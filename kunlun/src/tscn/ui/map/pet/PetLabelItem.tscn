@@ -1,0 +1,107 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/font/font-16.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/res/bangd.png" type="Texture" id=2]
+[ext_resource path="res://assets/res/petBattle.png" type="Texture" id=3]
+[ext_resource path="res://src/tscn/ui/map/pet/PetLabelItem.gd" type="Script" id=4]
+[ext_resource path="res://assets/res/keyin.png" type="Texture" id=5]
+
+[node name="PetLabelItem" type="TextureRect" groups=["pet_label_item"]]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -475.0
+rect_min_size = Vector2( 290, 25 )
+expand = true
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Zhan" type="TextureRect" parent="."]
+margin_right = 12.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+texture = ExtResource( 3 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bind" type="TextureRect" parent="."]
+margin_left = 52.0
+margin_right = 64.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+texture = ExtResource( 2 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bind2" type="TextureRect" parent="."]
+margin_left = 68.0
+margin_right = 80.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+texture = ExtResource( 5 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Grade" type="Label" parent="."]
+margin_left = 12.0
+margin_right = 52.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+custom_colors/font_color = Color( 1, 0.745098, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "一品"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="."]
+margin_left = 87.0
+margin_right = 151.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "祸天狐仙"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Level" type="Label" parent="."]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -50.0
+margin_top = -12.5
+margin_bottom = 12.5
+rect_min_size = Vector2( 0, 25 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "LV100"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 0, 25 )
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]

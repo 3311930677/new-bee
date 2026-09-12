@@ -1,0 +1,442 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://src/tscn/ui/common/title/XQTitle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/tscn/ui/common/tab/CustomTab.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/tscn/ui/common/btn/btn_left.tres" type="StyleBox" id=3]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=4]
+[ext_resource path="res://src/tscn/ui/common/bg/Background2.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/tscn/ui/common/bg/Background.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/tscn/ui/common/tres/NoVHScollBar.tres" type="Theme" id=7]
+[ext_resource path="res://src/util/common/ListAutoExpand.gd" type="Script" id=8]
+[ext_resource path="res://src/util/common/ScroContainerGD.gd" type="Script" id=9]
+[ext_resource path="res://src/tscn/ui/map/trade/TradeConsignmentUi.gd" type="Script" id=10]
+[ext_resource path="res://assets/font/font-16.tres" type="DynamicFont" id=11]
+[ext_resource path="res://src/tscn/ui/map/trade/TradeConsignmentUiRadioBtn.tres" type="ButtonGroup" id=12]
+[ext_resource path="res://src/tscn/ui/map/trade/TradeConsignmentEdit.gd" type="Script" id=13]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0.498039, 0.498039, 1 )
+
+[node name="TradeConsignmentUi" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Head" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.07
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="XQTitle" parent="Head" instance=ExtResource( 1 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -91.0
+margin_top = -17.5
+margin_right = 92.0
+margin_bottom = 17.5
+title = "我要寄卖"
+
+[node name="Tabs" type="Panel" parent="Head"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 3.514
+margin_bottom = 0.00999451
+rect_min_size = Vector2( 0, 50 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Head/Tabs"]
+anchor_right = 1.0
+anchor_bottom = 0.286
+margin_bottom = -0.0300007
+custom_constants/separation = 0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AllTab" parent="Head/Tabs/HBoxContainer" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 88.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 88, 30 )
+group_name = "bat_tab"
+text = "全部"
+is_checked = true
+
+[node name="PpropTab" parent="Head/Tabs/HBoxContainer" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 88.0
+margin_right = 176.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 88, 30 )
+group_name = "bat_tab"
+text = "道具"
+tab_index = 1
+
+[node name="EquiTab" parent="Head/Tabs/HBoxContainer" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 176.0
+margin_right = 264.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 88, 30 )
+group_name = "bat_tab"
+text = "装备"
+tab_index = 2
+
+[node name="PetTab" parent="Head/Tabs/HBoxContainer" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 264.0
+margin_right = 352.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 88, 30 )
+group_name = "bat_tab"
+text = "宠物"
+tab_index = 3
+
+[node name="Fac" type="Panel" parent="Head/Tabs"]
+anchor_top = 0.286
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_top = 4.832
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FacNum" type="Label" parent="Head/Tabs/Fac"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -45.0
+margin_top = -20.5
+margin_right = 45.0
+margin_bottom = 20.5
+custom_fonts/font = ExtResource( 4 )
+text = "背包容量
+(100/100)"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel3" type="Panel" parent="Head/Tabs"]
+anchor_left = 0.5
+anchor_top = 0.286
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 4.832
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BagNum" type="Label" parent="Head/Tabs/Panel3"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -45.0
+margin_top = -20.5
+margin_right = 45.0
+margin_bottom = 20.5
+custom_fonts/font = ExtResource( 4 )
+text = "寄卖容量
+（50/50）"
+align = 1
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" parent="." instance=ExtResource( 6 )]
+anchor_top = 0.246
+anchor_bottom = 0.96
+
+[node name="Background2" parent="Background" instance=ExtResource( 5 )]
+anchor_left = 0.057
+anchor_top = 0.06
+anchor_right = 0.943
+anchor_bottom = 0.94
+margin_left = -0.0640011
+margin_top = 0.0999985
+margin_right = 0.0639954
+margin_bottom = -0.100037
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Background/Background2"]
+anchor_left = 0.04
+anchor_top = 0.033
+anchor_right = 0.958
+anchor_bottom = 0.936
+margin_left = -0.48
+margin_top = 0.133001
+margin_right = 0.103973
+margin_bottom = 0.136017
+rect_min_size = Vector2( 287, 270 )
+theme = ExtResource( 7 )
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/Background2/ScrollContainer"]
+margin_right = 287.0
+margin_bottom = 270.0
+rect_min_size = Vector2( 287, 270 )
+script = ExtResource( 8 )
+
+[node name="Bootom" type="Panel" parent="."]
+anchor_top = 0.95
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -3.05176e-05
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="Bootom"]
+anchor_right = 0.156
+anchor_bottom = 1.0
+margin_right = 0.0879974
+custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "选项"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cancle" type="Button" parent="Bootom"]
+anchor_left = 0.844
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.0880127
+custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "返回"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMenu" type="PopupMenu" parent="Control"]
+margin_right = 20.0
+margin_bottom = 20.0
+custom_fonts/font = ExtResource( 4 )
+
+[node name="Edit" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupPanel" type="PopupPanel" parent="Edit"]
+visible = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -4.0
+margin_top = -4.0
+margin_right = 4.0
+margin_bottom = 4.0
+popup_exclusive = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Edit/PopupPanel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -95.0
+margin_top = -61.0
+margin_right = 95.0
+margin_bottom = 61.0
+rect_min_size = Vector2( 190, 122 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ConsignmentNum" type="Label" parent="Edit/PopupPanel/Panel"]
+anchor_left = 0.034
+anchor_right = 0.966
+anchor_bottom = 0.213
+margin_left = 0.0399995
+margin_right = -0.0400085
+margin_bottom = 0.013998
+rect_min_size = Vector2( 175, 25 )
+custom_fonts/font = ExtResource( 11 )
+text = "寄卖数量:"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextEdit" type="TextEdit" parent="Edit/PopupPanel/Panel/ConsignmentNum"]
+anchor_left = 0.446
+anchor_top = 0.135
+anchor_right = 1.0
+anchor_bottom = 0.865
+margin_left = 0.0579987
+margin_top = -0.0100002
+margin_bottom = 0.00999832
+text = "1"
+
+[node name="PriceNum" type="Label" parent="Edit/PopupPanel/Panel"]
+anchor_left = 0.034
+anchor_top = 0.213
+anchor_right = 0.966
+anchor_bottom = 0.426
+margin_left = 0.0399995
+margin_top = 0.013998
+margin_right = -0.0400085
+margin_bottom = 0.0279961
+rect_min_size = Vector2( 175, 25 )
+custom_fonts/font = ExtResource( 11 )
+text = "寄卖单价:"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextEdit" type="TextEdit" parent="Edit/PopupPanel/Panel/PriceNum"]
+anchor_left = 0.446
+anchor_top = 0.135
+anchor_right = 1.0
+anchor_bottom = 0.865
+margin_left = 0.0579987
+margin_top = -0.0100002
+margin_bottom = 0.00999832
+text = "0"
+
+[node name="CoinType" type="Label" parent="Edit/PopupPanel/Panel"]
+anchor_left = 0.042
+anchor_top = 0.459
+anchor_right = 0.989
+anchor_bottom = 0.77
+margin_left = 0.0199995
+margin_top = 0.0019989
+margin_right = 0.0899963
+margin_bottom = 0.0599976
+custom_fonts/font = ExtResource( 11 )
+text = "钱币类型:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Coupons" type="CheckBox" parent="Edit/PopupPanel/Panel/CoinType"]
+anchor_top = 0.421
+anchor_right = 0.328
+anchor_bottom = 1.079
+margin_left = -1.0
+margin_top = 0.0019989
+margin_right = -0.0400009
+margin_bottom = -0.0019989
+custom_fonts/font = ExtResource( 11 )
+group = ExtResource( 12 )
+text = "元宝"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GoldCoin" type="CheckBox" parent="Edit/PopupPanel/Panel/CoinType"]
+anchor_left = 0.333
+anchor_top = 0.421
+anchor_right = 0.667
+anchor_bottom = 1.079
+margin_left = 0.0599976
+margin_top = 0.0019989
+margin_right = -0.0600128
+margin_bottom = -0.0019989
+custom_fonts/font = ExtResource( 11 )
+pressed = true
+group = ExtResource( 12 )
+text = "银两"
+
+[node name="SliverCoin" type="CheckBox" parent="Edit/PopupPanel/Panel/CoinType"]
+anchor_left = 0.667
+anchor_top = 0.434
+anchor_right = 1.0
+anchor_bottom = 1.092
+margin_left = -0.0600128
+margin_top = 0.00799942
+margin_bottom = 0.0039978
+custom_fonts/font = ExtResource( 11 )
+group = ExtResource( 12 )
+text = "银票"
+
+[node name="Control" type="Control" parent="Edit/PopupPanel/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="Ok" type="Button" parent="Edit/PopupPanel/Panel/Control"]
+anchor_left = 0.226
+anchor_top = 0.795
+anchor_right = 0.458
+anchor_bottom = 0.984
+margin_left = 2.06
+margin_top = 0.00999451
+margin_right = 1.98
+margin_bottom = -0.0480042
+custom_fonts/font = ExtResource( 11 )
+text = "确定"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cancle" type="Button" parent="Edit/PopupPanel/Panel/Control"]
+anchor_left = 0.584
+anchor_top = 0.803
+anchor_right = 0.816
+anchor_bottom = 0.992
+margin_left = 0.0399933
+margin_top = 0.0339966
+margin_right = -0.0400085
+margin_bottom = -0.0240021
+custom_fonts/font = ExtResource( 11 )
+text = "取消"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Bootom/Ok" to="." method="_on_Ok_pressed"]
+[connection signal="pressed" from="Bootom/Cancle" to="." method="_on_Cancle_pressed"]
+[connection signal="index_pressed" from="Control/PopupMenu" to="." method="_on_PopupMenu_index_pressed"]
+[connection signal="edit_sucess" from="Edit" to="." method="_on_Edit_edit_sucess"]
+[connection signal="text_changed" from="Edit/PopupPanel/Panel/ConsignmentNum/TextEdit" to="Edit" method="_on_consignment_num_changed"]
+[connection signal="text_changed" from="Edit/PopupPanel/Panel/PriceNum/TextEdit" to="Edit" method="_on_price_num_changed"]
+[connection signal="pressed" from="Edit/PopupPanel/Panel/CoinType/Coupons" to="Edit" method="_on_coin_type_pressed" binds= [ 1 ]]
+[connection signal="pressed" from="Edit/PopupPanel/Panel/CoinType/GoldCoin" to="Edit" method="_on_coin_type_pressed" binds= [ 2 ]]
+[connection signal="pressed" from="Edit/PopupPanel/Panel/CoinType/SliverCoin" to="Edit" method="_on_coin_type_pressed" binds= [ 3 ]]
+[connection signal="pressed" from="Edit/PopupPanel/Panel/Control/Ok" to="Edit" method="_on_Ok_pressed"]
+[connection signal="pressed" from="Edit/PopupPanel/Panel/Control/Cancle" to="Edit" method="_on_Cancle_pressed"]

@@ -1,0 +1,297 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Node",
+"class": "ActivityDataManage",
+"language": "GDScript",
+"path": "res://src/util/manage/ActivityDataManage.gd"
+}, {
+"base": "Node",
+"class": "AroundRoleManage",
+"language": "GDScript",
+"path": "res://src/util/manage/AroundRoleManage.gd"
+}, {
+"base": "Node",
+"class": "AssetsManage",
+"language": "GDScript",
+"path": "res://src/util/manage/AssetsManage.gd"
+}, {
+"base": "Node",
+"class": "BagInfoManage",
+"language": "GDScript",
+"path": "res://src/util/manage/BagInfoManage.gd"
+}, {
+"base": "Node",
+"class": "CalculationManage",
+"language": "GDScript",
+"path": "res://src/util/manage/CalculationManage.gd"
+}, {
+"base": "Node",
+"class": "ChatInfoManage",
+"language": "GDScript",
+"path": "res://src/util/manage/ChatInfoManage.gd"
+}, {
+"base": "Node",
+"class": "ComMandManage",
+"language": "GDScript",
+"path": "res://src/util/manage/CommandManage.gd"
+}, {
+"base": "Node",
+"class": "CombatManage",
+"language": "GDScript",
+"path": "res://src/util/manage/CombatManage.gd"
+}, {
+"base": "Node",
+"class": "DialogManage",
+"language": "GDScript",
+"path": "res://src/util/manage/DialogManage.gd"
+}, {
+"base": "Node",
+"class": "DicStaticGameData",
+"language": "GDScript",
+"path": "res://src/util/manage/DicStaticGameData.gd"
+}, {
+"base": "Node2D",
+"class": "Entrance",
+"language": "GDScript",
+"path": "res://src/tscn/entrance/Entrance.gd"
+}, {
+"base": "Node",
+"class": "FactionInfoManage",
+"language": "GDScript",
+"path": "res://src/util/manage/FactionInfoManage.gd"
+}, {
+"base": "Reference",
+"class": "FileHelper",
+"language": "GDScript",
+"path": "res://src/util/common/FlleHelper.gd"
+}, {
+"base": "Node",
+"class": "FriendInfoManage",
+"language": "GDScript",
+"path": "res://src/util/manage/FriendInfoManage.gd"
+}, {
+"base": "Node",
+"class": "GoodAndEvilManage",
+"language": "GDScript",
+"path": "res://src/util/manage/GoodAndEvilManage.gd"
+}, {
+"base": "Reference",
+"class": "LocalInfo",
+"language": "GDScript",
+"path": "res://src/util/common/LocalInfo.gd"
+}, {
+"base": "Node",
+"class": "MailInfoManage",
+"language": "GDScript",
+"path": "res://src/util/manage/MailInfoManage.gd"
+}, {
+"base": "Node",
+"class": "MailOperate",
+"language": "GDScript",
+"path": "res://src/util/common/MailOperate.gd"
+}, {
+"base": "Node",
+"class": "MapInfoManage",
+"language": "GDScript",
+"path": "res://src/util/manage/MapInfoManage.gd"
+}, {
+"base": "Node",
+"class": "MasterDataManage",
+"language": "GDScript",
+"path": "res://src/util/manage/MasterDataManage.gd"
+}, {
+"base": "Node",
+"class": "MemoManage",
+"language": "GDScript",
+"path": "res://src/util/manage/MemoManage.gd"
+}, {
+"base": "Control",
+"class": "MemoUi",
+"language": "GDScript",
+"path": "res://src/tscn/ui/map/memo/memoUi.gd"
+}, {
+"base": "Node",
+"class": "NTeamManage",
+"language": "GDScript",
+"path": "res://src/util/manage/NTeamManage.gd"
+}, {
+"base": "Node",
+"class": "NetContext",
+"language": "GDScript",
+"path": "res://src/util/common/NetContext.gd"
+}, {
+"base": "Reference",
+"class": "NpcUtils",
+"language": "GDScript",
+"path": "res://src/util/NpcUtils.gd"
+}, {
+"base": "Node",
+"class": "PetInfoManage",
+"language": "GDScript",
+"path": "res://src/util/manage/PetInfoManage.gd"
+}, {
+"base": "Node",
+"class": "PlayerOperate",
+"language": "GDScript",
+"path": "res://src/util/common/PlayerOperate.gd"
+}, {
+"base": "Node",
+"class": "RankingInfoManage",
+"language": "GDScript",
+"path": "res://src/util/manage/RankingInfoManage.gd"
+}, {
+"base": "Node",
+"class": "RichTextContentFormat",
+"language": "GDScript",
+"path": "res://src/util/common/RichTextContentFormat.gd"
+}, {
+"base": "Node",
+"class": "RingDataManage",
+"language": "GDScript",
+"path": "res://src/util/manage/RingDataManage.gd"
+}, {
+"base": "Node",
+"class": "RoleInfoManage",
+"language": "GDScript",
+"path": "res://src/util/manage/RoleInfoManage.gd"
+}, {
+"base": "Reference",
+"class": "RoleUtils",
+"language": "GDScript",
+"path": "res://src/util/RoleUtils.gd"
+}, {
+"base": "Node",
+"class": "ScreenUtils",
+"language": "GDScript",
+"path": "res://src/util/ScreenUtils.gd"
+}, {
+"base": "Node",
+"class": "ServerNode",
+"language": "GDScript",
+"path": "res://src/tscn/server_nodes/ServerNode.gd"
+}, {
+"base": "Node",
+"class": "ServerPageManage",
+"language": "GDScript",
+"path": "res://src/util/manage/ServerPageManage.gd"
+}, {
+"base": "Node",
+"class": "ShopInfoManage",
+"language": "GDScript",
+"path": "res://src/util/manage/ShopInfoManage.gd"
+}, {
+"base": "Node",
+"class": "StaticGameData",
+"language": "GDScript",
+"path": "res://src/util/manage/StaticGameData.gd"
+}, {
+"base": "Node",
+"class": "TBBattleManage",
+"language": "GDScript",
+"path": "res://src/util/manage/TBBttleManage.gd"
+}, {
+"base": "Node",
+"class": "TaskInfoManage",
+"language": "GDScript",
+"path": "res://src/util/manage/TaskInfoManage.gd"
+}, {
+"base": "Node",
+"class": "TradeInfoManage",
+"language": "GDScript",
+"path": "res://src/util/manage/TradeInfoManage.gd"
+} ]
+_global_script_class_icons={
+"ActivityDataManage": "",
+"AroundRoleManage": "",
+"AssetsManage": "",
+"BagInfoManage": "",
+"CalculationManage": "",
+"ChatInfoManage": "",
+"ComMandManage": "",
+"CombatManage": "",
+"DialogManage": "",
+"DicStaticGameData": "",
+"Entrance": "",
+"FactionInfoManage": "",
+"FileHelper": "",
+"FriendInfoManage": "",
+"GoodAndEvilManage": "",
+"LocalInfo": "",
+"MailInfoManage": "",
+"MailOperate": "",
+"MapInfoManage": "",
+"MasterDataManage": "",
+"MemoManage": "",
+"MemoUi": "",
+"NTeamManage": "",
+"NetContext": "",
+"NpcUtils": "",
+"PetInfoManage": "",
+"PlayerOperate": "",
+"RankingInfoManage": "",
+"RichTextContentFormat": "",
+"RingDataManage": "",
+"RoleInfoManage": "",
+"RoleUtils": "",
+"ScreenUtils": "",
+"ServerNode": "",
+"ServerPageManage": "",
+"ShopInfoManage": "",
+"StaticGameData": "",
+"TBBattleManage": "",
+"TaskInfoManage": "",
+"TradeInfoManage": ""
+}
+
+[application]
+
+config/name="XQ-SAMPLE"
+run/main_scene="res://src/tscn/scence/ScenceManage.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+Global="*res://GlobalExports.gd"
+
+[display]
+
+window/size/width=352
+window/size/height=500
+window/dpi/allow_hidpi=true
+window/handheld/orientation="portrait"
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
+
+[global]
+
+etc2=true
+sdk=false
+
+[layer_names]
+
+2d_render/layer_5="collide"
+2d_physics/layer_5="collide"
+
+[network]
+
+limits/debugger_stdout/max_chars_per_second=204800
+
+[physics]
+
+common/enable_pause_aware_picking=true
+
+[rendering]
+
+quality/driver/driver_name="GLES2"
+vram_compression/import_etc=true
+vram_compression/import_etc2=false
+environment/default_environment="res://default_env.tres"

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="my.dao.shopMapper" >
+    <select id="getAllGroundingGoodsView" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_grounding_goods_view
+    </select>
+    <select id="getGroundingGoodsViewByPage" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_grounding_goods_view limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getGroundingGoodsViewByName" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_grounding_goods_view where name=#{name}
+    </select>
+    <update id="updateGroundingGoods" parameterType="string" >
+        update xq_grounding_goods
+        <set>
+            <if test="list!=null" >
+                list=#{list},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <insert id="insertGroundingGoods">
+        insert into xq_grounding_goods(name,list)
+        values(#{name},#{list})
+    </insert>
+    <delete id="delGroundingGoodsByName" parameterType="string">
+        delete from xq_grounding_goods where name=#{name}
+    </delete>
+
+    <select id="getGoodsById" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_shop where Id=#{Id} for update
+    </select>
+
+    <delete id="del" parameterType="string">
+        delete from xq_shop where Id=#{Id}
+    </delete>
+
+    <update id="update" parameterType="string" >
+        update xq_shop
+        <set>
+            <if test="goods!=null" >
+                goods=#{goods},
+            </if>
+            <if test="sale!=null" >
+                sale=#{sale},
+            </if>
+            <if test="kan!=null" >
+                kan=#{kan},
+            </if>
+        </set>
+        where Id=#{Id}
+    </update>
+
+    <insert id="insert">
+        insert into xq_shop(Id,goods,created,name,type,sale,kan,price_type)
+        values(#{Id},#{goods},#{created},#{name},#{type},'0','0',#{price_type})
+    </insert>
+
+</mapper>

@@ -1,0 +1,183 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://src/tscn/ui/common/btn/btn_left.tres" type="StyleBox" id=1]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=2]
+[ext_resource path="res://src/tscn/ui/map/fish/FishUi.gd" type="Script" id=3]
+[ext_resource path="res://assets/font/font-16.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/res/fish/diaoyu_02.png" type="Texture" id=5]
+[ext_resource path="res://assets/res/fish/diaoyu_01.png" type="Texture" id=6]
+[ext_resource path="res://assets/res/fish/diaoyu_03.png" type="Texture" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 9.5, 2 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 10, 6 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 10, 0.5 )
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Op/Diaoyu02:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 240, 156 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "start"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Op/Diaoyu02:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.6, 3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 240, 156 ), Vector2( 240, 331 ), Vector2( 240, 156 ) ]
+}
+
+[node name="FishUi" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Time" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.95
+margin_bottom = -3.05176e-05
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Diaoyu01" type="Sprite" parent="Time"]
+position = Vector2( 98, 238.188 )
+scale = Vector2( 1.30555, 1.14015 )
+texture = ExtResource( 6 )
+
+[node name="Label" type="Label" parent="Time"]
+margin_left = 63.0
+margin_top = 228.568
+margin_right = 135.0
+margin_bottom = 245.568
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 4 )
+text = "倒计时:10"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Op" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Diaoyu03" type="Sprite" parent="Op"]
+position = Vector2( 252, 237 )
+texture = ExtResource( 7 )
+
+[node name="Level1" type="Area2D" parent="Op/Diaoyu03"]
+position = Vector2( -2, 1 )
+collision_layer = 32768
+collision_mask = 16384
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Op/Diaoyu03/Level1"]
+position = Vector2( 0.5, -1 )
+shape = SubResource( 1 )
+
+[node name="Level2" type="Area2D" parent="Op/Diaoyu03"]
+position = Vector2( -2, 1 )
+collision_layer = 32768
+collision_mask = 16384
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Op/Diaoyu03/Level2"]
+position = Vector2( 0.5, -1 )
+shape = SubResource( 2 )
+
+[node name="Diaoyu02" type="Sprite" parent="Op"]
+position = Vector2( 240, 156 )
+texture = ExtResource( 5 )
+
+[node name="StaticBody" type="KinematicBody2D" parent="Op/Diaoyu02"]
+position = Vector2( -1, -1 )
+collision_layer = 16384
+collision_mask = 32768
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Op/Diaoyu02/StaticBody"]
+position = Vector2( 0, -0.5 )
+shape = SubResource( 4 )
+
+[node name="Panel" type="Panel" parent="."]
+anchor_top = 0.95
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -3.05176e-05
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="Panel"]
+anchor_right = 0.156
+anchor_bottom = 1.0
+margin_right = 0.0879974
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = ExtResource( 1 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/normal = ExtResource( 1 )
+text = "确定"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cancle" type="Button" parent="Panel"]
+anchor_left = 0.844
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.0880127
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = ExtResource( 1 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/normal = ExtResource( 1 )
+text = "取消"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 5 )
+anims/start = SubResource( 6 )
+
+[node name="UpTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="body_entered" from="Op/Diaoyu03/Level1" to="." method="_on_Level1_body_entered"]
+[connection signal="body_exited" from="Op/Diaoyu03/Level1" to="." method="_on_Level1_body_exited"]
+[connection signal="body_entered" from="Op/Diaoyu03/Level2" to="." method="_on_Level2_body_entered"]
+[connection signal="body_exited" from="Op/Diaoyu03/Level2" to="." method="_on_Level2_body_exited"]
+[connection signal="pressed" from="Panel/Ok" to="." method="_on_Ok_pressed"]
+[connection signal="pressed" from="Panel/Cancle" to="." method="_on_Cancle_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="UpTimer" to="." method="_on_UpTimer_timeout"]

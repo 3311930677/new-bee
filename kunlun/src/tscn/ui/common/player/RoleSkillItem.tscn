@@ -1,0 +1,62 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/skill/pet/cj_137.png" type="Texture" id=1]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=2]
+[ext_resource path="res://src/tscn/ui/common/player/RoleSkillItem.gd" type="Script" id=3]
+
+[node name="RoleSkillItem" type="TextureRect" groups=["role_skill_label_item"]]
+anchor_right = 1.0
+anchor_bottom = 0.05
+rect_min_size = Vector2( 0, 25 )
+expand = true
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_top = 0.1
+anchor_right = 0.057
+anchor_bottom = 0.9
+margin_right = -0.0640011
+rect_min_size = Vector2( 20, 0 )
+texture = ExtResource( 1 )
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SkillName" type="Label" parent="."]
+anchor_left = 0.071
+anchor_right = 0.276
+anchor_bottom = 1.0
+margin_left = 0.00799942
+margin_right = -8.15201
+rect_min_size = Vector2( 0, 25 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "技能名称"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SkillLevel" type="Label" parent="."]
+anchor_left = 0.886
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 0.127991
+rect_min_size = Vector2( 0, 25 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "LV30"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]

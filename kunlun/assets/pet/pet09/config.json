@@ -1,0 +1,9 @@
+{
+	"jn":[
+		{"anims":[3,2],"name":"攻击二","rangedAtk":0},
+		{"anims":[4,2],"name":"攻击三","rangedAtk":0},
+		{"anims":[5],"name":"hit","rangedAtk":0},
+		{"anims":[6],"name":"dodge","rangedAtk":0}
+	],
+	"fight_back":2
+}

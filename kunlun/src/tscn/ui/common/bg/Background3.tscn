@@ -1,0 +1,74 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/res/lefttop.png" type="Texture" id=1]
+[ext_resource path="res://assets/res/righttop.png" type="Texture" id=2]
+[ext_resource path="res://assets/res/rightbottom.png" type="Texture" id=3]
+[ext_resource path="res://assets/res/leftbottom.png" type="Texture" id=4]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.862745, 0.901961, 0.807843, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.584314, 0.219608, 0.219608, 0 )
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color( 0.364706, 0.537255, 0.478431, 1 )
+
+[node name="Background3" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LeftTop" type="TextureRect" parent="Panel"]
+anchor_right = 0.114
+anchor_bottom = 0.08
+margin_right = -0.128002
+margin_bottom = -3.8147e-06
+texture = ExtResource( 1 )
+expand = true
+
+[node name="RightTop" type="TextureRect" parent="Panel"]
+anchor_left = 0.886
+anchor_right = 1.0
+anchor_bottom = 0.08
+margin_left = 0.127991
+margin_bottom = -3.8147e-06
+texture = ExtResource( 2 )
+expand = true
+
+[node name="LeftBottom" type="TextureRect" parent="Panel"]
+anchor_top = 0.92
+anchor_right = 0.114
+anchor_bottom = 1.0
+margin_right = -0.128002
+texture = ExtResource( 4 )
+expand = true
+
+[node name="RightBottom" type="TextureRect" parent="Panel"]
+anchor_left = 0.886
+anchor_top = 0.92
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 0.127991
+texture = ExtResource( 3 )
+expand = true

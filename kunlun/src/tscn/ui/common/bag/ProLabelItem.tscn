@@ -1,0 +1,93 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/tscn/ui/common/bag/ProLabelItem.gd" type="Script" id=1]
+[ext_resource path="res://src/tscn/ui/common/tres/NoVHScollBar.tres" type="Theme" id=3]
+[ext_resource path="res://src/util/common/ScroContainerGD.gd" type="Script" id=4]
+[ext_resource path="res://assets/font/font-16.tres" type="DynamicFont" id=5]
+
+[node name="ProLabelItem" type="TextureRect" groups=["prop_label_item"]]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -15.0
+margin_bottom = -468.0
+rect_min_size = Vector2( 35, 25 )
+expand = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 0.798
+anchor_bottom = 0.781
+margin_right = 0.0739746
+margin_bottom = -2.992
+rect_min_size = Vector2( 0, 25 )
+theme = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Level" type="Label" parent="HBoxContainer"]
+margin_right = 50.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+custom_fonts/font = ExtResource( 5 )
+text = "LV100"
+align = 1
+valign = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer"]
+margin_left = 54.0
+margin_right = 252.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 198, 25 )
+theme = ExtResource( 3 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+is_hor_auto_scroll = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/ScrollContainer"]
+margin_right = 290.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+
+[node name="Name" type="Label" parent="HBoxContainer/ScrollContainer/HBoxContainer"]
+margin_right = 290.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+theme = ExtResource( 3 )
+custom_fonts/font = ExtResource( 5 )
+text = "[刻印][墨]装备名称共6个字1231321313"
+align = 1
+valign = 1
+
+[node name="Num" type="Label" parent="."]
+anchor_left = 0.899
+anchor_right = 1.0
+anchor_bottom = 0.781
+margin_left = -7.96298
+margin_right = -7.99997
+margin_bottom = 0.00799942
+rect_min_size = Vector2( 0, 25 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 5 )
+text = "X99"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -10.0
+rect_min_size = Vector2( 0, 25 )
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]

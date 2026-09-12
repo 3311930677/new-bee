@@ -1,0 +1,1288 @@
+[gd_scene load_steps=34 format=2]
+
+[ext_resource path="res://src/tscn/ui/battle/ControllerBtnSmallItem.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/tscn/scence/battle/ui/Middle.gd" type="Script" id=2]
+[ext_resource path="res://src/tscn/ui/common/topcolumn/TopColumn.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/tscn/ui/common/tres/progress_hp.tres" type="Theme" id=4]
+[ext_resource path="res://src/tscn/ui/common/tres/progress_mp.tres" type="Theme" id=5]
+[ext_resource path="res://src/tscn/ui/common/btn/btn_left.tres" type="StyleBox" id=6]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=7]
+[ext_resource path="res://assets/font/font-16.tres" type="DynamicFont" id=8]
+[ext_resource path="res://src/tscn/ui/battle/AutoAtkIcon.gd" type="Script" id=9]
+[ext_resource path="res://assets/res/cg_a2.png" type="Texture" id=10]
+[ext_resource path="res://assets/res/cg_a3.png" type="Texture" id=11]
+[ext_resource path="res://assets/res/1.png" type="Texture" id=12]
+[ext_resource path="res://assets/res/cg_a1.png" type="Texture" id=13]
+[ext_resource path="res://src/tscn/ui/battle/CombatChats.gd" type="Script" id=14]
+[ext_resource path="res://assets/battle/xiaojian.png" type="Texture" id=15]
+[ext_resource path="res://assets/battle/zd_05.png" type="Texture" id=16]
+[ext_resource path="res://assets/battle/zd_04.png" type="Texture" id=17]
+[ext_resource path="res://assets/battle/pount.png" type="Texture" id=18]
+[ext_resource path="res://src/tscn/scence/battle/ui/TBBttleUi.gd" type="Script" id=19]
+[ext_resource path="res://src/tscn/scence/battle/ui/XiaoJian.gd" type="Script" id=20]
+[ext_resource path="res://src/tscn/scence/battle/ui/Positions.gd" type="Script" id=21]
+[ext_resource path="res://src/tscn/scence/battle/ui/MainHead.gd" type="Script" id=22]
+[ext_resource path="res://src/tscn/scence/battle/ui/position_btn.gd" type="Script" id=23]
+[ext_resource path="res://assets/res/11.png" type="Texture" id=24]
+[ext_resource path="res://src/tscn/ui/common/menu/ListMenu.tscn" type="PackedScene" id=25]
+[ext_resource path="res://src/tscn/scence/battle/ui/ListMenu.gd" type="Script" id=26]
+[ext_resource path="res://assets/res/k_w.png" type="Texture" id=27]
+[ext_resource path="res://assets/res/cg_a4.png" type="Texture" id=28]
+[ext_resource path="res://src/tscn/scence/battle/ui/MiddleMsg.gd" type="Script" id=29]
+[ext_resource path="res://src/tscn/scence/battle/ui/TeamInfo1.gd" type="Script" id=30]
+[ext_resource path="res://src/tscn/ui/common/tres/NoVHScollBar.tres" type="Theme" id=31]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="Theme" id=1]
+
+[node name="TBBttleUi" type="Control" groups=["tb_battle_ui"]]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TopColumn" parent="." instance=ExtResource( 3 )]
+margin_top = -4.0
+
+[node name="MainHead" type="Control" parent="."]
+margin_right = 98.0
+margin_bottom = 57.0
+rect_scale = Vector2( 1.4, 1.4 )
+script = ExtResource( 22 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Role" type="Control" parent="MainHead"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="RoleInfo" type="Control" parent="MainHead/Role"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Hp" type="ProgressBar" parent="MainHead/Role/RoleInfo"]
+margin_left = 9.0
+margin_top = 38.0
+margin_right = 55.0
+margin_bottom = 41.0
+theme = ExtResource( 4 )
+value = 60.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mp" type="ProgressBar" parent="MainHead/Role/RoleInfo"]
+margin_left = 9.0
+margin_top = 43.0
+margin_right = 55.0
+margin_bottom = 46.0
+theme = ExtResource( 5 )
+value = 60.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RoleHead" type="TextureRect" parent="MainHead/Role"]
+margin_right = 73.0
+margin_bottom = 48.0
+texture = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exp" type="TextureRect" parent="MainHead/Role/RoleHead"]
+visible = false
+margin_left = 8.0
+margin_top = 48.0
+margin_right = 38.0
+margin_bottom = 55.0
+texture = ExtResource( 11 )
+
+[node name="Head" type="TextureRect" parent="MainHead/Role/RoleHead"]
+margin_left = 8.0
+margin_right = 35.0
+margin_bottom = 34.0
+texture = ExtResource( 12 )
+
+[node name="RoleBtnInfo" type="TextureButton" parent="MainHead/Role/RoleHead/Head"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Precent" type="Label" parent="MainHead/Role/RoleHead"]
+visible = false
+margin_left = 20.0
+margin_top = 47.0
+margin_right = 53.0
+margin_bottom = 66.0
+rect_scale = Vector2( 0.4, 0.4 )
+custom_fonts/font = ExtResource( 7 )
+text = "100"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Level" type="Label" parent="MainHead/Role/RoleHead"]
+margin_top = 30.0
+margin_right = 33.0
+margin_bottom = 49.0
+rect_scale = Vector2( 0.5, 0.5 )
+custom_fonts/font = ExtResource( 7 )
+text = "100"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Pet" type="Control" parent="MainHead"]
+visible = false
+margin_left = 41.0
+margin_top = 1.0
+margin_right = 81.0
+margin_bottom = 41.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PetInfo" type="Control" parent="MainHead/Pet"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Hp" type="ProgressBar" parent="MainHead/Pet/PetInfo"]
+margin_left = 17.0
+margin_top = 22.0
+margin_right = 42.0
+margin_bottom = 25.0
+theme = ExtResource( 4 )
+value = 60.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mp" type="ProgressBar" parent="MainHead/Pet/PetInfo"]
+margin_left = 17.0
+margin_top = 27.0
+margin_right = 42.0
+margin_bottom = 30.0
+theme = ExtResource( 5 )
+value = 60.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PetHead" type="TextureRect" parent="MainHead/Pet"]
+margin_left = -3.0
+margin_top = 10.0
+margin_right = 53.0
+margin_bottom = 33.0
+texture = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exp" type="TextureRect" parent="MainHead/Pet/PetHead"]
+visible = false
+margin_left = 18.0
+margin_top = 21.0
+margin_right = 48.0
+margin_bottom = 28.0
+texture = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Head" type="TextureRect" parent="MainHead/Pet/PetHead"]
+margin_top = 3.0
+margin_right = 22.0
+margin_bottom = 23.0
+expand = true
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PetBtnInfo" type="TextureButton" parent="MainHead/Pet/PetHead/Head"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Precent" type="Label" parent="MainHead/Pet/PetHead"]
+visible = false
+margin_left = 31.0
+margin_top = 21.0
+margin_right = 64.0
+margin_bottom = 40.0
+rect_scale = Vector2( 0.4, 0.4 )
+custom_fonts/font = ExtResource( 7 )
+text = "100"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Level" type="Label" parent="MainHead/Pet/PetHead"]
+margin_top = 17.0
+margin_right = 33.0
+margin_bottom = 36.0
+rect_scale = Vector2( 0.5, 0.5 )
+custom_fonts/font = ExtResource( 7 )
+text = "100"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MiddleMsg" type="Control" parent="." groups=["fight_team_msg"]]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 29 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MiddleMsg"]
+anchor_left = 0.224
+anchor_top = 0.202
+anchor_right = 0.776
+anchor_bottom = 0.252
+margin_left = 0.152
+margin_right = -0.152008
+rect_min_size = Vector2( 0, 25 )
+theme = ExtResource( 31 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="MiddleMsg/ScrollContainer"]
+margin_right = 20.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 20, 25 )
+custom_styles/panel = SubResource( 2 )
+
+[node name="Label" type="Label" parent="MiddleMsg/ScrollContainer/PanelContainer"]
+visible = false
+margin_right = 110.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 8 )
+text = "12313213213"
+align = 1
+valign = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MiddleMsg/ScrollContainer/PanelContainer"]
+margin_right = 20.0
+margin_bottom = 25.0
+grow_vertical = 0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+bbcode_enabled = true
+bbcode_text = "[fill]1231231211321213213213[/fill]"
+text = "1231231211321213213213"
+
+[node name="Team" type="Control" parent="."]
+anchor_left = 0.696
+anchor_right = 1.0
+anchor_bottom = 0.166
+margin_left = 0.00798035
+margin_top = 1.0
+margin_right = 1.0
+margin_bottom = -7.62939e-06
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel1" type="Panel" parent="Team"]
+anchor_left = -0.148
+anchor_top = 0.146
+anchor_right = 1.0
+anchor_bottom = 0.415
+margin_left = -0.0159998
+margin_top = 0.0279989
+margin_right = -2.0
+margin_bottom = -5.03
+rect_min_size = Vector2( 122, 17 )
+script = ExtResource( 30 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Team/Panel1"]
+anchor_left = -0.098
+anchor_bottom = 1.0
+margin_left = -0.0439997
+margin_bottom = 1.0
+texture = ExtResource( 28 )
+stretch_mode = 7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="role" type="Control" parent="Team/Panel1"]
+anchor_right = 0.5
+anchor_bottom = 1.059
+margin_right = 1.0
+margin_bottom = -0.00300026
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Head" type="Control" parent="Team/Panel1/role"]
+anchor_right = 0.984
+anchor_bottom = 0.889
+margin_right = -0.00800323
+margin_bottom = -0.00200081
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Team/Panel1/role/Head"]
+anchor_top = 0.062
+anchor_right = 0.279
+anchor_bottom = 1.062
+margin_top = 0.00799996
+margin_right = -0.019001
+margin_bottom = 0.00799942
+texture = ExtResource( 24 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Info" type="Control" parent="Team/Panel1/role"]
+anchor_left = 0.274
+anchor_right = 0.984
+anchor_bottom = 0.889
+margin_left = 0.0119991
+margin_right = -0.00800323
+margin_bottom = -0.00200081
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Hp" type="ProgressBar" parent="Team/Panel1/role/Info"]
+anchor_right = 1.0
+anchor_bottom = 0.562
+margin_top = 1.0
+margin_bottom = 0.00799942
+theme = ExtResource( 4 )
+value = 100.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mp" type="ProgressBar" parent="Team/Panel1/role/Info"]
+anchor_top = 0.562
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 0.00799942
+margin_bottom = 1.0
+rect_min_size = Vector2( 0, 8 )
+theme = ExtResource( 5 )
+value = 100.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="pet" type="Control" parent="Team/Panel1"]
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Head" type="Control" parent="Team/Panel1/pet"]
+anchor_right = 1.0
+anchor_bottom = 0.889
+margin_bottom = -0.00200081
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Team/Panel1/pet/Head"]
+anchor_left = -0.131
+anchor_top = -0.562
+anchor_right = 0.279
+anchor_bottom = 1.062
+margin_left = -0.00899935
+margin_top = -0.00799942
+margin_right = -0.019001
+margin_bottom = 0.00799942
+texture = ExtResource( 27 )
+stretch_mode = 7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Info" type="Control" parent="Team/Panel1/pet"]
+margin_left = 17.0
+margin_right = 61.0
+margin_bottom = 16.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Hp" type="ProgressBar" parent="Team/Panel1/pet/Info"]
+anchor_right = 1.0
+anchor_bottom = 0.562
+margin_top = 1.0
+margin_bottom = 0.00799942
+theme = ExtResource( 4 )
+value = 100.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mp" type="ProgressBar" parent="Team/Panel1/pet/Info"]
+anchor_top = 0.562
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 0.00799942
+margin_bottom = 1.0
+rect_min_size = Vector2( 0, 8 )
+theme = ExtResource( 5 )
+value = 100.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel2" type="Panel" parent="Team"]
+anchor_left = -0.148
+anchor_top = 0.488
+anchor_right = 0.981
+anchor_bottom = 0.695
+margin_left = -0.0159998
+margin_top = -0.0160027
+margin_right = 0.0519943
+margin_bottom = 0.00999451
+rect_min_size = Vector2( 122, 17 )
+script = ExtResource( 30 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+index = 2
+
+[node name="TextureRect" type="TextureRect" parent="Team/Panel2"]
+anchor_left = -0.098
+anchor_bottom = 1.0
+margin_left = -0.0439997
+margin_bottom = 1.0
+texture = ExtResource( 28 )
+stretch_mode = 7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="role" type="Control" parent="Team/Panel2"]
+anchor_right = 0.5
+anchor_bottom = 1.059
+margin_right = 1.0
+margin_bottom = -0.00300026
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Head" type="Control" parent="Team/Panel2/role"]
+anchor_right = 0.984
+anchor_bottom = 0.889
+margin_right = -0.00800323
+margin_bottom = -0.00200081
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Team/Panel2/role/Head"]
+anchor_top = 0.062
+anchor_right = 0.279
+anchor_bottom = 1.062
+margin_top = 0.00799996
+margin_right = -0.019001
+margin_bottom = 0.00799942
+texture = ExtResource( 24 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Info" type="Control" parent="Team/Panel2/role"]
+anchor_left = 0.274
+anchor_right = 0.984
+anchor_bottom = 0.889
+margin_left = 0.0119991
+margin_right = -0.00800323
+margin_bottom = -0.00200081
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Hp" type="ProgressBar" parent="Team/Panel2/role/Info"]
+anchor_right = 1.0
+anchor_bottom = 0.562
+margin_top = 1.0
+margin_bottom = 0.00799942
+theme = ExtResource( 4 )
+value = 100.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mp" type="ProgressBar" parent="Team/Panel2/role/Info"]
+anchor_top = 0.562
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 0.00799942
+margin_bottom = 1.0
+rect_min_size = Vector2( 0, 8 )
+theme = ExtResource( 5 )
+value = 100.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="pet" type="Control" parent="Team/Panel2"]
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Head" type="Control" parent="Team/Panel2/pet"]
+anchor_right = 1.0
+anchor_bottom = 0.889
+margin_bottom = -0.00200081
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Team/Panel2/pet/Head"]
+anchor_left = -0.131
+anchor_top = -0.562
+anchor_right = 0.279
+anchor_bottom = 1.062
+margin_left = -0.00899935
+margin_top = -0.00799942
+margin_right = -0.019001
+margin_bottom = 0.00799942
+texture = ExtResource( 27 )
+stretch_mode = 7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Info" type="Control" parent="Team/Panel2/pet"]
+margin_left = 17.0
+margin_right = 61.0
+margin_bottom = 16.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Hp" type="ProgressBar" parent="Team/Panel2/pet/Info"]
+anchor_right = 1.0
+anchor_bottom = 0.562
+margin_top = 1.0
+margin_bottom = 0.00799942
+theme = ExtResource( 4 )
+value = 100.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mp" type="ProgressBar" parent="Team/Panel2/pet/Info"]
+anchor_top = 0.562
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 0.00799942
+margin_bottom = 1.0
+rect_min_size = Vector2( 0, 8 )
+theme = ExtResource( 5 )
+value = 100.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Middle" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Round" type="Label" parent="Middle"]
+anchor_top = 0.132
+anchor_right = 1.0
+anchor_bottom = 0.166
+margin_bottom = -7.62939e-06
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 8 )
+text = "回合:1"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CTime" type="Label" parent="Middle"]
+anchor_top = 0.166
+anchor_right = 1.0
+anchor_bottom = 0.2
+margin_top = -7.62939e-06
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 8 )
+text = "60"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Btns" type="Control" parent="Middle"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="Middle/Btns"]
+anchor_top = 0.95
+anchor_right = 0.156
+anchor_bottom = 1.0
+margin_top = -3.05176e-05
+margin_right = 0.0879974
+mouse_filter = 1
+custom_fonts/font = ExtResource( 7 )
+custom_styles/hover = ExtResource( 6 )
+custom_styles/pressed = ExtResource( 6 )
+custom_styles/normal = ExtResource( 6 )
+text = "确定"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cancle" type="Button" parent="Middle/Btns"]
+anchor_left = 0.844
+anchor_top = 0.95
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.0880127
+margin_top = -3.05176e-05
+mouse_filter = 1
+custom_fonts/font = ExtResource( 7 )
+custom_styles/hover = ExtResource( 6 )
+custom_styles/pressed = ExtResource( 6 )
+custom_styles/normal = ExtResource( 6 )
+text = "取消"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="XiaoJian" type="Control" parent="Middle"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 20 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LeftItem" type="GridContainer" parent="Middle/XiaoJian"]
+anchor_right = 0.358
+anchor_bottom = 1.0
+margin_top = 1.0
+margin_right = -0.0160065
+mouse_filter = 2
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite1" type="Sprite" parent="Middle/XiaoJian/LeftItem"]
+position = Vector2( 35.5, 94 )
+texture = ExtResource( 15 )
+
+[node name="Sprite2" type="Sprite" parent="Middle/XiaoJian/LeftItem"]
+position = Vector2( 96.5, 146 )
+texture = ExtResource( 15 )
+
+[node name="Sprite3" type="Sprite" parent="Middle/XiaoJian/LeftItem"]
+position = Vector2( 35.5, 220 )
+texture = ExtResource( 15 )
+
+[node name="Sprite4" type="Sprite" parent="Middle/XiaoJian/LeftItem"]
+position = Vector2( 93.5, 274 )
+texture = ExtResource( 15 )
+
+[node name="Sprite5" type="Sprite" parent="Middle/XiaoJian/LeftItem"]
+position = Vector2( 33.5, 363 )
+texture = ExtResource( 15 )
+
+[node name="Sprite6" type="Sprite" parent="Middle/XiaoJian/LeftItem"]
+position = Vector2( 93.5, 407 )
+texture = ExtResource( 15 )
+
+[node name="RightItem" type="GridContainer" parent="Middle/XiaoJian"]
+anchor_left = 0.625
+anchor_right = 1.003
+anchor_bottom = 1.0
+margin_right = -0.0559998
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite7" type="Sprite" parent="Middle/XiaoJian/RightItem"]
+position = Vector2( 46.5, 143 )
+texture = ExtResource( 15 )
+
+[node name="Sprite8" type="Sprite" parent="Middle/XiaoJian/RightItem"]
+position = Vector2( 102.5, 95 )
+texture = ExtResource( 15 )
+
+[node name="Sprite9" type="Sprite" parent="Middle/XiaoJian/RightItem"]
+position = Vector2( 46.5, 276 )
+texture = ExtResource( 15 )
+
+[node name="Sprite10" type="Sprite" parent="Middle/XiaoJian/RightItem"]
+position = Vector2( 102.5, 218 )
+texture = ExtResource( 15 )
+
+[node name="Sprite11" type="Sprite" parent="Middle/XiaoJian/RightItem"]
+position = Vector2( 46.5, 409 )
+texture = ExtResource( 15 )
+
+[node name="Sprite12" type="Sprite" parent="Middle/XiaoJian/RightItem"]
+position = Vector2( 102.5, 367 )
+texture = ExtResource( 15 )
+
+[node name="Positions" type="Control" parent="Middle"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 21 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Position2D1" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 34, 151 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D1"]
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+index = 1
+
+[node name="Position2D2" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 95, 197 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D2"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+index = 2
+
+[node name="Position2D3" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 34, 277 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D3"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 22.0
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+index = 3
+
+[node name="Position2D4" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 92, 330 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D4"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+index = 4
+
+[node name="Position2D5" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 32, 417 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D5"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+index = 5
+
+[node name="Position2D6" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 92, 469 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D6"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+index = 6
+
+[node name="Position2D7" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 265, 197 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D7"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+index = 7
+
+[node name="Position2D8" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 321, 151 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D8"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+index = 8
+
+[node name="Position2D9" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 265, 330 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D9"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+index = 9
+
+[node name="Position2D10" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 321, 277 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D10"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+index = 10
+
+[node name="Position2D11" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 265, 469 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D11"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+index = 11
+
+[node name="Position2D12" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 321, 417 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D12"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+index = 12
+
+[node name="JNBTNS" type="Control" parent="Middle"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ControllerBtnSmallItem1" parent="Middle/JNBTNS" instance=ExtResource( 1 )]
+anchor_left = 0.418
+anchor_top = 0.352
+anchor_right = 0.554
+anchor_bottom = 0.412
+margin_left = -0.136002
+margin_top = -1.52588e-05
+margin_right = -0.00801086
+margin_bottom = -1.52588e-05
+
+[node name="ControllerBtnSmallItem2" parent="Middle/JNBTNS" instance=ExtResource( 1 )]
+anchor_left = 0.222
+anchor_top = 0.452
+anchor_right = 0.358
+anchor_bottom = 0.512
+margin_left = -0.144005
+margin_top = -1.52588e-05
+margin_right = -0.0160065
+margin_bottom = 0.0
+item_type = 4
+
+[node name="ControllerBtnSmallItem3" parent="Middle/JNBTNS" instance=ExtResource( 1 )]
+anchor_left = 0.418
+anchor_top = 0.452
+anchor_right = 0.554
+anchor_bottom = 0.512
+margin_left = -0.136002
+margin_top = -1.52588e-05
+margin_right = -0.00801086
+margin_bottom = 0.0
+item_type = 3
+
+[node name="ControllerBtnSmallItem4" parent="Middle/JNBTNS" instance=ExtResource( 1 )]
+anchor_left = 0.628
+anchor_top = 0.452
+anchor_right = 0.764
+anchor_bottom = 0.512
+margin_left = -0.0559998
+margin_top = -1.52588e-05
+margin_right = 0.071991
+margin_bottom = 0.0
+item_type = 2
+
+[node name="ControllerBtnSmallItem5" parent="Middle/JNBTNS" instance=ExtResource( 1 )]
+anchor_left = 0.418
+anchor_top = 0.568
+anchor_right = 0.554
+anchor_bottom = 0.628
+margin_left = -0.136002
+margin_right = -0.00801086
+margin_bottom = 0.0
+item_type = 1
+
+[node name="Timer" type="Timer" parent="Middle"]
+wait_time = 60.0
+one_shot = true
+
+[node name="Button" type="Button" parent="Middle"]
+visible = false
+margin_left = 149.0
+margin_top = 41.0
+margin_right = 186.0
+margin_bottom = 61.0
+text = "quit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bottom" type="Control" parent="."]
+anchor_top = 0.8
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 0, 50 )
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Bottom"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Bottom/VBoxContainer"]
+margin_right = 352.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 0, 50 )
+mouse_filter = 2
+
+[node name="CombatChats" type="TextureRect" parent="Bottom/VBoxContainer/Control"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -12.0
+margin_top = -24.0
+margin_right = 12.0
+texture = ExtResource( 16 )
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Bottom/VBoxContainer/Control/CombatChats"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -10.5
+margin_top = -10.5
+margin_right = 10.5
+margin_bottom = 10.5
+texture = ExtResource( 18 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="Bottom/VBoxContainer/Control/CombatChats"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control2" type="Control" parent="Bottom/VBoxContainer"]
+margin_top = 54.0
+margin_right = 352.0
+margin_bottom = 104.0
+rect_min_size = Vector2( 0, 50 )
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Bottom/VBoxContainer/Control2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Bottom/VBoxContainer/Control2/HBoxContainer"]
+margin_left = 149.0
+margin_right = 174.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 25, 0 )
+
+[node name="RoleAtk" type="TextureRect" parent="Bottom/VBoxContainer/Control2/HBoxContainer/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -12.0
+margin_top = -12.0
+margin_right = 8.0
+margin_bottom = 8.0
+texture = ExtResource( 17 )
+expand = true
+stretch_mode = 5
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Bottom/VBoxContainer/Control2/HBoxContainer/Control/RoleAtk"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -6.0
+margin_top = -6.0
+margin_right = 6.0
+margin_bottom = 6.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control2" type="Control" parent="Bottom/VBoxContainer/Control2/HBoxContainer"]
+margin_left = 178.0
+margin_right = 203.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 25, 0 )
+
+[node name="PetAtk" type="TextureRect" parent="Bottom/VBoxContainer/Control2/HBoxContainer/Control2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -12.0
+margin_top = -12.0
+margin_right = 8.0
+margin_bottom = 8.0
+rect_min_size = Vector2( 20, 20 )
+texture = ExtResource( 17 )
+expand = true
+stretch_mode = 5
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+atk_type = 2
+
+[node name="TextureRect" type="TextureRect" parent="Bottom/VBoxContainer/Control2/HBoxContainer/Control2/PetAtk"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -6.0
+margin_top = -6.0
+margin_right = 6.0
+margin_bottom = 6.0
+
+[node name="Auto" type="Button" parent="Bottom"]
+anchor_left = 0.844
+anchor_top = 0.75
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.0880127
+margin_top = -7.62939e-06
+mouse_filter = 1
+custom_fonts/font = ExtResource( 7 )
+custom_styles/hover = ExtResource( 6 )
+custom_styles/pressed = ExtResource( 6 )
+custom_styles/normal = ExtResource( 6 )
+text = "自动"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ListMenu" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 26 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupPanel" type="PopupPanel" parent="ListMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -54.0
+margin_top = -89.0
+margin_right = -44.0
+margin_bottom = -81.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ListMenu" parent="ListMenu/PopupPanel" instance=ExtResource( 25 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -1.0
+margin_right = 1.0
+theme = SubResource( 1 )
+
+[node name="TempAuto" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="pressed" from="Middle/Btns/Ok" to="." method="_on_ok_select_pressed"]
+[connection signal="pressed" from="Middle/Btns/Cancle" to="." method="_on_select_cancle_pressed"]
+[connection signal="item_click" from="Middle/JNBTNS/ControllerBtnSmallItem1" to="." method="_on_jin_item_click"]
+[connection signal="item_click" from="Middle/JNBTNS/ControllerBtnSmallItem2" to="." method="_on_gong_item_click"]
+[connection signal="item_click" from="Middle/JNBTNS/ControllerBtnSmallItem3" to="." method="_on_fang_item_click"]
+[connection signal="item_click" from="Middle/JNBTNS/ControllerBtnSmallItem4" to="." method="_on_tao_item_click"]
+[connection signal="item_click" from="Middle/JNBTNS/ControllerBtnSmallItem5" to="." method="_on_wu_item_click"]
+[connection signal="timeout" from="Middle/Timer" to="." method="_on_auto_timeout"]
+[connection signal="pressed" from="Middle/Button" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="Bottom/VBoxContainer/Control/CombatChats/TextureButton" to="Bottom/VBoxContainer/Control/CombatChats" method="_on_TextureButton_pressed"]
+[connection signal="pressed" from="Bottom/Auto" to="." method="_on_Auto_pressed"]
+[connection signal="timeout" from="TempAuto" to="." method="_on_TempAuto_timeout"]

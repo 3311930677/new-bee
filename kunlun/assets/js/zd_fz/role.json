@@ -1,0 +1,31 @@
+{	
+	"q5tx":1,
+	"jn":[
+		{"anims":[5,6],"txs":[3],"name":["淬毒",1]},
+		{"anims":[5,6],"txs":[9,16,8],"name":["碎魂",1]},
+		{"anims":[5,6],"txs":[2,4,10],"name":["影袭",1]},
+		{"anims":[7,8],"txs":[13,18],"name":["凝血",0]},
+		{"anims":[5,6],"txs":[10,4],"name":["断脉",1]},
+		{"anims":[7,8],"txs":[2,1],"name":["凝刚决",0]},
+		{"anims":[7,8],"txs":[2],"name":["扬沙",0]},
+		{"anims":[7,8],"txs":[13,15,5],"name":["蛊毒定",0]},
+		{"anims":[7,8],"txs":[13,6],"name":["乱神咒",0]},
+		{"anims":[7,8],"txs":[5,1,6],"name":["昏睡蛊",0]},
+		{"anims":[7,8],"txs":[4],"name":["catch",0]}
+	],
+	"isSkill":true,
+	"wqIsTemplate":true,
+	"wqTemplate":"fz_wq%d_zd.pwd",
+	"headTemplate":"fz_%d_t%d.pwd",
+	"headIsTemplate":false,
+	"nan":{
+		"head":"fz_nan_t1.pwd",
+		"wq":"",
+		"aef":"fz_nan_zd.aef"
+	},
+	"nv":{
+		"head":"fz_nv_t1.pwd",
+		"wq":"",
+		"aef":"fz_nv_zd.aef"
+	}
+}

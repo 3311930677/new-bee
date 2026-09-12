@@ -1,0 +1,768 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://src/tscn/ui/map/head/MainHead.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/font/font-16.tres" type="DynamicFont" id=3]
+[ext_resource path="res://src/tscn/ui/battle/ControllerBtnSmallItem.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/battle/xiaojian.png" type="Texture" id=5]
+[ext_resource path="res://src/tscn/ui/common/topcolumn/TopColumn.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/tscn/ui/battle/Middle.gd" type="Script" id=7]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=8]
+[ext_resource path="res://src/tscn/ui/common/btn/btn_left.tres" type="StyleBox" id=9]
+[ext_resource path="res://src/tscn/ui/battle/TargetAtk.gd" type="Script" id=10]
+[ext_resource path="res://src/tscn/ui/common/menu/ListMenu.tscn" type="PackedScene" id=11]
+[ext_resource path="res://src/tscn/ui/battle/ListMenu.gd" type="Script" id=12]
+[ext_resource path="res://src/tscn/ui/battle/CombatChats.gd" type="Script" id=13]
+[ext_resource path="res://src/tscn/ui/common/team/TeamSmallUi.tscn" type="PackedScene" id=14]
+[ext_resource path="res://assets/battle/pount.png" type="Texture" id=15]
+[ext_resource path="res://assets/battle/zd_05.png" type="Texture" id=16]
+[ext_resource path="res://assets/battle/zd_04.png" type="Texture" id=17]
+[ext_resource path="res://src/tscn/ui/battle/AutoAtkIcon.gd" type="Script" id=19]
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Control
+
+var round_start = false
+var round_num = 1
+var combatScence
+
+# 是否自动出招，默认是alse
+var is_auto_run = false
+
+
+func init_():
+	combatScence = Global.get_nodes_in_group(\"combat_scence\")[0]
+	$Middle/Timer.start()
+	round_start = true
+	combatScence.connect(\"round_show_hourglass_\",self,\"round_show_hourglass_\")
+	combatScence.connect(\"round_line_start_\",self,\"round_line_start_\")
+	
+	is_auto_run = Global.get(\"RoleInfoManage\").hot_role_op.get(\"auto_atk\",false)
+	if is_auto_run:
+		$Bottom/Auto.text = \"取消\"
+		$Middle/JNBTNS.hide()
+	else:
+		$Middle/JNBTNS.show()
+		$Bottom/Auto.text = \"自动\"
+	pass
+
+func _process(delta: float) -> void:
+	if round_start:
+		$Middle/CTime.text = str(int($Middle/Timer.time_left))
+
+
+
+func _on_Timer_timeout() -> void:
+	if round_start:
+		$Middle/Round.hide()
+		$Middle/CTime.hide()
+	_on_Auto_pressed() # 执行自动操作
+	pass # Replace with function body.
+
+
+# 看看热数据中的技能，如果没有就默认攻击
+# 直接全部隐藏，默认寻找
+func _on_Auto_pressed() -> void:
+	if !is_auto_run:
+		is_auto_run = true
+		$Bottom/Auto.text = \"取消\"
+		Global.get(\"RoleInfoManage\").hot_role_op[\"auto_atk\"] = true
+		$Middle/JNBTNS.hide()
+		auto_atk()
+	else:
+		Global.get(\"RoleInfoManage\").hot_role_op[\"auto_atk\"] = false
+		is_auto_run = false
+		$Bottom/Auto.text = \"自动\"
+		$Bottom/AutoTimer.stop()
+		if round_start: # 只有开始的时候才能显示
+			$Middle/JNBTNS.show()
+	pass
+
+func _on_AutoTimer_timeout() -> void:
+	# 这里解决卡间隙
+	if Global.get(\"RoleInfoManage\").hot_role_op.get(\"auto_atk\",false):
+		$Middle.auto_atk()
+	else:
+		if round_start: # 要为true的时候才开始
+			$Middle/JNBTNS.show()
+
+func load_data(dic_data):
+	pass
+
+
+# 执行自动行为
+func auto_atk():
+	# 自动进行选择,等待三秒
+	if round_start: # 要为true的时候才开始
+		if $Bottom/AutoTimer.is_stopped():
+			$Bottom/AutoTimer.start()
+
+
+func round_line_start_(data,index):
+	round_start  = false
+	$Middle/Round.hide()
+	$Middle/CTime.hide()
+	$Middle/Timer.stop()
+
+# 回合数+1 并且启动定时器
+func round_show_hourglass_():
+	round_num += 1
+	$Middle/Round.text = str(\"回合：\",round_num)
+	$Middle/Timer.start()
+	$Middle/Round.show()
+	$Middle/CTime.show()
+	round_start  =true
+	pass
+
+# 退出战斗
+func _on_Button_pressed() -> void:
+	Global.get(\"CombatManage\").quit_fight()
+
+# 显示信息
+func _on_Button2_pressed() -> void:
+	Global.get(\"ScreenUtils\").show_combat_info()
+	pass
+"
+
+[sub_resource type="Theme" id=1]
+
+[node name="CombatUi" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 1.0
+margin_bottom = 1.0
+script = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TopColumn" parent="." instance=ExtResource( 6 )]
+margin_top = -4.0
+
+[node name="MainHead" parent="." groups=["main_head"] instance=ExtResource( 2 )]
+rect_scale = Vector2( 1.4, 1.2 )
+fighting = true
+
+[node name="TeamSmallUi" parent="." instance=ExtResource( 14 )]
+
+[node name="Middle" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Round" type="Label" parent="Middle"]
+anchor_right = 1.0
+margin_top = 66.0
+margin_bottom = 83.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = "回合:1"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CTime" type="Label" parent="Middle"]
+anchor_right = 1.0
+margin_top = 83.0
+margin_bottom = 100.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = "60"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Btns" type="Control" parent="Middle"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="Middle/Btns"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -25.0
+margin_right = 55.0
+mouse_filter = 1
+custom_fonts/font = ExtResource( 8 )
+custom_styles/hover = ExtResource( 9 )
+custom_styles/pressed = ExtResource( 9 )
+custom_styles/normal = ExtResource( 9 )
+text = "确定"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cancle" type="Button" parent="Middle/Btns"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -55.0
+margin_top = -25.0
+mouse_filter = 1
+custom_fonts/font = ExtResource( 8 )
+custom_styles/hover = ExtResource( 9 )
+custom_styles/pressed = ExtResource( 9 )
+custom_styles/normal = ExtResource( 9 )
+text = "取消"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="XiaoJian" type="Control" parent="Middle"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite1" type="Sprite" parent="Middle/XiaoJian"]
+position = Vector2( 35.5, 96 )
+texture = ExtResource( 5 )
+
+[node name="Sprite2" type="Sprite" parent="Middle/XiaoJian"]
+position = Vector2( 96.5, 148 )
+texture = ExtResource( 5 )
+
+[node name="Sprite3" type="Sprite" parent="Middle/XiaoJian"]
+position = Vector2( 35.5, 222 )
+texture = ExtResource( 5 )
+
+[node name="Sprite4" type="Sprite" parent="Middle/XiaoJian"]
+position = Vector2( 93.5, 276 )
+texture = ExtResource( 5 )
+
+[node name="Sprite5" type="Sprite" parent="Middle/XiaoJian"]
+position = Vector2( 33.5, 365 )
+texture = ExtResource( 5 )
+
+[node name="Sprite6" type="Sprite" parent="Middle/XiaoJian"]
+position = Vector2( 93.5, 409 )
+texture = ExtResource( 5 )
+
+[node name="Sprite7" type="Sprite" parent="Middle/XiaoJian"]
+position = Vector2( 322.5, 95 )
+texture = ExtResource( 5 )
+
+[node name="Sprite8" type="Sprite" parent="Middle/XiaoJian"]
+position = Vector2( 266.5, 143 )
+texture = ExtResource( 5 )
+
+[node name="Sprite9" type="Sprite" parent="Middle/XiaoJian"]
+position = Vector2( 322.5, 218 )
+texture = ExtResource( 5 )
+
+[node name="Sprite10" type="Sprite" parent="Middle/XiaoJian"]
+position = Vector2( 266.5, 276 )
+texture = ExtResource( 5 )
+
+[node name="Sprite11" type="Sprite" parent="Middle/XiaoJian"]
+position = Vector2( 322.5, 367 )
+texture = ExtResource( 5 )
+
+[node name="Sprite12" type="Sprite" parent="Middle/XiaoJian"]
+position = Vector2( 266.5, 409 )
+texture = ExtResource( 5 )
+
+[node name="Positions" type="Control" parent="Middle"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Position2D1" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 34, 151 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D1"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Position2D2" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 95, 197 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D2"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+local_index = 1
+
+[node name="Position2D3" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 34, 277 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D3"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 22.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+local_index = 2
+
+[node name="Position2D4" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 92, 330 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D4"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+local_index = 3
+
+[node name="Position2D5" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 32, 417 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D5"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+local_index = 4
+
+[node name="Position2D6" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 92, 469 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D6"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+local_index = 5
+
+[node name="Position2D7" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 321, 151 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D7"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+local_index = 6
+
+[node name="Position2D8" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 265, 197 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D8"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+local_index = 7
+
+[node name="Position2D9" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 321, 277 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D9"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+local_index = 8
+
+[node name="Position2D10" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 265, 330 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D10"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+local_index = 9
+
+[node name="Position2D11" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 321, 417 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D11"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+local_index = 10
+
+[node name="Position2D12" type="Position2D" parent="Middle/Positions"]
+position = Vector2( 265, 469 )
+
+[node name="TextureButton" type="TextureButton" parent="Middle/Positions/Position2D12"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -50.0
+margin_right = 20.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+local_index = 11
+
+[node name="JNBTNS" type="Control" parent="Middle"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ControllerBtnSmallItem1" parent="Middle/JNBTNS" instance=ExtResource( 4 )]
+margin_left = 147.0
+margin_top = 176.0
+margin_right = -157.0
+margin_bottom = -294.0
+
+[node name="ControllerBtnSmallItem2" parent="Middle/JNBTNS" instance=ExtResource( 4 )]
+margin_left = 78.0
+margin_top = 226.0
+margin_right = -226.0
+margin_bottom = -244.0
+item_type = 4
+
+[node name="ControllerBtnSmallItem3" parent="Middle/JNBTNS" instance=ExtResource( 4 )]
+margin_left = 147.0
+margin_top = 226.0
+margin_right = -157.0
+margin_bottom = -244.0
+item_type = 3
+
+[node name="ControllerBtnSmallItem4" parent="Middle/JNBTNS" instance=ExtResource( 4 )]
+margin_left = 220.0
+margin_top = 226.0
+margin_right = -84.0
+margin_bottom = -244.0
+item_type = 2
+
+[node name="ControllerBtnSmallItem5" parent="Middle/JNBTNS" instance=ExtResource( 4 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -29.0
+margin_top = 34.0
+margin_right = 19.0
+margin_bottom = 64.0
+item_type = 1
+
+[node name="Timer" type="Timer" parent="Middle"]
+wait_time = 60.0
+one_shot = true
+
+[node name="Button" type="Button" parent="."]
+visible = false
+margin_left = 126.0
+margin_top = 43.0
+margin_right = 170.0
+margin_bottom = 66.0
+custom_fonts/font = ExtResource( 3 )
+text = "退出"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button2" type="Button" parent="."]
+visible = false
+margin_left = 182.0
+margin_top = 43.0
+margin_right = 226.0
+margin_bottom = 66.0
+custom_fonts/font = ExtResource( 3 )
+text = "信息"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bottom" type="Control" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -100.0
+rect_min_size = Vector2( 0, 50 )
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Bottom"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Bottom/VBoxContainer"]
+margin_right = 352.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 0, 50 )
+mouse_filter = 2
+
+[node name="CombatChats" type="TextureRect" parent="Bottom/VBoxContainer/Control"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -12.0
+margin_top = -24.0
+margin_right = 12.0
+texture = ExtResource( 16 )
+script = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Bottom/VBoxContainer/Control/CombatChats"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -10.5
+margin_top = -10.5
+margin_right = 10.5
+margin_bottom = 10.5
+texture = ExtResource( 15 )
+
+[node name="TextureButton" type="TextureButton" parent="Bottom/VBoxContainer/Control/CombatChats"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control2" type="Control" parent="Bottom/VBoxContainer"]
+margin_top = 54.0
+margin_right = 352.0
+margin_bottom = 104.0
+rect_min_size = Vector2( 0, 50 )
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Bottom/VBoxContainer/Control2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Bottom/VBoxContainer/Control2/HBoxContainer"]
+margin_left = 149.0
+margin_right = 174.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 25, 0 )
+
+[node name="RoleAtk" type="TextureRect" parent="Bottom/VBoxContainer/Control2/HBoxContainer/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -12.0
+margin_top = -12.0
+margin_right = 8.0
+margin_bottom = 8.0
+texture = ExtResource( 17 )
+expand = true
+stretch_mode = 5
+script = ExtResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Bottom/VBoxContainer/Control2/HBoxContainer/Control/RoleAtk"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -6.0
+margin_top = -6.0
+margin_right = 6.0
+margin_bottom = 6.0
+
+[node name="Control2" type="Control" parent="Bottom/VBoxContainer/Control2/HBoxContainer"]
+margin_left = 178.0
+margin_right = 203.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 25, 0 )
+
+[node name="PetAtk" type="TextureRect" parent="Bottom/VBoxContainer/Control2/HBoxContainer/Control2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -12.0
+margin_top = -12.0
+margin_right = 8.0
+margin_bottom = 8.0
+rect_min_size = Vector2( 20, 20 )
+texture = ExtResource( 17 )
+expand = true
+stretch_mode = 5
+script = ExtResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+atk_type = 2
+
+[node name="TextureRect" type="TextureRect" parent="Bottom/VBoxContainer/Control2/HBoxContainer/Control2/PetAtk"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -6.0
+margin_top = -6.0
+margin_right = 6.0
+margin_bottom = 6.0
+
+[node name="Auto" type="Button" parent="Bottom"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -55.0
+margin_top = -25.0
+mouse_filter = 1
+custom_fonts/font = ExtResource( 8 )
+custom_styles/hover = ExtResource( 9 )
+custom_styles/pressed = ExtResource( 9 )
+custom_styles/normal = ExtResource( 9 )
+text = "自动"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AutoTimer" type="Timer" parent="Bottom"]
+wait_time = 2.0
+one_shot = true
+
+[node name="ListMenu" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupPanel" type="PopupPanel" parent="ListMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -54.0
+margin_top = -89.0
+margin_right = -44.0
+margin_bottom = -81.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ListMenu" parent="ListMenu/PopupPanel" instance=ExtResource( 11 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -1.0
+margin_right = 1.0
+theme = SubResource( 1 )
+
+[connection signal="pressed" from="Middle/Btns/Ok" to="Middle" method="_on_Ok_pressed"]
+[connection signal="pressed" from="Middle/Btns/Cancle" to="Middle" method="_on_Cancle_pressed"]
+[connection signal="item_click" from="Middle/JNBTNS/ControllerBtnSmallItem1" to="Middle" method="_on_jn_item_click"]
+[connection signal="item_click" from="Middle/JNBTNS/ControllerBtnSmallItem2" to="Middle" method="_on_gong_jn_item_click"]
+[connection signal="item_click" from="Middle/JNBTNS/ControllerBtnSmallItem3" to="Middle" method="_on_fang_item_click"]
+[connection signal="item_click" from="Middle/JNBTNS/ControllerBtnSmallItem4" to="Middle" method="_on_tao_item_click"]
+[connection signal="item_click" from="Middle/JNBTNS/ControllerBtnSmallItem5" to="Middle" method="_on_wu_item_click"]
+[connection signal="timeout" from="Middle/Timer" to="." method="_on_Timer_timeout"]
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_Button2_pressed"]
+[connection signal="pressed" from="Bottom/VBoxContainer/Control/CombatChats/TextureButton" to="Bottom/VBoxContainer/Control/CombatChats" method="_on_TextureButton_pressed"]
+[connection signal="pressed" from="Bottom/Auto" to="." method="_on_Auto_pressed"]
+[connection signal="timeout" from="Bottom/AutoTimer" to="." method="_on_AutoTimer_timeout"]
+[connection signal="popup_hide" from="ListMenu/PopupPanel" to="ListMenu" method="_on_PopupPanel_popup_hide"]

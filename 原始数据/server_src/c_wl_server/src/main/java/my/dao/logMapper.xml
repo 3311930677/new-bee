@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="my.dao.logMapper" >
+    <!--排位战斗日志-->
+    <select id="getPkLogByName" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_pk_log where name=#{name}
+    </select>
+    <delete id="delPkLogByName" parameterType="string">
+        delete from xq_ac_pk_log where name=#{name}
+    </delete>
+    <insert id="insertPkLog" >
+        insert into xq_ac_pk_log(name,paiwei,jingji) values(#{name},#{paiwei},#{jingji})
+    </insert>
+    <update id="updatePkLog" >
+        update xq_ac_pk_log
+        <set>
+            <if test="paiwei!=null">
+                paiwei=#{paiwei},
+            </if>
+            <if test="jingji!=null">
+                jingji=#{jingji},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+
+
+
+
+
+    <select id="getByName" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_log_online where name=#{name} for update
+    </select>
+    <delete id="delByName" parameterType="string">
+        delete from xq_log_online where name=#{name}
+    </delete>
+    <insert id="insert" >
+        insert into xq_log_online(name,online,accumulate,offline) values(#{name},#{online},#{accumulate},#{offline})
+    </insert>
+    <update id="update" >
+        update xq_log_online
+        <set>
+            <if test="online!=null">
+                online=#{online},
+            </if>
+            <if test="accumulate!=null">
+                accumulate=#{accumulate},
+            </if>
+            <if test="offline!=null">
+                offline=#{offline},
+            </if>
+            <if test="is_get_lld!=null">
+                is_get_lld=#{is_get_lld},
+            </if>
+            <if test="leaveBpTime!=null">
+                leave_bp_time=#{leaveBpTime},
+            </if>
+        </set>
+         where name=#{name}
+    </update>
+    <update id="clear">
+        update xq_log_online set online=#{online},accumulate='0',offline='',is_get_lld='0'
+    </update>
+
+
+    <select id="getOp" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_op_log
+        <where>
+            <if test="name!=null">
+            name=#{name}
+            </if>
+        </where>
+         limit #{pageNum},#{pageSum}
+    </select>
+    <insert id="insertOp" >
+        insert into xq_op_log(Id,type,ip,name,des,eip,ename,created,suc)
+        values(#{Id},#{type},#{ip},#{name},#{des},#{eip},#{ename},#{created},#{suc})
+    </insert>
+    <delete id="delOp" parameterType="string">
+        delete from xq_op_log where Id=#{Id}
+    </delete>
+    <delete id="delOpByCreated">
+        delete from xq_op_log where #{created}>created
+    </delete>
+</mapper>

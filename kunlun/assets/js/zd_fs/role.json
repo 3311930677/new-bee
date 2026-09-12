@@ -1,0 +1,31 @@
+{	
+	"q5tx":1,
+	"jn":[
+		{"anims":[5,6],"txs":[3,5,4],"name":["荡魔曲",0]},
+		{"anims":[5,6],"txs":[2,3],"name":["魔魂曲",0]},
+		{"anims":[7,8],"txs":[3,10],"name":["灵脉曲",0]},
+		{"anims":[5,6],"txs":[6,7,8,9,10],"name":["天籁曲",0]},
+		{"anims":[5,6],"txs":[6,8,9,10],"name":["养生曲",0]},
+		{"anims":[5,6],"txs":[2,4,8,9,10],"name":["返魂曲",0]},
+		{"anims":[5,6],"txs":[3,4,5],"name":["夺魂咒",0]},
+		{"anims":[7,8],"txs":[2],"name":["清心曲",0]},
+		{"anims":[7,8],"txs":[6],"name":["魔音壁",0]},
+		{"anims":[7,8],"txs":[5],"name":["缚灵咒",0]},
+		{"anims":[1,2],"txs":[],"name":["catch",0]}
+	],
+	"isSkill":true,
+	"wqIsTemplate":true,
+	"wqTemplate":"fs_wq%d_zd.pwd",
+	"headTemplate":"fs_%s_t%d.pwd",
+	"headIsTemplate":false,
+	"nan":{
+		"head":"fs_nan_t1.pwd",
+		"wq":"",
+		"aef":"ys_nan_zd.aef"
+	},
+	"nv":{
+		"head":"fs_nv_t1.pwd",
+		"wq":"",
+		"aef":"ys_nv_zd.aef"
+	}
+}

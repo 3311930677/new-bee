@@ -1,0 +1,16 @@
+{	
+	"wqIsTemplate":true,
+	"wqTemplate":"fz_wq%d_cg.pwd",
+	"headTemplate":"fz_%s_t%d.pwd",
+	"headIsTemplate":false,
+	"nan":{
+		"head":"fz_nan_t1.pwd",
+		"wq":"",
+		"aef":"fz_nan_cg.aef"
+	},
+	"nv":{
+		"head":"fz_nv_t1.pwd",
+		"wq":"",
+		"aef":"fz_nv_cg.aef"
+	}
+}

@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://src/tscn/ui/common/btn/login_btn_normal.tres" type="StyleBox" id=1]
+[ext_resource path="res://src/tscn/ui/common/btn/login_btn_pressed.tres" type="StyleBox" id=2]
+[ext_resource path="res://src/tscn/ui/login/select_area/nine_patch_btn_normal.tres" type="Texture" id=3]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=4]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -233.0
+margin_bottom = -484.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+texture = ExtResource( 3 )
+region_rect = Rect2( 0.0796776, -0.172732, 43.3086, 24.0318 )
+patch_margin_left = 21
+patch_margin_right = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="textButton" type="Button" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = 3.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 1 )
+custom_styles/pressed = ExtResource( 2 )
+custom_styles/normal = SubResource( 1 )
+text = "登录游戏"
+__meta__ = {
+"_edit_use_anchors_": false
+}

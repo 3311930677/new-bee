@@ -1,0 +1,445 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://src/tscn/ui/common/title/XQTitle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/tscn/ui/common/btn/btn_left.tres" type="StyleBox" id=2]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=3]
+[ext_resource path="res://src/tscn/ui/common/bg/Background.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/tscn/ui/common/bg/Background2.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/util/common/ScroContainerGD.gd" type="Script" id=6]
+[ext_resource path="res://src/tscn/ui/common/tres/NoVHScollBar.tres" type="Theme" id=7]
+[ext_resource path="res://assets/font/font-16.tres" type="DynamicFont" id=8]
+[ext_resource path="res://src/tscn/ui/common/tres/yinliang.tres" type="Texture" id=9]
+[ext_resource path="res://src/tscn/ui/map/mail/ReadMailUi.gd" type="Script" id=10]
+[ext_resource path="res://src/util/common/ListAutoExpand.gd" type="Script" id=11]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0.498039, 0.498039, 1 )
+
+[sub_resource type="Theme" id=2]
+PopupMenu/fonts/font = ExtResource( 8 )
+
+[node name="ReadMailUi" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Head" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.07
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="XQTitle" parent="Head" instance=ExtResource( 1 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -91.5
+margin_top = -17.5
+margin_right = 91.5
+margin_bottom = 17.5
+title = "阅读邮件"
+
+[node name="Background" parent="." instance=ExtResource( 4 )]
+anchor_top = 0.07
+anchor_bottom = 0.95
+margin_bottom = -3.05176e-05
+
+[node name="Background2" parent="Background" instance=ExtResource( 5 )]
+anchor_left = 0.037
+anchor_top = 0.058
+anchor_right = 0.963
+anchor_bottom = 0.942
+margin_left = -0.0240002
+margin_top = -0.0200005
+margin_right = 0.0239868
+margin_bottom = 0.019989
+
+[node name="Sender" type="Control" parent="Background/Background2"]
+anchor_left = 0.037
+anchor_top = 0.033
+anchor_right = 0.957
+anchor_bottom = 0.095
+margin_left = -0.0620003
+margin_top = 0.163
+margin_right = 0.0180054
+margin_bottom = 0.0449982
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Background/Background2/Sender"]
+anchor_bottom = 0.792
+margin_right = 40.0
+margin_bottom = -5.008
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = "发件人："
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SenderName" type="Label" parent="Background/Background2/Sender"]
+anchor_left = 0.24
+anchor_right = 0.48
+anchor_bottom = 0.812
+margin_top = 0.5
+margin_bottom = 0.0119991
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = "寻秦OL"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MailTitle" type="Control" parent="Background/Background2"]
+anchor_top = 0.107
+anchor_right = 0.957
+anchor_bottom = 0.168
+margin_left = 12.0
+margin_top = -0.123005
+margin_right = 0.0180054
+margin_bottom = 0.147995
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Background/Background2/MailTitle"]
+anchor_bottom = 0.792
+margin_right = 40.0
+margin_bottom = -5.008
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = "邮件标题："
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="Background/Background2/MailTitle"]
+anchor_left = 0.297
+anchor_top = 0.042
+anchor_right = 0.297
+anchor_bottom = 0.833
+margin_left = -0.100006
+margin_top = -0.00800014
+margin_right = 199.9
+margin_bottom = 0.00800133
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = "系统邮件"
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MailContent" type="Control" parent="Background/Background2"]
+anchor_top = 0.183
+anchor_right = 0.966
+anchor_bottom = 0.584
+margin_left = 12.0
+margin_top = -0.187004
+margin_right = 0.0839844
+margin_bottom = -0.176025
+
+[node name="Label" type="Label" parent="Background/Background2/MailContent"]
+anchor_bottom = 0.122
+margin_right = 40.0
+margin_bottom = -5.032
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = "邮件内容："
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Background/Background2/MailContent"]
+anchor_top = 0.128
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 0.0319996
+margin_bottom = 1.0
+theme = ExtResource( 7 )
+scroll_horizontal_enabled = false
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/Background2/MailContent/ScrollContainer"]
+margin_right = 303.0
+margin_bottom = 137.0
+rect_min_size = Vector2( 303, 137 )
+script = ExtResource( 11 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Background/Background2/MailContent/ScrollContainer/VBoxContainer"]
+margin_right = 303.0
+margin_bottom = 20.0
+custom_fonts/normal_font = ExtResource( 3 )
+bbcode_enabled = true
+fit_content_height = true
+
+[node name="MailAttach" type="Control" parent="Background/Background2"]
+anchor_top = 0.609
+anchor_right = 0.957
+anchor_bottom = 0.735
+margin_left = 12.0
+margin_top = 0.0989838
+margin_right = 0.0180054
+margin_bottom = 0.0849915
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Background/Background2/MailAttach"]
+anchor_right = 0.18
+anchor_bottom = 0.388
+margin_right = -14.0
+margin_bottom = -5.012
+custom_colors/font_color = Color( 0, 0, 1, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = "附件："
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Background/Background2/MailAttach"]
+anchor_left = 0.18
+anchor_right = 0.36
+anchor_bottom = 0.388
+margin_left = -3.8147e-06
+margin_right = -7.62939e-06
+margin_bottom = -0.012001
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = "已提取"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AttachOptionButton" type="OptionButton" parent="Background/Background2/MailAttach"]
+anchor_top = 0.5
+anchor_right = 0.623
+anchor_bottom = 1.0
+margin_top = -0.5
+margin_right = 0.0999908
+rect_min_size = Vector2( 120, 25 )
+rect_pivot_offset = Vector2( 58, 13.5 )
+theme = SubResource( 2 )
+custom_fonts/font = ExtResource( 3 )
+text = "LV1 中文 X100"
+clip_text = true
+align = 1
+items = [ "LV1 中文 X100", null, false, 0, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InspectAttach" type="Button" parent="Background/Background2/MailAttach"]
+anchor_left = 0.697
+anchor_top = 0.5
+anchor_right = 0.977
+anchor_bottom = 1.01
+margin_left = -0.100006
+margin_right = -0.100006
+margin_bottom = 0.0100021
+custom_fonts/font = ExtResource( 3 )
+text = "查看附件"
+
+[node name="Yingliang" type="Label" parent="Background/Background2"]
+anchor_left = 0.037
+anchor_top = 0.769
+anchor_right = 0.979
+anchor_bottom = 0.82
+margin_left = -0.0620003
+margin_top = -0.141022
+margin_right = -0.154022
+margin_bottom = 0.019989
+custom_colors/font_color = Color( 0, 0, 1, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = "赠送银两："
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Background/Background2/Yingliang"]
+anchor_left = 0.29
+anchor_right = 0.521
+anchor_bottom = 1.225
+margin_left = -0.0300064
+margin_top = -0.5
+margin_right = 0.0529938
+margin_bottom = -5.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="YinLiang" type="Label" parent="Background/Background2/Yingliang/HBoxContainer"]
+margin_right = 56.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "9999999"
+align = 1
+valign = 1
+
+[node name="TextureRect" type="TextureRect" parent="Background/Background2/Yingliang/HBoxContainer"]
+margin_left = 60.0
+margin_right = 71.0
+margin_bottom = 25.0
+texture = ExtResource( 9 )
+stretch_mode = 4
+
+[node name="Price" type="Label" parent="Background/Background2"]
+anchor_left = 0.037
+anchor_top = 0.832
+anchor_right = 0.979
+anchor_bottom = 0.883
+margin_left = -0.0620003
+margin_top = -0.14801
+margin_right = -0.154022
+margin_bottom = 0.0130005
+custom_colors/font_color = Color( 0, 0, 1, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = "收件价格："
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Background/Background2/Price"]
+anchor_left = 0.29
+anchor_right = 0.521
+anchor_bottom = 1.225
+margin_left = -0.0300064
+margin_top = -0.5
+margin_right = 0.0529938
+margin_bottom = -5.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="YinLiang" type="Label" parent="Background/Background2/Price/HBoxContainer"]
+margin_right = 56.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "9999999"
+align = 1
+valign = 1
+
+[node name="TextureRect" type="TextureRect" parent="Background/Background2/Price/HBoxContainer"]
+margin_left = 60.0
+margin_right = 71.0
+margin_bottom = 25.0
+texture = ExtResource( 9 )
+stretch_mode = 4
+
+[node name="Sender2" type="Control" parent="Background/Background2"]
+anchor_left = 0.037
+anchor_top = 0.896
+anchor_right = 0.957
+anchor_bottom = 0.958
+margin_left = -0.0620003
+margin_top = -0.0440063
+margin_right = 0.0180054
+margin_bottom = -0.162018
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Background/Background2/Sender2"]
+anchor_right = 0.3
+anchor_bottom = 0.792
+margin_right = -50.0
+margin_bottom = -5.008
+custom_colors/font_color = Color( 0, 0, 1, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = "有效时间："
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Time" type="Label" parent="Background/Background2/Sender2"]
+anchor_left = 0.3
+anchor_right = 0.863
+anchor_bottom = 0.792
+margin_right = -96.9
+margin_bottom = -0.00800133
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = "2021-11-30 14：00"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+anchor_top = 0.95
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -3.05176e-05
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="Panel"]
+anchor_right = 0.156
+anchor_bottom = 1.0
+margin_right = 0.0879974
+custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 2 )
+custom_styles/normal = ExtResource( 2 )
+text = "选项"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cancle" type="Button" parent="Panel"]
+anchor_left = 0.844
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.0880127
+custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 2 )
+custom_styles/normal = ExtResource( 2 )
+text = "返回"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMenu" type="PopupMenu" parent="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -10.0
+margin_top = -10.0
+margin_right = 10.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Background/Background2/MailAttach/InspectAttach" to="." method="_on_InspectAttach_pressed"]
+[connection signal="pressed" from="Panel/Ok" to="." method="_on_Ok_pressed"]
+[connection signal="pressed" from="Panel/Cancle" to="." method="_on_Cancle_pressed"]
+[connection signal="index_pressed" from="Control/PopupMenu" to="." method="_on_PopupMenu_index_pressed"]

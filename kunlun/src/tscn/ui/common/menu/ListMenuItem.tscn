@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/font/font-16.tres" type="DynamicFont" id=1]
+[ext_resource path="res://src/tscn/ui/common/menu/ListMenuItem.gd" type="Script" id=3]
+
+[node name="ListMenuItem" type="TextureRect" groups=["skill_menu_item"]]
+anchor_right = 1.0
+anchor_bottom = 0.05
+margin_bottom = -1.0
+rect_min_size = Vector2( 100, 25 )
+expand = true
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 1 )
+text = "四字技能"
+align = 1
+valign = 1
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]

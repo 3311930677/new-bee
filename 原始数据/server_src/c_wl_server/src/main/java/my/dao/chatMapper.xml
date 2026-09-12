@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="my.dao.chatMapper" >
+    <select id="getChat"  resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_chat where
+        sender=#{sender} and receiver=#{receiver}
+        order by created desc
+        limit #{pageNum},#{pageSum}
+    </select>
+    <delete id="delChat" >
+        delete from xq_chat where sender=#{sender} and receiver=#{receiver}
+    </delete>
+    <!--<update id="updateChat" parameterType="string" >
+        update xq_chat set password=#{password} where username=#{username}
+    </update>-->
+    <insert id="addChat">
+        insert into xq_chat(Id,sender,receiver,created,content,type) values(#{Id},#{sender},#{receiver},#{created},#{content},#{type})
+    </insert>
+</mapper>

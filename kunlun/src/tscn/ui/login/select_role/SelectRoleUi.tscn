@@ -1,0 +1,236 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://src/tscn/ui/common/bg/Background2.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/tscn/ui/common/title/XQTitle.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/tscn/ui/common/bg/Background.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/tscn/ui/common/btn/btn_left.tres" type="StyleBox" id=4]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=5]
+[ext_resource path="res://assets/res/b.png" type="Texture" id=6]
+[ext_resource path="res://src/tscn/ui/login/rerister_role/RegisterRoleHeadItem.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/tscn/ui/login/select_role/SelectRoleUi.gd" type="Script" id=8]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0.498039, 0.498039, 1 )
+
+[node name="SelectRoleUi" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Head" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.07
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="XQTitle" parent="Head" instance=ExtResource( 2 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -91.5
+margin_top = -17.5
+margin_right = 91.5
+margin_bottom = 17.5
+title = "选择角色"
+
+[node name="Background" parent="." instance=ExtResource( 3 )]
+anchor_top = 0.07
+anchor_bottom = 0.96
+margin_bottom = -3.05176e-05
+
+[node name="Background2" parent="Background" instance=ExtResource( 1 )]
+anchor_left = 0.057
+anchor_top = 0.054
+anchor_right = 0.955
+anchor_bottom = 0.308
+margin_left = -0.0640011
+margin_top = -0.0300007
+margin_right = -0.160004
+margin_bottom = -0.0600128
+
+[node name="Head" parent="Background/Background2" instance=ExtResource( 7 )]
+anchor_left = 0.089
+anchor_top = 0.257
+anchor_right = 0.222
+anchor_bottom = 0.646
+margin_left = -0.124001
+margin_top = -0.0410004
+margin_right = -0.152008
+margin_bottom = 0.0019989
+index = 0
+
+[node name="RoleName" type="Label" parent="Background/Background2"]
+anchor_left = 0.313
+anchor_top = 0.097
+anchor_right = 0.484
+anchor_bottom = 0.265
+margin_left = 0.0919952
+margin_top = 0.0389996
+margin_right = 0.0559845
+margin_bottom = 0.0549984
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 5 )
+text = "昵称："
+
+[node name="RoleLevel" type="Label" parent="Background/Background2"]
+anchor_left = 0.313
+anchor_top = 0.407
+anchor_right = 0.484
+anchor_bottom = 0.575
+margin_left = 0.0919952
+margin_top = 0.00899887
+margin_right = 0.0559845
+margin_bottom = 0.0249939
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 5 )
+text = "等级："
+
+[node name="RoleFenTang" type="Label" parent="Background/Background2"]
+anchor_left = 0.313
+anchor_top = 0.699
+anchor_right = 0.484
+anchor_bottom = 0.867
+margin_left = 0.0919952
+margin_top = 0.0129929
+margin_right = 0.0559845
+margin_bottom = 0.0289917
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 5 )
+text = "分堂："
+
+[node name="TextureRect" type="TextureRect" parent="Background/Background2"]
+anchor_left = 0.769
+anchor_top = 0.239
+anchor_right = 0.949
+anchor_bottom = 0.752
+margin_left = -0.00401306
+margin_top = -0.00699997
+margin_right = 0.115967
+margin_bottom = 0.0239944
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Background"]
+anchor_top = 0.39
+anchor_right = 1.0
+anchor_bottom = 1.045
+margin_top = -14.55
+margin_bottom = -0.0250244
+texture = ExtResource( 6 )
+expand = true
+
+[node name="Dipan1" type="Control" parent="Background/TextureRect"]
+anchor_left = 0.159
+anchor_top = 0.647
+anchor_right = 0.315
+anchor_bottom = 0.797
+margin_left = 0.0319977
+margin_top = 0.0179901
+margin_right = 0.119987
+margin_bottom = 0.117981
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dipan2" type="Control" parent="Background/TextureRect"]
+anchor_left = 0.437
+anchor_top = 0.5
+anchor_right = 0.594
+anchor_bottom = 0.647
+margin_left = 0.175995
+margin_top = -1.0
+margin_right = -0.0880127
+margin_bottom = 0.0179901
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dipan3" type="Control" parent="Background/TextureRect"]
+anchor_left = 0.71
+anchor_top = 0.647
+anchor_right = 0.866
+anchor_bottom = 0.797
+margin_left = 0.0799866
+margin_top = 0.0179901
+margin_right = 0.167969
+margin_bottom = 0.117981
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+anchor_top = 0.95
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -3.05176e-05
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="Panel"]
+anchor_right = 0.156
+anchor_bottom = 1.0
+margin_right = 0.0879974
+custom_fonts/font = ExtResource( 5 )
+custom_styles/hover = ExtResource( 4 )
+custom_styles/pressed = ExtResource( 4 )
+custom_styles/normal = ExtResource( 4 )
+text = "确定"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cancle" type="Button" parent="Panel"]
+anchor_left = 0.844
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.0880127
+custom_fonts/font = ExtResource( 5 )
+custom_styles/hover = ExtResource( 4 )
+custom_styles/pressed = ExtResource( 4 )
+custom_styles/normal = ExtResource( 4 )
+text = "取消"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMenu" type="PopupMenu" parent="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -10.0
+margin_top = -10.0
+margin_right = 10.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 5 )
+popup_exclusive = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Panel/Ok" to="." method="_on_Ok_pressed"]
+[connection signal="pressed" from="Panel/Cancle" to="." method="_on_Cancle_pressed"]
+[connection signal="index_pressed" from="Control/PopupMenu" to="." method="_on_PopupMenu_index_pressed"]

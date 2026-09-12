@@ -1,0 +1,174 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://src/tscn/ui/map/task/TaskUi.gd" type="Script" id=1]
+[ext_resource path="res://src/tscn/ui/common/title/XQTitle.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=3]
+[ext_resource path="res://src/tscn/ui/common/btn/btn_left.tres" type="StyleBox" id=4]
+[ext_resource path="res://src/tscn/ui/common/bg/Background4.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/tscn/ui/common/bg/Background.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/res/renwu_jianhao.png" type="Texture" id=7]
+[ext_resource path="res://assets/res/renwu_jiahao.png" type="Texture" id=8]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0.498039, 0.498039, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0, 0.498039, 0.607843, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0, 0.490196, 0.607843, 1 )
+
+[node name="TaskUi" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Head" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.07
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="XQTitle" parent="Head" instance=ExtResource( 2 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -91.5
+margin_top = -17.5
+margin_right = 91.5
+margin_bottom = 17.5
+title = "任务列表"
+
+[node name="Middle" type="Control" parent="."]
+anchor_top = 0.07
+anchor_right = 1.0
+anchor_bottom = 0.95
+margin_bottom = -3.05176e-05
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Left" type="Panel" parent="Middle"]
+anchor_right = 0.415
+anchor_bottom = 1.0
+margin_right = -0.0800018
+custom_styles/panel = SubResource( 2 )
+
+[node name="Tree" type="Tree" parent="Middle/Left"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/item_margin = 20
+custom_constants/vseparation = 5
+custom_constants/hseparation = 5
+custom_fonts/font = ExtResource( 3 )
+custom_icons/arrow = ExtResource( 7 )
+custom_icons/arrow_collapsed = ExtResource( 8 )
+custom_styles/bg = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Right" parent="Middle" instance=ExtResource( 6 )]
+anchor_left = 0.415
+margin_left = -0.0800018
+
+[node name="Background4" parent="Middle/Right" instance=ExtResource( 5 )]
+anchor_left = 0.097
+anchor_top = 0.045
+anchor_right = 0.903
+anchor_bottom = 0.955
+margin_left = 0.0179996
+margin_top = 0.199999
+margin_right = -0.0180054
+margin_bottom = -0.200012
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Middle/Right/Background4"]
+anchor_left = 0.09
+anchor_top = 0.075
+anchor_right = 0.922
+anchor_bottom = 0.925
+margin_left = 0.0599995
+margin_top = -1.90735e-06
+margin_right = -0.052002
+margin_bottom = -3.05176e-05
+custom_fonts/normal_font = ExtResource( 3 )
+bbcode_enabled = true
+bbcode_text = "[color=blue]任务名称：[/color]
+[color=black]任务详情描述,以及任务完成情况[/color]
+[color=red](19/20)(未完成)[/color]
+[color=green](20/20)(已完成)[/color]"
+text = "任务名称：
+任务详情描述,以及任务完成情况
+(19/20)(未完成)
+(20/20)(已完成)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bottom" type="Panel" parent="."]
+anchor_top = 0.95
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -3.05176e-05
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="bottom"]
+anchor_right = 0.156
+anchor_bottom = 1.0
+margin_right = 0.0879974
+custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = ExtResource( 4 )
+custom_styles/pressed = ExtResource( 4 )
+custom_styles/normal = ExtResource( 4 )
+text = "选项"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cance" type="Button" parent="bottom"]
+anchor_left = 0.844
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.0880127
+custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = ExtResource( 4 )
+custom_styles/pressed = ExtResource( 4 )
+custom_styles/normal = ExtResource( 4 )
+text = "返回"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMenu" type="PopupMenu" parent="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -46.0
+margin_top = -31.0
+margin_right = 46.0
+margin_bottom = 31.0
+custom_fonts/font = ExtResource( 3 )
+items = [ "自动前往", null, 0, false, false, 0, 0, null, "", false, "放弃任务", null, 0, false, false, 1, 0, null, "", false ]
+
+[connection signal="item_selected" from="Middle/Left/Tree" to="." method="_on_Tree_item_selected"]
+[connection signal="pressed" from="bottom/Ok" to="." method="_on_Ok_pressed"]
+[connection signal="pressed" from="bottom/Cance" to="." method="_on_Cance_pressed"]
+[connection signal="index_pressed" from="Control/PopupMenu" to="." method="_on_PopupMenu_index_pressed"]

@@ -1,0 +1,126 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://src/tscn/player/Player.gd" type="Script" id=1]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/res/pSel.png" type="Texture" id=3]
+[ext_resource path="res://assets/font/font-16.tres" type="DynamicFont" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 13.5, 12.5 )
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 248.571, 18.5714 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "idle"
+length = 0.8
+loop = true
+step = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 248.571, 7.62939e-06 ), Vector2( 248.571, -21.4286 ), Vector2( 248.571, 0 ) ]
+}
+
+[node name="Player" type="KinematicBody2D"]
+collision_mask = 2049
+script = ExtResource( 1 )
+probability = 100
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+
+[node name="name" type="Label" parent="."]
+margin_left = -174.0
+margin_top = -56.0
+margin_right = 329.0
+margin_bottom = -37.0
+rect_scale = Vector2( 0.7, 0.7 )
+custom_fonts/font = ExtResource( 2 )
+text = "角色名称"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="name"]
+visible = false
+position = Vector2( 248.571, 18.5714 )
+texture = ExtResource( 3 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="name"]
+anims/RESET = SubResource( 2 )
+anims/idle = SubResource( 3 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="name"]
+margin_left = 176.0
+margin_top = -101.0
+margin_right = 320.0
+mouse_filter = 2
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Gm" type="Label" parent="name/VBoxContainer"]
+visible = false
+margin_top = 87.0
+margin_right = 144.0
+margin_bottom = 101.0
+custom_colors/font_color = Color( 1, 0, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 1
+text = "GM"
+align = 1
+valign = 1
+
+[node name="Faction" type="Label" parent="name/VBoxContainer"]
+visible = false
+margin_top = 63.0
+margin_right = 144.0
+margin_bottom = 80.0
+custom_colors/font_color = Color( 0, 0.694118, 1, 1 )
+custom_fonts/font = ExtResource( 4 )
+text = "帮派"
+align = 1
+valign = 1
+
+[node name="Title" type="Label" parent="name/VBoxContainer"]
+visible = false
+margin_top = 84.0
+margin_right = 144.0
+margin_bottom = 101.0
+custom_colors/font_color = Color( 0.313726, 1, 0, 1 )
+custom_fonts/font = ExtResource( 4 )
+text = "称号"
+align = 1
+valign = 1
+
+[node name="Encounter" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="timeout" from="Encounter" to="." method="_on_Encounter_timeout"]

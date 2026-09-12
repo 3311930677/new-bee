@@ -1,0 +1,354 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://src/tscn/ui/common/title/XQTitle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/tscn/ui/common/bg/Background2.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/tscn/ui/common/bg/Background.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/tscn/ui/login/RegisterUi.gd" type="Script" id=4]
+[ext_resource path="res://src/tscn/ui/common/btn/btn_left.tres" type="StyleBox" id=6]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=7]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0.498039, 0.498039, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 1, 1, 1, 1 )
+
+[node name="RegisterUi" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1.0
+margin_right = -1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Head" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.07
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="XQTitle" parent="Head" instance=ExtResource( 1 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -91.5
+margin_top = -17.5
+margin_right = 91.5
+margin_bottom = 17.5
+title = "注册账号"
+
+[node name="Background" parent="." instance=ExtResource( 3 )]
+anchor_top = 0.07
+margin_bottom = -20.0
+
+[node name="Background2" parent="Background" instance=ExtResource( 2 )]
+anchor_left = 0.057
+anchor_top = 0.053
+anchor_right = 0.943
+anchor_bottom = 0.947
+margin_left = -0.0640011
+margin_top = -0.085001
+margin_right = 0.0639954
+margin_bottom = 0.0849915
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/Background2"]
+anchor_left = 0.04
+anchor_top = 0.03
+anchor_right = 0.96
+anchor_bottom = 0.97
+margin_left = 0.0199995
+margin_top = 0.0599995
+margin_right = -0.0200195
+margin_bottom = -0.0599976
+custom_constants/separation = 20
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Background/Background2/VBoxContainer"]
+margin_top = 22.0
+margin_right = 286.0
+margin_bottom = 72.0
+rect_min_size = Vector2( 0, 50 )
+
+[node name="Label" type="Label" parent="Background/Background2/VBoxContainer/Control"]
+anchor_left = 0.064
+anchor_top = 0.1
+anchor_right = 0.315
+anchor_bottom = 0.48
+margin_left = 0.132
+margin_right = 0.0949936
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 7 )
+text = "用户名："
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Username" type="LineEdit" parent="Background/Background2/VBoxContainer/Control"]
+anchor_left = 0.345
+anchor_right = 0.937
+anchor_bottom = 0.5
+margin_left = -0.015007
+margin_top = 1.5
+margin_right = 0.0809937
+margin_bottom = 1.5
+custom_colors/cursor_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/clear_button_color = Color( 0, 0, 0, 1 )
+custom_styles/normal = SubResource( 2 )
+max_length = 12
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control2" type="Control" parent="Background/Background2/VBoxContainer"]
+margin_top = 92.0
+margin_right = 286.0
+margin_bottom = 142.0
+rect_min_size = Vector2( 0, 50 )
+
+[node name="Label" type="Label" parent="Background/Background2/VBoxContainer/Control2"]
+anchor_left = 0.064
+anchor_right = 0.322
+anchor_bottom = 0.5
+margin_left = 0.132
+margin_top = 5.0
+margin_right = -1.91401
+margin_bottom = -1.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 7 )
+text = "密    码："
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Password1" type="LineEdit" parent="Background/Background2/VBoxContainer/Control2"]
+anchor_left = 0.345
+anchor_right = 0.937
+anchor_bottom = 0.53
+margin_left = -0.015007
+margin_top = 1.5
+margin_right = 0.0809937
+margin_bottom = -1.90735e-06
+custom_colors/cursor_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/clear_button_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 7 )
+custom_styles/normal = SubResource( 2 )
+max_length = 18
+secret = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control3" type="Control" parent="Background/Background2/VBoxContainer"]
+margin_top = 162.0
+margin_right = 286.0
+margin_bottom = 212.0
+rect_min_size = Vector2( 0, 50 )
+
+[node name="Label" type="Label" parent="Background/Background2/VBoxContainer/Control3"]
+anchor_left = 0.064
+anchor_top = 0.1
+anchor_right = 0.322
+anchor_bottom = 0.48
+margin_left = 0.132
+margin_right = -1.91401
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 7 )
+text = "密    码："
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Password2" type="LineEdit" parent="Background/Background2/VBoxContainer/Control3"]
+anchor_left = 0.345
+anchor_top = 0.03
+anchor_right = 0.937
+anchor_bottom = 0.5
+margin_left = -0.015007
+margin_right = 0.0809937
+margin_bottom = 1.5
+custom_colors/cursor_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/clear_button_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 7 )
+custom_styles/normal = SubResource( 2 )
+max_length = 18
+secret = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control4" type="Control" parent="Background/Background2/VBoxContainer"]
+margin_top = 232.0
+margin_right = 286.0
+margin_bottom = 282.0
+rect_min_size = Vector2( 0, 50 )
+
+[node name="Label" type="Label" parent="Background/Background2/VBoxContainer/Control4"]
+anchor_left = 0.064
+anchor_top = 0.1
+anchor_right = 0.322
+anchor_bottom = 0.5
+margin_left = 0.132
+margin_right = -1.91401
+margin_bottom = -1.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 7 )
+text = "邮    箱："
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Email" type="LineEdit" parent="Background/Background2/VBoxContainer/Control4"]
+anchor_left = 0.345
+anchor_top = 0.03
+anchor_right = 0.937
+anchor_bottom = 0.53
+margin_left = -0.015007
+margin_right = 0.0809937
+margin_bottom = -1.90735e-06
+custom_colors/cursor_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/clear_button_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 7 )
+custom_styles/normal = SubResource( 2 )
+max_length = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control5" type="Control" parent="Background/Background2/VBoxContainer"]
+margin_top = 302.0
+margin_right = 286.0
+margin_bottom = 352.0
+rect_min_size = Vector2( 0, 50 )
+
+[node name="Label" type="Label" parent="Background/Background2/VBoxContainer/Control5"]
+anchor_left = 0.064
+anchor_top = 0.1
+anchor_right = 0.315
+anchor_bottom = 0.5
+margin_left = 0.132
+margin_right = 0.0949936
+margin_bottom = -1.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 7 )
+text = "验证码："
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Code" type="LineEdit" parent="Background/Background2/VBoxContainer/Control5"]
+anchor_left = 0.345
+anchor_top = 0.04
+anchor_right = 0.61
+anchor_bottom = 0.5
+margin_left = -0.015007
+margin_top = -2.38419e-07
+margin_right = -0.0700073
+custom_colors/cursor_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/clear_button_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 7 )
+custom_styles/normal = SubResource( 2 )
+max_length = 7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GetCode" type="Button" parent="Background/Background2/VBoxContainer/Control5"]
+anchor_left = 0.659
+anchor_top = 0.02
+anchor_right = 1.014
+anchor_bottom = 0.54
+margin_left = -0.133011
+margin_top = -1.19209e-07
+margin_right = -0.0180054
+margin_bottom = -1.90735e-06
+custom_fonts/font = ExtResource( 7 )
+text = "获取验证码"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tips" type="Label" parent="Background/Background2"]
+anchor_top = 0.862
+anchor_right = 1.0
+anchor_bottom = 0.915
+margin_top = -0.0760193
+margin_bottom = -0.170013
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 7 )
+align = 1
+valign = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 60.0
+one_shot = true
+
+[node name="Panel" type="Panel" parent="."]
+anchor_top = 0.95
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -3.05176e-05
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="Panel"]
+anchor_right = 0.156
+anchor_bottom = 1.0
+margin_right = 0.0879974
+custom_fonts/font = ExtResource( 7 )
+custom_styles/hover = ExtResource( 6 )
+custom_styles/pressed = ExtResource( 6 )
+custom_styles/normal = ExtResource( 6 )
+text = "注册"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cance" type="Button" parent="Panel"]
+anchor_left = 0.844
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.0880127
+custom_fonts/font = ExtResource( 7 )
+custom_styles/hover = ExtResource( 6 )
+custom_styles/pressed = ExtResource( 6 )
+custom_styles/normal = ExtResource( 6 )
+text = "取消"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Background/Background2/VBoxContainer/Control5/GetCode" to="." method="_on_GetCode_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="pressed" from="Panel/Ok" to="." method="_on_Ok_pressed"]
+[connection signal="pressed" from="Panel/Cance" to="." method="_on_Cance_pressed"]

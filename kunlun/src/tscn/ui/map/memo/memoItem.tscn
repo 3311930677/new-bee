@@ -1,0 +1,104 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=1]
+[ext_resource path="res://src/tscn/ui/map/memo/memoItem.gd" type="Script" id=2]
+[ext_resource path="res://src/tscn/ui/map/memo/star.png" type="Texture" id=3]
+
+[node name="bg" type="TextureRect"]
+anchor_right = 1.0
+anchor_bottom = 0.06
+margin_bottom = -1.90735e-06
+rect_min_size = Vector2( 5, 30 )
+expand = true
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="levelLabel" type="Label" parent="."]
+anchor_left = 0.028
+anchor_right = 0.153
+anchor_bottom = 0.833
+margin_left = -9.856
+margin_right = 0.144001
+margin_bottom = 0.0100002
+rect_min_size = Vector2( 0, 25 )
+custom_fonts/font = ExtResource( 1 )
+text = "LV70"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="nameLabel" type="Label" parent="."]
+anchor_left = 0.165
+anchor_right = 0.369
+anchor_bottom = 0.833
+margin_left = 1.92
+margin_right = 2.112
+margin_bottom = 0.0100002
+rect_min_size = Vector2( 0, 25 )
+custom_fonts/font = ExtResource( 1 )
+text = "备忘名"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="stars" type="HBoxContainer" parent="."]
+anchor_left = 0.719
+anchor_top = 0.067
+anchor_right = 1.0
+anchor_bottom = 0.933
+margin_left = -0.0879822
+margin_top = -0.00999904
+margin_bottom = 0.00999832
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="star1" type="TextureRect" parent="stars"]
+margin_right = 15.0
+margin_bottom = 26.0
+rect_min_size = Vector2( 15, 20 )
+texture = ExtResource( 3 )
+expand = true
+
+[node name="star2" type="TextureRect" parent="stars"]
+margin_left = 19.0
+margin_right = 34.0
+margin_bottom = 26.0
+rect_min_size = Vector2( 15, 20 )
+texture = ExtResource( 3 )
+expand = true
+
+[node name="star3" type="TextureRect" parent="stars"]
+margin_left = 38.0
+margin_right = 53.0
+margin_bottom = 26.0
+rect_min_size = Vector2( 15, 20 )
+texture = ExtResource( 3 )
+expand = true
+
+[node name="star4" type="TextureRect" parent="stars"]
+margin_left = 57.0
+margin_right = 72.0
+margin_bottom = 26.0
+rect_min_size = Vector2( 15, 20 )
+texture = ExtResource( 3 )
+expand = true
+
+[node name="star5" type="TextureRect" parent="stars"]
+margin_left = 76.0
+margin_right = 91.0
+margin_bottom = 26.0
+rect_min_size = Vector2( 15, 20 )
+texture = ExtResource( 3 )
+expand = true
+
+[node name="TextureButton" type="TextureButton" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}

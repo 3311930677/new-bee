@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="my.dao.userMapper" >
+    <select id="getUserByUsername" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_user where username=#{username} for update
+    </select>
+    <select id="getUserView" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_user_view where username=#{username}
+    </select>
+
+    <select id="getUserLimit" resultType="com.alibaba.fastjson2.JSONObject">
+        select t0.username,t0.online,t1.lever,t1.name from xq_user t0,xq_role t1 where t1.username=t0.username limit #{pageNum},#{pageSum}
+    </select>
+
+    <select id="countEmailNum" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select count(Id) n from xq_user where email=#{email}
+    </select>
+    <select id="match" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select Id from xq_user where username=#{username} and password=#{password}
+    </select>
+    <select id="selectByIp" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select name from xq_role t1,xq_user t2 where t2.ip=#{ip} and t1.username=t2.username
+    </select>
+    <select id="getUserNum" resultType="com.alibaba.fastjson2.JSONObject">
+        select count(Id) num from xq_user
+    </select>
+
+    <delete id="delUser" parameterType="string">
+        delete from xq_user where username=#{username}
+    </delete>
+    <update id="updatePassword" parameterType="string" >
+        update xq_user set password=#{password} where username=#{username}
+    </update>
+    <update id="bindEamil" parameterType="string" >
+        update xq_user set email=#{email} where username=#{username}
+    </update>
+    <update id="updateOnline" parameterType="string" >
+        update xq_user set online=#{online},ip=#{ip},allowed_ip=#{allowed_ip} where username=#{username}
+    </update>
+    <update id="updateVerify" parameterType="string" >
+        update xq_user set verify=#{verify} where username=#{username}
+    </update>
+    <insert id="insertUser">
+        insert into xq_user(Id,username,password,created,email,verify) values(#{Id},#{username},#{password},#{created},#{email},'0')
+    </insert>
+
+    <!--<delete id="delRepeatData">
+        delete from xq_man_task_submit where name not in (select t1.name name from xq_role t1,xq_user t2 where t1.username=t2.username);
+        delete from xq_man_task where name not in (select t1.name name from xq_role t1,xq_user t2 where t1.username=t2.username);
+        delete from xq_man_status where name not in (select t1.name name from xq_role t1,xq_user t2 where t1.username=t2.username);
+        delete from xq_man_skill where name not in (select t1.name name from xq_role t1,xq_user t2 where t1.username=t2.username);
+        delete from xq_man_prop where name not in (select t1.name name from xq_role t1,xq_user t2 where t1.username=t2.username);
+        delete from xq_man_pet where name not in (select t1.name name from xq_role t1,xq_user t2 where t1.username=t2.username);
+        delete from xq_man_package where name not in (select t1.name name from xq_role t1,xq_user t2 where t1.username=t2.username);
+        delete from xq_man_msg where name not in (select t1.name name from xq_role t1,xq_user t2 where t1.username=t2.username);
+        delete from xq_man_equip where name not in (select t1.name name from xq_role t1,xq_user t2 where t1.username=t2.username);
+        delete from xq_man_email where name not in (select t1.name name from xq_role t1,xq_user t2 where t1.username=t2.username);
+        delete from xq_activity_zhuanpan where name not in (select t1.name name from xq_role t1,xq_user t2 where t1.username=t2.username);
+        delete from xq_activity_happy_answer where name not in (select t1.name name from xq_role t1,xq_user t2 where t1.username=t2.username);
+        delete from xq_activity_fb where name not in (select t1.name name from xq_role t1,xq_user t2 where t1.username=t2.username);
+        delete from xq_role where name not in (select t1.name name from xq_role t1,xq_user t2 where t1.username=t2.username);
+        delete from xq_user where username not in (select t1.username username from xq_role t1,xq_user t2 where t1.username=t2.username);
+    </delete>-->
+</mapper>

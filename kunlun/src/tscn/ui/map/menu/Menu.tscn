@@ -1,0 +1,122 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=1]
+[ext_resource path="res://src/tscn/ui/common/btn/btn_left.tres" type="StyleBox" id=2]
+[ext_resource path="res://src/tscn/ui/map/menu/Menu.gd" type="Script" id=3]
+
+[node name="Menu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Panel" parent="."]
+anchor_left = 0.369
+anchor_top = 0.246
+anchor_right = 0.634
+anchor_bottom = 0.292
+margin_left = 0.111984
+margin_right = -0.168015
+margin_bottom = -1.52588e-05
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Title"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 1 )
+text = "主菜单"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Container" type="Panel" parent="."]
+anchor_left = 0.19
+anchor_top = 0.34
+anchor_right = 0.81
+anchor_bottom = 0.66
+margin_left = 0.119995
+margin_right = -0.120026
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="Container"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -109.0
+margin_top = -80.0
+margin_right = 109.0
+margin_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_constants/vseparation = 20
+columns = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Container2" type="Panel" parent="."]
+anchor_left = 0.19
+anchor_top = 0.34
+anchor_right = 0.81
+anchor_bottom = 0.66
+margin_left = 0.119995
+margin_right = -0.120026
+
+[node name="GridContainer" type="GridContainer" parent="Container2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -109.0
+margin_top = -80.0
+margin_right = 109.0
+margin_bottom = 80.0
+custom_constants/vseparation = 20
+custom_constants/hseparation = 40
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="."]
+anchor_top = 0.75
+anchor_right = 0.156
+anchor_bottom = 0.8
+margin_top = -3.05176e-05
+margin_right = 0.0879974
+custom_fonts/font = ExtResource( 1 )
+custom_styles/hover = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 2 )
+custom_styles/normal = ExtResource( 2 )
+text = "确定"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cancle" type="Button" parent="."]
+anchor_left = 0.844
+anchor_top = 0.75
+anchor_right = 1.0
+anchor_bottom = 0.8
+margin_left = -0.0880127
+margin_top = -3.05176e-05
+custom_fonts/font = ExtResource( 1 )
+custom_styles/hover = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 2 )
+custom_styles/normal = ExtResource( 2 )
+text = "取消"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Ok" to="." method="_on_Ok_pressed"]
+[connection signal="pressed" from="Cancle" to="." method="_on_Cancle_pressed"]

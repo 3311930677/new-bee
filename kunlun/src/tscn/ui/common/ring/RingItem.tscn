@@ -1,0 +1,86 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://src/tscn/ui/common/tres/NoVHScollBar.tres" type="Theme" id=1]
+[ext_resource path="res://assets/font/font-16.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=3]
+[ext_resource path="res://src/util/common/ScroContainerGD.gd" type="Script" id=4]
+[ext_resource path="res://src/tscn/ui/common/ring/RingItem.gd" type="Script" id=5]
+
+[node name="RingItem" type="TextureRect" groups=["ring_item"]]
+anchor_right = 1.0
+anchor_bottom = 0.07
+rect_min_size = Vector2( 0, 35 )
+expand = true
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Index" type="Label" parent="HBoxContainer"]
+margin_right = 25.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 25, 35 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = "1."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer"]
+margin_left = 29.0
+margin_right = 229.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 200, 35 )
+mouse_filter = 1
+theme = ExtResource( 1 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+is_hor_auto_scroll = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/ScrollContainer"]
+margin_right = 187.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 108, 35 )
+alignment = 1
+
+[node name="Name" type="Label" parent="HBoxContainer/ScrollContainer/VBoxContainer"]
+margin_right = 187.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 0, 35 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "[(男)LV100 玩家角色昵称]"
+valign = 1
+
+[node name="Value" type="Label" parent="HBoxContainer"]
+margin_left = 233.0
+margin_right = 283.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 0, 35 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "99999"
+align = 1
+valign = 1
+
+[node name="TextureButton" type="TextureButton" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]

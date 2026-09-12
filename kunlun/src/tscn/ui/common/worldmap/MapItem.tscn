@@ -1,0 +1,102 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/res/mini/zf2.png" type="Texture" id=1]
+[ext_resource path="res://assets/font/font-16.tres" type="DynamicFont" id=2]
+[ext_resource path="res://src/tscn/ui/common/worldmap/MapItem.gd" type="Script" id=3]
+[ext_resource path="res://assets/res/mini/p.png" type="Texture" id=4]
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("CurrentMap:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -23 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "idel"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("CurrentMap:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 30, -13 ), Vector2( 30, -23 ) ]
+}
+
+[node name="MapItem" type="Control" groups=["world_map_label_item"]]
+anchor_right = 0.205
+anchor_bottom = 0.102
+margin_right = -0.160004
+margin_bottom = -3.8147e-06
+rect_min_size = Vector2( 64, 60 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WorldName" type="Label" parent="."]
+anchor_top = 0.667
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.0170021
+custom_colors/font_color = Color( 1, 0.878431, 0.541176, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "太虚之峰"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_left = 0.292
+anchor_right = 0.708
+anchor_bottom = 0.588
+margin_left = -0.0240021
+margin_right = 0.0239983
+margin_bottom = 0.0119991
+texture = ExtResource( 1 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CurrentMap" type="TextureRect" parent="."]
+anchor_left = 0.417
+anchor_top = -0.433
+anchor_right = 0.569
+anchor_bottom = -0.083
+margin_left = -30.024
+margin_top = 2.98
+margin_right = -29.968
+margin_bottom = 2.98
+texture = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 1 )
+anims/idel = SubResource( 2 )
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]

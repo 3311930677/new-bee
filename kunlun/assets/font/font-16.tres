@@ -1,0 +1,16 @@
+[gd_resource type="DynamicFont" load_steps=3 format=2]
+
+[ext_resource path="res://assets/font/mkwtyt.ttf" type="DynamicFontData" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends DynamicFont
+
+func _init() -> void:
+	print(\"字体显示16\")
+	pass
+"
+
+[resource]
+use_filter = true
+font_data = ExtResource( 1 )
+script = SubResource( 1 )

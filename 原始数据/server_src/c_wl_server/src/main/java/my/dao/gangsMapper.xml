@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="my.dao.gangsMapper">
+    <!--帮派农场-->
+    <select id="selectGangsFarm" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_gangs_farm where Id=#{Id} for update
+    </select>
+    <update id="updateGangsFarm">
+        update xq_gangs_farm
+        <set>
+            <if test="yt1!=null">
+                yt1=#{yt1},
+            </if>
+            <if test="yt2!=null">
+                yt2=#{yt2},
+            </if>
+            <if test="yt3!=null">
+                yt3=#{yt3},
+            </if>
+            <if test="yt4!=null">
+                yt4=#{yt4},
+            </if>
+            <if test="yt5!=null">
+                yt5=#{yt5},
+            </if>
+        </set>
+        <where>
+            <if test="Id!=null">
+                Id=#{Id}
+            </if>
+        </where>
+    </update>
+    <insert id="addGangsFarm">
+        insert into xq_gangs_farm(yt1,yt2,yt3,yt4,yt5,Id)
+        values(#{yt1},#{yt2},#{yt3},#{yt4},#{yt5},#{Id})
+    </insert>
+    <delete id="delGangsFarm">
+        delete from xq_gangs_farm where Id=#{Id}
+    </delete>
+    <!--帮派强盗-->
+    <select id="selectAllGangsRobber" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_gangs_robber
+    </select>
+    <select id="selectGangsRobber" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_gangs_robber where Id=#{Id} for update
+    </select>
+    <update id="updateGangsRobber">
+        update xq_gangs_robber
+        <set>
+            <if test="num!=null">
+                num=#{num},
+            </if>
+        </set>
+        <where>
+            <if test="Id!=null">
+                Id=#{Id}
+            </if>
+        </where>
+    </update>
+    <insert id="addGangsRobber">
+        insert into xq_gangs_robber(num,Id)
+        values(#{num},#{Id})
+    </insert>
+    <delete id="delAllGangsRobber">
+        delete from xq_gangs_robber
+    </delete>
+    <!--宴会-->
+    <select id="selectGangsYanhui" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_gangs_yanhui where Id=#{Id} for update
+    </select>
+    <update id="updateGangsYanhui">
+        update xq_gangs_yanhui
+        <set>
+            <if test="num!=null">
+                num=#{num},
+            </if>
+            <if test="members!=null">
+                members=#{members},
+            </if>
+        </set>
+        <where>
+            <if test="Id!=null">
+                Id=#{Id}
+            </if>
+        </where>
+    </update>
+    <insert id="addGangsYanhui">
+        insert into xq_gangs_yanhui(num,members,Id)
+        values(#{num},#{members},#{Id})
+    </insert>
+    <delete id="delGangsYanhui">
+        delete from xq_gangs_yanhui
+        <where>
+            <if test="Id!=null">
+                Id=#{Id}
+            </if>
+        </where>
+    </delete>
+    <!--帮派建设-->
+    <select id="selectGangsMsgAndBuild" resultType="com.alibaba.fastjson2.JSONObject">
+        select t1.Id,t1.name,t1.lever,t1.captain,t1.money,t1.bg,t1.notice,
+        t2.shop,t2.tec,t2.solicit,t2.book,t2.mifa
+        from xq_gangs t1,xq_gangs_build t2 where t1.Id=#{t1.Id} and t1.Id=t2.Id
+    </select>
+    <select id="selectGangsBuild" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_gangs_build where Id=#{Id}
+    </select>
+    <update id="updateGangsBuild">
+        update xq_gangs_build
+        <set>
+            <if test="shop!=null">
+                shop=#{shop},
+            </if>
+            <if test="tec!=null">
+                tec=#{tec},
+            </if>
+            <if test="solicit!=null">
+                solicit=#{solicit},
+            </if>
+            <if test="book!=null">
+                book=#{book},
+            </if>
+            <if test="mifa!=null">
+                mifa=#{mifa},
+            </if>
+        </set>
+        <where>
+            <if test="Id!=null">
+                Id=#{Id}
+            </if>
+        </where>
+    </update>
+    <insert id="addGangsBuild">
+        insert into xq_gangs_build(shop,tec,solicit,book,mifa,Id)
+        values(#{shop},#{tec},#{solicit},#{book},#{mifa},#{Id})
+    </insert>
+    <delete id="delGangsBuild">
+        delete from xq_gangs_build where Id=#{Id}
+    </delete>
+    <!--个人活动次数-->
+    <select id="selectGangsAcTimes" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_gangs_ac_times where name=#{name}
+    </select>
+    <update id="updateGangsAcTimes">
+        update xq_gangs_ac_times
+        <set>
+            <if test="dayReward!=null">
+                dayReward=#{dayReward},
+            </if>
+            <if test="bossTimes!=null">
+                bossTimes=#{bossTimes},
+            </if>
+            <if test="psTimes!=null">
+                psTimes=#{psTimes},
+            </if>
+            <if test="yhTimes!=null">
+                yhTimes=#{yhTimes},
+            </if>
+
+        </set>
+        <where>
+            <if test="name!=null">
+                name=#{name}
+            </if>
+        </where>
+    </update>
+    <insert id="addGangsAcTimes">
+        insert into xq_gangs_ac_times(dayReward,bossTimes,psTimes,yhTimes,name)
+        values(#{dayReward},#{bossTimes},#{psTimes},#{yhTimes},#{name})
+    </insert>
+    <delete id="delGangsAcTimes">
+        delete from xq_gangs_ac_times where name=#{name}
+    </delete>
+    <!--帮派任务-->
+    <select id="selectGangsTask" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_gangs_task where Id=#{Id} for update
+    </select>
+    <update id="updateGangsTask">
+        update xq_gangs_task
+        <set>
+            <if test="task!=null">
+                task=#{task},
+            </if>
+        </set>
+        where Id=#{Id}
+    </update>
+    <insert id="addGangsTask">
+        insert into xq_gangs_task(Id,task) values(#{Id},#{task})
+    </insert>
+    <delete id="delGangsTaskById">
+        delete from xq_gangs_task where Id=#{Id}
+    </delete>
+
+    <select id="selectGangsBpdzzAllOrder" resultType="com.alibaba.fastjson2.JSONObject">
+        set @rank = 0;
+        select name,jf,@rank := @rank + 1 pos from xq_ac_bpdzz_player order by jf desc limit #{pageNum},#{pageSum};
+    </select>
+    <select id="selectGangsBpdzzGangsOrderView" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        set @rank = 0;
+        select t0.Id,t0.jf,t1.name,t1.members,@rank := @rank + 1 pos from xq_ac_bpdzz_gangs t0,xq_gangs t1 where
+        t0.Id=t1.Id order by t0.jf desc;
+    </select>
+    <select id="selectGangsBpdzzGangsOrder" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        set @rank = 0;
+        select Id,jf,@rank := @rank + 1 pos from xq_ac_bpdzz_gangs order by jf desc;
+    </select>
+
+
+    <select id="selectGangsBpdzzGangs" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_bpdzz_gangs where Id=#{Id} for update
+    </select>
+    <update id="updateGangsBpdzzGangs" parameterType="string">
+        update xq_ac_bpdzz_gangs
+        <set>
+            <if test="jf!=null">
+                jf=#{jf}
+            </if>
+        </set>
+        where Id=#{Id}
+    </update>
+    <insert id="addBpdzzGangs" parameterType="string">
+        insert into xq_ac_bpdzz_gangs(Id,jf) values(#{Id},'0')
+    </insert>
+    <delete id="delBpdzzGangs">
+        delete from xq_ac_bpdzz_gangs
+    </delete>
+
+    <select id="selectGangsBpdzzPlayerByNames" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_bpdzz_player where name in
+        <foreach collection="names" item="n" open="(" separator="," close=")">
+            #{n}
+        </foreach>
+    </select>
+    <select id="selectGangsBpdzzPlayer" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_bpdzz_player where name=#{name} for update
+    </select>
+    <update id="updateGangsBpdzzPlayer" parameterType="string">
+        update xq_ac_bpdzz_player
+        <set>
+            <if test="jf!=null">
+                jf=#{jf},
+            </if>
+            <if test="sumTimes!=null">
+                sum_times=#{sumTimes},
+            </if>
+            <if test="getTimes!=null">
+                get_times=#{getTimes},
+            </if>
+            <if test="rewards!=null">
+                rewards=#{rewards},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <insert id="addBpdzzPlayer" parameterType="string">
+        insert into xq_ac_bpdzz_player(name,jf,sum_times,get_times,rewards) values(#{name},'0','10','0','[]')
+    </insert>
+    <delete id="delBpdzzPlayer">
+        delete from xq_ac_bpdzz_player
+    </delete>
+
+    <select id="selectGangsBpdzzTaskByGainner" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_bpdzz_task where gainner=#{gainner}
+    </select>
+    <select id="selectGangsBpdzzTaskSum" resultType="com.alibaba.fastjson2.JSONObject">
+        select count(Id) n from xq_ac_bpdzz_task
+    </select>
+    <select id="selectGangsBpdzzTaskByPage" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_bpdzz_task limit #{pageNum},#{pageSum}
+    </select>
+    <select id="selectGangsBpdzzTask" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_bpdzz_task where Id=#{Id} for update
+    </select>
+    <update id="updateGangsBpdzzTask" parameterType="string">
+        update xq_ac_bpdzz_task
+        <set>
+            <if test="gainner!=null">
+                gainner=#{gainner},
+            </if>
+            <if test="startTime!=null">
+                start_time=#{startTime},
+            </if>
+            <if test="endTime!=null">
+                end_time=#{endTime},
+            </if>
+            <if test="status!=null">
+                status=#{status},
+            </if>
+            <if test="k!=null">
+                key=#{k},
+            </if>
+            <if test="num!=null">
+                num=#{num},
+            </if>
+        </set>
+        where Id=#{Id}
+    </update>
+    <insert id="addBpdzzTask" parameterType="string">
+        insert into xq_ac_bpdzz_task(Id,gainner,start_time,end_time,status,k,num)
+        values(#{Id},#{gainner},#{startTime},#{endTime},#{status},#{k},#{num})
+    </insert>
+    <delete id="delBpdzzTask">
+        delete from xq_ac_bpdzz_task
+    </delete>
+    <delete id="delBpdzzTaskById">
+        delete from xq_ac_bpdzz_task where Id=#{Id}
+    </delete>
+
+    <!--帮派申请-->
+    <update id="clearGangsReq" parameterType="string">
+        update xq_gangs_req set req='[]'
+    </update>
+    <select id="selectGangsReq" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select req from xq_gangs_req where Id=#{Id} for update
+    </select>
+    <update id="updateGangsReq" parameterType="string">
+        update xq_gangs_req set req=#{req} where Id=#{Id}
+    </update>
+    <insert id="insertGangsReq" parameterType="string">
+        insert into xq_gangs_req(Id,req) values(#{Id},'[]')
+    </insert>
+    <delete id="delGangsReq">
+        delete from xq_gangs_req where Id=#{Id}
+    </delete>
+
+    <!--帮派成员表-->
+    <select id="selectGangsMembersSum" resultType="com.alibaba.fastjson2.JSONObject">
+        select count(name) n from xq_gangs_members where bpId=#{bpId}
+    </select>
+    <select id="selectGangsMembersByPage" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_gangs_members where bpId=#{bpId}
+        limit #{pageNum},#{pageSum}
+    </select>
+    <select id="selectGangsMembersNames" resultType="com.alibaba.fastjson2.JSONObject">
+        select name from xq_gangs_members where bpId=#{bpId}
+    </select>
+    <select id="selectGangsMembers" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_gangs_members
+        <where>
+            <if test="name!=null">
+                name=#{name}
+            </if>
+            <if test="bpId!=null">
+                bpId=#{bpId}
+            </if>
+        </where>
+    </select>
+    <select id="selectGangsMembersDayBg" resultType="com.alibaba.fastjson2.JSONObject">
+        select dayBg from xq_gangs_members
+        <where>
+            <if test="bpId!=null">
+                bpId=#{bpId}
+            </if>
+        </where>
+    </select>
+    <insert id="insertGangsMembers" parameterType="string">
+        insert into xq_gangs_members(bpId,name,job,bg,dayBg,taskTimes)
+        values(#{bpId},#{name},#{job},'0','0','0')
+    </insert>
+    <update id="updateGangsMembers" parameterType="string">
+        update xq_gangs_members
+        <set>
+            <if test="bpId!=null">
+                bpId=#{bpId},
+            </if>
+            <if test="job!=null">
+                job=#{job},
+            </if>
+            <if test="bg!=null">
+                bg=#{bg},
+            </if>
+            <if test="dayBg!=null">
+                dayBg=#{dayBg},
+            </if>
+            <if test="taskTimes!=null">
+                taskTimes=#{taskTimes},
+            </if>
+        </set>
+        <where>
+            <if test="name!=null">
+                name=#{name}
+            </if>
+        </where>
+    </update>
+    <delete id="delGangsMembers">
+        delete from xq_gangs_members where name in
+        <foreach collection="names" item="n" open="(" separator="," close=")">
+            #{n}
+        </foreach>
+    </delete>
+
+    <select id="selectGangsByIds" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_gangs where id in
+        <foreach collection="ids" item="n" open="(" separator="," close=")">
+            #{n}
+        </foreach>
+    </select>
+    <select id="selectAllGangs" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_gangs
+    </select>
+    <select id="selectAllGangsId" resultType="com.alibaba.fastjson2.JSONObject">
+        select Id from xq_gangs
+    </select>
+
+    <select id="selectGangs" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_gangs where Id=#{Id} for update
+    </select>
+    <select id="selectGangsLimit" resultType="com.alibaba.fastjson2.JSONObject">
+        select Id,name,lever,captain from xq_gangs limit #{pageNum},#{pageSum}
+    </select>
+    <select id="countGangs" resultType="com.alibaba.fastjson2.JSONObject">
+        select count(Id) as total from xq_gangs
+    </select>
+    <select id="selectGangsByName" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select Id from xq_gangs where name=#{gangsName} or captain= #{captain}
+    </select>
+    <insert id="insertGangs" parameterType="string">
+        insert into xq_gangs(Id,name,lever,captain,notice)
+        values(#{Id},#{gangsName},'1',#{captain},'')
+    </insert>
+    <update id="updateGangs" parameterType="string">
+        update xq_gangs
+        <set>
+            <if test="captain!=null">
+                captain=#{captain},
+            </if>
+            <if test="money!=null">
+                money=#{money},
+            </if>
+            <if test="bg!=null">
+                bg=#{bg},
+            </if>
+            <if test="lever!=null">
+                lever=#{lever},
+            </if>
+            <if test="notice!=null">
+                notice=#{notice},
+            </if>
+        </set>
+        where Id=#{Id}
+    </update>
+    <delete id="delGangs" parameterType="string">
+        delete from xq_gangs where Id=#{Id}
+    </delete>
+
+    <select id="selectGangsActivity" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_gangs_activity where Id=#{Id} for update
+    </select>
+    <insert id="insertGangsActivity" parameterType="string">
+        insert into xq_gangs_activity(Id,boss,ywt,ps,yh) values(#{Id},'0','0','0','0')
+    </insert>
+    <update id="updateGangsActivity" parameterType="string">
+        update xq_gangs_activity
+        <set>
+            <if test="boss!=null">
+                boss=#{boss},
+            </if>
+            <if test="ywt!=null">
+                ywt=#{ywt},
+            </if>
+            <if test="ps!=null">
+                ps=#{ps},
+            </if>
+            <if test="yh!=null">
+                yh=#{yh},
+            </if>
+        </set>
+        where Id=#{Id}
+    </update>
+
+    <update id="clearGangsActivity">
+        update xq_gangs_activity set boss='0',ps='0',ywt='0',yh='0'
+    </update>
+
+    <delete id="delGangsActivity">
+        delete from xq_gangs_activity where Id=#{Id}
+    </delete>
+
+    <!--帮派boss-->
+    <select id="selectGangsActivityAndBoss" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_gangs_boss t0,xq_gangs_activity t1 where t0.Id=#{Id} and t0.Id=t1.Id
+    </select>
+    <select id="selectGangsBoss" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_gangs_boss where Id=#{Id} for update
+    </select>
+    <insert id="insertGangsBoss" parameterType="string">
+        insert into xq_gangs_boss(Id,xue,rewards) values(#{Id},'10000000','[]')
+    </insert>
+    <update id="updateGangsBoss" parameterType="string">
+        update xq_gangs_boss
+        <set>
+            <if test="xue!=null">
+                xue=#{xue},
+            </if>
+            <if test="rewards!=null">
+                rewards=#{rewards},
+            </if>
+        </set>
+        where Id=#{Id}
+    </update>
+
+    <delete id="delGangsBoss">
+        delete from xq_gangs_boss where Id=#{Id}
+    </delete>
+
+
+    <select id="selectGangsActivityAndV" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_gangs_v t0,xq_gangs_activity t1 where t0.Id=#{Id} and t0.Id=t1.Id
+    </select>
+
+    <select id="selectGangsV" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_gangs_v where Id=#{Id} for update
+    </select>
+    <insert id="insertGangsV" parameterType="string">
+        insert into xq_gangs_v(Id,monkey,pstimes) values(#{Id},'400','4')
+    </insert>
+    <update id="updateGangsV" parameterType="string">
+        update xq_gangs_v
+        <set>
+            <if test="monkey!=null">
+                monkey=#{monkey},
+            </if>
+            <if test="pstimes!=null">
+                pstimes=#{pstimes},
+            </if>
+        </set>
+        where Id=#{Id}
+    </update>
+
+    <delete id="delGangsV">
+        delete from xq_gangs_v where Id=#{Id}
+    </delete>
+
+    <select id="selectGangsFightAndMsg" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select t1.jf,t2.lever,t2.name,t2.money,t2.bg,t2.Id
+        from xq_gangs_fight t1,xq_gangs t2 where t1.Id=t2.Id
+    </select>
+    <select id="selectGangsFight" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_gangs_fight
+        <where>
+            <if test="Id!=null">
+                Id=#{Id}
+            </if>
+        </where>
+        for update
+    </select>
+    <select id="selectGangsAndFightByOrder" resultType="com.alibaba.fastjson2.JSONObject">
+        select t1.jf,t2.name from xq_gangs_fight t1,xq_gangs t2 order by jf desc
+    </select>
+    <select id="selectGangsFightByOrder" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_gangs_fight where jf>0 order by jf desc
+    </select>
+    <update id="updateGangsFight" parameterType="string">
+        update xq_gangs_fight
+        <set>
+            <if test="jf!=null">
+                jf=#{jf}
+            </if>
+        </set>
+        where Id=#{Id}
+    </update>
+    <insert id="insertGangsFight" parameterType="string">
+        insert into xq_gangs_fight(Id,jf) values(#{Id},'0')
+    </insert>
+    <delete id="delGangsFight">
+        delete from xq_gangs_fight
+    </delete>
+    <!--帮战奖励兑换-->
+    <select id="selectBRE" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_gangs_bz_rewards_exchange where name=#{name}
+    </select>
+    <update id="updateBRE" parameterType="string">
+        update xq_gangs_bz_rewards_exchange
+        <set>
+            <if test="exchange!=null">
+                exchange=#{exchange}
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <insert id="insertBRE" parameterType="string">
+        insert into xq_gangs_bz_rewards_exchange(name,exchange) values(#{name},'{}')
+    </insert>
+    <delete id="delBRE">
+        delete from xq_gangs_bz_rewards_exchange
+    </delete>
+
+    <select id="selectGangsPs" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_gangs_ps where name=#{name}
+    </select>
+    <insert id="insertGangsPs" parameterType="string">
+        insert into xq_gangs_ps(name,tale,goods) values(#{name},'20000','[]')
+    </insert>
+    <update id="updateGangsPs" parameterType="string">
+        update xq_gangs_ps
+        <set>
+            <if test="tale!=null">
+                tale=#{tale},
+            </if>
+            <if test="goods!=null">
+                goods=#{goods},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="delGangsPs">
+        delete from xq_gangs_ps
+        <where>
+            <if test="name!=null">
+                name=#{name}
+            </if>
+        </where>
+    </delete>
+</mapper>

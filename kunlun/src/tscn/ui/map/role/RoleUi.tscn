@@ -1,0 +1,1867 @@
+[gd_scene load_steps=33 format=2]
+
+[ext_resource path="res://src/tscn/ui/common/title/XQTitle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/tscn/ui/common/bg/Background.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/tscn/ui/common/lib/LibLabelItem.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/tscn/pet/DisplayPet.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/tscn/ui/map/role/RoleAttr.gd" type="Script" id=5]
+[ext_resource path="res://src/tscn/ui/common/tab/CustomTab.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/tscn/ui/common/bg/Background2.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/util/common/ScroContainerGD.gd" type="Script" id=8]
+[ext_resource path="res://src/tscn/ui/common/tres/progress_hp.tres" type="Theme" id=9]
+[ext_resource path="res://src/tscn/ui/common/tres/progress_exp.tres" type="Theme" id=10]
+[ext_resource path="res://src/tscn/ui/common/tres/progress_mp.tres" type="Theme" id=11]
+[ext_resource path="res://src/tscn/ui/common/tres/NoVHScollBar.tres" type="Theme" id=12]
+[ext_resource path="res://src/tscn/ui/common/btn/btn_left.tres" type="StyleBox" id=13]
+[ext_resource path="res://assets/font/font-16.tres" type="DynamicFont" id=14]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=15]
+[ext_resource path="res://src/tscn/player/DisplayRole.tscn" type="PackedScene" id=16]
+[ext_resource path="res://src/tscn/ui/map/role/RoleInfo.gd" type="Script" id=17]
+[ext_resource path="res://src/tscn/ui/common/equi/EquiItem.tscn" type="PackedScene" id=18]
+[ext_resource path="res://src/tscn/ui/map/role/RoleUi.gd" type="Script" id=19]
+[ext_resource path="res://src/tscn/ui/common/equi/EquiLabelItem.tscn" type="PackedScene" id=20]
+[ext_resource path="res://src/tscn/ui/common/player/RoleSkillItem.tscn" type="PackedScene" id=21]
+[ext_resource path="res://src/tscn/ui/common/player/RoleSateLableItem.tscn" type="PackedScene" id=22]
+[ext_resource path="res://src/tscn/ui/map/role/RoleEqui.gd" type="Script" id=23]
+[ext_resource path="res://src/tscn/ui/map/role/RoleState.gd" type="Script" id=24]
+[ext_resource path="res://src/tscn/ui/map/role/RoleSkill.gd" type="Script" id=25]
+[ext_resource path="res://src/tscn/ui/map/role/RoleLib.gd" type="Script" id=26]
+[ext_resource path="res://src/util/common/ListAutoExpand.gd" type="Script" id=27]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0.498039, 0.498039, 1 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.227451, 0.827451, 0.905882, 1 )
+
+[sub_resource type="Theme" id=11]
+ProgressBar/styles/bg = SubResource( 9 )
+ProgressBar/styles/fg = SubResource( 10 )
+
+[node name="RoleUi" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 19 )
+__meta__ = {
+"_edit_horizontal_guides_": [ -87.0 ],
+"_edit_use_anchors_": false,
+"_edit_vertical_guides_": [ 351.0 ]
+}
+
+[node name="Head" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.07
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="XQTitle" parent="Head" instance=ExtResource( 1 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -91.5
+margin_top = -17.5
+margin_right = 91.5
+margin_bottom = 17.5
+title = "个人信息"
+
+[node name="Tabs" type="Panel" parent="."]
+anchor_top = 0.07
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tabs"]
+anchor_right = 1.0
+anchor_bottom = 0.065
+margin_bottom = -0.225002
+custom_constants/separation = 0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AttrTab" parent="Tabs/HBoxContainer" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 2.0
+margin_right = 60.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 58, 30 )
+group_name = "role_tab"
+text = "属性"
+
+[node name="InfoTab" parent="Tabs/HBoxContainer" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 60.0
+margin_right = 118.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 58, 30 )
+group_name = "role_tab"
+text = "信息"
+
+[node name="EquiTab" parent="Tabs/HBoxContainer" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 118.0
+margin_right = 176.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 58, 30 )
+group_name = "role_tab"
+text = "装备"
+
+[node name="SkillTab" parent="Tabs/HBoxContainer" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 176.0
+margin_right = 234.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 58, 30 )
+group_name = "role_tab"
+text = "技能"
+
+[node name="LibraryTab" parent="Tabs/HBoxContainer" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 234.0
+margin_right = 292.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 58, 30 )
+group_name = "role_tab"
+text = "图鉴"
+
+[node name="StateTab" parent="Tabs/HBoxContainer" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 292.0
+margin_right = 350.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 58, 30 )
+group_name = "role_tab"
+text = "状态"
+
+[node name="Panels" type="Control" parent="Tabs"]
+anchor_top = 0.065
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.225002
+margin_right = -1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RoleAttr" type="Panel" parent="Tabs/Panels"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel2" type="Panel" parent="Tabs/Panels/RoleAttr"]
+anchor_right = 0.997
+anchor_bottom = 0.239
+margin_right = 0.0529785
+margin_bottom = 0.034996
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Level" type="Label" parent="Tabs/Panels/RoleAttr/Panel2"]
+anchor_right = 0.143
+anchor_bottom = 0.163
+margin_right = -10.05
+margin_bottom = -2.952
+custom_fonts/font = ExtResource( 14 )
+text = "LV100"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DisplayRole" parent="Tabs/Panels/RoleAttr/Panel2" instance=ExtResource( 16 )]
+position = Vector2( 50, 82 )
+scale = Vector2( 1.5, 1.5 )
+
+[node name="HpC" type="Control" parent="Tabs/Panels/RoleAttr/Panel2"]
+anchor_left = 0.314
+anchor_right = 0.846
+anchor_bottom = 0.327
+margin_left = 0.0999985
+margin_right = -0.100006
+margin_bottom = -0.00800323
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Tabs/Panels/RoleAttr/Panel2/HpC"]
+anchor_right = 0.995
+anchor_bottom = 0.853
+margin_right = -0.0700073
+margin_bottom = -0.00200081
+text = "HP"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Hp" type="ProgressBar" parent="Tabs/Panels/RoleAttr/Panel2/HpC"]
+anchor_left = 0.183
+anchor_top = 0.235
+anchor_right = 0.909
+anchor_bottom = 0.5
+margin_left = -0.038002
+margin_top = 0.00999928
+margin_right = -0.0740051
+theme = ExtResource( 9 )
+custom_styles/bg = SubResource( 8 )
+value = 60.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Nums" type="Label" parent="Tabs/Panels/RoleAttr/Panel2/HpC"]
+anchor_top = 0.588
+anchor_right = 0.995
+anchor_bottom = 1.0
+margin_top = 0.00799942
+margin_right = -0.0700073
+text = "123123/123123"
+align = 1
+valign = 1
+
+[node name="MpC" type="Control" parent="Tabs/Panels/RoleAttr/Panel2"]
+anchor_left = 0.314
+anchor_top = 0.327
+anchor_right = 0.846
+anchor_bottom = 0.654
+margin_left = 0.0999985
+margin_top = -0.00800323
+margin_right = -0.100006
+margin_bottom = -0.0160065
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Tabs/Panels/RoleAttr/Panel2/MpC"]
+anchor_right = 0.995
+anchor_bottom = 0.853
+margin_right = -0.0700073
+margin_bottom = -0.00200081
+text = "MP"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mp" type="ProgressBar" parent="Tabs/Panels/RoleAttr/Panel2/MpC"]
+anchor_left = 0.183
+anchor_top = 0.235
+anchor_right = 0.909
+anchor_bottom = 0.5
+margin_left = -0.038002
+margin_top = 0.00999928
+margin_right = -0.0740051
+theme = ExtResource( 11 )
+custom_styles/bg = SubResource( 8 )
+value = 80.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Nums" type="Label" parent="Tabs/Panels/RoleAttr/Panel2/MpC"]
+anchor_top = 0.588
+anchor_right = 0.995
+anchor_bottom = 1.0
+margin_top = 0.00799942
+margin_right = -0.0700073
+text = "123123/123123"
+align = 1
+valign = 1
+
+[node name="ExpC" type="Control" parent="Tabs/Panels/RoleAttr/Panel2"]
+anchor_left = 0.314
+anchor_top = 0.635
+anchor_right = 0.846
+anchor_bottom = 0.962
+margin_left = 0.0999985
+margin_top = -0.0400085
+margin_right = -0.100006
+margin_bottom = -0.0480042
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Tabs/Panels/RoleAttr/Panel2/ExpC"]
+anchor_right = 0.995
+anchor_bottom = 0.853
+margin_right = -0.0700073
+margin_bottom = -0.00200081
+text = "EXP"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exp" type="ProgressBar" parent="Tabs/Panels/RoleAttr/Panel2/ExpC"]
+anchor_left = 0.183
+anchor_top = 0.235
+anchor_right = 0.909
+anchor_bottom = 0.5
+margin_left = -0.038002
+margin_top = 0.00999928
+margin_right = -0.0740051
+theme = ExtResource( 10 )
+custom_styles/bg = SubResource( 8 )
+min_value = 1.0
+value = 80.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Nums" type="Label" parent="Tabs/Panels/RoleAttr/Panel2/ExpC"]
+anchor_top = 0.588
+anchor_right = 0.995
+anchor_bottom = 1.0
+margin_top = 0.00799942
+margin_right = -0.0700073
+text = "123123/123123"
+align = 1
+valign = 1
+
+[node name="Button" type="Button" parent="Tabs/Panels/RoleAttr/Panel2"]
+anchor_left = 0.863
+anchor_top = 0.375
+anchor_right = 0.989
+anchor_bottom = 0.596
+margin_left = -0.0500183
+margin_top = -3.8147e-06
+margin_right = -0.149994
+margin_bottom = 0.0159988
+custom_fonts/font = ExtResource( 14 )
+text = "升级"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" parent="Tabs/Panels/RoleAttr" instance=ExtResource( 2 )]
+anchor_top = 0.239
+margin_top = 0.034996
+margin_bottom = -25.0
+
+[node name="Background2" parent="Tabs/Panels/RoleAttr/Background" instance=ExtResource( 7 )]
+anchor_left = 0.047
+anchor_top = 0.057
+anchor_right = 0.953
+anchor_bottom = 0.943
+margin_left = 0.00299835
+margin_top = 0.0579987
+margin_right = -0.00302124
+margin_bottom = -0.0580139
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Tabs/Panels/RoleAttr/Background/Background2"]
+anchor_left = 0.044
+anchor_top = 0.057
+anchor_right = 0.956
+anchor_bottom = 0.943
+margin_left = 0.00799847
+margin_top = 0.0529985
+margin_right = -0.00799561
+margin_bottom = -0.053009
+theme = ExtResource( 12 )
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Panels/RoleAttr/Background/Background2/ScrollContainer"]
+margin_right = 290.0
+margin_bottom = 380.0
+rect_min_size = Vector2( 290, 240 )
+script = ExtResource( 27 )
+
+[node name="Label1" type="RichTextLabel" parent="Tabs/Panels/RoleAttr/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_right = 290.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+mouse_filter = 1
+custom_fonts/normal_font = ExtResource( 14 )
+bbcode_enabled = true
+bbcode_text = "[color=black]力量：100[color=#FFA500](+50)[color=green](+10)"
+text = "力量：100(+50)(+10)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="RichTextLabel" parent="Tabs/Panels/RoleAttr/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 24.0
+margin_right = 290.0
+margin_bottom = 44.0
+rect_min_size = Vector2( 0, 20 )
+mouse_filter = 1
+custom_fonts/normal_font = ExtResource( 14 )
+bbcode_enabled = true
+bbcode_text = "[color=black]敏捷：160[color=#FFA500](+60)[color=green]"
+text = "敏捷：160(+60)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="RichTextLabel" parent="Tabs/Panels/RoleAttr/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 48.0
+margin_right = 290.0
+margin_bottom = 68.0
+rect_min_size = Vector2( 0, 20 )
+mouse_filter = 1
+custom_fonts/normal_font = ExtResource( 14 )
+bbcode_enabled = true
+bbcode_text = "[color=black]智力：1360[color=#FFA500](+460)[color=green](+200)"
+text = "智力：1360(+460)(+200)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label4" type="RichTextLabel" parent="Tabs/Panels/RoleAttr/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 72.0
+margin_right = 290.0
+margin_bottom = 92.0
+rect_min_size = Vector2( 0, 20 )
+mouse_filter = 1
+custom_fonts/normal_font = ExtResource( 14 )
+bbcode_enabled = true
+bbcode_text = "[color=black]耐力：221[color=#FFA500](+40)[color=green]"
+text = "耐力：221(+40)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label5" type="RichTextLabel" parent="Tabs/Panels/RoleAttr/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 96.0
+margin_right = 290.0
+margin_bottom = 116.0
+rect_min_size = Vector2( 0, 20 )
+mouse_filter = 1
+custom_fonts/normal_font = ExtResource( 14 )
+bbcode_enabled = true
+bbcode_text = "[color=black]精神：586[color=#FFA500](+56)[color=green](+230)"
+text = "精神：586(+56)(+230)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label6" type="RichTextLabel" parent="Tabs/Panels/RoleAttr/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 120.0
+margin_right = 290.0
+margin_bottom = 140.0
+rect_min_size = Vector2( 0, 20 )
+mouse_filter = 1
+custom_fonts/normal_font = ExtResource( 14 )
+bbcode_enabled = true
+bbcode_text = "[color=black]物攻：12586[color=#FFA500](+1056)[color=green](+2330)"
+text = "物攻：12586(+1056)(+2330)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label7" type="RichTextLabel" parent="Tabs/Panels/RoleAttr/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 144.0
+margin_right = 290.0
+margin_bottom = 164.0
+rect_min_size = Vector2( 0, 20 )
+mouse_filter = 1
+custom_fonts/normal_font = ExtResource( 14 )
+bbcode_enabled = true
+bbcode_text = "[color=black]法攻：2586[color=#FFA500](+105)[color=green](+30)"
+text = "法攻：2586(+105)(+30)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label8" type="RichTextLabel" parent="Tabs/Panels/RoleAttr/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 168.0
+margin_right = 290.0
+margin_bottom = 188.0
+rect_min_size = Vector2( 0, 20 )
+mouse_filter = 1
+custom_fonts/normal_font = ExtResource( 14 )
+bbcode_enabled = true
+bbcode_text = "[color=black]物防：3586[color=#FFA500](+605)[color=green](+700)"
+text = "物防：3586(+605)(+700)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label9" type="RichTextLabel" parent="Tabs/Panels/RoleAttr/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 192.0
+margin_right = 290.0
+margin_bottom = 212.0
+rect_min_size = Vector2( 0, 20 )
+mouse_filter = 1
+custom_fonts/normal_font = ExtResource( 14 )
+bbcode_enabled = true
+bbcode_text = "[color=black]法防：1586[color=#FFA500](+305)[color=green](+100)"
+text = "法防：1586(+305)(+100)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label10" type="RichTextLabel" parent="Tabs/Panels/RoleAttr/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 216.0
+margin_right = 290.0
+margin_bottom = 236.0
+rect_min_size = Vector2( 0, 20 )
+mouse_filter = 1
+custom_fonts/normal_font = ExtResource( 14 )
+bbcode_enabled = true
+bbcode_text = "[color=black]命中：2236[color=#FFA500](+305)[color=green](+400)"
+text = "命中：2236(+305)(+400)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label11" type="RichTextLabel" parent="Tabs/Panels/RoleAttr/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 240.0
+margin_right = 290.0
+margin_bottom = 260.0
+rect_min_size = Vector2( 0, 20 )
+mouse_filter = 1
+custom_fonts/normal_font = ExtResource( 14 )
+bbcode_enabled = true
+bbcode_text = "[color=black]躲闪：2105[color=#FFA500](+205)[color=green](+158)"
+text = "躲闪：2105(+205)(+158)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label12" type="RichTextLabel" parent="Tabs/Panels/RoleAttr/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 264.0
+margin_right = 290.0
+margin_bottom = 284.0
+rect_min_size = Vector2( 0, 20 )
+mouse_filter = 1
+custom_fonts/normal_font = ExtResource( 14 )
+bbcode_enabled = true
+bbcode_text = "[color=black]暴击：2105[color=#FFA500](+205)[color=green](+158)"
+text = "暴击：2105(+205)(+158)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label13" type="RichTextLabel" parent="Tabs/Panels/RoleAttr/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 288.0
+margin_right = 290.0
+margin_bottom = 308.0
+rect_min_size = Vector2( 0, 20 )
+mouse_filter = 1
+custom_fonts/normal_font = ExtResource( 14 )
+bbcode_enabled = true
+bbcode_text = "[color=black]出手速：2105[color=#FFA500](+205)[color=green](+158)"
+text = "出手速：2105(+205)(+158)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label14" type="RichTextLabel" parent="Tabs/Panels/RoleAttr/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 312.0
+margin_right = 290.0
+margin_bottom = 332.0
+rect_min_size = Vector2( 0, 20 )
+mouse_filter = 1
+custom_fonts/normal_font = ExtResource( 14 )
+bbcode_enabled = true
+bbcode_text = "[color=black]暴击抗性：0"
+text = "暴击抗性：0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label15" type="RichTextLabel" parent="Tabs/Panels/RoleAttr/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 336.0
+margin_right = 290.0
+margin_bottom = 356.0
+rect_min_size = Vector2( 0, 20 )
+mouse_filter = 1
+custom_fonts/normal_font = ExtResource( 14 )
+bbcode_enabled = true
+bbcode_text = "[color=black]昏睡抗性：0"
+text = "昏睡抗性：0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label16" type="RichTextLabel" parent="Tabs/Panels/RoleAttr/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 360.0
+margin_right = 290.0
+margin_bottom = 380.0
+rect_min_size = Vector2( 0, 20 )
+mouse_filter = 1
+custom_fonts/normal_font = ExtResource( 14 )
+bbcode_enabled = true
+bbcode_text = "[color=black]混乱抗性：0"
+text = "混乱抗性：0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Tabs/Panels/RoleAttr"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -25.0
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="Tabs/Panels/RoleAttr/Panel"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -25.0
+margin_right = 55.0
+custom_fonts/font = ExtResource( 15 )
+custom_styles/hover = ExtResource( 13 )
+custom_styles/pressed = ExtResource( 13 )
+custom_styles/normal = ExtResource( 13 )
+text = "确定"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Tabs/Panels/RoleAttr"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -65.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMenu" type="PopupMenu" parent="Tabs/Panels/RoleAttr/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -10.0
+margin_top = -10.0
+margin_right = 10.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RoleInfo" type="Panel" parent="Tabs/Panels"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 17 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" parent="Tabs/Panels/RoleInfo" instance=ExtResource( 2 )]
+anchor_bottom = 0.943
+margin_bottom = -0.205017
+
+[node name="Background2" parent="Tabs/Panels/RoleInfo/Background" instance=ExtResource( 7 )]
+anchor_left = 0.047
+anchor_top = 0.04
+anchor_right = 0.953
+anchor_bottom = 0.96
+margin_left = 0.00299835
+margin_top = 0.0999985
+margin_right = -0.00302124
+margin_bottom = -0.100006
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Tabs/Panels/RoleInfo/Background/Background2"]
+anchor_left = 0.044
+anchor_top = 0.037
+anchor_right = 0.956
+anchor_bottom = 0.958
+margin_left = 0.00799847
+margin_top = 0.0509996
+margin_right = -0.00799561
+margin_bottom = -0.166016
+theme = ExtResource( 12 )
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer"]
+margin_right = 290.0
+margin_bottom = 521.0
+rect_min_size = Vector2( 290, 347 )
+script = ExtResource( 27 )
+
+[node name="Label" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_right = 290.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "贵族VIP等级：6/7(180000/299999)"
+
+[node name="Label2" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 21.0
+margin_right = 290.0
+margin_bottom = 38.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "活力值：245/245"
+
+[node name="Label3" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 42.0
+margin_right = 290.0
+margin_bottom = 59.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "职业：猛士"
+
+[node name="Label4" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 63.0
+margin_right = 290.0
+margin_bottom = 80.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "称号：江湖枭雄"
+
+[node name="Button" type="Button" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer/Label4"]
+margin_left = 237.5
+margin_top = -3.5
+margin_right = 291.5
+margin_bottom = 19.5
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "(更换)"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label5" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 84.0
+margin_right = 290.0
+margin_bottom = 101.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "帮派：测试名称"
+
+[node name="Label6" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 105.0
+margin_right = 290.0
+margin_bottom = 122.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "身份：英雄"
+
+[node name="Label7" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 126.0
+margin_right = 290.0
+margin_bottom = 143.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "仙人模式：LV18"
+
+[node name="Label8" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 147.0
+margin_right = 290.0
+margin_bottom = 164.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "仙法通灵：LV23"
+
+[node name="Label9" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 168.0
+margin_right = 290.0
+margin_bottom = 185.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "声望等级：LV49(9441/11010)"
+
+[node name="Label10" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 189.0
+margin_right = 290.0
+margin_bottom = 206.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "银两：43549"
+
+[node name="Label11" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 210.0
+margin_right = 290.0
+margin_bottom = 227.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "银票：9695559"
+
+[node name="Label12" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 231.0
+margin_right = 290.0
+margin_bottom = 248.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "积分：245"
+
+[node name="Label13" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 252.0
+margin_right = 290.0
+margin_bottom = 269.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "元宝：100"
+
+[node name="Label14" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 273.0
+margin_right = 290.0
+margin_bottom = 290.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "等级排行：100以外"
+
+[node name="Label15" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 294.0
+margin_right = 290.0
+margin_bottom = 311.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "武勋值：0"
+
+[node name="Label16" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 315.0
+margin_right = 290.0
+margin_bottom = 332.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "婚姻：无"
+
+[node name="Label17" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 336.0
+margin_right = 290.0
+margin_bottom = 353.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "师傅：无"
+
+[node name="Label18" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 357.0
+margin_right = 290.0
+margin_bottom = 374.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "徒弟1：无"
+
+[node name="Label19" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 378.0
+margin_right = 290.0
+margin_bottom = 395.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "徒弟2：无"
+
+[node name="Label20" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 399.0
+margin_right = 290.0
+margin_bottom = 416.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "徒弟3：无"
+
+[node name="Label21" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 420.0
+margin_right = 290.0
+margin_bottom = 437.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "武状元积分：10108"
+
+[node name="Label22" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 441.0
+margin_right = 290.0
+margin_bottom = 458.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "总贡献度：54826"
+
+[node name="Label23" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 462.0
+margin_right = 290.0
+margin_bottom = 479.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "贡献度：2068"
+
+[node name="Label24" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 483.0
+margin_right = 290.0
+margin_bottom = 500.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "军衔：元帅(0)"
+
+[node name="Label25" type="Label" parent="Tabs/Panels/RoleInfo/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 504.0
+margin_right = 290.0
+margin_bottom = 521.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "军工：4300"
+
+[node name="Panel" type="Panel" parent="Tabs/Panels/RoleInfo"]
+anchor_top = 0.943
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.205017
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="Tabs/Panels/RoleInfo/Panel"]
+anchor_right = 0.157
+anchor_bottom = 1.0
+margin_right = -0.107002
+custom_fonts/font = ExtResource( 15 )
+custom_styles/hover = ExtResource( 13 )
+custom_styles/pressed = ExtResource( 13 )
+custom_styles/normal = ExtResource( 13 )
+text = "确定"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Tabs/Panels/RoleInfo"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -65.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMenu" type="PopupMenu" parent="Tabs/Panels/RoleInfo/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -10.0
+margin_top = -10.0
+margin_right = 10.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RoleEqui" type="Panel" parent="Tabs/Panels"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Top" type="Panel" parent="Tabs/Panels/RoleEqui"]
+anchor_right = 1.0
+anchor_bottom = 0.352
+margin_right = 1.0
+margin_bottom = -0.12001
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Role" type="Panel" parent="Tabs/Panels/RoleEqui/Top"]
+margin_right = 219.0
+margin_bottom = 153.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="roletoubu" parent="Tabs/Panels/RoleEqui/Top/Role" instance=ExtResource( 18 )]
+margin_left = 94.0
+margin_top = 12.0
+margin_right = -105.0
+margin_bottom = -121.0
+icon_index = 4
+wear_index = 5
+call_node = NodePath("../../../Background/Background2/ScrollContainer/VBoxContainer/RoleToubu")
+
+[node name="roleshoubu" parent="Tabs/Panels/RoleEqui/Top/Role" instance=ExtResource( 18 )]
+margin_left = 60.0
+margin_top = 20.0
+margin_right = -139.0
+margin_bottom = -113.0
+icon_index = 2
+wear_index = 3
+call_node = NodePath("../../../Background/Background2/ScrollContainer/VBoxContainer/RoleShouzhi")
+
+[node name="rolejinbu" parent="Tabs/Panels/RoleEqui/Top/Role" instance=ExtResource( 18 )]
+margin_left = 129.0
+margin_top = 20.0
+margin_right = -70.0
+margin_bottom = -113.0
+wear_index = 2
+call_node = NodePath("../../../Background/Background2/ScrollContainer/VBoxContainer/RoleJingbu")
+
+[node name="rolejiaobu" parent="Tabs/Panels/RoleEqui/Top/Role" instance=ExtResource( 18 )]
+margin_left = 95.0
+margin_top = 126.0
+margin_right = -104.0
+margin_bottom = -7.0
+icon_index = 8
+wear_index = 9
+call_node = NodePath("../../../Background/Background2/ScrollContainer/VBoxContainer/RoleXiezi")
+
+[node name="roleyaobu" parent="Tabs/Panels/RoleEqui/Top/Role" instance=ExtResource( 18 )]
+margin_left = 60.0
+margin_top = 121.0
+margin_right = -139.0
+margin_bottom = -12.0
+icon_index = 6
+wear_index = 7
+call_node = NodePath("../../../Background/Background2/ScrollContainer/VBoxContainer/RoleYaobu")
+
+[node name="roletuibu" parent="Tabs/Panels/RoleEqui/Top/Role" instance=ExtResource( 18 )]
+margin_left = 129.0
+margin_top = 121.0
+margin_right = -70.0
+margin_bottom = -12.0
+icon_index = 7
+wear_index = 8
+call_node = NodePath("../../../Background/Background2/ScrollContainer/VBoxContainer/RoleTuibu")
+
+[node name="rolewuqi" parent="Tabs/Panels/RoleEqui/Top/Role" instance=ExtResource( 18 )]
+margin_left = 31.0
+margin_top = 34.0
+margin_right = -168.0
+margin_bottom = -99.0
+icon_index = 0
+call_node = NodePath("../../../Background/Background2/ScrollContainer/VBoxContainer/RoleWuqi")
+
+[node name="rolexiongbu" parent="Tabs/Panels/RoleEqui/Top/Role" instance=ExtResource( 18 )]
+margin_left = 31.0
+margin_top = 66.0
+margin_right = -168.0
+margin_bottom = -67.0
+icon_index = 5
+wear_index = 6
+call_node = NodePath("../../../Background/Background2/ScrollContainer/VBoxContainer/RoleXiongBu")
+
+[node name="rolewanbu" parent="Tabs/Panels/RoleEqui/Top/Role" instance=ExtResource( 18 )]
+margin_left = 31.0
+margin_top = 104.0
+margin_right = -168.0
+margin_bottom = -29.0
+icon_index = 3
+wear_index = 4
+call_node = NodePath("../../../Background/Background2/ScrollContainer/VBoxContainer/RoleWanbu")
+
+[node name="rolehufu" parent="Tabs/Panels/RoleEqui/Top/Role" instance=ExtResource( 18 )]
+margin_left = 159.0
+margin_top = 35.0
+margin_right = -40.0
+margin_bottom = -98.0
+icon_index = 9
+wear_index = 10
+call_node = NodePath("../../../Background/Background2/ScrollContainer/VBoxContainer/RoleHufu")
+
+[node name="rolefabao" parent="Tabs/Panels/RoleEqui/Top/Role" instance=ExtResource( 18 )]
+margin_left = 159.0
+margin_top = 67.0
+margin_right = -40.0
+margin_bottom = -66.0
+icon_index = 10
+wear_index = 11
+call_node = NodePath("../../../Background/Background2/ScrollContainer/VBoxContainer/RoleFabao")
+
+[node name="rolebujibao" parent="Tabs/Panels/RoleEqui/Top/Role" instance=ExtResource( 18 )]
+margin_left = 159.0
+margin_top = 105.0
+margin_right = -40.0
+margin_bottom = -28.0
+checked = true
+icon_index = 11
+wear_index = 12
+call_node = NodePath("../../../Background/Background2/ScrollContainer/VBoxContainer/RoleBuJiBao")
+
+[node name="DisplayRole" parent="Tabs/Panels/RoleEqui/Top/Role" instance=ExtResource( 16 )]
+position = Vector2( 103, 116 )
+scale = Vector2( 1.3, 1.3 )
+
+[node name="Pet" type="Panel" parent="Tabs/Panels/RoleEqui/Top"]
+visible = false
+margin_left = 219.0
+margin_right = 352.0
+margin_bottom = 149.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EquiItem1" parent="Tabs/Panels/RoleEqui/Top/Pet" instance=ExtResource( 18 )]
+visible = false
+margin_left = 20.0
+margin_top = 28.0
+margin_right = -93.0
+margin_bottom = -101.0
+icon_index = 12
+
+[node name="EquiItem2" parent="Tabs/Panels/RoleEqui/Top/Pet" instance=ExtResource( 18 )]
+visible = false
+margin_top = 72.0
+margin_right = -113.0
+margin_bottom = -57.0
+icon_index = 13
+
+[node name="EquiItem3" parent="Tabs/Panels/RoleEqui/Top/Pet" instance=ExtResource( 18 )]
+visible = false
+margin_left = 19.0
+margin_top = 116.0
+margin_right = -94.0
+margin_bottom = -13.0
+icon_index = 14
+
+[node name="DisplayPet" parent="Tabs/Panels/RoleEqui/Top/Pet" instance=ExtResource( 4 )]
+position = Vector2( 85, 113 )
+show_name = false
+
+[node name="Background" parent="Tabs/Panels/RoleEqui" instance=ExtResource( 2 )]
+anchor_top = 0.347
+margin_top = 0.0549927
+margin_bottom = -25.0
+
+[node name="Background2" parent="Tabs/Panels/RoleEqui/Background" instance=ExtResource( 7 )]
+anchor_left = 0.047
+anchor_top = 0.069
+anchor_right = 0.953
+anchor_bottom = 0.931
+margin_left = 0.00299835
+margin_top = 0.128998
+margin_right = -0.00302124
+margin_bottom = -0.129013
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Tabs/Panels/RoleEqui/Background/Background2"]
+anchor_left = 0.035
+anchor_top = 0.058
+anchor_right = 0.965
+anchor_bottom = 0.942
+margin_left = -0.13
+margin_top = 0.066
+margin_right = 0.129974
+margin_bottom = -0.0660095
+theme = ExtResource( 12 )
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Panels/RoleEqui/Background/Background2/ScrollContainer"]
+margin_right = 296.0
+margin_bottom = 431.0
+rect_min_size = Vector2( 296, 197 )
+script = ExtResource( 27 )
+
+[node name="RoleWuqi" parent="Tabs/Panels/RoleEqui/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 20 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 296.0
+margin_bottom = 25.0
+equi_type = "武器:"
+test_name = "LV100 [专属]测试武器"
+test_color = Color( 0.94902, 0.0862745, 1, 1 )
+wear_index = 1
+call_node = NodePath("../../../../../Top/Role/rolewuqi")
+
+[node name="RoleXiongBu" parent="Tabs/Panels/RoleEqui/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 20 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 29.0
+margin_right = 296.0
+margin_bottom = 54.0
+equi_type = "胸部:"
+test_name = "LV100 [绑定]测试防具"
+test_color = Color( 0.94902, 0.0862745, 1, 1 )
+wear_index = 3
+call_node = NodePath("../../../../../Top/Role/rolexiongbu")
+
+[node name="RoleShouzhi" parent="Tabs/Panels/RoleEqui/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 20 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 58.0
+margin_right = 296.0
+margin_bottom = 83.0
+equi_type = "手指:"
+test_name = "LV100 [刻印]测试手指"
+test_color = Color( 0.94902, 0.0862745, 1, 1 )
+wear_index = 9
+call_node = NodePath("../../../../../Top/Role/roleshoubu")
+
+[node name="RoleJingbu" parent="Tabs/Panels/RoleEqui/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 20 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 87.0
+margin_right = 296.0
+margin_bottom = 112.0
+equi_type = "颈部:"
+test_name = "LV100 [绑定]测试颈部"
+test_color = Color( 0.94902, 0.0862745, 1, 1 )
+wear_index = 8
+call_node = NodePath("../../../../../Top/Role/rolejinbu")
+
+[node name="RoleWanbu" parent="Tabs/Panels/RoleEqui/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 20 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 116.0
+margin_right = 296.0
+margin_bottom = 141.0
+equi_type = "腕部:"
+test_name = "LV100 [绑定]测试颈部"
+test_color = Color( 0.94902, 0.0862745, 1, 1 )
+wear_index = 4
+call_node = NodePath("../../../../../Top/Role/rolewanbu")
+
+[node name="RoleToubu" parent="Tabs/Panels/RoleEqui/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 20 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 145.0
+margin_right = 296.0
+margin_bottom = 170.0
+equi_type = "头部:"
+test_name = "LV100 [绑定]测试帽子"
+test_color = Color( 0.94902, 0.0862745, 1, 1 )
+wear_index = 2
+call_node = NodePath("../../../../../Top/Role/roletoubu")
+
+[node name="RoleYaobu" parent="Tabs/Panels/RoleEqui/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 20 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 174.0
+margin_right = 296.0
+margin_bottom = 199.0
+equi_type = "腰部:"
+test_name = "LV100 [刻印]测试腰带"
+test_color = Color( 0.94902, 0.0862745, 1, 1 )
+wear_index = 5
+call_node = NodePath("../../../../../Top/Role/roleyaobu")
+
+[node name="RoleTuibu" parent="Tabs/Panels/RoleEqui/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 20 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 203.0
+margin_right = 296.0
+margin_bottom = 228.0
+equi_type = "腿部:"
+test_name = "LV100 [绑定]测试腿部"
+test_color = Color( 0.94902, 0.0862745, 1, 1 )
+wear_index = 6
+call_node = NodePath("../../../../../Top/Role/roletuibu")
+
+[node name="RoleXiezi" parent="Tabs/Panels/RoleEqui/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 20 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 232.0
+margin_right = 296.0
+margin_bottom = 257.0
+equi_type = "脚部:"
+test_name = "LV100 [绑定]测试鞋子"
+test_color = Color( 0.94902, 0.0862745, 1, 1 )
+wear_index = 7
+call_node = NodePath("../../../../../Top/Role/rolejiaobu")
+
+[node name="RoleHufu" parent="Tabs/Panels/RoleEqui/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 20 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 261.0
+margin_right = 296.0
+margin_bottom = 286.0
+equi_type = "护符:"
+test_name = "LV100 [刻印]测试护符"
+test_color = Color( 0.94902, 0.0862745, 1, 1 )
+wear_index = 10
+call_node = NodePath("../../../../../Top/Role/rolehufu")
+
+[node name="RoleFabao" parent="Tabs/Panels/RoleEqui/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 20 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 290.0
+margin_right = 296.0
+margin_bottom = 315.0
+equi_type = "法宝:"
+test_name = "LV100 [刻印]测试法宝"
+test_color = Color( 0.94902, 0.0862745, 1, 1 )
+wear_index = 11
+call_node = NodePath("../../../../../Top/Role/rolefabao")
+
+[node name="RoleBuJiBao" parent="Tabs/Panels/RoleEqui/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 20 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 319.0
+margin_right = 296.0
+margin_bottom = 344.0
+equi_type = "补给包:"
+test_name = "LV100 [刻印]测试法宝"
+test_color = Color( 0.94902, 0.0862745, 1, 1 )
+wear_index = 12
+call_node = NodePath("../../../../../Top/Role/rolebujibao")
+
+[node name="PetWuQi" parent="Tabs/Panels/RoleEqui/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 20 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 348.0
+margin_right = 296.0
+margin_bottom = 373.0
+equi_type = "宠物武器:"
+test_name = "LV100 [绑定][宠]万灵鬼珠"
+test_color = Color( 0.94902, 0.0862745, 1, 1 )
+wear_index = 1111
+
+[node name="PetFangJu" parent="Tabs/Panels/RoleEqui/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 20 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 377.0
+margin_right = 296.0
+margin_bottom = 402.0
+equi_type = "宠物防具:"
+test_name = "LV100 [绑定][宠]白虎袍"
+test_color = Color( 0.94902, 0.0862745, 1, 1 )
+wear_index = 112
+
+[node name="PetSiPin" parent="Tabs/Panels/RoleEqui/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 20 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 406.0
+margin_right = 296.0
+margin_bottom = 431.0
+equi_type = "宠物饰品:"
+test_name = "LV100 [绑定][宠]勇气项链"
+test_color = Color( 0.94902, 0.0862745, 1, 1 )
+wear_index = 113
+
+[node name="Panel" type="Panel" parent="Tabs/Panels/RoleEqui"]
+anchor_top = 0.943
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.205017
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="Tabs/Panels/RoleEqui/Panel"]
+anchor_right = 0.157
+anchor_bottom = 1.0
+margin_right = -0.107002
+custom_fonts/font = ExtResource( 15 )
+custom_styles/hover = ExtResource( 13 )
+custom_styles/pressed = ExtResource( 13 )
+custom_styles/normal = ExtResource( 13 )
+text = "确定"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Tabs/Panels/RoleEqui"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -65.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMenu" type="PopupMenu" parent="Tabs/Panels/RoleEqui/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -10.0
+margin_top = -10.0
+margin_right = 10.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 15 )
+items = [ "卸下", null, 0, false, false, 0, 0, null, "", false, "查看", null, 0, false, false, 1, 0, null, "", false ]
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RoleSkill" type="Panel" parent="Tabs/Panels"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" parent="Tabs/Panels/RoleSkill" instance=ExtResource( 2 )]
+anchor_bottom = 0.943
+margin_bottom = -0.205017
+
+[node name="Background2" parent="Tabs/Panels/RoleSkill/Background" instance=ExtResource( 7 )]
+anchor_left = 0.047
+anchor_top = 0.033
+anchor_right = 0.953
+anchor_bottom = 0.967
+margin_left = 0.00299835
+margin_top = -0.0299997
+margin_right = -0.00302124
+margin_bottom = 0.0299683
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Tabs/Panels/RoleSkill/Background/Background2"]
+anchor_left = 0.044
+anchor_top = 0.037
+anchor_right = 0.956
+anchor_bottom = 0.963
+margin_left = 0.00799847
+margin_top = -0.171
+margin_right = -0.00799561
+margin_bottom = 0.17099
+theme = ExtResource( 12 )
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Panels/RoleSkill/Background/Background2/ScrollContainer"]
+margin_right = 290.0
+margin_bottom = 355.0
+rect_min_size = Vector2( 290, 355 )
+script = ExtResource( 27 )
+
+[node name="RoleSkillItem" parent="Tabs/Panels/RoleSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 21 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 290.0
+margin_bottom = 25.0
+
+[node name="RoleSkillItem2" parent="Tabs/Panels/RoleSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 21 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 29.0
+margin_right = 290.0
+margin_bottom = 54.0
+
+[node name="RoleSkillItem3" parent="Tabs/Panels/RoleSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 21 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 58.0
+margin_right = 290.0
+margin_bottom = 83.0
+
+[node name="RoleSkillItem4" parent="Tabs/Panels/RoleSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 21 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 87.0
+margin_right = 290.0
+margin_bottom = 112.0
+
+[node name="RoleSkillItem5" parent="Tabs/Panels/RoleSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 21 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 116.0
+margin_right = 290.0
+margin_bottom = 141.0
+
+[node name="RoleSkillItem6" parent="Tabs/Panels/RoleSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 21 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 145.0
+margin_right = 290.0
+margin_bottom = 170.0
+
+[node name="RoleSkillItem7" parent="Tabs/Panels/RoleSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 21 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 174.0
+margin_right = 290.0
+margin_bottom = 199.0
+
+[node name="RoleSkillItem8" parent="Tabs/Panels/RoleSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 21 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 203.0
+margin_right = 290.0
+margin_bottom = 228.0
+
+[node name="RoleSkillItem9" parent="Tabs/Panels/RoleSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 21 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 232.0
+margin_right = 290.0
+margin_bottom = 257.0
+
+[node name="RoleSkillItem10" parent="Tabs/Panels/RoleSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 21 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 261.0
+margin_right = 290.0
+margin_bottom = 286.0
+
+[node name="Panel" type="Panel" parent="Tabs/Panels/RoleSkill"]
+anchor_top = 0.943
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.205017
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="Tabs/Panels/RoleSkill/Panel"]
+anchor_right = 0.157
+anchor_bottom = 1.0
+margin_right = -0.107002
+custom_fonts/font = ExtResource( 15 )
+custom_styles/hover = ExtResource( 13 )
+custom_styles/pressed = ExtResource( 13 )
+custom_styles/normal = ExtResource( 13 )
+text = "确定"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Tabs/Panels/RoleSkill"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -65.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMenu" type="PopupMenu" parent="Tabs/Panels/RoleSkill/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -10.0
+margin_top = -10.0
+margin_right = 10.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RoleLib" type="Panel" parent="Tabs/Panels"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 26 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" parent="Tabs/Panels/RoleLib" instance=ExtResource( 2 )]
+anchor_bottom = 0.331
+margin_left = 2.0
+margin_top = 8.0
+margin_right = 2.0
+margin_bottom = 0.0149841
+
+[node name="Background2" parent="Tabs/Panels/RoleLib/Background" instance=ExtResource( 7 )]
+anchor_left = 0.047
+anchor_top = 0.092
+anchor_right = 0.953
+anchor_bottom = 0.908
+margin_left = 0.00299835
+margin_top = -0.012001
+margin_right = -0.00302124
+margin_bottom = 0.0119934
+
+[node name="Level" type="Label" parent="Tabs/Panels/RoleLib/Background/Background2"]
+anchor_left = 0.042
+anchor_top = 0.176
+anchor_right = 0.193
+anchor_bottom = 0.329
+margin_left = 0.143999
+margin_top = -0.0360012
+margin_right = 0.125999
+margin_bottom = -0.019001
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "lv5"
+
+[node name="Exp" type="Label" parent="Tabs/Panels/RoleLib/Background/Background2"]
+anchor_left = 0.637
+anchor_top = 0.176
+anchor_right = 0.961
+anchor_bottom = 0.329
+margin_left = -0.0660095
+margin_top = -0.0360012
+margin_right = -0.0980225
+margin_bottom = -0.019001
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "EXP 100/500"
+
+[node name="Label" type="Label" parent="Tabs/Panels/RoleLib/Background/Background2"]
+anchor_left = 0.03
+anchor_top = 0.581
+anchor_right = 0.181
+anchor_bottom = 0.734
+margin_left = -0.04
+margin_top = 0.00899506
+margin_right = -0.0580025
+margin_bottom = 0.0259933
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "完成度"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="Tabs/Panels/RoleLib/Background/Background2"]
+anchor_left = 0.313
+anchor_top = 0.581
+anchor_right = 0.769
+anchor_bottom = 0.707
+margin_left = -0.0340042
+margin_top = 0.00899506
+margin_right = -0.0420227
+margin_bottom = 0.022995
+theme = SubResource( 11 )
+value = 60.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exp2" type="Label" parent="Tabs/Panels/RoleLib/Background/Background2"]
+anchor_left = 0.819
+anchor_top = 0.554
+anchor_right = 0.904
+anchor_bottom = 0.707
+margin_left = 0.0579834
+margin_top = 0.0059967
+margin_right = 0.0279846
+margin_bottom = 0.022995
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 14 )
+text = "2/4"
+
+[node name="Background2" parent="Tabs/Panels/RoleLib" instance=ExtResource( 2 )]
+anchor_top = 0.352
+anchor_bottom = 0.943
+margin_top = -0.12001
+margin_bottom = -0.205017
+
+[node name="Background2" parent="Tabs/Panels/RoleLib/Background2" instance=ExtResource( 7 )]
+anchor_left = 0.047
+anchor_top = 0.049
+anchor_right = 0.953
+anchor_bottom = 0.951
+margin_left = 0.00299835
+margin_top = -0.0930004
+margin_right = -0.00302124
+margin_bottom = 0.0929871
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Tabs/Panels/RoleLib/Background2/Background2"]
+anchor_left = 0.044
+anchor_top = 0.037
+anchor_right = 0.956
+anchor_bottom = 0.963
+margin_left = 0.00799847
+margin_top = -0.0839996
+margin_right = -0.00799561
+margin_bottom = 0.0839844
+theme = ExtResource( 12 )
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Panels/RoleLib/Background2/Background2/ScrollContainer"]
+margin_right = 290.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 290, 0 )
+script = ExtResource( 27 )
+
+[node name="LibLabelItem" parent="Tabs/Panels/RoleLib/Background2/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 290.0
+margin_bottom = 25.0
+
+[node name="Panel" type="Panel" parent="Tabs/Panels/RoleLib"]
+anchor_top = 0.943
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.205017
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="Tabs/Panels/RoleLib/Panel"]
+anchor_right = 0.157
+anchor_bottom = 1.0
+margin_right = -0.107002
+custom_fonts/font = ExtResource( 15 )
+custom_styles/hover = ExtResource( 13 )
+custom_styles/pressed = ExtResource( 13 )
+custom_styles/normal = ExtResource( 13 )
+text = "确定"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Tabs/Panels/RoleLib"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -65.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMenu" type="PopupMenu" parent="Tabs/Panels/RoleLib/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -10.0
+margin_top = -10.0
+margin_right = 10.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RoleState" type="Panel" parent="Tabs/Panels"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 24 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" parent="Tabs/Panels/RoleState" instance=ExtResource( 2 )]
+anchor_bottom = 0.943
+margin_bottom = -0.205017
+
+[node name="Background2" parent="Tabs/Panels/RoleState/Background" instance=ExtResource( 7 )]
+anchor_left = 0.047
+anchor_top = 0.033
+anchor_right = 0.953
+anchor_bottom = 0.967
+margin_left = 0.00299835
+margin_top = -0.0299997
+margin_right = -0.00302124
+margin_bottom = 0.0299683
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Tabs/Panels/RoleState/Background/Background2"]
+anchor_left = 0.044
+anchor_top = 0.037
+anchor_right = 0.956
+anchor_bottom = 0.963
+margin_left = 0.00799847
+margin_top = -0.171
+margin_right = -0.00799561
+margin_bottom = 0.17099
+theme = ExtResource( 12 )
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Panels/RoleState/Background/Background2/ScrollContainer"]
+margin_right = 290.0
+margin_bottom = 355.0
+rect_min_size = Vector2( 290, 355 )
+script = ExtResource( 27 )
+
+[node name="RoleSateLableItem" parent="Tabs/Panels/RoleState/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 22 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 290.0
+margin_bottom = 25.0
+
+[node name="Panel" type="Panel" parent="Tabs/Panels/RoleState"]
+anchor_top = 0.943
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.205017
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="Tabs/Panels/RoleState/Panel"]
+anchor_right = 0.157
+anchor_bottom = 1.0
+margin_right = -0.107002
+custom_fonts/font = ExtResource( 15 )
+custom_styles/hover = ExtResource( 13 )
+custom_styles/pressed = ExtResource( 13 )
+custom_styles/normal = ExtResource( 13 )
+text = "切换"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Tabs/Panels/RoleState"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -65.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMenu" type="PopupMenu" parent="Tabs/Panels/RoleState/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -10.0
+margin_top = -10.0
+margin_right = 10.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cancle" type="Button" parent="."]
+anchor_left = 0.841
+anchor_top = 0.95
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.0320129
+margin_top = -3.05176e-05
+margin_right = -1.0
+custom_fonts/font = ExtResource( 15 )
+custom_styles/hover = ExtResource( 13 )
+custom_styles/pressed = ExtResource( 13 )
+custom_styles/normal = ExtResource( 13 )
+text = "返回"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="tab_click" from="Tabs/HBoxContainer/AttrTab" to="." method="_on_AttrTab_tab_click"]
+[connection signal="tab_click" from="Tabs/HBoxContainer/InfoTab" to="." method="_on_InfoTab_tab_click"]
+[connection signal="tab_click" from="Tabs/HBoxContainer/EquiTab" to="." method="_on_AttributeTab_tab_click"]
+[connection signal="tab_click" from="Tabs/HBoxContainer/SkillTab" to="." method="_on_SkillTab_tab_click"]
+[connection signal="tab_click" from="Tabs/HBoxContainer/LibraryTab" to="." method="_on_LibraryTab_tab_click"]
+[connection signal="tab_click" from="Tabs/HBoxContainer/StateTab" to="." method="_on_StateTab_tab_click"]
+[connection signal="pressed" from="Tabs/Panels/RoleAttr/Panel2/Button" to="Tabs/Panels/RoleAttr" method="_on_Button_pressed"]
+[connection signal="pressed" from="Tabs/Panels/RoleEqui/Panel/Ok" to="Tabs/Panels/RoleEqui" method="_on_Ok_pressed"]
+[connection signal="index_pressed" from="Tabs/Panels/RoleEqui/Control/PopupMenu" to="Tabs/Panels/RoleEqui" method="_on_PopupMenu_index_pressed"]
+[connection signal="pressed" from="Tabs/Panels/RoleSkill/Panel/Ok" to="Tabs/Panels/RoleSkill" method="_on_Ok_pressed"]
+[connection signal="pressed" from="Tabs/Panels/RoleState/Panel/Ok" to="Tabs/Panels/RoleState" method="_on_Ok_pressed"]
+[connection signal="pressed" from="Cancle" to="." method="_on_Cancle_pressed"]

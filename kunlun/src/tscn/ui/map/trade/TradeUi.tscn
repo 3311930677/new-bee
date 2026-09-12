@@ -1,0 +1,474 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://src/tscn/ui/common/title/XQTitle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/tscn/ui/common/bg/Background2.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/tscn/ui/common/bg/Background.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/tscn/ui/common/tres/NoVHScollBar.tres" type="Theme" id=4]
+[ext_resource path="res://src/tscn/ui/common/btn/btn_left.tres" type="StyleBox" id=5]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=6]
+[ext_resource path="res://src/util/common/ListAutoExpand.gd" type="Script" id=7]
+[ext_resource path="res://src/util/common/ScroContainerGD.gd" type="Script" id=8]
+[ext_resource path="res://src/tscn/ui/common/tres/yinliang.tres" type="Texture" id=9]
+[ext_resource path="res://src/tscn/ui/common/tres/yuanbao.tres" type="Texture" id=10]
+[ext_resource path="res://src/tscn/ui/map/trade/TradeUi.gd" type="Script" id=11]
+[ext_resource path="res://assets/font/font-16.tres" type="DynamicFont" id=12]
+[ext_resource path="res://src/tscn/ui/map/trade/TradeOption.tres" type="Theme" id=13]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0.498039, 0.498039, 1 )
+
+[node name="TradeUi" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Head" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.07
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="XQTitle" parent="Head" instance=ExtResource( 1 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -91.0
+margin_top = -17.5
+margin_right = 92.0
+margin_bottom = 17.5
+title = "购买"
+
+[node name="Tabs" type="Panel" parent="Head"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 3.229
+margin_bottom = -0.0149994
+rect_min_size = Vector2( 0, 50 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tips" type="Label" parent="Head/Tabs"]
+anchor_right = 1.0
+anchor_bottom = 0.286
+margin_bottom = -0.0300007
+custom_fonts/font = ExtResource( 12 )
+text = "名称搜索时条件均失效!"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fac" type="Panel" parent="Head/Tabs"]
+anchor_left = 0.5
+anchor_top = 0.286
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = -0.308001
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FacNum" type="Label" parent="Head/Tabs/Fac"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -45.0
+margin_top = -20.5
+margin_right = 45.0
+margin_bottom = 20.5
+custom_fonts/font = ExtResource( 6 )
+text = "背包容量
+(100/100)"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Coins" type="Panel" parent="Head/Tabs"]
+anchor_top = 0.286
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_top = -0.308001
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Head/Tabs/Coins"]
+anchor_top = 0.214
+anchor_right = 1.0
+anchor_bottom = 0.571
+margin_left = 2.0
+margin_top = -3.984
+margin_bottom = -3.976
+custom_fonts/font = ExtResource( 6 )
+text = "银两："
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Head/Tabs/Coins/Label"]
+margin_left = 54.0
+margin_right = 110.0
+margin_bottom = 20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="YinLiang" type="Label" parent="Head/Tabs/Coins/Label/HBoxContainer"]
+margin_top = 3.0
+margin_right = 56.0
+margin_bottom = 17.0
+text = "9999999"
+
+[node name="TextureRect" type="TextureRect" parent="Head/Tabs/Coins/Label/HBoxContainer"]
+margin_left = 60.0
+margin_right = 71.0
+margin_bottom = 20.0
+texture = ExtResource( 9 )
+stretch_mode = 4
+
+[node name="Label2" type="Label" parent="Head/Tabs/Coins"]
+anchor_top = 0.661
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = -9.016
+margin_bottom = -8.0
+custom_fonts/font = ExtResource( 6 )
+text = "元宝："
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Head/Tabs/Coins/Label2"]
+margin_left = 54.0
+margin_right = 110.0
+margin_bottom = 20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="YuanBao" type="Label" parent="Head/Tabs/Coins/Label2/HBoxContainer"]
+margin_top = 3.0
+margin_right = 56.0
+margin_bottom = 17.0
+text = "9999999"
+
+[node name="TextureRect" type="TextureRect" parent="Head/Tabs/Coins/Label2/HBoxContainer"]
+margin_left = 60.0
+margin_right = 73.0
+margin_bottom = 20.0
+texture = ExtResource( 10 )
+stretch_mode = 4
+
+[node name="Filter" type="Panel" parent="."]
+anchor_top = 0.218
+anchor_right = 1.0
+anchor_bottom = 0.362
+margin_top = -7.62939e-06
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Filter"]
+anchor_left = 0.783
+anchor_top = 0.088
+anchor_right = 1.0
+anchor_bottom = 0.882
+margin_left = -0.0500183
+margin_top = 0.0159993
+margin_bottom = 0.0239983
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Next" type="Button" parent="Filter/Panel"]
+anchor_left = 0.105
+anchor_top = 0.574
+anchor_right = 0.895
+anchor_bottom = 1.0
+margin_left = 0.0199995
+margin_top = 0.00399971
+margin_right = -0.0200043
+custom_fonts/font = ExtResource( 12 )
+text = "下一页"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Pre" type="Button" parent="Filter/Panel"]
+visible = false
+anchor_left = 0.105
+anchor_right = 0.895
+anchor_bottom = 0.426
+margin_left = 0.0199995
+margin_right = -0.0200043
+margin_bottom = -0.00400162
+custom_fonts/font = ExtResource( 12 )
+text = "上一页"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Filter" type="Panel" parent="Filter"]
+anchor_top = 0.088
+anchor_right = 0.674
+anchor_bottom = 1.0
+margin_top = 0.0159993
+margin_right = 0.0999908
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TypeOptionButton" type="OptionButton" parent="Filter/Filter"]
+anchor_right = 0.258
+anchor_bottom = 0.371
+margin_right = 0.111996
+margin_bottom = -2.03
+hint_tooltip = "商品类型"
+theme = ExtResource( 13 )
+text = "全部"
+align = 1
+items = [ "全部", null, false, 0, null, "角色", null, false, 1, null, "宠物", null, false, 2, null, "装备", null, false, 3, null, "宝石", null, false, 4, null, "道具", null, false, 5, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="RoleOptionButton" type="OptionButton" parent="Filter/Filter"]
+visible = false
+anchor_left = 0.288136
+anchor_right = 0.547
+anchor_bottom = 0.371
+margin_right = -0.0920105
+margin_bottom = -0.00200081
+hint_tooltip = "角色职业"
+theme = ExtResource( 13 )
+text = "全部"
+align = 1
+items = [ "全部", null, false, 0, null, "墨家", null, false, 1, null, "道家", null, false, 2, null, "阴阳", null, false, 3, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ArticleOptionButton" type="OptionButton" parent="Filter/Filter"]
+visible = false
+anchor_left = 0.288136
+anchor_right = 0.547
+anchor_bottom = 0.371
+margin_right = -0.0920105
+margin_bottom = -0.00200081
+hint_tooltip = "角色职业"
+theme = ExtResource( 13 )
+text = "全部"
+align = 1
+items = [ "全部", null, false, 0, null, "礼包", null, false, 1, null, "消耗", null, false, 2, null, "其他", null, false, 3, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="EquipOptionButton" type="OptionButton" parent="Filter/Filter"]
+visible = false
+anchor_top = 0.516129
+anchor_right = 0.258
+anchor_bottom = 0.887
+margin_right = 0.111996
+margin_bottom = 0.0059967
+hint_tooltip = "角色职业"
+theme = ExtResource( 13 )
+text = "全部"
+align = 1
+items = [ "全部", null, false, 0, null, "武器", null, false, 1, null, "头部", null, false, 2, null, "胸部", null, false, 3, null, "腕部", null, false, 4, null, "腰部", null, false, 5, null, "腿部", null, false, 6, null, "脚部", null, false, 7, null, "颈部", null, false, 8, null, "手部", null, false, 9, null, "护符", null, false, 10, null, "法宝", null, false, 11, null, "补给", null, false, 12, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="LevelOptionButton" type="OptionButton" parent="Filter/Filter"]
+visible = false
+anchor_left = 0.572034
+anchor_right = 0.932
+anchor_bottom = 0.371
+margin_right = 0.0479889
+margin_bottom = -0.00200081
+hint_tooltip = "等级范围"
+theme = ExtResource( 13 )
+text = "全部"
+align = 1
+items = [ "全部", null, false, 0, null, "LV0-10", null, false, 1, null, "LV10-20", null, false, 2, null, "LV20-30", null, false, 3, null, "LV30-40", null, false, 4, null, "LV40-50", null, false, 5, null, "LV50-60", null, false, 6, null, "LV60-70", null, false, 7, null, "LV70-80", null, false, 8, null, "LV80-90", null, false, 9, null, "LV90-100", null, false, 10, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label" type="Label" parent="Filter/Filter"]
+anchor_left = 0.301
+anchor_top = 0.5
+anchor_right = 0.945
+anchor_bottom = 0.919
+margin_left = -3.036
+margin_right = -3.02002
+margin_bottom = 0.0219994
+custom_fonts/font = ExtResource( 12 )
+text = "名称:"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextEdit" type="TextEdit" parent="Filter/Filter/Label"]
+anchor_left = 0.309
+anchor_top = 0.077
+anchor_right = 1.0
+anchor_bottom = 0.923
+margin_left = 0.0319977
+margin_top = -0.00200009
+margin_bottom = 0.0019989
+custom_fonts/font = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Search" type="Button" parent="Filter"]
+anchor_left = 0.674
+anchor_top = 0.544
+anchor_right = 0.8
+anchor_bottom = 0.882
+margin_left = 0.0999908
+margin_top = 0.00799942
+margin_bottom = 0.0239983
+custom_fonts/font = ExtResource( 12 )
+text = "搜索"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" parent="." instance=ExtResource( 3 )]
+anchor_top = 0.362
+anchor_bottom = 0.96
+margin_top = -1.52588e-05
+
+[node name="Background2" parent="Background" instance=ExtResource( 2 )]
+anchor_left = 0.057
+anchor_top = 0.06
+anchor_right = 0.943
+anchor_bottom = 0.94
+margin_left = -0.0640011
+margin_top = 0.0999985
+margin_right = 0.0639954
+margin_bottom = -0.100037
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Background/Background2"]
+anchor_left = 0.04
+anchor_top = 0.033
+anchor_right = 0.958
+anchor_bottom = 0.936
+margin_left = -0.48
+margin_top = 0.323642
+margin_right = 0.104004
+margin_bottom = 2.90692
+rect_min_size = Vector2( 287, 240 )
+mouse_filter = 1
+theme = ExtResource( 4 )
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/Background2/ScrollContainer"]
+margin_right = 287.0
+margin_bottom = 240.0
+rect_min_size = Vector2( 287, 240 )
+script = ExtResource( 7 )
+
+[node name="Bootom" type="Panel" parent="."]
+anchor_top = 0.95
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -3.05176e-05
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Bootom"]
+anchor_left = 0.159
+anchor_right = 0.844
+anchor_bottom = 1.0
+margin_left = 0.0319977
+margin_right = -0.0880127
+margin_bottom = -3.05176e-05
+custom_fonts/font = ExtResource( 12 )
+text = "点我加载更多"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Next" type="TextureButton" parent="Bootom/Label"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Ok" type="Button" parent="Bootom"]
+anchor_right = 0.156
+anchor_bottom = 1.0
+margin_right = 0.0879974
+custom_fonts/font = ExtResource( 6 )
+custom_styles/hover = ExtResource( 5 )
+custom_styles/pressed = ExtResource( 5 )
+custom_styles/normal = ExtResource( 5 )
+text = "选项"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cancle" type="Button" parent="Bootom"]
+anchor_left = 0.844
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.0880127
+custom_fonts/font = ExtResource( 6 )
+custom_styles/hover = ExtResource( 5 )
+custom_styles/pressed = ExtResource( 5 )
+custom_styles/normal = ExtResource( 5 )
+text = "返回"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMenu" type="PopupMenu" parent="Control"]
+margin_right = 20.0
+margin_bottom = 20.0
+custom_fonts/font = ExtResource( 6 )
+
+[connection signal="pressed" from="Filter/Panel/Next" to="." method="_on_Next_pressed"]
+[connection signal="item_selected" from="Filter/Filter/TypeOptionButton" to="." method="_on_TypeOptionButton_item_selected"]
+[connection signal="pressed" from="Filter/Search" to="." method="_on_Search_pressed"]
+[connection signal="pressed" from="Bootom/Label/Next" to="." method="_on_Next_pressed"]
+[connection signal="pressed" from="Bootom/Ok" to="." method="_on_Ok_pressed"]
+[connection signal="pressed" from="Bootom/Cancle" to="." method="_on_Cancle_pressed"]
+[connection signal="index_pressed" from="Control/PopupMenu" to="." method="_on_PopupMenu_index_pressed"]

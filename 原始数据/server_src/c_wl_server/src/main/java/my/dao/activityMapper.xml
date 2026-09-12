@@ -1,0 +1,1674 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="my.dao.activityMapper">
+    <!--血腥之地-->
+    <select id="getAllXxzd" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_xxzd
+    </select>
+    <select id="getXxzdByPage" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_xxzd
+        order by jf+0 desc limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getXxzdSum" resultType="com.alibaba.fastjson2.JSONObject">
+        select count(name) n from xq_ac_xxzd
+    </select>
+    <select id="getXxzd" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_xxzd where name=#{name} for update
+    </select>
+    <insert id="addXxzd">
+        insert into xq_ac_xxzd(name,jf)
+        values(#{name},'0')
+    </insert>
+    <update id="updateXxzd">
+        update xq_ac_xxzd
+        <set>
+            <if test="jf!=null">
+                jf=#{jf},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remXxzd">
+        delete from xq_ac_xxzd
+    </delete>
+    <!--投资日志-->
+    <select id="getInvestLog" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_invest_log
+        order by created+0 desc limit #{pageNum},#{pageSum}
+    </select>
+    <insert id="addInvestLog">
+        insert into xq_invest_log(Id,item,type,addGoldSum,cutGoldSum,created)
+        values(#{Id},#{item},#{type},#{addGoldSum},#{cutGoldSum},#{created})
+    </insert>
+    <delete id="remInvestLog">
+        delete from xq_invest_log where Id=#{Id}
+    </delete>
+    <!--签到领神、元宝-->
+    <select id="getQdGainShenView" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_qd_gain_shen where name=#{name}
+    </select>
+    <select id="getQdGainShen" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_qd_gain_shen where name=#{name} for update
+    </select>
+    <insert id="addQdGainShen">
+        insert into xq_ac_qd_gain_shen(name,shen_jf,gain_shen,tong_jf,gain_tong,gain_yuanbao,is_shen_gd,is_tong_gd)
+        values(#{name},'0','0','0','0','0','0','0')
+    </insert>
+    <update id="updateQdGainShen">
+        update xq_ac_qd_gain_shen
+        <set>
+            <if test="shen_jf!=null">
+                shen_jf=#{shen_jf},
+            </if>
+            <if test="gain_shen!=null">
+                gain_shen=#{gain_shen},
+            </if>
+            <if test="tong_jf!=null">
+                tong_jf=#{tong_jf},
+            </if>
+            <if test="gain_tong!=null">
+                gain_tong=#{gain_tong},
+            </if>
+            <if test="gain_yuanbao!=null">
+                gain_yuanbao=#{gain_yuanbao},
+            </if>
+            <if test="is_shen_gd!=null">
+                is_shen_gd=#{is_shen_gd},
+            </if>
+            <if test="is_tong_gd!=null">
+                is_tong_gd=#{is_tong_gd},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <update id="clearQdGainShenYb">
+        update xq_ac_qd_gain_shen set gain_yuanbao='0',gain_shen='0',gain_tong='0'
+    </update>
+    <delete id="remQdGainShen">
+        delete from xq_ac_qd_gain_shen where name=#{name}
+    </delete>
+    <!--神符-->
+    <select id="getShenFuOverTime" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_shenfu where #{now}>(end+0)
+    </select>
+    <select id="getShenFuView" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_shenfu where name=#{name}
+    </select>
+    <select id="getShenFu" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_shenfu where name=#{name} for update
+    </select>
+    <insert id="addShenFu">
+        insert into xq_ac_shenfu(name,sf_key,end)
+        values(#{name},#{sf_key},#{end})
+    </insert>
+    <update id="updateShenFu">
+        update xq_ac_shenfu
+        <set>
+            <if test="sf_key!=null">
+                sf_key=#{sf_key},
+            </if>
+            <if test="end!=null">
+                end=#{end},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remShenFu">
+        delete from xq_ac_shenfu where name=#{name}
+    </delete>
+    <delete id="remShenFuByNames">
+        delete from xq_ac_shenfu where name in
+        <foreach collection="names" item="n" open="(" separator="," close=")">
+            #{n}
+        </foreach>
+    </delete>
+    <!--累计档仙绝-->
+    <select id="getLjdXianJue" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_ljd_xianjue where name=#{name} for update
+    </select>
+    <insert id="addLjdXianJue">
+        insert into xq_ac_ljd_xianjue(name,old_jf,jf)
+        values(#{name},'0','0')
+    </insert>
+    <update id="updateLjdXianJue">
+        update xq_ac_ljd_xianjue
+        <set>
+            <if test="old_jf!=null">
+                old_jf=#{old_jf},
+            </if>
+            <if test="jf!=null">
+                jf=#{jf},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remLjdXianJue">
+        delete from xq_ac_ljd_xianjue where name=#{name}
+    </delete>
+    <!--累计档金票-->
+    <select id="getLjdGold" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_ljd_gold where name=#{name} for update
+    </select>
+    <insert id="addLjdGold">
+        insert into xq_ac_ljd_gold(name,old_jf,jf)
+        values(#{name},'0','0')
+    </insert>
+    <update id="updateLjdGold">
+        update xq_ac_ljd_gold
+        <set>
+            <if test="old_jf!=null">
+                old_jf=#{old_jf},
+            </if>
+            <if test="jf!=null">
+                jf=#{jf},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remLjdGold">
+        delete from xq_ac_ljd_gold where name=#{name}
+    </delete>
+    <!--节日礼物-->
+    <select id="getHolidayGift" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_holiday_gift where name=#{name} for update
+    </select>
+    <insert id="addHolidayGift">
+        insert into xq_ac_holiday_gift(name,g0)
+        values(#{name},'0')
+    </insert>
+    <update id="updateHolidayGift">
+        update xq_ac_holiday_gift
+        <set>
+            <if test="g0!=null">
+                g0=#{g0},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remHolidayGift">
+        delete from xq_ac_holiday_gift where name=#{name}
+    </delete>
+    <!--累计档礼包-->
+    <select id="getLeiJiDang" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_leijidang where name=#{name} for update
+    </select>
+    <insert id="addLeiJiDang">
+        insert into xq_ac_leijidang(name,jf)
+        values(#{name},'0')
+    </insert>
+    <update id="updateLeiJiDang">
+        update xq_ac_leijidang
+        <set>
+            <if test="jf!=null">
+                jf=#{jf},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remLeiJiDang">
+        delete from xq_ac_leijidang where name=#{name}
+    </delete>
+    <!--VIP等级礼包-->
+    <select id="getVipGift" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_vip_gift where name=#{name} for update
+    </select>
+    <insert id="addVipGift">
+        insert into xq_ac_vip_gift(name,g1,g2,g3,g4,g5,g6,g7,g8,g9,g10)
+        values(#{name},'0','0','0','0','0','0','0','0','0','0')
+    </insert>
+    <update id="updateVipGift">
+        update xq_ac_vip_gift
+        <set>
+            <if test="g1!=null">
+                g1=#{g1},
+            </if>
+            <if test="g2!=null">
+                g2=#{g2},
+            </if>
+            <if test="g3!=null">
+                g3=#{g3},
+            </if>
+            <if test="g4!=null">
+                g4=#{g4},
+            </if>
+            <if test="g5!=null">
+                g5=#{g5},
+            </if>
+            <if test="g6!=null">
+                g6=#{g6},
+            </if>
+            <if test="g7!=null">
+                g7=#{g7},
+            </if>
+            <if test="g8!=null">
+                g8=#{g8},
+            </if>
+            <if test="g9!=null">
+                g9=#{g9},
+            </if>
+            <if test="g10!=null">
+                g10=#{g10},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remVipGiftByName">
+        delete from xq_ac_vip_gift where name=#{name}
+    </delete>
+    <!--寄卖-->
+    <select id="getJiMaiViewByPage" resultType="com.alibaba.fastjson2.JSONObject">
+        select Id,price,priceType,num,gdType,gd,name from xq_ac_jimai_view
+        <where>
+            <if test="type!=null and type!=0">
+                type=#{type}
+            </if>
+            <if test="kword!=null">
+                kword like #{kword}
+            </if>
+        </where>
+        order by created+0 desc limit #{pageNum},#{pageSum}
+    </select>
+    <select id="countNumByPage" resultType="com.alibaba.fastjson2.JSONObject">
+        select count(Id) n from xq_ac_jimai_view
+        <where>
+            <if test="type!=null and type!=0">
+                type=#{type}
+            </if>
+            <if test="kword!=null">
+                kword=#{kword}
+            </if>
+        </where>
+    </select>
+    <select id="getNumByName" resultType="com.alibaba.fastjson2.JSONObject">
+        select count(Id) n from xq_ac_jimai_view where name=#{name}
+    </select>
+    <select id="getJiMaiViewByName" resultType="com.alibaba.fastjson2.JSONObject">
+        select Id,price,priceType,num,gdType,gd from xq_ac_jimai_view where name=#{name}
+    </select>
+    <select id="getJiMaiIdsByCreated" resultType="com.alibaba.fastjson2.JSONObject">
+        select Id from xq_ac_jimai where created&lt;${t} and endDay=#{endDay} for update
+    </select>
+    <select id="getJiMai" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_jimai where Id=#{Id} for update
+    </select>
+    <insert id="addJiMai">
+        insert into xq_ac_jimai(Id,price,priceType,num,gdType,name,gd,type,kword,created,endDay,bzj)
+        values(#{Id},#{price},#{priceType},#{num},#{gdType},#{name},#{gd},#{type},#{kword},#{created},#{endDay},#{bzj})
+    </insert>
+    <update id="updateJiMai">
+        update xq_ac_jimai
+        <set>
+            <if test="num!=null">
+                num=#{num},
+            </if>
+        </set>
+        where Id=#{Id}
+    </update>
+    <delete id="remJiMaiById">
+        delete from xq_ac_jimai where Id=#{Id}
+    </delete>
+    <delete id="remJiMaiByIds">
+        delete from xq_ac_jimai where id in
+        <foreach collection="ids" item="n" open="(" separator="," close=")">
+            #{n}
+        </foreach>
+    </delete>
+    <!--开服限购礼包-->
+    <select id="getOpenServerBuyGift" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_open_server_buy_gift where name=#{name} for update
+    </select>
+    <insert id="addOpenServerBuyGift">
+        insert into xq_ac_open_server_buy_gift(name,g0,g1)
+        values(#{name},'0','0')
+    </insert>
+    <update id="updateOpenServerBuyGift">
+        update xq_ac_open_server_buy_gift
+        <set>
+            <if test="g0!=null">
+                g0=#{g0},
+            </if>
+            <if test="g1!=null">
+                g1=#{g1},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <!--开服签到礼包-->
+    <select id="getOpenServerQianDaoGift" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_open_server_qiandao_gift where name=#{name} for update
+    </select>
+    <insert id="addOpenServerQianDaoGift">
+        insert into xq_ac_open_server_qiandao_gift(name,gain,day_sum)
+        values(#{name},'0','0')
+    </insert>
+    <update id="updateOpenServerQianDaoGift">
+        update xq_ac_open_server_qiandao_gift
+        <set>
+            <if test="gain!=null">
+                gain=#{gain},
+            </if>
+            <if test="day_sum!=null">
+                day_sum=#{day_sum},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <update id="clearOpenServerQianDaoGift">
+        update xq_ac_open_server_qiandao_gift set gain='0'
+    </update>
+    <!--开服等级礼包-->
+    <select id="getOpenServerLvGift" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_open_server_lv_gift where name=#{name} for update
+    </select>
+    <insert id="addOpenServerLvGift">
+        insert into xq_ac_open_server_lv_gift(name,g0,g1,g2,g3,g4,g5,g6,g7)
+        values(#{name},'0','0','0','0','0','0','0','0')
+    </insert>
+    <update id="updateOpenServerLvGift">
+        update xq_ac_open_server_lv_gift
+        <set>
+            <if test="g0!=null">
+                g0=#{g0},
+            </if>
+            <if test="g1!=null">
+                g1=#{g1},
+            </if>
+            <if test="g2!=null">
+                g2=#{g2},
+            </if>
+            <if test="g3!=null">
+                g3=#{g3},
+            </if>
+            <if test="g4!=null">
+                g4=#{g4},
+            </if>
+            <if test="g5!=null">
+                g5=#{g5},
+            </if>
+            <if test="g6!=null">
+                g6=#{g6},
+            </if>
+            <if test="g7!=null">
+                g7=#{g7},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+
+    <!--帮派传壁积分-->
+    <select id="getCbBpOrderByJf" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_order_cb_bp order by jf+0 desc limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getCbBpOrder" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_order_cb_bp where bpId=#{bpId}
+    </select>
+    <insert id="addCbBpOrder">
+        insert into xq_order_cb_bp(bpId,jf)
+        values(#{bpId},'0')
+    </insert>
+    <update id="updateCbBpOrder">
+        update xq_order_cb_bp
+        <set>
+            <if test="jf!=null">
+                jf=#{jf},
+            </if>
+        </set>
+        where bpId=#{bpId}
+    </update>
+    <delete id="clearCbBpOrder">
+        delete from xq_order_cb_bp
+    </delete>
+    <!--传壁积分-->
+    <select id="getCbOrderByZongJf" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_order_cb order by (jf1+0)+(jf2+0)+(jf3+0)+(jf4+0) desc limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getCbOrderByJf1" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_order_cb order by jf1+0 desc limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getCbOrderByJf2" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_order_cb order by jf2+0 desc limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getCbOrderByJf3" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_order_cb order by jf3+0 desc limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getCbOrderByJf4" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_order_cb order by jf4+0 desc limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getCbOrder" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_order_cb where name=#{name}
+    </select>
+    <insert id="addCbOrder">
+        insert into xq_order_cb(name,jf1,jf2,jf3,jf4)
+        values(#{name},'0','0','0','0')
+    </insert>
+    <update id="updateCbOrder">
+        update xq_order_cb
+        <set>
+            <if test="jf1!=null">
+                jf1=#{jf1},
+            </if>
+            <if test="jf2!=null">
+                jf2=#{jf2},
+            </if>
+            <if test="jf3!=null">
+                jf3=#{jf3},
+            </if>
+            <if test="jf4!=null">
+                jf4=#{jf4},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="clearCbOrder">
+        delete from xq_order_cb
+    </delete>
+    <!--通缉-->
+    <select id="getTongji" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_tongji where name=#{name} for update
+    </select>
+    <insert id="addTongji">
+        insert into xq_ac_tongji(name,tj_name,created)
+        values(#{name},#{tj_name},#{created})
+    </insert>
+    <update id="updateTongji">
+        update xq_ac_tongji
+        <set>
+            <if test="tj_name!=null">
+                tj_name=#{tj_name},
+            </if>
+            <if test="created!=null">
+                created=#{created},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remTongji">
+        delete from xq_ac_tongji where name=#{name}
+    </delete>
+    <!--农场-->
+    <select id="getFarmView" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_farm_view where name=#{name}
+    </select>
+    <select id="getFarm" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_farm where name=#{name} for update
+    </select>
+    <insert id="addFarm">
+        insert into xq_ac_farm(name,td,times,gain)
+        values(#{name},#{td},#{times},'0')
+    </insert>
+    <update id="updateFarm">
+        update xq_ac_farm
+        <set>
+            <if test="td!=null">
+                td=#{td},
+            </if>
+            <if test="times!=null">
+                times=#{times},
+            </if>
+            <if test="gain!=null">
+                gain=#{gain},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <update id="clearFarm">
+        update xq_ac_farm set times='0',gain='0'
+    </update>
+    <delete id="remFarm">
+        delete from xq_ac_farm where name=#{name}
+    </delete>
+    <!--洪荒宝库-->
+    <select id="getHHBK" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_hhbk where name=#{name} for update
+    </select>
+    <insert id="addHHBK">
+        insert into xq_ac_hhbk(name,search_res,yaoshi_num,sheng_pos,si_mon_num,open_box2,open_box3,created)
+        values(#{name},#{search_res},#{yaoshi_num},#{sheng_pos},#{si_mon_num},#{open_box2},#{open_box3},#{created})
+    </insert>
+    <update id="updateHHBK">
+        update xq_ac_hhbk
+        <set>
+            <if test="search_res!=null">
+                search_res=#{search_res},
+            </if>
+            <if test="yaoshi_num!=null">
+                yaoshi_num=#{yaoshi_num},
+            </if>
+            <if test="sheng_pos!=null">
+                sheng_pos=#{sheng_pos},
+            </if>
+            <if test="si_mon_num!=null">
+                si_mon_num=#{si_mon_num},
+            </if>
+            <if test="open_box2!=null">
+                open_box2=#{open_box2},
+            </if>
+            <if test="open_box3!=null">
+                open_box3=#{open_box3},
+            </if>
+            <if test="created!=null">
+                created=#{created},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remHHBK">
+        delete from xq_ac_hhbk where name=#{name}
+    </delete>
+    <!--仗剑除魔-->
+    <select id="getZJCM" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_zjcm where name=#{name}
+    </select>
+    <insert id="addZJCM">
+        insert into xq_ac_zjcm(name,times,map_key)
+        values(#{name},'20',#{map_key})
+    </insert>
+    <update id="updateZJCM">
+        update xq_ac_zjcm
+        <set>
+            <if test="times!=null">
+                times=#{times},
+            </if>
+            <if test="map_key!=null">
+                map_key=#{map_key},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="clearZJCM">
+        delete from xq_ac_zjcm
+    </delete>
+    <!--王者遗产-->
+    <select id="getWzyc" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_wzyc where name=#{name}
+    </select>
+    <insert id="addWzyc">
+        insert into xq_ac_wzyc(name,type,gain_times,sx_times,lv,free_sx_times,cbt_key)
+        values(#{name},'0','3','0','1','1',NULL)
+    </insert>
+    <update id="updateWzyc">
+        update xq_ac_wzyc
+        <set>
+            <if test="gain_times!=null">
+                gain_times=#{gain_times},
+            </if>
+            <if test="sx_times!=null">
+                sx_times=#{sx_times},
+            </if>
+            <if test="free_sx_times!=null">
+                free_sx_times=#{free_sx_times},
+            </if>
+            <if test="type!=null">
+                type=#{type},
+            </if>
+            <if test="lv!=null">
+                lv=#{lv},
+            </if>
+            <if test="cbt_key!=null">
+                cbt_key=#{cbt_key},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <update id="clearWzycCbtKey">
+        update xq_ac_wzyc cbt_key=NULL where name=#{name}
+    </update>
+    <delete id="clearWzyc">
+        update xq_ac_wzyc set free_sx_times='1',gain_times='3'
+    </delete>
+    <!--聚灵真火-->
+    <select id="getJuling" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_juling where name=#{name}
+    </select>
+    <insert id="addJuling">
+        insert into xq_ac_juling(name,times)
+        values(#{name},'3')
+    </insert>
+    <update id="updateJuling">
+        update xq_ac_juling
+        <set>
+            <if test="times!=null">
+                times=#{times},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="clearJuling">
+        delete from xq_ac_juling
+    </delete>
+    <!--垂钓-->
+    <select id="getChuiDiao" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_chuidiao where name=#{name}
+    </select>
+    <insert id="addChuiDiao">
+        insert into xq_ac_chuidiao(name,free_times,fufei_times)
+        values(#{name},'2','3')
+    </insert>
+    <update id="updateChuiDiao">
+        update xq_ac_chuidiao
+        <set>
+            <if test="free_times!=null">
+                free_times=#{free_times},
+            </if>
+            <if test="fufei_times!=null">
+                fufei_times=#{fufei_times},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="clearChuiDiao">
+        delete from xq_ac_chuidiao
+    </delete>
+    <!--锄奸卫道-->
+    <select id="getCjwd" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_cjwd where name=#{name}
+    </select>
+    <insert id="addCjwd">
+        insert into xq_ac_cjwd(name,list_index,times)
+        values(#{name},#{list_index},5)
+    </insert>
+    <update id="updateCjwd">
+        update xq_ac_cjwd
+        <set>
+            <if test="times!=null">
+                times=#{times},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="clearCjwd">
+        delete from xq_ac_cjwd
+    </delete>
+    <!--天兵-->
+    <select id="getTianbing" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_tianbing where name=#{name}
+    </select>
+    <insert id="addTianbing">
+        insert into xq_ac_tianbing(name,lv)
+        values(#{name},'1')
+    </insert>
+    <update id="updateTianbing">
+        update xq_ac_tianbing
+        <set>
+            <if test="lv!=null">
+                lv=#{lv},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remTianbing">
+        delete from xq_ac_tianbing where name=#{name}
+    </delete>
+    <!--竞技场（旧版）-->
+    <select id="getJingjiSum" resultType="com.alibaba.fastjson2.JSONObject">
+        select count(name) n from xq_ac_jingji
+    </select>
+    <select id="getJingjiOrderByJf" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_jingji order by jf desc limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getJingji" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_jingji where name=#{name}
+    </select>
+    <insert id="addJingji">
+        insert into xq_ac_jingji(name,jf,times)
+        values(#{name},'0','0')
+    </insert>
+    <update id="updateJingji">
+        update xq_ac_jingji
+        <set>
+            <if test="jf!=null">
+                jf=#{jf},
+            </if>
+            <if test="times!=null">
+                times=#{times},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <update id="clearTimesJingji">
+        update xq_ac_jingji set times='0'
+    </update>
+    <delete id="remJingji">
+        delete from xq_ac_jingji
+    </delete>
+    <!--境界突破 心魔-->
+    <select id="getXinMo" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_xinmo where name=#{name}
+    </select>
+    <insert id="addXinMo">
+        insert into xq_ac_xinmo(name,lv)
+        values(#{name},'0')
+    </insert>
+    <update id="updateXinMo">
+        update xq_ac_xinmo
+        <set>
+            <if test="lv!=null">
+                lv=#{lv},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remXinMo">
+        delete from xq_ac_xinmo
+    </delete>
+    <!--魔神降临-->
+    <select id="getMSJLMsg" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_msjl_msg where name=#{name}
+    </select>
+    <insert id="addMSJLMsg">
+        insert into xq_ac_msjl_msg(name,times)
+        values(#{name},'0')
+    </insert>
+    <update id="updateMSJLMsg">
+        update xq_ac_msjl_msg
+        <set>
+            <if test="times!=null">
+                times=#{times},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remMSJLMsg">
+        delete from xq_ac_msjl_msg
+    </delete>
+    <!--成王败寇-->
+    <select id="getCWBK" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_cwbk
+        <where>
+            <if test="Id!=null">
+                Id=#{Id}
+            </if>
+        </where>
+    </select>
+    <insert id="addCWBK">
+        insert into xq_ac_cwbk(Id,name,start)
+        values(#{Id},#{name},#{start})
+    </insert>
+    <update id="updateCWBK">
+        update xq_ac_cwbk
+        <set>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="start!=null">
+                start=#{start},
+            </if>
+        </set>
+        where Id=#{Id}
+    </update>
+    <update id="resetCWBK">
+        update xq_ac_cwbk set name=null,start=null
+        where Id=#{Id}
+    </update>
+    <delete id="remCWBK">
+        delete from xq_ac_cwbk
+    </delete>
+    <!--百炼妖塔-->
+    <select id="getBLYT" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_blyt where name=#{name}
+    </select>
+    <insert id="addBLYT">
+        insert into xq_ac_blyt(name,lever)
+        values(#{name},'1')
+    </insert>
+    <update id="updateBLYT">
+        update xq_ac_blyt
+        <set>
+            <if test="lever!=null">
+                lever=#{lever},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remBLYT">
+        delete from xq_ac_blyt
+    </delete>
+    <!--活动期间消费的元宝累计-->
+    <select id="getXFLJ" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_sjjl_xf_lj where name=#{name}
+    </select>
+    <insert id="addXFLJ">
+        insert into xq_ac_sjjl_xf_lj(name,yb)
+        values(#{name},'0')
+    </insert>
+    <update id="updateXFLJ">
+        update xq_ac_sjjl_xf_lj
+        <set>
+            <if test="yb!=null">
+                yb=#{yb},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remXFLJ">
+        delete from xq_ac_sjjl_xf_lj
+    </delete>
+    <!--团购累计奖励领取情况-->
+    <select id="getTGRG" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_tuangou_rewards_gain where name=#{name}
+    </select>
+    <insert id="addTGRG">
+        insert into xq_ac_tuangou_rewards_gain(name,a1,a2,a3)
+        values(#{name},#{a1},#{a2},#{a3})
+    </insert>
+    <update id="updateTGRG">
+        update xq_ac_tuangou_rewards_gain
+        <set>
+            <if test="a1!=null">
+                a1=#{a1},
+            </if>
+            <if test="a2!=null">
+                a2=#{a2},
+            </if>
+            <if test="a3!=null">
+                a3=#{a3},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remTGRG">
+        delete from xq_ac_tuangou_rewards_gain
+    </delete>
+    <!--团购累计(一共3档，活动开启时初始化一次)-->
+    <select id="getAllTGR" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_tuangou_rewards
+    </select>
+    <select id="getTGR" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_tuangou_rewards where Id=#{Id}
+    </select>
+    <insert id="addTGR">
+        insert into xq_ac_tuangou_rewards(Id,times)
+        values(#{Id},'0')
+    </insert>
+    <update id="updateTGR">
+        update xq_ac_tuangou_rewards
+        <set>
+            <if test="times!=null">
+                times=#{times},
+            </if>
+        </set>
+        where Id=#{Id}
+    </update>
+    <delete id="remTGR">
+        delete from xq_ac_tuangou_rewards
+    </delete>
+    <!--神将降临-->
+    <select id="getSjjl" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_sjjl where name=#{name}
+    </select>
+    <insert id="addSjjl">
+        insert into xq_ac_sjjl(name,times,exchange,cqrewards,qiandao,
+        xfrewards,tuangou,libao,ybrewards)
+        values(#{name},'0','{}','{}','{}','{}','{}','{}','{}')
+    </insert>
+    <update id="updateSjjl">
+        update xq_ac_sjjl
+        <set>
+            <if test="times!=null">
+                times=#{times},
+            </if>
+            <if test="exchange!=null">
+                exchange=#{exchange},
+            </if>
+            <if test="cqrewards!=null">
+                cqrewards=#{cqrewards},
+            </if>
+            <if test="qiandao!=null">
+                qiandao=#{qiandao},
+            </if>
+            <if test="xfrewards!=null">
+                xfrewards=#{xfrewards},
+            </if>
+            <if test="tuangou!=null">
+                tuangou=#{tuangou},
+            </if>
+            <if test="libao!=null">
+                libao=#{libao},
+            </if>
+            <if test="ybrewards!=null">
+                ybrewards=#{ybrewards},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remSjjl">
+        delete from xq_ac_sjjl
+    </delete>
+    <!--王侯将相-->
+    <select id="getSomeWHJX" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_whjx where jf>${minJf} and jf &lt; ${maxJf}
+    </select>
+    <select id="getWHJX" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_whjx where name=#{name}
+    </select>
+    <insert id="addWHJX">
+        insert into xq_ac_whjx(name,jf,times)
+        values(#{name},'0','5')
+    </insert>
+    <update id="updateWHJX">
+        update xq_ac_whjx
+        <set>
+            <if test="jf!=null">
+                jf=#{jf},
+            </if>
+            <if test="times!=null">
+                times=#{times},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <update id="clearTimesWHJX">
+        update xq_ac_whjx set times='5'
+    </update>
+    <delete id="remWHJX">
+        delete from xq_ac_whjx
+    </delete>
+    <!--幽谷秘宝-->
+    <select id="getYGMB" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_ygmb where name=#{name}
+    </select>
+    <insert id="addYGMB">
+        insert into xq_ac_ygmb(name,r1,r2,r3)
+        values(#{name},'0','0','0')
+    </insert>
+    <update id="updateYGMB">
+        update xq_ac_ygmb
+        <set>
+            <if test="r1!=null">
+                r1=#{r1},
+            </if>
+            <if test="r2!=null">
+                r2=#{r2},
+            </if>
+            <if test="r3!=null">
+                r3=#{r3},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remYGMB">
+        delete from xq_ac_ygmb where name=#{name}
+    </delete>
+    <!--摸金校尉-->
+    <select id="getMJXW" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_mjxw where name=#{name}
+    </select>
+    <insert id="addMJXW">
+        insert into xq_ac_mjxw(name,r1,r2,r3)
+        values(#{name},'0','0','0')
+    </insert>
+    <update id="updateMJXW">
+        update xq_ac_mjxw
+        <set>
+            <if test="r1!=null">
+                r1=#{r1},
+            </if>
+            <if test="r2!=null">
+                r2=#{r2},
+            </if>
+            <if test="r3!=null">
+                r3=#{r3},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remMJXW">
+        delete from xq_ac_mjxw
+    </delete>
+    <!--师徒登记-->
+    <select id="getStSignView" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_st_sign_view where lever>=15 and 60>lever
+    </select>
+    <select id="getStSign" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_st_sign where name=#{name}
+    </select>
+    <insert id="addStSign">
+        insert into xq_ac_st_sign(name)
+        values(#{name})
+    </insert>
+    <delete id="remStSign">
+        delete from xq_ac_st_sign where name=#{name}
+    </delete>
+    <!--土豪、侠义、战力榜-->
+    <select id="getManViewSum" resultType="com.alibaba.fastjson2.JSONObject">
+        select count(name) n from xq_man_view
+    </select>
+    <select id="getManView" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_man_view limit #{pageNum},#{pageSum}
+    </select>
+    <!--等级榜-->
+    <select id="getLvViewSum" resultType="com.alibaba.fastjson2.JSONObject">
+        select count(name) n from xq_lv_prop_view
+    </select>
+    <select id="getLvView" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_lv_prop_view order by lever desc
+        limit #{pageNum},#{pageSum}
+    </select>
+    <!--天梯-->
+    <select id="getTtViewSum" resultType="com.alibaba.fastjson2.JSONObject">
+        select count(name) n from xq_ac_tianti_view
+    </select>
+    <select id="getTtView" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_tianti_view order by ts+0 desc
+        limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getTiantiByName" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_tianti where name=#{name}
+    </select>
+    <insert id="addTianti">
+        insert into xq_ac_tianti(name,ts)
+        values(#{name},#{ts})
+    </insert>
+    <update id="updateTianti">
+        update xq_ac_tianti
+        <set>
+            <if test="ts!=null">
+                ts=#{ts}
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remTianti">
+        delete from xq_ac_tianti
+    </delete>
+    <!--排位-->
+    <select id="getOrderFromJJView" resultType="com.alibaba.fastjson2.JSONObject">
+        select @row_num := @row_num + 1 AS row_num,t1.name,t1.jd,t2.model,t2.lever from xq_ac_pk_jj_view t1,xq_role
+        t2,(SELECT @row_num := 0) t3 where t1.name=t2.name order by t1.jd+0 desc
+        limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getOrderFromJJViewByName" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from (select @row_num := @row_num + 1 AS row_num,t1.name,t1.jd,t2.model,t2.lever from xq_ac_pk_jj_view
+        t1,xq_role t2,(SELECT @row_num := 0) t3 where t1.name=t2.name order by t1.jd+0 desc) t4
+        where name=#{name}
+    </select>
+    <select id="getJdFromJJView" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_pk_jj_view order by jd+0 desc
+        limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getJJViewSum" resultType="com.alibaba.fastjson2.JSONObject">
+        select count(name) n from xq_ac_pk_jj_view
+    </select>
+    <select id="getJdFromPWView" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_pk_pw_view order by jd+0 desc
+        limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getPWViewSum" resultType="com.alibaba.fastjson2.JSONObject">
+        select count(name) n from xq_ac_pk_pw_view
+    </select>
+
+    <select id="getJdFromPWViewByWs" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_pk_pw_view where (jd+0)>=5500 order by jd+0 desc
+        limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getPWViewSumByWs" resultType="com.alibaba.fastjson2.JSONObject">
+        select count(name) n from xq_ac_pk_pw_view where (jd+0)>=5500
+    </select>
+
+    <select id="getPaiweiNearJd" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_paiwei
+        <where>
+            <if test="max!=null">
+                #{max}>jd
+            </if>
+            <if test="max!=null">
+                and jd>#{min}
+            </if>
+            <if test="names!=null">
+                and name not in
+                <foreach collection="names" item="n" open="(" separator="," close=")">
+                    #{n}
+                </foreach>
+            </if>
+
+        </where>
+        limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getPaiweiByName" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_paiwei where name=#{name}
+    </select>
+    <insert id="addPaiwei">
+        insert into xq_ac_paiwei(name,jd)
+        values(#{name},#{jd})
+    </insert>
+    <update id="updatePaiwei">
+        update xq_ac_paiwei
+        <set>
+            <if test="jd!=null">
+                jd=#{jd}
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remPaiwei">
+        delete from xq_ac_paiwei
+    </delete>
+    <update id="clearPaiwei">
+        update xq_ac_paiwei set jd='1000'
+    </update>
+    <!--个人竞技-->
+    <select id="getJjNearJd" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_person_jj
+        <where>
+            <if test="max!=null">
+                #{max}>jd
+            </if>
+            <if test="max!=null">
+                and jd>=#{min}
+            </if>
+            <if test="names!=null">
+                and name not in
+                <foreach collection="names" item="n" open="(" separator="," close=")">
+                    #{n}
+                </foreach>
+            </if>
+
+        </where>
+        limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getJjByName" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_person_jj where name=#{name}
+    </select>
+    <insert id="addJj">
+        insert into xq_ac_person_jj(name,jd,times)
+        values(#{name},#{jd},#{times})
+    </insert>
+    <update id="clearPersonJj">
+        update xq_ac_person_jj set times='16'
+    </update>
+    <update id="updateJj">
+        update xq_ac_person_jj
+        <set>
+            <if test="jd!=null">
+                jd=#{jd},
+            </if>
+            <if test="times!=null">
+                times=#{times},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remJj">
+        delete from xq_ac_person_jj
+    </delete>
+    <!--集字-->
+    <select id="getJiziByPage" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_jizi limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getJiziSum" resultType="com.alibaba.fastjson2.JSONObject">
+        select count(name) n from xq_ac_jizi
+    </select>
+    <select id="getJizi" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_jizi where name=#{name}
+    </select>
+    <insert id="addJizi">
+        insert into xq_ac_jizi(name,sub)
+        values(#{name},#{sub})
+    </insert>
+    <update id="updateJizi">
+        update xq_ac_jizi
+        <set>
+            <if test="sub!=null">
+                sub=#{sub},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remJizi">
+        delete from xq_ac_jizi
+    </delete>
+    <!--等级豪礼-->
+    <select id="getLvGift" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_lv_gift where name=#{name}
+    </select>
+    <insert id="addLvGift">
+        insert into xq_ac_lv_gift(name,gain)
+        values(#{name},'[]')
+    </insert>
+    <update id="updateLvGift">
+        update xq_ac_lv_gift
+        <set>
+            <if test="gain!=null">
+                gain=#{gain},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remLvGift">
+        delete from xq_ac_lv_gift
+    </delete>
+    <!--每日签到-->
+    <select id="getDayQiandao" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_day_qiandao where name=#{name}
+    </select>
+    <insert id="addDayQiandao">
+        insert into xq_ac_day_qiandao(name,gain)
+        values(#{name},'0')
+    </insert>
+    <update id="updateDayQiandao">
+        update xq_ac_day_qiandao
+        <set>
+            <if test="gain!=null">
+                gain=#{gain},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remDayQiandao">
+        delete from xq_ac_day_qiandao
+    </delete>
+    <!--签到-->
+    <select id="getQiandao" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_qiandao where name=#{name}
+    </select>
+    <insert id="addQiandao">
+        insert into xq_ac_qiandao(name,unlock0,gain0)
+        values(#{name},'1','0')
+    </insert>
+    <update id="updateQiandao">
+        update xq_ac_qiandao
+        <set>
+            <if test="gain0!=null">
+                gain0=#{gain0},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="remQiandao">
+        delete from xq_ac_qiandao
+    </delete>
+    <!--追杀令-->
+    <select id="getZslSum" resultType="com.alibaba.fastjson2.JSONObject">
+        select count(Id) num from xq_ac_zsl
+    </select>
+    <select id="getZslSumNoGetter" resultType="com.alibaba.fastjson2.JSONObject">
+        select count(Id) num from xq_ac_zsl where getter is null
+    </select>
+    <select id="getZsl" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_zsl
+        <where>
+            <if test="Id!=null">
+                Id=#{Id}
+            </if>
+            <if test="getter!=null">
+                and getter=#{getter}
+            </if>
+        </where>
+        limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getZslByNoGetter" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_zsl where getter is null limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getZslByDestroy" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_zsl where #{now}>destroy
+    </select>
+    <insert id="addZsl">
+        insert into xq_ac_zsl(Id,price,price_type,player,name,getter,created,destroy)
+        values(#{Id},#{price},#{price_type},#{player},#{name},#{getter},#{created},#{destroy})
+    </insert>
+    <update id="updateZsl">
+        update xq_ac_zsl
+        <set>
+            <if test="getter!=null">
+                getter=#{getter},
+            </if>
+        </set>
+        where Id=#{Id}
+    </update>
+    <delete id="remZsl">
+        delete from xq_ac_zsl where Id=#{Id}
+    </delete>
+    <!--论贱个人赛注册-->
+    <select id="getPersonLunjianSum" resultType="com.alibaba.fastjson2.JSONObject">
+        select count(name) num from xq_ac_pet_lunjian_person_sign
+    </select>
+    <select id="getPersonLunJianPetSignOrder" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_pet_lunjian_person_sign
+        <where>
+            <if test="jf!=null">
+                jf>=${jf}
+            </if>
+        </where>
+        order by jf desc limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getPersonLunJianPetSign" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_pet_lunjian_person_sign
+        <where>
+            <if test="name!=null">
+                name=#{name}
+            </if>
+            <if test="fail_times!=null">
+                fail_times>${fail_times}
+            </if>
+        </where>
+    </select>
+    <insert id="addPersonLunJianPetSign">
+        insert into xq_ac_pet_lunjian_person_sign(name,jf,fail_times,members) values(#{name},'0','2',#{members})
+    </insert>
+    <update id="updatePersonLunJianPetSign">
+        update xq_ac_pet_lunjian_person_sign
+        <set>
+            <if test="jf!=null">
+                jf=#{jf},
+            </if>
+            <if test="fail_times!=null">
+                fail_times=#{fail_times},
+            </if>
+            <if test="members!=null">
+                members=#{members},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="clearPersonLunJianPetSign">
+        delete from xq_ac_pet_lunjian_person_sign
+    </delete>
+    <!--论贱个人创建比赛-->
+    <select id="getLunjianPerson" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_pet_lunjian_person
+    </select>
+    <insert id="addLunJianPerson">
+        insert into xq_ac_pet_lunjian_person(title,bmf_type,bmf_v,jj_type,jj_v,name,created)
+        values(#{title},#{bmf_type},#{bmf_v},#{jj_type},#{jj_v},#{name},#{created})
+    </insert>
+    <update id="updateLunJianPerson">
+        update xq_ac_pet_lunjian_person
+        <set>
+            <if test="bmf_type!=null">
+                bmf_type=#{bmf_type},
+            </if>
+            <if test="bmf_v!=null">
+                bmf_v=#{bmf_v},
+            </if>
+            <if test="jj_type!=null">
+                jj_type=#{jj_type},
+            </if>
+            <if test="jj_v!=null">
+                jj_v=#{jj_v},
+            </if>
+        </set>
+        where name=#{title}
+    </update>
+    <delete id="clearLunJianPerson">
+        delete from xq_ac_pet_lunjian_person
+    </delete>
+
+    <!--宠物论贱报名-->
+    <select id="getLunjianSum" resultType="com.alibaba.fastjson2.JSONObject">
+        select count(name) num from xq_ac_pet_lunjian_sign
+    </select>
+    <select id="getLunJianPetSignOrder" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_pet_lunjian_sign
+        <where>
+            <if test="jf!=null">
+                jf>=${jf}
+            </if>
+        </where>
+        order by jf desc limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getLunJianPetSign" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_pet_lunjian_sign
+        <where>
+            <if test="name!=null">
+                name=#{name}
+            </if>
+            <if test="fail_times!=null">
+                fail_times>${fail_times}
+            </if>
+        </where>
+    </select>
+    <insert id="addLunJianPetSign">
+        insert into xq_ac_pet_lunjian_sign(name,jf,fail_times,members) values(#{name},'0','2',#{members})
+    </insert>
+    <update id="updateLunJianPetSign">
+        update xq_ac_pet_lunjian_sign
+        <set>
+            <if test="jf!=null">
+                jf=#{jf},
+            </if>
+            <if test="fail_times!=null">
+                fail_times=#{fail_times},
+            </if>
+            <if test="members!=null">
+                members=#{members},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="clearLunJianPetSign">
+        delete from xq_ac_pet_lunjian_sign
+    </delete>
+    <!--宠物论贱-->
+    <select id="getLunJianPet" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_pet_lunjian where name=#{name}
+    </select>
+    <insert id="addLunJianPet">
+        insert into xq_ac_pet_lunjian(name,pet) values(#{name},#{pet})
+    </insert>
+    <update id="updateLunJianPet">
+        update xq_ac_pet_lunjian set pet=#{pet} where name=#{name}
+    </update>
+    <delete id="clearLunJianPet">
+        delete from xq_ac_pet_lunjian
+    </delete>
+
+    <!--基金-->
+    <select id="getJiJin" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_jijin where name=#{name}
+    </select>
+    <insert id="insertJiJin">
+        insert into xq_ac_jijin(name,unlock0,gain0,unlock1,gain1) values(#{name},'0','0','0','0')
+    </insert>
+    <update id="updateJiJin">
+        update xq_ac_jijin
+        <set>
+            <if test="unlock0!=null">
+                unlock0=#{unlock0}
+            </if>
+            <if test="gain0!=null">
+                gain0=#{gain0}
+            </if>
+            <if test="unlock1!=null">
+                unlock1=#{unlock1}
+            </if>
+            <if test="gain1!=null">
+                gain1=#{gain1}
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <update id="updateJiJinByDay">
+        update xq_ac_jijin set gain0='0',gain1='0'
+    </update>
+
+    <!--副本-->
+    <select id="getFb" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_activity_fb where name=#{name}
+    </select>
+    <insert id="insertFb">
+        insert into xq_activity_fb(name,fb50,fb60,fb70,fb80,fb90,fb100,fbls,fbhh,fbys,fbzx,fbyzj)
+        values(#{name},'3','3','3','3','3','3','2','2','2','2','1')
+    </insert>
+    <update id="updateFb">
+        update xq_activity_fb
+        <set>
+            <if test="fb50!=null">
+                fb50=#{fb50},
+            </if>
+            <if test="fb60!=null">
+                fb60=#{fb60},
+            </if>
+            <if test="fb70!=null">
+                fb70=#{fb70},
+            </if>
+            <if test="fb80!=null">
+                fb80=#{fb80},
+            </if>
+            <if test="fb90!=null">
+                fb90=#{fb90},
+            </if>
+            <if test="fb100!=null">
+                fb100=#{fb100},
+            </if>
+            <if test="fbls!=null">
+                fbls=#{fbls},
+            </if>
+            <if test="fbhh!=null">
+                fbhh=#{fbhh},
+            </if>
+            <if test="fbys!=null">
+                fbys=#{fbys},
+            </if>
+            <if test="fbzx!=null">
+                fbzx=#{fbzx},
+            </if>
+            <if test="fbyzj!=null">
+                fbyzj=#{fbyzj},
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+
+    <update id="clearFb">
+        update xq_activity_fb set
+        fb50='3',fb60='3',fb70='3',fb80='3',fb90='3',fb100='3',fbls='2',fbhh='2',fbys='2',fbzx='2',fbyzj='1'
+    </update>
+    <!--中秋转盘积分-->
+    <select id="getAcJifen" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_jifen where name=#{name}
+    </select>
+    <insert id="insertAcJifen">
+        insert into xq_ac_jifen(name,zpjf,jnzpjf) values(#{name},#{zpjf},#{jnzpjf})
+    </insert>
+    <update id="updateAcJifen">
+        update xq_ac_jifen
+        <set>
+            <if test="zpjf!=null">
+                zpjf=#{zpjf}
+            </if>
+            <if test="jnzpjf!=null">
+                jnzpjf=#{jnzpjf}
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <!--活动每日奖励限制-->
+    <select id="getAcDayLimit" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_day_limit where name=#{name}
+    </select>
+    <insert id="insertAcDayLimit">
+        insert into xq_ac_day_limit(name,yuebing,hf,zhuling,fangsheng) values(#{name},30,1,10,1)
+    </insert>
+    <update id="updateAcDayLimit">
+        update xq_ac_day_limit
+        <set>
+            <if test="yuebing!=null">
+                yuebing=#{yuebing}
+            </if>
+            <if test="hf!=null">
+                hf=#{hf}
+            </if>
+            <if test="zhuling!=null">
+                zhuling=#{zhuling}
+            </if>
+            <if test="fangsheng!=null">
+                fangsheng=#{fangsheng}
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="delAcDayLimit">
+        delete from xq_ac_day_limit
+    </delete>
+
+    <!--活动奖励次数-->
+    <select id="getAcReward" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_ac_reward where name=#{name}
+    </select>
+    <update id="updateAcReward">
+        update xq_ac_reward set surplus=#{surplus} where name=#{name}
+    </update>
+    <!--监狱-->
+    <select id="getPrisonOne" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_prison where name=#{name}
+    </select>
+    <insert id="putPrison">
+        insert into xq_prison(name,total) values(#{name},'0')
+    </insert>
+    <update id="updatePrison">
+        update xq_prison
+        <set>
+            <if test="total!=null">
+                total=#{total}
+            </if>
+        </set>
+        where name=#{name}
+    </update>
+    <delete id="delPrison">
+        delete from xq_prison where name=#{name}
+    </delete>
+    <!--大师兄海选-->
+    <select id="getWinDsxNameList" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_dsx_sign where win='1'
+    </select>
+    <update id="updateDsxByNames">
+        update xq_dsx_sign set win=#{win} where name in
+        <foreach collection="names" item="n" open="(" separator="," close=")">
+            #{n}
+        </foreach>
+    </update>
+    <select id="getDsxNameList" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_dsx_sign where win='1' and model=#{model}
+    </select>
+    <select id="getDsxOne" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_dsx_sign where name=#{name} for update
+    </select>
+    <insert id="addDsx">
+        insert into xq_dsx_sign(name,win,model) values(#{name},'1',#{model})
+    </insert>
+    <update id="updateDsx">
+        update xq_dsx_sign set win=#{win} where name=#{name}
+    </update>
+    <delete id="delDsx">
+        delete from xq_dsx_sign
+    </delete>
+    <!--传壁-->
+    <select id="getB" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_activity_cb where name=#{name} for update
+    </select>
+    <insert id="createB">
+        insert into xq_activity_cb(name,times,qbtimes,uptimes,isget,lv) values(#{name},'2','2','2','0',#{lv})
+    </insert>
+    <update id="updateBLv">
+        update xq_activity_cb set lv=#{lv},times=#{times} where name=#{name}
+    </update>
+    <update id="setBIsGet">
+        update xq_activity_cb set isget=1 where name=#{name}
+    </update>
+    <update id="updateBUptimes">
+        update xq_activity_cb set uptimes=#{uptimes} where name=#{name}
+    </update>
+    <update id="updateBQbtimes">
+        update xq_activity_cb set qbtimes=#{qbtimes} where name=#{name}
+    </update>
+    <delete id="clearAllCb">
+        delete from xq_activity_cb
+    </delete>
+
+    <!--藏宝图-->
+    <select id="getCBT" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_activity_wb where name=#{name} for update
+    </select>
+    <insert id="createCBT">
+        insert into xq_activity_wb(name,times,lv,map,pos) values(#{name},'2',#{lv},#{map},#{pos})
+    </insert>
+    <update id="updateCBTLv">
+        update xq_activity_wb set lv=#{lv},times=#{times} where name=#{name}
+    </update>
+    <update id="finishCBT">
+        update xq_activity_wb set finish=1 where name=#{name}
+    </update>
+    <delete id="clearAll">
+        delete from xq_activity_wb
+    </delete>
+</mapper>

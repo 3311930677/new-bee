@@ -1,0 +1,216 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://src/tscn/ui/common/title/XQTitle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/tscn/ui/common/bg/Background2.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/tscn/ui/map/trade/TradeRetrieveUi.gd" type="Script" id=3]
+[ext_resource path="res://src/tscn/ui/common/bg/Background.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/tscn/ui/common/tres/NoVHScollBar.tres" type="Theme" id=5]
+[ext_resource path="res://src/tscn/ui/common/btn/btn_left.tres" type="StyleBox" id=6]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=7]
+[ext_resource path="res://src/util/common/ListAutoExpand.gd" type="Script" id=8]
+[ext_resource path="res://src/util/common/ScroContainerGD.gd" type="Script" id=9]
+[ext_resource path="res://src/tscn/ui/common/trade/TradeItem.tscn" type="PackedScene" id=10]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0.498039, 0.498039, 1 )
+
+[node name="TradeRetrieveUi" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Head" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.07
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="XQTitle" parent="Head" instance=ExtResource( 1 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -91.0
+margin_top = -17.5
+margin_right = 92.0
+margin_bottom = 17.5
+title = "寄卖取回"
+
+[node name="Tabs" type="Panel" parent="Head"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 3.229
+margin_bottom = -0.0149994
+rect_min_size = Vector2( 0, 50 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BagNum2" type="Label" parent="Head/Tabs"]
+anchor_right = 1.0
+anchor_bottom = 0.286
+margin_bottom = -0.0300007
+custom_fonts/font = ExtResource( 7 )
+text = "我的寄卖商品列表"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fac" type="Panel" parent="Head/Tabs"]
+anchor_top = 0.286
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_top = -0.0300007
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FacNum" type="Label" parent="Head/Tabs/Fac"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -45.0
+margin_top = -20.5
+margin_right = 45.0
+margin_bottom = 20.5
+custom_fonts/font = ExtResource( 7 )
+text = "背包容量
+(100/100)"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel3" type="Panel" parent="Head/Tabs"]
+anchor_left = 0.5
+anchor_top = 0.286
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.0300007
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BagNum" type="Label" parent="Head/Tabs/Panel3"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -45.0
+margin_top = -20.5
+margin_right = 45.0
+margin_bottom = 20.5
+custom_fonts/font = ExtResource( 7 )
+text = "寄卖容量
+（50/50）"
+align = 1
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" parent="." instance=ExtResource( 4 )]
+anchor_top = 0.226
+anchor_bottom = 0.96
+margin_top = -7.62939e-06
+
+[node name="Background2" parent="Background" instance=ExtResource( 2 )]
+anchor_left = 0.057
+anchor_top = 0.06
+anchor_right = 0.943
+anchor_bottom = 0.94
+margin_left = -0.0640011
+margin_top = 0.0999985
+margin_right = 0.0639954
+margin_bottom = -0.100037
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Background/Background2"]
+anchor_left = 0.04
+anchor_top = 0.033
+anchor_right = 0.958
+anchor_bottom = 0.936
+margin_left = -0.48
+margin_top = 0.133001
+margin_right = 0.103973
+margin_bottom = 0.136017
+rect_min_size = Vector2( 287, 270 )
+theme = ExtResource( 5 )
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/Background2/ScrollContainer"]
+margin_right = 287.0
+margin_bottom = 300.0
+rect_min_size = Vector2( 287, 300 )
+script = ExtResource( 8 )
+
+[node name="TradeItem" parent="Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 10 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 287.0
+margin_bottom = 30.0
+
+[node name="Bootom" type="Panel" parent="."]
+anchor_top = 0.95
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -3.05176e-05
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="Bootom"]
+anchor_right = 0.156
+anchor_bottom = 1.0
+margin_right = 0.0879974
+custom_fonts/font = ExtResource( 7 )
+custom_styles/hover = ExtResource( 6 )
+custom_styles/pressed = ExtResource( 6 )
+custom_styles/normal = ExtResource( 6 )
+text = "选项"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cancle" type="Button" parent="Bootom"]
+anchor_left = 0.844
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.0880127
+custom_fonts/font = ExtResource( 7 )
+custom_styles/hover = ExtResource( 6 )
+custom_styles/pressed = ExtResource( 6 )
+custom_styles/normal = ExtResource( 6 )
+text = "返回"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMenu" type="PopupMenu" parent="Control"]
+margin_right = 20.0
+margin_bottom = 20.0
+custom_fonts/font = ExtResource( 7 )
+
+[connection signal="pressed" from="Bootom/Ok" to="." method="_on_Ok_pressed"]
+[connection signal="pressed" from="Bootom/Cancle" to="." method="_on_Cancle_pressed"]
+[connection signal="index_pressed" from="Control/PopupMenu" to="." method="_on_PopupMenu_index_pressed"]

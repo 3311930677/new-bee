@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/tscn/ui/common/team/TeamSmallUi.gd" type="Script" id=2]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=4]
+[ext_resource path="res://src/tscn/ui/common/btn/btn_right.tres" type="StyleBox" id=5]
+
+[node name="TeamSmallUi" type="Control" groups=["team_small_ui"]]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.656
+anchor_top = 0.01
+anchor_right = 1.0
+anchor_bottom = 0.094
+margin_left = 0.0879974
+margin_top = -4.76837e-07
+margin_bottom = -3.8147e-06
+mouse_filter = 2
+custom_constants/separation = 10
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Follow" type="Button" parent="."]
+visible = false
+anchor_left = 0.864
+anchor_top = 0.752
+anchor_right = 1.003
+anchor_bottom = 0.802
+margin_left = -0.128021
+margin_top = -3.05176e-05
+margin_right = -0.0559998
+margin_bottom = -3.05176e-05
+custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 5 )
+custom_styles/pressed = ExtResource( 5 )
+custom_styles/normal = ExtResource( 5 )
+text = "跟随"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Follow" to="." method="_on_Follow_pressed"]

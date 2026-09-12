@@ -1,0 +1,461 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://src/tscn/ui/common/bg/Background2.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/tscn/ui/common/bg/Background.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/tscn/ui/common/title/XQTitle.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/util/common/ScroContainerGD.gd" type="Script" id=4]
+[ext_resource path="res://src/tscn/ui/common/tres/NoVHScollBar.tres" type="Theme" id=5]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=6]
+[ext_resource path="res://src/tscn/ui/common/btn/btn_left.tres" type="StyleBox" id=7]
+[ext_resource path="res://src/tscn/ui/map/faction/FactionInfo.gd" type="Script" id=8]
+[ext_resource path="res://assets/font/font-16.tres" type="DynamicFont" id=9]
+[ext_resource path="res://src/util/common/ListAutoExpand.gd" type="Script" id=10]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0.498039, 0.498039, 1 )
+
+[node name="FactionInfo" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Head" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.07
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="XQTitle" parent="Head" instance=ExtResource( 3 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -91.5
+margin_top = -17.5
+margin_right = 91.5
+margin_bottom = 17.5
+title = "帮派信息"
+
+[node name="Background" parent="." instance=ExtResource( 2 )]
+anchor_top = 0.07
+anchor_bottom = 0.95
+margin_bottom = -3.05176e-05
+
+[node name="Background2" parent="Background" instance=ExtResource( 1 )]
+anchor_left = 0.037
+anchor_top = 0.037
+anchor_right = 0.963
+anchor_bottom = 0.962
+margin_left = -0.0240002
+margin_top = 0.219999
+margin_right = 0.0239868
+margin_bottom = 0.219971
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Background/Background2"]
+anchor_left = 0.043
+anchor_top = 0.033
+anchor_right = 0.957
+anchor_bottom = 0.967
+margin_left = -0.0180006
+margin_top = 0.0690002
+margin_right = 0.0180054
+margin_bottom = -0.0690308
+theme = ExtResource( 5 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/Background2/ScrollContainer"]
+margin_right = 298.0
+margin_bottom = 140.0
+rect_min_size = Vector2( 298, 0 )
+script = ExtResource( 10 )
+
+[node name="GHName" type="Control" parent="Background/Background2/ScrollContainer/VBoxContainer"]
+margin_right = 298.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="Label" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHName"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "帮派名称："
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHNameLabel" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHName"]
+margin_left = 80.0
+margin_right = 160.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 0.898039, 0, 1, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "【测试名称】"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHLeader" type="Control" parent="Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 24.0
+margin_right = 298.0
+margin_bottom = 44.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="Label" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHLeader"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "现任帮主："
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHLeaderLabel" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHLeader"]
+margin_left = 80.0
+margin_right = 160.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "【测试玩家名称】"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHLevel" type="Control" parent="Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 48.0
+margin_right = 298.0
+margin_bottom = 68.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="Label" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHLevel"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "等级："
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHLevelLabel" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHLevel"]
+margin_left = 48.0
+margin_right = 176.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "4/6"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHMemberNum" type="Control" parent="Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 72.0
+margin_right = 298.0
+margin_bottom = 92.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="Label" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHMemberNum"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "帮派人物："
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHMemberNumLabel" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHMemberNum"]
+margin_left = 80.0
+margin_right = 208.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "35/45"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHConis" type="Control" parent="Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 96.0
+margin_right = 298.0
+margin_bottom = 116.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="Label" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHConis"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "帮派建设金："
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHCoinsLabel" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHConis"]
+margin_left = 96.0
+margin_right = 224.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "1659056"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHM" type="Control" parent="Background/Background2/ScrollContainer/VBoxContainer"]
+visible = false
+margin_top = 120.0
+margin_right = 298.0
+margin_bottom = 140.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="Label" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHM"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "炼神木："
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHMLabel" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHM"]
+margin_left = 64.0
+margin_right = 192.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "2362"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHK" type="Control" parent="Background/Background2/ScrollContainer/VBoxContainer"]
+visible = false
+margin_top = 120.0
+margin_right = 298.0
+margin_bottom = 140.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="Label" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHK"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "玄铁矿："
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHKLabel" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHK"]
+margin_left = 64.0
+margin_right = 192.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "2362"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHA" type="Control" parent="Background/Background2/ScrollContainer/VBoxContainer"]
+visible = false
+margin_top = 120.0
+margin_right = 298.0
+margin_bottom = 140.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="Label" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHA"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "安定值："
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHALabel" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHA"]
+margin_left = 64.0
+margin_right = 192.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "150/130"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHActive" type="Control" parent="Background/Background2/ScrollContainer/VBoxContainer"]
+visible = false
+margin_top = 120.0
+margin_right = 298.0
+margin_bottom = 140.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="Label" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHActive"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "活跃度："
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHActiveLabel" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHActive"]
+margin_left = 64.0
+margin_right = 192.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "600/600"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHLifeAllLevel" type="Control" parent="Background/Background2/ScrollContainer/VBoxContainer"]
+visible = false
+margin_top = 120.0
+margin_right = 298.0
+margin_bottom = 140.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="Label" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHLifeAllLevel"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "生活技能总等级："
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHLifeLabel" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHLifeAllLevel"]
+margin_left = 128.0
+margin_right = 256.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "716/1020"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHLifeLevel" type="Control" parent="Background/Background2/ScrollContainer/VBoxContainer"]
+visible = false
+margin_top = 120.0
+margin_right = 298.0
+margin_bottom = 140.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="Label" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHLifeLevel"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "已学生活技能数："
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHLifeLabel" type="Label" parent="Background/Background2/ScrollContainer/VBoxContainer/GHLifeLevel"]
+margin_left = 128.0
+margin_right = 256.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "18/18"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GHInfo" type="Control" parent="Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 120.0
+margin_right = 298.0
+margin_bottom = 140.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Background/Background2/ScrollContainer/VBoxContainer/GHInfo"]
+margin_right = 298.0
+margin_bottom = 40.0
+custom_fonts/normal_font = ExtResource( 9 )
+bbcode_enabled = true
+bbcode_text = "[color=black]帮派宗旨：[color=red]寻秦开发中，[color=purple]预计时间比较长，请耐心等待"
+text = "帮派宗旨：寻秦开发中，预计时间比较长，请耐心等待"
+fit_content_height = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -25.0
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="Panel"]
+visible = false
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -25.0
+margin_right = 55.0
+custom_fonts/font = ExtResource( 6 )
+custom_styles/hover = ExtResource( 7 )
+custom_styles/pressed = ExtResource( 7 )
+custom_styles/normal = ExtResource( 7 )
+text = "确定"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cancle" type="Button" parent="Panel"]
+anchor_left = 0.844
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.0880127
+custom_fonts/font = ExtResource( 6 )
+custom_styles/hover = ExtResource( 7 )
+custom_styles/pressed = ExtResource( 7 )
+custom_styles/normal = ExtResource( 7 )
+text = "返回"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMenu" type="PopupMenu" parent="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -10.0
+margin_top = -10.0
+margin_right = 10.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Panel/Cancle" to="." method="_on_Cancle_pressed"]

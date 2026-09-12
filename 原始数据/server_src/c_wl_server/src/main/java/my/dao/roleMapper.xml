@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="my.dao.roleMapper" >
+    <!--角色创建后的魔尊战斗控制(2d使用)-->
+    <select id="findMzzd" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_mzzd where name=#{name} for update
+    </select>
+    <insert id="insertMzzd" >
+        insert into xq_mzzd(name,mzzd) values(#{name},#{mzzd})
+    </insert>
+    <update id="updateMzzd" >
+        update xq_mzzd set mzzd=#{mzzd} where name=#{name}
+    </update>
+    <delete id="delMzzd" parameterType="string">
+        delete from xq_mzzd where name=#{name}
+    </delete>
+    <!--好友-->
+    <select id="findFriend" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_friend where name=#{name} for update
+    </select>
+    <insert id="insertFriend" >
+        insert into xq_friend(name,friend) values(#{name},#{friend})
+    </insert>
+    <update id="updateFriend" >
+        update xq_friend set friend=#{friend} where name=#{name}
+    </update>
+    <delete id="delFriend" parameterType="string">
+        delete from xq_friend where name=#{name}
+    </delete>
+
+    <select id="getRolesMsg" resultType="com.alibaba.fastjson2.JSONObject">
+        select name,lever,model,models from xq_role where name in
+        <foreach collection="names" item="n" open="(" separator="," close=")">
+            #{n}
+        </foreach>
+    </select>
+
+
+    <select id="count" resultType="com.alibaba.fastjson2.JSONObject">
+        select count(Id) num from xq_role
+    </select>
+    <select id="getOrderLv" resultType="com.alibaba.fastjson2.JSONObject">
+        select name,lever,model from xq_role order by lever desc limit #{pageNum},#{pageSum}
+    </select>
+    <select id="selectRoleByLever" parameterType="integer" resultType="com.alibaba.fastjson2.JSONObject">
+        select name from xq_role where lever>${lv} limit #{pageNum},#{pageSum}
+    </select>
+    <select id="getRoleOne" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select name from xq_role where username=#{username} for update
+    </select>
+    <select id="getRoleByUsername" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_role where username=#{username} for update
+    </select>
+    <select id="getRoleView" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_role where username=#{username}
+    </select>
+    <select id="getRoleViewByName" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_role where name=#{name}
+    </select>
+    <select id="getRoleByName" parameterType="string" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_role where name=#{name} for update
+    </select>
+    <select id="getRoleByLikeName"  resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_role where name like concat('%',#{name},'%') and name not in
+        <foreach collection="filterName" item="n" open="(" separator="," close=")">
+            #{n}
+        </foreach>
+         limit #{pageNum},#{pageSum}
+    </select>
+    <delete id="delRole" parameterType="string">
+        delete from xq_role where name=#{name}
+    </delete>
+    <select id="getRoleAndUser" resultType="com.alibaba.fastjson2.JSONObject">
+        select t2.allowed_ip,t2.email from xq_role
+        t1,xq_user t2 where t1.name=#{name} and t1.username=t2.username
+    </select>
+    <select id="selectRoleByIp" resultType="com.alibaba.fastjson2.JSONObject">
+        select t1.name from xq_role t1,xq_user t2
+        <where>
+            t1.username=t2.username
+            <if test="ip!=null">
+                and t2.allowed_ip like #{ip}
+            </if>
+            <if test="email!=null">
+                and t2.email=#{email}
+            </if>
+        </where>
+
+    </select>
+    <select id="selectRoleByNames" resultType="com.alibaba.fastjson2.JSONObject">
+        select lever,name,model,models from xq_role where name in
+        <foreach collection="names" item="n" open="(" separator="," close=")">
+            #{n}
+        </foreach>
+    </select>
+
+    <select id="getRolesByPage" resultType="com.alibaba.fastjson2.JSONObject">
+        select * from xq_role limit #{pageNum},#{pageSum}
+    </select>
+
+    <insert id="insertRole" >
+        insert into xq_role(Id,username,name,lever,model,models) values(#{Id},#{username},#{name},#{lever},#{model},#{models})
+    </insert>
+    <update id="updateLv" >
+        update xq_role set lever=#{lever} where name=#{name}
+    </update>
+    <update id="updateModel" >
+        update xq_role set model=#{model} where name=#{name}
+    </update>
+    <update id="updateModels" >
+        update xq_role set models=#{models} where name=#{name}
+    </update>
+
+</mapper>

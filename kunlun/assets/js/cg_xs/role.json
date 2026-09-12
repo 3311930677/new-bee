@@ -1,0 +1,16 @@
+{	
+	"wqIsTemplate":false,
+	"wqTemplate":"xs_wq%d_cg.pwd",
+	"headTemplate":"xs_%d_t%d.pwd",
+	"headIsTemplate":true,
+	"nan":{
+		"head":"xs_nan_t1.pwd",
+		"wq":"xs_wq1_cg.pwd",
+		"aef":"xs_nan_cg.aef"
+	},
+	"nv":{
+		"head":"xs_nv_t1.pwd",
+		"wq":"xs_wq2_cg.pwd",
+		"aef":"xs_nv_cg.aef"
+	}
+}

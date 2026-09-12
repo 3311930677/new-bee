@@ -1,0 +1,352 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/battle/victory.png" type="Texture" id=2]
+[ext_resource path="res://assets/font/font-16.tres" type="DynamicFont" id=3]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+const prefix = \"CombatScence\"
+
+signal round_line_start_ # 一条回合数据开始
+signal round_line_end_ # 一条回合数据结束
+signal round_show_hourglass_ # 提示没死的实体显示倒计时
+
+var round_index = 0
+var arr_line
+onready var positions = $Position
+
+
+
+# 战斗成功或者失败的图片
+var victory = load(\"res://assets/battle/victory.png\")
+var failure = load(\"res://assets/battle/failure.png\")
+var entity_res = preload(\"res://src/tscn/battle/BattleEntity.tscn\")
+
+var fight_end = false
+var fight_end_data
+# 真实的下标映射
+var real_index = {}
+
+# 完成集合下标，每次会清空
+var complete_map = {}
+
+var MapeUtils
+var NetContext
+var MapInfoManage
+var ScreenUtils
+var CombatManage
+var RoleInfoManage
+var PetInfoManage
+
+# 这里进行地图的加载
+func _ready() -> void:
+	MapeUtils = Global.get(\"MapeUtils\")
+	NetContext = Global.get(\"NetContext\")
+	ScreenUtils = Global.get(\"ScreenUtils\")
+	MapInfoManage = Global.get(\"MapInfoManage\")
+	CombatManage = Global.get(\"CombatManage\")
+	RoleInfoManage = Global.get(\"RoleInfoManage\")
+	PetInfoManage = Global.get(\"PetInfoManage\")
+	
+	CombatManage.connect(\"fight_round_line_\",self,\"fight_round_line_\") # 战斗回合数据
+	CombatManage.connect(\"fight_round_end_\",self,\"fight_round_end_\") # 战斗结束
+	load_map()
+	load_entity() # 加载实体
+
+# 这个方法抛弃，不用
+func load_data(str_data):
+	pass
+
+# 第一次进入加载实体并且显示
+func load_entity():
+	var c_data = CombatManage.fight_start_data
+	# 玩家这一列的数据
+	var p_arr = CombatManage.get_player_position()
+	var o_arr = CombatManage.get_player_position(false)
+	var position_arr = positions.get_children()
+	p_load_entity(position_arr.slice(6,11),p_arr,6)
+	p_load_entity(position_arr.slice(0,5),o_arr,0)
+	# 这里实例化一下管理器，让战斗管理器维护一个实体local_index:entity
+	var map_local = {}
+	# 只是做一个映射，方便对实体的使用
+	for i in 6:
+		map_local[str(i)] = o_arr[i]
+		map_local[str(i+6)] = p_arr[i]
+	CombatManage.local_mapping_map = map_local
+	# 判断房间类型 5 是偷袭
+	$CanvasLayer/RoomType.show()
+	if CombatManage.get_fight_room_type() == 5:
+		$CanvasLayer/RoomType.text = \"偷袭\"
+	elif CombatManage.get_fight_room_type() == 3:
+		$CanvasLayer/RoomType.text = \"切磋\"
+	elif CombatManage.get_fight_room_type() == 4:
+		$CanvasLayer/RoomType.text = \"匹配\"
+	else:
+		$CanvasLayer/RoomType.hide()
+		
+
+
+# 加载实体
+func p_load_entity(position_arr,entity_arr,inde):
+	for i in 6:
+		if entity_arr[i] == null: continue
+		var en = entity_res.instance()
+		en.source_position = position_arr[i].position
+		real_index[str(entity_arr[i][\"index\"])] = en
+		if inde < 6: en.is_flip = true
+		en.local_index = inde+i
+		en.position = position_arr[i].position
+		if entity_arr[i][\"type\"] == 1: # 人物
+			en.set_player_data(entity_arr[i])
+		elif entity_arr[i][\"type\"] == 2: # 宠物
+			en.set_pet_data(entity_arr[i])
+		elif entity_arr[i][\"type\"] == 3: # 怪物
+			en.set_monster_data(entity_arr[i])
+		else:
+			Global.log_info(str(prefix,\"未知实体类型\"))
+		$Battle.add_child(en)
+
+# 加载地图场景,根据当前地图进行加载
+func load_map():
+	var map_info = MapeUtils.loadMape(\"res://assets/map/xq/mapres\",str(MapInfoManage.current_map,\".mape\"))
+	if map_info == null:
+		ScreenUtils.show_message(str(prefix,\"地图读取失败：\",MapInfoManage.current_map))
+		return
+	var tilemap = TileMap.new()
+	tilemap.cell_size = Vector2(map_info[\"cell_h\"],map_info[\"cell_w\"])
+	tilemap.tile_set = map_info[\"tileset\"]
+	var x = 0
+	var y = 0
+	for i in map_info[\"map_data_list\"]:
+		for j in i:
+			var map_data = j
+			if abs(map_data) > map_info[\"max_tile_id\"]: map_data = 0
+			tilemap.set_cell(x,y,abs(map_data))
+			x = x +1
+		y = y + 1
+		x = 0
+	for i in map_info[\"builds\"]:
+		i.queue_free()
+#	tilemap.scale = Vector2(2.0,2.0)
+	$Map.call_deferred(\"add_child\",tilemap) 
+
+
+func fight_round_line_(data):
+	round_index = 0
+	complete_map.clear()
+	# 这里才开始让角色挨着去执行动作
+	arr_line = data[\"data\"][\"res\"] #里面包含每一回合的数据
+	emit_signal(\"round_line_start_\",arr_line[round_index],round_index)
+
+# 由角色调用这个，表示回合的开始起手动作数据处理完毕
+func sub_round_start_ok(index):
+	emit_signal(\"round_line_end_\",arr_line[round_index],round_index)
+
+# 由角色调用，这一回合数据彻底执行完毕
+func sub_round_end_ok(index):
+	# 检测当前的index下标数据是否完成
+	if !check_complete(index): return
+	
+	round_index += 1
+	if round_index < arr_line.size():
+		# 加一下延迟不然太快看不清
+		$RoundLine.start()
+	else:
+		# 检测战斗是否结束
+		if fight_end:
+			clear()
+		else:
+			# 动画播放完毕
+			emit_signal(\"round_show_hourglass_\")
+			CombatManage.round_end()
+
+# 战斗结束
+func fight_round_end_(data):
+	fight_end  = true
+	fight_end_data = data
+	# 修改角色的经验值
+	RoleInfoManage.set_role_exp(fight_end_data[\"reward\"][\"role_exp\"])
+	PetInfoManage.set_pet_exp(fight_end_data[\"reward\"][\"pet_exp\"])
+	RoleInfoManage.reload_ui()
+
+func clear():
+	$Position2D/BattleResult.show()
+	if fight_end_data[\"is_win\"]:
+		$Position2D/BattleResult.texture = victory
+		pass
+	else:
+		$Position2D/BattleResult.texture = failure
+		pass
+	$Timer.start()
+
+# 根据真实下标获取实体信息
+func get_real_entity_info(real_in):
+	if real_index.has(str(real_in)):
+		return real_index[str(real_in)].entity_data
+	return null
+
+func _on_Timer_timeout() -> void:
+	RoleInfoManage.flush_role_bvo_info(RoleInfoManage.get_role_id())
+	ScreenUtils.change_main_scence(true)
+	# 刷新任务状态
+	Global.get(\"TaskInfoManage\").request_refresh_task()
+	pass
+
+# 检测一下这个回合数据是否完成，直接检测施法者的目标数量
+# 是否死亡都会执行那个受击伤害执行完毕的操作
+func check_complete(inde):
+	# 最后一条数据可能多条，此时会出现越界，之间提示完成
+	if round_index >= arr_line.size():
+		return true
+	var info = arr_line[round_index]
+	if info[\"behavior\"][\"type\"] == 6 || info[\"behavior\"][\"type\"] == 9 || info[\"behavior\"][\"type\"] == 3: # 复活是没有目标对象的
+		return true
+		pass
+	else:
+		var num = info[\"behavior\"].get(\"targets\",[inde]).size() # 总次数
+		# 设置完成数量加1
+		complete_map[str(inde)] = complete_map.get(str(inde),0) + 1
+		# 这里不对等
+		var c = complete_map.get(str(inde),0) # 得到完成数量
+		
+		if c == num: return true
+		else: return false
+
+
+func _on_RoundLine_timeout() -> void:
+	emit_signal(\"round_line_start_\",arr_line[round_index],round_index)
+	pass # Replace with function body.
+
+# 逃跑成功调用这里
+func run_away(round_data):
+	# 销毁实体
+	var index = round_data[\"behavior\"][\"entity_index\"]
+	var run_A = round_data[\"data\"][\"is_runAway\"]
+	if !run_A: return
+	var o1_info = get_real_entity(index) # 逃跑的实体
+	var o2_info = get_real_entity(index+1) # 逃跑的实体
+	var p_info = CombatManage.get_player_info() # 玩家主角实体
+	# 实体销毁
+	CombatManage.local_mapping_map[index] = null
+	CombatManage.local_mapping_map[index+1] = null
+	
+	real_index[index] = null
+	real_index[index+1] = null
+	if o1_info!=null:o1_info.queue_free()
+	if o2_info!=null:o2_info.queue_free()
+	pass
+
+# 捕捉宠物
+func catch_pet(round_data):
+	var catchs = round_data[\"data\"][\"is_success\"]
+	var index = round_data[\"behavior\"][\"targets\"][0]
+	var o1_info = get_real_entity(index) # 逃跑的实体
+	if catchs and o1_info!=null:
+		CombatManage.local_mapping_map[str(index)] = null
+		real_index[index] = null
+		o1_info.queue_free()
+	
+
+# 得到实体
+func get_real_entity(index):
+	for en in $Battle.get_children():
+		if int(en.entity_data[\"index\"]) == index:
+			return en
+	return null
+"
+
+[node name="CombatScence" type="Node2D" groups=["combat_scence"]]
+script = SubResource( 1 )
+
+[node name="Map" type="Node2D" parent="."]
+
+[node name="Battle" type="YSort" parent="."]
+
+[node name="Position" type="Position2D" parent="."]
+
+[node name="Position2D1" type="Position2D" parent="Position"]
+position = Vector2( 34, 151 )
+
+[node name="Position2D2" type="Position2D" parent="Position"]
+position = Vector2( 95, 197 )
+
+[node name="Position2D3" type="Position2D" parent="Position"]
+position = Vector2( 34, 277 )
+
+[node name="Position2D4" type="Position2D" parent="Position"]
+position = Vector2( 92, 330 )
+
+[node name="Position2D5" type="Position2D" parent="Position"]
+position = Vector2( 32, 417 )
+
+[node name="Position2D6" type="Position2D" parent="Position"]
+position = Vector2( 92, 469 )
+
+[node name="Position2D7" type="Position2D" parent="Position"]
+position = Vector2( 321, 151 )
+
+[node name="Position2D8" type="Position2D" parent="Position"]
+position = Vector2( 265, 197 )
+
+[node name="Position2D9" type="Position2D" parent="Position"]
+position = Vector2( 321, 277 )
+
+[node name="Position2D10" type="Position2D" parent="Position"]
+position = Vector2( 265, 330 )
+
+[node name="Position2D11" type="Position2D" parent="Position"]
+position = Vector2( 321, 417 )
+
+[node name="Position2D12" type="Position2D" parent="Position"]
+position = Vector2( 265, 469 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 176, 244 )
+limit_left = 0
+limit_top = 0
+limit_right = 512
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 176, 244 )
+
+[node name="BattleResult" type="TextureRect" parent="Position2D"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -53.0
+margin_top = -20.0
+margin_right = 53.0
+margin_bottom = 20.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="RoundLine" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="RoomType" type="Label" parent="CanvasLayer"]
+anchor_left = 0.003
+anchor_top = 0.182
+anchor_right = 1.0
+anchor_bottom = 0.282
+margin_left = -0.056
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 3 )
+text = "偷袭"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="RoundLine" to="." method="_on_RoundLine_timeout"]

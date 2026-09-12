@@ -1,0 +1,28 @@
+{	
+	"q5tx":1,
+	"animZhenTxId":[[5,6],[7,8]],
+	"zuheTx":[
+				[0,0,3,5], // 0表示上面第【5,6】动画，第二个0表示[5,6]中 5 动画内第0个动画特效，后面的3,5都表示第[5,6]中6的动画所需要的特效，重要的就前2位
+				[1,0,2],
+				[1,0,6],
+				[1,0,5],
+				[0,0,3,4,6],
+				[0,0,3,10],
+				[0,0,2,7,8,9,10],
+				[0,0,2,8,9,10],
+				[0,0,2,4,8,9,10],
+				[0,0,3,4,5]
+				],
+	"nan":{
+		"_headFile":["fs_nan_t1.pwd"],
+		"bodyFile":"fs_nan_zd.pwd",
+		"_wq":["fs_wq1_zd.pwd","fs_wq2_zd.pwd","fs_wq3_zd.pwd"],
+		"aef":"ys_nan_zd.aef"
+	},
+	"nv":{
+		"headFile":["fs_nv_t1.pwd"],
+		"wq":["fs_wq1_zd.pwd","fs_wq2_zd.pwd","fs_wq3_zd.pwd"],
+		"bodyFile":"fs_nv_zd.pwd",
+		"aef":"ys_nv_zd.aef"
+	}
+}

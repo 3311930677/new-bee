@@ -1,0 +1,127 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/font/font-16.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/battle/victory.png" type="Texture" id=2]
+[ext_resource path="res://src/tscn/scence/battle/ItemBattleResult.gd" type="Script" id=3]
+[ext_resource path="res://src/tscn/scence/battle/TbBattleScence.gd" type="Script" id=4]
+
+[node name="TbBattleScence" type="Node2D" groups=["tb_battle_scence"]]
+script = ExtResource( 4 )
+
+[node name="Map" type="Node2D" parent="."]
+
+[node name="Battles" type="YSort" parent="."]
+
+[node name="Common" type="Node2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Camera2D" type="Camera2D" parent="Common"]
+limit_left = 0
+limit_top = 0
+limit_right = 512
+limit_bottom = 0
+
+[node name="Position2D" type="Position2D" parent="Common"]
+position = Vector2( 176, 244 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="BattleResult" type="TextureRect" parent="Common/Position2D"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -53.0
+margin_top = -20.0
+margin_right = 53.0
+margin_bottom = 20.0
+texture = ExtResource( 2 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RoomType" type="Label" parent="Common"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 1.0
+margin_top = 120.0
+margin_right = 352.0
+margin_bottom = 170.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "偷袭"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Position" type="Position2D" parent="."]
+
+[node name="Position2D1" type="Position2D" parent="Position"]
+position = Vector2( 34, 151 )
+
+[node name="Position2D2" type="Position2D" parent="Position"]
+position = Vector2( 95, 197 )
+
+[node name="Position2D3" type="Position2D" parent="Position"]
+position = Vector2( 34, 277 )
+
+[node name="Position2D4" type="Position2D" parent="Position"]
+position = Vector2( 92, 330 )
+
+[node name="Position2D5" type="Position2D" parent="Position"]
+position = Vector2( 32, 417 )
+
+[node name="Position2D6" type="Position2D" parent="Position"]
+position = Vector2( 92, 469 )
+
+[node name="Position2D7" type="Position2D" parent="Position"]
+position = Vector2( 265, 197 )
+
+[node name="Position2D8" type="Position2D" parent="Position"]
+position = Vector2( 321, 151 )
+
+[node name="Position2D9" type="Position2D" parent="Position"]
+position = Vector2( 265, 330 )
+
+[node name="Position2D10" type="Position2D" parent="Position"]
+position = Vector2( 321, 277 )
+
+[node name="Position2D11" type="Position2D" parent="Position"]
+position = Vector2( 265, 469 )
+
+[node name="Position2D12" type="Position2D" parent="Position"]
+position = Vector2( 321, 417 )
+
+[node name="Position2D" type="Position2D" parent="."]
+visible = false
+position = Vector2( 176, 244 )
+
+[node name="BattleResult" type="TextureRect" parent="Position2D"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -53.0
+margin_top = -20.0
+margin_right = 53.0
+margin_bottom = 20.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EndTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="timeout" from="EndTimer" to="." method="_on_EndTimer_timeout"]

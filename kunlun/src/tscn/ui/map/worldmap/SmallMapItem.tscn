@@ -1,0 +1,97 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://src/tscn/ui/map/worldmap/SmallMapItem.gd" type="Script" id=1]
+[ext_resource path="res://assets/map/minimapres/s.png" type="Texture" id=2]
+[ext_resource path="res://src/tscn/ui/map/worldmap/city.tres" type="Texture" id=3]
+[ext_resource path="res://assets/res/mini/p.png" type="Texture" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Idel"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Men:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 6, -18 ), Vector2( 6, -21 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Men:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 6, -18 ) ]
+}
+
+[node name="SmallMapItem" type="Control" groups=["small_map_items"]]
+anchor_right = 0.065
+anchor_bottom = 0.044
+margin_right = -22.88
+margin_bottom = -22.0
+rect_min_size = Vector2( 23, 22 )
+mouse_filter = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Icon" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource( 3 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SelectOn" type="TextureRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Men" type="TextureRect" parent="."]
+visible = false
+anchor_left = 0.261
+anchor_top = -0.818
+anchor_right = 0.739
+anchor_bottom = 0.136
+margin_left = -0.00300026
+margin_top = -0.00399971
+margin_right = 0.00300026
+margin_bottom = 0.0079999
+texture = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Idel = SubResource( 1 )
+anims/RESET = SubResource( 2 )
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]

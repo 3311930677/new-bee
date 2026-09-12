@@ -1,0 +1,58 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/skill/pet/cj_75.png" type="Texture" id=2]
+[ext_resource path="res://src/tscn/ui/map/pet/PetSkillLableItem.gd" type="Script" id=3]
+
+[node name="PetSkillLableItem" type="TextureRect" groups=["pet_skill_label_item"]]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -475.0
+rect_min_size = Vector2( 0, 25 )
+expand = true
+script = ExtResource( 3 )
+
+[node name="SkillIcon" type="TextureRect" parent="."]
+margin_right = 25.0
+margin_bottom = 25.0
+texture = ExtResource( 2 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SkillName" type="Label" parent="."]
+margin_left = 49.0
+margin_right = 121.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+custom_colors/font_color = Color( 0, 0, 1, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "技能名称"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SkillType" type="Label" parent="."]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -70.0
+margin_top = -12.5
+margin_bottom = 12.5
+rect_min_size = Vector2( 0, 25 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "（主动）"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]

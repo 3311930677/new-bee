@@ -1,0 +1,77 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://src/util/common/ScroContainerGD.gd" type="Script" id=1]
+[ext_resource path="res://src/tscn/ui/common/tres/NoVHScollBar.tres" type="Theme" id=2]
+[ext_resource path="res://src/tscn/ui/common/faction/FactionMemberLabelItem.gd" type="Script" id=3]
+[ext_resource path="res://assets/res/cd_bp01.png" type="Texture" id=4]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=5]
+
+[node name="FactionMemberLabelItem" type="TextureRect" groups=["faction_member_label_item"]]
+anchor_right = 0.847
+anchor_bottom = 0.05
+margin_right = -0.144012
+rect_min_size = Vector2( 298, 25 )
+expand = true
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FactionIcon" type="TextureRect" parent="."]
+anchor_right = 0.057
+anchor_bottom = 1.0
+margin_right = 0.013998
+texture = ExtResource( 4 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="."]
+anchor_left = 0.101
+anchor_right = 1.181
+anchor_bottom = 1.0
+margin_left = -0.0980015
+margin_right = 0.0619812
+theme = ExtResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer2"]
+margin_right = 234.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 181, 0 )
+
+[node name="Name" type="Label" parent="ScrollContainer2/HBoxContainer"]
+margin_right = 234.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 5 )
+text = "[LV100][墨]角色名称6个字符"
+valign = 1
+
+[node name="TimeLeft" type="Label" parent="."]
+anchor_left = 0.745
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.010025
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 5 )
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]

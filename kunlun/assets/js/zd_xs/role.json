@@ -1,0 +1,21 @@
+{	
+	"q5tx":1,
+	"jn":[
+		{"anims":[2,-1],"txs":[0],"name":["catch",0]}
+	],
+	"isSkill":true,
+	"wqIsTemplate":false,
+	"wqTemplate":"",
+	"headTemplate":"xs_%d_t%d.pwd",
+	"headIsTemplate":true,
+	"nan":{
+		"head":"",
+		"wq":"xs_wq1_zd.pwd",
+		"aef":"xs_nan_zd.aef"
+	},
+	"nv":{
+		"head":"",
+		"wq":"xs_wq2_zd.pwd",
+		"aef":"xs_nv_zd.aef"
+	}
+}

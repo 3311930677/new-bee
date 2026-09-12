@@ -1,0 +1,95 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/tscn/ui/login/select_area/nine_patch_btn_normal.tres" type="Texture" id=1]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/res/5.png" type="Texture" id=3]
+[ext_resource path="res://src/tscn/ui/login/select_area/AreaItem.gd" type="Script" id=4]
+
+[node name="AreaItem" type="Control" groups=["server_items"]]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -82.0
+margin_bottom = -460.0
+mouse_filter = 1
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+texture = ExtResource( 1 )
+region_rect = Rect2( 0.0796776, -0.172732, 41.8816, 24.0318 )
+patch_margin_left = 21
+patch_margin_right = 21
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 0.333
+anchor_bottom = 1.0
+margin_right = 0.0899963
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Head1" type="TextureRect" parent="Control"]
+visible = false
+margin_left = 8.0
+margin_top = 3.0
+margin_right = 35.0
+margin_bottom = 37.0
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Head2" type="TextureRect" parent="Control"]
+visible = false
+margin_left = 25.0
+margin_top = 3.0
+margin_right = 52.0
+margin_bottom = 37.0
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Head3" type="TextureRect" parent="Control"]
+visible = false
+margin_left = 42.0
+margin_top = 3.0
+margin_right = 69.0
+margin_bottom = 37.0
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="."]
+anchor_left = 0.281
+anchor_top = 0.1
+anchor_right = 0.741
+anchor_bottom = 1.0
+margin_left = 0.129997
+margin_right = -0.0700226
+margin_bottom = -3.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "服务器名称"
+align = 1
+valign = 1
+
+[node name="TextureButton" type="TextureButton" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]

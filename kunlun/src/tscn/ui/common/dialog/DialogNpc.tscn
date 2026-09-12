@@ -1,0 +1,129 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://src/tscn/ui/common/dialog/DialogNpc.gd" type="Script" id=1]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=2]
+[ext_resource path="res://src/tscn/ui/common/btn/btn_left.tres" type="StyleBox" id=3]
+[ext_resource path="res://assets/font/font-16.tres" type="DynamicFont" id=4]
+[ext_resource path="res://src/tscn/ui/common/tres/NoVHScollBar.tres" type="Theme" id=5]
+[ext_resource path="res://src/util/common/ScroContainerGD.gd" type="Script" id=6]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0, 0.411765, 0.501961, 1 )
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0.411765, 0.501961, 0 )
+
+[node name="DialogNpc" type="Control"]
+anchor_left = -0.007
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -4.52995e-06
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -115.0
+margin_top = -36.0
+margin_right = 115.0
+margin_bottom = 36.0
+grow_vertical = 2
+rect_min_size = Vector2( 226, 0 )
+custom_styles/panel = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+margin_right = 230.0
+margin_bottom = 72.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer"]
+margin_right = 230.0
+margin_bottom = 18.0
+mouse_filter = 1
+custom_fonts/normal_font = ExtResource( 4 )
+bbcode_enabled = true
+fit_content_height = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer"]
+margin_top = 22.0
+margin_right = 230.0
+margin_bottom = 72.0
+rect_min_size = Vector2( 0, 50 )
+mouse_filter = 1
+theme = ExtResource( 5 )
+scroll_horizontal_enabled = false
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/ScrollContainer"]
+margin_right = 230.0
+
+[node name="ItemList" type="ItemList" parent="PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+margin_right = 230.0
+rect_min_size = Vector2( 230, 0 )
+mouse_filter = 1
+custom_fonts/font = ExtResource( 4 )
+custom_styles/bg = SubResource( 1 )
+allow_reselect = true
+allow_rmb_select = true
+auto_height = true
+same_column_width = true
+fixed_column_width = 218
+icon_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="."]
+anchor_top = 0.752
+anchor_right = 0.155
+anchor_bottom = 0.802
+margin_top = -3.05176e-05
+margin_right = 0.0580826
+margin_bottom = -3.05176e-05
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "确定"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cance" type="Button" parent="."]
+anchor_left = 0.842
+anchor_top = 0.752
+anchor_right = 1.0
+anchor_bottom = 0.802
+margin_left = 0.00527954
+margin_top = -3.05176e-05
+margin_right = -1.0
+margin_bottom = -3.05176e-05
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "取消"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="resized" from="PanelContainer" to="." method="_on_PanelContainer_resized"]
+[connection signal="item_selected" from="PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer/ItemList" to="." method="_on_ItemList_item_selected"]
+[connection signal="pressed" from="Ok" to="." method="_on_Ok_pressed"]
+[connection signal="pressed" from="Cance" to="." method="_on_Cance_pressed"]

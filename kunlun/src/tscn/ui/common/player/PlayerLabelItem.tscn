@@ -1,0 +1,131 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://src/tscn/ui/common/player/PlayerLabelItem.gd" type="Script" id=1]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=2]
+[ext_resource path="res://src/util/common/ScroContainerGD.gd" type="Script" id=3]
+[ext_resource path="res://src/tscn/ui/common/tres/NoVHScollBar.tres" type="Theme" id=4]
+[ext_resource path="res://assets/res/light.png" type="Texture" id=5]
+[ext_resource path="res://assets/res/vip1.png" type="Texture" id=6]
+[ext_resource path="res://assets/res/oteam.png" type="Texture" id=7]
+[ext_resource path="res://assets/font/font-16.tres" type="DynamicFont" id=8]
+[ext_resource path="res://src/util/common/ListAutoExpand.gd" type="Script" id=9]
+
+[node name="PlayerLabelItem" type="TextureRect" groups=["player_label_item"]]
+anchor_right = 1.0
+anchor_bottom = 0.07
+margin_bottom = -35.0
+rect_min_size = Vector2( 0, 35 )
+texture = ExtResource( 5 )
+expand = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Team" type="TextureRect" parent="HBoxContainer"]
+margin_right = 11.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 11, 35 )
+texture = ExtResource( 7 )
+stretch_mode = 4
+
+[node name="Gm" type="Label" parent="HBoxContainer"]
+margin_left = 15.0
+margin_right = 37.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 0, 35 )
+custom_colors/font_color = Color( 1, 0, 1, 1 )
+text = "GM"
+align = 1
+valign = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer"]
+margin_left = 41.0
+margin_right = 211.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 170, 35 )
+mouse_filter = 1
+theme = ExtResource( 4 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+is_hor_auto_scroll = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/ScrollContainer"]
+margin_right = 238.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 108, 35 )
+alignment = 1
+script = ExtResource( 9 )
+
+[node name="Name" type="Label" parent="HBoxContainer/ScrollContainer/VBoxContainer"]
+margin_right = 238.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 0, 35 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 8 )
+text = "[LV100][遁甲]游戏角色昵称1123"
+valign = 1
+
+[node name="Sex" type="Label" parent="HBoxContainer"]
+margin_left = 215.0
+margin_right = 233.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 0, 35 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "男"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Vip" type="TextureRect" parent="HBoxContainer"]
+margin_left = 237.0
+margin_right = 254.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 17, 35 )
+texture = ExtResource( 6 )
+stretch_mode = 4
+
+[node name="VipNum" type="Label" parent="HBoxContainer/Vip"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "8"
+align = 2
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Identity" type="Label" parent="HBoxContainer"]
+margin_left = 258.0
+margin_right = 294.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 0, 35 )
+custom_colors/font_color = Color( 0.164706, 0.670588, 0.164706, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "英雄"
+align = 2
+valign = 1
+
+[node name="TextureButton" type="TextureButton" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]

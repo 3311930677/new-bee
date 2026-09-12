@@ -1,0 +1,386 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://src/tscn/ui/common/title/XQTitle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/tscn/ui/common/tab/CustomTab.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/tscn/ui/common/btn/btn_left.tres" type="StyleBox" id=3]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=4]
+[ext_resource path="res://src/tscn/ui/common/bg/Background.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/tscn/ui/common/bg/Background2.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/tscn/ui/common/player/PlayerLabelItem.tscn" type="PackedScene" id=8]
+[ext_resource path="res://src/tscn/ui/common/tres/NoVHScollBar.tres" type="Theme" id=9]
+[ext_resource path="res://src/util/common/ScroContainerGD.gd" type="Script" id=10]
+[ext_resource path="res://src/util/common/ListAutoExpand.gd" type="Script" id=11]
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Control
+
+onready var vbox = $Background/Background2/ScrollContainer/VBoxContainer
+onready var popupmenu = $Control/PopupMenu
+# 玩家显示的资源
+var player_item_res = preload(\"res://src/tscn/ui/common/player/PlayerLabelItem.tscn\")
+
+var check_node = null
+var model = 0
+var ScreenUtils
+var TeamManage
+var RoleInfoManage
+var PlayerOperate
+
+func _ready() -> void:
+	ScreenUtils = Global.get(\"ScreenUtils\")
+	TeamManage = Global.get(\"TeamManage\")
+	RoleInfoManage = Global.get(\"RoleInfoManage\")
+	PlayerOperate = Global.get(\"PlayerOperate\")
+	
+	TeamManage.connect(\"team_info_loaded\",self,\"_team_info_loaded\")
+	
+	TeamManage.connect(\"team_destory\",self,\"_team_destory\")
+	TeamManage.connect(\"team_agree_invite_loaded\",self,\"_team_agree_invite_loaded\")
+	TeamManage.connect(\"team_request_join_loaded\",self,\"_team_request_join_loaded\")
+	
+	RoleInfoManage.connect(\"role_deliver_loaded\",self,\"_role_deliver_loaded\")
+	pass
+
+func _on_Cancle_pressed() -> void:
+	queue_free()
+	pass
+func _role_deliver_loaded():
+	_on_Cancle_pressed()
+	pass
+
+func _item_click(node):
+	if check_node == node:
+		_on_Ok_pressed()
+		return
+	check_node = node
+	
+	PlayerOperate.current_player_info = check_node.data
+# 同意别人的邀请入队，清空子项
+func _team_agree_invite_loaded():
+	clear_container()
+	pass
+# 同意别人的申请入队，这里刷新一下
+func _team_request_join_loaded():
+	clear_container()
+	_team_info_loaded(TeamManage.request_join_team_arr)
+	pass
+
+func _on_Member_tab_click(node) -> void:
+	model = 0
+	clear_container()
+	if TeamManage == null : return
+	_team_info_loaded(TeamManage.team_all_role_info)
+
+
+
+func _on_MemberReq_tab_click(node) -> void:
+	model = 1
+	clear_container()
+	_team_info_loaded(TeamManage.request_join_team_arr)
+
+
+func _on_PopupMenu_index_pressed(index: int) -> void:
+	var id = $Control/PopupMenu.get_item_id(index)
+	Global.get(\"PlayerOperate\").menu_item_click(id)
+
+
+func _on_Ok_pressed() -> void:
+	if check_node != null:
+		PlayerOperate.role_id = check_node.data[\"id\"]
+		if check_node.team_type >= 2:
+			# 说明是第二个tab里的item被点击
+			PlayerOperate.team_name = check_node.data.get(\"invite_team_name\",\"\")
+			Global.get(\"ScreenUtils\").build_menu($Control/PopupMenu,PlayerOperate.get_team_menu_dic(check_node))
+			$Control/PopupMenu.popup_centered()
+			return
+	
+	# 说明不是另外一页
+	if !TeamManage.has_team():
+		ScreenUtils.build_menu(popupmenu,PlayerOperate.team_create_dic)
+		popupmenu.popup_centered()
+		return
+	
+	# 有队伍，选择的并且是空
+	if check_node == null: return
+	PlayerOperate.role_id = check_node.data[\"id\"]
+	# 直接把node 传过去 如果没有队伍，那么弹出创建队伍的操作
+	Global.get(\"ScreenUtils\").build_menu($Control/PopupMenu,PlayerOperate.get_team_menu_dic(check_node))
+	$Control/PopupMenu.popup_centered()
+
+# 队伍信息加载完成
+func _team_info_loaded(data):
+	clear_container()
+	
+	if model == 0:
+		data = TeamManage.team_all_role_info
+	else:
+		data = TeamManage.request_join_team_arr
+	
+	for key in data.keys():
+		var item = player_item_res.instance()
+		item.connect(\"item_click\",self,\"_item_click\")
+		$Background/Background2/ScrollContainer/VBoxContainer.add_child(item)
+		item.set_data(data[str(key)])
+	show()
+	
+
+func _team_destory():
+	clear_container()
+	pass
+
+# 加载数据
+func load_data(data_dic):
+	hide()
+	# 获取队伍信息，如果为空直接打开
+	TeamManage.get_team_info() # 获取队伍详细信息
+	pass
+
+
+# 清理数据
+func clear_container():
+	for item in $Background/Background2/ScrollContainer/VBoxContainer.get_children():
+		item.queue_free()
+	check_node = null
+"
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0.498039, 0.498039, 1 )
+
+[node name="TeamUi" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_edit_vertical_guides_": [ 352.0 ]
+}
+
+[node name="Head" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.07
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="XQTitle" parent="Head" instance=ExtResource( 1 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -91.5
+margin_top = -17.5
+margin_right = 91.5
+margin_bottom = 17.5
+title = "组队"
+
+[node name="Tabs" type="Panel" parent="Head"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.857
+margin_bottom = 0.00499725
+rect_min_size = Vector2( 0, 30 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Head/Tabs"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Member" parent="Head/Tabs/HBoxContainer" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 176.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 176, 30 )
+group_name = "team_tab"
+text = "成员"
+is_checked = true
+
+[node name="MemberReq" parent="Head/Tabs/HBoxContainer" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 176.0
+margin_right = 352.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 176, 30 )
+group_name = "team_tab"
+text = "请求"
+
+[node name="Background" parent="." instance=ExtResource( 5 )]
+anchor_top = 0.13
+anchor_bottom = 0.96
+margin_top = -7.62939e-06
+margin_bottom = -3.05176e-05
+
+[node name="Background2" parent="Background" instance=ExtResource( 6 )]
+anchor_left = 0.057
+anchor_top = 0.06
+anchor_right = 0.943
+anchor_bottom = 0.94
+margin_left = -0.0640011
+margin_top = 0.0999985
+margin_right = 0.0639954
+margin_bottom = -0.100037
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Background/Background2"]
+anchor_left = 0.04
+anchor_top = 0.033
+anchor_right = 0.96
+anchor_bottom = 0.967
+margin_left = 0.0199995
+margin_top = -0.0450287
+margin_right = -0.0200195
+margin_bottom = 0.0450134
+rect_min_size = Vector2( 287, 341 )
+theme = ExtResource( 9 )
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/Background2/ScrollContainer"]
+margin_right = 287.0
+margin_bottom = 386.0
+rect_min_size = Vector2( 287, 341 )
+script = ExtResource( 11 )
+
+[node name="PlayerLabelItem" parent="Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 8 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 287.0
+margin_bottom = 35.0
+
+[node name="PlayerLabelItem2" parent="Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 8 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 39.0
+margin_right = 287.0
+margin_bottom = 74.0
+
+[node name="PlayerLabelItem3" parent="Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 8 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 78.0
+margin_right = 287.0
+margin_bottom = 113.0
+
+[node name="PlayerLabelItem4" parent="Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 8 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 117.0
+margin_right = 287.0
+margin_bottom = 152.0
+
+[node name="PlayerLabelItem5" parent="Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 8 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 156.0
+margin_right = 287.0
+margin_bottom = 191.0
+
+[node name="PlayerLabelItem6" parent="Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 8 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 195.0
+margin_right = 287.0
+margin_bottom = 230.0
+
+[node name="PlayerLabelItem7" parent="Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 8 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 234.0
+margin_right = 287.0
+margin_bottom = 269.0
+
+[node name="PlayerLabelItem8" parent="Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 8 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 273.0
+margin_right = 287.0
+margin_bottom = 308.0
+
+[node name="PlayerLabelItem9" parent="Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 8 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 312.0
+margin_right = 287.0
+margin_bottom = 347.0
+
+[node name="PlayerLabelItem10" parent="Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 8 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 351.0
+margin_right = 287.0
+margin_bottom = 386.0
+
+[node name="Panel" type="Panel" parent="."]
+anchor_top = 0.95
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -3.05176e-05
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="Panel"]
+anchor_right = 0.156
+anchor_bottom = 1.0
+margin_right = 0.0879974
+custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "选项"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cancle" type="Button" parent="Panel"]
+anchor_left = 0.844
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.0880127
+custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "返回"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMenu" type="PopupMenu" parent="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -10.0
+margin_top = -10.0
+margin_right = 10.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="tab_click" from="Head/Tabs/HBoxContainer/Member" to="." method="_on_Member_tab_click"]
+[connection signal="tab_click" from="Head/Tabs/HBoxContainer/MemberReq" to="." method="_on_MemberReq_tab_click"]
+[connection signal="pressed" from="Panel/Ok" to="." method="_on_Ok_pressed"]
+[connection signal="pressed" from="Panel/Cancle" to="." method="_on_Cancle_pressed"]
+[connection signal="index_pressed" from="Control/PopupMenu" to="." method="_on_PopupMenu_index_pressed"]

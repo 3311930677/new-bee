@@ -1,0 +1,32 @@
+{	
+	"q5tx":1,
+	"jn":[
+		{"anims":[5,6],"txs":[6,14,8,17],"name":["猛虎纵",1]},
+		{"anims":[5,6],"txs":[1,8,21,8,21,8,21,7],"name":["连斩",1]},
+		{"anims":[5,6],"txs":[4,20,5],"name":["血祭",1]},
+		{"anims":[7,8],"txs":[7,19],"name":["战魂歌",0]},
+		{"anims":[5,6],"txs":[18,3,13,11],"name":["破甲",1]},	
+		{"anims":[7,8],"txs":[7,6,16],"name":["狂龙吼",0]},
+		{"anims":[7,8],"txs":[7,6,16],"name":["荡魂吼",0]},
+		{"anims":[7,8],"txs":[7,19],"name":["玄武护体",0]},
+		{"anims":[5,6],"txs":[1,18,4,14,18,10,7],"name":["挫骨",1]},
+		{"anims":[7,8],"txs":[18,16,1,12],"name":["破天吼",0]},
+		{"anims":[7,8],"txs":[8],"name":["catch",0]}
+
+	],
+	"isSkill":true,
+	"wqIsTemplate":true,
+	"wqTemplate":"zs_wq%d_zd.pwd",
+	"headTemplate":"zs_%d_t%d.pwd",
+	"headIsTemplate":false,
+	"nan":{
+		"head":"zs_nan_t1.pwd",
+		"wq":"",
+		"aef":"zs_nan_zd.aef"
+	},
+	"nv":{
+		"head":"zs_nv_t1.pwd",
+		"wq":"",
+		"aef":"zs_nv_zd.aef"
+	}
+}

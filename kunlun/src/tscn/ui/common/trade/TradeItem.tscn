@@ -1,0 +1,129 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/font/font-16.tres" type="DynamicFont" id=1]
+[ext_resource path="res://src/tscn/ui/common/tres/yinliang.tres" type="Texture" id=2]
+[ext_resource path="res://src/tscn/ui/common/tres/NoVHScollBar.tres" type="Theme" id=3]
+[ext_resource path="res://src/util/common/ScroContainerGD.gd" type="Script" id=4]
+[ext_resource path="res://src/tscn/ui/common/trade/TradeItem.gd" type="Script" id=5]
+
+[node name="TradeItem" type="Control" groups=["trade_item"]]
+anchor_right = 1.0
+anchor_bottom = 0.07
+margin_bottom = -5.0
+rect_min_size = Vector2( 0, 30 )
+mouse_filter = 2
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextureRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Level" type="Label" parent="TextureRect/HBoxContainer"]
+margin_right = 50.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 50, 30 )
+custom_fonts/font = ExtResource( 1 )
+text = "LV100"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TextureRect/HBoxContainer"]
+margin_left = 51.0
+margin_right = 151.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 100, 30 )
+mouse_filter = 1
+theme = ExtResource( 3 )
+script = ExtResource( 4 )
+is_hor_auto_scroll = true
+is_auto_expand = false
+
+[node name="TitleContainer" type="HBoxContainer" parent="TextureRect/HBoxContainer/ScrollContainer"]
+margin_right = 250.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 0, 30 )
+
+[node name="Name" type="Label" parent="TextureRect/HBoxContainer/ScrollContainer/TitleContainer"]
+margin_top = 2.0
+margin_right = 250.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 0, 25 )
+custom_fonts/font = ExtResource( 1 )
+text = "物品道具名称长度较长123456789"
+align = 1
+valign = 1
+
+[node name="Num" type="Label" parent="TextureRect/HBoxContainer"]
+margin_left = 152.0
+margin_right = 192.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 40, 30 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "X999"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="TextureRect/HBoxContainer"]
+margin_left = 193.0
+margin_right = 273.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 80, 0 )
+theme = ExtResource( 3 )
+script = ExtResource( 4 )
+is_hor_auto_scroll = true
+is_auto_expand = false
+scroll_speed = 0.3
+
+[node name="Coins" type="HBoxContainer" parent="TextureRect/HBoxContainer/ScrollContainer2"]
+margin_right = 125.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 0, 30 )
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="YinLiang" type="Label" parent="TextureRect/HBoxContainer/ScrollContainer2/Coins"]
+margin_top = 6.0
+margin_right = 110.0
+margin_bottom = 23.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "99999999999"
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect/HBoxContainer/ScrollContainer2/Coins"]
+margin_left = 114.0
+margin_right = 125.0
+margin_bottom = 30.0
+texture = ExtResource( 2 )
+stretch_mode = 4
+
+[node name="TextureButton" type="TextureButton" parent="TextureRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="TextureRect/TextureButton" to="." method="_on_TextureButton_pressed"]

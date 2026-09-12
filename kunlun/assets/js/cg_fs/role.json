@@ -1,0 +1,16 @@
+{	
+	"wqIsTemplate":true,
+	"wqTemplate":"fs_wq%d_cg.pwd",
+	"headTemplate":"fs_%s_t%d.pwd",
+	"headIsTemplate":false,
+	"nan":{
+		"head":"fs_nan_t1.pwd",
+		"wq":"",
+		"aef":"fs_nan_cg.aef"
+	},
+	"nv":{
+		"head":"fs_nv_t1.pwd",
+		"wq":"",
+		"aef":"fs_nv_cg.aef"
+	}
+}

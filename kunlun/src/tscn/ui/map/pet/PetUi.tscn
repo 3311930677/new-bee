@@ -1,0 +1,1598 @@
+[gd_scene load_steps=31 format=2]
+
+[ext_resource path="res://src/tscn/ui/common/tab/CustomTab.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/tscn/ui/common/title/XQTitle.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/tscn/ui/common/btn/btn_left.tres" type="StyleBox" id=3]
+[ext_resource path="res://assets/font/font-18.tres" type="DynamicFont" id=4]
+[ext_resource path="res://src/tscn/ui/common/bg/Background.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/font/font-16.tres" type="DynamicFont" id=6]
+[ext_resource path="res://src/tscn/ui/common/bg/Background2.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/tscn/ui/common/tres/progress_mp.tres" type="Theme" id=8]
+[ext_resource path="res://src/tscn/ui/common/tres/progress_hp.tres" type="Theme" id=9]
+[ext_resource path="res://src/tscn/ui/common/tres/progress_exp.tres" type="Theme" id=10]
+[ext_resource path="res://src/util/common/ScroContainerGD.gd" type="Script" id=11]
+[ext_resource path="res://src/tscn/ui/common/tres/NoVHScollBar.tres" type="Theme" id=12]
+[ext_resource path="res://src/tscn/ui/map/pet/PetUi.gd" type="Script" id=13]
+[ext_resource path="res://src/tscn/ui/map/pet/PetLabelItem.tscn" type="PackedScene" id=14]
+[ext_resource path="res://src/tscn/ui/map/pet/PetAttrbute.gd" type="Script" id=15]
+[ext_resource path="res://src/tscn/ui/map/pet/PetAbility.gd" type="Script" id=16]
+[ext_resource path="res://src/tscn/ui/map/pet/PetList.gd" type="Script" id=17]
+[ext_resource path="res://src/tscn/ui/map/pet/PetAttrItem.tscn" type="PackedScene" id=18]
+[ext_resource path="res://src/tscn/ui/map/pet/PetSkillLableItem.tscn" type="PackedScene" id=19]
+[ext_resource path="res://src/tscn/pet/DisplayPet.tscn" type="PackedScene" id=20]
+[ext_resource path="res://src/tscn/ui/map/pet/PetQualification.gd" type="Script" id=21]
+[ext_resource path="res://src/tscn/ui/map/pet/PetSkill.gd" type="Script" id=22]
+[ext_resource path="res://src/util/common/ListAutoExpand.gd" type="Script" id=23]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0.498039, 0.498039, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.211765, 0.188235, 0.188235, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.6, 0.6, 0.6, 0.278431 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.588235, 0.588235, 0.588235, 0 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.6, 0.6, 0.6, 0.278431 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0, 0, 0, 1 )
+
+[node name="PetUi" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 13 )
+
+[node name="Head" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.07
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="XQTitle" parent="Head" instance=ExtResource( 2 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -91.5
+margin_top = -17.5
+margin_right = 91.5
+margin_bottom = 17.5
+title = "宠物列表"
+
+[node name="Tabs" type="Panel" parent="."]
+anchor_top = 0.07
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tabs"]
+anchor_right = 1.0
+anchor_bottom = 0.065
+margin_bottom = -0.225002
+custom_constants/separation = 0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PetListTab" parent="Tabs/HBoxContainer" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1.0
+margin_right = 71.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 70, 30 )
+group_name = "pet_tab"
+text = "列表"
+
+[node name="AbilityTab" parent="Tabs/HBoxContainer" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 71.0
+margin_right = 141.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 70, 30 )
+group_name = "pet_tab"
+text = "能力"
+
+[node name="AttributeTab" parent="Tabs/HBoxContainer" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 141.0
+margin_right = 211.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 70, 30 )
+group_name = "pet_tab"
+text = "属性"
+
+[node name="QualificationTab" parent="Tabs/HBoxContainer" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 211.0
+margin_right = 281.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 70, 30 )
+group_name = "pet_tab"
+text = "资质"
+
+[node name="SkillTab" parent="Tabs/HBoxContainer" instance=ExtResource( 1 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 281.0
+margin_right = 351.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 70, 30 )
+group_name = "pet_tab"
+text = "技能"
+
+[node name="Panels" type="Control" parent="Tabs"]
+anchor_top = 0.065
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.225002
+margin_right = -1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PetList" type="Panel" parent="Tabs/Panels"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 17 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Tabs/Panels/PetList"]
+anchor_right = 1.0
+anchor_bottom = 0.067
+margin_bottom = -0.145
+custom_fonts/font = ExtResource( 6 )
+text = "携带数量：10/10"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" parent="Tabs/Panels/PetList" instance=ExtResource( 5 )]
+anchor_top = 0.067
+anchor_bottom = 0.943
+margin_top = -0.145
+margin_bottom = -0.205017
+
+[node name="Background2" parent="Tabs/Panels/PetList/Background" instance=ExtResource( 7 )]
+anchor_left = 0.047
+anchor_top = 0.06
+anchor_right = 0.953
+anchor_bottom = 0.94
+margin_left = 0.00299835
+margin_top = 0.139999
+margin_right = -0.00302124
+margin_bottom = -0.140015
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Tabs/Panels/PetList/Background/Background2"]
+anchor_left = 0.044
+anchor_top = 0.048
+anchor_right = 0.956
+anchor_bottom = 0.943
+margin_left = 0.00799847
+margin_top = -0.0799999
+margin_right = -0.00799561
+margin_bottom = 0.0950012
+theme = ExtResource( 12 )
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Panels/PetList/Background/Background2/ScrollContainer"]
+margin_right = 290.0
+margin_bottom = 402.0
+script = ExtResource( 23 )
+
+[node name="PetLabelItem" parent="Tabs/Panels/PetList/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 14 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 290.0
+margin_bottom = 25.0
+
+[node name="PetLabelItem2" parent="Tabs/Panels/PetList/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 14 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 29.0
+margin_right = 290.0
+margin_bottom = 54.0
+
+[node name="PetLabelItem3" parent="Tabs/Panels/PetList/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 14 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 58.0
+margin_right = 290.0
+margin_bottom = 83.0
+
+[node name="PetLabelItem4" parent="Tabs/Panels/PetList/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 14 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 87.0
+margin_right = 290.0
+margin_bottom = 112.0
+
+[node name="PetLabelItem5" parent="Tabs/Panels/PetList/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 14 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 116.0
+margin_right = 290.0
+margin_bottom = 141.0
+
+[node name="PetLabelItem6" parent="Tabs/Panels/PetList/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 14 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 145.0
+margin_right = 290.0
+margin_bottom = 170.0
+
+[node name="PetLabelItem7" parent="Tabs/Panels/PetList/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 14 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 174.0
+margin_right = 290.0
+margin_bottom = 199.0
+
+[node name="PetLabelItem8" parent="Tabs/Panels/PetList/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 14 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 203.0
+margin_right = 290.0
+margin_bottom = 228.0
+
+[node name="PetLabelItem9" parent="Tabs/Panels/PetList/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 14 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 232.0
+margin_right = 290.0
+margin_bottom = 257.0
+
+[node name="PetLabelItem10" parent="Tabs/Panels/PetList/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 14 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 261.0
+margin_right = 290.0
+margin_bottom = 286.0
+
+[node name="PetLabelItem11" parent="Tabs/Panels/PetList/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 14 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 290.0
+margin_right = 290.0
+margin_bottom = 315.0
+
+[node name="PetLabelItem12" parent="Tabs/Panels/PetList/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 14 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 319.0
+margin_right = 290.0
+margin_bottom = 344.0
+
+[node name="PetLabelItem13" parent="Tabs/Panels/PetList/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 14 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 348.0
+margin_right = 290.0
+margin_bottom = 373.0
+
+[node name="PetLabelItem14" parent="Tabs/Panels/PetList/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 14 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 377.0
+margin_right = 290.0
+margin_bottom = 402.0
+
+[node name="Panel" type="Panel" parent="Tabs/Panels/PetList"]
+anchor_top = 0.943
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.205017
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="Tabs/Panels/PetList/Panel"]
+anchor_right = 0.157
+anchor_bottom = 1.0
+margin_right = -0.107002
+custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "确定"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Tabs/Panels/PetList"]
+anchor_top = -0.149
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.184998
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMenu" type="PopupMenu" parent="Tabs/Panels/PetList/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -10.0
+margin_top = -10.0
+margin_right = 10.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PetAbility" type="Panel" parent="Tabs/Panels"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 16 )
+
+[node name="Panel2" type="Panel" parent="Tabs/Panels/PetAbility"]
+anchor_right = 1.0
+anchor_bottom = 0.244
+margin_bottom = -0.140007
+custom_styles/panel = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Level" type="Label" parent="Tabs/Panels/PetAbility/Panel2"]
+anchor_right = 0.114
+anchor_bottom = 0.132
+margin_right = -0.0140038
+margin_bottom = 0.00800037
+text = "LV100"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HpC" type="Control" parent="Tabs/Panels/PetAbility/Panel2"]
+anchor_left = 0.473
+anchor_right = 1.003
+anchor_bottom = 0.321
+margin_left = -0.0230103
+margin_right = -0.053009
+margin_bottom = -0.026001
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Tabs/Panels/PetAbility/Panel2/HpC"]
+anchor_right = 0.995
+anchor_bottom = 0.853
+margin_right = -0.0700073
+margin_bottom = -0.00200081
+text = "HP"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Hp" type="ProgressBar" parent="Tabs/Panels/PetAbility/Panel2/HpC"]
+anchor_left = 0.183
+anchor_top = 0.235
+anchor_right = 0.909
+anchor_bottom = 0.5
+margin_left = -0.038002
+margin_top = 0.00999928
+margin_right = -0.0740051
+theme = ExtResource( 9 )
+custom_styles/bg = SubResource( 3 )
+value = 60.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Nums" type="Label" parent="Tabs/Panels/PetAbility/Panel2/HpC"]
+anchor_top = 0.588
+anchor_right = 0.995
+anchor_bottom = 1.0
+margin_top = 0.00799942
+margin_right = -0.0700073
+text = "123123/123123"
+align = 1
+valign = 1
+
+[node name="MpC" type="Control" parent="Tabs/Panels/PetAbility/Panel2"]
+anchor_left = 0.473
+anchor_top = 0.321
+anchor_right = 1.0
+anchor_bottom = 0.642
+margin_left = -0.0230103
+margin_top = -0.026001
+margin_right = 1.0
+margin_bottom = -0.052002
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Tabs/Panels/PetAbility/Panel2/MpC"]
+anchor_right = 1.0
+anchor_bottom = 0.853
+margin_right = -1.0
+margin_bottom = -0.00200081
+text = "MP"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mp" type="ProgressBar" parent="Tabs/Panels/PetAbility/Panel2/MpC"]
+anchor_left = 0.183
+anchor_top = 0.235
+anchor_right = 0.909
+anchor_bottom = 0.5
+margin_left = -0.038002
+margin_top = 0.00999928
+margin_right = -0.0740051
+theme = ExtResource( 8 )
+custom_styles/bg = SubResource( 3 )
+value = 80.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Nums" type="Label" parent="Tabs/Panels/PetAbility/Panel2/MpC"]
+anchor_top = 0.588
+anchor_right = 0.995
+anchor_bottom = 1.0
+margin_top = 0.00799942
+margin_right = -0.0700073
+text = "123123/123123"
+align = 1
+valign = 1
+
+[node name="ExpC" type="Control" parent="Tabs/Panels/PetAbility/Panel2"]
+anchor_left = 0.473
+anchor_top = 0.623
+anchor_right = 1.003
+anchor_bottom = 0.943
+margin_left = -0.0230103
+margin_top = -0.038002
+margin_right = -0.053009
+margin_bottom = 0.0419998
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Tabs/Panels/PetAbility/Panel2/ExpC"]
+anchor_right = 0.995
+anchor_bottom = 0.853
+margin_right = -0.0700073
+margin_bottom = -0.00200081
+text = "EXP"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exp" type="ProgressBar" parent="Tabs/Panels/PetAbility/Panel2/ExpC"]
+anchor_left = 0.183
+anchor_top = 0.235
+anchor_right = 0.909
+anchor_bottom = 0.5
+margin_left = -0.038002
+margin_top = 0.00999928
+margin_right = -0.0740051
+theme = ExtResource( 10 )
+custom_styles/bg = SubResource( 3 )
+min_value = 1.0
+value = 80.0
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Nums" type="Label" parent="Tabs/Panels/PetAbility/Panel2/ExpC"]
+anchor_top = 0.588
+anchor_right = 0.995
+anchor_bottom = 1.0
+margin_top = 0.00799942
+margin_right = -0.0700073
+text = "123123/123123"
+align = 1
+valign = 1
+
+[node name="DisplayPet" parent="Tabs/Panels/PetAbility/Panel2" instance=ExtResource( 20 )]
+position = Vector2( 80, 82 )
+show_name = false
+
+[node name="Background" parent="Tabs/Panels/PetAbility" instance=ExtResource( 5 )]
+anchor_top = 0.244
+margin_top = -0.140007
+margin_bottom = -25.0
+
+[node name="Background2" parent="Tabs/Panels/PetAbility/Background" instance=ExtResource( 7 )]
+anchor_left = 0.047
+anchor_top = 0.092
+anchor_right = 0.953
+anchor_bottom = 0.908
+margin_left = 0.00299835
+margin_top = 0.0319977
+margin_right = -0.00302124
+margin_bottom = -0.0320129
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Tabs/Panels/PetAbility/Background/Background2"]
+anchor_left = 0.044
+anchor_top = 0.056
+anchor_right = 0.956
+anchor_bottom = 0.944
+margin_left = 0.00799847
+margin_top = 0.112
+margin_right = -0.00799561
+margin_bottom = -0.112015
+theme = ExtResource( 12 )
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Panels/PetAbility/Background/Background2/ScrollContainer"]
+margin_right = 183.0
+margin_bottom = 248.0
+script = ExtResource( 23 )
+
+[node name="Label1" type="Label" parent="Tabs/Panels/PetAbility/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_right = 183.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "宠物忠诚度：1000/1000"
+
+[node name="Label2" type="Label" parent="Tabs/Panels/PetAbility/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 21.0
+margin_right = 183.0
+margin_bottom = 38.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "成长度  200/1000"
+
+[node name="Label3" type="Label" parent="Tabs/Panels/PetAbility/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 42.0
+margin_right = 183.0
+margin_bottom = 59.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "成长等级  8"
+
+[node name="Label4" type="Label" parent="Tabs/Panels/PetAbility/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 63.0
+margin_right = 183.0
+margin_bottom = 80.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "品质  一品"
+
+[node name="Label5" type="Label" parent="Tabs/Panels/PetAbility/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 84.0
+margin_right = 183.0
+margin_bottom = 101.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "种类  祸天狐仙"
+
+[node name="Label6" type="Label" parent="Tabs/Panels/PetAbility/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 105.0
+margin_right = 183.0
+margin_bottom = 122.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "出战等级  1"
+
+[node name="Label7" type="Label" parent="Tabs/Panels/PetAbility/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 126.0
+margin_right = 183.0
+margin_bottom = 143.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "技能悟性  154"
+
+[node name="Label8" type="Label" parent="Tabs/Panels/PetAbility/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 147.0
+margin_right = 183.0
+margin_bottom = 164.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "成长率  1040"
+
+[node name="Label12" type="Label" parent="Tabs/Panels/PetAbility/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 168.0
+margin_right = 183.0
+margin_bottom = 185.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "技能扩展  0"
+
+[node name="Label9" type="Label" parent="Tabs/Panels/PetAbility/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 189.0
+margin_right = 183.0
+margin_bottom = 206.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "定身抗性  0"
+
+[node name="Label10" type="Label" parent="Tabs/Panels/PetAbility/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 210.0
+margin_right = 183.0
+margin_bottom = 227.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "昏睡抗性  0"
+
+[node name="Label11" type="Label" parent="Tabs/Panels/PetAbility/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 231.0
+margin_right = 183.0
+margin_bottom = 248.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "混乱抗性  0"
+
+[node name="Panel" type="Panel" parent="Tabs/Panels/PetAbility"]
+anchor_top = 0.943
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.205017
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="Tabs/Panels/PetAbility/Panel"]
+anchor_right = 0.157
+anchor_bottom = 1.0
+margin_right = -0.107002
+custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "确定"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Tabs/Panels/PetAbility"]
+anchor_top = -0.149
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.184998
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMenu" type="PopupMenu" parent="Tabs/Panels/PetAbility/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -10.0
+margin_top = -10.0
+margin_right = 10.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PetAttrbute" type="Panel" parent="Tabs/Panels"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" parent="Tabs/Panels/PetAttrbute" instance=ExtResource( 5 )]
+anchor_bottom = 0.943
+margin_bottom = -0.205017
+
+[node name="Background2" parent="Tabs/Panels/PetAttrbute/Background" instance=ExtResource( 7 )]
+anchor_left = 0.047
+anchor_top = 0.048
+anchor_right = 0.953
+anchor_bottom = 0.952
+margin_left = 0.00299835
+margin_top = -0.18
+margin_right = -0.00302124
+margin_bottom = 0.179993
+
+[node name="Private" type="Control" parent="Tabs/Panels/PetAttrbute/Background/Background2"]
+anchor_left = 0.031
+anchor_top = 0.028
+anchor_right = 0.969
+anchor_bottom = 0.972
+margin_left = 0.141999
+margin_top = 0.112
+margin_right = -0.141998
+margin_bottom = -0.11203
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Left" type="Panel" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private"]
+anchor_right = 0.631
+anchor_bottom = 1.0
+margin_right = -0.0380096
+margin_bottom = 2.0
+mouse_filter = 1
+custom_styles/panel = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Remain" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Left"]
+anchor_right = 1.0
+anchor_bottom = 0.054
+margin_right = 1.0
+margin_bottom = -0.00800133
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "剩余点数：9999"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Left"]
+anchor_left = 0.021
+anchor_top = 0.122
+anchor_right = 0.979
+anchor_bottom = 0.94
+margin_left = 0.0519998
+margin_top = 0.0559959
+margin_right = -0.052002
+margin_bottom = 0.119995
+mouse_filter = 1
+custom_styles/panel = SubResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Left/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.042
+margin_bottom = -0.0960083
+rect_min_size = Vector2( 180, 300 )
+custom_constants/separation = 35
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PetAttrItem1" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Left/Panel/VBoxContainer" instance=ExtResource( 18 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 180.0
+margin_bottom = 25.0
+
+[node name="PetAttrItem2" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Left/Panel/VBoxContainer" instance=ExtResource( 18 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 60.0
+margin_right = 180.0
+margin_bottom = 85.0
+name_ = "敏捷"
+key = "agile"
+
+[node name="PetAttrItem3" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Left/Panel/VBoxContainer" instance=ExtResource( 18 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 120.0
+margin_right = 180.0
+margin_bottom = 145.0
+name_ = "智力"
+key = "intelligence"
+
+[node name="PetAttrItem4" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Left/Panel/VBoxContainer" instance=ExtResource( 18 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 180.0
+margin_right = 180.0
+margin_bottom = 205.0
+name_ = "耐力"
+key = "endurance"
+
+[node name="PetAttrItem5" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Left/Panel/VBoxContainer" instance=ExtResource( 18 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 240.0
+margin_right = 180.0
+margin_bottom = 265.0
+name_ = "精神"
+key = "spirit"
+
+[node name="Save" type="Button" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Left"]
+anchor_left = 0.298
+anchor_top = 0.935
+anchor_right = 0.702
+anchor_bottom = 1.0
+margin_left = -0.0240021
+margin_top = -0.120026
+margin_right = 0.0240021
+custom_fonts/font = ExtResource( 6 )
+text = "保存加点"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Right" type="Panel" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private"]
+anchor_left = 0.634
+anchor_right = 1.0
+anchor_bottom = 1.006
+margin_left = 0.0679932
+margin_right = 1.0
+margin_bottom = -0.100006
+custom_styles/panel = SubResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Right"]
+anchor_top = 0.043
+anchor_right = 1.005
+anchor_bottom = 0.98
+margin_left = 0.5
+margin_top = -0.136001
+margin_right = -0.0500031
+margin_bottom = 0.039978
+theme = ExtResource( 12 )
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Right/ScrollContainer"]
+margin_right = 107.0
+margin_bottom = 352.0
+rect_min_size = Vector2( 90, 352 )
+custom_constants/separation = 12
+script = ExtResource( 23 )
+
+[node name="Atk" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Right/ScrollContainer/VBoxContainer"]
+margin_right = 107.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "物攻 9999999"
+
+[node name="LAtk" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Right/ScrollContainer/VBoxContainer"]
+margin_top = 29.0
+margin_right = 107.0
+margin_bottom = 46.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "法攻 9999"
+
+[node name="Def" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Right/ScrollContainer/VBoxContainer"]
+margin_top = 58.0
+margin_right = 107.0
+margin_bottom = 75.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "物防 9999"
+
+[node name="LDef" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Right/ScrollContainer/VBoxContainer"]
+margin_top = 87.0
+margin_right = 107.0
+margin_bottom = 104.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "法防 9999"
+
+[node name="Dodge" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Right/ScrollContainer/VBoxContainer"]
+margin_top = 116.0
+margin_right = 107.0
+margin_bottom = 133.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "闪避 9999"
+
+[node name="Speed" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Right/ScrollContainer/VBoxContainer"]
+margin_top = 145.0
+margin_right = 107.0
+margin_bottom = 162.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "速度 9999"
+
+[node name="Crit" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Right/ScrollContainer/VBoxContainer"]
+margin_top = 174.0
+margin_right = 107.0
+margin_bottom = 191.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "暴击 9999"
+
+[node name="Hp" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Right/ScrollContainer/VBoxContainer"]
+margin_top = 203.0
+margin_right = 107.0
+margin_bottom = 220.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "生命 9999"
+
+[node name="Mp" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Right/ScrollContainer/VBoxContainer"]
+margin_top = 232.0
+margin_right = 107.0
+margin_bottom = 249.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "魔法 9999"
+
+[node name="ShotSpeed" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Right/ScrollContainer/VBoxContainer"]
+margin_top = 261.0
+margin_right = 107.0
+margin_bottom = 278.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "出手速 9999"
+
+[node name="Hit" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Private/Right/ScrollContainer/VBoxContainer"]
+margin_top = 290.0
+margin_right = 107.0
+margin_bottom = 307.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "命中 9999"
+
+[node name="Public" type="Control" parent="Tabs/Panels/PetAttrbute/Background/Background2"]
+visible = false
+anchor_left = 0.031
+anchor_top = 0.028
+anchor_right = 0.969
+anchor_bottom = 0.972
+margin_left = 0.141999
+margin_top = 0.112
+margin_right = -0.141998
+margin_bottom = -0.11203
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Tabs/Panels/PetAttrbute/Background/Background2/Public"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 2.0
+margin_right = 1.0
+margin_bottom = -7.0
+theme = ExtResource( 12 )
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Panels/PetAttrbute/Background/Background2/Public/ScrollContainer"]
+margin_right = 200.0
+margin_bottom = 353.0
+rect_min_size = Vector2( 200, 352 )
+custom_constants/separation = 7
+script = ExtResource( 23 )
+
+[node name="Atk" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Public/ScrollContainer/VBoxContainer"]
+margin_right = 200.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "物攻 9999999"
+
+[node name="LAtk" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Public/ScrollContainer/VBoxContainer"]
+margin_top = 24.0
+margin_right = 200.0
+margin_bottom = 41.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "法攻 9999"
+
+[node name="Def" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Public/ScrollContainer/VBoxContainer"]
+margin_top = 48.0
+margin_right = 200.0
+margin_bottom = 65.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "物防 9999"
+
+[node name="LDef" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Public/ScrollContainer/VBoxContainer"]
+margin_top = 72.0
+margin_right = 200.0
+margin_bottom = 89.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "法防 9999"
+
+[node name="Dodge" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Public/ScrollContainer/VBoxContainer"]
+margin_top = 96.0
+margin_right = 200.0
+margin_bottom = 113.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "闪避 9999"
+
+[node name="Speed" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Public/ScrollContainer/VBoxContainer"]
+margin_top = 120.0
+margin_right = 200.0
+margin_bottom = 137.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "速度 9999"
+
+[node name="Crit" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Public/ScrollContainer/VBoxContainer"]
+margin_top = 144.0
+margin_right = 200.0
+margin_bottom = 161.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "暴击 9999"
+
+[node name="Hp" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Public/ScrollContainer/VBoxContainer"]
+margin_top = 168.0
+margin_right = 200.0
+margin_bottom = 185.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "生命 9999"
+
+[node name="Mp" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Public/ScrollContainer/VBoxContainer"]
+margin_top = 192.0
+margin_right = 200.0
+margin_bottom = 209.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "魔法 9999"
+
+[node name="ShotSpeed" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Public/ScrollContainer/VBoxContainer"]
+margin_top = 216.0
+margin_right = 200.0
+margin_bottom = 233.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "魔法 9999"
+
+[node name="Power" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Public/ScrollContainer/VBoxContainer"]
+margin_top = 240.0
+margin_right = 200.0
+margin_bottom = 257.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "力量 9999"
+
+[node name="Agile" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Public/ScrollContainer/VBoxContainer"]
+margin_top = 264.0
+margin_right = 200.0
+margin_bottom = 281.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "敏捷 9999"
+
+[node name="Intelligence" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Public/ScrollContainer/VBoxContainer"]
+margin_top = 288.0
+margin_right = 200.0
+margin_bottom = 305.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "智力 9999"
+
+[node name="Endurance" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Public/ScrollContainer/VBoxContainer"]
+margin_top = 312.0
+margin_right = 200.0
+margin_bottom = 329.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "耐力 9999"
+
+[node name="Spirit" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Public/ScrollContainer/VBoxContainer"]
+margin_top = 336.0
+margin_right = 200.0
+margin_bottom = 353.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "精神 9999"
+
+[node name="Hit" type="Label" parent="Tabs/Panels/PetAttrbute/Background/Background2/Public/ScrollContainer/VBoxContainer"]
+visible = false
+margin_top = 360.0
+margin_right = 200.0
+margin_bottom = 377.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "命中 9999"
+
+[node name="Panel" type="Panel" parent="Tabs/Panels/PetAttrbute"]
+anchor_top = 0.943
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.205017
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="Tabs/Panels/PetAttrbute/Panel"]
+anchor_right = 0.157
+anchor_bottom = 1.0
+margin_right = -0.107002
+custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "确定"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Tabs/Panels/PetAttrbute"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -65.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMenu" type="PopupMenu" parent="Tabs/Panels/PetAttrbute/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -10.0
+margin_top = -10.0
+margin_right = 10.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PetQualification" type="Panel" parent="Tabs/Panels"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 21 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" parent="Tabs/Panels/PetQualification" instance=ExtResource( 5 )]
+anchor_bottom = 0.943
+margin_bottom = -0.205017
+
+[node name="Background2" parent="Tabs/Panels/PetQualification/Background" instance=ExtResource( 7 )]
+anchor_left = 0.047
+anchor_top = 0.033
+anchor_right = 0.953
+anchor_bottom = 0.967
+margin_left = 0.00299835
+margin_top = -0.0299997
+margin_right = -0.00302124
+margin_bottom = 0.0299683
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Tabs/Panels/PetQualification/Background/Background2"]
+anchor_left = 0.044
+anchor_top = 0.037
+anchor_right = 0.956
+anchor_bottom = 0.963
+margin_left = 0.00799847
+margin_top = -0.171
+margin_right = -0.00799561
+margin_bottom = 0.17099
+theme = ExtResource( 12 )
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Panels/PetQualification/Background/Background2/ScrollContainer"]
+margin_right = 290.0
+margin_bottom = 355.0
+rect_min_size = Vector2( 290, 355 )
+custom_constants/separation = 10
+script = ExtResource( 23 )
+
+[node name="Label1" type="Label" parent="Tabs/Panels/PetQualification/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_right = 290.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "生命资质：9999/9999"
+
+[node name="Label2" type="Label" parent="Tabs/Panels/PetQualification/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 27.0
+margin_right = 290.0
+margin_bottom = 44.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "魔法资质：9999/9999"
+
+[node name="Label3" type="Label" parent="Tabs/Panels/PetQualification/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 54.0
+margin_right = 290.0
+margin_bottom = 71.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "物攻资质：9999/9999"
+
+[node name="Label4" type="Label" parent="Tabs/Panels/PetQualification/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 81.0
+margin_right = 290.0
+margin_bottom = 98.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "法攻资质：9999/9999"
+
+[node name="Label5" type="Label" parent="Tabs/Panels/PetQualification/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 108.0
+margin_right = 290.0
+margin_bottom = 125.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "物防资质：9999/9999"
+
+[node name="Label6" type="Label" parent="Tabs/Panels/PetQualification/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 135.0
+margin_right = 290.0
+margin_bottom = 152.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "法防资质：9999/9999"
+
+[node name="Label7" type="Label" parent="Tabs/Panels/PetQualification/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 162.0
+margin_right = 290.0
+margin_bottom = 179.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "暴击资质：9999/9999"
+
+[node name="Label8" type="Label" parent="Tabs/Panels/PetQualification/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 189.0
+margin_right = 290.0
+margin_bottom = 206.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "闪避资质：9999/9999"
+
+[node name="Label9" type="Label" parent="Tabs/Panels/PetQualification/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 216.0
+margin_right = 290.0
+margin_bottom = 233.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "速度资质：9999/9999"
+
+[node name="Label10" type="Label" parent="Tabs/Panels/PetQualification/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 243.0
+margin_right = 290.0
+margin_bottom = 260.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 6 )
+text = "命中资质：9999/9999"
+
+[node name="Panel" type="Panel" parent="Tabs/Panels/PetQualification"]
+anchor_top = 0.943
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.205017
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="Tabs/Panels/PetQualification/Panel"]
+anchor_right = 0.157
+anchor_bottom = 1.0
+margin_right = -0.107002
+custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "确定"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Tabs/Panels/PetQualification"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -65.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMenu" type="PopupMenu" parent="Tabs/Panels/PetQualification/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -10.0
+margin_top = -10.0
+margin_right = 10.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PetSkill" type="Panel" parent="Tabs/Panels"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 22 )
+
+[node name="Background" parent="Tabs/Panels/PetSkill" instance=ExtResource( 5 )]
+anchor_bottom = 0.943
+margin_bottom = -0.205017
+
+[node name="Background2" parent="Tabs/Panels/PetSkill/Background" instance=ExtResource( 7 )]
+anchor_left = 0.047
+anchor_top = 0.033
+anchor_right = 0.953
+anchor_bottom = 0.967
+margin_left = 0.00299835
+margin_top = -0.0299997
+margin_right = -0.00302124
+margin_bottom = 0.0299683
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Tabs/Panels/PetSkill/Background/Background2"]
+anchor_left = 0.044
+anchor_top = 0.037
+anchor_right = 0.956
+anchor_bottom = 0.963
+margin_left = 0.00799847
+margin_top = -0.171
+margin_right = -0.00799561
+margin_bottom = 0.17099
+theme = ExtResource( 12 )
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Panels/PetSkill/Background/Background2/ScrollContainer"]
+margin_right = 290.0
+margin_bottom = 475.0
+rect_min_size = Vector2( 290, 355 )
+script = ExtResource( 23 )
+
+[node name="PetSkillLableItem1" parent="Tabs/Panels/PetSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 19 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 290.0
+margin_bottom = 25.0
+
+[node name="Panel" type="Panel" parent="Tabs/Panels/PetSkill/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 29.0
+margin_right = 290.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 290, 1 )
+custom_styles/panel = SubResource( 7 )
+
+[node name="PetSkillLableItem2" parent="Tabs/Panels/PetSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 19 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 34.0
+margin_right = 290.0
+margin_bottom = 59.0
+
+[node name="PetSkillLableItem3" parent="Tabs/Panels/PetSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 19 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 63.0
+margin_right = 290.0
+margin_bottom = 88.0
+
+[node name="PetSkillLableItem4" parent="Tabs/Panels/PetSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 19 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 92.0
+margin_right = 290.0
+margin_bottom = 117.0
+
+[node name="PetSkillLableItem5" parent="Tabs/Panels/PetSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 19 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 121.0
+margin_right = 290.0
+margin_bottom = 146.0
+
+[node name="Panel2" type="Panel" parent="Tabs/Panels/PetSkill/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 150.0
+margin_right = 290.0
+margin_bottom = 151.0
+rect_min_size = Vector2( 290, 1 )
+custom_styles/panel = SubResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PetSkillLableItem6" parent="Tabs/Panels/PetSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 19 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 155.0
+margin_right = 290.0
+margin_bottom = 180.0
+
+[node name="PetSkillLableItem7" parent="Tabs/Panels/PetSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 19 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 184.0
+margin_right = 290.0
+margin_bottom = 209.0
+
+[node name="PetSkillLableItem8" parent="Tabs/Panels/PetSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 19 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 213.0
+margin_right = 290.0
+margin_bottom = 238.0
+
+[node name="PetSkillLableItem9" parent="Tabs/Panels/PetSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 19 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 242.0
+margin_right = 290.0
+margin_bottom = 267.0
+
+[node name="PetSkillLableItem10" parent="Tabs/Panels/PetSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 19 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 271.0
+margin_right = 290.0
+margin_bottom = 296.0
+
+[node name="PetSkillLableItem11" parent="Tabs/Panels/PetSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 19 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 300.0
+margin_right = 290.0
+margin_bottom = 325.0
+
+[node name="Panel3" type="Panel" parent="Tabs/Panels/PetSkill/Background/Background2/ScrollContainer/VBoxContainer"]
+margin_top = 329.0
+margin_right = 290.0
+margin_bottom = 330.0
+rect_min_size = Vector2( 290, 1 )
+custom_styles/panel = SubResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PetSkillLableItem12" parent="Tabs/Panels/PetSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 19 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 334.0
+margin_right = 290.0
+margin_bottom = 359.0
+
+[node name="PetSkillLableItem13" parent="Tabs/Panels/PetSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 19 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 363.0
+margin_right = 290.0
+margin_bottom = 388.0
+
+[node name="PetSkillLableItem14" parent="Tabs/Panels/PetSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 19 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 392.0
+margin_right = 290.0
+margin_bottom = 417.0
+
+[node name="PetSkillLableItem15" parent="Tabs/Panels/PetSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 19 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 421.0
+margin_right = 290.0
+margin_bottom = 446.0
+
+[node name="PetSkillLableItem16" parent="Tabs/Panels/PetSkill/Background/Background2/ScrollContainer/VBoxContainer" instance=ExtResource( 19 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 450.0
+margin_right = 290.0
+margin_bottom = 475.0
+
+[node name="Panel" type="Panel" parent="Tabs/Panels/PetSkill"]
+anchor_top = 0.943
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -0.205017
+rect_min_size = Vector2( 0, 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ok" type="Button" parent="Tabs/Panels/PetSkill/Panel"]
+anchor_right = 0.157
+anchor_bottom = 1.0
+margin_right = -0.107002
+custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "确定"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Tabs/Panels/PetSkill"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -65.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMenu" type="PopupMenu" parent="Tabs/Panels/PetSkill/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -10.0
+margin_top = -10.0
+margin_right = 10.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cancle" type="Button" parent="."]
+anchor_left = 0.841
+anchor_top = 0.95
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.0320129
+margin_top = -3.05176e-05
+margin_right = -1.0
+custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "返回"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="tab_click" from="Tabs/HBoxContainer/PetListTab" to="." method="_on_PetListTab_tab_click"]
+[connection signal="tab_click" from="Tabs/HBoxContainer/AbilityTab" to="." method="_on_AbilityTab_tab_click"]
+[connection signal="tab_click" from="Tabs/HBoxContainer/AttributeTab" to="." method="_on_AttributeTab_tab_click"]
+[connection signal="tab_click" from="Tabs/HBoxContainer/QualificationTab" to="." method="_on_QualificationTab_tab_click"]
+[connection signal="tab_click" from="Tabs/HBoxContainer/SkillTab" to="." method="_on_SkillTab_tab_click"]
+[connection signal="pressed" from="Tabs/Panels/PetList/Panel/Ok" to="Tabs/Panels/PetList" method="_on_Ok_pressed"]
+[connection signal="index_pressed" from="Tabs/Panels/PetList/Control/PopupMenu" to="Tabs/Panels/PetList" method="_on_PopupMenu_index_pressed"]
+[connection signal="pressed" from="Tabs/Panels/PetAttrbute/Background/Background2/Private/Left/Save" to="Tabs/Panels/PetAttrbute" method="_on_Save_pressed"]
+[connection signal="pressed" from="Tabs/Panels/PetAttrbute/Panel/Ok" to="Tabs/Panels/PetAttrbute" method="_on_Ok_pressed"]
+[connection signal="pressed" from="Tabs/Panels/PetSkill/Panel/Ok" to="Tabs/Panels/PetSkill" method="_on_Ok_pressed"]
+[connection signal="pressed" from="Cancle" to="." method="_on_Cancle_pressed"]
