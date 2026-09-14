@@ -24,7 +24,6 @@ G="*res://src/autoload/G.gd"
 window/size/viewport_width=480
 window/size/viewport_height=800
 window/stretch/mode="canvas_items"
-window/stretch/aspect="keep"
 window/handheld/orientation=1
 
 [physics]

@@ -54,17 +54,17 @@ func _build_background() -> void:
 
 # ---------- 标题（绝对定位，保证与设计稿一致） ----------
 func _build_title() -> void:
-	var t := G.gold_label("远征", 84, true, G.GOLD_BRIGHT)
-	t.add_theme_font_override("font", G.spaced_font(36))
-	t.add_theme_constant_override("outline_size", 10)
+	var t := G.gold_label("远征", G.FS_HERO, true, G.GOLD_BRIGHT)
+	t.add_theme_font_override("font", G.spaced_font(16))
+	t.add_theme_constant_override("outline_size", 5)
 	t.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	t.position = Vector2(0, 54)
 	t.size = Vector2(VIEW_W, 116)
 	add_child(t)
 
-	var sub := G.gold_label("EXPEDITION", 17, false, Color("e8cc90"))
-	sub.add_theme_font_override("font", G.spaced_font(10, false))
-	sub.add_theme_constant_override("outline_size", 3)
+	var sub := G.gold_label("EXPEDITION", G.FS_MD, false, Color("e8cc90"))
+	sub.add_theme_font_override("font", G.spaced_font(12, false))
+	sub.add_theme_constant_override("outline_size", 2)
 	sub.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	sub.position = Vector2(0, 164)
 	sub.size = Vector2(VIEW_W, 24)
@@ -160,7 +160,7 @@ func _show_intro() -> void:
 	box.add_theme_constant_override("separation", 12)
 	panel.add_child(box)
 
-	var title := G.gold_label("游戏介绍", 30, true, G.BANNER)
+	var title := G.gold_label("游戏介绍", G.FS_BIG, true, G.BANNER)
 	title.add_theme_color_override("font_color", G.BANNER)
 	title.add_theme_color_override("font_outline_color", G.PARCHMENT)
 	box.add_child(title)
@@ -186,14 +186,14 @@ func _show_intro() -> void:
 失败者不死者，只是重整旗鼓。
 远征，永不停歇。"""
 	body.add_theme_font_override("font", G.font_reg)
-	body.add_theme_font_size_override("font_size", 17)
+	body.add_theme_font_size_override("font_size", G.FS_SM)
 	body.add_theme_color_override("font_color", G.TEXT_DARK)
 	body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	body.custom_minimum_size = Vector2(350, 0)
 	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	box.add_child(body)
 
-	var hint := G.gold_label("点击任意处 / 按 确认键 返回", 14, false, Color("7a6640"))
+	var hint := G.gold_label("点击任意处 / 按 确认键 返回", G.FS_SM, false, Color("7a6640"))
 	hint.add_theme_color_override("font_outline_color", G.PARCHMENT)
 	box.add_child(hint)
 
@@ -205,7 +205,7 @@ func _show_intro() -> void:
 
 
 func _show_toast(msg: String) -> void:
-	var t := G.gold_label(msg, 18, false, Color("f5ead0"))
+	var t := G.gold_label(msg, G.FS_MD, false, Color("f5ead0"))
 	t.position = Vector2(0, 580)
 	t.custom_minimum_size = Vector2(480, 0)
 	add_child(t)
