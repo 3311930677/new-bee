@@ -28,6 +28,14 @@ const FONT_BOLD := "res://assets/fonts/NotoSansSC-Bold.otf"
 var font_reg: FontFile
 var font_bold: FontFile
 
+# 字号阶梯（统一收敛，禁止随手调参；层间比例 13/16/18/22/30/56）
+const FS_XS := 13    # 角标 / 最小辅助
+const FS_SM := 16    # 提示 / 描述文字
+const FS_MD := 18    # 按钮 / 输入框 / 正文
+const FS_LG := 22    # 面板标题 / 特写字段（角色名）
+const FS_BIG := 30   # 木匾 / 区块标题
+const FS_HERO := 56  # 主界面大标题
+
 # ---------- 共享状态 ----------
 var account := ""           # 登录账号（游客登录时为"游客"）
 var gender := "男"          # 玩家选择性别
@@ -81,7 +89,8 @@ func gold_label(text: String, size: int, bold := true,
 	l.add_theme_color_override("font_color", color)
 	if outline:
 		l.add_theme_color_override("font_outline_color", Color("1a0f06"))
-		l.add_theme_constant_override("outline_size", maxi(2, size / 12))
+		# 描边随字号阶梯变化：小字细边、大字粗边，避免糊成一团
+		l.add_theme_constant_override("outline_size", maxi(1, roundi(size / 14.0)))
 	return l
 
 
@@ -106,7 +115,7 @@ func menu_button(text: String) -> Control:
 	sb.content_margin_top = 8.0
 	sb.content_margin_bottom = 8.0
 	root.add_theme_stylebox_override("panel", sb)
-	var l := gold_label(text, 20)
+	var l := gold_label(text, FS_MD)
 	root.add_child(l)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	return root
@@ -131,7 +140,7 @@ func set_button_active(btn: Control, active: bool) -> void:
 # ---------- 参考风控件（创建角色 / 登录页） ----------
 
 ## 顶部棕色木匾横幅（金边 + 金字）
-func banner_box(text: String, w := 260, h := 52, font_size := 28) -> PanelContainer:
+func banner_box(text: String, w := 260, h := 52, font_size := FS_BIG) -> PanelContainer:
 	var root := PanelContainer.new()
 	root.custom_minimum_size = Vector2(w, h)
 	var sb := StyleBoxFlat.new()
@@ -143,7 +152,7 @@ func banner_box(text: String, w := 260, h := 52, font_size := 28) -> PanelContai
 	sb.content_margin_right = 24.0
 	root.add_theme_stylebox_override("panel", sb)
 	var l := gold_label(text, font_size, true, GOLD_BRIGHT)
-	l.add_theme_font_override("font", spaced_font(maxi(4, font_size / 4)))
+	l.add_theme_font_override("font", spaced_font(maxi(2, font_size / 8)))
 	root.add_child(l)
 	return root
 
@@ -166,7 +175,7 @@ func parchment_box(w := 400, h := 200, pad := 18.0) -> PanelContainer:
 
 
 ## 金色实心按钮（棕字，参考"随机取名"）
-func gold_button(text: String, w := 0.0, h := 42.0, font_size := 20) -> Control:
+func gold_button(text: String, w := 0.0, h := 42.0, font_size := FS_MD) -> Control:
 	var root := PanelContainer.new()
 	if w > 0.0:
 		root.custom_minimum_size = Vector2(w, h)
@@ -187,7 +196,7 @@ func gold_button(text: String, w := 0.0, h := 42.0, font_size := 20) -> Control:
 
 
 ## 米色选择框（参考"◀ 猎 ▶"中间的方框）
-func select_box(text: String, w := 132.0, h := 42.0, font_size := 21) -> PanelContainer:
+func select_box(text: String, w := 132.0, h := 42.0, font_size := FS_MD) -> PanelContainer:
 	var root := PanelContainer.new()
 	root.custom_minimum_size = Vector2(w, h)
 	var sb := StyleBoxFlat.new()
@@ -204,7 +213,7 @@ func select_box(text: String, w := 132.0, h := 42.0, font_size := 21) -> PanelCo
 
 
 ## 输入框样式（灰米底 + 深棕字）
-func style_line_edit(le: LineEdit, font_size := 20) -> void:
+func style_line_edit(le: LineEdit, font_size := FS_MD) -> void:
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = INPUT_BG
 	sb.set_corner_radius_all(3)

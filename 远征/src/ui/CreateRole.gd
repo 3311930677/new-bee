@@ -60,7 +60,7 @@ func _build_background() -> void:
 
 
 func _build_header() -> void:
-	var b := G.banner_box("创建角色", 240, 54, 27)
+	var b := G.banner_box("创建角色", 240, 54)
 	b.set_anchors_preset(Control.PRESET_CENTER_TOP)
 	b.position = Vector2(-120, 22)
 	add_child(b)
@@ -68,7 +68,7 @@ func _build_header() -> void:
 
 # ---------- 昵称 ----------
 func _build_name_row() -> void:
-	var lbl := G.gold_label("角色昵称", 19, true, G.TEXT_LIGHT)
+	var lbl := G.gold_label("角色昵称", G.FS_MD, true, G.TEXT_LIGHT)
 	lbl.position = Vector2(0, 88)
 	lbl.size = Vector2(VIEW_W, 26)
 	add_child(lbl)
@@ -79,11 +79,11 @@ func _build_name_row() -> void:
 	_name_edit.alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_name_edit.position = Vector2(62, 118)
 	_name_edit.custom_minimum_size = Vector2(232, 42)
-	G.style_line_edit(_name_edit, 19)
+	G.style_line_edit(_name_edit, G.FS_MD)
 	_name_edit.text_submitted.connect(func(_t: String): _confirm())
 	add_child(_name_edit)
 
-	var rnd := G.gold_button("随机取名", 112, 42, 19)
+	var rnd := G.gold_button("随机取名", 112, 42)
 	rnd.position = Vector2(306, 118)
 	rnd.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed:
@@ -92,7 +92,7 @@ func _build_name_row() -> void:
 	)
 	add_child(rnd)
 
-	var hint := G.gold_label("(请输入 2-12 个英文或 2-6 个汉字)", 13, false, Color("d8c398"))
+	var hint := G.gold_label("(请输入 2-12 个英文或 2-6 个汉字)", G.FS_SM, false, Color("d8c398"))
 	hint.position = Vector2(0, 168)
 	hint.size = Vector2(VIEW_W, 22)
 	add_child(hint)
@@ -100,13 +100,13 @@ func _build_name_row() -> void:
 
 # ---------- 性别 / 职业 选择框 ----------
 func _build_selectors() -> void:
-	_sel_gender = _Selector.new(132, 42, 21)
+	_sel_gender = _Selector.new(132, 42, G.FS_MD)
 	_sel_gender.position = Vector2(92, 200)
 	_sel_gender.prev_pressed.connect(func(): _cycle_gender(-1))
 	_sel_gender.next_pressed.connect(func(): _cycle_gender(1))
 	add_child(_sel_gender)
 
-	_sel_class = _Selector.new(132, 42, 21)
+	_sel_class = _Selector.new(132, 42, G.FS_MD)
 	_sel_class.position = Vector2(256, 200)
 	_sel_class.prev_pressed.connect(func(): _switch_role(_role_idx - 1, true))
 	_sel_class.next_pressed.connect(func(): _switch_role(_role_idx + 1, true))
@@ -198,19 +198,19 @@ func _build_info_panel() -> void:
 	title_row.add_theme_constant_override("separation", 10)
 	box.add_child(title_row)
 
-	var rname := G.gold_label("破军", 24, true, G.BANNER, false)
+	var rname := G.gold_label("破军", G.FS_LG, true, G.BANNER, false)
 	title_row.add_child(rname)
-	var job := G.gold_label("战士 · 大剑", 15, false, Color("7a5a2e"), false)
+	var job := G.gold_label("战士 · 大剑", G.FS_SM, false, Color("7a5a2e"), false)
 	job.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 	title_row.add_child(job)
 
-	var tags := G.gold_label("近战物理 · 能抗能打", 14, false, Color("8a6a34"), false)
+	var tags := G.gold_label("近战物理 · 能抗能打", G.FS_SM, false, Color("8a6a34"), false)
 	tags.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	box.add_child(tags)
 
 	var desc := Label.new()
 	desc.add_theme_font_override("font", G.font_reg)
-	desc.add_theme_font_size_override("font_size", 15)
+	desc.add_theme_font_size_override("font_size", G.FS_SM)
 	desc.add_theme_color_override("font_color", G.TEXT_DARK)
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	desc.custom_minimum_size = Vector2(392, 0)
@@ -230,7 +230,7 @@ func _refresh_info() -> void:
 
 # ---------- 底部按钮 ----------
 func _build_buttons() -> void:
-	var ok := G.gold_button("确 定", 150, 46, 21)
+	var ok := G.gold_button("确 定", 150, 46)
 	ok.position = Vector2(78, 744)
 	ok.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed:
@@ -238,7 +238,7 @@ func _build_buttons() -> void:
 	)
 	add_child(ok)
 
-	var cancel := G.gold_button("取 消", 150, 46, 21)
+	var cancel := G.gold_button("取 消", 150, 46)
 	cancel.position = Vector2(252, 744)
 	cancel.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed:
@@ -265,7 +265,7 @@ func _confirm() -> void:
 func _toast_msg(msg: String) -> void:
 	if _toast != null:
 		_toast.queue_free()
-	_toast = G.gold_label(msg, 17, false, Color("ffd0d0"))
+	_toast = G.gold_label(msg, G.FS_MD, false, Color("ffd0d0"))
 	_toast.position = Vector2(0, 470)
 	_toast.size = Vector2(VIEW_W, 24)
 	add_child(_toast)

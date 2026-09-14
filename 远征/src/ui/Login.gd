@@ -36,7 +36,7 @@ func _build_background() -> void:
 
 
 func _build_banner() -> void:
-	var b := G.banner_box("登 录", 200, 54, 28)
+	var b := G.banner_box("登 录", 200, 54)
 	b.set_anchors_preset(Control.PRESET_CENTER_TOP)
 	b.position = Vector2(-100, 46)
 	add_child(b)
@@ -52,7 +52,7 @@ func _build_panel() -> void:
 	box.add_theme_constant_override("separation", 16)
 	panel.add_child(box)
 
-	var title := G.gold_label("账 号 登 录", 22, true, G.BANNER, false)
+	var title := G.gold_label("账 号 登 录", G.FS_LG, true, G.BANNER, false)
 	box.add_child(title)
 
 	var sep := ColorRect.new()
@@ -63,7 +63,7 @@ func _build_panel() -> void:
 	_account = _field(box, "账号", "请输入账号", false)
 	_password = _field(box, "密码", "请输入密码", true)
 
-	var hint := G.gold_label("首次登录将直接创建新角色", 13, false, Color("7a6640"), false)
+	var hint := G.gold_label("首次登录将直接创建新角色", G.FS_SM, false, Color("7a6640"), false)
 	box.add_child(hint)
 
 	var row := HBoxContainer.new()
@@ -71,8 +71,8 @@ func _build_panel() -> void:
 	row.add_theme_constant_override("separation", 16)
 	box.add_child(row)
 
-	var ok := G.gold_button("登 录", 132, 46, 21)
-	var guest := G.gold_button("游客登录", 132, 46, 21)
+	var ok := G.gold_button("登 录", 132, 46)
+	var guest := G.gold_button("游客登录", 132, 46)
 	row.add_child(ok)
 	row.add_child(guest)
 
@@ -93,7 +93,7 @@ func _field(box: VBoxContainer, label: String, ph: String, secret: bool) -> Line
 	row.add_theme_constant_override("separation", 10)
 	box.add_child(row)
 
-	var l := G.gold_label(label, 18, true, G.BANNER, false)
+	var l := G.gold_label(label, G.FS_MD, true, G.BANNER, false)
 	l.custom_minimum_size = Vector2(56, 0)
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -105,7 +105,7 @@ func _field(box: VBoxContainer, label: String, ph: String, secret: bool) -> Line
 	le.max_length = 16
 	le.custom_minimum_size = Vector2(248, 42)
 	le.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	G.style_line_edit(le, 19)
+	G.style_line_edit(le, G.FS_MD)
 	row.add_child(le)
 	return le
 
@@ -129,7 +129,7 @@ func _do_login(guest: bool) -> void:
 func _toast_msg(msg: String) -> void:
 	if _toast != null:
 		_toast.queue_free()
-	_toast = G.gold_label(msg, 17, false, Color("ffd0d0"))
+	_toast = G.gold_label(msg, G.FS_MD, false, Color("ffd0d0"))
 	_toast.position = Vector2(0, 620)
 	_toast.custom_minimum_size = Vector2(VIEW_W, 0)
 	add_child(_toast)
