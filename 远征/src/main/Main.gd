@@ -1,8 +1,9 @@
-# Main.gd —— 场景流：Title → CharSelect → GameHome
+# Main.gd —— 场景流：Title → Login → CreateRole → GameHome
 extends Control
 
 const TITLE_SCENE := "res://src/ui/Title.tscn"
-const CHAR_SELECT_SCENE := "res://src/ui/CharSelect.tscn"
+const LOGIN_SCENE := "res://src/ui/Login.tscn"
+const CREATE_ROLE_SCENE := "res://src/ui/CreateRole.tscn"
 const GAME_HOME_SCENE := "res://src/ui/GameHome.tscn"
 
 
@@ -15,8 +16,12 @@ func go_title() -> void:
 	get_tree().change_scene_to_file(TITLE_SCENE)
 
 
-func go_char_select() -> void:
-	get_tree().change_scene_to_file(CHAR_SELECT_SCENE)
+func go_login() -> void:
+	get_tree().change_scene_to_file(LOGIN_SCENE)
+
+
+func go_create_role() -> void:
+	get_tree().change_scene_to_file(CREATE_ROLE_SCENE)
 
 
 func go_game_home() -> void:
