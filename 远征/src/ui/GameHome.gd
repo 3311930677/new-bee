@@ -21,18 +21,22 @@ func _ready() -> void:
 
 	box.add_child(G.gold_label("远 征 世 界", 40, true, G.GOLD_BRIGHT))
 
-	var info := G.gold_label("%s · %s（%s）" % [name_txt, role.get("name", ""), role.get("job", "")], 20, false, G.NAME_GREEN)
-	box.add_child(info)
+	var who := "%s · %s（%s · %s）" % [name_txt, role.get("name", ""),
+		G.gender, role.get("job", "")]
+	box.add_child(G.gold_label(who, 20, false, G.NAME_GREEN))
+
+	if not G.account.is_empty():
+		box.add_child(G.gold_label("账号：%s" % G.account, 15, false, Color("b8a888")))
 
 	var hint := G.gold_label("主线玩法随阶段 1~2 开发逐步开放\n（战斗竖切 → 远征循环）", 15, false, Color("b8a888"))
 	hint.add_theme_constant_override("outline_size", 2)
 	box.add_child(hint)
 
-	var back := G.menu_button("返回选人")
+	var back := G.menu_button("重新创建角色")
 	back.gui_input.connect(_on_back)
 	box.add_child(back)
 
 
 func _on_back(e: InputEvent) -> void:
 	if e is InputEventMouseButton and e.pressed:
-		get_tree().change_scene_to_file("res://src/ui/CharSelect.tscn")
+		get_tree().change_scene_to_file("res://src/ui/CreateRole.tscn")
