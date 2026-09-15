@@ -40,6 +40,7 @@ var _hp_fill := ColorRect.new()
 var _pot_l := Label.new()
 var _toast_lbl: Label = null
 var _pet_btn: Control = null
+var _picker: TraitPicker = null
 var _joy: _Joystick
 var _map_done := false
 var _map_cfg: Dictionary = {}
@@ -331,9 +332,28 @@ func _toast(msg: String) -> void:
 	tw.tween_callback(_toast_lbl.queue_free)
 
 
+# ================= 词条三选一 =================
+func _show_trait_picker(rows: Array) -> void:
+	_picker = TraitPicker.new()
+	_picker.setup(rows)
+	_picker.picked.connect(_on_trait_picked)
+	_hud.add_child(_picker)  # HUD 同层最后添加，盖住其余 HUD
+
+
+func _on_trait_picked(tid: String) -> void:
+	_picker = null
+	if tid != "":
+		st.traits.append(tid)
+		var tname := String(TableCache.get_trait(tid).get("name", ""))
+		_toast("获得词条：%s" % tname)
+	else:
+		_toast("放弃了祝福")
+	_refresh_hud()
+
+
 # ================= 主循环 =================
 func _physics_process(delta: float) -> void:
-	if _map_done or _battle != null:
+	if _map_done or _battle != null or _picker != null:
 		return
 	if _player == null:
 		return
@@ -448,11 +468,12 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 	if monster_tier == "boss" and _portal != null:
 		_portal.locked = false
 		_toast("首领陨落——传送阵封印解除！")
-	# 战斗胜利获 1 词条（#9 换三选一 UI）
-	var tid := st.roll_trait(_rng)
-	if tid != "":
-		var tname := String(TableCache.get_trait(tid).get("name", ""))
-		_toast("获得词条：%s" % tname)
+	# 战斗胜利三选一词条（§2.4：槽1数值机制/槽2流派85%双刃15%/槽3全池）
+	var choices := st.roll_trait_choices(_rng)
+	if choices.is_empty():
+		_toast("词条池已尽")
+	else:
+		_show_trait_picker(choices)
 	_refresh_hud()
 
 
@@ -530,8 +551,8 @@ class _MapMonster extends Node2D:
 	func _process(delta: float) -> void:
 		if map_ref == null or map_ref._player == null:
 			return
-		if chasing_contact or map_ref._map_done or map_ref._battle != null:
-			return  # 接触中 / 地图结束 / 战斗覆盖层期间冻结
+		if chasing_contact or map_ref._map_done or map_ref._battle != null or map_ref._picker != null:
+			return  # 接触中 / 地图结束 / 战斗覆盖层 / 三选一期间冻结
 		var player: CharacterBody2D = map_ref._player
 		var dist := position.distance_to(player.position)
 		if dist < _contact:

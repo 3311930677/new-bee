@@ -50,8 +50,11 @@ func _win_map_and_exit(scene: RouteScene) -> void:
 		map._battle.sim.finished = true
 		map._battle.sim.result = "victory"
 		map._battle.confirm_result()
+	await get_tree().process_frame
+	_check(map._battle == null, "战斗结束覆盖层应卸载")
+	if map._picker != null:  # 三选一：程序化选第一张
+		map._picker._emit_pick(String(map._picker.choices[0].get("id", "")))
 		await get_tree().process_frame
-		_check(map._battle == null, "战斗结束覆盖层应卸载")
 	map._player.position = map._portal.position
 	map._check_portal()
 	await get_tree().process_frame
@@ -131,6 +134,9 @@ func _run() -> void:
 				bmap._battle.confirm_result()
 				await get_tree().process_frame
 				_check(not bmap._portal.locked, "首领战败传送阵应解封")
+				if bmap._picker != null:  # 三选一：选卡后再通关
+					bmap._picker._emit_pick(String(bmap._picker.choices[0].get("id", "")))
+					await get_tree().process_frame
 				bmap._player.position = bmap._portal.position
 				bmap._check_portal()
 				await get_tree().process_frame

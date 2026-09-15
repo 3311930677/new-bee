@@ -66,18 +66,41 @@ func max_hp() -> int:
 	return maxi(1, int(float(stats.max_hp) * (1.0 + ts.passive_maxhp_pct())))
 
 
-## 战斗胜利后随机获 1 词条（#9 落地三选一 UI 前的过渡）；池尽返回空串
-func roll_trait(rng: RandomNumberGenerator) -> String:
-	var pool: Array = []
+## 战斗胜利三选一候选（玩法文档 §2.4）：槽1=num/mech，槽2=link(85%)/double(15%)，槽3=全池；
+## 过滤已获词条；槽池尽回退到剩余池，全池尽返回空数组
+func roll_trait_choices(rng: RandomNumberGenerator) -> Array:
+	var remain: Array = []
 	for t in TableCache.traits():
-		var tid := String((t as Dictionary).get("id", ""))
-		if not traits.has(tid):
-			pool.append(tid)
-	if pool.is_empty():
-		return ""
-	var pick := String(pool[rng.randi_range(0, pool.size() - 1)])
-	traits.append(pick)
-	return pick
+		if not traits.has(String((t as Dictionary).get("id", ""))):
+			remain.append(t)
+	if remain.is_empty():
+		return []
+	var choices: Array = []
+	var slot_pools: Array = [
+		_pool_by_type(remain, ["num", "mech"]),
+		_pool_by_type(remain, ["link" if rng.randf() < 0.85 else "double"]),
+		remain,
+	]
+	for pool in slot_pools:
+		if pool.is_empty() or choices.size() >= 3:
+			continue
+		var row: Dictionary = pool[rng.randi_range(0, pool.size() - 1)]
+		if not choices.has(row):
+			choices.append(row)
+	for t in remain:  # 槽池空/重复时从剩余池补足
+		if choices.size() >= 3:
+			break
+		if not choices.has(t):
+			choices.append(t)
+	return choices
+
+
+func _pool_by_type(remain: Array, types: Array) -> Array:
+	var pool: Array = []
+	for t in remain:
+		if types.has(String((t as Dictionary).get("type", ""))):
+			pool.append(t)
+	return pool
 
 
 ## 篝火治疗量（40% 最大生命，nodes.json bonfire.heal_pct）

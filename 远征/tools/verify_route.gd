@@ -94,18 +94,21 @@ func _run() -> void:
 		seeds[st.next_battle_seed()] = true
 	_check(seeds.size() == 10, "10 次战斗种子应互不相同")
 
-	# 7. 词条抽取：不重复直至池尽
+	# 7. 词条三选一：候选不含已获、逐次选卡可集满、池尽返回空
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 7
 	var total := TableCache.traits().size()
-	var got := {}
 	for i in total:
-		var tid := st.roll_trait(rng)
-		_check(not tid.is_empty(), "第 %d 次抽取应返回词条（池共 %d）" % [i + 1, total])
-		_check(not got.has(tid), "词条 %s 重复抽取" % tid)
-		got[tid] = true
-	_check(st.traits.size() == total, "应集满全部 %d 词条，实为 %d" % [total, st.traits.size()])
-	_check(st.roll_trait(rng).is_empty(), "池尽后应返回空串")
+		var ch: Array = st.roll_trait_choices(rng)
+		_check(not ch.is_empty(), "第 %d 次选卡应返回候选（池共 %d）" % [i + 1, total])
+		if ch.is_empty():
+			break
+		for cand in ch:
+			var cid := String((cand as Dictionary).get("id", ""))
+			_check(not st.traits.has(cid), "候选 %s 不应已获" % cid)
+		st.traits.append(String(ch[0].get("id", "")))
+	_check(st.traits.size() == total, "逐次选卡应集满全部 %d 词条，实为 %d" % [total, st.traits.size()])
+	_check(st.roll_trait_choices(rng).is_empty(), "池尽后应返回空数组")
 
 	# 8. 篝火治疗与夹紧（词条含 maxhp 类时口径一致）
 	var st2 := RunState.new()
