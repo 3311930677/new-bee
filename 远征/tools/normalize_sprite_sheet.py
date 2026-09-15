@@ -10,13 +10,13 @@ from pathlib import Path
 from PIL import Image
 
 
-def _background_candidate(rgb: tuple[int, int, int]) -> bool:
+def _background_candidate(rgb: tuple[int, int, int], neutral_floor: int = 150) -> bool:
     """Recognize the light neutral checkerboard baked into some generated images."""
     r, g, b = rgb
-    return min(r, g, b) >= 150 and max(r, g, b) - min(r, g, b) <= 8
+    return min(r, g, b) >= neutral_floor and max(r, g, b) - min(r, g, b) <= 8
 
 
-def remove_connected_checkerboard(image: Image.Image) -> Image.Image:
+def remove_connected_checkerboard(image: Image.Image, neutral_floor: int = 150) -> Image.Image:
     rgba = image.convert("RGBA")
     width, height = rgba.size
     pixels = rgba.load()
@@ -25,7 +25,7 @@ def remove_connected_checkerboard(image: Image.Image) -> Image.Image:
 
     def enqueue(x: int, y: int) -> None:
         index = y * width + x
-        if seen[index] or not _background_candidate(pixels[x, y][:3]):
+        if seen[index] or not _background_candidate(pixels[x, y][:3], neutral_floor):
             return
         seen[index] = 1
         queue.append((x, y))
