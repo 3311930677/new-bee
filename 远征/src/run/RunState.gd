@@ -17,7 +17,17 @@ var run_seed := 0
 var node_seq := 0          # 已进入节点计数（推导局内唯一战斗种子）
 var finished := false
 var result := ""           # "defeat" / "clear"
-var gold := 0              # 局内累计金币（#10 结算接管）
+var gold := 0              # 局内累计金币（#10b 结算入账钱包）
+var expedition := 0        # 局内累计远征币（抽奖祭坛货币）
+var soul := 0              # 局内累计灵魂石（宠物池货币）
+
+
+## 按 nodes.json rewards 累加节点奖励（normal/elite/boss/chest；战利与拾取同口径）
+func add_reward(kind: String) -> void:
+	var row: Dictionary = TableCache.nodes_config().get("rewards", {}).get(kind, {})
+	gold += int(row.get("gold", 0))
+	expedition += int(row.get("expedition", 0))
+	soul += int(row.get("soul", 0))
 
 
 func setup(cfg: Dictionary) -> void:
