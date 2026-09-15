@@ -6,13 +6,14 @@
   "weights": { "normal": 40, "elite": 15, "event": 15, "chest": 12, "shop": 8, "bonfire": 10 },
   "guarantee": { "layer2_min_elite": 1, "run_min_event": 1, "run_min_shop": 1 },
   "difficulty_scale_per_layer": 0.12,
+  "enemy": { "elite_hp_atk_mult": 1.8, "elite_def_mult": 1.3 },
   "bonfire": { "heal_pct": 0.40, "remove_trait": 1 },
   "shop": { "potion_price": 300, "potion_heal_pct": 0.35, "potion_cap": 3 },
   "rewards": {
-    "normal": { "gold": 120, "expedition": 20 },
-    "elite": { "gold": 300, "expedition": 45, "soul": 5 },
-    "boss": { "gold": 800, "expedition": 120, "soul": 15 },
-    "chest": { "gold": 200, "expedition": 30 }
+    "normal": { "gold": 120, "expedition": 20, "exp": 60 },
+    "elite": { "gold": 300, "expedition": 45, "soul": 5, "exp": 140 },
+    "boss": { "gold": 800, "expedition": 120, "soul": 15, "exp": 300 },
+    "chest": { "gold": 200, "expedition": 30, "exp": 30 }
   },
   "sweep_yield": 0.70
 }

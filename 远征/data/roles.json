@@ -36,7 +36,7 @@
     "weapon": "圣锤",
     "tags": "治疗辅助 · 可独立刷怪",
     "attack_range": "melee",
-    "base": { "hp": 115, "atk": 18, "def": 12, "spd": 0.95, "crit": 0.05 },
+    "base": { "hp": 115, "atk": 22, "def": 12, "spd": 0.95, "crit": 0.05 },
     "skills": ["fz_shengyu", "fz_puzhao", "fz_jinghua", "fz_zhudao", "fz_poxiao"]
   }
 ]
