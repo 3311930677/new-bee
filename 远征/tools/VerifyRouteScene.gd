@@ -81,6 +81,8 @@ func _clear_interactable_map(scene: RouteScene) -> void:
 
 
 func _run() -> void:
+	# 钱包备份：结算入账会写 user://save.json，测试收尾还原
+	var wallet_bak: Dictionary = G.wallet.duplicate()
 	# 1. 路线图构建
 	var scene := await _spawn(1, "pet_thunderhawk")
 	_check(scene.st.route.get("layers", []).size() == 3, "路线应有 3 层")
@@ -172,6 +174,10 @@ func _run() -> void:
 		_check(scene.st.finished and scene.st.result == "clear", "局状态应为通关")
 		_check(scene.st.expedition > 0 and scene.st.soul >= 15,
 			"通关应累计远征币/灵魂石，实为 %d/%d" % [scene.st.expedition, scene.st.soul])
+		_check(int(G.wallet.get("gold", 0)) == int(wallet_bak.get("gold", 0)) + scene.st.gold,
+			"结算应入账金币到钱包，实为 %d（原 %d + 局内 %d）" %
+			[int(G.wallet.get("gold", 0)), int(wallet_bak.get("gold", 0)), scene.st.gold])
+		_check(scene._settled, "入账应只做一次（_settled 置位）")
 	scene.queue_free()
 	await get_tree().process_frame
 
@@ -198,6 +204,12 @@ func _run() -> void:
 				_check(scene2.st.bench_pet == "", "换宠后替补位应清空")
 				_check(scene2.st.finished and scene2.st.result == "defeat", "战败应结束局")
 				_check(scene2._end_ui != null, "战败应显示结算浮层")
+				_check(int(G.wallet.get("gold", 0)) > int(wallet_bak.get("gold", 0)),
+					"战败结算亦应入账（失败无惩罚）")
+
+	# 测试收尾：还原钱包并存盘（清除入账污染）
+	G.wallet = wallet_bak
+	G.save_game()
 
 	if _fails == 0:
 		print("ROUTE_SCENE_OK all tests passed")

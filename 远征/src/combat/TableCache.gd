@@ -74,6 +74,10 @@ static func traits() -> Array:
 	return _rows("traits")
 
 
+static func pets() -> Array:
+	return _rows("pets")
+
+
 static func growth() -> Dictionary:
 	var v: Variant = _load("res://data/growth.json")
 	return v if v is Dictionary else {}

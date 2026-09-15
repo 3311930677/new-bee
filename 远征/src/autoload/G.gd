@@ -46,6 +46,10 @@ var selected_role := ""     # "zs" / "ck" / "fs" / "fz"
 var player_name := ""       # 玩家起的名字
 var roles: Array = []       # data/roles.json 内容
 
+# ---------- 存档与钱包（#10b 第一轮：user://save.json；钱包三币 + 角色档案） ----------
+const SAVE_PATH := "user://save.json"
+var wallet := {"gold": 0, "expedition": 0, "soul": 0}
+
 
 func _ready() -> void:
 	font_reg = load(FONT_REG) as FontFile
@@ -58,6 +62,65 @@ func _ready() -> void:
 	if font_serif == null:
 		font_serif = font_bold
 	_load_roles()
+	_load_save()
+
+
+## 读档：恢复钱包与角色档案（无存档/坏档保持默认，不报错弹窗——挫败感克制）
+func _load_save() -> void:
+	var f := FileAccess.open(SAVE_PATH, FileAccess.READ)
+	if f == null:
+		return
+	var parsed: Variant = JSON.parse_string(f.get_as_text())
+	if not (parsed is Dictionary):
+		push_warning("存档解析失败，沿用默认状态")
+		return
+	var data := parsed as Dictionary
+	var w: Variant = data.get("wallet", {})
+	if w is Dictionary:
+		for k in ["gold", "expedition", "soul"]:
+			wallet[k] = int((w as Dictionary).get(k, 0))
+	var rid := String(data.get("selected_role", ""))
+	if not rid.is_empty() and not get_role(rid).is_empty():
+		selected_role = rid
+	var acc := String(data.get("account", ""))
+	if not acc.is_empty():
+		account = acc
+	var nm := String(data.get("player_name", ""))
+	if not nm.is_empty():
+		player_name = nm
+	var gd := String(data.get("gender", ""))
+	if not gd.is_empty():
+		gender = gd
+
+
+## 存档：钱包三币 + 角色档案（远征结算入账 / 主城关键节点时写）
+func save_game() -> void:
+	var data := {
+		"version": 1,
+		"wallet": {
+			"gold": int(wallet.get("gold", 0)),
+			"expedition": int(wallet.get("expedition", 0)),
+			"soul": int(wallet.get("soul", 0)),
+		},
+		"account": account,
+		"gender": gender,
+		"player_name": player_name,
+		"selected_role": selected_role,
+	}
+	var f := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	if f == null:
+		push_error("存档写入失败：" + SAVE_PATH)
+		return
+	f.store_string(JSON.stringify(data, "\t"))
+	f.close()
+
+
+## 局结算入账（战败亦保留——失败无惩罚）并落盘
+func deposit(gold: int, expedition: int, soul: int) -> void:
+	wallet["gold"] = int(wallet.get("gold", 0)) + gold
+	wallet["expedition"] = int(wallet.get("expedition", 0)) + expedition
+	wallet["soul"] = int(wallet.get("soul", 0)) + soul
+	save_game()
 
 
 func _load_roles() -> void:
