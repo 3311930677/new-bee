@@ -1,6 +1,6 @@
 # VerifyRouteScene.gd —— 远征循环冒烟（场景模式：godot --headless --path . res://tools/VerifyRouteScene.tscn）
-# seed=1 布局：层1 bonfire/event/shop（全快捷）→ 层2 elite/shop/normal → 层3 normal/normal/elite
-# 覆盖：路线图构建 / 快捷节点流转 / 战斗节点经 MapScene 探索层（开战→胜利写回→传送阵通关）/
+# seed=1 布局：层1 bonfire/event/shop（全非战斗）→ 层2 elite/shop/normal → 层3 normal/normal/elite
+# 覆盖：路线图构建 / 非战斗节点经 MapScene 物件交互流转 / 战斗节点探索（开战→胜利写回→传送阵通关）/
 #       BOSS 通关结算 / 战败结算 / 药剂与换宠跨节点写回
 extends Node
 
@@ -61,6 +61,25 @@ func _win_map_and_exit(scene: RouteScene) -> void:
 	_check(scene._map == null, "走传送阵后地图覆盖层应卸载")
 
 
+## 非战斗节点：走近物件触发交互 → 走传送阵通关
+func _clear_interactable_map(scene: RouteScene) -> void:
+	var map := scene._map
+	_check(map != null, "非战斗节点应挂载 MapScene")
+	if map == null:
+		return
+	_check(map._interactable != null, "非战斗地图应放交互物件")
+	if map._interactable != null:
+		map._player.position = map._interactable.position
+		for i in 6:
+			await get_tree().process_frame
+	if map._remover != null:  # 篝火词条删除浮层：直接关闭
+		map._close_remover("")
+	map._player.position = map._portal.position
+	map._check_portal()
+	await get_tree().process_frame
+	_check(scene._map == null, "走传送阵后地图覆盖层应卸载")
+
+
 func _run() -> void:
 	# 1. 路线图构建
 	var scene := await _spawn(1, "pet_thunderhawk")
@@ -72,22 +91,27 @@ func _run() -> void:
 	_check(node_cnt == 11, "路线图应有 11 个节点视图（起点+9+BOSS），实为 %d" % node_cnt)
 	_check(scene.st.current_layer() == 1, "开局应在第 1 层")
 
-	# 2. 层 1 快捷节点流转（seed=1 层 1 全为非战斗）
+	# 2. 层 1 非战斗节点流转（seed=1 层 1 全为非战斗）：地图物件交互 → 传送阵
 	var quick := _find_node(scene.st.route["layers"][0], ["event", "chest", "shop", "bonfire"])
-	_check(not quick.is_empty(), "seed=1 层 1 应有快捷节点")
+	_check(not quick.is_empty(), "seed=1 层 1 应有非战斗节点")
 	if not quick.is_empty():
 		var qtype := String(quick.get("type", ""))
 		var gold_b := scene.st.gold
 		var pot_b := scene.st.potions
+		var exp_b := scene.st.expedition
 		scene._enter_node(quick)
-		_check(scene._map == null, "快捷节点不应挂载探索地图")
-		_check(bool(quick.get("cleared", false)), "快捷节点应标记完成")
-		_check(scene.st.current_layer() == 2, "快捷节点走完应推进到第 2 层")
+		_check(scene._map != null, "非战斗节点应挂载探索地图")
+		await _clear_interactable_map(scene)
+		_check(bool(quick.get("cleared", false)), "非战斗节点应标记完成")
+		_check(scene.st.current_layer() == 2, "非战斗节点走完应推进到第 2 层")
 		match qtype:
-			"event", "chest":
-				_check(scene.st.gold > gold_b, "%s 应产出金币" % qtype)
+			"event":
+				_check(scene.st.gold >= gold_b + 80, "事件应产金币 80+")
+			"chest":
+				_check(scene.st.gold == gold_b + 200 and scene.st.expedition == exp_b + 30,
+					"宝箱应入账金币 200/远征币 30")
 			"shop":
-				_check(scene.st.potions == pot_b + 1, "商店应购得 1 药剂")
+				_check(scene.st.potions == pot_b + 1, "商店应得 1 药剂")
 			"bonfire":
 				_check(scene.st.hp == scene.st.max_hp(), "篝火满血治疗应夹紧")
 
@@ -95,11 +119,15 @@ func _run() -> void:
 	var nd := _find_node(scene.st.route["layers"][1], ["normal", "elite"])
 	_check(not nd.is_empty(), "seed=1 层 2 应有战斗节点")
 	if not nd.is_empty():
+		var gold_b2 := scene.st.gold
 		scene._enter_node(nd)
 		await _win_map_and_exit(scene)
 		_check(bool(nd.get("cleared", false)), "走传送阵应标记节点完成")
 		_check(scene.st.traits.size() == 1, "胜利应获 1 词条，实为 %d" % scene.st.traits.size())
 		_check(scene.st.hp > 0, "HP 应延续为正值，实为 %d" % scene.st.hp)
+		_check(scene.st.gold > gold_b2, "战利应入账金币（%d → %d）" % [gold_b2, scene.st.gold])
+		if String(nd.get("type", "")) == "elite":
+			_check(scene.st.soul >= 5, "精英战利应含灵魂石，实为 %d" % scene.st.soul)
 		_check(scene.st.current_layer() == 3, "应推进到第 3 层，实为 %d" % scene.st.current_layer())
 
 	# 4. 层 3 战斗节点
@@ -142,6 +170,8 @@ func _run() -> void:
 				await get_tree().process_frame
 		_check(scene._end_ui != null, "通关应显示结算浮层")
 		_check(scene.st.finished and scene.st.result == "clear", "局状态应为通关")
+		_check(scene.st.expedition > 0 and scene.st.soul >= 15,
+			"通关应累计远征币/灵魂石，实为 %d/%d" % [scene.st.expedition, scene.st.soul])
 	scene.queue_free()
 	await get_tree().process_frame
 

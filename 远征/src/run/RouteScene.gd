@@ -26,7 +26,6 @@ const BOSS_Y := 168.0
 const START_Y := 604.0
 
 var st := RunState.new()
-var _rng := RandomNumberGenerator.new()
 var _field := Control.new()
 var _lines: _RouteLines
 var _layer_l := Label.new()
@@ -44,7 +43,6 @@ func _ready() -> void:
 	var cfg := pending_run
 	pending_run = {}
 	st.setup(cfg)
-	_rng.seed = st.run_seed ^ 0x5e11
 	_build()
 
 
@@ -209,35 +207,9 @@ func _on_node_input(e: InputEvent, nd: Dictionary) -> void:
 
 
 func _enter_node(nd: Dictionary) -> void:
+	# 全类型统一落地探索大地图（§2.7）：战斗节点有怪，非战斗节点有交互物件
 	_cur_node = nd
-	match String(nd.get("type", "normal")):
-		"normal", "elite", "boss":
-			_start_explore(nd)
-		"chest":
-			var gold := int(TableCache.nodes_config().get("rewards", {}).get("chest", {}).get("gold", 200))
-			st.gold += gold
-			_quick_done("宝箱开启：金币 +%d" % gold)
-		"event":
-			var gold2 := _rng.randi_range(80, 150)
-			st.gold += gold2
-			_quick_done("旅人赠礼：金币 +%d" % gold2)
-		"shop":
-			var cap := int(TableCache.nodes_config().get("shop", {}).get("potion_cap", 3))
-			if st.potions < cap:
-				st.potions += 1
-				_quick_done("商队补给：购得治疗药剂 ×1")
-			else:
-				_quick_done("商队补给：药剂已达上限，继续赶路")
-		"bonfire":
-			var heal_amt := st.bonfire_heal()
-			st.heal(heal_amt)
-			_quick_done("篝火休整：回复 %d 点生命" % heal_amt)
-
-
-func _quick_done(msg: String) -> void:
-	st.node_cleared(int(_cur_node.get("layer", 1)), int(_cur_node.get("index", 0)))
-	_toast_msg(msg)
-	_refresh()
+	_start_explore(nd)
 
 
 # ================= 战斗节点（MapScene 探索覆盖层） =================
@@ -287,6 +259,8 @@ func _show_end(win: bool) -> void:
 		Color("6a8a4a") if win else Color("8a4a3a")))
 	box.add_child(G.gold_label("历经 %d 场战斗" % st.node_seq, G.FS_SM, false, Color("7a5a2e"), false))
 	box.add_child(G.gold_label("金币 +%d" % st.gold, G.FS_MD, false, Color("8a6a34"), false))
+	box.add_child(G.gold_label("远征币 +%d" % st.expedition, G.FS_MD, false, Color("8a6a34"), false))
+	box.add_child(G.gold_label("灵魂石 +%d" % st.soul, G.FS_MD, false, Color("8a6a34"), false))
 	box.add_child(G.gold_label("词条 ×%d（随局重置）" % st.traits.size(), G.FS_SM,
 		false, Color("8a6a34"), false))
 

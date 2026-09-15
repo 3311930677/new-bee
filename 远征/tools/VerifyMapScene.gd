@@ -157,6 +157,70 @@ func _run() -> void:
 	gmap.queue_free()
 	await get_tree().process_frame
 
+	# ---- H. 非战斗节点物件化（宝箱/事件/商店/篝火，§2.7） ----
+	# H1 宝箱：无怪有物件，靠近自动开启并入账
+	var cmap := await _spawn_map("chest", 1, "")
+	_check(cmap._monsters.size() == 0, "宝箱区应无怪")
+	_check(cmap._interactable != null and cmap._interactable.kind == "chest", "宝箱区应放宝箱物件")
+	_check(not cmap._portal.locked, "宝箱区传送阵应解锁")
+	cmap._player.position = cmap._interactable.position
+	for i in 6:
+		await get_tree().process_frame
+	_check(cmap._interactable == null, "开启后宝箱物件应消失")
+	_check(cmap.st.gold == 200 and cmap.st.expedition == 30,
+		"宝箱应入账金币 200/远征币 30，实为 %d/%d" % [cmap.st.gold, cmap.st.expedition])
+	cmap._player.position = cmap._portal.position
+	cmap._check_portal()
+	_check(cmap._map_done and _last_result == "cleared", "宝箱区应可走传送阵通关")
+	cmap.queue_free()
+	await get_tree().process_frame
+
+	# H2 篝火：回血 + 词条删除浮层（选一行舍弃）
+	var fmap := await _spawn_map("bonfire", 2, "")
+	var tlist: Array = TableCache.traits()
+	fmap.st.traits = [String(tlist[0].get("id", "")), String(tlist[1].get("id", ""))]
+	fmap.st.hp = 10
+	fmap._player.position = fmap._interactable.position
+	for i in 6:
+		await get_tree().process_frame
+	_check(fmap._remover != null, "篝火应弹出词条删除浮层")
+	_check(fmap.st.hp > 10, "篝火应回血，实为 %d" % fmap.st.hp)
+	var drop_id := String(tlist[0].get("id", ""))
+	if fmap._remover != null:
+		var click := InputEventMouseButton.new()
+		click.button_index = MOUSE_BUTTON_LEFT
+		click.pressed = true
+		fmap._on_remove_row(click, drop_id)
+		await get_tree().process_frame
+	_check(fmap._remover == null, "选行后浮层应关闭")
+	_check(fmap.st.traits.size() == 1 and not fmap.st.traits.has(drop_id),
+		"应舍弃所选词条，实为 %s" % str(fmap.st.traits))
+	fmap.queue_free()
+	await get_tree().process_frame
+
+	# H3 商店：金不足免费赠药
+	var smap := await _spawn_map("shop", 1, "")
+	smap.st.gold = 0
+	smap.st.potions = 1
+	smap._player.position = smap._interactable.position
+	for i in 6:
+		await get_tree().process_frame
+	_check(smap._interactable == null and smap.st.potions == 2,
+		"金不足应免费赠药 ×1，实为药剂 %d" % smap.st.potions)
+	smap.queue_free()
+	await get_tree().process_frame
+
+	# H4 事件：金币 80~150 随机
+	var emap := await _spawn_map("event", 1, "")
+	emap.st.gold = 0
+	emap._player.position = emap._interactable.position
+	for i in 6:
+		await get_tree().process_frame
+	_check(emap._interactable == null and emap.st.gold >= 80 and emap.st.gold <= 150,
+		"事件应得金币 80~150，实为 %d" % emap.st.gold)
+	emap.queue_free()
+	await get_tree().process_frame
+
 	_print_result()
 
 

@@ -22,6 +22,7 @@ const ROLE_FRAMES := {  # 四方向行走帧（BattleScene 同款复用）
 const MON_COLOR := {
 	"normal": Color("5f7186"), "elite": Color("7a4a9a"), "boss": Color("8a2f2f"),
 }
+const INTERACT_R := 44.0      # 非战斗物件交互半径（maps.json 无此字段时的口径）
 
 var st: RunState
 var node: Dictionary = {}
@@ -33,6 +34,8 @@ var _player_anim: AnimatedSprite2D
 var _portal: _Portal
 var _monsters: Array[_MapMonster] = []
 var _contact_mon: _MapMonster = null
+var _interactable: _Interactable = null   # 非战斗节点物件（宝箱/事件/商店/篝火）
+var _remover: Control = null              # 篝火词条删除浮层
 var _battle_layer: CanvasLayer = null
 var _battle: BattleScene = null
 var _hud := CanvasLayer.new()
@@ -178,7 +181,11 @@ func _build_player(map_w: float, map_h: float) -> void:
 
 func _build_monsters(map_w: float, map_h: float) -> void:
 	# 编成：普通 3~4 小怪 / 精英 1+2 / BOSS 1 守阵（§2.5）；散布中上部，互不重叠
+	# 非战斗节点（宝箱/事件/商店/篝火）：无怪，放 1 个交互物件（§2.7）
 	var nt := String(node.get("type", "normal"))
+	if not MON_COLOR.has(nt):
+		_build_interactable(map_w, map_h)
+		return
 	var comp: Array = []
 	match nt:
 		"boss":
@@ -213,14 +220,27 @@ func _build_monsters(map_w: float, map_h: float) -> void:
 		_world.add_child(m)
 
 
+## 非战斗节点物件：置于玩家出生点与传送阵之间的中途（要走一段路）
+func _build_interactable(map_w: float, map_h: float) -> void:
+	var it := _Interactable.new()
+	it.kind = String(node.get("type", "chest"))
+	it.position = Vector2(map_w / 2.0, map_h * 0.45)
+	it.map_ref = self
+	_interactable = it
+	_world.add_child(it)
+
+
 # ================= HUD =================
 func _build_hud() -> void:
 	_hud.layer = 1
 	add_child(_hud)
 
 	var tc_name := String(_theme_cfg.get("name", "未知"))
-	var nt_name: String = {"normal": "遭遇区", "elite": "精英区", "boss": "首领巢穴"}.get(
-		String(node.get("type", "normal")), "探索")
+	var nt := String(node.get("type", "normal"))
+	var nt_name: String = {
+		"normal": "遭遇区", "elite": "精英区", "boss": "首领巢穴",
+		"chest": "藏宝地", "event": "奇遇", "shop": "商队", "bonfire": "篝火地",
+	}.get(nt, "探索")
 	var top := G.parchment_box(300, 34, 8.0)
 	top.position = Vector2(16, 12)
 	_hud.add_child(top)
@@ -228,8 +248,17 @@ func _build_hud() -> void:
 	title.set_anchors_preset(Control.PRESET_FULL_RECT)
 	top.add_child(title)
 
-	var goal := G.gold_label("寻找传送阵" if not _portal.locked else "击败首领，解除传送阵封印",
-		G.FS_XS, false, Color("ffd9a0"), false)
+	var goal_text := "寻找传送阵"
+	if _portal.locked:
+		goal_text = "击败首领，解除传送阵封印"
+	else:
+		goal_text = {
+			"chest": "开启宝箱，然后前往传送阵",
+			"event": "前方似乎有人影……",
+			"shop": "商队在此驻留",
+			"bonfire": "生火休整，再启程",
+		}.get(nt, goal_text)
+	var goal := G.gold_label(goal_text, G.FS_XS, false, Color("ffd9a0"), false)
 	goal.position = Vector2(0, 50)
 	goal.custom_minimum_size = Vector2(VIEW_W, 0)
 	_hud.add_child(goal)
@@ -351,9 +380,126 @@ func _on_trait_picked(tid: String) -> void:
 	_refresh_hud()
 
 
+# ================= 非战斗节点交互（§2.7 物件化） =================
+func on_interactable(it: _Interactable) -> void:
+	if _map_done or _battle != null or _picker != null or _remover != null:
+		return
+	it.used = true
+	match it.kind:
+		"chest":
+			st.add_reward("chest")
+			_toast("宝箱开启：金币 +200 · 远征币 +30")
+			it.queue_free()
+		"event":
+			var gold := _rng.randi_range(80, 150)
+			st.gold += gold
+			_toast("旅人赠礼：金币 +%d" % gold)
+			it.queue_free()
+		"shop":
+			_shop_supply()
+			it.queue_free()
+		"bonfire":
+			var amt := st.bonfire_heal()
+			st.heal(amt)
+			_refresh_hud()
+			if st.traits.is_empty():
+				_toast("篝火休整：回复 %d 点生命（无词条可弃）" % amt)
+			else:
+				_toast("篝火休整：回复 %d 点生命" % amt)
+				_show_trait_remove()
+			it.queue_free()
+	_interactable = null
+
+
+## 商队补给：金够扣钱购药；金不足免费赠 1 瓶（挫败感克制——每节点一次）
+func _shop_supply() -> void:
+	var shop: Dictionary = TableCache.nodes_config().get("shop", {})
+	var cap := int(shop.get("potion_cap", 3))
+	var price := int(shop.get("potion_price", 300))
+	if st.potions >= cap:
+		_toast("商队补给：药剂已达上限，祝你前路平安")
+		return
+	if st.gold >= price:
+		st.gold -= price
+		st.potions += 1
+		_toast("商队补给：购得治疗药剂 ×1（金币 -%d）" % price)
+	else:
+		st.potions += 1
+		_toast("商队钦佩你的勇气，赠你治疗药剂 ×1")
+	_refresh_hud()
+
+
+## 篝火词条删除浮层（§2.6 删 1 词条）：列表式选择舍弃，或保留全部
+func _show_trait_remove() -> void:
+	_remover = Control.new()
+	_remover.set_anchors_preset(Control.PRESET_FULL_RECT)
+	var dim := ColorRect.new()
+	dim.color = Color(0, 0, 0, 0.66)
+	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_remover.add_child(dim)
+
+	var panel := G.parchment_box(336, 470, 20.0)
+	panel.position = Vector2(72, 150)
+	_remover.add_child(panel)
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 8)
+	panel.add_child(box)
+	box.add_child(G.serif_label("篝火余温", G.FS_LG, Color("8a4a3a")))
+	box.add_child(G.gold_label("选择一份舍弃的祝福（或全部保留）", G.FS_SM,
+		false, Color("7a5a2e"), false))
+
+	var sc := ScrollContainer.new()
+	sc.custom_minimum_size = Vector2(296, 300)
+	box.add_child(sc)
+	var list := VBoxContainer.new()
+	list.add_theme_constant_override("separation", 6)
+	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	sc.add_child(list)
+	for tid in st.traits:
+		var row := PanelContainer.new()
+		row.custom_minimum_size = Vector2(0, 36)
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = Color("d8c8a0")
+		sb.set_corner_radius_all(3)
+		sb.content_margin_left = 10.0
+		sb.content_margin_right = 10.0
+		row.add_theme_stylebox_override("panel", sb)
+		row.mouse_filter = Control.MOUSE_FILTER_STOP
+		var t: Dictionary = TableCache.get_trait(String(tid))
+		var lbl := G.gold_label(String(t.get("name", String(tid))), G.FS_MD,
+			false, Color("3a2a14"), false)
+		row.add_child(lbl)
+		row.gui_input.connect(_on_remove_row.bind(String(tid)))
+		list.add_child(row)
+
+	var keep := G.gold_button("保 留 全 部", 200, 44)
+	keep.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_close_remover("你带着全部祝福离开了篝火"))
+	box.add_child(keep)
+	_hud.add_child(_remover)
+
+
+func _on_remove_row(e: InputEvent, tid: String) -> void:
+	if not (e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT):
+		return
+	var tname := String(TableCache.get_trait(tid).get("name", tid))
+	st.traits.erase(tid)
+	_close_remover("舍弃词条：%s" % tname)
+
+
+func _close_remover(msg: String) -> void:
+	if _remover != null:
+		_remover.queue_free()
+		_remover = null
+	_refresh_hud()
+	if msg != "":
+		_toast(msg)
+
+
 # ================= 主循环 =================
 func _physics_process(delta: float) -> void:
-	if _map_done or _battle != null or _picker != null:
+	if _map_done or _battle != null or _picker != null or _remover != null:
 		return
 	if _player == null:
 		return
@@ -454,6 +600,7 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 		st.result = "defeat"
 		_finish_map("defeat")
 		return
+	st.add_reward(monster_tier)  # 战利按接触怪 tier 累加（nodes.json rewards）
 	st.hp = hp_left
 	# 接触的怪离场
 	if _contact_mon != null:
@@ -594,6 +741,78 @@ class _MapMonster extends Node2D:
 		# 眼睛（朝向差异感）
 		draw_circle(Vector2(-6, -4), 3.0, Color(0.1, 0.1, 0.12))
 		draw_circle(Vector2(6, -4), 3.0, Color(0.1, 0.1, 0.12))
+
+
+## 非战斗节点交互物件（程序占位绘制；素材入库后热替换）
+## 宝箱=棕箱金锁 / 事件=石碑问号 / 商店=绿帐篷 / 篝火=柴堆火苗；头顶金三角标可交互
+class _Interactable extends Node2D:
+	var kind := "chest"  # chest / event / shop / bonfire
+	var used := false
+	var map_ref: MapScene = null
+	var _t := 0.0
+
+	func _process(delta: float) -> void:
+		_t += delta
+		if used or map_ref == null or map_ref._player == null:
+			return
+		if map_ref._battle != null or map_ref._picker != null or map_ref._remover != null:
+			return  # 覆盖层期间不触发
+		if position.distance_to(map_ref._player.position) < MapScene.INTERACT_R:
+			map_ref.on_interactable(self)
+		queue_redraw()
+
+	func _draw() -> void:
+		draw_circle(Vector2(0, 6), 30.0, Color(0, 0, 0, 0.22))  # 落地影
+		match kind:
+			"chest":
+				_draw_chest()
+			"event":
+				_draw_event()
+			"shop":
+				_draw_shop()
+			"bonfire":
+				_draw_bonfire()
+		# 头顶浮动金三角（可交互提示）
+		var bob := sin(_t * 2.2) * 4.0
+		var tip := Vector2(0, -52.0 + bob)
+		draw_colored_polygon([tip + Vector2(0, -7), tip + Vector2(6, 3), tip + Vector2(-6, 3)],
+			Color(G.GOLD_BRIGHT.r, G.GOLD_BRIGHT.g, G.GOLD_BRIGHT.b, 0.9))
+
+	func _draw_chest() -> void:
+		draw_rect(Rect2(-20, -18, 40, 26), Color("7a5228"))       # 箱体
+		draw_rect(Rect2(-20, -26, 40, 12), Color("5a3a1a"))       # 箱盖
+		draw_rect(Rect2(-20, -18, 40, 3), Color("3a2812"))        # 盖缝
+		draw_rect(Rect2(-4, -20, 8, 12), Color(G.GOLD))           # 金锁
+		draw_arc(Vector2.ZERO, 2.5, 0, TAU, 10, Color("5a3a1a"), 2.0)  # 锁孔
+
+	func _draw_event() -> void:
+		draw_rect(Rect2(-11, -34, 22, 40), Color("8a8578"))       # 石碑
+		draw_circle(Vector2(0, -34), 11.0, Color("8a8578"))       # 圆顶
+		draw_rect(Rect2(-13, -2, 26, 8), Color("6a655a"))         # 底座
+		var ts := G.font_bold.get_string_size("?", HORIZONTAL_ALIGNMENT_CENTER, -1, 18)
+		draw_string(G.font_bold, Vector2(-ts.x / 2.0, -16), "?",
+			HORIZONTAL_ALIGNMENT_CENTER, -1, 18, Color("3a3a30"))
+
+	func _draw_shop() -> void:
+		draw_colored_polygon([Vector2(0, -44), Vector2(26, 4), Vector2(-26, 4)],
+			Color("5a8a4a"))                                       # 帐篷顶
+		draw_rect(Rect2(-26, 4, 52, 6), Color("6b4a28"))          # 摊板
+		draw_line(Vector2(-26, 4), Vector2(0, -44), Color("3a5a30"), 2.0)
+		draw_line(Vector2(26, 4), Vector2(0, -44), Color("3a5a30"), 2.0)
+		draw_rect(Rect2(-8, -10, 16, 12), Color("c9a44a"))        # 摊位货箱
+
+	func _draw_bonfire() -> void:
+		draw_line(Vector2(-16, 2), Vector2(14, -14), Color("5a3a1a"), 7.0)   # 交叉柴
+		draw_line(Vector2(16, 2), Vector2(-14, -14), Color("4a2f14"), 7.0)
+		draw_circle(Vector2(-10, 3), 6.0, Color("6a655a"))         # 垫石
+		draw_circle(Vector2(10, 3), 6.0, Color("6a655a"))
+		# 火苗（三层，sin 呼吸）
+		var f := 1.0 + sin(_t * 6.0) * 0.15
+		var glow := Color(1.0, 0.55, 0.2, 0.28)
+		draw_circle(Vector2(0, -12), 22.0 * f, glow)
+		draw_circle(Vector2(0, -12), 12.0 * f, Color("e07030"))
+		draw_circle(Vector2(0, -15), 8.0 * f, Color("f0a040"))
+		draw_circle(Vector2(0, -18), 4.5 * f, Color("ffd070"))
 
 
 ## 虚拟摇杆（触屏/鼠标拖拽；键盘方向并行可用）
