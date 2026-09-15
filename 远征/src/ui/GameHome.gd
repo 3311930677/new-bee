@@ -200,21 +200,19 @@ func _entry(label: String, active: bool) -> Control:
 	return root
 
 
-# ---------- 远征入口（#7 路线循环落地前的战斗冒烟直连） ----------
+# ---------- 远征入口（阶段 2：进路线图；层选择/编队 DEPLOY 后续阶段接入） ----------
 func _on_expedition(e: InputEvent) -> void:
 	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-		BattleScene.pending_cfg = {
-			"ally": {
-				"role_id": G.selected_role,
-				"level": 5,
-				"traits": [],
-				"active_pet": "pet_rockturtle",
-				"potions": 2,
-			},
-			"enemy": {"theme": "forest", "node_type": "normal", "layer": 1},
-			"seed": 7,
+		RouteScene.pending_run = {
+			"theme": "forest",
+			"role_id": G.selected_role,
+			"level": 5,
+			"active_pet": "pet_rockturtle",
+			"bench_pet": "",
+			"potions": 2,
+			"seed": 0,
 		}
-		get_tree().change_scene_to_file("res://src/battle/BattleScene.tscn")
+		get_tree().change_scene_to_file("res://src/run/RouteScene.tscn")
 
 
 # ---------- 交互 ----------
