@@ -195,7 +195,26 @@ func _entry(label: String, active: bool) -> Control:
 		root.gui_input.connect(func(e: InputEvent):
 			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 				_toast_msg("「%s」功能开发中" % label))
+	elif label == "远征":
+		root.gui_input.connect(_on_expedition)
 	return root
+
+
+# ---------- 远征入口（#7 路线循环落地前的战斗冒烟直连） ----------
+func _on_expedition(e: InputEvent) -> void:
+	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+		BattleScene.pending_cfg = {
+			"ally": {
+				"role_id": G.selected_role,
+				"level": 5,
+				"traits": [],
+				"active_pet": "pet_rockturtle",
+				"potions": 2,
+			},
+			"enemy": {"theme": "forest", "node_type": "normal", "layer": 1},
+			"seed": 7,
+		}
+		get_tree().change_scene_to_file("res://src/battle/BattleScene.tscn")
 
 
 # ---------- 交互 ----------
