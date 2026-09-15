@@ -1,4 +1,4 @@
-# RouteScene.gd —— 远征路线图（玩法文档 §2.6；阶段 2.2）
+﻿# RouteScene.gd —— 远征路线图（玩法文档 §2.6；阶段 2.2）
 # 职责：路线图选节点（每层 3 选 1 → BOSS）；战斗节点挂载 BattleScene 覆盖层并接管
 #       battle_finished；非战斗节点（事件/宝箱/商店/篝火）极简快捷结算（#10 换正式交互）；
 #       跨节点延续写回：HP / 药剂余量 / 换宠后出战位 / 词条保留整局。
@@ -35,7 +35,7 @@ var _hp_l := Label.new()
 var _pot_l := Label.new()
 var _trait_l := Label.new()
 var _toast: Label = null
-var _battle: BattleScene = null
+var _map: MapScene = null
 var _cur_node: Dictionary = {}
 var _end_ui: Control = null
 
@@ -116,7 +116,7 @@ func _build_top(tint: Color) -> void:
 	quit.position = Vector2(VIEW_W - 96, 16)
 	quit.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			if _battle == null and _end_ui == null:
+			if _map == null and _end_ui == null:
 				get_tree().change_scene_to_file("res://src/ui/GameHome.tscn"))
 	add_child(quit)
 
@@ -199,7 +199,7 @@ func _refresh() -> void:
 func _on_node_input(e: InputEvent, nd: Dictionary) -> void:
 	if not (e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT):
 		return
-	if _battle != null or _end_ui != null or st.finished:
+	if _map != null or _end_ui != null or st.finished:
 		return
 	if not st.node_reachable(int(nd.get("layer", 0))):
 		return
@@ -212,7 +212,7 @@ func _enter_node(nd: Dictionary) -> void:
 	_cur_node = nd
 	match String(nd.get("type", "normal")):
 		"normal", "elite", "boss":
-			_start_battle(nd)
+			_start_explore(nd)
 		"chest":
 			var gold := int(TableCache.nodes_config().get("rewards", {}).get("chest", {}).get("gold", 200))
 			st.gold += gold
@@ -240,55 +240,28 @@ func _quick_done(msg: String) -> void:
 	_refresh()
 
 
-# ================= 战斗节点（BattleScene 覆盖层） =================
-func _start_battle(nd: Dictionary) -> void:
-	BattleScene.pending_cfg = {
-		"ally": {
-			"role_id": st.role_id,
-			"level": st.level,
-			"traits": st.traits.duplicate(),
-			"active_pet": st.active_pet,
-			"bench_pet": st.bench_pet,
-			"potions": st.potions,
-			"hp_override": st.hp,
-		},
-		"enemy": {"theme": st.theme, "node_type": String(nd.get("type", "normal")),
-			"layer": int(nd.get("layer", 1))},
-		"seed": st.next_battle_seed(),
-	}
-	var packed: PackedScene = load("res://src/battle/BattleScene.tscn")
-	_battle = packed.instantiate()
-	_battle.battle_finished.connect(_on_battle_end)
-	add_child(_battle)
+# ================= 战斗节点（MapScene 探索覆盖层） =================
+func _start_explore(nd: Dictionary) -> void:
+	MapScene.pending_cfg = {"node": nd, "run": st}
+	var packed: PackedScene = load("res://src/explore/MapScene.tscn")
+	_map = packed.instantiate()
+	_map.map_finished.connect(_on_map_finished)
+	add_child(_map)
 
 
-func _on_battle_end(result: String, hp_left: int) -> void:
-	var battle := _battle
-	_battle = null
-	# 跨节点延续写回：药剂余量 / 换宠后出战位（旧宠整局离场）
-	st.potions = battle.sim.potions_left
-	if battle.sim.pet_swap_used:
-		st.active_pet = String(battle.sim.pet_bench_id)
-		st.bench_pet = ""
-	battle.queue_free()
-
-	if result != "victory":
-		st.finished = true
-		st.result = "defeat"
+## 探索层结束：cleared（走传送阵）/ defeat（战斗失利）
+func _on_map_finished(map_result: String) -> void:
+	var is_boss := int(_cur_node.get("layer", 1)) == 4
+	_map.queue_free()
+	_map = null
+	if map_result == "defeat":
 		_show_end(false)
 		return
-	st.hp = hp_left
-	var is_boss := int(_cur_node.get("layer", 1)) == 4
-	st.node_cleared(int(_cur_node.get("layer", 1)), int(_cur_node.get("index", 0)))
 	if is_boss:
 		st.finished = true
 		st.result = "clear"
 		_show_end(true)
 		return
-	# 战斗胜利获 1 词条（#9 换三选一 UI）
-	var tid := st.roll_trait(_rng)
-	var tname := String(TableCache.get_trait(tid).get("name", "")) if tid != "" else ""
-	_toast_msg("获得词条：%s" % tname if tname != "" else "胜利")
 	_refresh()
 
 
@@ -340,7 +313,7 @@ func _toast_msg(msg: String) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel") and _battle == null and _end_ui == null:
+	if event.is_action_pressed("ui_cancel") and _map == null and _end_ui == null:
 		get_tree().change_scene_to_file("res://src/ui/GameHome.tscn")
 
 

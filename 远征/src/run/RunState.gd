@@ -97,6 +97,14 @@ func node_cleared(layer: int, index: int) -> void:
 	nd["cleared"] = true
 
 
+## 战斗结束跨节点写回：药剂余量 / 换宠后出战位（替补转正，旧宠整局离场）
+func apply_battle_result(sim: BattleSim) -> void:
+	potions = sim.potions_left
+	if sim.pet_swap_used:
+		active_pet = String(sim.pet_bench_id)
+		bench_pet = ""
+
+
 ## 治疗并夹紧到最大生命（篝火/药剂共用）
 func heal(amount: int) -> void:
 	var cap := max_hp()
