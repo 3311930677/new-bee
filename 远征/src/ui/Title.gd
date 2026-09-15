@@ -52,22 +52,21 @@ func _build_background() -> void:
 	add_child(grad)
 
 
-# ---------- 标题（绝对定位，保证与设计稿一致） ----------
+# ---------- 标题（宋体大标 + 收敛描边 + 轻字距） ----------
 func _build_title() -> void:
-	var t := G.gold_label("远征", G.FS_HERO, true, G.GOLD_BRIGHT)
-	t.add_theme_font_override("font", G.spaced_font(16))
-	t.add_theme_constant_override("outline_size", 5)
+	var t := G.serif_label("远征", G.FS_HERO + 8, G.GOLD_BRIGHT, true)
+	t.add_theme_font_override("font", G.spaced_font(10, true, true))
+	t.add_theme_constant_override("outline_size", 3)
 	t.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	t.position = Vector2(0, 54)
-	t.size = Vector2(VIEW_W, 116)
+	t.position = Vector2(0, 52)
+	t.size = Vector2(VIEW_W, 118)
 	add_child(t)
 
-	var sub := G.gold_label("EXPEDITION", G.FS_MD, false, Color("e8cc90"))
-	sub.add_theme_font_override("font", G.spaced_font(12, false))
-	sub.add_theme_constant_override("outline_size", 2)
+	var sub := G.gold_label("EXPEDITION", G.FS_SM, false, Color("d8bd8a", 0.8))
+	sub.add_theme_font_override("font", G.spaced_font(9, false))
 	sub.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	sub.position = Vector2(0, 164)
-	sub.size = Vector2(VIEW_W, 24)
+	sub.position = Vector2(0, 166)
+	sub.size = Vector2(VIEW_W, 22)
 	add_child(sub)
 
 	var rule := _Rule.new()
@@ -75,21 +74,27 @@ func _build_title() -> void:
 	add_child(rule)
 
 
-# ---------- 右侧按钮列 ----------
+# ---------- 右侧按钮列（轻微错落，避免模板式等宽对齐） ----------
+const STAGGER := [0, 14, 6, 18]
+
 func _build_menu() -> void:
 	var col := VBoxContainer.new()
 	col.name = "Menu"
 	col.position = Vector2(286, 316)
-	col.custom_minimum_size = Vector2(176, 0)
-	col.add_theme_constant_override("separation", 14)
+	col.custom_minimum_size = Vector2(194, 0)
+	col.add_theme_constant_override("separation", 15)
 	add_child(col)
 
 	for i in MENU.size():
 		var idx := i
+		var wrap := MarginContainer.new()
+		wrap.add_theme_constant_override("margin_left", STAGGER[i % STAGGER.size()])
+		wrap.add_theme_constant_override("margin_right", STAGGER[(i + 2) % STAGGER.size()] / 2)
 		var b := G.menu_button(MENU[i])
 		b.gui_input.connect(_on_menu_input.bind(idx))
 		b.mouse_entered.connect(func(): _update_focus(idx, true))
-		col.add_child(b)
+		wrap.add_child(b)
+		col.add_child(wrap)
 		_btns.append(b)
 
 
@@ -160,13 +165,11 @@ func _show_intro() -> void:
 	box.add_theme_constant_override("separation", 12)
 	panel.add_child(box)
 
-	var title := G.gold_label("游戏介绍", G.FS_BIG, true, G.BANNER)
-	title.add_theme_color_override("font_color", G.BANNER)
-	title.add_theme_color_override("font_outline_color", G.PARCHMENT)
+	var title := G.serif_label("游戏介绍", G.FS_BIG, G.BANNER)
 	box.add_child(title)
 
 	var sep := ColorRect.new()
-	sep.color = Color(G.BANNER.r, G.BANNER.g, G.BANNER.b, 0.5)
+	sep.color = Color(G.BANNER.r, G.BANNER.g, G.BANNER.b, 0.4)
 	sep.custom_minimum_size = Vector2(0, 2)
 	box.add_child(sep)
 
@@ -183,18 +186,18 @@ func _show_intro() -> void:
 词条构筑即命运，
 每一次抉择都在改写队伍的走向。
 
-失败者不死者，只是重整旗鼓。
+失败者不死，只是重整旗鼓。
 远征，永不停歇。"""
-	body.add_theme_font_override("font", G.font_reg)
+	body.add_theme_font_override("font", G.font_serif)
 	body.add_theme_font_size_override("font_size", G.FS_SM)
 	body.add_theme_color_override("font_color", G.TEXT_DARK)
+	body.add_theme_constant_override("line_spacing", 7)
 	body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	body.custom_minimum_size = Vector2(350, 0)
 	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	box.add_child(body)
 
-	var hint := G.gold_label("点击任意处 / 按 确认键 返回", G.FS_SM, false, Color("7a6640"))
-	hint.add_theme_color_override("font_outline_color", G.PARCHMENT)
+	var hint := G.gold_label("点击任意处 / 按 确认键 返回", G.FS_XS, false, Color("8a7350", 0.9), false)
 	box.add_child(hint)
 
 	dim.gui_input.connect(func(e: InputEvent):

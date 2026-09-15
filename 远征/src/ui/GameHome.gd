@@ -50,13 +50,13 @@ func _build_background() -> void:
 
 # ---------- 顶部：徽标 + 账号小字 + 重建入口 ----------
 func _build_top(role: Dictionary) -> void:
-	var b := G.banner_box("远 征 世 界", 240, 54)
+	var b := G.banner_box("远征世界", 240, 54)
 	b.set_anchors_preset(Control.PRESET_CENTER_TOP)
 	b.position = Vector2(-120, 34)
 	add_child(b)
 
 	if not G.account.is_empty():
-		var acc := G.gold_label("账号：%s" % G.account, G.FS_XS, false, Color("c8b898"), false)
+		var acc := G.gold_label(G.account, G.FS_XS, false, Color("bfa987", 0.8), false)
 		acc.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 		acc.position = Vector2(16, 22)
 		add_child(acc)
@@ -142,7 +142,7 @@ func _build_info(role: Dictionary) -> void:
 	title_row.add_theme_constant_override("separation", 10)
 	box.add_child(title_row)
 
-	var rname := G.gold_label(name_txt, G.FS_LG, true, G.NAME_GREEN, false)
+	var rname := G.serif_label(name_txt, G.FS_LG + 2, G.NAME_GREEN)
 	title_row.add_child(rname)
 	var job := G.gold_label("%s · %s" % [role.get("job", ""), role.get("weapon", "")],
 		G.FS_SM, false, Color("7a5a2e"), false)
@@ -188,7 +188,7 @@ func _entry(label: String, active: bool) -> Control:
 		sb.bg_color = Color(0.14, 0.09, 0.05, 0.8)
 		sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.45)
 	root.add_theme_stylebox_override("panel", sb)
-	var l := G.gold_label(label, G.FS_MD, true, G.TEXT_DARK if active else G.GOLD, false)
+	var l := G.serif_label(label, G.FS_MD, G.TEXT_DARK if active else Color("d9b96e"))
 	root.add_child(l)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	if not active:
