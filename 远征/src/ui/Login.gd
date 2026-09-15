@@ -36,7 +36,7 @@ func _build_background() -> void:
 
 
 func _build_banner() -> void:
-	var b := G.banner_box("登 录", 200, 54)
+	var b := G.banner_box("登录", 200, 54)
 	b.set_anchors_preset(Control.PRESET_CENTER_TOP)
 	b.position = Vector2(-100, 46)
 	add_child(b)
@@ -52,7 +52,7 @@ func _build_panel() -> void:
 	box.add_theme_constant_override("separation", 16)
 	panel.add_child(box)
 
-	var title := G.gold_label("账 号 登 录", G.FS_LG, true, G.BANNER, false)
+	var title := G.serif_label("账号登录", G.FS_LG, G.BANNER)
 	box.add_child(title)
 
 	var sep := ColorRect.new()
@@ -63,7 +63,7 @@ func _build_panel() -> void:
 	_account = _field(box, "账号", "请输入账号", false)
 	_password = _field(box, "密码", "请输入密码", true)
 
-	var hint := G.gold_label("首次登录将直接创建新角色", G.FS_SM, false, Color("7a6640"), false)
+	var hint := G.gold_label("首次登录将直接创建新角色", G.FS_XS, false, Color("8a7350"), false)
 	box.add_child(hint)
 
 	var row := HBoxContainer.new()
@@ -71,7 +71,7 @@ func _build_panel() -> void:
 	row.add_theme_constant_override("separation", 16)
 	box.add_child(row)
 
-	var ok := G.gold_button("登 录", 132, 46)
+	var ok := G.gold_button("登录", 132, 46)
 	var guest := G.gold_button("游客登录", 132, 46)
 	row.add_child(ok)
 	row.add_child(guest)

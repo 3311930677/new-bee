@@ -68,7 +68,7 @@ func _build_header() -> void:
 
 # ---------- 昵称 ----------
 func _build_name_row() -> void:
-	var lbl := G.gold_label("角色昵称", G.FS_MD, true, G.TEXT_LIGHT)
+	var lbl := G.serif_label("角色昵称", G.FS_MD, Color("ecdcb2"))
 	lbl.position = Vector2(0, 88)
 	lbl.size = Vector2(VIEW_W, 26)
 	add_child(lbl)
@@ -92,7 +92,7 @@ func _build_name_row() -> void:
 	)
 	add_child(rnd)
 
-	var hint := G.gold_label("(请输入 2-12 个英文或 2-6 个汉字)", G.FS_SM, false, Color("d8c398"))
+	var hint := G.gold_label("2~12 个字符，汉字 2~6 个", G.FS_XS, false, Color("cdb088", 0.85), false)
 	hint.position = Vector2(0, 168)
 	hint.size = Vector2(VIEW_W, 22)
 	add_child(hint)
@@ -198,7 +198,7 @@ func _build_info_panel() -> void:
 	title_row.add_theme_constant_override("separation", 10)
 	box.add_child(title_row)
 
-	var rname := G.gold_label("破军", G.FS_LG, true, G.BANNER, false)
+	var rname := G.serif_label("破军", G.FS_LG, G.BANNER)
 	title_row.add_child(rname)
 	var job := G.gold_label("战士 · 大剑", G.FS_SM, false, Color("7a5a2e"), false)
 	job.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
@@ -209,9 +209,10 @@ func _build_info_panel() -> void:
 	box.add_child(tags)
 
 	var desc := Label.new()
-	desc.add_theme_font_override("font", G.font_reg)
+	desc.add_theme_font_override("font", G.font_serif)
 	desc.add_theme_font_size_override("font_size", G.FS_SM)
 	desc.add_theme_color_override("font_color", G.TEXT_DARK)
+	desc.add_theme_constant_override("line_spacing", 5)
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	desc.custom_minimum_size = Vector2(392, 0)
 	desc.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -230,7 +231,7 @@ func _refresh_info() -> void:
 
 # ---------- 底部按钮 ----------
 func _build_buttons() -> void:
-	var ok := G.gold_button("确 定", 150, 46)
+	var ok := G.gold_button("确定", 150, 46)
 	ok.position = Vector2(78, 744)
 	ok.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed:
@@ -238,7 +239,7 @@ func _build_buttons() -> void:
 	)
 	add_child(ok)
 
-	var cancel := G.gold_button("取 消", 150, 46)
+	var cancel := G.gold_button("取消", 150, 46)
 	cancel.position = Vector2(252, 744)
 	cancel.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed:
