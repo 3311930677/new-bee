@@ -80,13 +80,20 @@ func _run() -> void:
 		return  # 后续依赖战斗，直接收尾
 	var mon_cnt := map._monsters.size()
 
-	# ---- D. 强制胜利写回 ----
+	# ---- D. 强制胜利写回 + 三选一 ----
 	_force_battle_end(map._battle, "victory")
 	await get_tree().process_frame
 	_check(map._battle == null, "战斗结束覆盖层应卸载")
 	_check(map._monsters.size() == mon_cnt - 1,
 		"接触怪应离场，实剩 %d / %d" % [map._monsters.size(), mon_cnt])
-	_check(map.st.traits.size() == 1, "胜利应获 1 词条，实为 %d" % map.st.traits.size())
+	_check(map._picker != null, "胜利应弹出词条三选一")
+	var picked_id := ""
+	if map._picker != null:
+		picked_id = String(map._picker.choices[0].get("id", ""))
+		map._picker._emit_pick(picked_id)
+		await get_tree().process_frame
+	_check(map._picker == null, "选卡后浮层应关闭")
+	_check(map.st.traits.size() == 1 and map.st.traits.has(picked_id), "选卡应写入词条")
 	_check(map.st.hp > 0, "HP 应写回正值，实为 %d" % map.st.hp)
 
 	# ---- 地图上换宠 ----
@@ -119,6 +126,9 @@ func _run() -> void:
 		_force_battle_end(bmap._battle, "victory")
 		await get_tree().process_frame
 		_check(not bmap._portal.locked, "首领战败传送阵应解封")
+		if bmap._picker != null:  # 选卡后再通关
+			bmap._picker._emit_pick(String(bmap._picker.choices[0].get("id", "")))
+			await get_tree().process_frame
 		bmap._player.position = bmap._portal.position
 		bmap._check_portal()
 		_check(bmap._map_done and _last_result == "cleared", "解封后触碰应 cleared")
