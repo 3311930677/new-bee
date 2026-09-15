@@ -128,8 +128,11 @@ func _build_enemies(theme: String, node_type: String) -> void:
 		return
 	match node_type:
 		"elite":
+			var ec: Dictionary = TableCache.nodes_config().get("enemy", {})
+			var hp_atk := float(ec.get("elite_hp_atk_mult", 1.8))
+			var def_m := float(ec.get("elite_def_mult", 1.3))
 			var elite := _spawn_monster(String(pool[rng.randi_range(0, pool.size() - 1)]),
-				Combatant.ROW_FRONT, 2, 1.6, 1.3)
+				Combatant.ROW_FRONT, 2, hp_atk, def_m)
 			_apply_elite_affix(elite)
 			_spawn_monster(String(pool[rng.randi_range(0, pool.size() - 1)]), Combatant.ROW_FRONT, 1)
 			_spawn_monster(String(pool[rng.randi_range(0, pool.size() - 1)]), Combatant.ROW_BACK, 2)
