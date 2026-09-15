@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "comment": "等级 1~60 成长公式（玩法文档 §1.2）。hp/atk/def/crit 为全局基准；角色个体差异在 roles.json base 微调后按本表系数线性成长。",
+  "level_cap": 60,
+  "exp_formula": "lv*100 + 2*pow(5, 0.1*lv)",
+  "per_level": { "hp": 40, "atk": 4, "def": 2, "crit": 0.001 },
+  "equip_visual_tiers": [50, 120, 250],
+  "energy": { "max": 100, "per_basic_attack": 20 },
+  "basic_attack_interval": 2.0
+}

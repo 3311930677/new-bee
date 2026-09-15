@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "comment": "路线图规则（玩法文档 §2.6）：起点→3层×3选1→BOSS。保底：第2层≥1精英、每局≥1事件≥1商店。难度：第N层怪全属性 ×(1+0.12N)。",
+  "layers": 3,
+  "choices_per_layer": 3,
+  "weights": { "normal": 40, "elite": 15, "event": 15, "chest": 12, "shop": 8, "bonfire": 10 },
+  "guarantee": { "layer2_min_elite": 1, "run_min_event": 1, "run_min_shop": 1 },
+  "difficulty_scale_per_layer": 0.12,
+  "bonfire": { "heal_pct": 0.40, "remove_trait": 1 },
+  "shop": { "potion_price": 300, "potion_heal_pct": 0.35, "potion_cap": 3 },
+  "rewards": {
+    "normal": { "gold": 120, "expedition": 20 },
+    "elite": { "gold": 300, "expedition": 45, "soul": 5 },
+    "boss": { "gold": 800, "expedition": 120, "soul": 15 },
+    "chest": { "gold": 200, "expedition": 30 }
+  },
+  "sweep_yield": 0.70
+}

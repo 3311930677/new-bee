@@ -1,0 +1,14 @@
+[
+  { "id": "combo_pozhen_duanzui", "name": "破阵→断罪",
+    "first": "zs_pozhen", "then": "zs_duanzui", "window": 5.0,
+    "effect": { "type": "k_bonus", "value": 1.0 }, "desc": "破阵后 5s 内断罪 k 额外 +1.0" },
+  { "id": "combo_shuanghuan_tianyun", "name": "霜环→天陨",
+    "first": "fs_shuanghuan", "then": "fs_tianyun", "window": 4.0,
+    "effect": { "type": "vs_slowed_bonus", "pct": 0.30 }, "desc": "霜环后天陨对减速目标 +30%" },
+  { "id": "combo_zhudao_poxiao", "name": "祝祷→破晓",
+    "first": "fz_zhudao", "then": "fz_poxiao", "window": 5.0,
+    "effect": { "type": "heal_bonus", "pct": 0.30 }, "desc": "祝祷后破晓治疗量 +30%" },
+  { "id": "combo_dunying_duopo", "name": "潜伏夺魄",
+    "first": "ck_dunying", "then": "ck_duopo", "window": 3.0,
+    "effect": { "type": "k_bonus", "value": 0.5 }, "desc": "潜伏中释放夺魄 k +0.5" }
+]
