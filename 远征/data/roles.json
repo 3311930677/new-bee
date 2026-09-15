@@ -5,8 +5,9 @@
     "job": "战士",
     "weapon": "大剑",
     "tags": "近战物理 · 能抗能打",
-    "desc": "杀伐星宿转世的持剑者。\n裂山之力汇聚于巨刃，越是险境越是锋利。\n前排的坚盾，也是前排的利刃。",
-    "speed": 1.0
+    "attack_range": "melee",
+    "base": { "hp": 130, "atk": 22, "def": 14, "spd": 1.0, "crit": 0.05 },
+    "skills": ["zs_lieshan", "zs_pozhen", "zs_huifeng", "zs_zhanhou", "zs_duanzui"]
   },
   {
     "id": "ck",
@@ -14,25 +15,28 @@
     "job": "枪骑",
     "weapon": "长枪",
     "tags": "中远程物理 · 灵动输出",
-    "desc": "百步穿杨的猎手。\n长枪所至，后排之敌亦无处遁形。\n遁影于烟，倾泻如雨。",
-    "speed": 1.2
+    "attack_range": "range",
+    "base": { "hp": 100, "atk": 24, "def": 9, "spd": 1.2, "crit": 0.07 },
+    "skills": ["ck_lianzhu", "ck_guanjia", "ck_duopo", "ck_dunying", "ck_qingxie"]
   },
   {
     "id": "fs",
     "name": "霜语",
     "job": "法师",
     "weapon": "法杖",
-    "tags": "远程群伤 · 冰霜控制",
-    "desc": "聆听冰霜低语的施法者。\n霜环锁敌，天陨焚场。\n秘盾护友，湮灭审判。",
-    "speed": 0.9
+    "tags": "远程群伤 · 控制",
+    "attack_range": "range",
+    "base": { "hp": 90, "atk": 26, "def": 8, "spd": 0.9, "crit": 0.05 },
+    "skills": ["fs_shuangren", "fs_shuanghuan", "fs_tianyun", "fs_midun", "fs_yanmie"]
   },
   {
     "id": "fz",
     "name": "晨星",
     "job": "牧师",
     "weapon": "圣锤",
-    "tags": "治疗辅助 · 独立作战",
-    "desc": "破晓之光的执灯人。\n圣愈抚伤，普照众生。\n持圣锤者，亦能独行斩魔。",
-    "speed": 1.0
+    "tags": "治疗辅助 · 可独立刷怪",
+    "attack_range": "melee",
+    "base": { "hp": 115, "atk": 18, "def": 12, "spd": 0.95, "crit": 0.05 },
+    "skills": ["fz_shengyu", "fz_puzhao", "fz_jinghua", "fz_zhudao", "fz_poxiao"]
   }
 ]
