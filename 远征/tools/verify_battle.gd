@@ -1,0 +1,185 @@
+# verify_battle.gd —— 战斗内核验证（headless：godot --headless --path . -s tools/verify_battle.gd）
+# 覆盖：DamageCalc 手算断言 / 编成规则 / 四人物自动战斗 / 确定性对拍 / 换宠 / 词条 / 精英与BOSS
+extends SceneTree
+
+var _fails: int = 0
+
+
+func _initialize() -> void:
+	call_deferred("_run")
+
+
+func _check(cond: bool, msg: String) -> void:
+	if not cond:
+		_fails += 1
+		push_error("FAIL: " + msg)
+
+
+func _run() -> void:
+	_test_damage_calc()
+	_test_formation()
+	_test_four_roles_auto()
+	_test_determinism()
+	_test_traits()
+	_test_elite_boss()
+	_test_energy_economy()
+	if _fails == 0:
+		print("BATTLE_OK all tests passed")
+	else:
+		print("BATTLE_FAIL fails=%d" % _fails)
+	quit(0 if _fails == 0 else 1)
+
+
+# ---------- 1. DamageCalc 手算（3 组） ----------
+func _test_damage_calc() -> void:
+	_check(DamageCalc.basic_damage(20, 10) == 4, "手算1: 20²/(8×10+20)=400/100=4")
+	_check(DamageCalc.basic_damage(22, 4) == 8, "手算2: 22²/(32+22)=484/54=8")
+	_check(DamageCalc.basic_damage(100, 50) == 20, "手算3: 10000/500=20")
+	_check(DamageCalc.basic_damage(5, 999) == 1, "下限 1")
+	_check(DamageCalc.crit_damage(20, 1.5) == 30, "暴击 20×1.5=30")
+	_check(DamageCalc.heal_amount(200, 20, 0.15, 0.5) == 40, "治疗 200×0.15+20×0.5=40")
+
+
+# ---------- 2. 敌方编成（§2.5） ----------
+func _test_formation() -> void:
+	for nt in ["normal", "elite", "boss"]:
+		var sim := BattleSim.new()
+		sim.record_events = false
+		sim.setup(42, {"role_id": "zs", "level": 5, "traits": []},
+			{"theme": "forest", "node_type": String(nt), "layer": 1})
+		var enemies := sim.alive_units("enemy")
+		if String(nt) == "normal":
+			_check(enemies.size() >= 3 and enemies.size() <= 4, "普通节点 3~4 怪，实为 %d" % enemies.size())
+		elif String(nt) == "elite":
+			_check(enemies.size() == 3, "精英节点 1+2=3，实为 %d" % enemies.size())
+		else:
+			_check(enemies.size() == 3, "BOSS 节点 1+2=3，实为 %d" % enemies.size())
+			_check(sim.has_boss(), "BOSS 节点应含 BOSS")
+		# 精英必前排
+		if String(nt) == "elite":
+			var has_front := false
+			for e in enemies:
+				if e.row == Combatant.ROW_FRONT and e.base_max_hp > 100:
+					has_front = true
+			_check(has_front, "精英应在前排且血量强化")
+	# 我方站位：近战前排 / 远程后排
+	var sim2 := BattleSim.new()
+	sim2.record_events = false
+	sim2.setup(1, {"role_id": "fs", "level": 1, "traits": []},
+		{"theme": "forest", "node_type": "normal", "layer": 1})
+	var fs := sim2.role_unit()
+	_check(fs != null and fs.row == Combatant.ROW_BACK, "霜语(远程)应在后排")
+	_check(fs != null and fs.col == 2, "人物固定 col2")
+
+
+# ---------- 3. 四人物自动战斗均能正常结束 ----------
+func _test_four_roles_auto() -> void:
+	for role_id in ["zs", "ck", "fs", "fz"]:
+		for layer in [1, 3]:
+			var sim := BattleSim.new()
+			sim.record_events = false
+			sim.auto_mode = true
+			sim.setup(7, {"role_id": String(role_id), "level": 10, "traits": []},
+				{"theme": "forest", "node_type": "normal", "layer": layer})
+			var r := sim.run_to_end()
+			_check(r == "victory", "%s lv10 第%d层普通节点应胜（无养成下限验证）" % [role_id, layer])
+
+
+# ---------- 4. 确定性对拍（同 seed 同指令 → 逐段哈希一致） ----------
+func _test_determinism() -> void:
+	var a := BattleSim.new()
+	var b := BattleSim.new()
+	a.record_events = false
+	b.record_events = false
+	a.setup(999, {"role_id": "zs", "level": 8, "traits": ["tr_atk_up_s", "tr_crit_up"]},
+		{"theme": "volcano", "node_type": "normal", "layer": 2})
+	b.setup(999, {"role_id": "zs", "level": 8, "traits": ["tr_atk_up_s", "tr_crit_up"]},
+		{"theme": "volcano", "node_type": "normal", "layer": 2})
+	a.auto_mode = true
+	b.auto_mode = true
+	for i in 900:
+		a.step()
+		b.step()
+		if i % 90 == 0:
+			_check(a.hash_state() == b.hash_state(), "确定性：第 %d tick 哈希漂移" % i)
+		if a.finished or b.finished:
+			break
+	_check(a.result == b.result, "同 seed 结果一致")
+	_check(a.result != "", "战斗应结束")
+
+
+# ---------- 5. 词条被动与流派 ----------
+func _test_traits() -> void:
+	# 数值系被动生效
+	var sim := BattleSim.new()
+	sim.record_events = false
+	sim.setup(3, {"role_id": "zs", "level": 10,
+		"traits": ["tr_atk_up_m", "tr_hp_up_s", "tr_def_up_s", "tr_spd_up", "tr_crit_up"]},
+		{"theme": "forest", "node_type": "normal", "layer": 1})
+	var role := sim.role_unit()
+	var plain := TableCache.role_stats("zs", 10)
+	_check(role.get_max_hp() == int(float(plain.max_hp) * 1.10), "词条 MaxHP +10% 生效")
+	_check(role.get_atk() == int(float(plain.atk) * 1.15), "词条 ATK +15% 生效")
+	_check(absf(role.get_spd() / plain.spd - 1.12) < 0.001, "词条 SPD +12% 生效")
+	_check(absf(role.get_crit() - (plain.crit + 0.08)) < 0.0001, "词条 CRIT +8% 生效")
+	# 流派 3 件触发（bleed = tr_bleed_1 + tr_bleed_2 + tr_deep_wound，见 traits.json school 归属）
+	var ts := TraitSystem.new(["tr_bleed_1", "tr_bleed_2", "tr_deep_wound"])
+	_check(ts.school_active("bleed"), "流血流派 3 件应激活")
+	_check(ts.bleed_dmg_pct() > 0.4, "流血流派加成生效")
+	_check(not ts.school_active("crit"), "不足 3 件不激活")
+	# 换宠免死
+	var sim2 := BattleSim.new()
+	sim2.record_events = false
+	sim2.setup(5, {"role_id": "zs", "level": 1, "traits": [],
+		"active_pet": "pet_rockturtle", "bench_pet": "pet_thunderhawk"},
+		{"theme": "forest", "node_type": "normal", "layer": 1})
+	_check(sim2.swap_pet(), "换宠应成功")
+	var pets := 0
+	for u in sim2.units:
+		if u.kind == "pet":
+			pets += 1
+			_check(u.deathproof_buff, "换上宠物应获免死")
+	_check(pets == 1, "换宠后仅 1 只宠物在场")
+	_check(not sim2.swap_pet(), "本局第二次换宠应失败")
+
+
+# ---------- 6. 精英与 BOSS 可战 ----------
+func _test_elite_boss() -> void:
+	for nt in ["elite", "boss"]:
+		var sim := BattleSim.new()
+		sim.record_events = false
+		sim.auto_mode = true
+		sim.setup(11, {"role_id": "ck", "level": 12, "traits": ["tr_atk_up_m"],
+			"active_pet": "pet_foxfire"},
+			{"theme": "snow", "node_type": String(nt), "layer": 2})
+		var r := sim.run_to_end()
+		_check(r == "victory", "%s 节点 lv12+紫宠应胜" % nt)
+	# BOSS 召唤：上限 6
+	var sim := BattleSim.new()
+	sim.record_events = false
+	sim.setup(13, {"role_id": "zs", "level": 15, "traits": []},
+		{"theme": "forest", "node_type": "boss", "layer": 1})
+	var boss: Combatant = null
+	for u in sim.units:
+		if u.ai_type == "boss":
+			boss = u
+	_check(boss != null, "BOSS 在场")
+	if boss != null:
+		sim.summon_monsters(boss, "mon_wolf", 5, 6)
+		_check(sim.alive_units("enemy").size() <= 6, "召唤上限 6")
+
+
+# ---------- 7. 分人物能量经济（无 deadlock：关键技能都能出手） ----------
+func _test_energy_economy() -> void:
+	for role_id in ["zs", "ck", "fs", "fz"]:
+		var sim := BattleSim.new()
+		sim.record_events = true
+		sim.auto_mode = true
+		sim.setup(21, {"role_id": String(role_id), "level": 10, "traits": []},
+			{"theme": "tomb", "node_type": "elite", "layer": 3})
+		sim.run_to_end()
+		var cast_count := 0
+		for e in sim.events:
+			if String(e.t) == "cast":
+				cast_count += 1
+		_check(cast_count >= 2, "%s 托管整局技能施放 ≥2 次（能量无死锁），实为 %d" % [role_id, cast_count])
