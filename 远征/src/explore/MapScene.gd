@@ -1,0 +1,605 @@
+# MapScene.gd —— 探索大地图（玩法文档 §2.7；阶段 2.3）
+# 职责：进入战斗节点后的探索层——地图 32×42 格（1536×2016）自由移动；
+#       散件 Y-sort 遮挡 + 碰撞；怪物游荡/警戒追击/接触开战（BattleScene 覆盖层）；
+#       传送阵为节点出口（BOSS 节点需先胜首领解封）；地图上可用药剂/换宠（战斗外无 CD）。
+# 编成（§2.5/§2.7）：普通区 3~4 小怪；精英区 1 精英 + 2 小怪；BOSS 区 1 首领守阵。
+class_name MapScene
+extends Control
+
+signal map_finished(result: String)  # "cleared"（走传送阵）/ "defeat"（战斗失利）
+
+## 场景切入前由 RouteScene 写入：{"node": 节点字典, "run": RunState}
+static var pending_cfg: Dictionary = {}
+
+const VIEW_W := 480.0
+const VIEW_H := 800.0
+const ROLE_FRAMES := {  # 四方向行走帧（BattleScene 同款复用）
+	"zs": ["res://image/role/zs/pojun_walk_frames.tres", "pojun"],
+	"ck": ["res://image/role/ck/chuanyang_walk_frames.tres", "chuanyang"],
+	"fs": ["res://image/role/fs/shuangyu_walk_frames.tres", "shuangyu"],
+	"fz": ["res://image/role/fz/chenxing_walk_frames.tres", "chenxing"],
+}
+const MON_COLOR := {
+	"normal": Color("5f7186"), "elite": Color("7a4a9a"), "boss": Color("8a2f2f"),
+}
+
+var st: RunState
+var node: Dictionary = {}
+var _rng := RandomNumberGenerator.new()
+
+var _world := Node2D.new()
+var _player: CharacterBody2D
+var _player_anim: AnimatedSprite2D
+var _portal: _Portal
+var _monsters: Array[_MapMonster] = []
+var _contact_mon: _MapMonster = null
+var _battle_layer: CanvasLayer = null
+var _battle: BattleScene = null
+var _hud := CanvasLayer.new()
+var _hp_fill := ColorRect.new()
+var _pot_l := Label.new()
+var _toast_lbl: Label = null
+var _pet_btn: Control = null
+var _joy: _Joystick
+var _map_done := false
+var _map_cfg: Dictionary = {}
+var _theme_cfg: Dictionary = {}
+
+
+func _ready() -> void:
+	var cfg := pending_cfg
+	pending_cfg = {}
+	st = cfg.get("run", null)
+	node = cfg.get("node", {})
+	if st == null:
+		push_error("MapScene 缺少 run 状态")
+		return
+	_map_cfg = TableCache.maps_config()
+	_theme_cfg = TableCache.theme_config(st.theme)
+	_rng.seed = hash("%d_%d" % [st.run_seed, int(node.get("layer", 1)) * 10 + int(node.get("index", 0))])
+	_build_ground()
+	_build_world()
+	_build_hud()
+
+
+# ================= 构建 =================
+func _build_ground() -> void:
+	# 地面层：TileMapLayer 程序构建（主题 3 种 tile 加权平铺，无碰撞）
+	var tl := TileMapLayer.new()
+	var ts := TileSet.new()
+	ts.tile_size = Vector2i(48, 48)
+	var tiles: Array = _theme_cfg.get("tiles", [])
+	var asset_dir := String(_map_cfg.get("asset_dir", "res://image/map"))
+	var weights := [0.6, 0.2, 0.2]
+	for i in mini(3, tiles.size()):
+		var src := TileSetAtlasSource.new()
+		src.texture = load("%s/%s.png" % [asset_dir, String(tiles[i])])
+		src.texture_region_size = Vector2i(48, 48)
+		src.create_tile(Vector2i.ZERO)
+		ts.add_source(src, i)
+	tl.tile_set = ts
+	var cols := int(_map_cfg.get("map_cols", 32))
+	var rows := int(_map_cfg.get("map_rows", 42))
+	for y in rows:
+		for x in cols:
+			var roll := _rng.randf()
+			var sid := 0
+			if roll > 0.8:
+				sid = 2
+			elif roll > 0.6:
+				sid = 1
+			if sid < ts.get_source_count():
+				tl.set_cell(Vector2i(x, y), sid, Vector2i.ZERO, 0)
+	add_child(tl)
+
+
+func _build_world() -> void:
+	_world.y_sort_enabled = true
+	add_child(_world)
+
+	var cols := int(_map_cfg.get("map_cols", 32))
+	var rows := int(_map_cfg.get("map_rows", 42))
+	var map_w := float(cols * 48)
+	var map_h := float(rows * 48)
+
+	_build_decos(cols, rows)
+	_build_portal(map_w)
+	_build_player(map_w, map_h)
+	_build_monsters(map_w, map_h)
+
+
+func _build_decos(cols: int, rows: int) -> void:
+	# 散件：随机摆放（避开出生区/传送区/中央通道），origin 底部 + 脚部碰撞，Y-sort 遮挡
+	var decos: Array = _theme_cfg.get("decos", [])
+	if decos.is_empty():
+		return
+	var density := float(_theme_cfg.get("deco_density", 0.05))
+	var asset_dir := String(_map_cfg.get("asset_dir", "res://image/map"))
+	var spawn := Vector2(float(cols) * 24.0, float(rows) * 48.0 - 100.0)
+	for gy in rows - 1:
+		for gx in cols:
+			var center_col := absi(gx - cols / 2) <= 1  # 中央通道密度减半
+			var d := density * (0.5 if center_col else 1.0)
+			if _rng.randf() > d:
+				continue
+			var pos := Vector2(gx * 48.0 + _rng.randf_range(8, 40),
+				gy * 48.0 + _rng.randf_range(8, 40))
+			if pos.distance_to(spawn) < 220.0 or pos.y < 200.0:
+				continue
+			var deco := _Deco.new()
+			var tex: Texture2D = load("%s/%s.png" % [asset_dir, String(decos[_rng.randi_range(0, decos.size() - 1)])])
+			deco.setup(tex, _rng.randf_range(0.6, 1.15))
+			deco.position = pos
+			_world.add_child(deco)
+
+
+func _build_portal(map_w: float) -> void:
+	_portal = _Portal.new()
+	_portal.position = Vector2(map_w / 2.0, 120.0)
+	_portal.locked = String(node.get("type", "normal")) == "boss"
+	_world.add_child(_portal)
+
+
+func _build_player(map_w: float, map_h: float) -> void:
+	_player = CharacterBody2D.new()
+	_player.motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
+	_player.position = Vector2(map_w / 2.0, map_h - 120.0)
+	_player.collision_layer = 1
+	_player.collision_mask = 2
+	_world.add_child(_player)
+
+	_player_anim = AnimatedSprite2D.new()
+	var frames_path := String(ROLE_FRAMES.get(st.role_id, ROLE_FRAMES["zs"])[0])
+	_player_anim.sprite_frames = load(frames_path)
+	_player_anim.scale = Vector2.ONE * 0.5
+	_player_anim.position = Vector2(0, -18)
+	_player_anim.animation = &"walk_down"
+	_player_anim.stop()
+	_player.add_child(_player_anim)
+
+	var shape := CollisionShape2D.new()
+	var rect := RectangleShape2D.new()
+	rect.size = Vector2(30, 26)
+	shape.shape = rect
+	shape.position = Vector2(0, 8)
+	_player.add_child(shape)
+
+	var cam := Camera2D.new()
+	cam.position = Vector2(0, -56)
+	cam.limit_left = 0
+	cam.limit_top = 0
+	cam.limit_right = int(map_w)
+	cam.limit_bottom = int(map_h)
+	cam.enabled = true
+	_player.add_child(cam)
+	cam.make_current()
+
+
+func _build_monsters(map_w: float, map_h: float) -> void:
+	# 编成：普通 3~4 小怪 / 精英 1+2 / BOSS 1 守阵（§2.5）；散布中上部，互不重叠
+	var nt := String(node.get("type", "normal"))
+	var comp: Array = []
+	match nt:
+		"boss":
+			comp = ["boss"]
+		"elite":
+			comp = ["elite", "normal", "normal"]
+		_:
+			comp = ["normal", "normal", "normal", "normal"] if _rng.randf() < 0.5 \
+				else ["normal", "normal", "normal"]
+	var placed: Array[Vector2] = []
+	for tier in comp:
+		var pos := Vector2.ZERO
+		for attempt in 24:
+			pos = Vector2(_rng.randf_range(120.0, map_w - 120.0),
+				_rng.randf_range(460.0, map_h - 320.0))
+			if nt == "boss":
+				pos = _portal.position + Vector2(0, 130)  # 首领守传送阵
+			var ok := true
+			for p in placed:
+				if p.distance_to(pos) < 140.0:
+					ok = false
+					break
+			if ok:
+				break
+		placed.append(pos)
+		var m := _MapMonster.new()
+		m.tier = String(tier)
+		m.position = pos
+		m.home = pos
+		m.map_ref = self
+		_monsters.append(m)
+		_world.add_child(m)
+
+
+# ================= HUD =================
+func _build_hud() -> void:
+	_hud.layer = 1
+	add_child(_hud)
+
+	var tc_name := String(_theme_cfg.get("name", "未知"))
+	var nt_name: String = {"normal": "遭遇区", "elite": "精英区", "boss": "首领巢穴"}.get(
+		String(node.get("type", "normal")), "探索")
+	var top := G.parchment_box(300, 34, 8.0)
+	top.position = Vector2(16, 12)
+	_hud.add_child(top)
+	var title := G.gold_label("%s · %s" % [tc_name, nt_name], G.FS_SM, false, Color("5a3a1e"), false)
+	title.set_anchors_preset(Control.PRESET_FULL_RECT)
+	top.add_child(title)
+
+	var goal := G.gold_label("寻找传送阵" if not _portal.locked else "击败首领，解除传送阵封印",
+		G.FS_XS, false, Color("ffd9a0"), false)
+	goal.position = Vector2(0, 50)
+	goal.custom_minimum_size = Vector2(VIEW_W, 0)
+	_hud.add_child(goal)
+
+	# HP 条 + 药剂 + 换宠
+	var panel := G.parchment_box(206, 56, 10.0)
+	panel.position = Vector2(16, 66)
+	_hud.add_child(panel)
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 2)
+	panel.add_child(box)
+	var hp_row := HBoxContainer.new()
+	hp_row.add_theme_constant_override("separation", 6)
+	box.add_child(hp_row)
+	var bar_bg := Control.new()  # 不用容器布局——手动控制填充条宽度
+	bar_bg.custom_minimum_size = Vector2(120, 12)
+	bar_bg.clip_contents = true
+	hp_row.add_child(bar_bg)
+	var bar_sbg := ColorRect.new()
+	bar_sbg.color = Color("3a2a18")
+	bar_sbg.size = Vector2(120, 12)
+	bar_bg.add_child(bar_sbg)
+	_hp_fill.color = Color("c05a3a")
+	_hp_fill.position = Vector2(2, 2)
+	_hp_fill.size = Vector2(116, 8)
+	bar_bg.add_child(_hp_fill)
+	_pot_l = G.gold_label("", G.FS_XS, false, Color("5a3a1e"), false)
+	_pot_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	hp_row.add_child(_pot_l)
+	_refresh_hud()
+
+	var potion_btn := G.gold_button("药", 44, 40)
+	potion_btn.position = Vector2(232, 72)
+	potion_btn.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_use_potion())
+	_hud.add_child(potion_btn)
+
+	_pet_btn = G.gold_button("换宠", 72, 40)
+	_pet_btn.position = Vector2(284, 72)
+	_pet_btn.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_swap_pet())
+	_hud.add_child(_pet_btn)
+
+	_joy = _Joystick.new()
+	_joy.position = Vector2(24, VIEW_H - 190)
+	_hud.add_child(_joy)
+	_refresh_hud()  # 覆盖换宠按钮可见性（bench 为空时隐藏）
+
+
+func _refresh_hud() -> void:
+	var m := st.max_hp()
+	var hp := m if st.hp < 0 else st.hp
+	_hp_fill.size.x = 116.0 * clampf(float(hp) / float(m), 0.0, 1.0)
+	_pot_l.text = "药剂 ×%d" % st.potions
+	if _pet_btn != null:
+		_pet_btn.visible = st.bench_pet != ""
+
+
+func _use_potion() -> void:
+	if _battle != null or _map_done:
+		return
+	if st.potions <= 0:
+		_toast("药剂已用尽")
+		return
+	var m := st.max_hp()
+	var hp := m if st.hp < 0 else st.hp
+	if hp >= m:
+		_toast("生命已满")
+		return
+	st.potions -= 1
+	var pct := float(TableCache.nodes_config().get("shop", {}).get("potion_heal_pct", 0.35))
+	var amt := int(float(m) * pct)
+	st.heal(amt)
+	_toast("使用药剂：回复 %d 点生命" % amt)
+	_refresh_hud()
+
+
+func _swap_pet() -> void:
+	if _battle != null or _map_done or st.bench_pet == "":
+		return
+	var old := st.active_pet
+	st.active_pet = st.bench_pet
+	st.bench_pet = old
+	_toast("出战宠物已更换")
+	_refresh_hud()
+
+
+func _toast(msg: String) -> void:
+	if _toast_lbl != null and not _toast_lbl.is_queued_for_deletion():
+		_toast_lbl.queue_free()
+	_toast_lbl = G.gold_label(msg, G.FS_MD, false, Color("ffe9b0"))
+	_toast_lbl.position = Vector2(0, 560)
+	_toast_lbl.custom_minimum_size = Vector2(VIEW_W, 0)
+	_hud.add_child(_toast_lbl)
+	var tw := create_tween()
+	tw.tween_interval(1.4)
+	tw.tween_property(_toast_lbl, "modulate:a", 0.0, 0.5)
+	tw.tween_callback(_toast_lbl.queue_free)
+
+
+# ================= 主循环 =================
+func _physics_process(delta: float) -> void:
+	if _map_done or _battle != null:
+		return
+	if _player == null:
+		return
+	# 输入：键盘方向 + 摇杆向量
+	var dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	if _joy != null:
+		dir = (dir + _joy.vector).limit_length(1.0)
+	var speed := float(_map_cfg.get("player_speed", 130.0))
+	_player.velocity = dir * speed
+	_player.move_and_slide()
+	# 地图边界夹紧
+	var cols := int(_map_cfg.get("map_cols", 32))
+	var rows := int(_map_cfg.get("map_rows", 42))
+	_player.position = _player.position.clamp(Vector2(24, 60), Vector2(cols * 48 - 24, rows * 48 - 24))
+	_update_player_anim(dir)
+	_check_portal()
+
+
+func _update_player_anim(dir: Vector2) -> void:
+	if dir.length_squared() < 0.01:
+		_player_anim.stop()
+		return
+	var anim := &"walk_down"
+	if absf(dir.x) > absf(dir.y):
+		anim = &"walk_right" if dir.x > 0 else &"walk_left"
+	else:
+		anim = &"walk_down" if dir.y > 0 else &"walk_up"
+	if _player_anim.animation != anim:
+		_player_anim.animation = anim
+	if not _player_anim.is_playing():
+		_player_anim.play()
+
+
+func _check_portal() -> void:
+	if _map_done:
+		return
+	if _player.position.distance_to(_portal.position) < 36.0:
+		if _portal.locked:
+			if not _portal.warned:
+				_portal.warned = true
+				_toast("传送阵被首领封印——先击败它！")
+		else:
+			_finish_map("cleared")
+
+
+func _finish_map(result: String) -> void:
+	if _map_done:
+		return
+	_map_done = true
+	if result == "cleared":
+		st.node_cleared(int(node.get("layer", 1)), int(node.get("index", 0)))
+	map_finished.emit(result)
+
+
+# ================= 怪物接触开战 =================
+func on_monster_contact(m: _MapMonster) -> void:
+	if _battle != null or _map_done:
+		m.chasing_contact = false  # 并行触发的接触复位
+		return
+	_start_battle(m)
+
+
+func _start_battle(m: _MapMonster) -> void:
+	m.chasing_contact = true  # 接触怪冻结
+	_contact_mon = m
+	BattleScene.pending_cfg = {
+		"ally": {
+			"role_id": st.role_id,
+			"level": st.level,
+			"traits": st.traits.duplicate(),
+			"active_pet": st.active_pet,
+			"bench_pet": st.bench_pet,
+			"potions": st.potions,
+			"hp_override": st.hp,
+		},
+		"enemy": {"theme": st.theme, "node_type": m.tier,
+			"layer": int(node.get("layer", 1))},
+		"seed": st.next_battle_seed(),
+	}
+	_battle_layer = CanvasLayer.new()
+	_battle_layer.layer = 2
+	add_child(_battle_layer)
+	_battle = (load("res://src/battle/BattleScene.tscn") as PackedScene).instantiate()
+	_battle.battle_finished.connect(_on_battle_end)
+	_battle_layer.add_child(_battle)
+
+
+func _on_battle_end(result: String, hp_left: int) -> void:
+	var battle := _battle
+	var monster_tier := _contact_mon.tier if _contact_mon != null else ""
+	_battle = null
+	_battle_layer.queue_free()  # 级联释放 BattleScene
+	_battle_layer = null
+	st.apply_battle_result(battle.sim)
+
+	if result != "victory":
+		st.finished = true
+		st.result = "defeat"
+		_finish_map("defeat")
+		return
+	st.hp = hp_left
+	# 接触的怪离场
+	if _contact_mon != null:
+		_monsters.erase(_contact_mon)
+		_contact_mon.queue_free()
+		_contact_mon = null
+	# 其余怪复位并返回巢穴
+	for m in _monsters:
+		m.chasing_contact = false
+		m.retreat_home()
+	# 首领解封传送阵
+	if monster_tier == "boss" and _portal != null:
+		_portal.locked = false
+		_toast("首领陨落——传送阵封印解除！")
+	# 战斗胜利获 1 词条（#9 换三选一 UI）
+	var tid := st.roll_trait(_rng)
+	if tid != "":
+		var tname := String(TableCache.get_trait(tid).get("name", ""))
+		_toast("获得词条：%s" % tname)
+	_refresh_hud()
+
+
+# ================= 局部节点 =================
+## 散件（origin 底部 + 脚部碰撞，参与 Y-sort）
+class _Deco extends StaticBody2D:
+	func setup(tex: Texture2D, s: float) -> void:
+		collision_layer = 2
+		collision_mask = 0
+		if tex == null:
+			return
+		var spr := Sprite2D.new()
+		spr.texture = tex
+		spr.scale = Vector2.ONE * s
+		spr.offset = Vector2(0, -tex.get_height() / 2.0)
+		add_child(spr)
+		var shape := CollisionShape2D.new()
+		var rect := RectangleShape2D.new()
+		rect.size = Vector2(40.0 * s, 26.0)
+		shape.shape = rect
+		shape.position = Vector2(0, -13.0)
+		add_child(shape)
+
+
+## 传送阵（双环旋转；BOSS 节点初始封印）
+class _Portal extends Node2D:
+	var locked := false
+	var warned := false
+	var _rot := 0.0
+
+	func _process(delta: float) -> void:
+		_rot += delta * (0.6 if locked else 1.8)
+		queue_redraw()
+
+	func _draw() -> void:
+		var base := Color("8a6a9a") if locked else Color("7ae0ff")
+		var glow := Color(base.r, base.g, base.b, 0.25)
+		draw_circle(Vector2.ZERO, 40.0, glow)
+		var n := 24
+		for i in n:
+			var a := _rot + TAU * float(i) / float(n)
+			var p := Vector2(cos(a), sin(a)) * 28.0
+			draw_circle(p, 3.0, base if i % 2 == 0 else Color(base.r, base.g, base.b, 0.4))
+		draw_arc(Vector2.ZERO, 18.0, _rot, _rot + TAU * 0.7, 16, base, 2.5)
+		draw_circle(Vector2.ZERO, 8.0, Color(base.r, base.g, base.b, 0.6))
+
+
+## 怪物（程序占位圆体；游荡/警戒/追击/接触回调；素材入库后热替换为精灵）
+class _MapMonster extends Node2D:
+	var tier := "normal"
+	var home := Vector2.ZERO
+	var chasing_contact := false  # 本只已触发接触（开战中）
+	var map_ref: MapScene = null
+	var _state := "wander"  # wander / chase
+	var _target := Vector2.ZERO
+	var _wait := 0.0
+	var _radius := 20.0
+	var _aggro := 120.0
+	var _contact := 26.0
+	var _wander_r := 96.0
+
+	func _ready() -> void:
+		_radius = {"normal": 20.0, "elite": 25.0, "boss": 32.0}.get(tier, 20.0)
+		var mc: Dictionary = TableCache.maps_config()
+		_aggro = float(mc.get("aggro_radius", 120.0))
+		_contact = float(mc.get("contact_radius", 26.0))
+		_wander_r = float(mc.get("monster_wander_radius", 96.0))
+		_pick_wander_target()
+
+	func _pick_wander_target() -> void:
+		var a := randf() * TAU
+		var d := randf() * _wander_r
+		_target = home + Vector2(cos(a), sin(a)) * d
+
+	func _process(delta: float) -> void:
+		if map_ref == null or map_ref._player == null:
+			return
+		if chasing_contact or map_ref._map_done or map_ref._battle != null:
+			return  # 接触中 / 地图结束 / 战斗覆盖层期间冻结
+		var player: CharacterBody2D = map_ref._player
+		var dist := position.distance_to(player.position)
+		if dist < _contact:
+			chasing_contact = true
+			map_ref.on_monster_contact(self)
+			return
+		if dist < _aggro and not map_ref._map_done and map_ref._battle == null:
+			_state = "chase"
+		elif _state == "chase" and dist > _aggro * 1.4:
+			_state = "wander"
+			_pick_wander_target()
+		var speed := 40.0
+		if _state == "chase":
+			_target = player.position
+			speed = float(TableCache.maps_config().get("player_speed", 130.0)) * 0.9
+		var to := _target - position
+		if to.length() > 6.0:
+			position += to.normalized() * speed * delta
+		elif _state == "wander":
+			_wait += delta
+			if _wait > randf_range(0.8, 2.2):
+				_wait = 0.0
+				_pick_wander_target()
+		queue_redraw()
+
+	func retreat_home() -> void:
+		_state = "wander"
+		_target = home
+
+	func _draw() -> void:
+		var col: Color = MapScene.MON_COLOR.get(tier, Color.GRAY)
+		var body := col if _state == "wander" else col.lightened(0.25)
+		draw_circle(Vector2(0, 4), _radius, Color(0, 0, 0, 0.3))
+		draw_circle(Vector2.ZERO, _radius, body)
+		draw_circle(Vector2.ZERO, _radius - 6.0, Color(col.r, col.g, col.b, 0.6))
+		# 追击警示环
+		if _state == "chase":
+			draw_arc(Vector2.ZERO, _radius + 7.0, 0, TAU, 20, Color(1.0, 0.4, 0.3, 0.8), 2.0)
+		# 眼睛（朝向差异感）
+		draw_circle(Vector2(-6, -4), 3.0, Color(0.1, 0.1, 0.12))
+		draw_circle(Vector2(6, -4), 3.0, Color(0.1, 0.1, 0.12))
+
+
+## 虚拟摇杆（触屏/鼠标拖拽；键盘方向并行可用）
+class _Joystick extends Control:
+	var vector := Vector2.ZERO
+	var _base := Vector2.ZERO
+	var _active := false
+
+	func _ready() -> void:
+		custom_minimum_size = Vector2(150, 150)
+		mouse_filter = Control.MOUSE_FILTER_STOP
+
+	func _gui_input(e: InputEvent) -> void:
+		if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT:
+			if e.pressed:
+				_active = true
+				_base = (e as InputEventMouseButton).position
+			else:
+				_active = false
+				vector = Vector2.ZERO
+				queue_redraw()
+		elif e is InputEventMouseMotion and _active:
+			vector = ((e as InputEventMouseMotion).position - _base).limit_length(56.0) / 56.0
+			queue_redraw()
+
+	func _draw() -> void:
+		var c := custom_minimum_size / 2.0
+		draw_circle(c, 56.0, Color(0.1, 0.08, 0.05, 0.35))
+		draw_arc(c, 56.0, 0, TAU, 40, Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.4), 2.0)
+		draw_circle(c + vector * 56.0, 22.0, Color(0.9, 0.8, 0.6, 0.75))
