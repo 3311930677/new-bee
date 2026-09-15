@@ -37,6 +37,7 @@ var _toast: Label = null
 var _map: MapScene = null
 var _cur_node: Dictionary = {}
 var _end_ui: Control = null
+var _settled := false     # 局结算入账只做一次
 
 
 func _ready() -> void:
@@ -239,6 +240,10 @@ func _on_map_finished(map_result: String) -> void:
 
 # ================= 局结束浮层 =================
 func _show_end(win: bool) -> void:
+	# 结算入账钱包并落盘（战败亦保留——失败无惩罚；_settled 防重复）
+	if not _settled:
+		_settled = true
+		G.deposit(st.gold, st.expedition, st.soul)
 	_end_ui = Control.new()
 	_end_ui.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(_end_ui)
