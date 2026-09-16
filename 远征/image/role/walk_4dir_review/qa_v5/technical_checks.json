@@ -1,0 +1,1423 @@
+{
+  "method": "separate direction strips with shared union anchor",
+  "cell": 128,
+  "columns": 4,
+  "rows": 4,
+  "directions": [
+    "down",
+    "left",
+    "right",
+    "up"
+  ],
+  "fps": 8.0,
+  "roles": [
+    {
+      "id": "zs",
+      "name": "pojun",
+      "common_scale": 0.2283464566929134,
+      "directions": [
+        {
+          "direction": "down",
+          "source": "image/role/zs/source/pojun_walk_down_strip_v5.png",
+          "source_size": [
+            2170,
+            725
+          ],
+          "shared_crop": [
+            27,
+            133,
+            535,
+            615
+          ],
+          "anchor": [
+            6,
+            10
+          ],
+          "foot_iou_0_2": 0.7701,
+          "foot_iou_1_3": 0.8898,
+          "frames": [
+            {
+              "frame": 0,
+              "source_bbox": [
+                28,
+                133,
+                535,
+                615
+              ],
+              "packed_bbox": [
+                6,
+                10,
+                122,
+                120
+              ],
+              "sha256": "3e298a4e536e51adbe95f47bba79088806f7d63e033e136b4e96f720f6ddec58"
+            },
+            {
+              "frame": 1,
+              "source_bbox": [
+                33,
+                133,
+                535,
+                610
+              ],
+              "packed_bbox": [
+                7,
+                10,
+                122,
+                119
+              ],
+              "sha256": "fda582faaf65d4deac92fcb802921fad64eb600803a817287e8b361adc03924c"
+            },
+            {
+              "frame": 2,
+              "source_bbox": [
+                27,
+                133,
+                535,
+                615
+              ],
+              "packed_bbox": [
+                6,
+                10,
+                122,
+                120
+              ],
+              "sha256": "b3ac111116aeb013ee929e5c9590f95c0d36cae54dd499980e1a359f374a226f"
+            },
+            {
+              "frame": 3,
+              "source_bbox": [
+                29,
+                133,
+                532,
+                615
+              ],
+              "packed_bbox": [
+                6,
+                10,
+                121,
+                120
+              ],
+              "sha256": "9ca543c142f911ba7a00f0e684937332c6d015c304107be2bef6e7effbc2fa3a"
+            }
+          ]
+        },
+        {
+          "direction": "left",
+          "source": "image/role/zs/source/pojun_walk_left_strip_v5.png",
+          "source_size": [
+            2170,
+            725
+          ],
+          "shared_crop": [
+            29,
+            180,
+            524,
+            608
+          ],
+          "anchor": [
+            7,
+            22
+          ],
+          "foot_iou_0_2": 0.6563,
+          "foot_iou_1_3": 0.7313,
+          "frames": [
+            {
+              "frame": 0,
+              "source_bbox": [
+                33,
+                181,
+                524,
+                608
+              ],
+              "packed_bbox": [
+                8,
+                22,
+                119,
+                119
+              ],
+              "sha256": "bd635702e26859fd9a3e5bfab13561296dc201ab85a7edc519765810a4650344"
+            },
+            {
+              "frame": 1,
+              "source_bbox": [
+                42,
+                181,
+                518,
+                608
+              ],
+              "packed_bbox": [
+                10,
+                22,
+                119,
+                119
+              ],
+              "sha256": "6824c547979158b51cdb530fd7623d1b4853dff8ca0b1d987091b2d2cc6d529e"
+            },
+            {
+              "frame": 2,
+              "source_bbox": [
+                29,
+                180,
+                516,
+                608
+              ],
+              "packed_bbox": [
+                7,
+                22,
+                118,
+                119
+              ],
+              "sha256": "76726aa7a2cda5552f96e692d394d5fc5ffb89e3ba82c37d9d25b5a012ea0e41"
+            },
+            {
+              "frame": 3,
+              "source_bbox": [
+                32,
+                180,
+                516,
+                608
+              ],
+              "packed_bbox": [
+                8,
+                22,
+                117,
+                119
+              ],
+              "sha256": "9bb8c417e1e522767483def57c702d73ab1cbee36a332612eb39bca6ae85d554"
+            }
+          ]
+        },
+        {
+          "direction": "right",
+          "source": "image/role/zs/source/pojun_walk_right_strip_v5.png",
+          "source_size": [
+            2172,
+            724
+          ],
+          "shared_crop": [
+            53,
+            174,
+            543,
+            572
+          ],
+          "anchor": [
+            8,
+            29
+          ],
+          "foot_iou_0_2": 0.7308,
+          "foot_iou_1_3": 0.7787,
+          "frames": [
+            {
+              "frame": 0,
+              "source_bbox": [
+                58,
+                174,
+                543,
+                570
+              ],
+              "packed_bbox": [
+                10,
+                30,
+                120,
+                120
+              ],
+              "sha256": "cfb7407dd2e3e20f25d340b00bd58a5e6a3833852bf75f127ffd89289cd5d7e5"
+            },
+            {
+              "frame": 1,
+              "source_bbox": [
+                60,
+                175,
+                543,
+                572
+              ],
+              "packed_bbox": [
+                10,
+                29,
+                120,
+                119
+              ],
+              "sha256": "482dc4aeb8563c50c221974b7f07fc5b9f434de15fbb9eb4c10bcaa9af3925af"
+            },
+            {
+              "frame": 2,
+              "source_bbox": [
+                53,
+                177,
+                541,
+                571
+              ],
+              "packed_bbox": [
+                8,
+                30,
+                120,
+                119
+              ],
+              "sha256": "4fca1a0f4ef281b0560d2f00b52ebef49284ebd24d52ad056de87512ca858011"
+            },
+            {
+              "frame": 3,
+              "source_bbox": [
+                60,
+                175,
+                540,
+                572
+              ],
+              "packed_bbox": [
+                10,
+                29,
+                118,
+                119
+              ],
+              "sha256": "e13391da1cf992a9eb0ec609f204e73c3bbce3ba0a6a4983b5a130f7182c51e7"
+            }
+          ]
+        },
+        {
+          "direction": "up",
+          "source": "image/role/zs/source/pojun_walk_up_strip_v5.png",
+          "source_size": [
+            2172,
+            724
+          ],
+          "shared_crop": [
+            62,
+            170,
+            529,
+            596
+          ],
+          "anchor": [
+            10,
+            23
+          ],
+          "foot_iou_0_2": 0.6204,
+          "foot_iou_1_3": 0.7067,
+          "frames": [
+            {
+              "frame": 0,
+              "source_bbox": [
+                62,
+                171,
+                529,
+                596
+              ],
+              "packed_bbox": [
+                11,
+                24,
+                117,
+                119
+              ],
+              "sha256": "ea45741c0ef9d1cc3f9d8dcaaea2ea45b22586d3d63dbb9660887e48a5ba97ad"
+            },
+            {
+              "frame": 1,
+              "source_bbox": [
+                62,
+                170,
+                529,
+                590
+              ],
+              "packed_bbox": [
+                11,
+                24,
+                117,
+                119
+              ],
+              "sha256": "bd76a1282e604115f1024280671ef09d06366c2a6cb614d9b6c6e0711a417f7d"
+            },
+            {
+              "frame": 2,
+              "source_bbox": [
+                63,
+                175,
+                529,
+                596
+              ],
+              "packed_bbox": [
+                11,
+                24,
+                117,
+                119
+              ],
+              "sha256": "9d9f816e8ea1ab20325cfb9592975bc02780d4ee7d3bedf2d3242afa509b91d8"
+            },
+            {
+              "frame": 3,
+              "source_bbox": [
+                67,
+                175,
+                524,
+                579
+              ],
+              "packed_bbox": [
+                11,
+                24,
+                114,
+                116
+              ],
+              "sha256": "96b155718183a197028c59187aec577cecf7158bf963825cd009549627dd32bd"
+            }
+          ]
+        }
+      ],
+      "output": "image/role/zs/pojun_walk_4dir.png"
+    },
+    {
+      "id": "ck",
+      "name": "chuanyang",
+      "common_scale": 0.20107719928186715,
+      "directions": [
+        {
+          "direction": "down",
+          "source": "image/role/ck/source/chuanyang_walk_down_strip_v5.png",
+          "source_size": [
+            2172,
+            724
+          ],
+          "shared_crop": [
+            97,
+            85,
+            482,
+            602
+          ],
+          "anchor": [
+            25,
+            16
+          ],
+          "foot_iou_0_2": 0.7817,
+          "foot_iou_1_3": 0.8518,
+          "frames": [
+            {
+              "frame": 0,
+              "source_bbox": [
+                99,
+                86,
+                482,
+                597
+              ],
+              "packed_bbox": [
+                25,
+                16,
+                102,
+                119
+              ],
+              "sha256": "1ee499c6a57651a229726c7a1828492da8715eb97729600981c247ab1ee5fa47"
+            },
+            {
+              "frame": 1,
+              "source_bbox": [
+                100,
+                86,
+                464,
+                601
+              ],
+              "packed_bbox": [
+                26,
+                16,
+                98,
+                120
+              ],
+              "sha256": "84eb8bbd3ef8ede11226112b1ae014d97c7a254a08650f67b1e40c2ea4b5d144"
+            },
+            {
+              "frame": 2,
+              "source_bbox": [
+                98,
+                86,
+                474,
+                602
+              ],
+              "packed_bbox": [
+                25,
+                16,
+                100,
+                120
+              ],
+              "sha256": "e67323976413b6e88dee7f972dcb8fb40308c8b08a00c429bb32951cd2632e5f"
+            },
+            {
+              "frame": 3,
+              "source_bbox": [
+                97,
+                85,
+                455,
+                601
+              ],
+              "packed_bbox": [
+                25,
+                16,
+                97,
+                120
+              ],
+              "sha256": "3068bdf691470320d440370809baac81d8bd0ac45a340d73eec39f263a73b414"
+            }
+          ]
+        },
+        {
+          "direction": "left",
+          "source": "image/role/ck/source/chuanyang_walk_left_strip_v5.png",
+          "source_size": [
+            2170,
+            725
+          ],
+          "shared_crop": [
+            79,
+            97,
+            461,
+            603
+          ],
+          "anchor": [
+            25,
+            18
+          ],
+          "foot_iou_0_2": 0.8317,
+          "foot_iou_1_3": 0.8297,
+          "frames": [
+            {
+              "frame": 0,
+              "source_bbox": [
+                80,
+                97,
+                458,
+                603
+              ],
+              "packed_bbox": [
+                25,
+                18,
+                101,
+                119
+              ],
+              "sha256": "4737eec8ef273e1041a0ef86ea2fbef8fbd54682b085ad88ff91b9c3ddea2d63"
+            },
+            {
+              "frame": 1,
+              "source_bbox": [
+                81,
+                97,
+                458,
+                603
+              ],
+              "packed_bbox": [
+                25,
+                30,
+                101,
+                119
+              ],
+              "sha256": "606066200e5549c68cb5d72ec2ed7dadb7da9700e150cafb855d8c5190df3433"
+            },
+            {
+              "frame": 2,
+              "source_bbox": [
+                79,
+                107,
+                461,
+                603
+              ],
+              "packed_bbox": [
+                25,
+                20,
+                101,
+                119
+              ],
+              "sha256": "bb537983f7d959c4498916c0186e7992def5cf7027bf4e7981f9a64eeb248b59"
+            },
+            {
+              "frame": 3,
+              "source_bbox": [
+                80,
+                108,
+                461,
+                603
+              ],
+              "packed_bbox": [
+                25,
+                27,
+                101,
+                119
+              ],
+              "sha256": "3e638e325feb7dbc641a9cc1d11614edb52028ee0a406e755a392655253beab9"
+            }
+          ]
+        },
+        {
+          "direction": "right",
+          "source": "image/role/ck/source/chuanyang_walk_right_strip_v5.png",
+          "source_size": [
+            2170,
+            725
+          ],
+          "shared_crop": [
+            51,
+            79,
+            496,
+            621
+          ],
+          "anchor": [
+            19,
+            11
+          ],
+          "foot_iou_0_2": 0.3755,
+          "foot_iou_1_3": 0.445,
+          "frames": [
+            {
+              "frame": 0,
+              "source_bbox": [
+                84,
+                88,
+                496,
+                608
+              ],
+              "packed_bbox": [
+                26,
+                15,
+                108,
+                117
+              ],
+              "sha256": "23e470e876da5994c13a8c396f1e66cad0176bec8a635dbc48c135427e5d436c"
+            },
+            {
+              "frame": 1,
+              "source_bbox": [
+                100,
+                79,
+                461,
+                621
+              ],
+              "packed_bbox": [
+                29,
+                17,
+                101,
+                119
+              ],
+              "sha256": "6504d8a4dd7a479df865e3f76a628edb246e2707ed29bfa427fa882d24d1f8ba"
+            },
+            {
+              "frame": 2,
+              "source_bbox": [
+                51,
+                80,
+                447,
+                610
+              ],
+              "packed_bbox": [
+                19,
+                13,
+                98,
+                117
+              ],
+              "sha256": "93a851860596309dd8e57815568a357c939ac0055ae52c4dcc2332d51aa4784f"
+            },
+            {
+              "frame": 3,
+              "source_bbox": [
+                85,
+                92,
+                453,
+                619
+              ],
+              "packed_bbox": [
+                26,
+                15,
+                99,
+                120
+              ],
+              "sha256": "2836af1addb0b751d3f56d447c1b24a92e3306555a566e5c4f160120a4c6fdb0"
+            }
+          ]
+        },
+        {
+          "direction": "up",
+          "source": "image/role/ck/source/chuanyang_walk_up_strip_v5.png",
+          "source_size": [
+            2172,
+            724
+          ],
+          "shared_crop": [
+            105,
+            64,
+            460,
+            621
+          ],
+          "anchor": [
+            28,
+            8
+          ],
+          "foot_iou_0_2": 0.6026,
+          "foot_iou_1_3": 0.7212,
+          "frames": [
+            {
+              "frame": 0,
+              "source_bbox": [
+                111,
+                82,
+                460,
+                621
+              ],
+              "packed_bbox": [
+                30,
+                16,
+                99,
+                119
+              ],
+              "sha256": "a1f36c2ae13b8fa7ecb52635e64fd28fbebc535934dd16a91748c6e27914f140"
+            },
+            {
+              "frame": 1,
+              "source_bbox": [
+                108,
+                65,
+                460,
+                615
+              ],
+              "packed_bbox": [
+                29,
+                10,
+                99,
+                119
+              ],
+              "sha256": "b324cc9b70a5180ca3a1f466ee41e13ea27879c6459a2a82200715959bf8246c"
+            },
+            {
+              "frame": 2,
+              "source_bbox": [
+                105,
+                64,
+                454,
+                616
+              ],
+              "packed_bbox": [
+                29,
+                8,
+                98,
+                119
+              ],
+              "sha256": "6e5fda00d0178fad4caf5752911de4de09c1e7f7b447f7038dfb319992ce1635"
+            },
+            {
+              "frame": 3,
+              "source_bbox": [
+                106,
+                74,
+                458,
+                611
+              ],
+              "packed_bbox": [
+                28,
+                13,
+                99,
+                118
+              ],
+              "sha256": "69d22095ca8ef0ee522a5811747d9b3e18827ccc11fd37645b4f5c6e79db069a"
+            }
+          ]
+        }
+      ],
+      "output": "image/role/ck/chuanyang_walk_4dir.png"
+    },
+    {
+      "id": "fs",
+      "name": "shuangyu",
+      "common_scale": 0.22134387351778656,
+      "directions": [
+        {
+          "direction": "down",
+          "source": "image/role/fs/source/shuangyu_walk_down_strip_v5.png",
+          "source_size": [
+            2172,
+            724
+          ],
+          "shared_crop": [
+            4,
+            133,
+            493,
+            619
+          ],
+          "anchor": [
+            10,
+            12
+          ],
+          "foot_iou_0_2": 0.6343,
+          "foot_iou_1_3": 0.6026,
+          "frames": [
+            {
+              "frame": 0,
+              "source_bbox": [
+                77,
+                133,
+                493,
+                619
+              ],
+              "packed_bbox": [
+                26,
+                12,
+                118,
+                120
+              ],
+              "sha256": "c705b88650d26824c5d2d3e891e0aed451d0dee4aa90e9ff85a6391d067744dd"
+            },
+            {
+              "frame": 1,
+              "source_bbox": [
+                48,
+                133,
+                459,
+                614
+              ],
+              "packed_bbox": [
+                20,
+                12,
+                110,
+                119
+              ],
+              "sha256": "d0aca0b06981eab79d2194028b9e3cecae66c84ac9146378457adcdbd4e2be31"
+            },
+            {
+              "frame": 2,
+              "source_bbox": [
+                30,
+                133,
+                447,
+                619
+              ],
+              "packed_bbox": [
+                16,
+                12,
+                108,
+                120
+              ],
+              "sha256": "ecdd345af5008214c69be81f0f405ae93e7b9142c5163cbcf1103fedc152fb68"
+            },
+            {
+              "frame": 3,
+              "source_bbox": [
+                4,
+                133,
+                414,
+                619
+              ],
+              "packed_bbox": [
+                10,
+                12,
+                101,
+                120
+              ],
+              "sha256": "22746b52c4f3c450bd97c0ade2e62ff2934a1d8bac0533a945b7a1f124449820"
+            }
+          ]
+        },
+        {
+          "direction": "left",
+          "source": "image/role/fs/source/shuangyu_walk_left_strip_v5.png",
+          "source_size": [
+            2170,
+            725
+          ],
+          "shared_crop": [
+            74,
+            117,
+            526,
+            595
+          ],
+          "anchor": [
+            14,
+            14
+          ],
+          "foot_iou_0_2": 0.7978,
+          "foot_iou_1_3": 0.7433,
+          "frames": [
+            {
+              "frame": 0,
+              "source_bbox": [
+                81,
+                120,
+                526,
+                595
+              ],
+              "packed_bbox": [
+                16,
+                15,
+                114,
+                120
+              ],
+              "sha256": "140f710174f1423ecb063fce61ff8566222da823b61d651d139d926c38c51205"
+            },
+            {
+              "frame": 1,
+              "source_bbox": [
+                76,
+                121,
+                517,
+                588
+              ],
+              "packed_bbox": [
+                14,
+                15,
+                112,
+                118
+              ],
+              "sha256": "7fd3595ce6448a34ec4586f21bb34618b27b8fddc9737379f19a9d544f94f7c1"
+            },
+            {
+              "frame": 2,
+              "source_bbox": [
+                77,
+                119,
+                526,
+                589
+              ],
+              "packed_bbox": [
+                15,
+                14,
+                114,
+                119
+              ],
+              "sha256": "d667c6bdadaf3f42a20642a8073d1f15291b39d01ed75e3c4aa52f0885c5d273"
+            },
+            {
+              "frame": 3,
+              "source_bbox": [
+                74,
+                117,
+                515,
+                585
+              ],
+              "packed_bbox": [
+                14,
+                15,
+                112,
+                118
+              ],
+              "sha256": "757ff81d68f6cdcdf744f3ffdb16ec3d6c9693ac395f85a09878bed58f6204e5"
+            }
+          ]
+        },
+        {
+          "direction": "right",
+          "source": "image/role/fs/source/shuangyu_walk_right_strip_v5.png",
+          "source_size": [
+            2172,
+            724
+          ],
+          "shared_crop": [
+            60,
+            101,
+            478,
+            601
+          ],
+          "anchor": [
+            17,
+            9
+          ],
+          "foot_iou_0_2": 0.913,
+          "foot_iou_1_3": 0.7177,
+          "frames": [
+            {
+              "frame": 0,
+              "source_bbox": [
+                62,
+                107,
+                476,
+                601
+              ],
+              "packed_bbox": [
+                17,
+                10,
+                110,
+                120
+              ],
+              "sha256": "cd54860ba04ba34e69337491ffb47150f2bddb8dce6d09780007a08d81d1bc0c"
+            },
+            {
+              "frame": 1,
+              "source_bbox": [
+                60,
+                101,
+                470,
+                601
+              ],
+              "packed_bbox": [
+                17,
+                9,
+                108,
+                120
+              ],
+              "sha256": "d42e36d998c678be17498d7612851b17535021934971bc90e55279e1e257cba0"
+            },
+            {
+              "frame": 2,
+              "source_bbox": [
+                61,
+                101,
+                478,
+                601
+              ],
+              "packed_bbox": [
+                17,
+                10,
+                109,
+                120
+              ],
+              "sha256": "f70993a65e39c78c00c1badcdb73ace42dce5da173d619811e2e63cbade7b9de"
+            },
+            {
+              "frame": 3,
+              "source_bbox": [
+                60,
+                103,
+                469,
+                601
+              ],
+              "packed_bbox": [
+                17,
+                10,
+                108,
+                120
+              ],
+              "sha256": "8f541330b902555b929a189ef95fe81ee5d0cdfced3355559f59b284653b4164"
+            }
+          ]
+        },
+        {
+          "direction": "up",
+          "source": "image/role/fs/source/shuangyu_walk_up_strip_v5.png",
+          "source_size": [
+            2170,
+            725
+          ],
+          "shared_crop": [
+            62,
+            95,
+            464,
+            601
+          ],
+          "anchor": [
+            19,
+            8
+          ],
+          "foot_iou_0_2": 0.615,
+          "foot_iou_1_3": 0.6073,
+          "frames": [
+            {
+              "frame": 0,
+              "source_bbox": [
+                62,
+                95,
+                450,
+                598
+              ],
+              "packed_bbox": [
+                19,
+                8,
+                104,
+                119
+              ],
+              "sha256": "b1d9949ab7ad771ed4c0e9698c88cb7af5dd071e6a30765312cf43e05001bff1"
+            },
+            {
+              "frame": 1,
+              "source_bbox": [
+                76,
+                96,
+                449,
+                599
+              ],
+              "packed_bbox": [
+                22,
+                8,
+                105,
+                119
+              ],
+              "sha256": "3934b58f01a12b3aa5c99d1e7bc197666f31c21c3192d105e36bc29c1cdcba2d"
+            },
+            {
+              "frame": 2,
+              "source_bbox": [
+                86,
+                95,
+                464,
+                601
+              ],
+              "packed_bbox": [
+                24,
+                8,
+                108,
+                119
+              ],
+              "sha256": "5bf71aa979652ea52a2ab50ccf0e1c60037a065e9bf411650959ca52506d7cf4"
+            },
+            {
+              "frame": 3,
+              "source_bbox": [
+                95,
+                95,
+                456,
+                597
+              ],
+              "packed_bbox": [
+                26,
+                8,
+                106,
+                119
+              ],
+              "sha256": "d913bcd7c3de7ee3c41e13e1c64b15359d3bf57616569cd2b795e15f69a84950"
+            }
+          ]
+        }
+      ],
+      "output": "image/role/fs/shuangyu_walk_4dir.png"
+    },
+    {
+      "id": "fz",
+      "name": "chenxing",
+      "common_scale": 0.19753086419753085,
+      "directions": [
+        {
+          "direction": "down",
+          "source": "image/role/fz/source/chenxing_walk_down_strip_v5.png",
+          "source_size": [
+            2170,
+            725
+          ],
+          "shared_crop": [
+            63,
+            67,
+            480,
+            634
+          ],
+          "anchor": [
+            23,
+            8
+          ],
+          "foot_iou_0_2": 0.8806,
+          "foot_iou_1_3": 0.7932,
+          "frames": [
+            {
+              "frame": 0,
+              "source_bbox": [
+                64,
+                67,
+                479,
+                634
+              ],
+              "packed_bbox": [
+                24,
+                8,
+                104,
+                120
+              ],
+              "sha256": "0416ed9a8df8b3a7f2c5064d5197bd16a4985acf4fc397e9717d011883ce768c"
+            },
+            {
+              "frame": 1,
+              "source_bbox": [
+                64,
+                67,
+                480,
+                628
+              ],
+              "packed_bbox": [
+                24,
+                8,
+                105,
+                119
+              ],
+              "sha256": "28e4975bd4b75d3291aa91235301bfe9928104a4a6d07e8f6a27af35447ff6ca"
+            },
+            {
+              "frame": 2,
+              "source_bbox": [
+                65,
+                68,
+                479,
+                633
+              ],
+              "packed_bbox": [
+                23,
+                8,
+                105,
+                120
+              ],
+              "sha256": "502ecbdaf71f344c740525d81b05cd26c95463313953af0c4550a1920fed8cac"
+            },
+            {
+              "frame": 3,
+              "source_bbox": [
+                63,
+                67,
+                479,
+                628
+              ],
+              "packed_bbox": [
+                23,
+                8,
+                105,
+                118
+              ],
+              "sha256": "a81b57bbad06c0e4df5f2b54798aef68b4fffb6baef86846e10f033db5c81708"
+            }
+          ]
+        },
+        {
+          "direction": "left",
+          "source": "image/role/fz/source/chenxing_walk_left_strip_v5.png",
+          "source_size": [
+            2170,
+            725
+          ],
+          "shared_crop": [
+            92,
+            115,
+            477,
+            607
+          ],
+          "anchor": [
+            26,
+            23
+          ],
+          "foot_iou_0_2": 0.9421,
+          "foot_iou_1_3": 0.8916,
+          "frames": [
+            {
+              "frame": 0,
+              "source_bbox": [
+                97,
+                115,
+                476,
+                601
+              ],
+              "packed_bbox": [
+                27,
+                23,
+                102,
+                119
+              ],
+              "sha256": "654fcf8eb804d85809a61a762aa617469f73068f29896286b1150b96bd2e21cb"
+            },
+            {
+              "frame": 1,
+              "source_bbox": [
+                98,
+                115,
+                475,
+                607
+              ],
+              "packed_bbox": [
+                27,
+                23,
+                102,
+                119
+              ],
+              "sha256": "ab9af01ae251e7c8e69c0a353156f2f0cd87b25667ae28d140c17fd79af18734"
+            },
+            {
+              "frame": 2,
+              "source_bbox": [
+                92,
+                115,
+                477,
+                597
+              ],
+              "packed_bbox": [
+                27,
+                23,
+                102,
+                118
+              ],
+              "sha256": "ce13b07f9dfeee3c0db6ce123494ddadcb92242fd83dd955efd7d69cebc8366d"
+            },
+            {
+              "frame": 3,
+              "source_bbox": [
+                96,
+                115,
+                475,
+                603
+              ],
+              "packed_bbox": [
+                27,
+                23,
+                102,
+                119
+              ],
+              "sha256": "5d057a606fa893321632e49838e50e7d839ffa22c17509172831380f35c7cdfd"
+            }
+          ]
+        },
+        {
+          "direction": "right",
+          "source": "image/role/fz/source/chenxing_walk_right_strip_v5.png",
+          "source_size": [
+            2169,
+            725
+          ],
+          "shared_crop": [
+            91,
+            95,
+            487,
+            614
+          ],
+          "anchor": [
+            25,
+            17
+          ],
+          "foot_iou_0_2": 0.9312,
+          "foot_iou_1_3": 0.9152,
+          "frames": [
+            {
+              "frame": 0,
+              "source_bbox": [
+                93,
+                95,
+                487,
+                604
+              ],
+              "packed_bbox": [
+                25,
+                18,
+                102,
+                118
+              ],
+              "sha256": "c717e6f5a0c2bdbca55859fdb30fbfbd586ffe68aa3017f89aa29dc468627264"
+            },
+            {
+              "frame": 1,
+              "source_bbox": [
+                95,
+                95,
+                481,
+                614
+              ],
+              "packed_bbox": [
+                26,
+                17,
+                101,
+                120
+              ],
+              "sha256": "f5c6cd03c4708c96e167247991e32cc4b0e0f33685c22b9c384096a435833e3d"
+            },
+            {
+              "frame": 2,
+              "source_bbox": [
+                91,
+                95,
+                483,
+                607
+              ],
+              "packed_bbox": [
+                25,
+                18,
+                101,
+                119
+              ],
+              "sha256": "a9af4661dd2af2163589519ac0e76beda4dd4b8a4558aa05f5a8d196930c2e07"
+            },
+            {
+              "frame": 3,
+              "source_bbox": [
+                91,
+                95,
+                473,
+                614
+              ],
+              "packed_bbox": [
+                25,
+                18,
+                100,
+                120
+              ],
+              "sha256": "9c7f1bc0ebc8ae3c34cebccb82e67afa25e112af01c1cdd0bb10269f429baf4e"
+            }
+          ]
+        },
+        {
+          "direction": "up",
+          "source": "image/role/fz/source/chenxing_walk_up_strip_v5.png",
+          "source_size": [
+            2167,
+            726
+          ],
+          "shared_crop": [
+            58,
+            82,
+            486,
+            594
+          ],
+          "anchor": [
+            21,
+            19
+          ],
+          "foot_iou_0_2": 0.6022,
+          "foot_iou_1_3": 0.647,
+          "frames": [
+            {
+              "frame": 0,
+              "source_bbox": [
+                96,
+                86,
+                486,
+                578
+              ],
+              "packed_bbox": [
+                29,
+                20,
+                106,
+                117
+              ],
+              "sha256": "c50c5d1219a17d7afddc93f7b8f947cf8584c1da20e09797286cf9fb476aab79"
+            },
+            {
+              "frame": 1,
+              "source_bbox": [
+                84,
+                82,
+                472,
+                578
+              ],
+              "packed_bbox": [
+                27,
+                19,
+                103,
+                117
+              ],
+              "sha256": "f312b2f8b863a0aa37ae859fafabd5c83c9484a05ac2caabad1fcc15e81b17f8"
+            },
+            {
+              "frame": 2,
+              "source_bbox": [
+                62,
+                82,
+                454,
+                594
+              ],
+              "packed_bbox": [
+                22,
+                19,
+                99,
+                119
+              ],
+              "sha256": "37046e9c71be956d508c766ca62973ae269e4acd1edcc0121431905d0f368d3d"
+            },
+            {
+              "frame": 3,
+              "source_bbox": [
+                58,
+                82,
+                450,
+                578
+              ],
+              "packed_bbox": [
+                21,
+                19,
+                98,
+                117
+              ],
+              "sha256": "745134f775cde3ec4e739abbeb6d9c62d3bfc97e791c99641a28aae409a303c2"
+            }
+          ]
+        }
+      ],
+      "output": "image/role/fz/chenxing_walk_4dir.png"
+    }
+  ]
+}
