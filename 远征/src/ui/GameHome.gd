@@ -30,20 +30,26 @@ func _ready() -> void:
 	_build_entries()
 
 
-# ---------- 背景（沿用入场插画 + 深色压暗） ----------
+# ---------- 背景（黄昏营地插画 + 轻压暗，保持暖调通透） ----------
 func _build_background() -> void:
 	var tr := TextureRect.new()
-	tr.texture = load("res://image/background/enter.png")
+	tr.texture = load("res://image/background/home.png")
 	tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	tr.stretch_mode = TextureRect.STRETCH_SCALE
-	tr.size = Vector2(VIEW_W, VIEW_W * 1672.0 / 941.0)
-	tr.position = Vector2(0, VIEW_H - tr.size.y)
-	tr.modulate = Color(0.72, 0.68, 0.66)
+	tr.set_anchors_preset(Control.PRESET_FULL_RECT)
 	tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(tr)
 
-	var dim := ColorRect.new()
-	dim.color = Color(0.08, 0.05, 0.03, 0.72)
+	# 上浅下深的压暗：顶部文字清晰，底部角色台与面板自然融入地面
+	var grad := Gradient.new()
+	grad.set_color(0, Color(0.10, 0.06, 0.03, 0.35))
+	grad.set_color(1, Color(0.08, 0.05, 0.03, 0.62))
+	var grad_tex := GradientTexture2D.new()
+	grad_tex.gradient = grad
+	grad_tex.fill_from = Vector2(0.5, 0.0)
+	grad_tex.fill_to = Vector2(0.5, 1.0)
+	var dim := TextureRect.new()
+	dim.texture = grad_tex
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
 	dim.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(dim)
@@ -84,6 +90,14 @@ func _build_top(role: Dictionary) -> void:
 		["金", "f0c060", "gold"], ["远征币", "7ac0c8", "expedition"], ["魂石", "b08ad0", "soul"],
 	]
 	for meta in wallet_meta:
+		# 小圆点色标（替代图标，克制不花哨）
+		var dot := Panel.new()
+		dot.custom_minimum_size = Vector2(8, 8)
+		var dot_sb := StyleBoxFlat.new()
+		dot_sb.bg_color = Color(String(meta[1]))
+		dot_sb.set_corner_radius_all(4)
+		dot.add_theme_stylebox_override("panel", dot_sb)
+		row.add_child(dot)
 		var name_l := G.gold_label(String(meta[0]), G.FS_XS, false, Color("bfa987"), false)
 		name_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		row.add_child(name_l)
@@ -205,6 +219,9 @@ func _entry(label: String, active: bool) -> Control:
 	else:
 		sb.bg_color = Color(0.14, 0.09, 0.05, 0.8)
 		sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.45)
+	sb.shadow_color = Color(0, 0, 0, 0.4)
+	sb.shadow_size = 4
+	sb.shadow_offset = Vector2(0, 2)
 	root.add_theme_stylebox_override("panel", sb)
 	var l := G.serif_label(label, G.FS_MD, G.TEXT_DARK if active else Color("d9b96e"))
 	root.add_child(l)
