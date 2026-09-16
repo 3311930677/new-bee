@@ -34,7 +34,7 @@ func setup(rows: Array) -> void:
 	add_child(dim)
 
 	var title := G.serif_label("选择一份祝福", G.FS_BIG, Color("ffd9a0"))
-	title.position = Vector2(0, 140)
+	title.position = Vector2(0, 170)
 	title.custom_minimum_size = Vector2(VIEW_W, 0)
 	add_child(title)
 
@@ -42,7 +42,7 @@ func setup(rows: Array) -> void:
 	var gap := 16.0
 	for i in mini(3, choices.size()):
 		var card := _make_card(choices[i])
-		card.position = Vector2(17.0 + float(i) * (cw + gap), 250.0)
+		card.position = Vector2(17.0 + float(i) * (cw + gap), 262.0)
 		add_child(card)
 
 	# 双刃可选不选：卡组含双刃时提供放弃
@@ -96,9 +96,14 @@ func _make_card(row: Dictionary) -> Control:
 
 	var desc_l := G.gold_label(String(row.get("desc", "")), G.FS_SM, false, Color("7a5a2e"), false)
 	desc_l.position = Vector2(10, 80)
-	desc_l.size = Vector2(118, 140)
+	desc_l.size = Vector2(118, 118)
 	desc_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	root.add_child(desc_l)
+
+	var hint_l := G.gold_label("— 点选 —", G.FS_XS, false, Color("a8895a", 0.75), false)
+	hint_l.position = Vector2(10, 198)
+	hint_l.custom_minimum_size = Vector2(118, 0)
+	root.add_child(hint_l)
 
 	var tid := String(row.get("id", ""))
 	var base_y := 0.0
