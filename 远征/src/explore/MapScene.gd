@@ -539,6 +539,9 @@ func _update_player_anim(dir: Vector2) -> void:
 		anim = &"walk_down" if dir.y > 0 else &"walk_up"
 	if _player_anim.animation != anim:
 		_player_anim.animation = anim
+	# 步频随实际移速缩放：8帧@10FPS 的步态循环按 88px/s 校准，
+	# 摇杆半速推动时步子放慢，避免任何速度下的滑步感
+	_player_anim.speed_scale = clampf(_player.velocity.length() / 88.0, 0.55, 2.0)
 	if not _player_anim.is_playing():
 		_player_anim.play()
 
