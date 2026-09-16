@@ -15,6 +15,7 @@ func configure(frames: SpriteFrames, speed_multiplier := 1.0) -> void:
 	sprite.offset = Vector2(-64, -120)
 	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	sprite.animation = &"walk_down"
+	sprite.frame = 1
 	add_child(sprite)
 	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 	var collision := CollisionShape2D.new()
@@ -37,7 +38,7 @@ func _physics_process(delta: float) -> void:
 	var actual_velocity := (global_position - before) / delta
 	if actual_velocity.length() < 0.5:
 		sprite.stop()
-		sprite.frame = 0
+		sprite.frame = 1 # passing pose is the most neutral grounded stop frame
 		return
 	if absf(actual_velocity.x) > absf(actual_velocity.y):
 		facing = "right" if actual_velocity.x > 0 else "left"
@@ -47,6 +48,6 @@ func _physics_process(delta: float) -> void:
 	if sprite.animation != animation:
 		sprite.animation = animation
 		sprite.frame = 0
-	# 8 frames / 10 FPS = .8 seconds; nominal stride is 48 world pixels.
+	# 4 key frames / 8 FPS = .5 seconds; playback follows actual speed.
 	sprite.speed_scale = actual_velocity.length() / 60.0
 	sprite.play(animation)

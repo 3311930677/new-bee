@@ -158,6 +158,7 @@ func _build_player(map_w: float, map_h: float) -> void:
 	_player_anim.scale = Vector2.ONE * 0.5
 	_player_anim.position = Vector2(0, -18)
 	_player_anim.animation = &"walk_down"
+	_player_anim.frame = 1 # neutral passing pose for the initial idle state
 	_player_anim.stop()
 	_player.add_child(_player_anim)
 
@@ -531,6 +532,7 @@ func _physics_process(delta: float) -> void:
 func _update_player_anim(dir: Vector2) -> void:
 	if dir.length_squared() < 0.01:
 		_player_anim.stop()
+		_player_anim.frame = 1 # neutral passing pose, not a wide contact pose
 		return
 	var anim := &"walk_down"
 	if absf(dir.x) > absf(dir.y):
@@ -539,7 +541,7 @@ func _update_player_anim(dir: Vector2) -> void:
 		anim = &"walk_down" if dir.y > 0 else &"walk_up"
 	if _player_anim.animation != anim:
 		_player_anim.animation = anim
-	# 步频随实际移速缩放：8帧@10FPS 的步态循环按 88px/s 校准，
+	# 步频随实际移速缩放：4关键帧@8FPS，88px/s 时每循环约移动44px，
 	# 摇杆半速推动时步子放慢，避免任何速度下的滑步感
 	_player_anim.speed_scale = clampf(_player.velocity.length() / 88.0, 0.55, 2.0)
 	if not _player_anim.is_playing():
