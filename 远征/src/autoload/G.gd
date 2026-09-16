@@ -147,6 +147,12 @@ func role_dir(id: String) -> String:
 
 # ---------- 通用 UI 工厂 ----------
 
+## 柔和投影（偏移向下、低透明，像纸页叠放而非霓虹光晕）
+func _apply_shadow(sb: StyleBoxFlat, size: float, off_y: float, alpha: float) -> void:
+	sb.shadow_color = Color(0.0, 0.0, 0.0, alpha)
+	sb.shadow_size = int(size)
+	sb.shadow_offset = Vector2(0, off_y)
+
 ## 金字 Label（描边克制：大标题才有可见描边，小字保持干净）
 func gold_label(text: String, size: int, bold := true,
 		color := GOLD, outline := true) -> Label:
@@ -209,6 +215,7 @@ func menu_button(text: String) -> Control:
 	sb.set_corner_radius_all(4)
 	sb.set_border_width_all(1)
 	sb.border_color = Color(GOLD.r, GOLD.g, GOLD.b, 0.28)
+	_apply_shadow(sb, 4.0, 2.0, 0.3)
 	sb.content_margin_left = 22.0
 	sb.content_margin_right = 22.0
 	sb.content_margin_top = 8.0
@@ -248,6 +255,7 @@ func banner_box(text: String, w := 260, h := 52, font_size := FS_BIG) -> PanelCo
 	sb.set_corner_radius_all(5)
 	sb.set_border_width_all(2)
 	sb.border_color = Color(GOLD.r, GOLD.g, GOLD.b, 0.65)
+	_apply_shadow(sb, 5.0, 2.0, 0.4)
 	sb.content_margin_left = 28.0
 	sb.content_margin_right = 20.0
 	root.add_theme_stylebox_override("panel", sb)
@@ -263,9 +271,14 @@ func parchment_box(w := 400, h := 200, pad := 18.0) -> PanelContainer:
 	root.custom_minimum_size = Vector2(w, h)
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = PARCHMENT
-	sb.set_corner_radius_all(6)
+	# 四角微差，避免机器感对称
+	sb.corner_radius_top_left = 6
+	sb.corner_radius_top_right = 8
+	sb.corner_radius_bottom_left = 7
+	sb.corner_radius_bottom_right = 5
 	sb.set_border_width_all(3)
 	sb.border_color = GOLD
+	_apply_shadow(sb, 7.0, 3.0, 0.38)
 	sb.content_margin_left = pad
 	sb.content_margin_right = pad
 	sb.content_margin_top = pad * 0.7
@@ -286,12 +299,24 @@ func gold_button(text: String, w := 0.0, h := 42.0, font_size := FS_MD) -> Contr
 	sb.set_corner_radius_all(4)
 	sb.set_border_width_all(2)
 	sb.border_color = GOLD_BTN_EDGE
+	_apply_shadow(sb, 4.0, 2.0, 0.35)
 	sb.content_margin_left = 16.0
 	sb.content_margin_right = 16.0
 	root.add_theme_stylebox_override("panel", sb)
 	var l := gold_label(text, font_size, true, TEXT_DARK, false)
 	root.add_child(l)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
+	# 按压反馈：微暗 + 微缩，松开回弹（避免静态死板的模板感）
+	root.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT:
+			root.pivot_offset = root.size * 0.5
+			var tw := root.create_tween()
+			if e.pressed:
+				tw.tween_property(root, "modulate", Color(0.9, 0.9, 0.9), 0.06)
+				tw.parallel().tween_property(root, "scale", Vector2.ONE * 0.97, 0.06)
+			else:
+				tw.tween_property(root, "modulate", Color.WHITE, 0.12)
+				tw.parallel().tween_property(root, "scale", Vector2.ONE, 0.12))
 	return root
 
 

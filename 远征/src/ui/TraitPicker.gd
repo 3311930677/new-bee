@@ -69,10 +69,12 @@ func _make_card(row: Dictionary) -> Control:
 	var panel := G.parchment_box(138, 230, 12.0)
 	root.add_child(panel)
 
-	var band := ColorRect.new()
+	# 类别色带：右端斜切，避免齐刷刷的矩形模板感
+	var band := Polygon2D.new()
 	band.color = meta[1]
-	band.position = Vector2(8, 8)
-	band.size = Vector2(122, 4)
+	band.polygon = PackedVector2Array([
+		Vector2(10, 10), Vector2(128, 10), Vector2(120, 15), Vector2(10, 15),
+	])
 	root.add_child(band)
 
 	var school := String(row.get("school", "none"))
@@ -99,6 +101,14 @@ func _make_card(row: Dictionary) -> Control:
 	root.add_child(desc_l)
 
 	var tid := String(row.get("id", ""))
+	var base_y := 0.0
+	root.ready.connect(func(): base_y = root.position.y)
+	root.mouse_entered.connect(func():
+		var tw := root.create_tween()
+		tw.tween_property(root, "position:y", base_y - 6.0, 0.12).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT))
+	root.mouse_exited.connect(func():
+		var tw := root.create_tween()
+		tw.tween_property(root, "position:y", base_y, 0.15).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT))
 	root.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_emit_pick(tid))
