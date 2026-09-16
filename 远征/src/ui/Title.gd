@@ -51,6 +51,22 @@ func _build_background() -> void:
 	grad.texture = tex
 	add_child(grad)
 
+	# 顶部渐隐，压住城堡亮部，让标题可读
+	var top_grad := TextureRect.new()
+	top_grad.name = "VignetteTop"
+	top_grad.set_anchors_preset(Control.PRESET_FULL_RECT)
+	top_grad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var ttex := GradientTexture2D.new()
+	var tg := Gradient.new()
+	tg.colors = PackedColorArray([Color(0.04, 0.02, 0.0, 0.55), Color(0, 0, 0, 0.0)])
+	tg.offsets = PackedFloat32Array([0.0, 0.42])
+	ttex.gradient = tg
+	ttex.fill = GradientTexture2D.FILL_LINEAR
+	ttex.fill_from = Vector2(0, 0)
+	ttex.fill_to = Vector2(0, 1)
+	top_grad.texture = ttex
+	add_child(top_grad)
+
 
 # ---------- 标题（宋体大标 + 收敛描边 + 轻字距） ----------
 func _build_title() -> void:

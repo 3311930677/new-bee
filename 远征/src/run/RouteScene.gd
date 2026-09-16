@@ -58,6 +58,22 @@ func _build() -> void:
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(bg)
 
+	# 中心微光：打破纯平底色，让节点区有"地图桌"的聚焦感
+	var glow := TextureRect.new()
+	glow.set_anchors_preset(Control.PRESET_FULL_RECT)
+	glow.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var gtex := GradientTexture2D.new()
+	var gg := Gradient.new()
+	gg.colors = PackedColorArray([
+		Color(tint.r, tint.g, tint.b, 0.10), Color(0, 0, 0, 0.28)])
+	gg.offsets = PackedFloat32Array([0.0, 1.0])
+	gtex.gradient = gg
+	gtex.fill = GradientTexture2D.FILL_RADIAL
+	gtex.fill_from = Vector2(0.5, 0.42)
+	gtex.fill_to = Vector2(0.5, 1.05)
+	glow.texture = gtex
+	add_child(glow)
+
 	_field.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_field.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_field)

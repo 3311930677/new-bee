@@ -1,0 +1,178 @@
+{
+  "size": [
+    48,
+    48
+  ],
+  "source_count": 24,
+  "edge_rule": "left=right and top=bottom",
+  "tiles": [
+    {
+      "name": "001_tile_forest_1.png",
+      "output": "image/map/tileset/base/001_tile_forest_1.png",
+      "source": "image/generated_001_050/source/001_tile_forest_1.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "002_tile_forest_2.png",
+      "output": "image/map/tileset/base/002_tile_forest_2.png",
+      "source": "image/generated_001_050/source/002_tile_forest_2.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "003_tile_forest_3.png",
+      "output": "image/map/tileset/base/003_tile_forest_3.png",
+      "source": "image/generated_001_050/source/003_tile_forest_3.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "004_tile_snow_1.png",
+      "output": "image/map/tileset/base/004_tile_snow_1.png",
+      "source": "image/generated_001_050/source/004_tile_snow_1.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "005_tile_snow_2.png",
+      "output": "image/map/tileset/base/005_tile_snow_2.png",
+      "source": "image/generated_001_050/source/005_tile_snow_2.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "006_tile_snow_3.png",
+      "output": "image/map/tileset/base/006_tile_snow_3.png",
+      "source": "image/generated_001_050/source/006_tile_snow_3.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "007_tile_volcano_1.png",
+      "output": "image/map/tileset/base/007_tile_volcano_1.png",
+      "source": "image/generated_001_050/source/007_tile_volcano_1.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "008_tile_volcano_2.png",
+      "output": "image/map/tileset/base/008_tile_volcano_2.png",
+      "source": "image/generated_001_050/source/008_tile_volcano_2.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "009_tile_volcano_3.png",
+      "output": "image/map/tileset/base/009_tile_volcano_3.png",
+      "source": "image/generated_001_050/source/009_tile_volcano_3.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "010_tile_tomb_1.png",
+      "output": "image/map/tileset/base/010_tile_tomb_1.png",
+      "source": "image/generated_001_050/source/010_tile_tomb_1.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "011_tile_tomb_2.png",
+      "output": "image/map/tileset/base/011_tile_tomb_2.png",
+      "source": "image/generated_001_050/source/011_tile_tomb_2.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "012_tile_tomb_3.png",
+      "output": "image/map/tileset/base/012_tile_tomb_3.png",
+      "source": "image/generated_001_050/source/012_tile_tomb_3.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "013_tile_desert_1.png",
+      "output": "image/map/tileset/base/013_tile_desert_1.png",
+      "source": "image/generated_001_050/source/013_tile_desert_1.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "014_tile_desert_2.png",
+      "output": "image/map/tileset/base/014_tile_desert_2.png",
+      "source": "image/generated_001_050/source/014_tile_desert_2.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "015_tile_desert_3.png",
+      "output": "image/map/tileset/base/015_tile_desert_3.png",
+      "source": "image/generated_001_050/source/015_tile_desert_3.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "016_tile_glacier_1.png",
+      "output": "image/map/tileset/base/016_tile_glacier_1.png",
+      "source": "image/generated_001_050/source/016_tile_glacier_1.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "017_tile_glacier_2.png",
+      "output": "image/map/tileset/base/017_tile_glacier_2.png",
+      "source": "image/generated_001_050/source/017_tile_glacier_2.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "018_tile_glacier_3.png",
+      "output": "image/map/tileset/base/018_tile_glacier_3.png",
+      "source": "image/generated_001_050/source/018_tile_glacier_3.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "019_tile_abyss_1.png",
+      "output": "image/map/tileset/base/019_tile_abyss_1.png",
+      "source": "image/generated_001_050/source/019_tile_abyss_1.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "020_tile_abyss_2.png",
+      "output": "image/map/tileset/base/020_tile_abyss_2.png",
+      "source": "image/generated_001_050/source/020_tile_abyss_2.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "021_tile_abyss_3.png",
+      "output": "image/map/tileset/base/021_tile_abyss_3.png",
+      "source": "image/generated_001_050/source/021_tile_abyss_3.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "022_tile_castle_1.png",
+      "output": "image/map/tileset/base/022_tile_castle_1.png",
+      "source": "image/generated_001_050/source/022_tile_castle_1.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "023_tile_castle_2.png",
+      "output": "image/map/tileset/base/023_tile_castle_2.png",
+      "source": "image/generated_001_050/source/023_tile_castle_2.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    },
+    {
+      "name": "024_tile_castle_3.png",
+      "output": "image/map/tileset/base/024_tile_castle_3.png",
+      "source": "image/generated_001_050/source/024_tile_castle_3.png",
+      "left_right_mismatch": 0,
+      "top_bottom_mismatch": 0
+    }
+  ]
+}

@@ -132,7 +132,7 @@ func _build_decos(cols: int, rows: int) -> void:
 				continue
 			var deco := _Deco.new()
 			var tex: Texture2D = load("%s/%s.png" % [asset_dir, String(decos[_rng.randi_range(0, decos.size() - 1)])])
-			deco.setup(tex, _rng.randf_range(0.6, 1.15))
+			deco.setup(tex, _rng.randf_range(0.85, 1.18))
 			deco.position = pos
 			_world.add_child(deco)
 
@@ -258,14 +258,24 @@ func _build_hud() -> void:
 			"shop": "商队在此驻留",
 			"bonfire": "生火休整，再启程",
 		}.get(nt, goal_text)
+	# 目标小签：深色半透明底托，避免压在地图上不可读
+	var goal_chip := PanelContainer.new()
+	var gsb := StyleBoxFlat.new()
+	gsb.bg_color = Color(0.13, 0.09, 0.05, 0.62)
+	gsb.set_corner_radius_all(4)
+	gsb.content_margin_left = 10.0
+	gsb.content_margin_right = 10.0
+	gsb.content_margin_top = 3.0
+	gsb.content_margin_bottom = 3.0
+	goal_chip.add_theme_stylebox_override("panel", gsb)
+	goal_chip.position = Vector2(16, 52)
 	var goal := G.gold_label(goal_text, G.FS_XS, false, Color("ffd9a0"), false)
-	goal.position = Vector2(0, 50)
-	goal.custom_minimum_size = Vector2(VIEW_W, 0)
-	_hud.add_child(goal)
+	goal_chip.add_child(goal)
+	_hud.add_child(goal_chip)
 
 	# HP 条 + 药剂 + 换宠
 	var panel := G.parchment_box(206, 56, 10.0)
-	panel.position = Vector2(16, 66)
+	panel.position = Vector2(16, 88)
 	_hud.add_child(panel)
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 2)
@@ -291,21 +301,21 @@ func _build_hud() -> void:
 	_refresh_hud()
 
 	var potion_btn := G.gold_button("药", 44, 40)
-	potion_btn.position = Vector2(232, 72)
+	potion_btn.position = Vector2(232, 96)
 	potion_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_use_potion())
 	_hud.add_child(potion_btn)
 
 	_pet_btn = G.gold_button("换宠", 72, 40)
-	_pet_btn.position = Vector2(284, 72)
+	_pet_btn.position = Vector2(284, 96)
 	_pet_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_swap_pet())
 	_hud.add_child(_pet_btn)
 
 	_joy = _Joystick.new()
-	_joy.position = Vector2(24, VIEW_H - 190)
+	_joy.position = Vector2(28, VIEW_H - 176)
 	_hud.add_child(_joy)
 	_refresh_hud()  # 覆盖换宠按钮可见性（bench 为空时隐藏）
 
@@ -822,7 +832,7 @@ class _Joystick extends Control:
 	var _active := false
 
 	func _ready() -> void:
-		custom_minimum_size = Vector2(150, 150)
+		custom_minimum_size = Vector2(124, 124)
 		mouse_filter = Control.MOUSE_FILTER_STOP
 
 	func _gui_input(e: InputEvent) -> void:
@@ -835,11 +845,16 @@ class _Joystick extends Control:
 				vector = Vector2.ZERO
 				queue_redraw()
 		elif e is InputEventMouseMotion and _active:
-			vector = ((e as InputEventMouseMotion).position - _base).limit_length(56.0) / 56.0
+			vector = ((e as InputEventMouseMotion).position - _base).limit_length(44.0) / 44.0
 			queue_redraw()
 
 	func _draw() -> void:
 		var c := custom_minimum_size / 2.0
-		draw_circle(c, 56.0, Color(0.1, 0.08, 0.05, 0.35))
-		draw_arc(c, 56.0, 0, TAU, 40, Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.4), 2.0)
-		draw_circle(c + vector * 56.0, 22.0, Color(0.9, 0.8, 0.6, 0.75))
+		# 底盘：深木色半透明 + 细金环
+		draw_circle(c, 46.0, Color(0.12, 0.09, 0.05, 0.40))
+		draw_arc(c, 46.0, 0, TAU, 40, Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.45), 1.5)
+		draw_arc(c, 30.0, 0, TAU, 32, Color(1, 1, 1, 0.07), 1.0)
+		# 摇杆头：羊皮纸色 + 木色底圈
+		var k := c + vector * 44.0
+		draw_circle(k, 18.0, Color(0.30, 0.20, 0.10, 0.85))
+		draw_circle(k, 15.0, Color(0.91, 0.84, 0.64, 0.92))
