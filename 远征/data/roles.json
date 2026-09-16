@@ -5,6 +5,7 @@
     "job": "战士",
     "weapon": "大剑",
     "tags": "近战物理 · 能抗能打",
+    "desc": "陷阵先登的重甲战士，一柄大剑开山裂石。身披百战余生的旧甲，越是险地，越是冲在最前。",
     "attack_range": "melee",
     "base": { "hp": 130, "atk": 22, "def": 14, "spd": 1.0, "crit": 0.05 },
     "skills": ["zs_lieshan", "zs_pozhen", "zs_huifeng", "zs_zhanhou", "zs_duanzui"]
@@ -15,6 +16,7 @@
     "job": "枪骑",
     "weapon": "长枪",
     "tags": "中远程物理 · 灵动输出",
+    "desc": "马背上的枪骑，长枪连珠、挑落飞影。身法轻灵，进退之间总能找到破绽，一击致命。",
     "attack_range": "range",
     "base": { "hp": 100, "atk": 24, "def": 9, "spd": 1.2, "crit": 0.07 },
     "skills": ["ck_lianzhu", "ck_guanjia", "ck_duopo", "ck_dunying", "ck_qingxie"]
@@ -25,6 +27,7 @@
     "job": "法师",
     "weapon": "法杖",
     "tags": "远程群伤 · 控制",
+    "desc": "掌霜执杖的法师，抬手间霜刃环列、寒雾锁敌。体魄虽弱，冰封千里之地无人敢近。",
     "attack_range": "range",
     "base": { "hp": 90, "atk": 26, "def": 8, "spd": 0.9, "crit": 0.05 },
     "skills": ["fs_shuangren", "fs_shuanghuan", "fs_tianyun", "fs_midun", "fs_yanmie"]
@@ -35,6 +38,7 @@
     "job": "牧师",
     "weapon": "圣锤",
     "tags": "治疗辅助 · 可独立刷怪",
+    "desc": "持圣锤的牧者，圣光庇佑同行之人，亦可独行荡魔。晨星高悬之处，伤病与黑暗一并退散。",
     "attack_range": "melee",
     "base": { "hp": 115, "atk": 22, "def": 12, "spd": 0.95, "crit": 0.05 },
     "skills": ["fz_shengyu", "fz_puzhao", "fz_jinghua", "fz_zhudao", "fz_poxiao"]

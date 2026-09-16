@@ -226,7 +226,7 @@ func _refresh_info() -> void:
 	_info["title"].text = role["name"]
 	_info["job"].text = "%s · %s" % [role["job"], role["weapon"]]
 	_info["tags"].text = role.get("tags", "")
-	_info["desc"].text = role["desc"]
+	_info["desc"].text = role.get("desc", "")
 
 
 # ---------- 底部按钮 ----------
