@@ -313,7 +313,14 @@ class _DeployPanel extends Control:
 		panel.position = Vector2(20, 108)
 		add_child(panel)
 
-		_section(panel, "远征秘境", 18)
+		# PanelContainer 是 Container，直接放子控件会被布局系统覆盖位置；
+		# 包一层 Control 再手动布局
+		var content := Control.new()
+		content.set_anchors_preset(Control.PRESET_FULL_RECT)
+		content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		panel.add_child(content)
+
+		_section(content, "远征秘境", 18)
 		var maps: Dictionary = TableCache.maps_config()
 		var order: Array = maps.get("theme_order", [])
 		var themes: Dictionary = maps.get("themes", {})
@@ -323,9 +330,9 @@ class _DeployPanel extends Control:
 			btn.position = Vector2(16 + (i % 4) * 104, 46 + (i / 4) * 46)
 			btn.gui_input.connect(func(e: InputEvent): _on_opt_click(e, _select_theme, tid))
 			_theme_btns[tid] = btn
-			panel.add_child(btn)
+			content.add_child(btn)
 
-		_section(panel, "出战人物", 140)
+		_section(content, "出战人物", 140)
 		for i in G.roles.size():
 			var r: Dictionary = G.roles[i]
 			var rid := String(r.get("id", ""))
@@ -333,9 +340,9 @@ class _DeployPanel extends Control:
 			rbtn.position = Vector2(16 + i * 104, 168)
 			rbtn.gui_input.connect(func(e: InputEvent): _on_opt_click(e, _select_role, rid))
 			_role_btns[rid] = rbtn
-			panel.add_child(rbtn)
+			content.add_child(rbtn)
 
-		_section(panel, "随行宠物（先点出战，再点替补）", 228)
+		_section(content, "随行宠物（先点出战，再点替补）", 228)
 		var pets: Array = TableCache.pets()
 		for i in pets.size():
 			var p: Dictionary = pets[i]
@@ -344,26 +351,26 @@ class _DeployPanel extends Control:
 			pbtn.position = Vector2(16 + (i % 4) * 104, 256 + (i / 4) * 48)
 			pbtn.gui_input.connect(func(e: InputEvent): _on_opt_click(e, _select_pet, pid))
 			_pet_btns[pid] = pbtn
-			panel.add_child(pbtn)
+			content.add_child(pbtn)
 
 		_hint = G.gold_label("▶ 出战 · ◇ 替补 · 再点取消", G.FS_XS, false, Color("8a6a34"), false)
 		_hint.position = Vector2(0, 352)
 		_hint.custom_minimum_size = Vector2(440, 0)
-		panel.add_child(_hint)
+		content.add_child(_hint)
 
 		var go := G.gold_button("出 征", 200, 48)
 		go.position = Vector2(120, 420)
 		go.gui_input.connect(func(e: InputEvent):
 			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 				_on_confirm())
-		panel.add_child(go)
+		content.add_child(go)
 
 		var back := G.gold_button("返 回", 120, 36)
 		back.position = Vector2(160, 484)
 		back.gui_input.connect(func(e: InputEvent):
 			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 				canceled.emit())
-		panel.add_child(back)
+		content.add_child(back)
 
 		_refresh_sel()
 
