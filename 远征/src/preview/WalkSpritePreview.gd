@@ -17,7 +17,7 @@ func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color("222732"))
 	var title := Label.new()
 	title.position = Vector2(24, 20)
-	title.text = "四方向行走预览\n点击人物按钮 / 数字1–4选择，方向键移动\n每行8帧：下、左、右、上；停下保留方向"
+	title.text = "四方向行走预览\n点击人物按钮 / 数字1–4选择，方向键移动\n每行4帧：下、左、右、上；停下保留方向"
 	title.add_theme_font_size_override("font_size", 17)
 	add_child(title)
 	for i in range(4):
