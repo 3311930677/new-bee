@@ -1,8 +1,8 @@
 # Login.gd —— 登录界面（参考风：棕木匾 + 羊皮纸面板 + 金按钮）
 extends Control
 
-const BG_W := 941.0
-const BG_H := 1672.0
+const BG_W := 971.0
+const BG_H := 1619.0
 const VIEW_W := 480.0
 const VIEW_H := 800.0
 
@@ -20,7 +20,8 @@ func _ready() -> void:
 # ---------- 背景 ----------
 func _build_background() -> void:
 	var tr := TextureRect.new()
-	tr.texture = load("res://image/background/enter.png")
+	tr.texture = G.res_tex("bg_main") if G.res_tex("bg_main") != null \
+		else load("res://image/background/enter.png")  # 黄昏营地：出征前的整备时刻
 	tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	tr.stretch_mode = TextureRect.STRETCH_SCALE
 	tr.size = Vector2(VIEW_W, VIEW_W * BG_H / BG_W)
@@ -63,7 +64,13 @@ func _build_panel() -> void:
 	_account = _field(box, "账号", "请输入账号", false)
 	_password = _field(box, "密码", "请输入密码", true)
 
-	var hint := G.gold_label("首次登录将直接创建新角色", G.FS_XS, false, Color("8a7350"), false)
+	# 老玩家：预填账号，提示语从「创建角色」换成「继续远征」
+	var hint_text := "首次登录将直接创建新角色"
+	if G.has_profile():
+		hint_text = "欢迎回来，登录后继续远征"
+		_account.text = G.account
+		_account.caret_column = _account.text.length()
+	var hint := G.gold_label(hint_text, G.FS_XS, false, Color("8a7350"), false)
 	box.add_child(hint)
 
 	var row := HBoxContainer.new()
@@ -123,7 +130,11 @@ func _do_login(guest: bool) -> void:
 			_toast_msg("请输入密码")
 			return
 		G.account = acc
-	get_tree().change_scene_to_file("res://src/ui/CreateRole.tscn")
+	# 已有存档（角色已创建）→ 直接回主城；首次登录才进捏人页
+	if G.has_profile():
+		get_tree().change_scene_to_file("res://src/ui/GameHome.tscn")
+	else:
+		get_tree().change_scene_to_file("res://src/ui/CreateRole.tscn")
 
 
 func _toast_msg(msg: String) -> void:
