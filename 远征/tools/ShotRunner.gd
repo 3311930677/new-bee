@@ -73,6 +73,9 @@ func _setup() -> void:
 			add_child(load("res://src/ui/Title.tscn").instantiate())
 		"login":
 			add_child(load("res://src/ui/Login.tscn").instantiate())
+		"prologue":
+			_demo_prog()
+			add_child(load("res://src/ui/Prologue.tscn").instantiate())
 		"createrole":
 			add_child(load("res://src/ui/CreateRole.tscn").instantiate())
 		"home":
@@ -86,6 +89,16 @@ func _setup() -> void:
 			ev.pressed = true
 			ev.button_index = MOUSE_BUTTON_LEFT
 			home.call("_on_expedition", ev)
+		"deploy_plain":
+			# 压掉首次引导弹层，只为看清秘境卡版式（题记 + 状态两行是否放得下）
+			_demo_prog()
+			G.prog["tips_seen"] = {"deploy": true}
+			var hp: Node = load("res://src/ui/GameHome.tscn").instantiate()
+			add_child(hp)
+			var ep := InputEventMouseButton.new()
+			ep.pressed = true
+			ep.button_index = MOUSE_BUTTON_LEFT
+			hp.call("_on_expedition", ep)
 		"deploy_role", "deploy_pet":
 			# 出征筹备的另两个页签（人物 / 宠物），方便逐页看图
 			_demo_prog()

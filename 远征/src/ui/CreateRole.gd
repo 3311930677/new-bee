@@ -332,7 +332,11 @@ func _confirm() -> void:
 	G.gender = GENDERS[_gender_idx]
 	G.selected_role = G.roles[_role_idx]["id"]
 	G.player_name = nm
-	get_tree().change_scene_to_file("res://src/ui/GameHome.tscn")
+	# 捏完人先看序章：交代"你在哪、为什么出征、第一站去哪"，再进主城
+	if G.lore_seen():
+		get_tree().change_scene_to_file("res://src/ui/GameHome.tscn")
+	else:
+		get_tree().change_scene_to_file("res://src/ui/Prologue.tscn")
 
 
 func _toast_msg(msg: String) -> void:

@@ -202,6 +202,12 @@ func _fill_themes() -> void:
 	for i in order.size():
 		var tid := String(order[i])
 		var open: bool = G.is_world_unlocked(tid)
+		# 志异题记 + 状态：出征前先让玩家读出这片地方的味道（文案在 data/lore.json）
+		var rows: Array = []
+		var epi := String(G.theme_lore(tid).get("epigraph", ""))
+		if not epi.is_empty():
+			rows.append("「%s」" % epi)
+		rows.append("首领未讨伐 · 通关开启下一片" if open else "尚未解锁 · 先通关前一片")
 		var card := SlideCardScript.new({
 			"kicker": "秘 境 %02d / %02d" % [i + 1, order.size()],
 			"title": G.world_name(tid),
@@ -211,7 +217,7 @@ func _fill_themes() -> void:
 			"art_fit": "cover",
 			"art_dim": not open,
 			"art_ratio": 0.44,
-			"lines": ["首领未讨伐 · 通关开启下一片" if open else "尚未解锁 · 先通关前一片"],
+			"lines": rows,
 			"footer": "点击选定出征目标",
 			"on_click": func(): _select_theme(tid),
 		})

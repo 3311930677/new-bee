@@ -22,6 +22,7 @@ const PRELOAD_CODE := [
 	"res://src/ui/DeployPanel.gd",
 	"res://src/ui/SettingsPanel.gd",
 	"res://src/ui/CreateRole.tscn",
+	"res://src/ui/Prologue.tscn",      # 序章（登录后入城前的一站）
 	"res://src/ui/Title.tscn",
 	"res://src/ui/Login.tscn",
 ]
