@@ -36,6 +36,18 @@ func _run() -> void:
 	var r3: Dictionary = await _run_flee()
 	_check(r3.get("finished", false) and r3.get("result", "") == "defeat", "撤退应判负结算")
 
+	# 4. 打击反馈：顿帧 / 震屏 / 敌方施法可读 / 战报统计 / 低血层不落飘字层
+	var r4: Dictionary = await _run_feedback()
+	_check(r4.get("hitstop_on", false), "重击应触发顿帧")
+	_check(r4.get("hitstop_off", false), "顿帧应在数十毫秒内归零")
+	_check(r4.get("shake_moved", false), "重击应推动震屏层")
+	_check(r4.get("shake_reset", false), "震屏层最终应回到原点")
+	_check(r4.get("enemy_tip", false),
+		"敌方施法应给出「敌方/首领技 · 技能名」提示，实为「%s」" % r4.get("tip_text", ""))
+	_check(int(r4.get("best_hit", 0)) >= 999, "战报应记下最高单击，实为 %d" % int(r4.get("best_hit", 0)))
+	_check(int(r4.get("dmg_in", 0)) >= 7, "战报应累计我方承伤，实为 %d" % int(r4.get("dmg_in", 0)))
+	_check(r4.get("danger_ok", false), "低血警示层应存在，且不能挂在飘字层里（飘字层会被清空断言检查）")
+
 	if _fails == 0:
 		print("BATTLE_SCENE_OK all tests passed")
 	else:
@@ -65,6 +77,64 @@ func _run_flee() -> Dictionary:
 	scene.sim.finished = true   # 模拟点击"撤退"（强制判负）
 	scene.sim.result = "defeat"
 	return await _drive(120, scene)
+
+
+## 打击反馈专项：造一场战斗，手工喂事件，检查顿帧/震屏/提示/战报/低血层挂点
+func _run_feedback() -> Dictionary:
+	var out := {"hitstop_on": false, "hitstop_off": false, "shake_moved": false,
+		"shake_reset": false, "enemy_tip": false, "tip_text": "", "best_hit": 0,
+		"dmg_in": 0, "danger_ok": false}
+	BattleScene.pending_cfg = {
+		"ally": {"role_id": "zs", "level": 5, "traits": [],
+			"active_pet": "pet_rockturtle", "potions": 2},
+		"enemy": {"theme": "forest", "node_type": "normal", "layer": 1},
+		"seed": 11,
+	}
+	var scene: BattleScene = _spawn()
+	scene.speed = 0.0   # 冻住 sim：本用例只验表现层，免得真实伤害持续插进来干扰断言
+	await get_tree().process_frame
+	var role := scene.sim.role_unit()
+	var enemy_uid := -1
+	for u in scene.sim.units:
+		if u.side == "enemy":
+			enemy_uid = u.uid
+			break
+	if role == null or enemy_uid < 0:
+		scene.queue_free()
+		return out
+
+	# 敌方施法必须读得出来
+	scene.call("_on_event", {"t": "cast_start", "uid": enemy_uid, "skill": "boss_slam", "name": "震地"})
+	var tip: Label = scene.get("_cast_tip")
+	out["tip_text"] = tip.text if tip != null else ""
+	out["enemy_tip"] = out["tip_text"].contains("敌方") or out["tip_text"].contains("首领技")
+
+	# 一次重击：顿帧 + 震屏 + 计入战报
+	scene.call("_on_event", {"t": "dmg", "src": role.uid, "uid": enemy_uid,
+		"amount": 999, "crit": true, "dot": false})
+	out["hitstop_on"] = float(scene.get("_hitstop")) > 0.0
+	out["best_hit"] = int(scene.get("_best_hit"))
+	await get_tree().process_frame
+	var shake_root: Control = scene.get("_shake_root")
+	out["shake_moved"] = shake_root != null and shake_root.position != Vector2.ZERO
+
+	# 我方挨打：计入承伤
+	scene.call("_on_event", {"t": "dmg", "src": enemy_uid, "uid": role.uid,
+		"amount": 7, "crit": false, "dot": false})
+	out["dmg_in"] = int(scene.get("_dmg_in"))
+
+	# 低血层挂点：必须是根节点的直接子级，不能混进飘字层
+	var danger: TextureRect = scene.get("_danger")
+	var fx: Control = scene.get("_fx_layer")
+	out["danger_ok"] = danger != null and fx != null and danger.get_parent() == scene
+
+	for i in 60:
+		await get_tree().process_frame
+	out["shake_reset"] = shake_root != null and shake_root.position == Vector2.ZERO
+	out["hitstop_off"] = float(scene.get("_hitstop")) <= 0.0
+	scene.queue_free()
+	await get_tree().process_frame
+	return out
 
 
 func _spawn() -> BattleScene:

@@ -169,6 +169,18 @@ func _setup() -> void:
 				"seed": 7,
 			}
 			add_child(load("res://src/battle/BattleScene.tscn").instantiate())
+		"battle_low":
+			# 低血警示：hp_override 把角色压到 10% 左右，看边缘红晕与"危急"提示
+			BattleScene.pending_cfg = {
+				"ally": {
+					"role_id": "zs", "level": 5, "traits": [],
+					"active_pet": "pet_rockturtle", "bench_pet": "pet_thunderhawk",
+					"potions": 2, "hp_override": 18,
+				},
+				"enemy": {"theme": "forest", "node_type": "boss", "layer": 3},
+				"seed": 5,
+			}
+			add_child(load("res://src/battle/BattleScene.tscn").instantiate())
 		"picker":
 			var p := TraitPicker.new()
 			var rows: Array = []
