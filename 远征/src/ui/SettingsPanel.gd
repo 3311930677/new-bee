@@ -16,6 +16,7 @@ var _hint2: Label = null     # 导入反馈（默认引导 / 红字报错 / 绿�
 var _reset_btn: Control = null
 var _reset_hint: Label = null
 var _reset_armed := false    # 重置二次确认：第一次点只亮「确认重置？」，再点才执行
+var _mute_btn: Control = null   # 静音开关（文案随状态切）
 
 
 func _ready() -> void:
@@ -89,45 +90,129 @@ func _build() -> void:
 	_hint2.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_content.add_child(_hint2)
 
-	# ---- 键位说明：静态文字 ----
-	_section("键位说明", 266)
-	var keys := [
+	# ---- 声音：音乐 / 音效音量 + 静音（存进存档，Audio 加载器读它） ----
+	_section("声音", 264)
+	_vol_row("音乐", 288, Audio.bgm_vol(), func(v: float): Audio.set_bgm_vol(v))
+	_vol_row("音效", 318, Audio.sfx_vol(), func(v: float): Audio.set_sfx_vol(v))
+	_mute_btn = G.gold_button("静音：关", 148, 32, G.FS_SM)
+	_mute_btn.position = Vector2(0, 350)
+	_mute_btn.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			Audio.set_mute(not Audio.muted())
+			_sync_mute())
+	_content.add_child(_mute_btn)
+	_sync_mute()
+	if Audio.has_no_stream():   # 还没放素材时提示一句来路，省得以为坏了
+		var tip := G.gold_label("（放 assets/audio/ 即生效）", G.FS_XS, false,
+			Color("8a6a34", 0.85), false)
+		tip.position = Vector2(164, 358)
+		tip.custom_minimum_size = Vector2(244, 0)
+		_content.add_child(tip)
+
+	# 键位说明收进「?」：静态三行常驻太占版面
+	var help := G.info_button("键位与说明", [
 		"WASD / 方向键 —— 人物移动",
+		"A/D 或 ← → —— 切换卡片；W/S 或 ↑ ↓ —— 切换页签",
 		"Esc —— 关闭当前浮层",
 		"F10 / ` —— 开发者控制台",
-	]
-	for i in keys.size():
-		var ln := G.text_label(keys[i], G.FS_SM, Color("6a5a3a"))
-		ln.position = Vector2(0, 294 + i * 24.0)
-		ln.custom_minimum_size = Vector2(CONTENT_W, 0)
-		_content.add_child(ln)
+		"音频素材为 CC0 / 公共领域，放 assets/audio/ 即自动生效。",
+	])
+	help.position = Vector2(CONTENT_W - 24.0, 0)
+	_content.add_child(help)
 
 	# ---- 危险区：回标题 / 重置存档（二次确认） ----
 	var title_btn := G.gold_button("回到标题", 196, 40, G.FS_SM)
-	title_btn.position = Vector2(0, 374)
+	title_btn.position = Vector2(0, 394)
 	title_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_on_title())
 	_content.add_child(title_btn)
 	_reset_btn = G.gold_button("重置存档", 196, 40, G.FS_SM)
-	_reset_btn.position = Vector2(212, 374)
+	_reset_btn.position = Vector2(212, 394)
 	_reset_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_on_reset_click())
 	_content.add_child(_reset_btn)
 
 	_reset_hint = G.gold_label("再点一次执行重置 · 其他操作取消", G.FS_XS, false, Color("a04a3a"), false)
-	_reset_hint.position = Vector2(0, 424)
+	_reset_hint.position = Vector2(0, 442)
 	_reset_hint.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_reset_hint.visible = false
 	_content.add_child(_reset_hint)
 
 	var back := G.gold_button("返 回", 120, 38)
-	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 456)
+	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 462)
 	back.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_on_back())
 	_content.add_child(back)
+
+
+## 音量行：名称 + 滑条 + 百分比
+func _vol_row(text: String, y: float, value: float, cb: Callable) -> void:
+	var l := G.text_label(text, G.FS_SM, Color("6a5a3a"))
+	l.position = Vector2(0, y + 3)
+	l.custom_minimum_size = Vector2(60, 0)
+	_content.add_child(l)
+
+	var sl := HSlider.new()
+	sl.min_value = 0.0
+	sl.max_value = 1.0
+	sl.step = 0.05
+	sl.value = value
+	sl.position = Vector2(62, y)
+	sl.custom_minimum_size = Vector2(234, 26)
+	sl.size = Vector2(234, 26)
+	_style_slider(sl)
+	_content.add_child(sl)
+
+	var pct := G.gold_label("%d%%" % roundi(value * 100.0), G.FS_XS, false, Color("8a6a34"), false)
+	pct.position = Vector2(304, y + 3)
+	pct.custom_minimum_size = Vector2(72, 0)
+	_content.add_child(pct)
+	sl.value_changed.connect(func(v: float):
+		pct.text = "%d%%" % roundi(v * 100.0)
+		cb.call(v))
+
+
+## 滑条皮肤：金槽 + 金色圆钮（默认皮肤在羊皮纸上太灰）
+func _style_slider(sl: HSlider) -> void:
+	var bg := StyleBoxFlat.new()
+	bg.bg_color = Color("c9bb96")
+	bg.set_corner_radius_all(5)
+	bg.content_margin_top = 3.0
+	bg.content_margin_bottom = 3.0
+	var fill := bg.duplicate() as StyleBoxFlat
+	fill.bg_color = G.GOLD_BTN
+	sl.add_theme_stylebox_override("slider", bg)
+	sl.add_theme_stylebox_override("grabber_area", fill)
+	sl.add_theme_stylebox_override("grabber_area_highlight", fill)
+	sl.add_theme_icon_override("grabber", _disc(20.0, Color("e8b84a")))
+	sl.add_theme_icon_override("grabber_highlight", _disc(22.0, Color("ffd97a")))
+
+
+## 生成一枚金色圆钮贴图（滑条把手）
+func _disc(px: float, fill: Color) -> Texture2D:
+	var grad := Gradient.new()
+	grad.set_color(0, G.GOLD_BTN_EDGE)
+	grad.set_color(1, fill)
+	var tex := GradientTexture2D.new()
+	tex.gradient = grad
+	tex.fill = GradientTexture2D.FILL_RADIAL
+	tex.fill_from = Vector2(0.5, 0.5)
+	tex.fill_to = Vector2(1.0, 0.5)
+	tex.width = int(px)
+	tex.height = int(px)
+	return tex
+
+
+## 静音按钮文案跟随状态
+func _sync_mute() -> void:
+	if _mute_btn == null:
+		return
+	var l := _mute_btn.get_child(0) as Label
+	if l != null:
+		l.text = "静音：开" if Audio.muted() else "静音：关"
 
 
 ## 区块小标题（同 DeployPanel._section 的画法）

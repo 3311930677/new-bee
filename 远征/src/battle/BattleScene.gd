@@ -59,6 +59,7 @@ var _cfg: Dictionary = {}
 
 
 func _ready() -> void:
+	Audio.play_bgm("bgm_battle")
 	_cfg = pending_cfg
 	pending_cfg = {}
 	sim.record_events = true
