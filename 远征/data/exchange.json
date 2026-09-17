@@ -1,0 +1,10 @@
+{
+	"entries": [
+		{"id": "gold_pack_s", "name": "金币袋·小", "cost": 100, "give": {"gold": 1200}, "icon": "cur_gold"},
+		{"id": "gold_pack_l", "name": "金币袋·大", "cost": 400, "give": {"gold": 5500}, "icon": "cur_gold"},
+		{"id": "soul_pack_s", "name": "魂石袋·小", "cost": 150, "give": {"soul": 180}, "icon": "cur_soul"},
+		{"id": "expedition_pack", "name": "远征补给", "cost": 120, "give": {"expedition": 150}, "icon": "cur_expedition"},
+		{"id": "ticket_ten", "name": "召唤十连券", "cost": 600, "give": {"item_ticket_ten": 1}, "icon": "itm_ticket_ten"},
+		{"id": "ticket_sweep", "name": "远征扫荡券", "cost": 200, "give": {"item_ticket_sweep": 1}, "icon": "itm_ticket_sweep"}
+	]
+}

@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 G="*res://src/autoload/G.gd"
 Data="*res://src/autoload/DataManager.gd"
+GmConsole="*res://src/ui/GmConsole.gd"
 
 [display]
 
