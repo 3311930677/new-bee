@@ -149,13 +149,16 @@ func _ready() -> void:
 	_apply_mouse_cursor()
 
 
-## 全局鼠标指针：金剑（Kenney CC0，ui_kenney/cursorSword_gold），剑尖为热点
+## 全局鼠标指针：金剑（Kenney CC0，ui_kenney/cursorSword_gold），剑尖为热点。
+## 热点必须压在剑尖上：贴图 34×37，刃尖在左上 (0,1)。此前写 (4,33)（=贴图左下角的空白），
+## 等于把整把剑画到鼠标上方 32px——玩家拿剑尖去点按钮，实际落点在剑尖下方 32px，
+## 于是「按钮经常点不动」。这是"点击失灵"的真凶，不是控件被挡。
 func _apply_mouse_cursor() -> void:
 	if DisplayServer.get_name() == "headless":
 		return
 	var tex := res_tex("cursorSword_gold")
 	if tex != null:
-		Input.set_custom_mouse_cursor(tex, Input.CURSOR_ARROW, Vector2(4, 33))
+		Input.set_custom_mouse_cursor(tex, Input.CURSOR_ARROW, Vector2(1, 1))
 
 
 ## 读档：恢复钱包与角色档案（无存档/坏档保持默认，不报错弹窗——挫败感克制）
@@ -1600,11 +1603,19 @@ func res_path(res_name: String) -> String:
 
 
 ## 按名称取纹理（无此素材返回 null，调用方自备回退画法）
+## 带一层自己的缓存：面板反复开关时省掉「拼路径 + 查索引 + load() 查引擎缓存」的来回
+## （主城 8 个 NPC、图鉴 8 张卡之类，一次开面板就是几十次查询）
+var _tex_cache := {}
+
 func res_tex(res_name: String) -> Texture2D:
+	if _tex_cache.has(res_name):
+		return _tex_cache[res_name]
 	var p := res_path(res_name)
-	if p.is_empty():
-		return null
-	return load(p) as Texture2D
+	var t: Texture2D = null
+	if not p.is_empty():
+		t = load(p) as Texture2D
+	_tex_cache[res_name] = t
+	return t
 
 
 # ---------- 通用 UI 工厂 ----------

@@ -268,11 +268,13 @@ func _build_hud() -> void:
 
 	var banner := G.banner_box(G.city_name(), 200, 46, G.FS_LG)
 	banner.position = Vector2((VIEW_W - 200.0) * 0.5, 12)
+	banner.mouse_filter = Control.MOUSE_FILTER_IGNORE   # 纯装饰：不参与点击争夺
 	_hud.add_child(banner)
 
 	# 左上：等级 + 金币小签（建造/宴会后会刷新）
 	var chip := G.parchment_box(112, 38, 8.0)
 	chip.position = Vector2(14, 16)
+	chip.mouse_filter = Control.MOUSE_FILTER_IGNORE     # 同上
 	_hud.add_child(chip)
 	_stat_lbl = G.gold_label("", G.FS_XS, false, Color("5a3a1e"), false)
 	_stat_lbl.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -287,6 +289,14 @@ func _build_hud() -> void:
 			_go_home())
 	_hud.add_child(home)
 
+	# 底部中央：出征（主页把出征搬进主城后，这里是主城最显眼的主操作）
+	var go := G.gold_button("出 征", 190, 54, G.FS_LG)
+	go.position = Vector2((VIEW_W - 190.0) * 0.5, VIEW_H - 78)
+	go.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_open_deploy())
+	_hud.add_child(go)
+
 	# 右下：操作提示
 	var hint_chip := PanelContainer.new()
 	var hsb := StyleBoxFlat.new()
@@ -298,12 +308,15 @@ func _build_hud() -> void:
 	hsb.content_margin_bottom = 2.0
 	hint_chip.add_theme_stylebox_override("panel", hsb)
 	hint_chip.position = Vector2(VIEW_W - 216, VIEW_H - 44)
+	# 提示条是装饰，但它原本会吃掉「出征」按钮右下角的点击（实测有 71×20 的死区）
+	hint_chip.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	hint_chip.add_child(G.gold_label("走近建筑或人物即可互动", G.FS_XS,
 		false, Color("ffd9a0", 0.75), false))
 	_hud.add_child(hint_chip)
 
+	# 摇杆往左让出 10px：它的 124×124 命中区原本咬住「出征」按钮左上角
 	_joy = _Joystick.new()
-	_joy.position = Vector2(28, VIEW_H - 176)
+	_joy.position = Vector2(16, VIEW_H - 176)
 	_hud.add_child(_joy)
 
 
@@ -317,14 +330,17 @@ func _build_vignette() -> void:
 	])
 	var tex := GradientTexture2D.new()
 	tex.gradient = grad
-	tex.width = 480
-	tex.height = 800
+	# 渐变很平滑，没必要按 480×800 逐像素生成（那是 38 万次插值）；
+	# 生成 1/4 分辨率再由 GPU 拉伸，观感一致，进场少卡一截
+	tex.width = 120
+	tex.height = 200
 	tex.fill = GradientTexture2D.FILL_RADIAL
 	tex.fill_from = Vector2(0.5, 0.5)
 	tex.fill_to = Vector2(1.0, 0.5)
 	var vig := TextureRect.new()
 	vig.texture = tex
 	vig.size = Vector2(VIEW_W, VIEW_H)
+	vig.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR   # 项目默认 nearest，放大必须改线性
 	vig.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_hud.add_child(vig)
 
@@ -1056,6 +1072,16 @@ class _Building extends StaticBody2D:
 		_plaque(String(data.get("name", "空地")), "待建", -h * 0.5 + 2.0)
 
 	func _draw_built() -> void:
+		# 统一的落地影 + 石台基：所有建筑都踩在地上，不再像色块浮在路面
+		draw_set_transform(Vector2(0, 4), 0.0, Vector2(1.0, 0.34))
+		draw_circle(Vector2.ZERO, _w * 0.54, Color(0, 0, 0, 0.30))
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+		draw_colored_polygon(PackedVector2Array([
+			Vector2(-_w * 0.5, 2), Vector2(_w * 0.5, 2),
+			Vector2(_w * 0.46, -9), Vector2(-_w * 0.46, -9)]), Color("6b5a42"))
+		draw_colored_polygon(PackedVector2Array([
+			Vector2(-_w * 0.46, -9), Vector2(_w * 0.46, -9),
+			Vector2(_w * 0.44, -12), Vector2(-_w * 0.44, -12)]), Color("8a7659"))
 		match String(data.get("style", "")):
 			"hall":
 				_draw_hall()
