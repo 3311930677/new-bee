@@ -125,7 +125,7 @@ func _run() -> void:
 				"取消出战应由替补转正，实为 %s/%s" % [dp._active_pet, dp._bench_pet])
 			dp._select_pet("pet_foxfire")     # 唯一出战再点 → 清空
 			_check(dp._active_pet == "", "再点唯一出战应清空出战位")
-			_check(dp._hint.text.contains("选宠物"), "正常选择后提示应回到本页常规文案，实为「%s」" % dp._hint.text)
+			_check(dp._hint.text == "", "正常选择后提示行应清空（说明文案已收进 ? 弹层），实为「%s」" % dp._hint.text)
 
 			# ---- E. 出征校验与配置 ----
 			_got_cfg = {}

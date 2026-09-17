@@ -21,7 +21,7 @@ const TAB_W := 96.0
 const TAB_H := 30.0
 const GUTTER := 40.0     # 与卡片左右边距对齐（卡 = 408 - 2*40）
 const DECK_Y := 36.0
-const DECK_H := 328.0
+const DECK_H := 346.0
 
 # 秘境色标：maps.json 的 tint 是给地图叠色用的（8 个都接近白），当色卡完全分不出来，
 # 所以另起一套辨识色 —— 林绿 / 雪蓝 / 火岩红 / 墓紫 / 沙黄 / 冰川青 / 深渊靛 / 城石灰
@@ -58,6 +58,15 @@ var _tab_btns: Array = []
 var _tab_sbs: Array = []
 var _cards := {}          # "步骤:选项id" -> SlideCard（选中态只改样式，不重建卡）
 var _sweep_btn: Control = null   # 扫荡按钮（持有引用用于刷新券余量）
+var _help_btn: Control = null    # 右上角「?」操作说明
+
+# 操作说明：? 弹层与首次进入的引导共用同一份文案
+const TIPS := [
+	"← → 或 A/D：切当前页的选项，也可直接左右拖动卡片",
+	"↑ ↓ 或 W/S：切换「秘境 / 人物 / 宠物」三个页签",
+	"点卡片选定；宠物再点一次可换替补或取消出战",
+	"秘境未解锁时，需先通关前一片大陆的首领",
+]
 
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -108,28 +117,36 @@ func _build() -> void:
 		_tab_sbs.append(sb)
 
 	_hint = G.gold_label("", G.FS_XS, false, Color("8a6a34"), false)
-	_hint.position = Vector2(0, 394)
+	_hint.position = Vector2(0, 410)
 	_hint.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_content.add_child(_hint)
 
+	# 操作说明收进「?」圆钮：常驻文案会把卡片视野压掉一块，点开才看
+	var help := G.info_button("出征筹备 · 怎么操作", TIPS)
+	help.position = Vector2(CONTENT_W - 26.0, 3.0)
+	_help_btn = help
+	_content.add_child(help)
+	# 头一回打开自动弹一次（新手教程），之后只靠右上角 ? 复看
+	G.tip_once.call_deferred("deploy", "出征筹备 · 怎么操作", TIPS, self)
+
 	# 扫荡：已通关秘境 + 1 张扫荡券 = 标准路线收益一键入账（免跑图）
 	_sweep_btn = G.gold_button("扫荡×%d" % G.item_count("ticket_sweep"), 140, 44, G.FS_SM)
-	_sweep_btn.position = Vector2(GUTTER, 436)
+	_sweep_btn.position = Vector2(GUTTER, 448)
 	_sweep_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_on_sweep())
 	_content.add_child(_sweep_btn)
 
 	var go := G.gold_button("出 征", 172, 48)
-	go.position = Vector2(196, 434)
+	go.position = Vector2(196, 446)
 	go.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_on_confirm())
 	_content.add_child(go)
 
 	var back := G.gold_button("返 回", 120, 36)
-	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 494)
+	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 502)
 	back.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			canceled.emit())
@@ -194,7 +211,7 @@ func _fill_themes() -> void:
 			"art_fit": "cover",
 			"art_dim": not open,
 			"art_ratio": 0.44,
-			"lines": ["首领未讨伐 · 通关后揭开下一片大陆" if open else "尚未解锁 · 先通关前一片大陆"],
+			"lines": ["首领未讨伐 · 通关开启下一片" if open else "尚未解锁 · 先通关前一片"],
 			"footer": "点击选定出征目标",
 			"on_click": func(): _select_theme(tid),
 		})
@@ -251,9 +268,9 @@ func _fill_pets() -> void:
 			"art_dim": not owned,
 			"art_frame": RARITY_FRAME.get(rarity, "frame_white"),
 			"art_ratio": 0.44,
-			"lines": ["点击派它出战（再点一次：换替补 / 取消）" if owned
-				else G.pet_unlock_text(pid)],
-			"footer": "未收集的灵宠不可出战",
+			# 文案只留一行：两行会把卡撑高、被页脚裁掉（操作说明在右上角 ? 里）
+			"lines": [G.pet_unlock_text(pid)] if not owned else [],
+			"footer": "",
 			"on_click": func(): _select_pet(pid),
 		})
 		card.set_meta("locked", not owned)
@@ -297,13 +314,8 @@ func _select_pet(id: String) -> void:
 	_refresh_sel()
 
 func _set_hint_default() -> void:
-	match _step:
-		0:
-			_hint.text = "← → 选秘境 · ↑ ↓ 换页签 · 未解锁的需先通关前一片"
-		1:
-			_hint.text = "← → 选人物 · ↑ ↓ 换页签 · 整备完毕直接出征"
-		2:
-			_hint.text = "← → 选宠物 · ↑ ↓ 换页签 · 点已选项可换位 / 取消"
+	# 平常留空：操作说明交给右上角「?」，这行只用来报错与提示结果
+	_hint.text = ""
 	_hint.add_theme_color_override("font_color", Color("8a6a34"))
 
 func _warn(msg: String) -> void:
@@ -350,9 +362,9 @@ func _paint_pet(card, pid: String) -> void:
 	if not G.owns_pet(pid):
 		card.set_selected(false)
 		card.set_badge("未收集", Color("7a7263"))
-		card.set_footer("未收集的灵宠不可出战 · 解锁途径见宠物图鉴")
+		card.set_footer("未收集 · 不可出战")
 		return
-	card.set_footer("点击派它出战 · 再点换位 / 取消")
+	card.set_footer("点卡片派出 · 再点换位或取消")
 	card.set_selected(pid == _active_pet or pid == _bench_pet)
 	if pid == _active_pet:
 		card.set_badge("▶ 出战", Color("8a4a2a"))

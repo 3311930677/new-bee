@@ -52,6 +52,7 @@ var _theme_cfg: Dictionary = {}
 
 
 func _ready() -> void:
+	Audio.play_bgm("bgm_map")
 	var cfg := pending_cfg
 	pending_cfg = {}
 	st = cfg.get("run", null)

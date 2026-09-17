@@ -9,8 +9,8 @@ const VIEW_H := 800.0
 # 新 class_name 尚未进编辑器全局类缓存，按项目惯例 preload 路径取脚本
 const GrowthPanelScript := preload("res://src/ui/GrowthPanel.gd")
 
-const SPRITE_SCALE := 1.9
-const PED_Y := 500.0            # 金色圆台中心 y
+const SPRITE_SCALE := 2.2       # 主界面以立绘为视觉中心，比局内放大一档
+const PED_Y := 604.0            # 金色圆台中心 y
 const BASE_OFFSET := 59.0       # 清理后素材脚底相对帧中心的偏移（基线 y=123）
 const ANIM_Y := PED_Y - BASE_OFFSET * SPRITE_SCALE
 
@@ -34,11 +34,12 @@ var _growth: Control = null      # 养成 6 线（GrowthPanel）
 
 
 func _ready() -> void:
+	Audio.play_bgm("bgm_home")
 	var role: Dictionary = G.get_role(G.selected_role)
 	_build_background()
+	_build_profile(role)
 	_build_top(role)
 	_build_stage(role)
-	_build_info(role)
 	_build_entries()
 
 
@@ -67,11 +68,97 @@ func _build_background() -> void:
 	add_child(dim)
 
 
+# ---------- 左上角：个人信息（头像 + 名字 + 等级经验） ----------
+func _build_profile(role: Dictionary) -> void:
+	# 头像：角色 icon；缺素材时回退成写着角色名首字的金边圆牌
+	var tex: Texture2D = load(G.role_dir(String(role.get("id", ""))) \
+		+ _role_name(String(role.get("id", ""))) + "_icon.png")
+	if tex != null:
+		var pic := TextureRect.new()
+		pic.texture = tex
+		pic.position = Vector2(16, 18)
+		pic.custom_minimum_size = Vector2(56, 56)
+		pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(pic)
+	else:
+		var nm := String(role.get("name", "旅"))
+		var d := _disc_panel(56, nm.substr(0, 1))
+		d.position = Vector2(16, 18)
+		add_child(d)
+
+	var name_txt: String = G.player_name if not G.player_name.is_empty() \
+		else String(role.get("name", "旅人"))
+	var nl := G.serif_label(name_txt, G.FS_MD + 1, G.NAME_GREEN)
+	nl.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	nl.position = Vector2(82, 20)
+	nl.custom_minimum_size = Vector2(160, 0)
+	add_child(nl)
+
+	var lv := int(G.prog.get("level", 1))
+	var cur := int(G.prog.get("exp", 0))
+	var need := G.exp_to_next(lv)
+	var lv_l := G.gold_label("LV %d" % lv, G.FS_MD, true, Color("f0c060"), false)
+	lv_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	lv_l.position = Vector2(82, 52)
+	lv_l.custom_minimum_size = Vector2(52, 0)
+	add_child(lv_l)
+	_add_exp_bar(Vector2(136, 58), 118.0, cur, need)
+
+
+## 顶部经验条（金色圆角，满级时按满格画）
+func _add_exp_bar(at: Vector2, w: float, cur: int, need: int) -> void:
+	var ratio := 1.0 if need <= 0 else clampf(float(cur) / float(need), 0.0, 1.0)
+	var track := Control.new()
+	track.position = at
+	track.custom_minimum_size = Vector2(w, 12)
+	track.size = Vector2(w, 12)
+	track.clip_contents = true
+	track.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(track)
+	var ts := StyleBoxFlat.new()
+	ts.bg_color = Color("4a3a24")
+	ts.set_corner_radius_all(6)
+	track.add_theme_stylebox_override("panel", ts)   # 只为了复用圆角画风，实际用 Panel 画
+	var bg := Panel.new()
+	bg.custom_minimum_size = Vector2(w, 12)
+	bg.size = Vector2(w, 12)
+	bg.add_theme_stylebox_override("panel", ts)
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	track.add_child(bg)
+	var fs := StyleBoxFlat.new()
+	fs.bg_color = Color("e8b84a")
+	fs.set_corner_radius_all(6)
+	var fg := Panel.new()
+	fg.position = Vector2(1, 1)
+	fg.custom_minimum_size = Vector2(maxf(0.0, (w - 2.0) * ratio), 10)
+	fg.size = Vector2(maxf(0.0, (w - 2.0) * ratio), 10)
+	fg.add_theme_stylebox_override("panel", fs)
+	fg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	track.add_child(fg)
+
+
+## 金边圆牌（头像缺素材时的回退）
+func _disc_panel(px: float, glyph: String) -> Control:
+	var p := PanelContainer.new()
+	p.custom_minimum_size = Vector2(px, px)
+	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(0.16, 0.11, 0.06, 0.86)
+	sb.set_corner_radius_all(int(px * 0.5))
+	sb.set_border_width_all(2)
+	sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.55)
+	p.add_theme_stylebox_override("panel", sb)
+	p.add_child(G.serif_label(glyph, G.FS_LG, Color("f0c060")))
+	return p
+
+
 # ---------- 顶部：徽标 + 账号小字 + 重建入口 ----------
 func _build_top(role: Dictionary) -> void:
 	var b := G.banner_box("远征主城", 240, 54)
 	b.set_anchors_preset(Control.PRESET_CENTER_TOP)
-	b.position = Vector2(-120, 34)
+	b.position = Vector2(-120, 84)   # 让出顶部两行：左上个人信息、右上四币与经验
 	add_child(b)
 
 	if not G.account.is_empty():
@@ -95,8 +182,8 @@ func _build_top(role: Dictionary) -> void:
 
 	# 钱包四币（金/远征币/魂石/荣誉——存档累计，远征结算入账）
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 6)
-	row.position = Vector2(VIEW_W / 2.0 - 152.0, 90)
+	row.add_theme_constant_override("separation", 12)   # 数字别贴着下一个币的图标
+	row.position = Vector2(206.0, 30)   # 顶部横带：四币（图标+数字）靠右一行
 	add_child(row)
 	var wallet_meta := [
 		["金", "f0c060", "gold", "cur_gold"], ["远征", "7ac0c8", "expedition", "cur_expedition"],
@@ -123,32 +210,15 @@ func _build_top(role: Dictionary) -> void:
 			dot.add_theme_stylebox_override("panel", dot_sb)
 			row.add_child(dot)
 		var name_l := G.gold_label(String(meta[0]), G.FS_XS, false, Color("bfa987"), false)
-		name_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		name_l.tooltip_text = String(meta[0])
+		name_l.visible = false   # 顶栏只留 图标+数字（参考手游主页的货币条），名字进悬停提示
 		row.add_child(name_l)
 		var num_l := G.gold_label(str(int(G.wallet.get(String(meta[2]), 0))),
 			G.FS_XS, true, Color(String(meta[1])), false)
 		num_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		row.add_child(num_l)
 
-	# 召唤 / 养成 / 兑换：三大系统入口（抽宠 · 六线养成 · 荣誉换补给），压在钱包下、展示台上
-	var gacha_btn := G.gold_button("召 唤", 130, 36, G.FS_MD)
-	gacha_btn.position = Vector2(38, 118)
-	gacha_btn.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_open_gacha())
-	add_child(gacha_btn)
-	var growth_btn := G.gold_button("养 成", 130, 36, G.FS_MD)
-	growth_btn.position = Vector2(175, 118)
-	growth_btn.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_open_growth())
-	add_child(growth_btn)
-	var exch_btn := G.gold_button("兑 换", 130, 36, G.FS_MD)
-	exch_btn.position = Vector2(312, 118)
-	exch_btn.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_open_exchange())
-	add_child(exch_btn)
+	# 召唤 / 养成 / 兑换移到右侧竖列（见 _build_entries），这里只留钱包与玩家条
 
 
 # ---------- 角色展示台（金色圆台 + 光圈 + 待机动画） ----------
@@ -200,133 +270,90 @@ func _role_name(id: String) -> String:
 	return id
 
 
-# ---------- 信息面板（羊皮纸：角色名 + 职业/武器 + 等级经验 + 世界进度） ----------
-func _build_info(role: Dictionary) -> void:
-	var panel := G.parchment_box(432, 152, 20.0)
-	panel.position = Vector2(24, 552)
-	add_child(panel)
+# ---------- 玩家条（压在木匾下：名字 / 等级经验 / 世界进度，一条读完） ----------
+## 右侧竖列：活动与系统入口（出征已搬进主城）
+const RAIL_R := [["世界", "界"], ["图鉴", "图"], ["养成", "养"],
+	["兑换", "兑"], ["召唤", "召"], ["设置", "设"]]
 
-	var box := VBoxContainer.new()
-	box.add_theme_constant_override("separation", 4)
-	panel.add_child(box)
-
-	var name_txt: String = G.player_name
-	if name_txt.is_empty():
-		name_txt = String(role.get("name", "旅人"))
-
-	var title_row := HBoxContainer.new()
-	title_row.add_theme_constant_override("separation", 10)
-	box.add_child(title_row)
-
-	var rname := G.serif_label(name_txt, G.FS_LG + 2, G.NAME_GREEN)
-	title_row.add_child(rname)
-	var job := G.gold_label("%s · %s" % [role.get("job", ""), role.get("weapon", "")],
-		G.FS_SM, false, Color("7a5a2e"), false)
-	job.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
-	title_row.add_child(job)
-
-	var detail := "%s · %s" % [G.gender, role.get("tags", "")]
-	var tags := G.gold_label(detail, G.FS_SM, false, Color("8a6a34"), false)
-	tags.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	box.add_child(tags)
-
-	var sep := ColorRect.new()
-	sep.color = Color(G.BANNER.r, G.BANNER.g, G.BANNER.b, 0.4)
-	sep.custom_minimum_size = Vector2(0, 2)
-	box.add_child(sep)
-
-	# 等级 + 经验条：经验条宽 150，右侧写「当前/所需」
-	var lv := int(G.prog.get("level", 1))
-	var cur := int(G.prog.get("exp", 0))
-	var need := G.exp_to_next(lv)
-	var lv_row := HBoxContainer.new()
-	lv_row.add_theme_constant_override("separation", 8)
-	box.add_child(lv_row)
-
-	var lv_l := G.gold_label("LV %d" % lv, G.FS_MD, true, Color("a06020"), false)
-	lv_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	lv_row.add_child(lv_l)
-
-	var bar_bg := Control.new()
-	bar_bg.custom_minimum_size = Vector2(150, 12)
-	bar_bg.clip_contents = true
-	bar_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	lv_row.add_child(bar_bg)
-	var bar_sbg := ColorRect.new()
-	bar_sbg.color = Color("b8a884")
-	bar_sbg.size = Vector2(150, 12)
-	bar_sbg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	bar_bg.add_child(bar_sbg)
-	var bar_fill := ColorRect.new()
-	bar_fill.color = Color("d8a838")
-	bar_fill.position = Vector2(1, 1)
-	bar_fill.size = Vector2(148.0 * clampf(float(cur) / maxf(1.0, float(need)), 0.0, 1.0), 10)
-	bar_fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	bar_bg.add_child(bar_fill)
-
-	var exp_l := G.gold_label("满级" if need <= 0 else "经验 %d / %d" % [cur, need],
-		G.FS_XS, false, Color("8a6a34"), false)
-	exp_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	lv_row.add_child(exp_l)
-
-	# 世界进度：已解锁（能出征）/ 已通关（首领倒下）分开写，两者不是一回事
-	var unlocked := int(G.prog.get("worlds_unlocked", 1))
-	var total := G.world_count()
-	var cleared_n := G.cleared_world_count()
-	var cur_theme := ""
-	var order := G.theme_order()
-	if unlocked >= 1 and unlocked <= order.size():
-		cur_theme = G.world_name(String(order[unlocked - 1]))
-	var prog_txt := "已解锁 %d / %d · 已通关 %d" % [unlocked, total, cleared_n]
-	if not cur_theme.is_empty():
-		prog_txt += " · 当前「%s」" % cur_theme
-	var world_l := G.gold_label(prog_txt, G.FS_SM, false, Color("6a8a4a"), false)
-	world_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	box.add_child(world_l)
-
-
-# ---------- 底部功能入口（占位） ----------
 func _build_entries() -> void:
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 8)
-	row.position = Vector2((VIEW_W - (5 * 86.0 + 4 * 8.0)) / 2.0, 732)
-	add_child(row)
+	# 右侧竖列：活动与系统入口（出征已搬进主城，主页只留浏览与设置）
+	for i in RAIL_R.size():
+		var b := _round_entry(String(RAIL_R[i][0]), String(RAIL_R[i][1]))
+		b.position = Vector2(VIEW_W - 88.0, 150 + i * 84.0)
+		add_child(b)
 
-	for e in ENTRIES:
-		row.add_child(_entry(e[0], e[1]))
+	# 底部：一行若隐若现的字，点它（或点屏幕下方）就直接进主世界
+	var hint := G.serif_label("轻 触 进 入 主 世 界", G.FS_MD, Color("e6d0a4"))
+	hint.position = Vector2(0, 730)
+	hint.custom_minimum_size = Vector2(VIEW_W, 0)
+	hint.modulate.a = 0.45
+	hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(hint)
+	var tw := create_tween()
+	tw.set_loops()
+	tw.tween_property(hint, "modulate:a", 0.85, 1.1)
+	tw.tween_property(hint, "modulate:a", 0.40, 1.1)
+
+	var zone := Control.new()
+	zone.position = Vector2(0, 706)
+	zone.custom_minimum_size = Vector2(VIEW_W, 94)
+	zone.mouse_filter = Control.MOUSE_FILTER_STOP
+	zone.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	zone.gui_input.connect(_open_city)
+	add_child(zone)
 
 
-func _entry(label: String, active: bool) -> Control:
-	var root := PanelContainer.new()
-	root.custom_minimum_size = Vector2(86, 56)
-	var sb := StyleBoxFlat.new()
-	sb.set_corner_radius_all(3)
-	sb.set_border_width_all(2)
-	if active:
-		sb.bg_color = G.GOLD_BTN
-		sb.border_color = G.GOLD_BTN_EDGE
-	else:
-		sb.bg_color = Color(0.14, 0.09, 0.05, 0.8)
-		sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.45)
-	sb.shadow_color = Color(0, 0, 0, 0.4)
-	sb.shadow_size = 4
-	sb.shadow_offset = Vector2(0, 2)
-	root.add_theme_stylebox_override("panel", sb)
-	var l := G.serif_label(label, G.FS_MD, G.TEXT_DARK if active else Color("d9b96e"))
-	root.add_child(l)
+## 圆形入口：圆底 + 金边 + 单字纹样 + 下方小字（不依赖新素材也能立住）
+func _round_entry(label: String, glyph: String) -> Control:
+	var root := Control.new()
+	root.custom_minimum_size = Vector2(72, 72)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
-	match label:
-		"主城":
-			root.gui_input.connect(_open_city)
-		"世界":
-			root.gui_input.connect(_open_worlds)
-		"图鉴":
-			root.gui_input.connect(_open_codex)
-		"出征":
-			root.gui_input.connect(_on_expedition)
-		"设置":
-			root.gui_input.connect(_open_settings)
+	root.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+
+	var disc := PanelContainer.new()
+	disc.custom_minimum_size = Vector2(60, 60)
+	disc.position = Vector2(6, 0)
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(0.14, 0.09, 0.05, 0.86)
+	sb.set_corner_radius_all(30)
+	sb.set_border_width_all(2)
+	sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.55)
+	G._apply_shadow(sb, 5.0, 2.0, 0.4)
+	disc.add_theme_stylebox_override("panel", sb)
+	disc.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	disc.add_child(G.serif_label(glyph, G.FS_LG, Color("f0c060")))
+	root.add_child(disc)
+
+	var cap := G.gold_label(label, G.FS_XS, false, Color("e0cfa4"), false)
+	cap.position = Vector2(0, 60)
+	cap.custom_minimum_size = Vector2(72, 0)
+	cap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(cap)
+
+	root.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			Audio.sfx("ui_click")
+			_dispatch_entry(label))
 	return root
+
+
+func _dispatch_entry(label: String) -> void:
+	match label:
+		"主城": get_tree().change_scene_to_file("res://src/city/CityScene.tscn")
+		"世界": _open_worlds(_click_ev())
+		"图鉴": _open_codex(_click_ev())
+		"养成": _open_growth()
+		"兑换": _open_exchange()
+		"召唤": _open_gacha()
+		"设置": _open_settings(_click_ev())
+
+
+## 几个入口函数按鼠标事件判定，这里补一个"左键按下"事件喂给它们
+func _click_ev() -> InputEventMouseButton:
+	var e := InputEventMouseButton.new()
+	e.button_index = MOUSE_BUTTON_LEFT
+	e.pressed = true
+	return e
 
 
 # ---------- 主城入口（可行走据点：建筑 / NPC / 活动 / 访客） ----------
