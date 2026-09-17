@@ -130,22 +130,23 @@ func _cycle_gender(delta: int) -> void:
 ## —— 生成好立绘丢进 image/generated_*/ready/ 即可自动铺在角色身后
 func _build_stage_art() -> void:
 	_role_art_frame = PanelContainer.new()
-	_role_art_frame.position = Vector2(56, 296)
-	_role_art_frame.custom_minimum_size = Vector2(368, 268)
+	_role_art_frame.position = Vector2(72, 298)
+	_role_art_frame.custom_minimum_size = Vector2(336, 246)
 	_role_art_frame.clip_contents = true
 	_role_art_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = Color(0.06, 0.04, 0.03, 0.35)
 	sb.set_corner_radius_all(10)
 	sb.set_border_width_all(2)
-	sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.32)
+	sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.16)
 	_role_art_frame.add_theme_stylebox_override("panel", sb)
 	add_child(_role_art_frame)
 
 	_role_art = TextureRect.new()
 	_role_art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_role_art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	_role_art.modulate = Color(0.95, 0.90, 0.86)
+	# 压成氛围层：这张立绘和台上的像素小人画的是同一个角色，太实会"两个破军"打架
+	_role_art.modulate = Color(0.82, 0.78, 0.76, 0.34)
 	_role_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_role_art_frame.add_child(_role_art)
 	_refresh_role_art()

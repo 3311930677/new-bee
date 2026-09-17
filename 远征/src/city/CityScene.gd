@@ -43,6 +43,7 @@ var _dlg: Dictionary = {}       # 进行中的对话 {"id","guest","turn","line"
 
 
 func _ready() -> void:
+	Audio.play_bgm("bgm_city")
 	_cfg = G.city_config()
 	_cols = int(_cfg.get("map_cols", 24))
 	_rows = int(_cfg.get("map_rows", 20))
@@ -212,6 +213,7 @@ func _spawn_npc(nd: Dictionary, guest: bool, at := Vector2.ZERO) -> void:
 	n.data = nd
 	n.guest = guest
 	n.hue = int(nd.get("hue", 0))
+	n.art = _npc_portrait_tex(String(nd.get("id", "")), guest)   # 有立绘就用立绘，别再画色块小人
 	if at == Vector2.ZERO:
 		var p: Array = nd.get("pos", [12.0, 10.0])
 		at = Vector2(float(p[0]) * TILE, float(p[1]) * TILE)
@@ -1282,6 +1284,7 @@ class _CityNPC extends Node2D:
 	var hover := false
 	var cooled := false
 	var _t := 0.0
+	var art: Texture2D = null   # 半身立绘（ready/npcs 的 512 图）；没有就退回色块小人
 
 	func _ready() -> void:
 		# 名字牌挂头顶（脚下会被 Y-sort 的建筑/行人来回遮挡，裁剪观感差）：
@@ -1290,12 +1293,13 @@ class _CityNPC extends Node2D:
 		var title := String(data.get("title", ""))
 		if title != "":
 			txt += " · " + title
+		var top := -114.0 if art != null else -52.0   # 立绘更高，名牌跟着抬
 		var l := G.gold_label(txt, G.FS_XS, false, Color("f5ead0"), true)
-		l.position = Vector2(-80, -52)
+		l.position = Vector2(-80, top + 2)
 		l.custom_minimum_size = Vector2(160, 0)
 		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		var pad := PanelContainer.new()
-		pad.position = Vector2(-80, -54)
+		pad.position = Vector2(-80, top)
 		pad.custom_minimum_size = Vector2(160, 18)
 		pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		var psb := StyleBoxFlat.new()
@@ -1313,8 +1317,21 @@ class _CityNPC extends Node2D:
 		var bob := sin(_t * 2.0 + float(hue)) * 1.2
 		# 落地影
 		draw_set_transform(Vector2(0, 3), 0.0, Vector2(1.0, 0.38))
-		draw_circle(Vector2.ZERO, 11.0, Color(0, 0, 0, 0.26))
+		draw_circle(Vector2.ZERO, 13.0, Color(0, 0, 0, 0.30))
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+		if art != null:
+			# 半身立绘立在地上：底缘压深渐隐，裁切不生硬（比色块小人像样得多）
+			var h := 104.0
+			var w := 104.0
+			var top := -h + bob * 0.5
+			draw_texture_rect(art, Rect2(-w * 0.5, top, w, h), false)
+			for i in 8:
+				var t := float(i) / 8.0
+				var yy := top + h * (0.78 + 0.22 * t)
+				draw_rect(Rect2(-w * 0.5, yy, w, h * 0.22 / 8.0 + 1.0),
+					Color(0.05, 0.03, 0.02, 0.07 + 0.13 * t))
+			_hover_mark(bob, -112.0)
+			return
 		var robe := Color.from_hsv(float(hue % 12) / 12.0, 0.32, 0.50)
 		if guest:
 			robe = Color("5a6a7a")  # 旅人一律靛青斗篷
@@ -1333,12 +1350,18 @@ class _CityNPC extends Node2D:
 			draw_rect(Rect2(7, -16 + bob, 7, 9), Color("5a4a28"), false, 1.0)
 		else:
 			draw_arc(Vector2(0, -27 + bob), 7.5, PI * 0.9, TAU * 1.02, 10, Color("3a2c1c"), 5.0)
-		# 可交互金三角（名牌在头顶 -52，三角再抬高避让）
-		if hover:
-			var bb := sin(_t * 2.4) * 3.0
-			var tip := Vector2(0, -78 + bb)
-			draw_colored_polygon([tip + Vector2(0, -6), tip + Vector2(5, 2), tip + Vector2(-5, 2)],
-				Color(G.GOLD_BRIGHT.r, G.GOLD_BRIGHT.g, G.GOLD_BRIGHT.b, 0.9))
+		# 可交互金三角（名牌在头顶，三角再抬高避让）
+		_hover_mark(bob, -78.0)
+
+
+	## 头顶可交互金三角：立绘 NPC 与色块小人共用，只是挂的高度不同
+	func _hover_mark(bob: float, y: float) -> void:
+		if not hover:
+			return
+		var bb := sin(_t * 2.4) * 3.0
+		var tip := Vector2(0, y + bb)
+		draw_colored_polygon([tip + Vector2(0, -6), tip + Vector2(5, 2), tip + Vector2(-5, 2)],
+			Color(G.GOLD_BRIGHT.r, G.GOLD_BRIGHT.g, G.GOLD_BRIGHT.b, 0.9))
 
 
 ## 虚拟摇杆（与 MapScene 同款）

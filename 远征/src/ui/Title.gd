@@ -15,6 +15,7 @@ var _intro_panel: Control = null
 
 
 func _ready() -> void:
+	Audio.play_bgm("bgm_title")
 	_build_background()
 	_build_title()
 	_build_menu()

@@ -22,6 +22,15 @@ var _deck_holder: Control = null
 var _deck = null            # PageDeck（类型不写死，避免全局类缓存未刷新时报错）
 var _detail: Control = null
 var _toast: Label = null
+var _help_btn: Control = null    # 右上角「?」养成说明
+
+# 养成说明：? 弹层与首次进入的引导共用同一份文案
+const PET_TIPS := [
+	"喂养消耗宠物粮：每份 100 经验，宠物等级上限跟随人物等级。",
+	"突破每层全属性 +8%，共 5 层，需突破晶与魂石。",
+	"洗资质消耗资质果，资质决定每级成长（1星×0.8 ~ 5星×1.6）。",
+	"材料产出自「兑换」商店与远征掉落。",
+]
 
 
 func _ready() -> void:
@@ -68,6 +77,12 @@ func _build() -> void:
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 			closed.emit())
 	content.add_child(close_btn)
+
+	# 养成说明收进「?」（只建一次：_build_detail 是反复重建的，放那里会叠出一摞）
+	_help_btn = G.info_button("灵宠养成 · 怎么玩", PET_TIPS)
+	_help_btn.position = Vector2(CONTENT_W - 24.0, 6.0)   # 贴在卡右侧的空白里，不压按钮
+	content.add_child(_help_btn)
+	G.tip_once.call_deferred("pet_raise", "灵宠养成 · 怎么玩", PET_TIPS, self)
 
 	_refresh()
 
@@ -216,12 +231,7 @@ func _build_detail() -> void:
 			_on_reroll())
 	_detail.add_child(star_btn)
 
-	var tip := G.text_label("材料产出自「兑换」商店与远征掉落；资质影响每级成长（1星×0.8 ~ 5星×1.6）。",
-		G.FS_XS, Color("8a6a34"))
-	tip.position = Vector2(40, 264)
-	tip.custom_minimum_size = Vector2(CONTENT_W - 80.0, 0)
-	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_detail.add_child(tip)
+
 
 
 func _op_btn(label: String, sub: String) -> Control:
