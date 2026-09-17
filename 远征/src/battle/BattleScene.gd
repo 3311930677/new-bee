@@ -32,6 +32,15 @@ const MON_COLOR := {  # 怪物占位体色（tier 区分；精灵素材入库后
 	"normal": Color("5f7186"), "elite": Color("7a4a9a"), "boss": Color("8a2f2f"),
 }
 
+# ---------- 打击感参数（只影响表现，不动 sim 规则） ----------
+const HITSTOP_STEP := 0.07      # 一次顿帧的时长（秒）
+const HITSTOP_SLOW := 0.18      # 顿帧期间的时间倍率（越小越"重"）
+const HEAVY_RATIO := 0.12       # 单次伤害 ≥ 目标最大生命这个比例 → 算重击（顿帧 + 震屏）
+const SHAKE_HEAVY := 7.0
+const SHAKE_CRIT := 4.5
+const SHAKE_HIT := 2.0
+const LOW_HP_RATIO := 0.25      # 角色血量低于此比例 → 边缘红晕脉动
+
 ## 场景切入前由调用方写入（远征循环 #7 落地前的冒烟入口也走此通道）
 static var pending_cfg: Dictionary = {}
 
@@ -40,8 +49,16 @@ var speed := 1.0
 
 var _acc := 0.0
 var _views: Dictionary = {}          # uid -> UnitView
+var _shake_root := Control.new()     # 背景 + 战场（震屏只抖这一层，HUD 不跟着晃）
 var _field := Node2D.new()           # 战场（单位 + 地面）
 var _fx_layer := Control.new()       # 飘字层（最上）
+var _hitstop := 0.0                  # 顿帧剩余秒数
+var _shake_tw: Tween = null
+var _danger: TextureRect = null      # 低血红晕（挂在根节点，别放进飘字层：那儿会被清空断言检查）
+var _danger_tip_done := false
+var _dmg_out := 0                    # 我方造成的总伤害（战报用）
+var _dmg_in := 0                     # 我方承受的总伤害
+var _best_hit := 0                   # 我方最高单击
 var _skill_btns: Array[Dictionary] = []  # {btn, name_l, cd_l, skill}
 var _energy_fill := ColorRect.new()
 var _energy_l := Label.new()
@@ -68,8 +85,13 @@ func _ready() -> void:
 		seed_v = randi()
 	sim.setup(seed_v, _cfg.get("ally", {}), _cfg.get("enemy", {}))
 	sim.events.clear()  # 丢弃 ready 事件
+	# 先摆震屏层：背景与战场都挂在它下面，受击时整屏一晃而 HUD 纹丝不动
+	_shake_root.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_shake_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_shake_root)
 	_build_background()
 	_build_field()
+	_build_danger_overlay()
 	_build_top_bar()
 	_build_skill_bar()
 	_build_func_row()
@@ -91,7 +113,7 @@ func _build_background() -> void:
 		bg.size = Vector2(VIEW_W, VIEW_H)
 		bg.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		add_child(bg)
+		_shake_root.add_child(bg)
 		_add_shade_gradient(0.0, 96.0, true)     # 顶部压暗（标题可读）
 		_add_shade_gradient(520.0, 280.0, false)  # 底部压暗（技能区可读）
 	else:
@@ -100,7 +122,7 @@ func _build_background() -> void:
 		flat.color = Color(tint.r * 0.22, tint.g * 0.22, tint.b * 0.24)
 		flat.size = Vector2(VIEW_W, VIEW_H)
 		flat.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		add_child(flat)
+		_shake_root.add_child(flat)
 		# 主题 tile 平铺地面（战场区 y48~592）
 		var tiles: Array = tc.get("tiles", [])
 		if not tiles.is_empty():
@@ -147,10 +169,35 @@ func _add_shade_gradient(y: float, h: float, top: bool) -> void:
 
 
 func _build_field() -> void:
-	add_child(_field)
+	_shake_root.add_child(_field)
 	_fx_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_fx_layer.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(_fx_layer)
+
+
+## 低血红晕：角色血量掉到阈值以下时脉动。挂在根节点靠前的位置（在 HUD 之下），
+## 别放进 _fx_layer——那里会被"战斗结束后飘字层应清空"的断言检查。
+func _build_danger_overlay() -> void:
+	var grad := Gradient.new()
+	grad.offsets = PackedFloat32Array([0.0, 0.58, 1.0])
+	grad.colors = PackedColorArray([
+		Color(0.62, 0.06, 0.06, 0.0), Color(0.62, 0.06, 0.06, 0.0),
+		Color(0.78, 0.05, 0.05, 0.9),
+	])
+	var tex := GradientTexture2D.new()
+	tex.gradient = grad
+	tex.width = 120
+	tex.height = 200
+	tex.fill = GradientTexture2D.FILL_RADIAL
+	tex.fill_from = Vector2(0.5, 0.5)
+	tex.fill_to = Vector2(1.0, 0.5)
+	_danger = TextureRect.new()
+	_danger.texture = tex
+	_danger.size = Vector2(VIEW_W, VIEW_H)
+	_danger.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR   # 项目默认 nearest，放大必须改线性
+	_danger.modulate.a = 0.0
+	_danger.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_danger)
 
 
 func _build_top_bar() -> void:
@@ -333,13 +380,19 @@ func _sync_views() -> void:
 
 # ================= 主循环 =================
 func _process(delta: float) -> void:
+	# 顿帧衰减放在最前：结算那一帧也要把它收干净，别留下一个"粘住"的慢动作
+	var time_scale := 1.0
+	if _hitstop > 0.0:
+		_hitstop = maxf(0.0, _hitstop - delta)
+		time_scale = lerpf(1.0, HITSTOP_SLOW, clampf(_hitstop / HITSTOP_STEP, 0.0, 1.0))
 	if sim.finished:
 		if not _finished_ui:
 			_finished_ui = true
+			_stop_shake()
 			_sync_views()
 			_show_result()
 		return
-	_acc += delta * speed
+	_acc += delta * speed * time_scale
 	while _acc >= TICK_SEC:
 		_acc -= TICK_SEC
 		sim.step()
@@ -374,20 +427,58 @@ func _on_event(e: Dictionary) -> void:
 			var role := sim.role_unit()
 			if role != null and int(e.uid) == role.uid:
 				_show_tip("%s · %s" % [role.name, String(e.get("name", ""))])
+			else:
+				# 敌方施法必须看得见：被打了却不知道对方放了什么，战斗就成了看血条
+				var tier := "normal"
+				var caster := sim.unit_by_uid(int(e.get("uid", -1)))
+				if caster != null:
+					tier = String(caster.data.get("tier", "normal"))
+				if tier == "boss":
+					_show_tip("首领技 · %s" % String(e.get("name", "")), Color("ff8a6a"))
+					_shake(SHAKE_HIT * 0.7)   # 首领抬手先晃一下，算预警
+				else:
+					_show_tip("敌方 · %s" % String(e.get("name", "")), Color("ffb0a0"))
 			if src != null:
 				src.cast_glow()
 		"dmg":
-			if dst != null:
+			var target := sim.unit_by_uid(int(e.get("uid", -1)))
+			if dst == null:
+				pass
+			elif target == null:
+				dst.hit_flash()
+				_float(dst.position, "%d" % int(e.amount), Color("ff7a6a"), G.FS_MD)
+			else:
 				var amount := int(e.amount)
-				if bool(e.get("crit", false)):
-					dst.hit_flash()
-					_float(dst.position, "暴 %d" % amount, Color("ffd24a"), G.FS_LG)
-				elif bool(e.get("dot", false)):
+				var crit := bool(e.get("crit", false))
+				var dot := bool(e.get("dot", false))
+				var max_hp := maxi(target.get_max_hp(), 1)
+				var heavy := amount >= int(float(max_hp) * HEAVY_RATIO)
+				var role_u := sim.role_unit()
+				var from_role := role_u != null and int(e.get("src", -1)) == role_u.uid
+				var to_role := role_u != null and int(e.get("uid", -1)) == role_u.uid
+				if from_role:
+					_dmg_out += amount
+					_best_hit = maxi(_best_hit, amount)
+				if to_role:
+					_dmg_in += amount
+				if dot:
 					dst.hit_flash(0.4)
-					_float(dst.position, "%d" % amount, Color("c9c9c9"), G.FS_XS)
+					_float_dmg(dst.position, amount, "dot")
+				elif crit:
+					dst.hit_flash()
+					_float_dmg(dst.position, amount, "crit")
+					_shake(SHAKE_CRIT)
+					_hit_stop(HITSTOP_STEP)
+				elif heavy:
+					dst.hit_flash()
+					_float_dmg(dst.position, amount, "heavy")
+					_shake(SHAKE_HEAVY)
+					_hit_stop(HITSTOP_STEP)
 				else:
 					dst.hit_flash()
-					_float(dst.position, "%d" % amount, Color("ff7a6a"), G.FS_MD)
+					_float_dmg(dst.position, amount, "hit")
+					if to_role:
+						_shake(SHAKE_HIT)   # 自己挨打也晃一下：让"被打"有实感
 		"heal":
 			if dst != null:
 				_float(dst.position, "+%d" % int(e.amount), Color("8ce89c"), G.FS_MD)
@@ -437,6 +528,20 @@ func _refresh_hud() -> void:
 		var ratio := float(role.energy) / float(Combatant.MAX_ENERGY)
 		_energy_fill.size.x = 432.0 * ratio
 		_energy_l.text = "能量 %d/100%s" % [role.energy, "  满" if role.energy >= Combatant.MAX_ENERGY else ""]
+	# 低血警示：边缘红晕脉动（首次再补一句提示，之后只靠视觉，不吵）
+	if _danger != null:
+		var hp_ratio := 0.0
+		if role != null:
+			hp_ratio = float(role.hp) / float(maxi(role.get_max_hp(), 1))
+		var low := role != null and role.alive and hp_ratio < LOW_HP_RATIO
+		if low:
+			var phase := float(Time.get_ticks_msec() % 1100) / 1100.0
+			_danger.modulate.a = 0.20 + 0.32 * absf(sin(phase * PI))   # 边缘红晕：够警觉不糊屏
+			if not _danger_tip_done:
+				_danger_tip_done = true
+				_show_tip("危急 · 血量过低，补药或撤退", Color("ff9a8a"))
+		else:
+			_danger.modulate.a = 0.0
 	# 连携可视化：窗口内的"下一手"技能格亮金粗框 + 能量条上方小签
 	var combo_sid := _combo_next()
 	var combo_row := _combo_row(combo_sid)
@@ -585,20 +690,68 @@ func _on_auto(e: InputEvent) -> void:
 		_chip_set_active(_auto_btn, sim.auto_mode)
 
 
+# ================= 打击感（顿帧 / 震屏） =================
+## 顿帧：重击瞬间把 sim 步进压慢一档（几十毫秒内回弹）。只改步进倍率，
+## 玩家的 ×1/×2 速度设置不受影响，sim 规则也一行没动。
+func _hit_stop(sec: float) -> void:
+	_hitstop = maxf(_hitstop, sec)
+
+
+## 震屏：只抖「背景 + 战场」这一层，HUD 与飘字不动（字跟着晃会花）
+func _shake(power: float) -> void:
+	if _shake_tw != null and _shake_tw.is_valid():
+		_shake_tw.kill()
+	var tw := create_tween()
+	for i in 4:
+		var amp := power * (1.0 - float(i) / 4.0)
+		tw.tween_property(_shake_root, "position",
+			Vector2(randf_range(-amp, amp), randf_range(-amp * 0.6, amp * 0.6)), 0.035)
+	tw.tween_property(_shake_root, "position", Vector2.ZERO, 0.05)
+	_shake_tw = tw
+
+
+## 收招：结算时把震屏层强制归位（否则最后一击若正抖着，战场会一直歪着）
+func _stop_shake() -> void:
+	if _shake_tw != null and _shake_tw.is_valid():
+		_shake_tw.kill()
+	_shake_root.position = Vector2.ZERO
+
+
 # ================= 飘字 / 提示 =================
-func _float(pos: Vector2, text: String, color: Color, size := 16) -> void:
+## 飘字：pop > 1 时先小后"弹"到目标大小（数字有生命感，不是静态贴纸）
+func _float(pos: Vector2, text: String, color: Color, size := 16, pop := 1.0) -> void:
 	var l := G.gold_label(text, size, true, color)
 	l.position = pos + Vector2(randf_range(-14.0, 2.0), -44.0)
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	l.pivot_offset = Vector2(30.0, float(size) * 0.6)
+	l.scale = Vector2.ONE * (pop * 0.7)
 	_fx_layer.add_child(l)
 	var tw := l.create_tween()
 	tw.set_parallel(true)
 	tw.tween_property(l, "position:y", l.position.y - 36.0, 0.85).set_ease(Tween.EASE_OUT)
 	tw.tween_property(l, "modulate:a", 0.0, 0.5).set_delay(0.35)
+	if not is_equal_approx(pop, 1.0):
+		tw.tween_property(l, "scale", Vector2.ONE * pop, 0.12)\
+			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tw.chain().tween_callback(l.queue_free)
 
 
-func _show_tip(msg: String) -> void:
+## 伤害飘字分层：暴击最大最亮、重击次之、普通居中、持续伤害最淡最静
+## —— 一眼分得出"这一下有多重"，而不是所有数字一个样
+func _float_dmg(pos: Vector2, amount: int, kind: String) -> void:
+	match kind:
+		"crit":
+			_float(pos, "暴 %d" % amount, Color("ffd24a"), G.FS_LG + 4, 1.32)
+		"heavy":
+			_float(pos, "%d" % amount, Color("ff9a6a"), G.FS_LG, 1.18)
+		"dot":
+			_float(pos, "%d" % amount, Color("b9b3aa"), G.FS_XS, 1.0)
+		_:
+			_float(pos, "%d" % amount, Color("ff7a6a"), G.FS_MD, 1.06)
+
+
+func _show_tip(msg: String, color := Color("ffe9b0")) -> void:
+	_cast_tip.add_theme_color_override("font_color", color)
 	_cast_tip.text = msg
 	_cast_tip.modulate.a = 1.0
 	if _tip_tween != null and _tip_tween.is_valid():
@@ -630,6 +783,10 @@ func _show_result() -> void:
 	box.add_child(G.serif_label("胜  利" if win else "战  败", G.FS_HERO,
 		Color("6a8a4a") if win else Color("8a4a3a")))
 	box.add_child(G.gold_label("残存生命 %d" % hp_left, G.FS_SM, false, Color("7a5a2e"), false))
+	# 战报：打了多久、最高单击多少、谁在输出 —— 表现层统计（sim 规则未动）
+	var secs := float(sim.tick_count) / 30.0
+	box.add_child(G.gold_label("战报 · 用时 %.1fs · 最高单击 %d · 输出 %d · 承伤 %d"
+		% [secs, _best_hit, _dmg_out, _dmg_in], G.FS_XS, false, Color("8a6a34"), false))
 
 	if win:
 		var nt: String = String(_cfg.get("enemy", {}).get("node_type", "normal"))
