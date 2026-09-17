@@ -96,7 +96,6 @@ func _setup() -> void:
 			ed.button_index = MOUSE_BUTTON_LEFT
 			hd.call("_on_expedition", ed)
 			hd.get("_deploy").call("_goto_step", 1 if _scene == "deploy_role" else 2)
-		"worlds":
 			_demo_prog()
 			var hw: Node = load("res://src/ui/GameHome.tscn").instantiate()
 			add_child(hw)

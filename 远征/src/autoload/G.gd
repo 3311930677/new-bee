@@ -100,6 +100,9 @@ var city := {
 # ---------- GM 开发者控制台 ----------
 # F10 / ` 唤起；输入口令后解锁全部内容与满级，仅供调试。解锁态只存本次运行，不落盘。
 const GM_PASSWORD := "@tsz20060706"
+# ---------- 音频设置（音量 0~1，存进存档；Audio 自动加载器读它）----------
+var audio := {"bgm": 0.7, "sfx": 0.8, "mute": false}
+
 var gm_unlocked := false
 var ui_blocked := false     # 全屏浮层（GM 控制台等）打开时为 true，探索层据此冻结移动
 
@@ -181,6 +184,12 @@ func _load_save() -> void:
 	var gd := String(data.get("gender", ""))
 	if not gd.is_empty():
 		gender = gd
+	var au: Variant = data.get("audio", {})
+	if au is Dictionary:
+		var ad := au as Dictionary
+		audio["bgm"] = clampf(float(ad.get("bgm", 0.7)), 0.0, 1.0)
+		audio["sfx"] = clampf(float(ad.get("sfx", 0.8)), 0.0, 1.0)
+		audio["mute"] = bool(ad.get("mute", false))
 	var its: Variant = data.get("items", {})
 	if its is Dictionary:
 		for k in (its as Dictionary):
@@ -208,6 +217,8 @@ func _load_save() -> void:
 		prog["titles"] = ti if ti is Dictionary else {"owned": [], "active": ""}
 		var pst: Variant = pd.get("pet_stat", {})
 		prog["pet_stat"] = pst if pst is Dictionary else {}
+		var ts: Variant = pd.get("tips_seen", {})   # 已看过的引导弹层，别每次开面板都弹
+		prog["tips_seen"] = ts if ts is Dictionary else {}
 	ensure_starter_pets()
 	var c: Variant = data.get("city", {})
 	if c is Dictionary:
@@ -236,6 +247,7 @@ func save_game() -> void:
 		"prog": prog,
 		"city": city,
 		"items": items,
+		"audio": audio,
 		"account": account,
 		"gender": gender,
 		"player_name": player_name,
@@ -1760,6 +1772,8 @@ func gold_button(text: String, w := 0.0, h := 42.0, font_size := FS_MD) -> Contr
 	# 按压反馈：微暗 + 微缩，松开回弹（避免静态死板的模板感）
 	root.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT:
+			if e.pressed:
+				Audio.sfx("ui_click")   # 全局按钮点击音（缺素材时静默）
 			root.pivot_offset = root.size * 0.5
 			var tw := root.create_tween()
 			if e.pressed:
@@ -1856,12 +1870,24 @@ func info_button(title: String, lines: Array, d := 24.0) -> Control:
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	root.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			Audio.sfx("ui_click")
 			root.pivot_offset = root.size * 0.5
 			var tw := root.create_tween()
 			tw.tween_property(root, "scale", Vector2.ONE * 0.92, 0.05)
 			tw.tween_property(root, "scale", Vector2.ONE, 0.1)
 			show_info_popup(root, title, lines))
 	return root
+
+
+## 首次打开某面板时弹一次引导（新手教程）：key 记进存档，之后只留「?」可再看
+func tip_once(key: String, title: String, lines: Array, anchor: Control) -> void:
+	var seen: Dictionary = prog.get("tips_seen", {})
+	if bool(seen.get(key, false)):
+		return
+	seen[key] = true
+	prog["tips_seen"] = seen
+	save_game()
+	show_info_popup(anchor, title, lines)
 
 
 ## 羊皮纸详情弹层：点遮罩或「知道了」关闭；内容超长可滚动

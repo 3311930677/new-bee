@@ -1,0 +1,153 @@
+# Audio.gd —— 音频总管（BGM 循环 + UI 音效）
+# 素材放 assets/audio/，文件名见该目录 README（全部为 CC0 / 公共领域，可商用免署名）。
+# 找不到文件时静默降级：不报错、不阻塞，先把框架跑起来，素材后补。
+# 音量与静音存进存档（G.audio），设置面板里调。
+extends Node
+
+const DIR := "res://assets/audio/"
+const EXTS := [".ogg", ".wav", ".mp3"]
+const FADE := 0.5          # 换曲淡入淡出秒数
+const VOL_MIN_DB := -45.0  # 音量 0% 时的静音替代（比 -80 更自然）
+
+var _bgm: AudioStreamPlayer = null
+var _sfx: AudioStreamPlayer = null
+var _bgm_name := ""
+var _fade: Tween = null
+var _cache := {}
+var _save_timer: Timer = null
+
+
+func _ready() -> void:
+	_bgm = AudioStreamPlayer.new()
+	_bgm.name = "Bgm"
+	add_child(_bgm)
+	_sfx = AudioStreamPlayer.new()
+	_sfx.name = "Sfx"
+	add_child(_sfx)
+	_apply_vol()
+
+
+# ---------- 播放 ----------
+## 播放背景音乐（同名不重播）。name 如 "bgm_home"
+func play_bgm(name: String) -> void:
+	if name == "" or name == _bgm_name:
+		return
+	var stream := _stream(name)
+	_bgm_name = name
+	if stream == null:
+		_bgm.stop()
+		return
+	_bgm.stream = stream
+	if _bgm.playing and _bgm.volume_db > VOL_MIN_DB:
+		# 换曲：先淡出再淡入，避免硬切
+		if _fade != null and _fade.is_valid():
+			_fade.kill()
+		_fade = create_tween()
+		_fade.tween_property(_bgm, "volume_db", VOL_MIN_DB, FADE * 0.5)
+		_fade.tween_callback(func():
+			_bgm.stream = stream
+			_bgm.play())
+		_fade.tween_property(_bgm, "volume_db", _bgm_db(), FADE * 0.5)
+	else:
+		_bgm.volume_db = _bgm_db()
+		_bgm.play()
+
+
+func stop_bgm() -> void:
+	_bgm_name = ""
+	_bgm.stop()
+
+
+## 播放一次性音效（UI 点击 / 战斗反馈）。name 如 "ui_click"
+func sfx(name: String) -> void:
+	var stream := _stream(name)
+	if stream == null or _muted():
+		return
+	_sfx.stream = stream
+	_sfx.volume_db = _sfx_db()
+	_sfx.play()
+
+
+# ---------- 音量（设置面板调） ----------
+func set_bgm_vol(v: float) -> void:
+	G.audio["bgm"] = clampf(v, 0.0, 1.0)
+	_queue_save()
+	_apply_vol()
+
+
+func set_sfx_vol(v: float) -> void:
+	G.audio["sfx"] = clampf(v, 0.0, 1.0)
+	_queue_save()
+	_apply_vol()
+
+
+func set_mute(on: bool) -> void:
+	G.audio["mute"] = on
+	_queue_save()
+	_apply_vol()
+
+
+## 拖滑条会连着触发，攒一下再落盘（0.5s 无操作才写档）
+func _queue_save() -> void:
+	if _save_timer == null:
+		_save_timer = Timer.new()
+		_save_timer.one_shot = true
+		_save_timer.wait_time = 0.5
+		_save_timer.timeout.connect(func(): G.save_game())
+		add_child(_save_timer)
+	_save_timer.start()
+
+
+func bgm_vol() -> float:
+	return float(G.audio.get("bgm", 0.7))
+
+
+func sfx_vol() -> float:
+	return float(G.audio.get("sfx", 0.8))
+
+
+func muted() -> bool:
+	return bool(G.audio.get("mute", false))
+
+
+# ---------- 内部 ----------
+func _muted() -> bool:
+	return muted()
+
+
+func _bgm_db() -> float:
+	if muted() or bgm_vol() <= 0.0:
+		return VOL_MIN_DB
+	return linear_to_db(bgm_vol())
+
+
+func _sfx_db() -> float:
+	if muted() or sfx_vol() <= 0.0:
+		return VOL_MIN_DB
+	return linear_to_db(sfx_vol())
+
+
+func _apply_vol() -> void:
+	if _bgm != null and _bgm.playing:
+		_bgm.volume_db = _bgm_db()
+	if _sfx != null:
+		_sfx.volume_db = _sfx_db()
+
+
+## 整套素材都还没放时返回 true（设置面板据此提示一句，而不是让人以为坏了）
+func has_no_stream() -> bool:
+	return _stream("bgm_home") == null and _stream("ui_click") == null
+
+
+## 按名找音频资源：先查缓存，再依次试 .ogg/.wav/.mp3；都没有返回 null
+func _stream(name: String) -> AudioStream:
+	if _cache.has(name):
+		return _cache[name]
+	for e in EXTS:
+		var path: String = DIR + name + String(e)
+		if ResourceLoader.exists(path):
+			var s := load(path) as AudioStream
+			_cache[name] = s
+			return s
+	_cache[name] = null
+	return null

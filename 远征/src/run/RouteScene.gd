@@ -44,6 +44,7 @@ var _bonus_gold := 0      # 表现加成金币（毫发无损 +10%）
 
 
 func _ready() -> void:
+	Audio.play_bgm("bgm_route")
 	var cfg := pending_run
 	pending_run = {}
 	st.setup(cfg)
