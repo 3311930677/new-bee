@@ -197,13 +197,13 @@ func _build_decos(cols: int, rows: int) -> void:
 	var spawn := Vector2(float(cols) * 24.0, float(rows) * 48.0 - 100.0)
 	for gy in rows - 1:
 		for gx in cols:
-			var center_col := absi(gx - cols / 2) <= 1  # 中央通道密度减半
-			var d := density * (0.5 if center_col else 1.0)
+			var center_col := absi(gx - cols / 2) <= 1  # 中央通道密度略降（0.65），保证通行但不显秃
+			var d := density * (0.65 if center_col else 1.0)
 			if _rng.randf() > d:
 				continue
 			var pos := Vector2(gx * 48.0 + _rng.randf_range(8, 40),
 				gy * 48.0 + _rng.randf_range(8, 40))
-			if pos.distance_to(spawn) < 150.0 or pos.y < 200.0:
+			if pos.distance_to(spawn) < 110.0 or pos.y < 200.0:
 				continue
 			var deco := _Deco.new()
 			var tex: Texture2D = load("%s/%s.png" % [asset_dir, String(decos[_rng.randi_range(0, decos.size() - 1)])])
@@ -781,6 +781,10 @@ func _start_battle(m: _MapMonster) -> void:
 			"bench_pet": st.bench_pet,
 			"potions": st.potions,
 			"hp_override": st.hp,
+			# 局外养成 6 线加成（天赋/装备/坐骑/称号 + 技能书等级 + 宠物养成快照）
+			"growth": G.growth_bonuses(st.role_id),
+			"skill_levels": G.prog.get("skills", {}),
+			"pet_stats": G.battle_pet_stats([st.active_pet, st.bench_pet]),
 		},
 		"enemy": {"theme": st.theme, "node_type": m.tier,
 			"layer": int(node.get("layer", 1)), "lead_mon": m.mon_id},

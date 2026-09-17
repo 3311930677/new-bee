@@ -75,17 +75,20 @@ func _run() -> void:
 		var dp = home._deploy
 		# 断开 GameHome 的真实出征连接（后面会 emit confirmed，避免真的切场景）
 		_drop_confirm(dp)
-		_check(dp._theme_btns.size() == 8, "应有 8 个秘境按钮，实为 %d" % dp._theme_btns.size())
-		_check(dp._role_btns.size() == 4, "应有 4 个人物按钮，实为 %d" % dp._role_btns.size())
-		_check(dp._pet_btns.size() == 8, "应有 8 个宠物按钮，实为 %d" % dp._pet_btns.size())
+		# 三页签各自一屏一项的轮播：卡片按「步骤:选项id」登记，切页签才建对应那页
+		_check(dp._cards.size() == 8, "秘境页应有 8 张卡，实为 %d" % dp._cards.size())
 		_check(dp._theme == "forest" and dp._role == "zs" and dp._active_pet == "pet_rockturtle",
 			"应预填 forest/zs/岩龟出战，实为 %s/%s/%s" % [dp._theme, dp._role, dp._active_pet])
 
 		# 门禁 A：未解锁世界 / 未收集宠物应压灰（locked 元标记）
-		_check(bool(dp._theme_btns["snow"].get_meta("locked", false)), "未解锁世界卡（snow）应标记 locked")
-		_check(not bool(dp._theme_btns["forest"].get_meta("locked", false)), "主世界卡（forest）不应 locked")
-		_check(bool(dp._pet_btns["pet_holydeer"].get_meta("locked", false)), "未收集宠物卡应标记 locked")
-		_check(not bool(dp._pet_btns["pet_rockturtle"].get_meta("locked", false)), "初始宠物卡不应 locked")
+		_check(bool(dp._cards["0:snow"].get_meta("locked", false)), "未解锁世界卡（snow）应标记 locked")
+		_check(not bool(dp._cards["0:forest"].get_meta("locked", false)), "主世界卡（forest）不应 locked")
+		dp._goto_step(1)
+		_check(dp._cards.size() == 4, "人物页应有 4 张卡，实为 %d" % dp._cards.size())
+		dp._goto_step(2)
+		_check(dp._cards.size() == 8, "宠物页应有 8 张卡，实为 %d" % dp._cards.size())
+		_check(bool(dp._cards["2:pet_holydeer"].get_meta("locked", false)), "未收集宠物卡应标记 locked")
+		_check(not bool(dp._cards["2:pet_rockturtle"].get_meta("locked", false)), "初始宠物卡不应 locked")
 
 		# 门禁 B：点它们应被拒绝并给出解锁提示
 		dp._select_theme("snow")
@@ -105,8 +108,9 @@ func _run() -> void:
 		_check(dp != null, "解锁后应能重开 DEPLOY 浮层")
 		if dp != null:
 			_drop_confirm(dp)
-			_check(not bool(dp._theme_btns["snow"].get_meta("locked", false)), "解锁后 snow 卡应解除 locked")
-			_check(not bool(dp._pet_btns["pet_frostwolf"].get_meta("locked", false)), "收集后 frostwolf 卡应解除 locked")
+			_check(not bool(dp._cards["0:snow"].get_meta("locked", false)), "解锁后 snow 卡应解除 locked")
+			dp._goto_step(2)
+			_check(not bool(dp._cards["2:pet_frostwolf"].get_meta("locked", false)), "收集后 frostwolf 卡应解除 locked")
 
 			# ---- D. 选择交互（解锁后全部可选） ----
 			dp._select_theme("snow")
@@ -121,7 +125,7 @@ func _run() -> void:
 				"取消出战应由替补转正，实为 %s/%s" % [dp._active_pet, dp._bench_pet])
 			dp._select_pet("pet_foxfire")     # 唯一出战再点 → 清空
 			_check(dp._active_pet == "", "再点唯一出战应清空出战位")
-			_check(dp._hint.text.contains("出战"), "正常选择后提示应回到常规文案，实为「%s」" % dp._hint.text)
+			_check(dp._hint.text.contains("选宠物"), "正常选择后提示应回到本页常规文案，实为「%s」" % dp._hint.text)
 
 			# ---- E. 出征校验与配置 ----
 			_got_cfg = {}

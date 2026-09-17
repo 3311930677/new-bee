@@ -98,6 +98,31 @@ static func city_config() -> Dictionary:
 	return v if v is Dictionary else {}
 
 
+static func talents_config() -> Dictionary:
+	var v: Variant = _load("res://data/talents.json")
+	return v if v is Dictionary else {}
+
+
+static func equip_config() -> Dictionary:
+	var v: Variant = _load("res://data/equip.json")
+	return v if v is Dictionary else {}
+
+
+static func skillbook_config() -> Dictionary:
+	var v: Variant = _load("res://data/skillbook.json")
+	return v if v is Dictionary else {}
+
+
+static func mounts_config() -> Dictionary:
+	var v: Variant = _load("res://data/mounts.json")
+	return v if v is Dictionary else {}
+
+
+static func titles_config() -> Dictionary:
+	var v: Variant = _load("res://data/titles.json")
+	return v if v is Dictionary else {}
+
+
 static func theme_config(theme: String) -> Dictionary:
 	var maps: Dictionary = maps_config()
 	var themes: Dictionary = maps.get("themes", {})

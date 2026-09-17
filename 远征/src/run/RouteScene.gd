@@ -29,7 +29,7 @@ var st := RunState.new()
 var _field := Control.new()
 var _lines: _RouteLines
 var _layer_l := Label.new()
-var _hp_fill := ColorRect.new()
+var _hp_fill := PanelContainer.new()   # 三段式木质血条填充（Kenney CC0），宽度即血量
 var _hp_l := Label.new()
 var _pot_l := Label.new()
 var _trait_l := Label.new()
@@ -190,28 +190,80 @@ func _build_bottom() -> void:
 	var hp_title := G.gold_label("生命", G.FS_SM, false, Color("7a5a2e"), false)
 	hp_row.add_child(hp_title)
 	var hp_bar := PanelContainer.new()
-	var bar_sb := StyleBoxFlat.new()
-	bar_sb.bg_color = Color("3a2a18")
-	bar_sb.set_corner_radius_all(4)
-	bar_sb.content_margin_left = 2.0
-	bar_sb.content_margin_top = 2.0
-	bar_sb.content_margin_right = 2.0
-	bar_sb.content_margin_bottom = 2.0
-	hp_bar.add_theme_stylebox_override("panel", bar_sb)
-	hp_bar.custom_minimum_size = Vector2(190, 18)
-	hp_row.add_child(hp_bar)
-	_hp_fill.color = Color("c05a3a")
-	_hp_fill.custom_minimum_size = Vector2(186, 14)
+	# 三段式血条（Kenney CC0）：银边轨道 + 陶红填充，两端帽不拉伸、中段平铺
+	var back_tex: Texture2D = G.res_tex("ui_kenney_hp_back")
+	var fill_tex: Texture2D = G.res_tex("ui_kenney_hp_fill")
+	if back_tex != null and fill_tex != null:
+		var back_sb := StyleBoxTexture.new()
+		back_sb.texture = back_tex
+		back_sb.texture_margin_left = 10.0
+		back_sb.texture_margin_right = 10.0
+		back_sb.texture_margin_top = 4.0
+		back_sb.texture_margin_bottom = 4.0
+		back_sb.content_margin_left = 3.0
+		back_sb.content_margin_top = 3.0
+		back_sb.content_margin_right = 3.0
+		back_sb.content_margin_bottom = 3.0
+		hp_bar.add_theme_stylebox_override("panel", back_sb)
+		hp_bar.custom_minimum_size = Vector2(192, 18)
+		hp_row.add_child(hp_bar)
+		var fill_sb := StyleBoxTexture.new()
+		fill_sb.texture = fill_tex
+		fill_sb.texture_margin_left = 10.0
+		fill_sb.texture_margin_right = 10.0
+		fill_sb.texture_margin_top = 4.0
+		fill_sb.texture_margin_bottom = 4.0
+		_hp_fill.add_theme_stylebox_override("panel", fill_sb)
+		_hp_fill.custom_minimum_size = Vector2(186, 12)
+	else:
+		# 素材缺失回退：深色轨道 + 陶红平色
+		var bar_sb := StyleBoxFlat.new()
+		bar_sb.bg_color = Color("3a2a18")
+		bar_sb.set_corner_radius_all(4)
+		bar_sb.content_margin_left = 2.0
+		bar_sb.content_margin_top = 2.0
+		bar_sb.content_margin_right = 2.0
+		bar_sb.content_margin_bottom = 2.0
+		hp_bar.add_theme_stylebox_override("panel", bar_sb)
+		hp_bar.custom_minimum_size = Vector2(190, 18)
+		hp_row.add_child(hp_bar)
+		var fill_flat := StyleBoxFlat.new()
+		fill_flat.bg_color = Color("c05a3a")
+		fill_flat.set_corner_radius_all(3)
+		_hp_fill.add_theme_stylebox_override("panel", fill_flat)
+		_hp_fill.custom_minimum_size = Vector2(186, 14)
 	hp_bar.add_child(_hp_fill)
 	_hp_l = G.gold_label("", G.FS_XS, false, Color("5a3a1e"), false)
 	_hp_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	hp_row.add_child(_hp_l)
 
 	var info_row := HBoxContainer.new()
-	info_row.add_theme_constant_override("separation", 24)
+	info_row.add_theme_constant_override("separation", 8)
 	box.add_child(info_row)
+	# 药剂小瓶图标 + 余量；词条用双刃图标（本局构筑的记号）
+	var pot_icon := TextureRect.new()
+	var pot_tex: Texture2D = G.res_tex("itm_potion_hp_m")
+	if pot_tex != null:
+		pot_icon.texture = pot_tex
+		pot_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		pot_icon.custom_minimum_size = Vector2(22, 22)
+		pot_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		pot_icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		info_row.add_child(pot_icon)
 	_pot_l = G.gold_label("", G.FS_SM, false, Color("7a5a2e"), false)
 	info_row.add_child(_pot_l)
+	var gap := Control.new()
+	gap.custom_minimum_size = Vector2(16, 0)
+	info_row.add_child(gap)
+	var tr_icon := TextureRect.new()
+	var tr_tex: Texture2D = G.res_tex("icon_double_edge")
+	if tr_tex != null:
+		tr_icon.texture = tr_tex
+		tr_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		tr_icon.custom_minimum_size = Vector2(22, 22)
+		tr_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		tr_icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		info_row.add_child(tr_icon)
 	_trait_l = G.gold_label("", G.FS_SM, false, Color("7a5a2e"), false)
 	info_row.add_child(_trait_l)
 
@@ -230,10 +282,10 @@ func _refresh() -> void:
 	# HP
 	var m := st.max_hp()
 	var hp := m if st.hp < 0 else st.hp
-	_hp_fill.custom_minimum_size.x = 186.0 * clampf(float(hp) / float(m), 0.0, 1.0)
+	_hp_fill.custom_minimum_size.x = maxf(8.0, 186.0 * clampf(float(hp) / float(m), 0.0, 1.0))
 	_hp_l.text = "%d / %d" % [hp, m]
-	_pot_l.text = "药剂 ×%d" % st.potions
-	_trait_l.text = "词条 ×%d" % st.traits.size()
+	_pot_l.text = "×%d" % st.potions
+	_trait_l.text = "×%d" % st.traits.size()
 
 
 # ================= 节点进入 =================

@@ -6,6 +6,9 @@ extends Control
 const VIEW_W := 480.0
 const VIEW_H := 800.0
 
+# 新 class_name 尚未进编辑器全局类缓存，按项目惯例 preload 路径取脚本
+const GrowthPanelScript := preload("res://src/ui/GrowthPanel.gd")
+
 const SPRITE_SCALE := 1.9
 const PED_Y := 500.0            # 金色圆台中心 y
 const BASE_OFFSET := 59.0       # 清理后素材脚底相对帧中心的偏移（基线 y=123）
@@ -27,6 +30,7 @@ var _codex: CodexPanel = null
 var _gacha: GachaPanel = null      # 召唤（魂石抽宠物）
 var _exchange: ExchangePanel = null  # 荣誉兑换
 var _settings: SettingsPanel = null  # 设置（存档/键位）
+var _growth: Control = null      # 养成 6 线（GrowthPanel）
 
 
 func _ready() -> void:
@@ -126,15 +130,21 @@ func _build_top(role: Dictionary) -> void:
 		num_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		row.add_child(num_l)
 
-	# 召唤 / 兑换：养成大入口（魂石抽宠 · 荣誉换补给），压在钱包下、展示台上
-	var gacha_btn := G.gold_button("召 唤", 138, 36, G.FS_MD)
-	gacha_btn.position = Vector2(VIEW_W / 2.0 - 145.0, 118)
+	# 召唤 / 养成 / 兑换：三大系统入口（抽宠 · 六线养成 · 荣誉换补给），压在钱包下、展示台上
+	var gacha_btn := G.gold_button("召 唤", 130, 36, G.FS_MD)
+	gacha_btn.position = Vector2(38, 118)
 	gacha_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_open_gacha())
 	add_child(gacha_btn)
-	var exch_btn := G.gold_button("兑 换", 138, 36, G.FS_MD)
-	exch_btn.position = Vector2(VIEW_W / 2.0 + 7.0, 118)
+	var growth_btn := G.gold_button("养 成", 130, 36, G.FS_MD)
+	growth_btn.position = Vector2(175, 118)
+	growth_btn.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_open_growth())
+	add_child(growth_btn)
+	var exch_btn := G.gold_button("兑 换", 130, 36, G.FS_MD)
+	exch_btn.position = Vector2(312, 118)
 	exch_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_open_exchange())
@@ -386,6 +396,17 @@ func _open_exchange() -> void:
 		_exchange.queue_free()
 		_exchange = null)
 	add_child(_exchange)
+
+
+# ---------- 养成入口（六线：天赋/装备/宠物/技能书/坐骑/称号） ----------
+func _open_growth() -> void:
+	if _growth != null:
+		return
+	_growth = GrowthPanelScript.new()
+	_growth.closed.connect(func():
+		_growth.queue_free()
+		_growth = null)
+	add_child(_growth)
 
 
 # ---------- 设置入口（存档导出导入 / 键位说明 / 回标题 / 重置） ----------

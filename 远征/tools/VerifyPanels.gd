@@ -50,9 +50,9 @@ func _verify_exchange() -> void:
 	add_child(ex)
 	await get_tree().process_frame  # 等 _ready 构建完
 
-	# 1. 兑换表加载
+	# 1. 兑换表加载（6 条货币/券 + 8 条养成材料）
 	var entries: Array = ex.entries()
-	_check(entries.size() == 6, "兑换表应有 6 条，实为 %d" % entries.size())
+	_check(entries.size() == 14, "兑换表应有 14 条，实为 %d" % entries.size())
 
 	# 2. 货币包兑换：扣荣誉 → 金币入钱包
 	_check(ex.do_exchange("gold_pack_s"), "gold_pack_s 应兑换成功")
