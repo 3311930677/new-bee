@@ -162,6 +162,21 @@ func _build_top(role: Dictionary) -> void:
 	b.position = Vector2(-120, 84)   # 让出顶部两行：左上个人信息、右上四币与经验
 	add_child(b)
 
+	# 主线目标一行：一进主页就知道"现在该干什么"；点开是世界志（题记/正史/首领来历）
+	# 宽度收到 304 并居中，避开右侧竖列按钮（x≥392），不跟它抢那一列
+	var goal := G.main_goal()
+	var gl := G.gold_label("目标 · " + G.main_goal_short(), G.FS_XS, false,
+		Color("f0d9a0", 0.94), false)
+	gl.position = Vector2(88, 142)
+	gl.custom_minimum_size = Vector2(304, 0)
+	gl.mouse_filter = Control.MOUSE_FILTER_STOP
+	gl.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	gl.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			G.show_info_popup(gl, String(goal.get("title", "当前目标")),
+				goal.get("lines", [])))
+	add_child(gl)
+
 	# 账号小字与「重新创建角色」撤出顶栏：一个和头像/名字挤在一起，一个压住货币条。
 	# 账号不再常驻主页（游客没信息量），重建入口挪进「设置」面板。
 

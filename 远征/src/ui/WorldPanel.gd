@@ -100,6 +100,11 @@ func _slide(tid: String, idx: int, order: Array) -> Control:
 		lines.append("通关「%s」后解锁" % G.world_name(prev_tid))
 		footer = "← → 翻阅其余大陆"
 
+	# 志异题记：让每片大陆除了"状态"还能读出点味道（文案在 data/lore.json）
+	var epi := String(G.theme_lore(tid).get("epigraph", ""))
+	if not epi.is_empty():
+		lines.insert(0, "「%s」" % epi)
+
 	return SlideCardScript.new({
 		"kicker": "秘 境 %02d / %02d" % [idx + 1, order.size()],
 		"title": G.world_name(tid),

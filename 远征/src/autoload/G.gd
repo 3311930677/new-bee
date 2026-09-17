@@ -222,6 +222,7 @@ func _load_save() -> void:
 		prog["pet_stat"] = pst if pst is Dictionary else {}
 		var ts: Variant = pd.get("tips_seen", {})   # 已看过的引导弹层，别每次开面板都弹
 		prog["tips_seen"] = ts if ts is Dictionary else {}
+		prog["lore_seen"] = bool(pd.get("lore_seen", false))   # 序章是否已看（看过的老档不再弹）
 	ensure_starter_pets()
 	var c: Variant = data.get("city", {})
 	if c is Dictionary:
@@ -1446,6 +1447,110 @@ func growth_bonuses(role_id := "") -> Dictionary:
 			if out.has(k):
 				out[k] = float(out[k]) + float(bonus[k])
 	return out
+
+
+# ================= 世界观与叙事（世界志，表驱动 data/lore.json）=================
+# 剧情文本一律走这里读表；改文案只动 data/lore.json，代码不写死句子。
+
+func lore() -> Dictionary:
+	return TableCache.lore_config()
+
+
+func world_setting() -> Dictionary:
+	var w: Variant = lore().get("world", {})
+	return w if w is Dictionary else {}
+
+
+func prologue_pages() -> Array:
+	var p: Variant = lore().get("prologue", [])
+	return p if p is Array else []
+
+
+## 某处秘境的志异：epigraph（题记）/ lore（正史）/ boss_lore（首领来历）+ name/boss（由表推导）
+func theme_lore(theme_id: String) -> Dictionary:
+	var all: Variant = lore().get("themes", {})
+	var out: Dictionary = {}
+	if all is Dictionary and (all as Dictionary).has(theme_id):
+		var d: Variant = (all as Dictionary)[theme_id]
+		if d is Dictionary:
+			out = (d as Dictionary).duplicate()
+	out["name"] = world_name(theme_id)
+	out["boss"] = theme_boss_name(theme_id)
+	return out
+
+
+## 某秘境首领名（从 maps.json 的 boss id 去 monsters.json 取，避免两处各写一份名字）
+func theme_boss_name(theme_id: String) -> String:
+	var bid := String(TableCache.theme_config(theme_id).get("boss", ""))
+	if bid.is_empty():
+		return "首领"
+	return String(TableCache.get_monster(bid).get("name", bid))
+
+
+func lore_seen() -> bool:
+	return bool(prog.get("lore_seen", false))
+
+
+## 序章看完（或跳过）后落盘：老玩家不再被拦，主城也能提供「重看序章」
+func mark_lore_seen() -> void:
+	prog["lore_seen"] = true
+	save_game()
+
+
+## 当前主线目标：按 theme_order 找「第一片还没通关的秘境」，连同它的志异一起给出
+## 返回 {theme, title, lines}；全部通关则给收束目标
+func main_goal() -> Dictionary:
+	var goals: Variant = lore().get("goals", {})
+	var g: Dictionary = goals if goals is Dictionary else {}
+	var order := theme_order()
+	var unlocked := int(prog.get("worlds_unlocked", 1))
+	for i in order.size():
+		var tid := String(order[i])
+		if is_world_cleared(tid):
+			continue
+		var tl := theme_lore(tid)
+		var lines: Array = []
+		var epi := String(tl.get("epigraph", ""))
+		if not epi.is_empty():
+			lines.append("「%s」" % epi)
+		var lo := String(tl.get("lore", ""))
+		if not lo.is_empty():
+			lines.append(lo)
+		var wd := String(tl.get("warden", ""))
+		if not wd.is_empty() and wd != "无":
+			lines.append("此地故人：%s" % wd)
+		var bl := String(tl.get("boss_lore", ""))
+		if not bl.is_empty():
+			lines.append(bl)
+		var reachable := i + 1 <= unlocked
+		var hint := ""
+		if reachable:
+			hint = String(g.get("next_hint", ""))
+			hint = hint.replace("%s", String(tl.get("name", tid)))
+		else:
+			hint = String(g.get("locked_hint", ""))
+		lines.append("")
+		lines.append(hint)
+		return {
+			"theme": tid,
+			"title": "当前目标 · 讨伐「%s」" % String(tl.get("boss", "首领")),
+			"lines": lines,
+		}
+	return {
+		"theme": "",
+		"title": "当前目标",
+		"lines": [String(g.get("after_all", "八碑归位。"))],
+	}
+
+
+## 主界面那一行摘要：给个小字行用（不带换行的一行）
+func main_goal_short() -> String:
+	var goal := main_goal()
+	var tid := String(goal.get("theme", ""))
+	if tid.is_empty():
+		return "八碑归位 · 回王城正殿"
+	var tl := theme_lore(tid)
+	return "%s · 讨伐「%s」" % [String(tl.get("name", tid)), String(tl.get("boss", "首领"))]
 
 
 # ================= GM 开发者控制台 =================

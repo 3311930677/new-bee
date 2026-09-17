@@ -130,9 +130,13 @@ func _do_login(guest: bool) -> void:
 			_toast_msg("请输入密码")
 			return
 		G.account = acc
-	# 已有存档（角色已创建）→ 直接回主城；首次登录才进捏人页
+	# 已有存档（角色已创建）→ 直接回主城；首次登录才进捏人页。
+	# 还没看过序章的话先在序章停一站（看过的不再拦，免得打断老玩家）
 	if G.has_profile():
-		get_tree().change_scene_to_file("res://src/ui/GameHome.tscn")
+		var next := "res://src/ui/GameHome.tscn"
+		if not G.lore_seen():
+			next = "res://src/ui/Prologue.tscn"
+		get_tree().change_scene_to_file(next)
 	else:
 		get_tree().change_scene_to_file("res://src/ui/CreateRole.tscn")
 
