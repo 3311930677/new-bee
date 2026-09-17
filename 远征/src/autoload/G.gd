@@ -1564,7 +1564,8 @@ func _build_res_index() -> void:
 	if _res_indexed:
 		return
 	_res_indexed = true
-	var batches := ["generated_001_100", "generated_101_200", "generated_201_333"]
+	var batches := ["generated_001_100", "generated_101_200", "generated_201_333",
+		"generated_334_341", "generated_342_353"]
 	# 先收 ready/（成品：已裁到设计尺寸、alpha 已硬化），再拿 source/ 母稿补位。
 	# 顺序不能反——source 是 970~2170px 的原始大图，既吃显存，也会把未受容器约束的
 	# TextureRect 的最小尺寸钳到原图大小（曾导致召唤横幅 2172×724 铺满面板压住文案）

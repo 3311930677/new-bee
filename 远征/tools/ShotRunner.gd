@@ -103,6 +103,14 @@ func _setup() -> void:
 			ew.pressed = true
 			ew.button_index = MOUSE_BUTTON_LEFT
 			hw.call("_open_worlds", ew)
+		"worlds":
+			_demo_prog()
+			var hw: Node = load("res://src/ui/GameHome.tscn").instantiate()
+			add_child(hw)
+			var ew := InputEventMouseButton.new()
+			ew.pressed = true
+			ew.button_index = MOUSE_BUTTON_LEFT
+			hw.call("_open_worlds", ew)
 		"codex":
 			_demo_prog()
 			var hc: Node = load("res://src/ui/GameHome.tscn").instantiate()
