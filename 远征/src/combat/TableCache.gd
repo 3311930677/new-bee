@@ -93,6 +93,11 @@ static func maps_config() -> Dictionary:
 	return v if v is Dictionary else {}
 
 
+static func city_config() -> Dictionary:
+	var v: Variant = _load("res://data/city.json")
+	return v if v is Dictionary else {}
+
+
 static func theme_config(theme: String) -> Dictionary:
 	var maps: Dictionary = maps_config()
 	var themes: Dictionary = maps.get("themes", {})
