@@ -1,8 +1,8 @@
 # CreateRole.gd —— 创建角色（参考"创建角色"风：昵称输入 + 随机取名 + 性别/职业切换 + 单角色展示 + 羊皮纸说明）
 extends Control
 
-const BG_W := 941.0
-const BG_H := 1672.0
+const BG_W := 971.0
+const BG_H := 1619.0
 const VIEW_W := 480.0
 const VIEW_H := 800.0
 
@@ -43,7 +43,8 @@ func _ready() -> void:
 # ---------- 背景 ----------
 func _build_background() -> void:
 	var tr := TextureRect.new()
-	tr.texture = load("res://image/background/enter.png")
+	tr.texture = G.res_tex("bg_abyss") if G.res_tex("bg_abyss") != null \
+		else load("res://image/background/enter.png")  # 深渊暗调：托底四职业立绘
 	tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	tr.stretch_mode = TextureRect.STRETCH_SCALE
 	tr.size = Vector2(VIEW_W, VIEW_W * BG_H / BG_W)
