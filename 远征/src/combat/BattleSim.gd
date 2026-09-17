@@ -1,4 +1,4 @@
-﻿# BattleSim.gd —— 确定性战斗模拟核心（玩法文档 §2.0 §2.1）
+# BattleSim.gd —— 确定性战斗模拟核心（玩法文档 §2.0 §2.1）
 # 纯逻辑无场景依赖：30 tick/s 固定步进、种子随机、整数伤害。
 # UI 层（BattleScene）每渲染帧按速度倍率步进并消费 events。
 class_name BattleSim
@@ -18,9 +18,13 @@ var finished := false
 var result := ""                      # "" / "victory" / "defeat"
 var auto_mode := false                # 托管
 var potions_left := 0                 # 治疗药剂
+var potion_cd_ticks := 0              # 药剂 CD（8 秒一瓶，防连点误用）
+const POTION_CD := 8 * 30
 var pet_bench_id := ""                # 替补宠物 id
 var pet_swap_used := false
 var enemy_scale := 1.0                # 层难度 ×(1+0.12N)
+var pet_level := 1                    # 宠物等级随人物等级（v0 简化；有 pet_stats 快照时以快照为准）
+var pet_stats: Dictionary = {}        # 局外宠物养成快照 {pid: {level, stat_mult, growth_mult}}
 var _next_uid := 1
 var _by_uid: Dictionary = {}
 
@@ -33,6 +37,8 @@ var role_uid: int = 0
 func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 	rng.seed = seed
 	enemy_scale = 1.0 + 0.12 * float(int(enemy_cfg.get("layer", 1)))
+	pet_level = maxi(1, int(ally_cfg.get("level", 1)))
+	pet_stats = ally_cfg.get("pet_stats", {})
 	_build_role(ally_cfg)
 	if String(ally_cfg.get("active_pet", "")) != "":
 		_build_pet(String(ally_cfg.active_pet), false)
@@ -40,7 +46,8 @@ func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 		pet_bench_id = String(ally_cfg.bench_pet)
 	potions_left = int(ally_cfg.get("potions", 0))
 	_build_enemies(String(enemy_cfg.get("theme", "forest")),
-		String(enemy_cfg.get("node_type", "normal")))
+		String(enemy_cfg.get("node_type", "normal")),
+		String(enemy_cfg.get("lead_mon", "")))
 	# 开场词条钩子
 	for u in units:
 		if u.traits != null:
@@ -66,6 +73,14 @@ func _build_role(cfg: Dictionary) -> void:
 	stats.def = int(float(stats.def) * (1.0 + ts.passive_def_pct()))
 	stats.spd = stats.spd * (1.0 + ts.passive_spd_pct())
 	stats.crit += ts.passive_crit_add()
+	# 局外养成加成（天赋/装备/坐骑/称号聚合，由 G.gd 计算后传入；缺省不影响）
+	var gb: Dictionary = cfg.get("growth", {})
+	if not gb.is_empty():
+		stats.max_hp = int(float(stats.max_hp) * (1.0 + float(gb.get("maxhp_pct", 0.0))) + float(gb.get("hp_add", 0)))
+		stats.atk = int(float(stats.atk) * (1.0 + float(gb.get("atk_pct", 0.0))) + float(gb.get("atk_add", 0.0)))
+		stats.def = int(float(stats.def) * (1.0 + float(gb.get("def_pct", 0.0))) + float(gb.get("def_add", 0.0)))
+		stats.spd = stats.spd * (1.0 + float(gb.get("spd_pct", 0.0)))
+		stats.crit += float(gb.get("crit_add", 0.0))
 	var u := Combatant.new(new_uid(), "role", "ally", role)
 	u.traits = ts
 	u.base_max_hp = maxi(1, int(stats.max_hp))
@@ -74,7 +89,7 @@ func _build_role(cfg: Dictionary) -> void:
 	u.base_spd = stats.spd
 	u.base_crit = clampf(stats.crit, 0.0, 0.95)
 	u.crit_dmg = ts.crit_dmg_override() if ts.crit_dmg_override() > 0 else 1.5
-	u.energy_gain_pct = ts.passive_energy_gain_pct()
+	u.energy_gain_pct = ts.passive_energy_gain_pct() + float(gb.get("energy_pct", 0.0))
 	u.cc_resist = clampf(ts.passive_cc_resist(), 0.0, 0.9)
 	u.attack_range = String(role.get("attack_range", "melee"))
 	u.row = Combatant.ROW_FRONT if u.attack_range == "melee" else Combatant.ROW_BACK
@@ -88,6 +103,12 @@ func _build_role(cfg: Dictionary) -> void:
 	for sid in role.get("skills", []):
 		var sd := TableCache.get_skill(String(sid))
 		if not sd.is_empty():
+			# 技能书等级：每级 k+5%（skillbook.json），局外升级局内生效
+			var slv := int((cfg.get("skill_levels", {}) as Dictionary).get(String(sid), 1))
+			if slv > 1:
+				sd = sd.duplicate()
+				var k_per := float(TableCache.skillbook_config().get("k_per_level", 0.05))
+				sd["k"] = snappedf(float(sd.get("k", 0.0)) * (1.0 + k_per * float(slv - 1)), 0.001)
 			u.skills.append({"id": String(sid), "def": sd, "cd_left": 0})
 	_add_unit(u)
 
@@ -98,15 +119,20 @@ func _build_pet(pet_id: String, is_bench_swap: bool) -> void:
 		push_warning("宠物不存在：%s" % pet_id)
 		return
 	var base: Dictionary = pet.get("base", {})
-	# 宠物等级随人物等级（v0 简化）；主人的召唤流派加成
+	# 宠物养成快照优先（升级/突破/资质），否则沿用人物等级（v0 简化）
+	var growth: Dictionary = pet.get("growth", {})
+	var ps: Dictionary = pet_stats.get(pet_id, {})
+	var gl := float(int(ps.get("level", pet_level)) - 1)
+	var gmult := float(ps.get("growth_mult", 1.0))
 	var owner := unit_by_uid(role_uid)
 	var stat_pct := 0.0
 	if owner != null and owner.traits != null:
 		stat_pct = owner.traits.pet_stat_pct()
+	var mult := (1.0 + stat_pct) * float(ps.get("stat_mult", 1.0))
 	var u := Combatant.new(new_uid(), "pet", "ally", pet)
-	u.base_max_hp = maxi(1, int(float(int(base.get("hp", 50))) * (1.0 + stat_pct)))
-	u.base_atk = maxi(1, int(float(int(base.get("atk", 10))) * (1.0 + stat_pct)))
-	u.base_def = maxi(0, int(float(int(base.get("def", 5))) * (1.0 + stat_pct)))
+	u.base_max_hp = maxi(1, int((float(int(base.get("hp", 50))) + float(growth.get("hp", 0)) * gl * gmult) * mult))
+	u.base_atk = maxi(1, int((float(int(base.get("atk", 10))) + float(growth.get("atk", 0)) * gl * gmult) * mult))
+	u.base_def = maxi(0, int((float(int(base.get("def", 5))) + float(growth.get("def", 0)) * gl * gmult) * mult))
 	u.base_spd = float(base.get("spd", 1.0))
 	u.base_crit = 0.05
 	u.attack_range = String(pet.get("attack_range", "melee"))
@@ -120,26 +146,29 @@ func _build_pet(pet_id: String, is_bench_swap: bool) -> void:
 	_add_unit(u)
 
 
-func _build_enemies(theme: String, node_type: String) -> void:
+## lead_mon：探索层撞到的那只怪（遇敌继承——撞谁谁领头，其余仍按池随机补位）
+func _build_enemies(theme: String, node_type: String, lead_mon := "") -> void:
 	var tc := TableCache.theme_config(theme)
 	var pool: Array = tc.get("monsters", [])
 	if pool.is_empty():
 		push_error("主题无怪物池：%s" % theme)
 		return
+	var pick := func() -> String:
+		return String(pool[rng.randi_range(0, pool.size() - 1)])
 	match node_type:
 		"elite":
 			var ec: Dictionary = TableCache.nodes_config().get("enemy", {})
 			var hp_atk := float(ec.get("elite_hp_atk_mult", 1.8))
 			var def_m := float(ec.get("elite_def_mult", 1.3))
-			var elite := _spawn_monster(String(pool[rng.randi_range(0, pool.size() - 1)]),
+			var elite := _spawn_monster(lead_mon if lead_mon != "" else pick.call(),
 				Combatant.ROW_FRONT, 2, hp_atk, def_m)
 			_apply_elite_affix(elite)
-			_spawn_monster(String(pool[rng.randi_range(0, pool.size() - 1)]), Combatant.ROW_FRONT, 1)
-			_spawn_monster(String(pool[rng.randi_range(0, pool.size() - 1)]), Combatant.ROW_BACK, 2)
+			_spawn_monster(pick.call(), Combatant.ROW_FRONT, 1)
+			_spawn_monster(pick.call(), Combatant.ROW_BACK, 2)
 		"boss":
 			_spawn_monster(String(tc.get("boss", "")), Combatant.ROW_FRONT, 2)
-			_spawn_monster(String(pool[rng.randi_range(0, pool.size() - 1)]), Combatant.ROW_FRONT, 1)
-			_spawn_monster(String(pool[rng.randi_range(0, pool.size() - 1)]), Combatant.ROW_BACK, 2)
+			_spawn_monster(pick.call(), Combatant.ROW_FRONT, 1)
+			_spawn_monster(pick.call(), Combatant.ROW_BACK, 2)
 		_:
 			var n := 3 + (1 if rng.randf() < 0.5 else 0)
 			var front_cols := [2, 1]
@@ -147,7 +176,7 @@ func _build_enemies(theme: String, node_type: String) -> void:
 			var fi := 0
 			var bi := 0
 			for i in n:
-				var mon_id := String(pool[rng.randi_range(0, pool.size() - 1)])
+				var mon_id: String = (lead_mon if i == 0 and lead_mon != "" else pick.call())
 				if i % 2 == 0 and fi < front_cols.size():
 					_spawn_monster(mon_id, Combatant.ROW_FRONT, int(front_cols[fi]))
 					fi += 1
@@ -241,12 +270,13 @@ func cast_skill(uid: int, skill_id: String) -> bool:
 
 
 func use_potion() -> bool:
-	if potions_left <= 0 or finished:
+	if potions_left <= 0 or finished or potion_cd_ticks > 0:
 		return false
 	var role := role_unit()
 	if role == null or not role.alive:
 		return false
 	potions_left -= 1
+	potion_cd_ticks = POTION_CD
 	var amt := DamageCalc.heal_amount(role.get_max_hp(), 0, 0.35, 0.0)
 	role.heal(amt, role, self)
 	return true
@@ -271,6 +301,9 @@ func swap_pet() -> bool:
 func step() -> void:
 	if finished:
 		return
+	# 0. 药剂 CD 计时（防连点误用）
+	if potion_cd_ticks > 0:
+		potion_cd_ticks -= 1
 	# 1. BuffSystem.tick
 	for u in units:
 		if u.alive:

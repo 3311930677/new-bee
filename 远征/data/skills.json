@@ -11,7 +11,7 @@
     "desc": "强制目标攻击自己 3s" },
   { "id": "zs_duanzui", "role": "zs", "name": "断罪", "k": 2.5, "cd": 15, "cost": 60,
     "target": "enemy_single", "effect": { "type": "execute_cond", "hp_below": 0.30, "k_to": 4.0 },
-    "desc": "目标 HP<30% 时 k→4.0" },
+    "desc": "目标 HP<30% 时伤害大增" },
 
   { "id": "ck_lianzhu", "role": "ck", "name": "连珠", "k": 0.9, "hits": 2, "cd": 5, "cost": 20,
     "target": "enemy_single", "effect": null, "desc": "二段连射" },
@@ -38,7 +38,7 @@
     "desc": "己方单体 20%HP 护盾" },
   { "id": "fs_yanmie", "role": "fs", "name": "湮灭", "k": 3.0, "cd": 18, "cost": 70,
     "target": "enemy_single", "effect": { "type": "vs_controlled", "k_to": 4.5 },
-    "desc": "对受控目标 k→4.5" },
+    "desc": "对受控目标伤害大增" },
 
   { "id": "fz_shengyu", "role": "fz", "name": "圣愈", "k": 0, "cd": 5, "cost": 20,
     "target": "ally_single", "effect": { "type": "heal", "hp_pct": 0.15, "atk_k": 0.5 },

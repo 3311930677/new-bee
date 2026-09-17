@@ -8,6 +8,7 @@ var _fails := 0
 
 
 func _ready() -> void:
+	G.SAVE_PATH = "user://save_verify_route.json"  # 别污染真实存档
 	await _run()
 	get_tree().quit(0 if _fails == 0 else 1)
 
@@ -174,9 +175,10 @@ func _run() -> void:
 		_check(scene.st.finished and scene.st.result == "clear", "局状态应为通关")
 		_check(scene.st.expedition > 0 and scene.st.soul >= 15,
 			"通关应累计远征币/灵魂石，实为 %d/%d" % [scene.st.expedition, scene.st.soul])
-		_check(int(G.wallet.get("gold", 0)) == int(wallet_bak.get("gold", 0)) + scene.st.gold,
-			"结算应入账金币到钱包，实为 %d（原 %d + 局内 %d）" %
-			[int(G.wallet.get("gold", 0)), int(wallet_bak.get("gold", 0)), scene.st.gold])
+		# 满血通关吃「毫发无损 +10%」加成，校验式需计入局外加成部分
+		_check(int(G.wallet.get("gold", 0)) == int(wallet_bak.get("gold", 0)) + scene.st.gold + scene._bonus_gold,
+			"结算应入账金币到钱包，实为 %d（原 %d + 局内 %d + 加成 %d）" %
+			[int(G.wallet.get("gold", 0)), int(wallet_bak.get("gold", 0)), scene.st.gold, scene._bonus_gold])
 		_check(scene._settled, "入账应只做一次（_settled 置位）")
 	scene.queue_free()
 	await get_tree().process_frame

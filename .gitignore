@@ -1,0 +1,9 @@
+# Godot 缓存
+.godot/
+*.godot
+
+# 临时备份
+*.bak
+
+# Python 临时产物
+tools/__pycache__/
