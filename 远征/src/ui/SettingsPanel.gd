@@ -121,14 +121,21 @@ func _build() -> void:
 	_content.add_child(help)
 
 	# ---- 危险区：回标题 / 重置存档（二次确认） ----
-	var title_btn := G.gold_button("回到标题", 196, 40, G.FS_SM)
-	title_btn.position = Vector2(0, 394)
+	# 「重新创建角色」从主页顶栏挪到这里（主页顶部要留给头像/名字/货币条）
+	var remake_btn := G.gold_button("重建角色", 128, 40, G.FS_SM)
+	remake_btn.position = Vector2(0, 394)
+	remake_btn.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			get_tree().change_scene_to_file("res://src/ui/CreateRole.tscn"))
+	_content.add_child(remake_btn)
+	var title_btn := G.gold_button("回标题", 128, 40, G.FS_SM)
+	title_btn.position = Vector2(140, 394)
 	title_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_on_title())
 	_content.add_child(title_btn)
-	_reset_btn = G.gold_button("重置存档", 196, 40, G.FS_SM)
-	_reset_btn.position = Vector2(212, 394)
+	_reset_btn = G.gold_button("重置存档", 128, 40, G.FS_SM)
+	_reset_btn.position = Vector2(280, 394)
 	_reset_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_on_reset_click())

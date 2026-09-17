@@ -1772,8 +1772,6 @@ func gold_button(text: String, w := 0.0, h := 42.0, font_size := FS_MD) -> Contr
 	# 按压反馈：微暗 + 微缩，松开回弹（避免静态死板的模板感）
 	root.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT:
-			if e.pressed:
-				Audio.sfx("ui_click")   # 全局按钮点击音（缺素材时静默）
 			root.pivot_offset = root.size * 0.5
 			var tw := root.create_tween()
 			if e.pressed:
@@ -1870,7 +1868,6 @@ func info_button(title: String, lines: Array, d := 24.0) -> Control:
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	root.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			Audio.sfx("ui_click")
 			root.pivot_offset = root.size * 0.5
 			var tw := root.create_tween()
 			tw.tween_property(root, "scale", Vector2.ONE * 0.92, 0.05)
