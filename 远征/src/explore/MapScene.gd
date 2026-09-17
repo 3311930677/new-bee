@@ -6,7 +6,7 @@
 class_name MapScene
 extends Control
 
-signal map_finished(result: String)  # "cleared"（走传送阵）/ "defeat"（战斗失利）
+signal map_finished(result: String)  # "cleared"（走传送阵）/ "defeat"（战斗失利）/ "exited"（中途撤离）
 
 ## 场景切入前由 RouteScene 写入：{"node": 节点字典, "run": RunState}
 static var pending_cfg: Dictionary = {}
@@ -36,6 +36,7 @@ var _monsters: Array[_MapMonster] = []
 var _contact_mon: _MapMonster = null
 var _interactable: _Interactable = null   # 非战斗节点物件（宝箱/事件/商店/篝火）
 var _remover: Control = null              # 篝火词条删除浮层
+var _exit_ui: Control = null              # 撤离确认浮层
 var _battle_layer: CanvasLayer = null
 var _battle: BattleScene = null
 var _hud := CanvasLayer.new()
@@ -97,14 +98,88 @@ func _build_ground() -> void:
 	add_child(tl)
 
 
-func _build_world() -> void:
-	_world.y_sort_enabled = true
-	add_child(_world)
+func _build_ground_detail(cols: int, rows: int) -> void:
+	# 地面细节层：主题土路套件（path_sheet，4×4＝16 块位掩码地形）+ 程序磨损斑块。
+	# 目的：打破 48×48 地砖满屏重复的“棋盘感”。必须先于 _world 入树（压在地砖上、实体下）。
+	var asset_dir := String(_map_cfg.get("asset_dir", "res://image/map"))
+	var sheet := String(_theme_cfg.get("path_sheet", ""))
+	var path := _path_cells(cols, rows)
+	var road: Array = []  # 路面格中心：主题无 4×4 套件时改用程序绘制的踩实土路
+	if sheet != "":
+		var tex: Texture2D = load("%s/%s.png" % [asset_dir, sheet])
+		if tex != null:
+			var tl := TileMapLayer.new()
+			var ts := TileSet.new()
+			ts.tile_size = Vector2i(48, 48)
+			var src := TileSetAtlasSource.new()
+			src.texture = tex
+			src.texture_region_size = Vector2i(48, 48)
+			for i in 16:  # 套件按 00~15 逐行排列，编号即北1/东2/南4/西8 的出口位之和
+				src.create_tile(Vector2i(i % 4, i / 4))
+			ts.add_source(src, 0)
+			tl.tile_set = ts
+			for cell: Vector2i in path.keys():
+				var mask := _path_mask(cell, path)
+				tl.set_cell(cell, 0, Vector2i(mask % 4, mask / 4), 0)
+			add_child(tl)
+		else:
+			sheet = ""
+	if sheet == "":
+		for cell: Vector2i in path.keys():
+			road.append(Vector2(float(cell.x) * 48.0 + 24.0, float(cell.y) * 48.0 + 24.0))
 
+	var tint := Color(String(_theme_cfg.get("tint", "ffffff")))
+	var earth := Color("6b5334")
+	var road_col := Color(earth.r * tint.r, earth.g * tint.g, earth.b * tint.b)
+	var wear := _GroundWear.new()
+	wear.setup(cols, rows, _rng, path, road, road_col)
+	add_child(wear)
+
+
+## 蜿蜒土路：自出生点（底部中央）走向传送阵（顶部中央），随机左右游走并偶尔加宽
+func _path_cells(cols: int, rows: int) -> Dictionary:
+	var cells: Dictionary = {}
+	var cx := cols / 2
+	var y := rows - 3
+	while y >= 2:
+		cells[Vector2i(cx, y)] = true
+		var roll := _rng.randf()
+		if roll < 0.34:
+			cx -= 1
+		elif roll > 0.66:
+			cx += 1
+		cx = clampi(cx, 4, cols - 5)
+		if _rng.randf() < 0.28:  # 加宽一节：岔口由位掩码自动出三岔/四岔
+			var side := 1 if _rng.randf() < 0.5 else -1
+			cells[Vector2i(clampi(cx + side, 2, cols - 3), y)] = true
+		y -= 1
+	return cells
+
+
+## 由相邻格推出出口掩码（北 1 / 东 2 / 南 4 / 西 8）
+func _path_mask(cell: Vector2i, cells: Dictionary) -> int:
+	var m := 0
+	if cells.has(cell + Vector2i(0, -1)):
+		m |= 1
+	if cells.has(cell + Vector2i(1, 0)):
+		m |= 2
+	if cells.has(cell + Vector2i(0, 1)):
+		m |= 4
+	if cells.has(cell + Vector2i(-1, 0)):
+		m |= 8
+	return m
+
+
+func _build_world() -> void:
 	var cols := int(_map_cfg.get("map_cols", 32))
 	var rows := int(_map_cfg.get("map_rows", 42))
 	var map_w := float(cols * 48)
 	var map_h := float(rows * 48)
+
+	_build_ground_detail(cols, rows)  # 先于 _world 入树：绘制在地砖之上、实体之下
+
+	_world.y_sort_enabled = true
+	add_child(_world)
 
 	_build_decos(cols, rows)
 	_build_portal(map_w)
@@ -122,13 +197,13 @@ func _build_decos(cols: int, rows: int) -> void:
 	var spawn := Vector2(float(cols) * 24.0, float(rows) * 48.0 - 100.0)
 	for gy in rows - 1:
 		for gx in cols:
-			var center_col := absi(gx - cols / 2) <= 1  # 中央通道密度减半
-			var d := density * (0.5 if center_col else 1.0)
+			var center_col := absi(gx - cols / 2) <= 1  # 中央通道密度略降（0.65），保证通行但不显秃
+			var d := density * (0.65 if center_col else 1.0)
 			if _rng.randf() > d:
 				continue
 			var pos := Vector2(gx * 48.0 + _rng.randf_range(8, 40),
 				gy * 48.0 + _rng.randf_range(8, 40))
-			if pos.distance_to(spawn) < 220.0 or pos.y < 200.0:
+			if pos.distance_to(spawn) < 110.0 or pos.y < 200.0:
 				continue
 			var deco := _Deco.new()
 			var tex: Texture2D = load("%s/%s.png" % [asset_dir, String(decos[_rng.randi_range(0, decos.size() - 1)])])
@@ -155,8 +230,10 @@ func _build_player(map_w: float, map_h: float) -> void:
 	_player_anim = AnimatedSprite2D.new()
 	var frames_path := String(ROLE_FRAMES.get(st.role_id, ROLE_FRAMES["zs"])[0])
 	_player_anim.sprite_frames = load(frames_path)
-	_player_anim.scale = Vector2.ONE * 0.5
-	_player_anim.position = Vector2(0, -18)
+	# 角色约占 128×128 帧内 y10~120（110px 高）。0.72 再叠 1.25 倍镜头 ⇒ 屏幕上约 99px＝两格；
+	# 帧中心在 y=64，脚底 y=120 ⇒ 局部 +56×0.72＝40.3，故上移 19.3px 让脚踩在碰撞盒下沿（y=21）
+	_player_anim.scale = Vector2.ONE * 0.72
+	_player_anim.position = Vector2(0, -19.3)
 	_player_anim.animation = &"walk_down"
 	_player_anim.frame = 1 # neutral passing pose for the initial idle state
 	_player_anim.stop()
@@ -170,6 +247,8 @@ func _build_player(map_w: float, map_h: float) -> void:
 	_player.add_child(shape)
 
 	var cam := Camera2D.new()
+	# 1.25 倍：视野收到 384×640（约 8×13 格），人物与怪物都放大一圈，不再是"蚂蚁走大图"
+	cam.zoom = Vector2.ONE * 1.25
 	cam.position = Vector2(0, -56)
 	cam.limit_left = 0
 	cam.limit_top = 0
@@ -197,6 +276,7 @@ func _build_monsters(map_w: float, map_h: float) -> void:
 			comp = ["normal", "normal", "normal", "normal"] if _rng.randf() < 0.5 \
 				else ["normal", "normal", "normal"]
 	var placed: Array[Vector2] = []
+	var pool: Array = _theme_cfg.get("monsters", [])
 	for tier in comp:
 		var pos := Vector2.ZERO
 		for attempt in 24:
@@ -214,6 +294,9 @@ func _build_monsters(map_w: float, map_h: float) -> void:
 		placed.append(pos)
 		var m := _MapMonster.new()
 		m.tier = String(tier)
+		# 首领用主题 boss id，其余从怪物池随机；接触开战会把这个 id 继承给战斗组队
+		m.mon_id = String(_theme_cfg.get("boss", "")) if String(tier) == "boss" \
+			else (String(pool[_rng.randi_range(0, maxi(0, pool.size() - 1))]) if not pool.is_empty() else "")
 		m.position = pos
 		m.home = pos
 		m.map_ref = self
@@ -232,9 +315,34 @@ func _build_interactable(map_w: float, map_h: float) -> void:
 
 
 # ================= HUD =================
+## 暗角：中心留亮、四周渐暗（椭圆半径按 480×800 观感取），把视线收到人物身上，
+## 同时压掉地图边缘那条直的"贴图断头"。纯视觉层，mouse_filter IGNORE 不吃点击。
+func _build_vignette() -> void:
+	var grad := Gradient.new()
+	grad.offsets = PackedFloat32Array([0.0, 0.42, 0.78])
+	grad.colors = PackedColorArray([
+		Color(0.06, 0.04, 0.02, 0.0),
+		Color(0.06, 0.04, 0.02, 0.0),
+		Color(0.04, 0.03, 0.02, 0.60),
+	])
+	var tex := GradientTexture2D.new()
+	tex.gradient = grad
+	tex.width = 480
+	tex.height = 800
+	tex.fill = GradientTexture2D.FILL_RADIAL
+	tex.fill_from = Vector2(0.5, 0.5)
+	tex.fill_to = Vector2(1.0, 0.5)
+	var vig := TextureRect.new()
+	vig.texture = tex
+	vig.size = Vector2(VIEW_W, VIEW_H)
+	vig.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_hud.add_child(vig)
+
+
 func _build_hud() -> void:
 	_hud.layer = 1
 	add_child(_hud)
+	_build_vignette()  # 最先入层：只在画面四周压暗，不遮住下方的 HUD 控件
 
 	var tc_name := String(_theme_cfg.get("name", "未知"))
 	var nt := String(node.get("type", "normal"))
@@ -314,6 +422,14 @@ func _build_hud() -> void:
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_swap_pet())
 	_hud.add_child(_pet_btn)
+
+	# 撤离：手边就必须能退出去（PC 亦可按 ESC），点按后二次确认防误触
+	var exit_btn := G.gold_button("撤离", 60, 40)
+	exit_btn.position = Vector2(404, 96)
+	exit_btn.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_ask_exit())
+	_hud.add_child(exit_btn)
 
 	_joy = _Joystick.new()
 	_joy.position = Vector2(28, VIEW_H - 176)
@@ -508,14 +624,90 @@ func _close_remover(msg: String) -> void:
 		_toast(msg)
 
 
+# ================= 撤离 =================
+func _unhandled_input(event: InputEvent) -> void:
+	if G.ui_blocked:  # 全屏浮层（GM 控制台）优先，ESC 让给它
+		return
+	if not event.is_action_pressed("ui_cancel"):
+		return
+	var vp := get_viewport()  # 切场景途中本节点可能已离场，viewport 会是 null
+	if _exit_ui != null:
+		_cancel_exit()
+		if vp != null:
+			vp.set_input_as_handled()
+	elif not (_map_done or _battle != null or _picker != null or _remover != null):
+		_ask_exit()
+		if vp != null:
+			vp.set_input_as_handled()
+
+
+## 撤离确认：本节点进度保留（可再次进入），但局内累计资源需重新挑战才结算
+func _ask_exit() -> void:
+	if _exit_ui != null or _map_done or _battle != null:
+		return
+	var layer := Control.new()
+	layer.set_anchors_preset(Control.PRESET_FULL_RECT)
+	layer.mouse_filter = Control.MOUSE_FILTER_STOP
+	_exit_ui = layer
+	_hud.add_child(layer)
+
+	var dim := ColorRect.new()
+	dim.color = Color(0, 0, 0, 0.72)
+	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	dim.mouse_filter = Control.MOUSE_FILTER_STOP
+	layer.add_child(dim)
+
+	var banner := G.banner_box("撤离本节点", 260, 48)
+	banner.position = Vector2((VIEW_W - 260.0) * 0.5, 264)
+	layer.add_child(banner)
+
+	var panel := G.parchment_box(340, 190, 16.0)
+	panel.position = Vector2((VIEW_W - 340.0) * 0.5, 328)
+	layer.add_child(panel)
+	var content := Control.new()
+	content.set_anchors_preset(Control.PRESET_FULL_RECT)
+	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	panel.add_child(content)
+
+	var tip := G.gold_label("撤离将返回路线图，本节点进度保留，\n可稍后再次进入。", G.FS_SM, false, Color("5a3a1e"), false)
+	tip.position = Vector2(0, 16)
+	tip.custom_minimum_size = Vector2(308, 0)
+	content.add_child(tip)
+
+	var stay := G.gold_button("继 续 探 索", 140, 42)
+	stay.position = Vector2(0, 100)
+	stay.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_cancel_exit())
+	content.add_child(stay)
+
+	var leave := G.gold_button("撤 离", 140, 42)
+	leave.position = Vector2(168, 100)
+	leave.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			if _exit_ui != null:
+				_exit_ui.queue_free()
+				_exit_ui = null
+			_finish_map("exited"))
+	content.add_child(leave)
+
+
+func _cancel_exit() -> void:
+	if _exit_ui != null:
+		_exit_ui.queue_free()
+		_exit_ui = null
+
+
 # ================= 主循环 =================
 func _physics_process(delta: float) -> void:
-	if _map_done or _battle != null or _picker != null or _remover != null:
+	if _map_done or _battle != null or _picker != null or _remover != null or _exit_ui != null:
+		return
+	if G.ui_blocked:  # GM 控制台等全屏浮层打开时冻结移动
 		return
 	if _player == null:
 		return
-	# 输入：键盘方向 + 摇杆向量
-	var dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	# 输入：WASD/方向键（PC）+ 摇杆向量（移动端）
+	var dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if _joy != null:
 		dir = (dir + _joy.vector).limit_length(1.0)
 	var speed := float(_map_cfg.get("player_speed", 130.0))
@@ -589,9 +781,13 @@ func _start_battle(m: _MapMonster) -> void:
 			"bench_pet": st.bench_pet,
 			"potions": st.potions,
 			"hp_override": st.hp,
+			# 局外养成 6 线加成（天赋/装备/坐骑/称号 + 技能书等级 + 宠物养成快照）
+			"growth": G.growth_bonuses(st.role_id),
+			"skill_levels": G.prog.get("skills", {}),
+			"pet_stats": G.battle_pet_stats([st.active_pet, st.bench_pet]),
 		},
 		"enemy": {"theme": st.theme, "node_type": m.tier,
-			"layer": int(node.get("layer", 1))},
+			"layer": int(node.get("layer", 1)), "lead_mon": m.mon_id},
 		"seed": st.next_battle_seed(),
 	}
 	_battle_layer = CanvasLayer.new()
@@ -640,6 +836,95 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 
 
 # ================= 局部节点 =================
+## 地面磨损层：低透明度不规则斑块 + 碎屑点，打散地砖的规则重复感（不参与碰撞/Y-sort）
+## 无套件主题的土路由"逐格方块"改为圆头连线（圆接头），消除 48px 方块的阶梯感
+class _GroundWear extends Node2D:
+	const ROAD_R := 20.0      # 路面半径（≈0.42 格，两侧各留 4px 地砖缝，免得像整格贴图）
+	const ROAD_W := 40.0      # 连线宽度＝2R，与圆端等宽才对得上
+
+	var _blobs: Array = []    # [pos, rx, ry, color]
+	var _specks: Array = []   # [pos, r, color]
+	var _road: Array = []     # 路面格中心（空＝该主题用套件贴图铺路）
+	var _links: Array = []    # [[中心, 中心]] 相邻路格连线
+	var _road_col := Color("6b5334")
+
+	func setup(cols: int, rows: int, rng: RandomNumberGenerator, path: Dictionary,
+			road: Array, road_col: Color) -> void:
+		var w := float(cols * 48)
+		var h := float(rows * 48)
+		_road = road
+		_road_col = road_col
+		if not road.is_empty():
+			# 邻居只取东/南/东南/东北，四向即可覆盖每一对相邻格且不重复成对。
+			# 必须含对角：路径每上行一格就左右挪一列，只连正交会断成一串孤零零的圆饼。
+			for cell: Vector2i in path.keys():
+				var a := Vector2(float(cell.x) * 48.0 + 24.0, float(cell.y) * 48.0 + 24.0)
+				for d in [Vector2i(1, 0), Vector2i(0, 1), Vector2i(1, 1), Vector2i(1, -1)]:
+					if path.has(cell + d):
+						_links.append([a, Vector2(float(cell.x + d.x) * 48.0 + 24.0,
+							float(cell.y + d.y) * 48.0 + 24.0)])
+			for c: Vector2 in _road:  # 土面碎屑：踩实的路不该是纯色块
+				for i in 5:
+					var p := c + Vector2(rng.randf_range(-16.0, 16.0), rng.randf_range(-16.0, 16.0))
+					var a2 := rng.randf_range(0.07, 0.17)
+					var col := Color(0.18, 0.14, 0.09, a2) if rng.randf() < 0.6 \
+						else Color(0.98, 0.93, 0.80, a2 * 0.8)
+					_specks.append([p, rng.randf_range(1.0, 2.0), col])
+		# 地面磨损：小、淡、软。半径封在 0.4 格以内、透明度封在 0.07 以内——
+		# 之前放到 38px/0.11 就成了满屏深色水渍，比它要打散的棋盘格还抢眼。
+		for i in int(cols * rows * 0.16):
+			var pos := Vector2(rng.randf_range(0.0, w), rng.randf_range(0.0, h))
+			if path.has(Vector2i(int(pos.x / 48.0), int(pos.y / 48.0))):
+				continue  # 土路上不压暗斑，免得路被糊掉
+			var dark := rng.randf() < 0.62
+			var a := rng.randf_range(0.030, 0.070)
+			var col := Color(0.11, 0.09, 0.06, a) if dark else Color(1.0, 0.96, 0.84, a * 0.9)
+			_blobs.append([pos, rng.randf_range(7.0, 20.0), rng.randf_range(5.0, 14.0), col])
+		for i in int(cols * rows * 0.30):
+			var pos := Vector2(rng.randf_range(0.0, w), rng.randf_range(0.0, h))
+			var a := rng.randf_range(0.05, 0.13)
+			var col := Color(0.12, 0.10, 0.07, a) if rng.randf() < 0.7 else Color(0.92, 0.88, 0.74, a)
+			_specks.append([pos, rng.randf_range(1.0, 1.8), col])
+
+	func _draw() -> void:
+		if not _road.is_empty():
+			_draw_road()
+		_draw_wear()
+
+	## 程序土路：一圈更宽的淡路缘（把路"融"进地砖）→ 暗边 → 亮面 → 极淡路心
+	func _draw_road() -> void:
+		var rim := _road_col.darkened(0.30)
+		var top := _road_col.lightened(0.18)  # 踩干的土偏亮，深褐会像泥坑
+		var feather := Color(rim.r, rim.g, rim.b, 0.16)
+		for c: Vector2 in _road:
+			draw_circle(c, ROAD_R + 7.0, feather)
+		for l: Array in _links:
+			draw_line(l[0], l[1], feather, ROAD_W + 14.0)
+		for c: Vector2 in _road:
+			draw_circle(c, ROAD_R + 2.5, rim)
+		for l: Array in _links:
+			draw_line(l[0], l[1], rim, ROAD_W + 5.0)
+		for c: Vector2 in _road:
+			draw_circle(c, ROAD_R, top)
+		for l: Array in _links:
+			draw_line(l[0], l[1], top, ROAD_W)
+		# 中央被踩得更实：一条极淡的亮心，给路面一点起伏
+		var crown := Color(top.r * 1.12, top.g * 1.09, top.b * 1.05, 0.14)
+		for l: Array in _links:
+			draw_line(l[0], l[1], crown, ROAD_W * 0.40)
+
+	## 磨损斑块：同心两圈叠出柔和边缘（单圈实心会像水渍）
+	func _draw_wear() -> void:
+		for b: Array in _blobs:
+			draw_set_transform(b[0], 0.0, Vector2(1.0, b[2] / b[1]))
+			var col: Color = b[3]
+			draw_circle(Vector2.ZERO, b[1], col)
+			draw_circle(Vector2.ZERO, b[1] * 0.55, Color(col.r, col.g, col.b, col.a * 0.7))
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+		for s: Array in _specks:
+			draw_circle(s[0], s[1], s[2])
+
+
 ## 散件（origin 底部 + 脚部碰撞，参与 Y-sort）
 class _Deco extends StaticBody2D:
 	func setup(tex: Texture2D, s: float) -> void:
@@ -683,9 +968,10 @@ class _Portal extends Node2D:
 		draw_circle(Vector2.ZERO, 8.0, Color(base.r, base.g, base.b, 0.6))
 
 
-## 怪物（程序占位圆体；游荡/警戒/追击/接触回调；素材入库后热替换为精灵）
+## 怪物（mon_ 精灵优先，无素材回退程序圆体；游荡/警戒/追击/接触回调）
 class _MapMonster extends Node2D:
 	var tier := "normal"
+	var mon_id := ""                  # 具体怪 id（精灵与战斗组队都按它）
 	var home := Vector2.ZERO
 	var chasing_contact := false  # 本只已触发接触（开战中）
 	var map_ref: MapScene = null
@@ -696,6 +982,9 @@ class _MapMonster extends Node2D:
 	var _aggro := 120.0
 	var _contact := 26.0
 	var _wander_r := 96.0
+	var _t := 0.0
+	var _sprite: Sprite2D = null    # 有 mon_ 素材时的精灵体
+	var _lobe: Array = []  # 每只固定不变的轮廓起伏，避免看着像同一个圆
 
 	func _ready() -> void:
 		_radius = {"normal": 20.0, "elite": 25.0, "boss": 32.0}.get(tier, 20.0)
@@ -703,6 +992,20 @@ class _MapMonster extends Node2D:
 		_aggro = float(mc.get("aggro_radius", 120.0))
 		_contact = float(mc.get("contact_radius", 26.0))
 		_wander_r = float(mc.get("monster_wander_radius", 96.0))
+		# 精灵体：boss 84 / elite 60 / normal 48 像素高，脚底对齐碰撞原点
+		if mon_id != "":
+			var tex: Texture2D = G.res_tex(mon_id)
+			if tex != null:
+				var h: float = {"normal": 48.0, "elite": 60.0, "boss": 84.0}.get(tier, 48.0)
+				var s := h / float(tex.get_height())
+				_sprite = Sprite2D.new()
+				_sprite.texture = tex
+				_sprite.scale = Vector2.ONE * s
+				_sprite.offset = Vector2(0, -tex.get_height() / 2.0)
+				add_child(_sprite)
+		var h := float(absi(hash(Vector2(position).floor())))
+		for i in 18:
+			_lobe.append(sin(float(i) * 2.1 + h) * 0.13 + sin(float(i) * 0.7 + h * 0.5) * 0.09)
 		_pick_wander_target()
 
 	func _pick_wander_target() -> void:
@@ -711,6 +1014,7 @@ class _MapMonster extends Node2D:
 		_target = home + Vector2(cos(a), sin(a)) * d
 
 	func _process(delta: float) -> void:
+		_t += delta
 		if map_ref == null or map_ref._player == null:
 			return
 		if chasing_contact or map_ref._map_done or map_ref._battle != null or map_ref._picker != null:
@@ -745,26 +1049,99 @@ class _MapMonster extends Node2D:
 		_target = home
 
 	func _draw() -> void:
+		# 精灵体：只画地面影 + 追击警示环（追击时精灵边缘泛红圈）
 		var col: Color = MapScene.MON_COLOR.get(tier, Color.GRAY)
-		var body := col if _state == "wander" else col.lightened(0.25)
-		draw_circle(Vector2(0, 4), _radius, Color(0, 0, 0, 0.3))
-		draw_circle(Vector2.ZERO, _radius, body)
-		draw_circle(Vector2.ZERO, _radius - 6.0, Color(col.r, col.g, col.b, 0.6))
-		# 追击警示环
+		var bob := sin(_t * 5.0) * 1.6
+		var r := _radius
+
+		# 地面投影
+		draw_set_transform(Vector2(0, r * 0.72), 0.0, Vector2(1.0, 0.38))
+		draw_circle(Vector2.ZERO, r * 1.02, Color(0, 0, 0, 0.32))
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+
+		if _sprite != null:
+			if _state == "chase":
+				draw_arc(Vector2.ZERO, r + 8.0, 0.0, TAU, 20, Color(1.0, 0.4, 0.3, 0.85), 2.0)
+			return
+
+		# 程序占位怪物：不规则轮廓 + 背光边缘 + 发光眼 + 地面投影（不再是光秃秃一个圆）
+		var body := col if _state == "wander" else col.lightened(0.22)
+
+		# 轮廓：按固定起伏生成有机外形
+		var pts := PackedVector2Array()
+		var n := 18
+		for i in n:
+			var a := TAU * float(i) / float(n)
+			var rr := r * (1.0 + float(_lobe[i]))
+			pts.append(Vector2(cos(a) * rr, sin(a) * rr * 0.94 + bob))
+		draw_colored_polygon(pts, body)
+		var outline := pts.duplicate()
+		outline.append(pts[0])
+		draw_polyline(outline, Color(0, 0, 0, 0.34), 2.0, true)
+
+		# 体积：下腹压暗 + 左上高光 + 背光描边
+		draw_circle(Vector2(0, r * 0.30 + bob), r * 0.62, Color(0, 0, 0, 0.16))
+		draw_circle(Vector2(-r * 0.30, -r * 0.34 + bob), r * 0.30, Color(1, 1, 1, 0.10))
+		draw_arc(Vector2(0, bob), r * 1.02, PI * 0.85, PI * 1.95, 14, Color(1, 1, 1, 0.16), 2.0)
+
+		# 层级特征：立耳 / 尖冠 / 巨角
+		var horn := Color(col.r * 0.55, col.g * 0.5, col.b * 0.55)
+		match tier:
+			"elite":
+				for i in 5:
+					var a := PI * 0.15 + PI * 0.7 * float(i) / 4.0
+					var base := Vector2(cos(a), sin(a)) * r * 0.96 + Vector2(0, bob)
+					draw_line(base, base + Vector2(cos(a), sin(a)) * 9.0, horn, 3.0)
+			"boss":
+				for i in 3:
+					var a := -PI * 0.5 + (float(i) - 1.0) * 0.62
+					var base := Vector2(cos(a), sin(a)) * r * 0.96 + Vector2(0, bob)
+					draw_line(base, base + Vector2(cos(a), sin(a)) * 16.0, horn, 4.0)
+				draw_arc(Vector2(0, bob), r + 5.0, -PI * 0.85, -PI * 0.15, 16, Color(1, 0.5, 0.35, 0.5), 2.0)
+			_:
+				for i in 2:
+					var a := -PI * 0.5 + (float(i) * 2.0 - 1.0) * 0.45
+					var base := Vector2(cos(a), sin(a)) * r * 0.96 + Vector2(0, bob)
+					draw_line(base, base + Vector2(cos(a), sin(a)) * 8.0, horn, 3.0)
+
+		# 眼睛：追击时亮起
+		var eye := Color("ff5a4a") if tier == "boss" else Color("ffd25a")
+		var eye_col := eye if _state == "chase" else Color(eye.r, eye.g, eye.b, 0.85)
+		var ey := -r * 0.20 + bob
+		draw_circle(Vector2(-r * 0.30, ey), r * 0.24, Color(0.06, 0.05, 0.07, 0.9))
+		draw_circle(Vector2(r * 0.30, ey), r * 0.24, Color(0.06, 0.05, 0.07, 0.9))
+		draw_circle(Vector2(-r * 0.30, ey), r * 0.13, eye_col)
+		draw_circle(Vector2(r * 0.30, ey), r * 0.13, eye_col)
+
+		# 追击警示
 		if _state == "chase":
-			draw_arc(Vector2.ZERO, _radius + 7.0, 0, TAU, 20, Color(1.0, 0.4, 0.3, 0.8), 2.0)
-		# 眼睛（朝向差异感）
-		draw_circle(Vector2(-6, -4), 3.0, Color(0.1, 0.1, 0.12))
-		draw_circle(Vector2(6, -4), 3.0, Color(0.1, 0.1, 0.12))
+			draw_arc(Vector2(0, bob), r + 8.0, 0.0, TAU, 20, Color(1.0, 0.4, 0.3, 0.85), 2.0)
 
 
-## 非战斗节点交互物件（程序占位绘制；素材入库后热替换）
-## 宝箱=棕箱金锁 / 事件=石碑问号 / 商店=绿帐篷 / 篝火=柴堆火苗；头顶金三角标可交互
+## 非战斗节点交互物件（node_* 素材优先，无素材回退程序绘制）
+## 宝箱/商店/篝火/事件各有立绘；头顶金三角标可交互
 class _Interactable extends Node2D:
+	const KIND_ART := {  # kind → 素材名（generated node_* 系列）
+		"chest": "node_chest", "event": "node_event",
+		"shop": "node_shop", "bonfire": "node_campfire",
+	}
 	var kind := "chest"  # chest / event / shop / bonfire
 	var used := false
 	var map_ref: MapScene = null
 	var _t := 0.0
+	var _art := false       # 已用素材立绘（程序体跳过）
+	var _art_h := 64.0      # 立绘显示高（三角提示的高度基准）
+
+	func _ready() -> void:
+		var tex: Texture2D = G.res_tex(String(KIND_ART.get(kind, "")))
+		if tex != null:
+			var s := _art_h / float(tex.get_height())
+			var spr := Sprite2D.new()
+			spr.texture = tex
+			spr.scale = Vector2.ONE * s
+			spr.offset = Vector2(0, -tex.get_height() / 2.0)
+			add_child(spr)
+			_art = true
 
 	func _process(delta: float) -> void:
 		_t += delta
@@ -778,18 +1155,19 @@ class _Interactable extends Node2D:
 
 	func _draw() -> void:
 		draw_circle(Vector2(0, 6), 30.0, Color(0, 0, 0, 0.22))  # 落地影
-		match kind:
-			"chest":
-				_draw_chest()
-			"event":
-				_draw_event()
-			"shop":
-				_draw_shop()
-			"bonfire":
-				_draw_bonfire()
-		# 头顶浮动金三角（可交互提示）
+		if not _art:
+			match kind:
+				"chest":
+					_draw_chest()
+				"event":
+					_draw_event()
+				"shop":
+					_draw_shop()
+				"bonfire":
+					_draw_bonfire()
+		# 头顶浮动金三角（可交互提示；立绘版抬高点避免压住画面）
 		var bob := sin(_t * 2.2) * 4.0
-		var tip := Vector2(0, -52.0 + bob)
+		var tip := Vector2(0, (-_art_h - 8.0 if _art else -52.0) + bob)
 		draw_colored_polygon([tip + Vector2(0, -7), tip + Vector2(6, 3), tip + Vector2(-6, 3)],
 			Color(G.GOLD_BRIGHT.r, G.GOLD_BRIGHT.g, G.GOLD_BRIGHT.b, 0.9))
 

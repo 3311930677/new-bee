@@ -49,8 +49,11 @@ var _potion_l := Label.new()
 var _pet_btn: Control = null
 var _auto_btn: Control = null
 var _speed_btn: Control = null
+var _flee_btn: Control = null        # 撤退按钮（二次确认要改它的文案）
+var _flee_armed := false             # 撤退已上膛（3 秒内再点才真正撤退）
 var _cast_tip := Label.new()
 var _tip_tween: Tween = null
+var _combo_tip := Label.new()      # 连携窗口提示（能量条上方）
 var _finished_ui := false
 var _cfg: Dictionary = {}
 
@@ -75,39 +78,71 @@ func _ready() -> void:
 
 # ================= 布局 =================
 func _build_background() -> void:
-	# 战斗底色（主题 tint 渐变；bg_battle_* 素材入库后热替换）
+	# 战斗背景：优先接主题 bg_battle_* 竖版手绘（971×1619，与 480×800 同比例）；
+	# 无素材时回退主题 tint 底色 + tile 平铺地面
 	var theme: String = String(_cfg.get("enemy", {}).get("theme", "forest"))
 	var tc := TableCache.theme_config(theme)
-	var tint := Color(String(tc.get("tint", "ffffff")))
-	var bg := ColorRect.new()
-	bg.color = Color(tint.r * 0.22, tint.g * 0.22, tint.b * 0.24)
-	bg.size = Vector2(VIEW_W, VIEW_H)
-	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(bg)
-	# 主题 tile 平铺地面（战场区 y48~592）
-	var tiles: Array = tc.get("tiles", [])
-	if not tiles.is_empty():
-		var asset_dir: String = String(TableCache.maps_config().get("asset_dir", "res://image/map"))
-		var tex: Texture2D = load("%s/%s.png" % [asset_dir, String(tiles[0])])
-		if tex != null:
-			var ground := TextureRect.new()
-			ground.texture = tex
-			ground.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-			ground.stretch_mode = TextureRect.STRETCH_TILE
-			ground.size = Vector2(VIEW_W, 544)
-			ground.position = Vector2(0, 48)
-			ground.modulate = Color(0.85, 0.85, 0.9)
-			ground.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			add_child(ground)
-	# 地面基线（手绘感双线）
-	var line := _LineDrawer.new()
-	line.position = Vector2(0, 338)
-	line.color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.35)
-	add_child(line)
-	var line2 := _LineDrawer.new()
-	line2.position = Vector2(0, 344)
-	line2.color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.16)
-	add_child(line2)
+	var bg_tex: Texture2D = G.res_tex(String(tc.get("battle_bg", "")))
+	if bg_tex != null:
+		var bg := TextureRect.new()
+		bg.texture = bg_tex
+		bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE   # 必须在 size 前：否则被钳到原图尺寸
+		bg.size = Vector2(VIEW_W, VIEW_H)
+		bg.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(bg)
+		_add_shade_gradient(0.0, 96.0, true)     # 顶部压暗（标题可读）
+		_add_shade_gradient(520.0, 280.0, false)  # 底部压暗（技能区可读）
+	else:
+		var tint := Color(String(tc.get("tint", "ffffff")))
+		var flat := ColorRect.new()
+		flat.color = Color(tint.r * 0.22, tint.g * 0.22, tint.b * 0.24)
+		flat.size = Vector2(VIEW_W, VIEW_H)
+		flat.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(flat)
+		# 主题 tile 平铺地面（战场区 y48~592）
+		var tiles: Array = tc.get("tiles", [])
+		if not tiles.is_empty():
+			var asset_dir: String = String(TableCache.maps_config().get("asset_dir", "res://image/map"))
+			var tex: Texture2D = load("%s/%s.png" % [asset_dir, String(tiles[0])])
+			if tex != null:
+				var ground := TextureRect.new()
+				ground.texture = tex
+				ground.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+				ground.stretch_mode = TextureRect.STRETCH_TILE
+				ground.size = Vector2(VIEW_W, 544)
+				ground.position = Vector2(0, 48)
+				ground.modulate = Color(0.85, 0.85, 0.9)
+				ground.mouse_filter = Control.MOUSE_FILTER_IGNORE
+				add_child(ground)
+		# 地面基线（手绘感双线）
+		var line := _LineDrawer.new()
+		line.position = Vector2(0, 338)
+		line.color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.35)
+		add_child(line)
+		var line2 := _LineDrawer.new()
+		line2.position = Vector2(0, 344)
+		line2.color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.16)
+		add_child(line2)
+
+
+## 上下缘压暗渐变（叠加在手绘背景上，保证 UI 文字对比度；不遮战场中区）
+func _add_shade_gradient(y: float, h: float, top: bool) -> void:
+	var grad := Gradient.new()
+	var dark := Color(0.03, 0.02, 0.01, 0.5)
+	grad.colors = PackedColorArray([dark, Color(dark.r, dark.g, dark.b, 0.0)]) if top \
+		else PackedColorArray([Color(dark.r, dark.g, dark.b, 0.0), dark])
+	grad.offsets = PackedFloat32Array([0.0, 1.0])
+	var gt := GradientTexture2D.new()
+	gt.gradient = grad
+	gt.fill_from = Vector2(0.5, 0.0)
+	gt.fill_to = Vector2(0.5, 1.0)
+	var shade := TextureRect.new()
+	shade.texture = gt
+	shade.position = Vector2(0, y)
+	shade.size = Vector2(VIEW_W, h)
+	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(shade)
 
 
 func _build_field() -> void:
@@ -182,6 +217,14 @@ func _build_skill_bar() -> void:
 	_energy_l.custom_minimum_size = Vector2(VIEW_W, 0)
 	add_child(_energy_l)
 
+	# 连携窗口提示：上一手命中 combo.first 且未过窗口 → 常驻小签提示"下一手"
+	_combo_tip = G.serif_label("", G.FS_SM, G.GOLD_BRIGHT)
+	_combo_tip.position = Vector2(0, 576)
+	_combo_tip.custom_minimum_size = Vector2(VIEW_W, 0)
+	_combo_tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_combo_tip.modulate.a = 0.0
+	add_child(_combo_tip)
+
 	# 5 技能格
 	var role := sim.role_unit()
 	if role == null:
@@ -203,6 +246,15 @@ func _build_skill_bar() -> void:
 		box.alignment = BoxContainer.ALIGNMENT_CENTER
 		box.add_theme_constant_override("separation", 2)
 		btn.add_child(box)
+		# 技能图标（sk_<id>；无素材留空位）
+		var icon_tex: Texture2D = G.res_tex("sk_%s" % String(skill.get("id", "")))
+		if icon_tex != null:
+			var icon := TextureRect.new()
+			icon.texture = icon_tex
+			icon.custom_minimum_size = Vector2(42, 42)
+			icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			box.add_child(icon)
 		box.add_child(G.serif_label(String(skill.get("name", "?")), G.FS_SM, Color("ffd97a")))
 		box.add_child(G.gold_label("耗 %d" % int(skill.get("cost", 0)), G.FS_XS, false,
 			Color("bfa987"), false))
@@ -237,14 +289,13 @@ func _build_func_row() -> void:
 			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 				_swap_pet())
 		add_child(_pet_btn)
-	# 撤退（放弃本节点）
-	var flee_btn := _func_chip("撤退", 86)
-	flee_btn.position = Vector2(23 + 3 * 96.0, 724)
-	flee_btn.gui_input.connect(func(e: InputEvent):
+	# 撤退（放弃本节点；二次确认防手滑）
+	_flee_btn = _func_chip("撤退", 86)
+	_flee_btn.position = Vector2(23 + 3 * 96.0, 724)
+	_flee_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			sim.finished = true
-			sim.result = "defeat")
-	add_child(flee_btn)
+			_on_flee())
+	add_child(_flee_btn)
 
 
 # ================= 单位视图 =================
@@ -312,6 +363,12 @@ func _on_event(e: Dictionary) -> void:
 		"basic", "cast":
 			if src != null and dst != null and t == "basic":
 				src.lunge(dst.position)
+			# 连携触发：施法者头顶飘"连携"金字（e.combo 为连携名）
+			if t == "cast" and String(e.get("combo", "")) != "":
+				var cu: UnitView = _views.get(int(e.get("uid", -1)))
+				if cu != null:
+					_float(cu.position + Vector2(0, -44), "连携 · %s" % String(e.combo),
+						Color("ffd97a"), G.FS_LG)
 		"cast_start":
 			var role := sim.role_unit()
 			if role != null and int(e.uid) == role.uid:
@@ -379,12 +436,37 @@ func _refresh_hud() -> void:
 		var ratio := float(role.energy) / float(Combatant.MAX_ENERGY)
 		_energy_fill.size.x = 432.0 * ratio
 		_energy_l.text = "能量 %d/100%s" % [role.energy, "  满" if role.energy >= Combatant.MAX_ENERGY else ""]
+	# 连携可视化：窗口内的"下一手"技能格亮金粗框 + 能量条上方小签
+	var combo_sid := _combo_next()
+	var combo_row := _combo_row(combo_sid)
+	if combo_sid != "" and role != null:
+		var sname := combo_sid
+		for s in role.skills:
+			if String(s.def.get("id", "")) == combo_sid:
+				sname = String(s.def.get("name", combo_sid))
+				break
+		var last: Dictionary = sim.last_cast.get(role.uid, {})
+		var left_s := 0.0
+		if not last.is_empty():
+			left_s = float(combo_row.get("window", 5.0)) - float(sim.tick_count - int(last.get("tick", 0))) / 30.0
+		_combo_tip.text = "连携 · %s %.1fs" % [sname, maxf(0.0, left_s)]
+		_combo_tip.modulate.a = 1.0
+	else:
+		_combo_tip.modulate.a = 0.0
 	# 技能格（CD 数字 + 可用性）
 	for sbd in _skill_btns:
 		var skill: Dictionary = sbd.skill
 		var cd := _skill_cd(role, String(skill.get("id", "")))
 		var cd_l: Label = sbd.cd_l
 		var btn: PanelContainer = sbd.btn
+		# 连携"下一手"：亮金粗边（即使 CD 中也亮，提示玩家这是连携目标）
+		var sb: StyleBoxFlat = btn.get_theme_stylebox("panel")
+		if String(skill.get("id", "")) == combo_sid:
+			sb.border_color = G.GOLD_BRIGHT
+			sb.set_border_width_all(3)
+		else:
+			sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.4)
+			sb.set_border_width_all(2)
 		if cd > 0:
 			cd_l.modulate.a = 1.0
 			cd_l.text = "%.1f" % (float(cd) / 30.0)
@@ -395,10 +477,42 @@ func _refresh_hud() -> void:
 		else:
 			cd_l.modulate.a = 0.0
 			btn.modulate = Color.WHITE
-	# 药剂 / 换宠
-	_potion_l.text = "药剂 ×%d" % sim.potions_left
+	# 药剂 / 换宠（药剂 CD 中显示剩余秒数）
+	if sim.potion_cd_ticks > 0:
+		_potion_l.text = "药剂 %.0fs" % (float(sim.potion_cd_ticks) / 30.0)
+	else:
+		_potion_l.text = "药剂 ×%d" % sim.potions_left
 	if _pet_btn != null:
 		_chip_set_active(_pet_btn, not sim.pet_swap_used and sim.pet_bench_id != "")
+
+
+## 当前连携窗口内的"下一手"技能 id（上一手命中 combo.first 且窗口未过；无则空串）
+func _combo_next() -> String:
+	var role := sim.role_unit()
+	if role == null:
+		return ""
+	var last: Dictionary = sim.last_cast.get(role.uid, {})
+	if last.is_empty():
+		return ""
+	var last_id := String(last.get("skill_id", ""))
+	if last_id == "":
+		return ""
+	var elapsed := sim.tick_count - int(last.get("tick", -99999))
+	for c in TableCache.combos():
+		if String(c.get("first", "")) == last_id \
+				and elapsed <= int(float(c.get("window", 5.0)) * 30.0):
+			return String(c.get("then", ""))
+	return ""
+
+
+## then == sid 的连携配置行（取 name/window 用；无则空字典）
+func _combo_row(sid: String) -> Dictionary:
+	if sid == "":
+		return {}
+	for c in TableCache.combos():
+		if String(c.get("then", "")) == sid:
+			return c
+	return {}
 
 
 func _skill_cd(role: Combatant, sid: String) -> int:
@@ -430,6 +544,31 @@ func _swap_pet() -> void:
 	if sim.swap_pet():
 		_consume_events()
 		_sync_views()
+
+
+## 撤退二次确认：首点变"确认撤退？"并亮起，3 秒内再点才真正撤退（超时自动解除）
+func _on_flee() -> void:
+	if sim.finished:
+		return
+	if _flee_armed:
+		sim.finished = true
+		sim.result = "defeat"
+		return
+	_flee_armed = true
+	if _flee_btn != null:
+		var l := _flee_btn.get_child(0) as Label
+		if l != null:
+			l.text = "确认撤退？"
+		_chip_set_active(_flee_btn, true)
+	get_tree().create_timer(3.0).timeout.connect(func():
+		if _flee_armed and _flee_btn != null and is_instance_valid(_flee_btn):
+			_flee_armed = false
+			var l2 := _flee_btn.get_child(0) as Label
+			if l2 != null:
+				l2.text = "撤退"
+			_chip_set_active(_flee_btn, false)
+		else:
+			_flee_armed = false)
 
 
 func _on_speed(e: InputEvent) -> void:
@@ -534,7 +673,7 @@ class UnitView extends Node2D:
 	var side := ""
 	var is_role := false
 	var body := Node2D.new()          # 位移/闪白的载体
-	var sprite: AnimatedSprite2D = null
+	var sprite: Node2D = null         # 角色 AnimatedSprite2D / 怪宠 Sprite2D
 	var hp_bg := ColorRect.new()
 	var hp_fg := ColorRect.new()
 	var name_l := Label.new()
@@ -543,7 +682,7 @@ class UnitView extends Node2D:
 	var _dead := false
 	var _radius := 22.0
 	var _draw_color := Color.WHITE
-	var _is_blob := false            # 怪/宠 = 程序圆体；role = 精灵
+	var _is_blob := false            # 怪/宠无素材时回退程序圆体
 
 
 	func setup(u: Combatant, role_sprites: Dictionary, mon_colors: Dictionary) -> void:
@@ -551,55 +690,84 @@ class UnitView extends Node2D:
 		side = u.side
 		is_role = u.kind == "role"
 		add_child(body)
+		var name_y := 0.0   # 名字 y（头顶上方）
+		var hp_y := 0.0     # 血条 y（脚下）
 		if is_role:
 			var cfg: Array = role_sprites.get(String(u.data.get("id", "")), [])
 			if cfg.size() == 2:
 				var frames: SpriteFrames = load(String(cfg[0]))
 				if frames != null:
-					sprite = AnimatedSprite2D.new()
-					sprite.sprite_frames = frames
-					sprite.animation = &"walk_down"
-					sprite.scale = Vector2.ONE * 0.55
-					sprite.position = Vector2(0, -26)
-					body.add_child(sprite)
+					var asp := AnimatedSprite2D.new()
+					asp.sprite_frames = frames
+					asp.animation = &"walk_down"
+					asp.scale = Vector2.ONE * 0.55
+					asp.position = Vector2(0, -26)
+					body.add_child(asp)
+					sprite = asp
+			# 行走帧 128×128 × 0.55：占位 -61~+9
+			name_y = -75.0
+			hp_y = 12.0
 		else:
-			_is_blob = true
-			if u.kind == "monster":
-				var tier := String(u.data.get("tier", "normal"))
-				_draw_color = mon_colors.get(tier, Color.GRAY)
-				_radius = 34.0 if tier == "boss" else (27.0 if tier == "elite" else 22.0)
-			else:  # 宠物：金边小圆
-				_draw_color = Color("9a7a3a")
-				_radius = 17.0
-			var blob := _Blob.new()
-			blob.radius = _radius
-			blob.color = _draw_color
-			body.add_child(blob)
-			body.position = Vector2(0, -_radius * 0.4)
-		# 名字
+			var unit_id := String(u.data.get("id", ""))
+			var tex: Texture2D = G.res_tex(unit_id)
+			if tex != null:
+				# 精灵素材（1254×1254 透明底，自带投影）：按档位缩放到目标身高
+				var disp_h := 78.0
+				if u.kind == "monster":
+					var tier := String(u.data.get("tier", "normal"))
+					disp_h = 128.0 if tier == "boss" else (94.0 if tier == "elite" else 78.0)
+				else:
+					disp_h = 64.0
+				var sp := Sprite2D.new()
+				sp.texture = tex
+				sp.scale = Vector2.ONE * (disp_h / float(tex.get_height()))
+				sp.position = Vector2(0, -disp_h * 0.42)  # 脚底落在站位附近
+				if u.kind == "monster" and String(u.data.get("tier", "")) == "elite":
+					sp.modulate = Color(1.06, 0.95, 1.12)  # 精英微紫晕（保档位辨识）
+				body.add_child(sp)
+				sprite = sp
+				name_y = sp.position.y - disp_h * 0.5 - 14.0
+				hp_y = sp.position.y + disp_h * 0.5 + 6.0
+			else:
+				# 回退：程序圆体
+				_is_blob = true
+				var blob := _Blob.new()
+				if u.kind == "monster":
+					var tier := String(u.data.get("tier", "normal"))
+					_draw_color = mon_colors.get(tier, Color.GRAY)
+					_radius = 34.0 if tier == "boss" else (27.0 if tier == "elite" else 22.0)
+					blob.tier = tier
+				else:  # 宠物：金边小伙伴
+					_draw_color = Color("9a7a3a")
+					_radius = 17.0
+					blob.tier = "pet"
+				blob.radius = _radius
+				blob.color = _draw_color
+				blob.seed = uid * 73 + 11
+				body.add_child(blob)
+				body.position = Vector2(0, -_radius * 0.4)
+				name_y = -_radius - 14.0
+				hp_y = _radius + 6.0
+		# 名字（头顶）
 		name_l = G.gold_label(u.name, G.FS_XS, false,
 			Color("ffd0d0") if side == "enemy" else Color("c8e8c8"), false)
-		name_l.position = Vector2(-36, -_radius - 34 if _is_blob else -92)
+		name_l.position = Vector2(-36, name_y)
 		name_l.custom_minimum_size = Vector2(72, 0)
 		body.add_child(name_l)
-		# HP 条
+		# HP 条（脚下）
 		hp_bg.color = Color(0, 0, 0, 0.55)
-		hp_bg.position = Vector2(-22, _hp_bar_y())
+		hp_bg.position = Vector2(-22, hp_y)
 		hp_bg.size = Vector2(44, 5)
 		body.add_child(hp_bg)
 		hp_fg.color = Color("e05a4a") if side == "enemy" else Color("5ab464")
 		hp_fg.position = hp_bg.position + Vector2(1, 1)
 		hp_fg.size = Vector2(42, 3)
 		body.add_child(hp_fg)
-		# buff 缩写
+		# buff 缩写（血条正下）
 		buff_l = G.gold_label("", G.FS_XS, false, Color("a8d8ff"), false)
-		buff_l.position = Vector2(-36, _hp_bar_y() + 7)
+		buff_l.position = Vector2(-36, hp_y + 7)
 		buff_l.custom_minimum_size = Vector2(72, 0)
 		body.add_child(buff_l)
-
-
-	func _hp_bar_y() -> float:
-		return -_radius - 20.0 if _is_blob else -12.0
 
 
 	func sync(u: Combatant) -> void:
@@ -673,15 +841,91 @@ class UnitView extends Node2D:
 		tw.tween_callback(queue_free)
 
 
-	## 怪物/宠物占位体（手绘感圆身 + 眼睛；精灵素材入库后替换）
+	## 怪物/宠物程序体：有机多瓣轮廓 + 呼吸 + 尖角/耳朵（与探索图怪同族画法）
 	class _Blob extends Node2D:
 		var radius := 22.0
 		var color := Color.GRAY
+		var tier := "normal"   # normal / elite / boss / pet
+		var seed := 1
+		var _lobe := PackedFloat32Array()
+		var _t := 0.0
+
+		func _ready() -> void:
+			var h := float(seed % 97) * 0.0628
+			for i in 18:
+				_lobe.append(sin(i * 2.1 + h) * 0.13 + sin(i * 0.7 + h * 0.5) * 0.09)
+
+		func _process(delta: float) -> void:
+			_t += delta
+			queue_redraw()
 
 		func _draw() -> void:
-			draw_circle(Vector2(0, radius * 0.15), radius * 1.05, Color(0, 0, 0, 0.3))  # 底影
-			draw_circle(Vector2.ZERO, radius, color)
-			draw_circle(Vector2(-radius * 0.32, -radius * 0.18), radius * 0.14, Color(0.1, 0.08, 0.06))
-			draw_circle(Vector2(radius * 0.32, -radius * 0.18), radius * 0.14, Color(0.1, 0.08, 0.06))
-			draw_circle(Vector2(-radius * 0.27, -radius * 0.23), radius * 0.05, Color.WHITE)
-			draw_circle(Vector2(radius * 0.37, -radius * 0.23), radius * 0.05, Color.WHITE)
+			var breathe := 1.0 + sin(_t * 2.2 + float(seed)) * 0.03
+			var r := radius * breathe
+			# 底影
+			draw_set_transform(Vector2(0, r * 0.85), 0.0, Vector2(1.0, 0.35))
+			draw_circle(Vector2.ZERO, r * 1.05, Color(0, 0, 0, 0.30))
+			draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+			# 有机身体：18 瓣轮廓
+			var pts := PackedVector2Array()
+			for i in 18:
+				var a := TAU * i / 18.0
+				var rr := r * (1.0 + _lobe[i])
+				pts.append(Vector2(cos(a), sin(a) * 0.94) * rr)
+			draw_colored_polygon(pts, color)
+			# 腹部压暗 + 顶部受光
+			var belly := PackedVector2Array()
+			for i in 18:
+				var a := TAU * i / 18.0
+				if sin(a) > 0.1:
+					belly.append(Vector2(cos(a), sin(a) * 0.94) * r * (0.98 + _lobe[i]))
+			if belly.size() >= 3:
+				belly.append(Vector2.ZERO)
+				draw_colored_polygon(belly, color.darkened(0.18))
+			draw_arc(Vector2(0, -r * 0.28), r * 0.52, PI * 1.15, PI * 1.85, 12,
+				color.lightened(0.25), 3.0)
+			if tier == "pet":
+				_draw_pet_charm(r)
+			else:
+				_draw_monster_face(r)
+
+		func _draw_monster_face(r: float) -> void:
+			# 尖角按档位
+			if tier == "elite" or tier == "boss":
+				var horn := color.lightened(0.35)
+				var horn_len := r * (0.62 if tier == "boss" else 0.45)
+				for side in [-1, 1]:
+					var bx: float = side * r * 0.42
+					draw_colored_polygon(PackedVector2Array([
+						Vector2(bx - side * 4, -r * 0.62), Vector2(bx + side * 5, -r * 0.58),
+						Vector2(bx + side * 2, -r * 0.62 - horn_len)]), horn)
+			# 眼：boss 发红光
+			var eye_col := Color("ff5a4a") if tier == "boss" else Color(0.1, 0.08, 0.06)
+			var eye_r := r * (0.16 if tier == "boss" else 0.13)
+			if tier == "boss":
+				draw_circle(Vector2(-r * 0.32, -r * 0.14), eye_r * 1.8, Color(1, 0.3, 0.2, 0.25))
+				draw_circle(Vector2(r * 0.32, -r * 0.14), eye_r * 1.8, Color(1, 0.3, 0.2, 0.25))
+			draw_circle(Vector2(-r * 0.32, -r * 0.14), eye_r, eye_col)
+			draw_circle(Vector2(r * 0.32, -r * 0.14), eye_r, eye_col)
+			draw_circle(Vector2(-r * 0.27, -r * 0.20), eye_r * 0.4, Color.WHITE)
+			draw_circle(Vector2(r * 0.37, -r * 0.20), eye_r * 0.4, Color.WHITE)
+			# 嘴
+			draw_arc(Vector2(0, r * 0.12), r * 0.30, PI * 0.25, PI * 0.75, 8,
+				color.darkened(0.45), 2.0)
+
+		func _draw_pet_charm(r: float) -> void:
+			# 耳朵
+			for side in [-1, 1]:
+				draw_colored_polygon(PackedVector2Array([
+					Vector2(side * r * 0.62, -r * 0.42), Vector2(side * r * 0.30, -r * 0.55),
+					Vector2(side * r * 0.50, -r * 1.05)]), color.darkened(0.1))
+			# 金项圈
+			draw_arc(Vector2(0, r * 0.18), r * 0.72, PI * 0.2, PI * 0.8, 12,
+				G.GOLD_BRIGHT, 2.5)
+			# 圆眼
+			draw_circle(Vector2(-r * 0.30, -r * 0.10), r * 0.15, Color(0.1, 0.08, 0.06))
+			draw_circle(Vector2(r * 0.30, -r * 0.10), r * 0.15, Color(0.1, 0.08, 0.06))
+			draw_circle(Vector2(-r * 0.25, -r * 0.16), r * 0.06, Color.WHITE)
+			draw_circle(Vector2(r * 0.35, -r * 0.16), r * 0.06, Color.WHITE)
+			# 鼻
+			draw_circle(Vector2(0, r * 0.14), r * 0.09, Color("5a3a2a"))

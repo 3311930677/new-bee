@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "comment": "主城（据点）配置。24×20 格＝1152×960px，比探索地图紧凑——一座能逛完的城。建筑用程序绘制，只在有素材时挑 asset_dir 里的散件当地被。",
+  "name": "远征主城",
+  "tile_size": 48,
+  "map_cols": 24,
+  "map_rows": 20,
+  "asset_dir": "res://image/map_proc",
+  "player_speed": 92,
+  "ground": {
+    "tiles": ["001_tile_forest_1", "002_tile_forest_2", "003_tile_forest_3"],
+    "path_sheet": "025_tile_forest_path_sheet_00_15"
+  },
+  "decos": ["028_deco_forest_tree", "030_deco_forest_rocks", "031_deco_forest_shrub",
+    "032_deco_forest_grass", "033_deco_forest_ruin"],
+  "deco_density": 0.05,
+  "spawn": [12.0, 15.5],
+
+  "buildings": [
+    { "id": "hall", "name": "议事厅", "style": "hall", "kind": "core", "start": true,
+      "min_level": 1, "hue": 3, "pos": [12.0, 5.0], "size": [4.0, 3.0], "action": "notice",
+      "desc": "主城的中心。石阶前那块布告板，就是城中活动的去处。" },
+
+    { "id": "gate", "name": "城门", "style": "gate", "kind": "core", "start": true,
+      "min_level": 1, "hue": 5, "pos": [12.0, 19.0], "size": [5.0, 2.0], "action": "visit",
+      "desc": "面朝远征的石砌城门。门上挂着你的据点木牌，往来旅人都从这里进出。" },
+
+    { "id": "archive", "name": "图志阁", "style": "archive", "kind": "func",
+      "min_level": 1, "cost": { "gold": 150 }, "hue": 7,
+      "pos": [5.0, 7.5], "size": [3.0, 2.5], "action": "worlds",
+      "desc": "暂存各地物产与地形图样。落成后不必出城，也能翻阅世界图志。" },
+
+    { "id": "kennel", "name": "兽栏", "style": "kennel", "kind": "func",
+      "min_level": 1, "cost": { "gold": 150 }, "hue": 9,
+      "pos": [19.0, 7.5], "size": [3.0, 2.5], "action": "codex",
+      "desc": "圈养随行宠物的木栏小院。落成后可翻看宠物图鉴，看看谁还愿意跟来。" },
+
+    { "id": "barracks", "name": "演武场", "style": "barracks", "kind": "func",
+      "min_level": 2, "cost": { "gold": 240 }, "hue": 0,
+      "pos": [4.0, 12.5], "size": [3.5, 2.5], "action": "deploy",
+      "desc": "夯土校场配一座擂台。落成后可在城内整备队伍，直接择路出征。" },
+
+    { "id": "storehouse", "name": "仓廪", "style": "storehouse", "kind": "func",
+      "min_level": 3, "cost": { "gold": 320 }, "hue": 11,
+      "pos": [20.0, 12.5], "size": [3.5, 2.5], "action": "activity:levy",
+      "desc": "通风的粮仓与货栈。落成后可定期征收城中物产。" },
+
+    { "id": "shrine", "name": "祭坛", "style": "shrine", "kind": "func",
+      "min_level": 3, "cost": { "gold": 260, "soul": 20 }, "hue": 8,
+      "pos": [17.5, 16.5], "size": [3.0, 2.5], "action": "activity:signin",
+      "desc": "以魂晶砌成的旧祭坛，风过时会有低鸣。落成后可每日点灯祈福。" },
+
+    { "id": "forge", "name": "锻造铺", "style": "forge", "kind": "soon",
+      "min_level": 6, "cost": { "gold": 600, "expedition": 40 }, "hue": 2,
+      "pos": [6.5, 16.5], "size": [3.0, 2.0], "action": "soon",
+      "desc": "铁砧与风箱都搬进来了，炉子还没点。匠人说要等更好的矿石。" }
+  ],
+
+  "npcs": [
+    { "id": "npc_steward", "name": "闻叔", "title": "执事", "need": "", "hue": 3,
+      "pos": [13.8, 6.8],
+      "lines": [
+        "主城的空地还多得很，慢慢来，一块砖一块砖地起。",
+        "议事厅立住了，别的营生才好谈。缺什么就先攒什么。",
+        "外头那些世界不好惹。不过咱这城里的灯，总给你留着。"
+      ] },
+
+    { "id": "npc_guard", "name": "老赵", "title": "城门卫", "need": "gate", "hue": 5,
+      "pos": [14.4, 18.0],
+      "lines": [
+        "据点码就是咱城的门牌，抄给别人，人家便能上门串门。",
+        "每天都有旅人路过，来过的我都在访客簿上记着。",
+        "出入随意，只是走的时候别把城门忘了。"
+      ] },
+
+    { "id": "npc_scribe", "name": "青姨", "title": "图志阁掌事", "need": "archive", "hue": 7,
+      "pos": [5.4, 8.8],
+      "lines": [
+        "图志上记着八片大陆，一片压着一片。",
+        "通关一片的首领，下一片的地图才会显形。",
+        "解锁和通关不是一回事——地图开了，路还得自己走。"
+      ] },
+
+    { "id": "npc_keeper", "name": "阿豆", "title": "兽栏伙计", "need": "kennel", "hue": 9,
+      "pos": [18.6, 8.8],
+      "lines": [
+        "宠物不是抓的，是那些世界首领倒下时，自己跟过来的。",
+        "岩龟最省心，喂什么都不挑。",
+        "带出去过的宠物，回来都要多吃一碗。"
+      ] },
+
+    { "id": "npc_smith", "name": "石头", "title": "铁匠", "need": "barracks", "hue": 0,
+      "pos": [5.2, 13.6],
+      "lines": [
+        "擂台上练出来的，跟野外真刀真枪地打，不是一回事。",
+        "演武场立起来了，队伍在这儿就能整备。",
+        "等矿石到位，我就把那炉子点上。"
+      ] },
+
+    { "id": "npc_warden", "name": "云游", "title": "行脚商人", "need": "", "hue": 6,
+      "pos": [9.2, 14.6],
+      "lines": [
+        "我从很远的据点来，那边的仓廪比你这还矮一截呢。",
+        "据点码换据点码，这买卖不亏。",
+        "你这城，比我上次路过时热闹了。"
+      ] },
+
+    { "id": "npc_child", "name": "小满", "title": "城中孩童", "need": "", "hue": 4,
+      "pos": [15.0, 13.6],
+      "lines": [
+        "等你把祭坛修好，我要第一个去扔石子！",
+        "你出征的时候，城门那边会有很好看的光。",
+        "我以后也要有一座主城，比你的大。"
+      ] }
+  ],
+
+  "activities": [
+    { "id": "signin", "name": "每日签到", "need": "shrine", "daily": true, "cd": 0,
+      "desc": "在祭坛前点一盏灯，一天一次。连着来，灯油会越添越厚。",
+      "reward": { "gold": 60, "soul": 4, "exp": 30 },
+      "streak_bonus": { "gold": 20, "exp": 10 } },
+
+    { "id": "levy", "name": "物资征收", "need": "storehouse", "cd": 14400,
+      "desc": "仓廪四小时清点一次。城里越热闹，收成越好。",
+      "reward": { "gold": 120, "expedition": 12, "exp": 20 } },
+
+    { "id": "drill", "name": "演武操练", "need": "barracks", "cd": 3600,
+      "desc": "在擂台打上一场不算数的架，只练手，不计胜负。",
+      "reward": { "exp": 45, "honor": 2 } },
+
+    { "id": "patrol", "name": "巡城", "need": "gate", "cd": 7200,
+      "desc": "沿城墙走一圈，把外头的动静记下来。",
+      "reward": { "soul": 8, "exp": 15 } },
+
+    { "id": "feast", "name": "城中宴会", "need": "hall", "cd": 0,
+      "desc": "摆一桌，把攒着的热闹花出去。花金币，换经验。",
+      "cost": { "gold": 200 }, "reward": { "exp": 160 } }
+  ],
+
+  "guest_sites": ["青石堡", "落雁渡", "铁砧镇", "白桦哨", "流沙驿", "钟乳城",
+    "焚风营", "夜航港", "月牙屯", "霜蹄堡", "断崖寨", "长风关", "琥珀村", "望星台"],
+  "guest_notes": [
+    "路过讨了碗水，你家城门修得真结实。",
+    "在议事厅前站了会儿，布告板上的字写得比我那儿好。",
+    "兽栏那只岩龟一直盯着我看，怪不好意思的。",
+    "城里的路扫得干净，走一圈鞋底没沾泥。",
+    "头一回见祭坛，风一过真有响声。",
+    "下回我带点我们那儿的矿石来换。"
+  ]
+}

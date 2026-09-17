@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "comment": "装备线（玩法文档 §6）：武器 4 系绑人物（剑→破军/枪→穿杨/杖→霜语/锤→晨星），甲/饰全人物通用。强化每级+10%、成功率 0.9^目标级、失败不掉级；宝石 3 色×5 级，每件 3 孔；精炼洗 4 词条，锁定耗锁符。",
+  "slots": [
+    { "id": "sword", "name": "大剑", "kind": "weapon", "role": "zs", "icon": "slot_sword", "base": {"atk": 10} },
+    { "id": "spear", "name": "长枪", "kind": "weapon", "role": "ck", "icon": "slot_spear", "base": {"atk": 10} },
+    { "id": "staff", "name": "法杖", "kind": "weapon", "role": "fs", "icon": "slot_staff", "base": {"atk": 11} },
+    { "id": "hammer", "name": "圣锤", "kind": "weapon", "role": "fz", "icon": "slot_hammer", "base": {"atk": 9, "hp": 30} },
+    { "id": "armor", "name": "护甲", "kind": "armor", "role": "", "icon": "slot_armor", "base": {"def": 6, "hp": 50} },
+    { "id": "accessory", "name": "饰品", "kind": "accessory", "role": "", "icon": "slot_accessory", "base": {"hp": 70, "crit": 0.02} }
+  ],
+  "enhance": {
+    "max_level": 20,
+    "pct_per_level": 0.10,
+    "success_base": 0.9,
+    "cost_gold_base": 150,
+    "cost_gold_step": 150,
+    "cost_item": "enhance_stone",
+    "cost_item_base": 1,
+    "cost_item_per_5": 1
+  },
+  "gems": {
+    "sockets": 3,
+    "socket_cost_gold": 200,
+    "colors": [
+      { "id": "atk", "name": "攻击宝石", "stat": "atk", "icon": "gem_atk_", "values": [3, 6, 10, 15, 21] },
+      { "id": "def", "name": "防御宝石", "stat": "def", "icon": "gem_def_", "values": [2, 4, 7, 11, 16] },
+      { "id": "hp", "name": "生命宝石", "stat": "hp", "icon": "gem_hp_", "values": [25, 50, 85, 130, 190] }
+    ]
+  },
+  "refine": {
+    "affix_count": 4,
+    "cost_item": "refine_stone",
+    "cost_item_n": 2,
+    "lock_item": "lock_rune",
+    "pool": [
+      {"stat": "atk_pct", "name": "攻击", "min": 0.02, "max": 0.08},
+      {"stat": "def_pct", "name": "防御", "min": 0.02, "max": 0.08},
+      {"stat": "maxhp_pct", "name": "生命", "min": 0.02, "max": 0.08},
+      {"stat": "crit_add", "name": "暴击", "min": 0.01, "max": 0.04},
+      {"stat": "spd_pct", "name": "速度", "min": 0.01, "max": 0.05}
+    ]
+  }
+}

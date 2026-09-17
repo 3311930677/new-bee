@@ -20,6 +20,8 @@ var result := ""           # "defeat" / "clear"
 var gold := 0              # 局内累计金币（#10b 结算入账钱包）
 var expedition := 0        # 局内累计远征币（抽奖祭坛货币）
 var soul := 0              # 局内累计灵魂石（宠物池货币）
+var exp := 0               # 局内累计经验（结算时回写养成等级）
+var honor := 0             # 局内累计荣誉（战功，用于高难世界门禁）
 
 
 ## 按 nodes.json rewards 累加节点奖励（normal/elite/boss/chest；战利与拾取同口径）
@@ -28,6 +30,8 @@ func add_reward(kind: String) -> void:
 	gold += int(row.get("gold", 0))
 	expedition += int(row.get("expedition", 0))
 	soul += int(row.get("soul", 0))
+	exp += int(row.get("exp", 0))
+	honor += int(row.get("honor", 0))
 
 
 func setup(cfg: Dictionary) -> void:

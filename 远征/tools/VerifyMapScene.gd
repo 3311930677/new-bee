@@ -9,6 +9,7 @@ var _last_result := ""
 
 
 func _ready() -> void:
+	G.SAVE_PATH = "user://save_verify_map.json"  # 别污染真实存档
 	await _run()
 	get_tree().quit(0 if _fails == 0 else 1)
 
@@ -17,6 +18,13 @@ func _check(cond: bool, msg: String) -> void:
 	if not cond:
 		_fails += 1
 		push_error("FAIL: " + msg)
+
+
+func _click() -> InputEventMouseButton:
+	var ev := InputEventMouseButton.new()
+	ev.button_index = MOUSE_BUTTON_LEFT
+	ev.pressed = true
+	return ev
 
 
 func _spawn_map(node_type: String, layer: int, bench: String) -> MapScene:
@@ -50,21 +58,49 @@ func _run() -> void:
 	_check(map._portal != null and not map._portal.locked, "普通区传送阵应解锁")
 	_check(map._monsters.size() >= 3 and map._monsters.size() <= 4,
 		"普通区应有 3~4 小怪，实为 %d" % map._monsters.size())
-	var tile_cnt := -1
+	var tile_cnt := 0
+	var layer_sizes: Array[int] = []
 	for c in map.get_children():
 		if c is TileMapLayer:
-			tile_cnt = (c as TileMapLayer).get_used_cells().size()
+			var n: int = (c as TileMapLayer).get_used_cells().size()
+			layer_sizes.append(n)
+			tile_cnt += n
 	_check(tile_cnt > 1000, "应平铺 TileMap 地面（>1000 格），实为 %d" % tile_cnt)
+	# 地面细节层：森林主题带 path_sheet，应多出一层蜿蜒土路（地面 + 土路 = 2 层）
+	_check(layer_sizes.size() == 2 and layer_sizes.min() >= 20,
+		"森林主题应含土路层（地面+土路），实为 %s" % str(layer_sizes))
 	_check(map._pet_btn != null and map._pet_btn.visible, "有替补时应显示换宠按钮")
 
-	# ---- B. 键盘移动（ui_up）----
+	# ---- B. 键盘移动（move_up / WASD 与方向键同映射）----
 	var y0: float = map._player.position.y
-	Input.action_press("ui_up")
+	var x0: float = map._player.position.x
+	Input.action_press("move_up")
 	for i in 30:
 		await get_tree().physics_frame
-	Input.action_release("ui_up")
+	Input.action_release("move_up")
 	_check(map._player.position.y < y0 - 20.0,
-		"按上键玩家应上移，Δy=%.1f" % (y0 - map._player.position.y))
+		"按上键（W）玩家应上移，Δy=%.1f" % (y0 - map._player.position.y))
+	Input.action_press("move_right")
+	for i in 30:
+		await get_tree().physics_frame
+	Input.action_release("move_right")
+	_check(map._player.position.x > x0 + 20.0,
+		"按右键（D）玩家应右移，Δx=%.1f" % (map._player.position.x - x0))
+
+	# ---- B2. 退出：HUD 撤离按钮 + ESC ----
+	_check(map._exit_ui == null, "起始不应有撤离确认浮层")
+	map._ask_exit()
+	_check(map._exit_ui != null, "点「撤离」应弹出二次确认")
+	map._cancel_exit()
+	_check(map._exit_ui == null, "「继续探索」应关闭确认浮层")
+	var esc := InputEventKey.new()
+	esc.keycode = KEY_ESCAPE
+	esc.physical_keycode = KEY_ESCAPE
+	esc.pressed = true
+	map._unhandled_input(esc)
+	_check(map._exit_ui != null, "ESC 应能呼出撤离确认（不再卡死在地图里）")
+	map._unhandled_input(esc)
+	_check(map._exit_ui == null, "再按 ESC 应关闭确认浮层")
 
 	# ---- C. 警戒追击→接触开战 ----
 	var m := map._monsters[0]
@@ -219,6 +255,27 @@ func _run() -> void:
 	_check(emap._interactable == null and emap.st.gold >= 80 and emap.st.gold <= 150,
 		"事件应得金币 80~150，实为 %d" % emap.st.gold)
 	emap.queue_free()
+	await get_tree().process_frame
+
+	# ---- I. 撤离确认里点「撤 离」→ 真正离场 ----
+	var xmap := await _spawn_map("normal", 1, "")
+	xmap._ask_exit()
+	_check(xmap._exit_ui != null, "点撤离应弹出二次确认")
+	var leave_btn: Control = null
+	if xmap._exit_ui != null and xmap._exit_ui.get_child_count() >= 3:
+		var ex_panel: Node = xmap._exit_ui.get_child(2)
+		if ex_panel.get_child_count() >= 1:
+			var ex_content: Node = ex_panel.get_child(0)
+			if ex_content.get_child_count() >= 3:
+				leave_btn = ex_content.get_child(2) as Control
+	_check(leave_btn != null, "撤离确认内应有「撤 离」按钮")
+	if leave_btn != null:
+		leave_btn.gui_input.emit(_click())
+		await get_tree().process_frame
+	_check(xmap._exit_ui == null, "点撤离后确认浮层应卸载")
+	_check(xmap._map_done and _last_result == "exited",
+		"点撤离应发 exited 信号并结束地图，实为 %s（done=%s）" % [_last_result, str(xmap._map_done)])
+	xmap.queue_free()
 	await get_tree().process_frame
 
 	_print_result()

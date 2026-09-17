@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "comment": "天赋树（玩法文档 §6）：每 5 级 1 点（level_cap 60 → 满级 12 点）。三系各 10 节点，tier 1→10 自下而上；点某 tier 需本系已投点数 ≥ tier-1。effect 为每点加成，全部表驱动。",
+  "points_per_levels": 5,
+  "branches": [
+    { "id": "fury", "name": "狂战", "color": "c06040", "desc": "进攻系：攻击与暴击",
+      "nodes": [
+        { "id": "fury_1", "tier": 1, "max": 3, "name": "锐利", "effect": {"atk_pct": 0.02}, "desc": "每点 攻击+2%" },
+        { "id": "fury_2", "tier": 2, "max": 3, "name": "破甲", "effect": {"atk_add": 3}, "desc": "每点 攻击+3" },
+        { "id": "fury_3", "tier": 3, "max": 2, "name": "嗜血", "effect": {"crit_add": 0.01}, "desc": "每点 暴击+1%" },
+        { "id": "fury_4", "tier": 4, "max": 3, "name": "猛进", "effect": {"atk_pct": 0.03}, "desc": "每点 攻击+3%" },
+        { "id": "fury_5", "tier": 5, "max": 2, "name": "怒意", "effect": {"energy_pct": 0.10}, "desc": "每点 能量获取+10%" },
+        { "id": "fury_6", "tier": 6, "max": 3, "name": "裂伤", "effect": {"atk_add": 5}, "desc": "每点 攻击+5" },
+        { "id": "fury_7", "tier": 7, "max": 2, "name": "绝杀", "effect": {"crit_add": 0.02}, "desc": "每点 暴击+2%" },
+        { "id": "fury_8", "tier": 8, "max": 3, "name": "狂澜", "effect": {"atk_pct": 0.04}, "desc": "每点 攻击+4%" },
+        { "id": "fury_9", "tier": 9, "max": 2, "name": "战意", "effect": {"energy_pct": 0.15}, "desc": "每点 能量获取+15%" },
+        { "id": "fury_10", "tier": 10, "max": 1, "name": "破军之势", "effect": {"atk_pct": 0.08, "crit_add": 0.03}, "desc": "攻击+8% 暴击+3%" }
+      ] },
+    { "id": "guard", "name": "坚壁", "color": "5a8a5a", "desc": "防御系：生命与减伤",
+      "nodes": [
+        { "id": "guard_1", "tier": 1, "max": 3, "name": "厚甲", "effect": {"def_add": 2}, "desc": "每点 防御+2" },
+        { "id": "guard_2", "tier": 2, "max": 3, "name": "活血", "effect": {"maxhp_pct": 0.02}, "desc": "每点 生命+2%" },
+        { "id": "guard_3", "tier": 3, "max": 2, "name": "铁骨", "effect": {"def_pct": 0.04}, "desc": "每点 防御+4%" },
+        { "id": "guard_4", "tier": 4, "max": 3, "name": "韧皮", "effect": {"hp_add": 40}, "desc": "每点 生命+40" },
+        { "id": "guard_5", "tier": 5, "max": 2, "name": "沉稳", "effect": {"def_add": 4}, "desc": "每点 防御+4" },
+        { "id": "guard_6", "tier": 6, "max": 3, "name": "坚垒", "effect": {"maxhp_pct": 0.03}, "desc": "每点 生命+3%" },
+        { "id": "guard_7", "tier": 7, "max": 2, "name": "御劲", "effect": {"def_pct": 0.06}, "desc": "每点 防御+6%" },
+        { "id": "guard_8", "tier": 8, "max": 3, "name": "磐石", "effect": {"hp_add": 70}, "desc": "每点 生命+70" },
+        { "id": "guard_9", "tier": 9, "max": 2, "name": "不屈", "effect": {"maxhp_pct": 0.04}, "desc": "每点 生命+4%" },
+        { "id": "guard_10", "tier": 10, "max": 1, "name": "不动如山", "effect": {"maxhp_pct": 0.08, "def_pct": 0.10}, "desc": "生命+8% 防御+10%" }
+      ] },
+    { "id": "spirit", "name": "迅捷", "color": "4a7a9a", "desc": "辅助系：速度与回复",
+      "nodes": [
+        { "id": "spirit_1", "tier": 1, "max": 3, "name": "轻身", "effect": {"spd_pct": 0.02}, "desc": "每点 速度+2%" },
+        { "id": "spirit_2", "tier": 2, "max": 3, "name": "凝神", "effect": {"energy_pct": 0.08}, "desc": "每点 能量获取+8%" },
+        { "id": "spirit_3", "tier": 3, "max": 2, "name": "慧心", "effect": {"crit_add": 0.01}, "desc": "每点 暴击+1%" },
+        { "id": "spirit_4", "tier": 4, "max": 3, "name": "疾行", "effect": {"spd_pct": 0.03}, "desc": "每点 速度+3%" },
+        { "id": "spirit_5", "tier": 5, "max": 2, "name": "养气", "effect": {"hp_add": 30}, "desc": "每点 生命+30" },
+        { "id": "spirit_6", "tier": 6, "max": 3, "name": "聚灵", "effect": {"energy_pct": 0.12}, "desc": "每点 能量获取+12%" },
+        { "id": "spirit_7", "tier": 7, "max": 2, "name": "流影", "effect": {"spd_pct": 0.04}, "desc": "每点 速度+4%" },
+        { "id": "spirit_8", "tier": 8, "max": 3, "name": "通明", "effect": {"crit_add": 0.015}, "desc": "每点 暴击+1.5%" },
+        { "id": "spirit_9", "tier": 9, "max": 2, "name": "乘风", "effect": {"spd_pct": 0.05}, "desc": "每点 速度+5%" },
+        { "id": "spirit_10", "tier": 10, "max": 1, "name": "天人合一", "effect": {"spd_pct": 0.08, "energy_pct": 0.20}, "desc": "速度+8% 能量+20%" }
+      ] }
+  ]
+}

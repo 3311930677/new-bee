@@ -1,0 +1,18 @@
+{
+	"entries": [
+		{"id": "gold_pack_s", "name": "金币袋·小", "cost": 100, "give": {"gold": 1200}, "icon": "cur_gold"},
+		{"id": "gold_pack_l", "name": "金币袋·大", "cost": 400, "give": {"gold": 5500}, "icon": "cur_gold"},
+		{"id": "soul_pack_s", "name": "魂石袋·小", "cost": 150, "give": {"soul": 180}, "icon": "cur_soul"},
+		{"id": "expedition_pack", "name": "远征补给", "cost": 120, "give": {"expedition": 150}, "icon": "cur_expedition"},
+		{"id": "ticket_ten", "name": "召唤十连券", "cost": 600, "give": {"item_ticket_ten": 1}, "icon": "itm_ticket_ten"},
+		{"id": "ticket_sweep", "name": "远征扫荡券", "cost": 200, "give": {"item_ticket_sweep": 1}, "icon": "itm_ticket_sweep"},
+		{"id": "enhance_stone", "name": "强化石 ×5", "cost": 100, "give": {"item_enhance_stone": 5}, "icon": "itm_enhance_stone"},
+		{"id": "refine_stone", "name": "精炼石 ×2", "cost": 150, "give": {"item_refine_stone": 2}, "icon": "itm_refine_stone"},
+		{"id": "lock_rune", "name": "锁定符 ×1", "cost": 100, "give": {"item_lock_rune": 1}, "icon": "itm_lock_rune"},
+		{"id": "pet_food", "name": "宠物粮 ×5", "cost": 80, "give": {"item_pet_food": 5}, "icon": "itm_pet_food"},
+		{"id": "break_crystal", "name": "突破晶 ×5", "cost": 120, "give": {"item_break_crystal": 5}, "icon": "itm_break_crystal"},
+		{"id": "aptitude_fruit", "name": "资质果 ×1", "cost": 150, "give": {"item_aptitude_fruit": 1}, "icon": "itm_aptitude_fruit"},
+		{"id": "gem_atk", "name": "攻击宝石·叁", "cost": 200, "give": {"item_gem_atk_3": 1}, "icon": "gem_atk_3"},
+		{"id": "gem_hp", "name": "生命宝石·叁", "cost": 200, "give": {"item_gem_hp_3": 1}, "icon": "gem_hp_3"}
+	]
+}

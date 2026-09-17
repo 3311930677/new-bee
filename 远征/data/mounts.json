@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "comment": "坐骑线（玩法文档 §6/§15.1）：6 类×2 阶。购入 1 阶后可用材料升 2 阶；同时只能骑乘 1 只，骑乘加成全局生效。",
+  "mounts": [
+    { "id": "horse", "name": "烈焰马", "icon": "mount_horse", "icon2": "mount_horse_elite",
+      "desc": "日行千里的赤色骏马",
+      "tiers": [
+        { "name": "烈焰马", "bonus": {"spd_pct": 0.05}, "cost": {"gold": 2000} },
+        { "name": "烈焰马·疾风", "bonus": {"spd_pct": 0.10, "atk_pct": 0.03}, "cost": {"gold": 8000, "honor": 200} }
+      ] },
+    { "id": "bear", "name": "铁背熊", "icon": "mount_bear", "icon2": "mount_bear_elite",
+      "desc": "皮糙肉厚的山地巨熊",
+      "tiers": [
+        { "name": "铁背熊", "bonus": {"def_pct": 0.05}, "cost": {"gold": 2000} },
+        { "name": "铁背熊·崩岩", "bonus": {"def_pct": 0.10, "maxhp_pct": 0.05}, "cost": {"gold": 8000, "honor": 200} }
+      ] },
+    { "id": "griffin", "name": "狮鹫", "icon": "mount_griffin", "icon2": "mount_griffin_elite",
+      "desc": "翱翔于风暴之上的猛禽",
+      "tiers": [
+        { "name": "狮鹫", "bonus": {"atk_pct": 0.05}, "cost": {"gold": 3000, "soul": 50} },
+        { "name": "狮鹫·裂空", "bonus": {"atk_pct": 0.10, "crit_add": 0.03}, "cost": {"gold": 12000, "honor": 300} }
+      ] },
+    { "id": "nightmare", "name": "梦魇", "icon": "mount_nightmare", "icon2": "mount_nightmare_elite",
+      "desc": "踏紫焰而来的幽暗战马",
+      "tiers": [
+        { "name": "梦魇", "bonus": {"crit_add": 0.03}, "cost": {"gold": 3000, "soul": 50} },
+        { "name": "梦魇·噬魂", "bonus": {"crit_add": 0.06, "atk_pct": 0.05}, "cost": {"gold": 12000, "honor": 300} }
+      ] },
+    { "id": "sandlizard", "name": "沙蜥", "icon": "mount_sandlizard", "icon2": "mount_sandlizard_elite",
+      "desc": "沙漠中来去如风的巨蜥",
+      "tiers": [
+        { "name": "沙蜥", "bonus": {"maxhp_pct": 0.05}, "cost": {"gold": 2000} },
+        { "name": "沙蜥·荒漠领主", "bonus": {"maxhp_pct": 0.10, "spd_pct": 0.04}, "cost": {"gold": 8000, "honor": 200} }
+      ] },
+    { "id": "woolyrhino", "name": "披毛犀", "icon": "mount_woolyrhino", "icon2": "mount_woolyrhino_elite",
+      "desc": "雪原上的移动堡垒",
+      "tiers": [
+        { "name": "披毛犀", "bonus": {"maxhp_pct": 0.03, "def_pct": 0.03}, "cost": {"gold": 2500} },
+        { "name": "披毛犀·冰川壁垒", "bonus": {"maxhp_pct": 0.08, "def_pct": 0.08}, "cost": {"gold": 10000, "honor": 250} }
+      ] }
+  ]
+}

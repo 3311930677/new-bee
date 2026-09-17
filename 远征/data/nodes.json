@@ -10,10 +10,10 @@
   "bonfire": { "heal_pct": 0.40, "remove_trait": 1 },
   "shop": { "potion_price": 300, "potion_heal_pct": 0.35, "potion_cap": 3 },
   "rewards": {
-    "normal": { "gold": 120, "expedition": 20, "exp": 60 },
-    "elite": { "gold": 300, "expedition": 45, "soul": 5, "exp": 140 },
-    "boss": { "gold": 800, "expedition": 120, "soul": 15, "exp": 300 },
-    "chest": { "gold": 200, "expedition": 30, "exp": 30 }
+    "normal": { "gold": 120, "expedition": 20, "exp": 60, "honor": 1 },
+    "elite": { "gold": 300, "expedition": 45, "soul": 5, "exp": 140, "honor": 3 },
+    "boss": { "gold": 800, "expedition": 120, "soul": 15, "exp": 300, "honor": 15 },
+    "chest": { "gold": 200, "expedition": 30, "exp": 30, "honor": 0 }
   },
   "sweep_yield": 0.70
 }

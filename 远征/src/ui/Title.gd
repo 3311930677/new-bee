@@ -4,8 +4,8 @@ extends Control
 
 const MENU := ["开始游戏", "游戏介绍", "游戏设置", "退出游戏"]
 
-const BG_W := 941.0            # enter.png 原始宽
-const BG_H := 1672.0           # enter.png 原始高
+const BG_W := 971.0             # bg_endless 原始宽
+const BG_H := 1619.0            # bg_endless 原始高
 const VIEW_W := 480.0
 const VIEW_H := 800.0
 
@@ -27,7 +27,8 @@ func _build_background() -> void:
 	# 顶部对齐（裁掉最上方天空），底部贴屏 ⇒ 左下角法师完整可见。
 	var tr := TextureRect.new()
 	tr.name = "BG"
-	tr.texture = load("res://image/background/enter.png")
+	tr.texture = G.res_tex("bg_endless") if G.res_tex("bg_endless") != null \
+		else load("res://image/background/enter.png")  # 星空秘境：中央留白正好承载标题
 	tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	tr.stretch_mode = TextureRect.STRETCH_SCALE
 	tr.size = Vector2(VIEW_W, VIEW_W * BG_H / BG_W)
