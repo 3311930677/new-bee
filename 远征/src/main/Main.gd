@@ -1,4 +1,4 @@
-# Main.gd —— 场景流：Title → Login → CreateRole → GameHome
+# Main.gd —— 场景流：开场一律 Title → Login；有档登录后直达「主城」，无档走 CreateRole
 extends Control
 
 const TITLE_SCENE := "res://src/ui/Title.tscn"
