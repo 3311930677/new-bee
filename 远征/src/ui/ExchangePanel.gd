@@ -88,10 +88,22 @@ func _build() -> void:
 	tip.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_content.add_child(tip)
 
+	# 14 条兑换项放不进一屏：装进滚动容器，返回/提示行固定在底部不再被行压住
+	var scroll := ScrollContainer.new()
+	scroll.position = Vector2(0, 54)
+	scroll.size = Vector2(CONTENT_W, 462)
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.mouse_filter = Control.MOUSE_FILTER_PASS
+	_content.add_child(scroll)
+	var rows := Control.new()
+	rows.custom_minimum_size = Vector2(CONTENT_W - 10.0, 58.0 + _entries.size() * ROW_STEP)
+	rows.size = rows.custom_minimum_size
+	scroll.add_child(rows)
+
 	for i in _entries.size():
 		var row := _entry_row(_entries[i] as Dictionary)
-		row.position = Vector2(0, 58 + i * ROW_STEP)
-		_content.add_child(row)
+		row.position = Vector2(0, i * ROW_STEP)
+		rows.add_child(row)
 
 	_hint = G.gold_label("点「兑 换」消耗荣誉换取资源", G.FS_XS, false, Color("8a6a34"), false)
 	_hint.position = Vector2(0, 528)

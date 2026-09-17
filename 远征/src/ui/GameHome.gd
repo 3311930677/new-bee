@@ -161,24 +161,8 @@ func _build_top(role: Dictionary) -> void:
 	b.position = Vector2(-120, 84)   # 让出顶部两行：左上个人信息、右上四币与经验
 	add_child(b)
 
-	if not G.account.is_empty():
-		var acc := G.gold_label(G.account, G.FS_XS, false, Color("bfa987", 0.8), false)
-		acc.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-		acc.position = Vector2(16, 22)
-		add_child(acc)
-
-	var back := Control.new()
-	back.custom_minimum_size = Vector2(120, 22)
-	back.position = Vector2(VIEW_W - 136, 18)
-	back.mouse_filter = Control.MOUSE_FILTER_STOP
-	back.gui_input.connect(_on_back)
-	var back_l := G.gold_label("重新创建角色", G.FS_XS, false, Color("d8c090"), false)
-	back_l.set_anchors_preset(Control.PRESET_FULL_RECT)
-	back_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	back_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	back_l.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	back.add_child(back_l)
-	add_child(back)
+	# 账号小字与「重新创建角色」撤出顶栏：一个和头像/名字挤在一起，一个压住货币条。
+	# 账号不再常驻主页（游客没信息量），重建入口挪进「设置」面板。
 
 	# 钱包四币（金/远征币/魂石/荣誉——存档累计，远征结算入账）
 	var row := HBoxContainer.new()
