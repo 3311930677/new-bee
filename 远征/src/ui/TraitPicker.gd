@@ -124,12 +124,28 @@ func _make_card(row: Dictionary) -> Control:
 	line.size = Vector2(CARD_W - 20, 1)
 	root.add_child(line)
 
-	var desc_l := G.text_label(String(row.get("desc", "")), G.FS_SM, Color("7a5a2e"))
-	desc_l.position = Vector2(10, 80)
-	desc_l.size = Vector2(CARD_W - 20, 138)
-	desc_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	# 描述最长约 19 字符（「免死 1 次并回 20%HP（每场 1 次）」）：
+	# FS_XS(13px) 每行约 9 汉字，给 3 行高度；中文无空格必须按字符断行
+	var desc_l := G.text_label(String(row.get("desc", "")), G.FS_XS, Color("7a5a2e"))
+	desc_l.position = Vector2(10, 78)
+	desc_l.size = Vector2(CARD_W - 20, 54)
+	desc_l.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
 	desc_l.clip_text = true
 	root.add_child(desc_l)
+
+	# 中部大号图标：按词条效果取 宝石/流派/双刃 素材，填充描述下方的空档
+	var icon_name := _trait_icon(row)
+	if icon_name != "":
+		var icon_tex: Texture2D = G.res_tex(icon_name)
+		if icon_tex != null:
+			var ic := TextureRect.new()
+			ic.texture = icon_tex
+			ic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE   # 必须在 size 前
+			ic.position = Vector2((CARD_W - 64.0) * 0.5, 136)
+			ic.size = Vector2(64, 64)
+			ic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			ic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			root.add_child(ic)
 
 	# 底部点选条：整卡唯一「按钮感」落点
 	var strip := ColorRect.new()
@@ -167,3 +183,19 @@ func _make_card(row: Dictionary) -> Control:
 func _emit_pick(tid: String) -> void:
 	picked.emit(tid)
 	queue_free()
+
+
+## 词条 → 中部大图标素材名：双刃用剑交叉图标；攻防血数值词条用对应宝石；
+## 其余优先流派图标（school_*），都没有则返回空（卡面维持纯文字）
+func _trait_icon(row: Dictionary) -> String:
+	if String(row.get("type", "")) == "double":
+		return "icon_double_edge"
+	var eff: Dictionary = row.get("effect", {})
+	match String(eff.get("stat", "")):
+		"atk":
+			return "gem_atk_3"
+		"maxhp":
+			return "gem_hp_3"
+		"def":
+			return "gem_def_3"
+	return String(SCHOOL_ART.get(String(row.get("school", "none")), ""))

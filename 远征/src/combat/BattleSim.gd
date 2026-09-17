@@ -23,7 +23,8 @@ const POTION_CD := 8 * 30
 var pet_bench_id := ""                # 替补宠物 id
 var pet_swap_used := false
 var enemy_scale := 1.0                # 层难度 ×(1+0.12N)
-var pet_level := 1                    # 宠物等级随人物等级（v0 简化）
+var pet_level := 1                    # 宠物等级随人物等级（v0 简化；有 pet_stats 快照时以快照为准）
+var pet_stats: Dictionary = {}        # 局外宠物养成快照 {pid: {level, stat_mult, growth_mult}}
 var _next_uid := 1
 var _by_uid: Dictionary = {}
 
@@ -37,6 +38,7 @@ func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 	rng.seed = seed
 	enemy_scale = 1.0 + 0.12 * float(int(enemy_cfg.get("layer", 1)))
 	pet_level = maxi(1, int(ally_cfg.get("level", 1)))
+	pet_stats = ally_cfg.get("pet_stats", {})
 	_build_role(ally_cfg)
 	if String(ally_cfg.get("active_pet", "")) != "":
 		_build_pet(String(ally_cfg.active_pet), false)
@@ -71,6 +73,14 @@ func _build_role(cfg: Dictionary) -> void:
 	stats.def = int(float(stats.def) * (1.0 + ts.passive_def_pct()))
 	stats.spd = stats.spd * (1.0 + ts.passive_spd_pct())
 	stats.crit += ts.passive_crit_add()
+	# 局外养成加成（天赋/装备/坐骑/称号聚合，由 G.gd 计算后传入；缺省不影响）
+	var gb: Dictionary = cfg.get("growth", {})
+	if not gb.is_empty():
+		stats.max_hp = int(float(stats.max_hp) * (1.0 + float(gb.get("maxhp_pct", 0.0))) + float(gb.get("hp_add", 0)))
+		stats.atk = int(float(stats.atk) * (1.0 + float(gb.get("atk_pct", 0.0))) + float(gb.get("atk_add", 0.0)))
+		stats.def = int(float(stats.def) * (1.0 + float(gb.get("def_pct", 0.0))) + float(gb.get("def_add", 0.0)))
+		stats.spd = stats.spd * (1.0 + float(gb.get("spd_pct", 0.0)))
+		stats.crit += float(gb.get("crit_add", 0.0))
 	var u := Combatant.new(new_uid(), "role", "ally", role)
 	u.traits = ts
 	u.base_max_hp = maxi(1, int(stats.max_hp))
@@ -79,7 +89,7 @@ func _build_role(cfg: Dictionary) -> void:
 	u.base_spd = stats.spd
 	u.base_crit = clampf(stats.crit, 0.0, 0.95)
 	u.crit_dmg = ts.crit_dmg_override() if ts.crit_dmg_override() > 0 else 1.5
-	u.energy_gain_pct = ts.passive_energy_gain_pct()
+	u.energy_gain_pct = ts.passive_energy_gain_pct() + float(gb.get("energy_pct", 0.0))
 	u.cc_resist = clampf(ts.passive_cc_resist(), 0.0, 0.9)
 	u.attack_range = String(role.get("attack_range", "melee"))
 	u.row = Combatant.ROW_FRONT if u.attack_range == "melee" else Combatant.ROW_BACK
@@ -93,6 +103,12 @@ func _build_role(cfg: Dictionary) -> void:
 	for sid in role.get("skills", []):
 		var sd := TableCache.get_skill(String(sid))
 		if not sd.is_empty():
+			# 技能书等级：每级 k+5%（skillbook.json），局外升级局内生效
+			var slv := int((cfg.get("skill_levels", {}) as Dictionary).get(String(sid), 1))
+			if slv > 1:
+				sd = sd.duplicate()
+				var k_per := float(TableCache.skillbook_config().get("k_per_level", 0.05))
+				sd["k"] = snappedf(float(sd.get("k", 0.0)) * (1.0 + k_per * float(slv - 1)), 0.001)
 			u.skills.append({"id": String(sid), "def": sd, "cd_left": 0})
 	_add_unit(u)
 
@@ -103,17 +119,20 @@ func _build_pet(pet_id: String, is_bench_swap: bool) -> void:
 		push_warning("宠物不存在：%s" % pet_id)
 		return
 	var base: Dictionary = pet.get("base", {})
-	# 宠物等级随人物等级（v0 简化）：base + growth × (等级-1)；主人的召唤流派加成
+	# 宠物养成快照优先（升级/突破/资质），否则沿用人物等级（v0 简化）
 	var growth: Dictionary = pet.get("growth", {})
-	var gl := float(pet_level - 1)
+	var ps: Dictionary = pet_stats.get(pet_id, {})
+	var gl := float(int(ps.get("level", pet_level)) - 1)
+	var gmult := float(ps.get("growth_mult", 1.0))
 	var owner := unit_by_uid(role_uid)
 	var stat_pct := 0.0
 	if owner != null and owner.traits != null:
 		stat_pct = owner.traits.pet_stat_pct()
+	var mult := (1.0 + stat_pct) * float(ps.get("stat_mult", 1.0))
 	var u := Combatant.new(new_uid(), "pet", "ally", pet)
-	u.base_max_hp = maxi(1, int((float(int(base.get("hp", 50))) + float(growth.get("hp", 0)) * gl) * (1.0 + stat_pct)))
-	u.base_atk = maxi(1, int((float(int(base.get("atk", 10))) + float(growth.get("atk", 0)) * gl) * (1.0 + stat_pct)))
-	u.base_def = maxi(0, int((float(int(base.get("def", 5))) + float(growth.get("def", 0)) * gl) * (1.0 + stat_pct)))
+	u.base_max_hp = maxi(1, int((float(int(base.get("hp", 50))) + float(growth.get("hp", 0)) * gl * gmult) * mult))
+	u.base_atk = maxi(1, int((float(int(base.get("atk", 10))) + float(growth.get("atk", 0)) * gl * gmult) * mult))
+	u.base_def = maxi(0, int((float(int(base.get("def", 5))) + float(growth.get("def", 0)) * gl * gmult) * mult))
 	u.base_spd = float(base.get("spd", 1.0))
 	u.base_crit = 0.05
 	u.attack_range = String(pet.get("attack_range", "melee"))

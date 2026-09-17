@@ -21,6 +21,8 @@ var _info: Dictionary = {}
 var _role_idx := 0
 var _gender_idx := 0
 var _toast: Label = null
+var _role_art_frame: PanelContainer = null   # 职业插画位（有图才显形）
+var _role_art: TextureRect = null
 
 
 func _ready() -> void:
@@ -28,7 +30,9 @@ func _ready() -> void:
 	_build_header()
 	_build_name_row()
 	_build_selectors()
+	_build_stage_art()
 	_build_stage()
+	_build_swipe()
 	_build_info_panel()
 	_build_buttons()
 	_sel_gender.set_text(GENDERS[_gender_idx])
@@ -122,6 +126,42 @@ func _cycle_gender(delta: int) -> void:
 
 
 # ---------- 角色展示台 ----------
+## 职业插画位：role_<id>_art.png（或 role_<id>.png）存在时才显形，缺图整块不占地方
+## —— 生成好立绘丢进 image/generated_*/ready/ 即可自动铺在角色身后
+func _build_stage_art() -> void:
+	_role_art_frame = PanelContainer.new()
+	_role_art_frame.position = Vector2(56, 296)
+	_role_art_frame.custom_minimum_size = Vector2(368, 268)
+	_role_art_frame.clip_contents = true
+	_role_art_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(0.06, 0.04, 0.03, 0.35)
+	sb.set_corner_radius_all(10)
+	sb.set_border_width_all(2)
+	sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.32)
+	_role_art_frame.add_theme_stylebox_override("panel", sb)
+	add_child(_role_art_frame)
+
+	_role_art = TextureRect.new()
+	_role_art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_role_art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	_role_art.modulate = Color(0.95, 0.90, 0.86)
+	_role_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_role_art_frame.add_child(_role_art)
+	_refresh_role_art()
+
+
+func _refresh_role_art() -> void:
+	if _role_art == null:
+		return
+	var rid := String((G.roles[_role_idx] as Dictionary).get("id", ""))
+	var tex: Texture2D = G.res_tex("role_%s_art" % rid)
+	if tex == null:
+		tex = G.res_tex("role_%s" % rid)
+	_role_art.texture = tex
+	_role_art_frame.visible = tex != null
+
+
 func _build_stage() -> void:
 	var pad := _Pedestal.new()
 	pad.position = Vector2(VIEW_W / 2.0, PED_Y)
@@ -141,6 +181,35 @@ func _build_stage() -> void:
 	add_child(_anim)
 
 
+## 滑动切职业：舞台上横向拖 40px 就换人（与 ←→ 键同口径），手机拖拽 / 电脑鼠标都能用
+func _build_swipe() -> void:
+	var hint := G.gold_label("← → 或左右拖动切换职业", G.FS_XS, false, Color("cdb088", 0.8), false)
+	hint.position = Vector2(0, 272)
+	hint.custom_minimum_size = Vector2(VIEW_W, 0)
+	add_child(hint)
+
+	var zone := Control.new()
+	zone.position = Vector2(20, 296)
+	zone.custom_minimum_size = Vector2(440, 268)
+	zone.mouse_filter = Control.MOUSE_FILTER_STOP
+	zone.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	var drag := {"on": false, "x": 0.0}
+	zone.gui_input.connect(func(e: InputEvent):
+		if not (e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT):
+			return
+		if e.pressed:
+			drag["on"] = true
+			drag["x"] = (e as InputEventMouseButton).global_position.x
+		elif drag["on"]:
+			drag["on"] = false
+			var dx: float = (e as InputEventMouseButton).global_position.x - float(drag["x"])
+			if dx < -40.0:
+				_switch_role(_role_idx + 1, true)
+			elif dx > 40.0:
+				_switch_role(_role_idx - 1, true))
+	add_child(zone)
+
+
 func _switch_role(idx: int, animate: bool) -> void:
 	_role_idx = wrapi(idx, 0, G.roles.size())
 	var role: Dictionary = G.roles[_role_idx]
@@ -150,6 +219,7 @@ func _switch_role(idx: int, animate: bool) -> void:
 	_sel_class.set_text(role["name"])
 	_sel_class.set_active(true)
 	_sel_gender.set_active(false)
+	_refresh_role_art()
 	_refresh_info()
 	if animate:
 		_anim.modulate.a = 0.0

@@ -79,20 +79,24 @@ func _rates() -> Dictionary:
 	return out
 
 
-func _rates_text() -> String:
+## 召唤规则长文案（收进 ⓘ 弹层；概率/保底/炼金全部读表，不硬编码）
+func _rules_lines() -> Array:
 	var rates := _rates()
-	var parts := PackedStringArray()
+	var rp := PackedStringArray()
 	for k in RARITY_ORDER:
-		parts.append("%s %d%%" % [String(RARITY_NAME[k]), roundi(float(rates[k]) * 100.0)])
-	return "出率 · " + " · ".join(parts)
-
-
-func _dup_text() -> String:
+		rp.append("%s %d％" % [String(RARITY_NAME[k]), roundi(float(rates[k]) * 100.0)])
 	var dup: Dictionary = _cfg().get("dup_gold", {})
-	var parts := PackedStringArray()
+	var dp := PackedStringArray()
 	for k in RARITY_ORDER:
-		parts.append("%s +%d" % [String(RARITY_NAME[k]), int(dup.get(k, 0))])
-	return "重复灵宠自动炼化为金币：" + " · ".join(parts)
+		dp.append("%s +%d" % [String(RARITY_NAME[k]), int(dup.get(k, 0))])
+	var pity_max := int(_cfg().get("pity", 60))
+	return [
+		"【出率】" + " · ".join(rp),
+		"【保底】每召唤 1 次累积 1 点计数，满 %d 点必出史诗或传说；中途出史诗/传说即清零重计。" % pity_max,
+		"【十连】十连必得至少一只稀有及以上灵宠；有十连券时优先用券。",
+		"【重复炼化】已结缘的灵宠再抽到会自动炼化为金币：" + " · ".join(dp) + "。",
+		"【结伴】通关各世界首领也能结识特定灵宠，详见图鉴。",
+	]
 
 
 # ================= 主面板 =================
@@ -140,27 +144,26 @@ func _build() -> void:
 	_ticket_l.position = Vector2(274, 126)
 	content.add_child(_ticket_l)
 
-	# 保底进度 + 出率说明（都从表里算，不硬编码）
+	# 保底进度一行带过（规则细节收进右侧 ⓘ 弹层，不再整版平铺文字）
 	_pity_l = G.gold_label("", G.FS_XS, false, Color("8a6a34"), false)
 	_pity_l.position = Vector2(0, 158)
-	_pity_l.custom_minimum_size = Vector2(CONTENT_W, 0)
+	_pity_l.custom_minimum_size = Vector2(CONTENT_W - 40.0, 0)
 	content.add_child(_pity_l)
-	var rates_l := G.gold_label(_rates_text(), G.FS_XS, false, Color("8a6a34"), false)
-	rates_l.position = Vector2(0, 178)
-	rates_l.custom_minimum_size = Vector2(CONTENT_W, 0)
-	content.add_child(rates_l)
+	var info := G.info_button("召唤规则", _rules_lines(), 24.0)
+	info.position = Vector2(CONTENT_W - 28.0, 154)
+	content.add_child(info)
 
 	# 抽卡按钮（主标题 + 副标价格两行）
 	var single_cost := int(_cfg().get("cost_soul_single", 80))
 	var ten_cost := int(_cfg().get("cost_soul_ten", 800))
 	var b1 := _gold_btn2("单 抽", "%d 魂石" % single_cost, 196, 54)
-	b1.position = Vector2(4, 212)
+	b1.position = Vector2(4, 192)
 	b1.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_do_single())
 	content.add_child(b1)
 	var b2 := _gold_btn2("十 连", "%d 魂石 / 1 券" % ten_cost, 196, 54)
-	b2.position = Vector2(208, 212)
+	b2.position = Vector2(208, 192)
 	b2.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_do_ten())
@@ -168,34 +171,27 @@ func _build() -> void:
 
 	# 行内提示（红字，1.5 秒后淡出）
 	_hint = G.gold_label("", G.FS_SM, false, Color("a04a3a"), false)
-	_hint.position = Vector2(0, 276)
+	_hint.position = Vector2(0, 254)
 	_hint.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_hint.modulate.a = 0.0
 	content.add_child(_hint)
 
 	# 一句书卷气的小字，压一压"功能面板"的模板感
 	var flavor := G.serif_label("魂 石 为 引 · 灵 宠 结 缘", G.FS_SM, Color("8a6a34"))
-	flavor.position = Vector2(0, 306)
+	flavor.position = Vector2(0, 286)
 	flavor.custom_minimum_size = Vector2(CONTENT_W, 0)
 	content.add_child(flavor)
 
 	# 本期奖池预览（pets.json 全量，稀有度色条一眼分档）
 	var sec := G.gold_label("本期奖池", G.FS_SM, false, Color("7a5a2e"), false)
-	sec.position = Vector2(0, 342)
+	sec.position = Vector2(0, 322)
 	sec.custom_minimum_size = Vector2(CONTENT_W, 0)
 	content.add_child(sec)
 	var pets: Array = TableCache.pets()
 	for i in pets.size():
 		var pc := _pool_card(pets[i] as Dictionary)
-		pc.position = Vector2((i % 4) * 104, 364 + (i / 4) * 56)
+		pc.position = Vector2((i % 4) * 104, 346 + (i / 4) * 58)
 		content.add_child(pc)
-
-	# 炼金规则说明（读 dup_gold 表）
-	var dup_l := G.gold_label(_dup_text(), G.FS_XS, false, Color("8a6a34"), false)
-	dup_l.position = Vector2(0, 478)
-	dup_l.custom_minimum_size = Vector2(CONTENT_W, 0)
-	dup_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	content.add_child(dup_l)
 
 	var back_btn := G.gold_button("返 回", 120, 38)
 	back_btn.position = Vector2((CONTENT_W - 120.0) * 0.5, 524)
@@ -228,7 +224,7 @@ func _pool_card(p: Dictionary) -> PanelContainer:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 6)
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var pic := _tex_rect("pet_" + pid, 36, 36, RARITY_HUE.get(rar, Color("a89e88")))
+	var pic := _tex_rect(pid, 36, 36, RARITY_HUE.get(rar, Color("a89e88")))
 	pic.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	row.add_child(pic)
 	var l := G.gold_label(String(p.get("name", pid)), G.FS_XS, false, G.TEXT_DARK, false)
@@ -446,7 +442,7 @@ func _make_card(res: Dictionary, big: bool) -> Control:
 	face.add_child(_tex_rect("gacha_card_" + rar, w, h,
 		RARITY_HUE.get(rar, Color("a89e88")).darkened(0.35), TextureRect.STRETCH_SCALE))
 	face.add_child(_tex_rect("frame_" + rar, w, h, Color("8a6220"), TextureRect.STRETCH_SCALE))
-	var pic := _tex_rect("pet_" + pid, 140 if big else 66, 132 if big else 62,
+	var pic := _tex_rect(pid, 140 if big else 66, 132 if big else 62,
 		RARITY_HUE.get(rar, Color("a89e88")))
 	pic.position = Vector2(15, 12) if big else Vector2(10, 8)
 	face.add_child(pic)

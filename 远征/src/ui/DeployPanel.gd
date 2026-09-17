@@ -1,4 +1,7 @@
-# DeployPanel.gd —— 出征筹备浮层（选秘境 → 选人物 → 选宠物；预填默认可直接出征）
+# DeployPanel.gd —— 出征筹备浮层（秘境 / 人物 / 宠物 三页签，每页一屏一项的大卡轮播）
+# 交互：← → （或 A/D、拖拽）翻当前页的选项；↑ ↓（或 W/S）切页签；点卡片选定。
+# 插画命名：秘境 world_<theme>.png、人物 role_<role>.png、宠物 <宠物id>.png；
+#          缺图时卡上留白占位并写出素材名，生成后丢进 image/generated_*/ready/ 即生效。
 # 从 GameHome 的内部类抽出，营帐与主城两处入口共用同一份筹备面板
 class_name DeployPanel
 extends Control
@@ -6,10 +9,20 @@ extends Control
 signal confirmed(cfg: Dictionary)
 signal canceled
 
-var _theme := "forest"
-var _role := "zs"
-var _active_pet := "pet_rockturtle"
-var _bench_pet := ""
+# 新 class_name 尚未进编辑器全局类缓存，按项目惯例 preload 路径取脚本
+const PageDeckScript := preload("res://src/ui/PageDeck.gd")
+const SlideCardScript := preload("res://src/ui/SlideCard.gd")
+
+const STEPS := ["秘境", "人物", "宠物"]
+# 羊皮纸 440 宽 - 左右各 16 内边距 = 内容可用宽。子控件坐标一律以这个宽度为基准，
+# 因为子控件挂的是 content（已被 PanelContainer 内缩过），再按 440 算就会整体右偏 16px
+const CONTENT_W := 408.0
+const TAB_W := 96.0
+const TAB_H := 30.0
+const GUTTER := 40.0     # 与卡片左右边距对齐（卡 = 408 - 2*40）
+const DECK_Y := 36.0
+const DECK_H := 328.0
+
 # 秘境色标：maps.json 的 tint 是给地图叠色用的（8 个都接近白），当色卡完全分不出来，
 # 所以另起一套辨识色 —— 林绿 / 雪蓝 / 火岩红 / 墓紫 / 沙黄 / 冰川青 / 深渊靛 / 城石灰
 const THEME_HUE := {
@@ -17,22 +30,33 @@ const THEME_HUE := {
 	"tomb": Color("6b5f88"), "desert": Color("c09a55"), "glacier": Color("6fb3ba"),
 	"abyss": Color("6d5a9e"), "castle": Color("8d8474"),
 }
-# 稀有度色：宠物卡左侧色条按它来，一眼分出白/蓝/紫/金档
+# 稀有度色：宠物卡色标与徽标按它来，一眼分出白/蓝/紫/金档
 const RARITY_HUE := {
 	"white": Color("a89e88"), "blue": Color("6f9fd0"),
 	"purple": Color("a273c9"), "gold": Color("d8ab48"),
 }
-# 立绘文件名映射（原本是内部类拿不到外层类的 _role_name()，抽出后仍然自持一份）
+const RARITY_NAME := {"white": "普通", "blue": "稀有", "purple": "史诗", "gold": "传说"}
+const RARITY_FRAME := {"white": "frame_white", "blue": "frame_blue",
+	"purple": "frame_purple", "gold": "frame_gold"}
+const ROLE_NAME := {
+	"tank": "护卫", "ranged_dps": "远程", "fast_dps": "速攻", "control": "控制",
+	"healer": "治疗", "aoe_dps": "群攻", "poison_control": "毒控",
+}
+# 立绘文件名映射（内部类拿不到外层类的 _role_name()，这里自持一份）
 const ROLE_ART := {"zs": "pojun", "ck": "chuanyang", "fs": "shuangyu", "fz": "chenxing"}
-# 羊皮纸 440 宽 - 左右各 16 内边距 = 内容可用宽。子控件坐标一律以这个宽度为基准，
-# 因为子控件挂的是 content（已被 PanelContainer 内缩过），再按 440 算就会整体右偏 16px
-const CONTENT_W := 408.0
 
-var _theme_btns := {}    # id -> PanelContainer
-var _role_btns := {}     # id -> PanelContainer
-var _pet_btns := {}    # id -> PanelContainer
-var _pet_labels := {}    # id -> Label（宠物名单独存，卡片里第一个子节点不再是 Label 了）
+var _theme := "forest"
+var _role := "zs"
+var _active_pet := "pet_rockturtle"
+var _bench_pet := ""
+
+var _content: Control = null
+var _deck = null          # PageDeck（类型不写死，避免全局类缓存未刷新时报错）
 var _hint: Label = null
+var _step := 0
+var _tab_btns: Array = []
+var _tab_sbs: Array = []
+var _cards := {}          # "步骤:选项id" -> SlideCard（选中态只改样式，不重建卡）
 var _sweep_btn: Control = null   # 扫荡按钮（持有引用用于刷新券余量）
 
 func _ready() -> void:
@@ -59,211 +83,196 @@ func _build() -> void:
 
 	# PanelContainer 是 Container，直接放子控件会被布局系统覆盖位置；
 	# 包一层 Control 再手动布局
-	var content := Control.new()
-	content.set_anchors_preset(Control.PRESET_FULL_RECT)
-	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	panel.add_child(content)
+	_content = Control.new()
+	_content.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	panel.add_child(_content)
 
-	_section(content, "远征秘境（未解锁的需先通关前一世界）", 12)
-	var maps: Dictionary = TableCache.maps_config()
-	var order: Array = maps.get("theme_order", [])
-	var themes: Dictionary = maps.get("themes", {})
-	for i in order.size():
-		var tid := String(order[i])
-		var hue: Color = THEME_HUE.get(tid, Color("8d8474"))
-		var t_open: bool = G.is_world_unlocked(tid)
-		var btn := _theme_card(String(themes.get(tid, {}).get("name", tid)), hue, 96, 40, t_open)
-		btn.position = Vector2((i % 4) * 104, 34 + (i / 4) * 48)
-		btn.gui_input.connect(func(e: InputEvent): _on_opt_click(e, _select_theme, tid))
-		_theme_btns[tid] = btn
-		content.add_child(btn)
+	# 三页签：点哪个进哪个，↑↓/WS 也能切（比再套一层横向分页更好认）
+	var gap := (CONTENT_W - GUTTER * 2.0 - TAB_W * float(STEPS.size())) / 2.0
+	for i in STEPS.size():
+		var tab := PanelContainer.new()
+		tab.custom_minimum_size = Vector2(TAB_W, TAB_H)
+		tab.position = Vector2(GUTTER + float(i) * (TAB_W + gap), 0.0)
+		var sb := StyleBoxFlat.new()
+		sb.set_corner_radius_all(15)
+		sb.set_border_width_all(1)
+		sb.content_margin_top = 4.0
+		sb.content_margin_bottom = 4.0
+		tab.add_theme_stylebox_override("panel", sb)
+		tab.add_child(G.gold_label(STEPS[i], G.FS_MD, true, G.TEXT_DARK, false))
+		tab.mouse_filter = Control.MOUSE_FILTER_STOP
+		tab.gui_input.connect(func(e: InputEvent): _on_tab_click(e, i))
+		_content.add_child(tab)
+		_tab_btns.append(tab)
+		_tab_sbs.append(sb)
 
-	_section(content, "出战人物", 130)
-	for i in G.roles.size():
-		var r: Dictionary = G.roles[i]
-		var rid := String(r.get("id", ""))
-		var rbtn := _role_card(rid, String(r.get("name", rid)), 96, 100)
-		rbtn.position = Vector2(i * 104, 152)
-		rbtn.gui_input.connect(func(e: InputEvent): _on_opt_click(e, _select_role, rid))
-		_role_btns[rid] = rbtn
-		content.add_child(rbtn)
-
-	_section(content, "随行宠物（先点出战，再点替补；未收集的不可选）", 260)
-	var pets: Array = TableCache.pets()
-	for i in pets.size():
-		var p: Dictionary = pets[i]
-		var pid := String(p.get("id", ""))
-		var p_open: bool = G.owns_pet(pid)
-		var pbtn := _pet_card(pid, String(p.get("name", pid)),
-			RARITY_HUE.get(String(p.get("rarity", "white")), Color("a89e88")), 96, 54, p_open)
-		pbtn.position = Vector2((i % 4) * 104, 284 + (i / 4) * 58)
-		pbtn.gui_input.connect(func(e: InputEvent): _on_opt_click(e, _select_pet, pid))
-		_pet_btns[pid] = pbtn
-		content.add_child(pbtn)
-
-	_hint = G.gold_label("▶ 出战 · ◇ 替补 · 再点取消", G.FS_XS, false, Color("8a6a34"), false)
-	_hint.position = Vector2(0, 404)
+	_hint = G.gold_label("", G.FS_XS, false, Color("8a6a34"), false)
+	_hint.position = Vector2(0, 394)
 	_hint.custom_minimum_size = Vector2(CONTENT_W, 0)
-	content.add_child(_hint)
+	_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_content.add_child(_hint)
 
 	# 扫荡：已通关秘境 + 1 张扫荡券 = 标准路线收益一键入账（免跑图）
-	_sweep_btn = G.gold_button("扫荡×%d" % G.item_count("ticket_sweep"), 118, 44, G.FS_SM)
-	_sweep_btn.position = Vector2(32, 438)
+	_sweep_btn = G.gold_button("扫荡×%d" % G.item_count("ticket_sweep"), 140, 44, G.FS_SM)
+	_sweep_btn.position = Vector2(GUTTER, 436)
 	_sweep_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_on_sweep())
-	content.add_child(_sweep_btn)
+	_content.add_child(_sweep_btn)
 
-	var go := G.gold_button("出 征", 200, 48)
-	go.position = Vector2(176, 436)
+	var go := G.gold_button("出 征", 172, 48)
+	go.position = Vector2(196, 434)
 	go.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_on_confirm())
-	content.add_child(go)
+	_content.add_child(go)
 
 	var back := G.gold_button("返 回", 120, 36)
-	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 492)
+	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 494)
 	back.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			canceled.emit())
-	content.add_child(back)
+	_content.add_child(back)
 
+	_rebuild_step()
+
+# ---------- 页签 ----------
+func _on_tab_click(e: InputEvent, i: int) -> void:
+	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+		_goto_step(i)
+
+func _goto_step(i: int) -> void:
+	i = wrapi(i, 0, STEPS.size())
+	if i == _step:
+		return
+	_step = i
+	_rebuild_step()
+
+func _refresh_tabs() -> void:
+	for i in _tab_btns.size():
+		var sb: StyleBoxFlat = _tab_sbs[i]
+		var on := i == _step
+		sb.bg_color = G.GOLD_BTN if on else Color("ddd0ae")
+		sb.border_color = G.GOLD_BTN_EDGE if on else Color("c0a068")
+		(_tab_btns[i] as Control).modulate = Color.WHITE if on else Color(0.86, 0.84, 0.80)
+
+# ---------- 选项页（一屏一项） ----------
+func _rebuild_step() -> void:
+	if _deck != null:
+		_content.remove_child(_deck)
+		_deck.queue_free()
+	_deck = null
+	_cards.clear()
+	_deck = PageDeckScript.new(CONTENT_W, DECK_H, 26.0)
+	_deck.position = Vector2(0, DECK_Y)
+	_deck.key_mode = "lr"   # ↑↓/WS 留给页签，别和二级导航抢键
+	match _step:
+		0:
+			_fill_themes()
+		1:
+			_fill_roles()
+		2:
+			_fill_pets()
+	_content.add_child(_deck)
+	_refresh_tabs()
+	_set_hint_default()
 	_refresh_sel()
 
-func _section(panel: Control, text: String, y: float) -> void:
-	var l := G.gold_label(text, G.FS_SM, false, Color("7a5a2e"), false)
-	l.position = Vector2(0, y)
-	l.custom_minimum_size = Vector2(CONTENT_W, 0)
-	panel.add_child(l)
+func _fill_themes() -> void:
+	var order: Array = G.theme_order()
+	var start := maxi(0, order.find(_theme))
+	for i in order.size():
+		var tid := String(order[i])
+		var open: bool = G.is_world_unlocked(tid)
+		var card := SlideCardScript.new({
+			"kicker": "秘 境 %02d / %02d" % [i + 1, order.size()],
+			"title": G.world_name(tid),
+			"art_names": ["world_%s_art" % tid, "world_%s" % tid],
+			"art_hint": "world_%s.png" % tid,
+			"art_tint": THEME_HUE.get(tid, Color("8d8474")),
+			"art_fit": "cover",
+			"art_dim": not open,
+			"art_ratio": 0.44,
+			"lines": ["首领未讨伐 · 通关后揭开下一片大陆" if open else "尚未解锁 · 先通关前一片大陆"],
+			"footer": "点击选定出征目标",
+			"on_click": func(): _select_theme(tid),
+		})
+		card.set_meta("locked", not open)   # 未解锁标记：校验脚本与后续扩展按它取态
+		_cards["0:%s" % tid] = card
+		_deck.add_page(SlideCardScript.page(card, CONTENT_W, DECK_H), Vector2(CONTENT_W, DECK_H))
+	_deck.go(start, true)
 
-## 卡片底：羊皮纸色 + 棕金细边 + 柔投影。四角刻意微差（5/7/6/4），别做成规整圆角矩形
-func _card_sb() -> StyleBoxFlat:
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = G.BOX_BG
-	sb.corner_radius_top_left = 5
-	sb.corner_radius_top_right = 7
-	sb.corner_radius_bottom_left = 6
-	sb.corner_radius_bottom_right = 4
-	sb.set_border_width_all(2)
-	sb.border_color = G.BOX_EDGE
-	G._apply_shadow(sb, 4.0, 2.0, 0.32)
-	return sb
+func _fill_roles() -> void:
+	var start := 0
+	for i in G.roles.size():
+		var r: Dictionary = G.roles[i]
+		var rid := String(r.get("id", ""))
+		if rid == _role:
+			start = i
+		var card := SlideCardScript.new({
+			"kicker": "人 物 %02d / %02d" % [i + 1, G.roles.size()],
+			"title": String(r.get("name", rid)),
+			"subtitle": "%s · %s" % [String(r.get("job", "")), String(r.get("weapon", ""))],
+			"art_names": ["role_%s_art" % rid, "role_%s" % rid],
+			"art_hint": "role_%s.png" % rid,
+			"art_fallback": G.role_dir(rid) + String(ROLE_ART.get(rid, rid)) + "_icon.png",
+			"art_tint": Color("b8923c"),
+			"art_fit": "contain",
+			"art_ratio": 0.44,
+			# 只放一行 tag：desc 是两三行散文，塞进选择卡会把卡片顶破（长文案在创角页看）
+			"lines": [String(r.get("tags", ""))],
+			"footer": "点击选定出战人物",
+			"on_click": func(): _select_role(rid),
+		})
+		_cards["1:%s" % rid] = card
+		_deck.add_page(SlideCardScript.page(card, CONTENT_W, DECK_H), Vector2(CONTENT_W, DECK_H))
+	_deck.go(start, true)
 
-## 一条竖色条：不给整卡上色（选中态要能整体换成金色），只在左侧插一小段颜色当识别标
-func _hue_bar(hue: Color, w: float) -> ColorRect:
-	var bar := ColorRect.new()
-	bar.color = hue
-	bar.custom_minimum_size = Vector2(w, 0)
-	bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	return bar
+func _fill_pets() -> void:
+	var pets: Array = TableCache.pets()
+	var start := 0
+	for i in pets.size():
+		var p: Dictionary = pets[i]
+		var pid := String(p.get("id", ""))
+		if pid == _active_pet or pid == _bench_pet:
+			start = i
+		var owned: bool = G.owns_pet(pid)
+		var rarity := String(p.get("rarity", "white"))
+		var card := SlideCardScript.new({
+			"kicker": "灵 宠 %02d / %02d" % [i + 1, pets.size()],
+			"title": String(p.get("name", pid)),
+			"subtitle": "%s · %s" % [RARITY_NAME.get(rarity, "普通"),
+				ROLE_NAME.get(String(p.get("role", "")), "未知")],
+			"art_names": ["%s_art" % pid, pid],
+			"art_hint": "%s.png" % pid,
+			"art_tint": RARITY_HUE.get(rarity, Color("a89e88")),
+			"art_fit": "contain",
+			"art_dim": not owned,
+			"art_frame": RARITY_FRAME.get(rarity, "frame_white"),
+			"art_ratio": 0.44,
+			"lines": ["点击派它出战（再点一次：换替补 / 取消）" if owned
+				else G.pet_unlock_text(pid)],
+			"footer": "未收集的灵宠不可出战",
+			"on_click": func(): _select_pet(pid),
+		})
+		card.set_meta("locked", not owned)
+		_cards["2:%s" % pid] = card
+		_deck.add_page(SlideCardScript.page(card, CONTENT_W, DECK_H), Vector2(CONTENT_W, DECK_H))
+	_deck.go(start, true)
 
-## 秘境卡：左色条 + 名称（locked 时整体压灰，点它会提示解锁条件）
-func _theme_card(title: String, hue: Color, w: float, h: float, unlocked := true) -> PanelContainer:
-	var root := PanelContainer.new()
-	root.custom_minimum_size = Vector2(w, h)
-	var sb := _card_sb()
-	if not unlocked:
-		sb.bg_color = Color("b0a68e")
-		sb.border_color = Color("8a7f68")
-	sb.content_margin_left = 8.0
-	sb.content_margin_right = 5.0
-	sb.content_margin_top = 3.0
-	sb.content_margin_bottom = 3.0
-	root.add_theme_stylebox_override("panel", sb)
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 7)
-	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	row.add_child(_hue_bar(hue if unlocked else Color(hue.r, hue.g, hue.b, 0.32), 6.0))
-	var l := G.gold_label(title, G.FS_SM, false,
-		G.TEXT_DARK if unlocked else Color("6a6152"), false)
-	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	row.add_child(l)
-	root.add_child(row)
-	root.mouse_filter = Control.MOUSE_FILTER_STOP
-	root.set_meta("locked", not unlocked)
-	return root
-
-## 人物卡：立绘头像（128px 像素图缩到卡宽内，nearest 采样保锐）+ 名字
-func _role_card(rid: String, title: String, w: float, h: float) -> PanelContainer:
-	var root := PanelContainer.new()
-	root.custom_minimum_size = Vector2(w, h)
-	var sb := _card_sb()
-	sb.content_margin_left = 4.0
-	sb.content_margin_right = 4.0
-	sb.content_margin_top = 5.0
-	sb.content_margin_bottom = 3.0
-	root.add_theme_stylebox_override("panel", sb)
-	var col := VBoxContainer.new()
-	col.add_theme_constant_override("separation", 1)
-	col.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var pic := TextureRect.new()
-	var art := String(ROLE_ART.get(rid, rid))
-	var tex: Texture2D = load(G.role_dir(rid) + art + "_icon.png")
-	pic.texture = tex
-	pic.custom_minimum_size = Vector2(0, 66)
-	pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	pic.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	col.add_child(pic)
-	col.add_child(G.gold_label(title, G.FS_SM, false, G.TEXT_DARK, false))
-	root.add_child(col)
-	root.mouse_filter = Control.MOUSE_FILTER_STOP
-	return root
-
-## 宠物卡：立绘头像 + 稀有度色条 + 名字（名字单独留引用，_refresh_sel 要往上面写 ▶/◇）
-func _pet_card(pid: String, title: String, hue: Color, w: float, h: float, owned := true) -> PanelContainer:
-	var root := PanelContainer.new()
-	root.custom_minimum_size = Vector2(w, h)
-	var sb := _card_sb()
-	if not owned:
-		sb.bg_color = Color("b0a68e")
-		sb.border_color = Color("8a7f68")
-	sb.content_margin_left = 5.0
-	sb.content_margin_right = 5.0
-	sb.content_margin_top = 3.0
-	sb.content_margin_bottom = 3.0
-	root.add_theme_stylebox_override("panel", sb)
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 5)
-	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	# 小头像（未收集显示暗剪影，只留轮廓）
-	var tex: Texture2D = G.res_tex(pid)
-	if tex != null:
-		var pic := TextureRect.new()
-		pic.texture = tex
-		pic.custom_minimum_size = Vector2(34, 34)
-		pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		if not owned:
-			pic.modulate = Color(0.3, 0.27, 0.24, 0.9)
-		row.add_child(pic)
-	row.add_child(_hue_bar(hue if owned else Color(hue.r, hue.g, hue.b, 0.32), 4.0))
-	var l := G.gold_label(title, G.FS_XS, false,
-		G.TEXT_DARK if owned else Color("6a6152"), false)
-	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	l.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	row.add_child(l)
-	_pet_labels[pid] = l
-	root.add_child(row)
-	root.mouse_filter = Control.MOUSE_FILTER_STOP
-	root.set_meta("locked", not owned)
-	return root
-
-func _on_opt_click(e: InputEvent, fn: Callable, id: String) -> void:
-	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-		fn.call(id)
-
+# ---------- 选择 ----------
 func _select_theme(id: String) -> void:
 	if not G.is_world_unlocked(id):
 		_warn("「%s」尚未解锁：先通关前一世界的首领" % G.world_name(id))
 		return
 	_theme = id
+	_set_hint_default()
 	_refresh_sel()
 
 func _select_role(id: String) -> void:
 	_role = id
+	_set_hint_default()
 	_refresh_sel()
 
 func _select_pet(id: String) -> void:
@@ -284,41 +293,18 @@ func _select_pet(id: String) -> void:
 			_active_pet = id
 		else:
 			_bench_pet = id
+	_set_hint_default()
 	_refresh_sel()
 
-func _refresh_sel() -> void:
-	if _hint != null:
-		_hint.text = "▶ 出战 · ◇ 替补 · 再点取消"
-		_hint.add_theme_color_override("font_color", Color("8a6a34"))
-	for id in _theme_btns:
-		_set_sel(_theme_btns[id], id == _theme)
-	for id in _role_btns:
-		_set_sel(_role_btns[id], id == _role)
-	for id in _pet_btns:
-		var btn: PanelContainer = _pet_btns[id]
-		_set_sel(btn, id == _active_pet or id == _bench_pet)
-		# 卡片改版后第一个子节点成了 HBoxContainer，取不到 Label，得走 _pet_labels
-		var l: Label = _pet_labels.get(id)
-		var txt := String(TableCache.get_pet(String(id)).get("name", String(id)))
-		if not G.owns_pet(String(id)):
-			txt = "未收集 · " + txt
-		elif id == _active_pet:
-			txt = "▶ " + txt
-		elif id == _bench_pet:
-			txt = "◇ " + txt
-		if l != null:
-			l.text = txt
-
-func _set_sel(btn: PanelContainer, on: bool) -> void:
-	var sb: StyleBoxFlat = btn.get_theme_stylebox("panel")
-	if sb == null:
-		return
-	if bool(btn.get_meta("locked", false)):
-		sb.bg_color = Color("b0a68e")
-		sb.border_color = Color("8a7f68")
-		return
-	sb.bg_color = G.GOLD_BTN if on else G.BOX_BG
-	sb.border_color = G.GOLD_BTN_EDGE if on else G.BOX_EDGE
+func _set_hint_default() -> void:
+	match _step:
+		0:
+			_hint.text = "← → 选秘境 · ↑ ↓ 换页签 · 未解锁的需先通关前一片"
+		1:
+			_hint.text = "← → 选人物 · ↑ ↓ 换页签 · 整备完毕直接出征"
+		2:
+			_hint.text = "← → 选宠物 · ↑ ↓ 换页签 · 点已选项可换位 / 取消"
+	_hint.add_theme_color_override("font_color", Color("8a6a34"))
 
 func _warn(msg: String) -> void:
 	if _hint == null:
@@ -326,6 +312,67 @@ func _warn(msg: String) -> void:
 	_hint.text = msg
 	_hint.add_theme_color_override("font_color", Color("a04a3a"))
 
+## 选中态刷新：只改卡片的描边、徽标与提示行，不重建（点一下不闪屏）
+func _refresh_sel() -> void:
+	for key in _cards:
+		var card = _cards[key]
+		var s := String(key)
+		match int(s.get_slice(":", 0)):
+			0:
+				_paint_theme(card, s.get_slice(":", 1))
+			1:
+				_paint_role(card, s.get_slice(":", 1))
+			2:
+				_paint_pet(card, s.get_slice(":", 1))
+
+func _paint_theme(card, tid: String) -> void:
+	var on := tid == _theme
+	card.set_selected(on)
+	if on:
+		card.set_badge("出征目标", Color("8a4a2a"))
+		card.set_footer("已选定 · 出征即前往此秘境")
+	elif G.is_world_cleared(tid):
+		card.set_badge("已通关", Color("4a7a44"))
+		card.set_footer("点击选定出征目标 · 已通关可扫荡")
+	elif G.is_world_unlocked(tid):
+		card.set_badge("可挑战", Color("a06020"))
+		card.set_footer("点击选定出征目标")
+	else:
+		card.set_badge("未解锁", Color("7a7263"))
+
+func _paint_role(card, rid: String) -> void:
+	var on := rid == _role
+	card.set_selected(on)
+	card.set_badge("出战人物" if on else "", Color("8a4a2a"))
+	card.set_footer("已选定 · 出征带队人物" if on else "点击选定出战人物")
+
+func _paint_pet(card, pid: String) -> void:
+	if not G.owns_pet(pid):
+		card.set_selected(false)
+		card.set_badge("未收集", Color("7a7263"))
+		card.set_footer("未收集的灵宠不可出战 · 解锁途径见宠物图鉴")
+		return
+	card.set_footer("点击派它出战 · 再点换位 / 取消")
+	card.set_selected(pid == _active_pet or pid == _bench_pet)
+	if pid == _active_pet:
+		card.set_badge("▶ 出战", Color("8a4a2a"))
+	elif pid == _bench_pet:
+		card.set_badge("◇ 替补", Color("3a5a6a"))
+	else:
+		card.set_badge("可出战", Color("4a7a44"))
+
+# ---------- 键盘：↑↓/WS 切页签（←→ 交给卡片轮播） ----------
+func _unhandled_input(e: InputEvent) -> void:
+	if G.ui_blocked:
+		return
+	if e.is_action_pressed("move_up") or e.is_action_pressed("ui_up"):
+		_goto_step(_step - 1)
+		get_viewport().set_input_as_handled()
+	elif e.is_action_pressed("move_down") or e.is_action_pressed("ui_down"):
+		_goto_step(_step + 1)
+		get_viewport().set_input_as_handled()
+
+# ---------- 扫荡 / 出征 ----------
 ## 扫荡：已通关秘境 + 1 张扫荡券 → 标准路线收益（×0.7）直接入账
 func _on_sweep() -> void:
 	if not G.is_world_cleared(_theme):
@@ -348,7 +395,6 @@ func _on_sweep() -> void:
 	# 刷新按钮上的券余量
 	if _sweep_btn != null and _sweep_btn.get_child_count() > 0:
 		(_sweep_btn.get_child(0) as Label).text = "扫荡×%d" % G.item_count("ticket_sweep")
-
 
 func _on_confirm() -> void:
 	if _active_pet == "":

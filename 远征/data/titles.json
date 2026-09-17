@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "comment": "称号成就线（玩法文档 §6）：称号本体程序文字渲染。cond 类称号达成即自动解锁；cost 类称号用荣誉购买。佩戴称号给小幅全局加成，同时只能戴一个。",
+  "titles": [
+    { "id": "t_rookie", "name": "初出茅庐", "desc": "角色达到 5 级", "cond": {"type": "level", "n": 5}, "bonus": {"hp_add": 50} },
+    { "id": "t_veteran", "name": "身经百战", "desc": "角色达到 20 级", "cond": {"type": "level", "n": 20}, "bonus": {"atk_add": 5, "hp_add": 100} },
+    { "id": "t_legend", "name": "远征传说", "desc": "角色达到 60 级", "cond": {"type": "level", "n": 60}, "bonus": {"atk_pct": 0.05, "maxhp_pct": 0.05} },
+    { "id": "t_forest", "name": "林海征服者", "desc": "通关「苍绿林海」首领", "cond": {"type": "clear_world", "world": "forest"}, "bonus": {"atk_add": 4} },
+    { "id": "t_snow", "name": "雪原猎手", "desc": "通关「封冻雪原」首领", "cond": {"type": "clear_world", "world": "snow"}, "bonus": {"def_add": 4} },
+    { "id": "t_abyss", "name": "深渊行者", "desc": "通关「无底深渊」首领", "cond": {"type": "clear_world", "world": "abyss"}, "bonus": {"atk_pct": 0.04, "def_pct": 0.04} },
+    { "id": "t_castle", "name": "王座终结者", "desc": "通关「失落王城」首领", "cond": {"type": "clear_world", "world": "castle"}, "bonus": {"atk_pct": 0.06, "crit_add": 0.03} },
+    { "id": "t_master", "name": "驯兽大师", "desc": "收集 6 只灵宠", "cond": {"type": "pets", "n": 6}, "bonus": {"hp_add": 150} },
+    { "id": "t_rich", "name": "腰缠万贯", "desc": "持有金币超过 50000", "cond": {"type": "gold", "n": 50000}, "bonus": {"atk_add": 6} },
+    { "id": "t_honor1", "name": "荣耀之证", "desc": "荣誉商店兑换", "cost": {"honor": 500}, "bonus": {"atk_pct": 0.03} },
+    { "id": "t_honor2", "name": "百战之徽", "desc": "荣誉商店兑换", "cost": {"honor": 800}, "bonus": {"maxhp_pct": 0.06} },
+    { "id": "t_honor3", "name": "不朽勋章", "desc": "荣誉商店兑换", "cost": {"honor": 1500}, "bonus": {"atk_pct": 0.04, "def_pct": 0.04} }
+  ]
+}

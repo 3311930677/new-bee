@@ -45,8 +45,30 @@ func _make_run() -> RunState:
 	return st
 
 
+## 养成线演示档：天赋/装备/技能/坐骑/称号/宠物各有一点进度，截图才有内容
+func _growth_demo() -> void:
+	_demo_prog()
+	G.selected_role = "zs"
+	G.prog["talents"] = {"fury_1": 1}
+	G.prog["equip"] = {
+		"sword": {"lv": 3, "gems": ["gem_atk_3"],
+			"affixes": [{"stat": "atk_pct", "v": 0.05, "locked": false}]},
+		"armor": {"lv": 2, "gems": [], "affixes": []},
+		"accessory": {"lv": 1, "gems": ["gem_hp_2"], "affixes": []},
+	}
+	G.prog["skills"] = {"zs_lieshan": 3}
+	G.prog["mounts"] = {"owned": {"horse": 1}, "active": "horse"}
+	G.prog["titles"] = {"owned": ["t_rookie"], "active": "t_rookie"}
+	G.prog["pet_stat"] = {"pet_rockturtle": {"lv": 5, "exp": 40, "star": 4, "brk": 1}}
+	G.items = {"enhance_stone": 12, "refine_stone": 6, "lock_rune": 3,
+		"pet_food": 4, "break_crystal": 18, "aptitude_fruit": 1,
+		"gem_atk_3": 1, "gem_hp_2": 1, "gem_def_1": 2}
+
+
 func _setup() -> void:
 	match _scene:
+		"load":
+			add_child(load("res://src/ui/LoadScreen.tscn").instantiate())
 		"title":
 			add_child(load("res://src/ui/Title.tscn").instantiate())
 		"login":
@@ -64,6 +86,16 @@ func _setup() -> void:
 			ev.pressed = true
 			ev.button_index = MOUSE_BUTTON_LEFT
 			home.call("_on_expedition", ev)
+		"deploy_role", "deploy_pet":
+			# 出征筹备的另两个页签（人物 / 宠物），方便逐页看图
+			_demo_prog()
+			var hd: Node = load("res://src/ui/GameHome.tscn").instantiate()
+			add_child(hd)
+			var ed := InputEventMouseButton.new()
+			ed.pressed = true
+			ed.button_index = MOUSE_BUTTON_LEFT
+			hd.call("_on_expedition", ed)
+			hd.get("_deploy").call("_goto_step", 1 if _scene == "deploy_role" else 2)
 		"worlds":
 			_demo_prog()
 			var hw: Node = load("res://src/ui/GameHome.tscn").instantiate()
@@ -171,6 +203,18 @@ func _setup() -> void:
 			es.pressed = true
 			es.button_index = MOUSE_BUTTON_LEFT
 			hs.call("_open_settings", es)
+		"growth":
+			_growth_demo()
+			var hgr: Node = load("res://src/ui/GameHome.tscn").instantiate()
+			add_child(hgr)
+			hgr.call("_open_growth")
+		"talent", "equip", "pet_raise", "skillbook", "mount", "titles":
+			_growth_demo()
+			var h2: Node = load("res://src/ui/GameHome.tscn").instantiate()
+			add_child(h2)
+			h2.call("_open_growth")
+			var sub_id := _scene.replace("pet_raise", "pet").replace("skillbook", "skill").replace("titles", "title")
+			(h2.get("_growth") as Control).call("_open", sub_id)
 		_:
 			push_error("未知场景：" + _scene)
 			get_tree().quit(1)

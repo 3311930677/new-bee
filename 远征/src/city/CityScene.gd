@@ -725,6 +725,22 @@ func _show_guests() -> void:
 
 
 # ================= NPC 对话 =================
+## 立绘寻址：npc_<id>_portrait 优先；三个老熟人沿用已有半身像；旅人暂无
+const NPC_PORTRAIT_ALIAS := {
+	"npc_smith": "npc_blacksmith",
+	"npc_warden": "npc_merchant",
+	"npc_keeper": "npc_courier",
+}
+
+func _npc_portrait_tex(npc_id: String, guest: bool) -> Texture2D:
+	if guest:
+		return null
+	var tex := G.res_tex("%s_portrait" % npc_id)
+	if tex == null and NPC_PORTRAIT_ALIAS.has(npc_id):
+		tex = G.res_tex(NPC_PORTRAIT_ALIAS[npc_id])
+	return tex
+
+
 func _open_dialog(nd: Dictionary, guest: bool) -> void:
 	if _panel != null:
 		return
@@ -749,9 +765,41 @@ func _open_dialog(nd: Dictionary, guest: bool) -> void:
 	name_l.position = Vector2(0, 0)
 	content.add_child(name_l)
 
+	# 对话立绘：优先生成图 npc_<id>_portrait，无则走旧三杰映射（merchant/blacksmith/courier）
+	var text_x := 0.0
+	var text_w := 400.0
+	var portrait := _npc_portrait_tex(String(nd.get("id", "")), guest)
+	if portrait != null:
+		var frame := PanelContainer.new()
+		var fsb := StyleBoxTexture.new()
+		var frame_tex: Texture2D = G.res_tex("panel_border_brown")
+		if frame_tex != null:
+			fsb.texture = frame_tex
+			fsb.texture_margin_left = 8.0
+			fsb.texture_margin_right = 8.0
+			fsb.texture_margin_top = 8.0
+			fsb.texture_margin_bottom = 8.0
+			fsb.content_margin_left = 6.0
+			fsb.content_margin_top = 6.0
+			fsb.content_margin_right = 6.0
+			fsb.content_margin_bottom = 6.0
+			frame.add_theme_stylebox_override("panel", fsb)
+		frame.position = Vector2(0, 26)
+		frame.custom_minimum_size = Vector2(76, 76)
+		var pic := TextureRect.new()
+		pic.texture = portrait
+		pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		pic.custom_minimum_size = Vector2(64, 64)
+		pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		frame.add_child(pic)
+		content.add_child(frame)
+		text_x = 84.0
+		text_w = 316.0
+
 	var line := G.text_label("", G.FS_MD, Color("3a2a14"))
-	line.position = Vector2(0, 30)
-	line.custom_minimum_size = Vector2(400, 64)
+	line.position = Vector2(text_x, 30)
+	line.custom_minimum_size = Vector2(text_w, 64)
 	line.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	content.add_child(line)
 
