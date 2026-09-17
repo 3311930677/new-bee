@@ -29,6 +29,23 @@
 > 注意：**Incompetech（Kevin MacLeod）是 CC-BY**，用了必须在游戏内标注作者，能避则避。
 > 若确实要用 CC-BY / CC-BY-SA 素材，请在本文件里追加一条署名记录（作者 · 曲名 · 协议 · 来源链接）。
 
+## 当前已放入的素材（临时占位，只为"先听见声"）
+
+| 文件 | 来源 | 协议 |
+|---|---|---|
+| `bgm_home.ogg` | Godot 官方示例 `2d/dodge_the_creeps/art/House In a Forest Loop.ogg` | CC0 |
+| `bgm_battle.ogg` | Godot 官方示例 `2d/physics_platformer/audio/music.ogg` | CC0 |
+| `ui_click.wav` | Godot 官方示例 `2d/physics_platformer/audio/sound_coin.wav` | CC0 |
+
+| `bgm_title.ogg` | 同上 `3d/truck_town/town/sound/mood_sunrise.ogg`（清晨/开场） | CC0 |
+| `bgm_city.ogg` | 同上 `mood_day.ogg`（白昼/据点，轻快） | CC0 |
+| `bgm_route.ogg` | 同上 `mood_sunset.ogg`（黄昏/行军） | CC0 |
+| `bgm_map.ogg` | 同上 `mood_night.ogg`（夜晚/探索，幽静） | CC0 |
+
+直链前缀 `https://raw.githubusercontent.com/godotengine/godot-demo-projects/master/`。
+七首都只是临时件（曲风与《远征》不搭，四首 mood_* 是卡车小镇的氛围曲），
+定版请换成上面推荐来源的素材或自己生成；替换时保持同名即可，代码不用动。
+
 ## 音量默认值
 
 音乐 70%、音效 80%（`G.audio`，见 `src/autoload/G.gd`）。
