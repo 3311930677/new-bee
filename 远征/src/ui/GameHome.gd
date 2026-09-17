@@ -156,7 +156,8 @@ func _disc_panel(px: float, glyph: String) -> Control:
 
 # ---------- 顶部：徽标 + 账号小字 + 重建入口 ----------
 func _build_top(role: Dictionary) -> void:
-	var b := G.banner_box("远征主城", 240, 54)
+	# 主页是"游戏主界面"：木匾挂游戏名，别跟主城（点进去才是主城）重名
+	var b := G.banner_box("远 征", 240, 54)
 	b.set_anchors_preset(Control.PRESET_CENTER_TOP)
 	b.position = Vector2(-120, 84)   # 让出顶部两行：左上个人信息、右上四币与经验
 	add_child(b)
@@ -168,6 +169,17 @@ func _build_top(role: Dictionary) -> void:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 12)   # 数字别贴着下一个币的图标
 	row.position = Vector2(206.0, 30)   # 顶部横带：四币（图标+数字）靠右一行
+	# 点货币条 → 讲清四种币各是什么、从哪来
+	row.mouse_filter = Control.MOUSE_FILTER_STOP
+	row.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	row.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			G.show_info_popup(row, "资源说明", [
+				"金：建造与升级的主力货币，远征结算、讨伐首领可得。",
+				"远征币：远征途中的通行花费，局结算与路线事件产出。",
+				"魂石：召唤灵宠的消耗，远征与重复炼化产出。",
+				"荣誉：兑换商店的交易凭证，对战与结算产出（不加深数值差距）。",
+			]))
 	add_child(row)
 	var wallet_meta := [
 		["金", "f0c060", "gold", "cur_gold"], ["远征", "7ac0c8", "expedition", "cur_expedition"],
@@ -183,6 +195,7 @@ func _build_top(role: Dictionary) -> void:
 			icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+			icon.mouse_filter = Control.MOUSE_FILTER_IGNORE   # 别把货币条的点击吃掉
 			row.add_child(icon)
 		else:
 			var dot := Panel.new()
@@ -192,6 +205,7 @@ func _build_top(role: Dictionary) -> void:
 			dot_sb.bg_color = Color(String(meta[1]))
 			dot_sb.set_corner_radius_all(4)
 			dot.add_theme_stylebox_override("panel", dot_sb)
+			dot.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			row.add_child(dot)
 		var name_l := G.gold_label(String(meta[0]), G.FS_XS, false, Color("bfa987"), false)
 		name_l.tooltip_text = String(meta[0])
@@ -254,7 +268,6 @@ func _role_name(id: String) -> String:
 	return id
 
 
-# ---------- 玩家条（压在木匾下：名字 / 等级经验 / 世界进度，一条读完） ----------
 ## 右侧竖列：活动与系统入口（出征已搬进主城）
 const RAIL_R := [["世界", "界"], ["图鉴", "图"], ["养成", "养"],
 	["兑换", "兑"], ["召唤", "召"], ["设置", "设"]]
