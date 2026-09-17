@@ -213,7 +213,7 @@ func _spawn_npc(nd: Dictionary, guest: bool, at := Vector2.ZERO) -> void:
 	n.data = nd
 	n.guest = guest
 	n.hue = int(nd.get("hue", 0))
-	n.art = _npc_portrait_tex(String(nd.get("id", "")), guest)   # 有立绘就用立绘，别再画色块小人
+	n.art = _npc_world_tex(String(nd.get("id", "")), guest)   # 有立绘就用立绘，别再画色块小人
 	if at == Vector2.ZERO:
 		var p: Array = nd.get("pos", [12.0, 10.0])
 		at = Vector2(float(p[0]) * TILE, float(p[1]) * TILE)
@@ -734,9 +734,17 @@ const NPC_PORTRAIT_ALIAS := {
 	"npc_keeper": "npc_courier",
 }
 
+## 城内站位图：优先全身立绘 npc_<id>_idle_single（346~353），缺了退回半身像
+func _npc_world_tex(npc_id: String, guest: bool) -> Texture2D:
+	var tex := G.res_tex("%s_idle_single" % npc_id)
+	if tex == null:
+		tex = _npc_portrait_tex(npc_id, guest)
+	return tex
+
+
 func _npc_portrait_tex(npc_id: String, guest: bool) -> Texture2D:
 	if guest:
-		return null
+		return G.res_tex("npc_guest_idle_single")
 	var tex := G.res_tex("%s_portrait" % npc_id)
 	if tex == null and NPC_PORTRAIT_ALIAS.has(npc_id):
 		tex = G.res_tex(NPC_PORTRAIT_ALIAS[npc_id])
