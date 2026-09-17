@@ -8,6 +8,7 @@ var _fails := 0
 
 
 func _ready() -> void:
+	G.SAVE_PATH = "user://save_verify_battle.json"  # 别污染真实存档
 	await _run()
 	get_tree().quit(0 if _fails == 0 else 1)
 
