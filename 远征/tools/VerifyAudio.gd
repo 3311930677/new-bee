@@ -1,6 +1,7 @@
 # VerifyAudio.gd —— 音频层回归（场景模式：godot --headless --path . res://tools/VerifyAudio.tscn）
 # 守：18 个音效素材全部可解析（缺一个就红）、音效池逐次轮转 + 随机音高（防机械复读）、
-#     静音早退、BGM 同名不重播 / 换曲 / 缺曲静默降级、音量设置 API。
+#     静音早退、BGM 同名不重播 / 换曲 / 缺曲静默降级、音量设置 API，
+#     以及"防循环依赖"：G 与 Audio 之间不许有编译期互相引用（只准运行时取节点）。
 # 音效由 tools/make_sfx.py 程序合成；新增/重生成后要跑 godot --headless --path . --import。
 extends Node
 
@@ -91,7 +92,42 @@ func _run() -> void:
 	Audio.preload_all()   # 不崩即过
 	_check(not Audio.has_no_stream(), "素材齐全时 has_no_stream 应为 false")
 
+	# ---- I. 防回退：G 与 Audio 两个 autoload 之间零编译期引用 ----
+	# 曾踩：Audio 里写 G.audio / G.save_game()，同时 G 里写 Audio.sfx()，双向依赖让编译器
+	# 互等对方先编译 → 全项目级联 `Identifier not found: Audio`（编辑期表现为满屏红字）。
+	# 规则：两边都只准运行时取节点（G._sfx → /root/Audio；Audio._game_state → /root/G）。
+	var cycle_sites := _scan_autoload_cycle()
+	_check(cycle_sites.is_empty(),
+		"G/Audio 之间又出现编译期引用（应改走 G._sfx / Audio._game_state 运行时取节点）：%s" % str(cycle_sites))
+
 	if _fails == 0:
 		print("AUDIO_OK all tests passed")
 	else:
 		print("AUDIO_FAIL fails=%d" % _fails)
+
+
+# ---------- 源码扫描（防循环依赖守则） ----------
+## 扫描两个自动加载器之间的编译期互相引用；命中返回 ["文件:行号", …]
+func _scan_autoload_cycle() -> Array:
+	var out: Array = []
+	_scan_compile_refs("res://src/autoload/Audio.gd", "G", out)
+	_scan_compile_refs("res://src/autoload/G.gd", "Audio", out)
+	return out
+
+
+func _scan_compile_refs(path: String, other: String, out: Array) -> void:
+	var f := FileAccess.open(path, FileAccess.READ)
+	if f == null:
+		return   # 读不到（如导出后的二进制脚本）就跳过，不误报
+	var re := RegEx.new()
+	# 形如 `G.` / `Audio.` 的成员访问；前面若是标识符或 `/root/` 的一部分则不算（那是运行时常量串）
+	re.compile("(^|[^A-Za-z0-9_./\"])%s\\.[A-Za-z_]" % other)
+	var ln := 0
+	while not f.eof_reached():
+		ln += 1
+		var line := f.get_line()
+		if line.strip_edges().begins_with("#"):
+			continue   # 注释里提对方不算
+		if re.search(line) != null:
+			out.append("%s:%d" % [path, ln])
+	f.close()
