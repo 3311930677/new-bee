@@ -135,6 +135,44 @@ func _run() -> void:
 	pro.queue_free()
 	await get_tree().process_frame
 
+	# ---- E. 剧情演出节拍（首领前「对峙」 / 战后「余韵」） ----
+	_baseline()
+	var beat_missing: Array = []
+	for t in order:
+		var tid := String(t)
+		if G.boss_beat_lines(tid, "intro").size() < 2:
+			beat_missing.append(tid + ":intro")
+		if G.boss_beat_lines(tid, "outro").size() < 2:
+			beat_missing.append(tid + ":outro")
+	_check(beat_missing.is_empty(), "八境演出文本缺项（每段至少 2 行）：%s" % str(beat_missing))
+
+	# 只演一次的门禁 + 存档往返
+	_check(not G.beat_seen("forest", "intro"), "新档不该看过对峙")
+	G.mark_beat_seen("forest", "intro")
+	_check(G.beat_seen("forest", "intro"), "标记后应记位")
+	_check(not G.beat_seen("forest", "outro"), "标记 intro 不该带出 outro")
+	G.prog = {"level": 1, "exp": 0, "worlds_unlocked": 1, "world_cleared": {}, "pets": []}
+	G._load_save()
+	_check(G.beat_seen("forest", "intro"), "读档后节拍记录应保留（老档无字段默认未看）")
+	_check(not G.beat_seen("snow", "intro"), "未标记的秘境应回到未看")
+
+	# 演出层：能建、能铺满、能推进结束并回调
+	var sb_packed: PackedScene = load("res://src/ui/StoryBeat.tscn")
+	_check(sb_packed != null, "StoryBeat.tscn 应能加载")
+	var sb: Control = sb_packed.instantiate()
+	sb.set("instant", true)
+	sb.call("setup", "forest", "intro")
+	var done := {"v": false}
+	sb.set("on_done", func(): done["v"] = true)
+	add_child(sb)
+	await get_tree().process_frame
+	_check(int(sb.get("_revealed")) == G.boss_beat_lines("forest", "intro").size(),
+		"instant 模式应一次铺满全部台词行")
+	sb.call("_advance")
+	_check(bool(done["v"]), "推进到末尾应触发 on_done 回调")
+	_check(is_instance_valid(sb) and sb.is_queued_for_deletion(), "演出结束后应自回收")
+	await get_tree().process_frame
+
 	if _fails == 0:
 		print("LORE_OK all tests passed")
 	else:

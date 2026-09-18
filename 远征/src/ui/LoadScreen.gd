@@ -24,6 +24,7 @@ const PRELOAD_CODE := [
 	"res://src/ui/QuestPanel.gd",
 	"res://src/ui/CreateRole.tscn",
 	"res://src/ui/Prologue.tscn",      # 序章（登录后入城前的一站）
+	"res://src/ui/StoryBeat.tscn",     # 首领剧情演出（对峙/余韵）
 	"res://src/ui/Title.tscn",
 	"res://src/ui/Login.tscn",
 ]

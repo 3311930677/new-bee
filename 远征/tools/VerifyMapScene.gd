@@ -148,6 +148,9 @@ func _run() -> void:
 
 	# ---- F. BOSS 区：封印→首领战→解封→通关 ----
 	var bmap := await _spawn_map("boss", 4, "")
+	# 剧情演出（首领前对峙/战后余韵）由 VerifyLore 覆盖；这里标记已看，让战斗流程直连
+	G.mark_beat_seen(bmap.st.theme, "intro")
+	G.mark_beat_seen(bmap.st.theme, "outro")
 	_check(bmap._monsters.size() == 1 and bmap._monsters[0].tier == "boss", "BOSS 区应 1 首领守阵")
 	_check(bmap._portal.locked, "BOSS 区传送阵应封印")
 	bmap._player.position = bmap._portal.position

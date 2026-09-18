@@ -142,6 +142,9 @@ func _run() -> void:
 		_check(scene.st.current_layer() == 4, "3 层走完应到 BOSS 层，实为 %d" % scene.st.current_layer())
 
 	# 5. BOSS 通关：封印 → 首领战 → 解封 → 结算浮层
+	# 剧情演出（首领前对峙/战后余韵）由 VerifyLore 覆盖；这里标记已看，让战斗流程直连
+	G.mark_beat_seen("forest", "intro")
+	G.mark_beat_seen("forest", "outro")
 	var boss: Dictionary = scene.st.route["boss"]
 	scene._enter_node(boss)
 	_check(scene._map != null, "BOSS 节点应挂载地图")

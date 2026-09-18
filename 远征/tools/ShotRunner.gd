@@ -226,6 +226,20 @@ func _setup() -> void:
 			var cc: Node = load("res://src/city/CityScene.tscn").instantiate()
 			add_child(cc)
 			cc.call("_open_deploy")
+		"story_intro":
+			# 首领战前对峙（instant：一次铺满，截图不用等逐行动画）
+			_demo_prog()
+			var sb: Control = (load("res://src/ui/StoryBeat.tscn") as PackedScene).instantiate()
+			sb.set("instant", true)
+			sb.call("setup", "forest", "intro")
+			add_child(sb)
+		"story_outro":
+			# 战后余韵（换一片大陆，展示 outro 的另一种色调）
+			_demo_prog()
+			var so: Control = (load("res://src/ui/StoryBeat.tscn") as PackedScene).instantiate()
+			so.set("instant", true)
+			so.call("setup", "tomb", "outro")
+			add_child(so)
 		"gacha":
 			_demo_prog()
 			var hg: Node = load("res://src/ui/GameHome.tscn").instantiate()
