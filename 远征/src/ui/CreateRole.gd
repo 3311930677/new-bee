@@ -324,11 +324,14 @@ func _build_buttons() -> void:
 func _confirm() -> void:
 	var nm := _name_edit.text.strip_edges()
 	if nm.is_empty():
+		Audio.sfx("ui_locked")
 		_toast_msg("请输入角色昵称")
 		return
 	if nm.length() > 12:
+		Audio.sfx("ui_locked")
 		_toast_msg("昵称最长 12 个字符")
 		return
+	Audio.sfx("ui_confirm")
 	G.gender = GENDERS[_gender_idx]
 	G.selected_role = G.roles[_role_idx]["id"]
 	G.player_name = nm

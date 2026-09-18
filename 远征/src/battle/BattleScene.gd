@@ -427,6 +427,7 @@ func _on_event(e: Dictionary) -> void:
 			var role := sim.role_unit()
 			if role != null and int(e.uid) == role.uid:
 				_show_tip("%s · %s" % [role.name, String(e.get("name", ""))])
+				Audio.sfx("skill_cast")
 			else:
 				# 敌方施法必须看得见：被打了却不知道对方放了什么，战斗就成了看血条
 				var tier := "normal"
@@ -436,8 +437,10 @@ func _on_event(e: Dictionary) -> void:
 				if tier == "boss":
 					_show_tip("首领技 · %s" % String(e.get("name", "")), Color("ff8a6a"))
 					_shake(SHAKE_HIT * 0.7)   # 首领抬手先晃一下，算预警
+					Audio.sfx("boss_warn")
 				else:
 					_show_tip("敌方 · %s" % String(e.get("name", "")), Color("ffb0a0"))
+					Audio.sfx("skill_cast", 0.06)   # 敌方普通施法也给声，抖动大一点免得与我方混淆
 			if src != null:
 				src.cast_glow()
 		"dmg":
@@ -469,14 +472,17 @@ func _on_event(e: Dictionary) -> void:
 					_float_dmg(dst.position, amount, "crit")
 					_shake(SHAKE_CRIT)
 					_hit_stop(HITSTOP_STEP)
+					Audio.sfx("hit_crit")
 				elif heavy:
 					dst.hit_flash()
 					_float_dmg(dst.position, amount, "heavy")
 					_shake(SHAKE_HEAVY)
 					_hit_stop(HITSTOP_STEP)
+					Audio.sfx("hit_heavy")
 				else:
 					dst.hit_flash()
 					_float_dmg(dst.position, amount, "hit")
+					Audio.sfx("hit_light")
 					if to_role:
 						_shake(SHAKE_HIT)   # 自己挨打也晃一下：让"被打"有实感
 		"heal":
@@ -540,6 +546,7 @@ func _refresh_hud() -> void:
 			if not _danger_tip_done:
 				_danger_tip_done = true
 				_show_tip("危急 · 血量过低，补药或撤退", Color("ff9a8a"))
+				Audio.sfx("low_hp")
 		else:
 			_danger.modulate.a = 0.0
 	# 连携可视化：窗口内的"下一手"技能格亮金粗框 + 能量条上方小签
@@ -766,6 +773,7 @@ func _show_result() -> void:
 	var win := sim.result == "victory"
 	var role := sim.role_unit()
 	var hp_left := role.hp if role != null else 0
+	Audio.sfx("victory" if win else "defeat", 0.0)   # 结算音不抖音高：这是"定局"，不是随机反馈
 
 	var dim := ColorRect.new()
 	dim.color = Color(0, 0, 0, 0.6)

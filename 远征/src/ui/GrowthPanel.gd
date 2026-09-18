@@ -181,8 +181,10 @@ func _open(id: String) -> void:
 			_sub = TitlePanelScript.new()
 	if _sub == null:
 		return
+	Audio.sfx("ui_open")
 	_sub.set("z_index", 10)
 	_sub.connect("closed", func():
+		Audio.sfx("ui_close")
 		_sub.queue_free()
 		_sub = null
 		_refresh())

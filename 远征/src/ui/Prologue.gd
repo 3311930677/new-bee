@@ -146,6 +146,7 @@ func _build() -> void:
 	skip.position = Vector2(36, 660)
 	skip.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			Audio.sfx("ui_cancel")
 			_finish())
 	add_child(skip)
 
@@ -211,8 +212,10 @@ func _find_label(root: Node) -> Label:
 
 func _advance() -> void:
 	if _page >= _pages.size() - 1:
+		Audio.sfx("ui_confirm")   # 末页「启程」：确认音比翻页更"重"，收得住
 		_finish()
 	else:
+		Audio.sfx("ui_page")
 		_show_page(_page + 1)
 
 
@@ -227,4 +230,5 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept") or event.is_action_pressed("ui_right"):
 		_advance()
 	elif event.is_action_pressed("ui_cancel"):
+		Audio.sfx("ui_cancel")
 		_finish()

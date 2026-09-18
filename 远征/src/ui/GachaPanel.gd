@@ -380,6 +380,13 @@ func _show_results(mode: String, results: Array) -> void:
 	for c in _fx_layer.get_children():
 		c.queue_free()
 	var big := results.size() == 1
+	# 开卡音：出金用更亮的升级音，其余用领赏音（整批只在开头响一次，别叠成十下）
+	var has_gold := false
+	for r in results:
+		if String((r as Dictionary).get("rarity", "")) == "gold":
+			has_gold = true
+			break
+	Audio.sfx("level_up" if has_gold else "reward", 0.0)
 	for i in results.size():
 		var card := _make_card(results[i] as Dictionary, big)
 		if big:

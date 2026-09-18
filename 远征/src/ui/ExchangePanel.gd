@@ -210,6 +210,7 @@ func do_exchange(entry_id: String) -> bool:
 	var cost := int(e.get("cost", 0))
 	var honor := int(G.wallet.get("honor", 0))
 	if honor < cost:
+		Audio.sfx("ui_locked")
 		_warn("荣誉不足，还差 %d 点" % (cost - honor))
 		return false
 	G.wallet["honor"] = honor - cost
@@ -227,6 +228,7 @@ func do_exchange(entry_id: String) -> bool:
 	if _hint != null:
 		_hint.text = "点「兑 换」消耗荣誉换取资源"
 		_hint.add_theme_color_override("font_color", Color("8a6a34"))
+	Audio.sfx("coin")
 	_toast("已兑换「%s」×%d" % [String(e.get("name", entry_id)), int(_times[entry_id])])
 	return true
 

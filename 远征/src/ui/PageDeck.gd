@@ -128,6 +128,7 @@ func go(i: int, instant := false) -> void:
 	if instant:
 		_track.position = target
 	else:
+		Audio.sfx("ui_page")   # 翻页（instant 是初始化落位，不响）
 		_tween = create_tween()
 		_tween.tween_property(_track, "position", target, 0.22)\
 			.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)

@@ -340,6 +340,8 @@ func gain_exp(amount: int) -> int:
 	if int(prog["level"]) >= cap:
 		prog["level"] = cap
 		prog["exp"] = 0
+	if ups > 0:
+		Audio.sfx("level_up", 0.0)   # 升级音不抖音高：这是"仪式"，不是随机反馈
 	save_game()
 	return ups
 
@@ -2129,12 +2131,13 @@ func gold_button(text: String, w := 0.0, h := 42.0, font_size := FS_MD) -> Contr
 	var l := gold_label(text, font_size, true, TEXT_DARK, false)
 	root.add_child(l)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
-	# 按压反馈：微暗 + 微缩，松开回弹（避免静态死板的模板感）
+	# 按压反馈：微暗 + 微缩，松开回弹（避免静态死板的模板感）；按下同时出声（全局按钮都有）
 	root.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT:
 			root.pivot_offset = root.size * 0.5
 			var tw := root.create_tween()
 			if e.pressed:
+				Audio.sfx("ui_click")
 				tw.tween_property(root, "modulate", Color(0.9, 0.9, 0.9), 0.06)
 				tw.parallel().tween_property(root, "scale", Vector2.ONE * 0.97, 0.06)
 			else:
@@ -2228,6 +2231,7 @@ func info_button(title: String, lines: Array, d := 24.0) -> Control:
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	root.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			Audio.sfx("ui_click")
 			root.pivot_offset = root.size * 0.5
 			var tw := root.create_tween()
 			tw.tween_property(root, "scale", Vector2.ONE * 0.92, 0.05)

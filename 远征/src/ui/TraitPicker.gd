@@ -181,6 +181,10 @@ func _make_card(row: Dictionary) -> Control:
 
 
 func _emit_pick(tid: String) -> void:
+	if tid == "":
+		Audio.sfx("ui_cancel")   # 放弃（双刃代价划不来时）
+	else:
+		Audio.sfx("ui_confirm")
 	picked.emit(tid)
 	queue_free()
 

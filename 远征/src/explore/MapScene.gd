@@ -515,10 +515,12 @@ func on_interactable(it: _Interactable) -> void:
 	it.used = true
 	match it.kind:
 		"chest":
+			Audio.sfx("coin")
 			st.add_reward("chest")
 			_toast("宝箱开启：金币 +200 · 远征币 +30")
 			it.queue_free()
 		"event":
+			Audio.sfx("coin")
 			var gold := _rng.randi_range(80, 150)
 			st.gold += gold
 			_toast("旅人赠礼：金币 +%d" % gold)
@@ -527,6 +529,7 @@ func on_interactable(it: _Interactable) -> void:
 			_shop_supply()
 			it.queue_free()
 		"bonfire":
+			Audio.sfx("reward")
 			var amt := st.bonfire_heal()
 			st.heal(amt)
 			_refresh_hud()
@@ -545,13 +548,16 @@ func _shop_supply() -> void:
 	var cap := int(shop.get("potion_cap", 3))
 	var price := int(shop.get("potion_price", 300))
 	if st.potions >= cap:
+		Audio.sfx("ui_locked")
 		_toast("商队补给：药剂已达上限，祝你前路平安")
 		return
 	if st.gold >= price:
+		Audio.sfx("coin")
 		st.gold -= price
 		st.potions += 1
 		_toast("商队补给：购得治疗药剂 ×1（金币 -%d）" % price)
 	else:
+		Audio.sfx("reward")
 		st.potions += 1
 		_toast("商队钦佩你的勇气，赠你治疗药剂 ×1")
 	_refresh_hud()
@@ -559,6 +565,7 @@ func _shop_supply() -> void:
 
 ## 篝火词条删除浮层（§2.6 删 1 词条）：列表式选择舍弃，或保留全部
 func _show_trait_remove() -> void:
+	Audio.sfx("ui_open")
 	_remover = Control.new()
 	_remover.set_anchors_preset(Control.PRESET_FULL_RECT)
 	var dim := ColorRect.new()
@@ -617,6 +624,7 @@ func _on_remove_row(e: InputEvent, tid: String) -> void:
 
 
 func _close_remover(msg: String) -> void:
+	Audio.sfx("ui_close")
 	if _remover != null:
 		_remover.queue_free()
 		_remover = null
@@ -646,6 +654,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _ask_exit() -> void:
 	if _exit_ui != null or _map_done or _battle != null:
 		return
+	Audio.sfx("ui_open")
 	var layer := Control.new()
 	layer.set_anchors_preset(Control.PRESET_FULL_RECT)
 	layer.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -694,6 +703,7 @@ func _ask_exit() -> void:
 
 
 func _cancel_exit() -> void:
+	Audio.sfx("ui_close")
 	if _exit_ui != null:
 		_exit_ui.queue_free()
 		_exit_ui = null
