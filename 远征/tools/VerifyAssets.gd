@@ -23,6 +23,13 @@ func _ready() -> void:
 	# 宠物（pets.json 全量）
 	for p in TableCache.pets():
 		names.append(String(p.get("id", "")))
+	# 秘境插画（world_<theme> 8 张）：图志 / 出征卡面直接吃
+	for tid3 in maps_cfg.get("themes", {}):
+		names.append("world_%s" % tid3)
+	# NPC idle 四帧条（主城像素小人；旅人共用 npc_guest_idle）
+	for nd in TableCache.city_config().get("npcs", []):
+		names.append("%s_idle" % String((nd as Dictionary).get("id", "")))
+	names.append("npc_guest_idle")
 	# 各主题怪物（maps.json monsters + boss）
 	for tid2 in maps_cfg.get("themes", {}):
 		var th2: Dictionary = maps_cfg["themes"][tid2]

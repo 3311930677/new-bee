@@ -41,6 +41,22 @@ func _run() -> void:
 	_check((city._npcs as Array).size() == npc_expect,
 		"NPC 数量应为 %d，实为 %d" % [npc_expect, (city._npcs as Array).size()])
 
+	# 像素小人：七常驻 + 旅人都要拿到 idle 四帧条；缺素材退回立绘/色块算 FAIL
+	var npc_bad: Array = []
+	for n in city._npcs:
+		var fr: SpriteFrames = (n as Object).get("frames")
+		if fr == null or fr.get_frame_count(&"idle") != 4:
+			npc_bad.append(String(((n as Object).get("data") as Dictionary).get("id", "")))
+	_check(npc_bad.is_empty(), "NPC 缺 idle 四帧条：%s" % ", ".join(npc_bad))
+	# 标定：帧动画子节点在位、0.72 倍、抬 42.5px（脚底踩在节点原点）
+	var npc0: Node2D = city._npcs[0]
+	var sp := npc0.get_node_or_null("Idle") as AnimatedSprite2D
+	_check(sp != null, "NPC 未挂 Idle 帧节点")
+	if sp != null:
+		_check(is_equal_approx(sp.scale.x, 0.72), "NPC 帧动画缩放应为 0.72，实为 %.3f" % sp.scale.x)
+		_check(is_equal_approx(sp.position.y, -42.5), "NPC 脚底标定应为 -42.5，实为 %.2f" % sp.position.y)
+		_check(sp.is_playing(), "NPC 呼吸动画应在播放")
+
 	# 建造闭环：图志阁可建 → 落成 → 青姨上街
 	_check(G.can_build("archive"), "图志阁应可建造（Lv.5 + 1000 金）")
 	var gold_before := int(G.wallet.get("gold", 0))

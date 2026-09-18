@@ -213,11 +213,13 @@ func _build_npcs() -> void:
 
 
 func _spawn_npc(nd: Dictionary, guest: bool, at := Vector2.ZERO) -> void:
+	var npc_id := String(nd.get("id", ""))
 	var n := _CityNPC.new()
 	n.data = nd
 	n.guest = guest
 	n.hue = int(nd.get("hue", 0))
-	n.art = _npc_world_tex(String(nd.get("id", "")), guest)   # 有立绘就用立绘，别再画色块小人
+	n.frames = _npc_idle_frames(npc_id, guest)   # 首选：idle 四帧条（像素小人会呼吸）
+	n.art = _npc_world_tex(npc_id, guest)        # 兜底：单帧站位/立绘；都没有才画色块小人
 	if at == Vector2.ZERO:
 		var p: Array = nd.get("pos", [12.0, 10.0])
 		at = Vector2(float(p[0]) * TILE, float(p[1]) * TILE)
@@ -764,14 +766,42 @@ func _show_guests() -> void:
 
 
 # ================= NPC 对话 =================
-## 立绘寻址：npc_<id>_portrait 优先；三个老熟人沿用已有半身像；旅人暂无
+## 立绘寻址：npc_<id>_portrait 优先；三个老熟人沿用已有半身像；旅人用 idle 首帧裁切
 const NPC_PORTRAIT_ALIAS := {
 	"npc_smith": "npc_blacksmith",
 	"npc_warden": "npc_merchant",
 	"npc_keeper": "npc_courier",
 }
 
-## 城内站位图：优先全身立绘 npc_<id>_idle_single（346~353），缺了退回半身像
+## 城内站位（首选）：npc_<id>_idle 横向四帧条（512×128，128/帧）→ 呼吸循环。
+## 帧条画法见 docs/人物素材需求.md §5（七位常驻 + 旅人 npc_guest_idle）；
+## 缺图返回 null，调用方退回单帧立绘/色块。帧序列按 key 缓存：反复进城不该重建 8×4 张 AtlasTexture。
+var _idle_frame_cache := {}
+
+
+func _npc_idle_frames(npc_id: String, guest: bool) -> SpriteFrames:
+	var key := "npc_guest_idle" if guest else "%s_idle" % npc_id
+	if _idle_frame_cache.has(key):
+		return _idle_frame_cache[key]
+	var tex: Texture2D = G.res_tex(key)
+	if tex == null or tex.get_width() < 512 or tex.get_height() < 128:
+		_idle_frame_cache[key] = null   # 「没有」也记下：省得每个 NPC 再查一遍索引
+		return null
+	var frames := SpriteFrames.new()
+	frames.remove_animation(&"default")
+	frames.add_animation(&"idle")
+	frames.set_animation_speed(&"idle", 5.0)   # 与主页角色展示台同速：是呼吸，不是抖动
+	frames.set_animation_loop(&"idle", true)
+	for c in 4:
+		var at := AtlasTexture.new()
+		at.atlas = tex
+		at.region = Rect2(c * 128, 0, 128, 128)
+		frames.add_frame(&"idle", at)
+	_idle_frame_cache[key] = frames
+	return frames
+
+
+## 城内站位（兜底）：全身单帧 npc_<id>_idle_single；再缺就退回半身像
 func _npc_world_tex(npc_id: String, guest: bool) -> Texture2D:
 	var tex := G.res_tex("%s_idle_single" % npc_id)
 	if tex == null:
@@ -781,7 +811,17 @@ func _npc_world_tex(npc_id: String, guest: bool) -> Texture2D:
 
 func _npc_portrait_tex(npc_id: String, guest: bool) -> Texture2D:
 	if guest:
-		return G.res_tex("npc_guest_idle_single")
+		var single := G.res_tex("npc_guest_idle_single")
+		if single != null:
+			return single
+		# 旅人没有单独半身像：从 idle 条首帧裁头肩顶上（对话框只有 64×64，够用）
+		var strip: Texture2D = G.res_tex("npc_guest_idle")
+		if strip != null and strip.get_width() >= 128:
+			var at := AtlasTexture.new()
+			at.atlas = strip
+			at.region = Rect2(16, 4, 96, 96)
+			return at
+		return null
 	var tex := G.res_tex("%s_portrait" % npc_id)
 	if tex == null and NPC_PORTRAIT_ALIAS.has(npc_id):
 		tex = G.res_tex(NPC_PORTRAIT_ALIAS[npc_id])
@@ -1383,7 +1423,7 @@ class _Building extends StaticBody2D:
 		_plaque(String(data.get("name", "")), "备料中", t0 + 48)
 
 
-## 城里人：常驻 NPC 与每日来访旅人（程序绘制长袍小人 + 脚下名牌）
+## 城里人：常驻 NPC 与每日来访旅人（idle 四帧条 → 呼吸小人；缺图退回立绘/程序小人 + 头顶名牌）
 class _CityNPC extends Node2D:
 	var data: Dictionary = {}
 	var guest := false
@@ -1391,16 +1431,32 @@ class _CityNPC extends Node2D:
 	var hover := false
 	var cooled := false
 	var _t := 0.0
-	var art: Texture2D = null   # 半身立绘（ready/npcs 的 512 图）；没有就退回色块小人
+	var frames: SpriteFrames = null   # idle 四帧条（像素小人）；有它就不必让立绘站桩
+	var art: Texture2D = null         # 兜底：半身立绘（ready/npcs 的 512 图）
+	# 与主角同一套标定：0.72 倍；idle 条帧内脚底 y≈123、帧心 64 → 反向抬 (123-64)×0.72，脚落在节点原点
+	const IDLE_SCALE := 0.72
+	const IDLE_LIFT := 42.5
 
 	func _ready() -> void:
+		if frames != null:
+			var sp := AnimatedSprite2D.new()
+			sp.name = "Idle"   # 显式命名：引擎自动名是 @AnimatedSprite2D@xx，回归断言没法按名找
+			sp.sprite_frames = frames
+			sp.animation = &"idle"
+			sp.scale = Vector2.ONE * IDLE_SCALE
+			sp.position = Vector2(0, -IDLE_LIFT)
+			# 错开起始帧：一排 NPC 齐步呼吸，会像同一张贴图复制了八份
+			sp.frame = int(absf(position.x + position.y)) % 4
+			sp.play()
+			add_child(sp)
 		# 名字牌挂头顶（脚下会被 Y-sort 的建筑/行人来回遮挡，裁剪观感差）：
 		# 半透明深底衬 + 居中，长名字也不会飘出屏幕
 		var txt := String(data.get("name", "???"))
 		var title := String(data.get("title", ""))
 		if title != "":
 			txt += " · " + title
-		var top := -114.0 if art != null else -52.0   # 立绘更高，名牌跟着抬
+		# 名牌高度随形象变：像素小人身高 80（含头）→ -108；立绘 104 → -114；色块小人 → -52
+		var top := -108.0 if frames != null else (-114.0 if art != null else -52.0)
 		var l := G.gold_label(txt, G.FS_XS, false, Color("f5ead0"), true)
 		l.position = Vector2(-80, top + 2)
 		l.custom_minimum_size = Vector2(160, 0)
@@ -1423,9 +1479,14 @@ class _CityNPC extends Node2D:
 	func _draw() -> void:
 		var bob := sin(_t * 2.0 + float(hue)) * 1.2
 		# 落地影
+		var sr := 11.0 if frames != null else 13.0   # 像素小人比立绘瘦一圈，影子跟着收
 		draw_set_transform(Vector2(0, 3), 0.0, Vector2(1.0, 0.38))
-		draw_circle(Vector2.ZERO, 13.0, Color(0, 0, 0, 0.30))
+		draw_circle(Vector2.ZERO, sr, Color(0, 0, 0, 0.30))
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+		if frames != null:
+			# 本体交给 AnimatedSprite2D（5fps 呼吸），这里只管影子与悬停金三角
+			_hover_mark(bob, -88.0)
+			return
 		if art != null:
 			# 半身立绘立在地上：底缘压深渐隐，裁切不生硬（比色块小人像样得多）
 			var h := 104.0
