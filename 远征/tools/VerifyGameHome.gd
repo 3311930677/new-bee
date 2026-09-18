@@ -68,6 +68,17 @@ func _run() -> void:
 		and wallet_txt.contains("魂石") and wallet_txt.contains("荣誉"),
 		"顶栏应显示钱包四币（金/远征/魂石/荣誉），实为「%s」" % wallet_txt)
 
+	# ESC：主界面打开设置，不应直接跳到创角页；设置内再次 ESC 才关闭浮层
+	var esc := InputEventKey.new()
+	esc.keycode = KEY_ESCAPE
+	esc.pressed = true
+	home._unhandled_input(esc)
+	_check(home._settings != null, "主界面 ESC 应打开设置浮层，而不是直接进创角页")
+	if home._settings != null:
+		home._unhandled_input(esc)
+		await get_tree().process_frame
+	_check(home._settings == null, "设置浮层内 ESC 应关闭设置")
+
 	# ---- C. DEPLOY 浮层构建、默认预填与门禁 ----
 	home._on_expedition(_click())
 	_check(home._deploy != null, "点出征入口应打开 DEPLOY 浮层")

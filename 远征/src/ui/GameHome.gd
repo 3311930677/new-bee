@@ -33,6 +33,20 @@ var _settings: SettingsPanel = null  # 设置（存档/键位）
 var _arena: Control = null       # 演武场（PVP 首版）
 const ArenaPanelScript := preload("res://src/ui/ArenaPanel.gd")
 var _growth: Control = null      # 养成 6 线（GrowthPanel）
+const AvatarPanelScript := preload("res://src/ui/AvatarPanel.gd")
+var _avatar_panel: Control = null   # 更换头像浮层
+var _avatar_frame: Panel = null     # 头像外框（悬停亮边用）
+var _avatar_pic: TextureRect = null
+var _home_content_hidden := false
+
+
+func _set_home_content_visible(visible: bool) -> void:
+	_home_content_hidden = not visible
+	for child in get_children():
+		if child != _deploy and child != _worlds and child != _codex and child != _gacha \
+			and child != _exchange and child != _settings and child != _arena and child != _growth \
+			and child != _avatar_panel:
+			child.visible = visible
 
 
 func _ready() -> void:
@@ -72,23 +86,51 @@ func _build_background() -> void:
 
 # ---------- 左上角：个人信息（头像 + 名字 + 等级经验） ----------
 func _build_profile(role: Dictionary) -> void:
-	# 头像：角色 icon；缺素材时回退成写着角色名首字的金边圆牌
-	var tex: Texture2D = load(G.role_dir(String(role.get("id", ""))) \
-		+ _role_name(String(role.get("id", ""))) + "_icon.png")
-	if tex != null:
-		var pic := TextureRect.new()
-		pic.texture = tex
-		pic.position = Vector2(16, 18)
-		pic.custom_minimum_size = Vector2(56, 56)
-		pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		add_child(pic)
-	else:
+	# 头像：登录页选过的/上传过的都从 G 取；点它就能换（含上传本地图片）
+	_avatar_frame = Panel.new()
+	_avatar_frame.position = Vector2(16, 18)
+	_avatar_frame.custom_minimum_size = Vector2(56, 56)
+	_avatar_frame.size = Vector2(56, 56)
+	var fs := StyleBoxFlat.new()
+	fs.bg_color = Color(0.10, 0.07, 0.04, 0.55)
+	fs.set_corner_radius_all(9)
+	fs.set_border_width_all(2)
+	fs.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.60)
+	_avatar_frame.add_theme_stylebox_override("panel", fs)
+	_avatar_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_avatar_frame)
+
+	_avatar_pic = TextureRect.new()
+	_avatar_pic.texture = G.avatar_texture()
+	_avatar_pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_avatar_pic.custom_minimum_size = Vector2(50, 50)
+	_avatar_pic.position = Vector2(3, 3)
+	_avatar_pic.size = Vector2(50, 50)
+	_avatar_pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	_avatar_pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_avatar_frame.add_child(_avatar_pic)
+	if _avatar_pic.texture == null:
 		var nm := String(role.get("name", "旅"))
-		var d := _disc_panel(56, nm.substr(0, 1))
-		d.position = Vector2(16, 18)
-		add_child(d)
+		var d := _disc_panel(50, nm.substr(0, 1))
+		d.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_avatar_frame.add_child(d)
+
+	# 整块头像都是热区：悬停亮边、点击开更换头像浮层（§26 状态齐全，不做无反馈的装饰图）
+	var hit := Control.new()
+	hit.position = Vector2(16, 18)
+	hit.custom_minimum_size = Vector2(56, 56)
+	hit.size = Vector2(56, 56)
+	hit.mouse_filter = Control.MOUSE_FILTER_STOP
+	hit.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	hit.tooltip_text = "点击更换头像"
+	hit.mouse_entered.connect(func():
+		fs.border_color = Color(G.GOLD_BRIGHT.r, G.GOLD_BRIGHT.g, G.GOLD_BRIGHT.b, 0.95))
+	hit.mouse_exited.connect(func():
+		fs.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.60))
+	hit.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_open_avatar_panel())
+	add_child(hit)
 
 	var name_txt: String = G.player_name if not G.player_name.is_empty() \
 		else String(role.get("name", "旅人"))
@@ -182,9 +224,21 @@ func _build_top(role: Dictionary) -> void:
 	# 账号小字与「重新创建角色」撤出顶栏：一个和头像/名字挤在一起，一个压住货币条。
 	# 账号不再常驻主页（游客没信息量），重建入口挪进「设置」面板。
 
+	# 资源栏统一底框（§15）：四币共用一条横带、同一套 [图标][数值] 结构，
+	# 而不是几个裸数字各自飘在背景上——资源栏最能体现"是不是真产品"
+	var strip := Panel.new()
+	strip.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var strip_sb := StyleBoxFlat.new()
+	strip_sb.bg_color = Color(0.07, 0.05, 0.03, 0.42)
+	strip_sb.set_corner_radius_all(9)
+	strip_sb.set_border_width_all(1)
+	strip_sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.22)
+	strip.add_theme_stylebox_override("panel", strip_sb)
+	add_child(strip)
+
 	# 钱包四币（金/远征币/魂石/荣誉——存档累计，远征结算入账）
 	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 12)   # 数字别贴着下一个币的图标
+	row.add_theme_constant_override("separation", 4)   # 图标与数字贴紧，币种之间靠间隔件分开
 	row.position = Vector2(206.0, 30)   # 顶部横带：四币（图标+数字）靠右一行
 	# 点货币条 → 讲清四种币各是什么、从哪来
 	row.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -202,13 +256,19 @@ func _build_top(role: Dictionary) -> void:
 		["金", "f0c060", "gold", "cur_gold"], ["远征", "7ac0c8", "expedition", "cur_expedition"],
 		["魂石", "b08ad0", "soul", "cur_soul"], ["荣誉", "d07a5a", "honor", "cur_honor"],
 	]
-	for meta in wallet_meta:
+	for i in wallet_meta.size():
+		var meta: Array = wallet_meta[i]
+		if i > 0:
+			var gap := Control.new()
+			gap.custom_minimum_size = Vector2(8, 0)
+			gap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			row.add_child(gap)
 		# 货币图标（无素材回退小圆点色标）
 		var icon_tex: Texture2D = G.res_tex(String(meta[3]))
 		if icon_tex != null:
 			var icon := TextureRect.new()
 			icon.texture = icon_tex
-			icon.custom_minimum_size = Vector2(16, 16)
+			icon.custom_minimum_size = Vector2(G.ICON_WALLET, G.ICON_WALLET)
 			icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
@@ -232,6 +292,11 @@ func _build_top(role: Dictionary) -> void:
 			G.FS_XS, true, Color(String(meta[1])), false)
 		num_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		row.add_child(num_l)
+
+	# 底框按资源栏实际宽度贴合（数字长度会变，不能写死宽度）
+	var ms := row.get_combined_minimum_size()
+	strip.position = row.position - Vector2(9.0, 5.0)
+	strip.size = ms + Vector2(18.0, 10.0)
 
 	# 召唤 / 养成 / 兑换移到右侧竖列（见 _build_entries），这里只留钱包与玩家条
 
@@ -286,13 +351,17 @@ func _role_name(id: String) -> String:
 
 
 ## 右侧竖列：活动与系统入口（出征已搬进主城）
-const RAIL_R := [["世界", "界"], ["竞技", "武"], ["图鉴", "图"],
-	["养成", "养"], ["兑换", "兑"], ["召唤", "召"], ["设置", "设"]]
+const RAIL_R := [
+	["世界", "界", "node_start"], ["竞技", "武", "icon_double_edge"],
+	["图鉴", "图", "itm_pet_book"], ["养成", "养", "gem_hp_3"],
+	["兑换", "兑", "icon_vault"], ["召唤", "召", "icon_altar"],
+	["设置", "设", "slot_accessory"],
+]
 
 func _build_entries() -> void:
 	# 右侧竖列：活动与系统入口（出征已搬进主城，主页只留浏览与设置）
 	for i in RAIL_R.size():
-		var b := _round_entry(String(RAIL_R[i][0]), String(RAIL_R[i][1]))
+		var b := _round_entry(String(RAIL_R[i][0]), String(RAIL_R[i][1]), String(RAIL_R[i][2]))
 		b.position = Vector2(VIEW_W - 88.0, 150 + i * 78.0)
 		add_child(b)
 
@@ -317,8 +386,8 @@ func _build_entries() -> void:
 	add_child(zone)
 
 
-## 圆形入口：圆底 + 金边 + 单字纹样 + 下方小字（不依赖新素材也能立住）
-func _round_entry(label: String, glyph: String) -> Control:
+## 圆形入口：功能图标 + 金边圆底 + 下方小字
+func _round_entry(label: String, glyph: String, icon_name: String) -> Control:
 	var root := Control.new()
 	root.custom_minimum_size = Vector2(72, 72)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -328,27 +397,61 @@ func _round_entry(label: String, glyph: String) -> Control:
 	disc.custom_minimum_size = Vector2(60, 60)
 	disc.position = Vector2(6, 0)
 	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color(0.14, 0.09, 0.05, 0.86)
+	sb.bg_color = Color(0.09, 0.07, 0.05, 0.92)
 	sb.set_corner_radius_all(30)
 	sb.set_border_width_all(2)
 	sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.55)
-	G._apply_shadow(sb, 5.0, 2.0, 0.4)
+	G._apply_shadow(sb, 4.0, 2.0, 0.30)
 	disc.add_theme_stylebox_override("panel", sb)
 	disc.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	disc.add_child(G.serif_label(glyph, G.FS_LG, Color("f0c060")))
+	var icon_tex: Texture2D = G.res_tex(icon_name)
+	if icon_tex != null:
+		var icon := TextureRect.new()
+		icon.texture = icon_tex
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		icon.custom_minimum_size = Vector2(G.ICON_RAIL, G.ICON_RAIL)
+		icon.size = Vector2(G.ICON_RAIL, G.ICON_RAIL)
+		icon.position = Vector2((60.0 - G.ICON_RAIL) * 0.5, (60.0 - G.ICON_RAIL) * 0.5)
+		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		disc.add_child(icon)
+	else:
+		disc.add_child(G.serif_label(glyph, G.FS_LG, Color("f0c060")))
 	root.add_child(disc)
 
-	var cap := G.gold_label(label, G.FS_XS, false, Color("e0cfa4"), false)
+	var cap := G.gold_label(label, G.FS_XS, false, Color("f4ddb0"), false)
 	cap.position = Vector2(0, 60)
 	cap.custom_minimum_size = Vector2(72, 0)
+	cap.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	cap.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(cap)
 
+	if _entry_has_badge(label):
+		G.badge_dot(root, Vector2(58, 2))
+
+	root.mouse_entered.connect(func(): root.modulate = Color(1.06, 1.04, 1.0))
+	root.mouse_exited.connect(func(): root.modulate = Color.WHITE)
 	root.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			Audio.sfx("ui_click")
-			_dispatch_entry(label))
+		if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT:
+			root.pivot_offset = root.size * 0.5
+			var tw := root.create_tween()
+			if e.pressed:
+				Audio.sfx("ui_click")
+				tw.tween_property(root, "scale", Vector2.ONE * 0.95, 0.06)
+			else:
+				tw.tween_property(root, "scale", Vector2.ONE, 0.12)
+				_dispatch_entry(label))
 	return root
+
+
+## 入口红点：只在现在确实有可操作内容时出现，避免把每个入口都做成警报。
+func _entry_has_badge(label: String) -> bool:
+	match label:
+		"召唤": return G.item_count("ticket_ten") > 0
+		"兑换":
+			var min_cost := G.exchange_min_cost()
+			return min_cost > 0 and int(G.wallet.get("honor", 0)) >= min_cost
+	return false
 
 
 func _dispatch_entry(label: String) -> void:
@@ -403,7 +506,9 @@ func _open_worlds(e: InputEvent) -> void:
 	_worlds.closed.connect(func():
 		Audio.sfx("ui_close")
 		_worlds.queue_free()
-		_worlds = null)
+		_worlds = null
+		_set_home_content_visible(true))
+	_set_home_content_visible(false)
 	add_child(_worlds)
 
 
@@ -416,7 +521,9 @@ func _open_arena() -> void:
 	_arena.closed.connect(func():
 		Audio.sfx("ui_close")
 		_arena.queue_free()
-		_arena = null)
+		_arena = null
+		_set_home_content_visible(true))
+	_set_home_content_visible(false)
 	add_child(_arena)
 
 
@@ -431,7 +538,9 @@ func _open_codex(e: InputEvent) -> void:
 	_codex.closed.connect(func():
 		Audio.sfx("ui_close")
 		_codex.queue_free()
-		_codex = null)
+		_codex = null
+		_set_home_content_visible(true))
+	_set_home_content_visible(false)
 	add_child(_codex)
 
 
@@ -444,7 +553,9 @@ func _open_gacha() -> void:
 	_gacha.closed.connect(func():
 		Audio.sfx("ui_close")
 		_gacha.queue_free()
-		_gacha = null)
+		_gacha = null
+		_set_home_content_visible(true))
+	_set_home_content_visible(false)
 	add_child(_gacha)
 
 
@@ -457,7 +568,9 @@ func _open_exchange() -> void:
 	_exchange.closed.connect(func():
 		Audio.sfx("ui_close")
 		_exchange.queue_free()
-		_exchange = null)
+		_exchange = null
+		_set_home_content_visible(true))
+	_set_home_content_visible(false)
 	add_child(_exchange)
 
 
@@ -470,11 +583,31 @@ func _open_growth() -> void:
 	_growth.closed.connect(func():
 		Audio.sfx("ui_close")
 		_growth.queue_free()
-		_growth = null)
+		_growth = null
+		_set_home_content_visible(true))
+	_set_home_content_visible(false)
 	add_child(_growth)
 
 
 # ---------- 设置入口（存档导出导入 / 键位说明 / 回标题 / 重置） ----------
+# ---------- 更换头像（主页点左上角头像；上传本地图片或切回职业头像） ----------
+func _open_avatar_panel() -> void:
+	if _avatar_panel != null:
+		return
+	Audio.sfx("ui_open")
+	_avatar_panel = AvatarPanelScript.new()
+	_avatar_panel.changed.connect(func():
+		if _avatar_pic != null:
+			_avatar_pic.texture = G.avatar_texture())
+	_avatar_panel.closed.connect(func():
+		Audio.sfx("ui_close")
+		_avatar_panel.queue_free()
+		_avatar_panel = null
+		_set_home_content_visible(true))
+	_set_home_content_visible(false)
+	add_child(_avatar_panel)
+
+
 func _open_settings(e: InputEvent) -> void:
 	if not (e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT):
 		return
@@ -485,7 +618,9 @@ func _open_settings(e: InputEvent) -> void:
 	_settings.closed.connect(func():
 		Audio.sfx("ui_close")
 		_settings.queue_free()
-		_settings = null)
+		_settings = null
+		_set_home_content_visible(true))
+	_set_home_content_visible(false)
 	add_child(_settings)
 
 
@@ -509,21 +644,46 @@ func _toast_msg(msg: String) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not event.is_action_pressed("ui_cancel"):
+	if not event.is_action_pressed("ui_cancel") or G.ui_blocked:
 		return
+	if _close_overlay_with_escape():
+		get_viewport().set_input_as_handled()
+		return
+	# 主界面没有“返回上一级”；ESC 应打开设置，而不是突然跳到创角页。
+	_open_settings(_click_ev())
+	get_viewport().set_input_as_handled()
+
+
+func _close_overlay_with_escape() -> bool:
+	if _settings != null:
+		_settings.closed.emit()
+		return true
 	if _worlds != null:
-		_worlds.queue_free()
-		_worlds = null
-		return
+		_worlds.closed.emit()
+		return true
 	if _codex != null:
-		_codex.queue_free()
-		_codex = null
-		return
+		_codex.closed.emit()
+		return true
 	if _deploy != null:
-		_deploy.queue_free()
-		_deploy = null
-		return
-	G.go("res://src/ui/CreateRole.tscn")
+		_deploy.canceled.emit()
+		return true
+	if _gacha != null:
+		_gacha.closed.emit()
+		return true
+	if _exchange != null:
+		_exchange.closed.emit()
+		return true
+	if _arena != null:
+		Audio.sfx("ui_close")
+		_arena.queue_free()
+		_arena = null
+		return true
+	if _growth != null:
+		Audio.sfx("ui_close")
+		_growth.queue_free()
+		_growth = null
+		return true
+	return false
 
 
 # ---------- 自绘：金色圆台 / 脚下光圈 ----------

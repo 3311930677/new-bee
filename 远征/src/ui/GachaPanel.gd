@@ -32,6 +32,8 @@ var _cfg_cache: Dictionary = {}
 var _soul_l: Label = null
 var _ticket_l: Label = null
 var _pity_l: Label = null
+var _pity_sub: Label = null
+var _pity_bar: Panel = null
 var _hint: Label = null
 # ---- 结果层 ----
 var _result: Control = null
@@ -122,48 +124,106 @@ func _build() -> void:
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.add_child(content)
 
-	# 顶部活动横幅（横条素材，按高裁剪显示）
-	var hero := _tex_rect("ui_banner_gacha", CONTENT_W, 110, Color("5a3a1e"),
-		TextureRect.STRETCH_KEEP_ASPECT_COVERED)
-	hero.position = Vector2(0, 0)
-	if hero is TextureRect:
-		(hero as TextureRect).clip_contents = true
-	content.add_child(hero)
-
-	# 余额行：灵魂石 + 十连券
-	var soul_icon := _tex_rect("cur_soul", 22, 22, Color("b08ad0"))
-	soul_icon.position = Vector2(78, 124)
-	content.add_child(soul_icon)
-	_soul_l = G.gold_label("× 0", G.FS_SM, false, G.TEXT_DARK, false)
-	_soul_l.position = Vector2(106, 126)
-	content.add_child(_soul_l)
-	var tk_icon := _tex_rect("itm_ticket_ten", 22, 22, Color("d8ab48"))
-	tk_icon.position = Vector2(246, 124)
-	content.add_child(tk_icon)
-	_ticket_l = G.gold_label("× 0", G.FS_SM, false, G.TEXT_DARK, false)
-	_ticket_l.position = Vector2(274, 126)
-	content.add_child(_ticket_l)
-
-	# 保底进度一行带过（规则细节收进右侧 ⓘ 弹层，不再整版平铺文字）
-	_pity_l = G.gold_label("", G.FS_XS, false, Color("8a6a34"), false)
-	_pity_l.position = Vector2(0, 158)
-	_pity_l.custom_minimum_size = Vector2(CONTENT_W - 40.0, 0)
-	content.add_child(_pity_l)
+	# 顶部信息带：本期主打 + 保底进度
+	# （原来是冷色「蓝城堡」横幅素材，压在暖色羊皮纸上像贴错了图；改成同族木色内嵌带）
+	var head := _inset_band(Vector2(CONTENT_W, 104), Vector2(0, 0))
+	content.add_child(head)
+	var feat := _featured_pet()
+	var fpic := _tex_rect(String(feat.get("id", "")), 68, 68, Color("a89e88"))
+	fpic.position = Vector2(14, 18)
+	head.add_child(fpic)
+	var fraw := String(feat.get("rarity", "white"))
+	var kicker := G.gold_label("本 期 主 打", G.FS_XS, false, Color("7a5a2e"), false)
+	kicker.position = Vector2(92, 14)
+	kicker.size = Vector2(120, 16)
+	kicker.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	head.add_child(kicker)
+	var fname_l := G.gold_label(String(feat.get("name", "")), G.FS_MD, true, G.BANNER, false)
+	fname_l.position = Vector2(92, 30)
+	fname_l.size = Vector2(120, 24)
+	fname_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	head.add_child(fname_l)
+	var chip := Panel.new()
+	chip.position = Vector2(92, 58)
+	chip.size = Vector2(64, 20)
+	var csb := StyleBoxFlat.new()
+	csb.bg_color = RARITY_HUE.get(fraw, Color("a89e88"))
+	csb.set_corner_radius_all(4)
+	csb.set_border_width_all(1)
+	csb.border_color = Color(0.25, 0.16, 0.06, 0.55)
+	chip.add_theme_stylebox_override("panel", csb)
+	chip.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var chip_l := G.gold_label(String(RARITY_NAME.get(fraw, "普通")), G.FS_XS, true,
+		Color("fff6e0"), false)
+	chip_l.set_anchors_preset(Control.PRESET_FULL_RECT)
+	chip_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	chip.add_child(chip_l)
+	head.add_child(chip)
+	# 右侧：保底数字 + 进度条 + 下一档提示
+	_pity_l = G.gold_label("", G.FS_XS, false, Color("6a4a1e"), false)
+	_pity_l.position = Vector2(206, 16)
+	_pity_l.size = Vector2(172, 16)
+	_pity_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	head.add_child(_pity_l)
+	var bar_bg := Panel.new()
+	bar_bg.position = Vector2(206, 38)
+	bar_bg.size = Vector2(172, 10)
+	var bsb := StyleBoxFlat.new()
+	bsb.bg_color = Color(0.35, 0.26, 0.14, 0.35)
+	bsb.set_corner_radius_all(5)
+	bar_bg.add_theme_stylebox_override("panel", bsb)
+	bar_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	head.add_child(bar_bg)
+	_pity_bar = Panel.new()
+	_pity_bar.position = Vector2(207, 39)
+	_pity_bar.size = Vector2(0, 8)
+	var pbsb := StyleBoxFlat.new()
+	pbsb.bg_color = Color("d8ab48")
+	pbsb.set_corner_radius_all(4)
+	_pity_bar.add_theme_stylebox_override("panel", pbsb)
+	_pity_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	head.add_child(_pity_bar)
+	_pity_sub = G.gold_label("", G.FS_XS, false, Color("8a6a34"), false)
+	_pity_sub.position = Vector2(206, 56)
+	_pity_sub.size = Vector2(172, 16)
+	_pity_sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	head.add_child(_pity_sub)
 	var info := G.info_button("召唤规则", _rules_lines(), 24.0)
-	info.position = Vector2(CONTENT_W - 28.0, 154)
-	content.add_child(info)
+	info.position = Vector2(382, 6)
+	head.add_child(info)
+
+	# 余额条：灵魂石 + 十连券（同一内嵌底，不再飘在羊皮纸上）
+	var bal := _inset_band(Vector2(CONTENT_W, 36), Vector2(0, 116))
+	content.add_child(bal)
+	var soul_icon := _tex_rect("cur_soul", 20, 20, Color("b08ad0"))
+	soul_icon.position = Vector2(72, 8)
+	bal.add_child(soul_icon)
+	_soul_l = G.gold_label("× 0", G.FS_SM, false, G.TEXT_DARK, false)
+	_soul_l.position = Vector2(98, 8)
+	_soul_l.size = Vector2(90, 20)
+	_soul_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	bal.add_child(_soul_l)
+	var tk_icon := _tex_rect("itm_ticket_ten", 20, 20, Color("d8ab48"))
+	tk_icon.position = Vector2(228, 8)
+	bal.add_child(tk_icon)
+	_ticket_l = G.gold_label("× 0", G.FS_SM, false, G.TEXT_DARK, false)
+	_ticket_l.position = Vector2(254, 8)
+	_ticket_l.size = Vector2(90, 20)
+	_ticket_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	bal.add_child(_ticket_l)
 
 	# 抽卡按钮（主标题 + 副标价格两行）
 	var single_cost := int(_cfg().get("cost_soul_single", 80))
 	var ten_cost := int(_cfg().get("cost_soul_ten", 800))
-	var b1 := _gold_btn2("单 抽", "%d 魂石" % single_cost, 196, 54)
-	b1.position = Vector2(4, 192)
+	# 主次分明：十连是主操作（金底），单抽降为描边次级，不再并排两个大金块
+	var b1 := _btn2("单 抽", "%d 魂石" % single_cost, 196, 56, true)
+	b1.position = Vector2(4, 160)
 	b1.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_do_single())
 	content.add_child(b1)
-	var b2 := _gold_btn2("十 连", "%d 魂石 / 1 券" % ten_cost, 196, 54)
-	b2.position = Vector2(208, 192)
+	var b2 := _btn2("十 连", "%d 魂石 / 1 券" % ten_cost, 196, 56, false)
+	b2.position = Vector2(208, 160)
 	b2.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_do_ten())
@@ -171,30 +231,31 @@ func _build() -> void:
 
 	# 行内提示（红字，1.5 秒后淡出）
 	_hint = G.gold_label("", G.FS_SM, false, Color("a04a3a"), false)
-	_hint.position = Vector2(0, 254)
+	_hint.position = Vector2(0, 222)
 	_hint.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_hint.modulate.a = 0.0
 	content.add_child(_hint)
 
 	# 一句书卷气的小字，压一压"功能面板"的模板感
 	var flavor := G.serif_label("魂 石 为 引 · 灵 宠 结 缘", G.FS_SM, Color("8a6a34"))
-	flavor.position = Vector2(0, 286)
+	flavor.position = Vector2(0, 246)
 	flavor.custom_minimum_size = Vector2(CONTENT_W, 0)
 	content.add_child(flavor)
 
 	# 本期奖池预览（pets.json 全量，稀有度色条一眼分档）
 	var sec := G.gold_label("本期奖池", G.FS_SM, false, Color("7a5a2e"), false)
-	sec.position = Vector2(0, 322)
+	sec.position = Vector2(0, 274)
 	sec.custom_minimum_size = Vector2(CONTENT_W, 0)
 	content.add_child(sec)
 	var pets: Array = TableCache.pets()
-	for i in pets.size():
+	# 两列四行：卡宽 196 能放下「双头蛇·影」这类长名，四列窄卡会把名字顶出面板右边界
+	for i in mini(pets.size(), 8):
 		var pc := _pool_card(pets[i] as Dictionary)
-		pc.position = Vector2((i % 4) * 104, 346 + (i / 4) * 58)
+		pc.position = Vector2((i % 2) * 212, 298 + (i / 2) * 54)
 		content.add_child(pc)
 
 	var back_btn := G.gold_button("返 回", 120, 38)
-	back_btn.position = Vector2((CONTENT_W - 120.0) * 0.5, 524)
+	back_btn.position = Vector2((CONTENT_W - 120.0) * 0.5, 522)
 	back_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_close())
@@ -202,11 +263,14 @@ func _build() -> void:
 
 
 ## 奖池小卡：立绘 + 名字（悬停看稀有度），样式同 DeployPanel 宠物卡
-func _pool_card(p: Dictionary) -> PanelContainer:
+func _pool_card(p: Dictionary) -> Panel:
 	var pid := String(p.get("id", ""))
 	var rar := String(p.get("rarity", "white"))
-	var root := PanelContainer.new()
-	root.custom_minimum_size = Vector2(96, 48)
+	# 用 Panel + 手动布局：PanelContainer 会按文字最小宽度自己撑大，长名卡片会顶出面板右边界
+	var root := Panel.new()
+	root.custom_minimum_size = Vector2(196, 50)
+	root.size = Vector2(196, 50)
+	root.clip_contents = true
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = G.BOX_BG
 	sb.corner_radius_top_left = 5
@@ -221,25 +285,35 @@ func _pool_card(p: Dictionary) -> PanelContainer:
 	sb.content_margin_top = 4.0
 	sb.content_margin_bottom = 4.0
 	root.add_theme_stylebox_override("panel", sb)
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 6)
-	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var pic := _tex_rect(pid, 36, 36, RARITY_HUE.get(rar, Color("a89e88")))
-	pic.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	row.add_child(pic)
+	pic.position = Vector2(14, 7)
+	root.add_child(pic)
 	var l := G.gold_label(String(p.get("name", pid)), G.FS_XS, false, G.TEXT_DARK, false)
-	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	l.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	row.add_child(l)
-	root.add_child(row)
+	l.position = Vector2(56, 15)
+	l.size = Vector2(132, 20)
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	l.clip_text = true
+	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(l)
+	# 左沿一条稀有度色带：比"四个角各不一样"的圆角更克制，也更容易一眼分档
+	var strip := Panel.new()
+	strip.position = Vector2(0, 0)
+	strip.size = Vector2(6, 50)
+	var ssb := StyleBoxFlat.new()
+	ssb.bg_color = RARITY_HUE.get(rar, Color("a89e88"))
+	ssb.corner_radius_top_left = 5
+	ssb.corner_radius_bottom_left = 5
+	strip.add_theme_stylebox_override("panel", ssb)
+	strip.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(strip)
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.tooltip_text = "%s · %s" % [String(p.get("name", pid)), String(RARITY_NAME.get(rar, "普通"))]
 	return root
 
 
 ## 金按钮 + 副标小字（价格行）：在 gold_button 的 Label 下再叠一行
-func _gold_btn2(title: String, sub: String, w: float, h: float) -> PanelContainer:
-	var btn := G.gold_button(title, w, h) as PanelContainer
+func _btn2(title: String, sub: String, w: float, h: float, ghost := false) -> PanelContainer:
+	var btn := (G.ghost_button(title, w, h) if ghost else G.gold_button(title, w, h)) as PanelContainer
 	# PanelContainer 会把每个直接子控件都铺满内容区——再 add_child 一个副标 Label 会与标题
 	# 完全重叠（「十连」盖在「800 魂石」上）。必须用 VBox 把标题与副标竖排
 	var title_l := btn.get_child(0) as Label
@@ -280,6 +354,38 @@ func _tex_rect(res_name: String, w: float, h: float, fallback: Color,
 	return p
 
 
+## 木色内嵌带（比羊皮纸深一档 + 棕描边）：把成组信息收进同一块底，别让控件飘在纸面上
+func _inset_band(sz: Vector2, at: Vector2) -> Panel:
+	var p := Panel.new()
+	p.custom_minimum_size = sz
+	p.size = sz
+	p.position = at
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color("d3bd92")
+	sb.set_corner_radius_all(6)
+	sb.set_border_width_all(2)
+	sb.border_color = Color(G.BOX_EDGE.r, G.BOX_EDGE.g, G.BOX_EDGE.b, 0.55)
+	sb.shadow_color = Color(0.24, 0.16, 0.06, 0.18)
+	sb.shadow_size = 3
+	sb.shadow_offset = Vector2(0, 1)
+	p.add_theme_stylebox_override("panel", sb)
+	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return p
+
+
+## 本期主打：取奖池里稀有度最高的一只（同档取第一只，稳定不随帧变化）
+func _featured_pet() -> Dictionary:
+	var best: Dictionary = {}
+	var rank := -1
+	for p in TableCache.pets():
+		var pd := p as Dictionary
+		var r := RARITY_ORDER.find(String(pd.get("rarity", "white")))
+		if r > rank:
+			rank = r
+			best = pd
+	return best
+
+
 func _refresh_top() -> void:
 	if _soul_l != null:
 		_soul_l.text = "× %d" % int(G.wallet.get("soul", 0))
@@ -287,8 +393,12 @@ func _refresh_top() -> void:
 		_ticket_l.text = "× %d" % G.item_count("ticket_ten")
 	if _pity_l != null:
 		var pity := int(G.items.get("gacha_pity", 0))
-		var pmax := int(_cfg().get("pity", 60))
-		_pity_l.text = "保底 %d / %d · 再 %d 抽必得史诗及以上" % [pity, pmax, maxi(0, pmax - pity)]
+		var pmax := maxi(1, int(_cfg().get("pity", 60)))
+		_pity_l.text = "保底 %d / %d" % [pity, pmax]
+		if _pity_sub != null:
+			_pity_sub.text = "还差 %d 抽必得史诗" % maxi(0, pmax - pity)
+		if _pity_bar != null:
+			_pity_bar.size = Vector2(roundi(170.0 * clampf(float(pity) / float(pmax), 0.0, 1.0)), 8)
 
 
 # ================= 结果层 =================
@@ -353,7 +463,7 @@ func _build_result() -> void:
 			_flip_all())
 	_result.add_child(_flip_all_btn)
 
-	_again_btn = _gold_btn2("再 抽 一 次", "", 190, 48)
+	_again_btn = _btn2("再 抽 一 次", "", 190, 48)
 	_again_btn.position = Vector2(28, 544)
 	var again_box := _again_btn.get_child(0) as VBoxContainer
 	_again_l = again_box.get_child(0) as Label

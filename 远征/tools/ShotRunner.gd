@@ -81,6 +81,13 @@ func _setup() -> void:
 		"home":
 			_demo_prog()
 			add_child(load("res://src/ui/GameHome.tscn").instantiate())
+		"avatar":
+			_demo_prog()
+			G.selected_role = "zs"
+			G.player_name = "演示旅人"
+			var hav: Node = load("res://src/ui/GameHome.tscn").instantiate()
+			add_child(hav)
+			hav.call("_open_avatar_panel")
 		"deploy":
 			_demo_prog()
 			var home: Node = load("res://src/ui/GameHome.tscn").instantiate()

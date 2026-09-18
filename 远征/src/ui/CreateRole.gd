@@ -335,6 +335,9 @@ func _confirm() -> void:
 	G.gender = GENDERS[_gender_idx]
 	G.selected_role = G.roles[_role_idx]["id"]
 	G.player_name = nm
+	if G.avatar_id.is_empty():
+		G.avatar_id = G.selected_role
+	G.save_game()
 	# 捏完人先看序章：交代"你在哪、为什么出征、第一站去哪"，再进主城
 	if G.lore_seen():
 		G.go("res://src/ui/GameHome.tscn")
