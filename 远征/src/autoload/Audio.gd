@@ -8,9 +8,22 @@ const DIR := "res://assets/audio/"
 const EXTS := [".ogg", ".wav", ".mp3"]
 const FADE := 0.5          # 换曲淡入淡出秒数
 const VOL_MIN_DB := -45.0  # 音量 0% 时的静音替代（比 -80 更自然）
+const SFX_POOL := 8        # 音效播放器池：连点/连击不互相掐断
+const PITCH_JITTER := 0.03 # 每次播放微调音高（±3%）：同一音反复响也不"机械复读"
+
+## 全量音效名（tools/make_sfx.py 合成；加载页按此预热，VerifyAudio 按此守）
+const SFX_NAMES := [
+	"ui_click", "ui_open", "ui_close", "ui_page",
+	"ui_confirm", "ui_cancel", "ui_locked",
+	"coin", "reward", "level_up",
+	"hit_light", "hit_heavy", "hit_crit", "skill_cast",
+	"boss_warn", "low_hp", "victory", "defeat",
+]
 
 var _bgm: AudioStreamPlayer = null
-var _sfx: AudioStreamPlayer = null
+var _sfx_pool: Array[AudioStreamPlayer] = []
+var _sfx_i := 0
+var _last_pitch := 1.0
 var _bgm_name := ""
 var _fade: Tween = null
 var _cache := {}
@@ -21,9 +34,13 @@ func _ready() -> void:
 	_bgm = AudioStreamPlayer.new()
 	_bgm.name = "Bgm"
 	add_child(_bgm)
-	_sfx = AudioStreamPlayer.new()
-	_sfx.name = "Sfx"
-	add_child(_sfx)
+	# 音效池：单一播放器在快速连点/连击时会把上一个音掐掉（听感"断"）；
+	# 轮转 8 个互不干扰，每个音再叠 ±3% 随机音高防机械复读
+	for i in SFX_POOL:
+		var p := AudioStreamPlayer.new()
+		p.name = "Sfx%d" % i
+		add_child(p)
+		_sfx_pool.append(p)
 	_apply_vol()
 
 
@@ -59,13 +76,18 @@ func stop_bgm() -> void:
 
 
 ## 播放一次性音效（UI 点击 / 战斗反馈）。name 如 "ui_click"
-func sfx(name: String) -> void:
+## jitter：本次音高扰动幅度（默认 ±3%）
+func sfx(name: String, jitter := PITCH_JITTER) -> void:
 	var stream := _stream(name)
-	if stream == null or _muted():
+	if stream == null or _muted() or _sfx_pool.is_empty():
 		return
-	_sfx.stream = stream
-	_sfx.volume_db = _sfx_db()
-	_sfx.play()
+	var p := _sfx_pool[_sfx_i]
+	_sfx_i = (_sfx_i + 1) % _sfx_pool.size()
+	p.stream = stream
+	p.volume_db = _sfx_db()
+	p.pitch_scale = 1.0 + randf_range(-jitter, jitter)
+	_last_pitch = p.pitch_scale
+	p.play()
 
 
 # ---------- 音量（设置面板调） ----------
@@ -130,13 +152,55 @@ func _sfx_db() -> float:
 func _apply_vol() -> void:
 	if _bgm != null and _bgm.playing:
 		_bgm.volume_db = _bgm_db()
-	if _sfx != null:
-		_sfx.volume_db = _sfx_db()
+	for p in _sfx_pool:
+		if p.playing:
+			p.volume_db = _sfx_db()
 
 
 ## 整套素材都还没放时返回 true（设置面板据此提示一句，而不是让人以为坏了）
 func has_no_stream() -> bool:
 	return _stream("bgm_home") == null and _stream("ui_click") == null
+
+
+# ---------- 预热与自检（加载页 / VerifyAudio） ----------
+## 把所有音效读进缓存（文件都很小，一次性热掉；加载页调用）
+func preload_all() -> void:
+	for n in SFX_NAMES:
+		_stream(n)
+
+
+## 音效解析到的路径（加载页按此逐个入队预热；找不到返回空串）
+func sfx_path(name: String) -> String:
+	for e in EXTS:
+		var path: String = DIR + name + String(e)
+		if ResourceLoader.exists(path):
+			return path
+	return ""
+
+
+func sfx_player_count() -> int:
+	return _sfx_pool.size()
+
+
+## 下一个将被使用的池位（VerifyAudio 用它验证"逐次轮转"）
+func sfx_slot() -> int:
+	return _sfx_i
+
+
+func sfx_playing_count() -> int:
+	var c := 0
+	for p in _sfx_pool:
+		if p.playing:
+			c += 1
+	return c
+
+
+func last_pitch() -> float:
+	return _last_pitch
+
+
+func current_bgm() -> String:
+	return _bgm_name
 
 
 ## 按名找音频资源：先查缓存，再依次试 .ogg/.wav/.mp3；都没有返回 null

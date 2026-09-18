@@ -21,6 +21,7 @@ var _rows := 0
 
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
+	Audio.sfx("ui_open")
 	_build()
 	_refresh()
 
@@ -63,6 +64,7 @@ func _build() -> void:
 	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 26.0 + float(_rows) * (ROW_H + ROW_GAP) + 12.0)
 	back.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			Audio.sfx("ui_close")
 			closed.emit())
 	_content.add_child(back)
 
@@ -183,12 +185,15 @@ func _act(qid: String) -> void:
 	if G.quest_active(qid):
 		var res := G.quest_claim(qid)
 		if bool(res.get("ok", false)):
+			Audio.sfx("reward")   # 领赏音：交付是"这一圈闭环"的高光，值得一个热闹点的音
 			_show_toast("「%s」交付 · %s" % [String(res.get("title", "")),
 				" · ".join(PackedStringArray(res.get("lines", [])))])
 		else:
+			Audio.sfx("ui_locked")
 			_show_toast(String(res.get("err", "还不能交付")))
 	else:
 		if G.quest_accept(qid):
+			Audio.sfx("ui_confirm")
 			var d := G.quest_def(qid)
 			_show_toast("接下委托：%s" % String(d.get("title", "")))
 			# 发布人的原话，接了才知道这事的分量
@@ -196,6 +201,7 @@ func _act(qid: String) -> void:
 			if desc != "":
 				G.show_info_popup(self, String(d.get("title", "")), [desc, "", "目标：" + String(d.get("goal", ""))])
 		else:
+			Audio.sfx("ui_locked")
 			_show_toast("这条接不了")
 	_refresh()
 
@@ -216,5 +222,6 @@ func _show_toast(msg: String) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
+		Audio.sfx("ui_close")
 		closed.emit()
 		get_viewport().set_input_as_handled()

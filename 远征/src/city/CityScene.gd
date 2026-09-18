@@ -476,6 +476,7 @@ func _panel_base(title: String, w: float, h: float) -> Control:
 
 
 func _close_panel() -> void:
+	Audio.sfx("ui_close")
 	if _panel != null:
 		_panel.queue_free()
 		_panel = null
@@ -790,6 +791,7 @@ func _npc_portrait_tex(npc_id: String, guest: bool) -> Texture2D:
 func _open_dialog(nd: Dictionary, guest: bool) -> void:
 	if _panel != null:
 		return
+	Audio.sfx("ui_open")
 	var id := String(nd.get("id", ""))
 	var layer := Control.new()
 	layer.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -909,6 +911,7 @@ func _advance_dialog() -> void:
 func _open_worlds() -> void:
 	if _overlay != null:
 		return
+	Audio.sfx("ui_open")
 	var p := WorldPanel.new()
 	_overlay = p
 	p.closed.connect(_close_overlay)
@@ -919,6 +922,7 @@ func _open_worlds() -> void:
 func _open_codex() -> void:
 	if _overlay != null:
 		return
+	Audio.sfx("ui_open")
 	var p := CodexPanel.new()
 	_overlay = p
 	p.closed.connect(_close_overlay)
@@ -929,6 +933,7 @@ func _open_codex() -> void:
 func _open_deploy() -> void:
 	if _overlay != null:
 		return
+	Audio.sfx("ui_open")
 	var p := DeployPanel.new()
 	_overlay = p
 	p.confirmed.connect(func(cfg: Dictionary):
@@ -943,7 +948,7 @@ func _open_deploy() -> void:
 func _open_quests() -> void:
 	if _overlay != null:
 		return
-	var p := QuestPanelScript.new()
+	var p := QuestPanelScript.new()   # QuestPanel 自己在 _ready 里响开层音
 	_overlay = p
 	p.closed.connect(_close_overlay)
 	_hud.visible = false   # 全屏面板期间藏起城内 HUD，免得双层标题/摇杆穿帮
@@ -951,6 +956,7 @@ func _open_quests() -> void:
 
 
 func _close_overlay() -> void:
+	Audio.sfx("ui_close")
 	if _overlay != null:
 		_overlay.queue_free()
 		_overlay = null

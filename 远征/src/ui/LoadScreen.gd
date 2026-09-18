@@ -173,6 +173,11 @@ func _collect_queue() -> void:
 	for a in PRELOAD_AUDIO:
 		if ResourceLoader.exists(a):
 			_queue.append(a)
+	# 音效（18 个小 wav）：全部热掉——第一次点击就该有回声，不该等到玩家点第二次才"热"起来
+	for s in Audio.SFX_NAMES:
+		var sp := Audio.sfx_path(String(s))
+		if sp != "":
+			_queue.append(sp)
 	_code.clear()
 	_code.assign(PRELOAD_CODE)   # 注意：Array[String] 不能用 = duplicate()，类型不匹配会静默失败
 	_total = _queue.size() + _code.size()

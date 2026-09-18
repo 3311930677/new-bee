@@ -327,6 +327,7 @@ func _set_hint_default() -> void:
 func _warn(msg: String) -> void:
 	if _hint == null:
 		return
+	Audio.sfx("ui_locked")   # 所有"这里走不通"的统一有声
 	_hint.text = msg
 	_hint.add_theme_color_override("font_color", Color("a04a3a"))
 
@@ -403,6 +404,7 @@ func _on_sweep() -> void:
 	if gains.is_empty():
 		_warn("扫荡失败：条件不满足")
 		return
+	Audio.sfx("coin")
 	var ups := int(gains.get("level_ups", 0))
 	var msg := "扫荡入账：金+%d 币+%d 魂+%d 荣誉+%d" % [
 		int(gains["gold"]), int(gains["expedition"]), int(gains["soul"]), int(gains["honor"])]
@@ -424,6 +426,7 @@ func _on_confirm() -> void:
 	if not G.is_world_unlocked(_theme):
 		_warn("「%s」尚未解锁" % G.world_name(_theme))
 		return
+	Audio.sfx("ui_confirm")
 	confirmed.emit({
 		"theme": _theme,
 		"role_id": _role,

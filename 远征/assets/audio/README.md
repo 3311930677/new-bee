@@ -13,9 +13,16 @@
 | `bgm_route.ogg` | 路线图 BGM | 60~90s |
 | `bgm_map.ogg` | 探索地图 BGM | 60~90s |
 | `bgm_battle.ogg` | 战斗 BGM | 60~90s，节奏更紧 |
-| `ui_click.ogg` | 全局按钮点击音（金色按钮与「?」已接） | 0.1~0.3s |
 
-再加音效只需在代码里调 `Audio.sfx("名字")`，文件同名放进来即可。
+音效（**18 个已全部就位**，程序合成，见下节；名字登记在 `Audio.SFX_NAMES`）：
+
+- UI 七件：`ui_click` / `ui_open` / `ui_close` / `ui_page` / `ui_confirm` / `ui_cancel` / `ui_locked`
+- 奖励三件：`coin` / `reward` / `level_up`
+- 战斗八件：`hit_light` / `hit_heavy` / `hit_crit` / `skill_cast` / `boss_warn` / `low_hp` / `victory` / `defeat`
+
+再加音效的流程：①在 `tools/make_sfx.py` 加一条合成函数（或手工放同名文件）→
+②在 `Audio.SFX_NAMES` 登记（加载页预热与 `VerifyAudio` 都按这份清单走）→
+③代码里 `Audio.sfx("名字")` 调用。
 
 ## 推荐的免费素材来源（都能商用）
 
@@ -29,13 +36,14 @@
 > 注意：**Incompetech（Kevin MacLeod）是 CC-BY**，用了必须在游戏内标注作者，能避则避。
 > 若确实要用 CC-BY / CC-BY-SA 素材，请在本文件里追加一条署名记录（作者 · 曲名 · 协议 · 来源链接）。
 
-## 当前已放入的素材（临时占位，只为"先听见声"）
+## 当前已放入的素材
+
+### BGM（临时占位，只为"先听见声"）
 
 | 文件 | 来源 | 协议 |
 |---|---|---|
 | `bgm_home.ogg` | Godot 官方示例 `2d/dodge_the_creeps/art/House In a Forest Loop.ogg` | CC0 |
 | `bgm_battle.ogg` | Godot 官方示例 `2d/physics_platformer/audio/music.ogg` | CC0 |
-| `ui_click.wav` | Godot 官方示例 `2d/physics_platformer/audio/sound_coin.wav` | CC0 |
 
 | `bgm_title.ogg` | 同上 `3d/truck_town/town/sound/mood_sunrise.ogg`（清晨/开场） | CC0 |
 | `bgm_city.ogg` | 同上 `mood_day.ogg`（白昼/据点，轻快） | CC0 |
@@ -43,8 +51,17 @@
 | `bgm_map.ogg` | 同上 `mood_night.ogg`（夜晚/探索，幽静） | CC0 |
 
 直链前缀 `https://raw.githubusercontent.com/godotengine/godot-demo-projects/master/`。
-七首都只是临时件（曲风与《远征》不搭，四首 mood_* 是卡车小镇的氛围曲），
+六首都只是临时件（曲风与《远征》不搭，四首 mood_* 是卡车小镇的氛围曲），
 定版请换成上面推荐来源的素材或自己生成；替换时保持同名即可，代码不用动。
+
+### 音效（18 个 · 项目自产：程序合成）
+
+`tools/make_sfx.py` 用 numpy 合成（44.1kHz / 16-bit / 单声道 WAV），风格走
+**木质 / 羊皮纸 / 克制**——UI 音峰值压低一档，战斗音允许更脏更重。无第三方版权。
+
+- 可**反复生成**（同名覆盖）：`python tools/make_sfx.py`
+- 重生成后必须让引擎重新导入：`godot --headless --path . --import`
+- 运行时由 `src/autoload/Audio.gd` 的音效池播放（8 个播放器轮转 + ±3% 随机音高）
 
 ## 音量默认值
 

@@ -395,8 +395,10 @@ func _open_worlds(e: InputEvent) -> void:
 		return
 	if _worlds != null:
 		return
+	Audio.sfx("ui_open")
 	_worlds = WorldPanel.new()
 	_worlds.closed.connect(func():
+		Audio.sfx("ui_close")
 		_worlds.queue_free()
 		_worlds = null)
 	add_child(_worlds)
@@ -408,8 +410,10 @@ func _open_codex(e: InputEvent) -> void:
 		return
 	if _codex != null:
 		return
+	Audio.sfx("ui_open")
 	_codex = CodexPanel.new()
 	_codex.closed.connect(func():
+		Audio.sfx("ui_close")
 		_codex.queue_free()
 		_codex = null)
 	add_child(_codex)
@@ -419,8 +423,10 @@ func _open_codex(e: InputEvent) -> void:
 func _open_gacha() -> void:
 	if _gacha != null:
 		return
+	Audio.sfx("ui_open")
 	_gacha = GachaPanel.new()
 	_gacha.closed.connect(func():
+		Audio.sfx("ui_close")
 		_gacha.queue_free()
 		_gacha = null)
 	add_child(_gacha)
@@ -430,8 +436,10 @@ func _open_gacha() -> void:
 func _open_exchange() -> void:
 	if _exchange != null:
 		return
+	Audio.sfx("ui_open")
 	_exchange = ExchangePanel.new()
 	_exchange.closed.connect(func():
+		Audio.sfx("ui_close")
 		_exchange.queue_free()
 		_exchange = null)
 	add_child(_exchange)
@@ -441,8 +449,10 @@ func _open_exchange() -> void:
 func _open_growth() -> void:
 	if _growth != null:
 		return
+	Audio.sfx("ui_open")
 	_growth = GrowthPanelScript.new()
 	_growth.closed.connect(func():
+		Audio.sfx("ui_close")
 		_growth.queue_free()
 		_growth = null)
 	add_child(_growth)
@@ -454,8 +464,10 @@ func _open_settings(e: InputEvent) -> void:
 		return
 	if _settings != null:
 		return
+	Audio.sfx("ui_open")
 	_settings = SettingsPanel.new()
 	_settings.closed.connect(func():
+		Audio.sfx("ui_close")
 		_settings.queue_free()
 		_settings = null)
 	add_child(_settings)
