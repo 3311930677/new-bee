@@ -38,6 +38,11 @@ var _dragging := false
 var _drag_start := 0.0          # 按下时的指针 x
 var _drag_base := 0.0           # 按下时轨道 x
 
+# ---- 工厂模式（set_factory）：页面"用到才建" ----
+var _made: Dictionary = {}              # 工厂模式：i -> 已建页
+var _factory: Callable = Callable()
+var _factory_size := Vector2.ZERO
+
 
 ## w/h 是一页（一项）的尺寸；footer_h > 0 时圆点落在页面下方的页脚带里
 func _init(w := 408.0, h := 320.0, footer_h := 0.0) -> void:
@@ -116,12 +121,49 @@ func add_page(page: Control, page_size := Vector2.ZERO) -> void:
 	_refresh_arrows()
 
 
+## 工厂装页：页面「用到才建」——大卡面板首开的卡顿来源就是"一次建完所有卡"。
+## - count：总页数（圆点/箭头/翻页范围据此先立起来）
+## - make_page: func(i: int) -> Control，返回第 i 页的容器
+## - page_size：单页尺寸（与 add_page 同口径）
+func set_factory(count: int, make_page: Callable, page_size: Vector2) -> void:
+	_factory = make_page
+	_factory_size = page_size
+	page_count = count
+	_refresh_arrows()
+
+
+## 已建页数（虚拟化自检：首开应远小于总页数）
+func made_count() -> int:
+	return _made.size()
+
+
+func _ensure_page(i: int) -> Control:
+	if i < 0 or i >= page_count or not _factory.is_valid():
+		return null
+	if _made.has(i):
+		return _made[i]
+	var page: Control = _factory.call(i)
+	if page == null:
+		return null
+	page.custom_minimum_size = _factory_size
+	page.size = _factory_size
+	page.position = Vector2(float(i) * _view_w, 0)
+	_track.add_child(page)
+	_made[i] = page
+	return page
+
+
 ## 跳到第 i 页（带滑动动画）
 func go(i: int, instant := false) -> void:
 	if page_count <= 0:
 		return
 	i = wrapi(i, 0, page_count) if wrap else clampi(i, 0, page_count - 1)
 	current = i
+	# 工厂模式：先建「目标页 + 相邻页」，翻页才不空窗
+	if _factory.is_valid():
+		_ensure_page(i)
+		_ensure_page(i - 1)
+		_ensure_page(i + 1)
 	var target := Vector2(-float(i) * _view_w, 0)
 	if _tween != null and _tween.is_valid():
 		_tween.kill()

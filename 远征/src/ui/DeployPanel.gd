@@ -199,58 +199,67 @@ func _rebuild_step() -> void:
 func _fill_themes() -> void:
 	var order: Array = G.theme_order()
 	var start := maxi(0, order.find(_theme))
-	for i in order.size():
-		var tid := String(order[i])
-		var open: bool = G.is_world_unlocked(tid)
-		# 志异题记 + 状态：出征前先让玩家读出这片地方的味道（文案在 data/lore.json）
-		var rows: Array = []
-		var epi := String(G.theme_lore(tid).get("epigraph", ""))
-		if not epi.is_empty():
-			rows.append("「%s」" % epi)
-		rows.append("首领未讨伐 · 通关开启下一片" if open else "尚未解锁 · 先通关前一片")
-		var card := SlideCardScript.new({
-			"kicker": "秘 境 %02d / %02d" % [i + 1, order.size()],
-			"title": G.world_name(tid),
-			"art_names": ["world_%s_art" % tid, "world_%s" % tid],
-			"art_hint": "world_%s.png" % tid,
-			"art_tint": THEME_HUE.get(tid, Color("8d8474")),
-			"art_fit": "cover",
-			"art_dim": not open,
-			"art_ratio": 0.44,
-			"lines": rows,
-			"footer": "点击选定出征目标",
-			"on_click": func(): _select_theme(tid),
-		})
-		card.set_meta("locked", not open)   # 未解锁标记：校验脚本与后续扩展按它取态
-		_cards["0:%s" % tid] = card
-		_deck.add_page(SlideCardScript.page(card, CONTENT_W, DECK_H), Vector2(CONTENT_W, DECK_H))
+	# 卡「用到才建」：首开只建首屏与相邻页（20 张卡全建会砸出一次顿卡）
+	_deck.set_factory(order.size(), func(i: int) -> Control:
+		return SlideCardScript.page(_theme_card(String(order[i]), i, order), CONTENT_W, DECK_H),
+		Vector2(CONTENT_W, DECK_H))
 	_deck.go(start, true)
+
+func _theme_card(tid: String, i: int, order: Array) -> Control:
+	var open: bool = G.is_world_unlocked(tid)
+	# 志异题记 + 状态：出征前先让玩家读出这片地方的味道（文案在 data/lore.json）
+	var rows: Array = []
+	var epi := String(G.theme_lore(tid).get("epigraph", ""))
+	if not epi.is_empty():
+		rows.append("「%s」" % epi)
+	rows.append("首领未讨伐 · 通关开启下一片" if open else "尚未解锁 · 先通关前一片")
+	var card := SlideCardScript.new({
+		"kicker": "秘 境 %02d / %02d" % [i + 1, order.size()],
+		"title": G.world_name(tid),
+		"art_names": ["world_%s_art" % tid, "world_%s" % tid],
+		"art_hint": "world_%s.png" % tid,
+		"art_tint": THEME_HUE.get(tid, Color("8d8474")),
+		"art_fit": "cover",
+		"art_dim": not open,
+		"art_ratio": 0.44,
+		"lines": rows,
+		"footer": "点击选定出征目标",
+		"on_click": func(): _select_theme(tid),
+	})
+	card.set_meta("locked", not open)   # 未解锁标记：校验脚本与后续扩展按它取态
+	_cards["0:%s" % tid] = card
+	return card
 
 func _fill_roles() -> void:
 	var start := 0
 	for i in G.roles.size():
 		var r: Dictionary = G.roles[i]
-		var rid := String(r.get("id", ""))
-		if rid == _role:
+		if String(r.get("id", "")) == _role:
 			start = i
-		var card := SlideCardScript.new({
-			"kicker": "人 物 %02d / %02d" % [i + 1, G.roles.size()],
-			"title": String(r.get("name", rid)),
-			"subtitle": "%s · %s" % [String(r.get("job", "")), String(r.get("weapon", ""))],
-			"art_names": ["role_%s_art" % rid, "role_%s" % rid],
-			"art_hint": "role_%s.png" % rid,
-			"art_fallback": G.role_dir(rid) + String(ROLE_ART.get(rid, rid)) + "_icon.png",
-			"art_tint": Color("b8923c"),
-			"art_fit": "contain",
-			"art_ratio": 0.44,
-			# 只放一行 tag：desc 是两三行散文，塞进选择卡会把卡片顶破（长文案在创角页看）
-			"lines": [String(r.get("tags", ""))],
-			"footer": "点击选定出战人物",
-			"on_click": func(): _select_role(rid),
-		})
-		_cards["1:%s" % rid] = card
-		_deck.add_page(SlideCardScript.page(card, CONTENT_W, DECK_H), Vector2(CONTENT_W, DECK_H))
+	_deck.set_factory(G.roles.size(), func(i: int) -> Control:
+		return SlideCardScript.page(_role_card(G.roles[i] as Dictionary, i), CONTENT_W, DECK_H),
+		Vector2(CONTENT_W, DECK_H))
 	_deck.go(start, true)
+
+func _role_card(r: Dictionary, i: int) -> Control:
+	var rid := String(r.get("id", ""))
+	var card := SlideCardScript.new({
+		"kicker": "人 物 %02d / %02d" % [i + 1, G.roles.size()],
+		"title": String(r.get("name", rid)),
+		"subtitle": "%s · %s" % [String(r.get("job", "")), String(r.get("weapon", ""))],
+		"art_names": ["role_%s_art" % rid, "role_%s" % rid],
+		"art_hint": "role_%s.png" % rid,
+		"art_fallback": G.role_dir(rid) + String(ROLE_ART.get(rid, rid)) + "_icon.png",
+		"art_tint": Color("b8923c"),
+		"art_fit": "contain",
+		"art_ratio": 0.44,
+		# 只放一行 tag：desc 是两三行散文，塞进选择卡会把卡片顶破（长文案在创角页看）
+		"lines": [String(r.get("tags", ""))],
+		"footer": "点击选定出战人物",
+		"on_click": func(): _select_role(rid),
+	})
+	_cards["1:%s" % rid] = card
+	return card
 
 func _fill_pets() -> void:
 	var pets: Array = TableCache.pets()
@@ -260,29 +269,35 @@ func _fill_pets() -> void:
 		var pid := String(p.get("id", ""))
 		if pid == _active_pet or pid == _bench_pet:
 			start = i
-		var owned: bool = G.owns_pet(pid)
-		var rarity := String(p.get("rarity", "white"))
-		var card := SlideCardScript.new({
-			"kicker": "灵 宠 %02d / %02d" % [i + 1, pets.size()],
-			"title": String(p.get("name", pid)),
-			"subtitle": "%s · %s" % [RARITY_NAME.get(rarity, "普通"),
-				ROLE_NAME.get(String(p.get("role", "")), "未知")],
-			"art_names": ["%s_art" % pid, pid],
-			"art_hint": "%s.png" % pid,
-			"art_tint": RARITY_HUE.get(rarity, Color("a89e88")),
-			"art_fit": "contain",
-			"art_dim": not owned,
-			"art_frame": RARITY_FRAME.get(rarity, "frame_white"),
-			"art_ratio": 0.44,
-			# 文案只留一行：两行会把卡撑高、被页脚裁掉（操作说明在右上角 ? 里）
-			"lines": [G.pet_unlock_text(pid)] if not owned else [],
-			"footer": "",
-			"on_click": func(): _select_pet(pid),
-		})
-		card.set_meta("locked", not owned)
-		_cards["2:%s" % pid] = card
-		_deck.add_page(SlideCardScript.page(card, CONTENT_W, DECK_H), Vector2(CONTENT_W, DECK_H))
+	_deck.set_factory(pets.size(), func(i: int) -> Control:
+		return SlideCardScript.page(_pet_card(pets[i] as Dictionary, i, pets.size()), CONTENT_W, DECK_H),
+		Vector2(CONTENT_W, DECK_H))
 	_deck.go(start, true)
+
+func _pet_card(p: Dictionary, i: int, total: int) -> Control:
+	var pid := String(p.get("id", ""))
+	var owned: bool = G.owns_pet(pid)
+	var rarity := String(p.get("rarity", "white"))
+	var card := SlideCardScript.new({
+		"kicker": "灵 宠 %02d / %02d" % [i + 1, total],
+		"title": String(p.get("name", pid)),
+		"subtitle": "%s · %s" % [RARITY_NAME.get(rarity, "普通"),
+			ROLE_NAME.get(String(p.get("role", "")), "未知")],
+		"art_names": ["%s_art" % pid, pid],
+		"art_hint": "%s.png" % pid,
+		"art_tint": RARITY_HUE.get(rarity, Color("a89e88")),
+		"art_fit": "contain",
+		"art_dim": not owned,
+		"art_frame": RARITY_FRAME.get(rarity, "frame_white"),
+		"art_ratio": 0.44,
+		# 文案只留一行：两行会把卡撑高、被页脚裁掉（操作说明在右上角 ? 里）
+		"lines": [G.pet_unlock_text(pid)] if not owned else [],
+		"footer": "",
+		"on_click": func(): _select_pet(pid),
+	})
+	card.set_meta("locked", not owned)
+	_cards["2:%s" % pid] = card
+	return card
 
 # ---------- 选择 ----------
 func _select_theme(id: String) -> void:

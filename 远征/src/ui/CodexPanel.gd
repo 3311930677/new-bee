@@ -27,6 +27,9 @@ const CONTENT_W := 408.0
 const DECK_H := 400.0
 const DECK_Y := 30.0
 
+var _deck: Control = null   # 大卡轮播（工厂模式：卡用到才建）
+
+
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_build()
@@ -61,18 +64,20 @@ func _build() -> void:
 	content.add_child(tip)
 
 	# 一屏一只：拖拽、两侧箭头、←→/AD 翻页，圆点在卡下页脚
-	var deck := PageDeckScript.new(CONTENT_W, DECK_H, 26.0)
-	deck.position = Vector2(0, DECK_Y)
-	deck.key_mode = "both"   # 方向键 / WASD 都能翻
+	# 卡「用到才建」（同 WorldPanel）：先把起始页算出来，卡由工厂按需建
 	var start := 0
 	for i in pets.size():
 		var p: Dictionary = pets[i]
 		if not G.owns_pet(String(p.get("id", ""))) and start == 0:
 			start = i   # 打开先落在「还没收集到的那只」上
-		deck.add_page(SlideCardScript.page(_card(p, i, pets.size()), CONTENT_W, DECK_H),
-			Vector2(CONTENT_W, DECK_H))
-	content.add_child(deck)
-	deck.go(start, true)
+	_deck = PageDeckScript.new(CONTENT_W, DECK_H, 26.0)
+	_deck.position = Vector2(0, DECK_Y)
+	_deck.key_mode = "both"   # 方向键 / WASD 都能翻
+	_deck.set_factory(pets.size(), func(i: int) -> Control:
+		return SlideCardScript.page(_card(pets[i] as Dictionary, i, pets.size()), CONTENT_W, DECK_H),
+		Vector2(CONTENT_W, DECK_H))
+	content.add_child(_deck)
+	_deck.go(start, true)
 
 	var back := G.gold_button("返 回", 120, 38)
 	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 480)
