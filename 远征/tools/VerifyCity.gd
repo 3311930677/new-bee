@@ -21,7 +21,10 @@ func _run() -> void:
 	G.account = "验证"
 	G.player_name = "验证"
 	G.selected_role = "zs"
-	G.prog["level"] = 5
+	# 基线完整重置 prog：autoload 启动时已读入真实存档，只改 level 会留下残留 exp——
+	# 领宴会经验时恰好跨过升级线就被清零，「宴会应加经验」假红（VerifyGameHome 同款先例）
+	G.prog = {"level": 5, "exp": 0, "worlds_unlocked": 1, "world_cleared": {}, "pets": []}
+	G.ensure_starter_pets()
 	G.wallet = {"gold": 1000, "expedition": 100, "soul": 50, "honor": 10}
 	G.city = {"built": ["hall", "gate"], "code": "", "visits": [], "acts": {}, "day": "", "streak": 0}
 	G.ensure_starter_buildings()

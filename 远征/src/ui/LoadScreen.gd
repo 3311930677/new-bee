@@ -156,13 +156,12 @@ func _build() -> void:
 	add_child(_bar_l)
 
 
-## 预热清单：素材索引全量（首扫建索引）+ 四人行走帧 + 背景 + 音频 + 脚本场景
+## 预热清单：素材索引只建不逐张加载（场景 load 会自动带上依赖纹理，
+## 全量预热 879 张图既白做又拖慢启动——实测裁掉后预热 <1s，
+## 启动总时长收敛到 MIN_SECONDS 一档）。
+## 只热：行走帧 + 界面大背景 + 音频 + 脚本/场景编译。
 func _collect_queue() -> void:
 	G._build_res_index()
-	for key in G._res_index:
-		var p := String(G._res_index[key])
-		if p.find("/ready/") != -1 or p.find("/source/") == -1:
-			_queue.append(p)
 	_queue.append("res://image/role/zs/pojun_walk_4dir.png")
 	_queue.append("res://image/role/ck/chuanyang_walk_4dir.png")
 	_queue.append("res://image/role/fs/shuangyu_walk_4dir.png")
