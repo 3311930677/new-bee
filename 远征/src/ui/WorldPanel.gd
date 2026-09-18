@@ -23,6 +23,9 @@ const THEME_HUE := {
 	"abyss": Color("6d5a9e"), "castle": Color("8d8474"),
 }
 
+var _deck: Control = null   # 大卡轮播（工厂模式：卡用到才建）
+
+
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_build()
@@ -58,16 +61,16 @@ func _build() -> void:
 	content.add_child(tip)
 
 	# 一屏一片：拖拽、两侧箭头、←→/AD 翻页，圆点在卡下页脚
-	var deck := PageDeckScript.new(CONTENT_W, DECK_H, 26.0)
-	deck.position = Vector2(0, DECK_Y)
-	deck.key_mode = "both"   # 没有二级页签，方向键 / WASD 哪个都用来翻大陆
-	for i in order.size():
-		var tid := String(order[i])
-		var card := _slide(tid, i, order)
-		deck.add_page(SlideCardScript.page(card, CONTENT_W, DECK_H), Vector2(CONTENT_W, DECK_H))
-	content.add_child(deck)
+	# 卡「用到才建」：首开只建首屏与相邻两页——8 张大卡一次建完的 ~120ms 不再砸在打开那一帧
+	_deck = PageDeckScript.new(CONTENT_W, DECK_H, 26.0)
+	_deck.position = Vector2(0, DECK_Y)
+	_deck.key_mode = "both"   # 没有二级页签，方向键 / WASD 哪个都用来翻大陆
+	_deck.set_factory(order.size(), func(i: int) -> Control:
+		return SlideCardScript.page(_slide(String(order[i]), i, order), CONTENT_W, DECK_H),
+		Vector2(CONTENT_W, DECK_H))
+	content.add_child(_deck)
 	# 打开就停在「当前推进到的那片」，省得每次从头翻
-	deck.go(clampi(unlocked_n - 1, 0, maxi(0, order.size() - 1)), true)
+	_deck.go(clampi(unlocked_n - 1, 0, maxi(0, order.size() - 1)), true)
 
 	var back := G.gold_button("返 回", 120, 38)
 	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 480)

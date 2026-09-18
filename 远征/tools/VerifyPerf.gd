@@ -9,7 +9,7 @@ extends Node
 
 const BUDGET_HOME_MS := 200      # 主界面（脚本已预热）
 const BUDGET_CITY_MS := 250      # 主城（480 格地面 + 8 NPC + 建筑）
-const BUDGET_PANEL_MS := 130     # 单个浮层
+const BUDGET_PANEL_MS := 100     # 单个浮层（大卡面板已虚拟化：卡用到才建）
 const BUDGET_REOPEN_MS := 70     # 同一浮层第二次打开（纯结构成本）
 
 var _fails := 0
@@ -153,6 +153,12 @@ func _run() -> void:
 			var panel: Control = home.get(k)
 			if panel != null:
 				_assert_clickable(panel, "返回", "浮层「%s」的返回按钮" % name)
+				if name == "世界":
+					# 虚拟化：世界图志首开只应建首屏相邻卡（8 张大卡全建是这轮优化掉的卡顿源）
+					var deck: Control = panel.get("_deck")
+					var made := int(deck.call("made_count")) if deck != null else -1
+					_check(deck != null and made <= 3,
+						"世界图志应只建首屏相邻卡（虚拟化），实为 %d 张" % made)
 				panel.closed.emit()
 			await get_tree().process_frame
 			await get_tree().process_frame
