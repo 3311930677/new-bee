@@ -73,12 +73,8 @@ func _build() -> void:
 	_root.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(_root)
 
-	# 遮罩：吞掉鼠标事件，避免误点到底下的界面
-	var dim := ColorRect.new()
-	dim.color = Color(0, 0, 0, 0.78)
-	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
-	dim.mouse_filter = Control.MOUSE_FILTER_STOP
-	_root.add_child(dim)
+	# 浮层底衬：走统一工厂（深棕 + 暗角 + 斜纹）并吞掉鼠标事件，避免误点到底下的界面
+	G.veil(_root, 0.78, true)
 
 	# 别用锚点定位：CanvasLayer 下浮层自己的 rect 要等一帧才结算，写死坐标最稳
 	var banner := G.banner_box("开发者控制台", 300, 50)

@@ -158,10 +158,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 # ---------- 羊皮纸介绍面板 ----------
 func _show_intro() -> void:
-	var dim := ColorRect.new()
-	dim.color = Color(0, 0, 0, 0.6)
-	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
-	add_child(dim)
+	# 底衬：统一走 G.veil（深棕 + 暗角 + 斜纹）。整块底衬就是"介绍层"本身，
+	# 点它关闭，所以要保持吃点击。
+	var dim := G.veil(self, 0.6, true)
 	_intro_panel = dim
 
 	var panel := PanelContainer.new()

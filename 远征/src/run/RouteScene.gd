@@ -354,10 +354,8 @@ func _show_end(win: bool) -> void:
 	_end_ui.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(_end_ui)
 
-	var dim := ColorRect.new()
-	dim.color = Color(0, 0, 0, 0.66)
-	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_end_ui.add_child(dim)
+	# 通关结算底衬：整屏接管，走统一工厂（深棕 + 暗角 + 斜纹）
+	G.veil(_end_ui, G.VEIL_TAKEOVER_A)
 
 	var panel := G.parchment_box(360, 372, 22.0)
 	panel.position = Vector2(60, 196)

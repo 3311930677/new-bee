@@ -22,6 +22,15 @@ const INPUT_BG_FOCUS := Color("ece5cf")
 const BOX_BG := Color("c2b79b")          # 选择框底
 const BOX_EDGE := Color("7c5f2c")        # 选择框描边
 
+# ---------- 浮层背景（§46 遮罩不该是一整块死黑纯灰） ----------
+# 全项目浮层统一走这两个工厂，禁止再各自 new ColorRect 写一个灰色。
+# 底色是深棕（与羊皮纸同调），再叠一层暗角：中心让位给内容，四角自然压暗。
+const VEIL := Color("241a10")                 # 浮层底：深棕，不用纯黑
+const VEIL_MODAL_A := 0.72                    # 弹窗级：能看见底下的场景轮廓
+const VEIL_TAKEOVER_A := 0.94                 # 接管级：结果/结算整屏，底下不该透出来
+const VEIL_VIGNETTE_A := 0.55                 # 暗角强度（相对弹窗级：弹窗 0.55、接管 0.72）
+const VEIL_GRID := 8.0                        # 斜纹间距（远看是布纹，近看无规律）
+
 # ---------- 字体 ----------
 # 黑体：界面正文/按钮/数字（清晰优先）；宋体（站酷小薇）：标题/横幅/书卷文字（自然手写感）
 const FONT_REG := "res://assets/fonts/NotoSansSC-Regular.otf"
@@ -214,10 +223,37 @@ func _ready() -> void:
 		# 站酷小薇个别字形损坏（「回」渲染成实心黑块，已从 cmap 删映射）；
 		# 配 fallback 后坏字/缺字自动走黑体，不再破相
 		font_serif.fallbacks = [font_bold]
+	_tune_font_rendering()
 	_load_roles()
 	_load_save()
 	ensure_starter_buildings()
 	_apply_mouse_cursor()
+	# 预热浮层贴图：第一次 G.veil() 走 _build_vignette_tex / _build_hatch_tex，
+	# 各 new 一张 Gradient/ImageTexture 会花掉 ~50ms，让 VerifyPerf 的"首开浮层"
+	# 直接踩预算。在这里跑一次以后所有面板首开都拿缓存，零开销。
+	_build_vignette_tex()
+	_build_hatch_tex()
+
+
+## 字体渲染调优（"字体难看"的根治点，全部集中在 G 一处，页面不准各自设）
+## 问题：字体的 .import 里 hinting=3（全量 hinting）+ force_autohinter=false。
+## Noto Sans SC 这类大字库在小字号（13/16px）下走 hinting 会把汉字笔画强行对齐像素格，
+## 「攒/攀」这类多笔画字会糊成一团、横竖粗细不均——这就是界面里"字很丑"的主因。
+## 做法：字号 < 20 时关掉 hinting、开轻量抗锯齿，笔画回到设计字形；大字号保持 hinting
+## 让标题边缘更锐利（标题字号大，不吃 hinting 的变形）。
+func _tune_font_rendering() -> void:
+	for f in [font_reg, font_bold, font_serif]:
+		if f == null:
+			continue
+		f.subpixel_positioning = TextServer.SUBPIXEL_POSITIONING_AUTO
+		f.force_autohinter = false
+		f.hinting = TextServer.HINTING_NONE if _is_small_face(f) else TextServer.HINTING_LIGHT
+		f.antialiasing = TextServer.FONT_ANTIALIASING_GRAY
+
+
+## 小字号字体（正文字体）：全局关 hinting；标题用宋体保留轻 hinting
+func _is_small_face(f: FontFile) -> bool:
+	return f == font_reg or f == font_bold
 
 
 ## 全局鼠标指针：金剑（Kenney CC0，ui_kenney/cursorSword_gold），剑尖为热点。
@@ -2153,6 +2189,16 @@ func _build_res_index() -> void:
 	# 先收 ready/（成品：已裁到设计尺寸、alpha 已硬化），再拿 source/ 母稿补位。
 	# 顺序不能反——source 是 970~2170px 的原始大图，既吃显存，也会把未受容器约束的
 	# TextureRect 的最小尺寸钳到原图大小（曾导致召唤横幅 2172×724 铺满面板压住文案）
+	#
+	# 注意：批次之间会重名，且这是**故意的**。例：
+	#   npc_steward_portrait = 201_333/ready/npcs（512 像素立绘，画风统一）
+	#                        + 342_353/source（1254 高清插画，画风不同）
+	# 两阶段扫描保证「任何 ready/ 都压过任何 source/」，所以最终取到像素那张。
+	# 想让新版素材真正生效，必须把它放进某批的 ready/ —— 只丢进 source/ 是无效的。
+	#
+	# generated_354_361（1448×1086 建筑母稿）**故意不列入**：它是同一批建筑的另一版
+	# 重新生成，用户 2026-09-19 决定沿用 342_353/ready/city_buildings 那版。
+	# 列进来只会白白多扫 8 张千像素大图，且让它们可被 res_tex 按名取到（画风不统一）。
 	for dir_name in batches:
 		var ready_root: String = "res://image/%s/ready" % dir_name
 		if not DirAccess.dir_exists_absolute(ready_root):
@@ -2206,6 +2252,115 @@ func _apply_shadow(sb: StyleBoxFlat, size: float, off_y: float, alpha: float) ->
 	sb.shadow_color = Color(0.0, 0.0, 0.0, alpha)
 	sb.shadow_size = int(size)
 	sb.shadow_offset = Vector2(0, off_y)
+
+
+# ---------- 浮层背景工厂 ----------
+## 浮层底衬（深棕 + 暗角 + 极淡斜纹）。
+## 只写一个 ColorRect 铺满的纯灰遮罩，是"没设计"的典型：底色发闷、四角和中心一样亮，
+## 面板浮在上面像贴纸。这里用三层叠出纵深——底色定调、暗角收边、斜纹给材质。
+## eat_input=true 时吞掉点击（模态弹窗用）。四层全部 IGNORE 鼠标，不会挡住上层按钮。
+func veil(parent: Control, strength := VEIL_MODAL_A, eat_input := true, a := -1.0) -> Control:
+	return _veil_into(parent, strength, eat_input, a)
+
+
+## 同上，但父节点是 CanvasLayer（详情弹层那种）。CanvasLayer 没有 Control 的接口，
+## 所以单独开一个只收 Node 的入口——否则调用处就得自己 new 一层 Control 包着。
+func veil_at(parent: Node, strength := VEIL_MODAL_A, eat_input := true, a := -1.0) -> Control:
+	return _veil_into(parent, strength, eat_input, a)
+
+
+func _veil_into(parent: Node, strength: float, eat_input: bool, a: float) -> Control:
+	if a < 0.0:
+		a = strength
+	var root := Control.new()
+	root.name = "Veil"
+	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	root.mouse_filter = Control.MOUSE_FILTER_STOP if eat_input else Control.MOUSE_FILTER_IGNORE
+	parent.add_child(root)
+
+	# 视口尺寸：TextureRect 必须自己撑满，不能只靠 anchors。
+	# 坑：父级还没布局时 set_anchors_and_offsets_preset 只写 anchors，size 要等下一帧
+	# 才结算，这一帧里 TextureRect 是 0×0 → 贴图根本不画。
+	var vp := _veil_viewport_size(parent)
+
+	# 暗角 TextureRect：自带 darken 模式，同时承担"色底"+"四角压暗"两件事。
+	# 关键：把 VEIL 颜色直接喂进 modulate（而不是先画一层 ColorRect 再叠暗角）——
+	# 4 个子节点就减成 3 个，且首帧的 ColorRect 已不再先于暗角一层（之前"灰色平铺"是它）。
+	# 斜纹再叠一层做材质收边。
+	var v := TextureRect.new()
+	v.texture = _build_vignette_tex()
+	v.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	v.stretch_mode = TextureRect.STRETCH_SCALE
+	v.self_modulate = Color(VEIL.r / 0.02, VEIL.g / 0.014, VEIL.b / 0.008, a * VEIL_VIGNETTE_A / 0.55)
+	v.size = vp
+	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(v)
+
+	var g := TextureRect.new()
+	g.texture = _build_hatch_tex()
+	g.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	g.stretch_mode = TextureRect.STRETCH_TILE
+	g.size = vp
+	g.modulate.a = 0.045
+	g.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(g)
+	return root
+
+
+## 浮层要铺多大：优先问父级尺寸，拿不到（headless 早期/未入树）再退回项目基准 480×800
+func _veil_viewport_size(parent: Node) -> Vector2:
+	if parent is Control:
+		var cs := (parent as Control).size
+		if cs.x > 1.0 and cs.y > 1.0:
+			return cs
+	var tree := parent.get_tree()
+	if tree != null and tree.root != null:
+		var vs := tree.root.size
+		if vs.x > 1.0 and vs.y > 1.0:
+			return vs
+	return Vector2(480, 800)
+
+
+## 暗角贴图（径向渐变：中心全透 → 四边压暗）。
+## 关键：fill_to 必须指到 mid-edge（offset (0.5,0) 表示半径 = 半宽），
+## 若指到角点则半径放大 √2 倍，渐变只能铺到对角线的 71%，四角永远到不了最深——
+## 表现就是"中心亮、四角也不够暗"，跟没做暗角一样。四角靠调制值封顶即可。
+var _vignette_tex: GradientTexture2D = null
+
+func _build_vignette_tex() -> GradientTexture2D:
+	if _vignette_tex != null:
+		return _vignette_tex
+	var grad := Gradient.new()
+	grad.set_color(0, Color(0.02, 0.014, 0.008, 0.0))        # 中心：不动
+	grad.set_color(1, Color(0.02, 0.014, 0.008, 1.0))        # 四边：压到最深
+	grad.add_point(0.60, Color(0.02, 0.014, 0.008, 0.16))    # 中段缓过渡，避免"圆环"
+	_vignette_tex = GradientTexture2D.new()
+	_vignette_tex.gradient = grad
+	_vignette_tex.fill = GradientTexture2D.FILL_RADIAL
+	_vignette_tex.fill_from = Vector2(0.5, 0.5)
+	_vignette_tex.fill_to = Vector2(0.5, 0.0)
+	_vignette_tex.width = 128
+	_vignette_tex.height = 128
+	return _vignette_tex
+
+
+## 斜纹贴图（1px 线、8px 周期，低对比）。远看是布纹，不是噪点——
+## 规范 §43 明确禁止"程序随机噪点冒充细节"，所以这里用有方向的规则纹。
+var _hatch_tex: ImageTexture = null
+
+func _build_hatch_tex() -> ImageTexture:
+	if _hatch_tex != null:
+		return _hatch_tex
+	var n := int(VEIL_GRID)
+	var img := Image.create(n, n, false, Image.FORMAT_RGBA8)
+	img.fill(Color(0, 0, 0, 0))
+	for y in n:
+		for x in n:
+			# 45° 斜线：x+y 落在同一斜带上的像素才画，线宽 1px
+			if (x + y) % n == 0:
+				img.set_pixel(x, y, Color(1.0, 0.92, 0.78, 0.055))
+	_hatch_tex = ImageTexture.create_from_image(img)
+	return _hatch_tex
 
 ## 金字 Label（描边克制：大标题才有可见描边，小字保持干净）
 func gold_label(text: String, size: int, bold := true,
@@ -2672,14 +2827,12 @@ func show_info_popup(anchor: Control, title: String, lines: Array) -> void:
 	layer.layer = 90   # 低于 GM 控制台(100)，高于一切面板
 	tree.root.add_child(layer)
 
-	var dim := ColorRect.new()
-	dim.color = Color(0, 0, 0, 0.55)
-	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
-	dim.mouse_filter = Control.MOUSE_FILTER_STOP
+	# 统一浮层底衬（深棕 + 暗角 + 斜纹）；要能接 gui_input 以便点空白关闭，
+	# 所以不再走独立 ColorRect，直接用 veil 返回的那层 Control。
+	var dim := veil_at(layer, 0.55)
 	dim.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			layer.queue_free())
-	layer.add_child(dim)
 
 	# 宽度 400：与所有面板同一排版基准；每行约 22 个中文（FS_SM/16px ÷ 368px 行宽）
 	const PW := 400.0

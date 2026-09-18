@@ -457,11 +457,8 @@ func _panel_base(title: String, w: float, h: float) -> Control:
 	var layer := Control.new()
 	layer.set_anchors_preset(Control.PRESET_FULL_RECT)
 	layer.mouse_filter = Control.MOUSE_FILTER_STOP
-	var dim := ColorRect.new()
-	dim.color = Color(0, 0, 0, 0.72)
-	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
-	dim.mouse_filter = Control.MOUSE_FILTER_STOP
-	layer.add_child(dim)
+	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），城内所有面板共用同一层质感
+	G.veil(layer, 0.72, true)
 	var banner := G.banner_box(title, 260, 48)
 	banner.position = Vector2((VIEW_W - 260.0) * 0.5, (VIEW_H - h) * 0.5 - 58.0)
 	layer.add_child(banner)
@@ -802,8 +799,13 @@ func _npc_idle_frames(npc_id: String, guest: bool) -> SpriteFrames:
 
 
 ## 城内站位（兜底）：全身单帧 npc_<id>_idle_single；再缺就退回半身像
+## 单帧站位图必须是小图（世界内 100px 级）。342_353 那批 source/ 里的
+## *_idle_single 是 1254×1254 的高清插画，画风与像素小人不同、也不能当世界精灵用，
+## 所以超过 320px 就当没有，直接走立绘/色块兜底。
 func _npc_world_tex(npc_id: String, guest: bool) -> Texture2D:
 	var tex := G.res_tex("%s_idle_single" % npc_id)
+	if tex != null and tex.get_width() > 320:
+		tex = null
 	if tex == null:
 		tex = _npc_portrait_tex(npc_id, guest)
 	return tex
@@ -1061,12 +1063,25 @@ class _Building extends StaticBody2D:
 	var _t := 0.0
 	var _w := 96.0
 	var _h := 96.0
+	# 成品建筑贴图（256×192 等距像素楼）。有贴图就画贴图，缺图退回程序绘制——
+	# 这样新素材到位时立刻生效，将来某张图缺失也不会让那座楼凭空消失。
+	var art: Texture2D = null
+	# 贴图统一按 0.75 倍画（256×192 → 192×144，正好 4×3 格）。
+	# 这批楼是同一台等距相机、同一比例出的：内容高都落在 161~181px，宽随楼本身宽窄变化
+	# （城门宽、祭坛窄）。所以绝不能"按各楼占地宽度缩放"——那会让窄楼被拉扁、宽楼被撑肿，
+	# 一排楼大小失控。统一倍数才能让它们看起来在同一片城里。
+	const ART_SCALE := 0.75
+	const ART_W := 256.0 * ART_SCALE    # 192
+	const ART_H := 192.0 * ART_SCALE    # 144
+	const ART_BOTTOM := 4.0             # 楼脚相对节点原点的下探量（压住落地影）
 
 	func setup(d: Dictionary) -> void:
 		data = d
 		var s: Array = d.get("size", [2.0, 2.0])
 		_w = float(s[0]) * 48.0
 		_h = float(s[1]) * 48.0
+		# 贴图只在落成后才画（_draw_built 才走 _draw_art），工地仍走 _draw_plot 的翻土画法。
+		art = G.res_tex("city_%s" % String(d.get("id", "")))
 		collision_layer = 2
 		collision_mask = 0
 		var shape := CollisionShape2D.new()
@@ -1095,11 +1110,15 @@ class _Building extends StaticBody2D:
 	func _roof_col() -> Color:
 		return Color.from_hsv(float(int(data.get("hue", 0)) % 12) / 12.0, 0.40, 0.50)
 
+	## 楼体可见轮廓的最高点（负值，越小越高）。木牌、功能图标、悬停指示都挂在这条线之上，
+	## 免得贴图比程序绘制高时，装饰还按老高度摆就被楼顶顶穿。
+	func _art_top() -> float:
+		if art != null:
+			return ART_BOTTOM - ART_H
+		return -_h * 0.5
+
 	func _draw() -> void:
-		# 落地影
-		draw_set_transform(Vector2(0, _h * 0.5 - 4.0), 0.0, Vector2(1.0, 0.30))
-		draw_circle(Vector2.ZERO, _w * 0.46, Color(0, 0, 0, 0.22))
-		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+		# 落地影统一由 _draw_built / _draw_plot 各自画（两者尺寸口径不同），这里不再重复。
 		if built():
 			_draw_built()
 		else:
@@ -1109,7 +1128,8 @@ class _Building extends StaticBody2D:
 		_draw_function_icon()
 		if hover:
 			var bob := sin(_t * 2.4) * 3.0
-			var tip := Vector2(0, -_h * 0.5 - 16.0 + bob)
+			var top := _art_top()
+			var tip := Vector2(0, top - 16.0 + bob)
 			draw_colored_polygon([tip + Vector2(0, -7), tip + Vector2(6, 3), tip + Vector2(-6, 3)],
 				Color(G.GOLD_BRIGHT.r, G.GOLD_BRIGHT.g, G.GOLD_BRIGHT.b, 0.9))
 			var action := String(data.get("action", ""))
@@ -1117,9 +1137,9 @@ class _Building extends StaticBody2D:
 				var activity := G.city_activity(action.get_slice(":", 1))
 				var activity_name := String(activity.get("name", "可互动"))
 				var hint_size := G.font_reg.get_string_size(activity_name, HORIZONTAL_ALIGNMENT_LEFT, -1, 11)
-				draw_rect(Rect2(-hint_size.x * 0.5 - 7, -_h * 0.5 - 50, hint_size.x + 14, 22),
+				draw_rect(Rect2(-hint_size.x * 0.5 - 7, top - 50, hint_size.x + 14, 22),
 					Color("3a2919", 0.92))
-				draw_string(G.font_reg, Vector2(-hint_size.x * 0.5, -_h * 0.5 - 35),
+				draw_string(G.font_reg, Vector2(-hint_size.x * 0.5, top - 35),
 					activity_name, HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color("f4ddb0"))
 
 	## 在建筑上方放置功能图标；无对应素材时不画，保持程序绘制的降级路径。
@@ -1137,7 +1157,7 @@ class _Building extends StaticBody2D:
 		if tex == null:
 			return
 		var icon_size := 28.0
-		draw_texture_rect(tex, Rect2(-icon_size * 0.5, -_h * 0.5 - 30.0, icon_size, icon_size), false,
+		draw_texture_rect(tex, Rect2(-icon_size * 0.5, _art_top() - 30.0, icon_size, icon_size), false,
 			Color(1.0, 1.0, 1.0, 0.92))
 
 
@@ -1160,6 +1180,10 @@ class _Building extends StaticBody2D:
 	func _draw_plot() -> void:
 		var w := _w
 		var h := _h
+		# 工地自身的落地影（原来在外层 _draw 统一画，现在各分支自管）
+		draw_set_transform(Vector2(0, h * 0.5 - 4.0), 0.0, Vector2(1.0, 0.30))
+		draw_circle(Vector2.ZERO, w * 0.46, Color(0, 0, 0, 0.22))
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		# 翻过的地
 		draw_rect(Rect2(-w / 2 + 6, -h / 2 + 6, w - 12, h - 12), Color(0.42, 0.35, 0.24, 0.30))
 		for i in 5:  # 犁沟
@@ -1185,7 +1209,14 @@ class _Building extends StaticBody2D:
 		_plaque(String(data.get("name", "空地")), "待建", -h * 0.5 + 2.0)
 
 	func _draw_built() -> void:
-		# 统一的落地影 + 石台基：所有建筑都踩在地上，不再像色块浮在路面
+		# 贴图路径：不再叠程序绘制的石台（贴图自带台基），只补一圈贴地的接影。
+		if art != null:
+			draw_set_transform(Vector2(0, 4), 0.0, Vector2(1.0, 0.34))
+			draw_circle(Vector2.ZERO, ART_W * 0.42, Color(0, 0, 0, 0.30))
+			draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+			_draw_art()
+			return
+		# 程序绘制路径：统一的落地影 + 石台基
 		draw_set_transform(Vector2(0, 4), 0.0, Vector2(1.0, 0.34))
 		draw_circle(Vector2.ZERO, _w * 0.54, Color(0, 0, 0, 0.30))
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
@@ -1214,6 +1245,15 @@ class _Building extends StaticBody2D:
 				_draw_forge()
 			_:
 				_draw_hall()
+
+	# 成品贴图：统一 0.75 倍、水平居中、底缘对齐 ART_BOTTOM（踩住落地影）。
+	# 贴图自带完整的台基与台阶，所以不再叠程序绘制的石台，免得两层台基打架。
+	func _draw_art() -> void:
+		var left := -ART_W * 0.5
+		var top := ART_BOTTOM - ART_H
+		draw_texture_rect(art, Rect2(left, top, ART_W, ART_H), false)
+		# 名牌移到楼顶之上：贴图本身细节很密，压在上面会糊掉
+		_plaque(String(data.get("name", "")), "", top - 20.0)
 
 	# 议事厅：石阶高台 + 四柱 + 大屋顶 + 门前布告板
 	func _draw_hall() -> void:

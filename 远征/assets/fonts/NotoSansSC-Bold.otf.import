@@ -2,7 +2,7 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://by18fvnlitrti"
+uid="uid://cljmvh6m1cc5e"
 path="res://.godot/imported/NotoSansSC-Bold.otf-fa84860cf655782046e9b0ef786b5de8.fontdata"
 
 [deps]
@@ -20,10 +20,10 @@ multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48
 allow_system_fallback=true
-force_autohinter=false
+force_autohinter=true
 modulate_color_glyphs=false
-hinting=3
-subpixel_positioning=4
+hinting=1
+subpixel_positioning=2
 keep_rounding_remainders=true
 oversampling=0.0
 Fallbacks=null
