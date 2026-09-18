@@ -7,3 +7,16 @@
 
 # Python 临时产物
 tools/__pycache__/
+
+# 工作区记忆与本地配置（属于本机，不进仓库）
+.workbuddy-ai/
+
+# Godot 运行期产物：截图落在 远征/Godot/app_userdata/ 下，是验收中间产物
+远征/Godot/
+
+# 仓库根的临时截图目录
+_shots/
+
+# 夜间迭代产物：回归日志与快照备份
+regression.log
+_backups/

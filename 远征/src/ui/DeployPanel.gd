@@ -75,10 +75,8 @@ func _ready() -> void:
 	_build()
 
 func _build() -> void:
-	var dim := ColorRect.new()
-	dim.color = Color(0, 0, 0, 0.72)
-	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
-	add_child(dim)
+	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），不再各写一块纯灰
+	G.veil(self, 0.72)
 
 	# 这里别用 set_anchors_preset 定位：浮层自己的 rect 要等一帧才结算完，
 	# 锚点基准取到的是 0，横幅会被推到屏幕左边外面去，直接写死坐标最稳

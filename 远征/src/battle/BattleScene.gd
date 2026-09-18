@@ -11,6 +11,15 @@ const VIEW_W := 480.0
 const VIEW_H := 800.0
 const COL_X := 96.0            # col 0 的 x（5 列：96~384，中心 240）
 const COL_GAP := 72.0
+# ---------- 底部技能栏网格（§5 网格系统：技能格与功能行共用同一列基准）----------
+# 5 格 × 82 宽、列距 88 → 23..457，左右边距各 23，对称。
+# 功能行（药剂/换宠/撤退）不再各自手算坐标，一律 BAR_X + n*SKILL_STEP。
+const BAR_X := 23.0
+const SKILL_W := 82.0
+const SKILL_H := 88.0
+const SKILL_STEP := 88.0
+const SKILL_Y := 620.0
+const FUNC_Y := 724.0
 const ENEMY_BACK_Y := 148.0
 const ENEMY_FRONT_Y := 226.0
 const ALLY_FRONT_Y := 402.0
@@ -253,27 +262,30 @@ func _build_skill_bar() -> void:
 	# 能量条（人物专属）
 	var ebg := ColorRect.new()
 	ebg.color = Color(0.1, 0.08, 0.04, 0.85)
-	ebg.position = Vector2(23, 598)
-	ebg.size = Vector2(434, 14)
+	ebg.position = Vector2(BAR_X, 598)
+	ebg.size = Vector2(VIEW_W - BAR_X * 2.0, 14)
 	add_child(ebg)
 	_energy_fill.color = G.GOLD
-	_energy_fill.position = Vector2(24, 599)
+	_energy_fill.position = Vector2(BAR_X + 1, 599)
 	_energy_fill.size = Vector2(0, 12)
 	add_child(_energy_fill)
-	_energy_l = G.gold_label("能量 0/100", G.FS_XS, false, G.TEXT_LIGHT, false)
-	_energy_l.position = Vector2(0, 597)
+	# 能量文字压在能量条正上方：原来 y=597 与条(y=598..612)重叠，字被条的深底吃掉一半。
+	# 上移到 580，并改用暖金 + 描边（TEXT_LIGHT 压草地上没有描边会发飘）
+	_energy_l = G.gold_label("能量 0/100", G.FS_XS, true, Color("ffe9b8"), true)
+	_energy_l.position = Vector2(0, 578)
 	_energy_l.custom_minimum_size = Vector2(VIEW_W, 0)
 	add_child(_energy_l)
 
-	# 连携窗口提示：上一手命中 combo.first 且未过窗口 → 常驻小签提示"下一手"
+	# 连携窗口提示：让到能量条与能量文字上方，不再和它们挤在一起
 	_combo_tip = G.serif_label("", G.FS_SM, G.GOLD_BRIGHT)
-	_combo_tip.position = Vector2(0, 576)
+	_combo_tip.position = Vector2(0, 558)
 	_combo_tip.custom_minimum_size = Vector2(VIEW_W, 0)
 	_combo_tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_combo_tip.modulate.a = 0.0
 	add_child(_combo_tip)
 
-	# 5 技能格
+	# 5 技能格。网格基准 SKILL_STEP 同时也是功能行的列距基准（见 _build_func_row）：
+	# 原来技能格用 88、功能行用 96，两行从第 4 列起就错开一格，「撤退」悬在技能格上方不伦不类
 	var role := sim.role_unit()
 	if role == null:
 		return
@@ -281,14 +293,14 @@ func _build_skill_bar() -> void:
 		var s: Dictionary = role.skills[i]
 		var skill: Dictionary = s.def
 		var btn := PanelContainer.new()
-		btn.custom_minimum_size = Vector2(82, 88)
+		btn.custom_minimum_size = Vector2(SKILL_W, SKILL_H)
 		var sb := StyleBoxFlat.new()
-		sb.bg_color = Color(0.16, 0.11, 0.06, 0.88)
+		sb.bg_color = Color(0.16, 0.11, 0.06, 0.92)
 		sb.set_corner_radius_all(4)
 		sb.set_border_width_all(2)
-		sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.4)
+		sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.45)
 		btn.add_theme_stylebox_override("panel", sb)
-		btn.position = Vector2(23 + i * 88.0, 620)
+		btn.position = Vector2(BAR_X + i * SKILL_STEP, SKILL_Y)
 		btn.mouse_filter = Control.MOUSE_FILTER_STOP
 		var box := VBoxContainer.new()
 		box.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -303,9 +315,12 @@ func _build_skill_bar() -> void:
 			icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			box.add_child(icon)
-		box.add_child(G.serif_label(String(skill.get("name", "?")), G.FS_SM, Color("ffd97a")))
+		# 技能名：宋体在深底小字号下笔画发糊（截图里「回风斩」几乎连成一片），
+		# 换黑体加粗 + 亮金，深底上才立得住（§32 常规按钮文字必须清楚）
+		box.add_child(G.gold_label(String(skill.get("name", "?")), G.FS_SM, true, Color("ffe0a0"), true))
+		# 耗能：原来是 bfa987 压深底 13px，对比度约 3:1，几乎看不清。提亮到暖米色
 		box.add_child(G.gold_label("耗 %d" % int(skill.get("cost", 0)), G.FS_XS, false,
-			Color("bfa987"), false))
+			Color("dcc9a4"), true))
 		var cd_l := G.gold_label("", G.FS_LG, true, Color("ffffff"))
 		cd_l.modulate.a = 0.0
 		box.add_child(cd_l)
@@ -320,8 +335,8 @@ func _build_skill_bar() -> void:
 
 func _build_func_row() -> void:
 	# 药剂
-	var potion_btn := _func_chip("", 86)
-	potion_btn.position = Vector2(23, 724)
+	var potion_btn := _func_chip("", SKILL_W)
+	potion_btn.position = Vector2(BAR_X, FUNC_Y)
 	potion_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_use_potion())
@@ -329,17 +344,18 @@ func _build_func_row() -> void:
 	_potion_l.set_anchors_preset(Control.PRESET_FULL_RECT)
 	potion_btn.add_child(_potion_l)
 	add_child(potion_btn)
-	# 换宠（无替补则隐藏）
+	# 换宠（无替补则隐藏）：紧贴药剂右侧，同宽同高
 	if sim.pet_bench_id != "":
-		_pet_btn = _func_chip("换宠", 86)
-		_pet_btn.position = Vector2(119, 724)
+		_pet_btn = _func_chip("换宠", SKILL_W)
+		_pet_btn.position = Vector2(BAR_X + SKILL_STEP, FUNC_Y)
 		_pet_btn.gui_input.connect(func(e: InputEvent):
 			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 				_swap_pet())
 		add_child(_pet_btn)
-	# 撤退（放弃本节点；二次确认防手滑）
-	_flee_btn = _func_chip("撤退", 86)
-	_flee_btn.position = Vector2(23 + 3 * 96.0, 724)
+	# 撤退（放弃本节点；二次确认防手滑）：靠右对齐到技能栏右沿，
+	# 与第 4 技能格列同基准（原来用 3*96 手算，与技能格网格错位）
+	_flee_btn = _func_chip("撤退", SKILL_W)
+	_flee_btn.position = Vector2(BAR_X + 4 * SKILL_STEP, FUNC_Y)
 	_flee_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_on_flee())
@@ -532,7 +548,8 @@ func _refresh_hud() -> void:
 	var role := sim.role_unit()
 	if role != null:
 		var ratio := float(role.energy) / float(Combatant.MAX_ENERGY)
-		_energy_fill.size.x = 432.0 * ratio
+		# 填充宽 = 底条宽 - 左右各 1px 内缩，与 _build_skill_bar 的 _energy_fill 起点/尺寸一致
+		_energy_fill.size.x = (VIEW_W - BAR_X * 2.0 - 2.0) * ratio
 		_energy_l.text = "能量 %d/100%s" % [role.energy, "  满" if role.energy >= Combatant.MAX_ENERGY else ""]
 	# 低血警示：边缘红晕脉动（首次再补一句提示，之后只靠视觉，不吵）
 	if _danger != null:
@@ -775,10 +792,8 @@ func _show_result() -> void:
 	var hp_left := role.hp if role != null else 0
 	Audio.sfx("victory" if win else "defeat", 0.0)   # 结算音不抖音高：这是"定局"，不是随机反馈
 
-	var dim := ColorRect.new()
-	dim.color = Color(0, 0, 0, 0.6)
-	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
-	add_child(dim)
+	# 结算底衬：整屏接管，走统一工厂（深棕 + 暗角 + 斜纹）
+	G.veil(self, G.VEIL_TAKEOVER_A)
 
 	var panel := G.parchment_box(380, 316, 24.0)
 	panel.position = Vector2(50, 232)

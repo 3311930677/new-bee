@@ -31,10 +31,8 @@ func _ready() -> void:
 	_build()
 
 func _build() -> void:
-	var dim := ColorRect.new()
-	dim.color = Color(0, 0, 0, 0.72)
-	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
-	add_child(dim)
+	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），不再各写一块纯灰
+	G.veil(self, 0.72)
 
 	# 浮层自身 rect 要等一帧才结算，锚点定位会算到 0，坐标一律写死
 	var banner := G.banner_box("世 界 图 志", 300, 50)

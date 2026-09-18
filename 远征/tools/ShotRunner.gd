@@ -219,6 +219,27 @@ func _setup() -> void:
 			var c: Node = load("res://src/city/CityScene.tscn").instantiate()
 			add_child(c)
 			c._player.position = Vector2(576, 400)  # 镜头拉到议事厅门前看建筑群
+		"city_all":
+			# 八座建筑全落成，镜头拉到城中央俯看：一张图核对 8 张贴图的尺寸/接地/木牌位置
+			_demo_prog()
+			G.wallet["gold"] = 999999
+			G.wallet["soul"] = 9999
+			G.wallet["expedition"] = 9999
+			G.prog["level"] = 20
+			for bid in ["archive", "kennel", "barracks", "storehouse", "shrine", "forge"]:
+				G.build(bid)
+			var ca: Node = load("res://src/city/CityScene.tscn").instantiate()
+			add_child(ca)
+			ca._player.position = Vector2(576, 480)  # 城中央：四周建筑都进画
+		"city_mix":
+			# 落成 vs 工地同框：核对贴图建筑与程序绘制的空地不会看起来像两种游戏
+			_demo_prog()
+			G.wallet["gold"] = 99999
+			G.build("archive")
+			var cm: Node = load("res://src/city/CityScene.tscn").instantiate()
+			add_child(cm)
+			# 图志阁（已落成，左）与演武场（工地，右下）之间的空地
+			cm._player.position = Vector2(360, 400)
 		"quests":
 			# 演示档：今日牌固定成"一条可交付 + 一条进行中"，截图才看得出两种状态
 			_demo_prog()

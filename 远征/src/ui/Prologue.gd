@@ -68,11 +68,8 @@ func _build() -> void:
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(bg)
 
-	var dim := ColorRect.new()
-	dim.color = Color(0.06, 0.04, 0.03, 0.62)
-	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
-	dim.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(dim)
+	# 序章氛围压暗：不吃点击（正文之上还有继续/跳过的按钮要能用）
+	G.veil(self, 0.62, false)
 
 	var banner := G.banner_box("序 章", 200, 50)
 	banner.position = Vector2((VIEW_W - 200.0) * 0.5, 34)

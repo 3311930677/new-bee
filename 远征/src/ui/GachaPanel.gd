@@ -8,6 +8,8 @@ signal closed
 
 # 羊皮纸 440 宽 - 左右各 16 内边距 = 408（同 DeployPanel/CodexPanel 的手动布局基准）
 const CONTENT_W := 408.0
+# 视口宽：面板宽 440 是内容基准，视口宽 480 是居中对齐基准，两者不要混用
+const VIEW_W := 480.0
 # 稀有度固定顺序（权重累加、文案、卡底命名都按它来）
 const RARITY_ORDER := ["white", "blue", "purple", "gold"]
 const RARITY_NAME := {"white": "普通", "blue": "稀有", "purple": "史诗", "gold": "传说"}
@@ -104,13 +106,11 @@ func _rules_lines() -> Array:
 # ================= 主面板 =================
 
 func _build() -> void:
-	var dim := ColorRect.new()
-	dim.color = Color(0, 0, 0, 0.72)
-	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
-	add_child(dim)
+	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），不再各写一块纯灰
+	G.veil(self, G.VEIL_MODAL_A)
 
 	# 同 DeployPanel 的教训：浮层 rect 时机问题，横幅直接写死坐标最稳
-	var banner := G.banner_box("灵 宠 召 唤", 300, 50)
+	var banner := G.banner_box("灵宠召唤", 300, 50)
 	banner.position = Vector2(90, 36)
 	add_child(banner)
 
@@ -183,7 +183,8 @@ func _build() -> void:
 	_pity_bar.add_theme_stylebox_override("panel", pbsb)
 	_pity_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	head.add_child(_pity_bar)
-	_pity_sub = G.gold_label("", G.FS_XS, false, Color("8a6a34"), false)
+	# 保底小字 8a6a34 在 d3bd92 内嵌底上约 3.4:1，13px 下偏灰；压深到 6a5230 约 5:1
+	_pity_sub = G.gold_label("", G.FS_XS, false, Color("6a5230"), false)
 	_pity_sub.position = Vector2(206, 56)
 	_pity_sub.size = Vector2(172, 16)
 	_pity_sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -193,21 +194,23 @@ func _build() -> void:
 	head.add_child(info)
 
 	# 余额条：灵魂石 + 十连券（同一内嵌底，不再飘在羊皮纸上）
+	# 对称（§5 网格）：408 宽对半分，每组"图标+数字"在各自半区居中。
+	# 原来写 72/228，两组中心分别在 115 / 258，视觉上左边空、右边挤。
 	var bal := _inset_band(Vector2(CONTENT_W, 36), Vector2(0, 116))
 	content.add_child(bal)
 	var soul_icon := _tex_rect("cur_soul", 20, 20, Color("b08ad0"))
-	soul_icon.position = Vector2(72, 8)
+	soul_icon.position = Vector2(60, 8)
 	bal.add_child(soul_icon)
 	_soul_l = G.gold_label("× 0", G.FS_SM, false, G.TEXT_DARK, false)
-	_soul_l.position = Vector2(98, 8)
+	_soul_l.position = Vector2(84, 8)
 	_soul_l.size = Vector2(90, 20)
 	_soul_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	bal.add_child(_soul_l)
 	var tk_icon := _tex_rect("itm_ticket_ten", 20, 20, Color("d8ab48"))
-	tk_icon.position = Vector2(228, 8)
+	tk_icon.position = Vector2(264, 8)
 	bal.add_child(tk_icon)
 	_ticket_l = G.gold_label("× 0", G.FS_SM, false, G.TEXT_DARK, false)
-	_ticket_l.position = Vector2(254, 8)
+	_ticket_l.position = Vector2(288, 8)
 	_ticket_l.size = Vector2(90, 20)
 	_ticket_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	bal.add_child(_ticket_l)
@@ -323,7 +326,10 @@ func _btn2(title: String, sub: String, w: float, h: float, ghost := false) -> Pa
 	box.add_theme_constant_override("separation", 0)
 	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	box.add_child(title_l)
-	box.add_child(G.gold_label(sub, G.FS_XS, false, Color("6a4a1e"), false))
+	# 副标（价格/说明）压在主按钮的金底上：用比主标略浅但明显深于底色的棕，
+	# 保证"主标深棕加粗 / 副标深棕常规"两级都在金底上读得清（§17 数字与价格必须高可读）
+	var sub_l := G.gold_label(sub, G.FS_XS, false, Color("5a3c14"), false)
+	box.add_child(sub_l)
 	btn.add_child(box)
 	return btn
 
@@ -405,66 +411,94 @@ func _refresh_top() -> void:
 
 func _build_result() -> void:
 	_result = Control.new()
-	_result.set_anchors_preset(Control.PRESET_FULL_RECT)
+	# 用 set_anchors_and_offsets_preset 而不是 set_anchors_preset：
+	# 前者同时把 offset 归零，控件立即铺满父级；后者只改 anchors，size 要等下一帧布局
+	# 才更新，期间遮罩会是 (0,0) 尺寸——结果层看起来"没盖住"，主面板整个透出来。
+	_result.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_result.mouse_filter = Control.MOUSE_FILTER_STOP   # 盖住主面板的按钮
 	_result.visible = false
 	add_child(_result)
 
-	var rdim := ColorRect.new()
-	rdim.color = Color(0, 0, 0, 0.8)
-	rdim.set_anchors_preset(Control.PRESET_FULL_RECT)
-	rdim.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_result.add_child(rdim)
+	# 结果层底衬：整屏接管，底下不该透出任何东西。走统一浮层工厂（深棕+暗角+斜纹），
+	# 比原来单色 0.985 的大平底有纵深——顶部木匾、底部按钮各有一块暗角收边。
+	var rdim := G.veil(_result, G.VEIL_TAKEOVER_A)
 
-	var title := G.banner_box("召 唤 结 果", 260, 46)
+	var title := G.banner_box("召唤结果", 260, 46)
 	title.position = Vector2(110, 30)
 	_result.add_child(title)
 
-	# 结果层也放一份余额：连抽时不必回主面板看家底
+	# 余额条：结果层在深底上，控件的浅色字需要一块暗底衬着才不发飘（§8 光效预算——
+	# 只有一块内嵌底，不做发光）。用非交互 Panel 承载，避免和遮罩抢点击。
+	var rbal := Panel.new()
+	rbal.position = Vector2(0, 86)
+	rbal.custom_minimum_size = Vector2(VIEW_W, 34)
+	rbal.size = Vector2(VIEW_W, 34)
+	var rsb := StyleBoxFlat.new()
+	rsb.bg_color = Color(0.16, 0.11, 0.06, 0.85)
+	rsb.set_border_width_all(0)
+	rbal.add_theme_stylebox_override("panel", rsb)
+	rbal.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_result.add_child(rbal)
+	# 两个资源对称排布：中心线左右各占一半，图标+数字成组居中。
+	# 坐标一律相对 rbal（高 34），垂直居中 → (34-20)/2 = 7。
+	# 原来写 y=93/94（那是屏幕绝对坐标），被 rbal 的 34 高裁掉，余额条看着是空的。
 	var s_icon := _tex_rect("cur_soul", 20, 20, Color("b08ad0"))
-	s_icon.position = Vector2(108, 90)
-	_result.add_child(s_icon)
+	s_icon.position = Vector2(118, 7)
+	rbal.add_child(s_icon)
 	_r_soul_l = G.gold_label("× 0", G.FS_SM, false, Color("f5ead0"), false)
-	_r_soul_l.position = Vector2(134, 91)
-	_result.add_child(_r_soul_l)
+	_r_soul_l.position = Vector2(142, 7)
+	_r_soul_l.size = Vector2(90, 20)
+	_r_soul_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	rbal.add_child(_r_soul_l)
 	var t_icon := _tex_rect("itm_ticket_ten", 20, 20, Color("d8ab48"))
-	t_icon.position = Vector2(268, 90)
-	_result.add_child(t_icon)
+	t_icon.position = Vector2(262, 7)
+	rbal.add_child(t_icon)
 	_r_ticket_l = G.gold_label("× 0", G.FS_SM, false, Color("f5ead0"), false)
-	_r_ticket_l.position = Vector2(294, 91)
-	_result.add_child(_r_ticket_l)
+	_r_ticket_l.position = Vector2(286, 7)
+	_r_ticket_l.size = Vector2(90, 20)
+	_r_ticket_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	rbal.add_child(_r_ticket_l)
 
-	# 摘要行 + 行内提示
-	_sum_l = G.gold_label("", G.FS_SM, false, Color("ffe9b8"), true)
-	_sum_l.position = Vector2(0, 402)
-	_sum_l.custom_minimum_size = Vector2(480, 0)
+	# 摘要行 + 行内提示：摘要承载"本次结果"这一核心信息，抬到卡片区正下方并加底衬
+	_sum_l = G.gold_label("", G.FS_SM, true, Color("ffe9b8"), true)
+	_sum_l.position = Vector2(0, 400)
+	_sum_l.custom_minimum_size = Vector2(VIEW_W, 0)
 	_result.add_child(_sum_l)
-	_r_hint = G.gold_label("", G.FS_SM, false, Color("ff9a8a"), false)
-	_r_hint.position = Vector2(0, 428)
-	_r_hint.custom_minimum_size = Vector2(480, 0)
+	_r_hint = G.gold_label("", G.FS_SM, false, Color("ff9a8a"), true)
+	_r_hint.position = Vector2(0, 426)
+	_r_hint.custom_minimum_size = Vector2(VIEW_W, 0)
 	_r_hint.modulate.a = 0.0
 	_result.add_child(_r_hint)
 
-	# 卡片区与特效层同坐标系：特效压在卡上方但不挡点击
-	_cards_box = Control.new()
-	_cards_box.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_cards_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# 卡片区与特效层同坐标系：特效压在卡上方但不挡点击。
+	# 这两层是卡片定位的坐标基准，必须立即铺满（否则卡会按 (0,0) 尺寸的父级算位置）
+	var _cb := Control.new()
+	_cb.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_cb.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_cards_box = _cb
 	_result.add_child(_cards_box)
-	_fx_layer = Control.new()
-	_fx_layer.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_fx_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var _fx := Control.new()
+	_fx.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_fx.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_fx_layer = _fx
 	_result.add_child(_fx_layer)
 
-	_flip_all_btn = G.gold_button("全 部 翻 开", 150, 44)
-	_flip_all_btn.position = Vector2(165, 462)
+	# 「全部翻开」：悬浮在摘要行上方居中，只在还有未翻卡时出现
+	_flip_all_btn = G.gold_button("全部翻开", 150, 44)
+	_flip_all_btn.position = Vector2((VIEW_W - 150.0) * 0.5, 456)
 	_flip_all_btn.visible = false
 	_flip_all_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_flip_all())
 	_result.add_child(_flip_all_btn)
 
-	_again_btn = _btn2("再 抽 一 次", "", 190, 48)
-	_again_btn.position = Vector2(28, 544)
+	# 底部操作行：主操作（再抽一次）+ 次操作（返回），同高同基线、左右对称留边 28。
+	# y=612 而非 540：卡片/摘要/翻牌按钮占满 400..500，按钮贴太近会挤成一坨，
+	# 下移后"操作区"与"结果区"之间留出一段安静空白（§9 留白本身就是设计）。
+	var pad := 28.0
+	var btn_w := (VIEW_W - pad * 3.0) * 0.5   # 两枚等宽，间距与边距都为 pad
+	_again_btn = _btn2("再抽一次", "", btn_w, 48)
+	_again_btn.position = Vector2(pad, 612)
 	var again_box := _again_btn.get_child(0) as VBoxContainer
 	_again_l = again_box.get_child(0) as Label
 	_again_sub = again_box.get_child(1) as Label
@@ -473,8 +507,9 @@ func _build_result() -> void:
 			_again())
 	_result.add_child(_again_btn)
 
-	var back_btn := G.gold_button("返 回", 190, 48)
-	back_btn.position = Vector2(262, 544)
+	# 返回是次操作：走描边款，避免和主操作抢视觉（§7 一层只有一个核心操作）
+	var back_btn := G.ghost_button("返回", btn_w, 48)
+	back_btn.position = Vector2(pad * 2.0 + btn_w, 612)
 	back_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_close())
@@ -567,6 +602,17 @@ func _make_card(res: Dictionary, big: bool) -> Control:
 	var name_l := G.gold_label(pname, G.FS_LG if big else G.FS_XS, true, Color("fff3d8"), true)
 	name_l.position = Vector2(0, 150 if big else 72)
 	name_l.custom_minimum_size = Vector2(w, 0)
+	# 卡名字有两种压底：卡底素材纹理 + 稀有度边框纹样，白字描边后仍会被花纹理吃掉笔画。
+	# 加一条居中的暗色底衬条，让名字有一块稳定的阅读底（§17 数字/文字必须高可读）
+	var name_bar := Panel.new()
+	name_bar.position = Vector2(4 if big else 3, 148 if big else 70)
+	name_bar.size = Vector2(w - (8 if big else 6), 26 if big else 20)
+	var nbsb := StyleBoxFlat.new()
+	nbsb.bg_color = Color(0.06, 0.04, 0.02, 0.55)
+	nbsb.set_corner_radius_all(3)
+	name_bar.add_theme_stylebox_override("panel", nbsb)
+	name_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	face.add_child(name_bar)
 	face.add_child(name_l)
 
 	if big:
@@ -697,17 +743,21 @@ func _update_result_ui() -> void:
 			new_n += 1
 		else:
 			gold_n += int((r as Dictionary).get("dup", 0))
+	# 摘要：结果层最该被看到的一句话（§18 玩家要 3 秒知道"我拿到了什么"）。
+	# 原来"皆是旧识 · 炼金 +2280"和"再抽一次/返回"挤在同一视觉带里，且全用同色同号，
+	# 现在摘要走 FS_SM 加粗描边、底部按钮独立成行，层级才分得开。
 	if new_n > 0 and gold_n > 0:
-		_sum_l.text = "新结缘 %d · 炼金 +%d" % [new_n, gold_n]
+		_sum_l.text = "新结缘 %d 只 · 炼金 +%d 金币" % [new_n, gold_n]
 	elif new_n > 0:
 		_sum_l.text = "新结缘 %d 只灵宠" % new_n
 	else:
-		_sum_l.text = "皆是旧识 · 炼金 +%d" % gold_n
+		_sum_l.text = "皆是旧识 · 炼金 +%d 金币" % gold_n
+	# 按钮文案不手打空格：字距交给 G 的 _button_text 统一处理（规范 §30/§31）
 	if _last_mode == "single":
-		_again_l.text = "再 抽 一 次"
+		_again_l.text = "再抽一次"
 		_again_sub.text = "%d 魂石" % int(_cfg().get("cost_soul_single", 80))
 	else:
-		_again_l.text = "再 来 十 连"
+		_again_l.text = "再来十连"
 		_again_sub.text = "%d 魂石 / 1 券" % int(_cfg().get("cost_soul_ten", 800))
 	_r_soul_l.text = "× %d" % int(G.wallet.get("soul", 0))
 	_r_ticket_l.text = "× %d" % G.item_count("ticket_ten")

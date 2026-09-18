@@ -40,11 +40,9 @@ func _build() -> void:
 	var is_intro := kind == "intro"
 
 	# 压暗底：intro 暗红（压迫感），outro 金灰（余韵）
-	var dim := ColorRect.new()
-	dim.color = Color(0.07, 0.02, 0.02, 0.88) if is_intro else Color(0.05, 0.04, 0.02, 0.86)
-	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
-	dim.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(dim)
+	# 对峙/余韵演出：整屏接管。intro 偏红（血色）、outro 偏土（尘归尘），
+	# 但都走同一套工厂拿暗角与斜纹，不另造一层纯色。
+	G.veil(self, 0.88 if is_intro else 0.86, false)
 
 	_build_silhouette(is_intro)
 

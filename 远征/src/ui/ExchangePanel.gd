@@ -50,10 +50,8 @@ func entries() -> Array:
 
 
 func _build() -> void:
-	var dim := ColorRect.new()
-	dim.color = Color(0, 0, 0, 0.72)
-	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
-	add_child(dim)
+	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），不再各写一块纯灰
+	G.veil(self, 0.72)
 
 	var banner := G.banner_box("荣 誉 兑 换", 300, 50)
 	banner.position = Vector2(90, 36)

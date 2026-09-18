@@ -26,11 +26,8 @@ func _ready() -> void:
 
 func _build() -> void:
 	# 演武场是独立场景，完全压住主页控件，避免标题和圆台透出造成层级混乱。
-	var dim := ColorRect.new()
-	dim.color = Color(0.035, 0.025, 0.02, 0.96)
-	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
-	dim.mouse_filter = Control.MOUSE_FILTER_STOP
-	add_child(dim)
+	# 演武场是独立场景 → 走接管级底衬；统一工厂（深棕 + 暗角 + 斜纹）
+	G.veil(self, G.VEIL_TAKEOVER_A)
 
 	# 木匾压在面板上沿（挂牌式），整块弹窗落在屏幕视觉中心，不再悬在半空
 	var banner := G.banner_box("演武场", 280, 50)
@@ -38,14 +35,22 @@ func _build() -> void:
 	banner.z_index = 2
 	add_child(banner)
 
-	var subtitle := G.gold_label("擂台试锋 · 不损装备，不耗资源", G.FS_XS, false, Color("c7a46b"), false)
+	# 副标题：原来压在木匾正上方（y=126）且用 c7a46b 压深底，字号 13px 又暗又小，
+	# 实测几乎读不出来。移到木匾与面板之间不成立（木匾 150 起、面板 178 起），
+	# 改为降到面板下沿外、用更亮的暖金 + FS_SM，既让开木匾，也保证对比度
+	var subtitle := G.gold_label("擂台试锋 · 不损装备，不耗资源", G.FS_SM, false,
+		Color("d9b96e"), false)
 	subtitle.z_index = 3
-	subtitle.position = Vector2(0, 126)
+	subtitle.position = Vector2(0, 631)
 	subtitle.custom_minimum_size = Vector2(VIEW_W, 0)
 	subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(subtitle)
 
-	_panel = G.parchment_box(440, 420, 16.0)
+	# 木匾下沿 y=200 会盖住面板内容首行（内容起点 178+11=189）。
+	# 整块内容区下移 TOP_PAD，让首行完全落在木匾之下，而不是被压掉半行。
+	var top_pad := 26.0
+
+	_panel = G.parchment_box(440, 436, 16.0)
 	_panel.position = Vector2(20, 178)
 	_panel.z_index = 1
 	add_child(_panel)
@@ -59,24 +64,29 @@ func _build() -> void:
 	rank_icon.texture = G.res_tex(_rank_icon_name())
 	rank_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	rank_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	rank_icon.position = Vector2(12, 4)
+	rank_icon.position = Vector2(12, 4 + top_pad)
 	rank_icon.size = Vector2(52, 52)
 	rank_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.add_child(rank_icon)
 
-	_info = G.gold_label("", G.FS_SM, false, Color("5a4020"), false)
-	_info.position = Vector2(74, 8)
+	# 段位名与战绩：段位名用深棕加粗、显著高于辅助行（§7 第二层核心信息）
+	_info = G.gold_label("", G.FS_MD, true, Color("4a3010"), false)
+	_info.position = Vector2(74, 6 + top_pad)
 	_info.custom_minimum_size = Vector2(CONTENT_W - 74.0, 0)
+	_info.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	content.add_child(_info)
 
-	var rule := G.gold_label("胜利提升段位分，失败小幅扣分", G.FS_XS, false, Color("8a6a34"), false)
-	rule.position = Vector2(74, 34)
+	# 规则说明属于第三层辅助信息：字号小一档、颜色降饱和但要保住对比度
+	# （原 8a6a34 在羊皮纸上只有约 3.1:1，13px 下偏灰；提到 6a5230 后约 4.6:1）
+	var rule := G.gold_label("胜利提升段位分，失败小幅扣分", G.FS_XS, false, Color("6a5230"), false)
+	rule.position = Vector2(74, 34 + top_pad)
 	rule.custom_minimum_size = Vector2(CONTENT_W - 74.0, 0)
+	rule.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	content.add_child(rule)
 
 	var divider := ColorRect.new()
 	divider.color = Color("c9a85a", 0.42)
-	divider.position = Vector2(0, 68)
+	divider.position = Vector2(0, 68 + top_pad)
 	divider.size = Vector2(CONTENT_W, 1)
 	divider.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.add_child(divider)
@@ -84,8 +94,8 @@ func _build() -> void:
 	# 对手预览卡：图标 + 名称 + 等级，避免整块面板只有文字。
 	# 用 Panel（非 PanelContainer）：PanelContainer 会把所有子节点拉伸铺满整卡，手摆的图标/两行字会互相重叠。
 	var foe_card := Panel.new()
-	foe_card.position = Vector2(0, 86)
-	foe_card.size = Vector2(CONTENT_W, 112)
+	foe_card.position = Vector2(0, 86 + top_pad)
+	foe_card.size = Vector2(CONTENT_W, 100)
 	var foe_sb := StyleBoxFlat.new()
 	foe_sb.bg_color = Color(0.32, 0.23, 0.13, 0.16)
 	foe_sb.set_corner_radius_all(10)
@@ -98,30 +108,34 @@ func _build() -> void:
 	foe_icon.texture = G.res_tex("icon_double_edge")
 	foe_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	foe_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	foe_icon.position = Vector2(18, 20)
+	foe_icon.position = Vector2(18, 16)
 	foe_icon.size = Vector2(68, 68)
 	foe_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	foe_card.add_child(foe_icon)
-	_foe_l = G.gold_label("", G.FS_LG, true, Color("6a4a1e"), false)
-	_foe_l.position = Vector2(104, 26)
+	_foe_l = G.gold_label("", G.FS_LG, true, Color("4a3010"), false)
+	_foe_l.position = Vector2(104, 20)
 	_foe_l.custom_minimum_size = Vector2(280, 0)
+	_foe_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	foe_card.add_child(_foe_l)
-	var foe_tip := G.gold_label("演武傀儡 · 练手对局", G.FS_XS, false, Color("8a6a34"), false)
-	foe_tip.position = Vector2(104, 62)
+	var foe_tip := G.gold_label("演武傀儡 · 练手对局", G.FS_XS, false, Color("6a5230"), false)
+	foe_tip.position = Vector2(104, 58)
 	foe_tip.custom_minimum_size = Vector2(280, 0)
+	foe_tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	foe_card.add_child(foe_tip)
 
+	# 提示行：紧跟对手卡之后（卡底 +10），与下方按钮行拉开 12，避免被按钮压住
 	var tip := G.gold_label("不掉装备、不耗资源，专注磨练战术", G.FS_XS,
-		false, Color("8a6a34"), false)
-	tip.position = Vector2(0, 214)
+		false, Color("6a5230"), false)
+	tip.position = Vector2(0, 222 + top_pad)
 	tip.custom_minimum_size = Vector2(CONTENT_W, 0)
 	tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	content.add_child(tip)
 
 	# 主次分明（§7 光效预算）：整块面板只有一个金色主按钮，换对手和返回都走描边次级款。
-	# 两个按钮左右贴齐 408 内容宽、底边对齐，不再各自留 20px 的随手内缩。
+	# 对齐（§5 网格）：BTN_L 高 52、BTN_M 高 44，两枚按钮按垂直中心对齐（不是按 top 对齐）
+	var btn_cy := 282.0 + top_pad
 	var reroll := G.ghost_button("换对手", G.BTN_M.x, G.BTN_M.y, G.FS_SM)
-	reroll.position = Vector2(0, 260)
+	reroll.position = Vector2(0, btn_cy - G.BTN_M.y * 0.5)
 	reroll.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			Audio.sfx("ui_page")
@@ -130,14 +144,15 @@ func _build() -> void:
 	content.add_child(reroll)
 
 	_go_btn = G.gold_button("开始切磋", G.BTN_L.x, G.BTN_L.y)
-	_go_btn.position = Vector2(CONTENT_W - G.BTN_L.x, 252)
+	_go_btn.position = Vector2(CONTENT_W - G.BTN_L.x, btn_cy - G.BTN_L.y * 0.5)
 	_go_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_start_battle())
 	content.add_child(_go_btn)
 
 	var back := G.ghost_button("返回", G.BTN_S.x, G.BTN_S.y, G.FS_SM)
-	back.position = Vector2((CONTENT_W - G.BTN_S.x) * 0.5, 336)
+	# 返回按钮与按钮行拉开 16，落在整个面板的底部收尾位
+	back.position = Vector2((CONTENT_W - G.BTN_S.x) * 0.5, 324 + top_pad)
 	back.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			Audio.sfx("ui_close")

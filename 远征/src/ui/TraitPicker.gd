@@ -36,11 +36,8 @@ func setup(rows: Array) -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 
-	var dim := ColorRect.new()
-	dim.color = Color(0, 0, 0, 0.66)
-	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
-	dim.mouse_filter = Control.MOUSE_FILTER_STOP
-	add_child(dim)
+	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），不再各写一块纯灰
+	G.veil(self, 0.66, true)
 
 	var title := G.serif_label("选择一份祝福", G.FS_BIG, Color("ffd9a0"))
 	title.position = Vector2(0, 158)

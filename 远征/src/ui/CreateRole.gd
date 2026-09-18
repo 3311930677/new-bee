@@ -57,11 +57,8 @@ func _build_background() -> void:
 	tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(tr)
 
-	var dim := ColorRect.new()
-	dim.color = Color(0.08, 0.05, 0.03, 0.70)
-	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
-	dim.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(dim)
+	# 创建角色页的氛围压暗：不吃点击（还要能点下面的职业卡）
+	G.veil(self, 0.70, false)
 
 
 func _build_header() -> void:
