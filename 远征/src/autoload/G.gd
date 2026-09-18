@@ -243,6 +243,8 @@ func _load_save() -> void:
 		var ts: Variant = pd.get("tips_seen", {})   # 已看过的引导弹层，别每次开面板都弹
 		prog["tips_seen"] = ts if ts is Dictionary else {}
 		prog["lore_seen"] = bool(pd.get("lore_seen", false))   # 序章是否已看（看过的老档不再弹）
+		var lb: Variant = pd.get("lore_beats", {})   # 已演过的剧情节拍（首领前对峙/战后余韵）
+		prog["lore_beats"] = lb if lb is Dictionary else {}
 	ensure_starter_pets()
 	var c: Variant = data.get("city", {})
 	if c is Dictionary:
@@ -1724,12 +1726,52 @@ func theme_lore(theme_id: String) -> Dictionary:
 	return out
 
 
+## 某秘境首领的素材/数据 id（= monsters.json 的 id；战斗内贴图也按它寻址）
+func theme_boss_id(theme_id: String) -> String:
+	return String(TableCache.theme_config(theme_id).get("boss", ""))
+
+
 ## 某秘境首领名（从 maps.json 的 boss id 去 monsters.json 取，避免两处各写一份名字）
 func theme_boss_name(theme_id: String) -> String:
-	var bid := String(TableCache.theme_config(theme_id).get("boss", ""))
+	var bid := theme_boss_id(theme_id)
 	if bid.is_empty():
 		return "首领"
 	return String(TableCache.get_monster(bid).get("name", bid))
+
+
+# ---------- 剧情节拍（首领前「对峙」/ 战后「余韵」）----------
+# 文本在 lore.json 的 themes.<id>.boss_intro / boss_outro；演出只拦第一次，重复挑战不再播。
+
+## 某段演出的台词；表里没有就返回空数组（调用方据此直接跳过演出）
+func boss_beat_lines(theme_id: String, kind: String) -> Array:
+	var l: Variant = theme_lore(theme_id).get("boss_%s" % kind, [])
+	return l if l is Array else []
+
+
+## 该秘境某段演出是否已演过
+func beat_seen(theme_id: String, kind: String) -> bool:
+	var beats: Variant = prog.get("lore_beats", {})
+	if not (beats is Dictionary):
+		return false
+	var per: Variant = (beats as Dictionary).get(theme_id, {})
+	if not (per is Dictionary):
+		return false
+	return bool((per as Dictionary).get(kind, false))
+
+
+func mark_beat_seen(theme_id: String, kind: String) -> void:
+	var d: Dictionary = {}
+	var beats: Variant = prog.get("lore_beats", {})
+	if beats is Dictionary:
+		d = beats as Dictionary
+	var p: Dictionary = {}
+	var per: Variant = d.get(theme_id, {})
+	if per is Dictionary:
+		p = per as Dictionary
+	p[kind] = true
+	d[theme_id] = p
+	prog["lore_beats"] = d
+	save_game()
 
 
 func lore_seen() -> bool:

@@ -23,6 +23,7 @@ const MON_COLOR := {
 	"normal": Color("5f7186"), "elite": Color("7a4a9a"), "boss": Color("8a2f2f"),
 }
 const INTERACT_R := 44.0      # 非战斗物件交互半径（maps.json 无此字段时的口径）
+const StoryBeatScript := preload("res://src/ui/StoryBeat.gd")   # 首领剧情演出层（对峙/余韵）
 
 var st: RunState
 var node: Dictionary = {}
@@ -37,6 +38,7 @@ var _contact_mon: _MapMonster = null
 var _interactable: _Interactable = null   # 非战斗节点物件（宝箱/事件/商店/篝火）
 var _remover: Control = null              # 篝火词条删除浮层
 var _exit_ui: Control = null              # 撤离确认浮层
+var _beat: Control = null                 # 首领剧情演出层（对峙/余韵）
 var _battle_layer: CanvasLayer = null
 var _battle: BattleScene = null
 var _hud := CanvasLayer.new()
@@ -644,7 +646,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		_cancel_exit()
 		if vp != null:
 			vp.set_input_as_handled()
-	elif not (_map_done or _battle != null or _picker != null or _remover != null):
+	elif not (_map_done or _battle != null or _picker != null or _remover != null or _beat != null):
 		_ask_exit()
 		if vp != null:
 			vp.set_input_as_handled()
@@ -711,7 +713,8 @@ func _cancel_exit() -> void:
 
 # ================= 主循环 =================
 func _physics_process(delta: float) -> void:
-	if _map_done or _battle != null or _picker != null or _remover != null or _exit_ui != null:
+	if _map_done or _battle != null or _picker != null or _remover != null \
+			or _exit_ui != null or _beat != null:
 		return
 	if G.ui_blocked:  # GM 控制台等全屏浮层打开时冻结移动
 		return
@@ -783,6 +786,17 @@ func on_monster_contact(m: _MapMonster) -> void:
 func _start_battle(m: _MapMonster) -> void:
 	m.chasing_contact = true  # 接触怪冻结
 	_contact_mon = m
+	# BOSS 战前「对峙」：第一次挑战这片秘境的首领时演一段（看过的不再拦人）
+	if m.tier == "boss" and not G.beat_seen(st.theme, "intro") \
+			and not G.boss_beat_lines(st.theme, "intro").is_empty():
+		G.mark_beat_seen(st.theme, "intro")
+		_play_boss_beat("intro", func(): _launch_battle(m))
+		return
+	_launch_battle(m)
+
+
+## 真正的开战（演出结束后 / 无演出时直接进）
+func _launch_battle(m: _MapMonster) -> void:
 	BattleScene.pending_cfg = {
 		"ally": {
 			"role_id": st.role_id,
@@ -837,10 +851,21 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 	for m in _monsters:
 		m.chasing_contact = false
 		m.retreat_home()
-	# 首领解封传送阵
-	if monster_tier == "boss" and _portal != null:
-		_portal.locked = false
-		_toast("首领陨落——传送阵封印解除！")
+	# 首领解封传送阵；首次击败时先演一段「战后余韵」，再回词条三选一
+	if monster_tier == "boss":
+		if _portal != null:
+			_portal.locked = false
+			_toast("首领陨落——传送阵封印解除！")
+		if not G.beat_seen(st.theme, "outro") \
+				and not G.boss_beat_lines(st.theme, "outro").is_empty():
+			G.mark_beat_seen(st.theme, "outro")
+			_play_boss_beat("outro", _after_battle_rewards)
+			_refresh_hud()
+			return
+	_after_battle_rewards()
+
+
+func _after_battle_rewards() -> void:
 	# 战斗胜利三选一词条（§2.4：槽1数值机制/槽2流派85%双刃15%/槽3全池）
 	var choices := st.roll_trait_choices(_rng)
 	if choices.is_empty():
@@ -848,6 +873,21 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 	else:
 		_show_trait_picker(choices)
 	_refresh_hud()
+
+
+## 首领剧情演出（"intro" 对峙 / "outro" 余韵）：全屏演出层，结束后回调
+func _play_boss_beat(kind: String, after: Callable) -> void:
+	var beat := StoryBeatScript.new()
+	beat.setup(st.theme, kind)
+	beat.on_done = after
+	var layer := CanvasLayer.new()
+	layer.layer = 3   # 压过战斗层（2）与 HUD
+	add_child(layer)
+	beat.finished.connect(func():
+		_beat = null
+		layer.queue_free())
+	_beat = beat
+	layer.add_child(beat)
 
 
 # ================= 局部节点 =================
