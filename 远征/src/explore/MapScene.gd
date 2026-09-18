@@ -23,6 +23,10 @@ const MON_COLOR := {
 	"normal": Color("5f7186"), "elite": Color("7a4a9a"), "boss": Color("8a2f2f"),
 }
 const INTERACT_R := 44.0      # 非战斗物件交互半径（maps.json 无此字段时的口径）
+const MINI_W := 78.0          # 小地图尺寸：与 32×42 格地图同比例（1536:2016 ≈ 0.762）
+const MINI_H := 102.0
+const _MiniMapPos := Vector2(390, 14)
+const AUTO_TIMEOUT := 26.0    # 自动前往超时（秒）：到不了就交还控制权，不把玩家困住
 const StoryBeatScript := preload("res://src/ui/StoryBeat.gd")   # 首领剧情演出层（对峙/余韵）
 
 var st: RunState
@@ -51,6 +55,21 @@ var _joy: _Joystick
 var _map_done := false
 var _map_cfg: Dictionary = {}
 var _theme_cfg: Dictionary = {}
+
+# ---- 导航辅助（轮次 13：探索不再"盲走"）----
+# 痛点：32×42 格地图只能看到约 1/5，玩家不知道自己在哪、目标在哪，只能一直往上走。
+# 三件套：小地图（全局位置感）+ 目标罗盘（方向与距离，点它自动前往）+ 疾行（缩短空跑时间）。
+var _minimap: _Minimap = null        # 右上角小地图（点击放大为大地图）
+var _compass: _Compass = null        # 目标罗盘（含距离，点击开始/停止自动前往）
+var _sprint_btn: Control = null      # 疾行开关
+var _big_map: Control = null         # 大地图浮层（含图例与返回按钮）
+var _sprint := false
+var _auto_walk := false
+var _auto_time := 0.0                # 自动前往累计时长（超时自停，防止绕过点卡死）
+var _auto_stuck := 0.0
+var _auto_dodge := 0.0
+var _auto_dodge_side := 1.0
+var _prev_pos := Vector2.ZERO
 
 
 func _ready() -> void:
@@ -385,9 +404,15 @@ func _build_hud() -> void:
 	goal_chip.add_child(goal)
 	_hud.add_child(goal_chip)
 
-	# HP 条 + 药剂 + 换宠
+	# 目标罗盘：一眼看到"该往哪走、还有多远"，点它开始自动前往（手游不用一直搓摇杆）
+	_compass = _Compass.new()
+	_compass.position = Vector2(16, 78)
+	_compass.tapped.connect(_on_compass_tapped)
+	_hud.add_child(_compass)
+
+	# HP 条 + 药剂 + 换宠（整行下移让位给目标罗盘小签）
 	var panel := G.parchment_box(206, 56, 10.0)
-	panel.position = Vector2(16, 88)
+	panel.position = Vector2(16, 114)
 	_hud.add_child(panel)
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 2)
@@ -413,26 +438,42 @@ func _build_hud() -> void:
 	_refresh_hud()
 
 	var potion_btn := G.gold_button("药", 44, 40)
-	potion_btn.position = Vector2(232, 96)
+	potion_btn.position = Vector2(232, 122)
 	potion_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_use_potion())
 	_hud.add_child(potion_btn)
 
 	_pet_btn = G.gold_button("换宠", 72, 40)
-	_pet_btn.position = Vector2(284, 96)
+	_pet_btn.position = Vector2(284, 122)
 	_pet_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_swap_pet())
 	_hud.add_child(_pet_btn)
 
 	# 撤离：手边就必须能退出去（PC 亦可按 ESC），点按后二次确认防误触
+	# 位置让给右上角小地图（小地图 y 到 116），下移到地图正下方仍是拇指热区
 	var exit_btn := G.gold_button("撤离", 60, 40)
-	exit_btn.position = Vector2(404, 96)
+	exit_btn.position = Vector2(404, 126)
 	exit_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_ask_exit())
 	_hud.add_child(exit_btn)
+
+	# 右上角小地图：全局位置感（"我在哪、出口在哪、还有几个人"）
+	_minimap = _Minimap.new()
+	_minimap.map_ref = self
+	_minimap.position = Vector2(_MiniMapPos.x, _MiniMapPos.y)
+	_minimap.tapped.connect(_toggle_big_map)
+	_hud.add_child(_minimap)
+
+	# 疾行：地图纵深远、步行慢，空跑的那段路要能加速（数据配置 sprint_mult）
+	_sprint_btn = G.gold_button("疾行 · 关", 78, 40, G.FS_SM)
+	_sprint_btn.position = Vector2(386, VIEW_H - 200)
+	_sprint_btn.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_toggle_sprint())
+	_hud.add_child(_sprint_btn)
 
 	_joy = _Joystick.new()
 	_joy.position = Vector2(28, VIEW_H - 176)
@@ -570,10 +611,8 @@ func _show_trait_remove() -> void:
 	Audio.sfx("ui_open")
 	_remover = Control.new()
 	_remover.set_anchors_preset(Control.PRESET_FULL_RECT)
-	var dim := ColorRect.new()
-	dim.color = Color(0, 0, 0, 0.66)
-	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_remover.add_child(dim)
+	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），不再各写一块纯灰
+	G.veil(_remover, 0.66, true)
 
 	var panel := G.parchment_box(336, 470, 20.0)
 	panel.position = Vector2(72, 150)
@@ -642,7 +681,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not event.is_action_pressed("ui_cancel"):
 		return
 	var vp := get_viewport()  # 切场景途中本节点可能已离场，viewport 会是 null
-	if _exit_ui != null:
+	if _big_map != null:   # 大地图优先：ESC 先收浮层，再谈撤离
+		_close_big_map()
+		if vp != null:
+			vp.set_input_as_handled()
+	elif _exit_ui != null:
 		_cancel_exit()
 		if vp != null:
 			vp.set_input_as_handled()
@@ -663,11 +706,8 @@ func _ask_exit() -> void:
 	_exit_ui = layer
 	_hud.add_child(layer)
 
-	var dim := ColorRect.new()
-	dim.color = Color(0, 0, 0, 0.72)
-	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
-	dim.mouse_filter = Control.MOUSE_FILTER_STOP
-	layer.add_child(dim)
+	# 撤离确认底衬：统一工厂（深棕 + 暗角 + 斜纹），保持浮层质感一致
+	G.veil(layer, 0.72, true)
 
 	var banner := G.banner_box("撤离本节点", 260, 48)
 	banner.position = Vector2((VIEW_W - 260.0) * 0.5, 264)
@@ -714,7 +754,7 @@ func _cancel_exit() -> void:
 # ================= 主循环 =================
 func _physics_process(delta: float) -> void:
 	if _map_done or _battle != null or _picker != null or _remover != null \
-			or _exit_ui != null or _beat != null:
+			or _exit_ui != null or _beat != null or _big_map != null:
 		return
 	if G.ui_blocked:  # GM 控制台等全屏浮层打开时冻结移动
 		return
@@ -724,7 +764,15 @@ func _physics_process(delta: float) -> void:
 	var dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if _joy != null:
 		dir = (dir + _joy.vector).limit_length(1.0)
+	# 手动输入优先级最高：一推摇杆/一键键盘就交还控制权（自动前往不会跟玩家抢方向盘）
+	if _auto_walk and dir.length_squared() > 0.01:
+		_stop_auto_walk("")
+	elif _auto_walk:
+		dir = _auto_dir(delta)
 	var speed := float(_map_cfg.get("player_speed", 130.0))
+	if _sprint:
+		speed *= float(_map_cfg.get("sprint_mult", 1.6))
+	_prev_pos = _player.position
 	_player.velocity = dir * speed
 	_player.move_and_slide()
 	# 地图边界夹紧
@@ -732,6 +780,8 @@ func _physics_process(delta: float) -> void:
 	var rows := int(_map_cfg.get("map_rows", 42))
 	_player.position = _player.position.clamp(Vector2(24, 60), Vector2(cols * 48 - 24, rows * 48 - 24))
 	_update_player_anim(dir)
+	_tick_auto_walk(delta)
+	_update_nav()
 	_check_portal()
 
 
@@ -749,9 +799,190 @@ func _update_player_anim(dir: Vector2) -> void:
 		_player_anim.animation = anim
 	# 步频随实际移速缩放：4关键帧@8FPS，88px/s 时每循环约移动44px，
 	# 摇杆半速推动时步子放慢，避免任何速度下的滑步感
-	_player_anim.speed_scale = clampf(_player.velocity.length() / 88.0, 0.55, 2.0)
+	# 基准改为配置里的步行速度：疾行时步频自然加快，不再锁死在旧写死的 88
+	_player_anim.speed_scale = clampf(_player.velocity.length()
+		/ maxf(1.0, float(_map_cfg.get("player_speed", 100.0))), 0.55, 2.0)
 	if not _player_anim.is_playing():
 		_player_anim.play()
+
+
+# ================= 导航三件套（小地图 / 目标罗盘 / 疾行） =================
+## 地图世界尺寸（像素）
+func _map_extent() -> Vector2:
+	return Vector2(float(int(_map_cfg.get("map_cols", 32))) * 48.0,
+		float(int(_map_cfg.get("map_rows", 42))) * 48.0)
+
+
+## 当前该去哪：优先未使用过的物件（宝箱/事件/商店/篝火），
+## 传送阵被封印时先指向守阵首领，其余一律指向传送阵
+func _nav_info() -> Dictionary:
+	if _interactable != null and not _interactable.used:
+		var kind := String(_interactable.kind)
+		var n: String = {"chest": "宝箱", "event": "奇遇", "shop": "商队",
+			"bonfire": "篝火"}.get(kind, "目标")
+		return {"name": n, "pos": _interactable.position, "kind": kind}
+	if _portal != null and _portal.locked:
+		for m in _monsters:
+			if m.tier == "boss":
+				return {"name": "首领", "pos": m.position, "kind": "boss"}
+	if _portal != null:
+		return {"name": "传送阵", "pos": _portal.position, "kind": "portal"}
+	return {"name": "", "pos": Vector2.ZERO, "kind": ""}
+
+
+func _update_nav() -> void:
+	var info := _nav_info()
+	if _compass != null:
+		_compass.set_target(String(info.get("name", "")), info.get("pos", Vector2.ZERO),
+			_player.position if _player != null else Vector2.ZERO, _auto_walk)
+	if _minimap != null:
+		_minimap.queue_redraw()
+
+
+## 罗盘被点：开始 / 停止自动前往（把"按住摇杆走 20 秒"变成一次点击）
+func _on_compass_tapped() -> void:
+	if _auto_walk:
+		_stop_auto_walk("")
+		return
+	if _map_done or _battle != null or _picker != null or _remover != null:
+		return
+	var info := _nav_info()
+	if String(info.get("kind", "")).is_empty():
+		return
+	Audio.sfx("ui_confirm")
+	_auto_walk = true
+	_auto_time = 0.0
+	_auto_stuck = 0.0
+	_auto_dodge = 0.0
+	_toast("前往%s · 推动摇杆可随时接手" % String(info.get("name", "目标")))
+
+
+func _start_auto_walk() -> void:
+	_on_compass_tapped()
+
+
+func _stop_auto_walk(msg: String) -> void:
+	if not _auto_walk:
+		return
+	_auto_walk = false
+	_auto_time = 0.0
+	_auto_stuck = 0.0
+	_auto_dodge = 0.0
+	if msg != "":
+		_toast(msg)
+
+
+## 自动前往的转向：直线朝目标；被散件挡住时先沿切线绕一段再回来
+func _auto_dir(delta: float) -> Vector2:
+	var info := _nav_info()
+	var to := (info.get("pos", Vector2.ZERO) as Vector2) - _player.position
+	if to.length() < 24.0:
+		_stop_auto_walk("")
+		return Vector2.ZERO
+	_auto_time += delta
+	if _auto_time > AUTO_TIMEOUT:
+		_stop_auto_walk("前路不通——请你亲自来")
+		return Vector2.ZERO
+	if _auto_dodge > 0.0:
+		_auto_dodge -= delta
+		var side := to.normalized().rotated(PI * 0.5 * _auto_dodge_side)
+		return side
+	return to.normalized()
+
+
+## 卡住判定：实际位移远低于预期持续一小段，就换一侧绕行（树林/岩石多的图不会卡死）
+func _tick_auto_walk(delta: float) -> void:
+	if not _auto_walk or _player == null:
+		return
+	var moved := _player.position.distance_to(_prev_pos)
+	var expected := float(_map_cfg.get("player_speed", 88.0)) * delta * 0.45
+	if moved < expected:
+		_auto_stuck += delta
+	else:
+		_auto_stuck = 0.0
+	if _auto_stuck > 0.22:
+		_auto_stuck = 0.0
+		_auto_dodge = 0.5
+		_auto_dodge_side = -_auto_dodge_side
+
+
+func _toggle_sprint() -> void:
+	_sprint = not _sprint
+	if _sprint_btn != null:
+		var l := _sprint_btn.get_child(0) as Label
+		if l != null:
+			l.text = "疾行 · 开" if _sprint else "疾行 · 关"
+	Audio.sfx("ui_click")
+
+
+## 大地图：点小地图呼出，看清整片地形与全部目标；带图例与返回按钮
+func _toggle_big_map() -> void:
+	if _big_map != null:
+		_close_big_map()
+		return
+	if _map_done or _battle != null:
+		return
+	Audio.sfx("ui_open")
+	_big_map = Control.new()
+	_big_map.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_big_map.mouse_filter = Control.MOUSE_FILTER_STOP
+	_hud.add_child(_big_map)
+	G.veil(_big_map, 0.74, true)
+
+	var banner := G.banner_box("地 图", 200, 46)
+	banner.position = Vector2((VIEW_W - 200.0) * 0.5, 40)
+	_big_map.add_child(banner)
+
+	var panel := G.parchment_box(400, 560, 16.0)
+	panel.position = Vector2(40, 108)
+	_big_map.add_child(panel)
+	var content := Control.new()
+	content.set_anchors_preset(Control.PRESET_FULL_RECT)
+	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	panel.add_child(content)
+
+	var mm := _Minimap.new()
+	mm.map_ref = self
+	mm.big = true
+	mm.position = Vector2(54, 6)
+	content.add_child(mm)
+
+	var ext := _map_extent()
+	var lines := [
+		"全图 %d × %d 格（约 %.0f × %.0f 步）" % [int(ext.x / 48.0), int(ext.y / 48.0),
+			ext.x / 48.0, ext.y / 48.0],
+		"金点：你所在的位置 · 亮框：当前视野",
+		"青点：传送阵（封印时转紫）· 金菱：宝箱 / 事件 / 商队 / 篝火",
+		"红点：敌影（视野内才会显形）",
+		"点下方「前 往」自动走到当前目标；再推摇杆即可接手",
+	]
+	for i in lines.size():
+		var l := G.text_label(String(lines[i]), G.FS_XS, Color("5a3a1e"))
+		l.position = Vector2(16, 360 + float(i) * 21.0)
+		l.custom_minimum_size = Vector2(336, 0)
+		content.add_child(l)
+
+	var go := G.gold_button("前 往", 148, 44)
+	go.position = Vector2(24, 474)
+	go.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_close_big_map()
+			_start_auto_walk())
+	content.add_child(go)
+	var back := G.gold_button("返 回", 148, 44)
+	back.position = Vector2(192, 474)
+	back.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_close_big_map())
+	content.add_child(back)
+
+
+func _close_big_map() -> void:
+	if _big_map == null:
+		return
+	Audio.sfx("ui_close")
+	_big_map.queue_free()
+	_big_map = null
 
 
 func _check_portal() -> void:
@@ -1277,6 +1508,131 @@ class _Interactable extends Node2D:
 		draw_circle(Vector2(0, -12), 12.0 * f, Color("e07030"))
 		draw_circle(Vector2(0, -15), 8.0 * f, Color("f0a040"))
 		draw_circle(Vector2(0, -18), 4.5 * f, Color("ffd070"))
+
+
+## 小地图：把整张 32×42 的地图装进方块里——黄框是当前视野，玩家一眼知道自己在哪、
+## 出口在哪、目标物件在哪。点一下放大成大地图（看清全貌 + 图例）。
+## 敌影只在视野附近显形（reveal_radius），远处保留"未知"，不至于变成上帝视角。
+class _Minimap extends Control:
+	signal tapped
+
+	var map_ref: MapScene = null
+	var big := false
+
+	func _ready() -> void:
+		mouse_filter = Control.MOUSE_FILTER_STOP
+		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		custom_minimum_size = Vector2(260.0, 342.0) if big \
+			else Vector2(MapScene.MINI_W, MapScene.MINI_H)
+		size = custom_minimum_size   # 非容器控件不会自动吃最小尺寸，必须显式给宽高
+
+	func _gui_input(e: InputEvent) -> void:
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			tapped.emit()
+
+	func _draw() -> void:
+		if map_ref == null:
+			return
+		var sz := size
+		if sz.x <= 1.0 or sz.y <= 1.0:
+			sz = custom_minimum_size
+		draw_rect(Rect2(Vector2.ZERO, sz), Color(0.08, 0.06, 0.04, 0.74))
+		draw_rect(Rect2(Vector2.ZERO, sz), Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.42), false, 1.5)
+
+		var ext := map_ref._map_extent()
+		var s := minf(sz.x / ext.x, sz.y / ext.y)
+		var off := (sz - ext * s) * 0.5
+		var at := func(p: Vector2) -> Vector2: return off + p * s
+		draw_rect(Rect2(off, ext * s), Color(0.30, 0.25, 0.17, 0.50))
+
+		var reveal := float(map_ref._map_cfg.get("map_reveal_radius", 520.0))
+		var pp := map_ref._player.position if map_ref._player != null else Vector2.ZERO
+
+		# 当前视野框（相机 1.25 倍 ⇒ 384×640；相机带 (0,-56) 偏移，位在玩家上方）
+		var view := Vector2(384.0, 640.0)
+		var vc := pp + Vector2(0, -56.0)
+		draw_rect(Rect2(at.call(vc - view * 0.5), view * s),
+			Color(1.0, 0.98, 0.90, 0.16), false, 1.5)
+
+		# 传送阵（封印为紫）
+		if map_ref._portal != null:
+			var pc := Color("8a6a9a") if map_ref._portal.locked else Color("7ae0ff")
+			_pt(at.call(map_ref._portal.position), 4.0, pc)
+		# 目标物件（金菱）
+		if map_ref._interactable != null and not map_ref._interactable.used:
+			var ip: Vector2 = at.call(map_ref._interactable.position)
+			draw_colored_polygon([ip + Vector2(0, -4.5), ip + Vector2(3.6, 0), ip + Vector2(-3.6, 0)],
+				Color("ffd980"))
+		# 敌影（视野内）
+		for m in map_ref._monsters:
+			if m.position.distance_to(pp) <= reveal or m.tier == "boss":
+				_pt(at.call(m.position), 2.6, Color("e0664a"))
+		# 玩家（金点 + 朝向短须）
+		draw_circle(at.call(pp), 3.4, Color("ffe9a8"))
+		var face := Vector2.ZERO
+		if is_instance_valid(map_ref._player_anim):
+			match String(map_ref._player_anim.animation):
+				"walk_up": face = Vector2(0, -1)
+				"walk_down": face = Vector2(0, 1)
+				"walk_left": face = Vector2(-1, 0)
+				_: face = Vector2(0, 1)
+		draw_line(at.call(pp), at.call(pp) + face * 6.0, Color("ffe9a8"), 1.5)
+
+	func _pt(p: Vector2, r: float, c: Color) -> void:
+		draw_circle(p, r, c)
+
+
+## 目标罗盘：一行小签告诉你「该往哪走、还有多远」，点它开始自动前往。
+## 只放必要信息：朝向箭头 + 目标名 + 步数（1 步＝1 格），手机上拇指一点就能走。
+class _Compass extends Control:
+	signal tapped
+
+	var _lbl: Label = null
+	var _angle := 0.0
+	var _key := ""
+
+	func _ready() -> void:
+		mouse_filter = Control.MOUSE_FILTER_STOP
+		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		custom_minimum_size = Vector2(216.0, 26.0)
+		size = custom_minimum_size
+		_lbl = G.gold_label("", G.FS_XS, false, Color("ffd9a0"), false)
+		_lbl.position = Vector2(20, 3)
+		_lbl.custom_minimum_size = Vector2(194, 0)
+		add_child(_lbl)
+
+	func _gui_input(e: InputEvent) -> void:
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			tapped.emit()
+
+	func set_target(name: String, target: Vector2, player_pos: Vector2, auto: bool) -> void:
+		if name.is_empty():
+			_key = ""
+			_lbl.text = "自由探索"
+			_angle = 0.0
+			queue_redraw()
+			return
+		var steps := int(player_pos.distance_to(target) / 48.0)
+		var key := "%s|%d|%s" % [name, steps, str(auto)]
+		if key != _key:
+			_key = key
+			_lbl.text = ("行进中 · %s %d 步" if auto else "%s · 还有 %d 步") % [name, steps]
+		_angle = (target - player_pos).angle() + PI * 0.5
+		queue_redraw()
+
+	func _draw() -> void:
+		var sz := size
+		if sz.x <= 1.0:
+			sz = custom_minimum_size
+		draw_rect(Rect2(Vector2.ZERO, sz), Color(0.13, 0.09, 0.05, 0.62))
+		draw_rect(Rect2(Vector2.ZERO, sz), Color(0.13, 0.09, 0.05, 0), false, 1.0)
+		if _key.is_empty():
+			return
+		# 箭头：绕自身旋转，永远指向目标
+		draw_set_transform(Vector2(11, sz.y * 0.5), _angle, Vector2.ONE)
+		draw_colored_polygon([Vector2(0, -6), Vector2(4.5, 3), Vector2(-4.5, 3)],
+			Color(G.GOLD_BRIGHT.r, G.GOLD_BRIGHT.g, G.GOLD_BRIGHT.b, 0.92))
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 
 ## 虚拟摇杆（触屏/鼠标拖拽；键盘方向并行可用）
