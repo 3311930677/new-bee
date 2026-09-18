@@ -240,6 +240,12 @@ func _setup() -> void:
 			so.set("instant", true)
 			so.call("setup", "tomb", "outro")
 			add_child(so)
+		"arena":
+			# 演武场面板
+			_demo_prog()
+			var ha: Node = load("res://src/ui/GameHome.tscn").instantiate()
+			add_child(ha)
+			ha.call("_open_arena")
 		"gacha":
 			_demo_prog()
 			var hg: Node = load("res://src/ui/GameHome.tscn").instantiate()

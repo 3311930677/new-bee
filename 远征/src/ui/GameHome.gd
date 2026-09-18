@@ -30,6 +30,8 @@ var _codex: CodexPanel = null
 var _gacha: GachaPanel = null      # 召唤（魂石抽宠物）
 var _exchange: ExchangePanel = null  # 荣誉兑换
 var _settings: SettingsPanel = null  # 设置（存档/键位）
+var _arena: Control = null       # 演武场（PVP 首版）
+const ArenaPanelScript := preload("res://src/ui/ArenaPanel.gd")
 var _growth: Control = null      # 养成 6 线（GrowthPanel）
 
 
@@ -284,14 +286,14 @@ func _role_name(id: String) -> String:
 
 
 ## 右侧竖列：活动与系统入口（出征已搬进主城）
-const RAIL_R := [["世界", "界"], ["图鉴", "图"], ["养成", "养"],
-	["兑换", "兑"], ["召唤", "召"], ["设置", "设"]]
+const RAIL_R := [["世界", "界"], ["竞技", "武"], ["图鉴", "图"],
+	["养成", "养"], ["兑换", "兑"], ["召唤", "召"], ["设置", "设"]]
 
 func _build_entries() -> void:
 	# 右侧竖列：活动与系统入口（出征已搬进主城，主页只留浏览与设置）
 	for i in RAIL_R.size():
 		var b := _round_entry(String(RAIL_R[i][0]), String(RAIL_R[i][1]))
-		b.position = Vector2(VIEW_W - 88.0, 150 + i * 84.0)
+		b.position = Vector2(VIEW_W - 88.0, 150 + i * 78.0)
 		add_child(b)
 
 	# 底部：一行若隐若现的字，点它（或点屏幕下方）就直接进主世界
@@ -353,6 +355,7 @@ func _dispatch_entry(label: String) -> void:
 	match label:
 		"主城": G.go("res://src/city/CityScene.tscn")
 		"世界": _open_worlds(_click_ev())
+		"竞技": _open_arena()
 		"图鉴": _open_codex(_click_ev())
 		"养成": _open_growth()
 		"兑换": _open_exchange()
@@ -402,6 +405,19 @@ func _open_worlds(e: InputEvent) -> void:
 		_worlds.queue_free()
 		_worlds = null)
 	add_child(_worlds)
+
+
+# ---------- 竞技入口（演武场：傀儡切磋 + 段位分） ----------
+func _open_arena() -> void:
+	if _arena != null:
+		return
+	Audio.sfx("ui_open")
+	_arena = ArenaPanelScript.new()
+	_arena.closed.connect(func():
+		Audio.sfx("ui_close")
+		_arena.queue_free()
+		_arena = null)
+	add_child(_arena)
 
 
 # ---------- 图鉴入口（宠物收集进度 + 解锁条件） ----------
