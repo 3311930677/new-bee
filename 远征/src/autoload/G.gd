@@ -39,10 +39,22 @@ const FS_LG := 22    # 面板标题 / 特写字段（角色名）
 const FS_BIG := 30   # 木匾 / 区块标题
 const FS_HERO := 56  # 主界面大标题
 
+# ---------- UI 规格（§6 有限尺寸：同一层级只用同一档，禁止逐页手调宽高） ----------
+# 按钮三档：主操作 / 次操作 / 返回关闭；页面里能用的就这三种高度，不再各自为政
+const BTN_L := Vector2(190, 52)   # 主操作：开始切磋 / 登录 / 确认
+const BTN_M := Vector2(148, 44)   # 次操作：换对手 / 切换 / 上传
+const BTN_S := Vector2(120, 38)   # 返回 / 关闭
+const ICON_RAIL := 36.0           # 主页圆形入口图标（圆底 60）
+const ICON_WALLET := 18.0         # 资源栏图标
+const ICON_MARK := 28.0           # 建筑/卡片角标图标
+
 # ---------- 共享状态 ----------
 var account := ""           # 登录账号（游客登录时为"游客"）
 var gender := "男"          # 玩家选择性别
 var selected_role := ""     # "zs" / "ck" / "fs" / "fz"
+var avatar_id := ""         # 职业头像 id；为空时跟随当前职业
+var avatar_custom := ""     # 上传的自定义头像文件名（user://avatars/ 下）；空串=没上传过
+var avatar_use_custom := false   # 当前是否使用自定义头像（选职业头像后仍保留上传的图）
 var player_name := ""       # 玩家起的名字
 var roles: Array = []       # data/roles.json 内容
 
@@ -237,6 +249,17 @@ func _load_save() -> void:
 	var gd := String(data.get("gender", ""))
 	if not gd.is_empty():
 		gender = gd
+	var aid := String(data.get("avatar_id", ""))
+	if not aid.is_empty() and not get_role(aid).is_empty():
+		avatar_id = aid
+	# 读档可能在同一进程里被测试/导入流程再次调用，先失效缓存再验证文件，
+	# 否则上一轮的 null 缓存会让刚读回的自定义头像被误判成不存在。
+	avatar_custom = String(data.get("avatar_custom", ""))
+	_avatar_tex_done = false
+	_avatar_tex = null
+	avatar_use_custom = bool(data.get("avatar_use_custom", false))
+	if avatar_use_custom and not has_custom_avatar():
+		avatar_use_custom = false   # 图被系统清了就退回职业头像，别让主页头像开天窗
 	var au: Variant = data.get("audio", {})
 	if au is Dictionary:
 		var ad := au as Dictionary
@@ -324,6 +347,9 @@ func save_game() -> void:
 		"audio": audio,
 		"account": account,
 		"gender": gender,
+		"avatar_id": avatar_id,
+		"avatar_custom": avatar_custom,
+		"avatar_use_custom": avatar_use_custom,
 		"player_name": player_name,
 		"selected_role": selected_role,
 	}
@@ -1986,6 +2012,123 @@ func role_dir(id: String) -> String:
 	return "res://image/role/%s/" % id
 
 
+## 职业立绘文件名（pojun/chuanyang/shuangyu/chenxing）：此前 Login/GameHome 各抄一份，统一收到这里
+const ROLE_ART := {"zs": "pojun", "ck": "chuanyang", "fs": "shuangyu", "fz": "chenxing"}
+
+
+func role_art_name(id: String) -> String:
+	return String(ROLE_ART.get(id, id))
+
+
+## 职业头像贴图路径（未知 id 回落到破军，绝不返回空路径让调用方 load 失败）
+func role_icon_path(id: String) -> String:
+	var rid := id if not get_role(id).is_empty() else "zs"
+	return role_dir(rid) + role_art_name(rid) + "_icon.png"
+
+
+# ================= 头像（登录页 / 主界面都可上传本地图片） =================
+# 口径：上传的图一律居中裁方 → 缩到 256×256 → 存成 PNG。界面端只拿一张方图，
+#       不用关心来源尺寸/比例（§6 有限尺寸规格）。
+const AVATAR_DIR := "user://avatars/"
+const AVATAR_SIZE := 256
+var _avatar_tex: Texture2D = null
+var _avatar_tex_done := false
+
+
+## 当前头像贴图：上传过且在用 → 自定义图；否则用职业头像
+func avatar_texture() -> Texture2D:
+	if avatar_use_custom:
+		var t := custom_avatar_texture()
+		if t != null:
+			return t
+	var rid := avatar_id if not get_role(avatar_id).is_empty() else selected_role
+	return load(role_icon_path(rid)) as Texture2D
+
+
+## 已上传的自定义头像贴图（没上传/文件丢了返回 null）
+func custom_avatar_texture() -> Texture2D:
+	if _avatar_tex_done:
+		return _avatar_tex
+	_avatar_tex_done = true
+	_avatar_tex = _read_avatar_file()
+	return _avatar_tex
+
+
+func has_custom_avatar() -> bool:
+	return custom_avatar_texture() != null
+
+
+## 导入本地图片为头像：读图 → 居中裁方 → 缩到 256 → 转 PNG 落盘 → 立即生效。
+## 返回空串=成功，非空=给玩家看的失败原因（不 push_error：选错文件不是程序错误）
+func import_avatar(src_path: String) -> String:
+	if src_path.is_empty() or not FileAccess.file_exists(src_path):
+		return "找不到这张图片"
+	var img := Image.new()
+	var err := img.load(src_path)
+	if err != OK or img.is_empty():
+		return "这个文件不是可识别的图片"
+	var side := mini(img.get_width(), img.get_height())
+	var cut := img.get_region(Rect2i((img.get_width() - side) / 2,
+		(img.get_height() - side) / 2, side, side))
+	if cut.get_width() != AVATAR_SIZE:
+		cut.resize(AVATAR_SIZE, AVATAR_SIZE, Image.INTERPOLATE_LANCZOS)
+	# make_dir_recursive_absolute 要求操作系统绝对路径；user:// 先转成本机路径，避免某些平台创建失败。
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(AVATAR_DIR))
+	# 微秒参与文件名，连续快速上传也不会覆盖上一张图。
+	var file_name := "custom_%d_%d.png" % [Time.get_unix_time_from_system(), Time.get_ticks_usec()]
+	if cut.save_png(AVATAR_DIR + file_name) != OK:
+		return "头像保存失败，换一张再试"
+	var old := avatar_custom
+	avatar_custom = file_name
+	avatar_use_custom = true
+	_reload_avatar_texture()
+	save_game()
+	_remove_avatar_file(old)   # 旧图不再被引用就删掉，别让 user:// 越攒越多
+	return ""
+
+
+## 切回职业头像（上传的图保留，随时能再切回来）
+func use_role_avatar(id: String) -> void:
+	if not get_role(id).is_empty():
+		avatar_id = id
+	avatar_use_custom = false
+	save_game()
+
+
+## 切回上次上传的自定义头像；没上传过返回 false（调用方据此弹选文件）
+func use_custom_avatar() -> bool:
+	if not has_custom_avatar():
+		return false
+	avatar_use_custom = true
+	save_game()
+	return true
+
+
+func _read_avatar_file() -> Texture2D:
+	if avatar_custom.is_empty():
+		return null
+	var path := AVATAR_DIR + avatar_custom
+	if not FileAccess.file_exists(path):
+		return null
+	var img := Image.new()
+	if img.load(path) != OK:
+		return null
+	return ImageTexture.create_from_image(img)
+
+
+func _reload_avatar_texture() -> void:
+	_avatar_tex_done = true
+	_avatar_tex = _read_avatar_file()
+
+
+func _remove_avatar_file(file_name: String) -> void:
+	if file_name.is_empty() or file_name == avatar_custom:
+		return
+	var path := AVATAR_DIR + file_name
+	if FileAccess.file_exists(path):
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(path))
+
+
 # ---------- 生成素材索引（image/generated_*/source/，文件名形如 NNN_名称.png） ----------
 # 统一按「名称」寻址（如 res_tex("mon_wolf")），免去在代码里硬编码 300+ 条编号路径；
 # 首次访问时扫描一次目录并缓存，后续 O(1) 查表。
@@ -2148,6 +2291,14 @@ func set_button_active(btn: Control, active: bool) -> void:
 
 # ---------- 参考风控件（创建角色 / 登录页） ----------
 
+## 木匾标题规范化：文案只写文字，字距交给字体规则；带「· / 空格」的复合标题（如「远征 · 森林」）
+## 原样保留。规则集中在工厂一处，页面里不再手打「设 置」这类空格——同类标题必须同一规则。
+func _banner_text(text: String) -> String:
+	if text.contains("·") or text.contains("/"):
+		return text.strip_edges()
+	return text.replace(" ", "")
+
+
 ## 顶部棕色木匾横幅（宋体 + 柔金边；边框降饱和避免荧光感）
 func banner_box(text: String, w := 260, h := 52, font_size := FS_BIG) -> PanelContainer:
 	var root := PanelContainer.new()
@@ -2163,7 +2314,7 @@ func banner_box(text: String, w := 260, h := 52, font_size := FS_BIG) -> PanelCo
 	sb.content_margin_left = 24.0
 	sb.content_margin_right = 24.0
 	root.add_theme_stylebox_override("panel", sb)
-	var l := serif_label(text, font_size, GOLD_BRIGHT)
+	var l := serif_label(_banner_text(text), font_size, GOLD_BRIGHT)
 	l.add_theme_font_override("font", spaced_font(maxi(1, font_size / 10), true, true))
 	root.add_child(l)
 	return root
@@ -2191,7 +2342,31 @@ func parchment_box(w := 400, h := 200, pad := 18.0) -> PanelContainer:
 	return root
 
 
-## 金色实心按钮（棕字，参考"随机取名"）
+## 按钮文案规范化：调用处手打的「返 回 / 兑 换」式空格统一在这里收掉。同类按钮的字距
+## 靠字体与内边距控制，不靠手打空格（分散在各页面的空格是典型的"每处各写一遍"）。
+func _button_text(text: String) -> String:
+	return text.replace(" ", "")
+
+
+## 按钮通用交互态：悬停微亮、按下微缩回弹（§26/§39 状态必须齐全）。全部按钮共用这一套，
+## 避免每个按钮各自写一份反馈；按下即出声，与项目既有口径一致。
+func _bind_press_feedback(root: Control) -> void:
+	root.mouse_entered.connect(func(): root.modulate = Color(1.07, 1.05, 1.0))
+	root.mouse_exited.connect(func(): root.modulate = Color.WHITE)
+	root.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT:
+			root.pivot_offset = root.size * 0.5
+			var tw := root.create_tween()
+			if e.pressed:
+				Audio.sfx("ui_click")
+				tw.tween_property(root, "modulate", Color(0.9, 0.9, 0.9), 0.06)
+				tw.parallel().tween_property(root, "scale", Vector2.ONE * 0.97, 0.06)
+			else:
+				tw.tween_property(root, "modulate", Color.WHITE, 0.12)
+				tw.parallel().tween_property(root, "scale", Vector2.ONE, 0.12))
+
+
+## 金色实心按钮（棕字）：主操作用，一个页面里同一时刻通常只该有一个
 func gold_button(text: String, w := 0.0, h := 42.0, font_size := FS_MD) -> Control:
 	var root := PanelContainer.new()
 	if w > 0.0:
@@ -2207,22 +2382,51 @@ func gold_button(text: String, w := 0.0, h := 42.0, font_size := FS_MD) -> Contr
 	sb.content_margin_left = 16.0
 	sb.content_margin_right = 16.0
 	root.add_theme_stylebox_override("panel", sb)
-	var l := gold_label(text, font_size, true, TEXT_DARK, false)
-	root.add_child(l)
+	root.add_child(gold_label(_button_text(text), font_size, true, TEXT_DARK, false))
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
-	# 按压反馈：微暗 + 微缩，松开回弹（避免静态死板的模板感）；按下同时出声（全局按钮都有）
-	root.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT:
-			root.pivot_offset = root.size * 0.5
-			var tw := root.create_tween()
-			if e.pressed:
-				Audio.sfx("ui_click")
-				tw.tween_property(root, "modulate", Color(0.9, 0.9, 0.9), 0.06)
-				tw.parallel().tween_property(root, "scale", Vector2.ONE * 0.97, 0.06)
-			else:
-				tw.tween_property(root, "modulate", Color.WHITE, 0.12)
-				tw.parallel().tween_property(root, "scale", Vector2.ONE, 0.12))
+	root.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	_bind_press_feedback(root)
 	return root
+
+
+## 描边次级按钮（棕底透明 + 棕字）：切换/返回/上传这类次级操作用它。
+## 与 gold_button 同尺寸档位、同交互反馈，只换皮——页面里不再出现第二套按钮设计。
+func ghost_button(text: String, w := 0.0, h := 38.0, font_size := FS_SM) -> Control:
+	var root := PanelContainer.new()
+	if w > 0.0:
+		root.custom_minimum_size = Vector2(w, h)
+	else:
+		root.custom_minimum_size = Vector2(0, h)
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(0.28, 0.19, 0.08, 0.10)
+	sb.set_corner_radius_all(9)
+	sb.set_border_width_all(2)
+	sb.border_color = Color(BOX_EDGE.r, BOX_EDGE.g, BOX_EDGE.b, 0.70)
+	sb.content_margin_left = 14.0
+	sb.content_margin_right = 14.0
+	root.add_theme_stylebox_override("panel", sb)
+	root.add_child(gold_label(_button_text(text), font_size, true, Color("6a4a1e"), false))
+	root.mouse_filter = Control.MOUSE_FILTER_STOP
+	root.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	_bind_press_feedback(root)
+	return root
+
+
+## 红点（§28）：只提示"有可做的事"，不做"有新内容"的假提示；同一入口最多一枚
+func badge_dot(parent: Control, at: Vector2, d := 9.0) -> Control:
+	var dot := Panel.new()
+	dot.custom_minimum_size = Vector2(d, d)
+	dot.size = Vector2(d, d)
+	dot.position = at
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color("d8442f")
+	sb.set_corner_radius_all(int(d * 0.5))
+	sb.set_border_width_all(1)
+	sb.border_color = Color(0.24, 0.09, 0.05, 0.9)
+	dot.add_theme_stylebox_override("panel", sb)
+	dot.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	parent.add_child(dot)
+	return dot
 
 
 ## 米色选择框（参考"◀ 猎 ▶"中间的方框）
@@ -2252,7 +2456,7 @@ func style_line_edit(le: LineEdit, font_size := FS_MD) -> void:
 	sb.content_margin_left = 10.0
 	sb.content_margin_right = 10.0
 	var focus := sb.duplicate() as StyleBoxFlat
-	focus.bg_color = INPUT_BG_FOCUS
+	focus.bg_color = INPUT_BG.lerp(INPUT_BG_FOCUS, 0.35)
 	focus.border_color = GOLD_BTN_EDGE
 	le.add_theme_stylebox_override("normal", sb)
 	le.add_theme_stylebox_override("focus", focus)
@@ -2324,9 +2528,13 @@ func transit_busy() -> bool:
 
 
 # ---------- 演武场 ----------
-## 段位名（铜/银/金印）
+## 段位名（铜/银/金/铂/钻印）
 func arena_rank() -> String:
 	var s := int(arena.get("score", 0))
+	if s >= 1800:
+		return "钻印"
+	if s >= 1600:
+		return "铂印"
 	if s >= 1400:
 		return "金印"
 	if s >= 1200:
@@ -2347,6 +2555,23 @@ func make_arena_foe(level: int) -> Dictionary:
 		"skills": [{"id": "boss_slam", "name": "震地", "k": 1.6, "cd": 9,
 			"target": "enemy_front_all"}],
 	}
+
+
+## 兑换表最低单价（主页红点用：荣誉买得起任意一件才点亮，宁可少提示也不乱提示）
+var _exchange_min := -1
+func exchange_min_cost() -> int:
+	if _exchange_min >= 0:
+		return _exchange_min
+	_exchange_min = 0
+	var f := FileAccess.open("res://data/exchange.json", FileAccess.READ)
+	if f != null:
+		var parsed: Variant = JSON.parse_string(f.get_as_text())
+		if parsed is Dictionary:
+			for e in (parsed as Dictionary).get("entries", []):
+				var c := int((e as Dictionary).get("cost", 0))
+				if c > 0 and (_exchange_min == 0 or c < _exchange_min):
+					_exchange_min = c
+	return _exchange_min
 
 
 ## 结算一场切磋：胜 +18~26，负 -12（保底 0）；返回 {delta, score, rank}

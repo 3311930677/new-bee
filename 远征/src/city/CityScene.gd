@@ -1064,11 +1064,42 @@ class _Building extends StaticBody2D:
 			_draw_built()
 		else:
 			_draw_plot()
+		# 功能建筑使用统一的小图标标记；祭坛图标直接对应每日签到功能，
+		# 让玩家不靠猜建筑用途，也不会把建筑做成一排无意义色块。
+		_draw_function_icon()
 		if hover:
 			var bob := sin(_t * 2.4) * 3.0
 			var tip := Vector2(0, -_h * 0.5 - 16.0 + bob)
 			draw_colored_polygon([tip + Vector2(0, -7), tip + Vector2(6, 3), tip + Vector2(-6, 3)],
 				Color(G.GOLD_BRIGHT.r, G.GOLD_BRIGHT.g, G.GOLD_BRIGHT.b, 0.9))
+			var action := String(data.get("action", ""))
+			if built() and action.begins_with("activity:"):
+				var activity := G.city_activity(action.get_slice(":", 1))
+				var activity_name := String(activity.get("name", "可互动"))
+				var hint_size := G.font_reg.get_string_size(activity_name, HORIZONTAL_ALIGNMENT_LEFT, -1, 11)
+				draw_rect(Rect2(-hint_size.x * 0.5 - 7, -_h * 0.5 - 50, hint_size.x + 14, 22),
+					Color("3a2919", 0.92))
+				draw_string(G.font_reg, Vector2(-hint_size.x * 0.5, -_h * 0.5 - 35),
+					activity_name, HORIZONTAL_ALIGNMENT_LEFT, -1, 11, Color("f4ddb0"))
+
+	## 在建筑上方放置功能图标；无对应素材时不画，保持程序绘制的降级路径。
+	func _draw_function_icon() -> void:
+		if not built():
+			return
+		var icon_name := ""
+		match String(data.get("id", "")):
+			"shrine": icon_name = "icon_altar"
+			"barracks": icon_name = "icon_double_edge"
+			"archive": icon_name = "itm_pet_book"
+			"storehouse": icon_name = "icon_vault"
+			_: return
+		var tex: Texture2D = G.res_tex(icon_name)
+		if tex == null:
+			return
+		var icon_size := 28.0
+		draw_texture_rect(tex, Rect2(-icon_size * 0.5, -_h * 0.5 - 30.0, icon_size, icon_size), false,
+			Color(1.0, 1.0, 1.0, 0.92))
+
 
 	## 木牌：名字 (+ 状态)
 	func _plaque(txt: String, sub: String, y: float) -> void:

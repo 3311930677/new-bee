@@ -92,19 +92,19 @@ func sfx(name: String, jitter := PITCH_JITTER) -> void:
 
 # ---------- 音量（设置面板调） ----------
 func set_bgm_vol(v: float) -> void:
-	G.audio["bgm"] = clampf(v, 0.0, 1.0)
+	_set_audio_setting("bgm", clampf(v, 0.0, 1.0))
 	_queue_save()
 	_apply_vol()
 
 
 func set_sfx_vol(v: float) -> void:
-	G.audio["sfx"] = clampf(v, 0.0, 1.0)
+	_set_audio_setting("sfx", clampf(v, 0.0, 1.0))
 	_queue_save()
 	_apply_vol()
 
 
 func set_mute(on: bool) -> void:
-	G.audio["mute"] = on
+	_set_audio_setting("mute", on)
 	_queue_save()
 	_apply_vol()
 
@@ -115,21 +115,47 @@ func _queue_save() -> void:
 		_save_timer = Timer.new()
 		_save_timer.one_shot = true
 		_save_timer.wait_time = 0.5
-		_save_timer.timeout.connect(func(): G.save_game())
+		_save_timer.timeout.connect(_save_audio_settings)
 		add_child(_save_timer)
 	_save_timer.start()
 
 
 func bgm_vol() -> float:
-	return float(G.audio.get("bgm", 0.7))
+	return float(_audio_settings().get("bgm", 0.7))
 
 
 func sfx_vol() -> float:
-	return float(G.audio.get("sfx", 0.8))
+	return float(_audio_settings().get("sfx", 0.8))
 
 
 func muted() -> bool:
-	return bool(G.audio.get("mute", false))
+	return bool(_audio_settings().get("mute", false))
+
+
+# Audio 与 G 都是自动加载器，不能在编译期互相引用；运行时再取 G 节点可避免循环依赖。
+func _game_state() -> Node:
+	return get_node_or_null("/root/G")
+
+
+func _audio_settings() -> Dictionary:
+	var game_state := _game_state()
+	if game_state != null and game_state.get("audio") is Dictionary:
+		return game_state.get("audio") as Dictionary
+	return {"bgm": 0.7, "sfx": 0.8, "mute": false}
+
+
+func _set_audio_setting(key: String, value: Variant) -> void:
+	var settings := _audio_settings()
+	settings[key] = value
+	var game_state := _game_state()
+	if game_state != null:
+		game_state.set("audio", settings)
+
+
+func _save_audio_settings() -> void:
+	var game_state := _game_state()
+	if game_state != null:
+		game_state.call("save_game")
 
 
 # ---------- 内部 ----------

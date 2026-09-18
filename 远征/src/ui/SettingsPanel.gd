@@ -113,7 +113,8 @@ func _build() -> void:
 	var help := G.info_button("键位与说明", [
 		"WASD / 方向键 —— 人物移动",
 		"A/D 或 ← → —— 切换卡片；W/S 或 ↑ ↓ —— 切换页签",
-		"Esc —— 关闭当前浮层",
+		"Esc —— 主界面打开设置；浮层内关闭当前浮层",
+		"设置里的「重新选择角色」不会删除其他存档数据",
 		"F10 / ` —— 开发者控制台",
 		"音频素材为 CC0 / 公共领域，放 assets/audio/ 即自动生效。",
 	])
@@ -128,8 +129,8 @@ func _build() -> void:
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			G.go("res://src/ui/Prologue.tscn"))
 	_content.add_child(reread_btn)
-	# 「重新创建角色」从主页顶栏挪到这里（主页顶部要留给头像/名字/货币条）
-	var remake_btn := G.gold_button("重建角色", 128, 40, G.FS_SM)
+	# 「重新选择角色」从主页顶栏挪到这里（主页顶部要留给头像/名字/货币条）
+	var remake_btn := G.gold_button("重新选择角色", 128, 40, G.FS_SM)
 	remake_btn.position = Vector2(140, 386)
 	remake_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
