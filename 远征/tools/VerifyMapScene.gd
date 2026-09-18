@@ -102,6 +102,30 @@ func _run() -> void:
 	map._unhandled_input(esc)
 	_check(map._exit_ui == null, "再按 ESC 应关闭确认浮层")
 
+	# ---- B3. 导航三件套：小地图 / 目标罗盘 / 疾行（轮次 13）----
+	_check(map._minimap != null and map._minimap.size.x > 1.0 and map._minimap.size.y > 1.0,
+		"应有已铺开尺寸的小地图")
+	_check(map._compass != null and map._compass.size.x > 1.0, "应有目标罗盘小签")
+	var nav := map._nav_info()
+	_check(String(nav.get("kind", "")) == "portal", "普通区罗盘应指向传送阵，实为 %s" % str(nav))
+	_check(nav.get("pos", Vector2.ZERO) == map._portal.position, "罗盘目标应取传送阵坐标")
+	_check(String(map._compass._lbl.text).contains("步"),
+		"罗盘应显示到目标的步数，实为「%s」" % String(map._compass._lbl.text))
+	await map.get_tree().physics_frame   # 让罗盘按实际位置刷新一次
+	_check(String(map._compass._lbl.text).contains("传送阵"),
+		"罗盘文案应带目标名，实为「%s」" % String(map._compass._lbl.text))
+
+	# 大地图：点小地图打开（含图例与返回按钮），ESC 也能关掉
+	_check(map._big_map == null, "起始不应有大地图浮层")
+	map._toggle_big_map()
+	_check(map._big_map != null, "点小地图应放大为大地图")
+	var esc2 := InputEventKey.new()
+	esc2.keycode = KEY_ESCAPE
+	esc2.physical_keycode = KEY_ESCAPE
+	esc2.pressed = true
+	map._unhandled_input(esc2)
+	_check(map._big_map == null, "ESC 应关闭大地图浮层")
+
 	# ---- C. 警戒追击→接触开战 ----
 	var m := map._monsters[0]
 	m.position = map._player.position + Vector2(50.0, 30.0)
@@ -258,6 +282,68 @@ func _run() -> void:
 	_check(emap._interactable == null and emap.st.gold >= 80 and emap.st.gold <= 150,
 		"事件应得金币 80~150，实为 %d" % emap.st.gold)
 	emap.queue_free()
+	await get_tree().process_frame
+
+	# ---- J. 导航：疾行提速 + 罗盘自动前往（宝箱区无怪，排除战斗干扰）----
+	var nmap := await _spawn_map("chest", 1, "")
+	_check(nmap._monsters.is_empty(), "宝箱区应无怪，便于单测导航")
+	var nnav := nmap._nav_info()
+	_check(String(nnav.get("kind", "")) == "chest", "宝箱区罗盘应指向宝箱，实为 %s" % str(nnav))
+
+	# J1 疾行：同样帧数内位移应显著变大
+	var walk_base: float = 0.0
+	var sprint_base: float = 0.0
+	for pass_idx in 2:
+		var y_start: float = nmap._player.position.y
+		if pass_idx == 1:
+			nmap._toggle_sprint()
+		Input.action_press("move_down")
+		for i in 10:
+			await nmap.get_tree().physics_frame
+		Input.action_release("move_down")
+		if pass_idx == 0:
+			walk_base = absf(nmap._player.position.y - y_start)
+		else:
+			sprint_base = absf(nmap._player.position.y - y_start)
+	if nmap._sprint:
+		nmap._toggle_sprint()
+	_check(sprint_base > walk_base * 1.3,
+		"疾行位移应明显大于步行，实为 疾行%.1f / 步行%.1f" % [sprint_base, walk_base])
+
+	# J2 自动前往：点罗盘应自己缩短与目标的距离
+	nmap._player.position = Vector2(nmap._interactable.position.x,
+		nmap._interactable.position.y + 420.0)
+	var d0: float = nmap._player.position.distance_to(nnav.get("pos", Vector2.ZERO) as Vector2)
+	nmap._on_compass_tapped()
+	_check(nmap._auto_walk, "点罗盘应开启自动前往")
+	for i in 340:
+		await nmap.get_tree().physics_frame
+		if nmap._interactable == null:   # 已开箱则提前收尾
+			break
+	var d1: float = nmap._player.position.distance_to(nnav.get("pos", Vector2.ZERO) as Vector2)
+	_check(d1 < d0 - 40.0, "自动前往应明显靠近目标 %.1f → %.1f" % [d0, d1])
+	_check(nmap._interactable == null, "自动走到宝箱处应触发开箱（%.1f 步外）" % (d1 / 48.0))
+
+	# J3 手动输入随时接手 / 再点罗盘可停下
+	var jmap := await _spawn_map("event", 1, "")
+	jmap._on_compass_tapped()
+	_check(jmap._auto_walk, "奇遇区应能开启自动前往")
+	jmap._on_compass_tapped()
+	_check(not jmap._auto_walk, "再点罗盘应停止自动前往")
+	jmap._on_compass_tapped()
+	Input.action_press("move_left")
+	for i in 3:
+		await jmap.get_tree().physics_frame
+	Input.action_release("move_left")
+	_check(not jmap._auto_walk, "手动键盘输入应立刻取消自动前往")
+	if jmap._auto_walk:   # 再验摇杆这条取消路径（手游主路径）
+		jmap._joy.vector = Vector2(0.0, -1.0)
+		await jmap.get_tree().physics_frame
+		_check(not jmap._auto_walk, "手动摇杆输入应立刻取消自动前往")
+		jmap._joy.vector = Vector2.ZERO
+	jmap.queue_free()
+	await get_tree().process_frame
+	nmap.queue_free()
 	await get_tree().process_frame
 
 	# ---- I. 撤离确认里点「撤 离」→ 真正离场 ----
