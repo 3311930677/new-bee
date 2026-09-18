@@ -108,6 +108,11 @@ static func quests_config() -> Dictionary:
 	return v if v is Dictionary else {}
 
 
+static func drops_config() -> Dictionary:
+	var v: Variant = _load("res://data/drops.json")
+	return v if v is Dictionary else {}
+
+
 static func talents_config() -> Dictionary:
 	var v: Variant = _load("res://data/talents.json")
 	return v if v is Dictionary else {}
