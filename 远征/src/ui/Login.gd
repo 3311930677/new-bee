@@ -136,9 +136,9 @@ func _do_login(guest: bool) -> void:
 		var next := "res://src/ui/GameHome.tscn"
 		if not G.lore_seen():
 			next = "res://src/ui/Prologue.tscn"
-		get_tree().change_scene_to_file(next)
+		G.go(next)
 	else:
-		get_tree().change_scene_to_file("res://src/ui/CreateRole.tscn")
+		G.go("res://src/ui/CreateRole.tscn")
 
 
 func _toast_msg(msg: String) -> void:
@@ -158,4 +158,4 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		_do_login(false)
 	elif event.is_action_pressed("ui_cancel"):
-		get_tree().change_scene_to_file("res://src/ui/Title.tscn")
+		G.go("res://src/ui/Title.tscn")

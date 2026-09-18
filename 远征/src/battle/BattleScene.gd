@@ -823,6 +823,7 @@ func confirm_result() -> void:
 	var hp_left := role.hp if role != null else 0
 	battle_finished.emit(sim.result, hp_left)
 	if battle_finished.get_connections().is_empty():
+		# 无人接管的兜底路径（主要给 headless 冒烟）：不走转场，立即回主城
 		get_tree().change_scene_to_file("res://src/ui/GameHome.tscn")
 
 

@@ -938,7 +938,7 @@ func _open_deploy() -> void:
 	_overlay = p
 	p.confirmed.connect(func(cfg: Dictionary):
 		RouteScene.pending_run = cfg
-		get_tree().change_scene_to_file("res://src/run/RouteScene.tscn"))
+		G.go("res://src/run/RouteScene.tscn"))
 	p.canceled.connect(_close_overlay)
 	_hud.visible = false
 	_overlay_layer.add_child(p)
@@ -966,7 +966,7 @@ func _close_overlay() -> void:
 
 # ================= 退出 =================
 func _go_home() -> void:
-	get_tree().change_scene_to_file("res://src/ui/GameHome.tscn")
+	G.go("res://src/ui/GameHome.tscn")
 
 
 func _unhandled_input(event: InputEvent) -> void:

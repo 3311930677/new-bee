@@ -96,11 +96,11 @@ func _arrow_btn(tex_name: String, pos: Vector2) -> Control:
 
 
 func _layout_dots() -> void:
-	var y := _view_h - 14.0
+	var y := _view_h - 17.0
 	if _footer > 0.0:
-		y = _view_h + (_footer - 10.0) * 0.5
+		y = _view_h + (_footer - 14.0) * 0.5
 	_dots.position = Vector2(0, y)
-	_dots.custom_minimum_size = Vector2(_view_w, 10)
+	_dots.custom_minimum_size = Vector2(_view_w, 14)
 
 
 ## 装页：page 是一屏一项，页宽等于本容器宽；page_size 省略时按自身最小高度
@@ -208,11 +208,23 @@ func _rebuild_dots() -> void:
 	for c in _dots.get_children():
 		c.queue_free()
 	for i in page_count:
+		# 圆点可点跳页（手游习惯）：外面包 14×14 命中区，点按去 go(i)
+		var hit := Control.new()
+		hit.custom_minimum_size = Vector2(14, 14)
+		hit.mouse_filter = Control.MOUSE_FILTER_STOP
+		hit.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		var idx := i
+		hit.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				go(idx))
 		var d := ColorRect.new()
 		d.color = DOT_ON if i == current else DOT_OFF
 		d.custom_minimum_size = Vector2(7, 7)
+		d.size = Vector2(7, 7)
+		d.position = Vector2(3.5, 3.5)
 		d.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		_dots.add_child(d)
+		hit.add_child(d)
+		_dots.add_child(hit)
 	_dots.visible = page_count > 1
 	_refresh_dots()
 
@@ -220,8 +232,10 @@ func _rebuild_dots() -> void:
 func _refresh_dots() -> void:
 	var i := 0
 	for c in _dots.get_children():
-		if c is ColorRect:
-			(c as ColorRect).color = DOT_ON if i == current else DOT_OFF
+		if c.get_child_count() > 0:
+			var dot := c.get_child(0) as ColorRect
+			if dot != null:
+				dot.color = DOT_ON if i == current else DOT_OFF
 		i += 1
 
 

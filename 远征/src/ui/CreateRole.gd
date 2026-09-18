@@ -315,7 +315,7 @@ func _build_buttons() -> void:
 	cancel.position = Vector2(252, 744)
 	cancel.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed:
-			get_tree().change_scene_to_file("res://src/ui/Login.tscn")
+			G.go("res://src/ui/Login.tscn")
 	)
 	add_child(cancel)
 
@@ -337,9 +337,9 @@ func _confirm() -> void:
 	G.player_name = nm
 	# 捏完人先看序章：交代"你在哪、为什么出征、第一站去哪"，再进主城
 	if G.lore_seen():
-		get_tree().change_scene_to_file("res://src/ui/GameHome.tscn")
+		G.go("res://src/ui/GameHome.tscn")
 	else:
-		get_tree().change_scene_to_file("res://src/ui/Prologue.tscn")
+		G.go("res://src/ui/Prologue.tscn")
 
 
 func _toast_msg(msg: String) -> void:
@@ -357,7 +357,7 @@ func _toast_msg(msg: String) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		get_tree().change_scene_to_file("res://src/ui/Login.tscn")
+		G.go("res://src/ui/Login.tscn")
 	elif event.is_action_pressed("ui_left"):
 		_switch_role(_role_idx - 1, true)
 	elif event.is_action_pressed("ui_right"):
