@@ -55,6 +55,17 @@ var wallet := {"gold": 0, "expedition": 0, "soul": 0, "honor": 0}
 # ---------- 道具库存（最小实现：id -> 数量；券类先行，后续道具沿用） ----------
 var items := {"ticket_ten": 0, "ticket_sweep": 1}
 
+## 道具显示名（委托/兑换/提示共用；没有登记的一律回落到 id，不静默编名字）
+const ITEM_NAMES := {
+	"ticket_ten": "十连券", "ticket_sweep": "扫荡券",
+	"enhance_stone": "强化石", "refine_stone": "精炼石", "lock_rune": "锁定符",
+	"pet_food": "宠物粮", "break_crystal": "突破晶", "aptitude_fruit": "资质果",
+}
+
+
+func item_name(id: String) -> String:
+	return String(ITEM_NAMES.get(id, id))
+
 
 func item_count(id: String) -> int:
 	return int(items.get(id, 0))
@@ -95,6 +106,15 @@ var city := {
 	"acts": {},                 # 活动 id -> 上次领取的 unix 秒
 	"day": "",                  # 上次签到日期（YYYY-MM-DD）
 	"streak": 0,                # 连续签到天数
+}
+
+# ---------- 主城委托（日刷新：接取 → 出征办事 → 回城领赏）----------
+# 今日牌只在跨日时重刷；跨日未交付的委托作废（今日事今日毕，不堆任务列表）
+var quest := {
+	"day": "",        # 上次刷新日期
+	"offer": [],      # 今日可接的委托 id
+	"active": {},     # 已接委托 id -> 进度
+	"claimed": [],    # 今日已交付的 id
 }
 
 # ---------- GM 开发者控制台 ----------
@@ -236,6 +256,16 @@ func _load_save() -> void:
 		city["acts"] = ac if ac is Dictionary else {}
 		city["day"] = String(cd.get("day", ""))
 		city["streak"] = maxi(0, int(cd.get("streak", 0)))
+	var q: Variant = data.get("quest", {})
+	if q is Dictionary:
+		var qd := q as Dictionary
+		quest["day"] = String(qd.get("day", ""))
+		var of: Variant = qd.get("offer", [])
+		quest["offer"] = of if of is Array else []
+		var aq: Variant = qd.get("active", {})
+		quest["active"] = aq if aq is Dictionary else {}
+		var cl: Variant = qd.get("claimed", [])
+		quest["claimed"] = cl if cl is Array else []
 
 
 ## 存档：钱包四币 + 养成进度 + 角色档案（远征结算入账 / 主城关键节点时写）
@@ -250,6 +280,7 @@ func save_game() -> void:
 		},
 		"prog": prog,
 		"city": city,
+		"quest": quest,
 		"items": items,
 		"audio": audio,
 		"account": account,
@@ -375,6 +406,7 @@ func on_world_cleared(theme_id: String) -> String:
 		prog["worlds_unlocked"] = idx + 2
 		opened = world_name(String(theme_order()[idx + 1]))
 	unlock_pets_for_world(theme_id)
+	quest_report("clear", theme_id)   # 「讨伐某秘境首领」类委托的钩子：通关即上报
 	save_game()
 	return opened
 
@@ -1447,6 +1479,217 @@ func growth_bonuses(role_id := "") -> Dictionary:
 			if out.has(k):
 				out[k] = float(out[k]) + float(bonus[k])
 	return out
+
+
+# ================= 主城委托（接取 → 出征办事 → 回城领赏）=================
+# 表 data/quests.json，三种 kind：
+#   slay    在指定秘境击杀 n 只 —— 战斗胜利回报（MapScene._on_battle_end）
+#   clear   讨伐指定秘境首领   —— 与"通关世界"同一个钩子（on_world_cleared 内部上报）
+#   deliver 上交 n 个道具       —— 交付时扣物，进度不看击杀
+
+func quests_cfg() -> Dictionary:
+	return TableCache.quests_config()
+
+
+func quest_defs() -> Array:
+	var q: Variant = quests_cfg().get("quests", [])
+	return q if q is Array else []
+
+
+func quest_def(qid: String) -> Dictionary:
+	for q in quest_defs():
+		if String((q as Dictionary).get("id", "")) == qid:
+			return q
+	return {}
+
+
+func quest_daily_slots() -> int:
+	return maxi(1, int(quests_cfg().get("daily_slots", 2)))
+
+
+## 今日可接的委托（跨日才重刷；同一天反复调用结果稳定）
+func quest_offer() -> Array:
+	if String(quest.get("day", "")) != today_key():
+		_refresh_quests()
+	var o: Variant = quest.get("offer", [])
+	return o if o is Array else []
+
+
+## 刷今日牌：从全部委托里按「日期 + 等级」确定性抽 daily_slots 条（改档不会随机跳）
+## 跨日未交付的委托作废——今日事今日毕，不给玩家堆一墙任务
+func _refresh_quests() -> void:
+	var pool: Array = []
+	for q in quest_defs():
+		pool.append(String((q as Dictionary).get("id", "")))
+	if pool.is_empty():
+		quest["day"] = today_key()
+		quest["offer"] = []
+		return
+	var rng := RandomNumberGenerator.new()
+	rng.seed = int((today_key() + "|" + str(int(prog.get("level", 1)))).hash())
+	var pick: Array = []
+	var want := mini(quest_daily_slots(), pool.size())
+	var guard := 0
+	while pick.size() < want and guard < 256:
+		guard += 1
+		var id := String(pool[rng.randi_range(0, pool.size() - 1)])
+		if not pick.has(id):
+			pick.append(id)
+	quest["day"] = today_key()
+	quest["offer"] = pick
+	quest["active"] = {}
+	quest["claimed"] = []
+	save_game()
+
+
+func quest_active(qid: String) -> bool:
+	return (quest.get("active", {}) as Dictionary).has(qid)
+
+
+func quest_progress(qid: String) -> int:
+	return int((quest.get("active", {}) as Dictionary).get(qid, 0))
+
+
+func quest_need(qid: String) -> int:
+	return maxi(1, int(quest_def(qid).get("n", 1)))
+
+
+func quest_claimed(qid: String) -> bool:
+	return (quest.get("claimed", []) as Array).has(qid)
+
+
+## 交付条件是否已满足（deliver 看道具，其余看进度）
+func quest_completed(qid: String) -> bool:
+	if not quest_active(qid):
+		return false
+	var d := quest_def(qid)
+	if String(d.get("kind", "")) == "deliver":
+		return item_count(String(d.get("item", ""))) >= quest_need(qid)
+	return quest_progress(qid) >= quest_need(qid)
+
+
+## 接取：必须出现在今日牌上、且没交过
+func quest_accept(qid: String) -> bool:
+	if quest_def(qid).is_empty() or quest_claimed(qid):
+		return false
+	if not quest_offer().has(qid):
+		return false
+	var act: Dictionary = quest.get("active", {})
+	if act.has(qid):
+		return false
+	act[qid] = 0
+	quest["active"] = act
+	save_game()
+	return true
+
+
+## 进度上报：推进所有「进行中且条件匹配」的委托；返回本次刚好做满的委托标题
+## （slay 由战斗胜利调用，clear 由 on_world_cleared 调用）
+func quest_report(kind: String, target: String, n := 1) -> Array:
+	if kind == "deliver":
+		return []   # 上交类不看击杀，只在交付时结算
+	var act: Dictionary = quest.get("active", {})
+	var done: Array = []
+	var changed := false
+	for qid in act.keys():
+		var d := quest_def(String(qid))
+		if d.is_empty() or String(d.get("kind", "")) != kind:
+			continue
+		if String(d.get("theme", "")) != target:
+			continue
+		var need := maxi(1, int(d.get("n", 1)))
+		var cur := int(act[qid])
+		if cur >= need:
+			continue
+		act[qid] = mini(need, cur + n)
+		changed = true
+		if int(act[qid]) >= need:
+			done.append(String(d.get("title", qid)))
+	if changed:
+		quest["active"] = act
+		save_game()
+	return done
+
+
+## 交付：校验 → 扣物/发奖 → 记入今日已交付。返回 {ok, title, lines, npc, err}
+func quest_claim(qid: String) -> Dictionary:
+	var d := quest_def(qid)
+	if d.is_empty():
+		return {"ok": false, "err": "没有这条委托"}
+	if quest_claimed(qid):
+		return {"ok": false, "err": "今天已经交过了"}
+	if not quest_active(qid):
+		return {"ok": false, "err": "还没接这条委托"}
+	if not quest_completed(qid):
+		# 上交类要直接说清缺什么，别让玩家对着"还没办完"猜
+		if String(d.get("kind", "")) == "deliver":
+			var lack := String(d.get("item", ""))
+			return {"ok": false, "err": "%s 不够（要 %d 个，现有 %d）"
+				% [item_name(lack), quest_need(qid), item_count(lack)]}
+		return {"ok": false, "err": "事情还没办完"}
+	if String(d.get("kind", "")) == "deliver":
+		var iid := String(d.get("item", ""))
+		if not consume_item(iid, quest_need(qid)):
+			return {"ok": false, "err": "%s 不够" % item_name(iid)}
+	var reward: Dictionary = (d.get("reward", {}) as Dictionary).duplicate()
+	apply_reward(reward)
+	var claimed: Array = quest.get("claimed", [])
+	claimed.append(qid)
+	quest["claimed"] = claimed
+	var act: Dictionary = quest.get("active", {})
+	act.erase(qid)
+	quest["active"] = act
+	save_game()
+	return {"ok": true, "title": String(d.get("title", "")),
+		"npc": String(d.get("npc", "")), "lines": reward_lines(reward)}
+
+
+## 委托状态文案（委托板按钮旁用）
+func quest_state(qid: String) -> String:
+	if quest_claimed(qid):
+		return "今日已交付"
+	if not quest_active(qid):
+		return "未接取"
+	if quest_completed(qid):
+		return "可交付"
+	var d := quest_def(qid)
+	if String(d.get("kind", "")) == "deliver":
+		var iid := String(d.get("item", ""))
+		return "备齐 %d/%d" % [item_count(iid), quest_need(qid)]
+	return "进行中 %d/%d" % [quest_progress(qid), quest_need(qid)]
+
+
+## 主城 HUD 一行：今日委托进度
+func quest_today_text() -> String:
+	var offer := quest_offer()
+	if offer.is_empty():
+		return "今日无委托"
+	var claimed_n := (quest.get("claimed", []) as Array).size()
+	var ready := 0
+	for qid in offer:
+		var s := String(qid)
+		if quest_active(s) and quest_completed(s) and not quest_claimed(s):
+			ready += 1
+	if ready > 0:
+		return "委托 · %d 件可交付" % ready
+	return "委托 · %d/%d 已交付" % [claimed_n, offer.size()]
+
+
+## NPC 的委托台词：身上挂着今日委托的发布者优先说委托（未接/进行中/可交付各一种口吻）
+func npc_quest_line(npc_id: String) -> String:
+	for qid in quest_offer():
+		var s := String(qid)
+		var d := quest_def(s)
+		if String(d.get("npc", "")) != npc_id:
+			continue
+		if quest_claimed(s):
+			return "「今日的事，谢了。明天再看有什么活儿。」"
+		if quest_completed(s):
+			return "「看你这身风尘——事情办成了吧？来，把话说给我听。」"
+		if quest_active(s):
+			return "「%s 的事，不急，但别拖到明日。」" % String(d.get("title", ""))
+		return "「有件事正想托人。你来得正好。」"
+	return ""
 
 
 # ================= 世界观与叙事（世界志，表驱动 data/lore.json）=================

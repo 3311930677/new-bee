@@ -13,6 +13,8 @@ const NPC_R := 52.0        # 人物交互半径
 const BUILD_R := 26.0      # 建筑轮廓外扩的交互边距
 const REARM_R := 90.0      # 走出这么远才允许再次触发
 
+const QuestPanelScript := preload("res://src/ui/QuestPanel.gd")   # 委托板（浮层）
+
 const ROLE_FRAMES := {  # 与 MapScene 同源的四方向行走帧
 	"zs": "res://image/role/zs/pojun_walk_frames.tres",
 	"ck": "res://image/role/ck/chuanyang_walk_frames.tres",
@@ -35,6 +37,8 @@ var _hud := CanvasLayer.new()
 var _overlay_layer := CanvasLayer.new()  # 复用面板（世界/图鉴/出征）必须压过 HUD
 var _joy: _Joystick
 var _stat_lbl: Label = null
+var _quest_chip: PanelContainer = null
+var _quest_lbl: Label = null
 var _toast_lbl: Label = null
 var _panel: Control = null      # 城内浮层（对话/建筑/布告板/访客簿）
 var _overlay: Control = null    # 复用面板（世界/图鉴/出征）
@@ -279,6 +283,20 @@ func _build_hud() -> void:
 	_stat_lbl = G.gold_label("", G.FS_XS, false, Color("5a3a1e"), false)
 	_stat_lbl.set_anchors_preset(Control.PRESET_FULL_RECT)
 	chip.add_child(_stat_lbl)
+
+	# 左上第二行：今日委托小签（点开委托板）。委托是"每天回城有事做"的抓手，
+	# 所以要常驻可见，而不是藏进建筑里等玩家去翻。
+	_quest_chip = G.parchment_box(132, 34, 6.0)
+	_quest_chip.position = Vector2(14, 60)
+	_quest_chip.mouse_filter = Control.MOUSE_FILTER_STOP
+	_quest_chip.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	_quest_chip.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_open_quests())
+	_hud.add_child(_quest_chip)
+	_quest_lbl = G.gold_label("", G.FS_XS, false, Color("5a3a1e"), false)
+	_quest_lbl.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_quest_chip.add_child(_quest_lbl)
 	_refresh_stat()
 
 	# 右上：回营（返回养成主界面）
@@ -349,6 +367,8 @@ func _refresh_stat() -> void:
 	if _stat_lbl != null:
 		_stat_lbl.text = "Lv.%d · 金 %d" % [int(G.prog.get("level", 1)),
 			int(G.wallet.get("gold", 0))]
+	if _quest_lbl != null:
+		_quest_lbl.text = G.quest_today_text()
 
 
 func _toast(msg: String) -> void:
@@ -868,7 +888,11 @@ func _show_dialog_line() -> void:
 		if not lines.is_empty():
 			txt = String(lines[int(_dlg.get("turn", 0)) % lines.size()])
 	else:
-		txt = G.npc_line(String(_dlg.get("id", "")), int(_dlg.get("turn", 0)))
+		# 身上挂着今日委托的发布者，第一句先说委托（接了/办完/交过口吻不同）
+		if int(_dlg.get("turn", 0)) == 0:
+			txt = G.npc_quest_line(String(_dlg.get("id", "")))
+		if txt == "":
+			txt = G.npc_line(String(_dlg.get("id", "")), int(_dlg.get("turn", 0)))
 	line.text = txt
 	var id := String(_dlg.get("id", ""))
 	_talk_turns[id] = int(_dlg.get("turn", 0)) + 1
@@ -915,11 +939,23 @@ func _open_deploy() -> void:
 	_overlay_layer.add_child(p)
 
 
+## 委托板（与 世界/图鉴/出征 同为全屏浮层）
+func _open_quests() -> void:
+	if _overlay != null:
+		return
+	var p := QuestPanelScript.new()
+	_overlay = p
+	p.closed.connect(_close_overlay)
+	_hud.visible = false   # 全屏面板期间藏起城内 HUD，免得双层标题/摇杆穿帮
+	_overlay_layer.add_child(p)
+
+
 func _close_overlay() -> void:
 	if _overlay != null:
 		_overlay.queue_free()
 		_overlay = null
-		_hud.visible = true
+	_hud.visible = true
+	_refresh_stat()   # 委托进度小签要跟着刷新（刚交付完）
 
 
 # ================= 退出 =================

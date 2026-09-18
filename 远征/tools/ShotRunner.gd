@@ -212,6 +212,15 @@ func _setup() -> void:
 			var c: Node = load("res://src/city/CityScene.tscn").instantiate()
 			add_child(c)
 			c._player.position = Vector2(576, 400)  # 镜头拉到议事厅门前看建筑群
+		"quests":
+			# 演示档：今日牌固定成"一条可交付 + 一条进行中"，截图才看得出两种状态
+			_demo_prog()
+			G.quest = {"day": G.today_key(), "offer": ["q_slay_forest", "q_deliver_food"],
+				"active": {"q_slay_forest": 3, "q_deliver_food": 0}, "claimed": []}
+			G.items["pet_food"] = 0
+			var cq: Node = load("res://src/city/CityScene.tscn").instantiate()
+			add_child(cq)
+			cq.call("_open_quests")
 		"city_deploy":
 			_demo_prog()
 			var cc: Node = load("res://src/city/CityScene.tscn").instantiate()

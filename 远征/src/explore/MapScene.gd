@@ -814,6 +814,10 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 		return
 	st.add_reward(monster_tier)  # 战利按接触怪 tier 累加（nodes.json rewards）
 	st.hp = hp_left
+	# 主城委托上报：这一场打掉的怪算 1 只（"在某某秘境击杀 N 只"类委托靠它推进）
+	var q_done := G.quest_report("slay", st.theme, 1)
+	for t in q_done:
+		_toast("委托办妥：%s —— 回城交付" % String(t))
 	# 接触的怪离场
 	if _contact_mon != null:
 		_monsters.erase(_contact_mon)
