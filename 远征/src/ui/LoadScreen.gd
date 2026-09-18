@@ -206,8 +206,8 @@ func _process(_d: float) -> void:
 			return
 		var elapsed := float(Time.get_ticks_msec() - _t0) / 1000.0
 		if elapsed >= MIN_SECONDS:
-			get_tree().change_scene_to_file(TITLE_SCENE)
+			G.go(TITLE_SCENE)
 		else:
 			var tw := create_tween()
 			tw.tween_interval(MIN_SECONDS - elapsed)
-			tw.tween_callback(func(): get_tree().change_scene_to_file(TITLE_SCENE))
+			tw.tween_callback(func(): G.go(TITLE_SCENE))

@@ -2242,6 +2242,65 @@ func random_name() -> String:
 	return s + g
 
 
+# ================= 场景转场（全项目切场景统一走 G.go） =================
+# 目的：消灭"硬切"（画面瞬变）的廉价感——统一为「遮罩淡入 → 换场景 → 遮罩淡出」。
+# 约束：转场期间 ui_blocked=true 且遮罩吃输入（连点两次不会切两次场景）；
+#       tween 挂在 G（autoload）上，换场景不会把它一起释放。
+const TRANSIT_FADE := 0.16   # 单侧淡入/淡出秒数
+const TRANSIT_HOLD := 0.06   # 全黑停留（盖住场景重建的那一帧）
+
+var _veil_layer: CanvasLayer = null
+var _veil: ColorRect = null
+var _transit_busy := false
+
+
+## 前往某场景（所有 change_scene_to_file 都应改从 G.go 走；重复调用只认第一次）
+func go(scene_path: String) -> void:
+	if not can_go(scene_path):
+		push_error("转场被拒（忙碌中或目标不存在）：" + scene_path)
+		return
+	_ensure_veil()
+	_transit_busy = true
+	ui_blocked = true
+	_veil.mouse_filter = Control.MOUSE_FILTER_STOP
+	var tw := create_tween()
+	tw.tween_property(_veil, "modulate:a", 1.0, TRANSIT_FADE)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	tw.tween_callback(func(): get_tree().change_scene_to_file(scene_path))
+	tw.tween_interval(TRANSIT_HOLD)
+	tw.tween_property(_veil, "modulate:a", 0.0, TRANSIT_FADE)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tw.tween_callback(func():
+		_transit_busy = false
+		ui_blocked = false
+		if _veil != null:
+			_veil.mouse_filter = Control.MOUSE_FILTER_IGNORE)
+
+
+## 预检：目标存在且当前不在转场中（按钮防抖与回归都用它）
+func can_go(scene_path: String) -> bool:
+	return not _transit_busy and ResourceLoader.exists(scene_path)
+
+
+func transit_busy() -> bool:
+	return _transit_busy
+
+
+## 遮罩：全屏深棕黑（不是纯黑，与羊皮纸调性一致）；懒创建、平时不吃输入
+func _ensure_veil() -> void:
+	if _veil != null and is_instance_valid(_veil):
+		return
+	_veil_layer = CanvasLayer.new()
+	_veil_layer.layer = 128   # 压过一切浮层（GM 控制台 100）
+	add_child(_veil_layer)
+	_veil = ColorRect.new()
+	_veil.color = Color(0.045, 0.032, 0.020)
+	_veil.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_veil.modulate.a = 0.0
+	_veil.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_veil_layer.add_child(_veil)
+
+
 # ================= ⓘ 详情小按钮 + 弹层 =================
 # 长文案收纳处：规则/概率/说明不再平铺在面板上（一屏堆字显乱），
 # 缩成小圆圈按钮，点开出羊皮纸弹层细看。各面板统一用这两个工厂。

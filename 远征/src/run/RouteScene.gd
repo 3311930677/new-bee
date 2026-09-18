@@ -152,7 +152,7 @@ func _build_top(tint: Color) -> void:
 	quit.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			if _map == null and _end_ui == null:
-				get_tree().change_scene_to_file("res://src/ui/GameHome.tscn"))
+				G.go("res://src/ui/GameHome.tscn"))
 	add_child(quit)
 
 
@@ -387,7 +387,7 @@ func _show_end(win: bool) -> void:
 	var btn := G.gold_button("回 到 主 城", 200, 48)
 	btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			get_tree().change_scene_to_file("res://src/ui/GameHome.tscn"))
+			G.go("res://src/ui/GameHome.tscn"))
 	box.add_child(btn)
 	_refresh()
 
@@ -408,7 +408,7 @@ func _toast_msg(msg: String) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") and _map == null and _end_ui == null:
-		get_tree().change_scene_to_file("res://src/ui/GameHome.tscn")
+		G.go("res://src/ui/GameHome.tscn")
 
 
 # ================= 局部绘制 =================

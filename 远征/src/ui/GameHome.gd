@@ -351,7 +351,7 @@ func _round_entry(label: String, glyph: String) -> Control:
 
 func _dispatch_entry(label: String) -> void:
 	match label:
-		"主城": get_tree().change_scene_to_file("res://src/city/CityScene.tscn")
+		"主城": G.go("res://src/city/CityScene.tscn")
 		"世界": _open_worlds(_click_ev())
 		"图鉴": _open_codex(_click_ev())
 		"养成": _open_growth()
@@ -371,7 +371,7 @@ func _click_ev() -> InputEventMouseButton:
 # ---------- 主城入口（可行走据点：建筑 / NPC / 活动 / 访客） ----------
 func _open_city(e: InputEvent) -> void:
 	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-		get_tree().change_scene_to_file("res://src/city/CityScene.tscn")
+		G.go("res://src/city/CityScene.tscn")
 
 
 # ---------- 远征入口（阶段 2.7：出征筹备 DEPLOY——选秘境→选人物→选宠物） ----------
@@ -382,7 +382,7 @@ func _on_expedition(e: InputEvent) -> void:
 		_deploy = DeployPanel.new()
 		_deploy.confirmed.connect(func(cfg: Dictionary):
 			RouteScene.pending_run = cfg
-			get_tree().change_scene_to_file("res://src/run/RouteScene.tscn"))
+			G.go("res://src/run/RouteScene.tscn"))
 		_deploy.canceled.connect(func():
 			_deploy.queue_free()
 			_deploy = null)
@@ -476,7 +476,7 @@ func _open_settings(e: InputEvent) -> void:
 # ---------- 交互 ----------
 func _on_back(e: InputEvent) -> void:
 	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-		get_tree().change_scene_to_file("res://src/ui/CreateRole.tscn")
+		G.go("res://src/ui/CreateRole.tscn")
 
 
 func _toast_msg(msg: String) -> void:
@@ -507,7 +507,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		_deploy.queue_free()
 		_deploy = null
 		return
-	get_tree().change_scene_to_file("res://src/ui/CreateRole.tscn")
+	G.go("res://src/ui/CreateRole.tscn")
 
 
 # ---------- 自绘：金色圆台 / 脚下光圈 ----------

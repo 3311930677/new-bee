@@ -132,7 +132,7 @@ func _update_focus(idx: int, sfx: bool) -> void:
 func _activate(idx: int) -> void:
 	match idx:
 		0:  # 开始游戏
-			get_tree().change_scene_to_file("res://src/ui/Login.tscn")
+			G.go("res://src/ui/Login.tscn")
 		1:  # 游戏介绍
 			_show_intro()
 		2:  # 游戏设置（占位提示）

@@ -120,35 +120,42 @@ func _build() -> void:
 	help.position = Vector2(CONTENT_W - 24.0, 0)
 	_content.add_child(help)
 
-	# ---- 危险区：回标题 / 重置存档（二次确认） ----
+	# ---- 剧情与危险区（两行四钮：重看序章 / 重建角色 / 回标题 // 重置存档） ----
+	# 「重看序章」：剧情是"可回访"的内容，老玩家想重温不必开新档
+	var reread_btn := G.gold_button("重看序章", 128, 40, G.FS_SM)
+	reread_btn.position = Vector2(0, 386)
+	reread_btn.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			G.go("res://src/ui/Prologue.tscn"))
+	_content.add_child(reread_btn)
 	# 「重新创建角色」从主页顶栏挪到这里（主页顶部要留给头像/名字/货币条）
 	var remake_btn := G.gold_button("重建角色", 128, 40, G.FS_SM)
-	remake_btn.position = Vector2(0, 394)
+	remake_btn.position = Vector2(140, 386)
 	remake_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			get_tree().change_scene_to_file("res://src/ui/CreateRole.tscn"))
+			G.go("res://src/ui/CreateRole.tscn"))
 	_content.add_child(remake_btn)
 	var title_btn := G.gold_button("回标题", 128, 40, G.FS_SM)
-	title_btn.position = Vector2(140, 394)
+	title_btn.position = Vector2(280, 386)
 	title_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_on_title())
 	_content.add_child(title_btn)
 	_reset_btn = G.gold_button("重置存档", 128, 40, G.FS_SM)
-	_reset_btn.position = Vector2(280, 394)
+	_reset_btn.position = Vector2(0, 428)
 	_reset_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_on_reset_click())
 	_content.add_child(_reset_btn)
 
 	_reset_hint = G.gold_label("再点一次执行重置 · 其他操作取消", G.FS_XS, false, Color("a04a3a"), false)
-	_reset_hint.position = Vector2(0, 442)
-	_reset_hint.custom_minimum_size = Vector2(CONTENT_W, 0)
+	_reset_hint.position = Vector2(140, 436)
+	_reset_hint.custom_minimum_size = Vector2(268, 0)
 	_reset_hint.visible = false
 	_content.add_child(_reset_hint)
 
 	var back := G.gold_button("返 回", 120, 38)
-	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 462)
+	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 470)
 	back.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_on_back())
@@ -343,7 +350,7 @@ func _on_reset_click() -> void:
 		_reset_hint.visible = true
 		return
 	execute_reset()
-	get_tree().change_scene_to_file(TITLE_PATH)
+	G.go(TITLE_PATH)
 
 
 func _disarm_reset() -> void:
@@ -364,7 +371,7 @@ func _set_reset_btn(text: String, color: Color) -> void:
 
 
 func _on_title() -> void:
-	get_tree().change_scene_to_file(TITLE_PATH)
+	G.go(TITLE_PATH)
 
 
 func _on_back() -> void:

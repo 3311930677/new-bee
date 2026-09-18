@@ -223,7 +223,7 @@ func _finish() -> void:
 	G.mark_lore_seen()
 	if on_finish_scene.is_empty():
 		return
-	get_tree().change_scene_to_file(on_finish_scene)
+	G.go(on_finish_scene)
 
 
 func _unhandled_input(event: InputEvent) -> void:

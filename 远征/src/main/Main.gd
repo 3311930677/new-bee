@@ -15,20 +15,20 @@ func _ready() -> void:
 
 
 func go_load() -> void:
-		get_tree().change_scene_to_file(LOAD_SCENE)
+	G.go(LOAD_SCENE)
 
 
 func go_title() -> void:
-		get_tree().change_scene_to_file(TITLE_SCENE)
+	G.go(TITLE_SCENE)
 
 
 func go_login() -> void:
-		get_tree().change_scene_to_file(LOGIN_SCENE)
+	G.go(LOGIN_SCENE)
 
 
 func go_create_role() -> void:
-		get_tree().change_scene_to_file(CREATE_ROLE_SCENE)
+	G.go(CREATE_ROLE_SCENE)
 
 
 func go_game_home() -> void:
-		get_tree().change_scene_to_file(GAME_HOME_SCENE)
+	G.go(GAME_HOME_SCENE)
