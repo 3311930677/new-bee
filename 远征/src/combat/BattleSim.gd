@@ -45,9 +45,13 @@ func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 	if String(ally_cfg.get("bench_pet", "")) != "":
 		pet_bench_id = String(ally_cfg.bench_pet)
 	potions_left = int(ally_cfg.get("potions", 0))
-	_build_enemies(String(enemy_cfg.get("theme", "forest")),
-		String(enemy_cfg.get("node_type", "normal")),
-		String(enemy_cfg.get("lead_mon", "")))
+	var cm: Variant = enemy_cfg.get("custom_mon", null)
+	if cm is Dictionary and not (cm as Dictionary).is_empty():
+		_build_custom_mon(cm as Dictionary)   # 演武场等：不走怪物池，直接给对手数据
+	else:
+		_build_enemies(String(enemy_cfg.get("theme", "forest")),
+			String(enemy_cfg.get("node_type", "normal")),
+			String(enemy_cfg.get("lead_mon", "")))
 	# 开场词条钩子
 	for u in units:
 		if u.traits != null:
@@ -183,6 +187,25 @@ func _build_enemies(theme: String, node_type: String, lead_mon := "") -> void:
 				else:
 					_spawn_monster(mon_id, Combatant.ROW_BACK, int(back_cols[bi % back_cols.size()]))
 					bi += 1
+
+
+## 演武场等模式的"自定义对手"：不走怪物池，直接给一份怪物数据（name/base/skills/tier）
+func _build_custom_mon(d: Dictionary) -> void:
+	var base: Dictionary = d.get("base", {})
+	var u := Combatant.new(new_uid(), "monster", "enemy", d)
+	u.base_max_hp = maxi(1, int(base.get("hp", 100)))
+	u.base_atk = maxi(1, int(base.get("atk", 12)))
+	u.base_def = maxi(0, int(base.get("def", 6)))
+	u.base_spd = float(base.get("spd", 1.0))
+	u.base_crit = 0.05
+	u.attack_range = String(d.get("attack_range", "melee"))
+	u.ai_type = String(d.get("ai", "boss"))
+	u.row = Combatant.ROW_FRONT
+	u.col = 2
+	u.hp = u.base_max_hp
+	for sk in d.get("skills", []):
+		u.skills.append({"id": String(sk.get("id", "")), "def": sk, "cd_left": 0})
+	_add_unit(u)
 
 
 func _spawn_monster(mon_id: String, row: int, col: int, hp_atk_mult := 1.0,

@@ -150,6 +150,9 @@ const GM_PASSWORD := "@tsz20060706"
 # ---------- 音频设置（音量 0~1，存进存档；Audio 自动加载器读它）----------
 var audio := {"bgm": 0.7, "sfx": 0.8, "mute": false}
 
+# ---------- 演武场（PVP 首版：傀儡对手 + 段位分） ----------
+var arena := {"score": 1000, "wins": 0, "losses": 0}
+
 var gm_unlocked := false
 var ui_blocked := false     # 全屏浮层（GM 控制台等）打开时为 true，探索层据此冻结移动
 
@@ -285,6 +288,12 @@ func _load_save() -> void:
 		city["acts"] = ac if ac is Dictionary else {}
 		city["day"] = String(cd.get("day", ""))
 		city["streak"] = maxi(0, int(cd.get("streak", 0)))
+	var av: Variant = data.get("arena", {})
+	if av is Dictionary:
+		var ad := av as Dictionary
+		arena["score"] = clampi(int(ad.get("score", 1000)), 0, 999999)
+		arena["wins"] = maxi(0, int(ad.get("wins", 0)))
+		arena["losses"] = maxi(0, int(ad.get("losses", 0)))
 	var q: Variant = data.get("quest", {})
 	if q is Dictionary:
 		var qd := q as Dictionary
@@ -310,6 +319,7 @@ func save_game() -> void:
 		"prog": prog,
 		"city": city,
 		"quest": quest,
+		"arena": arena,
 		"items": items,
 		"audio": audio,
 		"account": account,
@@ -2311,6 +2321,46 @@ func can_go(scene_path: String) -> bool:
 
 func transit_busy() -> bool:
 	return _transit_busy
+
+
+# ---------- 演武场 ----------
+## 段位名（铜/银/金印）
+func arena_rank() -> String:
+	var s := int(arena.get("score", 0))
+	if s >= 1400:
+		return "金印"
+	if s >= 1200:
+		return "银印"
+	return "铜印"
+
+
+## 生成一个演武傀儡（数值随等级缩放；贴图缺省走程序圆体）
+func make_arena_foe(level: int) -> Dictionary:
+	var lvl := maxi(1, level)
+	var sc := 1.0 + 0.16 * float(lvl - 1)
+	return {
+		"id": "mon_arena_dummy",
+		"name": "演武傀儡 · %d 级" % lvl,
+		"tier": "boss", "ai": "boss", "attack_range": "melee",
+		"base": {"hp": int(520.0 * sc), "atk": int(20.0 * sc),
+			"def": int(11.0 * sc), "spd": 0.95},
+		"skills": [{"id": "boss_slam", "name": "震地", "k": 1.6, "cd": 9,
+			"target": "enemy_front_all"}],
+	}
+
+
+## 结算一场切磋：胜 +18~26，负 -12（保底 0）；返回 {delta, score, rank}
+func arena_result(win: bool) -> Dictionary:
+	var delta := 0
+	if win:
+		delta = 18 + randi() % 9
+		arena["wins"] = int(arena.get("wins", 0)) + 1
+	else:
+		delta = -mini(12, int(arena.get("score", 0)))
+		arena["losses"] = int(arena.get("losses", 0)) + 1
+	arena["score"] = maxi(0, int(arena.get("score", 0)) + delta)
+	save_game()
+	return {"delta": delta, "score": int(arena["score"]), "rank": arena_rank()}
 
 
 ## 遮罩：全屏深棕黑（不是纯黑，与羊皮纸调性一致）；懒创建、平时不吃输入
