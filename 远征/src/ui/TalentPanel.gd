@@ -82,6 +82,15 @@ func _build() -> void:
 	_refresh()
 
 
+## ESC / 返回手势关闭本浮层（轮次 14 统一口径；本面板是「养成」的子面板，先关自己）
+func _unhandled_input(event: InputEvent) -> void:
+	if G.ui_blocked:
+		return
+	if event.is_action_pressed("ui_cancel"):
+		closed.emit()
+		get_viewport().set_input_as_handled()
+
+
 func _build_branch(b: Dictionary, idx: int) -> void:
 	# 三列整体在内容区居中：总宽 = 3*COL_W + 2*COL_GAP，起点 = (CONTENT_W - 总宽)/2
 	var total_w := COL_W * 3.0 + COL_GAP * 2.0

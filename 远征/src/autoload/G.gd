@@ -2555,21 +2555,26 @@ func gold_button(text: String, w := 0.0, h := 42.0, font_size := FS_MD) -> Contr
 
 ## 描边次级按钮（棕底透明 + 棕字）：切换/返回/上传这类次级操作用它。
 ## 与 gold_button 同尺寸档位、同交互反馈，只换皮——页面里不再出现第二套按钮设计。
-func ghost_button(text: String, w := 0.0, h := 38.0, font_size := FS_SM) -> Control:
+func ghost_button(text: String, w := 0.0, h := 38.0, font_size := FS_SM,
+		text_color := Color("6a4a1e")) -> Control:
 	var root := PanelContainer.new()
 	if w > 0.0:
 		root.custom_minimum_size = Vector2(w, h)
 	else:
 		root.custom_minimum_size = Vector2(0, h)
+	# 幽灵钮的深棕字在羊皮纸上好看，压在整屏暗底（如召唤结果层）上就看不见了：
+	# 传浅色字时自动换成"暗底 + 金描边"，别再出现"按钮在、字没了"。
+	var on_dark := text_color.get_luminance() > 0.5
 	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color(0.28, 0.19, 0.08, 0.10)
+	sb.bg_color = Color(0.10, 0.07, 0.04, 0.55) if on_dark else Color(0.28, 0.19, 0.08, 0.10)
 	sb.set_corner_radius_all(9)
 	sb.set_border_width_all(2)
-	sb.border_color = Color(BOX_EDGE.r, BOX_EDGE.g, BOX_EDGE.b, 0.70)
+	sb.border_color = Color(GOLD.r, GOLD.g, GOLD.b, 0.60) if on_dark \
+		else Color(BOX_EDGE.r, BOX_EDGE.g, BOX_EDGE.b, 0.70)
 	sb.content_margin_left = 14.0
 	sb.content_margin_right = 14.0
 	root.add_theme_stylebox_override("panel", sb)
-	root.add_child(gold_label(_button_text(text), font_size, true, Color("6a4a1e"), false))
+	root.add_child(gold_label(_button_text(text), font_size, true, text_color, false))
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	root.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	_bind_press_feedback(root)

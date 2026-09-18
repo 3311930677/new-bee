@@ -224,6 +224,8 @@ func _finish() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if G.ui_blocked:   # GM 控制台等全屏层优先（轮次 14）
+		return
 	if event.is_action_pressed("ui_accept") or event.is_action_pressed("ui_right"):
 		_advance()
 	elif event.is_action_pressed("ui_cancel"):

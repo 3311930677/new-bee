@@ -239,6 +239,8 @@ func _toast(msg: String) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if G.ui_blocked:   # GM 控制台等全屏层优先（轮次 14：ESC 只在最上层生效）
+		return
 	if event.is_action_pressed("ui_cancel") and not _busy:
 		Audio.sfx("ui_close")
 		closed.emit()

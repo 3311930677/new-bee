@@ -219,6 +219,8 @@ func _show_toast(msg: String) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if G.ui_blocked:   # GM 控制台等全屏层优先（轮次 14：原来这里没有守卫，
+		return         # 开着控制台按 ESC 会把背后的委托板一起关掉）
 	if event.is_action_pressed("ui_cancel"):
 		Audio.sfx("ui_close")
 		closed.emit()

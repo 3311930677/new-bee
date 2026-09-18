@@ -85,6 +85,15 @@ func _build() -> void:
 	content.add_child(back)
 
 
+## ESC / 返回手势关闭本浮层（轮次 14 统一口径）
+func _unhandled_input(event: InputEvent) -> void:
+	if G.ui_blocked:
+		return
+	if event.is_action_pressed("ui_cancel"):
+		closed.emit()
+		get_viewport().set_input_as_handled()
+
+
 func _card(p: Dictionary, idx: int, total: int) -> Control:
 	var pid := String(p.get("id", ""))
 	var owned: bool = G.owns_pet(pid)

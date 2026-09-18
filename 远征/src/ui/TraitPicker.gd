@@ -200,3 +200,13 @@ func _trait_icon(row: Dictionary) -> String:
 		"def":
 			return "gem_def_3"
 	return String(SCHOOL_ART.get(String(row.get("school", "none")), ""))
+
+
+## ESC = 放弃本次祝福（轮次 14：三选一浮层也是浮层，PC 上按 ESC 不该无动于衷；
+## 走的是界面上本来就有的「放弃」分支，不新增规则）
+func _unhandled_input(event: InputEvent) -> void:
+	if G.ui_blocked:   # GM 控制台等全屏层优先
+		return
+	if event.is_action_pressed("ui_cancel"):
+		_emit_pick("")
+		get_viewport().set_input_as_handled()

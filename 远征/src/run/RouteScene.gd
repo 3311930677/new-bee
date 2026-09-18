@@ -405,8 +405,11 @@ func _toast_msg(msg: String) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if G.ui_blocked:   # GM 控制台等全屏层优先（轮次 14）
+		return
 	if event.is_action_pressed("ui_cancel") and _map == null and _end_ui == null:
 		G.go("res://src/ui/GameHome.tscn")
+		get_viewport().set_input_as_handled()
 
 
 # ================= 局部绘制 =================

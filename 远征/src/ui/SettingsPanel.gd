@@ -375,3 +375,13 @@ func _on_title() -> void:
 
 func _on_back() -> void:
 	closed.emit()
+
+
+## ESC / 返回手势关闭本浮层（轮次 14 统一口径：主界面按 ESC 打开设置，设置里再按 ESC 关掉它，
+## 不再依赖父层 GameHome 代为关闭——父层只做兜底）
+func _unhandled_input(event: InputEvent) -> void:
+	if G.ui_blocked:
+		return
+	if event.is_action_pressed("ui_cancel"):
+		_on_back()
+		get_viewport().set_input_as_handled()
