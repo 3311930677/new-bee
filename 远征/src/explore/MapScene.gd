@@ -837,6 +837,7 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 		_finish_map("defeat")
 		return
 	st.add_reward(monster_tier)  # 战利按接触怪 tier 累加（nodes.json rewards）
+	_grant_drops(monster_tier)   # 材料掉落（data/drops.json）：刷图产出养成材料
 	st.hp = hp_left
 	# 主城委托上报：这一场打掉的怪算 1 只（"在某某秘境击杀 N 只"类委托靠它推进）
 	var q_done := G.quest_report("slay", st.theme, 1)
@@ -863,6 +864,21 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 			_refresh_hud()
 			return
 	_after_battle_rewards()
+
+
+## 掉落结算：掷表 → grant_item → 汇总一句 toast（没有掉落就安静）
+func _grant_drops(tier: String) -> void:
+	var rows := G.roll_drops(tier)
+	if rows.is_empty():
+		return
+	var parts := PackedStringArray()
+	for r in rows:
+		var d := r as Dictionary
+		var iid := String(d.get("item", ""))
+		var n := int(d.get("n", 1))
+		G.grant_item(iid, n)
+		parts.append("%s ×%d" % [G.item_name(iid), n])
+	_toast("拾获：" + " · ".join(parts))
 
 
 func _after_battle_rewards() -> void:

@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "drops": {
+    "normal": [
+      { "item": "enhance_stone", "chance": 0.45, "min": 1, "max": 2 },
+      { "item": "pet_food", "chance": 0.18, "min": 1, "max": 1 }
+    ],
+    "elite": [
+      { "item": "enhance_stone", "chance": 1.0, "min": 2, "max": 3 },
+      { "item": "refine_stone", "chance": 0.35, "min": 1, "max": 1 },
+      { "item": "break_crystal", "chance": 0.25, "min": 1, "max": 1 }
+    ],
+    "boss": [
+      { "item": "refine_stone", "chance": 1.0, "min": 2, "max": 3 },
+      { "item": "aptitude_fruit", "chance": 0.45, "min": 1, "max": 1 },
+      { "item": "lock_rune", "chance": 0.30, "min": 1, "max": 1 }
+    ]
+  }
+}

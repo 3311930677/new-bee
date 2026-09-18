@@ -85,6 +85,33 @@ func consume_item(id: String, n: int) -> bool:
 	save_game()
 	return true
 
+
+## 战斗掉落掷表（data/drops.json，按档位）；返回 [{item, n}]
+func roll_drops(tier: String) -> Array:
+	var rows: Variant = TableCache.drops_config().get("drops", {})
+	if not (rows is Dictionary):
+		return []
+	return _roll_drop_rows((rows as Dictionary).get(tier, []))
+
+
+func _roll_drop_rows(list: Variant) -> Array:
+	var out: Array = []
+	if not (list is Array):
+		return out
+	for row_v in (list as Array):
+		if not (row_v is Dictionary):
+			continue
+		var row := row_v as Dictionary
+		var item := String(row.get("item", ""))
+		if item.is_empty():
+			continue
+		if randf() > float(row.get("chance", 0.0)):
+			continue
+		var lo := maxi(1, int(row.get("min", 1)))
+		var hi := maxi(lo, int(row.get("max", lo)))
+		out.append({"item": item, "n": randi_range(lo, hi)})
+	return out
+
 # ---------- 养成进度（跨局持久）----------
 # 主线：以"主世界"为起点，逐世界推进——通关某世界首领即解锁下一世界，
 #       并同时解封一只新宠物；宠物/资源靠不断打怪升级与对战积累解锁。
