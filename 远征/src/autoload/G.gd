@@ -162,6 +162,15 @@ const GM_PASSWORD := "@tsz20060706"
 # ---------- 音频设置（音量 0~1，存进存档；Audio 自动加载器读它）----------
 var audio := {"bgm": 0.7, "sfx": 0.8, "mute": false}
 
+
+## 播 UI/战斗音效。G 与 Audio 都是自动加载器，**编译期互相引用会成环**：
+## 编译器互等对方先编译 → 全项目级联 `Identifier not found: Audio`。
+## 所以这边也一律运行时取节点（Audio 侧对称用法见 `Audio._game_state`）。
+func _sfx(name: String, jitter := 0.03) -> void:
+	var au := get_node_or_null("/root/Audio")
+	if au != null:
+		au.call("sfx", name, jitter)
+
 # ---------- 演武场（PVP 首版：傀儡对手 + 段位分） ----------
 var arena := {"score": 1000, "wins": 0, "losses": 0}
 
@@ -406,7 +415,7 @@ func gain_exp(amount: int) -> int:
 		prog["level"] = cap
 		prog["exp"] = 0
 	if ups > 0:
-		Audio.sfx("level_up", 0.0)   # 升级音不抖音高：这是"仪式"，不是随机反馈
+		_sfx("level_up", 0.0)   # 升级音不抖音高：这是"仪式"，不是随机反馈
 	save_game()
 	return ups
 
@@ -2358,7 +2367,7 @@ func _bind_press_feedback(root: Control) -> void:
 			root.pivot_offset = root.size * 0.5
 			var tw := root.create_tween()
 			if e.pressed:
-				Audio.sfx("ui_click")
+				_sfx("ui_click")
 				tw.tween_property(root, "modulate", Color(0.9, 0.9, 0.9), 0.06)
 				tw.parallel().tween_property(root, "scale", Vector2.ONE * 0.97, 0.06)
 			else:
@@ -2634,7 +2643,7 @@ func info_button(title: String, lines: Array, d := 24.0) -> Control:
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	root.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			Audio.sfx("ui_click")
+			_sfx("ui_click")
 			root.pivot_offset = root.size * 0.5
 			var tw := root.create_tween()
 			tw.tween_property(root, "scale", Vector2.ONE * 0.92, 0.05)
