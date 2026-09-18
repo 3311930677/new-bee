@@ -393,11 +393,14 @@ func _paint_pet(card, pid: String) -> void:
 	else:
 		card.set_badge("可出战", Color("4a7a44"))
 
-# ---------- 键盘：↑↓/WS 切页签（←→ 交给卡片轮播） ----------
+# ---------- 键盘：ESC 取消筹备 / ↑↓·WS 切页签（←→ 交给卡片轮播） ----------
 func _unhandled_input(e: InputEvent) -> void:
 	if G.ui_blocked:
 		return
-	if e.is_action_pressed("move_up") or e.is_action_pressed("ui_up"):
+	if e.is_action_pressed("ui_cancel"):   # 轮次 14 统一口径：浮层自己吃 ESC
+		canceled.emit()
+		get_viewport().set_input_as_handled()
+	elif e.is_action_pressed("move_up") or e.is_action_pressed("ui_up"):
 		_goto_step(_step - 1)
 		get_viewport().set_input_as_handled()
 	elif e.is_action_pressed("move_down") or e.is_action_pressed("ui_down"):

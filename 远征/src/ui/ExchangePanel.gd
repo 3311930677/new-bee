@@ -275,3 +275,12 @@ func _toast(msg: String) -> void:
 
 func _on_back() -> void:
 	closed.emit()
+
+
+## ESC / 返回手势关闭本浮层（轮次 14 统一口径）
+func _unhandled_input(event: InputEvent) -> void:
+	if G.ui_blocked:
+		return
+	if event.is_action_pressed("ui_cancel"):
+		_on_back()
+		get_viewport().set_input_as_handled()

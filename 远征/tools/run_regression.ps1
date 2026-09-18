@@ -26,7 +26,7 @@ $scenes = @(
   "VerifyAssets","VerifyBattleScene","VerifyCity","VerifyGameHome",
   "VerifyMapScene","VerifyRouteScene","VerifyGacha","VerifyPanels","VerifyGrowth",
   "VerifyPerf","VerifyLore","VerifyQuests","VerifyAudio","VerifyTransit",
-  "VerifyDrops","VerifyArena","VerifyAvatar"
+  "VerifyDrops","VerifyArena","VerifyAvatar","VerifyNav"
 )
 $scripts = @("verify_data","verify_battle","verify_route","verify_trait","verify_walk_assets")
 

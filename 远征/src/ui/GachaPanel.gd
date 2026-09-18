@@ -508,7 +508,8 @@ func _build_result() -> void:
 	_result.add_child(_again_btn)
 
 	# 返回是次操作：走描边款，避免和主操作抢视觉（§7 一层只有一个核心操作）
-	var back_btn := G.ghost_button("返回", btn_w, 48)
+	# 结果层是整屏暗底（VEIL_TAKEOVER_A）：这里必须传浅色字，否则返回键的字会被暗底吃掉
+	var back_btn := G.ghost_button("返回", btn_w, 48, G.FS_SM, Color("f0d9a0"))
 	back_btn.position = Vector2(pad * 2.0 + btn_w, 612)
 	back_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -803,6 +804,17 @@ func _again() -> void:
 
 func _close() -> void:
 	closed.emit()
+
+
+## ESC / 返回手势关闭本浮层（轮次 14 统一口径）。
+## 与结果层「返回」按钮同一条路径：召唤页的结果层是整屏接管页，没有"只收起结果层"
+## 的可见操作，ESC 就照按钮的口径走，不额外发明一层。
+func _unhandled_input(event: InputEvent) -> void:
+	if G.ui_blocked:
+		return
+	if event.is_action_pressed("ui_cancel"):
+		_close()
+		get_viewport().set_input_as_handled()
 
 
 ## 行内提示：主面板用深红，结果层用亮红；1.5 秒后淡出（重复触发时重置计时）

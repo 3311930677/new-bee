@@ -46,6 +46,15 @@ func _build_banner() -> void:
 	b.position = Vector2(-100, 46)
 	add_child(b)
 
+	# 左上「返回」：登录是标题页的下级，手游必须有能点的回头路（原来只有 ESC）。
+	# 用金钮而不是幽灵钮：登录页背后是深色晚霞插画，幽灵钮的深棕字在这块底上看不清
+	var back := G.gold_button("返回", G.BTN_S.x, G.BTN_S.y, G.FS_SM)
+	back.position = Vector2(16, 52)
+	back.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			G.go("res://src/ui/Title.tscn"))
+	add_child(back)
+
 
 # ---------- 面板 ----------
 func _build_panel() -> void:
@@ -318,6 +327,8 @@ func _toast_msg(msg: String) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if G.ui_blocked:   # GM 控制台等全屏层优先（轮次 14）
+		return
 	if event.is_action_pressed("ui_accept"):
 		_do_login(false)
 	elif event.is_action_pressed("ui_cancel"):

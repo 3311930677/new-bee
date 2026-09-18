@@ -78,6 +78,16 @@ func _build() -> void:
 	content.add_child(back)
 
 
+## ESC / 返回手势关闭本浮层（轮次 14 统一口径：每个浮层自己吃 ESC，
+## 关闭音由打开它的父层在 closed 回调里统一播，这里不重复播）
+func _unhandled_input(event: InputEvent) -> void:
+	if G.ui_blocked:   # GM 控制台等全屏层优先
+		return
+	if event.is_action_pressed("ui_cancel"):
+		closed.emit()
+		get_viewport().set_input_as_handled()
+
+
 func _slide(tid: String, idx: int, order: Array) -> Control:
 	var unlocked: bool = G.is_world_unlocked(tid)
 	var cleared: bool = G.is_world_cleared(tid)

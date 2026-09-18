@@ -143,6 +143,8 @@ func _activate(idx: int) -> void:
 
 # ---------- 键盘操作 ----------
 func _unhandled_input(event: InputEvent) -> void:
+	if G.ui_blocked:   # GM 控制台等全屏层优先（轮次 14）
+		return
 	if _intro_panel != null:
 		if event.is_action_pressed("ui_accept") or event.is_action_pressed("ui_cancel"):
 			_intro_panel.queue_free()
