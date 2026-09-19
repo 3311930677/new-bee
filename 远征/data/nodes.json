@@ -29,6 +29,12 @@
     "rank_thresholds": [30, 70, 105],
     "rank_bonus_gold": [40, 90, 160],
     "pickup_radius": 30,
-    "reveal_radius": 380
+    "reveal_radius": 380,
+    "altar_chance": 0.6,
+    "altar_gold": 200,
+    "vein_count": [1, 2],
+    "vein_items": ["enhance_stone", "refine_stone", "pet_food"],
+    "vein_amount": [1, 2],
+    "spot_radius": 34
   }
 }

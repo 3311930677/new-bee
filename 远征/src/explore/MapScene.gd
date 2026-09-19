@@ -60,6 +60,8 @@ var _theme_cfg: Dictionary = {}
 # 原来最优解永远是直线冲传送阵：绕开怪物零成本。现在清怪与拾取都给探索分，
 # 探索分决定本节点的评价与额外赏金，"走一趟"与"清一遍"变成真正的取舍。
 var _pickups: Array[_Pickup] = []
+var _spots: Array[_Spot] = []          # 兴趣点（碑灵祭坛 / 矿脉）
+var _altar_ui: Control = null          # 祭坛浮层
 var _score := 0
 var _kills := 0
 var _total_monsters := 0
@@ -218,6 +220,7 @@ func _build_world() -> void:
 	_build_player(map_w, map_h)
 	_build_monsters(map_w, map_h)
 	_build_pickups(cols, rows)   # 散落拾取物：路上有微反馈（轮次 16）
+	_build_spots(cols, rows)     # 兴趣点：祭坛（花金重摇祝福）/ 矿脉（材料）（轮次 17）
 
 
 func _build_decos(cols: int, rows: int) -> void:
@@ -710,7 +713,14 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not event.is_action_pressed("ui_cancel"):
 		return
 	var vp := get_viewport()  # 切场景途中本节点可能已离场，viewport 会是 null
-	if _big_map != null:   # 大地图优先：ESC 先收浮层，再谈撤离
+	if _altar_ui != null:  # 祭坛选择框在最上层（只关它，不动大地图/撤离）
+		for s in _spots:
+			if s.kind == "altar":
+				_close_altar(s, true)
+				break
+		if vp != null:
+			vp.set_input_as_handled()
+	elif _big_map != null:   # 大地图：ESC 先收浮层，再谈撤离
 		_close_big_map()
 		if vp != null:
 			vp.set_input_as_handled()
@@ -783,7 +793,7 @@ func _cancel_exit() -> void:
 # ================= 主循环 =================
 func _physics_process(delta: float) -> void:
 	if _map_done or _battle != null or _picker != null or _remover != null \
-			or _exit_ui != null or _beat != null or _big_map != null:
+			or _exit_ui != null or _beat != null or _big_map != null or _altar_ui != null:
 		return
 	if G.ui_blocked:  # GM 控制台等全屏浮层打开时冻结移动
 		return
@@ -926,6 +936,133 @@ func _build_pickups(cols: int, rows: int) -> void:
 		_world.add_child(p)
 
 
+## 兴趣点：碑灵祭坛（花金重摇祝福）/ 矿脉（白拿材料）
+## 与拾取物的区别：拾取是被动入袋的微奖励，兴趣点是"要不要花代价"的选择——这是探索层的取舍
+func _build_spots(cols: int, rows: int) -> void:
+	var map_w := float(cols * 48)
+	var map_h := float(rows * 48)
+	var spawn := Vector2(map_w / 2.0, map_h - 120.0)
+	var portal_y := 120.0
+	if _rng.randf() < float(_explore_cfg().get("altar_chance", 0.6)):
+		var a := _Spot.new()
+		a.kind = "altar"
+		a.position = Vector2(_rng.randf_range(120.0, map_w - 120.0),
+			_rng.randf_range(320.0, map_h - 360.0))
+		a.map_ref = self
+		_spots.append(a)
+		_world.add_child(a)
+	var vr := _cfg_range("vein_count", [1, 2])
+	var vn := _rng.randi_range(int(vr[0]), int(vr[1]))
+	for i in vn:
+		var v := _Spot.new()
+		v.kind = "vein"
+		var pos := Vector2.ZERO
+		for attempt in 20:
+			pos = Vector2(_rng.randf_range(100.0, map_w - 100.0),
+				_rng.randf_range(240.0, map_h - 240.0))
+			if pos.distance_to(spawn) > 140.0 and absf(pos.y - portal_y) > 120.0:
+				break
+		v.position = pos
+		v.map_ref = self
+		_spots.append(v)
+		_world.add_child(v)
+
+
+func on_spot(s: _Spot) -> void:
+	if _map_done or _battle != null:
+		return
+	if s.kind == "vein":
+		var items: Array = _cfg_range("vein_items", ["enhance_stone"])
+		var am: Array = _cfg_range("vein_amount", [1, 2])
+		var n := _rng.randi_range(int(am[0]), int(am[1]))
+		var iid := String(items[_rng.randi_range(0, maxi(0, items.size() - 1))])
+		G.grant_item(iid, n)
+		Audio.sfx("pickup")
+		_toast("采得矿脉：%s ×%d" % [G.item_name(iid), n])
+		_add_score(_cfg_int("pickup_score", 6), "矿脉")
+		_spots.erase(s)
+		s.queue_free()
+		return
+	_open_altar(s)
+
+
+## 碑灵祭坛：花金换一次「祝福重择」——花的是局内金币（会被远征结算算进去，是真代价）
+func _open_altar(s: _Spot) -> void:
+	if _altar_ui != null:
+		return
+	var cost := _cfg_int("altar_gold", 200)
+	Audio.sfx("ui_open")
+	var layer := Control.new()
+	layer.set_anchors_preset(Control.PRESET_FULL_RECT)
+	layer.mouse_filter = Control.MOUSE_FILTER_STOP
+	_altar_ui = layer
+	_hud.add_child(layer)
+	G.veil(layer, 0.72, true)
+
+	var banner := G.banner_box("碑 灵 祭 坛", 260, 48)
+	banner.position = Vector2((VIEW_W - 260.0) * 0.5, 236)
+	layer.add_child(banner)
+
+	var panel := G.parchment_box(340, 232, 16.0)
+	panel.position = Vector2((VIEW_W - 340.0) * 0.5, 300)
+	layer.add_child(panel)
+	var content := Control.new()
+	content.set_anchors_preset(Control.PRESET_FULL_RECT)
+	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	panel.add_child(content)
+
+	var tip := G.gold_label("碑上的字还在动。献上 %d 金，\n可重择一次祝福（当前持有 %d 词条）。"
+		% [cost, st.traits.size()], G.FS_SM, false, Color("5a3a1e"), false)
+	tip.position = Vector2(0, 14)
+	tip.custom_minimum_size = Vector2(308, 0)
+	content.add_child(tip)
+
+	var pay := G.gold_button("献 金 %d" % cost, 140, 42, G.FS_SM)
+	pay.position = Vector2(0, 96)
+	pay.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_altar_pay(s, cost))
+	content.add_child(pay)
+	var leave := G.gold_button("离 开", 140, 42, G.FS_SM)
+	leave.position = Vector2(168, 96)
+	leave.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_close_altar(s, true))
+	content.add_child(leave)
+	var hint := G.gold_label("献金后原地重摇祝福；祭坛用掉即熄。", G.FS_XS, false, Color("8a6a34"), false)
+	hint.position = Vector2(0, 158)
+	hint.custom_minimum_size = Vector2(308, 0)
+	content.add_child(hint)
+
+
+func _altar_pay(s: _Spot, cost: int) -> void:
+	if st.gold < cost:
+		Audio.sfx("ui_locked")
+		_toast("金币不足，碑灵沉默不语")
+		return
+	st.gold -= cost
+	Audio.sfx("altar")
+	_close_altar(s, true)   # 献过金的祭坛即熄，不再重复打扰
+	_add_score(_cfg_int("pickup_score", 6), "祭坛")
+	var choices := st.roll_trait_choices(_rng)
+	if choices.is_empty():
+		_toast("碑灵无言——词条池已尽，金子退你了")
+		st.gold += cost
+		return
+	_toast("碑灵应声 · 祝福重择")
+	_show_trait_picker(choices)
+
+
+func _close_altar(s: _Spot, leave: bool) -> void:
+	Audio.sfx("ui_close")
+	if _altar_ui != null:
+		_altar_ui.queue_free()
+		_altar_ui = null
+	if leave and s != null:
+		s.used = true          # 走过一次不再弹（祭坛保留在地图上，但不重复打扰）
+		_spots.erase(s)
+
+
 ## 拾取结算：金 + 远征币 + 探索分，一条 toast（同一帧捡两个也不刷屏——后一个覆盖前一个）
 func on_pickup(p: _Pickup) -> void:
 	if _map_done or _pickups.is_empty():
@@ -939,7 +1076,7 @@ func on_pickup(p: _Pickup) -> void:
 		int(c[1]) if c.size() > 1 else 8)
 	st.gold += gold
 	st.expedition += cur
-	Audio.sfx("coin")
+	Audio.sfx("pickup")   # 与战斗后的 coin 区分：一局要捡好几次，听感不能太重
 	_toast("拾获 · 金币 +%d · 远征币 +%d" % [gold, cur])
 	_add_score(_cfg_int("pickup_score", 6), "拾取")
 
@@ -1093,6 +1230,7 @@ func _toggle_big_map() -> void:
 		"青点：传送阵（封印时转紫）· 金菱：宝箱 / 事件 / 商队 / 篝火",
 		"红点：敌影（视野内才会显形）· 亮点：散落的钱袋 / 魂晶（走近自动入袋）",
 		"清光全图怪物有额外赏，走的越细、离开时的评价越高",
+		"紫菱：碑灵祭坛（献金重摇一次祝福）· 灰点：矿脉（白拿养成材料）",
 		"点下方「前 往」自动走到当前目标；再推摇杆即可接手",
 	]
 	for i in lines.size():
@@ -1419,6 +1557,63 @@ class _Pickup extends Node2D:
 			draw_colored_polygon(pts, base)
 			draw_polyline(PackedVector2Array([pts[0], pts[1], pts[2], pts[3], pts[0]]),
 				Color(1, 1, 1, 0.5), 1.2, true)
+
+
+## 兴趣点（碑灵祭坛 / 矿脉）：走近触发一次交互。与拾取物的差别是"要不要做"——
+## 祭坛弹选择框（花金重摇祝福），矿脉白拿材料。用掉即熄，不重复打扰。
+class _Spot extends Node2D:
+	var kind := "vein"        # altar / vein
+	var map_ref: MapScene = null
+	var used := false
+	var _t := 0.0
+	var _bob := 0.0
+
+	func _process(delta: float) -> void:
+		_t += delta
+		if used or map_ref == null or map_ref._player == null:
+			return
+		if map_ref._map_done or map_ref._battle != null or map_ref._altar_ui != null \
+				or map_ref._picker != null or map_ref._remover != null:
+			return
+		var r := float(map_ref._cfg_int("spot_radius", 34))
+		if position.distance_to(map_ref._player.position) < r:
+			# 矿脉：立刻锁死并交接入袋（回调里 queue_free）
+			# 祭坛：不锁——由 _altar_ui != null 的守卫防重入，玩家选完（献金或离开）才标记用过
+			if kind == "vein":
+				used = true
+			map_ref.on_spot(self)
+			return
+		queue_redraw()
+
+	func _draw() -> void:
+		_bob = sin(_t * 2.0) * 2.0
+		if kind == "vein":
+			# 矿脉：灰蓝岩块上嵌几颗亮矿点
+			draw_set_transform(Vector2(0, 8), 0.0, Vector2(1.0, 0.36))
+			draw_circle(Vector2.ZERO, 20.0, Color(0, 0, 0, 0.26))
+			draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+			var rock := Color("6b6f78")
+			draw_colored_polygon(PackedVector2Array([Vector2(-22, 10), Vector2(-12, -12),
+				Vector2(6, -16), Vector2(22, -2), Vector2(16, 10)]), rock)
+			draw_polyline(PackedVector2Array([Vector2(-22, 10), Vector2(-12, -12),
+				Vector2(6, -16), Vector2(22, -2), Vector2(16, 10), Vector2(-22, 10)]),
+				Color(0, 0, 0, 0.35), 2.0, true)
+			for p in [Vector2(-8, -6), Vector2(4, -9), Vector2(10, 0)]:
+				draw_circle(p + Vector2(0, _bob), 3.4, Color("9fe0f0"))
+			return
+		# 碑灵祭坛：立着的断碑 + 顶部浮动的青色碑火
+		draw_set_transform(Vector2(0, 10), 0.0, Vector2(1.0, 0.38))
+		draw_circle(Vector2.ZERO, 24.0, Color(0, 0, 0, 0.28))
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+		draw_rect(Rect2(-16, -34, 32, 46), Color("7d7a86"))
+		draw_rect(Rect2(-16, -34, 32, 7), Color("5f5c68"))
+		draw_rect(Rect2(-20, 8, 40, 8), Color("57545e"))
+		for i in 3:   # 碑文：三条阴刻线（不是文字，避免烧字进图）
+			draw_line(Vector2(-9, -24 + i * 11), Vector2(9, -24 + i * 11), Color(0, 0, 0, 0.30), 2.0)
+		var flame := Vector2(0, -46 + _bob)
+		draw_circle(flame, 13.0, Color(0.55, 0.9, 1.0, 0.20))
+		draw_circle(flame, 6.5, Color("7ae0ff"))
+		draw_circle(flame + Vector2(0, -2), 3.0, Color(1, 1, 1, 0.85))
 
 
 ## 散件（origin 底部 + 脚部碰撞，参与 Y-sort）
@@ -1762,6 +1957,17 @@ class _Minimap extends Control:
 			if p.used:
 				continue
 			_pt(at.call(p.position), 2.6, Color("ffe9a8") if p.kind == "coin" else Color("9fe0f0"))
+		# 兴趣点：紫菱=祭坛（花金重摇祝福）· 灰点=矿脉（材料）
+		# 注意别用 s 当循环名：本函数上面已经有一个 s = 地图缩放比（同名会直接编译失败）
+		for spot in map_ref._spots:
+			if spot.used:
+				continue
+			var sp: Vector2 = at.call(spot.position)
+			if spot.kind == "altar":
+				draw_colored_polygon([sp + Vector2(0, -4.5), sp + Vector2(3.6, 0),
+					sp + Vector2(0, 4.5), sp + Vector2(-3.6, 0)], Color("c9a0ff"))
+			else:
+				_pt(sp, 2.4, Color("cfd6e0"))
 		# 敌影（视野内）
 		for m in map_ref._monsters:
 			if m.position.distance_to(pp) <= reveal or m.tier == "boss":

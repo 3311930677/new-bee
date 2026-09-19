@@ -419,6 +419,49 @@ func _run() -> void:
 	c2map.queue_free()
 	await get_tree().process_frame
 
+	# ---- L. 兴趣点：矿脉（材料）/ 碑灵祭坛（花金重摇祝福）（轮次 17）----
+	var lmap := await _spawn_map("normal", 1, "")
+	var veins: Array = []
+	for s in lmap._spots:
+		if s.kind == "vein":
+			veins.append(s)
+	_check(lmap._spots.size() >= 1 and veins.size() >= 1,
+		"每张图应至少 1 个兴趣点（矿脉），实为 %d 个（%d 矿脉）" % [lmap._spots.size(), veins.size()])
+	var items_before := 0
+	for iid in ["enhance_stone", "refine_stone", "pet_food"]:
+		items_before += G.item_count(String(iid))
+	var score_before2: int = lmap._score
+	lmap._player.position = veins[0].position
+	for i in 8:
+		await get_tree().process_frame
+	var items_after := 0
+	for iid2 in ["enhance_stone", "refine_stone", "pet_food"]:
+		items_after += G.item_count(String(iid2))
+	_check(items_after > items_before, "矿脉应给养成材料，实为 %d → %d" % [items_before, items_after])
+	_check(lmap._score > score_before2, "矿脉也应加探索分")
+	_check(lmap._spots.size() == 1 and lmap._spots[0].kind != "vein" or lmap._spots.size() == 0,
+		"矿脉用掉后应从兴趣点里移除")
+
+	# 祭坛：献金 → 扣费 → 关浮层 → 重摇祝福；金不足则拒绝且不扣费
+	lmap.st.gold = 500
+	lmap._open_altar(null)
+	_check(lmap._altar_ui != null, "祭坛应弹出选择浮层")
+	lmap._altar_pay(null, 200)
+	_check(lmap.st.gold == 300, "献金应扣 200 金，实为 %d" % lmap.st.gold)
+	_check(lmap._altar_ui == null, "献金后祭坛浮层应关闭")
+	_check(lmap._picker != null, "献金后应弹出祝福重择")
+	if lmap._picker != null:
+		lmap._picker._emit_pick(String(lmap._picker.choices[0].get("id", "")))
+		await get_tree().process_frame
+	lmap.st.gold = 10
+	lmap._open_altar(null)
+	lmap._altar_pay(null, 200)
+	_check(lmap.st.gold == 10 and lmap._altar_ui != null, "金币不足应拒绝且不扣费、浮层不关")
+	lmap._close_altar(null, true)
+	_check(lmap._altar_ui == null, "离开应关闭祭坛浮层")
+	lmap.queue_free()
+	await get_tree().process_frame
+
 	_print_result()
 
 
