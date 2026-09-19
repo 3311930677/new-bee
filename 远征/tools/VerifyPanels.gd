@@ -124,6 +124,19 @@ func _verify_settings() -> void:
 		_check(back is Dictionary and int((back as Dictionary).get("wallet", {}).get("honor", -1)) == 777,
 			"导入后存档应为 honor 777")
 
+		# 2.1 导入后必须重读内存态（P0-3）：只写盘不重读，旧内存会在下次保存覆盖导入档
+		(d.get("wallet", {}) as Dictionary)["gold"] = 4321
+		_check(sp.do_import(JSON.stringify(d)), "导入成功（gold 4321）")
+		G.reload_save()
+		_check(int(G.wallet.get("gold", -1)) == 4321,
+			"导入后内存钱包应重读为 4321，实为 %d" % int(G.wallet.get("gold", -1)))
+		_check(int(G.wallet.get("honor", -1)) == 777, "导入后内存荣誉应重读为 777")
+		G.wallet["gold"] = 999
+		G.save_game()
+		var back2: Variant = JSON.parse_string(sp.do_export())
+		_check(back2 is Dictionary and int((back2 as Dictionary).get("wallet", {}).get("gold", -1)) == 999,
+			"重读后正常保存应写回新值，而不是被旧内存覆盖")
+
 	# 3. 导入非法码：乱串与非字典 JSON 都要拒绝
 	_check(not sp.do_import("这不是存档码"), "乱码应导入失败")
 	_check(not sp.do_import("[1,2,3]"), "数组 JSON 应导入失败")
@@ -181,6 +194,26 @@ func _verify_settings() -> void:
 	var fresh: Variant = JSON.parse_string(sp.do_export())
 	_check(fresh is Dictionary and int((fresh as Dictionary).get("wallet", {}).get("honor", -1)) == 0,
 		"重置后应重落默认档（honor 0）")
+
+	# 5.1 重置必须清掉全部进度类字段（P0-4：此前只清 prog/wallet，道具/主城/委托/段位/资料全留存）
+	G.items["ticket_ten"] = 7
+	G.city["built"] = ["hall", "gate", "archive"]
+	G.quest["claimed"] = ["q_fake"]
+	G.arena["score"] = 1500
+	G.player_name = "测试者"
+	G.gm_reset_save()
+	_check(int(G.items.get("ticket_ten", -1)) == 0, "重置后道具应清空（ticket_ten 归零）")
+	_check((G.city.get("built", []) as Array).size() == 2, "重置后主城应回到初始两建筑")
+	_check((G.quest.get("claimed", []) as Array).is_empty(), "重置后委托已交付记录应清空")
+	_check(int(G.arena.get("score", -1)) == 1000, "重置后段位分应回 1000，实为 %d" % int(G.arena.get("score", -1)))
+	_check(G.player_name == "", "重置后昵称应清空，实为「%s」" % G.player_name)
+
+	# 5.2 非 daily 活动必须有冷却（防「cd:0 = 无限次」歧义再发生，P0-5）
+	for a in G.city_activities():
+		var ad := a as Dictionary
+		if not bool(ad.get("daily", false)):
+			_check(int(ad.get("cd", 0)) > 0, "非 daily 活动「%s」应显式给冷却（cd），实为 %d"
+				% [String(ad.get("id", "")), int(ad.get("cd", 0))])
 
 	# 6. 返回信号
 	var closed_n := {"n": 0}

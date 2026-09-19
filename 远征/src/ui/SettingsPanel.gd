@@ -491,12 +491,15 @@ func _on_import() -> void:
 		_hint2.text = "存档码无效"
 		_hint2.add_theme_color_override("font_color", Color("a04a3a"))
 		return
-	# 先提示成功，停一拍再回标题重读档，玩家能看到反馈
+	# 先提示成功，停一拍回标题——回标题前必须 G.reload_save() 重读内存态，
+	# 只 reload 场景不会重读存档，旧内存会在下一次保存时覆盖导入档（P0-3）
 	_hint2.text = "导入成功 · 即将回到标题"
 	_hint2.add_theme_color_override("font_color", Color("4a7a44"))
 	var tw := create_tween()
 	tw.tween_interval(0.9)
-	tw.tween_callback(func(): get_tree().reload_current_scene())
+	tw.tween_callback(func():
+		G.reload_save()
+		G.go(TITLE_PATH))
 
 
 # ================= 重置存档（二次确认） =================
