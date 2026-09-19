@@ -9,7 +9,7 @@
 #  * --quit-after is hang insurance: if a verify script hits a compile error the coroutine
 #    never reaches get_tree().quit(), and headless Godot would otherwise never exit.
 param(
-  [string]$Godot = "C:\Users\Administrator\AppData\Local\Microsoft\WinGet\Packages\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\Godot_v4.7.2-stable_win64.exe",
+  [string]$Godot = "",
   [string]$Proj  = "",
   [string]$Only  = "",
   [string]$List  = "",
@@ -17,6 +17,22 @@ param(
 )
 
 if ($Proj -eq "") { $Proj = Split-Path -Parent $PSScriptRoot }
+# Godot exe resolution (P2-9): -Godot argument > GODOT_EXE env > common paths > clear error.
+if ($Godot -eq "") { $Godot = $env:GODOT_EXE }
+if (-not $Godot -or -not (Test-Path $Godot)) {
+  $cands = @(
+    "D:\godot\Godot_v4.6.1-stable_win64.exe",
+    (Join-Path $env:LOCALAPPDATA "Microsoft\WinGet\Packages\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\Godot_v4.7.2-stable_win64.exe"),
+    "C:\Users\Administrator\AppData\Local\Microsoft\WinGet\Packages\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\Godot_v4.7.2-stable_win64.exe"
+  )
+  $found = ""
+  foreach ($c in $cands) { if (-not $found -and $c -and (Test-Path $c)) { $found = $c } }
+  if ($found -eq "") {
+    Write-Host "Godot exe not found. Pass -Godot <exe> or set GODOT_EXE."
+    exit 2
+  }
+  $Godot = $found
+}
 Write-Host ("Godot : " + $Godot)
 Write-Host ("Project: " + $Proj)
 

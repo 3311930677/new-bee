@@ -805,6 +805,9 @@ func _show_tip(msg: String, color := Color("ffe9b0")) -> void:
 
 # ================= 结算 =================
 func _show_result() -> void:
+	# 结算帧收干净低血红晕（P2-19：胜残血时不该在结算层背后留一块红）
+	if _danger != null:
+		_danger.modulate.a = 0.0
 	var win := sim.result == "victory"
 	var flee := sim.result == "flee"
 	var draw := sim.result == "draw"

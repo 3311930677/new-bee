@@ -220,7 +220,13 @@ func _end_drag(x: float) -> void:
 	elif dx > w * 0.16:
 		go(current - 1)
 	else:
-		go(current)   # 幅度不够：回弹归位
+		# 幅度不够：回弹归位——不算翻页（否则单击也播翻页音 + 空跑一条 tween，P2-15）
+		if absf(dx) < 1.0:
+			_track.position = Vector2(_drag_base, 0)
+			return
+		var tw := create_tween()
+		tw.tween_property(_track, "position:x", _drag_base, 0.16)\
+			.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 
 # ---------- 键盘 ----------
