@@ -1,14 +1,20 @@
 # SkillBookPanel.gd —— 技能书（当前角色 5 技能，每级 k+5%，上限 10 级，耗远征币）
+# 一屏一项（皇室战争式大卡聚焦）：PageDeck 翻页，每张卡大留白 + 大号等级珠 + 大升级按钮，
+# 不再把 5 张带等级珠的卡片平铺在一屏。
 class_name SkillBookPanel
 extends Control
 
 signal closed
 
 const CONTENT_W := 408.0
+const DECK_H := 400.0
+const PageDeckScript := preload("res://src/ui/PageDeck.gd")
 
-var _rows_box: Control = null
+var _deck: Control = null
 var _expedition_l: Label = null
 var _toast: Label = null
+var _content: Control = null
+var _sids: Array = []
 
 
 func _ready() -> void:
@@ -31,6 +37,7 @@ func _build() -> void:
 	content.set_anchors_preset(Control.PRESET_FULL_RECT)
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.add_child(content)
+	_content = content
 
 	var role := G.get_role(G.selected_role)
 	_expedition_l = G.gold_label("", G.FS_SM, true, Color("4a7a8a"), false)
@@ -48,12 +55,14 @@ func _build() -> void:
 	info.position = Vector2(CONTENT_W - 28.0, -2)
 	content.add_child(info)
 
-	_rows_box = Control.new()
-	_rows_box.position = Vector2(0, 44)
-	content.add_child(_rows_box)
+	# 一屏一项大卡翻页（技能 id 列表由 _refresh 填）
+	_deck = PageDeckScript.new(CONTENT_W, DECK_H, 30.0)
+	_deck.position = Vector2(0, 40)
+	_deck.key_mode = "both"
+	content.add_child(_deck)
 
-	var close_btn := G.gold_button("返 回", 130, 36, G.FS_MD)
-	close_btn.position = Vector2(CONTENT_W / 2.0 - 65, 528)
+	var close_btn := G.gold_button("返 回", G.BTN_S.x, G.BTN_S.y, G.FS_SM)
+	close_btn.position = Vector2((CONTENT_W - G.BTN_S.x) * 0.5, 466)
 	close_btn.gui_input.connect(func(ev: InputEvent):
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 			closed.emit())
@@ -63,78 +72,106 @@ func _build() -> void:
 
 
 func _refresh() -> void:
-	_expedition_l.text = "远征币 %d · 「%s」的五技能" % [
+	_expedition_l.text = "远征币 %d · 「%s」" % [
 		int(G.wallet.get("expedition", 0)),
 		String(G.get_role(G.selected_role).get("name", ""))]
-	for c in _rows_box.get_children():
-		c.queue_free()
 	var role := G.get_role(G.selected_role)
-	var sids: Array = role.get("skills", [])
-	for i in sids.size():
-		var row := _skill_row(String(sids[i]))
-		row.position = Vector2(0, i * 88.0)
-		_rows_box.add_child(row)
+	_sids = role.get("skills", [])
+	# 重建 PageDeck：技能升级会改变等级珠与按钮文案，整块重建（技能少，开销可忽略）
+	if _deck != null:
+		_deck.queue_free()
+	_deck = PageDeckScript.new(CONTENT_W, DECK_H, 30.0)
+	_deck.position = Vector2(0, 40)
+	_deck.key_mode = "both"
+	_deck.set_factory(_sids.size(), func(i: int) -> Control:
+		return _skill_page(String(_sids[i])), Vector2(CONTENT_W, DECK_H))
+	_content.add_child(_deck)
+	# 打开先落在「未满级」的技能上（都从 LV1 开始，落第 0 个即可）
+	_deck.go(0, true)
 
 
-func _skill_row(sid: String) -> Control:
+## 一页一个大卡片：技能名 + 大号等级珠 + 描述 + 大升级按钮
+func _skill_page(sid: String) -> Control:
 	var sd := TableCache.get_skill(sid)
 	var lv := G.skill_level(sid)
 	var mx := G.skill_max_level()
 	var cost := G.skill_upgrade_cost(sid)
 
+	var page := Control.new()
+	page.custom_minimum_size = Vector2(CONTENT_W, DECK_H)
+	page.size = Vector2(CONTENT_W, DECK_H)
+
 	var root := PanelContainer.new()
-	root.custom_minimum_size = Vector2(CONTENT_W, 80)
+	root.custom_minimum_size = Vector2(CONTENT_W, DECK_H)
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = Color("f0e2bc")
-	sb.corner_radius_top_left = 5
-	sb.corner_radius_top_right = 7
-	sb.corner_radius_bottom_left = 6
-	sb.corner_radius_bottom_right = 4
+	sb.set_corner_radius_all(10)
 	sb.set_border_width_all(2)
 	sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.5)
 	G._apply_shadow(sb, 3.0, 2.0, 0.22)
 	root.add_theme_stylebox_override("panel", sb)
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.position = Vector2(0, 0)
+	page.add_child(root)
 
 	var inner := Control.new()
 	inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(inner)
 
-	var name_l := G.serif_label(String(sd.get("name", sid)), G.FS_MD, G.TEXT_DARK)
-	name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	name_l.position = Vector2(10, 6)
+	# 技能名：宋体大标题，居中
+	var name_l := G.serif_label(String(sd.get("name", sid)), G.FS_BIG, G.TEXT_DARK)
+	name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	name_l.position = Vector2(0, 20)
+	name_l.custom_minimum_size = Vector2(CONTENT_W, 0)
 	inner.add_child(name_l)
 
-	# 等级珠：10 颗小点
+	# 大号等级珠：10 颗，居中横排，一眼看出等级
+	var dots_w := mx * 30.0
+	var dot_x := (CONTENT_W - dots_w) * 0.5
 	for i in mx:
 		var dot := Panel.new()
-		dot.position = Vector2(10 + i * 17.0, 34)
-		dot.size = Vector2(12, 12)
+		dot.position = Vector2(dot_x + i * 30.0, 80)
+		dot.size = Vector2(22, 22)
 		dot.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		var dsb := StyleBoxFlat.new()
-		dsb.set_corner_radius_all(6)
-		dsb.bg_color = Color("4a7a9a") if i < lv else Color("c8b892")
+		dsb.set_corner_radius_all(11)
+		dsb.bg_color = Color("4a7a9a") if i < lv else Color("d0c09a")
+		if i == lv and lv < mx:
+			dsb.border_color = G.GOLD_BRIGHT
+			dsb.set_border_width_all(2)
 		dot.add_theme_stylebox_override("panel", dsb)
 		inner.add_child(dot)
 
+	# 等级文字：「LV3 / 10」
+	var lv_l := G.gold_label("LV%d / %d" % [lv, mx], G.FS_MD, true, Color("4a7a8a"), false)
+	lv_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lv_l.position = Vector2(0, 116)
+	lv_l.custom_minimum_size = Vector2(CONTENT_W, 0)
+	inner.add_child(lv_l)
+
+	# 效果描述：一行，居中
 	var k0 := float(sd.get("k", 0.0))
-	# 玩家友好表述：「单体猛击 · 强度+25%」，不暴露 k 系数术语；1 级未强化时不显示强度段
 	var eff := String(sd.get("desc", ""))
 	var mult := G.skill_k_mult(sid)
 	if k0 > 0.0 and mult > 1.001:
 		eff += " · 强度 +%d％" % roundi((mult - 1.0) * 100.0)
-	var k_l := G.text_label(eff, G.FS_XS, Color("7a5a2e"))
-	k_l.position = Vector2(10, 52)
+	var k_l := G.text_label(eff, G.FS_SM, Color("5a3a1e"))
+	k_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	k_l.position = Vector2(20, 156)
+	k_l.custom_minimum_size = Vector2(CONTENT_W - 40, 0)
+	k_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	inner.add_child(k_l)
 
-	var btn := G.gold_button("满 级" if cost <= 0 else "升级 %d" % cost, 108, 34, G.FS_SM)
-	btn.position = Vector2(CONTENT_W - 118, 23)
+	# 大升级按钮：底部居中
+	var btn := G.gold_button("已满级" if cost <= 0 else "升 级 · %d 远征币" % cost,
+		G.BTN_L.x, G.BTN_L.y, G.FS_MD)
+	btn.position = Vector2((CONTENT_W - G.BTN_L.x) * 0.5, 260)
 	btn.mouse_filter = Control.MOUSE_FILTER_STOP
 	btn.gui_input.connect(func(ev: InputEvent):
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 			_on_upgrade(sid))
 	inner.add_child(btn)
-	return root
+	return page
 
 
 func _on_upgrade(sid: String) -> void:
