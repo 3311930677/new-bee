@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "comment": "主城物资铺（锻造铺落成后开放）：金币换养成材料——装备/强化线的稳定获取口（P1-2）。",
+  "items": [
+    { "item": "enhance_stone", "price": 120 },
+    { "item": "refine_stone", "price": 260 },
+    { "item": "pet_food", "price": 90 },
+    { "item": "aptitude_fruit", "price": 420 },
+    { "item": "evolve_crystal", "price": 600 }
+  ]
+}

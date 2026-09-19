@@ -71,7 +71,8 @@ func _run() -> void:
 			has_scribe = true
 	_check(has_scribe, "图志阁落成后青姨应上街")
 	_check(G.build_state("hall") == "已落成", "议事厅状态应为已落成，实为 %s" % G.build_state("hall"))
-	_check(G.build_state("forge") == "尚未开放", "锻造铺状态应为尚未开放")
+	_check(G.build_state("forge") != "尚未开放", "锻造铺应已开放（物资铺），实为 %s" % G.build_state("forge"))
+	_check(String(G.city_building("forge").get("action", "")) == "shop", "锻造铺应指向物资铺")
 
 	# 活动：祭坛未建时签到不可领；城中宴会（议事厅）随时可办
 	_check(not G.activity_ready("signin"), "祭坛未建，签到应不可领")

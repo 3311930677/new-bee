@@ -50,10 +50,10 @@
       "pos": [17.5, 16.5], "size": [3.0, 2.5], "action": "activity:signin",
       "desc": "以魂晶砌成的旧祭坛，风过时会有低鸣。落成后可每日点灯祈福。" },
 
-    { "id": "forge", "name": "锻造铺", "style": "forge", "kind": "soon",
+    { "id": "forge", "name": "锻造铺", "style": "forge", "kind": "func",
       "min_level": 6, "cost": { "gold": 600, "expedition": 40 }, "hue": 2,
-      "pos": [6.5, 16.5], "size": [3.0, 2.0], "action": "soon",
-      "desc": "铁砧与风箱都搬进来了，炉子还没点。匠人说要等更好的矿石。" }
+      "pos": [6.5, 16.5], "size": [3.0, 2.0], "action": "shop",
+      "desc": "炉火点着了。匠人说：带足金币，养成材料随到随取。" }
   ],
 
   "npcs": [

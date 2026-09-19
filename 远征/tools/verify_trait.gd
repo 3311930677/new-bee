@@ -123,6 +123,34 @@ func _init() -> void:
 		fails += 1
 		push_error("FAIL: 死线低血 ATK 应 ×%.2f，实为 ×%.2f" % [want6, ratio])
 
+	# 7. 三处词条接线（P1-12）：荆棘·小反伤取表值、弱点洞悉对满血加成、处决者普攻生效
+	var e_th := _eff("tr_thorns_s")
+	var ts_th := TraitSystem.new(["tr_thorns_s"])
+	if not _num_ok(ts_th.reflect_pct(), float(e_th.get("pct", 0.0))):
+		fails += 1
+		push_error("FAIL: 荆棘·小反伤应取表值 %.2f，实为 %.2f"
+			% [float(e_th.get("pct", 0.0)), ts_th.reflect_pct()])
+	var sim7 := BattleSim.new()
+	sim7.record_events = false
+	sim7.setup(51, {"role_id": "zs", "level": 10, "traits": ["tr_crit_2", "tr_execute"]},
+		{"theme": "forest", "node_type": "normal", "layer": 1})
+	var u7 := sim7.role_unit()
+	var foe7 := sim7.alive_units("enemy")[0]
+	var e_cr := _eff("tr_crit_2")
+	if not _num_ok(u7.traits.crit_vs_full_hp_bonus(foe7), float(e_cr.get("crit_vs_full_hp", 0.15))):
+		fails += 1
+		push_error("FAIL: 弱点洞悉对满血目标应 +%.2f" % float(e_cr.get("crit_vs_full_hp", 0.15)))
+	foe7.hp = 1
+	if not _num_ok(u7.traits.crit_vs_full_hp_bonus(foe7), 0.0):
+		fails += 1
+		push_error("FAIL: 弱点洞悉对残血目标不应加成")
+	var e_ex := _eff("tr_execute")
+	var want7 := int(100.0 * (1.0 + float(e_ex.get("dmg_pct", 0.25))))
+	var boosted := u7.traits.modify_outgoing(u7, foe7, 100, false, false)
+	if boosted != want7:
+		fails += 1
+		push_error("FAIL: 处决者应在普攻路径生效（100 → %d，期望 %d）" % [boosted, want7])
+
 	if fails == 0:
 		print("TRAIT_OK all tests passed")
 	else:

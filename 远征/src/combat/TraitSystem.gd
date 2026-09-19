@@ -217,25 +217,42 @@ func energy_on_skill() -> int:
 	return int(e.get("energy_on_skill", 0))
 
 
-# ---------- 技能伤害修正（多词条叠加） ----------
-func modify_skill_dmg(unit: Combatant, target: Combatant, dmg: int, is_full_energy: bool) -> int:
+# ---------- 出手伤害修正（技能与普攻共用，多词条叠加） ----------
+## 修「处决者只对技能生效」与 `target.is_empty()` 误用（P1-12）；is_skill 区分「仅技能」词条。
+func modify_outgoing(unit: Combatant, target: Combatant, dmg: int, is_skill: bool, is_full_energy: bool) -> int:
 	var pct := 0.0
-	# 凝神：技能伤害 +12%
-	if has_trait("tr_focus"):
+	# 凝神：技能伤害 +12%（只吃技能）
+	if is_skill and has_trait("tr_focus"):
 		pct += 0.12
-	# 处决者：对 HP<20% 目标 +25%
+	# 处决者：对 HP<20% 目标 +25%（普攻/技能都吃）
 	var e := _effect_of("tr_execute")
-	if not e.is_empty() and not target.is_empty():
+	if not e.is_empty() and target != null and target.alive:
 		var ratio := float(target.hp) / float(maxi(target.get_max_hp(), 1))
 		if ratio < float(e.get("vs_hp_below", 0.2)):
 			pct += float(e.get("dmg_pct", 0.25))
-	# 碎冰：对受控目标 +20%
-	if has_trait("tr_ctrl_2") and (target.has_buff("stun") or target.has_buff("fear") or target.has_buff("confusion")):
+	# 碎冰：对受控目标 +20%（普攻/技能都吃）
+	if has_trait("tr_ctrl_2") and target != null \
+			and (target.has_buff("stun") or target.has_buff("fear") or target.has_buff("confusion")):
 		pct += 0.20
-	# 超载：满能量时 +20%
-	if has_trait("tr_energy_2") and is_full_energy:
+	# 超载：满能量时技能伤害 +20%（只吃技能）
+	if is_skill and has_trait("tr_energy_2") and is_full_energy:
 		pct += 0.20
 	return maxi(1, int(float(dmg) * (1.0 + pct)))
+
+
+## 技能路径兼容入口（原函数名保留；转发到共用实现）
+func modify_skill_dmg(unit: Combatant, target: Combatant, dmg: int, is_full_energy: bool) -> int:
+	return modify_outgoing(unit, target, dmg, true, is_full_energy)
+
+
+## 弱点洞悉：对满血目标暴击率 +表值（P1-12；由掷骰处调用）
+func crit_vs_full_hp_bonus(target: Combatant) -> float:
+	var e := _effect_of("tr_crit_2")
+	if e.is_empty() or target == null or not target.alive:
+		return 0.0
+	if target.hp >= target.get_max_hp():
+		return float(e.get("crit_vs_full_hp", 0.15))
+	return 0.0
 
 
 # ---------- 钩子 ----------
@@ -277,7 +294,7 @@ func on_crit(sim: BattleSim, unit: Combatant, target: Combatant) -> void:
 	var e2 := _effect_of("tr_crit_1")
 	if not e2.is_empty():
 		unit.add_buff("spd_up", int(float(e2.get("dur", 3.0)) * 30.0), {"pct": e2.get("spd_pct", 0.15)})
-	# 弱点洞悉：对满血目标暴击率加成（getter 端处理不了，简化为命中即触发一次小加速）
+	# （弱点洞悉改由 crit_vs_full_hp_bonus 在掷骰处生效，此处无需额外处理）
 
 
 func on_behit(sim: BattleSim, unit: Combatant, src: Combatant, dmg: int) -> void:

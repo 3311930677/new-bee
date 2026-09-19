@@ -81,6 +81,7 @@ var _auto_time := 0.0                # 自动前往累计时长（超时自停�
 var _auto_stuck := 0.0
 var _auto_dodge := 0.0
 var _auto_dodge_side := 1.0
+var _auto_fail := 0                  # 连续卡住计数：绕行多次无效即停手（P1-14）
 var _prev_pos := Vector2.ZERO
 var _prog := {}                      # 本节点探索进度（RunState.map_progress 的引用；P0-1）
 
@@ -1180,6 +1181,7 @@ func _on_compass_tapped() -> void:
 	_auto_time = 0.0
 	_auto_stuck = 0.0
 	_auto_dodge = 0.0
+	_auto_fail = 0
 	_toast("前往%s · 推动摇杆可随时接手" % String(info.get("name", "目标")))
 
 
@@ -1194,6 +1196,7 @@ func _stop_auto_walk(msg: String) -> void:
 	_auto_time = 0.0
 	_auto_stuck = 0.0
 	_auto_dodge = 0.0
+	_auto_fail = 0
 	if msg != "":
 		_toast(msg)
 
@@ -1206,8 +1209,10 @@ func _auto_dir(delta: float) -> Vector2:
 		_stop_auto_walk("")
 		return Vector2.ZERO
 	_auto_time += delta
-	if _auto_time > AUTO_TIMEOUT:
-		_stop_auto_walk("前路不通——请你亲自来")
+	# 按剩余距离给余量（2.5 倍步行时长）：远路不再被固定 26s 误判成"前路不通"（P1-14）
+	var allowed := maxf(AUTO_TIMEOUT, to.length() / 100.0 * 2.5)
+	if _auto_time > allowed:
+		_stop_auto_walk("走得太久——请你亲自来")
 		return Vector2.ZERO
 	if _auto_dodge > 0.0:
 		_auto_dodge -= delta
@@ -1226,10 +1231,16 @@ func _tick_auto_walk(delta: float) -> void:
 		_auto_stuck += delta
 	else:
 		_auto_stuck = 0.0
+		_auto_fail = 0
 	if _auto_stuck > 0.22:
 		_auto_stuck = 0.0
 		_auto_dodge = 0.5
 		_auto_dodge_side = -_auto_dodge_side
+		# 来回绕仍卡住 → 停手交还控制（不再无限对撞，P1-14）
+		_auto_fail += 1
+		if _auto_fail >= 4:
+			_stop_auto_walk("前路受阻——请你亲自来")
+			return
 
 
 func _toggle_sprint() -> void:

@@ -602,6 +602,8 @@ func _show_built_panel(bd: Dictionary) -> void:
 			btn_text = "翻看宠物图鉴"
 		"deploy":
 			btn_text = "整备出征"
+		"shop":
+			btn_text = "采买物资"
 		"soon":
 			btn_text = "尚未开放"
 	if act.begins_with("activity:"):
@@ -637,6 +639,8 @@ func _built_action(act: String) -> void:
 			_open_codex()
 		"deploy":
 			_open_deploy()
+		"shop":
+			_open_shop()
 		"soon":
 			_toast("匠人还没备好料，再等等")
 
@@ -966,6 +970,18 @@ func _open_codex() -> void:
 		return
 	Audio.sfx("ui_open")
 	var p := CodexPanel.new()
+	_overlay = p
+	p.closed.connect(_close_overlay)
+	_hud.visible = false
+	_overlay_layer.add_child(p)
+
+
+## 物资铺（锻造铺落成后开放；P1-2 的金币出口）
+func _open_shop() -> void:
+	if _overlay != null:
+		return
+	Audio.sfx("ui_open")
+	var p: Control = (load("res://src/ui/ShopPanel.gd") as GDScript).new()
 	_overlay = p
 	p.closed.connect(_close_overlay)
 	_hud.visible = false

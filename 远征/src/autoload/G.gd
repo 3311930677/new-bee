@@ -640,6 +640,45 @@ func pet_unlock_text(pid: String) -> String:
 	return "未知途径"
 
 
+# ---------- 主城物资铺（锻造铺；P1-2：金币换养成材料的稳定出口） ----------
+
+## 物资铺货架（data/shop.json；读盘失败返回空数组，面板照常可开）
+func shop_items() -> Array:
+	var f := FileAccess.open("res://data/shop.json", FileAccess.READ)
+	if f == null:
+		push_error("data/shop.json 缺失")
+		return []
+	var parsed: Variant = JSON.parse_string(f.get_as_text())
+	f.close()
+	if not (parsed is Dictionary):
+		return []
+	var arr: Variant = (parsed as Dictionary).get("items", [])
+	return arr if arr is Array else []
+
+
+## 某货品单价（未登记返回 0）
+func shop_price(item_id: String) -> int:
+	for r in shop_items():
+		var d := r as Dictionary
+		if String(d.get("item", "")) == item_id:
+			return maxi(1, int(d.get("price", 1)))
+	return 0
+
+
+## 购买一件：金币不足拒绝；成功扣款并发放（单件购买，防一次买爆经济）
+func shop_buy(item_id: String) -> Dictionary:
+	var price := shop_price(item_id)
+	if price <= 0:
+		return {"ok": false, "err": "本店没有这件货"}
+	if int(wallet.get("gold", 0)) < price:
+		return {"ok": false, "err": "金币不足（需 %d）" % price}
+	wallet["gold"] = int(wallet.get("gold", 0)) - price
+	grant_item(item_id, 1)   # 内部落盘
+	save_game()
+	_sfx("coin", 0.0)
+	return {"ok": true, "err": ""}
+
+
 # ================= 主城（据点） =================
 # 数据源 data/city.json：建筑（程序绘制，按 style 分支）、NPC（对话池）、活动（冷却产出）。
 

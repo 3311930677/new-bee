@@ -21,8 +21,8 @@
     "effect": { "stat": "energy_gain", "pct": 0.25 }, "desc": "能量获取 +25%" },
   { "id": "tr_lifesteal_s", "name": "饮血·小", "school": "none", "type": "num", "hook": "on_hit",
     "effect": { "lifesteal": 0.05 }, "desc": "普攻吸血 5%" },
-  { "id": "tr_thorns_s", "name": "荆棘·小", "school": "thorn", "type": "num", "hook": "on_behit",
-    "effect": { "reflect": 0.08 }, "desc": "反伤 8%" },
+  { "id": "tr_thorns_s", "name": "荆棘·小", "school": "thorn", "type": "num", "hook": "passive",
+    "effect": { "stat": "reflect", "pct": 0.08 }, "desc": "反伤 8%" },
 
   { "id": "tr_first_strike", "name": "先发制人", "school": "none", "type": "mech", "hook": "on_hit",
     "effect": { "first_hit_k": 2.0 }, "desc": "开局首次普攻伤害 ×2" },

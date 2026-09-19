@@ -343,6 +343,17 @@ func _run() -> void:
 		jmap._joy.vector = Vector2.ZERO
 	jmap.queue_free()
 	await get_tree().process_frame
+
+	# J4 卡死自停（P1-14）：连续卡住应停手交还控制，不再无限对撞
+	var zmap := await _spawn_map("chest", 1, "")
+	zmap._on_compass_tapped()
+	_check(zmap._auto_walk, "应能开启自动前往")
+	zmap._auto_fail = 3
+	zmap._prev_pos = zmap._player.position   # 伪造"几乎没动"
+	zmap._tick_auto_walk(0.3)
+	_check(not zmap._auto_walk, "连续卡住应自停交还控制")
+	zmap.queue_free()
+	await get_tree().process_frame
 	nmap.queue_free()
 	await get_tree().process_frame
 

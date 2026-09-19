@@ -215,6 +215,34 @@ func _verify_settings() -> void:
 			_check(int(ad.get("cd", 0)) > 0, "非 daily 活动「%s」应显式给冷却（cd），实为 %d"
 				% [String(ad.get("id", "")), int(ad.get("cd", 0))])
 
+	# 7. 物资铺（P1-2）：价目表合法、购买扣款发货、金币不足拒绝、面板能列出货架
+	G.wallet = {"gold": 0, "expedition": 0, "soul": 0, "honor": 0}
+	G.items = {}
+	var shop: Array = G.shop_items()
+	_check(shop.size() >= 4, "物资铺应有至少 4 件货，实为 %d" % shop.size())
+	var bad_shop: Array = []
+	for r in shop:
+		var d := r as Dictionary
+		var iid := String(d.get("item", ""))
+		if G.item_name(iid) == iid or int(d.get("price", 0)) <= 0:
+			bad_shop.append(iid)
+	_check(bad_shop.is_empty(), "物资铺条目应登记名称且有正价：%s" % str(bad_shop))
+	if not shop.is_empty():
+		var item0 := String((shop[0] as Dictionary).get("item", ""))
+		var price0 := G.shop_price(item0)
+		_check(price0 > 0, "取价应命中货品")
+		_check(not bool(G.shop_buy(item0)["ok"]), "金币不足应买不了")
+		G.wallet["gold"] = price0
+		var buy1 := G.shop_buy(item0)
+		_check(bool(buy1["ok"]) and G.item_count(item0) == 1, "购买应发货")
+		_check(int(G.wallet["gold"]) == 0, "购买应扣款")
+	var shop_p: Control = (load("res://src/ui/ShopPanel.gd") as GDScript).new()
+	add_child(shop_p)
+	await get_tree().process_frame
+	_check(shop_p.get("_rows_box") != null and (shop_p.get("_rows_box") as Control).get_child_count() >= shop.size(),
+		"物资铺面板应列出全部货品")
+	shop_p.queue_free()
+
 	# 6. 返回信号
 	var closed_n := {"n": 0}
 	sp.closed.connect(func(): closed_n["n"] += 1)
