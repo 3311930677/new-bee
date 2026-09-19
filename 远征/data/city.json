@@ -132,7 +132,7 @@
       "desc": "沿城墙走一圈，把外头的动静记下来。",
       "reward": { "soul": 8, "exp": 15 } },
 
-    { "id": "feast", "name": "城中宴会", "need": "hall", "cd": 0,
+    { "id": "feast", "name": "城中宴会", "need": "hall", "cd": 14400,
       "desc": "摆一桌，把攒着的热闹花出去。花金币，换经验。",
       "cost": { "gold": 200 }, "reward": { "exp": 160 } }
   ],

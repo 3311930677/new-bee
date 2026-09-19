@@ -278,6 +278,10 @@ func _load_save() -> void:
 		push_warning("存档解析失败，沿用默认状态")
 		return
 	var data := parsed as Dictionary
+	# 版本提示（迁移策略：字段一律「缺省即默认」，暂无需逐版迁移；高于本程序的档按兼容读）
+	var ver := int(data.get("version", 1))
+	if ver > SAVE_VERSION:
+		push_warning("存档版本 %d 高于本程序 %d，按兼容方式读取" % [ver, SAVE_VERSION])
 	var w: Variant = data.get("wallet", {})
 	if w is Dictionary:
 		for k in ["gold", "expedition", "soul", "honor"]:
@@ -374,6 +378,38 @@ func _load_save() -> void:
 		quest["active"] = aq if aq is Dictionary else {}
 		var cl: Variant = qd.get("claimed", [])
 		quest["claimed"] = cl if cl is Array else []
+
+
+## 把「进度类」内存态重置为初始默认值（导入重读 / 重置存档共用，P0-3/P0-4）。
+## 保留项：音频偏好（设置而非进度）与已上传头像文件（avatar_custom 串保留、不启用）。
+func _init_state_defaults() -> void:
+	wallet = {"gold": 0, "expedition": 0, "soul": 0, "honor": 0}
+	items = {"ticket_ten": 0, "ticket_sweep": 1}
+	prog = {"level": 1, "exp": 0, "worlds_unlocked": 1, "world_cleared": {}, "pets": [],
+		"talents": {}, "equip": {}, "skills": {}, "mounts": {"owned": {}, "active": ""},
+		"titles": {"owned": [], "active": ""}, "pet_stat": {}, "tips_seen": {},
+		"lore_seen": false, "lore_beats": {}, "settings": {}}
+	city = {"built": ["hall", "gate"], "code": "", "visits": [], "acts": {}, "day": "", "streak": 0}
+	quest = {"day": "", "offer": [], "active": {}, "claimed": []}
+	arena = {"score": 1000, "wins": 0, "losses": 0}
+	account = ""
+	gender = "男"
+	selected_role = ""
+	avatar_id = ""
+	avatar_use_custom = false
+	player_name = ""
+	_avatar_tex_done = false
+	_avatar_tex = null
+
+
+## 导入存档 / 外部写入后：重置内存态并重读文件。此前只写盘不重读，
+## 旧内存会在下一次 save_game 把刚导入的档覆盖掉（P0-3）
+func reload_save() -> bool:
+	if not FileAccess.file_exists(SAVE_PATH):
+		return false
+	_init_state_defaults()
+	_load_save()
+	return true
 
 
 ## 存档：钱包四币 + 养成进度 + 角色档案（远征结算入账 / 主城关键节点时写）
@@ -2051,12 +2087,11 @@ func gm_add_currency(amount: int) -> void:
 
 
 func gm_reset_save() -> void:
-	prog = {"level": 1, "exp": 0, "worlds_unlocked": 1, "world_cleared": {}, "pets": [],
-		"talents": {}, "equip": {}, "skills": {},
-		"mounts": {"owned": {}, "active": ""}, "titles": {"owned": [], "active": ""},
-		"pet_stat": {}}
-	wallet = {"gold": 0, "expedition": 0, "soul": 0, "honor": 0}
+	# 完整口径（P0-4）：钱包/道具/养成/主城/委托/段位/账号资料全清；头像文件保留但不启用；
+	# 补发初始伙伴与初始建筑后落盘
+	_init_state_defaults()
 	ensure_starter_pets()
+	ensure_starter_buildings()
 	save_game()
 
 
