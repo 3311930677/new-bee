@@ -620,6 +620,12 @@ func _open_settings(e: InputEvent) -> void:
 		_settings.queue_free()
 		_settings = null
 		_set_home_content_visible(true))
+	# 设置页里的「更换头像」把请求交给主界面：设置先收起来，再叠出头像浮层，
+	# 免得两个面板叠在一起（设置卡片在下面、头像卡片在上面，两套返回键容易点错）
+	_settings.avatar_requested.connect(func():
+		if _settings != null:
+			_settings.closed.emit()
+		_open_avatar_panel())
 	_set_home_content_visible(false)
 	add_child(_settings)
 

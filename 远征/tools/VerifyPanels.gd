@@ -32,6 +32,14 @@ func _check(cond: bool, msg: String) -> void:
 		push_error("FAIL: " + msg)
 
 
+## 合成一次左键按下事件（开关类按钮都只认这一种输入）
+func _click_ev() -> InputEventMouseButton:
+	var e := InputEventMouseButton.new()
+	e.button_index = MOUSE_BUTTON_LEFT
+	e.pressed = true
+	return e
+
+
 func _run() -> void:
 	await _verify_exchange()
 	await _verify_settings()
@@ -119,6 +127,40 @@ func _verify_settings() -> void:
 	# 3. 导入非法码：乱串与非字典 JSON 都要拒绝
 	_check(not sp.do_import("这不是存档码"), "乱码应导入失败")
 	_check(not sp.do_import("[1,2,3]"), "数组 JSON 应导入失败")
+
+	# 3.5 轮次 15：两页设置 + 开关项真的写进存档
+	var deck: Control = sp.get("_deck")
+	_check(deck != null and int(deck.get("page_count")) == 2, "设置应分两页（常规 / 存档与系统）")
+	_check(bool(G.setting_get("shake", true)), "震屏默认应为开")
+	sp.get("_shake_btn").gui_input.emit(_click_ev())
+	_check(not bool(G.setting_get("shake", true)), "点震屏开关应写入 shake=false")
+	var raw: Variant = JSON.parse_string(sp.do_export())
+	_check(raw is Dictionary
+		and bool(((raw as Dictionary).get("prog", {}) as Dictionary).get("settings", {}).get("shake", true)) == false,
+		"shake 应落进存档 prog.settings")
+	sp.get("_shake_btn").gui_input.emit(_click_ev())
+	_check(bool(G.setting_get("shake", true)), "再点一次应恢复 shake=true")
+
+	_check(not bool(G.setting_get("skip_story", false)), "剧情演出默认应为播")
+	sp.get("_story_btn").gui_input.emit(_click_ev())
+	_check(bool(G.setting_get("skip_story", false)), "点剧情开关应写入 skip_story=true")
+	sp.get("_story_btn").gui_input.emit(_click_ev())
+
+	_check(is_equal_approx(float(G.setting_get("battle_speed", 1.0)), 1.0), "默认倍速应为 ×1")
+	sp.get("_speed_btn").gui_input.emit(_click_ev())
+	_check(is_equal_approx(float(G.setting_get("battle_speed", 1.0)), 2.0), "点倍速应切到 ×2")
+	sp.get("_speed_btn").gui_input.emit(_click_ev())
+	_check(is_equal_approx(float(G.setting_get("battle_speed", 1.0)), 1.0), "再点应切回 ×1")
+
+	# 3.6 昵称：空值拒绝、正常值写入存档
+	var ne: LineEdit = sp.get("_name_edit")
+	_check(ne != null, "设置页应有昵称输入框")
+	ne.text = "   "
+	sp.call("_save_name")
+	_check(String(sp.get("_name_hint").text).contains("不能为空"), "空昵称应被拒绝并提示")
+	ne.text = "夜行者"
+	sp.call("_save_name")
+	_check(G.player_name == "夜行者", "昵称应写入 G.player_name，实为 %s" % G.player_name)
 
 	# 4. 重置二次确认：第一次点击只亮确认态，不落盘
 	sp._on_reset_click()

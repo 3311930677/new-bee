@@ -1017,8 +1017,10 @@ func on_monster_contact(m: _MapMonster) -> void:
 func _start_battle(m: _MapMonster) -> void:
 	m.chasing_contact = true  # 接触怪冻结
 	_contact_mon = m
-	# BOSS 战前「对峙」：第一次挑战这片秘境的首领时演一段（看过的不再拦人）
-	if m.tier == "boss" and not G.beat_seen(st.theme, "intro") \
+	# BOSS 战前「对峙」：第一次挑战这片秘境的首领时演一段（看过的不再拦人；
+	# 设置里关掉演出则直接开打，且**不标记已看**——回头打开设置还能补看）
+	if m.tier == "boss" and not bool(G.setting_get("skip_story", false)) \
+			and not G.beat_seen(st.theme, "intro") \
 			and not G.boss_beat_lines(st.theme, "intro").is_empty():
 		G.mark_beat_seen(st.theme, "intro")
 		_play_boss_beat("intro", func(): _launch_battle(m))
@@ -1088,7 +1090,8 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 		if _portal != null:
 			_portal.locked = false
 			_toast("首领陨落——传送阵封印解除！")
-		if not G.beat_seen(st.theme, "outro") \
+		if not bool(G.setting_get("skip_story", false)) \
+				and not G.beat_seen(st.theme, "outro") \
 				and not G.boss_beat_lines(st.theme, "outro").is_empty():
 			G.mark_beat_seen(st.theme, "outro")
 			_play_boss_beat("outro", _after_battle_rewards)
