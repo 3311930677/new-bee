@@ -2751,6 +2751,49 @@ func make_arena_foe(level: int) -> Dictionary:
 	}
 
 
+## 镜影对手（轮次 18）：用玩家自己的角色面板生成的"镜像"——
+## 同一套角色基础属性 + 同一套局外养成加成（天赋/装备/坐骑/称号）+ **同一套技能**（含技能书等级），
+## 只有 HP 打到 90%（给玩家一点公平优势）。演武场因此从"打木桩"变成"跟自己过招"：
+## 你越强，镜影也越强，但你能看懂它的每一手。
+func make_arena_mirror(role_id: String, level: int) -> Dictionary:
+	var rid := role_id if role_id != "" else selected_role
+	var role: Dictionary = get_role(rid)
+	if role.is_empty():
+		return make_arena_foe(level)   # 角色表缺数据时退回傀儡，不让面板开天窗
+	var lvl := maxi(1, level)
+	var stats := TableCache.role_stats(rid, lvl)
+	var gb := growth_bonuses(rid)
+	stats.max_hp = int(float(stats.max_hp) * (1.0 + float(gb.get("maxhp_pct", 0.0))) + float(gb.get("hp_add", 0)))
+	stats.atk = int(float(stats.atk) * (1.0 + float(gb.get("atk_pct", 0.0))) + float(gb.get("atk_add", 0.0)))
+	stats.def = int(float(stats.def) * (1.0 + float(gb.get("def_pct", 0.0))) + float(gb.get("def_add", 0.0)))
+	stats.spd = stats.spd * (1.0 + float(gb.get("spd_pct", 0.0)))
+	var skills: Array = []
+	var learned: Dictionary = prog.get("skills", {})
+	var k_per := float(TableCache.skillbook_config().get("k_per_level", 0.05))
+	for sid in role.get("skills", []):
+		var sd := TableCache.get_skill(String(sid))
+		if sd.is_empty():
+			continue
+		var slv := int(learned.get(String(sid), 1))
+		if slv > 1:
+			sd = sd.duplicate()
+			sd["k"] = snappedf(float(sd.get("k", 0.0)) * (1.0 + k_per * float(slv - 1)), 0.001)
+		skills.append(sd)
+	if skills.is_empty():   # 角色表没给技能：至少给一手重击，别让它站着挨打
+		skills = [{"id": "boss_slam", "name": "震地", "k": 1.6, "cd": 9,
+			"target": "enemy_front_all"}]
+	return {
+		"id": "mon_arena_dummy",
+		"name": "镜影 · %s" % String(role.get("name", "守碑人")),
+		"tier": "boss", "ai": "boss",
+		"attack_range": String(role.get("attack_range", "melee")),
+		"base": {"hp": int(float(stats.max_hp) * 0.9), "atk": int(stats.atk),
+			"def": int(stats.def), "spd": float(stats.spd)},
+		"skills": skills,
+		"mirror": true,
+	}
+
+
 ## 兑换表最低单价（主页红点用：荣誉买得起任意一件才点亮，宁可少提示也不乱提示）
 var _exchange_min := -1
 func exchange_min_cost() -> int:
