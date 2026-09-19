@@ -28,6 +28,8 @@ const DECK_H := 400.0
 const DECK_Y := 30.0
 
 var _deck: Control = null   # 大卡轮播（工厂模式：卡用到才建）
+var _pets: Array = []       # 宠物表快照（进化后重建卡组要重读）
+var _content: Control = null
 
 
 func _ready() -> void:
@@ -50,6 +52,7 @@ func _build() -> void:
 	content.set_anchors_preset(Control.PRESET_FULL_RECT)
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.add_child(content)
+	_content = content
 
 	var pets: Array = TableCache.pets()
 	var owned_n := G.owned_pets().size()
@@ -63,22 +66,24 @@ func _build() -> void:
 
 	# 一屏一只：拖拽、两侧箭头、←→/AD 翻页，圆点在卡下页脚
 	# 卡「用到才建」（同 WorldPanel）：先把起始页算出来，卡由工厂按需建
-	var start := 0
+	_pets = pets
+	var start := -1
 	for i in pets.size():
 		var p: Dictionary = pets[i]
-		if not G.owns_pet(String(p.get("id", ""))) and start == 0:
-			start = i   # 打开先落在「还没收集到的那只」上
-	_deck = PageDeckScript.new(CONTENT_W, DECK_H, 26.0)
-	_deck.position = Vector2(0, DECK_Y)
-	_deck.key_mode = "both"   # 方向键 / WASD 都能翻
-	_deck.set_factory(pets.size(), func(i: int) -> Control:
-		return SlideCardScript.page(_card(pets[i] as Dictionary, i, pets.size()), CONTENT_W, DECK_H),
-		Vector2(CONTENT_W, DECK_H))
-	content.add_child(_deck)
-	_deck.go(start, true)
+		if not G.owns_pet(String(p.get("id", ""))) and start < 0:
+			start = i   # 打开先落在「还没收集到的那只」上（-1 哨兵：索引 0 也正确）
+	_build_deck(maxi(0, start))
+
+	# 进化入口：对「当前页」的灵宠生效（P1-3）；与「返回」左右成对
+	var evolve := G.gold_button("进 化", 120, 38)
+	evolve.position = Vector2(20, 480)
+	evolve.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_on_evolve())
+	content.add_child(evolve)
 
 	var back := G.gold_button("返 回", 120, 38)
-	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 480)
+	back.position = Vector2(268, 480)
 	back.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			closed.emit())
@@ -106,6 +111,8 @@ func _card(p: Dictionary, idx: int, total: int) -> Control:
 	if owned:
 		subtitle = "%s · %s" % [RARITY_NAME.get(rarity, "普通"),
 			ROLE_NAME.get(String(p.get("role", "")), "未知")]
+		if bool(G.pet_stat(pid).get("evolved", false)):
+			lines.append("已进化 · 全属性 +25％")
 		lines.append("血 %d · 攻 %d · 防 %d" % [
 			int(base.get("hp", 0)), int(base.get("atk", 0)), int(base.get("def", 0))])
 		var sk := PackedStringArray()
@@ -120,7 +127,8 @@ func _card(p: Dictionary, idx: int, total: int) -> Control:
 		"kicker": "灵 宠 %02d / %02d" % [idx + 1, total],
 		"title": String(p.get("name", pid)) if owned else "？？？",
 		"subtitle": subtitle,
-		"art_names": ["%s_art" % pid, pid],
+		"art_names": (["%s_evo" % pid, "%s_art" % pid, pid]
+			if owned and bool(G.pet_stat(pid).get("evolved", false)) else ["%s_art" % pid, pid]),
 		"art_hint": "%s.png" % pid,
 		"art_tint": hue,
 		"art_fit": "contain",
@@ -132,3 +140,49 @@ func _card(p: Dictionary, idx: int, total: int) -> Control:
 		"lines": lines,
 		"footer": "← → 翻阅 · 未收集的会标出解锁途径",
 	})
+
+
+## 建/重建卡组（进化后数据变了要整组重建；start = 落在哪一页）
+func _build_deck(start: int) -> void:
+	if _deck != null:
+		_deck.queue_free()
+		_deck = null
+	_deck = PageDeckScript.new(CONTENT_W, DECK_H, 26.0)
+	_deck.position = Vector2(0, DECK_Y)
+	_deck.key_mode = "both"   # 方向键 / WASD 都能翻
+	var total := _pets.size()
+	_deck.set_factory(total, func(i: int) -> Control:
+		return SlideCardScript.page(_card(_pets[i] as Dictionary, i, total), CONTENT_W, DECK_H),
+		Vector2(CONTENT_W, DECK_H))
+	if _content != null:
+		_content.add_child(_deck)
+	_deck.go(start, true)
+
+
+## 进化当前页的灵宠（数据/素材变化 → 整组重建刷新）
+func _on_evolve() -> void:
+	if _deck == null or _pets.is_empty():
+		return
+	var idx: int = clampi(int(_deck.current), 0, _pets.size() - 1)
+	var pid := String((_pets[idx] as Dictionary).get("id", ""))
+	var res := G.pet_evolve(pid)
+	if bool(res.get("ok", false)):
+		_build_deck(idx)
+		_toast("进化成功 · 全属性提升")
+	else:
+		_toast(String(res.get("err", "不可进化")))
+
+
+## 一句话提示（图鉴没有行内提示位，用临时金字）
+func _toast(msg: String) -> void:
+	if _content == null:
+		return
+	var l := G.gold_label(msg, G.FS_SM, false, Color("8a4a3a"), false)
+	l.position = Vector2(0, 452)
+	l.custom_minimum_size = Vector2(CONTENT_W, 0)
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_content.add_child(l)
+	var tw := l.create_tween()
+	tw.tween_interval(1.6)
+	tw.tween_property(l, "modulate:a", 0.0, 0.4)
+	tw.tween_callback(l.queue_free)

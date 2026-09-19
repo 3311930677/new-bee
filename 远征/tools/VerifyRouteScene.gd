@@ -212,6 +212,20 @@ func _run() -> void:
 				_check(int(G.wallet.get("gold", 0)) > int(wallet_bak.get("gold", 0)),
 					"战败结算亦应入账（失败无惩罚）")
 
+	# 7. 连败保底礼包（P1-5）：三连败发魂石 30 + 宠物粮 5，随后清零；胜局清零
+	G.prog["lose_streak"] = 0
+	G.wallet = {"gold": 0, "expedition": 0, "soul": 0, "honor": 0}
+	G.items = {}
+	_check(G.report_run_result(false) == "", "首败不送礼包")
+	_check(G.report_run_result(false) == "", "二连败不送礼包")
+	var g3 := G.report_run_result(false)
+	_check(g3.contains("灵魂石 +30"), "三连败应发礼包（实为「%s」）" % g3)
+	_check(int(G.wallet.get("soul", 0)) == 30 and G.item_count("pet_food") == 5,
+		"礼包应入账 30 魂石 + 5 宠物粮")
+	_check(int(G.prog.get("lose_streak", -1)) == 0, "发礼包后连败应清零")
+	G.report_run_result(true)
+	_check(int(G.prog.get("lose_streak", -1)) == 0, "胜局应保持清零")
+
 	# 测试收尾：还原钱包并存盘（清除入账污染）
 	G.wallet = wallet_bak
 	G.save_game()

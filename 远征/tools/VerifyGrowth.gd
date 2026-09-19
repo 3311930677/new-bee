@@ -319,6 +319,19 @@ func _run() -> void:
 	var sp := snap["pet_rockturtle"] as Dictionary
 	_check(int(sp["level"]) == 4 and absf(float(sp["stat_mult"]) - 1.16) < 0.0001
 		and absf(float(sp["growth_mult"]) - 1.6) < 0.0001, "快照数值应与养成一致")
+	# 进化（P1-3）：一次、耗晶石、全属性 +25％、重复拒绝
+	G.prog["pet_stat"]["pet_rockturtle"] = {"lv": 4, "exp": 0, "star": 5, "brk": 2}
+	G.items = {"evolve_crystal": 3}
+	var ev1 := G.pet_evolve("pet_rockturtle")
+	_check(bool(ev1["ok"]), "满足条件应可进化（实为 %s）" % String(ev1.get("err", "")))
+	_check(absf(G.pet_stat_mult("pet_rockturtle") - 1.16 * 1.25) < 0.0001, "进化应叠乘 +25％")
+	_check(G.item_count("evolve_crystal") == 0, "进化应扣 3 晶石")
+	_check(bool((G.pet_stat("pet_rockturtle") as Dictionary).get("evolved", false)), "进化态应落盘")
+	_check(not bool(G.pet_evolve("pet_rockturtle")["ok"]), "重复进化应被拒绝")
+	G.prog["pet_stat"]["pet_rockturtle"] = {"lv": 4, "exp": 0, "star": 5, "brk": 2}
+	G.items = {}
+	_check(not bool(G.pet_evolve("pet_rockturtle")["ok"]), "晶石不足应拒绝进化")
+	_check(not bool(G.pet_evolve("pet_frostwolf")["ok"]), "未收集的宠物不能进化")
 
 	# —— 9. 养成聚合（含武器绑人物）——
 	_reset(10)

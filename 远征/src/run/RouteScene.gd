@@ -41,6 +41,7 @@ var _settled := false     # 局结算入账只做一次
 var _level_ups := 0       # 本次结算提升的等级数
 var _new_world := ""      # 本次通关新解锁的世界名（无则空串）
 var _bonus_gold := 0      # 表现加成金币（毫发无损 +10%）
+var _gift_line := ""      # 连败保底礼包文案（无则空串，P1-5）
 
 
 func _ready() -> void:
@@ -351,6 +352,8 @@ func _show_end(win: bool) -> void:
 		_level_ups = G.gain_exp(st.exp)
 		if win:
 			_new_world = G.on_world_cleared(st.theme)
+		# 连败兜底（P1-5）：连续 3 局失利发保底礼包（世界链卡关的唯一减压阀）
+		_gift_line = G.report_run_result(win)
 	_end_ui = Control.new()
 	_end_ui.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(_end_ui)
@@ -380,6 +383,8 @@ func _show_end(win: bool) -> void:
 			G.FS_MD, true, Color("a06020")))
 	if _new_world != "":
 		box.add_child(G.gold_label("新世界解锁：%s" % _new_world, G.FS_MD, true, Color("6a8a4a")))
+	if _gift_line != "":
+		box.add_child(G.gold_label(_gift_line, G.FS_MD, true, Color("a06020")))
 	box.add_child(G.gold_label("词条 ×%d（随局重置）" % st.traits.size(), G.FS_SM,
 		false, Color("8a6a34"), false))
 
