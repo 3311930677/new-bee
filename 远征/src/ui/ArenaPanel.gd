@@ -12,6 +12,9 @@ var _panel: PanelContainer = null
 var _info: Label = null
 var _foe_l: Label = null
 var _foe_lv := 1
+var _mirror := false          # 对手模式：false=演武傀儡（默认，好上手）true=镜影（自己的镜像）
+var _mode_btn: Control = null
+var _foe_tip: Label = null
 var _battle_layer: CanvasLayer = null
 var _busy := false
 var _go_btn: Control = null
@@ -117,18 +120,28 @@ func _build() -> void:
 	_foe_l.custom_minimum_size = Vector2(280, 0)
 	_foe_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	foe_card.add_child(_foe_l)
-	var foe_tip := G.gold_label("演武傀儡 · 练手对局", G.FS_XS, false, Color("6a5230"), false)
-	foe_tip.position = Vector2(104, 58)
-	foe_tip.custom_minimum_size = Vector2(280, 0)
-	foe_tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	foe_card.add_child(foe_tip)
+	_foe_tip = G.gold_label("", G.FS_XS, false, Color("6a5230"), false)
+	_foe_tip.position = Vector2(104, 58)
+	_foe_tip.custom_minimum_size = Vector2(280, 0)
+	_foe_tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	foe_card.add_child(_foe_tip)
 
-	# 提示行：紧跟对手卡之后（卡底 +10），与下方按钮行拉开 12，避免被按钮压住
-	var tip := G.gold_label("不掉装备、不耗资源，专注磨练战术", G.FS_XS,
+	# 对手模式切换（轮次 18）：傀儡好上手，镜影是"你自己"——同套技能与养成，打的每一手都认得
+	_mode_btn = G.ghost_button("对手：傀儡", G.BTN_S.x, G.BTN_S.y, G.FS_SM)
+	_mode_btn.position = Vector2(0, 226 + top_pad)
+	_mode_btn.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_mirror = not _mirror
+			Audio.sfx("ui_confirm")
+			_refresh())
+	content.add_child(_mode_btn)
+
+	# 提示行：与模式按钮同一行右侧，不与按钮行抢竖排空间
+	var tip := G.gold_label("不耗资源 · 只磨战术", G.FS_XS,
 		false, Color("6a5230"), false)
-	tip.position = Vector2(0, 222 + top_pad)
-	tip.custom_minimum_size = Vector2(CONTENT_W, 0)
-	tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	tip.position = Vector2(G.BTN_S.x + 12.0, 238 + top_pad)
+	tip.custom_minimum_size = Vector2(CONTENT_W - G.BTN_S.x - 12.0, 0)
+	tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	content.add_child(tip)
 
 	# 主次分明（§7 光效预算）：整块面板只有一个金色主按钮，换对手和返回都走描边次级款。
@@ -175,14 +188,26 @@ func _refresh() -> void:
 	_info.text = "%s · %d 分 · %d 胜 %d 负" % [G.arena_rank(),
 		int(G.arena.get("score", 0)), int(G.arena.get("wins", 0)), int(G.arena.get("losses", 0))]
 	# 傀儡名里已带等级（"演武傀儡 · N 级"），这里不再重复拼 Lv.
-	_foe_l.text = "对手：%s" % String(G.make_arena_foe(_foe_lv).get("name", ""))
+	_foe_l.text = "对手：%s" % String(_foe().get("name", ""))
+	if _foe_tip != null:
+		_foe_tip.text = "镜像对局 · 同套技能与养成加成" if _mirror else "练手对局 · 数值随等级缩放"
+	if _mode_btn != null:
+		var ml := _mode_btn.get_child(0) as Label
+		if ml != null:
+			ml.text = "对手：镜影" if _mirror else "对手：傀儡"
+
+
+func _foe() -> Dictionary:
+	if _mirror:
+		return G.make_arena_mirror(G.selected_role, _foe_lv)
+	return G.make_arena_foe(_foe_lv)
 
 
 func _start_battle() -> void:
 	if _busy:
 		return
 	_busy = true
-	var foe := G.make_arena_foe(_foe_lv)
+	var foe := _foe()
 	var pet := ""
 	var owned: Array = G.owned_pets()
 	if owned.size() > 0:

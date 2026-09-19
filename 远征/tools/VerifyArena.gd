@@ -38,6 +38,12 @@ func _run() -> void:
 		_check(foes[0].base_max_hp == int((f5.get("base", {}) as Dictionary).get("hp", 0)),
 			"傀儡 HP 应按数据来")
 
+	# B2. 镜影（轮次 18）
+	G.selected_role = "zs"
+	var m1 := G.make_arena_mirror("zs", 5)
+	_check(String(m1.get("name", "")).contains("镜影"), "镜影名应带镜影")
+	_check((m1.get("skills", []) as Array).size() >= 2, "镜影应带角色技能组")
+
 	# C. 段位分：胜加分、负扣分且保底 0；存档往返
 	G.arena = {"score": 1000, "wins": 0, "losses": 0}
 	var w := G.arena_result(true)
