@@ -37,6 +37,8 @@ func _ready() -> void:
 			names.append(String(m))
 		if String(th2.get("boss", "")) != "":
 			names.append(String(th2.get("boss", "")))
+	# 演武场运行时动态创建的敌人不在 maps.json，必须单独纳入素材契约。
+	names.append("mon_arena_dummy")
 	for n2 in names:
 		if n2 == "":
 			continue

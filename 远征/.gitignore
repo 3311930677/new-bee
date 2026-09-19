@@ -3,3 +3,6 @@
 /android/
 __pycache__/
 .commitmsg.txt
+
+# 回归日志（tools/run_regression.ps1 每个用例落一份完整日志，属运行期产物）
+tools/_logs/

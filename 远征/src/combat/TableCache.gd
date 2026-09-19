@@ -93,6 +93,11 @@ static func maps_config() -> Dictionary:
 	return v if v is Dictionary else {}
 
 
+static func arena_config() -> Dictionary:
+	var v: Variant = _load("res://data/arena.json")
+	return v if v is Dictionary else {}
+
+
 static func city_config() -> Dictionary:
 	var v: Variant = _load("res://data/city.json")
 	return v if v is Dictionary else {}
