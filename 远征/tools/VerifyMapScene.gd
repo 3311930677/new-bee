@@ -367,6 +367,58 @@ func _run() -> void:
 	xmap.queue_free()
 	await get_tree().process_frame
 
+	# ---- K. 探索动机：拾取物 / 探索分 / 评价 / 清剿赏（轮次 16）----
+	var kmap := await _spawn_map("chest", 1, "")
+	var pk_n := kmap._pickups.size()
+	_check(pk_n >= 3 and pk_n <= 5, "应撒 3~5 个拾取物，实为 %d" % pk_n)
+	var g0: int = kmap.st.gold
+	var e0: int = kmap.st.expedition
+	if pk_n > 0:
+		kmap._player.position = kmap._pickups[0].position
+	for i in 8:
+		await get_tree().process_frame
+	_check(kmap._pickups.size() == pk_n - 1, "走到拾取物上应交接入袋，实剩 %d" % kmap._pickups.size())
+	_check(kmap.st.gold > g0 and kmap.st.expedition > e0,
+		"拾取应给金币与远征币，实为 %d/%d" % [kmap.st.gold, kmap.st.expedition])
+	_check(kmap._score >= 6, "拾取应加探索分，实为 %d" % kmap._score)
+	_check(String(kmap._explore_lbl.text).contains("探索分"),
+		"无怪节点应显示探索分，实为「%s」" % String(kmap._explore_lbl.text))
+
+	kmap._score = 0
+	_check(int(kmap._rank().get("tier", -1)) == 0 and int(kmap._rank().get("bonus", -1)) == 0,
+		"低分应无评价加成，实为 %s" % str(kmap._rank()))
+	kmap._score = 999
+	_check(int(kmap._rank().get("tier", -1)) == 3 and int(kmap._rank().get("bonus", -1)) == 160,
+		"满分应为「寸土必争」+160，实为 %s" % str(kmap._rank()))
+	var gb: int = kmap.st.gold
+	kmap._player.position = kmap._portal.position
+	kmap._check_portal()
+	_check(kmap.st.gold == gb + 160, "通关时应结算评价附加赏，实为 +%d" % (kmap.st.gold - gb))
+	kmap.queue_free()
+	await get_tree().process_frame
+
+	var c2map := await _spawn_map("normal", 1, "")
+	_check(c2map._total_monsters == c2map._monsters.size(),
+		"应记录全图怪物总数，实为 %d / %d" % [c2map._total_monsters, c2map._monsters.size()])
+	var g1: int = c2map.st.gold
+	c2map._on_area_cleared()
+	_check(c2map._cleared_bonus and c2map.st.gold == g1 + 260,
+		"清剿应给额外赏 +260，实为 +%d" % (c2map.st.gold - g1))
+	c2map._on_area_cleared()
+	_check(c2map.st.gold == g1 + 260, "清剿赏只应给一次")
+	var score_before: int = c2map._score
+	c2map._start_battle(c2map._monsters[0])
+	if c2map._battle != null:
+		_force_battle_end(c2map._battle, "victory")
+		await get_tree().process_frame
+		if c2map._picker != null:
+			c2map._picker._emit_pick("")
+			await get_tree().process_frame
+	_check(c2map._kills == 1, "击败 1 只应计 1 杀，实为 %d" % c2map._kills)
+	_check(c2map._score > score_before, "击杀应加探索分，实为 %d → %d" % [score_before, c2map._score])
+	c2map.queue_free()
+	await get_tree().process_frame
+
 	_print_result()
 
 
