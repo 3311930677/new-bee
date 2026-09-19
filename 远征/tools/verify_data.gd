@@ -41,6 +41,14 @@ func _run() -> void:
 			assert(FileAccess.file_exists("res://image/map/%s.png" % deco),
 				"散件缺失：%s" % deco)
 
+	# 召唤类技能口径：带 summon 字段的技能必须声明 effect.type=="summon"（否则 summon 分支不可达）
+	for mon in dm.table("monsters"):
+		for sk in (mon as Dictionary).get("skills", []):
+			var skd: Dictionary = sk
+			if skd.has("summon"):
+				assert(String((skd.get("effect", {}) as Dictionary).get("type", "")) == "summon",
+					"召唤技能缺 effect.type：%s / %s" % [String((mon as Dictionary).get("id", "")), String(skd.get("id", ""))])
+
 	# 技能表字段完整性
 	for sk in dm.table("skills"):
 		assert(String(sk.get("id", "")).length() > 0)

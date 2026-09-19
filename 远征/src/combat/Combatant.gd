@@ -240,8 +240,9 @@ func take_damage(dmg: int, src: Combatant, sim: BattleSim, is_crit := false) -> 
 		reflect_pct += traits.reflect_pct()
 	if src != null and src.alive and reflect_pct > 0.0:
 		src._direct_damage(maxi(1, int(float(final) * reflect_pct)), self, sim)
-	# 吸血
-	var lifesteal := buff_pct_sum("lifesteal")
+	# 吸血：按攻击方自己的 lifesteal 结算、回攻击方（与上一段反伤的取向对称；
+	# 历史 bug：曾读受击方的 buff，导致「打带吸血的敌人反而给玩家回血」）
+	var lifesteal := (src.buff_pct_sum("lifesteal") if src != null else 0.0)
 	if src != null and src.alive and lifesteal > 0.0:
 		src.heal(maxi(1, int(float(final) * lifesteal)), self, sim)
 	# 受击词条（以伤换伤回血）

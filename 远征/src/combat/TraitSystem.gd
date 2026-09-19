@@ -53,8 +53,15 @@ func school_active(school: String) -> bool:
 
 
 # ---------- 被动数值（构建时由 BattleSim 烧入 base 属性） ----------
+# 双刃词条（燃血/薄甲/狂潮/死线）的数值一律从表读，禁止硬编码——
+# 历史坑：ATK 加成曾张冠李戴（燃血没加、薄甲多拿），且表值改动不同步。守卫见 verify_trait 第 6 段。
 func passive_atk_pct() -> float:
-	return _sum_stat("atk") + (0.35 if has_trait("de_baojia") else 0.0)
+	var s := _sum_stat("atk")
+	for tid in ["de_ranxue", "de_baojia"]:
+		var e := _effect_of(tid)
+		if not e.is_empty():
+			s += float(e.get("atk_pct", 0.0))
+	return s
 
 
 func passive_maxhp_pct() -> float:
@@ -62,11 +69,19 @@ func passive_maxhp_pct() -> float:
 
 
 func passive_def_pct() -> float:
-	return _sum_stat("def") + (-0.25 if has_trait("de_baojia") else 0.0)
+	var s := _sum_stat("def")
+	var e := _effect_of("de_baojia")
+	if not e.is_empty():
+		s += float(e.get("def_pct", 0.0))
+	return s
 
 
 func passive_spd_pct() -> float:
-	return _sum_stat("spd") + (0.25 if has_trait("de_kuangchao") else 0.0)
+	var s := _sum_stat("spd")
+	var e := _effect_of("de_kuangchao")
+	if not e.is_empty():
+		s += float(e.get("spd_pct", 0.0))
+	return s
 
 
 func passive_crit_add() -> float:
@@ -99,11 +114,17 @@ func passive_cd_pct() -> float:
 
 
 func passive_dmg_taken_pct() -> float:
-	return 0.15 if has_trait("de_kuangchao") else 0.0
+	var e := _effect_of("de_kuangchao")
+	if e.is_empty():
+		return 0.0
+	return float(e.get("dmg_taken_pct", 0.0))
 
 
 func heal_taken_pct() -> float:
-	return -0.50 if has_trait("de_sixian") else 0.0
+	var e := _effect_of("de_sixian")
+	if e.is_empty():
+		return 0.0
+	return float(e.get("heal_taken_pct", 0.0))
 
 
 # ---------- 动态数值（getter 每次查询） ----------
@@ -115,9 +136,11 @@ func dynamic_atk_pct(unit: Combatant) -> float:
 	var e := _effect_of("tr_last_stand")
 	if not e.is_empty() and float(unit.hp) / float(maxi(unit.get_max_hp(), 1)) < float(e.get("hp_below", 0.3)):
 		pct += float(e.get("atk_pct", 0.0))
-	# 死线：HP<50% 时伤害 +50%（近似并 ATK）
-	if has_trait("de_sixian") and float(unit.hp) / float(maxi(unit.get_max_hp(), 1)) < 0.5:
-		pct += 0.50
+	# 死线：HP<阈值时伤害 +pct（近似并 ATK；阈值与幅度读表）
+	var e_sx := _effect_of("de_sixian")
+	if not e_sx.is_empty() \
+			and float(unit.hp) / float(maxi(unit.get_max_hp(), 1)) < float(e_sx.get("hp_below", 0.5)):
+		pct += float(e_sx.get("dmg_pct", 0.5))
 	return pct
 
 
@@ -278,9 +301,12 @@ func on_tick(sim: BattleSim, unit: Combatant) -> void:
 	var e := _effect_of("tr_regen")
 	if not e.is_empty() and sim.tick_count % 30 == 0:
 		unit.heal(maxi(1, int(float(unit.get_max_hp()) * float(e.get("regen_hp_pct", 0.005)))), unit, sim)
-	# 燃血：每秒流失 1.5% MaxHP
-	if has_trait("de_ranxue") and sim.tick_count % 30 == 0:
-		unit._direct_damage(maxi(1, int(float(unit.get_max_hp()) * 0.015)), unit, sim, true)
+	# 燃血：每秒流失 hp_drain_pct×MaxHP（数值读表）
+	var e_drain := _effect_of("de_ranxue")
+	if not e_drain.is_empty() and sim.tick_count % 30 == 0:
+		unit._direct_damage(
+			maxi(1, int(float(unit.get_max_hp()) * float(e_drain.get("hp_drain_pct", 0.015)))),
+			unit, sim, true)
 
 
 func on_skill_cast(sim: BattleSim, unit: Combatant, total_dmg: int) -> void:

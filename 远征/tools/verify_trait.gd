@@ -84,8 +84,59 @@ func _init() -> void:
 		fails += 1
 		push_error("FAIL: 余 2 条应返回 2 张，实为 %d" % ch4.size())
 
+	# 6. 双刃词条：代码取值必须等于 traits.json 表值（防硬编码漂移；燃血/薄甲曾错配）
+	var e_rx := _eff("de_ranxue")
+	var e_bj := _eff("de_baojia")
+	var e_kc := _eff("de_kuangchao")
+	var e_sx := _eff("de_sixian")
+	var ts_rx := TraitSystem.new(["de_ranxue"])
+	if not _num_ok(ts_rx.passive_atk_pct(), float(e_rx.get("atk_pct", 0.0))):
+		fails += 1
+		push_error("FAIL: 燃血 ATK 应 +%.2f，实为 %.2f"
+			% [float(e_rx.get("atk_pct", 0.0)), ts_rx.passive_atk_pct()])
+	var ts_bj := TraitSystem.new(["de_baojia"])
+	if not _num_ok(ts_bj.passive_atk_pct(), float(e_bj.get("atk_pct", 0.0))) \
+			or not _num_ok(ts_bj.passive_def_pct(), float(e_bj.get("def_pct", 0.0))):
+		fails += 1
+		push_error("FAIL: 薄甲数值与表不符（ATK %.2f / DEF %.2f）"
+			% [ts_bj.passive_atk_pct(), ts_bj.passive_def_pct()])
+	var ts_kc := TraitSystem.new(["de_kuangchao"])
+	if not _num_ok(ts_kc.passive_spd_pct(), float(e_kc.get("spd_pct", 0.0))) \
+			or not _num_ok(ts_kc.passive_dmg_taken_pct(), float(e_kc.get("dmg_taken_pct", 0.0))):
+		fails += 1
+		push_error("FAIL: 狂潮数值与表不符（SPD %.2f / 受伤 %.2f）"
+			% [ts_kc.passive_spd_pct(), ts_kc.passive_dmg_taken_pct()])
+	if not _num_ok(ts_rx.heal_taken_pct(), 0.0) or not _num_ok(ts_kc.heal_taken_pct(), 0.0):
+		fails += 1
+		push_error("FAIL: 非死线词条不应有治疗折减")
+	# 死线：低血 ATK 倍率 = 1 + 表值 dmg_pct
+	var sim_d := BattleSim.new()
+	sim_d.record_events = false
+	sim_d.setup(6, {"role_id": "zs", "level": 10, "traits": ["de_sixian"]},
+		{"theme": "forest", "node_type": "normal", "layer": 1})
+	var u6 := sim_d.role_unit()
+	var atk_full := u6.get_atk()
+	u6.hp = maxi(1, int(float(u6.get_max_hp()) * 0.30))
+	var ratio := float(u6.get_atk()) / float(atk_full)
+	var want6 := 1.0 + float(e_sx.get("dmg_pct", 0.5))
+	if absf(ratio - want6) > 0.02:
+		fails += 1
+		push_error("FAIL: 死线低血 ATK 应 ×%.2f，实为 ×%.2f" % [want6, ratio])
+
 	if fails == 0:
 		print("TRAIT_OK all tests passed")
 	else:
 		print("TRAIT_FAIL fails=%d" % fails)
 	quit(0 if fails == 0 else 1)
+
+
+## traits.json 里某词条的 effect（不经过 TraitSystem，做「表值 vs 代码值」对拍）
+func _eff(id: String) -> Dictionary:
+	for t in TableCache.traits():
+		if String((t as Dictionary).get("id", "")) == id:
+			return (t as Dictionary).get("effect", {})
+	return {}
+
+
+func _num_ok(got: float, want: float) -> bool:
+	return absf(got - want) < 0.0001

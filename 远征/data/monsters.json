@@ -13,7 +13,8 @@
   { "id": "mon_boss_forest", "name": "森林之主", "theme": "forest", "tier": "boss", "ai": "boss",
     "base": { "hp": 700, "atk": 22, "def": 12, "spd": 0.9 }, "attack_range": "melee",
     "skills": [ { "id": "boss_slam", "name": "震地", "k": 1.6, "cd": 9, "target": "enemy_front_all" },
-      { "id": "boss_summon", "name": "召唤狼群", "k": 0, "cd": 30, "target": "summon",
+      { "id": "boss_summon", "name": "召唤狼群", "k": 0, "cd": 30, "target": "self",
+        "effect": { "type": "summon" },
         "summon": "mon_wolf", "summon_count": 2, "summon_cap": 6 } ] },
 
   { "id": "mon_icebat", "name": "冰蝠", "theme": "snow", "tier": "normal", "ai": "basic",
