@@ -243,6 +243,50 @@ func _verify_settings() -> void:
 		"物资铺面板应列出全部货品")
 	shop_p.queue_free()
 
+	# 7.1 非法货品必须下架，且购买接口独立拒绝（轮次 20 · #20）
+	# 旧实现把异常价格 max(1, ...) 兜底成 1：表里写 0/负/字符串/缺字段，货架照卖 1 金币。
+	# 这条用例把"表被写坏"直接注进去，检查的是**下架**而不是"兜底成 1"。
+	var bad_path := "user://verify_panels_shop_bad.json"
+	var bf := FileAccess.open(bad_path, FileAccess.WRITE)
+	bf.store_string(JSON.stringify({"items": [
+		{"item": "ticket_ten", "price": 100},        # 合法
+		{"item": "ticket_ten", "price": 5},          # 重复 id
+		{"item": "enhance_stone"},                   # 缺 price
+		{"item": "refine_stone", "price": 0},        # 零价
+		{"item": "lock_rune", "price": -50},         # 负价
+		{"item": "pet_food", "price": "100"},        # 字符串价
+		{"item": "break_crystal", "price": 100.7},   # 非整数价
+		{"item": "no_such_item_xyz", "price": 100},  # 未登记 id
+		{"item": "", "price": 100},                  # 空 id
+	]}))
+	bf.close()
+	var real_shop_path := G.SHOP_PATH
+	G.SHOP_PATH = bad_path
+	G.shop_reload()
+	var shelf: Array = G.shop_items()
+	_check(shelf.size() == 1, "非法货品应全部下架，只剩 1 件（实为 %d）" % shelf.size())
+	_check(String((shelf[0] as Dictionary).get("item", "")) == "ticket_ten"
+		and int((shelf[0] as Dictionary).get("price", 0)) == 100, "留下的应是唯一合法条目")
+	for bogus in ["enhance_stone", "refine_stone", "lock_rune", "pet_food",
+			"break_crystal", "no_such_item_xyz", ""]:
+		G.wallet["gold"] = 9999
+		var items_before := G.items.duplicate()
+		var r := G.shop_buy(bogus)
+		_check(not bool(r["ok"]), "非法商品「%s」不应允许购买" % bogus)
+		_check(int(G.wallet["gold"]) == 9999, "非法购买不应扣款（%s）" % bogus)
+		_check(JSON.stringify(G.items) == JSON.stringify(items_before), "非法购买不应发货（%s）" % bogus)
+		_check(G.shop_price(bogus) <= 0, "非法商品取价应为 0（%s）" % bogus)
+	# 合法条目仍要能正常买：恰好扣一次、发一次
+	G.wallet["gold"] = 100
+	G.items = {}
+	var ok_buy := G.shop_buy("ticket_ten")
+	_check(bool(ok_buy["ok"]) and int(G.wallet["gold"]) == 0 and G.item_count("ticket_ten") == 1,
+		"合法商品应恰好扣一次发一次")
+	G.SHOP_PATH = real_shop_path
+	G.shop_reload()
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(bad_path))
+	_check(G.shop_items().size() >= 4, "恢复真实货架后应回到正常条目数")
+
 	# 6. 返回信号
 	var closed_n := {"n": 0}
 	sp.closed.connect(func(): closed_n["n"] += 1)

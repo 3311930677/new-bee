@@ -367,6 +367,8 @@ func _load_save() -> void:
 			"free_day": String(ggd.get("free_day", "")),
 			"free_streak": maxi(0, int(ggd.get("free_streak", 0))),
 			"free_last": String(ggd.get("free_last", ""))}
+		var cc: Variant = pd.get("codex_claimed", [])   # 已领取的图鉴收集里程
+		prog["codex_claimed"] = cc if cc is Array else []
 		# 旧档迁移：保底计数曾寄居道具背包（items.gacha_pity）——搬进 prog.gacha 并从道具清掉（P2-5）
 		if int((prog["gacha"] as Dictionary).get("pity", 0)) == 0 and items.has("gacha_pity"):
 			prog["gacha"]["pity"] = maxi(0, int(items["gacha_pity"]))
@@ -413,10 +415,11 @@ func _init_state_defaults() -> void:
 		"talents": {}, "equip": {}, "skills": {}, "mounts": {"owned": {}, "active": ""},
 		"titles": {"owned": [], "active": ""}, "pet_stat": {}, "tips_seen": {},
 		"lore_seen": false, "lore_beats": {}, "settings": {}, "last_ts": 0,
-		"gacha": {"pity": 0, "free_day": "", "free_streak": 0, "free_last": ""}}
+		"gacha": {"pity": 0, "free_day": "", "free_streak": 0, "free_last": ""},
+		"codex_claimed": []}
 	city = {"built": ["hall", "gate"], "code": "", "visits": [], "acts": {}, "day": "", "streak": 0}
 	quest = {"day": "", "offer": [], "active": {}, "claimed": []}
-	arena = {"score": 1000, "wins": 0, "losses": 0}
+	arena = {"score": 1000, "wins": 0, "losses": 0, "streak": 0, "best_streak": 0}
 	account = ""
 	gender = "男"
 	selected_role = ""
@@ -605,6 +608,100 @@ func collect_pet(pid: String) -> bool:
 	return true
 
 
+# ---------- 图鉴收集里程（轮次 20）：把"收了多少只"变成可领取的回报 ----------
+# 此前图鉴只有一行"已收集 N / 8"的计数，收集本身没有任何回报——多抽到的宠物除了炼金
+# 就没有别的意义。里程把"收集"变成有终点的短目标，且奖励直接落回抽卡/养成循环。
+
+## 里程表（data/codex.json）。表写坏时返回空数组，图鉴照常能开。
+func codex_milestones() -> Array:
+	var arr: Variant = TableCache.codex_config().get("milestones", [])
+	if not (arr is Array):
+		return []
+	var out: Array = []
+	for m in arr:
+		if not (m is Dictionary):
+			push_warning("codex.json 里程条目不是对象，已忽略")
+			continue
+		var d := m as Dictionary
+		if String(d.get("id", "")).is_empty() or int(d.get("need", 0)) <= 0:
+			push_warning("codex.json 里程条目缺 id 或 need，已忽略：%s" % str(d))
+			continue
+		out.append(d)
+	out.sort_custom(func(a, b):
+		return int((a as Dictionary).get("need", 0)) < int((b as Dictionary).get("need", 0)))
+	return out
+
+
+func codex_claimed() -> Array:
+	var arr: Variant = prog.get("codex_claimed", [])
+	return arr if arr is Array else []
+
+
+## 每条里程的当前状态：claimed / ready / missing。
+func codex_milestone_state() -> Array:
+	var owned := owned_pets().size()
+	var claimed := codex_claimed()
+	var out: Array = []
+	for m in codex_milestones():
+		var mid := String(m.get("id", ""))
+		var need := int(m.get("need", 0))
+		var done := claimed.has(mid)
+		out.append({
+			"id": mid, "need": need, "name": String(m.get("name", mid)),
+			"rewards": m.get("rewards", {}), "item": m.get("item", {}),
+			"claimed": done, "ready": (not done) and owned >= need,
+			"missing": maxi(0, need - owned), "owned": owned,
+		})
+	return out
+
+
+## 第一条可领取的里程（没有就返回空字典）。图鉴面板据此决定"领取"按钮能不能点。
+func codex_next_ready() -> Dictionary:
+	for s in codex_milestone_state():
+		if bool((s as Dictionary).get("ready", false)):
+			return s
+	return {}
+
+
+## 领取一条里程：存在 / 未领过 / 收集数达标，三者缺一即拒绝，且不做任何部分发放。
+func codex_claim(mid: String) -> Dictionary:
+	if mid.is_empty():
+		return {"ok": false, "err": "暂时没有可领取的收集奖励"}
+	var target: Dictionary = {}
+	for m in codex_milestones():
+		if String((m as Dictionary).get("id", "")) == mid:
+			target = m
+			break
+	if target.is_empty():
+		return {"ok": false, "err": "未知的收集里程"}
+	if codex_claimed().has(mid):
+		return {"ok": false, "err": "这份收集奖励已经领过了"}
+	var need := int(target.get("need", 0))
+	if owned_pets().size() < need:
+		return {"ok": false, "err": "还差 %d 只灵宠" % (need - owned_pets().size())}
+	var rewards: Variant = target.get("rewards", {})
+	var lines: Array = []
+	if rewards is Dictionary:
+		apply_reward(rewards as Dictionary)
+		lines = reward_lines(rewards as Dictionary)
+	var item: Variant = target.get("item", {})
+	var item_n := 0
+	var item_id := ""
+	if item is Dictionary:
+		item_id = String((item as Dictionary).get("id", ""))
+		item_n = maxi(0, int((item as Dictionary).get("n", 0)))
+	if item_n > 0 and not item_id.is_empty():
+		grant_item(item_id, item_n)
+		lines.append("%s ×%d" % [item_name(item_id), item_n])
+	var claimed: Array = codex_claimed()
+	claimed.append(mid)
+	prog["codex_claimed"] = claimed
+	save_game()
+	_sfx("reward", 0.0)
+	return {"ok": true, "err": "", "name": String(target.get("name", mid)),
+		"lines": lines, "need": need}
+
+
 ## 按 pets.json 的 unlock 规则，解封"通关某世界"可得的宠物
 func unlock_pets_for_world(theme_id: String) -> void:
 	var arr: Array = prog.get("pets", [])
@@ -654,31 +751,92 @@ func pet_unlock_text(pid: String) -> String:
 
 # ---------- 主城物资铺（锻造铺；P1-2：金币换养成材料的稳定出口） ----------
 
+## 货架表路径。用 var 而非 const：自动化测试把它指向临时表，才能验证"非法商品被下架"
+## 这条路径（生产代码不允许改这个值）。
+var SHOP_PATH := "res://data/shop.json"
+
 ## 物资铺货架（data/shop.json；读盘失败返回空数组，面板照常可开）
+##
+## 只返回**合法**货品：id 非空且已登记、价格为正整数、同 id 不重复。
+## 旧实现把所有异常价格兜底成 1——表里写成 0/负数/字符串/缺字段，货架照卖 1 金币，
+## UI 拦不住的同时购买接口也拦不住（问题 #20）。兜底不是修复，是把配置错误变成白送。
+var _shop_shelf: Array = []
+var _shop_shelf_built := false
 func shop_items() -> Array:
-	var f := FileAccess.open("res://data/shop.json", FileAccess.READ)
+	if _shop_shelf_built:
+		return _shop_shelf
+	_shop_shelf_built = true
+	_shop_shelf = []
+	var f := FileAccess.open(SHOP_PATH, FileAccess.READ)
 	if f == null:
-		push_error("data/shop.json 缺失")
-		return []
-	var parsed: Variant = JSON.parse_string(f.get_as_text())
+		push_error("%s 缺失" % SHOP_PATH)
+		return _shop_shelf
+	var parsed: Variant = json_parse_silent(f.get_as_text())
 	f.close()
 	if not (parsed is Dictionary):
-		return []
+		push_error("%s 解析失败或不是对象" % SHOP_PATH)
+		return _shop_shelf
 	var arr: Variant = (parsed as Dictionary).get("items", [])
-	return arr if arr is Array else []
+	if not (arr is Array):
+		push_error("%s items 应为数组" % SHOP_PATH)
+		return _shop_shelf
+	var seen := {}
+	for r in arr:
+		if not (r is Dictionary):
+			push_warning("shop.json 条目不是对象，已下架")
+			continue
+		var d := r as Dictionary
+		var iid := String(d.get("item", ""))
+		if iid.is_empty():
+			push_warning("shop.json 条目缺 item 字段，已下架")
+			continue
+		if seen.has(iid):
+			push_warning("shop.json 商品 id 重复：%s，只保留第一条" % iid)
+			continue
+		if item_name(iid) == iid:
+			push_warning("shop.json 商品未登记：%s，已下架" % iid)
+			continue
+		var price := _shop_valid_price(d.get("price"))
+		if price <= 0:
+			push_warning("shop.json 商品价格非法（须正整数）：%s，已下架" % iid)
+			continue
+		seen[iid] = true
+		_shop_shelf.append({"item": iid, "price": price})
+	return _shop_shelf
 
 
-## 某货品单价（未登记返回 0）
+## 价格字段校验：只接受正整数值（JSON 整数，或数值上等于整数的浮点）。
+## 字符串/布尔/缺字段/null/0/负数一律判非法——不做任何"兜底成 1"。
+func _shop_valid_price(raw: Variant) -> int:
+	if raw is int:
+		return int(raw) if int(raw) > 0 else 0
+	if raw is float:
+		var v := float(raw)
+		if v > 0.0 and is_equal_approx(v, roundf(v)):
+			return int(v)
+	return 0
+
+
+## 货架缓存失效（改表 / 测试注入非法商品时使用）
+func shop_reload() -> void:
+	_shop_shelf_built = false
+	_shop_shelf = []
+
+
+## 某货品单价（未登记 / 已下架返回 0，与货架同源）
 func shop_price(item_id: String) -> int:
 	for r in shop_items():
 		var d := r as Dictionary
 		if String(d.get("item", "")) == item_id:
-			return maxi(1, int(d.get("price", 1)))
+			return int(d.get("price", 0))
 	return 0
 
 
-## 购买一件：金币不足拒绝；成功扣款并发放（单件购买，防一次买爆经济）
+## 购买一件：id 非法 / 金币不足一律拒绝；成功扣款并发放（单件购买，防一次买爆经济）。
+## 这里必须**独立**再校验一次：面板可以改，购买接口是唯一入口，不能只靠 UI 拦。
 func shop_buy(item_id: String) -> Dictionary:
+	if item_id.is_empty():
+		return {"ok": false, "err": "本店没有这件货"}
 	var price := shop_price(item_id)
 	if price <= 0:
 		return {"ok": false, "err": "本店没有这件货"}

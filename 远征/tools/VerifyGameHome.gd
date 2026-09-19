@@ -257,6 +257,92 @@ func _run() -> void:
 	_check(G.pet_unlock_text("pet_frostwolf").begins_with("通关"),
 		"世界解锁宠物的文案应说明通关条件，实为「%s」" % G.pet_unlock_text("pet_frostwolf"))
 
+	# ---- J. 图鉴收集里程（轮次 20） ----
+	# 收集本身此前没有任何回报；里程把"收了几只"换成可领取奖励。
+	# 这里守三件事：未达标不给领、达标只能领一次、领完要落盘。
+	G.prog["pets"] = ["pet_rockturtle"]
+	G.prog["codex_claimed"] = []
+	G.wallet = {"gold": 0, "expedition": 0, "soul": 0, "honor": 0}
+	G.items = {}
+	G.save_game()
+	var ms := G.codex_milestones()
+	_check(ms.size() >= 3, "codex.json 应有至少 3 档收集里程，实为 %d" % ms.size())
+	var max_need := 0
+	var monotonic := true
+	var prev_need := 0
+	for m in ms:
+		var need_m := int((m as Dictionary).get("need", 0))
+		if need_m <= prev_need:
+			monotonic = false
+		prev_need = need_m
+		max_need = maxi(max_need, need_m)
+	_check(monotonic, "里程档位应严格递增（按 need 升序）")
+	_check(max_need <= TableCache.pets().size(),
+		"最高里程 need=%d 不应超过宠物总数 %d（否则永远领不到）" % [max_need, TableCache.pets().size()])
+	_check(G.codex_next_ready().is_empty(), "只集 1 只时不应有可领取里程")
+	var first_need := int((ms[0] as Dictionary).get("need", 0))
+	var deny := G.codex_claim(String((ms[0] as Dictionary).get("id", "")))
+	_check(not bool(deny["ok"]), "数量不足时不应允许领取")
+	_check(int(G.wallet.get("soul", 0)) == 0 and int(G.wallet.get("honor", 0)) == 0,
+		"被拒的领取不能有任何部分发放")
+
+	# 凑到达标数量 → 可领取
+	var all_ids: Array = []
+	for p in TableCache.pets():
+		all_ids.append(String((p as Dictionary).get("id", "")))
+	G.prog["pets"] = all_ids.slice(0, first_need)
+	var ready := G.codex_next_ready()
+	_check(not ready.is_empty(), "达标后应出现可领取里程")
+	var soul_before := int(G.wallet.get("soul", 0))
+	var claim := G.codex_claim(String(ready.get("id", "")))
+	_check(bool(claim["ok"]), "达标后应能领取（err=%s）" % String(claim.get("err", "")))
+	_check(int(G.wallet.get("soul", 0)) > soul_before, "领取后魂晶应入账")
+	_check((claim.get("lines", []) as Array).size() > 0, "领取应返回奖励明细文案")
+	var again := G.codex_claim(String(ready.get("id", "")))
+	_check(not bool(again["ok"]), "同一档里程不应能重复领取")
+	_check(G.codex_claimed().has(String(ready.get("id", ""))), "已领记录应写进 prog.codex_claimed")
+
+	# 领完所有档：逐档领取，且最后一档的奖励真的到账
+	G.prog["pets"] = all_ids
+	var guard := 0
+	while not G.codex_next_ready().is_empty() and guard < 20:
+		var r2 := G.codex_next_ready()
+		var c2 := G.codex_claim(String(r2.get("id", "")))
+		_check(bool(c2["ok"]), "逐档领取应成功（%s）" % String(r2.get("id", "")))
+		guard += 1
+	_check(G.codex_next_ready().is_empty(), "全部领取后不应再有可领里程")
+	_check(G.codex_claimed().size() == ms.size(),
+		"已领记录应覆盖全部 %d 档，实为 %d" % [ms.size(), G.codex_claimed().size()])
+	_check(int(G.wallet.get("honor", 0)) > 0, "里程奖励里的荣誉应入账")
+
+	# 落盘往返：已领记录必须跟着存档走，否则重进游戏能再领一次
+	G.save_game()
+	G.prog["codex_claimed"] = []
+	G._load_save()
+	_check(G.codex_claimed().size() == ms.size(), "读档后已领记录应保留，实为 %d" % G.codex_claimed().size())
+	_check(G.codex_next_ready().is_empty(), "读档后不应又冒出可领取里程（防重复领奖）")
+
+	# 面板层：进度行文案与领取按钮可用态
+	G.prog["pets"] = ["pet_rockturtle"]
+	G.prog["codex_claimed"] = []
+	var codex: Control = (load("res://src/ui/CodexPanel.gd") as GDScript).new()
+	add_child(codex)
+	await get_tree().process_frame
+	var ms_label := codex.get("_ms_l") as Label
+	var ms_text := ms_label.text if ms_label != null else ""
+	_check(ms_label != null and ms_text.begins_with("收集里程"),
+		"图鉴应显示收集里程行，实为「%s」" % ms_text)
+	_check((codex.get("_claim_btn") as Control).mouse_filter == Control.MOUSE_FILTER_IGNORE,
+		"没有可领奖励时领取按钮不应可点")
+	G.prog["pets"] = all_ids.slice(0, first_need)
+	codex._refresh_milestone()
+	_check((codex.get("_claim_btn") as Control).mouse_filter == Control.MOUSE_FILTER_STOP,
+		"有可领奖励时领取按钮应可点")
+	codex._on_claim()
+	_check(G.codex_claimed().size() == 1, "从面板点领取应真的领到一档")
+	codex.queue_free()
+	await get_tree().process_frame
+
 	if _fails == 0:
 		print("GAME_HOME_OK all tests passed")
 	else:

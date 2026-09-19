@@ -237,7 +237,88 @@ func _run() -> void:
 		"旧档保底应迁移为 42（实为 %d）" % int(G.gacha_state().get("pity", -1)))
 	_check(not G.items.has("gacha_pity"), "迁移后 items 里不应再留 gacha_pity")
 
+	# —— 14. 保底路径确定性覆盖（轮次 20 · #19）——
+	# 只替换"稀有度判定"这一个钩子，把每条保底分支单独走一遍。
+	# 靠连抽几百次碰运气来验证保底是假绿：随机源一换就可能永远不命中那条分支。
+	var sc := ScriptedGacha.new()
+	holder.add_child(sc)
+	await get_tree().process_frame
+
+	# (a) 阈值保底：pity=59 → 本次是第 60 抽，判定必须看到 pity == 60
+	_reset(0, 0, 59)
+	sc.script_rar = ["gold"]
+	sc.seen_pity = []
+	var a: Array = sc.roll_batch_with(1, RandomNumberGenerator.new())
+	_check(sc.seen_pity.size() == 1 and int(sc.seen_pity[0]) == 60,
+		"第 60 抽的判定应看到 pity=60（实为 %s）" % str(sc.seen_pity))
+	_check(String((a[0] as Dictionary)["rarity"]) == "gold", "阈值保底应出高品质")
+	_check(int(G.gacha_state().get("pity", -1)) == 0, "阈值保底后保底应清零")
+
+	# (b) 自然出紫同样清零计数
+	_reset(0, 0, 5)
+	sc.script_rar = ["purple"]
+	sc.seen_pity = []
+	sc.roll_batch_with(1, RandomNumberGenerator.new())
+	_check(int(G.gacha_state().get("pity", -1)) == 0, "自然出紫应清零保底（实为 %d）"
+		% int(G.gacha_state().get("pity", -1)))
+
+	# (c) #19 核心：十连整批补发高品质后必须清零
+	_reset(0, 0, 0)
+	sc.script_rar = ["white", "white", "white", "white", "white",
+		"white", "white", "white", "white", "white"]
+	sc.seen_pity = []
+	var cb: Array = sc.roll_batch_with(10, RandomNumberGenerator.new())
+	var cb_high := 0
+	for r in cb:
+		var rc := String((r as Dictionary)["rarity"])
+		if rc == "purple" or rc == "gold":
+			cb_high += 1
+	_check(cb_high == 1, "全下品十连应整批补 1 张高品质（实为 %d）" % cb_high)
+	_check(int(G.gacha_state().get("pity", -1)) == 0,
+		"整批补发高品质后保底必须清零（旧实现残留 10，实为 %d）"
+		% int(G.gacha_state().get("pity", -1)))
+
+	# (d) 批次里已有高品质时不得二次替换，且计数按逐张口径继续累计
+	_reset(0, 0, 0)
+	sc.script_rar = ["white", "white", "purple", "white", "white",
+		"white", "white", "white", "white", "white"]
+	sc.seen_pity = []
+	var cd: Array = sc.roll_batch_with(10, RandomNumberGenerator.new())
+	var cd_high := 0
+	for r in cd:
+		var rd2 := String((r as Dictionary)["rarity"])
+		if rd2 == "purple" or rd2 == "gold":
+			cd_high += 1
+	_check(cd_high == 1, "已有高品质时不应二次替换（实为 %d 张）" % cd_high)
+	_check(String((cd[9] as Dictionary)["rarity"]) == "white", "已有高品质时末张不应被替换")
+	_check(int(G.gacha_state().get("pity", -1)) == 7,
+		"紫之后 7 张白应累计到 7（实为 %d）" % int(G.gacha_state().get("pity", -1)))
+
+	# (e) 单池结构下保底必须挂在 prog.gacha（不是道具背包），且坏值不越界
+	_check(G.prog.get("gacha") is Dictionary and G.prog["gacha"].has("pity"),
+		"保底计数应存在 prog.gacha.pity")
+	G.prog["gacha"]["pity"] = 9999
+	sc.script_rar = ["white"]
+	sc.seen_pity = []
+	sc.roll_batch_with(1, RandomNumberGenerator.new())
+	_check(int(sc.seen_pity[0]) >= 60, "超过阈值的计数应被当作已达阈值处理")
+	sc.queue_free()
+
 	if _fails == 0:
 		print("GACHA_OK all tests passed")
 	else:
 		print("GACHA_FAIL fails=%d" % _fails)
+
+
+## 只覆写稀有度判定钩子的测试替身：script_rar 是预先写好的稀有度序列，
+## seen_pity 记录每次判定时看到的保底计数（用来断言"第 60 抽"这种边界）。
+class ScriptedGacha extends GachaPanel:
+	var script_rar: Array = []
+	var seen_pity: Array = []
+
+	func _decide_rarity(_rng: RandomNumberGenerator, _rates: Dictionary,
+			pity: int, _pity_max: int) -> String:
+		seen_pity.append(pity)
+		if script_rar.is_empty():
+			return "white"
+		return String(script_rar.pop_front())

@@ -30,6 +30,8 @@ const DECK_Y := 30.0
 var _deck: Control = null   # 大卡轮播（工厂模式：卡用到才建）
 var _pets: Array = []       # 宠物表快照（进化后重建卡组要重读）
 var _content: Control = null
+var _ms_l: Label = null     # 收集里程进度行（轮次 20）
+var _claim_btn: Control = null
 
 
 func _ready() -> void:
@@ -74,6 +76,21 @@ func _build() -> void:
 			start = i   # 打开先落在「还没收集到的那只」上（-1 哨兵：索引 0 也正确）
 	_build_deck(maxi(0, start))
 
+	# 收集里程（轮次 20）：图鉴此前只有一行计数，收集本身没有回报。
+	# 进度行放在大卡与按钮行之间，领取按钮插在「进化 / 返回」中间的空档。
+	_ms_l = G.gold_label("", G.FS_XS, false, Color("7a5a2e"), false)
+	_ms_l.position = Vector2(0, 436)
+	_ms_l.custom_minimum_size = Vector2(CONTENT_W, 0)
+	_ms_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	content.add_child(_ms_l)
+
+	_claim_btn = G.gold_button("领 取", 104, 38)
+	_claim_btn.position = Vector2(152, 480)
+	_claim_btn.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_on_claim())
+	content.add_child(_claim_btn)
+
 	# 进化入口：对「当前页」的灵宠生效（P1-3）；与「返回」左右成对
 	var evolve := G.gold_button("进 化", 120, 38)
 	evolve.position = Vector2(20, 480)
@@ -88,6 +105,9 @@ func _build() -> void:
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			closed.emit())
 	content.add_child(back)
+
+	# 必须在里程行与领取按钮都建好之后再刷新一次（放在 _build_deck 旁边会因为节点还没建而空跑）
+	_refresh_milestone()
 
 
 ## ESC / 返回手势关闭本浮层（轮次 14 统一口径）
@@ -168,9 +188,57 @@ func _on_evolve() -> void:
 	var res := G.pet_evolve(pid)
 	if bool(res.get("ok", false)):
 		_build_deck(idx)
+		_refresh_milestone()
 		_toast("进化成功 · 全属性提升")
 	else:
 		_toast(String(res.get("err", "不可进化")))
+
+
+## 收集里程进度行 + 领取按钮可用态。
+## 文案分三种：还有可领的 / 下一档还差几只 / 全部领完。
+func _refresh_milestone() -> void:
+	if _ms_l == null:
+		return
+	var owned := G.owned_pets().size()
+	var states := G.codex_milestone_state()
+	var ready := G.codex_next_ready()
+	if not ready.is_empty():
+		_ms_l.text = "收集里程 · 已集 %d 只 · 可领取「%s」" % [owned, String(ready.get("name", ""))]
+		_ms_l.add_theme_color_override("font_color", Color("8a4a3a"))
+	elif states.is_empty():
+		_ms_l.text = "收集里程 · 已集 %d 只" % owned
+		_ms_l.add_theme_color_override("font_color", Color("7a5a2e"))
+	else:
+		var nxt: Dictionary = {}
+		for s in states:
+			if not bool((s as Dictionary).get("claimed", false)):
+				nxt = s
+				break
+		if nxt.is_empty():
+			_ms_l.text = "收集里程 · 已集 %d 只 · 全部领取完毕" % owned
+		else:
+			_ms_l.text = "收集里程 · 已集 %d 只 · 再集 %d 只可领「%s」" % [
+				owned, int(nxt.get("missing", 0)), String(nxt.get("name", ""))]
+		_ms_l.add_theme_color_override("font_color", Color("7a5a2e"))
+	if _claim_btn != null:
+		var can := not ready.is_empty()
+		_claim_btn.modulate = Color.WHITE if can else Color(1, 1, 1, 0.5)
+		_claim_btn.mouse_filter = Control.MOUSE_FILTER_STOP if can else Control.MOUSE_FILTER_IGNORE
+
+
+func _on_claim() -> void:
+	var ready := G.codex_next_ready()
+	if ready.is_empty():
+		_toast("暂时没有可领取的收集奖励")
+		return
+	var res := G.codex_claim(String(ready.get("id", "")))
+	if bool(res.get("ok", false)):
+		_refresh_milestone()
+		var lines: Array = res.get("lines", [])
+		_toast("「%s」达成 · %s" % [String(res.get("name", "")), " · ".join(lines)])
+	else:
+		_refresh_milestone()
+		_toast(String(res.get("err", "领取失败")))
 
 
 ## 一句话提示（图鉴没有行内提示位，用临时金字）
@@ -178,7 +246,8 @@ func _toast(msg: String) -> void:
 	if _content == null:
 		return
 	var l := G.gold_label(msg, G.FS_SM, false, Color("8a4a3a"), false)
-	l.position = Vector2(0, 452)
+	# 452 会和收集里程行（436 起）抢位置；移到按钮行之下
+	l.position = Vector2(0, 524)
 	l.custom_minimum_size = Vector2(CONTENT_W, 0)
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_content.add_child(l)

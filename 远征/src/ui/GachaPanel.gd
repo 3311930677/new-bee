@@ -936,22 +936,34 @@ func _roll_high(rng: RandomNumberGenerator, rates: Dictionary) -> String:
 	return "purple" if rng.randf() < p / (p + g) else "gold"
 
 
-## 抽 n 张：逐张结算保底计数（+1，出紫/金清零，满 60 强制紫/金）；
-## 十连另有一条整批保底：至少一张史诗及以上（全下品时把末张换成紫/金，设计 §4.2）
+## 稀有度判定钩子：满保底走紫/金池，否则按权重正常抽。
+## 单独一层是为了给测试一个"只换判定、不换引擎"的缝——子类覆写它就能确定性走完每一条保底路径。
+func _decide_rarity(rng: RandomNumberGenerator, rates: Dictionary, pity: int, pity_max: int) -> String:
+	if pity >= pity_max:
+		return _roll_high(rng, rates)
+	return _roll_rarity(rng, rates)
+
+
+## 抽 n 张：随机源在本层创建（局外 RNG 与战斗种子 RNG 严禁互串）。判定逻辑见 roll_batch_with。
 func _roll_batch(n: int) -> Array:
 	var rng := RandomNumberGenerator.new()
 	rng.randomize()
+	return roll_batch_with(n, rng)
+
+
+## 抽 n 张的**确定性内核**：逐张结算保底计数（+1，出紫/金清零，满 pity 强制紫/金）；
+## 十连另有一条整批保底：至少一张史诗及以上（全下品时把末张换成紫/金，设计 §4.2）。
+##
+## 单独拆出来是为了测试能注入固定 seed 的 rng —— 靠"连抽几百次总能触发保底"来碰运气
+## 验证保底是假绿：随机源一换（引擎版本、平台、抽数）就可能永远不命中那条分支。
+func roll_batch_with(n: int, rng: RandomNumberGenerator) -> Array:
 	var rates := _rates()
-	var pity_max := int(_pool().get("pity", 60))
+	var pity_max := maxi(1, int(_pool().get("pity", 60)))
 	var pity := int(G.gacha_state().get("pity", 0))
 	var out: Array = []
 	for i in n:
 		pity += 1
-		var rar := ""
-		if pity >= pity_max:
-			rar = _roll_high(rng, rates)
-		else:
-			rar = _roll_rarity(rng, rates)
+		var rar := _decide_rarity(rng, rates, pity, pity_max)
 		if rar == "purple" or rar == "gold":
 			pity = 0
 		out.append({"id": _pick_pet(rng, rar), "rarity": rar})
@@ -965,6 +977,10 @@ func _roll_batch(n: int) -> Array:
 		if not has_high:
 			var rar_hi := _roll_high(rng, rates)   # 按原始权重在紫/金两档里挑
 			out[n - 1] = {"id": _pick_pet(rng, rar_hi), "rarity": rar_hi}
+			# 整批补的这张同样是"出了史诗及以上"：和逐张保底一个口径，必须清零计数。
+			# 漏掉这行就变成"十连补发后保底仍挂着"，下一次连抽会白送一张高品质（问题 #19）。
+			# （已做故障注入验证：去掉这行后 VerifyGacha 报「实为 10」，用例确实抓得住。）
+			pity = 0
 	G.gacha_state()["pity"] = pity
 	return out
 
