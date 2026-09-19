@@ -10,6 +10,8 @@ const CONTENT_W := 408.0
 
 var _panel: PanelContainer = null
 var _info: Label = null
+var _streak_l: Label = null      # 连胜行（轮次 19）
+var _streak_rule: Label = null   # 连胜奖励说明
 var _foe_l: Label = null
 var _foe_lv := 1
 var _mirror := false          # 对手模式：false=演武傀儡（默认，好上手）true=镜影（自己的镜像）
@@ -74,22 +76,37 @@ func _build() -> void:
 
 	# 段位名与战绩：段位名用深棕加粗、显著高于辅助行（§7 第二层核心信息）
 	_info = G.gold_label("", G.FS_MD, true, Color("4a3010"), false)
-	_info.position = Vector2(74, 6 + top_pad)
+	_info.position = Vector2(74, 4 + top_pad)
 	_info.custom_minimum_size = Vector2(CONTENT_W - 74.0, 0)
 	_info.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	content.add_child(_info)
 
+	# 连胜行（轮次 19）：演武场此前赢了只有段位分，没有可花的产出。
+	# 连胜既是短期目标，也是荣誉来源——放在段位行正下方，一眼能看到进度。
+	_streak_l = G.gold_label("", G.FS_SM, true, Color("8a5a1a"), false)
+	_streak_l.position = Vector2(74, 28 + top_pad)
+	_streak_l.custom_minimum_size = Vector2(CONTENT_W - 74.0, 0)
+	_streak_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	content.add_child(_streak_l)
+
 	# 规则说明属于第三层辅助信息：字号小一档、颜色降饱和但要保住对比度
 	# （原 8a6a34 在羊皮纸上只有约 3.1:1，13px 下偏灰；提到 6a5230 后约 4.6:1）
 	var rule := G.gold_label("胜利提升段位分，失败小幅扣分", G.FS_XS, false, Color("6a5230"), false)
-	rule.position = Vector2(74, 34 + top_pad)
+	rule.position = Vector2(74, 50 + top_pad)
 	rule.custom_minimum_size = Vector2(CONTENT_W - 74.0, 0)
 	rule.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	content.add_child(rule)
 
+	# 连胜奖励口径也写在界面上（数值读 data/arena.json，不在代码里写死）
+	_streak_rule = G.gold_label("", G.FS_XS, false, Color("6a5230"), false)
+	_streak_rule.position = Vector2(74, 70 + top_pad)
+	_streak_rule.custom_minimum_size = Vector2(CONTENT_W - 74.0, 0)
+	_streak_rule.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	content.add_child(_streak_rule)
+
 	var divider := ColorRect.new()
 	divider.color = Color("c9a85a", 0.42)
-	divider.position = Vector2(0, 68 + top_pad)
+	divider.position = Vector2(0, 92 + top_pad)
 	divider.size = Vector2(CONTENT_W, 1)
 	divider.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.add_child(divider)
@@ -97,7 +114,7 @@ func _build() -> void:
 	# 对手预览卡：图标 + 名称 + 等级，避免整块面板只有文字。
 	# 用 Panel（非 PanelContainer）：PanelContainer 会把所有子节点拉伸铺满整卡，手摆的图标/两行字会互相重叠。
 	var foe_card := Panel.new()
-	foe_card.position = Vector2(0, 86 + top_pad)
+	foe_card.position = Vector2(0, 110 + top_pad)
 	foe_card.size = Vector2(CONTENT_W, 100)
 	var foe_sb := StyleBoxFlat.new()
 	foe_sb.bg_color = Color(0.32, 0.23, 0.13, 0.16)
@@ -128,7 +145,7 @@ func _build() -> void:
 
 	# 对手模式切换（轮次 18）：傀儡好上手，镜影是"你自己"——同套技能与养成，打的每一手都认得
 	_mode_btn = G.ghost_button("对手：傀儡", G.BTN_S.x, G.BTN_S.y, G.FS_SM)
-	_mode_btn.position = Vector2(0, 226 + top_pad)
+	_mode_btn.position = Vector2(0, 250 + top_pad)
 	_mode_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_mirror = not _mirror
@@ -139,14 +156,14 @@ func _build() -> void:
 	# 提示行：与模式按钮同一行右侧，不与按钮行抢竖排空间
 	var tip := G.gold_label("不耗资源 · 只磨战术", G.FS_XS,
 		false, Color("6a5230"), false)
-	tip.position = Vector2(G.BTN_S.x + 12.0, 238 + top_pad)
+	tip.position = Vector2(G.BTN_S.x + 12.0, 262 + top_pad)
 	tip.custom_minimum_size = Vector2(CONTENT_W - G.BTN_S.x - 12.0, 0)
 	tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	content.add_child(tip)
 
 	# 主次分明（§7 光效预算）：整块面板只有一个金色主按钮，换对手和返回都走描边次级款。
 	# 对齐（§5 网格）：BTN_L 高 52、BTN_M 高 44，两枚按钮按垂直中心对齐（不是按 top 对齐）
-	var btn_cy := 282.0 + top_pad
+	var btn_cy := 306.0 + top_pad
 	var reroll := G.ghost_button("换对手", G.BTN_M.x, G.BTN_M.y, G.FS_SM)
 	reroll.position = Vector2(0, btn_cy - G.BTN_M.y * 0.5)
 	reroll.gui_input.connect(func(e: InputEvent):
@@ -165,7 +182,7 @@ func _build() -> void:
 
 	var back := G.ghost_button("返回", G.BTN_S.x, G.BTN_S.y, G.FS_SM)
 	# 返回按钮与按钮行拉开 16，落在整个面板的底部收尾位
-	back.position = Vector2((CONTENT_W - G.BTN_S.x) * 0.5, 324 + top_pad)
+	back.position = Vector2((CONTENT_W - G.BTN_S.x) * 0.5, 348 + top_pad)
 	back.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			Audio.sfx("ui_close")
@@ -187,6 +204,15 @@ func _rank_icon_name() -> String:
 func _refresh() -> void:
 	_info.text = "%s · %d 分 · %d 胜 %d 负" % [G.arena_rank(),
 		int(G.arena.get("score", 0)), int(G.arena.get("wins", 0)), int(G.arena.get("losses", 0))]
+	if _streak_l != null:
+		var st := G.arena_streak()
+		_streak_l.text = "连胜 %d · 最佳 %d" % [st, maxi(st, int(G.arena.get("best_streak", 0)))]
+		_streak_l.add_theme_color_override("font_color",
+			Color("8a5a1a") if st > 0 else Color("6a5230"))
+	if _streak_rule != null:
+		var cfg := G.arena_streak_cfg()
+		_streak_rule.text = "每 %d 连胜额外 %d 荣誉（败则清零）" % [
+			maxi(1, int(cfg.get("step", 3))), maxi(0, int(cfg.get("honor_per_milestone", 0)))]
 	# 傀儡名里已带等级（"演武傀儡 · N 级"），这里不再重复拼 Lv.
 	_foe_l.text = "对手：%s" % String(_foe().get("name", ""))
 	if _foe_tip != null:
@@ -254,6 +280,9 @@ func _on_battle_end(result: String, _hp_left: int) -> void:
 	_set_busy_look(false)
 	_toast("切磋%s · 段位分 %+d（%s · %d 分）" % ["得胜" if win else "落败",
 		int(res.get("delta", 0)), String(res.get("rank", "")), int(res.get("score", 0))])
+	if bool(res.get("milestone", false)):
+		Audio.sfx("reward")
+		_toast("%d 连胜！额外荣誉 +%d" % [int(res.get("streak", 0)), int(res.get("honor", 0))])
 	_refresh()
 
 

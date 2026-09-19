@@ -182,7 +182,7 @@ func _sfx(name: String, jitter := 0.03) -> void:
 		au.call("sfx", name, jitter)
 
 # ---------- 演武场（PVP 首版：傀儡对手 + 段位分） ----------
-var arena := {"score": 1000, "wins": 0, "losses": 0}
+var arena := {"score": 1000, "wins": 0, "losses": 0, "streak": 0, "best_streak": 0}
 
 var gm_unlocked := false
 var ui_blocked := false     # 全屏浮层（GM 控制台等）打开时为 true，探索层据此冻结移动
@@ -269,12 +269,22 @@ func _apply_mouse_cursor() -> void:
 		Input.set_custom_mouse_cursor(tex, Input.CURSOR_ARROW, Vector2(1, 1))
 
 
+## 静默解析 JSON：失败返回 null，不打印引擎错误。
+## JSON.parse_string 解析失败时会自己 push 一条 "Parse JSON failed"，
+## 玩家粘贴一段乱码存档码就刷红字——那是我们自己的输入校验该说话，不是引擎。
+func json_parse_silent(text: String) -> Variant:
+	var j := JSON.new()
+	if j.parse(text) != OK:
+		return null
+	return j.data
+
+
 ## 读档：恢复钱包与角色档案（无存档/坏档保持默认，不报错弹窗——挫败感克制）
 func _load_save() -> void:
 	var f := FileAccess.open(SAVE_PATH, FileAccess.READ)
 	if f == null:
 		return
-	var parsed: Variant = JSON.parse_string(f.get_as_text())
+	var parsed: Variant = json_parse_silent(f.get_as_text())
 	if not (parsed is Dictionary):
 		push_warning("存档解析失败，沿用默认状态")
 		return
@@ -380,6 +390,8 @@ func _load_save() -> void:
 		arena["score"] = clampi(int(ad.get("score", 1000)), 0, 999999)
 		arena["wins"] = maxi(0, int(ad.get("wins", 0)))
 		arena["losses"] = maxi(0, int(ad.get("losses", 0)))
+		arena["streak"] = maxi(0, int(ad.get("streak", 0)))
+		arena["best_streak"] = maxi(0, int(ad.get("best_streak", 0)))
 	var q: Variant = data.get("quest", {})
 	if q is Dictionary:
 		var qd := q as Dictionary
@@ -2527,6 +2539,12 @@ func _veil_viewport_size(parent: Node) -> Vector2:
 		var cs := (parent as Control).size
 		if cs.x > 1.0 and cs.y > 1.0:
 			return cs
+	# 坑：父级还没进树时 parent.get_tree() 在 4.7 会直接刷
+	#   ERROR: Parameter "data.tree" is null. at: get_tree (scene/main/node.h:559)
+	# （TraitPicker.setup 在 add_child 之前就建浮层，headless 测试里每局刷 7 条）。
+	# 必须先 is_inside_tree() 再问 get_tree()，拿不到就退回 480×800 基准。
+	if not parent.is_inside_tree():
+		return Vector2(480, 800)
 	var tree := parent.get_tree()
 	if tree != null and tree.root != null:
 		var vs := tree.root.size
@@ -2911,9 +2929,21 @@ func transit_busy() -> bool:
 
 
 # ---------- 演武场 ----------
-## 段位名（铜/银/金/铂/钻印）
+## 段位名（铜/银/金/铂/钻印）——阈值在 data/arena.json ranks，改段位不动代码
 func arena_rank() -> String:
 	var s := int(arena.get("score", 0))
+	var ranks: Variant = TableCache.arena_config().get("ranks", [])
+	var best_name := "铜印"
+	var best_min := -1
+	if ranks is Array:
+		for r in ranks:
+			if not (r is Dictionary):
+				continue
+			var lo := int((r as Dictionary).get("min", 0))
+			if s >= lo and lo >= best_min:
+				best_min = lo
+				best_name = String((r as Dictionary).get("name", "铜印"))
+		return best_name
 	if s >= 1800:
 		return "钻印"
 	if s >= 1600:
@@ -3003,18 +3033,58 @@ func exchange_min_cost() -> int:
 	return _exchange_min
 
 
-## 结算一场切磋：胜 +18~26，负 -12（保底 0）；返回 {delta, score, rank}
+## 连胜参数（data/arena.json）：每 step 连胜发一次荣誉，另按连胜长度追加段位分加成
+func arena_streak_cfg() -> Dictionary:
+	var c: Variant = TableCache.arena_config().get("streak", {})
+	return c if c is Dictionary else {}
+
+
+## 当前连胜（败/平局不清零之外的口径见 arena_result）
+func arena_streak() -> int:
+	return maxi(0, int(arena.get("streak", 0)))
+
+
+## 结算一场切磋：胜 +18~26（数值来自 data/arena.json）、负 -12（保底 0）。
+## 连胜：胜则 +1，负则清零；平局/撤退还走 ArenaPanel 的早退分支，不进这里，连胜保持不变。
+## 每满 step 连胜额外发荣誉（演武场此前只给段位分，赢了没有可花的产出——连胜奖补上这一环）。
+## 返回 {delta, score, rank, streak, best, honor, milestone}
 func arena_result(win: bool) -> Dictionary:
+	var cfg := arena_streak_cfg()
+	var scfg: Variant = TableCache.arena_config().get("score", {})
+	var sc: Dictionary = scfg if scfg is Dictionary else {}
+	var step := maxi(1, int(cfg.get("step", 3)))
+	var honor_per := maxi(0, int(cfg.get("honor_per_milestone", 0)))
+	var per_streak := maxi(0, int(cfg.get("score_bonus_per_streak", 0)))
+	var cap := maxi(0, int(cfg.get("score_bonus_cap", 0)))
+
 	var delta := 0
+	var streak := arena_streak()
+	var honor := 0
+	var milestone := false
 	if win:
-		delta = 18 + randi() % 9
+		var wmin := int(sc.get("win_min", 18))
+		var wmax := int(sc.get("win_max", 26))
+		delta = wmin + (randi() % maxi(1, wmax - wmin + 1))
+		streak += 1
 		arena["wins"] = int(arena.get("wins", 0)) + 1
+		if streak % step == 0:
+			milestone = true
+			honor = honor_per
+		if per_streak > 0:
+			delta += mini(cap, per_streak * (streak - 1))
 	else:
-		delta = -mini(12, int(arena.get("score", 0)))
+		delta = -mini(int(sc.get("loss", 12)), int(arena.get("score", 0)))
+		streak = 0
 		arena["losses"] = int(arena.get("losses", 0)) + 1
+	arena["streak"] = streak
+	var best := maxi(int(arena.get("best_streak", 0)), streak)
+	arena["best_streak"] = best
+	if honor > 0:
+		wallet["honor"] = int(wallet.get("honor", 0)) + honor
 	arena["score"] = maxi(0, int(arena.get("score", 0)) + delta)
 	save_game()
-	return {"delta": delta, "score": int(arena["score"]), "rank": arena_rank()}
+	return {"delta": delta, "score": int(arena["score"]), "rank": arena_rank(),
+		"streak": streak, "best": best, "honor": honor, "milestone": milestone}
 
 
 ## 遮罩：全屏深棕黑（不是纯黑，与羊皮纸调性一致）；懒创建、平时不吃输入

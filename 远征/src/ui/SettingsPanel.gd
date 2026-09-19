@@ -440,7 +440,8 @@ func do_export() -> String:
 ## 导入：校验是 JSON 字典后整份写入存档路径（不碰剪贴板/不切场景，方便自动化验证直调）
 func do_import(code: String) -> bool:
 	var body := code.strip_edges()
-	var parsed: Variant = JSON.parse_string(body)
+	# 走静默解析：乱码存档码是玩家会真实输入的东西，不该往控制台刷引擎错误
+	var parsed: Variant = G.json_parse_silent(body)
 	if not (parsed is Dictionary):
 		return false
 	var f := FileAccess.open(G.SAVE_PATH, FileAccess.WRITE)
