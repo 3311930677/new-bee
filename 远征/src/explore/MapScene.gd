@@ -56,6 +56,16 @@ var _map_done := false
 var _map_cfg: Dictionary = {}
 var _theme_cfg: Dictionary = {}
 
+# ---- 探索动机（轮次 16：清场不再是"浪费时间"）----
+# 原来最优解永远是直线冲传送阵：绕开怪物零成本。现在清怪与拾取都给探索分，
+# 探索分决定本节点的评价与额外赏金，"走一趟"与"清一遍"变成真正的取舍。
+var _pickups: Array[_Pickup] = []
+var _score := 0
+var _kills := 0
+var _total_monsters := 0
+var _cleared_bonus := false
+var _explore_lbl: Label = null
+
 # ---- 导航辅助（轮次 13：探索不再"盲走"）----
 # 痛点：32×42 格地图只能看到约 1/5，玩家不知道自己在哪、目标在哪，只能一直往上走。
 # 三件套：小地图（全局位置感）+ 目标罗盘（方向与距离，点它自动前往）+ 疾行（缩短空跑时间）。
@@ -207,6 +217,7 @@ func _build_world() -> void:
 	_build_portal(map_w)
 	_build_player(map_w, map_h)
 	_build_monsters(map_w, map_h)
+	_build_pickups(cols, rows)   # 散落拾取物：路上有微反馈（轮次 16）
 
 
 func _build_decos(cols: int, rows: int) -> void:
@@ -287,6 +298,7 @@ func _build_monsters(map_w: float, map_h: float) -> void:
 	var nt := String(node.get("type", "normal"))
 	if not MON_COLOR.has(nt):
 		_build_interactable(map_w, map_h)
+		_total_monsters = 0
 		return
 	var comp: Array = []
 	match nt:
@@ -324,6 +336,7 @@ func _build_monsters(map_w: float, map_h: float) -> void:
 		m.map_ref = self
 		_monsters.append(m)
 		_world.add_child(m)
+	_total_monsters = _monsters.size()
 
 
 ## 非战斗节点物件：置于玩家出生点与传送阵之间的中途（要走一段路）
@@ -410,9 +423,25 @@ func _build_hud() -> void:
 	_compass.tapped.connect(_on_compass_tapped)
 	_hud.add_child(_compass)
 
-	# HP 条 + 药剂 + 换宠（整行下移让位给目标罗盘小签）
+	# 探索进度小签：清剿 x/y · 探索分与评价（清场与拾取都能加分，见 _explore_cfg）
+	var exp_chip := PanelContainer.new()
+	var esb := StyleBoxFlat.new()
+	esb.bg_color = Color(0.13, 0.09, 0.05, 0.62)
+	esb.set_corner_radius_all(4)
+	esb.content_margin_left = 10.0
+	esb.content_margin_right = 10.0
+	esb.content_margin_top = 2.0
+	esb.content_margin_bottom = 2.0
+	exp_chip.add_theme_stylebox_override("panel", esb)
+	exp_chip.position = Vector2(16, 110)
+	_explore_lbl = G.gold_label("", G.FS_XS, false, Color("c8e0a0"), false)
+	exp_chip.add_child(_explore_lbl)
+	_hud.add_child(exp_chip)
+	_refresh_explore_hud()
+
+	# HP 条 + 药剂 + 换宠（整行下移让位给目标罗盘与探索小签）
 	var panel := G.parchment_box(206, 56, 10.0)
-	panel.position = Vector2(16, 114)
+	panel.position = Vector2(16, 136)
 	_hud.add_child(panel)
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 2)
@@ -438,14 +467,14 @@ func _build_hud() -> void:
 	_refresh_hud()
 
 	var potion_btn := G.gold_button("药", 44, 40)
-	potion_btn.position = Vector2(232, 122)
+	potion_btn.position = Vector2(232, 144)
 	potion_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_use_potion())
 	_hud.add_child(potion_btn)
 
 	_pet_btn = G.gold_button("换宠", 72, 40)
-	_pet_btn.position = Vector2(284, 122)
+	_pet_btn.position = Vector2(284, 144)
 	_pet_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_swap_pet())
@@ -454,7 +483,7 @@ func _build_hud() -> void:
 	# 撤离：手边就必须能退出去（PC 亦可按 ESC），点按后二次确认防误触
 	# 位置让给右上角小地图（小地图 y 到 116），下移到地图正下方仍是拇指热区
 	var exit_btn := G.gold_button("撤离", 60, 40)
-	exit_btn.position = Vector2(404, 126)
+	exit_btn.position = Vector2(404, 150)
 	exit_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_ask_exit())
@@ -806,6 +835,115 @@ func _update_player_anim(dir: Vector2) -> void:
 		_player_anim.play()
 
 
+# ================= 探索动机（轮次 16） =================
+## 探索配置（nodes.json 的 explore 段），数据表驱动，缺表给保守默认
+func _explore_cfg() -> Dictionary:
+	var e: Variant = TableCache.nodes_config().get("explore", {})
+	return e as Dictionary if e is Dictionary else {}
+
+
+func _cfg_range(key: String, fallback: Array) -> Array:
+	var e := _explore_cfg()
+	var arr: Variant = e.get(key, fallback)
+	return arr as Array if arr is Array else fallback
+
+
+func _cfg_int(key: String, fallback: int) -> int:
+	var e := _explore_cfg()
+	return int(e.get(key, fallback))
+
+
+## 探索评价：分档给名字与附加赏金（0 档 = 匆匆过客，不给附加赏）
+func _rank() -> Dictionary:
+	var th := _cfg_range("rank_thresholds", [30, 70, 105])
+	var gold := _cfg_range("rank_bonus_gold", [40, 90, 160])
+	var names := ["匆匆过客", "踏遍此地", "寸土必争"]
+	var rank := 0
+	for i in th.size():
+		if _score >= int(th[i]):
+			rank = i + 1
+	var bonus := 0
+	if rank > 0 and rank - 1 < gold.size():
+		bonus = int(gold[rank - 1])
+	return {"name": String(names[mini(rank, names.size() - 1)]), "bonus": bonus, "tier": rank}
+
+
+func _refresh_explore_hud() -> void:
+	if _explore_lbl == null:
+		return
+	var total := _total_monsters
+	var killed := _kills
+	if total > 0:
+		_explore_lbl.text = "清剿 %d/%d · %s" % [killed, total, String(_rank().get("name", ""))]
+	else:
+		_explore_lbl.text = "探索分 %d · %s" % [_score, String(_rank().get("name", ""))]
+
+
+func _add_score(n: int, why: String) -> void:
+	if n <= 0:
+		return
+	var before := int(_rank().get("tier", 0))
+	_score += n
+	_refresh_explore_hud()
+	var after := int(_rank().get("tier", 0))
+	if after > before:
+		Audio.sfx("reward")
+		_toast("探索评价提升 · %s" % String(_rank().get("name", "")))
+
+
+## 全图怪物清空：给"清场"这件事一个明确的落点（额外赏 + 一句交代）
+func _on_area_cleared() -> void:
+	if _cleared_bonus or _total_monsters <= 0:
+		return
+	_cleared_bonus = true
+	st.add_reward("clear")
+	Audio.sfx("reward")
+	_toast("本区已清剿 · 赏金入袋（金币 +%d）"
+		% int(TableCache.nodes_config().get("rewards", {}).get("clear", {}).get("gold", 0)))
+	_add_score(_cfg_int("clear_bonus_score", 30), "清剿")
+
+
+## 散落拾取物：地图上撒几个，走过去自动拾取——路上有微反馈，不再是纯赶路
+func _build_pickups(cols: int, rows: int) -> void:
+	var rng_cfg := _cfg_range("pickup_count", [3, 5])
+	var lo := int(rng_cfg[0]) if rng_cfg.size() > 0 else 3
+	var hi := int(rng_cfg[1]) if rng_cfg.size() > 1 else 5
+	var n := _rng.randi_range(maxi(0, lo), maxi(lo, hi))
+	var map_w := float(cols * 48)
+	var spawn := Vector2(map_w / 2.0, float(rows) * 48.0 - 120.0)
+	for i in n:
+		var pos := Vector2.ZERO
+		for attempt in 20:
+			pos = Vector2(_rng.randf_range(80.0, map_w - 80.0),
+				_rng.randf_range(180.0, float(rows) * 48.0 - 200.0))
+			if pos.distance_to(spawn) > 150.0:
+				break
+		var p := _Pickup.new()
+		p.position = pos
+		p.map_ref = self
+		p.kind = "soul" if i % 3 == 2 else "coin"
+		_pickups.append(p)
+		_world.add_child(p)
+
+
+## 拾取结算：金 + 远征币 + 探索分，一条 toast（同一帧捡两个也不刷屏——后一个覆盖前一个）
+func on_pickup(p: _Pickup) -> void:
+	if _map_done or _pickups.is_empty():
+		return
+	_pickups.erase(p)
+	var g := _cfg_range("pickup_gold", [18, 42])
+	var c := _cfg_range("pickup_currency_amount", [3, 8])
+	var gold := _rng.randi_range(int(g[0]) if g.size() > 0 else 18,
+		int(g[1]) if g.size() > 1 else 42)
+	var cur := _rng.randi_range(int(c[0]) if c.size() > 0 else 3,
+		int(c[1]) if c.size() > 1 else 8)
+	st.gold += gold
+	st.expedition += cur
+	Audio.sfx("coin")
+	_toast("拾获 · 金币 +%d · 远征币 +%d" % [gold, cur])
+	_add_score(_cfg_int("pickup_score", 6), "拾取")
+
+
 # ================= 导航三件套（小地图 / 目标罗盘 / 疾行） =================
 ## 地图世界尺寸（像素）
 func _map_extent() -> Vector2:
@@ -953,7 +1091,8 @@ func _toggle_big_map() -> void:
 			ext.x / 48.0, ext.y / 48.0],
 		"金点：你所在的位置 · 亮框：当前视野",
 		"青点：传送阵（封印时转紫）· 金菱：宝箱 / 事件 / 商队 / 篝火",
-		"红点：敌影（视野内才会显形）",
+		"红点：敌影（视野内才会显形）· 亮点：散落的钱袋 / 魂晶（走近自动入袋）",
+		"清光全图怪物有额外赏，走的越细、离开时的评价越高",
 		"点下方「前 往」自动走到当前目标；再推摇杆即可接手",
 	]
 	for i in lines.size():
@@ -1003,6 +1142,13 @@ func _finish_map(result: String) -> void:
 	_map_done = true
 	if result == "cleared":
 		st.node_cleared(int(node.get("layer", 1)), int(node.get("index", 0)))
+		# 探索评价附加赏：走完节点时结算，"清一遍"的收益在这里落袋
+		var r := _rank()
+		var bonus := int(r.get("bonus", 0))
+		if bonus > 0:
+			st.gold += bonus
+			Audio.sfx("reward")
+			_toast("探索评价 · %s（金币 +%d）" % [String(r.get("name", "")), bonus])
 	map_finished.emit(result)
 
 
@@ -1081,6 +1227,10 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 		_monsters.erase(_contact_mon)
 		_contact_mon.queue_free()
 		_contact_mon = null
+	_kills += 1
+	_add_score(_cfg_int("kill_score", 12), "击杀")
+	if _monsters.is_empty() and _total_monsters > 0:
+		_on_area_cleared()   # 清场：额外赏 + 评价提升（轮次 16）
 	# 其余怪复位并返回巢穴
 	for m in _monsters:
 		m.chasing_contact = false
@@ -1228,6 +1378,47 @@ class _GroundWear extends Node2D:
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		for s: Array in _specks:
 			draw_circle(s[0], s[1], s[2])
+
+
+## 散落拾取物（魂晶 / 钱袋）：走过去自动入袋，给"空跑的那段路"一点微反馈
+class _Pickup extends Node2D:
+	var kind := "coin"        # coin / soul（只影响画法与提示色调）
+	var map_ref: MapScene = null
+	var used := false
+	var _t := 0.0
+
+	func _process(delta: float) -> void:
+		_t += delta
+		if used or map_ref == null or map_ref._player == null:
+			return
+		if map_ref._map_done or map_ref._battle != null:
+			return
+		var r := float(map_ref._cfg_int("pickup_radius", 30))
+		if position.distance_to(map_ref._player.position) < r:
+			used = true
+			map_ref.on_pickup(self)
+			queue_free()
+			return
+		queue_redraw()
+
+	func _draw() -> void:
+		var bob := sin(_t * 3.0) * 3.0
+		var base := Color("f0c060") if kind == "coin" else Color("8ad0e8")
+		# 地面光斑：远处也能一眼看到（配合小地图上的同色小点）
+		draw_set_transform(Vector2(0, 5), 0.0, Vector2(1.0, 0.36))
+		draw_circle(Vector2.ZERO, 13.0, Color(base.r, base.g, base.b, 0.22))
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+		var c := Vector2(0, bob)
+		if kind == "coin":
+			draw_circle(c, 8.0, Color("a8761e"))
+			draw_circle(c, 6.5, base)
+			draw_circle(c + Vector2(-1.6, -1.6), 2.0, Color(1, 1, 1, 0.65))
+		else:
+			var pts := PackedVector2Array([c + Vector2(0, -10), c + Vector2(6, -1),
+				c + Vector2(0, 10), c + Vector2(-6, -1)])
+			draw_colored_polygon(pts, base)
+			draw_polyline(PackedVector2Array([pts[0], pts[1], pts[2], pts[3], pts[0]]),
+				Color(1, 1, 1, 0.5), 1.2, true)
 
 
 ## 散件（origin 底部 + 脚部碰撞，参与 Y-sort）
@@ -1566,6 +1757,11 @@ class _Minimap extends Control:
 			var ip: Vector2 = at.call(map_ref._interactable.position)
 			draw_colored_polygon([ip + Vector2(0, -4.5), ip + Vector2(3.6, 0), ip + Vector2(-3.6, 0)],
 				Color("ffd980"))
+		# 未拾取的拾取物（金点=钱袋 / 淡青=魂晶）：与地面光斑同色，指路用
+		for p in map_ref._pickups:
+			if p.used:
+				continue
+			_pt(at.call(p.position), 2.6, Color("ffe9a8") if p.kind == "coin" else Color("9fe0f0"))
 		# 敌影（视野内）
 		for m in map_ref._monsters:
 			if m.position.distance_to(pp) <= reveal or m.tier == "boss":

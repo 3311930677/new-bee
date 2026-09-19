@@ -13,7 +13,22 @@
     "normal": { "gold": 120, "expedition": 20, "exp": 60, "honor": 1 },
     "elite": { "gold": 300, "expedition": 45, "soul": 5, "exp": 140, "honor": 3 },
     "boss": { "gold": 800, "expedition": 120, "soul": 15, "exp": 300, "honor": 15 },
-    "chest": { "gold": 200, "expedition": 30, "exp": 30, "honor": 0 }
+    "chest": { "gold": 200, "expedition": 30, "exp": 30, "honor": 0 },
+    "clear": { "gold": 260, "expedition": 40, "exp": 110, "honor": 2 }
   },
-  "sweep_yield": 0.70
+  "sweep_yield": 0.70,
+  "explore": {
+    "comment": "轮次 16：探索动机。清剿全图有额外赏，路上有散落拾取物，让'绕怪直冲传送阵'不再是最优解。",
+    "pickup_count": [3, 5],
+    "pickup_gold": [18, 42],
+    "pickup_currency": "expedition",
+    "pickup_currency_amount": [3, 8],
+    "pickup_score": 6,
+    "kill_score": 12,
+    "clear_bonus_score": 30,
+    "rank_thresholds": [30, 70, 105],
+    "rank_bonus_gold": [40, 90, 160],
+    "pickup_radius": 30,
+    "reveal_radius": 380
+  }
 }
