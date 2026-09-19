@@ -343,6 +343,64 @@ func _run() -> void:
 	codex.queue_free()
 	await get_tree().process_frame
 
+	# ---- K. 出征补给（轮次 21） ----
+	# 药剂本来固定 2 瓶，玩家没有"为这趟远征投资"的取舍；加带补给把金币变成战前选择。
+	# 守两条：金币在出征时才结算（加带/返回不扣钱），超上限与余额不足整单拒绝。
+	G.prog["pets"] = ["pet_rockturtle"]
+	G.prog["worlds_unlocked"] = 1
+	G.selected_role = "zs"
+	var base_p := G.run_potions_base()
+	var max_p := G.run_potions_max()
+	_check(base_p >= 1 and max_p > base_p, "补给口径应 base≥1 且 max>base（base=%d max=%d）" % [base_p, max_p])
+	var p0 := G.run_supply_price(0)
+	var p1 := G.run_supply_price(1)
+	_check(p0 > 0 and p1 > p0, "加带单价应随数量递增（%d → %d）" % [p0, p1])
+	G.wallet["gold"] = 0
+	var deny_pay := G.buy_run_supply_pack(1)
+	_check(not bool(deny_pay["ok"]), "金币不足时不应结算成功")
+	_check(int(G.wallet["gold"]) == 0, "被拒的补给不能扣钱")
+	var over := G.buy_run_supply_pack(max_p - base_p + 1)
+	_check(not bool(over["ok"]), "超过上限的加带应被拒绝")
+	G.wallet["gold"] = 99999
+	var total_want := 0
+	for i in (max_p - base_p):
+		total_want += G.run_supply_price(i)
+	var okk := G.buy_run_supply_pack(max_p - base_p)
+	_check(bool(okk["ok"]) and int(okk["total"]) == total_want,
+		"加带到上限应按递增单价求和（实为 %d，应为 %d）" % [int(okk["total"]), total_want])
+	_check(int(G.wallet["gold"]) == 99999 - total_want, "应恰好扣一次总价")
+
+	# 面板：加带只计数不扣钱；点「出征」才一次结算；取消返回更不该扣
+	G.wallet["gold"] = 99999
+	var dp: Control = (load("res://src/ui/DeployPanel.gd") as GDScript).new()
+	add_child(dp)
+	await get_tree().process_frame
+	_drop_confirm(dp)
+	var gold_before := int(G.wallet["gold"])
+	dp._add_supply()
+	dp._add_supply()
+	_check(int(dp.get("_extra_potions")) == 2, "点两次补给应记 2 瓶，实为 %d" % int(dp.get("_extra_potions")))
+	_check(int(G.wallet["gold"]) == gold_before, "加带阶段不应扣钱（金币在出征时才结算）")
+	_got_cfg = {}
+	dp.confirmed.connect(func(cfg): _got_cfg = cfg)
+	dp._on_confirm()
+	_check(not _got_cfg.is_empty(), "确认后应发出出征配置")
+	_check(int(_got_cfg.get("potions", -1)) == base_p + 2,
+		"出征配置里的药剂应为 base+2=%d，实为 %d" % [base_p + 2, int(_got_cfg.get("potions", -1))])
+	_check(int(G.wallet["gold"]) == gold_before - (p0 + p1),
+		"出征时应一次结算两瓶的递增总价（%d）" % (p0 + p1))
+	dp.queue_free()
+	await get_tree().process_frame
+	var dp2: Control = (load("res://src/ui/DeployPanel.gd") as GDScript).new()
+	add_child(dp2)
+	await get_tree().process_frame
+	var gold2 := int(G.wallet["gold"])
+	dp2._add_supply()
+	dp2.canceled.emit()
+	_check(int(G.wallet["gold"]) == gold2, "取消返回不应扣补给钱")
+	dp2.queue_free()
+	await get_tree().process_frame
+
 	if _fails == 0:
 		print("GAME_HOME_OK all tests passed")
 	else:

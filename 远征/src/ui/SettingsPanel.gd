@@ -437,20 +437,25 @@ func do_export() -> String:
 	return text
 
 
-## 导入：校验是 JSON 字典后整份写入存档路径（不碰剪贴板/不切场景，方便自动化验证直调）
-func do_import(code: String) -> bool:
-	var body := code.strip_edges()
+## 导入（带原因版）：版本闸门 → 逐版迁移 → 语义校验 → 备份原档 → 原子替换。
+## 任一步不过就整份拒绝，原档一字不动（问题 #39/#24）。
+## 返回 { ok, err }；err 是给玩家看的中文原因，直接可以贴进提示行。
+func do_import_ex(code: String) -> Dictionary:
 	# 走静默解析：乱码存档码是玩家会真实输入的东西，不该往控制台刷引擎错误
-	var parsed: Variant = G.json_parse_silent(body)
-	if not (parsed is Dictionary):
-		return false
-	var f := FileAccess.open(G.SAVE_PATH, FileAccess.WRITE)
-	if f == null:
-		push_error("存档写入失败：" + G.SAVE_PATH)
-		return false
-	f.store_string(body)
-	f.close()
-	return true
+	var res := SaveData.import_payload(code.strip_edges(), int(Time.get_unix_time_from_system()))
+	if not bool(res.get("ok", false)):
+		return {"ok": false, "err": String(res.get("err", "存档码无效"))}
+	# 先备份现有档，再原子替换；写失败时原档仍在（备份里也还有一份）
+	SaveData.backup_file(G.SAVE_PATH, int(Time.get_unix_time_from_system()))
+	var w := SaveData.write_text_atomic(G.SAVE_PATH, String(res.get("text", "")))
+	if not bool(w.get("ok", false)):
+		return {"ok": false, "err": String(w.get("err", "存档写入失败"))}
+	return {"ok": true, "err": ""}
+
+
+## 导入（旧签名，保留给既有调用方与回归用例）：成功为 true
+func do_import(code: String) -> bool:
+	return bool(do_import_ex(code).get("ok", false))
 
 
 func _on_export() -> void:
@@ -488,8 +493,10 @@ func _on_import() -> void:
 		_hint2.text = "请先粘贴或输入存档码"
 		_hint2.add_theme_color_override("font_color", Color("a04a3a"))
 		return
-	if not do_import(code):
-		_hint2.text = "存档码无效"
+	var imp := do_import_ex(code)
+	if not bool(imp.get("ok", false)):
+		# 把具体原因贴出来（版本过高 / 时间水位异常 / 字段非法），别只给一句"无效"
+		_hint2.text = String(imp.get("err", "存档码无效"))
 		_hint2.add_theme_color_override("font_color", Color("a04a3a"))
 		return
 	# 先提示成功，停一拍回标题——回标题前必须 G.reload_save() 重读内存态，

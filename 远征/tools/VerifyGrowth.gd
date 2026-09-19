@@ -353,6 +353,46 @@ func _run() -> void:
 	var agg_ck := G.growth_bonuses("ck")
 	_check(int(agg_ck["atk_add"]) == 10, "换穿杨应取长枪(lv0 攻10)而非大剑，实为 %d" % int(agg_ck["atk_add"]))
 
+	# —— 9.5 成长口径（轮次 21 · #29）——
+	# 暴击以前写死 0.05+0.001*level，把 roles.json 里四职业的 base.crit 与 growth.json 的
+	# per_level.crit 全忽略；穿杨（ck）明明是 0.07 的暴击职业，实战里却和破军一样。
+	var per_crit := float(TableCache.growth().get("per_level", {}).get("crit", 0.0))
+	_check(per_crit > 0.0, "growth.json 应声明 per_level.crit（实为 %f）" % per_crit)
+	for rid in ["zs", "ck", "fs", "fz"]:
+		var rbase: Dictionary = TableCache.get_role(rid).get("base", {})
+		var base_crit := float(rbase.get("crit", 0.0))
+		_check(base_crit > 0.0, "roles.json 的 %s 应声明 base.crit" % rid)
+		for lv in [1, 30, 60]:
+			var st := TableCache.role_stats(rid, lv)
+			var want := base_crit + per_crit * float(lv - 1)
+			_check(absf(float(st.get("crit", -1.0)) - want) < 0.000001,
+				"%s lv%d 暴击应为 base(%f)+per_level×%d = %f，实为 %f"
+				% [rid, lv, base_crit, lv - 1, want, float(st.get("crit", -1.0))])
+			# hp/atk/def 同样是 base + per_level×(lv-1)：等级 1 必须等于 base
+			if lv == 1:
+				_check(int(st.get("atk", -1)) == int(rbase.get("atk", 0))
+					and int(st.get("max_hp", -1)) == int(rbase.get("hp", 0)),
+					"%s 1 级攻击/生命应等于 roles.json base" % rid)
+	# 职业差异必须真的体现出来：穿杨比破军高 0.02 暴击（表里一直写着，代码以前没读）
+	var crit_zs := float(TableCache.role_stats("zs", 60).get("crit", 0.0))
+	var crit_ck := float(TableCache.role_stats("ck", 60).get("crit", 0.0))
+	_check(absf((crit_ck - crit_zs) - 0.02) < 0.000001,
+		"满级穿杨应比破军高 0.02 暴击（实为 %.4f）" % (crit_ck - crit_zs))
+
+	# 经验曲线：类型显式声明，数值与文档曲线一致，且不执行表里的字符串
+	_check(TableCache.exp_formula_kind() == "linear_plus_exp",
+		"growth.json 应声明 exp.type=linear_plus_exp（实为「%s」）" % TableCache.exp_formula_kind())
+	var exp_ok := true
+	var exp_bad := ""
+	for lv in [1, 2, 5, 17, 33, 59]:
+		var want_exp := int(float(lv) * 100.0 + 2.0 * pow(5.0, 0.1 * float(lv)))
+		var got_exp := TableCache.exp_to_next(lv)
+		if got_exp != want_exp:
+			exp_ok = false
+			exp_bad = "lv%d 期望 %d 实为 %d" % [lv, want_exp, got_exp]
+	_check(exp_ok, "经验曲线应与既定公式逐级一致（%s）" % exp_bad)
+	_check(G.exp_to_next(G.level_cap()) == 0, "满级不应有升级需求")
+
 	# —— 10. BattleSim 接入 ——
 	_reset(5)
 	var rs5 := TableCache.role_stats("zs", 5)

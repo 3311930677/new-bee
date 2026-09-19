@@ -70,7 +70,12 @@ var roles: Array = []       # data/roles.json 内容
 # ---------- 存档与钱包（user://save.json；四币 + 角色档案 + 养成进度） ----------
 # 用 var 而非 const：自动化测试会把 SAVE_PATH 指向临时文件，避免污染真实存档
 var SAVE_PATH := "user://save.json"
-const SAVE_VERSION := 3
+const SAVE_VERSION := SaveData.CURRENT_VERSION
+## 最近一次读档的报告（SaveData.load_payload 的返回值）：mode/err/steps 都在里面，
+## 设置面板与回归用例据此判断"这次是正常读、迁移读、还是遇到未来版本的档"。
+var last_load_report: Dictionary = {}
+## 未来版本的档被读取时，原档备份的位置（没发生就是空串）
+var save_backup_path := ""
 var wallet := {"gold": 0, "expedition": 0, "soul": 0, "honor": 0}
 
 # ---------- 道具库存（最小实现：id -> 数量；券类先行，后续道具沿用） ----------
@@ -280,19 +285,29 @@ func json_parse_silent(text: String) -> Variant:
 
 
 ## 读档：恢复钱包与角色档案（无存档/坏档保持默认，不报错弹窗——挫败感克制）
+##
+## 版本闸门 / 逐版迁移 / 语义校验都收在 SaveData（问题 #39）；未来时间水位也在那里判（#24）。
+## 未来版本的档不能"只用默认值顶着"——那等于静默覆盖玩家进度，所以先备份原档再按兼容方式读。
 func _load_save() -> void:
 	var f := FileAccess.open(SAVE_PATH, FileAccess.READ)
 	if f == null:
 		return
-	var parsed: Variant = json_parse_silent(f.get_as_text())
+	var text := f.get_as_text()
+	f.close()
+	var parsed: Variant = json_parse_silent(text)
 	if not (parsed is Dictionary):
 		push_warning("存档解析失败，沿用默认状态")
 		return
-	var data := parsed as Dictionary
-	# 版本提示（迁移策略：字段一律「缺省即默认」，暂无需逐版迁移；高于本程序的档按兼容读）
-	var ver := int(data.get("version", 1))
-	if ver > SAVE_VERSION:
-		push_warning("存档版本 %d 高于本程序 %d，按兼容方式读取" % [ver, SAVE_VERSION])
+	var now := int(Time.get_unix_time_from_system())
+	var res := SaveData.load_payload(parsed as Dictionary, now)
+	last_load_report = res
+	if not bool(res.get("ok", false)):
+		push_warning("存档不可读：%s（沿用默认状态，原档未改动）" % String(res.get("err", "")))
+		return
+	if String(res.get("mode", "")) == "future":
+		save_backup_path = SaveData.backup_file(SAVE_PATH, now)
+		push_warning("%s；原档已备份到 %s" % [String(res.get("err", "")), save_backup_path])
+	var data: Dictionary = res.get("data", {})
 	var w: Variant = data.get("wallet", {})
 	if w is Dictionary:
 		for k in ["gold", "expedition", "soul", "honor"]:
@@ -369,11 +384,9 @@ func _load_save() -> void:
 			"free_last": String(ggd.get("free_last", ""))}
 		var cc: Variant = pd.get("codex_claimed", [])   # 已领取的图鉴收集里程
 		prog["codex_claimed"] = cc if cc is Array else []
-		# 旧档迁移：保底计数曾寄居道具背包（items.gacha_pity）——搬进 prog.gacha 并从道具清掉（P2-5）
-		if int((prog["gacha"] as Dictionary).get("pity", 0)) == 0 and items.has("gacha_pity"):
-			prog["gacha"]["pity"] = maxi(0, int(items["gacha_pity"]))
-			items.erase("gacha_pity")
-	ensure_starter_pets()
+		# 保底迁移（items.gacha_pity → prog.gacha.pity）已收进 SaveData 的 v2→v3 步骤与归一化，
+		# 不再散落在读档赋值之间（问题 #39：迁移要有版本边界、要幂等）。
+		ensure_starter_pets()
 	var c: Variant = data.get("city", {})
 	if c is Dictionary:
 		var cd := c as Dictionary
@@ -470,6 +483,55 @@ func save_game() -> void:
 		return
 	f.store_string(JSON.stringify(data, "\t"))
 	f.close()
+
+
+# ---------- 出征补给（轮次 21）：出征前花金币加带药剂 ----------
+# 药剂本来是固定 2 瓶（开局给），玩家没有任何"为这趟远征投资"的决策；
+# 加带补给把金币变成一次可选的战前取舍：多带一瓶 = 多一次容错，但要花钱。
+
+func run_cfg() -> Dictionary:
+	var c: Variant = TableCache.nodes_config().get("run", {})
+	return c if c is Dictionary else {}
+
+
+func run_potions_base() -> int:
+	return maxi(0, int(run_cfg().get("potions_base", 2)))
+
+
+func run_potions_max() -> int:
+	return maxi(run_potions_base(), int(run_cfg().get("potions_max", 4)))
+
+
+## 第 bought 瓶加带药剂的单价（bought 从 0 起，单价随已购数量递增）
+func run_supply_price(bought: int) -> int:
+	var c := run_cfg()
+	var base := int(c.get("supply_price", 0))
+	if base <= 0:
+		return 0
+	return base + maxi(0, bought) * maxi(0, int(c.get("supply_price_step", 0)))
+
+
+## 出征前补给打包结算：买 extra 瓶。
+## 超上限 / 单价未配置 / 余额不足 → 整单拒绝（不做部分发放），成功才扣款落盘。
+## 返回 { ok, err, total }
+func buy_run_supply_pack(extra: int) -> Dictionary:
+	if extra <= 0:
+		return {"ok": true, "err": "", "total": 0}
+	var room := run_potions_max() - run_potions_base()
+	if extra > room:
+		return {"ok": false, "err": "补给最多再带 %d 瓶" % maxi(0, room)}
+	var total := 0
+	for i in extra:
+		var p := run_supply_price(i)
+		if p <= 0:
+			return {"ok": false, "err": "补给价格未配置"}
+		total += p
+	if int(wallet.get("gold", 0)) < total:
+		return {"ok": false, "err": "金币不足（加带 %d 瓶需 %d）" % [extra, total]}
+	wallet["gold"] = int(wallet.get("gold", 0)) - total
+	save_game()
+	_sfx("coin", 0.0)
+	return {"ok": true, "err": "", "total": total}
 
 
 ## 局结算入账（战败亦保留——失败无惩罚）并落盘

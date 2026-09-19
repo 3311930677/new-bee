@@ -119,14 +119,16 @@ func _verify_settings() -> void:
 
 		# 2. 导入合法码：写入后回读一致
 		(d.get("wallet", {}) as Dictionary)["honor"] = 777
-		_check(sp.do_import(JSON.stringify(d)), "合法存档码应导入成功")
+		var imp1 := sp.do_import_ex(JSON.stringify(d))
+		_check(bool(imp1["ok"]), "合法存档码应导入成功（原因：%s）" % String(imp1["err"]))
 		var back: Variant = JSON.parse_string(sp.do_export())
 		_check(back is Dictionary and int((back as Dictionary).get("wallet", {}).get("honor", -1)) == 777,
 			"导入后存档应为 honor 777")
 
 		# 2.1 导入后必须重读内存态（P0-3）：只写盘不重读，旧内存会在下次保存覆盖导入档
 		(d.get("wallet", {}) as Dictionary)["gold"] = 4321
-		_check(sp.do_import(JSON.stringify(d)), "导入成功（gold 4321）")
+		var imp2 := sp.do_import_ex(JSON.stringify(d))
+		_check(bool(imp2["ok"]), "导入成功（gold 4321，原因：%s）" % String(imp2["err"]))
 		G.reload_save()
 		_check(int(G.wallet.get("gold", -1)) == 4321,
 			"导入后内存钱包应重读为 4321，实为 %d" % int(G.wallet.get("gold", -1)))
