@@ -202,7 +202,10 @@ static func _apply_damage(sim: BattleSim, caster: Combatant, skill: Dictionary, 
 			if String(effect.get("type", "")) == "def_pierce":
 				dmg = DamageCalc.basic_damage(int(float(caster.get_atk()) * k),
 					int(float(t.get_def()) * (1.0 - float(effect.get("pct", 0.5)))))
-			var is_crit := sim.rng.randf() < caster.get_crit()
+			var crit_chance := caster.get_crit()
+			if caster.traits != null:
+				crit_chance += caster.traits.crit_vs_full_hp_bonus(t)   # 弱点洞悉（P1-12）
+			var is_crit := sim.rng.randf() < crit_chance
 			if is_crit:
 				dmg = DamageCalc.crit_damage(dmg, caster.crit_dmg)
 			# 词条修正（凝神/处决/碎冰/超载）

@@ -357,7 +357,10 @@ func do_basic_attack(sim: BattleSim) -> void:
 	first_basic_done = true
 	var atk := get_atk()
 	var dmg := DamageCalc.basic_damage(atk, target.get_def())
-	var is_crit := sim.rng.randf() < get_crit()
+	var crit_chance := get_crit()
+	if traits != null:
+		crit_chance += traits.crit_vs_full_hp_bonus(target)   # 弱点洞悉（P1-12）
+	var is_crit := sim.rng.randf() < crit_chance
 	if is_crit:
 		dmg = DamageCalc.crit_damage(dmg, crit_dmg)
 	var halved := false
@@ -369,6 +372,9 @@ func do_basic_attack(sim: BattleSim) -> void:
 		once_flags["first_strike"] = true
 		if traits.has_first_strike():
 			dmg *= 2
+	# 词条出手修正（处决者/碎冰等与技能共用——修「处决者只对技能生效」，P1-12）
+	if traits != null:
+		dmg = traits.modify_outgoing(self, target, dmg, false, false)
 	sim.emit({"t": "basic", "src": uid, "uid": target.uid, "halved": halved})
 	target.take_damage(dmg, self, sim, is_crit)
 	# 怪物附带效果（毒/流血/减速按概率）
