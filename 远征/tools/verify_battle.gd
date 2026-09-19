@@ -27,6 +27,8 @@ func _run() -> void:
 	_test_summon_skill()
 	_test_empty_target_fallback()
 	_test_cast_dedup()
+	_test_max_hp_parity()
+	_test_timeout_draw()
 	if _fails == 0:
 		print("BATTLE_OK all tests passed")
 	else:
@@ -310,3 +312,33 @@ func _test_cast_dedup() -> void:
 		if String(e.t) == "cast_start":
 			n1 += 1
 	_check(n1 == n0 + 1, "前摇期间只应入队一次（cast_start %d → %d）" % [n0, n1])
+
+
+# ---------- 12. 血上限同口径：BattleSim 与共享公式一致（P1-6） ----------
+func _test_max_hp_parity() -> void:
+	var growth := {"maxhp_pct": 0.35, "hp_add": 40, "atk_pct": 0.1, "def_pct": 0.0,
+		"spd_pct": 0.0, "crit_add": 0.0, "atk_add": 0.0, "def_add": 0.0, "energy_pct": 0.0}
+	var traits := ["tr_hp_up_m"]
+	var sim := BattleSim.new()
+	sim.record_events = false
+	sim.setup(41, {"role_id": "zs", "level": 10, "traits": traits, "growth": growth},
+		{"theme": "forest", "node_type": "normal", "layer": 1})
+	var role := sim.role_unit()
+	var want := TraitSystem.role_max_hp("zs", 10, traits, growth)
+	_check(role.get_max_hp() == want, "战斗血上限应等于共享公式（%d vs %d）" % [role.get_max_hp(), want])
+	var sim0 := BattleSim.new()
+	sim0.record_events = false
+	sim0.setup(41, {"role_id": "zs", "level": 10, "traits": traits},
+		{"theme": "forest", "node_type": "normal", "layer": 1})
+	_check(role.get_max_hp() > sim0.role_unit().get_max_hp(), "带成长的血上限应更大")
+
+
+# ---------- 13. 超时判平局（P1-8）：result="draw"，不再一律判负 ----------
+func _test_timeout_draw() -> void:
+	var sim := BattleSim.new()
+	sim.record_events = false
+	sim.setup(43, {"role_id": "zs", "level": 3, "traits": []},
+		{"theme": "forest", "node_type": "elite", "layer": 1})
+	sim.tick_count = BattleSim.MAX_TICKS - 1
+	sim.step()
+	_check(sim.finished and sim.result == "draw", "到硬上限应判平局（实为 %s）" % sim.result)

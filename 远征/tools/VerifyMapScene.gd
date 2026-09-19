@@ -574,6 +574,16 @@ func _run() -> void:
 	qmap.queue_free()
 	await get_tree().process_frame
 
+	# ---- Q. 血上限同口径：带局外成长时，篝火不会把血削低（P1-6）----
+	var fbmap := await _spawn_map("bonfire", 2, "")
+	fbmap.st.growth_bonus = {"maxhp_pct": 0.5}   # 模拟天赋/装备的局外加成
+	var cap := fbmap.st.max_hp()
+	fbmap.st.hp = cap
+	fbmap.st.heal(fbmap.st.bonfire_heal())
+	_check(fbmap.st.hp == cap, "满血点篝火不应掉血（%d → %d，上限 %d）" % [cap, fbmap.st.hp, cap])
+	fbmap.queue_free()
+	await get_tree().process_frame
+
 	_print_result()
 
 

@@ -158,6 +158,21 @@ func _run() -> void:
 	_check(G.quest_today_text().contains("委托"), "主城委托小签文案应含「委托」，实为「%s」"
 		% G.quest_today_text())
 
+	# ---- J. 委托池过滤 + 时钟回拨防线（P1-13） ----
+	G.prog["worlds_unlocked"] = 1
+	G.quest = {"day": "", "offer": [], "active": {}, "claimed": []}
+	var early := G.quest_offer()
+	var bad_theme: Array = []
+	for qid in early:
+		var th := String(G.quest_def(String(qid)).get("theme", ""))
+		if th != "" and not G.is_world_unlocked(th):
+			bad_theme.append(String(qid))
+	_check(bad_theme.is_empty(), "未解锁世界的委托不应上今日牌，实为 %s" % str(bad_theme))
+	var t0 := G.now_ts()
+	G.prog["last_ts"] = t0 + 86400
+	_check(G.now_ts() >= t0 + 86400, "回拨时 now_ts 应取存档水位（单调）")
+	G.prog["last_ts"] = t0
+
 	if _fails == 0:
 		print("QUESTS_OK all tests passed")
 	else:

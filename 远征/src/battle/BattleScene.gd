@@ -807,10 +807,11 @@ func _show_tip(msg: String, color := Color("ffe9b0")) -> void:
 func _show_result() -> void:
 	var win := sim.result == "victory"
 	var flee := sim.result == "flee"
+	var draw := sim.result == "draw"
 	var role := sim.role_unit()
 	var hp_left := role.hp if role != null else 0
-	# 结算音不抖音高：这是"定局"，不是随机反馈（撤退用轻音，不判负）
-	Audio.sfx("victory" if win else ("ui_close" if flee else "defeat"), 0.0)
+	# 结算音不抖音高：这是"定局"，不是随机反馈（撤退/平局用轻音，不判负）
+	Audio.sfx("victory" if win else ("defeat" if not flee and not draw else "ui_close"), 0.0)
 
 	# 结算底衬：整屏接管，走统一工厂（深棕 + 暗角 + 斜纹）
 	G.veil(self, G.VEIL_TAKEOVER_A)
@@ -823,11 +824,23 @@ func _show_result() -> void:
 	box.alignment = BoxContainer.ALIGNMENT_CENTER
 	panel.add_child(box)
 
-	box.add_child(G.serif_label("胜  利" if win else ("已 撤 退" if flee else "战  败"), G.FS_HERO,
-		Color("6a8a4a") if win else (Color("8a6a34") if flee else Color("8a4a3a"))))
+	var title_text := "战  败"
+	var title_col := Color("8a4a3a")
+	if win:
+		title_text = "胜  利"
+		title_col = Color("6a8a4a")
+	elif flee:
+		title_text = "已 撤 退"
+		title_col = Color("8a6a34")
+	elif draw:
+		title_text = "平  局"
+		title_col = Color("7a5a2e")
+	box.add_child(G.serif_label(title_text, G.FS_HERO, title_col))
 	box.add_child(G.gold_label("残存生命 %d" % hp_left, G.FS_SM, false, Color("7a5a2e"), false))
 	if flee:
 		box.add_child(G.gold_label("节点进度已保留 · 可再次进入", G.FS_SM, false, Color("6a8a4a"), false))
+	elif draw:
+		box.add_child(G.gold_label("时间耗尽 · 未分胜负", G.FS_SM, false, Color("7a5a2e"), false))
 	# 战报：打了多久、最高单击多少、谁在输出 —— 表现层统计（sim 规则未动）
 	var secs := float(sim.tick_count) / 30.0
 	box.add_child(G.gold_label("战报 · 用时 %.1fs · 最高单击 %d · 输出 %d · 承伤 %d"

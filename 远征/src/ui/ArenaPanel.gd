@@ -234,6 +234,13 @@ func _on_battle_end(result: String, _hp_left: int) -> void:
 	if _battle_layer != null:
 		_battle_layer.queue_free()
 		_battle_layer = null
+	if result == "draw":
+		# 超时平局：不判负、不动段位分（口径 D3）
+		_busy = false
+		_set_busy_look(false)
+		_toast("未分胜负 · 段位分不变")
+		_refresh()
+		return
 	var win := result == "victory"
 	var res: Dictionary = G.arena_result(win)
 	_busy = false
