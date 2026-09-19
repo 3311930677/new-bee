@@ -25,6 +25,8 @@ func _run() -> void:
 	_test_energy_economy()
 	_test_lifesteal()
 	_test_summon_skill()
+	_test_empty_target_fallback()
+	_test_cast_dedup()
 	if _fails == 0:
 		print("BATTLE_OK all tests passed")
 	else:
@@ -235,3 +237,76 @@ func _test_summon_skill() -> void:
 	sim.step()
 	_check(sim.alive_units("enemy").size() == n0 + 2,
 		"召唤狼群应 +2 狼（%d → %d）" % [n0, sim.alive_units("enemy").size()])
+
+
+# ---------- 10. 空目标兜底：前排全灭时 front_all 改打最低血单体；无敌人时整招作废不扣能量 ----------
+func _test_empty_target_fallback() -> void:
+	var sim := BattleSim.new()
+	sim.record_events = false
+	sim.setup(29, {"role_id": "zs", "level": 15, "traits": []},
+		{"theme": "forest", "node_type": "elite", "layer": 1})
+	var role := sim.role_unit()
+	# 构造「敌方无前排」：全部摆到后排，只留一只顶着
+	var keep: Combatant = null
+	for e in sim.alive_units("enemy"):
+		e.row = Combatant.ROW_BACK
+		if keep == null:
+			keep = e
+	for e in sim.alive_units("enemy"):
+		if e != keep:
+			e.hp = 0
+			e.alive = false
+	_check(keep != null, "应留一名敌人")
+	if keep != null:
+		var sd: Dictionary = TableCache.get_skill("zs_huifeng")
+		role.energy = 100
+		_check(SkillSystem.can_cast(sim, role, sd), "回风斩应可施放")
+		var hp0 := keep.hp
+		SkillSystem.enqueue_cast(sim, role, sd)
+		if not sim.cast_queue.is_empty():
+			sim.cast_queue[sim.cast_queue.size() - 1]["windup"] = 1
+		sim.step()
+		_check(keep.hp < hp0, "前排全灭时回风斩应兜底命中最低血敌人（%d → %d）" % [hp0, keep.hp])
+	# 无敌人：整招作废，能量不减
+	var sim2 := BattleSim.new()
+	sim2.record_events = false
+	sim2.setup(37, {"role_id": "zs", "level": 10, "traits": []},
+		{"theme": "forest", "node_type": "normal", "layer": 1})
+	var r2 := sim2.role_unit()
+	for e2 in sim2.alive_units("enemy"):
+		e2.hp = 0
+		e2.alive = false
+	r2.energy = 80
+	var sd2: Dictionary = TableCache.get_skill("zs_huifeng")
+	SkillSystem.enqueue_cast(sim2, r2, sd2)
+	if not sim2.cast_queue.is_empty():
+		sim2.cast_queue[sim2.cast_queue.size() - 1]["windup"] = 1
+	sim2.step()
+	_check(r2.energy == 80, "无敌人时技能作废不应扣能量（实为 %d）" % r2.energy)
+
+
+# ---------- 11. 入队去重：前摇期间 AI 重复决策只产生一条 cast_start ----------
+func _test_cast_dedup() -> void:
+	var sim := BattleSim.new()
+	sim.record_events = true
+	sim.setup(19, {"role_id": "zs", "level": 15, "traits": []},
+		{"theme": "forest", "node_type": "boss", "layer": 1})
+	var boss: Combatant = null
+	for u in sim.units:
+		if u.ai_type == "boss":
+			boss = u
+	_check(boss != null, "BOSS 在场")
+	if boss == null:
+		return
+	var n0 := 0
+	for e in sim.events:
+		if String(e.t) == "cast_start":
+			n0 += 1
+	# 模拟决策循环：前摇期间连续决策不应重复入队
+	for i in 6:
+		MonsterAI.decide(sim, boss)
+	var n1 := 0
+	for e in sim.events:
+		if String(e.t) == "cast_start":
+			n1 += 1
+	_check(n1 == n0 + 1, "前摇期间只应入队一次（cast_start %d → %d）" % [n0, n1])

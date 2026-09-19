@@ -6,12 +6,17 @@ const WINDUP_TICKS := 12        # 前摇 0.4s
 const WINDUP_TICKS_ULT := 15    # 大招前摇 0.5s（cost≥60）
 
 
-## 施法校验：存活 / 未被控制 / CD 转好 / 能量足够
+## 施法校验：存活 / 未被控制 / CD 转好 / 能量足够 / 本单位不在施法中
 static func can_cast(sim: BattleSim, caster: Combatant, skill: Dictionary) -> bool:
 	if not caster.can_act():
 		return false
 	if String(skill.get("id", "")).is_empty():
 		return false
+	# 施法中（前摇队列里已有本单位的招）不可再次入队——历史 bug：AI 每 tick 重复决策入队，
+	# 一次施法刷出十几条 cast_start（提示/音效风暴），队列还被无效项塞满
+	for q in sim.cast_queue:
+		if int((q as Dictionary).get("uid", -1)) == caster.uid:
+			return false
 	for s in caster.skills:
 		if String(s.def.get("id", "")) == String(skill.get("id", "")):
 			if int(s.cd_left) > 0:
@@ -40,6 +45,14 @@ static func resolve_cast(sim: BattleSim, entry: Dictionary) -> void:
 	var skill: Dictionary = entry.skill
 	if not can_cast(sim, caster, skill):
 		return
+	# 全场已无敌人（只剩自方）时，伤害/控制类整招作废：不扣能量、不进 CD（历史 bug：空放照扣）
+	var etype_pre := ""
+	var effect_pre: Variant = skill.get("effect", {})
+	if effect_pre is Dictionary:
+		etype_pre = String((effect_pre as Dictionary).get("type", ""))
+	if etype_pre != "heal" and etype_pre != "summon" and etype_pre != "cleanse":
+		if sim.alive_units("enemy" if caster.side == "ally" else "ally").is_empty():
+			return
 	# 消耗与 CD
 	if caster.kind == "role":
 		caster.energy -= int(skill.get("cost", 0))
@@ -105,11 +118,16 @@ static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, c
 				k *= 1.0 + float(ce.get("pct", 0.3))
 
 	# 目标集合
-	var targets := _pick_targets(sim, caster, target_type)
-	if targets.is_empty() and String(effect.get("type", "")) != "heal":
-		return
-
 	var etype := String(effect.get("type", ""))
+	var targets := _pick_targets(sim, caster, target_type)
+	if targets.is_empty() and etype != "heal" and etype != "summon" and etype != "cleanse":
+		# 兜底：目标集合为空（敌方前排全灭 / 双方全远程编成）时改打最低血单体（与普攻同规则），
+		# 避免 front_all 类技能空放还照扣能量与 CD
+		var enemies := sim.alive_units("enemy" if caster.side == "ally" else "ally")
+		if not enemies.is_empty():
+			targets = [caster.lowest_hp(enemies)]
+	if targets.is_empty() and etype != "heal" and etype != "summon":
+		return
 	match etype:
 		"heal":
 			_apply_heal(sim, caster, skill, effect, targets, combo)

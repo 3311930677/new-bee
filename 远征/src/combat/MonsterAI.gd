@@ -28,10 +28,9 @@ static func decide_auto(sim: BattleSim, unit: Combatant) -> void:
 	for i in range(unit.skills.size() - 1, -1, -1):
 		var s: Dictionary = unit.skills[i]
 		var skill: Dictionary = s.def
-		if int(s.cd_left) > 0:
-			continue
-		var cost := int(skill.get("cost", 0))
-		if unit.energy < cost:
+		# 统一走 can_cast：CD / 能量 / 「本单位施法中不重复入队」三关都在这里把关
+		# （历史 bug：托管绕过校验重复入队，前摇期每 tick 刷一条 cast_start）
+		if not SkillSystem.can_cast(sim, unit, skill):
 			continue
 		var sid := String(skill.get("id", ""))
 		if not _auto_condition(sim, unit, sid, skill, allies, enemies):

@@ -689,8 +689,9 @@ func _on_flee() -> void:
 	if sim.finished:
 		return
 	if _flee_armed:
+		# 撤退 = 退出本节点（与地图「撤离」同义）：MapScene 保留节点进度，不判负、不结束本局
 		sim.finished = true
-		sim.result = "defeat"
+		sim.result = "flee"
 		return
 	_flee_armed = true
 	if _flee_btn != null:
@@ -805,9 +806,11 @@ func _show_tip(msg: String, color := Color("ffe9b0")) -> void:
 # ================= 结算 =================
 func _show_result() -> void:
 	var win := sim.result == "victory"
+	var flee := sim.result == "flee"
 	var role := sim.role_unit()
 	var hp_left := role.hp if role != null else 0
-	Audio.sfx("victory" if win else "defeat", 0.0)   # 结算音不抖音高：这是"定局"，不是随机反馈
+	# 结算音不抖音高：这是"定局"，不是随机反馈（撤退用轻音，不判负）
+	Audio.sfx("victory" if win else ("ui_close" if flee else "defeat"), 0.0)
 
 	# 结算底衬：整屏接管，走统一工厂（深棕 + 暗角 + 斜纹）
 	G.veil(self, G.VEIL_TAKEOVER_A)
@@ -820,9 +823,11 @@ func _show_result() -> void:
 	box.alignment = BoxContainer.ALIGNMENT_CENTER
 	panel.add_child(box)
 
-	box.add_child(G.serif_label("胜  利" if win else "战  败", G.FS_HERO,
-		Color("6a8a4a") if win else Color("8a4a3a")))
+	box.add_child(G.serif_label("胜  利" if win else ("已 撤 退" if flee else "战  败"), G.FS_HERO,
+		Color("6a8a4a") if win else (Color("8a6a34") if flee else Color("8a4a3a"))))
 	box.add_child(G.gold_label("残存生命 %d" % hp_left, G.FS_SM, false, Color("7a5a2e"), false))
+	if flee:
+		box.add_child(G.gold_label("节点进度已保留 · 可再次进入", G.FS_SM, false, Color("6a8a4a"), false))
 	# 战报：打了多久、最高单击多少、谁在输出 —— 表现层统计（sim 规则未动）
 	var secs := float(sim.tick_count) / 30.0
 	box.add_child(G.gold_label("战报 · 用时 %.1fs · 最高单击 %d · 输出 %d · 承伤 %d"
@@ -842,7 +847,7 @@ func _show_result() -> void:
 			lines.append("经验 +%d" % int(rw.exp))
 		box.add_child(G.gold_label("  ·  ".join(lines), G.FS_SM, false, Color("8a6a34"), false))
 
-	var btn := G.gold_button("继 续", 200, 48)
+	var btn := G.gold_button("返 回" if flee else "继 续", 200, 48)
 	btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			confirm_result())
