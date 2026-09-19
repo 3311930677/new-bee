@@ -70,7 +70,7 @@ var roles: Array = []       # data/roles.json 内容
 # ---------- 存档与钱包（user://save.json；四币 + 角色档案 + 养成进度） ----------
 # 用 var 而非 const：自动化测试会把 SAVE_PATH 指向临时文件，避免污染真实存档
 var SAVE_PATH := "user://save.json"
-const SAVE_VERSION := 2
+const SAVE_VERSION := 3
 var wallet := {"gold": 0, "expedition": 0, "soul": 0, "honor": 0}
 
 # ---------- 道具库存（最小实现：id -> 数量；券类先行，后续道具沿用） ----------
@@ -349,6 +349,16 @@ func _load_save() -> void:
 		prog["lore_beats"] = lb if lb is Dictionary else {}
 		var setg: Variant = pd.get("settings", {})   # 玩家设置（震屏/剧情演出/战斗默认倍速）
 		prog["settings"] = setg if setg is Dictionary else {}
+		var gg: Variant = pd.get("gacha", {})   # 抽奖状态（保底 / 每日免费；P1-1）
+		var ggd: Dictionary = gg if gg is Dictionary else {}
+		prog["gacha"] = {"pity": maxi(0, int(ggd.get("pity", 0))),
+			"free_day": String(ggd.get("free_day", "")),
+			"free_streak": maxi(0, int(ggd.get("free_streak", 0))),
+			"free_last": String(ggd.get("free_last", ""))}
+		# 旧档迁移：保底计数曾寄居道具背包（items.gacha_pity）——搬进 prog.gacha 并从道具清掉（P2-5）
+		if int((prog["gacha"] as Dictionary).get("pity", 0)) == 0 and items.has("gacha_pity"):
+			prog["gacha"]["pity"] = maxi(0, int(items["gacha_pity"]))
+			items.erase("gacha_pity")
 	ensure_starter_pets()
 	var c: Variant = data.get("city", {})
 	if c is Dictionary:
@@ -388,7 +398,8 @@ func _init_state_defaults() -> void:
 	prog = {"level": 1, "exp": 0, "worlds_unlocked": 1, "world_cleared": {}, "pets": [],
 		"talents": {}, "equip": {}, "skills": {}, "mounts": {"owned": {}, "active": ""},
 		"titles": {"owned": [], "active": ""}, "pet_stat": {}, "tips_seen": {},
-		"lore_seen": false, "lore_beats": {}, "settings": {}}
+		"lore_seen": false, "lore_beats": {}, "settings": {},
+		"gacha": {"pity": 0, "free_day": "", "free_streak": 0, "free_last": ""}}
 	city = {"built": ["hall", "gate"], "code": "", "visits": [], "acts": {}, "day": "", "streak": 0}
 	quest = {"day": "", "offer": [], "active": {}, "claimed": []}
 	arena = {"score": 1000, "wins": 0, "losses": 0}
@@ -651,6 +662,46 @@ func now_ts() -> int:
 ## 当日键（YYYY-MM-DD）。签到翻篇、今日来客都按它算。
 func today_key() -> String:
 	return Time.get_date_string_from_unix_time(now_ts())
+
+
+# ---------- 抽奖状态（保底 / 每日免费；P1-1、P2-5） ----------
+
+## 抽奖状态（prog.gacha）：保底计数与每日免费信息。
+## 旧档曾把保底寄居在道具背包（items.gacha_pity），_load_save 会自动迁移。
+func gacha_state() -> Dictionary:
+	if not (prog.get("gacha") is Dictionary):
+		prog["gacha"] = {"pity": 0, "free_day": "", "free_streak": 0, "free_last": ""}
+	return prog["gacha"]
+
+
+## 今日免费召唤是否可用（每日 1 次，零点刷新）
+func gacha_free_available() -> bool:
+	return String(gacha_state().get("free_day", "")) != today_key()
+
+
+## 记一次免费召唤：连续天数 +1（昨天抽过才算连），满 7 天送灵魂石 ×50 并重新计数。
+## 返回本次连抽奖励（0 或 50），UI 据此飘字。
+func gacha_mark_free() -> int:
+	var gs := gacha_state()
+	if String(gs.get("free_last", "")) == _day_key(now_ts() - 86400):
+		gs["free_streak"] = int(gs.get("free_streak", 0)) + 1
+	else:
+		gs["free_streak"] = 1
+	gs["free_last"] = today_key()
+	gs["free_day"] = today_key()
+	var bonus := 0
+	if int(gs.get("free_streak", 0)) >= 7:
+		gs["free_streak"] = 0   # 满 7 天发一次奖、重新计数
+		bonus = 50
+		wallet["soul"] = int(wallet.get("soul", 0)) + bonus
+		_sfx("level_up", 0.0)
+	save_game()
+	return bonus
+
+
+## unix 秒 → 日期键（YYYY-MM-DD）
+func _day_key(ts: int) -> String:
+	return Time.get_date_string_from_unix_time(ts)
 
 
 # ---------- 建筑 ----------

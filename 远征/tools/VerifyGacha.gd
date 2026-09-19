@@ -1,8 +1,8 @@
 # VerifyGacha.gd —— 召唤面板冒烟（场景模式：godot --headless --path . res://tools/VerifyGacha.tscn）
 # 用场景模式而非 -s：GachaPanel 依赖 autoload G，-s 模式下编译器不注册 autoload 全局名
-# 覆盖：配置表读取 / 余额不足行内提示 / 单抽扣费与新收集 / 重复炼金入账 /
-#       十连用券优先与至少一张蓝 / 无券扣魂石 / 60 抽保底强制史诗 / 全白十连强制补蓝 /
-#       翻卡与全部翻开 / closed 信号 / 200 抽概率与保底不变量
+# 覆盖：配置表读取（v2 池结构）/ 余额不足行内提示 / 单抽扣费与新收集 / 重复炼金入账 /
+#       十连用券优先与至少一张紫 / 无券扣魂石 / 60 抽保底强制史诗 / 全下品十连强制补紫 /
+#       每日免费抽与七日连抽奖 / 旧档保底迁移 / 翻卡与全部翻开 / closed 信号 / 200 抽概率与保底不变量
 extends Node
 
 var _fails := 0
@@ -20,11 +20,13 @@ func _check(cond: bool, msg: String) -> void:
 		push_error("FAIL: " + msg)
 
 
-## 重置到确定状态（钱包 / 道具含保底计数 / 宠物只留初始岩龟）
+## 重置到确定状态（钱包 / 道具 / 抽奖状态 / 宠物只留初始岩龟）。
+## 免费抽默认记为「今天已领」，避免干扰付费路径；免费用例自行改写 free_day。
 func _reset(soul := 0, ticket := 0, pity := 0) -> void:
 	G.wallet = {"gold": 0, "expedition": 0, "soul": soul, "honor": 0}
-	G.items = {"ticket_ten": ticket, "ticket_sweep": 0, "gacha_pity": pity}
+	G.items = {"ticket_ten": ticket, "ticket_sweep": 0}
 	G.prog["pets"] = ["pet_rockturtle"]
+	G.prog["gacha"] = {"pity": pity, "free_day": G.today_key(), "free_streak": 0, "free_last": ""}
 	G.save_game()
 
 
@@ -44,13 +46,17 @@ func _run() -> void:
 	var p := GachaPanel.new()
 	holder.add_child(p)
 
-	# —— 0. 配置表 ——
+	# —— 0. 配置表（v2 池结构） ——
 	var cfg := p._cfg()
 	_check(not cfg.is_empty(), "gacha.json 应能读取")
-	_check(int(cfg.get("cost_soul_single", 0)) == 80, "单抽价格应为 80")
-	_check(int(cfg.get("cost_soul_ten", 0)) == 800, "十连价格应为 800")
-	_check(int(cfg.get("pity", 0)) == 60, "保底抽数应为 60")
-	var rates: Dictionary = cfg.get("rates", {})
+	var pool: Dictionary = p._pool()
+	_check(not pool.is_empty(), "gacha.json 应有 pools[0]（v2 结构）")
+	_check(int(pool.get("cost_soul_single", 0)) == 80, "单抽价格应为 80")
+	_check(int(pool.get("cost_soul_ten", 0)) == 720, "十连应为 9 折 720")
+	_check(int(pool.get("pity", 0)) == 60, "保底抽数应为 60")
+	_check(int(pool.get("daily_free", 0)) == 1, "应有每日免费 1 抽")
+	_check(String(pool.get("ten_guarantee", "")) == "purple", "十连保底应为史诗及以上")
+	var rates: Dictionary = pool.get("rates", {})
 	var rates_sum := float(rates.get("white", 0.0)) + float(rates.get("blue", 0.0)) \
 		+ float(rates.get("purple", 0.0)) + float(rates.get("gold", 0.0))
 	_check(is_equal_approx(rates_sum, 1.0), "四档概率之和应为 1（实为 %f）" % rates_sum)
@@ -100,39 +106,44 @@ func _run() -> void:
 	_check(G.item_count("ticket_ten") == 1, "有券时应优先消耗十连券")
 	_check(int(G.wallet["soul"]) == 50, "用券时不应扣魂石")
 	_check(_live_cards(p) == 10 and p._results.size() == 10, "十连应有十张卡")
-	var has_blue := false
+	var has_high := false
 	for r in p._results:
-		if String((r as Dictionary)["rarity"]) != "white":
-			has_blue = true
-	_check(has_blue, "十连至少一张稀有及以上")
-	var pity_now := int(G.items.get("gacha_pity", -1))
+		var rr4 := String((r as Dictionary)["rarity"])
+		if rr4 == "purple" or rr4 == "gold":
+			has_high = true
+	_check(has_high, "十连至少一张史诗及以上")
+	var pity_now := int(G.gacha_state().get("pity", -1))
 	_check(pity_now >= 0 and pity_now < 60, "保底计数应在 0..59（实为 %d）" % pity_now)
 
-	# —— 5. 十连：无券扣魂石 ——
+	# —— 5. 十连：无券扣魂石（9 折 720） ——
 	_reset(800, 0, 0)
 	p._do_ten()
-	_check(int(G.wallet["soul"]) == 0 and G.item_count("ticket_ten") == 0, "无券十连应扣 800 魂石")
+	_check(int(G.wallet["soul"]) == 80 and G.item_count("ticket_ten") == 0, "无券十连应扣 720 魂石")
 
 	# —— 6. 60 抽保底：强制史诗及以上并清零 ——
 	_reset(80, 0, 59)
 	p._do_single()
 	var rar6 := String(p._results[0]["rarity"])
 	_check(rar6 == "purple" or rar6 == "gold", "第 60 抽必出史诗及以上（实为 %s）" % rar6)
-	_check(int(G.items.get("gacha_pity", -1)) == 0, "出紫/金后保底应清零")
+	_check(int(G.gacha_state().get("pity", -1)) == 0, "出紫/金后保底应清零")
 
-	# —— 7. 全白十连强制补一张稀有（临时注入全白概率表）——
+	# —— 7. 全下品十连强制补一张史诗（临时注入全白概率表）——
 	_reset(800, 0, 0)
 	p._cfg_cache = {
-		"cost_soul_single": 80, "cost_soul_ten": 800, "pity": 60,
-		"rates": {"white": 1.0, "blue": 0.0, "purple": 0.0, "gold": 0.0},
+		"version": 2,
+		"pools": [{"id": "pet", "name": "灵宠召唤", "currency": "soul",
+			"cost_soul_single": 80, "cost_soul_ten": 720, "pity": 60, "daily_free": 1,
+			"ten_guarantee": "purple",
+			"rates": {"white": 1.0, "blue": 0.0, "purple": 0.0, "gold": 0.0}}],
 		"dup_gold": {"white": 200, "blue": 600, "purple": 1500, "gold": 4000},
 	}
 	p._do_ten()
-	var blues := 0
+	var highs := 0
 	for r in p._results:
-		if String((r as Dictionary)["rarity"]) == "blue":
-			blues += 1
-	_check(blues == 1, "全白十连应强制补一张稀有（实为 %d 张蓝）" % blues)
+		var rr7 := String((r as Dictionary)["rarity"])
+		if rr7 == "purple" or rr7 == "gold":
+			highs += 1
+	_check(highs == 1, "全下品十连应强制补一张史诗（实为 %d 张紫/金）" % highs)
 	p._cfg_cache = {}   # 恢复读表
 
 	# —— 8. 翻卡：初始背面 → 点击翻开 → 全部翻开 ——
@@ -164,7 +175,7 @@ func _run() -> void:
 	_check(p._r_hint.text != "" and _live_cards(p) == 10, "再抽失败应给行内提示且卡片不变")
 	_reset(800, 0, 1)
 	p._again()
-	_check(p._results.size() == 10 and int(G.wallet["soul"]) == 0, "再抽一次应按十连重放并扣费")
+	_check(p._results.size() == 10 and int(G.wallet["soul"]) == 80, "再抽一次应按十连重放并扣费")
 	var closed_flag := {"hit": false}   # lambda 按值捕获，得用引用类型带出状态
 	p.closed.connect(func(): closed_flag["hit"] = true)
 	p._close()
@@ -175,7 +186,7 @@ func _run() -> void:
 	var gold_n := 0
 	var purple_n := 0
 	for i in 200:
-		var pre := int(G.items.get("gacha_pity", 0))
+		var pre := int(G.gacha_state().get("pity", 0))
 		p._do_single()
 		var rr: Dictionary = p._results[0]
 		var rar := String(rr["rarity"])
@@ -185,7 +196,7 @@ func _run() -> void:
 			purple_n += 1
 		if pre >= 59:
 			_check(rar == "purple" or rar == "gold", "保底触发必出史诗及以上（实为 %s）" % rar)
-		var post := int(G.items.get("gacha_pity", -1))
+		var post := int(G.gacha_state().get("pity", -1))
 		_check(post >= 0 and post < 60, "保底计数应始终在 0..59（实为 %d）" % post)
 		_check(not TableCache.get_pet(String(rr["id"])).is_empty(), "抽中 id 应为有效宠物")
 		if i % 20 == 0:
@@ -193,6 +204,38 @@ func _run() -> void:
 	_check(purple_n >= 4 and purple_n <= 32, "200 抽紫卡应在 4..32（实为 %d）" % purple_n)
 	_check(gold_n <= 13, "200 抽金卡不应超过 13（实为 %d）" % gold_n)
 	_check(p._soul_l.text == "× 0", "抽完后主面板魂石余额应刷新（实为 %s）" % p._soul_l.text)
+
+	# —— 11. 每日免费抽：同日一次、不扣魂石 ——
+	_reset(0, 0, 0)
+	G.prog["gacha"]["free_day"] = ""   # 模拟"今天还没领"
+	_check(G.gacha_free_available(), "未领取时免费抽应可用")
+	p._do_free()
+	_check(p._results.size() >= 1, "免费抽应出结果")
+	_check(int(G.wallet["soul"]) == 0, "免费抽不扣魂石")
+	_check(String(G.gacha_state().get("free_day", "")) == G.today_key(), "免费次数应记为今天")
+	_check(not G.gacha_free_available(), "同一天第二次应不可用")
+	var n_free := p._results.size()
+	p._do_free()
+	_check(p._results.size() == n_free, "重复点免费不应再抽")
+
+	# —— 12. 连续 7 天免费：第 7 天送灵魂石 ×50 并重新计数 ——
+	_reset(0, 0, 0)
+	G.prog["gacha"]["free_day"] = ""
+	G.prog["gacha"]["free_streak"] = 6
+	G.prog["gacha"]["free_last"] = G._day_key(G.now_ts() - 86400)
+	p._do_free()
+	_check(int(G.wallet["soul"]) == 50, "连续第 7 天免费应送灵魂石 50（实为 %d）" % int(G.wallet["soul"]))
+	_check(int(G.gacha_state().get("free_streak", -1)) == 0, "满 7 天后连抽计数应重置")
+
+	# —— 13. 旧档迁移：items.gacha_pity → prog.gacha.pity（P2-5） ——
+	_reset(0, 0, 0)
+	G.items["gacha_pity"] = 42
+	G.prog["gacha"]["pity"] = 0
+	G.save_game()
+	G.reload_save()
+	_check(int(G.gacha_state().get("pity", -1)) == 42,
+		"旧档保底应迁移为 42（实为 %d）" % int(G.gacha_state().get("pity", -1)))
+	_check(not G.items.has("gacha_pity"), "迁移后 items 里不应再留 gacha_pity")
 
 	if _fails == 0:
 		print("GACHA_OK all tests passed")
