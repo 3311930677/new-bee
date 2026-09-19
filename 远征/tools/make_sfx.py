@@ -265,10 +265,40 @@ def defeat() -> np.ndarray:
     return x
 
 
+def pickup() -> np.ndarray:
+    """探索拾取（钱袋/魂晶）：比 coin 更小更轻——一局要捡好几次，不能抢戏。
+    木片轻叩 + 一颗高音小铃，尾巴短。"""
+    n = n_of(0.30)
+    x = np.zeros(n)
+    tap = bell(880, n_of(0.10), 0.035, partials=(1.0, 2.0), gains=(1.0, 0.25))
+    x = mix_at(x, tap, 0.0, 0.55)
+    shimmer = bell(1318, n_of(0.18), 0.055, partials=(1.0, 2.01), gains=(1.0, 0.22))
+    x = mix_at(x, shimmer, 0.045, 0.42)
+    x += 0.10 * hp(noise(n), 3000) * env(n, 0.03, attack=0.001)
+    return x
+
+
+def altar() -> np.ndarray:
+    """碑灵祭坛：低沉钟鸣 + 一层上行的气声，像"碑里有人应了一声"。
+    与 reward（明亮）刻意区分：祭坛是庄重的，不是"赚到了"。"""
+    n = n_of(1.20)
+    x = np.zeros(n)
+    tone = bell(196, n_of(1.00), 0.42, partials=(1.0, 2.0, 2.98, 4.02),
+                gains=(1.0, 0.30, 0.16, 0.07))
+    x = mix_at(x, tone, 0.0, 0.85)
+    x = mix_at(x, bell(294, n_of(0.70), 0.30, partials=(1.0, 2.0), gains=(1.0, 0.22)),
+               0.10, 0.42)
+    # 气声：噪声经低通，慢慢张开（上行感靠包络做出来即可，不做真滑音）
+    air = lp(noise(n), 900) * np.linspace(0.0, 1.0, n) ** 2 * np.exp(-np.arange(n) / (0.5 * SR))
+    x += 0.18 * air
+    return x
+
+
 # ---------- 清单 ----------
 UI_SFX = [ui_click, ui_open, ui_close, ui_page, ui_confirm, ui_cancel, ui_locked]
 REWARD_SFX = [coin, reward, level_up]
 BATTLE_SFX = [hit_light, hit_heavy, hit_crit, skill_cast, boss_warn, low_hp, victory, defeat]
+EXPLORE_SFX = [pickup, altar]   # 探索：拾取 / 祭坛（峰值压一档，不抢战斗音）
 
 
 def main() -> None:
@@ -283,7 +313,10 @@ def main() -> None:
     print("[战斗]")
     for f in BATTLE_SFX:
         save(f.__name__, f(), 0.8)
-    total = len(UI_SFX) + len(REWARD_SFX) + len(BATTLE_SFX)
+    print("[探索]")
+    for f in EXPLORE_SFX:
+        save(f.__name__, f(), 0.70)
+    total = len(UI_SFX) + len(REWARD_SFX) + len(BATTLE_SFX) + len(EXPLORE_SFX)
     print(f"完成：{total} 个音效。接着跑 godot --headless --path . --import 让引擎导入。")
 
 

@@ -18,6 +18,7 @@ const SFX_NAMES := [
 	"coin", "reward", "level_up",
 	"hit_light", "hit_heavy", "hit_crit", "skill_cast",
 	"boss_warn", "low_hp", "victory", "defeat",
+	"pickup", "altar",   # 探索：拾取 / 碑灵祭坛（轮次 17）
 ]
 
 var _bgm: AudioStreamPlayer = null

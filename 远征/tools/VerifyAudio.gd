@@ -1,5 +1,5 @@
 # VerifyAudio.gd —— 音频层回归（场景模式：godot --headless --path . res://tools/VerifyAudio.tscn）
-# 守：18 个音效素材全部可解析（缺一个就红）、音效池逐次轮转 + 随机音高（防机械复读）、
+# 守：20 个音效素材全部可解析（缺一个就红）、音效池逐次轮转 + 随机音高（防机械复读）、
 #     静音早退、BGM 同名不重播 / 换曲 / 缺曲静默降级、音量设置 API，
 #     以及"防循环依赖"：G 与 Audio 之间不许有编译期互相引用（只准运行时取节点）。
 # 音效由 tools/make_sfx.py 程序合成；新增/重生成后要跑 godot --headless --path . --import。
@@ -27,7 +27,7 @@ func _run() -> void:
 		if Audio.sfx_path(String(n)) == "":
 			missing.append(String(n))
 	_check(missing.is_empty(), "音效素材缺失：%s" % str(missing))
-	_check(Audio.SFX_NAMES.size() >= 17, "音效清单不应少于 17 个，实为 %d" % Audio.SFX_NAMES.size())
+	_check(Audio.SFX_NAMES.size() >= 20, "音效清单不应少于 20 个，实为 %d" % Audio.SFX_NAMES.size())
 	_check(Audio.sfx_path("ui_click").begins_with("res://assets/audio/ui_click"),
 		"sfx_path 应指向 assets/audio，实为 %s" % Audio.sfx_path("ui_click"))
 
