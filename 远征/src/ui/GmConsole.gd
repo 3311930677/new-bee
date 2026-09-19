@@ -24,6 +24,12 @@ var _close_btn: Control = null
 
 
 func _ready() -> void:
+	# 发行门禁（P2-11）：非 debug 构建自锁，开发者控制台不进正式包
+	if not OS.is_debug_build():
+		visible = false
+		process_mode = Node.PROCESS_MODE_DISABLED
+		set_process_unhandled_input(false)
+		return
 	layer = 100
 	visible = false
 	# 常驻最上层：任何界面都能唤起
