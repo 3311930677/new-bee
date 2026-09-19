@@ -1,7 +1,17 @@
 {
-  "cost_soul_single": 80,
-  "cost_soul_ten": 800,
-  "pity": 60,
-  "rates": { "white": 0.60, "blue": 0.30, "purple": 0.08, "gold": 0.02 },
+  "version": 2,
+  "pools": [
+    {
+      "id": "pet",
+      "name": "灵宠召唤",
+      "currency": "soul",
+      "cost_soul_single": 80,
+      "cost_soul_ten": 720,
+      "pity": 60,
+      "daily_free": 1,
+      "ten_guarantee": "purple",
+      "rates": { "white": 0.60, "blue": 0.30, "purple": 0.08, "gold": 0.02 }
+    }
+  ],
   "dup_gold": { "white": 200, "blue": 600, "purple": 1500, "gold": 4000 }
 }

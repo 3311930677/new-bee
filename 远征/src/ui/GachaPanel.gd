@@ -37,6 +37,8 @@ var _pity_l: Label = null
 var _pity_sub: Label = null
 var _pity_bar: Panel = null
 var _hint: Label = null
+var _free_btn: Control = null             # 每日免费召唤条
+var _free_l: Label = null
 # ---- 结果层 ----
 var _result: Control = null
 var _cards_box: Control = null
@@ -74,9 +76,17 @@ func _cfg() -> Dictionary:
 	return _cfg_cache
 
 
+## 当前单池配置（gacha.json v2 的 pools[0]；老结构顶层字段作兼容回退）
+func _pool() -> Dictionary:
+	var pools: Variant = _cfg().get("pools", [])
+	if pools is Array and not (pools as Array).is_empty():
+		return (pools as Array)[0]
+	return _cfg()
+
+
 ## 四档概率（缺档按 0 补，表被改坏也不崩）
 func _rates() -> Dictionary:
-	var src: Dictionary = _cfg().get("rates", {})
+	var src: Dictionary = _pool().get("rates", {})
 	var out := {}
 	for k in RARITY_ORDER:
 		out[k] = float(src.get(k, 0.0))
@@ -93,11 +103,12 @@ func _rules_lines() -> Array:
 	var dp := PackedStringArray()
 	for k in RARITY_ORDER:
 		dp.append("%s +%d" % [String(RARITY_NAME[k]), int(dup.get(k, 0))])
-	var pity_max := int(_cfg().get("pity", 60))
+	var pity_max := int(_pool().get("pity", 60))
 	return [
 		"【出率】" + " · ".join(rp),
 		"【保底】每召唤 1 次累积 1 点计数，满 %d 点必出史诗或传说；中途出史诗/传说即清零重计。" % pity_max,
-		"【十连】十连必得至少一只稀有及以上灵宠；有十连券时优先用券。",
+		"【十连】十连 9 折，且必得至少一只史诗及以上灵宠；有十连券时优先用券。",
+		"【每日免费】每天可免费召唤 1 次（零点刷新）；连续 7 天免费召唤可领灵魂石 ×50。",
 		"【重复炼化】已结缘的灵宠再抽到会自动炼化为金币：" + " · ".join(dp) + "。",
 		"【结伴】通关各世界首领也能结识特定灵宠，详见图鉴。",
 	]
@@ -216,8 +227,9 @@ func _build() -> void:
 	bal.add_child(_ticket_l)
 
 	# 抽卡按钮（主标题 + 副标价格两行）
-	var single_cost := int(_cfg().get("cost_soul_single", 80))
-	var ten_cost := int(_cfg().get("cost_soul_ten", 800))
+	var pool := _pool()
+	var single_cost := int(pool.get("cost_soul_single", 80))
+	var ten_cost := int(pool.get("cost_soul_ten", 720))
 	# 主次分明：十连是主操作（金底），单抽降为描边次级，不再并排两个大金块
 	var b1 := _btn2("单 抽", "%d 魂石" % single_cost, 196, 56, true)
 	b1.position = Vector2(4, 160)
@@ -239,11 +251,19 @@ func _build() -> void:
 	_hint.modulate.a = 0.0
 	content.add_child(_hint)
 
-	# 一句书卷气的小字，压一压"功能面板"的模板感
-	var flavor := G.serif_label("魂 石 为 引 · 灵 宠 结 缘", G.FS_SM, Color("8a6a34"))
-	flavor.position = Vector2(0, 246)
-	flavor.custom_minimum_size = Vector2(CONTENT_W, 0)
-	content.add_child(flavor)
+	# 每日免费召唤（设计 §4.2）：每天 1 次、零点刷新；连续 7 天送灵魂石 ×50。
+	# 替掉原来的纯装饰小字——免费抽是"每天回来看看"的钩子，值得一个实体入口。
+	_free_btn = _inset_band(Vector2(CONTENT_W, 26), Vector2(0, 240))
+	_free_l = G.gold_label("", G.FS_SM, false, G.TEXT_DARK, false)
+	_free_l.position = Vector2(0, 4)
+	_free_l.size = Vector2(CONTENT_W, 18)
+	_free_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_free_l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_free_btn.add_child(_free_l)
+	_free_btn.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_do_free())
+	content.add_child(_free_btn)
 
 	# 本期奖池预览（pets.json 全量，稀有度色条一眼分档）
 	var sec := G.gold_label("本期奖池", G.FS_SM, false, Color("7a5a2e"), false)
@@ -398,13 +418,28 @@ func _refresh_top() -> void:
 	if _ticket_l != null:
 		_ticket_l.text = "× %d" % G.item_count("ticket_ten")
 	if _pity_l != null:
-		var pity := int(G.items.get("gacha_pity", 0))
-		var pmax := maxi(1, int(_cfg().get("pity", 60)))
+		var pity := int(G.gacha_state().get("pity", 0))
+		var pmax := maxi(1, int(_pool().get("pity", 60)))
 		_pity_l.text = "保底 %d / %d" % [pity, pmax]
 		if _pity_sub != null:
 			_pity_sub.text = "还差 %d 抽必得史诗" % maxi(0, pmax - pity)
 		if _pity_bar != null:
 			_pity_bar.size = Vector2(roundi(170.0 * clampf(float(pity) / float(pmax), 0.0, 1.0)), 8)
+	_refresh_free()
+
+
+## 免费条状态刷新（可用 = 深金字；已领 = 灰字 + 压暗）
+func _refresh_free() -> void:
+	if _free_l == null:
+		return
+	if G.gacha_free_available():
+		_free_l.text = "今日免费 · 灵宠结缘（每日 1 次）"
+		_free_l.add_theme_color_override("font_color", Color("6a5230"))
+		_free_btn.modulate = Color.WHITE
+	else:
+		_free_l.text = "今日免费已领 · 明日再来"
+		_free_l.add_theme_color_override("font_color", Color("8a8a8a"))
+		_free_btn.modulate = Color(1, 1, 1, 0.72)
 
 
 # ================= 结果层 =================
@@ -756,10 +791,10 @@ func _update_result_ui() -> void:
 	# 按钮文案不手打空格：字距交给 G 的 _button_text 统一处理（规范 §30/§31）
 	if _last_mode == "single":
 		_again_l.text = "再抽一次"
-		_again_sub.text = "%d 魂石" % int(_cfg().get("cost_soul_single", 80))
+		_again_sub.text = "%d 魂石" % int(_pool().get("cost_soul_single", 80))
 	else:
 		_again_l.text = "再来十连"
-		_again_sub.text = "%d 魂石 / 1 券" % int(_cfg().get("cost_soul_ten", 800))
+		_again_sub.text = "%d 魂石 / 1 券" % int(_pool().get("cost_soul_ten", 720))
 	_r_soul_l.text = "× %d" % int(G.wallet.get("soul", 0))
 	_r_ticket_l.text = "× %d" % G.item_count("ticket_ten")
 
@@ -767,7 +802,7 @@ func _update_result_ui() -> void:
 # ================= 行为逻辑 =================
 
 func _do_single() -> void:
-	var cost := int(_cfg().get("cost_soul_single", 80))
+	var cost := int(_pool().get("cost_soul_single", 80))
 	if int(G.wallet.get("soul", 0)) < cost:
 		_warn("魂石不足：单抽需 %d，现有 %d" % [cost, int(G.wallet.get("soul", 0))])
 		return
@@ -779,7 +814,7 @@ func _do_single() -> void:
 
 
 func _do_ten() -> void:
-	var cost := int(_cfg().get("cost_soul_ten", 800))
+	var cost := int(_pool().get("cost_soul_ten", 720))
 	# 有券优先用券（consume_item 内部会落盘）
 	if G.item_count("ticket_ten") >= 1 and G.consume_item("ticket_ten", 1):
 		pass
@@ -792,6 +827,21 @@ func _do_ten() -> void:
 	_settle(results)
 	G.save_game()
 	_show_results("ten", results)
+
+
+## 每日免费一召：不扣魂石、正常累积保底；连抽满 7 天由 G.gacha_mark_free 发奖
+func _do_free() -> void:
+	if not G.gacha_free_available():
+		_warn("今日免费已领取 · 明日再来")
+		return
+	var bonus := G.gacha_mark_free()
+	var results := _roll_batch(1)
+	_settle(results)
+	G.save_game()
+	_show_results("single", results)
+	if bonus > 0:
+		_warn("连续七日 · 灵魂石 +%d" % bonus, Color("ffe9b8"))
+	_refresh_top()
 
 
 ## 再抽一次：按上次模式重放
@@ -817,17 +867,19 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 
-## 行内提示：主面板用深红，结果层用亮红；1.5 秒后淡出（重复触发时重置计时）
-func _warn(msg: String) -> void:
+## 行内提示：默认深红警告；传 color 可换色（如奖励的金色）；1.5 秒后淡出（重复触发重置计时）
+func _warn(msg: String, color := Color(0, 0, 0, 0)) -> void:
 	var target := _hint
-	var color := Color("a04a3a")
+	var col := Color("a04a3a")
 	if _result != null and _result.visible and _r_hint != null:
 		target = _r_hint
-		color = Color("ff9a8a")
+		col = Color("ff9a8a")
+	if color.a > 0.0:
+		col = color
 	if target == null:
 		return
 	target.text = msg
-	target.add_theme_color_override("font_color", color)
+	target.add_theme_color_override("font_color", col)
 	target.modulate.a = 1.0
 	var old: Tween = null
 	if target.has_meta("fade_tw"):
@@ -885,13 +937,13 @@ func _roll_high(rng: RandomNumberGenerator, rates: Dictionary) -> String:
 
 
 ## 抽 n 张：逐张结算保底计数（+1，出紫/金清零，满 60 强制紫/金）；
-## 十连另有一条"至少一张蓝及以上"的整批保底（全白时把末张换成随机稀有）
+## 十连另有一条整批保底：至少一张史诗及以上（全下品时把末张换成紫/金，设计 §4.2）
 func _roll_batch(n: int) -> Array:
 	var rng := RandomNumberGenerator.new()
 	rng.randomize()
 	var rates := _rates()
-	var pity_max := int(_cfg().get("pity", 60))
-	var pity := int(G.items.get("gacha_pity", 0))
+	var pity_max := int(_pool().get("pity", 60))
+	var pity := int(G.gacha_state().get("pity", 0))
 	var out: Array = []
 	for i in n:
 		pity += 1
@@ -904,19 +956,16 @@ func _roll_batch(n: int) -> Array:
 			pity = 0
 		out.append({"id": _pick_pet(rng, rar), "rarity": rar})
 	if n >= 10:
-		var has_blue := false
+		var has_high := false
 		for r in out:
-			if String((r as Dictionary).get("rarity", "")) != "white":
-				has_blue = true
+			var rr := String((r as Dictionary).get("rarity", ""))
+			if rr == "purple" or rr == "gold":
+				has_high = true
 				break
-		if not has_blue:
-			for rar in ["blue", "purple", "gold"]:
-				var pool := _pool_of(rar)
-				if pool.is_empty():
-					continue
-				out[n - 1] = {"id": _rand_id(rng, pool), "rarity": rar}
-				break
-	G.items["gacha_pity"] = pity
+		if not has_high:
+			var rar_hi := _roll_high(rng, rates)   # 按原始权重在紫/金两档里挑
+			out[n - 1] = {"id": _pick_pet(rng, rar_hi), "rarity": rar_hi}
+	G.gacha_state()["pity"] = pity
 	return out
 
 
