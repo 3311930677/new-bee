@@ -343,6 +343,8 @@ func _load_save() -> void:
 		prog["lore_seen"] = bool(pd.get("lore_seen", false))   # 序章是否已看（看过的老档不再弹）
 		var lb: Variant = pd.get("lore_beats", {})   # 已演过的剧情节拍（首领前对峙/战后余韵）
 		prog["lore_beats"] = lb if lb is Dictionary else {}
+		var setg: Variant = pd.get("settings", {})   # 玩家设置（震屏/剧情演出/战斗默认倍速）
+		prog["settings"] = setg if setg is Dictionary else {}
 	ensure_starter_pets()
 	var c: Variant = data.get("city", {})
 	if c is Dictionary:
@@ -1889,6 +1891,29 @@ func lore_seen() -> bool:
 ## 序章看完（或跳过）后落盘：老玩家不再被拦，主城也能提供「重看序章」
 func mark_lore_seen() -> void:
 	prog["lore_seen"] = true
+	save_game()
+
+
+# ---------- 玩家设置（轮次 15）----------
+# 存 prog.settings，跟着存档走：换设备导档后手感设置也一起过去。
+# 现有键：shake（受击震屏，默认 true）/ skip_story（剧情演出直接跳过，默认 false）/
+#         battle_speed（每场战斗开局默认倍速，默认 1.0）
+## 读一项设置（缺省给 def；老档没有 settings 字段也安全）
+func setting_get(key: String, def: Variant) -> Variant:
+	var s: Variant = prog.get("settings", {})
+	if not (s is Dictionary):
+		return def
+	return (s as Dictionary).get(key, def)
+
+
+## 写一项设置并落盘（只动某一项，不动其余）
+func setting_set(key: String, value: Variant) -> void:
+	var d: Dictionary = {}
+	var s: Variant = prog.get("settings", {})
+	if s is Dictionary:
+		d = s as Dictionary
+	d[key] = value
+	prog["settings"] = d
 	save_game()
 
 

@@ -284,7 +284,7 @@ func _setup() -> void:
 			var he: Node = load("res://src/ui/GameHome.tscn").instantiate()
 			add_child(he)
 			he.call("_open_exchange")
-		"settings":
+		"settings", "settings2":
 			_demo_prog()
 			var hs: Node = load("res://src/ui/GameHome.tscn").instantiate()
 			add_child(hs)
@@ -292,6 +292,11 @@ func _setup() -> void:
 			es.pressed = true
 			es.button_index = MOUSE_BUTTON_LEFT
 			hs.call("_open_settings", es)
+			if _scene == "settings2":   # 第二页（存档与系统）：翻页后再截
+				await get_tree().process_frame
+				var sp: Node = hs.get("_settings")
+				if sp != null:
+					(sp.get("_deck") as Node).call("go", 1, true)
 		"growth":
 			_growth_demo()
 			var hgr: Node = load("res://src/ui/GameHome.tscn").instantiate()

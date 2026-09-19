@@ -54,7 +54,11 @@ const LOW_HP_RATIO := 0.25      # 角色血量低于此比例 → 边缘红晕�
 static var pending_cfg: Dictionary = {}
 
 var sim := BattleSim.new()
-var speed := 1.0
+## 战斗倍速。**负数 = "还没人指定过"**，此时用设置里的默认档（见 cur_speed()）。
+## 之所以不复用 1.0 当默认值：外部（如回归用例、将来的观战/录像）会在 add_child 之前
+## 直接写 speed，若 _build_hud 再赋一次默认值就会把人家设的档吃掉——曾经因此让
+## 「12 倍速跑完一场」变成 1 倍速，用例等到超时也等不到结算。
+var speed := -1.0
 
 var _acc := 0.0
 var _views: Dictionary = {}          # uid -> UnitView
@@ -217,9 +221,13 @@ func _build_top_bar() -> void:
 	title.position = Vector2(16, 14)
 	add_child(title)
 
-	_speed_btn = _func_chip("速度 ×1", 74)
+	# 开局倍速读设置里的默认档（设置里改了不必每场再点一次）；进战斗后仍可随时切换。
+	# 外部已指定过 speed 的场合（负哨兵被覆盖）不会走到 cur_speed() 的默认分支。
+	var sp := cur_speed()
+	_speed_btn = _func_chip("速度 ×%d" % int(sp), 74)
 	_speed_btn.position = Vector2(VIEW_W - 170, 12)
 	_speed_btn.gui_input.connect(_on_speed)
+	_chip_set_active(_speed_btn, sp >= 1.5)
 	add_child(_speed_btn)
 
 	_auto_btn = _func_chip("托管", 58)
@@ -408,7 +416,7 @@ func _process(delta: float) -> void:
 			_sync_views()
 			_show_result()
 		return
-	_acc += delta * speed * time_scale
+	_acc += delta * cur_speed() * time_scale
 	while _acc >= TICK_SEC:
 		_acc -= TICK_SEC
 		sim.step()
@@ -701,10 +709,17 @@ func _on_flee() -> void:
 			_flee_armed = false)
 
 
+## 当前实际倍速：外部显式给过就照用，否则取设置里的默认档（>=1.5 视为 ×2）
+func cur_speed() -> float:
+	if speed >= 0.0:
+		return speed
+	return 2.0 if float(G.setting_get("battle_speed", 1.0)) >= 1.5 else 1.0
+
+
 func _on_speed(e: InputEvent) -> void:
 	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-		speed = 2.0 if speed == 1.0 else 1.0
-		_chip_set_active(_speed_btn, speed == 2.0)
+		speed = 2.0 if cur_speed() < 1.5 else 1.0
+		_chip_set_active(_speed_btn, speed >= 1.5)
 		(_speed_btn.get_child(0) as Label).text = "速度 ×%d" % int(speed)
 
 
@@ -723,6 +738,8 @@ func _hit_stop(sec: float) -> void:
 
 ## 震屏：只抖「背景 + 战场」这一层，HUD 与飘字不动（字跟着晃会花）
 func _shake(power: float) -> void:
+	if not bool(G.setting_get("shake", true)):
+		return   # 设置里关了震屏：只保留顿帧/飘字/音效，画面不晃（§15 设置项要真生效）
 	if _shake_tw != null and _shake_tw.is_valid():
 		_shake_tw.kill()
 	var tw := create_tween()
