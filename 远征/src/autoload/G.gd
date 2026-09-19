@@ -81,6 +81,7 @@ const ITEM_NAMES := {
 	"ticket_ten": "十连券", "ticket_sweep": "扫荡券",
 	"enhance_stone": "强化石", "refine_stone": "精炼石", "lock_rune": "锁定符",
 	"pet_food": "宠物粮", "break_crystal": "突破晶", "aptitude_fruit": "资质果",
+	"evolve_crystal": "进化晶石",
 }
 
 
@@ -711,6 +712,24 @@ func gacha_mark_free() -> int:
 ## unix 秒 → 日期键（YYYY-MM-DD）
 func _day_key(ts: int) -> String:
 	return Time.get_date_string_from_unix_time(ts)
+
+
+## 局结算上报：连败计数与保底礼包（P1-5）。胜局清零；三连败发魂石 30 + 宠物粮 5，
+## 返回礼包文案（无则空串）供结算页展示——世界逐个解锁卡关时的唯一减压阀。
+func report_run_result(win: bool) -> String:
+	if win:
+		prog["lose_streak"] = 0
+		save_game()
+		return ""
+	prog["lose_streak"] = int(prog.get("lose_streak", 0)) + 1
+	var gift := ""
+	if int(prog["lose_streak"]) >= 3:
+		prog["lose_streak"] = 0
+		wallet["soul"] = int(wallet.get("soul", 0)) + 30
+		grant_item("pet_food", 5)   # 内部落盘
+		gift = "连败慰礼 · 灵魂石 +30 · 宠物粮 ×5"
+	save_game()
+	return gift
 
 
 # ---------- 建筑 ----------
@@ -1618,10 +1637,41 @@ func pet_reroll_star(pid: String) -> Dictionary:
 	return {"ok": true, "star": int(st["star"])}
 
 
-## 宠物战斗属性倍率：突破 +8%/层；资质影响每级成长（1星0.8 / 3星1.2 / 5星1.6）
+## 宠物进化（P1-3）：每只一次，全属性 +25％（由 pet_stat_mult 承接）；耗进化晶石。
+## 数值从 pets.json 的 evolve 段读；素材换用 <pid>_evo（图鉴卡自动切换）。
+func pet_evolve(pid: String) -> Dictionary:
+	if not owns_pet(pid):
+		return {"ok": false, "err": "尚未结缘"}
+	var st := pet_stat(pid)
+	if bool(st.get("evolved", false)):
+		return {"ok": false, "err": "已经进化过了"}
+	var ev: Dictionary = TableCache.get_pet(pid).get("evolve", {})
+	if ev.is_empty():
+		return {"ok": false, "err": "该灵宠不可进化"}
+	var cost := 3
+	if ev.get("cost") is Dictionary:
+		cost = maxi(1, int((ev["cost"] as Dictionary).get("evolve_crystal", 3)))
+	if item_count("evolve_crystal") < cost:
+		return {"ok": false, "err": "进化晶石不足（需 %d）" % cost}
+	consume_item("evolve_crystal", cost)
+	st["evolved"] = true
+	var all: Dictionary = prog.get("pet_stat", {})
+	all[pid] = st
+	prog["pet_stat"] = all
+	save_game()
+	_sfx("level_up", 0.0)
+	return {"ok": true, "err": ""}
+
+
+## 宠物战斗属性倍率：突破 +8%/层；进化 ×(1 + hp_pct)（表值，默认 25％）；
+## 资质影响每级成长（1星0.8 / 3星1.2 / 5星1.6）
 func pet_stat_mult(pid: String) -> float:
 	var st := pet_stat(pid)
-	return 1.0 + 0.08 * float(st.get("brk", 0))
+	var m := 1.0 + 0.08 * float(st.get("brk", 0))
+	if bool(st.get("evolved", false)):
+		var ev: Dictionary = TableCache.get_pet(pid).get("evolve", {})
+		m *= 1.0 + float(ev.get("hp_pct", 0.25))
+	return m
 
 
 func pet_growth_mult(pid: String) -> float:
