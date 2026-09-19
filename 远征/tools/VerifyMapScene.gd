@@ -438,6 +438,7 @@ func _run() -> void:
 			veins.append(s)
 	_check(lmap._spots.size() >= 1 and veins.size() >= 1,
 		"每张图应至少 1 个兴趣点（矿脉），实为 %d 个（%d 矿脉）" % [lmap._spots.size(), veins.size()])
+	var v_idx: int = veins[0].idx
 	var items_before := 0
 	for iid in ["enhance_stone", "refine_stone", "pet_food"]:
 		items_before += G.item_count(String(iid))
@@ -449,6 +450,8 @@ func _run() -> void:
 	for iid2 in ["enhance_stone", "refine_stone", "pet_food"]:
 		items_after += G.item_count(String(iid2))
 	_check(items_after > items_before, "矿脉应给养成材料，实为 %d → %d" % [items_before, items_after])
+	_check((lmap._prog.get("spots", []) as Array).has(v_idx),
+		"矿脉用掉应记进进度档（否则重进可重复采，2026-09-20）")
 	_check(lmap._score > score_before2, "矿脉也应加探索分")
 	_check(lmap._spots.size() == 1 and lmap._spots[0].kind != "vein" or lmap._spots.size() == 0,
 		"矿脉用掉后应从兴趣点里移除")
@@ -490,6 +493,11 @@ func _run() -> void:
 			_check(not mmap.st.finished, "撤退不应结束本局")
 			_check(mmap.st.hp == 42, "撤退应写回残血，实为 %d" % mmap.st.hp)
 			_check(mmap._monsters.size() == n_before, "撤退不应移除怪物，实为 %d/%d" % [mmap._monsters.size(), n_before])
+			# 冷静期：撤退后不应被同一只怪立刻二次拽回战斗（2026-09-20 复核发现）
+			_check(mmap._monsters[0].contact_cd > 0.0, "撤退后应有接触冷静期")
+			for i in 20:
+				await get_tree().physics_frame
+			_check(mmap._battle == null, "冷静期内不应被同一只怪重新拖入战斗")
 	mmap.queue_free()
 	await get_tree().process_frame
 

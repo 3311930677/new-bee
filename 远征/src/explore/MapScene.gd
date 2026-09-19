@@ -27,6 +27,7 @@ const MINI_W := 78.0          # 小地图尺寸：与 32×42 格地图同比例�
 const MINI_H := 102.0
 const _MiniMapPos := Vector2(390, 14)
 const AUTO_TIMEOUT := 26.0    # 自动前往超时（秒）：到不了就交还控制权，不把玩家困住
+const FLEE_CONTACT_CD := 1.6  # 战斗撤退后的接触冷静期（秒）：防"刚退又被同一只怪拽回去"
 const StoryBeatScript := preload("res://src/ui/StoryBeat.gd")   # 首领剧情演出层（对峙/余韵）
 
 var st: RunState
@@ -1028,6 +1029,9 @@ func on_spot(s: _Spot) -> void:
 		Audio.sfx("pickup")
 		_toast("采得矿脉：%s ×%d" % [G.item_name(iid), n])
 		_add_score(_cfg_int("pickup_score", 6), "矿脉")
+		# 进度落表：矿脉同样是一次性兴趣点，不记就会"撤离→重进"反复采（P0-1 漏网项）
+		if not _prog["spots"].has(s.idx):
+			_prog["spots"].append(s.idx)
 		_spots.erase(s)
 		s.queue_free()
 		return
@@ -1090,13 +1094,14 @@ func _altar_pay(s: _Spot, cost: int) -> void:
 		return
 	st.gold -= cost
 	Audio.sfx("altar")
-	_close_altar(s, true)   # 献过金的祭坛即熄，不再重复打扰
-	_add_score(_cfg_int("pickup_score", 6), "祭坛")
 	var choices := st.roll_trait_choices(_rng)
 	if choices.is_empty():
+		# 词条池已尽：全额退款且不熄灯（否则玩家钱退了、祭坛却永久用掉）
 		_toast("碑灵无言——词条池已尽，金子退你了")
 		st.gold += cost
 		return
+	_close_altar(s, true)   # 献过金且真能重择，祭坛才熄，不再重复打扰
+	_add_score(_cfg_int("pickup_score", 6), "祭坛")
 	_toast("碑灵应声 · 祝福重择")
 	_show_trait_picker(choices)
 
@@ -1106,6 +1111,9 @@ func _close_altar(s: _Spot, leave: bool) -> void:
 	if _altar_ui != null:
 		_altar_ui.queue_free()
 		_altar_ui = null
+	# 关掉就给一小段冷却：否则玩家还站在触发圈内，浮层会被 _Spot._process 立刻重新弹开
+	if s != null:
+		s.cd = 0.9
 	if leave and s != null:
 		# 只有献金才熄灯；「离开」不消耗（P2-22）。祭坛留在场上画熄灭态，不再触发交互
 		s.used = true
@@ -1356,7 +1364,8 @@ func _finish_map(result: String) -> void:
 ## 任一浮层/演出/看地图打开时冻结怪物与接触判定（防"看地图被偷袭"，P1-10）
 func _modal_open() -> bool:
 	return _battle != null or _map_done or _picker != null or _remover != null \
-		or _big_map != null or _altar_ui != null or _exit_ui != null or _beat != null
+		or _big_map != null or _altar_ui != null or _exit_ui != null or _beat != null \
+		or G.ui_blocked   # 转场 / GM 控制台：玩家被冻结时怪物也该冻结
 
 
 func on_monster_contact(m: _MapMonster) -> void:
@@ -1423,6 +1432,8 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 		st.hp = hp_left
 		if _contact_mon != null:
 			_contact_mon.chasing_contact = false
+			# 接触冷静期：否则玩家还在接触半径内，下一物理帧就被同一只怪二次拖进战斗
+			_contact_mon.contact_cd = FLEE_CONTACT_CD
 			_contact_mon.retreat_home()
 			_contact_mon = null
 		for m in _monsters:
@@ -1655,14 +1666,17 @@ class _Spot extends Node2D:
 	var kind := "vein"        # altar / vein
 	var map_ref: MapScene = null
 	var used := false
+	var cd := 0.0             # 触发冷却：关闭浮层后短暂不再触发（防重弹）
 	var _t := 0.0
 	var _bob := 0.0
 
 	func _process(delta: float) -> void:
 		_t += delta
+		if cd > 0.0:
+			cd -= delta
 		if used or map_ref == null or map_ref._player == null:
 			return
-		if map_ref._modal_open():
+		if map_ref._modal_open() or cd > 0.0:
 			return
 		var r := float(map_ref._cfg_int("spot_radius", 34))
 		if position.distance_to(map_ref._player.position) < r:
@@ -1754,6 +1768,7 @@ class _Portal extends Node2D:
 ## 怪物（mon_ 精灵优先，无素材回退程序圆体；游荡/警戒/追击/接触回调）
 class _MapMonster extends CharacterBody2D:
 	var idx := 0                      # 稳定序号（进度表按它记「已击杀」，P0-1）
+	var contact_cd := 0.0             # 接触冷静期（撤退后不再立刻重新开战）
 	var tier := "normal"
 	var mon_id := ""                  # 具体怪 id（精灵与战斗组队都按它）
 	var home := Vector2.ZERO
@@ -1814,9 +1829,11 @@ class _MapMonster extends CharacterBody2D:
 			return
 		if chasing_contact or map_ref._modal_open():
 			return  # 接触中 / 任意浮层或演出打开期间冻结（含看地图，P1-10）
+		if contact_cd > 0.0:
+			contact_cd -= delta
 		var player: CharacterBody2D = map_ref._player
 		var dist := position.distance_to(player.position)
-		if dist < _contact:
+		if contact_cd <= 0.0 and dist < _contact:
 			chasing_contact = true
 			map_ref.on_monster_contact(self)
 			return
