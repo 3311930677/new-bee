@@ -82,6 +82,7 @@ var _auto_stuck := 0.0
 var _auto_dodge := 0.0
 var _auto_dodge_side := 1.0
 var _prev_pos := Vector2.ZERO
+var _prog := {}                      # 本节点探索进度（RunState.map_progress 的引用；P0-1）
 
 
 func _ready() -> void:
@@ -96,9 +97,11 @@ func _ready() -> void:
 	_map_cfg = TableCache.maps_config()
 	_theme_cfg = TableCache.theme_config(st.theme)
 	_rng.seed = hash("%d_%d" % [st.run_seed, int(node.get("layer", 1)) * 10 + int(node.get("index", 0))])
+	_prog = st.map_progress(int(node.get("layer", 1)), int(node.get("index", 0)))
 	_build_ground()
 	_build_world()
 	_build_hud()
+	_refresh_explore_hud()   # 恢复的探索分/击杀数要在 HUD 上显出来
 
 
 # ================= 构建 =================
@@ -221,6 +224,7 @@ func _build_world() -> void:
 	_build_monsters(map_w, map_h)
 	_build_pickups(cols, rows)   # 散落拾取物：路上有微反馈（轮次 16）
 	_build_spots(cols, rows)     # 兴趣点：祭坛（花金重摇祝福）/ 矿脉（材料）（轮次 17）
+	_restore_node_state()        # 恢复本节点进度：打过的不复活、不重发奖励（P0-1）
 
 
 func _build_decos(cols: int, rows: int) -> void:
@@ -330,6 +334,7 @@ func _build_monsters(map_w: float, map_h: float) -> void:
 				break
 		placed.append(pos)
 		var m := _MapMonster.new()
+		m.idx = _monsters.size()   # 稳定序号：进度表按它记「已击杀」（P0-1）
 		m.tier = String(tier)
 		# 首领用主题 boss id，其余从怪物池随机；接触开战会把这个 id 继承给战斗组队
 		m.mon_id = String(_theme_cfg.get("boss", "")) if String(tier) == "boss" \
@@ -344,6 +349,8 @@ func _build_monsters(map_w: float, map_h: float) -> void:
 
 ## 非战斗节点物件：置于玩家出生点与传送阵之间的中途（要走一段路）
 func _build_interactable(map_w: float, map_h: float) -> void:
+	if bool(_prog.get("interact_done", false)):
+		return  # 一次性物件已用掉：重进不再生成（P0-1）
 	var it := _Interactable.new()
 	it.kind = String(node.get("type", "chest"))
 	it.position = Vector2(map_w / 2.0, map_h * 0.45)
@@ -614,6 +621,7 @@ func on_interactable(it: _Interactable) -> void:
 				_toast("篝火休整：回复 %d 点生命" % amt)
 				_show_trait_remove()
 			it.queue_free()
+	_prog["interact_done"] = true   # 一次性物件记档：重进不再生成（P0-1）
 	_interactable = null
 
 
@@ -716,7 +724,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _altar_ui != null:  # 祭坛选择框在最上层（只关它，不动大地图/撤离）
 		for s in _spots:
 			if s.kind == "altar":
-				_close_altar(s, true)
+				_close_altar(s, false)   # ESC 只关浮层，不消耗祭坛（P2-22）
 				break
 		if vp != null:
 			vp.set_input_as_handled()
@@ -894,6 +902,7 @@ func _add_score(n: int, why: String) -> void:
 		return
 	var before := int(_rank().get("tier", 0))
 	_score += n
+	_prog["score"] = _score   # 进度落表（P0-1）
 	_refresh_explore_hud()
 	var after := int(_rank().get("tier", 0))
 	if after > before:
@@ -906,6 +915,7 @@ func _on_area_cleared() -> void:
 	if _cleared_bonus or _total_monsters <= 0:
 		return
 	_cleared_bonus = true
+	_prog["cleared_bonus"] = true   # 清剿赏只发一次：重进不再给（P0-1）
 	st.add_reward("clear")
 	Audio.sfx("reward")
 	_toast("本区已清剿 · 赏金入袋（金币 +%d）"
@@ -929,6 +939,7 @@ func _build_pickups(cols: int, rows: int) -> void:
 			if pos.distance_to(spawn) > 150.0:
 				break
 		var p := _Pickup.new()
+		p.idx = i
 		p.position = pos
 		p.map_ref = self
 		p.kind = "soul" if i % 3 == 2 else "coin"
@@ -945,6 +956,7 @@ func _build_spots(cols: int, rows: int) -> void:
 	var portal_y := 120.0
 	if _rng.randf() < float(_explore_cfg().get("altar_chance", 0.6)):
 		var a := _Spot.new()
+		a.idx = _spots.size()
 		a.kind = "altar"
 		a.position = Vector2(_rng.randf_range(120.0, map_w - 120.0),
 			_rng.randf_range(320.0, map_h - 360.0))
@@ -955,6 +967,7 @@ func _build_spots(cols: int, rows: int) -> void:
 	var vn := _rng.randi_range(int(vr[0]), int(vr[1]))
 	for i in vn:
 		var v := _Spot.new()
+		v.idx = _spots.size()
 		v.kind = "vein"
 		var pos := Vector2.ZERO
 		for attempt in 20:
@@ -966,6 +979,40 @@ func _build_spots(cols: int, rows: int) -> void:
 		v.map_ref = self
 		_spots.append(v)
 		_world.add_child(v)
+
+
+## 恢复本节点探索进度（P0-1）：构建顺序与随机流保持完全一致，只在建完后「摘掉」已完成的部分——
+## 打过的不复活、不重发奖励；拾取过的消失；用过的祭坛/矿脉留场但熄灭（可看不可用）
+func _restore_node_state() -> void:
+	var killed: Array = _prog.get("killed", [])
+	if not killed.is_empty():
+		var kept_m: Array[_MapMonster] = []
+		for m in _monsters:
+			if killed.has(m.idx):
+				m.queue_free()
+			else:
+				kept_m.append(m)
+		_monsters = kept_m
+		_kills = killed.size()
+	if bool(_prog.get("boss_down", false)) and _portal != null:
+		_portal.locked = false
+	var taken: Array = _prog.get("taken", [])
+	if not taken.is_empty():
+		var kept_p: Array[_Pickup] = []
+		for p in _pickups:
+			if taken.has(p.idx):
+				p.queue_free()
+			else:
+				kept_p.append(p)
+		_pickups = kept_p
+	var used_spots: Array = _prog.get("spots", [])
+	if not used_spots.is_empty():
+		for s in _spots:
+			if used_spots.has(s.idx):
+				s.used = true
+				s.queue_redraw()   # 熄灭态（_draw 依 used 表达）
+	_score = int(_prog.get("score", 0))
+	_cleared_bonus = bool(_prog.get("cleared_bonus", false))
 
 
 func on_spot(s: _Spot) -> void:
@@ -1027,7 +1074,7 @@ func _open_altar(s: _Spot) -> void:
 	leave.position = Vector2(168, 96)
 	leave.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_close_altar(s, true))
+			_close_altar(s, false))   # 离开不消耗：误触/犹豫不熄灯（P2-22）
 	content.add_child(leave)
 	var hint := G.gold_label("献金后原地重摇祝福；祭坛用掉即熄。", G.FS_XS, false, Color("8a6a34"), false)
 	hint.position = Vector2(0, 158)
@@ -1059,14 +1106,18 @@ func _close_altar(s: _Spot, leave: bool) -> void:
 		_altar_ui.queue_free()
 		_altar_ui = null
 	if leave and s != null:
-		s.used = true          # 走过一次不再弹（祭坛保留在地图上，但不重复打扰）
-		_spots.erase(s)
+		# 只有献金才熄灯；「离开」不消耗（P2-22）。祭坛留在场上画熄灭态，不再触发交互
+		s.used = true
+		if not _prog["spots"].has(s.idx):
+			_prog["spots"].append(s.idx)
 
 
 ## 拾取结算：金 + 远征币 + 探索分，一条 toast（同一帧捡两个也不刷屏——后一个覆盖前一个）
 func on_pickup(p: _Pickup) -> void:
 	if _map_done or _pickups.is_empty():
 		return
+	if not _prog["taken"].has(p.idx):
+		_prog["taken"].append(p.idx)   # 进度落表：重进不再撒同一个（P0-1）
 	_pickups.erase(p)
 	var g := _cfg_range("pickup_gold", [18, 42])
 	var c := _cfg_range("pickup_currency_amount", [3, 8])
@@ -1291,9 +1342,15 @@ func _finish_map(result: String) -> void:
 
 
 # ================= 怪物接触开战 =================
+## 任一浮层/演出/看地图打开时冻结怪物与接触判定（防"看地图被偷袭"，P1-10）
+func _modal_open() -> bool:
+	return _battle != null or _map_done or _picker != null or _remover != null \
+		or _big_map != null or _altar_ui != null or _exit_ui != null or _beat != null
+
+
 func on_monster_contact(m: _MapMonster) -> void:
-	if _battle != null or _map_done:
-		m.chasing_contact = false  # 并行触发的接触复位
+	if _modal_open():
+		m.chasing_contact = false  # 浮层/战斗中并行触发的接触复位
 		return
 	_start_battle(m)
 
@@ -1375,11 +1432,15 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 	var q_done := G.quest_report("slay", st.theme, 1)
 	for t in q_done:
 		_toast("委托办妥：%s —— 回城交付" % String(t))
-	# 接触的怪离场
+	# 接触的怪离场；进度落表（重进不再复活、不重发奖励，P0-1）
 	if _contact_mon != null:
+		if not _prog["killed"].has(_contact_mon.idx):
+			_prog["killed"].append(_contact_mon.idx)
 		_monsters.erase(_contact_mon)
 		_contact_mon.queue_free()
 		_contact_mon = null
+	if monster_tier == "boss":
+		_prog["boss_down"] = true
 	_kills += 1
 	_add_score(_cfg_int("kill_score", 12), "击杀")
 	if _monsters.is_empty() and _total_monsters > 0:
@@ -1535,6 +1596,7 @@ class _GroundWear extends Node2D:
 
 ## 散落拾取物（魂晶 / 钱袋）：走过去自动入袋，给"空跑的那段路"一点微反馈
 class _Pickup extends Node2D:
+	var idx := 0              # 稳定序号（进度表按它记「已拾取」，P0-1）
 	var kind := "coin"        # coin / soul（只影响画法与提示色调）
 	var map_ref: MapScene = null
 	var used := false
@@ -1577,6 +1639,7 @@ class _Pickup extends Node2D:
 ## 兴趣点（碑灵祭坛 / 矿脉）：走近触发一次交互。与拾取物的差别是"要不要做"——
 ## 祭坛弹选择框（花金重摇祝福），矿脉白拿材料。用掉即熄，不重复打扰。
 class _Spot extends Node2D:
+	var idx := 0              # 稳定序号（进度表按它记「已用过」，P0-1）
 	var kind := "vein"        # altar / vein
 	var map_ref: MapScene = null
 	var used := false
@@ -1587,8 +1650,7 @@ class _Spot extends Node2D:
 		_t += delta
 		if used or map_ref == null or map_ref._player == null:
 			return
-		if map_ref._map_done or map_ref._battle != null or map_ref._altar_ui != null \
-				or map_ref._picker != null or map_ref._remover != null:
+		if map_ref._modal_open():
 			return
 		var r := float(map_ref._cfg_int("spot_radius", 34))
 		if position.distance_to(map_ref._player.position) < r:
@@ -1620,12 +1682,15 @@ class _Spot extends Node2D:
 		draw_set_transform(Vector2(0, 10), 0.0, Vector2(1.0, 0.38))
 		draw_circle(Vector2.ZERO, 24.0, Color(0, 0, 0, 0.28))
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
-		draw_rect(Rect2(-16, -34, 32, 46), Color("7d7a86"))
-		draw_rect(Rect2(-16, -34, 32, 7), Color("5f5c68"))
+		draw_rect(Rect2(-16, -34, 32, 46), Color("7d7a86") if not used else Color("64616c"))
+		draw_rect(Rect2(-16, -34, 32, 7), Color("5f5c68") if not used else Color("4d4b55"))
 		draw_rect(Rect2(-20, 8, 40, 8), Color("57545e"))
 		for i in 3:   # 碑文：三条阴刻线（不是文字，避免烧字进图）
 			draw_line(Vector2(-9, -24 + i * 11), Vector2(9, -24 + i * 11), Color(0, 0, 0, 0.30), 2.0)
 		var flame := Vector2(0, -46 + _bob)
+		if used:
+			draw_circle(flame, 7.0, Color(0.42, 0.45, 0.5, 0.30))  # 已熄：只剩一圈冷灰
+			return
 		draw_circle(flame, 13.0, Color(0.55, 0.9, 1.0, 0.20))
 		draw_circle(flame, 6.5, Color("7ae0ff"))
 		draw_circle(flame + Vector2(0, -2), 3.0, Color(1, 1, 1, 0.85))
@@ -1675,7 +1740,8 @@ class _Portal extends Node2D:
 
 
 ## 怪物（mon_ 精灵优先，无素材回退程序圆体；游荡/警戒/追击/接触回调）
-class _MapMonster extends Node2D:
+class _MapMonster extends CharacterBody2D:
+	var idx := 0                      # 稳定序号（进度表按它记「已击杀」，P0-1）
 	var tier := "normal"
 	var mon_id := ""                  # 具体怪 id（精灵与战斗组队都按它）
 	var home := Vector2.ZERO
@@ -1694,6 +1760,17 @@ class _MapMonster extends Node2D:
 
 	func _ready() -> void:
 		_radius = {"normal": 20.0, "elite": 25.0, "boss": 32.0}.get(tier, 20.0)
+		# 参与碰撞：只撞散件层（mask 2），用 move_and_slide 走位——不再穿树（P1-15）
+		motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
+		collision_layer = 1
+		collision_mask = 2
+		var cs := CollisionShape2D.new()
+		var cir := CircleShape2D.new()
+		cir.radius = _radius * 0.75
+		cs.shape = cir
+		# 碰撞圆对准身体（原点上方）：散件的碰撞盒也在脚上方，圆若压在脚下会从盒底滑过去（实测穿树）
+		cs.position = Vector2(0, -_radius * 0.5)
+		add_child(cs)
 		var mc: Dictionary = TableCache.maps_config()
 		_aggro = float(mc.get("aggro_radius", 120.0))
 		_contact = float(mc.get("contact_radius", 26.0))
@@ -1719,12 +1796,12 @@ class _MapMonster extends Node2D:
 		var d := randf() * _wander_r
 		_target = home + Vector2(cos(a), sin(a)) * d
 
-	func _process(delta: float) -> void:
+	func _physics_process(delta: float) -> void:
 		_t += delta
 		if map_ref == null or map_ref._player == null:
 			return
-		if chasing_contact or map_ref._map_done or map_ref._battle != null or map_ref._picker != null:
-			return  # 接触中 / 地图结束 / 战斗覆盖层 / 三选一期间冻结
+		if chasing_contact or map_ref._modal_open():
+			return  # 接触中 / 任意浮层或演出打开期间冻结（含看地图，P1-10）
 		var player: CharacterBody2D = map_ref._player
 		var dist := position.distance_to(player.position)
 		if dist < _contact:
@@ -1742,7 +1819,8 @@ class _MapMonster extends Node2D:
 			speed = float(TableCache.maps_config().get("player_speed", 130.0)) * 0.9
 		var to := _target - position
 		if to.length() > 6.0:
-			position += to.normalized() * speed * delta
+			velocity = to.normalized() * speed
+			move_and_slide()   # 散件阻挡 + 沿边滑行（P1-15）
 		elif _state == "wander":
 			_wait += delta
 			if _wait > randf_range(0.8, 2.2):
@@ -1853,8 +1931,8 @@ class _Interactable extends Node2D:
 		_t += delta
 		if used or map_ref == null or map_ref._player == null:
 			return
-		if map_ref._battle != null or map_ref._picker != null or map_ref._remover != null:
-			return  # 覆盖层期间不触发
+		if map_ref._modal_open():
+			return  # 覆盖层期间不触发（含看大地图/演出，P1-10）
 		if position.distance_to(map_ref._player.position) < MapScene.INTERACT_R:
 			map_ref.on_interactable(self)
 		queue_redraw()
