@@ -1299,6 +1299,8 @@ func on_monster_contact(m: _MapMonster) -> void:
 
 
 func _start_battle(m: _MapMonster) -> void:
+	# 遇敌即停自动前往（战斗结束也不自动续走，要续走需再点罗盘）——防"一键全自动跑完整张图"
+	_stop_auto_walk("")
 	m.chasing_contact = true  # 接触怪冻结
 	_contact_mon = m
 	# BOSS 战前「对峙」：第一次挑战这片秘境的首领时演一段（看过的不再拦人；
@@ -1347,6 +1349,19 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 	_battle_layer.queue_free()  # 级联释放 BattleScene
 	_battle_layer = null
 	st.apply_battle_result(battle.sim)
+
+	if result == "flee":
+		# 撤退 = 退出本节点（与地图「撤离」同义）：保留战损与节点进度，不判负、不结束本局
+		st.hp = hp_left
+		if _contact_mon != null:
+			_contact_mon.chasing_contact = false
+			_contact_mon.retreat_home()
+			_contact_mon = null
+		for m in _monsters:
+			m.chasing_contact = false
+		_refresh_hud()
+		_toast("已撤退——节点进度已保留")
+		return
 
 	if result != "victory":
 		st.finished = true

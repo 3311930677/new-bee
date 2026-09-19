@@ -462,6 +462,26 @@ func _run() -> void:
 	lmap.queue_free()
 	await get_tree().process_frame
 
+	# ---- M. 战斗撤退 =「退出本节点」：不判负 / 不结束局 / 保留怪物与 HP；开战即停自动前往 ----
+	var mmap := await _spawn_map("normal", 1, "")
+	var n_before: int = mmap._monsters.size()
+	_check(n_before >= 1, "普通区应有怪")
+	if n_before >= 1:
+		mmap._auto_walk = true     # 直接置位，验证开战会把它停掉
+		mmap._start_battle(mmap._monsters[0])
+		_check(not mmap._auto_walk, "开战应停止自动前往")
+		_check(mmap._battle != null, "战斗应挂载")
+		if mmap._battle != null:
+			mmap._battle.sim.role_unit().hp = 42
+			_force_battle_end(mmap._battle, "flee")
+			await get_tree().process_frame
+			_check(mmap._battle == null, "撤退后战斗层应卸载")
+			_check(not mmap.st.finished, "撤退不应结束本局")
+			_check(mmap.st.hp == 42, "撤退应写回残血，实为 %d" % mmap.st.hp)
+			_check(mmap._monsters.size() == n_before, "撤退不应移除怪物，实为 %d/%d" % [mmap._monsters.size(), n_before])
+	mmap.queue_free()
+	await get_tree().process_frame
+
 	_print_result()
 
 
