@@ -84,7 +84,10 @@ func _make_row(idx: int, row: Dictionary) -> void:
 	var iid := String(row.get("item", ""))
 	if iid.is_empty():
 		return
-	var price := maxi(1, int(row.get("price", 1)))
+	# 货架已由 G.shop_items() 校验过；这里只做"非法不上屏"，不再兜底成 1（问题 #20）
+	var price := int(row.get("price", 0))
+	if price <= 0:
+		return
 	var y := float(idx) * 46.0
 	var band := Panel.new()
 	band.position = Vector2(0, y)

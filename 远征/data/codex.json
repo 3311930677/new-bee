@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "comment": "宠物图鉴收集里程：集齐 need 只可领取一次奖励。rewards 走 G.apply_reward 口径（gold/expedition/soul/honor/exp），item 可选。",
+  "milestones": [
+    { "id": "codex_2", "need": 2, "name": "初识灵宠",
+      "rewards": { "soul": 120 },
+      "item": { "id": "pet_food", "n": 2 } },
+    { "id": "codex_4", "need": 4, "name": "结伴同行",
+      "rewards": { "soul": 300, "honor": 60 },
+      "item": { "id": "enhance_stone", "n": 3 } },
+    { "id": "codex_6", "need": 6, "name": "群兽归心",
+      "rewards": { "soul": 600, "honor": 150, "exp": 200 },
+      "item": { "id": "aptitude_fruit", "n": 2 } },
+    { "id": "codex_8", "need": 8, "name": "万象生灵",
+      "rewards": { "soul": 1200, "honor": 400, "exp": 500 },
+      "item": { "id": "evolve_crystal", "n": 2 } }
+  ]
+}

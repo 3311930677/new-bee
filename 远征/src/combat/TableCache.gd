@@ -103,6 +103,11 @@ static func city_config() -> Dictionary:
 	return v if v is Dictionary else {}
 
 
+static func codex_config() -> Dictionary:
+	var v: Variant = _load("res://data/codex.json")
+	return v if v is Dictionary else {}
+
+
 static func lore_config() -> Dictionary:
 	var v: Variant = _load("res://data/lore.json")
 	return v if v is Dictionary else {}
