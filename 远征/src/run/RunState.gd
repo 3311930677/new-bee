@@ -25,6 +25,7 @@ var honor := 0             # 局内累计荣誉（战功，用于高难世界门
 ## 本局各节点探索进度（会话态，不入存档；键 "layer_index"）：重进同一节点恢复
 ## 击杀/拾取/兴趣点/探索分，避免「撤离 → 重进」重复结算（P0-1）
 var map_state := {}
+var growth_bonus := {}     # 局外成长快照（G.growth_bonuses；由 RouteScene 注入，供 max_hp 同口径）
 
 
 ## 取某节点的探索进度（不存在则建空档）
@@ -85,11 +86,9 @@ func next_battle_seed() -> int:
 	return run_seed * 1000 + node_seq * 7 + 13
 
 
-## 人物当前最大生命（词条被动烧入口径与 BattleSim._build_role 一致）
+## 人物当前最大生命（唯一口径，含局外成长；与 BattleSim._build_role 完全一致，P1-6）
 func max_hp() -> int:
-	var stats := TableCache.role_stats(role_id, level)
-	var ts := TraitSystem.new(traits)
-	return maxi(1, int(float(stats.max_hp) * (1.0 + ts.passive_maxhp_pct())))
+	return TraitSystem.role_max_hp(role_id, level, traits, growth_bonus)
 
 
 ## 战斗胜利三选一候选（玩法文档 §2.4）：槽1=num/mech，槽2=link(85%)/double(15%)，槽3=全池；

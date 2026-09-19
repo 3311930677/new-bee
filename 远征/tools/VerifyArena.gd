@@ -24,6 +24,12 @@ func _run() -> void:
 	_check(int((f5.get("base", {}) as Dictionary).get("hp", 0)) >
 		int((f1.get("base", {}) as Dictionary).get("hp", 0)), "高等级傀儡应更强")
 	_check(int((f1.get("base", {}) as Dictionary).get("hp", 0)) > 0, "傀儡 HP 应为正")
+	# A2. 面板对齐（P1-8）：血量按当前职业面板生成，且不带首领狂暴
+	G.selected_role = "zs"
+	var st1 := TableCache.role_stats("zs", 1)
+	_check(int((f1.get("base", {}) as Dictionary).get("hp", 0))
+		== maxi(180, int(float(st1.max_hp) * 2.2)), "1 级傀儡血量应取自角色面板 ×2.2")
+	_check(String(f1.get("ai", "")) == "basic", "傀儡应去掉 boss 狂暴（ai=basic）")
 
 	# B. BattleSim custom_mon：敌方只 1 只、名字/HP 按数据
 	var sim := BattleSim.new()
@@ -59,6 +65,15 @@ func _run() -> void:
 	G.arena = {"score": 1000, "wins": 0, "losses": 0}
 	G._load_save()
 	_check(int(G.arena.get("score", 0)) == 1500, "读档后段位分应保留")
+
+	# D. 超时平局：不扣段位分（P1-8 / 口径 D3）
+	var ap: Control = (load("res://src/ui/ArenaPanel.gd") as GDScript).new()
+	add_child(ap)
+	await get_tree().process_frame
+	G.arena = {"score": 1000, "wins": 0, "losses": 0}
+	ap._on_battle_end("draw", 0)
+	_check(int(G.arena.get("score", 0)) == 1000, "平局不应改段位分（实为 %d）" % int(G.arena.get("score", 0)))
+	ap.queue_free()
 
 	if _fails == 0:
 		print("ARENA_OK all tests passed")

@@ -52,6 +52,17 @@ func school_active(school: String) -> bool:
 	return int(school_count.get(school, 0)) >= 3
 
 
+## 人物战斗血上限（唯一口径）：表基础 HP → 词条被动取整 → 局外成长取整。
+## BattleSim._build_role 与 RunState.max_hp 都走这里——否则「看面板一个数、进战斗另一个数」，
+## 篝火/药剂会把跨节点的血量错误削低（P1-6）。
+static func role_max_hp(role_id: String, level: int, trait_ids: Array, growth: Dictionary) -> int:
+	var stats := TableCache.role_stats(role_id, level)
+	var ts := TraitSystem.new(trait_ids)
+	var v := int(float(stats.max_hp) * (1.0 + ts.passive_maxhp_pct()))
+	v = int(float(v) * (1.0 + float(growth.get("maxhp_pct", 0.0))) + float(growth.get("hp_add", 0)))
+	return maxi(1, v)
+
+
 # ---------- 被动数值（构建时由 BattleSim 烧入 base 属性） ----------
 # 双刃词条（燃血/薄甲/狂潮/死线）的数值一律从表读，禁止硬编码——
 # 历史坑：ATK 加成曾张冠李戴（燃血没加、薄甲多拿），且表值改动不同步。守卫见 verify_trait 第 6 段。

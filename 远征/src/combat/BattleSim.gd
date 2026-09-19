@@ -71,16 +71,18 @@ func _build_role(cfg: Dictionary) -> void:
 		return
 	var stats := TableCache.role_stats(String(cfg.role_id), int(cfg.get("level", 1)))
 	var ts := TraitSystem.new(cfg.get("traits", []))
-	# 词条被动烧入基础属性
-	stats.max_hp = int(float(stats.max_hp) * (1.0 + ts.passive_maxhp_pct()))
+	var gb0: Dictionary = cfg.get("growth", {}) if cfg.get("growth") is Dictionary else {}
+	# 血上限走唯一口径（含局外成长；与 RunState.max_hp 共用，P1-6）
+	stats.max_hp = TraitSystem.role_max_hp(String(cfg.role_id), int(cfg.get("level", 1)),
+		cfg.get("traits", []), gb0)
+	# 词条被动烧入其余基础属性
 	stats.atk = int(float(stats.atk) * (1.0 + ts.passive_atk_pct()))
 	stats.def = int(float(stats.def) * (1.0 + ts.passive_def_pct()))
 	stats.spd = stats.spd * (1.0 + ts.passive_spd_pct())
 	stats.crit += ts.passive_crit_add()
 	# 局外养成加成（天赋/装备/坐骑/称号聚合，由 G.gd 计算后传入；缺省不影响）
-	var gb: Dictionary = cfg.get("growth", {})
+	var gb: Dictionary = gb0
 	if not gb.is_empty():
-		stats.max_hp = int(float(stats.max_hp) * (1.0 + float(gb.get("maxhp_pct", 0.0))) + float(gb.get("hp_add", 0)))
 		stats.atk = int(float(stats.atk) * (1.0 + float(gb.get("atk_pct", 0.0))) + float(gb.get("atk_add", 0.0)))
 		stats.def = int(float(stats.def) * (1.0 + float(gb.get("def_pct", 0.0))) + float(gb.get("def_add", 0.0)))
 		stats.spd = stats.spd * (1.0 + float(gb.get("spd_pct", 0.0)))
@@ -378,8 +380,9 @@ func step() -> void:
 		result = "defeat"
 		emit({"t": "defeat"})
 	elif tick_count >= MAX_TICKS:
+		# 到硬上限判「平局」：演武场据此不扣分；PVE 由 MapScene 显式按败处理（口径 D3）
 		finished = true
-		result = "defeat"
+		result = "draw"
 		emit({"t": "timeout"})
 
 

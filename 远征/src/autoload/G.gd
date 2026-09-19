@@ -349,6 +349,7 @@ func _load_save() -> void:
 		prog["lore_beats"] = lb if lb is Dictionary else {}
 		var setg: Variant = pd.get("settings", {})   # 玩家设置（震屏/剧情演出/战斗默认倍速）
 		prog["settings"] = setg if setg is Dictionary else {}
+		prog["last_ts"] = maxi(0, int(pd.get("last_ts", 0)))   # 单调时间水位（P1-13）
 		var gg: Variant = pd.get("gacha", {})   # 抽奖状态（保底 / 每日免费；P1-1）
 		var ggd: Dictionary = gg if gg is Dictionary else {}
 		prog["gacha"] = {"pity": maxi(0, int(ggd.get("pity", 0))),
@@ -398,7 +399,7 @@ func _init_state_defaults() -> void:
 	prog = {"level": 1, "exp": 0, "worlds_unlocked": 1, "world_cleared": {}, "pets": [],
 		"talents": {}, "equip": {}, "skills": {}, "mounts": {"owned": {}, "active": ""},
 		"titles": {"owned": [], "active": ""}, "pet_stat": {}, "tips_seen": {},
-		"lore_seen": false, "lore_beats": {}, "settings": {},
+		"lore_seen": false, "lore_beats": {}, "settings": {}, "last_ts": 0,
 		"gacha": {"pity": 0, "free_day": "", "free_streak": 0, "free_last": ""}}
 	city = {"built": ["hall", "gate"], "code": "", "visits": [], "acts": {}, "day": "", "streak": 0}
 	quest = {"day": "", "offer": [], "active": {}, "claimed": []}
@@ -655,8 +656,16 @@ func city_name() -> String:
 	return String(city_config().get("name", "远征主城"))
 
 
+## 当前时间（unix 秒；**单调**：系统时钟被回拨时取存档水位，日常进度不重放，P1-13）。
+## 前跳不设防（离线单机可接受）；水位随存档落盘。
 func now_ts() -> int:
-	return int(Time.get_unix_time_from_system())
+	var t := int(Time.get_unix_time_from_system())
+	var last := int(prog.get("last_ts", 0))
+	if t < last:
+		return last
+	if t != last:
+		prog["last_ts"] = t
+	return t
 
 
 ## 当日键（YYYY-MM-DD）。签到翻篇、今日来客都按它算。
@@ -1721,7 +1730,12 @@ func quest_offer() -> Array:
 func _refresh_quests() -> void:
 	var pool: Array = []
 	for q in quest_defs():
-		pool.append(String((q as Dictionary).get("id", "")))
+		var qd := q as Dictionary
+		# 只上「当前打得动」的委托：带 theme 的（讨伐/击杀）必须该世界已解锁（P1-13）
+		var th := String(qd.get("theme", ""))
+		if th != "" and not is_world_unlocked(th):
+			continue
+		pool.append(String(qd.get("id", "")))
 	if pool.is_empty():
 		quest["day"] = today_key()
 		quest["offer"] = []
@@ -2822,16 +2836,19 @@ func arena_rank() -> String:
 	return "铜印"
 
 
-## 生成一个演武傀儡（数值随等级缩放；贴图缺省走程序圆体）
+## 生成一个演武傀儡：血量/攻防按当前职业面板生成（P1-8——不再是固定 520 血的"墙"），
+## ai 用 basic（去掉首领 <30% 狂暴）；超时平局见 BattleSim（口径 D3）。
 func make_arena_foe(level: int) -> Dictionary:
 	var lvl := maxi(1, level)
-	var sc := 1.0 + 0.16 * float(lvl - 1)
+	var rid := selected_role if selected_role != "" else "zs"
+	var stats := TableCache.role_stats(rid, lvl)
 	return {
 		"id": "mon_arena_dummy",
 		"name": "演武傀儡 · %d 级" % lvl,
-		"tier": "boss", "ai": "boss", "attack_range": "melee",
-		"base": {"hp": int(520.0 * sc), "atk": int(20.0 * sc),
-			"def": int(11.0 * sc), "spd": 0.95},
+		"tier": "boss", "ai": "basic", "attack_range": "melee",
+		"base": {"hp": maxi(180, int(float(stats.max_hp) * 2.2)),
+			"atk": maxi(1, int(float(stats.atk) * 1.15)),
+			"def": maxi(0, int(stats.def)), "spd": 0.95},
 		"skills": [{"id": "boss_slam", "name": "震地", "k": 1.6, "cd": 9,
 			"target": "enemy_front_all"}],
 	}

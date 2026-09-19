@@ -1421,6 +1421,7 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 		return
 
 	if result != "victory":
+		# 含超时平局（draw）：PVE 里一律按败收场（口径 D3；演武场单独判平局）
 		st.finished = true
 		st.result = "defeat"
 		_finish_map("defeat")

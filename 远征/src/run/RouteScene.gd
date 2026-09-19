@@ -48,6 +48,7 @@ func _ready() -> void:
 	var cfg := pending_run
 	pending_run = {}
 	st.setup(cfg)
+	st.growth_bonus = G.growth_bonuses(st.role_id)   # 血上限同口径（P1-6）
 	_build()
 
 
