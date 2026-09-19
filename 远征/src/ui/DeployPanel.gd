@@ -59,6 +59,8 @@ var _tab_sbs: Array = []
 var _cards := {}          # "步骤:选项id" -> SlideCard（选中态只改样式，不重建卡）
 var _sweep_btn: Control = null   # 扫荡按钮（持有引用用于刷新券余量）
 var _help_btn: Control = null    # 右上角「?」操作说明
+var _extra_potions := 0          # 出征前加带的药剂（轮次 21）；金币在「出征」确认时结算
+var _supply_btn: Control = null
 
 # 操作说明：? 弹层与首次进入的引导共用同一份文案
 const TIPS := [
@@ -66,6 +68,7 @@ const TIPS := [
 	"↑ ↓ 或 W/S：切换「秘境 / 人物 / 宠物」三个页签",
 	"点卡片选定；宠物再点一次可换替补或取消出战",
 	"秘境未解锁时，需先通关前一片大陆的首领",
+	"左下「补给」可加带药剂：金币在点「出征」时一次性结算，返回不扣钱",
 ]
 
 func _ready() -> void:
@@ -142,6 +145,16 @@ func _build() -> void:
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_on_confirm())
 	_content.add_child(go)
+
+	# 补给（轮次 21）：塞进「返回」左侧的空档（返回居中占 144~264，这里 16~136 不重叠）。
+	# 点它只累计数量，金币留到「出征」确认时才算——否则玩家加带后按返回会白花钱。
+	_supply_btn = G.ghost_button("", 120, 36, G.FS_XS)
+	_supply_btn.position = Vector2(16, 502)
+	_supply_btn.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_add_supply())
+	_content.add_child(_supply_btn)
+	_refresh_supply()
 
 	var back := G.gold_button("返 回", 120, 36)
 	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 502)
@@ -332,6 +345,44 @@ func _select_pet(id: String) -> void:
 	_set_hint_default()
 	_refresh_sel()
 
+## 加带一瓶药剂（不立即扣钱，只累计）。已满或价格未配置就提示。
+func _add_supply() -> void:
+	var room := G.run_potions_max() - G.run_potions_base()
+	if _extra_potions >= room:
+		_warn("补给已满：本趟最多带 %d 瓶药剂" % G.run_potions_max())
+		return
+	if G.run_supply_price(_extra_potions) <= 0:
+		_warn("补给价格未配置")
+		return
+	_extra_potions += 1
+	Audio.sfx("ui_confirm")
+	_refresh_supply()
+	_hint.text = "已加带 %d 瓶（出征时合计结算 %d 金）" % [_extra_potions, _supply_total()]
+	_hint.add_theme_color_override("font_color", Color("4a7a44"))
+
+
+func _supply_total() -> int:
+	var sum := 0
+	for i in _extra_potions:
+		sum += G.run_supply_price(i)
+	return sum
+
+
+func _refresh_supply() -> void:
+	if _supply_btn == null:
+		return
+	var lbl := _supply_btn.get_child(0) as Label
+	if lbl == null:
+		return
+	var base := G.run_potions_base()
+	if _extra_potions >= G.run_potions_max() - base:
+		lbl.text = "补给已满 ×%d" % G.run_potions_max()
+		_supply_btn.modulate = Color(1, 1, 1, 0.55)
+		return
+	_supply_btn.modulate = Color.WHITE
+	lbl.text = "补给 +1（%d金）" % G.run_supply_price(_extra_potions)
+
+
 func _set_hint_default() -> void:
 	# 平常留空：操作说明交给右上角「?」，这行只用来报错与提示结果
 	_hint.text = ""
@@ -442,6 +493,12 @@ func _on_confirm() -> void:
 	if not G.is_world_unlocked(_theme):
 		_warn("「%s」尚未解锁" % G.world_name(_theme))
 		return
+	# 补给在这里一次性结算：买不成就不放行，避免"进了远征却少带药剂"
+	if _extra_potions > 0:
+		var pay := G.buy_run_supply_pack(_extra_potions)
+		if not bool(pay.get("ok", false)):
+			_warn(String(pay.get("err", "补给结算失败")))
+			return
 	Audio.sfx("ui_confirm")
 	confirmed.emit({
 		"theme": _theme,
@@ -449,6 +506,6 @@ func _on_confirm() -> void:
 		"level": int(G.prog.get("level", 1)),
 		"active_pet": _active_pet,
 		"bench_pet": _bench_pet,
-		"potions": 2,
+		"potions": G.run_potions_base() + _extra_potions,
 		"seed": 0,
 	})

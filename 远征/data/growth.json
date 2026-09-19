@@ -1,8 +1,9 @@
 {
   "version": 1,
-  "comment": "等级 1~60 成长公式（玩法文档 §1.2）。hp/atk/def/crit 为全局基准；角色个体差异在 roles.json base 微调后按本表系数线性成长。",
+  "comment": "等级 1~60 成长公式（玩法文档 §1.2）。hp/atk/def/crit 为全局基准；角色个体差异在 roles.json base 微调后按本表系数线性成长。等级 1 的值 = base，等级 n 的值 = base + per_level*(n-1)。",
   "level_cap": 60,
-  "exp_formula": "lv*100 + 2*pow(5, 0.1*lv)",
+  "exp_formula_note": "lv*100 + 2*pow(5, 0.1*lv)。此字符串只是给人看的说明；实际计算读下面的 exp.type 与 exp 参数，代码不执行表里的字符串。",
+  "exp": { "type": "linear_plus_exp", "linear": 100, "scale": 2, "base": 5, "rate": 0.1 },
   "per_level": { "hp": 40, "atk": 4, "def": 2, "crit": 0.001 },
   "equip_visual_tiers": [50, 120, 250],
   "energy": { "max": 100, "per_basic_attack": 20 },

@@ -1,0 +1,17 @@
+{
+  "version": 3,
+  "wallet": { "gold": 777, "expedition": 22, "soul": 3, "honor": 7 },
+  "items": { "ticket_ten": 1, "ticket_sweep": 0 },
+  "gender": "男",
+  "prog": {
+    "level": 12,
+    "exp": 40,
+    "pets": ["pet_rockturtle"],
+    "codex_claimed": [],
+    "worlds_unlocked": 2,
+    "last_ts": 1700000000
+  },
+  "city": { "built": ["hall", "gate"], "day": "", "streak": 0 },
+  "quest": { "day": "", "offer": [], "active": {}, "claimed": [] },
+  "arena": { "score": 1200, "wins": 4, "losses": 2, "streak": 1, "best_streak": 2 }
+}

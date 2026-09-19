@@ -33,7 +33,7 @@ param(
   [string]$List = "",
   [int]$QuitAfter = 6000,
   [int]$TimeoutSec = 240,
-  [int]$Expected = 23,
+  [int]$Expected = 24,
   [string]$LogDir = "",
   [switch]$AllowAnyVersion
 )
@@ -83,6 +83,7 @@ if ($verOut -notmatch "4\.7\.") {
 $cases = @(
 	@{ N = "VerifyAssets";      K = "scene";  T = "ASSETS_OK" },
 	@{ N = "VerifyBattleScene"; K = "scene";  T = "BATTLE_SCENE_OK" },
+	@{ N = "VerifySave";        K = "scene";  T = "SAVE_OK" },
 	@{ N = "VerifyCity";        K = "scene";  T = "CITY_OK" },
 	@{ N = "VerifyGameHome";    K = "scene";  T = "GAME_HOME_OK" },
 	@{ N = "VerifyMapScene";    K = "scene";  T = "MAP_SCENE_OK" },
@@ -243,7 +244,10 @@ foreach ($c in $cases) {
 		$reasons += ("exit code " + $r.Code)
 	}
 	$okRe = "(?m)^\s*" + $c.T + "\b"
-	if (-not ($out -match $okRe)) {
+	# -cmatch (case sensitive) on purpose: PowerShell's -match is case-INsensitive, so "_FAIL"
+	# also matched the identifier "_mig_fail" inside a push_warning backtrace and turned a green
+	# case red. Engine error strings have fixed capitalisation, so exact case is the safe test.
+	if (-not ($out -cmatch $okRe)) {
 		$reasons += ("missing completion line '" + $c.T + "'")
 	}
 	$sigErr = @{}
@@ -252,10 +256,10 @@ foreach ($c in $cases) {
 		$t = $line.Trim()
 		if ($t -eq "") { continue }
 		$isNoise = $false
-		foreach ($n in $exitNoise) { if ($t -match [regex]::Escape($n)) { $isNoise = $true } }
+		foreach ($n in $exitNoise) { if ($t -cmatch [regex]::Escape($n)) { $isNoise = $true } }
 		if ($isNoise) { $caseNoise++; continue }
 		foreach ($p in $errPatterns) {
-			if ($t -match [regex]::Escape($p)) { $sigErr[$p] = $true }
+			if ($t -cmatch [regex]::Escape($p)) { $sigErr[$p] = $true }
 		}
 	}
 	if ($caseNoise -gt 0) { $noiseCases++; $noiseLines += $caseNoise }
@@ -282,10 +286,10 @@ foreach ($c in $cases) {
 			$t = $line.Trim()
 			if ($t -eq "") { continue }
 			$isNoise = $false
-			foreach ($n in $exitNoise) { if ($t -match [regex]::Escape($n)) { $isNoise = $true } }
+			foreach ($n in $exitNoise) { if ($t -cmatch [regex]::Escape($n)) { $isNoise = $true } }
 			if ($isNoise) { continue }
 			$hitErr = $false
-			foreach ($p in $errPatterns) { if ($t -match [regex]::Escape($p)) { $hitErr = $true } }
+			foreach ($p in $errPatterns) { if ($t -cmatch [regex]::Escape($p)) { $hitErr = $true } }
 			if ($hitErr) {
 				if ($seen.ContainsKey($t)) { continue }
 				$seen[$t] = $true
