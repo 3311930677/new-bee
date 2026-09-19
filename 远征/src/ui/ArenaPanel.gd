@@ -241,6 +241,13 @@ func _on_battle_end(result: String, _hp_left: int) -> void:
 		_toast("未分胜负 · 段位分不变")
 		_refresh()
 		return
+	if result == "flee":
+		# 退出切磋（与远征撤退同义）：不判负、不动段位分
+		_busy = false
+		_set_busy_look(false)
+		_toast("已退出切磋 · 段位分不变")
+		_refresh()
+		return
 	var win := result == "victory"
 	var res: Dictionary = G.arena_result(win)
 	_busy = false
