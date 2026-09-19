@@ -23,6 +23,8 @@ func _run() -> void:
 	_test_traits()
 	_test_elite_boss()
 	_test_energy_economy()
+	_test_lifesteal()
+	_test_summon_skill()
 	if _fails == 0:
 		print("BATTLE_OK all tests passed")
 	else:
@@ -183,3 +185,53 @@ func _test_energy_economy() -> void:
 			if String(e.t) == "cast":
 				cast_count += 1
 		_check(cast_count >= 2, "%s 托管整局技能施放 ≥2 次（能量无死锁），实为 %d" % [role_id, cast_count])
+
+
+# ---------- 8. 吸血取向：攻击方的 lifesteal 回攻击方；受击方的 lifesteal 不生效 ----------
+func _test_lifesteal() -> void:
+	var sim := BattleSim.new()
+	sim.record_events = false
+	sim.setup(31, {"role_id": "zs", "level": 10, "traits": []},
+		{"theme": "forest", "node_type": "normal", "layer": 1})
+	var role := sim.role_unit()
+	var foe := sim.alive_units("enemy")[0]
+	# ① 攻击方带吸血：受击方挨打 → 攻击方按 50% 回血
+	role.hp = 100
+	role.add_buff("lifesteal", -1, {"pct": 0.5})
+	foe.take_damage(40, role, sim)
+	_check(role.hp == mini(role.get_max_hp(), 120), "吸血：攻击方应按伤害 50％ 回血（hp=%d）" % role.hp)
+	# ② 受击方带吸血：攻击方血量不受影响（历史 bug：该场景曾错给攻击方回血）
+	role.remove_buff("lifesteal")
+	foe.add_buff("lifesteal", -1, {"pct": 0.5})
+	role.hp = 50
+	foe.take_damage(5, role, sim)
+	_check(role.hp == 50, "吸血：受击方的 lifesteal 不应治疗攻击方（hp=%d）" % role.hp)
+
+
+# ---------- 9. BOSS 召唤技可达（历史 bug：target="summon" 数据与 effect 分支对不上，整招空放） ----------
+func _test_summon_skill() -> void:
+	var sim := BattleSim.new()
+	sim.record_events = false
+	sim.setup(17, {"role_id": "zs", "level": 15, "traits": []},
+		{"theme": "forest", "node_type": "boss", "layer": 1})
+	var boss: Combatant = null
+	for u in sim.units:
+		if u.ai_type == "boss":
+			boss = u
+	_check(boss != null, "BOSS 在场")
+	if boss == null:
+		return
+	var sd: Dictionary = {}
+	for s in boss.skills:
+		if String((s as Dictionary).get("def", {}).get("id", "")) == "boss_summon":
+			sd = (s as Dictionary).def
+	_check(not sd.is_empty(), "BOSS 应带 boss_summon 技能")
+	if sd.is_empty():
+		return
+	var n0 := sim.alive_units("enemy").size()
+	SkillSystem.enqueue_cast(sim, boss, sd)
+	if not sim.cast_queue.is_empty():
+		sim.cast_queue[sim.cast_queue.size() - 1]["windup"] = 1
+	sim.step()
+	_check(sim.alive_units("enemy").size() == n0 + 2,
+		"召唤狼群应 +2 狼（%d → %d）" % [n0, sim.alive_units("enemy").size()])
