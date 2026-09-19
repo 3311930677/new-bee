@@ -22,6 +22,18 @@ var expedition := 0        # 局内累计远征币（抽奖祭坛货币）
 var soul := 0              # 局内累计灵魂石（宠物池货币）
 var exp := 0               # 局内累计经验（结算时回写养成等级）
 var honor := 0             # 局内累计荣誉（战功，用于高难世界门禁）
+## 本局各节点探索进度（会话态，不入存档；键 "layer_index"）：重进同一节点恢复
+## 击杀/拾取/兴趣点/探索分，避免「撤离 → 重进」重复结算（P0-1）
+var map_state := {}
+
+
+## 取某节点的探索进度（不存在则建空档）
+func map_progress(layer: int, index: int) -> Dictionary:
+	var k := "%d_%d" % [layer, index]
+	if not map_state.has(k):
+		map_state[k] = {"killed": [], "taken": [], "spots": [], "score": 0,
+			"cleared_bonus": false, "boss_down": false, "interact_done": false}
+	return map_state[k]
 
 
 ## 按 nodes.json rewards 累加节点奖励（normal/elite/boss/chest；战利与拾取同口径）

@@ -482,6 +482,98 @@ func _run() -> void:
 	mmap.queue_free()
 	await get_tree().process_frame
 
+	# ---- N. 节点进度持久化：撤离→重进 不复活、不重发（P0-1）----
+	var nmap2 := await _spawn_map("normal", 1, "")
+	var n_all: int = nmap2._monsters.size()
+	var n_st: RunState = nmap2.st
+	_check(n_all >= 3, "普通区应有 3~4 怪，实为 %d" % n_all)
+	nmap2._start_battle(nmap2._monsters[0])
+	_check(nmap2._battle != null, "战斗应挂载")
+	if nmap2._battle != null:
+		_force_battle_end(nmap2._battle, "victory")
+		await get_tree().process_frame
+		if nmap2._picker != null:
+			nmap2._picker._emit_pick(String(nmap2._picker.choices[0].get("id", "")))
+			await get_tree().process_frame
+	_check(nmap2._monsters.size() == n_all - 1, "击杀后应少 1 怪，实为 %d/%d" % [nmap2._monsters.size(), n_all])
+	var gold_after: int = n_st.gold
+	nmap2.queue_free()
+	await get_tree().process_frame
+	# 重进同节点（同一 RunState、同 layer/index → 同种子同布局）
+	MapScene.pending_cfg = {"node": {"type": "normal", "layer": 1, "index": 0}, "run": n_st}
+	var rmap: MapScene = (load("res://src/explore/MapScene.tscn") as PackedScene).instantiate()
+	rmap.map_finished.connect(func(r: String): _last_result = r)
+	add_child(rmap)
+	await get_tree().process_frame
+	_check(rmap._monsters.size() == n_all - 1,
+		"重进后已击杀的怪不应复活（%d vs 期望 %d）" % [rmap._monsters.size(), n_all - 1])
+	_check(n_st.gold == gold_after, "重进不应重发奖励（金币 %d vs %d）" % [n_st.gold, gold_after])
+	_check(int((rmap._prog as Dictionary).get("killed", []).size()) == 1, "进度表应记 1 个击杀")
+	# 再杀一只：只结算新击杀
+	if rmap._monsters.size() >= 1:
+		rmap._start_battle(rmap._monsters[0])
+		if rmap._battle != null:
+			_force_battle_end(rmap._battle, "victory")
+			await get_tree().process_frame
+			if rmap._picker != null:
+				rmap._picker._emit_pick(String(rmap._picker.choices[0].get("id", "")))
+				await get_tree().process_frame
+		_check(n_st.gold > gold_after, "新击杀应正常结算（%d → %d）" % [gold_after, n_st.gold])
+		_check(int((rmap._prog as Dictionary).get("killed", []).size()) == 2, "进度表应记 2 个击杀")
+	rmap.queue_free()
+	await get_tree().process_frame
+
+	# ---- O. 浮层冻结：看大地图期间怪不动、不触发开战（P1-10）----
+	var omap := await _spawn_map("normal", 1, "")
+	var om = omap._monsters[0]
+	om._aggro = 1.0   # 只观察冻结，不让它主动追
+	om.position = omap._player.position + Vector2(200.0, 0)
+	om.home = om.position
+	var om_p0 = om.position
+	omap._toggle_big_map()
+	_check(omap._big_map != null, "大地图应打开")
+	for i in 30:
+		await get_tree().physics_frame
+	_check(om.position == om_p0, "看大地图时怪物应完全冻结（%.1f,%.1f）" % [om.position.x, om.position.y])
+	om.position = omap._player.position + Vector2(10.0, 0)
+	for i in 15:
+		await get_tree().physics_frame
+	_check(omap._battle == null, "看大地图时贴脸也不应开战")
+	omap._toggle_big_map()   # 关掉
+	var fwait := 0
+	while omap._battle == null and fwait < 180:
+		await get_tree().process_frame
+		fwait += 1
+	_check(omap._battle != null, "关掉大地图后接触应恢复开战（%d 帧内）" % fwait)
+	omap.queue_free()
+	await get_tree().process_frame
+
+	# ---- P. 怪物参与散件碰撞：不再穿树（P1-15）----
+	var qmap := await _spawn_map("normal", 1, "")
+	var qm = qmap._monsters[0]
+	_check(qm is CharacterBody2D, "怪物应为 CharacterBody2D")
+	_check(qm.collision_mask == 2, "怪物应只撞散件层（mask 2）")
+	var deco: Node2D = null
+	for c in qmap._world.get_children():
+		if c is StaticBody2D:
+			deco = c
+			break
+	_check(deco != null, "地图上应有散件")
+	if deco != null:
+		qm._aggro = 1.0
+		qm._contact = 0.0
+		qm.position = deco.position + Vector2(-46.0, 0)
+		qm.velocity = Vector2.ZERO
+		qm._target = deco.position + Vector2(60.0, 0)
+		qm._state = "wander"
+		var min_d := 9999.0
+		for i in 70:
+			await get_tree().physics_frame
+			min_d = minf(min_d, qm.position.distance_to(deco.position))
+		_check(min_d > 25.0, "怪物不应压进散件碰撞盒（最近距离 %.1f）" % min_d)
+	qmap.queue_free()
+	await get_tree().process_frame
+
 	_print_result()
 
 
