@@ -26,6 +26,27 @@ var honor := 0             # 局内累计荣誉（战功，用于高难世界门
 ## 击杀/拾取/兴趣点/探索分，避免「撤离 → 重进」重复结算（P0-1）
 var map_state := {}
 var growth_bonus := {}     # 局外成长快照（G.growth_bonuses；由 RouteScene 注入，供 max_hp 同口径）
+var ascetic := false       # 苦行（轮次 22）：本局敌人更强、收益更高，出征前选定，一旦出发不可改
+
+
+## 苦行参数（data/nodes.json 的 ascetic 段）
+func ascetic_cfg() -> Dictionary:
+	var c: Variant = TableCache.nodes_config().get("ascetic", {})
+	return c if c is Dictionary else {}
+
+
+## 本局敌人强度倍率（未开苦行 = 1.0）
+func enemy_mult() -> float:
+	if not ascetic:
+		return 1.0
+	return maxf(0.1, float(ascetic_cfg().get("enemy_mult", 1.0)))
+
+
+## 本局收益倍率（未开苦行 = 1.0）
+func reward_mult() -> float:
+	if not ascetic:
+		return 1.0
+	return maxf(0.0, float(ascetic_cfg().get("reward_mult", 1.0)))
 
 
 ## 取某节点的探索进度（不存在则建空档）
@@ -37,14 +58,16 @@ func map_progress(layer: int, index: int) -> Dictionary:
 	return map_state[k]
 
 
-## 按 nodes.json rewards 累加节点奖励（normal/elite/boss/chest；战利与拾取同口径）
+## 按 nodes.json rewards 累加节点奖励（normal/elite/boss/chest；战利与拾取同口径）。
+## 苦行局在这里统一乘收益倍率：这是本局收益的唯一入口，不会漏掉某类节点。
 func add_reward(kind: String) -> void:
 	var row: Dictionary = TableCache.nodes_config().get("rewards", {}).get(kind, {})
-	gold += int(row.get("gold", 0))
-	expedition += int(row.get("expedition", 0))
-	soul += int(row.get("soul", 0))
-	exp += int(row.get("exp", 0))
-	honor += int(row.get("honor", 0))
+	var mult := reward_mult()
+	gold += roundi(float(row.get("gold", 0)) * mult)
+	expedition += roundi(float(row.get("expedition", 0)) * mult)
+	soul += roundi(float(row.get("soul", 0)) * mult)
+	exp += roundi(float(row.get("exp", 0)) * mult)
+	honor += roundi(float(row.get("honor", 0)) * mult)
 
 
 func setup(cfg: Dictionary) -> void:
@@ -54,6 +77,7 @@ func setup(cfg: Dictionary) -> void:
 	active_pet = String(cfg.get("active_pet", ""))
 	bench_pet = String(cfg.get("bench_pet", ""))
 	potions = int(cfg.get("potions", 0))
+	ascetic = bool(cfg.get("ascetic", false))
 	run_seed = int(cfg.get("seed", 0))
 	if run_seed == 0:
 		run_seed = randi()

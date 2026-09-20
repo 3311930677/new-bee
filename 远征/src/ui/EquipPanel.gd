@@ -8,12 +8,19 @@ signal closed
 
 const CONTENT_W := 408.0
 const SLOT_W := 62.0
+# 背包宝石区：4 列 × 2 行 = 8 格一页（问题 #4；15 种宝石分 2 页）
+const GEM_COLS := 4
+const GEM_ROWS := 2
 
 var _sel := ""               # 当前选中槽位
 var _detail: Control = null  # 详情区（重绘）
 var _slots_row: Control = null
 var _hint: Label = null
 var _toast: Label = null
+## 槽位等级 Label 的直引用（问题 #14）：原来靠 get_child(0).get_child(2) 数节点，
+#  缺图标时子节点数变化就取错节点、刷新时崩或被静默跳过
+var _slot_lv: Dictionary = {}
+var _gem_page := 0           # 背包宝石分页（问题 #4）：以前只列前 6 种，持有 15 种也选不到后面的
 
 
 func _ready() -> void:
@@ -124,6 +131,7 @@ func _slot_button(s: Dictionary) -> Control:
 	lv.position = Vector2(0, 46)
 	lv.custom_minimum_size = Vector2(SLOT_W, 0)
 	inner.add_child(lv)
+	_slot_lv[sid] = lv   # 直引用，刷新时不再数节点下标
 
 	root.gui_input.connect(func(ev: InputEvent):
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
@@ -142,8 +150,9 @@ func _refresh() -> void:
 			sb.border_color = G.GOLD_BRIGHT if sid == _sel else Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.5)
 			if sid == G.equip_weapon_slot():
 				sb.border_color = Color("c05030") if sid != _sel else Color("d06840")
-		var lv_l := (c.get_child(0) as Control).get_child(2) as Label
-		lv_l.text = "+%d" % int(G.equip_state(sid).get("lv", 0))
+		var lv_l := _slot_lv.get(sid) as Label
+		if lv_l != null:
+			lv_l.text = "+%d" % int(G.equip_state(sid).get("lv", 0))
 	var role_name := String(G.get_role(G.selected_role).get("name", ""))
 	_hint.text = "红框为「%s」本职业武器" % role_name
 
@@ -197,16 +206,46 @@ func _refresh() -> void:
 		var sock := _socket_box(gems, i)
 		sock.position = Vector2(6 + i * 56.0, 130)
 		_detail.add_child(sock)
+	# 镶嵌费用必须写在按钮旁边（问题 #5）：它是"每次成功镶嵌"扣的金币，不是一次性开孔费。
+	# 数值直接读 equip_socket_cost()，与扣费同源，改表即同步。
+	var fee := G.text_label("镶嵌费 %d 金币/次 · 每次镶嵌即扣" % G.equip_socket_cost(),
+		G.FS_XS, Color("7a5a2e"))
+	fee.position = Vector2(0, 182)
+	_detail.add_child(fee)
+
+	# 背包宝石分页（问题 #4）：装备表有 15 种宝石（3 色 × 5 级），原来只列前 6 种，
+	# 后面的永远选不到。改成 4 列 × 2 行 = 8 格一页，翻页按钮只在多于 1 页时出现。
 	var inv := _gem_inventory()
 	if inv.is_empty():
 		var none := G.text_label("背包暂无宝石（兑换商店有售）", G.FS_XS, Color("8a6a34"))
 		none.position = Vector2(186, 138)
 		_detail.add_child(none)
 	else:
-		for i in mini(inv.size(), 6):
-			var chip := _gem_chip(String(inv[i]))
-			chip.position = Vector2(186 + (i % 3) * 54.0, 130 + (i / 3) * 40.0)
+		var pages := gem_page_count()
+		_gem_page = clampi(_gem_page, 0, pages - 1)
+		var ids := gem_page_ids()
+		for slot_i in ids.size():
+			var chip := _gem_chip(String(ids[slot_i]))
+			chip.position = Vector2(186 + (slot_i % GEM_COLS) * 52.0,
+				130 + (slot_i / GEM_COLS) * 40.0)
 			_detail.add_child(chip)
+		if pages > 1:
+			var pg := G.gold_label("%d/%d" % [_gem_page + 1, pages], G.FS_XS, false,
+				Color("7a5a2e"), false)
+			pg.position = Vector2(300, 100)
+			pg.custom_minimum_size = Vector2(44, 0)
+			pg.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			_detail.add_child(pg)
+			for arrow in [["◀", -1, 186.0], ["▶", 1, 348.0]]:
+				var ab := G.ghost_button(String(arrow[0]), 44, 22, G.FS_XS)
+				ab.position = Vector2(float(arrow[2]), 100)
+				var step := int(arrow[1])
+				ab.gui_input.connect(func(ev: InputEvent):
+					if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
+						_gem_page = clampi(_gem_page + step, 0, pages - 1)
+						Audio.sfx("ui_page")
+						_refresh())
+				_detail.add_child(ab)
 
 	# 精炼区
 	var rf_t := G.serif_label("精 炼", G.FS_MD, Color("7a5a2e"))
@@ -293,6 +332,23 @@ func _gem_inventory() -> Array:
 	return out
 
 
+## 宝石区分几页（每页 GEM_COLS×GEM_ROWS）
+func gem_page_count() -> int:
+	var inv := _gem_inventory()
+	return maxi(1, int(ceil(float(inv.size()) / float(GEM_COLS * GEM_ROWS))))
+
+
+## 当前页实际列出的宝石 id（回归用例据此断言"持有 15 种也全都翻得到"）
+func gem_page_ids() -> Array:
+	var inv := _gem_inventory()
+	var page_size := GEM_COLS * GEM_ROWS
+	var begin := _gem_page * page_size
+	var out: Array = []
+	for k in range(begin, mini(begin + page_size, inv.size())):
+		out.append(String(inv[k]))
+	return out
+
+
 func _gem_chip(gid: String) -> Control:
 	var root := PanelContainer.new()
 	root.custom_minimum_size = Vector2(48, 36)
@@ -319,7 +375,7 @@ func _gem_chip(gid: String) -> Control:
 	var cnt := G.gold_label("×%d" % G.item_count(gid), G.FS_XS - 2, false, G.TEXT_DARK, false)
 	cnt.position = Vector2(24, 9)
 	inner.add_child(cnt)
-	root.tooltip_text = "%s  +%d" % [gid, G.equip_gem_value(gid)]
+	root.tooltip_text = "%s  +%d" % [G.gem_label(gid), G.equip_gem_value(gid)]
 	root.gui_input.connect(func(ev: InputEvent):
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 			var r := G.equip_socket_gem(_sel, gid)

@@ -8,6 +8,10 @@ signal closed
 
 const CONTENT_W := 408.0
 const DECK_H := 470.0
+# 组内纵向滚动（问题 #2）：卡片宽再让出滚动条的空间，否则滚动条一出现就有 12px 被裁掉
+const SCROLLBAR_W := 16.0
+const CARD_W := CONTENT_W - SCROLLBAR_W
+const HEAD_H := 44.0        # 组名头 + 分隔线占的高度，滚动区从它下面开始
 const PageDeckScript := preload("res://src/ui/PageDeck.gd")
 
 var _deck: Control = null
@@ -99,11 +103,14 @@ func _sorted_group(gi: int) -> Array:
 	return owned + claimable + locked
 
 
-func _refresh() -> void:
+## preserve=true 时留在当前组（佩戴/领取后不该被弹回默认组——问题 #10）；
+## preserve=false（首次打开）才用 _default_group() 挑「有未领取的那组」。
+func _refresh(preserve := false) -> void:
 	var tid := G.title_active()
 	_active_l.text = "佩戴：%s" % String(G.title_cfg(tid).get("name", "")) if not tid.is_empty() \
 		else "尚未佩戴称号"
 	# 重新分组 + 整块重建 PageDeck：领取/佩戴会改变状态色与归属，组少重建开销可忽略
+	var prev := int(_deck.current) if (preserve and _deck != null) else -1
 	_split_groups()
 	if _deck != null:
 		_deck.queue_free()
@@ -113,7 +120,8 @@ func _refresh() -> void:
 	_deck.set_factory(_groups.size(), func(gi: int) -> Control:
 		return _group_page(gi), Vector2(CONTENT_W, DECK_H))
 	_content.add_child(_deck)
-	_deck.go(_default_group(), true)
+	var want := prev if prev >= 0 else _default_group()
+	_deck.go(clampi(want, 0, maxi(0, _groups.size() - 1)), true)
 
 
 ## 一组一个分页：组名头 + 该组称号大卡片纵向排
@@ -136,14 +144,27 @@ func _group_page(gi: int) -> Control:
 	rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	page.add_child(rule)
 
-	# 该组称号卡片：大卡片纵向排，行距 10
+	# 该组称号卡片：组内**纵向滚动**（问题 #2）。
+	# 原来卡片从 y=50 起、步进 104、高 94：第 5 张下缘到 560，而 Deck 视口只有 470，
+	# 第 5 张及以后被裁掉且没有任何滚动手段，等于永远点不到。
+	# 这里不改外层尺寸（外层要留给页脚/返回按钮），只在组内套一层 ScrollContainer。
 	var list := _sorted_group(gi)
-	var y := 50.0
+	var scroll := ScrollContainer.new()
+	scroll.position = Vector2(0, HEAD_H)
+	scroll.size = Vector2(CONTENT_W, DECK_H - HEAD_H)
+	scroll.custom_minimum_size = Vector2(CONTENT_W, DECK_H - HEAD_H)
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	scroll.mouse_filter = Control.MOUSE_FILTER_STOP
+	page.add_child(scroll)
+
+	var list_box := VBoxContainer.new()
+	list_box.add_theme_constant_override("separation", 10)
+	list_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	list_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	scroll.add_child(list_box)
 	for t in list:
-		var card := _title_card(t as Dictionary)
-		card.position = Vector2(0, y)
-		page.add_child(card)
-		y += 104.0
+		list_box.add_child(_title_card(t as Dictionary))
 	return page
 
 
@@ -154,7 +175,9 @@ func _title_card(t: Dictionary) -> Control:
 	var met := G.title_cond_met(t)
 
 	var root := PanelContainer.new()
-	root.custom_minimum_size = Vector2(CONTENT_W, 94)
+	# 卡宽让出滚动条（CARD_W）；坐标一律以 CARD_W 为右边界，别再按 CONTENT_W 算，
+	# 否则滚动条一出现右侧按钮就会被裁掉一截。
+	root.custom_minimum_size = Vector2(CARD_W, 94)
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = Color("f0e2bc") if owned else Color("e2d2a8")
 	sb.set_corner_radius_all(8)
@@ -209,13 +232,13 @@ func _title_card(t: Dictionary) -> Control:
 		btn.gui_input.connect(func(ev: InputEvent):
 			if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 				G.title_set_active("")
-				_refresh())
+				_refresh(true))
 	elif owned:
 		btn = G.gold_button("佩 戴", G.BTN_S.x - 24, 34, G.FS_SM)
 		btn.gui_input.connect(func(ev: InputEvent):
 			if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 				G.title_set_active(tid)
-				_refresh())
+				_refresh(true))
 	elif met:
 		btn = G.gold_button("领 取", G.BTN_S.x - 24, 34, G.FS_SM)
 		(btn.get_child(0) as Label).add_theme_color_override("font_color", Color("a03020"))
@@ -232,7 +255,8 @@ func _title_card(t: Dictionary) -> Control:
 			btn.gui_input.connect(func(ev: InputEvent):
 				if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 					_on_claim(tid))
-	btn.position = Vector2(CONTENT_W - G.BTN_S.x + 20, 30)
+	var btn_w := G.BTN_S.x - 24.0
+	btn.position = Vector2(CARD_W - btn_w - 10.0, 30)
 	btn.mouse_filter = Control.MOUSE_FILTER_STOP
 	inner.add_child(btn)
 	return root
@@ -257,7 +281,7 @@ func _on_claim(tid: String) -> void:
 	var r := G.title_claim(tid)
 	_toast_msg("称号「%s」入手！" % String(G.title_cfg(tid).get("name", "")) if bool(r.get("ok", false))
 		else String(r.get("err", "")))
-	_refresh()
+	_refresh(true)   # 领取后留在同一组（问题 #10）
 
 
 func _toast_msg(msg: String) -> void:
