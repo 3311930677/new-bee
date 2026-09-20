@@ -526,7 +526,10 @@ func _refresh_hud() -> void:
 	var m := st.max_hp()
 	var hp := m if st.hp < 0 else st.hp
 	_hp_fill.size.x = 116.0 * clampf(float(hp) / float(m), 0.0, 1.0)
-	_pot_l.text = "药剂 ×%d" % st.potions
+	# 苦行局要在 HUD 上一直看得见：玩家必须清楚"这局敌人更强、收益更高"，
+	# 而不是打着打着忘了自己开过什么
+	_pot_l.text = "药剂 ×%d" % st.potions if not st.ascetic \
+		else "苦行 · 药剂 ×%d" % st.potions
 	if _pet_btn != null:
 		_pet_btn.visible = st.bench_pet != ""
 
@@ -1408,7 +1411,9 @@ func _launch_battle(m: _MapMonster) -> void:
 			"pet_stats": G.battle_pet_stats([st.active_pet, st.bench_pet]),
 		},
 		"enemy": {"theme": st.theme, "node_type": m.tier,
-			"layer": int(node.get("layer", 1)), "lead_mon": m.mon_id},
+			"layer": int(node.get("layer", 1)), "lead_mon": m.mon_id,
+			# 苦行局（轮次 22）：敌人强度倍率由 RunState 决定，战斗内核只吃数字
+			"enemy_mult": st.enemy_mult()},
 		"seed": st.next_battle_seed(),
 	}
 	_battle_layer = CanvasLayer.new()

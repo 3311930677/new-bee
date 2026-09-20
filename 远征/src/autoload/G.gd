@@ -494,6 +494,12 @@ func run_cfg() -> Dictionary:
 	return c if c is Dictionary else {}
 
 
+## 苦行（轮次 22）：出征前可选的难度/收益开关，参数在 data/nodes.json 的 ascetic 段
+func ascetic_cfg() -> Dictionary:
+	var c: Variant = TableCache.nodes_config().get("ascetic", {})
+	return c if c is Dictionary else {}
+
+
 func run_potions_base() -> int:
 	return maxi(0, int(run_cfg().get("potions_base", 2)))
 
@@ -1531,6 +1537,20 @@ func equip_gem_value(gem_id: String) -> int:
 			if lv >= 1 and lv <= values.size():
 				return int(values[lv - 1])
 	return 0
+
+
+## 宝石显示名（如「攻击宝石 · 3 级」）。tooltip 不该裸露内部 id（问题 #14）。
+## 未登记/缺等级的 id 原样返回，避免把内部串彻底藏掉、排查时无从下手。
+func gem_label(gem_id: String) -> String:
+	if gem_id.is_empty():
+		return ""
+	for c in equip_gem_colors():
+		var cd := c as Dictionary
+		var prefix := String(cd.get("id", ""))
+		if gem_id.begins_with("gem_%s_" % prefix):
+			var lv := int(gem_id.get_slice("_", 2))
+			return "%s · %d 级" % [String(cd.get("name", prefix)), lv]
+	return gem_id
 
 
 ## 镶嵌：消耗 1 颗宝石 + 开孔费；孔满返回 false

@@ -7,6 +7,9 @@ const TITLE_SCENE := "res://src/ui/Title.tscn"
 const MIN_SECONDS := 1.0
 const PER_FRAME := 8        # 每帧预热的贴图数（59 项实际引用 + 行走帧 ≈ 数十张，分帧绰绰有余）
 const CODE_PER_FRAME := 1   # 每帧顺带编译的脚本/场景数（编译只能在主线程，只能摊开几帧）
+const BAR_W := 288.0        # 外框宽（问题 #1：进度条实际可用宽 = BAR_W - 2×BAR_INSET）
+const BAR_H := 18.0
+const BAR_INSET := 3.0      # 内填充与外框的边距；9-patch 左右各 10px 拉伸区，太窄会糊角
 
 # 脚本/场景预热清单：这些「一次性开销」原本全砸在"玩家点进某个界面"的那一帧上——
 # 实测 GameHome 首次进场景 533ms、第二次 31ms，差的 500ms 就是 GDScript 编译。
@@ -44,7 +47,7 @@ var _code: Array[String] = []       # 待编译的脚本/场景
 var _total := 0
 var _done := false
 var _t0 := 0.0
-var _bar_fill := PanelContainer.new()
+var _bar_fill := Panel.new()
 var _bar_l := Label.new()
 
 ## 测试接口：置 false 时预热带跑完也不切场景（tools/VerifyPerf.gd 直接驱动本页量耗时）
@@ -112,7 +115,12 @@ func _build() -> void:
 	add_child(sub)
 
 	# 底部进度条：三段式贴图（与路线图 HP 条同款）
-	var back := PanelContainer.new()
+	#
+	# 坑（问题 #1）：原来外框是 PanelContainer、内填充是它"唯一的子控件"——
+	# PanelContainer 会**无视子控件的 custom_minimum_size，把它强行铺满自己的内容矩形**，
+	# 所以无论进度是多少，填充条永远是满格（0% 时看着像 100%）。
+	# 改成 Panel（普通容器，不排版子节点）+ 子 Panel 显式设 size，宽度才真的按比例。
+	var back := Panel.new()
 	var back_tex: Texture2D = G.res_tex("ui_kenney_hp_back")
 	var fill_tex: Texture2D = G.res_tex("ui_kenney_hp_fill")
 	if back_tex != null and fill_tex != null:
@@ -122,10 +130,6 @@ func _build() -> void:
 		bsb.texture_margin_right = 10.0
 		bsb.texture_margin_top = 4.0
 		bsb.texture_margin_bottom = 4.0
-		bsb.content_margin_left = 3.0
-		bsb.content_margin_top = 3.0
-		bsb.content_margin_right = 3.0
-		bsb.content_margin_bottom = 3.0
 		back.add_theme_stylebox_override("panel", bsb)
 		var fsb := StyleBoxTexture.new()
 		fsb.texture = fill_tex
@@ -144,8 +148,11 @@ func _build() -> void:
 		fsb.set_corner_radius_all(3)
 		_bar_fill.add_theme_stylebox_override("panel", fsb)
 	back.position = Vector2(96, 690)
-	back.custom_minimum_size = Vector2(288, 18)
-	_bar_fill.custom_minimum_size = Vector2(6.0, 12.0)
+	back.size = Vector2(BAR_W, BAR_H)
+	_bar_fill.position = Vector2(BAR_INSET, BAR_INSET)
+	_bar_fill.size = Vector2(0, BAR_H - BAR_INSET * 2.0)
+	_bar_fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_set_bar_ratio(0.0)
 	back.add_child(_bar_fill)
 	add_child(back)
 
@@ -154,6 +161,18 @@ func _build() -> void:
 	_bar_l.custom_minimum_size = Vector2(480, 0)
 	_bar_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(_bar_l)
+
+
+## 进度条填充宽度（0~1）。钳制在 0~1，0 时宽度为 0（不能像 #1 那样一开始就满格）。
+## 供回归用例直调：这条宽度必须真的随比例变化。
+func _set_bar_ratio(ratio: float) -> void:
+	var r := clampf(ratio, 0.0, 1.0)
+	_bar_fill.size = Vector2((BAR_W - BAR_INSET * 2.0) * r, BAR_H - BAR_INSET * 2.0)
+
+
+## 当前进度条填充宽（测试读它）
+func bar_fill_width() -> float:
+	return _bar_fill.size.x
 
 
 ## 预热清单：素材索引只建不逐张加载（场景 load 会自动带上依赖纹理，
@@ -196,7 +215,7 @@ func _process(_d: float) -> void:
 		load(_code.pop_front() as String)
 	var left := _queue.size() + _code.size()
 	var ratio := 0.0 if _total == 0 else clampf(float(_total - left) / float(_total), 0.0, 1.0)
-	_bar_fill.custom_minimum_size.x = maxf(6.0, 282.0 * ratio)
+	_set_bar_ratio(ratio)
 	var stage_i := mini(STAGES.size() - 1, int(ratio * float(STAGES.size())))
 	_bar_l.text = "%s %d％" % [String(STAGES[stage_i]), roundi(ratio * 100.0)]
 	if left == 0:

@@ -61,6 +61,8 @@ var _sweep_btn: Control = null   # 扫荡按钮（持有引用用于刷新券余
 var _help_btn: Control = null    # 右上角「?」操作说明
 var _extra_potions := 0          # 出征前加带的药剂（轮次 21）；金币在「出征」确认时结算
 var _supply_btn: Control = null
+var _ascetic := false            # 苦行（轮次 22）：敌人更强 / 收益更高，本局一次性选择
+var _ascetic_btn: Control = null
 
 # 操作说明：? 弹层与首次进入的引导共用同一份文案
 const TIPS := [
@@ -69,6 +71,7 @@ const TIPS := [
 	"点卡片选定；宠物再点一次可换替补或取消出战",
 	"秘境未解锁时，需先通关前一片大陆的首领",
 	"左下「补给」可加带药剂：金币在点「出征」时一次性结算，返回不扣钱",
+	"右下「苦行」是难度开关：敌人更强，但本局金币/远征币/经验等收益同样放大",
 ]
 
 func _ready() -> void:
@@ -155,6 +158,16 @@ func _build() -> void:
 			_add_supply())
 	_content.add_child(_supply_btn)
 	_refresh_supply()
+
+	# 苦行（轮次 22）：出征前一次性选择「敌人更强 / 收益更高」。塞进「返回」右侧空档
+	# （返回居中占 144~264，这里 272~392 不重叠）。
+	_ascetic_btn = G.ghost_button("", 120, 36, G.FS_XS)
+	_ascetic_btn.position = Vector2(272, 502)
+	_ascetic_btn.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_toggle_ascetic())
+	_content.add_child(_ascetic_btn)
+	_refresh_ascetic()
 
 	var back := G.gold_button("返 回", 120, 36)
 	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 502)
@@ -361,6 +374,32 @@ func _add_supply() -> void:
 	_hint.add_theme_color_override("font_color", Color("4a7a44"))
 
 
+## 苦行开关：只改本局参数，不动任何局外状态
+func _toggle_ascetic() -> void:
+	_ascetic = not _ascetic
+	Audio.sfx("ui_confirm" if _ascetic else "ui_close")
+	_refresh_ascetic()
+	var c := G.ascetic_cfg()
+	_hint.text = ("已开启「%s」：敌人全属性 ×%.2f，本局收益 ×%.2f"
+		% [String(c.get("name", "苦行")), float(c.get("enemy_mult", 1.0)),
+			float(c.get("reward_mult", 1.0))]) if _ascetic else "已关闭「%s」" % String(c.get("name", "苦行"))
+	_hint.add_theme_color_override("font_color", Color("a04a3a") if _ascetic else Color("4a7a44"))
+
+
+func _refresh_ascetic() -> void:
+	if _ascetic_btn == null:
+		return
+	var lbl := _ascetic_btn.get_child(0) as Label
+	if lbl == null:
+		return
+	var c := G.ascetic_cfg()
+	var mult := float(c.get("enemy_mult", 1.0))
+	var rew := float(c.get("reward_mult", 1.0))
+	lbl.text = "%s：开（敌×%.2f）" % [String(c.get("name", "苦行")), mult] if _ascetic \
+		else "%s：关（收益×%.2f）" % [String(c.get("name", "苦行")), rew]
+	_ascetic_btn.modulate = Color(1.0, 0.92, 0.84) if _ascetic else Color.WHITE
+
+
 func _supply_total() -> int:
 	var sum := 0
 	for i in _extra_potions:
@@ -507,5 +546,6 @@ func _on_confirm() -> void:
 		"active_pet": _active_pet,
 		"bench_pet": _bench_pet,
 		"potions": G.run_potions_base() + _extra_potions,
+		"ascetic": _ascetic,
 		"seed": 0,
 	})

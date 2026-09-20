@@ -33,10 +33,12 @@ var role_uid: int = 0
 
 # ---------- 组建 ----------
 ## ally_cfg: {role_id, level, traits[], active_pet, bench_pet, hp_override, potions}
-## enemy_cfg: {theme, node_type("normal"/"elite"/"boss"), layer(1..3)}
+## enemy_cfg: {theme, node_type("normal"/"elite"/"boss"), layer(1..3), enemy_mult}
+##   enemy_mult 由调用方（苦行局）给，默认 1.0；模拟器不自己读表，保持内核无配置依赖。
 func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 	rng.seed = seed
 	enemy_scale = 1.0 + 0.12 * float(int(enemy_cfg.get("layer", 1)))
+	enemy_scale *= maxf(0.1, float(enemy_cfg.get("enemy_mult", 1.0)))
 	pet_level = maxi(1, int(ally_cfg.get("level", 1)))
 	pet_stats = ally_cfg.get("pet_stats", {})
 	_build_role(ally_cfg)

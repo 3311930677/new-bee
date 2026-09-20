@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://tools/VerifyUiLayout.gd" id="1_uilayout"]
+
+[node name="VerifyUiLayout" type="Node"]
+script = ExtResource("1_uilayout")

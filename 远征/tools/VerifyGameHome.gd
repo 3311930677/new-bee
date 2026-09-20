@@ -401,6 +401,66 @@ func _run() -> void:
 	dp2.queue_free()
 	await get_tree().process_frame
 
+	# ---- L. 苦行（轮次 22） ----
+	# 出征前可选的难度/收益开关：敌人更强、本局收益同倍放大。守三件事：
+	# 面板能把开关带进出口配置、RunState 的收益倍率作用在唯一入口 add_reward 上、
+	# 战斗内核只吃"倍率数字"而不会自己去读表。
+	var ac := G.ascetic_cfg()
+	_check(not ac.is_empty(), "nodes.json 应声明 ascetic 段")
+	var em := float(ac.get("enemy_mult", 0.0))
+	var rm := float(ac.get("reward_mult", 0.0))
+	_check(em > 1.0, "苦行的敌人倍率应 >1（实为 %.2f）" % em)
+	_check(rm > 1.0, "苦行的收益倍率应 >1（实为 %.2f）" % rm)
+	# RunState：默认局收益 = 表值；苦行局按倍率放大，且五币同时生效
+	var st_n := RunState.new()
+	st_n.setup({"theme": "forest", "role_id": "zs", "level": 1, "seed": 20260920})
+	var row: Dictionary = TableCache.nodes_config().get("rewards", {}).get("normal", {})
+	st_n.add_reward("normal")
+	_check(st_n.gold == int(row.get("gold", 0)),
+		"普通局收益应等于表值（实为 %d）" % st_n.gold)
+	var st_a := RunState.new()
+	st_a.setup({"theme": "forest", "role_id": "zs", "level": 1, "seed": 20260920, "ascetic": true})
+	_check(st_a.ascetic, "配置里 ascetic=true 应被 RunState 接住")
+	st_a.add_reward("normal")
+	_check(st_a.gold == roundi(float(row.get("gold", 0)) * rm),
+		"苦行局金币应 ×%.2f（期望 %d，实为 %d）"
+		% [rm, roundi(float(row.get("gold", 0)) * rm), st_a.gold])
+	_check(st_a.expedition == roundi(float(row.get("expedition", 0)) * rm)
+		and st_a.honor == roundi(float(row.get("honor", 0)) * rm),
+		"远征币与荣誉也应同倍放大")
+	_check(is_equal_approx(st_n.enemy_mult(), 1.0), "普通局敌人倍率应为 1.0")
+	_check(absf(st_a.enemy_mult() - em) < 0.0001, "苦行局敌人倍率应等于表值 %.2f" % em)
+	# BattleSim：只有传进来的 enemy_mult 起作用（内核不读表）
+	var base_sim := BattleSim.new()
+	base_sim.setup(1, {"role_id": "zs", "level": 3, "traits": [], "active_pet": ""},
+		{"theme": "forest", "node_type": "normal", "layer": 1})
+	var asc_sim := BattleSim.new()
+	asc_sim.setup(1, {"role_id": "zs", "level": 3, "traits": [], "active_pet": ""},
+		{"theme": "forest", "node_type": "normal", "layer": 1, "enemy_mult": em})
+	_check(absf(asc_sim.enemy_scale - base_sim.enemy_scale * em) < 0.0001,
+		"战斗内核应按传入倍率缩放敌人（%.3f vs %.3f）" % [asc_sim.enemy_scale, base_sim.enemy_scale * em])
+	# 面板：开关能把 ascetic 带进出口配置
+	G.wallet["gold"] = 5000
+	var dp3: Control = (load("res://src/ui/DeployPanel.gd") as GDScript).new()
+	add_child(dp3)
+	await get_tree().process_frame
+	_drop_confirm(dp3)
+	_check(not bool(dp3.get("_ascetic")), "苦行默认应为关")
+	dp3._toggle_ascetic()
+	_check(bool(dp3.get("_ascetic")), "点一下应开启苦行")
+	_got_cfg = {}
+	dp3.confirmed.connect(func(cfg): _got_cfg = cfg)
+	dp3._on_confirm()
+	_check(bool(_got_cfg.get("ascetic", false)), "出征配置应带上 ascetic=true")
+	var st_cfg := RunState.new()
+	st_cfg.setup(_got_cfg)
+	_check(st_cfg.ascetic and absf(st_cfg.enemy_mult() - em) < 0.0001,
+		"面板配置直接喂给 RunState 也应生效")
+	dp3._toggle_ascetic()
+	_check(not bool(dp3.get("_ascetic")), "再点一下应关闭苦行")
+	dp3.queue_free()
+	await get_tree().process_frame
+
 	if _fails == 0:
 		print("GAME_HOME_OK all tests passed")
 	else:

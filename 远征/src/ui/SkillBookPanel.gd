@@ -71,11 +71,14 @@ func _build() -> void:
 	_refresh()
 
 
-func _refresh() -> void:
+## 重建卡片。preserve=true 时保留当前页（升级一个技能后不该被弹回第 1 页——问题 #3）；
+## preserve=false（首次打开）时落在第一个未满级技能上。
+func _refresh(preserve := false) -> void:
 	_expedition_l.text = "远征币 %d · 「%s」" % [
 		int(G.wallet.get("expedition", 0)),
 		String(G.get_role(G.selected_role).get("name", ""))]
 	var role := G.get_role(G.selected_role)
+	var prev := row_want(preserve)
 	_sids = role.get("skills", [])
 	# 重建 PageDeck：技能升级会改变等级珠与按钮文案，整块重建（技能少，开销可忽略）
 	if _deck != null:
@@ -86,8 +89,18 @@ func _refresh() -> void:
 	_deck.set_factory(_sids.size(), func(i: int) -> Control:
 		return _skill_page(String(_sids[i])), Vector2(CONTENT_W, DECK_H))
 	_content.add_child(_deck)
-	# 打开先落在「未满级」的技能上（都从 LV1 开始，落第 0 个即可）
-	_deck.go(0, true)
+	# 重建后回到原来的页（列表变短时钳制回退），而不是无条件 go(0)
+	_deck.go(clampi(prev, 0, maxi(0, _sids.size() - 1)), true)
+
+
+## 重建后该回哪一页：保留态就回原页；首次打开则找第一个未满级技能。
+func row_want(preserve: bool) -> int:
+	if preserve and _deck != null:
+		return int(_deck.current)
+	for i in _sids.size():
+		if G.skill_level(String(_sids[i])) < G.skill_max_level():
+			return i
+	return 0
 
 
 ## 一页一个大卡片：技能名 + 大号等级珠 + 描述 + 大升级按钮
@@ -179,7 +192,7 @@ func _on_upgrade(sid: String) -> void:
 		_toast_msg("「%s」升至 LV%d" % [String(TableCache.get_skill(sid).get("name", sid)), G.skill_level(sid)])
 	else:
 		_toast_msg("远征币不足或已满级")
-	_refresh()
+	_refresh(true)   # 升级后留在同一页（问题 #3：以前会跳回第 1 页）
 
 
 func _toast_msg(msg: String) -> void:
