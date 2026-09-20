@@ -87,7 +87,11 @@ func _run() -> void:
 	_check((TableCache.equip_config().get("slots", []) as Array).size() == 6, "装备应 6 槽")
 	_check(int(TableCache.skillbook_config().get("max_level", 0)) == 10, "技能书上限应 10 级")
 	_check((TableCache.mounts_config().get("mounts", []) as Array).size() == 6, "坐骑应 6 类")
-	_check((TableCache.titles_config().get("titles", []) as Array).size() == 12, "称号应 12 个")
+	# 座骑/槽位这些是**设计常量**（改了就是设计变更，该红）；
+	# 称号是**内容表**（加称号是正常的迭代，不该因为加了内容就红），所以用下界而不是等值
+	_check((TableCache.titles_config().get("titles", []) as Array).size() >= 12,
+		"称号表应至少有 12 条（加称号不该让这条用例红，实为 %d）"
+		% (TableCache.titles_config().get("titles", []) as Array).size())
 
 	# —— 1. 天赋树 ——
 	_reset(10)
@@ -392,6 +396,53 @@ func _run() -> void:
 			exp_bad = "lv%d 期望 %d 实为 %d" % [lv, want_exp, got_exp]
 	_check(exp_ok, "经验曲线应与既定公式逐级一致（%s）" % exp_bad)
 	_check(G.exp_to_next(G.level_cap()) == 0, "满级不应有升级需求")
+
+	# —— 9.6 称号表关系校验（数据关系断言，不是"实现算什么就期望什么"）——
+	# 新增称号最常见的错是：cond.type 拼错、world 写成表里没有的 id、bonus 键名不在
+	# 加成聚合里（加了等于没加）。这些在界面上只是"永远不解锁"，没人会发现。
+	var theme_ids := {}
+	for tid in TableCache.maps_config().get("themes", {}):
+		theme_ids[String(tid)] = true
+	var bonus_keys := ["atk_pct", "def_pct", "maxhp_pct", "crit_add", "spd_pct",
+		"atk_add", "def_add", "hp_add"]
+	var t_bad: Array = []
+	var t_ids := {}
+	var t_cost := 0
+	for t in G.titles_cfg():
+		var td := t as Dictionary
+		var tid2 := String(td.get("id", ""))
+		if tid2.is_empty() or t_ids.has(tid2):
+			t_bad.append("id 缺失或重复：" + tid2)
+			continue
+		t_ids[tid2] = true
+		if String(td.get("name", "")).is_empty():
+			t_bad.append("%s 缺 name" % tid2)
+		var cond: Dictionary = td.get("cond", {})
+		var cost: Dictionary = td.get("cost", {})
+		if cond.is_empty() and cost.is_empty():
+			t_bad.append("%s 既无 cond 也无 cost（永远拿不到）" % tid2)
+		if not cond.is_empty():
+			var ct := String(cond.get("type", ""))
+			if not ["level", "pets", "gold", "clear_world"].has(ct):
+				t_bad.append("%s cond.type 未支持：%s" % [tid2, ct])
+			if ct == "clear_world" and not theme_ids.has(String(cond.get("world", ""))):
+				t_bad.append("%s 的 world 不存在：%s" % [tid2, String(cond.get("world", ""))])
+			if ct != "clear_world" and int(cond.get("n", 0)) < 1:
+				t_bad.append("%s 的 cond.n 应为正数" % tid2)
+		if not cost.is_empty():
+			if int(cost.get("honor", 0)) <= 0:
+				t_bad.append("%s 的 honor 价应为正数" % tid2)
+			else:
+				t_cost += 1
+		var bonus: Dictionary = td.get("bonus", {})
+		if bonus.is_empty():
+			t_bad.append("%s 没有加成（戴着没意义）" % tid2)
+		for bk in bonus:
+			if not bonus_keys.has(String(bk)):
+				t_bad.append("%s 的 bonus 键不会被聚合：%s" % [tid2, String(bk)])
+	_check(t_bad.is_empty(), "称号表关系校验失败：%s" % str(t_bad))
+	_check(t_ids.size() >= 12, "称号全表应有至少 12 条（实为 %d）" % t_ids.size())
+	_check(t_cost >= 1, "荣誉商店至少应有一件可兑换称号")
 
 	# —— 10. BattleSim 接入 ——
 	_reset(5)

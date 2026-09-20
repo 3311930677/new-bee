@@ -75,6 +75,9 @@ var _explore_lbl: Label = null
 # 痛点：32×42 格地图只能看到约 1/5，玩家不知道自己在哪、目标在哪，只能一直往上走。
 # 三件套：小地图（全局位置感）+ 目标罗盘（方向与距离，点它自动前往）+ 疾行（缩短空跑时间）。
 var _minimap: _Minimap = null        # 右上角小地图（点击放大为大地图）
+const MINIMAP_INTERVAL := 0.1        # 小地图重绘间隔（约 10Hz；问题 #15）
+var _nav_acc := 0.0
+var _nav_dirty := true               # 事件类变化置脏，下一帧立即刷新（不等节流窗口）
 var _compass: _Compass = null        # 目标罗盘（含距离，点击开始/停止自动前往）
 var _sprint_btn: Control = null      # 疾行开关
 var _big_map: Control = null         # 大地图浮层（含图例与返回按钮）
@@ -841,7 +844,7 @@ func _physics_process(delta: float) -> void:
 	_player.position = _player.position.clamp(Vector2(24, 60), Vector2(cols * 48 - 24, rows * 48 - 24))
 	_update_player_anim(dir)
 	_tick_auto_walk(delta)
-	_update_nav()
+	_update_nav(delta)
 	_check_portal()
 
 
@@ -1045,6 +1048,7 @@ func on_spot(s: _Spot) -> void:
 			_prog["spots"].append(s.idx)
 		_spots.erase(s)
 		s.queue_free()
+		_mark_nav_dirty()   # 兴趣点用掉后要立刻从地图消失（问题 #15）
 		return
 	_open_altar(s)
 
@@ -1150,6 +1154,7 @@ func on_pickup(p: _Pickup) -> void:
 	Audio.sfx("pickup")   # 与战斗后的 coin 区分：一局要捡好几次，听感不能太重
 	_toast("拾获 · 金币 +%d · 远征币 +%d" % [gold, cur])
 	_add_score(_cfg_int("pickup_score", 6), "拾取")
+	_mark_nav_dirty()   # 拾取物消失要立刻从地图上抹掉（问题 #15：节流不能让"点了没反应"）
 
 
 # ================= 导航三件套（小地图 / 目标罗盘 / 疾行） =================
@@ -1176,13 +1181,25 @@ func _nav_info() -> Dictionary:
 	return {"name": "", "pos": Vector2.ZERO, "kind": ""}
 
 
-func _update_nav() -> void:
+func _update_nav(delta: float = 0.0) -> void:
 	var info := _nav_info()
 	if _compass != null:
 		_compass.set_target(String(info.get("name", "")), info.get("pos", Vector2.ZERO),
 			_player.position if _player != null else Vector2.ZERO, _auto_walk)
-	if _minimap != null:
+	if _minimap == null:
+		return
+	# 小地图重绘上限 ~10Hz（问题 #15）：一次 _draw 要遍历怪物/拾取物/兴趣点/传送阵多个集合，
+	# 每帧重绘纯属浪费。位置类变化走节流；拾取/击杀/用掉兴趣点/开关大地图这类**事件**
+	# 由 _mark_nav_dirty() 置脏，下一帧立刻刷新，不会出现"点了却半天不变"。
+	_nav_acc += delta
+	if _nav_dirty or _nav_acc >= MINIMAP_INTERVAL:
+		_nav_acc = 0.0
+		_nav_dirty = false
 		_minimap.queue_redraw()
+
+
+func _mark_nav_dirty() -> void:
+	_nav_dirty = true
 
 
 ## 罗盘被点：开始 / 停止自动前往（把"按住摇杆走 20 秒"变成一次点击）
@@ -1279,6 +1296,7 @@ func _toggle_big_map() -> void:
 	if _map_done or _battle != null:
 		return
 	Audio.sfx("ui_open")
+	_mark_nav_dirty()   # 打开大地图时数据必须是最新的（问题 #15）
 	_big_map = Control.new()
 	_big_map.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_big_map.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -1476,6 +1494,7 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 		_monsters.erase(_contact_mon)
 		_contact_mon.queue_free()
 		_contact_mon = null
+		_mark_nav_dirty()   # 击杀后小地图上的红点要立刻消失（问题 #15）
 	if monster_tier == "boss":
 		_prog["boss_down"] = true
 	_kills += 1
@@ -1798,6 +1817,15 @@ class _MapMonster extends CharacterBody2D:
 	var _t := 0.0
 	var _sprite: Sprite2D = null    # 有 mon_ 素材时的精灵体
 	var _lobe: Array = []  # 每只固定不变的轮廓起伏，避免看着像同一个圆
+	# 卡住检测（问题 #23）：move_and_slide 顶着散件时"速度有值、位置不动"，
+	# 所以只能用**实际位移**判断有没有进展。连续卡住就绕行，绕不动就放弃当前目标。
+	const STALL_SEC := 0.6        # 连续这么久几乎没有实际位移 → 判定卡住
+	const STALL_MIN_RATIO := 0.35  # 实际位移低于期望位移的这个比例就算没进展
+	const STALL_GIVE_UP := 3       # 连续卡住这么多次 → 放弃当前目标（不传送，只换目标）
+	var _stall := 0.0
+	var _stalls := 0
+	var _detour := 0.0             # 绕行剩余时间：>0 时先横向挪开，别继续顶
+	var _detour_to := Vector2.ZERO
 
 	func _ready() -> void:
 		_radius = {"normal": 20.0, "elite": 25.0, "boss": 32.0}.get(tier, 20.0)
@@ -1860,10 +1888,24 @@ class _MapMonster extends CharacterBody2D:
 		if _state == "chase":
 			_target = player.position
 			speed = float(TableCache.maps_config().get("player_speed", 130.0)) * 0.9
+		if _detour > 0.0:
+			_detour -= delta
+			_target = _detour_to   # 绕行期间先走侧移点，绕完再回到原目标
 		var to := _target - position
+		var pre := position
 		if to.length() > 6.0:
 			velocity = to.normalized() * speed
 			move_and_slide()   # 散件阻挡 + 沿边滑行（P1-15）
+			# 实际位移远小于期望 → 被挡住了（速度仍有值）。累计到阈值就绕行，别一直顶着树抖。
+			var want := speed * delta
+			if want > 0.001 and position.distance_to(pre) < want * STALL_MIN_RATIO:
+				_stall += delta
+				if _stall >= STALL_SEC:
+					_stall = 0.0
+					_on_stalled()
+			else:
+				_stall = 0.0
+				_stalls = 0   # 有进展就重置计数，避免把"走得慢"累计成"卡住"
 		elif _state == "wander":
 			_wait += delta
 			if _wait > randf_range(0.8, 2.2):
@@ -1871,9 +1913,39 @@ class _MapMonster extends CharacterBody2D:
 				_pick_wander_target()
 		queue_redraw()
 
+	## 卡住一次：先绕行；连续绕不动就放弃当前目标。
+	## **不做穿墙传送**——只换目标点，位置永远由 move_and_slide 决定。
+	func _on_stalled() -> void:
+		_stalls += 1
+		if _stalls >= STALL_GIVE_UP:
+			_stalls = 0
+			_detour = 0.0
+			if _state == "chase":
+				_state = "wander"   # 追不到就不追了，别再顶着障碍抖
+			_target = home
+			return
+		_start_detour()
+
+	## 绕行点：追击时沿"目标方向"的侧向挪开（不往玩家接触圈里挤），游荡时随机换个方向。
+	func _start_detour() -> void:
+		var dir := Vector2.RIGHT.rotated(randf() * TAU)
+		if _state == "chase" and map_ref != null and map_ref._player != null:
+			var to_p := (map_ref._player.position - position).normalized()
+			var perp := Vector2(-to_p.y, to_p.x)
+			if perp.dot(home - position) < 0.0:
+				perp = -perp
+			dir = (perp + to_p * 0.35).normalized()
+		_detour_to = position + dir * 72.0
+		_detour = 0.5
+
+	## 撤退后回巢：必须一并清掉绕行/卡住状态（问题 #23）——否则它可能带着上一段的
+	## 侧移目标继续往障碍里顶，"回巢"就成了空话。
 	func retreat_home() -> void:
 		_state = "wander"
 		_target = home
+		_detour = 0.0
+		_stall = 0.0
+		_stalls = 0
 
 	func _draw() -> void:
 		# 精灵体：只画地面影 + 追击警示环（追击时精灵边缘泛红圈）
