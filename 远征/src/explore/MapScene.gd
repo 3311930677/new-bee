@@ -55,6 +55,8 @@ var _picker: TraitPicker = null
 var _joy: _Joystick
 var _map_done := false
 var _map_cfg: Dictionary = {}
+var _map_asset_dir := ""   # 地图素材成品目录（maps.json 的 asset_dir；缺配置时退回 FALLBACK_ASSET_DIR）
+const FALLBACK_ASSET_DIR := "res://image/map_proc"
 var _theme_cfg: Dictionary = {}
 
 # ---- 探索动机（轮次 16：清场不再是"浪费时间"）----
@@ -98,6 +100,12 @@ func _ready() -> void:
 		return
 	_map_cfg = TableCache.maps_config()
 	_theme_cfg = TableCache.theme_config(st.theme)
+	# 地图素材目录必须是**明确的成品配置**（问题 #34）：以前这里没有默认值兜底，
+	# 也没人报缺配置，maps.json 少了 asset_dir 就会静默去 load 一个不存在的母稿路径。
+	_map_asset_dir = String(_map_cfg.get("asset_dir", ""))
+	if _map_asset_dir.is_empty():
+		_map_asset_dir = FALLBACK_ASSET_DIR
+		push_warning("maps.json 缺 asset_dir，地图素材退回 %s（请在表里显式配置）" % FALLBACK_ASSET_DIR)
 	_rng.seed = hash("%d_%d" % [st.run_seed, int(node.get("layer", 1)) * 10 + int(node.get("index", 0))])
 	_prog = st.map_progress(int(node.get("layer", 1)), int(node.get("index", 0)))
 	_build_ground()
@@ -113,7 +121,7 @@ func _build_ground() -> void:
 	var ts := TileSet.new()
 	ts.tile_size = Vector2i(48, 48)
 	var tiles: Array = _theme_cfg.get("tiles", [])
-	var asset_dir := String(_map_cfg.get("asset_dir", "res://image/map"))
+	var asset_dir := _map_asset_dir
 	var weights := [0.6, 0.2, 0.2]
 	for i in mini(3, tiles.size()):
 		var src := TileSetAtlasSource.new()
@@ -140,7 +148,7 @@ func _build_ground() -> void:
 func _build_ground_detail(cols: int, rows: int) -> void:
 	# 地面细节层：主题土路套件（path_sheet，4×4＝16 块位掩码地形）+ 程序磨损斑块。
 	# 目的：打破 48×48 地砖满屏重复的“棋盘感”。必须先于 _world 入树（压在地砖上、实体下）。
-	var asset_dir := String(_map_cfg.get("asset_dir", "res://image/map"))
+	var asset_dir := _map_asset_dir
 	var sheet := String(_theme_cfg.get("path_sheet", ""))
 	var path := _path_cells(cols, rows)
 	var road: Array = []  # 路面格中心：主题无 4×4 套件时改用程序绘制的踩实土路
@@ -235,7 +243,7 @@ func _build_decos(cols: int, rows: int) -> void:
 	if decos.is_empty():
 		return
 	var density := float(_theme_cfg.get("deco_density", 0.05))
-	var asset_dir := String(_map_cfg.get("asset_dir", "res://image/map"))
+	var asset_dir := _map_asset_dir
 	var spawn := Vector2(float(cols) * 24.0, float(rows) * 48.0 - 100.0)
 	for gy in rows - 1:
 		for gx in cols:

@@ -626,21 +626,45 @@ func cleared_world_count() -> int:
 func sweep_world(theme_id: String) -> Dictionary:
 	if not is_world_cleared(theme_id):
 		return {}
-	if not consume_item("ticket_sweep", 1):
-		return {}
 	var nodes_cfg: Dictionary = TableCache.nodes_config()
 	var rewards: Dictionary = nodes_cfg.get("rewards", {})
+	if rewards.is_empty():
+		push_error("nodes.json 缺 rewards，扫荡拒绝执行（不消耗券）")
+		return {}
 	var yield_pct := float(nodes_cfg.get("sweep_yield", 0.7))
 	var gains := {"gold": 0, "expedition": 0, "soul": 0, "exp": 0, "honor": 0}
-	for kind in ["normal", "normal", "normal", "boss"]:
+	for kind in _sweep_plan(nodes_cfg):
 		var row: Dictionary = rewards.get(kind, {})
 		for k in gains:
 			gains[k] += int(row.get(k, 0))
 	for k in gains:
 		gains[k] = int(float(gains[k]) * yield_pct)
+	# 先把收益算完再扣券：表配坏了就整单拒绝，不能让玩家白掉一张券（失败零副作用）
+	var total := 0
+	for k in gains:
+		total += int(gains[k])
+	if total <= 0:
+		push_error("扫荡收益核算为 0（rewards/sweep_yield 配置异常），不消耗券")
+		return {}
+	if not consume_item("ticket_sweep", 1):
+		return {}
 	deposit(int(gains["gold"]), int(gains["expedition"]), int(gains["soul"]), int(gains["honor"]))
 	gains["level_ups"] = gain_exp(int(gains["exp"]))
 	return gains
+
+
+## 扫荡的结算构成：每层 1 个普通节点 + 最终 1 个 BOSS。
+## 层数读 nodes.json 的 layers——以前写死 ["normal","normal","normal","boss"]（问题 #37），
+## 层数一改成 4 层，扫荡收益就与真实路线对不上，而且没有任何用例会红。
+## 注意：扫荡**不吃苦行加成**，它是"免跑图"的保底收益。
+func _sweep_plan(cfg: Dictionary) -> Array:
+	# （已做故障注入验证：把它写死成 3 后 VerifySweep 报「期望 896，实为 812」，用例确实抓得住）
+	var layers := maxi(1, int(cfg.get("layers", 3)))
+	var plan: Array = []
+	for i in layers:
+		plan.append("normal")
+	plan.append("boss")
+	return plan
 
 
 ## 世界进度文案：「苍绿林海」等

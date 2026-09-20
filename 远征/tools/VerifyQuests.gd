@@ -173,6 +173,48 @@ func _run() -> void:
 	_check(G.now_ts() >= t0 + 86400, "回拨时 now_ts 应取存档水位（单调）")
 	G.prog["last_ts"] = t0
 
+	# ---- 数据完整性（关系断言，不是"实现算什么就期望什么"）----
+	# 新增委托最容易犯的错是手抄字段出错（写错 npc / 交付未登记道具 / kind 拼错），
+	# 这些在 UI 上表现为"这条接不了"，但没人会去逐条点。这里做一次全表关系校验。
+	var ids := {}
+	var themes: Dictionary = TableCache.maps_config().get("themes", {})
+	var npc_ids := {}
+	for nd in TableCache.city_config().get("npcs", []):
+		npc_ids[String((nd as Dictionary).get("id", ""))] = true
+	var bad_rows: Array = []
+	for q in G.quest_defs():
+		var qd := q as Dictionary
+		var qid := String(qd.get("id", ""))
+		if qid.is_empty() or ids.has(qid):
+			bad_rows.append("id 缺失或重复：" + qid)
+			continue
+		ids[qid] = true
+		var kind := String(qd.get("kind", ""))
+		if not ["slay", "clear", "deliver"].has(kind):
+			bad_rows.append("%s kind 非法：%s" % [qid, kind])
+		if not npc_ids.has(String(qd.get("npc", ""))):
+			bad_rows.append("%s 的 npc 未在主城登记：%s" % [qid, String(qd.get("npc", ""))])
+		var th2 := String(qd.get("theme", ""))
+		if kind != "deliver" and not themes.has(th2):
+			bad_rows.append("%s 的 theme 不存在：%s" % [qid, th2])
+		if kind == "deliver":
+			var iid := String(qd.get("item", ""))
+			if iid.is_empty() or G.item_name(iid) == iid:
+				bad_rows.append("%s 交付的道具未登记：%s" % [qid, iid])
+		if int(qd.get("n", 0)) < 1:
+			bad_rows.append("%s 的 n 应为正数" % qid)
+		if String(qd.get("title", "")).is_empty() or String(qd.get("goal", "")).is_empty():
+			bad_rows.append("%s 缺 title/goal" % qid)
+		var reward: Dictionary = qd.get("reward", {})
+		var positive := 0
+		for k in G.REWARD_KEYS:
+			if int(reward.get(k, 0)) > 0:
+				positive += 1
+		if positive == 0:
+			bad_rows.append("%s 的 reward 没有任何正数项" % qid)
+	_check(bad_rows.is_empty(), "委托表关系校验失败：%s" % str(bad_rows))
+	_check(G.quest_defs().size() >= 8, "委托全表应有足够条目供每日抽取（实为 %d）" % G.quest_defs().size())
+
 	if _fails == 0:
 		print("QUESTS_OK all tests passed")
 	else:
