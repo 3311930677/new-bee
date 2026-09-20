@@ -11,6 +11,13 @@ const CONTENT_W := 408.0
 const ROW_H := 96.0
 const ROW_GAP := 8.0
 const TOP := 46.0
+# 卡片内排版（问题 #13）：row 的 content_margin 左右各 12 → 内宽 384。
+# 任务名/委托人同占一行各限宽，目标与奖励各自限宽，右列留给操作按钮。
+const CARD_PAD := 12.0
+const INNER_W := CONTENT_W - CARD_PAD * 2.0
+const BTN_W := 92.0
+const NAME_W := 236.0
+const GOAL_W := INNER_W - BTN_W - 28.0
 
 var _panel: PanelContainer = null
 var _content: Control = null
@@ -103,30 +110,41 @@ func _row(qid: String, y: float) -> void:
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_list.add_child(row)
 
+	# 卡片内容容器（问题 #13）：文字原来直接挂在 _list 上、用绝对坐标摆（y+6 / y+34 …），
+	# 于是完全绕过卡片的 content_margin，而且 250/168 两段宽度在 240 处重叠 10px，
+	# 任务名一长就压到委托人身上。改成放进 row 的内容矩形里按内宽排版：
+	# 内宽 = CONTENT_W - 左右各 12 的边距 = 384，每行文字各自限宽、超长裁切。
+	var inner := Control.new()
+	inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(inner)
+
 	# 谁托的（NPC 名字 + 头衔，从 city.json 取，别在委托表里再抄一遍）
 	var npc := G.city_npc(String(d.get("npc", "")))
 	var who := String(npc.get("name", ""))
-	var title := String(npc.get("title", ""))
-	if title != "":
-		who += " · " + title
+	var npc_title := String(npc.get("title", ""))
+	if npc_title != "":
+		who += " · " + npc_title
 
 	var name_l := G.gold_label(String(d.get("title", qid)), G.FS_MD, false, Color("3a2a14"), false)
 	name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	name_l.position = Vector2(0, y + 6)
-	name_l.custom_minimum_size = Vector2(250, 0)
-	_list.add_child(name_l)
+	name_l.position = Vector2(0, 0)
+	name_l.custom_minimum_size = Vector2(NAME_W, 0)
+	name_l.clip_text = true
+	inner.add_child(name_l)
 
 	var who_l := G.gold_label(who, G.FS_XS, false, Color("8a6a34"), false)
 	who_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	who_l.position = Vector2(240, y + 10)
-	who_l.custom_minimum_size = Vector2(168, 0)
-	_list.add_child(who_l)
+	who_l.position = Vector2(NAME_W, 3)
+	who_l.custom_minimum_size = Vector2(INNER_W - NAME_W, 0)
+	who_l.clip_text = true
+	inner.add_child(who_l)
 
 	var goal_l := G.gold_label(String(d.get("goal", "")), G.FS_SM, false, Color("5a4020"), false)
 	goal_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	goal_l.position = Vector2(0, y + 34)
-	goal_l.custom_minimum_size = Vector2(250, 0)
-	_list.add_child(goal_l)
+	goal_l.position = Vector2(0, 24)
+	goal_l.custom_minimum_size = Vector2(GOAL_W, 0)
+	goal_l.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY   # 中文无空格，按字符断行
+	inner.add_child(goal_l)
 
 	var state := G.quest_state(qid)
 	var state_col := Color("8a6a34")
@@ -138,9 +156,10 @@ func _row(qid: String, y: float) -> void:
 		state_col = Color("a06020")
 	var st_l := G.gold_label(state, G.FS_XS, false, state_col, false)
 	st_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	st_l.position = Vector2(0, y + 58)
-	st_l.custom_minimum_size = Vector2(250, 0)
-	_list.add_child(st_l)
+	st_l.position = Vector2(0, 54)
+	st_l.custom_minimum_size = Vector2(150, 0)
+	st_l.clip_text = true
+	inner.add_child(st_l)
 
 	# 奖励一行小字：让玩家知道值不值得做
 	var reward: Dictionary = d.get("reward", {})
@@ -151,9 +170,10 @@ func _row(qid: String, y: float) -> void:
 	if parts.size() > 0:
 		var rw_l := G.gold_label(" · ".join(parts), G.FS_XS, false, Color("8a6a34", 0.9), false)
 		rw_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-		rw_l.position = Vector2(0, y + 76)
-		rw_l.custom_minimum_size = Vector2(260, 0)
-		_list.add_child(rw_l)
+		rw_l.position = Vector2(154, 54)
+		rw_l.custom_minimum_size = Vector2(INNER_W - 154.0, 0)
+		rw_l.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
+		inner.add_child(rw_l)
 
 	# 操作按钮：未接取→接取；可交付→交付；其余是灰字状态
 	var btn_text := ""
@@ -168,15 +188,15 @@ func _row(qid: String, y: float) -> void:
 	else:
 		btn_text = "进行中"
 		enabled = false
-	var btn := G.gold_button(btn_text, 92, 38, G.FS_SM)
-	btn.position = Vector2(276, y + 28)
+	var btn := G.gold_button(btn_text, BTN_W, 38, G.FS_SM)
+	btn.position = Vector2(INNER_W - BTN_W, 24)
 	if not enabled:
 		btn.modulate = Color(0.72, 0.68, 0.6)
 	else:
 		btn.gui_input.connect(func(e: InputEvent):
 			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 				_act(qid))
-	_list.add_child(btn)
+	inner.add_child(btn)
 
 
 func _act(qid: String) -> void:

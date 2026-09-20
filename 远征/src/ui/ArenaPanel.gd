@@ -245,6 +245,7 @@ func _start_battle() -> void:
 			"skill_levels": G.prog.get("skills", {}),
 			"pet_stats": G.battle_pet_stats([pet])},
 		"enemy": {"theme": "forest", "node_type": "normal", "custom_mon": foe},
+		"mode": "arena",   # 超时文案按"未分胜负"显示（口径 D3；问题 #21）
 		"seed": 0,
 	}
 	_set_busy_look(true)   # 切磋进行中：主按钮压灰，避免连点重复开局（§26 禁用态要看得见）

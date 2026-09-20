@@ -48,10 +48,45 @@ func _run() -> void:
 	_check(int(r4.get("dmg_in", 0)) >= 7, "战报应累计我方承伤，实为 %d" % int(r4.get("dmg_in", 0)))
 	_check(r4.get("danger_ok", false), "低血警示层应存在，且不能挂在飘字层里（飘字层会被清空断言检查）")
 
+	# 5. 超时文案按模式分开（问题 #21 / 口径 D3）：
+	#    同一个战斗场景被远征与演武复用，但超时在两边的意义不同——
+	#    远征按失败结算（要说"远征失利"），演武不判负（要说"未分胜负"）。
+	_check(await _draw_text_seen("pve", "远征失利"), "PVE 超时应显示「远征失利」，与按败结算一致")
+	_check(await _draw_text_seen("arena", "未分胜负"), "演武平局应显示「未分胜负」，不能写成失利")
+
 	if _fails == 0:
 		print("BATTLE_SCENE_OK all tests passed")
 	else:
 		print("BATTLE_SCENE_FAIL fails=%d" % _fails)
+
+
+## 造一场超时（draw）结算，返回结算层里是否出现了 want 这段文案
+func _draw_text_seen(mode: String, want: String) -> bool:
+	BattleScene.pending_cfg = {
+		"ally": {"role_id": "zs", "level": 5, "traits": [], "potions": 1},
+		"enemy": {"theme": "forest", "node_type": "normal", "layer": 1},
+		"mode": mode,
+		"seed": 5,
+	}
+	var scene: BattleScene = _spawn()
+	scene.sim.finished = true
+	scene.sim.result = "draw"
+	var found := false
+	for i in 90:
+		await get_tree().process_frame
+		if not found and _texts(scene).any(func(t): return String(t).contains(want)):
+			found = true
+	scene.queue_free()
+	await get_tree().process_frame
+	return found
+
+
+func _texts(root: Node, out: Array = []) -> Array:
+	for c in root.get_children():
+		if c is Label:
+			out.append(String((c as Label).text))
+		_texts(c, out)
+	return out
 
 
 func _run_one(theme: String, node_type: String, layer: int, strong: bool) -> Dictionary:
