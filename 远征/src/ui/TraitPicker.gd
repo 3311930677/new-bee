@@ -22,10 +22,13 @@ const SCHOOL_NAME := {
 	"bleed": "流血", "crit": "暴击", "thorn": "反伤",
 	"control": "控制", "energy": "能量", "summon": "召唤",
 }
-# 流派 → school_* 图标素材名（thorn 对应素材是 school_thorns；summon 无图标）
+# 流派 → school_* 图标素材名。
+# 注意两处命名不一致：thorn 的素材是 school_thorns（复数）；其余与流派名一一对应。
+# summon 的图标 school_summon.png 早就入库了，这里以前漏登记，导致召唤流词条在三选一里
+# 永远没有图标（问题 #33）。这张表是**流派图标的唯一事实来源**，回归用例直接读它。
 const SCHOOL_ART := {
 	"bleed": "school_bleed", "crit": "school_crit", "thorn": "school_thorns",
-	"control": "school_control", "energy": "school_energy",
+	"control": "school_control", "energy": "school_energy", "summon": "school_summon",
 }
 
 var choices: Array = []

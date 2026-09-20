@@ -1414,6 +1414,7 @@ func _launch_battle(m: _MapMonster) -> void:
 			"layer": int(node.get("layer", 1)), "lead_mon": m.mon_id,
 			# 苦行局（轮次 22）：敌人强度倍率由 RunState 决定，战斗内核只吃数字
 			"enemy_mult": st.enemy_mult()},
+		"mode": "pve",   # 超时按远征失利显示（口径 D3；问题 #21）
 		"seed": st.next_battle_seed(),
 	}
 	_battle_layer = CanvasLayer.new()

@@ -212,7 +212,111 @@ func _run() -> void:
 	ep.queue_free()
 	await get_tree().process_frame
 
+	# ---- #6 详情弹层的模态所有权：栈 + ESC 只关栈顶 + owner 退出自动释放 ----
+	G.ui_blocked = false
+	_check(G.modal_count() == 0, "初始不该有模态弹层")
+	_check(not G.ui_blocked, "没有弹层时 ui_blocked 应为 false")
+	var anchor := Control.new()
+	add_child(anchor)
+	await get_tree().process_frame
+	var m1: CanvasLayer = G.show_info_popup(anchor, "测试弹层一", ["第一层"])
+	await get_tree().process_frame
+	_check(G.modal_count() == 1, "弹层应入栈（实为 %d）" % G.modal_count())
+	_check(G.ui_blocked, "弹层打开时 ui_blocked 必须为真——否则底下的面板会抢走 ESC 与移动")
+	var m2: CanvasLayer = G.show_info_popup(anchor, "测试弹层二", ["第二层"])
+	await get_tree().process_frame
+	_check(G.modal_count() == 2, "第二个弹层应叠在栈上（实为 %d）" % G.modal_count())
+	# ESC 只关最上层：第一次 ESC 之后还应该剩一层
+	G._unhandled_input(_esc())
+	await get_tree().process_frame
+	_check(G.modal_count() == 1, "ESC 只应关掉栈顶一层（实为 %d）" % G.modal_count())
+	# 被关的那个此时可能已经真的 free 掉了，所以只断言"不再是一个活着的弹层"
+	_check(not is_instance_valid(m2) or m2.is_queued_for_deletion(), "被关掉的应是后开的那个弹层")
+	_check(is_instance_valid(m1) and not m1.is_queued_for_deletion(), "先开的弹层不该被一起关掉")
+	G._unhandled_input(_esc())
+	await get_tree().process_frame
+	_check(G.modal_count() == 0, "再按一次 ESC 应清空（实为 %d）" % G.modal_count())
+	_check(not G.ui_blocked, "弹层全部关闭后 ui_blocked 应回到 false")
+	# 重复关闭要安全：再按 ESC 不该报错、也不该影响别的状态
+	G._unhandled_input(_esc())
+	_check(G.modal_count() == 0, "无弹层时按 ESC 应无副作用")
+	# owner 退出 → 弹层自动释放（否则会成为挂在根上的孤儿）
+	var owner_node := Control.new()
+	add_child(owner_node)
+	await get_tree().process_frame
+	G.show_info_popup(owner_node, "归属弹层", ["owner 退出时应一起消失"], owner_node)
+	await get_tree().process_frame
+	_check(G.modal_count() == 1, "带 owner 的弹层应入栈")
+	owner_node.queue_free()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_check(G.modal_count() == 0, "owner 被释放后弹层必须自动出栈（实为 %d）" % G.modal_count())
+	_check(not G.ui_blocked, "owner 退出后不该留着阻塞")
+	# 转场/GM 自己的锁与模态栈要取并集，不能互相覆盖
+	G.ui_blocked = true
+	G.show_info_popup(anchor, "锁叠加", ["内部锁 + 弹层"])
+	await get_tree().process_frame
+	_check(G.ui_blocked, "内部锁与弹层任一为真时 ui_blocked 都应为真")
+	G.close_info_popup(null)
+	await get_tree().process_frame
+	_check(G.modal_count() == 1, "close(null) 不该误删栈里的弹层")
+	var m3: CanvasLayer = G._modals[0].get("layer")
+	G.close_info_popup(m3)
+	await get_tree().process_frame
+	_check(G.ui_blocked, "弹层关掉后内部锁还在，ui_blocked 应仍为真（不能把别人的锁放掉）")
+	G.ui_blocked = false
+	_check(not G.ui_blocked, "内部锁释放后应回到 false")
+	anchor.queue_free()
+	await get_tree().process_frame
+
+	# ---- #13 委托卡：文字必须在卡片内容矩形内，且不许互相压字 ----
+	G.quest["day"] = ""   # 逼一次跨日重刷，保证牌面上一定有委托
+	G.quest["offer"] = []
+	G.quest["claimed"] = []
+	var qp: Control = load("res://src/ui/QuestPanel.tscn").instantiate() \
+		if ResourceLoader.exists("res://src/ui/QuestPanel.tscn") else null
+	if qp == null:
+		qp = (load("res://src/ui/QuestPanel.gd") as GDScript).new()
+	add_child(qp)
+	await get_tree().process_frame
+	var list: Control = qp.get("_list")
+	var inner_w: float = float(qp.get("INNER_W"))
+	var cards := 0
+	for card in list.get_children():
+		if not (card is PanelContainer):
+			continue
+		cards += 1
+		_check(card.get_child_count() == 1,
+			"委托卡应只有一个内容容器（文字直接挂 _list 会绕过卡片内边距，实为 %d 个子节点）"
+			% card.get_child_count())
+		var inner: Control = card.get_child(0) as Control
+		if inner == null:
+			continue
+		var over := _overflow_right(inner, inner_w)
+		_check(over == "", "委托卡内有控件超出内容宽度（%s）" % over)
+		# 同一行的任务名与委托人不得压字
+		var row_labels: Array = []
+		for c in inner.get_children():
+			if c is Label:
+				row_labels.append(c as Label)
+		if row_labels.size() >= 2:
+			var a: Label = row_labels[0]
+			var b: Label = row_labels[1]
+			_check(a.position.x + a.size.x <= b.position.x + 1.0,
+				"任务名与委托人压字（名右缘 %.1f > 委托人左缘 %.1f）"
+				% [a.position.x + a.size.x, b.position.x])
+	_check(cards >= 1, "今日委托板应至少有一张卡（实为 %d）" % cards)
+	qp.queue_free()
+	await get_tree().process_frame
+
 	if _fails == 0:
 		print("UI_LAYOUT_OK all tests passed")
 	else:
 		print("UI_LAYOUT_FAIL fails=%d" % _fails)
+
+
+func _esc() -> InputEventAction:
+	var ev := InputEventAction.new()
+	ev.action = "ui_cancel"
+	ev.pressed = true
+	return ev

@@ -190,7 +190,15 @@ func _sfx(name: String, jitter := 0.03) -> void:
 var arena := {"score": 1000, "wins": 0, "losses": 0, "streak": 0, "best_streak": 0}
 
 var gm_unlocked := false
-var ui_blocked := false     # 全屏浮层（GM 控制台等）打开时为 true，探索层据此冻结移动
+## 全屏浮层（GM 控制台/转场）或详情弹层打开时为 true，探索层据此冻结移动。
+## 写成属性而非裸变量（问题 #6）：详情弹层现在也是"阻塞源"，但阻塞不能靠简单布尔覆盖——
+## 否则关掉弹层时会把别人的锁一起放掉。内部锁 + 模态栈取并集，读法对 30 处调用点保持不变。
+var _ui_blocked_locked := false
+var ui_blocked: bool:
+	get:
+		return _ui_blocked_locked or not _modals.is_empty()
+	set(v):
+		_ui_blocked_locked = v
 
 
 # ---------- 输入映射（键位在代码里注册，避免手写 project.godot 的序列化块出错） ----------
@@ -3393,21 +3401,58 @@ func tip_once(key: String, title: String, lines: Array, anchor: Control) -> void
 	show_info_popup(anchor, title, lines)
 
 
-## 羊皮纸详情弹层：点遮罩或「知道了」关闭；内容超长可滚动
-func show_info_popup(anchor: Control, title: String, lines: Array) -> void:
+## 羊皮纸详情弹层：遮罩 / 「知道了」/ ESC / 归属面板退出 —— 四条路都走同一个释放函数。
+##
+## 这块以前是一团散沙（问题 #6）：CanvasLayer 挂在根节点上、没有 owner、ESC 无人处理、
+## 也不参与 ui_blocked，于是出现两类真实故障：
+##   1. 开着详情弹层按 ESC，ESC 会穿到底下的面板把它关掉，详情弹层反而留在屏幕上；
+##   2. 详情弹层的父面板被关掉后，弹层还挂在根上，成了点不掉也没人能收的孤儿。
+## 现在用一个模态栈统一管理：栈非空 = ui_blocked（见 ui_blocked 的 getter），
+## ESC 只关栈顶，owner 退出时自动出栈释放。
+var _modals: Array = []
+var _modal_seq := 0
+
+
+## 栈里可能留着已被别处释放的弹层：读数与关栈顶之前先清一遍，
+## 否则一个失效条目会永久占着栈顶、让所有 ESC 都打在空气上。
+func _prune_modals() -> void:
+	for i in range(_modals.size() - 1, -1, -1):
+		var l: Variant = _modals[i].get("layer")
+		if l == null or not is_instance_valid(l) or (l as CanvasLayer).is_queued_for_deletion():
+			_modals.remove_at(i)
+
+
+func modal_count() -> int:
+	_prune_modals()
+	return _modals.size()
+
+
+## 返回弹层句柄（CanvasLayer），调用方可用 close_info_popup 主动关闭
+func show_info_popup(anchor: Control, title: String, lines: Array, owner: Node = null) -> CanvasLayer:
 	var tree := anchor.get_tree()
 	if tree == null:
-		return
+		return null
+	var own: Node = owner if owner != null else _top_owner_for(anchor)
 	var layer := CanvasLayer.new()
 	layer.layer = 90   # 低于 GM 控制台(100)，高于一切面板
 	tree.root.add_child(layer)
 
 	# 统一浮层底衬（深棕 + 暗角 + 斜纹）；要能接 gui_input 以便点空白关闭，
 	# 所以不再走独立 ColorRect，直接用 veil 返回的那层 Control。
+	# 入栈：ui_blocked 立刻为真，底下的面板不会再把 ESC / 输入抢走
+	_modal_seq += 1
+	var mid := _modal_seq
+	_modals.append({"id": mid, "layer": layer, "owner": own})
+	if own != null:
+		# owner 退出（关面板 / 切场景）时必须一起释放，否则弹层会成为孤儿。
+		# 闭包捕获的是**整数 id 而不是弹层对象**：捕获对象的话，对象被释放后
+		# 回调触发时会打印 "Lambda capture at index 0 was freed. Passed null instead."
+		own.tree_exiting.connect(func(): close_info_popup_by_id(mid), CONNECT_ONE_SHOT)
+
 	var dim := veil_at(layer, 0.55)
 	dim.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			layer.queue_free())
+			close_info_popup(layer))
 
 	# 宽度 400：与所有面板同一排版基准；每行约 22 个中文（FS_SM/16px ÷ 368px 行宽）
 	const PW := 400.0
@@ -3453,5 +3498,57 @@ func show_info_popup(anchor: Control, title: String, lines: Array) -> void:
 	ok.position = Vector2((PW - 32.0 - 120.0) * 0.5, 42.0 + content_h + 12.0)
 	ok.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			layer.queue_free())
+			close_info_popup(layer))
 	content.add_child(ok)
+	return layer
+
+
+## 唯一的释放路径：出栈 + 释放。可重复调用（已释放/无效都不报错）。
+func close_info_popup(layer: CanvasLayer) -> void:
+	if layer == null:
+		return
+	_forget_modal(layer)
+	if is_instance_valid(layer) and not layer.is_queued_for_deletion():
+		layer.queue_free()
+
+
+## 按 id 关闭（给"捕获整数"的回调用，避免闭包持有已释放对象）
+func close_info_popup_by_id(mid: int) -> void:
+	for i in range(_modals.size() - 1, -1, -1):
+		if int(_modals[i].get("id", -1)) == mid:
+			var l: Variant = _modals[i].get("layer")
+			_modals.remove_at(i)
+			if l != null and is_instance_valid(l) and not (l as CanvasLayer).is_queued_for_deletion():
+				(l as CanvasLayer).queue_free()
+			return
+
+
+func _forget_modal(layer: CanvasLayer) -> void:
+	for i in range(_modals.size() - 1, -1, -1):
+		var l: Variant = _modals[i].get("layer")
+		if l == null or not is_instance_valid(l) or l == layer:
+			_modals.remove_at(i)
+
+
+## 弹层的自然归属：从锚点往上找到"最外层、但不是场景根"的那个节点（通常是整块面板/场景）
+func _top_owner_for(anchor: Node) -> Node:
+	var cur: Node = anchor
+	var root := anchor.get_tree().root if anchor.get_tree() != null else null
+	while cur != null and cur.get_parent() != null and cur.get_parent() != root:
+		cur = cur.get_parent()
+	return cur
+
+
+## ESC 只关最上层弹层；没有弹层时什么都不做，把 ESC 让给正常流程。
+## G 是 autoload，在输入传播顺序上先于场景节点，所以这里标记 handled 后
+## 底下的面板不会再收到这次 ESC（这正是"时灵时不灵"的根因之一）。
+func _unhandled_input(event: InputEvent) -> void:
+	_prune_modals()
+	if _modals.is_empty():
+		return
+	if event.is_action_pressed("ui_cancel"):
+		# 只关栈顶：底下的弹层/面板必须等下一次 ESC，不能再出现"一次 ESC 关两层"
+		close_info_popup_by_id(int(_modals.back().get("id", -1)))
+		var vp := get_viewport()
+		if vp != null:
+			vp.set_input_as_handled()
