@@ -30,6 +30,18 @@ static func generate(run_seed: int) -> Dictionary:
 	}
 
 
+## BOSS 层号 = 普通层数 + 1（层数来自 nodes.json 的 layers）。
+## 集中在这里是为了避免各处写死 `== 4`（问题 #37）：层数一改成 4 层，写死的地方
+## 会把第 4 层当成 BOSS，而真正的 BOSS 层（5）反而没人认。
+static func boss_layer(route: Dictionary) -> int:
+	var layers: Variant = route.get("layers", [])
+	return (layers as Array).size() + 1 if layers is Array else 1
+
+
+static func is_boss_layer(route: Dictionary, layer: int) -> bool:
+	return layer >= boss_layer(route)
+
+
 static func _weighted_pick(rng: RandomNumberGenerator, weights: Dictionary) -> String:
 	var total := 0
 	for t in weights:

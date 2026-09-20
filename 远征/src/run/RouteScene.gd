@@ -65,7 +65,11 @@ func _build() -> void:
 	add_child(bg)
 
 	# 羊皮纸卷轴：素材 971×1619 与本屏 480×800 同为 3:5，铺满不变形
-	var scroll: Texture2D = load("res://image/generated_001_100/source/067_bg_route.png")
+	# 走 G.res_tex 的 ready-优先解析（问题 #34）：以前直接 load source 母稿（067_bg_route.png），
+	# 一旦有人把成品丢进 ready/，这里会继续吃旧母稿，而且打包时母稿可能不在发布集里。
+	var scroll: Texture2D = G.res_tex("bg_route")
+	if scroll == null:
+		push_warning("bg_route 素材缺失：路线图背景退回程序绘制")
 	if scroll != null:
 		var tr := TextureRect.new()
 		tr.texture = scroll
@@ -130,7 +134,7 @@ func _make_node(nd: Dictionary) -> Control:
 	c.node_data = nd
 	c.name = "node_%d_%d" % [int(nd.get("layer", 0)), int(nd.get("index", 0))]
 	c.size = Vector2(64, 64)
-	var pos := Vector2(240.0, BOSS_Y) if int(nd.get("layer", 0)) == 4 \
+	var pos := Vector2(240.0, BOSS_Y) if RouteGenerator.is_boss_layer(st.route, int(nd.get("layer", 0))) \
 		else Vector2(NODE_X[int(nd.get("index", 1))], LAYER_Y[int(nd.get("layer", 1))])
 	c.position = pos - Vector2(32, 32)
 	c.gui_input.connect(_on_node_input.bind(nd))
@@ -321,7 +325,7 @@ func _start_explore(nd: Dictionary) -> void:
 
 ## 探索层结束：cleared（走传送阵）/ defeat（战斗失利）/ exited（中途撤离，节点进度保留）
 func _on_map_finished(map_result: String) -> void:
-	var is_boss := int(_cur_node.get("layer", 1)) == 4
+	var is_boss := RouteGenerator.is_boss_layer(st.route, int(_cur_node.get("layer", 1)))
 	_map.queue_free()
 	_map = null
 	if map_result == "exited":
@@ -465,7 +469,7 @@ class _RouteLines extends Node2D:
 
 		# 下一层的三条支路：虚线，把"每层 3 选 1"讲明白，也让画面不至于只有一条孤线
 		var targets: Array = []
-		if cur_layer >= 4:
+		if RouteGenerator.is_boss_layer(route_ref, cur_layer):
 			targets = [boss]
 		elif cur_layer - 1 >= 0 and cur_layer - 1 < layers.size():
 			targets = layers[cur_layer - 1]
@@ -474,7 +478,7 @@ class _RouteLines extends Node2D:
 			var nd: Dictionary = n
 			if bool(nd.get("cleared", false)):
 				continue
-			var pos := Vector2(240.0, RouteScene.BOSS_Y) if int(nd.get("layer", 0)) == 4 \
+			var pos := Vector2(240.0, RouteScene.BOSS_Y) if RouteGenerator.is_boss_layer(route_ref, int(nd.get("layer", 0))) \
 				else Vector2(RouteScene.NODE_X[int(nd.get("index", 1))],
 					RouteScene.LAYER_Y[int(nd.get("layer", 1))])
 			_dashed(from, pos, Color(0.24, 0.16, 0.08, 0.34), 2.0, 7.0, 6.0)

@@ -58,6 +58,41 @@
       "goal": "在「流沙荒漠」击杀 5 只",
       "desc": "「沙底下埋着八条路，我只认得出其中一条。你把上头的麻烦清了，我再走一趟。」",
       "reward": { "gold": 240, "exp": 70, "expedition": 20 }
+    },
+    {
+      "id": "q_clear_snow", "npc": "npc_guard", "kind": "clear", "theme": "snow", "n": 1,
+      "title": "风雪关隘",
+      "goal": "讨伐「凛风雪原」的首领",
+      "desc": "「雪线上的关隘一年封半年。你能走到碑前，我就把巡防的名册往后延一延。」",
+      "reward": { "gold": 420, "exp": 140, "honor": 6 }
+    },
+    {
+      "id": "q_slay_glacier", "npc": "npc_scribe", "kind": "slay", "theme": "glacier", "n": 4,
+      "title": "冰下回声",
+      "goal": "在「万载冰川」击杀 4 只",
+      "desc": "「冰川底下有回声，像是有人在念名字。你去听一听——听清了回来告诉我。」",
+      "reward": { "gold": 280, "exp": 90, "soul": 8 }
+    },
+    {
+      "id": "q_slay_abyss", "npc": "npc_warden", "kind": "slay", "theme": "abyss", "n": 5,
+      "title": "渊口清剿",
+      "goal": "在「沉星深渊」击杀 5 只",
+      "desc": "「渊口的那些东西会往上看。多看一次，城里就少一次夜里的怪响。」",
+      "reward": { "gold": 320, "exp": 110, "honor": 4 }
+    },
+    {
+      "id": "q_deliver_stone", "npc": "npc_smith", "kind": "deliver", "item": "enhance_stone", "n": 3,
+      "title": "炉边的料",
+      "goal": "上交 强化石 ×3",
+      "desc": "「炉子空着比熄了还冷。你手上要是有富余的石头，先扔三块过来。」",
+      "reward": { "gold": 190, "exp": 50, "expedition": 18 }
+    },
+    {
+      "id": "q_deliver_crystal", "npc": "npc_keeper", "kind": "deliver", "item": "break_crystal", "n": 2,
+      "title": "栏里的旧伤",
+      "goal": "上交 突破晶 ×2",
+      "desc": "「老伙计腿上那道口子一直没收口。你们从外头带回来的晶石，磨碎了正好。」",
+      "reward": { "gold": 210, "exp": 55, "soul": 10 }
     }
   ]
 }

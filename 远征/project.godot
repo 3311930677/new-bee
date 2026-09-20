@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 G="*res://src/autoload/G.gd"
-Data="*res://src/autoload/DataManager.gd"
 Audio="*res://src/autoload/Audio.gd"
 GmConsole="*res://src/ui/GmConsole.gd"
 
