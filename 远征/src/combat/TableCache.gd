@@ -93,6 +93,19 @@ static func maps_config() -> Dictionary:
 	return v if v is Dictionary else {}
 
 
+## 玩家步行速度（maps.json 顶层 player_speed）。
+## 四个消费点（移动 / 步频 / 卡住判定 / 怪物追击基准）都走这里：
+## 以前各写一份兜底（130/100/88/130），改表时行为分裂（收口：同字段禁止多处默认值）
+static func map_player_speed() -> float:
+	return float(maps_config().get("player_speed", 100.0))
+
+
+## 主题规则（maps.json themes.<id>.rule，C 批世界主题规则）。没有配就返回空字典。
+static func theme_rule(theme: String) -> Dictionary:
+	var v: Variant = theme_config(theme).get("rule", {})
+	return v if v is Dictionary else {}
+
+
 static func arena_config() -> Dictionary:
 	var v: Variant = _load("res://data/arena.json")
 	return v if v is Dictionary else {}

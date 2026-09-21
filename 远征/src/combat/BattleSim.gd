@@ -25,6 +25,8 @@ var pet_swap_used := false
 var enemy_scale := 1.0                # 层难度 ×(1+0.12N)
 var pet_level := 1                    # 宠物等级随人物等级（v0 简化；有 pet_stats 快照时以快照为准）
 var pet_stats: Dictionary = {}        # 局外宠物养成快照 {pid: {level, stat_mult, growth_mult}}
+## 组建失败原因（空主题池等）：调用方据此拒绝开战，别让「一 tick 就判胜」的空战斗照发奖励
+var setup_error := ""
 var _next_uid := 1
 var _by_uid: Dictionary = {}
 
@@ -103,10 +105,12 @@ func _build_role(cfg: Dictionary) -> void:
 	u.row = Combatant.ROW_FRONT if u.attack_range == "melee" else Combatant.ROW_BACK
 	u.col = 2
 	u.hp = u.base_max_hp
-	# HP 跨节点延续
+	# HP 跨节点延续。哨兵口径：-1 = 无续血（满血开局）；>= 0 一律有效。
+	# 0 必须钳到 1（濒危续战）：人物阵亡但宠物清场时，0 血开局等于必死——
+	# 药剂救不回来（heal 拒绝治疗 hp<=0 的单位），下一个节点白给（A6）。
 	var hp_override := int(cfg.get("hp_override", -1))
-	if hp_override > 0:
-		u.hp = mini(hp_override, u.base_max_hp)
+	if hp_override >= 0:
+		u.hp = clampi(hp_override, 1, u.base_max_hp)
 	role_uid = u.uid
 	for sid in role.get("skills", []):
 		var sd := TableCache.get_skill(String(sid))
@@ -154,12 +158,38 @@ func _build_pet(pet_id: String, is_bench_swap: bool) -> void:
 	_add_unit(u)
 
 
+## maps.json 顶层 spawn 段（**不在主题条目里**）：编成数量表驱动（B4）
+static func _spawn_cfg(node_type: String) -> Dictionary:
+	var v: Variant = TableCache.maps_config().get("spawn", {})
+	if v is Dictionary:
+		var d := v as Dictionary
+		var sub: Variant = d.get(node_type, {})
+		return sub if sub is Dictionary else {}
+	return {}
+
+
+## BOSS 召唤上限（maps.json spawn.boss.summon_cap）
+static func spawn_summon_cap() -> int:
+	return maxi(1, int(_spawn_cfg("boss").get("summon_cap", 6)))
+
+
+## 杂兵补位：前排 col1 → 后排 col2 → 后排 col1/3（与原本精英/BOSS 的补位一致）
+func _spawn_adds(pick: Callable, n: int) -> void:
+	var slots := [[Combatant.ROW_FRONT, 1], [Combatant.ROW_BACK, 2],
+		[Combatant.ROW_BACK, 1], [Combatant.ROW_BACK, 3]]
+	for i in n:
+		var p: Array = slots[i % slots.size()]
+		_spawn_monster(pick.call(), int(p[0]), int(p[1]))
+
+
 ## lead_mon：探索层撞到的那只怪（遇敌继承——撞谁谁领头，其余仍按池随机补位）
 func _build_enemies(theme: String, node_type: String, lead_mon := "") -> void:
 	var tc := TableCache.theme_config(theme)
 	var pool: Array = tc.get("monsters", [])
 	if pool.is_empty():
-		push_error("主题无怪物池：%s" % theme)
+		# 空池 = 组不出战斗：显式报错交给调用方拒绝开战，别再「一 tick 判胜还照发奖励」
+		setup_error = "主题怪物池为空：%s" % theme
+		push_error(setup_error)
 		return
 	var pick := func() -> String:
 		return String(pool[rng.randi_range(0, pool.size() - 1)])
@@ -168,17 +198,31 @@ func _build_enemies(theme: String, node_type: String, lead_mon := "") -> void:
 			var ec: Dictionary = TableCache.nodes_config().get("enemy", {})
 			var hp_atk := float(ec.get("elite_hp_atk_mult", 1.8))
 			var def_m := float(ec.get("elite_def_mult", 1.3))
-			var elite := _spawn_monster(lead_mon if lead_mon != "" else pick.call(),
-				Combatant.ROW_FRONT, 2, hp_atk, def_m)
-			_apply_elite_affix(elite)
-			_spawn_monster(pick.call(), Combatant.ROW_FRONT, 1)
-			_spawn_monster(pick.call(), Combatant.ROW_BACK, 2)
+			var sp := _spawn_cfg("elite")
+			var n_elite := maxi(1, int(sp.get("elite_count", 1)))
+			var e_cols := [2, 1]
+			for i in n_elite:
+				var elite := _spawn_monster(
+					lead_mon if (i == 0 and lead_mon != "") else pick.call(),
+					Combatant.ROW_FRONT, int(e_cols[i % e_cols.size()]), hp_atk, def_m, "elite")
+				if elite != null:      # 怪物 id 失效时不再空引用（原代码直接 _apply_elite_affix(null)）
+					_apply_elite_affix(elite)
+			_spawn_adds(pick, int(sp.get("adds", 2)))
 		"boss":
-			_spawn_monster(String(tc.get("boss", "")), Combatant.ROW_FRONT, 2)
-			_spawn_monster(pick.call(), Combatant.ROW_FRONT, 1)
-			_spawn_monster(pick.call(), Combatant.ROW_BACK, 2)
+			var sp := _spawn_cfg("boss")
+			var n_boss := maxi(1, int(sp.get("boss_count", 1)))
+			for i in n_boss:
+				_spawn_monster(String(tc.get("boss", "")), Combatant.ROW_FRONT,
+					2 if i == 0 else 1, 1.0, 1.0, "boss")
+			_spawn_adds(pick, int(sp.get("adds", 2)))
 		_:
-			var n := 3 + (1 if rng.randf() < 0.5 else 0)
+			var nc: Variant = _spawn_cfg("normal").get("count", [3, 4])
+			var lo := 3
+			var hi := 4
+			if nc is Array and (nc as Array).size() >= 2:
+				lo = int((nc as Array)[0])
+				hi = maxi(lo, int((nc as Array)[1]))
+			var n := rng.randi_range(lo, hi)
 			var front_cols := [2, 1]
 			var back_cols := [2, 1, 3]
 			var fi := 0
@@ -212,12 +256,16 @@ func _build_custom_mon(d: Dictionary) -> void:
 	_add_unit(u)
 
 
+## tier 回写进 u.data（normal/elite/boss）：立绘高度 / 紫晕 / 名签三处表现全靠它（B4）。
+## 坑：TableCache 返回的是**缓存引用**，必须 duplicate 后再写，否则这只精英会污染整张表。
 func _spawn_monster(mon_id: String, row: int, col: int, hp_atk_mult := 1.0,
-		def_mult := 1.0) -> Combatant:
+		def_mult := 1.0, tier := "normal") -> Combatant:
 	var m := TableCache.get_monster(mon_id)
 	if m.is_empty():
 		push_warning("怪物不存在：%s" % mon_id)
 		return null
+	m = m.duplicate(true)
+	m["tier"] = tier
 	var base: Dictionary = m.get("base", {})
 	var u := Combatant.new(new_uid(), "monster", "enemy", m)
 	u.base_max_hp = maxi(1, int(float(int(base.get("hp", 50))) * hp_atk_mult * enemy_scale))
@@ -301,6 +349,9 @@ func use_potion() -> bool:
 		return false
 	var role := role_unit()
 	if role == null or not role.alive:
+		return false
+	# 满血喝药：直接拒绝，不扣瓶也不进 CD（地图侧早有拦截，战斗内漏了这条）
+	if role.hp >= role.get_max_hp():
 		return false
 	potions_left -= 1
 	potion_cd_ticks = POTION_CD

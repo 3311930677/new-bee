@@ -53,6 +53,11 @@ static func resolve_cast(sim: BattleSim, entry: Dictionary) -> void:
 	if etype_pre != "heal" and etype_pre != "summon" and etype_pre != "cleanse":
 		if sim.alive_units("enemy" if caster.side == "ally" else "ally").is_empty():
 			return
+	# 「满能量」快照必须在**扣能量之前**取（A4）：扣完再判恒为 false，
+	# 上限 100、技能至少 20 费 → 超载（tr_energy_2）从未生效过
+	var is_full_energy := caster.kind == "role" \
+		and caster.energy >= Combatant.MAX_ENERGY \
+		and int(skill.get("cost", 0)) > 0
 	# 消耗与 CD
 	if caster.kind == "role":
 		caster.energy -= int(skill.get("cost", 0))
@@ -67,7 +72,7 @@ static func resolve_cast(sim: BattleSim, entry: Dictionary) -> void:
 	var combo := _check_combo(sim, caster, skill)
 	sim.emit({"t": "cast", "uid": caster.uid, "skill": String(skill.get("id", "")),
 		"name": String(skill.get("name", "")), "combo": combo.get("name", "")})
-	_apply_skill(sim, caster, skill, combo)
+	_apply_skill(sim, caster, skill, combo, is_full_energy)
 
 
 static func _check_combo(sim: BattleSim, caster: Combatant, skill: Dictionary) -> Dictionary:
@@ -86,7 +91,8 @@ static func _check_combo(sim: BattleSim, caster: Combatant, skill: Dictionary) -
 	return {}
 
 
-static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, combo: Dictionary) -> void:
+static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, combo: Dictionary,
+		is_full_energy := false) -> void:
 	# 记录连携窗口起点
 	sim.last_cast[caster.uid] = {"skill_id": String(skill.get("id", "")), "tick": sim.tick_count}
 	var target_type := String(skill.get("target", "enemy_single"))
@@ -141,14 +147,18 @@ static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, c
 		"taunt":
 			var t := _primary_target(sim, caster, target_type)
 			if t != null and sim.rng.randf() >= t.cc_resist:
-				t.add_buff("taunt", t.cc_duration_ticks(float(effect.get("dur", 3.0))),
+				# 控制时长一律取**施加方** caster（A3）
+				t.add_buff("taunt", caster.cc_duration_ticks(float(effect.get("dur", 3.0))),
 					{"src_uid": caster.uid})
 				sim.emit({"t": "buff", "uid": t.uid, "buff": "taunt"})
 		"shield":
 			for t in targets:
 				var pool := int(float(t.get_max_hp()) * float(effect.get("hp_pct", 0.2)))
 				t.add_buff("shield", -1, {"pool": pool})
-				sim.emit({"t": "shield_add", "uid": t.uid, "pool": pool})
+				# 广播**合并后**的真实池子（A8）：重复施放以前只刷新时长不累加，
+				# 却照扣能量与 CD，飘字还显示旧数值——玩家以为盾变多了其实没有
+				var real := int(t.get_buff("shield").get("val", {}).get("pool", pool))
+				sim.emit({"t": "shield_add", "uid": t.uid, "pool": real})
 		"atk_up":
 			for t in targets:
 				t.add_buff("atk_up", int(float(effect.get("dur", 5.0)) * 30.0),
@@ -167,25 +177,26 @@ static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, c
 		"fear":
 			var t := _primary_target(sim, caster, target_type)
 			if t != null and sim.rng.randf() >= t.cc_resist:
-				t.add_buff("fear", t.cc_duration_ticks(float(effect.get("dur", 1.5))), {})
+				t.add_buff("fear", caster.cc_duration_ticks(float(effect.get("dur", 1.5))), {})
 				sim.emit({"t": "buff", "uid": t.uid, "buff": "fear"})
 		"stun":
 			var t := _primary_target(sim, caster, target_type)
 			if t != null and sim.rng.randf() >= t.cc_resist:
-				t.add_buff("stun", t.cc_duration_ticks(float(effect.get("dur", 1.2))), {})
+				t.add_buff("stun", caster.cc_duration_ticks(float(effect.get("dur", 1.2))), {})
 				sim.emit({"t": "buff", "uid": t.uid, "buff": "stun"})
 		"summon":
 			var mon_id := String(skill.get("summon", ""))
 			var count := int(skill.get("summon_count", 2))
-			sim.summon_monsters(caster, mon_id, count, int(skill.get("summon_cap", 6)))
+			sim.summon_monsters(caster, mon_id, count,
+				int(skill.get("summon_cap", BattleSim.spawn_summon_cap())))
 		_:
-			_apply_damage(sim, caster, skill, k, hits, targets, effect, combo)
+			_apply_damage(sim, caster, skill, k, hits, targets, effect, combo, is_full_energy)
 
 
 static func _apply_damage(sim: BattleSim, caster: Combatant, skill: Dictionary, k: float,
-		hits: int, targets: Array[Combatant], effect: Dictionary, combo: Dictionary) -> void:
+		hits: int, targets: Array[Combatant], effect: Dictionary, combo: Dictionary,
+		is_full_energy := false) -> void:
 	var total := 0
-	var is_full_energy := caster.energy >= Combatant.MAX_ENERGY
 	for h in hits:
 		var hit_targets := targets
 		# 随机目标：每段独立随机
@@ -209,11 +220,10 @@ static func _apply_damage(sim: BattleSim, caster: Combatant, skill: Dictionary, 
 			if is_crit:
 				dmg = DamageCalc.crit_damage(dmg, caster.crit_dmg)
 			# 词条修正（凝神/处决/碎冰/超载）
+			# 注：受方「受伤加深」（狂潮）已下沉到 Combatant.take_damage 统一入口，
+			# 这里再算一遍就会double counting（普攻路径以前也整条漏掉）
 			if caster.traits != null:
 				dmg = caster.traits.modify_skill_dmg(caster, t, dmg, is_full_energy)
-			# 狂潮：受伤 +15%（受方词条）
-			if t.traits != null:
-				dmg = int(float(dmg) * (1.0 + t.traits.passive_dmg_taken_pct()))
 			var dealt := t.take_damage(dmg, caster, sim, is_crit)
 			total += dealt
 			if caster.traits != null:
@@ -231,10 +241,17 @@ static func _apply_damage(sim: BattleSim, caster: Combatant, skill: Dictionary, 
 				if caster.traits != null:
 					pct *= 1.0 + caster.traits.bleed_dmg_pct()
 				t.add_buff(add_type, int(float(effect.get("dur", 4.0)) * 30.0),
-					{"pct": pct, "atk": caster.get_atk(), "stacks": 1, "stack_cap": maxi(1, cap)})
+					{"pct": pct, "atk": caster.get_atk(), "stacks": 1, "stack_cap": maxi(1, cap),
+						"src_uid": caster.uid})
 			elif add_type == "slow":
 				t.add_buff("slow", int(float(effect.get("dur", 3.0)) * 30.0),
 					{"pct": effect.get("pct", 0.2)})
+			elif add_type == "def_down":
+				# 破阵 / 贯甲：DEF -pct%（A5）。skills.json 写的是 def_down，
+				# 而减防 buff 的实体名是 def_break（已在驱散白名单与状态条里）
+				t.add_buff("def_break", int(float(effect.get("dur", 5.0)) * 30.0),
+					{"pct": effect.get("pct", 0.2), "src_uid": caster.uid})
+				sim.emit({"t": "buff", "uid": t.uid, "buff": "def_break"})
 			# 击退一排（岩龟冲撞）：目标从前排压到后排
 			if String(effect.get("type", "")) == "knockback_row" and t.row == Combatant.ROW_FRONT:
 				sim.knock_back(t)

@@ -132,6 +132,9 @@ func buff_pct_sum(type: String) -> float:
 	return s
 
 
+## 控制时长（秒 → tick）：倍率一律取**施加方**的 traits（A3）。
+## 历史 bug：调用方传的是被控方（`t.cc_duration_ticks`），怪物没有 traits（恒 1.0），
+## 「霜寒延长 / 控制流派 +30%」整条不生效，还会把自己被控的时间拉长。
 func cc_duration_ticks(dur_s: float) -> int:
 	var dur := dur_s
 	if traits != null:
@@ -140,17 +143,43 @@ func cc_duration_ticks(dur_s: float) -> int:
 
 
 # ---------- buff 生命周期 ----------
+## 同类 buff 的数值合并口径（A8）：**逐键合并，绝不整包替换**。
+## 坑：DoT 把浮点累积器 `acc` 存在 val 里（tick_buffs），整包替换会把已累积的部分清零。
+## 口径：pool 累加（护盾可叠）/ atk·pct·stack_cap 取强 / acc 保留 / 其余（src_uid）取新。
+static func _merge_buff_val(old: Dictionary, add: Dictionary) -> void:
+	for k in add.keys():
+		match String(k):
+			"pool":
+				old["pool"] = int(old.get("pool", 0)) + int(add[k])
+			"atk":
+				old["atk"] = maxi(int(old.get("atk", 0)), int(add[k]))
+			"pct", "stack_cap":
+				old[k] = maxf(float(old.get(k, 0.0)), float(add[k]))
+			"acc":
+				pass  # 累积器保留旧的，不能被重复施放清零
+			_:
+				old[k] = add[k]
+
+
 func add_buff(type: String, dur_ticks: int, val: Dictionary = {}) -> void:
 	var stack_add: int = int(val.get("stacks", 1))
 	var stack_cap: int = int(val.get("stack_cap", 5))
 	for b in buffs:
 		if String(b.type) == type:
 			# 同类刷新时长并叠层
-			if dur_ticks >= 0:
-				b.dur = maxi(int(b.dur), dur_ticks)
-			b.stacks = mini(int(b.stacks) + stack_add, stack_cap)
+			if dur_ticks < 0:
+				b.dur = -1                                    # 新的永久 buff：提级为永久
+			elif int(b.dur) >= 0:
+				b.dur = maxi(int(b.dur), dur_ticks)           # 永久（dur<0）不被限时刷新改写
+			# 层数上限一经写入即固定，后续只放宽：否则重创 3 层会被低层技能打回 1
+			var cap: int = maxi(int(b.val.get("stack_cap", stack_cap)), stack_cap)
+			b.val["stack_cap"] = cap
+			b.stacks = mini(int(b.stacks) + stack_add, cap)
+			_merge_buff_val(b.val, val)
 			return
-	var entry := {"type": type, "dur": dur_ticks, "stacks": mini(stack_add, stack_cap), "val": val}
+	var entry := {"type": type, "dur": dur_ticks, "stacks": mini(stack_add, stack_cap),
+		"val": val.duplicate()}
+	(entry["val"] as Dictionary)["stack_cap"] = stack_cap
 	buffs.append(entry)
 
 
@@ -183,7 +212,10 @@ func tick_buffs(sim: BattleSim) -> void:
 			if acc >= 1.0:
 				var dot := int(acc)
 				acc -= float(dot)
-				_direct_damage(dot, self, sim, true)
+				# DoT 归属：伤害记到**施加者**头上（A2）。以前把 src 传成中毒者自己，
+				# 击杀钩子会算成「自杀」，越战越勇 / 威吓 / 流血击杀回血整条失效
+				var applier: Combatant = sim.unit_by_uid(int(b.val.get("src_uid", -1)))
+				_direct_damage(dot, applier if applier != null else self, sim, true)
 			b.val["acc"] = acc
 		if int(b.dur) > 0:
 			b.dur = int(b.dur) - 1
@@ -204,7 +236,7 @@ func _direct_damage(dmg: int, src: Combatant, sim: BattleSim, is_dot := false) -
 	sim.emit({"t": "dmg", "src": src.uid if src != null else -1, "uid": uid,
 		"amount": dmg, "crit": false, "dot": is_dot})
 	if hp == 0:
-		_on_lethal(sim)
+		_on_lethal(sim, src)
 	return dmg
 
 
@@ -216,6 +248,10 @@ func take_damage(dmg: int, src: Combatant, sim: BattleSim, is_crit := false) -> 
 		sim.emit({"t": "immune", "uid": uid})
 		return 0
 	var final := dmg
+	# 受方「受伤加深」（狂潮）下沉到唯一入口：以前只在技能路径结算，普攻不吃这条，
+	# 双刃词条于是变成纯增益（SkillSystem 侧的同款应用已删，别再两处都算一遍）
+	if traits != null:
+		final = int(float(final) * (1.0 + traits.passive_dmg_taken_pct()))
 	if has_buff("lurk"):
 		final = maxi(1, final / 2)  # 潜伏：受击减半
 	# 护盾吸收
@@ -245,15 +281,16 @@ func take_damage(dmg: int, src: Combatant, sim: BattleSim, is_crit := false) -> 
 	var lifesteal := (src.buff_pct_sum("lifesteal") if src != null else 0.0)
 	if src != null and src.alive and lifesteal > 0.0:
 		src.heal(maxi(1, int(float(final) * lifesteal)), self, sim)
-	# 受击词条（以伤换伤回血）
+	# 受击词条（以伤换伤回血）；on_behit 内部自带「已死则不再触发」护栏
 	if traits != null:
 		traits.on_behit(sim, self, src, final)
 	if hp == 0:
-		_on_lethal(sim)
+		_on_lethal(sim, src)
 	return final
 
 
-func _on_lethal(sim: BattleSim) -> void:
+## 致命伤结算。killer 用于驱动击杀钩子（A2）：宠物击杀记主人，环境伤害（null）与自伤不记归属。
+func _on_lethal(sim: BattleSim, killer: Combatant) -> void:
 	# 免死（换宠 buff）
 	if deathproof_buff:
 		deathproof_buff = false
@@ -267,10 +304,18 @@ func _on_lethal(sim: BattleSim) -> void:
 	alive = false
 	hp = 0
 	sim.emit({"t": "death", "uid": uid})
+	var k := killer
+	if k != null and k.kind == "pet":
+		k = sim.role_unit()      # 宠物击杀算主人的（主人流派的击杀收益才成立）
+	if k == null or k == self or not k.alive or k.traits == null:
+		return
+	k.traits.on_kill(sim, k, self)
 
 
 func heal(amount: int, src: Combatant, sim: BattleSim) -> int:
-	if not alive or amount <= 0:
+	# 死了就不再被奶回来（A1）：以伤换伤的回血曾排在死亡判定前，把致死伤「奶回去」→ 几乎无敌。
+	# 回光返照 / 换宠免死都是直接写 hp，不走 heal，不受这条护栏影响。
+	if not alive or hp <= 0 or amount <= 0:
 		return 0
 	var amt := amount
 	if traits != null:
@@ -376,7 +421,9 @@ func do_basic_attack(sim: BattleSim) -> void:
 	if traits != null:
 		dmg = traits.modify_outgoing(self, target, dmg, false, false)
 	sim.emit({"t": "basic", "src": uid, "uid": target.uid, "halved": halved})
-	target.take_damage(dmg, self, sim, is_crit)
+	# 用 take_damage 的**返回值**（已减伤/已被盾吸收后的实数）喂命中钩子：
+	# 以前喂的是未减伤的 dmg，打盾时饮血吸回来的血比实际造成的伤害还多
+	var dealt := target.take_damage(dmg, self, sim, is_crit)
 	# 怪物附带效果（毒/流血/减速按概率）
 	if kind == "monster" and data.has("on_hit") and target.alive:
 		var proc: Dictionary = data.on_hit
@@ -386,13 +433,13 @@ func do_basic_attack(sim: BattleSim) -> void:
 			match ptype:
 				"poison", "bleed":
 					target.add_buff(ptype, dur, {"pct": proc.get("pct", 0.03), "atk": atk,
-						"stacks": 1, "stack_cap": 3})
+						"stacks": 1, "stack_cap": 3, "src_uid": uid})
 				"slow":
 					target.add_buff("slow", dur, {"pct": proc.get("pct", 0.2)})
 			sim.emit({"t": "proc", "src": uid, "uid": target.uid, "buff": ptype})
 	# 词条命中钩子（普攻）
 	if traits != null:
-		traits.on_hit(sim, self, target, dmg, is_crit, false)
+		traits.on_hit(sim, self, target, dealt, is_crit, false)
 		if is_crit:
 			traits.on_crit(sim, self, target)
 	# 普攻 +20 能量

@@ -48,8 +48,17 @@ func _sum_stat(stat: String, key: String = "pct") -> float:
 	return s
 
 
+## 流派激活阈值：**读表**（nodes.json run.school_active_n），别写死。
+## 一局只有 3~4 次三选一，阈值 3 意味着数学上几乎凑不出三件套——构筑系统玩家摸不到（B1）。
+static func school_active_n() -> int:
+	var run: Variant = TableCache.nodes_config().get("run", {})
+	if run is Dictionary:
+		return maxi(1, int((run as Dictionary).get("school_active_n", 2)))
+	return 2
+
+
 func school_active(school: String) -> bool:
-	return int(school_count.get(school, 0)) >= 3
+	return int(school_count.get(school, 0)) >= school_active_n()
 
 
 ## 人物战斗血上限（唯一口径）：表基础 HP → 词条被动取整 → 局外成长取整。
@@ -234,9 +243,11 @@ func modify_outgoing(unit: Combatant, target: Combatant, dmg: int, is_skill: boo
 	if has_trait("tr_ctrl_2") and target != null \
 			and (target.has_buff("stun") or target.has_buff("fear") or target.has_buff("confusion")):
 		pct += 0.20
-	# 超载：满能量时技能伤害 +20%（只吃技能）
-	if is_skill and has_trait("tr_energy_2") and is_full_energy:
-		pct += 0.20
+	# 超载：满能量时技能伤害 +表值（只吃技能）
+	if is_skill and is_full_energy:
+		var e_ov := _effect_of("tr_energy_2")
+		if not e_ov.is_empty():
+			pct += float(e_ov.get("full_energy_dmg_pct", 0.20))
 	return maxi(1, int(float(dmg) * (1.0 + pct)))
 
 
@@ -274,11 +285,11 @@ func on_hit(sim: BattleSim, unit: Combatant, target: Combatant, dmg: int, is_cri
 	var e2 := _effect_of("tr_chill_touch")
 	if not e2.is_empty() and target.alive and sim.rng.randf() < float(e2.get("chance", 0.15)):
 		target.add_buff("slow", int(float(e2.get("dur", 2.0)) * 30.0), {"pct": e2.get("pct", 0.2)})
-	# 重击：8% 概率定身
+	# 重击：8% 概率定身（时长倍率取施加方 unit，不是被控方——A3）
 	var e3 := _effect_of("tr_stun_blow")
 	if not e3.is_empty() and target.alive and sim.rng.randf() < float(e3.get("chance", 0.08)):
 		if sim.rng.randf() >= target.cc_resist:
-			target.add_buff("stun", target.cc_duration_ticks(float(e3.get("dur", 1.0))), {})
+			target.add_buff("stun", unit.cc_duration_ticks(float(e3.get("dur", 1.0))), {})
 	# 燃血：每秒流失 1.5% MaxHP（在 on_tick 处理）
 	# 反击架势：受击触发（on_behit）
 
@@ -289,7 +300,8 @@ func on_crit(sim: BattleSim, unit: Combatant, target: Combatant) -> void:
 	if not e.is_empty() and target.alive:
 		var cap := 3 + bleed_stack_cap_add()
 		target.add_buff("bleed", int(float(e.get("dur", 4.0)) * 30.0),
-			{"pct": e.get("pct", 0.03), "atk": unit.get_atk(), "stacks": 1, "stack_cap": cap})
+			{"pct": e.get("pct", 0.03), "atk": unit.get_atk(), "stacks": 1, "stack_cap": cap,
+				"src_uid": unit.uid})
 	# 致命韵律：暴击后 SPD +15%×3s
 	var e2 := _effect_of("tr_crit_1")
 	if not e2.is_empty():
@@ -298,6 +310,10 @@ func on_crit(sim: BattleSim, unit: Combatant, target: Combatant) -> void:
 
 
 func on_behit(sim: BattleSim, unit: Combatant, src: Combatant, dmg: int) -> void:
+	# 死了就不再触发受击钩子（A1）：以伤换伤的回血曾排在死亡判定之前，
+	# 把致死伤「奶回去」→ 死亡判定落空 → 几乎无敌。反击架势同理，死人不再反击。
+	if unit.hp <= 0:
+		return
 	# 以伤换伤：受击回复 3% 伤害量
 	var e := _effect_of("tr_thorn_2")
 	if not e.is_empty():
@@ -313,12 +329,12 @@ func on_kill(sim: BattleSim, unit: Combatant, victim: Combatant) -> void:
 	# 越战越勇叠层
 	if has_trait("tr_rampage"):
 		unit.rampage_stacks = mini(unit.rampage_stacks + 1, 5)
-	# 威吓：击杀后恐惧敌方全体 1s
+	# 威吓：击杀后恐惧敌方全体 1s（时长倍率取击杀者 unit——A3）
 	var e := _effect_of("tr_fear_aura")
 	if not e.is_empty():
 		for u in sim.alive_units("enemy" if unit.side == "ally" else "ally"):
 			if sim.rng.randf() >= u.cc_resist:
-				u.add_buff("fear", u.cc_duration_ticks(float(e.get("dur", 1.0))), {})
+				u.add_buff("fear", unit.cc_duration_ticks(float(e.get("dur", 1.0))), {})
 	# 流血流派击杀回血 5%
 	if school_active("bleed"):
 		unit.heal(maxi(1, int(float(unit.get_max_hp()) * 0.05)), unit, sim)
