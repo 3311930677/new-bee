@@ -559,10 +559,12 @@ class _RouteNode extends Control:
 		var fs := 13
 		var ts := font.get_string_size(label, HORIZONTAL_ALIGNMENT_CENTER, -1, fs)
 		var tp := Vector2(center.x - ts.x / 2.0, center.y + r + fs + 2.0)
+		# 浅底（羊皮纸）上别用浅色字：原来近白字 + 黑影，实测在米黄纸面上几乎读不出。
+		# 改墨褐字 + 浅色描边（与本文件 _layer_l 的"浅底改墨褐"同一口径）。
 		draw_string(font, tp + Vector2(0, 1.0), label, HORIZONTAL_ALIGNMENT_CENTER, -1, fs,
-			Color(0.0, 0.0, 0.0, 0.4 * alpha))
+			Color(1.0, 0.98, 0.90, 0.55 * alpha))
 		draw_string(font, tp, label, HORIZONTAL_ALIGNMENT_CENTER, -1, fs,
-			Color(0.99, 0.95, 0.86, alpha))
+			Color(0.34, 0.24, 0.12, alpha))
 
 		# 已清：右上一枚小金牌 ✓
 		if state == "done":

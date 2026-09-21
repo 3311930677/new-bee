@@ -467,6 +467,9 @@ func _check_interact() -> void:
 			best = n
 			best_d = nd
 		n.hover = nd < NPC_R + 24.0
+		# 名牌按距离淡入（1.4 巡检）：原来 8 张牌全亮、还会互相压在一起，
+		# 远处压到 0.28 留个"那儿有人"的轮廓，走近才全亮
+		n.set_plate_alpha(lerpf(1.0, 0.28, clampf((nd - (NPC_R + 24.0)) / 116.0, 0.0, 1.0)))
 		if nd > REARM_R:
 			n.cooled = false
 	if best != null and not (best as Object).get("cooled"):
@@ -1571,6 +1574,13 @@ class _CityNPC extends Node2D:
 
 	## 名牌屏内钳制：镜头跟主角走，NPC 挪到屏缘时名牌会被裁掉半块——
 	## 每帧按画布坐标把名牌拨回屏内（左右留 4px）；落进左下摇杆区（约 160×160）的再抬 40px
+	## 名牌透明度（由 CityScene 每帧按"离主角多远"驱动）
+	func set_plate_alpha(a: float) -> void:
+		if _pad != null:
+			_pad.modulate.a = a
+		if _name_l != null:
+			_name_l.modulate.a = a
+
 	func _clamp_plate() -> void:
 		if _pad == null or _name_l == null:
 			return
