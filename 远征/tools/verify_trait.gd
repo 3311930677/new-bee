@@ -151,6 +151,37 @@ func _init() -> void:
 		fails += 1
 		push_error("FAIL: 处决者应在普攻路径生效（100 → %d，期望 %d）" % [boosted, want7])
 
+	# 8. 流派偏置（B2）：已持有同系词条后，三选一应优先出本系
+	var rng2 := RandomNumberGenerator.new()
+	rng2.seed = 20260921
+	var st5 := RunState.new()
+	st5.setup({"seed": 5})
+	st5.traits = ["tr_bleed_1"]
+	var st6 := RunState.new()
+	st6.setup({"seed": 6})
+	var trials := 200
+	var hit_bias := 0
+	var hit_plain := 0
+	for i in trials:
+		var cb: Array = st5.roll_trait_choices(rng2)
+		for r in cb:
+			if String((r as Dictionary).get("school", "none")) == "bleed":
+				hit_bias += 1
+				break
+		var cp: Array = st6.roll_trait_choices(rng2)
+		for r in cp:
+			if String((r as Dictionary).get("school", "none")) == "bleed":
+				hit_plain += 1
+				break
+	var rb := float(hit_bias) / float(trials)
+	var rp := float(hit_plain) / float(trials)
+	if rb <= 0.60:
+		fails += 1
+		push_error("FAIL: 偏置后「三选一里至少一张本系」的命中率 %.2f 应显著高于随机" % rb)
+	if rb <= rp + 0.20:
+		fails += 1
+		push_error("FAIL: 偏置命中率 %.2f 应显著高于无偏置 %.2f" % [rb, rp])
+
 	if fails == 0:
 		print("TRAIT_OK all tests passed")
 	else:

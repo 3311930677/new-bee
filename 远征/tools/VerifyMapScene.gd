@@ -220,6 +220,47 @@ func _run() -> void:
 	gmap.queue_free()
 	await get_tree().process_frame
 
+	# ---- G2. B3/B4：精英战后多给一次三选一 + 档位可见 ----
+	var emap2 := await _spawn_map("elite", 2, "")
+	var elite_mon = null
+	for mo in emap2._monsters:
+		if mo.tier == "elite":
+			elite_mon = mo
+	_check(elite_mon != null, "精英区应含精英怪")
+	if elite_mon != null:
+		emap2._start_battle(elite_mon)
+		_check(emap2._battle != null, "精英战应挂载")
+		if emap2._battle != null:
+			var has_elite_tier := emap2._battle.sim.units.any(
+				func(u): return u.kind == "monster" and String(u.data.get("tier", "")) == "elite")
+			_check(has_elite_tier,
+				"精英应回写 data.tier=elite（立绘高度/紫晕/名签三处表现都靠它）")
+			_force_battle_end(emap2._battle, "victory")
+			await get_tree().process_frame
+			var want_picks: int = emap2._trait_pick_count("elite")
+			_check(want_picks >= 2, "精英战后应多给一次选择（配置 %d 次）" % want_picks)
+			var n_pick := 0
+			while emap2._picker != null and n_pick < 6:
+				emap2._picker._emit_pick(String(emap2._picker.choices[0].get("id", "")))
+				n_pick += 1
+				await get_tree().process_frame
+			_check(n_pick == want_picks, "精英战后应连弹 %d 次三选一，实为 %d" % [want_picks, n_pick])
+			_check(emap2.st.traits.size() == want_picks,
+				"精英战后应拿到 %d 条词条，实为 %d" % [want_picks, emap2.st.traits.size()])
+		# 词条池尽：剩余次数静默跳过，不再逐次弹「已尽」
+		for t in TableCache.traits():
+			var tid := String((t as Dictionary).get("id", ""))
+			if not emap2.st.traits.has(tid):
+				emap2.st.traits.append(tid)
+		if emap2._monsters.size() > 1:
+			emap2._start_battle(emap2._monsters[emap2._monsters.size() - 1])
+			if emap2._battle != null:
+				_force_battle_end(emap2._battle, "victory")
+				await get_tree().process_frame
+				_check(emap2._picker == null, "词条池尽时不应再弹选择浮层")
+	emap2.queue_free()
+	await get_tree().process_frame
+
 	# ---- H. 非战斗节点物件化（宝箱/事件/商店/篝火，§2.7） ----
 	# H1 宝箱：无怪有物件，靠近自动开启并入账
 	var cmap := await _spawn_map("chest", 1, "")
