@@ -3094,6 +3094,7 @@ const XA_ART := {
 	"mon_lavahound": "b_monster_fire_salamander",
 	"mon_magmagolem": "b_monster_puppet_guard",
 	"mon_siege": "b_monster_puppet_guard",
+	"mon_traitor": "b_bandit",
 	# 宠物（D 类 4 张）
 	"pet_foxfire": "d_pet_fire_fox",
 	"pet_thunderhawk": "d_pet_thunder_sparrow",
@@ -3221,6 +3222,31 @@ func xa_idle_frames(role_id: String, fps := 6.0) -> SpriteFrames:
 		at.atlas = tex
 		at.region = Rect2(float(c) * cw, 0.0, cw, ch)
 		frames.add_frame(&"idle", at)
+	return frames
+
+
+## 四方向行走帧（A3 网格：列=帧、行=下/左/右/上）。拿不到网格返回 null，
+## 调用方回落到旧 .tres——探索图与主城的角色现在都是 AI 重生成素材了。
+func xa_walk_frames(role_id: String, fps := 8.0) -> SpriteFrames:
+	var name := String(XA_ROLE_GRID.get(role_id, ""))
+	var tex := res_tex(name) if name != "" else null
+	if tex == null:
+		return null
+	var cw := float(tex.get_width()) / 5.0
+	var ch := float(tex.get_height()) / 4.0
+	var frames := SpriteFrames.new()
+	frames.remove_animation(&"default")
+	var dirs := ["walk_down", "walk_left", "walk_right", "walk_up"]
+	for r in dirs.size():
+		var anim := StringName(dirs[r])
+		frames.add_animation(anim)
+		frames.set_animation_speed(anim, fps)
+		frames.set_animation_loop(anim, true)
+		for c in 5:
+			var at := AtlasTexture.new()
+			at.atlas = tex
+			at.region = Rect2(float(c) * cw, float(r) * ch, cw, ch)
+			frames.add_frame(anim, at)
 	return frames
 
 

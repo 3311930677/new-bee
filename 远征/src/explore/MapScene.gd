@@ -70,6 +70,7 @@ var _theme_cfg: Dictionary = {}
 var _pickups: Array[_Pickup] = []
 var _spots: Array[_Spot] = []          # 兴趣点（碑灵祭坛 / 矿脉）
 var _altar_ui: Control = null          # 祭坛浮层
+var _npcs: Array = []                  # 图上的 NPC（走近搭话，可反复）
 ## 战后三选一：精英/首领多给几次（B3），一次选完接着弹下一次
 var _pending_trait_picks := 0
 var _last_battle_tier := ""
@@ -249,6 +250,7 @@ func _build_world() -> void:
 	_build_portal(map_w)
 	_build_player(map_w, map_h)
 	_build_monsters(map_w, map_h)
+	_build_npcs(map_w, map_h)    # 图上的 NPC：走近搭话（Task 2.2）
 	_build_pickups(cols, rows)   # 散落拾取物：路上有微反馈（轮次 16）
 	_build_spots(cols, rows)     # 兴趣点：祭坛（花金重摇祝福）/ 矿脉（材料）（轮次 17）
 	_restore_node_state()        # 恢复本节点进度：打过的不复活、不重发奖励（P0-1）
@@ -295,12 +297,24 @@ func _build_player(map_w: float, map_h: float) -> void:
 	_world.add_child(_player)
 
 	_player_anim = AnimatedSprite2D.new()
-	var frames_path := String(ROLE_FRAMES.get(st.role_id, ROLE_FRAMES["zs"])[0])
-	_player_anim.sprite_frames = load(frames_path)
+	# 复刻版：优先 AI 重生成的行走网格（A3，四向 × 5 帧），取不到才回落旧素材
+	var xa_frames := G.xa_walk_frames(st.role_id)
+	if xa_frames != null:
+		_player_anim.sprite_frames = xa_frames
+	else:
+		var frames_path := String(ROLE_FRAMES.get(st.role_id, ROLE_FRAMES["zs"])[0])
+		_player_anim.sprite_frames = load(frames_path)
 	# 角色约占 128×128 帧内 y10~120（110px 高）。0.72 再叠 1.25 倍镜头 ⇒ 屏幕上约 99px＝两格；
-	# 帧中心在 y=64，脚底 y=120 ⇒ 局部 +56×0.72＝40.3，故上移 19.3px 让脚踩在碰撞盒下沿（y=21）
-	_player_anim.scale = Vector2.ONE * 0.72
-	_player_anim.position = Vector2(0, -19.3)
+	# 帧中心在 y=64，脚底 y=120 ⇒ 局部 +56×0.72＝40.3，故上移 19.3px 让脚踩在碰撞盒下沿（y=21）。
+	# AI 网格单元是 128×200、人高约 100：缩放按「屏幕上的人一样高」折算，脚底偏移同理折算，
+	# 否则一换素材人就浮起来（两套素材的单元尺寸不同是硬差异，不能共用一个写死的数）。
+	var anim_scale := 0.72
+	var foot_dy := 56.0
+	if xa_frames != null:
+		anim_scale = 0.72 * 110.0 / 100.0
+		foot_dy = 45.0
+	_player_anim.scale = Vector2.ONE * anim_scale
+	_player_anim.position = Vector2(0, -(foot_dy * anim_scale - 21.0))
 	_player_anim.animation = &"walk_down"
 	_player_anim.frame = 1 # neutral passing pose for the initial idle state
 	_player_anim.stop()
@@ -324,6 +338,27 @@ func _build_player(map_w: float, map_h: float) -> void:
 	cam.enabled = true
 	_player.add_child(cam)
 	cam.make_current()
+
+
+## 探索图 NPC（data/npcs.json，Task 2.2）：每主题一位，位置取地图比例。
+## 走近自动搭话，可反复谈（靠 cd 防连点，不像宝箱那样「用一次就熄」）。
+func _build_npcs(map_w: float, map_h: float) -> void:
+	for row in TableCache.theme_npcs(st.theme):
+		var d := row as Dictionary
+		var p: Array = d.get("pos", [0.5, 0.3])
+		if p.size() < 2:
+			continue
+		var it := _Interactable.new()
+		it.kind = "npc"
+		it.npc_name = String(d.get("name", "路人"))
+		it.npc_title = String(d.get("title", ""))
+		var ls: Variant = d.get("lines", [])
+		it.lines = ls if ls is Array else []
+		it.position = Vector2(map_w * float(p[0]), map_h * float(p[1]))
+		it.map_ref = self
+		it.cd = 2.5   # 出生点附近就落位时，先给一段冷静期，别一进场就被拦下说话
+		_world.add_child(it)
+		_npcs.append(it)
 
 
 func _build_monsters(map_w: float, map_h: float) -> void:
@@ -623,9 +658,25 @@ func _on_trait_picked(tid: String) -> void:
 		_next_trait_pick()
 
 
+## 与 NPC 搭话：走统一详情弹层（模态栈会接管 ESC 与归属，点一下即关）。
+## 第一行是身份（如「洛林残军」），其余是台词——玩家一眼看清"这是谁、他说了什么"。
+func _talk_npc(it: _Interactable) -> void:
+	Audio.sfx("ui_open")
+	var body: Array = []
+	if it.npc_title != "":
+		body.append("—— %s ——" % it.npc_title)
+	body.append_array(it.lines)
+	G.show_info_popup(self, it.npc_name, body, self)
+
+
 # ================= 非战斗节点交互（§2.7 物件化） =================
 func on_interactable(it: _Interactable) -> void:
 	if _map_done or _battle != null or _picker != null or _remover != null:
+		return
+	if it.kind == "npc":
+		# NPC 不像宝箱那样一次性：只上冷却，走开再回来还能再聊
+		it.cd = 1.8
+		_talk_npc(it)
 		return
 	it.used = true
 	match it.kind:
@@ -2094,12 +2145,17 @@ class _Interactable extends Node2D:
 		"chest": "node_chest", "event": "node_event",
 		"shop": "node_shop", "bonfire": "node_campfire",
 	}
-	var kind := "chest"  # chest / event / shop / bonfire
+	var kind := "chest"  # chest / event / shop / bonfire / npc
 	var used := false
 	var map_ref: MapScene = null
 	var _t := 0.0
 	var _art := false       # 已用素材立绘（程序体跳过）
 	var _art_h := 64.0      # 立绘显示高（三角提示的高度基准）
+	# NPC 专有（kind == "npc"）：靠近自动搭话，可反复谈，靠 cd 防连点
+	var cd := 0.0
+	var npc_name := ""
+	var npc_title := ""
+	var lines: Array = []
 
 	func _ready() -> void:
 		var tex: Texture2D = G.res_tex(String(KIND_ART.get(kind, "")))
@@ -2111,13 +2167,25 @@ class _Interactable extends Node2D:
 			spr.offset = Vector2(0, -tex.get_height() / 2.0)
 			add_child(spr)
 			_art = true
+		if kind == "npc":
+			_build_npc_label()
+
+	## NPC 名签（原版口径：NPC 名绿色、怪物标签紫色）
+	func _build_npc_label() -> void:
+		var l := G.gold_label(npc_name, G.FS_XS, false, Color("8ce08c"), true)
+		l.position = Vector2(-52, -66)
+		l.custom_minimum_size = Vector2(104, 0)
+		l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(l)
 
 	func _process(delta: float) -> void:
 		_t += delta
+		if cd > 0.0:
+			cd -= delta
 		if used or map_ref == null or map_ref._player == null:
 			return
-		if map_ref._modal_open():
-			return  # 覆盖层期间不触发（含看大地图/演出，P1-10）
+		if cd > 0.0 or map_ref._modal_open():
+			return  # 覆盖层期间不触发（含看大地图/演出/对话，P1-10）
 		if position.distance_to(map_ref._player.position) < MapScene.INTERACT_R:
 			map_ref.on_interactable(self)
 		queue_redraw()
@@ -2134,6 +2202,8 @@ class _Interactable extends Node2D:
 					_draw_shop()
 				"bonfire":
 					_draw_bonfire()
+				"npc":
+					_draw_npc()
 		# 头顶浮动金三角（可交互提示；立绘版抬高点避免压住画面）
 		var bob := sin(_t * 2.2) * 4.0
 		var tip := Vector2(0, (-_art_h - 8.0 if _art else -52.0) + bob)
@@ -2146,6 +2216,18 @@ class _Interactable extends Node2D:
 		draw_rect(Rect2(-20, -18, 40, 3), Color("3a2812"))        # 盖缝
 		draw_rect(Rect2(-4, -20, 8, 12), Color(G.GOLD))           # 金锁
 		draw_arc(Vector2.ZERO, 2.5, 0, TAU, 10, Color("5a3a1a"), 2.0)  # 锁孔
+
+	## 程序占位 NPC：斗篷 + 头 + 一只提灯（无素材时的兜底画法，有立绘则走 _art 分支）
+	func _draw_npc() -> void:
+		draw_colored_polygon(PackedVector2Array([
+			Vector2(0, -40), Vector2(13, -6), Vector2(-13, -6)]), Color("4a5a6a"))    # 斗篷
+		draw_rect(Rect2(-13, -6, 26, 5), Color("2f3a45"))                              # 下摆
+		draw_circle(Vector2(0, -44), 8.0, Color("d8b48a"))                             # 头
+		draw_colored_polygon(PackedVector2Array([
+			Vector2(0, -56), Vector2(11, -44), Vector2(-11, -44)]),
+			Color("3a4a58"))                                                           # 兜帽
+		draw_circle(Vector2(15, -12), 5.0, Color("ffd98a"))                            # 提灯
+		draw_circle(Vector2(15, -12), 8.0, Color(1.0, 0.85, 0.5, 0.22))
 
 	func _draw_event() -> void:
 		draw_rect(Rect2(-11, -34, 22, 40), Color("8a8578"))       # 石碑
