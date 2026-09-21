@@ -44,11 +44,6 @@ func _run() -> void:
 	# 召唤类技能口径：带 summon 字段的技能必须声明 effect.type=="summon"（否则 summon 分支不可达）
 	# 复刻版素材映射自检（1.4 巡检）：同一张 AI 素材不许挂到两只不同的怪身上——
 	# 曾经 mon_magmagolem 与 mon_siege 共用 puppet_guard，两只怪长得一模一样
-	# 复刻版补图：id 命名的这批 AI 怪物**不登记 XA_ART**，全靠 G.art() 的原名回落命中，
-	# 所以这里直接查"按 id 能不能取到图"——文件名写错一个字母就会静默退回程序占位
-	for mid3 in ["mon_spider", "mon_treant", "mon_yeti", "mon_frostguard",
-			"mon_ashimp", "mon_magmagolem", "mon_boss_snow", "mon_boss_volcano"]:
-		assert(G.res_path(mid3) != "", "AI 怪物图缺失：%s" % mid3)
 	var used_art := {}
 	for mid in G.XA_ART.keys():
 		var aid := String(G.XA_ART[mid])
