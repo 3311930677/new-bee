@@ -27,7 +27,7 @@
     "snow": {
       "name": "凛雪原",
       "tiles": ["004_tile_snow_1", "005_tile_snow_2", "006_tile_snow_3"],
-      "path_sheet": "026_tile_snow_path_sheet_00_15",
+      "path_sheet": "",
       "decos": ["035_deco_snow_pine", "036_deco_snow_icecrystal", "037_deco_snow_snowdrift"],
       "deco_density": 0.16,
       "monsters": ["mon_icebat", "mon_yeti", "mon_frostguard"],
@@ -40,7 +40,7 @@
     "volcano": {
       "name": "赤焰岭",
       "tiles": ["007_tile_volcano_1", "008_tile_volcano_2", "009_tile_volcano_3"],
-      "path_sheet": "027_tile_volcano_lava_sheet_00_15",
+      "path_sheet": "",
       "decos": ["038_deco_volcano_lavarock", "039_deco_volcano_bones", "040_deco_volcano_geyser"],
       "deco_density": 0.16,
       "monsters": ["mon_lavahound", "mon_ashimp", "mon_magmagolem"],

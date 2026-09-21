@@ -77,16 +77,19 @@ def fit(img: Image.Image, target_h: int) -> Image.Image:
     return img.resize((w, target_h), Image.Resampling.NEAREST)
 
 
-def rebase_path_sheet(grass: Image.Image) -> Image.Image:
+def rebase_path_sheet(grass: Image.Image, old_sheet: Path = None) -> Image.Image:
     """把现有路面套件的草底换成 AI 新草地、**保留原土路形状**。
 
     为什么不是简单丢掉路面：那张 4×4 是正经的位掩码表（16 格对应 N1/E2/S4/W8 的出口组合），
     而 H2 图集只是个"素材目录"（4 草 + 2 路 + 过渡 + 水 + 石），凑不出三岔/四岔。
     所以路形沿用旧的、草底换新的——路带不会在满屏新草上割出一条旧绿的色带。
+
+    old_sheet 缺省用枫林郊野那张；雪原/火山各传自己那张（路形不同：雪山道 vs 熔岩道）。
     """
-    if not OLD_PATH_SHEET.exists():
+    src = old_sheet if old_sheet is not None else OLD_PATH_SHEET
+    if not src.exists():
         return None
-    old = Image.open(OLD_PATH_SHEET).convert("RGB")
+    old = Image.open(src).convert("RGB")
     out = Image.new("RGB", old.size)
     op, np_, gp = old.load(), out.load(), grass.convert("RGB").load()
     for y in range(old.height):
