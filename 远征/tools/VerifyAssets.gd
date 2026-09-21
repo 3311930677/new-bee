@@ -191,7 +191,11 @@ func _count_dir(path: String) -> int:
 ## 全靠 G.art() 的原名回落命中——文件名错一个字母就会静默退回程序占位，所以在这里点名。
 ## 放在本用例而不是 verify_data：verify_data 是 --script 级、拿不到 autoload（G）。
 const XA_MONSTER_IDS := ["mon_spider", "mon_treant", "mon_yeti", "mon_frostguard",
-	"mon_ashimp", "mon_magmagolem", "mon_boss_snow", "mon_boss_volcano"]
+	"mon_ashimp", "mon_magmagolem", "mon_boss_snow", "mon_boss_volcano", "mon_ghost", "mon_cryptspider", "mon_plague", "mon_boss_tomb",
+	"mon_scorp", "mon_mummy", "mon_sandwyrm", "mon_boss_desert",
+	"mon_icespirit", "mon_frostwalrus", "mon_frostmage", "mon_boss_glacier",
+	"mon_voidling", "mon_shade", "mon_cultist", "mon_boss_abyss",
+	"mon_traitor", "mon_blackknight", "mon_boss_castle"]
 
 
 func _xa_missing_assets() -> PackedStringArray:
