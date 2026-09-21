@@ -715,7 +715,7 @@ func _sweep_plan(cfg: Dictionary) -> Array:
 	return plan
 
 
-## 世界进度文案：「苍绿林海」等
+## 世界进度文案：「枫林郊野」等
 func world_name(theme_id: String) -> String:
 	return String(TableCache.theme_config(theme_id).get("name", theme_id))
 
@@ -1496,7 +1496,7 @@ func equip_slot_cfg(slot_id: String) -> Dictionary:
 	return {}
 
 
-## 当前角色对应的武器槽（剑→破军/枪→穿杨/杖→霜语/锤→晨星）
+## 当前角色对应的武器槽（大剑→铁衣 / 长弓→追风 / 法杖→霜语）
 func equip_weapon_slot(role_id := "") -> String:
 	var rid := role_id if not role_id.is_empty() else selected_role
 	for s in equip_cfg().get("slots", []):

@@ -146,7 +146,7 @@ func _build_avatar_picker(box: VBoxContainer) -> void:
 	if not AVATAR_IDS.has(selected):
 		selected = "zs"
 	_select_avatar(selected)
-	_avatar_caption = G.gold_label("当前：%s ·「+」可上传本地图片" % String(AVATAR_NAMES.get(selected, "破军")),
+	_avatar_caption = G.gold_label("当前：%s ·「+」可上传本地图片" % String(AVATAR_NAMES.get(selected, "铁衣")),
 		G.FS_XS, false, Color("8a7350"), false)
 	box.add_child(_avatar_caption)
 

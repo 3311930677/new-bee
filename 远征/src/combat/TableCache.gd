@@ -172,8 +172,8 @@ static func theme_config(theme: String) -> Dictionary:
 ##
 ## 一律「base + per_level × (level-1)」：等级 1 就是 base，和表里的写法一一对应。
 ## 暴击以前写死 `0.05 + 0.001*level`，把 roles.json 里四职业的 base.crit 与
-## growth.json 的 per_level.crit 全忽略了（问题 #29）——穿杨（ck）表里是 0.07 的暴击职业，
-## 实战里却和破军一个暴击率。
+## growth.json 的 per_level.crit 全忽略了（问题 #29）——追风（ls）表里是 0.07 的暴击职业，
+## 实战里却和铁衣一个暴击率。
 static func role_stats(role_id: String, level: int) -> Dictionary:
 	var role := get_role(role_id)
 	if role.is_empty():

@@ -266,9 +266,9 @@ func _build_info_panel() -> void:
 	title_row.add_theme_constant_override("separation", 10)
 	box.add_child(title_row)
 
-	var rname := G.serif_label("破军", G.FS_LG, G.BANNER)
+	var rname := G.serif_label("铁衣", G.FS_LG, G.BANNER)
 	title_row.add_child(rname)
-	var job := G.gold_label("战士 · 大剑", G.FS_SM, false, Color("7a5a2e"), false)
+	var job := G.gold_label("战士 · 环首大刀", G.FS_SM, false, Color("7a5a2e"), false)
 	job.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 	title_row.add_child(job)
 
