@@ -87,7 +87,8 @@ func _run() -> void:
 	_check((TableCache.equip_config().get("slots", []) as Array).size() == 5,
 		"装备应 5 槽（三职业各 1 武器 + 甲 + 饰）")
 	_check(int(TableCache.skillbook_config().get("max_level", 0)) == 10, "技能书上限应 10 级")
-	_check((TableCache.mounts_config().get("mounts", []) as Array).size() == 6, "坐骑应 6 类")
+	_check((TableCache.mounts_config().get("mounts", []) as Array).size() == 8,
+		"坐骑应 8 类（复刻版按 AI 素材补齐为 8）")
 	# 座骑/槽位这些是**设计常量**（改了就是设计变更，该红）；
 	# 称号是**内容表**（加称号是正常的迭代，不该因为加了内容就红），所以用下界而不是等值
 	_check((TableCache.titles_config().get("titles", []) as Array).size() >= 12,

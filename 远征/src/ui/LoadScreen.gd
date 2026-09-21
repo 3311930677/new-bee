@@ -184,6 +184,11 @@ func _collect_queue() -> void:
 	_queue.append("res://image/role/zs/pojun_walk_4dir.png")
 	_queue.append("res://image/role/ls/chuanyang_walk_4dir.png")
 	_queue.append("res://image/role/fs/shuangyu_walk_4dir.png")
+	# 复刻版：AI 四向行走网格（探索图/主城首帧就要用，预热掉免得首进卡一下）
+	for n in ["a3_zs_walk_grid", "a3_ls_walk_grid", "a3_fs_walk_grid"]:
+		var gp := G.res_path(String(n))
+		if gp != "":
+			_queue.append(gp)
 	# 三张界面大背景（1.5~2.4MB 一张，不预热的话进主城/回主页会各卡一下）
 	for bg in ["home", "enter", "title", "login"]:
 		if ResourceLoader.exists("res://image/background/%s.png" % bg):

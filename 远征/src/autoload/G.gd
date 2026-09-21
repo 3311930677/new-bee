@@ -3099,6 +3099,7 @@ const XA_ART := {
 	"pet_foxfire": "d_pet_fire_fox",
 	"pet_thunderhawk": "d_pet_thunder_sparrow",
 	"pet_rockturtle": "d_pet_turtle_chancellor",
+	"pet_frostwolf": "d_pet_snow_mink",
 }
 
 
