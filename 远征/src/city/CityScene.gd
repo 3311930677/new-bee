@@ -59,16 +59,33 @@ func _ready() -> void:
 
 
 # ================= 地面 =================
+## 地图素材取图（复刻版 Task 1.5）：先问 AI 批次目录（`G.res_tex` 按名索引），命中用新画风，
+## 否则回落 asset_dir 旧素材。asset_dir 的兜底**只在这里写一次**——以前地面用
+## "res://image/map_proc"、散件用 ""，表里少配一个字段两处行为就分裂。
+const FALLBACK_ASSET_DIR := "res://image/map_proc"
+
+func _map_tex(name: String) -> Texture2D:
+	if name == "":
+		return null
+	var t := G.res_tex(name)
+	if t != null:
+		return t
+	# 先 exists 再 load：表里写错一个名字不该刷一屏 load 失败，返回 null 让调用方兜底
+	var path := "%s/%s.png" % [String(_cfg.get("asset_dir", FALLBACK_ASSET_DIR)), name]
+	if not ResourceLoader.exists(path):
+		return null
+	return load(path) as Texture2D
+
+
 func _build_ground() -> void:
 	var g: Dictionary = _cfg.get("ground", {})
 	var tiles: Array = g.get("tiles", [])
-	var asset_dir := String(_cfg.get("asset_dir", "res://image/map_proc"))
 	var tl := TileMapLayer.new()
 	var ts := TileSet.new()
 	ts.tile_size = Vector2i(48, 48)
 	for i in mini(3, tiles.size()):
 		var src := TileSetAtlasSource.new()
-		src.texture = load("%s/%s.png" % [asset_dir, String(tiles[i])])
+		src.texture = _map_tex(String(tiles[i]))
 		src.texture_region_size = Vector2i(48, 48)
 		src.create_tile(Vector2i.ZERO)
 		ts.add_source(src, i)
@@ -84,7 +101,7 @@ func _build_ground() -> void:
 			if sid < ts.get_source_count():
 				tl.set_cell(Vector2i(x, y), sid, Vector2i.ZERO, 0)
 	add_child(tl)
-	_build_roads(asset_dir, String(g.get("path_sheet", "")))
+	_build_roads(String(g.get("path_sheet", "")))
 
 
 ## 城内路网：一条主街（城门→议事厅）+ 三条横街，格子是写死的——城是规划出来的，不是野路
@@ -101,10 +118,10 @@ func _road_cells() -> Dictionary:
 	return cells
 
 
-func _build_roads(asset_dir: String, sheet: String) -> void:
+func _build_roads(sheet: String) -> void:
 	if sheet == "":
 		return
-	var tex: Texture2D = load("%s/%s.png" % [asset_dir, sheet])
+	var tex: Texture2D = _map_tex(sheet)
 	if tex == null:
 		return
 	var cells := _road_cells()
@@ -166,7 +183,6 @@ func _build_decos() -> void:
 	if decos.is_empty():
 		return
 	var density := float(_cfg.get("deco_density", 0.03))
-	var asset_dir := String(_cfg.get("asset_dir", ""))
 	var roads := _road_cells()
 	var spawn := _spawn_px()
 	for gy in _rows:
@@ -180,8 +196,7 @@ func _build_decos() -> void:
 			if pos.distance_to(spawn) < 150.0 or _in_building(pos):
 				continue
 			var deco := _Deco.new()
-			var tex: Texture2D = load("%s/%s.png" % [asset_dir,
-				String(decos[_rng.randi_range(0, decos.size() - 1)])])
+			var tex: Texture2D = _map_tex(String(decos[_rng.randi_range(0, decos.size() - 1)]))
 			deco.setup(tex, _rng.randf_range(0.85, 1.15))
 			deco.position = pos
 			_world.add_child(deco)

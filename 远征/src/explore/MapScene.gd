@@ -133,6 +133,21 @@ func _ready() -> void:
 
 
 # ================= 构建 =================
+## 地图素材取图（复刻版 Task 1.5）：先问 AI 批次目录（`G.res_tex` 按名索引），
+## 命中就用新画风，否则回落 asset_dir 里的旧素材——换画风与改表解耦，单张能单独回退。
+func _map_tex(name: String) -> Texture2D:
+	if name == "":
+		return null
+	var t := G.res_tex(name)
+	if t != null:
+		return t
+	# 先 exists 再 load：表里写错一个名字不该刷一屏 load 失败，返回 null 让调用方兜底
+	var path := "%s/%s.png" % [_map_asset_dir, name]
+	if not ResourceLoader.exists(path):
+		return null
+	return load(path) as Texture2D
+
+
 func _build_ground() -> void:
 	# 地面层：TileMapLayer 程序构建（主题 3 种 tile 加权平铺，无碰撞）
 	var tl := TileMapLayer.new()
@@ -143,7 +158,7 @@ func _build_ground() -> void:
 	var weights := [0.6, 0.2, 0.2]
 	for i in mini(3, tiles.size()):
 		var src := TileSetAtlasSource.new()
-		src.texture = load("%s/%s.png" % [asset_dir, String(tiles[i])])
+		src.texture = _map_tex(String(tiles[i]))
 		src.texture_region_size = Vector2i(48, 48)
 		src.create_tile(Vector2i.ZERO)
 		ts.add_source(src, i)
@@ -171,7 +186,7 @@ func _build_ground_detail(cols: int, rows: int) -> void:
 	var path := _path_cells(cols, rows)
 	var road: Array = []  # 路面格中心：主题无 4×4 套件时改用程序绘制的踩实土路
 	if sheet != "":
-		var tex: Texture2D = load("%s/%s.png" % [asset_dir, sheet])
+		var tex: Texture2D = _map_tex(sheet)
 		if tex != null:
 			var tl := TileMapLayer.new()
 			var ts := TileSet.new()
@@ -275,7 +290,7 @@ func _build_decos(cols: int, rows: int) -> void:
 			if pos.distance_to(spawn) < 110.0 or pos.y < 200.0:
 				continue
 			var deco := _Deco.new()
-			var tex: Texture2D = load("%s/%s.png" % [asset_dir, String(decos[_rng.randi_range(0, decos.size() - 1)])])
+			var tex: Texture2D = _map_tex(String(decos[_rng.randi_range(0, decos.size() - 1)]))
 			deco.setup(tex, _rng.randf_range(0.85, 1.18))
 			deco.position = pos
 			_world.add_child(deco)

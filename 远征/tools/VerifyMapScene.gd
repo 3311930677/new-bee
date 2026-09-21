@@ -307,6 +307,24 @@ func _run() -> void:
 	pnpcmap.queue_free()
 	await get_tree().process_frame
 
+	# ---- G5. 复刻版地图素材：AI 切图优先命中、缺图回落旧目录（Task 1.5） ----
+	_check(G.res_tex("001_tile_forest_1") != null,
+		"枫林郊野地砖应命中 AI 重生成素材（image/generated_362_xajh/ready/map/）")
+	var tmap := await _spawn_map("normal", 1, "")
+	var ai_tile: Texture2D = tmap._map_tex("001_tile_forest_1")
+	var old_tile: Texture2D = load("res://image/map_proc/001_tile_forest_1.png")
+	_check(ai_tile != null and ai_tile != old_tile and ai_tile.get_width() == 48,
+		"_map_tex 应取到 AI 地砖（48×48）而不是旧目录素材")
+	var ai_deco: Texture2D = tmap._map_tex("028_deco_forest_tree")
+	_check(ai_deco != null and ai_deco.get_height() == 128,
+		"森林大树应命中 AI 散件（128 高；旧素材 125）")
+	_check(tmap._map_tex("037_deco_snow_snowdrift") != null,
+		"没有 AI 版本的散件应回落 asset_dir（缺图不许开天窗）")
+	_check(tmap._map_tex("not_exist_at_all") == null,
+		"两边都没有的素材应老实返回 null，交给调用方处理")
+	tmap.queue_free()
+	await get_tree().process_frame
+
 	# ---- H. 非战斗节点物件化（宝箱/事件/商店/篝火，§2.7） ----
 	# H1 宝箱：无怪有物件，靠近自动开启并入账
 	var cmap := await _spawn_map("chest", 1, "")
