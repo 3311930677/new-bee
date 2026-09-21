@@ -12,6 +12,7 @@ const VIEW_H := 800.0
 var _btns: Array[Control] = []
 var _focus := 0
 var _intro_panel: Control = null
+var _settings: SettingsPanel = null
 
 
 func _ready() -> void:
@@ -135,16 +136,32 @@ func _activate(idx: int) -> void:
 			G.go("res://src/ui/Login.tscn")
 		1:  # 游戏介绍
 			_show_intro()
-		2:  # 游戏设置（占位提示）
-			_show_toast("设置功能开发中")
+		2:  # 游戏设置：与主界面同一个设置面板（standalone 模式隐藏「回标题」）
+			_open_settings()
 		3:  # 退出
 			get_tree().quit()
+
+
+# ---------- 设置（接上真正的设置面板，不再是「开发中」占位） ----------
+func _open_settings() -> void:
+	if _settings != null:
+		return
+	Audio.sfx("ui_open")
+	_settings = SettingsPanel.new()
+	_settings.standalone = true
+	_settings.closed.connect(func():
+		Audio.sfx("ui_close")
+		_settings.queue_free()
+		_settings = null)
+	add_child(_settings)
 
 
 # ---------- 键盘操作 ----------
 func _unhandled_input(event: InputEvent) -> void:
 	if G.ui_blocked:   # GM 控制台等全屏层优先（轮次 14）
 		return
+	if _settings != null:
+		return   # 设置打开时键盘交给设置面板（它自己处理 Esc 关闭）
 	if _intro_panel != null:
 		if event.is_action_pressed("ui_accept") or event.is_action_pressed("ui_cancel"):
 			_intro_panel.queue_free()

@@ -143,7 +143,7 @@ func _skill_page(sid: String) -> Control:
 	var dot_x := (CONTENT_W - dots_w) * 0.5
 	for i in mx:
 		var dot := Panel.new()
-		dot.position = Vector2(dot_x + i * 30.0, 80)
+		dot.position = Vector2(dot_x + i * 30.0, 68)
 		dot.size = Vector2(22, 22)
 		dot.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		var dsb := StyleBoxFlat.new()
@@ -158,33 +158,110 @@ func _skill_page(sid: String) -> Control:
 	# 等级文字：「LV3 / 10」
 	var lv_l := G.gold_label("LV%d / %d" % [lv, mx], G.FS_MD, true, Color("4a7a8a"), false)
 	lv_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	lv_l.position = Vector2(0, 116)
+	lv_l.position = Vector2(0, 96)
 	lv_l.custom_minimum_size = Vector2(CONTENT_W, 0)
 	inner.add_child(lv_l)
 
-	# 效果描述：一行，居中
+	# 效果描述：一行，居中（强度百分比移到下面的对比区，不在同一屏说两遍）
 	var k0 := float(sd.get("k", 0.0))
-	var eff := String(sd.get("desc", ""))
-	var mult := G.skill_k_mult(sid)
-	if k0 > 0.0 and mult > 1.001:
-		eff += " · 强度 +%d％" % roundi((mult - 1.0) * 100.0)
-	var k_l := G.text_label(eff, G.FS_SM, Color("5a3a1e"))
+	var k_l := G.text_label(String(sd.get("desc", "")), G.FS_SM, Color("5a3a1e"))
 	k_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	k_l.position = Vector2(20, 156)
+	k_l.position = Vector2(20, 128)
 	k_l.custom_minimum_size = Vector2(CONTENT_W - 40, 0)
 	k_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	inner.add_child(k_l)
 
+	# ── 升级对比区：把"当前等级 → 下一等级"的强度变化并排摆出来，升级前就能看到收益
+	# 数值口径与 BattleSim 一致：等级只缩放伤害系数 k（k × (1 + k_per×(lv-1))）；
+	# 效果型技能（k=0）在战斗里确实不吃等级加成，这里如实说明，不编造缩放数字。
+	var k_per := float(TableCache.skillbook_config().get("k_per_level", 0.05))
+	var cmp := Control.new()
+	cmp.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	cmp.position = Vector2(0, 172)
+	cmp.custom_minimum_size = Vector2(CONTENT_W, 96)
+	inner.add_child(cmp)
+
+	# 左右各留 28：PageDeck 的翻页箭头骑在页宽最外侧 26px，留 28 才不会被箭头压住边角
+	var m := 28.0
+	var inner_w := CONTENT_W - m * 2.0
+
+	if k0 <= 0.0:
+		var eff_cell := _cmp_cell(inner_w, 96.0, "效果型技能 LV%d" % lv,
+			"效果固定", "升级不改变强度数值", false)
+		eff_cell.position = Vector2(m, 0)
+		cmp.add_child(eff_cell)
+	elif lv >= mx:
+		var cap_cell := _cmp_cell(inner_w, 96.0, "已达最高等级 LV%d" % mx,
+			"×%.2f" % (k0 * (1.0 + k_per * float(mx - 1))),
+			_pct_text(roundi(k_per * float(mx - 1) * 100.0)), true)
+		cap_cell.position = Vector2(m, 0)
+		cmp.add_child(cap_cell)
+	else:
+		var gap := 24.0
+		var cw := (inner_w - gap) * 0.5
+		var cur_cell := _cmp_cell(cw, 96.0, "当前 LV%d" % lv,
+			"×%.2f" % (k0 * (1.0 + k_per * float(lv - 1))),
+			_pct_text(roundi(k_per * float(lv - 1) * 100.0)), false)
+		cur_cell.position = Vector2(m, 0)
+		cmp.add_child(cur_cell)
+		var next_cell := _cmp_cell(cw, 96.0, "升级后 LV%d" % (lv + 1),
+			"×%.2f" % (k0 * (1.0 + k_per * float(lv))),
+			_pct_text(roundi(k_per * float(lv) * 100.0)), true)
+		next_cell.position = Vector2(CONTENT_W - m - cw, 0)
+		cmp.add_child(next_cell)
+		var arrow := G.gold_label("→", G.FS_LG, true, Color("8a5a1a"), false)
+		arrow.position = Vector2(m + cw, 34)
+		arrow.custom_minimum_size = Vector2(gap, 0)
+		cmp.add_child(arrow)
+
 	# 大升级按钮：底部居中
 	var btn := G.gold_button("已满级" if cost <= 0 else "升 级 · %d 远征币" % cost,
 		G.BTN_L.x, G.BTN_L.y, G.FS_MD)
-	btn.position = Vector2((CONTENT_W - G.BTN_L.x) * 0.5, 260)
+	btn.position = Vector2((CONTENT_W - G.BTN_L.x) * 0.5, 286)
 	btn.mouse_filter = Control.MOUSE_FILTER_STOP
 	btn.gui_input.connect(func(ev: InputEvent):
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 			_on_upgrade(sid))
 	inner.add_child(btn)
 	return page
+
+
+## 强度百分比文案：0% 说成"基础强度"，避免出现"+0％"这种废话
+func _pct_text(pct: int) -> String:
+	return "基础强度" if pct <= 0 else "强度 +%d％" % pct
+
+
+## 对比区单元格：等宽小牌，三行（标题 / 数值 / 副标）；accent=true 用于"升级后"一侧
+func _cmp_cell(w: float, h: float, title: String, value: String, sub: String, accent: bool) -> Control:
+	var cell := Panel.new()
+	cell.custom_minimum_size = Vector2(w, h)
+	cell.size = Vector2(w, h)
+	cell.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color("f7ecc8") if accent else Color("e6dab6")
+	sb.set_corner_radius_all(8)
+	sb.set_border_width_all(2)
+	sb.border_color = G.GOLD_BTN_EDGE if accent else Color("c0a868")
+	cell.add_theme_stylebox_override("panel", sb)
+
+	var t := G.gold_label(title, G.FS_XS, false, Color("8a5a1a") if accent else Color("6a5230"), false)
+	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	t.position = Vector2(0, 12)
+	t.custom_minimum_size = Vector2(w, 0)
+	cell.add_child(t)
+
+	var v := G.gold_label(value, G.FS_LG, true, Color("8a5a1a") if accent else G.TEXT_DARK, false)
+	v.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	v.position = Vector2(0, 34)
+	v.custom_minimum_size = Vector2(w, 0)
+	cell.add_child(v)
+
+	var s := G.gold_label(sub, G.FS_XS, false, Color("6a5230"), false)
+	s.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	s.position = Vector2(0, 66)
+	s.custom_minimum_size = Vector2(w, 0)
+	cell.add_child(s)
+	return cell
 
 
 func _on_upgrade(sid: String) -> void:

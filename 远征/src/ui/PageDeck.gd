@@ -24,6 +24,15 @@ var current := 0
 var key_mode := "both"
 ## 首尾循环：末尾再往右回到第一张，箭头常驻
 var wrap := false
+## 页间留白（px）：相邻页紧贴排布时，其左侧控件的 StyleBox 阴影会向左越过
+## 裁切边界渗漏 2-3px（设置页右缘的虚线竖条就是这么来的），留缝后阴影落在缝里
+var page_gap := 0.0
+## 箭头外扩（px）：>0 时左右箭头骑到内容区外缘（面板边框上），
+## 不再压住页内垂直居中处的内容（设置第 2 页「剧情与角色」标题就被压过）
+var arrow_outset := 0.0:
+	set(v):
+		arrow_outset = v
+		_layout_arrows()
 
 var _view_w := 408.0
 var _view_h := 320.0
@@ -63,16 +72,26 @@ func _init(w := 408.0, h := 320.0, footer_h := 0.0) -> void:
 	_track.position = Vector2.ZERO
 	_clip.add_child(_track)
 
-	# 左右箭头（Kenney CC0 棕色箭头，22×21）：贴在两缘、垂直居中
+	# 左右箭头（Kenney CC0 棕色箭头，22×21）：贴在两缘、垂直居中。
+	# 挂在本节点而非 _clip：arrow_outset>0 时箭头骑到裁切区外缘，放 _clip 里会被裁掉
 	_prev_btn = _arrow_btn("arrowBrown_left", Vector2(4, h * 0.5 - 17))
 	_next_btn = _arrow_btn("arrowBrown_right", Vector2(w - 26, h * 0.5 - 17))
-	_clip.add_child(_prev_btn)
-	_clip.add_child(_next_btn)
+	add_child(_prev_btn)
+	add_child(_next_btn)
+	_layout_arrows()
 
 	_dots.alignment = BoxContainer.ALIGNMENT_CENTER
 	_dots.add_theme_constant_override("separation", DOT_GAP)
 	add_child(_dots)
 	_layout_dots()
+
+
+## 箭头落位：arrow_outset>0 时骑出内容区两缘（压在宿主面板的边框上）
+func _layout_arrows() -> void:
+	if _prev_btn == null or _next_btn == null:
+		return   # 成员初始化期 setter 先触发一次，此时箭头还没建
+	_prev_btn.position = Vector2(4.0 - arrow_outset, _view_h * 0.5 - 17)
+	_next_btn.position = Vector2(_view_w - 26.0 + arrow_outset, _view_h * 0.5 - 17)
 
 
 func _arrow_btn(tex_name: String, pos: Vector2) -> Control:
@@ -115,7 +134,7 @@ func add_page(page: Control, page_size := Vector2.ZERO) -> void:
 		ps = Vector2(_view_w, page.custom_minimum_size.y)
 	page.custom_minimum_size = ps
 	page.size = ps
-	page.position = Vector2(float(page_count) * _view_w, 0)
+	page.position = Vector2(float(page_count) * (_view_w + page_gap), 0)
 	_track.add_child(page)
 	self.page_count += 1
 	_refresh_arrows()
@@ -147,7 +166,7 @@ func _ensure_page(i: int) -> Control:
 		return null
 	page.custom_minimum_size = _factory_size
 	page.size = _factory_size
-	page.position = Vector2(float(i) * _view_w, 0)
+	page.position = Vector2(float(i) * (_view_w + page_gap), 0)
 	_track.add_child(page)
 	_made[i] = page
 	return page
@@ -164,7 +183,7 @@ func go(i: int, instant := false) -> void:
 		_ensure_page(i)
 		_ensure_page(i - 1)
 		_ensure_page(i + 1)
-	var target := Vector2(-float(i) * _view_w, 0)
+	var target := Vector2(-float(i) * (_view_w + page_gap), 0)
 	if _tween != null and _tween.is_valid():
 		_tween.kill()
 	if instant:
@@ -204,7 +223,7 @@ func _gui_input(e: InputEvent) -> void:
 		var dx := (e as InputEventMouseMotion).global_position.x - _drag_start
 		# 拖出边界时给一半阻尼，松手自然回弹
 		var raw := _drag_base + dx
-		var min_x := -float(maxi(0, page_count - 1)) * _view_w
+		var min_x := -float(maxi(0, page_count - 1)) * (_view_w + page_gap)
 		if raw > 0.0:
 			raw *= 0.4
 		elif raw < min_x:

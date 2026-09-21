@@ -19,6 +19,7 @@ const ICON_FALLBACK := {
 
 var _entries: Array = []     # data/exchange.json 的 entries
 var _btns := {}              # id -> 兑换按钮（刷新置灰态用）
+var _cost_l := {}            # id -> 代价行 Label（买不起时转红）
 var _times := {}             # id -> 本次会话已兑换次数（toast 的 ×N）
 var _content: Control = null
 var _honor_l: Label = null   # 顶部荣誉余额
@@ -177,7 +178,7 @@ func _entry_row(e: Dictionary) -> Control:
 	col.add_child(cost_l)
 	row.add_child(col)
 
-	var btn := G.gold_button("兑 换", 84, 38, G.FS_SM)
+	var btn := G.gold_button("兑 换", 96, 38, G.FS_SM)
 	btn.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	btn.gui_input.connect(func(e2: InputEvent):
 		if e2 is InputEventMouseButton and e2.pressed and e2.button_index == MOUSE_BUTTON_LEFT:
@@ -187,6 +188,7 @@ func _entry_row(e: Dictionary) -> Control:
 	root.add_child(row)
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_btns[eid] = btn
+	_cost_l[eid] = cost_l
 	return root
 
 
@@ -231,7 +233,8 @@ func do_exchange(entry_id: String) -> bool:
 	return true
 
 
-## 刷新余额数字与各条按钮态（买不起的置灰 modulate 0.5，但仍可点击看红字提示）
+## 刷新余额数字与各条按钮态：买不起的整颗钮压灰 + 文案直说「荣誉不足」+ 代价数字转红
+## ——玩家不点也知道差多少，而不是要靠点一次弹红字才明白
 func _refresh() -> void:
 	var honor := int(G.wallet.get("honor", 0))
 	if _honor_l != null:
@@ -241,7 +244,15 @@ func _refresh() -> void:
 		if btn == null:
 			continue
 		var e := _find(String(id))
-		btn.modulate = Color(1, 1, 1, 0.5) if honor < int(e.get("cost", 0)) else Color.WHITE
+		var poor := honor < int(e.get("cost", 0))
+		btn.modulate = Color(1, 1, 1, 0.5) if poor else Color.WHITE
+		var bl := btn.get_child(0) as Label
+		if bl != null:
+			bl.text = "荣誉不足" if poor else "兑换"
+		var cl: Label = _cost_l.get(String(id))
+		if cl != null:
+			cl.add_theme_color_override("font_color",
+				G.C_COST if poor else Color("8a6a34"))
 
 
 func _warn(msg: String) -> void:

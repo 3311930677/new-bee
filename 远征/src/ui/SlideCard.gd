@@ -19,7 +19,7 @@
 #   art_tint     占位与边框的色标（通常给主题色/稀有度色）
 #   art_fit      contain（整图居中）/ cover（铺满裁切，默认 contain）
 #   art_dim      true 时压暗插画（未解锁 / 未收集）
-#   art_frame    叠加在插画上的外框素材名（如稀有度方框）
+#   art_frame    稀有度外框标记（非空即在插画四周描一圈 art_tint 色矢量边）
 #   art_ratio    插画高占卡片高的比例（默认 0.52）
 #   selected     初始选中态
 #   on_click     点击回调（无参 Callable）；给了才会响应点击并启用 PASS 事件透传
@@ -243,7 +243,6 @@ func _gui_input(e: InputEvent) -> void:
 ## 无图：画柔光 + 远山占位，并标出「该生成哪张图」的素材名（留白等后续生成）
 class _ArtInner extends Control:
 	var tex: Texture2D = null
-	var frame_tex: Texture2D = null
 	var fit := "contain"
 	var tint := Color("8d8474")
 	var hint := ""
@@ -258,9 +257,6 @@ class _ArtInner extends Control:
 		hint = String(c.get("art_hint", ""))
 		dim = bool(c.get("art_dim", false))
 		tex = _first_tex(c.get("art_names", []), String(c.get("art_fallback", "")))
-		var frame_name := String(c.get("art_frame", ""))
-		if frame_name != "":
-			frame_tex = G.res_tex(frame_name)
 		if tex != null:
 			var pic := TextureRect.new()
 			pic.texture = tex
@@ -275,16 +271,20 @@ class _ArtInner extends Control:
 			if dim:
 				pic.modulate = Color(0.34, 0.31, 0.29, 0.9)
 			add_child(pic)
-		if frame_tex != null:
-			var fr := TextureRect.new()
-			fr.texture = frame_tex
-			fr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-			fr.stretch_mode = TextureRect.STRETCH_SCALE
-			fr.set_anchors_preset(Control.PRESET_FULL_RECT)
-			fr.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			if dim:
-				fr.modulate = Color(0.55, 0.55, 0.55, 0.85)
-			add_child(fr)
+		# 稀有度外框：矢量描边。外框贴图（方括号形）被 STRETCH_SCALE 拉到宽矩形后
+		# 两侧细边糊成黑竖带、四角花纹断成虚线段，改 StyleBox 描边后任意长宽比都清晰
+		var frame_name := String(c.get("art_frame", ""))
+		if frame_name != "":
+			var fb := Panel.new()
+			var fsb := StyleBoxFlat.new()
+			fsb.bg_color = Color(0, 0, 0, 0)
+			fsb.set_corner_radius_all(10)
+			fsb.set_border_width_all(2)
+			fsb.border_color = tint.darkened(0.25) if dim else tint.lightened(0.18)
+			fb.add_theme_stylebox_override("panel", fsb)
+			fb.set_anchors_preset(Control.PRESET_FULL_RECT)
+			fb.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			add_child(fb)
 		if tex == null and hint != "":
 			_h1 = G.gold_label("此处留白 · 待补插画", G.FS_XS - 1, false, Color("9a8c6c"), false)
 			_h2 = G.gold_label(hint, G.FS_XS - 2, false, Color("a89a7c"), false)

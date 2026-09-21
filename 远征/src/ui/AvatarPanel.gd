@@ -13,12 +13,17 @@ const PREVIEW := 132.0   # 预览尺寸（也是"上传后最多被看到的清�
 const PICK_FILTERS := ["*.png,*.jpg,*.jpeg,*.webp,*.bmp ; 图片文件"]
 const AVATAR_IDS := ["zs", "ck", "fs", "fz"]
 const ROLE_NAMES := {"zs": "破军", "ck": "穿杨", "fs": "霜语", "fz": "晨星"}
+# 四职业快捷行（C3）：预览框下方一排 4 个职业小卡，点一下直接换职业头像
+const ROLE_ROW_Y := PREVIEW + 92.0
+const ROLE_CARD := 48.0
+const ROLE_CARD_GAP := 16.0
+const ROLE_NAME_H := 14.0
 
 var _content: Control = null
 var _preview: TextureRect = null
 var _state_l: Label = null
 var _use_custom_btn: Control = null
-var _use_role_btn: Control = null
+var _role_cards: Array = []      # 四职业快捷行的卡（每张带 style/mark 元数据）
 var _picker: FileDialog = null
 var _toast_l: Label = null
 
@@ -73,14 +78,14 @@ func _build() -> void:
 
 	# 当前状态一行（用哪张图、从哪来），换完立刻能对得上
 	_state_l = G.gold_label("", G.FS_XS, false, Color("8a6a34"), false)
-	_state_l.position = Vector2(0, PREVIEW + 14.0)
+	_state_l.position = Vector2(0, PREVIEW + 8.0)
 	_state_l.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_state_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_content.add_child(_state_l)
 
 	# 主操作：上传本地图片（唯一的主按钮）
 	var up := G.gold_button("上传本地图片", G.BTN_L.x, G.BTN_L.y, G.FS_MD)
-	up.position = Vector2((CONTENT_W - G.BTN_L.x) * 0.5, PREVIEW + 44.0)
+	up.position = Vector2((CONTENT_W - G.BTN_L.x) * 0.5, PREVIEW + 32.0)
 	up.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_open_picker())
@@ -88,7 +93,7 @@ func _build() -> void:
 
 	# 次操作：切回上次上传的图（没上传过就压灰，不给假按钮）
 	_use_custom_btn = G.ghost_button("用上次上传的图", G.BTN_M.x, G.BTN_M.y, G.FS_SM)
-	_use_custom_btn.position = Vector2((CONTENT_W - G.BTN_M.x) * 0.5, PREVIEW + 108.0)
+	_use_custom_btn.position = Vector2((CONTENT_W - G.BTN_M.x) * 0.5, PREVIEW + 162.0)
 	_use_custom_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			if G.use_custom_avatar():
@@ -99,29 +104,18 @@ func _build() -> void:
 				_toast("还没上传过图片"))
 	_content.add_child(_use_custom_btn)
 
-	# 恢复默认：保留已上传的图片，只切换当前使用的头像来源。
-	_use_role_btn = G.ghost_button("用职业头像", G.BTN_M.x, G.BTN_M.y, G.FS_SM)
-	_use_role_btn.position = Vector2((CONTENT_W - G.BTN_M.x) * 0.5, PREVIEW + 160.0)
-	_use_role_btn.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			var rid := G.avatar_id if not G.get_role(G.avatar_id).is_empty() else G.selected_role
-			if G.get_role(rid).is_empty():
-				rid = "zs"
-			G.use_role_avatar(rid)
-			_toast("已切回职业头像")
-			_refresh()
-			changed.emit())
-	_content.add_child(_use_role_btn)
+	# 四职业快捷行（C3）：一排 4 个职业头像，点一下直接换上（替代原来单独的「用职业头像」按钮）
+	_build_role_row()
 
 	var tip := G.gold_label("图片只保存在本机，不联网、不上传",
 		G.FS_XS, false, Color("8a6a34"), false)
-	tip.position = Vector2(0, PREVIEW + 216.0)
+	tip.position = Vector2(0, PREVIEW + 212.0)
 	tip.custom_minimum_size = Vector2(CONTENT_W, 0)
 	tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_content.add_child(tip)
 
 	var back := G.ghost_button("返回", G.BTN_S.x, G.BTN_S.y, G.FS_SM)
-	back.position = Vector2((CONTENT_W - G.BTN_S.x) * 0.5, PREVIEW + 246.0)
+	back.position = Vector2((CONTENT_W - G.BTN_S.x) * 0.5, PREVIEW + 232.0)
 	back.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			Audio.sfx("ui_close")
@@ -133,6 +127,86 @@ func _apply_shadow(sb: StyleBoxFlat) -> void:
 	sb.shadow_color = Color(0, 0, 0, 0.28)
 	sb.shadow_size = 5
 	sb.shadow_offset = Vector2(0, 2)
+
+
+# ---------- 四职业快捷行（C3） ----------
+func _build_role_row() -> void:
+	_role_cards.clear()
+	var n := AVATAR_IDS.size()
+	var row_w := ROLE_CARD * float(n) + ROLE_CARD_GAP * float(n - 1)
+	var x0 := (CONTENT_W - row_w) * 0.5
+	for i in n:
+		var card := _role_card(String(AVATAR_IDS[i]))
+		card.position = Vector2(x0 + float(i) * (ROLE_CARD + ROLE_CARD_GAP), ROLE_ROW_Y)
+		_content.add_child(card)
+		_role_cards.append(card)
+
+
+func _role_card(id: String) -> Control:
+	var root := Control.new()
+	var ch := ROLE_CARD + ROLE_NAME_H
+	root.custom_minimum_size = Vector2(ROLE_CARD, ch)
+	root.size = Vector2(ROLE_CARD, ch)
+	root.mouse_filter = Control.MOUSE_FILTER_STOP
+	root.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	root.tooltip_text = String(ROLE_NAMES.get(id, id))
+	root.set_meta("avatar_id", id)
+
+	var card := Panel.new()
+	card.name = "Card"
+	card.size = Vector2(ROLE_CARD, ROLE_CARD)
+	card.clip_contents = true
+	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color("dcc9a0")
+	sb.set_corner_radius_all(5)
+	sb.set_border_width_all(2)
+	sb.border_color = G.BOX_EDGE
+	card.add_theme_stylebox_override("panel", sb)
+	root.set_meta("style", sb)
+	root.add_child(card)
+
+	var tex := load(G.role_icon_path(id)) as Texture2D
+	if tex != null:
+		var pic := TextureRect.new()
+		pic.texture = tex
+		pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		pic.position = Vector2(4, 4)
+		pic.size = Vector2(ROLE_CARD - 8.0, ROLE_CARD - 8.0)
+		pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		card.add_child(pic)
+
+	var mark := G.gold_label("✓", G.FS_XS, true, G.GOLD, false)
+	mark.name = "SelectedMark"
+	mark.position = Vector2(ROLE_CARD - 15.0, 1)
+	mark.size = Vector2(15, 18)
+	mark.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	mark.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	mark.visible = false
+	card.add_child(mark)
+
+	var nm := G.gold_label(String(ROLE_NAMES.get(id, id)), G.FS_XS, false, Color("7a5a2e"), false)
+	nm.position = Vector2(0, ROLE_CARD + 1.0)
+	nm.size = Vector2(ROLE_CARD, ROLE_NAME_H)
+	nm.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	nm.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(nm)
+
+	root.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_pick_role(id))
+	return root
+
+
+## 点职业卡：直接换成该职业头像（保留已上传的图，只切来源）
+func _pick_role(id: String) -> void:
+	if not AVATAR_IDS.has(id):
+		return
+	G.use_role_avatar(id)
+	_toast("已换上「%s」职业头像" % String(ROLE_NAMES.get(id, id)))
+	_refresh()
+	changed.emit()
 
 
 # ---------- 选文件 ----------
@@ -186,6 +260,19 @@ func _refresh() -> void:
 		_use_custom_btn.modulate = Color.WHITE if usable else Color(1, 1, 1, 0.45)
 		_use_custom_btn.mouse_filter = Control.MOUSE_FILTER_STOP if usable \
 			else Control.MOUSE_FILTER_IGNORE
+	# 四职业快捷行选中态：只有「当前来源=职业头像」且 id 对得上才高亮（与登录页选卡同一套样式）
+	var rid_active := "" if using_custom else (
+		G.avatar_id if AVATAR_IDS.has(G.avatar_id) else G.selected_role)
+	for card in _role_cards:
+		var active := String(card.get_meta("avatar_id", "")) == rid_active
+		var sb := card.get_meta("style") as StyleBoxFlat
+		if sb != null:
+			sb.bg_color = Color("f4e8c8") if active else Color("dcc9a0")
+			sb.border_color = G.GOLD if active else G.BOX_EDGE
+			sb.set_border_width_all(3 if active else 2)
+		var mark := card.get_node_or_null("Card/SelectedMark") as Label
+		if mark != null:
+			mark.visible = active
 
 
 func _toast(msg: String) -> void:

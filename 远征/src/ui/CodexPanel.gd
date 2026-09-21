@@ -10,7 +10,9 @@ signal closed
 const PageDeckScript := preload("res://src/ui/PageDeck.gd")
 const SlideCardScript := preload("res://src/ui/SlideCard.gd")
 
-const RARITY_NAME := {"white": "普通", "blue": "稀有", "purple": "史诗", "gold": "传说"}
+# 稀有度色/名全项目唯一定义在 G.gd（C6），这里只引用，不再各自复制一份
+const GScript := preload("res://src/autoload/G.gd")
+const RARITY_NAME := GScript.RARITY_NAME
 const ROLE_NAME := {
 	"tank": "护卫", "ranged_dps": "远程", "fast_dps": "速攻", "control": "控制",
 	"healer": "治疗", "aoe_dps": "群攻", "poison_control": "毒控",
@@ -18,10 +20,7 @@ const ROLE_NAME := {
 # 稀有度 → 边框素材名（frame_* 为方框空心底图，叠在宠物头像外圈）
 const RARITY_FRAME := {"white": "frame_white", "blue": "frame_blue",
 	"purple": "frame_purple", "gold": "frame_gold"}
-const RARITY_HUE := {
-	"white": Color("a89e88"), "blue": Color("6f9fd0"),
-	"purple": Color("a273c9"), "gold": Color("d8ab48"),
-}
+const RARITY_HUE := GScript.RARITY_HUE
 # 同 DeployPanel：440 羊皮纸 - 左右各 16 内边距 = 408，子控件按 408 排版才不右偏
 const CONTENT_W := 408.0
 const DECK_H := 400.0
@@ -124,7 +123,7 @@ func _card(p: Dictionary, idx: int, total: int) -> Control:
 	var owned: bool = G.owns_pet(pid)
 	var rarity := String(p.get("rarity", "white"))
 	var base: Dictionary = p.get("base", {})
-	var hue: Color = RARITY_HUE.get(rarity, Color("a89e88"))
+	var hue: Color = RARITY_HUE.get(rarity, G.C_HINT)
 
 	var lines: Array = []
 	var subtitle := ""

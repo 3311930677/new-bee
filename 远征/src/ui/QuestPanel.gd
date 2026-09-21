@@ -8,7 +8,8 @@ signal closed
 const VIEW_W := 480.0
 const VIEW_H := 800.0
 const CONTENT_W := 408.0
-const ROW_H := 96.0
+# 行高 108：奖励从「状态行右半」挪到独立一行（原来伸到按钮底下被压住），多要 12px
+const ROW_H := 108.0
 const ROW_GAP := 8.0
 const TOP := 46.0
 # 卡片内排版（问题 #13）：row 的 content_margin 左右各 12 → 内宽 384。
@@ -156,12 +157,12 @@ func _row(qid: String, y: float) -> void:
 		state_col = Color("a06020")
 	var st_l := G.gold_label(state, G.FS_XS, false, state_col, false)
 	st_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	st_l.position = Vector2(0, 54)
+	st_l.position = Vector2(0, 48)
 	st_l.custom_minimum_size = Vector2(150, 0)
 	st_l.clip_text = true
 	inner.add_child(st_l)
 
-	# 奖励一行小字：让玩家知道值不值得做
+	# 奖励独占一行：原来塞在状态行右半（x=154），文字一长就钻到右侧按钮底下被压住
 	var reward: Dictionary = d.get("reward", {})
 	var parts := PackedStringArray()
 	for k in G.REWARD_KEYS:
@@ -170,9 +171,9 @@ func _row(qid: String, y: float) -> void:
 	if parts.size() > 0:
 		var rw_l := G.gold_label(" · ".join(parts), G.FS_XS, false, Color("8a6a34", 0.9), false)
 		rw_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-		rw_l.position = Vector2(154, 54)
-		rw_l.custom_minimum_size = Vector2(INNER_W - 154.0, 0)
-		rw_l.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
+		rw_l.position = Vector2(0, 70)
+		rw_l.custom_minimum_size = Vector2(INNER_W, 0)
+		rw_l.clip_text = true
 		inner.add_child(rw_l)
 
 	# 操作按钮：未接取→接取；可交付→交付；其余是灰字状态

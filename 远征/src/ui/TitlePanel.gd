@@ -1,24 +1,25 @@
 # TitlePanel.gd —— 称号成就（条件达成免费领 / 荣誉购买；佩戴给小幅加成，程序文字渲染）
-# 分组分页（皇室战争式）：成就达成 / 荣誉兑换 两组，用 PageDeck 一屏一组翻页，
-# 不再把 12 条全平铺在一屏。组内仍按「已拥有 → 可领取 → 未达成」排序。
+# 单一纵向滚动列表（原来 PageDeck 翻页 + 组内滚动 + 圆点三套导航并存，找称号像走迷宫）：
+# 三组（修行/征服/荣誉）按组名头分段排进一个 ScrollContainer，上下滚到底；
+# 组内按「已拥有 → 可领取 → 未达成」排序。滚动条隐藏，卡片吃满内宽。
 class_name TitlePanel
 extends Control
 
 signal closed
 
 const CONTENT_W := 408.0
-const DECK_H := 470.0
-# 组内纵向滚动（问题 #2）：卡片宽再让出滚动条的空间，否则滚动条一出现就有 12px 被裁掉
-const SCROLLBAR_W := 16.0
-const CARD_W := CONTENT_W - SCROLLBAR_W
-const HEAD_H := 44.0        # 组名头 + 分隔线占的高度，滚动区从它下面开始
-const PageDeckScript := preload("res://src/ui/PageDeck.gd")
+const LIST_Y := 30.0
+const LIST_H := 524.0       # 佩戴行之下、返回钮之上的整条滚动区
+const CARD_W := CONTENT_W   # 滚动条隐藏后卡片吃满内宽
+const CARD_H := 94.0
+const HEAD_H := 40.0        # 组名头（标题 + 金细分隔线）
+const GAP := 10.0           # 列表间距（VBox separation）
 
-var _deck: Control = null
+var _scroll: ScrollContainer = null
 var _active_l: Label = null
 var _toast: Label = null
 var _content: Control = null
-# 三组：修行（等级/宠物/金币养成）/ 征服（通关秘境）/ 荣誉（荣誉兑换），一屏 ≤5 张大卡片
+# 三组：修行（等级/宠物/金币养成）/ 征服（通关秘境）/ 荣誉（荣誉兑换）
 var _groups: Array = []
 var _group_names := ["修行之路", "秘境征服", "荣誉兑换"]
 
@@ -50,7 +51,7 @@ func _build() -> void:
 	_active_l.custom_minimum_size = Vector2(CONTENT_W, 0)
 	content.add_child(_active_l)
 
-	# 分组分页由 _refresh 统一建（首次 + 交互后重建共用一条路径）
+	# 滚动列表由 _refresh 统一建（首次 + 交互后重建共用一条路径）
 
 	var close_btn := G.gold_button("返 回", G.BTN_S.x, G.BTN_S.y, G.FS_SM)
 	close_btn.position = Vector2((CONTENT_W - G.BTN_S.x) * 0.5, 566)
@@ -103,69 +104,86 @@ func _sorted_group(gi: int) -> Array:
 	return owned + claimable + locked
 
 
-## preserve=true 时留在当前组（佩戴/领取后不该被弹回默认组——问题 #10）；
-## preserve=false（首次打开）才用 _default_group() 挑「有未领取的那组」。
+## preserve=true 时留在当前滚动位置（佩戴/领取后不该被弹回顶部——问题 #10）；
+## preserve=false（首次打开）滚到「有未领取的那组」的组名头。
 func _refresh(preserve := false) -> void:
 	var tid := G.title_active()
 	_active_l.text = "佩戴：%s" % String(G.title_cfg(tid).get("name", "")) if not tid.is_empty() \
 		else "尚未佩戴称号"
-	# 重新分组 + 整块重建 PageDeck：领取/佩戴会改变状态色与归属，组少重建开销可忽略
-	var prev := int(_deck.current) if (preserve and _deck != null) else -1
 	_split_groups()
-	if _deck != null:
-		_deck.queue_free()
-	_deck = PageDeckScript.new(CONTENT_W, DECK_H, 30.0)
-	_deck.position = Vector2(0, 30)
-	_deck.key_mode = "both"
-	_deck.set_factory(_groups.size(), func(gi: int) -> Control:
-		return _group_page(gi), Vector2(CONTENT_W, DECK_H))
-	_content.add_child(_deck)
-	var want := prev if prev >= 0 else _default_group()
-	_deck.go(clampi(want, 0, maxi(0, _groups.size() - 1)), true)
+	var prev_scroll := int(_scroll.scroll_vertical) if (preserve and _scroll != null) else -1
+	if _scroll != null:
+		_scroll.queue_free()
+	_scroll = ScrollContainer.new()
+	_scroll.position = Vector2(0, LIST_Y)
+	_scroll.size = Vector2(CONTENT_W, LIST_H)
+	_scroll.custom_minimum_size = Vector2(CONTENT_W, LIST_H)
+	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER   # 藏滚动条，卡片吃满 408
+	_scroll.mouse_filter = Control.MOUSE_FILTER_STOP
+	_content.add_child(_scroll)
+
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", GAP)
+	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_scroll.add_child(box)
+	for gi in _groups.size():
+		if _groups[gi].is_empty():
+			continue
+		box.add_child(_group_head(gi))
+		for t in _sorted_group(gi):
+			box.add_child(_title_card(t as Dictionary))
+
+	var want_y := prev_scroll if prev_scroll >= 0 else _group_offset(_default_group())
+	# 布局还没结算，直接设会被钳回 0；延迟一帧再设
+	_scroll.set_deferred("scroll_vertical", want_y)
 
 
-## 一组一个分页：组名头 + 该组称号大卡片纵向排
-func _group_page(gi: int) -> Control:
-	var page := Control.new()
-	page.custom_minimum_size = Vector2(CONTENT_W, DECK_H)
-	page.size = Vector2(CONTENT_W, DECK_H)
+## 第 gi 组组名头在列表里的 y：组块 = 组名头(40) + 每张卡(10 间距 + 94)
+func _group_offset(gi: int) -> int:
+	var y := 0.0
+	for j in mini(gi, _groups.size()):
+		if _groups[j].is_empty():
+			continue
+		y += HEAD_H + float(_groups[j].size()) * (GAP + CARD_H) + GAP
+	return int(y)
 
-	# 组名头：宋体深棕 + 底部一条金细分隔线（顶部留 8px 与「佩戴」行分开）
-	var head := G.serif_label(_group_names[gi], G.FS_MD, Color("7a5a2e"))
-	head.position = Vector2(4, 8)
-	head.custom_minimum_size = Vector2(CONTENT_W - 8, 0)
-	page.add_child(head)
+
+## 组名头：宋体深棕 + 底部一条金细分隔线
+func _group_head(gi: int) -> Control:
+	var head := Control.new()
+	head.custom_minimum_size = Vector2(CARD_W, HEAD_H)
+	head.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var l := G.serif_label(_group_names[gi], G.FS_MD, Color("7a5a2e"))
+	l.position = Vector2(4, 4)
+	l.custom_minimum_size = Vector2(CARD_W - 8, 0)
+	head.add_child(l)
 	var rule := Panel.new()
-	rule.position = Vector2(4, 36)
-	rule.size = Vector2(CONTENT_W - 8, 2)
+	rule.position = Vector2(4, 32)
+	rule.size = Vector2(CARD_W - 8, 2)
 	var rsb := StyleBoxFlat.new()
 	rsb.bg_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.4)
 	rule.add_theme_stylebox_override("panel", rsb)
 	rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	page.add_child(rule)
+	head.add_child(rule)
+	return head
 
-	# 该组称号卡片：组内**纵向滚动**（问题 #2）。
-	# 原来卡片从 y=50 起、步进 104、高 94：第 5 张下缘到 560，而 Deck 视口只有 470，
-	# 第 5 张及以后被裁掉且没有任何滚动手段，等于永远点不到。
-	# 这里不改外层尺寸（外层要留给页脚/返回按钮），只在组内套一层 ScrollContainer。
-	var list := _sorted_group(gi)
-	var scroll := ScrollContainer.new()
-	scroll.position = Vector2(0, HEAD_H)
-	scroll.size = Vector2(CONTENT_W, DECK_H - HEAD_H)
-	scroll.custom_minimum_size = Vector2(CONTENT_W, DECK_H - HEAD_H)
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
-	scroll.mouse_filter = Control.MOUSE_FILTER_STOP
-	page.add_child(scroll)
 
-	var list_box := VBoxContainer.new()
-	list_box.add_theme_constant_override("separation", 10)
-	list_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	list_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	scroll.add_child(list_box)
-	for t in list:
-		list_box.add_child(_title_card(t as Dictionary))
-	return page
+## 状态按钮皮（B6）：与 gold_button 同尺寸档位，只换皮——「已佩戴」深绿底白字、
+## 「未达成」灰描边棕字。这样"能点的"（金）和"状态"（绿/灰）在列表里一眼分得开。
+func _state_button(text: String, active: bool) -> Control:
+	var btn := G.gold_button(text, G.BTN_S.x - 24, 34, G.FS_SM)
+	var sb: StyleBoxFlat = btn.get_theme_stylebox("panel")
+	if active:
+		sb.bg_color = Color("1f5a2e")
+		sb.border_color = Color("3e7a44")
+		(btn.get_child(0) as Label).add_theme_color_override("font_color", Color("eef6e8"))
+	else:
+		sb.bg_color = Color("9a8a6a4d")   # #9a8a6a 30% 透明
+		sb.border_color = Color("8a7a5a")
+		(btn.get_child(0) as Label).add_theme_color_override("font_color", Color("8a7a5a"))
+	return btn
 
 
 func _title_card(t: Dictionary) -> Control:
@@ -175,9 +193,8 @@ func _title_card(t: Dictionary) -> Control:
 	var met := G.title_cond_met(t)
 
 	var root := PanelContainer.new()
-	# 卡宽让出滚动条（CARD_W）；坐标一律以 CARD_W 为右边界，别再按 CONTENT_W 算，
-	# 否则滚动条一出现右侧按钮就会被裁掉一截。
-	root.custom_minimum_size = Vector2(CARD_W, 94)
+	# 坐标一律以 CARD_W 为右边界（滚动条隐藏后 CARD_W = CONTENT_W，卡片吃满内宽）
+	root.custom_minimum_size = Vector2(CARD_W, CARD_H)
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = Color("f0e2bc") if owned else Color("e2d2a8")
 	sb.set_corner_radius_all(8)
@@ -228,7 +245,8 @@ func _title_card(t: Dictionary) -> Control:
 	# 右侧操作按钮：垂直居中
 	var btn: Control
 	if is_active:
-		btn = G.gold_button("卸 下", G.BTN_S.x - 24, 34, G.FS_SM)
+		# 已佩戴：深绿底白字——与"可操作的金钮"拉开反差，一眼看出当前生效的是哪个
+		btn = _state_button("卸 下", true)
 		btn.gui_input.connect(func(ev: InputEvent):
 			if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 				G.title_set_active("")
@@ -248,8 +266,8 @@ func _title_card(t: Dictionary) -> Control:
 	else:
 		var cost: Dictionary = t.get("cost", {})
 		if cost.is_empty():
-			btn = G.gold_button("未达成", G.BTN_S.x - 24, 34, G.FS_SM)
-			(btn.get_child(0) as Label).add_theme_color_override("font_color", Color("8a7a58"))
+			# 未达成：灰描边钮（不是"灰字金钮"）——状态钮不该长得像能点的金钮
+			btn = _state_button("未达成", false)
 		else:
 			btn = G.gold_button("%d 荣誉" % int(cost.get("honor", 0)), G.BTN_S.x - 24, 34, G.FS_SM)
 			btn.gui_input.connect(func(ev: InputEvent):
@@ -302,4 +320,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event.is_action_pressed("ui_cancel"):
 		closed.emit()
+		get_viewport().set_input_as_handled()
+	elif _scroll != null and event.is_action_pressed("ui_down"):
+		_scroll.scroll_vertical += int(CARD_H + GAP)
+		get_viewport().set_input_as_handled()
+	elif _scroll != null and event.is_action_pressed("ui_up"):
+		_scroll.scroll_vertical -= int(CARD_H + GAP)
 		get_viewport().set_input_as_handled()
