@@ -216,6 +216,29 @@ func _run() -> void:
 	sp.queue_free()
 	await get_tree().process_frame
 
+	# ---- J. 非法档（语义校验失败）：必须备份原档 + 锁定写盘（A7） ----
+	_wipe(G.SAVE_PATH)
+	_write(G.SAVE_PATH, _fixture_text("future_ts.json"))
+	G.save_backup_path = ""
+	G.save_locked = false
+	G.last_load_report = {}
+	G._load_save()
+	_check(String(G.last_load_report.get("mode", "")) == "invalid",
+		"未来时间水位档应被判 invalid，实为「%s」" % String(G.last_load_report.get("mode", "")))
+	_check(G.save_backup_path != "" and FileAccess.file_exists(G.save_backup_path),
+		"校验失败的档同样必须备份原档（备份路径：%s）" % G.save_backup_path)
+	_check(G.save_locked, "校验失败后应锁定写盘（内存是默认态，写下去就覆盖玩家真档）")
+	var locked_text := _read(G.SAVE_PATH)
+	G.save_game()
+	_check(_read(G.SAVE_PATH) == locked_text, "锁写期间 save_game 不得改写原档")
+	if G.save_backup_path != "":
+		_wipe(G.save_backup_path)
+	# 玩家在主界面选了「继续（放弃原档）」之后应能正常落盘
+	G.save_locked = false
+	G.save_lock_reason = ""
+	G.save_game()
+	_check(_read(G.SAVE_PATH) != locked_text, "解锁后 save_game 应能正常落盘")
+
 	_wipe(G.SAVE_PATH)
 	if _fails == 0:
 		print("SAVE_OK all tests passed")

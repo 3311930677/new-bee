@@ -57,6 +57,32 @@ func _ready() -> void:
 	_build_top(role)
 	_build_stage(role)
 	_build_entries()
+	_prompt_save_locked()
+
+
+# ---------- 坏档提示（A7） ----------
+## 读档被判非法时，内存是干净默认态：写盘会覆盖玩家真档，所以进主界面第一件事
+## 就是把选择权交回玩家——继续（放弃原档）或去设置里导入旧档。原档已备份，丢不了。
+func _prompt_save_locked() -> void:
+	if not G.save_locked:
+		return
+	var lines := [
+		"存档校验未通过，进度暂时没有读入。",
+		"原因：%s" % G.save_lock_reason,
+		"原档已备份，本程序不会擅自覆盖它：",
+		G.save_backup_path if G.save_backup_path != "" else "（无备份）",
+		"选择「继续」= 放弃原档、以新进度开始；",
+		"选择「导入旧档」= 去设置里粘贴存档码恢复。",
+	]
+	var home := self
+	var go_import := func():
+		_open_settings(_click_ev())
+	G.show_choice_popup(home, "存档未能读入", lines, [
+		{"text": "继 续", "cb": func():
+			G.save_locked = false
+			G.save_lock_reason = ""},
+		{"text": "导入旧档", "cb": go_import},
+	])
 
 
 # ---------- 背景（黄昏营地插画 + 轻压暗，保持暖调通透） ----------
@@ -491,7 +517,10 @@ func _on_expedition(e: InputEvent) -> void:
 			G.go("res://src/run/RouteScene.tscn"))
 		_deploy.canceled.connect(func():
 			_deploy.queue_free()
-			_deploy = null)
+			_deploy = null
+			_set_home_content_visible(true))
+		# 出征筹备是沉浸式整屏浮层：主城的横幅/入口从面纱后透出来会显得版面很脏
+		_set_home_content_visible(false)
 		add_child(_deploy)
 
 
