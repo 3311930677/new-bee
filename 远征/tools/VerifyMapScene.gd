@@ -261,6 +261,29 @@ func _run() -> void:
 	emap2.queue_free()
 	await get_tree().process_frame
 
+	# ---- G3. C 批：深渊主题规则 —— 小地图揭示半径按 rule 缩放 ----
+	var rmap0 := await _spawn_map("normal", 1, "")
+	var base_reveal := float(rmap0._map_cfg.get("map_reveal_radius", 520.0))
+	rmap0.queue_free()
+	await get_tree().process_frame
+	var zst := RunState.new()
+	zst.setup({"theme": "abyss", "role_id": "zs", "level": 5, "seed": 11})
+	MapScene.pending_cfg = {"node": {"type": "normal", "layer": 1, "index": 0}, "run": zst}
+	var rmap1: MapScene = (load("res://src/explore/MapScene.tscn") as PackedScene).instantiate()
+	add_child(rmap1)
+	await get_tree().process_frame
+	var abyss_reveal := float(rmap1._map_cfg.get("map_reveal_radius", 520.0))
+	var reveal_mult := float((TableCache.theme_rule("abyss").get("params", {}) as Dictionary)
+		.get("reveal_mult", 0.5))
+	_check(absf(abyss_reveal - base_reveal * reveal_mult) < 1.0,
+		"深渊揭示半径应按 rule 缩放（%.0f，期望 %.0f×%.2f）"
+			% [abyss_reveal, base_reveal, reveal_mult])
+	_check(absf(float(TableCache.maps_config().get("map_reveal_radius", 520.0)) - base_reveal) < 1.0,
+		"主题覆盖不得污染 TableCache 缓存（原表 %.0f）"
+			% float(TableCache.maps_config().get("map_reveal_radius", 520.0)))
+	rmap1.queue_free()
+	await get_tree().process_frame
+
 	# ---- H. 非战斗节点物件化（宝箱/事件/商店/篝火，§2.7） ----
 	# H1 宝箱：无怪有物件，靠近自动开启并入账
 	var cmap := await _spawn_map("chest", 1, "")

@@ -110,8 +110,14 @@ func _ready() -> void:
 	if st == null:
 		push_error("MapScene 缺少 run 状态")
 		return
-	_map_cfg = TableCache.maps_config()
+	_map_cfg = TableCache.maps_config().duplicate(true)
 	_theme_cfg = TableCache.theme_config(st.theme)
+	# 世界主题规则（C 批）：揭示半径这条不属于战斗 tick，只能在大地图侧按主题覆盖。
+	# 必须 duplicate 后再写——原地改 _map_cfg 就是改 TableCache 的缓存，跨场景串味。
+	var rule := TableCache.theme_rule(st.theme)
+	if String(rule.get("id", "")) == "abyss_dark":
+		var mult := float((rule.get("params", {}) as Dictionary).get("reveal_mult", 0.5))
+		_map_cfg["map_reveal_radius"] = float(_map_cfg.get("map_reveal_radius", 520.0)) * mult
 	# 地图素材目录必须是**明确的成品配置**（问题 #34）：以前这里没有默认值兜底，
 	# 也没人报缺配置，maps.json 少了 asset_dir 就会静默去 load 一个不存在的母稿路径。
 	_map_asset_dir = String(_map_cfg.get("asset_dir", ""))
