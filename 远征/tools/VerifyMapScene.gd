@@ -325,6 +325,23 @@ func _run() -> void:
 	tmap.queue_free()
 	await get_tree().process_frame
 
+	# ---- G6. 坐骑的跑图机动加成（mounts.json 顶层 explore 段） ----
+	var keep_m: Variant = G.prog.get("mounts", {})
+	G.prog["mounts"] = {"owned": {"horse": 1}, "active": "horse"}
+	_check(float(G.mount_explore_bonus().get("sprint_pct", 0.0)) > 0.0, "骑追风骏应有疾行提速")
+	G.prog["mounts"] = {"owned": {"griffin": 1}, "active": "griffin"}
+	_check(float(G.mount_explore_bonus().get("stealth_pct", 0.0)) > 0.0, "骑金鳞鲤应有明雷规避")
+	var zmob := await _spawn_map("normal", 1, "")
+	if not zmob._monsters.is_empty():
+		var base_aggro := float(TableCache.maps_config().get("aggro_radius", 120.0))
+		_check(zmob._monsters[0]._aggro < base_aggro,
+			"明雷规避应缩小警戒半径（%s < %s）" % [str(zmob._monsters[0]._aggro), str(base_aggro)])
+	zmob.queue_free()
+	await get_tree().process_frame
+	G.prog["mounts"] = {"owned": {}, "active": ""}
+	_check(float(G.mount_explore_bonus().get("sprint_pct", 0.0)) == 0.0, "没骑坐骑不应有机动加成")
+	G.prog["mounts"] = keep_m
+
 	# ---- H. 非战斗节点物件化（宝箱/事件/商店/篝火，§2.7） ----
 	# H1 宝箱：无怪有物件，靠近自动开启并入账
 	var cmap := await _spawn_map("chest", 1, "")

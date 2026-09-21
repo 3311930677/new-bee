@@ -1793,6 +1793,32 @@ func mount_active() -> String:
 	return String((prog.get("mounts", {}) as Dictionary).get("active", ""))
 
 
+## 坐骑的**大地图**机动加成（mounts.json 各阶 explore 段）：疾行提速 + 明雷规避。
+## 与战斗加成同一个来源（当前骑乘的那只、当前阶），但作用在探索层——
+## 坐骑此前只在战斗中加数值，"换坐骑"在跑图时毫无手感差别。
+## 返回 {"sprint_pct", "stealth_pct"}，没骑乘就全 0。
+func mount_explore_bonus() -> Dictionary:
+	var out := {"sprint_pct": 0.0, "stealth_pct": 0.0}
+	var mid := mount_active()
+	var tier := mount_tier(mid)
+	if mid == "" or tier <= 0:
+		return out
+	# 探索加成集中在 mounts.json 顶层 explore[mid][阶-1]（与战斗 bonus 分开两处，
+	# 是因为一个管战斗内数值、一个管跑图手感，改哪边都不用碰另一边的数字）
+	var all: Variant = TableCache.mounts_config().get("explore", {})
+	if not (all is Dictionary):
+		return out
+	var arr: Variant = (all as Dictionary).get(mid, [])
+	if not (arr is Array) or tier > (arr as Array).size():
+		return out
+	var ex: Variant = (arr as Array)[tier - 1]
+	if not (ex is Dictionary):
+		return out
+	out["sprint_pct"] = float((ex as Dictionary).get("sprint_pct", 0.0))
+	out["stealth_pct"] = float((ex as Dictionary).get("stealth_pct", 0.0))
+	return out
+
+
 ## 购买 1 阶 / 升级 2 阶
 func mount_buy(mid: String) -> Dictionary:
 	var cfg := mount_cfg(mid)

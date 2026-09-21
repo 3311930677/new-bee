@@ -1,5 +1,15 @@
 {
   "version": 1,
+  "explore": {
+    "comment": "坐骑的跑图机动加成（2026-09-22）：sprint_pct = 疾行提速，stealth_pct = 明雷规避（怪物警戒半径按此缩小）。按 [一阶, 二阶]，与战斗 bonus 分开：一个管战斗数值、一个管跑图手感。",
+    "horse":       [{"sprint_pct": 0.12}, {"sprint_pct": 0.20}],
+    "whitedeer":   [{"sprint_pct": 0.08, "stealth_pct": 0.08}, {"sprint_pct": 0.16, "stealth_pct": 0.14}],
+    "griffin":     [{"sprint_pct": 0.06, "stealth_pct": 0.10}, {"sprint_pct": 0.10, "stealth_pct": 0.16}],
+    "nightmare":   [{"sprint_pct": 0.08, "stealth_pct": 0.10}, {"sprint_pct": 0.14, "stealth_pct": 0.16}],
+    "sandlizard":  [{"sprint_pct": 0.04, "stealth_pct": 0.04}, {"sprint_pct": 0.08, "stealth_pct": 0.08}],
+    "bear":        [{"stealth_pct": 0.05}, {"stealth_pct": 0.08}],
+    "woolyrhino":  [{"stealth_pct": 0.04}, {"stealth_pct": 0.07}]
+  },
   "comment": "坐骑线（玩法文档 §6/§15.1）：购入 1 阶后可用材料升 2 阶；同时只能骑乘 1 只，骑乘加成全局生效。2026-09-22 复刻版换皮：名字按帕拉多诺/洛林线自拟，图标指向 AI 重生成素材（C 类 8 张）；**id 与数值一律未动**（存档键与回归口径不变），二阶美术待补故 icon2 暂与一阶同图。",
   "mounts": [
     { "id": "horse", "name": "追风骏", "icon": "c_mount_zq_sj", "icon2": "c_mount_zq_sj",

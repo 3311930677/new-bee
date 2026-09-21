@@ -91,6 +91,8 @@ var _compass: _Compass = null        # 目标罗盘（含距离，点击开始/�
 var _sprint_btn: Control = null      # 疾行开关
 var _big_map: Control = null         # 大地图浮层（含图例与返回按钮）
 var _sprint := false
+## 坐骑的跑图机动加成（G.mount_explore_bonus()）：疾行提速 + 明雷规避
+var _explore: Dictionary = {}
 var _auto_walk := false
 var _auto_time := 0.0                # 自动前往累计时长（超时自停，防止绕过点卡死）
 var _auto_stuck := 0.0
@@ -110,6 +112,7 @@ func _ready() -> void:
 	if st == null:
 		push_error("MapScene 缺少 run 状态")
 		return
+	_explore = G.mount_explore_bonus()
 	_map_cfg = TableCache.maps_config().duplicate(true)
 	_theme_cfg = TableCache.theme_config(st.theme)
 	# 世界主题规则（C 批）：揭示半径这条不属于战斗 tick，只能在大地图侧按主题覆盖。
@@ -917,7 +920,7 @@ func _physics_process(delta: float) -> void:
 		dir = _auto_dir(delta)
 	var speed := TableCache.map_player_speed()
 	if _sprint:
-		speed *= float(_map_cfg.get("sprint_mult", 1.6))
+		speed *= float(_map_cfg.get("sprint_mult", 1.6)) * (1.0 + float(_explore.get("sprint_pct", 0.0)))
 	_prev_pos = _player.position
 	_player.velocity = dir * speed
 	_player.move_and_slide()
@@ -1367,7 +1370,10 @@ func _toggle_sprint() -> void:
 	if _sprint_btn != null:
 		var l := _sprint_btn.get_child(0) as Label
 		if l != null:
-			l.text = "疾行 · 开" if _sprint else "疾行 · 关"
+			# 坐骑的疾行加成写在按钮上：换坐骑后跑图变快，玩家得看得见原因
+			var sp := float(_explore.get("sprint_pct", 0.0))
+			var tag := " · 开 +%d%%" % int(sp * 100.0) if sp > 0.0 else " · 开"
+			l.text = "疾行" + tag if _sprint else "疾行 · 关"
 	Audio.sfx("ui_click")
 
 
@@ -1957,7 +1963,9 @@ class _MapMonster extends CharacterBody2D:
 		cs.position = Vector2(0, -_radius * 0.5)
 		add_child(cs)
 		var mc: Dictionary = TableCache.maps_config()
-		_aggro = float(mc.get("aggro_radius", 120.0))
+		# 明雷规避（坐骑）：警戒半径按 stealth_pct 缩小——怪要更近才发现你
+		_aggro = float(mc.get("aggro_radius", 120.0)) \
+			* (1.0 - clampf(float(G.mount_explore_bonus().get("stealth_pct", 0.0)), 0.0, 0.6))
 		_contact = float(mc.get("contact_radius", 26.0))
 		_wander_r = float(mc.get("monster_wander_radius", 96.0))
 		# 精灵体：boss 84 / elite 60 / normal 48 像素高，脚底对齐碰撞原点
