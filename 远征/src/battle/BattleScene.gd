@@ -25,12 +25,49 @@ const ENEMY_FRONT_Y := 226.0
 const ALLY_FRONT_Y := 402.0
 const ALLY_BACK_Y := 474.0
 
-const ROLE_SPRITE := {  # 人物战斗表现复用行走帧（walk_down 首帧行走帧当待机）
+const ROLE_SPRITE := {  # 人物战斗行走帧（探索/进出场用）
 	"zs": ["res://image/role/zs/pojun_walk_frames.tres", "pojun"],
 	"ck": ["res://image/role/ck/chuanyang_walk_frames.tres", "chuanyang"],
 	"fs": ["res://image/role/fs/shuangyu_walk_frames.tres", "shuangyu"],
 	"fz": ["res://image/role/fz/chenxing_walk_frames.tres", "chenxing"],
 }
+# 战斗五态 spritesheet（4 列 × 5 行 @128px：待机/普攻/施法/受击/倒下）。
+# Godot 3 的 .tres 在 4.7 下不稳，统一运行时从整图重建（与 GameHome/CreateRole 同口径）。
+const ROLE_BATTLE_SHEET := {
+	"zs": "res://image/role/zs/pojun_spritesheet.png",
+	"ck": "res://image/role/ck/chuanyang_spritesheet.png",
+	"fs": "res://image/role/fs/shuangyu_spritesheet.png",
+	"fz": "res://image/role/fz/chenxing_spritesheet.png",
+}
+const BATTLE_ROWS := [  # [动画名, 行号, 是否循环, 帧率]
+	["idle", 0, true, 5.0], ["attack", 1, false, 11.0], ["cast", 2, false, 8.0],
+	["hit", 3, false, 10.0], ["death", 4, false, 6.0],
+]
+static var _battle_frames_cache := {}
+
+## 按职业构建战斗五态帧；无素材返回 null（调用方回退行走帧）
+static func battle_frames(role_id: String) -> SpriteFrames:
+	if _battle_frames_cache.has(role_id):
+		return _battle_frames_cache[role_id]
+	var path: String = ROLE_BATTLE_SHEET.get(role_id, "")
+	var tex: Texture2D = load(path) if path != "" else null
+	var frames: SpriteFrames = null
+	if tex != null:
+		frames = SpriteFrames.new()
+		frames.remove_animation(&"default")
+		for r in BATTLE_ROWS:
+			var anim := StringName(r[0])
+			frames.add_animation(anim)
+			frames.set_animation_loop(anim, bool(r[2]))
+			frames.set_animation_speed(anim, float(r[3]))
+			for c in 4:
+				var at := AtlasTexture.new()
+				at.atlas = tex
+				at.region = Rect2(c * 128, int(r[1]) * 128, 128, 128)
+				frames.add_frame(anim, at)
+	_battle_frames_cache[role_id] = frames
+	return frames
+
 const BUFF_ABBR := {  # buff 状态条缩写
 	"poison": "毒", "bleed": "血", "slow": "缓", "stun": "晕", "fear": "惧",
 	"taunt": "嘲", "shield": "盾", "atk_up": "攻", "atk_down": "衰", "lurk": "潜",
@@ -69,6 +106,9 @@ var _hitstop := 0.0                  # 顿帧剩余秒数
 var _shake_tw: Tween = null
 var _danger: TextureRect = null      # 低血红晕（挂在根节点，别放进飘字层：那儿会被清空断言检查）
 var _danger_tip_done := false
+var _boss_name_l: Label = null       # B4 首领战顶部大血条：左侧名字
+var _boss_fill: ColorRect = null      # B4 首领血条填充
+var _boss_bar_w := 0.0                # B4 血条满宽（算一次，刷新时按比例缩）
 var _dmg_out := 0                    # 我方造成的总伤害（战报用）
 var _dmg_in := 0                     # 我方承受的总伤害
 var _best_hit := 0                   # 我方最高单击
@@ -217,9 +257,13 @@ func _build_top_bar() -> void:
 	var tc := TableCache.theme_config(String(_cfg.get("enemy", {}).get("theme", "forest")))
 	var nt: String = String(_cfg.get("enemy", {}).get("node_type", "normal"))
 	var nt_name: String = {"normal": "遭遇战", "elite": "精英战", "boss": "首领战"}.get(nt, "遭遇战")
+	# 标题垫一块与右侧按钮同族的深底 chip：亮天空下宋体金字不再糊进背景
+	var title_chip := _func_chip("", 178)
+	title_chip.position = Vector2(12, 12)
+	title_chip.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var title := G.serif_label("%s · %s" % [String(tc.get("name", "未知")), nt_name], G.FS_MD, G.GOLD)
-	title.position = Vector2(16, 14)
-	add_child(title)
+	title_chip.add_child(title)
+	add_child(title_chip)
 
 	# 开局倍速读设置里的默认档（设置里改了不必每场再点一次）；进战斗后仍可随时切换。
 	# 外部已指定过 speed 的场合（负哨兵被覆盖）不会走到 cur_speed() 的默认分支。
@@ -236,10 +280,63 @@ func _build_top_bar() -> void:
 	add_child(_auto_btn)
 
 	_cast_tip = G.serif_label("", G.FS_SM, Color("ffe9b0"))
-	_cast_tip.position = Vector2(0, 52)
+	# 战场中部的空带（敌方前排血条之下、我方前排名字之上）：原来放 y=52，
+	# 和后排敌人头顶的名字撞成一串
+	_cast_tip.position = Vector2(0, 306)
 	_cast_tip.custom_minimum_size = Vector2(VIEW_W, 0)
 	_cast_tip.modulate.a = 0.0
 	add_child(_cast_tip)
+
+	_build_boss_bar()
+
+
+## B4 首领战顶部大血条：标题 chip 之下（y=46）一条横贯的大血条，左名右条。
+## 首领体型大、头顶小血条既挤又看不清，改由顶部专条承担"还剩多少"的职责。
+func _build_boss_bar() -> void:
+	if not sim.has_boss():
+		return
+	_boss_name_l = G.gold_label("", G.FS_SM, true, Color("ffd98a"), true)
+	_boss_name_l.position = Vector2(BAR_X, 46)
+	_boss_name_l.custom_minimum_size = Vector2(118, 0)
+	_boss_name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	_boss_name_l.clip_text = true
+	add_child(_boss_name_l)
+	var bx := BAR_X + 122.0
+	_boss_bar_w = VIEW_W - BAR_X * 2.0 - 122.0
+	var bg := ColorRect.new()
+	bg.color = Color(0.08, 0.05, 0.03, 0.8)
+	bg.position = Vector2(bx, 48)
+	bg.size = Vector2(_boss_bar_w, 14)
+	add_child(bg)
+	_boss_fill = ColorRect.new()
+	_boss_fill.color = Color("d8483a")
+	_boss_fill.position = Vector2(bx + 1, 49)
+	_boss_fill.size = Vector2(_boss_bar_w - 2, 12)
+	add_child(_boss_fill)
+	# 下沿细白描边 + 金外框：暗底战场上把条的边界勾清楚
+	var edge := ColorRect.new()
+	edge.color = Color(1, 0.96, 0.9, 0.45)
+	edge.position = Vector2(bx, 61)
+	edge.size = Vector2(_boss_bar_w, 1)
+	add_child(edge)
+	var frame := Panel.new()
+	frame.position = Vector2(bx - 1, 47)
+	frame.size = Vector2(_boss_bar_w + 2, 16)
+	var fsb := StyleBoxFlat.new()
+	fsb.bg_color = Color(0, 0, 0, 0)
+	fsb.set_border_width_all(1)
+	fsb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.75)
+	frame.add_theme_stylebox_override("panel", fsb)
+	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(frame)
+
+
+## 当前活着的首领单位（无则 null）
+func _boss_unit() -> Combatant:
+	for u in sim.units:
+		if u.alive and u.side == "enemy" and u.ai_type == "boss":
+			return u
+	return null
 
 
 func _func_chip(text: String, w := 64.0) -> PanelContainer:
@@ -334,10 +431,32 @@ func _build_skill_bar() -> void:
 		box.add_child(cd_l)
 		var sid := String(skill.get("id", ""))
 		btn.gui_input.connect(func(e: InputEvent):
-			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-				_try_cast(sid))
+			if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT:
+				# 按下回弹：pivot 居中后缩到 0.92 再弹回，给技能键一点"按得动"的手感
+				btn.pivot_offset = btn.size * 0.5
+				var tw := btn.create_tween()
+				if e.pressed:
+					tw.tween_property(btn, "scale", Vector2.ONE * 0.92, 0.06)
+					_try_cast(sid)
+				else:
+					tw.tween_property(btn, "scale", Vector2.ONE, 0.10))
+		# B1 呼吸光圈：外扩 3px 的金色描边环，能量够且不在 CD 时呼吸闪烁——
+		# 商业战斗界面"该放技能了"的标准提示。环用独立 Panel 挂在场景上（不进
+		# PanelContainer，否则会被容器布局压回按钮内侧），常态 alpha=0 不打扰。
+		var glow := Panel.new()
+		glow.position = Vector2(BAR_X + i * SKILL_STEP - 3.0, SKILL_Y - 3.0)
+		glow.size = Vector2(SKILL_W + 6.0, SKILL_H + 6.0)
+		var gsb := StyleBoxFlat.new()
+		gsb.bg_color = Color(0, 0, 0, 0)
+		gsb.set_corner_radius_all(6)
+		gsb.set_border_width_all(2)
+		gsb.border_color = G.GOLD_BRIGHT
+		glow.add_theme_stylebox_override("panel", gsb)
+		glow.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		glow.modulate.a = 0.0
+		add_child(glow)
 		add_child(btn)
-		_skill_btns.append({"btn": btn, "cd_l": cd_l, "skill": skill,
+		_skill_btns.append({"btn": btn, "cd_l": cd_l, "skill": skill, "glow": glow,
 			"cd_max": int(skill.get("cd", 5))})
 
 
@@ -440,6 +559,7 @@ func _on_event(e: Dictionary) -> void:
 	match t:
 		"basic", "cast":
 			if src != null and dst != null and t == "basic":
+				src.play_state(&"attack")   # 普攻：挥剑动作 + 前冲
 				src.lunge(dst.position)
 			# 连携触发：施法者头顶飘"连携"金字（e.combo 为连携名）
 			if t == "cast" and String(e.get("combo", "")) != "":
@@ -450,7 +570,7 @@ func _on_event(e: Dictionary) -> void:
 		"cast_start":
 			var role := sim.role_unit()
 			if role != null and int(e.uid) == role.uid:
-				_show_tip("%s · %s" % [role.name, String(e.get("name", ""))])
+				# 我方施法不再走顶部通报：技能名跟着施法者头顶的图标牌走（_skill_splash）
 				Audio.sfx("skill_cast")
 			else:
 				# 敌方施法必须看得见：被打了却不知道对方放了什么，战斗就成了看血条
@@ -465,8 +585,12 @@ func _on_event(e: Dictionary) -> void:
 				else:
 					_show_tip("敌方 · %s" % String(e.get("name", "")), Color("ffb0a0"))
 					Audio.sfx("skill_cast", 0.06)   # 敌方普通施法也给声，抖动大一点免得与我方混淆
-			if src != null:
-				src.cast_glow()
+			# 不同技能不同架势：单击用挥砍（attack 行），群攻/大招/增益用蓄力（cast 行）
+			var caster_view: UnitView = _views.get(int(e.get("uid", -1)))
+			if caster_view != null:
+				caster_view.play_state(_skill_anim(String(e.get("skill", ""))))
+				caster_view.cast_glow()
+			_skill_splash(caster_view, String(e.get("skill", "")))
 		"dmg":
 			var target := sim.unit_by_uid(int(e.get("uid", -1)))
 			if dst == null:
@@ -509,9 +633,12 @@ func _on_event(e: Dictionary) -> void:
 					Audio.sfx("hit_light")
 					if to_role:
 						_shake(SHAKE_HIT)   # 自己挨打也晃一下：让"被打"有实感
+				# 角色挨打播受击架势（格挡/踉跄行）；dot 跳血太频繁不抢动作
+				if to_role and not dot and dst != null:
+					dst.play_state(&"hit")
 		"heal":
 			if dst != null:
-				_float(dst.position, "+%d" % int(e.amount), Color("8ce89c"), G.FS_MD)
+				_float(dst.position, "+%d" % int(e.amount), G.C_GAIN, G.FS_MD)
 		"shield_add":
 			if dst != null:
 				_float(dst.position, "+盾", Color("8cc4ff"), G.FS_SM)
@@ -559,6 +686,16 @@ func _refresh_hud() -> void:
 		# 填充宽 = 底条宽 - 左右各 1px 内缩，与 _build_skill_bar 的 _energy_fill 起点/尺寸一致
 		_energy_fill.size.x = (VIEW_W - BAR_X * 2.0 - 2.0) * ratio
 		_energy_l.text = "能量 %d/100%s" % [role.energy, "  满" if role.energy >= Combatant.MAX_ENERGY else ""]
+	# B4 首领血条刷新：名字 + 百分比，填充宽按当前血量比例缩放
+	if _boss_fill != null:
+		var boss := _boss_unit()
+		if boss != null:
+			var bratio := clampf(float(boss.hp) / float(maxi(boss.get_max_hp(), 1)), 0.0, 1.0)
+			_boss_fill.size.x = (_boss_bar_w - 2.0) * bratio
+			_boss_name_l.text = "%s  %d%%" % [boss.name, roundi(bratio * 100.0)]
+		else:
+			_boss_fill.size.x = 0.0
+			_boss_name_l.text = "首领 · 已击破"
 	# 低血警示：边缘红晕脉动（首次再补一句提示，之后只靠视觉，不吵）
 	if _danger != null:
 		var hp_ratio := 0.0
@@ -570,7 +707,8 @@ func _refresh_hud() -> void:
 			_danger.modulate.a = 0.20 + 0.32 * absf(sin(phase * PI))   # 边缘红晕：够警觉不糊屏
 			if not _danger_tip_done:
 				_danger_tip_done = true
-				_show_tip("危急 · 血量过低，补药或撤退", Color("ff9a8a"))
+				_show_tip("危急 · 血量过低，补药或撤退", G.C_COST, G.FS_MD,
+					Color("3a0e0a"), 2)
 				Audio.sfx("low_hp")
 		else:
 			_danger.modulate.a = 0.0
@@ -592,11 +730,13 @@ func _refresh_hud() -> void:
 	else:
 		_combo_tip.modulate.a = 0.0
 	# 技能格（CD 数字 + 可用性）
+	var glow_a := 0.28 + 0.42 * absf(sin(float(Time.get_ticks_msec() % 1400) / 1400.0 * PI))
 	for sbd in _skill_btns:
 		var skill: Dictionary = sbd.skill
 		var cd := _skill_cd(role, String(skill.get("id", "")))
 		var cd_l: Label = sbd.cd_l
 		var btn: PanelContainer = sbd.btn
+		var glow: Panel = sbd.get("glow", null)
 		# 连携"下一手"：亮金粗边（即使 CD 中也亮，提示玩家这是连携目标）
 		var sb: StyleBoxFlat = btn.get_theme_stylebox("panel")
 		if String(skill.get("id", "")) == combo_sid:
@@ -609,12 +749,18 @@ func _refresh_hud() -> void:
 			cd_l.modulate.a = 1.0
 			cd_l.text = "%.1f" % (float(cd) / 30.0)
 			btn.modulate = Color(0.6, 0.6, 0.6)
+			if glow != null:
+				glow.modulate.a = 0.0
 		elif role != null and int(skill.get("cost", 0)) > role.energy:
 			cd_l.modulate.a = 0.0
 			btn.modulate = Color(0.75, 0.7, 0.6)
+			if glow != null:
+				glow.modulate.a = 0.0
 		else:
 			cd_l.modulate.a = 0.0
 			btn.modulate = Color.WHITE
+			if glow != null:
+				glow.modulate.a = glow_a
 	# 药剂 / 换宠（药剂 CD 中显示剩余秒数）
 	if sim.potion_cd_ticks > 0:
 		_potion_l.text = "药剂 %.0fs" % (float(sim.potion_cd_ticks) / 30.0)
@@ -792,8 +938,15 @@ func _float_dmg(pos: Vector2, amount: int, kind: String) -> void:
 			_float(pos, "%d" % amount, Color("ff7a6a"), G.FS_MD, 1.06)
 
 
-func _show_tip(msg: String, color := Color("ffe9b0")) -> void:
+func _show_tip(msg: String, color := Color("ffe9b0"), size := 0,
+		outline_color := Color(0, 0, 0, 0), outline_size := 0) -> void:
 	_cast_tip.add_theme_color_override("font_color", color)
+	# 字号/描边按调用重置：危急提示要"红字 + 深红描边"更刺眼，普通提示回到常态，
+	# 避免上一次的告警样式残留到后一条提示上
+	_cast_tip.add_theme_font_size_override("font_size", size if size > 0 else G.FS_SM)
+	_cast_tip.add_theme_constant_override("outline_size", outline_size)
+	_cast_tip.add_theme_color_override("font_outline_color",
+		outline_color if outline_size > 0 else Color(0, 0, 0, 0))
 	_cast_tip.text = msg
 	_cast_tip.modulate.a = 1.0
 	if _tip_tween != null and _tip_tween.is_valid():
@@ -801,6 +954,69 @@ func _show_tip(msg: String, color := Color("ffe9b0")) -> void:
 	_tip_tween = _cast_tip.create_tween()
 	_tip_tween.tween_interval(1.0)
 	_tip_tween.tween_property(_cast_tip, "modulate:a", 0.0, 0.35)
+
+
+## 技能 → 人物架势：单体直击用挥砍（attack 行），群攻/高费大招/辅助用蓄力（cast 行）
+func _skill_anim(skill_id: String) -> StringName:
+	var sd := TableCache.get_skill(skill_id)
+	if sd.is_empty():
+		return &"attack"
+	var heavy_hit := int(sd.get("cost", 0)) >= 50 or \
+		String(sd.get("target", "")) in ["enemy_all", "enemy_front_all", "enemy_random"]
+	if float(sd.get("k", 0.0)) <= 0.0 or heavy_hit:
+		return &"cast"
+	return &"attack"
+
+
+## 施法时技能牌在施法者头顶闪现（图标 + 技能名：弹起 → 悬停 → 淡出），
+## 生成的技能图不只躺在技能栏里，战斗中也能认得出"放的是哪一招、是谁放的"
+func _skill_splash(caster: UnitView, skill_id: String) -> void:
+	if caster == null:
+		return
+	var tex: Texture2D = G.res_tex("sk_%s" % skill_id)
+	if tex == null:
+		return
+	var sname := String(TableCache.get_skill(skill_id).get("name", skill_id))
+	var card := PanelContainer.new()
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(0.12, 0.08, 0.03, 0.92)
+	sb.set_corner_radius_all(10)
+	sb.set_border_width_all(2)
+	sb.border_color = G.GOLD_BRIGHT
+	sb.content_margin_left = 6.0
+	sb.content_margin_right = 10.0
+	sb.content_margin_top = 4.0
+	sb.content_margin_bottom = 4.0
+	card.add_theme_stylebox_override("panel", sb)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 6)
+	var pic := TextureRect.new()
+	pic.texture = tex
+	pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	pic.custom_minimum_size = Vector2(34, 34)
+	pic.size = Vector2(34, 34)
+	pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(pic)
+	var nl := G.gold_label(sname, G.FS_SM, true, Color("ffe9b0"), true)
+	nl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	row.add_child(nl)
+	card.add_child(row)
+	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_fx_layer.add_child(card)
+	card.reset_size()   # 让 PanelContainer 按内容结算出真实宽高，居中定位才准
+	var w := card.size.x
+	card.position = caster.position + Vector2(-w * 0.5, -138)
+	card.position.y = maxf(card.position.y, 46.0)   # 后排敌人贴顶栏，牌子别钻进标题下
+	card.pivot_offset = Vector2(w * 0.5, card.size.y * 0.5)
+	card.scale = Vector2.ONE * 0.3
+	var tw := card.create_tween()
+	tw.tween_property(card, "scale", Vector2.ONE, 0.16)\
+		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.parallel().tween_property(card, "position:y", card.position.y - 14.0, 0.5)
+	tw.tween_interval(0.3)
+	tw.tween_property(card, "modulate:a", 0.0, 0.22)
+	tw.tween_callback(card.queue_free)
 
 
 # ================= 结算 =================
@@ -902,6 +1118,7 @@ class UnitView extends Node2D:
 	var body := Node2D.new()          # 位移/闪白的载体
 	var sprite: Node2D = null         # 角色 AnimatedSprite2D / 怪宠 Sprite2D
 	var hp_bg := ColorRect.new()
+	var hp_ghost := ColorRect.new()    # B2 白残影条：停在旧血量，缓动追上真实值
 	var hp_fg := ColorRect.new()
 	var name_l := Label.new()
 	var buff_l := Label.new()
@@ -910,6 +1127,11 @@ class UnitView extends Node2D:
 	var _radius := 22.0
 	var _draw_color := Color.WHITE
 	var _is_blob := false            # 怪/宠无素材时回退程序圆体
+	var _hideable_name := false      # 杂兵名签：常态隐藏、受击亮 1.4s
+	var _name_fade := 0.0
+	var _last_hp := -1
+	var _hp_ratio := 1.0               # B2 真实血量比例（sync 更新）
+	var _ghost_ratio := 1.0            # B2 残影条比例（_process 缓动追赶）
 
 
 	func setup(u: Combatant, role_sprites: Dictionary, mon_colors: Dictionary) -> void:
@@ -920,17 +1142,26 @@ class UnitView extends Node2D:
 		var name_y := 0.0   # 名字 y（头顶上方）
 		var hp_y := 0.0     # 血条 y（脚下）
 		if is_role:
-			var cfg: Array = role_sprites.get(String(u.data.get("id", "")), [])
-			if cfg.size() == 2:
-				var frames: SpriteFrames = load(String(cfg[0]))
-				if frames != null:
-					var asp := AnimatedSprite2D.new()
-					asp.sprite_frames = frames
-					asp.animation = &"walk_down"
-					asp.scale = Vector2.ONE * 0.55
-					asp.position = Vector2(0, -26)
-					body.add_child(asp)
-					sprite = asp
+			var role_id := String(u.data.get("id", ""))
+			# 优先战斗五态帧（待机/普攻/施法/受击/倒下），缺素材回退行走帧
+			var frames: SpriteFrames = BattleScene.battle_frames(role_id)
+			if frames == null:
+				var cfg: Array = role_sprites.get(role_id, [])
+				if cfg.size() == 2:
+					frames = load(String(cfg[0]))
+			if frames != null:
+				var asp := AnimatedSprite2D.new()
+				asp.sprite_frames = frames
+				asp.animation = &"idle" if frames.has_animation(&"idle") else &"walk_down"
+				asp.scale = Vector2.ONE * 0.55
+				asp.position = Vector2(0, -26)
+				asp.play()
+				# 一次性动作（普攻/施法/受击）播完自动回待机
+				asp.animation_finished.connect(func():
+					if not _dead and asp.animation != &"idle":
+						asp.play(&"idle"))
+				body.add_child(asp)
+				sprite = asp
 			# 行走帧 128×128 × 0.55：占位 -61~+9
 			name_y = -75.0
 			hp_y = 12.0
@@ -975,17 +1206,29 @@ class UnitView extends Node2D:
 				body.position = Vector2(0, -_radius * 0.4)
 				name_y = -_radius - 14.0
 				hp_y = _radius + 6.0
-		# 名字（头顶）
+		# 名字（头顶）——亮底战场上必须带描边，否则敌方名字糊成一片白
 		name_l = G.gold_label(u.name, G.FS_XS, false,
-			Color("ffd0d0") if side == "enemy" else Color("c8e8c8"), false)
+			Color("ffd0d0") if side == "enemy" else Color("c8e8c8"), true)
 		name_l.position = Vector2(-36, name_y)
 		name_l.custom_minimum_size = Vector2(72, 0)
 		body.add_child(name_l)
+		# 杂兵名签常态隐藏：首领战五人同屏时名签挤成一团、比血条还抢戏。
+		# 只在受击时亮 1.4s（精英/首领/我方单位常驻显示）
+		_hideable_name = side == "enemy" and u.kind == "monster" \
+			and String(u.data.get("tier", "normal")) == "normal"
+		if _hideable_name:
+			name_l.modulate.a = 0.0
 		# HP 条（脚下）
 		hp_bg.color = Color(0, 0, 0, 0.55)
 		hp_bg.position = Vector2(-22, hp_y)
 		hp_bg.size = Vector2(44, 5)
 		body.add_child(hp_bg)
+		# B2 两段式削减：白残影条垫在前色条之下，被打时前色条瞬减、残影条停在旧值
+		# 再缓动追上（街霸式），一眼看清"这一次掉了多少"
+		hp_ghost.color = Color(1.0, 0.94, 0.86, 0.9)
+		hp_ghost.position = hp_bg.position + Vector2(1, 1)
+		hp_ghost.size = Vector2(42, 3)
+		body.add_child(hp_ghost)
 		hp_fg.color = Color("e05a4a") if side == "enemy" else Color("5ab464")
 		hp_fg.position = hp_bg.position + Vector2(1, 1)
 		hp_fg.size = Vector2(42, 3)
@@ -1003,7 +1246,14 @@ class UnitView extends Node2D:
 		_base_pos = _owner_grid(u)
 		position = _base_pos
 		var ratio := clampf(float(u.hp) / float(maxi(u.get_max_hp(), 1)), 0.0, 1.0)
+		_hp_ratio = ratio
 		hp_fg.size.x = 42.0 * ratio
+		# 杂兵受击亮名：掉血瞬间把名签唤出 1.4s，随后 _process 里淡掉
+		if _hideable_name:
+			if _last_hp >= 0 and u.hp < _last_hp and u.alive:
+				_name_fade = 1.4
+				name_l.modulate.a = 1.0
+			_last_hp = u.hp
 		var abbrs := PackedStringArray()
 		for b in u.buffs:
 			var a: String = BattleScene.BUFF_ABBR.get(String(b.type), "")
@@ -1012,6 +1262,22 @@ class UnitView extends Node2D:
 		buff_l.text = " ".join(abbrs)
 		if not u.alive:
 			die()
+
+
+	## 杂兵名签的淡出计时：最后 0.4s 线性消隐，亮名期间被打断会重新计满。
+	## 同时驱动 B2 血条残影条：掉血时缓动追上真实值，回血时立刻跟上（不留假残影）。
+	func _process(delta: float) -> void:
+		if _name_fade > 0.0:
+			_name_fade -= delta
+			name_l.modulate.a = clampf(_name_fade / 0.4, 0.0, 1.0)
+		if is_equal_approx(_ghost_ratio, _hp_ratio):
+			pass
+		elif _ghost_ratio < _hp_ratio:
+			_ghost_ratio = _hp_ratio
+			hp_ghost.size.x = 42.0 * _ghost_ratio
+		else:
+			_ghost_ratio = maxf(_hp_ratio, lerpf(_ghost_ratio, _hp_ratio, 1.0 - exp(-delta * 6.0)))
+			hp_ghost.size.x = 42.0 * _ghost_ratio
 
 
 	func _owner_grid(u: Combatant) -> Vector2:
@@ -1026,6 +1292,19 @@ class UnitView extends Node2D:
 		var tw := body.create_tween()
 		tw.tween_property(body, "position", dir, 0.09).set_ease(Tween.EASE_OUT)
 		tw.tween_property(body, "position", Vector2.ZERO, 0.14).set_ease(Tween.EASE_IN)
+
+
+	## 播一次性动作（普攻/施法/受击）；播完由 animation_finished 带回待机。
+	## 同名动作正在播时不打断自己（受击连掉三滴血不至于鬼畜抽搐）
+	func play_state(anim: StringName) -> void:
+		var asp := sprite as AnimatedSprite2D
+		if asp == null or _dead:
+			return
+		if not asp.sprite_frames.has_animation(anim):
+			return
+		if asp.animation == anim and asp.is_playing():
+			return
+		asp.play(anim)
 
 
 	func cast_glow() -> void:
@@ -1053,6 +1332,15 @@ class UnitView extends Node2D:
 			return
 		_dead = true
 		buff_l.text = ""
+		# 角色有倒下动画：先播完（4 帧 @6fps ≈ 0.67s）再淡出；怪宠维持原地缩放淡出
+		var asp := sprite as AnimatedSprite2D
+		if asp != null and asp.sprite_frames != null and asp.sprite_frames.has_animation(&"death"):
+			asp.play(&"death")
+			var tw := create_tween()
+			tw.tween_interval(0.7)
+			tw.tween_property(self, "modulate:a", 0.0, 0.45)
+			tw.parallel().tween_property(self, "scale", Vector2(0.9, 0.8), 0.45)
+			return
 		var tw := create_tween()
 		tw.tween_property(self, "modulate:a", 0.0, 0.6)
 		tw.tween_property(self, "scale", Vector2(0.85, 0.7), 0.6)

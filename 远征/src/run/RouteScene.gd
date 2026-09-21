@@ -542,6 +542,14 @@ class _RouteNode extends Control:
 				var a := PI * 0.5 * float(i) + PI * 0.25
 				var d := Vector2(cos(a), sin(a))
 				draw_line(center + d * (r + 5.0), center + d * (r + 10.0), ring, 2.0)
+		# 未达：一圈虚线描边（灰米=「未解锁」语义色），说明"这格有内容、只是还没轮到"，
+		# 用虚线和不透明度和当前层的实线金环区分开；半径 r+3 落在金环(r+5)内侧，两者不撞。
+		elif state == "future":
+			var oc := Color(G.C_HINT.r, G.C_HINT.g, G.C_HINT.b, 0.42)
+			var seg := TAU / 12.0
+			for i in 12:
+				draw_arc(center, r + 3.0, seg * float(i), seg * float(i) + seg * 0.55,
+					6, oc, 1.6, true)
 
 		# 类型小字：图标下方，先影后字
 		var font := G.font_bold

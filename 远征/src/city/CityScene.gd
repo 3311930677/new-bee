@@ -1489,6 +1489,9 @@ class _CityNPC extends Node2D:
 	var _t := 0.0
 	var frames: SpriteFrames = null   # idle 四帧条（像素小人）；有它就不必让立绘站桩
 	var art: Texture2D = null         # 兜底：半身立绘（ready/npcs 的 512 图）
+	var _pad: PanelContainer = null   # 名牌底衬（屏内钳制要挪它）
+	var _name_l: Label = null         # 名牌文字
+	var _plate_top := 0.0             # 名牌本地 y（形象决定，钳制只动 x/按需上抬）
 	# 与主角同一套标定：0.72 倍；idle 条帧内脚底 y≈123、帧心 64 → 反向抬 (123-64)×0.72，脚落在节点原点
 	const IDLE_SCALE := 0.72
 	const IDLE_LIFT := 42.5
@@ -1512,25 +1515,57 @@ class _CityNPC extends Node2D:
 		if title != "":
 			txt += " · " + title
 		# 名牌高度随形象变：像素小人身高 80（含头）→ -108；立绘 104 → -114；色块小人 → -52
-		var top := -108.0 if frames != null else (-114.0 if art != null else -52.0)
-		var l := G.gold_label(txt, G.FS_XS, false, Color("f5ead0"), true)
-		l.position = Vector2(-80, top + 2)
-		l.custom_minimum_size = Vector2(160, 0)
-		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		var pad := PanelContainer.new()
-		pad.position = Vector2(-80, top)
-		pad.custom_minimum_size = Vector2(160, 18)
-		pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_plate_top = -108.0 if frames != null else (-114.0 if art != null else -52.0)
+		_name_l = G.gold_label(txt, G.FS_XS, false, Color("f5ead0"), true)
+		_name_l.position = Vector2(-80, _plate_top + 2)
+		_name_l.custom_minimum_size = Vector2(160, 0)
+		_name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_pad = PanelContainer.new()
+		_pad.position = Vector2(-80, _plate_top)
+		_pad.custom_minimum_size = Vector2(160, 18)
+		_pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		var psb := StyleBoxFlat.new()
-		psb.bg_color = Color(0.08, 0.05, 0.03, 0.55)
-		psb.set_corner_radius_all(3)
-		pad.add_theme_stylebox_override("panel", psb)
-		add_child(pad)
-		add_child(l)
+		# 名牌做成一小块木牌：圆角拉成胶囊状 + 一圈暗金描边 + 浅投影，
+		# 和羊皮纸/金钮同一套材质语言；原来只是个圆角 3 的半透明黑条，像调试贴片。
+		# 尺寸口径严格不动（160×18），_clamp_plate() 按这个数钳制屏内位置。
+		psb.bg_color = Color(0.08, 0.05, 0.03, 0.62)
+		psb.set_corner_radius_all(9)
+		psb.set_border_width_all(1)
+		psb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.45)
+		psb.shadow_color = Color(0.0, 0.0, 0.0, 0.30)
+		psb.shadow_size = 2
+		psb.shadow_offset = Vector2(0, 1)
+		_pad.add_theme_stylebox_override("panel", psb)
+		add_child(_pad)
+		add_child(_name_l)
 
 	func _process(delta: float) -> void:
 		_t += delta
 		queue_redraw()
+		_clamp_plate()
+
+	## 名牌屏内钳制：镜头跟主角走，NPC 挪到屏缘时名牌会被裁掉半块——
+	## 每帧按画布坐标把名牌拨回屏内（左右留 4px）；落进左下摇杆区（约 160×160）的再抬 40px
+	func _clamp_plate() -> void:
+		if _pad == null or _name_l == null:
+			return
+		var xf := get_global_transform_with_canvas()
+		var z: float = absf(xf.x.x)
+		if z < 0.001:
+			return
+		var sx: float = xf.origin.x
+		var sy: float = xf.origin.y
+		# 本地 x 的可行区间：屏左 ≥4 且屏右 ≤476（名牌本地宽 160）
+		var lo := (4.0 - sx) / z
+		var hi := (476.0 - sx) / z - 160.0
+		var px := clampf(-80.0, lo, hi) if lo <= hi else -80.0
+		var py := _plate_top
+		var scr_left := sx + px * z
+		var scr_top := sy + py * z
+		if scr_left < 160.0 and scr_top + 18.0 * z > 624.0:
+			py -= 40.0 / z   # 摇杆区上抬（屏幕 40px 折回本地坐标）
+		_pad.position = Vector2(px, py)
+		_name_l.position = Vector2(px, py + 2)
 
 	func _draw() -> void:
 		var bob := sin(_t * 2.0 + float(hue)) * 1.2

@@ -71,12 +71,10 @@ func _build() -> void:
 	# 序章氛围压暗：不吃点击（正文之上还有继续/跳过的按钮要能用）
 	G.veil(self, 0.62, false)
 
-	var banner := G.banner_box("序 章", 200, 50)
-	banner.position = Vector2((VIEW_W - 200.0) * 0.5, 34)
-	add_child(banner)
-
-	var sub := G.gold_label("开 卷 · 远征图志", G.FS_XS, false, Color("d8bd8a", 0.75), false)
-	sub.position = Vector2(0, 88)
+	# 主标题只留「远征图志」：原来上面还压了一块「序章」木牌，双层标题打架，
+	# 而且每页 kicker 本就带"序章/第X章"，木牌是重复信息
+	var sub := G.serif_label("开卷 · 远征图志", G.FS_LG + 2, Color("ffd9a0"))
+	sub.position = Vector2(0, 46)
 	sub.custom_minimum_size = Vector2(VIEW_W, 0)
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(sub)

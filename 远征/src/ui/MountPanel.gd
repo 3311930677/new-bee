@@ -132,8 +132,13 @@ func _mount_card(m: Dictionary) -> Control:
 	if tier <= 0 or tier < tiers.size():
 		var cost: Dictionary = tinfo.get("cost", {})
 		btn = G.gold_button("购 买" if tier <= 0 else "升 阶", 84, 30, G.FS_SM)
-		var cost_l := G.text_label(_cost_text(cost), G.FS_XS - 1, Color("8a6a34"))
-		cost_l.position = Vector2(96, 104)
+		# 价格独立行：FS_XS + 限宽换行裁切。原来 12px 一行横排、资源间空格相连，
+		# 五位数金币带第二项资源时直接顶出卡右缘
+		var cost_l := G.text_label(_cost_text(cost), G.FS_XS, Color("8a6a34"))
+		cost_l.position = Vector2(96, 100)
+		cost_l.size = Vector2(CARD_W - 102.0, 44)
+		cost_l.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
+		cost_l.clip_text = true
 		inner.add_child(cost_l)
 		btn.gui_input.connect(func(ev: InputEvent):
 			if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
@@ -166,8 +171,8 @@ func _cost_text(cost: Dictionary) -> String:
 	var names := {"gold": "金币", "soul": "魂石", "honor": "荣誉", "expedition": "远征币"}
 	var parts := PackedStringArray()
 	for k in cost.keys():
-		parts.append("%s %d" % [String(names.get(String(k), String(k))), int(cost[k])])
-	return " ".join(parts)
+		parts.append("%s·%d" % [String(names.get(String(k), String(k))), int(cost[k])])
+	return "\n".join(parts)   # 一项资源一行：卡内只有 96px 宽，横排必溢出
 
 
 func _on_buy(mid: String) -> void:

@@ -83,9 +83,11 @@ func _make_card(row: Dictionary) -> Control:
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(panel)
 
-	# 类别色带：右端斜切，避免齐刷刷的矩形模板感
+	# 类别色带：右端斜切，避免齐刷刷的矩形模板感。
+	# 统一金棕——原来按类型上青蓝/紫，跟羊皮纸+金棕的美术体系打架（"AI 拼贴感"来源之一）；
+	# 类型区分交给标签文字颜色与底部点选条
 	var band := Polygon2D.new()
-	band.color = col
+	band.color = Color("c9a45c")
 	band.polygon = PackedVector2Array([
 		Vector2(10, 10), Vector2(CARD_W - 10, 10), Vector2(CARD_W - 18, 16), Vector2(10, 16),
 	])

@@ -12,11 +12,10 @@ const CONTENT_W := 408.0
 const VIEW_W := 480.0
 # 稀有度固定顺序（权重累加、文案、卡底命名都按它来）
 const RARITY_ORDER := ["white", "blue", "purple", "gold"]
-const RARITY_NAME := {"white": "普通", "blue": "稀有", "purple": "史诗", "gold": "传说"}
-const RARITY_HUE := {
-	"white": Color("a89e88"), "blue": Color("6f9fd0"),
-	"purple": Color("a273c9"), "gold": Color("d8ab48"),
-}
+# 稀有度色/名全项目唯一定义在 G.gd（C6），这里只引用，不再各自复制一份
+const GScript := preload("res://src/autoload/G.gd")
+const RARITY_NAME := GScript.RARITY_NAME
+const RARITY_HUE := GScript.RARITY_HUE
 # 十连网格：5 列 × 2 行。卡 86×115、列距 92、行距 131，整排落在 13..467，不出 480
 const CARD_W := 86.0
 const CARD_H := 115.0
@@ -36,9 +35,12 @@ var _ticket_l: Label = null
 var _pity_l: Label = null
 var _pity_sub: Label = null
 var _pity_bar: Panel = null
+var _pity_gem: Panel = null               # 保底进度条末端菱形标记
 var _hint: Label = null
 var _free_btn: Control = null             # 每日免费召唤条
 var _free_l: Label = null
+var _free_glow: Panel = null              # 免费可用时的呼吸金边
+var _free_available := false
 # ---- 结果层 ----
 var _result: Control = null
 var _cards_box: Control = null
@@ -140,7 +142,7 @@ func _build() -> void:
 	var head := _inset_band(Vector2(CONTENT_W, 104), Vector2(0, 0))
 	content.add_child(head)
 	var feat := _featured_pet()
-	var fpic := _tex_rect(String(feat.get("id", "")), 68, 68, Color("a89e88"))
+	var fpic := _tex_rect(String(feat.get("id", "")), 68, 68, G.C_HINT)
 	fpic.position = Vector2(14, 18)
 	head.add_child(fpic)
 	var fraw := String(feat.get("rarity", "white"))
@@ -158,7 +160,7 @@ func _build() -> void:
 	chip.position = Vector2(92, 58)
 	chip.size = Vector2(64, 20)
 	var csb := StyleBoxFlat.new()
-	csb.bg_color = RARITY_HUE.get(fraw, Color("a89e88"))
+	csb.bg_color = RARITY_HUE.get(fraw, G.C_HINT)
 	csb.set_corner_radius_all(4)
 	csb.set_border_width_all(1)
 	csb.border_color = Color(0.25, 0.16, 0.06, 0.55)
@@ -189,11 +191,25 @@ func _build() -> void:
 	_pity_bar.position = Vector2(207, 39)
 	_pity_bar.size = Vector2(0, 8)
 	var pbsb := StyleBoxFlat.new()
-	pbsb.bg_color = Color("d8ab48")
+	pbsb.bg_color = G.C_RARE
 	pbsb.set_corner_radius_all(4)
 	_pity_bar.add_theme_stylebox_override("panel", pbsb)
 	_pity_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	head.add_child(_pity_bar)
+	# 末端菱形标记：金填充推进到哪，菱形就停在哪，「离保底还差几抽」有可见的目标点
+	# 旋转 45° 的方块做菱形；pivot 取中心，位置按旋转后的包围盒中心对齐条带中线
+	_pity_gem = Panel.new()
+	_pity_gem.size = Vector2(9, 9)
+	_pity_gem.pivot_offset = Vector2(4.5, 4.5)
+	_pity_gem.rotation = PI / 4.0
+	var gsb := StyleBoxFlat.new()
+	gsb.bg_color = Color("f6e4a6")
+	gsb.set_corner_radius_all(1)
+	gsb.set_border_width_all(1)
+	gsb.border_color = Color("8a6a34")
+	_pity_gem.add_theme_stylebox_override("panel", gsb)
+	_pity_gem.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	head.add_child(_pity_gem)
 	# 保底小字 8a6a34 在 d3bd92 内嵌底上约 3.4:1，13px 下偏灰；压深到 6a5230 约 5:1
 	_pity_sub = G.gold_label("", G.FS_XS, false, Color("6a5230"), false)
 	_pity_sub.position = Vector2(206, 56)
@@ -217,7 +233,7 @@ func _build() -> void:
 	_soul_l.size = Vector2(90, 20)
 	_soul_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	bal.add_child(_soul_l)
-	var tk_icon := _tex_rect("itm_ticket_ten", 20, 20, Color("d8ab48"))
+	var tk_icon := _tex_rect("itm_ticket_ten", 20, 20, G.C_RARE)
 	tk_icon.position = Vector2(264, 8)
 	bal.add_child(tk_icon)
 	_ticket_l = G.gold_label("× 0", G.FS_SM, false, G.TEXT_DARK, false)
@@ -254,12 +270,30 @@ func _build() -> void:
 	# 每日免费召唤（设计 §4.2）：每天 1 次、零点刷新；连续 7 天送灵魂石 ×50。
 	# 替掉原来的纯装饰小字——免费抽是"每天回来看看"的钩子，值得一个实体入口。
 	_free_btn = _inset_band(Vector2(CONTENT_W, 26), Vector2(0, 240))
+	# 呼吸金边：可用时把「今天还有一次免费」变成会动的钩子；已领则整条隐藏
+	# 独立 Panel 挂在 content 上（不开内边距），避免挤掉条带自身的布局
+	_free_glow = Panel.new()
+	_free_glow.position = Vector2(-2, 238)
+	_free_glow.size = Vector2(CONTENT_W + 4, 30)
+	var fgsb := StyleBoxFlat.new()
+	fgsb.bg_color = Color(0, 0, 0, 0)
+	fgsb.set_corner_radius_all(8)
+	fgsb.set_border_width_all(2)
+	fgsb.border_color = Color("e8b84a")
+	fgsb.shadow_color = Color(0.91, 0.72, 0.29, 0.4)
+	fgsb.shadow_size = 6
+	_free_glow.add_theme_stylebox_override("panel", fgsb)
+	_free_glow.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_free_glow.visible = false
+	content.add_child(_free_glow)
 	_free_l = G.gold_label("", G.FS_SM, false, G.TEXT_DARK, false)
 	_free_l.position = Vector2(0, 4)
 	_free_l.size = Vector2(CONTENT_W, 18)
 	_free_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_free_l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_free_btn.add_child(_free_l)
+	# _inset_band 默认 IGNORE，收不到鼠标事件——免费条要真的能点，必须改回 STOP
+	_free_btn.mouse_filter = Control.MOUSE_FILTER_STOP
 	_free_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_do_free())
@@ -308,7 +342,7 @@ func _pool_card(p: Dictionary) -> Panel:
 	sb.content_margin_top = 4.0
 	sb.content_margin_bottom = 4.0
 	root.add_theme_stylebox_override("panel", sb)
-	var pic := _tex_rect(pid, 36, 36, RARITY_HUE.get(rar, Color("a89e88")))
+	var pic := _tex_rect(pid, 36, 36, RARITY_HUE.get(rar, G.C_HINT))
 	pic.position = Vector2(14, 7)
 	root.add_child(pic)
 	var l := G.gold_label(String(p.get("name", pid)), G.FS_XS, false, G.TEXT_DARK, false)
@@ -323,7 +357,7 @@ func _pool_card(p: Dictionary) -> Panel:
 	strip.position = Vector2(0, 0)
 	strip.size = Vector2(6, 50)
 	var ssb := StyleBoxFlat.new()
-	ssb.bg_color = RARITY_HUE.get(rar, Color("a89e88"))
+	ssb.bg_color = RARITY_HUE.get(rar, G.C_HINT)
 	ssb.corner_radius_top_left = 5
 	ssb.corner_radius_bottom_left = 5
 	strip.add_theme_stylebox_override("panel", ssb)
@@ -420,26 +454,58 @@ func _refresh_top() -> void:
 	if _pity_l != null:
 		var pity := int(G.gacha_state().get("pity", 0))
 		var pmax := maxi(1, int(_pool().get("pity", 60)))
+		var ratio := clampf(float(pity) / float(pmax), 0.0, 1.0)
 		_pity_l.text = "保底 %d / %d" % [pity, pmax]
 		if _pity_sub != null:
 			_pity_sub.text = "还差 %d 抽必得史诗" % maxi(0, pmax - pity)
 		if _pity_bar != null:
-			_pity_bar.size = Vector2(roundi(170.0 * clampf(float(pity) / float(pmax), 0.0, 1.0)), 8)
+			_pity_bar.size = Vector2(roundi(170.0 * ratio), 8)
+		if _pity_gem != null:
+			# 条带在 head 里是 (207,39) 起、8 高，中线 y=43；菱形 9×9 pivot 4.5 → y=38.5
+			# 中心跟金填充前沿走，并钳在槽内 [209,375]，空进度时也不会戳出左端
+			var cx := clampf(207.0 + 170.0 * ratio, 209.0, 375.0)
+			_pity_gem.position = Vector2(cx - 4.5, 38.5)
 	_refresh_free()
 
 
-## 免费条状态刷新（可用 = 深金字；已领 = 灰字 + 压暗）
+## 免费条两种皮肤：可用 = 暖金底 + 金描边（"金钮"）；已领 = 灰扑扑压暗
+func _free_band_style(active: bool) -> StyleBoxFlat:
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color("e6cd93") if active else Color("cfc6b0")
+	sb.set_corner_radius_all(6)
+	sb.set_border_width_all(2)
+	sb.border_color = (Color("b8892e") if active
+		else Color(G.BOX_EDGE.r, G.BOX_EDGE.g, G.BOX_EDGE.b, 0.4))
+	sb.shadow_color = Color(0.24, 0.16, 0.06, 0.18)
+	sb.shadow_size = 3
+	sb.shadow_offset = Vector2(0, 1)
+	return sb
+
+
+## 免费条状态刷新（可用 = 暖金底 + 深金字 + 呼吸金边；已领 = 灰底灰字 + 压暗）
 func _refresh_free() -> void:
 	if _free_l == null:
 		return
-	if G.gacha_free_available():
+	_free_available = G.gacha_free_available()
+	_free_btn.add_theme_stylebox_override("panel", _free_band_style(_free_available))
+	if _free_available:
 		_free_l.text = "今日免费 · 灵宠结缘（每日 1 次）"
-		_free_l.add_theme_color_override("font_color", Color("6a5230"))
+		_free_l.add_theme_color_override("font_color", Color("7a4a0e"))
 		_free_btn.modulate = Color.WHITE
 	else:
 		_free_l.text = "今日免费已领 · 明日再来"
 		_free_l.add_theme_color_override("font_color", Color("8a8a8a"))
 		_free_btn.modulate = Color(1, 1, 1, 0.72)
+	if _free_glow != null:
+		_free_glow.visible = _free_available
+
+
+## 呼吸金边：仅可用时脉动 alpha；已领时不动、省电
+func _process(_delta: float) -> void:
+	if _free_glow == null or not _free_available:
+		return
+	var ph := float(Time.get_ticks_msec() % 1500) / 1500.0
+	_free_glow.modulate.a = 0.4 + 0.6 * absf(sin(ph * PI))
 
 
 # ================= 结果层 =================
@@ -485,7 +551,7 @@ func _build_result() -> void:
 	_r_soul_l.size = Vector2(90, 20)
 	_r_soul_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	rbal.add_child(_r_soul_l)
-	var t_icon := _tex_rect("itm_ticket_ten", 20, 20, Color("d8ab48"))
+	var t_icon := _tex_rect("itm_ticket_ten", 20, 20, G.C_RARE)
 	t_icon.position = Vector2(262, 7)
 	rbal.add_child(t_icon)
 	_r_ticket_l = G.gold_label("× 0", G.FS_SM, false, Color("f5ead0"), false)
@@ -628,10 +694,10 @@ func _make_card(res: Dictionary, big: bool) -> Control:
 	face.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	face.visible = false
 	face.add_child(_tex_rect("gacha_card_" + rar, w, h,
-		RARITY_HUE.get(rar, Color("a89e88")).darkened(0.35), TextureRect.STRETCH_SCALE))
+		RARITY_HUE.get(rar, G.C_HINT).darkened(0.35), TextureRect.STRETCH_SCALE))
 	face.add_child(_tex_rect("frame_" + rar, w, h, Color("8a6220"), TextureRect.STRETCH_SCALE))
 	var pic := _tex_rect(pid, 140 if big else 66, 132 if big else 62,
-		RARITY_HUE.get(rar, Color("a89e88")))
+		RARITY_HUE.get(rar, G.C_HINT))
 	pic.position = Vector2(15, 12) if big else Vector2(10, 8)
 	face.add_child(pic)
 
@@ -653,7 +719,7 @@ func _make_card(res: Dictionary, big: bool) -> Control:
 
 	if big:
 		var tag := G.gold_label(String(RARITY_NAME.get(rar, "普通")), G.FS_SM, false,
-			RARITY_HUE.get(rar, Color("d8ab48")), true)
+			RARITY_HUE.get(rar, G.C_RARE), true)
 		tag.position = Vector2(0, 180)
 		tag.custom_minimum_size = Vector2(w, 0)
 		face.add_child(tag)

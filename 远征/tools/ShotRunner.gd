@@ -71,6 +71,11 @@ func _setup() -> void:
 			add_child(load("res://src/ui/LoadScreen.tscn").instantiate())
 		"title":
 			add_child(load("res://src/ui/Title.tscn").instantiate())
+		"title_settings":
+			# 标题页 → 游戏设置（验证外置设置入口不再是「开发中」）
+			var ts: Node = load("res://src/ui/Title.tscn").instantiate()
+			add_child(ts)
+			ts.call("_open_settings")
 		"login":
 			add_child(load("res://src/ui/Login.tscn").instantiate())
 		"prologue":
@@ -90,6 +95,7 @@ func _setup() -> void:
 			hav.call("_open_avatar_panel")
 		"deploy":
 			_demo_prog()
+			G.prog["tips_seen"] = {"deploy": true}   # 压掉首次引导弹层，截图看版式
 			var home: Node = load("res://src/ui/GameHome.tscn").instantiate()
 			add_child(home)
 			var ev := InputEventMouseButton.new()
@@ -109,6 +115,7 @@ func _setup() -> void:
 		"deploy_role", "deploy_pet":
 			# 出征筹备的另两个页签（人物 / 宠物），方便逐页看图
 			_demo_prog()
+			G.prog["tips_seen"] = {"deploy": true}
 			var hd: Node = load("res://src/ui/GameHome.tscn").instantiate()
 			add_child(hd)
 			var ed := InputEventMouseButton.new()
@@ -116,13 +123,6 @@ func _setup() -> void:
 			ed.button_index = MOUSE_BUTTON_LEFT
 			hd.call("_on_expedition", ed)
 			hd.get("_deploy").call("_goto_step", 1 if _scene == "deploy_role" else 2)
-			_demo_prog()
-			var hw: Node = load("res://src/ui/GameHome.tscn").instantiate()
-			add_child(hw)
-			var ew := InputEventMouseButton.new()
-			ew.pressed = true
-			ew.button_index = MOUSE_BUTTON_LEFT
-			hw.call("_open_worlds", ew)
 		"worlds":
 			_demo_prog()
 			var hw: Node = load("res://src/ui/GameHome.tscn").instantiate()
@@ -176,6 +176,24 @@ func _setup() -> void:
 				"seed": 7,
 			}
 			add_child(load("res://src/battle/BattleScene.tscn").instantiate())
+		"battle_cast":
+			# 施法瞬间：满能量开局，0.25s 后强点「回风斩」——截图抓蓄力架势 + 技能图标闪现
+			BattleScene.pending_cfg = {
+				"ally": {
+					"role_id": "zs", "level": 5, "traits": [],
+					"active_pet": "pet_rockturtle", "bench_pet": "pet_thunderhawk",
+					"potions": 2, "hp_override": -1,
+				},
+				"enemy": {"theme": "forest", "node_type": "normal", "layer": 1},
+				"seed": 7,
+			}
+			var bc: Node = load("res://src/battle/BattleScene.tscn").instantiate()
+			add_child(bc)
+			get_tree().create_timer(0.25).timeout.connect(func():
+				var role = bc.sim.role_unit()
+				if role != null:
+					role.energy = 100
+					bc.call("_try_cast", "zs_huifeng"))
 		"battle_low":
 			# 低血警示：hp_override 把角色压到 10% 左右，看边缘红晕与"危急"提示
 			BattleScene.pending_cfg = {

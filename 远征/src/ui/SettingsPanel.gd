@@ -33,6 +33,11 @@ var _speed_btn: Control = null  # 战斗默认倍速
 var _name_edit: LineEdit = null # 昵称
 var _name_hint: Label = null
 var _deck: Control = null
+var _vol_rows: Array[Control] = []  # 音量行容器：静音时整行压暗（数值仍保留）
+var _mute_hint: Label = null    # 静音键右侧的情境提示（随静音 / 素材状态换话）
+var _play_hint: Label = null    # 战斗与演出三项的情境提示（随三个开关状态换话）
+## 从标题页直接打开时为 true：隐藏「回标题」（已经在标题），关闭时自行销毁
+var standalone := false
 
 
 func _ready() -> void:
@@ -41,11 +46,13 @@ func _ready() -> void:
 
 
 func _build() -> void:
-	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），不再各写一块纯灰
-	G.veil(self, 0.72)
+	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），不再各写一块纯灰。
+	# 设置页压得更暗（0.88）：它常从标题页打开，0.72 会把背后的标题 logo 透出来，
+	# 跟「设置」木牌叠成一团花
+	G.veil(self, 0.88)
 
 	var banner := G.banner_box("设 置", 300, 50)
-	banner.position = Vector2(90, 36)
+	banner.position = Vector2(90, 26)
 	add_child(banner)
 
 	var panel := G.parchment_box(440, PANEL_H, 16.0)
@@ -58,10 +65,10 @@ func _build() -> void:
 	_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.add_child(_content)
 
-	# 顶部小徽记（ui_notice 有图用图，缺素材回退一枚字符花饰，不强制装饰）
-	var notice := _emblem("ui_notice", 30)
-	notice.position = Vector2((CONTENT_W - 30.0) * 0.5, -2)
-	_content.add_child(notice)
+	# 右上角关闭钮（手游惯例：显眼、一定能找到出口）；「?」键位说明往左让位
+	var close := _close_button()
+	close.position = Vector2(CONTENT_W - 32.0, -4.0)
+	_content.add_child(close)
 
 	# 键位说明收进「?」：三行常驻太占版面
 	var help := G.info_button("键位与说明", [
@@ -73,7 +80,7 @@ func _build() -> void:
 		"F10 / ` —— 开发者控制台",
 		"音频素材为 CC0 / 公共领域，放 assets/audio/ 即自动生效。",
 	])
-	help.position = Vector2(CONTENT_W - 24.0, -2)
+	help.position = Vector2(CONTENT_W - 58.0, -2)
 	_content.add_child(help)
 
 	# 两页设置：常规（玩起来的手感）/ 存档与系统（备份与危险操作）
@@ -82,6 +89,8 @@ func _build() -> void:
 	_deck = PageDeckScript.new(CONTENT_W, PAGE_H, 24.0)
 	_deck.position = Vector2(0, DECK_Y)
 	_deck.key_mode = "lr"   # 上下键不抢（设置页里没有纵向导航）
+	_deck.page_gap = 14.0   # 相邻页按钮的阴影不再越过裁切边渗进来
+	_deck.arrow_outset = 24.0   # 翻页箭头骑到羊皮纸两缘：原来压在第 2 页「剧情与角色」标题上
 	_deck.add_page(_page_common())
 	_deck.add_page(_page_save())
 	_content.add_child(_deck)
@@ -109,13 +118,15 @@ func _page_common() -> Control:
 			Audio.set_mute(not Audio.muted())
 			_sync_mute())
 	page.add_child(_mute_btn)
+	# 情境提示：静音键右边这一行随状态换话——静音时说清「为什么不响」，
+	# 素材缺失时在同一块地方补一句来路（原来两块各自占位，容易互相顶到）
+	_mute_hint = G.gold_label("", G.FS_XS, false, Color("8a6a34"), false)
+	_mute_hint.position = Vector2(160, 88)
+	_mute_hint.custom_minimum_size = Vector2(248, 44)
+	_mute_hint.size = Vector2(248, 44)
+	_mute_hint.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
+	page.add_child(_mute_hint)
 	_sync_mute()
-	if Audio.has_no_stream():   # 还没放素材时提示一句来路，省得以为坏了
-		var tip := G.gold_label("（放 assets/audio/ 即生效）", G.FS_XS, false,
-			Color("8a6a34", 0.85), false)
-		tip.position = Vector2(160, 94)
-		tip.custom_minimum_size = Vector2(248, 0)
-		page.add_child(tip)
 
 	# ---- 战斗与演出 ----
 	_section(page, "战斗与演出", 130)
@@ -142,15 +153,17 @@ func _page_common() -> Control:
 			_sync_toggles())
 	page.add_child(_speed_btn)
 	_sync_toggles()
-	# 说明文案：手摆坐标的 Label 不会被父级约束宽度，必须显式给 size，
+	# 情境提示：三行分别跟着三个开关的当前状态说话（原来是一段固定文案，
+	# 把「开」和「关」两种后果都堆在一起，玩家还得自己去对应）
+	# 手摆坐标的 Label 不会被父级约束宽度，必须显式给 size，
 	# 否则文本最小宽会把它顶出面板右缘（实测第一版就是这样溢出的）
-	var t2 := G.gold_label("震屏：受击不再抖屏（低血红晕保留）。\n剧情演出：首领对峙 / 战后余韵直接跳过。\n倍速：每场战斗开局的默认档，战斗中仍可改。",
-		G.FS_XS, false, Color("8a6a34"), false)
-	t2.position = Vector2(0, 230)
-	t2.custom_minimum_size = Vector2(CONTENT_W, 0)
-	t2.size = Vector2(CONTENT_W, 60)
-	t2.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
-	page.add_child(t2)
+	_play_hint = G.gold_label("", G.FS_XS, false, Color("8a6a34"), false)
+	_play_hint.position = Vector2(0, 230)
+	_play_hint.custom_minimum_size = Vector2(CONTENT_W, 0)
+	_play_hint.size = Vector2(CONTENT_W, 60)
+	_play_hint.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
+	page.add_child(_play_hint)
+	_refresh_play_hint()
 
 	# ---- 玩家 ----
 	_section(page, "玩家", 292)
@@ -234,27 +247,34 @@ func _page_save() -> Control:
 	_hint2.position = Vector2(0, 188)
 	_hint2.custom_minimum_size = Vector2(CONTENT_W, 0)
 	page.add_child(_hint2)
+	# 情境提示：剪贴板里已经躺着一份存档码时，直接把默认引导换成"点粘贴码"，
+	# 免得玩家对着空输入框不知道先干嘛（存档码是 JSON，用首字符粗判一下）
+	if _clip_code().begins_with("{"):
+		_hint2.text = "剪贴板里像是一份存档码，点「粘贴码」读进来"
 
 	# ---- 剧情与角色 ----
 	_section(page, "剧情与角色", 228)
-	var reread_btn := G.gold_button("重看序章", 128, 40, G.FS_SM)
+	# 从标题页进入时已经在标题，「回标题」无意义；两个按钮加宽铺满一行
+	var bw: float = 196.0 if standalone else 128.0
+	var reread_btn := G.gold_button("重看序章", bw, 40, G.FS_SM)
 	reread_btn.position = Vector2(0, 252)
 	reread_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			G.go("res://src/ui/Prologue.tscn"))
 	page.add_child(reread_btn)
-	var remake_btn := G.gold_button("重新选择角色", 128, 40, G.FS_SM)
-	remake_btn.position = Vector2(140, 252)
+	var remake_btn := G.gold_button("重新选择角色", bw, 40, G.FS_SM)
+	remake_btn.position = Vector2(212 if standalone else 140, 252)
 	remake_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			G.go("res://src/ui/CreateRole.tscn"))
 	page.add_child(remake_btn)
-	var title_btn := G.gold_button("回标题", 128, 40, G.FS_SM)
-	title_btn.position = Vector2(280, 252)
-	title_btn.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_on_title())
-	page.add_child(title_btn)
+	if not standalone:
+		var title_btn := G.gold_button("回标题", 128, 40, G.FS_SM)
+		title_btn.position = Vector2(280, 252)
+		title_btn.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				_on_title())
+		page.add_child(title_btn)
 	var ro_hint := G.gold_label("重看序章与重选角色都不会清空养成与资源", G.FS_XS, false,
 		Color("8a6a34"), false)
 	ro_hint.position = Vector2(0, 298)
@@ -293,22 +313,41 @@ func _page_root() -> Control:
 	return page
 
 
-## 区块小标题（同 DeployPanel._section 的画法）
+## 区块小标题：左侧金色竖条 + 左对齐粗体——原来居中的小字混在正文里看不出层级
 func _section(page: Control, text: String, y: float) -> void:
-	var l := G.gold_label(text, G.FS_SM, false, Color("7a5a2e"), false)
-	l.position = Vector2(0, y)
-	l.custom_minimum_size = Vector2(CONTENT_W, 0)
+	var bar := ColorRect.new()
+	bar.color = Color("b98c3a")
+	bar.position = Vector2(0, y + 3)
+	bar.size = Vector2(4, 15)
+	bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	page.add_child(bar)
+	var l := G.gold_label(text, G.FS_SM, true, Color("7a5a2e"), false)
+	l.position = Vector2(12, y)
+	l.custom_minimum_size = Vector2(CONTENT_W - 12.0, 0)
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	page.add_child(l)
 
 
 # ================= 开关文案同步 =================
-## 静音按钮文案跟随状态
+## 静音按钮文案 + 音量行联动：静音时两条滑条整体压暗（数值仍保留），
+## 旁边一行说明「为什么不响」——不然玩家会以为滑条坏了
 func _sync_mute() -> void:
 	if _mute_btn == null:
 		return
-	var l := _mute_btn.get_child(0) as Label
-	if l != null:
-		l.text = "静音：开" if Audio.muted() else "静音：关"
+	var on := Audio.muted()
+	_set_btn_text(_mute_btn, "静音：开" if on else "静音：关")
+	for row in _vol_rows:
+		if is_instance_valid(row):
+			row.modulate = Color(1, 1, 1, 0.4) if on else Color(1, 1, 1, 1.0)
+	if _mute_hint == null:
+		return
+	# 两行硬换行：这一块宽 248，一句话顶满会从词中间断成"…仍保 / 留"，很难看
+	var lines := ["静音只停播放，不改动滑条", "滑条上的音量数值仍保留"]
+	if on:
+		lines = ["已静音：音乐与音效都不播", "滑条数值仍保留（未被改动）"]
+	if Audio.has_no_stream():
+		lines.append("（放 assets/audio/ 即生效）")
+	_mute_hint.text = "\n".join(lines)
 
 
 ## 震屏 / 剧情演出 / 倍速 三个开关的文案跟随存档
@@ -318,6 +357,21 @@ func _sync_toggles() -> void:
 		"剧情演出：%s" % ("省略" if bool(G.setting_get("skip_story", false)) else "播"))
 	var sp := float(G.setting_get("battle_speed", 1.0))
 	_set_btn_text(_speed_btn, "战斗倍速：×%d" % int(round(sp)))
+	_refresh_play_hint()
+
+
+## 战斗与演出三项的情境提示：每行只描述「当前这一档」会发生什么
+func _refresh_play_hint() -> void:
+	if _play_hint == null:
+		return
+	var shake := bool(G.setting_get("shake", true))
+	var skip := bool(G.setting_get("skip_story", false))
+	var sp := int(round(float(G.setting_get("battle_speed", 1.0))))
+	_play_hint.text = "\n".join([
+		"震屏：%s" % ("受击会抖屏" if shake else "受击不抖屏（低血红晕保留）"),
+		"剧情演出：%s" % ("省略首领对峙与战后余韵" if skip else "播放首领对峙与战后余韵"),
+		"倍速：×%d 是每场战斗开局的默认档，战斗中仍可切换" % sp,
+	])
 
 
 func _set_btn_text(btn: Control, text: String) -> void:
@@ -348,31 +402,40 @@ func _open_avatar() -> void:
 	avatar_requested.emit()
 
 
-## 音量行：名称 + 滑条 + 百分比
-func _vol_row(page: Control, text: String, y: float, value: float, cb: Callable) -> void:
+## 音量行：名称 + 滑条 + 百分比。整行包一个容器返回，静音时好整行压暗
+func _vol_row(page: Control, text: String, y: float, value: float, cb: Callable) -> Control:
+	var row := Control.new()   # 容器不拦鼠标，滑条才收得到拖拽
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.position = Vector2(0, y)
+	row.custom_minimum_size = Vector2(CONTENT_W, 26)
+	row.size = Vector2(CONTENT_W, 26)
+	page.add_child(row)
+
 	var l := G.text_label(text, G.FS_SM, Color("6a5a3a"))
-	l.position = Vector2(0, y + 3)
+	l.position = Vector2(0, 3)
 	l.custom_minimum_size = Vector2(60, 0)
-	page.add_child(l)
+	row.add_child(l)
 
 	var sl := HSlider.new()
 	sl.min_value = 0.0
 	sl.max_value = 1.0
 	sl.step = 0.05
 	sl.value = value
-	sl.position = Vector2(62, y)
+	sl.position = Vector2(62, 0)
 	sl.custom_minimum_size = Vector2(234, 26)
 	sl.size = Vector2(234, 26)
 	_style_slider(sl)
-	page.add_child(sl)
+	row.add_child(sl)
 
 	var pct := G.gold_label("%d%%" % roundi(value * 100.0), G.FS_XS, false, Color("8a6a34"), false)
-	pct.position = Vector2(304, y + 3)
+	pct.position = Vector2(304, 3)
 	pct.custom_minimum_size = Vector2(72, 0)
-	page.add_child(pct)
+	row.add_child(pct)
 	sl.value_changed.connect(func(v: float):
 		pct.text = "%d%%" % roundi(v * 100.0)
 		cb.call(v))
+	_vol_rows.append(row)
+	return row
 
 
 ## 滑条皮肤：金槽 + 金色圆钮（默认皮肤在羊皮纸上太灰）
@@ -406,23 +469,25 @@ func _disc(px: float, fill: Color) -> Texture2D:
 	return tex
 
 
-## 顶部徽记：有素材用图，缺素材回退一枚字符花饰
-func _emblem(res: String, px: float) -> Control:
-	var tex: Texture2D = G.res_tex(res)
-	if tex != null:
-		var pic := TextureRect.new()
-		pic.texture = tex
-		pic.custom_minimum_size = Vector2(px, px)
-		pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		# 必须 KEEP_ASPECT_CENTERED：ui_notice 是 448×320 的大图，
-		# 用 KEEP_CENTERED 会按原尺寸整张铺出来，糊住整个面板上半屏。
-		pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		return pic
-	var l := G.serif_label("※", G.FS_LG, Color("b98c3a"))
-	l.custom_minimum_size = Vector2(px, 0)
-	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	return l
+## 右上角圆形关闭钮：金底深字「×」，比底部「返回」更显眼（玩家反馈找不到出口）
+func _close_button() -> Control:
+	var btn := PanelContainer.new()
+	btn.custom_minimum_size = Vector2(28, 28)
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color("b98c3a")
+	sb.set_corner_radius_all(14)
+	sb.set_border_width_all(2)
+	sb.border_color = Color("7a5a2e")
+	btn.add_theme_stylebox_override("panel", sb)
+	var l := G.gold_label("×", G.FS_MD, true, Color("3a2408"), false)
+	btn.add_child(l)
+	btn.mouse_filter = Control.MOUSE_FILTER_STOP
+	btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	btn.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			Audio.sfx("ui_close")
+			_on_back())
+	return btn
 
 
 # ================= 存档导出 / 导入 =================
@@ -458,6 +523,13 @@ func do_import(code: String) -> bool:
 	return bool(do_import_ex(code).get("ok", false))
 
 
+## 剪贴板文本（已去首尾空白）；headless 没有剪贴板服务，返回空串走"没读到"分支
+func _clip_code() -> String:
+	if DisplayServer.get_name() == "headless":
+		return ""
+	return String(DisplayServer.clipboard_get()).strip_edges()
+
+
 func _on_export() -> void:
 	_disarm_reset()
 	var code := do_export()
@@ -474,10 +546,8 @@ func _on_export() -> void:
 
 func _on_paste() -> void:
 	_disarm_reset()
-	var clip := ""
-	if DisplayServer.get_name() != "headless":
-		clip = String(DisplayServer.clipboard_get())
-	if clip.strip_edges().is_empty():
+	var clip := _clip_code()
+	if clip.is_empty():
 		_hint2.text = "剪贴板里没有存档码"
 		_hint2.add_theme_color_override("font_color", Color("a04a3a"))
 		return

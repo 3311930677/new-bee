@@ -75,61 +75,47 @@ func _run() -> void:
 	load.queue_free()
 	await get_tree().process_frame
 
-	# ---- #2 / #10 称号：组内滚动 + 刷新不跳组 ----
+	# ---- #2 / #10 称号：单一纵向滚动列表 + 刷新不跳滚动位置 ----
 	var tp: Control = (load("res://src/ui/TitlePanel.gd") as GDScript).new()
 	add_child(tp)
 	await get_tree().process_frame
 	var groups: Array = tp.get("_groups")
 	_check(groups.size() >= 2, "称号应至少分成 2 组，实为 %d" % groups.size())
 	var card_w: float = float(tp.get("CARD_W"))
-	for gi in groups.size():
-		var page: Control = tp._group_page(gi)
-		# 必须真的挂进场景树再量：不在树上的控件不会布局，size 全是 0，
-		# 那样断言只会"因为拿不到尺寸而假通过"。
-		add_child(page)
-		await get_tree().process_frame
-		var scroll: ScrollContainer = null
-		for c in page.get_children():
-			if c is ScrollContainer:
-				scroll = c
-		_check(scroll != null, "第 %d 组页应有纵向滚动区（否则组内多于 4~5 条就永远点不到）" % gi)
-		if scroll == null:
-			page.queue_free()
-			continue
+	var scroll: ScrollContainer = tp.get("_scroll")
+	_check(scroll != null, "称号面板应是单一纵向滚动列表（_scroll 缺失）")
+	if scroll != null:
+		_check(scroll.get_child_count() == 1, "滚动区应只有一个列表容器")
 		var box: Control = scroll.get_child(0)
-		var want_n := (tp._sorted_group(gi) as Array).size()
-		_check(box.get_child_count() == want_n,
-			"第 %d 组的滚动区应放下全部 %d 张卡，实为 %d" % [gi, want_n, box.get_child_count()])
-		if box.get_child_count() > 0:
-			var last: Control = box.get_child(box.get_child_count() - 1)
+		var want_cards := 0
+		for gi in groups.size():
+			want_cards += (tp._sorted_group(gi) as Array).size()
+		var got_cards := 0
+		var last: Control = null
+		for c in box.get_children():
+			if c is PanelContainer:
+				got_cards += 1
+				last = c
+		_check(got_cards == want_cards, "滚动列表应放下全部 %d 张称号卡，实为 %d" % [want_cards, got_cards])
+		if last != null:
 			_check(box.size.y + 1.0 >= last.position.y + last.size.y,
 				"最后一张卡应落在滚动内容高度内（内容 %.1f < 卡底 %.1f）"
 				% [box.size.y, last.position.y + last.size.y])
-			# 卡宽由容器给（滚动条出现与否会差几个像素），所以只要求不小于给滚动条
-			# 让位后的 CARD_W——真正要守的是"卡内元素不越界"，见下面那条。
 			_check(last.size.x >= card_w - 1.0,
 				"卡片宽度不应小于 CARD_W（%.1f vs %.1f）" % [last.size.x, card_w])
 			var over := _overflow_right(last, last.size.x)
-			_check(over == "",
-				"第 %d 组卡片内有控件超出卡的右边界（%s）——滚动条一出现右侧按钮就会被裁掉"
-				% [gi, over])
-			if want_n >= 5:
-				_check(box.size.y > scroll.size.y,
-					"该组有 %d 张卡，内容应高于视口才需要滚动（内容 %.1f 视口 %.1f）"
-					% [want_n, box.size.y, scroll.size.y])
-		page.queue_free()
+			_check(over == "", "称号卡内有控件超出卡的右边界（%s）" % over)
+		_check(box.size.y > scroll.size.y,
+			"内容应高于视口才需要滚动（内容 %.1f 视口 %.1f）" % [box.size.y, scroll.size.y])
+		# 刷新保留滚动位置（#10 的新形态：列表只有一条，留位置即留组）
+		scroll.scroll_vertical = 200
 		await get_tree().process_frame
-	# 刷新保留当前组：跳到最后一组后 _refresh(true) 不该弹回默认组。
-	# ⚠ _refresh 会 queue_free 旧 deck 并新建一个，断言必须重新取 sb._deck，否则量的是旧对象。
-	var tp_deck: Control = tp.get("_deck")
-	if int(tp_deck.page_count) >= 3:
-		tp_deck.go(2, true)
-		var before_cur := int(tp_deck.current)
-		_check(before_cur == 2, "应能把称号切到第 3 组（实为 %d）" % before_cur)
 		tp._refresh(true)
-		tp_deck = tp.get("_deck")
-		_check(int(tp_deck.current) == 2,
-			"佩戴/领取后应留在当前组（#10：以前总是回默认组，实为 %d）" % int(tp_deck.current))
+		scroll = tp.get("_scroll")
+		await get_tree().process_frame
+		await get_tree().process_frame   # set_deferred 的 scroll_vertical 要等一帧才生效
+		_check(absf(float(scroll.scroll_vertical) - 200.0) < 2.0,
+			"佩戴/领取后应留在原滚动位置（#10，实为 %d）" % int(scroll.scroll_vertical))
 	tp.queue_free()
 	await get_tree().process_frame
 

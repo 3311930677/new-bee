@@ -19,10 +19,15 @@ const BRANCH_HUES := {"fury": Color("c06040"), "guard": Color("5a8a5a"), "spirit
 # 系名与节点文字色：直接用色系本色压深一档，保证在羊皮纸上够对比度。
 # 原来的亮色系色（c06040/5a8a5a/4a7a9a）当 16px 字色偏灰、在米底上发闷，读起来费劲。
 const BRANCH_TEXT := {"fury": Color("8e2f18"), "guard": Color("2f5a2f"), "spirit": Color("23506e")}
+# 节点圈内的流派图标：项目没有专门的天赋图标，按语义就近复用已有 school_* 素材
+# （fury 进攻系=暴击 / guard 防御系=荆棘反伤 / spirit 辅助系=能量），避免凭空塞文字
+const BRANCH_ART := {"fury": "school_crit", "guard": "school_thorns", "spirit": "school_energy"}
 
 var _points_l: Label = null
 var _info_l: Label = null
 var _cols: Control = null
+# 可点节点（有待分配天赋点时的未满节点）：_process 里做金色呼吸，其余节点保持静态
+var _pulse_nodes: Array = []
 
 
 func _ready() -> void:
@@ -109,11 +114,20 @@ func _build_branch(b: Dictionary, idx: int) -> void:
 	var nodes: Array = b.get("nodes", [])
 	var top_y := TREE_TOP
 	var bot_y := TREE_TOP + (nodes.size() - 1) * TIER_STEP
+	# 已投点的最高档位：其中心 y 以上是"未激活"（灰细线），以下是"已激活"（金粗线）。
+	# 无任何投点时 act_y = bot_y，金色段长度为 0，整条都是灰线。
+	var act_y := bot_y
+	for nj in nodes.size():
+		var ndj := nodes[nj] as Dictionary
+		var curj := int((G.prog.get("talents", {}) as Dictionary).get(String(ndj.get("id", "")), 0))
+		if curj > 0:
+			var tj := int(ndj.get("tier", nj + 1))
+			act_y = minf(act_y, bot_y - (tj - 1) * TIER_STEP)
 	# 竖线贴着圆的左沿走（圆改为靠列左摆），让右侧腾出完整空间放名字
 	var node_cx := col_x + NODE_D / 2.0
 	line.p_from = Vector2(node_cx, top_y)
 	line.p_to = Vector2(node_cx, bot_y)
-	line.hue = hue
+	line.act_y = act_y
 	_cols.add_child(line)
 
 	# 节点：tier 1 在底部（倒序摆）。圆靠列左，名字在圆右侧单行排布
@@ -121,7 +135,7 @@ func _build_branch(b: Dictionary, idx: int) -> void:
 		var nd := nodes[ni] as Dictionary
 		var tier := int(nd.get("tier", ni + 1))
 		var cy := bot_y - (tier - 1) * TIER_STEP
-		var btn := _node_button(nd, hue)
+		var btn := _node_button(nd, hue, bid)
 		btn.position = Vector2(col_x, cy - NODE_D / 2.0)
 		_cols.add_child(btn)
 		var st := _node_state(nd)
@@ -142,7 +156,7 @@ func _node_state(nd: Dictionary) -> int:
 	return 1 if G.talent_can_add(nid) else 0
 
 
-func _node_button(nd: Dictionary, hue: Color) -> Control:
+func _node_button(nd: Dictionary, hue: Color, bid: String) -> Control:
 	var nid := String(nd.get("id", ""))
 	var root := PanelContainer.new()
 	root.custom_minimum_size = Vector2(NODE_D, NODE_D)
@@ -152,18 +166,18 @@ func _node_button(nd: Dictionary, hue: Color) -> Control:
 	root.gui_input.connect(func(ev: InputEvent):
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 			_on_node(nid))
-	_paint_node(root, nd, hue)
+	_paint_node(root, nd, hue, bid)
 	return root
 
 
 ## 节点外观三态：已点满（亮金边+色系底）/ 可点（金边羊皮纸）/ 未解锁（灰）
 ## 可读性重构（原版节点圆内塞「名字\n0/3」两行 12px 字）：
 ##   40px 的圆扣掉边框后可用宽度不足 36px，中文名三字（「破军之势」四字更甚）直接被圆边裁掉，
-##   两行字还把圆撑满，既看不清又像糊了一团。改为「圆内只放等级数字（大字、居中）+
+##   两行字还把圆撑满，既看不清又像糊了一团。改为「圆内中央放流派图标 + 右下角小字显示等级 +
 ##   名字外置到圆右侧（左对齐、独立文字层）」——圆恢复成纯粹的进度指示器，
 ##   名字有完整横向空间，对比度和字号都能按正文档来。这与去AI感规范 §33「图标不要画太复杂，
-##   0.5 秒识别」一致：圆负责状态，文字负责识别。
-func _paint_node(root: PanelContainer, nd: Dictionary, hue: Color) -> void:
+##   0.5 秒识别」一致：圆负责状态与识别，文字负责命名。
+func _paint_node(root: PanelContainer, nd: Dictionary, hue: Color, bid: String) -> void:
 	var nid := String(nd.get("id", ""))
 	var cur := int((G.prog.get("talents", {}) as Dictionary).get(nid, 0))
 	var mx := int(nd.get("max", 1))
@@ -171,7 +185,11 @@ func _paint_node(root: PanelContainer, nd: Dictionary, hue: Color) -> void:
 	var sb := StyleBoxFlat.new()
 	sb.set_corner_radius_all(int(NODE_D / 2.0))
 	sb.set_border_width_all(2)
+	# 内容边距归零：否则 PanelContainer 会按边框宽内缩内容区，
+	# 圆内的图标/等级就跟着偏移，位置算不准
+	sb.set_content_margin_all(0.0)
 	var txt_col := G.TEXT_DARK
+	var art_a := 1.0
 	if cur >= mx:
 		sb.bg_color = hue
 		sb.border_color = G.GOLD_BRIGHT
@@ -183,19 +201,46 @@ func _paint_node(root: PanelContainer, nd: Dictionary, hue: Color) -> void:
 		sb.bg_color = Color(hue.r, hue.g, hue.b, 0.45)
 		sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.5)
 		txt_col = Color("3a2a14")
+		art_a = 0.85
 	else:
 		# 未解锁：灰底 + 灰字是原来的"看不清"重灾区（b8a884 底 + TEXT_DARK 只有约 2.6:1）。
 		# 底色提到接近羊皮纸、字色压到深棕，保证"未解锁"依然读得清，只是没颜色
 		sb.bg_color = Color("cdbf9c")
 		sb.border_color = Color(0.34, 0.28, 0.17, 0.55)
+		art_a = 0.42
 	G._apply_shadow(sb, 2.0, 1.0, 0.25)
 	root.add_theme_stylebox_override("panel", sb)
 	for c in root.get_children():
 		c.queue_free()
-	# 圆内只留「当前/上限」：字号提到正文档，加粗，一眼看出进度
-	var l := G.gold_label("%d/%d" % [cur, mx], G.FS_SM, true, txt_col, cur >= mx)
+	# 包一层 Control 手动布局：PanelContainer 会把每个直接子控件都铺满内容区，
+	# 图标与等级会完全重叠。内容边距已归零，这层就是精确的 NODE_D×NODE_D 坐标系
+	var lay := Control.new()
+	lay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	lay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(lay)
+	# 圆中央：本系图标（20px 内切于 40px 圆，四角不会戳出圆边）
+	var tex := G.res_tex(String(BRANCH_ART.get(bid, "")))
+	if tex != null:
+		var art := TextureRect.new()
+		art.texture = tex
+		art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		art.size = Vector2(20, 20)
+		art.position = Vector2((NODE_D - 20.0) * 0.5, 5.0)
+		art.modulate = Color(1, 1, 1, art_a)
+		art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		lay.add_child(art)
+	# 右下角：等级小字（11px，右对齐内缩 4px，落在圆下部仍完整在圆内）
+	var l := G.gold_label("%d/%d" % [cur, mx], 11, true, txt_col, false)
+	l.position = Vector2(0, 25)
+	l.size = Vector2(NODE_D - 4.0, 12)
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	root.add_child(l)
+	lay.add_child(l)
+	# 有剩余点时的可点节点登记进呼吸队列；点用完则整棵静态（不空转 _process）
+	if can and G.talent_points_left() > 0:
+		_pulse_nodes.append({"sb": sb})
 
 
 ## 节点名字层（圆右侧外置）：与圆分开摆放，避免"塞进 40px 圆"的裁切问题
@@ -235,7 +280,8 @@ func _on_node(nid: String) -> void:
 
 func _refresh() -> void:
 	_points_l.text = "剩余天赋点 %d / %d（每 5 级 1 点）" % [G.talent_points_left(), G.talent_points_total()]
-	# 整列重建重绘（节点少，重建最省心）
+	# 整列重建重绘（节点少，重建最省心）；呼吸队列随重建一并清空重登记
+	_pulse_nodes.clear()
 	for c in _cols.get_children():
 		c.queue_free()
 	var branches: Array = G.talents_cfg().get("branches", [])
@@ -243,11 +289,25 @@ func _refresh() -> void:
 		_build_branch(branches[i], i)
 
 
+## 可点节点的金色呼吸（仅存在待分配天赋点时才有队列，否则直接返回，不空转）
+func _process(_delta: float) -> void:
+	if _pulse_nodes.is_empty():
+		return
+	var ph := float(Time.get_ticks_msec() % 1300) / 1300.0
+	var a := 0.4 + 0.6 * absf(sin(ph * PI))
+	for e in _pulse_nodes:
+		var sb: StyleBoxFlat = e.get("sb")
+		if sb != null:
+			sb.border_color = Color(G.GOLD_BRIGHT.r, G.GOLD_BRIGHT.g, G.GOLD_BRIGHT.b, a)
+			sb.set_border_width_all(2 + int(a > 0.8))
+
+
 # 竖直连线
 class _BranchLine extends Control:
 	var p_from := Vector2.ZERO
 	var p_to := Vector2.ZERO
-	var hue := Color.GRAY
+	# 已激活段与未激活段的分界 y（已投点最高档位的圆心）；= p_to.y 时整条未激活
+	var act_y := 0.0
 
 	func _ready() -> void:
 		mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -264,5 +324,12 @@ class _BranchLine extends Control:
 			var t := a
 			a = b
 			b = t
-		draw_line(Vector2(a.x, a.y + r), Vector2(b.x, b.y - r),
-			Color(hue.r, hue.g, hue.b, 0.4), 3.0)
+		var top := Vector2(a.x, a.y + r)
+		var bot := Vector2(b.x, b.y - r)
+		var split := clampf(act_y, top.y, bot.y)
+		# 未激活段（上方）：灰细线，弱化"还没走到"
+		if split > top.y:
+			draw_line(top, Vector2(top.x, split), Color(0.42, 0.34, 0.22, 0.5), 1.0)
+		# 已激活段（下方）：金粗线，强化"已经点亮"
+		if bot.y > split:
+			draw_line(Vector2(bot.x, split), bot, G.C_RARE, 2.0)

@@ -30,12 +30,10 @@ const THEME_HUE := {
 	"tomb": Color("6b5f88"), "desert": Color("c09a55"), "glacier": Color("6fb3ba"),
 	"abyss": Color("6d5a9e"), "castle": Color("8d8474"),
 }
-# 稀有度色：宠物卡色标与徽标按它来，一眼分出白/蓝/紫/金档
-const RARITY_HUE := {
-	"white": Color("a89e88"), "blue": Color("6f9fd0"),
-	"purple": Color("a273c9"), "gold": Color("d8ab48"),
-}
-const RARITY_NAME := {"white": "普通", "blue": "稀有", "purple": "史诗", "gold": "传说"}
+# 稀有度色/名全项目唯一定义在 G.gd（C6），这里只引用，不再各自复制一份
+const GScript := preload("res://src/autoload/G.gd")
+const RARITY_HUE := GScript.RARITY_HUE
+const RARITY_NAME := GScript.RARITY_NAME
 const RARITY_FRAME := {"white": "frame_white", "blue": "frame_blue",
 	"purple": "frame_purple", "gold": "frame_gold"}
 const ROLE_NAME := {
@@ -208,6 +206,7 @@ func _rebuild_step() -> void:
 	_deck = PageDeckScript.new(CONTENT_W, DECK_H, 26.0)
 	_deck.position = Vector2(0, DECK_Y)
 	_deck.key_mode = "lr"   # ↑↓/WS 留给页签，别和二级导航抢键
+	_deck.page_gap = 14.0   # 相邻卡片的阴影不再贴到当前卡的裁切边上
 	match _step:
 		0:
 			_fill_themes()
@@ -309,7 +308,7 @@ func _pet_card(p: Dictionary, i: int, total: int) -> Control:
 			ROLE_NAME.get(String(p.get("role", "")), "未知")],
 		"art_names": ["%s_art" % pid, pid],
 		"art_hint": "%s.png" % pid,
-		"art_tint": RARITY_HUE.get(rarity, Color("a89e88")),
+		"art_tint": RARITY_HUE.get(rarity, G.C_HINT),
 		"art_fit": "contain",
 		"art_dim": not owned,
 		"art_frame": RARITY_FRAME.get(rarity, "frame_white"),
