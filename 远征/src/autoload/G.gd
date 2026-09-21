@@ -1803,20 +1803,26 @@ func mount_explore_bonus() -> Dictionary:
 	var tier := mount_tier(mid)
 	if mid == "" or tier <= 0:
 		return out
-	# 探索加成集中在 mounts.json 顶层 explore[mid][阶-1]（与战斗 bonus 分开两处，
-	# 是因为一个管战斗内数值、一个管跑图手感，改哪边都不用碰另一边的数字）
+	var ex := mount_explore_at(mid, tier)
+	out["sprint_pct"] = float(ex.get("sprint_pct", 0.0))
+	out["stealth_pct"] = float(ex.get("stealth_pct", 0.0))
+	return out
+
+
+## 指定坐骑/阶级的跑图加成（坐骑面板要按"这一只、这一阶"显示，不能只看当前骑乘的那只）
+func mount_explore_at(mid: String, tier: int) -> Dictionary:
+	# 探索加成集中在 mounts.json 顶层 explore[mid][阶-1]（与战斗 bonus 分开两处：
+	# 一个管战斗内数值、一个管跑图手感，改哪边都不用碰另一边的数字）
+	if mid == "" or tier <= 0:
+		return {}
 	var all: Variant = TableCache.mounts_config().get("explore", {})
 	if not (all is Dictionary):
-		return out
+		return {}
 	var arr: Variant = (all as Dictionary).get(mid, [])
 	if not (arr is Array) or tier > (arr as Array).size():
-		return out
+		return {}
 	var ex: Variant = (arr as Array)[tier - 1]
-	if not (ex is Dictionary):
-		return out
-	out["sprint_pct"] = float((ex as Dictionary).get("sprint_pct", 0.0))
-	out["stealth_pct"] = float((ex as Dictionary).get("stealth_pct", 0.0))
-	return out
+	return ex if ex is Dictionary else {}
 
 
 ## 购买 1 阶 / 升级 2 阶

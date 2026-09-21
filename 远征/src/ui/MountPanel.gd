@@ -114,7 +114,8 @@ func _mount_card(m: Dictionary) -> Control:
 	var show_tier := mini(tier, tiers.size() - 1)
 	var tinfo := tiers[show_tier] as Dictionary
 	var bonus: Dictionary = tinfo.get("bonus", {})
-	var bl := G.text_label("%s：%s" % [String(tinfo.get("name", "")), _bonus_text(bonus)],
+	var bl := G.text_label("%s：%s" % [String(tinfo.get("name", "")),
+			_bonus_text(bonus, mid, show_tier + 1)],
 		G.FS_XS, Color("7a5a2e"))
 	bl.position = Vector2(68, 34)
 	bl.custom_minimum_size = Vector2(122, 40)
@@ -159,11 +160,18 @@ func _mount_card(m: Dictionary) -> Control:
 	return root
 
 
-func _bonus_text(bonus: Dictionary) -> String:
-	var names := {"atk_pct": "攻击", "def_pct": "防御", "maxhp_pct": "生命", "spd_pct": "速度", "crit_add": "暴击"}
+func _bonus_text(bonus: Dictionary, mid := "", tier := 0) -> String:
+	var names := {"atk_pct": "攻击", "def_pct": "防御", "maxhp_pct": "生命", "spd_pct": "速度",
+		"crit_add": "暴击", "sprint_pct": "疾行", "stealth_pct": "明雷"}
 	var parts := PackedStringArray()
 	for k in bonus.keys():
 		parts.append("%s+%d%%" % [String(names.get(String(k), String(k))), roundi(float(bonus[k]) * 100.0)])
+	# 跑图加成也写在这里（1.4 巡检：玩家在坐骑面板上做决定，看不到"跑图手感"等于没做）
+	if mid != "" and tier > 0:
+		for k2 in G.mount_explore_at(mid, tier).keys():
+			var v := float(G.mount_explore_at(mid, tier)[k2])
+			if v > 0.0:
+				parts.append("%s+%d%%" % [String(names.get(String(k2), String(k2))), roundi(v * 100.0)])
 	return " ".join(parts)
 
 
