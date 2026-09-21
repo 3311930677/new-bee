@@ -153,7 +153,10 @@ func _refresh_role_art() -> void:
 	if _role_art == null:
 		return
 	var rid := String((G.roles[_role_idx] as Dictionary).get("id", ""))
-	var tex: Texture2D = G.res_tex("role_%s_art" % rid)
+	# 复刻版：优先 AI 重生成的「职业×性别」立绘（A1），取不到才回落旧素材（Task 1.3）
+	var tex: Texture2D = G.xa_portrait(rid)
+	if tex == null:
+		tex = G.res_tex("role_%s_art" % rid)
 	if tex == null:
 		tex = G.res_tex("role_%s" % rid)
 	_role_art.texture = tex
@@ -245,12 +248,8 @@ func _build_frames(role_id: String) -> SpriteFrames:
 
 
 func _role_name(id: String) -> String:
-	match id:
-		"zs": return "pojun"
-		"ck": return "chuanyang"
-		"fs": return "shuangyu"
-		"fz": return "chenxing"
-	return id
+	# 复刻版三职业：老角色（ck/fz）统一走 G.ROLE_ART，改名后不用再各处抄一份
+	return G.role_art_name(id)
 
 
 # ---------- 羊皮纸说明面板 ----------

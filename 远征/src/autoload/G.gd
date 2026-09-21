@@ -76,7 +76,7 @@ const ICON_MARK := 28.0           # 建筑/卡片角标图标
 # ---------- 共享状态 ----------
 var account := ""           # 登录账号（游客登录时为"游客"）
 var gender := "男"          # 玩家选择性别
-var selected_role := ""     # "zs" / "ck" / "fs" / "fz"
+var selected_role := ""     # "zs" / "ls" / "fs"（复刻版三职业）
 var avatar_id := ""         # 职业头像 id；为空时跟随当前职业
 var avatar_custom := ""     # 上传的自定义头像文件名（user://avatars/ 下）；空串=没上传过
 var avatar_use_custom := false   # 当前是否使用自定义头像（选职业头像后仍保留上传的图）
@@ -350,8 +350,14 @@ func _load_save() -> void:
 		for k in ["gold", "expedition", "soul", "honor"]:
 			wallet[k] = int((w as Dictionary).get(k, 0))
 	var rid := String(data.get("selected_role", ""))
-	if not rid.is_empty() and not get_role(rid).is_empty():
-		selected_role = rid
+	if not rid.is_empty():
+		if get_role(rid).is_empty():
+			var mig := migrate_legacy_role(rid)   # 旧档（ck/fz）→ 现行职业
+			if mig != "":
+				rid = mig
+				legacy_role_migrated = String(data.get("selected_role", ""))
+		if not get_role(rid).is_empty():
+			selected_role = rid
 	var acc := String(data.get("account", ""))
 	if not acc.is_empty():
 		account = acc
@@ -362,8 +368,15 @@ func _load_save() -> void:
 	if not gd.is_empty():
 		gender = gd
 	var aid := String(data.get("avatar_id", ""))
-	if not aid.is_empty() and not get_role(aid).is_empty():
-		avatar_id = aid
+	if not aid.is_empty():
+		if get_role(aid).is_empty():
+			var amig := migrate_legacy_role(aid)   # 头像也存的是职业 id，同样要换算
+			if amig != "":
+				aid = amig
+				if legacy_role_migrated == "":
+					legacy_role_migrated = String(data.get("avatar_id", ""))
+		if not get_role(aid).is_empty():
+			avatar_id = aid
 	# 读档可能在同一进程里被测试/导入流程再次调用，先失效缓存再验证文件，
 	# 否则上一轮的 null 缓存会让刚读回的自定义头像被误判成不存在。
 	avatar_custom = String(data.get("avatar_custom", ""))
@@ -2586,22 +2599,39 @@ func get_role(id: String) -> Dictionary:
 
 
 func role_dir(id: String) -> String:
-	# 素材目录映射：zs→zs / ck→ck / fs→fs / fz→fz（image/role/<id>/）
+	# 素材目录映射：zs→zs / ls→ls / fs→fs（image/role/<id>/）
 	return "res://image/role/%s/" % id
 
 
-## 职业立绘文件名（pojun/chuanyang/shuangyu/chenxing）：此前 Login/GameHome 各抄一份，统一收到这里
-const ROLE_ART := {"zs": "pojun", "ck": "chuanyang", "fs": "shuangyu", "fz": "chenxing"}
+## 职业立绘文件名（pojun/chuanyang/shuangyu）：此前 Login/GameHome 各抄一份，统一收到这里
+const ROLE_ART := {"zs": "pojun", "ls": "chuanyang", "fs": "shuangyu"}
 
 
 func role_art_name(id: String) -> String:
 	return String(ROLE_ART.get(id, id))
 
 
-## 职业头像贴图路径（未知 id 回落到破军，绝不返回空路径让调用方 load 失败）
+## 职业头像贴图路径（未知 id 回落到铁衣，绝不返回空路径让调用方 load 失败）
 func role_icon_path(id: String) -> String:
 	var rid := id if not get_role(id).is_empty() else "zs"
 	return role_dir(rid) + role_art_name(rid) + "_icon.png"
+
+
+# ---------- 复刻版：职业立绘 / 头像按「职业 × 性别」取 AI 重生成素材（Task 3.1） ----------
+# 附录 A 的 A1/A4：六套立绘与头像（战士/法师/猎手 × 男女）。取不到时回落旧素材，
+# 保证「性别只是画风差异，不影响任何数值与逻辑」。
+func xa_gender_suffix() -> String:
+	return "nv" if gender == "女" else "nan"
+
+
+## 立绘（A1，512×768）；没有对应 AI 素材返回 null
+func xa_portrait(role_id: String) -> Texture2D:
+	return res_tex("a1_%s_%s_anchor" % [role_id, xa_gender_suffix()])
+
+
+## 头像（A4，96×96）；没有对应 AI 素材返回 null
+func xa_avatar_tex(role_id: String) -> Texture2D:
+	return res_tex("a4_%s_%s_avatar" % [role_id, xa_gender_suffix()])
 
 
 # ================= 头像（登录页 / 主界面都可上传本地图片） =================
@@ -3154,8 +3184,22 @@ func mk_wood_button(text: String, w := 0.0, h := 42.0, font_size := FS_MD) -> Co
 
 
 ## 复刻版角色素材映射（Task 1.3）：现行 4 职业 → AI 重生成行走网格（只有 zs/fs/ls 三套）
-const XA_ROLE_GRID := {"zs": "a3_zs_walk_grid", "ck": "a3_ls_walk_grid",
-	"fs": "a3_fs_walk_grid", "fz": "a3_fs_walk_grid"}
+const XA_ROLE_GRID := {"zs": "a3_zs_walk_grid", "ls": "a3_ls_walk_grid",
+	"fs": "a3_fs_walk_grid"}
+
+
+## 旧存档兼容（Task 3.4）：三职业改造把 穿杨(ck)/晨星(fz) 换成了 猎手(ls)。
+## 老档里的 selected_role / avatar_id 若还是旧 id，会指向不存在的职业——不换算就会读到空角色。
+const XA_LEGACY_ROLE := {"ck": "ls", "fz": "fs"}
+var legacy_role_migrated := ""   # 发生换算时记下旧 id（主界面据此提示一次）
+
+
+## 旧职业 id → 现行 id（无换算返回空串）
+func migrate_legacy_role(id: String) -> String:
+	var to := String(XA_LEGACY_ROLE.get(id, ""))
+	if to == "" or get_role(to).is_empty():
+		return ""
+	return to
 
 
 ## 用 AI 行走网格的第 1 行（朝下 5 帧）拼待机动画；拿不到网格返回 null（调用方回落旧图）。

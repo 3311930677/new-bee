@@ -84,7 +84,8 @@ func _run() -> void:
 	for b in tc_cfg.get("branches", []):
 		node_n += ((b as Dictionary).get("nodes", []) as Array).size()
 	_check(node_n == 30, "三系应共 30 节点，实为 %d" % node_n)
-	_check((TableCache.equip_config().get("slots", []) as Array).size() == 6, "装备应 6 槽")
+	_check((TableCache.equip_config().get("slots", []) as Array).size() == 5,
+		"装备应 5 槽（三职业各 1 武器 + 甲 + 饰）")
 	_check(int(TableCache.skillbook_config().get("max_level", 0)) == 10, "技能书上限应 10 级")
 	_check((TableCache.mounts_config().get("mounts", []) as Array).size() == 6, "坐骑应 6 类")
 	# 座骑/槽位这些是**设计常量**（改了就是设计变更，该红）；
@@ -123,9 +124,9 @@ func _run() -> void:
 
 	# —— 2. 装备强化 ——
 	_reset(1)
-	_check(G.equip_weapon_slot("zs") == "sword" and G.equip_weapon_slot("ck") == "spear"
-		and G.equip_weapon_slot("fs") == "staff" and G.equip_weapon_slot("fz") == "hammer",
-		"四系武器应绑定对应人物")
+	_check(G.equip_weapon_slot("zs") == "sword" and G.equip_weapon_slot("ls") == "spear"
+		and G.equip_weapon_slot("fs") == "staff",
+		"三系武器应绑定对应职业")
 	var c0 := G.equip_enhance_cost("sword")
 	_check(int(c0["gold"]) == 150 and int(c0["item_n"]) == 1, "lv0 强化应耗 150 金 + 1 石")
 	G.prog["equip"] = {"sword": {"lv": 5, "gems": [], "affixes": []}}
@@ -354,15 +355,15 @@ func _run() -> void:
 	_check(int(agg["hp_add"]) == 170, "聚合：甲50+饰70+称号50=170，实为 %d" % int(agg["hp_add"]))
 	_check(absf(float(agg["spd_pct"]) - 0.05) < 0.0001, "聚合：烈焰马速度+5%")
 	_check(absf(float(agg["crit_add"]) - 0.02) < 0.0001, "聚合：饰品暴击+2%")
-	var agg_ck := G.growth_bonuses("ck")
-	_check(int(agg_ck["atk_add"]) == 10, "换穿杨应取长枪(lv0 攻10)而非大剑，实为 %d" % int(agg_ck["atk_add"]))
+	var agg_ls := G.growth_bonuses("ls")
+	_check(int(agg_ls["atk_add"]) == 10, "换追风应取长弓(lv0 攻10)而非大剑，实为 %d" % int(agg_ls["atk_add"]))
 
 	# —— 9.5 成长口径（轮次 21 · #29）——
-	# 暴击以前写死 0.05+0.001*level，把 roles.json 里四职业的 base.crit 与 growth.json 的
-	# per_level.crit 全忽略；穿杨（ck）明明是 0.07 的暴击职业，实战里却和破军一样。
+	# 暴击以前写死 0.05+0.001*level，把 roles.json 里各职业的 base.crit 与 growth.json 的
+	# per_level.crit 全忽略；追风（ls）明明是 0.07 的暴击职业，实战里却和铁衣一样。
 	var per_crit := float(TableCache.growth().get("per_level", {}).get("crit", 0.0))
 	_check(per_crit > 0.0, "growth.json 应声明 per_level.crit（实为 %f）" % per_crit)
-	for rid in ["zs", "ck", "fs", "fz"]:
+	for rid in ["zs", "ls", "fs"]:
 		var rbase: Dictionary = TableCache.get_role(rid).get("base", {})
 		var base_crit := float(rbase.get("crit", 0.0))
 		_check(base_crit > 0.0, "roles.json 的 %s 应声明 base.crit" % rid)
@@ -377,11 +378,11 @@ func _run() -> void:
 				_check(int(st.get("atk", -1)) == int(rbase.get("atk", 0))
 					and int(st.get("max_hp", -1)) == int(rbase.get("hp", 0)),
 					"%s 1 级攻击/生命应等于 roles.json base" % rid)
-	# 职业差异必须真的体现出来：穿杨比破军高 0.02 暴击（表里一直写着，代码以前没读）
+	# 职业差异必须真的体现出来：追风比铁衣高 0.02 暴击（表里一直写着，代码以前没读）
 	var crit_zs := float(TableCache.role_stats("zs", 60).get("crit", 0.0))
-	var crit_ck := float(TableCache.role_stats("ck", 60).get("crit", 0.0))
-	_check(absf((crit_ck - crit_zs) - 0.02) < 0.000001,
-		"满级穿杨应比破军高 0.02 暴击（实为 %.4f）" % (crit_ck - crit_zs))
+	var crit_ls := float(TableCache.role_stats("ls", 60).get("crit", 0.0))
+	_check(absf((crit_ls - crit_zs) - 0.02) < 0.000001,
+		"满级追风应比铁衣高 0.02 暴击（实为 %.4f）" % (crit_ls - crit_zs))
 
 	# 经验曲线：类型显式声明，数值与文档曲线一致，且不执行表里的字符串
 	_check(TableCache.exp_formula_kind() == "linear_plus_exp",

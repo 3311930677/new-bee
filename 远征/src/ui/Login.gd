@@ -16,8 +16,8 @@ var _avatar_row: HBoxContainer = null
 var _avatar_dialog: FileDialog = null
 var _toast: Label = null
 
-const AVATAR_IDS := ["zs", "ck", "fs", "fz", "custom"]
-const AVATAR_NAMES := {"zs": "破军", "ck": "穿杨", "fs": "霜语", "fz": "晨星", "custom": "自定义"}
+const AVATAR_IDS := ["zs", "ls", "fs", "custom"]
+const AVATAR_NAMES := {"zs": "铁衣", "ls": "追风", "fs": "霜语", "custom": "自定义"}
 
 
 func _ready() -> void:

@@ -286,6 +286,9 @@ Get-ChildItem "d:\new bee\远征\assets_regan\refs\sprites" -Recurse -Directory 
 | 2.2 遇敌 | ✅（已满足） | 大地图本就是**全明雷**（怪物游走 + 接触开战），本轮补紫标 `Lv{n}`；随机遇敌 roll 从不存在所以无需移除 |
 | 2.3 历练武侠化 | ✅（部分） | 节点显示名：遭遇→劫道、事件→奇遇、商店→货栈、篝火→营火（类型 id 与机制未动） |
 | 2.4 主城对齐 | ✅（部分） | 图志阁→藏经阁、兽栏→坐骑厩、演武场→切磋台、布告板→江湖告示（`祭坛`/`仓廪` 保留：`VerifyCity` 断言里用到） |
+| 3.1 三职业 × 男女 | ✅ | `roles.json` 改为 **zs 铁衣（战士·环首大刀）/ ls 追风（猎手·铁胎长弓）/ fs 霜语（法师·九环法杖）**，desc 按「末日浩劫·龙怒」重写；`image/role/ck` → `image/role/ls`（`.tres` 内引用同步修正）；新增 `G.xa_portrait()/xa_avatar_tex()`：立绘/头像按**职业×性别**取 A1/A4，`CreateRole` 已接 |
+| 3.2 数值文案 | ✅（部分） | `skills.json` 20→15（三职业各 5；猎手接管原枪骑五技能，法师并入「圣愈」补回治疗）；`combos.json` 4→3；`equip.json` 武器 4 系→3 系（长弓槽沿用 id `spear` 保住宿存档键）；`MonsterAI` 托管条件同步。**未做**：maps/npcs/世界观地名 |
+| 3.4 旧存档兼容 | ✅ | `G.XA_LEGACY_ROLE`：老档 `selected_role`/`avatar_id` 为 `ck`/`fz` 时换算成 `ls`/`fs`，并在主界面弹一次「旧档已换算」（不静默改档） |
 
 **与方案的偏离（重要）**
 
@@ -298,7 +301,9 @@ Get-ChildItem "d:\new bee\远征\assets_regan\refs\sprites" -Recurse -Directory 
 - 1.4 收尾：其余面板逐个换 `mk_panel`（大面板才上九宫格；`TraitPicker` 这种 140px 宽卡片必须继续用程序绘制，否则九宫格边距会吃掉内容区）。
 - 1.5 收尾：主城建筑立面（H4）、H2/H3 地图图集切图与 Terrain 自动图块。
 - 2.5 坐骑/宠物换血（含探索机动加成）——与 3.x 的 id 改名一起做更省事。
-- **阶段 3 全部**：3.1 三职业×男女、3.2 skills/monsters/maps/npcs、3.3 lore/codex/quests 移植「末日浩劫·龙怒」、3.4 旧存档兼容钩子（`G.XA_LEGACY_ROLE` 映射已想好，等 3.1 落地时一起接，否则是死代码）。
+- **3.2 剩余**：`monsters.json` 接原版怪物精灵命名、`maps.json` 改「洛林郊野／黄城」等地名、新增 `data/npcs.json`（NPC 对话）。
+- **3.3 全部**：`lore.json`/`codex.json`/`quests.json` 移植 readme.txt 的「末日浩劫·龙怒」（造物神帕拉多／洛林国／钢剑王子）——需要先读原版 readme，属独立一轮。
+- **孤儿素材**：`image/role/fz/`（晨星）已无代码引用，等确认后清掉。
 - 阶段 4 联机化。
 
 ## 五、验收清单（阶段 1-3 完成 = 单机版达标）

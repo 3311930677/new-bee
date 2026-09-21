@@ -58,6 +58,20 @@ func _ready() -> void:
 	_build_stage(role)
 	_build_entries()
 	_prompt_save_locked()
+	_prompt_legacy_role()
+
+
+## 旧职业换算提示（Task 3.4）：三职业改造后老档里的 ck/fz 会被换算，静默换算不符合口径
+func _prompt_legacy_role() -> void:
+	if G.legacy_role_migrated == "" or G.save_locked:
+		return
+	var old_id := G.legacy_role_migrated
+	G.legacy_role_migrated = ""
+	var now_name := String(G.get_role(G.selected_role).get("name", G.selected_role))
+	G.show_info_popup(self, "旧档已换算", [
+		"复刻版改成三职业：铁衣（战士）/ 追风（猎手）/ 霜语（法师）。",
+		"旧档里的「%s」已换算为「%s」，等级、装备与全部进度原样保留。" % [old_id, now_name],
+	])
 
 
 # ---------- 坏档提示（A7） ----------
@@ -372,12 +386,8 @@ func _frames(role_id: String) -> SpriteFrames:
 
 
 func _role_name(id: String) -> String:
-	match id:
-		"zs": return "pojun"
-		"ck": return "chuanyang"
-		"fs": return "shuangyu"
-		"fz": return "chenxing"
-	return id
+	# 复刻版三职业：统一走 G.ROLE_ART（Login/CreateRole/DeployPanel 同一口径）
+	return G.role_art_name(id)
 
 
 ## 右侧竖列：活动与系统入口（出征已搬进主城）
