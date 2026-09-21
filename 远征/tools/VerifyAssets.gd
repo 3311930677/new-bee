@@ -198,8 +198,14 @@ const XA_MONSTER_IDS := ["mon_spider", "mon_treant", "mon_yeti", "mon_frostguard
 	"mon_traitor", "mon_blackknight", "mon_boss_castle"]
 
 
+const XA_PET_IDS := ["pet_eyescat", "pet_holydeer", "pet_emberling", "pet_shadowviper"]
+
+
 func _xa_missing_assets() -> PackedStringArray:
 	var miss := PackedStringArray()
+	for pid in XA_PET_IDS:
+		if G.res_path(String(pid)) == "":
+			miss.append("宠物图:" + String(pid))
 	for mid in XA_MONSTER_IDS:
 		if G.res_path(String(mid)) == "":
 			miss.append("怪物图:" + String(mid))
