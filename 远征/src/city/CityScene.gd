@@ -593,7 +593,7 @@ func _show_built_panel(bd: Dictionary) -> void:
 	var btn_text := ""
 	match act:
 		"notice":
-			btn_text = "查看布告板"
+			btn_text = "江湖告示"
 		"visit":
 			btn_text = "翻开访客簿"
 		"worlds":
