@@ -71,6 +71,9 @@ var _theme_cfg: Dictionary = {}
 var _pickups: Array[_Pickup] = []
 var _spots: Array[_Spot] = []          # 兴趣点（碑灵祭坛 / 矿脉）
 var _altar_ui: Control = null          # 祭坛浮层
+## 战后三选一：精英/首领多给几次（B3），一次选完接着弹下一次
+var _pending_trait_picks := 0
+var _last_battle_tier := ""
 var _score := 0
 var _kills := 0
 var _total_monsters := 0
@@ -610,6 +613,9 @@ func _on_trait_picked(tid: String) -> void:
 	else:
 		_toast("放弃了祝福")
 	_refresh_hud()
+	# 精英/首领的额外选择：上一张收完立刻接着弹下一张（B3）
+	if _pending_trait_picks > 0:
+		_next_trait_pick()
 
 
 # ================= 非战斗节点交互（§2.7 物件化） =================
@@ -1471,6 +1477,7 @@ func _launch_battle(m: _MapMonster) -> void:
 func _on_battle_end(result: String, hp_left: int) -> void:
 	var battle := _battle
 	var monster_tier := _contact_mon.tier if _contact_mon != null else ""
+	_last_battle_tier = monster_tier   # 战后三选一次数按档位给（B3）
 	_battle = null
 	_battle_layer.queue_free()  # 级联释放 BattleScene
 	_battle_layer = null
@@ -1552,13 +1559,33 @@ func _grant_drops(tier: String) -> void:
 	_toast("拾获：" + " · ".join(parts))
 
 
+## 战后三选一次数（nodes.json run.trait_choices，B3）：精英 +1、首领 +2
+func _trait_pick_count(tier: String) -> int:
+	var run_v: Variant = TableCache.nodes_config().get("run", {})
+	if not (run_v is Dictionary):
+		return 1
+	var tc: Variant = (run_v as Dictionary).get("trait_choices", {})
+	if not (tc is Dictionary):
+		return 1
+	return maxi(1, int((tc as Dictionary).get(tier, 1)))
+
+
 func _after_battle_rewards() -> void:
-	# 战斗胜利三选一词条（§2.4：槽1数值机制/槽2流派85%双刃15%/槽3全池）
+	_pending_trait_picks = _trait_pick_count(_last_battle_tier)
+	_next_trait_pick()
+
+
+func _next_trait_pick() -> void:
+	if _pending_trait_picks <= 0:
+		return
 	var choices := st.roll_trait_choices(_rng)
 	if choices.is_empty():
+		# 词条池已尽：剩余次数静默跳过，不再逐次弹「已尽」刷屏
+		_pending_trait_picks = 0
 		_toast("词条池已尽")
-	else:
-		_show_trait_picker(choices)
+		return
+	_pending_trait_picks -= 1
+	_show_trait_picker(choices)
 	_refresh_hud()
 
 

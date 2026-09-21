@@ -116,7 +116,9 @@ func max_hp() -> int:
 
 
 ## 战斗胜利三选一候选（玩法文档 §2.4）：槽1=num/mech，槽2=link(85%)/double(15%)，槽3=全池；
-## 过滤已获词条；槽池尽回退到剩余池，全池尽返回空数组
+## 过滤已获词条；槽池尽回退到剩余池，全池尽返回空数组。
+## 槽位规则与流派偏置全部读 nodes.json 的 run.trait_slots / run.school_bias_min（B2）：
+## 一局只有 3~4 次选择，随机池几乎凑不出流派，玩家根本摸不到构筑系统。
 func roll_trait_choices(rng: RandomNumberGenerator) -> Array:
 	var remain: Array = []
 	for t in TableCache.traits():
@@ -124,16 +126,27 @@ func roll_trait_choices(rng: RandomNumberGenerator) -> Array:
 			remain.append(t)
 	if remain.is_empty():
 		return []
+	var slot := _trait_slot_cfg()
+	var bias := _school_bias()
+	var pool2 := _pool_by_type(remain, _types(slot.get("slot2_types", ["link"])))
+	if rng.randf() < float(slot.get("slot2_alt_chance", 0.15)):
+		pool2 = _pool_by_type(remain, _types(slot.get("slot2_alt_types", ["double"])))
+	var pool3: Array = remain.duplicate()
+	if bias != "":
+		# 偏置只在**槽内**挑本系：槽位类型（数值/机制/流派/双刃）的结构不变，
+		# 但同系候选优先出现，玩家才看得见「再拿一条就成型」
+		pool2 = _prefer_school(pool2, bias)
+		pool3 = _prefer_school(pool3, bias)
 	var choices: Array = []
 	var slot_pools: Array = [
-		_pool_by_type(remain, ["num", "mech"]),
-		_pool_by_type(remain, ["link" if rng.randf() < 0.85 else "double"]),
-		remain,
+		_pool_by_type(remain, _types(slot.get("slot1_types", ["num", "mech"]))),
+		pool2,
+		pool3,
 	]
 	for pool in slot_pools:
-		if pool.is_empty() or choices.size() >= 3:
+		if (pool as Array).is_empty() or choices.size() >= 3:
 			continue
-		var row: Dictionary = pool[rng.randi_range(0, pool.size() - 1)]
+		var row: Dictionary = (pool as Array)[rng.randi_range(0, (pool as Array).size() - 1)]
 		if not choices.has(row):
 			choices.append(row)
 	for t in remain:  # 槽池空/重复时从剩余池补足
@@ -144,12 +157,53 @@ func roll_trait_choices(rng: RandomNumberGenerator) -> Array:
 	return choices
 
 
+## 槽位配置（nodes.json run.trait_slots）
+func _trait_slot_cfg() -> Dictionary:
+	var run_v: Variant = TableCache.nodes_config().get("run", {})
+	if not (run_v is Dictionary):
+		return {}
+	var s: Variant = (run_v as Dictionary).get("trait_slots", {})
+	return s if s is Dictionary else {}
+
+
+func _types(v: Variant) -> Array:
+	return v if v is Array else []
+
+
+## 目标流派：已获同系达到 school_bias_min（缺省 = 激活阈值-1，即「差一件就成型」）时偏置。
+## 返回 "" = 不偏置。
+func _school_bias() -> String:
+	var ts := TraitSystem.new(traits)
+	var run_v: Variant = TableCache.nodes_config().get("run", {})
+	var min_n := maxi(1, TraitSystem.school_active_n() - 1)
+	if run_v is Dictionary:
+		min_n = maxi(1, int((run_v as Dictionary).get("school_bias_min", min_n)))
+	for s in TraitSystem.SCHOOLS:
+		if int(ts.school_count.get(s, 0)) >= min_n:
+			return String(s)
+	return ""
+
+
 func _pool_by_type(remain: Array, types: Array) -> Array:
 	var pool: Array = []
 	for t in remain:
 		if types.has(String((t as Dictionary).get("type", ""))):
 			pool.append(t)
 	return pool
+
+
+func _pool_by_school(pool: Array, school: String) -> Array:
+	var out: Array = []
+	for t in pool:
+		if String((t as Dictionary).get("school", "none")) == school:
+			out.append(t)
+	return out
+
+
+## 优先本系；本系在该槽里已无可出则原样返回（不强行凑）
+func _prefer_school(pool: Array, school: String) -> Array:
+	var sub := _pool_by_school(pool, school)
+	return sub if not sub.is_empty() else pool
 
 
 ## 篝火治疗量（40% 最大生命，nodes.json bonfire.heal_pct）

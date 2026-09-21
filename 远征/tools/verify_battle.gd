@@ -37,6 +37,7 @@ func _run() -> void:
 	_test_hp_override_zero()
 	_test_potion_full_hp()
 	_test_dmg_taken_on_basic()
+	_test_school_build_rate()
 	if _fails == 0:
 		print("BATTLE_OK all tests passed")
 	else:
@@ -604,6 +605,37 @@ func _test_dmg_taken_on_basic() -> void:
 	role.take_damage(100, foe, sim)
 	_check(h1 - role.hp == int(100.0 * (1.0 + pct)),
 		"受伤加深不应被算两遍（掉 %d）" % (h1 - role.hp))
+
+
+# ---------- 22. B 批手感指标：一局下来真能凑出一条流派吗 ----------
+## 固定种子模拟 20 局（每局 3~4 次三选一），统计「至少一条流派激活」的局占比。
+## 阈值进 nodes.json run.school_active_rate_min：调平衡改表，不改代码。
+func _test_school_build_rate() -> void:
+	var run_v: Variant = TableCache.nodes_config().get("run", {})
+	var min_rate := 0.7
+	if run_v is Dictionary:
+		min_rate = float((run_v as Dictionary).get("school_active_rate_min", 0.7))
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 20260921
+	var runs := 20
+	var ok_runs := 0
+	for i in runs:
+		var st := RunState.new()
+		st.setup({"theme": "forest", "role_id": "zs", "level": 10, "seed": 1000 + i})
+		for n in 4:   # 一局 3 层 + BOSS ≈ 3~4 次选择
+			var ch: Array = st.roll_trait_choices(rng)
+			if ch.is_empty():
+				break
+			var row: Dictionary = ch[rng.randi_range(0, ch.size() - 1)]
+			st.traits.append(String(row.get("id", "")))
+		var ts := TraitSystem.new(st.traits)
+		for s in TraitSystem.SCHOOLS:
+			if ts.school_active(s):
+				ok_runs += 1
+				break
+	var rate := float(ok_runs) / float(runs)
+	_check(rate >= min_rate,
+		"20 局里「至少一条流派激活」占比 %.2f 应 ≥ %.2f（阈值读表）" % [rate, min_rate])
 
 
 ## traits.json 里某词条的 effect（用于「表值 vs 代码值」对拍）

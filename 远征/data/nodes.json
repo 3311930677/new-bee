@@ -22,7 +22,23 @@
     "potions_max": 4,
     "supply_price": 180,
     "supply_price_step": 120,
-    "school_active_n": 2
+    "school_active_n": 2,
+    "school_bias_min": 1,
+    "school_active_rate_min": 0.70,
+    "trait_slots": {
+      "comment": "三选一槽位规则（B2）：槽1 类型池 / 槽2 类型池与切换概率 / 槽3 全池。改这里就能调槽位结构，不动代码。",
+      "slot1_types": ["num", "mech"],
+      "slot2_types": ["link"],
+      "slot2_alt_types": ["double"],
+      "slot2_alt_chance": 0.15
+    },
+    "trait_choices": {
+      "comment": "战后三选一次数（B3）：精英多给 1 次、首领多给 2 次——打硬仗的回报是构筑更强，不是多一点金币。",
+      "normal": 1,
+      "elite": 2,
+      "boss": 3,
+      "chest": 1
+    }
   },
   "ascetic": {
     "comment": "轮次 22：苦行——出征前可选的难度/收益开关。敌人全属性 ×1.15，本局节点收益 ×1.3（撤离/战败同样按此结算，风险自负）。扫荡不吃这个开关。",
