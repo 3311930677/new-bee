@@ -267,6 +267,40 @@ Get-ChildItem "d:\new bee\远征\assets_regan\refs\sprites" -Recurse -Directory 
 | D2 | 探索遇敌方式 | ~~随机遇敌 + 明雷精英~~ → **全地图明雷**（🎬 2026-09-21 实机录屏修正）：怪物在地图层游走，接触即触发「遭遇战」，随机遇敌 roll 作废 |
 | D3 | gacha 抽卡 | **保留为特色玩法**「江湖寻访」：机制不动换皮，并融合宠物系统为「侠客伙伴」 |
 
+## 四点五、实施记录（2026-09-21 首轮落地）
+
+**已做**
+
+| 任务 | 状态 | 落点 / 说明 |
+|---|---|---|
+| 0.1 git 安全网 | ✅ | 快照 commit `651f28f`、tag `v-zhanchang-nvshen-final`、分支 `xajh-remake` |
+| 0.2 参考图库 | ✅ | 精灵/容器：`tools/export_refs.py`（218 图 + manifest）；UI/地图：新增 `tools/export_refs_ui.py`（96 图）→ `assets_regen/refs/`（已 gitignore） |
+| 0.3 素材入库 | ✅ | batch0_v2/batch1/batch2_ui/batch3_combat/batch4_mount_pet/batch5_scene_map 的 **ready 成品 77 张**按类别入库 `image/generated_362_xajh/ready/{role,monster,mount,pet,fx,ui,bg,map}/`，文件名统一去掉尺寸/`_v2` 后缀 |
+| 0.4 Godot 导入 | ✅ | `--headless --import` 无 ERROR |
+| 1.1 色板微调 | ✅ | `G.gd`：BG_DEEP/BANNER/PARCHMENT/GOLD/GOLD_BRIGHT/WOOD 按原版取色；语义色与稀有度四档未动 |
+| 1.2 标题/登录换肤 | ✅ | Login 背景 `g_title_background`、标题 `G.mk_plaque`、面板 `G.mk_panel` |
+| 1.3 主界面立绘 | ✅ | `G.xa_idle_frames()`：用 A3 行走网格第 1 行 5 帧拼待机动画（拿不到才回落旧 4 帧图） |
+| 1.4 位图控件 | ✅（分批） | 新增 `G.mk_panel / mk_plaque / mk_wood_button`：九宫格位图 + **缺图一律回落程序绘制**；Login 已接，其余面板按同一签名逐个替换 |
+| 1.5 探索/主城贴图 | ✅（部分） | 新增取图入口 `G.art()` + `XA_ART` 映射表：怪物/宠物优先用 AI 重生成素材，地图与战斗两处都已切换 |
+| 2.1 战斗表现对齐 | ✅ | 脚下 HP 红条 + **MP 蓝条**（仅人物）、怪物紫色 `Lv{n}名`、命中五角星爆（程序绘制）、遭遇战/精英战/首领战入场横幅、右下红色「自动」键 |
+| 2.2 遇敌 | ✅（已满足） | 大地图本就是**全明雷**（怪物游走 + 接触开战），本轮补紫标 `Lv{n}`；随机遇敌 roll 从不存在所以无需移除 |
+| 2.3 历练武侠化 | ✅（部分） | 节点显示名：遭遇→劫道、事件→奇遇、商店→货栈、篝火→营火（类型 id 与机制未动） |
+| 2.4 主城对齐 | ✅（部分） | 图志阁→藏经阁、兽栏→坐骑厩、演武场→切磋台、布告板→江湖告示（`祭坛`/`仓廪` 保留：`VerifyCity` 断言里用到） |
+
+**与方案的偏离（重要）**
+
+1. **素材入库路径**：方案附录 A 写 `assets/role/<id>/`，但运行时取图入口是 `G.res_tex()`，它只扫 `image/generated_*/ready/`。为满足「接入点不变」，实际落在 `image/generated_362_xajh/ready/<类别>/`（并在 `G._build_res_index` 的批次表里登记）。
+2. **id 改名延后**：`roles/monsters/pets` 的 id 与数值文案改属阶段 3，本轮一律不动，改用 `G.XA_ART` / `G.XA_ROLE_GRID` **映射层**接新素材——换画风与改 id 解耦，各自可单独回退。
+3. **只做「对得上号」的映射**：AI 只生成了 10 怪 / 4 宠，气质对不上的（如雪怪、狮鹫）暂不映射，继续用原素材，不硬凑。
+
+**未做（下一轮）**
+
+- 1.4 收尾：其余面板逐个换 `mk_panel`（大面板才上九宫格；`TraitPicker` 这种 140px 宽卡片必须继续用程序绘制，否则九宫格边距会吃掉内容区）。
+- 1.5 收尾：主城建筑立面（H4）、H2/H3 地图图集切图与 Terrain 自动图块。
+- 2.5 坐骑/宠物换血（含探索机动加成）——与 3.x 的 id 改名一起做更省事。
+- **阶段 3 全部**：3.1 三职业×男女、3.2 skills/monsters/maps/npcs、3.3 lore/codex/quests 移植「末日浩劫·龙怒」、3.4 旧存档兼容钩子（`G.XA_LEGACY_ROLE` 映射已想好，等 3.1 落地时一起接，否则是死代码）。
+- 阶段 4 联机化。
+
 ## 五、验收清单（阶段 1-3 完成 = 单机版达标）
 
 - [ ] 登录→创角（三职业×男女，AI 重生成立绘）→主城→探索→**接触明雷**→**实时战斗**→升级→坐骑/宠物→存档，全流程无报错

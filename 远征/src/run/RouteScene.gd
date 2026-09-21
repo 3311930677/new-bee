@@ -11,13 +11,15 @@ const VIEW_H := 800.0
 ## 场景切入前由调用方写入（GameHome 远征入口）
 static var pending_run: Dictionary = {}
 
-const NODE_META := {  # 类型 → [显示名, 节点色, 图标名]
-	"normal": ["遭遇", Color("5f7186"), "node_normal"],
+# 类型 → [显示名, 节点色, 图标名]。2026-09-21 武侠化（复刻方案 Task 2.3）：
+# 只换显示名，节点类型 id 与全部机制不动（肉鸽路线是本作特色，不砍不改）。
+const NODE_META := {
+	"normal": ["劫道", Color("5f7186"), "node_normal"],
 	"elite": ["精英", Color("7a4a9a"), "node_elite"],
-	"event": ["事件", Color("c9a44a"), "node_event"],
+	"event": ["奇遇", Color("c9a44a"), "node_event"],
 	"chest": ["宝箱", Color("b87830"), "node_chest"],
-	"shop": ["商店", Color("5a8a4a"), "node_shop"],
-	"bonfire": ["篝火", Color("a04a3a"), "node_campfire"],
+	"shop": ["货栈", Color("5a8a4a"), "node_shop"],
+	"bonfire": ["营火", Color("a04a3a"), "node_campfire"],
 	"boss": ["首领", Color("8a2f2f"), "node_boss"],
 }
 const NODE_X := [120.0, 240.0, 360.0]
