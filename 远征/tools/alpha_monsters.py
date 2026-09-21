@@ -44,8 +44,9 @@ def strip_watermark(img: Image.Image) -> Image.Image:
 
 def main() -> None:
     if len(sys.argv) < 2:
-        print("用法：python tools/alpha_monsters.py <map.json>")
+        print("用法：python tools/alpha_monsters.py <map.json> [size] [subdir] [noalpha]")
         return
+    noalpha = len(sys.argv) > 4   # 满幅场景图：不抠黑底，只切掉底部水印条带（插画类用）
     mapping = json.loads(io.open(sys.argv[1], encoding="utf-8").read())
     src_dir = Path(sys.argv[1]).parent
     OUT.mkdir(parents=True, exist_ok=True)
@@ -55,10 +56,18 @@ def main() -> None:
         if not src.exists():
             print("缺源图 %s" % fname)
             continue
-        img = crop_to_content(strip_watermark(chroma_black(Image.open(src))))
+        if noalpha:
+            full = Image.open(src).convert("RGB")
+            img = full.crop((0, 0, full.width, int(full.height * 0.93)))  # 水印在底部 7%
+        else:
+            img = crop_to_content(strip_watermark(chroma_black(Image.open(src))))
         s = TARGET / float(max(img.width, img.height))
         img = img.resize((max(1, round(img.width * s)), max(1, round(img.height * s))),
                          Image.Resampling.NEAREST)
+        if noalpha:
+            img.save(OUT / ("%s.png" % mon_id))
+            made.append("%s ← %s (%dx%d)" % (mon_id, fname[-22:], img.width, img.height))
+            continue
         canvas = Image.new("RGBA", (TARGET, TARGET), (0, 0, 0, 0))
         canvas.paste(img, ((TARGET - img.width) // 2, (TARGET - img.height) // 2))
         canvas.save(OUT / ("%s.png" % mon_id))
