@@ -42,6 +42,13 @@ func _run() -> void:
 				"散件缺失：%s" % deco)
 
 	# 召唤类技能口径：带 summon 字段的技能必须声明 effect.type=="summon"（否则 summon 分支不可达）
+	# 复刻版素材映射自检（1.4 巡检）：同一张 AI 素材不许挂到两只不同的怪身上——
+	# 曾经 mon_magmagolem 与 mon_siege 共用 puppet_guard，两只怪长得一模一样
+	var used_art := {}
+	for mid in G.XA_ART.keys():
+		var aid := String(G.XA_ART[mid])
+		assert(not used_art.has(aid), "AI 素材被重复引用：%s ← %s / %s" % [aid, used_art.get(aid, ""), mid])
+		used_art[aid] = mid
 	for mon in dm.table("monsters"):
 		for sk in (mon as Dictionary).get("skills", []):
 			var skd: Dictionary = sk

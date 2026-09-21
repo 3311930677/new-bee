@@ -3147,16 +3147,15 @@ func parchment_box(w := 400, h := 200, pad := 18.0) -> PanelContainer:
 const XA_ART := {
 	# 怪物（asset-regen B 类 10 张）：id → AI 素材名
 	"mon_wolf": "b_monster_evil_wolf",
-	"mon_spider": "b_monster_poison_python",
-	"mon_treant": "b_monster_mud_monster",
 	"mon_skeleton": "b_monster_skeleton_swordsman",
 	"mon_goblin": "b_bandit",
 	"mon_boss_forest": "b_monster_black_wind_chief",
 	"mon_icebat": "b_monster_blood_bat",
 	"mon_lavahound": "b_monster_fire_salamander",
-	"mon_magmagolem": "b_monster_puppet_guard",
 	"mon_siege": "b_monster_puppet_guard",
-	"mon_traitor": "b_bandit",
+	# 1.4 巡检删掉的三条**名实不符**映射：蜘蛛→毒蟒、树精→泥怪（打起来是另一只怪），
+	# 以及 mon_magmagolem 与 mon_siege 共用同一张傀儡图（两只不同的怪长得一模一样）。
+	# 口径：对不上号就用原素材——混画风是观感问题，长错样子是内容错误，后者更贵。
 	# 宠物（D 类 4 张）
 	"pet_foxfire": "d_pet_fire_fox",
 	"pet_thunderhawk": "d_pet_thunder_sparrow",
