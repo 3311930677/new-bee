@@ -43,10 +43,60 @@ const BATTLE_ROWS := [  # [动画名, 行号, 是否循环, 帧率]
 ]
 static var _battle_frames_cache := {}
 
+## 复刻版五态（AI 只有 A2 单帧，没有五态套图）：以单帧为底，按状态**平移/缩放**出四帧。
+## 只做 blit_rect 与 resize（都在 C++ 侧，20 帧约 1~2ms）；逐像素染色在 GDScript 里要几百毫秒。
+## 五态各 4 帧、格子 128×128 的接口保持不变——视图的偏移标定与 has_animation("hit") 判断照旧。
+const PROC_FRAME := {
+	"idle": [[Vector2i(0, 0), 1.0], [Vector2i(0, -2), 1.0], [Vector2i(0, 0), 1.0], [Vector2i(0, 1), 1.0]],
+	"attack": [[Vector2i(0, 0), 1.0], [Vector2i(-6, 0), 1.0], [Vector2i(-8, -1), 1.0], [Vector2i(-3, 0), 1.0]],
+	"cast": [[Vector2i(0, 0), 1.0], [Vector2i(0, -2), 1.0], [Vector2i(0, -3), 1.0], [Vector2i(0, -1), 1.0]],
+	"hit": [[Vector2i(0, 0), 1.0], [Vector2i(6, 0), 1.0], [Vector2i(-6, 1), 1.0], [Vector2i(0, 0), 1.0]],
+	"death": [[Vector2i(0, 0), 1.0], [Vector2i(0, 4), 0.90], [Vector2i(0, 10), 0.78], [Vector2i(0, 16), 0.62]],
+}
+const XA_CELL := 128
+
+static func _xa_battle_frames(role_id: String) -> SpriteFrames:
+	var tex := G.xa_combat_tex(role_id)
+	if tex == null:
+		return null
+	var src: Image = tex.get_image()
+	if src == null or src.is_empty():
+		return null
+	src = src.duplicate()
+	var frames := SpriteFrames.new()
+	frames.remove_animation(&"default")
+	for r in BATTLE_ROWS:
+		var anim := StringName(r[0])
+		frames.add_animation(anim)
+		frames.set_animation_loop(anim, bool(r[2]))
+		frames.set_animation_speed(anim, float(r[3]))
+		var plan: Array = PROC_FRAME.get(String(anim), [])
+		for c in 4:
+			var step: Array = plan[c % plan.size()] if not plan.is_empty() else [Vector2i.ZERO, 1.0]
+			var body := src
+			var s := float(step[1])
+			if not is_equal_approx(s, 1.0):
+				body = src.duplicate()
+				body.resize(maxi(1, int(src.get_width() * s)), maxi(1, int(src.get_height() * s)),
+					Image.INTERPOLATE_NEAREST)
+			var canvas := Image.create(XA_CELL, XA_CELL, false, Image.FORMAT_RGBA8)
+			canvas.fill(Color(0, 0, 0, 0))
+			var off: Vector2i = step[0]
+			canvas.blit_rect(body, Rect2i(Vector2i.ZERO, body.get_size()),
+				Vector2i((XA_CELL - body.get_width()) / 2 + off.x,
+					(XA_CELL - body.get_height()) / 2 + off.y))
+			frames.add_frame(anim, ImageTexture.create_from_image(canvas))
+	return frames
+
+
 ## 按职业构建战斗五态帧；无素材返回 null（调用方回退行走帧）
 static func battle_frames(role_id: String) -> SpriteFrames:
 	if _battle_frames_cache.has(role_id):
 		return _battle_frames_cache[role_id]
+	var xa := _xa_battle_frames(role_id)     # 复刻版：AI 单帧 + 程序动作优先
+	if xa != null:
+		_battle_frames_cache[role_id] = xa
+		return xa
 	var path: String = ROLE_BATTLE_SHEET.get(role_id, "")
 	var tex: Texture2D = load(path) if path != "" else null
 	var frames: SpriteFrames = null
