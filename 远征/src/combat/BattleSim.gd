@@ -30,6 +30,8 @@ var setup_error := ""
 ## 世界主题规则（C 批，maps.json themes.<id>.rule）：纯表驱动，规则 id + params。
 ## 八个世界只差数值、玩法元素从第 1 个世界起就全见过，这是当前最大的「新鲜感缺口」。
 var theme_id := ""
+## 怪物显示等级（原版「Lv{n}名」标签；按层取 nodes.json enemy.display_level）
+var enemy_layer := 1
 var theme_rule: Dictionary = {}
 var rule_timer := 0        # 距下次触发的 tick 数（测试把它置 1 即可精确验证一次）
 var _next_uid := 1
@@ -45,6 +47,7 @@ var role_uid: int = 0
 func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 	rng.seed = seed
 	theme_id = String(enemy_cfg.get("theme", "forest"))
+	enemy_layer = maxi(1, int(enemy_cfg.get("layer", 1)))
 	theme_rule = TableCache.theme_rule(theme_id)
 	rule_timer = rule_interval_ticks()
 	enemy_scale = 1.0 + 0.12 * float(int(enemy_cfg.get("layer", 1)))
@@ -274,6 +277,7 @@ func _spawn_monster(mon_id: String, row: int, col: int, hp_atk_mult := 1.0,
 		return null
 	m = m.duplicate(true)
 	m["tier"] = tier
+	m["lv"] = monster_display_level()
 	var base: Dictionary = m.get("base", {})
 	var u := Combatant.new(new_uid(), "monster", "enemy", m)
 	u.base_max_hp = maxi(1, int(float(int(base.get("hp", 50))) * hp_atk_mult * enemy_scale))
@@ -473,6 +477,16 @@ func rule_params() -> Dictionary:
 ## 周期规则的间隔（tick）。0 / 负 = 该主题没有周期规则。
 func rule_interval_ticks() -> int:
 	return int(float(rule_params().get("interval", 0.0)) * float(TICK_RATE))
+
+
+## 怪物显示等级（原版战斗里怪物头顶是「Lv{n}名」紫标）：按层读 nodes.json enemy.display_level
+func monster_display_level() -> int:
+	var v: Variant = TableCache.nodes_config().get("enemy", {}).get("display_level", [])
+	if v is Array:
+		var arr := v as Array
+		if not arr.is_empty():
+			return maxi(1, int(arr[mini(enemy_layer - 1, arr.size() - 1)]))
+	return enemy_layer * 6
 
 
 ## 最大生命者（火山灼烧挑它；双向——敌我都可能中招，不是纯福利）
