@@ -10,51 +10,51 @@
     "bear":        [{"stealth_pct": 0.05}, {"stealth_pct": 0.08}],
     "woolyrhino":  [{"stealth_pct": 0.04}, {"stealth_pct": 0.07}]
   },
-  "comment": "坐骑线（玩法文档 §6/§15.1）：购入 1 阶后可用材料升 2 阶；同时只能骑乘 1 只，骑乘加成全局生效。2026-09-22 复刻版换皮：名字按帕拉多诺/洛林线自拟，图标指向 AI 重生成素材（C 类 8 张）；**id 与数值一律未动**（存档键与回归口径不变），二阶美术待补故 icon2 暂与一阶同图。",
+  "comment": "坐骑线（玩法文档 §6/§15.1）：购入 1 阶后可用材料升 2 阶；同时只能骑乘 1 只，骑乘加成全局生效。2026-09-22 复刻版换皮：名字按帕拉多诺/洛林线自拟，图标指向 AI 重生成素材（C 类 8 张）；**id 与数值一律未动**（存档键与回归口径不变），二阶图标为 2026-09-22 补的强化形态（c_mount_*2）。",
   "mounts": [
-    { "id": "horse", "name": "追风骏", "icon": "c_mount_zq_sj", "icon2": "c_mount_zq_sj",
+    { "id": "horse", "name": "追风骏", "icon": "c_mount_zq_sj", "icon2": "c_mount_zq_sj2",
       "desc": "纯白鬃毛如一缕风，四蹄踏着风纹。洛林旧军传令官才配得上的脚力。",
       "tiers": [
         { "name": "追风骏", "bonus": {"spd_pct": 0.05}, "cost": {"gold": 2000} },
         { "name": "追风骏·踏风", "bonus": {"spd_pct": 0.10, "atk_pct": 0.03}, "cost": {"gold": 8000, "honor": 200} }
       ] },
-    { "id": "bear", "name": "墨甲狻猊", "icon": "c_mount_zq_mj", "icon2": "c_mount_zq_mj",
+    { "id": "bear", "name": "墨甲狻猊", "icon": "c_mount_zq_mj", "icon2": "c_mount_zq_mj2",
       "desc": "鬃毛如墨焰翻卷，浑身玄铁甲片。它不冲锋，它只是走过去。",
       "tiers": [
         { "name": "墨甲狻猊", "bonus": {"def_pct": 0.05}, "cost": {"gold": 2000} },
         { "name": "墨甲狻猊·崩岩", "bonus": {"def_pct": 0.10, "maxhp_pct": 0.05}, "cost": {"gold": 8000, "honor": 200} }
       ] },
-    { "id": "griffin", "name": "金鳞鲤", "icon": "c_mount_zq_jxl", "icon2": "c_mount_zq_jxl",
+    { "id": "griffin", "name": "金鳞鲤", "icon": "c_mount_zq_jxl", "icon2": "c_mount_zq_jxl2",
       "desc": "传说中游于云上的锦鲤，金鳞开合时鳞下透光。乘位在它背上。",
       "tiers": [
         { "name": "金鳞鲤", "bonus": {"atk_pct": 0.05}, "cost": {"gold": 3000, "soul": 50} },
         { "name": "金鳞鲤·化龙", "bonus": {"atk_pct": 0.10, "crit_add": 0.03}, "cost": {"gold": 12000, "honor": 300} }
       ] },
-    { "id": "nightmare", "name": "暗霜狼", "icon": "c_mount_frost_wolf", "icon2": "c_mount_frost_wolf",
+    { "id": "nightmare", "name": "暗霜狼", "icon": "c_mount_frost_wolf", "icon2": "c_mount_frost_wolf2",
       "desc": "冰蓝毛皮上凝着一层暗紫的霜，呼出的白气比雪更冷。",
       "tiers": [
         { "name": "暗霜狼", "bonus": {"crit_add": 0.03}, "cost": {"gold": 3000, "soul": 50} },
         { "name": "暗霜狼·噬影", "bonus": {"crit_add": 0.06, "atk_pct": 0.05}, "cost": {"gold": 12000, "honor": 300} }
       ] },
-    { "id": "sandlizard", "name": "踏云青", "icon": "c_mount_zq_dyq", "icon2": "c_mount_zq_dyq",
+    { "id": "sandlizard", "name": "踏云青", "icon": "c_mount_zq_dyq", "icon2": "c_mount_zq_dyq2",
       "desc": "青毛卷纹的老牛，鼻上挂一只铜环。走得不快，却从不失蹄。",
       "tiers": [
         { "name": "踏云青", "bonus": {"maxhp_pct": 0.05}, "cost": {"gold": 2000} },
         { "name": "踏云青·负山", "bonus": {"maxhp_pct": 0.10, "spd_pct": 0.04}, "cost": {"gold": 8000, "honor": 200} }
       ] },
-    { "id": "woolyrhino", "name": "玲犀", "icon": "c_mount_zq_lxn", "icon2": "c_mount_zq_lxn",
+    { "id": "woolyrhino", "name": "玲犀", "icon": "c_mount_zq_lxn", "icon2": "c_mount_zq_lxn2",
       "desc": "玉白的独角踏下泛起青光，是雪线以上唯一肯让人骑的活物。",
       "tiers": [
         { "name": "玲犀", "bonus": {"maxhp_pct": 0.03, "def_pct": 0.03}, "cost": {"gold": 2500} },
         { "name": "玲犀·蓝玉壁", "bonus": {"maxhp_pct": 0.08, "def_pct": 0.08}, "cost": {"gold": 10000, "honor": 250} }
       ] },
-    { "id": "whitedeer", "name": "白鹿", "icon": "c_mount_zq_bl", "icon2": "c_mount_zq_bl",
+    { "id": "whitedeer", "name": "白鹿", "icon": "c_mount_zq_bl", "icon2": "c_mount_zq_bl2",
       "desc": "雪白的灵鹿，鹿角上缠着金藤。它记得每一条没人走过的路。",
       "tiers": [
         { "name": "白鹿", "bonus": {"maxhp_pct": 0.04, "spd_pct": 0.02}, "cost": {"gold": 3000} },
         { "name": "白鹿·衔芝", "bonus": {"maxhp_pct": 0.08, "spd_pct": 0.06}, "cost": {"gold": 12000, "honor": 300} }
       ] },
-    { "id": "flamecolt", "name": "焰驹", "icon": "c_mount_flame_steed", "icon2": "c_mount_flame_steed",
+    { "id": "flamecolt", "name": "焰驹", "icon": "c_mount_flame_steed", "icon2": "c_mount_flame_steed2",
       "desc": "赤焰为鬃，蹄下溅火星。跑起来时，身后那串火星能照亮夜路。",
       "tiers": [
         { "name": "焰驹", "bonus": {"atk_pct": 0.03, "crit_add": 0.02}, "cost": {"gold": 3500, "soul": 60} },
