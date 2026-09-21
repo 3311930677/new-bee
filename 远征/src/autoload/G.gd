@@ -2655,6 +2655,11 @@ func xa_portrait(role_id: String) -> Texture2D:
 	return res_tex("a1_%s_%s_anchor" % [role_id, xa_gender_suffix()])
 
 
+## A2 战斗立绘（复刻版）：AI 只出了单帧，战斗五态由 BattleScene 以位移/缩放演出。
+func xa_combat_tex(role_id: String) -> Texture2D:
+	return res_tex("a2_%s_%s_combat" % [role_id, xa_gender_suffix()])
+
+
 ## 头像（A4，96×96）；没有对应 AI 素材返回 null
 func xa_avatar_tex(role_id: String) -> Texture2D:
 	return res_tex("a4_%s_%s_avatar" % [role_id, xa_gender_suffix()])
