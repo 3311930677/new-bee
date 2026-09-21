@@ -189,10 +189,43 @@ func _collect_queue() -> void:
 		var gp := G.res_path(String(n))
 		if gp != "":
 			_queue.append(gp)
+	# 复刻版界面皮肤（1.4）：九宫格面板/牌匾/按钮。任何一个面板都要用，
+	# 不预热就会把 512×512 面板图的首帧加载砸在"玩家点开某个界面"的那一帧上（VerifyPerf 实测 +6~50ms）
+	for n in ["f3_panel_parchment", "f3_panel_wood", "f2_plaque", "f1_button_normal",
+			"f1_button_hover", "f1_button_pressed", "f1_button_disabled"]:
+		var sk := G.res_path(String(n))
+		if sk != "":
+			_queue.append(sk)
+	G.warm_res(["f3_panel_parchment", "f3_panel_wood", "f2_plaque", "f1_button_normal",
+		"f1_button_hover", "f1_button_pressed", "f1_button_disabled"])
 	# 三张界面大背景（1.5~2.4MB 一张，不预热的话进主城/回主页会各卡一下）
 	for bg in ["home", "enter", "title", "login"]:
 		if ResourceLoader.exists("res://image/background/%s.png" % bg):
 			_queue.append("res://image/background/%s.png" % bg)
+	# 城内 NPC 的行头（8 位常驻 + 今日来客）：_npc_idle_frames / _npc_world_tex 是"首查即 load"，
+	# 一次进主城 10 个 NPC 实测 199ms 全砸在切场景那一帧（VerifyPerf 超预算的主因）
+	var npc_art: Array = []
+	for nd in G.city_npcs():
+		var nid := String((nd as Dictionary).get("id", ""))
+		# 城里给的 id 自带 npc_ 前缀，这里别再拼一次（拼成 npc_npc_guard_xxx 就一条也命中不了）
+		var base := nid if nid.begins_with("npc_") else "npc_" + nid
+		for sfx in ["_idle", "_idle_single", "", "_portrait"]:
+			npc_art.append("%s%s" % [base, sfx])
+	for gname in ["npc_guest_idle", "npc_guest_idle_single", "npc_guest_idle_portrait"]:
+		npc_art.append(gname)
+	for nm in npc_art:
+		var npath := G.res_path(String(nm))
+		if npath != "":
+			_queue.append(npath)
+	# 直接灌进 res_tex 的缓存：只进队列会被回收，实测对切场景那一帧毫无帮助
+	G.warm_res(npc_art)
+	# 复刻版大背景（AI 重生成，768×1024）：主城/野外/标题各一张，
+	# 进场景首帧才加载会把"一次性开销"砸在切场景那一帧（VerifyPerf 实测 +30~50ms）
+	for n in ["g_main_city", "g_lorin_wilds", "g_black_wind_camp", "g_mountain_pass",
+			"g_title_background"]:
+		var sbg := G.res_path(String(n))
+		if sbg != "":
+			_queue.append(sbg)
 	for a in PRELOAD_AUDIO:
 		if ResourceLoader.exists(a):
 			_queue.append(a)

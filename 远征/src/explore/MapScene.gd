@@ -1773,6 +1773,11 @@ class _GroundWear extends Node2D:
 
 ## 散落拾取物（魂晶 / 钱袋）：走过去自动入袋，给"空跑的那段路"一点微反馈
 class _Pickup extends Node2D:
+	## 程序绘制的物件提亮（复刻版）：这些剪影是给旧地图（暗底）配的色号，
+	## 换成 AI 新地面后原封不动会读成一块黑斑——统一在 _ready 里乘一个亮度。
+	func _ready() -> void:
+		modulate = Color(1.42, 1.42, 1.42)
+
 	var idx := 0              # 稳定序号（进度表按它记「已拾取」，P0-1）
 	var kind := "coin"        # coin / soul（只影响画法与提示色调）
 	var map_ref: MapScene = null
@@ -1816,6 +1821,9 @@ class _Pickup extends Node2D:
 ## 兴趣点（碑灵祭坛 / 矿脉）：走近触发一次交互。与拾取物的差别是"要不要做"——
 ## 祭坛弹选择框（花金重摇祝福），矿脉白拿材料。用掉即熄，不重复打扰。
 class _Spot extends Node2D:
+	func _ready() -> void:
+		modulate = Color(1.42, 1.42, 1.42)   # 同 _Pickup：新地面下的黑斑问题
+
 	var idx := 0              # 稳定序号（进度表按它记「已用过」，P0-1）
 	var kind := "vein"        # altar / vein
 	var map_ref: MapScene = null
@@ -1898,6 +1906,9 @@ class _Deco extends StaticBody2D:
 
 ## 传送阵（双环旋转；BOSS 节点初始封印）
 class _Portal extends Node2D:
+	func _ready() -> void:
+		modulate = Color(1.30, 1.30, 1.30)   # 同 _Pickup：新地面下的黑斑问题
+
 	var locked := false
 	var warned := false
 	var _rot := 0.0
@@ -2181,6 +2192,7 @@ class _Interactable extends Node2D:
 	var lines: Array = []
 
 	func _ready() -> void:
+		modulate = Color(1.42, 1.42, 1.42)   # 同 _Pickup：新地面下的黑斑问题
 		var tex: Texture2D = G.res_tex(String(KIND_ART.get(kind, "")))
 		if tex != null:
 			var s := _art_h / float(tex.get_height())

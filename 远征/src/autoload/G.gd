@@ -2826,6 +2826,14 @@ func res_path(res_name: String) -> String:
 ## （主城 8 个 NPC、图鉴 8 张卡之类，一次开面板就是几十次查询）
 var _tex_cache := {}
 
+## 预热一批素材进 res_tex 的缓存（LoadScreen 调用）。
+## **必须留引用**：只把路径丢进预热队列的话，线程加载完没人持有，资源会被回收，
+## 进场景时照样重新解码——实测城内 10 个 NPC 的行头在切场景那一帧花了 200ms。
+func warm_res(names: Array) -> void:
+	for n in names:
+		res_tex(String(n))
+
+
 func res_tex(res_name: String) -> Texture2D:
 	if _tex_cache.has(res_name):
 		return _tex_cache[res_name]
@@ -3086,6 +3094,20 @@ func banner_box(text: String, w := 260, h := 52, font_size := FS_BIG) -> PanelCo
 func parchment_box(w := 400, h := 200, pad := 18.0) -> PanelContainer:
 	var root := PanelContainer.new()
 	root.custom_minimum_size = Vector2(w, h)
+	# 复刻版 1.4：九宫格位图优先（f3_panel_parchment）。**padding 与程序绘制版逐项一致**，
+	# 所以这是一次不改布局的换肤——各面板仍按原来的尺寸与内边距排版，只换皮。
+	# 缺图（headless 回归）则原样走下面的 StyleBoxFlat，不出现空白控件。
+	var art := res_tex(XA_PANEL_ART["parchment"])
+	if art != null:
+		var tsb := StyleBoxTexture.new()
+		tsb.texture = art
+		tsb.set_texture_margin_all(72.0)
+		tsb.content_margin_left = pad
+		tsb.content_margin_right = pad
+		tsb.content_margin_top = pad * 0.7
+		tsb.content_margin_bottom = pad * 0.6
+		root.add_theme_stylebox_override("panel", tsb)
+		return root
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = PARCHMENT
 	# 四角微差，避免机器感对称
