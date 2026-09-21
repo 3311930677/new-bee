@@ -12,6 +12,20 @@ const LV_ORANGE := Color("f0a030")      # 等级橙
 const TEXT_DARK := Color("3a2a14")      # 羊皮纸上的深字
 const TEXT_LIGHT := Color("f5ead0")      # 深底上的浅字
 
+# ---------- 语义色（按「含义」取色，不按「好看」取色） ----------
+# 凡是表达「获得/代价/提示/稀有」语义的地方一律引用这里，禁止再写散落的字面色值。
+const C_GAIN := Color("7ddb6a")          # 获得 / 治疗 / 增益（绿）
+const C_COST := Color("c04030")          # 代价 / 不足 / 扣除（红）
+const C_HINT := Color("a89e88")          # 次要提示 / 未解锁 / 中性（灰米，与稀有度「普通」同调）
+const C_RARE := Color("d8ab48")          # 稀有 / 传说强调（金）
+
+# ---------- 稀有度四档（全项目唯一定义，各面板只引用，禁止再各自复制一份） ----------
+const RARITY_HUE := {
+	"white": C_HINT, "blue": Color("6f9fd0"),
+	"purple": Color("a273c9"), "gold": C_RARE,
+}
+const RARITY_NAME := {"white": "普通", "blue": "稀有", "purple": "史诗", "gold": "传说"}
+
 # ---------- 参考风（创建角色页）配色 ----------
 const WOOD := Color("6b4a28")            # 木框/顶栏棕
 const WOOD_DARK := Color("4a3018")       # 木框暗部
@@ -76,6 +90,11 @@ const SAVE_VERSION := SaveData.CURRENT_VERSION
 var last_load_report: Dictionary = {}
 ## 未来版本的档被读取时，原档备份的位置（没发生就是空串）
 var save_backup_path := ""
+## 读档被判非法后锁写：此时内存是「干净默认态」，一旦写盘就会用默认态覆盖玩家的真档（A7）。
+## 解锁只发生在玩家显式做出选择后（继续 = 放弃原档 / 导入旧档 = 走了导入路径）。
+var save_locked := false
+## 锁写原因（给玩家看的那一句）
+var save_lock_reason := ""
 var wallet := {"gold": 0, "expedition": 0, "soul": 0, "honor": 0}
 
 # ---------- 道具库存（最小实现：id -> 数量；券类先行，后续道具沿用） ----------
@@ -310,11 +329,19 @@ func _load_save() -> void:
 	var res := SaveData.load_payload(parsed as Dictionary, now)
 	last_load_report = res
 	if not bool(res.get("ok", false)):
-		push_warning("存档不可读：%s（沿用默认状态，原档未改动）" % String(res.get("err", "")))
+		# 非法档同样要留备份（A7）：以前只有 future 档备份，钱包为负 / 时间水位超前被判非法时
+		# 原档无人看管，玩家一捡道具就被默认态覆盖
+		save_backup_path = SaveData.backup_file(SAVE_PATH, now)
+		save_locked = true
+		save_lock_reason = String(res.get("err", ""))
+		push_warning("存档校验失败：%s（沿用默认状态，原档已备份到 %s 并锁定写盘）"
+			% [save_lock_reason, save_backup_path])
 		return
 	if String(res.get("mode", "")) == "future":
 		save_backup_path = SaveData.backup_file(SAVE_PATH, now)
 		push_warning("%s；原档已备份到 %s" % [String(res.get("err", "")), save_backup_path])
+	save_locked = false
+	save_lock_reason = ""
 	var data: Dictionary = res.get("data", {})
 	var w: Variant = data.get("wallet", {})
 	if w is Dictionary:
@@ -463,6 +490,12 @@ func reload_save() -> bool:
 
 ## 存档：钱包四币 + 养成进度 + 角色档案（远征结算入账 / 主城关键节点时写）
 func save_game() -> void:
+	# 读档被判非法期间禁止写盘：内存是默认态，写下去就是覆盖玩家真档（A7）。
+	# 不静默跳过——必须 push_warning，否则坏档这件事没人知道。
+	if save_locked:
+		push_warning("存档处于锁定状态，本次写盘已跳过（原因：%s；备份：%s）"
+			% [save_lock_reason, save_backup_path])
+		return
 	var data := {
 		"version": SAVE_VERSION,
 		"wallet": {
@@ -3453,6 +3486,19 @@ func modal_count() -> int:
 
 ## 返回弹层句柄（CanvasLayer），调用方可用 close_info_popup 主动关闭
 func show_info_popup(anchor: Control, title: String, lines: Array, owner: Node = null) -> CanvasLayer:
+	return _build_popup(anchor, title, lines, owner, [])
+
+
+## 带选项的弹层：choices = [{"text": "...", "cb": Callable}, ...]，点了先关弹层再回调。
+## 空数组 = 只有一个「知道了」（与 show_info_popup 等价）。
+## 存档被判非法时用得上：玩家必须能在「继续（放弃原档）」与「导入旧档」之间显式选一条（A7）。
+func show_choice_popup(anchor: Control, title: String, lines: Array, choices: Array,
+		owner: Node = null) -> CanvasLayer:
+	return _build_popup(anchor, title, lines, owner, choices)
+
+
+func _build_popup(anchor: Control, title: String, lines: Array, owner: Node,
+		choices: Array) -> CanvasLayer:
 	var tree := anchor.get_tree()
 	if tree == null:
 		return null
@@ -3472,6 +3518,10 @@ func show_info_popup(anchor: Control, title: String, lines: Array, owner: Node =
 		# 闭包捕获的是**整数 id 而不是弹层对象**：捕获对象的话，对象被释放后
 		# 回调触发时会打印 "Lambda capture at index 0 was freed. Passed null instead."
 		own.tree_exiting.connect(func(): close_info_popup_by_id(mid), CONNECT_ONE_SHOT)
+	# 锚点兜底：_top_owner_for 假定面板直挂场景根，嵌套容器或测试夹具里锚点先走，
+	# 不兜底就留孤儿弹层压住 ui_blocked（VerifyNav 的 ESC 复位失败就是这么来的）
+	if anchor != null and anchor != own:
+		anchor.tree_exiting.connect(func(): close_info_popup_by_id(mid), CONNECT_ONE_SHOT)
 
 	var dim := veil_at(layer, 0.55)
 	dim.gui_input.connect(func(e: InputEvent):
@@ -3518,12 +3568,28 @@ func show_info_popup(anchor: Control, title: String, lines: Array, owner: Node =
 		t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		vbox.add_child(t)
 
-	var ok := gold_button("知道了", 120, 40, FS_SM)
-	ok.position = Vector2((PW - 32.0 - 120.0) * 0.5, 42.0 + content_h + 12.0)
-	ok.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			close_info_popup(layer))
-	content.add_child(ok)
+	var btn_y := 42.0 + content_h + 12.0
+	var picks: Array = []
+	for c in choices:
+		if c is Dictionary and String((c as Dictionary).get("text", "")) != "":
+			picks.append(c)
+	if picks.is_empty():
+		picks = [{"text": "知道了", "cb": Callable()}]
+	var bw := 120.0 if picks.size() == 1 else 150.0
+	var gap := 12.0
+	var total_w := float(picks.size()) * bw + float(picks.size() - 1) * gap
+	var x0 := (PW - 32.0 - total_w) * 0.5
+	for i in picks.size():
+		var pc: Dictionary = picks[i]
+		var cb: Callable = pc.get("cb", Callable())
+		var ok := gold_button(String(pc.get("text", "知道了")), bw, 40, FS_SM)
+		ok.position = Vector2(x0 + float(i) * (bw + gap), btn_y)
+		ok.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				close_info_popup(layer)
+				if cb.is_valid():
+					cb.call())
+		content.add_child(ok)
 	return layer
 
 

@@ -26,6 +26,12 @@ const INTERACT_R := 44.0      # 非战斗物件交互半径（maps.json 无此�
 const MINI_W := 78.0          # 小地图尺寸：与 32×42 格地图同比例（1536:2016 ≈ 0.762）
 const MINI_H := 102.0
 const _MiniMapPos := Vector2(390, 14)
+# HUD 常驻小钮（药 / 换宠 / 撤离 / 疾行）统一口径（C8）：同一高度、同一字号档，
+# 宽度按字数给足（PanelContainer 会被文字撑大，给窄了彼此压边或出屏），右缘与小地图右缘对齐。
+const HUD_BTN_H := 40.0
+const HUD_BTN_FS := 16          # = G.FS_SM，HUD 小钮一律这一档，不再混用 FS_MD
+const HUD_BTN_Y := 144.0        # 与左侧 HP 面板（136..192）纵向居中，三枚并排钮统一基线
+const HUD_BTN_RIGHT := 468.0    # = _MiniMapPos.x + MINI_W（右上角小地图右缘）
 const AUTO_TIMEOUT := 26.0    # 自动前往超时（秒）：到不了就交还控制权，不把玩家困住
 const FLEE_CONTACT_CD := 1.6  # 战斗撤退后的接触冷静期（秒）：防"刚退又被同一只怪拽回去"
 const StoryBeatScript := preload("res://src/ui/StoryBeat.gd")   # 首领剧情演出层（对峙/余韵）
@@ -489,24 +495,24 @@ func _build_hud() -> void:
 	hp_row.add_child(_pot_l)
 	_refresh_hud()
 
-	var potion_btn := G.gold_button("药", 44, 40)
-	potion_btn.position = Vector2(232, 144)
+	var potion_btn := G.gold_button("药", 48, HUD_BTN_H, HUD_BTN_FS)
+	potion_btn.position = Vector2(232, HUD_BTN_Y)
 	potion_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_use_potion())
 	_hud.add_child(potion_btn)
 
-	_pet_btn = G.gold_button("换宠", 72, 40)
-	_pet_btn.position = Vector2(284, 144)
+	_pet_btn = G.gold_button("换宠", 66, HUD_BTN_H, HUD_BTN_FS)
+	_pet_btn.position = Vector2(288, HUD_BTN_Y)
 	_pet_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_swap_pet())
 	_hud.add_child(_pet_btn)
 
 	# 撤离：手边就必须能退出去（PC 亦可按 ESC），点按后二次确认防误触
-	# 位置让给右上角小地图（小地图 y 到 116），下移到地图正下方仍是拇指热区
-	var exit_btn := G.gold_button("撤离", 60, 40)
-	exit_btn.position = Vector2(404, 150)
+	# 位置让给右上角小地图（小地图 y 到 116），下移到地图正下方仍是拇指热区；右缘与小地图对齐
+	var exit_btn := G.gold_button("撤离", 66, HUD_BTN_H, HUD_BTN_FS)
+	exit_btn.position = Vector2(HUD_BTN_RIGHT - 66.0, HUD_BTN_Y)
 	exit_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_ask_exit())
@@ -520,8 +526,8 @@ func _build_hud() -> void:
 	_hud.add_child(_minimap)
 
 	# 疾行：地图纵深远、步行慢，空跑的那段路要能加速（数据配置 sprint_mult）
-	_sprint_btn = G.gold_button("疾行 · 关", 78, 40, G.FS_SM)
-	_sprint_btn.position = Vector2(386, VIEW_H - 200)
+	_sprint_btn = G.gold_button("疾行 · 关", 100, HUD_BTN_H, HUD_BTN_FS)
+	_sprint_btn.position = Vector2(HUD_BTN_RIGHT - 100.0, VIEW_H - 200)
 	_sprint_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_toggle_sprint())
@@ -832,7 +838,7 @@ func _physics_process(delta: float) -> void:
 		_stop_auto_walk("")
 	elif _auto_walk:
 		dir = _auto_dir(delta)
-	var speed := float(_map_cfg.get("player_speed", 130.0))
+	var speed := TableCache.map_player_speed()
 	if _sprint:
 		speed *= float(_map_cfg.get("sprint_mult", 1.6))
 	_prev_pos = _player.position
@@ -864,7 +870,7 @@ func _update_player_anim(dir: Vector2) -> void:
 	# 摇杆半速推动时步子放慢，避免任何速度下的滑步感
 	# 基准改为配置里的步行速度：疾行时步频自然加快，不再锁死在旧写死的 88
 	_player_anim.speed_scale = clampf(_player.velocity.length()
-		/ maxf(1.0, float(_map_cfg.get("player_speed", 100.0))), 0.55, 2.0)
+		/ maxf(1.0, TableCache.map_player_speed()), 0.55, 2.0)
 	if not _player_anim.is_playing():
 		_player_anim.play()
 
@@ -1262,7 +1268,7 @@ func _tick_auto_walk(delta: float) -> void:
 	if not _auto_walk or _player == null:
 		return
 	var moved := _player.position.distance_to(_prev_pos)
-	var expected := float(_map_cfg.get("player_speed", 88.0)) * delta * 0.45
+	var expected := TableCache.map_player_speed() * delta * 0.45
 	if moved < expected:
 		_auto_stuck += delta
 	else:
@@ -1422,6 +1428,17 @@ func _start_battle(m: _MapMonster) -> void:
 
 ## 真正的开战（演出结束后 / 无演出时直接进）
 func _launch_battle(m: _MapMonster) -> void:
+	# 主题没有怪物池时拒绝开战：空池战斗会「一 tick 判胜并照发奖励」（A6 同批收口）
+	var mons: Variant = TableCache.theme_config(st.theme).get("monsters", [])
+	if mons is Array and (mons as Array).is_empty():
+		push_error("主题怪物池为空，拒绝开战：%s" % st.theme)
+		_toast("这片秘境空无一人")
+		Audio.sfx("ui_locked")
+		m.chasing_contact = false
+		m.contact_cd = FLEE_CONTACT_CD
+		m.retreat_home()
+		_contact_mon = null
+		return
 	BattleScene.pending_cfg = {
 		"ally": {
 			"role_id": st.role_id,
@@ -1887,7 +1904,7 @@ class _MapMonster extends CharacterBody2D:
 		var speed := 40.0
 		if _state == "chase":
 			_target = player.position
-			speed = float(TableCache.maps_config().get("player_speed", 130.0)) * 0.9
+			speed = TableCache.map_player_speed() * 0.9
 		if _detour > 0.0:
 			_detour -= delta
 			_target = _detour_to   # 绕行期间先走侧移点，绕完再回到原目标
