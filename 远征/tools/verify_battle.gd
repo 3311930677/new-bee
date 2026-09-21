@@ -38,6 +38,7 @@ func _run() -> void:
 	_test_potion_full_hp()
 	_test_dmg_taken_on_basic()
 	_test_school_build_rate()
+	_test_theme_rules()
 	if _fails == 0:
 		print("BATTLE_OK all tests passed")
 	else:
@@ -605,6 +606,59 @@ func _test_dmg_taken_on_basic() -> void:
 	role.take_damage(100, foe, sim)
 	_check(h1 - role.hp == int(100.0 * (1.0 + pct)),
 		"受伤加深不应被算两遍（掉 %d）" % (h1 - role.hp))
+
+
+# ---------- 23. C 批：世界主题规则（纯表驱动） ----------
+func _test_theme_rules() -> void:
+	# ① 火山：每 6s 最大生命者受 hp_pct×MaxHP 灼烧，且**不触发受击钩子**
+	var vrule := TableCache.theme_rule("volcano")
+	_check(String(vrule.get("id", "")) == "volcano_burn", "火山应配 volcano_burn 规则")
+	var vprm: Dictionary = vrule.get("params", {})
+	var sim := BattleSim.new()
+	sim.record_events = true
+	sim.setup(95, {"role_id": "zs", "level": 10, "traits": ["tr_thorn_2"]},
+		{"theme": "volcano", "node_type": "normal", "layer": 1})
+	var role := sim.role_unit()
+	role.base_max_hp = 99999   # 保证人物是「最大生命者」
+	role.hp = 99999
+	var victim := sim.highest_max_hp_unit()
+	_check(victim == role, "构造：人物应是最大生命者（灼烧双向，敌我都可能中招）")
+	var want := maxi(1, int(99999.0 * float(vprm.get("hp_pct", 0.02))))
+	sim.rule_timer = 1
+	var hp0 := victim.hp
+	sim.step()
+	_check(hp0 - victim.hp == want,
+		"火山灼烧应造成 %d 点环境伤害（实为 %d；若少了就是受击钩子把它奶回去了）"
+			% [want, hp0 - victim.hp])
+	var burned := false
+	for e in sim.events:
+		if String(e.get("t", "")) == "theme_rule" and String(e.get("rule", "")) == "volcano_burn":
+			burned = true
+	_check(burned, "应广播 theme_rule 事件（表现层靠它做灼烧表现）")
+	# ② 雪原：每 8s 全场减速
+	var srule := TableCache.theme_rule("snow")
+	_check(String(srule.get("id", "")) == "snow_slip", "雪原应配 snow_slip 规则")
+	var sim2 := BattleSim.new()
+	sim2.record_events = false
+	sim2.setup(97, {"role_id": "zs", "level": 10, "traits": []},
+		{"theme": "snow", "node_type": "normal", "layer": 1})
+	sim2.rule_timer = 1
+	sim2.step()
+	var slowed := 0
+	for u in sim2.units:
+		if u.has_buff("slow"):
+			slowed += 1
+	_check(slowed == sim2.units.size(), "雪原规则应给全场减速（%d/%d）" % [slowed, sim2.units.size()])
+	# ③ 没配 rule 的主题：行为必须和以前一模一样
+	var sim3 := BattleSim.new()
+	sim3.record_events = false
+	sim3.setup(99, {"role_id": "zs", "level": 10, "traits": []},
+		{"theme": "forest", "node_type": "normal", "layer": 1})
+	_check(sim3.theme_rule.is_empty(), "森林（未配规则）不应有主题规则")
+	sim3.rule_timer = 1
+	sim3.step()
+	for u in sim3.units:
+		_check(not u.has_buff("slow"), "无 rule 的主题不应给任何人上减速")
 
 
 # ---------- 22. B 批手感指标：一局下来真能凑出一条流派吗 ----------

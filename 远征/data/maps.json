@@ -33,7 +33,9 @@
       "monsters": ["mon_icebat", "mon_yeti", "mon_frostguard"],
       "boss": "mon_boss_snow",
       "battle_bg": "bg_battle_snowfield",
-      "tint": "eef4ff"
+      "tint": "eef4ff",
+      "rule": { "id": "snow_slip", "name": "冰面打滑",
+        "params": { "interval": 8.0, "dur": 2.0, "pct": 0.15 } }
     },
     "volcano": {
       "name": "焚天火山",
@@ -44,7 +46,9 @@
       "monsters": ["mon_lavahound", "mon_ashimp", "mon_magmagolem"],
       "boss": "mon_boss_volcano",
       "battle_bg": "bg_battle_volcano",
-      "tint": "ffeadd"
+      "tint": "ffeadd",
+      "rule": { "id": "volcano_burn", "name": "灼热之地",
+        "params": { "interval": 6.0, "hp_pct": 0.02 } }
     },
     "tomb": {
       "name": "幽暗古墓",
@@ -88,7 +92,9 @@
       "monsters": ["mon_voidling", "mon_shade", "mon_cultist"],
       "boss": "mon_boss_abyss",
       "battle_bg": "bg_battle_abyss",
-      "tint": "e2d8f0"
+      "tint": "e2d8f0",
+      "rule": { "id": "abyss_dark", "name": "深渊迷雾",
+        "params": { "reveal_mult": 0.5 } }
     },
     "castle": {
       "name": "王城遗迹",

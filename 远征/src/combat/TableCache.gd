@@ -101,9 +101,10 @@ static func map_player_speed() -> float:
 
 
 ## 主题规则（maps.json themes.<id>.rule，C 批世界主题规则）。没有配就返回空字典。
+## 返回**深拷贝**：调用方可能就地改写（例如按规则缩放揭示半径），不能污染缓存。
 static func theme_rule(theme: String) -> Dictionary:
 	var v: Variant = theme_config(theme).get("rule", {})
-	return v if v is Dictionary else {}
+	return (v as Dictionary).duplicate(true) if v is Dictionary else {}
 
 
 static func arena_config() -> Dictionary:

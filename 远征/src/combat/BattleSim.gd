@@ -27,6 +27,11 @@ var pet_level := 1                    # 宠物等级随人物等级（v0 简化�
 var pet_stats: Dictionary = {}        # 局外宠物养成快照 {pid: {level, stat_mult, growth_mult}}
 ## 组建失败原因（空主题池等）：调用方据此拒绝开战，别让「一 tick 就判胜」的空战斗照发奖励
 var setup_error := ""
+## 世界主题规则（C 批，maps.json themes.<id>.rule）：纯表驱动，规则 id + params。
+## 八个世界只差数值、玩法元素从第 1 个世界起就全见过，这是当前最大的「新鲜感缺口」。
+var theme_id := ""
+var theme_rule: Dictionary = {}
+var rule_timer := 0        # 距下次触发的 tick 数（测试把它置 1 即可精确验证一次）
 var _next_uid := 1
 var _by_uid: Dictionary = {}
 
@@ -39,6 +44,9 @@ var role_uid: int = 0
 ##   enemy_mult 由调用方（苦行局）给，默认 1.0；模拟器不自己读表，保持内核无配置依赖。
 func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 	rng.seed = seed
+	theme_id = String(enemy_cfg.get("theme", "forest"))
+	theme_rule = TableCache.theme_rule(theme_id)
+	rule_timer = rule_interval_ticks()
 	enemy_scale = 1.0 + 0.12 * float(int(enemy_cfg.get("layer", 1)))
 	enemy_scale *= maxf(0.1, float(enemy_cfg.get("enemy_mult", 1.0)))
 	pet_level = maxi(1, int(ally_cfg.get("level", 1)))
@@ -422,7 +430,9 @@ func step() -> void:
 			MonsterAI.decide(self, u)
 		elif auto_mode:
 			MonsterAI.decide_auto(self, u)
-	# 6. 死亡/胜负判定
+	# 6. 世界主题规则（C 批）：周期类规则在这里 tick；揭示半径那条在 MapScene 侧生效
+	_apply_theme_rule()
+	# 7. 死亡/胜负判定
 	tick_count += 1
 	if alive_units("enemy").is_empty():
 		finished = true
@@ -452,6 +462,68 @@ func hash_state() -> int:
 	for u in units:
 		h = (h * 31 + u.uid * 1000003 + u.hp * 7919 + u.energy) % 2147483647
 	return h
+
+
+# ---------- 世界主题规则（C 批，表驱动） ----------
+func rule_params() -> Dictionary:
+	var p: Variant = theme_rule.get("params", {})
+	return p if p is Dictionary else {}
+
+
+## 周期规则的间隔（tick）。0 / 负 = 该主题没有周期规则。
+func rule_interval_ticks() -> int:
+	return int(float(rule_params().get("interval", 0.0)) * float(TICK_RATE))
+
+
+## 最大生命者（火山灼烧挑它；双向——敌我都可能中招，不是纯福利）
+func highest_max_hp_unit() -> Combatant:
+	var best: Combatant = null
+	for u in units:
+		if not u.alive:
+			continue
+		if best == null or u.get_max_hp() > best.get_max_hp():
+			best = u
+	return best
+
+
+## 每条规则 = 一处 match 分支 + 一段表参数。后续世界照这个模板往里加。
+func _apply_theme_rule() -> void:
+	if theme_rule.is_empty():
+		return
+	var prm := rule_params()
+	match String(theme_rule.get("id", "")):
+		"volcano_burn":
+			if not _rule_timer_tick():
+				return
+			var victim := highest_max_hp_unit()
+			if victim == null:
+				return
+			var dmg := maxi(1, int(float(victim.get_max_hp()) * float(prm.get("hp_pct", 0.02))))
+			# src 传 null：环境伤害**不占击杀归属**（on_kill 不会因灼烧收尾误记），
+			# 也不触发受击钩子（与 A1 的「死人不再被奶回来」解耦）
+			victim._direct_damage(dmg, null, self, true)
+			emit({"t": "theme_rule", "rule": "volcano_burn", "uid": victim.uid, "amount": dmg})
+		"snow_slip":
+			if not _rule_timer_tick():
+				return
+			var dur := int(float(prm.get("dur", 2.0)) * float(TICK_RATE))
+			var affected := alive_units("ally") + alive_units("enemy")
+			for u in affected:
+				u.add_buff("slow", dur, {"pct": prm.get("pct", 0.15)})
+			emit({"t": "theme_rule", "rule": "snow_slip", "uid": -1, "amount": affected.size()})
+		_:
+			pass   # 其余规则不作用在战斗 tick 上（如深渊揭示半径在 MapScene 侧）
+
+
+## 周期倒计时：到点返回 true 并重置。没配 interval 的规则永不触发。
+func _rule_timer_tick() -> bool:
+	if rule_interval_ticks() <= 0:
+		return false
+	rule_timer -= 1
+	if rule_timer > 0:
+		return false
+	rule_timer = rule_interval_ticks()
+	return true
 
 
 # ---------- 战斗内动作：击退一排（岩龟冲撞等） ----------
