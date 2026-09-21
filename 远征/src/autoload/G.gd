@@ -2,11 +2,13 @@
 extends Node
 
 # ---------- 配色（模仿参考游戏：暖棕 + 羊皮纸 + 金） ----------
-const BG_DEEP := Color("2a1f14")        # 深棕黑（选人底）
-const BANNER := Color("5a3a1e")          # 棕色横幅
-const PARCHMENT := Color("e8d5a3")       # 羊皮纸底
-const GOLD := Color("f0c060")            # 金字/金边
-const GOLD_BRIGHT := Color("ffd97a")     # 选中亮金
+# 2026-09-21 按原版实机录屏取色微调（复刻方案 Task 1.1）：整体更沉、更木，金更收敛。
+# 语义色 / 稀有度四档 / 按钮三档一律不动（工程规范保留）。
+const BG_DEEP := Color("2b2016")        # 深木底（原版深木）
+const BANNER := Color("4a3018")          # 棕色横幅（更沉）
+const PARCHMENT := Color("d8c8a0")       # 羊皮纸底（降饱和，贴近原版木牌纸面）
+const GOLD := Color("d9a94e")            # 描金（原版描金）
+const GOLD_BRIGHT := Color("e8c06a")     # 选中亮金（同步降亮）
 const NAME_GREEN := Color("84c48c")      # 角色名（柔玉绿，非荧光绿）
 const LV_ORANGE := Color("f0a030")      # 等级橙
 const TEXT_DARK := Color("3a2a14")      # 羊皮纸上的深字
@@ -27,7 +29,7 @@ const RARITY_HUE := {
 const RARITY_NAME := {"white": "普通", "blue": "稀有", "purple": "史诗", "gold": "传说"}
 
 # ---------- 参考风（创建角色页）配色 ----------
-const WOOD := Color("6b4a28")            # 木框/顶栏棕
+const WOOD := Color("5a3d20")            # 木框/顶栏棕（原版更沉的木色）
 const WOOD_DARK := Color("4a3018")       # 木框暗部
 const GOLD_BTN := Color("e8b84a")        # 金色实心按钮
 const GOLD_BTN_EDGE := Color("8a6220")   # 金按钮描边
@@ -2716,7 +2718,10 @@ func _build_res_index() -> void:
 		return
 	_res_indexed = true
 	var batches := ["generated_001_100", "generated_101_200", "generated_201_333",
-		"generated_334_341", "generated_342_353"]
+		"generated_334_341", "generated_342_353",
+		# 笑傲江湖复刻：AI 重生成素材（assets_regen/batch0~5 的 ready 成品）
+		# 按 role/monster/mount/pet/fx/ui/bg/map 分类入库，按名字取用（G.res_tex）
+		"generated_362_xajh"]
 	# 先收 ready/（成品：已裁到设计尺寸、alpha 已硬化），再拿 source/ 母稿补位。
 	# 顺序不能反——source 是 970~2170px 的原始大图，既吃显存，也会把未受容器约束的
 	# TextureRect 的最小尺寸钳到原图大小（曾导致召唤横幅 2172×724 铺满面板压住文案）
@@ -3041,6 +3046,138 @@ func parchment_box(w := 400, h := 200, pad := 18.0) -> PanelContainer:
 	sb.content_margin_bottom = pad * 0.6
 	root.add_theme_stylebox_override("panel", sb)
 	return root
+
+
+# ---------- 复刻版素材映射（AI 重生成产物 → 现行 id，Task 1.5） ----------
+# 现行 id 体系（roles/monsters/pets 的改名是阶段 3.1/3.2 的事）**保持不动**，
+# 只在取图时优先用 AI 重生成的素材：换画风与改数值文案解耦，任何一步都能单独回退。
+# 只登记"对得上号"的（原版精灵气质接近），对不上的继续用原素材——宁缺毋滥，别硬凑。
+const XA_ART := {
+	# 怪物（asset-regen B 类 10 张）：id → AI 素材名
+	"mon_wolf": "b_monster_evil_wolf",
+	"mon_spider": "b_monster_poison_python",
+	"mon_treant": "b_monster_mud_monster",
+	"mon_skeleton": "b_monster_skeleton_swordsman",
+	"mon_goblin": "b_bandit",
+	"mon_boss_forest": "b_monster_black_wind_chief",
+	"mon_icebat": "b_monster_blood_bat",
+	"mon_lavahound": "b_monster_fire_salamander",
+	"mon_magmagolem": "b_monster_puppet_guard",
+	"mon_siege": "b_monster_puppet_guard",
+	# 宠物（D 类 4 张）
+	"pet_foxfire": "d_pet_fire_fox",
+	"pet_thunderhawk": "d_pet_thunder_sparrow",
+	"pet_rockturtle": "d_pet_turtle_chancellor",
+}
+
+
+## 取图入口（复刻版）：先查 XA_ART 映射，映射目标缺图时继续回落原名——任何一步都不会开天窗
+func art(res_name: String) -> Texture2D:
+	var mapped := String(XA_ART.get(res_name, ""))
+	if mapped != "":
+		var t := res_tex(mapped)
+		if t != null:
+			return t
+	return res_tex(res_name)
+
+
+# ---------- 复刻版位图控件（笑傲江湖·Task 1.4） ----------
+# 素材来自 AI 重生成管线（image/generated_362_xajh/ready/ui/），按名字经 res_tex 取用。
+# 铁律：**位图缺失一律回落到既有程序绘制**——资产管线没跑完时游戏必须照常可玩，
+# headless 回归里拿不到纹理，绝不允许出现空白控件。
+const XA_PANEL_ART := {"parchment": "f3_panel_parchment", "wood": "f3_panel_wood"}
+const XA_BUTTON_ART := {"normal": "f1_button_normal", "hover": "f1_button_hover",
+	"pressed": "f1_button_pressed", "disabled": "f1_button_disabled"}
+const XA_PLAQUE_ART := "f2_plaque"
+
+
+## 九宫格面板（位图优先，回落 parchment_box）：512×512 底板，边缘 96px 拉伸、中央留白
+func mk_panel(w: float, h: float, dark := false, pad := 18.0) -> PanelContainer:
+	var art := res_tex(XA_PANEL_ART["wood" if dark else "parchment"])
+	if art == null:
+		return parchment_box(w, h, pad)
+	var root := PanelContainer.new()
+	root.custom_minimum_size = Vector2(w, h)
+	var sb := StyleBoxTexture.new()
+	sb.texture = art
+	sb.set_texture_margin_all(96.0)
+	sb.content_margin_left = pad
+	sb.content_margin_right = pad
+	sb.content_margin_top = pad * 0.7
+	sb.content_margin_bottom = pad * 0.6
+	root.add_theme_stylebox_override("panel", sb)
+	return root
+
+
+## 木牌匾标题（位图优先，回落 banner_box）
+func mk_plaque(text: String, w := 260.0, h := 52.0, font_size := FS_BIG) -> Control:
+	var art := res_tex(XA_PLAQUE_ART)
+	if art == null:
+		return banner_box(text, w, h, font_size)
+	var root := PanelContainer.new()
+	root.custom_minimum_size = Vector2(w, h)
+	var sb := StyleBoxTexture.new()
+	sb.texture = art
+	sb.set_texture_margin_all(28.0)
+	sb.content_margin_left = 24.0
+	sb.content_margin_right = 24.0
+	root.add_theme_stylebox_override("panel", sb)
+	var l := serif_label(_banner_text(text), font_size, GOLD_BRIGHT)
+	l.add_theme_font_override("font", spaced_font(maxi(1, font_size / 10), true, true))
+	root.add_child(l)
+	return root
+
+
+## 横幅木按钮（位图四态，回落 gold_button）：常态/悬停/按下/禁用
+func mk_wood_button(text: String, w := 0.0, h := 42.0, font_size := FS_MD) -> Control:
+	var tex_normal := res_tex(XA_BUTTON_ART["normal"])
+	if tex_normal == null:
+		return gold_button(text, w, h, font_size)
+	var root := PanelContainer.new()
+	root.custom_minimum_size = Vector2(w if w > 0.0 else 0.0, h)
+	var sb := StyleBoxTexture.new()
+	sb.texture = tex_normal
+	sb.set_texture_margin_all(24.0)
+	sb.content_margin_left = 18.0
+	sb.content_margin_right = 18.0
+	root.add_theme_stylebox_override("panel", sb)
+	root.add_child(gold_label(_button_text(text), font_size, true, TEXT_DARK, false))
+	root.mouse_filter = Control.MOUSE_FILTER_STOP
+	root.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	root.mouse_entered.connect(func():
+		var t := res_tex(XA_BUTTON_ART["hover"])
+		if t != null:
+			sb.texture = t)
+	root.mouse_exited.connect(func(): sb.texture = tex_normal)
+	_bind_press_feedback(root)
+	return root
+
+
+## 复刻版角色素材映射（Task 1.3）：现行 4 职业 → AI 重生成行走网格（只有 zs/fs/ls 三套）
+const XA_ROLE_GRID := {"zs": "a3_zs_walk_grid", "ck": "a3_ls_walk_grid",
+	"fs": "a3_fs_walk_grid", "fz": "a3_fs_walk_grid"}
+
+
+## 用 AI 行走网格的第 1 行（朝下 5 帧）拼待机动画；拿不到网格返回 null（调用方回落旧图）。
+## 网格是 5 列 × 4 行：列=帧、行=朝向（下/左/右/上），与 A3 提示词的排版一致。
+func xa_idle_frames(role_id: String, fps := 6.0) -> SpriteFrames:
+	var name := String(XA_ROLE_GRID.get(role_id, ""))
+	var tex := res_tex(name) if name != "" else null
+	if tex == null:
+		return null
+	var cw := float(tex.get_width()) / 5.0
+	var ch := float(tex.get_height()) / 4.0
+	var frames := SpriteFrames.new()
+	frames.remove_animation(&"default")
+	frames.add_animation(&"idle")
+	frames.set_animation_speed(&"idle", fps)
+	frames.set_animation_loop(&"idle", true)
+	for c in 5:
+		var at := AtlasTexture.new()
+		at.atlas = tex
+		at.region = Rect2(float(c) * cw, 0.0, cw, ch)
+		frames.add_frame(&"idle", at)
+	return frames
 
 
 ## 按钮文案规范化：调用处手打的「返 回 / 兑 换」式空格统一在这里收掉。同类按钮的字距

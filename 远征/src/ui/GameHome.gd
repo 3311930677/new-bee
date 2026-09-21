@@ -353,6 +353,10 @@ func _build_stage(role: Dictionary) -> void:
 
 
 func _frames(role_id: String) -> SpriteFrames:
+	# 复刻版：优先用 AI 重生成的行走网格（Task 1.3），拿不到才回落旧 4 帧图
+	var xa := G.xa_idle_frames(role_id)
+	if xa != null:
+		return xa
 	var tex: Texture2D = load(G.role_dir(role_id) + _role_name(role_id) + "_idle.png")
 	var frames := SpriteFrames.new()
 	frames.remove_animation(&"default")

@@ -1866,6 +1866,7 @@ class _MapMonster extends CharacterBody2D:
 	var _wander_r := 96.0
 	var _t := 0.0
 	var _sprite: Sprite2D = null    # 有 mon_ 素材时的精灵体
+	var _lv_l: Label = null         # 紫色「Lv{n}名」等级标签
 	var _lobe: Array = []  # 每只固定不变的轮廓起伏，避免看着像同一个圆
 	# 卡住检测（问题 #23）：move_and_slide 顶着散件时"速度有值、位置不动"，
 	# 所以只能用**实际位移**判断有没有进展。连续卡住就绕行，绕不动就放弃当前目标。
@@ -1896,7 +1897,7 @@ class _MapMonster extends CharacterBody2D:
 		_wander_r = float(mc.get("monster_wander_radius", 96.0))
 		# 精灵体：boss 84 / elite 60 / normal 48 像素高，脚底对齐碰撞原点
 		if mon_id != "":
-			var tex: Texture2D = G.res_tex(mon_id)
+			var tex: Texture2D = G.art(mon_id)   # 复刻版素材优先（Task 1.5）
 			if tex != null:
 				var h: float = {"normal": 48.0, "elite": 60.0, "boss": 84.0}.get(tier, 48.0)
 				var s := h / float(tex.get_height())
@@ -1909,6 +1910,26 @@ class _MapMonster extends CharacterBody2D:
 		for i in 18:
 			_lobe.append(sin(float(i) * 2.1 + h) * 0.13 + sin(float(i) * 0.7 + h * 0.5) * 0.09)
 		_pick_wander_target()
+		_build_level_tag()
+
+	## 怪物标签（原版实录：怪物头顶是**紫色「Lv{n}名」**，NPC 名才是绿色）。
+	## 等级取 nodes.json enemy.display_level 按层查——它只是显示用，不参与任何战斗数值。
+	func _build_level_tag() -> void:
+		var lv := 1
+		var dl: Variant = TableCache.nodes_config().get("enemy", {}).get("display_level", [])
+		if dl is Array and not (dl as Array).is_empty():
+			var layer := 1
+			if map_ref != null and map_ref.node is Dictionary:
+				layer = maxi(1, int((map_ref.node as Dictionary).get("layer", 1)))
+			var arr := dl as Array
+			lv = maxi(1, int(arr[mini(layer - 1, arr.size() - 1)]))
+		var nm := String(TableCache.get_monster(mon_id).get("name", ""))
+		_lv_l = G.gold_label("Lv%d %s" % [lv, nm] if nm != "" else "Lv%d" % lv,
+			G.FS_XS, false, Color("c88ae8"), true)
+		_lv_l.position = Vector2(-46, -_radius - 32.0)
+		_lv_l.custom_minimum_size = Vector2(92, 0)
+		_lv_l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(_lv_l)
 
 	func _pick_wander_target() -> void:
 		var a := randf() * TAU
