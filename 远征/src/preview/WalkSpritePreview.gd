@@ -3,12 +3,11 @@ extends Node2D
 const Actor = preload("res://src/preview/WalkActor.gd")
 const FRAME_PATHS = [
 	"res://image/role/zs/pojun_walk_frames.tres",
-	"res://image/role/ck/chuanyang_walk_frames.tres",
+	"res://image/role/ls/chuanyang_walk_frames.tres",
 	"res://image/role/fs/shuangyu_walk_frames.tres",
-	"res://image/role/fz/chenxing_walk_frames.tres",
 ]
-const NAMES = ["破军", "穿杨", "霜语", "晨星"]
-const SPEEDS = [1.0, 1.2, 0.9, 1.0]
+const NAMES = ["铁衣", "追风", "霜语"]
+const SPEEDS = [1.0, 1.2, 0.9]
 var actors: Array = []
 var selected := 0
 

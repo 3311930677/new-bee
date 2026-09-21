@@ -41,7 +41,7 @@ const ROLE_NAME := {
 	"healer": "治疗", "aoe_dps": "群攻", "poison_control": "毒控",
 }
 # 立绘文件名映射（内部类拿不到外层类的 _role_name()，这里自持一份）
-const ROLE_ART := {"zs": "pojun", "ck": "chuanyang", "fs": "shuangyu", "fz": "chenxing"}
+const ROLE_ART := {"zs": "pojun", "ls": "chuanyang", "fs": "shuangyu"}
 
 var _theme := "forest"
 var _role := "zs"

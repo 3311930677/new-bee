@@ -182,9 +182,8 @@ func bar_fill_width() -> float:
 func _collect_queue() -> void:
 	G._build_res_index()
 	_queue.append("res://image/role/zs/pojun_walk_4dir.png")
-	_queue.append("res://image/role/ck/chuanyang_walk_4dir.png")
+	_queue.append("res://image/role/ls/chuanyang_walk_4dir.png")
 	_queue.append("res://image/role/fs/shuangyu_walk_4dir.png")
-	_queue.append("res://image/role/fz/chenxing_walk_4dir.png")
 	# 三张界面大背景（1.5~2.4MB 一张，不预热的话进主城/回主页会各卡一下）
 	for bg in ["home", "enter", "title", "login"]:
 		if ResourceLoader.exists("res://image/background/%s.png" % bg):

@@ -100,7 +100,7 @@ func _run() -> void:
 		dp._goto_step(1)
 		for i in 4:
 			dp._deck.go(i, true)
-		_check(dp._cards.size() == 4, "人物页翻满后应有 4 张卡，实为 %d" % dp._cards.size())
+		_check(dp._cards.size() == 3, "人物页翻满后应有 3 张卡（三职业），实为 %d" % dp._cards.size())
 		dp._goto_step(2)
 		for i in 8:
 			dp._deck.go(i, true)
@@ -136,7 +136,7 @@ func _run() -> void:
 			# ---- D. 选择交互（解锁后全部可选） ----
 			dp._select_theme("snow")
 			_check(dp._theme == "snow", "解锁后应能选 snow，实为 %s" % dp._theme)
-			dp._select_role("ck")
+			dp._select_role("ls")
 			dp._select_pet("pet_frostwolf")  # 有出战 → 进替补
 			_check(dp._bench_pet == "pet_frostwolf", "第二只宠物应进替补位")
 			dp._select_pet("pet_foxfire")    # 已有替补 → 替换替补
@@ -157,7 +157,7 @@ func _run() -> void:
 			dp._on_confirm()
 			_check(not _got_cfg.is_empty(), "补齐出战后出征应通过")
 			if not _got_cfg.is_empty():
-				_check(String(_got_cfg.get("theme", "")) == "snow" and String(_got_cfg.get("role_id", "")) == "ck"
+				_check(String(_got_cfg.get("theme", "")) == "snow" and String(_got_cfg.get("role_id", "")) == "ls"
 					and String(_got_cfg.get("active_pet", "")) == "pet_holydeer",
 					"出征配置应带所选秘境/人物/宠物，实为 %s" % str(_got_cfg))
 				_check(int(_got_cfg.get("level", 0)) == int(G.prog.get("level", 1)),

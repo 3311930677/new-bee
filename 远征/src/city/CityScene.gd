@@ -17,9 +17,8 @@ const QuestPanelScript := preload("res://src/ui/QuestPanel.gd")   # 委托板（
 
 const ROLE_FRAMES := {  # 与 MapScene 同源的四方向行走帧
 	"zs": "res://image/role/zs/pojun_walk_frames.tres",
-	"ck": "res://image/role/ck/chuanyang_walk_frames.tres",
+	"ls": "res://image/role/ls/chuanyang_walk_frames.tres",
 	"fs": "res://image/role/fs/shuangyu_walk_frames.tres",
-	"fz": "res://image/role/fz/chenxing_walk_frames.tres",
 }
 
 var _cfg: Dictionary = {}

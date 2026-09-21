@@ -11,8 +11,8 @@ const VIEW_W := 480.0
 const CONTENT_W := 368.0
 const PREVIEW := 132.0   # 预览尺寸（也是"上传后最多被看到的清晰度"上限，落盘是 256 方图）
 const PICK_FILTERS := ["*.png,*.jpg,*.jpeg,*.webp,*.bmp ; 图片文件"]
-const AVATAR_IDS := ["zs", "ck", "fs", "fz"]
-const ROLE_NAMES := {"zs": "破军", "ck": "穿杨", "fs": "霜语", "fz": "晨星"}
+const AVATAR_IDS := ["zs", "ls", "fs"]
+const ROLE_NAMES := {"zs": "铁衣", "ls": "追风", "fs": "霜语"}
 # 四职业快捷行（C3）：预览框下方一排 4 个职业小卡，点一下直接换职业头像
 const ROLE_ROW_Y := PREVIEW + 92.0
 const ROLE_CARD := 48.0

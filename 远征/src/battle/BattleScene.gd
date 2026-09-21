@@ -27,17 +27,15 @@ const ALLY_BACK_Y := 474.0
 
 const ROLE_SPRITE := {  # 人物战斗行走帧（探索/进出场用）
 	"zs": ["res://image/role/zs/pojun_walk_frames.tres", "pojun"],
-	"ck": ["res://image/role/ck/chuanyang_walk_frames.tres", "chuanyang"],
+	"ls": ["res://image/role/ls/chuanyang_walk_frames.tres", "chuanyang"],
 	"fs": ["res://image/role/fs/shuangyu_walk_frames.tres", "shuangyu"],
-	"fz": ["res://image/role/fz/chenxing_walk_frames.tres", "chenxing"],
 }
 # 战斗五态 spritesheet（4 列 × 5 行 @128px：待机/普攻/施法/受击/倒下）。
 # Godot 3 的 .tres 在 4.7 下不稳，统一运行时从整图重建（与 GameHome/CreateRole 同口径）。
 const ROLE_BATTLE_SHEET := {
 	"zs": "res://image/role/zs/pojun_spritesheet.png",
-	"ck": "res://image/role/ck/chuanyang_spritesheet.png",
+	"ls": "res://image/role/ls/chuanyang_spritesheet.png",
 	"fs": "res://image/role/fs/shuangyu_spritesheet.png",
-	"fz": "res://image/role/fz/chenxing_spritesheet.png",
 }
 const BATTLE_ROWS := [  # [动画名, 行号, 是否循环, 帧率]
 	["idle", 0, true, 5.0], ["attack", 1, false, 11.0], ["cast", 2, false, 8.0],

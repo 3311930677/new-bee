@@ -13,11 +13,10 @@ static var pending_cfg: Dictionary = {}
 
 const VIEW_W := 480.0
 const VIEW_H := 800.0
-const ROLE_FRAMES := {  # 四方向行走帧（BattleScene 同款复用）
+const ROLE_FRAMES := {  # 四方向行走帧（BattleScene 同款复用）；拿不到时回落旧素材
 	"zs": ["res://image/role/zs/pojun_walk_frames.tres", "pojun"],
-	"ck": ["res://image/role/ck/chuanyang_walk_frames.tres", "chuanyang"],
+	"ls": ["res://image/role/ls/chuanyang_walk_frames.tres", "chuanyang"],
 	"fs": ["res://image/role/fs/shuangyu_walk_frames.tres", "shuangyu"],
-	"fz": ["res://image/role/fz/chenxing_walk_frames.tres", "chenxing"],
 }
 const MON_COLOR := {
 	"normal": Color("5f7186"), "elite": Color("7a4a9a"), "boss": Color("8a2f2f"),

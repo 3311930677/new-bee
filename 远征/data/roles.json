@@ -1,46 +1,35 @@
 [
   {
     "id": "zs",
-    "name": "破军",
+    "name": "铁衣",
     "job": "战士",
-    "weapon": "大剑",
+    "weapon": "环首大刀",
     "tags": "近战物理 · 能抗能打",
-    "desc": "陷阵先登的重甲战士，一柄大剑开山裂石。身披百战余生的旧甲，越是险地，越是冲在最前。",
+    "desc": "洛林旧军的重甲武士，一柄环首大刀开山裂石。龙怒降临那年他背对燃烧的城门，站在最后一道防线上。",
     "attack_range": "melee",
     "base": { "hp": 130, "atk": 22, "def": 14, "spd": 1.0, "crit": 0.05 },
     "skills": ["zs_lieshan", "zs_pozhen", "zs_huifeng", "zs_zhanhou", "zs_duanzui"]
   },
   {
-    "id": "ck",
-    "name": "穿杨",
-    "job": "枪骑",
-    "weapon": "长枪",
+    "id": "ls",
+    "name": "追风",
+    "job": "猎手",
+    "weapon": "铁胎长弓",
     "tags": "中远程物理 · 灵动输出",
-    "desc": "马背上的枪骑，长枪连珠、挑落飞影。身法轻灵，进退之间总能找到破绽，一击致命。",
+    "desc": "在洛林郊野长大的猎手，铁胎长弓从不空放。灾变之后他独行于荒野，把每一头异兽都记进自己的猎谱。",
     "attack_range": "range",
     "base": { "hp": 100, "atk": 24, "def": 9, "spd": 1.2, "crit": 0.07 },
-    "skills": ["ck_lianzhu", "ck_guanjia", "ck_duopo", "ck_dunying", "ck_qingxie"]
+    "skills": ["ls_lianzhu", "ls_guanjia", "ls_duopo", "ls_dunying", "ls_qingxie"]
   },
   {
     "id": "fs",
     "name": "霜语",
     "job": "法师",
-    "weapon": "法杖",
-    "tags": "远程群伤 · 控制",
-    "desc": "掌霜执杖的法师，抬手间霜刃环列、寒雾锁敌。体魄虽弱，冰封千里之地无人敢近。",
+    "weapon": "九环法杖",
+    "tags": "远程群伤 · 控制 · 续航",
+    "desc": "掌霜执杖的法师，抬手间冰刃环列、寒雾锁敌。她读得懂帕拉多留下的残卷，也读得懂龙怒真正的来处。",
     "attack_range": "range",
     "base": { "hp": 90, "atk": 26, "def": 8, "spd": 0.9, "crit": 0.05 },
-    "skills": ["fs_shuangren", "fs_shuanghuan", "fs_tianyun", "fs_midun", "fs_yanmie"]
-  },
-  {
-    "id": "fz",
-    "name": "晨星",
-    "job": "牧师",
-    "weapon": "圣锤",
-    "tags": "治疗辅助 · 可独立刷怪",
-    "desc": "持圣锤的牧者，圣光庇佑同行之人，亦可独行荡魔。晨星高悬之处，伤病与黑暗一并退散。",
-    "attack_range": "melee",
-    "base": { "hp": 115, "atk": 22, "def": 12, "spd": 0.95, "crit": 0.05 },
-    "skills": ["fz_shengyu", "fz_puzhao", "fz_jinghua", "fz_zhudao", "fz_poxiao"]
+    "skills": ["fs_shuangren", "fs_shuanghuan", "fs_tianyun", "fs_midun", "fs_shengyu"]
   }
 ]

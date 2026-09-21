@@ -42,22 +42,12 @@ static func decide_auto(sim: BattleSim, unit: Combatant) -> void:
 static func _auto_condition(sim: BattleSim, unit: Combatant, sid: String,
 		skill: Dictionary, allies: Array[Combatant], enemies: Array[Combatant]) -> bool:
 	match sid:
-		"fz_shengyu", "fz_puzhao":
-			var threshold := 0.55 if sid == "fz_shengyu" else 0.70
-			var need := 1 if sid == "fz_shengyu" else 2
-			var low := 0
+		# 复刻版三职业：治疗并入法师（fs_shengyu），旧的 fz_* 条件随职业改造一并删掉
+		"fs_shengyu":
 			for a in allies:
-				if float(a.hp) / float(maxi(a.get_max_hp(), 1)) < threshold:
-					low += 1
-			return low >= need
-		"fz_jinghua":
-			for a in allies:
-				if a.has_buff("bleed") or a.has_buff("poison") or a.has_buff("slow") \
-						or a.has_buff("def_break") or a.has_buff("fear") or a.has_buff("stun"):
+				if float(a.hp) / float(maxi(a.get_max_hp(), 1)) < 0.55:
 					return true
 			return false
-		"fz_zhudao":
-			return enemies.size() >= 3 or sim.has_boss()
 		"fs_midun":
 			for a in allies:
 				if float(a.hp) / float(maxi(a.get_max_hp(), 1)) < 0.50:
@@ -65,7 +55,7 @@ static func _auto_condition(sim: BattleSim, unit: Combatant, sid: String,
 			return false
 		"zs_zhanhou":
 			return sim.has_boss() or enemies.size() >= 3
-		"ck_dunying":
+		"ls_dunying":
 			return float(unit.hp) / float(maxi(unit.get_max_hp(), 1)) < 0.40
 	# 通用：大招满能量即放；中费技能留 20 缓冲；小技能能量够就放
 	var cost := int(skill.get("cost", 0))
