@@ -6,35 +6,35 @@
     {
       "id": "q_clear_forest", "npc": "npc_steward", "kind": "clear", "theme": "forest", "n": 1,
       "title": "立碑之始",
-      "goal": "讨伐「苍绿林海」的首领",
-      "desc": "「那座碑是第一个哑的，也最该先去看。你回来的时候，把林子里的事讲给我听。」",
+      "goal": "讨伐「枫林郊野」的首领",
+      "desc": "「八方镇龙印里，那一座是第一道哑的，也最该先去看。你回来的时候，把林子里的事讲给我听。」",
       "reward": { "gold": 260, "exp": 80, "honor": 3 }
     },
     {
       "id": "q_slay_forest", "npc": "npc_guard", "kind": "slay", "theme": "forest", "n": 3,
       "title": "清出道来",
-      "goal": "在「苍绿林海」击杀 3 只",
+      "goal": "在「枫林郊野」击杀 3 只",
       "desc": "「出城门往林子里走，先清出条能走人的道。别贪深，活着回来要紧。」",
       "reward": { "gold": 140, "exp": 40 }
     },
     {
       "id": "q_slay_snow", "npc": "npc_scribe", "kind": "slay", "theme": "snow", "n": 4,
       "title": "雪原录事",
-      "goal": "在「凛风雪原」击杀 4 只",
+      "goal": "在「凛雪原」击杀 4 只",
       "desc": "「图志上雪原那一页还是空的。你替我打上几场，我照着你的说法把雪补上去。」",
       "reward": { "gold": 180, "exp": 60, "expedition": 15 }
     },
     {
       "id": "q_slay_volcano", "npc": "npc_smith", "kind": "slay", "theme": "volcano", "n": 3,
       "title": "炉料",
-      "goal": "在「焚天火山」击杀 3 只",
+      "goal": "在「赤焰岭」击杀 3 只",
       "desc": "「火山里的石头烧得透，敲起来脆。你去一趟，顺手替我清几头挡路的。」",
       "reward": { "gold": 200, "exp": 55 }
     },
     {
       "id": "q_slay_tomb", "npc": "npc_child", "kind": "slay", "theme": "tomb", "n": 2,
       "title": "小满的胆子",
-      "goal": "在「幽暗古墓」击杀 2 只",
+      "goal": "在「黄城废墟」击杀 2 只",
       "desc": "「我不敢去，可我又想听。你去了回来给我讲——讲真的，别哄我。」",
       "reward": { "gold": 120, "exp": 45, "honor": 1 }
     },
@@ -55,14 +55,14 @@
     {
       "id": "q_slay_desert", "npc": "npc_warden", "kind": "slay", "theme": "desert", "n": 5,
       "title": "沙下的路",
-      "goal": "在「流沙荒漠」击杀 5 只",
+      "goal": "在「流沙关」击杀 5 只",
       "desc": "「沙底下埋着八条路，我只认得出其中一条。你把上头的麻烦清了，我再走一趟。」",
       "reward": { "gold": 240, "exp": 70, "expedition": 20 }
     },
     {
       "id": "q_clear_snow", "npc": "npc_guard", "kind": "clear", "theme": "snow", "n": 1,
       "title": "风雪关隘",
-      "goal": "讨伐「凛风雪原」的首领",
+      "goal": "讨伐「凛雪原」的首领",
       "desc": "「雪线上的关隘一年封半年。你能走到碑前，我就把巡防的名册往后延一延。」",
       "reward": { "gold": 420, "exp": 140, "honor": 6 }
     },

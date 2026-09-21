@@ -289,6 +289,8 @@ Get-ChildItem "d:\new bee\远征\assets_regan\refs\sprites" -Recurse -Directory 
 | 3.1 三职业 × 男女 | ✅ | `roles.json` 改为 **zs 铁衣（战士·环首大刀）/ ls 追风（猎手·铁胎长弓）/ fs 霜语（法师·九环法杖）**，desc 按「末日浩劫·龙怒」重写；`image/role/ck` → `image/role/ls`（`.tres` 内引用同步修正）；新增 `G.xa_portrait()/xa_avatar_tex()`：立绘/头像按**职业×性别**取 A1/A4，`CreateRole` 已接 |
 | 3.2 数值文案 | ✅（部分） | `skills.json` 20→15（三职业各 5；猎手接管原枪骑五技能，法师并入「圣愈」补回治疗）；`combos.json` 4→3；`equip.json` 武器 4 系→3 系（长弓槽沿用 id `spear` 保住宿存档键）；`MonsterAI` 托管条件同步。**未做**：maps/npcs/世界观地名 |
 | 3.4 旧存档兼容 | ✅ | `G.XA_LEGACY_ROLE`：老档 `selected_role`/`avatar_id` 为 `ck`/`fz` 时换算成 `ls`/`fs`，并在主界面弹一次「旧档已换算」（不静默改档） |
+| 3.2 地名 | ✅ | `maps.json` 八主题改名：枫林郊野 / 凛雪原 / 赤焰岭 / 黄城废墟 / 流沙关 / 千岁冰原 / **龙怒渊** / **希望之都**；`quests.json` 7 处目标、`titles.json` 5 条称号、`lore.json` 序章同步 |
+| 3.3 世界观移植 | ✅ | `lore.json` 全量重写为 **「末日浩劫·龙怒」**线：造物神帕拉多 / 天狼星系·帕拉多诺 / 洛林国内忧外患 / 毒矛以演习为名的政变 / 侍卫长月影连夜出逃 / 枫林村七年 / 神秘来客与钢剑王子不辞而别 → 序章五页、八方镇龙印、八境志异与首领对峙/余韵全部改写；`Title.gd` 开场白同步。**保留**原有结构键与八境首领名，机制与回归零改动 |
 
 **与方案的偏离（重要）**
 
@@ -301,8 +303,8 @@ Get-ChildItem "d:\new bee\远征\assets_regan\refs\sprites" -Recurse -Directory 
 - 1.4 收尾：其余面板逐个换 `mk_panel`（大面板才上九宫格；`TraitPicker` 这种 140px 宽卡片必须继续用程序绘制，否则九宫格边距会吃掉内容区）。
 - 1.5 收尾：主城建筑立面（H4）、H2/H3 地图图集切图与 Terrain 自动图块。
 - 2.5 坐骑/宠物换血（含探索机动加成）——与 3.x 的 id 改名一起做更省事。
-- **3.2 剩余**：`monsters.json` 接原版怪物精灵命名、`maps.json` 改「洛林郊野／黄城」等地名、新增 `data/npcs.json`（NPC 对话）。
-- **3.3 全部**：`lore.json`/`codex.json`/`quests.json` 移植 readme.txt 的「末日浩劫·龙怒」（造物神帕拉多／洛林国／钢剑王子）——需要先读原版 readme，属独立一轮。
+- **3.2 剩余**：`monsters.json` 按原版怪物精灵改显示名、新增 `data/npcs.json` + 探索图 NPC 对话（属 2.2 的 NPC 部分）。
+- **`codex.json`**：现为纯图鉴里程奖励（无世界观文案），无需移植。
 - **孤儿素材**：`image/role/fz/`（晨星）已无代码引用，等确认后清掉。
 - 阶段 4 联机化。
 
