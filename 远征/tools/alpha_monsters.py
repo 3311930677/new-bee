@@ -24,7 +24,11 @@ from slice_map_atlas import chroma_black, crop_to_content
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "image" / "generated_362_xajh" / "ready" / "monster"
-TARGET = 128          # 与既有 10 张 AI 怪物同规格
+if len(sys.argv) > 3:
+    OUT = OUT.parent / sys.argv[3]   # 第三个参数换输出目录（如 pet）
+TARGET = 128          # 与既有 10 张 AI 怪物同规格；宠物 D 类是 96×96，用第二个参数覆盖
+if len(sys.argv) > 2:
+    TARGET = int(sys.argv[2])
 WATERMARK_H = 0.09    # 底部 9% 与右下 45%×22% 一律清空（水印的常见落点）
 WATERMARK_W = 0.45
 
