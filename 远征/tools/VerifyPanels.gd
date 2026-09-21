@@ -40,9 +40,27 @@ func _click_ev() -> InputEventMouseButton:
 	return e
 
 
+## 面板换肤（1.4）不许改版式：九宫格 StyleBoxTexture 的**最小尺寸 = 四边切片之和**，
+## 小面板（信息条 / 小牌）套上大切片会被顶厚一截——这条断言就是防它。
+func _verify_panel_skin() -> void:
+	var small := G.parchment_box(300.0, 34.0, 8.0)
+	var ssb: StyleBox = small.get_theme_stylebox("panel")
+	_check(ssb.get_minimum_size().y <= 34.0,
+		"300×34 信息条的 stylebox 最小高度应 ≤ 34（实为 %.0f）" % ssb.get_minimum_size().y)
+	_check(ssb.get_minimum_size().x <= 300.0,
+		"300×34 信息条的 stylebox 最小宽度应 ≤ 300（实为 %.0f）" % ssb.get_minimum_size().x)
+	var big := G.parchment_box(440.0, 600.0, 16.0)
+	var bsb: StyleBox = big.get_theme_stylebox("panel")
+	_check(bsb.get_minimum_size().y <= 300.0,
+		"440×600 面板的切片不该吃掉一半高度（实为 %.0f）" % bsb.get_minimum_size().y)
+	small.queue_free()
+	big.queue_free()
+
+
 func _run() -> void:
 	await _verify_exchange()
 	await _verify_settings()
+	_verify_panel_skin()
 	if _fails == 0:
 		print("PANELS_OK all tests passed")
 	else:
