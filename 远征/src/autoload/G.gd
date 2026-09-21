@@ -3102,11 +3102,14 @@ func parchment_box(w := 400, h := 200, pad := 18.0) -> PanelContainer:
 	# 复刻版 1.4：九宫格位图优先（f3_panel_parchment）。**padding 与程序绘制版逐项一致**，
 	# 所以这是一次不改布局的换肤——各面板仍按原来的尺寸与内边距排版，只换皮。
 	# 缺图（headless 回归）则原样走下面的 StyleBoxFlat，不出现空白控件。
-	var art := res_tex(XA_PANEL_ART["parchment"])
+	# 小面板不上九宫格（回到程序绘制）：StyleBoxTexture 的**最小尺寸 = 四边切片之和**，
+	# 56px 切片会把 300×34 的信息条、132×34 的小牌顶厚一截——薄条/小牌本来就是"画"出来的。
+	# 口径：每轴都得放得下 2×切片 + 一点中央留白（≥240×160），否则走下面的 StyleBoxFlat。
+	var art := res_tex(XA_PANEL_ART["parchment"]) if (w >= 240.0 and h >= 160.0) else null
 	if art != null:
 		var tsb := StyleBoxTexture.new()
 		tsb.texture = art
-		tsb.set_texture_margin_all(72.0)
+		tsb.set_texture_margin_all(56.0)
 		tsb.content_margin_left = pad
 		tsb.content_margin_right = pad
 		tsb.content_margin_top = pad * 0.7
@@ -3178,6 +3181,9 @@ const XA_PLAQUE_ART := "f2_plaque"
 
 ## 九宫格面板（位图优先，回落 parchment_box）：512×512 底板，边缘 96px 拉伸、中央留白
 func mk_panel(w: float, h: float, dark := false, pad := 18.0) -> PanelContainer:
+	# 尺寸太小就交给 parchment_box（它会按同一条口径回落程序绘制）——切片四方之和不能超过面板
+	if w < 240.0 or h < 160.0:
+		return parchment_box(w, h, pad)
 	var art := res_tex(XA_PANEL_ART["wood" if dark else "parchment"])
 	if art == null:
 		return parchment_box(w, h, pad)
@@ -3185,7 +3191,7 @@ func mk_panel(w: float, h: float, dark := false, pad := 18.0) -> PanelContainer:
 	root.custom_minimum_size = Vector2(w, h)
 	var sb := StyleBoxTexture.new()
 	sb.texture = art
-	sb.set_texture_margin_all(96.0)
+	sb.set_texture_margin_all(56.0)
 	sb.content_margin_left = pad
 	sb.content_margin_right = pad
 	sb.content_margin_top = pad * 0.7
