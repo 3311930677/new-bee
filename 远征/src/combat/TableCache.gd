@@ -132,6 +132,24 @@ static func quests_config() -> Dictionary:
 	return v if v is Dictionary else {}
 
 
+## 探索图 NPC（data/npcs.json）：走近自动对话，可反复搭话
+static func npcs_config() -> Dictionary:
+	var v: Variant = _load("res://data/npcs.json")
+	return v if v is Dictionary else {}
+
+
+## 某个主题的 NPC 列表（无则空数组）
+static func theme_npcs(theme: String) -> Array:
+	var v: Variant = npcs_config().get("npcs", [])
+	if not (v is Array):
+		return []
+	var out: Array = []
+	for n in (v as Array):
+		if n is Dictionary and String((n as Dictionary).get("theme", "")) == theme:
+			out.append(n)
+	return out
+
+
 static func drops_config() -> Dictionary:
 	var v: Variant = _load("res://data/drops.json")
 	return v if v is Dictionary else {}

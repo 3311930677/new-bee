@@ -284,6 +284,29 @@ func _run() -> void:
 	rmap1.queue_free()
 	await get_tree().process_frame
 
+	# ---- G4. 探索图 NPC：走近搭话（Task 2.2 / data/npcs.json） ----
+	var pst := RunState.new()
+	pst.setup({"theme": "forest", "role_id": "zs", "level": 5, "seed": 13})
+	MapScene.pending_cfg = {"node": {"type": "normal", "layer": 1, "index": 0}, "run": pst}
+	var pnpcmap: MapScene = (load("res://src/explore/MapScene.tscn") as PackedScene).instantiate()
+	add_child(pnpcmap)
+	await get_tree().process_frame
+	_check(pnpcmap._npcs.size() >= 1, "森林图应至少配 1 位 NPC，实为 %d" % pnpcmap._npcs.size())
+	if pnpcmap._npcs.size() >= 1:
+		var npc: Node = pnpcmap._npcs[0]
+		_check(String(npc.get("kind")) == "npc", "NPC 物件的 kind 应为 npc")
+		_check(String(npc.get("npc_name")) != "", "NPC 应有名字（头顶绿字）")
+		_check((npc.get("lines") as Array).size() >= 1, "NPC 应至少一句台词")
+		pnpcmap.on_interactable(npc)
+		await get_tree().process_frame
+		_check(G.modal_count() == 1, "搭话应弹出对话浮层，实为 %d" % G.modal_count())
+		_check(float(npc.get("cd")) > 0.0, "搭话后应上冷却，否则站在旁边会反复弹")
+		while G.modal_count() > 0:
+			G.close_info_popup_by_id(int((G._modals[0] as Dictionary).get("id", -1)))
+		await get_tree().process_frame
+	pnpcmap.queue_free()
+	await get_tree().process_frame
+
 	# ---- H. 非战斗节点物件化（宝箱/事件/商店/篝火，§2.7） ----
 	# H1 宝箱：无怪有物件，靠近自动开启并入账
 	var cmap := await _spawn_map("chest", 1, "")

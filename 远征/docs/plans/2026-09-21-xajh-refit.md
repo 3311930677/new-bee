@@ -298,10 +298,19 @@ Get-ChildItem "d:\new bee\远征\assets_regan\refs\sprites" -Recurse -Directory 
 2. **id 改名延后**：`roles/monsters/pets` 的 id 与数值文案改属阶段 3，本轮一律不动，改用 `G.XA_ART` / `G.XA_ROLE_GRID` **映射层**接新素材——换画风与改 id 解耦，各自可单独回退。
 3. **只做「对得上号」的映射**：AI 只生成了 10 怪 / 4 宠，气质对不上的（如雪怪、狮鹫）暂不映射，继续用原素材，不硬凑。
 
+**第二轮追加（2026-09-22）**
+
+| 任务 | 状态 | 落点 |
+|---|---|---|
+| 2.2 NPC 对话 | ✅ | 新增 `data/npcs.json`（每主题 1 位，帕拉多诺/洛林线台词）+ `TableCache.theme_npcs()`；MapScene 新增 `_build_npcs()` 与 `npc` 交互类型：**头顶绿名签**、走近自动搭话、走统一详情弹层、**可反复谈**（`cd` 防连点，不像宝箱用一次就熄）；程序兜底画法=斗篷+提灯 |
+| 1.3/1.5 行走动画 | ✅ | 新增 `G.xa_walk_frames()`（A3 网格四向 × 5 帧）；**探索图与主城的角色**已切到 AI 素材，旧 `.tres` 仅作回落。两套素材单元尺寸不同（128×128 vs 128×200），缩放与脚底偏移**按实测人高折算**，换素材不会浮空 |
+| 3.2 怪物映射 | ✅（补） | `XA_ART` 补 `mon_traitor → b_bandit`（叛军）；AI 只出了 10 只怪，岩鹰等暂未分配 |
+
 **未做（下一轮）**
 
 - 1.4 收尾：其余面板逐个换 `mk_panel`（大面板才上九宫格；`TraitPicker` 这种 140px 宽卡片必须继续用程序绘制，否则九宫格边距会吃掉内容区）。
 - 1.5 收尾：主城建筑立面（H4）、H2/H3 地图图集切图与 Terrain 自动图块。
+- 战斗角色五态 sprite（idle/attack/cast/hit/death）仍是旧素材——AI 未出对应套图，等 A2 补齐再换（`BattleScene.ROLE_BATTLE_SHEET`）。
 - 2.5 坐骑/宠物换血（含探索机动加成）——与 3.x 的 id 改名一起做更省事。
 - **3.2 剩余**：`monsters.json` 按原版怪物精灵改显示名、新增 `data/npcs.json` + 探索图 NPC 对话（属 2.2 的 NPC 部分）。
 - **`codex.json`**：现为纯图鉴里程奖励（无世界观文案），无需移植。

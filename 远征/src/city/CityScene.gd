@@ -236,11 +236,22 @@ func _build_player() -> void:
 	_world.add_child(_player)
 
 	_player_anim = AnimatedSprite2D.new()
-	var frames_path: String = ROLE_FRAMES.get(G.selected_role, ROLE_FRAMES["zs"])
-	_player_anim.sprite_frames = load(frames_path)
-	# 与 MapScene 同一套标定：0.72 倍 + 上移 19.3px，让脚踩在碰撞盒下沿
-	_player_anim.scale = Vector2.ONE * 0.72
-	_player_anim.position = Vector2(0, -19.3)
+	# 复刻版：优先 AI 重生成的四向行走网格（A3），取不到才回落旧素材
+	var xa_frames := G.xa_walk_frames(G.selected_role)
+	if xa_frames != null:
+		_player_anim.sprite_frames = xa_frames
+	else:
+		var frames_path: String = ROLE_FRAMES.get(G.selected_role, ROLE_FRAMES["zs"])
+		_player_anim.sprite_frames = load(frames_path)
+	# 与 MapScene 同一套标定：0.72 倍 + 上移 19.3px，让脚踩在碰撞盒下沿。
+	# AI 网格单元是 128×200（人高约 100）而非 128×128（人高约 110），折算同上。
+	var anim_scale := 0.72
+	var foot_dy := 56.0
+	if xa_frames != null:
+		anim_scale = 0.72 * 110.0 / 100.0
+		foot_dy = 45.0
+	_player_anim.scale = Vector2.ONE * anim_scale
+	_player_anim.position = Vector2(0, -(foot_dy * anim_scale - 21.0))
 	_player_anim.animation = &"walk_down"
 	_player_anim.frame = 1
 	_player_anim.stop()
