@@ -26,7 +26,7 @@ func _build() -> void:
 	banner.position = Vector2(120, 30)
 	add_child(banner)
 
-	var panel := G.parchment_box(440, 620, 16.0)
+	var panel := G.parchment_box(440, 700, 16.0)
 	panel.position = Vector2(20, 96)
 	add_child(panel)
 	var content := Control.new()
@@ -34,7 +34,7 @@ func _build() -> void:
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.add_child(content)
 
-	_active_l = G.gold_label("", G.FS_SM, true, Color("a06020"), false)
+	_active_l = G.gold_label("", G.FS_SM, true, Color("5a4020"), false)
 	_active_l.position = Vector2(0, 0)
 	_active_l.custom_minimum_size = Vector2(CONTENT_W, 0)
 	content.add_child(_active_l)
@@ -44,7 +44,7 @@ func _build() -> void:
 	content.add_child(_grid)
 
 	var close_btn := G.gold_button("返 回", 130, 36, G.FS_MD)
-	close_btn.position = Vector2(CONTENT_W / 2.0 - 65, 556)
+	close_btn.position = Vector2(CONTENT_W / 2.0 - 65, 656)
 	close_btn.gui_input.connect(func(ev: InputEvent):
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 			closed.emit())
