@@ -174,7 +174,7 @@ func _build_profile(role: Dictionary) -> void:
 
 	var name_txt: String = G.player_name if not G.player_name.is_empty() \
 		else String(role.get("name", "旅人"))
-	var nl := G.serif_label(name_txt, G.FS_MD + 1, G.NAME_GREEN)
+	var nl := G.serif_label(name_txt, G.FS_MD + 1, Color("a8e0b0"))   # 暗底上提亮一档：暗玉绿看不清
 	nl.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	nl.position = Vector2(82, 20)
 	nl.custom_minimum_size = Vector2(160, 0)
