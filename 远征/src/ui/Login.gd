@@ -3,8 +3,6 @@ extends Control
 
 const BG_W := 971.0
 const BG_H := 1619.0
-const XA_BG_W := 768.0      # 复刻版标题背景（AI 重生成）
-const XA_BG_H := 1024.0
 const VIEW_W := 480.0
 const VIEW_H := 800.0
 
@@ -16,8 +14,8 @@ var _avatar_row: HBoxContainer = null
 var _avatar_dialog: FileDialog = null
 var _toast: Label = null
 
-const AVATAR_IDS := ["zs", "ls", "fs", "custom"]
-const AVATAR_NAMES := {"zs": "铁衣", "ls": "追风", "fs": "霜语", "custom": "自定义"}
+const AVATAR_IDS := ["zs", "ck", "fs", "fz", "custom"]
+const AVATAR_NAMES := {"zs": "破军", "ck": "穿杨", "fs": "霜语", "fz": "晨星", "custom": "自定义"}
 
 
 func _ready() -> void:
@@ -29,19 +27,12 @@ func _ready() -> void:
 # ---------- 背景 ----------
 func _build_background() -> void:
 	var tr := TextureRect.new()
-	# 复刻版标题背景（AI 重生成，Task 1.2）：768×1024 → 480×640，底部 160px 留给按钮区
-	var xa := G.res_tex("g_title_background")
-	if xa != null:
-		tr.texture = xa
-		tr.size = Vector2(VIEW_W, VIEW_W * XA_BG_H / XA_BG_W)
-		tr.position = Vector2(0, VIEW_H - tr.size.y)
-	else:
-		tr.texture = G.res_tex("bg_main") if G.res_tex("bg_main") != null \
-			else load("res://image/background/enter.png")  # 黄昏营地：出征前的整备时刻
-		tr.size = Vector2(VIEW_W, VIEW_W * BG_H / BG_W)
-		tr.position = Vector2(0, VIEW_H - tr.size.y)
+	tr.texture = G.res_tex("bg_main") if G.res_tex("bg_main") != null \
+		else load("res://image/background/enter.png")  # 黄昏营地：出征前的整备时刻
 	tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	tr.stretch_mode = TextureRect.STRETCH_SCALE
+	tr.size = Vector2(VIEW_W, VIEW_W * BG_H / BG_W)
+	tr.position = Vector2(0, VIEW_H - tr.size.y)
 	tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(tr)
 
@@ -50,7 +41,7 @@ func _build_background() -> void:
 
 
 func _build_banner() -> void:
-	var b := G.mk_plaque("登录", 200, 54)
+	var b := G.banner_box("登录", 200, 54)
 	b.set_anchors_preset(Control.PRESET_CENTER_TOP)
 	b.position = Vector2(-100, 46)
 	add_child(b)
@@ -67,7 +58,7 @@ func _build_banner() -> void:
 
 # ---------- 面板 ----------
 func _build_panel() -> void:
-	var panel := G.mk_panel(372.0, 430.0, false, 22.0)
+	var panel := G.parchment_box(372, 430, 22.0)
 	panel.position = Vector2(54, 150)
 	add_child(panel)
 
@@ -77,7 +68,7 @@ func _build_panel() -> void:
 
 	# 页面标题只在顶部木匾出现一次（"登录"）。面板里原来还有一行"账号登录"，
 	# 和木匾重复、还跟输入框抢视线——按"操作页不是海报"的原则去掉，让面板直接从说明开始。
-	var account_hint := G.gold_label("账号用于识别存档，本地保存，不联网", G.FS_XS, false, Color("5a4020"), false)
+	var account_hint := G.gold_label("账号用于识别存档，本地保存，不联网", G.FS_XS, false, Color("8a7350"), false)
 	box.add_child(account_hint)
 
 	var sep := ColorRect.new()
@@ -146,7 +137,7 @@ func _build_avatar_picker(box: VBoxContainer) -> void:
 	if not AVATAR_IDS.has(selected):
 		selected = "zs"
 	_select_avatar(selected)
-	_avatar_caption = G.gold_label("当前：%s ·「+」可上传本地图片" % String(AVATAR_NAMES.get(selected, "铁衣")),
+	_avatar_caption = G.gold_label("当前：%s ·「+」可上传本地图片" % String(AVATAR_NAMES.get(selected, "破军")),
 		G.FS_XS, false, Color("8a7350"), false)
 	box.add_child(_avatar_caption)
 

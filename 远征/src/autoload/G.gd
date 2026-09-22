@@ -2,13 +2,11 @@
 extends Node
 
 # ---------- 配色（模仿参考游戏：暖棕 + 羊皮纸 + 金） ----------
-# 2026-09-21 按原版实机录屏取色微调（复刻方案 Task 1.1）：整体更沉、更木，金更收敛。
-# 语义色 / 稀有度四档 / 按钮三档一律不动（工程规范保留）。
-const BG_DEEP := Color("2b2016")        # 深木底（原版深木）
-const BANNER := Color("4a3018")          # 棕色横幅（更沉）
-const PARCHMENT := Color("d8c8a0")       # 羊皮纸底（降饱和，贴近原版木牌纸面）
-const GOLD := Color("d9a94e")            # 描金（原版描金）
-const GOLD_BRIGHT := Color("e8c06a")     # 选中亮金（同步降亮）
+const BG_DEEP := Color("2a1f14")        # 深棕黑（选人底）
+const BANNER := Color("5a3a1e")          # 棕色横幅
+const PARCHMENT := Color("e8d5a3")       # 羊皮纸底
+const GOLD := Color("f0c060")            # 金字/金边
+const GOLD_BRIGHT := Color("ffd97a")     # 选中亮金
 const NAME_GREEN := Color("84c48c")      # 角色名（柔玉绿，非荧光绿）
 const LV_ORANGE := Color("f0a030")      # 等级橙
 const TEXT_DARK := Color("3a2a14")      # 羊皮纸上的深字
@@ -29,7 +27,7 @@ const RARITY_HUE := {
 const RARITY_NAME := {"white": "普通", "blue": "稀有", "purple": "史诗", "gold": "传说"}
 
 # ---------- 参考风（创建角色页）配色 ----------
-const WOOD := Color("5a3d20")            # 木框/顶栏棕（原版更沉的木色）
+const WOOD := Color("6b4a28")            # 木框/顶栏棕
 const WOOD_DARK := Color("4a3018")       # 木框暗部
 const GOLD_BTN := Color("e8b84a")        # 金色实心按钮
 const GOLD_BTN_EDGE := Color("8a6220")   # 金按钮描边
@@ -76,7 +74,7 @@ const ICON_MARK := 28.0           # 建筑/卡片角标图标
 # ---------- 共享状态 ----------
 var account := ""           # 登录账号（游客登录时为"游客"）
 var gender := "男"          # 玩家选择性别
-var selected_role := ""     # "zs" / "ls" / "fs"（复刻版三职业）
+var selected_role := ""     # "zs" / "ck" / "fs" / "fz"
 var avatar_id := ""         # 职业头像 id；为空时跟随当前职业
 var avatar_custom := ""     # 上传的自定义头像文件名（user://avatars/ 下）；空串=没上传过
 var avatar_use_custom := false   # 当前是否使用自定义头像（选职业头像后仍保留上传的图）
@@ -350,14 +348,8 @@ func _load_save() -> void:
 		for k in ["gold", "expedition", "soul", "honor"]:
 			wallet[k] = int((w as Dictionary).get(k, 0))
 	var rid := String(data.get("selected_role", ""))
-	if not rid.is_empty():
-		if get_role(rid).is_empty():
-			var mig := migrate_legacy_role(rid)   # 旧档（ck/fz）→ 现行职业
-			if mig != "":
-				rid = mig
-				legacy_role_migrated = String(data.get("selected_role", ""))
-		if not get_role(rid).is_empty():
-			selected_role = rid
+	if not rid.is_empty() and not get_role(rid).is_empty():
+		selected_role = rid
 	var acc := String(data.get("account", ""))
 	if not acc.is_empty():
 		account = acc
@@ -368,15 +360,8 @@ func _load_save() -> void:
 	if not gd.is_empty():
 		gender = gd
 	var aid := String(data.get("avatar_id", ""))
-	if not aid.is_empty():
-		if get_role(aid).is_empty():
-			var amig := migrate_legacy_role(aid)   # 头像也存的是职业 id，同样要换算
-			if amig != "":
-				aid = amig
-				if legacy_role_migrated == "":
-					legacy_role_migrated = String(data.get("avatar_id", ""))
-		if not get_role(aid).is_empty():
-			avatar_id = aid
+	if not aid.is_empty() and not get_role(aid).is_empty():
+		avatar_id = aid
 	# 读档可能在同一进程里被测试/导入流程再次调用，先失效缓存再验证文件，
 	# 否则上一轮的 null 缓存会让刚读回的自定义头像被误判成不存在。
 	avatar_custom = String(data.get("avatar_custom", ""))
@@ -715,7 +700,7 @@ func _sweep_plan(cfg: Dictionary) -> Array:
 	return plan
 
 
-## 世界进度文案：「枫林郊野」等
+## 世界进度文案：「苍绿林海」等
 func world_name(theme_id: String) -> String:
 	return String(TableCache.theme_config(theme_id).get("name", theme_id))
 
@@ -1496,7 +1481,7 @@ func equip_slot_cfg(slot_id: String) -> Dictionary:
 	return {}
 
 
-## 当前角色对应的武器槽（大剑→铁衣 / 长弓→追风 / 法杖→霜语）
+## 当前角色对应的武器槽（剑→破军/枪→穿杨/杖→霜语/锤→晨星）
 func equip_weapon_slot(role_id := "") -> String:
 	var rid := role_id if not role_id.is_empty() else selected_role
 	for s in equip_cfg().get("slots", []):
@@ -1791,38 +1776,6 @@ func mount_tier(mid: String) -> int:
 
 func mount_active() -> String:
 	return String((prog.get("mounts", {}) as Dictionary).get("active", ""))
-
-
-## 坐骑的**大地图**机动加成（mounts.json 各阶 explore 段）：疾行提速 + 明雷规避。
-## 与战斗加成同一个来源（当前骑乘的那只、当前阶），但作用在探索层——
-## 坐骑此前只在战斗中加数值，"换坐骑"在跑图时毫无手感差别。
-## 返回 {"sprint_pct", "stealth_pct"}，没骑乘就全 0。
-func mount_explore_bonus() -> Dictionary:
-	var out := {"sprint_pct": 0.0, "stealth_pct": 0.0}
-	var mid := mount_active()
-	var tier := mount_tier(mid)
-	if mid == "" or tier <= 0:
-		return out
-	var ex := mount_explore_at(mid, tier)
-	out["sprint_pct"] = float(ex.get("sprint_pct", 0.0))
-	out["stealth_pct"] = float(ex.get("stealth_pct", 0.0))
-	return out
-
-
-## 指定坐骑/阶级的跑图加成（坐骑面板要按"这一只、这一阶"显示，不能只看当前骑乘的那只）
-func mount_explore_at(mid: String, tier: int) -> Dictionary:
-	# 探索加成集中在 mounts.json 顶层 explore[mid][阶-1]（与战斗 bonus 分开两处：
-	# 一个管战斗内数值、一个管跑图手感，改哪边都不用碰另一边的数字）
-	if mid == "" or tier <= 0:
-		return {}
-	var all: Variant = TableCache.mounts_config().get("explore", {})
-	if not (all is Dictionary):
-		return {}
-	var arr: Variant = (all as Dictionary).get(mid, [])
-	if not (arr is Array) or tier > (arr as Array).size():
-		return {}
-	var ex: Variant = (arr as Array)[tier - 1]
-	return ex if ex is Dictionary else {}
 
 
 ## 购买 1 阶 / 升级 2 阶
@@ -2631,48 +2584,22 @@ func get_role(id: String) -> Dictionary:
 
 
 func role_dir(id: String) -> String:
-	# 素材目录映射：zs→zs / ls→ls / fs→fs（image/role/<id>/）
+	# 素材目录映射：zs→zs / ck→ck / fs→fs / fz→fz（image/role/<id>/）
 	return "res://image/role/%s/" % id
 
 
-## 职业立绘文件名（pojun/chuanyang/shuangyu）：此前 Login/GameHome 各抄一份，统一收到这里
-const ROLE_ART := {"zs": "pojun", "ls": "chuanyang", "fs": "shuangyu"}
+## 职业立绘文件名（pojun/chuanyang/shuangyu/chenxing）：此前 Login/GameHome 各抄一份，统一收到这里
+const ROLE_ART := {"zs": "pojun", "ck": "chuanyang", "fs": "shuangyu", "fz": "chenxing"}
 
 
 func role_art_name(id: String) -> String:
 	return String(ROLE_ART.get(id, id))
 
 
-## 职业头像贴图路径（未知 id 回落到铁衣，绝不返回空路径让调用方 load 失败）
+## 职业头像贴图路径（未知 id 回落到破军，绝不返回空路径让调用方 load 失败）
 func role_icon_path(id: String) -> String:
 	var rid := id if not get_role(id).is_empty() else "zs"
 	return role_dir(rid) + role_art_name(rid) + "_icon.png"
-
-
-# ---------- 复刻版：职业立绘 / 头像按「职业 × 性别」取 AI 重生成素材（Task 3.1） ----------
-# 附录 A 的 A1/A4：六套立绘与头像（战士/法师/猎手 × 男女）。取不到时回落旧素材，
-# 保证「性别只是画风差异，不影响任何数值与逻辑」。
-func xa_gender_suffix() -> String:
-	return "nv" if gender == "女" else "nan"
-
-
-## 立绘（A1，512×768）；没有对应 AI 素材返回 null
-func xa_portrait(role_id: String) -> Texture2D:
-	if not XA_ROLE_ART:
-		return null
-	return res_tex("a1_%s_%s_anchor" % [role_id, xa_gender_suffix()])
-
-
-## A2 战斗立绘（复刻版）：AI 只出了单帧，战斗五态由 BattleScene 以位移/缩放演出。
-func xa_combat_tex(role_id: String) -> Texture2D:
-	if not XA_ROLE_ART:
-		return null
-	return res_tex("a2_%s_%s_combat" % [role_id, xa_gender_suffix()])
-
-
-## 头像（A4，96×96）；没有对应 AI 素材返回 null
-func xa_avatar_tex(role_id: String) -> Texture2D:
-	return res_tex("a4_%s_%s_avatar" % [role_id, xa_gender_suffix()])
 
 
 # ================= 头像（登录页 / 主界面都可上传本地图片） =================
@@ -2789,10 +2716,7 @@ func _build_res_index() -> void:
 		return
 	_res_indexed = true
 	var batches := ["generated_001_100", "generated_101_200", "generated_201_333",
-		"generated_334_341", "generated_342_353",
-		# 笑傲江湖复刻：AI 重生成素材（assets_regen/batch0~5 的 ready 成品）
-		# 按 role/monster/mount/pet/fx/ui/bg/map 分类入库，按名字取用（G.res_tex）
-		"generated_362_xajh"]
+		"generated_334_341", "generated_342_353"]
 	# 先收 ready/（成品：已裁到设计尺寸、alpha 已硬化），再拿 source/ 母稿补位。
 	# 顺序不能反——source 是 970~2170px 的原始大图，既吃显存，也会把未受容器约束的
 	# TextureRect 的最小尺寸钳到原图大小（曾导致召唤横幅 2172×724 铺满面板压住文案）
@@ -2840,14 +2764,6 @@ func res_path(res_name: String) -> String:
 ## 带一层自己的缓存：面板反复开关时省掉「拼路径 + 查索引 + load() 查引擎缓存」的来回
 ## （主城 8 个 NPC、图鉴 8 张卡之类，一次开面板就是几十次查询）
 var _tex_cache := {}
-
-## 预热一批素材进 res_tex 的缓存（LoadScreen 调用）。
-## **必须留引用**：只把路径丢进预热队列的话，线程加载完没人持有，资源会被回收，
-## 进场景时照样重新解码——实测城内 10 个 NPC 的行头在切场景那一帧花了 200ms。
-func warm_res(names: Array) -> void:
-	for n in names:
-		res_tex(String(n))
-
 
 func res_tex(res_name: String) -> Texture2D:
 	if _tex_cache.has(res_name):
@@ -3109,23 +3025,6 @@ func banner_box(text: String, w := 260, h := 52, font_size := FS_BIG) -> PanelCo
 func parchment_box(w := 400, h := 200, pad := 18.0) -> PanelContainer:
 	var root := PanelContainer.new()
 	root.custom_minimum_size = Vector2(w, h)
-	# 复刻版 1.4：九宫格位图优先（f3_panel_parchment）。**padding 与程序绘制版逐项一致**，
-	# 所以这是一次不改布局的换肤——各面板仍按原来的尺寸与内边距排版，只换皮。
-	# 缺图（headless 回归）则原样走下面的 StyleBoxFlat，不出现空白控件。
-	# 小面板不上九宫格（回到程序绘制）：StyleBoxTexture 的**最小尺寸 = 四边切片之和**，
-	# 56px 切片会把 300×34 的信息条、132×34 的小牌顶厚一截——薄条/小牌本来就是"画"出来的。
-	# 口径：每轴都得放得下 2×切片 + 一点中央留白（≥240×160），否则走下面的 StyleBoxFlat。
-	var art := res_tex(XA_PANEL_ART["parchment"]) if (w >= 240.0 and h >= 160.0) else null
-	if art != null:
-		var tsb := StyleBoxTexture.new()
-		tsb.texture = art
-		tsb.set_texture_margin_all(56.0)
-		tsb.content_margin_left = pad
-		tsb.content_margin_right = pad
-		tsb.content_margin_top = pad * 0.7
-		tsb.content_margin_bottom = pad * 0.6
-		root.add_theme_stylebox_override("panel", tsb)
-		return root
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = PARCHMENT
 	# 四角微差，避免机器感对称
@@ -3142,188 +3041,6 @@ func parchment_box(w := 400, h := 200, pad := 18.0) -> PanelContainer:
 	sb.content_margin_bottom = pad * 0.6
 	root.add_theme_stylebox_override("panel", sb)
 	return root
-
-
-# ---------- 复刻版素材映射（AI 重生成产物 → 现行 id，Task 1.5） ----------
-# 现行 id 体系（roles/monsters/pets 的改名是阶段 3.1/3.2 的事）**保持不动**，
-# 只在取图时优先用 AI 重生成的素材：换画风与改数值文案解耦，任何一步都能单独回退。
-# 只登记"对得上号"的（原版精灵气质接近），对不上的继续用原素材——宁缺毋滥，别硬凑。
-const XA_ART := {
-	# 怪物（asset-regen B 类 10 张）：id → AI 素材名
-	"mon_wolf": "b_monster_evil_wolf",
-	"mon_skeleton": "b_monster_skeleton_swordsman",
-	"mon_goblin": "b_bandit",
-	"mon_boss_forest": "b_monster_black_wind_chief",
-	"mon_icebat": "b_monster_blood_bat",
-	"mon_lavahound": "b_monster_fire_salamander",
-	"mon_siege": "b_monster_puppet_guard",
-	# 1.4 巡检删掉的三条**名实不符**映射：蜘蛛→毒蟒、树精→泥怪（打起来是另一只怪），
-	# 以及 mon_magmagolem 与 mon_siege 共用同一张傀儡图（两只不同的怪长得一模一样）。
-	# 口径：对不上号就用原素材——混画风是观感问题，长错样子是内容错误，后者更贵。
-	# 宠物（D 类 4 张）
-	"pet_foxfire": "d_pet_fire_fox",
-	"pet_thunderhawk": "d_pet_thunder_sparrow",
-	"pet_rockturtle": "d_pet_turtle_chancellor",
-	"pet_frostwolf": "d_pet_snow_mink",
-}
-
-
-## 取图入口（复刻版）：先查 XA_ART 映射，映射目标缺图时继续回落原名——任何一步都不会开天窗
-func art(res_name: String) -> Texture2D:
-	var mapped := String(XA_ART.get(res_name, ""))
-	if mapped != "":
-		var t := res_tex(mapped)
-		if t != null:
-			return t
-	return res_tex(res_name)
-
-
-# ---------- 复刻版位图控件（笑傲江湖·Task 1.4） ----------
-# 素材来自 AI 重生成管线（image/generated_362_xajh/ready/ui/），按名字经 res_tex 取用。
-# 铁律：**位图缺失一律回落到既有程序绘制**——资产管线没跑完时游戏必须照常可玩，
-# headless 回归里拿不到纹理，绝不允许出现空白控件。
-const XA_PANEL_ART := {"parchment": "f3_panel_parchment", "wood": "f3_panel_wood"}
-const XA_BUTTON_ART := {"normal": "f1_button_normal", "hover": "f1_button_hover",
-	"pressed": "f1_button_pressed", "disabled": "f1_button_disabled"}
-const XA_PLAQUE_ART := "f2_plaque"
-
-
-## 九宫格面板（位图优先，回落 parchment_box）：512×512 底板，边缘 96px 拉伸、中央留白
-func mk_panel(w: float, h: float, dark := false, pad := 18.0) -> PanelContainer:
-	# 尺寸太小就交给 parchment_box（它会按同一条口径回落程序绘制）——切片四方之和不能超过面板
-	if w < 240.0 or h < 160.0:
-		return parchment_box(w, h, pad)
-	var art := res_tex(XA_PANEL_ART["wood" if dark else "parchment"])
-	if art == null:
-		return parchment_box(w, h, pad)
-	var root := PanelContainer.new()
-	root.custom_minimum_size = Vector2(w, h)
-	var sb := StyleBoxTexture.new()
-	sb.texture = art
-	sb.set_texture_margin_all(56.0)
-	sb.content_margin_left = pad
-	sb.content_margin_right = pad
-	sb.content_margin_top = pad * 0.7
-	sb.content_margin_bottom = pad * 0.6
-	root.add_theme_stylebox_override("panel", sb)
-	return root
-
-
-## 木牌匾标题（位图优先，回落 banner_box）
-func mk_plaque(text: String, w := 260.0, h := 52.0, font_size := FS_BIG) -> Control:
-	var art := res_tex(XA_PLAQUE_ART)
-	if art == null:
-		return banner_box(text, w, h, font_size)
-	var root := PanelContainer.new()
-	root.custom_minimum_size = Vector2(w, h)
-	var sb := StyleBoxTexture.new()
-	sb.texture = art
-	sb.set_texture_margin_all(28.0)
-	sb.content_margin_left = 24.0
-	sb.content_margin_right = 24.0
-	root.add_theme_stylebox_override("panel", sb)
-	var l := serif_label(_banner_text(text), font_size, GOLD_BRIGHT)
-	l.add_theme_font_override("font", spaced_font(maxi(1, font_size / 10), true, true))
-	root.add_child(l)
-	return root
-
-
-## 横幅木按钮（位图四态，回落 gold_button）：常态/悬停/按下/禁用
-func mk_wood_button(text: String, w := 0.0, h := 42.0, font_size := FS_MD) -> Control:
-	var tex_normal := res_tex(XA_BUTTON_ART["normal"])
-	if tex_normal == null:
-		return gold_button(text, w, h, font_size)
-	var root := PanelContainer.new()
-	root.custom_minimum_size = Vector2(w if w > 0.0 else 0.0, h)
-	var sb := StyleBoxTexture.new()
-	sb.texture = tex_normal
-	sb.set_texture_margin_all(24.0)
-	sb.content_margin_left = 18.0
-	sb.content_margin_right = 18.0
-	root.add_theme_stylebox_override("panel", sb)
-	root.add_child(gold_label(_button_text(text), font_size, true, TEXT_DARK, false))
-	root.mouse_filter = Control.MOUSE_FILTER_STOP
-	root.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	root.mouse_entered.connect(func():
-		var t := res_tex(XA_BUTTON_ART["hover"])
-		if t != null:
-			sb.texture = t)
-	root.mouse_exited.connect(func(): sb.texture = tex_normal)
-	_bind_press_feedback(root)
-	return root
-
-
-## 复刻版角色素材映射（Task 1.3）：现行 4 职业 → AI 重生成行走网格（只有 zs/fs/ls 三套）
-## 总开关（2026-09-22）：AI 人物与原版画风割裂、观感违和，先整体退回**原版人物素材**——
-## 怪物/宠物/坐骑/UI 的 AI 素材不受影响。要再启用改回 true 即可。
-const XA_ROLE_ART := false
-const XA_ROLE_GRID := {"zs": "a3_zs_walk_grid", "ls": "a3_ls_walk_grid",
-	"fs": "a3_fs_walk_grid"}
-
-
-## 旧存档兼容（Task 3.4）：三职业改造把 穿杨(ck)/晨星(fz) 换成了 猎手(ls)。
-## 老档里的 selected_role / avatar_id 若还是旧 id，会指向不存在的职业——不换算就会读到空角色。
-const XA_LEGACY_ROLE := {"ck": "ls", "fz": "fs"}
-var legacy_role_migrated := ""   # 发生换算时记下旧 id（主界面据此提示一次）
-
-
-## 旧职业 id → 现行 id（无换算返回空串）
-func migrate_legacy_role(id: String) -> String:
-	var to := String(XA_LEGACY_ROLE.get(id, ""))
-	if to == "" or get_role(to).is_empty():
-		return ""
-	return to
-
-
-## 用 AI 行走网格的第 1 行（朝下 5 帧）拼待机动画；拿不到网格返回 null（调用方回落旧图）。
-## 网格是 5 列 × 4 行：列=帧、行=朝向（下/左/右/上），与 A3 提示词的排版一致。
-func xa_idle_frames(role_id: String, fps := 6.0) -> SpriteFrames:
-	if not XA_ROLE_ART:
-		return null
-	var name := String(XA_ROLE_GRID.get(role_id, ""))
-	var tex := res_tex(name) if name != "" else null
-	if tex == null:
-		return null
-	var cw := float(tex.get_width()) / 5.0
-	var ch := float(tex.get_height()) / 4.0
-	var frames := SpriteFrames.new()
-	frames.remove_animation(&"default")
-	frames.add_animation(&"idle")
-	frames.set_animation_speed(&"idle", fps)
-	frames.set_animation_loop(&"idle", true)
-	for c in 5:
-		var at := AtlasTexture.new()
-		at.atlas = tex
-		at.region = Rect2(float(c) * cw, 0.0, cw, ch)
-		frames.add_frame(&"idle", at)
-	return frames
-
-
-## 四方向行走帧（A3 网格：列=帧、行=下/左/右/上）。拿不到网格返回 null，
-## 调用方回落到旧 .tres——探索图与主城的角色现在都是 AI 重生成素材了。
-func xa_walk_frames(role_id: String, fps := 8.0) -> SpriteFrames:
-	if not XA_ROLE_ART:
-		return null
-	var name := String(XA_ROLE_GRID.get(role_id, ""))
-	var tex := res_tex(name) if name != "" else null
-	if tex == null:
-		return null
-	var cw := float(tex.get_width()) / 5.0
-	var ch := float(tex.get_height()) / 4.0
-	var frames := SpriteFrames.new()
-	frames.remove_animation(&"default")
-	var dirs := ["walk_down", "walk_left", "walk_right", "walk_up"]
-	for r in dirs.size():
-		var anim := StringName(dirs[r])
-		frames.add_animation(anim)
-		frames.set_animation_speed(anim, fps)
-		frames.set_animation_loop(anim, true)
-		for c in 5:
-			var at := AtlasTexture.new()
-			at.atlas = tex
-			at.region = Rect2(float(c) * cw, float(r) * ch, cw, ch)
-			frames.add_frame(anim, at)
-	return frames
 
 
 ## 按钮文案规范化：调用处手打的「返 回 / 兑 换」式空格统一在这里收掉。同类按钮的字距

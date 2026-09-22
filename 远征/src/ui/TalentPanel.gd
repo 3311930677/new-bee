@@ -53,8 +53,8 @@ func _build() -> void:
 	panel.add_child(content)
 
 	# 顶行：剩余点数
-	_points_l = G.gold_label("", G.FS_MD, true, Color("5a4020"), false)
-	_points_l.position = Vector2(36, 8)   # 上边框带占 56px：点数行别压进金框
+	_points_l = G.gold_label("", G.FS_MD, true, Color("a06020"), false)
+	_points_l.position = Vector2(0, 0)
 	_points_l.custom_minimum_size = Vector2(CONTENT_W, 0)
 	content.add_child(_points_l)
 
@@ -69,7 +69,7 @@ func _build() -> void:
 
 	# 底部信息行（点击节点后显示详情）
 	_info_l = G.text_label("点击节点投入天赋点", G.FS_XS, Color("6a4a1e"))
-	_info_l.position = Vector2(36, 494)
+	_info_l.position = Vector2(0, 544)
 	_info_l.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_info_l.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
 	_info_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -78,7 +78,7 @@ func _build() -> void:
 	# 返回按钮走 BTN_S 档（120×38），字号 FS_SM——与全项目次级按钮同一规格，
 	# 原来写死 130×36 + FS_MD，既不在档位上，字也比同类按钮大一号
 	var close_btn := G.ghost_button("返回", G.BTN_S.x, G.BTN_S.y, G.FS_SM)
-	close_btn.position = Vector2((CONTENT_W - G.BTN_S.x) * 0.5, 520)   # 上移：别被下边框裁掉半截
+	close_btn.position = Vector2((CONTENT_W - G.BTN_S.x) * 0.5, 572)
 	close_btn.gui_input.connect(func(ev: InputEvent):
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 			closed.emit())

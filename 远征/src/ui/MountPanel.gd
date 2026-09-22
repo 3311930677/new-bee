@@ -26,7 +26,7 @@ func _build() -> void:
 	banner.position = Vector2(120, 30)
 	add_child(banner)
 
-	var panel := G.parchment_box(440, 700, 16.0)
+	var panel := G.parchment_box(440, 620, 16.0)
 	panel.position = Vector2(20, 96)
 	add_child(panel)
 	var content := Control.new()
@@ -34,7 +34,7 @@ func _build() -> void:
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.add_child(content)
 
-	_active_l = G.gold_label("", G.FS_SM, true, Color("5a4020"), false)
+	_active_l = G.gold_label("", G.FS_SM, true, Color("a06020"), false)
 	_active_l.position = Vector2(0, 0)
 	_active_l.custom_minimum_size = Vector2(CONTENT_W, 0)
 	content.add_child(_active_l)
@@ -44,7 +44,7 @@ func _build() -> void:
 	content.add_child(_grid)
 
 	var close_btn := G.gold_button("返 回", 130, 36, G.FS_MD)
-	close_btn.position = Vector2(CONTENT_W / 2.0 - 65, 656)
+	close_btn.position = Vector2(CONTENT_W / 2.0 - 65, 556)
 	close_btn.gui_input.connect(func(ev: InputEvent):
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 			closed.emit())
@@ -114,8 +114,7 @@ func _mount_card(m: Dictionary) -> Control:
 	var show_tier := mini(tier, tiers.size() - 1)
 	var tinfo := tiers[show_tier] as Dictionary
 	var bonus: Dictionary = tinfo.get("bonus", {})
-	var bl := G.text_label("%s：%s" % [String(tinfo.get("name", "")),
-			_bonus_text(bonus, mid, show_tier + 1)],
+	var bl := G.text_label("%s：%s" % [String(tinfo.get("name", "")), _bonus_text(bonus)],
 		G.FS_XS, Color("7a5a2e"))
 	bl.position = Vector2(68, 34)
 	bl.custom_minimum_size = Vector2(122, 40)
@@ -160,18 +159,11 @@ func _mount_card(m: Dictionary) -> Control:
 	return root
 
 
-func _bonus_text(bonus: Dictionary, mid := "", tier := 0) -> String:
-	var names := {"atk_pct": "攻击", "def_pct": "防御", "maxhp_pct": "生命", "spd_pct": "速度",
-		"crit_add": "暴击", "sprint_pct": "疾行", "stealth_pct": "明雷"}
+func _bonus_text(bonus: Dictionary) -> String:
+	var names := {"atk_pct": "攻击", "def_pct": "防御", "maxhp_pct": "生命", "spd_pct": "速度", "crit_add": "暴击"}
 	var parts := PackedStringArray()
 	for k in bonus.keys():
 		parts.append("%s+%d%%" % [String(names.get(String(k), String(k))), roundi(float(bonus[k]) * 100.0)])
-	# 跑图加成也写在这里（1.4 巡检：玩家在坐骑面板上做决定，看不到"跑图手感"等于没做）
-	if mid != "" and tier > 0:
-		for k2 in G.mount_explore_at(mid, tier).keys():
-			var v := float(G.mount_explore_at(mid, tier)[k2])
-			if v > 0.0:
-				parts.append("%s+%d%%" % [String(names.get(String(k2), String(k2))), roundi(v * 100.0)])
 	return " ".join(parts)
 
 

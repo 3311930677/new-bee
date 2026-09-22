@@ -153,10 +153,7 @@ func _refresh_role_art() -> void:
 	if _role_art == null:
 		return
 	var rid := String((G.roles[_role_idx] as Dictionary).get("id", ""))
-	# 复刻版：优先 AI 重生成的「职业×性别」立绘（A1），取不到才回落旧素材（Task 1.3）
-	var tex: Texture2D = G.xa_portrait(rid)
-	if tex == null:
-		tex = G.res_tex("role_%s_art" % rid)
+	var tex: Texture2D = G.res_tex("role_%s_art" % rid)
 	if tex == null:
 		tex = G.res_tex("role_%s" % rid)
 	_role_art.texture = tex
@@ -248,8 +245,12 @@ func _build_frames(role_id: String) -> SpriteFrames:
 
 
 func _role_name(id: String) -> String:
-	# 复刻版三职业：老角色（ck/fz）统一走 G.ROLE_ART，改名后不用再各处抄一份
-	return G.role_art_name(id)
+	match id:
+		"zs": return "pojun"
+		"ck": return "chuanyang"
+		"fs": return "shuangyu"
+		"fz": return "chenxing"
+	return id
 
 
 # ---------- 羊皮纸说明面板 ----------
@@ -266,9 +267,9 @@ func _build_info_panel() -> void:
 	title_row.add_theme_constant_override("separation", 10)
 	box.add_child(title_row)
 
-	var rname := G.serif_label("铁衣", G.FS_LG, G.BANNER)
+	var rname := G.serif_label("破军", G.FS_LG, G.BANNER)
 	title_row.add_child(rname)
-	var job := G.gold_label("战士 · 环首大刀", G.FS_SM, false, Color("7a5a2e"), false)
+	var job := G.gold_label("战士 · 大剑", G.FS_SM, false, Color("7a5a2e"), false)
 	job.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 	title_row.add_child(job)
 

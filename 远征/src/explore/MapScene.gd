@@ -13,10 +13,11 @@ static var pending_cfg: Dictionary = {}
 
 const VIEW_W := 480.0
 const VIEW_H := 800.0
-const ROLE_FRAMES := {  # 四方向行走帧（BattleScene 同款复用）；拿不到时回落旧素材
+const ROLE_FRAMES := {  # 四方向行走帧（BattleScene 同款复用）
 	"zs": ["res://image/role/zs/pojun_walk_frames.tres", "pojun"],
-	"ls": ["res://image/role/ls/chuanyang_walk_frames.tres", "chuanyang"],
+	"ck": ["res://image/role/ck/chuanyang_walk_frames.tres", "chuanyang"],
 	"fs": ["res://image/role/fs/shuangyu_walk_frames.tres", "shuangyu"],
+	"fz": ["res://image/role/fz/chenxing_walk_frames.tres", "chenxing"],
 }
 const MON_COLOR := {
 	"normal": Color("5f7186"), "elite": Color("7a4a9a"), "boss": Color("8a2f2f"),
@@ -70,7 +71,6 @@ var _theme_cfg: Dictionary = {}
 var _pickups: Array[_Pickup] = []
 var _spots: Array[_Spot] = []          # 兴趣点（碑灵祭坛 / 矿脉）
 var _altar_ui: Control = null          # 祭坛浮层
-var _npcs: Array = []                  # 图上的 NPC（走近搭话，可反复）
 ## 战后三选一：精英/首领多给几次（B3），一次选完接着弹下一次
 var _pending_trait_picks := 0
 var _last_battle_tier := ""
@@ -91,8 +91,6 @@ var _compass: _Compass = null        # 目标罗盘（含距离，点击开始/�
 var _sprint_btn: Control = null      # 疾行开关
 var _big_map: Control = null         # 大地图浮层（含图例与返回按钮）
 var _sprint := false
-## 坐骑的跑图机动加成（G.mount_explore_bonus()）：疾行提速 + 明雷规避
-var _explore: Dictionary = {}
 var _auto_walk := false
 var _auto_time := 0.0                # 自动前往累计时长（超时自停，防止绕过点卡死）
 var _auto_stuck := 0.0
@@ -112,7 +110,6 @@ func _ready() -> void:
 	if st == null:
 		push_error("MapScene 缺少 run 状态")
 		return
-	_explore = G.mount_explore_bonus()
 	_map_cfg = TableCache.maps_config().duplicate(true)
 	_theme_cfg = TableCache.theme_config(st.theme)
 	# 世界主题规则（C 批）：揭示半径这条不属于战斗 tick，只能在大地图侧按主题覆盖。
@@ -136,21 +133,6 @@ func _ready() -> void:
 
 
 # ================= 构建 =================
-## 地图素材取图（复刻版 Task 1.5）：先问 AI 批次目录（`G.res_tex` 按名索引），
-## 命中就用新画风，否则回落 asset_dir 里的旧素材——换画风与改表解耦，单张能单独回退。
-func _map_tex(name: String) -> Texture2D:
-	if name == "":
-		return null
-	var t := G.res_tex(name)
-	if t != null:
-		return t
-	# 先 exists 再 load：表里写错一个名字不该刷一屏 load 失败，返回 null 让调用方兜底
-	var path := "%s/%s.png" % [_map_asset_dir, name]
-	if not ResourceLoader.exists(path):
-		return null
-	return load(path) as Texture2D
-
-
 func _build_ground() -> void:
 	# 地面层：TileMapLayer 程序构建（主题 3 种 tile 加权平铺，无碰撞）
 	var tl := TileMapLayer.new()
@@ -161,7 +143,7 @@ func _build_ground() -> void:
 	var weights := [0.6, 0.2, 0.2]
 	for i in mini(3, tiles.size()):
 		var src := TileSetAtlasSource.new()
-		src.texture = _map_tex(String(tiles[i]))
+		src.texture = load("%s/%s.png" % [asset_dir, String(tiles[i])])
 		src.texture_region_size = Vector2i(48, 48)
 		src.create_tile(Vector2i.ZERO)
 		ts.add_source(src, i)
@@ -189,7 +171,7 @@ func _build_ground_detail(cols: int, rows: int) -> void:
 	var path := _path_cells(cols, rows)
 	var road: Array = []  # 路面格中心：主题无 4×4 套件时改用程序绘制的踩实土路
 	if sheet != "":
-		var tex: Texture2D = _map_tex(sheet)
+		var tex: Texture2D = load("%s/%s.png" % [asset_dir, sheet])
 		if tex != null:
 			var tl := TileMapLayer.new()
 			var ts := TileSet.new()
@@ -268,7 +250,6 @@ func _build_world() -> void:
 	_build_portal(map_w)
 	_build_player(map_w, map_h)
 	_build_monsters(map_w, map_h)
-	_build_npcs(map_w, map_h)    # 图上的 NPC：走近搭话（Task 2.2）
 	_build_pickups(cols, rows)   # 散落拾取物：路上有微反馈（轮次 16）
 	_build_spots(cols, rows)     # 兴趣点：祭坛（花金重摇祝福）/ 矿脉（材料）（轮次 17）
 	_restore_node_state()        # 恢复本节点进度：打过的不复活、不重发奖励（P0-1）
@@ -293,7 +274,7 @@ func _build_decos(cols: int, rows: int) -> void:
 			if pos.distance_to(spawn) < 110.0 or pos.y < 200.0:
 				continue
 			var deco := _Deco.new()
-			var tex: Texture2D = _map_tex(String(decos[_rng.randi_range(0, decos.size() - 1)]))
+			var tex: Texture2D = load("%s/%s.png" % [asset_dir, String(decos[_rng.randi_range(0, decos.size() - 1)])])
 			deco.setup(tex, _rng.randf_range(0.85, 1.18))
 			deco.position = pos
 			_world.add_child(deco)
@@ -315,24 +296,12 @@ func _build_player(map_w: float, map_h: float) -> void:
 	_world.add_child(_player)
 
 	_player_anim = AnimatedSprite2D.new()
-	# 复刻版：优先 AI 重生成的行走网格（A3，四向 × 5 帧），取不到才回落旧素材
-	var xa_frames := G.xa_walk_frames(st.role_id)
-	if xa_frames != null:
-		_player_anim.sprite_frames = xa_frames
-	else:
-		var frames_path := String(ROLE_FRAMES.get(st.role_id, ROLE_FRAMES["zs"])[0])
-		_player_anim.sprite_frames = load(frames_path)
+	var frames_path := String(ROLE_FRAMES.get(st.role_id, ROLE_FRAMES["zs"])[0])
+	_player_anim.sprite_frames = load(frames_path)
 	# 角色约占 128×128 帧内 y10~120（110px 高）。0.72 再叠 1.25 倍镜头 ⇒ 屏幕上约 99px＝两格；
-	# 帧中心在 y=64，脚底 y=120 ⇒ 局部 +56×0.72＝40.3，故上移 19.3px 让脚踩在碰撞盒下沿（y=21）。
-	# AI 网格单元是 128×200、人高约 100：缩放按「屏幕上的人一样高」折算，脚底偏移同理折算，
-	# 否则一换素材人就浮起来（两套素材的单元尺寸不同是硬差异，不能共用一个写死的数）。
-	var anim_scale := 0.72
-	var foot_dy := 56.0
-	if xa_frames != null:
-		anim_scale = 0.72 * 110.0 / 100.0
-		foot_dy = 45.0
-	_player_anim.scale = Vector2.ONE * anim_scale
-	_player_anim.position = Vector2(0, -(foot_dy * anim_scale - 21.0))
+	# 帧中心在 y=64，脚底 y=120 ⇒ 局部 +56×0.72＝40.3，故上移 19.3px 让脚踩在碰撞盒下沿（y=21）
+	_player_anim.scale = Vector2.ONE * 0.72
+	_player_anim.position = Vector2(0, -19.3)
 	_player_anim.animation = &"walk_down"
 	_player_anim.frame = 1 # neutral passing pose for the initial idle state
 	_player_anim.stop()
@@ -356,27 +325,6 @@ func _build_player(map_w: float, map_h: float) -> void:
 	cam.enabled = true
 	_player.add_child(cam)
 	cam.make_current()
-
-
-## 探索图 NPC（data/npcs.json，Task 2.2）：每主题一位，位置取地图比例。
-## 走近自动搭话，可反复谈（靠 cd 防连点，不像宝箱那样「用一次就熄」）。
-func _build_npcs(map_w: float, map_h: float) -> void:
-	for row in TableCache.theme_npcs(st.theme):
-		var d := row as Dictionary
-		var p: Array = d.get("pos", [0.5, 0.3])
-		if p.size() < 2:
-			continue
-		var it := _Interactable.new()
-		it.kind = "npc"
-		it.npc_name = String(d.get("name", "路人"))
-		it.npc_title = String(d.get("title", ""))
-		var ls: Variant = d.get("lines", [])
-		it.lines = ls if ls is Array else []
-		it.position = Vector2(map_w * float(p[0]), map_h * float(p[1]))
-		it.map_ref = self
-		it.cd = 2.5   # 出生点附近就落位时，先给一段冷静期，别一进场就被拦下说话
-		_world.add_child(it)
-		_npcs.append(it)
 
 
 func _build_monsters(map_w: float, map_h: float) -> void:
@@ -676,25 +624,9 @@ func _on_trait_picked(tid: String) -> void:
 		_next_trait_pick()
 
 
-## 与 NPC 搭话：走统一详情弹层（模态栈会接管 ESC 与归属，点一下即关）。
-## 第一行是身份（如「洛林残军」），其余是台词——玩家一眼看清"这是谁、他说了什么"。
-func _talk_npc(it: _Interactable) -> void:
-	Audio.sfx("ui_open")
-	var body: Array = []
-	if it.npc_title != "":
-		body.append("—— %s ——" % it.npc_title)
-	body.append_array(it.lines)
-	G.show_info_popup(self, it.npc_name, body, self)
-
-
 # ================= 非战斗节点交互（§2.7 物件化） =================
 func on_interactable(it: _Interactable) -> void:
 	if _map_done or _battle != null or _picker != null or _remover != null:
-		return
-	if it.kind == "npc":
-		# NPC 不像宝箱那样一次性：只上冷却，走开再回来还能再聊
-		it.cd = 1.8
-		_talk_npc(it)
 		return
 	it.used = true
 	match it.kind:
@@ -920,7 +852,7 @@ func _physics_process(delta: float) -> void:
 		dir = _auto_dir(delta)
 	var speed := TableCache.map_player_speed()
 	if _sprint:
-		speed *= float(_map_cfg.get("sprint_mult", 1.6)) * (1.0 + float(_explore.get("sprint_pct", 0.0)))
+		speed *= float(_map_cfg.get("sprint_mult", 1.6))
 	_prev_pos = _player.position
 	_player.velocity = dir * speed
 	_player.move_and_slide()
@@ -1370,10 +1302,7 @@ func _toggle_sprint() -> void:
 	if _sprint_btn != null:
 		var l := _sprint_btn.get_child(0) as Label
 		if l != null:
-			# 坐骑的疾行加成写在按钮上：换坐骑后跑图变快，玩家得看得见原因
-			var sp := float(_explore.get("sprint_pct", 0.0))
-			var tag := " · 开 +%d%%" % int(sp * 100.0) if sp > 0.0 else " · 开"
-			l.text = "疾行" + tag if _sprint else "疾行 · 关"
+			l.text = "疾行 · 开" if _sprint else "疾行 · 关"
 	Audio.sfx("ui_click")
 
 
@@ -1773,11 +1702,6 @@ class _GroundWear extends Node2D:
 
 ## 散落拾取物（魂晶 / 钱袋）：走过去自动入袋，给"空跑的那段路"一点微反馈
 class _Pickup extends Node2D:
-	## 程序绘制的物件提亮（复刻版）：这些剪影是给旧地图（暗底）配的色号，
-	## 换成 AI 新地面后原封不动会读成一块黑斑——统一在 _ready 里乘一个亮度。
-	func _ready() -> void:
-		modulate = Color(1.42, 1.42, 1.42)
-
 	var idx := 0              # 稳定序号（进度表按它记「已拾取」，P0-1）
 	var kind := "coin"        # coin / soul（只影响画法与提示色调）
 	var map_ref: MapScene = null
@@ -1821,9 +1745,6 @@ class _Pickup extends Node2D:
 ## 兴趣点（碑灵祭坛 / 矿脉）：走近触发一次交互。与拾取物的差别是"要不要做"——
 ## 祭坛弹选择框（花金重摇祝福），矿脉白拿材料。用掉即熄，不重复打扰。
 class _Spot extends Node2D:
-	func _ready() -> void:
-		modulate = Color(1.42, 1.42, 1.42)   # 同 _Pickup：新地面下的黑斑问题
-
 	var idx := 0              # 稳定序号（进度表按它记「已用过」，P0-1）
 	var kind := "vein"        # altar / vein
 	var map_ref: MapScene = null
@@ -1906,9 +1827,6 @@ class _Deco extends StaticBody2D:
 
 ## 传送阵（双环旋转；BOSS 节点初始封印）
 class _Portal extends Node2D:
-	func _ready() -> void:
-		modulate = Color(1.30, 1.30, 1.30)   # 同 _Pickup：新地面下的黑斑问题
-
 	var locked := false
 	var warned := false
 	var _rot := 0.0
@@ -1948,7 +1866,6 @@ class _MapMonster extends CharacterBody2D:
 	var _wander_r := 96.0
 	var _t := 0.0
 	var _sprite: Sprite2D = null    # 有 mon_ 素材时的精灵体
-	var _lv_l: Label = null         # 紫色「Lv{n}名」等级标签
 	var _lobe: Array = []  # 每只固定不变的轮廓起伏，避免看着像同一个圆
 	# 卡住检测（问题 #23）：move_and_slide 顶着散件时"速度有值、位置不动"，
 	# 所以只能用**实际位移**判断有没有进展。连续卡住就绕行，绕不动就放弃当前目标。
@@ -1974,14 +1891,12 @@ class _MapMonster extends CharacterBody2D:
 		cs.position = Vector2(0, -_radius * 0.5)
 		add_child(cs)
 		var mc: Dictionary = TableCache.maps_config()
-		# 明雷规避（坐骑）：警戒半径按 stealth_pct 缩小——怪要更近才发现你
-		_aggro = float(mc.get("aggro_radius", 120.0)) \
-			* (1.0 - clampf(float(G.mount_explore_bonus().get("stealth_pct", 0.0)), 0.0, 0.6))
+		_aggro = float(mc.get("aggro_radius", 120.0))
 		_contact = float(mc.get("contact_radius", 26.0))
 		_wander_r = float(mc.get("monster_wander_radius", 96.0))
 		# 精灵体：boss 84 / elite 60 / normal 48 像素高，脚底对齐碰撞原点
 		if mon_id != "":
-			var tex: Texture2D = G.art(mon_id)   # 复刻版素材优先（Task 1.5）
+			var tex: Texture2D = G.res_tex(mon_id)
 			if tex != null:
 				var h: float = {"normal": 48.0, "elite": 60.0, "boss": 84.0}.get(tier, 48.0)
 				var s := h / float(tex.get_height())
@@ -1994,26 +1909,6 @@ class _MapMonster extends CharacterBody2D:
 		for i in 18:
 			_lobe.append(sin(float(i) * 2.1 + h) * 0.13 + sin(float(i) * 0.7 + h * 0.5) * 0.09)
 		_pick_wander_target()
-		_build_level_tag()
-
-	## 怪物标签（原版实录：怪物头顶是**紫色「Lv{n}名」**，NPC 名才是绿色）。
-	## 等级取 nodes.json enemy.display_level 按层查——它只是显示用，不参与任何战斗数值。
-	func _build_level_tag() -> void:
-		var lv := 1
-		var dl: Variant = TableCache.nodes_config().get("enemy", {}).get("display_level", [])
-		if dl is Array and not (dl as Array).is_empty():
-			var layer := 1
-			if map_ref != null and map_ref.node is Dictionary:
-				layer = maxi(1, int((map_ref.node as Dictionary).get("layer", 1)))
-			var arr := dl as Array
-			lv = maxi(1, int(arr[mini(layer - 1, arr.size() - 1)]))
-		var nm := String(TableCache.get_monster(mon_id).get("name", ""))
-		_lv_l = G.gold_label("Lv%d %s" % [lv, nm] if nm != "" else "Lv%d" % lv,
-			G.FS_XS, false, Color("c88ae8"), true)
-		_lv_l.position = Vector2(-46, -_radius - 32.0)
-		_lv_l.custom_minimum_size = Vector2(92, 0)
-		_lv_l.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		add_child(_lv_l)
 
 	func _pick_wander_target() -> void:
 		var a := randf() * TAU
@@ -2179,20 +2074,14 @@ class _Interactable extends Node2D:
 		"chest": "node_chest", "event": "node_event",
 		"shop": "node_shop", "bonfire": "node_campfire",
 	}
-	var kind := "chest"  # chest / event / shop / bonfire / npc
+	var kind := "chest"  # chest / event / shop / bonfire
 	var used := false
 	var map_ref: MapScene = null
 	var _t := 0.0
 	var _art := false       # 已用素材立绘（程序体跳过）
 	var _art_h := 64.0      # 立绘显示高（三角提示的高度基准）
-	# NPC 专有（kind == "npc"）：靠近自动搭话，可反复谈，靠 cd 防连点
-	var cd := 0.0
-	var npc_name := ""
-	var npc_title := ""
-	var lines: Array = []
 
 	func _ready() -> void:
-		modulate = Color(1.42, 1.42, 1.42)   # 同 _Pickup：新地面下的黑斑问题
 		var tex: Texture2D = G.res_tex(String(KIND_ART.get(kind, "")))
 		if tex != null:
 			var s := _art_h / float(tex.get_height())
@@ -2202,25 +2091,13 @@ class _Interactable extends Node2D:
 			spr.offset = Vector2(0, -tex.get_height() / 2.0)
 			add_child(spr)
 			_art = true
-		if kind == "npc":
-			_build_npc_label()
-
-	## NPC 名签（原版口径：NPC 名绿色、怪物标签紫色）
-	func _build_npc_label() -> void:
-		var l := G.gold_label(npc_name, G.FS_XS, false, Color("8ce08c"), true)
-		l.position = Vector2(-52, -66)
-		l.custom_minimum_size = Vector2(104, 0)
-		l.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		add_child(l)
 
 	func _process(delta: float) -> void:
 		_t += delta
-		if cd > 0.0:
-			cd -= delta
 		if used or map_ref == null or map_ref._player == null:
 			return
-		if cd > 0.0 or map_ref._modal_open():
-			return  # 覆盖层期间不触发（含看大地图/演出/对话，P1-10）
+		if map_ref._modal_open():
+			return  # 覆盖层期间不触发（含看大地图/演出，P1-10）
 		if position.distance_to(map_ref._player.position) < MapScene.INTERACT_R:
 			map_ref.on_interactable(self)
 		queue_redraw()
@@ -2237,8 +2114,6 @@ class _Interactable extends Node2D:
 					_draw_shop()
 				"bonfire":
 					_draw_bonfire()
-				"npc":
-					_draw_npc()
 		# 头顶浮动金三角（可交互提示；立绘版抬高点避免压住画面）
 		var bob := sin(_t * 2.2) * 4.0
 		var tip := Vector2(0, (-_art_h - 8.0 if _art else -52.0) + bob)
@@ -2251,18 +2126,6 @@ class _Interactable extends Node2D:
 		draw_rect(Rect2(-20, -18, 40, 3), Color("3a2812"))        # 盖缝
 		draw_rect(Rect2(-4, -20, 8, 12), Color(G.GOLD))           # 金锁
 		draw_arc(Vector2.ZERO, 2.5, 0, TAU, 10, Color("5a3a1a"), 2.0)  # 锁孔
-
-	## 程序占位 NPC：斗篷 + 头 + 一只提灯（无素材时的兜底画法，有立绘则走 _art 分支）
-	func _draw_npc() -> void:
-		draw_colored_polygon(PackedVector2Array([
-			Vector2(0, -40), Vector2(13, -6), Vector2(-13, -6)]), Color("4a5a6a"))    # 斗篷
-		draw_rect(Rect2(-13, -6, 26, 5), Color("2f3a45"))                              # 下摆
-		draw_circle(Vector2(0, -44), 8.0, Color("d8b48a"))                             # 头
-		draw_colored_polygon(PackedVector2Array([
-			Vector2(0, -56), Vector2(11, -44), Vector2(-11, -44)]),
-			Color("3a4a58"))                                                           # 兜帽
-		draw_circle(Vector2(15, -12), 5.0, Color("ffd98a"))                            # 提灯
-		draw_circle(Vector2(15, -12), 8.0, Color(1.0, 0.85, 0.5, 0.22))
 
 	func _draw_event() -> void:
 		draw_rect(Rect2(-11, -34, 22, 40), Color("8a8578"))       # 石碑

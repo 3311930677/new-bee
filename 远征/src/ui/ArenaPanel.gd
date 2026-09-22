@@ -136,8 +136,8 @@ func _build() -> void:
 	content.add_child(_rank_bar)
 
 	_rank_sub = G.gold_label("", G.FS_XS, false, Color("6a5230"), false)
-	_rank_sub.position = Vector2(36, 122)   # 右对齐文字别压进右侧金框带
-	_rank_sub.custom_minimum_size = Vector2(CONTENT_W - 72.0, 0)
+	_rank_sub.position = Vector2(0, 122)
+	_rank_sub.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_rank_sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	content.add_child(_rank_sub)
 
@@ -192,14 +192,14 @@ func _build() -> void:
 	# 演武场此前只显示段位分，看不出"打了这么多场攒下了什么"。
 	# foe 卡下沿（236）到按钮行（268）只剩一条窄缝 → 单行左右分栏，左奖励右战绩，不再占第二行高度。
 	_season_l = G.gold_label("", G.FS_XS, false, Color("7a5a20"), false)
-	_season_l.position = Vector2(36, 244)   # 九宫格边框带各占 56px：贴边文字会压在金框上
-	_season_l.custom_minimum_size = Vector2(150, 0)
+	_season_l.position = Vector2(0, 244)
+	_season_l.custom_minimum_size = Vector2(CONTENT_W * 0.5, 0)
 	_season_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	content.add_child(_season_l)
 
 	_rec_l = G.gold_label("", G.FS_XS, false, Color("6a5230"), false)
-	_rec_l.position = Vector2(200, 244)
-	_rec_l.custom_minimum_size = Vector2(164, 0)
+	_rec_l.position = Vector2(CONTENT_W * 0.5, 244)
+	_rec_l.custom_minimum_size = Vector2(CONTENT_W * 0.5, 0)
 	_rec_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	content.add_child(_rec_l)
 

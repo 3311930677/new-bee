@@ -1,7 +1,7 @@
 extends SceneTree
 
 const Actor = preload("res://src/preview/WalkActor.gd")
-const ROLES = {"zs": "pojun", "ls": "chuanyang", "fs": "shuangyu"}
+const ROLES = {"zs": "pojun", "ck": "chuanyang", "fs": "shuangyu", "fz": "chenxing"}
 
 
 func _initialize() -> void:

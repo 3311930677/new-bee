@@ -75,7 +75,7 @@ func _run() -> void:
 		"目标标题应点出首领名「森林之主」，实为「%s」" % String(goal.get("title", "")))
 	var joined := " ".join(PackedStringArray(goal.get("lines", [])))
 	_check(joined.contains("出征"), "可达成的目标应给出「出征」指引，实为「%s」" % joined)
-	_check(G.main_goal_short().contains("枫林郊野"),
+	_check(G.main_goal_short().contains("苍绿林海"),
 		"主页那一行摘要应含大陆名，实为「%s」" % G.main_goal_short())
 
 	G.on_world_cleared("forest")

@@ -14,7 +14,7 @@
         { "id": "fury_7", "tier": 7, "max": 2, "name": "绝杀", "effect": {"crit_add": 0.02}, "desc": "每点 暴击+2%" },
         { "id": "fury_8", "tier": 8, "max": 3, "name": "狂澜", "effect": {"atk_pct": 0.04}, "desc": "每点 攻击+4%" },
         { "id": "fury_9", "tier": 9, "max": 2, "name": "战意", "effect": {"energy_pct": 0.15}, "desc": "每点 能量获取+15%" },
-        { "id": "fury_10", "tier": 10, "max": 1, "name": "铁衣之势", "effect": {"atk_pct": 0.08, "crit_add": 0.03}, "desc": "攻击+8% 暴击+3%" }
+        { "id": "fury_10", "tier": 10, "max": 1, "name": "破军之势", "effect": {"atk_pct": 0.08, "crit_add": 0.03}, "desc": "攻击+8% 暴击+3%" }
       ] },
     { "id": "guard", "name": "坚壁", "color": "5a8a5a", "desc": "防御系：生命与减伤",
       "nodes": [

@@ -17,8 +17,9 @@ const QuestPanelScript := preload("res://src/ui/QuestPanel.gd")   # 委托板（
 
 const ROLE_FRAMES := {  # 与 MapScene 同源的四方向行走帧
 	"zs": "res://image/role/zs/pojun_walk_frames.tres",
-	"ls": "res://image/role/ls/chuanyang_walk_frames.tres",
+	"ck": "res://image/role/ck/chuanyang_walk_frames.tres",
 	"fs": "res://image/role/fs/shuangyu_walk_frames.tres",
+	"fz": "res://image/role/fz/chenxing_walk_frames.tres",
 }
 
 var _cfg: Dictionary = {}
@@ -59,33 +60,16 @@ func _ready() -> void:
 
 
 # ================= 地面 =================
-## 地图素材取图（复刻版 Task 1.5）：先问 AI 批次目录（`G.res_tex` 按名索引），命中用新画风，
-## 否则回落 asset_dir 旧素材。asset_dir 的兜底**只在这里写一次**——以前地面用
-## "res://image/map_proc"、散件用 ""，表里少配一个字段两处行为就分裂。
-const FALLBACK_ASSET_DIR := "res://image/map_proc"
-
-func _map_tex(name: String) -> Texture2D:
-	if name == "":
-		return null
-	var t := G.res_tex(name)
-	if t != null:
-		return t
-	# 先 exists 再 load：表里写错一个名字不该刷一屏 load 失败，返回 null 让调用方兜底
-	var path := "%s/%s.png" % [String(_cfg.get("asset_dir", FALLBACK_ASSET_DIR)), name]
-	if not ResourceLoader.exists(path):
-		return null
-	return load(path) as Texture2D
-
-
 func _build_ground() -> void:
 	var g: Dictionary = _cfg.get("ground", {})
 	var tiles: Array = g.get("tiles", [])
+	var asset_dir := String(_cfg.get("asset_dir", "res://image/map_proc"))
 	var tl := TileMapLayer.new()
 	var ts := TileSet.new()
 	ts.tile_size = Vector2i(48, 48)
 	for i in mini(3, tiles.size()):
 		var src := TileSetAtlasSource.new()
-		src.texture = _map_tex(String(tiles[i]))
+		src.texture = load("%s/%s.png" % [asset_dir, String(tiles[i])])
 		src.texture_region_size = Vector2i(48, 48)
 		src.create_tile(Vector2i.ZERO)
 		ts.add_source(src, i)
@@ -101,7 +85,7 @@ func _build_ground() -> void:
 			if sid < ts.get_source_count():
 				tl.set_cell(Vector2i(x, y), sid, Vector2i.ZERO, 0)
 	add_child(tl)
-	_build_roads(String(g.get("path_sheet", "")))
+	_build_roads(asset_dir, String(g.get("path_sheet", "")))
 
 
 ## 城内路网：一条主街（城门→议事厅）+ 三条横街，格子是写死的——城是规划出来的，不是野路
@@ -118,10 +102,10 @@ func _road_cells() -> Dictionary:
 	return cells
 
 
-func _build_roads(sheet: String) -> void:
+func _build_roads(asset_dir: String, sheet: String) -> void:
 	if sheet == "":
 		return
-	var tex: Texture2D = _map_tex(sheet)
+	var tex: Texture2D = load("%s/%s.png" % [asset_dir, sheet])
 	if tex == null:
 		return
 	var cells := _road_cells()
@@ -183,6 +167,7 @@ func _build_decos() -> void:
 	if decos.is_empty():
 		return
 	var density := float(_cfg.get("deco_density", 0.03))
+	var asset_dir := String(_cfg.get("asset_dir", ""))
 	var roads := _road_cells()
 	var spawn := _spawn_px()
 	for gy in _rows:
@@ -196,7 +181,8 @@ func _build_decos() -> void:
 			if pos.distance_to(spawn) < 150.0 or _in_building(pos):
 				continue
 			var deco := _Deco.new()
-			var tex: Texture2D = _map_tex(String(decos[_rng.randi_range(0, decos.size() - 1)]))
+			var tex: Texture2D = load("%s/%s.png" % [asset_dir,
+				String(decos[_rng.randi_range(0, decos.size() - 1)])])
 			deco.setup(tex, _rng.randf_range(0.85, 1.15))
 			deco.position = pos
 			_world.add_child(deco)
@@ -251,22 +237,11 @@ func _build_player() -> void:
 	_world.add_child(_player)
 
 	_player_anim = AnimatedSprite2D.new()
-	# 复刻版：优先 AI 重生成的四向行走网格（A3），取不到才回落旧素材
-	var xa_frames := G.xa_walk_frames(G.selected_role)
-	if xa_frames != null:
-		_player_anim.sprite_frames = xa_frames
-	else:
-		var frames_path: String = ROLE_FRAMES.get(G.selected_role, ROLE_FRAMES["zs"])
-		_player_anim.sprite_frames = load(frames_path)
-	# 与 MapScene 同一套标定：0.72 倍 + 上移 19.3px，让脚踩在碰撞盒下沿。
-	# AI 网格单元是 128×200（人高约 100）而非 128×128（人高约 110），折算同上。
-	var anim_scale := 0.72
-	var foot_dy := 56.0
-	if xa_frames != null:
-		anim_scale = 0.72 * 110.0 / 100.0
-		foot_dy = 45.0
-	_player_anim.scale = Vector2.ONE * anim_scale
-	_player_anim.position = Vector2(0, -(foot_dy * anim_scale - 21.0))
+	var frames_path: String = ROLE_FRAMES.get(G.selected_role, ROLE_FRAMES["zs"])
+	_player_anim.sprite_frames = load(frames_path)
+	# 与 MapScene 同一套标定：0.72 倍 + 上移 19.3px，让脚踩在碰撞盒下沿
+	_player_anim.scale = Vector2.ONE * 0.72
+	_player_anim.position = Vector2(0, -19.3)
 	_player_anim.animation = &"walk_down"
 	_player_anim.frame = 1
 	_player_anim.stop()
@@ -467,9 +442,6 @@ func _check_interact() -> void:
 			best = n
 			best_d = nd
 		n.hover = nd < NPC_R + 24.0
-		# 名牌按距离淡入（1.4 巡检）：原来 8 张牌全亮、还会互相压在一起，
-		# 远处压到 0.28 留个"那儿有人"的轮廓，走近才全亮
-		n.set_plate_alpha(lerpf(1.0, 0.28, clampf((nd - (NPC_R + 24.0)) / 116.0, 0.0, 1.0)))
 		if nd > REARM_R:
 			n.cooled = false
 	if best != null and not (best as Object).get("cooled"):
@@ -621,7 +593,7 @@ func _show_built_panel(bd: Dictionary) -> void:
 	var btn_text := ""
 	match act:
 		"notice":
-			btn_text = "江湖告示"
+			btn_text = "查看布告板"
 		"visit":
 			btn_text = "翻开访客簿"
 		"worlds":
@@ -1574,13 +1546,6 @@ class _CityNPC extends Node2D:
 
 	## 名牌屏内钳制：镜头跟主角走，NPC 挪到屏缘时名牌会被裁掉半块——
 	## 每帧按画布坐标把名牌拨回屏内（左右留 4px）；落进左下摇杆区（约 160×160）的再抬 40px
-	## 名牌透明度（由 CityScene 每帧按"离主角多远"驱动）
-	func set_plate_alpha(a: float) -> void:
-		if _pad != null:
-			_pad.modulate.a = a
-		if _name_l != null:
-			_name_l.modulate.a = a
-
 	func _clamp_plate() -> void:
 		if _pad == null or _name_l == null:
 			return
@@ -1599,8 +1564,6 @@ class _CityNPC extends Node2D:
 		var scr_top := sy + py * z
 		if scr_left < 160.0 and scr_top + 18.0 * z > 624.0:
 			py -= 40.0 / z   # 摇杆区上抬（屏幕 40px 折回本地坐标）
-		if scr_top < 56.0:
-			py += (56.0 - scr_top) / z   # 顶部 HUD 占 56px：名牌别钻进标题/资源条底下
 		_pad.position = Vector2(px, py)
 		_name_l.position = Vector2(px, py + 2)
 
