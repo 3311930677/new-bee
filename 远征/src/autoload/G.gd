@@ -2658,11 +2658,15 @@ func xa_gender_suffix() -> String:
 
 ## 立绘（A1，512×768）；没有对应 AI 素材返回 null
 func xa_portrait(role_id: String) -> Texture2D:
+	if not XA_ROLE_ART:
+		return null
 	return res_tex("a1_%s_%s_anchor" % [role_id, xa_gender_suffix()])
 
 
 ## A2 战斗立绘（复刻版）：AI 只出了单帧，战斗五态由 BattleScene 以位移/缩放演出。
 func xa_combat_tex(role_id: String) -> Texture2D:
+	if not XA_ROLE_ART:
+		return null
 	return res_tex("a2_%s_%s_combat" % [role_id, xa_gender_suffix()])
 
 
@@ -3250,6 +3254,9 @@ func mk_wood_button(text: String, w := 0.0, h := 42.0, font_size := FS_MD) -> Co
 
 
 ## 复刻版角色素材映射（Task 1.3）：现行 4 职业 → AI 重生成行走网格（只有 zs/fs/ls 三套）
+## 总开关（2026-09-22）：AI 人物与原版画风割裂、观感违和，先整体退回**原版人物素材**——
+## 怪物/宠物/坐骑/UI 的 AI 素材不受影响。要再启用改回 true 即可。
+const XA_ROLE_ART := false
 const XA_ROLE_GRID := {"zs": "a3_zs_walk_grid", "ls": "a3_ls_walk_grid",
 	"fs": "a3_fs_walk_grid"}
 
@@ -3271,6 +3278,8 @@ func migrate_legacy_role(id: String) -> String:
 ## 用 AI 行走网格的第 1 行（朝下 5 帧）拼待机动画；拿不到网格返回 null（调用方回落旧图）。
 ## 网格是 5 列 × 4 行：列=帧、行=朝向（下/左/右/上），与 A3 提示词的排版一致。
 func xa_idle_frames(role_id: String, fps := 6.0) -> SpriteFrames:
+	if not XA_ROLE_ART:
+		return null
 	var name := String(XA_ROLE_GRID.get(role_id, ""))
 	var tex := res_tex(name) if name != "" else null
 	if tex == null:
@@ -3293,6 +3302,8 @@ func xa_idle_frames(role_id: String, fps := 6.0) -> SpriteFrames:
 ## 四方向行走帧（A3 网格：列=帧、行=下/左/右/上）。拿不到网格返回 null，
 ## 调用方回落到旧 .tres——探索图与主城的角色现在都是 AI 重生成素材了。
 func xa_walk_frames(role_id: String, fps := 8.0) -> SpriteFrames:
+	if not XA_ROLE_ART:
+		return null
 	var name := String(XA_ROLE_GRID.get(role_id, ""))
 	var tex := res_tex(name) if name != "" else null
 	if tex == null:

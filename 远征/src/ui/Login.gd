@@ -77,7 +77,7 @@ func _build_panel() -> void:
 
 	# 页面标题只在顶部木匾出现一次（"登录"）。面板里原来还有一行"账号登录"，
 	# 和木匾重复、还跟输入框抢视线——按"操作页不是海报"的原则去掉，让面板直接从说明开始。
-	var account_hint := G.gold_label("账号用于识别存档，本地保存，不联网", G.FS_XS, false, Color("8a7350"), false)
+	var account_hint := G.gold_label("账号用于识别存档，本地保存，不联网", G.FS_XS, false, Color("5a4020"), false)
 	box.add_child(account_hint)
 
 	var sep := ColorRect.new()
