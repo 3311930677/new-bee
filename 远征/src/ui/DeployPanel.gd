@@ -88,7 +88,7 @@ func _build() -> void:
 	banner.position = Vector2(90, 36)
 	add_child(banner)
 
-	var panel := G.parchment_box(440, 560, 16.0)
+	var panel := G.parchment_box(440, 574, 16.0)   # 底部三枚按钮 502~538，原 560 高会被下边框压住
 	panel.position = Vector2(20, 108)
 	add_child(panel)
 
@@ -134,14 +134,14 @@ func _build() -> void:
 
 	# 扫荡：已通关秘境 + 1 张扫荡券 = 标准路线收益一键入账（免跑图）
 	_sweep_btn = G.gold_button("扫荡×%d" % G.item_count("ticket_sweep"), 140, 44, G.FS_SM)
-	_sweep_btn.position = Vector2(GUTTER, 448)
+	_sweep_btn.position = Vector2(GUTTER, 430)
 	_sweep_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_on_sweep())
 	_content.add_child(_sweep_btn)
 
 	var go := G.gold_button("出 征", 172, 48)
-	go.position = Vector2(196, 446)
+	go.position = Vector2(196, 428)
 	go.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_on_confirm())
@@ -150,7 +150,7 @@ func _build() -> void:
 	# 补给（轮次 21）：塞进「返回」左侧的空档（返回居中占 144~264，这里 16~136 不重叠）。
 	# 点它只累计数量，金币留到「出征」确认时才算——否则玩家加带后按返回会白花钱。
 	_supply_btn = G.ghost_button("", 120, 36, G.FS_XS)
-	_supply_btn.position = Vector2(16, 502)
+	_supply_btn.position = Vector2(16, 478)
 	_supply_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_add_supply())
@@ -160,7 +160,7 @@ func _build() -> void:
 	# 苦行（轮次 22）：出征前一次性选择「敌人更强 / 收益更高」。塞进「返回」右侧空档
 	# （返回居中占 144~264，这里 272~392 不重叠）。
 	_ascetic_btn = G.ghost_button("", 120, 36, G.FS_XS)
-	_ascetic_btn.position = Vector2(272, 502)
+	_ascetic_btn.position = Vector2(272, 478)
 	_ascetic_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_toggle_ascetic())
@@ -168,7 +168,7 @@ func _build() -> void:
 	_refresh_ascetic()
 
 	var back := G.gold_button("返 回", 120, 36)
-	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 502)
+	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 478)
 	back.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			canceled.emit())

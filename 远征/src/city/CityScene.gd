@@ -1599,6 +1599,8 @@ class _CityNPC extends Node2D:
 		var scr_top := sy + py * z
 		if scr_left < 160.0 and scr_top + 18.0 * z > 624.0:
 			py -= 40.0 / z   # 摇杆区上抬（屏幕 40px 折回本地坐标）
+		if scr_top < 56.0:
+			py += (56.0 - scr_top) / z   # 顶部 HUD 占 56px：名牌别钻进标题/资源条底下
 		_pad.position = Vector2(px, py)
 		_name_l.position = Vector2(px, py + 2)
 
