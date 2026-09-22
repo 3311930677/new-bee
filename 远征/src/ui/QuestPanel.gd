@@ -56,7 +56,7 @@ func _build() -> void:
 	_panel.add_child(_content)
 
 	var tip := G.gold_label("今日的活计就这些。接下、办完、回来交付——跨日作废。",
-		G.FS_XS, false, Color("7a5a2e"), false)
+		G.FS_XS, false, Color("5a4020"), false)
 	tip.position = Vector2(0, 0)
 	tip.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_content.add_child(tip)
