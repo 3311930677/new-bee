@@ -40,9 +40,9 @@ func _build() -> void:
 	_content = content
 
 	var role := G.get_role(G.selected_role)
-	_expedition_l = G.gold_label("", G.FS_SM, true, Color("4a7a8a"), false)
+	_expedition_l = G.gold_label("", G.FS_XS, true, Color("5a4020"), false)
 	_expedition_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	_expedition_l.position = Vector2(0, 0)
+	_expedition_l.position = Vector2(24, 474)   # 底部与返回键同排：顶部被上边框和卡组挤压，放不下
 	content.add_child(_expedition_l)
 	# 升级规则收进 ⓘ 弹层，主面板不再铺说明文字
 	var info := G.info_button("技能书规则", [
