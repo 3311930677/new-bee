@@ -13,7 +13,7 @@
   "monster_wander_radius": 96,
   "themes": {
     "forest": {
-      "name": "枫林郊野",
+      "name": "苍绿林海",
       "tiles": ["001_tile_forest_1", "002_tile_forest_2", "003_tile_forest_3"],
       "path_sheet": "025_tile_forest_path_sheet_00_15",
       "decos": ["028_deco_forest_tree", "029_deco_forest_deadtree", "030_deco_forest_rocks",
@@ -25,9 +25,9 @@
       "tint": "ffffff"
     },
     "snow": {
-      "name": "凛雪原",
+      "name": "凛风雪原",
       "tiles": ["004_tile_snow_1", "005_tile_snow_2", "006_tile_snow_3"],
-      "path_sheet": "",
+      "path_sheet": "026_tile_snow_path_sheet_00_15",
       "decos": ["035_deco_snow_pine", "036_deco_snow_icecrystal", "037_deco_snow_snowdrift"],
       "deco_density": 0.16,
       "monsters": ["mon_icebat", "mon_yeti", "mon_frostguard"],
@@ -38,9 +38,9 @@
         "params": { "interval": 8.0, "dur": 2.0, "pct": 0.15 } }
     },
     "volcano": {
-      "name": "赤焰岭",
+      "name": "焚天火山",
       "tiles": ["007_tile_volcano_1", "008_tile_volcano_2", "009_tile_volcano_3"],
-      "path_sheet": "",
+      "path_sheet": "027_tile_volcano_lava_sheet_00_15",
       "decos": ["038_deco_volcano_lavarock", "039_deco_volcano_bones", "040_deco_volcano_geyser"],
       "deco_density": 0.16,
       "monsters": ["mon_lavahound", "mon_ashimp", "mon_magmagolem"],
@@ -51,7 +51,7 @@
         "params": { "interval": 6.0, "hp_pct": 0.02 } }
     },
     "tomb": {
-      "name": "黄城废墟",
+      "name": "幽暗古墓",
       "tiles": ["010_tile_tomb_1", "011_tile_tomb_2", "012_tile_tomb_3"],
       "path_sheet": "",
       "decos": ["041_deco_tomb_gravestone", "042_deco_tomb_coffin", "043_deco_tomb_brazier"],
@@ -62,7 +62,7 @@
       "tint": "e8e4f2"
     },
     "desert": {
-      "name": "流沙关",
+      "name": "流沙荒漠",
       "tiles": ["013_tile_desert_1", "014_tile_desert_2", "015_tile_desert_3"],
       "path_sheet": "",
       "decos": ["044_deco_desert_cactus", "045_deco_desert_sandstone", "046_deco_desert_drywell"],
@@ -73,7 +73,7 @@
       "tint": "fff4dc"
     },
     "glacier": {
-      "name": "千岁冰原",
+      "name": "千年冰川",
       "tiles": ["016_tile_glacier_1", "017_tile_glacier_2", "018_tile_glacier_3"],
       "path_sheet": "",
       "decos": ["047_deco_glacier_icespire"],
@@ -84,7 +84,7 @@
       "tint": "e4f4ff"
     },
     "abyss": {
-      "name": "龙怒渊",
+      "name": "无底深渊",
       "tiles": ["019_tile_abyss_1", "020_tile_abyss_2", "021_tile_abyss_3"],
       "path_sheet": "",
       "decos": ["034_deco_forest_bones", "043_deco_tomb_brazier"],
@@ -97,7 +97,7 @@
         "params": { "reveal_mult": 0.5 } }
     },
     "castle": {
-      "name": "希望之都",
+      "name": "王城遗迹",
       "tiles": ["022_tile_castle_1", "023_tile_castle_2", "024_tile_castle_3"],
       "path_sheet": "",
       "decos": ["033_deco_forest_ruin", "041_deco_tomb_gravestone", "043_deco_tomb_brazier"],

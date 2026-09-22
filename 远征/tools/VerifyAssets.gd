@@ -30,7 +30,6 @@ func _ready() -> void:
 		else:
 			hit += 1
 
-	miss.append_array(_xa_missing_assets())   # 复刻版补图的点名检查（见 XA_MONSTER_IDS）
 	print("素材命中 %d / %d" % [hit, checked])
 	if miss.size() > 0:
 		print("MISS: " + ", ".join(miss))
@@ -185,31 +184,3 @@ func _count_dir(path: String) -> int:
 		if not nm.begins_with("frame_") and G.res_path(nm) == "":
 			n += 1
 	return n
-
-
-## 复刻版补图（asset-regen B 类）：id 命名的这批 AI 怪物**不登记 XA_ART**，
-## 全靠 G.art() 的原名回落命中——文件名错一个字母就会静默退回程序占位，所以在这里点名。
-## 放在本用例而不是 verify_data：verify_data 是 --script 级、拿不到 autoload（G）。
-const XA_MONSTER_IDS := ["mon_spider", "mon_treant", "mon_yeti", "mon_frostguard",
-	"mon_ashimp", "mon_magmagolem", "mon_boss_snow", "mon_boss_volcano", "mon_ghost", "mon_cryptspider", "mon_plague", "mon_boss_tomb",
-	"mon_scorp", "mon_mummy", "mon_sandwyrm", "mon_boss_desert",
-	"mon_icespirit", "mon_frostwalrus", "mon_frostmage", "mon_boss_glacier",
-	"mon_voidling", "mon_shade", "mon_cultist", "mon_boss_abyss",
-	"mon_traitor", "mon_blackknight", "mon_boss_castle"]
-
-
-const XA_PET_IDS := ["pet_eyescat", "pet_holydeer", "pet_emberling", "pet_shadowviper"]
-
-
-func _xa_missing_assets() -> PackedStringArray:
-	var miss := PackedStringArray()
-	for pid in XA_PET_IDS:
-		if G.res_path(String(pid)) == "":
-			miss.append("宠物图:" + String(pid))
-	for mid in XA_MONSTER_IDS:
-		if G.res_path(String(mid)) == "":
-			miss.append("怪物图:" + String(mid))
-	for k in G.XA_ART.keys():
-		if G.res_path(String(G.XA_ART[k])) == "":
-			miss.append("映射:%s→%s" % [k, G.XA_ART[k]])
-	return miss

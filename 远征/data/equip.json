@@ -1,10 +1,11 @@
 {
   "version": 1,
-  "comment": "装备线（玩法文档 §6）：武器 3 系绑职业（大剑→铁衣/长弓→追风/法杖→霜语），甲/饰全职业通用。强化每级+10%、成功率 0.9^目标级、失败不掉级；宝石 3 色×5 级，每件 3 孔；精炼洗 4 词条，锁定耗锁符。注：长弓槽 id 沿用 `spear`（存档键不变），图标暂用 slot_spear，待补 slot_bow 素材。",
+  "comment": "装备线（玩法文档 §6）：武器 4 系绑人物（剑→破军/枪→穿杨/杖→霜语/锤→晨星），甲/饰全人物通用。强化每级+10%、成功率 0.9^目标级、失败不掉级；宝石 3 色×5 级，每件 3 孔；精炼洗 4 词条，锁定耗锁符。",
   "slots": [
     { "id": "sword", "name": "大剑", "kind": "weapon", "role": "zs", "icon": "slot_sword", "base": {"atk": 10} },
-    { "id": "spear", "name": "长弓", "kind": "weapon", "role": "ls", "icon": "slot_spear", "base": {"atk": 10} },
+    { "id": "spear", "name": "长枪", "kind": "weapon", "role": "ck", "icon": "slot_spear", "base": {"atk": 10} },
     { "id": "staff", "name": "法杖", "kind": "weapon", "role": "fs", "icon": "slot_staff", "base": {"atk": 11} },
+    { "id": "hammer", "name": "圣锤", "kind": "weapon", "role": "fz", "icon": "slot_hammer", "base": {"atk": 9, "hp": 30} },
     { "id": "armor", "name": "护甲", "kind": "armor", "role": "", "icon": "slot_armor", "base": {"def": 6, "hp": 50} },
     { "id": "accessory", "name": "饰品", "kind": "accessory", "role": "", "icon": "slot_accessory", "base": {"hp": 70, "crit": 0.02} }
   ],

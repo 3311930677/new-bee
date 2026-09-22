@@ -58,20 +58,6 @@ func _ready() -> void:
 	_build_stage(role)
 	_build_entries()
 	_prompt_save_locked()
-	_prompt_legacy_role()
-
-
-## 旧职业换算提示（Task 3.4）：三职业改造后老档里的 ck/fz 会被换算，静默换算不符合口径
-func _prompt_legacy_role() -> void:
-	if G.legacy_role_migrated == "" or G.save_locked:
-		return
-	var old_id := G.legacy_role_migrated
-	G.legacy_role_migrated = ""
-	var now_name := String(G.get_role(G.selected_role).get("name", G.selected_role))
-	G.show_info_popup(self, "旧档已换算", [
-		"复刻版改成三职业：铁衣（战士）/ 追风（猎手）/ 霜语（法师）。",
-		"旧档里的「%s」已换算为「%s」，等级、装备与全部进度原样保留。" % [old_id, now_name],
-	])
 
 
 # ---------- 坏档提示（A7） ----------
@@ -174,7 +160,7 @@ func _build_profile(role: Dictionary) -> void:
 
 	var name_txt: String = G.player_name if not G.player_name.is_empty() \
 		else String(role.get("name", "旅人"))
-	var nl := G.serif_label(name_txt, G.FS_MD + 1, Color("a8e0b0"))   # 暗底上提亮一档：暗玉绿看不清
+	var nl := G.serif_label(name_txt, G.FS_MD + 1, G.NAME_GREEN)
 	nl.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	nl.position = Vector2(82, 20)
 	nl.custom_minimum_size = Vector2(160, 0)
@@ -367,10 +353,6 @@ func _build_stage(role: Dictionary) -> void:
 
 
 func _frames(role_id: String) -> SpriteFrames:
-	# 复刻版：优先用 AI 重生成的行走网格（Task 1.3），拿不到才回落旧 4 帧图
-	var xa := G.xa_idle_frames(role_id)
-	if xa != null:
-		return xa
 	var tex: Texture2D = load(G.role_dir(role_id) + _role_name(role_id) + "_idle.png")
 	var frames := SpriteFrames.new()
 	frames.remove_animation(&"default")
@@ -386,8 +368,12 @@ func _frames(role_id: String) -> SpriteFrames:
 
 
 func _role_name(id: String) -> String:
-	# 复刻版三职业：统一走 G.ROLE_ART（Login/CreateRole/DeployPanel 同一口径）
-	return G.role_art_name(id)
+	match id:
+		"zs": return "pojun"
+		"ck": return "chuanyang"
+		"fs": return "shuangyu"
+		"fz": return "chenxing"
+	return id
 
 
 ## 右侧竖列：活动与系统入口（出征已搬进主城）

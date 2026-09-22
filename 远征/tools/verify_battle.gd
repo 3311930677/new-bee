@@ -39,7 +39,6 @@ func _run() -> void:
 	_test_dmg_taken_on_basic()
 	_test_school_build_rate()
 	_test_theme_rules()
-	_test_role_skill_kits()
 	if _fails == 0:
 		print("BATTLE_OK all tests passed")
 	else:
@@ -91,7 +90,7 @@ func _test_formation() -> void:
 
 # ---------- 3. 四人物自动战斗均能正常结束 ----------
 func _test_four_roles_auto() -> void:
-	for role_id in ["zs", "ls", "fs"]:
+	for role_id in ["zs", "ck", "fs", "fz"]:
 		for layer in [1, 3]:
 			var sim := BattleSim.new()
 			sim.record_events = false
@@ -100,28 +99,6 @@ func _test_four_roles_auto() -> void:
 				{"theme": "forest", "node_type": "normal", "layer": layer})
 			var r := sim.run_to_end()
 			_check(r == "victory", "%s lv10 第%d层普通节点应胜（无养成下限验证）" % [role_id, layer])
-
-
-## 三职业（铁衣/追风/霜语）技能条应各 5 条，且 id 与 skills.json 对得上
-func _test_role_skill_kits() -> void:
-	_check(_roles_rows().size() == 3, "复刻版应是三职业，实为 %d" % _roles_rows().size())
-	for rid in ["zs", "ls", "fs"]:
-		var role := TableCache.get_role(rid)
-		_check(not role.is_empty(), "角色表应含 %s" % rid)
-		var sids: Array = role.get("skills", [])
-		_check(sids.size() == 5, "%s 应有 5 条技能，实为 %d" % [rid, sids.size()])
-		for sid in sids:
-			var sd := TableCache.get_skill(String(sid))
-			_check(not sd.is_empty(), "技能 %s 应在 skills.json 里存在" % String(sid))
-			_check(String(sd.get("role", "")) == rid, "%s 的归属职业应为 %s" % [String(sid), rid])
-
-
-## roles.json 的行（复刻版三职业）
-func _roles_rows() -> Array:
-	var f := FileAccess.open("res://data/roles.json", FileAccess.READ)
-	var parsed: Variant = JSON.parse_string(f.get_as_text())
-	f.close()
-	return parsed if parsed is Array else []
 
 
 # ---------- 4. 确定性对拍（同 seed 同指令 → 逐段哈希一致） ----------
@@ -197,7 +174,7 @@ func _test_elite_boss() -> void:
 		var sim := BattleSim.new()
 		sim.record_events = false
 		sim.auto_mode = true
-		sim.setup(11, {"role_id": "ls", "level": 12, "traits": ["tr_atk_up_m"],
+		sim.setup(11, {"role_id": "ck", "level": 12, "traits": ["tr_atk_up_m"],
 			"active_pet": "pet_foxfire"},
 			{"theme": "snow", "node_type": String(nt), "layer": 2})
 		var r := sim.run_to_end()
@@ -219,7 +196,7 @@ func _test_elite_boss() -> void:
 
 # ---------- 7. 分人物能量经济（无 deadlock：关键技能都能出手） ----------
 func _test_energy_economy() -> void:
-	for role_id in ["zs", "ls", "fs"]:
+	for role_id in ["zs", "ck", "fs", "fz"]:
 		var sim := BattleSim.new()
 		sim.record_events = true
 		sim.auto_mode = true

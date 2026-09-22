@@ -27,15 +27,17 @@ const ALLY_BACK_Y := 474.0
 
 const ROLE_SPRITE := {  # 人物战斗行走帧（探索/进出场用）
 	"zs": ["res://image/role/zs/pojun_walk_frames.tres", "pojun"],
-	"ls": ["res://image/role/ls/chuanyang_walk_frames.tres", "chuanyang"],
+	"ck": ["res://image/role/ck/chuanyang_walk_frames.tres", "chuanyang"],
 	"fs": ["res://image/role/fs/shuangyu_walk_frames.tres", "shuangyu"],
+	"fz": ["res://image/role/fz/chenxing_walk_frames.tres", "chenxing"],
 }
 # 战斗五态 spritesheet（4 列 × 5 行 @128px：待机/普攻/施法/受击/倒下）。
 # Godot 3 的 .tres 在 4.7 下不稳，统一运行时从整图重建（与 GameHome/CreateRole 同口径）。
 const ROLE_BATTLE_SHEET := {
 	"zs": "res://image/role/zs/pojun_spritesheet.png",
-	"ls": "res://image/role/ls/chuanyang_spritesheet.png",
+	"ck": "res://image/role/ck/chuanyang_spritesheet.png",
 	"fs": "res://image/role/fs/shuangyu_spritesheet.png",
+	"fz": "res://image/role/fz/chenxing_spritesheet.png",
 }
 const BATTLE_ROWS := [  # [动画名, 行号, 是否循环, 帧率]
 	["idle", 0, true, 5.0], ["attack", 1, false, 11.0], ["cast", 2, false, 8.0],
@@ -43,60 +45,10 @@ const BATTLE_ROWS := [  # [动画名, 行号, 是否循环, 帧率]
 ]
 static var _battle_frames_cache := {}
 
-## 复刻版五态（AI 只有 A2 单帧，没有五态套图）：以单帧为底，按状态**平移/缩放**出四帧。
-## 只做 blit_rect 与 resize（都在 C++ 侧，20 帧约 1~2ms）；逐像素染色在 GDScript 里要几百毫秒。
-## 五态各 4 帧、格子 128×128 的接口保持不变——视图的偏移标定与 has_animation("hit") 判断照旧。
-const PROC_FRAME := {
-	"idle": [[Vector2i(0, 0), 1.0], [Vector2i(0, -2), 1.0], [Vector2i(0, 0), 1.0], [Vector2i(0, 1), 1.0]],
-	"attack": [[Vector2i(0, 0), 1.0], [Vector2i(-6, 0), 1.0], [Vector2i(-8, -1), 1.0], [Vector2i(-3, 0), 1.0]],
-	"cast": [[Vector2i(0, 0), 1.0], [Vector2i(0, -2), 1.0], [Vector2i(0, -3), 1.0], [Vector2i(0, -1), 1.0]],
-	"hit": [[Vector2i(0, 0), 1.0], [Vector2i(6, 0), 1.0], [Vector2i(-6, 1), 1.0], [Vector2i(0, 0), 1.0]],
-	"death": [[Vector2i(0, 0), 1.0], [Vector2i(0, 4), 0.90], [Vector2i(0, 10), 0.78], [Vector2i(0, 16), 0.62]],
-}
-const XA_CELL := 128
-
-static func _xa_battle_frames(role_id: String) -> SpriteFrames:
-	var tex := G.xa_combat_tex(role_id)
-	if tex == null:
-		return null
-	var src: Image = tex.get_image()
-	if src == null or src.is_empty():
-		return null
-	src = src.duplicate()
-	var frames := SpriteFrames.new()
-	frames.remove_animation(&"default")
-	for r in BATTLE_ROWS:
-		var anim := StringName(r[0])
-		frames.add_animation(anim)
-		frames.set_animation_loop(anim, bool(r[2]))
-		frames.set_animation_speed(anim, float(r[3]))
-		var plan: Array = PROC_FRAME.get(String(anim), [])
-		for c in 4:
-			var step: Array = plan[c % plan.size()] if not plan.is_empty() else [Vector2i.ZERO, 1.0]
-			var body := src
-			var s := float(step[1])
-			if not is_equal_approx(s, 1.0):
-				body = src.duplicate()
-				body.resize(maxi(1, int(src.get_width() * s)), maxi(1, int(src.get_height() * s)),
-					Image.INTERPOLATE_NEAREST)
-			var canvas := Image.create(XA_CELL, XA_CELL, false, Image.FORMAT_RGBA8)
-			canvas.fill(Color(0, 0, 0, 0))
-			var off: Vector2i = step[0]
-			canvas.blit_rect(body, Rect2i(Vector2i.ZERO, body.get_size()),
-				Vector2i((XA_CELL - body.get_width()) / 2 + off.x,
-					(XA_CELL - body.get_height()) / 2 + off.y))
-			frames.add_frame(anim, ImageTexture.create_from_image(canvas))
-	return frames
-
-
 ## 按职业构建战斗五态帧；无素材返回 null（调用方回退行走帧）
 static func battle_frames(role_id: String) -> SpriteFrames:
 	if _battle_frames_cache.has(role_id):
 		return _battle_frames_cache[role_id]
-	var xa := _xa_battle_frames(role_id)     # 复刻版：AI 单帧 + 程序动作优先
-	if xa != null:
-		_battle_frames_cache[role_id] = xa
-		return xa
 	var path: String = ROLE_BATTLE_SHEET.get(role_id, "")
 	var tex: Texture2D = load(path) if path != "" else null
 	var frames: SpriteFrames = null
@@ -198,27 +150,6 @@ func _ready() -> void:
 	_build_func_row()
 	_sync_views()
 	sim.events.clear()
-	_show_enter_banner()
-
-
-## 入场横幅（原版「遭遇战 / 精英战 / 首领战」横幅，Task 2.1）：
-## 从上方压下来 → 停 0.5s → 上滑淡出。挂在根节点且不进 _fx_layer（那里有清空断言）。
-func _show_enter_banner() -> void:
-	if bool(_cfg.get("no_banner", false)):
-		return
-	var nt: String = String(_cfg.get("enemy", {}).get("node_type", "normal"))
-	var title: String = {"normal": "遭 遇 战", "elite": "精 英 战",
-		"boss": "首 领 战"}.get(nt, "遭 遇 战")
-	var b := G.mk_plaque(title, 300.0, 76.0, G.FS_BIG)
-	b.position = Vector2((VIEW_W - 300.0) * 0.5, -90.0)
-	b.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(b)
-	var tw := b.create_tween()
-	tw.tween_property(b, "position:y", 132.0, 0.28).set_trans(Tween.TRANS_BACK)\
-		.set_ease(Tween.EASE_OUT)
-	tw.tween_interval(0.5)
-	tw.tween_property(b, "position:y", -90.0, 0.24).set_ease(Tween.EASE_IN)
-	tw.chain().tween_callback(b.queue_free)
 
 
 # ================= 布局 =================
@@ -343,7 +274,10 @@ func _build_top_bar() -> void:
 	_chip_set_active(_speed_btn, sp >= 1.5)
 	add_child(_speed_btn)
 
-	# 复刻版：挂机键移到右下角做成红色「自动」键（原版实录形态），顶栏不再放第二个开关
+	_auto_btn = _func_chip("托管", 58)
+	_auto_btn.position = Vector2(VIEW_W - 96, 12)
+	_auto_btn.gui_input.connect(_on_auto)
+	add_child(_auto_btn)
 
 	_cast_tip = G.serif_label("", G.FS_SM, Color("ffe9b0"))
 	# 战场中部的空带（敌方前排血条之下、我方前排名字之上）：原来放 y=52，
@@ -545,34 +479,14 @@ func _build_func_row() -> void:
 			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 				_swap_pet())
 		add_child(_pet_btn)
-	# 撤退（放弃本节点；二次确认防手滑）：与技能格同网格，第 4 列
+	# 撤退（放弃本节点；二次确认防手滑）：靠右对齐到技能栏右沿，
+	# 与第 4 技能格列同基准（原来用 3*96 手算，与技能格网格错位）
 	_flee_btn = _func_chip("撤退", SKILL_W)
-	_flee_btn.position = Vector2(BAR_X + 3 * SKILL_STEP, FUNC_Y)
+	_flee_btn.position = Vector2(BAR_X + 4 * SKILL_STEP, FUNC_Y)
 	_flee_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_on_flee())
 	add_child(_flee_btn)
-	# 右下「自动」键（原版形态：红底挂机键）。与顶栏时代不同，这里就一个开关，不重复。
-	_auto_btn = _auto_chip()
-	_auto_btn.position = Vector2(BAR_X + 4 * SKILL_STEP, FUNC_Y)
-	_auto_btn.gui_input.connect(_on_auto)
-	_chip_set_active(_auto_btn, sim.auto_mode)
-	add_child(_auto_btn)
-
-
-## 红色「自动」键：底色血红 + 亮金描边，激活时压暗表示"正在挂机"
-func _auto_chip() -> PanelContainer:
-	var root := PanelContainer.new()
-	root.custom_minimum_size = Vector2(SKILL_W, 30)
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color(0.62, 0.14, 0.10, 0.95)
-	sb.set_corner_radius_all(3)
-	sb.set_border_width_all(2)
-	sb.border_color = Color("e8c06a")
-	root.add_theme_stylebox_override("panel", sb)
-	root.add_child(G.gold_label("自 动", G.FS_SM, true, Color("ffe6b0"), true))
-	root.mouse_filter = Control.MOUSE_FILTER_STOP
-	return root
 
 
 # ================= 单位视图 =================
@@ -698,9 +612,6 @@ func _on_event(e: Dictionary) -> void:
 					_best_hit = maxi(_best_hit, amount)
 				if to_role:
 					_dmg_in += amount
-				# 命中星爆（原版命中特效）：白黄五角星 + 橙色放射光线
-				if not dot:
-					_burst(dst.position)
 				if dot:
 					dst.hit_flash(0.4)
 					_float_dmg(dst.position, amount, "dot")
@@ -972,16 +883,6 @@ func _hit_stop(sec: float) -> void:
 	_hitstop = maxf(_hitstop, sec)
 
 
-## 命中星爆（原版命中特效）：白黄五角星 + 橙色放射光线，0.22s 内扩散淡出。
-## 挂在 _field 下（与单位同一坐标系），不进 _fx_layer——飘字层有「战斗结束应清空」断言。
-func _burst(pos: Vector2) -> void:
-	if not bool(G.setting_get("shake", true)):
-		return   # 与震屏同一开关：关掉打击感表现时不再放特效
-	var b := UnitView._HitBurst.new()
-	b.position = pos
-	_field.add_child(b)
-
-
 ## 震屏：只抖「背景 + 战场」这一层，HUD 与飘字不动（字跟着晃会花）
 func _shake(power: float) -> void:
 	if not bool(G.setting_get("shake", true)):
@@ -1219,8 +1120,6 @@ class UnitView extends Node2D:
 	var hp_bg := ColorRect.new()
 	var hp_ghost := ColorRect.new()    # B2 白残影条：停在旧血量，缓动追上真实值
 	var hp_fg := ColorRect.new()
-	var mp_bg := ColorRect.new()      # 脚下蓝 MP 条（仅人物）
-	var mp_fg := ColorRect.new()
 	var name_l := Label.new()
 	var buff_l := Label.new()
 	var _base_pos := Vector2.ZERO
@@ -1268,7 +1167,7 @@ class UnitView extends Node2D:
 			hp_y = 12.0
 		else:
 			var unit_id := String(u.data.get("id", ""))
-			var tex: Texture2D = G.art(unit_id)   # 复刻版素材优先（Task 1.5）
+			var tex: Texture2D = G.res_tex(unit_id)
 			if tex != null:
 				# 精灵素材（1254×1254 透明底，自带投影）：按档位缩放到目标身高
 				var disp_h := 78.0
@@ -1307,13 +1206,9 @@ class UnitView extends Node2D:
 				body.position = Vector2(0, -_radius * 0.4)
 				name_y = -_radius - 14.0
 				hp_y = _radius + 6.0
-		# 名字（头顶）——亮底战场上必须带描边，否则敌方名字糊成一片白。
-		# 复刻版口径：怪物标签 = 紫色「Lv{n}名」，我方 = 绿色（原版实录）
-		var label := u.name
-		if side == "enemy" and u.kind == "monster":
-			label = "Lv%d%s" % [maxi(1, int(u.data.get("lv", 1))), u.name]
-		name_l = G.gold_label(label, G.FS_XS, false,
-			Color("c88ae8") if side == "enemy" else Color("c8e8c8"), true)
+		# 名字（头顶）——亮底战场上必须带描边，否则敌方名字糊成一片白
+		name_l = G.gold_label(u.name, G.FS_XS, false,
+			Color("ffd0d0") if side == "enemy" else Color("c8e8c8"), true)
 		name_l.position = Vector2(-36, name_y)
 		name_l.custom_minimum_size = Vector2(72, 0)
 		body.add_child(name_l)
@@ -1338,20 +1233,9 @@ class UnitView extends Node2D:
 		hp_fg.position = hp_bg.position + Vector2(1, 1)
 		hp_fg.size = Vector2(42, 3)
 		body.add_child(hp_fg)
-		# MP 蓝条（脚下、HP 条之下）：原版战斗是脚下「红血条 + 蓝 MP 条」双条，
-		# 只有吃能量的单位（人物）才有，怪物/宠物不给蓝条
-		if u.kind == "role":
-			mp_bg.color = Color(0, 0, 0, 0.55)
-			mp_bg.position = Vector2(-22, hp_y + 6)
-			mp_bg.size = Vector2(44, 4)
-			body.add_child(mp_bg)
-			mp_fg.color = Color("4a90d0")
-			mp_fg.position = mp_bg.position + Vector2(1, 1)
-			mp_fg.size = Vector2(42, 2)
-			body.add_child(mp_fg)
 		# buff 缩写（血条正下）
 		buff_l = G.gold_label("", G.FS_XS, false, Color("a8d8ff"), false)
-		buff_l.position = Vector2(-36, hp_y + (12 if u.kind == "role" else 7))
+		buff_l.position = Vector2(-36, hp_y + 7)
 		buff_l.custom_minimum_size = Vector2(72, 0)
 		body.add_child(buff_l)
 
@@ -1364,8 +1248,6 @@ class UnitView extends Node2D:
 		var ratio := clampf(float(u.hp) / float(maxi(u.get_max_hp(), 1)), 0.0, 1.0)
 		_hp_ratio = ratio
 		hp_fg.size.x = 42.0 * ratio
-		if u.kind == "role":
-			mp_fg.size.x = 42.0 * clampf(float(u.energy) / float(Combatant.MAX_ENERGY), 0.0, 1.0)
 		# 杂兵受击亮名：掉血瞬间把名签唤出 1.4s，随后 _process 里淡掉
 		if _hideable_name:
 			if _last_hp >= 0 and u.hp < _last_hp and u.alive:
@@ -1472,35 +1354,6 @@ class UnitView extends Node2D:
 		var tw := create_tween()
 		tw.tween_property(self, "modulate:a", 0.0, 0.4)
 		tw.tween_callback(queue_free)
-
-
-	## 命中星爆：白黄五角星 + 橙色放射光线（原版战斗命中特效，Task 2.1）
-	class _HitBurst extends Node2D:
-		const LIFE := 0.22
-		var _t := 0.0
-		var _r := 15.0
-
-		func _process(delta: float) -> void:
-			_t += delta
-			if _t >= LIFE:
-				queue_free()
-				return
-			queue_redraw()
-
-		func _draw() -> void:
-			var k := _t / LIFE
-			var r := _r * (0.55 + 0.95 * k)
-			var a := 1.0 - k
-			for i in 6:   # 放射光线
-				var ang := TAU * float(i) / 6.0 + k * 0.7
-				var d := Vector2(cos(ang), sin(ang))
-				draw_line(d * r * 0.7, d * r * 1.75, Color(1.0, 0.62, 0.24, a * 0.9), 2.0)
-			var pts := PackedVector2Array()   # 五角星
-			for i in 10:
-				var ang := -PI / 2.0 + TAU * float(i) / 10.0
-				var rr := r * (1.0 if i % 2 == 0 else 0.45)
-				pts.append(Vector2(cos(ang), sin(ang)) * rr)
-			draw_colored_polygon(pts, Color(1.0, 0.95, 0.72, a))
 
 
 	## 怪物/宠物程序体：有机多瓣轮廓 + 呼吸 + 尖角/耳朵（与探索图怪同族画法）

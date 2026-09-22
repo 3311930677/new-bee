@@ -72,7 +72,7 @@ func _build() -> void:
 	var bar := HBoxContainer.new()
 	bar.alignment = BoxContainer.ALIGNMENT_CENTER
 	bar.add_theme_constant_override("separation", 6)
-	bar.position = Vector2(0, 44)   # 上边框带占 56px：荣誉余额别压进金框
+	bar.position = Vector2(0, 0)
 	bar.custom_minimum_size = Vector2(CONTENT_W, 0)
 	var vault := _icon("icon_vault", 26)
 	vault.size_flags_vertical = Control.SIZE_SHRINK_CENTER
@@ -83,14 +83,14 @@ func _build() -> void:
 	_content.add_child(bar)
 
 	var tip := G.gold_label("远征结算与讨伐首领可赚得荣誉", G.FS_XS, false, Color("7a5a2e"), false)
-	tip.position = Vector2(0, 76)
+	tip.position = Vector2(0, 32)
 	tip.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_content.add_child(tip)
 
 	# 14 条兑换项放不进一屏：装进滚动容器，返回/提示行固定在底部不再被行压住
 	var scroll := ScrollContainer.new()
-	scroll.position = Vector2(0, 98)
-	scroll.size = Vector2(CONTENT_W, 418)   # 顶部让出 44px 给荣誉余额后，高度同步收缩
+	scroll.position = Vector2(0, 54)
+	scroll.size = Vector2(CONTENT_W, 462)
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	scroll.mouse_filter = Control.MOUSE_FILTER_PASS
 	_content.add_child(scroll)

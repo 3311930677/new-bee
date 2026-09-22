@@ -12,17 +12,17 @@ func _run() -> void:
 	root.add_child(dm)
 
 	var roles: Variant = dm.table("roles")
-	assert(roles is Array and roles.size() == 3, "roles 应为 3 职业（复刻版三职业×男女）")
-	assert(dm.get_role("zs").get("name") == "铁衣")
+	assert(roles is Array and roles.size() == 4, "roles 应为 4 人")
+	assert(dm.get_role("zs").get("name") == "破军")
 	assert(dm.get_skill("zs_lieshan").get("k") == 1.5)
 	assert(dm.get_monster("mon_boss_forest").get("tier") == "boss")
 	assert(dm.get_pet("pet_frostwolf").get("rarity") == "blue")
 	assert(dm.get_trait("de_ranxue").get("type") == "double")
 	assert((dm.table("traits") as Array).size() == 44, "traits 应为 44 条")
-	assert((dm.table("skills") as Array).size() == 15, "skills 应为 15 条（三职业各 5）")
+	assert((dm.table("skills") as Array).size() == 20, "skills 应为 20 条")
 	assert((dm.table("monsters") as Array).size() == 35, "monsters 应为 35 条")
 	assert((dm.table("pets") as Array).size() == 8, "pets 应为 8 只")
-	assert((dm.table("combos") as Array).size() == 3, "combos 应为 3 条（三职业各 1）")
+	assert((dm.table("combos") as Array).size() == 4, "combos 应为 4 条")
 	assert(dm.theme_config("forest").get("boss") == "mon_boss_forest")
 	assert(dm.nodes_config().get("layers") == 3)
 	var themes: Dictionary = dm.maps_config().get("themes", {})
@@ -42,13 +42,6 @@ func _run() -> void:
 				"散件缺失：%s" % deco)
 
 	# 召唤类技能口径：带 summon 字段的技能必须声明 effect.type=="summon"（否则 summon 分支不可达）
-	# 复刻版素材映射自检（1.4 巡检）：同一张 AI 素材不许挂到两只不同的怪身上——
-	# 曾经 mon_magmagolem 与 mon_siege 共用 puppet_guard，两只怪长得一模一样
-	var used_art := {}
-	for mid in G.XA_ART.keys():
-		var aid := String(G.XA_ART[mid])
-		assert(not used_art.has(aid), "AI 素材被重复引用：%s ← %s / %s" % [aid, used_art.get(aid, ""), mid])
-		used_art[aid] = mid
 	for mon in dm.table("monsters"):
 		for sk in (mon as Dictionary).get("skills", []):
 			var skd: Dictionary = sk

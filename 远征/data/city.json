@@ -25,17 +25,17 @@
       "min_level": 1, "hue": 5, "pos": [12.0, 19.0], "size": [5.0, 2.0], "action": "visit",
       "desc": "面朝远征的石砌城门。门上挂着你的据点木牌，往来旅人都从这里进出。" },
 
-    { "id": "archive", "name": "藏经阁", "style": "archive", "kind": "func",
+    { "id": "archive", "name": "图志阁", "style": "archive", "kind": "func",
       "min_level": 1, "cost": { "gold": 150 }, "hue": 7,
       "pos": [5.0, 7.5], "size": [3.0, 2.5], "action": "worlds",
       "desc": "暂存各地物产与地形图样。落成后不必出城，也能翻阅世界图志。" },
 
-    { "id": "kennel", "name": "坐骑厩", "style": "kennel", "kind": "func",
+    { "id": "kennel", "name": "兽栏", "style": "kennel", "kind": "func",
       "min_level": 1, "cost": { "gold": 150 }, "hue": 9,
       "pos": [19.0, 7.5], "size": [3.0, 2.5], "action": "codex",
-      "desc": "圈养随行伙伴与坐骑的木栏小院。落成后可翻看图鉴，看看谁还愿意跟来。" },
+      "desc": "圈养随行宠物的木栏小院。落成后可翻看宠物图鉴，看看谁还愿意跟来。" },
 
-    { "id": "barracks", "name": "切磋台", "style": "barracks", "kind": "func",
+    { "id": "barracks", "name": "演武场", "style": "barracks", "kind": "func",
       "min_level": 2, "cost": { "gold": 240 }, "hue": 0,
       "pos": [4.0, 12.5], "size": [3.5, 2.5], "action": "deploy",
       "desc": "夯土校场配一座擂台。落成后可在城内整备队伍，直接择路出征。" },
@@ -73,7 +73,7 @@
         "出入随意，只是走的时候别把城门忘了。"
       ] },
 
-    { "id": "npc_scribe", "name": "青姨", "title": "藏经阁掌事", "need": "archive", "hue": 7,
+    { "id": "npc_scribe", "name": "青姨", "title": "图志阁掌事", "need": "archive", "hue": 7,
       "pos": [5.4, 8.8],
       "lines": [
         "图志上记着八片大陆，一片压着一片。",
@@ -81,7 +81,7 @@
         "解锁和通关不是一回事——地图开了，路还得自己走。"
       ] },
 
-    { "id": "npc_keeper", "name": "阿豆", "title": "坐骑厩伙计", "need": "kennel", "hue": 9,
+    { "id": "npc_keeper", "name": "阿豆", "title": "兽栏伙计", "need": "kennel", "hue": 9,
       "pos": [18.6, 8.8],
       "lines": [
         "宠物不是抓的，是那些世界首领倒下时，自己跟过来的。",

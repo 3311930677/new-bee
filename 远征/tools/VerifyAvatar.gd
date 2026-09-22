@@ -112,10 +112,10 @@ func _verify_import() -> void:
 
 # ---------- B. 切换：职业头像 ↔ 自定义头像 ----------
 func _verify_switch() -> void:
-	G.use_role_avatar("ls")
-	_check(G.avatar_id == "ls", "切到职业头像应成功")
+	G.use_role_avatar("ck")
+	_check(G.avatar_id == "ck", "切到职业头像应成功")
 	_check(not G.avatar_use_custom, "切职业头像后不应再使用自定义图")
-	_check(G.avatar_texture() == load(G.role_icon_path("ls")), "应使用追风（猎手）的职业头像")
+	_check(G.avatar_texture() == load(G.role_icon_path("ck")), "应使用穿杨的职业头像")
 	_check(G.has_custom_avatar(), "切走后上传的图应保留（还能切回来）")
 
 	_check(G.use_custom_avatar(), "有上传图时应能切回自定义头像")
@@ -124,8 +124,8 @@ func _verify_switch() -> void:
 
 	# 未知职业 id 不应写坏状态，也不应返回空贴图
 	G.use_role_avatar("not_exist")
-	_check(G.avatar_id == "ls", "未知职业 id 不应覆盖已有选择")
-	_check(G.role_icon_path("not_exist").ends_with("pojun_icon.png"), "未知职业应回落到铁衣头像")
+	_check(G.avatar_id == "ck", "未知职业 id 不应覆盖已有选择")
+	_check(G.role_icon_path("not_exist").ends_with("pojun_icon.png"), "未知职业应回落到破军头像")
 	_check(G.avatar_texture() != null, "头像贴图任何时候都不该为空")
 
 
@@ -158,7 +158,7 @@ func _verify_panels() -> void:
 	add_child(login)
 	await get_tree().process_frame
 	var cards: Array = login.get("_avatar_buttons")
-	_check(cards.size() == 4, "登录页应有 4 张头像卡（三职业 + 自定义），实为 %d" % cards.size())
+	_check(cards.size() == 5, "登录页应有 5 张头像卡（4 职业 + 自定义），实为 %d" % cards.size())
 	var ids: Array = []
 	for c in cards:
 		ids.append(String(c.get_meta("avatar_id", "")))

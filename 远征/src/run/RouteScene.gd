@@ -11,15 +11,13 @@ const VIEW_H := 800.0
 ## 场景切入前由调用方写入（GameHome 远征入口）
 static var pending_run: Dictionary = {}
 
-# 类型 → [显示名, 节点色, 图标名]。2026-09-21 武侠化（复刻方案 Task 2.3）：
-# 只换显示名，节点类型 id 与全部机制不动（肉鸽路线是本作特色，不砍不改）。
-const NODE_META := {
-	"normal": ["劫道", Color("5f7186"), "node_normal"],
+const NODE_META := {  # 类型 → [显示名, 节点色, 图标名]
+	"normal": ["遭遇", Color("5f7186"), "node_normal"],
 	"elite": ["精英", Color("7a4a9a"), "node_elite"],
-	"event": ["奇遇", Color("c9a44a"), "node_event"],
+	"event": ["事件", Color("c9a44a"), "node_event"],
 	"chest": ["宝箱", Color("b87830"), "node_chest"],
-	"shop": ["货栈", Color("5a8a4a"), "node_shop"],
-	"bonfire": ["营火", Color("a04a3a"), "node_campfire"],
+	"shop": ["商店", Color("5a8a4a"), "node_shop"],
+	"bonfire": ["篝火", Color("a04a3a"), "node_campfire"],
 	"boss": ["首领", Color("8a2f2f"), "node_boss"],
 }
 const NODE_X := [120.0, 240.0, 360.0]
@@ -559,12 +557,10 @@ class _RouteNode extends Control:
 		var fs := 13
 		var ts := font.get_string_size(label, HORIZONTAL_ALIGNMENT_CENTER, -1, fs)
 		var tp := Vector2(center.x - ts.x / 2.0, center.y + r + fs + 2.0)
-		# 浅底（羊皮纸）上别用浅色字：原来近白字 + 黑影，实测在米黄纸面上几乎读不出。
-		# 改墨褐字 + 浅色描边（与本文件 _layer_l 的"浅底改墨褐"同一口径）。
 		draw_string(font, tp + Vector2(0, 1.0), label, HORIZONTAL_ALIGNMENT_CENTER, -1, fs,
-			Color(1.0, 0.98, 0.90, 0.55 * alpha))
+			Color(0.0, 0.0, 0.0, 0.4 * alpha))
 		draw_string(font, tp, label, HORIZONTAL_ALIGNMENT_CENTER, -1, fs,
-			Color(0.34, 0.24, 0.12, alpha))
+			Color(0.99, 0.95, 0.86, alpha))
 
 		# 已清：右上一枚小金牌 ✓
 		if state == "done":

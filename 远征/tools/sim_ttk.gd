@@ -1,20 +1,22 @@
 # sim_ttk.gd —— TTK 数值模拟报告（玩法文档 §1.8，headless：godot --headless --path . -s tools/sim_ttk.gd）
-# 覆盖：① 三职业×4等级×3节点 TTK 表（目标 普通8~15s/精英40~70s/BOSS 60~120s）
-#       ② 分职业能量经济（霜语双重惩罚验证）③ 法师续航曲线 vs 主题强度递进
+# 覆盖：① 四人物×4等级×3节点 TTK 表（目标 普通8~15s/精英40~70s/BOSS 60~120s）
+#       ② 分人物能量经济（霜语双重惩罚验证）③ 晨星治疗曲线 vs 主题强度递进
 #       ④ 深渊 25 层终层（×4）vs lv60 满养成（流派词条+金宠+药剂）可行性
 extends SceneTree
 
 const SEEDS := 10
 const THEMES := ["forest", "snow", "volcano", "tomb", "desert", "glacier", "abyss", "castle"]
-const ROLES := ["zs", "ls", "fs"]
-# lv60 满养成 Build：各职业一套流派 4 词条 + 金宠 + 药剂×3
+const ROLES := ["zs", "ck", "fs", "fz"]
+# lv60 满养成 Build：各人物一套流派 4 词条 + 金宠 + 药剂×3
 const BUILD := {
 	"zs": {"traits": ["tr_atk_up_m", "tr_bleed_1", "tr_bleed_2", "tr_deep_wound"],
 		"pet": "pet_shadowviper", "bench": "pet_rockturtle"},
-	"ls": {"traits": ["tr_crit_1", "tr_crit_2", "tr_crit_up", "tr_crit_dmg"],
+	"ck": {"traits": ["tr_crit_1", "tr_crit_2", "tr_crit_up", "tr_crit_dmg"],
 		"pet": "pet_emberling", "bench": "pet_foxfire"},
 	"fs": {"traits": ["tr_ctrl_1", "tr_ctrl_2", "tr_chill_touch", "tr_stun_blow"],
 		"pet": "pet_eyescat", "bench": "pet_frostwolf"},
+	"fz": {"traits": ["tr_summon_1", "tr_summon_2", "tr_regen", "tr_hp_up_m"],
+		"pet": "pet_holydeer", "bench": "pet_thunderhawk"},
 }
 
 
@@ -80,11 +82,11 @@ func _run() -> void:
 			float(r.casts) / float(SEEDS), r.taken])
 
 	print("")
-	print("== ③ 法师续航曲线（fs layer3 normal，各主题胜率/场均治疗/场均承伤）==")
+	print("== ③ 晨星治疗曲线（fz layer3 normal，各主题胜率/场均治疗/场均承伤）==")
 	for lv in [10, 30, 50]:
-		var line := "fs lv%-2d |" % lv
+		var line := "fz lv%-2d |" % lv
 		for theme in THEMES:
-			var r := _sim_batch("fs", lv, "normal", 3, theme)
+			var r := _sim_batch("fz", lv, "normal", 3, theme)
 			line += " %s %3.0f%%(治%4.0f/伤%4.0f) |" % [theme.substr(0, 3), r.win * 100.0, r.heal, r.taken]
 		print(line)
 

@@ -284,64 +284,6 @@ func _run() -> void:
 	rmap1.queue_free()
 	await get_tree().process_frame
 
-	# ---- G4. 探索图 NPC：走近搭话（Task 2.2 / data/npcs.json） ----
-	var pst := RunState.new()
-	pst.setup({"theme": "forest", "role_id": "zs", "level": 5, "seed": 13})
-	MapScene.pending_cfg = {"node": {"type": "normal", "layer": 1, "index": 0}, "run": pst}
-	var pnpcmap: MapScene = (load("res://src/explore/MapScene.tscn") as PackedScene).instantiate()
-	add_child(pnpcmap)
-	await get_tree().process_frame
-	_check(pnpcmap._npcs.size() >= 1, "森林图应至少配 1 位 NPC，实为 %d" % pnpcmap._npcs.size())
-	if pnpcmap._npcs.size() >= 1:
-		var npc: Node = pnpcmap._npcs[0]
-		_check(String(npc.get("kind")) == "npc", "NPC 物件的 kind 应为 npc")
-		_check(String(npc.get("npc_name")) != "", "NPC 应有名字（头顶绿字）")
-		_check((npc.get("lines") as Array).size() >= 1, "NPC 应至少一句台词")
-		pnpcmap.on_interactable(npc)
-		await get_tree().process_frame
-		_check(G.modal_count() == 1, "搭话应弹出对话浮层，实为 %d" % G.modal_count())
-		_check(float(npc.get("cd")) > 0.0, "搭话后应上冷却，否则站在旁边会反复弹")
-		while G.modal_count() > 0:
-			G.close_info_popup_by_id(int((G._modals[0] as Dictionary).get("id", -1)))
-		await get_tree().process_frame
-	pnpcmap.queue_free()
-	await get_tree().process_frame
-
-	# ---- G5. 复刻版地图素材：AI 切图优先命中、缺图回落旧目录（Task 1.5） ----
-	_check(G.res_tex("001_tile_forest_1") != null,
-		"枫林郊野地砖应命中 AI 重生成素材（image/generated_362_xajh/ready/map/）")
-	var tmap := await _spawn_map("normal", 1, "")
-	var ai_tile: Texture2D = tmap._map_tex("001_tile_forest_1")
-	var old_tile: Texture2D = load("res://image/map_proc/001_tile_forest_1.png")
-	_check(ai_tile != null and ai_tile != old_tile and ai_tile.get_width() == 48,
-		"_map_tex 应取到 AI 地砖（48×48）而不是旧目录素材")
-	var ai_deco: Texture2D = tmap._map_tex("028_deco_forest_tree")
-	_check(ai_deco != null and ai_deco.get_height() == 128,
-		"森林大树应命中 AI 散件（128 高；旧素材 125）")
-	_check(tmap._map_tex("037_deco_snow_snowdrift") != null,
-		"没有 AI 版本的散件应回落 asset_dir（缺图不许开天窗）")
-	_check(tmap._map_tex("not_exist_at_all") == null,
-		"两边都没有的素材应老实返回 null，交给调用方处理")
-	tmap.queue_free()
-	await get_tree().process_frame
-
-	# ---- G6. 坐骑的跑图机动加成（mounts.json 顶层 explore 段） ----
-	var keep_m: Variant = G.prog.get("mounts", {})
-	G.prog["mounts"] = {"owned": {"horse": 1}, "active": "horse"}
-	_check(float(G.mount_explore_bonus().get("sprint_pct", 0.0)) > 0.0, "骑追风骏应有疾行提速")
-	G.prog["mounts"] = {"owned": {"griffin": 1}, "active": "griffin"}
-	_check(float(G.mount_explore_bonus().get("stealth_pct", 0.0)) > 0.0, "骑金鳞鲤应有明雷规避")
-	var zmob := await _spawn_map("normal", 1, "")
-	if not zmob._monsters.is_empty():
-		var base_aggro := float(TableCache.maps_config().get("aggro_radius", 120.0))
-		_check(zmob._monsters[0]._aggro < base_aggro,
-			"明雷规避应缩小警戒半径（%s < %s）" % [str(zmob._monsters[0]._aggro), str(base_aggro)])
-	zmob.queue_free()
-	await get_tree().process_frame
-	G.prog["mounts"] = {"owned": {}, "active": ""}
-	_check(float(G.mount_explore_bonus().get("sprint_pct", 0.0)) == 0.0, "没骑坐骑不应有机动加成")
-	G.prog["mounts"] = keep_m
-
 	# ---- H. 非战斗节点物件化（宝箱/事件/商店/篝火，§2.7） ----
 	# H1 宝箱：无怪有物件，靠近自动开启并入账
 	var cmap := await _spawn_map("chest", 1, "")

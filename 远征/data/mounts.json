@@ -1,64 +1,42 @@
 {
   "version": 1,
-  "explore": {
-    "comment": "坐骑的跑图机动加成（2026-09-22）：sprint_pct = 疾行提速，stealth_pct = 明雷规避（怪物警戒半径按此缩小）。按 [一阶, 二阶]，与战斗 bonus 分开：一个管战斗数值、一个管跑图手感。",
-    "horse":       [{"sprint_pct": 0.12}, {"sprint_pct": 0.20}],
-    "whitedeer":   [{"sprint_pct": 0.08, "stealth_pct": 0.08}, {"sprint_pct": 0.16, "stealth_pct": 0.14}],
-    "griffin":     [{"sprint_pct": 0.06, "stealth_pct": 0.10}, {"sprint_pct": 0.10, "stealth_pct": 0.16}],
-    "nightmare":   [{"sprint_pct": 0.08, "stealth_pct": 0.10}, {"sprint_pct": 0.14, "stealth_pct": 0.16}],
-    "sandlizard":  [{"sprint_pct": 0.04, "stealth_pct": 0.04}, {"sprint_pct": 0.08, "stealth_pct": 0.08}],
-    "bear":        [{"stealth_pct": 0.05}, {"stealth_pct": 0.08}],
-    "woolyrhino":  [{"stealth_pct": 0.04}, {"stealth_pct": 0.07}]
-  },
-  "comment": "坐骑线（玩法文档 §6/§15.1）：购入 1 阶后可用材料升 2 阶；同时只能骑乘 1 只，骑乘加成全局生效。2026-09-22 复刻版换皮：名字按帕拉多诺/洛林线自拟，图标指向 AI 重生成素材（C 类 8 张）；**id 与数值一律未动**（存档键与回归口径不变），二阶图标为 2026-09-22 补的强化形态（c_mount_*2）。",
+  "comment": "坐骑线（玩法文档 §6/§15.1）：6 类×2 阶。购入 1 阶后可用材料升 2 阶；同时只能骑乘 1 只，骑乘加成全局生效。",
   "mounts": [
-    { "id": "horse", "name": "追风骏", "icon": "c_mount_zq_sj", "icon2": "c_mount_zq_sj2",
-      "desc": "纯白鬃毛如一缕风，四蹄踏着风纹。洛林旧军传令官才配得上的脚力。",
+    { "id": "horse", "name": "烈焰马", "icon": "mount_horse", "icon2": "mount_horse_elite",
+      "desc": "日行千里的赤色骏马",
       "tiers": [
-        { "name": "追风骏", "bonus": {"spd_pct": 0.05}, "cost": {"gold": 2000} },
-        { "name": "追风骏·踏风", "bonus": {"spd_pct": 0.10, "atk_pct": 0.03}, "cost": {"gold": 8000, "honor": 200} }
+        { "name": "烈焰马", "bonus": {"spd_pct": 0.05}, "cost": {"gold": 2000} },
+        { "name": "烈焰马·疾风", "bonus": {"spd_pct": 0.10, "atk_pct": 0.03}, "cost": {"gold": 8000, "honor": 200} }
       ] },
-    { "id": "bear", "name": "墨甲狻猊", "icon": "c_mount_zq_mj", "icon2": "c_mount_zq_mj2",
-      "desc": "鬃毛如墨焰翻卷，浑身玄铁甲片。它不冲锋，它只是走过去。",
+    { "id": "bear", "name": "铁背熊", "icon": "mount_bear", "icon2": "mount_bear_elite",
+      "desc": "皮糙肉厚的山地巨熊",
       "tiers": [
-        { "name": "墨甲狻猊", "bonus": {"def_pct": 0.05}, "cost": {"gold": 2000} },
-        { "name": "墨甲狻猊·崩岩", "bonus": {"def_pct": 0.10, "maxhp_pct": 0.05}, "cost": {"gold": 8000, "honor": 200} }
+        { "name": "铁背熊", "bonus": {"def_pct": 0.05}, "cost": {"gold": 2000} },
+        { "name": "铁背熊·崩岩", "bonus": {"def_pct": 0.10, "maxhp_pct": 0.05}, "cost": {"gold": 8000, "honor": 200} }
       ] },
-    { "id": "griffin", "name": "金鳞鲤", "icon": "c_mount_zq_jxl", "icon2": "c_mount_zq_jxl2",
-      "desc": "传说中游于云上的锦鲤，金鳞开合时鳞下透光。乘位在它背上。",
+    { "id": "griffin", "name": "狮鹫", "icon": "mount_griffin", "icon2": "mount_griffin_elite",
+      "desc": "翱翔于风暴之上的猛禽",
       "tiers": [
-        { "name": "金鳞鲤", "bonus": {"atk_pct": 0.05}, "cost": {"gold": 3000, "soul": 50} },
-        { "name": "金鳞鲤·化龙", "bonus": {"atk_pct": 0.10, "crit_add": 0.03}, "cost": {"gold": 12000, "honor": 300} }
+        { "name": "狮鹫", "bonus": {"atk_pct": 0.05}, "cost": {"gold": 3000, "soul": 50} },
+        { "name": "狮鹫·裂空", "bonus": {"atk_pct": 0.10, "crit_add": 0.03}, "cost": {"gold": 12000, "honor": 300} }
       ] },
-    { "id": "nightmare", "name": "暗霜狼", "icon": "c_mount_frost_wolf", "icon2": "c_mount_frost_wolf2",
-      "desc": "冰蓝毛皮上凝着一层暗紫的霜，呼出的白气比雪更冷。",
+    { "id": "nightmare", "name": "梦魇", "icon": "mount_nightmare", "icon2": "mount_nightmare_elite",
+      "desc": "踏紫焰而来的幽暗战马",
       "tiers": [
-        { "name": "暗霜狼", "bonus": {"crit_add": 0.03}, "cost": {"gold": 3000, "soul": 50} },
-        { "name": "暗霜狼·噬影", "bonus": {"crit_add": 0.06, "atk_pct": 0.05}, "cost": {"gold": 12000, "honor": 300} }
+        { "name": "梦魇", "bonus": {"crit_add": 0.03}, "cost": {"gold": 3000, "soul": 50} },
+        { "name": "梦魇·噬魂", "bonus": {"crit_add": 0.06, "atk_pct": 0.05}, "cost": {"gold": 12000, "honor": 300} }
       ] },
-    { "id": "sandlizard", "name": "踏云青", "icon": "c_mount_zq_dyq", "icon2": "c_mount_zq_dyq2",
-      "desc": "青毛卷纹的老牛，鼻上挂一只铜环。走得不快，却从不失蹄。",
+    { "id": "sandlizard", "name": "沙蜥", "icon": "mount_sandlizard", "icon2": "mount_sandlizard_elite",
+      "desc": "沙漠中来去如风的巨蜥",
       "tiers": [
-        { "name": "踏云青", "bonus": {"maxhp_pct": 0.05}, "cost": {"gold": 2000} },
-        { "name": "踏云青·负山", "bonus": {"maxhp_pct": 0.10, "spd_pct": 0.04}, "cost": {"gold": 8000, "honor": 200} }
+        { "name": "沙蜥", "bonus": {"maxhp_pct": 0.05}, "cost": {"gold": 2000} },
+        { "name": "沙蜥·荒漠领主", "bonus": {"maxhp_pct": 0.10, "spd_pct": 0.04}, "cost": {"gold": 8000, "honor": 200} }
       ] },
-    { "id": "woolyrhino", "name": "玲犀", "icon": "c_mount_zq_lxn", "icon2": "c_mount_zq_lxn2",
-      "desc": "玉白的独角踏下泛起青光，是雪线以上唯一肯让人骑的活物。",
+    { "id": "woolyrhino", "name": "披毛犀", "icon": "mount_woolyrhino", "icon2": "mount_woolyrhino_elite",
+      "desc": "雪原上的移动堡垒",
       "tiers": [
-        { "name": "玲犀", "bonus": {"maxhp_pct": 0.03, "def_pct": 0.03}, "cost": {"gold": 2500} },
-        { "name": "玲犀·蓝玉壁", "bonus": {"maxhp_pct": 0.08, "def_pct": 0.08}, "cost": {"gold": 10000, "honor": 250} }
-      ] },
-    { "id": "whitedeer", "name": "白鹿", "icon": "c_mount_zq_bl", "icon2": "c_mount_zq_bl2",
-      "desc": "雪白的灵鹿，鹿角上缠着金藤。它记得每一条没人走过的路。",
-      "tiers": [
-        { "name": "白鹿", "bonus": {"maxhp_pct": 0.04, "spd_pct": 0.02}, "cost": {"gold": 3000} },
-        { "name": "白鹿·衔芝", "bonus": {"maxhp_pct": 0.08, "spd_pct": 0.06}, "cost": {"gold": 12000, "honor": 300} }
-      ] },
-    { "id": "flamecolt", "name": "焰驹", "icon": "c_mount_flame_steed", "icon2": "c_mount_flame_steed2",
-      "desc": "赤焰为鬃，蹄下溅火星。跑起来时，身后那串火星能照亮夜路。",
-      "tiers": [
-        { "name": "焰驹", "bonus": {"atk_pct": 0.03, "crit_add": 0.02}, "cost": {"gold": 3500, "soul": 60} },
-        { "name": "焰驹·燎原", "bonus": {"atk_pct": 0.08, "crit_add": 0.05}, "cost": {"gold": 14000, "honor": 350} }
+        { "name": "披毛犀", "bonus": {"maxhp_pct": 0.03, "def_pct": 0.03}, "cost": {"gold": 2500} },
+        { "name": "披毛犀·冰川壁垒", "bonus": {"maxhp_pct": 0.08, "def_pct": 0.08}, "cost": {"gold": 10000, "honor": 250} }
       ] }
   ]
 }
