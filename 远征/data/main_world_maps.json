@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "default_map": "lorin_wilds",
+  "maps": {
+    "lorin_wilds": {
+      "name": "洛林主城",
+      "theme": "forest",
+      "background": "res://image/main_world/lorin_wilds_grass_v2.png",
+      "map_cols": 20,
+      "map_rows": 26,
+      "layout_version": 3,
+      "player_scale": 0.54,
+      "camera_zoom": 1.15,
+      "spawn": [480, 930],
+      "exit": [480, 96],
+      "city_building_positions": {
+        "hall": [245, 260], "archive": [245, 520],
+        "barracks": [245, 790], "forge": [245, 1080],
+        "kennel": [715, 260], "storehouse": [715, 520],
+        "shrine": [715, 790], "gate": [715, 1080]
+      },
+      "city_npc_positions": {
+        "npc_steward": [375, 300], "npc_scribe": [375, 560],
+        "npc_smith": [375, 830], "npc_warden": [375, 1120],
+        "npc_keeper": [585, 300], "npc_child": [585, 830],
+        "npc_guard": [585, 1120]
+      },
+      "city_guest_positions": [[375, 1210], [585, 1210]],
+      "goal": "游历主城，走访城中建筑",
+      "node_type": "normal",
+      "monster_count": 6,
+      "monster_positions": [[480, 790], [80, 600], [880, 600], [80, 1000], [880, 1000], [480, 160]],
+      "monster_ids": ["mon_zombie"],
+      "monster_sprite": "res://image/generated_362_xajh/ready/monster/mon_ghost.png",
+      "monster_height": 118,
+      "monster_level_offset": 2,
+      "monster_wander_only": true,
+      "monster_wander_radius": 48,
+      "monster_respawn_seconds": 30,
+      "monster_contact_radius": 42,
+      "encounter_solo": true
+    }
+  }
+}

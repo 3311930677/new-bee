@@ -1,0 +1,21 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+WARNING: Loaded resource as image file, this will not work on export: 'res://image/role/zs/source/pojun_walk_before_v8.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _initialize (res://tools/pack_walk_gait_v9.gd:18)
+HEIGHT zs row 0: [95, 95, 95, 95]
+HEIGHT zs row 1: [96, 96, 96, 96]
+HEIGHT zs row 2: [96, 96, 96, 96]
+HEIGHT zs row 3: [95, 94, 96, 94]
+GAIT_V8_CANDIDATE_OK zs
+WARNING: Loaded resource as image file, this will not work on export: 'res://image/role/ck/source/chuanyang_walk_before_v8.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _initialize (res://tools/pack_walk_gait_v9.gd:18)
+SCRIPT ERROR: Assertion failed.
+   at: _initialize (res://tools/pack_walk_gait_v9.gd:80)
+   GDScript backtrace (most recent call first):
+       [0] _initialize (res://tools/pack_walk_gait_v9.gd:80)

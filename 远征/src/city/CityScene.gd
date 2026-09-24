@@ -44,13 +44,33 @@ var _panel: Control = null      # 城内浮层（对话/建筑/布告板/访客�
 var _overlay: Control = null    # 复用面板（世界/图鉴/出征）
 var _talk_turns := {}           # npc_id -> 已聊次数（当天对话轮换）
 var _dlg: Dictionary = {}       # 进行中的对话 {"id","guest","turn","line"}
+var _embedded_map: MapScene = null
+
+
+## 作为新主城地图的城务层运行；原有建筑、NPC、对话和面板仍由本场景维护。
+func embed_in(map: MapScene) -> void:
+	_embedded_map = map
+
+
+func has_modal() -> bool:
+	return _panel != null or _overlay != null
 
 
 func _ready() -> void:
-	Audio.play_bgm("bgm_city")
 	_cfg = G.city_config()
 	_cols = int(_cfg.get("map_cols", 24))
 	_rows = int(_cfg.get("map_rows", 20))
+	if _embedded_map != null:
+		_world = _embedded_map._world
+		_player = _embedded_map._player
+		_hud = _embedded_map._hud
+		_build_buildings()
+		_build_npcs()
+		_build_embedded_hud()
+		_overlay_layer.layer = 3
+		add_child(_overlay_layer)
+		return
+	Audio.play_bgm("bgm_city")
 	_rng.seed = 20260916  # 城是固定的：地被/散件布局不随进出变化
 	_build_ground()
 	_build_world()
@@ -148,6 +168,24 @@ func _spawn_px() -> Vector2:
 	return Vector2(float(sp[0]) * TILE, float(sp[1]) * TILE)
 
 
+func _city_pos(pos: Vector2) -> Vector2:
+	if _embedded_map == null:
+		return pos
+	var map_size := Vector2(float(int(_embedded_map._map_cfg.get("map_cols", 20)) * 48),
+		float(int(_embedded_map._map_cfg.get("map_rows", 26)) * 48))
+	return pos * map_size / Vector2(float(_cols) * TILE, float(_rows) * TILE)
+
+
+func _embedded_city_point(group: String, id: String, fallback: Vector2) -> Vector2:
+	if _embedded_map == null:
+		return fallback
+	var positions: Dictionary = _embedded_map._main_cfg.get(group, {})
+	var point: Variant = positions.get(id, [])
+	if point is Array and (point as Array).size() >= 2:
+		return Vector2(float(point[0]), float(point[1]))
+	return _city_pos(fallback)
+
+
 ## 某点是否落在任一建筑轮廓内（散件避让用）
 func _in_building(pos: Vector2) -> bool:
 	for bd in _cfg.get("buildings", []):
@@ -193,7 +231,8 @@ func _build_buildings() -> void:
 		var b := _Building.new()
 		b.setup(bd)
 		var p: Array = (bd as Dictionary).get("pos", [12.0, 10.0])
-		b.position = Vector2(float(p[0]) * TILE, float(p[1]) * TILE)
+		b.position = _embedded_city_point("city_building_positions", String(bd.get("id", "")),
+			Vector2(float(p[0]) * TILE, float(p[1]) * TILE))
 		_buildings.append(b)
 		_world.add_child(b)
 
@@ -204,12 +243,21 @@ func _build_npcs() -> void:
 	# 今日来客：按「当天 + 据点码」确定性抽两位，在城门内侧落脚
 	var guests := G.today_guests(2)
 	var spots := [Vector2(10.6, 16.6), Vector2(13.6, 16.9)]
+	var guest_points: Array = _embedded_map._main_cfg.get("city_guest_positions", []) \
+		if _embedded_map != null else []
 	for i in guests.size():
 		var site := String(guests[i])
 		_spawn_npc({
 			"id": "guest_" + site, "name": site, "title": "来访旅人",
 			"hue": 6, "lines": [G.guest_note(site)],
-		}, true, spots[i % spots.size()] * TILE)
+		}, true, _cfg_guest_point(guest_points, i, spots[i % spots.size()] * TILE))
+
+
+func _cfg_guest_point(points: Array, idx: int, fallback: Vector2) -> Vector2:
+	if _embedded_map != null and idx < points.size() and points[idx] is Array \
+			and (points[idx] as Array).size() >= 2:
+		return Vector2(float(points[idx][0]), float(points[idx][1]))
+	return _city_pos(fallback)
 
 
 func _spawn_npc(nd: Dictionary, guest: bool, at := Vector2.ZERO) -> void:
@@ -217,12 +265,14 @@ func _spawn_npc(nd: Dictionary, guest: bool, at := Vector2.ZERO) -> void:
 	var n := _CityNPC.new()
 	n.data = nd
 	n.guest = guest
+	n.embedded = _embedded_map != null
 	n.hue = int(nd.get("hue", 0))
 	n.frames = _npc_idle_frames(npc_id, guest)   # 首选：idle 四帧条（像素小人会呼吸）
 	n.art = _npc_world_tex(npc_id, guest)        # 兜底：单帧站位/立绘；都没有才画色块小人
 	if at == Vector2.ZERO:
 		var p: Array = nd.get("pos", [12.0, 10.0])
-		at = Vector2(float(p[0]) * TILE, float(p[1]) * TILE)
+		at = _embedded_city_point("city_npc_positions", npc_id,
+			Vector2(float(p[0]) * TILE, float(p[1]) * TILE))
 	n.position = at
 	_npcs.append(n)
 	_world.add_child(n)
@@ -340,6 +390,49 @@ func _build_hud() -> void:
 	_hud.add_child(_joy)
 
 
+func _build_embedded_hud() -> void:
+	# 原主城的城名、金币、委托与出征入口放在地图 HUD 上。
+	var banner := G.banner_box(G.city_name(), 150, 34, G.FS_SM)
+	banner.position = Vector2(198, 14)
+	banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_hud.add_child(banner)
+	var gold_chip := G.parchment_box(104, 32, 5.0)
+	gold_chip.position = Vector2(154, 98)
+	gold_chip.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_hud.add_child(gold_chip)
+	var gold_row := HBoxContainer.new()
+	gold_row.add_theme_constant_override("separation", 4)
+	gold_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	gold_chip.add_child(gold_row)
+	var gold_icon := TextureRect.new()
+	gold_icon.texture = G.res_tex("cur_gold")
+	gold_icon.custom_minimum_size = Vector2(20, 20)
+	gold_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	gold_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	gold_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	gold_row.add_child(gold_icon)
+	_stat_lbl = G.gold_label("", 13, true, Color("3e2a14"), false)
+	_stat_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	gold_row.add_child(_stat_lbl)
+	_quest_chip = G.parchment_box(130, 32, 5.0)
+	_quest_chip.position = Vector2(16, 98)
+	_quest_chip.mouse_filter = Control.MOUSE_FILTER_STOP
+	_quest_chip.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_open_quests())
+	_hud.add_child(_quest_chip)
+	_quest_lbl = G.gold_label("", 13, true, Color("3e2a14"), false)
+	_quest_lbl.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_quest_chip.add_child(_quest_lbl)
+	_refresh_stat()
+	var go := G.gold_button("出 征", 156, 50, G.FS_MD)
+	go.position = Vector2((VIEW_W - 156.0) * 0.5, VIEW_H - 76)
+	go.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_open_deploy())
+	_hud.add_child(go)
+
+
 func _build_vignette() -> void:
 	var grad := Gradient.new()
 	grad.offsets = PackedFloat32Array([0.0, 0.42, 0.78])
@@ -367,8 +460,8 @@ func _build_vignette() -> void:
 
 func _refresh_stat() -> void:
 	if _stat_lbl != null:
-		_stat_lbl.text = "Lv.%d · 金 %d" % [int(G.prog.get("level", 1)),
-			int(G.wallet.get("gold", 0))]
+		_stat_lbl.text = str(int(G.wallet.get("gold", 0))) if _embedded_map != null \
+			else "Lv.%d · 金 %d" % [int(G.prog.get("level", 1)), int(G.wallet.get("gold", 0))]
 	if _quest_lbl != null:
 		_quest_lbl.text = G.quest_today_text()
 
@@ -387,7 +480,12 @@ func _toast(msg: String) -> void:
 
 
 # ================= 主循环 =================
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	if _embedded_map != null:
+		if _embedded_map._modal_open() or _player == null:
+			return
+		_check_interact()
+		return
 	if _panel != null or _overlay != null:
 		return
 	if G.ui_blocked:  # GM 控制台等全屏浮层优先
@@ -399,15 +497,16 @@ func _physics_process(_delta: float) -> void:
 		dir = (dir + _joy.vector).limit_length(1.0)
 	var speed := float(_cfg.get("player_speed", 92.0))
 	_player.velocity = dir * speed
+	var before := _player.position
 	_player.move_and_slide()
 	_player.position = _player.position.clamp(Vector2(20, 40),
 		Vector2(_cols * 48 - 20, _rows * 48 - 20))
-	_update_player_anim(dir)
+	_update_player_anim((_player.position - before) / maxf(delta, 0.0001))
 	_check_interact()
 
 
 func _update_player_anim(dir: Vector2) -> void:
-	if dir.length_squared() < 0.01:
+	if dir.length_squared() < 0.25:
 		_player_anim.stop()
 		_player_anim.frame = 1
 		return
@@ -417,8 +516,11 @@ func _update_player_anim(dir: Vector2) -> void:
 	else:
 		anim = &"walk_down" if dir.y > 0 else &"walk_up"
 	if _player_anim.animation != anim:
+		var gait_frame := _player_anim.frame
+		var gait_progress := _player_anim.frame_progress
 		_player_anim.animation = anim
-	_player_anim.speed_scale = clampf(_player.velocity.length() / 92.0, 0.55, 2.0)
+		_player_anim.set_frame_and_progress(gait_frame, gait_progress)
+	_player_anim.speed_scale = dir.length() / maxf(1.0, float(_cfg.get("player_speed", 92.0)))
 	if not _player_anim.is_playing():
 		_player_anim.play()
 
@@ -442,6 +544,7 @@ func _check_interact() -> void:
 			best = n
 			best_d = nd
 		n.hover = nd < NPC_R + 24.0
+		n.label_near = nd < 122.0 if _embedded_map != null else true
 		if nd > REARM_R:
 			n.cooled = false
 	if best != null and not (best as Object).get("cooled"):
@@ -1032,6 +1135,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if not event.is_action_pressed("ui_cancel"):
 		return
+	if _embedded_map != null and _overlay == null and _panel == null:
+		return
 	# 先拿 viewport：_go_home() 会触发切场景，本节点离场后 get_viewport() 返回 null
 	var vp := get_viewport()
 	if _overlay != null:
@@ -1483,6 +1588,8 @@ class _Building extends StaticBody2D:
 class _CityNPC extends Node2D:
 	var data: Dictionary = {}
 	var guest := false
+	var embedded := false
+	var label_near := true
 	var hue := 0
 	var hover := false
 	var cooled := false
@@ -1492,6 +1599,8 @@ class _CityNPC extends Node2D:
 	var _pad: PanelContainer = null   # 名牌底衬（屏内钳制要挪它）
 	var _name_l: Label = null         # 名牌文字
 	var _plate_top := 0.0             # 名牌本地 y（形象决定，钳制只动 x/按需上抬）
+	var _plate_w := 160.0
+	var _plate_h := 18.0
 	# 与主角同一套标定：0.72 倍；idle 条帧内脚底 y≈123、帧心 64 → 反向抬 (123-64)×0.72，脚落在节点原点
 	const IDLE_SCALE := 0.72
 	const IDLE_LIFT := 42.5
@@ -1516,19 +1625,24 @@ class _CityNPC extends Node2D:
 			txt += " · " + title
 		# 名牌高度随形象变：像素小人身高 80（含头）→ -108；立绘 104 → -114；色块小人 → -52
 		_plate_top = -108.0 if frames != null else (-114.0 if art != null else -52.0)
-		_name_l = G.gold_label(txt, G.FS_XS, false, Color("f5ead0"), true)
-		_name_l.position = Vector2(-80, _plate_top + 2)
-		_name_l.custom_minimum_size = Vector2(160, 0)
+		_plate_w = clampf(G.font_bold.get_string_size(txt,
+			HORIZONTAL_ALIGNMENT_LEFT, -1, 14).x + 16.0, 76.0, 156.0) \
+			if embedded else 160.0
+		_plate_h = 20.0 if embedded else 18.0
+		_name_l = G.gold_label(txt, 14 if embedded else G.FS_XS,
+			embedded, Color("fff5df"), false)
+		_name_l.position = Vector2(-_plate_w * 0.5, _plate_top + 2)
+		_name_l.custom_minimum_size = Vector2(_plate_w, 0)
 		_name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		_pad = PanelContainer.new()
-		_pad.position = Vector2(-80, _plate_top)
-		_pad.custom_minimum_size = Vector2(160, 18)
+		_pad.position = Vector2(-_plate_w * 0.5, _plate_top)
+		_pad.custom_minimum_size = Vector2(_plate_w, _plate_h)
 		_pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		var psb := StyleBoxFlat.new()
 		# 名牌做成一小块木牌：圆角拉成胶囊状 + 一圈暗金描边 + 浅投影，
 		# 和羊皮纸/金钮同一套材质语言；原来只是个圆角 3 的半透明黑条，像调试贴片。
-		# 尺寸口径严格不动（160×18），_clamp_plate() 按这个数钳制屏内位置。
-		psb.bg_color = Color(0.08, 0.05, 0.03, 0.62)
+		# 名牌按文字内容收紧，_clamp_plate() 按实际宽度钳制屏内位置。
+		psb.bg_color = Color(0.08, 0.05, 0.03, 0.82 if embedded else 0.62)
 		psb.set_corner_radius_all(9)
 		psb.set_border_width_all(1)
 		psb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.45)
@@ -1538,10 +1652,18 @@ class _CityNPC extends Node2D:
 		_pad.add_theme_stylebox_override("panel", psb)
 		add_child(_pad)
 		add_child(_name_l)
+		if embedded:
+			_pad.modulate.a = 0.0
+			_name_l.modulate.a = 0.0
 
 	func _process(delta: float) -> void:
 		_t += delta
 		queue_redraw()
+		if embedded and _pad != null and _name_l != null:
+			var alpha := move_toward(_pad.modulate.a, 1.0 if label_near else 0.0,
+				delta * 5.0)
+			_pad.modulate.a = alpha
+			_name_l.modulate.a = alpha
 		_clamp_plate()
 
 	## 名牌屏内钳制：镜头跟主角走，NPC 挪到屏缘时名牌会被裁掉半块——
@@ -1555,14 +1677,14 @@ class _CityNPC extends Node2D:
 			return
 		var sx: float = xf.origin.x
 		var sy: float = xf.origin.y
-		# 本地 x 的可行区间：屏左 ≥4 且屏右 ≤476（名牌本地宽 160）
+		# 本地 x 的可行区间：屏左 ≥4 且屏右 ≤476。
 		var lo := (4.0 - sx) / z
-		var hi := (476.0 - sx) / z - 160.0
-		var px := clampf(-80.0, lo, hi) if lo <= hi else -80.0
+		var hi := (476.0 - sx) / z - _plate_w
+		var px := clampf(-_plate_w * 0.5, lo, hi) if lo <= hi else -_plate_w * 0.5
 		var py := _plate_top
 		var scr_left := sx + px * z
 		var scr_top := sy + py * z
-		if scr_left < 160.0 and scr_top + 18.0 * z > 624.0:
+		if scr_left < 160.0 and scr_top + _plate_h * z > 624.0:
 			py -= 40.0 / z   # 摇杆区上抬（屏幕 40px 折回本地坐标）
 		_pad.position = Vector2(px, py)
 		_name_l.position = Vector2(px, py + 2)

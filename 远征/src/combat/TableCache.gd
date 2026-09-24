@@ -93,6 +93,24 @@ static func maps_config() -> Dictionary:
 	return v if v is Dictionary else {}
 
 
+## 主世界地图与历练 maps.json 分表：前者是常驻江湖，后者继续服务肉鸽探索。
+static func main_world_config() -> Dictionary:
+	var v: Variant = _load("res://data/main_world_maps.json")
+	return v if v is Dictionary else {}
+
+
+static func main_world_map(map_id: String) -> Dictionary:
+	var maps: Variant = main_world_config().get("maps", {})
+	if not (maps is Dictionary):
+		return {}
+	var row: Variant = (maps as Dictionary).get(map_id, {})
+	return (row as Dictionary).duplicate(true) if row is Dictionary else {}
+
+
+static func default_main_world_map() -> String:
+	return String(main_world_config().get("default_map", "lorin_wilds"))
+
+
 ## 玩家步行速度（maps.json 顶层 player_speed）。
 ## 四个消费点（移动 / 步频 / 卡住判定 / 怪物追击基准）都走这里：
 ## 以前各写一份兜底（130/100/88/130），改表时行为分裂（收口：同字段禁止多处默认值）

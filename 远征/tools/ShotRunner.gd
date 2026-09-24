@@ -1,11 +1,12 @@
 # ShotRunner.gd —— 界面截图工具（窗口模式运行，非 headless）
-# 用法：godot --path . res://tools/ShotRunner.tscn -- --scene=title [--frames=45] [--theme=castle]
+# 用法：godot --path . res://tools/ShotRunner.tscn -- --scene=title [--frames=45] [--theme=castle] [--out=<png>]
 # 输出：user://shots/<scene>.png
 extends Node
 
 var _scene := "title"
 var _frames := 45
 var _theme := "forest"
+var _output := ""
 
 
 func _ready() -> void:
@@ -16,19 +17,29 @@ func _ready() -> void:
 			_frames = int(a.trim_prefix("--frames="))
 		elif a.begins_with("--theme="):
 			_theme = a.trim_prefix("--theme=")
+		elif a.begins_with("--out="):
+			_output = a.trim_prefix("--out=")
 	await _setup()
 	for i in _frames:
 		await get_tree().process_frame
-	DirAccess.make_dir_recursive_absolute("user://shots")
+	if _output == "":
+		DirAccess.make_dir_recursive_absolute("user://shots")
+		_output = "user://shots/%s.png" % _scene
+	else:
+		DirAccess.make_dir_recursive_absolute(_output.get_base_dir())
 	var img := get_viewport().get_texture().get_image()
-	img.save_png("user://shots/%s.png" % _scene)
-	print("SHOT_SAVED ", _scene)
+	var save_err := img.save_png(_output)
+	if save_err != OK:
+		push_error("SHOT_SAVE_FAILED %s (%d)" % [_output, save_err])
+	else:
+		print("SHOT_SAVED ", _output)
 	get_tree().quit()
 
 
 func _demo_prog() -> void:
 	G.prog = {"level": 12, "exp": 340, "worlds_unlocked": 3,
-		"world_cleared": {"forest": true, "snow": true}, "pets": []}
+		"world_cleared": {"forest": true, "snow": true}, "pets": [],
+		"main_world": {"map_id": "lorin_wilds"}}
 	G.ensure_starter_pets()
 	G.collect_pet("pet_thunderhawk")
 	G.collect_pet("pet_frostwolf")
@@ -165,6 +176,36 @@ func _setup() -> void:
 			MapScene.pending_cfg = {
 				"node": {"type": "boss", "layer": 4, "index": 0}, "run": _make_run()}
 			add_child(load("res://src/explore/MapScene.tscn").instantiate())
+		"main_world", "main_world_battle", "main_world_battle_commands", "main_world_battle_skills", "main_world_battle_projectile":
+			G.SAVE_PATH = "res://tools/_logs/save_shot_main_world.json"
+			_demo_prog()
+			G.account = "演示账号"
+			G.player_name = "角色昵称"
+			var world_run := _make_run()
+			world_run.level = int(G.prog.get("level", world_run.level))
+			MapScene.pending_cfg = {"mode": "main_world", "main_map_id": "lorin_wilds",
+				"node": {"type": "normal", "layer": 0, "index": 0}, "run": world_run}
+			var world: MapScene = load("res://src/explore/MapScene.tscn").instantiate()
+			add_child(world)
+			if _scene in ["main_world_battle", "main_world_battle_commands", "main_world_battle_skills",
+				"main_world_battle_projectile"]:
+				await get_tree().process_frame
+				world._start_battle(world._monsters[0])
+				if _scene == "main_world_battle_projectile" and world._battle != null:
+					world._battle.speed = 0.0
+					var role := world._battle.sim.role_unit()
+					var targets := world._battle.sim.alive_units("enemy")
+					if role != null and not targets.is_empty():
+						role.attack_range = "range"
+						var target: Combatant = targets[0]
+						var amount := mini(18, maxi(target.hp - 1, 1))
+						target.hp -= amount
+						world._battle._on_event({"t": "basic", "src": role.uid, "uid": target.uid})
+						world._battle._on_event({"t": "dmg", "src": role.uid, "uid": target.uid,
+							"amount": amount, "crit": false, "dot": false})
+						world._battle._sync_views()
+				elif _scene == "main_world_battle_skills" and world._battle != null:
+					world._battle._show_command_skills()
 		"battle":
 			BattleScene.pending_cfg = {
 				"ally": {

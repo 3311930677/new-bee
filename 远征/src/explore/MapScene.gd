@@ -52,11 +52,20 @@ var _exit_ui: Control = null              # 撤离确认浮层
 var _beat: Control = null                 # 首领剧情演出层（对峙/余韵）
 var _battle_layer: CanvasLayer = null
 var _battle: BattleScene = null
+var _city_content: Node = null
 var _hud := CanvasLayer.new()
 var _hp_fill := ColorRect.new()
 var _pot_l := Label.new()
+var _main_hp_fill := ColorRect.new()
+var _main_exp_fill := ColorRect.new()
+var _main_level_l: Label = null
+var _main_exp_l: Label = null
+var _main_hp_l: Label = null
+var _player_name_l: Label = null
+var _player_tag: Panel = null
 var _toast_lbl: Label = null
 var _pet_btn: Control = null
+var _potion_badge: Label = null
 var _picker: TraitPicker = null
 var _joy: _Joystick
 var _map_done := false
@@ -64,6 +73,13 @@ var _map_cfg: Dictionary = {}
 var _map_asset_dir := ""   # 地图素材成品目录（maps.json 的 asset_dir；缺配置时退回 FALLBACK_ASSET_DIR）
 const FALLBACK_ASSET_DIR := "res://image/map_proc"
 var _theme_cfg: Dictionary = {}
+var _mode := "expedition"
+var _main_map_id := ""
+var _main_cfg: Dictionary = {}
+var _main_resume_pos := Vector2(-1.0, -1.0)
+var _main_respawn_at: Dictionary = {}
+var _main_spawn_slots: Array[Dictionary] = []
+var _main_respawn_tick := 0.0
 
 # ---- 探索动机（轮次 16：清场不再是"浪费时间"）----
 # 原来最优解永远是直线冲传送阵：绕开怪物零成本。现在清怪与拾取都给探索分，
@@ -105,12 +121,53 @@ func _ready() -> void:
 	Audio.play_bgm("bgm_map")
 	var cfg := pending_cfg
 	pending_cfg = {}
+	_mode = String(cfg.get("mode", "expedition"))
+	_main_map_id = String(cfg.get("main_map_id", ""))
+	if _mode == "main_world":
+		if _main_map_id.is_empty():
+			_main_map_id = TableCache.default_main_world_map()
+		_main_cfg = TableCache.main_world_map(_main_map_id)
+		if _main_cfg.is_empty():
+			push_error("主世界地图配置缺失：%s" % _main_map_id)
+			return
+		var world_state: Variant = G.prog.get("main_world", {})
+		if world_state is Dictionary and String((world_state as Dictionary).get("map_id", "")) == _main_map_id:
+			var saved_pos: Variant = (world_state as Dictionary).get("position", [])
+			if saved_pos is Array and (saved_pos as Array).size() >= 2:
+				_main_resume_pos = Vector2(float((saved_pos as Array)[0]), float((saved_pos as Array)[1]))
+			# 首版洛林郊野是 32×42 格；缩图时把旧档坐标按比例迁移，
+			# 避免只做边界钳制而把旅人挤到新地图的右下角。
+			if _main_map_id == "lorin_wilds" \
+					and int((world_state as Dictionary).get("layout_version", 1)) < 2 \
+					and _main_resume_pos.x >= 0.0 and _main_resume_pos.y >= 0.0:
+				_main_resume_pos *= Vector2(
+					float(int(_main_cfg.get("map_cols", 20))) / 32.0,
+					float(int(_main_cfg.get("map_rows", 26))) / 42.0)
+			# 上版旧出生点在道路中段。只迁移仍停在那里的角色，不动玩家自行走到的坐标。
+			if _main_map_id == "lorin_wilds" \
+					and int((world_state as Dictionary).get("layout_version", 1)) == 2 \
+					and _main_resume_pos.distance_to(Vector2(480, 980)) < 25.0:
+				_main_resume_pos = _cfg_point(_main_cfg.get("spawn", []), Vector2(480, 930))
+			var saved_respawn: Variant = (world_state as Dictionary).get("respawn_at", {})
+			if saved_respawn is Dictionary:
+				_main_respawn_at = (saved_respawn as Dictionary).duplicate()
+			# 旧档永久击杀记录迁移为一次限时刷新。
+			var saved_killed: Variant = (world_state as Dictionary).get("killed", [])
+			if saved_killed is Array:
+				for old_id in saved_killed:
+					var key := str(old_id)
+					if not _main_respawn_at.has(key):
+						_main_respawn_at[key] = Time.get_unix_time_from_system() + _main_respawn_seconds()
 	st = cfg.get("run", null)
 	node = cfg.get("node", {})
 	if st == null:
 		push_error("MapScene 缺少 run 状态")
 		return
 	_map_cfg = TableCache.maps_config().duplicate(true)
+	if _mode == "main_world":
+		_map_cfg["map_cols"] = int(_main_cfg.get("map_cols", _map_cfg.get("map_cols", 32)))
+		_map_cfg["map_rows"] = int(_main_cfg.get("map_rows", _map_cfg.get("map_rows", 42)))
+		st.theme = String(_main_cfg.get("theme", st.theme))
 	_theme_cfg = TableCache.theme_config(st.theme)
 	# 世界主题规则（C 批）：揭示半径这条不属于战斗 tick，只能在大地图侧按主题覆盖。
 	# 必须 duplicate 后再写——原地改 _map_cfg 就是改 TableCache 的缓存，跨场景串味。
@@ -124,16 +181,43 @@ func _ready() -> void:
 	if _map_asset_dir.is_empty():
 		_map_asset_dir = FALLBACK_ASSET_DIR
 		push_warning("maps.json 缺 asset_dir，地图素材退回 %s（请在表里显式配置）" % FALLBACK_ASSET_DIR)
-	_rng.seed = hash("%d_%d" % [st.run_seed, int(node.get("layer", 1)) * 10 + int(node.get("index", 0))])
+	var node_seed := int(node.get("layer", 1)) * 10 + int(node.get("index", 0))
+	# 历练沿用原种子文本，保证旧局布局、测试 fixture 与存档恢复完全不漂移。
+	_rng.seed = hash("main_world_%s" % _main_map_id) \
+		if _mode == "main_world" else hash("%d_%d" % [st.run_seed, node_seed])
 	_prog = st.map_progress(int(node.get("layer", 1)), int(node.get("index", 0)))
 	_build_ground()
 	_build_world()
 	_build_hud()
+	if _mode == "main_world":
+		_attach_city_content()
 	_refresh_explore_hud()   # 恢复的探索分/击杀数要在 HUD 上显出来
+
+
+func _attach_city_content() -> void:
+	_city_content = (load("res://src/city/CityScene.tscn") as PackedScene).instantiate()
+	_city_content.call("embed_in", self)
+	add_child(_city_content)
 
 
 # ================= 构建 =================
 func _build_ground() -> void:
+	if _mode == "main_world":
+		var path := String(_main_cfg.get("background", ""))
+		var tex: Texture2D = load(path) if path != "" else null
+		if tex == null:
+			push_error("主世界背景缺失：%s" % path)
+		else:
+			var bg := TextureRect.new()
+			bg.texture = tex
+			bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			bg.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+			bg.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+			bg.size = Vector2(int(_map_cfg.get("map_cols", 32)) * 48,
+				int(_map_cfg.get("map_rows", 42)) * 48)
+			bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			add_child(bg)
+			return
 	# 地面层：TileMapLayer 程序构建（主题 3 种 tile 加权平铺，无碰撞）
 	var tl := TileMapLayer.new()
 	var ts := TileSet.new()
@@ -164,6 +248,8 @@ func _build_ground() -> void:
 
 
 func _build_ground_detail(cols: int, rows: int) -> void:
+	if _mode == "main_world":
+		return
 	# 地面细节层：主题土路套件（path_sheet，4×4＝16 块位掩码地形）+ 程序磨损斑块。
 	# 目的：打破 48×48 地砖满屏重复的“棋盘感”。必须先于 _world 入树（压在地砖上、实体下）。
 	var asset_dir := _map_asset_dir
@@ -235,6 +321,13 @@ func _path_mask(cell: Vector2i, cells: Dictionary) -> int:
 	return m
 
 
+## JSON 坐标安全读取；格式错误时回退，不让一张地图表拖垮整个场景。
+func _cfg_point(value: Variant, fallback: Vector2) -> Vector2:
+	if value is Array and (value as Array).size() >= 2:
+		return Vector2(float((value as Array)[0]), float((value as Array)[1]))
+	return fallback
+
+
 func _build_world() -> void:
 	var cols := int(_map_cfg.get("map_cols", 32))
 	var rows := int(_map_cfg.get("map_rows", 42))
@@ -250,12 +343,15 @@ func _build_world() -> void:
 	_build_portal(map_w)
 	_build_player(map_w, map_h)
 	_build_monsters(map_w, map_h)
-	_build_pickups(cols, rows)   # 散落拾取物：路上有微反馈（轮次 16）
-	_build_spots(cols, rows)     # 兴趣点：祭坛（花金重摇祝福）/ 矿脉（材料）（轮次 17）
+	if _mode != "main_world":
+		_build_pickups(cols, rows)   # 历练专属：散落拾取物
+		_build_spots(cols, rows)     # 历练专属：祭坛 / 矿脉
 	_restore_node_state()        # 恢复本节点进度：打过的不复活、不重发奖励（P0-1）
 
 
 func _build_decos(cols: int, rows: int) -> void:
+	if _mode == "main_world":
+		return
 	# 散件：随机摆放（避开出生区/传送区/中央通道），origin 底部 + 脚部碰撞，Y-sort 遮挡
 	var decos: Array = _theme_cfg.get("decos", [])
 	if decos.is_empty():
@@ -282,15 +378,25 @@ func _build_decos(cols: int, rows: int) -> void:
 
 func _build_portal(map_w: float) -> void:
 	_portal = _Portal.new()
-	_portal.position = Vector2(map_w / 2.0, 120.0)
+	_portal.position = _cfg_point(_main_cfg.get("exit", []), Vector2(map_w / 2.0, 120.0)) \
+		if _mode == "main_world" else Vector2(map_w / 2.0, 120.0)
 	_portal.locked = String(node.get("type", "normal")) == "boss"
 	_world.add_child(_portal)
+	_portal.visible = _mode != "main_world"
 
 
 func _build_player(map_w: float, map_h: float) -> void:
 	_player = CharacterBody2D.new()
 	_player.motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
-	_player.position = Vector2(map_w / 2.0, map_h - 120.0)
+	var spawn := _cfg_point(_main_cfg.get("spawn", []), Vector2(map_w / 2.0, map_h - 120.0)) \
+		if _mode == "main_world" else Vector2(map_w / 2.0, map_h - 120.0)
+	if _mode == "main_world" and _main_resume_pos.x >= 0.0 and _main_resume_pos.y >= 0.0:
+		spawn = _main_resume_pos.clamp(Vector2(48.0, 48.0), Vector2(map_w - 48.0, map_h - 48.0))
+		# 离开时站在传送阵上也不能让重进后马上再次触发出口。
+		if spawn.distance_to(_portal.position) < 80.0:
+			spawn = (_portal.position + Vector2(0, 110)).clamp(
+				Vector2(48.0, 48.0), Vector2(map_w - 48.0, map_h - 48.0))
+	_player.position = spawn
 	_player.collision_layer = 1
 	_player.collision_mask = 2
 	_world.add_child(_player)
@@ -298,14 +404,48 @@ func _build_player(map_w: float, map_h: float) -> void:
 	_player_anim = AnimatedSprite2D.new()
 	var frames_path := String(ROLE_FRAMES.get(st.role_id, ROLE_FRAMES["zs"])[0])
 	_player_anim.sprite_frames = load(frames_path)
-	# 角色约占 128×128 帧内 y10~120（110px 高）。0.72 再叠 1.25 倍镜头 ⇒ 屏幕上约 99px＝两格；
-	# 帧中心在 y=64，脚底 y=120 ⇒ 局部 +56×0.72＝40.3，故上移 19.3px 让脚踩在碰撞盒下沿（y=21）
-	_player_anim.scale = Vector2.ONE * 0.72
-	_player_anim.position = Vector2(0, -19.3)
+	# 历练保留旧比例；主地图单独校准人物占屏，不靠放大整张草地底图。
+	# 帧中心在 y=64，脚底 y=120，脚点偏移按旧比例校准，避免放大后脚底与碰撞点分离。
+	var player_scale := float(_main_cfg.get("player_scale", 0.96)) if _mode == "main_world" else 0.72
+	_player_anim.scale = Vector2.ONE * player_scale
+	_player_anim.position = Vector2(0, 21.0 - 56.0 * player_scale)
 	_player_anim.animation = &"walk_down"
 	_player_anim.frame = 1 # neutral passing pose for the initial idle state
 	_player_anim.stop()
 	_player.add_child(_player_anim)
+	if _mode == "main_world":
+		# 深底名牌保证绿地、浅色道路上都可读；红色菱形仍标识玩家。
+		_player_tag = Panel.new()
+		var name_y := -38.0 - 60.0 * player_scale
+		_player_tag.position = Vector2(-70, name_y)
+		_player_tag.size = Vector2(140, 22)
+		_player_tag.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var tag_style := StyleBoxFlat.new()
+		tag_style.bg_color = Color(0.07, 0.13, 0.09, 0.91)
+		tag_style.border_color = Color("90c79c", 0.8)
+		tag_style.set_border_width_all(1)
+		tag_style.set_corner_radius_all(7)
+		_player_tag.add_theme_stylebox_override("panel", tag_style)
+		_player.add_child(_player_tag)
+		_player_name_l = G.gold_label("", 14, true, Color("f1ffe9"), false)
+		_player_name_l.position = Vector2(5, 1)
+		_player_name_l.size = Vector2(130, 20)
+		_player_name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_player_name_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		_player_name_l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_player_tag.add_child(_player_name_l)
+		var marker := Polygon2D.new()
+		marker.polygon = PackedVector2Array([
+			Vector2(0, -11), Vector2(9, 0), Vector2(0, 13), Vector2(-9, 0)])
+		marker.color = Color("e54651")
+		marker.position = Vector2(0, name_y - 19.0)
+		_player.add_child(marker)
+		var gleam := Polygon2D.new()
+		gleam.polygon = PackedVector2Array([
+			Vector2(0, -8), Vector2(5, -1), Vector2(-4, 0)])
+		gleam.color = Color("fff0da")
+		gleam.position = marker.position
+		_player.add_child(gleam)
 
 	var shape := CollisionShape2D.new()
 	var rect := RectangleShape2D.new()
@@ -315,9 +455,10 @@ func _build_player(map_w: float, map_h: float) -> void:
 	_player.add_child(shape)
 
 	var cam := Camera2D.new()
-	# 1.25 倍：视野收到 384×640（约 8×13 格），人物与怪物都放大一圈，不再是"蚂蚁走大图"
-	cam.zoom = Vector2.ONE * 1.25
-	cam.position = Vector2(0, -56)
+	# 主世界镜头由素材像素密度决定；历练保持原 1.25 倍，不改变旧地图观察范围。
+	var camera_zoom := float(_main_cfg.get("camera_zoom", 1.35)) if _mode == "main_world" else 1.25
+	cam.zoom = Vector2.ONE * camera_zoom
+	cam.position = Vector2(0, -34 if _mode == "main_world" else -56)
 	cam.limit_left = 0
 	cam.limit_top = 0
 	cam.limit_right = int(map_w)
@@ -344,9 +485,19 @@ func _build_monsters(map_w: float, map_h: float) -> void:
 		_:
 			comp = ["normal", "normal", "normal", "normal"] if _rng.randf() < 0.5 \
 				else ["normal", "normal", "normal"]
+	if _mode == "main_world" and nt == "normal":
+		comp.clear()
+		for i in maxi(1, int(_main_cfg.get("monster_count", 4))):
+			comp.append("normal")
 	var placed: Array[Vector2] = []
 	var pool: Array = _theme_cfg.get("monsters", [])
-	for tier in comp:
+	var main_positions: Array = _main_cfg.get("monster_positions", []) if _mode == "main_world" else []
+	if _mode == "main_world":
+		var main_pool: Variant = _main_cfg.get("monster_ids", [])
+		if main_pool is Array and not (main_pool as Array).is_empty():
+			pool = main_pool
+	for i in comp.size():
+		var tier := String(comp[i])
 		var pos := Vector2.ZERO
 		for attempt in 24:
 			pos = Vector2(_rng.randf_range(120.0, map_w - 120.0),
@@ -360,19 +511,64 @@ func _build_monsters(map_w: float, map_h: float) -> void:
 					break
 			if ok:
 				break
+		if i < main_positions.size():
+			pos = _cfg_point(main_positions[i], pos).clamp(
+				Vector2(72.0, 72.0), Vector2(map_w - 72.0, map_h - 72.0))
 		placed.append(pos)
-		var m := _MapMonster.new()
-		m.idx = _monsters.size()   # 稳定序号：进度表按它记「已击杀」（P0-1）
-		m.tier = String(tier)
-		# 首领用主题 boss id，其余从怪物池随机；接触开战会把这个 id 继承给战斗组队
-		m.mon_id = String(_theme_cfg.get("boss", "")) if String(tier) == "boss" \
+		var mon_id := String(_theme_cfg.get("boss", "")) if tier == "boss" \
 			else (String(pool[_rng.randi_range(0, maxi(0, pool.size() - 1))]) if not pool.is_empty() else "")
-		m.position = pos
-		m.home = pos
-		m.map_ref = self
-		_monsters.append(m)
-		_world.add_child(m)
-	_total_monsters = _monsters.size()
+		var slot := {"idx": i, "tier": tier, "mon_id": mon_id, "position": pos}
+		if _mode == "main_world":
+			_main_spawn_slots.append(slot)
+			if float(_main_respawn_at.get(str(i), 0.0)) > Time.get_unix_time_from_system():
+				continue
+			_main_respawn_at.erase(str(i))
+		_spawn_monster(slot)
+	_total_monsters = comp.size() if _mode == "main_world" else _monsters.size()
+
+
+func _spawn_monster(slot: Dictionary) -> void:
+	var m := _MapMonster.new()
+	m.idx = int(slot["idx"]) if _mode == "main_world" else _monsters.size()
+	m.tier = String(slot["tier"])
+	m.mon_id = String(slot["mon_id"])
+	if _mode == "main_world":
+		m.sprite_path = String(_main_cfg.get("monster_sprite", ""))
+		m.sprite_height = float(_main_cfg.get("monster_height", 48.0))
+	m.display_level = st.level + int(_main_cfg.get("monster_level_offset", 2)) \
+		if _mode == "main_world" else 0
+	m.wander_only = _mode == "main_world" \
+		and bool(_main_cfg.get("monster_wander_only", true))
+	m.position = slot["position"]
+	m.home = m.position
+	m.map_ref = self
+	_monsters.append(m)
+	_world.add_child(m)
+	_mark_nav_dirty()
+
+
+func _main_respawn_seconds() -> float:
+	return maxf(1.0, float(_main_cfg.get("monster_respawn_seconds", 30.0)))
+
+
+func _tick_main_respawns(delta: float) -> void:
+	if _mode != "main_world" or _map_done:
+		return
+	_main_respawn_tick += delta
+	if _main_respawn_tick < 1.0:
+		return
+	_main_respawn_tick = 0.0
+	var now := Time.get_unix_time_from_system()
+	for slot in _main_spawn_slots:
+		var key := str(slot["idx"])
+		if not _main_respawn_at.has(key) or float(_main_respawn_at[key]) > now:
+			continue
+		if _player.position.distance_to(slot["position"]) < 100.0:
+			continue
+		_main_respawn_at.erase(key)
+		_spawn_monster(slot)
+		_persist_main_world_progress()
+		G.save_game()
 
 
 ## 非战斗节点物件：置于玩家出生点与传送阵之间的中途（要走一段路）
@@ -391,6 +587,8 @@ func _build_interactable(map_w: float, map_h: float) -> void:
 ## 暗角：中心留亮、四周渐暗（椭圆半径按 480×800 观感取），把视线收到人物身上，
 ## 同时压掉地图边缘那条直的"贴图断头"。纯视觉层，mouse_filter IGNORE 不吃点击。
 func _build_vignette() -> void:
+	if _mode == "main_world":
+		return  # 原版草地主场景明亮平坦；历练暗角不带进常驻江湖
 	var grad := Gradient.new()
 	grad.offsets = PackedFloat32Array([0.0, 0.42, 0.78])
 	grad.colors = PackedColorArray([
@@ -412,25 +610,75 @@ func _build_vignette() -> void:
 	_hud.add_child(vig)
 
 
+func _build_main_world_status() -> void:
+	# 生命、经验拆成两条清楚的轨道，字与底图保持足够对比。
+	var root := Panel.new()
+	root.position = Vector2(14, 12)
+	root.size = Vector2(176, 80)
+	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(0.07, 0.10, 0.07, 0.91)
+	sb.set_border_width_all(1)
+	sb.border_color = Color("b6a064")
+	sb.set_corner_radius_all(7)
+	root.add_theme_stylebox_override("panel", sb)
+	_hud.add_child(root)
+	_main_level_l = G.gold_label("", 16, true, Color("ffdf89"), false)
+	_main_level_l.position = Vector2(7, 8)
+	_main_level_l.custom_minimum_size = Vector2(42, 0)
+	root.add_child(_main_level_l)
+	var hp_bg := ColorRect.new()
+	hp_bg.color = Color("35251e")
+	hp_bg.position = Vector2(51, 11)
+	hp_bg.size = Vector2(117, 12)
+	root.add_child(hp_bg)
+	_main_hp_fill.color = Color("eac54c")
+	_main_hp_fill.position = Vector2(52, 12)
+	_main_hp_fill.size = Vector2(115, 10)
+	root.add_child(_main_hp_fill)
+	_main_hp_l = G.gold_label("", 13, true, Color("fff2d4"), false)
+	_main_hp_l.position = Vector2(51, 25)
+	_main_hp_l.custom_minimum_size = Vector2(117, 0)
+	root.add_child(_main_hp_l)
+	var exp_bg := ColorRect.new()
+	exp_bg.color = Color("24342b")
+	exp_bg.position = Vector2(51, 48)
+	exp_bg.size = Vector2(117, 9)
+	root.add_child(exp_bg)
+	_main_exp_fill.color = Color("75c995")
+	_main_exp_fill.position = Vector2(52, 49)
+	_main_exp_fill.size = Vector2(0, 7)
+	root.add_child(_main_exp_fill)
+	_main_exp_l = G.gold_label("", 13, true, Color("c4efd1"), false)
+	_main_exp_l.position = Vector2(51, 59)
+	_main_exp_l.custom_minimum_size = Vector2(117, 0)
+	root.add_child(_main_exp_l)
+
+
 func _build_hud() -> void:
 	_hud.layer = 1
 	add_child(_hud)
 	_build_vignette()  # 最先入层：只在画面四周压暗，不遮住下方的 HUD 控件
+	if _mode == "main_world":
+		_build_main_world_status()
 
-	var tc_name := String(_theme_cfg.get("name", "未知"))
+	var tc_name := String(_main_cfg.get("name", "江湖")) if _mode == "main_world" \
+		else String(_theme_cfg.get("name", "未知"))
 	var nt := String(node.get("type", "normal"))
-	var nt_name: String = {
+	var nt_name: String = "主地图" if _mode == "main_world" else {
 		"normal": "遭遇区", "elite": "精英区", "boss": "首领巢穴",
 		"chest": "藏宝地", "event": "奇遇", "shop": "商队", "bonfire": "篝火地",
 	}.get(nt, "探索")
 	var top := G.parchment_box(300, 34, 8.0)
 	top.position = Vector2(16, 12)
 	_hud.add_child(top)
+	top.visible = _mode != "main_world"
 	var title := G.gold_label("%s · %s" % [tc_name, nt_name], G.FS_SM, false, Color("5a3a1e"), false)
 	title.set_anchors_preset(Control.PRESET_FULL_RECT)
 	top.add_child(title)
 
-	var goal_text := "寻找传送阵"
+	var goal_text := String(_main_cfg.get("goal", "沿道路探索")) if _mode == "main_world" \
+		else "寻找传送阵"
 	if _portal.locked:
 		goal_text = "击败首领，解除传送阵封印"
 	else:
@@ -454,33 +702,37 @@ func _build_hud() -> void:
 	var goal := G.gold_label(goal_text, G.FS_XS, false, Color("ffd9a0"), false)
 	goal_chip.add_child(goal)
 	_hud.add_child(goal_chip)
+	goal_chip.visible = _mode != "main_world"
 
 	# 目标罗盘：一眼看到"该往哪走、还有多远"，点它开始自动前往（手游不用一直搓摇杆）
 	_compass = _Compass.new()
 	_compass.position = Vector2(16, 78)
 	_compass.tapped.connect(_on_compass_tapped)
 	_hud.add_child(_compass)
+	_compass.visible = _mode != "main_world"
 
-	# 探索进度小签：清剿 x/y · 探索分与评价（清场与拾取都能加分，见 _explore_cfg）
-	var exp_chip := PanelContainer.new()
-	var esb := StyleBoxFlat.new()
-	esb.bg_color = Color(0.13, 0.09, 0.05, 0.62)
-	esb.set_corner_radius_all(4)
-	esb.content_margin_left = 10.0
-	esb.content_margin_right = 10.0
-	esb.content_margin_top = 2.0
-	esb.content_margin_bottom = 2.0
-	exp_chip.add_theme_stylebox_override("panel", esb)
-	exp_chip.position = Vector2(16, 110)
-	_explore_lbl = G.gold_label("", G.FS_XS, false, Color("c8e0a0"), false)
-	exp_chip.add_child(_explore_lbl)
-	_hud.add_child(exp_chip)
-	_refresh_explore_hud()
+	if _mode != "main_world":
+		# 历练进度只属于肉鸽探索，主世界不显示清剿评价。
+		var exp_chip := PanelContainer.new()
+		var esb := StyleBoxFlat.new()
+		esb.bg_color = Color(0.13, 0.09, 0.05, 0.62)
+		esb.set_corner_radius_all(4)
+		esb.content_margin_left = 10.0
+		esb.content_margin_right = 10.0
+		esb.content_margin_top = 2.0
+		esb.content_margin_bottom = 2.0
+		exp_chip.add_theme_stylebox_override("panel", esb)
+		exp_chip.position = Vector2(16, 110)
+		_explore_lbl = G.gold_label("", G.FS_XS, false, Color("c8e0a0"), false)
+		exp_chip.add_child(_explore_lbl)
+		_hud.add_child(exp_chip)
+		_refresh_explore_hud()
 
 	# HP 条 + 药剂 + 换宠（整行下移让位给目标罗盘与探索小签）
 	var panel := G.parchment_box(206, 56, 10.0)
 	panel.position = Vector2(16, 136)
 	_hud.add_child(panel)
+	panel.visible = _mode != "main_world"
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 2)
 	panel.add_child(box)
@@ -503,25 +755,49 @@ func _build_hud() -> void:
 	_pot_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	hp_row.add_child(_pot_l)
 	_refresh_hud()
+	var action_y := 146.0 if _mode == "main_world" else HUD_BTN_Y
 
-	var potion_btn := G.gold_button("药", 48, HUD_BTN_H, HUD_BTN_FS)
-	potion_btn.position = Vector2(232, HUD_BTN_Y)
-	potion_btn.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_use_potion())
+	var potion_btn := _hud_icon_button("itm_potion_hp_s", 48.0,
+		"使用药剂", func(): _use_potion()) if _mode == "main_world" \
+		else G.gold_button("药", 48, HUD_BTN_H, HUD_BTN_FS)
+	potion_btn.position = Vector2(232, action_y)
+	if _mode == "main_world":
+		var badge := PanelContainer.new()
+		badge.position = Vector2(28, 22)
+		badge.custom_minimum_size = Vector2(19, 17)
+		badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var badge_style := StyleBoxFlat.new()
+		badge_style.bg_color = Color("4b2817")
+		badge_style.border_color = Color("e5ba68")
+		badge_style.set_border_width_all(1)
+		badge_style.set_corner_radius_all(8)
+		badge_style.content_margin_left = 2
+		badge_style.content_margin_right = 2
+		badge.add_theme_stylebox_override("panel", badge_style)
+		_potion_badge = G.gold_label("", G.FS_XS, true, Color("fff2c9"), true)
+		_potion_badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		badge.add_child(_potion_badge)
+		potion_btn.add_child(badge)
+	else:
+		potion_btn.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				_use_potion())
 	_hud.add_child(potion_btn)
 
-	_pet_btn = G.gold_button("换宠", 66, HUD_BTN_H, HUD_BTN_FS)
-	_pet_btn.position = Vector2(288, HUD_BTN_Y)
-	_pet_btn.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_swap_pet())
+	_pet_btn = _hud_icon_button("f6_icon_pet", 48.0,
+		"切换出战宠物", func(): _swap_pet()) if _mode == "main_world" \
+		else G.gold_button("换宠", 66, HUD_BTN_H, HUD_BTN_FS)
+	_pet_btn.position = Vector2(288, action_y)
+	if _mode != "main_world":
+		_pet_btn.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				_swap_pet())
 	_hud.add_child(_pet_btn)
 
 	# 撤离：手边就必须能退出去（PC 亦可按 ESC），点按后二次确认防误触
 	# 位置让给右上角小地图（小地图 y 到 116），下移到地图正下方仍是拇指热区；右缘与小地图对齐
-	var exit_btn := G.gold_button("撤离", 66, HUD_BTN_H, HUD_BTN_FS)
-	exit_btn.position = Vector2(HUD_BTN_RIGHT - 66.0, HUD_BTN_Y)
+	var exit_btn := G.gold_button("营帐" if _mode == "main_world" else "撤离", 66, HUD_BTN_H, HUD_BTN_FS)
+	exit_btn.position = Vector2(HUD_BTN_RIGHT - 66.0, action_y)
 	exit_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_ask_exit())
@@ -548,14 +824,55 @@ func _build_hud() -> void:
 	_refresh_hud()  # 覆盖换宠按钮可见性（bench 为空时隐藏）
 
 
+func _hud_icon_button(icon_key: String, width: float, hint: String, action: Callable) -> Control:
+	var holder := Control.new()
+	holder.size = Vector2(width, HUD_BTN_H)
+	holder.mouse_filter = Control.MOUSE_FILTER_PASS
+	var hit := G.gold_button("", width, HUD_BTN_H, HUD_BTN_FS)
+	hit.tooltip_text = hint
+	hit.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			action.call())
+	holder.add_child(hit)
+	var icon := Sprite2D.new()
+	icon.texture = load("res://image/generated_362_xajh/ready/ui/f6_icon_pet.png") as Texture2D \
+		if icon_key == "f6_icon_pet" else G.res_tex(icon_key)
+	icon.position = Vector2(width * 0.5, HUD_BTN_H * 0.5 - 1.0)
+	if icon.texture != null:
+		var icon_px := 34.0 if icon_key == "itm_potion_hp_s" else 27.0
+		icon.scale = Vector2.ONE * (icon_px / maxf(icon.texture.get_width(), icon.texture.get_height()))
+	holder.add_child(icon)
+	return holder
+
+
 func _refresh_hud() -> void:
 	var m := st.max_hp()
 	var hp := m if st.hp < 0 else st.hp
 	_hp_fill.size.x = 116.0 * clampf(float(hp) / float(m), 0.0, 1.0)
+	if _mode == "main_world" and _main_level_l != null:
+		var lv := int(G.prog.get("level", st.level))
+		var exp := int(G.prog.get("exp", 0))
+		var need := G.exp_to_next(lv)
+		var exp_ratio := 1.0 if need <= 0 else clampf(float(exp) / float(need), 0.0, 1.0)
+		_main_level_l.text = "Lv%d" % lv
+		_main_hp_fill.size.x = 115.0 * clampf(float(hp) / float(maxi(m, 1)), 0.0, 1.0)
+		_main_exp_fill.size.x = 115.0 * exp_ratio
+		_main_hp_l.text = "生命 %d/%d" % [hp, m]
+		_main_exp_l.text = "EXP %d%%" % roundi(exp_ratio * 100.0)
+		if _player_name_l != null:
+			_player_name_l.text = "%s  Lv%d" % [G.display_name(), lv]
+			var name_width := G.font_bold.get_string_size(_player_name_l.text,
+				HORIZONTAL_ALIGNMENT_LEFT, -1, 14).x
+			var tag_width := clampf(name_width + 16.0, 126.0, 290.0)
+			_player_tag.size.x = tag_width
+			_player_tag.position.x = -tag_width * 0.5
+			_player_name_l.size.x = tag_width - 10.0
 	# 苦行局要在 HUD 上一直看得见：玩家必须清楚"这局敌人更强、收益更高"，
 	# 而不是打着打着忘了自己开过什么
 	_pot_l.text = "药剂 ×%d" % st.potions if not st.ascetic \
 		else "苦行 · 药剂 ×%d" % st.potions
+	if _potion_badge != null:
+		_potion_badge.text = str(st.potions)
 	if _pet_btn != null:
 		_pet_btn.visible = st.bench_pet != ""
 
@@ -750,6 +1067,8 @@ func _close_remover(msg: String) -> void:
 
 # ================= 撤离 =================
 func _unhandled_input(event: InputEvent) -> void:
+	if _city_content != null and bool(_city_content.call("has_modal")):
+		return
 	if G.ui_blocked:  # 全屏浮层（GM 控制台）优先，ESC 让给它
 		return
 	if not event.is_action_pressed("ui_cancel"):
@@ -778,7 +1097,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 ## 撤离确认：本节点进度保留（可再次进入），但局内累计资源需重新挑战才结算
 func _ask_exit() -> void:
-	if _exit_ui != null or _map_done or _battle != null:
+	if _exit_ui != null or _map_done or _battle != null \
+			or (_city_content != null and bool(_city_content.call("has_modal"))):
 		return
 	Audio.sfx("ui_open")
 	var layer := Control.new()
@@ -790,7 +1110,7 @@ func _ask_exit() -> void:
 	# 撤离确认底衬：统一工厂（深棕 + 暗角 + 斜纹），保持浮层质感一致
 	G.veil(layer, 0.72, true)
 
-	var banner := G.banner_box("撤离本节点", 260, 48)
+	var banner := G.banner_box("返回营帐" if _mode == "main_world" else "撤离本节点", 260, 48)
 	banner.position = Vector2((VIEW_W - 260.0) * 0.5, 264)
 	layer.add_child(banner)
 
@@ -802,7 +1122,9 @@ func _ask_exit() -> void:
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.add_child(content)
 
-	var tip := G.gold_label("撤离将返回路线图，本节点进度保留，\n可稍后再次进入。", G.FS_SM, false, Color("5a3a1e"), false)
+	var tip_text := "返回营帐后可随时再进主城，\n人物位置与怪物刷新时间会保留。" if _mode == "main_world" \
+		else "撤离将返回路线图，本节点进度保留，\n可稍后再次进入。"
+	var tip := G.gold_label(tip_text, G.FS_SM, false, Color("5a3a1e"), false)
 	tip.position = Vector2(0, 16)
 	tip.custom_minimum_size = Vector2(308, 0)
 	content.add_child(tip)
@@ -834,8 +1156,8 @@ func _cancel_exit() -> void:
 
 # ================= 主循环 =================
 func _physics_process(delta: float) -> void:
-	if _map_done or _battle != null or _picker != null or _remover != null \
-			or _exit_ui != null or _beat != null or _big_map != null or _altar_ui != null:
+	_tick_main_respawns(delta)
+	if _modal_open():
 		return
 	if G.ui_blocked:  # GM 控制台等全屏浮层打开时冻结移动
 		return
@@ -860,14 +1182,14 @@ func _physics_process(delta: float) -> void:
 	var cols := int(_map_cfg.get("map_cols", 32))
 	var rows := int(_map_cfg.get("map_rows", 42))
 	_player.position = _player.position.clamp(Vector2(24, 60), Vector2(cols * 48 - 24, rows * 48 - 24))
-	_update_player_anim(dir)
+	_update_player_anim((_player.position - _prev_pos) / maxf(delta, 0.0001))
 	_tick_auto_walk(delta)
 	_update_nav(delta)
 	_check_portal()
 
 
 func _update_player_anim(dir: Vector2) -> void:
-	if dir.length_squared() < 0.01:
+	if dir.length_squared() < 0.25:
 		_player_anim.stop()
 		_player_anim.frame = 1 # neutral passing pose, not a wide contact pose
 		return
@@ -877,12 +1199,12 @@ func _update_player_anim(dir: Vector2) -> void:
 	else:
 		anim = &"walk_down" if dir.y > 0 else &"walk_up"
 	if _player_anim.animation != anim:
+		var gait_frame := _player_anim.frame
+		var gait_progress := _player_anim.frame_progress
 		_player_anim.animation = anim
-	# 步频随实际移速缩放：4关键帧@8FPS，88px/s 时每循环约移动44px，
-	# 摇杆半速推动时步子放慢，避免任何速度下的滑步感
-	# 基准改为配置里的步行速度：疾行时步频自然加快，不再锁死在旧写死的 88
-	_player_anim.speed_scale = clampf(_player.velocity.length()
-		/ maxf(1.0, TableCache.map_player_speed()), 0.55, 2.0)
+		_player_anim.set_frame_and_progress(gait_frame, gait_progress)
+	# 实际位移决定步频；贴墙停止，低速摇杆也不强制播放半速动画。
+	_player_anim.speed_scale = dir.length() / maxf(1.0, TableCache.map_player_speed())
 	if not _player_anim.is_playing():
 		_player_anim.play()
 
@@ -1018,7 +1340,7 @@ func _build_spots(cols: int, rows: int) -> void:
 ## 恢复本节点探索进度（P0-1）：构建顺序与随机流保持完全一致，只在建完后「摘掉」已完成的部分——
 ## 打过的不复活、不重发奖励；拾取过的消失；用过的祭坛/矿脉留场但熄灭（可看不可用）
 func _restore_node_state() -> void:
-	var killed: Array = _prog.get("killed", [])
+	var killed: Array = [] if _mode == "main_world" else _prog.get("killed", [])
 	if not killed.is_empty():
 		var kept_m: Array[_MapMonster] = []
 		for m in _monsters:
@@ -1380,7 +1702,7 @@ func _close_big_map() -> void:
 
 
 func _check_portal() -> void:
-	if _map_done:
+	if _map_done or _mode == "main_world":
 		return
 	if _player.position.distance_to(_portal.position) < 36.0:
 		if _portal.locked:
@@ -1391,10 +1713,36 @@ func _check_portal() -> void:
 			_finish_map("cleared")
 
 
+func _persist_main_world_progress() -> void:
+	if _mode != "main_world":
+		return
+	var state: Dictionary = {}
+	var previous: Variant = G.prog.get("main_world", {})
+	if previous is Dictionary:
+		state = (previous as Dictionary).duplicate(true)
+	state["map_id"] = _main_map_id
+	state["layout_version"] = int(_main_cfg.get("layout_version", 1))
+	state.erase("killed")
+	state["respawn_at"] = _main_respawn_at.duplicate()
+	if _player != null:
+		var pos := _player.position
+		if _portal != null and pos.distance_to(_portal.position) < 80.0:
+			pos = _portal.position + Vector2(0, 110)
+		state["position"] = [roundi(pos.x), roundi(pos.y)]
+	G.prog["main_world"] = state
+
+
 func _finish_map(result: String) -> void:
 	if _map_done:
 		return
 	_map_done = true
+	if _mode == "main_world":
+		_persist_main_world_progress()
+		G.save_game()
+		map_finished.emit(result)
+		if map_finished.get_connections().is_empty():
+			G.go("res://src/ui/GameHome.tscn")
+		return
 	if result == "cleared":
 		st.node_cleared(int(node.get("layer", 1)), int(node.get("index", 0)))
 		# 探索评价附加赏：走完节点时结算，"清一遍"的收益在这里落袋
@@ -1412,6 +1760,7 @@ func _finish_map(result: String) -> void:
 func _modal_open() -> bool:
 	return _battle != null or _map_done or _picker != null or _remover != null \
 		or _big_map != null or _altar_ui != null or _exit_ui != null or _beat != null \
+		or (_city_content != null and bool(_city_content.call("has_modal"))) \
 		or G.ui_blocked   # 转场 / GM 控制台：玩家被冻结时怪物也该冻结
 
 
@@ -1467,11 +1816,20 @@ func _launch_battle(m: _MapMonster) -> void:
 		},
 		"enemy": {"theme": st.theme, "node_type": m.tier,
 			"layer": int(node.get("layer", 1)), "lead_mon": m.mon_id,
+			"solo": _mode == "main_world" and bool(_main_cfg.get("encounter_solo", true)),
+			"display_level": m.display_level,
+			"sprite_path": m.sprite_path if _mode == "main_world" else "",
 			# 苦行局（轮次 22）：敌人强度倍率由 RunState 决定，战斗内核只吃数字
 			"enemy_mult": st.enemy_mult()},
 		"mode": "pve",   # 超时按远征失利显示（口径 D3；问题 #21）
+		"presentation": "classic_inline" if _mode == "main_world" else "default",
+		"player_name": G.display_name(),
 		"seed": st.next_battle_seed(),
 	}
+	if _mode == "main_world":
+		# 战斗单位由 BattleScene 接管；只留下地图底图，避免玩家/怪物和 HUD 各画两遍。
+		_world.visible = false
+		_hud.visible = false
 	_battle_layer = CanvasLayer.new()
 	_battle_layer.layer = 2
 	add_child(_battle_layer)
@@ -1487,6 +1845,9 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 	_battle = null
 	_battle_layer.queue_free()  # 级联释放 BattleScene
 	_battle_layer = null
+	if _mode == "main_world":
+		_world.visible = true
+		_hud.visible = true
 	st.apply_battle_result(battle.sim)
 
 	if result == "flee":
@@ -1500,6 +1861,9 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 			_contact_mon = null
 		for m in _monsters:
 			m.chasing_contact = false
+		if _mode == "main_world":
+			_persist_main_world_progress()
+			G.save_game()
 		_refresh_hud()
 		_toast("已撤退——节点进度已保留")
 		return
@@ -1512,6 +1876,10 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 		return
 	st.add_reward(monster_tier)  # 战利按接触怪 tier 累加（nodes.json rewards）
 	_grant_drops(monster_tier)   # 材料掉落（data/drops.json）：刷图产出养成材料
+	if _mode == "main_world":
+		if _contact_mon != null:
+			_main_respawn_at[str(_contact_mon.idx)] = Time.get_unix_time_from_system() + _main_respawn_seconds()
+		_bank_main_world_rewards()
 	st.hp = hp_left
 	# 主城委托上报：这一场打掉的怪算 1 只（"在某某秘境击杀 N 只"类委托靠它推进）
 	var q_done := G.quest_report("slay", st.theme, 1)
@@ -1519,7 +1887,7 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 		_toast("委托办妥：%s —— 回城交付" % String(t))
 	# 接触的怪离场；进度落表（重进不再复活、不重发奖励，P0-1）
 	if _contact_mon != null:
-		if not _prog["killed"].has(_contact_mon.idx):
+		if _mode != "main_world" and not _prog["killed"].has(_contact_mon.idx):
 			_prog["killed"].append(_contact_mon.idx)
 		_monsters.erase(_contact_mon)
 		_contact_mon.queue_free()
@@ -1528,8 +1896,9 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 	if monster_tier == "boss":
 		_prog["boss_down"] = true
 	_kills += 1
-	_add_score(_cfg_int("kill_score", 12), "击杀")
-	if _monsters.is_empty() and _total_monsters > 0:
+	if _mode != "main_world":
+		_add_score(_cfg_int("kill_score", 12), "击杀")
+	if _mode != "main_world" and _monsters.is_empty() and _total_monsters > 0:
 		_on_area_cleared()   # 清场：额外赏 + 评价提升（轮次 16）
 	# 其余怪复位并返回巢穴
 	for m in _monsters:
@@ -1577,8 +1946,35 @@ func _trait_pick_count(tier: String) -> int:
 
 
 func _after_battle_rewards() -> void:
+	if _mode == "main_world":
+		_refresh_hud()
+		return
 	_pending_trait_picks = _trait_pick_count(_last_battle_tier)
 	_next_trait_pick()
+
+
+## 主世界是常驻成长：每场胜利立刻入账，异常退出也不会吞掉已经取得的战利。
+func _bank_main_world_rewards() -> void:
+	_persist_main_world_progress()
+	var gold := st.gold
+	var expedition := st.expedition
+	var soul := st.soul
+	var honor := st.honor
+	var exp := st.exp
+	G.deposit(gold, expedition, soul, honor)
+	var level_ups := G.gain_exp(exp)
+	st.gold = 0
+	st.expedition = 0
+	st.soul = 0
+	st.honor = 0
+	st.exp = 0
+	st.level = int(G.prog.get("level", st.level))
+	if _city_content != null:
+		_city_content.call("_refresh_stat")
+	var msg := "战利 · 铜钱 +%d · 经验 +%d" % [gold, exp]
+	if level_ups > 0:
+		msg += " · 升级 ×%d" % level_ups
+	_toast(msg)
 
 
 func _next_trait_pick() -> void:
@@ -1854,6 +2250,11 @@ class _MapMonster extends CharacterBody2D:
 	var contact_cd := 0.0             # 接触冷静期（撤退后不再立刻重新开战）
 	var tier := "normal"
 	var mon_id := ""                  # 具体怪 id（精灵与战斗组队都按它）
+	var sprite_path := ""
+	var sprite_height := 48.0
+	var display_level := 0
+	var wander_only := false
+	var level_l: Label = null
 	var home := Vector2.ZERO
 	var chasing_contact := false  # 本只已触发接触（开战中）
 	var map_ref: MapScene = null
@@ -1894,17 +2295,28 @@ class _MapMonster extends CharacterBody2D:
 		_aggro = float(mc.get("aggro_radius", 120.0))
 		_contact = float(mc.get("contact_radius", 26.0))
 		_wander_r = float(mc.get("monster_wander_radius", 96.0))
+		if wander_only:
+			_contact = float(map_ref._main_cfg.get("monster_contact_radius", 42.0))
+			_wander_r = float(map_ref._main_cfg.get("monster_wander_radius", 48.0))
 		# 精灵体：boss 84 / elite 60 / normal 48 像素高，脚底对齐碰撞原点
 		if mon_id != "":
-			var tex: Texture2D = G.res_tex(mon_id)
+			var tex: Texture2D = load(sprite_path) as Texture2D if not sprite_path.is_empty() else G.res_tex(mon_id)
 			if tex != null:
-				var h: float = {"normal": 48.0, "elite": 60.0, "boss": 84.0}.get(tier, 48.0)
+				var h: float = sprite_height if not sprite_path.is_empty() else {"normal": 48.0, "elite": 60.0, "boss": 84.0}.get(tier, 48.0)
 				var s := h / float(tex.get_height())
 				_sprite = Sprite2D.new()
 				_sprite.texture = tex
 				_sprite.scale = Vector2.ONE * s
 				_sprite.offset = Vector2(0, -tex.get_height() / 2.0)
 				add_child(_sprite)
+		if display_level > 0:
+			var mon_name := String(TableCache.get_monster(mon_id).get("name", "怪物"))
+			level_l = G.gold_label("Lv%d %s" % [display_level, mon_name],
+				G.FS_SM, true, Color("c46cdd"), true)
+			level_l.position = Vector2(-66, -sprite_height - 7.0)
+			level_l.custom_minimum_size = Vector2(132, 0)
+			level_l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			add_child(level_l)
 		var h := float(absi(hash(Vector2(position).floor())))
 		for i in 18:
 			_lobe.append(sin(float(i) * 2.1 + h) * 0.13 + sin(float(i) * 0.7 + h * 0.5) * 0.09)
@@ -1929,7 +2341,9 @@ class _MapMonster extends CharacterBody2D:
 			chasing_contact = true
 			map_ref.on_monster_contact(self)
 			return
-		if dist < _aggro and not map_ref._map_done and map_ref._battle == null:
+		if wander_only:
+			_state = "wander"
+		elif dist < _aggro and not map_ref._map_done and map_ref._battle == null:
 			_state = "chase"
 		elif _state == "chase" and dist > _aggro * 1.4:
 			_state = "wander"

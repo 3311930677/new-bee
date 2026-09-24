@@ -8,7 +8,7 @@ var _got_cfg := {}   # confirmed 信号回填（lambda 不能写回局部变量�
 
 
 func _ready() -> void:
-	G.SAVE_PATH = "user://save_verify_home.json"  # 别污染真实存档
+	G.SAVE_PATH = "res://tools/_logs/save_verify_home.json"  # 别污染真实存档
 	await _run()
 	get_tree().quit(0 if _fails == 0 else 1)
 

@@ -158,8 +158,7 @@ func _build_profile(role: Dictionary) -> void:
 			_open_avatar_panel())
 	add_child(hit)
 
-	var name_txt: String = G.player_name if not G.player_name.is_empty() \
-		else String(role.get("name", "旅人"))
+	var name_txt: String = G.display_name()
 	var nl := G.serif_label(name_txt, G.FS_MD + 1, G.NAME_GREEN)
 	nl.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	nl.position = Vector2(82, 20)
@@ -388,11 +387,11 @@ func _build_entries() -> void:
 	# 右侧竖列：活动与系统入口（出征已搬进主城，主页只留浏览与设置）
 	for i in RAIL_R.size():
 		var b := _round_entry(String(RAIL_R[i][0]), String(RAIL_R[i][1]), String(RAIL_R[i][2]))
-		b.position = Vector2(VIEW_W - 88.0, 150 + i * 78.0)
+		b.position = Vector2(VIEW_W - 88.0, 124 + i * 72.0)
 		add_child(b)
 
-	# 底部：一行若隐若现的字，点它（或点屏幕下方）就直接进主世界
-	var hint := G.serif_label("轻 触 进 入 主 世 界", G.FS_MD, Color("e6d0a4"))
+	# 主城只有一个入口，进入承载城务和明雷的新地图。
+	var hint := G.serif_label("轻 触 进 入 主 城", G.FS_MD, Color("e6d0a4"))
 	hint.position = Vector2(0, 730)
 	hint.custom_minimum_size = Vector2(VIEW_W, 0)
 	hint.modulate.a = 0.45
@@ -482,7 +481,7 @@ func _entry_has_badge(label: String) -> bool:
 
 func _dispatch_entry(label: String) -> void:
 	match label:
-		"主城": G.go("res://src/city/CityScene.tscn")
+		"主城": _open_main_world(_click_ev())
 		"世界": _open_worlds(_click_ev())
 		"竞技": _open_arena()
 		"图鉴": _open_codex(_click_ev())
@@ -502,8 +501,36 @@ func _click_ev() -> InputEventMouseButton:
 
 # ---------- 主城入口（可行走据点：建筑 / NPC / 活动 / 访客） ----------
 func _open_city(e: InputEvent) -> void:
-	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-		G.go("res://src/city/CityScene.tscn")
+	_open_main_world(e)
+
+
+## 主城唯一入口：新地图承载城务、NPC、明雷和同图战斗。
+func _open_main_world(e: InputEvent) -> void:
+	if not (e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT):
+		return
+	var state: Variant = G.prog.get("main_world", {})
+	var map_id := String((state as Dictionary).get("map_id", "")) if state is Dictionary else ""
+	if TableCache.main_world_map(map_id).is_empty():
+		map_id = TableCache.default_main_world_map()
+	var map_cfg := TableCache.main_world_map(map_id)
+	var pets := G.owned_pets()
+	var run := RunState.new()
+	run.setup({
+		"theme": String(map_cfg.get("theme", "forest")),
+		"role_id": G.selected_role if G.selected_role != "" else "zs",
+		"level": int(G.prog.get("level", 1)),
+		"active_pet": String(pets[0]) if not pets.is_empty() else "",
+		"bench_pet": String(pets[1]) if pets.size() > 1 else "",
+		"potions": G.run_potions_base(),
+		"seed": randi(),
+	})
+	MapScene.pending_cfg = {
+		"mode": "main_world",
+		"main_map_id": map_id,
+		"run": run,
+		"node": {"type": String(map_cfg.get("node_type", "normal")), "layer": 0, "index": 0},
+	}
+	G.go("res://src/explore/MapScene.tscn")
 
 
 # ---------- 远征入口（阶段 2.7：出征筹备 DEPLOY——选秘境→选人物→选宠物） ----------

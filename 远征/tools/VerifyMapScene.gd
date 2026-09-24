@@ -9,7 +9,7 @@ var _last_result := ""
 
 
 func _ready() -> void:
-	G.SAVE_PATH = "user://save_verify_map.json"  # 别污染真实存档
+	G.SAVE_PATH = "res://tools/_logs/save_verify_map.json"  # 独立测试存档，不污染真实存档
 	await _run()
 	get_tree().quit(0 if _fails == 0 else 1)
 
@@ -55,6 +55,13 @@ func _run() -> void:
 	var map := await _spawn_map("normal", 1, "pet_thunderhawk")
 	_check(map.st != null, "应持有 run 状态")
 	_check(map._player != null, "应构建玩家")
+	_check(is_equal_approx(map._player_anim.scale.x, 0.72), "历练人物比例应保持原值")
+	var expedition_camera: Camera2D
+	for child in map._player.get_children():
+		if child is Camera2D:
+			expedition_camera = child as Camera2D
+	_check(expedition_camera != null and is_equal_approx(expedition_camera.zoom.x, 1.25),
+		"历练镜头范围应保持原值")
 	_check(map._portal != null and not map._portal.locked, "普通区传送阵应解锁")
 	_check(map._monsters.size() >= 3 and map._monsters.size() <= 4,
 		"普通区应有 3~4 小怪，实为 %d" % map._monsters.size())

@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><title>步态重做 · V8</title>
+<style>body{margin:24px;background:#202733;color:#e5ecf5;font:16px system-ui}h1{font-size:23px}button,select,input{font:inherit;margin-right:12px}main{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1100px}article{background:#2b3544;padding:12px;border-radius:10px}canvas{width:100%;image-rendering:pixelated}p{color:#b8c8dc}label{display:inline-block;margin-bottom:20px}.caption{display:flex;justify-content:space-around;font-size:13px}</style>
+<h1>腿部步态对照</h1><p>每组左侧是旧版，右侧是重做版。上排向左，下排向右。</p>
+<label><button id="toggle">暂停</button><button id="step">下一帧</button>帧率 <select id="fps"><option>8</option><option>4</option><option>2</option></select> 当前帧 <span id="frame">1</span> / 4</label>
+<main id="grid"></main>
+<script>
+const roles=[['zs','pojun','破军'],['ck','chuanyang','穿杨'],['fs','shuangyu','霜语'],['fz','chenxing','晨星']];
+let running=true,frame=0,last=0;const views=[];
+for(const[id,name,label]of roles){const a=document.createElement('article');a.innerHTML='<strong>'+label+'</strong><div class="caption"><span>旧版</span><span>重做版</span></div><canvas width="256" height="256"></canvas>';grid.append(a);const before=new Image(),after=new Image();before.src='../../'+id+'/source/'+name+'_walk_before_v8.png';after.src=name+'_candidate.png';views.push({before,after,ctx:a.querySelector('canvas').getContext('2d')});}
+function draw(){document.getElementById('frame').textContent=frame+1;for(const{before,after,ctx}of views){ctx.imageSmoothingEnabled=false;ctx.fillStyle='#2b3544';ctx.fillRect(0,0,256,256);for(let row=0;row<2;row++){ctx.strokeStyle='#556578';ctx.beginPath();ctx.moveTo(0,row*128+120.5);ctx.lineTo(256,row*128+120.5);ctx.stroke();if(before.complete&&before.naturalWidth)ctx.drawImage(before,frame*128,(row+1)*128,128,128,0,row*128,128,128);if(after.complete&&after.naturalWidth)ctx.drawImage(after,frame*128,(row+1)*128,128,128,128,row*128,128,128);}}}
+toggle.onclick=()=>{running=!running;toggle.textContent=running?'暂停':'播放';};step.onclick=()=>{running=false;toggle.textContent='播放';frame=(frame+1)%4;draw();};function loop(t){if(running&&t-last>=1000/Number(fps.value)){frame=(frame+1)%4;last=t;}draw();requestAnimationFrame(loop);}requestAnimationFrame(loop);
+</script></html>

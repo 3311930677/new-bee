@@ -1,0 +1,40 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+WARNING: Loaded resource as image file, this will not work on export: 'res://image/role/zs/source/pojun_walk_before_v7.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _initialize (res://tools/pack_walk_side_v7.gd:18)
+WARNING: Loaded resource as image file, this will not work on export: 'res://image/role/zs/source/pojun_walk_side_v7.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _initialize (res://tools/pack_walk_side_v7.gd:20)
+SIDE_V7_OK zs: front/back unchanged; 8 side frames grounded at y=120
+WARNING: Loaded resource as image file, this will not work on export: 'res://image/role/ck/source/chuanyang_walk_before_v7.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _initialize (res://tools/pack_walk_side_v7.gd:18)
+WARNING: Loaded resource as image file, this will not work on export: 'res://image/role/ck/source/chuanyang_walk_side_v7.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _initialize (res://tools/pack_walk_side_v7.gd:20)
+SIDE_V7_OK ck: front/back unchanged; 8 side frames grounded at y=120
+WARNING: Loaded resource as image file, this will not work on export: 'res://image/role/fs/source/shuangyu_walk_before_v7.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _initialize (res://tools/pack_walk_side_v7.gd:18)
+WARNING: Loaded resource as image file, this will not work on export: 'res://image/role/fs/source/shuangyu_walk_side_v7.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _initialize (res://tools/pack_walk_side_v7.gd:20)
+SIDE_V7_OK fs: front/back unchanged; 8 side frames grounded at y=120
+WARNING: Loaded resource as image file, this will not work on export: 'res://image/role/fz/source/chenxing_walk_before_v7.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _initialize (res://tools/pack_walk_side_v7.gd:18)
+WARNING: Loaded resource as image file, this will not work on export: 'res://image/role/fz/source/chenxing_walk_side_v7.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _initialize (res://tools/pack_walk_side_v7.gd:20)
+SIDE_V7_OK fz: front/back unchanged; 8 side frames grounded at y=120

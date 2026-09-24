@@ -1,0 +1,1102 @@
+{
+	"atlas_size": [
+		768,
+		512
+	],
+	"cell": 128,
+	"columns": 6,
+	"directions": [
+		"down",
+		"left",
+		"right",
+		"up"
+	],
+	"fps": 8.0,
+	"roles": [
+		{
+			"atlas": "res://image/role/zs/pojun_walk_4dir.png",
+			"frames": [
+				{
+					"body_ground": 127,
+					"frame": 0,
+					"packed_bounds": [
+						8,
+						29,
+						120,
+						92
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 127,
+					"frame": 1,
+					"packed_bounds": [
+						0,
+						29,
+						128,
+						92
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 127,
+					"frame": 2,
+					"packed_bounds": [
+						12,
+						30,
+						116,
+						91
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 127,
+					"frame": 3,
+					"packed_bounds": [
+						0,
+						29,
+						128,
+						92
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 127,
+					"frame": 4,
+					"packed_bounds": [
+						0,
+						30,
+						128,
+						91
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 127,
+					"frame": 5,
+					"packed_bounds": [
+						0,
+						29,
+						128,
+						92
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 127,
+					"frame": 0,
+					"packed_bounds": [
+						14,
+						19,
+						111,
+						102
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 127,
+					"frame": 1,
+					"packed_bounds": [
+						19,
+						22,
+						104,
+						99
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 127,
+					"frame": 2,
+					"packed_bounds": [
+						19,
+						21,
+						99,
+						100
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 127,
+					"frame": 3,
+					"packed_bounds": [
+						16,
+						22,
+						109,
+						99
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 127,
+					"frame": 4,
+					"packed_bounds": [
+						19,
+						22,
+						101,
+						99
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 127,
+					"frame": 5,
+					"packed_bounds": [
+						18,
+						22,
+						101,
+						99
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 119,
+					"frame": 0,
+					"packed_bounds": [
+						9,
+						18,
+						109,
+						103
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 118,
+					"frame": 1,
+					"packed_bounds": [
+						12,
+						21,
+						105,
+						100
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 119,
+					"frame": 2,
+					"packed_bounds": [
+						13,
+						21,
+						103,
+						100
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 118,
+					"frame": 3,
+					"packed_bounds": [
+						11,
+						22,
+						106,
+						99
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 119,
+					"frame": 4,
+					"packed_bounds": [
+						12,
+						20,
+						105,
+						101
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 118,
+					"frame": 5,
+					"packed_bounds": [
+						13,
+						22,
+						104,
+						99
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 106,
+					"frame": 0,
+					"packed_bounds": [
+						15,
+						21,
+						113,
+						100
+					],
+					"row": "up"
+				},
+				{
+					"body_ground": 106,
+					"frame": 1,
+					"packed_bounds": [
+						0,
+						20,
+						128,
+						101
+					],
+					"row": "up"
+				},
+				{
+					"body_ground": 106,
+					"frame": 2,
+					"packed_bounds": [
+						0,
+						21,
+						128,
+						100
+					],
+					"row": "up"
+				},
+				{
+					"body_ground": 106,
+					"frame": 3,
+					"packed_bounds": [
+						0,
+						21,
+						128,
+						100
+					],
+					"row": "up"
+				},
+				{
+					"body_ground": 106,
+					"frame": 4,
+					"packed_bounds": [
+						0,
+						21,
+						128,
+						100
+					],
+					"row": "up"
+				},
+				{
+					"body_ground": 106,
+					"frame": 5,
+					"packed_bounds": [
+						0,
+						21,
+						128,
+						100
+					],
+					"row": "up"
+				}
+			],
+			"id": "zs",
+			"source": "res://image/role/zs/source/pojun_walk_v10.png"
+		},
+		{
+			"atlas": "res://image/role/ck/chuanyang_walk_4dir.png",
+			"frames": [
+				{
+					"body_ground": 127,
+					"frame": 0,
+					"packed_bounds": [
+						12,
+						20,
+						113,
+						101
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 127,
+					"frame": 1,
+					"packed_bounds": [
+						14,
+						20,
+						113,
+						101
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 127,
+					"frame": 2,
+					"packed_bounds": [
+						14,
+						20,
+						113,
+						101
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 127,
+					"frame": 3,
+					"packed_bounds": [
+						14,
+						20,
+						113,
+						101
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 127,
+					"frame": 4,
+					"packed_bounds": [
+						17,
+						20,
+						111,
+						101
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 127,
+					"frame": 5,
+					"packed_bounds": [
+						0,
+						20,
+						127,
+						101
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 118,
+					"frame": 0,
+					"packed_bounds": [
+						10,
+						2,
+						109,
+						119
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 118,
+					"frame": 1,
+					"packed_bounds": [
+						14,
+						2,
+						107,
+						119
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 118,
+					"frame": 2,
+					"packed_bounds": [
+						14,
+						2,
+						107,
+						119
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 118,
+					"frame": 3,
+					"packed_bounds": [
+						14,
+						2,
+						106,
+						119
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 118,
+					"frame": 4,
+					"packed_bounds": [
+						15,
+						2,
+						108,
+						119
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 118,
+					"frame": 5,
+					"packed_bounds": [
+						16,
+						2,
+						104,
+						119
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 110,
+					"frame": 0,
+					"packed_bounds": [
+						16,
+						20,
+						109,
+						101
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 110,
+					"frame": 1,
+					"packed_bounds": [
+						16,
+						20,
+						111,
+						101
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 110,
+					"frame": 2,
+					"packed_bounds": [
+						17,
+						20,
+						110,
+						101
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 110,
+					"frame": 3,
+					"packed_bounds": [
+						18,
+						20,
+						109,
+						101
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 110,
+					"frame": 4,
+					"packed_bounds": [
+						19,
+						20,
+						109,
+						101
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 110,
+					"frame": 5,
+					"packed_bounds": [
+						0,
+						20,
+						125,
+						101
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 107,
+					"frame": 0,
+					"packed_bounds": [
+						16,
+						17,
+						111,
+						104
+					],
+					"row": "up"
+				},
+				{
+					"body_ground": 107,
+					"frame": 1,
+					"packed_bounds": [
+						17,
+						17,
+						110,
+						104
+					],
+					"row": "up"
+				},
+				{
+					"body_ground": 107,
+					"frame": 2,
+					"packed_bounds": [
+						17,
+						17,
+						110,
+						104
+					],
+					"row": "up"
+				},
+				{
+					"body_ground": 107,
+					"frame": 3,
+					"packed_bounds": [
+						17,
+						17,
+						110,
+						104
+					],
+					"row": "up"
+				},
+				{
+					"body_ground": 105,
+					"frame": 4,
+					"packed_bounds": [
+						18,
+						19,
+						110,
+						102
+					],
+					"row": "up"
+				},
+				{
+					"body_ground": 107,
+					"frame": 5,
+					"packed_bounds": [
+						0,
+						17,
+						127,
+						104
+					],
+					"row": "up"
+				}
+			],
+			"id": "ck",
+			"source": "res://image/role/ck/source/chuanyang_walk_v10.png"
+		},
+		{
+			"atlas": "res://image/role/fs/shuangyu_walk_4dir.png",
+			"frames": [
+				{
+					"body_ground": 127,
+					"frame": 0,
+					"packed_bounds": [
+						13,
+						17,
+						110,
+						104
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 127,
+					"frame": 1,
+					"packed_bounds": [
+						15,
+						16,
+						104,
+						105
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 127,
+					"frame": 2,
+					"packed_bounds": [
+						11,
+						16,
+						107,
+						105
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 127,
+					"frame": 3,
+					"packed_bounds": [
+						9,
+						18,
+						108,
+						103
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 127,
+					"frame": 4,
+					"packed_bounds": [
+						9,
+						17,
+						108,
+						104
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 127,
+					"frame": 5,
+					"packed_bounds": [
+						8,
+						16,
+						109,
+						105
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 116,
+					"frame": 0,
+					"packed_bounds": [
+						21,
+						24,
+						102,
+						97
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 120,
+					"frame": 1,
+					"packed_bounds": [
+						23,
+						20,
+						94,
+						101
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 116,
+					"frame": 2,
+					"packed_bounds": [
+						22,
+						24,
+						99,
+						97
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 120,
+					"frame": 3,
+					"packed_bounds": [
+						21,
+						20,
+						98,
+						101
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 116,
+					"frame": 4,
+					"packed_bounds": [
+						24,
+						24,
+						90,
+						97
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 120,
+					"frame": 5,
+					"packed_bounds": [
+						19,
+						20,
+						93,
+						101
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 113,
+					"frame": 0,
+					"packed_bounds": [
+						15,
+						17,
+						102,
+						104
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 114,
+					"frame": 1,
+					"packed_bounds": [
+						18,
+						17,
+						100,
+						104
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 113,
+					"frame": 2,
+					"packed_bounds": [
+						17,
+						17,
+						102,
+						104
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 114,
+					"frame": 3,
+					"packed_bounds": [
+						15,
+						17,
+						102,
+						104
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 113,
+					"frame": 4,
+					"packed_bounds": [
+						16,
+						17,
+						101,
+						104
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 114,
+					"frame": 5,
+					"packed_bounds": [
+						12,
+						17,
+						103,
+						104
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 108,
+					"frame": 0,
+					"packed_bounds": [
+						20,
+						15,
+						102,
+						106
+					],
+					"row": "up"
+				},
+				{
+					"body_ground": 106,
+					"frame": 1,
+					"packed_bounds": [
+						23,
+						17,
+						97,
+						104
+					],
+					"row": "up"
+				},
+				{
+					"body_ground": 108,
+					"frame": 2,
+					"packed_bounds": [
+						22,
+						15,
+						99,
+						106
+					],
+					"row": "up"
+				},
+				{
+					"body_ground": 109,
+					"frame": 3,
+					"packed_bounds": [
+						19,
+						14,
+						102,
+						107
+					],
+					"row": "up"
+				},
+				{
+					"body_ground": 109,
+					"frame": 4,
+					"packed_bounds": [
+						19,
+						14,
+						102,
+						107
+					],
+					"row": "up"
+				},
+				{
+					"body_ground": 108,
+					"frame": 5,
+					"packed_bounds": [
+						18,
+						16,
+						98,
+						105
+					],
+					"row": "up"
+				}
+			],
+			"id": "fs",
+			"source": "res://image/role/fs/source/shuangyu_walk_v10.png"
+		},
+		{
+			"atlas": "res://image/role/fz/chenxing_walk_4dir.png",
+			"frames": [
+				{
+					"body_ground": 127,
+					"frame": 0,
+					"packed_bounds": [
+						13,
+						22,
+						105,
+						99
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 127,
+					"frame": 1,
+					"packed_bounds": [
+						14,
+						22,
+						103,
+						99
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 127,
+					"frame": 2,
+					"packed_bounds": [
+						13,
+						22,
+						104,
+						99
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 127,
+					"frame": 3,
+					"packed_bounds": [
+						13,
+						22,
+						104,
+						99
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 127,
+					"frame": 4,
+					"packed_bounds": [
+						14,
+						22,
+						103,
+						99
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 127,
+					"frame": 5,
+					"packed_bounds": [
+						13,
+						22,
+						104,
+						99
+					],
+					"row": "down"
+				},
+				{
+					"body_ground": 124,
+					"frame": 0,
+					"packed_bounds": [
+						18,
+						0,
+						100,
+						121
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 124,
+					"frame": 1,
+					"packed_bounds": [
+						21,
+						0,
+						95,
+						121
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 124,
+					"frame": 2,
+					"packed_bounds": [
+						24,
+						0,
+						93,
+						121
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 124,
+					"frame": 3,
+					"packed_bounds": [
+						20,
+						0,
+						97,
+						121
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 124,
+					"frame": 4,
+					"packed_bounds": [
+						22,
+						0,
+						95,
+						121
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 124,
+					"frame": 5,
+					"packed_bounds": [
+						25,
+						0,
+						90,
+						121
+					],
+					"row": "left"
+				},
+				{
+					"body_ground": 127,
+					"frame": 0,
+					"packed_bounds": [
+						16,
+						1,
+						103,
+						120
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 127,
+					"frame": 1,
+					"packed_bounds": [
+						16,
+						1,
+						100,
+						120
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 127,
+					"frame": 2,
+					"packed_bounds": [
+						16,
+						1,
+						99,
+						120
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 127,
+					"frame": 3,
+					"packed_bounds": [
+						16,
+						1,
+						101,
+						120
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 127,
+					"frame": 4,
+					"packed_bounds": [
+						16,
+						1,
+						101,
+						120
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 127,
+					"frame": 5,
+					"packed_bounds": [
+						16,
+						1,
+						99,
+						120
+					],
+					"row": "right"
+				},
+				{
+					"body_ground": 98,
+					"frame": 0,
+					"packed_bounds": [
+						16,
+						22,
+						97,
+						99
+					],
+					"row": "up"
+				},
+				{
+					"body_ground": 98,
+					"frame": 1,
+					"packed_bounds": [
+						15,
+						22,
+						98,
+						99
+					],
+					"row": "up"
+				},
+				{
+					"body_ground": 99,
+					"frame": 2,
+					"packed_bounds": [
+						15,
+						21,
+						98,
+						100
+					],
+					"row": "up"
+				},
+				{
+					"body_ground": 98,
+					"frame": 3,
+					"packed_bounds": [
+						16,
+						22,
+						97,
+						99
+					],
+					"row": "up"
+				},
+				{
+					"body_ground": 98,
+					"frame": 4,
+					"packed_bounds": [
+						15,
+						22,
+						98,
+						99
+					],
+					"row": "up"
+				},
+				{
+					"body_ground": 99,
+					"frame": 5,
+					"packed_bounds": [
+						15,
+						21,
+						98,
+						100
+					],
+					"row": "up"
+				}
+			],
+			"id": "fz",
+			"source": "res://image/role/fz/source/chenxing_walk_v10.png"
+		}
+	],
+	"rows": 4
+}

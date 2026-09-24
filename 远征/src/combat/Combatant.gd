@@ -354,6 +354,13 @@ func pick_basic_target(sim: BattleSim) -> Combatant:
 		if all.is_empty():
 			return null
 		return all[sim.rng.randi_range(0, all.size() - 1)]
+	# 玩家可以用经典“攻”指令集火；强控状态与原近战前排规则仍优先。
+	if side == "ally" and kind == "role" and sim.role_focus_target_uid >= 0:
+		var focus := sim.unit_by_uid(sim.role_focus_target_uid)
+		if focus != null and focus.alive and focus.side == "enemy":
+			var front_alive := _filter_row(enemies, ROW_FRONT)
+			if attack_range != "melee" or focus.row == ROW_FRONT or front_alive.is_empty():
+				return focus
 	# 敌方 AI 目标规则（§2.5）；我方单位统一 basic 规则
 	if side == "enemy":
 		match ai_type:
