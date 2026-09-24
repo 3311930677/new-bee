@@ -18,13 +18,13 @@ func _run() -> void:
 			var direction: String = ["down", "left", "right", "up"][row]
 			var animation := StringName("walk_" + direction)
 			assert(frames.has_animation(animation))
-			assert(frames.get_frame_count(animation) == 4)
+			assert(frames.get_frame_count(animation) == 6)
 			assert(frames.get_animation_loop(animation))
-			for col in range(4):
+			for col in range(6):
 				var tex := frames.get_frame_texture(animation, col) as AtlasTexture
 				assert(tex != null)
 				assert(tex.region == Rect2(col * 128, row * 128, 128, 128))
-				assert(tex.atlas.get_size() == Vector2(512, 512))
+				assert(tex.atlas.get_size() == Vector2(768, 512), "unexpected atlas size: %s" % tex.atlas.get_size())
 				assert(tex.filter_clip)
 				checked += 1
 		var actor := Actor.new()

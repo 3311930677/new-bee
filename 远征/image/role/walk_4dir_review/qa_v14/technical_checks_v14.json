@@ -1,0 +1,50 @@
+{
+  "cell": 128,
+  "columns": 6,
+  "rows": 4,
+  "fps": 12.0,
+  "directions": [
+    "down",
+    "left",
+    "right",
+    "up"
+  ],
+  "front_back_phases": [
+    "left_contact",
+    "left_weight_transfer",
+    "passing_right",
+    "right_contact",
+    "right_weight_transfer",
+    "passing_left"
+  ],
+  "roles": [
+    {
+      "id": "zs",
+      "name": "pojun",
+      "atlas": "image/role/zs/pojun_walk_4dir.png",
+      "side_source": "image/role/zs/source/pojun_walk_v13.png",
+      "front_back_source": "four authored v5 gait poses with widened lower-body spacing and planted-contact holds"
+    },
+    {
+      "id": "ck",
+      "name": "chuanyang",
+      "atlas": "image/role/ck/chuanyang_walk_4dir.png",
+      "side_source": "image/role/ck/source/chuanyang_walk_v13.png",
+      "front_back_source": "four authored v5 gait poses with widened lower-body spacing and planted-contact holds"
+    },
+    {
+      "id": "fs",
+      "name": "shuangyu",
+      "atlas": "image/role/fs/shuangyu_walk_4dir.png",
+      "side_source": "image/role/fs/source/shuangyu_walk_v13.png",
+      "front_back_source": "four authored v5 gait poses with widened lower-body spacing and planted-contact holds"
+    },
+    {
+      "id": "fz",
+      "name": "chenxing",
+      "atlas": "image/role/fz/chenxing_walk_4dir.png",
+      "side_source": "image/role/fz/source/chenxing_walk_v13.png",
+      "front_back_source": "four authored v5 gait poses with widened lower-body spacing and planted-contact holds"
+    }
+  ]
+}

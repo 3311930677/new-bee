@@ -20,7 +20,7 @@ func _run() -> void:
 	assert(dm.get_trait("de_ranxue").get("type") == "double")
 	assert((dm.table("traits") as Array).size() == 44, "traits 应为 44 条")
 	assert((dm.table("skills") as Array).size() == 20, "skills 应为 20 条")
-	assert((dm.table("monsters") as Array).size() == 35, "monsters 应为 35 条")
+	assert((dm.table("monsters") as Array).size() == 36, "monsters 应为 36 条")
 	assert((dm.table("pets") as Array).size() == 8, "pets 应为 8 只")
 	assert((dm.table("combos") as Array).size() == 4, "combos 应为 4 条")
 	assert(dm.theme_config("forest").get("boss") == "mon_boss_forest")
@@ -60,5 +60,5 @@ func _run() -> void:
 	assert(cnt["num"] == 12 and cnt["mech"] == 16 and cnt["link"] == 12 and cnt["double"] == 4,
 		"词条分系计数不符：%s" % str(cnt))
 
-	print("DATA_OK roles=4 skills=20 monsters=35 pets=8 traits=44(12+16+12+4) combos=4 themes=8 tiles_ok")
+	print("DATA_OK roles=4 skills=20 monsters=36 pets=8 traits=44(12+16+12+4) combos=4 themes=8 tiles_ok")
 	quit(0)

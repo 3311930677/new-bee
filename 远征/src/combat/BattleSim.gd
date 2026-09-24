@@ -17,6 +17,7 @@ var record_events := true
 var finished := false
 var result := ""                      # "" / "victory" / "defeat"
 var auto_mode := false                # 托管
+var role_focus_target_uid := -1        # 玩家“攻”指令指定目标；不覆盖嘲讽/混乱与近战前排规则
 var potions_left := 0                 # 治疗药剂
 var potion_cd_ticks := 0              # 药剂 CD（8 秒一瓶，防连点误用）
 const POTION_CD := 8 * 30
@@ -40,14 +41,18 @@ var role_uid: int = 0
 
 # ---------- 组建 ----------
 ## ally_cfg: {role_id, level, traits[], active_pet, bench_pet, hp_override, potions}
-## enemy_cfg: {theme, node_type("normal"/"elite"/"boss"), layer(1..3), enemy_mult}
+## enemy_cfg: {theme, node_type("normal"/"elite"/"boss"), layer(1..3), enemy_mult,
+##             solo, display_level}; solo 明雷按显示等级成长，历练仍按层数成长。
 ##   enemy_mult 由调用方（苦行局）给，默认 1.0；模拟器不自己读表，保持内核无配置依赖。
 func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 	rng.seed = seed
+	role_focus_target_uid = -1
 	theme_id = String(enemy_cfg.get("theme", "forest"))
 	theme_rule = TableCache.theme_rule(theme_id)
 	rule_timer = rule_interval_ticks()
 	enemy_scale = 1.0 + 0.12 * float(int(enemy_cfg.get("layer", 1)))
+	if bool(enemy_cfg.get("solo", false)) and int(enemy_cfg.get("display_level", 0)) > 0:
+		enemy_scale = 1.0 + 0.16 * float(int(enemy_cfg.get("display_level", 1)) - 1)
 	enemy_scale *= maxf(0.1, float(enemy_cfg.get("enemy_mult", 1.0)))
 	pet_level = maxi(1, int(ally_cfg.get("level", 1)))
 	pet_stats = ally_cfg.get("pet_stats", {})
@@ -63,7 +68,7 @@ func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 	else:
 		_build_enemies(String(enemy_cfg.get("theme", "forest")),
 			String(enemy_cfg.get("node_type", "normal")),
-			String(enemy_cfg.get("lead_mon", "")))
+			String(enemy_cfg.get("lead_mon", "")), bool(enemy_cfg.get("solo", false)))
 	# 开场词条钩子
 	for u in units:
 		if u.traits != null:
@@ -191,7 +196,7 @@ func _spawn_adds(pick: Callable, n: int) -> void:
 
 
 ## lead_mon：探索层撞到的那只怪（遇敌继承——撞谁谁领头，其余仍按池随机补位）
-func _build_enemies(theme: String, node_type: String, lead_mon := "") -> void:
+func _build_enemies(theme: String, node_type: String, lead_mon := "", solo := false) -> void:
 	var tc := TableCache.theme_config(theme)
 	var pool: Array = tc.get("monsters", [])
 	if pool.is_empty():
@@ -201,6 +206,11 @@ func _build_enemies(theme: String, node_type: String, lead_mon := "") -> void:
 		return
 	var pick := func() -> String:
 		return String(pool[rng.randi_range(0, pool.size() - 1)])
+	# 主世界明雷是一只具体的地图怪：接触谁就与谁交战；历练编成保持原样。
+	if solo and node_type == "normal":
+		_spawn_monster(lead_mon if lead_mon != "" else pick.call(),
+			Combatant.ROW_FRONT, 2)
+		return
 	match node_type:
 		"elite":
 			var ec: Dictionary = TableCache.nodes_config().get("enemy", {})
@@ -320,6 +330,15 @@ func alive_units(side: String) -> Array[Combatant]:
 		if u.alive and u.side == side:
 			out.append(u)
 	return out
+
+
+## 经典“攻”指令只改玩家普攻的选敌优先级，不另写伤害或攻速规则。
+func set_role_focus_target(uid: int) -> bool:
+	var target := unit_by_uid(uid)
+	if target == null or not target.alive or target.side != "enemy":
+		return false
+	role_focus_target_uid = uid
+	return true
 
 
 func has_boss() -> bool:
@@ -458,7 +477,7 @@ func run_to_end() -> String:
 
 ## 状态哈希（确定性对拍用）
 func hash_state() -> int:
-	var h := tick_count
+	var h := (tick_count * 31 + role_focus_target_uid + 1) % 2147483647
 	for u in units:
 		h = (h * 31 + u.uid * 1000003 + u.hp * 7919 + u.energy) % 2147483647
 	return h

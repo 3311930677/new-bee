@@ -16,7 +16,7 @@ const BAR_INSET := 3.0      # 内填充与外框的边距；9-patch 左右各 10
 # 挪进加载页（这里有进度条，玩家知道在等），之后每个界面都能在 30ms 内到位。
 const PRELOAD_CODE := [
 	"res://src/ui/GameHome.tscn",      # 主界面（连带 GrowthPanel 六个子面板）
-	"res://src/city/CityScene.tscn",   # 主城
+	"res://src/explore/MapScene.tscn", # 主城（城务层沿用 CityScene）
 	"res://src/run/RouteScene.tscn",   # 路线图（连带 MapScene / BattleScene）
 	"res://src/ui/WorldPanel.gd",
 	"res://src/ui/CodexPanel.gd",

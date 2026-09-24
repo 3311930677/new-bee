@@ -5,7 +5,7 @@ var _fails := 0
 
 
 func _ready() -> void:
-	G.SAVE_PATH = "user://save_verify_city.json"
+	G.SAVE_PATH = "res://tools/_logs/save_verify_city.json"
 	await _run()
 	get_tree().quit(0 if _fails == 0 else 1)
 

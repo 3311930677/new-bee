@@ -169,7 +169,7 @@ static func validate(data: Dictionary, now_sec: int) -> Dictionary:
 			if arr != null and not (arr is Array):
 				return {"ok": false, "err": "prog.%s 应为数组" % k}
 		for k in ["talents", "equip", "skills", "mounts", "titles", "pet_stat",
-				"tips_seen", "settings", "gacha", "world_cleared", "lore_beats"]:
+				"tips_seen", "settings", "gacha", "world_cleared", "lore_beats", "main_world"]:
 			var dv: Variant = pd.get(k)
 			if dv != null and not (dv is Dictionary):
 				return {"ok": false, "err": "prog.%s 应为对象" % k}

@@ -46,8 +46,10 @@ func _physics_process(delta: float) -> void:
 		facing = "down" if actual_velocity.y > 0 else "up"
 	var animation := StringName("walk_" + facing)
 	if sprite.animation != animation:
+		var gait_frame := sprite.frame
+		var gait_progress := sprite.frame_progress
 		sprite.animation = animation
-		sprite.frame = 0
+		sprite.set_frame_and_progress(gait_frame, gait_progress)
 	# 4 key frames / 8 FPS = .5 seconds; playback follows actual speed.
 	sprite.speed_scale = actual_velocity.length() / 60.0
 	sprite.play(animation)

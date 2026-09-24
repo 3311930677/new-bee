@@ -81,6 +81,15 @@ var avatar_use_custom := false   # 当前是否使用自定义头像（选职业
 var player_name := ""       # 玩家起的名字
 var roles: Array = []       # data/roles.json 内容
 
+
+## 界面显示本次登录输入的账号；游客沿用创角昵称。
+func display_name() -> String:
+	if not account.strip_edges().is_empty() and account != "游客":
+		return account.strip_edges()
+	if not player_name.strip_edges().is_empty():
+		return player_name.strip_edges()
+	return "旅人"
+
 # ---------- 存档与钱包（user://save.json；四币 + 角色档案 + 养成进度） ----------
 # 用 var 而非 const：自动化测试会把 SAVE_PATH 指向临时文件，避免污染真实存档
 var SAVE_PATH := "user://save.json"
@@ -167,6 +176,7 @@ var prog := {
 	"worlds_unlocked": 1,       # 已解锁世界数（按 maps.json theme_order 顺序推进）
 	"world_cleared": {},        # theme_id -> true（已通关该世界）
 	"pets": ["pet_rockturtle"], # 已收集宠物 id（初始伙伴：岩龟）
+	"main_world": {"map_id": "lorin_wilds"},
 }
 
 # ---------- 主城（据点）状态（跨局持久）----------
@@ -388,6 +398,8 @@ func _load_save() -> void:
 		prog["worlds_unlocked"] = clampi(int(pd.get("worlds_unlocked", 1)), 1, maxi(1, world_count()))
 		var wc: Variant = pd.get("world_cleared", {})
 		prog["world_cleared"] = wc if wc is Dictionary else {}
+		var mw: Variant = pd.get("main_world", {})
+		prog["main_world"] = mw if mw is Dictionary else {"map_id": "lorin_wilds"}
 		var ps: Variant = pd.get("pets", [])
 		prog["pets"] = ps if ps is Array else []
 		# 养成 6 线字段（老存档缺省补默认，向后兼容）
@@ -460,6 +472,7 @@ func _init_state_defaults() -> void:
 	wallet = {"gold": 0, "expedition": 0, "soul": 0, "honor": 0}
 	items = {"ticket_ten": 0, "ticket_sweep": 1}
 	prog = {"level": 1, "exp": 0, "worlds_unlocked": 1, "world_cleared": {}, "pets": [],
+		"main_world": {"map_id": "lorin_wilds"},
 		"talents": {}, "equip": {}, "skills": {}, "mounts": {"owned": {}, "active": ""},
 		"titles": {"owned": [], "active": ""}, "pet_stat": {}, "tips_seen": {},
 		"lore_seen": false, "lore_beats": {}, "settings": {}, "last_ts": 0,

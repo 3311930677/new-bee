@@ -1,4 +1,6 @@
 [
+  { "id": "mon_zombie", "name": "僵尸", "theme": "forest", "tier": "normal", "ai": "basic",
+    "base": { "hp": 64, "atk": 12, "def": 5, "spd": 1.0 }, "attack_range": "melee" },
   { "id": "mon_wolf", "name": "野狼", "theme": "forest", "tier": "normal", "ai": "basic",
     "base": { "hp": 60, "atk": 10, "def": 4, "spd": 1.1 }, "attack_range": "melee" },
   { "id": "mon_spider", "name": "毒蛛", "theme": "forest", "tier": "normal", "ai": "back",

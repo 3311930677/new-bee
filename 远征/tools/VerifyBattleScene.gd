@@ -53,6 +53,8 @@ func _run() -> void:
 	#    远征按失败结算（要说"远征失利"），演武不判负（要说"未分胜负"）。
 	_check(await _draw_text_seen("pve", "远征失利"), "PVE 超时应显示「远征失利」，与按败结算一致")
 	_check(await _draw_text_seen("arena", "未分胜负"), "演武平局应显示「未分胜负」，不能写成失利")
+	_check(await _run_classic_commands(), "经典战斗的攻/技/物/逃入口应可用且共用原战斗规则")
+	_check(await _run_ranged_presentation(), "远程普攻应先飞弹、抵达后再显示伤害反馈且血条同步")
 
 	if _fails == 0:
 		print("BATTLE_SCENE_OK all tests passed")
@@ -79,6 +81,140 @@ func _draw_text_seen(mode: String, want: String) -> bool:
 	scene.queue_free()
 	await get_tree().process_frame
 	return found
+
+
+func _run_classic_commands() -> bool:
+	BattleScene.pending_cfg = {
+		"ally": {"role_id": "zs", "level": 5, "traits": [],
+			"active_pet": "pet_rockturtle", "bench_pet": "pet_thunderhawk", "potions": 2},
+		"enemy": {"theme": "forest", "node_type": "normal", "layer": 1},
+		"presentation": "classic_inline", "seed": 17,
+	}
+	var scene := _spawn()
+	scene.speed = 0.0
+	await get_tree().process_frame
+	var ok := scene._classic_presentation() and scene._cmd_root != null \
+		and scene._cmd_btns.size() == 4 and scene._cmd_root.visible
+	if not ok:
+		scene.queue_free()
+		await get_tree().process_frame
+		return false
+
+	var role := scene.sim.role_unit()
+	var role_view: BattleScene.UnitView = scene._views[role.uid] if role != null else null
+	var enemies := scene.sim.alive_units("enemy")
+	if role != null and not enemies.is_empty():
+		var enemy := enemies[0]
+		ok = ok and scene._grid_pos(enemy.side, enemy.row, enemy.col).x \
+			< scene._grid_pos(role.side, role.row, role.col).x
+		ok = ok and (scene._views[enemy.uid] as BattleScene.UnitView).position \
+			== scene._grid_pos(enemy.side, enemy.row, enemy.col)
+		ok = ok and role_view.position == scene._grid_pos(role.side, role.row, role.col)
+	if role_view != null:
+		# 四枚径向指令按 RADIAL_OFFSETS 环绕角色脚底摆放（夹在视野内），互不重叠，
+		# 且不压角色精灵（128×128×0.55：x±36、头 -61）与脚下血/能量条（12~22）
+		var sprite_rect := Rect2(role_view.position + Vector2(-36, -62), Vector2(72, 72))
+		var bars_rect := Rect2(role_view.position + Vector2(-22, 12), Vector2(44, 11))
+		var tiles: Array[Rect2] = []
+		for cbd in scene._cmd_btns:
+			var root := cbd.root as Control
+			var want: Vector2 = role_view.position + (BattleScene.RADIAL_OFFSETS.get(
+				String(cbd.key), Vector2.ZERO) as Vector2)
+			want.x = clampf(want.x, 6.0, BattleScene.VIEW_W - BattleScene.RADIAL_BTN - 6.0)
+			want.y = clampf(want.y, 56.0, 560.0)
+			ok = ok and root.position == want
+			var tile := Rect2(root.position, Vector2(BattleScene.RADIAL_BTN,
+				BattleScene.RADIAL_BTN + BattleScene.RADIAL_LABEL_H))
+			ok = ok and not tile.intersects(sprite_rect) and not tile.intersects(bars_rect)
+			for other in tiles:
+				ok = ok and not tile.intersects(other)
+			tiles.append(tile)
+		# 原版风名牌：挂身右、纯文字无底板（name_bg 从不创建）
+		ok = ok and role_view.name_l.position == Vector2(38, -58) \
+			and role_view.name_bg == null \
+			and String(role_view.name_l.text) == "旅人 5"
+		# 身侧宠物（经典模式整体偏移）不压任何一枚指令
+		for unit in scene.sim.units:
+			if unit.alive and unit.uid != role.uid:
+				var uv: BattleScene.UnitView = scene._views[unit.uid]
+				var unit_pos: Vector2 = scene._grid_pos(unit.side, unit.row, unit.col) \
+					+ uv.body.position
+				var unit_bounds := Rect2(unit_pos + Vector2(-36, -76), Vector2(72, 94))
+				for tile in tiles:
+					ok = ok and not tile.intersects(unit_bounds)
+	scene._command_attack()
+	var focus_id := scene.sim.role_focus_target_uid
+	ok = focus_id >= 0 and role != null \
+		and role.pick_basic_target(scene.sim) != null \
+		and role.pick_basic_target(scene.sim).uid == focus_id
+	ok = ok and (scene._views[focus_id] as BattleScene.UnitView)._target_mark.visible
+
+	scene._show_command_skills()
+	await get_tree().process_frame  # 页条按钮 queue_free 后再核对技能页
+	var expected_skills := mini(5, role.skills.size()) if role != null else 0
+	ok = ok and scene._page_panel.get_child_count() == expected_skills + 1 \
+		and scene._page_panel.position == BattleScene.PAGE_PANEL_POS \
+		and scene._page_panel.size == BattleScene.PAGE_PANEL_SIZE
+	scene._close_page()
+	ok = ok and not scene._page_panel.visible
+	scene._show_command_skills()
+	await get_tree().process_frame
+	if role != null:
+		role.energy = Combatant.MAX_ENERGY
+		var sid := String((role.skills[0] as Dictionary).def.get("id", ""))
+		scene._cast_command_skill(sid)
+		ok = ok and scene.sim.cast_queue.size() > 0 and not scene._page_panel.visible
+
+	var potions_before := scene.sim.potions_left
+	if role != null:
+		role.hp = maxi(1, role.get_max_hp() - 40)
+	scene._command_item()
+	ok = ok and scene._page_panel.visible and scene._command_page == "items"
+	scene._command_use_potion()
+	ok = ok and scene.sim.potions_left == potions_before - 1
+	scene._flee_armed = true # 模拟二次确认的第二击，验证仍落到既有撤退结算
+	scene._command_flee()
+	ok = ok and scene.sim.finished and scene.sim.result == "flee"
+	scene.queue_free()
+	await get_tree().process_frame
+	return ok
+
+
+func _run_ranged_presentation() -> bool:
+	BattleScene.pending_cfg = {
+		"ally": {"role_id": "fs", "level": 5, "traits": [],
+			"active_pet": "pet_rockturtle", "potions": 1},
+		"enemy": {"theme": "forest", "node_type": "normal", "layer": 1},
+		"presentation": "classic_inline", "seed": 19,
+	}
+	var scene := _spawn()
+	scene.speed = 0.0
+	await get_tree().process_frame
+	var role := scene.sim.role_unit()
+	var enemies := scene.sim.alive_units("enemy")
+	if role == null or enemies.is_empty():
+		scene.queue_free()
+		await get_tree().process_frame
+		return false
+	role.attack_range = "range"  # 固定用例条件，不依赖职业表未来的平衡调整
+	var target: Combatant = enemies[0]
+	var target_view: BattleScene.UnitView = scene._views[target.uid]
+	var before_ratio := target_view._hp_ratio
+	var amount := mini(20, maxi(target.hp - 1, 1))
+	target.hp -= amount
+	scene._on_event({"t": "basic", "src": role.uid, "uid": target.uid})
+	scene._on_event({"t": "dmg", "src": role.uid, "uid": target.uid,
+		"amount": amount, "crit": false, "dot": false})
+	scene._sync_views()
+	var key := "%d:%d" % [role.uid, target.uid]
+	var launched := scene._ranged_waiting.has(key) and target_view._hp_hold_count > 0 \
+		and is_equal_approx(target_view._hp_ratio, before_ratio)
+	await get_tree().create_timer(0.5).timeout
+	var arrived := target_view._hp_hold_count == 0 \
+		and target_view._hp_ratio < before_ratio and scene._ranged_waiting.is_empty()
+	scene.queue_free()
+	await get_tree().process_frame
+	return launched and arrived
 
 
 func _texts(root: Node, out: Array = []) -> Array:
