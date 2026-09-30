@@ -708,7 +708,8 @@ func knock_back(t: Combatant) -> void:
 
 
 # ---------- 战斗召唤（BOSS 技能） ----------
-func summon_monsters(caster: Combatant, mon_id: String, count: int, cap: int) -> void:
+func summon_monsters(caster: Combatant, mon_id: String, count: int, cap: int,
+		row := Combatant.ROW_BACK) -> void:
 	var enemies := alive_units("enemy")
 	var n := mini(count, cap - enemies.size())
 	if n <= 0:
@@ -716,6 +717,6 @@ func summon_monsters(caster: Combatant, mon_id: String, count: int, cap: int) ->
 	var cols := [3, 1, 4, 0]
 	var ci := 0
 	for i in n:
-		_spawn_monster(mon_id, Combatant.ROW_BACK, int(cols[ci % cols.size()]))
+		_spawn_monster(mon_id, row, int(cols[ci % cols.size()]))
 		ci += 1
 	emit({"t": "summon", "uid": caster.uid, "count": n})

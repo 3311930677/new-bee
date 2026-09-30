@@ -32,6 +32,7 @@ var role_id := "zs"
 var phase := "a"
 var act2 := false
 var act3_front := false
+var act3 := false
 
 var _map: MapScene = null
 var _reason := ""
@@ -41,7 +42,8 @@ func _ready() -> void:
 	var args := OS.get_cmdline_user_args()
 	role_id = String(args[0]) if args.size() > 0 else "zs"
 	phase = String(args[1]) if args.size() > 1 else "a"
-	act3_front = args.has("act3_front")
+	act3 = args.has("act3")
+	act3_front = args.has("act3_front") or act3
 	act2 = args.has("act2") or act3_front
 	G.SAVE_PATH = "res://tools/_logs/save_playthrough_%s_%s.json" % [role_id, phase]
 	for arg in args:
@@ -183,10 +185,14 @@ func _run_phase_a() -> void:
 	# --- s12 ---
 	if not await _talk_to("npc_steward", "s12"):
 		return
+	if act3 and not await _learn_second_skill():
+		return
 
 	if act2 and not await _run_second_act():
 		return
 	if act3_front and not await _run_third_act_front():
+		return
+	if act3 and not await _run_third_act_back():
 		return
 	_release_all()
 	var state := _state()
@@ -197,6 +203,29 @@ func _run_phase_a() -> void:
 
 
 ## 第二幕仍只用真实移动、接触和鼠标选项，不直接写主线。
+func _learn_second_skill() -> bool:
+	if not await _close_city_modal(): return false
+	var sid := G.mentor_second_skill()
+	var title := "领悟·" + String(TableCache.get_skill(sid).get("name",sid))
+	var pos := _npc_pos("npc_mentor")
+	for attempt in 20:
+		if not _city_modal():
+			var result := await _travel(pos,20.0,true,false)
+			if result != "ok": return _bad("导师导航失败：" + result)
+		if _city_modal():
+			var panel: Node = _map._city_content.get("_panel") as Node
+			var label := _find_label(panel,[title])
+			if label != null:
+				if not await _click_until(label.get_parent() as Control,
+					func() -> bool: return G.act1_unlocked_skills().has(sid),40,"mentor_learn"):
+					return _bad("导师真实领取第二式失败")
+				print("PLAY_EVENT mentor_second_skill learned=" + sid)
+				return await _close_city_modal()
+			if not await _close_city_modal(): return false
+		await _wait_frames(4)
+	return _bad("未找到导师第二式真实按钮")
+
+
 func _run_second_act() -> bool:
 	if not await _talk_to("npc_warden", "s13"): return false
 	if not await _exit_to("lorin_wilds", Vector2(480, 96), "maple_road"): return false
@@ -262,6 +291,60 @@ func _run_third_act_front() -> bool:
 	return true
 
 
+func _run_third_act_back() -> bool:
+	if not await _exit_to("frost_post", Vector2(864,710), "rift_mine_road"): return false
+	if not await _exit_to("rift_mine_road", Vector2(480,96), "rift_mine_vault"): return false
+	_map.st.active_pet = ""
+	_map.st.bench_pet = ""
+	_map.st.hp = 1
+	if not await _fight_nearest("boss_lose", "mon_redsand_guard"): return false
+	if G.item_count("mine_record") != 1 or G.story_step_done("s25"):
+		return _bad("械卫败北误交记录或推进主线")
+	if not G.reload_save() or G.item_count("mine_record") != 1:
+		return _bad("械卫败北后读档丢失记录")
+	if not await _enter_world("", "", "rift_mine_vault"): return false
+	print("PLAY_EVENT act3_defeat_reenter mine_record=1")
+	if not await _fight_nearest("win", "mon_redsand_guard"): return false
+	if not await _need("s25"): return false
+	if not await _exit_to("rift_mine_vault",Vector2(480,1152),"rift_mine_road"): return false
+	if not await _exit_to("rift_mine_road",Vector2(90,710),"frost_post"): return false
+	if not await _exit_to("frost_post",Vector2(480,96),"frost_boardwalk"): return false
+	if not await _fight_nearest("flee"): return false
+	if G.item_count("gate_stamp") != 1 or G.story_step_done("s26"):
+		return _bad("栈道撤退误交铁印或推进主线")
+	print("PLAY_EVENT act3_flee_done gate_stamp=1")
+	await get_tree().create_timer(MapScene.FLEE_CONTACT_CD + .2).timeout
+	if not await _visit_entity("signal_ribbons","s26"): return false
+	if not await _exit_to("frost_boardwalk",Vector2(480,96),"frost_pass"): return false
+	if not await _fight_nearest("win","mon_snowveil_lord"): return false
+	if not await _need("s27"): return false
+	if not await _exit_to("frost_pass",Vector2(480,1152),"frost_boardwalk"): return false
+	if not await _exit_to("frost_boardwalk",Vector2(480,1152),"frost_post"): return false
+	if not await _choose_frost_route(): return false
+	if not await _need("s28"): return false
+	for item in ["mine_record","gate_stamp","frost_reply","veil_seal"]:
+		if G.item_count(item) != 0: return _bad("第三幕任务物交付残留：" + item)
+	print("PLAY_EVENT act3_complete choice=wardens")
+	return true
+
+
+func _choose_frost_route() -> bool:
+	var pos := _npc_pos("npc_frost_envoy")
+	for attempt in 20:
+		if not _city_modal():
+			var result := await _travel(pos,28.0,true,false)
+			if result != "ok": return _bad("双关定路导航失败：" + result)
+		if _city_modal():
+			var root: Node = _map._city_content.get("_panel") as Node
+			var label := _find_label(root,["守关补给"])
+			if label != null:
+				return await _click_until(label.get_parent() as Control,
+					func() -> bool: return G.story_step_done("s28"),40,"frost_choice")
+			if not await _close_city_modal(): return false
+		await _wait_frames(4)
+	return _bad("未找到双关供货选择")
+
+
 func _visit_entity(entity_id: String, step: String) -> bool:
 	var entity: Node2D = null
 	for candidate in _map._quest_entities:
@@ -307,22 +390,24 @@ func _run_phase_b() -> void:
 	var step := String(story.get("step", ""))
 	var done: Array = story.get("done", [])
 	var missing: Array = []
-	for i in range(1, 25 if act3_front else (21 if act2 else 13)):
+	for i in range(1, 29 if act3 else (25 if act3_front else (21 if act2 else 13))):
 		var sid := "s%02d" % i
 		if not done.has(sid):
 			missing.append(sid)
-	if (act3_front and not step.is_empty()) or (act2 and not act3_front and step != "s21") \
+	if (act3 and not step.is_empty()) or (act3_front and not act3 and step != "s25") or (act2 and not act3_front and step != "s21") \
 		or (not act2 and step not in ["", "s13"]):
 		return _bad("阶段 B 主线未走完，当前 step=%s" % step)
 	if not missing.is_empty():
 		return _bad("阶段 B 缺少主线步骤：%s" % ", ".join(missing))
+	if act3 and not G.act1_unlocked_skills().has(G.mentor_second_skill()):
+		return _bad("阶段 B 丢失真实领取的导师技能")
 	var map_id := String((G.prog.get("main_world", {}) as Dictionary).get("map_id", ""))
 	if map_id != ("frost_post" if act3_front else ("shenyuan_port" if act2 else "lorin_wilds")):
 		return _bad("阶段 B 不是停在边城：map_id=%s" % map_id)
 	# 跨进程奖励账本幂等：重放 s12 那笔主线事务，必须命中 duplicate，且金币一分不动。
 	var tid := ""
 	for a in (G.ledger().get("applied", []) as Array):
-		if String(a).begins_with("story|s24|" if act3_front else ("story|s20|" if act2 else "story|s12|")):
+		if String(a).begins_with("story|s28|" if act3 else ("story|s24|" if act3_front else ("story|s20|" if act2 else "story|s12|"))):
 			tid = String(a)
 			break
 	if tid.is_empty():
@@ -424,6 +509,7 @@ func _state() -> Dictionary:
 	equipped.sort()
 	return {
 		"role": role_id,
+		"unlocked_skills": G.act1_unlocked_skills(),
 		"story_step": String(story.get("step", "")),
 		"story_done_n": done.size(),
 		"story_done": done,
@@ -853,7 +939,7 @@ func _fight_nearest(policy: String, target_mon_id := "") -> bool:
 		return _bad("期望胜利却得到 %s（%s）" % [res, mon_id])
 	if policy == "flee" and res != "flee":
 		return _bad("期望撤退却得到 %s（%s）" % [res, mon_id])
-	if policy == "lose" and res != "defeat":
+	if policy in ["lose", "boss_lose"] and res != "defeat":
 		return _bad("期望战败却得到 %s（%s）" % [res, mon_id])
 	return true
 
@@ -879,6 +965,13 @@ func _resolve_battle(policy: String) -> String:
 			func() -> bool: return bool(bs.sim.auto_mode) == want_auto, 20, "auto")
 		if not auto_ok:
 			return "auto_click_failed"
+	if policy == "boss_lose":
+		var blocked_flee := _cmd_root(bs,"flee")
+		if blocked_flee == null or not bool(bs._flee_blocked): return "boss_flee_not_blocked"
+		_click(blocked_flee)
+		await _wait_frames(4)
+		if bool(bs._flee_armed) or bool(bs.sim.finished): return "boss_flee_escaped"
+		print("PLAY_EVENT act3_boss_flee_blocked real_click=true")
 	if policy == "flee":
 		var flee_root := _cmd_root(bs, "flee")
 		if flee_root == null:

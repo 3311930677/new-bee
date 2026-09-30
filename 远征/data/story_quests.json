@@ -31,6 +31,10 @@
     {"id": "s21", "title": "北驿来信", "goal": "在沉渊港找沈澜，接下霜关来信", "dialogue": "北驿的信到了。商队说矿道封关，守关人却在找失踪矿工。沿港北赤砂商路，把这封信交给宁砚。", "event": "talk", "map": "shenyuan_port", "target": "npc_harbormaster", "next": "s22", "reward": {"gold": 140, "exp": 90, "item": "frost_letter", "count": 1}},
     {"id": "s22", "title": "赤砂商路", "goal": "从港北出口进入赤砂商路", "event": "visit", "map": "red_sand_route", "target": "red_sand_route", "next": "s23", "reward": {"gold": 100, "exp": 75}},
     {"id": "s23", "title": "驿中两说", "goal": "到霜关驿找宁砚交付来信", "dialogue": "商队催我开关，岑雪却不敢撤岗。两份信的印记相同，说的事却不同。去驿东矿道，翻倒矿车的轨道记录或许能说清。", "event": "talk", "map": "frost_post", "target": "npc_frost_envoy", "requires_item": "frost_letter", "next": "s24", "reward": {"gold": 180, "exp": 120}},
-    {"id": "s24", "title": "矿道留痕", "goal": "到驿东裂谷矿道查看翻倒矿车", "event": "collect", "map": "rift_mine_road", "target": "overturned_mine_cart", "next": "", "reward": {"gold": 120, "exp": 90, "item": "mine_record", "count": 1}}
+    {"id": "s24", "title": "矿道留痕", "goal": "到驿东裂谷矿道查看翻倒矿车", "event": "collect", "map": "rift_mine_road", "target": "overturned_mine_cart", "next": "s25", "reward": {"gold": 120, "exp": 90, "item": "mine_record", "count": 1}},
+    {"id": "s25", "title": "矿脉械卫", "goal": "进入裂谷矿脉，击败赤砂械卫", "event": "defeat", "map": "rift_mine_vault", "target": "mon_redsand_guard", "requires_item": "mine_record", "next": "s26", "reward": {"gold": 310, "exp": 210, "item": "gate_stamp", "count": 1}},
+    {"id": "s26", "title": "雪中回讯", "goal": "到驿北霜林栈道观察双关讯号", "event": "observe", "map": "frost_boardwalk", "target": "signal_ribbons", "requires_item": "gate_stamp", "next": "s27", "reward": {"gold": 160, "exp": 110, "item": "frost_reply", "count": 1}},
+    {"id": "s27", "title": "雪幕领主", "goal": "进入冰隘，击败雪幕领主", "event": "defeat", "map": "frost_pass", "target": "mon_snowveil_lord", "requires_item": "frost_reply", "next": "s28", "reward": {"gold": 340, "exp": 230, "item": "veil_seal", "count": 1}},
+    {"id": "s28", "title": "双关定路", "goal": "回霜关驿找宁砚，决定先恢复哪路供货", "dialogue": "轨道和雪幕都已查清。商货与守关补给只能先放一队，两边的人都等得太久。另一条路随后仍会恢复。", "event": "talk", "map": "frost_post", "target": "npc_frost_envoy", "requires_item": "veil_seal", "craft_options": {"merchant": {"title": "商货先行", "costs": {}}, "wardens": {"title": "守关补给", "costs": {}}}, "next": "", "reward": {"gold": 280, "exp": 160}}
   ]
 }

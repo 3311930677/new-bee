@@ -23,6 +23,7 @@ param(
   [string]$Roles = "zs,fs",
   [switch]$Act2,
   [switch]$Act3Front,
+  [switch]$Act3,
   [int]$TimeoutSec = 2400,
   [string]$LogDir = ""
 )
@@ -194,7 +195,7 @@ foreach ($role in $roleList) {
 
 	# ---- phase A: walk the whole chain and persist ----
 	$argsA = @("--headless", "--path", $Proj, "res://tools/PlaythroughMainWorld.tscn", "--", $role, "a")
-	if ($Act3Front) { $argsA += "act3_front" } elseif ($Act2) { $argsA += "act2" }
+	if ($Act3) { $argsA += "act3" } elseif ($Act3Front) { $argsA += "act3_front" } elseif ($Act2) { $argsA += "act2" }
 	$argsA += ("--save-dir=" + [System.IO.Path]::GetFullPath($LogDir))
 	$ra = Invoke-Engine -Exe $Godot -ArgList $argsA -TimeoutSec $TimeoutSec -WorkDir $Proj
 	$logA = Join-Path $LogDir ("playthrough_" + $role + "_a.log")
@@ -235,7 +236,7 @@ foreach ($role in $roleList) {
 
 	# ---- phase B: reopen the SAME save in a NEW process and verify ----
 	$argsB = @("--headless", "--path", $Proj, "res://tools/PlaythroughMainWorld.tscn", "--", $role, "b")
-	if ($Act3Front) { $argsB += "act3_front" } elseif ($Act2) { $argsB += "act2" }
+	if ($Act3) { $argsB += "act3" } elseif ($Act3Front) { $argsB += "act3_front" } elseif ($Act2) { $argsB += "act2" }
 	$argsB += ("--save-dir=" + [System.IO.Path]::GetFullPath($LogDir))
 	$rb = Invoke-Engine -Exe $Godot -ArgList $argsB -TimeoutSec $TimeoutSec -WorkDir $Proj
 	$logB = Join-Path $LogDir ("playthrough_" + $role + "_b.log")

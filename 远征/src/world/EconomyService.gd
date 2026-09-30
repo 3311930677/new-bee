@@ -68,6 +68,12 @@ static func market_price(cfg: Dictionary, state: Dictionary, site_id: String,
 			event_pct += port_pct
 			event_name = String((port_event as Dictionary).get("name", ""))
 	var site_pct := int((s.get("price_pct", {}) as Dictionary).get(good_id, 100))
+	var frost_choice := String(state.get("frost_event", ""))
+	var frost_event: Dictionary = (cfg.get("events", {}) as Dictionary).get(frost_choice, {})
+	var frost_pct := int((frost_event.get(site_id, {}) as Dictionary).get(good_id, 0))
+	if frost_pct != 0:
+		event_pct += frost_pct
+		event_name = String(frost_event.get("name", ""))
 	var factor := maxi(1, 100 + phase + event_pct)
 	var mid := maxi(1, roundi(float(int(g.get("base_gold", 1)) * site_pct * factor) / 10000.0))
 	return {"mid": mid, "day_wave_pct": phase, "event_pct": event_pct,

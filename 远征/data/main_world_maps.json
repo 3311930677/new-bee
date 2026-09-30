@@ -12,7 +12,10 @@
     {"id": "tidal_gate", "name": "退潮水闸", "kind": "首领", "level": [16, 22], "point": [795, 240]},
     {"id": "red_sand_route", "name": "赤砂商路", "kind": "野外", "level": [20, 28], "point": [620, 240]},
     {"id": "frost_post", "name": "霜关驿", "kind": "城镇", "level": [22, 32], "point": [620, 400]},
-    {"id": "rift_mine_road", "name": "裂谷矿道", "kind": "野外", "level": [24, 34], "point": [795, 400]}
+    {"id": "rift_mine_road", "name": "裂谷矿道", "kind": "野外", "level": [24, 34], "point": [795, 400]},
+    {"id": "rift_mine_vault", "name": "裂谷矿脉", "kind": "首领", "level": [26, 36], "point": [970, 400]},
+    {"id": "frost_boardwalk", "name": "霜林栈道", "kind": "野外", "level": [26, 36], "point": [620, 560]},
+    {"id": "frost_pass", "name": "冰隘", "kind": "首领", "level": [26, 36], "point": [795, 560]}
   ],
   "maps": {
     "lorin_wilds": {
@@ -437,6 +440,10 @@
         "from_rift_mine_road": [
           745,
           710
+        ],
+        "from_frost_boardwalk": [
+          480,
+          210
         ]
       },
       "exits": [
@@ -460,6 +467,18 @@
           "arrival": "from_frost_post",
           "label": "裂谷矿道",
           "requires_story": "s23",
+          "locked_hint": "先完成当前主线，再沿这条路前行"
+        },
+        {
+          "id": "north_boardwalk",
+          "at": [
+            480,
+            96
+          ],
+          "to": "frost_boardwalk",
+          "arrival": "from_frost_post",
+          "label": "霜林栈道",
+          "requires_story": "s25",
           "locked_hint": "先完成当前主线，再沿这条路前行"
         }
       ],
@@ -499,7 +518,14 @@
       "encounter_solo": true
     },
     "rift_mine_road": {
-      "clear_rects": [[75, 455, 465, 315]],
+      "clear_rects": [
+        [
+          75,
+          455,
+          465,
+          315
+        ]
+      ],
       "name": "裂谷矿道",
       "city": false,
       "theme": "tomb",
@@ -518,6 +544,10 @@
         "from_frost_post": [
           160,
           710
+        ],
+        "from_rift_mine_vault": [
+          480,
+          210
         ]
       },
       "exits": [
@@ -530,6 +560,18 @@
           "to": "frost_post",
           "arrival": "from_rift_mine_road",
           "label": "霜关驿"
+        },
+        {
+          "id": "north_vault",
+          "at": [
+            480,
+            96
+          ],
+          "to": "rift_mine_vault",
+          "arrival": "from_rift_mine_road",
+          "label": "裂谷矿脉",
+          "requires_story": "s24",
+          "locked_hint": "先完成当前主线，再沿这条路前行"
         }
       ],
       "decos": [
@@ -586,6 +628,270 @@
           "at": [
             480,
             525
+          ]
+        }
+      }
+    },
+    "rift_mine_vault": {
+      "name": "裂谷矿脉",
+      "city": false,
+      "theme": "tomb",
+      "tint": "ffffff",
+      "background": "",
+      "map_cols": 20,
+      "map_rows": 26,
+      "layout_version": 1,
+      "player_scale": 0.54,
+      "camera_zoom": 1.15,
+      "spawn": [
+        480,
+        1050
+      ],
+      "spawn_points": {
+        "from_rift_mine_road": [
+          480,
+          1050
+        ]
+      },
+      "exits": [
+        {
+          "id": "south_return",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "rift_mine_road",
+          "arrival": "from_rift_mine_vault",
+          "label": "裂谷矿道"
+        }
+      ],
+      "goal": "观察首领预兆，抓住过热破绽",
+      "node_type": "boss",
+      "boss_id": "mon_redsand_guard",
+      "monster_count": 1,
+      "monster_positions": [
+        [
+          480,
+          410
+        ]
+      ],
+      "monster_ids": [
+        "mon_redsand_guard"
+      ],
+      "battle_rewards": {
+        "boss": {
+          "gold": 460,
+          "exp": 320
+        }
+      },
+      "monster_sprite": "res://image/third_act/mon_redsand_guard.png",
+      "monster_sprite_paths": {
+        "mon_redsand_guard": "res://image/third_act/mon_redsand_guard.png",
+        "mon_frost_eye": "res://image/third_act/mon_frost_eye.svg"
+      },
+      "monster_height": 120,
+      "monster_level_offset": 3,
+      "monster_wander_only": true,
+      "monster_wander_radius": 18,
+      "monster_respawn_seconds": 86400,
+      "monster_contact_radius": 52,
+      "encounter_solo": true,
+      "dismount_on_entry": true,
+      "clear_rects": [
+        [
+          360,
+          130,
+          240,
+          1045
+        ]
+      ]
+    },
+    "frost_pass": {
+      "name": "冰隘",
+      "city": false,
+      "theme": "snow",
+      "tint": "ffffff",
+      "background": "",
+      "map_cols": 20,
+      "map_rows": 26,
+      "layout_version": 1,
+      "player_scale": 0.54,
+      "camera_zoom": 1.15,
+      "spawn": [
+        480,
+        1050
+      ],
+      "spawn_points": {
+        "from_frost_boardwalk": [
+          480,
+          1050
+        ]
+      },
+      "exits": [
+        {
+          "id": "south_return",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "frost_boardwalk",
+          "arrival": "from_frost_pass",
+          "label": "霜林栈道"
+        }
+      ],
+      "goal": "击破风眼，让雪幕领主露出破绽",
+      "node_type": "boss",
+      "boss_id": "mon_snowveil_lord",
+      "monster_count": 1,
+      "monster_positions": [
+        [
+          480,
+          410
+        ]
+      ],
+      "monster_ids": [
+        "mon_snowveil_lord"
+      ],
+      "battle_rewards": {
+        "boss": {
+          "gold": 460,
+          "exp": 320
+        }
+      },
+      "monster_sprite": "res://image/third_act/mon_snowveil_lord.png",
+      "monster_sprite_paths": {
+        "mon_snowveil_lord": "res://image/third_act/mon_snowveil_lord.png",
+        "mon_frost_eye": "res://image/third_act/mon_frost_eye.svg"
+      },
+      "monster_height": 120,
+      "monster_level_offset": 3,
+      "monster_wander_only": true,
+      "monster_wander_radius": 18,
+      "monster_respawn_seconds": 86400,
+      "monster_contact_radius": 52,
+      "encounter_solo": true,
+      "dismount_on_entry": true,
+      "clear_rects": [
+        [
+          360,
+          130,
+          240,
+          1045
+        ]
+      ]
+    },
+    "frost_boardwalk": {
+      "name": "霜林栈道",
+      "city": false,
+      "theme": "snow",
+      "tint": "ffffff",
+      "background": "",
+      "map_cols": 20,
+      "map_rows": 26,
+      "layout_version": 1,
+      "player_scale": 0.54,
+      "camera_zoom": 1.15,
+      "spawn": [
+        480,
+        1030
+      ],
+      "spawn_points": {
+        "from_frost_post": [
+          480,
+          1030
+        ],
+        "from_frost_pass": [
+          480,
+          210
+        ]
+      },
+      "exits": [
+        {
+          "id": "south_post",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "frost_post",
+          "arrival": "from_frost_boardwalk",
+          "label": "霜关驿"
+        },
+        {
+          "id": "north_pass",
+          "at": [
+            480,
+            96
+          ],
+          "to": "frost_pass",
+          "arrival": "from_frost_boardwalk",
+          "label": "冰隘",
+          "requires_story": "s26",
+          "locked_hint": "先完成当前主线，再沿这条路前行"
+        }
+      ],
+      "decos": [
+        "035_deco_snow_pine",
+        "037_deco_snow_snowdrift"
+      ],
+      "goal": "查看双关讯号，循冰隘方向找到回讯",
+      "node_type": "normal",
+      "monster_count": 4,
+      "monster_positions": [
+        [
+          225,
+          350
+        ],
+        [
+          740,
+          435
+        ],
+        [
+          215,
+          895
+        ],
+        [
+          480,
+          860
+        ]
+      ],
+      "monster_ids": [
+        "mon_icebat",
+        "mon_frostguard"
+      ],
+      "battle_rewards": {
+        "normal": {
+          "gold": 85,
+          "exp": 65
+        }
+      },
+      "monster_sprite": "",
+      "monster_height": 70,
+      "monster_level_offset": 2,
+      "monster_wander_only": true,
+      "monster_wander_radius": 36,
+      "monster_respawn_seconds": 120,
+      "monster_contact_radius": 40,
+      "encounter_solo": true,
+      "dismount_on_entry": true,
+      "clear_rects": [
+        [
+          350,
+          130,
+          260,
+          1045
+        ]
+      ],
+      "entities": {
+        "signal_ribbons": {
+          "kind": "story",
+          "quest": "",
+          "story_step": "s26",
+          "story_event": "observe",
+          "art": "signal_ribbons",
+          "name": "双关讯号",
+          "at": [
+            480,
+            565
           ]
         }
       }

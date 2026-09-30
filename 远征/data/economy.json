@@ -27,20 +27,24 @@
     {"id": "slope_camp", "name": "断碑营地", "map_id": "broken_slope", "entity_id": "trade_slope_camp",
       "price_pct": {"trade_grain": 145, "trade_salt": 145, "trade_herb": 66, "trade_iron": 150},
       "stock": {"trade_grain": 3, "trade_salt": 3, "trade_herb": 8, "trade_iron": 2},
-      "demand": {"trade_grain": 6, "trade_salt": 6, "trade_herb": 3, "trade_iron": 5}}
+      "demand": {"trade_grain": 6, "trade_salt": 6, "trade_herb": 3, "trade_iron": 5}},
+    {"id": "frost_market", "name": "霜关物资市集", "map_id": "frost_post", "npc_id": "npc_frost_miner", "price_pct": {"trade_grain": 120, "trade_salt": 116, "trade_herb": 104, "trade_iron": 108}, "stock": {"trade_grain": 8, "trade_salt": 5, "trade_herb": 7, "trade_iron": 6}, "demand": {"trade_grain": 6, "trade_salt": 5, "trade_herb": 6, "trade_iron": 7}}
   ],
   "events": {
     "forge": {"name": "碑文锻合，补给车可通行", "slope_camp": {"trade_salt": -6, "trade_iron": -8}},
     "scribe": {"name": "路标校准，药草采集队回归", "slope_camp": {"trade_herb": -6, "trade_grain": -4}},
     "dredge": {"name": "盐渠疏浚，盐船恢复", "shenyuan_market": {"trade_salt": -8, "trade_iron": 5}},
-    "embank": {"name": "堤道加固，谷车畅行", "shenyuan_market": {"trade_grain": -8, "trade_herb": 5}}
+    "embank": {"name": "堤道加固，谷车畅行", "shenyuan_market": {"trade_grain": -8, "trade_herb": 5}},
+    "merchant": {"name": "商货先行，谷车回驿", "frost_market": {"trade_grain": -8, "trade_iron": 5}},
+    "wardens": {"name": "守关补给，铁料优先", "frost_market": {"trade_iron": -8, "trade_herb": 5}}
   },
   "jobs": [
     {"id": "carry", "name": "商会搬运", "site_id": "city_market", "gold": 42, "exp": 3, "desc": "整理集市货箱"},
     {"id": "letter", "name": "驿亭送信", "site_id": "maple_post", "gold": 48, "exp": 4, "desc": "替驿亭传递信件"},
     {"id": "road", "name": "营地修路", "site_id": "slope_camp", "gold": 54, "exp": 5, "desc": "加固断碑坡道路"},
     {"id": "herb", "name": "营地采药", "site_id": "slope_camp", "gold": 45, "exp": 4, "desc": "采集可用药草"},
-    {"id": "port", "name": "栈桥搬货", "site_id": "shenyuan_market", "gold": 58, "exp": 5, "desc": "核对船运货箱"}
+    {"id": "port", "name": "栈桥搬货", "site_id": "shenyuan_market", "gold": 58, "exp": 5, "desc": "核对船运货箱"},
+    {"id": "frost", "name": "驿站分货", "site_id": "frost_market", "gold": 62, "exp": 6, "desc": "核对商货与守关补给"}
   ],
   "shipping_orders": [
     {"id": "salt_ship", "name": "盐铁备舱", "unlock_step": "s16", "dispatch_site": "shenyuan_market",

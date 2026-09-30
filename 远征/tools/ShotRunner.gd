@@ -534,6 +534,61 @@ func _setup() -> void:
 			add_child(warden_city)
 			await get_tree().process_frame
 			warden_city.call("_open_dialog", G.city_npc("npc_warden"), false)
+		"third_vault", "third_vault_windup", "third_boardwalk", "third_pass", "third_eye", "third_break", "third_choice", "third_merchant", "third_wardens", "third_market", "third_back_regions":
+			G.SAVE_PATH = "res://tools/_logs/save_shot_third_back.json"
+			_demo_prog()
+			G.player_name = "双关行者"
+			G.selected_role = "zs"
+			var back_step := "s25"
+			var back_map := "rift_mine_vault"
+			if _scene == "third_boardwalk":
+				back_step = "s26"
+				back_map = "frost_boardwalk"
+			if _scene in ["third_pass", "third_eye", "third_break"]:
+				back_step = "s27"
+				back_map = "frost_pass"
+			if _scene in ["third_choice", "third_merchant", "third_wardens", "third_market", "third_back_regions"]:
+				back_step = "s28"
+				back_map = "frost_post"
+			var back_done: Array = []
+			for i in range(1,int(back_step.substr(1))): back_done.append("s%02d" % i)
+			G.prog["story"] = {"step":back_step,"done":back_done,"goals":{}}
+			for item in ["mine_record", "gate_stamp", "frost_reply", "veil_seal"]: G.items[item] = 1
+			if _scene in ["third_merchant", "third_wardens", "third_market"]:
+				G.story_event("talk","npc_frost_envoy","frost_post",false,
+					{"method":"wardens" if _scene == "third_wardens" else "merchant"})
+			G.prog["main_world"] = {"map_id":back_map}
+			if _scene == "third_back_regions":
+				G.prog["main_world"]["map_id"] = "frost_pass"
+				add_child(RegionMapPanel.new())
+			else:
+				var back_cfg := TableCache.main_world_map(back_map)
+				MapScene.pending_cfg = {"mode":"main_world","main_map_id":back_map,
+					"node":{"type":String(back_cfg.get("node_type","normal")),"layer":0,"index":0},"run":_make_run()}
+				var back_world: MapScene = load("res://src/explore/MapScene.tscn").instantiate()
+				add_child(back_world)
+				back_world._player.position = Vector2(480,620)
+				if _scene in ["third_vault", "third_pass"]: back_world._player.position = Vector2(480,560)
+				if back_map == "frost_post": back_world._player.position = Vector2(480,375)
+				if _scene == "third_choice": back_world._city_content._open_dialog(G.city_npc("npc_frost_envoy"),false)
+				if _scene == "third_market": back_world._city_content._built_action("trade:frost_market")
+				if _scene in ["third_vault_windup","third_eye","third_break"]:
+					await get_tree().process_frame
+					back_world._start_battle(back_world._monsters[0])
+					var battle := back_world._battle
+					if battle != null:
+						battle.speed = 0.0
+						var boss: Combatant = battle.sim.alive_units("enemy")[0]
+						if _scene == "third_vault_windup":
+							SkillSystem.enqueue_cast(battle.sim,boss,boss.skills[0].def)
+						else:
+							boss.hp = int(boss.get_max_hp() * .54)
+							battle.sim._apply_phases()
+							SkillSystem.resolve_cast(battle.sim,{"uid":boss.uid,"skill":boss.skills[1].def})
+							if _scene == "third_break":
+								var eye: Combatant = battle.sim.alive_units("enemy")[1]
+								eye.take_damage(99999,boss,battle.sim)
+						battle._consume_events()
 		"third_route", "third_post", "third_post_south", "third_mine", "third_dialog", "third_regions", "third_items":
 			G.SAVE_PATH = "res://tools/_logs/save_shot_third_act.json"
 			_demo_prog()

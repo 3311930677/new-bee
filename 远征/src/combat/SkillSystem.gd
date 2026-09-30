@@ -12,6 +12,8 @@ static func can_cast(sim: BattleSim, caster: Combatant, skill: Dictionary) -> bo
 		return false
 	if String(skill.get("id", "")).is_empty():
 		return false
+	if bool(skill.get("once", false)) and caster.once_flags.has("skill_" + String(skill.get("id", ""))):
+		return false
 	# 施法中（前摇队列里已有本单位的招）不可再次入队——历史 bug：AI 每 tick 重复决策入队，
 	# 一次施法刷出十几条 cast_start（提示/音效风暴），队列还被无效项塞满
 	for q in sim.cast_queue:
@@ -78,6 +80,9 @@ static func resolve_cast(sim: BattleSim, entry: Dictionary) -> void:
 	sim.emit({"t": "cast", "uid": caster.uid, "skill": String(skill.get("id", "")),
 		"name": String(skill.get("name", "")), "combo": combo.get("name", "")})
 	_apply_skill(sim, caster, skill, combo, is_full_energy)
+	# 仅在实际结算后记一次性技能；前摇被控制打断仍可重新尝试。
+	if bool(skill.get("once", false)):
+		caster.once_flags["skill_" + String(skill.get("id", ""))] = true
 
 
 static func _check_combo(sim: BattleSim, caster: Combatant, skill: Dictionary) -> Dictionary:
@@ -195,7 +200,8 @@ static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, c
 			var mon_id := String(skill.get("summon", ""))
 			var count := int(skill.get("summon_count", 2))
 			sim.summon_monsters(caster, mon_id, count,
-				int(skill.get("summon_cap", BattleSim.spawn_summon_cap())))
+				int(skill.get("summon_cap", BattleSim.spawn_summon_cap())),
+				Combatant.ROW_FRONT if String(skill.get("summon_row", "back")) == "front" else Combatant.ROW_BACK)
 		_:
 			effective = _apply_damage(sim, caster, skill, k, hits, targets, effect, combo, is_full_energy)
 	# 施法后的自身状态（P03）：首领技「打完露出破绽」这类代价写在数据表里，不塞进每个技能分支。

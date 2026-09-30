@@ -160,6 +160,8 @@ func _ready() -> void:
 		if _main_cfg.is_empty():
 			push_error("主世界地图配置缺失：%s" % _main_map_id)
 			return
+		if bool(_main_cfg.get("dismount_on_entry", false)) and G.mount_riding():
+			G.mount_set_riding(false)
 		var world_state: Variant = G.prog.get("main_world", {})
 		if world_state is Dictionary and String((world_state as Dictionary).get("map_id", "")) == _main_map_id:
 			var saved_pos: Variant = (world_state as Dictionary).get("position", [])
@@ -422,7 +424,7 @@ func _build_world() -> void:
 		add_child(TideflatGround.new())
 	elif _mode == "main_world" and _main_map_id == "tidal_gate":
 		add_child(TidalGateGround.new())
-	elif _mode == "main_world" and _main_map_id in ["red_sand_route", "frost_post", "rift_mine_road"]:
+	elif _mode == "main_world" and _main_map_id in ["red_sand_route", "frost_post", "rift_mine_road", "rift_mine_vault", "frost_boardwalk", "frost_pass"]:
 		var ground := ThirdActGroundScript.new()
 		ground.map_id = _main_map_id
 		add_child(ground)
@@ -700,6 +702,9 @@ func _toggle_mount() -> void:
 	if _mode != "main_world" or _battle != null or _modal_open():
 		return
 	var ride := not G.mount_riding()
+	if ride and bool(_main_cfg.get("dismount_on_entry", false)):
+		_toast("栈道与关隘路窄，请步行通过")
+		return
 	if ride and not _mount_clearance():
 		_toast("这里太窄，先走到开阔处再上马")
 		return
@@ -2486,6 +2491,7 @@ func _check_world_exits() -> void:
 		if target_cfg.is_empty() or not G.can_go("res://src/explore/MapScene.tscn"):
 			return
 		_world_exit_cd = 2.0
+		var before_prog := G.prog.duplicate(true)
 		_persist_main_world_progress()
 		var state: Dictionary = G.prog.get("main_world", {}).duplicate(true)
 		state["map_id"] = target
@@ -2497,7 +2503,12 @@ func _check_world_exits() -> void:
 			target_pos = _cfg_point((points as Dictionary)[arrival], target_pos)
 		state["position"] = [roundi(target_pos.x), roundi(target_pos.y)]
 		G.prog["main_world"] = WorldSession.normalize_state(state)
-		G.save_game()
+		if bool(target_cfg.get("dismount_on_entry", false)):
+			G.mount_set_riding(false, false)
+		if not G.save_game():
+			G.prog = before_prog
+			_toast("存档未能写入，留在当前地图")
+			return
 		G.enter_main_world(target, arrival)
 		return
 
@@ -2591,6 +2602,10 @@ func on_optional_boss_seen(mon_id: String) -> void:
 
 
 func _start_battle(m: _MapMonster) -> void:
+	if _mode == "main_world" and not _story_battle_ready(m.mon_id):
+		m.chasing_contact = false
+		m.contact_cd = FLEE_CONTACT_CD
+		return
 	# 遇敌即停自动前往（战斗结束也不自动续走，要续走需再点罗盘）——防"一键全自动跑完整张图"
 	_stop_auto_walk("")
 	m.chasing_contact = true  # 接触怪冻结
@@ -2755,7 +2770,7 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 		var settle_res := _settle_main_world(monster_tier, defeated_mon_id)
 		if settle_res == "dup":
 			_toast("这场战斗已经结算过了")
-		elif settle_res == "save_failed":
+		elif settle_res in ["save_failed", "quest_missing"]:
 			# 战利和刷点都已回滚；留在地图上可重新接触同一只怪。
 			_encounter = {}
 			if _contact_mon != null:
@@ -2811,7 +2826,20 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 ## 主世界胜利结算（P03 §1.1）：唯一发奖入口，按 result_id 幂等。
 ## 返回 "ok" = 本场第一次结算且已落盘；"dup" = 重复上报，什么都没做；
 ## "save_failed" = 已经结算但写盘失败（R-04：战利不算入袋，不显示成功提示）。
+func _story_battle_ready(mon_id: String) -> bool:
+	var row := G.story_current()
+	if String(row.get("event", "")) != "defeat" or String(row.get("target", "")) != mon_id:
+		return true
+	var item := String(row.get("requires_item", ""))
+	if not item.is_empty() and G.item_count(item) < 1:
+		_toast("先备好%s，再挑战首领" % G.item_name(item))
+		return false
+	return true
+
+
 func _settle_main_world(tier: String, defeated_mon_id: String) -> String:
+	if not _story_battle_ready(defeated_mon_id):
+		return "quest_missing"
 	# 一次胜利会同时改动世界刷点、钱包、背包、主线和临时战利。
 	# 写盘失败必须退回结算之前，而不是只退回最后一段支线进度。
 	var before_prog := G.prog.duplicate(true)
@@ -3832,6 +3860,12 @@ class _QuestEntity extends Node2D:
 		draw_circle(Vector2.ZERO, 22.0, Color(0, 0, 0, 0.24))   # 落地影
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		match art:
+			"signal_ribbons":
+				for x in [-26.0, 26.0]:
+					draw_rect(Rect2(x - 3, -75, 6, 80), Color("635543"))
+					var flag_color := Color("c9b477") if x < 0 else Color("83bfc6")
+					draw_rect(Rect2(x, -72, 25, 38), flag_color)
+					draw_line(Vector2(x + 5, -65), Vector2(x + 18, -46), Color("f1eee0"), 3)
 			"mine_cart":
 				draw_rect(Rect2(-46, -46, 82, 34), Color("495862"))
 				draw_rect(Rect2(-48, -49, 86, 7), Color("9da9a7"))

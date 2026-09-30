@@ -127,6 +127,30 @@ func _rebuild() -> void:
 		factor += "  ·  %s %+d%%" % [String(quote.get("event_name", "")),
 			int(quote.get("event_pct", 0))]
 	_label(content, factor, Vector2(8, 358), 395, Color("6b4925"))
+	_build_order_section(content)
+	_button(content, "歇脚换日 · %d 金" % int(cfg.get("rest_gold", 22)),
+		Vector2(218, 478), 194, func(): _rest())
+	var job_x := 8.0
+	for job_v in (cfg.get("jobs", []) as Array):
+		var job := job_v as Dictionary
+		if String(job.get("site_id", "")) != site_id:
+			continue
+		var jid := String(job.get("id", ""))
+		var done := int((state.get("work", {}) as Dictionary).get(jid, 0)) >= int(state.get("day", 1))
+		_button(content, "%s · %s" % [String(job.get("name", "")),
+			"已做" if done else "+%d金" % int(job.get("gold", 0))],
+			Vector2(job_x, 528), 196, func(): _work(jid))
+		job_x += 204.0
+	_label(content, _message, Vector2(8, 575), 395, Color("8a4a2a"))
+	_button(content, "返回", Vector2(150, 612), 120, func(): close())
+
+
+func _build_order_section(content: Control) -> void:
+	if site_id == "frost_market":
+		_label(content, "霜关补给", Vector2(8,391),395,Color("8a4a2a"),G.FS_SM)
+		_label(content, "商货与守关物资在此成交；歇脚后补充每日库存。",Vector2(8,423),395)
+		_label(content, "驿站分货每日一次，报酬当场入账。",Vector2(8,451),395)
+		return
 	var order := G.economy_first_order()
 	var status := String(order.get("status", "locked"))
 	var status_name: String = {"locked": "未解锁", "available": "可接", "active": "运送中",
@@ -151,21 +175,6 @@ func _rebuild() -> void:
 		_button(content, "接取运单", Vector2(8, 478), 130, func(): _order_accept())
 	if status == "active" and site_id == String(order.get("destination_site", "")):
 		_button(content, "交付货物", Vector2(8, 478), 130, func(): _order_deliver())
-	_button(content, "歇脚换日 · %d 金" % int(cfg.get("rest_gold", 22)),
-		Vector2(218, 478), 194, func(): _rest())
-	var job_x := 8.0
-	for job_v in (cfg.get("jobs", []) as Array):
-		var job := job_v as Dictionary
-		if String(job.get("site_id", "")) != site_id:
-			continue
-		var jid := String(job.get("id", ""))
-		var done := int((state.get("work", {}) as Dictionary).get(jid, 0)) >= int(state.get("day", 1))
-		_button(content, "%s · %s" % [String(job.get("name", "")),
-			"已做" if done else "+%d金" % int(job.get("gold", 0))],
-			Vector2(job_x, 528), 196, func(): _work(jid))
-		job_x += 204.0
-	_label(content, _message, Vector2(8, 575), 395, Color("8a4a2a"))
-	_button(content, "返回", Vector2(150, 612), 120, func(): close())
 
 
 func _trade(action: String) -> void:
