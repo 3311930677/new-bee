@@ -101,9 +101,9 @@ func _run() -> void:
 	map._refresh_hud()
 	var first_mon = map._monsters[0]
 	_check(first_mon.wander_only and first_mon.mon_id == "mon_zombie" \
-		and first_mon.display_level == 7 \
-		and first_mon.level_l != null and first_mon.level_l.text.begins_with("Lv7 "),
-		"主世界怪物应显示等级且只游荡")
+		and first_mon.display_level == 2 \
+		and first_mon.level_l != null and first_mon.level_l.text.begins_with("Lv2 "),
+		"边城怪物应显示固定二级且只游荡")
 	_check(first_mon._sprite != null and first_mon._sprite.texture != null,
 		"主地图明雷应使用配置的怪物形象")
 	var edge_mon = map._monsters[3]

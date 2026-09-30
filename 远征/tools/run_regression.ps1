@@ -33,7 +33,7 @@ param(
   [string]$List = "",
   [int]$QuitAfter = 6000,
   [int]$TimeoutSec = 240,
-  [int]$Expected = 39,
+  [int]$Expected = 40,
   [string]$LogDir = "",
   [switch]$AllowAnyVersion
 )
@@ -99,6 +99,7 @@ $cases = @(
 	@{ N = "VerifyThirdBack";   K = "scene";  T = "THIRD_BACK_OK" },
 	@{ N = "VerifyThirdSide";   K = "scene";  T = "THIRD_SIDE_OK" },
 	@{ N = "VerifyCompanions";  K = "scene";  T = "COMPANIONS_OK" },
+	@{ N = "VerifyCampaignGrowth"; K = "scene"; T = "CAMPAIGN_GROWTH_OK" },
 	@{ N = "VerifyPortGrowth";  K = "scene";  T = "PORT_GROWTH_OK" },
 	@{ N = "VerifyShipping";    K = "scene";  T = "SHIPPING_OK" },
 	@{ N = "VerifyFishing";     K = "scene";  T = "FISHING_OK" },
@@ -232,7 +233,7 @@ $errPatterns = @(
 # Godot prints these unconditionally while tearing the process down. They are a real signal
 # (ref-counted resources still alive at exit) but they are emitted by the engine's shutdown
 # path, not by any assertion, so they must not turn a green case red. They are counted and
-# reported separately instead; see issue #43 in docs/2026-09-20-问题清单.md.
+# reported separately instead; see issue #43 in the project issue checklist.
 $exitNoise = @(
 	"were leaked at exit", "resources still in use at exit"
 )

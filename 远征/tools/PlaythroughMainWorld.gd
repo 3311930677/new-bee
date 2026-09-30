@@ -185,6 +185,7 @@ func _run_phase_a() -> void:
 	# --- s12 ---
 	if not await _talk_to("npc_steward", "s12"):
 		return
+	if not _growth_checkpoint("act1", 12, 13): return
 	if act3 and not await _learn_second_skill():
 		return
 
@@ -268,6 +269,7 @@ func _run_second_act() -> bool:
 	if G.item_count("salt_ledger") != 0 or G.item_count("gate_clue") != 0 or G.item_count("tide_core") != 0:
 		return _bad("第二幕任务物交付后仍有残留")
 	print("PLAY_EVENT act2_complete choice=dredge")
+	if not _growth_checkpoint("act2", 25, 26): return false
 	return true
 
 
@@ -325,6 +327,7 @@ func _run_third_act_back() -> bool:
 	for item in ["mine_record","gate_stamp","frost_reply","veil_seal"]:
 		if G.item_count(item) != 0: return _bad("第三幕任务物交付残留：" + item)
 	print("PLAY_EVENT act3_complete choice=wardens")
+	if not _growth_checkpoint("act3", 42, 43): return false
 	return true
 
 
@@ -501,6 +504,14 @@ func _fill_bag() -> void:
 		% [G.inv_count(), cap, G.inv_pending().size()])
 
 
+func _growth_checkpoint(chapter: String, low: int, high: int) -> bool:
+	var level := int(G.prog.get("level", 1))
+	if level < low or level > high or _map.st.level != level or (_map.st.hp > 0 and _map.st.hp > _map.st.max_hp()):
+		return _bad("实际主线等级或同图生命不同步：%s Lv%d" % [chapter, level])
+	print("PLAY_EVENT growth_checkpoint chapter=%s level=%d hp=%d max_hp=%d revisions=%d" % [chapter, level, _map.st.hp, _map.st.max_hp(), G.prog.get("campaign_growth", {}).get("story_revision", {}).size()])
+	return true
+
+
 func _state() -> Dictionary:
 	var story: Dictionary = G.prog.get("story", {})
 	var done: Array = (story.get("done", []) as Array).duplicate()
@@ -514,6 +525,8 @@ func _state() -> Dictionary:
 		"story_done_n": done.size(),
 		"story_done": done,
 		"level": int(G.prog.get("level", 1)),
+		"exp": int(G.prog.get("exp", 0)),
+		"experience_revision_n": G.prog.get("campaign_growth", {}).get("story_revision", {}).size(),
 		"gold": int(G.wallet.get("gold", 0)),
 		"frag": int(G.items.get("stele_fragment", 0)),
 		"bag": G.inv_count(),

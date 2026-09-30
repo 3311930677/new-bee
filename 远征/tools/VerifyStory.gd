@@ -142,6 +142,8 @@ func _run() -> void:
 	var saved_wallet := G.wallet.duplicate(true)
 	var saved_items := G.items.duplicate(true)
 	G.prog["story"] = {"step": "s11", "done": [], "goals": {}}
+	# 后续为独立合成进度 fixture，不能沿用前一个故事链的经验版本标记。
+	G.prog.erase("campaign_growth")
 	G.prog["ledger"] = {"applied": []}
 	G.wallet["gold"] = 200
 	G.items["stele_fragment"] = 1
@@ -589,6 +591,7 @@ func _run() -> void:
 		"重复领取不得复制岩龟")
 	# 兼容旧档：即使其主线仍早，已有伙伴也只保留，不回收、不重复改旗。
 	G.prog["story"] = {"step": "s01", "done": [], "goals": {}}
+	G.prog.erase("campaign_growth")
 	_check(G.rockturtle_status() == "owned" and G.owns_pet("pet_rockturtle"),
 		"旧档已有岩龟必须原样保留")
 

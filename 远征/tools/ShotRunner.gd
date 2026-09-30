@@ -9,6 +9,7 @@ var _theme := "forest"
 var _output := ""
 var _role := "zs"
 var _direction := "down"
+var _source_save := ""
 
 
 func _ready() -> void:
@@ -28,6 +29,8 @@ func _ready() -> void:
 			_role = a.trim_prefix("--role=")
 		elif a.begins_with("--direction="):
 			_direction = a.trim_prefix("--direction=")
+		elif a.begins_with("--source-save="):
+			_source_save = a.trim_prefix("--source-save=")
 	await _setup()
 	for i in _frames:
 		await get_tree().process_frame
@@ -240,7 +243,43 @@ func _companion_demo() -> void:
 	battle._on_event({"t":"companion_trait","trait":tid,"src":pet.uid,"uid":target.uid,"amount":35})
 	_frames = 8
 
+## 用已验收存档的真实字段渲染界面；只有相机/位置为截图摆位，不作为输入验证。
+func _campaign_demo() -> void:
+	G.SAVE_PATH = "res://tools/_logs/save_shot_campaign.json"
+	var source := FileAccess.get_file_as_string(_source_save)
+	if not (JSON.parse_string(source) is Dictionary):
+		push_error("SHOT_SOURCE_INVALID")
+		return
+	var file := FileAccess.open(G.SAVE_PATH, FileAccess.WRITE)
+	file.store_string(source)
+	file.close()
+	if not G.reload_save() or G.save_locked:
+		push_error("SHOT_SOURCE_LOAD_FAILED")
+		return
+	var catchup := G.campaign_growth_catchup()
+	if not bool(catchup.ok):
+		push_error("SHOT_CATCHUP_FAILED")
+		return
+	if int(catchup.exp) > 0:
+		G._pending_campaign_note = "旅途经验补记 +%d · Lv%d" % [int(catchup.exp), int(G.prog.level)]
+	var id := "frost_post" if _scene == "campaign_catchup" else ("lorin_wilds" if _scene == "campaign_return" else "rift_mine_road")
+	var run := RunState.new()
+	run.setup({"theme": String(TableCache.main_world_map(id).get("theme", "forest")), "role_id": G.selected_role,
+		"level": int(G.prog.level), "active_pet": G.companion_active(), "potions": 2, "seed": 91})
+	run.growth_bonus = G.growth_bonuses(run.role_id)
+	MapScene.pending_cfg = {"mode": "main_world", "main_map_id": id, "run": run,
+		"node": {"type": "normal", "layer": 0, "index": 0}}
+	var world: MapScene = load("res://src/explore/MapScene.tscn").instantiate()
+	add_child(world)
+	await get_tree().process_frame
+	if _scene == "campaign_catchup": world._player.position = Vector2(480, 930)
+	elif not world._monsters.is_empty(): world._player.position = world._monsters[0].position + Vector2(85, 60)
+
+
 func _setup() -> void:
+	if _scene.begins_with("campaign_"):
+		await _campaign_demo()
+		return
 	if _scene.begins_with("companion_"):
 		await _companion_demo()
 		return
