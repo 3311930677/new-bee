@@ -24,7 +24,7 @@ func _check(ok: bool, msg: String) -> void:
 func _run() -> void:
 	var cfg := TableCache.economy_config()
 	_check((cfg.get("goods", []) as Array).size() == 4 and
-		(cfg.get("sites", []) as Array).size() == 4, "四货品、四交易点须入表")
+		(cfg.get("sites", []) as Array).size() == 5, "四货品、五交易点须入表")
 	var maps: Dictionary = TableCache.main_world_config().get("maps", {})
 	for site_v in cfg.get("sites", []):
 		var site: Dictionary = site_v

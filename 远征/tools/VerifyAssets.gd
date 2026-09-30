@@ -29,6 +29,24 @@ func _ready() -> void:
 			miss.append(String(n2))
 		else:
 			hit += 1
+	# 主世界贴图按显式路径加载，不都经过名称索引；同样必须纳入资源契约。
+	var world_paths := {}
+	for map_v in (TableCache.main_world_config().get("maps", {}) as Dictionary).values():
+		var map: Dictionary = map_v
+		var leader := String(map.get("monster_sprite", ""))
+		if not leader.is_empty(): world_paths[leader] = true
+		for path_v in (map.get("monster_sprite_paths", {}) as Dictionary).values():
+			var path := String(path_v)
+			if not path.is_empty(): world_paths[path] = true
+		for optional_v in (map.get("optional_bosses", []) as Array):
+			var path := String((optional_v as Dictionary).get("sprite_path", ""))
+			if not path.is_empty(): world_paths[path] = true
+	for path in world_paths:
+		checked += 1
+		if not ResourceLoader.exists(String(path)) or not (load(String(path)) is Texture2D):
+			miss.append("path:" + String(path))
+		else:
+			hit += 1
 
 	print("素材命中 %d / %d" % [hit, checked])
 	if miss.size() > 0:

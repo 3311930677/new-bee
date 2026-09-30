@@ -96,6 +96,8 @@ class _RegionGraph extends Control:
 			if not (point is Array) or (point as Array).size() < 2:
 				continue
 			var pos := Vector2(float(point[0]), float(point[1]))
+			custom_minimum_size = Vector2(maxf(custom_minimum_size.x, pos.x + 100),
+				maxf(custom_minimum_size.y, pos.y + 70))
 			var id := String(row.get("id", ""))
 			if id == _current:
 				current_point = pos

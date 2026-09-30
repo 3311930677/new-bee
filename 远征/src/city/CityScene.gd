@@ -722,6 +722,8 @@ func _show_built_panel(bd: Dictionary) -> void:
 			btn_text = "采买物资"
 		"trade:shenyuan_market":
 			btn_text = "查看港口行情"
+		"trade:frost_market":
+			btn_text = "查看驿站行情"
 		"mount":
 			btn_text = "查看马厩"
 		"soon":
@@ -745,6 +747,9 @@ func _show_built_panel(bd: Dictionary) -> void:
 
 
 func _built_action(act: String) -> void:
+	if act == "trade:frost_market":
+		_open_first_order_preview("frost_market")
+		return
 	if act == "trade:shenyuan_market":
 		_open_first_order_preview("shenyuan_market")
 		return
@@ -1024,6 +1029,9 @@ func _open_dialog(nd: Dictionary, guest: bool) -> void:
 	if not guest and id == "npc_harbormaster" and String(G.story_current().get("id", "")) == "s20":
 		_open_tide_choice_panel()
 		return
+	if not guest and id == "npc_frost_envoy" and String(G.story_current().get("id", "")) == "s28":
+		_open_frost_choice_panel()
+		return
 	if not guest and id == "npc_harbormaster" and G.story_step_done("s16") \
 		and String(G.story_current().get("target", "")) != id:
 		_open_port_services()
@@ -1176,6 +1184,44 @@ func _open_first_order_preview(site_id := "city_market") -> void:
 		if _panel == trade:
 			_panel = null
 		_refresh_stat())
+
+
+func _open_frost_choice_panel() -> void:
+	var content := _panel_base("双关定路", 432, 354)
+	var intro := G.text_label("宁砚：两关回讯已到，只能先放一队。两种选择的任务奖励相同；供货变化会显示在驿站行情。", G.FS_SM, Color("4b351e"))
+	intro.position = Vector2(8, 7)
+	intro.custom_minimum_size = Vector2(384, 64)
+	intro.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(intro)
+	var choices := [
+		["merchant", "商货先行", "谷价约 -8%，铁料约 +5%。谷车先回驿，守关铁料下一程。"],
+		["wardens", "守关补给", "铁料约 -8%，药草约 +5%。关口先换岗，商队下一程。"]]
+	for i in choices.size():
+		var row: Array = choices[i]
+		var desc := G.text_label(String(row[2]), G.FS_SM, Color("3d5360"))
+		desc.position = Vector2(12, 82 + i * 108)
+		desc.custom_minimum_size = Vector2(376, 48)
+		desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		content.add_child(desc)
+		var button := G.gold_button(String(row[1]), 176, 44, G.FS_SM)
+		button.position = Vector2(112, 132 + i * 108)
+		button.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				_commit_frost_choice(String(row[0])))
+		content.add_child(button)
+	_panel_back(content, 304.0)
+
+
+func _commit_frost_choice(method: String) -> void:
+	var result := G.story_event("talk", "npc_frost_envoy", _city_id, true, {"method": method})
+	if result.is_empty():
+		_toast("雪幕印或存档状态尚未准备好")
+		return
+	_close_panel()
+	_toast("主线完成：%s" % String(result.get("title", "")))
+	_refresh_stat()
+	if _embedded_map != null:
+		_embedded_map.call("_refresh_hud")
 
 
 func _open_tide_choice_panel() -> void:

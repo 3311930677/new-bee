@@ -1,0 +1,128 @@
+{
+	"boss_data_sha256": "73fc434ded605e87a35620f2c2a17a6eea5627f91701b275e8fd46cc9c83769f",
+	"note": "Failed isolated save fixtures; second skill unlocked in memory only for prospective balancing. Real input proof is separate full playthrough A/B.",
+	"prospective_mentor_unlock": true,
+	"results": [
+		{
+			"boss": "mon_redsand_guard",
+			"last_seed_hp": 199,
+			"last_seed_ticks": 2989,
+			"level": 8,
+			"role": "zs",
+			"seeds": 10,
+			"source_save": "res://tools/_logs/p08_back_retry_zs_ck/save_playthrough_zs_a.json",
+			"source_sha256": "7dae5a96f1744e4795c27b66758a2876b72585cd7c4dbfbfc0ea0f62a03034e6",
+			"unlocked_skills": [
+				"zs_lieshan",
+				"zs_pozhen"
+			],
+			"wins": 10
+		},
+		{
+			"boss": "mon_snowveil_lord",
+			"last_seed_hp": 469,
+			"last_seed_ticks": 2856,
+			"level": 8,
+			"role": "zs",
+			"seeds": 10,
+			"source_save": "res://tools/_logs/p08_back_retry_zs_ck/save_playthrough_zs_a.json",
+			"source_sha256": "7dae5a96f1744e4795c27b66758a2876b72585cd7c4dbfbfc0ea0f62a03034e6",
+			"unlocked_skills": [
+				"zs_lieshan",
+				"zs_pozhen"
+			],
+			"wins": 10
+		},
+		{
+			"boss": "mon_redsand_guard",
+			"last_seed_hp": 95,
+			"last_seed_ticks": 2807,
+			"level": 7,
+			"role": "ck",
+			"seeds": 10,
+			"source_save": "res://tools/_logs/p08_back_retry_zs_ck/save_playthrough_ck_a.json",
+			"source_sha256": "43f849050f2bf8518aa92cedeb968fda3d4942d6e48776e7f02d6c41652d8a6b",
+			"unlocked_skills": [
+				"ck_lianzhu",
+				"ck_guanjia"
+			],
+			"wins": 10
+		},
+		{
+			"boss": "mon_snowveil_lord",
+			"last_seed_hp": 328,
+			"last_seed_ticks": 2683,
+			"level": 7,
+			"role": "ck",
+			"seeds": 10,
+			"source_save": "res://tools/_logs/p08_back_retry_zs_ck/save_playthrough_ck_a.json",
+			"source_sha256": "43f849050f2bf8518aa92cedeb968fda3d4942d6e48776e7f02d6c41652d8a6b",
+			"unlocked_skills": [
+				"ck_lianzhu",
+				"ck_guanjia"
+			],
+			"wins": 10
+		},
+		{
+			"boss": "mon_redsand_guard",
+			"last_seed_hp": 154,
+			"last_seed_ticks": 2559,
+			"level": 8,
+			"role": "fs",
+			"seeds": 10,
+			"source_save": "res://tools/_logs/p08_back_access_fs_fz/save_playthrough_fs_a.json",
+			"source_sha256": "e1263bc81f6d0c7f0b958f63a47359cc1007c46a7fd757bb2a673430f2a3dca9",
+			"unlocked_skills": [
+				"fs_shuangren",
+				"fs_shuanghuan"
+			],
+			"wins": 10
+		},
+		{
+			"boss": "mon_snowveil_lord",
+			"last_seed_hp": 404,
+			"last_seed_ticks": 2604,
+			"level": 8,
+			"role": "fs",
+			"seeds": 10,
+			"source_save": "res://tools/_logs/p08_back_access_fs_fz/save_playthrough_fs_a.json",
+			"source_sha256": "e1263bc81f6d0c7f0b958f63a47359cc1007c46a7fd757bb2a673430f2a3dca9",
+			"unlocked_skills": [
+				"fs_shuangren",
+				"fs_shuanghuan"
+			],
+			"wins": 10
+		},
+		{
+			"boss": "mon_redsand_guard",
+			"last_seed_hp": 332,
+			"last_seed_ticks": 6741,
+			"level": 8,
+			"role": "fz",
+			"seeds": 10,
+			"source_save": "res://tools/_logs/p08_back_retry_fs_fz/save_playthrough_fz_a.json",
+			"source_sha256": "80fb012f1157a7d297bbc1734519d1a96164b25d9d63651f1a3750ed879138c0",
+			"unlocked_skills": [
+				"fz_shengyu",
+				"fz_puzhao"
+			],
+			"wins": 10
+		},
+		{
+			"boss": "mon_snowveil_lord",
+			"last_seed_hp": 380,
+			"last_seed_ticks": 6992,
+			"level": 8,
+			"role": "fz",
+			"seeds": 10,
+			"source_save": "res://tools/_logs/p08_back_retry_fs_fz/save_playthrough_fz_a.json",
+			"source_sha256": "80fb012f1157a7d297bbc1734519d1a96164b25d9d63651f1a3750ed879138c0",
+			"unlocked_skills": [
+				"fz_shengyu",
+				"fz_puzhao"
+			],
+			"wins": 10
+		}
+	],
+	"simulation_only": true
+}

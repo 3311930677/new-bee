@@ -2,6 +2,15 @@ extends Node2D
 
 # 第三幕可走地貌；识别图形在实体下层，不用装饰性裂谷充当隐形碰撞。
 var map_id := ""
+var _choice := ""
+
+
+func _process(_delta: float) -> void:
+	if map_id != "frost_post": return
+	var choice := String((G.prog.get("flags", {}) as Dictionary).get("act3_supply_choice", ""))
+	if choice != _choice:
+		_choice = choice
+		queue_redraw()
 
 
 func _draw() -> void:
@@ -18,6 +27,12 @@ func _draw() -> void:
 			for x in [585.0, 625.0]:
 				draw_line(Vector2(x, 717), Vector2(x, 790), Color("4a4034"), 6)
 		"frost_post":
+			if not _choice.is_empty():
+				var color := Color("c9b477") if _choice == "merchant" else Color("83bfc6")
+				for x in [415.0, 545.0]:
+					draw_rect(Rect2(x - 3, 235, 6, 95), Color("635543"))
+					draw_rect(Rect2(x, 235, 34, 48), color)
+					draw_rect(Rect2(x + 8, 245, 18, 5), Color("eee7d4"))
 			# 雪地木栈道：宽主街与东向矿道支路，两侧房屋独立留出 NPC 空间。
 			_boardwalk(Rect2(426, 80, 108, 1100))
 			_boardwalk(Rect2(335, 420, 260, 60))
@@ -43,6 +58,35 @@ func _draw() -> void:
 				draw_line(Vector2(385, y), Vector2(385, y + 76), Color("8b7151"), 13)
 				draw_line(Vector2(577, y), Vector2(577, y + 76), Color("8b7151"), 13)
 				draw_line(Vector2(378, y), Vector2(584, y), Color("ab9061"), 13)
+		"rift_mine_vault":
+			draw_rect(Rect2(370, 135, 220, 1045), Color("6b6659"))
+			for y in range(150, 1140, 38):
+				draw_rect(Rect2(420, y, 120, 10), Color("493d32"))
+			for x in [448.0, 512.0]:
+				draw_line(Vector2(x, 150), Vector2(x, 1140), Color("aab2b4"), 6)
+			for p in [Vector2(230, 440), Vector2(735, 440)]:
+				draw_circle(p, 58, Color("574737"))
+				draw_arc(p, 44, 0, TAU, 16, Color("bd925a"), 12)
+				for i in 8:
+					var at: Vector2 = p + Vector2.from_angle(i * TAU / 8) * 59
+					draw_rect(Rect2(at - Vector2(9, 9), Vector2(18, 18)), Color("bd925a"))
+		"frost_boardwalk":
+			draw_rect(Rect2(345, 140, 270, 1040), Color("596d78"))
+			_boardwalk(Rect2(400, 135, 160, 1045))
+			for y in range(160, 1150, 95):
+				for x in [385.0, 575.0]:
+					draw_rect(Rect2(x - 5, y, 10, 44), Color("53483c"))
+			for x in [385.0, 575.0]:
+				draw_line(Vector2(x, 175), Vector2(x, 1160), Color("c6c4b0"), 5)
+		"frost_pass":
+			draw_rect(Rect2(370, 135, 220, 1045), Color("b3c9ce"))
+			for y in [230.0, 540.0, 880.0]:
+				_rock(Vector2(245, y), Color("a5cbd2"))
+				_rock(Vector2(730, y + 70), Color("a5cbd2"))
+			for x in [350.0, 610.0]:
+				draw_rect(Rect2(x - 24, 310, 48, 85), Color("718f9b"))
+				draw_rect(Rect2(x - 18, 320, 36, 55), Color("bddbe1"))
+				draw_line(Vector2(x - 9, 330), Vector2(x + 9, 365), Color("4e7c90"), 5)
 
 
 func _boardwalk(rect: Rect2) -> void:

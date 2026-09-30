@@ -117,6 +117,7 @@ const ITEM_NAMES := {
 	"salt_ledger": "盐车账页",
 	"gate_clue": "闸门线索", "tide_core": "潮蚀闸芯",
 	"frost_letter": "霜关来信", "mine_record": "矿道记录",
+	"gate_stamp": "关闸铁印", "frost_reply": "双关回讯", "veil_seal": "雪幕印",
 	"tide_egg": "潮纹蛋",
 	"fish_salt": "盐泉鲫", "fish_port": "港湾银鳞", "fish_tide": "潮纹鳞",
 	"wind_chime": "旧风铃", "salt_pack": "封好的盐包",
@@ -725,8 +726,8 @@ func story_current() -> Dictionary:
 func story_goal_short() -> String:
 	var row := story_current()
 	if row.is_empty():
-		if story_step_done("s24"):
-			return "矿道记录已找回 · 第三幕后段待续"
+		if story_step_done("s28"):
+			return "双关已互通 · 自由探索"
 		if story_step_done("s20"):
 			return "第二幕潮闸已开 · 自由探索"
 		return "边城失声已平息 · 自由探索"
@@ -759,7 +760,9 @@ func normalize_story_state() -> Dictionary:
 	# 不重放复命事件，也不碰奖励账本、位置或其他养成状态。
 	if String(state.get("step", "")) == "":
 		var done: Array = state.get("done", [])
-		if done.has("s20") and not done.has("s21"):
+		if done.has("s24") and not done.has("s25"):
+			state["step"] = "s25"
+		elif done.has("s20") and not done.has("s21"):
 			state["step"] = "s21"
 		elif done.has("s16") and not done.has("s17"):
 			state["step"] = "s17"
@@ -807,6 +810,8 @@ func story_event(kind: String, target: String, map_id: String, persist := true,
 			"act1_repair_method": choice}
 	elif step_id == "s20" and not choice.is_empty():
 		flags = {"act2_tide_gate_open": true, "act2_port_choice": choice}
+	elif step_id == "s28" and not choice.is_empty():
+		flags = {"act3_supply_choice": choice, "act3_pass_open": true}
 	var tx := RewardLedger.make(RewardLedger.tx_id("story", step_id,
 		String(event.get("event_id", ""))), costs, grants, flags)
 	var res := RewardLedger.apply(tx, ledger(), self)
@@ -816,6 +821,8 @@ func story_event(kind: String, target: String, map_id: String, persist := true,
 	prog["story"] = plan.get("next_state", {})
 	if step_id == "s20" and not choice.is_empty():
 		economy_state()["port_event"] = choice
+	if step_id == "s28" and not choice.is_empty():
+		economy_state()["frost_event"] = choice
 	if step_id == "s11" and not choice.is_empty():
 		var act1: Dictionary = prog.get("act1", {})
 		act1["repair_method"] = choice
@@ -2578,7 +2585,12 @@ func city_npc(id: String) -> Dictionary:
 
 ## 取一句对话：按「当天 + NPC + 已聊次数」推进，避免每次都是同一句
 func npc_line(id: String, turn: int) -> String:
-	var lines: Array = city_npc(id).get("lines", [])
+	var npc := city_npc(id)
+	var lines: Array = npc.get("lines", [])
+	var choice := String((prog.get("flags", {}) as Dictionary).get("act3_supply_choice", ""))
+	var responses: Dictionary = npc.get("choice_lines", {})
+	if responses.has(choice):
+		lines = responses[choice]
 	if lines.is_empty():
 		return ""
 	var k := absi((today_key() + id).hash()) + turn
@@ -4445,6 +4457,11 @@ func _build_res_index() -> void:
 	# 小型任务图标采用代码原生矢量；保留 res_tex 的名称契约与纹理缓存。
 	_res_index["itm_frost_letter.png"] = "res://image/third_act/itm_frost_letter.svg"
 	_res_index["itm_mine_record.png"] = "res://image/third_act/itm_mine_record.svg"
+	for id in ["gate_stamp", "frost_reply", "veil_seal"]:
+		_res_index["itm_%s.png" % id] = "res://image/third_act/itm_%s.svg" % id
+	for id in ["mon_redsand_guard", "mon_snowveil_lord"]:
+		_res_index[id + ".png"] = "res://image/third_act/%s.png" % id
+	_res_index["mon_frost_eye.png"] = "res://image/third_act/mon_frost_eye.svg"
 	var batches := ["generated_001_100", "generated_101_200", "generated_201_333",
 		"generated_334_341", "generated_342_353", "generated_362_xajh"]
 	# 先收 ready/（成品：已裁到设计尺寸、alpha 已硬化），再拿 source/ 母稿补位。
