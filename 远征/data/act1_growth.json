@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "mentor": {
+    "npc": "npc_mentor",
+    "unlock_after": "s03",
+    "mastery_target": 1,
+    "reset_cost_gold": 120,
+    "roles": {
+      "zs": {
+        "skill": "zs_pozhen",
+        "variants": {
+          "guard": {"name": "镇守", "desc": "消耗 -5，冷却 +2 秒，减防幅度 +25%。", "cost_delta": -5, "cd_delta": 2, "effect_mult": 1.25},
+          "breaker": {"name": "裂阵", "desc": "伤害 +20%，消耗 +5，冷却 -1 秒。", "cost_delta": 5, "cd_delta": -1, "k_mult": 1.20}
+        }
+      },
+      "ck": {
+        "skill": "ck_guanjia",
+        "variants": {
+          "mark": {"name": "猎印", "desc": "减防幅度 +25%，消耗 -5，冷却 +2 秒。", "cost_delta": -5, "cd_delta": 2, "effect_mult": 1.25},
+          "skirmish": {"name": "游击", "desc": "伤害 +20%，消耗 +5，冷却 -1 秒。", "cost_delta": 5, "cd_delta": -1, "k_mult": 1.20}
+        }
+      },
+      "fs": {
+        "skill": "fs_shuanghuan",
+        "variants": {
+          "frostchain": {"name": "霜链", "desc": "减速幅度 +25%，消耗 -5，冷却 +2 秒。", "cost_delta": -5, "cd_delta": 2, "effect_mult": 1.25},
+          "star": {"name": "星术", "desc": "伤害 +20%，消耗 +5，冷却 -1 秒。", "cost_delta": 5, "cd_delta": -1, "k_mult": 1.20}
+        }
+      },
+      "fz": {
+        "skill": "fz_puzhao",
+        "variants": {
+          "shelter": {"name": "庇护", "desc": "治疗量 +25%，消耗 -5，冷却 +2 秒。", "cost_delta": -5, "cd_delta": 2, "effect_mult": 1.25},
+          "dawn": {"name": "晨辉", "desc": "治疗量 +10%，消耗 +5，冷却 -1 秒。", "cost_delta": 5, "cd_delta": -1, "effect_mult": 1.10}
+        }
+      }
+    }
+  },
+  "first_mount": {
+    "npc": "npc_stablemaster",
+    "building": "stable",
+    "mount_id": "horse",
+    "unlock_after": "s06",
+    "world_speed_mult": 1.25
+  }
+}

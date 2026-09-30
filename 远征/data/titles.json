@@ -19,6 +19,6 @@
     { "id": "t_tomb", "name": "墓道点灯人", "desc": "通关「幽暗古墓」首领", "cond": {"type": "clear_world", "world": "tomb"}, "bonus": {"crit_add": 0.02} },
     { "id": "t_desert", "name": "沙海识途", "desc": "通关「流沙荒漠」首领", "cond": {"type": "clear_world", "world": "desert"}, "bonus": {"spd_pct": 0.05} },
     { "id": "t_glacier", "name": "冰河引路人", "desc": "通关「万载冰川」首领", "cond": {"type": "clear_world", "world": "glacier"}, "bonus": {"def_pct": 0.05} },
-    { "id": "t_allbeast", "name": "万兽之友", "desc": "收集全部 8 只灵宠", "cond": {"type": "pets", "n": 8}, "bonus": {"maxhp_pct": 0.08, "hp_add": 100} }
+    { "id": "t_allbeast", "name": "万兽之友", "desc": "收集至少 8 只灵宠", "cond": {"type": "pets", "n": 8}, "bonus": {"maxhp_pct": 0.08, "hp_add": 100} }
   ]
 }

@@ -1,5 +1,5 @@
 # ShopPanel.gd —— 主城物资铺（锻造铺落成后开放）：金币换养成材料（P1-2）
-# 版式与其它浮层一致：统一 veil 底衬 + 木匾 + 羊皮纸；单列货架，行内「名称/持有/价格/购买」。
+# 版式与其它浮层一致：统一 veil 底衬 + 木匾 + 羊皮纸；单列货架，行内明示买卖价。
 class_name ShopPanel
 extends Control
 
@@ -33,7 +33,7 @@ func _build() -> void:
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.add_child(content)
 
-	var tip := G.gold_label("铁匠说：炉子还热着，带足金币，随到随取。", G.FS_XS, false, Color("7a5a2e"), false)
+	var tip := G.gold_label("路上捡来的材料可回收；购价和回收价各自明示。", G.FS_XS, false, Color("7a5a2e"), false)
 	tip.position = Vector2(0, 2)
 	tip.custom_minimum_size = Vector2(CONTENT_W, 0)
 	content.add_child(tip)
@@ -102,21 +102,30 @@ func _make_row(idx: int, row: Dictionary) -> void:
 	_rows_box.add_child(band)
 
 	var nm := G.gold_label("%s　持有 ×%d" % [G.item_name(iid), G.item_count(iid)],
-		G.FS_SM, false, G.TEXT_DARK, false)
-	nm.position = Vector2(12, 11)
-	nm.size = Vector2(220, 20)
+		G.FS_XS, false, G.TEXT_DARK, false)
+	nm.position = Vector2(10, 11)
+	nm.size = Vector2(164, 20)
 	band.add_child(nm)
-	var pr := G.gold_label("%d 金" % price, G.FS_SM, false, Color("8a4a3a"), false)
-	pr.position = Vector2(232, 11)
-	pr.size = Vector2(80, 20)
-	pr.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	var sell_price := int(row.get("sell_price", 0))
+	var pr := G.gold_label("购%d / 售%d" % [price, sell_price], G.FS_XS, false,
+		Color("8a4a3a"), false)
+	pr.position = Vector2(170, 11)
+	pr.size = Vector2(94, 20)
+	pr.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	band.add_child(pr)
-	var buy := G.gold_button("购 买", 84, 32, G.FS_SM)
-	buy.position = Vector2(320, 5)
+	var buy := G.gold_button("购入", 64, 32, G.FS_XS)
+	buy.position = Vector2(269, 5)
 	buy.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_on_buy(iid))
 	band.add_child(buy)
+	var sell := G.ghost_button("出售", 64, 32, G.FS_XS)
+	sell.position = Vector2(338, 5)
+	sell.modulate.a = 0.5 if G.item_count(iid) <= 0 or sell_price <= 0 else 1.0
+	sell.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_on_sell(iid))
+	band.add_child(sell)
 
 
 func _on_buy(iid: String) -> void:
@@ -125,6 +134,15 @@ func _on_buy(iid: String) -> void:
 		_note("已购入 %s" % G.item_name(iid), Color("4a7a44"))
 	else:
 		_note(String(res.get("err", "买不了")), Color("a04a3a"))
+	_refresh()
+
+
+func _on_sell(iid: String) -> void:
+	var res := G.shop_sell(iid)
+	if bool(res.get("ok", false)):
+		_note("已出售 %s，金币 +%d" % [G.item_name(iid), int(res.get("gold", 0))], Color("4a7a44"))
+	else:
+		_note(String(res.get("err", "卖不了")), Color("a04a3a"))
 	_refresh()
 
 

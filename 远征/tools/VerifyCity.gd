@@ -34,12 +34,21 @@ func _run() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 
-	# 实体：8 座建筑全在（落成 2 + 工地 6）；常驻 NPC（need 为空的 3 位）+ 城门卫 + 来客 2
+	# 实体：配置中的建筑全在；常驻 NPC 与来客均有对应实体。
 	_check(city._player != null, "玩家未生成")
-	_check((city._buildings as Array).size() == 8, "建筑数量应为 8，实为 %d" % (city._buildings as Array).size())
+	_check((city._buildings as Array).size() == G.city_buildings().size(),
+		"建筑数量应为 %d，实为 %d" % [G.city_buildings().size(), (city._buildings as Array).size()])
 	var npc_expect: int = G.city_npcs().size() + G.today_guests(2).size()
 	_check((city._npcs as Array).size() == npc_expect,
 		"NPC 数量应为 %d，实为 %d" % [npc_expect, (city._npcs as Array).size()])
+	# P06：行脚商人不能被交易页抢走原有对话；交易另从对话按钮进入。
+	city._open_dialog(G.city_npc("npc_warden"), false)
+	_check(String(city._dlg.get("id", "")) == "npc_warden" and city._panel != null,
+		"行脚商人应先保留原对话/委托入口")
+	city._close_panel()
+	city._open_first_order_preview()
+	_check(city._panel is TradePanel and city.has_modal(), "行脚商人应能打开现货交易页")
+	(city._panel as TradePanel).close()
 
 	# 像素小人：七常驻 + 旅人都要拿到 idle 四帧条；缺素材退回立绘/色块算 FAIL
 	var npc_bad: Array = []
@@ -57,12 +66,11 @@ func _run() -> void:
 		_check(is_equal_approx(sp.position.y, -42.5), "NPC 脚底标定应为 -42.5，实为 %.2f" % sp.position.y)
 		_check(sp.is_playing(), "NPC 呼吸动画应在播放")
 
-	# 建造闭环：图志阁可建 → 落成 → 青姨上街
-	_check(G.can_build("archive"), "图志阁应可建造（Lv.5 + 1000 金）")
+	# 基础服务开局可用；工坊与图志不能把主线挡在建造门槛外。
+	_check(G.is_built("archive"), "图志阁应开局开放")
 	var gold_before := int(G.wallet.get("gold", 0))
-	_check(G.build("archive"), "图志阁建造应成功")
-	_check(int(G.wallet.get("gold", 0)) == gold_before - 150, "建造应扣 150 金")
-	_check(G.is_built("archive"), "图志阁应已落成")
+	_check(not G.can_build("archive"), "已开放的基础服务不应重复收费建造")
+	_check(int(G.wallet.get("gold", 0)) == gold_before, "基础服务开放不应扣金币")
 	city._refresh_city()
 	await get_tree().process_frame
 	var has_scribe := false
@@ -82,7 +90,7 @@ func _run() -> void:
 	var exp_before := int(G.prog.get("exp", 0))
 	var res := G.do_activity("feast")
 	_check(bool(res.get("ok", false)), "宴会应领取成功：%s" % String(res.get("err", "")))
-	_check(int(G.wallet.get("gold", 0)) == gold_before - 150 - 200, "宴会应花 200 金")
+	_check(int(G.wallet.get("gold", 0)) == gold_before - 200, "宴会应花 200 金")
 	_check(int(G.prog.get("exp", 0)) > exp_before, "宴会应加经验")
 
 	# 祭坛落成 → 签到可领 → 连签记 1

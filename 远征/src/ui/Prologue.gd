@@ -6,10 +6,10 @@ extends Control
 
 const VIEW_W := 480.0
 const VIEW_H := 800.0
-const GAME_HOME := "res://src/ui/GameHome.tscn"
+const MAIN_WORLD := "main_world"
 
 ## 测试接口：置空串时不切场景（tools/VerifyLore.gd 用它驱动整段序章）
-var on_finish_scene := GAME_HOME
+var on_finish_scene := MAIN_WORLD
 
 var _pages: Array = []
 var _page := 0
@@ -218,7 +218,10 @@ func _finish() -> void:
 	G.mark_lore_seen()
 	if on_finish_scene.is_empty():
 		return
-	G.go(on_finish_scene)
+	if on_finish_scene == MAIN_WORLD:
+		G.enter_main_world()
+	else:
+		G.go(on_finish_scene)
 
 
 func _unhandled_input(event: InputEvent) -> void:

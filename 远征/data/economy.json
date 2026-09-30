@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "day_seed": 7919,
+  "carry_limit": 28,
+  "buy_markup_pct": 110,
+  "sell_bid_pct": 88,
+  "rest_gold": 22,
+  "goods": [
+    {"id": "trade_grain", "name": "谷物", "base_gold": 48, "weight": 1, "haul_gold": 2, "icon": "itm_trade_grain"},
+    {"id": "trade_salt", "name": "盐", "base_gold": 70, "weight": 1, "haul_gold": 3, "icon": "itm_salt_pack"},
+    {"id": "trade_herb", "name": "药草", "base_gold": 86, "weight": 1, "haul_gold": 3, "icon": "itm_herb"},
+    {"id": "trade_iron", "name": "铁料", "base_gold": 122, "weight": 2, "haul_gold": 6, "icon": "itm_iron_ore"}
+  ],
+  "sites": [
+    {"id": "city_market", "name": "昭元市集", "map_id": "lorin_wilds", "npc_id": "npc_warden",
+      "price_pct": {"trade_grain": 100, "trade_salt": 90, "trade_herb": 115, "trade_iron": 105},
+      "stock": {"trade_grain": 10, "trade_salt": 8, "trade_herb": 5, "trade_iron": 6},
+      "demand": {"trade_grain": 5, "trade_salt": 4, "trade_herb": 7, "trade_iron": 4}},
+    {"id": "maple_post", "name": "古道驿亭", "map_id": "maple_road", "entity_id": "trade_maple_post",
+      "price_pct": {"trade_grain": 120, "trade_salt": 118, "trade_herb": 96, "trade_iron": 118},
+      "stock": {"trade_grain": 5, "trade_salt": 4, "trade_herb": 7, "trade_iron": 4},
+      "demand": {"trade_grain": 5, "trade_salt": 5, "trade_herb": 5, "trade_iron": 4}},
+    {"id": "shenyuan_market", "name": "沉渊栈桥市集", "map_id": "shenyuan_port", "npc_id": "npc_port_trader",
+      "price_pct": {"trade_grain": 112, "trade_salt": 132, "trade_herb": 92, "trade_iron": 112},
+      "stock": {"trade_grain": 8, "trade_salt": 5, "trade_herb": 6, "trade_iron": 7},
+      "demand": {"trade_grain": 6, "trade_salt": 7, "trade_herb": 5, "trade_iron": 6}},
+    {"id": "slope_camp", "name": "断碑营地", "map_id": "broken_slope", "entity_id": "trade_slope_camp",
+      "price_pct": {"trade_grain": 145, "trade_salt": 145, "trade_herb": 66, "trade_iron": 150},
+      "stock": {"trade_grain": 3, "trade_salt": 3, "trade_herb": 8, "trade_iron": 2},
+      "demand": {"trade_grain": 6, "trade_salt": 6, "trade_herb": 3, "trade_iron": 5}}
+  ],
+  "events": {
+    "forge": {"name": "碑文锻合，补给车可通行", "slope_camp": {"trade_salt": -6, "trade_iron": -8}},
+    "scribe": {"name": "路标校准，药草采集队回归", "slope_camp": {"trade_herb": -6, "trade_grain": -4}},
+    "dredge": {"name": "盐渠疏浚，盐船恢复", "shenyuan_market": {"trade_salt": -8, "trade_iron": 5}},
+    "embank": {"name": "堤道加固，谷车畅行", "shenyuan_market": {"trade_grain": -8, "trade_herb": 5}}
+  },
+  "jobs": [
+    {"id": "carry", "name": "商会搬运", "site_id": "city_market", "gold": 42, "exp": 3, "desc": "整理集市货箱"},
+    {"id": "letter", "name": "驿亭送信", "site_id": "maple_post", "gold": 48, "exp": 4, "desc": "替驿亭传递信件"},
+    {"id": "road", "name": "营地修路", "site_id": "slope_camp", "gold": 54, "exp": 5, "desc": "加固断碑坡道路"},
+    {"id": "herb", "name": "营地采药", "site_id": "slope_camp", "gold": 45, "exp": 4, "desc": "采集可用药草"},
+    {"id": "port", "name": "栈桥搬货", "site_id": "shenyuan_market", "gold": 58, "exp": 5, "desc": "核对船运货箱"}
+  ],
+  "shipping_orders": [
+    {"id": "salt_ship", "name": "盐铁备舱", "unlock_step": "s16", "dispatch_site": "shenyuan_market",
+      "purchase_site": "city_market", "cargo": {"trade_salt": 2, "trade_iron": 1},
+      "gross_reward_gold": 540, "freight_gold": 45, "event_freight": {"dredge": -10, "embank": -5},
+      "reward_exp": 32, "deadline_days": 3, "travel_days": 1},
+    {"id": "herb_ship", "name": "沿岸药粮", "unlock_step": "s16", "dispatch_site": "shenyuan_market",
+      "purchase_site": "shenyuan_market", "cargo": {"trade_herb": 2, "trade_grain": 3},
+      "gross_reward_gold": 490, "freight_gold": 40, "event_freight": {"dredge": -5, "embank": -10},
+      "reward_exp": 24, "deadline_days": 3, "travel_days": 1}
+  ],
+  "first_order": {
+    "id": "a1_broken_slope_supply", "unlock_side_quest": "a1_trade_cart",
+    "origin_site": "city_market", "destination_site": "slope_camp",
+    "cargo": {"trade_salt": 2, "trade_iron": 1},
+    "gross_reward_gold": 520, "reward_exp": 35, "deadline_days": 3
+  }
+}

@@ -14,6 +14,7 @@ const BUILD_R := 26.0      # 建筑轮廓外扩的交互边距
 const REARM_R := 90.0      # 走出这么远才允许再次触发
 
 const QuestPanelScript := preload("res://src/ui/QuestPanel.gd")   # 委托板（浮层）
+const MountVisual := preload("res://src/world/MountVisual.gd")
 
 const ROLE_FRAMES := {  # 与 MapScene 同源的四方向行走帧
 	"zs": "res://image/role/zs/pojun_walk_frames.tres",
@@ -45,11 +46,13 @@ var _overlay: Control = null    # 复用面板（世界/图鉴/出征）
 var _talk_turns := {}           # npc_id -> 已聊次数（当天对话轮换）
 var _dlg: Dictionary = {}       # 进行中的对话 {"id","guest","turn","line"}
 var _embedded_map: MapScene = null
+var _city_id := "lorin_wilds"
 
 
 ## 作为新主城地图的城务层运行；原有建筑、NPC、对话和面板仍由本场景维护。
-func embed_in(map: MapScene) -> void:
+func embed_in(map: MapScene, city_id := "lorin_wilds") -> void:
 	_embedded_map = map
+	_city_id = city_id
 
 
 func has_modal() -> bool:
@@ -57,7 +60,7 @@ func has_modal() -> bool:
 
 
 func _ready() -> void:
-	_cfg = G.city_config()
+	_cfg = TableCache.city_config_for(_city_id)
 	_cols = int(_cfg.get("map_cols", 24))
 	_rows = int(_cfg.get("map_rows", 20))
 	if _embedded_map != null:
@@ -206,6 +209,10 @@ func _build_decos() -> void:
 		return
 	var density := float(_cfg.get("deco_density", 0.03))
 	var asset_dir := String(_cfg.get("asset_dir", ""))
+	# 同一种散件会在全城出现多次；进城时每种资源只查询一次。
+	var deco_textures: Array[Texture2D] = []
+	for deco_id in decos:
+		deco_textures.append(load("%s/%s.png" % [asset_dir, String(deco_id)]) as Texture2D)
 	var roads := _road_cells()
 	var spawn := _spawn_px()
 	for gy in _rows:
@@ -219,8 +226,7 @@ func _build_decos() -> void:
 			if pos.distance_to(spawn) < 150.0 or _in_building(pos):
 				continue
 			var deco := _Deco.new()
-			var tex: Texture2D = load("%s/%s.png" % [asset_dir,
-				String(decos[_rng.randi_range(0, decos.size() - 1)])])
+			var tex: Texture2D = deco_textures[_rng.randi_range(0, deco_textures.size() - 1)]
 			deco.setup(tex, _rng.randf_range(0.85, 1.15))
 			deco.position = pos
 			_world.add_child(deco)
@@ -238,8 +244,11 @@ func _build_buildings() -> void:
 
 
 func _build_npcs() -> void:
-	for nd in G.city_npcs():
+	var residents: Array = G.city_npcs() if _city_id == "lorin_wilds" else _cfg.get("npcs", [])
+	for nd in residents:
 		_spawn_npc(nd, false)
+	if _city_id != "lorin_wilds":
+		return
 	# 今日来客：按「当天 + 据点码」确定性抽两位，在城门内侧落脚
 	var guests := G.today_guests(2)
 	var spots := [Vector2(10.6, 16.6), Vector2(13.6, 16.9)]
@@ -268,7 +277,8 @@ func _spawn_npc(nd: Dictionary, guest: bool, at := Vector2.ZERO) -> void:
 	n.embedded = _embedded_map != null
 	n.hue = int(nd.get("hue", 0))
 	n.frames = _npc_idle_frames(npc_id, guest)   # 首选：idle 四帧条（像素小人会呼吸）
-	n.art = _npc_world_tex(npc_id, guest)        # 兜底：单帧站位/立绘；都没有才画色块小人
+	# 四帧已可用时不再加载只供兜底的半身像；城务首次进场无需解码所有 NPC 立绘。
+	n.art = _npc_world_tex(npc_id, guest) if n.frames == null else null
 	if at == Vector2.ZERO:
 		var p: Array = nd.get("pos", [12.0, 10.0])
 		at = _embedded_city_point("city_npc_positions", npc_id,
@@ -391,46 +401,21 @@ func _build_hud() -> void:
 
 
 func _build_embedded_hud() -> void:
-	# 原主城的城名、金币、委托与出征入口放在地图 HUD 上。
-	var banner := G.banner_box(G.city_name(), 150, 34, G.FS_SM)
-	banner.position = Vector2(198, 14)
-	banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_hud.add_child(banner)
-	var gold_chip := G.parchment_box(104, 32, 5.0)
-	gold_chip.position = Vector2(154, 98)
-	gold_chip.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_hud.add_child(gold_chip)
-	var gold_row := HBoxContainer.new()
-	gold_row.add_theme_constant_override("separation", 4)
-	gold_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	gold_chip.add_child(gold_row)
-	var gold_icon := TextureRect.new()
-	gold_icon.texture = G.res_tex("cur_gold")
-	gold_icon.custom_minimum_size = Vector2(20, 20)
-	gold_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	gold_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	gold_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	gold_row.add_child(gold_icon)
-	_stat_lbl = G.gold_label("", 13, true, Color("3e2a14"), false)
-	_stat_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	gold_row.add_child(_stat_lbl)
+	# 主世界的地图名和金币由 MapScene 显示。两城的小签指向各自可用服务。
 	_quest_chip = G.parchment_box(130, 32, 5.0)
 	_quest_chip.position = Vector2(16, 98)
 	_quest_chip.mouse_filter = Control.MOUSE_FILTER_STOP
 	_quest_chip.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_open_quests())
+			if _city_id == "shenyuan_port":
+				_open_first_order_preview("shenyuan_market")
+			else:
+				_open_quests())
 	_hud.add_child(_quest_chip)
 	_quest_lbl = G.gold_label("", 13, true, Color("3e2a14"), false)
 	_quest_lbl.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_quest_chip.add_child(_quest_lbl)
 	_refresh_stat()
-	var go := G.gold_button("出 征", 156, 50, G.FS_MD)
-	go.position = Vector2((VIEW_W - 156.0) * 0.5, VIEW_H - 76)
-	go.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_open_deploy())
-	_hud.add_child(go)
 
 
 func _build_vignette() -> void:
@@ -463,7 +448,7 @@ func _refresh_stat() -> void:
 		_stat_lbl.text = str(int(G.wallet.get("gold", 0))) if _embedded_map != null \
 			else "Lv.%d · 金 %d" % [int(G.prog.get("level", 1)), int(G.wallet.get("gold", 0))]
 	if _quest_lbl != null:
-		_quest_lbl.text = G.quest_today_text()
+		_quest_lbl.text = "港务 · 查看行情" if _city_id == "shenyuan_port" else G.quest_today_text()
 
 
 func _toast(msg: String) -> void:
@@ -532,7 +517,7 @@ func _check_interact() -> void:
 	var best_d := 9999.0
 	for b in _buildings:
 		var d: float = b.dist_to(_player.position)
-		if d < BUILD_R and d < best_d:
+		if not b.cooled and d < BUILD_R and d < best_d:
 			best = b
 			best_d = d
 		b.hover = d < BUILD_R + 24.0
@@ -540,11 +525,12 @@ func _check_interact() -> void:
 			b.cooled = false
 	for n in _npcs:
 		var nd: float = n.position.distance_to(_player.position)
-		if nd < NPC_R and nd < best_d:
+		if not n.cooled and nd < NPC_R and nd < best_d:
 			best = n
 			best_d = nd
 		n.hover = nd < NPC_R + 24.0
-		n.label_near = nd < 122.0 if _embedded_map != null else true
+		n.label_near = (nd < 122.0 and not _npc_plate_overlaps_player(n)) \
+			if _embedded_map != null else true
 		if nd > REARM_R:
 			n.cooled = false
 	if best != null and not (best as Object).get("cooled"):
@@ -555,6 +541,18 @@ func _check_interact() -> void:
 			_open_dialog((best as _CityNPC).data, (best as _CityNPC).guest)
 
 
+## 城务名签与人物名签共处同一世界坐标。靠近时优先保留人物名签；
+## NPC 实体和交互仍在，离开重叠位置后名签自动恢复。
+func _npc_plate_overlaps_player(n: _CityNPC) -> bool:
+	if _embedded_map == null or _embedded_map._player_tag == null:
+		return false
+	var tag := _embedded_map._player_tag
+	var player_rect := Rect2(_player.position + tag.position, tag.size)
+	var npc_rect := Rect2(n.position + Vector2(-n._plate_w * 0.5, n._plate_top),
+		Vector2(n._plate_w, n._plate_h))
+	return player_rect.grow(4.0).intersects(npc_rect)
+
+
 # ================= 浮层骨架 =================
 func _panel_base(title: String, w: float, h: float) -> Control:
 	var layer := Control.new()
@@ -562,11 +560,12 @@ func _panel_base(title: String, w: float, h: float) -> Control:
 	layer.mouse_filter = Control.MOUSE_FILTER_STOP
 	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），城内所有面板共用同一层质感
 	G.veil(layer, 0.72, true)
+	var visible_h := maxf(VIEW_H, get_viewport_rect().size.y)
 	var banner := G.banner_box(title, 260, 48)
-	banner.position = Vector2((VIEW_W - 260.0) * 0.5, (VIEW_H - h) * 0.5 - 58.0)
+	banner.position = Vector2((VIEW_W - 260.0) * 0.5, (visible_h - h) * 0.5 - 58.0)
 	layer.add_child(banner)
 	var panel := G.parchment_box(w, h, 16.0)
-	panel.position = Vector2((VIEW_W - w) * 0.5, (VIEW_H - h) * 0.5)
+	panel.position = Vector2((VIEW_W - w) * 0.5, (visible_h - h) * 0.5)
 	layer.add_child(panel)
 	var content := Control.new()
 	content.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -598,8 +597,15 @@ func _panel_back(content: Control, y: float, w := 120.0) -> void:
 func _open_building(bd: Dictionary) -> void:
 	if _panel != null:
 		return
+	# 进入城内建筑先下马；主世界马上切回步行脚点与碰撞盒。
+	if G.mount_riding():
+		if not G.mount_set_riding(false):
+			_toast("下马状态未能保存，请稍后再试")
+			return
+		if _embedded_map != null:
+			_embedded_map.call("_sync_mount_visual")
 	var id := String(bd.get("id", ""))
-	if G.is_built(id):
+	if bool(bd.get("port_built", false)) or G.is_built(id):
 		_show_built_panel(bd)
 	else:
 		_show_build_panel(bd)
@@ -703,10 +709,16 @@ func _show_built_panel(bd: Dictionary) -> void:
 			btn_text = "翻阅世界图志"
 		"codex":
 			btn_text = "翻看宠物图鉴"
+		"hatch":
+			btn_text = "孵化潮纹蛋"
 		"deploy":
 			btn_text = "整备出征"
 		"shop":
 			btn_text = "采买物资"
+		"trade:shenyuan_market":
+			btn_text = "查看港口行情"
+		"mount":
+			btn_text = "查看马厩"
 		"soon":
 			btn_text = "尚未开放"
 	if act.begins_with("activity:"):
@@ -728,6 +740,9 @@ func _show_built_panel(bd: Dictionary) -> void:
 
 
 func _built_action(act: String) -> void:
+	if act == "trade:shenyuan_market":
+		_open_first_order_preview("shenyuan_market")
+		return
 	if act.begins_with("activity:"):
 		_claim_activity(act.get_slice(":", 1))
 		return
@@ -740,10 +755,16 @@ func _built_action(act: String) -> void:
 			_open_worlds()
 		"codex":
 			_open_codex()
+		"shipping":
+			_open_shipping_panel()
+		"hatch":
+			_open_tide_hatch_panel()
 		"deploy":
 			_open_deploy()
 		"shop":
 			_open_shop()
+		"mount":
+			_open_first_mount_panel()
 		"soon":
 			_toast("匠人还没备好料，再等等")
 
@@ -764,7 +785,8 @@ func _show_notice() -> void:
 	if _panel != null:
 		return
 	var acts := G.city_activities()
-	var h := 120.0 + acts.size() * 60.0
+	# P05-C：布告栏常驻一条「路西兽影」悬赏行（72px），线索与状态随支线／首胜变化
+	var h := 120.0 + acts.size() * 60.0 + 76.0
 	var content := _panel_base("布 告 板", 400, h)
 
 	var tip := G.gold_label("城中的营生都在这儿。冷却好了就来领。",
@@ -812,7 +834,44 @@ func _show_notice() -> void:
 					_claim_activity(aid))
 			content.add_child(claim)
 
+	# P05-C：布告栏「路西兽影」悬赏行（spec §5：城内布告栏给线索）。
+	# 状态文案与支线／世界旗同源：未见 → 已接 → 已见过 → 首胜已了。
+	var by := 28.0 + acts.size() * 60.0 + 6.0
+	var brow := PanelContainer.new()
+	brow.custom_minimum_size = Vector2(368, 66)
+	brow.position = Vector2(0, by)
+	var bsb := StyleBoxFlat.new()
+	bsb.bg_color = Color("cbb890")
+	bsb.set_corner_radius_all(4)
+	bsb.content_margin_left = 10.0
+	bsb.content_margin_right = 10.0
+	bsb.content_margin_top = 4.0
+	brow.add_theme_stylebox_override("panel", bsb)
+	brow.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	content.add_child(brow)
+	var b_title := G.gold_label("路西兽影 · 悬赏", G.FS_MD, false, Color("3a2a14"), false)
+	b_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	b_title.position = Vector2(10, by + 4)
+	content.add_child(b_title)
+	var b_sub := G.gold_label(_notice_lost_beast_line(), G.FS_XS, false, Color("6a4a24"), false)
+	b_sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	b_sub.custom_minimum_size = Vector2(348, 0)
+	b_sub.position = Vector2(10, by + 26)
+	content.add_child(b_sub)
+
 	_panel_back(content, h - 64.0)
+
+
+## 布告栏「路西兽影」状态行（P05-C）：未接给线索，已接给目标，见过给回报，首胜给了结。
+func _notice_lost_beast_line() -> String:
+	if bool((G.prog.get("flags", {}) as Dictionary).get("act1_lost_beast_down", false)):
+		return "失路兽已伏诛，断碑坡路西平安——悬赏已了。"
+	var st := G.side_status_of("a1_elite_beast")
+	if st == "ready":
+		return "你已见过它——回城找闻叔回报。"
+	if st == "active":
+		return "目标：断碑坡找到失路兽（可战可察）。"
+	return "断碑坡路西有东西在走，不像寻常野兽。"
 
 
 # ================= 访客簿 =================
@@ -875,6 +934,8 @@ const NPC_PORTRAIT_ALIAS := {
 	"npc_smith": "npc_blacksmith",
 	"npc_warden": "npc_merchant",
 	"npc_keeper": "npc_courier",
+	"npc_mentor": "npc_guard",
+	"npc_stablemaster": "npc_courier",
 }
 
 ## 城内站位（首选）：npc_<id>_idle 横向四帧条（512×128，128/帧）→ 呼吸循环。
@@ -889,12 +950,12 @@ func _npc_idle_frames(npc_id: String, guest: bool) -> SpriteFrames:
 		return _idle_frame_cache[key]
 	var tex: Texture2D = G.res_tex(key)
 	if tex == null or tex.get_width() < 512 or tex.get_height() < 128:
-		_idle_frame_cache[key] = null   # 「没有」也记下：省得每个 NPC 再查一遍索引
+		_idle_frame_cache[key] = null
 		return null
 	var frames := SpriteFrames.new()
 	frames.remove_animation(&"default")
 	frames.add_animation(&"idle")
-	frames.set_animation_speed(&"idle", 5.0)   # 与主页角色展示台同速：是呼吸，不是抖动
+	frames.set_animation_speed(&"idle", 5.0)
 	frames.set_animation_loop(&"idle", true)
 	for c in 4:
 		var at := AtlasTexture.new()
@@ -934,6 +995,13 @@ func _npc_portrait_tex(npc_id: String, guest: bool) -> Texture2D:
 	var tex := G.res_tex("%s_portrait" % npc_id)
 	if tex == null and NPC_PORTRAIT_ALIAS.has(npc_id):
 		tex = G.res_tex(NPC_PORTRAIT_ALIAS[npc_id])
+	if tex == null and (npc_id.begins_with("npc_port_") or npc_id == "npc_harbormaster"):
+		var strip := G.res_tex("%s_idle" % npc_id)
+		if strip != null and strip.get_width() >= 512:
+			var portrait := AtlasTexture.new()
+			portrait.atlas = strip
+			portrait.region = Rect2(28, 4, 72, 86)
+			return portrait
 	return tex
 
 
@@ -942,6 +1010,34 @@ func _open_dialog(nd: Dictionary, guest: bool) -> void:
 		return
 	Audio.sfx("ui_open")
 	var id := String(nd.get("id", ""))
+	if not guest:
+		var side_action := QuestService.side_npc_action(G.act1_state(), G._side_live_rows(), id)
+		var side_row := QuestService.side_row(G.side_quest_rows(), String(side_action.get("qid", "")))
+		if String(side_action.get("kind", "")) == "turn_in" and not (side_row.get("choices", {}) as Dictionary).is_empty():
+			_open_port_side_panel(id)
+			return
+	if not guest and id == "npc_harbormaster" and String(G.story_current().get("id", "")) == "s20":
+		_open_tide_choice_panel()
+		return
+	if not guest and id == "npc_harbormaster" and G.story_step_done("s16"):
+		_open_port_services()
+		return
+	if not guest and id == "npc_port_keeper":
+		_open_tide_hatch_panel()
+		return
+	if not guest and id == "npc_smith" and String(G.story_current().get("id", "")) == "s11":
+		_open_repair_panel()
+		return
+	if not guest and id == "npc_mentor":
+		_open_mentor_panel()
+		return
+	if not guest and id == "npc_stablemaster" and G.first_mount_status() != "locked":
+		_open_first_mount_panel()
+		return
+	# 阿豆原有的足迹支线仍走普通对话；只在 s04 已完成且尚未领取时切到结缘面板。
+	if not guest and id == "npc_keeper" and G.rockturtle_status() == "ready":
+		_open_rockturtle_panel()
+		return
 	var layer := Control.new()
 	layer.set_anchors_preset(Control.PRESET_FULL_RECT)
 	layer.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -1005,6 +1101,16 @@ func _open_dialog(nd: Dictionary, guest: bool) -> void:
 	hint.position = Vector2(0, 100)
 	hint.custom_minimum_size = Vector2(400, 0)
 	content.add_child(hint)
+	# 行脚商人仍先说原有的任务/修碑台词；现货从初期可逛，首单由送盐支线解锁。
+	if not guest and id in ["npc_warden", "npc_port_trader"]:
+		hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		var market := G.gold_button("市集交易", 122, 44, G.FS_XS)
+		market.position = Vector2(274, 89)
+		market.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				_close_panel()
+				_open_first_order_preview("shenyuan_market" if id == "npc_port_trader" else "city_market"))
+		content.add_child(market)
 
 	var leave := G.gold_button("离 开", 64, 30, G.FS_XS)
 	leave.position = Vector2(336, -4)
@@ -1020,13 +1126,600 @@ func _open_dialog(nd: Dictionary, guest: bool) -> void:
 
 	_panel = layer
 	_hud.add_child(layer)
-	_dlg = {"id": id, "guest": guest, "data": nd,
-		"turn": int(_talk_turns.get(id, 0)), "line": line}
+	var offered_story := G.story_current() if not guest else {}
+	var offered_dialogue := String(offered_story.get("dialogue", "")) \
+		if String(offered_story.get("event", "")) == "talk" \
+		and String(offered_story.get("target", "")) == id else ""
+	_dlg = {"id": id, "guest": guest, "data": nd, "story_dialogue": offered_dialogue,
+		"turn": 0 if not offered_dialogue.is_empty() else int(_talk_turns.get(id, 0)), "line": line}
+	# 支线接取/交付（P05-B）：先落地再显示第一句——接取与交付各有专属台词，写盘失败内部会回滚。
+	var side_res := {}
+	if not guest:
+		side_res = G.side_npc_interact(id)
+		if not side_res.is_empty():
+			_dlg["side_line"] = String(side_res.get("line", ""))
 	_show_dialog_line()
+	if not guest:
+		var story_result := G.story_event("talk", id, _city_id)
+		if not story_result.is_empty():
+			_toast("主线完成：%s" % String(story_result.get("title", "")))
+			_refresh_stat()
+			if _embedded_map != null:
+				_embedded_map.call("_refresh_quest_entities")
+				_embedded_map.call("_refresh_hud")
+		if not side_res.is_empty():
+			for t in side_res.get("toasts", []):
+				_toast(String(t))
+			_refresh_stat()
+			if _embedded_map != null:
+				_embedded_map.call("_refresh_quest_entities")
+				_embedded_map.call("_refresh_hud")
 	if guest:
 		var site := String(nd.get("name", ""))
 		if G.add_visitor(site):
 			_toast("访客簿添了新名字：%s" % site)
+
+
+## 行脚商人对话里的市集入口；现货从初期可逛，首单由送盐支线解锁。
+func _open_first_order_preview(site_id := "city_market") -> void:
+	var trade := TradePanel.new()
+	_panel = trade
+	_hud.add_child(trade)
+	trade.open_site(site_id)
+	trade.closed.connect(func():
+		if _panel == trade:
+			_panel = null
+		_refresh_stat())
+
+
+func _open_tide_choice_panel() -> void:
+	var content := _panel_base("回港定路", 432, 354)
+	var intro := G.text_label("沈澜：潮闸已开，港里只能先修一条供货路。两种选择的任务奖励相同；行情变化会显示在栈桥市集。",
+		G.FS_SM, Color("4b351e"))
+	intro.position = Vector2(8, 7)
+	intro.custom_minimum_size = Vector2(384, 64)
+	intro.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(intro)
+	var dredge := G.text_label("疏浚盐渠：港口盐价约 -8%，铁料约 +5%。盐船先走，缺铁的修船匠会抬价。",
+		G.FS_SM, Color("3d5360"))
+	dredge.position = Vector2(12, 82)
+	dredge.custom_minimum_size = Vector2(376, 53)
+	dredge.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(dredge)
+	var dredge_btn := G.gold_button("疏浚盐渠", 176, 40, G.FS_SM)
+	dredge_btn.position = Vector2(112, 132)
+	dredge_btn.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_commit_tide_choice("dredge"))
+	content.add_child(dredge_btn)
+	var embank := G.text_label("加固堤道：港口谷价约 -8%，药草约 +5%。谷车先走，滩涂采药队暂缓通行。",
+		G.FS_SM, Color("3d5360"))
+	embank.position = Vector2(12, 190)
+	embank.custom_minimum_size = Vector2(376, 53)
+	embank.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(embank)
+	var embank_btn := G.gold_button("加固堤道", 176, 40, G.FS_SM)
+	embank_btn.position = Vector2(112, 240)
+	embank_btn.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_commit_tide_choice("embank"))
+	content.add_child(embank_btn)
+	_panel_back(content, 304.0)
+
+
+func _commit_tide_choice(method: String) -> void:
+	var result := G.story_event("talk", "npc_harbormaster", _city_id, true, {"method": method})
+	if result.is_empty():
+		_toast("账芯或存档状态尚未准备好")
+		return
+	_close_panel()
+	_toast("主线完成：%s" % String(result.get("title", "")))
+	_refresh_stat()
+	if _embedded_map != null:
+		_embedded_map.call("_refresh_hud")
+
+
+## P05-D4：马厩实体领取首骑；真正上马由主世界 HUD 操作，避免对话关闭后瞬间碰撞。
+func _open_first_mount_panel() -> void:
+	var status := G.first_mount_status()
+	var content := _panel_base("边城马厩", 416, 302)
+	var cfg := G.first_mount_cfg()
+	var mid := String(cfg.get("mount_id", "horse"))
+	var art_frames := MountVisual.frames_for(G.selected_role)
+	if art_frames != null:
+		var art := TextureRect.new()
+		art.texture = art_frames.get_frame_texture(&"walk_down", 0)
+		art.position = Vector2(0, 42)
+		art.custom_minimum_size = Vector2(132, 124)
+		art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		content.add_child(art)
+	var intro := G.text_label("马伯：北路走通了，这匹马认得回城的路。", G.FS_SM, Color("3a2a14"))
+	intro.position = Vector2(8, 6)
+	intro.custom_minimum_size = Vector2(368, 35)
+	intro.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(intro)
+	var detail := "守住断碑坡的路后，再来挑一匹行路马。"
+	match status:
+		"ready":
+			detail = "首骑 · %s\n剧情赠送，无需金币。野外可上马，接战会下马。" % String(G.mount_cfg(mid).get("name", mid))
+		"owned":
+			detail = "已拥有 · %s\n主世界右下可上马／下马；进建筑与接战自动下马。" % String(G.mount_cfg(mid).get("name", mid))
+	var text_l := G.text_label(detail, G.FS_SM, Color("5a4020"))
+	text_l.position = Vector2(140, 53)
+	text_l.custom_minimum_size = Vector2(235, 116)
+	text_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(text_l)
+	if status == "ready":
+		var claim := G.gold_button("领取首骑", 176, 42, G.FS_SM)
+		claim.position = Vector2(104, 190)
+		claim.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				var res := G.claim_first_mount()
+				if bool(res.get("ok", false)):
+					_toast("首骑已结缘：%s" % String(res.get("name", "")))
+					if _embedded_map != null:
+						_embedded_map.call("_sync_mount_visual")
+				else:
+					_toast("暂时不能领取，请稍后再试")
+				_close_panel()
+				_open_first_mount_panel())
+		content.add_child(claim)
+	_panel_back(content, 246.0)
+
+
+## P05-D：导师是领取 → 实战熟练 → 二选一分支的同一个实体入口，不再另开孤立菜单。
+func _open_mentor_panel() -> void:
+	var content := _panel_base("巡界授业", 432, 390)
+	var mentor_portrait := _npc_portrait_tex("npc_mentor", false)
+	if mentor_portrait != null:
+		var portrait := Sprite2D.new()
+		portrait.texture = mentor_portrait
+		portrait.position = Vector2(45, 47)
+		portrait.scale = Vector2.ONE * (78.0 / maxf(mentor_portrait.get_width(),
+			mentor_portrait.get_height()))
+		content.add_child(portrait)
+	var role_cfg := G.mentor_role_cfg()
+	var sid := G.mentor_second_skill()
+	var skill_name := String(TableCache.get_skill(sid).get("name", sid))
+	var status := G.mentor_status()
+	var intro_text := "岳教头：先把古道上的第一场硬仗打明白，再来学第二式。"
+	match status:
+		"ready":
+			intro_text = "岳教头：第一式已站稳脚跟。现在教你「%s」，领悟后去野外真正用中一次。" % skill_name
+		"practice":
+			var mastery := int((G.mentor_state()["mastery"] as Dictionary).get(sid, 0))
+			var need := maxi(1, int(G.mentor_cfg().get("mastery_target", 1)))
+			intro_text = "岳教头：会按招式不算会用。让「%s」产生真实效果，再回来谈分支。\n熟练 %d/%d" % [skill_name, mastery, need]
+		"choose":
+			intro_text = "岳教头：这一式已经用活了。选一条路，改变它的消耗、节奏与效果。"
+		"chosen":
+			var choice := String((G.mentor_state()["variants"] as Dictionary).get(sid, ""))
+			var vars: Dictionary = role_cfg.get("variants", {})
+			var chosen: Dictionary = vars.get(choice, {})
+			intro_text = "岳教头：你为「%s」选了【%s】。\n%s" % [skill_name,
+				String(chosen.get("name", choice)), String(chosen.get("desc", ""))]
+	var intro := G.text_label(intro_text, G.FS_SM, Color("3a2a14"))
+	intro.position = Vector2(94, 8) if mentor_portrait != null else Vector2(8, 8)
+	intro.custom_minimum_size = Vector2(290, 80) if mentor_portrait != null else Vector2(384, 80)
+	intro.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(intro)
+
+	if status == "ready":
+		var learn := G.gold_button("领悟 · %s" % skill_name, 190, 42, G.FS_SM)
+		learn.position = Vector2(101, 118)
+		learn.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				var res := G.mentor_unlock_second()
+				if bool(res.get("ok", false)):
+					_toast("已解锁第二技能：%s" % String(res.get("name", skill_name)))
+				_close_panel()
+				_open_mentor_panel())
+		content.add_child(learn)
+	elif status == "choose":
+		var variants: Dictionary = role_cfg.get("variants", {})
+		var keys := variants.keys()
+		for i in mini(2, keys.size()):
+			var key := String(keys[i])
+			var row := variants[key] as Dictionary
+			var desc := G.text_label("【%s】%s" % [String(row.get("name", key)), String(row.get("desc", ""))],
+				G.FS_XS, Color("4b351e"))
+			desc.position = Vector2(8, 102 + i * 92)
+			desc.custom_minimum_size = Vector2(384, 38)
+			desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			content.add_child(desc)
+			var choose := G.gold_button("选择 · %s" % String(row.get("name", key)), 176, 38, G.FS_SM)
+			choose.position = Vector2(108, 145 + i * 92)
+			choose.gui_input.connect(Callable(self, "_mentor_choice_input").bind(key))
+			content.add_child(choose)
+	elif status == "chosen":
+		var cost := int(G.mentor_cfg().get("reset_cost_gold", 120))
+		var reset := G.gold_button("重置分支 · %d 金" % cost, 190, 42, G.FS_SM)
+		reset.position = Vector2(101, 138)
+		if int(G.wallet.get("gold", 0)) < cost:
+			reset.modulate = Color(0.62, 0.62, 0.62)
+		reset.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				var res := G.mentor_reset_variant()
+				if bool(res.get("ok", false)):
+					_toast("已重置，可重新选择分支")
+				else:
+					_toast("金币不足，暂时不能重置")
+				_close_panel()
+				_open_mentor_panel())
+		content.add_child(reset)
+	_panel_back(content, 330.0)
+
+
+func _mentor_choice_input(e: InputEvent, key: String) -> void:
+	if not (e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT):
+		return
+	var res := G.mentor_choose_variant(key)
+	if bool(res.get("ok", false)):
+		_toast("专精已定：%s" % String(res.get("name", key)))
+	_close_panel()
+	_open_mentor_panel()
+
+
+## P05-D2：s04 后由兽栏实体承接伙伴领取。展示、确认、写档在同一面板完成，
+## 不把关键成长节点藏在主页菜单或无条件启动赠送里。
+func _open_rockturtle_panel() -> void:
+	var content := _panel_base("兽栏结缘", 432, 430)
+	var pet_tex := G.res_tex("pet_rockturtle")
+	if pet_tex != null:
+		var halo := Panel.new()
+		halo.position = Vector2(136, 14)
+		halo.size = Vector2(128, 128)
+		var halo_style := StyleBoxFlat.new()
+		halo_style.bg_color = Color("4c6a45", 0.16)
+		halo_style.border_color = Color("9a7437", 0.76)
+		halo_style.set_border_width_all(2)
+		halo_style.set_corner_radius_all(64)
+		halo.add_theme_stylebox_override("panel", halo_style)
+		halo.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		content.add_child(halo)
+		var pic := TextureRect.new()
+		pic.texture = pet_tex
+		pic.position = Vector2(8, 8)
+		pic.size = Vector2(112, 112)
+		pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		pic.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		halo.add_child(pic)
+
+	var name_l := G.serif_label("岩 龟", G.FS_LG, Color("744c21"))
+	name_l.position = Vector2(0, 148)
+	name_l.custom_minimum_size = Vector2(400, 32)
+	name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	content.add_child(name_l)
+	var desc := G.text_label("阿豆：它总在门边等你。背甲很沉，脚步却稳；\n带它出城，它会跟在身后，也会与你一同接战。",
+		G.FS_SM, Color("3a2a14"))
+	desc.position = Vector2(22, 190)
+	desc.custom_minimum_size = Vector2(356, 62)
+	desc.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(desc)
+	var trait_l := G.gold_label("守御伙伴 · 近战 · 冲撞", G.FS_SM, false, Color("6b512c"), false)
+	trait_l.position = Vector2(0, 260)
+	trait_l.custom_minimum_size = Vector2(400, 26)
+	content.add_child(trait_l)
+
+	var claim := G.gold_button("结 缘 · 带它同行", 210, 46, G.FS_SM)
+	claim.position = Vector2(95, 304)
+	claim.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			var res := G.claim_rockturtle()
+			if bool(res.get("ok", false)):
+				if _embedded_map != null:
+					_embedded_map.st.active_pet = "pet_rockturtle"
+					_embedded_map.call("_sync_world_companion")
+				_toast("伙伴加入：岩龟")
+			else:
+				_toast("结缘未完成，请稍后再试")
+			_close_panel())
+	content.add_child(claim)
+	_panel_back(content, 362.0)
+
+
+## P07-D：港口兽栏的首枚宠物蛋。剧情给来源，购买给重复孵化的材料出口。
+func _open_port_services() -> void:
+	var content := _panel_base("沈澜 · 港务人", 432, 390)
+	var stage := int((G.prog.get("flags", {}) as Dictionary).get("act2_shenlan_relation_stage", 0))
+	var intro := G.text_label("港里的船照潮位走，账要一页一页核。\n备齐实物可托船运出；潮闸事了，也可坐下谈谈。\n\n关系：%s" % ("潮声旧账 · 已完成" if stage >= 1 else "尚未深谈"), G.FS_SM, Color("493724"))
+	intro.position = Vector2(20, 24)
+	intro.custom_minimum_size = Vector2(380, 120)
+	intro.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(intro)
+	var ship := G.gold_button("查看船运订单", 220, 40, G.FS_SM)
+	ship.position = Vector2(92, 144)
+	ship.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_close_panel()
+			_open_shipping_panel())
+	content.add_child(ship)
+	var talk := G.gold_button("潮声旧账 · 谈谈", 220, 40, G.FS_SM)
+	talk.position = Vector2(92, 202)
+	talk.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			if not G.story_step_done("s20"):
+				_toast("先处理潮闸并回港定路")
+				return
+			_close_panel()
+			_open_port_relation())
+	content.add_child(talk)
+	_port_side_button(content, "npc_harbormaster", Vector2(92, 256))
+	_panel_back(content, 332.0)
+
+
+func _port_side_button(content: Control, npc_id: String, at: Vector2) -> void:
+	var button := G.gold_button("本人的托付 · 支线", 220, 44, G.FS_SM)
+	button.position = at
+	button.gui_input.connect(func(event: InputEvent):
+		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			_close_panel()
+			_open_port_side_panel(npc_id))
+	content.add_child(button)
+
+
+func _open_port_side_panel(npc_id: String, reply := {}) -> void:
+	var action := QuestService.side_npc_action(G.act1_state(), G._side_live_rows(), npc_id) if reply.is_empty() else {}
+	var qid := String(reply.get("qid", action.get("qid", "")))
+	var row := QuestService.side_row(G.side_quest_rows(), qid)
+	var choices: Dictionary = row.get("choices", {})
+	var choosing := String(action.get("kind", "")) == "turn_in" and not choices.is_empty()
+	var result := reply if not reply.is_empty() else ({} if choosing else G.side_npc_interact(npc_id))
+	var line := String(row.get("ready_dialogue", "")) if choosing else String(result.get("line", G.side_npc_line(npc_id)))
+	if line.is_empty(): line = "把盐车账页交给沈澜后，可以来问港口的托付。已完成的事不会重复发奖。"
+	var content := _panel_base("%s · 托付" % String(G.city_npc(npc_id).get("name", "港口人")), 432, 456)
+	var label := G.text_label(line, G.FS_SM, Color("493724"))
+	label.position = Vector2(20, 22)
+	label.custom_minimum_size = Vector2(380, 100)
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(label)
+	var details := G.text_label("\n".join(G.side_info_lines(qid)) if not qid.is_empty() else "已接任务可在图志中切换追踪。", G.FS_SM, Color("493724"))
+	details.position = Vector2(20, 126)
+	details.custom_minimum_size = Vector2(380, 176)
+	details.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(details)
+	if choosing:
+		var index := 0
+		for key in choices:
+			var choice := String(key)
+			var option: Dictionary = choices[key]
+			var button := G.gold_button(String(option.get("title", choice)), 184, 44, G.FS_SM)
+			button.position = Vector2(12 + index * 194, 312)
+			button.gui_input.connect(func(event: InputEvent):
+				if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+					var completed := G._side_complete(qid, true, choice)
+					if completed.is_empty():
+						_toast("本次未能保存，托付仍待交付")
+						return
+					_close_panel()
+					_toast(String(completed.get("line", "托付完成")))
+					_open_port_side_panel(npc_id, completed))
+			content.add_child(button)
+			index += 1
+	for toast in result.get("toasts", []): _toast(String(toast))
+	if _embedded_map != null:
+		_embedded_map.call("_refresh_quest_entities")
+		_embedded_map.call("_refresh_hud")
+	_panel_back(content, 396.0)
+
+
+func _open_port_relation() -> void:
+	var content := _panel_base("潮声旧账", 432, 420)
+	var flags: Dictionary = G.prog.get("flags", {})
+	var finished := int(flags.get("act2_shenlan_relation_stage", 0)) >= 1
+	var words := "沈澜翻开旧账，里面夹着一封未寄出的家书。\n\n“从前我只信账上的数。潮闸关了以后，有些人的名字就再也没回来。”\n\n她把一枚磨平的石头放在桌边。\n“船可以晚一日，等船的人不能永远等下去。”\n\n完成这段谈话：防御宝石Ⅰ ×1，经验 +20。"
+	if finished:
+		words = "沈澜收起旧账，记得上次与你的谈话。\n\n“%s”\n\n关系第一段已完成，潮闸与船单仍可照常处理。\n宝石已入背包，在营帐的工坊宝石页选择护甲镶嵌：200 铜钱，防御 +2；可免费拆回。" % ("那些名字，我会好好记住。" if String(flags.get("act2_shenlan_relation_choice", "")) == "remember" else "下次开船前，我会先去渡口看看等船的人。")
+	var label := G.text_label(words, G.FS_SM, Color("493724"))
+	label.position = Vector2(20, 22)
+	label.custom_minimum_size = Vector2(380, 268)
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(label)
+	if not finished:
+		for i in 2:
+			var choice := "remember" if i == 0 else "promise"
+			var button := G.gold_button("记住那些名字" if i == 0 else "下次一起去渡口", 184, 42, G.FS_SM)
+			button.position = Vector2(12 + i * 194, 304)
+			button.gui_input.connect(func(e: InputEvent):
+				if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+					var result := G.port_relation_choice(choice)
+					_toast("关系推进 · 防御宝石Ⅰ ×1" if bool(result.get("ok", false)) else String(result.get("err", "未完成")))
+					_close_panel()
+					_open_port_relation()
+					_refresh_stat())
+			content.add_child(button)
+	_panel_back(content, 366.0)
+
+
+func _open_shipping_panel(order_id := "salt_ship") -> void:
+	var content := _panel_base("港务船单", 432, 540)
+	var info := G.shipping_order(order_id)
+	for i in 2:
+		var route_id := "salt_ship" if i == 0 else "herb_ship"
+		var route := G.shipping_config(route_id)
+		var tab := G.gold_button(String(route.get("name", "船单")), 184, 38, G.FS_SM)
+		tab.position = Vector2(12 + i * 194, 16)
+		tab.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				_close_panel()
+				_open_shipping_panel(route_id))
+		content.add_child(tab)
+	var status := String(info.get("status", "locked"))
+	var status_names := {"locked": "交清盐路账页后开放", "available": "可以接单", "active": "等待备货装船",
+		"expired": "备货期限已过，可重新接单", "transit": "货船在途", "ready": "已到港，等待领取", "done": "本日已完成，明日可再接"}
+	var cargo_lines: Array[String] = []
+	for gid in (info.get("cargo", {}) as Dictionary):
+		cargo_lines.append("%s  %d / %d" % [G.item_name(String(gid)), G.item_count(String(gid)), int(info["cargo"][gid])])
+	var timing := "接单后 %d 日内备货，装船后 %d 日到港。" % [int(info.get("deadline_days", 3)), int(info.get("travel_days", 1))]
+	if status == "active": timing = "当前第 %d 日 · 最迟第 %d 日装船" % [int(info["day"]), int(info["deadline_day"])]
+	if status in ["transit", "ready"]: timing = "当前第 %d 日 · 第 %d 日到港" % [int(info["day"]), int(info["arrival_day"])]
+	var body := "%s\n\n备货（持有 / 所需）\n%s\n\n到手 %d 铜钱 · 已扣运费 %d\n采购参考 %d · 预计净收益 %d\n经验 +%d\n\n%s\n接单锁定报酬；市集歇脚推进游戏日。" % [
+		String(status_names.get(status, status)), "\n".join(cargo_lines), int(info.get("payout_gold", 0)),
+		int(info.get("freight_gold", 0)), int(info.get("purchase_gold", 0)), int(info.get("expected_profit_gold", 0)),
+		int(info.get("reward_exp", 0)), timing]
+	var label := G.text_label(body, G.FS_SM, Color("493724"))
+	label.position = Vector2(20, 72)
+	label.custom_minimum_size = Vector2(382, 324)
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(label)
+	var actions := {"available": "接取船单", "expired": "重新接单", "active": "交货装船", "ready": "领取报酬"}
+	if actions.has(status):
+		var button := G.gold_button(String(actions[status]), 220, 42, G.FS_SM)
+		button.position = Vector2(92, 414)
+		button.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				var result: Dictionary
+				match status:
+					"active": result = G.shipping_dispatch(order_id, "shenyuan_market")
+					"ready": result = G.shipping_claim(order_id, "shenyuan_market")
+					_: result = G.shipping_accept(order_id, "shenyuan_market")
+				var messages := {"active": "货物已装船，明日到港", "ready": "船单报酬已入账"}
+				_toast(String(messages.get(status, "已接单，请备齐实物")) if bool(result.get("ok", false)) else String(result.get("err", "未完成")))
+				_close_panel()
+				_open_shipping_panel(order_id)
+				_refresh_stat())
+		content.add_child(button)
+	_panel_back(content, 474.0)
+
+
+func _open_tide_hatch_panel() -> void:
+	var content := _panel_base("潮羽孵化", 432, 488)
+	var egg_count := G.item_count("tide_egg")
+	var owned := G.owns_pet("pet_tide_gull")
+	var egg_tex := G.res_tex("itm_tide_egg")
+	var pet_tex := G.res_tex("pet_tide_gull")
+	for pic_data in [
+		{"tex": egg_tex, "x": 55.0}, {"tex": pet_tex, "x": 267.0}
+	]:
+		var pic := TextureRect.new()
+		pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		pic.texture = pic_data["tex"] as Texture2D
+		pic.position = Vector2(float(pic_data["x"]), 14)
+		pic.custom_minimum_size = Vector2(100, 100)
+		pic.size = Vector2(100, 100)
+		pic.stretch_mode = TextureRect.STRETCH_SCALE
+		pic.clip_contents = true
+		pic.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		content.add_child(pic)
+		pic.size = Vector2(100, 100)
+	var heading := G.serif_label("潮纹蛋  →  潮羽雏鸥", G.FS_MD, Color("76502b"))
+	heading.position = Vector2(14, 120)
+	heading.custom_minimum_size = Vector2(388, 30)
+	heading.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	content.add_child(heading)
+	var status := "已结缘 · 再孵化得宠物粮 ×2" if owned else "未结缘 · 孵化后可随行接战"
+	var info := G.text_label("持有潮纹蛋 %d 枚   ·   %s\n阿棠：港务交账后可领首枚，余下的在兽栏购入。" % [egg_count, status],
+		G.FS_SM, Color("493724"))
+	info.position = Vector2(20, 163)
+	info.custom_minimum_size = Vector2(380, 74)
+	info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(info)
+	if not G.story_step_done("s16"):
+		var locked := G.text_label("先把盐车账页交给港务人，再来孵化。", G.FS_SM, Color("7a5a3a"))
+		locked.position = Vector2(20, 266)
+		locked.custom_minimum_size = Vector2(380, 42)
+		content.add_child(locked)
+	else:
+		if not bool((G.prog.get("flags", {}) as Dictionary).get("act2_port_egg_claimed", false)):
+			var gift := G.gold_button("领港务赠蛋 · 免费", 202, 38, G.FS_SM)
+			gift.position = Vector2(99, 232)
+			gift.gui_input.connect(func(e: InputEvent):
+				if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+					var res := G.port_egg_claim()
+					_toast("得到潮纹蛋 ×1" if bool(res.get("ok", false)) else "赠蛋已领取")
+					_close_panel()
+					_open_tide_hatch_panel())
+			content.add_child(gift)
+		var hatch := G.gold_button("孵 化 · 消耗 1 枚", 184, 44, G.FS_SM)
+		hatch.position = Vector2(12, 280)
+		hatch.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				var res := G.port_egg_hatch()
+				if bool(res.get("ok", false)):
+					_toast("重复孵化 · 宠物粮 ×2" if bool(res.get("duplicate", false)) else "伙伴加入 · 潮羽雏鸥")
+				else:
+					_toast("没有可孵化的潮纹蛋")
+				_close_panel()
+				_open_tide_hatch_panel())
+		content.add_child(hatch)
+		var buy := G.gold_button("购 蛋 · 500 铜钱", 184, 44, G.FS_SM)
+		buy.position = Vector2(206, 280)
+		buy.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				var res := G.port_egg_buy()
+				_toast("购入潮纹蛋 ×1" if bool(res.get("ok", false)) else "铜钱不足或暂不能购买")
+				_close_panel()
+				_open_tide_hatch_panel())
+		content.add_child(buy)
+	_port_side_button(content, "npc_port_keeper", Vector2(92, 338))
+	_panel_back(content, 414.0)
+
+
+## P05-A：石头只提出两条修碑方法；玩家点选并付得起材料时才推进 s11。
+func _open_repair_panel() -> void:
+	var content := _panel_base("缺页回炉", 432, 360)
+	var intro := G.text_label("石头：旧铁扣能锁住碑片。你想先锻合，还是请青姨拓录？",
+		G.FS_SM, Color("3a2a14"))
+	intro.position = Vector2(8, 8)
+	intro.custom_minimum_size = Vector2(384, 54)
+	intro.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(intro)
+	var frag := G.item_count("stele_fragment")
+	var refine := G.item_count("refine_stone")
+	var gold := int(G.wallet.get("gold", 0))
+	var a := G.text_label("锻合 · 碑文碎片 1 / %d，精炼石 2 / %d\n稳固旧铁扣，修复后开放北路线索。" % [frag, refine],
+		G.FS_SM, Color("4b351e"))
+	a.position = Vector2(12, 68)
+	a.custom_minimum_size = Vector2(376, 57)
+	a.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(a)
+	var forge := G.gold_button("用精炼石锻合", 176, 40, G.FS_SM)
+	forge.position = Vector2(110, 132)
+	if frag < 1 or refine < 2:
+		forge.modulate = Color(0.62, 0.62, 0.62)
+	forge.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_commit_repair("forge"))
+	content.add_child(forge)
+	var b := G.text_label("拓录 · 碑文碎片 1 / %d，金币 120 / %d\n请青姨记下碑名，修复后开放同一条北路。" % [frag, gold],
+		G.FS_SM, Color("4b351e"))
+	b.position = Vector2(12, 182)
+	b.custom_minimum_size = Vector2(376, 57)
+	b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(b)
+	var scribe := G.gold_button("花金币拓录", 176, 40, G.FS_SM)
+	scribe.position = Vector2(110, 245)
+	if frag < 1 or gold < 120:
+		scribe.modulate = Color(0.62, 0.62, 0.62)
+	scribe.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_commit_repair("scribe"))
+	content.add_child(scribe)
+	var later := G.gold_button("暂不修复", 128, 36, G.FS_SM)
+	later.position = Vector2(134, 301)
+	later.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_close_panel())
+	content.add_child(later)
+
+
+func _commit_repair(method: String) -> void:
+	var result := G.story_event("craft", "npc_smith", "lorin_wilds", true,
+		{"method": method})
+	if result.is_empty():
+		_toast("材料不足，碑文尚未修复")
+		return
+	_close_panel()
+	_toast("碑文已修复 · 主线完成：%s" % String(result.get("title", "")))
+	_refresh_stat()
+	if _embedded_map != null:
+		_embedded_map.call("_refresh_hud")
 
 
 func _show_dialog_line() -> void:
@@ -1039,8 +1732,38 @@ func _show_dialog_line() -> void:
 		if not lines.is_empty():
 			txt = String(lines[int(_dlg.get("turn", 0)) % lines.size()])
 	else:
-		# 身上挂着今日委托的发布者，第一句先说委托（接了/办完/交过口吻不同）
 		if int(_dlg.get("turn", 0)) == 0:
+			txt = String(_dlg.get("story_dialogue", ""))
+			if txt.is_empty() and bool((G.prog.get("flags", {}) as Dictionary).get("act1_stele_repaired", false)):
+				var method := String((G.prog.get("act1", {}) as Dictionary).get("repair_method", ""))
+				match String(_dlg.get("id", "")):
+					"npc_smith":
+						txt = "铁扣已锻稳，北路的碑名终于能看清了。" if method == "forge" else "青姨的拓片对上了，北路的碑名终于能看清了。"
+					"npc_scribe":
+						txt = "修碑时先留下拓片，图志阁如今多了一页。" if method == "scribe" else "修好的碑文送来一份摹本，图志阁如今多了一页。"
+		# 支线台词优先于每日委托与闲聊（P05-B）：接取/交付当次 → 该 NPC 的支线态台词
+		if txt == "" and int(_dlg.get("turn", 0)) == 0:
+			txt = String(_dlg.get("side_line", ""))
+		# P05-C：闻叔首胜后的新台词（世界旗 act1_lost_beast_down 同步变化）。
+		# 排在支线当次台词之后：交付那一句该说 ready_dialogue，不抢它的位置。
+		if txt == "" and int(_dlg.get("turn", 0)) == 0 \
+				and String(_dlg.get("id", "")) == "npc_steward" \
+				and bool((G.prog.get("flags", {}) as Dictionary).get("act1_lost_beast_down", false)):
+			txt = "路西的兽影散了——碑坡那边的路，如今走得安心。"
+		if txt == "":
+			txt = G.side_npc_line(String(_dlg.get("id", "")))
+		if txt == "" and int(_dlg.get("turn", 0)) == 0 \
+				and bool((G.prog.get("flags", {}) as Dictionary).get("act1_stele_repaired", false)):
+			var repair_method := String(G.act1_state().get("repair_method", ""))
+			match String(_dlg.get("id", "")):
+				"npc_steward":
+					txt = "石头锻稳了%s，北路供货终于能走直道。" % G.restored_stele_name() \
+						if repair_method == "forge" else "青姨拓出了%s旧文，商队照着路标绕开塌方。" % G.restored_stele_name()
+				"npc_warden":
+					txt = "锻合后坡口更稳，往北运货省了些脚力。" if repair_method == "forge" \
+						else "拓片标出了旧路，送往断碑坡的供货不再摸黑。"
+		# 身上挂着今日委托的发布者，第一句先说委托（接了/办完/交过口吻不同）
+		if txt == "" and int(_dlg.get("turn", 0)) == 0:
 			txt = G.npc_quest_line(String(_dlg.get("id", "")))
 		if txt == "":
 			txt = G.npc_line(String(_dlg.get("id", "")), int(_dlg.get("turn", 0)))
@@ -1061,7 +1784,7 @@ func _open_worlds() -> void:
 	if _overlay != null:
 		return
 	Audio.sfx("ui_open")
-	var p := WorldPanel.new()
+	var p := RegionMapPanel.new()
 	_overlay = p
 	p.closed.connect(_close_overlay)
 	_hud.visible = false  # 全屏面板期间藏起城内 HUD，免得双层标题/摇杆穿帮
@@ -1142,7 +1865,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _overlay != null:
 		_close_overlay()
 	elif _panel != null:
-		_close_panel()
+		if _panel is TradePanel:
+			(_panel as TradePanel).close()
+		else:
+			_close_panel()
 	else:
 		_go_home()
 	if vp != null:
@@ -1214,7 +1940,7 @@ class _Building extends StaticBody2D:
 		add_child(shape)
 
 	func built() -> bool:
-		return G.is_built(String(data.get("id", "")))
+		return bool(data.get("port_built", false)) or G.is_built(String(data.get("id", "")))
 
 	## 玩家到建筑轮廓的距离（矩形外距；轮廓内为 0）
 	func dist_to(p: Vector2) -> float:
@@ -1235,7 +1961,7 @@ class _Building extends StaticBody2D:
 	## 免得贴图比程序绘制高时，装饰还按老高度摆就被楼顶顶穿。
 	func _art_top() -> float:
 		if art != null:
-			return ART_BOTTOM - ART_H
+			return ART_BOTTOM - float(data.get("art_visible_height", 192.0)) * ART_SCALE
 		return -_h * 0.5
 
 	func _draw() -> void:
@@ -1282,21 +2008,22 @@ class _Building extends StaticBody2D:
 			Color(1.0, 1.0, 1.0, 0.92))
 
 
-	## 木牌：名字 (+ 状态)
+	## 木牌：名字 (+ 状态)。P01 样板 §5：最小可读字号为 FS_XS(13)，
+	## 状态行原来画 10px（低于任何一档），牌高与行距随之加高。
 	func _plaque(txt: String, sub: String, y: float) -> void:
 		var pw := 76.0
 		var ph := 18.0
 		if sub != "":
-			ph = 30.0
+			ph = 34.0
 		draw_rect(Rect2(-pw / 2, y, pw, ph), Color("e8d5a3"))
 		draw_rect(Rect2(-pw / 2, y, pw, ph), Color("8a6220"), false, 1.5)
-		var ts := G.font_bold.get_string_size(txt, HORIZONTAL_ALIGNMENT_CENTER, -1, 13)
+		var ts := G.font_bold.get_string_size(txt, HORIZONTAL_ALIGNMENT_CENTER, -1, G.FS_XS)
 		draw_string(G.font_bold, Vector2(-ts.x / 2, y + 14), txt,
-			HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color("3a2a14"))
+			HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS, Color("3a2a14"))
 		if sub != "":
-			var ss := G.font_reg.get_string_size(sub, HORIZONTAL_ALIGNMENT_CENTER, -1, 10)
-			draw_string(G.font_reg, Vector2(-ss.x / 2, y + 26), sub,
-				HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color("8a4a2a"))
+			var ss := G.font_reg.get_string_size(sub, HORIZONTAL_ALIGNMENT_CENTER, -1, G.FS_XS)
+			draw_string(G.font_reg, Vector2(-ss.x / 2, y + 30), sub,
+				HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS, Color("8a4a2a"))
 
 	func _draw_plot() -> void:
 		var w := _w
@@ -1364,8 +2091,31 @@ class _Building extends StaticBody2D:
 				_draw_shrine()
 			"forge":
 				_draw_forge()
+			"port_market":
+				_draw_port_market()
 			_:
 				_draw_hall()
+
+	func _draw_port_market() -> void:
+		var w := _w
+		var h := _h
+		var top := -h * 0.5
+		var bottom := h * 0.5
+		# 栈桥市集使用横向布棚、布条与货箱，避免借用校场圆环。
+		draw_rect(Rect2(-w * 0.46, top + 32, w * 0.92, h - 42), Color("795c43"))
+		for px in [-w * 0.37, w * 0.37]:
+			draw_line(Vector2(px, top + 22), Vector2(px, bottom - 8), Color("4e392c"), 7)
+		draw_colored_polygon(PackedVector2Array([
+			Vector2(-w * 0.55, top + 25), Vector2(w * 0.55, top + 25),
+			Vector2(w * 0.40, top - 5), Vector2(-w * 0.40, top - 5)]), Color("6b8d86"))
+		for stripe in [-2, -1, 0, 1, 2]:
+			var sx := float(stripe) * w * 0.19
+			draw_line(Vector2(sx, top + 25), Vector2(sx * 0.73, top - 3),
+				Color("d7c69e", 0.65), 3)
+		for px in [-w * 0.26, 0.0, w * 0.26]:
+			draw_rect(Rect2(px - 15, bottom - 42, 30, 24), Color("aa8457"))
+			draw_rect(Rect2(px - 15, bottom - 42, 30, 4), Color("d3b17b"))
+		_plaque(String(data.get("name", "市集")), "", top - 22)
 
 	# 成品贴图：统一 0.75 倍、水平居中、底缘对齐 ART_BOTTOM（踩住落地影）。
 	# 贴图自带完整的台基与台阶，所以不再叠程序绘制的石台，免得两层台基打架。
@@ -1374,7 +2124,7 @@ class _Building extends StaticBody2D:
 		var top := ART_BOTTOM - ART_H
 		draw_texture_rect(art, Rect2(left, top, ART_W, ART_H), false)
 		# 名牌移到楼顶之上：贴图本身细节很密，压在上面会糊掉
-		_plaque(String(data.get("name", "")), "", top - 20.0)
+		_plaque(String(data.get("name", "")), "", _art_top() - 20.0)
 
 	# 议事厅：石阶高台 + 四柱 + 大屋顶 + 门前布告板
 	func _draw_hall() -> void:
@@ -1626,10 +2376,11 @@ class _CityNPC extends Node2D:
 		# 名牌高度随形象变：像素小人身高 80（含头）→ -108；立绘 104 → -114；色块小人 → -52
 		_plate_top = -108.0 if frames != null else (-114.0 if art != null else -52.0)
 		_plate_w = clampf(G.font_bold.get_string_size(txt,
-			HORIZONTAL_ALIGNMENT_LEFT, -1, 14).x + 16.0, 76.0, 156.0) \
+			HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_SM).x + 16.0, 76.0, 156.0) \
 			if embedded else 160.0
-		_plate_h = 20.0 if embedded else 18.0
-		_name_l = G.gold_label(txt, 14 if embedded else G.FS_XS,
+		_plate_h = 22.0 if embedded else 18.0
+		# 字号收进六档（P01 样板 §5）：主世界里的城务 NPC 名签原来是不在档里的字面量 14
+		_name_l = G.gold_label(txt, G.FS_SM if embedded else G.FS_XS,
 			embedded, Color("fff5df"), false)
 		_name_l.position = Vector2(-_plate_w * 0.5, _plate_top + 2)
 		_name_l.custom_minimum_size = Vector2(_plate_w, 0)

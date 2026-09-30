@@ -66,7 +66,7 @@ const FS_HERO := 56  # 主界面大标题
 # 按钮三档：主操作 / 次操作 / 返回关闭；页面里能用的就这三种高度，不再各自为政
 const BTN_L := Vector2(190, 52)   # 主操作：开始切磋 / 登录 / 确认
 const BTN_M := Vector2(148, 44)   # 次操作：换对手 / 切换 / 上传
-const BTN_S := Vector2(120, 38)   # 返回 / 关闭
+const BTN_S := Vector2(120, 44)   # 返回 / 关闭（P01 样板 §4：次级按钮高度不低于 44 触控下限）
 const ICON_RAIL := 36.0           # 主页圆形入口图标（圆底 60）
 const ICON_WALLET := 18.0         # 资源栏图标
 const ICON_MARK := 28.0           # 建筑/卡片角标图标
@@ -82,10 +82,8 @@ var player_name := ""       # 玩家起的名字
 var roles: Array = []       # data/roles.json 内容
 
 
-## 界面显示本次登录输入的账号；游客沿用创角昵称。
+## 人物名始终取创角昵称；登录账号只用于本地存档识别。
 func display_name() -> String:
-	if not account.strip_edges().is_empty() and account != "游客":
-		return account.strip_edges()
 	if not player_name.strip_edges().is_empty():
 		return player_name.strip_edges()
 	return "旅人"
@@ -115,10 +113,19 @@ const ITEM_NAMES := {
 	"enhance_stone": "强化石", "refine_stone": "精炼石", "lock_rune": "锁定符",
 	"pet_food": "宠物粮", "break_crystal": "突破晶", "aptitude_fruit": "资质果",
 	"evolve_crystal": "进化晶石",
+	"stele_fragment": "失声碑文",
+	"salt_ledger": "盐车账页",
+	"gate_clue": "闸门线索", "tide_core": "潮蚀闸芯",
+	"tide_egg": "潮纹蛋",
+	"fish_salt": "盐泉鲫", "fish_port": "港湾银鳞", "fish_tide": "潮纹鳞",
+	"wind_chime": "旧风铃", "salt_pack": "封好的盐包",
+	"trade_grain": "谷物", "trade_salt": "盐", "trade_herb": "药草", "trade_iron": "铁料",
 }
 
 
 func item_name(id: String) -> String:
+	if id.begins_with("gem_"):
+		return gem_label(id)
 	return String(ITEM_NAMES.get(id, id))
 
 
@@ -127,9 +134,10 @@ func item_count(id: String) -> int:
 
 
 ## 发放道具（数量下限 0）
-func grant_item(id: String, n: int) -> void:
+func grant_item(id: String, n: int, persist := true) -> void:
 	items[id] = maxi(0, item_count(id) + n)
-	save_game()
+	if persist:
+		save_game()
 
 
 ## 消耗道具：不足则不动并返回 false
@@ -175,8 +183,13 @@ var prog := {
 	"exp": 0,                   # 当前等级已积累经验
 	"worlds_unlocked": 1,       # 已解锁世界数（按 maps.json theme_order 顺序推进）
 	"world_cleared": {},        # theme_id -> true（已通关该世界）
-	"pets": ["pet_rockturtle"], # 已收集宠物 id（初始伙伴：岩龟）
+	"pets": [],                 # 已收集宠物 id；岩龟在第一幕 s04 后于兽栏领取
 	"main_world": {"map_id": "lorin_wilds"},
+	"story": {"step": "s01", "done": [], "goals": {}},
+	"ledger": {"applied": []},  # P02：已结算事务 ID（同一事务只落地一次）
+	"flags": {},                # P02：世界旗标（事务副作用）
+	"inventory": {"instances": [], "pending": [], "next_uid": 1},  # P04：装备实例拥有池 + 待领取箱
+	"economy": {},            # P06：游戏日、现货余量、价格历史与订单
 }
 
 # ---------- 主城（据点）状态（跨局持久）----------
@@ -326,17 +339,33 @@ func json_parse_silent(text: String) -> Variant:
 ## 版本闸门 / 逐版迁移 / 语义校验都收在 SaveData（问题 #39）；未来时间水位也在那里判（#24）。
 ## 未来版本的档不能"只用默认值顶着"——那等于静默覆盖玩家进度，所以先备份原档再按兼容方式读。
 func _load_save() -> void:
-	var f := FileAccess.open(SAVE_PATH, FileAccess.READ)
-	if f == null:
-		return
-	var text := f.get_as_text()
-	f.close()
-	var parsed: Variant = json_parse_silent(text)
-	if not (parsed is Dictionary):
-		push_warning("存档解析失败，沿用默认状态")
-		return
 	var now := int(Time.get_unix_time_from_system())
-	var res := SaveData.load_payload(parsed as Dictionary, now)
+	# R-04：启动恢复不只认主档 —— 上次写盘若在替换中途被打断（留下 .tmp/.prev）或主档丢失，
+	# 就从这些残档 / 最近备份里挑一份有效档读回来。**主档缺失不等于新档**：
+	# 只有主档与所有恢复源都不可用时才算新档，否则玩家会在一次崩溃后被静默清空进度。
+	var pick := SaveData.pick_readable(SAVE_PATH, now)
+	var source := String(pick.get("source", "none"))
+	if source == "none":
+		return
+	if source == "unreadable":
+		# 主档在，但连 JSON 都解析不了：不改写内存、不锁写（保持"坏档不静默覆盖玩家真档"的既有语义），
+		# 把判断权交回玩家 / 工具。
+		push_warning("存档解析失败，沿用默认状态（原档保持不动）")
+		return
+	if source != "main":
+		# 从残档 / 备份恢复：把内容写回主档，让"主档缺失"被真正修好，而不是每次启动都从备份捞。
+		# 写不回也不阻断本次读取（内存里仍用恢复出来的那份）。
+		var rp := String(pick.get("path", ""))
+		var rf := FileAccess.open(rp, FileAccess.READ)
+		if rf != null:
+			var rtext := rf.get_as_text()
+			rf.close()
+			var wres := SaveData.save_text(SAVE_PATH, rtext, now, false)
+			if bool(wres.get("ok", false)):
+				push_warning("存档主档缺失/损坏，已从 %s 恢复（%s）" % [source, rp])
+			else:
+				push_warning("从 %s 恢复存档失败：%s" % [source, String(wres.get("err", ""))])
+	var res: Dictionary = pick.get("res", {})
 	last_load_report = res
 	if not bool(res.get("ok", false)):
 		# 非法档同样要留备份（A7）：以前只有 future 档备份，钱包为负 / 时间水位超前被判非法时
@@ -399,7 +428,28 @@ func _load_save() -> void:
 		var wc: Variant = pd.get("world_cleared", {})
 		prog["world_cleared"] = wc if wc is Dictionary else {}
 		var mw: Variant = pd.get("main_world", {})
-		prog["main_world"] = mw if mw is Dictionary else {"map_id": "lorin_wilds"}
+		prog["main_world"] = WorldSession.normalize_state(
+			mw if mw is Dictionary else {"map_id": "lorin_wilds"})
+		var story: Variant = pd.get("story", {})
+		prog["story"] = QuestService.normalize_state(
+			story if story is Dictionary else {"step": "s01", "done": [], "goals": {}})
+		var lg: Variant = pd.get("ledger", {})
+		prog["ledger"] = RewardLedger.ensure(lg if lg is Dictionary else {"applied": []})
+		var flg: Variant = pd.get("flags", {})
+		prog["flags"] = flg if flg is Dictionary else {}
+		# P05：第一幕状态（repair_method / side_quests / tracked / discoveries / first_kills）。
+		# 读档白名单此前漏了 act1，会让修碑选择与支线进度在读档后静默丢失——这里补上，
+		# 缺键由 act1_state() 懒归一兜底（不预写默认，避免把"没做过"写成"做过了"）。
+		var a1: Variant = pd.get("act1", {})
+		prog["act1"] = a1 if a1 is Dictionary else {}
+		var ec: Variant = pd.get("economy", {})
+		prog["economy"] = EconomyService.ensure(ec if ec is Dictionary else {},
+			TableCache.economy_config())
+		var fishing: Variant = pd.get("fishing", {})
+		prog["fishing"] = fishing if fishing is Dictionary else {}
+		# P04：装备实例拥有池（SaveData 的 v5 迁移已补齐，这里再兜一层）
+		var invv: Variant = pd.get("inventory", {})
+		prog["inventory"] = Inventory.ensure(invv if invv is Dictionary else {})
 		var ps: Variant = pd.get("pets", [])
 		prog["pets"] = ps if ps is Array else []
 		# 养成 6 线字段（老存档缺省补默认，向后兼容）
@@ -434,6 +484,7 @@ func _load_save() -> void:
 		# 保底迁移（items.gacha_pity → prog.gacha.pity）已收进 SaveData 的 v2→v3 步骤与归一化，
 		# 不再散落在读档赋值之间（问题 #39：迁移要有版本边界、要幂等）。
 		ensure_starter_pets()
+		ensure_starter_equip()
 	var c: Variant = data.get("city", {})
 	if c is Dictionary:
 		var cd := c as Dictionary
@@ -473,6 +524,10 @@ func _init_state_defaults() -> void:
 	items = {"ticket_ten": 0, "ticket_sweep": 1}
 	prog = {"level": 1, "exp": 0, "worlds_unlocked": 1, "world_cleared": {}, "pets": [],
 		"main_world": {"map_id": "lorin_wilds"},
+		"story": {"step": "s01", "done": [], "goals": {}},
+		"ledger": {"applied": []}, "flags": {},
+		"inventory": {"instances": [], "pending": [], "next_uid": 1},
+		"economy": {},
 		"talents": {}, "equip": {}, "skills": {}, "mounts": {"owned": {}, "active": ""},
 		"titles": {"owned": [], "active": ""}, "pet_stat": {}, "tips_seen": {},
 		"lore_seen": false, "lore_beats": {}, "settings": {}, "last_ts": 0,
@@ -502,13 +557,19 @@ func reload_save() -> bool:
 
 
 ## 存档：钱包四币 + 养成进度 + 角色档案（远征结算入账 / 主城关键节点时写）
-func save_game() -> void:
+##
+## R-04：写入统一走 SaveData.save_text（临时文件 + 回读校验 + 滚动备份 + 就地替换 + 失败回滚），
+## 不再直接 FileAccess.open(WRITE) 覆盖唯一档。返回是否真的落到盘上 ——
+## 调用方（结算 / 领取等）据此决定要不要向玩家显示"已入袋 / 已领取"。
+func save_game() -> bool:
 	# 读档被判非法期间禁止写盘：内存是默认态，写下去就是覆盖玩家真档（A7）。
 	# 不静默跳过——必须 push_warning，否则坏档这件事没人知道。
 	if save_locked:
 		push_warning("存档处于锁定状态，本次写盘已跳过（原因：%s；备份：%s）"
 			% [save_lock_reason, save_backup_path])
-		return
+		return false
+	# v6 新档在尚未进入市集时也必须写出完整经济结构。
+	economy_state()
 	var data := {
 		"version": SAVE_VERSION,
 		"wallet": {
@@ -531,12 +592,12 @@ func save_game() -> void:
 		"player_name": player_name,
 		"selected_role": selected_role,
 	}
-	var f := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
-	if f == null:
-		push_error("存档写入失败：" + SAVE_PATH)
-		return
-	f.store_string(JSON.stringify(data, "\t"))
-	f.close()
+	var res := SaveData.save_text(SAVE_PATH, JSON.stringify(data, "\t"),
+		int(Time.get_unix_time_from_system()))
+	if not bool(res.get("ok", false)):
+		push_error("存档写入失败：%s（%s）" % [SAVE_PATH, String(res.get("err", ""))])
+		return false
+	return true
 
 
 # ---------- 出征补给（轮次 21）：出征前花金币加带药剂 ----------
@@ -617,14 +678,15 @@ func exp_to_next(level: int) -> int:
 
 
 ## 加经验并逐级结算，返回本次提升的级数
-func gain_exp(amount: int) -> int:
+func gain_exp(amount: int, persist := true) -> int:
 	if amount <= 0:
 		return 0
 	var cap := level_cap()
 	if int(prog.get("level", 1)) >= cap:
 		prog["level"] = cap
 		prog["exp"] = 0
-		save_game()
+		if persist:
+			save_game()
 		return 0
 	prog["exp"] = int(prog.get("exp", 0)) + amount
 	var ups := 0
@@ -640,8 +702,1030 @@ func gain_exp(amount: int) -> int:
 		prog["exp"] = 0
 	if ups > 0:
 		_sfx("level_up", 0.0)   # 升级音不抖音高：这是"仪式"，不是随机反馈
-	save_game()
+	if persist:
+		save_game()
 	return ups
+
+
+## 首章目标由事件驱动，任务 ID 固定写档。状态与奖励在同一次写盘中提交。
+func story_current() -> Dictionary:
+	var state := normalize_story_state()
+	var step := String(state.get("step", "s01"))
+	if step.is_empty():
+		return {}
+	var rows: Variant = TableCache.story_quests_config().get("steps", [])
+	if rows is Array:
+		for row_v in rows:
+			if row_v is Dictionary and String((row_v as Dictionary).get("id", "")) == step:
+				return (row_v as Dictionary).duplicate(true)
+	return {}
+
+
+func story_goal_short() -> String:
+	var row := story_current()
+	if row.is_empty():
+		if story_step_done("s20"):
+			return "第二幕潮闸已开 · 自由探索"
+		return "边城失声已平息 · 自由探索"
+	return "主线 · %s" % String(row.get("goal", ""))
+
+
+func story_step_done(step_id: String) -> bool:
+	var state: Variant = prog.get("story", {})
+	return state is Dictionary and step_id in (state as Dictionary).get("done", [])
+
+
+## 奖励账本（P02）：prog.ledger.applied 记录已落地的事务 ID，同一事务只发一次。
+func ledger() -> Dictionary:
+	# 注意用 .get 不带缺省值：拿临时容器再写，记录会落进临时对象里丢掉
+	var l: Variant = prog.get("ledger")
+	if not (l is Dictionary):
+		l = {"applied": []}
+		prog["ledger"] = l
+	return RewardLedger.ensure(l as Dictionary)
+
+
+## 主线状态归一（P02）：保证 step/done/goals 三件套存在，旧档 done[] 补成 goals。
+func normalize_story_state() -> Dictionary:
+	var s: Variant = prog.get("story")
+	if not (s is Dictionary):
+		s = {"step": "s01", "done": [], "goals": {}}
+		prog["story"] = s
+	var state := QuestService.normalize_state(s as Dictionary)
+	# 第一幕完结时旧版本把 step 写成空串。只迁移已完成 s12 的档，
+	# 不重放复命事件，也不碰奖励账本、位置或其他养成状态。
+	if String(state.get("step", "")) == "":
+		var done: Array = state.get("done", [])
+		if done.has("s16") and not done.has("s17"):
+			state["step"] = "s17"
+		elif done.has("s12") and not done.has("s13"):
+			state["step"] = "s13"
+	return state
+
+
+func story_event(kind: String, target: String, map_id: String, persist := true,
+		payload := {}) -> Dictionary:
+	if save_locked:
+		return {}
+	var event := QuestService.world_event(kind, target, map_id,
+		selected_role if not selected_role.is_empty() else "player", payload)
+	var rows: Variant = TableCache.story_quests_config().get("steps", [])
+	var plan := QuestService.plan(normalize_story_state(),
+		rows if rows is Array else [], event, items)
+	if not bool(plan.get("ok", false)):
+		return {}
+	var step_id := String(plan.get("step_id", ""))
+	var row: Dictionary = plan.get("step", {})
+	var reward: Dictionary = plan.get("reward", {})
+	# 一次事务：需要就扣任务物，奖励走账本去重；状态推进与发放同一次写盘
+	var costs := {}
+	var consume := String(plan.get("consume_item", ""))
+	if not consume.is_empty():
+		costs["item:%s" % consume] = 1
+	var extra_costs: Dictionary = plan.get("extra_costs", {})
+	for key in extra_costs:
+		costs[String(key)] = int(costs.get(String(key), 0)) + int(extra_costs[key])
+	var grants := {
+		"gold": maxi(0, int(reward.get("gold", 0))),
+		"exp": maxi(0, int(reward.get("exp", 0))),
+	}
+	var reward_item := String(reward.get("item", ""))
+	if not reward_item.is_empty():
+		grants["item:%s" % reward_item] = maxi(1, int(reward.get("count", 1)))
+	var choice := String(plan.get("choice", ""))
+	var flags := {}
+	if step_id == "s11" and not choice.is_empty():
+		flags = {"act1_stele_repaired": true, "act1_route_open": true,
+			"act1_repair_method": choice}
+	elif step_id == "s20" and not choice.is_empty():
+		flags = {"act2_tide_gate_open": true, "act2_port_choice": choice}
+	var tx := RewardLedger.make(RewardLedger.tx_id("story", step_id,
+		String(event.get("event_id", ""))), costs, grants, flags)
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var before_items := items.duplicate(true)
+	var res := RewardLedger.apply(tx, ledger(), self)
+	if not bool(res.get("ok", false)):
+		push_warning("主线结算未落地：%s" % String(res.get("err", "")))
+		return {}
+	prog["story"] = plan.get("next_state", {})
+	if step_id == "s20" and not choice.is_empty():
+		economy_state()["port_event"] = choice
+	if step_id == "s11" and not choice.is_empty():
+		var act1: Dictionary = prog.get("act1", {})
+		act1["repair_method"] = choice
+		prog["act1"] = act1
+	if persist:
+		if not save_game():
+			prog = before_prog
+			wallet = before_wallet
+			items = before_items
+			return {}
+	return {"id": step_id, "title": String(row.get("title", "")), "reward": reward,
+		"next_goal": story_goal_short()}
+
+
+# ---------- 第一幕支线（P05-B） ----------
+#
+# 状态在 prog.act1（side_quests / tracked / discoveries / first_kills），规则与纯逻辑在
+# QuestService.side_*，这里只做胶水：存档（含写盘失败回滚）、物品发放/消耗与 UI 文案。
+# 奖励一律走 RewardLedger（tx = side|<qid>|complete）——重复交付不会再发第二次。
+# 共同规则（P05 设计 §4）：目标发生在接取前不计数；同一时间只追踪 1 条；完成后可补做。
+
+## 支线全表（data/side_quests.json）。
+func side_quest_rows() -> Array:
+	var rows: Variant = TableCache.side_quests_config().get("quests", [])
+	return rows if rows is Array else []
+
+
+## 当前可玩（live）的支线行：a1_elite_beast 要等 P05-C 失路兽落地后才开门，
+## 所有入口（接取／NPC 交互／实体生成）统一走这里，避免开出做不了的任务。
+func _side_live_rows() -> Array:
+	var out: Array = []
+	for row_v in side_quest_rows():
+		if row_v is Dictionary and bool((row_v as Dictionary).get("live", true)):
+			var prerequisite := String((row_v as Dictionary).get("requires_story", ""))
+			if not prerequisite.is_empty() and not story_step_done(prerequisite):
+				continue
+			out.append(row_v)
+	return out
+
+
+## prog.act1 归一（幂等，只补缺键）：side_quests / tracked / discoveries / first_kills。
+## 旧档没有这些键时补空结构；不重写 repair_method 等既有内容。
+func act1_state() -> Dictionary:
+	var a: Variant = prog.get("act1")
+	if not (a is Dictionary):
+		a = {}
+		prog["act1"] = a
+	var act1 := a as Dictionary
+	if not (act1.get("side_quests") is Dictionary):
+		act1["side_quests"] = {}
+	if not (act1.get("discoveries") is Array):
+		act1["discoveries"] = []
+	if not (act1.get("first_kills") is Array):
+		act1["first_kills"] = []
+	if not act1.has("tracked"):
+		act1["tracked"] = ""
+	return act1
+
+
+# ---------- P05-D：导师第二技能与第一专精 ----------
+
+func mentor_cfg() -> Dictionary:
+	var v: Variant = TableCache.act1_growth_config().get("mentor", {})
+	return v if v is Dictionary else {}
+
+
+func mentor_role_cfg(role_id := "") -> Dictionary:
+	var rid := role_id if not role_id.is_empty() else selected_role
+	var roles_v: Variant = mentor_cfg().get("roles", {})
+	if not (roles_v is Dictionary):
+		return {}
+	var row: Variant = (roles_v as Dictionary).get(rid, {})
+	return row if row is Dictionary else {}
+
+
+func mentor_second_skill(role_id := "") -> String:
+	return String(mentor_role_cfg(role_id).get("skill", ""))
+
+
+func mentor_state() -> Dictionary:
+	var a := act1_state()
+	var v: Variant = a.get("mentor")
+	if not (v is Dictionary):
+		v = {"unlocked": [], "mastery": {}, "variants": {}}
+		a["mentor"] = v
+	var m := v as Dictionary
+	if not (m.get("unlocked") is Array):
+		m["unlocked"] = []
+	if not (m.get("mastery") is Dictionary):
+		m["mastery"] = {}
+	if not (m.get("variants") is Dictionary):
+		m["variants"] = {}
+	return m
+
+
+func mentor_status(role_id := "") -> String:
+	var rid := role_id if not role_id.is_empty() else selected_role
+	var sid := mentor_second_skill(rid)
+	if sid.is_empty():
+		return "unavailable"
+	var unlock_after := String(mentor_cfg().get("unlock_after", "s03"))
+	if not story_step_done(unlock_after):
+		return "locked"
+	var m := mentor_state()
+	if not (m["unlocked"] as Array).has(sid):
+		return "ready"
+	var need := maxi(1, int(mentor_cfg().get("mastery_target", 1)))
+	if int((m["mastery"] as Dictionary).get(sid, 0)) < need:
+		return "practice"
+	if String((m["variants"] as Dictionary).get(sid, "")).is_empty():
+		return "choose"
+	return "chosen"
+
+
+## 主世界技能槽：第一式默认可用；导师领取后加入第二式。未传该字段的历练／演武仍保留五技。
+func act1_unlocked_skills(role_id := "") -> Array:
+	var rid := role_id if not role_id.is_empty() else selected_role
+	var role := get_role(rid)
+	var all: Array = role.get("skills", [])
+	if all.is_empty():
+		return []
+	var out: Array = [String(all[0])]
+	var sid := mentor_second_skill(rid)
+	if not sid.is_empty() and (mentor_state()["unlocked"] as Array).has(sid):
+		out.append(sid)
+	return out
+
+
+func act1_skill_variants(role_id := "") -> Dictionary:
+	var sid := mentor_second_skill(role_id)
+	if sid.is_empty():
+		return {}
+	var choice := String((mentor_state()["variants"] as Dictionary).get(sid, ""))
+	if choice.is_empty():
+		return {}
+	var variants_v: Variant = mentor_role_cfg(role_id).get("variants", {})
+	if not (variants_v is Dictionary):
+		return {}
+	var mod_v: Variant = (variants_v as Dictionary).get(choice, {})
+	return {sid: (mod_v as Dictionary).duplicate(true)} if mod_v is Dictionary else {}
+
+
+func mentor_unlock_second(persist := true) -> Dictionary:
+	if save_locked or mentor_status() != "ready":
+		return {"ok": false, "reason": mentor_status()}
+	var sid := mentor_second_skill()
+	var before := prog.duplicate(true)
+	(mentor_state()["unlocked"] as Array).append(sid)
+	if persist and not save_game():
+		prog = before
+		return {"ok": false, "reason": "save_failed"}
+	return {"ok": true, "skill": sid, "name": String(TableCache.get_skill(sid).get("name", sid))}
+
+
+## 一场战斗同一技能只上报一次；只有 SkillSystem 发出的 skill_effective 才会进入这里，空放不刷。
+func mentor_report_effective(skill_ids: Array, persist := true) -> Array:
+	var messages: Array = []
+	var sid := mentor_second_skill()
+	if sid.is_empty() or not skill_ids.has(sid):
+		return messages
+	var m := mentor_state()
+	if not (m["unlocked"] as Array).has(sid):
+		return messages
+	var mastery := m["mastery"] as Dictionary
+	var need := maxi(1, int(mentor_cfg().get("mastery_target", 1)))
+	var old := int(mastery.get(sid, 0))
+	if old >= need:
+		return messages
+	var before := prog.duplicate(true)
+	var now := mini(need, old + 1)
+	mastery[sid] = now
+	if persist and not save_game():
+		prog = before
+		return []
+	messages.append("熟练 · %s %d/%d" % [String(TableCache.get_skill(sid).get("name", sid)), now, need])
+	if now >= need:
+		messages.append("可回城找岳教头选择招式分支")
+	return messages
+
+
+func mentor_choose_variant(choice: String, persist := true) -> Dictionary:
+	if save_locked or mentor_status() != "choose":
+		return {"ok": false, "reason": mentor_status()}
+	var sid := mentor_second_skill()
+	var variants_v: Variant = mentor_role_cfg().get("variants", {})
+	if not (variants_v is Dictionary) or not (variants_v as Dictionary).has(choice):
+		return {"ok": false, "reason": "invalid_choice"}
+	var before := prog.duplicate(true)
+	(mentor_state()["variants"] as Dictionary)[sid] = choice
+	if persist and not save_game():
+		prog = before
+		return {"ok": false, "reason": "save_failed"}
+	var row := (variants_v as Dictionary)[choice] as Dictionary
+	return {"ok": true, "skill": sid, "choice": choice,
+		"name": String(row.get("name", choice)), "desc": String(row.get("desc", ""))}
+
+
+func mentor_reset_variant(persist := true) -> Dictionary:
+	if save_locked or mentor_status() != "chosen":
+		return {"ok": false, "reason": mentor_status()}
+	var cost := maxi(0, int(mentor_cfg().get("reset_cost_gold", 120)))
+	if int(wallet.get("gold", 0)) < cost:
+		return {"ok": false, "reason": "gold"}
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	wallet["gold"] = int(wallet.get("gold", 0)) - cost
+	(mentor_state()["variants"] as Dictionary).erase(mentor_second_skill())
+	if persist and not save_game():
+		prog = before_prog
+		wallet = before_wallet
+		return {"ok": false, "reason": "save_failed"}
+	return {"ok": true, "cost": cost}
+
+
+func side_status_of(qid: String) -> String:
+	return QuestService.side_status(act1_state(), qid)
+
+
+## 第一幕商路报价是只读预览：由已交付的送盐支线与修碑方式派生，
+## 不另存一份价格状态，读档后始终与实际世界旗一致。
+func first_order_preview() -> Dictionary:
+	var cfg: Dictionary = TableCache.act1_orders_config().get("first_route", {})
+	if cfg.is_empty():
+		return {}
+	var out := cfg.duplicate(true)
+	var qid := String(cfg.get("unlock_side_quest", ""))
+	var unlocked := side_status_of(qid) == QuestService.SIDE_DONE
+	out["unlocked"] = unlocked
+	var method := String(act1_state().get("repair_method", ""))
+	var quotes: Dictionary = cfg.get("repair_quotes", {})
+	out["quote_gold"] = int(quotes.get(method, cfg.get("base_quote_gold", 0)))
+	out["route_state"] = "blocked" if not unlocked else ("repaired" if quotes.has(method) else "open")
+	out["note"] = String(cfg.get("blocked_note", "")) if not unlocked else \
+		String(cfg.get("%s_note" % method, cfg.get("open_note", "")))
+	return out
+
+
+## P06 单机现货：每笔交易只修改本地档。游戏日与价格从存档状态重现，不看现实零点。
+func economy_state() -> Dictionary:
+	var current: Variant = prog.get("economy", {})
+	if current is Dictionary:
+		var existing := current as Dictionary
+		if existing.has("seed") and existing.has("day") and existing.has("next_tx") \
+				and existing.has("bought") and existing.has("sold") and existing.has("history") \
+			and existing.has("orders") and existing.has("work"):
+			return existing
+	var state := EconomyService.ensure(current if current is Dictionary else {},
+		TableCache.economy_config())
+	prog["economy"] = state
+	return state
+
+
+func economy_quote(site_id: String, good_id: String) -> Dictionary:
+	var cfg := TableCache.economy_config()
+	var state := economy_state()
+	var repair := String(act1_state().get("repair_method", ""))
+	var out := EconomyService.quote(cfg, state, site_id, good_id, repair)
+	if not out.is_empty():
+		out["held"] = item_count(good_id)
+		out["carried_weight"] = EconomyService.carried_weight(cfg, items)
+		out["carry_limit"] = int(cfg.get("carry_limit", 28))
+	return out
+
+
+## {ok, err, action, quantity, total_gold, transaction_id}；失败内存/存档零副作用。
+func economy_trade(site_id: String, good_id: String, action: String, quantity: int) -> Dictionary:
+	if save_locked:
+		return {"ok": false, "err": "存档暂不可写"}
+	if action not in ["buy", "sell"] or quantity < 1 or quantity > 20:
+		return {"ok": false, "err": "交易数量须为 1–20"}
+	var cfg := TableCache.economy_config()
+	var quote := economy_quote(site_id, good_id)
+	if quote.is_empty():
+		return {"ok": false, "err": "没有这个交易点或货品"}
+	if action == "buy" and quantity > int(quote["stock_left"]):
+		return {"ok": false, "err": "今日库存不足"}
+	if action == "sell" and quantity > int(quote["demand_left"]):
+		return {"ok": false, "err": "今日收购额度已满"}
+	if action == "buy" and int(quote["carried_weight"]) + quantity * int(quote["weight"]) \
+			> int(quote["carry_limit"]):
+		return {"ok": false, "err": "携带负担已满"}
+	var unit := int(quote["buy_gold"] if action == "buy" else quote["sell_gold"])
+	var total := unit * quantity
+	var costs := {"gold": total} if action == "buy" else {"item:%s" % good_id: quantity}
+	var grants := {"item:%s" % good_id: quantity} if action == "buy" else {"gold": total}
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var before_items := items.duplicate(true)
+	var state := economy_state()
+	var tid := RewardLedger.tx_id("spot", site_id, "%s:%s" % [action, good_id],
+		str(int(state.get("next_tx", 1))))
+	var applied := RewardLedger.apply(RewardLedger.make(tid, costs, grants, {}), ledger(), self)
+	if not bool(applied.get("applied", false)):
+		prog = before_prog
+		wallet = before_wallet
+		items = before_items
+		return {"ok": false, "err": String(applied.get("err", "交易未结算"))}
+	state["next_tx"] = int(state.get("next_tx", 1)) + 1
+	var bucket := "bought" if action == "buy" else "sold"
+	var counts: Dictionary = state[bucket]
+	var stock_key := EconomyService.key(site_id, good_id)
+	counts[stock_key] = int(counts.get(stock_key, 0)) + quantity
+	EconomyService.record_history(cfg, state,
+		String(act1_state().get("repair_method", "")))
+	if not save_game():
+		prog = before_prog
+		wallet = before_wallet
+		items = before_items
+		return {"ok": false, "err": "交易写盘失败，已回滚"}
+	return {"ok": true, "err": "", "action": action, "quantity": quantity,
+		"total_gold": total, "transaction_id": tid}
+
+
+## 在可走到的驿点歇脚推进游戏日；付费让行情轮换有真实成本。
+func economy_rest(site_id: String) -> Dictionary:
+	if save_locked or EconomyService.site(TableCache.economy_config(), site_id).is_empty():
+		return {"ok": false, "err": "当前不能歇脚"}
+	var cfg := TableCache.economy_config()
+	var fee := maxi(0, int(cfg.get("rest_gold", 22)))
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var before_items := items.duplicate(true)
+	var state := economy_state()
+	var tid := RewardLedger.tx_id("economy", "rest", site_id,
+		str(int(state.get("next_tx", 1))))
+	var applied := RewardLedger.apply(RewardLedger.make(tid, {"gold": fee}, {}, {}), ledger(), self)
+	if not bool(applied.get("applied", false)):
+		prog = before_prog
+		wallet = before_wallet
+		items = before_items
+		return {"ok": false, "err": String(applied.get("err", "歇脚未结算"))}
+	state["next_tx"] = int(state.get("next_tx", 1)) + 1
+	var day := EconomyService.advance_day(cfg, state,
+		String(act1_state().get("repair_method", "")))
+	if not save_game():
+		prog = before_prog
+		wallet = before_wallet
+		items = before_items
+		return {"ok": false, "err": "歇脚写盘失败，已回滚"}
+	return {"ok": true, "day": day, "fee_gold": fee}
+
+
+## 工作每日每种只完成一次，收益低且稳定；事务 ID 含游戏日，读档不能重复领。
+func economy_work(site_id: String, job_id: String) -> Dictionary:
+	if save_locked:
+		return {"ok": false, "err": "存档暂不可写"}
+	var job := {}
+	for row_v in (TableCache.economy_config().get("jobs", []) as Array):
+		var row := row_v as Dictionary
+		if String(row.get("id", "")) == job_id and String(row.get("site_id", "")) == site_id:
+			job = row
+			break
+	if job.is_empty():
+		return {"ok": false, "err": "这里没有这份工作"}
+	var state := economy_state()
+	var day := int(state.get("day", 1))
+	var work: Dictionary = state.get("work", {})
+	if int(work.get(job_id, 0)) >= day:
+		return {"ok": false, "err": "今天这份工作已经做过"}
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var tid := RewardLedger.tx_id("work", site_id, job_id, str(day))
+	var grant := {"gold": int(job.get("gold", 0)), "exp": int(job.get("exp", 0))}
+	var applied := RewardLedger.apply(RewardLedger.make(tid, {}, grant, {}), ledger(), self)
+	if not bool(applied.get("applied", false)):
+		prog = before_prog
+		wallet = before_wallet
+		return {"ok": false, "err": String(applied.get("err", "工作未结算"))}
+	work[job_id] = day
+	if not save_game():
+		prog = before_prog
+		wallet = before_wallet
+		return {"ok": false, "err": "工作写盘失败，已回滚"}
+	return {"ok": true, "gold": int(job.get("gold", 0)), "exp": int(job.get("exp", 0))}
+
+
+## 第一幕运路：货物由现货买入或其它玩法取得；订单只认实际携带数量。
+func economy_first_order() -> Dictionary:
+	var route := first_order_preview()
+	var config: Dictionary = TableCache.economy_config().get("first_order", {})
+	if route.is_empty() or config.is_empty():
+		return {}
+	var id := String(config.get("id", ""))
+	var state := economy_state()
+	var saved: Variant = (state.get("orders", {}) as Dictionary).get(id, {})
+	var record: Dictionary = saved if saved is Dictionary else {}
+	var status := String(record.get("status", "available"))
+	if not bool(route.get("unlocked", false)):
+		status = "locked"
+	elif status == "active" and int(state.get("day", 1)) > int(record.get("deadline_day", 0)):
+		status = "expired"
+	var cargo: Dictionary = config.get("cargo", {})
+	var purchase := 0
+	for gid in cargo:
+		var q := economy_quote(String(config.get("origin_site", "")), String(gid))
+		purchase += int(q.get("buy_gold", 0)) * int(cargo[gid])
+	# 接单瞬间锁定净报酬。修碑与行情随后变化时不追溯修改合同。
+	var freight := int(record.get("freight_gold", route.get("quote_gold", 0)))
+	var payout := int(record.get("payout_gold", maxi(0,
+		int(config.get("gross_reward_gold", 0)) - freight)))
+	return {"id": id, "name": String(route.get("name", "")), "status": status,
+		"origin_site": String(config.get("origin_site", "")),
+		"destination_site": String(config.get("destination_site", "")),
+		"cargo": cargo, "freight_gold": freight, "payout_gold": payout,
+		"purchase_gold": purchase, "expected_profit_gold": payout - purchase,
+		"reward_exp": int(config.get("reward_exp", 0)),
+		"day": int(state.get("day", 1)), "deadline_day": int(record.get("deadline_day", 0)),
+		"attempt": int(record.get("attempt", 0))}
+
+
+func economy_first_order_accept() -> Dictionary:
+	if save_locked:
+		return {"ok": false, "err": "存档暂不可写"}
+	var info := economy_first_order()
+	if String(info.get("status", "locked")) not in ["available", "expired"]:
+		return {"ok": false, "err": "这份订单目前不可接取"}
+	var before := prog.duplicate(true)
+	var state := economy_state()
+	var orders: Dictionary = state["orders"]
+	var id := String(info["id"])
+	var prior: Variant = orders.get(id, {})
+	var old: Dictionary = prior if prior is Dictionary else {}
+	var day := int(state["day"])
+	var deadline := day + int(TableCache.economy_config().get("first_order", {}).get("deadline_days", 3))
+	orders[id] = {"status": "active", "attempt": int(old.get("attempt", 0)) + 1,
+		"accepted_day": day, "deadline_day": deadline,
+		"freight_gold": int(info["freight_gold"]), "payout_gold": int(info["payout_gold"])}
+	if not save_game():
+		prog = before
+		return {"ok": false, "err": "接单写盘失败，已回滚"}
+	return {"ok": true, "deadline_day": deadline, "attempt": int((orders[id] as Dictionary)["attempt"])}
+
+
+func economy_first_order_deliver(site_id: String) -> Dictionary:
+	if save_locked:
+		return {"ok": false, "err": "存档暂不可写"}
+	var info := economy_first_order()
+	if site_id != String(info.get("destination_site", "")):
+		return {"ok": false, "err": "请到订单目的地交货"}
+	if String(info.get("status", "")) != "active":
+		return {"ok": false, "err": "订单未接取、已过期或已经完成"}
+	var costs := {}
+	for gid in (info.get("cargo", {}) as Dictionary):
+		costs["item:%s" % String(gid)] = int((info["cargo"] as Dictionary)[gid])
+	var grants := {"gold": int(info["payout_gold"]), "exp": int(info["reward_exp"])}
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var before_items := items.duplicate(true)
+	var tid := RewardLedger.tx_id("order", String(info["id"]), "complete",
+		str(int(info["attempt"])))
+	var applied := RewardLedger.apply(RewardLedger.make(tid, costs, grants,
+		{"act1_first_order_done": true}), ledger(), self)
+	if not bool(applied.get("applied", false)):
+		prog = before_prog
+		wallet = before_wallet
+		items = before_items
+		return {"ok": false, "err": String(applied.get("err", "订单未结算"))}
+	var state := economy_state()
+	var orders: Dictionary = state["orders"]
+	var record: Dictionary = orders[String(info["id"])]
+	record["status"] = "done"
+	record["completed_day"] = int(state.get("day", 1))
+	if not save_game():
+		prog = before_prog
+		wallet = before_wallet
+		items = before_items
+		return {"ok": false, "err": "交单写盘失败，已回滚"}
+	return {"ok": true, "gold": int(info["payout_gold"]), "exp": int(info["reward_exp"]),
+		"transaction_id": tid}
+
+
+## P07-D：现货备货 → 港口装船 → 下一游戏日领取。与 P06 共用实物和订单账本。
+func shipping_config(id: String) -> Dictionary:
+	for row in (TableCache.economy_config().get("shipping_orders", []) as Array):
+		if String((row as Dictionary).get("id", "")) == id:
+			return row as Dictionary
+	return {}
+
+
+func shipping_order(id: String) -> Dictionary:
+	var cfg := shipping_config(id)
+	if cfg.is_empty():
+		return {}
+	var state := economy_state()
+	var record: Dictionary = (state["orders"] as Dictionary).get(id, {})
+	var day := int(state["day"])
+	var status := String(record.get("status", "available"))
+	if not story_step_done(String(cfg.get("unlock_step", "s16"))):
+		status = "locked"
+	elif status == "active" and day > int(record.get("deadline_day", 0)):
+		status = "expired"
+	elif status == "transit" and day >= int(record.get("arrival_day", 0)):
+		status = "ready"
+	elif status == "done" and day > int(record.get("completed_day", 0)):
+		status = "available"
+	var event := String(state.get("port_event", ""))
+	var freight := maxi(0, int(cfg.get("freight_gold", 0))
+		+ int((cfg.get("event_freight", {}) as Dictionary).get(event, 0)))
+	var payout := maxi(0, int(cfg.get("gross_reward_gold", 0)) - freight)
+	if status in ["active", "transit", "ready", "done"]:
+		freight = int(record.get("freight_gold", freight))
+		payout = int(record.get("payout_gold", payout))
+	var purchase := 0
+	for gid in (cfg["cargo"] as Dictionary):
+		purchase += int(economy_quote(String(cfg["purchase_site"]), String(gid)).get("buy_gold", 0)) \
+			* int((cfg["cargo"] as Dictionary)[gid])
+	var out := cfg.duplicate(true)
+	out.merge({"status": status, "day": day, "freight_gold": freight, "payout_gold": payout,
+		"purchase_gold": purchase, "expected_profit_gold": payout - purchase,
+		"attempt": int(record.get("attempt", 0)), "deadline_day": int(record.get("deadline_day", 0)),
+		"arrival_day": int(record.get("arrival_day", 0))}, true)
+	return out
+
+
+func shipping_accept(id: String, site_id: String) -> Dictionary:
+	var info := shipping_order(id)
+	if save_locked or info.is_empty() or site_id != String(info.get("dispatch_site", "")):
+		return {"ok": false, "err": "请在沉渊港港务厅接单"}
+	if String(info.get("status", "")) not in ["available", "expired"]:
+		return {"ok": false, "err": "此船单未开放或正在执行，本日完成的单明日可再接"}
+	var before := prog.duplicate(true)
+	var state := economy_state()
+	var orders: Dictionary = state["orders"]
+	var attempt := int(info["attempt"]) + 1
+	var deadline := int(state["day"]) + int(info["deadline_days"])
+	orders[id] = {"status": "active", "attempt": attempt, "accepted_day": int(state["day"]),
+		"deadline_day": deadline, "freight_gold": int(info["freight_gold"]),
+		"payout_gold": int(info["payout_gold"])}
+	if not save_game():
+		prog = before
+		return {"ok": false, "err": "接单未保存，已回滚"}
+	return {"ok": true, "deadline_day": deadline}
+
+
+func shipping_dispatch(id: String, site_id: String) -> Dictionary:
+	var info := shipping_order(id)
+	if save_locked or info.is_empty() or site_id != String(info.get("dispatch_site", "")):
+		return {"ok": false, "err": "请在沉渊港装船"}
+	if String(info.get("status", "")) != "active":
+		return {"ok": false, "err": "此船单尚未接取、已过期或已装船"}
+	var costs := {}
+	for gid in (info["cargo"] as Dictionary):
+		costs["item:%s" % String(gid)] = int((info["cargo"] as Dictionary)[gid])
+	var before_prog := prog.duplicate(true)
+	var before_items := items.duplicate(true)
+	var tid := RewardLedger.tx_id("shipping", id, "dispatch", str(int(info["attempt"])))
+	var res := RewardLedger.apply(RewardLedger.make(tid, costs, {}, {}), ledger(), self)
+	if not bool(res.get("applied", false)):
+		prog = before_prog
+		items = before_items
+		return {"ok": false, "err": "所需货物不足或此批已经装船"}
+	var state := economy_state()
+	var record: Dictionary = (state["orders"] as Dictionary)[id]
+	record["status"] = "transit"
+	record["arrival_day"] = int(state["day"]) + maxi(1, int(info.get("travel_days", 1)))
+	if not save_game():
+		prog = before_prog
+		items = before_items
+		return {"ok": false, "err": "装船未保存，货物已退回"}
+	return {"ok": true, "arrival_day": int(record["arrival_day"])}
+
+
+func shipping_claim(id: String, site_id: String) -> Dictionary:
+	var info := shipping_order(id)
+	if save_locked or info.is_empty() or site_id != String(info.get("dispatch_site", "")):
+		return {"ok": false, "err": "请回沉渊港领取船单报酬"}
+	if String(info.get("status", "")) != "ready":
+		return {"ok": false, "err": "船尚未到港或这笔报酬已领取"}
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var tid := RewardLedger.tx_id("shipping", id, "arrive", str(int(info["attempt"])))
+	var grants := {"gold": int(info["payout_gold"]), "exp": int(info["reward_exp"])}
+	var res := RewardLedger.apply(RewardLedger.make(tid, {}, grants,
+		{"act2_ship_first_done": true}), ledger(), self)
+	if not bool(res.get("applied", false)):
+		prog = before_prog
+		wallet = before_wallet
+		return {"ok": false, "err": "船单报酬已经结算"}
+	var state := economy_state()
+	var record: Dictionary = (state["orders"] as Dictionary)[id]
+	record["status"] = "done"
+	record["completed_day"] = int(state["day"])
+	if not save_game():
+		prog = before_prog
+		wallet = before_wallet
+		return {"ok": false, "err": "领取未保存，已回滚"}
+	return {"ok": true, "gold": int(info["payout_gold"]), "exp": int(info["reward_exp"])}
+
+
+## 港务关系第一段：叙事选择等值，宝石奖励整段只领取一次。
+func port_relation_choice(choice: String) -> Dictionary:
+	if save_locked or not story_step_done("s20") or choice not in ["remember", "promise"]:
+		return {"ok": false, "err": "先处理潮闸与回港定路，再与沈澜谈谈"}
+	if int((prog.get("flags", {}) as Dictionary).get("act2_shenlan_relation_stage", 0)) >= 1:
+		return {"ok": false, "err": "这一段谈话已经完成"}
+	var before_prog := prog.duplicate(true)
+	var before_items := items.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var tx := RewardLedger.make(RewardLedger.tx_id("relation", "shenlan", "stage1"), {},
+		{"item:gem_def_1": 1, "exp": 20}, {"act2_shenlan_relation_stage": 1, "act2_shenlan_relation_choice": choice})
+	var result := RewardLedger.apply(tx, ledger(), self)
+	if not bool(result.get("applied", false)) or not save_game():
+		prog = before_prog
+		items = before_items
+		wallet = before_wallet
+		return {"ok": false, "err": "谈话未保存，奖励已回滚"}
+	return {"ok": true, "gem": "gem_def_1", "exp": 20}
+
+
+func restored_stele_name() -> String:
+	return String(TableCache.story_quests_config().get("restored_stele_name", "归路碑"))
+
+
+func side_tracked() -> String:
+	return String(act1_state().get("tracked", ""))
+
+
+## 切换追踪（写盘）。只能追踪已接且未完的支线；同一时间只追踪一条。
+func side_track(qid: String) -> bool:
+	if save_locked:
+		return false
+	var before := prog.duplicate(true)
+	if not QuestService.side_track(act1_state(), qid):
+		return false
+	if not save_game():
+		prog = before
+		return false
+	return true
+
+
+## 接取支线（写盘；含接取时发放的任务物，如驿商的盐包）。
+func side_accept(qid: String) -> Dictionary:
+	if save_locked:
+		return {"ok": false, "reason": "locked"}
+	var rows := _side_live_rows()
+	var row := QuestService.side_row(rows, qid)
+	if row.is_empty():
+		return {"ok": false, "reason": "locked"}
+	var before := prog.duplicate(true)
+	var before_items := items.duplicate(true)
+	var res := QuestService.side_accept(act1_state(), rows, qid)
+	if not bool(res.get("ok", false)):
+		return res
+	var give := String(row.get("accept_item", ""))
+	if not give.is_empty():
+		items[give] = item_count(give) + 1
+	if not save_game():
+		prog = before
+		items = before_items
+		return {"ok": false, "reason": "save_failed"}
+	return {"ok": true, "reason": "ok", "qid": qid,
+		"title": String(row.get("title", "")),
+		"line": String(row.get("accept_dialogue", ""))}
+
+
+## 野外事件上报（战斗胜利／采集／观察）。persist=false 时由调用方与主线一起写盘。
+## 返回发生变化的 qid 列表；dup 与无变化返回空（同一场战斗只结算一次，不会重复计数）。
+func side_report(kind: String, source_id: String, map_id: String, persist := true) -> Array:
+	if save_locked:
+		return []
+	var before := prog.duplicate(true)
+	var event := QuestService.world_event(kind, source_id, map_id,
+		selected_role if not selected_role.is_empty() else "player")
+	var touched := QuestService.side_report(act1_state(), _side_live_rows(), event, items)
+	if touched.is_empty():
+		return []
+	if persist and not save_game():
+		prog = before
+		return []
+	return touched
+
+
+## 野外实体是否该生成（MapScene 调）。规则：未接／可交付／已完成不生成；
+## 已采过或看过的实体（seen）不再生成——跨读档、跨天一致，不靠每日刷新。
+func side_entity_visible(eid: String, qid: String) -> bool:
+	if qid.is_empty():
+		return true   # 无任务归属的实体（P05-D 旧路石箱）由 WorldSession 实体态自己管
+	var act1 := act1_state()
+	var st := QuestService.side_status(act1, qid)
+	if st.is_empty() or st == QuestService.SIDE_READY or st == QuestService.SIDE_DONE:
+		return false
+	var seen: Variant = QuestService.side_get(act1, qid).get("seen", [])
+	return not (seen is Array and (seen as Array).has(eid))
+
+
+## 野外实体交互（MapScene 调）。kind ∈ collect／observe／deliver。
+## 返回 { ok, reason, toasts, hide }：hide=true 时实体从地图上消失（采集/观察/送达成功）。
+func side_entity_interact(kind: String, eid: String, map_id: String, qid := "") -> Dictionary:
+	if save_locked:
+		return {"ok": false, "reason": "locked", "toasts": [], "hide": false}
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var before_items := items.duplicate(true)
+	var act1 := act1_state()
+	var rows := _side_live_rows()
+	var event := QuestService.world_event(kind, eid, map_id,
+		selected_role if not selected_role.is_empty() else "player")
+	var touched := QuestService.side_report(act1, rows, event, items)
+	if touched.is_empty():
+		return {"ok": false, "reason": "no_progress", "toasts": [], "hide": false}
+	var toasts: Array = []
+	if kind == "collect":
+		for qid_v in touched:
+			var row := QuestService.side_row(rows, String(qid_v))
+			var give := String(row.get("collect_item", ""))
+			if not give.is_empty():
+				items[give] = item_count(give) + 1
+				toasts.append("获得 %s ×1" % item_name(give))
+	if kind == "deliver":
+		for qid_v2 in touched:
+			var qid2 := String(qid_v2)
+			var row2 := QuestService.side_row(rows, qid2)
+			if String(row2.get("turn_in", "")) == eid:
+				var done := _side_complete(qid2, false)   # 收件人是实体自己：当场成交
+				for t in done.get("toasts", []):
+					toasts.append(String(t))
+	if not save_game():
+		prog = before_prog
+		wallet = before_wallet
+		items = before_items
+		return {"ok": false, "reason": "save_failed", "toasts": [], "hide": false}
+	return {"ok": true, "reason": "", "toasts": toasts, "hide": true}
+
+
+## 交付领取（persist=true 时自己写盘；false 时由调用方统一写盘）。
+## 前置：该支线 ready。一个事务：扣交付物 + 发奖 + 记线索 + 清追踪，同次落盘；失败整体回滚。
+func _side_complete(qid: String, persist := true, choice := "") -> Dictionary:
+	if save_locked:
+		return {}
+	var rows := _side_live_rows()
+	var row := QuestService.side_row(rows, qid)
+	if row.is_empty():
+		return {}
+	var options: Dictionary = row.get("choices", {})
+	if not options.is_empty() and not options.has(choice):
+		return {}
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var before_items := items.duplicate(true)
+	var res := QuestService.side_turn_in(act1_state(), rows, qid)
+	if not bool(res.get("ok", false)):
+		return {}
+	var chosen: Dictionary = options.get(choice, {})
+	if not chosen.is_empty():
+		QuestService.side_get(act1_state(), qid)["choice"] = choice
+	var reward: Dictionary = res.get("reward", {})
+	var costs := {}
+	var consume := String(res.get("consume_item", ""))
+	if not consume.is_empty():
+		costs["item:%s" % consume] = 1
+	var grants := {
+		"gold": maxi(0, int(reward.get("gold", 0))),
+		"exp": maxi(0, int(reward.get("exp", 0))),
+	}
+	var ritems: Variant = reward.get("items", {})
+	if ritems is Dictionary:
+		for key in (ritems as Dictionary):
+			grants["item:%s" % String(key)] = maxi(1, int((ritems as Dictionary)[key]))
+	var completion_flags: Dictionary = chosen.get("flags", {})
+	var tx := RewardLedger.make(RewardLedger.tx_id("side", qid, "complete"), costs, grants, completion_flags)
+	var applied := RewardLedger.apply(tx, ledger(), self)
+	if not bool(applied.get("ok", false)):
+		prog = before_prog
+		wallet = before_wallet
+		items = before_items
+		push_warning("支线交付未落地：%s" % String(applied.get("err", "")))
+		return {}
+	var discovery := String(res.get("discovery", ""))
+	if not discovery.is_empty():
+		var discs: Array = act1_state()["discoveries"]
+		if not discs.has(discovery):
+			discs.append(discovery)
+	if persist and not save_game():
+		prog = before_prog
+		wallet = before_wallet
+		items = before_items
+		return {}
+	return {"ok": true, "qid": qid, "reward": reward,
+		"title": String(row.get("title", "")),
+		"line": String(chosen.get("dialogue", row.get("completion_dialogue", ""))),
+		"toasts": _side_reward_toasts(reward)}
+
+
+## 支线奖励行（含 items 字典；reward_lines 只认单数 item，这里补上）。
+func _side_reward_toasts(reward: Dictionary) -> Array:
+	var out: Array = []
+	for line in reward_lines(reward):
+		out.append(String(line))
+	var ritems: Variant = reward.get("items", {})
+	if ritems is Dictionary:
+		for key in (ritems as Dictionary):
+			out.append("%s ×%d" % [item_name(String(key)), int((ritems as Dictionary)[key])])
+	return out
+
+
+## 城内 NPC 支线交互（CityScene 打开对话时调）。
+## 返回 {kind:"accept"/"turn_in", qid, title, line, toasts}；无支线动作返回 {}。
+func side_npc_interact(npc_id: String) -> Dictionary:
+	var rows := _side_live_rows()
+	var action := QuestService.side_npc_action(act1_state(), rows, npc_id)
+	if action.is_empty():
+		return {}
+	var qid := String(action.get("qid", ""))
+	var row := QuestService.side_row(rows, qid)
+	if String(action.get("kind", "")) == "turn_in":
+		var done := _side_complete(qid)
+		if done.is_empty():
+			return {}
+		return {"kind": "turn_in", "qid": qid,
+			"title": String(row.get("title", "")),
+			"line": String(row.get("completion_dialogue", "")),
+			"toasts": done.get("toasts", [])}
+	var acc := side_accept(qid)
+	if not bool(acc.get("ok", false)):
+		return {}
+	var toasts: Array = ["已接取支线：%s" % String(row.get("title", ""))]
+	var give := String(row.get("accept_item", ""))
+	if not give.is_empty():
+		toasts.append("获得 %s ×1" % item_name(give))
+	return {"kind": "accept", "qid": qid,
+		"title": String(row.get("title", "")),
+		"line": String(row.get("accept_dialogue", "")),
+		"toasts": toasts}
+
+
+## NPC 的支线台词（CityScene 台词优先级：支线 > 每日委托 > 随机闲聊）。
+## 可交付 > 进行中 > 完成后的世界变化台词；无相关支线返回空串。
+func side_npc_line(npc_id: String) -> String:
+	var act1 := act1_state()
+	var completed_line := ""
+	for row_v in _side_live_rows():
+		var row := row_v as Dictionary
+		var qid := String(row.get("id", ""))
+		var st := QuestService.side_status(act1, qid)
+		if st.is_empty():
+			continue
+		var is_giver := String(row.get("giver", "")) == npc_id
+		var is_turn := String(row.get("turn_in", "")) == npc_id
+		if not (is_giver or is_turn):
+			continue
+		if st == QuestService.SIDE_READY and is_turn:
+			return String(row.get("ready_dialogue", ""))
+		if st == QuestService.SIDE_ACTIVE:
+			return String(row.get("progress_dialogue", ""))
+		if st == QuestService.SIDE_DONE:
+			var choice := String(QuestService.side_get(act1, qid).get("choice", ""))
+			var chosen: Dictionary = (row.get("choices", {}) as Dictionary).get(choice, {})
+			completed_line = String(chosen.get("dialogue", row.get("completion_dialogue", "")))
+	return completed_line
+
+
+## HUD 支线蓝签文案（只显示追踪中的那一条）。
+func side_line() -> String:
+	var qid := side_tracked()
+	if qid.is_empty():
+		return ""
+	var rows := _side_live_rows()
+	var info := QuestService.side_progress_info(act1_state(), rows, qid)
+	if info.is_empty():
+		return ""
+	var title := String(info.get("title", "支线"))
+	var st := String(info.get("status", ""))
+	if st == QuestService.SIDE_READY:
+		return "支线 · %s（可交付：%s）" % [title, side_target_name(String(info.get("turn_in", "")))]
+	if st == QuestService.SIDE_DONE:
+		return ""
+	return "支线 · %s %d/%d" % [title, int(info.get("progress", 0)), int(info.get("need", 1))]
+
+
+## 支线日志（蓝签点击/任务详情）。qid 空时取当前追踪的一条。
+func side_info_lines(qid := "") -> Array:
+	var q := qid if not qid.is_empty() else side_tracked()
+	if q.is_empty():
+		return ["当前没有追踪的支线。", "城内可接线索：老赵、小满、青姨、阿豆、行脚商人。"]
+	var rows := _side_live_rows()
+	var row := QuestService.side_row(rows, q)
+	var info := QuestService.side_progress_info(act1_state(), rows, q)
+	if row.is_empty() or info.is_empty():
+		return []
+	var st := String(info.get("status", ""))
+	var lines: Array = ["目标：%s" % String(info.get("objective_text", ""))]
+	if st == QuestService.SIDE_READY:
+		lines.append("进度：目标已完成，回去交付")
+	elif st == QuestService.SIDE_DONE:
+		lines.append("进度：已完成")
+	else:
+		lines.append("进度：%d/%d" % [int(info.get("progress", 0)), int(info.get("need", 1))])
+	var map_name := String(TableCache.main_world_map(String(row.get("map", ""))).get("name", ""))
+	if not map_name.is_empty():
+		lines.append("地点：%s" % map_name)
+	if st != QuestService.SIDE_DONE:
+		lines.append("交付：%s（%s）" % [side_target_name(String(info.get("turn_in", ""))),
+			String(TableCache.main_world_map(String(info.get("turn_in_map", ""))).get("name", ""))])
+	for line in _side_reward_toasts(row.get("reward", {})):
+		lines.append("奖励：%s" % String(line))
+	return lines
+
+
+## 支线交付对象显示名：城内 NPC 走 city.json，野外实体走地图实体配置的 name。
+func side_target_name(id: String) -> String:
+	var npc := city_npc(id)
+	if not npc.is_empty():
+		return String(npc.get("name", id))
+	var maps: Variant = TableCache.main_world_config().get("maps", {})
+	if maps is Dictionary:
+		for mid in (maps as Dictionary):
+			var cfg: Variant = (maps as Dictionary)[mid]
+			if not (cfg is Dictionary):
+				continue
+			var ents: Variant = (cfg as Dictionary).get("entities", {})
+			if ents is Dictionary and (ents as Dictionary).has(id):
+				var row: Variant = (ents as Dictionary)[id]
+				if row is Dictionary:
+					return String((row as Dictionary).get("name", id))
+	return id
 
 
 func theme_order() -> Array:
@@ -867,8 +1951,8 @@ func unlock_pets_for_world(theme_id: String) -> void:
 		prog["pets"] = arr
 
 
-## 保底：初始伙伴（pets.json 里 unlock.type == "starter"）永远在册。
-## 老存档 pets 为空 / 被改坏时，也不至于开局无宠可带、出征被门禁卡死。
+## 兼容仍声明为 starter 的伙伴。岩龟已改为第一幕领取；这里不会删掉老档已有伙伴，
+## 也不会再给新档越过剧情自动补发。
 func ensure_starter_pets() -> void:
 	var arr: Array = prog.get("pets", [])
 	var changed := false
@@ -890,9 +1974,248 @@ func pet_unlock_text(pid: String) -> String:
 	match String(u.get("type", "")):
 		"starter":
 			return "初始伙伴"
+		"story":
+			var step := String(u.get("step", ""))
+			return "第一幕兽栏结缘" if step == "s04" else "主线剧情结缘"
 		"world_clear":
 			return "通关「%s」首领" % world_name(String(u.get("world", "")))
+		"egg":
+			return "沉渊港兽栏孵化潮纹蛋"
 	return "未知途径"
+
+
+# ---------- P05-D2：岩龟剧情领取 ----------
+
+## 老档已经拥有岩龟时直接视为 owned；新档必须完成 s04，绝不因打开面板自动发放。
+func rockturtle_status() -> String:
+	if owns_pet("pet_rockturtle"):
+		return "owned"
+	return "ready" if story_step_done("s04") else "locked"
+
+
+## 在兽栏确认后才结缘。领取与旗标同次写盘，失败整体回滚；重复点击不会复制伙伴。
+func claim_rockturtle(persist := true) -> Dictionary:
+	var status := rockturtle_status()
+	if save_locked or status != "ready":
+		return {"ok": false, "reason": "locked" if save_locked else status}
+	var before := prog.duplicate(true)
+	var arr: Array = prog.get("pets", [])
+	arr.append("pet_rockturtle")
+	prog["pets"] = arr
+	var flags: Variant = prog.get("flags")
+	if not (flags is Dictionary):
+		flags = {}
+		prog["flags"] = flags
+	(flags as Dictionary)["act1_rockturtle_claimed"] = true
+	if persist and not save_game():
+		prog = before
+		return {"ok": false, "reason": "save_failed"}
+	return {"ok": true, "pet": "pet_rockturtle", "name": "岩龟"}
+
+
+## P07-D：完成港务交账后在兽栏领首枚蛋，旧 s16 存档同样可领。
+func port_egg_claim(persist := true) -> Dictionary:
+	if save_locked or not story_step_done("s16"):
+		return {"ok": false, "reason": "locked"}
+	var flags: Dictionary = prog.get("flags", {})
+	if bool(flags.get("act2_port_egg_claimed", false)):
+		return {"ok": false, "reason": "claimed"}
+	var before_prog := prog.duplicate(true)
+	var before_items := items.duplicate(true)
+	flags["act2_port_egg_claimed"] = true
+	prog["flags"] = flags
+	items["tide_egg"] = item_count("tide_egg") + 1
+	if persist and not save_game():
+		prog = before_prog
+		items = before_items
+		return {"ok": false, "reason": "save_failed"}
+	return {"ok": true}
+
+
+## 追加购买按一次写盘处理，失败时金币与蛋一起回滚。
+func port_egg_buy(persist := true) -> Dictionary:
+	if save_locked or not story_step_done("s16"):
+		return {"ok": false, "reason": "locked"}
+	const PRICE := 500
+	if int(wallet.get("gold", 0)) < PRICE:
+		return {"ok": false, "reason": "gold"}
+	var before_wallet := wallet.duplicate(true)
+	var before_items := items.duplicate(true)
+	wallet["gold"] = int(wallet.get("gold", 0)) - PRICE
+	items["tide_egg"] = item_count("tide_egg") + 1
+	if persist and not save_game():
+		wallet = before_wallet
+		items = before_items
+		return {"ok": false, "reason": "save_failed"}
+	return {"ok": true, "price": PRICE}
+
+
+## 孵化消耗一个蛋。已拥有潮羽雏鸥时改为两份宠物粮，重复操作永不复制伙伴。
+func port_egg_hatch(persist := true) -> Dictionary:
+	if save_locked or not story_step_done("s16") or item_count("tide_egg") <= 0:
+		return {"ok": false, "reason": "egg"}
+	var before_prog := prog.duplicate(true)
+	var before_items := items.duplicate(true)
+	items["tide_egg"] = item_count("tide_egg") - 1
+	var duplicate_pet := owns_pet("pet_tide_gull")
+	if duplicate_pet:
+		items["pet_food"] = item_count("pet_food") + 2
+	else:
+		var pets_owned: Array = prog.get("pets", [])
+		pets_owned.append("pet_tide_gull")
+		prog["pets"] = pets_owned
+	if persist and not save_game():
+		prog = before_prog
+		items = before_items
+		return {"ok": false, "reason": "save_failed"}
+	return {"ok": true, "pet": "pet_tide_gull", "duplicate": duplicate_pet,
+		"food": 2 if duplicate_pet else 0}
+
+
+# ---------- P07-D 普通钓鱼 ----------
+func fishing_spot(id: String) -> Dictionary:
+	for row in (TableCache.fishing_config().get("spots", []) as Array):
+		if String((row as Dictionary).get("id", "")) == id:
+			return row as Dictionary
+	return {}
+
+
+func fishing_state() -> Dictionary:
+	if not (prog.get("fishing") is Dictionary):
+		prog["fishing"] = {"day": 0, "counts": {}, "discoveries": [], "pending": {}}
+	var state: Dictionary = prog["fishing"]
+	var day := int(economy_state().get("day", 1))
+	if int(state.get("day", 0)) != day:
+		state["day"] = day
+		state["counts"] = {}
+		state["pending"] = {}
+	if not (state.get("discoveries") is Array):
+		state["discoveries"] = []
+	if not (state.get("counts") is Dictionary):
+		state["counts"] = {}
+	if not (state.get("pending") is Dictionary):
+		state["pending"] = {}
+	return state
+
+
+func fishing_remaining(spot_id: String) -> int:
+	if fishing_spot(spot_id).is_empty():
+		return 0
+	var state := fishing_state()
+	return maxi(0, int(TableCache.fishing_config().get("daily_limit", 3))
+		- int((state.get("counts", {}) as Dictionary).get(spot_id, 0)))
+
+
+## 抛竿时先保存次数和具名凭据；中途重启可在同一钓点接回这一竿。
+func fishing_begin(spot_id: String, persist := true) -> Dictionary:
+	if save_locked or fishing_spot(spot_id).is_empty():
+		return {"ok": false, "reason": "locked"}
+	var state := fishing_state()
+	var pending: Dictionary = state.get("pending", {})
+	if String(pending.get("spot", "")) == spot_id:
+		return {"ok": true, "cast": pending.duplicate(true), "resumed": true}
+	if fishing_remaining(spot_id) <= 0:
+		return {"ok": false, "reason": "limit"}
+	var before_prog := prog.duplicate(true)
+	var counts: Dictionary = state.get("counts", {})
+	var attempt := int(counts.get(spot_id, 0)) + 1
+	counts[spot_id] = attempt
+	state["counts"] = counts
+	var token := "fish|%d|%s|%d" % [int(state["day"]), spot_id, attempt]
+	var cast := {"spot": spot_id, "token": token,
+		"center": 0.35 + float(absi(token.hash()) % 31) / 100.0}
+	state["pending"] = cast
+	if persist and not save_game():
+		prog = before_prog
+		return {"ok": false, "reason": "save_failed"}
+	return {"ok": true, "cast": cast.duplicate(true), "resumed": false}
+
+
+## 凭据仅结算一次。成功给普通鱼和图鉴，失败只消耗已预留的次数。
+func fishing_finish(token: String, hit: bool, persist := true) -> Dictionary:
+	if save_locked:
+		return {"ok": false, "reason": "locked"}
+	var state := fishing_state()
+	var pending: Dictionary = state.get("pending", {})
+	if token.is_empty() or String(pending.get("token", "")) != token:
+		return {"ok": false, "reason": "stale"}
+	var spot := fishing_spot(String(pending.get("spot", "")))
+	if spot.is_empty():
+		return {"ok": false, "reason": "stale"}
+	var before_prog := prog.duplicate(true)
+	var before_items := items.duplicate(true)
+	var iid := String(spot.get("item", ""))
+	var grants := {"item:%s" % iid: 1} if hit and not iid.is_empty() else {}
+	var res := RewardLedger.apply(RewardLedger.make(token, {}, grants, {}), ledger(), self)
+	if not bool(res.get("ok", false)):
+		prog = before_prog
+		items = before_items
+		return {"ok": false, "reason": "transaction"}
+	state["pending"] = {}
+	if hit and not (state["discoveries"] as Array).has(iid):
+		(state["discoveries"] as Array).append(iid)
+	if persist and not save_game():
+		prog = before_prog
+		items = before_items
+		return {"ok": false, "reason": "save_failed"}
+	return {"ok": true, "hit": hit, "item": iid if hit else ""}
+
+
+func fishing_cook(iid: String, persist := true) -> Dictionary:
+	if save_locked or not ["fish_salt", "fish_port", "fish_tide"].has(iid) or item_count(iid) < 1:
+		return {"ok": false, "reason": "fish"}
+	var before_items := items.duplicate(true)
+	items[iid] = item_count(iid) - 1
+	items["pet_food"] = item_count("pet_food") + 1
+	if persist and not save_game():
+		items = before_items
+		return {"ok": false, "reason": "save_failed"}
+	return {"ok": true}
+
+
+# ---------- P05-D：古道固定奇遇 ----------
+
+const WAYSTONE_CACHE_ID := "act1_waystone_cache"
+
+
+func waystone_cache_available() -> bool:
+	var world_v: Variant = prog.get("main_world", {})
+	var world: Dictionary = world_v if world_v is Dictionary else {}
+	return not WorldSession.entity_taken(world, WAYSTONE_CACHE_ID) \
+		and not RewardLedger.applied(ledger(), RewardLedger.tx_id("act1", "waystone_cache", "first"))
+
+
+## 旧路石匣只有一份：材料、金币、世界旗、图鉴线索和实体消失一起写盘。
+func claim_waystone_cache(persist := true) -> Dictionary:
+	if save_locked or not waystone_cache_available():
+		return {"ok": false, "reason": "locked" if save_locked else "already_taken", "toasts": []}
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var before_items := items.duplicate(true)
+	var tx := RewardLedger.make(RewardLedger.tx_id("act1", "waystone_cache", "first"), {},
+		{"gold": 30, "item:refine_stone": 1}, {"act1_waystone_cache_found": true})
+	var applied := RewardLedger.apply(tx, ledger(), self)
+	if not bool(applied.get("ok", false)) or not bool(applied.get("applied", false)):
+		prog = before_prog
+		wallet = before_wallet
+		items = before_items
+		return {"ok": false, "reason": String(applied.get("err", "ledger")), "toasts": []}
+	var world_v: Variant = prog.get("main_world", {})
+	var world := WorldSession.normalize_state(world_v if world_v is Dictionary else {})
+	WorldSession.mark_entity_taken(world, WAYSTONE_CACHE_ID, true)
+	prog["main_world"] = world
+	var discoveries := act1_state()["discoveries"] as Array
+	if not discoveries.has(WAYSTONE_CACHE_ID):
+		discoveries.append(WAYSTONE_CACHE_ID)
+	if persist and not save_game():
+		prog = before_prog
+		wallet = before_wallet
+		items = before_items
+		return {"ok": false, "reason": "save_failed", "toasts": []}
+	return {"ok": true, "reason": "", "toasts": [
+		"旧路石匣：箱盖内刻着断碑坡方位",
+		"获得 精炼石 ×1 · 金币 +30",
+	]}
 
 
 # ---------- 主城物资铺（锻造铺；P1-2：金币换养成材料的稳定出口） ----------
@@ -946,8 +2269,12 @@ func shop_items() -> Array:
 		if price <= 0:
 			push_warning("shop.json 商品价格非法（须正整数）：%s，已下架" % iid)
 			continue
+		var sell_price := _shop_valid_price(d.get("sell_price"))
+		if sell_price <= 0 or sell_price >= price:
+			# 旧版表没有回收价，按购价四成计；显式错误价格拒绝回收套利。
+			sell_price = maxi(1, price * 2 / 5) if not d.has("sell_price") and price > 1 else 0
 		seen[iid] = true
-		_shop_shelf.append({"item": iid, "price": price})
+		_shop_shelf.append({"item": iid, "price": price, "sell_price": sell_price})
 	return _shop_shelf
 
 
@@ -978,6 +2305,14 @@ func shop_price(item_id: String) -> int:
 	return 0
 
 
+func shop_sell_price(item_id: String) -> int:
+	for r in shop_items():
+		var d := r as Dictionary
+		if String(d.get("item", "")) == item_id:
+			return int(d.get("sell_price", 0))
+	return 0
+
+
 ## 购买一件：id 非法 / 金币不足一律拒绝；成功扣款并发放（单件购买，防一次买爆经济）。
 ## 这里必须**独立**再校验一次：面板可以改，购买接口是唯一入口，不能只靠 UI 拦。
 func shop_buy(item_id: String) -> Dictionary:
@@ -989,10 +2324,24 @@ func shop_buy(item_id: String) -> Dictionary:
 	if int(wallet.get("gold", 0)) < price:
 		return {"ok": false, "err": "金币不足（需 %d）" % price}
 	wallet["gold"] = int(wallet.get("gold", 0)) - price
-	grant_item(item_id, 1)   # 内部落盘
+	grant_item(item_id, 1, false)
 	save_game()
 	_sfx("coin", 0.0)
 	return {"ok": true, "err": ""}
+
+
+## 回收只接受本店白名单材料，回收价严格低于买价；扣物与入金同次写档。
+func shop_sell(item_id: String) -> Dictionary:
+	var price := shop_sell_price(item_id)
+	if price <= 0:
+		return {"ok": false, "err": "本店不回收这件货"}
+	if item_count(item_id) <= 0:
+		return {"ok": false, "err": "背包里没有这件货"}
+	items[item_id] = item_count(item_id) - 1
+	wallet["gold"] = int(wallet.get("gold", 0)) + price
+	save_game()
+	_sfx("coin", 0.0)
+	return {"ok": true, "err": "", "gold": price}
 
 
 # ================= 主城（据点） =================
@@ -1000,8 +2349,27 @@ func shop_buy(item_id: String) -> Dictionary:
 
 const REWARD_KEYS := ["gold", "expedition", "soul", "honor", "exp"]
 const REWARD_NAMES := {
-	"gold": "金币", "expedition": "远征点", "soul": "魂晶", "honor": "荣誉", "exp": "经验",
+	"gold": "金币", "expedition": "远征币", "soul": "魂晶", "honor": "荣誉", "exp": "经验",
 }
+
+
+func wallet_info_lines() -> Array:
+	var lines: Array = []
+	var rows: Variant = TableCache.currencies_config().get("currencies", [])
+	if not (rows is Array):
+		return lines
+	for row_v in rows:
+		if not (row_v is Dictionary):
+			continue
+		var row := row_v as Dictionary
+		var id := String(row.get("id", ""))
+		if not wallet.has(id):
+			continue
+		lines.append("%s ×%d · %s" % [String(row.get("name", id)),
+			int(wallet[id]), String(row.get("scope", ""))])
+		lines.append("获得：%s；用途：%s" % [String(row.get("source", "")),
+			String(row.get("use", ""))])
+	return lines
 
 
 func city_config() -> Dictionary:
@@ -1196,9 +2564,10 @@ func city_npcs() -> Array:
 
 
 func city_npc(id: String) -> Dictionary:
-	for n in city_config().get("npcs", []):
-		if String((n as Dictionary).get("id", "")) == id:
-			return n
+	for map_id in ["lorin_wilds", "shenyuan_port"]:
+		for n in TableCache.city_config_for(map_id).get("npcs", []):
+			if String((n as Dictionary).get("id", "")) == id:
+				return n
 	return {}
 
 
@@ -1293,6 +2662,9 @@ func reward_lines(reward: Dictionary) -> Array:
 	for k in REWARD_KEYS:
 		if int(reward.get(k, 0)) > 0:
 			out.append("%s +%d" % [String(REWARD_NAMES.get(k, k)), int(reward[k])])
+	var reward_item := String(reward.get("item", ""))
+	if not reward_item.is_empty():
+		out.append("%s ×%d" % [item_name(reward_item), maxi(1, int(reward.get("count", 1)))])
 	return out
 
 
@@ -1408,8 +2780,14 @@ func has_profile() -> bool:
 
 ## 道具图标名：背包 id 无 itm_ 前缀，素材名有；gem_* 素材与 id 同名
 func item_icon(item_id: String) -> String:
+	if item_id in ["fish_salt", "fish_port", "fish_tide"]:
+		return "itm_fish_common"
 	if item_id.begins_with("gem_"):
 		return item_id
+	if item_id.begins_with("trade_"):
+		var good := EconomyService.good(TableCache.economy_config(), item_id)
+		if not good.is_empty():
+			return String(good.get("icon", "itm_" + item_id))
 	return "itm_" + item_id
 
 
@@ -1494,6 +2872,39 @@ func equip_slot_cfg(slot_id: String) -> Dictionary:
 	return {}
 
 
+func equip_templates() -> Array:
+	return equip_cfg().get("templates", [])
+
+
+## 模板 id → 模板字典（找不到返回 {}）
+func equip_tpl(tpl_id: String) -> Dictionary:
+	for t in equip_templates():
+		var td := t as Dictionary
+		if String(td.get("id", "")) == tpl_id:
+			return td
+	return {}
+
+
+## 槽位的基础模板（tpl_<slot>_basic）：base 与 slots[<slot>].base 逐字段相等，
+## 这是「旧档等值迁移」的支点（见 SaveData._ensure_v5）。
+func equip_basic_tpl(slot_id: String) -> Dictionary:
+	return equip_tpl("tpl_%s_basic" % slot_id)
+
+
+func equip_rarity_cfg(rarity_id: int) -> Dictionary:
+	return Inventory.rarity_row(equip_cfg(), rarity_id)
+
+
+## 稀有度展示色（缺省回落普通灰，避免空串造出黑框）
+func equip_rarity_color(rarity_id: int) -> Color:
+	var hex := String(equip_rarity_cfg(rarity_id).get("color", ""))
+	return Color(hex) if not hex.is_empty() else Color("b8b8b8")
+
+
+func equip_rarity_name(rarity_id: int) -> String:
+	return String(equip_rarity_cfg(rarity_id).get("name", "普通"))
+
+
 ## 当前角色对应的武器槽（剑→破军/枪→穿杨/杖→霜语/锤→晨星）
 func equip_weapon_slot(role_id := "") -> String:
 	var rid := role_id if not role_id.is_empty() else selected_role
@@ -1504,27 +2915,228 @@ func equip_weapon_slot(role_id := "") -> String:
 	return ""
 
 
-## 装备槽存档状态（缺省：0 级 / 无宝石 / 无词条）
+# 容器口径（P04）：instances[] 是**拥有池** —— 背包里的与正穿在身上的实例都在里面，
+# 穿在身上的由 prog.equip[slot] = uid 指向；背包已用格 = 未被指向的条数（装备不占格）。
+
+## 装备实例拥有池（prog.inventory）。SaveData 的 v5 迁移已保证存在，这里再兜一层。
+func _inventory() -> Dictionary:
+	var invv: Variant = prog.get("inventory")
+	if not (invv is Dictionary):
+		invv = {"instances": [], "pending": [], "next_uid": 1}
+		prog["inventory"] = invv
+	return Inventory.ensure(invv as Dictionary)
+
+
+func inv_instances() -> Array:
+	return _inventory()["instances"] as Array
+
+
+func inv_pending() -> Array:
+	return _inventory()["pending"] as Array
+
+
+## 槽 → uid 映射（活对象，就地改写会落进 prog）
+func _equip_map() -> Dictionary:
+	var em: Variant = prog.get("equip")
+	if not (em is Dictionary):
+		em = {}
+		prog["equip"] = em
+	return em as Dictionary
+
+
+## 背包已用格（装备不占格）
+func inv_count() -> int:
+	return Inventory.count(_inventory(), _equip_map())
+
+
+## 正穿在身上的实例 uid 集合（背包列表据此排除在身装备）
+func inv_worn_uids() -> Dictionary:
+	return Inventory.worn_uids(_equip_map())
+
+
+func inv_capacity() -> int:
+	return Inventory.capacity(equip_cfg())
+
+
+## 按 uid 找实例（找到返回活对象，找不到返回 {}）
+func inv_find(uid: int) -> Dictionary:
+	return Inventory.find_by_uid(inv_instances(), uid)
+
+
+## 槽位**在身实例**（未装备返回 {}）。返回的是 instances 里的活对象，
+## 调用方就地改写（+lv / 加宝石 / 洗词条）后只需 save_game()。
 func equip_state(slot_id: String) -> Dictionary:
-	var all: Dictionary = prog.get("equip", {})
-	var st: Variant = all.get(slot_id, {})
-	if not (st is Dictionary):
-		st = {}
-	var d := st as Dictionary
-	if not d.has("lv"):
-		d["lv"] = 0
-	if not (d.get("gems") is Array):
-		d["gems"] = []
-	if not (d.get("affixes") is Array):
-		d["affixes"] = []
-	return d
+	var uid := int(_equip_map().get(slot_id, 0))
+	if uid <= 0:
+		return {}
+	return Inventory.find_by_uid(inv_instances(), uid)
 
 
-func _equip_save_state(slot_id: String, st: Dictionary) -> void:
-	var all: Dictionary = prog.get("equip", {})
-	all[slot_id] = st
-	prog["equip"] = all
-	save_game()
+## 取在身实例；create=true 且该槽为空时用基础模板现场补一件（老档缺槽兜底）。
+func _equip_worn(slot_id: String, create := false) -> Dictionary:
+	var st := equip_state(slot_id)
+	if not st.is_empty() or not create:
+		return st
+	var tpl := equip_basic_tpl(slot_id)
+	if tpl.is_empty():
+		return {}
+	var inv := _inventory()
+	var inst := Inventory.new_instance(inv, tpl, int(tpl.get("rarity", 1)))
+	(inv["instances"] as Array).append(inst)
+	_equip_map()[slot_id] = int(inst["uid"])
+	return inst
+
+
+## 新档/空档保底：6 个槽各发一件基础装备并全部穿上，保证开局战力与 P03 完全一致。
+## force=true（仅供测试重置）先清空实例与背包再重建，得到确定性初始态。
+func ensure_starter_equip(force := false) -> void:
+	var inv := _inventory()
+	var em := _equip_map()
+	var any_uid := false
+	for s in equip_cfg().get("slots", []):
+		if int(em.get(String((s as Dictionary).get("id", "")), 0)) > 0:
+			any_uid = true
+			break
+	if force:
+		for k in em.keys():
+			em.erase(k)
+		inv["instances"] = []
+		inv["pending"] = []
+	elif any_uid or not (inv["instances"] as Array).is_empty() \
+			or not (inv["pending"] as Array).is_empty():
+		return   # 已有装备或已有实例：是玩家自己的状态，不擅自补发
+	for s2 in equip_cfg().get("slots", []):
+		var sid := String((s2 as Dictionary).get("id", ""))
+		if int(em.get(sid, 0)) > 0:
+			continue
+		var tpl := equip_basic_tpl(sid)
+		if tpl.is_empty():
+			continue
+		var inst := Inventory.new_instance(inv, tpl, int(tpl.get("rarity", 1)))
+		(inv["instances"] as Array).append(inst)
+		em[sid] = int(inst["uid"])
+
+
+# ---------- 背包 / 待领取箱 / 换装 / 卖出 / 宝石合成（P04 薄封装，逻辑都在 Inventory） ----------
+
+## 发一件装备（掉落/奖励）。spec = {"tpl": <模板id>, "rarity": <稀有度>, "n": <数量>}。
+## 满包 → 进待领取箱，绝不丢物。
+func inv_grant_equip(spec: Dictionary, persist := true) -> Dictionary:
+	var tpl_id := String(spec.get("tpl", ""))
+	var tpl := equip_tpl(tpl_id)
+	if tpl.is_empty():
+		return {"ok": false, "err": "未知装备模板：%s" % tpl_id}
+	var rarity := int(spec.get("rarity", tpl.get("rarity", 1)))
+	var n := maxi(1, int(spec.get("n", 1)))
+	var inv := _inventory()
+	var cfg := equip_cfg()
+	var em := _equip_map()
+	var to_pending := false
+	for i in n:
+		var r := Inventory.add(inv, cfg, em, Inventory.new_instance(inv, tpl, rarity))
+		if bool(r.get("to_pending", false)):
+			to_pending = true
+	if persist:
+		save_game()
+	return {"ok": true, "to_pending": to_pending, "n": n}
+
+
+## 待领取箱 → 背包（背包满则拒绝并保留）
+##
+## R-04：写盘失败时不得让界面显示"已领取" —— 把刚领取的实例回滚回待领取箱，
+## 并返回 ok=false，调用方据此提示失败（内存与盘上状态一致：装备仍在待领取箱）。
+func inv_claim(uid: int) -> Dictionary:
+	var inv := _inventory()
+	var em := _equip_map()
+	var r := Inventory.claim(inv, equip_cfg(), em, uid)
+	if not bool(r.get("ok", false)):
+		return r
+	if not save_game():
+		Inventory.return_to_pending(inv, uid)
+		return {"ok": false, "err": "存档写入失败，领取未生效（装备仍在待领取箱）"}
+	return r
+
+
+## 穿上 uid 指向的实例（同槽旧装备自动回背包，永不因满包失败）
+func inv_equip(uid: int) -> Dictionary:
+	var r := Inventory.equip(_inventory(), _equip_map(), uid)
+	if bool(r.get("ok", false)):
+		save_game()
+	return r
+
+
+func inv_unequip(slot_id: String) -> Dictionary:
+	var r := Inventory.unequip(_inventory(), equip_cfg(), _equip_map(), slot_id)
+	if bool(r.get("ok", false)):
+		save_game()
+	return r
+
+
+func inv_set_locked(uid: int, on: bool) -> Dictionary:
+	var r := Inventory.set_locked(_inventory(), uid, on)
+	if bool(r.get("ok", false)):
+		save_game()
+	return r
+
+
+## 实例回收价（找不到返回 0）
+func inv_sell_price(uid: int) -> int:
+	var inst := Inventory.find_by_uid(inv_instances(), uid)
+	if inst.is_empty():
+		return 0
+	return Inventory.sell_price(equip_cfg(), equip_tpl(String(inst.get("tpl", ""))), inst)
+
+
+## 卖出（在身/锁定拒绝；强化过或稀有需 confirm=true）。所得金币进钱包。
+func inv_sell(uid: int, confirm := false) -> Dictionary:
+	var r := Inventory.sell(_inventory(), equip_cfg(), _equip_map(),
+		Callable(self, "equip_tpl"), uid, confirm)
+	if bool(r.get("ok", false)):
+		wallet["gold"] = int(wallet.get("gold", 0)) + int(r.get("gold", 0))
+		save_game()
+	return r
+
+
+## 拆下一颗宝石（免金币），归还到 items
+func inv_gem_pop(uid: int, idx: int) -> Dictionary:
+	if save_locked:
+		return {"ok": false, "err": "存档暂不可写"}
+	var inst := Inventory.find_by_uid(inv_instances(), uid)
+	if inst.is_empty():
+		return {"ok": false, "err": "找不到这件装备"}
+	var before_prog := prog.duplicate(true)
+	var before_items := items.duplicate(true)
+	var r := Inventory.gem_pop(inst, idx)
+	if bool(r.get("ok", false)):
+		var gem := String(r.get("gem", ""))
+		items[gem] = item_count(gem) + 1
+		if not save_game():
+			prog = before_prog
+			items = before_items
+			return {"ok": false, "err": "拆卸未保存，已回滚"}
+	return r
+
+
+## 宝石 3 合 1（同级同色 → 高一级），扣金币费
+func inv_gem_merge(gem_id: String) -> Dictionary:
+	if save_locked:
+		return {"ok": false, "err": "存档暂不可写"}
+	var before_items := items.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var r := Inventory.gem_merge(items, wallet, equip_cfg(), gem_id)
+	if bool(r.get("ok", false)) and not save_game():
+		items = before_items
+		wallet = before_wallet
+		return {"ok": false, "err": "合成未保存，已回滚"}
+	return r
+
+
+## 地图外观钩子（P04 §6.4）：当前角色在身武器 → {weapon_tpl, weapon_icon, weapon_name, rarity, color}
+func equip_appearance() -> Dictionary:
+	var ws := equip_weapon_slot()
+	if ws.is_empty():
+		return {}
+	return Inventory.appearance(Callable(self, "equip_tpl"), equip_cfg(), equip_state(ws))
 
 
 func equip_enhance_max() -> int:
@@ -1554,7 +3166,9 @@ func equip_enhance(slot_id: String, rng: RandomNumberGenerator = null) -> Dictio
 	var cfg := equip_slot_cfg(slot_id)
 	if cfg.is_empty():
 		return {"ok": false, "err": "没有这个装备槽"}
-	var st := equip_state(slot_id)
+	var st := _equip_worn(slot_id, true)
+	if st.is_empty():
+		return {"ok": false, "err": "没有这个装备槽"}
 	var lv := int(st.get("lv", 0))
 	if lv >= equip_enhance_max():
 		return {"ok": false, "err": "已强化至上限"}
@@ -1570,17 +3184,21 @@ func equip_enhance(slot_id: String, rng: RandomNumberGenerator = null) -> Dictio
 		r.randomize()
 	var ok := r.randf() < equip_enhance_rate(slot_id)
 	if ok:
-		st["lv"] = lv + 1
-		_equip_save_state(slot_id, st)
-	else:
-		save_game()
+		st["lv"] = lv + 1   # 实例是活对象，就地改写即落进 prog.inventory
+	save_game()
 	return {"ok": true, "success": ok, "lv": int(st.get("lv", 0))}
 
 
-## 槽位强化后基础属性 = base × (1 + 0.1×lv)
+## 槽位强化后基础属性 = 模板 base × (1 + 0.1×lv)。
+## 在身实例取其实例模板的 base；空槽回落到槽配置 base（老行为，保证聚合值不变）。
 func equip_base_stat(slot_id: String) -> Dictionary:
-	var base: Dictionary = equip_slot_cfg(slot_id).get("base", {})
-	var lv := int(equip_state(slot_id).get("lv", 0))
+	var st := equip_state(slot_id)
+	var base: Dictionary = {}
+	if st.is_empty():
+		base = equip_slot_cfg(slot_id).get("base", {})
+	else:
+		base = equip_tpl(String(st.get("tpl", ""))).get("base", {})
+	var lv := int(st.get("lv", 0))
 	var mult := 1.0 + float(equip_cfg().get("enhance", {}).get("pct_per_level", 0.1)) * lv
 	var out := {}
 	for k in base.keys():
@@ -1633,9 +3251,16 @@ func gem_label(gem_id: String) -> String:
 
 ## 镶嵌：消耗 1 颗宝石 + 开孔费；孔满返回 false
 func equip_socket_gem(slot_id: String, gem_id: String) -> Dictionary:
-	var st := equip_state(slot_id)
+	if save_locked:
+		return {"ok": false, "err": "存档暂不可写"}
+	var before_prog := prog.duplicate(true)
+	var before_items := items.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var st := _equip_worn(slot_id, true)
+	if st.is_empty():
+		return {"ok": false, "err": "没有这个装备槽"}
 	var gems: Array = st.get("gems", [])
-	if gems.size() >= equip_gem_sockets():
+	if gems.size() >= int(st.get("sockets", equip_gem_sockets())):
 		return {"ok": false, "err": "孔位已满"}
 	if equip_gem_value(gem_id) <= 0:
 		return {"ok": false, "err": "无效宝石"}
@@ -1645,17 +3270,23 @@ func equip_socket_gem(slot_id: String, gem_id: String) -> Dictionary:
 	if int(wallet.get("gold", 0)) < cost:
 		return {"ok": false, "err": "金币不足"}
 	wallet["gold"] = int(wallet.get("gold", 0)) - cost
-	consume_item(gem_id, 1)
+	items[gem_id] = item_count(gem_id) - 1
 	gems.append(gem_id)
 	st["gems"] = gems
-	_equip_save_state(slot_id, st)
+	if not save_game():
+		prog = before_prog
+		items = before_items
+		wallet = before_wallet
+		return {"ok": false, "err": "镶嵌未保存，已回滚"}
 	return {"ok": true}
 
 
 ## 精炼：重洗未锁定词条（满 4 条）；每条锁定额外耗 1 锁符
 func equip_refine(slot_id: String, rng: RandomNumberGenerator = null) -> Dictionary:
 	var rc: Dictionary = equip_cfg().get("refine", {})
-	var st := equip_state(slot_id)
+	var st := _equip_worn(slot_id, true)
+	if st.is_empty():
+		return {"ok": false, "err": "没有这个装备槽"}
 	var affixes: Array = st.get("affixes", [])
 	var locks := 0
 	for a in affixes:
@@ -1687,30 +3318,37 @@ func equip_refine(slot_id: String, rng: RandomNumberGenerator = null) -> Diction
 		a["v"] = snappedf(r.randf_range(float(p.get("min", 0.0)), float(p.get("max", 0.0))), 0.001)
 	affixes.resize(count)
 	st["affixes"] = affixes
-	_equip_save_state(slot_id, st)
+	save_game()
 	return {"ok": true, "affixes": affixes}
 
 
 ## 切换词条锁定状态（免费，只是标记）
 func equip_toggle_lock(slot_id: String, idx: int) -> void:
-	var st := equip_state(slot_id)
+	var st := _equip_worn(slot_id, true)
+	if st.is_empty():
+		return
 	var affixes: Array = st.get("affixes", [])
 	if idx >= 0 and idx < affixes.size():
 		var a := affixes[idx] as Dictionary
 		a["locked"] = not bool(a.get("locked", false))
-		_equip_save_state(slot_id, st)
+		save_game()
 
 
-## 槽位总加成（强化基础 + 宝石 + 精炼词条）
-func equip_slot_bonus(slot_id: String) -> Dictionary:
+## 任意实例的加成（强化基础 + 宝石 + 精炼词条）。
+## 与 equip_slot_bonus 同一套算法，背包比较区据此算"换上会多几点"。
+func equip_instance_bonus(inst: Dictionary) -> Dictionary:
 	var out := {"atk": 0, "def": 0, "hp": 0, "crit": 0.0,
 		"atk_pct": 0.0, "def_pct": 0.0, "maxhp_pct": 0.0, "spd_pct": 0.0, "crit_add": 0.0}
-	var base := equip_base_stat(slot_id)
-	for k in ["atk", "def", "hp"]:
-		out[k] = int(base.get(k, 0))
-	out["crit"] = float(base.get("crit", 0.0))
-	var st := equip_state(slot_id)
-	for g in st.get("gems", []):
+	if inst.is_empty():
+		return out
+	var base: Dictionary = equip_tpl(String(inst.get("tpl", ""))).get("base", {})
+	var mult := 1.0 + float(equip_cfg().get("enhance", {}).get("pct_per_level", 0.1)) * int(inst.get("lv", 0))
+	for k in base.keys():
+		if String(k) == "crit":
+			out["crit"] = float(base[k])  # 暴击值不吃强化倍率
+		else:
+			out[k] = int(roundf(float(base[k]) * mult))
+	for g in (inst.get("gems", []) as Array):
 		var gid := String(g)
 		var v := equip_gem_value(gid)
 		if gid.begins_with("gem_atk_"):
@@ -1719,12 +3357,21 @@ func equip_slot_bonus(slot_id: String) -> Dictionary:
 			out["def"] += v
 		elif gid.begins_with("gem_hp_"):
 			out["hp"] += v
-	for a in st.get("affixes", []):
+	for a in (inst.get("affixes", []) as Array):
 		var ad := a as Dictionary
 		var stat := String(ad.get("stat", ""))
 		if out.has(stat):
 			out[stat] = float(out[stat]) + float(ad.get("v", 0.0))
 	return out
+
+
+## 槽位总加成（强化基础 + 宝石 + 精炼词条）。
+## 空槽用基础模板（tpl_<slot>_basic）算，等价于老的"槽配置 base、0 级"口径。
+func equip_slot_bonus(slot_id: String) -> Dictionary:
+	var st := equip_state(slot_id)
+	if st.is_empty():
+		return equip_instance_bonus({"tpl": "tpl_%s_basic" % slot_id, "lv": 0})
+	return equip_instance_bonus(st)
 
 
 # ---------- 技能书（每级 k+5%，上限 10 级，耗远征币） ----------
@@ -1791,6 +3438,67 @@ func mount_active() -> String:
 	return String((prog.get("mounts", {}) as Dictionary).get("active", ""))
 
 
+## 首骑是剧情奖励；已有付费马的旧档直接视为拥有，不重复赠送或覆盖选择。
+func first_mount_cfg() -> Dictionary:
+	var row: Variant = TableCache.act1_growth_config().get("first_mount", {})
+	return row as Dictionary if row is Dictionary else {}
+
+
+func first_mount_status() -> String:
+	var cfg := first_mount_cfg()
+	var mid := String(cfg.get("mount_id", "horse"))
+	if mount_tier(mid) > 0:
+		return "owned"
+	if not story_step_done(String(cfg.get("unlock_after", "s06"))):
+		return "locked"
+	return "ready"
+
+
+func claim_first_mount(persist := true) -> Dictionary:
+	if save_locked or first_mount_status() != "ready":
+		return {"ok": false, "reason": "locked" if save_locked else first_mount_status()}
+	var before := prog.duplicate(true)
+	var mid := String(first_mount_cfg().get("mount_id", "horse"))
+	var mts: Dictionary = prog.get("mounts", {"owned": {}, "active": ""})
+	var owned: Dictionary = mts.get("owned", {})
+	owned[mid] = 1
+	mts["owned"] = owned
+	if String(mts.get("active", "")).is_empty():
+		mts["active"] = mid
+	mts["riding"] = false
+	prog["mounts"] = mts
+	var flags: Dictionary = prog.get("flags", {})
+	flags["act1_first_mount_claimed"] = true
+	prog["flags"] = flags
+	if persist and not save_game():
+		prog = before
+		return {"ok": false, "reason": "save_failed"}
+	return {"ok": true, "mount_id": mid,
+		"name": String(mount_cfg(mid).get("name", mid))}
+
+
+## 装备中的马与此刻上马分开；老档只有 active 时默认是步行。
+## 首骑素材目前只覆盖 horse，其他六线坐骑仍按原局外属性结算。
+func mount_riding() -> bool:
+	return mount_active() == String(first_mount_cfg().get("mount_id", "horse")) \
+		and mount_tier(mount_active()) > 0 \
+		and bool((prog.get("mounts", {}) as Dictionary).get("riding", false))
+
+
+func mount_set_riding(ride: bool, persist := true) -> bool:
+	if save_locked or (ride and (mount_active() != String(first_mount_cfg().get("mount_id", "horse"))
+			or mount_tier(mount_active()) <= 0)):
+		return false
+	var before := prog.duplicate(true)
+	var mts: Dictionary = prog.get("mounts", {})
+	mts["riding"] = ride
+	prog["mounts"] = mts
+	if persist and not save_game():
+		prog = before
+		return false
+	return true
+
+
 ## 购买 1 阶 / 升级 2 阶
 func mount_buy(mid: String) -> Dictionary:
 	var cfg := mount_cfg(mid)
@@ -1820,6 +3528,7 @@ func mount_set_active(mid: String) -> bool:
 		return false
 	var mts: Dictionary = prog.get("mounts", {})
 	mts["active"] = mid
+	mts["riding"] = false
 	prog["mounts"] = mts
 	save_game()
 	return true
@@ -2729,7 +4438,7 @@ func _build_res_index() -> void:
 		return
 	_res_indexed = true
 	var batches := ["generated_001_100", "generated_101_200", "generated_201_333",
-		"generated_334_341", "generated_342_353"]
+		"generated_334_341", "generated_342_353", "generated_362_xajh"]
 	# 先收 ready/（成品：已裁到设计尺寸、alpha 已硬化），再拿 source/ 母稿补位。
 	# 顺序不能反——source 是 970~2170px 的原始大图，既吃显存，也会把未受容器约束的
 	# TextureRect 的最小尺寸钳到原图大小（曾导致召唤横幅 2172×724 铺满面板压住文案）
@@ -3240,6 +4949,41 @@ func go(scene_path: String) -> void:
 ## 预检：目标存在且当前不在转场中（按钮防抖与回归都用它）
 func can_go(scene_path: String) -> bool:
 	return not _transit_busy and ResourceLoader.exists(scene_path)
+
+
+## 主世界统一入口：登录、序章、营帐与跨图只走同一份角色/地图配置。
+## arrival 是目标地图的落地点 id；留空时恢复该地图保存位置或使用 spawn。
+func enter_main_world(map_id := "", arrival := "") -> void:
+	const WORLD_SCENE := "res://src/explore/MapScene.tscn"
+	if not can_go(WORLD_SCENE):
+		return
+	var state: Variant = prog.get("main_world", {})
+	var target := map_id
+	if target.is_empty() and state is Dictionary:
+		target = String((state as Dictionary).get("map_id", ""))
+	if TableCache.main_world_map(target).is_empty():
+		target = TableCache.default_main_world_map()
+	var map_cfg := TableCache.main_world_map(target)
+	if map_cfg.is_empty():
+		push_error("主世界地图配置缺失：%s" % target)
+		return
+	var pets := owned_pets()
+	var run := RunState.new()
+	run.setup({
+		"theme": String(map_cfg.get("theme", "forest")),
+		"role_id": selected_role if not selected_role.is_empty() else "zs",
+		"level": int(prog.get("level", 1)),
+		"active_pet": String(pets[0]) if not pets.is_empty() else "",
+		"bench_pet": String(pets[1]) if pets.size() > 1 else "",
+		"potions": run_potions_base(),
+		"seed": randi(),
+	})
+	MapScene.pending_cfg = {
+		"mode": "main_world", "main_map_id": target, "arrival": arrival,
+		"run": run,
+		"node": {"type": String(map_cfg.get("node_type", "normal")), "layer": 0, "index": 0},
+	}
+	go(WORLD_SCENE)
 
 
 func transit_busy() -> bool:

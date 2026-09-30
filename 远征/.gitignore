@@ -6,6 +6,7 @@ __pycache__/
 
 # 回归日志（tools/run_regression.ps1 每个用例落一份完整日志，属运行期产物）
 tools/_logs/
+tools/_sandbox_appdata/
 
 # 原版实机录屏派生截图（版权素材，仅本地参照，不进仓库）
 docs/ref_video/

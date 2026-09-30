@@ -1,0 +1,569 @@
+{
+    "date":  "2026-09-30",
+    "engine":  "Godot 4.7.2 Compatibility",
+    "goal_complete":  false,
+    "scope":  "Acts 1-2 desktop recovery playthrough and six port side quests; full S0-S7 remains active",
+    "regression_runner_exit_code":  0,
+    "regression_case_count":  35,
+    "case_completion_tokens":  {
+                                   "value":  [
+                                                 {
+                                                     "case":  "verify_battle",
+                                                     "token":  "BATTLE_OK"
+                                                 },
+                                                 {
+                                                     "case":  "verify_data",
+                                                     "token":  "DATA_OK"
+                                                 },
+                                                 {
+                                                     "case":  "verify_route",
+                                                     "token":  "ROUTE_OK"
+                                                 },
+                                                 {
+                                                     "case":  "verify_trait",
+                                                     "token":  "TRAIT_OK"
+                                                 },
+                                                 {
+                                                     "case":  "verify_walk_assets",
+                                                     "token":  "WALK_ASSETS_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyArena",
+                                                     "token":  "ARENA_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyAssets",
+                                                     "token":  "ASSETS_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyAudio",
+                                                     "token":  "AUDIO_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyAvatar",
+                                                     "token":  "AVATAR_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyBattleScene",
+                                                     "token":  "BATTLE_SCENE_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyCity",
+                                                     "token":  "CITY_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyDrops",
+                                                     "token":  "DROPS_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyEconomy",
+                                                     "token":  "ECONOMY_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyFishing",
+                                                     "token":  "FISHING_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyGacha",
+                                                     "token":  "GACHA_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyGameHome",
+                                                     "token":  "GAME_HOME_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyGrowth",
+                                                     "token":  "GROWTH_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyLore",
+                                                     "token":  "LORE_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyMainWorld",
+                                                     "token":  "MAIN_WORLD_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyMapScene",
+                                                     "token":  "MAP_SCENE_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyNav",
+                                                     "token":  "NAV_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyPanels",
+                                                     "token":  "PANELS_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyPerf",
+                                                     "token":  "PERF_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyPortGrowth",
+                                                     "token":  "PORT_GROWTH_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyQuests",
+                                                     "token":  "QUESTS_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyRouteScene",
+                                                     "token":  "ROUTE_SCENE_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifySave",
+                                                     "token":  "SAVE_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifySecondAct",
+                                                     "token":  "SECOND_ACT_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyShipping",
+                                                     "token":  "SHIPPING_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyStory",
+                                                     "token":  "STORY_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifySweep",
+                                                     "token":  "SWEEP_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyTradeWorld",
+                                                     "token":  "TRADE_WORLD_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyTransit",
+                                                     "token":  "TRANSIT_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyUiLayout",
+                                                     "token":  "UI_LAYOUT_OK"
+                                                 },
+                                                 {
+                                                     "case":  "VerifyWorldSession",
+                                                     "token":  "WORLD_SESSION_OK"
+                                                 }
+                                             ],
+                                   "Count":  35
+                               },
+    "playthrough_runner_exit_code":  0,
+    "roles":  [
+                  {
+                      "role":  "zs",
+                      "story_done":  [
+                                         "s01",
+                                         "s02",
+                                         "s03",
+                                         "s04",
+                                         "s05",
+                                         "s06",
+                                         "s07",
+                                         "s08",
+                                         "s09",
+                                         "s10",
+                                         "s11",
+                                         "s12",
+                                         "s13",
+                                         "s14",
+                                         "s15",
+                                         "s16",
+                                         "s17",
+                                         "s18",
+                                         "s19",
+                                         "s20"
+                                     ],
+                      "map":  "shenyuan_port",
+                      "level":  6,
+                      "gold":  3145,
+                      "ledger_count":  25,
+                      "cross_process_states_equal":  true,
+                      "tidal_guard_flee":  true,
+                      "priest_defeat_reentry":  true,
+                      "reward_replay_duplicate":  true
+                  },
+                  {
+                      "role":  "ck",
+                      "story_done":  [
+                                         "s01",
+                                         "s02",
+                                         "s03",
+                                         "s04",
+                                         "s05",
+                                         "s06",
+                                         "s07",
+                                         "s08",
+                                         "s09",
+                                         "s10",
+                                         "s11",
+                                         "s12",
+                                         "s13",
+                                         "s14",
+                                         "s15",
+                                         "s16",
+                                         "s17",
+                                         "s18",
+                                         "s19",
+                                         "s20"
+                                     ],
+                      "map":  "shenyuan_port",
+                      "level":  6,
+                      "gold":  3145,
+                      "ledger_count":  25,
+                      "cross_process_states_equal":  true,
+                      "tidal_guard_flee":  true,
+                      "priest_defeat_reentry":  true,
+                      "reward_replay_duplicate":  true
+                  },
+                  {
+                      "role":  "fs",
+                      "story_done":  [
+                                         "s01",
+                                         "s02",
+                                         "s03",
+                                         "s04",
+                                         "s05",
+                                         "s06",
+                                         "s07",
+                                         "s08",
+                                         "s09",
+                                         "s10",
+                                         "s11",
+                                         "s12",
+                                         "s13",
+                                         "s14",
+                                         "s15",
+                                         "s16",
+                                         "s17",
+                                         "s18",
+                                         "s19",
+                                         "s20"
+                                     ],
+                      "map":  "shenyuan_port",
+                      "level":  6,
+                      "gold":  3145,
+                      "ledger_count":  25,
+                      "cross_process_states_equal":  true,
+                      "tidal_guard_flee":  true,
+                      "priest_defeat_reentry":  true,
+                      "reward_replay_duplicate":  true
+                  },
+                  {
+                      "role":  "fz",
+                      "story_done":  [
+                                         "s01",
+                                         "s02",
+                                         "s03",
+                                         "s04",
+                                         "s05",
+                                         "s06",
+                                         "s07",
+                                         "s08",
+                                         "s09",
+                                         "s10",
+                                         "s11",
+                                         "s12",
+                                         "s13",
+                                         "s14",
+                                         "s15",
+                                         "s16",
+                                         "s17",
+                                         "s18",
+                                         "s19",
+                                         "s20"
+                                     ],
+                      "map":  "shenyuan_port",
+                      "level":  6,
+                      "gold":  3145,
+                      "ledger_count":  25,
+                      "cross_process_states_equal":  true,
+                      "tidal_guard_flee":  true,
+                      "priest_defeat_reentry":  true,
+                      "reward_replay_duplicate":  true
+                  }
+              ],
+    "player_save_sha256_before":  "C5D29EE55C033619C4F5232D55A6C4F186D40ADD556DB61EE0D776B9FDA2660C",
+    "player_save_sha256_after":  "C5D29EE55C033619C4F5232D55A6C4F186D40ADD556DB61EE0D776B9FDA2660C",
+    "screenshot_count":  34,
+    "screenshots":  [
+                        {
+                            "path":  "shots/p07e_20260930/second_fishing_480x1067.png",
+                            "width":  480,
+                            "height":  1067,
+                            "sha256":  "8E1A8E5676CFEFCE9201FD9AFB151095A81DD45DC19F6CBEDB52A64684740614"
+                        },
+                        {
+                            "path":  "shots/p07e_20260930/second_fishing_480x800.png",
+                            "width":  480,
+                            "height":  800,
+                            "sha256":  "37596ECE58474B08B981EB83A182BD357F74813D7DE3C3FB781B683BB4870298"
+                        },
+                        {
+                            "path":  "shots/p07e_20260930/second_gate_480x1067.png",
+                            "width":  480,
+                            "height":  1067,
+                            "sha256":  "5EF32F186E27DFD2E0F620D8D771B4CC0937EE827AFE3BE8627A7A24E3F5077F"
+                        },
+                        {
+                            "path":  "shots/p07e_20260930/second_gate_480x800.png",
+                            "width":  480,
+                            "height":  800,
+                            "sha256":  "80DCF21FE51DEA5DD263B1E8E78A64DA2E6083447B3F7A52FF760D4148330ECA"
+                        },
+                        {
+                            "path":  "shots/p07e_20260930/second_gate_ebb_480x1067.png",
+                            "width":  480,
+                            "height":  1067,
+                            "sha256":  "18DF2572D26C2B0C11C94431F3E354A38F998007B71F6F807257CFD04E600D99"
+                        },
+                        {
+                            "path":  "shots/p07e_20260930/second_gate_ebb_480x800.png",
+                            "width":  480,
+                            "height":  800,
+                            "sha256":  "11C6865A43894CFCA3376652297462AF0D0E3B8B4DDB51072D08572491F16887"
+                        },
+                        {
+                            "path":  "shots/p07e_20260930/second_gate_windup_480x1067.png",
+                            "width":  480,
+                            "height":  1067,
+                            "sha256":  "DD73D452D5BE7B28263A727C5C956466EE595915511CAC0ADE2A78B71709816F"
+                        },
+                        {
+                            "path":  "shots/p07e_20260930/second_gate_windup_480x800.png",
+                            "width":  480,
+                            "height":  800,
+                            "sha256":  "971A885697A506730496375EF2F564227F92DF91011A69D02F9C9C70E8D627D2"
+                        },
+                        {
+                            "path":  "shots/p07e_20260930/second_hatch_480x1067.png",
+                            "width":  480,
+                            "height":  1067,
+                            "sha256":  "8FF6AEEEB5FFAE4CFCD2596798324CC354BAE59BED324D1239544F11621AE9FE"
+                        },
+                        {
+                            "path":  "shots/p07e_20260930/second_hatch_480x800.png",
+                            "width":  480,
+                            "height":  800,
+                            "sha256":  "771604D48FA361639C9151F3F8268FB0794D5E226DBCC3C9D6D83A1F5FC77576"
+                        },
+                        {
+                            "path":  "shots/p07e_20260930/second_port_480x1067.png",
+                            "width":  480,
+                            "height":  1067,
+                            "sha256":  "68502AC66BE7F0DB3D6715749C6E1B391D9B6CD1262E24B61A53FD1402B9AD22"
+                        },
+                        {
+                            "path":  "shots/p07e_20260930/second_port_480x800.png",
+                            "width":  480,
+                            "height":  800,
+                            "sha256":  "008C70DFC032DBBFCEEBF1B87B70C678C788AEDB11633A3BCF1B589F3F028C09"
+                        },
+                        {
+                            "path":  "shots/p07e_20260930/second_port_south_480x1067.png",
+                            "width":  480,
+                            "height":  1067,
+                            "sha256":  "B9C6AEA8513D51D51D1D33D4F4118F1AFABE8196022E04B2017C57C64148DE4C"
+                        },
+                        {
+                            "path":  "shots/p07e_20260930/second_port_south_480x800.png",
+                            "width":  480,
+                            "height":  800,
+                            "sha256":  "63AE5882F869734FDC0B1B48D312B87C3E978E881B21CD46A42DB90903F33DE6"
+                        },
+                        {
+                            "path":  "shots/p07e_20260930/second_relation_480x1067.png",
+                            "width":  480,
+                            "height":  1067,
+                            "sha256":  "C766EF50BBC7A00A2A4E5728734C3B9CBAF5621084F95F77E0C404431752EC17"
+                        },
+                        {
+                            "path":  "shots/p07e_20260930/second_relation_480x800.png",
+                            "width":  480,
+                            "height":  800,
+                            "sha256":  "C67642C11563E0CBD491D5D1D9476405292710786CAA0DECB297C60BCBCA65C2"
+                        },
+                        {
+                            "path":  "shots/p07e_20260930/second_salt_480x1067.png",
+                            "width":  480,
+                            "height":  1067,
+                            "sha256":  "A9488209B04301905756C0CD806C7EE19AC50690425BB4759850D981F8900D8B"
+                        },
+                        {
+                            "path":  "shots/p07e_20260930/second_salt_480x800.png",
+                            "width":  480,
+                            "height":  800,
+                            "sha256":  "41364A037F38A746C001855031BB1E5829B20E2D779CEDB9670F7AAB5E1BB82E"
+                        },
+                        {
+                            "path":  "shots/p07e_20260930/second_shipping_480x1067.png",
+                            "width":  480,
+                            "height":  1067,
+                            "sha256":  "72DE2BD868B9AFEA49FBF6537E0BFC9E6C6FB6AFDB7BC24696484A2ADEF0EB97"
+                        },
+                        {
+                            "path":  "shots/p07e_20260930/second_shipping_480x800.png",
+                            "width":  480,
+                            "height":  800,
+                            "sha256":  "8DACE93E659D71A0BC65E7AAAC250EF5C2687AA705800786A1B5A1F9F8F8124D"
+                        },
+                        {
+                            "path":  "shots/p07e_20260930/second_tideflat_480x1067.png",
+                            "width":  480,
+                            "height":  1067,
+                            "sha256":  "483BB9687DC35F1BE19EE035F3F3FBD5CBBDE9CB2E294D3F2640F603D3A14331"
+                        },
+                        {
+                            "path":  "shots/p07e_20260930/second_tideflat_480x800.png",
+                            "width":  480,
+                            "height":  800,
+                            "sha256":  "B6FC63D78647B2231DC50A80333C91BE0E1817388EC291B6D1815090E1D8671F"
+                        },
+                        {
+                            "path":  "shots/p07f_20260930/second_hatch_480x1067.png",
+                            "width":  480,
+                            "height":  1067,
+                            "sha256":  "C03B99AFB2514926A08BC2F50493486CF5C731678993A896A5C139A266A1BFA0"
+                        },
+                        {
+                            "path":  "shots/p07f_20260930/second_hatch_480x800.png",
+                            "width":  480,
+                            "height":  800,
+                            "sha256":  "68F290EA2645F96D23833F2ED48C2A08E618AA36F31EF8A4A9A17572855B3DA2"
+                        },
+                        {
+                            "path":  "shots/p07f_20260930/second_side_choice_480x1067.png",
+                            "width":  480,
+                            "height":  1067,
+                            "sha256":  "756D869DAC2558B2C450DB58C0E50163C01AF45FFF2CF1466A1B64F2D3DC7465"
+                        },
+                        {
+                            "path":  "shots/p07f_20260930/second_side_choice_480x800.png",
+                            "width":  480,
+                            "height":  800,
+                            "sha256":  "EAE8570D1B141A9499CC23EB4B251DAE663C6CBDF4A91E143F86537AA6E3367C"
+                        },
+                        {
+                            "path":  "shots/p07f_20260930/second_side_courier_480x1067.png",
+                            "width":  480,
+                            "height":  1067,
+                            "sha256":  "351F71C4DD29AB448B309245F16BB4A668305A96A98D785727EC182784732A77"
+                        },
+                        {
+                            "path":  "shots/p07f_20260930/second_side_courier_480x800.png",
+                            "width":  480,
+                            "height":  800,
+                            "sha256":  "4ED80DF62AB1A78A7FFDFA4FEBEEE233DBD32826047C1E9F274572480EDED08D"
+                        },
+                        {
+                            "path":  "shots/p07f_20260930/second_side_grass_480x1067.png",
+                            "width":  480,
+                            "height":  1067,
+                            "sha256":  "5FF0EF4C3FB895D43C4A66E8AE81F2DD5FB19979A6B27CAE002E4EE967C87856"
+                        },
+                        {
+                            "path":  "shots/p07f_20260930/second_side_grass_480x800.png",
+                            "width":  480,
+                            "height":  800,
+                            "sha256":  "5FAE0FBFB11FB38C6C0E74CADAC08012602425D3B7BA266BC15FC402C9CCD0D9"
+                        },
+                        {
+                            "path":  "shots/p07f_20260930/second_side_repaired_480x1067.png",
+                            "width":  480,
+                            "height":  1067,
+                            "sha256":  "4D75A236030DFA4B8DC3AECE1D5A13F7B614879F183A2523D58A3B2E6738A8EC"
+                        },
+                        {
+                            "path":  "shots/p07f_20260930/second_side_repaired_480x800.png",
+                            "width":  480,
+                            "height":  800,
+                            "sha256":  "BEF51614678194884832FBCA18AE5BA0ED0F30B7A4BB39EC439E0D7B05338D00"
+                        },
+                        {
+                            "path":  "shots/p07f_20260930/second_side_rope_480x1067.png",
+                            "width":  480,
+                            "height":  1067,
+                            "sha256":  "CA54496C28F61AA5618857ABB9BD3A27D0EF56A4CF4BBC958A38B15C9B628EAA"
+                        },
+                        {
+                            "path":  "shots/p07f_20260930/second_side_rope_480x800.png",
+                            "width":  480,
+                            "height":  800,
+                            "sha256":  "8CFD618E12769B15B02563E9392717BADBD81AF61164D68A36DCBA37213CA032"
+                        }
+                    ],
+    "current_source_hashes":  [
+                                  {
+                                      "path":  "src/autoload/G.gd",
+                                      "sha256":  "309F78AA7FF0703A3FD3EE7AFA4CF70D28801501B915150AC614E786C1CC1E4A"
+                                  },
+                                  {
+                                      "path":  "src/city/CityScene.gd",
+                                      "sha256":  "17B843C4CFEA12C03192C330DED65D7E9658D5E2D5121DB4DFD375FBB7075106"
+                                  },
+                                  {
+                                      "path":  "src/explore/MapScene.gd",
+                                      "sha256":  "29A5E8E87AF695C49C6C60C3F7B2DD5F3D87F6406FC91C5F3E4E8A729FA9C399"
+                                  },
+                                  {
+                                      "path":  "src/explore/PortGround.gd",
+                                      "sha256":  "4E44898E4C3C0F775ECF720D5D3B1A1EB998D5EA42948D33165162588D443A1D"
+                                  },
+                                  {
+                                      "path":  "src/world/QuestService.gd",
+                                      "sha256":  "A4B3FC9DBC7A61F7968CA6311BD4C88B5EA4F17636659FBE4DEFE8D46F1DC726"
+                                  },
+                                  {
+                                      "path":  "src/world/RewardLedger.gd",
+                                      "sha256":  "0DD1ED1AD56EA73572A7F753026E6B9FC80F39A87200E670E6582B94E74A15BA"
+                                  },
+                                  {
+                                      "path":  "src/save/SaveData.gd",
+                                      "sha256":  "71D26A017F84449588E51F54AF9FDC3E1B4BF195287A70700CCFD3AD55CE5980"
+                                  },
+                                  {
+                                      "path":  "data/side_quests.json",
+                                      "sha256":  "F70F3EFA2C34B2ADC0199C17BB758B8F333FE8ED412D065B5118AAE09F6BFE36"
+                                  },
+                                  {
+                                      "path":  "data/main_world_maps.json",
+                                      "sha256":  "8C12DC7645DFCAFF87B445C56A53B231D221E63AFCCEAA75974091A3AD16D82B"
+                                  },
+                                  {
+                                      "path":  "data/maps.json",
+                                      "sha256":  "49288BA1BE4092740B376F48F5068BBBD6914F6A1196E03AAD6A8ECE9AA068DF"
+                                  },
+                                  {
+                                      "path":  "tools/VerifySecondAct.gd",
+                                      "sha256":  "C5DF89D67FCD09A682E721C9F1D0A40940353CCB94C7F6DCAC950BB073DBFB6D"
+                                  },
+                                  {
+                                      "path":  "tools/VerifyStory.gd",
+                                      "sha256":  "5EB8534641E4D6B5BE0731D9C8898ACF118BD5EF2BE1A925B4C3A6223979D9C0"
+                                  },
+                                  {
+                                      "path":  "tools/PlaythroughMainWorld.gd",
+                                      "sha256":  "757508B72EBFFA6E355B8FD8FDFF0B69C8ECDD6D768C7BC55687B6BAE716A065"
+                                  },
+                                  {
+                                      "path":  "tools/run_playthrough.ps1",
+                                      "sha256":  "5BE272D6F691165395EF9CCFF3779DF43045B9795FF879550B1133F6B3B27362"
+                                  },
+                                  {
+                                      "path":  "tools/run_regression.ps1",
+                                      "sha256":  "9D0BC61F8BAA1B63D6A8A04C8B91DA9372BF487E6642C4290B514D6F0E2E46C6"
+                                  },
+                                  {
+                                      "path":  "tools/ShotRunner.gd",
+                                      "sha256":  "02C5625CACEE0F833D945E53E865D3989CF6591461F9B9969318C901DC126138"
+                                  }
+                              ],
+    "limitations":  [
+                        "Offscreen logical viewport is not physical Android verification",
+                        "Manual 30-45 minute first-act timing pending",
+                        "Acts 3-4 and 24 remaining side quests pending",
+                        "Existing engine exit-resource diagnostics tracked as issue 43"
+                    ]
+}

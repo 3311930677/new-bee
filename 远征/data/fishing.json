@@ -1,0 +1,8 @@
+{
+  "daily_limit": 3,
+  "spots": [
+    {"id": "fish_salt_spring", "map": "old_salt_road", "name": "断桥盐泉", "item": "fish_salt", "fish_name": "盐泉鲫"},
+    {"id": "fish_port_pier", "map": "shenyuan_port", "name": "沉渊港栈桥", "item": "fish_port", "fish_name": "港湾银鳞"},
+    {"id": "fish_tide_pool", "map": "tideflat", "name": "潮痕浅池", "item": "fish_tide", "fish_name": "潮纹鳞"}
+  ]
+}

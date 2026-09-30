@@ -8,9 +8,10 @@ const VIEW_H := 800.0
 
 # 新 class_name 尚未进编辑器全局类缓存，按项目惯例 preload 路径取脚本
 const GrowthPanelScript := preload("res://src/ui/GrowthPanel.gd")
+const BagPanelScript := preload("res://src/ui/BagPanel.gd")
 
-const SPRITE_SCALE := 2.2       # 主界面以立绘为视觉中心，比局内放大一档
-const PED_Y := 604.0            # 金色圆台中心 y
+const SPRITE_SCALE := 1.8       # 营帐的角色预览不盖住导航与主世界入口
+const PED_Y := 602.0            # 金色圆台中心 y
 const BASE_OFFSET := 59.0       # 清理后素材脚底相对帧中心的偏移（基线 y=123）
 const ANIM_Y := PED_Y - BASE_OFFSET * SPRITE_SCALE
 
@@ -25,7 +26,7 @@ const ENTRIES := [
 var _anim: AnimatedSprite2D
 var _toast: Label = null
 var _deploy: DeployPanel = null
-var _worlds: WorldPanel = null
+var _worlds: RegionMapPanel = null
 var _codex: CodexPanel = null
 var _gacha: GachaPanel = null      # 召唤（魂石抽宠物）
 var _exchange: ExchangePanel = null  # 荣誉兑换
@@ -33,6 +34,7 @@ var _settings: SettingsPanel = null  # 设置（存档/键位）
 var _arena: Control = null       # 演武场（PVP 首版）
 const ArenaPanelScript := preload("res://src/ui/ArenaPanel.gd")
 var _growth: Control = null      # 养成 6 线（GrowthPanel）
+var _bag: Control = null         # 背包（BagPanel，P04）
 const AvatarPanelScript := preload("res://src/ui/AvatarPanel.gd")
 var _avatar_panel: Control = null   # 更换头像浮层
 var _avatar_frame: Panel = null     # 头像外框（悬停亮边用）
@@ -45,7 +47,7 @@ func _set_home_content_visible(visible: bool) -> void:
 	for child in get_children():
 		if child != _deploy and child != _worlds and child != _codex and child != _gacha \
 			and child != _exchange and child != _settings and child != _arena and child != _growth \
-			and child != _avatar_panel:
+			and child != _bag and child != _avatar_panel:
 			child.visible = visible
 
 
@@ -225,25 +227,30 @@ func _disc_panel(px: float, glyph: String) -> Control:
 
 # ---------- 顶部：徽标 + 账号小字 + 重建入口 ----------
 func _build_top(role: Dictionary) -> void:
-	# 主页是"游戏主界面"：木匾挂游戏名，别跟主城（点进去才是主城）重名
-	var b := G.banner_box("远 征", 240, 54)
+	# 营帐是整备页，实际探索主界面已经在可走的昭元边城。
+	var b := G.banner_box("行旅营帐", 230, 50)
 	b.set_anchors_preset(Control.PRESET_CENTER_TOP)
-	b.position = Vector2(-120, 84)   # 让出顶部两行：左上个人信息、右上四币与经验
+	b.position = Vector2(-115, 86)
 	add_child(b)
 
-	# 主线目标一行：一进主页就知道"现在该干什么"；点开是世界志（题记/正史/首领来历）
-	# 宽度收到 304 并居中，避开右侧竖列按钮（x≥392），不跟它抢那一列
-	var goal := G.main_goal()
-	var gl := G.gold_label("目标 · " + G.main_goal_short(), G.FS_XS, false,
-		Color("f0d9a0", 0.94), false)
-	gl.position = Vector2(88, 142)
-	gl.custom_minimum_size = Vector2(304, 0)
+	# 主线提示只读主世界任务；历练的旧首领目标不再误占营帐首页。
+	var story := G.story_current()
+	var gl := G.gold_label(G.story_goal_short(), G.FS_XS, false,
+		Color("fff0ca"), true)
+	gl.position = Vector2(42, 144)
+	gl.size = Vector2(350, 25)
+	gl.clip_text = true
 	gl.mouse_filter = Control.MOUSE_FILTER_STOP
 	gl.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	gl.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			G.show_info_popup(gl, String(goal.get("title", "当前目标")),
-				goal.get("lines", [])))
+			var lines: Array = ["当前目标：%s" % String(story.get("goal", "自由探索"))]
+			if not story.is_empty():
+				var target_cfg := TableCache.main_world_map(String(story.get("map", "")))
+				lines.append("前往：%s" % String(target_cfg.get("name", "昭元边城")))
+				for reward_line in G.reward_lines(story.get("reward", {})):
+					lines.append(String(reward_line))
+			G.show_info_popup(gl, String(story.get("title", "当前主线")), lines))
 	add_child(gl)
 
 	# 账号小字与「重新创建角色」撤出顶栏：一个和头像/名字挤在一起，一个压住货币条。
@@ -270,16 +277,11 @@ func _build_top(role: Dictionary) -> void:
 	row.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	row.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			G.show_info_popup(row, "资源说明", [
-				"金：建造与升级的主力货币，远征结算、讨伐首领可得。",
-				"远征币：远征途中的通行花费，局结算与路线事件产出。",
-				"魂石：召唤灵宠的消耗，远征与重复炼化产出。",
-				"荣誉：兑换商店的交易凭证，对战与结算产出（不加深数值差距）。",
-			]))
+			G.show_info_popup(row, "资源说明", G.wallet_info_lines()))
 	add_child(row)
 	var wallet_meta := [
-		["金", "f0c060", "gold", "cur_gold"], ["远征", "7ac0c8", "expedition", "cur_expedition"],
-		["魂石", "b08ad0", "soul", "cur_soul"], ["荣誉", "d07a5a", "honor", "cur_honor"],
+		["金币", "f0c060", "gold", "cur_gold"], ["远征币", "7ac0c8", "expedition", "cur_expedition"],
+		["魂晶", "b08ad0", "soul", "cur_soul"], ["荣誉", "d07a5a", "honor", "cur_honor"],
 	]
 	for i in wallet_meta.size():
 		var meta: Array = wallet_meta[i]
@@ -379,6 +381,7 @@ func _role_name(id: String) -> String:
 const RAIL_R := [
 	["世界", "界", "node_start"], ["竞技", "武", "icon_double_edge"],
 	["图鉴", "图", "itm_pet_book"], ["养成", "养", "gem_hp_3"],
+	["背包", "包", "itm_mithril"],
 	["兑换", "兑", "icon_vault"], ["召唤", "召", "icon_altar"],
 	["设置", "设", "slot_accessory"],
 ]
@@ -387,43 +390,35 @@ func _build_entries() -> void:
 	# 右侧竖列：活动与系统入口（出征已搬进主城，主页只留浏览与设置）
 	for i in RAIL_R.size():
 		var b := _round_entry(String(RAIL_R[i][0]), String(RAIL_R[i][1]), String(RAIL_R[i][2]))
-		b.position = Vector2(VIEW_W - 88.0, 124 + i * 72.0)
+		b.position = Vector2(VIEW_W - 80.0, 182 + i * 64.0)
 		add_child(b)
 
-	# 主城只有一个入口，进入承载城务和明雷的新地图。
-	var hint := G.serif_label("轻 触 进 入 主 城", G.FS_MD, Color("e6d0a4"))
-	hint.position = Vector2(0, 730)
-	hint.custom_minimum_size = Vector2(VIEW_W, 0)
-	hint.modulate.a = 0.45
-	hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(hint)
-	var tw := create_tween()
-	tw.set_loops()
-	tw.tween_property(hint, "modulate:a", 0.85, 1.1)
-	tw.tween_property(hint, "modulate:a", 0.40, 1.1)
-
-	var zone := Control.new()
-	zone.position = Vector2(0, 706)
-	zone.custom_minimum_size = Vector2(VIEW_W, 94)
-	zone.mouse_filter = Control.MOUSE_FILTER_STOP
-	zone.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	zone.gui_input.connect(_open_city)
-	add_child(zone)
+	# 明确的主要动作；不再用底部无边界的整屏隐形热区。
+	var state: Variant = G.prog.get("main_world", {})
+	var map_id := String((state as Dictionary).get("map_id", "lorin_wilds")) \
+		if state is Dictionary else "lorin_wilds"
+	var map_name := String(TableCache.main_world_map(map_id).get("name", "昭元边城"))
+	var back_to_world := G.gold_button("返回主世界 · %s" % map_name, 412, 56, G.FS_MD)
+	back_to_world.name = "ReturnToWorld"
+	back_to_world.position = Vector2(34, 709)
+	back_to_world.tooltip_text = "返回上次所在的主世界地区"
+	back_to_world.gui_input.connect(_open_city)
+	add_child(back_to_world)
 
 
 ## 圆形入口：功能图标 + 金边圆底 + 下方小字
 func _round_entry(label: String, glyph: String, icon_name: String) -> Control:
 	var root := Control.new()
-	root.custom_minimum_size = Vector2(72, 72)
+	root.custom_minimum_size = Vector2(64, 64)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	root.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 
 	var disc := PanelContainer.new()
-	disc.custom_minimum_size = Vector2(60, 60)
-	disc.position = Vector2(6, 0)
+	disc.custom_minimum_size = Vector2(48, 48)
+	disc.position = Vector2(8, 0)
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = Color(0.09, 0.07, 0.05, 0.92)
-	sb.set_corner_radius_all(30)
+	sb.set_corner_radius_all(24)
 	sb.set_border_width_all(2)
 	sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.55)
 	G._apply_shadow(sb, 4.0, 2.0, 0.30)
@@ -435,24 +430,25 @@ func _round_entry(label: String, glyph: String, icon_name: String) -> Control:
 		icon.texture = icon_tex
 		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		icon.custom_minimum_size = Vector2(G.ICON_RAIL, G.ICON_RAIL)
-		icon.size = Vector2(G.ICON_RAIL, G.ICON_RAIL)
-		icon.position = Vector2((60.0 - G.ICON_RAIL) * 0.5, (60.0 - G.ICON_RAIL) * 0.5)
+		var icon_size := minf(G.ICON_RAIL, 40.0)
+		icon.custom_minimum_size = Vector2(icon_size, icon_size)
+		icon.size = Vector2(icon_size, icon_size)
+		icon.position = Vector2((48.0 - icon_size) * 0.5, (48.0 - icon_size) * 0.5)
 		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		disc.add_child(icon)
 	else:
 		disc.add_child(G.serif_label(glyph, G.FS_LG, Color("f0c060")))
 	root.add_child(disc)
 
-	var cap := G.gold_label(label, G.FS_XS, false, Color("f4ddb0"), false)
-	cap.position = Vector2(0, 60)
-	cap.custom_minimum_size = Vector2(72, 0)
+	var cap := G.gold_label(label, G.FS_XS, false, Color("f4ddb0"), true)
+	cap.position = Vector2(0, 49)
+	cap.custom_minimum_size = Vector2(64, 0)
 	cap.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	cap.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(cap)
 
 	if _entry_has_badge(label):
-		G.badge_dot(root, Vector2(58, 2))
+		G.badge_dot(root, Vector2(52, 2))
 
 	root.mouse_entered.connect(func(): root.modulate = Color(1.06, 1.04, 1.0))
 	root.mouse_exited.connect(func(): root.modulate = Color.WHITE)
@@ -486,6 +482,7 @@ func _dispatch_entry(label: String) -> void:
 		"竞技": _open_arena()
 		"图鉴": _open_codex(_click_ev())
 		"养成": _open_growth()
+		"背包": _open_bag()
 		"兑换": _open_exchange()
 		"召唤": _open_gacha()
 		"设置": _open_settings(_click_ev())
@@ -508,29 +505,7 @@ func _open_city(e: InputEvent) -> void:
 func _open_main_world(e: InputEvent) -> void:
 	if not (e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT):
 		return
-	var state: Variant = G.prog.get("main_world", {})
-	var map_id := String((state as Dictionary).get("map_id", "")) if state is Dictionary else ""
-	if TableCache.main_world_map(map_id).is_empty():
-		map_id = TableCache.default_main_world_map()
-	var map_cfg := TableCache.main_world_map(map_id)
-	var pets := G.owned_pets()
-	var run := RunState.new()
-	run.setup({
-		"theme": String(map_cfg.get("theme", "forest")),
-		"role_id": G.selected_role if G.selected_role != "" else "zs",
-		"level": int(G.prog.get("level", 1)),
-		"active_pet": String(pets[0]) if not pets.is_empty() else "",
-		"bench_pet": String(pets[1]) if pets.size() > 1 else "",
-		"potions": G.run_potions_base(),
-		"seed": randi(),
-	})
-	MapScene.pending_cfg = {
-		"mode": "main_world",
-		"main_map_id": map_id,
-		"run": run,
-		"node": {"type": String(map_cfg.get("node_type", "normal")), "layer": 0, "index": 0},
-	}
-	G.go("res://src/explore/MapScene.tscn")
+	G.enter_main_world()
 
 
 # ---------- 远征入口（阶段 2.7：出征筹备 DEPLOY——选秘境→选人物→选宠物） ----------
@@ -558,7 +533,7 @@ func _open_worlds(e: InputEvent) -> void:
 	if _worlds != null:
 		return
 	Audio.sfx("ui_open")
-	_worlds = WorldPanel.new()
+	_worlds = RegionMapPanel.new()
 	_worlds.closed.connect(func():
 		Audio.sfx("ui_close")
 		_worlds.queue_free()
@@ -615,7 +590,7 @@ func _open_gacha() -> void:
 	add_child(_gacha)
 
 
-# ---------- 兑换入口（荣誉换金币/远征币/魂石/扫荡券） ----------
+# ---------- 演武荣誉补给入口 ----------
 func _open_exchange() -> void:
 	if _exchange != null:
 		return
@@ -643,6 +618,21 @@ func _open_growth() -> void:
 		_set_home_content_visible(true))
 	_set_home_content_visible(false)
 	add_child(_growth)
+
+
+# ---------- 背包入口（装备实例 / 材料 / 宝石 / 待领取箱，P04） ----------
+func _open_bag() -> void:
+	if _bag != null:
+		return
+	Audio.sfx("ui_open")
+	_bag = BagPanelScript.new()
+	_bag.closed.connect(func():
+		Audio.sfx("ui_close")
+		_bag.queue_free()
+		_bag = null
+		_set_home_content_visible(true))
+	_set_home_content_visible(false)
+	add_child(_bag)
 
 
 # ---------- 设置入口（存档导出导入 / 键位说明 / 回标题 / 重置） ----------

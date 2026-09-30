@@ -17,6 +17,8 @@ const BAR_INSET := 3.0      # 内填充与外框的边距；9-patch 左右各 10
 const PRELOAD_CODE := [
 	"res://src/ui/GameHome.tscn",      # 主界面（连带 GrowthPanel 六个子面板）
 	"res://src/explore/MapScene.tscn", # 主城（城务层沿用 CityScene）
+	"res://src/city/CityScene.tscn",   # 城务层独立入口和主世界嵌入共用
+	"res://src/ui/RegionMapPanel.gd", # 主世界地区图
 	"res://src/run/RouteScene.tscn",   # 路线图（连带 MapScene / BattleScene）
 	"res://src/ui/WorldPanel.gd",
 	"res://src/ui/CodexPanel.gd",
@@ -30,6 +32,7 @@ const PRELOAD_CODE := [
 	"res://src/ui/StoryBeat.tscn",     # 首领剧情演出（对峙/余韵）
 	"res://src/ui/Title.tscn",
 	"res://src/ui/Login.tscn",
+	"res://src/ui/NameRecovery.tscn", # 旧档有职业而缺昵称时补填，不重建角色
 ]
 
 # 音频预热：首播时解析 ogg 有几毫秒抖动，顺手一起热掉（音量大头是流式解码，不进这里）

@@ -135,6 +135,50 @@ static func city_config() -> Dictionary:
 	return v if v is Dictionary else {}
 
 
+static func city_config_for(map_id: String) -> Dictionary:
+	if map_id == "shenyuan_port":
+		var v: Variant = _load("res://data/shenyuan_port.json")
+		return v if v is Dictionary else {}
+	return city_config()
+
+
+static func currencies_config() -> Dictionary:
+	var v: Variant = _load("res://data/currencies.json")
+	return v if v is Dictionary else {}
+
+
+static func story_quests_config() -> Dictionary:
+	var v: Variant = _load("res://data/story_quests.json")
+	return v if v is Dictionary else {}
+
+
+## 第一幕支线表（P05-B）。与主线分开：主线是顺序步骤，支线是并行小状态机。
+static func side_quests_config() -> Dictionary:
+	var v: Variant = _load("res://data/side_quests.json")
+	return v if v is Dictionary else {}
+
+
+## 第一幕成长纵切（P05-D）：导师解锁、熟练分支与后续首宠／首骑共用一张小表。
+static func act1_growth_config() -> Dictionary:
+	var v: Variant = _load("res://data/act1_growth.json")
+	return v if v is Dictionary else {}
+
+
+static func act1_orders_config() -> Dictionary:
+	var v: Variant = _load("res://data/act1_orders.json")
+	return v if v is Dictionary else {}
+
+
+static func economy_config() -> Dictionary:
+	var v: Variant = _load("res://data/economy.json")
+	return v if v is Dictionary else {}
+
+
+static func fishing_config() -> Dictionary:
+	var v: Variant = _load("res://data/fishing.json")
+	return v if v is Dictionary else {}
+
+
 static func codex_config() -> Dictionary:
 	var v: Variant = _load("res://data/codex.json")
 	return v if v is Dictionary else {}

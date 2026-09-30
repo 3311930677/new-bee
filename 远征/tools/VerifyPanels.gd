@@ -50,7 +50,7 @@ func _run() -> void:
 
 
 func _verify_exchange() -> void:
-	G.wallet = {"gold": 0, "expedition": 0, "soul": 0, "honor": 1000}
+	G.wallet = {"gold": 0, "expedition": 0, "soul": 0, "honor": 330}
 	G.items = {"ticket_ten": 0, "ticket_sweep": 0}
 	G.save_game()
 
@@ -58,33 +58,37 @@ func _verify_exchange() -> void:
 	add_child(ex)
 	await get_tree().process_frame  # 等 _ready 构建完
 
-	# 1. 兑换表加载（6 条货币/券 + 8 条养成材料）
+	# 1. 荣誉兑换只给辅助材料，不能直接换其他三币。
 	var entries: Array = ex.entries()
-	_check(entries.size() == 14, "兑换表应有 14 条，实为 %d" % entries.size())
+	_check(entries.size() == 5, "演武补给应有 5 条，实为 %d" % entries.size())
+	for row_v in entries:
+		var row: Dictionary = row_v
+		for key in (row.get("give", {}) as Dictionary):
+			_check(String(key).begins_with("item_"), "荣誉不应兑换通用货币")
 
-	# 2. 货币包兑换：扣荣誉 → 金币入钱包
-	_check(ex.do_exchange("gold_pack_s"), "gold_pack_s 应兑换成功")
-	_check(int(G.wallet.get("honor", -1)) == 900, "兑换后荣誉应 900，实为 %d" % int(G.wallet.get("honor", -1)))
-	_check(int(G.wallet.get("gold", -1)) == 1200, "兑换后金币应 1200，实为 %d" % int(G.wallet.get("gold", -1)))
+	# 2. 辅助材料兑换：扣荣誉，道具入包，金币不变化。
+	_check(ex.do_exchange("enhance_stone"), "强化石应兑换成功")
+	_check(int(G.wallet.get("honor", -1)) == 250, "兑换后荣誉应 250")
+	_check(G.item_count("enhance_stone") == 3, "强化石应入包 ×3")
+	_check(int(G.wallet.get("gold", -1)) == 0, "荣誉兑换不应印出金币")
 
-	# 3. 道具券兑换：走 G.grant_item
-	var tk_before := G.item_count("ticket_ten")
-	_check(ex.do_exchange("ticket_ten"), "ticket_ten 应兑换成功")
-	_check(G.item_count("ticket_ten") == tk_before + 1, "召唤十连券应 +1，实为 %d" % G.item_count("ticket_ten"))
+	# 3. 第二次兑换写入另一项库存。
+	_check(ex.do_exchange("refine_stone"), "精炼石应兑换成功")
+	_check(G.item_count("refine_stone") == 2, "精炼石应入包 ×2")
 
-	# 4. 荣誉不足分支：剩余 300 < 400，拒绝且不扣费
-	_check(not ex.do_exchange("gold_pack_l"), "荣誉不足应返回 false")
-	_check(int(G.wallet.get("honor", -1)) == 300, "失败的兑换不应扣荣誉")
+	# 4. 荣誉不足分支：剩余 130 < 160，拒绝且不扣费。
+	_check(not ex.do_exchange("lock_rune"), "荣誉不足应返回 false")
+	_check(int(G.wallet.get("honor", -1)) == 130, "失败的兑换不应扣荣誉")
 	var hint: Label = ex.get("_hint")
 	_check(hint != null and hint.text.contains("荣誉不足"), "荣誉不足应给红字提示")
 
 	# 5. UI 刷新：余额标签 + 按钮置灰态
 	var honor_l: Label = ex.get("_honor_l")
-	_check(honor_l != null and honor_l.text == "荣誉 300",
-		"余额标签应刷成「荣誉 300」，实为 %s" % String(honor_l.text if honor_l != null else ""))
+	_check(honor_l != null and honor_l.text == "荣誉 130",
+		"余额标签应刷成「荣誉 130」，实为 %s" % String(honor_l.text if honor_l != null else ""))
 	var btns: Dictionary = ex.get("_btns")
-	var poor: Control = btns.get("gold_pack_l")
-	var rich: Control = btns.get("gold_pack_s")
+	var poor: Control = btns.get("lock_rune")
+	var rich: Control = btns.get("enhance_stone")
 	_check(poor != null and is_equal_approx(poor.modulate.a, 0.5), "买不起的按钮应置灰 modulate 0.5")
 	_check(rich != null and is_equal_approx(rich.modulate.a, 1.0), "买得起的按钮不应置灰")
 
@@ -205,7 +209,10 @@ func _verify_settings() -> void:
 	G.player_name = "测试者"
 	G.gm_reset_save()
 	_check(int(G.items.get("ticket_ten", -1)) == 0, "重置后道具应清空（ticket_ten 归零）")
-	_check((G.city.get("built", []) as Array).size() == 2, "重置后主城应回到初始两建筑")
+	for building_v in G.city_buildings():
+		var building: Dictionary = building_v
+		_check(G.is_built(String(building.get("id", ""))) == bool(building.get("start", false)),
+			"重置后基础服务应按 city.json 开局状态恢复")
 	_check((G.quest.get("claimed", []) as Array).is_empty(), "重置后委托已交付记录应清空")
 	_check(int(G.arena.get("score", -1)) == 1000, "重置后段位分应回 1000，实为 %d" % int(G.arena.get("score", -1)))
 	_check(G.player_name == "", "重置后昵称应清空，实为「%s」" % G.player_name)
@@ -238,6 +245,15 @@ func _verify_settings() -> void:
 		var buy1 := G.shop_buy(item0)
 		_check(bool(buy1["ok"]) and G.item_count(item0) == 1, "购买应发货")
 		_check(int(G.wallet["gold"]) == 0, "购买应扣款")
+		var sell_price0 := G.shop_sell_price(item0)
+		_check(sell_price0 > 0 and sell_price0 < price0,
+			"回收价必须公开且低于购价，防止同城套利")
+		var sale := G.shop_sell(item0)
+		_check(bool(sale["ok"]) and G.item_count(item0) == 0,
+			"出售应扣掉一件材料")
+		_check(int(G.wallet["gold"]) == sell_price0,
+			"出售应只按公开回收价入金")
+		_check(not bool(G.shop_sell(item0)["ok"]), "库存为零不能重复出售")
 	var shop_p: Control = (load("res://src/ui/ShopPanel.gd") as GDScript).new()
 	add_child(shop_p)
 	await get_tree().process_frame

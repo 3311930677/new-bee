@@ -30,6 +30,11 @@ static func can_cast(sim: BattleSim, caster: Combatant, skill: Dictionary) -> bo
 ## 入队（校验通过后调用）
 static func enqueue_cast(sim: BattleSim, caster: Combatant, skill: Dictionary) -> void:
 	var windup := WINDUP_TICKS_ULT if int(skill.get("cost", 0)) >= 60 else WINDUP_TICKS
+	# 表驱动的 per-skill 前摇（秒）：慢招要让玩家**看得见**预兆（例：失路兽「嗅踪」2 秒，
+	# 表现层按 cast_queue 剩余前摇画收缩环并逐帧倒数）。不给 windup 的照旧走 0.4/0.5 秒口径。
+	var windup_sec := float(skill.get("windup", 0.0))
+	if windup_sec > 0.0:
+		windup = maxi(1, int(windup_sec * float(BattleSim.TICK_RATE)))
 	if caster.traits != null:
 		windup = maxi(6, int(float(windup) * (1.0 + caster.traits.passive_cd_pct() * 0.5)))
 	sim.cast_queue.append({"uid": caster.uid, "skill": skill, "windup": windup})
@@ -126,7 +131,8 @@ static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, c
 	# 目标集合
 	var etype := String(effect.get("type", ""))
 	var targets := _pick_targets(sim, caster, target_type)
-	if targets.is_empty() and etype != "heal" and etype != "summon" and etype != "cleanse":
+	var effective := 0
+	if targets.is_empty() and target_type != "ally_role" and etype != "heal" and etype != "summon" and etype != "cleanse":
 		# 兜底：目标集合为空（敌方前排全灭 / 双方全远程编成）时改打最低血单体（与普攻同规则），
 		# 避免 front_all 类技能空放还照扣能量与 CD
 		var enemies := sim.alive_units("enemy" if caster.side == "ally" else "ally")
@@ -136,7 +142,7 @@ static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, c
 		return
 	match etype:
 		"heal":
-			_apply_heal(sim, caster, skill, effect, targets, combo)
+			effective = _apply_heal(sim, caster, skill, effect, targets, combo)
 		"cleanse":
 			for t in targets:
 				var n := t.dispel_debuffs()
@@ -159,6 +165,7 @@ static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, c
 				# 却照扣能量与 CD，飘字还显示旧数值——玩家以为盾变多了其实没有
 				var real := int(t.get_buff("shield").get("val", {}).get("pool", pool))
 				sim.emit({"t": "shield_add", "uid": t.uid, "pool": real})
+				effective += pool
 		"atk_up":
 			for t in targets:
 				t.add_buff("atk_up", int(float(effect.get("dur", 5.0)) * 30.0),
@@ -190,12 +197,24 @@ static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, c
 			sim.summon_monsters(caster, mon_id, count,
 				int(skill.get("summon_cap", BattleSim.spawn_summon_cap())))
 		_:
-			_apply_damage(sim, caster, skill, k, hits, targets, effect, combo, is_full_energy)
+			effective = _apply_damage(sim, caster, skill, k, hits, targets, effect, combo, is_full_energy)
+	# 施法后的自身状态（P03）：首领技「打完露出破绽」这类代价写在数据表里，不塞进每个技能分支。
+	# after.self_buff = {type, dur, pct}（例：break_window 破绽 4 秒、受伤 +35%）。
+	var after_v: Variant = skill.get("after")
+	if after_v is Dictionary:
+		var sb: Variant = (after_v as Dictionary).get("self_buff")
+		if sb is Dictionary:
+			sim.apply_buff_spec(caster, sb as Dictionary)
+	# P05-D 熟练只认真实效果：命中造成伤害、实际回复生命或真正加上护盾。
+	# 空放、满血治疗、能量不足和被取消的前摇都不会发这条事件。
+	if caster.kind == "role" and effective > 0:
+		sim.emit({"t": "skill_effective", "uid": caster.uid,
+			"skill": String(skill.get("id", "")), "amount": effective})
 
 
 static func _apply_damage(sim: BattleSim, caster: Combatant, skill: Dictionary, k: float,
 		hits: int, targets: Array[Combatant], effect: Dictionary, combo: Dictionary,
-		is_full_energy := false) -> void:
+		is_full_energy := false) -> int:
 	var total := 0
 	for h in hits:
 		var hit_targets := targets
@@ -258,19 +277,22 @@ static func _apply_damage(sim: BattleSim, caster: Combatant, skill: Dictionary, 
 	# 词条：技能施放钩子（能量导管）
 	if caster.traits != null and total > 0:
 		caster.traits.on_skill_cast(sim, caster, total)
+	return total
 
 
 static func _apply_heal(sim: BattleSim, caster: Combatant, skill: Dictionary,
-		effect: Dictionary, targets: Array[Combatant], combo: Dictionary) -> void:
+		effect: Dictionary, targets: Array[Combatant], combo: Dictionary) -> int:
 	var hp_pct := float(effect.get("hp_pct", 0.1))
 	var atk_k := float(effect.get("atk_k", 0.0))
 	var ce: Dictionary = combo.get("effect", {})
 	if String(ce.get("type", "")) == "heal_bonus":
 		hp_pct *= 1.0 + float(ce.get("pct", 0.3))
 		atk_k *= 1.0 + float(ce.get("pct", 0.3))
+	var total := 0
 	for t in targets:
 		var amt := DamageCalc.heal_amount(t.get_max_hp(), caster.get_atk(), hp_pct, atk_k)
-		t.heal(amt, caster, sim)
+		total += t.heal(amt, caster, sim)
+	return total
 
 
 static func _pick_targets(sim: BattleSim, caster: Combatant, target_type: String) -> Array[Combatant]:
@@ -303,6 +325,10 @@ static func _pick_targets(sim: BattleSim, caster: Combatant, target_type: String
 				out.append(t)
 		"ally_single":
 			out.append(_heal_target(caster, allies))
+		"ally_role":
+			var role := sim.role_unit()
+			if role != null and role.alive and role.side == caster.side:
+				out.append(role)
 		"ally_all":
 			out = allies
 		"self":

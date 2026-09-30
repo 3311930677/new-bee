@@ -55,6 +55,9 @@ func _run() -> void:
 	_check(await _draw_text_seen("arena", "未分胜负"), "演武平局应显示「未分胜负」，不能写成失利")
 	_check(await _run_classic_commands(), "经典战斗的攻/技/物/逃入口应可用且共用原战斗规则")
 	_check(await _run_ranged_presentation(), "远程普攻应先飞弹、抵达后再显示伤害反馈且血条同步")
+	_check(await _run_omens_and_phase(),
+		"P03 敌方施法应出图形预兆（施法者+目标环）与含技能名的蓄力倒数；阶段事件应出居中横幅并把阶段名写进首领血条")
+	_check(await _run_boss_flee_blocked(), "P03 剧情首领战「逃」应置灰且点击不产生撤退结算（其余三枚不受影响）")
 
 	if _fails == 0:
 		print("BATTLE_SCENE_OK all tests passed")
@@ -95,6 +98,8 @@ func _run_classic_commands() -> bool:
 	await get_tree().process_frame
 	var ok := scene._classic_presentation() and scene._cmd_root != null \
 		and scene._cmd_btns.size() == 4 and scene._cmd_root.visible
+	# P03：「逃」的后果文案要说在点之前（普通怪=退出本节点、保留战损与进度）
+	ok = ok and String(scene._radial_hint("flee")).contains("保留战损")
 	if not ok:
 		scene.queue_free()
 		await get_tree().process_frame
@@ -111,20 +116,17 @@ func _run_classic_commands() -> bool:
 			== scene._grid_pos(enemy.side, enemy.row, enemy.col)
 		ok = ok and role_view.position == scene._grid_pos(role.side, role.row, role.col)
 	if role_view != null:
-		# 四枚径向指令按 RADIAL_OFFSETS 环绕角色脚底摆放（夹在视野内），互不重叠，
-		# 且不压角色精灵（128×128×0.55：x±36、头 -61）与脚下血/能量条（12~22）
+		# 四枚指令在固定操作带上，不随角色移动，也不压单位与血条。
 		var sprite_rect := Rect2(role_view.position + Vector2(-36, -62), Vector2(72, 72))
 		var bars_rect := Rect2(role_view.position + Vector2(-22, 12), Vector2(44, 11))
 		var tiles: Array[Rect2] = []
-		for cbd in scene._cmd_btns:
+		for i in scene._cmd_btns.size():
+			var cbd: Dictionary = scene._cmd_btns[i]
 			var root := cbd.root as Control
-			var want: Vector2 = role_view.position + (BattleScene.RADIAL_OFFSETS.get(
-				String(cbd.key), Vector2.ZERO) as Vector2)
-			want.x = clampf(want.x, 6.0, BattleScene.VIEW_W - BattleScene.RADIAL_BTN - 6.0)
-			want.y = clampf(want.y, 56.0, 560.0)
+			var want := Vector2(39.0 + i * 101.0, BattleScene.CLASSIC_CMD_Y)
 			ok = ok and root.position == want
-			var tile := Rect2(root.position, Vector2(BattleScene.RADIAL_BTN,
-				BattleScene.RADIAL_BTN + BattleScene.RADIAL_LABEL_H))
+			var tile := Rect2(root.position, Vector2(BattleScene.CLASSIC_CMD_W,
+				BattleScene.CLASSIC_CMD_H))
 			ok = ok and not tile.intersects(sprite_rect) and not tile.intersects(bars_rect)
 			for other in tiles:
 				ok = ok and not tile.intersects(other)
@@ -152,9 +154,22 @@ func _run_classic_commands() -> bool:
 	scene._show_command_skills()
 	await get_tree().process_frame  # 页条按钮 queue_free 后再核对技能页
 	var expected_skills := mini(5, role.skills.size()) if role != null else 0
+	# 技能页底边固定、按行数向上长；每行至少 44px，触屏易点且不会透出旧指令。
 	ok = ok and scene._page_panel.get_child_count() == expected_skills + 1 \
-		and scene._page_panel.position == BattleScene.PAGE_PANEL_POS \
-		and scene._page_panel.size == BattleScene.PAGE_PANEL_SIZE
+		and BattleScene.PAGE_ROW_H >= 44.0 and not scene._cmd_root.visible \
+		and is_equal_approx(scene._page_panel.position.x, BattleScene.PAGE_PANEL_POS.x) \
+		and is_equal_approx(scene._page_panel.size.x, BattleScene.PAGE_PANEL_SIZE.x) \
+		and is_equal_approx(scene._page_panel.position.y + scene._page_panel.size.y,
+			BattleScene.PAGE_PANEL_BOTTOM)
+	if scene._page_panel.get_child_count() > 0:
+		var row0 := scene._page_panel.get_child(0) as Control
+		ok = ok and is_equal_approx(row0.size.x, BattleScene.PAGE_PANEL_SIZE.x) \
+			and is_equal_approx(row0.size.y, BattleScene.PAGE_ROW_H)
+	if expected_skills > 0:
+		# 每行「左名 + 右侧灰色详情」：技能行必须写清 Lv/耗/冷/范围
+		var row_text := " ".join(_texts(scene._page_panel.get_child(0)))
+		ok = ok and row_text.contains("Lv") and row_text.contains("耗") \
+			and row_text.contains("冷") and row_text.contains("单体")
 	scene._close_page()
 	ok = ok and not scene._page_panel.visible
 	scene._show_command_skills()
@@ -169,12 +184,105 @@ func _run_classic_commands() -> bool:
 	if role != null:
 		role.hp = maxi(1, role.get_max_hp() - 40)
 	scene._command_item()
+	await get_tree().process_frame
 	ok = ok and scene._page_panel.visible and scene._command_page == "items"
+	# P03：道具行必须写清「数量 + 效果」（药剂 ×N / 恢复 X% 生命）
+	var item_text := _join_texts(scene._page_panel)
+	ok = ok and item_text.contains("药剂 ×") and item_text.contains("恢复")
+	# P03 常驻信息条：四枚指令之上的一行，把攻/技/物三件事都说出来
+	var info: Label = scene.get("_cmd_info_l")
+	ok = ok and info != null and String(info.text).contains("攻") \
+		and String(info.text).contains("技") and String(info.text).contains("物")
 	scene._command_use_potion()
 	ok = ok and scene.sim.potions_left == potions_before - 1
 	scene._flee_armed = true # 模拟二次确认的第二击，验证仍落到既有撤退结算
 	scene._command_flee()
 	ok = ok and scene.sim.finished and scene.sim.result == "flee"
+	scene.queue_free()
+	await get_tree().process_frame
+	return ok
+
+
+## 把一棵子树里的所有 Label 文本拼成一段（弹页断言用）
+func _join_texts(root: Node) -> String:
+	return " | ".join(_texts(root))
+
+
+## P03：图形预兆 + 文字倒数 + 阶段横幅 + 首领血条阶段名
+func _run_omens_and_phase() -> bool:
+	BattleScene.pending_cfg = {
+		"ally": {"role_id": "zs", "level": 20, "traits": [], "potions": 2},
+		"enemy": {"theme": "forest", "node_type": "boss", "layer": 1},
+		"presentation": "classic_inline", "seed": 29,
+	}
+	var scene := _spawn()
+	scene.speed = 0.0   # 冻住 sim：本用例只验表现层，避免真实施法把队列搅乱
+	await get_tree().process_frame
+	var boss: Combatant = null
+	for u in scene.sim.units:
+		if u.side == "enemy" and u.ai_type == "boss":
+			boss = u
+			break
+	if boss == null:
+		scene.queue_free()
+		await get_tree().process_frame
+		return false
+
+	# 手工塞一条敌方前摇（首领技 · 碑震 · 全体前排），验预兆环与文字倒数
+	scene.sim.cast_queue.append({"uid": boss.uid, "windup": 8,
+		"skill": {"id": "boss_slam", "name": "碑震", "target": "enemy_front_all"}})
+	scene.call("_on_event", {"t": "cast_start", "uid": boss.uid, "skill": "boss_slam", "name": "碑震"})
+	# 预兆环平时是逐帧刷新的；这里直接调一次，免得断言依赖 process_frame 与 _process 的先后
+	scene.call("_refresh_omens")
+	var omens: Node2D = scene.get("_omens")
+	var rings: Array = [] if omens == null else omens.get("rings")
+	var caster_ring := false
+	var target_ring := false
+	for r in rings:
+		if bool(r.get("target", false)):
+			target_ring = true
+		else:
+			caster_ring = true
+	# 施法者脚下 + 将要挨打者身上，两种环都要有
+	var ok := omens != null and omens.visible and rings.size() >= 2 and caster_ring and target_ring
+	var tip: Label = scene.get("_cast_tip")
+	ok = ok and tip != null and String(tip.text).contains("碑震") and String(tip.text).contains("蓄力")
+
+	# 阶段事件 → 居中横幅 + 首领血条追加阶段名
+	scene.call("_on_event", {"t": "phase", "uid": boss.uid, "id": "wail",
+		"name": "碑鸣", "announce": "失声碑灵发出低鸣——攻势加快"})
+	var banner := false
+	for i in 6:
+		await get_tree().process_frame
+		if not banner and _texts(scene).any(func(t): return String(t).contains("碑鸣")):
+			banner = true
+	ok = ok and banner
+	var boss_l: Label = scene.get("_boss_name_l")
+	ok = ok and boss_l != null and String(boss_l.text).contains("碑鸣")
+	scene.queue_free()
+	await get_tree().process_frame
+	return ok
+
+
+## P03：剧情首领战禁止撤退（flee_rule=blocked）——按钮置灰且点击不出撤退结算
+func _run_boss_flee_blocked() -> bool:
+	BattleScene.pending_cfg = {
+		"ally": {"role_id": "zs", "level": 20, "traits": [], "potions": 1},
+		"enemy": {"theme": "forest", "node_type": "boss", "layer": 1},
+		"presentation": "classic_inline", "flee_rule": "blocked", "seed": 31,
+	}
+	var scene := _spawn()
+	scene.speed = 0.0
+	await get_tree().process_frame
+	var ok := bool(scene.get("_flee_blocked")) and scene._radial_disabled("flee")
+	# 置灰的同时必须把「为什么不能逃」写在按钮上（否则玩家以为是按键坏了）
+	ok = ok and String(scene._radial_hint("flee")) == "首领战不可撤退"
+	scene._command_flee()
+	await get_tree().process_frame
+	ok = ok and not scene.sim.finished and not bool(scene.get("_flee_armed"))
+	# 灰化必须只落在「逃」上，其他三枚照常可点
+	ok = ok and not scene._radial_disabled("attack") \
+		and not scene._radial_disabled("skill") and not scene._radial_disabled("item")
 	scene.queue_free()
 	await get_tree().process_frame
 	return ok

@@ -337,7 +337,7 @@ func _confirm() -> void:
 	G.save_game()
 	# 捏完人先看序章：交代"你在哪、为什么出征、第一站去哪"，再进主城
 	if G.lore_seen():
-		G.go("res://src/ui/GameHome.tscn")
+		G.enter_main_world()
 	else:
 		G.go("res://src/ui/Prologue.tscn")
 

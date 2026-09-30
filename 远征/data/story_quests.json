@@ -1,0 +1,32 @@
+{
+  "chapter": "第一幕先行线索·边城失声",
+  "restored_stele_name": "归路碑",
+  "steps": [
+    {"id": "s01", "title": "城门来信", "goal": "与边城执事闻叔交谈", "dialogue": "北门古道的界碑忽然失了声。先去枫林古道看看，碰上敌影不要硬撑。", "event": "talk", "map": "lorin_wilds", "target": "npc_steward", "next": "s02", "reward": {"gold": 40, "exp": 15}},
+    {"id": "s02", "title": "古道异响", "goal": "从北门进入枫林古道", "event": "visit", "map": "maple_road", "target": "maple_road", "next": "s03", "reward": {"gold": 30, "exp": 20}},
+    {"id": "s03", "title": "路旁敌影", "goal": "在枫林古道击败一只游荡怪物", "event": "defeat", "map": "maple_road", "target": "*", "next": "s04", "reward": {"gold": 65, "exp": 35}},
+    {"id": "s04", "title": "断裂的铁扣", "goal": "回边城找铁匠石头", "dialogue": "这是断碑坡旧巡界甲上的铁扣。顺着古道再往北，看看碑石还在不在。", "event": "talk", "map": "lorin_wilds", "target": "npc_smith", "next": "s05", "reward": {"gold": 60, "exp": 35}},
+    {"id": "s05", "title": "追索界碑", "goal": "穿过古道抵达断碑坡", "event": "visit", "map": "broken_slope", "target": "broken_slope", "next": "s06", "reward": {"gold": 50, "exp": 35}},
+    {"id": "s06", "title": "断碑守影", "goal": "在断碑坡击败一只游荡怪物", "event": "defeat", "map": "broken_slope", "target": "*", "next": "s07", "reward": {"gold": 95, "exp": 55}},
+    {"id": "s07", "title": "带回线索", "goal": "回边城向闻叔复命", "dialogue": "坡上的守影果然出现了。青姨保存着早年的碑文拓片，你去向她问问。", "event": "talk", "map": "lorin_wilds", "target": "npc_steward", "next": "s08", "reward": {"gold": 90, "exp": 55}},
+    {"id": "s08", "title": "旧卷中的名字", "goal": "向抄录人询问界碑来历", "dialogue": "拓片里少了一段名字，却描出了碑窟旧门。石头已把机关校好，从断碑坡北口进去，找回缺页。", "event": "talk", "map": "lorin_wilds", "target": "npc_scribe", "next": "s09", "reward": {"gold": 120, "exp": 70}},
+    {"id": "s09", "title": "碑窟旧门", "goal": "从断碑坡北口进入失声碑窟", "event": "visit", "map": "stele_cavern", "target": "stele_cavern", "next": "s10", "reward": {"gold": 80, "exp": 65}},
+    {"id": "s10", "title": "失声碑灵", "goal": "击败碑窟深处的失声碑灵", "event": "defeat", "map": "stele_cavern", "target": "mon_stele_warden", "next": "s11", "reward": {"gold": 220, "exp": 160, "item": "stele_fragment", "count": 1}},
+    {"id": "s11", "title": "缺页回炉", "goal": "带失声碑文回边城找石头，选择修碑方法", "dialogue": "这块碑片一直在发热，旧铁扣原来是它的锁。要先锻合，还是请青姨拓录？", "event": "craft", "map": "lorin_wilds", "target": "npc_smith", "requires_item": "stele_fragment", "craft_options": {
+      "forge": {"title": "锻合碑文", "costs": {"item:refine_stone": 2}},
+      "scribe": {"title": "拓录碑文", "costs": {"gold": 120}}
+    }, "next": "s12", "reward": {"gold": 100, "exp": 75}},
+    {"id": "s12", "title": "边城复命", "goal": "向闻叔报告碑窟之事", "dialogue": "碑窟的名字找回来了，但当年谁抹去它，仍要往北查。边城这段路先交给你照看。", "event": "talk", "map": "lorin_wilds", "target": "npc_steward", "next": "s13", "reward": {"gold": 160, "exp": 90}},
+    {"id": "s13", "title": "盐账线索", "goal": "在边城找行脚商人问旧盐道", "dialogue": "有车盐没进边城，却在旧道断桥留下了车辙。账页恐怕还在车上，沿古道东侧去找。", "event": "talk", "map": "lorin_wilds", "target": "npc_warden", "next": "s14", "reward": {"gold": 75, "exp": 45}},
+    {"id": "s14", "title": "重走旧路", "goal": "从枫林古道东侧走进旧盐道", "event": "visit", "map": "old_salt_road", "target": "old_salt_road", "next": "s15", "reward": {"gold": 75, "exp": 50}},
+    {"id": "s15", "title": "断桥盐车", "goal": "在旧盐道断桥盐车取回账页", "event": "collect", "map": "old_salt_road", "target": "salt_cart_ledger", "next": "s16", "reward": {"gold": 90, "exp": 60, "item": "salt_ledger", "count": 1}},
+    {"id": "s16", "title": "港务核账", "goal": "把盐车账页交给沉渊港的港务人沈澜", "dialogue": "账上记的不是盐数，是闸口开合。潮痕滩有同样的印记，等潮退了我们再往东查。", "event": "talk", "map": "shenyuan_port", "target": "npc_harbormaster", "requires_item": "salt_ledger", "next": "s17", "reward": {"gold": 160, "exp": 100}},
+    {"id": "s17", "title": "潮痕货堆", "goal": "去港东潮痕滩查看涨潮货堆", "event": "observe", "map": "tideflat", "target": "tide_cargo", "next": "s18", "reward": {"gold": 90, "exp": 65}},
+    {"id": "s18", "title": "闸门守影", "goal": "在潮痕滩击败一只闸门守卫", "event": "defeat", "map": "tideflat", "target": "mon_tidal_guard", "next": "s19", "reward": {"gold": 130, "exp": 90, "item": "gate_clue", "count": 1}},
+    {"id": "s19", "title": "水闸司祭", "goal": "进入水闸，击败潮蚀司祭", "event": "defeat", "map": "tidal_gate", "target": "mon_tide_priest", "requires_item": "gate_clue", "next": "s20", "reward": {"gold": 280, "exp": 190, "item": "tide_core", "count": 1}},
+    {"id": "s20", "title": "回港定路", "goal": "回沉渊港找沈澜，决定先修哪条供货路", "dialogue": "潮闸已开，两条供货线只能先疏通一条。疏浚盐渠会压低盐价；加固堤道会压低谷价。选哪边，另一边也不会永久关闭。", "event": "talk", "map": "shenyuan_port", "target": "npc_harbormaster", "requires_item": "tide_core", "craft_options": {
+      "dredge": {"title": "疏浚盐渠", "costs": {}},
+      "embank": {"title": "加固堤道", "costs": {}}
+    }, "next": "", "reward": {"gold": 240, "exp": 130}}
+  ]
+}
