@@ -28,14 +28,20 @@ func _ready() -> void:
 	hint.size = Vector2(376, 24)
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	content.add_child(hint)
+	var scroll := ScrollContainer.new()
+	scroll.position = Vector2(6, 46)
+	scroll.size = Vector2(372, 325)
+	scroll.mouse_filter = Control.MOUSE_FILTER_STOP
+	content.add_child(scroll)
 	var graph := _RegionGraph.new()
-	graph.position = Vector2(12, 46)
-	graph.size = Vector2(360, 325)
-	content.add_child(graph)
+	graph.custom_minimum_size = Vector2(900, 470)
+	scroll.add_child(graph)
 	var cfg := TableCache.main_world_config()
 	var rows: Variant = cfg.get("regions", [])
 	if rows is Array:
 		graph.setup(rows as Array)
+		scroll.set_deferred("scroll_horizontal", int(maxf(0, graph.current_point.x - 180)))
+		scroll.set_deferred("scroll_vertical", int(maxf(0, graph.current_point.y - 150)))
 	var cur: Variant = G.prog.get("main_world", {})
 	var map_id := String((cur as Dictionary).get("map_id", "lorin_wilds")) \
 		if cur is Dictionary else "lorin_wilds"
@@ -45,17 +51,17 @@ func _ready() -> void:
 	current.position = Vector2(24, 388)
 	current.size = Vector2(342, 28)
 	content.add_child(current)
-	var archive_note := "走到地图边缘的路牌可切换地区。界碑历练从边城巡界厅进入。"
+	var archive_note := "拖动滚动条查看地区，沿路牌步行切图。\n界碑历练可从边城巡界厅进入。"
 	if bool((G.prog.get("flags", {}) as Dictionary).get("act1_stele_repaired", false)):
 		var method := String(G.act1_state().get("repair_method", ""))
 		var method_note := "石头锻稳铁扣，北路已经重新通行。" if method == "forge" else \
 			"青姨拓出旧路标，北路已经重新通行。"
-		archive_note = "图志新录 · %s。%s" % [G.restored_stele_name(), method_note]
+		archive_note = "图志新录 · %s。\n%s" % [G.restored_stele_name(), method_note]
 	var note := G.text_label(archive_note,
 		G.FS_XS, G.TEXT_DARK)
 	note.position = Vector2(24, 421)
-	note.size = Vector2(342, 46)
 	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	note.size = Vector2(342, 46)
 	content.add_child(note)
 	var back := G.gold_button("返 回", 150, 42, G.FS_SM)
 	back.position = Vector2(117, 475)
@@ -76,6 +82,7 @@ func _unhandled_input(event: InputEvent) -> void:
 class _RegionGraph extends Control:
 	var _rows: Array = []
 	var _current := ""
+	var current_point := Vector2.ZERO
 
 	func setup(rows: Array) -> void:
 		_rows = rows
@@ -90,6 +97,8 @@ class _RegionGraph extends Control:
 				continue
 			var pos := Vector2(float(point[0]), float(point[1]))
 			var id := String(row.get("id", ""))
+			if id == _current:
+				current_point = pos
 			var name := String(row.get("name", id))
 			var button := G.gold_button(name, 142, 36, G.FS_SM) if id == _current \
 				else G.ghost_button(name, 142, 36, G.FS_SM)

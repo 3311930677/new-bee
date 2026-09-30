@@ -1,0 +1,581 @@
+{
+  "date": "2026-09-30",
+  "checkpoint": "P08-A third act front",
+  "goal_complete": false,
+  "main_world_maps": 11,
+  "story_steps": 24,
+  "regression": [
+    {
+      "case": "verify_battle",
+      "token": "BATTLE_OK",
+      "log": "tools\\_logs\\p08_front_release\\verify_battle.log",
+      "sha256": "492DBB35C8BA333A84AA8FDE831795634B9F34546324CDF5832A154EE494E721"
+    },
+    {
+      "case": "verify_data",
+      "token": "DATA_OK",
+      "log": "tools\\_logs\\p08_front_release\\verify_data.log",
+      "sha256": "C39512D0DB898AF28C54748D66DEA371443CFD8FDFFD0BE7D7112095A8E100BC"
+    },
+    {
+      "case": "verify_route",
+      "token": "ROUTE_OK",
+      "log": "tools\\_logs\\p08_front_release\\verify_route.log",
+      "sha256": "6D060C95A54D363B29A137649B2BEABA6AB974D9477A052F1675A4F93968C48B"
+    },
+    {
+      "case": "verify_trait",
+      "token": "TRAIT_OK",
+      "log": "tools\\_logs\\p08_front_release\\verify_trait.log",
+      "sha256": "B7C9D0C71E5776A7E6F1FEDA22E860E0D868A74ACDEB1CCF017D02CF753010ED"
+    },
+    {
+      "case": "verify_walk_assets",
+      "token": "WALK_ASSETS_OK",
+      "log": "tools\\_logs\\p08_front_release\\verify_walk_assets.log",
+      "sha256": "92E117B16DC97052A37EC6F8AB0FF51C9D2229C232E7FB6320E8094E8828F36A"
+    },
+    {
+      "case": "VerifyArena",
+      "token": "ARENA_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyArena.log",
+      "sha256": "A5807BD3A529209D0A1CFCD48D0265694B17288B8611A0ECEEFF6A4D949D26D7"
+    },
+    {
+      "case": "VerifyAssets",
+      "token": "ASSETS_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyAssets.log",
+      "sha256": "140AF4F094BC740E2C5EF446FD540C82F04BBAD66851FBB1A5CDC336D98CF7CB"
+    },
+    {
+      "case": "VerifyAudio",
+      "token": "AUDIO_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyAudio.log",
+      "sha256": "5DFD80CAE3E4F037F17DCC48670C24C1954A3C85AFB36FA0B005F7874FF08229"
+    },
+    {
+      "case": "VerifyAvatar",
+      "token": "AVATAR_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyAvatar.log",
+      "sha256": "502DAF3127149AA2E3B39801EB756D5DEE5714196187B92F1F4EFEC6CB150D2D"
+    },
+    {
+      "case": "VerifyBattleScene",
+      "token": "BATTLE_SCENE_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyBattleScene.log",
+      "sha256": "CE3357530D401C6E318760093E78AB03B59804821082C7A8BC0C2705486E9F7C"
+    },
+    {
+      "case": "VerifyCity",
+      "token": "CITY_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyCity.log",
+      "sha256": "10EB98AC9682D10E9FDBD9A0408DCC284C5DAB3BE78F18909F59E215AFB958A1"
+    },
+    {
+      "case": "VerifyDrops",
+      "token": "DROPS_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyDrops.log",
+      "sha256": "F47147B2980CC8CCD1672DA68C6CC19BE901B6C1B0C847885AB1FFFE275E831E"
+    },
+    {
+      "case": "VerifyEconomy",
+      "token": "ECONOMY_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyEconomy.log",
+      "sha256": "EE9D8F0B565586E4E5C9E9DCA90F04BEE9F7C4CF14C2F75D371EE461D5B9F38A"
+    },
+    {
+      "case": "VerifyFishing",
+      "token": "FISHING_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyFishing.log",
+      "sha256": "8DED1A31F5D67AFEAA456277EF3AC7841E78CE48E71A9A3A1607D46760190D74"
+    },
+    {
+      "case": "VerifyGacha",
+      "token": "GACHA_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyGacha.log",
+      "sha256": "ED0B51F0EC2D2FB17BF643689ED0D561F6756189FCD6E9AB1B9C42171A3749D2"
+    },
+    {
+      "case": "VerifyGameHome",
+      "token": "GAME_HOME_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyGameHome.log",
+      "sha256": "A500A906D7DEBD407A2211C99E341213BC0AB1F35FE29C4E32637585FD8C7BEE"
+    },
+    {
+      "case": "VerifyGrowth",
+      "token": "GROWTH_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyGrowth.log",
+      "sha256": "42F9CF8659AB9981346C8FF90F77AB3A7DBC4913CB69C983AEC4A6399A6DF598"
+    },
+    {
+      "case": "VerifyLore",
+      "token": "LORE_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyLore.log",
+      "sha256": "3F7BA8C14C40301934C663AB07A5C0990CBF13922699655AE1904E1DA3D0A53A"
+    },
+    {
+      "case": "VerifyMainWorld",
+      "token": "MAIN_WORLD_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyMainWorld.log",
+      "sha256": "7A11A572158EB45B4B0E1B33EA2BDA2114AC42F6C408B804C358427BD2E31503"
+    },
+    {
+      "case": "VerifyMapScene",
+      "token": "MAP_SCENE_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyMapScene.log",
+      "sha256": "8ED6C87800BB6581843A824CDBF58B34184748BED68D817772344B8D2D565A69"
+    },
+    {
+      "case": "VerifyNav",
+      "token": "NAV_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyNav.log",
+      "sha256": "1638DC339D0B68AB09D93FFD5C9BE8082D634AE39B5A19D53AD5B1C670FA4BDD"
+    },
+    {
+      "case": "VerifyPanels",
+      "token": "PANELS_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyPanels.log",
+      "sha256": "758A662577ABD87A1EB279E03C7766D4438D69B3B28A16A3AE60626401A9214A"
+    },
+    {
+      "case": "VerifyPerf",
+      "token": "PERF_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyPerf.log",
+      "sha256": "80A0CFE5D682AA030FD20A428B814561514D9A13CE7F76D87D078819ACDDC447"
+    },
+    {
+      "case": "VerifyPortGrowth",
+      "token": "PORT_GROWTH_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyPortGrowth.log",
+      "sha256": "F5E1F66F3EDF2BB6A4657E7B93223EF8AD5564C8CD3E611FD0D50BDBE26E333E"
+    },
+    {
+      "case": "VerifyQuests",
+      "token": "QUESTS_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyQuests.log",
+      "sha256": "BDD792E3930870E979F005B20E6047877072921711BB0B2F16B5F063DD618FEF"
+    },
+    {
+      "case": "VerifyRouteScene",
+      "token": "ROUTE_SCENE_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyRouteScene.log",
+      "sha256": "4685FBAE629A04C58F35E2383D7177C5E877D1F02E1A244E08576260A0796DB5"
+    },
+    {
+      "case": "VerifySave",
+      "token": "SAVE_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifySave.log",
+      "sha256": "17CFD61D31D3F320A982CFAC3E01F9C6FF5BE288085FEEFFEABCC3BCB026998F"
+    },
+    {
+      "case": "VerifySecondAct",
+      "token": "SECOND_ACT_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifySecondAct.log",
+      "sha256": "C7A1BC498EBD6676857D773617E63D8DC3373C503E10599BB4EC52F1AFD8A288"
+    },
+    {
+      "case": "VerifyShipping",
+      "token": "SHIPPING_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyShipping.log",
+      "sha256": "D22DEE97137111A0A0E588550579FD8BF8E314E1812749CA387A244291FA3E66"
+    },
+    {
+      "case": "VerifyStory",
+      "token": "STORY_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyStory.log",
+      "sha256": "C8A9DF81C3B191581F28E2BA71DB5515EF3A8F3BB156FF4E2B679E30429B44DD"
+    },
+    {
+      "case": "VerifySweep",
+      "token": "SWEEP_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifySweep.log",
+      "sha256": "2264B04CD6F229CB3A6F1D3F6642AB242F28121EFECAB905A9749689AD7DA28D"
+    },
+    {
+      "case": "VerifyThirdAct",
+      "token": "THIRD_ACT_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyThirdAct.log",
+      "sha256": "C90ABCAAADA0909CB9163869AF52530D008058890094874EB9F4D06D17BE0D3E"
+    },
+    {
+      "case": "VerifyTradeWorld",
+      "token": "TRADE_WORLD_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyTradeWorld.log",
+      "sha256": "1F983A52A6883590D4CBBC6D619DFEC09F2EF9C7D077BB81DFE49B047D3F4EC9"
+    },
+    {
+      "case": "VerifyTransit",
+      "token": "TRANSIT_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyTransit.log",
+      "sha256": "90E62B0161B4CFC3D36AB0F07D989A518D3465D72F9D617D7374ABA6E6835AD4"
+    },
+    {
+      "case": "VerifyUiLayout",
+      "token": "UI_LAYOUT_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyUiLayout.log",
+      "sha256": "C0381C3ED2F85EE46E19EF384E4C5180035871FD4019B2CF38592CDE88BE0E72"
+    },
+    {
+      "case": "VerifyWorldSession",
+      "token": "WORLD_SESSION_OK",
+      "log": "tools\\_logs\\p08_front_release\\VerifyWorldSession.log",
+      "sha256": "A4944E03341A2271FBF108CE3552291992447EBBF7A7BF13F08EE42BC5D9F277"
+    }
+  ],
+  "runner_selftest": "11 fault-injection checks passed",
+  "roles": [
+    {
+      "role": "zs",
+      "done": 24,
+      "state_equal": true,
+      "state": {
+        "bag": 60,
+        "cap": 60,
+        "equipped": [
+          "accessory",
+          "armor",
+          "hammer",
+          "spear",
+          "staff",
+          "sword"
+        ],
+        "frag": 0,
+        "gold": 3770,
+        "ledger_n": 30,
+        "level": 7,
+        "map": "frost_post",
+        "pending": 2,
+        "role": "zs",
+        "story_done": [
+          "s01",
+          "s02",
+          "s03",
+          "s04",
+          "s05",
+          "s06",
+          "s07",
+          "s08",
+          "s09",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14",
+          "s15",
+          "s16",
+          "s17",
+          "s18",
+          "s19",
+          "s20",
+          "s21",
+          "s22",
+          "s23",
+          "s24"
+        ],
+        "story_done_n": 24,
+        "story_step": ""
+      },
+      "saved_snapshots_equal": true,
+      "mine_record": 1,
+      "frost_letter": 0,
+      "phase_a_log": "tools\\_logs\\p08_front_retry\\playthrough_zs_a.log",
+      "phase_b_log": "tools\\_logs\\p08_front_retry\\playthrough_zs_b.log",
+      "phase_a_sha256": "A1226B236A9927AF3337552885A5A5071BEFB812AB734FEDBBC3B7E0ED024E26",
+      "phase_b_sha256": "E2EAF0F1BA00B9897BA4B7BCEAC889A7FF51FCACD5CE722594E81E2BB4037176"
+    },
+    {
+      "role": "ck",
+      "done": 24,
+      "state_equal": true,
+      "state": {
+        "bag": 60,
+        "cap": 60,
+        "equipped": [
+          "accessory",
+          "armor",
+          "hammer",
+          "spear",
+          "staff",
+          "sword"
+        ],
+        "frag": 0,
+        "gold": 3770,
+        "ledger_n": 30,
+        "level": 7,
+        "map": "frost_post",
+        "pending": 2,
+        "role": "ck",
+        "story_done": [
+          "s01",
+          "s02",
+          "s03",
+          "s04",
+          "s05",
+          "s06",
+          "s07",
+          "s08",
+          "s09",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14",
+          "s15",
+          "s16",
+          "s17",
+          "s18",
+          "s19",
+          "s20",
+          "s21",
+          "s22",
+          "s23",
+          "s24"
+        ],
+        "story_done_n": 24,
+        "story_step": ""
+      },
+      "saved_snapshots_equal": true,
+      "mine_record": 1,
+      "frost_letter": 0,
+      "phase_a_log": "tools\\_logs\\p08_front_retry\\playthrough_ck_a.log",
+      "phase_b_log": "tools\\_logs\\p08_front_retry\\playthrough_ck_b.log",
+      "phase_a_sha256": "F7F5557D39BB4BE512E6D2408D7990CF854A71AC01E93221772F39C398F77476",
+      "phase_b_sha256": "AD640130819344190CD2E7F8CB547A3BC173DCEE76EEB4962F217B8F4A84C817"
+    },
+    {
+      "role": "fs",
+      "done": 24,
+      "state_equal": true,
+      "state": {
+        "bag": 60,
+        "cap": 60,
+        "equipped": [
+          "accessory",
+          "armor",
+          "hammer",
+          "spear",
+          "staff",
+          "sword"
+        ],
+        "frag": 0,
+        "gold": 3770,
+        "ledger_n": 30,
+        "level": 7,
+        "map": "frost_post",
+        "pending": 2,
+        "role": "fs",
+        "story_done": [
+          "s01",
+          "s02",
+          "s03",
+          "s04",
+          "s05",
+          "s06",
+          "s07",
+          "s08",
+          "s09",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14",
+          "s15",
+          "s16",
+          "s17",
+          "s18",
+          "s19",
+          "s20",
+          "s21",
+          "s22",
+          "s23",
+          "s24"
+        ],
+        "story_done_n": 24,
+        "story_step": ""
+      },
+      "saved_snapshots_equal": true,
+      "mine_record": 1,
+      "frost_letter": 0,
+      "phase_a_log": "tools\\_logs\\p08_front_play\\playthrough_fs_a.log",
+      "phase_b_log": "tools\\_logs\\p08_front_play\\playthrough_fs_b.log",
+      "phase_a_sha256": "3B04B2B32E4C61F07D7F1AC7483A825B03067FA009DDDC1D27EB42F95739FDC1",
+      "phase_b_sha256": "21AF883C6E09F26B7AC58FF6E70B47DE646DB0C86B064FA5D7CB08A399FD509E"
+    },
+    {
+      "role": "fz",
+      "done": 24,
+      "state_equal": true,
+      "state": {
+        "bag": 60,
+        "cap": 60,
+        "equipped": [
+          "accessory",
+          "armor",
+          "hammer",
+          "spear",
+          "staff",
+          "sword"
+        ],
+        "frag": 0,
+        "gold": 3770,
+        "ledger_n": 30,
+        "level": 7,
+        "map": "frost_post",
+        "pending": 2,
+        "role": "fz",
+        "story_done": [
+          "s01",
+          "s02",
+          "s03",
+          "s04",
+          "s05",
+          "s06",
+          "s07",
+          "s08",
+          "s09",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14",
+          "s15",
+          "s16",
+          "s17",
+          "s18",
+          "s19",
+          "s20",
+          "s21",
+          "s22",
+          "s23",
+          "s24"
+        ],
+        "story_done_n": 24,
+        "story_step": ""
+      },
+      "saved_snapshots_equal": true,
+      "mine_record": 1,
+      "frost_letter": 0,
+      "phase_a_log": "tools\\_logs\\p08_front_play\\playthrough_fz_a.log",
+      "phase_b_log": "tools\\_logs\\p08_front_play\\playthrough_fz_b.log",
+      "phase_a_sha256": "01D4C6A4C9CE964989638BAFBFF75512F71490BC475051F820F7CC9D3CE64A73",
+      "phase_b_sha256": "D3190255EF6170AC5D95D8A60585E4D8C2BDB491DDDE2DCE4E3A1403C0CA1E8B"
+    }
+  ],
+  "shots": [
+    {
+      "file": "third_dialog_480x1067.png",
+      "width": 480,
+      "height": 1067,
+      "sha256": "4F4DACFA143004BEBBE841062B72F89DB270CF954823C286FD3319E042737B82"
+    },
+    {
+      "file": "third_dialog_480x800.png",
+      "width": 480,
+      "height": 800,
+      "sha256": "136A1FE42EBDA26EB60676CC1C5910ECF5220709AB42DBFE89032FEBBA3F5C28"
+    },
+    {
+      "file": "third_items_480x1067.png",
+      "width": 480,
+      "height": 1067,
+      "sha256": "79FA181AECC1E5317E9C6A410D8D59DF36825288C0D1F289C336D46AC1D1FE86"
+    },
+    {
+      "file": "third_items_480x800.png",
+      "width": 480,
+      "height": 800,
+      "sha256": "F1B114003B4E977F97F6A39896FEFD23BB0CAD45116E2F2AE59590F80E01028D"
+    },
+    {
+      "file": "third_mine_480x1067.png",
+      "width": 480,
+      "height": 1067,
+      "sha256": "73C8C169C376A454DEF4081F163E9E557DF4261885271D441EDF237EDD24DB95"
+    },
+    {
+      "file": "third_mine_480x800.png",
+      "width": 480,
+      "height": 800,
+      "sha256": "CAAF655A15F8F615E2441B95BE502510496F3F6E14F6FD9320F9DEC8A85B90E1"
+    },
+    {
+      "file": "third_post_480x1067.png",
+      "width": 480,
+      "height": 1067,
+      "sha256": "114DDE108DA82763FE1A04DC1044A323E36C2B8F504947B92E3D137CF7AB021E"
+    },
+    {
+      "file": "third_post_480x800.png",
+      "width": 480,
+      "height": 800,
+      "sha256": "3157FA48EDC2018FE4B0C126F31523CB016DE1FF02936ADD5E7F45AAA53FB454"
+    },
+    {
+      "file": "third_post_south_480x1067.png",
+      "width": 480,
+      "height": 1067,
+      "sha256": "96D16F3D410A547AF78FFF4791ED75B92845D59492ADC15ADAFD514A653F9F28"
+    },
+    {
+      "file": "third_post_south_480x800.png",
+      "width": 480,
+      "height": 800,
+      "sha256": "D0B18B6FCC83DC7AF5ED8688722F3DE16315B063C9629D8E203C51CEE88AB472"
+    },
+    {
+      "file": "third_regions_480x1067.png",
+      "width": 480,
+      "height": 1067,
+      "sha256": "57C8CD7366E1E2B4859B79C6E526CDC7A0C61DA9745C2A6009B0DFD9BAB8722F"
+    },
+    {
+      "file": "third_regions_480x800.png",
+      "width": 480,
+      "height": 800,
+      "sha256": "FBC478F3C41EF60A4EF13A3140B5357CF8D3CB476EA0B32947A3C66C5CD40F17"
+    },
+    {
+      "file": "third_route_480x1067.png",
+      "width": 480,
+      "height": 1067,
+      "sha256": "CECB9F0BF77F86DF25E1C7F1A0C98C9FBC758015677D732EE2E6BAD5F53C6BCA"
+    },
+    {
+      "file": "third_route_480x800.png",
+      "width": 480,
+      "height": 800,
+      "sha256": "33349AE47AD1432C28E6C4260CFC85F53B287F65DAD01044FF5FB6233BA991C4"
+    }
+  ],
+  "source_sha256": {
+    "data/frost_post.json": "5A182D529CD4ACC64C67ABD7D19A9C0802D0377D9E9D7589E33C38ECAD28A4E7",
+    "data/main_world_maps.json": "73C958AA3581036D307C7E1854F5EACBA5C814FDBF4DB4C27B18514399567E9C",
+    "data/story_quests.json": "B0FC07C1F738D863220676F2E07CD599E87B837493803DA2FD4468AC19B40D00",
+    "src/autoload/G.gd": "AB7957EACEADB75943B43C95818CE95B7DD0B9FAD473925FB3FF768A393FEE14",
+    "src/city/CityScene.gd": "5659FEADBEE0EED55E3F79CE1E84C7796BD155B086B7386413D3DD1A25E3CFF5",
+    "src/combat/TableCache.gd": "56482458DC67B26B16066989E72A7ABC1655B60FF77A3A806F87809C3AAE73C4",
+    "src/explore/MapScene.gd": "24BD4D4A1A4A820BCD15E70D0BE87C313BBC0C4D8BE5A5443650E7F6EC131D19",
+    "src/explore/ThirdActGround.gd": "69BA1ACC756D1C36D99E36A15CD3B4FCB4C7CE206923D43A0237ADA8279BC44C",
+    "src/ui/RegionMapPanel.gd": "E0A7E313195348C5617587F7A5E842671ADB12467B49D31D69217CBFC15287C0",
+    "src/world/QuestService.gd": "D1EA42775490744DD810495848B072E3E582C60E7B38E8F8CF245D86196238BC",
+    "tools/PlaythroughMainWorld.gd": "1FAA07D4ADA15E087B2FFA85895CED8D853D685CB069DCB8C10E959376E90FFD",
+    "tools/ShotRunner.gd": "936EF62B869EE438AAAA69904062FE21B66A3FF390E53A83FA2D679E7C52EE3B",
+    "tools/VerifyThirdAct.gd": "362D867B1DE60F0A5D4140AF651F837D69795B35CD67254A8FAEB6F31D6518CE",
+    "tools/VerifyThirdAct.tscn": "DC236E8DE14B8EB79AF969D79B8A5AE440275863B3640F8B5A9BEE5B12B97A8F",
+    "tools/VerifyStory.gd": "A0FDC9CCC6C66E65B7F3F84EA3DAB1FF8706A9E6D15C4C1497EA6B22199E1051",
+    "tools/run_playthrough.ps1": "1628AADCD4D52D755A54CC9C632A0FAD363FFDD906FCC66443A09FE4398C211D",
+    "tools/run_regression.ps1": "2BE4AA2F2DDDFCFFBEEAFDD6900E405F25F06B0C1EA06CB06E4D1692B8CBFD59",
+    "image/third_act/itm_frost_letter.svg": "F08BD6FDB83CCDCA6CCCA1222C19D1931F8606149798984BDB8D7571F577D9E0",
+    "image/third_act/itm_mine_record.svg": "4A3E49F7DD46E39AC1D067B0C2D62AC4FA8D3F0426D400D5AC3822FA0C940328"
+  },
+  "json_tables_utf8_no_bom": 33,
+  "real_player_save_unchanged_sha256": "C5D29EE55C033619C4F5232D55A6C4F186D40ADD556DB61EE0D776B9FDA2660C",
+  "replay_retry_note": "Initial zs/ck return path failed before clear_rects fix; corrected full A/B retries are recorded above. fs/fz started after that fix.",
+  "limitations": [
+    "s25-s28, act 4 and remaining S5-S7 content unfinished",
+    "town art uses procedural buildings and characters; dedicated animations unfinished",
+    "offscreen logical viewport is not Android device evidence",
+    "manual play time and progression balance unverified",
+    "known exit resource diagnostics remain tracked as issue 43"
+  ]
+}

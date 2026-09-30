@@ -31,6 +31,7 @@ const MOVE_ACTIONS := ["move_left", "move_right", "move_up", "move_down"]
 var role_id := "zs"
 var phase := "a"
 var act2 := false
+var act3_front := false
 
 var _map: MapScene = null
 var _reason := ""
@@ -40,7 +41,8 @@ func _ready() -> void:
 	var args := OS.get_cmdline_user_args()
 	role_id = String(args[0]) if args.size() > 0 else "zs"
 	phase = String(args[1]) if args.size() > 1 else "a"
-	act2 = args.size() > 2 and String(args[2]) == "act2"
+	act3_front = args.has("act3_front")
+	act2 = args.has("act2") or act3_front
 	G.SAVE_PATH = "res://tools/_logs/save_playthrough_%s_%s.json" % [role_id, phase]
 	for arg in args:
 		if arg.begins_with("--save-dir="):
@@ -184,6 +186,8 @@ func _run_phase_a() -> void:
 
 	if act2 and not await _run_second_act():
 		return
+	if act3_front and not await _run_third_act_front():
+		return
 	_release_all()
 	var state := _state()
 	print("PLAY_A_STATE " + JSON.stringify(state))
@@ -238,6 +242,26 @@ func _run_second_act() -> bool:
 	return true
 
 
+func _run_third_act_front() -> bool:
+	if not await _close_city_modal(): return false
+	# 离开再靠近沈澜，按普通对话接信，不复用第二幕选择事件。
+	if await _travel(Vector2(480, 560), 16.0, true) != "ok": return _bad("接信前离开对话位置失败")
+	if not await _talk_to("npc_harbormaster", "s21"): return false
+	if G.item_count("frost_letter") != 1: return _bad("接信后缺霜关来信")
+	if not await _exit_to("shenyuan_port", Vector2(480, 96), "red_sand_route"): return false
+	if not await _need("s22"): return false
+	if not await _fight_nearest("win"): return false
+	if not await _exit_to("red_sand_route", Vector2(480, 96), "frost_post"): return false
+	if not await _talk_to("npc_frost_envoy", "s23"): return false
+	if G.item_count("frost_letter") != 0: return _bad("交信后信件未扣除")
+	if not await _exit_to("frost_post", Vector2(864, 710), "rift_mine_road"): return false
+	if not await _visit_entity("overturned_mine_cart", "s24"): return false
+	if G.item_count("mine_record") != 1: return _bad("调查矿车后缺少记录")
+	if not await _exit_to("rift_mine_road", Vector2(90, 710), "frost_post"): return false
+	print("PLAY_EVENT act3_front_complete mine_record=1 map=frost_post")
+	return true
+
+
 func _visit_entity(entity_id: String, step: String) -> bool:
 	var entity: Node2D = null
 	for candidate in _map._quest_entities:
@@ -283,21 +307,22 @@ func _run_phase_b() -> void:
 	var step := String(story.get("step", ""))
 	var done: Array = story.get("done", [])
 	var missing: Array = []
-	for i in range(1, 21 if act2 else 13):
+	for i in range(1, 25 if act3_front else (21 if act2 else 13)):
 		var sid := "s%02d" % i
 		if not done.has(sid):
 			missing.append(sid)
-	if (act2 and not step.is_empty()) or (not act2 and step not in ["", "s13"]):
+	if (act3_front and not step.is_empty()) or (act2 and not act3_front and step != "s21") \
+		or (not act2 and step not in ["", "s13"]):
 		return _bad("阶段 B 主线未走完，当前 step=%s" % step)
 	if not missing.is_empty():
 		return _bad("阶段 B 缺少主线步骤：%s" % ", ".join(missing))
 	var map_id := String((G.prog.get("main_world", {}) as Dictionary).get("map_id", ""))
-	if map_id != ("shenyuan_port" if act2 else "lorin_wilds"):
+	if map_id != ("frost_post" if act3_front else ("shenyuan_port" if act2 else "lorin_wilds")):
 		return _bad("阶段 B 不是停在边城：map_id=%s" % map_id)
 	# 跨进程奖励账本幂等：重放 s12 那笔主线事务，必须命中 duplicate，且金币一分不动。
 	var tid := ""
 	for a in (G.ledger().get("applied", []) as Array):
-		if String(a).begins_with("story|s20|" if act2 else "story|s12|"):
+		if String(a).begins_with("story|s24|" if act3_front else ("story|s20|" if act2 else "story|s12|")):
 			tid = String(a)
 			break
 	if tid.is_empty():

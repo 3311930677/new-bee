@@ -23,6 +23,7 @@ const MON_COLOR := {
 	"normal": Color("5f7186"), "elite": Color("7a4a9a"), "boss": Color("8a2f2f"),
 }
 const INTERACT_R := 44.0      # 非战斗物件交互半径（maps.json 无此字段时的口径）
+const ThirdActGroundScript := preload("res://src/explore/ThirdActGround.gd")
 const MINI_W := 78.0          # 小地图尺寸：与 32×42 格地图同比例（1536:2016 ≈ 0.762）
 const MINI_H := 102.0
 const _MiniMapPos := Vector2(390, 14)
@@ -421,6 +422,10 @@ func _build_world() -> void:
 		add_child(TideflatGround.new())
 	elif _mode == "main_world" and _main_map_id == "tidal_gate":
 		add_child(TidalGateGround.new())
+	elif _mode == "main_world" and _main_map_id in ["red_sand_route", "frost_post", "rift_mine_road"]:
+		var ground := ThirdActGroundScript.new()
+		ground.map_id = _main_map_id
+		add_child(ground)
 
 	_world.y_sort_enabled = true
 	add_child(_world)
@@ -489,6 +494,12 @@ func _build_decos(cols: int, rows: int) -> void:
 
 ## 散件脚部碰撞盒是否压到本图主路格（_ground_path）。盒：40×s 宽 × 26 高，底边在原点、中心上移 13。
 func _foot_hits_road(pos: Vector2, s: float) -> bool:
+	var footprint := Rect2(pos - Vector2(20.0 * s, 26), Vector2(40.0 * s, 26)).grow(18)
+	for rect_v in (_main_cfg.get("clear_rects", []) as Array):
+		if rect_v is Array and (rect_v as Array).size() == 4:
+			var r: Array = rect_v
+			if footprint.intersects(Rect2(float(r[0]), float(r[1]), float(r[2]), float(r[3]))):
+				return true
 	if _ground_path.is_empty():
 		return false
 	var hw := 20.0 * s
@@ -3821,6 +3832,17 @@ class _QuestEntity extends Node2D:
 		draw_circle(Vector2.ZERO, 22.0, Color(0, 0, 0, 0.24))   # 落地影
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		match art:
+			"mine_cart":
+				draw_rect(Rect2(-46, -46, 82, 34), Color("495862"))
+				draw_rect(Rect2(-48, -49, 86, 7), Color("9da9a7"))
+				for x in [-28.0, 24.0]:
+					draw_circle(Vector2(x, -10), 12, Color("272e31"))
+					draw_circle(Vector2(x, -10), 6, Color("a48a64"))
+				for p in [Vector2(-27, -51), Vector2(-5, -60), Vector2(18, -53)]:
+					draw_colored_polygon(PackedVector2Array([p + Vector2(-12, 0), p + Vector2(-8, -15), p + Vector2(9, -20), p + Vector2(15, 1)]), Color("846b4c"))
+				draw_rect(Rect2(35, -26, 22, 19), Color("e4cf9c"))
+				for y in [-22.0, -17.0, -12.0]:
+					draw_line(Vector2(38, y), Vector2(54, y), Color("745642"), 2)
 			"rope":
 				draw_rect(Rect2(-4, -30, 8, 36), Color("5d4532"))
 				for offset in [0.0, 5.0, 10.0]:

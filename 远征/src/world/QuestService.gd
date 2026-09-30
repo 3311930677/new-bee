@@ -111,9 +111,13 @@ static func plan(state: Dictionary, rows: Array, event: Dictionary, inventory: D
 		out["reason"] = "missing_item"
 		return out
 	var craft_options: Variant = row.get("craft_options", {})
+	var payload: Variant = event.get("payload", {})
+	var method := String((payload as Dictionary).get("method", "")) if payload is Dictionary else ""
+	# 同一 NPC 可能跨章节发任务；旧选择重报不能被普通交谈步骤接收。
+	if not method.is_empty() and (not (craft_options is Dictionary) or (craft_options as Dictionary).is_empty()):
+		out["reason"] = "invalid_choice"
+		return out
 	if craft_options is Dictionary and not (craft_options as Dictionary).is_empty():
-		var payload: Variant = event.get("payload", {})
-		var method := String((payload as Dictionary).get("method", "")) if payload is Dictionary else ""
 		var option: Variant = (craft_options as Dictionary).get(method, {})
 		if not (option is Dictionary) or (option as Dictionary).is_empty():
 			out["reason"] = "invalid_choice"

@@ -27,6 +27,10 @@
     {"id": "s20", "title": "回港定路", "goal": "回沉渊港找沈澜，决定先修哪条供货路", "dialogue": "潮闸已开，两条供货线只能先疏通一条。疏浚盐渠会压低盐价；加固堤道会压低谷价。选哪边，另一边也不会永久关闭。", "event": "talk", "map": "shenyuan_port", "target": "npc_harbormaster", "requires_item": "tide_core", "craft_options": {
       "dredge": {"title": "疏浚盐渠", "costs": {}},
       "embank": {"title": "加固堤道", "costs": {}}
-    }, "next": "", "reward": {"gold": 240, "exp": 130}}
+    }, "next": "s21", "reward": {"gold": 240, "exp": 130}},
+    {"id": "s21", "title": "北驿来信", "goal": "在沉渊港找沈澜，接下霜关来信", "dialogue": "北驿的信到了。商队说矿道封关，守关人却在找失踪矿工。沿港北赤砂商路，把这封信交给宁砚。", "event": "talk", "map": "shenyuan_port", "target": "npc_harbormaster", "next": "s22", "reward": {"gold": 140, "exp": 90, "item": "frost_letter", "count": 1}},
+    {"id": "s22", "title": "赤砂商路", "goal": "从港北出口进入赤砂商路", "event": "visit", "map": "red_sand_route", "target": "red_sand_route", "next": "s23", "reward": {"gold": 100, "exp": 75}},
+    {"id": "s23", "title": "驿中两说", "goal": "到霜关驿找宁砚交付来信", "dialogue": "商队催我开关，岑雪却不敢撤岗。两份信的印记相同，说的事却不同。去驿东矿道，翻倒矿车的轨道记录或许能说清。", "event": "talk", "map": "frost_post", "target": "npc_frost_envoy", "requires_item": "frost_letter", "next": "s24", "reward": {"gold": 180, "exp": 120}},
+    {"id": "s24", "title": "矿道留痕", "goal": "到驿东裂谷矿道查看翻倒矿车", "event": "collect", "map": "rift_mine_road", "target": "overturned_mine_cart", "next": "", "reward": {"gold": 120, "exp": 90, "item": "mine_record", "count": 1}}
   ]
 }

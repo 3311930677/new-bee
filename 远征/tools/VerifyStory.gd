@@ -44,8 +44,9 @@ func _run() -> void:
 						has_return = true
 				_check(has_return, "%s → %s 应有返回道路" % [mid, dest])
 	var rows: Array = TableCache.story_quests_config().get("steps", [])
-	_check(rows.size() == 20 and String((rows[11] as Dictionary).get("id", "")) == "s12",
-		"第一幕十二步保留，第二幕八步接续")
+	_check(rows.size() == 24 and String((rows[11] as Dictionary).get("id", "")) == "s12"
+		and String((rows[19] as Dictionary).get("id", "")) == "s20",
+		"前两幕二十步保留，第三幕前四步接续")
 	for row_v in rows:
 		var step: Dictionary = row_v
 		var map_id := String(step.get("map", ""))

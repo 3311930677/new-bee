@@ -1,0 +1,106 @@
+{
+  "version": 1,
+  "name": "霜关驿",
+  "map_cols": 20,
+  "map_rows": 26,
+  "buildings": [
+    {
+      "id": "frost_lodge",
+      "name": "霜关驿舍",
+      "style": "frost_house",
+      "kind": "core",
+      "port_built": true,
+      "pos": [
+        5.3,
+        8.0
+      ],
+      "size": [
+        3.3,
+        2.7
+      ],
+      "action": "worlds",
+      "desc": "暖炉旁收存来信与路图。翻阅图志可查看已有历练地区。"
+    },
+    {
+      "id": "frost_supply",
+      "name": "驿站物资铺",
+      "style": "frost_house",
+      "kind": "core",
+      "port_built": true,
+      "pos": [
+        14.7,
+        17.1
+      ],
+      "size": [
+        3.3,
+        2.7
+      ],
+      "action": "shop",
+      "desc": "寒路行装与养成材料在这里采买。"
+    },
+    {
+      "id": "frost_guardhouse",
+      "name": "巡界岗",
+      "style": "frost_house",
+      "kind": "core",
+      "port_built": true,
+      "pos": [
+        5.3,
+        17.1
+      ],
+      "size": [
+        3.3,
+        2.7
+      ],
+      "action": "deploy",
+      "desc": "守关人的落脚处，也可以在这里整备界碑历练。"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "npc_frost_envoy",
+      "name": "宁砚",
+      "title": "霜关驿使",
+      "hue": 7,
+      "pos": [
+        8.2,
+        9.0
+      ],
+      "lines": [
+        "两份信盖着同样的印，却没有一份提到另一头的人。",
+        "有些路要亲自走一趟，账上才不只是数字。"
+      ],
+      "frost_cloak": true
+    },
+    {
+      "id": "npc_frost_guard",
+      "name": "岑雪",
+      "title": "守关人",
+      "hue": 6,
+      "pos": [
+        8.2,
+        18.1
+      ],
+      "lines": [
+        "矿工一夜没有回来，我不会让商队贸然进山。",
+        "能找到轨道记录，比互相指责更有用。"
+      ],
+      "frost_cloak": true
+    },
+    {
+      "id": "npc_frost_miner",
+      "name": "陶铎",
+      "title": "矿工",
+      "hue": 1,
+      "pos": [
+        11.8,
+        18.1
+      ],
+      "lines": [
+        "东边的车翻了，绞盘却还在转。有人改过旧轨。",
+        "我守在这里等伙伴回来。你若见到他们，替我捎句话。"
+      ],
+      "frost_cloak": true
+    }
+  ]
+}

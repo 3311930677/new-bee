@@ -136,10 +136,16 @@ static func city_config() -> Dictionary:
 
 
 static func city_config_for(map_id: String) -> Dictionary:
-	if map_id == "shenyuan_port":
-		var v: Variant = _load("res://data/shenyuan_port.json")
-		return v if v is Dictionary else {}
-	return city_config()
+	if map_id == "lorin_wilds":
+		return city_config()
+	var path := String(main_world_map(map_id).get("city_config", ""))
+	# 兼容在配置字段引入前已存在的港口；野外不能误载边城 NPC。
+	if path.is_empty() and map_id == "shenyuan_port":
+		path = "res://data/shenyuan_port.json"
+	if not path.begins_with("res://data/") or not path.ends_with(".json"):
+		return {}
+	var v: Variant = _load(path)
+	return v if v is Dictionary else {}
 
 
 static func currencies_config() -> Dictionary:

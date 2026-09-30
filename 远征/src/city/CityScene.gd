@@ -409,6 +409,8 @@ func _build_embedded_hud() -> void:
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			if _city_id == "shenyuan_port":
 				_open_first_order_preview("shenyuan_market")
+			elif _city_id == "frost_post":
+				_open_shop()
 			else:
 				_open_quests())
 	_hud.add_child(_quest_chip)
@@ -448,7 +450,10 @@ func _refresh_stat() -> void:
 		_stat_lbl.text = str(int(G.wallet.get("gold", 0))) if _embedded_map != null \
 			else "Lv.%d · 金 %d" % [int(G.prog.get("level", 1)), int(G.wallet.get("gold", 0))]
 	if _quest_lbl != null:
-		_quest_lbl.text = "港务 · 查看行情" if _city_id == "shenyuan_port" else G.quest_today_text()
+		match _city_id:
+			"shenyuan_port": _quest_lbl.text = "港务 · 查看行情"
+			"frost_post": _quest_lbl.text = "驿务 · 采买物资"
+			_: _quest_lbl.text = G.quest_today_text()
 
 
 func _toast(msg: String) -> void:
@@ -1019,7 +1024,8 @@ func _open_dialog(nd: Dictionary, guest: bool) -> void:
 	if not guest and id == "npc_harbormaster" and String(G.story_current().get("id", "")) == "s20":
 		_open_tide_choice_panel()
 		return
-	if not guest and id == "npc_harbormaster" and G.story_step_done("s16"):
+	if not guest and id == "npc_harbormaster" and G.story_step_done("s16") \
+		and String(G.story_current().get("target", "")) != id:
 		_open_port_services()
 		return
 	if not guest and id == "npc_port_keeper":
@@ -2075,6 +2081,8 @@ class _Building extends StaticBody2D:
 			Vector2(-_w * 0.46, -9), Vector2(_w * 0.46, -9),
 			Vector2(_w * 0.44, -12), Vector2(-_w * 0.44, -12)]), Color("8a7659"))
 		match String(data.get("style", "")):
+			"frost_house":
+				_draw_frost_house()
 			"hall":
 				_draw_hall()
 			"gate":
@@ -2095,6 +2103,26 @@ class _Building extends StaticBody2D:
 				_draw_port_market()
 			_:
 				_draw_hall()
+
+	func _draw_frost_house() -> void:
+		var w := _w
+		var top := -_h * 0.5
+		var bottom := _h * 0.5
+		draw_rect(Rect2(-w * 0.43, top + 16, w * 0.86, _h - 22), Color("685949"))
+		for x in [-w * 0.39, w * 0.39]:
+			draw_rect(Rect2(x - 3, top + 16, 6, _h - 22), Color("403831"))
+		draw_colored_polygon(PackedVector2Array([Vector2(-w * 0.52, top + 20),
+			Vector2(w * 0.52, top + 20), Vector2(w * 0.30, top - 18),
+			Vector2(-w * 0.30, top - 18)]), Color("415663"))
+		draw_colored_polygon(PackedVector2Array([Vector2(-w * 0.51, top + 10),
+			Vector2(w * 0.51, top + 10), Vector2(w * 0.30, top - 18),
+			Vector2(-w * 0.30, top - 18)]), Color("dae7de"))
+		draw_rect(Rect2(-14, bottom - 40, 28, 40), Color("342d28"))
+		for x in [-w * 0.27, w * 0.27]:
+			draw_rect(Rect2(x - 11, top + 38, 22, 20), Color("d7a55c"))
+			draw_line(Vector2(x, top + 38), Vector2(x, top + 58), Color("4b4137"), 2)
+		draw_rect(Rect2(-18, bottom - 4, 36, 8), Color("b4bcb4"))
+		_plaque(String(data.get("name", "驿舍")), "", top - 35)
 
 	func _draw_port_market() -> void:
 		var w := _w
@@ -2482,6 +2510,9 @@ class _CityNPC extends Node2D:
 			draw_rect(Rect2(7, -16 + bob, 7, 9), Color("5a4a28"), false, 1.0)
 		else:
 			draw_arc(Vector2(0, -27 + bob), 7.5, PI * 0.9, TAU * 1.02, 10, Color("3a2c1c"), 5.0)
+		if bool(data.get("frost_cloak", false)):
+			draw_arc(Vector2(0, -29 + bob), 9, PI, TAU, 8, robe.darkened(0.25), 6)
+			draw_line(Vector2(-10, -16 + bob), Vector2(10, -16 + bob), Color("dfded2"), 5)
 		# 可交互金三角（名牌在头顶，三角再抬高避让）
 		_hover_mark(bob, -78.0)
 
