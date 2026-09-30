@@ -522,6 +522,9 @@ static func validate(data: Dictionary, now_sec: int) -> Dictionary:
 	if data.get("prog",{}) is Dictionary and (data.get("prog",{}) as Dictionary).has("companions"):
 		if not CompanionService.validate(data.prog.companions,data.prog.get("pets",[])):
 			return {"ok":false,"err":"prog.companions 伙伴协战状态无效"}
+	if data.get("prog", {}) is Dictionary and (data.get("prog", {}) as Dictionary).has("campaign_growth"):
+		if not CampaignGrowth.validate(data.prog.campaign_growth, data.prog.get("story", {})):
+			return {"ok": false, "err": "prog.campaign_growth 主线经验版本无效"}
 	return {"ok": true, "err": ""}
 
 

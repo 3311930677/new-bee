@@ -183,6 +183,8 @@ func _roll_drop_rows(list: Variant) -> Array:
 # ---------- 养成进度（跨局持久）----------
 # 主线：以"主世界"为起点，逐世界推进——通关某世界首领即解锁下一世界，
 #       并同时解封一只新宠物；宠物/资源靠不断打怪升级与对战积累解锁。
+var _pending_campaign_note := ""
+var _campaign_exp_batch := false
 var prog := {
 	"level": 1,                 # 主角等级（上限 growth.level_cap）
 	"exp": 0,                   # 当前等级已积累经验
@@ -229,6 +231,7 @@ var audio := {"bgm": 0.7, "sfx": 0.8, "mute": false}
 ## 编译器互等对方先编译 → 全项目级联 `Identifier not found: Audio`。
 ## 所以这边也一律运行时取节点（Audio 侧对称用法见 `Audio._game_state`）。
 func _sfx(name: String, jitter := 0.03) -> void:
+	if not is_inside_tree(): return
 	var au := get_node_or_null("/root/Audio")
 	if au != null:
 		au.call("sfx", name, jitter)
@@ -471,6 +474,7 @@ func _load_save() -> void:
 		var pst: Variant = pd.get("pet_stat", {})
 		prog["pet_stat"] = pst if pst is Dictionary else {}
 		if pd.has("companions"): prog["companions"] = (pd.companions as Dictionary).duplicate(true)
+		if pd.has("campaign_growth"): prog["campaign_growth"] = (pd.campaign_growth as Dictionary).duplicate(true)
 		var ts: Variant = pd.get("tips_seen", {})   # 已看过的引导弹层，别每次开面板都弹
 		prog["tips_seen"] = ts if ts is Dictionary else {}
 		prog["lore_seen"] = bool(pd.get("lore_seen", false))   # 序章是否已看（看过的老档不再弹）
@@ -526,6 +530,8 @@ func _load_save() -> void:
 ## 把「进度类」内存态重置为初始默认值（导入重读 / 重置存档共用，P0-3/P0-4）。
 ## 保留项：音频偏好（设置而非进度）与已上传头像文件（avatar_custom 串保留、不启用）。
 func _init_state_defaults() -> void:
+	_pending_campaign_note = ""
+	_campaign_exp_batch = false
 	wallet = {"gold": 0, "expedition": 0, "soul": 0, "honor": 0}
 	items = {"ticket_ten": 0, "ticket_sweep": 1}
 	prog = {"level": 1, "exp": 0, "worlds_unlocked": 1, "world_cleared": {}, "pets": [],
@@ -706,20 +712,53 @@ func gain_exp(amount: int, persist := true) -> int:
 	if int(prog["level"]) >= cap:
 		prog["level"] = cap
 		prog["exp"] = 0
-	if ups > 0:
+	if ups > 0 and not _campaign_exp_batch:
 		_sfx("level_up", 0.0)   # 升级音不抖音高：这是"仪式"，不是随机反馈
 	if persist:
 		save_game()
 	return ups
 
 
-## 首章目标由事件驱动，任务 ID 固定写档。状态与奖励在同一次写盘中提交。
+## 旧主线首通经验差额：按任务版本补记，与去重账本和等级同一次保存。
+func campaign_growth_catchup(persist := true) -> Dictionary:
+	if save_locked: return {"ok": false, "exp": 0}
+	var plan := CampaignGrowth.catchup_plan(prog)
+	if plan.is_empty(): return {"ok": true, "exp": 0}
+	var before := prog.duplicate(true)
+	var old_level := int(prog.get("level", 1))
+	var total := 0
+	var previous_batch := _campaign_exp_batch
+	_campaign_exp_batch = true
+	for entry in plan:
+		var tx := RewardLedger.make(String(entry.transaction_id), {}, {"exp": int(entry.exp)})
+		var result := RewardLedger.apply(tx, ledger(), self)
+		if not bool(result.get("ok", false)):
+			prog = before
+			_campaign_exp_batch = previous_batch
+			return {"ok": false, "exp": 0}
+		if bool(result.get("applied", false)): total += int(entry.exp)
+		CampaignGrowth.mark(prog, String(entry.id))
+	_campaign_exp_batch = previous_batch
+	if persist and not save_game():
+		prog = before
+		return {"ok": false, "exp": 0}
+	if int(prog.get("level", 1)) > old_level and not previous_batch: _sfx("level_up", 0.0)
+	return {"ok": true, "exp": total, "levels": int(prog.get("level", 1)) - old_level}
+
+
+func take_campaign_note() -> String:
+	var result := _pending_campaign_note
+	_pending_campaign_note = ""
+	return result
+
+
+## 主线目标由事件驱动，任务 ID 固定写档，查询展示新版首通经验。
 func story_current() -> Dictionary:
 	var state := normalize_story_state()
 	var step := String(state.get("step", "s01"))
 	if step.is_empty():
 		return {}
-	var rows: Variant = TableCache.story_quests_config().get("steps", [])
+	var rows: Variant = CampaignGrowth.story_rows()
 	if rows is Array:
 		for row_v in rows:
 			if row_v is Dictionary and String((row_v as Dictionary).get("id", "")) == step:
@@ -784,7 +823,7 @@ func story_event(kind: String, target: String, map_id: String, persist := true,
 	var before_items := items.duplicate(true)
 	var event := QuestService.world_event(kind, target, map_id,
 		selected_role if not selected_role.is_empty() else "player", payload)
-	var rows: Variant = TableCache.story_quests_config().get("steps", [])
+	var rows: Variant = CampaignGrowth.story_rows()
 	var plan := QuestService.plan(normalize_story_state(),
 		rows if rows is Array else [], event, items)
 	if not bool(plan.get("ok", false)):
@@ -823,6 +862,13 @@ func story_event(kind: String, target: String, map_id: String, persist := true,
 		push_warning("主线结算未落地：%s" % String(res.get("err", "")))
 		return {}
 	prog["story"] = plan.get("next_state", {})
+	if bool(res.get("applied", false)):
+		CampaignGrowth.mark(prog, step_id)
+	if not bool(campaign_growth_catchup(false).get("ok", false)):
+		prog = before_prog
+		wallet = before_wallet
+		items = before_items
+		return {}
 	if step_id == "s20" and not choice.is_empty():
 		economy_state()["port_event"] = choice
 	if step_id == "s28" and not choice.is_empty():
@@ -5051,6 +5097,14 @@ func enter_main_world(map_id := "", arrival := "") -> void:
 	if map_cfg.is_empty():
 		push_error("主世界地图配置缺失：%s" % target)
 		return
+	var catchup := campaign_growth_catchup()
+	if not bool(catchup.get("ok", false)):
+		var anchor := get_tree().current_scene as Control
+		if anchor != null:
+			show_info_popup(anchor, "经验补记未保存", ["请检查存档位置后重试，当前进度已保留。"])
+		return
+	if int(catchup.get("exp", 0)) > 0:
+		_pending_campaign_note = "旅途经验补记 +%d · Lv%d" % [int(catchup.exp), int(prog.get("level", 1))]
 	var pets := owned_pets()
 	var run := RunState.new()
 	run.setup({
@@ -5062,6 +5116,7 @@ func enter_main_world(map_id := "", arrival := "") -> void:
 		"potions": run_potions_base(),
 		"seed": randi(),
 	})
+	run.growth_bonus = growth_bonuses(run.role_id)
 	MapScene.pending_cfg = {
 		"mode": "main_world", "main_map_id": target, "arrival": arrival,
 		"run": run,

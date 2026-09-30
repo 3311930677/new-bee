@@ -1,0 +1,985 @@
+{
+  "package": "P08-E1",
+  "baseline_commit": "54a0ae3",
+  "regression_count": 40,
+  "regression": [
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyAssets.log",
+      "sha256": "C00E3D116527924F21D852F630654D39FC1DE4D3C62A6DF037F672F0673FD04A",
+      "case": "VerifyAssets",
+      "token": "ASSETS_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyBattleScene.log",
+      "sha256": "CE3357530D401C6E318760093E78AB03B59804821082C7A8BC0C2705486E9F7C",
+      "case": "VerifyBattleScene",
+      "token": "BATTLE_SCENE_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifySave.log",
+      "sha256": "5FB1ECBB841DFCF3275CFB540B38E9314D5245B3B259553B4DD38A36F33B3FA8",
+      "case": "VerifySave",
+      "token": "SAVE_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyUiLayout.log",
+      "sha256": "C0381C3ED2F85EE46E19EF384E4C5180035871FD4019B2CF38592CDE88BE0E72",
+      "case": "VerifyUiLayout",
+      "token": "UI_LAYOUT_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifySweep.log",
+      "sha256": "3AB7AD3A15106E4483D9456B6127FDFD45E03CDC446FF4C7B4BD1EF46E4233C7",
+      "case": "VerifySweep",
+      "token": "SWEEP_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyCity.log",
+      "sha256": "B137E5160D9C88E019FB40D256AB0BBACA75B874C98024250A0DB7900E60A502",
+      "case": "VerifyCity",
+      "token": "CITY_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyGameHome.log",
+      "sha256": "A37ABD9D0F9F4A0990C411296CCAC55DF4F2DE4A897A1E8F235B29FFE8FDBF3C",
+      "case": "VerifyGameHome",
+      "token": "GAME_HOME_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyMapScene.log",
+      "sha256": "8ED6C87800BB6581843A824CDBF58B34184748BED68D817772344B8D2D565A69",
+      "case": "VerifyMapScene",
+      "token": "MAP_SCENE_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyMainWorld.log",
+      "sha256": "7A11A572158EB45B4B0E1B33EA2BDA2114AC42F6C408B804C358427BD2E31503",
+      "case": "VerifyMainWorld",
+      "token": "MAIN_WORLD_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyWorldSession.log",
+      "sha256": "ED809607A1AACA33835E35A7FFB2E214AD9CC0835F66FBD140AB7A3778CFE33E",
+      "case": "VerifyWorldSession",
+      "token": "WORLD_SESSION_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyStory.log",
+      "sha256": "71A65AC0B4ECBCAD47EB5FABBA0B8F043E29DDA3FDB82B18A290650EAD72A3F1",
+      "case": "VerifyStory",
+      "token": "STORY_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyEconomy.log",
+      "sha256": "EE9D8F0B565586E4E5C9E9DCA90F04BEE9F7C4CF14C2F75D371EE461D5B9F38A",
+      "case": "VerifyEconomy",
+      "token": "ECONOMY_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyTradeWorld.log",
+      "sha256": "1F983A52A6883590D4CBBC6D619DFEC09F2EF9C7D077BB81DFE49B047D3F4EC9",
+      "case": "VerifyTradeWorld",
+      "token": "TRADE_WORLD_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifySecondAct.log",
+      "sha256": "50CFD047123C4A7387EAFFD9D8B37CF96D2AB1E5EB43EDA79A08C09421E621F1",
+      "case": "VerifySecondAct",
+      "token": "SECOND_ACT_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyThirdAct.log",
+      "sha256": "AFECFAB227FE27EFF7E3FBBA3851101C4B994FCCDADB8631319F61285038D29F",
+      "case": "VerifyThirdAct",
+      "token": "THIRD_ACT_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyThirdBack.log",
+      "sha256": "94FBD54C6F2A99A4A73F0338BAA6939F2E37C125D91B241C6B916AFDB8F38929",
+      "case": "VerifyThirdBack",
+      "token": "THIRD_BACK_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyThirdSide.log",
+      "sha256": "A2CC9DB1A912244BCD00FF1CE37FCCE59ACBA7F88F44DA4E539CFAC2B68CCE46",
+      "case": "VerifyThirdSide",
+      "token": "THIRD_SIDE_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyCompanions.log",
+      "sha256": "DA4E9C94D8D9085E9C9A67A292984E7C9A42F1EE8208A734669AD5F8129373EB",
+      "case": "VerifyCompanions",
+      "token": "COMPANIONS_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyCampaignGrowth.log",
+      "sha256": "49D55E4ACE68B9E719F3B6710CF038D02E4CCA07FB5E2F9462354DEAB203111B",
+      "case": "VerifyCampaignGrowth",
+      "token": "CAMPAIGN_GROWTH_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyPortGrowth.log",
+      "sha256": "F5E1F66F3EDF2BB6A4657E7B93223EF8AD5564C8CD3E611FD0D50BDBE26E333E",
+      "case": "VerifyPortGrowth",
+      "token": "PORT_GROWTH_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyShipping.log",
+      "sha256": "D70DDF00AA36042824290004D399530832BBFF3A4593E06D4EE33D315864B7B4",
+      "case": "VerifyShipping",
+      "token": "SHIPPING_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyFishing.log",
+      "sha256": "8DED1A31F5D67AFEAA456277EF3AC7841E78CE48E71A9A3A1607D46760190D74",
+      "case": "VerifyFishing",
+      "token": "FISHING_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyRouteScene.log",
+      "sha256": "78A30FE4D1B7899F3997C83BAE565888C9BEFB19A8A035189036E8ED8EC59DE8",
+      "case": "VerifyRouteScene",
+      "token": "ROUTE_SCENE_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyGacha.log",
+      "sha256": "A81D65E01042E659A2899B04BF360F655A13A4C058DA1B91B86EA05D72B25CDD",
+      "case": "VerifyGacha",
+      "token": "GACHA_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyPanels.log",
+      "sha256": "710C336399522E5EE2FE14C1E64EB4D38C88BD559484FBC0687D214AE2F38207",
+      "case": "VerifyPanels",
+      "token": "PANELS_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyGrowth.log",
+      "sha256": "6CB5FE2B1D3F6225569AEAD6F30E2F986C4AEAC18F0994D0091153F2E750AC76",
+      "case": "VerifyGrowth",
+      "token": "GROWTH_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyPerf.log",
+      "sha256": "2CD74093F37D8402C984AAE53DF038079D984A0660E6A422F4247A93E60D9D8B",
+      "case": "VerifyPerf",
+      "token": "PERF_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyLore.log",
+      "sha256": "3F7BA8C14C40301934C663AB07A5C0990CBF13922699655AE1904E1DA3D0A53A",
+      "case": "VerifyLore",
+      "token": "LORE_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyQuests.log",
+      "sha256": "BDD792E3930870E979F005B20E6047877072921711BB0B2F16B5F063DD618FEF",
+      "case": "VerifyQuests",
+      "token": "QUESTS_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyAudio.log",
+      "sha256": "5DFD80CAE3E4F037F17DCC48670C24C1954A3C85AFB36FA0B005F7874FF08229",
+      "case": "VerifyAudio",
+      "token": "AUDIO_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyTransit.log",
+      "sha256": "90E62B0161B4CFC3D36AB0F07D989A518D3465D72F9D617D7374ABA6E6835AD4",
+      "case": "VerifyTransit",
+      "token": "TRANSIT_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyDrops.log",
+      "sha256": "F47147B2980CC8CCD1672DA68C6CC19BE901B6C1B0C847885AB1FFFE275E831E",
+      "case": "VerifyDrops",
+      "token": "DROPS_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyArena.log",
+      "sha256": "91C6D62379E214A64D950BC31E7BA8C75AC2CDD21F9F832BB6DD5C755A69BC68",
+      "case": "VerifyArena",
+      "token": "ARENA_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyAvatar.log",
+      "sha256": "502DAF3127149AA2E3B39801EB756D5DEE5714196187B92F1F4EFEC6CB150D2D",
+      "case": "VerifyAvatar",
+      "token": "AVATAR_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/VerifyNav.log",
+      "sha256": "93638306E28106F3DA76710C8026788E9CA5A9A55E59B6718770B60DC45DAB14",
+      "case": "VerifyNav",
+      "token": "NAV_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/verify_data.log",
+      "sha256": "2C3231EC9DC458CECB2A474A6BC5C2800A155E232E48314EED49B8D2DD113D81",
+      "case": "verify_data",
+      "token": "DATA_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/verify_battle.log",
+      "sha256": "492DBB35C8BA333A84AA8FDE831795634B9F34546324CDF5832A154EE494E721",
+      "case": "verify_battle",
+      "token": "BATTLE_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/verify_route.log",
+      "sha256": "6D060C95A54D363B29A137649B2BEABA6AB974D9477A052F1675A4F93968C48B",
+      "case": "verify_route",
+      "token": "ROUTE_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/verify_trait.log",
+      "sha256": "B7C9D0C71E5776A7E6F1FEDA22E860E0D868A74ACDEB1CCF017D02CF753010ED",
+      "case": "verify_trait",
+      "token": "TRAIT_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_regression/verify_walk_assets.log",
+      "sha256": "92E117B16DC97052A37EC6F8AB0FF51C9D2229C232E7FB6320E8094E8828F36A",
+      "case": "verify_walk_assets",
+      "token": "WALK_ASSETS_OK"
+    }
+  ],
+  "final_audio_cases": [
+    {
+      "path": "tools/_logs/p08e_final_audio/VerifyCampaignGrowth.log",
+      "sha256": "BAA39A626C798A97B745ADC21553AD2A90935688ACAD7F31A06DC4531E7C50B5",
+      "case": "VerifyCampaignGrowth",
+      "token": "CAMPAIGN_GROWTH_OK"
+    },
+    {
+      "path": "tools/_logs/p08e_final_audio/VerifyAudio.log",
+      "sha256": "DECBB3CDC32D13BE301E084B8B587B9F46CB840B8DE0C2131B5A51F563AD2541",
+      "case": "VerifyAudio",
+      "token": "AUDIO_OK"
+    }
+  ],
+  "verification_note": "Full 40 cases passed; final batched level-up audio change covered by growth/audio targeted rerun and four-role old-save input rerun. Fresh saves have no catchup transactions.",
+  "selftest": {
+    "path": "tools/_logs/p08e_selftest.log",
+    "sha256": "9997361D44F9C0CEABE5A352A4276D7F4BCD1729B0D25A35AD0AE7A0C3CECCDF",
+    "checks": 11
+  },
+  "fresh": [
+    {
+      "role": "zs",
+      "state": {
+        "bag": 60,
+        "cap": 60,
+        "equipped": [
+          "accessory",
+          "armor",
+          "hammer",
+          "spear",
+          "staff",
+          "sword"
+        ],
+        "exp": 1508,
+        "experience_revision_n": 28,
+        "frag": 0,
+        "gold": 5903,
+        "ledger_n": 38,
+        "level": 42,
+        "map": "frost_post",
+        "pending": 5,
+        "role": "zs",
+        "story_done": [
+          "s01",
+          "s02",
+          "s03",
+          "s04",
+          "s05",
+          "s06",
+          "s07",
+          "s08",
+          "s09",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14",
+          "s15",
+          "s16",
+          "s17",
+          "s18",
+          "s19",
+          "s20",
+          "s21",
+          "s22",
+          "s23",
+          "s24",
+          "s25",
+          "s26",
+          "s27",
+          "s28"
+        ],
+        "story_done_n": 28,
+        "story_step": "",
+        "unlocked_skills": [
+          "zs_lieshan",
+          "zs_pozhen"
+        ]
+      },
+      "milestones": [
+        [
+          "act1",
+          "12",
+          "-1",
+          "690",
+          "12"
+        ],
+        [
+          "act2",
+          "25",
+          "-1",
+          "1210",
+          "20"
+        ],
+        [
+          "act3",
+          "42",
+          "-1",
+          "1890",
+          "28"
+        ]
+      ],
+      "main_experience_share": 0.9854,
+      "a_log": {
+        "path": "tools/_logs/p08e_final_zs_fs/playthrough_zs_a.log",
+        "sha256": "DC2CD43CD4CDD1F972AF397140593E178FFFA4ABE656E04F950C860CE1634DD9"
+      },
+      "b_log": {
+        "path": "tools/_logs/p08e_final_zs_fs/playthrough_zs_b.log",
+        "sha256": "7914A3D2025381504F48DAA765788A09602CC2AF7EAF06796712BF893FA0C8C1"
+      },
+      "a_save": {
+        "path": "tools/_logs/p08e_final_zs_fs/save_playthrough_zs_a.json",
+        "sha256": "4FFD32F509D17CBE202007F9CE457E139D8B2FD813CCDECDF544667DEB00A4D6"
+      },
+      "b_save": {
+        "path": "tools/_logs/p08e_final_zs_fs/save_playthrough_zs_b.json",
+        "sha256": "4FFD32F509D17CBE202007F9CE457E139D8B2FD813CCDECDF544667DEB00A4D6"
+      }
+    },
+    {
+      "role": "fs",
+      "state": {
+        "bag": 60,
+        "cap": 60,
+        "equipped": [
+          "accessory",
+          "armor",
+          "hammer",
+          "spear",
+          "staff",
+          "sword"
+        ],
+        "exp": 1508,
+        "experience_revision_n": 28,
+        "frag": 0,
+        "gold": 5903,
+        "ledger_n": 38,
+        "level": 42,
+        "map": "frost_post",
+        "pending": 5,
+        "role": "fs",
+        "story_done": [
+          "s01",
+          "s02",
+          "s03",
+          "s04",
+          "s05",
+          "s06",
+          "s07",
+          "s08",
+          "s09",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14",
+          "s15",
+          "s16",
+          "s17",
+          "s18",
+          "s19",
+          "s20",
+          "s21",
+          "s22",
+          "s23",
+          "s24",
+          "s25",
+          "s26",
+          "s27",
+          "s28"
+        ],
+        "story_done_n": 28,
+        "story_step": "",
+        "unlocked_skills": [
+          "fs_shuangren",
+          "fs_shuanghuan"
+        ]
+      },
+      "milestones": [
+        [
+          "act1",
+          "12",
+          "-1",
+          "650",
+          "12"
+        ],
+        [
+          "act2",
+          "25",
+          "-1",
+          "1170",
+          "20"
+        ],
+        [
+          "act3",
+          "42",
+          "-1",
+          "1850",
+          "28"
+        ]
+      ],
+      "main_experience_share": 0.9854,
+      "a_log": {
+        "path": "tools/_logs/p08e_final_zs_fs/playthrough_fs_a.log",
+        "sha256": "96B2D083CF7A9030F2C0D30FB184BDF6FB94381949BB632A232390A5B38DFA2C"
+      },
+      "b_log": {
+        "path": "tools/_logs/p08e_final_zs_fs/playthrough_fs_b.log",
+        "sha256": "D0FF33BB4AEEE0743D0E49034B540087CA8E6669348AA4CEBF1E6AC37BF315B6"
+      },
+      "a_save": {
+        "path": "tools/_logs/p08e_final_zs_fs/save_playthrough_fs_a.json",
+        "sha256": "E0B72E25E27B52AF6E2DF326E17026CEA965349E10C58BFFE1445CFEF4952AB6"
+      },
+      "b_save": {
+        "path": "tools/_logs/p08e_final_zs_fs/save_playthrough_fs_b.json",
+        "sha256": "E0B72E25E27B52AF6E2DF326E17026CEA965349E10C58BFFE1445CFEF4952AB6"
+      }
+    },
+    {
+      "role": "ck",
+      "state": {
+        "bag": 60,
+        "cap": 60,
+        "equipped": [
+          "accessory",
+          "armor",
+          "hammer",
+          "spear",
+          "staff",
+          "sword"
+        ],
+        "exp": 1480,
+        "experience_revision_n": 28,
+        "frag": 0,
+        "gold": 5865,
+        "ledger_n": 37,
+        "level": 42,
+        "map": "frost_post",
+        "pending": 4,
+        "role": "ck",
+        "story_done": [
+          "s01",
+          "s02",
+          "s03",
+          "s04",
+          "s05",
+          "s06",
+          "s07",
+          "s08",
+          "s09",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14",
+          "s15",
+          "s16",
+          "s17",
+          "s18",
+          "s19",
+          "s20",
+          "s21",
+          "s22",
+          "s23",
+          "s24",
+          "s25",
+          "s26",
+          "s27",
+          "s28"
+        ],
+        "story_done_n": 28,
+        "story_step": "",
+        "unlocked_skills": [
+          "ck_lianzhu",
+          "ck_guanjia"
+        ]
+      },
+      "milestones": [
+        [
+          "act1",
+          "12",
+          "-1",
+          "660",
+          "12"
+        ],
+        [
+          "act2",
+          "25",
+          "-1",
+          "1180",
+          "20"
+        ],
+        [
+          "act3",
+          "42",
+          "-1",
+          "1860",
+          "28"
+        ]
+      ],
+      "main_experience_share": 0.9857,
+      "a_log": {
+        "path": "tools/_logs/p08e_final_ck_fz/playthrough_ck_a.log",
+        "sha256": "E6088565B47DAA1BB55CAA8979103266358B09B3F8066F305AEAFC4B6D6F6541"
+      },
+      "b_log": {
+        "path": "tools/_logs/p08e_final_ck_fz/playthrough_ck_b.log",
+        "sha256": "FBF7380F1B92E02FCFE50D9A7CAE0DFDED80069ADA541079309A298178DC1985"
+      },
+      "a_save": {
+        "path": "tools/_logs/p08e_final_ck_fz/save_playthrough_ck_a.json",
+        "sha256": "15660FC4D98FCDC13E4E8DC33CA405D366CA06AB1FDB5E7B085A6DC1554975D0"
+      },
+      "b_save": {
+        "path": "tools/_logs/p08e_final_ck_fz/save_playthrough_ck_b.json",
+        "sha256": "15660FC4D98FCDC13E4E8DC33CA405D366CA06AB1FDB5E7B085A6DC1554975D0"
+      }
+    },
+    {
+      "role": "fz",
+      "state": {
+        "bag": 60,
+        "cap": 60,
+        "equipped": [
+          "accessory",
+          "armor",
+          "hammer",
+          "spear",
+          "staff",
+          "sword"
+        ],
+        "exp": 1638,
+        "experience_revision_n": 28,
+        "frag": 0,
+        "gold": 6073,
+        "ledger_n": 40,
+        "level": 42,
+        "map": "frost_post",
+        "pending": 5,
+        "role": "fz",
+        "story_done": [
+          "s01",
+          "s02",
+          "s03",
+          "s04",
+          "s05",
+          "s06",
+          "s07",
+          "s08",
+          "s09",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14",
+          "s15",
+          "s16",
+          "s17",
+          "s18",
+          "s19",
+          "s20",
+          "s21",
+          "s22",
+          "s23",
+          "s24",
+          "s25",
+          "s26",
+          "s27",
+          "s28"
+        ],
+        "story_done_n": 28,
+        "story_step": "",
+        "unlocked_skills": [
+          "fz_shengyu",
+          "fz_puzhao"
+        ]
+      },
+      "milestones": [
+        [
+          "act1",
+          "12",
+          "-1",
+          "705",
+          "12"
+        ],
+        [
+          "act2",
+          "25",
+          "-1",
+          "1225",
+          "20"
+        ],
+        [
+          "act3",
+          "42",
+          "-1",
+          "1905",
+          "28"
+        ]
+      ],
+      "main_experience_share": 0.9841,
+      "a_log": {
+        "path": "tools/_logs/p08e_final_ck_fz/playthrough_fz_a.log",
+        "sha256": "51BEB378D1A223E15DA15AB3A6D9D02FE43840E56CBCE735A1D36C17F705C7FC"
+      },
+      "b_log": {
+        "path": "tools/_logs/p08e_final_ck_fz/playthrough_fz_b.log",
+        "sha256": "02F3A00FEB36E25B32CE5A0EE06B5CC7AF172277525C58036F08F32CF47687C0"
+      },
+      "a_save": {
+        "path": "tools/_logs/p08e_final_ck_fz/save_playthrough_fz_a.json",
+        "sha256": "6B32452EAC8B595773EE04E06AF0E43520B4D52A3BC05A2195B9CE6C369A7F3F"
+      },
+      "b_save": {
+        "path": "tools/_logs/p08e_final_ck_fz/save_playthrough_fz_b.json",
+        "sha256": "6B32452EAC8B595773EE04E06AF0E43520B4D52A3BC05A2195B9CE6C369A7F3F"
+      }
+    }
+  ],
+  "old_saves": [
+    {
+      "role": "zs",
+      "old_level": 10,
+      "new_level": 42,
+      "experience_added": 93511,
+      "source": {
+        "path": "tools/_logs/p08d_patrol_zs_ck/save_playthrough_zs_a.json",
+        "sha256": "7DC5945F57235D2665A002ED8D12FDABB69951EA97A2824BB3C1B51437AE6598"
+      },
+      "a_log": {
+        "path": "tools/_logs/p08e_final_old_zs_ck/playthrough_zs_a.log",
+        "sha256": "F3252994057F17CF35690FBE6E129FEB14965FE1132340F0AECD5063F50F1D67"
+      },
+      "b_log": {
+        "path": "tools/_logs/p08e_final_old_zs_ck/playthrough_zs_b.log",
+        "sha256": "ACBFF05721D9D5AD016C121D32C72592828DC3C288F16411C5D3AC46C2A3F5B7"
+      },
+      "a_save": {
+        "path": "tools/_logs/p08e_final_old_zs_ck/save_playthrough_zs_a.json",
+        "sha256": "FB16AAC35D7DC2EB6443C2A5E3A622C7B66E694D27C28E049DD80B9D8AFDBD7A"
+      },
+      "b_save": {
+        "path": "tools/_logs/p08e_final_old_zs_ck/save_playthrough_zs_b.json",
+        "sha256": "FB16AAC35D7DC2EB6443C2A5E3A622C7B66E694D27C28E049DD80B9D8AFDBD7A"
+      },
+      "preserved_prog_keys": [
+        "act1",
+        "codex_claimed",
+        "companions",
+        "economy",
+        "equip",
+        "fishing",
+        "flags",
+        "gacha",
+        "inventory",
+        "lore_beats",
+        "lore_seen",
+        "mounts",
+        "pet_stat",
+        "pets",
+        "settings",
+        "skills",
+        "story",
+        "talents",
+        "tips_seen",
+        "titles",
+        "world_cleared",
+        "worlds_unlocked"
+      ]
+    },
+    {
+      "role": "ck",
+      "old_level": 10,
+      "new_level": 42,
+      "experience_added": 93511,
+      "source": {
+        "path": "tools/_logs/p08d_patrol_zs_ck/save_playthrough_ck_a.json",
+        "sha256": "2FB10CD820E76D69A3DC233E98098D9A674A6BB177773963439EB0420D5C3429"
+      },
+      "a_log": {
+        "path": "tools/_logs/p08e_final_old_zs_ck/playthrough_ck_a.log",
+        "sha256": "92F2C7D25FAC850980A87AB3B3094C9986B71F90AD9F15A24932BCA7D2B9F84A"
+      },
+      "b_log": {
+        "path": "tools/_logs/p08e_final_old_zs_ck/playthrough_ck_b.log",
+        "sha256": "AE37055E51187ECDE13737717B00BEEED4DA52C1CB58FE2BEAE854E9E8876597"
+      },
+      "a_save": {
+        "path": "tools/_logs/p08e_final_old_zs_ck/save_playthrough_ck_a.json",
+        "sha256": "3FE77F44BB26033577D7E547FBEDB679029B39B914FD100F1E392E4CA7A430D0"
+      },
+      "b_save": {
+        "path": "tools/_logs/p08e_final_old_zs_ck/save_playthrough_ck_b.json",
+        "sha256": "3FE77F44BB26033577D7E547FBEDB679029B39B914FD100F1E392E4CA7A430D0"
+      },
+      "preserved_prog_keys": [
+        "act1",
+        "codex_claimed",
+        "companions",
+        "economy",
+        "equip",
+        "fishing",
+        "flags",
+        "gacha",
+        "inventory",
+        "lore_beats",
+        "lore_seen",
+        "mounts",
+        "pet_stat",
+        "pets",
+        "settings",
+        "skills",
+        "story",
+        "talents",
+        "tips_seen",
+        "titles",
+        "world_cleared",
+        "worlds_unlocked"
+      ]
+    },
+    {
+      "role": "fs",
+      "old_level": 10,
+      "new_level": 42,
+      "experience_added": 93511,
+      "source": {
+        "path": "tools/_logs/p08d_patrol_fs_fz/save_playthrough_fs_a.json",
+        "sha256": "B183D58F090F3750438A717FE41ECAD94E53CE89E8084B29C593AB7C534831E7"
+      },
+      "a_log": {
+        "path": "tools/_logs/p08e_final_old_fs_fz/playthrough_fs_a.log",
+        "sha256": "2A748D23FED88BDE17FA13FBDC78869BDF84AD85309D774E9B8B636643FEC909"
+      },
+      "b_log": {
+        "path": "tools/_logs/p08e_final_old_fs_fz/playthrough_fs_b.log",
+        "sha256": "251C1600C2372C6E14F56BCEF9BC5A0D47CE8DCECFA73C9CD33F622C286EFFE8"
+      },
+      "a_save": {
+        "path": "tools/_logs/p08e_final_old_fs_fz/save_playthrough_fs_a.json",
+        "sha256": "F739DA4513F2DDDA29AFD52AED38268F693069C4748178A10542294D109CCF3F"
+      },
+      "b_save": {
+        "path": "tools/_logs/p08e_final_old_fs_fz/save_playthrough_fs_b.json",
+        "sha256": "F739DA4513F2DDDA29AFD52AED38268F693069C4748178A10542294D109CCF3F"
+      },
+      "preserved_prog_keys": [
+        "act1",
+        "codex_claimed",
+        "companions",
+        "economy",
+        "equip",
+        "fishing",
+        "flags",
+        "gacha",
+        "inventory",
+        "lore_beats",
+        "lore_seen",
+        "mounts",
+        "pet_stat",
+        "pets",
+        "settings",
+        "skills",
+        "story",
+        "talents",
+        "tips_seen",
+        "titles",
+        "world_cleared",
+        "worlds_unlocked"
+      ]
+    },
+    {
+      "role": "fz",
+      "old_level": 10,
+      "new_level": 42,
+      "experience_added": 93511,
+      "source": {
+        "path": "tools/_logs/p08d_patrol_fs_fz/save_playthrough_fz_a.json",
+        "sha256": "6BEDCD70948E419A7187F6A1574AE7DF58504C65E0FBC2729567A02663764F95"
+      },
+      "a_log": {
+        "path": "tools/_logs/p08e_final_old_fs_fz/playthrough_fz_a.log",
+        "sha256": "D7C5B430A4EFF89F28217394B2DC97B2CAAD93A018D1C92F17E6A5B38E99EEA6"
+      },
+      "b_log": {
+        "path": "tools/_logs/p08e_final_old_fs_fz/playthrough_fz_b.log",
+        "sha256": "522B96A74AF8D34798A6924E195F324EA49274E008D923D6E629C00A34FD8E78"
+      },
+      "a_save": {
+        "path": "tools/_logs/p08e_final_old_fs_fz/save_playthrough_fz_a.json",
+        "sha256": "8509A913CDE1E69CDCD383C786357C26492EAA830FB8437569465F53561311A8"
+      },
+      "b_save": {
+        "path": "tools/_logs/p08e_final_old_fs_fz/save_playthrough_fz_b.json",
+        "sha256": "8509A913CDE1E69CDCD383C786357C26492EAA830FB8437569465F53561311A8"
+      },
+      "preserved_prog_keys": [
+        "act1",
+        "codex_claimed",
+        "companions",
+        "economy",
+        "equip",
+        "fishing",
+        "flags",
+        "gacha",
+        "inventory",
+        "lore_beats",
+        "lore_seen",
+        "mounts",
+        "pet_stat",
+        "pets",
+        "settings",
+        "skills",
+        "story",
+        "talents",
+        "tips_seen",
+        "titles",
+        "world_cleared",
+        "worlds_unlocked"
+      ]
+    }
+  ],
+  "shots": [
+    {
+      "path": "shots/p08e_20261001/campaign_catchup_480x800.png",
+      "sha256": "E9F09A2341271C644B5ED441646643609EE9ECD089DCA41A151455FEFDD961DB",
+      "size": "480x800",
+      "scene": "campaign_catchup",
+      "kind": "verified-save UI rendering; screenshot positioning only, not input proof"
+    },
+    {
+      "path": "shots/p08e_20261001/campaign_return_480x800.png",
+      "sha256": "01D5BC22944FE89237086C41B8FFDA4A0F868950873EE7DBB6B8F64A6BB05910",
+      "size": "480x800",
+      "scene": "campaign_return",
+      "kind": "verified-save UI rendering; screenshot positioning only, not input proof"
+    },
+    {
+      "path": "shots/p08e_20261001/campaign_mine_480x800.png",
+      "sha256": "BDAD29B51FCFF6EC654864B46FA7CEC1144D24792A76212B5D063D450979D5C2",
+      "size": "480x800",
+      "scene": "campaign_mine",
+      "kind": "verified-save UI rendering; screenshot positioning only, not input proof"
+    },
+    {
+      "path": "shots/p08e_20261001/campaign_catchup_480x1067.png",
+      "sha256": "C1D54C3B89CC85E3529261C56B9A9EEE24C00D17208D91290391602F0E013E92",
+      "size": "480x1067",
+      "scene": "campaign_catchup",
+      "kind": "verified-save UI rendering; screenshot positioning only, not input proof"
+    },
+    {
+      "path": "shots/p08e_20261001/campaign_return_480x1067.png",
+      "sha256": "C93115D4C914806774E897342329A2D54CA20D8958328B18086A4A6658C2D4FB",
+      "size": "480x1067",
+      "scene": "campaign_return",
+      "kind": "verified-save UI rendering; screenshot positioning only, not input proof"
+    },
+    {
+      "path": "shots/p08e_20261001/campaign_mine_480x1067.png",
+      "sha256": "D52D209DFE2DEE9743A99C50E961B4594FE74CF8FB3590942D65620D10419B30",
+      "size": "480x1067",
+      "scene": "campaign_mine",
+      "kind": "verified-save UI rendering; screenshot positioning only, not input proof"
+    }
+  ],
+  "sources": [
+    {
+      "path": "data/campaign_growth.json",
+      "sha256": "C246DEDE5E657F951EAEB672E6F738F4C339449FA5706404F35E93A93CBF59D0"
+    },
+    {
+      "path": "src/world/CampaignGrowth.gd",
+      "sha256": "58635936D83D95FB97DE4A25E7B3451E26915F10C103659FDEF2A305E2EFAECF"
+    },
+    {
+      "path": "src/autoload/G.gd",
+      "sha256": "1AD633371B86ECEB51D793F6A5BD7BAA9ACC1106A043A74FA2C1133240FB5BB2"
+    },
+    {
+      "path": "src/combat/TableCache.gd",
+      "sha256": "F9BF2BEE07EEC0FD05A18F0EB3DCD9F89482FAFD68DADC60FA85489035B08AA3"
+    },
+    {
+      "path": "src/explore/MapScene.gd",
+      "sha256": "6B95F6A42B61597DDC41B6A58F9F1AA94B7A68D8A6FEDB9755911BDF38189C9D"
+    },
+    {
+      "path": "src/save/SaveData.gd",
+      "sha256": "C30D4BBF5542AC0C659DA6BB77BBE63AC029AE3F67C830FA4273A96C4BB130A0"
+    },
+    {
+      "path": "tools/PlaythroughMainWorld.gd",
+      "sha256": "6964D534BDE86A26E8BC0476333DC11C9AF8D32EE09E9F2CD44B4AFC7C9788D2"
+    },
+    {
+      "path": "tools/PlaythroughCampaignGrowth.gd",
+      "sha256": "23CD230956F8FDCAEA2D37C5C518F42831D55761C874A5B4B3BFA05DA67C632F"
+    },
+    {
+      "path": "tools/VerifyCampaignGrowth.gd",
+      "sha256": "6C4E2DF765D157B8DC66D81DD5C168979153C3E9ED4B537F6955505C21A865AD"
+    },
+    {
+      "path": "tools/VerifyStory.gd",
+      "sha256": "02830D3A9416EE0D212BEBFC50C279A8C775BC76E40F6E05A05453CC63440B93"
+    },
+    {
+      "path": "tools/VerifyMainWorld.gd",
+      "sha256": "56FBC3855D3F07634470D6E160BA6CBCB2A9151A50299291DE19F03A5FD0735C"
+    },
+    {
+      "path": "tools/ShotRunner.gd",
+      "sha256": "E7845F3F10E3F0AAD2791233C49576C77E2CDE5060BF53773DE342119833A1DE"
+    },
+    {
+      "path": "tools/run_regression.ps1",
+      "sha256": "26E76640C7140B17958B76DAFB79DF65C60488136EF569CD6FF863FD2DBC3DC4"
+    },
+    {
+      "path": "tools/run_playthrough.ps1",
+      "sha256": "FBE7AEEBC20492B07F1EA8CB91C2190090DC781013973356A597109797C6B424"
+    }
+  ],
+  "json_tables": 35,
+  "real_save_sha256": "C5D29EE55C033619C4F5232D55A6C4F186D40ADD556DB61EE0D776B9FDA2660C",
+  "remaining": [
+    "equipment/resource calibration",
+    "six mount terrain traits and riding animations",
+    "affiliation/contracts/oath",
+    "act IV s29-s36",
+    "18 remaining side quests and 12 replayable commissions total",
+    "multiroom mechanism dungeons",
+    "S4 manual timing",
+    "S7 animated assets and Android/release validation"
+  ]
+}

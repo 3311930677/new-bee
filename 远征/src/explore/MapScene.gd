@@ -241,6 +241,9 @@ func _ready() -> void:
 			_toast("主线完成：%s" % String(story_result.get("title", "")))
 			_refresh_hud()
 	_refresh_explore_hud()   # 恢复的探索分/击杀数要在 HUD 上显出来
+	if _mode == "main_world":
+		var campaign_note := G.take_campaign_note()
+		if not campaign_note.is_empty(): _toast(campaign_note)
 
 
 func _attach_city_content() -> void:
@@ -926,7 +929,8 @@ func _spawn_monster(slot: Dictionary) -> void:
 			m.sprite_height = float(slot["height"])
 		m.contact_radius = float(slot.get("contact_radius", 0.0))
 		m.wander_radius = float(slot.get("wander_radius", 0.0))
-	m.display_level = st.level + int(slot.get("level_offset", _main_cfg.get("monster_level_offset", 2))) \
+	m.display_level = CampaignGrowth.enemy_level(_main_map_id, slot,
+		st.level + int(slot.get("level_offset", _main_cfg.get("monster_level_offset", 2)))) \
 		if _mode == "main_world" else 0
 	m.wander_only = _mode == "main_world" \
 		and bool(_main_cfg.get("monster_wander_only", true))
@@ -1434,7 +1438,19 @@ func _hud_icon_button(icon_key: String, width: float, hint: String, action: Call
 	return holder
 
 
+func _sync_campaign_level() -> void:
+	if _mode != "main_world": return
+	var level := int(G.prog.get("level", st.level))
+	var bonus := G.growth_bonuses(st.role_id)
+	if level <= st.level and bonus == st.growth_bonus: return
+	var old_max := st.max_hp()
+	st.level = maxi(st.level, level)
+	st.growth_bonus = bonus
+	if st.hp > 0: st.hp = clampi(st.hp + st.max_hp() - old_max, 1, st.max_hp())
+
+
 func _refresh_hud() -> void:
+	_sync_campaign_level()
 	var m := st.max_hp()
 	var hp := m if st.hp < 0 else st.hp
 	_hp_fill.size.x = 116.0 * clampf(float(hp) / float(m), 0.0, 1.0)
@@ -2873,6 +2889,8 @@ func _settle_main_world(tier: String, defeated_mon_id: String) -> String:
 	var before_gold := st.gold
 	var before_exp := st.exp
 	var before_level := st.level
+	var before_hp := st.hp
+	var before_growth := st.growth_bonus.duplicate(true)
 	var rewards: Variant = _main_cfg.get("battle_rewards", {})
 	var reward: Variant = (rewards as Dictionary).get(tier, {}) if rewards is Dictionary else {}
 	var gold := 0
@@ -2926,6 +2944,8 @@ func _settle_main_world(tier: String, defeated_mon_id: String) -> String:
 		st.gold = before_gold
 		st.exp = before_exp
 		st.level = before_level
+		st.hp = before_hp
+		st.growth_bonus = before_growth
 		_toast("存档写入失败：战利未落袋（请检查磁盘空间后重进本图）")
 		return "save_failed"
 	_toast(reward_msg)
@@ -3110,7 +3130,7 @@ func _bank_main_world_rewards(txid := "") -> String:
 	st.soul = 0
 	st.honor = 0
 	st.exp = 0
-	st.level = int(G.prog.get("level", st.level))
+	_sync_campaign_level()
 	if _city_content != null:
 		_city_content.call("_refresh_stat")
 	var msg := "战利 · 铜钱 +%d · 经验 +%d%s" % [gold, exp, msg_suffix]
