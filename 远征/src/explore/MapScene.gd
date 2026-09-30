@@ -3860,6 +3860,40 @@ class _QuestEntity extends Node2D:
 		draw_circle(Vector2.ZERO, 22.0, Color(0, 0, 0, 0.24))   # 落地影
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		match art:
+			"frost_brazier":
+				draw_rect(Rect2(-7, -46, 14, 46), Color("53483c"))
+				draw_rect(Rect2(-16, -63, 32, 22), Color("c19b65"))
+				draw_rect(Rect2(-19, -68, 38, 7), Color("dddcd0"))
+				draw_line(Vector2(-3, -62), Vector2(8, -43), Color("604d3f"), 3)
+			"frost_nameplate":
+				var plate := G.res_tex("itm_frost_nameplate")
+				if plate != null: draw_texture_rect(plate, Rect2(-22, -42, 44, 44), false)
+			"frost_lichen":
+				for p in [Vector2(-19, -8), Vector2(0, -17), Vector2(19, -5)]:
+					draw_rect(Rect2(p - Vector2(10, 9), Vector2(20, 17)), Color("7caea5"))
+					draw_rect(Rect2(p - Vector2(6, 8), Vector2(12, 5)), Color("d5e5dc"))
+			"mine_vent":
+				draw_rect(Rect2(-25, -25, 50, 24), Color("53616b"))
+				draw_circle(Vector2(0, -37), 20, Color("a78553"))
+				draw_circle(Vector2(0, -37), 12, Color("42545c"))
+				for angle in [0.0, PI / 2, PI, PI * 1.5]:
+					draw_line(Vector2(0, -37), Vector2(0, -37) + Vector2.from_angle(angle) * 18, Color("c5ad7c"), 4)
+			"frost_courier":
+				# 接应人沿用霜关 NPC 的原生人物比例，蓝绳药包握在身侧。
+				draw_rect(Rect2(-10, -64, 20, 20), Color("76533b"))
+				draw_rect(Rect2(-8, -59, 16, 16), Color("dbbd92"))
+				draw_rect(Rect2(-13, -43, 26, 28), Color("638e9e"))
+				draw_rect(Rect2(-17, -38, 6, 19), Color("83bfc6"))
+				draw_rect(Rect2(11, -38, 6, 19), Color("83bfc6"))
+				draw_rect(Rect2(-10, -15, 8, 15), Color("4e453b"))
+				draw_rect(Rect2(3, -15, 8, 15), Color("4e453b"))
+				draw_rect(Rect2(12, -25, 17, 17), Color("c9ba91"))
+				draw_line(Vector2(15, -18), Vector2(27, -18), Color("83bfc6"), 3)
+			"frost_echo":
+				draw_rect(Rect2(-23, -61, 46, 60), Color("718f9b"))
+				draw_rect(Rect2(-16, -53, 32, 43), Color("bddbe1"))
+				draw_line(Vector2(-8, -46), Vector2(9, -18), Color("4e7c90"), 4)
+				draw_arc(Vector2(0, -35), 31, -PI * .75, -PI * .25, 10, Color("a0cfd3"), 2)
 			"signal_ribbons":
 				for x in [-26.0, 26.0]:
 					draw_rect(Rect2(x - 3, -75, 6, 80), Color("635543"))

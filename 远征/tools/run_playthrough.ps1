@@ -24,6 +24,8 @@ param(
   [switch]$Act2,
   [switch]$Act3Front,
   [switch]$Act3,
+  [switch]$ThirdSide,
+  [string]$SourceDir = "",
   [int]$TimeoutSec = 2400,
   [string]$LogDir = ""
 )
@@ -33,6 +35,10 @@ $ErrorActionPreference = "Stop"
 if ($Proj -eq "") { $Proj = Split-Path -Parent $PSScriptRoot }
 if ($LogDir -eq "") { $LogDir = Join-Path $PSScriptRoot "_logs" }
 if (-not (Test-Path $LogDir)) { New-Item -ItemType Directory -Path $LogDir -Force | Out-Null }
+if ($ThirdSide -and ($SourceDir -eq "" -or -not (Test-Path -LiteralPath $SourceDir -PathType Container))) {
+    Write-Host "FATAL: -ThirdSide requires an existing -SourceDir with verified s01-s28 saves."
+    exit 2
+}
 
 # ---------------- engine resolution: explicit > env > known installs ----------------
 $explicitGodot = ($Godot -ne "")
@@ -194,7 +200,10 @@ foreach ($role in $roleList) {
 	$saveB = Join-Path $LogDir ("save_playthrough_" + $role + "_b.json")
 
 	# ---- phase A: walk the whole chain and persist ----
-	$argsA = @("--headless", "--path", $Proj, "res://tools/PlaythroughMainWorld.tscn", "--", $role, "a")
+	$playScene = "res://tools/PlaythroughMainWorld.tscn"
+	if ($ThirdSide) { $playScene = "res://tools/PlaythroughThirdSide.tscn" }
+	$argsA = @("--headless", "--path", $Proj, $playScene, "--", $role, "a")
+	if ($ThirdSide) { $argsA += ("--source-dir=" + [System.IO.Path]::GetFullPath($SourceDir)) }
 	if ($Act3) { $argsA += "act3" } elseif ($Act3Front) { $argsA += "act3_front" } elseif ($Act2) { $argsA += "act2" }
 	$argsA += ("--save-dir=" + [System.IO.Path]::GetFullPath($LogDir))
 	$ra = Invoke-Engine -Exe $Godot -ArgList $argsA -TimeoutSec $TimeoutSec -WorkDir $Proj
@@ -235,7 +244,7 @@ foreach ($role in $roleList) {
 	}
 
 	# ---- phase B: reopen the SAME save in a NEW process and verify ----
-	$argsB = @("--headless", "--path", $Proj, "res://tools/PlaythroughMainWorld.tscn", "--", $role, "b")
+	$argsB = @("--headless", "--path", $Proj, $playScene, "--", $role, "b")
 	if ($Act3) { $argsB += "act3" } elseif ($Act3Front) { $argsB += "act3_front" } elseif ($Act2) { $argsB += "act2" }
 	$argsB += ("--save-dir=" + [System.IO.Path]::GetFullPath($LogDir))
 	$rb = Invoke-Engine -Exe $Godot -ArgList $argsB -TimeoutSec $TimeoutSec -WorkDir $Proj

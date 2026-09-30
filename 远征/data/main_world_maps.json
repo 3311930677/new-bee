@@ -414,7 +414,19 @@
       "monster_wander_radius": 36,
       "monster_respawn_seconds": 120,
       "monster_contact_radius": 40,
-      "encounter_solo": true
+      "encounter_solo": true,
+      "entities": {
+        "a3_cold_courier": {
+          "quest": "a3_trade_parcel",
+          "kind": "deliver",
+          "art": "frost_courier",
+          "name": "赤砂接应人",
+          "at": [
+            525,
+            950
+          ]
+        }
+      }
     },
     "frost_post": {
       "name": "霜关驿",
@@ -515,7 +527,19 @@
       "monster_count": 0,
       "monster_positions": [],
       "monster_ids": [],
-      "encounter_solo": true
+      "encounter_solo": true,
+      "entities": {
+        "a3_wind_lamp": {
+          "quest": "a3_rel_brazier",
+          "kind": "observe",
+          "art": "frost_brazier",
+          "name": "风灯",
+          "at": [
+            365,
+            660
+          ]
+        }
+      }
     },
     "rift_mine_road": {
       "clear_rects": [
@@ -628,6 +652,36 @@
           "at": [
             480,
             525
+          ]
+        },
+        "a3_dropped_plate": {
+          "quest": "a3_rel_nameplate",
+          "kind": "collect",
+          "art": "frost_nameplate",
+          "name": "裂纹名牌",
+          "at": [
+            430,
+            950
+          ]
+        },
+        "a3_vent_south": {
+          "quest": "a3_eco_vents",
+          "kind": "observe",
+          "art": "mine_vent",
+          "name": "南排气口",
+          "at": [
+            430,
+            805
+          ]
+        },
+        "a3_vent_north": {
+          "quest": "a3_eco_vents",
+          "kind": "observe",
+          "art": "mine_vent",
+          "name": "北排气口",
+          "at": [
+            530,
+            340
           ]
         }
       }
@@ -778,7 +832,29 @@
           240,
           1045
         ]
-      ]
+      ],
+      "entities": {
+        "a3_echo_south": {
+          "quest": "a3_secret_echo",
+          "kind": "observe",
+          "art": "frost_echo",
+          "name": "南封碑",
+          "at": [
+            430,
+            855
+          ]
+        },
+        "a3_echo_north": {
+          "quest": "a3_secret_echo",
+          "kind": "observe",
+          "art": "frost_echo",
+          "name": "北封碑",
+          "at": [
+            530,
+            590
+          ]
+        }
+      }
     },
     "frost_boardwalk": {
       "name": "霜林栈道",
@@ -892,6 +968,26 @@
           "at": [
             480,
             565
+          ]
+        },
+        "a3_lichen_south": {
+          "quest": "a3_eco_lichen",
+          "kind": "collect",
+          "art": "frost_lichen",
+          "name": "南霜苔",
+          "at": [
+            435,
+            875
+          ]
+        },
+        "a3_lichen_north": {
+          "quest": "a3_eco_lichen",
+          "kind": "collect",
+          "art": "frost_lichen",
+          "name": "北霜苔",
+          "at": [
+            525,
+            310
           ]
         }
       }

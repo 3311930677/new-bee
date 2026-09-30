@@ -125,8 +125,64 @@ func _beast_unit(battle: BattleScene, mon_id: String) -> Combatant:
 	return null
 
 
+## 隔离演示档仅用于短/长屏构图，真实输入进度由 PlaythroughThirdSide 验证。
+func _third_side_demo() -> void:
+	G.SAVE_PATH = "res://tools/_logs/save_shot_third_side.json"
+	G._init_state_defaults()
+	_demo_prog()
+	G.selected_role = "zs"
+	G.player_name = "霜关行者"
+	var done: Array = []
+	for i in range(1,29): done.append("s%02d" % i)
+	G.prog["story"] = {"step":"","done":done,"goals":{}}
+	G.prog["flags"] = {"act3_supply_choice":"wardens"}
+	var qid := "a3_rel_brazier"
+	var mid := "frost_post"
+	var at := Vector2(480,710)
+	match _scene:
+		"third_side_nameplate":
+			qid = "a3_rel_nameplate"
+			mid = "rift_mine_road"
+			at = Vector2(480,970)
+		"third_side_vents":
+			qid = "a3_eco_vents"
+			mid = "rift_mine_road"
+			at = Vector2(480,860)
+		"third_side_lichen":
+			qid = "a3_eco_lichen"
+			mid = "frost_boardwalk"
+			at = Vector2(480,920)
+		"third_side_parcel":
+			qid = "a3_trade_parcel"
+			mid = "red_sand_route"
+			at = Vector2(480,1035)
+		"third_side_echo":
+			qid = "a3_secret_echo"
+			mid = "frost_pass"
+			at = Vector2(480,920)
+	G.side_accept(qid)
+	if _scene in ["third_side_choice","third_side_coal","third_side_shield"]:
+		G.side_entity_interact("observe","a3_wind_lamp","frost_post",qid)
+		if _scene != "third_side_choice":
+			G._side_complete(qid,true,"coal" if _scene == "third_side_coal" else "shield")
+	G.prog["main_world"] = {"map_id":mid}
+	if mid == "frost_pass": WorldSession.mark_boss_cleared(G.prog.main_world,mid)
+	var cfg := TableCache.main_world_map(mid)
+	MapScene.pending_cfg = {"mode":"main_world","main_map_id":mid,
+		"node":{"type":String(cfg.get("node_type","normal")),"layer":0,"index":0},"run":_make_run()}
+	var world: MapScene = load("res://src/explore/MapScene.tscn").instantiate()
+	add_child(world)
+	world._player.position = at
+	if _scene == "third_side_choice":
+		world._city_content._open_dialog(G.city_npc("npc_frost_guard"),false)
+	# 目标截图停在交互半径外，避免自动调查使目标在截帧前消失。
+	await get_tree().process_frame
+
+
 func _setup() -> void:
 	match _scene:
+		"third_side_choice", "third_side_coal", "third_side_shield", "third_side_nameplate", "third_side_lichen", "third_side_vents", "third_side_parcel", "third_side_echo":
+			await _third_side_demo()
 		"load":
 			add_child(load("res://src/ui/LoadScreen.tscn").instantiate())
 		"title":
