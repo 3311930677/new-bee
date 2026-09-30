@@ -137,6 +137,7 @@ var _mount_btn: Control = null       # 第一幕首骑上马／下马
 var _big_map: Control = null         # 大地图浮层（含图例与返回按钮）
 var _sprint := false
 var _mount_hoof_timer := 0.0
+var _last_battle_pets: Array = []
 var _auto_walk := false
 var _auto_time := 0.0                # 自动前往累计时长（超时自停，防止绕过点卡死）
 var _auto_stuck := 0.0
@@ -487,6 +488,8 @@ func _build_decos(cols: int, rows: int) -> void:
 			# 这里按碰撞盒真实覆盖的格再筛一遍（RNG 次序不变，故散件布局只少了压路的那几株）。
 			if _mode == "main_world" and _foot_hits_road(pos, sc):
 				continue
+			if _mode == "main_world" and _foot_hits_patrol(pos, sc):
+				continue
 			var deco := _Deco.new()
 			deco.setup(tex, sc)
 			deco.modulate = tint
@@ -511,6 +514,16 @@ func _foot_hits_road(pos: Vector2, s: float) -> bool:
 				return true
 	return false
 
+
+## 明雷巡逻与接触范围不能被随机岩石占住，否则敌人会卡在岩石边，角色无法接近。
+## 保留散件原布局和随机顺序，仅剔除压住配置巡逻范围的实体基座。
+func _foot_hits_patrol(pos: Vector2, scale_factor: float) -> bool:
+	var footprint := Rect2(pos-Vector2(20.0*scale_factor,26),Vector2(40.0*scale_factor,26)).grow(18)
+	var radius := float(_main_cfg.get("monster_wander_radius",0)) + float(_main_cfg.get("monster_contact_radius",40))
+	for point in (_main_cfg.get("monster_positions",[]) as Array):
+		var center := _cfg_point(point,Vector2.ZERO)
+		if center.distance_to(center.clamp(footprint.position,footprint.end)) <= radius: return true
+	return false
 
 func _build_portal(map_w: float) -> void:
 	_portal = _Portal.new()
@@ -761,6 +774,16 @@ func _sync_world_companion() -> void:
 	tag.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	tag.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_pet_follower.add_child(tag)
+	var trained := CompanionService.snapshot(G.prog,pid)
+	if not trained.is_empty():
+		var marks: Array = []
+		for tid in trained: marks.append(String(trained[tid].name))
+		var badge := G.gold_label(" · ".join(marks),G.FS_XS,true,G.C_COMPANION,true)
+		badge.position = Vector2(-70,-83)
+		badge.size = Vector2(140,20)
+		badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_pet_follower.add_child(badge)
 
 
 func _update_world_companion(delta: float, move_dir: Vector2) -> void:
@@ -2704,6 +2727,7 @@ func _launch_battle(m: _MapMonster) -> void:
 
 func _on_battle_end(result: String, hp_left: int) -> void:
 	var battle := _battle
+	_last_battle_pets = battle.sim.companion_participants.duplicate() if battle != null else []
 	var mastery_lines: Array = []
 	if _mode == "main_world" and battle != null:
 		mastery_lines = G.mentor_report_effective(battle.effective_skills)
@@ -2892,6 +2916,8 @@ func _settle_main_world(tier: String, defeated_mon_id: String) -> String:
 	# 写盘失败时连支线计数一起退回，磁盘上不留半份。
 	var side_touched := G.side_report("defeat", defeated_mon_id, _main_map_id, false)
 	var story_result := G.story_event("defeat", defeated_mon_id, _main_map_id, false)
+	if not _encounter.is_empty() and G.story_step_done(String(CompanionService.config().get("requires_story","s24"))):
+		CompanionService.record_win(G.prog,_last_battle_pets)
 	if not G.save_game():
 		G.prog = before_prog
 		G.wallet = before_wallet

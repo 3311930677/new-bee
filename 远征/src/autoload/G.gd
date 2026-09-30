@@ -18,6 +18,8 @@ const C_GAIN := Color("7ddb6a")          # 获得 / 治疗 / 增益（绿）
 const C_COST := Color("c04030")          # 代价 / 不足 / 扣除（红）
 const C_HINT := Color("a89e88")          # 次要提示 / 未解锁 / 中性（灰米，与稀有度「普通」同调）
 const C_RARE := Color("d8ab48")          # 稀有 / 传说强调（金）
+const C_COMPANION := Color("83cfd1")     # 伙伴协战 / 元素响应
+const C_COMPANION_GUARD := Color("6f9fd0") # 伙伴护卫
 
 # ---------- 稀有度四档（全项目唯一定义，各面板只引用，禁止再各自复制一份） ----------
 const RARITY_HUE := {
@@ -468,6 +470,7 @@ func _load_save() -> void:
 		prog["titles"] = ti if ti is Dictionary else {"owned": [], "active": ""}
 		var pst: Variant = pd.get("pet_stat", {})
 		prog["pet_stat"] = pst if pst is Dictionary else {}
+		if pd.has("companions"): prog["companions"] = (pd.companions as Dictionary).duplicate(true)
 		var ts: Variant = pd.get("tips_seen", {})   # 已看过的引导弹层，别每次开面板都弹
 		prog["tips_seen"] = ts if ts is Dictionary else {}
 		prog["lore_seen"] = bool(pd.get("lore_seen", false))   # 序章是否已看（看过的老档不再弹）
@@ -3783,8 +3786,63 @@ func battle_pet_stats(pids: Array) -> Dictionary:
 			continue
 		var st := pet_stat(id)
 		out[id] = {"level": int(st.get("lv", 1)), "stat_mult": pet_stat_mult(id),
-			"growth_mult": pet_growth_mult(id)}
+			"growth_mult": pet_growth_mult(id), "companion_traits":CompanionService.snapshot(prog,id)}
 	return out
+
+
+func companion_active() -> String:
+	var selected := String((prog.get("companions",{}) as Dictionary).get("active",""))
+	if owns_pet(selected): return selected
+	var pets := owned_pets()
+	return String(pets[0]) if not pets.is_empty() else ""
+
+
+func companion_select(pid: String) -> Dictionary:
+	if save_locked or not owns_pet(pid) or not story_step_done(String(CompanionService.config().get("requires_story","s24"))) \
+			or not bool(TableCache.main_world_map(String((prog.get("main_world",{}) as Dictionary).get("map_id",""))).get("city",false)):
+		return {"ok":false,"err":"找回矿道记录后，在城镇选择已拥有伙伴"}
+	var before := prog.duplicate(true)
+	var root: Dictionary = prog.get("companions",{}).duplicate(true)
+	root["active"] = pid
+	prog["companions"] = root
+	if not save_game():
+		prog = before
+		return {"ok":false,"err":"本次选择未能保存"}
+	return {"ok":true}
+
+
+func companion_train(pid: String, slot: int, tid: String) -> Dictionary:
+	var cfg := CompanionService.config()
+	var slots: Array = cfg.get("slots",[])
+	if save_locked or not owns_pet(pid) or slot < 0 or slot >= slots.size() \
+			or not (cfg.get("traits",{}) as Dictionary).has(tid) \
+			or not story_step_done(String(cfg.get("requires_story","s24"))) \
+			or String((prog.get("main_world",{}) as Dictionary).get("map_id","")) != String(cfg.get("training_site","frost_post")):
+		return {"ok":false,"err":"找回矿道记录后，在霜关驿舍训练已拥有伙伴"}
+	var state := CompanionService.state(prog,pid)
+	var traits: Array = state.get("traits",[])
+	if slot < traits.size() and traits[slot] == tid: return {"ok":true,"unchanged":true}
+	if traits.has(tid): return {"ok":false,"err":"两项不能重复选择同一特性"}
+	if int(state.get("wins",0)) < int(slots[slot].get("wins",0)):
+		return {"ok":false,"err":"该伙伴胜利协战不足 %d 次" % int(slots[slot].wins)}
+	var cost := int(slots[slot].get("pet_food",1))
+	if item_count("pet_food") < cost: return {"ok":false,"err":"需要宠物粮 ×%d" % cost}
+	var before := prog.duplicate(true)
+	var before_items := items.duplicate(true)
+	while traits.size() <= slot: traits.append("")
+	traits[slot] = tid
+	state["traits"] = traits
+	var root: Dictionary = prog.get("companions",{}).duplicate(true)
+	var pets: Dictionary = root.get("pets",{})
+	pets[pid] = state
+	root["pets"] = pets
+	prog["companions"] = root
+	items["pet_food"] = item_count("pet_food") - cost
+	if not save_game():
+		prog = before
+		items = before_items
+		return {"ok":false,"err":"本次训练未能保存，宠粮已保留"}
+	return {"ok":true}
 
 
 # ---------- 养成总加成聚合（进战斗时由 MapScene 取走） ----------
@@ -4999,8 +5057,8 @@ func enter_main_world(map_id := "", arrival := "") -> void:
 		"theme": String(map_cfg.get("theme", "forest")),
 		"role_id": selected_role if not selected_role.is_empty() else "zs",
 		"level": int(prog.get("level", 1)),
-		"active_pet": String(pets[0]) if not pets.is_empty() else "",
-		"bench_pet": String(pets[1]) if pets.size() > 1 else "",
+		"active_pet": companion_active(),
+		"bench_pet": String(pets.filter(func(pid): return String(pid) != companion_active())[0]) if pets.size() > 1 else "",
 		"potions": run_potions_base(),
 		"seed": randi(),
 	})

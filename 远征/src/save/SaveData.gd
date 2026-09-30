@@ -519,6 +519,9 @@ static func validate(data: Dictionary, now_sec: int) -> Dictionary:
 			if float(ts) > float(now_sec) + float(FUTURE_TS_LIMIT_SEC):
 				return {"ok": false, "err": "时间水位异常：last_ts 比当前时间超前 %d 小时，会冻结按天/按时的刷新"
 					% int((float(ts) - float(now_sec)) / 3600.0)}
+	if data.get("prog",{}) is Dictionary and (data.get("prog",{}) as Dictionary).has("companions"):
+		if not CompanionService.validate(data.prog.companions,data.prog.get("pets",[])):
+			return {"ok":false,"err":"prog.companions 伙伴协战状态无效"}
 	return {"ok": true, "err": ""}
 
 

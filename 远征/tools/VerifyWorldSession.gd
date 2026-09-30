@@ -318,6 +318,8 @@ func _test_result_idempotent() -> void:
 		"committed → return 后结果必须仍在（record 是合并写入而非整行覆盖）")
 	_check(String((WorldSession.encounters(st)[eid] as Dictionary).get("result_id", "")) == rid,
 		"committed → return 后 result_id 也必须仍在")
+	_check(not WorldSession.settle_result(st,ctx,"victory"),"回到地图后同一战果仍不得重结算")
+	_check(int(host.wallet.gold) == 33,"回图后重报不能再次发奖")
 
 
 # ---------- 行 10：fled / failed 是终态（P03） ----------
@@ -329,6 +331,7 @@ func _test_terminal_states() -> void:
 	var sf := {}
 	WorldSession.record(sf, fled, WorldSession.ST_FLED)
 	_check(WorldSession.is_terminal(WorldSession.ST_FLED), "fled 必须是终态")
+	_check(WorldSession.is_terminal(WorldSession.ST_RETURN),"return 是结算终态，不能重开同一遭遇")
 	_check(not WorldSession.commit(sf, fled), "已撤退不得再 commit 发奖")
 	_check(not WorldSession.settle_result(sf, fled, "victory"), "已撤退不得再结算")
 	_check(WorldSession.status_of(sf, fid) == WorldSession.ST_FLED, "被拒结算不得改写状态")
