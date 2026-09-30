@@ -534,6 +534,36 @@ func _setup() -> void:
 			add_child(warden_city)
 			await get_tree().process_frame
 			warden_city.call("_open_dialog", G.city_npc("npc_warden"), false)
+		"third_route", "third_post", "third_post_south", "third_mine", "third_dialog", "third_regions", "third_items":
+			G.SAVE_PATH = "res://tools/_logs/save_shot_third_act.json"
+			_demo_prog()
+			G.player_name = "双关行者"
+			G.selected_role = "zs"
+			var third_done: Array = []
+			for i in range(1, 23): third_done.append("s%02d" % i)
+			if _scene in ["third_mine", "third_regions", "third_items"]: third_done.append("s23")
+			G.prog["story"] = {"step": "s24" if third_done.has("s23") else "s23", "done": third_done, "goals": {}}
+			G.items["frost_letter"] = 1
+			G.items["mine_record"] = 1
+			var third_map := "frost_post"
+			if _scene == "third_route": third_map = "red_sand_route"
+			if _scene == "third_mine": third_map = "rift_mine_road"
+			G.prog["main_world"] = {"map_id": third_map}
+			if _scene == "third_regions":
+				add_child(RegionMapPanel.new())
+			elif _scene == "third_items":
+				var bag := BagPanel.new()
+				bag._tab = "mat"
+				add_child(bag)
+			else:
+				MapScene.pending_cfg = {"mode": "main_world", "main_map_id": third_map,
+					"node": {"type": "normal", "layer": 0, "index": 0}, "run": _make_run()}
+				var third_world: MapScene = load("res://src/explore/MapScene.tscn").instantiate()
+				add_child(third_world)
+				third_world._player.position = Vector2(480, 575)
+				if _scene in ["third_post", "third_dialog"]: third_world._player.position = Vector2(425, 520)
+				if _scene == "third_post_south": third_world._player.position = Vector2(480, 930)
+				if _scene == "third_dialog": third_world._city_content._open_dialog(G.city_npc("npc_frost_envoy"), false)
 		"second_salt", "second_port", "second_port_south", "second_hatch", "second_relation", "second_shipping", "second_fishing", "second_tideflat", "second_gate", "second_gate_battle", "second_gate_windup", "second_gate_ebb", "second_crab_battle", "second_side_rope", "second_side_choice", "second_side_grass", "second_side_courier", "second_side_repaired":
 			G.SAVE_PATH = "res://tools/_logs/save_shot_second_act.json"
 			_demo_prog()

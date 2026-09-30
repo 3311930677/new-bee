@@ -9,7 +9,10 @@
     {"id": "old_salt_road", "name": "旧盐道", "kind": "野外", "level": [10, 16], "point": [445, 75]},
     {"id": "shenyuan_port", "name": "沉渊港", "kind": "城镇", "level": [10, 18], "point": [620, 75]},
     {"id": "tideflat", "name": "潮痕滩", "kind": "野外", "level": [13, 20], "point": [795, 75]},
-    {"id": "tidal_gate", "name": "退潮水闸", "kind": "首领", "level": [16, 22], "point": [795, 240]}
+    {"id": "tidal_gate", "name": "退潮水闸", "kind": "首领", "level": [16, 22], "point": [795, 240]},
+    {"id": "red_sand_route", "name": "赤砂商路", "kind": "野外", "level": [20, 28], "point": [620, 240]},
+    {"id": "frost_post", "name": "霜关驿", "kind": "城镇", "level": [22, 32], "point": [620, 400]},
+    {"id": "rift_mine_road", "name": "裂谷矿道", "kind": "野外", "level": [24, 34], "point": [795, 400]}
   ],
   "maps": {
     "lorin_wilds": {
@@ -194,11 +197,12 @@
       }
     },
     "shenyuan_port": {
-      "name": "沉渊港", "city": true, "theme": "desert", "tint": "d9e6e3",
+      "name": "沉渊港", "city": true, "city_config": "res://data/shenyuan_port.json", "theme": "desert", "tint": "d9e6e3",
       "background": "", "map_cols": 20, "map_rows": 26, "layout_version": 1,
       "player_scale": 0.54, "camera_zoom": 1.15, "spawn": [210, 660],
-      "spawn_points": {"from_old_salt_road": [210, 660], "from_tideflat": [760, 700]},
+      "spawn_points": {"from_old_salt_road": [210, 660], "from_tideflat": [760, 700], "from_red_sand_route": [480, 190]},
       "exits": [
+        {"id": "north_caravan", "at": [480, 96], "to": "red_sand_route", "arrival": "from_shenyuan_port", "label": "赤砂商路", "requires_story": "s21", "locked_hint": "先完成当前主线，再沿这条路前行"},
         {"id": "west_salt_path", "at": [90, 660], "to": "old_salt_road", "arrival": "from_shenyuan_port", "label": "旧盐道"},
         {"id": "east_tide_path", "at": [864, 700], "to": "tideflat", "arrival": "from_shenyuan_port", "label": "潮痕滩", "requires_story": "s16", "locked_hint": "先把盐车账页交给港务人沈澜"}
       ],
@@ -317,6 +321,274 @@
       "monster_respawn_seconds": 86400,
       "monster_contact_radius": 48,
       "encounter_solo": true
+    },
+    "red_sand_route": {
+      "name": "赤砂商路",
+      "city": false,
+      "theme": "desert",
+      "tint": "ffffff",
+      "background": "",
+      "map_cols": 20,
+      "map_rows": 26,
+      "layout_version": 1,
+      "player_scale": 0.54,
+      "camera_zoom": 1.15,
+      "spawn": [
+        480,
+        1050
+      ],
+      "spawn_points": {
+        "from_shenyuan_port": [
+          480,
+          1050
+        ],
+        "from_frost_post": [
+          480,
+          190
+        ]
+      },
+      "exits": [
+        {
+          "id": "south_port",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "shenyuan_port",
+          "arrival": "from_red_sand_route",
+          "label": "沉渊港"
+        },
+        {
+          "id": "north_post",
+          "at": [
+            480,
+            96
+          ],
+          "to": "frost_post",
+          "arrival": "from_red_sand_route",
+          "label": "霜关驿"
+        }
+      ],
+      "decos": [
+        "044_deco_desert_cactus",
+        "045_deco_desert_sandstone"
+      ],
+      "goal": "沿赤砂商路北上，把霜关来信交给宁砚",
+      "node_type": "normal",
+      "monster_count": 4,
+      "monster_positions": [
+        [
+          225,
+          420
+        ],
+        [
+          745,
+          535
+        ],
+        [
+          235,
+          840
+        ],
+        [
+          745,
+          955
+        ]
+      ],
+      "monster_ids": [
+        "mon_scorp",
+        "mon_mummy"
+      ],
+      "battle_rewards": {
+        "normal": {
+          "gold": 85,
+          "exp": 65
+        }
+      },
+      "monster_sprite": "",
+      "monster_height": 70,
+      "monster_level_offset": 2,
+      "monster_wander_only": true,
+      "monster_wander_radius": 36,
+      "monster_respawn_seconds": 120,
+      "monster_contact_radius": 40,
+      "encounter_solo": true
+    },
+    "frost_post": {
+      "name": "霜关驿",
+      "city": true,
+      "city_config": "res://data/frost_post.json",
+      "theme": "snow",
+      "tint": "ffffff",
+      "background": "",
+      "map_cols": 20,
+      "map_rows": 26,
+      "layout_version": 1,
+      "player_scale": 0.54,
+      "camera_zoom": 1.15,
+      "spawn": [
+        480,
+        1030
+      ],
+      "spawn_points": {
+        "from_red_sand_route": [
+          480,
+          1030
+        ],
+        "from_rift_mine_road": [
+          745,
+          710
+        ]
+      },
+      "exits": [
+        {
+          "id": "south_route",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "red_sand_route",
+          "arrival": "from_frost_post",
+          "label": "赤砂商路"
+        },
+        {
+          "id": "east_mine",
+          "at": [
+            864,
+            710
+          ],
+          "to": "rift_mine_road",
+          "arrival": "from_frost_post",
+          "label": "裂谷矿道",
+          "requires_story": "s23",
+          "locked_hint": "先完成当前主线，再沿这条路前行"
+        }
+      ],
+      "city_building_positions": {
+        "frost_lodge": [
+          255,
+          385
+        ],
+        "frost_supply": [
+          705,
+          820
+        ],
+        "frost_guardhouse": [
+          255,
+          820
+        ]
+      },
+      "city_npc_positions": {
+        "npc_frost_envoy": [
+          395,
+          430
+        ],
+        "npc_frost_guard": [
+          395,
+          870
+        ],
+        "npc_frost_miner": [
+          565,
+          870
+        ]
+      },
+      "goal": "拜访宁砚，再循驿东栈桥寻找矿道记录",
+      "node_type": "normal",
+      "monster_count": 0,
+      "monster_positions": [],
+      "monster_ids": [],
+      "encounter_solo": true
+    },
+    "rift_mine_road": {
+      "clear_rects": [[75, 455, 465, 315]],
+      "name": "裂谷矿道",
+      "city": false,
+      "theme": "tomb",
+      "tint": "ffffff",
+      "background": "",
+      "map_cols": 20,
+      "map_rows": 26,
+      "layout_version": 1,
+      "player_scale": 0.54,
+      "camera_zoom": 1.15,
+      "spawn": [
+        160,
+        710
+      ],
+      "spawn_points": {
+        "from_frost_post": [
+          160,
+          710
+        ]
+      },
+      "exits": [
+        {
+          "id": "west_post",
+          "at": [
+            90,
+            710
+          ],
+          "to": "frost_post",
+          "arrival": "from_rift_mine_road",
+          "label": "霜关驿"
+        }
+      ],
+      "decos": [
+        "030_deco_forest_rocks",
+        "043_deco_tomb_brazier"
+      ],
+      "goal": "调查翻倒矿车，查清封关与失踪的线索",
+      "node_type": "normal",
+      "monster_count": 4,
+      "monster_positions": [
+        [
+          260,
+          345
+        ],
+        [
+          750,
+          405
+        ],
+        [
+          245,
+          960
+        ],
+        [
+          720,
+          1020
+        ]
+      ],
+      "monster_ids": [
+        "mon_skeleton",
+        "mon_cryptspider"
+      ],
+      "battle_rewards": {
+        "normal": {
+          "gold": 85,
+          "exp": 65
+        }
+      },
+      "monster_sprite": "",
+      "monster_height": 70,
+      "monster_level_offset": 2,
+      "monster_wander_only": true,
+      "monster_wander_radius": 36,
+      "monster_respawn_seconds": 120,
+      "monster_contact_radius": 40,
+      "encounter_solo": true,
+      "entities": {
+        "overturned_mine_cart": {
+          "kind": "story",
+          "quest": "",
+          "story_step": "s24",
+          "story_event": "collect",
+          "art": "mine_cart",
+          "name": "矿车记录",
+          "at": [
+            480,
+            525
+          ]
+        }
+      }
     }
   }
 }

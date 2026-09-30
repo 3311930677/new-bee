@@ -116,6 +116,7 @@ const ITEM_NAMES := {
 	"stele_fragment": "失声碑文",
 	"salt_ledger": "盐车账页",
 	"gate_clue": "闸门线索", "tide_core": "潮蚀闸芯",
+	"frost_letter": "霜关来信", "mine_record": "矿道记录",
 	"tide_egg": "潮纹蛋",
 	"fish_salt": "盐泉鲫", "fish_port": "港湾银鳞", "fish_tide": "潮纹鳞",
 	"wind_chime": "旧风铃", "salt_pack": "封好的盐包",
@@ -724,6 +725,8 @@ func story_current() -> Dictionary:
 func story_goal_short() -> String:
 	var row := story_current()
 	if row.is_empty():
+		if story_step_done("s24"):
+			return "矿道记录已找回 · 第三幕后段待续"
 		if story_step_done("s20"):
 			return "第二幕潮闸已开 · 自由探索"
 		return "边城失声已平息 · 自由探索"
@@ -756,7 +759,9 @@ func normalize_story_state() -> Dictionary:
 	# 不重放复命事件，也不碰奖励账本、位置或其他养成状态。
 	if String(state.get("step", "")) == "":
 		var done: Array = state.get("done", [])
-		if done.has("s16") and not done.has("s17"):
+		if done.has("s20") and not done.has("s21"):
+			state["step"] = "s21"
+		elif done.has("s16") and not done.has("s17"):
 			state["step"] = "s17"
 		elif done.has("s12") and not done.has("s13"):
 			state["step"] = "s13"
@@ -767,6 +772,9 @@ func story_event(kind: String, target: String, map_id: String, persist := true,
 		payload := {}) -> Dictionary:
 	if save_locked:
 		return {}
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var before_items := items.duplicate(true)
 	var event := QuestService.world_event(kind, target, map_id,
 		selected_role if not selected_role.is_empty() else "player", payload)
 	var rows: Variant = TableCache.story_quests_config().get("steps", [])
@@ -801,9 +809,6 @@ func story_event(kind: String, target: String, map_id: String, persist := true,
 		flags = {"act2_tide_gate_open": true, "act2_port_choice": choice}
 	var tx := RewardLedger.make(RewardLedger.tx_id("story", step_id,
 		String(event.get("event_id", ""))), costs, grants, flags)
-	var before_prog := prog.duplicate(true)
-	var before_wallet := wallet.duplicate(true)
-	var before_items := items.duplicate(true)
 	var res := RewardLedger.apply(tx, ledger(), self)
 	if not bool(res.get("ok", false)):
 		push_warning("主线结算未落地：%s" % String(res.get("err", "")))
@@ -2564,7 +2569,7 @@ func city_npcs() -> Array:
 
 
 func city_npc(id: String) -> Dictionary:
-	for map_id in ["lorin_wilds", "shenyuan_port"]:
+	for map_id in (TableCache.main_world_config().get("maps", {}) as Dictionary):
 		for n in TableCache.city_config_for(map_id).get("npcs", []):
 			if String((n as Dictionary).get("id", "")) == id:
 				return n
@@ -4437,6 +4442,9 @@ func _build_res_index() -> void:
 	if _res_indexed:
 		return
 	_res_indexed = true
+	# 小型任务图标采用代码原生矢量；保留 res_tex 的名称契约与纹理缓存。
+	_res_index["itm_frost_letter.png"] = "res://image/third_act/itm_frost_letter.svg"
+	_res_index["itm_mine_record.png"] = "res://image/third_act/itm_mine_record.svg"
 	var batches := ["generated_001_100", "generated_101_200", "generated_201_333",
 		"generated_334_341", "generated_342_353", "generated_362_xajh"]
 	# 先收 ready/（成品：已裁到设计尺寸、alpha 已硬化），再拿 source/ 母稿补位。
