@@ -14,11 +14,12 @@
 | `bgm_map.ogg` | 探索地图 BGM | 60~90s |
 | `bgm_battle.ogg` | 战斗 BGM | 60~90s，节奏更紧 |
 
-音效（**18 个已全部就位**，程序合成，见下节；名字登记在 `Audio.SFX_NAMES`）：
+音效（**22 个已全部就位**，程序合成，见下节；名字登记在 `Audio.SFX_NAMES`）：
 
 - UI 七件：`ui_click` / `ui_open` / `ui_close` / `ui_page` / `ui_confirm` / `ui_cancel` / `ui_locked`
 - 奖励三件：`coin` / `reward` / `level_up`
 - 战斗八件：`hit_light` / `hit_heavy` / `hit_crit` / `skill_cast` / `boss_warn` / `low_hp` / `victory` / `defeat`
+- 探索四件：`pickup` / `altar` / `mount_toggle` / `mount_hoof`
 
 再加音效的流程：①在 `tools/make_sfx.py` 加一条合成函数（或手工放同名文件）→
 ②在 `Audio.SFX_NAMES` 登记（加载页预热与 `VerifyAudio` 都按这份清单走）→
@@ -54,7 +55,7 @@
 六首都只是临时件（曲风与《远征》不搭，四首 mood_* 是卡车小镇的氛围曲），
 定版请换成上面推荐来源的素材或自己生成；替换时保持同名即可，代码不用动。
 
-### 音效（18 个 · 项目自产：程序合成）
+### 音效（22 个 · 项目自产：程序合成）
 
 `tools/make_sfx.py` 用 numpy 合成（44.1kHz / 16-bit / 单声道 WAV），风格走
 **木质 / 羊皮纸 / 克制**——UI 音峰值压低一档，战斗音允许更脏更重。无第三方版权。

@@ -1,5 +1,6 @@
 {
-  "version": 1,
+  "version": 2,
+  "comment": "战斗掉落表（按档位）。drops = 堆叠材料；equip = 该档位允许掉出的装备稀有度（P04，掉出哪件由 equip.json.templates 按稀有度权重抽）。",
   "drops": {
     "normal": [
       { "item": "enhance_stone", "chance": 0.45, "min": 1, "max": 2 },
@@ -16,5 +17,10 @@
       { "item": "lock_rune", "chance": 0.30, "min": 1, "max": 1 },
       { "item": "evolve_crystal", "chance": 0.35, "min": 1, "max": 1 }
     ]
+  },
+  "equip": {
+    "normal": { "rarities": [1, 2] },
+    "elite": { "rarities": [2, 3] },
+    "boss": { "rarities": [2, 3] }
   }
 }

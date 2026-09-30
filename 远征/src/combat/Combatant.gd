@@ -1,4 +1,4 @@
-﻿# Combatant.gd —— 战斗单位：属性/站位/能量/普攻/生命与 buff 容器（玩法文档 §1.3 §2.1 §2.3）
+# Combatant.gd —— 战斗单位：属性/站位/能量/普攻/生命与 buff 容器（玩法文档 §1.3 §2.1 §2.3）
 # 确定性铁律：时间全用整数 tick（1 tick = 1/30s），伤害全整数，随机全走 sim.rng。
 class_name Combatant
 extends RefCounted
@@ -254,6 +254,11 @@ func take_damage(dmg: int, src: Combatant, sim: BattleSim, is_crit := false) -> 
 		final = int(float(final) * (1.0 + traits.passive_dmg_taken_pct()))
 	if has_buff("lurk"):
 		final = maxi(1, final / 2)  # 潜伏：受击减半
+	# 破绽（P03）：首领阶段/技能在自己身上留下的反击窗口，受击伤害按 pct 放大。
+	# 纯查表 + 整数运算，无随机——同一份输入得到同一份结果（确定性护栏）。
+	var break_pct := buff_pct_sum("break_window")
+	if break_pct > 0.0:
+		final = int(float(final) * (1.0 + break_pct))
 	# 护盾吸收
 	for i in range(buffs.size() - 1, -1, -1):
 		var b: Dictionary = buffs[i]
@@ -304,6 +309,9 @@ func _on_lethal(sim: BattleSim, killer: Combatant) -> void:
 	alive = false
 	hp = 0
 	sim.emit({"t": "death", "uid": uid})
+	# 死亡钩子（P05-C）：首领阶段表里的 on_death 以「死后反应」形式挂着（如影狼先死 → 首领破绽）。
+	# 必须排在本单位的死亡事件之后：表现层先播倒地，再收阶段横幅。
+	sim.notify_death(self)
 	var k := killer
 	if k != null and k.kind == "pet":
 		k = sim.role_unit()      # 宠物击杀算主人的（主人流派的击杀收益才成立）

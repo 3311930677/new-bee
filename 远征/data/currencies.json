@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "currencies": [
+    {"id": "gold", "name": "金币", "icon": "cur_gold", "scope": "主世界流通",
+      "source": "任务、野外战斗、商旅订单和出售物品",
+      "use": "补给、制作、强化、交易与城镇服务"},
+    {"id": "expedition", "name": "远征币", "icon": "cur_expedition", "scope": "界碑历练",
+      "source": "界碑历练的路线事件与结算",
+      "use": "历练专属兑换和技能突破材料"},
+    {"id": "soul", "name": "魂晶", "icon": "cur_soul", "scope": "灵宠养成",
+      "source": "伙伴任务、首领首次奖励和重复伙伴转化",
+      "use": "灵宠寻访与高阶伙伴进阶"},
+    {"id": "honor", "name": "荣誉", "icon": "cur_honor", "scope": "演武挑战",
+      "source": "演武场对战与明确标注的竞技目标",
+      "use": "演武兑换外观及少量辅助材料"}
+  ]
+}

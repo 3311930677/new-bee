@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "first_route": {
+    "id": "a1_broken_slope_supply",
+    "name": "断碑坡运路",
+    "npc": "npc_warden",
+    "unlock_side_quest": "a1_trade_cart",
+    "origin": "昭元边城",
+    "destination": "断碑坡驿口",
+    "cargo": "盐铁与修碑物资",
+    "base_quote_gold": 90,
+    "repair_quotes": {"forge": 78, "scribe": 84},
+    "blocked_note": "先替驿商送达「一封盐包」，才能看到这条路的供货消息。",
+    "open_note": "商路已探明。修碑方式会改变接单时的运费，订单报酬接单后锁定。",
+    "forge_note": "锻合碑文后，北口支架稳固，运费降低。",
+    "scribe_note": "拓片校准了旧路标，驿商已能避开塌方路段。"
+  }
+}

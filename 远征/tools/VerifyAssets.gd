@@ -80,6 +80,15 @@ func _required_names() -> Array:
 	for nd in TableCache.city_config().get("npcs", []):
 		out.append("%s_idle" % String((nd as Dictionary).get("id", "")))
 	out.append("npc_guest_idle")
+	# 岳教头授业面板使用独立半身像，避免资源漏接后悄悄回退为守卫。
+	out.append("npc_mentor_portrait")
+	var port := TableCache.city_config_for("shenyuan_port")
+	for nd in port.get("npcs", []):
+		out.append("%s_idle" % String((nd as Dictionary).get("id", "")))
+	for bd in port.get("buildings", []):
+		out.append("city_%s" % String((bd as Dictionary).get("id", "")))
+	# P06 断碑营地常驻交易点，图丢失会退回通用路牌，视觉验收必须拦住。
+	out.append("trade_stall")
 	# 段位徽章：从 data/arena.json 的 ranks 推导（以前根本没人检查这 5 张）
 	for r in TableCache.arena_config().get("ranks", []):
 		out.append(String((r as Dictionary).get("id", "")))

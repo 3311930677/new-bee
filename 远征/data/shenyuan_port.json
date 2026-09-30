@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "name": "沉渊港",
+  "map_cols": 20,
+  "map_rows": 26,
+  "buildings": [
+    {"id": "port_hall", "art_visible_height": 188, "name": "港务厅", "style": "hall", "kind": "core", "port_built": true,
+      "pos": [5.3, 6.0], "size": [3.3, 2.7], "hue": 7, "action": "shipping",
+      "desc": "登记来船、潮位与盐路消息。港务人请你把旧盐车的账页带来。"},
+    {"id": "port_warehouse", "art_visible_height": 141, "name": "港口仓栈", "style": "storehouse", "kind": "core", "port_built": true,
+      "pos": [5.3, 19.2], "size": [3.3, 2.5], "hue": 4, "action": "shop",
+      "desc": "仓栈兼卖行路物资。补给和养成材料在这里采买。"},
+    {"id": "port_market", "art_visible_height": 188, "name": "栈桥市集", "style": "port_market", "kind": "core", "port_built": true,
+      "pos": [14.9, 8.8], "size": [3.3, 2.7], "hue": 6, "action": "trade:shenyuan_market",
+      "desc": "潮涨潮落间，盐、铁、谷物与药草都有各自的行情。"},
+    {"id": "port_kennel", "art_visible_height": 183, "name": "随行兽栏", "style": "kennel", "kind": "core", "port_built": true,
+      "pos": [14.9, 19.5], "size": [3.0, 2.4], "hue": 9, "action": "hatch",
+      "desc": "水边安静的兽栏，孵化潮纹蛋并整备随行伙伴。"}
+  ],
+  "npcs": [
+    {"id": "npc_harbormaster", "name": "沈澜", "title": "港务人", "hue": 7,
+      "pos": [7.8, 6.7], "lines": ["旧盐车停在断桥边，账页上的潮印不像陆路留下的。", "港里的船照潮位走，账要一页一页核。"]},
+    {"id": "npc_port_trader", "name": "陆七", "title": "栈桥商人", "hue": 6,
+      "pos": [12.1, 9.5], "lines": ["今天的潮位压住了船，货价会跟着变。", "要买要卖，先看清每件货的重量和到手价。"]},
+    {"id": "npc_port_keeper", "name": "阿棠", "title": "兽栏管事", "hue": 9,
+      "pos": [12.1, 20.0], "lines": ["远行的伙伴先歇在这里，别让它们空着肚子下船。"]},
+    {"id": "npc_port_worker", "name": "老鹭", "title": "搬运工", "hue": 4,
+      "pos": [7.8, 20.0], "lines": ["盐袋搬了半辈子，我头一回见到印着闸门纹样的账页。"]}
+  ]
+}

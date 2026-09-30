@@ -1,6 +1,6 @@
 {
-  "version": 1,
-  "comment": "装备线（玩法文档 §6）：武器 4 系绑人物（剑→破军/枪→穿杨/杖→霜语/锤→晨星），甲/饰全人物通用。强化每级+10%、成功率 0.9^目标级、失败不掉级；宝石 3 色×5 级，每件 3 孔；精炼洗 4 词条，锁定耗锁符。",
+  "version": 2,
+  "comment": "装备线（玩法文档 §6）：武器 4 系绑人物（剑→破军/枪→穿杨/杖→霜语/锤→晨星），甲/饰全人物通用。强化每级+10%、成功率 0.9^目标级、失败不掉级；宝石 3 色×5 级，每件 3 孔；精炼洗 4 词条，锁定耗锁符。v2（P04）把 6 个固定槽升级成「实例」：模板决定名称/基础/孔数，稀有度只决定展示色、回收价倍率与掉落权重（不加战斗数值）。slots[].base 与 templates[] 里 tpl_<slot>_basic.base 必须逐字段相等（旧档等值迁移的前提）。",
   "slots": [
     { "id": "sword", "name": "大剑", "kind": "weapon", "role": "zs", "icon": "slot_sword", "base": {"atk": 10} },
     { "id": "spear", "name": "长枪", "kind": "weapon", "role": "ck", "icon": "slot_spear", "base": {"atk": 10} },
@@ -40,5 +40,50 @@
       {"stat": "crit_add", "name": "暴击", "min": 0.01, "max": 0.04},
       {"stat": "spd_pct", "name": "速度", "min": 0.01, "max": 0.05}
     ]
+  },
+  "bag": { "capacity": 60 },
+  "merge": { "gem_merge_n": 3, "gem_merge_cost_gold": 300 },
+  "rarity": [
+    { "id": 1, "name": "普通", "color": "b8b8b8", "sell_mult": 1.0, "drop_weight": 60 },
+    { "id": 2, "name": "精良", "color": "6cc06c", "sell_mult": 2.0, "drop_weight": 25 },
+    { "id": 3, "name": "稀有", "color": "5aa0e0", "sell_mult": 4.0, "drop_weight": 12 },
+    { "id": 4, "name": "史诗", "color": "c070e0", "sell_mult": 8.0, "drop_weight": 3 }
+  ],
+  "templates": [
+    { "id": "tpl_sword_basic", "name": "生铁大剑", "slot": "sword", "rarity": 1,
+      "icon": "slot_sword", "base": {"atk": 10}, "sockets": 3, "price": 300 },
+    { "id": "tpl_spear_basic", "name": "生铁长枪", "slot": "spear", "rarity": 1,
+      "icon": "slot_spear", "base": {"atk": 10}, "sockets": 3, "price": 300 },
+    { "id": "tpl_staff_basic", "name": "生铁法杖", "slot": "staff", "rarity": 1,
+      "icon": "slot_staff", "base": {"atk": 11}, "sockets": 3, "price": 320 },
+    { "id": "tpl_hammer_basic", "name": "生铁圣锤", "slot": "hammer", "rarity": 1,
+      "icon": "slot_hammer", "base": {"atk": 9, "hp": 30}, "sockets": 3, "price": 320 },
+    { "id": "tpl_armor_basic", "name": "皮甲", "slot": "armor", "rarity": 1,
+      "icon": "slot_armor", "base": {"def": 6, "hp": 50}, "sockets": 3, "price": 400 },
+    { "id": "tpl_accessory_basic", "name": "骨饰", "slot": "accessory", "rarity": 1,
+      "icon": "slot_accessory", "base": {"hp": 70, "crit": 0.02}, "sockets": 3, "price": 420 },
+
+    { "id": "tpl_sword_wolf", "name": "狼牙大剑", "slot": "sword", "rarity": 2,
+      "icon": "slot_sword", "base": {"atk": 14}, "sockets": 3, "price": 600 },
+    { "id": "tpl_spear_iron", "name": "精铁长枪", "slot": "spear", "rarity": 2,
+      "icon": "slot_spear", "base": {"atk": 14}, "sockets": 3, "price": 600 },
+    { "id": "tpl_staff_frost", "name": "霜纹法杖", "slot": "staff", "rarity": 2,
+      "icon": "slot_staff", "base": {"atk": 15}, "sockets": 3, "price": 640 },
+    { "id": "tpl_hammer_dawn", "name": "晨光圣锤", "slot": "hammer", "rarity": 2,
+      "icon": "slot_hammer", "base": {"atk": 13, "hp": 40}, "sockets": 3, "price": 640 },
+    { "id": "tpl_armor_scale", "name": "鳞甲", "slot": "armor", "rarity": 2,
+      "icon": "slot_armor", "base": {"def": 9, "hp": 75}, "sockets": 3, "price": 700 },
+    { "id": "tpl_accessory_moon", "name": "月纹坠饰", "slot": "accessory", "rarity": 2,
+      "icon": "slot_accessory", "base": {"hp": 100, "crit": 0.03}, "sockets": 3, "price": 720 },
+
+    { "id": "tpl_sword_ruin", "name": "残锋·陨铁大剑", "slot": "sword", "rarity": 3,
+      "icon": "slot_sword", "base": {"atk": 22}, "sockets": 3, "price": 1600 },
+    { "id": "tpl_armor_bulwark", "name": "壁垒重甲", "slot": "armor", "rarity": 3,
+      "icon": "slot_armor", "base": {"def": 14, "hp": 130}, "sockets": 3, "price": 1800 }
+  ],
+  "drop": {
+    "normal": { "chance": 0.12 },
+    "elite": { "chance": 0.35 },
+    "boss": { "chance": 1.0 }
   }
 }

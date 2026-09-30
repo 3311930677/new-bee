@@ -21,6 +21,8 @@ var role_focus_target_uid := -1        # 玩家“攻”指令指定目标；不
 var potions_left := 0                 # 治疗药剂
 var potion_cd_ticks := 0              # 药剂 CD（8 秒一瓶，防连点误用）
 const POTION_CD := 8 * 30
+## 药剂回复比例（占最大生命）。表现层「道具页」直接读它写详情，避免两处各写一份 0.35。
+const POTION_HEAL_PCT := 0.35
 var pet_bench_id := ""                # 替补宠物 id
 var pet_swap_used := false
 var enemy_scale := 1.0                # 层难度 ×(1+0.12N)
@@ -125,9 +127,18 @@ func _build_role(cfg: Dictionary) -> void:
 	if hp_override >= 0:
 		u.hp = clampi(hp_override, 1, u.base_max_hp)
 	role_uid = u.uid
+	var allowed_v: Variant = cfg.get("unlocked_skills")
+	var allowed: Array = allowed_v if allowed_v is Array else []
+	var variants_v: Variant = cfg.get("skill_variants", {})
+	var variants: Dictionary = variants_v if variants_v is Dictionary else {}
 	for sid in role.get("skills", []):
+		# unlocked_skills 只在主世界显式传入；其他玩法不传，继续保留完整五技。
+		if cfg.has("unlocked_skills") and not allowed.has(String(sid)):
+			continue
 		var sd := TableCache.get_skill(String(sid))
 		if not sd.is_empty():
+			if variants.has(String(sid)) and variants[String(sid)] is Dictionary:
+				sd = _apply_skill_variant(sd, variants[String(sid)] as Dictionary)
 			# 技能书等级：每级 k+5%（skillbook.json），局外升级局内生效
 			var slv := int((cfg.get("skill_levels", {}) as Dictionary).get(String(sid), 1))
 			if slv > 1:
@@ -136,6 +147,22 @@ func _build_role(cfg: Dictionary) -> void:
 				sd["k"] = snappedf(float(sd.get("k", 0.0)) * (1.0 + k_per * float(slv - 1)), 0.001)
 			u.skills.append({"id": String(sid), "def": sd, "cd_left": 0})
 	_add_unit(u)
+
+
+## 导师分支只改技能表副本。数值项集中在这里，按钮、AI 与真正结算读取同一份 def。
+func _apply_skill_variant(base: Dictionary, mod: Dictionary) -> Dictionary:
+	var out := base.duplicate(true)
+	out["cost"] = maxi(0, int(out.get("cost", 0)) + int(mod.get("cost_delta", 0)))
+	out["cd"] = maxf(0.5, float(out.get("cd", 0.0)) + float(mod.get("cd_delta", 0.0)))
+	out["k"] = snappedf(float(out.get("k", 0.0)) * float(mod.get("k_mult", 1.0)), 0.001)
+	var em := float(mod.get("effect_mult", 1.0))
+	var effect_v: Variant = out.get("effect", {})
+	if effect_v is Dictionary and not is_equal_approx(em, 1.0):
+		var effect := effect_v as Dictionary
+		for key in ["pct", "hp_pct", "atk_k"]:
+			if effect.has(key):
+				effect[key] = snappedf(float(effect[key]) * em, 0.001)
+	return out
 
 
 func _build_pet(pet_id: String, is_bench_swap: bool) -> void:
@@ -207,9 +234,9 @@ func _build_enemies(theme: String, node_type: String, lead_mon := "", solo := fa
 	var pick := func() -> String:
 		return String(pool[rng.randi_range(0, pool.size() - 1)])
 	# 主世界明雷是一只具体的地图怪：接触谁就与谁交战；历练编成保持原样。
-	if solo and node_type == "normal":
+	if solo and node_type in ["normal", "elite", "boss"]:
 		_spawn_monster(lead_mon if lead_mon != "" else pick.call(),
-			Combatant.ROW_FRONT, 2)
+			Combatant.ROW_FRONT, 2, 1.0, 1.0, node_type)
 		return
 	match node_type:
 		"elite":
@@ -362,7 +389,14 @@ func cast_skill(uid: int, skill_id: String) -> bool:
 	var u := unit_by_uid(uid)
 	if u == null:
 		return false
-	var sd := TableCache.get_skill(skill_id)
+	# 必须从该单位的技能栏取最终 def：这里已经叠好技能书等级与导师分支。
+	# 旧实现重新读 TableCache 原表，导致按钮施放时所有局外加成都被静默抹掉。
+	var sd: Dictionary = {}
+	for slot_v in u.skills:
+		var slot := slot_v as Dictionary
+		if String(slot.get("id", "")) == skill_id:
+			sd = slot.get("def", {})
+			break
 	if sd.is_empty():
 		return false
 	if not SkillSystem.can_cast(self, u, sd):
@@ -382,7 +416,7 @@ func use_potion() -> bool:
 		return false
 	potions_left -= 1
 	potion_cd_ticks = POTION_CD
-	var amt := DamageCalc.heal_amount(role.get_max_hp(), 0, 0.35, 0.0)
+	var amt := DamageCalc.heal_amount(role.get_max_hp(), 0, POTION_HEAL_PCT, 0.0)
 	role.heal(amt, role, self)
 	return true
 
@@ -451,6 +485,8 @@ func step() -> void:
 			MonsterAI.decide_auto(self, u)
 	# 6. 世界主题规则（C 批）：周期类规则在这里 tick；揭示半径那条在 MapScene 侧生效
 	_apply_theme_rule()
+	# 6.5 首领阶段（P03）：只在单位数据表带 phases 时生效（历练首领没有 phases，行为不变）
+	_apply_phases()
 	# 7. 死亡/胜负判定
 	tick_count += 1
 	if alive_units("enemy").is_empty():
@@ -481,6 +517,120 @@ func hash_state() -> int:
 	for u in units:
 		h = (h * 31 + u.uid * 1000003 + u.hp * 7919 + u.energy) % 2147483647
 	return h
+
+
+# ---------- 首领阶段（P03，表驱动） ----------
+## 施加一个 buff 规格 {type, dur(秒, <=0 表永久), pct}。技能 after.self_buff 与首领阶段共用，
+## 保证「破绽 / 硬直 / 加速」三条路径的时长与数值口径只有一处。
+func apply_buff_spec(u: Combatant, spec: Dictionary) -> void:
+	if u == null or not u.alive:
+		return
+	var t := String(spec.get("type", ""))
+	if t.is_empty():
+		return
+	var dur := float(spec.get("dur", 0.0))
+	var ticks := -1 if dur <= 0.0 else maxi(1, int(dur * float(TICK_RATE)))
+	var val := {}
+	var pct := float(spec.get("pct", 0.0))
+	if pct != 0.0:
+		val["pct"] = pct
+	u.add_buff(t, ticks, val)
+	emit({"t": "buff", "uid": u.uid, "buff": t, "dur": ticks})
+
+
+## 首领阶段：血量跌破阈值时解锁技能 / 永久增益 / 自身状态，并广播 onphase 横幅事件。
+## 只触发一次（记在 once_flags），阈值按整数血量比例判定，无随机 → 不影响历练与确定性对拍。
+func _apply_phases() -> void:
+	for u in units:
+		if not u.alive or u.side != "enemy":
+			continue
+		var phases: Variant = u.data.get("phases")
+		if not (phases is Array):
+			continue
+		var max_hp := maxi(1, u.get_max_hp())
+		for ph in (phases as Array):
+			if not (ph is Dictionary):
+				continue
+			var p := ph as Dictionary
+			var flag := "phase_" + String(p.get("id", ""))
+			if u.once_flags.has(flag):
+				continue
+			if float(u.hp) / float(max_hp) > float(p.get("hp_below", 0.0)):
+				continue
+			u.once_flags[flag] = true
+			_enter_phase(u, p)
+
+
+func _enter_phase(u: Combatant, p: Dictionary) -> void:
+	# 解锁技能（同 id 已在技能表里就跳过，避免阶段重复加后技能栏出现两条同名）
+	for sk in p.get("add_skills", []):
+		if not (sk is Dictionary):
+			continue
+		var sid := String((sk as Dictionary).get("id", ""))
+		var dup := false
+		for s in u.skills:
+			if String(s.get("id", "")) == sid:
+				dup = true
+				break
+		if not dup and not sid.is_empty():
+			u.skills.append({"id": sid, "def": sk, "cd_left": 0})
+	# 永久增益（dur <= 0 → 永久；不随阶段回退）
+	var buffs_v: Variant = p.get("buffs")
+	if buffs_v is Dictionary:
+		for k in (buffs_v as Dictionary):
+			var spec: Variant = (buffs_v as Dictionary)[k]
+			var d := (spec as Dictionary).duplicate() if spec is Dictionary else {}
+			d["type"] = String(k)
+			d["dur"] = 0.0
+			apply_buff_spec(u, d)
+	# 自身状态（碎碑硬直等）：走同一套施法后自身状态的口径
+	var sb: Variant = p.get("self_buff")
+	if sb is Dictionary:
+		apply_buff_spec(u, sb as Dictionary)
+	emit({"t": "phase", "uid": u.uid, "id": String(p.get("id", "")),
+		"name": String(p.get("name", "")), "announce": String(p.get("announce", ""))})
+
+
+## 死亡钩子（P05-C，表驱动）：单位阵亡后检查存活敌首领**已进入**的阶段里有没有 on_death，
+## 命中死者 id 就执行该阶段的死后反应（例：失路兽「迷路低吼」召出的影狼先死 → 首领获得
+## 4 秒破绽）。一条阶段钩子只触发一次；阶段未进入（once_flags 无 phase_<id>）不响应——
+## 影狼在阶段前被别的途径召出来时不该白给破绽。
+func notify_death(dead: Combatant) -> void:
+	if dead == null or dead.side != "enemy" or dead.data.is_empty():
+		return
+	var mid := String(dead.data.get("id", ""))
+	if mid.is_empty():
+		return
+	for u in units:
+		if u == dead or not u.alive or u.side != "enemy":
+			continue
+		var phases: Variant = u.data.get("phases")
+		if not (phases is Array):
+			continue
+		for ph in (phases as Array):
+			if not (ph is Dictionary):
+				continue
+			var p := ph as Dictionary
+			var pid := String(p.get("id", ""))
+			if not u.once_flags.has("phase_" + pid):
+				continue
+			var od_v: Variant = p.get("on_death")
+			if not (od_v is Dictionary):
+				continue
+			var od := od_v as Dictionary
+			if String(od.get("mon_id", "")) != mid:
+				continue
+			var flag := "on_death_%s_%s" % [pid, mid]
+			if u.once_flags.has(flag):
+				continue
+			u.once_flags[flag] = true
+			var sb: Variant = od.get("self_buff")
+			if sb is Dictionary:
+				apply_buff_spec(u, sb as Dictionary)
+			# 复用 phase 事件：表现层已有阶段横幅 + 破绽「绽」飘字两条通道，
+			# 事件 id 加 _break 后缀只作区分，不参与任何状态判定。
+			emit({"t": "phase", "uid": u.uid, "id": pid + "_break",
+				"name": String(p.get("name", "")), "announce": String(od.get("announce", ""))})
 
 
 # ---------- 世界主题规则（C 批，表驱动） ----------

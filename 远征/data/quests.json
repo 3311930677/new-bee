@@ -8,7 +8,7 @@
       "title": "立碑之始",
       "goal": "讨伐「苍绿林海」的首领",
       "desc": "「那座碑是第一个哑的，也最该先去看。你回来的时候，把林子里的事讲给我听。」",
-      "reward": { "gold": 260, "exp": 80, "honor": 3 }
+      "reward": { "gold": 260, "exp": 80 }
     },
     {
       "id": "q_slay_forest", "npc": "npc_guard", "kind": "slay", "theme": "forest", "n": 3,
@@ -36,7 +36,7 @@
       "title": "小满的胆子",
       "goal": "在「幽暗古墓」击杀 2 只",
       "desc": "「我不敢去，可我又想听。你去了回来给我讲——讲真的，别哄我。」",
-      "reward": { "gold": 120, "exp": 45, "honor": 1 }
+      "reward": { "gold": 120, "exp": 45 }
     },
     {
       "id": "q_deliver_food", "npc": "npc_keeper", "kind": "deliver", "item": "pet_food", "n": 2,
@@ -64,7 +64,7 @@
       "title": "风雪关隘",
       "goal": "讨伐「凛风雪原」的首领",
       "desc": "「雪线上的关隘一年封半年。你能走到碑前，我就把巡防的名册往后延一延。」",
-      "reward": { "gold": 420, "exp": 140, "honor": 6 }
+      "reward": { "gold": 420, "exp": 140 }
     },
     {
       "id": "q_slay_glacier", "npc": "npc_scribe", "kind": "slay", "theme": "glacier", "n": 4,
@@ -78,7 +78,7 @@
       "title": "渊口清剿",
       "goal": "在「沉星深渊」击杀 5 只",
       "desc": "「渊口的那些东西会往上看。多看一次，城里就少一次夜里的怪响。」",
-      "reward": { "gold": 320, "exp": 110, "honor": 4 }
+      "reward": { "gold": 320, "exp": 110 }
     },
     {
       "id": "q_deliver_stone", "npc": "npc_smith", "kind": "deliver", "item": "enhance_stone", "n": 3,

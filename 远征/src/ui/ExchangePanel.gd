@@ -1,4 +1,4 @@
-# ExchangePanel.gd —— 荣誉兑换浮层（荣誉换金币/魂晶/远征点/召唤券，条目读 data/exchange.json）
+# ExchangePanel.gd —— 演武荣誉补给（仅兑换少量辅助材料，条目读 data/exchange.json）
 # 结构与 CodexPanel 一致：遮罩 → 木匾 → 羊皮纸 → 内包 content 手动布局；父层负责 closed 后回收
 class_name ExchangePanel
 extends Control
@@ -54,7 +54,7 @@ func _build() -> void:
 	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），不再各写一块纯灰
 	G.veil(self, 0.72)
 
-	var banner := G.banner_box("荣 誉 兑 换", 300, 50)
+	var banner := G.banner_box("演 武 补 给", 300, 50)
 	banner.position = Vector2(90, 36)
 	add_child(banner)
 
@@ -82,7 +82,7 @@ func _build() -> void:
 	bar.add_child(_honor_l)
 	_content.add_child(bar)
 
-	var tip := G.gold_label("远征结算与讨伐首领可赚得荣誉", G.FS_XS, false, Color("7a5a2e"), false)
+	var tip := G.gold_label("演武场对战可获得荣誉", G.FS_XS, false, Color("7a5a2e"), false)
 	tip.position = Vector2(0, 32)
 	tip.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_content.add_child(tip)
@@ -207,6 +207,13 @@ func do_exchange(entry_id: String) -> bool:
 	var e := _find(entry_id)
 	if e.is_empty():
 		return false
+	var give: Dictionary = e.get("give", {})
+	if give.is_empty():
+		return false
+	for k in give:
+		if not String(k).begins_with("item_") or int(give[k]) <= 0:
+			push_error("演武荣誉兑换表只允许正数道具：%s" % entry_id)
+			return false
 	var cost := int(e.get("cost", 0))
 	var honor := int(G.wallet.get("honor", 0))
 	if honor < cost:
@@ -214,14 +221,10 @@ func do_exchange(entry_id: String) -> bool:
 		_warn("荣誉不足，还差 %d 点" % (cost - honor))
 		return false
 	G.wallet["honor"] = honor - cost
-	var give: Dictionary = e.get("give", {})
 	for k in give.keys():
 		var key := String(k)
 		var n := int(give[k])
-		if key.begins_with("item_"):
-			G.grant_item(key.substr(5), n)
-		elif G.wallet.has(key):
-			G.wallet[key] = int(G.wallet[key]) + n
+		G.grant_item(key.substr(5), n, false)
 	_times[entry_id] = int(_times.get(entry_id, 0)) + 1
 	G.save_game()
 	_refresh()

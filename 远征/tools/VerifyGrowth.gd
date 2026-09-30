@@ -42,12 +42,24 @@ func _reset(level := 1) -> void:
 	G.prog["world_cleared"] = {}
 	G.prog["talents"] = {}
 	G.prog["equip"] = {}
+	G.prog["inventory"] = {"instances": [], "pending": [], "next_uid": 1}
+	G.ensure_starter_equip(true)   # P04：装备是实例；重置 = 重发 6 件基础装（uid 从 1 起，确定性）
 	G.prog["skills"] = {}
 	G.prog["mounts"] = {"owned": {}, "active": ""}
 	G.prog["titles"] = {"owned": [], "active": ""}
 	G.prog["pet_stat"] = {}
 	G.selected_role = "zs"
 	G.save_game()
+
+
+## 背包里（未在身）的第一件实例 uid；没有返回 0
+func _bag_uid() -> int:
+	var worn := G.inv_worn_uids()
+	for it in G.inv_instances():
+		var u := int((it as Dictionary).get("uid", 0))
+		if not worn.has(u):
+			return u
+	return 0
 
 
 func _rng(seed: int) -> RandomNumberGenerator:
@@ -128,11 +140,11 @@ func _run() -> void:
 		"四系武器应绑定对应人物")
 	var c0 := G.equip_enhance_cost("sword")
 	_check(int(c0["gold"]) == 150 and int(c0["item_n"]) == 1, "lv0 强化应耗 150 金 + 1 石")
-	G.prog["equip"] = {"sword": {"lv": 5, "gems": [], "affixes": []}}
+	G.equip_state("sword")["lv"] = 5   # P04：等级写在实例上（旧档的 dict 形状已由 v5 迁移吃掉）
 	var c5 := G.equip_enhance_cost("sword")
 	_check(int(c5["gold"]) == 900 and int(c5["item_n"]) == 2, "lv5 强化应耗 900 金 + 2 石")
 	_check(absf(G.equip_enhance_rate("sword") - pow(0.9, 6.0)) < 0.0001, "成功率应为 0.9^目标级")
-	G.prog["equip"] = {}
+	G.equip_state("sword")["lv"] = 0
 	_check(absf(G.equip_enhance_rate("sword") - 0.9) < 0.0001, "lv0→1 成功率应 0.9")
 	var r_ng: Dictionary = G.equip_enhance("sword")
 	_check(not bool(r_ng["ok"]) and String(r_ng["err"]) == "金币不足", "无金币应拒绝强化")
@@ -145,19 +157,19 @@ func _run() -> void:
 	var r_ok := G.equip_enhance("sword", _rng(seed_ok))
 	_check(bool(r_ok["ok"]) and bool(r_ok["success"]) and int(r_ok["lv"]) == 1, "强化成功应升 1 级")
 	_check(int(G.wallet["gold"]) == 850 and G.item_count("enhance_stone") == 9, "成功应扣 150 金 1 石")
-	G.prog["equip"] = {}
+	G.equip_state("sword")["lv"] = 0
 	G.wallet["gold"] = 1000
 	G.items = {"enhance_stone": 10}
 	var r_fl := G.equip_enhance("sword", _rng(seed_ng))
 	_check(bool(r_fl["ok"]) and not bool(r_fl["success"]) and int(r_fl["lv"]) == 0, "强化失败不掉级")
 	_check(int(G.wallet["gold"]) == 850 and G.item_count("enhance_stone") == 9, "失败仍扣费")
-	G.prog["equip"] = {"sword": {"lv": 20, "gems": [], "affixes": []}}
+	G.equip_state("sword")["lv"] = 20
 	G.wallet["gold"] = 99999
 	G.items = {"enhance_stone": 99}
 	_check(not bool(G.equip_enhance("sword")["ok"]), "满级应拒绝强化")
 	# 强化属性：lv10 大剑 atk = 10×(1+0.1×10)=20；饰品 crit 不吃倍率
-	G.prog["equip"] = {"sword": {"lv": 10, "gems": [], "affixes": []},
-		"accessory": {"lv": 10, "gems": [], "affixes": []}}
+	G.equip_state("sword")["lv"] = 10
+	G.equip_state("accessory")["lv"] = 10
 	var bs := G.equip_base_stat("sword")
 	_check(int(bs.get("atk", 0)) == 20, "大剑 lv10 攻击应 20，实为 %d" % int(bs.get("atk", 0)))
 	var ba := G.equip_base_stat("accessory")
@@ -340,11 +352,9 @@ func _run() -> void:
 	# —— 9. 养成聚合（含武器绑人物）——
 	_reset(10)
 	G.prog["talents"] = {"fury_1": 1}
-	G.prog["equip"] = {
-		"sword": {"lv": 10, "gems": ["gem_atk_3"], "affixes": []},
-		"armor": {"lv": 0, "gems": [], "affixes": []},
-		"accessory": {"lv": 0, "gems": [], "affixes": []},
-	}
+	G.equip_state("sword")["lv"] = 10
+	G.equip_state("sword")["gems"] = ["gem_atk_3"]
+	# 甲/饰保持 _reset 发的基础装（护甲 def6+hp50、饰品 hp70+crit0.02），聚合期望值与旧档逐项相同
 	G.prog["mounts"] = {"owned": {"horse": 1}, "active": "horse"}
 	G.prog["titles"] = {"owned": ["t_rookie"], "active": "t_rookie"}
 	var agg := G.growth_bonuses("zs")
@@ -490,26 +500,186 @@ func _run() -> void:
 	_check(pet2 != null and pet2.base_atk == 15,
 		"无快照应随人物等级：攻 9+1.5×4=15，实为 %d" % (pet2.base_atk if pet2 != null else -1))
 
+	# —— 10.5 装备实例与背包（P04）——
+	# 口径：instances[] 是拥有池（背包里的 + 在身的都在里面），equip[slot] = uid；
+	#       背包已用格 = 未被 equip 指向的条数（装备不占格）；满包掉落进待领取箱，绝不丢物。
+	_reset(1)
+	_check(G.inv_instances().size() == 6, "开局应有 6 件基础装实例，实为 %d" % G.inv_instances().size())
+	_check(G.inv_count() == 0, "在身装备不占背包格，实为 %d" % G.inv_count())
+	var slot_uids := {}
+	for sid2 in ["sword", "spear", "staff", "hammer", "armor", "accessory"]:
+		var su := int(G.equip_state(sid2).get("uid", 0))
+		_check(su > 0 and not slot_uids.has(su), "槽 %s 应指向一个未被占用的实例 uid（实为 %d）" % [sid2, su])
+		slot_uids[su] = true
+
+	# 掉落入包 → 占 1 格；uid 全局唯一
+	G.inv_grant_equip({"tpl": "tpl_sword_wolf", "rarity": 2, "n": 1})
+	_check(G.inv_count() == 1, "掉落一件装备应占 1 格，实为 %d" % G.inv_count())
+	var wolf_uid := 0
+	for it in G.inv_instances():
+		if String((it as Dictionary).get("tpl", "")) == "tpl_sword_wolf":
+			wolf_uid = int((it as Dictionary).get("uid", 0))
+	_check(wolf_uid > 0, "应能找到刚掉落的狼牙大剑实例")
+
+	# 回收价 = 模板价×稀有度倍率 + 已投入强化金币的一半（与 equip_enhance_cost 同一条公式）
+	var ec: Dictionary = G.equip_cfg().get("enhance", {})
+	var g_base := float(ec.get("cost_gold_base", 150))
+	var g_step := float(ec.get("cost_gold_step", 150))
+	var tpl_px := float(G.equip_tpl("tpl_sword_wolf").get("price", 0)) \
+		* float(G.equip_rarity_cfg(2).get("sell_mult", 1.0))
+	_check(G.inv_sell_price(wolf_uid) == int(roundf(tpl_px)),
+		"0 级稀有回收价应为 %d，实为 %d" % [int(roundf(tpl_px)), G.inv_sell_price(wolf_uid)])
+	G.inv_find(wolf_uid)["lv"] = 3
+	var refund := 0.0
+	for i in 3:
+		refund += g_base + g_step * float(i)
+	_check(G.inv_sell_price(wolf_uid) == int(roundf(tpl_px + refund * 0.5)),
+		"lv3 回收价应含已投入强化的一半（%d），实为 %d"
+		% [int(roundf(tpl_px + refund * 0.5)), G.inv_sell_price(wolf_uid)])
+
+	# 强化过/稀有 → 卖出要二次确认；确认后金币入钱包、实例出池；重复卖出幂等
+	var s_ask := G.inv_sell(wolf_uid)
+	_check(not bool(s_ask.get("ok", false)) and bool(s_ask.get("need_confirm", false)),
+		"强化过的装备卖出应先要二次确认")
+	var gold0 := int(G.wallet.get("gold", 0))
+	var px := G.inv_sell_price(wolf_uid)
+	var s_ok := G.inv_sell(wolf_uid, true)
+	_check(bool(s_ok.get("ok", false)) and int(s_ok.get("gold", 0)) == px, "确认后应卖出并返回回收价")
+	_check(int(G.wallet.get("gold", 0)) == gold0 + px, "回收金币应进钱包")
+	_check(not bool(G.inv_sell(wolf_uid, true).get("ok", false)), "重复卖出应被拒绝（幂等）")
+
+	# 在身 / 锁定不可卖
+	_check(String(G.inv_sell(int(G.equip_state("sword").get("uid", 0)), true).get("err", ""))
+		== "装备中的物品不能卖出", "在身装备不可卖出")
+	G.inv_grant_equip({"tpl": "tpl_armor_basic", "rarity": 1, "n": 1})
+	# 开局基础装里也有 tpl_armor_basic 且正穿在身上 —— 必须挑**刚掉进背包**的那件（未在身）
+	var plain_uid := 0
+	var worn_now := G.inv_worn_uids()
+	for it in G.inv_instances():
+		var d1 := it as Dictionary
+		if String(d1.get("tpl", "")) == "tpl_armor_basic" \
+			and not worn_now.has(int(d1.get("uid", 0))):
+			plain_uid = int(d1.get("uid", 0))
+	_check(plain_uid > 0, "应能找到刚掉进背包的皮甲实例")
+	_check(bool(G.inv_set_locked(plain_uid, true).get("ok", false)), "锁定应成功")
+	_check(String(G.inv_sell(plain_uid, true).get("err", "")) == "已锁定的装备不能卖出",
+		"锁定装备不可卖出")
+	G.inv_set_locked(plain_uid, false)
+	# 0 级普通装备：不需确认，直接可卖
+	_check(bool(G.inv_sell(plain_uid).get("ok", false)), "0 级普通装备应无需确认即可卖出")
+
+	# 满包：掉落进待领取箱、领取被拒且保留、卸下被拒；换装不因满包失败
+	var cap := G.inv_capacity()
+	G.inv_grant_equip({"tpl": "tpl_armor_scale", "rarity": 2, "n": maxi(0, cap - G.inv_count())})
+	_check(G.inv_count() == cap, "背包应已填满（%d/%d）" % [G.inv_count(), cap])
+	var over := G.inv_grant_equip({"tpl": "tpl_sword_ruin", "rarity": 3, "n": 1})
+	_check(bool(over.get("to_pending", false)), "满包时的掉落应进待领取箱")
+	_check(G.inv_pending().size() == 1, "待领取箱应有 1 件，实为 %d" % G.inv_pending().size())
+	var pend_uid := int((G.inv_pending()[0] as Dictionary).get("uid", 0))
+	var cl_full := G.inv_claim(pend_uid)
+	_check(not bool(cl_full.get("ok", false)) and String(cl_full.get("err", "")) == "背包已满",
+		"满包时领取应被拒绝")
+	_check(G.inv_pending().size() == 1, "领取失败必须保留在待领取箱，不得丢物")
+	_check(String(G.inv_unequip("sword").get("err", "")) == "背包已满，先腾出空位",
+		"满包时卸下应被拒绝（不允许卸下来没处放）")
+	var swap_uid := _bag_uid()
+	_check(swap_uid > 0, "满包时也应能在背包里找到一件可换的装备")
+	var swap := G.inv_equip(swap_uid)
+	_check(bool(swap.get("ok", false)), "换装不应因满包失败（旧件回池，占用不变）")
+	_check(G.inv_count() == cap, "换装后占用不应变化，实为 %d" % G.inv_count())
+	_check(not bool(G.inv_equip(swap_uid).get("ok", false)), "重复换装同一件应被拒绝（幂等）")
+
+	# 腾格 → 领取成功；uid 单调递增、不复用卖出的号
+	var max_uid := 0
+	for it in G.inv_instances():
+		max_uid = maxi(max_uid, int((it as Dictionary).get("uid", 0)))
+	var dump := _bag_uid()
+	_check(bool(G.inv_sell(dump, true).get("ok", false)), "腾格卖出应成功")
+	_check(G.inv_count() == cap - 1, "卖出后应空出 1 格，实为 %d" % G.inv_count())
+	var cl_ok := G.inv_claim(pend_uid)
+	_check(bool(cl_ok.get("ok", false)), "腾出空位后领取应成功")
+	_check(G.inv_pending().is_empty(), "领取成功后待领取箱应清空")
+	_check(not bool(G.inv_claim(pend_uid).get("ok", false)), "重复领取应被拒绝（幂等）")
+	var dump2 := _bag_uid()
+	G.inv_sell(dump2, true)
+	G.inv_grant_equip({"tpl": "tpl_spear_iron", "rarity": 2, "n": 1})
+	var fresh := 0
+	for it in G.inv_instances():
+		var u4 := int((it as Dictionary).get("uid", 0))
+		if u4 > max_uid:
+			fresh = u4
+	_check(fresh > max_uid and fresh > dump, "新实例 uid 必须单调递增、不得重用卖出的号（%d）" % fresh)
+	var uid_seen := {}
+	for it in G.inv_instances():
+		var u5 := int((it as Dictionary).get("uid", 0))
+		_check(not uid_seen.has(u5), "拥有池里 uid 不得重复（%d）" % u5)
+		uid_seen[u5] = true
+
+	# 拆宝石：归还原宝石、不占背包格（满包也能拆）
+	var sw := G.equip_state("sword")
+	var sw_uid := int(sw.get("uid", 0))
+	sw["gems"] = ["gem_atk_3"]
+	G.items = {}
+	var pop := G.inv_gem_pop(sw_uid, 0)
+	_check(bool(pop.get("ok", false)) and String(pop.get("gem", "")) == "gem_atk_3",
+		"拆宝石应返还 gem_atk_3")
+	_check(G.item_count("gem_atk_3") == 1, "拆下的宝石应进 items")
+	_check((sw["gems"] as Array).is_empty(), "拆下后孔位应空出")
+	_check(not bool(G.inv_gem_pop(sw_uid, 0).get("ok", false)), "空孔位再拆应被拒绝")
+
+	# 宝石 3 合 1：同级同色 3 颗 → 1 颗高一级，扣金币费；缺钱/不足/满级拒绝且不改动
+	var mc: Dictionary = G.equip_cfg().get("merge", {})
+	var need_n := maxi(2, int(mc.get("gem_merge_n", 3)))
+	var fee_g := maxi(0, int(mc.get("gem_merge_cost_gold", 300)))
+	G.items = {"gem_atk_1": 3}
+	G.wallet["gold"] = 1000
+	var mg := G.inv_gem_merge("gem_atk_1")
+	_check(bool(mg.get("ok", false)) and String(mg.get("gem", "")) == "gem_atk_2",
+		"%d 颗 1 级应合成 1 颗 2 级" % need_n)
+	_check(G.item_count("gem_atk_1") == 0 and G.item_count("gem_atk_2") == 1, "合成应 3 换 1")
+	_check(int(G.wallet["gold"]) == 1000 - fee_g, "合成应扣 %d 金币" % fee_g)
+	_check(not bool(G.inv_gem_merge("gem_atk_2").get("ok", false)), "不足 3 颗应拒绝合成")
+	G.items["gem_atk_2"] = 3
+	G.wallet["gold"] = fee_g - 1
+	var poor := G.inv_gem_merge("gem_atk_2")
+	_check(not bool(poor.get("ok", false)) and String(poor.get("err", "")) == "金币不足",
+		"金币不足应拒绝合成")
+	_check(int(G.item_count("gem_atk_2")) == 3, "拒绝合成时不得改动宝石数量")
+	G.wallet["gold"] = 99999
+	G.items["gem_atk_5"] = 3
+	_check(String(G.inv_gem_merge("gem_atk_5").get("err", "")) == "已是最高级", "满级宝石应拒绝合成")
+
 	# —— 11. 存档往返 ——
 	_reset(12)
 	G.prog["talents"] = {"fury_1": 2}
-	G.prog["equip"] = {"sword": {"lv": 3, "gems": ["gem_atk_3"],
-		"affixes": [{"stat": "atk_pct", "v": 0.05, "locked": true}]}}
+	G.equip_state("sword")["lv"] = 3
+	G.equip_state("sword")["gems"] = ["gem_atk_3"]
+	G.equip_state("sword")["affixes"] = [{"stat": "atk_pct", "v": 0.05, "locked": true}]
 	G.prog["skills"] = {_sid: 4}
 	G.prog["mounts"] = {"owned": {"horse": 1}, "active": "horse"}
 	G.prog["titles"] = {"owned": ["t_rookie"], "active": "t_rookie"}
 	G.prog["pet_stat"] = {"pet_rockturtle": {"lv": 3, "exp": 10, "star": 4, "brk": 1}}
 	G.save_game()
+	var sword_uid_before := int(G.equip_state("sword").get("uid", 0))
+	var inst_n_before := G.inv_instances().size()
 	G.prog["talents"] = {}
 	G.prog["equip"] = {}
+	G.prog["inventory"] = {"instances": [], "pending": [], "next_uid": 1}
 	G.prog["skills"] = {}
 	G.prog["mounts"] = {"owned": {}, "active": ""}
 	G.prog["titles"] = {"owned": [], "active": ""}
 	G.prog["pet_stat"] = {}
 	G._load_save()
 	_check(int((G.prog["talents"] as Dictionary).get("fury_1", 0)) == 2, "天赋应随存档恢复")
-	_check(int(((G.prog["equip"] as Dictionary).get("sword", {}) as Dictionary).get("lv", 0)) == 3,
-		"装备等级应恢复")
+	_check(int(G.equip_state("sword").get("lv", 0)) == 3, "装备等级应恢复")
+	_check(G.equip_state("sword").get("gems", []) == ["gem_atk_3"], "装备宝石应恢复")
+	var aff_rt: Array = G.equip_state("sword").get("affixes", [])
+	_check(aff_rt.size() == 1 and bool((aff_rt[0] as Dictionary).get("locked", false)),
+		"装备词条与锁应恢复")
+	_check(int(G.equip_state("sword").get("uid", 0)) == sword_uid_before,
+		"存档往返后在身实例 uid 应一致（%d vs %d）" % [int(G.equip_state("sword").get("uid", 0)), sword_uid_before])
+	_check(G.inv_instances().size() == inst_n_before,
+		"存档往返后拥有池条数应一致（%d vs %d）" % [G.inv_instances().size(), inst_n_before])
 	_check(G.skill_level(_sid) == 4, "技能等级应恢复")
 	_check(G.mount_active() == "horse" and G.mount_tier("horse") == 1, "坐骑应恢复")
 	_check(G.title_owned("t_rookie") and G.title_active() == "t_rookie", "称号应恢复")

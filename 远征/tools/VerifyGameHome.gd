@@ -32,10 +32,10 @@ func _drop_confirm(dp) -> void:
 
 
 func _run() -> void:
-	# 基线：只解锁主世界（forest）、只有初始伙伴。门禁断言必须建立在确定状态上，
+	# 基线：只解锁主世界（forest）、显式放入一只测试伙伴。门禁断言必须建立在确定状态上，
 	# 不能依赖环境里那份存档（跑过出征/路线图用例后它已经推进过了）。
-	G.prog = {"level": 1, "exp": 0, "worlds_unlocked": 1, "world_cleared": {}, "pets": []}
-	G.ensure_starter_pets()
+	G.prog = {"level": 1, "exp": 0, "worlds_unlocked": 1, "world_cleared": {},
+		"pets": ["pet_rockturtle"]}
 	G.wallet = {"gold": 0, "expedition": 0, "soul": 0, "honor": 0}
 	G.save_game()
 
@@ -58,15 +58,19 @@ func _run() -> void:
 	await get_tree().process_frame
 	_check(home._anim != null and home._anim.is_playing(), "角色待机动画应播放")
 	_check(home._deploy == null, "开局不应有 DEPLOY 浮层")
+	var world_entry := home.get_node_or_null("ReturnToWorld") as Control
+	_check(world_entry != null and world_entry.size.x >= 400.0
+		and world_entry.size.y >= 44.0,
+		"营帐应有明确且可触控的返回主世界入口")
 	var wallet_txt := ""
 	for c in home.get_children():
 		if c is HBoxContainer:
 			for l in c.get_children():
 				if l is Label:
 					wallet_txt += (l as Label).text
-	_check(wallet_txt.contains("金") and wallet_txt.contains("远征")
-		and wallet_txt.contains("魂石") and wallet_txt.contains("荣誉"),
-		"顶栏应显示钱包四币（金/远征/魂石/荣誉），实为「%s」" % wallet_txt)
+	_check(wallet_txt.contains("金币") and wallet_txt.contains("远征币")
+		and wallet_txt.contains("魂晶") and wallet_txt.contains("荣誉"),
+		"顶栏应显示钱包四币（金币/远征币/魂晶/荣誉），实为「%s」" % wallet_txt)
 
 	# ESC：主界面打开设置，不应直接跳到创角页；设置内再次 ESC 才关闭浮层
 	var esc := InputEventKey.new()
@@ -104,7 +108,7 @@ func _run() -> void:
 		dp._goto_step(2)
 		for i in 8:
 			dp._deck.go(i, true)
-		_check(dp._cards.size() == 8, "宠物页翻满后应有 8 张卡，实为 %d" % dp._cards.size())
+		_check(dp._cards.size() == 9, "宠物页翻满后应有 9 张卡，实为 %d" % dp._cards.size())
 		_check(bool(dp._cards["2:pet_holydeer"].get_meta("locked", false)), "未收集宠物卡应标记 locked")
 		_check(not bool(dp._cards["2:pet_rockturtle"].get_meta("locked", false)), "初始宠物卡不应 locked")
 
@@ -188,9 +192,15 @@ func _run() -> void:
 	await get_tree().process_frame
 
 	# ---- H. 养成主线：通关世界 → 解锁下一世界 + 解封对应宠物 ----
-	G.prog = {"level": 1, "exp": 0, "worlds_unlocked": 1, "world_cleared": {}, "pets": []}
+	G.prog = {"level": 1, "exp": 0, "worlds_unlocked": 1, "world_cleared": {}, "pets": [],
+		"story": {"step": "s01", "done": [], "goals": {}}, "flags": {}}
 	G.ensure_starter_pets()
-	_check(G.owns_pet("pet_rockturtle"), "初始伙伴应保底在册（老存档 pets 为空也不至于无宠可带）")
+	_check(not G.owns_pet("pet_rockturtle"), "新档不得跳过第一幕自动赠送岩龟")
+	_check(not bool(G.claim_rockturtle(false).get("ok", false)), "s04 前不得提前领取岩龟")
+	G.prog["story"] = {"step": "s05", "done": ["s01", "s02", "s03", "s04"],
+		"goals": {"s01": "done", "s02": "done", "s03": "done", "s04": "done"}}
+	_check(bool(G.claim_rockturtle(false).get("ok", false)) and G.owns_pet("pet_rockturtle"),
+		"s04 后应在兽栏领取岩龟")
 	_check(G.is_world_unlocked("forest") and not G.is_world_unlocked("snow"), "初始只应解锁主世界 forest")
 	_check(not G.owns_pet("pet_thunderhawk") and not G.owns_pet("pet_frostwolf"),
 		"初始不应拥有通关奖励宠物")
@@ -245,7 +255,7 @@ func _run() -> void:
 	# 单步工具 + 复位
 	G.gm_reset_save()
 	_check(int(G.prog.get("level", 0)) == 1 and int(G.prog.get("worlds_unlocked", 0)) == 1, "复位应回到 1 级、仅解锁主世界")
-	_check(G.owns_pet("pet_rockturtle") and not G.owns_pet("pet_frostwolf"), "复位后只应留初始伙伴")
+	_check(not G.owns_pet("pet_rockturtle") and not G.owns_pet("pet_frostwolf"), "复位后应回到尚未结缘的全新档")
 	_check(int(G.wallet.get("gold", 0)) == 0, "复位应清空钱包")
 	G.gm_add_currency(50)
 	_check(int(G.wallet.get("gold", 0)) == 50 and int(G.wallet.get("honor", 0)) == 50, "加币应对四币同时生效")
@@ -253,7 +263,7 @@ func _run() -> void:
 	_check(int(G.prog.get("level", 0)) == G.level_cap(), "单独满级指令应生效")
 
 	# 解锁文案
-	_check(G.pet_unlock_text("pet_rockturtle") == "初始伙伴", "初始伙伴的解锁文案应为「初始伙伴」")
+	_check(G.pet_unlock_text("pet_rockturtle") == "第一幕兽栏结缘", "岩龟解锁文案应指向第一幕兽栏")
 	_check(G.pet_unlock_text("pet_frostwolf").begins_with("通关"),
 		"世界解锁宠物的文案应说明通关条件，实为「%s」" % G.pet_unlock_text("pet_frostwolf"))
 

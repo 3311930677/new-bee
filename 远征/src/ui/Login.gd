@@ -68,7 +68,7 @@ func _build_panel() -> void:
 
 	# 页面标题只在顶部木匾出现一次（"登录"）。面板里原来还有一行"账号登录"，
 	# 和木匾重复、还跟输入框抢视线——按"操作页不是海报"的原则去掉，让面板直接从说明开始。
-	var account_hint := G.gold_label("账号用于识别存档，本地保存，不联网", G.FS_XS, false, Color("8a7350"), false)
+	var account_hint := G.gold_label("账号用于识别存档，本地保存，不联网", G.FS_XS, false, Color("65492a"), false)
 	box.add_child(account_hint)
 
 	var sep := ColorRect.new()
@@ -82,11 +82,11 @@ func _build_panel() -> void:
 
 	# 老玩家：预填账号，提示语从「创建角色」换成「继续远征」
 	var hint_text := "首次登录将直接创建新角色"
-	if G.has_profile():
+	if G.has_profile() or not G.selected_role.is_empty():
 		hint_text = "欢迎回来，登录后继续远征"
 		_account.text = G.account
 		_account.caret_column = _account.text.length()
-	var hint := G.gold_label(hint_text, G.FS_XS, false, Color("8a7350"), false)
+	var hint := G.gold_label(hint_text, G.FS_XS, false, Color("65492a"), false)
 	box.add_child(hint)
 
 	var row := HBoxContainer.new()
@@ -138,7 +138,7 @@ func _build_avatar_picker(box: VBoxContainer) -> void:
 		selected = "zs"
 	_select_avatar(selected)
 	_avatar_caption = G.gold_label("当前：%s ·「+」可上传本地图片" % String(AVATAR_NAMES.get(selected, "破军")),
-		G.FS_XS, false, Color("8a7350"), false)
+		G.FS_XS, false, Color("65492a"), false)
 	box.add_child(_avatar_caption)
 
 
@@ -305,10 +305,12 @@ func _do_login(guest: bool) -> void:
 	# 已有存档（角色已创建）→ 直接回主城；首次登录才进捏人页。
 	# 还没看过序章的话先在序章停一站（看过的不再拦，免得打断老玩家）
 	if G.has_profile():
-		var next := "res://src/ui/GameHome.tscn"
 		if not G.lore_seen():
-			next = "res://src/ui/Prologue.tscn"
-		G.go(next)
+			G.go("res://src/ui/Prologue.tscn")
+		else:
+			G.enter_main_world()
+	elif not G.selected_role.is_empty():
+		G.go("res://src/ui/NameRecovery.tscn")
 	else:
 		G.go("res://src/ui/CreateRole.tscn")
 

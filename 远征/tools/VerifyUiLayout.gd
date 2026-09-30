@@ -27,6 +27,23 @@ func _texts(root: Node, out: Array = []) -> Array:
 	return out
 
 
+func _gem_chip_with_tooltip(root: Node) -> Control:
+	for c in root.get_children():
+		if c is PanelContainer and String((c as Control).tooltip_text).contains("宝石"):
+			return c as Control
+		var nested := _gem_chip_with_tooltip(c)
+		if nested != null:
+			return nested
+	return null
+
+
+func _forge_child(root: Control, meta_key: String, meta_value: String) -> Control:
+	for child in root.get_children():
+		if child is Control and String(child.get_meta(meta_key, "")) == meta_value:
+			return child as Control
+	return null
+
+
 ## 递归找出右边界越界的控件（问题 #12 那一类：固定坐标写死、容器一变宽就压出去）。
 ## 返回第一个越界控件的描述，没有越界返回空串。
 func _overflow_right(node: Node, limit: float, dx := 0.0) -> String:
@@ -151,6 +168,7 @@ func _run() -> void:
 	await get_tree().process_frame
 
 	# ---- #14 / #4 / #5 装备面板 ----
+	G.ensure_starter_equip()
 	# 持有全部 15 种宝石（3 色 × 5 级）——#4 的原始表现就是后 9 种永远选不到
 	var all_gems: Array = []
 	for color in ["atk", "def", "hp"]:
@@ -172,6 +190,20 @@ func _run() -> void:
 		if l == null or not l.text.begins_with("+"):
 			ok_lv = false
 	_check(ok_lv, "刷新后每个槽位等级都应写成 +N")
+	await get_tree().process_frame
+	var gem_tab := _forge_child(ep.get("_detail") as Control, "work_tab", "gem")
+	var tab_press := InputEventMouseButton.new()
+	tab_press.button_index = MOUSE_BUTTON_LEFT
+	tab_press.pressed = true
+	if gem_tab != null:
+		gem_tab.gui_input.emit(tab_press)
+	await get_tree().process_frame
+	var gem_page := _forge_child(ep.get("_detail") as Control, "work_page", "gem")
+	var enhance_page := _forge_child(ep.get("_detail") as Control, "work_page", "enhance")
+	_check(ep.get("_work_tab") == "gem"
+		and gem_page != null and gem_page.visible
+		and enhance_page != null and not enhance_page.visible,
+		"工坊页签应把宝石操作单独显示")
 	# 分页可覆盖全部宝石
 	var pages := int(ep.gem_page_count())
 	var seen := {}
@@ -183,19 +215,52 @@ func _run() -> void:
 	_check(pages >= 2, "15 种宝石应分成多页，实为 %d 页" % pages)
 	_check(seen.size() == all_gems.size(),
 		"翻完全部页应能触达全部 %d 种宝石，实为 %d" % [all_gems.size(), seen.size()])
+	ep.set("_work_tab", "gem")
+	ep._refresh()
 	# 镶嵌费必须写在界面上，且与扣费同源
 	var fee_txt := " ".join(_texts(ep))
 	_check(fee_txt.contains("镶嵌费") and fee_txt.contains(str(G.equip_socket_cost())),
 		"界面应显示镶嵌费且数值来自 equip_socket_cost（当前 %d）" % G.equip_socket_cost())
 	# 宝石 tooltip 用本地化名，不裸露内部 id
-	var chip: Control = null
-	for c in (ep.get("_detail") as Control).get_children():
-		if c is PanelContainer and String((c as Control).tooltip_text).contains("宝石"):
-			chip = c
+	var chip := _gem_chip_with_tooltip(ep.get("_detail") as Control)
 	_check(chip != null and not String(chip.tooltip_text).contains("gem_"),
 		"宝石 tooltip 应使用本地化名而不是内部 id（实为「%s」）"
 		% ("" if chip == null else String(chip.tooltip_text)))
+	await get_tree().process_frame
+	var refine_tab := _forge_child(ep.get("_detail") as Control, "work_tab", "refine")
+	if refine_tab != null:
+		refine_tab.gui_input.emit(tab_press)
+	await get_tree().process_frame
+	var refine_page := _forge_child(ep.get("_detail") as Control, "work_page", "refine")
+	_check(ep.get("_work_tab") == "refine"
+		and refine_page != null and refine_page.visible,
+		"工坊精炼页签应可从宝石页切换")
+	var gold_before_empty := int(G.wallet.get("gold", 0))
+	var stone_before_empty := G.item_count("enhance_stone")
+	_check(bool(G.inv_unequip("sword").get("ok", false)), "空槽验证前应能卸下测试大剑")
+	ep.set("_sel", "sword")
+	ep.call("_on_enhance")
+	_check(G.equip_state("sword").is_empty()
+		and int(G.wallet.get("gold", 0)) == gold_before_empty
+		and G.item_count("enhance_stone") == stone_before_empty,
+		"空槽点击强化不能暗中补出基础装备或扣除材料")
 	ep.queue_free()
+	await get_tree().process_frame
+
+	# ---- P04 背包面板 ----
+	# 背包要有四个页签、显示已用/容量，空包时也要给出可操作的指引（不能只画个空壳）
+	var bp: Control = (load("res://src/ui/BagPanel.gd") as GDScript).new()
+	add_child(bp)
+	await get_tree().process_frame
+	var bag_txt := " ".join(_texts(bp))
+	_check(bag_txt.contains("装备") and bag_txt.contains("材料") and bag_txt.contains("宝石")
+		and bag_txt.contains("待领取"),
+		"背包应有四个页签（装备/材料/宝石/待领取），现有文案：%s" % bag_txt)
+	_check(bag_txt.contains("已用") and bag_txt.contains(str(G.inv_capacity())),
+		"背包应显示「已用/容量」（容量 %d），现有文案：%s" % [G.inv_capacity(), bag_txt])
+	_check(bag_txt.contains("选中一件装备") or bag_txt.contains("背包里没有装备"),
+		"背包装备页应给出可操作的空态/选中指引，现有文案：%s" % bag_txt)
+	bp.queue_free()
 	await get_tree().process_frame
 
 	# ---- #6 详情弹层的模态所有权：栈 + ESC 只关栈顶 + owner 退出自动释放 ----

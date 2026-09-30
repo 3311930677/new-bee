@@ -39,6 +39,9 @@ func _run() -> void:
 	_test_dmg_taken_on_basic()
 	_test_school_build_rate()
 	_test_theme_rules()
+	_test_boss_phases()
+	_test_break_window()
+	_test_no_phases_unchanged()
 	if _fails == 0:
 		print("BATTLE_OK all tests passed")
 	else:
@@ -698,3 +701,116 @@ func _trait_eff(id: String) -> Dictionary:
 		if String((t as Dictionary).get("id", "")) == id:
 			return (t as Dictionary).get("effect", {})
 	return {}
+
+
+# ---------- 24. P03：首领阶段阈值（表驱动、只触发一次） ----------
+## 失声碑灵是主世界明雷首领：走 lead_mon + solo 生成，与 MapScene 接战时同一条路径。
+func _test_boss_phases() -> void:
+	var sim := BattleSim.new()
+	sim.record_events = true
+	sim.setup(101, {"role_id": "zs", "level": 20, "traits": []},
+		{"theme": "tomb", "node_type": "boss", "layer": 1,
+			"lead_mon": "mon_stele_warden", "solo": true})
+	var boss: Combatant = null
+	for u in sim.units:
+		if u.side == "enemy" and u.ai_type == "boss":
+			boss = u
+			break
+	_check(boss != null, "构造：失声碑灵应在场")
+	if boss == null:
+		return
+	_check(String(boss.data.get("id", "")) == "mon_stele_warden",
+		"构造：这次首领应是失声碑灵，实为 %s" % String(boss.data.get("id", "")))
+	# ① 跌破 50%：解锁失声悲鸣 + 永久加速 + 广播 phase
+	sim.events.clear()
+	boss.hp = int(float(boss.get_max_hp()) * 0.49)
+	sim.step()
+	var names := _phase_names(sim)
+	_check(names.size() == 1 and String(names[0]) == "碑鸣",
+		"跌破 50%% 应只广播一次「碑鸣」阶段，实为 %s" % str(names))
+	var has_wail := false
+	for s in boss.skills:
+		if String((s as Dictionary).get("id", "")) == "boss_wail":
+			has_wail = true
+	_check(has_wail, "跌破 50% 应解锁失声悲鸣")
+	_check(boss.has_buff("spd_up"), "跌破 50% 应获永久加速")
+	# ② 同一个阶段不再重复触发（once_flags 挡住）
+	sim.events.clear()
+	sim.step()
+	_check(_phase_names(sim).is_empty(),
+		"同一阶段不应重复触发，实为 %s" % str(_phase_names(sim)))
+	# ③ 跌破 22%：永久破防 + 自身硬直（第二个反击窗口）
+	sim.events.clear()
+	boss.hp = int(float(boss.get_max_hp()) * 0.21)
+	sim.step()
+	names = _phase_names(sim)
+	_check(names.size() == 1 and String(names[0]) == "碎碑",
+		"跌破 22%% 应广播「碎碑」阶段，实为 %s" % str(names))
+	_check(boss.has_buff("def_break"), "跌破 22% 应永久破防")
+	_check(boss.has_buff("stun"), "跌破 22% 应自身硬直（反击窗口）")
+	# ④ 已进过 22% 阶段后再压血也不重复
+	sim.events.clear()
+	boss.hp = 1
+	sim.step()
+	_check(_phase_names(sim).is_empty(),
+		"碎的阶段也不应重复触发，实为 %s" % str(_phase_names(sim)))
+
+
+## 本场已广播的 phase 阶段名（按事件顺序）
+func _phase_names(sim: BattleSim) -> Array:
+	var out: Array = []
+	for e in sim.events:
+		if String(e.get("t", "")) == "phase":
+			out.append(String(e.get("name", "")))
+	return out
+
+
+# ---------- 25. P03：破绽窗口放大伤害（确定性、无随机） ----------
+func _test_break_window() -> void:
+	var sim := BattleSim.new()
+	sim.record_events = false
+	sim.setup(103, {"role_id": "zs", "level": 10, "traits": []},
+		{"theme": "forest", "node_type": "normal", "layer": 1})
+	var role := sim.role_unit()
+	var foe := sim.alive_units("enemy")[0]
+	foe.base_def = 0
+	foe.base_max_hp = 100000
+	foe.hp = 100000
+	var plain := foe.take_damage(100, role, sim)
+	_check(plain == 100, "构造：无破绽时 100 伤害应原样落地（实为 %d）" % plain)
+	# 与首领阶段/技能 after.self_buff 共用同一条口径
+	sim.apply_buff_spec(foe, {"type": "break_window", "dur": 4.0, "pct": 0.35})
+	_check(foe.has_buff("break_window"), "apply_buff_spec 应落成 break_window")
+	var amp := foe.take_damage(100, role, sim)
+	_check(amp == 135, "破绽窗口内同一次伤害应放大 35%%（实为 %d）" % amp)
+	var again := foe.take_damage(100, role, sim)
+	_check(again == amp, "破绽放大应是确定性的，不摇随机（%d vs %d）" % [again, amp])
+
+
+# ---------- 26. P03：无 phases 的首领行为不变（确定性护栏） ----------
+func _test_no_phases_unchanged() -> void:
+	var sims: Array[BattleSim] = []
+	for i in 2:
+		var s := BattleSim.new()
+		s.record_events = true
+		s.auto_mode = true
+		s.setup(107, {"role_id": "zs", "level": 15, "traits": []},
+			{"theme": "forest", "node_type": "boss", "layer": 1})
+		sims.append(s)
+	for i in 900:
+		sims[0].step()
+		sims[1].step()
+		_check(sims[0].hash_state() == sims[1].hash_state(), "无 phases 首领：第 %d tick 哈希漂移" % i)
+		if sims[0].finished or sims[1].finished:
+			break
+	var phased := false
+	for e in sims[0].events:
+		if String(e.get("t", "")) == "phase":
+			phased = true
+	_check(not phased, "未配 phases 的首领不应广播 phase 事件（行为与 P03 前一致）")
+	while not (sims[0].finished or sims[1].finished):
+		sims[0].step()
+		sims[1].step()
+	_check(sims[0].finished == sims[1].finished, "无 phases 首领：同种子两个实例应同时结束")
+	_check(sims[0].result == sims[1].result and sims[0].result != "",
+		"无 phases 首领同种子结果应一致且非空（实为「%s」/「%s」）" % [sims[0].result, sims[1].result])

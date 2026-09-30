@@ -33,7 +33,7 @@ param(
   [string]$List = "",
   [int]$QuitAfter = 6000,
   [int]$TimeoutSec = 240,
-  [int]$Expected = 27,
+  [int]$Expected = 35,
   [string]$LogDir = "",
   [switch]$AllowAnyVersion
 )
@@ -90,6 +90,14 @@ $cases = @(
 	@{ N = "VerifyGameHome";    K = "scene";  T = "GAME_HOME_OK" },
 	@{ N = "VerifyMapScene";    K = "scene";  T = "MAP_SCENE_OK" },
 	@{ N = "VerifyMainWorld";   K = "scene";  T = "MAIN_WORLD_OK" },
+	@{ N = "VerifyWorldSession";K = "scene";  T = "WORLD_SESSION_OK" },
+	@{ N = "VerifyStory";       K = "scene";  T = "STORY_OK" },
+	@{ N = "VerifyEconomy";     K = "scene";  T = "ECONOMY_OK" },
+	@{ N = "VerifyTradeWorld";  K = "scene";  T = "TRADE_WORLD_OK" },
+	@{ N = "VerifySecondAct";   K = "scene";  T = "SECOND_ACT_OK" },
+	@{ N = "VerifyPortGrowth";  K = "scene";  T = "PORT_GROWTH_OK" },
+	@{ N = "VerifyShipping";    K = "scene";  T = "SHIPPING_OK" },
+	@{ N = "VerifyFishing";     K = "scene";  T = "FISHING_OK" },
 	@{ N = "VerifyRouteScene";  K = "scene";  T = "ROUTE_SCENE_OK" },
 	@{ N = "VerifyGacha";       K = "scene";  T = "GACHA_OK" },
 	@{ N = "VerifyPanels";      K = "scene";  T = "PANELS_OK" },

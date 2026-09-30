@@ -78,6 +78,7 @@ func _verify_panel_affordance() -> void:
 		["GachaPanel", "res://src/ui/GachaPanel.gd"],
 		["SettingsPanel", "res://src/ui/SettingsPanel.gd"],
 		["GrowthPanel", "res://src/ui/GrowthPanel.gd"],
+		["BagPanel", "res://src/ui/BagPanel.gd"],
 		["TalentPanel", "res://src/ui/TalentPanel.gd"],
 		["EquipPanel", "res://src/ui/EquipPanel.gd"],
 		["PetRaisePanel", "res://src/ui/PetRaisePanel.gd"],

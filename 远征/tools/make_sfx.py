@@ -294,11 +294,29 @@ def altar() -> np.ndarray:
     return x
 
 
+def mount_toggle() -> np.ndarray:
+    """上马／下马：皮具轻擦、鞍扣与压实的脚步，短于领奖音。"""
+    n = n_of(0.43)
+    x = 0.34 * lp(noise(n), 950) * env(n, 0.085, attack=0.008)
+    x = mix_at(x, thud(145, n_of(0.19), 0.065), 0.09, 0.6)
+    x = mix_at(x, metal(730, n_of(0.10), 0.032), 0.19, 0.22)
+    return x
+
+
+def mount_hoof() -> np.ndarray:
+    """骑行落蹄：两下错开的木土闷击，低音量重复时不盖过对白。"""
+    n = n_of(0.33)
+    x = mix_at(np.zeros(n), thud(155, n_of(0.11), 0.035), 0.0, 0.8)
+    x = mix_at(x, thud(135, n_of(0.12), 0.040), 0.16, 0.65)
+    x += 0.12 * lp(noise(n), 850) * env(n, 0.045, attack=0.003)
+    return x
+
+
 # ---------- 清单 ----------
 UI_SFX = [ui_click, ui_open, ui_close, ui_page, ui_confirm, ui_cancel, ui_locked]
 REWARD_SFX = [coin, reward, level_up]
 BATTLE_SFX = [hit_light, hit_heavy, hit_crit, skill_cast, boss_warn, low_hp, victory, defeat]
-EXPLORE_SFX = [pickup, altar]   # 探索：拾取 / 祭坛（峰值压一档，不抢战斗音）
+EXPLORE_SFX = [pickup, altar, mount_toggle, mount_hoof]
 
 
 def main() -> None:
@@ -315,7 +333,7 @@ def main() -> None:
         save(f.__name__, f(), 0.8)
     print("[探索]")
     for f in EXPLORE_SFX:
-        save(f.__name__, f(), 0.70)
+        save(f.__name__, f(), 0.35 if f is mount_hoof else 0.55 if f is mount_toggle else 0.70)
     total = len(UI_SFX) + len(REWARD_SFX) + len(BATTLE_SFX) + len(EXPLORE_SFX)
     print(f"完成：{total} 个音效。接着跑 godot --headless --path . --import 让引擎导入。")
 

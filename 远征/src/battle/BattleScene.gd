@@ -29,7 +29,7 @@ const CLASSIC_FUNC_Y := 744.0
 ## 像素木牌描边色：经典模式的底板（径向指令 / 技能格 / 小签）统一这一支暗金，
 ## 方角 + 2px 厚边压像素地图才立得住（原来 3~6px 圆角 + 1px 淡金边是现代 UI 语言）
 const WOOD_BORDER := Color("8a6524")
-# ---------- 经典模式径向指令菜单（攻/技/物/逃）：对标原版功能机战斗 ----------
+# ---------- 主世界同图战斗指令：像素图标配可读文字，集中在战场下缘 ----------
 # 四枚 16×16 字符网格像素图标，运行时烤成 ImageTexture 后 2 倍放大（nearest，不糊）。
 # 图例：k 深褐描边 / s 钢亮 S 钢暗 / g 金亮 G 金暗 / h 木亮 H 木暗
 #       p 纸页亮 P 纸页线 / b 书皮 / c 软木塞 / w 玻璃 r 药液 R 液面
@@ -114,19 +114,15 @@ const CMD_ICON_FLEE := [  # 撤退靴：靴筒 + 靴头右探 + 深色靴底
 ]
 const RADIAL_BTN := 38.0      # 图标 tile 边长（32 图标 + 3 内边距 ×2）
 const RADIAL_LABEL_H := 16.0  # tile 下方文字带高
-## 四枚指令相对角色脚底原点的左上角偏移：上 / 左 / 右下 / 下——原版菱形环绕。
-## 数值按角色精灵实测占位定（128×128×0.55：头 -61、脚 +9、血/能量条 12~22）：
-##   「攻」-122：图标+字签叠高 54，底边落在头线上方 6px，不压头盔；
-##   「物」压低于右：给右侧名牌（头高度）让位，两者错高不叠；
-##   「逃」+40：整块让到血条/能量条与 buff 签之下，原版靴子就在脚下的位置。
-const RADIAL_OFFSETS := {
-	"attack": Vector2(-19.0, -122.0),
-	"skill": Vector2(-81.0, -45.0),
-	"item": Vector2(43.0, -20.0),
-	"flee": Vector2(-19.0, 40.0),
-}
-const PAGE_PANEL_POS := Vector2(39.0, 520.0)
+const CLASSIC_CMD_W := 88.0
+const CLASSIC_CMD_H := 50.0
+const CLASSIC_CMD_Y := 585.0
+const PAGE_PANEL_POS := Vector2(39.0, 740.0)
 const PAGE_PANEL_SIZE := Vector2(402.0, 42.0)
+# 技能/道具页整宽竖排；每行 44px，触屏不会挤到相邻技能。
+# 面板底边固定不动（PAGE_PANEL_BOTTOM），行数多时向上长，玩家的手指始终落在同一片区域。
+const PAGE_ROW_H := 44.0
+const PAGE_PANEL_BOTTOM := PAGE_PANEL_POS.y + PAGE_PANEL_SIZE.y
 const ENEMY_BACK_Y := 148.0
 const ENEMY_FRONT_Y := 226.0
 const ALLY_FRONT_Y := 402.0
@@ -200,6 +196,7 @@ const BUFF_ABBR := {  # buff 状态条缩写
 	"taunt": "嘲", "shield": "盾", "atk_up": "攻", "atk_down": "衰", "lurk": "潜",
 	"invincible": "免", "thorns": "荆", "lifesteal": "吸", "confusion": "乱",
 	"def_break": "破", "def_up": "防", "spd_up": "疾", "deathproof": "生",
+	"break_window": "绽",   # P03：首领施法后露出的反击窗口（受伤放大）
 }
 const MON_COLOR := {  # 怪物占位体色（tier 区分；精灵素材入库后热替换）
 	"normal": Color("5f7186"), "elite": Color("7a4a9a"), "boss": Color("8a2f2f"),
@@ -240,6 +237,7 @@ var _dmg_out := 0                    # 我方造成的总伤害（战报用）
 var _dmg_in := 0                     # 我方承受的总伤害
 var _best_hit := 0                   # 我方最高单击
 var _skill_btns: Array[Dictionary] = []  # {btn, name_l, cd_l, skill}
+var effective_skills: Array = []         # P05-D：本场真正生效过的玩家技能（每个 id 只记一次）
 var _energy_fill: ColorRect = null       # 底部能量横条（经典模式不建：能量只走角色脚下蓝条）
 var _energy_bar_w := VIEW_W - BAR_X * 2.0
 var _energy_l: Label = null              # 底部能量文字（同上）
@@ -260,11 +258,26 @@ var _tip_tween: Tween = null
 var _combo_tip := Label.new()      # 连携窗口提示（能量条上方）
 var _finished_ui := false
 var _cfg: Dictionary = {}
+# ---------- P03 表现层：预兆 / 阶段横幅 ----------
+var _omens: Node2D = null              # 预兆层：施法者脚下 + 将要被打者身上的脉动环
+var _windup_uid := -1                  # 正在前摇倒数的敌人 uid（-1 = 没有）
+var _windup_tier := "normal"
+var _windup_total: Dictionary = {}     # uid -> 起手前摇 tick 数（算环的收缩比例）
+var _windup_name := ""                 # 正在前摇的技能名（实时倒数用）
+var _boss_phase_name := ""             # 首领当前阶段名（追加在顶部血条后面）
+# ---------- P03 四指令详情 ----------
+var _page_rows := 0                    # 当前弹出页已排行数（queue_free 是延迟的，不能靠子节点数）
+var _flee_blocked := false             # 剧情首领战禁止撤退（按钮置灰 + 点击出文案）
+var _cmd_info_l: Label = null          # 常驻信息条（四枚指令之上）：攻/技/物的当前关键事实
 
 
 func _classic_presentation() -> bool:
 	return String(_cfg.get("presentation", "default")) == "classic_inline" \
 		and bool(G.setting_get("classic_combat_presentation", true))
+
+
+func _classic_extra_y() -> float:
+	return maxf(0.0, get_viewport_rect().size.y - VIEW_H) if _classic_presentation() else 0.0
 
 
 func _ready() -> void:
@@ -365,9 +378,18 @@ func _add_shade_gradient(y: float, h: float, top: bool) -> void:
 
 
 func _build_field() -> void:
+	_field.position.y = _classic_extra_y()
+	# 预兆层垫在战场最底（单位之下、地面上），随震屏层一起抖；把「谁在起手、要打谁」画出来
+	_omens = _Omens.new()
+	_omens.z_index = -1
+	_field.add_child(_omens)
 	_shake_root.add_child(_field)
 	_fx_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_fx_layer.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_fx_layer.position.y = _classic_extra_y()
+	# P05-C：飘字层是本层「最上」——但阶段/破绽横幅是事件发生时 add_child 的，后添加者
+	# 反而压在上面，把同时刻的飘字（如影狼死的「绽」）整块盖住。显式置顶，让"最上"成立。
+	_fx_layer.z_index = 10
 	add_child(_fx_layer)
 
 
@@ -428,15 +450,14 @@ func _build_top_bar() -> void:
 	# 自动：经典模式与速度同族像素木牌（原来常驻红底圆角按钮，与像素地图不是一套语言）。
 	# 开/关走 _chip_set_active 的亮金态，一眼能看出"现在是不是托管中"
 	_auto_btn = _pixel_chip("自动", 58) if _classic_presentation() else _func_chip("托管", 58)
-	_auto_btn.position = Vector2(VIEW_W - 74, 548) if _classic_presentation() else Vector2(VIEW_W - 96, 12)
+	_auto_btn.position = Vector2(VIEW_W - 74, 12) if _classic_presentation() else Vector2(VIEW_W - 96, 12)
 	_auto_btn.gui_input.connect(_on_auto)
 	_chip_set_active(_auto_btn, sim.auto_mode)
 	add_child(_auto_btn)
 
 	_cast_tip = G.serif_label("", G.FS_SM, Color("ffe9b0"))
-	# 战场中部的空带（敌方前排血条之下、我方前排名字之上）：原来放 y=52，
-	# 和后排敌人头顶的名字撞成一串
-	_cast_tip.position = Vector2(0, 306)
+	# 角色与敌怪占据 y≈240–450；施法提示放到其下方的空带。
+	_cast_tip.position = Vector2(0, 462 + _classic_extra_y())
 	_cast_tip.custom_minimum_size = Vector2(VIEW_W, 0)
 	_cast_tip.modulate.a = 0.0
 	add_child(_cast_tip)
@@ -451,12 +472,15 @@ func _build_boss_bar() -> void:
 		return
 	_boss_name_l = G.gold_label("", G.FS_SM, true, Color("ffd98a"), true)
 	_boss_name_l.position = Vector2(BAR_X, 46)
-	_boss_name_l.custom_minimum_size = Vector2(118, 0)
+	# P05-C：进阶段后名字后面要追「· 迷路低吼」（首领名 4 字 + 双空格 + 百分比 + 双空格
+	# + 中点 + 4 字阶段名 ≈ 170px），旧宽 118 会把阶段名连着裁掉——那等于"进阶段了但
+	# 玩家看不见规则变了"。留到 200px：既覆盖 100% 三位数，也不至于把血条挤太短。
+	_boss_name_l.custom_minimum_size = Vector2(200, 0)
 	_boss_name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	_boss_name_l.clip_text = true
 	add_child(_boss_name_l)
-	var bx := BAR_X + 122.0
-	_boss_bar_w = VIEW_W - BAR_X * 2.0 - 122.0
+	var bx := BAR_X + 204.0
+	_boss_bar_w = VIEW_W - BAR_X * 2.0 - 204.0
 	var bg := ColorRect.new()
 	bg.color = Color(0.08, 0.05, 0.03, 0.8)
 	bg.position = Vector2(bx, 48)
@@ -563,11 +587,15 @@ func _build_skill_bar() -> void:
 
 	# 连携窗口提示：经典模式没有底部能量条，提示落在技能栏上沿与角色之间
 	_combo_tip = G.serif_label("", G.FS_SM, G.GOLD_BRIGHT)
-	_combo_tip.position = Vector2(0, 706 if classic else 558)
+	_combo_tip.position = Vector2(0, 706 + _classic_extra_y() if classic else 558)
 	_combo_tip.custom_minimum_size = Vector2(VIEW_W, 0)
 	_combo_tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_combo_tip.modulate.a = 0.0
 	add_child(_combo_tip)
+	# 主世界战斗由“技能”指令展开同一组技能。常驻技能格会重复占据
+	# 画面下缘，也让玩家误以为两套入口有不同规则。
+	if classic:
+		return
 
 	# 5 技能格。网格基准 SKILL_STEP 同时也是功能行的列距基准（见 _build_func_row）：
 	# 原来技能格用 88、功能行用 96，两行从第 4 列起就错开一格，「撤退」悬在技能格上方不伦不类
@@ -691,7 +719,7 @@ func _build_func_row() -> void:
 	add_child(_flee_btn)
 
 
-## 经典战斗指令层：角色身周四枚像素图标（攻/技/物/逃，对标原版功能机风），
+## 经典战斗指令层：四枚像素图标集中排列，战斗人物与敌怪四周留给名称和动作。
 ## 常驻显示无需开关；「技」「物」弹出底部页条（技能 / 道具），「逃」两步确认撤退。
 ## 关闭经典表现开关时不插入任何新 UI。
 func _build_classic_command_ui() -> void:
@@ -701,21 +729,43 @@ func _build_classic_command_ui() -> void:
 	_cmd_root.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_cmd_root.mouse_filter = Control.MOUSE_FILTER_IGNORE   # 只在四枚图标上吃输入
 	add_child(_cmd_root)
-	_add_radial_option("attack", "攻", CMD_ICON_ATTACK, Callable(self, "_command_attack"),
+	_add_radial_option("attack", "攻击", CMD_ICON_ATTACK, Callable(self, "_command_attack"),
 		"循环选择可攻击的敌方目标")
-	_add_radial_option("skill", "技", CMD_ICON_SKILL, Callable(self, "_show_command_skills"),
+	_add_radial_option("skill", "技能", CMD_ICON_SKILL, Callable(self, "_show_command_skills"),
 		"打开技能选择")
-	_add_radial_option("item", "物", CMD_ICON_ITEM, Callable(self, "_command_item"),
+	_add_radial_option("item", "道具", CMD_ICON_ITEM, Callable(self, "_command_item"),
 		"使用道具（药剂 / 换宠）")
-	_add_radial_option("flee", "逃", CMD_ICON_FLEE, Callable(self, "_command_flee"),
+	_add_radial_option("flee", "撤退", CMD_ICON_FLEE, Callable(self, "_command_flee"),
 		"撤退需在确认时间内再点一次")
+	# P03：剧情首领战不可撤退——按钮置灰 + 文案说清后果，别让玩家点了才发现走不了
+	_flee_blocked = String(_cfg.get("flee_rule", "")) == "blocked"
+	if _flee_blocked:
+		_set_radial_disabled("flee", true)
+		_set_radial_hint("flee", "首领战不可撤退")
+	else:
+		_set_radial_hint("flee", "退出本节点，保留战损与进度")
+	# 常驻信息条：四枚指令之上，一行说清「攻谁 / 有没有技 / 药剩几瓶」
+	var info_bg := Panel.new()
+	info_bg.position = Vector2(CLASSIC_BAR_X, CLASSIC_CMD_Y - 26.0 + _classic_extra_y())
+	info_bg.size = Vector2(PAGE_PANEL_SIZE.x, 23.0)
+	var info_style := StyleBoxFlat.new()
+	info_style.bg_color = Color(0.10, 0.07, 0.04, 0.78)
+	info_style.set_corner_radius_all(2)
+	info_bg.add_theme_stylebox_override("panel", info_style)
+	info_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_cmd_root.add_child(info_bg)
+	_cmd_info_l = G.gold_label("", G.FS_XS, true, Color("e8d9a8"), true)
+	_cmd_info_l.position = Vector2(CLASSIC_BAR_X, CLASSIC_CMD_Y - 22.0 + _classic_extra_y())
+	_cmd_info_l.custom_minimum_size = Vector2(PAGE_PANEL_SIZE.x, 0)
+	_cmd_info_l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_cmd_root.add_child(_cmd_info_l)
 	_position_radial_menu()
 	# 技能 / 道具弹出页（默认隐藏，点在身周图标上才展开）
 	_page_panel = Panel.new()
-	_page_panel.position = PAGE_PANEL_POS
+	_page_panel.position = PAGE_PANEL_POS + Vector2(0, _classic_extra_y())
 	_page_panel.size = PAGE_PANEL_SIZE
 	var psb := StyleBoxFlat.new()
-	psb.bg_color = Color(0.10, 0.07, 0.04, 0.92)
+	psb.bg_color = Color(0.10, 0.07, 0.04, 0.98)
 	psb.set_corner_radius_all(2)
 	psb.set_border_width_all(2)
 	psb.border_color = WOOD_BORDER
@@ -725,23 +775,23 @@ func _build_classic_command_ui() -> void:
 	add_child(_page_panel)
 	# 能量读数：底部横条撤掉后，数值只在「技」页展开时给一眼（常驻信息交给脚下蓝条）
 	_page_energy_l = G.gold_label("", G.FS_XS, true, Color("ffe9b8"), true)
-	_page_energy_l.position = PAGE_PANEL_POS + Vector2(0, -20)
+	_page_energy_l.position = PAGE_PANEL_POS + Vector2(0, _classic_extra_y() - 20)
 	_page_energy_l.custom_minimum_size = Vector2(PAGE_PANEL_SIZE.x, 0)
 	_page_energy_l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_page_energy_l.hide()
 	add_child(_page_energy_l)
 
 
-## 单枚径向指令：深色圆角 tile + 32px 像素图标 + 下方小字签。
+## 单枚战斗指令：横向木牌 + 32px 像素图标 + 常用全称。
 ## 按压回弹与技能格同族（pivot 居中缩到 0.88 再弹回）。
 func _add_radial_option(key: String, text: String, grid: Array,
 		action: Callable, tooltip := "") -> void:
 	var root := Control.new()
-	root.custom_minimum_size = Vector2(RADIAL_BTN, RADIAL_BTN + RADIAL_LABEL_H)
+	root.custom_minimum_size = Vector2(CLASSIC_CMD_W, CLASSIC_CMD_H)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	root.tooltip_text = tooltip
 	var tile := Panel.new()
-	tile.size = Vector2(RADIAL_BTN, RADIAL_BTN)
+	tile.size = Vector2(CLASSIC_CMD_W, CLASSIC_CMD_H)
 	tile.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var sb := StyleBoxFlat.new()
 	# 像素木牌：方角 + 2px 暗金厚边。原来 6px 圆角 + 1px 淡金边是现代 UI 语言，
@@ -754,15 +804,15 @@ func _add_radial_option(key: String, text: String, grid: Array,
 	root.add_child(tile)
 	var icon := TextureRect.new()
 	icon.texture = cmd_icon_tex(grid)
-	icon.position = Vector2(3, 3)
+	icon.position = Vector2(6, 9)
 	icon.size = Vector2(32, 32)
 	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	icon.stretch_mode = TextureRect.STRETCH_SCALE
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(icon)
 	var l := G.gold_label(text, G.FS_XS, true, Color("ffe9b0"), true)
-	l.position = Vector2(0, RADIAL_BTN + 1)
-	l.custom_minimum_size = Vector2(RADIAL_BTN, RADIAL_LABEL_H - 1)
+	l.position = Vector2(39, 8)
+	l.custom_minimum_size = Vector2(46, CLASSIC_CMD_H - 16)
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(l)
 	root.gui_input.connect(func(e: InputEvent):
@@ -773,23 +823,17 @@ func _add_radial_option(key: String, text: String, grid: Array,
 			tw.tween_property(root, "scale", Vector2.ONE, 0.09)
 			action.call())
 	_cmd_root.add_child(root)
-	_cmd_btns.append({"key": key, "root": root, "tile_sb": sb, "label": l})
+	_cmd_btns.append({"key": key, "root": root, "tile_sb": sb, "label": l, "hint": tooltip})
 
 
-## 四枚指令按 RADIAL_OFFSETS 环绕角色脚底原点摆放，越界时夹回视野内。
+## 四枚指令固定在下方操作带，战斗对象移动时按键不会跳位。
 ## 角色倒下 / 结算时由 _refresh_hud 整组隐藏。
 func _position_radial_menu() -> void:
 	if _cmd_root == null:
 		return
-	var role := sim.role_unit()
-	var anchor := _grid_pos(role.side, role.row, role.col) if role != null \
-		else Vector2(360.0, 180.0)
-	for cbd in _cmd_btns:
-		var off: Vector2 = RADIAL_OFFSETS.get(String(cbd.key), Vector2.ZERO)
-		var pos: Vector2 = anchor + off
-		pos.x = clampf(pos.x, 6.0, VIEW_W - RADIAL_BTN - 6.0)
-		pos.y = clampf(pos.y, 56.0, 560.0)
-		(cbd.root as Control).position = pos
+	for i in _cmd_btns.size():
+		(_cmd_btns[i].root as Control).position = Vector2(39.0 + i * 101.0,
+			CLASSIC_CMD_Y + _classic_extra_y())
 
 
 ## 径向指令"上膛"态描边（撤退二次确认用）：暖橙粗边亮起，取消时收回金边
@@ -804,6 +848,51 @@ func _set_radial_armed(key: String, armed: bool) -> void:
 			sb.set_border_width_all(2)
 
 
+## 径向指令置灰（P03：剧情首领战不可撤退）：灰边 + 整块压暗，点了只出文案
+func _set_radial_disabled(key: String, disabled: bool) -> void:
+	for cbd in _cmd_btns:
+		if String(cbd.key) != key:
+			continue
+		var root := cbd.root as Control
+		var sb: StyleBoxFlat = cbd.tile_sb
+		if sb != null:
+			sb.border_color = Color(0.32, 0.27, 0.22) if disabled else WOOD_BORDER
+			sb.set_border_width_all(2)
+		root.modulate = Color(0.55, 0.52, 0.48) if disabled else Color.WHITE
+		var l := cbd.label as Label
+		if l != null:
+			l.add_theme_color_override("font_color",
+				Color("7d7266") if disabled else Color("ffe9b0"))
+		cbd["disabled"] = disabled
+
+
+## 径向指令是否被置灰
+func _radial_disabled(key: String) -> bool:
+	for cbd in _cmd_btns:
+		if String(cbd.key) == key:
+			return bool(cbd.get("disabled", false))
+	return false
+
+
+## 改写某枚指令的后果文案（P03：普通怪「退出本节点，保留战损与进度」／剧情首领「首领战不可撤退」）
+func _set_radial_hint(key: String, text: String) -> void:
+	for cbd in _cmd_btns:
+		if String(cbd.key) != key:
+			continue
+		cbd["hint"] = text
+		var root := cbd.root as Control
+		if root != null:
+			root.tooltip_text = text
+
+
+## 某枚指令的当前后果文案
+func _radial_hint(key: String) -> String:
+	for cbd in _cmd_btns:
+		if String(cbd.key) == key:
+			return String(cbd.get("hint", ""))
+	return ""
+
+
 ## 收页：收起技能/道具弹出条，回到常驻径向菜单
 func _close_page() -> void:
 	if _page_panel != null:
@@ -811,29 +900,80 @@ func _close_page() -> void:
 	if _page_energy_l != null:
 		_page_energy_l.hide()
 	_command_page = "root"
+	if _cmd_root != null and not sim.finished:
+		_cmd_root.show()
 
 
 func _clear_command_options() -> void:
+	_page_rows = 0
 	if _page_panel == null:
 		return
 	for child in _page_panel.get_children():
 		child.queue_free()
 
 
-func _add_command_option(text: String, pos: Vector2, w: float,
-		action: Callable, tooltip := "") -> Control:
-	# 经典模式弹页按钮换成像素木牌，和径向指令、技能格是同一套牌子
-	var btn := _pixel_chip(text, w) if _classic_presentation() else _func_chip(text, w)
-	btn.position = pos
-	btn.tooltip_text = tooltip
-	btn.gui_input.connect(func(e: InputEvent):
+## 按行数把弹出页撑成「底边不动、向上生长」的竖排列表；行高固定 PAGE_ROW_H
+func _open_page_panel(rows: int) -> void:
+	if _page_panel == null:
+		return
+	_page_panel.size = Vector2(PAGE_PANEL_SIZE.x, float(rows) * PAGE_ROW_H + 4.0)
+	_page_panel.position = Vector2(PAGE_PANEL_POS.x,
+		PAGE_PANEL_BOTTOM + _classic_extra_y() - _page_panel.size.y)
+	if _cmd_root != null:
+		_cmd_root.hide()
+	_page_panel.show()
+
+
+## 弹页里的一行：左名（亮） + 右侧灰色详情，整行可点。行高 28 → 触控达标。
+func _add_command_row(name_text: String, detail_text: String, action: Callable,
+		tooltip := "", name_color := Color("ffe9b0")) -> Control:
+	var row := Control.new()
+	row.custom_minimum_size = Vector2(PAGE_PANEL_SIZE.x, PAGE_ROW_H)
+	row.size = Vector2(PAGE_PANEL_SIZE.x, PAGE_ROW_H)
+	row.position = Vector2(0, 2.0 + float(_page_rows) * PAGE_ROW_H)
+	row.tooltip_text = tooltip
+	row.mouse_filter = Control.MOUSE_FILTER_STOP
+	var nl := G.gold_label(name_text, G.FS_SM, true, name_color, true)
+	nl.position = Vector2(8, 8)
+	nl.custom_minimum_size = Vector2(148, PAGE_ROW_H - 16)
+	nl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	nl.clip_text = true
+	nl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(nl)
+	var dl := G.gold_label(detail_text, G.FS_XS, false, Color("e5d4ac"), true)
+	dl.position = Vector2(158, 8)
+	dl.custom_minimum_size = Vector2(PAGE_PANEL_SIZE.x - 166.0, PAGE_ROW_H - 16)
+	dl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	dl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	dl.clip_text = true
+	dl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(dl)
+	row.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			action.call())
-	_page_panel.add_child(btn)
-	return btn
+	_page_panel.add_child(row)
+	_page_rows += 1
+	return row
 
 
-## 技能页：底部横条列出前 5 个技能（名 + 消耗），点按释放后自动收页
+## 技能范围的玩家话术（详情列用）
+func _range_text(target_type: String) -> String:
+	return {
+		"enemy_single": "单体", "enemy_front_all": "前排全体", "enemy_all": "全体",
+		"enemy_back_single": "后排单体", "enemy_random": "随机单体",
+		"ally_single": "友方单体", "ally_all": "友方全体", "self": "自身",
+	}.get(target_type, "单体")
+
+
+## 技能等级：与 BattleSim 用同一来源（ally.skill_levels），无则回落局外养成值
+func _skill_lv(sid: String) -> int:
+	var levels: Variant = (_cfg.get("ally", {}) as Dictionary).get("skill_levels")
+	if levels is Dictionary and (levels as Dictionary).has(sid):
+		return maxi(1, int((levels as Dictionary)[sid]))
+	return G.skill_level(sid)
+
+
+## 技能页：整宽竖排——每个技能一行（名 + Lv/耗/冷/范围），底部一行返回，点按释放后收页
 func _show_command_skills() -> void:
 	if _page_panel == null:
 		return
@@ -843,50 +983,53 @@ func _show_command_skills() -> void:
 		_close_page()
 		return
 	_command_page = "skills"
-	_page_panel.position = PAGE_PANEL_POS
-	_page_panel.size = PAGE_PANEL_SIZE
 	_clear_command_options()
 	for i in mini(5, role.skills.size()):
 		var skill: Dictionary = role.skills[i]
-		var sid := String(skill.def.get("id", ""))
-		var sname := String(skill.def.get("name", sid))
-		var cost := int(skill.def.get("cost", 0))
-		var cast_action := Callable(self, "_cast_command_skill").bind(sid)
-		var btn := _add_command_option(sname, Vector2(5.0 + i * 67.0, 6), 62,
-			cast_action, "%s · 消耗 %d" % [sname, cost])
-		var label := btn.get_child(0) as Label
-		if label != null:
-			label.add_theme_font_size_override("font_size", G.FS_XS)
-			label.clip_text = true
-	_add_command_option("返", Vector2(347, 6), 48, Callable(self, "_close_page"),
-		"返回战场指令")
+		var sdef: Dictionary = skill.def
+		var sid := String(sdef.get("id", ""))
+		var sname := String(sdef.get("name", sid))
+		var cost := int(sdef.get("cost", 0))
+		var cd_left := _skill_cd(role, sid)
+		var cd_txt := "就绪" if cd_left <= 0 else "%.1fs" % (float(cd_left) / 30.0)
+		var detail := "Lv%d · 耗%d · 冷 %s · %s" % [self._skill_lv(sid), cost, cd_txt,
+			_range_text(String(sdef.get("target", "")))]
+		var usable := cd_left <= 0 and cost <= role.energy
+		_add_command_row(sname, detail, Callable(self, "_cast_command_skill").bind(sid),
+			"%s · 消耗 %d 能量" % [sname, cost],
+			Color("ffe9b0") if usable else Color("8f8068"))
+	_add_command_row("返", "返回战场指令", Callable(self, "_close_page"), "返回战场指令")
+	_open_page_panel(_page_rows)
 	# 底部能量横条撤掉后，能量数值就在这一页露一次（常驻表达交给脚下蓝条）
 	if _page_energy_l != null:
+		_page_energy_l.position = Vector2(PAGE_PANEL_POS.x, _page_panel.position.y - 20.0)
 		_page_energy_l.text = "能量 %d/%d" % [role.energy, Combatant.MAX_ENERGY]
 		_page_energy_l.show()
-	_page_panel.show()
 
 
-## 道具页：药剂（剩余数 / 冷却秒数）+ 换宠（有替补时）+ 返回。
-## 底部功能行撤掉后，药剂与换宠统一从「物」进入——与原版道具入口对齐。
+## 道具页：药剂（剩余数 / 冷却 / 回复比例）+ 换宠（每场一次 / 替补名）+ 返回
 func _show_command_items() -> void:
 	if _page_panel == null:
 		return
 	_command_page = "items"
-	_page_panel.position = PAGE_PANEL_POS
-	_page_panel.size = PAGE_PANEL_SIZE
 	_clear_command_options()
-	var potion_text := "药剂 ×%d" % sim.potions_left
+	var potion_detail := "恢复 %d%% 生命" % roundi(float(BattleSim.POTION_HEAL_PCT) * 100.0)
 	if sim.potion_cd_ticks > 0:
-		potion_text = "药剂 %.0fs" % (float(sim.potion_cd_ticks) / 30.0)
-	_add_command_option(potion_text, Vector2(6, 6), 110,
-		Callable(self, "_command_use_potion"), "恢复生命；冷却中不可用")
+		_add_command_row("药剂 ×%d" % sim.potions_left,
+			"冷却 %.0fs · %s" % [float(sim.potion_cd_ticks) / 30.0, potion_detail],
+			Callable(self, "_command_use_potion"), "恢复生命；冷却中不可用",
+			Color("8f8068"))
+	else:
+		_add_command_row("药剂 ×%d" % sim.potions_left, potion_detail,
+			Callable(self, "_command_use_potion"), "恢复生命；冷却中不可用")
 	if sim.pet_bench_id != "":
-		_add_command_option("换宠", Vector2(122, 6), 90,
-			Callable(self, "_command_swap_pet"), "换上替补宠物（每场一次）")
-	_add_command_option("返", Vector2(347, 6), 48, Callable(self, "_close_page"),
-		"返回战场指令")
-	_page_panel.show()
+		var pet_name := String(TableCache.get_pet(sim.pet_bench_id).get("name", sim.pet_bench_id))
+		var swap_txt := "本场已换过" if sim.pet_swap_used else "每场一次"
+		_add_command_row("换宠", "%s · %s" % [swap_txt, pet_name],
+			Callable(self, "_command_swap_pet"), "换上替补宠物（每场一次）",
+			Color("ffe9b0") if not sim.pet_swap_used else Color("8f8068"))
+	_add_command_row("返", "返回战场指令", Callable(self, "_close_page"), "返回战场指令")
+	_open_page_panel(_page_rows)
 
 
 func _command_attack() -> void:
@@ -951,6 +1094,10 @@ func _command_swap_pet() -> void:
 
 func _command_flee() -> void:
 	_close_page()
+	# P03：剧情首领战禁止撤退——按钮已置灰，这里再兜一层（键盘/脚本调用也不放行）
+	if _flee_blocked:
+		_show_tip("首领战不可撤退", G.C_COST, G.FS_MD, Color("3a0e0a"), 2)
+		return
 	_on_flee()
 
 
@@ -958,8 +1105,17 @@ func _command_flee() -> void:
 func _spawn_view(u: Combatant) -> UnitView:
 	var v := UnitView.new()
 	var enemy_cfg: Dictionary = _cfg.get("enemy", {})
-	v.setup(u, ROLE_SPRITE, MON_COLOR, _classic_presentation(),
-		String(enemy_cfg.get("sprite_path", "")) if u.kind == "monster" else "")
+	# P05-C：怪物立绘先按单位 id 查 sprite_paths（首领召唤的影狼要用自己的图），
+	# 查不到再退回本场 lead_mon 的那张。玩家/宠物恒走职业立绘。
+	var mon_sprite := ""
+	if u.kind == "monster":
+		mon_sprite = String(enemy_cfg.get("sprite_path", ""))
+		var paths: Variant = enemy_cfg.get("sprite_paths", {})
+		if paths is Dictionary:
+			var override := String((paths as Dictionary).get(String(u.data.get("id", "")), ""))
+			if not override.is_empty():
+				mon_sprite = override
+	v.setup(u, ROLE_SPRITE, MON_COLOR, _classic_presentation(), mon_sprite)
 	v.position = _grid_pos(u.side, u.row, u.col)
 	if _classic_presentation():
 		if u.kind == "role":
@@ -1040,6 +1196,7 @@ func _process(delta: float) -> void:
 			_finished_ui = true
 			_stop_shake()
 			_sync_views()
+			_refresh_omens()   # 收招后预兆环必须消失，别留在结算画面上
 			_show_result()
 		return
 	_acc += delta * cur_speed() * time_scale
@@ -1050,6 +1207,7 @@ func _process(delta: float) -> void:
 		if sim.finished:
 			break
 	_sync_views()
+	_refresh_omens()
 	_refresh_hud()
 
 
@@ -1089,12 +1247,16 @@ func _on_event(e: Dictionary) -> void:
 				var caster := sim.unit_by_uid(int(e.get("uid", -1)))
 				if caster != null:
 					tier = String(caster.data.get("tier", "normal"))
+				# P03：进前摇就报「谁 · 哪招 · 还要蓄多久」，每帧按剩余前摇倒数（预兆环同时画在地上）
+				_windup_uid = int(e.get("uid", -1))
+				_windup_tier = tier
+				_windup_name = String(e.get("name", ""))
+				_windup_total[_windup_uid] = maxi(1, _windup_ticks(_windup_uid, 12))
+				_announce_windup()
 				if tier == "boss":
-					_show_tip("首领技 · %s" % String(e.get("name", "")), Color("ff8a6a"))
 					_shake(SHAKE_HIT * 0.7)   # 首领抬手先晃一下，算预警
 					Audio.sfx("boss_warn")
 				else:
-					_show_tip("敌方 · %s" % String(e.get("name", "")), Color("ffb0a0"))
 					Audio.sfx("skill_cast", 0.06)   # 敌方普通施法也给声，抖动大一点免得与我方混淆
 			# 不同技能不同架势：单击用挥砍（attack 行），群攻/大招/增益用蓄力（cast 行）
 			var caster_view: UnitView = _views.get(int(e.get("uid", -1)))
@@ -1132,6 +1294,12 @@ func _on_event(e: Dictionary) -> void:
 		"shield_add":
 			if dst != null:
 				_float(dst.position, "+盾", Color("8cc4ff"), G.FS_SM)
+		"skill_effective":
+			var role_effect := sim.role_unit()
+			var sid := String(e.get("skill", ""))
+			if role_effect != null and int(e.get("uid", -1)) == role_effect.uid \
+					and not sid.is_empty() and not effective_skills.has(sid):
+				effective_skills.append(sid)
 		"cleanse":
 			if dst != null:
 				_float(dst.position, "净化", Color("cfe8ff"), G.FS_SM)
@@ -1159,11 +1327,19 @@ func _on_event(e: Dictionary) -> void:
 			if dst != null:
 				_float(dst.position, "击退", Color("ffd0a0"), G.FS_SM)
 		"summon":
-			_show_tip("敌方召唤 reinforcements！")
+			# P05-C 顺手修：文案里混了个英文单词（"敌方召唤 reinforcements！"），全中文 UI 里
+			# 只有这一处漏网；失路兽召影狼正好会走到这里，趁机制落地一并统一口径。
+			_show_tip("敌方召唤援兵！")
 		"pet_enter":
 			_show_tip("替补宠物入场")
 		"pet_leave":
 			pass
+		"phase":
+			# P03：首领进入新阶段——居中横幅 + 血条追加阶段名，让玩家知道「规则变了」
+			_boss_phase_name = String(e.get("name", ""))
+			_show_phase_banner(_boss_phase_name, String(e.get("announce", "")))
+			_shake(SHAKE_HIT)
+			Audio.sfx("boss_warn")
 		"victory", "defeat", "timeout":
 			pass
 
@@ -1179,13 +1355,14 @@ func _refresh_hud() -> void:
 		_energy_l.text = "能量 %d/100%s" % [role.energy, "  满" if role.energy >= Combatant.MAX_ENERGY else ""]
 	if role != null and _page_energy_l != null and _page_energy_l.visible:
 		_page_energy_l.text = "能量 %d/%d" % [role.energy, Combatant.MAX_ENERGY]
-	# B4 首领血条刷新：名字 + 百分比，填充宽按当前血量比例缩放
+	# B4 首领血条刷新：名字 + 百分比，填充宽按当前血量比例缩放（P03：进阶段后追阶段名）
 	if _boss_fill != null:
 		var boss := _boss_unit()
 		if boss != null:
 			var bratio := clampf(float(boss.hp) / float(maxi(boss.get_max_hp(), 1)), 0.0, 1.0)
 			_boss_fill.size.x = (_boss_bar_w - 2.0) * bratio
-			_boss_name_l.text = "%s  %d%%" % [boss.name, roundi(bratio * 100.0)]
+			var suffix := "  · %s" % _boss_phase_name if _boss_phase_name != "" else ""
+			_boss_name_l.text = "%s  %d%%%s" % [boss.name, roundi(bratio * 100.0), suffix]
 		else:
 			_boss_fill.size.x = 0.0
 			_boss_name_l.text = "首领 · 已击破"
@@ -1267,9 +1444,171 @@ func _refresh_hud() -> void:
 	# 径向指令菜单：角色倒下 / 结算后整组隐藏，弹出页同步收掉
 	if _cmd_root != null:
 		var cmd_alive := role != null and role.alive and not sim.finished
-		_cmd_root.visible = cmd_alive
+		_cmd_root.visible = cmd_alive and _command_page == "root"
 		if not cmd_alive:
 			_close_page()
+	# P03：敌方前摇实时倒数（预兆环在地面同步收缩）
+	_refresh_windup_tip()
+	_refresh_cmd_info()
+
+
+## P03 常驻信息条：四枚指令之上的一行事实——攻谁 / 几个技能放得出来 / 药还剩几瓶。
+## 只读 sim 与已缓存的 _cfg，**不调用 pick_basic_target**（混乱态会摇随机，逐帧调用会污染确定性）。
+func _refresh_cmd_info() -> void:
+	if _cmd_info_l == null:
+		return
+	var role := sim.role_unit()
+	var atk_txt := "自动选敌"
+	var focus := sim.unit_by_uid(sim.role_focus_target_uid)
+	if focus != null and focus.alive and focus.side == "enemy":
+		var pct := roundi(100.0 * float(focus.hp) / float(maxi(focus.get_max_hp(), 1)))
+		atk_txt = "集火 %s %d%%" % [focus.name, pct]
+	var usable := 0
+	if role != null:
+		for s in role.skills:
+			if int(s.cd_left) <= 0 and int(s.def.get("cost", 0)) <= role.energy:
+				usable += 1
+	var pot_txt := "药×%d" % sim.potions_left
+	if sim.potion_cd_ticks > 0:
+		pot_txt = "药%.0fs" % (float(sim.potion_cd_ticks) / 30.0)
+	_cmd_info_l.text = "攻 %s ｜ 技 %d/%d ｜ 物 %s" % [atk_txt, usable,
+		role.skills.size() if role != null else 0, pot_txt]
+
+
+## P03 预兆（文字）：把「首领技 · 碑震 · 蓄力 0.4s」按剩余前摇逐帧倒数。
+## 只在真的还有这条前摇时才改写提示；前摇一落地就放手，让下一条提示（伤害/连携）自己说话。
+func _refresh_windup_tip() -> void:
+	if _windup_uid < 0:
+		return
+	var remain := -1
+	for q in sim.cast_queue:
+		if int(q.get("uid", -1)) == _windup_uid:
+			remain = int(q.get("windup", 0))
+			_windup_name = String((q.get("skill", {}) as Dictionary).get("name", _windup_name))
+			break
+	if remain < 0:
+		_windup_uid = -1
+		return
+	_announce_windup()
+
+
+## 写一条前摇提示（首帧与逐帧倒数共用同一处文案口径）
+func _announce_windup() -> void:
+	var prefix := "首领技" if _windup_tier == "boss" else "敌方"
+	var color := Color("ff8a6a") if _windup_tier == "boss" else Color("ffb0a0")
+	var secs := _windup_remain_sec()
+	if secs > 0.0:
+		_show_tip("%s · %s · 蓄力 %.1fs" % [prefix, _windup_name, secs], color)
+	else:
+		_show_tip("%s · %s" % [prefix, _windup_name], color)
+
+
+## 指定单位当前前摇剩余秒数（不在队列里返回 0）
+func _windup_remain_sec() -> float:
+	for q in sim.cast_queue:
+		if int(q.get("uid", -1)) == _windup_uid:
+			return float(int(q.get("windup", 0))) * TICK_SEC
+	return 0.0
+
+
+## 指定单位当前前摇的剩余 tick（用于算预兆环的收缩比例；无则回退 fallback）
+func _windup_ticks(uid: int, fallback: int) -> int:
+	for q in sim.cast_queue:
+		if int(q.get("uid", -1)) == uid:
+			return int(q.get("windup", fallback))
+	return fallback
+
+
+## P03 预兆（图形）：把 cast_queue 翻译成地上的脉动环——施法者脚下 + 将要被打者身上。
+## 纯读 sim（不摇随机、不写规则）；只对敌方起手出环，玩家看的就是「接下来会挨谁的打」。
+func _refresh_omens() -> void:
+	if _omens == null:
+		return
+	var rings: Array[Dictionary] = []
+	if not sim.finished:
+		for q in sim.cast_queue:
+			var caster := sim.unit_by_uid(int(q.get("uid", -1)))
+			if caster == null or not caster.alive or caster.side != "enemy":
+				continue
+			var skill: Dictionary = q.get("skill", {}) if q.get("skill") is Dictionary else {}
+			var heavy := String(caster.data.get("tier", "normal")) == "boss"
+			var total := float(_windup_total.get(caster.uid, maxi(1, int(q.get("windup", 1)))))
+			var ratio := clampf(float(int(q.get("windup", 0))) / maxf(1.0, total), 0.0, 1.0)
+			var caster_view: UnitView = _views.get(caster.uid)
+			if caster_view != null:
+				rings.append({"pos": caster_view.position, "radius": 40.0 if heavy else 30.0,
+					"ratio": ratio, "heavy": heavy, "target": false})
+			for t in _omen_targets(caster, String(skill.get("target", ""))):
+				var tv: UnitView = _views.get(t.uid)
+				if tv != null:
+					rings.append({"pos": tv.position, "radius": 34.0 if heavy else 26.0,
+						"ratio": ratio, "heavy": heavy, "target": true})
+	_omens.rings = rings
+	_omens.queue_redraw()
+
+
+## 预兆预览的目标（确定性镜像 _pick_targets 的常见分支：不摇随机、不改 sim 状态）
+func _omen_targets(caster: Combatant, target_type: String) -> Array[Combatant]:
+	var opp := sim.alive_units("enemy" if caster.side == "ally" else "ally")
+	var out: Array[Combatant] = []
+	match target_type:
+		"enemy_front_all":
+			for e in opp:
+				if e.row == Combatant.ROW_FRONT:
+					out.append(e)
+		"enemy_all":
+			out = opp
+		"enemy_back_single":
+			var best: Combatant = null
+			for e in opp:
+				if e.row == Combatant.ROW_BACK and (best == null or e.hp < best.hp):
+					best = e
+			if best != null:
+				out.append(best)
+		"self", "ally_single", "ally_all":
+			out.append(caster)
+		_:
+			# enemy_single / enemy_random / 未标注：按「最低血」预告（与 basic/boss AI 同一口径）
+			var low: Combatant = null
+			for e in opp:
+				if low == null or e.hp < low.hp:
+					low = e
+			if low != null:
+				out.append(low)
+	return out
+
+
+## P03：阶段横幅——居中一条暗底带 + 阶段名 + 一句宣告，弹入后停留再淡出。
+## 挂在根节点（HUD 之下与其他常驻层同族），**不放进 _fx_layer**（那儿有"战后清空"的断言）。
+func _show_phase_banner(pname: String, announce: String) -> void:
+	var root := Control.new()
+	root.set_anchors_preset(Control.PRESET_FULL_RECT)
+	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(root)
+	var band := ColorRect.new()
+	band.color = Color(0.10, 0.04, 0.02, 0.84)
+	band.position = Vector2(0, 250)
+	band.size = Vector2(VIEW_W, 58)
+	band.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(band)
+	var tl := G.gold_label("阶段 · %s" % pname, G.FS_LG, true, Color("ffd08a"), true)
+	tl.position = Vector2(0, 254)
+	tl.custom_minimum_size = Vector2(VIEW_W, 0)
+	tl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	tl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(tl)
+	var al := G.gold_label(announce, G.FS_SM, true, Color("ffe9c8"), true)
+	al.position = Vector2(0, 284)
+	al.custom_minimum_size = Vector2(VIEW_W, 0)
+	al.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	al.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(al)
+	root.modulate.a = 0.0
+	var tw := root.create_tween()
+	tw.tween_property(root, "modulate:a", 1.0, 0.18)
+	tw.tween_interval(1.5)
+	tw.tween_property(root, "modulate:a", 0.0, 0.4)
+	tw.tween_callback(root.queue_free)
 
 
 ## 当前连携窗口内的"下一手"技能 id（上一手命中 combo.first 且窗口未过；无则空串）
@@ -1349,8 +1688,9 @@ func _on_flee() -> void:
 			l.text = "确认撤退？"
 		_chip_set_active(_flee_btn, true)
 	else:
-		# 经典模式没有撤退 chip：飘字提示 + 「逃」图标暖橙描边作为二次确认反馈
-		_show_tip("再次点击「逃」确认撤退", Color("ffb0a0"))
+		# 经典模式没有撤退 chip：飘字提示 + 「逃」图标暖橙描边作为二次确认反馈。
+		# 提示里带上后果口径（普通怪=退出本节点保留战损；首领战根本走不到这里）
+		_show_tip("再次点击「逃」确认 · %s" % _radial_hint("flee"), Color("ffb0a0"))
 		_set_radial_armed("flee", true)
 	get_tree().create_timer(3.0).timeout.connect(func():
 		if _flee_armed and _flee_btn != null and is_instance_valid(_flee_btn):
@@ -1580,9 +1920,9 @@ func _show_tip(msg: String, color := Color("ffe9b0"), size := 0,
 	# 字号/描边按调用重置：危急提示要"红字 + 深红描边"更刺眼，普通提示回到常态，
 	# 避免上一次的告警样式残留到后一条提示上
 	_cast_tip.add_theme_font_size_override("font_size", size if size > 0 else G.FS_SM)
-	_cast_tip.add_theme_constant_override("outline_size", outline_size)
+	_cast_tip.add_theme_constant_override("outline_size", maxi(2, outline_size))
 	_cast_tip.add_theme_color_override("font_outline_color",
-		outline_color if outline_size > 0 else Color(0, 0, 0, 0))
+		outline_color if outline_size > 0 else Color(0.10, 0.07, 0.04, 0.9))
 	_cast_tip.text = msg
 	_cast_tip.modulate.a = 1.0
 	if _tip_tween != null and _tip_tween.is_valid():
@@ -1595,6 +1935,14 @@ func _show_tip(msg: String, color := Color("ffe9b0"), size := 0,
 ## 技能 → 人物架势：单体直击用挥砍（attack 行），群攻/高费大招/辅助用蓄力（cast 行）
 func _skill_anim(skill_id: String) -> StringName:
 	var sd := TableCache.get_skill(skill_id)
+	if sd.is_empty():
+		for pet_v in TableCache.pets():
+			for pet_skill_v in (pet_v as Dictionary).get("skills", []):
+				if String((pet_skill_v as Dictionary).get("id", "")) == skill_id:
+					sd = pet_skill_v as Dictionary
+					break
+			if not sd.is_empty():
+				break
 	if sd.is_empty():
 		return &"attack"
 	var heavy_hit := int(sd.get("cost", 0)) >= 50 or \
@@ -1610,9 +1958,18 @@ func _skill_splash(caster: UnitView, skill_id: String) -> void:
 	if caster == null:
 		return
 	var tex: Texture2D = G.res_tex("sk_%s" % skill_id)
+	var sname := String(TableCache.get_skill(skill_id).get("name", skill_id))
+	if tex == null and sim != null:
+		var caster_unit := sim.unit_by_uid(caster.uid)
+		if caster_unit != null and caster_unit.kind == "pet":
+			tex = G.res_tex(String(caster_unit.data.get("id", "")))
+			for slot_v in caster_unit.skills:
+				var slot := slot_v as Dictionary
+				if String(slot.get("id", "")) == skill_id:
+					sname = String((slot.get("def", {}) as Dictionary).get("name", skill_id))
+					break
 	if tex == null:
 		return
-	var sname := String(TableCache.get_skill(skill_id).get("name", skill_id))
 	var card := PanelContainer.new()
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = Color(0.12, 0.08, 0.03, 0.92)
@@ -1743,6 +2100,31 @@ func confirm_result() -> void:
 
 
 # ================= 局部绘制 =================
+## P03 预兆层：把「谁在起手、这一招要打谁」画成地面的脉动环。
+## 纯表现：只拿到 BattleScene 每帧算好的 rings，自己不含任何 sim 访问与随机。
+class _Omens extends Node2D:
+	var rings: Array[Dictionary] = []
+
+	func _draw() -> void:
+		var pulse := 0.5 + 0.5 * sin(float(Time.get_ticks_msec() % 900) / 900.0 * TAU)
+		for r in rings:
+			var pos: Vector2 = r.get("pos", Vector2.ZERO)
+			var ratio := clampf(float(r.get("ratio", 1.0)), 0.0, 1.0)
+			var heavy := bool(r.get("heavy", false))
+			var base_r := float(r.get("radius", 30.0))
+			var rad := base_r * (0.35 + 0.65 * ratio)      # 随剩余前摇收缩：越紧越危险
+			var col := Color("ff8a5a") if heavy else Color("ffd08a")
+			var w := 4.0 if heavy else 2.0
+			var a := (0.30 + 0.30 * (1.0 - ratio)) * (0.7 + 0.3 * pulse)
+			col.a = a
+			draw_arc(pos, rad, 0.0, TAU, 48, col, w, true)
+			draw_arc(pos, rad * 0.58, 0.0, TAU, 36,
+				Color(col.r, col.g, col.b, a * 0.5), 1.0, true)
+			if bool(r.get("target", false)):
+				# 将要挨打的人：环内再填一层薄色，玩家一眼认出「这圈里的会吃到」
+				draw_circle(pos, rad * 0.92, Color(col.r, col.g, col.b, a * 0.20))
+
+
 class _LineDrawer extends Node2D:
 	var color := Color.WHITE
 	func _draw() -> void:
@@ -1815,6 +2197,7 @@ class UnitView extends Node2D:
 	var name_l := Label.new()
 	var name_bg: Panel = null
 	var buff_l := Label.new()
+	var shield_ring: Line2D = null
 	var _target_mark: Polygon2D = null
 	var _base_pos := Vector2.ZERO
 	## 身体基准位移：经典模式给宠物挪位（左下避开身周木牌）也写这里。
@@ -1845,6 +2228,16 @@ class UnitView extends Node2D:
 		var name_y := 0.0   # 名字 y（头顶上方）
 		var hp_y := 0.0     # 血条 y（脚下）
 		if is_role:
+			# 岩龟「护主甲」与人物自带护盾共用这条状态提示：蓝色轮廓随真实 shield buff 显隐。
+			shield_ring = Line2D.new()
+			shield_ring.width = 2.5
+			shield_ring.default_color = Color("9bd8ff", 0.82)
+			shield_ring.z_index = -1
+			for ring_i in 25:
+				var a := TAU * float(ring_i) / 24.0
+				shield_ring.add_point(Vector2(cos(a) * 38.0, -26.0 + sin(a) * 58.0))
+			shield_ring.visible = false
+			body.add_child(shield_ring)
 			var role_id := String(u.data.get("id", ""))
 			# 优先战斗五态帧（待机/普攻/施法/受击/倒下），缺素材回退行走帧
 			var frames: SpriteFrames = BattleScene.battle_frames(role_id)
@@ -1985,9 +2378,11 @@ class UnitView extends Node2D:
 			# ——等级数字必须常驻可见，名字可以短，信息不能缺。
 			var x := 38.0
 			var room := BattleScene.VIEW_W - 4.0 - (position.x + x)
-			if room < 40.0:
-				x = -30.0
-				room = BattleScene.VIEW_W - 4.0 - (position.x + x)
+			# 角色站在画面右侧时，优先把完整名签放到身左；旧逻辑只在剩余不足 40px
+			# 才左移，54px 这种常见宽度会把四字昵称截成「角色…12」。
+			if text_w > room and text_w + 16.0 <= position.x:
+				x = -text_w - 12.0
+				room = text_w + 4.0
 			var show := value
 			if text_w > room:
 				# 截断时把末尾的等级数字留出来：名字可以先短，等级是战斗信息，不能缺。
@@ -2034,6 +2429,8 @@ class UnitView extends Node2D:
 			hp_fg.size.x = 42.0 * ratio
 		if _classic and is_role:
 			energy_fg.size.x = 42.0 * clampf(float(u.energy) / float(Combatant.MAX_ENERGY), 0.0, 1.0)
+		if shield_ring != null:
+			shield_ring.visible = u.has_buff("shield")
 		# 杂兵受击亮名：掉血瞬间把名签唤出 1.4s，随后 _process 里淡掉
 		if _hideable_name:
 			if _last_hp >= 0 and u.hp < _last_hp and u.alive:
