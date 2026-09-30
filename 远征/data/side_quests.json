@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "comment": "第一幕与港口地区各六条支线。沿用 prog.act1.side_quests 和 QuestService.side_*，奖励走 RewardLedger（tx=side|<id>|complete）；同一时间只追踪 1 条。requires_story 控制接取；choices 控制明确选择后交付。",
+  "comment": "第一幕、港口与霜关地区各六条支线。沿用 prog.act1.side_quests 和 QuestService.side_*，奖励走 RewardLedger（tx=side|<id>|complete）；同一时间只追踪 1 条。requires_story 控制接取；choices 控制明确选择后交付。",
   "quests": [
     {
       "id": "a1_rel_guard",
@@ -206,6 +206,211 @@
       "ready_dialogue": "盐鳞旧影还在？说说你看见的模样。",
       "completion_dialogue": "账里的影子和眼前的对上了。我会提醒过滩的人避开它的巢。",
       "world_feedback": "沈澜记录可选首领，不强迫胜利或重复首胜"
+    },
+    {
+      "id": "a3_rel_brazier",
+      "category": "关系",
+      "title": "灯下的轮岗",
+      "requires_story": "s24",
+      "giver": "npc_frost_guard",
+      "map": "frost_post",
+      "clue": "北来的风总把轮岗灯吹暗。替我看看驿站中段的风灯，回来一起决定添炭还是装挡风片。",
+      "objective": {
+        "kind": "observe",
+        "map": "frost_post",
+        "count": 1,
+        "target_entity": "a3_wind_lamp"
+      },
+      "objective_text": "查看驿站风灯，回岑雪处决定修法",
+      "turn_in": "npc_frost_guard",
+      "turn_in_map": "frost_post",
+      "reward": {
+        "gold": 160,
+        "exp": 90
+      },
+      "accept_dialogue": "北来的风总把轮岗灯吹暗。替我看看驿站中段的风灯，回来一起决定添炭还是装挡风片。",
+      "progress_dialogue": "先看看灯罩，添炭能暖人，挡风片能省炭；两种修法报酬相同。",
+      "ready_dialogue": "灯罩有裂缝，炉膛还能烧。你想添炭，还是装挡风片？",
+      "completion_dialogue": "轮岗的人又能看清脚下了。你替我们留住了这盏灯。",
+      "world_feedback": "风灯的颜色或挡风片与岑雪回应同步变化",
+      "choices": {
+        "coal": {
+          "title": "添炭 · 暖灯轮岗",
+          "flags": {
+            "act3_brazier_choice": "coal"
+          },
+          "dialogue": "岑雪添了一炉炭。灯下暖了一圈，夜班的人可以把冻手伸过来。"
+        },
+        "shield": {
+          "title": "挡风 · 省炭守灯",
+          "flags": {
+            "act3_brazier_choice": "shield"
+          },
+          "dialogue": "岑雪把挡风片扣牢。风绕过灯罩，炭火可以陪轮岗的人烧得更久。"
+        }
+      }
+    },
+    {
+      "id": "a3_rel_nameplate",
+      "category": "关系",
+      "title": "名牌上的刻痕",
+      "requires_story": "s24",
+      "giver": "npc_frost_miner",
+      "map": "rift_mine_road",
+      "clue": "伙伴的名牌落在矿道南段了。字刻得浅，绳子是我编的；找到请替我带回来。",
+      "objective": {
+        "kind": "collect",
+        "map": "rift_mine_road",
+        "count": 1,
+        "target_entity": "a3_dropped_plate"
+      },
+      "objective_text": "在裂谷矿道找回裂纹名牌，带给陶铎",
+      "turn_in": "npc_frost_miner",
+      "turn_in_map": "frost_post",
+      "reward": {
+        "gold": 150,
+        "exp": 90,
+        "items": {
+          "pet_food": 2
+        }
+      },
+      "accept_dialogue": "伙伴的名牌落在矿道南段了。字刻得浅，绳子是我编的；找到请替我带回来。",
+      "progress_dialogue": "名牌在南段轨道边，别把它当矿料卖了。",
+      "ready_dialogue": "这道刻痕我认得。把名牌给我，我替他收好。",
+      "completion_dialogue": "陶铎把裂纹名牌挂在驿舍门边：人回来时，一眼就能认出自己的名字。",
+      "world_feedback": "名牌交付后被收存，矿工记住归队的人",
+      "collect_item": "frost_nameplate",
+      "turn_in_item": "frost_nameplate"
+    },
+    {
+      "id": "a3_eco_lichen",
+      "category": "生态采集",
+      "title": "雪下留根",
+      "requires_story": "s24",
+      "giver": "npc_frost_envoy",
+      "map": "frost_boardwalk",
+      "clue": "栈道南北的霜苔颜色不同。各取一小片叶子给我，雪下的根要留着。",
+      "objective": {
+        "kind": "collect",
+        "map": "frost_boardwalk",
+        "count": 2,
+        "target_entities": [
+          "a3_lichen_south",
+          "a3_lichen_north"
+        ]
+      },
+      "objective_text": "在霜林栈道两处霜苔取样，回宁砚处复命",
+      "turn_in": "npc_frost_envoy",
+      "turn_in_map": "frost_post",
+      "reward": {
+        "gold": 170,
+        "exp": 95,
+        "items": {
+          "enhance_stone": 1
+        }
+      },
+      "accept_dialogue": "栈道南北的霜苔颜色不同。各取一小片叶子给我，雪下的根要留着。",
+      "progress_dialogue": "南北两处各取一次，别反复摘同一丛。",
+      "ready_dialogue": "两片颜色果然不同，雪深也能从叶上看出来。",
+      "completion_dialogue": "宁砚把叶样压进路图：下次送信的人，能凭它避开最深的积雪。",
+      "world_feedback": "两处样本单独保存；采过的蓝标消失"
+    },
+    {
+      "id": "a3_eco_vents",
+      "category": "生态观察",
+      "title": "两处炉息",
+      "requires_story": "s24",
+      "giver": "npc_frost_miner",
+      "map": "rift_mine_road",
+      "clue": "两处排气口的炉息不一样。替我看清南北两只铜轮，别伸手碰热管。",
+      "objective": {
+        "kind": "observe",
+        "map": "rift_mine_road",
+        "count": 2,
+        "target_entities": [
+          "a3_vent_south",
+          "a3_vent_north"
+        ]
+      },
+      "objective_text": "查看裂谷矿道两处排气口，回陶铎处复命",
+      "turn_in": "npc_frost_miner",
+      "turn_in_map": "frost_post",
+      "reward": {
+        "gold": 180,
+        "exp": 100,
+        "items": {
+          "refine_stone": 1
+        }
+      },
+      "accept_dialogue": "两处排气口的炉息不一样。替我看清南北两只铜轮，别伸手碰热管。",
+      "progress_dialogue": "南口贴着返程轨，北口在矿脉入口前；各看一次。",
+      "ready_dialogue": "南边沉、北边急？这就能排出修管的先后了。",
+      "completion_dialogue": "陶铎在检修簿上记下两处炉息：先停北炉，再补南管，不用叫人摸黑试。",
+      "world_feedback": "调查保存，陶铎不再让伙伴冒险试热管"
+    },
+    {
+      "id": "a3_trade_parcel",
+      "category": "商旅价格",
+      "title": "寒路药包",
+      "requires_story": "s24",
+      "giver": "npc_frost_envoy",
+      "map": "red_sand_route",
+      "clue": "这份药包是给赤砂路接应人的。路图通了，冻伤的人也该能等到药；不用替我们买货。",
+      "objective": {
+        "kind": "deliver",
+        "map": "red_sand_route",
+        "count": 1,
+        "target_entity": "a3_cold_courier",
+        "item": "frost_parcel"
+      },
+      "objective_text": "把宁砚的寒路药包交给赤砂接应人",
+      "turn_in": "a3_cold_courier",
+      "turn_in_map": "red_sand_route",
+      "reward": {
+        "gold": 210,
+        "exp": 100
+      },
+      "accept_dialogue": "这份药包是给赤砂路接应人的。路图通了，冻伤的人也该能等到药；不用替我们买货。",
+      "progress_dialogue": "接应人在赤砂商路南段，蓝绳药包要交到他手里。",
+      "ready_dialogue": "霜关的蓝绳，我认得。药包到了，车队就不必再多等一夜。",
+      "completion_dialogue": "接应人收好药包，当场结清报酬；宁砚在送信簿上划去这次拖延。",
+      "world_feedback": "实物药包同笔扣发；接应人退场，送信簿记住交付",
+      "accept_item": "frost_parcel",
+      "turn_in_item": "frost_parcel"
+    },
+    {
+      "id": "a3_secret_echo",
+      "category": "精英秘闻",
+      "title": "雪幕余痕",
+      "requires_story": "s28",
+      "giver": "npc_frost_guard",
+      "map": "frost_pass",
+      "clue": "雪幕散了，封碑里却还有两段回声。替我看看两处碑纹，不必再叫醒领主。",
+      "objective": {
+        "kind": "observe",
+        "map": "frost_pass",
+        "count": 2,
+        "target_entities": [
+          "a3_echo_south",
+          "a3_echo_north"
+        ]
+      },
+      "objective_text": "查看冰隘两处封碑的回声，回岑雪处复命",
+      "turn_in": "npc_frost_guard",
+      "turn_in_map": "frost_post",
+      "reward": {
+        "gold": 200,
+        "exp": 120,
+        "items": {
+          "refine_stone": 1
+        }
+      },
+      "accept_dialogue": "雪幕散了，封碑里却还有两段回声。替我看看两处碑纹，不必再叫醒领主。",
+      "progress_dialogue": "冰隘已经清静，两处封碑在路边；看清再回来。",
+      "ready_dialogue": "两段回声都朝更深处去？我把它们记在巡界簿上。",
+      "completion_dialogue": "岑雪记录了雪幕余痕：关口的风已经停了，界碑更深处仍有人需要一条回路。",
+      "world_feedback": "已清首领不重刷也能调查；保存后续界碑线索",
+      "discovery": "frost_echo_secret"
     }
   ]
 }

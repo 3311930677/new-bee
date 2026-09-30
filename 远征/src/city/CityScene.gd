@@ -1523,7 +1523,9 @@ func _open_port_side_panel(npc_id: String, reply := {}) -> void:
 	var choosing := String(action.get("kind", "")) == "turn_in" and not choices.is_empty()
 	var result := reply if not reply.is_empty() else ({} if choosing else G.side_npc_interact(npc_id))
 	var line := String(row.get("ready_dialogue", "")) if choosing else String(result.get("line", G.side_npc_line(npc_id)))
-	if line.is_empty(): line = "把盐车账页交给沈澜后，可以来问港口的托付。已完成的事不会重复发奖。"
+	if line.is_empty():
+		line = "找回矿道记录后，可以来问霜关的托付。已完成的事不会重复发奖。" if _city_id == "frost_post" \
+			else "把盐车账页交给沈澜后，可以来问港口的托付。已完成的事不会重复发奖。"
 	var content := _panel_base("%s · 托付" % String(G.city_npc(npc_id).get("name", "港口人")), 432, 456)
 	var label := G.text_label(line, G.FS_SM, Color("493724"))
 	label.position = Vector2(20, 22)

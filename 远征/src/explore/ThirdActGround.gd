@@ -3,13 +3,16 @@ extends Node2D
 # 第三幕可走地貌；识别图形在实体下层，不用装饰性裂谷充当隐形碰撞。
 var map_id := ""
 var _choice := ""
+var _brazier_choice := ""
 
 
 func _process(_delta: float) -> void:
 	if map_id != "frost_post": return
 	var choice := String((G.prog.get("flags", {}) as Dictionary).get("act3_supply_choice", ""))
-	if choice != _choice:
+	var brazier := String((G.prog.get("flags", {}) as Dictionary).get("act3_brazier_choice", ""))
+	if choice != _choice or brazier != _brazier_choice:
 		_choice = choice
+		_brazier_choice = brazier
 		queue_redraw()
 
 
@@ -39,9 +42,15 @@ func _draw() -> void:
 			_boardwalk(Rect2(335, 840, 300, 60))
 			_boardwalk(Rect2(480, 680, 398, 60))
 			for p in [Vector2(365, 660), Vector2(595, 970)]:
+				var repaired: bool = p.x == 365 and not _brazier_choice.is_empty()
+				if repaired and _brazier_choice == "coal":
+					draw_circle(p + Vector2(0, -42), 40, Color(0.98, 0.64, 0.18, 0.16))
 				draw_rect(Rect2(p + Vector2(-7, -46), Vector2(14, 46)), Color("53483c"))
-				draw_rect(Rect2(p + Vector2(-16, -63), Vector2(32, 22)), Color("f4c779"))
+				var lamp := Color("83bfc6") if repaired and _brazier_choice == "shield" else Color("f4c779")
+				draw_rect(Rect2(p + Vector2(-16, -63), Vector2(32, 22)), lamp)
 				draw_rect(Rect2(p + Vector2(-19, -68), Vector2(38, 7)), Color("dddcd0"))
+				if repaired and _brazier_choice == "shield":
+					draw_rect(Rect2(p + Vector2(20, -71), Vector2(8, 43)), Color("6d8490"))
 			for y in [245.0, 1040.0]:
 				_rock(Vector2(165, y), Color("889c9c"))
 		"rift_mine_road":

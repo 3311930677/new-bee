@@ -118,6 +118,7 @@ const ITEM_NAMES := {
 	"gate_clue": "闸门线索", "tide_core": "潮蚀闸芯",
 	"frost_letter": "霜关来信", "mine_record": "矿道记录",
 	"gate_stamp": "关闸铁印", "frost_reply": "双关回讯", "veil_seal": "雪幕印",
+	"frost_nameplate": "裂纹名牌", "frost_parcel": "寒路药包",
 	"tide_egg": "潮纹蛋",
 	"fish_salt": "盐泉鲫", "fish_port": "港湾银鳞", "fish_tide": "潮纹鳞",
 	"wind_chime": "旧风铃", "salt_pack": "封好的盐包",
@@ -4457,7 +4458,7 @@ func _build_res_index() -> void:
 	# 小型任务图标采用代码原生矢量；保留 res_tex 的名称契约与纹理缓存。
 	_res_index["itm_frost_letter.png"] = "res://image/third_act/itm_frost_letter.svg"
 	_res_index["itm_mine_record.png"] = "res://image/third_act/itm_mine_record.svg"
-	for id in ["gate_stamp", "frost_reply", "veil_seal"]:
+	for id in ["gate_stamp", "frost_reply", "veil_seal", "frost_nameplate", "frost_parcel"]:
 		_res_index["itm_%s.png" % id] = "res://image/third_act/itm_%s.svg" % id
 	for id in ["mon_redsand_guard", "mon_snowveil_lord"]:
 		_res_index[id + ".png"] = "res://image/third_act/%s.png" % id
