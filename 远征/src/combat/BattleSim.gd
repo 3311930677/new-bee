@@ -39,6 +39,8 @@ var _next_uid := 1
 var _by_uid: Dictionary = {}
 
 var role_uid: int = 0
+var companion_used: Dictionary = {} # 物种/特性 -> 一次标记或冷却截止 tick
+var companion_participants: Array = []
 
 
 # ---------- 组建 ----------
@@ -57,7 +59,7 @@ func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 		enemy_scale = 1.0 + 0.16 * float(int(enemy_cfg.get("display_level", 1)) - 1)
 	enemy_scale *= maxf(0.1, float(enemy_cfg.get("enemy_mult", 1.0)))
 	pet_level = maxi(1, int(ally_cfg.get("level", 1)))
-	pet_stats = ally_cfg.get("pet_stats", {})
+	pet_stats = (ally_cfg.get("pet_stats", {}) as Dictionary).duplicate(true)
 	_build_role(ally_cfg)
 	if String(ally_cfg.get("active_pet", "")) != "":
 		_build_pet(String(ally_cfg.active_pet), false)
@@ -174,6 +176,7 @@ func _build_pet(pet_id: String, is_bench_swap: bool) -> void:
 	# 宠物养成快照优先（升级/突破/资质），否则沿用人物等级（v0 简化）
 	var growth: Dictionary = pet.get("growth", {})
 	var ps: Dictionary = pet_stats.get(pet_id, {})
+	if not companion_participants.has(pet_id): companion_participants.append(pet_id)
 	var gl := float(int(ps.get("level", pet_level)) - 1)
 	var gmult := float(ps.get("growth_mult", 1.0))
 	var owner := unit_by_uid(role_uid)
@@ -182,6 +185,7 @@ func _build_pet(pet_id: String, is_bench_swap: bool) -> void:
 		stat_pct = owner.traits.pet_stat_pct()
 	var mult := (1.0 + stat_pct) * float(ps.get("stat_mult", 1.0))
 	var u := Combatant.new(new_uid(), "pet", "ally", pet)
+	u.companion_traits = (ps.get("companion_traits",{}) as Dictionary).duplicate(true)
 	u.base_max_hp = maxi(1, int((float(int(base.get("hp", 50))) + float(growth.get("hp", 0)) * gl * gmult) * mult))
 	u.base_atk = maxi(1, int((float(int(base.get("atk", 10))) + float(growth.get("atk", 0)) * gl * gmult) * mult))
 	u.base_def = maxi(0, int((float(int(base.get("def", 5))) + float(growth.get("def", 0)) * gl * gmult) * mult))

@@ -137,6 +137,7 @@ static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, c
 	var etype := String(effect.get("type", ""))
 	var targets := _pick_targets(sim, caster, target_type)
 	var effective := 0
+	var companion_effective := 0
 	if targets.is_empty() and target_type != "ally_role" and etype != "heal" and etype != "summon" and etype != "cleanse":
 		# 兜底：目标集合为空（敌方前排全灭 / 双方全远程编成）时改打最低血单体（与普攻同规则），
 		# 避免 front_all 类技能空放还照扣能量与 CD
@@ -151,9 +152,11 @@ static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, c
 		"cleanse":
 			for t in targets:
 				var n := t.dispel_debuffs()
+				companion_effective += n
 				sim.emit({"t": "cleanse", "uid": t.uid, "count": n})
 		"lurk":
 			caster.add_buff("lurk", caster.cc_duration_ticks(float(effect.get("dur", 3.0))), {})
+			companion_effective += 1
 			sim.emit({"t": "buff", "uid": caster.uid, "buff": "lurk"})
 		"taunt":
 			var t := _primary_target(sim, caster, target_type)
@@ -161,6 +164,7 @@ static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, c
 				# 控制时长一律取**施加方** caster（A3）
 				t.add_buff("taunt", caster.cc_duration_ticks(float(effect.get("dur", 3.0))),
 					{"src_uid": caster.uid})
+				companion_effective += 1
 				sim.emit({"t": "buff", "uid": t.uid, "buff": "taunt"})
 		"shield":
 			for t in targets:
@@ -175,26 +179,30 @@ static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, c
 			for t in targets:
 				t.add_buff("atk_up", int(float(effect.get("dur", 5.0)) * 30.0),
 					{"pct": effect.get("pct", 0.2)})
+				companion_effective += 1
 				sim.emit({"t": "buff", "uid": t.uid, "buff": "atk_up"})
 		"invincible_heal":
 			for t in targets:
 				t.add_buff("invincible", int(float(effect.get("dur", 1.5)) * 30.0), {})
+				companion_effective += 1
 				var amt := DamageCalc.heal_amount(t.get_max_hp(), caster.get_atk(),
 					float(effect.get("hp_pct", 0.08)), 0.0)
 				var ce: Dictionary = combo.get("effect", {})
 				if String(ce.get("type", "")) == "heal_bonus":
 					amt = int(float(amt) * (1.0 + float(ce.get("pct", 0.3))))
-				t.heal(amt, caster, sim)
+				effective += t.heal(amt, caster, sim)
 				sim.emit({"t": "buff", "uid": t.uid, "buff": "invincible"})
 		"fear":
 			var t := _primary_target(sim, caster, target_type)
 			if t != null and sim.rng.randf() >= t.cc_resist:
 				t.add_buff("fear", caster.cc_duration_ticks(float(effect.get("dur", 1.5))), {})
+				companion_effective += 1
 				sim.emit({"t": "buff", "uid": t.uid, "buff": "fear"})
 		"stun":
 			var t := _primary_target(sim, caster, target_type)
 			if t != null and sim.rng.randf() >= t.cc_resist:
 				t.add_buff("stun", caster.cc_duration_ticks(float(effect.get("dur", 1.2))), {})
+				companion_effective += 1
 				sim.emit({"t": "buff", "uid": t.uid, "buff": "stun"})
 		"summon":
 			var mon_id := String(skill.get("summon", ""))
@@ -216,6 +224,7 @@ static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, c
 	if caster.kind == "role" and effective > 0:
 		sim.emit({"t": "skill_effective", "uid": caster.uid,
 			"skill": String(skill.get("id", "")), "amount": effective})
+	CompanionService.on_skill(sim,caster,skill,maxi(effective,companion_effective),effective)
 
 
 static func _apply_damage(sim: BattleSim, caster: Combatant, skill: Dictionary, k: float,

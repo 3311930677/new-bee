@@ -738,6 +738,15 @@ func _show_built_panel(bd: Dictionary) -> void:
 			_close_panel()
 			_built_action(act))
 	content.add_child(go)
+	if String(bd.get("id","")) == "frost_lodge":
+		go.position.y = 116
+		var training := G.gold_button("伙伴协战",240,44)
+		training.position = Vector2(44,172)
+		training.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				_close_panel()
+				_built_action("companion_training"))
+		content.add_child(training)
 	var back := G.gold_button("返 回", 240, 38)
 	back.position = Vector2(44, 232)
 	back.gui_input.connect(func(e: InputEvent):
@@ -747,6 +756,19 @@ func _show_built_panel(bd: Dictionary) -> void:
 
 
 func _built_action(act: String) -> void:
+	if act == "companion_training":
+		_panel = CompanionPanel.new()
+		(_panel as CompanionPanel).closed.connect(_close_panel)
+		(_panel as CompanionPanel).changed.connect(func():
+			if _embedded_map == null: return
+			var active := G.companion_active()
+			_embedded_map.st.active_pet = active
+			var other := G.owned_pets().filter(func(pid): return String(pid) != active)
+			_embedded_map.st.bench_pet = String(other[0]) if not other.is_empty() else ""
+			_embedded_map.call("_sync_world_companion")
+			_embedded_map.call("_refresh_hud"))
+		_hud.add_child(_panel)
+		return
 	if act == "trade:frost_market":
 		_open_first_order_preview("frost_market")
 		return

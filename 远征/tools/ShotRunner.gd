@@ -179,7 +179,71 @@ func _third_side_demo() -> void:
 	await get_tree().process_frame
 
 
+## Staged UI/FX fixtures only. Actual acquisition/food/training uses PlaythroughCompanions.
+func _companion_demo() -> void:
+	G.SAVE_PATH = "res://tools/_logs/save_shot_companion.json"
+	G._init_state_defaults()
+	_demo_prog()
+	G.selected_role = "zs"
+	G.player_name = "霜关行者"
+	var done: Array = []
+	for i in range(1,29): done.append("s%02d" % i)
+	G.prog["story"] = {"step":"","done":done,"goals":{}}
+	G.items = {"pet_food":3}
+	G.prog["companions"] = {"active":"pet_rockturtle","pets":{"pet_rockturtle":{"wins":3,"traits":["comp_guard","comp_pursuit"]}}}
+	G.prog["main_world"] = {"map_id":"frost_post"}
+	if _scene == "companion_locked":
+		G.prog.companions.pets.pet_rockturtle = {"wins":0,"traits":[]}
+	if _scene == "companion_first": G.prog.companions.pets.pet_rockturtle.traits = ["comp_guard"]
+	if _scene in ["companion_locked","companion_first","companion_second","companion_help"]:
+		var panel := CompanionPanel.new()
+		add_child(panel)
+		if _scene in ["companion_locked","companion_second"]:
+			panel._slot = 1
+			if _scene == "companion_locked": panel._message = "需与这只伙伴胜利协战3次，才能训练第二项。"
+			panel._build()
+		if _scene == "companion_help":
+			await get_tree().process_frame
+			var popup := G.show_info_popup(panel,"元素响应 · 对应技能",panel._response_tips("pet_rockturtle"),panel)
+			# Offscreen demo: place the actual popup on the viewport being captured.
+			popup.reparent(self)
+		return
+	var mid := "frost_post" if _scene in ["companion_world","companion_lodge"] else "rift_mine_road"
+	G.prog.main_world.map_id = mid
+	var run := _make_run()
+	run.setup({"theme":"snow","role_id":"zs","level":12,"active_pet":"pet_rockturtle",
+		"potions":2,"seed":73})
+	MapScene.pending_cfg = {"mode":"main_world","main_map_id":mid,
+		"node":{"type":"normal","layer":0,"index":0},"run":run}
+	var world: MapScene = load("res://src/explore/MapScene.tscn").instantiate()
+	add_child(world)
+	await get_tree().process_frame
+	if _scene == "companion_lodge":
+		for building in TableCache._load("res://data/frost_post.json").buildings:
+			if building.id == "frost_lodge": world._city_content._open_building(building)
+		return
+	if _scene == "companion_world":
+		world._player.position = Vector2(480,660)
+		return
+	world._start_battle(world._monsters[0])
+	var battle: BattleScene = world._battle
+	battle.speed = 0
+	await get_tree().process_frame
+	var sim := battle.sim
+	var role := sim.role_unit()
+	var pet: Combatant = null
+	for unit in sim.units:
+		if unit.kind == "pet": pet = unit
+	var tid := "comp_guard" if _scene == "companion_guard" else ("comp_pursuit" if _scene == "companion_pursuit" else "comp_resonance")
+	var target := role
+	if tid == "comp_pursuit": target = sim.alive_units("enemy")[0]
+	battle._on_event({"t":"companion_trait","trait":tid,"src":pet.uid,"uid":target.uid,"amount":35})
+	_frames = 8
+
 func _setup() -> void:
+	if _scene.begins_with("companion_"):
+		await _companion_demo()
+		return
 	match _scene:
 		"third_side_choice", "third_side_coal", "third_side_shield", "third_side_nameplate", "third_side_lichen", "third_side_vents", "third_side_parcel", "third_side_echo":
 			await _third_side_demo()

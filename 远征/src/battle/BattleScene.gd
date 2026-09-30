@@ -1303,6 +1303,15 @@ func _on_event(e: Dictionary) -> void:
 		"cleanse":
 			if dst != null:
 				_float(dst.position, "净化", Color("cfe8ff"), G.FS_SM)
+		"companion_trait":
+			var trait_id := String(e.get("trait",""))
+			var title := "护卫" if trait_id == "comp_guard" else ("追击" if trait_id == "comp_pursuit" else "元素响应")
+			if src != null:
+				src.play_state(&"attack" if trait_id == "comp_pursuit" else &"cast")
+				src.cast_glow()
+				if dst != null and trait_id == "comp_pursuit": src.lunge(dst.position)
+			if src != null and dst != null: _companion_effect(src,dst,trait_id)
+			if dst != null: _float(dst.position+Vector2(0,-40),title,G.C_COMPANION,G.FS_SM)
 		"immune":
 			if dst != null:
 				_float(dst.position, "免疫", Color("ffffff"), G.FS_SM)
@@ -1808,6 +1817,27 @@ func _hit_burst(pos: Vector2, strong: bool) -> void:
 	tw.tween_property(fx, "scale", Vector2.ONE * 1.18, 0.09).set_trans(Tween.TRANS_BACK)
 	tw.tween_property(fx, "modulate:a", 0.0, 0.18).set_delay(0.07)
 	tw.chain().tween_callback(fx.queue_free)
+
+## 短暂的盾弧 / 追击连线 / 净化圈，和战斗飘字共用自动清理层。
+func _companion_effect(src: UnitView, dst: UnitView, tid: String) -> void:
+	var line := Line2D.new()
+	line.width = 3.0
+	line.default_color = G.GOLD_BRIGHT if tid == "comp_pursuit" else (G.C_COMPANION_GUARD if tid == "comp_guard" else G.C_COMPANION)
+	var at := dst.global_position - _fx_layer.global_position + Vector2(0,-20)
+	if tid == "comp_pursuit":
+		line.add_point(src.global_position - _fx_layer.global_position + Vector2(0,-20))
+		line.add_point(at)
+	else:
+		line.position = at
+		var start := -PI * 0.85 if tid == "comp_guard" else 0.0
+		var span := PI * 0.7 if tid == "comp_guard" else TAU
+		for i in 25:
+			var angle := start + span * i / 24.0
+			line.add_point(Vector2(cos(angle)*32,sin(angle)*38))
+	_fx_layer.add_child(line)
+	var tween := line.create_tween()
+	tween.tween_property(line,"modulate:a",0.0,0.65)
+	tween.tween_callback(line.queue_free)
 
 
 ## 远程普攻先飞弹，再播放命中反馈；伤害结算仍在 BattleSim 原 tick 完成。

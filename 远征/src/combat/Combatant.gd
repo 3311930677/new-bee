@@ -38,6 +38,7 @@ var rampage_stacks: int = 0        # 词条"越战越勇"
 var once_flags: Dictionary = {}    # 词条一次性标记（如回光返照）
 var deathproof_buff: bool = false  # 换宠免死
 var traits: TraitSystem = null     # 仅我方 role 持有
+var companion_traits: Dictionary = {} # 已训练特性的入场快照；老档为空
 
 var buffs: Array[Dictionary] = []  # {type, dur(ticks, -1 永久), stacks, val}
 var skills: Array[Dictionary] = [] # {id, def, cd_left(ticks)}
@@ -272,6 +273,7 @@ func take_damage(dmg: int, src: Combatant, sim: BattleSim, is_crit := false) -> 
 			if final <= 0:
 				sim.emit({"t": "shield_absorb", "uid": uid, "amount": absorb})
 				return 0
+	final = CompanionService.guard(sim,self,final,src)
 	hp = maxi(0, hp - final)
 	sim.emit({"t": "dmg", "src": src.uid if src != null else -1, "uid": uid,
 		"amount": final, "crit": is_crit, "dot": false})

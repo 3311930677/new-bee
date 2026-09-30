@@ -131,7 +131,7 @@ static func commit(state: Dictionary, ctx: Dictionary) -> bool:
 
 ## 终态：到达后这场遭遇不能再被结算（重复上报走这里挡掉）。
 static func is_terminal(status: String) -> bool:
-	return status == ST_COMMITTED or status == ST_FLED or status == ST_FAILED
+	return status == ST_COMMITTED or status == ST_FLED or status == ST_FAILED or status == ST_RETURN
 
 
 ## 按转移表推进一步（P03）。非法转移返回 {ok:false, reason:"bad_transition"} 且不落盘。

@@ -1,0 +1,111 @@
+{
+  "version": 1,
+  "requires_story": "s24",
+  "training_site": "frost_post",
+  "wins_cap": 20,
+  "slots": [
+    {
+      "wins": 0,
+      "pet_food": 1
+    },
+    {
+      "wins": 3,
+      "pet_food": 2
+    }
+  ],
+  "traits": {
+    "comp_guard": {
+      "name": "护卫",
+      "heavy_pct": 0.15,
+      "share_pct": 0.35,
+      "desc": "每战分担一次重击的35%；伙伴会受伤"
+    },
+    "comp_pursuit": {
+      "name": "追击",
+      "atk_mult": 0.8,
+      "cooldown": 12,
+      "desc": "技能伤害或治疗生效后追击；冷却12秒"
+    },
+    "comp_resonance": {
+      "name": "元素响应",
+      "cooldown": 12,
+      "desc": "对应元素技能生效，净化一项负面；冷却12秒"
+    }
+  },
+  "skill_elements": {
+    "zs_lieshan": "physical",
+    "zs_pozhen": "physical",
+    "zs_huifeng": "physical",
+    "zs_zhanhou": "physical",
+    "zs_duanzui": "physical",
+    "ck_lianzhu": "physical",
+    "ck_guanjia": "physical",
+    "ck_duopo": "shadow",
+    "ck_dunying": "shadow",
+    "ck_qingxie": "physical",
+    "fs_shuangren": "frost",
+    "fs_shuanghuan": "frost",
+    "fs_tianyun": "earth",
+    "fs_midun": "frost",
+    "fs_yanmie": "shadow",
+    "fz_shengyu": "holy",
+    "fz_puzhao": "holy",
+    "fz_jinghua": "holy",
+    "fz_zhudao": "holy",
+    "fz_poxiao": "holy",
+    "pw_bite": "frost",
+    "pw_howl": "frost",
+    "pw_fireball": "fire",
+    "pw_burn": "fire",
+    "pw_ram": "physical",
+    "pw_shellguard": "physical",
+    "pw_peck": "physical",
+    "pw_tide_peck": "frost",
+    "pw_gull_squall": "frost",
+    "pw_fear": "shadow",
+    "pw_guard": "shadow",
+    "pw_deerheal": "holy",
+    "pw_dragonbreath": "fire",
+    "pw_ember": "fire",
+    "pw_venomfang": "shadow",
+    "pw_constrict": "shadow"
+  },
+  "pet_elements": {
+    "pet_rockturtle": [
+      "physical",
+      "earth"
+    ],
+    "pet_thunderhawk": [
+      "physical"
+    ],
+    "pet_frostwolf": [
+      "frost"
+    ],
+    "pet_tide_gull": [
+      "frost"
+    ],
+    "pet_foxfire": [
+      "fire"
+    ],
+    "pet_eyescat": [
+      "shadow"
+    ],
+    "pet_holydeer": [
+      "holy"
+    ],
+    "pet_emberling": [
+      "fire"
+    ],
+    "pet_shadowviper": [
+      "shadow"
+    ]
+  },
+  "element_names": {
+    "physical": "武技",
+    "earth": "土",
+    "frost": "霜",
+    "shadow": "影",
+    "holy": "光",
+    "fire": "火"
+  }
+}
