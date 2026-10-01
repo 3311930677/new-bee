@@ -38,6 +38,13 @@ func _run() -> void:
 	_check(city._player != null, "玩家未生成")
 	_check((city._buildings as Array).size() == G.city_buildings().size(),
 		"建筑数量应为 %d，实为 %d" % [G.city_buildings().size(), (city._buildings as Array).size()])
+	for building in city._buildings:
+		var id := String(building.data.get("id", ""))
+		if id == "stable": id = "kennel"
+		if id in ["hall", "archive", "barracks", "kennel", "storehouse", "gate", "shrine", "forge"]:
+			_check(building.art != null and building.art.resource_path == "res://image/main_world/city_%s_reference_v2.png" % id, "昭元建筑实际读取统一新图")
+			var rect := building.get_child(0) as CollisionShape2D
+			_check(rect != null and is_equal_approx((rect.shape as RectangleShape2D).size.y, building._h * 0.30), "换图保留建筑脚下碰撞范围")
 	var npc_expect: int = G.city_npcs().size() + G.today_guests(2).size()
 	_check((city._npcs as Array).size() == npc_expect,
 		"NPC 数量应为 %d，实为 %d" % [npc_expect, (city._npcs as Array).size()])

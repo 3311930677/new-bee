@@ -1994,6 +1994,8 @@ class _Building extends StaticBody2D:
 	# 成品建筑贴图（256×192 等距像素楼）。有贴图就画贴图，缺图退回程序绘制——
 	# 这样新素材到位时立刻生效，将来某张图缺失也不会让那座楼凭空消失。
 	var art: Texture2D = null
+	var _reference_art := false
+	const REFERENCE_ART_IDS := ["hall", "archive", "barracks", "kennel", "storehouse", "gate", "shrine", "forge"]
 	# 贴图统一按 0.75 倍画（256×192 → 192×144，正好 4×3 格）。
 	# 这批楼是同一台等距相机、同一比例出的：内容高都落在 161~181px，宽随楼本身宽窄变化
 	# （城门宽、祭坛窄）。所以绝不能"按各楼占地宽度缩放"——那会让窄楼被拉扁、宽楼被撑肿，
@@ -2010,8 +2012,13 @@ class _Building extends StaticBody2D:
 		_h = float(s[1]) * 48.0
 		# 贴图只在落成后才画（_draw_built 才走 _draw_art），工地仍走 _draw_plot 的翻土画法。
 		art = G.res_tex("city_%s" % String(d.get("id", "")))
-		if String(d.get("id", "")) == "forge":
-			art = load("res://image/main_world/city_forge_reference_v2.png") as Texture2D
+		var art_id := String(d.get("id", ""))
+		if art_id == "stable": art_id = "kennel"
+		if art_id in REFERENCE_ART_IDS:
+			var path := "res://image/main_world/city_%s_reference_v2.png" % art_id
+			if ResourceLoader.exists(path):
+				art = load(path) as Texture2D
+				_reference_art = true
 		collision_layer = 2
 		collision_mask = 0
 		var shape := CollisionShape2D.new()
@@ -2044,7 +2051,7 @@ class _Building extends StaticBody2D:
 	## 免得贴图比程序绘制高时，装饰还按老高度摆就被楼顶顶穿。
 	func _art_top() -> float:
 		if art != null:
-			if String(data.get("id", "")) == "forge":
+			if _reference_art:
 				return ART_BOTTOM - ART_W * float(art.get_height()) / float(art.get_width())
 			return ART_BOTTOM - float(data.get("art_visible_height", 192.0)) * ART_SCALE
 		return -_h * 0.5
@@ -2229,7 +2236,7 @@ class _Building extends StaticBody2D:
 	func _draw_art() -> void:
 		var left := -ART_W * 0.5
 		var height := ART_W * float(art.get_height()) / float(art.get_width()) \
-			if String(data.get("id", "")) == "forge" else ART_H
+			if _reference_art else ART_H
 		var top := ART_BOTTOM - height
 		draw_texture_rect(art, Rect2(left, top, ART_W, height), false)
 		# 名牌移到楼顶之上：贴图本身细节很密，压在上面会糊掉

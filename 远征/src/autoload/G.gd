@@ -3280,21 +3280,33 @@ func equip_enhance_cost(slot_id: String) -> Dictionary:
 	}
 
 
-## 强化成功率 = 0.9^目标级（失败不掉级）
+## 低阶确定成功；高阶在原基础率上公开累加本实例的失败积累。
 func equip_enhance_rate(slot_id: String) -> float:
 	var ec: Dictionary = equip_cfg().get("enhance", {})
+	var st := equip_state(slot_id)
+	var target := int(st.get("lv", 0)) + 1
+	if target <= int(ec.get("guaranteed_target", 3)): return 1.0
+	return minf(1.0, pow(float(ec.get("success_base", 0.9)), float(target)) \
+		+ int(st.get("enhance_failures", 0)) * float(ec.get("failure_rate_bonus", 0.15)))
+
+
+func equip_enhance_failure_limit(slot_id: String) -> int:
+	var ec: Dictionary = equip_cfg().get("enhance", {})
 	var target := int(equip_state(slot_id).get("lv", 0)) + 1
-	return pow(float(ec.get("success_base", 0.9)), float(target))
+	if target <= int(ec.get("guaranteed_target", 3)): return 0
+	var base := pow(float(ec.get("success_base", 0.9)), float(target))
+	return ceili((1.0 - base) / maxf(0.001, float(ec.get("failure_rate_bonus", 0.15))))
 
 
 ## 强化：校验 → 扣费 → 掷点（失败不掉级）；返回 {ok, success, err}
 func equip_enhance(slot_id: String, rng: RandomNumberGenerator = null) -> Dictionary:
+	if save_locked: return {"ok": false, "err": "存档暂不可写"}
 	var cfg := equip_slot_cfg(slot_id)
 	if cfg.is_empty():
 		return {"ok": false, "err": "没有这个装备槽"}
-	var st := _equip_worn(slot_id, true)
+	var st := equip_state(slot_id)
 	if st.is_empty():
-		return {"ok": false, "err": "没有这个装备槽"}
+		return {"ok": false, "err": "请先装备一件物品"}
 	var lv := int(st.get("lv", 0))
 	if lv >= equip_enhance_max():
 		return {"ok": false, "err": "已强化至上限"}
@@ -3303,16 +3315,30 @@ func equip_enhance(slot_id: String, rng: RandomNumberGenerator = null) -> Dictio
 		return {"ok": false, "err": "金币不足"}
 	if item_count(String(cost["item"])) < int(cost["item_n"]):
 		return {"ok": false, "err": "强化石不足"}
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var before_items := items.duplicate(true)
+	var rate := equip_enhance_rate(slot_id)
 	wallet["gold"] = int(wallet.get("gold", 0)) - int(cost["gold"])
-	consume_item(String(cost["item"]), int(cost["item_n"]))
+	items[String(cost["item"])] = item_count(String(cost["item"])) - int(cost["item_n"])
 	var r := rng if rng != null else RandomNumberGenerator.new()
 	if rng == null:
 		r.randomize()
-	var ok := r.randf() < equip_enhance_rate(slot_id)
+	var rng_state := r.state
+	var ok := rate >= 1.0 or r.randf() < rate
 	if ok:
 		st["lv"] = lv + 1   # 实例是活对象，就地改写即落进 prog.inventory
-	save_game()
-	return {"ok": true, "success": ok, "lv": int(st.get("lv", 0))}
+		st["enhance_failures"] = 0
+	else:
+		st["enhance_failures"] = int(st.get("enhance_failures", 0)) + 1
+	if not save_game():
+		prog = before_prog
+		wallet = before_wallet
+		items = before_items
+		r.state = rng_state
+		return {"ok": false, "err": "强化未保存，已回滚"}
+	return {"ok": true, "success": ok, "lv": int(st.get("lv", 0)),
+		"failures": int(st.get("enhance_failures", 0)), "next_rate": equip_enhance_rate(slot_id)}
 
 
 ## 槽位强化后基础属性 = 模板 base × (1 + 0.1×lv)。

@@ -145,7 +145,7 @@ func _run() -> void:
 	_check(int(c5["gold"]) == 900 and int(c5["item_n"]) == 2, "lv5 强化应耗 900 金 + 2 石")
 	_check(absf(G.equip_enhance_rate("sword") - pow(0.9, 6.0)) < 0.0001, "成功率应为 0.9^目标级")
 	G.equip_state("sword")["lv"] = 0
-	_check(absf(G.equip_enhance_rate("sword") - 0.9) < 0.0001, "lv0→1 成功率应 0.9")
+	_check(is_equal_approx(G.equip_enhance_rate("sword"), 1.0), "lv0→1 低阶确定成功")
 	var r_ng: Dictionary = G.equip_enhance("sword")
 	_check(not bool(r_ng["ok"]) and String(r_ng["err"]) == "金币不足", "无金币应拒绝强化")
 	G.wallet["gold"] = 1000
@@ -157,13 +157,14 @@ func _run() -> void:
 	var r_ok := G.equip_enhance("sword", _rng(seed_ok))
 	_check(bool(r_ok["ok"]) and bool(r_ok["success"]) and int(r_ok["lv"]) == 1, "强化成功应升 1 级")
 	_check(int(G.wallet["gold"]) == 850 and G.item_count("enhance_stone") == 9, "成功应扣 150 金 1 石")
-	G.equip_state("sword")["lv"] = 0
+	G.equip_state("sword")["lv"] = 3
 	G.wallet["gold"] = 1000
 	G.items = {"enhance_stone": 10}
 	var r_fl := G.equip_enhance("sword", _rng(seed_ng))
-	_check(bool(r_fl["ok"]) and not bool(r_fl["success"]) and int(r_fl["lv"]) == 0, "强化失败不掉级")
-	_check(int(G.wallet["gold"]) == 850 and G.item_count("enhance_stone") == 9, "失败仍扣费")
+	_check(bool(r_fl["ok"]) and not bool(r_fl["success"]) and int(r_fl["lv"]) == 3, "中阶强化失败不掉级")
+	_check(int(G.wallet["gold"]) == 400 and G.item_count("enhance_stone") == 9, "失败扣公开费用600金与1石")
 	G.equip_state("sword")["lv"] = 20
+	G.equip_state("sword")["enhance_failures"] = 0
 	G.wallet["gold"] = 99999
 	G.items = {"enhance_stone": 99}
 	_check(not bool(G.equip_enhance("sword")["ok"]), "满级应拒绝强化")

@@ -77,8 +77,10 @@ func _build() -> void:
 	# 强化/宝石/精炼规则收进 ⓘ 弹层，不再铺满面板
 	var enh: Dictionary = G.equip_cfg().get("enhance", {})
 	var info := G.info_button("装备玩法", [
-		"【强化】每级属性 +%d％，成功率随等级递减（失败不掉级），最高 %d 级。" % [
-			roundi(float(enh.get("pct_per_level", 0.1)) * 100.0), int(enh.get("max_level", 20))],
+		"【强化】每级属性 +%d％，目标+1至+%d确定成功，最高%d级。" % [
+			roundi(float(enh.get("pct_per_level", 0.1)) * 100.0),
+			int(enh.get("guaranteed_target", 3)), int(enh.get("max_level", 20))],
+		"【积累】中高阶每失败一次，成功率增加%d个百分点，最高100%%；成功后清零。失败扣本次金币与强化石，不掉级。积累随装备保存。" % roundi(float(enh.get("failure_rate_bonus", 0.15)) * 100.0),
 		"【宝石】每件装备 3 孔，三色宝石各 5 级；开孔花金币，宝石可自由拆装。",
 		"【精炼】洗出 4 条随机词条；中意的词条可用锁符锁定，下次洗练不会被冲掉。",
 		"【武器】剑/枪/杖/锤四系各自独立强化，跟随对应职业；护甲与饰品全队通用。",
@@ -253,24 +255,29 @@ func _refresh() -> void:
 	var enh_l := G.text_label("空槽不能强化" if not has_worn else "已满级" if maxed else
 		"消耗：金币 %d · 强化石×%d" % [
 		int(cost["gold"]), int(cost["item_n"])], G.FS_SM, Color("664119"))
-	enh_l.position = Vector2(0, 148)
+	enh_l.position = Vector2(0, 138)
 	enh_group.add_child(enh_l)
+	var guaranteed := int(G.equip_cfg().get("enhance", {}).get("guaranteed_target", 3))
+	var rate_text := "成功率100% · 低阶确定成功，消耗本次金币与强化石" \
+		if level + 1 <= guaranteed else "成功率%.1f%% · 失败扣费、不掉级\n积累%d/%d · 每失败+%d个百分点，成功清零" % [
+			rate * 100.0, int(st.get("enhance_failures", 0)), G.equip_enhance_failure_limit(_sel),
+			roundi(float(G.equip_cfg().get("enhance", {}).get("failure_rate_bonus", 0.15)) * 100.0)]
 	var rate_l := G.text_label("请先点右上角背包，为这个槽位穿上装备" if not has_worn else
-		"满级，无需继续强化" if maxed else \
-		"成功率 %d%% · 失败只消耗材料，等级不下降" % roundi(rate * 100.0),
+		"满级，无需继续强化" if maxed else rate_text,
 		G.FS_XS, Color("8a5836"))
-	rate_l.position = Vector2(0, 178)
+	rate_l.position = Vector2(0, 166)
+	rate_l.custom_minimum_size = Vector2(408, 30)
+	rate_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	enh_group.add_child(rate_l)
 	var enough := has_worn and int(G.wallet.get("gold", 0)) >= int(cost["gold"]) \
 		and G.item_count(String(cost["item"])) >= int(cost["item_n"])
-	var ready_l := G.text_label("先装备，再决定是否强化" if not has_worn else
+	var ready_text := ("先装备，再决定是否强化" if not has_worn else
 		"可以强化" if enough and not maxed else \
-		"材料不足，请先去背包或委托补足" if not maxed else "此装备已到强化上限",
-		G.FS_XS, Color("467047") if enough and not maxed else Color("9b5b38"))
-	ready_l.position = Vector2(0, 206)
-	enh_group.add_child(ready_l)
+		"材料不足，请先去背包或委托补足" if not maxed else "此装备已到强化上限")
 	var enh_btn := G.gold_button("确认强化", 160, 40, G.FS_MD)
+	enh_btn.tooltip_text = ready_text
 	enh_btn.position = Vector2(124, 220)
+	enh_btn.set_meta("work_action", "enhance")
 	enh_btn.mouse_filter = Control.MOUSE_FILTER_IGNORE if maxed or not has_worn else Control.MOUSE_FILTER_STOP
 	enh_btn.modulate.a = 0.55 if maxed or not has_worn else 1.0
 	enh_btn.gui_input.connect(func(ev: InputEvent):
@@ -578,7 +585,8 @@ func _on_enhance() -> void:
 	elif bool(r.get("success", false)):
 		_toast_msg("强化成功！+%d" % int(r.get("lv", 0)))
 	else:
-		_toast_msg("强化失败，等级不变")
+		_toast_msg("未成功，等级不变 · 积累%d次，下次%.1f%%" % [
+			int(r.get("failures", 0)), float(r.get("next_rate", 0.0)) * 100.0])
 	_refresh()
 
 

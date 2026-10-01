@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "comment": "装备线（玩法文档 §6）：武器 4 系绑人物（剑→破军/枪→穿杨/杖→霜语/锤→晨星），甲/饰全人物通用。强化每级+10%、成功率 0.9^目标级、失败不掉级；宝石 3 色×5 级，每件 3 孔；精炼洗 4 词条，锁定耗锁符。v2（P04）把 6 个固定槽升级成「实例」：模板决定名称/基础/孔数，稀有度只决定展示色、回收价倍率与掉落权重（不加战斗数值）。slots[].base 与 templates[] 里 tpl_<slot>_basic.base 必须逐字段相等（旧档等值迁移的前提）。",
+  "comment": "装备线（玩法文档 §6）：武器4系绑人物，甲/饰通用。强化每级+10%；目标+1至+3确定成功，之后成功率min(100%,0.9^目标级+本实例失败次数×15个百分点)，失败扣本次金币与强化石、不掉级，成功清零失败积累。宝石3色×5级，每件3孔；精炼洗4词条，锁定耗锁符。v2实例模板决定名称/基础/孔数，稀有度只决定展示色、回收价与掉落权重。slots[].base与基础模板base逐字段相等，以保持旧档等值迁移。",
   "slots": [
     { "id": "sword", "name": "大剑", "kind": "weapon", "role": "zs", "icon": "slot_sword", "base": {"atk": 10} },
     { "id": "spear", "name": "长枪", "kind": "weapon", "role": "ck", "icon": "slot_spear", "base": {"atk": 10} },
@@ -13,6 +13,8 @@
     "max_level": 20,
     "pct_per_level": 0.10,
     "success_base": 0.9,
+    "guaranteed_target": 3,
+    "failure_rate_bonus": 0.15,
     "cost_gold_base": 150,
     "cost_gold_step": 150,
     "cost_item": "enhance_stone",
