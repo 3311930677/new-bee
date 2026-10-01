@@ -1,0 +1,283 @@
+{
+  "reset_cost_gold": 120,
+  "roles": {
+    "zs": [
+      {
+        "id": "zs_huifeng",
+        "previous": "zs_pozhen",
+        "level": 12,
+        "after": "s12",
+        "gold": 100,
+        "mastery_target": 2,
+        "variants": {
+          "steady": {
+            "name": "稳式",
+            "cost_delta": -8,
+            "cd_delta": 2,
+            "desc": "能量减少8，冷却延长2秒，原有作用不变。"
+          },
+          "swift": {
+            "name": "疾式",
+            "cost_delta": 8,
+            "cd_delta": -2,
+            "desc": "能量增加8，冷却缩短2秒，基础伤害倍率提高15%。条件增伤仍沿用原技能规则。",
+            "k_mult": 1.15
+          }
+        }
+      },
+      {
+        "id": "zs_zhanhou",
+        "previous": "zs_huifeng",
+        "level": 25,
+        "after": "s20",
+        "gold": 160,
+        "mastery_target": 2,
+        "variants": {
+          "steady": {
+            "name": "稳式",
+            "cost_delta": -5,
+            "cd_delta": 2,
+            "desc": "能量减少5，冷却延长2秒，原有作用不变。"
+          },
+          "swift": {
+            "name": "疾式",
+            "cost_delta": 5,
+            "cd_delta": -2,
+            "desc": "能量增加5，冷却缩短2秒，原有作用不变。"
+          }
+        }
+      },
+      {
+        "id": "zs_duanzui",
+        "previous": "zs_zhanhou",
+        "level": 35,
+        "after": "s24",
+        "gold": 240,
+        "mastery_target": 3,
+        "variants": {
+          "steady": {
+            "name": "稳式",
+            "cost_delta": -8,
+            "cd_delta": 2,
+            "desc": "能量减少8，冷却延长2秒，原有作用不变。"
+          },
+          "swift": {
+            "name": "疾式",
+            "cost_delta": 8,
+            "cd_delta": -2,
+            "desc": "能量增加8，冷却缩短2秒，基础伤害倍率提高15%。条件增伤仍沿用原技能规则。",
+            "k_mult": 1.15
+          }
+        }
+      }
+    ],
+    "ck": [
+      {
+        "id": "ck_duopo",
+        "previous": "ck_guanjia",
+        "level": 12,
+        "after": "s12",
+        "gold": 100,
+        "mastery_target": 2,
+        "variants": {
+          "steady": {
+            "name": "稳式",
+            "cost_delta": -8,
+            "cd_delta": 2,
+            "desc": "能量减少8，冷却延长2秒，原有作用不变。"
+          },
+          "swift": {
+            "name": "疾式",
+            "cost_delta": 8,
+            "cd_delta": -2,
+            "desc": "能量增加8，冷却缩短2秒，基础伤害倍率提高15%。条件增伤仍沿用原技能规则。",
+            "k_mult": 1.15
+          }
+        }
+      },
+      {
+        "id": "ck_dunying",
+        "previous": "ck_duopo",
+        "level": 25,
+        "after": "s20",
+        "gold": 160,
+        "mastery_target": 2,
+        "variants": {
+          "steady": {
+            "name": "稳式",
+            "cost_delta": -5,
+            "cd_delta": 2,
+            "desc": "能量减少5，冷却延长2秒，原有作用不变。"
+          },
+          "swift": {
+            "name": "疾式",
+            "cost_delta": 5,
+            "cd_delta": -2,
+            "desc": "能量增加5，冷却缩短2秒，原有作用不变。"
+          }
+        }
+      },
+      {
+        "id": "ck_qingxie",
+        "previous": "ck_dunying",
+        "level": 35,
+        "after": "s24",
+        "gold": 240,
+        "mastery_target": 3,
+        "variants": {
+          "steady": {
+            "name": "稳式",
+            "cost_delta": -8,
+            "cd_delta": 2,
+            "desc": "能量减少8，冷却延长2秒，原有作用不变。"
+          },
+          "swift": {
+            "name": "疾式",
+            "cost_delta": 8,
+            "cd_delta": -2,
+            "desc": "能量增加8，冷却缩短2秒，基础伤害倍率提高15%。条件增伤仍沿用原技能规则。",
+            "k_mult": 1.15
+          }
+        }
+      }
+    ],
+    "fs": [
+      {
+        "id": "fs_tianyun",
+        "previous": "fs_shuanghuan",
+        "level": 12,
+        "after": "s12",
+        "gold": 100,
+        "mastery_target": 2,
+        "variants": {
+          "steady": {
+            "name": "稳式",
+            "cost_delta": -8,
+            "cd_delta": 2,
+            "desc": "能量减少8，冷却延长2秒，原有作用不变。"
+          },
+          "swift": {
+            "name": "疾式",
+            "cost_delta": 8,
+            "cd_delta": -2,
+            "desc": "能量增加8，冷却缩短2秒，基础伤害倍率提高15%。条件增伤仍沿用原技能规则。",
+            "k_mult": 1.15
+          }
+        }
+      },
+      {
+        "id": "fs_midun",
+        "previous": "fs_tianyun",
+        "level": 25,
+        "after": "s20",
+        "gold": 160,
+        "mastery_target": 2,
+        "variants": {
+          "steady": {
+            "name": "稳式",
+            "cost_delta": -5,
+            "cd_delta": 2,
+            "desc": "能量减少5，冷却延长2秒，原有作用不变。"
+          },
+          "swift": {
+            "name": "疾式",
+            "cost_delta": 5,
+            "cd_delta": -2,
+            "desc": "能量增加5，冷却缩短2秒，原有作用不变。"
+          }
+        }
+      },
+      {
+        "id": "fs_yanmie",
+        "previous": "fs_midun",
+        "level": 35,
+        "after": "s24",
+        "gold": 240,
+        "mastery_target": 3,
+        "variants": {
+          "steady": {
+            "name": "稳式",
+            "cost_delta": -8,
+            "cd_delta": 2,
+            "desc": "能量减少8，冷却延长2秒，原有作用不变。"
+          },
+          "swift": {
+            "name": "疾式",
+            "cost_delta": 8,
+            "cd_delta": -2,
+            "desc": "能量增加8，冷却缩短2秒，基础伤害倍率提高15%。条件增伤仍沿用原技能规则。",
+            "k_mult": 1.15
+          }
+        }
+      }
+    ],
+    "fz": [
+      {
+        "id": "fz_jinghua",
+        "previous": "fz_puzhao",
+        "level": 12,
+        "after": "s12",
+        "gold": 100,
+        "mastery_target": 2,
+        "variants": {
+          "steady": {
+            "name": "稳式",
+            "cost_delta": -5,
+            "cd_delta": 2,
+            "desc": "能量减少5，冷却延长2秒，原有作用不变。"
+          },
+          "swift": {
+            "name": "疾式",
+            "cost_delta": 5,
+            "cd_delta": -2,
+            "desc": "能量增加5，冷却缩短2秒，原有作用不变。"
+          }
+        }
+      },
+      {
+        "id": "fz_zhudao",
+        "previous": "fz_jinghua",
+        "level": 25,
+        "after": "s20",
+        "gold": 160,
+        "mastery_target": 2,
+        "variants": {
+          "steady": {
+            "name": "稳式",
+            "cost_delta": -5,
+            "cd_delta": 2,
+            "desc": "能量减少5，冷却延长2秒，原有作用不变。"
+          },
+          "swift": {
+            "name": "疾式",
+            "cost_delta": 5,
+            "cd_delta": -2,
+            "desc": "能量增加5，冷却缩短2秒，原有作用不变。"
+          }
+        }
+      },
+      {
+        "id": "fz_poxiao",
+        "previous": "fz_zhudao",
+        "level": 35,
+        "after": "s24",
+        "gold": 240,
+        "mastery_target": 3,
+        "variants": {
+          "steady": {
+            "name": "稳式",
+            "cost_delta": -5,
+            "cd_delta": 2,
+            "desc": "能量减少5，冷却延长2秒，原有作用不变。"
+          },
+          "swift": {
+            "name": "疾式",
+            "cost_delta": 5,
+            "cd_delta": -2,
+            "desc": "能量增加5，冷却缩短2秒，原有作用不变。"
+          }
+        }
+      }
+    ]
+  }
+}

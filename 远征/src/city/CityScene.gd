@@ -1428,7 +1428,109 @@ func _open_mentor_panel() -> void:
 				_close_panel()
 				_open_mentor_panel())
 		content.add_child(reset)
+	var later := G.gold_button("研习后续招式", 210, 44, G.FS_SM)
+	later.position = Vector2(91, 278)
+	later.set_meta("curriculum_action", "open")
+	later.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_close_panel()
+			_open_curriculum_panel())
+	content.add_child(later)
 	_panel_back(content, 330.0)
+
+func _curriculum_reason(sid: String) -> String:
+	var entry := MentorCurriculum.row(sid)
+	match MentorCurriculum.status(G, sid):
+		"level": return "需要等级 %d" % int(entry.level)
+		"story": return "先完成：%s" % _curriculum_story_name(String(entry.after))
+		"previous": return "先学会「%s」" % String(TableCache.get_skill(String(entry.previous)).get("name", entry.previous))
+		"ready": return "可学习 · %d 金" % int(entry.gold)
+		"practice": return "已学会 · 熟练 %d/%d" % [int(MentorCurriculum.state(G.prog).mastery.get(sid, 0)), int(entry.mastery_target)]
+		"choose": return "熟练已满 · 可选分支"
+		"chosen": return "分支：%s" % String(entry.variants[MentorCurriculum.state(G.prog).variants[sid]].name)
+	return "暂不可学习"
+
+func _curriculum_story_name(step_id: String) -> String:
+	return String(QuestService.step_by_id(TableCache.story_quests_config().get("steps", []), step_id).get("title", step_id))
+
+func _curriculum_text(content: Control, text: String, pos: Vector2, extent: Vector2, small := false) -> void:
+	var label := G.text_label(text, G.FS_XS if small else G.FS_SM, Color("3a2a14"))
+	label.position = pos
+	label.custom_minimum_size = extent
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(label)
+
+func _open_curriculum_panel() -> void:
+	var content := _panel_base("巡界授业 · 后续三式", 432, 528)
+	_curriculum_text(content, "岳教头：依序学招，在实战里用活它。", Vector2(8, 8), Vector2(384, 32))
+	var entries := MentorCurriculum.rows(G.selected_role)
+	for i in entries.size():
+		var sid := String(entries[i].id)
+		var skill := TableCache.get_skill(sid)
+		var y := 48.0 + i * 128.0
+		_curriculum_text(content, "第%d式 · %s" % [i + 3, String(skill.name)], Vector2(8, y), Vector2(384, 26))
+		_curriculum_text(content, "%s；能量 %d · 冷却 %s秒" % [String(skill.get("desc", "")), int(skill.cost), str(skill.cd)], Vector2(8, y + 28), Vector2(384, 36), true)
+		_curriculum_text(content, _curriculum_reason(sid), Vector2(8, y + 74), Vector2(228, 44), true)
+		var go := G.gold_button("查看 / 研习", 144, 44, G.FS_SM)
+		go.position = Vector2(240, y + 74)
+		go.set_meta("curriculum_action", "detail")
+		go.set_meta("curriculum_skill", sid)
+		go.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				_close_panel()
+				_open_curriculum_skill(sid))
+		content.add_child(go)
+	_panel_back(content, 456.0)
+
+func _curriculum_action_button(content: Control, sid: String, action: String, choice: String, text: String, y: float) -> void:
+	var button := G.gold_button(text, 240, 44, G.FS_SM)
+	button.position = Vector2(76, y)
+	button.set_meta("curriculum_action", action)
+	button.set_meta("curriculum_skill", sid)
+	button.set_meta("curriculum_choice", choice)
+	button.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			var result := G.curriculum_apply(sid, action, choice)
+			if bool(result.ok):
+				_toast("招式已保存")
+			else:
+				var reason := String(result.get("reason", ""))
+				_toast("金币不足" if reason == "gold" else ("未能写入存档，请重试" if reason == "save_failed" else "当前条件未满足"))
+			_close_panel()
+			_open_curriculum_skill(sid))
+	content.add_child(button)
+
+func _open_curriculum_skill(sid: String) -> void:
+	var entry := MentorCurriculum.row(sid)
+	var skill := TableCache.get_skill(sid)
+	var content := _panel_base(String(skill.name) + " · 研习", 432, 496)
+	_curriculum_text(content, "%s\n基础：能量 %d · 冷却 %s秒" % [String(skill.get("desc", "")), int(skill.cost), str(skill.cd)], Vector2(8, 8), Vector2(384, 56))
+	_curriculum_text(content, "等级 %d · 完成%s\n先学「%s」 · 学费 %d 金" % [int(entry.level), _curriculum_story_name(String(entry.after)), String(TableCache.get_skill(String(entry.previous)).name), int(entry.gold)], Vector2(8, 76), Vector2(384, 56), true)
+	_curriculum_text(content, _curriculum_reason(sid), Vector2(8, 140), Vector2(384, 34))
+	var status := MentorCurriculum.status(G, sid)
+	if status == "ready":
+		_curriculum_action_button(content, sid, "learn", "", "学习 · %d 金" % int(entry.gold), 220)
+	elif status == "choose":
+		var choices: Array = entry.variants.keys()
+		for i in choices.size():
+			var choice := String(choices[i])
+			var variant: Dictionary = entry.variants[choice]
+			_curriculum_text(content, "【%s】%s" % [String(variant.name), String(variant.desc)], Vector2(8, 186 + i * 110), Vector2(384, 44), true)
+			_curriculum_action_button(content, sid, "choose", choice, "选择 · " + String(variant.name), 232 + i * 110)
+	elif status == "chosen":
+		var variant: Dictionary = entry.variants[MentorCurriculum.state(G.prog).variants[sid]]
+		_curriculum_text(content, String(variant.desc), Vector2(8, 192), Vector2(384, 62))
+		_curriculum_action_button(content, sid, "reset", "", "重置分支 · 120 金", 280)
+	else:
+		_curriculum_text(content, "实战有效使用 %d 场后选分支。\n同一遭遇只计一次，空放不增长熟练。" % int(entry.mastery_target), Vector2(8, 206), Vector2(384, 74))
+	var back := G.gold_button("返回招式表", 180, 44, G.FS_SM)
+	back.position = Vector2(106, 432)
+	back.set_meta("curriculum_action", "back")
+	back.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			_close_panel()
+			_open_curriculum_panel())
+	content.add_child(back)
 
 
 func _mentor_choice_input(e: InputEvent, key: String) -> void:

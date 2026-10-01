@@ -201,7 +201,7 @@
     },
     "shenyuan_port": {
       "name": "沉渊港", "city": true, "city_config": "res://data/shenyuan_port.json", "theme": "desert", "tint": "d9e6e3",
-      "background": "", "map_cols": 20, "map_rows": 26, "layout_version": 1,
+      "background": "res://image/main_world/shenyuan_port_ground_reference_v2.png", "map_cols": 20, "map_rows": 26, "layout_version": 1,
       "player_scale": 0.54, "camera_zoom": 1.15, "spawn": [210, 660],
       "spawn_points": {"from_old_salt_road": [210, 660], "from_tideflat": [760, 700], "from_red_sand_route": [480, 190]},
       "exits": [
@@ -434,7 +434,7 @@
       "city_config": "res://data/frost_post.json",
       "theme": "snow",
       "tint": "ffffff",
-      "background": "",
+      "background": "res://image/main_world/frost_post_ground_reference_v2.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,

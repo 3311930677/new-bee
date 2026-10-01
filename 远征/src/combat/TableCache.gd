@@ -178,6 +178,10 @@ static func act1_growth_config() -> Dictionary:
 	var v: Variant = _load("res://data/act1_growth.json")
 	return v if v is Dictionary else {}
 
+static func mentor_curriculum_config() -> Dictionary:
+	var v: Variant = _load("res://data/mentor_curriculum.json")
+	return v if v is Dictionary else {}
+
 
 static func act1_orders_config() -> Dictionary:
 	var v: Variant = _load("res://data/act1_orders.json")

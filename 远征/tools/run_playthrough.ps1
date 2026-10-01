@@ -29,6 +29,7 @@ param(
   [switch]$CampaignGrowth,
   [switch]$CampaignGear,
   [switch]$CampaignBudget,
+  [switch]$Curriculum,
   [string]$SourceDir = "",
   [int]$TimeoutSec = 2400,
   [string]$LogDir = ""
@@ -39,7 +40,7 @@ $ErrorActionPreference = "Stop"
 if ($Proj -eq "") { $Proj = Split-Path -Parent $PSScriptRoot }
 if ($LogDir -eq "") { $LogDir = Join-Path $PSScriptRoot "_logs" }
 if (-not (Test-Path $LogDir)) { New-Item -ItemType Directory -Path $LogDir -Force | Out-Null }
-if (($ThirdSide -or $Companions -or $CampaignGrowth) -and ($SourceDir -eq "" -or -not (Test-Path -LiteralPath $SourceDir -PathType Container))) {
+if (($ThirdSide -or $Companions -or $CampaignGrowth -or $Curriculum) -and ($SourceDir -eq "" -or -not (Test-Path -LiteralPath $SourceDir -PathType Container))) {
     Write-Host "FATAL: continuation requires an existing -SourceDir with verified s01-s28 saves."
     exit 2
 }
@@ -210,8 +211,9 @@ foreach ($role in $roleList) {
 	if ($CampaignGrowth) { $playScene = "res://tools/PlaythroughCampaignGrowth.tscn" }
 	if ($CampaignGear) { $playScene = "res://tools/PlaythroughCampaignGear.tscn" }
 	if ($CampaignBudget) { $playScene = "res://tools/PlaythroughCampaignBudget.tscn" }
+	if ($Curriculum) { $playScene = "res://tools/PlaythroughCurriculum.tscn" }
 	$argsA = @("--headless", "--path", $Proj, $playScene, "--", $role, "a")
-	if ($ThirdSide -or $Companions -or $CampaignGrowth -or ($CampaignGear -and $SourceDir -ne "")) { $argsA += ("--source-dir=" + [System.IO.Path]::GetFullPath($SourceDir)) }
+	if ($ThirdSide -or $Companions -or $CampaignGrowth -or $Curriculum -or ($CampaignGear -and $SourceDir -ne "")) { $argsA += ("--source-dir=" + [System.IO.Path]::GetFullPath($SourceDir)) }
 	if ($Act3) { $argsA += "act3" } elseif ($Act3Front) { $argsA += "act3_front" } elseif ($Act2) { $argsA += "act2" }
 	$argsA += ("--save-dir=" + [System.IO.Path]::GetFullPath($LogDir))
 	$ra = Invoke-Engine -Exe $Godot -ArgList $argsA -TimeoutSec $TimeoutSec -WorkDir $Proj

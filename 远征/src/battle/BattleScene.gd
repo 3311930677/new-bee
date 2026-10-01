@@ -1315,7 +1315,7 @@ func _on_event(e: Dictionary) -> void:
 		"shield_add":
 			if dst != null:
 				_float(dst.position, "+盾", Color("8cc4ff"), G.FS_SM)
-		"skill_effective":
+		"skill_effective", "curriculum_effective":
 			var role_effect := sim.role_unit()
 			var sid := String(e.get("skill", ""))
 			if role_effect != null and int(e.get("uid", -1)) == role_effect.uid \

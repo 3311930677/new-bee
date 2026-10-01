@@ -281,6 +281,10 @@ func _build_ground() -> void:
 				int(_map_cfg.get("map_rows", 42)) * 48)
 			bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			add_child(bg)
+			if _main_map_id == "shenyuan_port":
+				var harbor_state := PortGround.new()
+				harbor_state.use_reference_ground = true
+				add_child(harbor_state)
 			return
 	# 地面层：TileMapLayer 程序构建（主题 3 种 tile 加权平铺，无碰撞）
 	var tl := TileMapLayer.new()
@@ -431,6 +435,7 @@ func _build_world() -> void:
 	elif _mode == "main_world" and _main_map_id in ["red_sand_route", "frost_post", "rift_mine_road", "rift_mine_vault", "frost_boardwalk", "frost_pass"]:
 		var ground := ThirdActGroundScript.new()
 		ground.map_id = _main_map_id
+		ground.use_reference_ground = _main_map_id == "frost_post" and not String(_main_cfg.get("background", "")).is_empty()
 		add_child(ground)
 
 	_world.y_sort_enabled = true
@@ -2748,6 +2753,8 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 	var mastery_lines: Array = []
 	if _mode == "main_world" and battle != null:
 		mastery_lines = G.mentor_report_effective(battle.effective_skills)
+		mastery_lines.append_array(G.curriculum_report_effective(battle.effective_skills,
+			String(_encounter.get("encounter_id", ""))))
 	var monster_tier := _contact_mon.tier if _contact_mon != null else ""
 	var defeated_mon_id := _contact_mon.mon_id if _contact_mon != null else ""
 	_last_battle_tier = monster_tier   # 战后三选一次数按档位给（B3）

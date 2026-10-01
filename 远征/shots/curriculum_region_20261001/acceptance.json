@@ -1,0 +1,268 @@
+{
+  "unit": "P08-E5",
+  "formal_cases": 43,
+  "runner_fault_checks": 11,
+  "source_commit": "a9330f8",
+  "images": [
+    {
+      "id": "shenyuan_port_ground_reference_v2",
+      "path": "image/main_world/shenyuan_port_ground_reference_v2.png",
+      "size": [
+        1100,
+        1430
+      ],
+      "sha256": "e8c3b0e17b86d3e4202657a4f9546e23f1c32fd52461def52fd2df24d3dd0995",
+      "opaque": true
+    },
+    {
+      "id": "frost_post_ground_reference_v2",
+      "path": "image/main_world/frost_post_ground_reference_v2.png",
+      "size": [
+        1100,
+        1430
+      ],
+      "sha256": "03c064917e66990381fe7eca3f8d8e680316d30711dcaf33ccd395dea85cb1b5",
+      "opaque": true
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "curriculum_branch_4801067.png",
+      "size": [
+        480,
+        1067
+      ],
+      "sha256": "327e1c169b6fb3ce9003b62d863643d60da6a59731d53740f8e8112068cc0852",
+      "staged_layout": true
+    },
+    {
+      "file": "curriculum_branch_480800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "0b19ace9a3a3a8913043ff63cd991ba62a49bc113c1272328f7b26b68f187372",
+      "staged_layout": true
+    },
+    {
+      "file": "curriculum_detail_4801067.png",
+      "size": [
+        480,
+        1067
+      ],
+      "sha256": "35379b15562082357c923a2e0ea9085e0c893a9848d95e864573d4dcee776345",
+      "staged_layout": true
+    },
+    {
+      "file": "curriculum_detail_480800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "9524dd026cc5e3dd030337a82c25c0ac2bee89148cd1ae5f408bf369e22a13e7",
+      "staged_layout": true
+    },
+    {
+      "file": "curriculum_learned_ck.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "09e7cb91b85f33c0d112833ba69ee03ef3c115b534c2fe868635bd61dbd09a3c",
+      "staged_layout": true
+    },
+    {
+      "file": "curriculum_learned_fs.png",
+      "size": [
+        480,
+        1067
+      ],
+      "sha256": "32345f059ac1df48d43ce8992054ae65155f4914b81cc4e86d8030b16d8c07e7",
+      "staged_layout": true
+    },
+    {
+      "file": "curriculum_learned_fz.png",
+      "size": [
+        480,
+        1067
+      ],
+      "sha256": "7e81732a190404cc292431805dfa6dce79ecc6f193df7ea13ee074ecc2386c55",
+      "staged_layout": true
+    },
+    {
+      "file": "curriculum_learned_zs.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "e728ddb9fc498787d6ab1fcc479facbc21131b69707de449a3cfcffa57195435",
+      "staged_layout": true
+    },
+    {
+      "file": "curriculum_list_4801067.png",
+      "size": [
+        480,
+        1067
+      ],
+      "sha256": "65872c520ffc7f9037e922f254fb9717a8d518ed014f0083ce4c89a34049c529",
+      "staged_layout": true
+    },
+    {
+      "file": "curriculum_list_480800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "f929e15b24f3cb262e833e346ef75b185b3e4a9e82dc6ee6d8f807ec6abec6a1",
+      "staged_layout": true
+    },
+    {
+      "file": "terrain_frost_4801067.png",
+      "size": [
+        480,
+        1067
+      ],
+      "sha256": "0c735d9802b37f712b7725e2f8b85c7b6e8152ee1d81f96c9aeee4f5045eaa8c",
+      "staged_layout": true
+    },
+    {
+      "file": "terrain_frost_480800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "50b7876259d66cdfe485205bcc601ffec35ca416cdeeb463a36b8e4a26648369",
+      "staged_layout": true
+    },
+    {
+      "file": "terrain_frost_south_4801067.png",
+      "size": [
+        480,
+        1067
+      ],
+      "sha256": "e1e35ea2e61bb36e26dd0274b2381c2030cfac0c275d42d670af623cb2e5f3e4",
+      "staged_layout": true
+    },
+    {
+      "file": "terrain_frost_south_480800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "f8249223743f93d1c49ee857ddc839728a2f4930fdd322b7bd5a927b61316f93",
+      "staged_layout": true
+    },
+    {
+      "file": "terrain_port_4801067.png",
+      "size": [
+        480,
+        1067
+      ],
+      "sha256": "6c24d4777c3037310553e8d8a0929c54f0f0edfa8ac480d954a198dd4e8f9a03",
+      "staged_layout": true
+    },
+    {
+      "file": "terrain_port_480800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "43d60465b7028a741310e216284a297584bc3d834cec876f6f56c2e4d674d2b4",
+      "staged_layout": true
+    },
+    {
+      "file": "terrain_port_south_4801067.png",
+      "size": [
+        480,
+        1067
+      ],
+      "sha256": "8b7166d0b4406287cce1485d3dee665693229d187005c083531f364743959fe6",
+      "staged_layout": true
+    },
+    {
+      "file": "terrain_port_south_480800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "9623f868ab3d6ba218d378cbfe7ca277a6e66fecc39e3aeedeb0e2e01c953369",
+      "staged_layout": true
+    }
+  ],
+  "roles": [
+    {
+      "role": "zs",
+      "source_sha256": "872942a1ada1ebe33f02657ebc60eff5545407da9e1c4a8643cf3bee8efbba24",
+      "save_a_sha256": "ec0eb2eb473b65df0496f26ac2a508133fe10fecf22cf8fb45efe3fb3cb47dcb",
+      "save_b_sha256": "ec0eb2eb473b65df0496f26ac2a508133fe10fecf22cf8fb45efe3fb3cb47dcb",
+      "learned": [
+        "zs_huifeng",
+        "zs_zhanhou",
+        "zs_duanzui"
+      ],
+      "learning_gold": 500,
+      "remaining_gold": 1165,
+      "old_investments_identical": true,
+      "natural_mastery_not_claimed": true,
+      "route_sidequest_accepted": "a3_eco_lichen, active 0 progress, no rewards"
+    },
+    {
+      "role": "ck",
+      "source_sha256": "c43ca7bb4cda28784d0378f1e66333c5db2b761104155e9211a5d2e967b5d703",
+      "save_a_sha256": "515b046cc94701c85f90c1b390199563934cc2d3064542b45959325d18aaed3a",
+      "save_b_sha256": "515b046cc94701c85f90c1b390199563934cc2d3064542b45959325d18aaed3a",
+      "learned": [
+        "ck_duopo",
+        "ck_dunying",
+        "ck_qingxie"
+      ],
+      "learning_gold": 500,
+      "remaining_gold": 1165,
+      "old_investments_identical": true,
+      "natural_mastery_not_claimed": true,
+      "route_sidequest_accepted": "a3_eco_lichen, active 0 progress, no rewards"
+    },
+    {
+      "role": "fs",
+      "source_sha256": "75ebfd9eda483b320f7b73edc5323720c6b53a51aa34043d3a198894d4676f7b",
+      "save_a_sha256": "5bba231c7e37e2890141e87d4b591e5668055981426a6d89b3a996eb3378419e",
+      "save_b_sha256": "5bba231c7e37e2890141e87d4b591e5668055981426a6d89b3a996eb3378419e",
+      "learned": [
+        "fs_tianyun",
+        "fs_midun",
+        "fs_yanmie"
+      ],
+      "learning_gold": 500,
+      "remaining_gold": 1165,
+      "old_investments_identical": true,
+      "natural_mastery_not_claimed": true,
+      "route_sidequest_accepted": "a3_eco_lichen, active 0 progress, no rewards"
+    },
+    {
+      "role": "fz",
+      "source_sha256": "d4de5c3aefd702921a190e6e1e39619fc503af40e3ec003a0912a69b4d07c0a8",
+      "save_a_sha256": "a321877d3b62fb037c4aa59ead793f52156553645dbc265b484d337195b38403",
+      "save_b_sha256": "a321877d3b62fb037c4aa59ead793f52156553645dbc265b484d337195b38403",
+      "learned": [
+        "fz_jinghua",
+        "fz_zhudao",
+        "fz_poxiao"
+      ],
+      "learning_gold": 500,
+      "remaining_gold": 1165,
+      "old_investments_identical": true,
+      "natural_mastery_not_claimed": true,
+      "route_sidequest_accepted": "a3_eco_lichen, active 0 progress, no rewards"
+    }
+  ],
+  "real_save_sha256": "c5d29ee55c033619c4f5232d55a6c4f186d40add556db61ee0d776b9fda2660c",
+  "hero_redraw_deferred": true,
+  "routing_and_collisions_unchanged": true,
+  "limits": [
+    "screenshots are staged composition, not acquisition proof",
+    "real-input macro proves 12 skill acquisitions and independent restart, not natural training of all branches",
+    "formal tests cover actual skill effects, mastery replay, both branch rules and rollback",
+    "frost buildings, NPCs and lamps still require art replacement",
+    "whole S0-S7 goal remains active; issue 43 exit resource diagnostics remain"
+  ]
+}
