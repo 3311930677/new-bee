@@ -1,0 +1,1464 @@
+{
+  "date": "2026-10-01",
+  "baseline": "e949873",
+  "status": "ZHAOYUAN_BUILDINGS_AND_WORKSHOP_IMPLEMENTED",
+  "real_save_sha256": "C5D29EE55C033619C4F5232D55A6C4F186D40ADD556DB61EE0D776B9FDA2660C",
+  "checks": [
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyAssets.log",
+      "sha256": "5010895C81A30D412091C9D35F1333619379238E727D7AB2DB383FB17B7260C9",
+      "case": "VerifyAssets",
+      "token": "ASSETS_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyBattleScene.log",
+      "sha256": "350CEE37009DC7A3172B0961630AF738E10A8E9807C4F30E47E6FF7D01522FE8",
+      "case": "VerifyBattleScene",
+      "token": "BATTLE_SCENE_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifySave.log",
+      "sha256": "5EF1191A8527F368E4AE3B90A77061FEC45C2E05F3A45ABAAB39039EDFBEE9D4",
+      "case": "VerifySave",
+      "token": "SAVE_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyUiLayout.log",
+      "sha256": "DEAADA6E45BE819D2209E6DD7FCA17D0B7D6888F1088F6C98BB6B786D22795C7",
+      "case": "VerifyUiLayout",
+      "token": "UI_LAYOUT_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifySweep.log",
+      "sha256": "4C8A270F5D432EE2510033F8580135C05E768745552F1B2C28E54601925AD7D6",
+      "case": "VerifySweep",
+      "token": "SWEEP_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyCity.log",
+      "sha256": "FC5EDAA712D12D55390D70BF4185F1F0C0D380FC938C38BB45F164F51E39CE5E",
+      "case": "VerifyCity",
+      "token": "CITY_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyGameHome.log",
+      "sha256": "E21D086F52741131933FA660AB3A4FEFA00DAFC1BFB4BAA288606C2BBB1D4AC0",
+      "case": "VerifyGameHome",
+      "token": "GAME_HOME_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyMapScene.log",
+      "sha256": "C6859C0DC72D20D9E66E5085A4D7401992279F2DE32DB4F5A35462849C87389B",
+      "case": "VerifyMapScene",
+      "token": "MAP_SCENE_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyMainWorld.log",
+      "sha256": "288A631AB827AB4C84E9791AD2A5AC0B06062BE75E7807A98F9A9320DC79080D",
+      "case": "VerifyMainWorld",
+      "token": "MAIN_WORLD_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyWorldSession.log",
+      "sha256": "3D1CECE17E874DC94C0F18F9717192C1875A94B4B90A241112117663EE99A4C5",
+      "case": "VerifyWorldSession",
+      "token": "WORLD_SESSION_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyStory.log",
+      "sha256": "FD140F1E7E01D1A410B14D10ABD4210843D7D71CD2EC8FBD4354B2D376DA52D2",
+      "case": "VerifyStory",
+      "token": "STORY_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyEconomy.log",
+      "sha256": "708BE25FF30CCBE301771F094D4FEF7FDDAE1F560A8CE701915ABFE1BCB1F8CC",
+      "case": "VerifyEconomy",
+      "token": "ECONOMY_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyTradeWorld.log",
+      "sha256": "CCD756E2D348FD0FBDAFFFDA9F93B58961EF0B3E5A259BE82B256C79A4FEF4D9",
+      "case": "VerifyTradeWorld",
+      "token": "TRADE_WORLD_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifySecondAct.log",
+      "sha256": "048BFA298C7BBD4658C169C3EDD1BEDE8D20FBC5E0C7F5D673B9508F501BD9BC",
+      "case": "VerifySecondAct",
+      "token": "SECOND_ACT_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyThirdAct.log",
+      "sha256": "7E5BB1730D79845935F9EE28EC0FF4102CC14106ECD0F621FA3A11EAEDCB26FB",
+      "case": "VerifyThirdAct",
+      "token": "THIRD_ACT_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyThirdBack.log",
+      "sha256": "8012BDC4AF44AEA4D01EAACCB7ABDBF7FDD99BBB92BAD608374C7D961666D35E",
+      "case": "VerifyThirdBack",
+      "token": "THIRD_BACK_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyThirdSide.log",
+      "sha256": "05A5F1BC507B6A04DC3122228017848C6E2D776363527A8AC442D5B1F5C03BD6",
+      "case": "VerifyThirdSide",
+      "token": "THIRD_SIDE_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyCompanions.log",
+      "sha256": "7A32611B658884E8307FA2003F7686364AEF3B50340FED2D0E147AC7DA4B55F2",
+      "case": "VerifyCompanions",
+      "token": "COMPANIONS_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyCampaignGrowth.log",
+      "sha256": "1CCB897577BB3E8829203C31774D5985FD9E2749C918647C2DFA1CD14AC05787",
+      "case": "VerifyCampaignGrowth",
+      "token": "CAMPAIGN_GROWTH_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyCampaignGear.log",
+      "sha256": "75AADA70EE996A694268366EB653F86863E25A90B791D2520264CF53DAE4A4EE",
+      "case": "VerifyCampaignGear",
+      "token": "CAMPAIGN_GEAR_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyWorkshop.log",
+      "sha256": "A42261D8AAF1497319B967229299BB3E1C3660490C7BA8E4A76D9D70F9A25EA4",
+      "case": "VerifyWorkshop",
+      "token": "WORKSHOP_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyPortGrowth.log",
+      "sha256": "DEADDEFB22FE22A82E3148D466CEADAEBDA3894C753F63E420FD9F21C8360D42",
+      "case": "VerifyPortGrowth",
+      "token": "PORT_GROWTH_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyShipping.log",
+      "sha256": "927983B78C3CCBA11C390F6F6834E981A833633341DC8C9E9E80297A016B871E",
+      "case": "VerifyShipping",
+      "token": "SHIPPING_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyFishing.log",
+      "sha256": "F6B5DFAB81CAA4929C07644727A8E5A00AAA9187FE6614C6F78F06595091E934",
+      "case": "VerifyFishing",
+      "token": "FISHING_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyRouteScene.log",
+      "sha256": "25805CC9ED6D03E03BFA376FC2AC14EF30CBBD2A33AC38D32EBBC6F01EB99CE3",
+      "case": "VerifyRouteScene",
+      "token": "ROUTE_SCENE_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyGacha.log",
+      "sha256": "1DEFC25149AA651D211B00E3390E7125DFB76DC4D448A0FD2C7A760FBA2DF2EB",
+      "case": "VerifyGacha",
+      "token": "GACHA_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyPanels.log",
+      "sha256": "F68B4C339AC278C63A23680A3C567DAC9147CD5B9D3089140805FD82EF4F0A71",
+      "case": "VerifyPanels",
+      "token": "PANELS_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyGrowth.log",
+      "sha256": "90C76FE9EB79984AA18406636093051E7471FAE64F96B0D419F87DF0E3B09653",
+      "case": "VerifyGrowth",
+      "token": "GROWTH_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyPerf.log",
+      "sha256": "05A2E574B49492DCCF754B89507C29DEE104A09C46863AAF329EBE1A09CCF229",
+      "case": "VerifyPerf",
+      "token": "PERF_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyLore.log",
+      "sha256": "220325E477A15263F376D9C93BF4ABDD0F57439E0ADAF9835F8879FEF2EAF482",
+      "case": "VerifyLore",
+      "token": "LORE_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyQuests.log",
+      "sha256": "BE7D293F17BCAF77A08EEF3A4D2A9736122359510FEDECE3CFF987DCD748F113",
+      "case": "VerifyQuests",
+      "token": "QUESTS_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyAudio.log",
+      "sha256": "817D77BED69D72E1A3EFA536063C830CDE053C89A726FD5B7F675298D70410E6",
+      "case": "VerifyAudio",
+      "token": "AUDIO_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyTransit.log",
+      "sha256": "117E69FB9D4AC5C22FAECD2BC68E3A9BE3B5530875A6DED112AB939BE61387E5",
+      "case": "VerifyTransit",
+      "token": "TRANSIT_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyDrops.log",
+      "sha256": "E1A789C97E99041BD87F74D3CDA5DC3AA6FD0D70EC2FA7BF1BD96F947B440151",
+      "case": "VerifyDrops",
+      "token": "DROPS_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyArena.log",
+      "sha256": "F5210C0F88A962FEE1B062FCA4EDEB196B464E04E87C150B144AF4FAA4383786",
+      "case": "VerifyArena",
+      "token": "ARENA_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyAvatar.log",
+      "sha256": "946371E9BE58E5AE40B51DE5D8EC27583CB69B1BA33C3F07A7CEEEAD6D9108A1",
+      "case": "VerifyAvatar",
+      "token": "AVATAR_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/VerifyNav.log",
+      "sha256": "8D8DB2BB1B9D7CBE628D065B8F6AC4DD8B85AC86987EE38E9DA25212B5568BA2",
+      "case": "VerifyNav",
+      "token": "NAV_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/verify_data.log",
+      "sha256": "39C65462BDFF7CCD957725CDD50186250A82976B4A9D3C539636610F10DA63DB",
+      "case": "verify_data",
+      "token": "DATA_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/verify_battle.log",
+      "sha256": "8A21022C65DCBB80983BD556D55E8F2B3922A05699462E8E06923AAA98D24EA4",
+      "case": "verify_battle",
+      "token": "BATTLE_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/verify_route.log",
+      "sha256": "C1FA1DBECB318FBD65BE9E7E4A482196DC034F18604109B4A3237D255B756830",
+      "case": "verify_route",
+      "token": "ROUTE_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/verify_trait.log",
+      "sha256": "3F3A7A9B78F6999303B0C18AE3BC453C5999D6EB0DEC899BEEA35DAF77787019",
+      "case": "verify_trait",
+      "token": "TRAIT_OK"
+    },
+    {
+      "path": "tools/_logs/town_workshop_final_regression/verify_walk_assets.log",
+      "sha256": "3F41C6FC847E49E6F800CE7815355F3FA36A607A6AFF549235A89C02035F710B",
+      "case": "verify_walk_assets",
+      "token": "WALK_ASSETS_OK"
+    }
+  ],
+  "all_tiers": {
+    "path": "tools/_logs/town_workshop_all_tiers/VerifyWorkshop.log",
+    "sha256": "A42261D8AAF1497319B967229299BB3E1C3660490C7BA8E4A76D9D70F9A25EA4"
+  },
+  "selftest": {
+    "path": "tools/_logs/town_workshop_selftest_final.log",
+    "sha256": "9997361D44F9C0CEABE5A352A4276D7F4BCD1729B0D25A35AD0AE7A0C3CECCDF"
+  },
+  "inputs": [
+    {
+      "role": "zs",
+      "source": {
+        "path": "tools/_logs/p08e2_fresh_zs_fs/save_playthrough_zs_a.json",
+        "sha256": "27102418AC8C3DB139B8136443051C975EDAD3E352C21D542A36DC7A543A6961"
+      },
+      "save": {
+        "path": "tools/_logs/workshop_input/save_zs.json",
+        "sha256": "54BD50BF7CA5A6E86504406FFC3DCE196A30E85E98DEAEED83BC5CFAC9F76C99"
+      },
+      "logs": [
+        {
+          "path": "tools/_logs/workshop_input_zs_a.log",
+          "sha256": "FA8082DA77B6AE670C7D9C6E419108DDEC18814D509DC173E5D74A1CF8DF9629"
+        },
+        {
+          "path": "tools/_logs/workshop_input_zs_b.log",
+          "sha256": "7FEF53A16E3D16ADC7BEBA544D6DFD5C19FC7CFE7CB6A6DF1BDD6CD2B0640ED2"
+        }
+      ],
+      "a_b_state_equal": true,
+      "gold_cost": 900,
+      "stone_cost": 3
+    },
+    {
+      "role": "fs",
+      "source": {
+        "path": "tools/_logs/p08e2_fresh_zs_fs/save_playthrough_fs_a.json",
+        "sha256": "03D45244FFC489E30E7ACC53947FA9884CFCC5D56465EF31148E9FB242C56D38"
+      },
+      "save": {
+        "path": "tools/_logs/workshop_input/save_fs.json",
+        "sha256": "EA131A6FB3AE3D13263A76731E96C5ED433E26AB2EFA688C5DAC0CA7F9F87C16"
+      },
+      "logs": [
+        {
+          "path": "tools/_logs/workshop_input_fs_a.log",
+          "sha256": "44C17EBFED9C484E3709F084F21E128935E3627B089013A632A60ED71550392A"
+        },
+        {
+          "path": "tools/_logs/workshop_input_fs_b.log",
+          "sha256": "BA65EC71DC04117606613D7A845E7EA1678058C48C56128DEDD8F47B588EDD39"
+        }
+      ],
+      "a_b_state_equal": true,
+      "gold_cost": 900,
+      "stone_cost": 3
+    },
+    {
+      "role": "ck",
+      "source": {
+        "path": "tools/_logs/p08e2_fresh_ck_fz/save_playthrough_ck_a.json",
+        "sha256": "87E3000B672A437389BEFC2F12D0235759995BE5FB14ED6D9B324685CA4C1E48"
+      },
+      "save": {
+        "path": "tools/_logs/workshop_input/save_ck.json",
+        "sha256": "6795EC8C47EF9F60AEF46DC0CC73D2B13CCEA119ADD4FBD38649C06FBBA3DAC7"
+      },
+      "logs": [
+        {
+          "path": "tools/_logs/workshop_input_ck_a.log",
+          "sha256": "5DA33017E3BE6C8852BD816FAEE243103B26D5B5BEDFC48A82102E4D875935C6"
+        },
+        {
+          "path": "tools/_logs/workshop_input_ck_b.log",
+          "sha256": "67DF1B1CAD598DBECD3168C365B92F021F8E9F3464EAD7975C5AC420F19951E6"
+        }
+      ],
+      "a_b_state_equal": true,
+      "gold_cost": 900,
+      "stone_cost": 3
+    },
+    {
+      "role": "fz",
+      "source": {
+        "path": "tools/_logs/p08e2_fresh_ck_fz/save_playthrough_fz_a.json",
+        "sha256": "77CC34EA723321B323BB3CCD571F322B30FBEA76021601345C23BBD800C37C28"
+      },
+      "save": {
+        "path": "tools/_logs/workshop_input/save_fz.json",
+        "sha256": "649E09A96C3FF7F7FC9A69106EAD49C4B470E43FACE0052F57D3878417272934"
+      },
+      "logs": [
+        {
+          "path": "tools/_logs/workshop_input_fz_a.log",
+          "sha256": "E1922E5A601DFA26AF675EC28EC356427457D4FFA0C670F6FE14C8109ED3E288"
+        },
+        {
+          "path": "tools/_logs/workshop_input_fz_b.log",
+          "sha256": "685925236B1A78F59FC0442698C282C4BE1544BC107FCD8DB62154D58662E7DE"
+        }
+      ],
+      "a_b_state_equal": true,
+      "gold_cost": 900,
+      "stone_cost": 3
+    }
+  ],
+  "assets": [
+    {
+      "path": "image/main_world/city_hall_reference_v2.png",
+      "sha256": "340D50CE78091FD3DE6F859EA7D0E359A9C1649D82CE35D92D01DDF5998EA1FD",
+      "size": [
+        1448,
+        1086
+      ],
+      "alpha_bounds": [
+        0,
+        11,
+        1448,
+        1075
+      ],
+      "transparent_corners": true
+    },
+    {
+      "path": "image/main_world/city_archive_reference_v2.png",
+      "sha256": "550373535EE502140344CB726011985544EDAC0CF52507C35C327C5A047EE037",
+      "size": [
+        1448,
+        1086
+      ],
+      "alpha_bounds": [
+        0,
+        17,
+        1418,
+        1086
+      ],
+      "transparent_corners": true
+    },
+    {
+      "path": "image/main_world/city_barracks_reference_v2.png",
+      "sha256": "5DF42B7C9BAFEEF2A3BA9B573E7A27BDE78421E50D1D5B3D304348A25EB6F510",
+      "size": [
+        1448,
+        1086
+      ],
+      "alpha_bounds": [
+        0,
+        7,
+        1448,
+        1086
+      ],
+      "transparent_corners": true
+    },
+    {
+      "path": "image/main_world/city_kennel_reference_v2.png",
+      "sha256": "05F2C3A5FAF754DF001D1102FBC87F00084D3E66279D09FF596466C7977A4C7C",
+      "size": [
+        1448,
+        1086
+      ],
+      "alpha_bounds": [
+        0,
+        45,
+        1433,
+        1058
+      ],
+      "transparent_corners": true
+    },
+    {
+      "path": "image/main_world/city_storehouse_reference_v2.png",
+      "sha256": "0EF468C5B08C38D44D3E6F50C2E61273F4CD8D55295A7F36A4F8FD2D8E7B65E7",
+      "size": [
+        1448,
+        1086
+      ],
+      "alpha_bounds": [
+        0,
+        0,
+        1412,
+        1072
+      ],
+      "transparent_corners": true
+    },
+    {
+      "path": "image/main_world/city_gate_reference_v2.png",
+      "sha256": "5FE7B733050AC601AA8EF1617B06BA4D9261C0E6FFA76DA985D4DD258AF88452",
+      "size": [
+        1448,
+        1086
+      ],
+      "alpha_bounds": [
+        0,
+        9,
+        1432,
+        1027
+      ],
+      "transparent_corners": true
+    },
+    {
+      "path": "image/main_world/city_shrine_reference_v2.png",
+      "sha256": "79EB04CD147A7EF63259E2B3469F4F0F7B0F2947E0A68CBE419036827F748A34",
+      "size": [
+        1448,
+        1086
+      ],
+      "alpha_bounds": [
+        0,
+        40,
+        1430,
+        1054
+      ],
+      "transparent_corners": true
+    },
+    {
+      "path": "image/main_world/city_forge_reference_v2.png",
+      "sha256": "ADE719494FA496D43EE250F71385635D658C7215D8163D3CE280219B9B58254F",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_bounds": [
+        0,
+        17,
+        1482,
+        984
+      ],
+      "transparent_corners": true
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "shots/town_workshop_20261001/town_middle_4801067.png",
+      "sha256": "E9C3385BADCEC90DD1F952AF9D37BD1485AF9FC79B7DECC4E6F472D44FA847A0",
+      "size": [
+        480,
+        1067
+      ]
+    },
+    {
+      "path": "shots/town_workshop_20261001/town_middle_480800.png",
+      "sha256": "5B4F72C229C8E0F9F6E0C5578FF4847030AFD07275A7B488796814F28C3A6D34",
+      "size": [
+        480,
+        800
+      ]
+    },
+    {
+      "path": "shots/town_workshop_20261001/town_middle_left_480800.png",
+      "sha256": "72391BBFE79B22870DE399CB5BB108C2A7C196D2A39434260EC8180FBFC8C211",
+      "size": [
+        480,
+        800
+      ]
+    },
+    {
+      "path": "shots/town_workshop_20261001/town_middle_right_480800.png",
+      "sha256": "A961DD28DEABA97A5BCA47A761C86BC8AEA275B4B0A28559C49B0C7F34F1C0FA",
+      "size": [
+        480,
+        800
+      ]
+    },
+    {
+      "path": "shots/town_workshop_20261001/town_north_4801067.png",
+      "sha256": "E19F937663F7393EDED928527F25D8C3463C999C0E7FD4EBAE71C487533BD1E7",
+      "size": [
+        480,
+        1067
+      ]
+    },
+    {
+      "path": "shots/town_workshop_20261001/town_north_480800.png",
+      "sha256": "E50F059BA91D76999E014FD53C2F8893F04DF9AC85382CD40B97ABFA88C4163F",
+      "size": [
+        480,
+        800
+      ]
+    },
+    {
+      "path": "shots/town_workshop_20261001/town_north_left_480800.png",
+      "sha256": "CBCBF1ABF9F732CDE5A3D52341DA8DC99C2AC597FFD57CD926F87339C6D7C0FA",
+      "size": [
+        480,
+        800
+      ]
+    },
+    {
+      "path": "shots/town_workshop_20261001/town_north_right_480800.png",
+      "sha256": "D47997C9E62B0EAEB49AE9BCFC60D2E747BAC84C0FB255057D1F0A9EC01F588E",
+      "size": [
+        480,
+        800
+      ]
+    },
+    {
+      "path": "shots/town_workshop_20261001/town_south_4801067.png",
+      "sha256": "328D1D026AABD8C304044284D005E151D5985688534E8ECA773D3D575F09EB0B",
+      "size": [
+        480,
+        1067
+      ]
+    },
+    {
+      "path": "shots/town_workshop_20261001/town_south_480800.png",
+      "sha256": "95F62A01619FBC65FAA1EC51E978BB1D19F3E70055F7A5F26256E59B9FCFE0C4",
+      "size": [
+        480,
+        800
+      ]
+    },
+    {
+      "path": "shots/town_workshop_20261001/town_south_left_480800.png",
+      "sha256": "4558AED445EC718E08AF8F4C51B77DED3D5C0207D68128C896BF04F682385D7D",
+      "size": [
+        480,
+        800
+      ]
+    },
+    {
+      "path": "shots/town_workshop_20261001/town_south_right_480800.png",
+      "sha256": "07FB73E5B4AD099850477D8EAABEA958732E44569F9D75C79AA47D6206DFF576",
+      "size": [
+        480,
+        800
+      ]
+    },
+    {
+      "path": "shots/town_workshop_20261001/workshop_low_4801067.png",
+      "sha256": "995FF753DB24448136006A7BC3FCE8C66C82DADAEB9AE861CFA874980BC4CA63",
+      "size": [
+        480,
+        1067
+      ]
+    },
+    {
+      "path": "shots/town_workshop_20261001/workshop_low_480800.png",
+      "sha256": "DE047F0F156B33CE395F51DED4915F5035DB9192CC404CC8F33FADF1D3435BDB",
+      "size": [
+        480,
+        800
+      ]
+    },
+    {
+      "path": "shots/town_workshop_20261001/workshop_progress_4801067.png",
+      "sha256": "2FF89A185BD77480558D915068078ADDBF87A57EFC9C3C0089D6501B62928D23",
+      "size": [
+        480,
+        1067
+      ]
+    },
+    {
+      "path": "shots/town_workshop_20261001/workshop_progress_480800.png",
+      "sha256": "6A681D1B04DE94548E3D46C6DFCF1D43F2B2BC35B474937E88CB61B2BA9CE808",
+      "size": [
+        480,
+        800
+      ]
+    }
+  ],
+  "unchanged_hero_assets": [
+    {
+      "path": "image/role/ck/chuanyang_icon.png",
+      "sha256": "5B4EB14413937A1EC06ECFCDAA049F385E7994B32AE52E6134221854EBD5AF80"
+    },
+    {
+      "path": "image/role/ck/chuanyang_idle.png",
+      "sha256": "BEBCB3A4180D1B3707B69EC5FCB3043BE672BA5C1356C74BF3CFDB1CEFAC0965"
+    },
+    {
+      "path": "image/role/ck/chuanyang_sheet.png",
+      "sha256": "3E8C2E84E0C6A4A2EE43FA4515217E9AEBF51490AEA18658F05286677FD938B6"
+    },
+    {
+      "path": "image/role/ck/chuanyang_sprite_frames.tres",
+      "sha256": "17D6E777B9FFD8659BF651A6B76831CBC436FF0792E1E694993DED41136A948F"
+    },
+    {
+      "path": "image/role/ck/chuanyang_spritesheet.png",
+      "sha256": "716610F7EB43EDF9C39FBFD51777C7F9F78583D2E2DE05D8379FB8C445B8CFBE"
+    },
+    {
+      "path": "image/role/ck/chuanyang_walk_4dir.png",
+      "sha256": "58EA7C9B04073328278E66EE253E3D9EDA31947E493C53173B5474E95FABD768"
+    },
+    {
+      "path": "image/role/ck/chuanyang_walk_frames.tres",
+      "sha256": "359C494440040DEB60354F33B9D0150422FEAE04311569E8208599EA965A8E75"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_animation_grid_source.png",
+      "sha256": "A942F2C60CB0C412628DCA4DC9FBA5AC9CE91BC4948991BE9714C4060C60C4B9"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk4_keyframes_v4.png",
+      "sha256": "96A47C85E3EB826CD4F2A28BE9AAF28374B82A8B375D46D9B775ABE947561F4E"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk4_keyframes_v4_alpha.png",
+      "sha256": "6769710843DD890F422C2326BE00CCD36494F8DE931E91CE4F2A7EF80CD3F3CF"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk_4dir_edit_v2.png",
+      "sha256": "F3EF505422B6AF92DD9220CBC2949CC0411B07B4D8030414636F6DBEE7001B92"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk_4dir_raw_v1.png",
+      "sha256": "267AF13D2FDF4C1CBF6830ACA5E4999BEFC15D41F78D93D58B089BDB0324AB3A"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk_4dir_raw_v1_alpha.png",
+      "sha256": "D372253FC3EAE28344C17B60BC0302C33D3D12B295E482B5F0D8A4138580D68A"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk_before_v6.png",
+      "sha256": "509EC5E8AE87A9027AD08FEA4A893678021CEE62BCE80B45CFCD545C105E8A95"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk_before_v7.png",
+      "sha256": "1AF573BB77EC6F4CD0ECE544FA5A3BBCAA88E5AD437636B5FC7815641B1923D9"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk_before_v8.png",
+      "sha256": "688EB3DF88E79D2E6FC33BBC7283883E94957A67E5A50D20C7518C42AED81804"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk_down_strip_v5.png",
+      "sha256": "053D70CDC058433AD89B490103E68A76428D9C363DE754638EC4DB30D33F8574"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk_down_strip_v5_alpha.png",
+      "sha256": "726FD5D6C8422861A31406840073D5648E9FB4B25AF9D04F829C1A9090C87CED"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk_left_strip_v5.png",
+      "sha256": "F0805205CC3F8720A8D6FCAA62546EA7DBD685A57AD44E9D2B66644F076DA681"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk_left_strip_v5_alpha.png",
+      "sha256": "6F2CAF2B08CF07691DF7E06652051C319CA058E43CDAD82BEE373DA20566E8AC"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk_right_strip_v5.png",
+      "sha256": "FE080C4FAA5334145955BD3AD53F40BE0E73C3DE6F34AAC3A61AB1F5AD196E42"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk_right_strip_v5_alpha.png",
+      "sha256": "71C34808C0CFFED58D7C16EBCD53C5F5B066A07F8FC3506CAAAC4411635A902E"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk_side_v7.png",
+      "sha256": "CB499AD0737B4F05FE6FE571D0FE075466B07CF3648B5140F3485680733E6338"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk_side_v8.png",
+      "sha256": "FB7F67FB6B37952C31329ECF82080BA13647C81ABFC85C89045509DDB21DCED8"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk_side_v9.png",
+      "sha256": "8695D68933DB9CD04776401CB0DBA581F62A953749A46C6AFE736BE5AFB77022"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk_up_strip_v5.png",
+      "sha256": "9CB7F0EE0C06AD026A45CB813A73DBF13042A1ABF222E7DEBF574D4A4CEDF2D7"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk_up_strip_v5_alpha.png",
+      "sha256": "3CD75C7AB2BE1A441CE2B464F05E8BAED32D2BA153945920DFB2383BCEE4C299"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk_v10.png",
+      "sha256": "50BEA2F33FC7988C708D723D234CD6B0C1AC260CEE63A8BC393CA95DB5FAEFD9"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk_v13.png",
+      "sha256": "C8C6B7DBE35AE2ACF68FBDD8F48BCA4EAE5C75BB14117E2F498472B361F2ACF2"
+    },
+    {
+      "path": "image/role/ck/source/chuanyang_walk_v6.png",
+      "sha256": "C5242597B984DD872C4D57BBA838B0DA02E5159E637440070E09470719C02AC3"
+    },
+    {
+      "path": "image/role/fs/shuangyu_icon.png",
+      "sha256": "5EF433FB380DC0E59B4E54A36CAE93FCBA2CD04F84EF52DB33E8EE5BFCC3598C"
+    },
+    {
+      "path": "image/role/fs/shuangyu_idle.png",
+      "sha256": "06B625F4D35013B301A275D46E5024EE09B5C23B6B24939A9A64FAE250731668"
+    },
+    {
+      "path": "image/role/fs/shuangyu_sprite_frames.tres",
+      "sha256": "8765B04649678E440C38B6CC18E2594F4F83A0F18C4EC1572E5D625462219F38"
+    },
+    {
+      "path": "image/role/fs/shuangyu_spritesheet.png",
+      "sha256": "79A8ED8266482A8220F762457DFBF5267D84E02DF385A641135528EE358A542E"
+    },
+    {
+      "path": "image/role/fs/shuangyu_walk_4dir.png",
+      "sha256": "0D30979431A40F383F2D01C59AA38E1C0050070FDB5E08FD1D52B873C5BDD188"
+    },
+    {
+      "path": "image/role/fs/shuangyu_walk_frames.tres",
+      "sha256": "40CB2A0DBDF1ADB4D46FE22F06A8082EC579D1A4C78B94E4CF758F2BE8C21CB0"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_animation_grid_source.png",
+      "sha256": "59D8C7730302C0B2F4CAB8B1F58FBF4E98FFEBDB1B9B24170AD9A9B1703BBAAB"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk4_keyframes_v4.png",
+      "sha256": "87DF0D6DA77230F7E29C479F19F33DE31BA5B8BC7EDB5D1919FF0822E1A975BA"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk4_keyframes_v4_alpha.png",
+      "sha256": "C17F7139C158EEF5B1180731EA8C22FAFCC2090928499987CC3AA7CDA5FBB312"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk_4dir_edit_v2.png",
+      "sha256": "B43E6AAB7EE11CBF43B95104C314E85CCB12E0D6986215AA9E498437BDFEC994"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk_4dir_edit_v2_alpha.png",
+      "sha256": "49DF684FB61BCDA678124E838D3A3CC7A1F56D5268D29094DE7859FAD75B138D"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk_4dir_raw_v1.png",
+      "sha256": "4AE40B38F2B82331C9C62A7B9DCCEC809B5B661E994B499A162C25A6D7E581CB"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk_4dir_raw_v1_alpha.png",
+      "sha256": "9B75007A376C9C59F89DB672DE34584A1A01D2E1C1A1396FFA0C2CD0D180BE35"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk_before_v6.png",
+      "sha256": "D52F8A1AEBC9C4A38B57B1B58E7D162091F1D187F094213B8B9A30FB81F2778B"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk_before_v7.png",
+      "sha256": "1C55E5A11DDDBBABFFD7CE965CA19C1F9A09AA7D8E8017A79C4913215B835553"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk_before_v8.png",
+      "sha256": "22D937E6065B4DEC5BD88D62C23C93B228C6EE8BD1AB058DA04A127F85B9630D"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk_down_strip_v5.png",
+      "sha256": "AFA1D77C222F84346546D455B0530337150F0E0A445E76B5BC18AD1EDCA876E9"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk_down_strip_v5_alpha.png",
+      "sha256": "71FB118CCBA9857C7E0E80FC8DDD74EA978A5FC916CFDFDAD71D24AFC929F690"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk_left_strip_v5.png",
+      "sha256": "7CD46CAB34127876612B41001FB93BD03762205D676091FCB482ED47FC24B6F5"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk_left_strip_v5_alpha.png",
+      "sha256": "AE9F2D319674B229AD34DC37A9B84054DD3143447B33C3BF40B5996A0D94AEB6"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk_right_strip_v5.png",
+      "sha256": "55F90D44E17AE92136A846E6AAF7B3CC305BB68A140C999B8DE7EE5DB701B507"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk_right_strip_v5_alpha.png",
+      "sha256": "9CC43E0B8F6336AE9AF9594B2E54672ED2834457D7B5879AF5A39717A2EA2AE5"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk_side_v7.png",
+      "sha256": "D2CC0848EE01B8173C33651BBB84146B310CBEEC15D31BE5F56743C882AB74A3"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk_side_v8.png",
+      "sha256": "C9999A05F7178FE93B396461DCD6E382D1721EB251EC0CB6F605CEEB43BD9ABA"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk_up_strip_v5.png",
+      "sha256": "2BA1B11CB85152DAB13B7B33ED98016BC839A582C4773D637C0ED01E69640A39"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk_up_strip_v5_alpha.png",
+      "sha256": "761422092DB2CF58BCD724C7486AD97C829994E604667AB786883138843CC7D7"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk_v10.png",
+      "sha256": "AA2185FE3EC3D5898CB0E8C2D213BC6BF0C35DB5CDD7007CB8572A3FD42012D9"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk_v13.png",
+      "sha256": "884D8D42402B73823565AC44A53B63A3D5E01B0054F2AA22AC2E3C868EBDADB6"
+    },
+    {
+      "path": "image/role/fs/source/shuangyu_walk_v6.png",
+      "sha256": "D6C6DF1E113BE5BDE72CABD121AC0B4D72D43296D38286E7377CFDA546A0541B"
+    },
+    {
+      "path": "image/role/fz/chenxing_icon.png",
+      "sha256": "F74214343425B1C4E67DF3968C5D327547BA8DAE9A088A7761D5BE1EBFB461A4"
+    },
+    {
+      "path": "image/role/fz/chenxing_idle.png",
+      "sha256": "C3D1979ABA557FB8DC610933545BE9B972ED3D4C02A2354BDBFB4AE1E075BC62"
+    },
+    {
+      "path": "image/role/fz/chenxing_sheet.png",
+      "sha256": "3B738B3AA539B63237F3A9F619BBE5ADFDB618AE8D42B61DB3FFA57CFE6D5402"
+    },
+    {
+      "path": "image/role/fz/chenxing_sprite_frames.tres",
+      "sha256": "92F1E69E4E4238E5BFF46EC48182A623E0723DC67CC99D2F2287A3697E62A47F"
+    },
+    {
+      "path": "image/role/fz/chenxing_spritesheet.png",
+      "sha256": "8B1E9D3B50C8A3B8947E0DA9F0AD6EA7720C4D2723854CD06B34D665E8BA4A32"
+    },
+    {
+      "path": "image/role/fz/chenxing_walk_4dir.png",
+      "sha256": "90AEFCFC8084AE605B406036DE5B6A958133EAF1EC8D18FB6C8D605CCFC3318A"
+    },
+    {
+      "path": "image/role/fz/chenxing_walk_frames.tres",
+      "sha256": "54BE23784C1DC73E93ADFB72F204D0B6662B36DA38F8D84FF2B0C4245F5C4747"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_animation_grid_source.png",
+      "sha256": "54A09C739E0FBCEC4555141B21D10D84A4E3E0B3669A29AF7259BEC05199448A"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_icon_reference_v2.png",
+      "sha256": "4A6162BB825AD635B98D49B762ADFB81E037EC6C6335DC529F4597A7C02D5BE0"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_idle_reference_v2.png",
+      "sha256": "BCCB8D3E574409C73FDAC21304C2716CAD1F1FB65F69E674EB7DDA8B5CD1F05B"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_walk4_keyframes_v4.png",
+      "sha256": "B5DC94B526EF7AA63BCAFA889B1AE629731EBA538E59BA6D07DAC0C178369A7A"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_walk4_keyframes_v4_alpha.png",
+      "sha256": "CC13ED58E134C9F37F3DB5CB4543AE1A2EC9E927E8250A820AEECCB59EE9544D"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_walk_4dir_edit_v2.png",
+      "sha256": "A897E54298A8EEB0302E041272E25E868366642AF6BF81C08FC29E919455041A"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_walk_4dir_raw_v1.png",
+      "sha256": "2DAD6F51857E21A6DEC1E4F9EC3307560481723B4304B75D370D76B5D733B84E"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_walk_4dir_raw_v1_alpha.png",
+      "sha256": "F2568BAFEA883D7AB03C7BD4FA4EB1548CF65E9922AAFF3773A418E57E499323"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_walk_before_v6.png",
+      "sha256": "A41B1DABC648F1CC8C22DCE93F9D84B72BEBB678829056EAAD488638706FC670"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_walk_before_v7.png",
+      "sha256": "71E0580F7CE5F4AD4B98DFFED8D5FDB68EA78C98A1C97A23EE7475B3B2540CC3"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_walk_before_v8.png",
+      "sha256": "F72276DB9B986BA332C2F22F3885F19C24659EE7D1965D69D634E0672E29E6B5"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_walk_down_strip_v5.png",
+      "sha256": "141BCE163D3C0598CA925E2666870DB6EF43509963E3E9C93797DEBFE21BCE93"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_walk_down_strip_v5_alpha.png",
+      "sha256": "15871A4BC141F2821E559698B8CE1EA3221020D5F416E8B76C1820E510342F59"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_walk_left_strip_v5.png",
+      "sha256": "D94C4FE05F7D0CA91CE41950525D69991C5BFFA2B40947DEA2A1D31574FEFAC2"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_walk_left_strip_v5_alpha.png",
+      "sha256": "C55AB023613919E6B85E95FD07267A3CFF73D47CAA1AF16D18874250E93F9A8E"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_walk_right_strip_v5.png",
+      "sha256": "6929D0800F83F54929973BE3AB7D23C67A43291A05B0B929A9FFDF7B663D1CDF"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_walk_right_strip_v5_alpha.png",
+      "sha256": "460B0B5C73C30C912F5D6221310E0AA45C28CB8DB8234213FB9CE99C3A16113E"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_walk_side_v7.png",
+      "sha256": "97390932102596878653437770BF042769573796B82924250176CA8D80020D99"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_walk_side_v8.png",
+      "sha256": "458AE7A5FCF0364BAA6CCA60110C15A3D655F1AFC668973474AE8A58D590B309"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_walk_up_strip_v5.png",
+      "sha256": "2EACB0EAFBF1AC355122D5222A45C1D018B0F2430FA044667C9A2636ECF7AAFF"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_walk_up_strip_v5_alpha.png",
+      "sha256": "6E1FBF87348162C9E1A0139A9E517E40E459B4D1E2395F21C653CA6C1ADBF6B7"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_walk_v10.png",
+      "sha256": "3629F38CAB386D70CF25F371F6048E3F8945A5E4A9D71222A332D0B80A8B0280"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_walk_v13.png",
+      "sha256": "A1355A3041FF311CB19F9B83141F592D3277807DF95F15FD865A4540C870A723"
+    },
+    {
+      "path": "image/role/fz/source/chenxing_walk_v6.png",
+      "sha256": "D6082413236D999B809D4EF2A1AA0CDA53188A3EC8B58DB16242F21601DD51CC"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa/chenxing_frames.png",
+      "sha256": "EA926883C0167DE5B0FC4F1D35911677050366635F6E36978F4A1FCC014F3595"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa/chuanyang_frames.png",
+      "sha256": "1A7E3C7859DCFDE7E2F2A148536FAFA378EC1EC3431EDFB797C946D711FDB9D0"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa/pojun_frames.png",
+      "sha256": "DA0EE967B8E456FC75576A9F012A65B45CF55CC3128FE374B6E3D397B1276CAD"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa/shuangyu_frames.png",
+      "sha256": "5F87B34F876481F1739648EBE02658FCB091A8E9D79624B1C63F57549F6502A1"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v10/all_roles_4dir_preview.png",
+      "sha256": "B7CD4AE09ACE3580F14F028BA0295705996646599447562B914226AC6E682A86"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v10/chenxing_sheet.png",
+      "sha256": "A6D79EBCD03103053815F2969B35BD4348C54CA1B02E3697F5F53A14E0ED77F5"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v10/chuanyang_sheet.png",
+      "sha256": "77F6E2292521D6AE2EE5B436F7CC01030C5A076EDFE03E74DA788F0998059080"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v10/pojun_sheet.png",
+      "sha256": "33705AB2B91334832D5C0BC59B14D8A76BF1C08EBCFE9B60E5B7903BD340C1B4"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v10/shuangyu_sheet.png",
+      "sha256": "F4E4992E48CEDEE1BE188D03CE6FDD1F4F601470410131AD07F31407FDB43253"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v10/side_frame0.png",
+      "sha256": "46990A407A861239F22CA78763ADDE160E610CFD38E3948D7A9E07FC1A07D58A"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v10/sides_zoom.png",
+      "sha256": "23C576EFD5ACAA60A007C568F66986724B74660DD12A7DF244478CEF8672E985"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v10/sides_zoom_clean.png",
+      "sha256": "B13E1C269AD04B1057920801E7D4E283BD7E7B75E768837461EDB8676398CDFE"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v11/all_roles_4dir_preview.png",
+      "sha256": "D33889A99E6D7F8238E884971C9D291630836EFC6BA0E6A3F29D6C69C90AECDF"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v11/chenxing_sheet.png",
+      "sha256": "7C52560EC042031F02BFF4DF61FB86303A4A60E8167E3659EFEE01CDA6310760"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v11/chuanyang_sheet.png",
+      "sha256": "1F9FD40F4C679F0D65E8F6E757C725D59F5659FCFAFF2796BEBB81D27F86550D"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v11/pojun_sheet.png",
+      "sha256": "DC058C780B524E4A83948E9222F377C72BD8EFF91DE796BD4149872BF167CCF9"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v11/shuangyu_sheet.png",
+      "sha256": "75D4BAADF5AFFC20F099B7435CC01CF8DD4685126B0755E1D719F1A0DC83C1C0"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v11/v12_side_rows.png",
+      "sha256": "F6C5FABBE2BF38D78AAD218787156A97AC90BFD8DC61F69C1AD7DA13CA754F01"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v11/walk_preview_phases.png",
+      "sha256": "404AC73D4D4258735891D6598271498C1F7E265DC2317C8C0B0983CF840D1379"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v11clean/all_roles.png",
+      "sha256": "D33889A99E6D7F8238E884971C9D291630836EFC6BA0E6A3F29D6C69C90AECDF"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v11clean/chenxing_sheet.png",
+      "sha256": "169A05F1BBB7A8AB32679BD8EDA2B109476B0C30AE39869AE955342C6E0169AE"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v11clean/chuanyang_sheet.png",
+      "sha256": "00C8294C39A7D44296E8B6668228D87230191B643D8AB708C640D178E9270DD8"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v11clean/pojun_sheet.png",
+      "sha256": "BC692B7520570C48A1DC275783AE33537EFD4F5C1E679AC1114874DB7E848794"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v11clean/shuangyu_sheet.png",
+      "sha256": "4DA1522B1F0396F6D04AC49792FEB851EDD88AABFD443D8EEB6A15F5B7DFFC75"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v11clean/sides_zoom_clean.png",
+      "sha256": "02A9EB8E2A4709C9D37260C8A847DDE40D810E62A639E8D12F6E3B0CE6787BF8"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v13/chenxing_sheet.png",
+      "sha256": "84DC3C8191D08858640DB740D6A72D53EB0D5EA36FCE7CECB4F3D06A2A40BAE2"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v13/chuanyang_sheet.png",
+      "sha256": "634044F2AFDB670F57B7108CFC3138D15983BA525CC14C11AA8F4A1E0AC7C043"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v13/front_side_feet_detail.png",
+      "sha256": "1EF851A00FD592BFA43E52C835AA04D9CEEF7CFDE9C109492262802C1804DBC0"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v13/frontback_packed.png",
+      "sha256": "21D0021C75CFED39AFCA83128B4286B24CA7A24859CDAABCAAD30C8CD1FD35F3"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v13/frontback_raw.png",
+      "sha256": "8F802530711C411BFB1F0FB0542993F372622081BA8ACCDE1B43F7DD6BB6DCD7"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v13/pojun_sheet.png",
+      "sha256": "F804FC584F195A52678BD6F10F486070D56D7C5B6B2E549DEFE3D0EB97D03D43"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v13/shuangyu_sheet.png",
+      "sha256": "C942FCB7672F494E9B8C0D4FFF2C2E1CEA6899247C5D83FA285602567F3F95ED"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v13/side_walk_preview_phases.png",
+      "sha256": "A24573F781847DE36EEFD7FF15FB36551DC092BC3D20784378A20B9BC060BC1F"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v13/walk_preview_phases.png",
+      "sha256": "65CD27BD8E6B58050A4A0B67C60DE241871DB616C4F5D5E4D8881D37CDF92388"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/chenxing_contact_4x4_test.png",
+      "sha256": "1F7EEC0F2FB4FE6A95A80032D381FF8FFFCCD6A982E87E46501117E81F365DE1"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/chenxing_contact_4x4_v14_test.png",
+      "sha256": "8E531FF369661D3744F2ECB0A5104A451FBE686307EB7BBB0B610F5A08E6BE82"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/chenxing_contact_6x4.png",
+      "sha256": "DB480A74080C8C6639C53A9B530211579955FE5F412D262BB6C3BF61B4327BC2"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/chenxing_optflow_test.png",
+      "sha256": "99F85F5DE98E59CA2F7CB26722C83FB9B308010142F5B0CCD76929F5C4070513"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/chenxing_sheet_4x4_masktest2.png",
+      "sha256": "DA1209C21FA60CDDCE390193148C18530EDCF25A49D6870CE5D84D65ADAB3F0F"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/chenxing_sheet_4x4_test.png",
+      "sha256": "3EDC6DEB8ADFF3302134E8A511DE6A9B0969CB7CE1BA4546A54CDBF02649294B"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/chenxing_sheet_4x4_v14_test.png",
+      "sha256": "8A34EC5235EDD3398374F4FF510CFBABDF5BC0B23C13757E34E17AA45935B2EE"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/chuanyang_contact_4x4_test.png",
+      "sha256": "3A3169D21D70982A74A09753393616D78B1AFC228130143E5EE74ED8625F9167"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/chuanyang_contact_4x4_v14_test.png",
+      "sha256": "63BFEE274B39C3267871F828D0716C4BB544CB41C5F19C883196FC07063EADC5"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/chuanyang_contact_6x4.png",
+      "sha256": "21C0F089BF72272E85790270EE820F25349B1611F8C41B87A274C9037881A6F4"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/chuanyang_optflow_test.png",
+      "sha256": "D6BD41EBE8A7E99767FC95A24AC270F3EC7F28278CE993EB71D934429C9DB99C"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/chuanyang_right0_grid.png",
+      "sha256": "3B6DAFDF7F10DF6F97C093D62EC66FC3D166872677741EB6848AEC5DE407B2CF"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/chuanyang_sheet_4x4_masktest2.png",
+      "sha256": "6821718501B1B8FEA2C2E2B9A91C8D7F11FCEF71037D2BBB598A81391480F169"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/chuanyang_sheet_4x4_test.png",
+      "sha256": "755189E636D550AB6CE6E7F9B7BEAC67E80DAE0560FAA42CF39BF9F036922FB6"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/chuanyang_sheet_4x4_v14_test.png",
+      "sha256": "8730AA71221AD016DEEBB8B83519E06269175EF4833C68C47E272CCE3F1AB9A9"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/pojun_contact_4x4_test.png",
+      "sha256": "696A9894F2B5B9B331B38388524F99DEC708B0788B6CDA160BB560A4EBCC32AC"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/pojun_contact_4x4_v14_test.png",
+      "sha256": "5ADF3127BF587058003D8DDF0148A4F117B2BB65357E6AB04FFBA004E761B44A"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/pojun_contact_6x4.png",
+      "sha256": "94FC10FEE375AAAB5A5C31DA8E4693DADE52DB82EC2D759F3B4145D3A5D8CF74"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/pojun_down_contact.png",
+      "sha256": "20F99D892A2710AB97892D7115E51032349400E16C54D0BE471AE6CAD1AE2D91"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/pojun_left_0_2_grid.png",
+      "sha256": "04DD4C68A42FDB0B9AEC592B196FE2FF5ED9D9DED84563CD55BEF6E225202EC9"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/pojun_optflow_test.png",
+      "sha256": "850748CA187FD02EF937BF61D0DA9239BD670ECBB0F08B315ED66730CD4CF1EA"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/pojun_sheet_4x4_masktest2.png",
+      "sha256": "7597AC59372AC2CB5ACDE4EADD87B10E488CAEB8FA9FF02BAE5AF6FD53574FC9"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/pojun_sheet_4x4_test.png",
+      "sha256": "9F94F66AF03BBE34771ED65E8A3C75D9F3E5776DF0F3E848E835B9B5F4DD8D94"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/pojun_sheet_4x4_v14_test.png",
+      "sha256": "AB8C339BEFB941ECD9991F7CADC28D9A52BC3449E8FA35E4D7C13F4FE8200D8F"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/pojun_side_mask_test.png",
+      "sha256": "2AF14DD1A4EAB41243F7272CB9933200A8C52A7B7CDC454B30A739A2C069860F"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/pojun_side_onefoot_test.png",
+      "sha256": "120A2B5B897BE3CCFE3A4427A8C096BA0C443655CABCE75BD4A72E374EEF7085"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/pojun_side_v5_contact.png",
+      "sha256": "BD37A9DC446E78733053E58AF7E69BB8FDE002049C7863101027404FB1194E87"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/shuangyu_contact_4x4_test.png",
+      "sha256": "3249968F100E6AF6BD1BCD41910973CF32525C4A75CA6CA2C4A0C3B7FA6E73C4"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/shuangyu_contact_4x4_v14_test.png",
+      "sha256": "BE2AC8C27D129909345B36AFD375E0554EF8EAA86A5F7705DA9887E7BF90A9A5"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/shuangyu_contact_6x4.png",
+      "sha256": "63B45F65696AC54291AB9FC70393CDA99DA51B23BB74A267BBD9577408703B7B"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/shuangyu_optflow_test.png",
+      "sha256": "A16CA2984E52C7954B437EAFA39FACBFB94BC7067FB410DB085945C49FE569D3"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/shuangyu_sheet_4x4_masktest2.png",
+      "sha256": "1F80B7A41159974CD3E89BBC603836C431EA6A67314F9B50AEFB63A82DEBDB02"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/shuangyu_sheet_4x4_test.png",
+      "sha256": "CEB63C7AFC1B593943BFD14617041F27A7A2B7EB0C44BCA79064B4986F8BBE3C"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/shuangyu_sheet_4x4_v14_test.png",
+      "sha256": "4880D9911C8C3DAA31B6B82BD1520835E643EB70C2DCA90420E3C1ACD3DBCBF3"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v14/walk_preview_v14_candidate_phases.png",
+      "sha256": "1C890954E7E11F02E8C3BE62030E985589EF92AF16ACAEEEB7CC1EE431E2F749"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v4/chenxing_frames.png",
+      "sha256": "252EFA7E80A1A131BAEC286BA473CC2AA0DE2D6583C377D7C82AE692262A9121"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v4/chuanyang_frames.png",
+      "sha256": "BD551791BC4BFBF14A799BDF4216B323FAB0CFE13E43B699FEB958F61F671D97"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v4/pojun_frames.png",
+      "sha256": "D6552E1579429E479C49F9D3B8EC80B2664D1F981AC49473542B1F1D414008DC"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v4/shuangyu_frames.png",
+      "sha256": "D461ED3AA6136BF866173783683B645CC92FD5EAE14DEBA7A95B053D34F60FA7"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v5/chenxing_frames.png",
+      "sha256": "2C65411E4F6F18A293C3A10EEF3745B8A6BCEE0CFB8CA88138A827FB0ADA9BDA"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v5/chuanyang_frames.png",
+      "sha256": "83D615AE4CA3FC7AFC69E057ECF515D0517F81A5137ADD6896B303B95E2411F8"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v5/pojun_frames.png",
+      "sha256": "BA2939D857DBC3AD6F382D2DA544274BBD155C327004C19493FCEA773ED64C8D"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v5/shuangyu_frames.png",
+      "sha256": "69CAECC2D89162B0913231CE1AFFFD243E3216A196ADF288257B8E66AF443AE3"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v6/chenxing_sheet.png",
+      "sha256": "71E0580F7CE5F4AD4B98DFFED8D5FDB68EA78C98A1C97A23EE7475B3B2540CC3"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v6/chuanyang_sheet.png",
+      "sha256": "1AF573BB77EC6F4CD0ECE544FA5A3BBCAA88E5AD437636B5FC7815641B1923D9"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v6/pojun_sheet.png",
+      "sha256": "16FF3FB34BC72846476356A9AFAD08E755D980932EEE7C0F5DB83E415E3FE115"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v6/shuangyu_sheet.png",
+      "sha256": "1C55E5A11DDDBBABFFD7CE965CA19C1F9A09AA7D8E8017A79C4913215B835553"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v7/side_review.png",
+      "sha256": "1B616379E6E44367346792BDD49DE226B980B76437D72B1F079385FA48673C84"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v8/chenxing_candidate.png",
+      "sha256": "CBBF6F40F6993F43C4CECA1CF6029E369E24FBD3C2F6F9112487C154F3C3740F"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v8/chuanyang_candidate.png",
+      "sha256": "BFAF75B11039D0230616177C73C9D38DC0019726F8DB51F6DA97FC2D64D0FE44"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v8/pojun_candidate.png",
+      "sha256": "DC220C131B4B7D05DC7002289D1E0B4145B55D2B82EFDA45A46539565579F3D3"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v8/shuangyu_candidate.png",
+      "sha256": "BDEA28BBE75DCD99302F8A9735C0A30C4A76D93A0D9990E55FD98E1C38B0C840"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v8/side_review.png",
+      "sha256": "53F06599DCCA6053FD423B5B351F684D36AFC550AB3D4C26ED91AA7B93FFD1FD"
+    },
+    {
+      "path": "image/role/walk_4dir_review/qa_v9/pojun_candidate.png",
+      "sha256": "FE680E8484DF03448BF15282F02F425D496B72F34D9624D618F83E98F5A74CCB"
+    },
+    {
+      "path": "image/role/zs/pojun_icon.png",
+      "sha256": "1145E689E61BD014CA53FFF638F8E073007B281B1A17ED233734C390A5BD9C86"
+    },
+    {
+      "path": "image/role/zs/pojun_idle.png",
+      "sha256": "5ACF74E9E5F4633B95254F377AC019E626EBFB5F1854EA55980992AB62EFD905"
+    },
+    {
+      "path": "image/role/zs/pojun_sheet.png",
+      "sha256": "94C303131F45861759301138BD6FB588C57798BB67C43E383744DA54D8D33B1E"
+    },
+    {
+      "path": "image/role/zs/pojun_sprite_frames.tres",
+      "sha256": "FC8183CF9AA41752480BD0D6C400F47C8DD7AB4F730EC6AFE6571FA905ECC9B8"
+    },
+    {
+      "path": "image/role/zs/pojun_spritesheet.png",
+      "sha256": "1F3245B1886E353F85F9A98087D357D8D70CDA987EF6DFA21EB99E9AEAA07FE5"
+    },
+    {
+      "path": "image/role/zs/pojun_walk_4dir.png",
+      "sha256": "72D378E864005C1F1519416A93AD6F0CE89D5AA3D7A3B51C7C771B49987BB454"
+    },
+    {
+      "path": "image/role/zs/pojun_walk_frames.tres",
+      "sha256": "4428E562D05CFDB90EE595283DD7D723A201061A948C7AD9027CF946F3AD4B60"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk4_keyframes_v4.png",
+      "sha256": "AD474673B5CE9A10F128BA852C5E87F90C4B10B10F479D5C1EC9BE99AC8BB27D"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk4_keyframes_v4_alpha.png",
+      "sha256": "38A8FA93791704D231301EC64077434FFC7F8A04F18107A0ACF7F4A51A32372B"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_4dir_edit_v2.png",
+      "sha256": "A57E0AF792F35EF1CD6459D6A976917990DAC7F2540190FE43DC678F9CBB061A"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_4dir_raw_v1.png",
+      "sha256": "2374DD90AF843AF98632D01B9ABD3D866AE5E46DB7E1E9A4275F00D4E7F1F076"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_4dir_raw_v1_alpha.png",
+      "sha256": "4FFF0D953432DA9A6D94F25C111AF1AA9D740490D8BC31161818DC088EB475FB"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_4dir_reference_v3.png",
+      "sha256": "D26589BB48EDB07807139996E9D01104CF9195CE87FCE41A0AB000803EB36398"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_4dir_reference_v3_alpha.png",
+      "sha256": "65082DAAF18BBEE1ADBC02C7C0E0B9719FEFFE2E4A8217B6F46715F500BE885A"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_before_v6.png",
+      "sha256": "74D3FE9004E9D5273AB6A7858D86470725E37329869A576D60847D8BB1FCC15E"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_before_v7.png",
+      "sha256": "16FF3FB34BC72846476356A9AFAD08E755D980932EEE7C0F5DB83E415E3FE115"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_before_v8.png",
+      "sha256": "2F86D90096774B21D36BADBEF6B88D387C59A0C0ADAD51711934F63C25920528"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_down_strip_v5.png",
+      "sha256": "3EDE8495FFDDEBF4B10EFD1B6A98EBF364DDD7124941BD11517C577F1960A2D2"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_down_strip_v5_alpha.png",
+      "sha256": "7BC7E9A3D28C66FE309456750DDAE8D6483B05B9D9649AD7DCF6A28E1C7C1D95"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_left_strip_v5.png",
+      "sha256": "9DA946B978324E502D490CC6887A2824C276FA1CD49EB79C362383C31EC47111"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_left_strip_v5_alpha.png",
+      "sha256": "09FA0C67681EAD5A98D3809D2CA28D255F04B1320732567E4D154041310FBE56"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_right_strip_v5.png",
+      "sha256": "DE4D76DD51347E69FE14E3B71B706E98C28B751D033EF8500593EBE7266D0D91"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_right_strip_v5_alpha.png",
+      "sha256": "3231841F5A40DC7617079E3C1F102ED2B91E38236D95B40A4995C115E827547E"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_side_v7.png",
+      "sha256": "3807386D6955933AD4BCE19FC83B79132D4EB2B60034152BF5F844E710B927BB"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_side_v8.png",
+      "sha256": "2461A625E61BD48040EF1D5364E9E4B05C0B1367CA40D430EAD627FE409D804F"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_side_v9.png",
+      "sha256": "601DBEEEA91F5E1862C5168D1535356144820AB2ACEC6270251836A8DDA012E7"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_up_strip_v5.png",
+      "sha256": "35715FA10B91ADA51D0E541D82A265E4C46781F5A339FDAACED5B949CA266EA1"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_up_strip_v5_alpha.png",
+      "sha256": "C5EFEC87E5A2860A5738C5DF21DDEFCF7B372F8AD029E8823F0B63F569817840"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_v10.png",
+      "sha256": "6A6D0D99B96D962ED8EF797C0865AA77F0F670EB1B1343930CD9911BBB84AC70"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_v13.png",
+      "sha256": "AD4CD81BF4A93FCB7A756B37235BF3B67D8380914A3788C040836278528CA4E2"
+    },
+    {
+      "path": "image/role/zs/source/pojun_walk_v6.png",
+      "sha256": "0ADE0A68B7CFB3E266DD08D05E74294F8EE7D1F47B738D05C43A13C2DF09993F"
+    }
+  ],
+  "limits": [
+    "Main character redraw deferred by user",
+    "NPC and monster bitmap redraw, other region art, login/camp and Android remain",
+    "Town screenshot fixtures mark all buildings built and freeze auto-interaction; not unlock or movement proof",
+    "Four-role input uses copied completed campaign saves; earlier fixture sale income is not economic evidence",
+    "Issue43 engine exit-time resource diagnostics remain",
+    "Overall content remains 28/36 main steps, 18/36 side quests, 6/8 bosses"
+  ]
+}

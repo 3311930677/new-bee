@@ -262,7 +262,11 @@ func _campaign_demo() -> void:
 		return
 	if int(catchup.exp) > 0:
 		G._pending_campaign_note = "旅途经验补记 +%d · Lv%d" % [int(catchup.exp), int(G.prog.level)]
-	var id := "frost_post" if _scene in ["campaign_catchup", "gear_world"] else ("lorin_wilds" if _scene in ["campaign_return", "style_city", "style_forge"] else ("maple_road" if _scene == "style_battle" else "rift_mine_road"))
+	if _scene.begins_with("town_"):
+		for building in G.city_buildings():
+			var bid := String(building.id)
+			if not G.city.built.has(bid): G.city.built.append(bid) # Layout fixture, not unlock proof.
+	var id := "frost_post" if _scene in ["campaign_catchup", "gear_world"] else ("lorin_wilds" if _scene in ["campaign_return", "style_city", "style_forge"] or _scene.begins_with("town_") else ("maple_road" if _scene == "style_battle" else "rift_mine_road"))
 	var run := RunState.new()
 	run.setup({"theme": String(TableCache.main_world_map(id).get("theme", "forest")), "role_id": G.selected_role,
 		"level": int(G.prog.level), "active_pet": G.companion_active(), "potions": 2, "seed": 91})
@@ -273,8 +277,19 @@ func _campaign_demo() -> void:
 	add_child(world)
 	await get_tree().process_frame
 	if _scene in ["campaign_catchup", "gear_world", "style_city"]: world._player.position = Vector2(480, 930)
+	elif _scene.begins_with("town_north"): world._player.position = Vector2(480, 340)
+	elif _scene.begins_with("town_middle"): world._player.position = Vector2(480, 690)
+	elif _scene.begins_with("town_south"): world._player.position = Vector2(480, 1030)
 	elif _scene == "style_forge": world._player.position = Vector2(385, 1030)
 	elif not world._monsters.is_empty(): world._player.position = world._monsters[0].position + Vector2(85, 60)
+	if _scene.begins_with("town_") and world._city_content != null:
+		if _scene.ends_with("_left"): world._player.position.x = 305
+		elif _scene.ends_with("_right"): world._player.position.x = 655
+		world._city_content.call("_close_panel")
+		world._city_content.set_process(false) # Freeze auto-interaction only in staged art screenshots.
+		world._city_content.set_physics_process(false)
+		world.set_process(false)
+		world.set_physics_process(false)
 	if _scene == "style_battle" and not world._monsters.is_empty():
 		world._start_battle(world._monsters[0])
 		if world._battle != null: world._battle.speed = 0.0 # QA composition, not input replay.
@@ -322,10 +337,16 @@ func _gear_demo() -> void:
 	bag._refresh()
 
 func _setup() -> void:
+	if _scene in ["workshop_low", "workshop_progress"]:
+		_growth_demo()
+		G.equip_state("sword")["lv"] = 1 if _scene == "workshop_low" else 3
+		G.equip_state("sword")["enhance_failures"] = 0 if _scene == "workshop_low" else 2
+		add_child(EquipPanel.new())
+		return
 	if _scene == "style_bag":
 		await _gear_demo()
 		return
-	if _scene in ["style_city", "style_battle", "style_forge"]:
+	if _scene in ["style_city", "style_battle", "style_forge"] or _scene.begins_with("town_"):
 		await _campaign_demo()
 		return
 	if _scene.begins_with("gear_"):

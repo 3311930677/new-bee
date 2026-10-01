@@ -593,6 +593,16 @@ static func _validate_inventory(inv: Dictionary, equip_v: Variant) -> Dictionary
 			var lv_v: Variant = it.get("lv")
 			if not (lv_v is int or lv_v is float) or int(lv_v) < 0:
 				return {"ok": false, "err": "装备实例 uid %d 的强化等级应为非负数值（%s）" % [uid, str(lv_v)]}
+			if it.has("enhance_failures"):
+				var failures: Variant = it.enhance_failures
+				var ec: Dictionary = cfg.get("enhance", {}) if cfg_ok else {}
+				var target := int(lv_v) + 1
+				var limit := 0 if target <= int(ec.get("guaranteed_target", 3)) or int(lv_v) >= int(ec.get("max_level", 20)) else ceili(
+					(1.0 - pow(float(ec.get("success_base", 0.9)), float(target))) \
+					/ maxf(0.001, float(ec.get("failure_rate_bonus", 0.15))))
+				if not (failures is int or failures is float) or float(failures) != float(int(failures)) \
+						or int(failures) < 0 or int(failures) > limit:
+					return {"ok": false, "err": "装备实例 uid %d 的强化积累非法" % uid}
 			for gk in ["gems", "affixes"]:
 				if it.has(gk) and not (it.get(gk) is Array):
 					return {"ok": false, "err": "装备实例 uid %d 的 %s 应为数组" % [uid, gk]}
