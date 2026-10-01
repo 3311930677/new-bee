@@ -34,6 +34,8 @@ var act2 := false
 var act3_front := false
 var act3 := false
 
+var fullbag_fixture := true # Keep legacy full-bag coverage; natural-budget runs opt out.
+
 var _map: MapScene = null
 var _reason := ""
 
@@ -157,11 +159,11 @@ func _run_phase_a() -> void:
 		return
 	if not await _need("s10"):
 		return
-	if G.inv_count() != G.inv_capacity():
+	if fullbag_fixture and G.inv_count() != G.inv_capacity():
 		return _bad("碑灵胜利后背包格数变化：%d/%d" % [G.inv_count(), G.inv_capacity()])
-	if G.inv_pending().is_empty():
+	if fullbag_fixture and G.inv_pending().is_empty():
 		return _bad("满背包时碑灵掉落没有进待领取箱")
-	print("PLAY_EVENT fullbag_drop pending=%d bag=%d/%d"
+	print(("PLAY_EVENT fullbag_drop pending=%d bag=%d/%d" if fullbag_fixture else "PLAY_EVENT natural_drop pending=%d bag=%d/%d")
 		% [G.inv_pending().size(), G.inv_count(), G.inv_capacity()])
 
 	# --- 返城：碑窟 → 断碑坡 → 枫林古道 → 边城 ---
@@ -494,6 +496,9 @@ func _equip_all_slots() -> void:
 ## 满背包预置（setup，非玩法进度）：与「不要直接给道具」不冲突——只发**装备实例**占格，
 #  不涉及金币/经验/任务物/主线状态，用于构造「满包掉落进待领取箱」这一真实边界。
 func _fill_bag() -> void:
+	if not fullbag_fixture:
+		print("PLAY_SETUP natural_bag=%d/%d no_fixture_items=true" % [G.inv_count(),G.inv_capacity()])
+		return
 	var cap := G.inv_capacity()
 	var guard := 0
 	while G.inv_count() < cap and guard < 400:

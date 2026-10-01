@@ -2068,7 +2068,7 @@ class _Building extends StaticBody2D:
 		if hover:
 			var bob := sin(_t * 2.4) * 3.0
 			var top := _art_top()
-			var tip := Vector2(0, top - 16.0 + bob)
+			var tip := Vector2(-54, top - 12.0 + bob)
 			draw_colored_polygon([tip + Vector2(0, -7), tip + Vector2(6, 3), tip + Vector2(-6, 3)],
 				Color(G.GOLD_BRIGHT.r, G.GOLD_BRIGHT.g, G.GOLD_BRIGHT.b, 0.9))
 			var action := String(data.get("action", ""))
@@ -2095,8 +2095,9 @@ class _Building extends StaticBody2D:
 		var tex: Texture2D = G.res_tex(icon_name)
 		if tex == null:
 			return
-		var icon_size := 28.0
-		draw_texture_rect(tex, Rect2(-icon_size * 0.5, _art_top() - 30.0, icon_size, icon_size), false,
+		var icon_size := 24.0
+		# Name plaque occupies x=-38..38. Keep function art beside it, never over characters.
+		draw_texture_rect(tex, Rect2(44, _art_top() - 25.0, icon_size, icon_size), false,
 			Color(1.0, 1.0, 1.0, 0.92))
 
 

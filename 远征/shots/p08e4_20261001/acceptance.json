@@ -1,0 +1,853 @@
+{
+  "date": "2026-10-01",
+  "baseline": "3ac80ed",
+  "status": "FIRST_THREE_ACTS_CONSERVATIVE_EQUIPMENT_BUDGET_VERIFIED",
+  "real_save_sha256": "C5D29EE55C033619C4F5232D55A6C4F186D40ADD556DB61EE0D776B9FDA2660C",
+  "fixed_story_gold_by_act": [
+    1110,
+    1140,
+    1630
+  ],
+  "fixed_story_total": 3880,
+  "gold_spent": 4200,
+  "stones_spent": 16,
+  "roles": [
+    {
+      "role": "zs",
+      "milestones": [
+        {
+          "after": {
+            "bag": 4.0,
+            "items": {
+              "aptitude_fruit": 1.0,
+              "enhance_stone": 4.0,
+              "pet_food": 1.0,
+              "refine_stone": 1.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 920.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "before": {
+            "bag": 4.0,
+            "items": {
+              "aptitude_fruit": 1.0,
+              "enhance_stone": 7.0,
+              "pet_food": 1.0,
+              "refine_stone": 1.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 1520.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "chapter": "act1",
+          "gold_cost": 600.0,
+          "stone_cost": 3.0,
+          "targets": {
+            "armor": 1.0,
+            "sword": 2.0
+          }
+        },
+        {
+          "after": {
+            "bag": 7.0,
+            "items": {
+              "aptitude_fruit": 1.0,
+              "enhance_stone": 8.0,
+              "gate_clue": 0.0,
+              "pet_food": 1.0,
+              "refine_stone": 4.0,
+              "salt_ledger": 0.0,
+              "salt_pack": 1.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0,
+              "tide_core": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 1195.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "before": {
+            "bag": 7.0,
+            "items": {
+              "aptitude_fruit": 1.0,
+              "enhance_stone": 13.0,
+              "gate_clue": 0.0,
+              "pet_food": 1.0,
+              "refine_stone": 4.0,
+              "salt_ledger": 0.0,
+              "salt_pack": 1.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0,
+              "tide_core": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 2545.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "chapter": "act2",
+          "gold_cost": 1350.0,
+          "stone_cost": 5.0,
+          "targets": {
+            "armor": 2.0,
+            "sword": 3.0
+          }
+        },
+        {
+          "after": {
+            "bag": 12.0,
+            "items": {
+              "aptitude_fruit": 1.0,
+              "enhance_stone": 11.0,
+              "frost_letter": 0.0,
+              "frost_reply": 0.0,
+              "gate_clue": 0.0,
+              "gate_stamp": 0.0,
+              "mine_record": 0.0,
+              "pet_food": 4.0,
+              "refine_stone": 10.0,
+              "salt_ledger": 0.0,
+              "salt_pack": 1.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0,
+              "tide_core": 0.0,
+              "veil_seal": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 1665.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "before": {
+            "bag": 12.0,
+            "items": {
+              "aptitude_fruit": 1.0,
+              "enhance_stone": 19.0,
+              "frost_letter": 0.0,
+              "frost_reply": 0.0,
+              "gate_clue": 0.0,
+              "gate_stamp": 0.0,
+              "mine_record": 0.0,
+              "pet_food": 4.0,
+              "refine_stone": 10.0,
+              "salt_ledger": 0.0,
+              "salt_pack": 1.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0,
+              "tide_core": 0.0,
+              "veil_seal": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 3915.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "chapter": "act3",
+          "gold_cost": 2250.0,
+          "stone_cost": 8.0,
+          "targets": {
+            "accessory": 2.0,
+            "armor": 3.0,
+            "sword": 3.0
+          }
+        }
+      ],
+      "final_gold": 1665,
+      "final_stones": 11,
+      "final_food": 4,
+      "save_a": {
+        "path": "tools/_logs/p08e4_budget_zs_fs/save_playthrough_zs_a.json",
+        "sha256": "872942A1ADA1EBE33F02657EBC60EFF5545407DA9E1C4A8643CF3BEE8EFBBA24"
+      },
+      "save_b": {
+        "path": "tools/_logs/p08e4_budget_zs_fs/save_playthrough_zs_b.json",
+        "sha256": "872942A1ADA1EBE33F02657EBC60EFF5545407DA9E1C4A8643CF3BEE8EFBBA24"
+      },
+      "logs": [
+        {
+          "path": "tools/_logs/p08e4_budget_zs_fs/playthrough_zs_a.log",
+          "sha256": "C272FFB0F393EEA6C7F89EC08CC3BFEF2150BCF5BDF662DE7757AA3430B71CB6"
+        },
+        {
+          "path": "tools/_logs/p08e4_budget_zs_fs/playthrough_zs_b.log",
+          "sha256": "8A04F2D323978CB87FEBF9D9E905DDCFA47B4DE7AEF241B105FE325157C008E2"
+        }
+      ],
+      "a_b_bytes_equal": true
+    },
+    {
+      "role": "fs",
+      "milestones": [
+        {
+          "after": {
+            "bag": 4.0,
+            "items": {
+              "aptitude_fruit": 1.0,
+              "enhance_stone": 4.0,
+              "evolve_crystal": 1.0,
+              "refine_stone": 0.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 920.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "before": {
+            "bag": 4.0,
+            "items": {
+              "aptitude_fruit": 1.0,
+              "enhance_stone": 7.0,
+              "evolve_crystal": 1.0,
+              "refine_stone": 0.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 1520.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "chapter": "act1",
+          "gold_cost": 600.0,
+          "stone_cost": 3.0,
+          "targets": {
+            "armor": 1.0,
+            "staff": 2.0
+          }
+        },
+        {
+          "after": {
+            "bag": 7.0,
+            "items": {
+              "aptitude_fruit": 2.0,
+              "enhance_stone": 8.0,
+              "evolve_crystal": 1.0,
+              "gate_clue": 0.0,
+              "refine_stone": 2.0,
+              "salt_ledger": 0.0,
+              "salt_pack": 1.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0,
+              "tide_core": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 1195.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "before": {
+            "bag": 7.0,
+            "items": {
+              "aptitude_fruit": 2.0,
+              "enhance_stone": 13.0,
+              "evolve_crystal": 1.0,
+              "gate_clue": 0.0,
+              "refine_stone": 2.0,
+              "salt_ledger": 0.0,
+              "salt_pack": 1.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0,
+              "tide_core": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 2545.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "chapter": "act2",
+          "gold_cost": 1350.0,
+          "stone_cost": 5.0,
+          "targets": {
+            "armor": 2.0,
+            "staff": 3.0
+          }
+        },
+        {
+          "after": {
+            "bag": 12.0,
+            "items": {
+              "aptitude_fruit": 3.0,
+              "enhance_stone": 13.0,
+              "evolve_crystal": 2.0,
+              "frost_letter": 0.0,
+              "frost_reply": 0.0,
+              "gate_clue": 0.0,
+              "gate_stamp": 0.0,
+              "lock_rune": 1.0,
+              "mine_record": 0.0,
+              "pet_food": 3.0,
+              "refine_stone": 6.0,
+              "salt_ledger": 0.0,
+              "salt_pack": 1.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0,
+              "tide_core": 0.0,
+              "veil_seal": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 1665.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "before": {
+            "bag": 12.0,
+            "items": {
+              "aptitude_fruit": 3.0,
+              "enhance_stone": 21.0,
+              "evolve_crystal": 2.0,
+              "frost_letter": 0.0,
+              "frost_reply": 0.0,
+              "gate_clue": 0.0,
+              "gate_stamp": 0.0,
+              "lock_rune": 1.0,
+              "mine_record": 0.0,
+              "pet_food": 3.0,
+              "refine_stone": 6.0,
+              "salt_ledger": 0.0,
+              "salt_pack": 1.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0,
+              "tide_core": 0.0,
+              "veil_seal": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 3915.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "chapter": "act3",
+          "gold_cost": 2250.0,
+          "stone_cost": 8.0,
+          "targets": {
+            "accessory": 2.0,
+            "armor": 3.0,
+            "staff": 3.0
+          }
+        }
+      ],
+      "final_gold": 1665,
+      "final_stones": 13,
+      "final_food": 3,
+      "save_a": {
+        "path": "tools/_logs/p08e4_budget_zs_fs/save_playthrough_fs_a.json",
+        "sha256": "75EBFD9EDA483B320F7B73EDC5323720C6B53A51AA34043D3A198894D4676F7B"
+      },
+      "save_b": {
+        "path": "tools/_logs/p08e4_budget_zs_fs/save_playthrough_fs_b.json",
+        "sha256": "75EBFD9EDA483B320F7B73EDC5323720C6B53A51AA34043D3A198894D4676F7B"
+      },
+      "logs": [
+        {
+          "path": "tools/_logs/p08e4_budget_zs_fs/playthrough_fs_a.log",
+          "sha256": "32CFBC8953E523BED1C194AFAF04274D09DDC407D5FD08254287A34EC390B03A"
+        },
+        {
+          "path": "tools/_logs/p08e4_budget_zs_fs/playthrough_fs_b.log",
+          "sha256": "CF2F9EB9AAD0FEDF9D4306A387B1AF373C68B4AA4FB04EDB4E1F7CA5C7CCF0B7"
+        }
+      ],
+      "a_b_bytes_equal": true
+    },
+    {
+      "role": "ck",
+      "milestones": [
+        {
+          "after": {
+            "bag": 4.0,
+            "items": {
+              "enhance_stone": 4.0,
+              "refine_stone": 0.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 920.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "before": {
+            "bag": 4.0,
+            "items": {
+              "enhance_stone": 7.0,
+              "refine_stone": 0.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 1520.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "chapter": "act1",
+          "gold_cost": 600.0,
+          "stone_cost": 3.0,
+          "targets": {
+            "armor": 1.0,
+            "spear": 2.0
+          }
+        },
+        {
+          "after": {
+            "bag": 7.0,
+            "items": {
+              "enhance_stone": 9.0,
+              "gate_clue": 0.0,
+              "pet_food": 1.0,
+              "refine_stone": 3.0,
+              "salt_ledger": 0.0,
+              "salt_pack": 1.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0,
+              "tide_core": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 1195.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "before": {
+            "bag": 7.0,
+            "items": {
+              "enhance_stone": 14.0,
+              "gate_clue": 0.0,
+              "pet_food": 1.0,
+              "refine_stone": 3.0,
+              "salt_ledger": 0.0,
+              "salt_pack": 1.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0,
+              "tide_core": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 2545.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "chapter": "act2",
+          "gold_cost": 1350.0,
+          "stone_cost": 5.0,
+          "targets": {
+            "armor": 2.0,
+            "spear": 3.0
+          }
+        },
+        {
+          "after": {
+            "bag": 12.0,
+            "items": {
+              "aptitude_fruit": 2.0,
+              "enhance_stone": 11.0,
+              "evolve_crystal": 2.0,
+              "frost_letter": 0.0,
+              "frost_reply": 0.0,
+              "gate_clue": 0.0,
+              "gate_stamp": 0.0,
+              "mine_record": 0.0,
+              "pet_food": 4.0,
+              "refine_stone": 9.0,
+              "salt_ledger": 0.0,
+              "salt_pack": 1.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0,
+              "tide_core": 0.0,
+              "veil_seal": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 1665.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "before": {
+            "bag": 12.0,
+            "items": {
+              "aptitude_fruit": 2.0,
+              "enhance_stone": 19.0,
+              "evolve_crystal": 2.0,
+              "frost_letter": 0.0,
+              "frost_reply": 0.0,
+              "gate_clue": 0.0,
+              "gate_stamp": 0.0,
+              "mine_record": 0.0,
+              "pet_food": 4.0,
+              "refine_stone": 9.0,
+              "salt_ledger": 0.0,
+              "salt_pack": 1.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0,
+              "tide_core": 0.0,
+              "veil_seal": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 3915.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "chapter": "act3",
+          "gold_cost": 2250.0,
+          "stone_cost": 8.0,
+          "targets": {
+            "accessory": 2.0,
+            "armor": 3.0,
+            "spear": 3.0
+          }
+        }
+      ],
+      "final_gold": 1665,
+      "final_stones": 11,
+      "final_food": 4,
+      "save_a": {
+        "path": "tools/_logs/p08e4_budget_ck_fz/save_playthrough_ck_a.json",
+        "sha256": "C43CA7BB4CDA28784D0378F1E66333C5DB2B761104155E9211A5D2E967B5D703"
+      },
+      "save_b": {
+        "path": "tools/_logs/p08e4_budget_ck_fz/save_playthrough_ck_b.json",
+        "sha256": "C43CA7BB4CDA28784D0378F1E66333C5DB2B761104155E9211A5D2E967B5D703"
+      },
+      "logs": [
+        {
+          "path": "tools/_logs/p08e4_budget_ck_fz/playthrough_ck_a.log",
+          "sha256": "786BDEDB65C1FDF0EFB483FCED9C70FB03F6637D5168D82B0DA5F547D32EC033"
+        },
+        {
+          "path": "tools/_logs/p08e4_budget_ck_fz/playthrough_ck_b.log",
+          "sha256": "B203318D83A1DB8F2D8624A2C02C693A0554F44F61F309EEBD329D79D737A15B"
+        }
+      ],
+      "a_b_bytes_equal": true
+    },
+    {
+      "role": "fz",
+      "milestones": [
+        {
+          "after": {
+            "bag": 4.0,
+            "items": {
+              "enhance_stone": 6.0,
+              "evolve_crystal": 1.0,
+              "pet_food": 1.0,
+              "refine_stone": 0.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 920.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "before": {
+            "bag": 4.0,
+            "items": {
+              "enhance_stone": 9.0,
+              "evolve_crystal": 1.0,
+              "pet_food": 1.0,
+              "refine_stone": 0.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 1520.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "chapter": "act1",
+          "gold_cost": 600.0,
+          "stone_cost": 3.0,
+          "targets": {
+            "armor": 1.0,
+            "hammer": 2.0
+          }
+        },
+        {
+          "after": {
+            "bag": 7.0,
+            "items": {
+              "enhance_stone": 9.0,
+              "evolve_crystal": 2.0,
+              "gate_clue": 0.0,
+              "pet_food": 1.0,
+              "refine_stone": 3.0,
+              "salt_ledger": 0.0,
+              "salt_pack": 1.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0,
+              "tide_core": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 1195.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "before": {
+            "bag": 7.0,
+            "items": {
+              "enhance_stone": 14.0,
+              "evolve_crystal": 2.0,
+              "gate_clue": 0.0,
+              "pet_food": 1.0,
+              "refine_stone": 3.0,
+              "salt_ledger": 0.0,
+              "salt_pack": 1.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0,
+              "tide_core": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 2545.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "chapter": "act2",
+          "gold_cost": 1350.0,
+          "stone_cost": 5.0,
+          "targets": {
+            "armor": 2.0,
+            "hammer": 3.0
+          }
+        },
+        {
+          "after": {
+            "bag": 12.0,
+            "items": {
+              "aptitude_fruit": 1.0,
+              "enhance_stone": 11.0,
+              "evolve_crystal": 2.0,
+              "frost_letter": 0.0,
+              "frost_reply": 0.0,
+              "gate_clue": 0.0,
+              "gate_stamp": 0.0,
+              "mine_record": 0.0,
+              "pet_food": 5.0,
+              "refine_stone": 8.0,
+              "salt_ledger": 0.0,
+              "salt_pack": 1.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0,
+              "tide_core": 0.0,
+              "veil_seal": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 1665.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "before": {
+            "bag": 12.0,
+            "items": {
+              "aptitude_fruit": 1.0,
+              "enhance_stone": 19.0,
+              "evolve_crystal": 2.0,
+              "frost_letter": 0.0,
+              "frost_reply": 0.0,
+              "gate_clue": 0.0,
+              "gate_stamp": 0.0,
+              "mine_record": 0.0,
+              "pet_food": 5.0,
+              "refine_stone": 8.0,
+              "salt_ledger": 0.0,
+              "salt_pack": 1.0,
+              "stele_fragment": 0.0,
+              "ticket_sweep": 1.0,
+              "ticket_ten": 0.0,
+              "tide_core": 0.0,
+              "veil_seal": 0.0
+            },
+            "wallet": {
+              "expedition": 0.0,
+              "gold": 3915.0,
+              "honor": 0.0,
+              "soul": 0.0
+            }
+          },
+          "chapter": "act3",
+          "gold_cost": 2250.0,
+          "stone_cost": 8.0,
+          "targets": {
+            "accessory": 2.0,
+            "armor": 3.0,
+            "hammer": 3.0
+          }
+        }
+      ],
+      "final_gold": 1665,
+      "final_stones": 11,
+      "final_food": 5,
+      "save_a": {
+        "path": "tools/_logs/p08e4_budget_ck_fz/save_playthrough_fz_a.json",
+        "sha256": "D4DE5C3AEFD702921A190E6E1E39619FC503AF40E3EC003A0912A69B4D07C0A8"
+      },
+      "save_b": {
+        "path": "tools/_logs/p08e4_budget_ck_fz/save_playthrough_fz_b.json",
+        "sha256": "D4DE5C3AEFD702921A190E6E1E39619FC503AF40E3EC003A0912A69B4D07C0A8"
+      },
+      "logs": [
+        {
+          "path": "tools/_logs/p08e4_budget_ck_fz/playthrough_fz_a.log",
+          "sha256": "AC5FF2E54FF1F47F87671FAEEE4D13E56C80A7C59DA2FDC13FD14D59EB4DC0AB"
+        },
+        {
+          "path": "tools/_logs/p08e4_budget_ck_fz/playthrough_fz_b.log",
+          "sha256": "2D4192132D1435FAC44EB9FE18191C08FB2ECB282E4F715B381F086934A83A85"
+        }
+      ],
+      "a_b_bytes_equal": true
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "shots/p08e4_20261001/gear_ck_480800.png",
+      "sha256": "8671AC7A9800CA65BB83DA9F518C21B17F84F721FA6E853A963926DBE29B93E5",
+      "size": [
+        480,
+        800
+      ]
+    },
+    {
+      "path": "shots/p08e4_20261001/gear_fs_4801067.png",
+      "sha256": "E4FD11441256508B03E6A83284264F329BAB98D69520A192EEF2A1381DE8AE06",
+      "size": [
+        480,
+        1067
+      ]
+    },
+    {
+      "path": "shots/p08e4_20261001/gear_fz_4801067.png",
+      "sha256": "5927899F7ABB5D91B7869A3E166F1448F63D41F7FD0F458FFE2C731C628053C1",
+      "size": [
+        480,
+        1067
+      ]
+    },
+    {
+      "path": "shots/p08e4_20261001/gear_zs_480800.png",
+      "sha256": "37CA1538B0430C2802B5A7D419925EB8DADBA84A5FC68287198297A503D3C002",
+      "size": [
+        480,
+        800
+      ]
+    },
+    {
+      "path": "shots/p08e4_20261001/town_middle_right_480800.png",
+      "sha256": "23C18118A2D0EC182AD1D12AA1440FE7257E4A78FF50A1F002A22D78850B1313",
+      "size": [
+        480,
+        800
+      ]
+    },
+    {
+      "path": "shots/p08e4_20261001/town_north_left_480800.png",
+      "sha256": "9E3E373CAAA7CFA273265F699C7E5085898179D8F42CC03350E8FC323D9BA4AF",
+      "size": [
+        480,
+        800
+      ]
+    }
+  ],
+  "latest_visual_checks": [
+    {
+      "path": "tools/_logs/budget_label_target/VerifyCity.log",
+      "sha256": "FC5EDAA712D12D55390D70BF4185F1F0C0D380FC938C38BB45F164F51E39CE5E",
+      "case": "VerifyCity",
+      "token": "CITY_OK"
+    },
+    {
+      "path": "tools/_logs/budget_label_target/VerifyUiLayout.log",
+      "sha256": "DEAADA6E45BE819D2209E6DD7FCA17D0B7D6888F1088F6C98BB6B786D22795C7",
+      "case": "VerifyUiLayout",
+      "token": "UI_LAYOUT_OK"
+    },
+    {
+      "path": "tools/_logs/budget_label_target/VerifyMainWorld.log",
+      "sha256": "EA57CE5D7C64E6AFCAC09AC670A539C1F757C4176B7CA42B2D235916E89DA193",
+      "case": "VerifyMainWorld",
+      "token": "MAIN_WORLD_OK"
+    }
+  ],
+  "regression_note": "Baseline 3ac80ed passed all 42 cases and 11 runner fault-injections. The subsequent building nameplate/icon placement correction passed the three related cases; this is not a second full 42-case run. Economic game data and code are unchanged.",
+  "limits": [
+    "No game reward, price or stat changes in this package",
+    "This is one conservative equipment route, not a full economy or all-growth budget",
+    "Inherited intentional loss/retreat scenarios are test fixtures, not manual difficulty or duration proof",
+    "Pet growth, later mentor skills, repeatable work and other resource combinations remain",
+    "Content remains 28/36 main steps, 18/36 side quests, 6/8 bosses",
+    "Issue43 exit-time engine resource diagnostics remain"
+  ]
+}
