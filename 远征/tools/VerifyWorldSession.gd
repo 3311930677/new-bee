@@ -569,7 +569,11 @@ func _test_g_integration() -> void:
 
 	# 账本去重表随存档落盘
 	var applied_l: Array = G.prog["ledger"]["applied"]
-	_check(applied_l.size() == 11, "每次主线结算都应在 ledger.applied 留去重记录，实为 %d" % applied_l.size())
+	var story_transactions := 0
+	for transaction in applied_l:
+		if String(transaction).begins_with("story|"): story_transactions += 1
+	_check(story_transactions == 11 and applied_l.size() == 12 and applied_l.has("campaign_gear|s10|first|"),
+		"11笔原任务与s10装备保底各保留独立去重记录，实为 %d" % applied_l.size())
 	G.save_game()
 	var f := FileAccess.open(G.SAVE_PATH, FileAccess.READ)
 	_check(f != null, "应能写出合成存档")

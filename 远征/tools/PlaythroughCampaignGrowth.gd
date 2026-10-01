@@ -42,7 +42,7 @@ func _ready() -> void:
 	var before := _investments()
 	var old_exp := _total_exp()
 	if not await _enter_world("", "", "frost_post"): return
-	if int(G.prog.level) != 42 or _total_exp() != old_exp+93511 or _investments() != before or not CampaignGrowth.catchup_plan(G.prog).is_empty():
+	if int(G.prog.level) != 42 or _total_exp() != old_exp+93511 or not _legacy_preserved(before) or not CampaignGrowth.catchup_plan(G.prog).is_empty():
 		_bad("实际入口补领或旧投入保存不符")
 		return
 	var once := G.prog.duplicate(true)
@@ -74,9 +74,23 @@ func _investments() -> Dictionary:
 		result[field] = G.prog.get(field, {}).duplicate(true) if G.prog.get(field) is Dictionary or G.prog.get(field) is Array else G.prog.get(field)
 	return result
 
+func _legacy_preserved(before: Dictionary) -> bool:
+	var after := _investments()
+	# Entering the world also grants the independently tested P08-E2 gear migration.
+	var inventory: Dictionary = after.inventory
+	for pool in ["instances", "pending"]:
+		inventory[pool] = inventory.get(pool, []).filter(func(item): return not String(item.get("source_id", "")).begins_with("campaign_gear|"))
+	inventory["next_uid"] = before.inventory.get("next_uid", inventory.get("next_uid"))
+	for id in ["enhance_stone", "pet_food"]:
+		var original := int(before.items.get(id, 0))
+		if int(after.items.get(id, 0)) != original+(24 if id == "enhance_stone" else 3): return false
+		if before.items.has(id): after.items[id] = before.items[id]
+		else: after.items.erase(id)
+	return after == before
+
 func _state() -> Dictionary:
 	var result := super._state()
 	result["exp"] = int(G.prog.exp)
 	result["experience_revision_n"] = G.prog.get("campaign_growth", {}).get("story_revision", {}).size()
-	result["investments"] = _investments()
+	result["investments"] = JSON.parse_string(JSON.stringify(_investments()))
 	return result

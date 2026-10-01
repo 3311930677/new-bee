@@ -33,8 +33,8 @@ func _run() -> void:
 	_check(ResourceLoader.exists(String(cfg.get("monster_sprite", ""))),
 		"主地图怪物像素形象应存在")
 	_check(not TableCache.get_monster("mon_zombie").is_empty(), "主地图僵尸战斗数据应存在")
-	_check(String(cfg.get("background", "")).ends_with("lorin_wilds_grass_v2.png"),
-		"主地图应使用新版细节底图")
+	_check(String(cfg.get("background", "")).ends_with("lorin_wilds_reference_v4.png"),
+		"主地图应实际接入参考画风地表")
 	var ground_tex := load(String(cfg.get("background", ""))) as Texture2D
 	if ground_tex != null:
 		var screen_pixel_scale := float(int(cfg.get("map_cols", 20)) * 48) \
@@ -118,7 +118,7 @@ func _run() -> void:
 	_check(first_mon._state == "wander", "主世界怪物靠近玩家时不应进入追击")
 	_check(map._map_cfg.get("map_cols") == 20 and map._map_cfg.get("map_rows") == 26,
 		"主地图行走范围应缩到 20×26 格")
-	_check(is_equal_approx(map._player_anim.scale.x, 0.54), "主地图旅人应按参考录屏比例控制占屏")
+	_check(is_equal_approx(map._player_anim.scale.x, 0.66), "主地图旅人应采用当前同屏样板比例")
 	var player_camera: Camera2D
 	for child in map._player.get_children():
 		if child is Camera2D:

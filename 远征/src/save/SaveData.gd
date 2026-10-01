@@ -568,6 +568,8 @@ static func _validate_inventory(inv: Dictionary, equip_v: Variant) -> Dictionary
 				return {"ok": false, "err": "装备实例 uid %d 在 instances/pending 中重复（会导致换装与回收指错实例）" % uid}
 			by_uid[uid] = it
 			max_uid = maxi(max_uid, uid)
+			if it.has("source_id") and not (it.source_id is String):
+				return {"ok": false, "err": "装备实例 uid %d 的来源应为文字" % uid}
 			var tpl_id := String(it.get("tpl", ""))
 			if tpl_id.is_empty():
 				return {"ok": false, "err": "装备实例 uid %d 缺少模板 id" % uid}

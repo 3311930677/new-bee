@@ -1,0 +1,1720 @@
+{
+  "status": "V1_IMPLEMENTED_PARTIAL_ART",
+  "date": "2026-10-01",
+  "real_save_sha256": "C5D29EE55C033619C4F5232D55A6C4F186D40ADD556DB61EE0D776B9FDA2660C",
+  "baseline": "1a2e322",
+  "json_files": 36,
+  "regression": [
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyAssets.log",
+      "sha256": "5010895C81A30D412091C9D35F1333619379238E727D7AB2DB383FB17B7260C9",
+      "case": "VerifyAssets",
+      "token": "ASSETS_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyBattleScene.log",
+      "sha256": "350CEE37009DC7A3172B0961630AF738E10A8E9807C4F30E47E6FF7D01522FE8",
+      "case": "VerifyBattleScene",
+      "token": "BATTLE_SCENE_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifySave.log",
+      "sha256": "5EE3565CC4582DE8497B9321247BCDD7F7D099945E5F2AB588450C984A074F32",
+      "case": "VerifySave",
+      "token": "SAVE_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyUiLayout.log",
+      "sha256": "DEAADA6E45BE819D2209E6DD7FCA17D0B7D6888F1088F6C98BB6B786D22795C7",
+      "case": "VerifyUiLayout",
+      "token": "UI_LAYOUT_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifySweep.log",
+      "sha256": "4C8A270F5D432EE2510033F8580135C05E768745552F1B2C28E54601925AD7D6",
+      "case": "VerifySweep",
+      "token": "SWEEP_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyCity.log",
+      "sha256": "4372D56213D171DF0568D3F70D57C3D0F76128155314D980B01416C4BA262641",
+      "case": "VerifyCity",
+      "token": "CITY_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyGameHome.log",
+      "sha256": "10CD5316DB962CCF0302FDE75E15B1624D1CF4FDD4106BFB91892A3D2F4FFA51",
+      "case": "VerifyGameHome",
+      "token": "GAME_HOME_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyMapScene.log",
+      "sha256": "9A5864A4BC054CC6E8431337F5082AC0FCCF19CD979A199C84093396A6AB953A",
+      "case": "VerifyMapScene",
+      "token": "MAP_SCENE_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyMainWorld.log",
+      "sha256": "01EA3CF7BA893D44B1392EBC7B35117644362451C6F727BF9E57293493837958",
+      "case": "VerifyMainWorld",
+      "token": "MAIN_WORLD_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyWorldSession.log",
+      "sha256": "3D1CECE17E874DC94C0F18F9717192C1875A94B4B90A241112117663EE99A4C5",
+      "case": "VerifyWorldSession",
+      "token": "WORLD_SESSION_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyStory.log",
+      "sha256": "6B7F0E7FECF7F0C588D74884E082F7255CCFA8FE54A944FF7344D2999CAE1F8F",
+      "case": "VerifyStory",
+      "token": "STORY_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyEconomy.log",
+      "sha256": "708BE25FF30CCBE301771F094D4FEF7FDDAE1F560A8CE701915ABFE1BCB1F8CC",
+      "case": "VerifyEconomy",
+      "token": "ECONOMY_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyTradeWorld.log",
+      "sha256": "CCD756E2D348FD0FBDAFFFDA9F93B58961EF0B3E5A259BE82B256C79A4FEF4D9",
+      "case": "VerifyTradeWorld",
+      "token": "TRADE_WORLD_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifySecondAct.log",
+      "sha256": "8310524EDC572873271D24409D802BEFE852071D97A803579FF3BBE8D633994D",
+      "case": "VerifySecondAct",
+      "token": "SECOND_ACT_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyThirdAct.log",
+      "sha256": "739818232090F8780BB85F4F9C05A60C704C36C8371414A49ADF0D1E8BDDE657",
+      "case": "VerifyThirdAct",
+      "token": "THIRD_ACT_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyThirdBack.log",
+      "sha256": "8012BDC4AF44AEA4D01EAACCB7ABDBF7FDD99BBB92BAD608374C7D961666D35E",
+      "case": "VerifyThirdBack",
+      "token": "THIRD_BACK_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyThirdSide.log",
+      "sha256": "05A5F1BC507B6A04DC3122228017848C6E2D776363527A8AC442D5B1F5C03BD6",
+      "case": "VerifyThirdSide",
+      "token": "THIRD_SIDE_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyCompanions.log",
+      "sha256": "16F065805A262420C166D03CFE8DAC86248881334519EA8939EDD4EDF6A38357",
+      "case": "VerifyCompanions",
+      "token": "COMPANIONS_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyCampaignGrowth.log",
+      "sha256": "D1E7D690162322E0A13F5B717722C09880138841910EC7543D540FEDE06368AE",
+      "case": "VerifyCampaignGrowth",
+      "token": "CAMPAIGN_GROWTH_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyCampaignGear.log",
+      "sha256": "D5F70067BAD352AAB20123DFEE9CB938A2CF4AEFEC4110E16F678A00FA707F7A",
+      "case": "VerifyCampaignGear",
+      "token": "CAMPAIGN_GEAR_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyPortGrowth.log",
+      "sha256": "DEADDEFB22FE22A82E3148D466CEADAEBDA3894C753F63E420FD9F21C8360D42",
+      "case": "VerifyPortGrowth",
+      "token": "PORT_GROWTH_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyShipping.log",
+      "sha256": "DA870B59BA4FA13C8F63F4CB2C63A0CE698020E73BBF5E2916B4260BA2610273",
+      "case": "VerifyShipping",
+      "token": "SHIPPING_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyFishing.log",
+      "sha256": "F6B5DFAB81CAA4929C07644727A8E5A00AAA9187FE6614C6F78F06595091E934",
+      "case": "VerifyFishing",
+      "token": "FISHING_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyRouteScene.log",
+      "sha256": "B24527CC87816A55E47245662A3966341DC669D05F1E0C9C8E30542EB87AC077",
+      "case": "VerifyRouteScene",
+      "token": "ROUTE_SCENE_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyGacha.log",
+      "sha256": "0AB7BBC7B04750BDFE72552218046E75659A8E4DBA6C6D4E02C3F98C750201D6",
+      "case": "VerifyGacha",
+      "token": "GACHA_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyPanels.log",
+      "sha256": "6F023E2E34E5D69A6D6B8B4995ECD0BCFD156958DF6B2E84D58F8EBFFFADE75B",
+      "case": "VerifyPanels",
+      "token": "PANELS_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyGrowth.log",
+      "sha256": "CA346B8186430B2A39E33C842207394CCE069A5DEC33D1BA9B5432C40412C436",
+      "case": "VerifyGrowth",
+      "token": "GROWTH_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyPerf.log",
+      "sha256": "D605FAB55466E71623FD14AC76806B01A49EA63A45AA7A82E8E28F209DD32A12",
+      "case": "VerifyPerf",
+      "token": "PERF_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyLore.log",
+      "sha256": "220325E477A15263F376D9C93BF4ABDD0F57439E0ADAF9835F8879FEF2EAF482",
+      "case": "VerifyLore",
+      "token": "LORE_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyQuests.log",
+      "sha256": "BE7D293F17BCAF77A08EEF3A4D2A9736122359510FEDECE3CFF987DCD748F113",
+      "case": "VerifyQuests",
+      "token": "QUESTS_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyAudio.log",
+      "sha256": "B373C052AFFED907DE0B0C4B336E821CD68DE4D440FFF8231C3B2DE0DF4B3B52",
+      "case": "VerifyAudio",
+      "token": "AUDIO_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyTransit.log",
+      "sha256": "117E69FB9D4AC5C22FAECD2BC68E3A9BE3B5530875A6DED112AB939BE61387E5",
+      "case": "VerifyTransit",
+      "token": "TRANSIT_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyDrops.log",
+      "sha256": "E1A789C97E99041BD87F74D3CDA5DC3AA6FD0D70EC2FA7BF1BD96F947B440151",
+      "case": "VerifyDrops",
+      "token": "DROPS_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyArena.log",
+      "sha256": "ACAFAFC098CA1502EB89FE7562594F11F4C7DA51F1D8C6C380A58C0919C144E3",
+      "case": "VerifyArena",
+      "token": "ARENA_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyAvatar.log",
+      "sha256": "946371E9BE58E5AE40B51DE5D8EC27583CB69B1BA33C3F07A7CEEEAD6D9108A1",
+      "case": "VerifyAvatar",
+      "token": "AVATAR_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/VerifyNav.log",
+      "sha256": "70C3EB7BE56AB9254138B9DBA5BB0DA4577361F75A678F5B0B8B39424566EFB5",
+      "case": "VerifyNav",
+      "token": "NAV_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/verify_data.log",
+      "sha256": "39C65462BDFF7CCD957725CDD50186250A82976B4A9D3C539636610F10DA63DB",
+      "case": "verify_data",
+      "token": "DATA_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/verify_battle.log",
+      "sha256": "8A21022C65DCBB80983BD556D55E8F2B3922A05699462E8E06923AAA98D24EA4",
+      "case": "verify_battle",
+      "token": "BATTLE_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/verify_route.log",
+      "sha256": "C1FA1DBECB318FBD65BE9E7E4A482196DC034F18604109B4A3237D255B756830",
+      "case": "verify_route",
+      "token": "ROUTE_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/verify_trait.log",
+      "sha256": "3F3A7A9B78F6999303B0C18AE3BC453C5999D6EB0DEC899BEEA35DAF77787019",
+      "case": "verify_trait",
+      "token": "TRAIT_OK"
+    },
+    {
+      "path": "tools/_logs/style_v1_final_regression/verify_walk_assets.log",
+      "sha256": "3F41C6FC847E49E6F800CE7815355F3FA36A607A6AFF549235A89C02035F710B",
+      "case": "verify_walk_assets",
+      "token": "WALK_ASSETS_OK"
+    }
+  ],
+  "selftest": {
+    "path": "tools/_logs/p08e2_selftest.log",
+    "sha256": "F4913A406015B74E063F9E039D3FA50735F3028D56D946500C3E7EC0709CCCF2"
+  },
+  "real_input": {
+    "path": "tools/_logs/style_v1_input.log",
+    "sha256": "A93DCA8F97CFD6ECAA321EBB39071A3F5015C279758D923117374D7D3CC40798"
+  },
+  "gear_runs": [
+    {
+      "role": "zs",
+      "source": null,
+      "state": {
+        "bag": 60,
+        "cap": 60,
+        "equipped": [
+          "accessory",
+          "armor",
+          "hammer",
+          "spear",
+          "staff",
+          "sword"
+        ],
+        "exp": 1545,
+        "experience_revision_n": 28,
+        "frag": 0,
+        "gear": [
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "sword",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s10|first|",
+            "tpl": "tpl_sword_stele",
+            "uid": 68.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s12|first|",
+            "tpl": "tpl_armor_stele",
+            "uid": 69.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "sword",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s19|first|",
+            "tpl": "tpl_sword_tidegate",
+            "uid": 71.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s20|first|",
+            "tpl": "tpl_armor_tidegate",
+            "uid": 72.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "sword",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s25|first|",
+            "tpl": "tpl_sword_frostgate",
+            "uid": 74.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s27|first|",
+            "tpl": "tpl_armor_frostgate",
+            "uid": 76.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "accessory",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s28|first|",
+            "tpl": "tpl_accessory_twinpass",
+            "uid": 77.0
+          }
+        ],
+        "gold": 8050,
+        "ledger_n": 45,
+        "level": 42,
+        "map": "frost_post",
+        "pending": 4,
+        "role": "zs",
+        "story_done": [
+          "s01",
+          "s02",
+          "s03",
+          "s04",
+          "s05",
+          "s06",
+          "s07",
+          "s08",
+          "s09",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14",
+          "s15",
+          "s16",
+          "s17",
+          "s18",
+          "s19",
+          "s20",
+          "s21",
+          "s22",
+          "s23",
+          "s24",
+          "s25",
+          "s26",
+          "s27",
+          "s28"
+        ],
+        "story_done_n": 28,
+        "story_step": "",
+        "unlocked_skills": [
+          "zs_lieshan",
+          "zs_pozhen"
+        ],
+        "worn": {
+          "accessory": 77.0,
+          "armor": 76.0,
+          "hammer": 4.0,
+          "spear": 2.0,
+          "staff": 3.0,
+          "sword": 74.0
+        }
+      },
+      "a_save": {
+        "path": "tools/_logs/p08e2_fresh_zs_fs/save_playthrough_zs_a.json",
+        "sha256": "27102418AC8C3DB139B8136443051C975EDAD3E352C21D542A36DC7A543A6961"
+      },
+      "b_save": {
+        "path": "tools/_logs/p08e2_fresh_zs_fs/save_playthrough_zs_b.json",
+        "sha256": "27102418AC8C3DB139B8136443051C975EDAD3E352C21D542A36DC7A543A6961"
+      },
+      "a_log": {
+        "path": "tools/_logs/p08e2_fresh_zs_fs/playthrough_zs_a.log",
+        "sha256": "006267A32466425FB33850590483B6C80A3B8CE4F4A1D055845E0680B20084EA"
+      },
+      "b_log": {
+        "path": "tools/_logs/p08e2_fresh_zs_fs/playthrough_zs_b.log",
+        "sha256": "451A14F00FF3EECB62BF6A22B655114D3D6AAFFA3C87C2CAA5F95BB8EC62F5DA"
+      }
+    },
+    {
+      "role": "fs",
+      "source": null,
+      "state": {
+        "bag": 60,
+        "cap": 60,
+        "equipped": [
+          "accessory",
+          "armor",
+          "hammer",
+          "spear",
+          "staff",
+          "sword"
+        ],
+        "exp": 1480,
+        "experience_revision_n": 28,
+        "frag": 0,
+        "gear": [
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "staff",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s10|first|",
+            "tpl": "tpl_staff_stele",
+            "uid": 68.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s12|first|",
+            "tpl": "tpl_armor_stele",
+            "uid": 69.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "staff",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s19|first|",
+            "tpl": "tpl_staff_tidegate",
+            "uid": 71.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s20|first|",
+            "tpl": "tpl_armor_tidegate",
+            "uid": 72.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "staff",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s25|first|",
+            "tpl": "tpl_staff_frostgate",
+            "uid": 74.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s27|first|",
+            "tpl": "tpl_armor_frostgate",
+            "uid": 76.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "accessory",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s28|first|",
+            "tpl": "tpl_accessory_twinpass",
+            "uid": 77.0
+          }
+        ],
+        "gold": 7965,
+        "ledger_n": 44,
+        "level": 42,
+        "map": "frost_post",
+        "pending": 4,
+        "role": "fs",
+        "story_done": [
+          "s01",
+          "s02",
+          "s03",
+          "s04",
+          "s05",
+          "s06",
+          "s07",
+          "s08",
+          "s09",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14",
+          "s15",
+          "s16",
+          "s17",
+          "s18",
+          "s19",
+          "s20",
+          "s21",
+          "s22",
+          "s23",
+          "s24",
+          "s25",
+          "s26",
+          "s27",
+          "s28"
+        ],
+        "story_done_n": 28,
+        "story_step": "",
+        "unlocked_skills": [
+          "fs_shuangren",
+          "fs_shuanghuan"
+        ],
+        "worn": {
+          "accessory": 77.0,
+          "armor": 76.0,
+          "hammer": 4.0,
+          "spear": 2.0,
+          "staff": 74.0,
+          "sword": 1.0
+        }
+      },
+      "a_save": {
+        "path": "tools/_logs/p08e2_fresh_zs_fs/save_playthrough_fs_a.json",
+        "sha256": "03D45244FFC489E30E7ACC53947FA9884CFCC5D56465EF31148E9FB242C56D38"
+      },
+      "b_save": {
+        "path": "tools/_logs/p08e2_fresh_zs_fs/save_playthrough_fs_b.json",
+        "sha256": "03D45244FFC489E30E7ACC53947FA9884CFCC5D56465EF31148E9FB242C56D38"
+      },
+      "a_log": {
+        "path": "tools/_logs/p08e2_fresh_zs_fs/playthrough_fs_a.log",
+        "sha256": "D31954843D534A85106FB8DECE93EA4E3FBE43B34E1E6CDE20231BF622A6993F"
+      },
+      "b_log": {
+        "path": "tools/_logs/p08e2_fresh_zs_fs/playthrough_fs_b.log",
+        "sha256": "1E6B20A19D9337AF43B097196FA7D622615F2669F6F7F27F8956D4BB6E68BBCC"
+      }
+    },
+    {
+      "role": "ck",
+      "source": null,
+      "state": {
+        "bag": 60,
+        "cap": 60,
+        "equipped": [
+          "accessory",
+          "armor",
+          "hammer",
+          "spear",
+          "staff",
+          "sword"
+        ],
+        "exp": 1480,
+        "experience_revision_n": 28,
+        "frag": 0,
+        "gear": [
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "spear",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s10|first|",
+            "tpl": "tpl_spear_stele",
+            "uid": 68.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s12|first|",
+            "tpl": "tpl_armor_stele",
+            "uid": 69.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "spear",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s19|first|",
+            "tpl": "tpl_spear_tidegate",
+            "uid": 71.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s20|first|",
+            "tpl": "tpl_armor_tidegate",
+            "uid": 72.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "spear",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s25|first|",
+            "tpl": "tpl_spear_frostgate",
+            "uid": 74.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s27|first|",
+            "tpl": "tpl_armor_frostgate",
+            "uid": 76.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "accessory",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s28|first|",
+            "tpl": "tpl_accessory_twinpass",
+            "uid": 77.0
+          }
+        ],
+        "gold": 7965,
+        "ledger_n": 44,
+        "level": 42,
+        "map": "frost_post",
+        "pending": 4,
+        "role": "ck",
+        "story_done": [
+          "s01",
+          "s02",
+          "s03",
+          "s04",
+          "s05",
+          "s06",
+          "s07",
+          "s08",
+          "s09",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14",
+          "s15",
+          "s16",
+          "s17",
+          "s18",
+          "s19",
+          "s20",
+          "s21",
+          "s22",
+          "s23",
+          "s24",
+          "s25",
+          "s26",
+          "s27",
+          "s28"
+        ],
+        "story_done_n": 28,
+        "story_step": "",
+        "unlocked_skills": [
+          "ck_lianzhu",
+          "ck_guanjia"
+        ],
+        "worn": {
+          "accessory": 77.0,
+          "armor": 76.0,
+          "hammer": 4.0,
+          "spear": 74.0,
+          "staff": 3.0,
+          "sword": 1.0
+        }
+      },
+      "a_save": {
+        "path": "tools/_logs/p08e2_fresh_ck_fz/save_playthrough_ck_a.json",
+        "sha256": "87E3000B672A437389BEFC2F12D0235759995BE5FB14ED6D9B324685CA4C1E48"
+      },
+      "b_save": {
+        "path": "tools/_logs/p08e2_fresh_ck_fz/save_playthrough_ck_b.json",
+        "sha256": "87E3000B672A437389BEFC2F12D0235759995BE5FB14ED6D9B324685CA4C1E48"
+      },
+      "a_log": {
+        "path": "tools/_logs/p08e2_fresh_ck_fz/playthrough_ck_a.log",
+        "sha256": "F003080205BADDFEF76B0294A841D20D37B4B0B7EE4FCC4E67FAD759ABED011C"
+      },
+      "b_log": {
+        "path": "tools/_logs/p08e2_fresh_ck_fz/playthrough_ck_b.log",
+        "sha256": "D41FEEF6F4FA4E6FCFEE55E2C50CCD2683FE08BA2B9C1E0C4E49BEC4B608F748"
+      }
+    },
+    {
+      "role": "fz",
+      "source": null,
+      "state": {
+        "bag": 60,
+        "cap": 60,
+        "equipped": [
+          "accessory",
+          "armor",
+          "hammer",
+          "spear",
+          "staff",
+          "sword"
+        ],
+        "exp": 1508,
+        "experience_revision_n": 28,
+        "frag": 0,
+        "gear": [
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "hammer",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s10|first|",
+            "tpl": "tpl_hammer_stele",
+            "uid": 68.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s12|first|",
+            "tpl": "tpl_armor_stele",
+            "uid": 69.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "hammer",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s19|first|",
+            "tpl": "tpl_hammer_tidegate",
+            "uid": 72.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s20|first|",
+            "tpl": "tpl_armor_tidegate",
+            "uid": 73.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "hammer",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s25|first|",
+            "tpl": "tpl_hammer_frostgate",
+            "uid": 75.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s27|first|",
+            "tpl": "tpl_armor_frostgate",
+            "uid": 77.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "accessory",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s28|first|",
+            "tpl": "tpl_accessory_twinpass",
+            "uid": 78.0
+          }
+        ],
+        "gold": 8003,
+        "ledger_n": 45,
+        "level": 42,
+        "map": "frost_post",
+        "pending": 5,
+        "role": "fz",
+        "story_done": [
+          "s01",
+          "s02",
+          "s03",
+          "s04",
+          "s05",
+          "s06",
+          "s07",
+          "s08",
+          "s09",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14",
+          "s15",
+          "s16",
+          "s17",
+          "s18",
+          "s19",
+          "s20",
+          "s21",
+          "s22",
+          "s23",
+          "s24",
+          "s25",
+          "s26",
+          "s27",
+          "s28"
+        ],
+        "story_done_n": 28,
+        "story_step": "",
+        "unlocked_skills": [
+          "fz_shengyu",
+          "fz_puzhao"
+        ],
+        "worn": {
+          "accessory": 78.0,
+          "armor": 77.0,
+          "hammer": 75.0,
+          "spear": 2.0,
+          "staff": 3.0,
+          "sword": 1.0
+        }
+      },
+      "a_save": {
+        "path": "tools/_logs/p08e2_fresh_ck_fz/save_playthrough_fz_a.json",
+        "sha256": "77CC34EA723321B323BB3CCD571F322B30FBEA76021601345C23BBD800C37C28"
+      },
+      "b_save": {
+        "path": "tools/_logs/p08e2_fresh_ck_fz/save_playthrough_fz_b.json",
+        "sha256": "77CC34EA723321B323BB3CCD571F322B30FBEA76021601345C23BBD800C37C28"
+      },
+      "a_log": {
+        "path": "tools/_logs/p08e2_fresh_ck_fz/playthrough_fz_a.log",
+        "sha256": "736FCB8605CD46BB0418320559AF319C172312263017849905472E18B2F745C7"
+      },
+      "b_log": {
+        "path": "tools/_logs/p08e2_fresh_ck_fz/playthrough_fz_b.log",
+        "sha256": "9E51F0DDFE02F6C00FE4C88AAD63EEE37B6DD6D93D748A3AFEF73E081571C488"
+      }
+    },
+    {
+      "role": "zs",
+      "source": "p08e_final_old_zs_ck",
+      "state": {
+        "bag": 60,
+        "cap": 60,
+        "equipped": [
+          "accessory",
+          "armor",
+          "hammer",
+          "spear",
+          "staff",
+          "sword"
+        ],
+        "exp": 2335,
+        "experience_revision_n": 28,
+        "frag": 0,
+        "gear": [
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "sword",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s10|first|",
+            "tpl": "tpl_sword_stele",
+            "uid": 71.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s12|first|",
+            "tpl": "tpl_armor_stele",
+            "uid": 72.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "sword",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s19|first|",
+            "tpl": "tpl_sword_tidegate",
+            "uid": 73.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s20|first|",
+            "tpl": "tpl_armor_tidegate",
+            "uid": 74.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "sword",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s25|first|",
+            "tpl": "tpl_sword_frostgate",
+            "uid": 75.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s27|first|",
+            "tpl": "tpl_armor_frostgate",
+            "uid": 76.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "accessory",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s28|first|",
+            "tpl": "tpl_accessory_twinpass",
+            "uid": 77.0
+          }
+        ],
+        "gold": 9285,
+        "ledger_n": 82,
+        "level": 42,
+        "map": "frost_post",
+        "pending": 4,
+        "role": "zs",
+        "story_done": [
+          "s01",
+          "s02",
+          "s03",
+          "s04",
+          "s05",
+          "s06",
+          "s07",
+          "s08",
+          "s09",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14",
+          "s15",
+          "s16",
+          "s17",
+          "s18",
+          "s19",
+          "s20",
+          "s21",
+          "s22",
+          "s23",
+          "s24",
+          "s25",
+          "s26",
+          "s27",
+          "s28"
+        ],
+        "story_done_n": 28,
+        "story_step": "",
+        "unlocked_skills": [
+          "zs_lieshan",
+          "zs_pozhen"
+        ],
+        "worn": {
+          "accessory": 77.0,
+          "armor": 76.0,
+          "hammer": 4.0,
+          "spear": 2.0,
+          "staff": 3.0,
+          "sword": 75.0
+        }
+      },
+      "a_save": {
+        "path": "tools/_logs/p08e2_final_old_zs_ck/save_playthrough_zs_a.json",
+        "sha256": "A21BDDFB9BDBE411BAA65454840D1BC9528926688411B688C7E83281E2B9E657"
+      },
+      "b_save": {
+        "path": "tools/_logs/p08e2_final_old_zs_ck/save_playthrough_zs_b.json",
+        "sha256": "A21BDDFB9BDBE411BAA65454840D1BC9528926688411B688C7E83281E2B9E657"
+      },
+      "a_log": {
+        "path": "tools/_logs/p08e2_final_old_zs_ck/playthrough_zs_a.log",
+        "sha256": "A08F8AC055CB46658F1559653998827FBFB2502BED00BE09B59DAAD620C8E887"
+      },
+      "b_log": {
+        "path": "tools/_logs/p08e2_final_old_zs_ck/playthrough_zs_b.log",
+        "sha256": "AE904B728D59E161D6EEE69ABA39D0AA20E548AC61708E383AF0112ADEC4492F"
+      }
+    },
+    {
+      "role": "ck",
+      "source": "p08e_final_old_zs_ck",
+      "state": {
+        "bag": 60,
+        "cap": 60,
+        "equipped": [
+          "accessory",
+          "armor",
+          "hammer",
+          "spear",
+          "staff",
+          "sword"
+        ],
+        "exp": 2335,
+        "experience_revision_n": 28,
+        "frag": 0,
+        "gear": [
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "spear",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s10|first|",
+            "tpl": "tpl_spear_stele",
+            "uid": 71.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s12|first|",
+            "tpl": "tpl_armor_stele",
+            "uid": 72.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "spear",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s19|first|",
+            "tpl": "tpl_spear_tidegate",
+            "uid": 73.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s20|first|",
+            "tpl": "tpl_armor_tidegate",
+            "uid": 74.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "spear",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s25|first|",
+            "tpl": "tpl_spear_frostgate",
+            "uid": 75.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s27|first|",
+            "tpl": "tpl_armor_frostgate",
+            "uid": 76.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "accessory",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s28|first|",
+            "tpl": "tpl_accessory_twinpass",
+            "uid": 77.0
+          }
+        ],
+        "gold": 9375,
+        "ledger_n": 82,
+        "level": 42,
+        "map": "frost_post",
+        "pending": 4,
+        "role": "ck",
+        "story_done": [
+          "s01",
+          "s02",
+          "s03",
+          "s04",
+          "s05",
+          "s06",
+          "s07",
+          "s08",
+          "s09",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14",
+          "s15",
+          "s16",
+          "s17",
+          "s18",
+          "s19",
+          "s20",
+          "s21",
+          "s22",
+          "s23",
+          "s24",
+          "s25",
+          "s26",
+          "s27",
+          "s28"
+        ],
+        "story_done_n": 28,
+        "story_step": "",
+        "unlocked_skills": [
+          "ck_lianzhu",
+          "ck_guanjia"
+        ],
+        "worn": {
+          "accessory": 77.0,
+          "armor": 76.0,
+          "hammer": 4.0,
+          "spear": 75.0,
+          "staff": 3.0,
+          "sword": 1.0
+        }
+      },
+      "a_save": {
+        "path": "tools/_logs/p08e2_final_old_zs_ck/save_playthrough_ck_a.json",
+        "sha256": "A17DA2E92CA8902DDA21B5300A1E52D57673BF60F2738EFAF1AAF635C999B75C"
+      },
+      "b_save": {
+        "path": "tools/_logs/p08e2_final_old_zs_ck/save_playthrough_ck_b.json",
+        "sha256": "A17DA2E92CA8902DDA21B5300A1E52D57673BF60F2738EFAF1AAF635C999B75C"
+      },
+      "a_log": {
+        "path": "tools/_logs/p08e2_final_old_zs_ck/playthrough_ck_a.log",
+        "sha256": "7FF2E7A2B870B75FCDD73F9889E19D092CC1C7A1C56398ED2706EB61D8B9254D"
+      },
+      "b_log": {
+        "path": "tools/_logs/p08e2_final_old_zs_ck/playthrough_ck_b.log",
+        "sha256": "E9D49F7C94FDD754BA11898A0DA43D7B47D7A3417D2E5DDBA4E6C466E1B16CE5"
+      }
+    },
+    {
+      "role": "fs",
+      "source": "p08e_final_old_fs_fz",
+      "state": {
+        "bag": 60,
+        "cap": 60,
+        "equipped": [
+          "accessory",
+          "armor",
+          "hammer",
+          "spear",
+          "staff",
+          "sword"
+        ],
+        "exp": 2335,
+        "experience_revision_n": 28,
+        "frag": 0,
+        "gear": [
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "staff",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s10|first|",
+            "tpl": "tpl_staff_stele",
+            "uid": 71.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s12|first|",
+            "tpl": "tpl_armor_stele",
+            "uid": 72.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "staff",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s19|first|",
+            "tpl": "tpl_staff_tidegate",
+            "uid": 73.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s20|first|",
+            "tpl": "tpl_armor_tidegate",
+            "uid": 74.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "staff",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s25|first|",
+            "tpl": "tpl_staff_frostgate",
+            "uid": 75.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s27|first|",
+            "tpl": "tpl_armor_frostgate",
+            "uid": 76.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "accessory",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s28|first|",
+            "tpl": "tpl_accessory_twinpass",
+            "uid": 77.0
+          }
+        ],
+        "gold": 9375,
+        "ledger_n": 82,
+        "level": 42,
+        "map": "frost_post",
+        "pending": 4,
+        "role": "fs",
+        "story_done": [
+          "s01",
+          "s02",
+          "s03",
+          "s04",
+          "s05",
+          "s06",
+          "s07",
+          "s08",
+          "s09",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14",
+          "s15",
+          "s16",
+          "s17",
+          "s18",
+          "s19",
+          "s20",
+          "s21",
+          "s22",
+          "s23",
+          "s24",
+          "s25",
+          "s26",
+          "s27",
+          "s28"
+        ],
+        "story_done_n": 28,
+        "story_step": "",
+        "unlocked_skills": [
+          "fs_shuangren",
+          "fs_shuanghuan"
+        ],
+        "worn": {
+          "accessory": 77.0,
+          "armor": 76.0,
+          "hammer": 4.0,
+          "spear": 2.0,
+          "staff": 75.0,
+          "sword": 1.0
+        }
+      },
+      "a_save": {
+        "path": "tools/_logs/p08e2_final_old_fs_fz/save_playthrough_fs_a.json",
+        "sha256": "A7E3F52F8DD8D182F402D4755DBB6FEE2439F5D08DC7B952AA45527723E80C65"
+      },
+      "b_save": {
+        "path": "tools/_logs/p08e2_final_old_fs_fz/save_playthrough_fs_b.json",
+        "sha256": "A7E3F52F8DD8D182F402D4755DBB6FEE2439F5D08DC7B952AA45527723E80C65"
+      },
+      "a_log": {
+        "path": "tools/_logs/p08e2_final_old_fs_fz/playthrough_fs_a.log",
+        "sha256": "642817B23D5C934E396B1D9094BA963CA79C6443613656A5AB4FA715252470C1"
+      },
+      "b_log": {
+        "path": "tools/_logs/p08e2_final_old_fs_fz/playthrough_fs_b.log",
+        "sha256": "BF483DDB7B82AB1286C00BBE5CCCCA9621CC4EE82A0985A88E0FD14BF4884B2E"
+      }
+    },
+    {
+      "role": "fz",
+      "source": "p08e_final_old_fs_fz",
+      "state": {
+        "bag": 60,
+        "cap": 60,
+        "equipped": [
+          "accessory",
+          "armor",
+          "hammer",
+          "spear",
+          "staff",
+          "sword"
+        ],
+        "exp": 2428,
+        "experience_revision_n": 28,
+        "frag": 0,
+        "gear": [
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "hammer",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s10|first|",
+            "tpl": "tpl_hammer_stele",
+            "uid": 72.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s12|first|",
+            "tpl": "tpl_armor_stele",
+            "uid": 73.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "hammer",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s19|first|",
+            "tpl": "tpl_hammer_tidegate",
+            "uid": 74.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s20|first|",
+            "tpl": "tpl_armor_tidegate",
+            "uid": 75.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "hammer",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s25|first|",
+            "tpl": "tpl_hammer_frostgate",
+            "uid": 76.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "armor",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s27|first|",
+            "tpl": "tpl_armor_frostgate",
+            "uid": 77.0
+          },
+          {
+            "affixes": [],
+            "gems": [],
+            "locked": false,
+            "lv": 0.0,
+            "rarity": 3.0,
+            "slot": "accessory",
+            "sockets": 3.0,
+            "source_id": "campaign_gear|s28|first|",
+            "tpl": "tpl_accessory_twinpass",
+            "uid": 78.0
+          }
+        ],
+        "gold": 9498,
+        "ledger_n": 84,
+        "level": 42,
+        "map": "frost_post",
+        "pending": 5,
+        "role": "fz",
+        "story_done": [
+          "s01",
+          "s02",
+          "s03",
+          "s04",
+          "s05",
+          "s06",
+          "s07",
+          "s08",
+          "s09",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14",
+          "s15",
+          "s16",
+          "s17",
+          "s18",
+          "s19",
+          "s20",
+          "s21",
+          "s22",
+          "s23",
+          "s24",
+          "s25",
+          "s26",
+          "s27",
+          "s28"
+        ],
+        "story_done_n": 28,
+        "story_step": "",
+        "unlocked_skills": [
+          "fz_shengyu",
+          "fz_puzhao"
+        ],
+        "worn": {
+          "accessory": 78.0,
+          "armor": 77.0,
+          "hammer": 76.0,
+          "spear": 2.0,
+          "staff": 3.0,
+          "sword": 1.0
+        }
+      },
+      "a_save": {
+        "path": "tools/_logs/p08e2_final_old_fs_fz/save_playthrough_fz_a.json",
+        "sha256": "FDBB150DC72999019BA2AF95EE43C0C0A98BFB60F0929B8FF1A42E74A60BA930"
+      },
+      "b_save": {
+        "path": "tools/_logs/p08e2_final_old_fs_fz/save_playthrough_fz_b.json",
+        "sha256": "FDBB150DC72999019BA2AF95EE43C0C0A98BFB60F0929B8FF1A42E74A60BA930"
+      },
+      "a_log": {
+        "path": "tools/_logs/p08e2_final_old_fs_fz/playthrough_fz_a.log",
+        "sha256": "1442A3F5066A8DFB90720BF7DCEC8BBA531D904A38C5E54FAB856C792C3A861E"
+      },
+      "b_log": {
+        "path": "tools/_logs/p08e2_final_old_fs_fz/playthrough_fz_b.log",
+        "sha256": "2709B835E71CF08785130F4D5B0C72D6DF46F9207023DD2C6BBFB1F79307F6BF"
+      }
+    }
+  ],
+  "assets": [
+    {
+      "path": "image/main_world/lorin_wilds_reference_v3.png",
+      "sha256": "963FDCAB63C6C764531544ACD1A44936960D8324C379CD9EC24EFA91C1167CE3",
+      "size": [
+        1086,
+        1448
+      ],
+      "selected": false
+    },
+    {
+      "path": "image/main_world/lorin_wilds_reference_v4.png",
+      "sha256": "00A8CA22CB624E2952F4F31ACAFB5F33065D82BF69BEA7454764B9F47A4D9D87",
+      "size": [
+        1086,
+        1448
+      ],
+      "selected": true
+    },
+    {
+      "path": "image/main_world/classic_floor_reference_v1.png",
+      "sha256": "EDE852833524EA27C51C6C899331C13D56AB232DD9B218135A7A1131D821AF10",
+      "size": [
+        971,
+        1619
+      ],
+      "selected": true
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "shots/style_v1_20261001/style_bag_480x1067.png",
+      "sha256": "558BB7CB56B125DBAE99551ED7CA0AF790E02B31632280A9FA64AD0508C0A849",
+      "size": [
+        480,
+        1067
+      ]
+    },
+    {
+      "path": "shots/style_v1_20261001/style_bag_480x800.png",
+      "sha256": "9C0F45BEE2ED454652373EB6E6980446886BCB66D7BB96B18488E4550E0CE502",
+      "size": [
+        480,
+        800
+      ]
+    },
+    {
+      "path": "shots/style_v1_20261001/style_battle_480x1067.png",
+      "sha256": "D57E6ADC11536BCD05F5A519FF4464A77D0F75435D1429F7B0A58F673792A5EB",
+      "size": [
+        480,
+        1067
+      ]
+    },
+    {
+      "path": "shots/style_v1_20261001/style_battle_480x800.png",
+      "sha256": "39C199402A0644BF4A752A2B726475663F20A5101E68839D7DC066F4B23A876F",
+      "size": [
+        480,
+        800
+      ]
+    },
+    {
+      "path": "shots/style_v1_20261001/style_city_480x1067.png",
+      "sha256": "04F95588D4C7F376E470BF00405FC5DFAA9B3AE858D821B0BC7C44FD1240E325",
+      "size": [
+        480,
+        1067
+      ]
+    },
+    {
+      "path": "shots/style_v1_20261001/style_city_480x800.png",
+      "sha256": "6ED13B3127485EFE27553043680A6E66CA4106AC6E90BBC8619D326EF792D25C",
+      "size": [
+        480,
+        800
+      ]
+    }
+  ],
+  "limits": [
+    "V2 character/NPC/monster redraw pending",
+    "V3 building and later regions pending",
+    "V4 remaining UI and Android pending",
+    "screenshots are staged composition, input is separately recorded",
+    "issue43 exit-resource diagnostics remain",
+    "gear input sold 7 gray full-bag fixture items, not a resource-economy proof"
+  ]
+}

@@ -162,6 +162,10 @@ static func campaign_growth_config() -> Dictionary:
 	var v: Variant = _load("res://data/campaign_growth.json")
 	return v if v is Dictionary else {}
 
+static func campaign_gear_config() -> Dictionary:
+	var v: Variant = _load("res://data/campaign_gear.json")
+	return v if v is Dictionary else {}
+
 
 ## 第一幕支线表（P05-B）。与主线分开：主线是顺序步骤，支线是并行小状态机。
 static func side_quests_config() -> Dictionary:

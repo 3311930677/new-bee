@@ -262,7 +262,7 @@ func _campaign_demo() -> void:
 		return
 	if int(catchup.exp) > 0:
 		G._pending_campaign_note = "旅途经验补记 +%d · Lv%d" % [int(catchup.exp), int(G.prog.level)]
-	var id := "frost_post" if _scene == "campaign_catchup" else ("lorin_wilds" if _scene == "campaign_return" else "rift_mine_road")
+	var id := "frost_post" if _scene in ["campaign_catchup", "gear_world"] else ("lorin_wilds" if _scene in ["campaign_return", "style_city"] else ("maple_road" if _scene == "style_battle" else "rift_mine_road"))
 	var run := RunState.new()
 	run.setup({"theme": String(TableCache.main_world_map(id).get("theme", "forest")), "role_id": G.selected_role,
 		"level": int(G.prog.level), "active_pet": G.companion_active(), "potions": 2, "seed": 91})
@@ -272,11 +272,64 @@ func _campaign_demo() -> void:
 	var world: MapScene = load("res://src/explore/MapScene.tscn").instantiate()
 	add_child(world)
 	await get_tree().process_frame
-	if _scene == "campaign_catchup": world._player.position = Vector2(480, 930)
+	if _scene in ["campaign_catchup", "gear_world", "style_city"]: world._player.position = Vector2(480, 930)
 	elif not world._monsters.is_empty(): world._player.position = world._monsters[0].position + Vector2(85, 60)
+	if _scene == "style_battle" and not world._monsters.is_empty():
+		world._start_battle(world._monsters[0])
+		if world._battle != null: world._battle.speed = 0.0 # QA composition, not input replay.
 
+
+## Layout staging only; source files are isolated, verified playthrough saves.
+func _gear_demo() -> void:
+	if _scene == "gear_world":
+		await _campaign_demo()
+		return
+	G.SAVE_PATH = "res://tools/_logs/save_shot_gear.json"
+	var raw := FileAccess.get_file_as_string(_source_save)
+	if not (JSON.parse_string(raw) is Dictionary):
+		push_error("SHOT_SOURCE_INVALID")
+		return
+	var file := FileAccess.open(G.SAVE_PATH, FileAccess.WRITE)
+	file.store_string(raw)
+	file.close()
+	if not G.reload_save() or G.save_locked:
+		push_error("SHOT_SOURCE_LOAD_FAILED")
+		return
+	if _scene == "gear_pending" and not bool(G.campaign_gear_claim().ok):
+		push_error("SHOT_GEAR_CLAIM_FAILED")
+		return
+	var home: Control = load("res://src/ui/GameHome.tscn").instantiate()
+	add_child(home)
+	await get_tree().process_frame
+	if _scene == "gear_preview":
+		var row := G.story_current()
+		var lines: Array = ["目标：%s" % String(row.get("goal", ""))]
+		lines.append_array(G.reward_lines(row.get("reward", {})))
+		var popup := G.show_info_popup(home, String(row.get("title", "主线")), lines, home)
+		# Put the production popup in the same screenshot viewport as its owner.
+		popup.reparent(get_parent())
+		return
+	home._open_bag()
+	await get_tree().process_frame
+	var bag := home._bag as BagPanel
+	if _scene == "gear_pending":
+		bag._tab = "pending"
+		bag._page = 1
+	else:
+		for item in G.inv_instances():
+			if String(item.get("source_id", "")) == "campaign_gear|s28|first|": bag._sel_uid = int(item.uid)
+	bag._refresh()
 
 func _setup() -> void:
+	if _scene == "style_bag":
+		await _gear_demo()
+		return
+	if _scene in ["style_city", "style_battle"]:
+		await _campaign_demo()
+		return
+	if _scene.begins_with("gear_"):
+		await _gear_demo()
+		return
 	if _scene.begins_with("campaign_"):
 		await _campaign_demo()
 		return
