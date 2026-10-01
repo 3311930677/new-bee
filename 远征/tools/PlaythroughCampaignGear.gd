@@ -172,8 +172,12 @@ func _campaign_gear_checkpoint(chapter: String) -> bool:
 		print("PLAY_EVENT gear_worn chapter=%s step=%s uid=%d tpl=%s level=%d" % [chapter, step, uid, expected.tpl, int(G.prog.level)])
 	if not await _click_until(bag._close_btn, func(): return home._bag == null, 30, "close_bag"): return _bad("关闭背包失败")
 	await _wait_frames(4)
+	if not await _after_gear_worn(home,chapter): return false
 	var back := home.find_child("ReturnToWorld", true, false) as Control
 	if not await _click_until(back, func(): return G.transit_busy(), 30, "return_world"): return _bad("返世界失败")
 	_map = await _wait_new_map(previous, map_id)
 	if _map == null: return _bad("返世界地图不符")
+	return true
+
+func _after_gear_worn(_home: Control, _chapter: String) -> bool:
 	return true

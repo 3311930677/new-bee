@@ -28,6 +28,7 @@ param(
   [switch]$Companions,
   [switch]$CampaignGrowth,
   [switch]$CampaignGear,
+  [switch]$CampaignBudget,
   [string]$SourceDir = "",
   [int]$TimeoutSec = 2400,
   [string]$LogDir = ""
@@ -208,6 +209,7 @@ foreach ($role in $roleList) {
 	if ($Companions) { $playScene = "res://tools/PlaythroughCompanions.tscn" }
 	if ($CampaignGrowth) { $playScene = "res://tools/PlaythroughCampaignGrowth.tscn" }
 	if ($CampaignGear) { $playScene = "res://tools/PlaythroughCampaignGear.tscn" }
+	if ($CampaignBudget) { $playScene = "res://tools/PlaythroughCampaignBudget.tscn" }
 	$argsA = @("--headless", "--path", $Proj, $playScene, "--", $role, "a")
 	if ($ThirdSide -or $Companions -or $CampaignGrowth -or ($CampaignGear -and $SourceDir -ne "")) { $argsA += ("--source-dir=" + [System.IO.Path]::GetFullPath($SourceDir)) }
 	if ($Act3) { $argsA += "act3" } elseif ($Act3Front) { $argsA += "act3_front" } elseif ($Act2) { $argsA += "act2" }
