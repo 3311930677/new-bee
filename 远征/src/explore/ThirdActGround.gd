@@ -5,6 +5,12 @@ var map_id := ""
 var use_reference_ground := false
 var _choice := ""
 var _brazier_choice := ""
+var _brazier_art: Texture2D
+
+func _ready() -> void:
+	if map_id == "frost_post":
+		_brazier_art = FrostCityArt.prop("frost_brazier")
+		material = FrostCityArt.cutout_material()
 
 
 func _process(_delta: float) -> void:
@@ -47,10 +53,15 @@ func _draw() -> void:
 				var repaired: bool = p.x == 365 and not _brazier_choice.is_empty()
 				if repaired and _brazier_choice == "coal":
 					draw_circle(p + Vector2(0, -42), 40, Color(0.98, 0.64, 0.18, 0.16))
-				draw_rect(Rect2(p + Vector2(-7, -46), Vector2(14, 46)), Color("53483c"))
+				if _brazier_art != null:
+					draw_texture_rect(_brazier_art, Rect2(p + Vector2(-18, -64), Vector2(36, 64)), false)
 				var lamp := Color("83bfc6") if repaired and _brazier_choice == "shield" else Color("f4c779")
-				draw_rect(Rect2(p + Vector2(-16, -63), Vector2(32, 22)), lamp)
-				draw_rect(Rect2(p + Vector2(-19, -68), Vector2(38, 7)), Color("dddcd0"))
+				if _brazier_lit(p):
+					draw_colored_polygon(PackedVector2Array([p + Vector2(-8, -48), p + Vector2(-5, -57),
+						p + Vector2(-2, -53), p + Vector2(1, -66), p + Vector2(4, -57),
+						p + Vector2(8, -54), p + Vector2(7, -48)]), lamp)
+					draw_colored_polygon(PackedVector2Array([p + Vector2(-3, -48), p + Vector2(0, -57),
+						p + Vector2(3, -49)]), Color("fff3cf"))
 				if repaired and _brazier_choice == "shield":
 					draw_rect(Rect2(p + Vector2(20, -71), Vector2(8, 43)), Color("6d8490"))
 			if not use_reference_ground:
@@ -99,6 +110,10 @@ func _draw() -> void:
 				draw_rect(Rect2(x - 24, 310, 48, 85), Color("718f9b"))
 				draw_rect(Rect2(x - 18, 320, 36, 55), Color("bddbe1"))
 				draw_line(Vector2(x - 9, 330), Vector2(x + 9, 365), Color("4e7c90"), 5)
+
+
+func _brazier_lit(at: Vector2) -> bool:
+	return at.x != 365.0 or not _brazier_choice.is_empty()
 
 
 func _boardwalk(rect: Rect2) -> void:

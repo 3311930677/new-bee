@@ -460,7 +460,7 @@ func _toast(msg: String) -> void:
 	if _toast_lbl != null and not _toast_lbl.is_queued_for_deletion():
 		_toast_lbl.queue_free()
 	_toast_lbl = G.gold_label(msg, G.FS_MD, false, Color("ffe9b0"))
-	_toast_lbl.position = Vector2(0, 560)
+	_toast_lbl.position = Vector2(0, maxf(VIEW_H, get_viewport_rect().size.y) - 240.0)
 	_toast_lbl.custom_minimum_size = Vector2(VIEW_W, 0)
 	_hud.add_child(_toast_lbl)
 	var tw := create_tween()
@@ -982,6 +982,8 @@ var _idle_frame_cache := {}
 
 
 func _npc_idle_frames(npc_id: String, guest: bool) -> SpriteFrames:
+	if not guest and FrostCityArt.rows().has(npc_id):
+		return FrostCityArt.idle(npc_id)
 	var key := "npc_guest_idle" if guest else "%s_idle" % npc_id
 	if _idle_frame_cache.has(key):
 		return _idle_frame_cache[key]
@@ -1017,6 +1019,8 @@ func _npc_world_tex(npc_id: String, guest: bool) -> Texture2D:
 
 
 func _npc_portrait_tex(npc_id: String, guest: bool) -> Texture2D:
+	if not guest and FrostCityArt.rows().has(npc_id):
+		return FrostCityArt.portrait(npc_id)
 	if guest:
 		var single := G.res_tex("npc_guest_idle_single")
 		if single != null:
@@ -1083,7 +1087,7 @@ func _open_dialog(nd: Dictionary, guest: bool) -> void:
 	layer.set_anchors_preset(Control.PRESET_FULL_RECT)
 	layer.mouse_filter = Control.MOUSE_FILTER_STOP
 	var panel := G.parchment_box(432, 150, 16.0)
-	panel.position = Vector2(24, VIEW_H - 190)
+	panel.position = Vector2(24, maxf(VIEW_H, get_viewport_rect().size.y) - 190.0)
 	layer.add_child(panel)
 	var content := Control.new()
 	content.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -2097,7 +2101,7 @@ class _Building extends StaticBody2D:
 	# 这样新素材到位时立刻生效，将来某张图缺失也不会让那座楼凭空消失。
 	var art: Texture2D = null
 	var _reference_art := false
-	const REFERENCE_ART_IDS := ["hall", "archive", "barracks", "kennel", "storehouse", "gate", "shrine", "forge"]
+	const REFERENCE_ART_IDS := ["hall", "archive", "barracks", "kennel", "storehouse", "gate", "shrine", "forge", "frost_lodge", "frost_supply", "frost_guardhouse"]
 	# 贴图统一按 0.75 倍画（256×192 → 192×144，正好 4×3 格）。
 	# 这批楼是同一台等距相机、同一比例出的：内容高都落在 161~181px，宽随楼本身宽窄变化
 	# （城门宽、祭坛窄）。所以绝不能"按各楼占地宽度缩放"——那会让窄楼被拉扁、宽楼被撑肿，
@@ -2121,6 +2125,9 @@ class _Building extends StaticBody2D:
 			if ResourceLoader.exists(path):
 				art = load(path) as Texture2D
 				_reference_art = true
+		if art_id.begins_with("frost_") and _reference_art:
+			art = FrostCityArt.prop("city_" + art_id)
+			material = FrostCityArt.cutout_material()
 		collision_layer = 2
 		collision_mask = 0
 		var shape := CollisionShape2D.new()
@@ -2583,6 +2590,14 @@ class _CityNPC extends Node2D:
 			var display_scale := 0.64 if embedded else IDLE_SCALE
 			sp.scale = Vector2.ONE * display_scale
 			sp.position = Vector2(0, -59.0 * display_scale if embedded else -IDLE_LIFT)
+			if frames.get_meta("foot_registered", false):
+				var canvas_height := float(frames.get_meta("canvas_height"))
+				display_scale = float(frames.get_meta("world_height")) / canvas_height
+				if not embedded: display_scale *= 84.0 / 76.0
+				sp.scale = Vector2.ONE * display_scale
+				sp.position = Vector2(0, -canvas_height * display_scale * 0.5)
+				sp.material = FrostCityArt.cutout_material()
+				sp.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 			# 错开起始帧：一排 NPC 齐步呼吸，会像同一张贴图复制了八份
 			sp.frame = int(absf(position.x + position.y)) % 4
 			sp.play()

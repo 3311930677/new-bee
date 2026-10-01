@@ -1,0 +1,927 @@
+{
+  "unit": "P08-E6",
+  "baseline_commit": "d1b6c2a",
+  "formal_cases": 44,
+  "runner_fault_checks": 11,
+  "assets": {
+    "npcs": {
+      "npc_frost_envoy": {
+        "path": "res://image/main_world/npc_frost_envoy_idle_reference_v2.png",
+        "source_size": [
+          2170,
+          725
+        ],
+        "sha256": "8ac5873deb23df65bb7646b049a6bb810d7498622ca8bb77d41fe3409f1ac8e6",
+        "canvas": [
+          316,
+          515
+        ],
+        "frames": [
+          {
+            "region": [
+              115,
+              110,
+              300,
+              514
+            ],
+            "foot_x": 152.0,
+            "margin": [
+              6.0,
+              1,
+              16,
+              1
+            ]
+          },
+          {
+            "region": [
+              659,
+              109,
+              302,
+              515
+            ],
+            "foot_x": 153.5,
+            "margin": [
+              4.5,
+              0,
+              14,
+              0
+            ]
+          },
+          {
+            "region": [
+              1205,
+              111,
+              301,
+              513
+            ],
+            "foot_x": 153.5,
+            "margin": [
+              4.5,
+              2,
+              15,
+              2
+            ]
+          },
+          {
+            "region": [
+              1755,
+              110,
+              295,
+              514
+            ],
+            "foot_x": 147.5,
+            "margin": [
+              10.5,
+              1,
+              21,
+              1
+            ]
+          }
+        ],
+        "portrait": [
+          115,
+          110,
+          300,
+          221
+        ],
+        "world_height": 76
+      },
+      "npc_frost_guard": {
+        "path": "res://image/main_world/npc_frost_guard_idle_reference_v2.png",
+        "source_size": [
+          2172,
+          724
+        ],
+        "sha256": "eef418f3fe4d1c96fadfad743e6c98979005cc6162613c7daf0bf53df18a5d1e",
+        "canvas": [
+          418,
+          556
+        ],
+        "frames": [
+          {
+            "region": [
+              122,
+              110,
+              329,
+              556
+            ],
+            "foot_x": 138.0,
+            "margin": [
+              71.0,
+              0,
+              89,
+              0
+            ]
+          },
+          {
+            "region": [
+              662,
+              110,
+              341,
+              556
+            ],
+            "foot_x": 141.5,
+            "margin": [
+              67.5,
+              0,
+              77,
+              0
+            ]
+          },
+          {
+            "region": [
+              1209,
+              110,
+              334,
+              556
+            ],
+            "foot_x": 136.5,
+            "margin": [
+              72.5,
+              0,
+              84,
+              0
+            ]
+          },
+          {
+            "region": [
+              1751,
+              110,
+              343,
+              556
+            ],
+            "foot_x": 138.5,
+            "margin": [
+              70.5,
+              0,
+              75,
+              0
+            ]
+          }
+        ],
+        "portrait": [
+          122,
+          110,
+          329,
+          239
+        ],
+        "world_height": 76
+      },
+      "npc_frost_miner": {
+        "path": "res://image/main_world/npc_frost_miner_idle_reference_v2.png",
+        "source_size": [
+          2170,
+          725
+        ],
+        "sha256": "03747bd94f88bfde480914d8507dd00d660a4788e98062c3751419e2bb7c7449",
+        "canvas": [
+          322,
+          532
+        ],
+        "frames": [
+          {
+            "region": [
+              116,
+              117,
+              312,
+              532
+            ],
+            "foot_x": 155.5,
+            "margin": [
+              5.5,
+              0,
+              10,
+              0
+            ]
+          },
+          {
+            "region": [
+              659,
+              117,
+              311,
+              532
+            ],
+            "foot_x": 155.0,
+            "margin": [
+              6.0,
+              0,
+              11,
+              0
+            ]
+          },
+          {
+            "region": [
+              1202,
+              117,
+              311,
+              532
+            ],
+            "foot_x": 154.5,
+            "margin": [
+              6.5,
+              0,
+              11,
+              0
+            ]
+          },
+          {
+            "region": [
+              1745,
+              117,
+              311,
+              532
+            ],
+            "foot_x": 154.0,
+            "margin": [
+              7.0,
+              0,
+              11,
+              0
+            ]
+          }
+        ],
+        "portrait": [
+          116,
+          117,
+          312,
+          229
+        ],
+        "world_height": 76
+      }
+    },
+    "props": {
+      "city_frost_lodge": {
+        "path": "res://image/main_world/city_frost_lodge_reference_v2.png",
+        "region": [
+          45,
+          11,
+          1359,
+          1063
+        ],
+        "sha256": "143c00ae1c291a51ec3d1d6c0f8dee28eede3273bd80097c44c257aa35fc5ee1"
+      },
+      "city_frost_supply": {
+        "path": "res://image/main_world/city_frost_supply_reference_v2.png",
+        "region": [
+          116,
+          141,
+          1382,
+          852
+        ],
+        "sha256": "34585a1dce521f85cc52505b465811093c243875f02d926b64d822eed5d0a749"
+      },
+      "city_frost_guardhouse": {
+        "path": "res://image/main_world/city_frost_guardhouse_reference_v2.png",
+        "region": [
+          96,
+          9,
+          1320,
+          1049
+        ],
+        "sha256": "895c9a35e6c6bc0cd4004e974ef9939bded91c760e470937934d84515bdae3c2"
+      },
+      "frost_brazier": {
+        "path": "res://image/main_world/frost_brazier_reference_v2.png",
+        "region": [
+          140,
+          368,
+          742,
+          1078
+        ],
+        "sha256": "6d72d7db21d8ad9dc8ea7da1577049e38380e090fc9126eda847fdaaa14bc8f4"
+      }
+    }
+  },
+  "screenshots": [
+    {
+      "file": "frost_art_coal_480x1067.png",
+      "size": [
+        480,
+        1067
+      ],
+      "sha256": "29d0f49f47a8968b45e5b84e012be76888b939054fee27472978690cfef76fd8",
+      "staged_layout": true
+    },
+    {
+      "file": "frost_art_coal_480x800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "f133a4e4426e486b24d99c94e627db34110a3af580d0637ca625ca8fd57d1305",
+      "staged_layout": true
+    },
+    {
+      "file": "frost_art_envoy_480x1067.png",
+      "size": [
+        480,
+        1067
+      ],
+      "sha256": "09dcb243d19140076a9b265d5305871ee64a3e8581637cd012fa6593d947cefb",
+      "staged_layout": true
+    },
+    {
+      "file": "frost_art_envoy_480x800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "956415996268e8894655d171216802ac86444bd90c52a234cccf27b5b4420bbe",
+      "staged_layout": true
+    },
+    {
+      "file": "frost_art_guard_480x1067.png",
+      "size": [
+        480,
+        1067
+      ],
+      "sha256": "c2d3efc5a6559fcc7dd5be18af14eda3c7467443a2c48ad522f57eb1407588d3",
+      "staged_layout": true
+    },
+    {
+      "file": "frost_art_guard_480x800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "121a625a2404f679b449fa000c3dfaf9cb673ceb6252adb4fc6a59b9373dfb0c",
+      "staged_layout": true
+    },
+    {
+      "file": "frost_art_miner_480x1067.png",
+      "size": [
+        480,
+        1067
+      ],
+      "sha256": "c72bc387f9052473317c43e1c90982638d343999c2acb264a248ee895460f928",
+      "staged_layout": true
+    },
+    {
+      "file": "frost_art_miner_480x800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "8607ea3401a6fd8aab9bbfb74109fd8d26eaed50ea1349339fb21d6f831c9c20",
+      "staged_layout": true
+    },
+    {
+      "file": "frost_art_north_480x1067.png",
+      "size": [
+        480,
+        1067
+      ],
+      "sha256": "267980f58249b746dffb74ff43c3c66f4e97c2dab17a3cc286677d740e32051d",
+      "staged_layout": true
+    },
+    {
+      "file": "frost_art_north_480x800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "7a76c82d17ca02abeede07d22add9311987a58c628c40b3d9808fc7ffbca4983",
+      "staged_layout": true
+    },
+    {
+      "file": "frost_art_north_left_480x1067.png",
+      "size": [
+        480,
+        1067
+      ],
+      "sha256": "a33a8a8e6b02f97fe34ad28f7d5a074bd6e3a917709e3d633aca448408c50cd9",
+      "staged_layout": true
+    },
+    {
+      "file": "frost_art_north_left_480x800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "4a194d8e8976d0ca285865377bb4b01abaf1370bcc5e49840d4e86737e843c28",
+      "staged_layout": true
+    },
+    {
+      "file": "frost_art_shield_480x1067.png",
+      "size": [
+        480,
+        1067
+      ],
+      "sha256": "d7017f1d74c3eb196ce4ea6a44e46ec3fe7d0ebf949aac69caae9d19ecb6e8c6",
+      "staged_layout": true
+    },
+    {
+      "file": "frost_art_shield_480x800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "99877b0eca34525310d5c3981f367512af1b0f7b9142e824d301f6b550140c3d",
+      "staged_layout": true
+    },
+    {
+      "file": "frost_art_south_480x1067.png",
+      "size": [
+        480,
+        1067
+      ],
+      "sha256": "35c2eb35f3e034f921f360353074b9b23282d1f304e3a28d920ca4a0301e5e2e",
+      "staged_layout": true
+    },
+    {
+      "file": "frost_art_south_480x800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "fe82bf7467db79f4e8e40d994a12d41fa2854636aba9254d2f1cf504f3fed476",
+      "staged_layout": true
+    },
+    {
+      "file": "frost_art_south_left_480x1067.png",
+      "size": [
+        480,
+        1067
+      ],
+      "sha256": "f65eb843ea7a1a75b2d344bea8d07b7c291cc69df3dedb7a7ddd297d8dae2960",
+      "staged_layout": true
+    },
+    {
+      "file": "frost_art_south_left_480x800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "649c7ce098bb1f283c8d1d3f1a3a35a4e08390dfd79e1de037cff5d624726e9a",
+      "staged_layout": true
+    },
+    {
+      "file": "frost_art_south_right_480x1067.png",
+      "size": [
+        480,
+        1067
+      ],
+      "sha256": "f6ea363b9f62eb6757570accc2e8059226e1945851911c4d6e16f00d2e83a3f8",
+      "staged_layout": true
+    },
+    {
+      "file": "frost_art_south_right_480x800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "2899fa66d9bd82302187683e3de0362fcb0935c12bad985b535dd76691ec2afe",
+      "staged_layout": true
+    }
+  ],
+  "roles": [
+    {
+      "role": "zs",
+      "source_sha256": "872942a1ada1ebe33f02657ebc60eff5545407da9e1c4a8643cf3bee8efbba24",
+      "save_a_sha256": "85007aa7ce6be53e4f1b3eab967bb89d5244ebb58119236d09ea0bc0e58e14c6",
+      "save_b_sha256": "85007aa7ce6be53e4f1b3eab967bb89d5244ebb58119236d09ea0bc0e58e14c6",
+      "state_a": {
+        "bag": 12,
+        "brazier_choice": "shield",
+        "cap": 60,
+        "equipped": [
+          "accessory",
+          "armor",
+          "hammer",
+          "spear",
+          "staff",
+          "sword"
+        ],
+        "exp": 2140,
+        "experience_revision_n": 28,
+        "frag": 0,
+        "frost_nameplate": 0,
+        "frost_parcel": 0,
+        "gold": 2820,
+        "ledger_n": 51,
+        "level": 42,
+        "map": "frost_post",
+        "pending": 0,
+        "role": "zs",
+        "story_done": [
+          "s01",
+          "s02",
+          "s03",
+          "s04",
+          "s05",
+          "s06",
+          "s07",
+          "s08",
+          "s09",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14",
+          "s15",
+          "s16",
+          "s17",
+          "s18",
+          "s19",
+          "s20",
+          "s21",
+          "s22",
+          "s23",
+          "s24",
+          "s25",
+          "s26",
+          "s27",
+          "s28"
+        ],
+        "story_done_n": 28,
+        "story_step": "",
+        "third_side": {
+          "a3_eco_lichen": {
+            "progress": 2.0,
+            "seen": [
+              "a3_lichen_south",
+              "a3_lichen_north"
+            ],
+            "status": "done"
+          },
+          "a3_eco_vents": {
+            "progress": 2.0,
+            "seen": [
+              "a3_vent_south",
+              "a3_vent_north"
+            ],
+            "status": "done"
+          },
+          "a3_rel_brazier": {
+            "choice": "shield",
+            "progress": 1.0,
+            "seen": [
+              "a3_wind_lamp"
+            ],
+            "status": "done"
+          },
+          "a3_rel_nameplate": {
+            "progress": 1.0,
+            "seen": [
+              "a3_dropped_plate"
+            ],
+            "status": "done"
+          },
+          "a3_secret_echo": {
+            "progress": 2.0,
+            "seen": [
+              "a3_echo_south",
+              "a3_echo_north"
+            ],
+            "status": "done"
+          },
+          "a3_trade_parcel": {
+            "progress": 1.0,
+            "seen": [],
+            "status": "done"
+          }
+        },
+        "unlocked_skills": [
+          "zs_lieshan",
+          "zs_pozhen"
+        ]
+      },
+      "state_b": {
+        "bag": 12,
+        "brazier_choice": "shield",
+        "cap": 60,
+        "equipped": [
+          "accessory",
+          "armor",
+          "hammer",
+          "spear",
+          "staff",
+          "sword"
+        ],
+        "exp": 2140,
+        "experience_revision_n": 28,
+        "frag": 0,
+        "frost_nameplate": 0,
+        "frost_parcel": 0,
+        "gold": 2820,
+        "ledger_n": 51,
+        "level": 42,
+        "map": "frost_post",
+        "pending": 0,
+        "role": "zs",
+        "story_done": [
+          "s01",
+          "s02",
+          "s03",
+          "s04",
+          "s05",
+          "s06",
+          "s07",
+          "s08",
+          "s09",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14",
+          "s15",
+          "s16",
+          "s17",
+          "s18",
+          "s19",
+          "s20",
+          "s21",
+          "s22",
+          "s23",
+          "s24",
+          "s25",
+          "s26",
+          "s27",
+          "s28"
+        ],
+        "story_done_n": 28,
+        "story_step": "",
+        "third_side": {
+          "a3_eco_lichen": {
+            "progress": 2.0,
+            "seen": [
+              "a3_lichen_south",
+              "a3_lichen_north"
+            ],
+            "status": "done"
+          },
+          "a3_eco_vents": {
+            "progress": 2.0,
+            "seen": [
+              "a3_vent_south",
+              "a3_vent_north"
+            ],
+            "status": "done"
+          },
+          "a3_rel_brazier": {
+            "choice": "shield",
+            "progress": 1.0,
+            "seen": [
+              "a3_wind_lamp"
+            ],
+            "status": "done"
+          },
+          "a3_rel_nameplate": {
+            "progress": 1.0,
+            "seen": [
+              "a3_dropped_plate"
+            ],
+            "status": "done"
+          },
+          "a3_secret_echo": {
+            "progress": 2.0,
+            "seen": [
+              "a3_echo_south",
+              "a3_echo_north"
+            ],
+            "status": "done"
+          },
+          "a3_trade_parcel": {
+            "progress": 1.0,
+            "seen": [],
+            "status": "done"
+          }
+        },
+        "unlocked_skills": [
+          "zs_lieshan",
+          "zs_pozhen"
+        ]
+      },
+      "old_investments_unchanged": true
+    },
+    {
+      "role": "fz",
+      "source_sha256": "d4de5c3aefd702921a190e6e1e39619fc503af40e3ec003a0912a69b4d07c0a8",
+      "save_a_sha256": "4422f8de2bbdccaa0f73b47f5459f84446b846dad756ed3aea55fa38dc9899e7",
+      "save_b_sha256": "4422f8de2bbdccaa0f73b47f5459f84446b846dad756ed3aea55fa38dc9899e7",
+      "state_a": {
+        "bag": 12,
+        "brazier_choice": "shield",
+        "cap": 60,
+        "equipped": [
+          "accessory",
+          "armor",
+          "hammer",
+          "spear",
+          "staff",
+          "sword"
+        ],
+        "exp": 2140,
+        "experience_revision_n": 28,
+        "frag": 0,
+        "frost_nameplate": 0,
+        "frost_parcel": 0,
+        "gold": 2820,
+        "ledger_n": 51,
+        "level": 42,
+        "map": "frost_post",
+        "pending": 0,
+        "role": "fz",
+        "story_done": [
+          "s01",
+          "s02",
+          "s03",
+          "s04",
+          "s05",
+          "s06",
+          "s07",
+          "s08",
+          "s09",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14",
+          "s15",
+          "s16",
+          "s17",
+          "s18",
+          "s19",
+          "s20",
+          "s21",
+          "s22",
+          "s23",
+          "s24",
+          "s25",
+          "s26",
+          "s27",
+          "s28"
+        ],
+        "story_done_n": 28,
+        "story_step": "",
+        "third_side": {
+          "a3_eco_lichen": {
+            "progress": 2.0,
+            "seen": [
+              "a3_lichen_south",
+              "a3_lichen_north"
+            ],
+            "status": "done"
+          },
+          "a3_eco_vents": {
+            "progress": 2.0,
+            "seen": [
+              "a3_vent_south",
+              "a3_vent_north"
+            ],
+            "status": "done"
+          },
+          "a3_rel_brazier": {
+            "choice": "shield",
+            "progress": 1.0,
+            "seen": [
+              "a3_wind_lamp"
+            ],
+            "status": "done"
+          },
+          "a3_rel_nameplate": {
+            "progress": 1.0,
+            "seen": [
+              "a3_dropped_plate"
+            ],
+            "status": "done"
+          },
+          "a3_secret_echo": {
+            "progress": 2.0,
+            "seen": [
+              "a3_echo_south",
+              "a3_echo_north"
+            ],
+            "status": "done"
+          },
+          "a3_trade_parcel": {
+            "progress": 1.0,
+            "seen": [],
+            "status": "done"
+          }
+        },
+        "unlocked_skills": [
+          "fz_shengyu",
+          "fz_puzhao"
+        ]
+      },
+      "state_b": {
+        "bag": 12,
+        "brazier_choice": "shield",
+        "cap": 60,
+        "equipped": [
+          "accessory",
+          "armor",
+          "hammer",
+          "spear",
+          "staff",
+          "sword"
+        ],
+        "exp": 2140,
+        "experience_revision_n": 28,
+        "frag": 0,
+        "frost_nameplate": 0,
+        "frost_parcel": 0,
+        "gold": 2820,
+        "ledger_n": 51,
+        "level": 42,
+        "map": "frost_post",
+        "pending": 0,
+        "role": "fz",
+        "story_done": [
+          "s01",
+          "s02",
+          "s03",
+          "s04",
+          "s05",
+          "s06",
+          "s07",
+          "s08",
+          "s09",
+          "s10",
+          "s11",
+          "s12",
+          "s13",
+          "s14",
+          "s15",
+          "s16",
+          "s17",
+          "s18",
+          "s19",
+          "s20",
+          "s21",
+          "s22",
+          "s23",
+          "s24",
+          "s25",
+          "s26",
+          "s27",
+          "s28"
+        ],
+        "story_done_n": 28,
+        "story_step": "",
+        "third_side": {
+          "a3_eco_lichen": {
+            "progress": 2.0,
+            "seen": [
+              "a3_lichen_south",
+              "a3_lichen_north"
+            ],
+            "status": "done"
+          },
+          "a3_eco_vents": {
+            "progress": 2.0,
+            "seen": [
+              "a3_vent_south",
+              "a3_vent_north"
+            ],
+            "status": "done"
+          },
+          "a3_rel_brazier": {
+            "choice": "shield",
+            "progress": 1.0,
+            "seen": [
+              "a3_wind_lamp"
+            ],
+            "status": "done"
+          },
+          "a3_rel_nameplate": {
+            "progress": 1.0,
+            "seen": [
+              "a3_dropped_plate"
+            ],
+            "status": "done"
+          },
+          "a3_secret_echo": {
+            "progress": 2.0,
+            "seen": [
+              "a3_echo_south",
+              "a3_echo_north"
+            ],
+            "status": "done"
+          },
+          "a3_trade_parcel": {
+            "progress": 1.0,
+            "seen": [],
+            "status": "done"
+          }
+        },
+        "unlocked_skills": [
+          "fz_shengyu",
+          "fz_puzhao"
+        ]
+      },
+      "old_investments_unchanged": true
+    }
+  ],
+  "real_save_sha256": "c5d29ee55c033619c4f5232d55a6c4f186d40add556db61ee0d776b9fda2660c",
+  "hero_redraw_deferred": true,
+  "geometry_and_story_tables_unchanged": true,
+  "limits": [
+    "screenshots are staged compositions, not unlock or natural-play proof",
+    "two-role real-input route covers the six existing Frost Post side quests and shield choice; coal is covered by formal state/save tests",
+    "NPC soles and heights are validated against the actual source pixels and native AtlasTexture margins",
+    "whole S0-S7 goal remains active; fourth act and full art set remain",
+    "issue 43 exit-only resource/RID diagnostics remain; Android performance is not claimed"
+  ]
+}
