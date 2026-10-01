@@ -33,7 +33,7 @@ param(
   [string]$List = "",
   [int]$QuitAfter = 6000,
   [int]$TimeoutSec = 240,
-  [int]$Expected = 43,
+  [int]$Expected = 44,
   [string]$LogDir = "",
   [switch]$AllowAnyVersion
 )
@@ -103,6 +103,7 @@ $cases = @(
 	@{ N = "VerifyCampaignGear"; K = "scene"; T = "CAMPAIGN_GEAR_OK" },
 	@{ N = "VerifyWorkshop"; K = "scene"; T = "WORKSHOP_OK" },
 	@{ N = "VerifyCurriculum"; K = "scene"; T = "CURRICULUM_OK" },
+	@{ N = "VerifyFrostArt"; K = "scene"; T = "FROST_ART_OK" },
 	@{ N = "VerifyPortGrowth";  K = "scene";  T = "PORT_GROWTH_OK" },
 	@{ N = "VerifyShipping";    K = "scene";  T = "SHIPPING_OK" },
 	@{ N = "VerifyFishing";     K = "scene";  T = "FISHING_OK" },

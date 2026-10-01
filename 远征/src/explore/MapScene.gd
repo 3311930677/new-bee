@@ -3881,13 +3881,16 @@ class _QuestEntity extends Node2D:
 	var map_ref: MapScene = null
 	var _t := 0.0
 	var _trade_tex: Texture2D = null
+	var _uses_ground_art := false
 
 	func _ready() -> void:
 		if art == "trade_stall":
 			_trade_tex = G.res_tex("trade_stall")
+		_uses_ground_art = art == "frost_brazier" and map_ref != null and map_ref._main_map_id == "frost_post"
 		var label := G.gold_label(caption, G.FS_XS, true,
 			Color("ffe2a0") if kind in ["cache", "trade", "story"] else Color("cfe3ff"), true)
 		label.position = Vector2(-84, -124 if art in ["trade_stall", "salt_cart", "tide_cargo"] else -70)
+		if _uses_ground_art: label.position.y = -98
 		label.size = Vector2(168, 20)
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -3915,10 +3918,12 @@ class _QuestEntity extends Node2D:
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		match art:
 			"frost_brazier":
-				draw_rect(Rect2(-7, -46, 14, 46), Color("53483c"))
-				draw_rect(Rect2(-16, -63, 32, 22), Color("c19b65"))
-				draw_rect(Rect2(-19, -68, 38, 7), Color("dddcd0"))
-				draw_line(Vector2(-3, -62), Vector2(8, -43), Color("604d3f"), 3)
+				# The permanent scene prop owns the body; this entity owns only the quest marker.
+				if not _uses_ground_art:
+					draw_rect(Rect2(-7, -46, 14, 46), Color("53483c"))
+					draw_rect(Rect2(-16, -63, 32, 22), Color("c19b65"))
+					draw_rect(Rect2(-19, -68, 38, 7), Color("dddcd0"))
+					draw_line(Vector2(-3, -62), Vector2(8, -43), Color("604d3f"), 3)
 			"frost_nameplate":
 				var plate := G.res_tex("itm_frost_nameplate")
 				if plate != null: draw_texture_rect(plate, Rect2(-22, -42, 44, 44), false)
@@ -4005,6 +4010,7 @@ class _QuestEntity extends Node2D:
 		# 固定奇遇金三角，支线蓝三角：地图上可直接分辨两个事件。
 		var bob := sin(_t * 2.2) * 4.0
 		var tip := Vector2(0, (-142.0 if art in ["trade_stall", "salt_cart", "tide_cargo"] else -88.0) + bob)
+		if _uses_ground_art: tip.y = -116.0 + bob
 		draw_colored_polygon([tip + Vector2(0, -7), tip + Vector2(6, 3), tip + Vector2(-6, 3)],
 			Color("ffd279") if kind in ["cache", "trade", "story"] else Color("9fd0ff"))
 

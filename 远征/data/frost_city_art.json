@@ -1,0 +1,289 @@
+{
+  "npcs": {
+    "npc_frost_envoy": {
+      "path": "res://image/main_world/npc_frost_envoy_idle_reference_v2.png",
+      "source_size": [
+        2170,
+        725
+      ],
+      "sha256": "8ac5873deb23df65bb7646b049a6bb810d7498622ca8bb77d41fe3409f1ac8e6",
+      "canvas": [
+        316,
+        515
+      ],
+      "frames": [
+        {
+          "region": [
+            115,
+            110,
+            300,
+            514
+          ],
+          "foot_x": 152.0,
+          "margin": [
+            6.0,
+            1,
+            16,
+            1
+          ]
+        },
+        {
+          "region": [
+            659,
+            109,
+            302,
+            515
+          ],
+          "foot_x": 153.5,
+          "margin": [
+            4.5,
+            0,
+            14,
+            0
+          ]
+        },
+        {
+          "region": [
+            1205,
+            111,
+            301,
+            513
+          ],
+          "foot_x": 153.5,
+          "margin": [
+            4.5,
+            2,
+            15,
+            2
+          ]
+        },
+        {
+          "region": [
+            1755,
+            110,
+            295,
+            514
+          ],
+          "foot_x": 147.5,
+          "margin": [
+            10.5,
+            1,
+            21,
+            1
+          ]
+        }
+      ],
+      "portrait": [
+        115,
+        110,
+        300,
+        221
+      ],
+      "world_height": 76
+    },
+    "npc_frost_guard": {
+      "path": "res://image/main_world/npc_frost_guard_idle_reference_v2.png",
+      "source_size": [
+        2172,
+        724
+      ],
+      "sha256": "eef418f3fe4d1c96fadfad743e6c98979005cc6162613c7daf0bf53df18a5d1e",
+      "canvas": [
+        418,
+        556
+      ],
+      "frames": [
+        {
+          "region": [
+            122,
+            110,
+            329,
+            556
+          ],
+          "foot_x": 138.0,
+          "margin": [
+            71.0,
+            0,
+            89,
+            0
+          ]
+        },
+        {
+          "region": [
+            662,
+            110,
+            341,
+            556
+          ],
+          "foot_x": 141.5,
+          "margin": [
+            67.5,
+            0,
+            77,
+            0
+          ]
+        },
+        {
+          "region": [
+            1209,
+            110,
+            334,
+            556
+          ],
+          "foot_x": 136.5,
+          "margin": [
+            72.5,
+            0,
+            84,
+            0
+          ]
+        },
+        {
+          "region": [
+            1751,
+            110,
+            343,
+            556
+          ],
+          "foot_x": 138.5,
+          "margin": [
+            70.5,
+            0,
+            75,
+            0
+          ]
+        }
+      ],
+      "portrait": [
+        122,
+        110,
+        329,
+        239
+      ],
+      "world_height": 76
+    },
+    "npc_frost_miner": {
+      "path": "res://image/main_world/npc_frost_miner_idle_reference_v2.png",
+      "source_size": [
+        2170,
+        725
+      ],
+      "sha256": "03747bd94f88bfde480914d8507dd00d660a4788e98062c3751419e2bb7c7449",
+      "canvas": [
+        322,
+        532
+      ],
+      "frames": [
+        {
+          "region": [
+            116,
+            117,
+            312,
+            532
+          ],
+          "foot_x": 155.5,
+          "margin": [
+            5.5,
+            0,
+            10,
+            0
+          ]
+        },
+        {
+          "region": [
+            659,
+            117,
+            311,
+            532
+          ],
+          "foot_x": 155.0,
+          "margin": [
+            6.0,
+            0,
+            11,
+            0
+          ]
+        },
+        {
+          "region": [
+            1202,
+            117,
+            311,
+            532
+          ],
+          "foot_x": 154.5,
+          "margin": [
+            6.5,
+            0,
+            11,
+            0
+          ]
+        },
+        {
+          "region": [
+            1745,
+            117,
+            311,
+            532
+          ],
+          "foot_x": 154.0,
+          "margin": [
+            7.0,
+            0,
+            11,
+            0
+          ]
+        }
+      ],
+      "portrait": [
+        116,
+        117,
+        312,
+        229
+      ],
+      "world_height": 76
+    }
+  },
+  "props": {
+    "city_frost_lodge": {
+      "path": "res://image/main_world/city_frost_lodge_reference_v2.png",
+      "region": [
+        45,
+        11,
+        1359,
+        1063
+      ],
+      "sha256": "143c00ae1c291a51ec3d1d6c0f8dee28eede3273bd80097c44c257aa35fc5ee1"
+    },
+    "city_frost_supply": {
+      "path": "res://image/main_world/city_frost_supply_reference_v2.png",
+      "region": [
+        116,
+        141,
+        1382,
+        852
+      ],
+      "sha256": "34585a1dce521f85cc52505b465811093c243875f02d926b64d822eed5d0a749"
+    },
+    "city_frost_guardhouse": {
+      "path": "res://image/main_world/city_frost_guardhouse_reference_v2.png",
+      "region": [
+        96,
+        9,
+        1320,
+        1049
+      ],
+      "sha256": "895c9a35e6c6bc0cd4004e974ef9939bded91c760e470937934d84515bdae3c2"
+    },
+    "frost_brazier": {
+      "path": "res://image/main_world/frost_brazier_reference_v2.png",
+      "region": [
+        140,
+        368,
+        742,
+        1078
+      ],
+      "sha256": "6d72d7db21d8ad9dc8ea7da1577049e38380e090fc9126eda847fdaaa14bc8f4"
+    }
+  }
+}

@@ -271,6 +271,17 @@ func _curriculum_region_demo() -> void:
 		world._city_content.set_process(false)
 		world._city_content.set_physics_process(false)
 		world._city_content._close_panel()
+	if _scene.begins_with("frost_art_"):
+		world._player.position = Vector2(480, 450 if _scene.contains("north") else 910)
+		if _scene.ends_with("left"): world._player.position.x = 310
+		elif _scene.ends_with("right"): world._player.position.x = 650
+		if _scene.ends_with("coal") or _scene.ends_with("shield"):
+			G.prog.get_or_add("flags", {})["act3_brazier_choice"] = "coal" if _scene.ends_with("coal") else "shield"
+			world._player.position = Vector2(480, 680)
+		for id in ["envoy", "guard", "miner"]:
+			if _scene.ends_with(id):
+				world._player.position = Vector2(480, 450 if id == "envoy" else 910)
+				world._city_content._open_dialog(G.city_npc("npc_frost_" + id), false)
 	if _scene.begins_with("curriculum_"):
 		var sid := String(MentorCurriculum.rows(G.selected_role)[0].id)
 		if _scene == "curriculum_branch":
@@ -377,7 +388,7 @@ func _gear_demo() -> void:
 	bag._refresh()
 
 func _setup() -> void:
-	if _scene.begins_with("terrain_") or _scene.begins_with("curriculum_"):
+	if _scene.begins_with("terrain_") or _scene.begins_with("curriculum_") or _scene.begins_with("frost_art_"):
 		await _curriculum_region_demo()
 		return
 	if _scene in ["workshop_low", "workshop_progress"]:
