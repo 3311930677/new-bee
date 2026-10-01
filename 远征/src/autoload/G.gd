@@ -475,6 +475,7 @@ func _load_save() -> void:
 		prog["pet_stat"] = pst if pst is Dictionary else {}
 		if pd.has("companions"): prog["companions"] = (pd.companions as Dictionary).duplicate(true)
 		if pd.has("campaign_growth"): prog["campaign_growth"] = (pd.campaign_growth as Dictionary).duplicate(true)
+		if pd.has("skill_curriculum"): prog["skill_curriculum"] = (pd.skill_curriculum as Dictionary).duplicate(true)
 		var ts: Variant = pd.get("tips_seen", {})   # 已看过的引导弹层，别每次开面板都弹
 		prog["tips_seen"] = ts if ts is Dictionary else {}
 		prog["lore_seen"] = bool(pd.get("lore_seen", false))   # 序章是否已看（看过的老档不再弹）
@@ -1035,21 +1036,31 @@ func act1_unlocked_skills(role_id := "") -> Array:
 	var sid := mentor_second_skill(rid)
 	if not sid.is_empty() and (mentor_state()["unlocked"] as Array).has(sid):
 		out.append(sid)
+	out.append_array(MentorCurriculum.unlocked(prog, rid))
 	return out
 
 
 func act1_skill_variants(role_id := "") -> Dictionary:
+	var rid := role_id if not role_id.is_empty() else selected_role
+	var out := MentorCurriculum.variants(prog, rid)
 	var sid := mentor_second_skill(role_id)
 	if sid.is_empty():
-		return {}
+		return out
 	var choice := String((mentor_state()["variants"] as Dictionary).get(sid, ""))
 	if choice.is_empty():
-		return {}
+		return out
 	var variants_v: Variant = mentor_role_cfg(role_id).get("variants", {})
 	if not (variants_v is Dictionary):
-		return {}
+		return out
 	var mod_v: Variant = (variants_v as Dictionary).get(choice, {})
-	return {sid: (mod_v as Dictionary).duplicate(true)} if mod_v is Dictionary else {}
+	if mod_v is Dictionary and not choice.is_empty(): out[sid] = (mod_v as Dictionary).duplicate(true)
+	return out
+
+func curriculum_apply(sid: String, action: String, choice := "", persist := true) -> Dictionary:
+	return MentorCurriculum.apply(self, sid, action, choice, persist)
+
+func curriculum_report_effective(skills: Array, encounter_id: String, persist := true) -> Array:
+	return MentorCurriculum.report(self, skills, encounter_id, persist)
 
 
 func mentor_unlock_second(persist := true) -> Dictionary:

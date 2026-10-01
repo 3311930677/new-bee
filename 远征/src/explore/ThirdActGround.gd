@@ -2,6 +2,7 @@ extends Node2D
 
 # 第三幕可走地貌；识别图形在实体下层，不用装饰性裂谷充当隐形碰撞。
 var map_id := ""
+var use_reference_ground := false
 var _choice := ""
 var _brazier_choice := ""
 
@@ -36,11 +37,12 @@ func _draw() -> void:
 					draw_rect(Rect2(x - 3, 235, 6, 95), Color("635543"))
 					draw_rect(Rect2(x, 235, 34, 48), color)
 					draw_rect(Rect2(x + 8, 245, 18, 5), Color("eee7d4"))
-			# 雪地木栈道：宽主街与东向矿道支路，两侧房屋独立留出 NPC 空间。
-			_boardwalk(Rect2(426, 80, 108, 1100))
-			_boardwalk(Rect2(335, 420, 260, 60))
-			_boardwalk(Rect2(335, 840, 300, 60))
-			_boardwalk(Rect2(480, 680, 398, 60))
+			if not use_reference_ground:
+				# 雪地木栈道：宽主街与东向矿道支路，两侧房屋独立留出 NPC 空间。
+				_boardwalk(Rect2(426, 80, 108, 1100))
+				_boardwalk(Rect2(335, 420, 260, 60))
+				_boardwalk(Rect2(335, 840, 300, 60))
+				_boardwalk(Rect2(480, 680, 398, 60))
 			for p in [Vector2(365, 660), Vector2(595, 970)]:
 				var repaired: bool = p.x == 365 and not _brazier_choice.is_empty()
 				if repaired and _brazier_choice == "coal":
@@ -51,8 +53,9 @@ func _draw() -> void:
 				draw_rect(Rect2(p + Vector2(-19, -68), Vector2(38, 7)), Color("dddcd0"))
 				if repaired and _brazier_choice == "shield":
 					draw_rect(Rect2(p + Vector2(20, -71), Vector2(8, 43)), Color("6d8490"))
-			for y in [245.0, 1040.0]:
-				_rock(Vector2(165, y), Color("889c9c"))
+			if not use_reference_ground:
+				for y in [245.0, 1040.0]:
+					_rock(Vector2(165, y), Color("889c9c"))
 		"rift_mine_road":
 			# 侧面的开采沟与两条明亮轨道构成矿道识别点；中央和西出口可步行。
 			draw_colored_polygon(PackedVector2Array([Vector2(620, 190), Vector2(960, 230),

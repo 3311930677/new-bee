@@ -224,6 +224,10 @@ static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, c
 	if caster.kind == "role" and effective > 0:
 		sim.emit({"t": "skill_effective", "uid": caster.uid,
 			"skill": String(skill.get("id", "")), "amount": effective})
+	# 后续授业接受成功的增益/控制与清除负面；独立事件保留原导师实效口径。
+	if caster.kind == "role" and maxi(effective, companion_effective) > 0:
+		sim.emit({"t": "curriculum_effective", "uid": caster.uid,
+			"skill": String(skill.get("id", "")), "amount": maxi(effective, companion_effective)})
 	CompanionService.on_skill(sim,caster,skill,maxi(effective,companion_effective),effective)
 
 

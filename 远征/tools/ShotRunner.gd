@@ -244,6 +244,46 @@ func _companion_demo() -> void:
 	_frames = 8
 
 ## 用已验收存档的真实字段渲染界面；只有相机/位置为截图摆位，不作为输入验证。
+func _curriculum_region_demo() -> void:
+	G.SAVE_PATH = "res://tools/_logs/save_shot_curriculum_region.json"
+	var raw := FileAccess.get_file_as_string(_source_save)
+	if not JSON.parse_string(raw) is Dictionary:
+		push_error("SHOT_SOURCE_INVALID")
+		return
+	var file := FileAccess.open(G.SAVE_PATH, FileAccess.WRITE)
+	file.store_string(raw)
+	file.close()
+	if not G.reload_save() or G.save_locked:
+		push_error("SHOT_SOURCE_LOAD_FAILED")
+		return
+	var mid := "lorin_wilds" if _scene.begins_with("curriculum_") else ("shenyuan_port" if _scene.begins_with("terrain_port") else "frost_post")
+	var run := RunState.new()
+	run.setup({"theme": String(TableCache.main_world_map(mid).get("theme", "forest")), "role_id": G.selected_role, "level": int(G.prog.level), "active_pet": G.companion_active(), "potions": 2, "seed": 91})
+	run.growth_bonus = G.growth_bonuses(run.role_id)
+	MapScene.pending_cfg = {"mode": "main_world", "main_map_id": mid, "run": run, "node": {"type": "normal", "layer": 0, "index": 0}}
+	var world: MapScene = load("res://src/explore/MapScene.tscn").instantiate()
+	add_child(world)
+	await get_tree().process_frame
+	world._player.position = Vector2(480, 1000 if _scene.ends_with("south") else 600)
+	world.set_process(false)
+	world.set_physics_process(false)
+	if world._city_content != null:
+		world._city_content.set_process(false)
+		world._city_content.set_physics_process(false)
+		world._city_content._close_panel()
+	if _scene.begins_with("curriculum_"):
+		var sid := String(MentorCurriculum.rows(G.selected_role)[0].id)
+		if _scene == "curriculum_branch":
+			# 熟练分支构图 fixture；不当作自然实战取得证明。
+			if not sid in G.act1_unlocked_skills(): G.curriculum_apply(sid, "learn", "", false)
+			for i in 2: G.curriculum_report_effective([sid], "shot_%d" % i, false)
+			world._city_content._open_curriculum_skill(sid)
+		elif _scene == "curriculum_detail":
+			world._city_content._open_curriculum_skill(sid)
+		else:
+			world._city_content._open_curriculum_panel()
+
+
 func _campaign_demo() -> void:
 	G.SAVE_PATH = "res://tools/_logs/save_shot_campaign.json"
 	var source := FileAccess.get_file_as_string(_source_save)
@@ -337,6 +377,9 @@ func _gear_demo() -> void:
 	bag._refresh()
 
 func _setup() -> void:
+	if _scene.begins_with("terrain_") or _scene.begins_with("curriculum_"):
+		await _curriculum_region_demo()
+		return
 	if _scene in ["workshop_low", "workshop_progress"]:
 		_growth_demo()
 		G.equip_state("sword")["lv"] = 1 if _scene == "workshop_low" else 3
