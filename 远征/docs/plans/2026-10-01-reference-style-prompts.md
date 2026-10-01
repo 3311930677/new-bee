@@ -27,3 +27,7 @@ Create a runtime BACKGROUND bitmap for a classic 16-bit Chinese mobile fantasy R
 Change ONLY the texture density of this background. Remove at least 95 percent of all scattered dark speckles, light speckles, mottled patches and grass tuft textures. The result MUST be predominantly FLAT QUIET light sage/olive green (#a8b97a) occupying almost the entire canvas, with a subtle repeating pattern of low-contrast rounded paving shapes (each shape 24-32 output pixels wide, only 1-2 neighboring green shades). The ground should read like the clean green terrain in an early Chinese mobile pixel RPG, not a textured lawn photograph and not camouflage. Leave a very broad clean middle area for combat sprites. Do not add gradients, vignette, light direction, road, buildings, actors, text or UI. Preserve exact portrait dimensions. Minimal decorative pixels, no granular noise. Large uniform color fields are required; sharp pixel steps on the few shallow stone outlines.
 
 项目路径：image/main_world/classic_floor_reference_v1.png。
+
+## 用户追加：背景细化、主角暂缓
+
+主城v5、战斗v2与锻造铺v2的完整提示词见同目录 `2026-10-01-reference-style-refinement.md`，保留版本化图片和原资产，不以改变主角素材适配背景。

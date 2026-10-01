@@ -365,7 +365,7 @@ func _build_classic_region_floor() -> void:
 	if tiles.is_empty(): return
 	var asset_dir := String(TableCache.maps_config().get("asset_dir", "res://image/map_proc"))
 	var is_grass := theme == "forest"
-	var texture: Texture2D = load("res://image/main_world/classic_floor_reference_v1.png" if is_grass else "%s/%s.png" % [asset_dir, String(tiles[0])])
+	var texture: Texture2D = load("res://image/main_world/classic_floor_reference_v2.png" if is_grass else "%s/%s.png" % [asset_dir, String(tiles[0])])
 	if texture == null: return
 	var ground := TextureRect.new()
 	ground.name = "ClassicRegionFloor"
