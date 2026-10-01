@@ -33,7 +33,7 @@ func _run() -> void:
 	_check(ResourceLoader.exists(String(cfg.get("monster_sprite", ""))),
 		"主地图怪物像素形象应存在")
 	_check(not TableCache.get_monster("mon_zombie").is_empty(), "主地图僵尸战斗数据应存在")
-	_check(String(cfg.get("background", "")).ends_with("lorin_wilds_reference_v4.png"),
+	_check(String(cfg.get("background", "")).ends_with("lorin_wilds_reference_v6.png"),
 		"主地图应实际接入参考画风地表")
 	var ground_tex := load(String(cfg.get("background", ""))) as Texture2D
 	if ground_tex != null:
@@ -78,6 +78,10 @@ func _run() -> void:
 	map._city_content._check_interact()
 	_check(not map._city_content._npcs[0].label_near,
 		"远处 NPC 名签应隐藏，避免遮住主城视野")
+	map._player.position = map._city_content._npcs[0].position + Vector2(0, -100)
+	map._city_content._check_interact()
+	_check(not map._city_content._npcs[0].label_near,
+		"下方NPC名牌不能压住主角身体")
 	map._player.position = map._city_content._npcs[0].position + Vector2(70, 0)
 	map._city_content._check_interact()
 	_check(map._city_content._npcs[0].label_near,

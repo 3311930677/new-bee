@@ -262,7 +262,7 @@ func _campaign_demo() -> void:
 		return
 	if int(catchup.exp) > 0:
 		G._pending_campaign_note = "旅途经验补记 +%d · Lv%d" % [int(catchup.exp), int(G.prog.level)]
-	var id := "frost_post" if _scene in ["campaign_catchup", "gear_world"] else ("lorin_wilds" if _scene in ["campaign_return", "style_city"] else ("maple_road" if _scene == "style_battle" else "rift_mine_road"))
+	var id := "frost_post" if _scene in ["campaign_catchup", "gear_world"] else ("lorin_wilds" if _scene in ["campaign_return", "style_city", "style_forge"] else ("maple_road" if _scene == "style_battle" else "rift_mine_road"))
 	var run := RunState.new()
 	run.setup({"theme": String(TableCache.main_world_map(id).get("theme", "forest")), "role_id": G.selected_role,
 		"level": int(G.prog.level), "active_pet": G.companion_active(), "potions": 2, "seed": 91})
@@ -273,6 +273,7 @@ func _campaign_demo() -> void:
 	add_child(world)
 	await get_tree().process_frame
 	if _scene in ["campaign_catchup", "gear_world", "style_city"]: world._player.position = Vector2(480, 930)
+	elif _scene == "style_forge": world._player.position = Vector2(385, 1030)
 	elif not world._monsters.is_empty(): world._player.position = world._monsters[0].position + Vector2(85, 60)
 	if _scene == "style_battle" and not world._monsters.is_empty():
 		world._start_battle(world._monsters[0])
@@ -324,7 +325,7 @@ func _setup() -> void:
 	if _scene == "style_bag":
 		await _gear_demo()
 		return
-	if _scene in ["style_city", "style_battle"]:
+	if _scene in ["style_city", "style_battle", "style_forge"]:
 		await _campaign_demo()
 		return
 	if _scene.begins_with("gear_"):

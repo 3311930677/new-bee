@@ -546,13 +546,18 @@ func _check_interact() -> void:
 			_open_dialog((best as _CityNPC).data, (best as _CityNPC).guest)
 
 
-## 城务名签与人物名签共处同一世界坐标。靠近时优先保留人物名签；
+## 城务名签不遮住主角名签或身体。靠近时优先保留主角轮廓；
 ## NPC 实体和交互仍在，离开重叠位置后名签自动恢复。
 func _npc_plate_overlaps_player(n: _CityNPC) -> bool:
 	if _embedded_map == null or _embedded_map._player_tag == null:
 		return false
 	var tag := _embedded_map._player_tag
 	var player_rect := Rect2(_player.position + tag.position, tag.size)
+	# NPC位于主角下方时，其头顶名牌也可能盖住主角身体。
+	var draw_scale := float(_embedded_map._main_cfg.get("player_scale", 0.54))
+	var body_rect := Rect2(_player.position + Vector2(-48.0, -120.0) * draw_scale,
+		Vector2(96.0, 128.0) * draw_scale)
+	player_rect = player_rect.merge(body_rect)
 	var npc_rect := Rect2(n.position + Vector2(-n._plate_w * 0.5, n._plate_top),
 		Vector2(n._plate_w, n._plate_h))
 	return player_rect.grow(4.0).intersects(npc_rect)
@@ -2005,6 +2010,8 @@ class _Building extends StaticBody2D:
 		_h = float(s[1]) * 48.0
 		# 贴图只在落成后才画（_draw_built 才走 _draw_art），工地仍走 _draw_plot 的翻土画法。
 		art = G.res_tex("city_%s" % String(d.get("id", "")))
+		if String(d.get("id", "")) == "forge":
+			art = load("res://image/main_world/city_forge_reference_v2.png") as Texture2D
 		collision_layer = 2
 		collision_mask = 0
 		var shape := CollisionShape2D.new()
@@ -2037,6 +2044,8 @@ class _Building extends StaticBody2D:
 	## 免得贴图比程序绘制高时，装饰还按老高度摆就被楼顶顶穿。
 	func _art_top() -> float:
 		if art != null:
+			if String(data.get("id", "")) == "forge":
+				return ART_BOTTOM - ART_W * float(art.get_height()) / float(art.get_width())
 			return ART_BOTTOM - float(data.get("art_visible_height", 192.0)) * ART_SCALE
 		return -_h * 0.5
 
@@ -2136,7 +2145,7 @@ class _Building extends StaticBody2D:
 		# 贴图路径：不再叠程序绘制的石台（贴图自带台基），只补一圈贴地的接影。
 		if art != null:
 			draw_set_transform(Vector2(0, 4), 0.0, Vector2(1.0, 0.34))
-			draw_circle(Vector2.ZERO, ART_W * 0.42, Color(0, 0, 0, 0.30))
+			draw_circle(Vector2.ZERO, ART_W * 0.42, Color(0, 0, 0, 0.20))
 			draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 			_draw_art()
 			return
@@ -2219,8 +2228,10 @@ class _Building extends StaticBody2D:
 	# 贴图自带完整的台基与台阶，所以不再叠程序绘制的石台，免得两层台基打架。
 	func _draw_art() -> void:
 		var left := -ART_W * 0.5
-		var top := ART_BOTTOM - ART_H
-		draw_texture_rect(art, Rect2(left, top, ART_W, ART_H), false)
+		var height := ART_W * float(art.get_height()) / float(art.get_width()) \
+			if String(data.get("id", "")) == "forge" else ART_H
+		var top := ART_BOTTOM - height
+		draw_texture_rect(art, Rect2(left, top, ART_W, height), false)
 		# 名牌移到楼顶之上：贴图本身细节很密，压在上面会糊掉
 		_plaque(String(data.get("name", "")), "", _art_top() - 20.0)
 
@@ -2459,8 +2470,9 @@ class _CityNPC extends Node2D:
 			sp.name = "Idle"   # 显式命名：引擎自动名是 @AnimatedSprite2D@xx，回归断言没法按名找
 			sp.sprite_frames = frames
 			sp.animation = &"idle"
-			sp.scale = Vector2.ONE * IDLE_SCALE
-			sp.position = Vector2(0, -IDLE_LIFT)
+			var display_scale := 0.64 if embedded else IDLE_SCALE
+			sp.scale = Vector2.ONE * display_scale
+			sp.position = Vector2(0, -59.0 * display_scale if embedded else -IDLE_LIFT)
 			# 错开起始帧：一排 NPC 齐步呼吸，会像同一张贴图复制了八份
 			sp.frame = int(absf(position.x + position.y)) % 4
 			sp.play()
@@ -2473,6 +2485,9 @@ class _CityNPC extends Node2D:
 			txt += " · " + title
 		# 名牌高度随形象变：像素小人身高 80（含头）→ -108；立绘 104 → -114；色块小人 → -52
 		_plate_top = -108.0 if frames != null else (-114.0 if art != null else -52.0)
+		if embedded and frames != null:
+			# 成人名牌保留原安全高度，避免与0.66倍主角名牌相交后被隐藏。
+			_plate_top = -78.0 if String(data.get("id", "")) == "npc_child" else -108.0
 		_plate_w = clampf(G.font_bold.get_string_size(txt,
 			HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_SM).x + 16.0, 76.0, 156.0) \
 			if embedded else 160.0
@@ -2488,16 +2503,14 @@ class _CityNPC extends Node2D:
 		_pad.custom_minimum_size = Vector2(_plate_w, _plate_h)
 		_pad.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		var psb := StyleBoxFlat.new()
-		# 名牌做成一小块木牌：圆角拉成胶囊状 + 一圈暗金描边 + 浅投影，
-		# 和羊皮纸/金钮同一套材质语言；原来只是个圆角 3 的半透明黑条，像调试贴片。
+		# 深木硬边名牌与新的纸页/金钮共用材质语言。
 		# 名牌按文字内容收紧，_clamp_plate() 按实际宽度钳制屏内位置。
 		psb.bg_color = Color(0.08, 0.05, 0.03, 0.82 if embedded else 0.62)
-		psb.set_corner_radius_all(9)
+		psb.set_corner_radius_all(0)
 		psb.set_border_width_all(1)
 		psb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.45)
-		psb.shadow_color = Color(0.0, 0.0, 0.0, 0.30)
-		psb.shadow_size = 2
-		psb.shadow_offset = Vector2(0, 1)
+		psb.shadow_color = Color.TRANSPARENT
+		psb.shadow_size = 0
 		_pad.add_theme_stylebox_override("panel", psb)
 		add_child(_pad)
 		add_child(_name_l)
