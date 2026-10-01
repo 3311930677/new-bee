@@ -316,6 +316,7 @@ static func roll_drop(cfg: Dictionary, drops_cfg: Dictionary, tier: String,
 	var total := 0.0
 	for t in (cfg.get("templates", []) as Array):
 		var td := t as Dictionary
+		if not bool(td.get("random_drop", true)): continue
 		var r := int(td.get("rarity", 1))
 		if not allowed.is_empty() and not allowed.has(r):
 			continue

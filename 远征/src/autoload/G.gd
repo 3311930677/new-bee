@@ -4,7 +4,7 @@ extends Node
 # ---------- 配色（模仿参考游戏：暖棕 + 羊皮纸 + 金） ----------
 const BG_DEEP := Color("2a1f14")        # 深棕黑（选人底）
 const BANNER := Color("5a3a1e")          # 棕色横幅
-const PARCHMENT := Color("e8d5a3")       # 羊皮纸底
+const PARCHMENT := Color("eedbaa")       # 参考风纸色底，安静的大色块
 const GOLD := Color("f0c060")            # 金字/金边
 const GOLD_BRIGHT := Color("ffd97a")     # 选中亮金
 const NAME_GREEN := Color("84c48c")      # 角色名（柔玉绿，非荧光绿）
@@ -31,7 +31,7 @@ const RARITY_NAME := {"white": "普通", "blue": "稀有", "purple": "史诗", "
 # ---------- 参考风（创建角色页）配色 ----------
 const WOOD := Color("6b4a28")            # 木框/顶栏棕
 const WOOD_DARK := Color("4a3018")       # 木框暗部
-const GOLD_BTN := Color("e8b84a")        # 金色实心按钮
+const GOLD_BTN := Color("d7b668")        # 低饱和金色选中/操作底
 const GOLD_BTN_EDGE := Color("8a6220")   # 金按钮描边
 const INPUT_BG := Color("cdc4ab")        # 输入框灰米底
 const INPUT_BG_FOCUS := Color("ece5cf")
@@ -752,6 +752,34 @@ func take_campaign_note() -> String:
 	return result
 
 
+func campaign_gear_claim(persist := true) -> Dictionary:
+	if save_locked: return {"ok": false, "count": 0, "err": "存档暂不可写"}
+	var role := selected_role if not selected_role.is_empty() else "zs"
+	var plan := CampaignGear.claim_plan(prog, role)
+	if plan.is_empty(): return {"ok": true, "count": 0, "names": []}
+	var before_prog := prog.duplicate(true)
+	var before_items := items.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var names: Array = []
+	for entry in plan:
+		var tpl := equip_tpl(String(entry.tpl))
+		var grants := {"equip:%s:%d" % [String(entry.tpl), int(tpl.get("rarity", 3))]: 1}
+		for id in entry.materials: grants["item:%s" % String(id)] = int(entry.materials[id])
+		var result := RewardLedger.apply(RewardLedger.make(String(entry.transaction_id), {}, grants), ledger(), self)
+		if not bool(result.get("ok", false)):
+			prog = before_prog
+			items = before_items
+			wallet = before_wallet
+			return {"ok": false, "count": 0, "err": String(result.get("err", "保底未保存"))}
+		if bool(result.get("applied", false)): names.append(String(tpl.get("name", "装备")))
+	if persist and not save_game():
+		prog = before_prog
+		items = before_items
+		wallet = before_wallet
+		return {"ok": false, "count": 0, "err": "保底未保存，已回滚"}
+	return {"ok": true, "count": names.size(), "names": names}
+
+
 ## 主线目标由事件驱动，任务 ID 固定写档，查询展示新版首通经验。
 func story_current() -> Dictionary:
 	var state := normalize_story_state()
@@ -762,7 +790,10 @@ func story_current() -> Dictionary:
 	if rows is Array:
 		for row_v in rows:
 			if row_v is Dictionary and String((row_v as Dictionary).get("id", "")) == step:
-				return (row_v as Dictionary).duplicate(true)
+				var row := (row_v as Dictionary).duplicate(true)
+				var floor_reward := CampaignGear.reward(step, selected_role if not selected_role.is_empty() else "zs")
+				if not floor_reward.is_empty(): row["reward"]["campaign_gear"] = floor_reward
+				return row
 	return {}
 
 
@@ -869,6 +900,12 @@ func story_event(kind: String, target: String, map_id: String, persist := true,
 		wallet = before_wallet
 		items = before_items
 		return {}
+	var gear := campaign_gear_claim(false)
+	if not bool(gear.get("ok", false)):
+		prog = before_prog
+		wallet = before_wallet
+		items = before_items
+		return {}
 	if step_id == "s20" and not choice.is_empty():
 		economy_state()["port_event"] = choice
 	if step_id == "s28" and not choice.is_empty():
@@ -884,7 +921,7 @@ func story_event(kind: String, target: String, map_id: String, persist := true,
 			items = before_items
 			return {}
 	return {"id": step_id, "title": String(row.get("title", "")), "reward": reward,
-		"next_goal": story_goal_short()}
+		"next_goal": story_goal_short(), "gear": gear}
 
 
 # ---------- 第一幕支线（P05-B） ----------
@@ -2732,6 +2769,13 @@ func reward_lines(reward: Dictionary) -> Array:
 	var reward_item := String(reward.get("item", ""))
 	if not reward_item.is_empty():
 		out.append("%s ×%d" % [item_name(reward_item), maxi(1, int(reward.get("count", 1)))])
+	var floor_reward: Dictionary = reward.get("campaign_gear", {})
+	if not floor_reward.is_empty():
+		var tpl := equip_tpl(String(floor_reward.get("tpl", "")))
+		out.append("主线保底：%s（Lv%d）" % [String(tpl.get("name", "装备")), int(tpl.get("requires_level", 1))])
+		for id in floor_reward.get("materials", {}):
+			out.append("保底材料：%s ×%d" % [item_name(String(id)), int(floor_reward.materials[id])])
+		out.append("只发一次；随机战利另算，满包进入待领取。")
 	return out
 
 
@@ -3089,22 +3133,28 @@ func ensure_starter_equip(force := false) -> void:
 ## 发一件装备（掉落/奖励）。spec = {"tpl": <模板id>, "rarity": <稀有度>, "n": <数量>}。
 ## 满包 → 进待领取箱，绝不丢物。
 func inv_grant_equip(spec: Dictionary, persist := true) -> Dictionary:
+	if save_locked: return {"ok": false, "err": "存档暂不可写"}
 	var tpl_id := String(spec.get("tpl", ""))
 	var tpl := equip_tpl(tpl_id)
 	if tpl.is_empty():
 		return {"ok": false, "err": "未知装备模板：%s" % tpl_id}
 	var rarity := int(spec.get("rarity", tpl.get("rarity", 1)))
 	var n := maxi(1, int(spec.get("n", 1)))
+	var before := prog.duplicate(true)
 	var inv := _inventory()
 	var cfg := equip_cfg()
 	var em := _equip_map()
 	var to_pending := false
 	for i in n:
-		var r := Inventory.add(inv, cfg, em, Inventory.new_instance(inv, tpl, rarity))
+		var inst := Inventory.new_instance(inv, tpl, rarity)
+		if not String(spec.get("source_id", "")).is_empty(): inst["source_id"] = String(spec.source_id)
+		var r := Inventory.add(inv, cfg, em, inst)
 		if bool(r.get("to_pending", false)):
 			to_pending = true
 	if persist:
-		save_game()
+		if not save_game():
+			prog = before
+			return {"ok": false, "err": "装备发放未保存，已回滚"}
 	return {"ok": true, "to_pending": to_pending, "n": n}
 
 
@@ -3126,16 +3176,25 @@ func inv_claim(uid: int) -> Dictionary:
 
 ## 穿上 uid 指向的实例（同槽旧装备自动回背包，永不因满包失败）
 func inv_equip(uid: int) -> Dictionary:
+	if save_locked: return {"ok": false, "err": "存档暂不可写"}
+	var inst := inv_find(uid)
+	var need := int(equip_tpl(String(inst.get("tpl", ""))).get("requires_level", 1))
+	if int(prog.get("level", 1)) < need: return {"ok": false, "err": "需 Lv%d 才能装备" % need}
+	var before := prog.duplicate(true)
 	var r := Inventory.equip(_inventory(), _equip_map(), uid)
-	if bool(r.get("ok", false)):
-		save_game()
+	if bool(r.get("ok", false)) and not save_game():
+		prog = before
+		return {"ok": false, "err": "换装未保存，已回滚"}
 	return r
 
 
 func inv_unequip(slot_id: String) -> Dictionary:
+	if save_locked: return {"ok": false, "err": "存档暂不可写"}
+	var before := prog.duplicate(true)
 	var r := Inventory.unequip(_inventory(), equip_cfg(), _equip_map(), slot_id)
-	if bool(r.get("ok", false)):
-		save_game()
+	if bool(r.get("ok", false)) and not save_game():
+		prog = before
+		return {"ok": false, "err": "卸装未保存，已回滚"}
 	return r
 
 
@@ -4630,11 +4689,11 @@ func res_tex(res_name: String) -> Texture2D:
 
 # ---------- 通用 UI 工厂 ----------
 
-## 柔和投影（偏移向下、低透明，像纸页叠放而非霓虹光晕）
-func _apply_shadow(sb: StyleBoxFlat, size: float, off_y: float, alpha: float) -> void:
-	sb.shadow_color = Color(0.0, 0.0, 0.0, alpha)
-	sb.shadow_size = int(size)
-	sb.shadow_offset = Vector2(0, off_y)
+## 参考像素界面用硬边；保留工厂签名，不再铺大面积软投影。
+func _apply_shadow(sb: StyleBoxFlat, _size: float, _off_y: float, _alpha: float) -> void:
+	sb.shadow_color = Color.TRANSPARENT
+	sb.shadow_size = 0
+	sb.shadow_offset = Vector2.ZERO
 
 
 # ---------- 浮层背景工厂 ----------
@@ -4810,7 +4869,7 @@ func menu_button(text: String) -> Control:
 	var root := PanelContainer.new()
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = Color(0.15, 0.10, 0.05, 0.66)
-	sb.set_corner_radius_all(4)
+	sb.set_corner_radius_all(0)
 	sb.set_border_width_all(1)
 	sb.border_color = Color(GOLD.r, GOLD.g, GOLD.b, 0.28)
 	_apply_shadow(sb, 4.0, 2.0, 0.3)
@@ -4858,7 +4917,7 @@ func banner_box(text: String, w := 260, h := 52, font_size := FS_BIG) -> PanelCo
 	root.custom_minimum_size = Vector2(w, h)
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = Color(0.30, 0.18, 0.08, 0.92)
-	sb.set_corner_radius_all(14)
+	sb.set_corner_radius_all(0)
 	sb.set_border_width_all(2)
 	sb.border_color = Color(GOLD.r, GOLD.g, GOLD.b, 0.65)
 	_apply_shadow(sb, 5.0, 2.0, 0.4)
@@ -4870,6 +4929,7 @@ func banner_box(text: String, w := 260, h := 52, font_size := FS_BIG) -> PanelCo
 	var l := serif_label(_banner_text(text), font_size, GOLD_BRIGHT)
 	l.add_theme_font_override("font", spaced_font(maxi(1, font_size / 10), true, true))
 	root.add_child(l)
+	root.add_child(_ReferenceFrame.new())
 	return root
 
 
@@ -4879,19 +4939,16 @@ func parchment_box(w := 400, h := 200, pad := 18.0) -> PanelContainer:
 	root.custom_minimum_size = Vector2(w, h)
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = PARCHMENT
-	# 四角微差，避免机器感对称
-	sb.corner_radius_top_left = 14
-	sb.corner_radius_top_right = 16
-	sb.corner_radius_bottom_left = 15
-	sb.corner_radius_bottom_right = 13
+	sb.set_corner_radius_all(0)
 	sb.set_border_width_all(3)
-	sb.border_color = GOLD
+	sb.border_color = WOOD_DARK
 	_apply_shadow(sb, 7.0, 3.0, 0.38)
 	sb.content_margin_left = pad
 	sb.content_margin_right = pad
 	sb.content_margin_top = pad * 0.7
 	sb.content_margin_bottom = pad * 0.6
 	root.add_theme_stylebox_override("panel", sb)
+	root.add_child(_ReferenceFrame.new(), false, Node.INTERNAL_MODE_BACK)
 	return root
 
 
@@ -4928,7 +4985,7 @@ func gold_button(text: String, w := 0.0, h := 42.0, font_size := FS_MD) -> Contr
 		root.custom_minimum_size = Vector2(0, h)
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = GOLD_BTN
-	sb.set_corner_radius_all(10)
+	sb.set_corner_radius_all(0)
 	sb.set_border_width_all(2)
 	sb.border_color = GOLD_BTN_EDGE
 	_apply_shadow(sb, 4.0, 2.0, 0.35)
@@ -4956,7 +5013,7 @@ func ghost_button(text: String, w := 0.0, h := 38.0, font_size := FS_SM,
 	var on_dark := text_color.get_luminance() > 0.5
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = Color(0.10, 0.07, 0.04, 0.55) if on_dark else Color(0.28, 0.19, 0.08, 0.10)
-	sb.set_corner_radius_all(9)
+	sb.set_corner_radius_all(0)
 	sb.set_border_width_all(2)
 	sb.border_color = Color(GOLD.r, GOLD.g, GOLD.b, 0.60) if on_dark \
 		else Color(BOX_EDGE.r, BOX_EDGE.g, BOX_EDGE.b, 0.70)
@@ -5105,6 +5162,14 @@ func enter_main_world(map_id := "", arrival := "") -> void:
 		return
 	if int(catchup.get("exp", 0)) > 0:
 		_pending_campaign_note = "旅途经验补记 +%d · Lv%d" % [int(catchup.exp), int(prog.get("level", 1))]
+	var gear := campaign_gear_claim()
+	if not bool(gear.get("ok", false)):
+		var anchor := get_tree().current_scene as Control
+		if anchor != null: show_info_popup(anchor, "主线保底未保存", [String(gear.get("err", "请检查存档位置后重试。"))])
+		return
+	if int(gear.get("count", 0)) > 0:
+		if not _pending_campaign_note.is_empty(): _pending_campaign_note += "\n"
+		_pending_campaign_note += "主线保底 %d 件 · 请查看背包／待领取" % int(gear.count)
 	var pets := owned_pets()
 	var run := RunState.new()
 	run.setup({
@@ -5538,3 +5603,18 @@ func _unhandled_input(event: InputEvent) -> void:
 		var vp := get_viewport()
 		if vp != null:
 			vp.set_input_as_handled()
+
+
+## Node2D 不参与容器布局或GUI拾取，保留按钮/内容的原有热区。
+class _ReferenceFrame extends Node2D:
+	func _ready() -> void:
+		(get_parent() as Control).resized.connect(queue_redraw)
+	func _draw() -> void:
+		var dimensions := (get_parent() as Control).size
+		for corner in [Vector2(0, 0), Vector2(1, 0), Vector2(0, 1), Vector2(1, 1)]:
+			for block in [Rect2(4, 4, 14, 2), Rect2(4, 4, 2, 14),
+					Rect2(9, 9, 9, 2), Rect2(9, 9, 2, 9), Rect2(14, 14, 4, 4)]:
+				var at: Vector2 = block.position
+				if corner.x == 1: at.x = dimensions.x-block.end.x
+				if corner.y == 1: at.y = dimensions.y-block.end.y
+				draw_rect(Rect2(at, block.size), Color("c5a14f"))

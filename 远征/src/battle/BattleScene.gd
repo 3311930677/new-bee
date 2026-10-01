@@ -307,8 +307,9 @@ func _ready() -> void:
 
 # ================= 布局 =================
 func _build_background() -> void:
-	# 主世界战斗直接叠在 MapScene 上；根 Control 本身透明，因此保留接战地点的地图画面。
+	# 保留现有战斗/回图生命周期，表现层使用独立地区地表构图。
 	if _classic_presentation():
+		_build_classic_region_floor()
 		return
 	# 战斗背景：优先接主题 bg_battle_* 竖版手绘（971×1619，与 480×800 同比例）；
 	# 无素材时回退主题 tint 底色 + tile 平铺地面
@@ -356,6 +357,26 @@ func _build_background() -> void:
 		line2.position = Vector2(0, 344)
 		line2.color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.16)
 		add_child(line2)
+
+
+func _build_classic_region_floor() -> void:
+	var theme := String(_cfg.get("enemy", {}).get("theme", "forest"))
+	var tiles: Array = TableCache.theme_config(theme).get("tiles", [])
+	if tiles.is_empty(): return
+	var asset_dir := String(TableCache.maps_config().get("asset_dir", "res://image/map_proc"))
+	var is_grass := theme == "forest"
+	var texture: Texture2D = load("res://image/main_world/classic_floor_reference_v1.png" if is_grass else "%s/%s.png" % [asset_dir, String(tiles[0])])
+	if texture == null: return
+	var ground := TextureRect.new()
+	ground.name = "ClassicRegionFloor"
+	ground.texture = texture
+	ground.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	ground.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED if is_grass else TextureRect.STRETCH_TILE
+	ground.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	ground.size = Vector2(VIEW_W, maxf(VIEW_H, get_viewport_rect().size.y))
+	ground.modulate = Color(String(_cfg.get("region_floor_tint", "ffffff")))
+	ground.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_shake_root.add_child(ground)
 
 
 ## 上下缘压暗渐变（叠加在手绘背景上，保证 UI 文字对比度；不遮战场中区）
@@ -2279,8 +2300,9 @@ class UnitView extends Node2D:
 				var asp := AnimatedSprite2D.new()
 				asp.sprite_frames = frames
 				asp.animation = &"idle" if frames.has_animation(&"idle") else &"walk_down"
-				asp.scale = Vector2.ONE * 0.55
-				asp.position = Vector2(0, -26)
+				var role_scale := 0.75 if _classic else 0.55
+				asp.scale = Vector2.ONE * role_scale
+				asp.position = Vector2(0, 5.0-56.0*role_scale)
 				asp.play()
 				# 一次性动作（普攻/施法/受击）播完自动回待机
 				asp.animation_finished.connect(func():
@@ -2288,8 +2310,8 @@ class UnitView extends Node2D:
 						asp.play(&"idle"))
 				body.add_child(asp)
 				sprite = asp
-			# 行走帧 128×128 × 0.55：占位 -61~+9
-			name_y = -75.0
+			# 128px帧按表现模式缩放，脚点仍约在单位原点下方5px。
+			name_y = -100.0 if _classic else -75.0
 			hp_y = 12.0
 		else:
 			var unit_id := String(u.data.get("id", ""))

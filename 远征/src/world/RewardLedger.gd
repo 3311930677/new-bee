@@ -116,6 +116,7 @@ static func apply(tx: Dictionary, ledger: Dictionary, host: Object) -> Dictionar
 				"tpl": String(parts[0]) if parts.size() > 0 else "",
 				"rarity": int(parts[1]) if parts.size() > 1 else 0,
 				"n": n3,
+				"source_id": tid,
 			}, false)
 			if not (er is Dictionary) or not bool((er as Dictionary).get("ok", false)):
 				_restore_dict(wallet, before_wallet)

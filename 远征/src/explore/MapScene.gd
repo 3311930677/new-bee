@@ -616,7 +616,7 @@ func _build_player(map_w: float, map_h: float) -> void:
 		tag_style.bg_color = Color(0.07, 0.13, 0.09, 0.91)
 		tag_style.border_color = Color("90c79c", 0.8)
 		tag_style.set_border_width_all(1)
-		tag_style.set_corner_radius_all(7)
+		tag_style.set_corner_radius_all(0)
 		_player_tag.add_theme_stylebox_override("panel", tag_style)
 		_player_tag_style = tag_style
 		_player.add_child(_player_tag)
@@ -1075,7 +1075,7 @@ func _build_main_world_status() -> void:
 	sb.bg_color = Color(0.07, 0.10, 0.07, 0.91)
 	sb.set_border_width_all(1)
 	sb.border_color = Color("b6a064")
-	sb.set_corner_radius_all(7)
+	sb.set_corner_radius_all(0)
 	root.add_theme_stylebox_override("panel", sb)
 	_hud.add_child(root)
 	_main_level_l = G.gold_label("", 16, true, Color("ffdf89"), false)
@@ -1119,7 +1119,7 @@ func _build_main_world_status() -> void:
 	gold_style.bg_color = Color(0.07, 0.10, 0.07, 0.91)
 	gold_style.set_border_width_all(1)
 	gold_style.border_color = Color("b6a064")
-	gold_style.set_corner_radius_all(6)
+	gold_style.set_corner_radius_all(0)
 	gold_chip.add_theme_stylebox_override("panel", gold_style)
 	gold_chip.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -1156,7 +1156,7 @@ func _build_hud() -> void:
 		var story_chip := Panel.new()
 		var story_style := StyleBoxFlat.new()
 		story_style.bg_color = Color(0.07, 0.10, 0.07, 0.84)
-		story_style.set_corner_radius_all(4)
+		story_style.set_corner_radius_all(0)
 		story_style.border_color = Color("b6a064", 0.72)
 		story_style.set_border_width_all(1)
 		story_chip.add_theme_stylebox_override("panel", story_style)
@@ -1184,7 +1184,7 @@ func _build_hud() -> void:
 		_side_chip = Panel.new()
 		var side_style := StyleBoxFlat.new()
 		side_style.bg_color = Color(0.06, 0.09, 0.12, 0.84)
-		side_style.set_corner_radius_all(4)
+		side_style.set_corner_radius_all(0)
 		side_style.border_color = Color("9fd0ff", 0.72)
 		side_style.set_border_width_all(1)
 		_side_chip.add_theme_stylebox_override("panel", side_style)
@@ -2717,6 +2717,7 @@ func _launch_battle(m: _MapMonster) -> void:
 			"enemy_mult": st.enemy_mult()},
 		"mode": "pve",   # 超时按远征失利显示（口径 D3；问题 #21）
 		"presentation": "classic_inline" if _mode == "main_world" else "default",
+		"region_floor_tint": _ground_tint().to_html(false),
 		# P03：撤退规则。主线首领（失声碑灵）不可撤退——按钮置灰并写明后果，
 		# 由 BattleScene 直接读这一项，规则不写在表现层里。
 		# P05-C：可选首领（失路兽）可自由撤退——不是必经关，撤退不该把玩家钉死在巢穴边。

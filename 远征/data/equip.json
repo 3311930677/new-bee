@@ -79,7 +79,26 @@
     { "id": "tpl_sword_ruin", "name": "残锋·陨铁大剑", "slot": "sword", "rarity": 3,
       "icon": "slot_sword", "base": {"atk": 22}, "sockets": 3, "price": 1600 },
     { "id": "tpl_armor_bulwark", "name": "壁垒重甲", "slot": "armor", "rarity": 3,
-      "icon": "slot_armor", "base": {"def": 14, "hp": 130}, "sockets": 3, "price": 1800 }
+      "icon": "slot_armor", "base": {"def": 14, "hp": 130}, "sockets": 3, "price": 1800 },
+
+    { "id": "tpl_sword_stele", "name": "碑鸣大剑", "slot": "sword", "rarity": 3, "icon": "slot_sword", "base": {"atk": 22}, "sockets": 3, "price": 100, "requires_level": 10, "random_drop": false },
+    { "id": "tpl_spear_stele", "name": "碑鸣长枪", "slot": "spear", "rarity": 3, "icon": "slot_spear", "base": {"atk": 22}, "sockets": 3, "price": 100, "requires_level": 10, "random_drop": false },
+    { "id": "tpl_staff_stele", "name": "碑鸣法杖", "slot": "staff", "rarity": 3, "icon": "slot_staff", "base": {"atk": 23}, "sockets": 3, "price": 100, "requires_level": 10, "random_drop": false },
+    { "id": "tpl_hammer_stele", "name": "碑鸣圣锤", "slot": "hammer", "rarity": 3, "icon": "slot_hammer", "base": {"atk": 19, "hp": 60}, "sockets": 3, "price": 100, "requires_level": 10, "random_drop": false },
+    { "id": "tpl_armor_stele", "name": "碑鸣护甲", "slot": "armor", "rarity": 3, "icon": "slot_armor", "base": {"def": 14, "hp": 130}, "sockets": 3, "price": 120, "requires_level": 12, "random_drop": false },
+
+    { "id": "tpl_sword_tidegate", "name": "潮关大剑", "slot": "sword", "rarity": 3, "icon": "slot_sword", "base": {"atk": 45}, "sockets": 3, "price": 180, "requires_level": 23, "random_drop": false },
+    { "id": "tpl_spear_tidegate", "name": "潮关长枪", "slot": "spear", "rarity": 3, "icon": "slot_spear", "base": {"atk": 45}, "sockets": 3, "price": 180, "requires_level": 23, "random_drop": false },
+    { "id": "tpl_staff_tidegate", "name": "潮关法杖", "slot": "staff", "rarity": 3, "icon": "slot_staff", "base": {"atk": 46}, "sockets": 3, "price": 180, "requires_level": 23, "random_drop": false },
+    { "id": "tpl_hammer_tidegate", "name": "潮关圣锤", "slot": "hammer", "rarity": 3, "icon": "slot_hammer", "base": {"atk": 40, "hp": 120}, "sockets": 3, "price": 180, "requires_level": 23, "random_drop": false },
+    { "id": "tpl_armor_tidegate", "name": "潮关护甲", "slot": "armor", "rarity": 3, "icon": "slot_armor", "base": {"def": 26, "hp": 250}, "sockets": 3, "price": 210, "requires_level": 25, "random_drop": false },
+
+    { "id": "tpl_sword_frostgate", "name": "霜关大剑", "slot": "sword", "rarity": 3, "icon": "slot_sword", "base": {"atk": 70}, "sockets": 3, "price": 260, "requires_level": 35, "random_drop": false },
+    { "id": "tpl_spear_frostgate", "name": "霜关长枪", "slot": "spear", "rarity": 3, "icon": "slot_spear", "base": {"atk": 70}, "sockets": 3, "price": 260, "requires_level": 35, "random_drop": false },
+    { "id": "tpl_staff_frostgate", "name": "霜关法杖", "slot": "staff", "rarity": 3, "icon": "slot_staff", "base": {"atk": 71}, "sockets": 3, "price": 260, "requires_level": 35, "random_drop": false },
+    { "id": "tpl_hammer_frostgate", "name": "霜关圣锤", "slot": "hammer", "rarity": 3, "icon": "slot_hammer", "base": {"atk": 62, "hp": 200}, "sockets": 3, "price": 260, "requires_level": 35, "random_drop": false },
+    { "id": "tpl_armor_frostgate", "name": "霜关护甲", "slot": "armor", "rarity": 3, "icon": "slot_armor", "base": {"def": 42, "hp": 400}, "sockets": 3, "price": 300, "requires_level": 40, "random_drop": false },
+    { "id": "tpl_accessory_twinpass", "name": "双关坠饰", "slot": "accessory", "rarity": 3, "icon": "slot_accessory", "base": {"hp": 300, "crit": 0.03}, "sockets": 3, "price": 270, "requires_level": 42, "random_drop": false }
   ],
   "drop": {
     "normal": { "chance": 0.12 },

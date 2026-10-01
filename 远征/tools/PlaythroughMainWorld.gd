@@ -186,6 +186,7 @@ func _run_phase_a() -> void:
 	if not await _talk_to("npc_steward", "s12"):
 		return
 	if not _growth_checkpoint("act1", 12, 13): return
+	if not await _campaign_gear_checkpoint("act1"): return
 	if act3 and not await _learn_second_skill():
 		return
 
@@ -270,6 +271,7 @@ func _run_second_act() -> bool:
 		return _bad("第二幕任务物交付后仍有残留")
 	print("PLAY_EVENT act2_complete choice=dredge")
 	if not _growth_checkpoint("act2", 25, 26): return false
+	if not await _campaign_gear_checkpoint("act2"): return false
 	return true
 
 
@@ -328,6 +330,7 @@ func _run_third_act_back() -> bool:
 		if G.item_count(item) != 0: return _bad("第三幕任务物交付残留：" + item)
 	print("PLAY_EVENT act3_complete choice=wardens")
 	if not _growth_checkpoint("act3", 42, 43): return false
+	if not await _campaign_gear_checkpoint("act3"): return false
 	return true
 
 
@@ -509,6 +512,9 @@ func _growth_checkpoint(chapter: String, low: int, high: int) -> bool:
 	if level < low or level > high or _map.st.level != level or (_map.st.hp > 0 and _map.st.hp > _map.st.max_hp()):
 		return _bad("实际主线等级或同图生命不同步：%s Lv%d" % [chapter, level])
 	print("PLAY_EVENT growth_checkpoint chapter=%s level=%d hp=%d max_hp=%d revisions=%d" % [chapter, level, _map.st.hp, _map.st.max_hp(), G.prog.get("campaign_growth", {}).get("story_revision", {}).size()])
+	return true
+
+func _campaign_gear_checkpoint(_chapter: String) -> bool:
 	return true
 
 

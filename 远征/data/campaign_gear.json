@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "comment": "主线固定保底独立于原随机战利；旧已完成步骤一次补领，满包待领，不自动穿装。",
+  "rewards": [
+    {"step": "s10", "name": "碑鸣武器", "role_equips": {"zs": "tpl_sword_stele", "ck": "tpl_spear_stele", "fs": "tpl_staff_stele", "fz": "tpl_hammer_stele"}, "materials": {"enhance_stone": 3}},
+    {"step": "s12", "name": "碑鸣护甲", "equip": "tpl_armor_stele", "materials": {"enhance_stone": 3}},
+    {"step": "s19", "name": "潮关武器", "role_equips": {"zs": "tpl_sword_tidegate", "ck": "tpl_spear_tidegate", "fs": "tpl_staff_tidegate", "fz": "tpl_hammer_tidegate"}, "materials": {"enhance_stone": 4}},
+    {"step": "s20", "name": "潮关护甲", "equip": "tpl_armor_tidegate", "materials": {"enhance_stone": 4}},
+    {"step": "s25", "name": "霜关武器", "role_equips": {"zs": "tpl_sword_frostgate", "ck": "tpl_spear_frostgate", "fs": "tpl_staff_frostgate", "fz": "tpl_hammer_frostgate"}, "materials": {"enhance_stone": 5}},
+    {"step": "s27", "name": "霜关护甲", "equip": "tpl_armor_frostgate", "materials": {"enhance_stone": 5}},
+    {"step": "s28", "name": "双关坠饰", "equip": "tpl_accessory_twinpass", "materials": {"pet_food": 3}}
+  ]
+}

@@ -192,13 +192,14 @@ func _item_row(inst: Dictionary) -> Control:
 	var uid := int(inst.get("uid", 0))
 	var rarity := int(inst.get("rarity", 1))
 	var root := PanelContainer.new()
+	root.set_meta("gear_uid", uid)
 	root.custom_minimum_size = Vector2(CONTENT_W - 12.0, ROW_H - 2.0)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	var sb := StyleBoxFlat.new()
-	sb.set_corner_radius_all(4)
-	sb.set_border_width_all(2)
-	sb.bg_color = Color("f6ead0") if uid == _sel_uid else Color("e6d8b0")
-	sb.border_color = G.equip_rarity_color(rarity)
+	sb.set_corner_radius_all(0)
+	sb.set_border_width_all(2 if uid == _sel_uid else 1)
+	sb.bg_color = Color("e2c275") if uid == _sel_uid else G.PARCHMENT
+	sb.border_color = G.WOOD_DARK if uid == _sel_uid else Color("c2ad7b")
 	root.add_theme_stylebox_override("panel", sb)
 	var inner := Control.new()
 	inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -291,6 +292,13 @@ func _build_detail() -> void:
 	var aff_l := G.text_label(aff_txt, G.FS_XS, Color("8a6a34"))
 	aff_l.position = Vector2(0, 140)
 	_detail.add_child(aff_l)
+	var provenance := CampaignGear.source_text(inst)
+	var need := int(tpl.get("requires_level", 0))
+	if need > 0 or not provenance.is_empty():
+		var line := "需求 Lv%d · %s" % [maxi(1, need), provenance] if need > 0 else provenance
+		var source_l := G.text_label(line, G.FS_XS, Color("7a5a2e"))
+		source_l.position = Vector2(0, 160)
+		_detail.add_child(source_l)
 
 	_build_detail_buttons(inst, worn)
 
@@ -299,6 +307,7 @@ func _build_detail_buttons(inst: Dictionary, worn: bool) -> void:
 	var uid := int(inst.get("uid", 0))
 	var slot := String(inst.get("slot", ""))
 	var y := 168.0
+	if int(G.equip_tpl(String(inst.get("tpl", ""))).get("requires_level", 0)) > 0 or not CampaignGear.source_text(inst).is_empty(): y = 188.0
 	# 装备 / 卸下
 	var act := G.gold_button("卸 下" if worn else "装 备", 110, 34, G.FS_SM)
 	act.position = Vector2(0, y)
@@ -491,13 +500,33 @@ func _build_gem_tab() -> void:
 # ---------- 待领取页 ----------
 func _build_pending_tab() -> void:
 	var pend := G.inv_pending()
+	var pages := maxi(1, int(ceil(float(pend.size()) / float(ROWS_PER_PAGE))))
+	_page = clampi(_page, 0, pages-1)
+	var header := 32.0 if pages > 1 else 0.0
+	_layout_panel(clampi(pend.size()-_page*ROWS_PER_PAGE,0,ROWS_PER_PAGE),header)
 	if pend.is_empty():
 		var none := G.text_label("待领取箱是空的。背包满时掉落会先存这里，绝不会丢。",
 			G.FS_SM, Color("8a6a34"))
 		none.position = Vector2(4, 8)
 		_list.add_child(none)
 		return
-	for i in pend.size():
+	if pages > 1:
+		var page_l := G.gold_label("%d/%d" % [_page+1,pages],G.FS_XS,false,Color("7a5a2e"),false)
+		page_l.position = Vector2(CONTENT_W-216,8)
+		page_l.custom_minimum_size.x = 60
+		page_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_list.add_child(page_l)
+		for arrow in [["◀",-1,CONTENT_W-274],["▶",1,CONTENT_W-92]]:
+			var button := G.ghost_button(String(arrow[0]),44,22,G.FS_XS)
+			button.position = Vector2(float(arrow[2]),8)
+			var step := int(arrow[1])
+			button.gui_input.connect(func(ev: InputEvent):
+				if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
+					_page = clampi(_page+step,0,pages-1)
+					_refresh())
+			_list.add_child(button)
+	var begin := _page*ROWS_PER_PAGE
+	for i in range(begin,mini(begin+ROWS_PER_PAGE,pend.size())):
 		var inst := pend[i] as Dictionary
 		var uid := int(inst.get("uid", 0))
 		var tpl := G.equip_tpl(String(inst.get("tpl", "")))
@@ -517,10 +546,11 @@ func _build_pending_tab() -> void:
 			G.FS_SM, false, G.TEXT_DARK, false)
 		nm.position = Vector2(10, 4)
 		inner.add_child(nm)
-		row.position = Vector2(0, i * ROW_H)
+		row.position = Vector2(0, header+(i-begin)*ROW_H)
 		_list.add_child(row)
 		var btn := G.gold_button("领 取", 90, 26, G.FS_XS)
-		btn.position = Vector2(CONTENT_W - 108.0, i * ROW_H + 4.0)
+		btn.set_meta("gear_uid", uid)
+		btn.position = Vector2(CONTENT_W - 108.0, header+(i-begin)*ROW_H+4)
 		btn.gui_input.connect(func(ev: InputEvent):
 			if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 				var r := G.inv_claim(uid)
