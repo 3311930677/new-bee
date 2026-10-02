@@ -89,5 +89,5 @@ manifest = dict(checkpoint='P09-B', save_version=6, story_steps=32, side_quests=
                 limits=['Automated real input is not human 30–45 minute timing or Android touch QA',
                         'Fourth-act rear half, ending, remaining S5/S6/S7 scope are not complete',
                         'Shutdown RID/resource diagnostics still occur'])
-(shots / 'acceptance.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+(shots / 'acceptance.json').write_bytes((json.dumps(manifest, ensure_ascii=False, indent=2) + '\n').encode('utf-8'))
 print('FOURTH_FRONT_ACCEPTANCE_OK 46 cases / 4 roles / 8 PNG / real save unchanged')

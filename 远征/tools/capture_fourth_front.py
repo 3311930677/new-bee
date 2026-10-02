@@ -27,6 +27,6 @@ for size in ['480x800', '480x1067']:
         results.append(dict(scene=scene, size=size, path=str(png), passed=passed,
                             exit_code=run.returncode, exit_diagnostics='leaked' in text))
         print(('PASS ' if passed else 'FAIL ') + name, flush=True)
-(output / 'captures.json').write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding='utf-8')
+(output / 'captures.json').write_bytes((json.dumps(results, ensure_ascii=False, indent=2) + '\n').encode('utf-8'))
 print('FOURTH_CAPTURE %d/%d' % (sum(row['passed'] for row in results), len(results)))
 raise SystemExit(0 if all(row['passed'] for row in results) else 1)
