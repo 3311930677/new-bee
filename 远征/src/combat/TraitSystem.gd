@@ -150,8 +150,8 @@ func heal_taken_pct() -> float:
 # ---------- 动态数值（getter 每次查询） ----------
 func dynamic_atk_pct(unit: Combatant) -> float:
 	var pct := 0.0
-	# 越战越勇：每击杀 +6%（叠 5 层）
-	pct += 0.06 * float(unit.rampage_stacks)
+	# 越战越勇：每击杀 +表值（叠 stack 层）——数值读 traits.json，禁止硬编码
+	pct += float(_effect_of("tr_rampage").get("atk_pct_per_kill", 0.06)) * float(unit.rampage_stacks)
 	# 背水一战：HP<30% 时 +30%
 	var e := _effect_of("tr_last_stand")
 	if not e.is_empty() and float(unit.hp) / float(maxi(unit.get_max_hp(), 1)) < float(e.get("hp_below", 0.3)):
@@ -192,6 +192,11 @@ func has_first_strike() -> bool:
 	return has_trait("tr_first_strike")
 
 
+## 先发制人：首次普攻伤害倍率（读表 tr_first_strike.first_hit_k，禁止硬编码 ×2）
+func first_strike_k() -> float:
+	return float(_effect_of("tr_first_strike").get("first_hit_k", 2.0))
+
+
 func bleed_dmg_pct() -> float:
 	var s := 0.0
 	var e := _effect_of("tr_bleed_1")
@@ -230,19 +235,19 @@ func energy_on_skill() -> int:
 ## 修「处决者只对技能生效」与 `target.is_empty()` 误用（P1-12）；is_skill 区分「仅技能」词条。
 func modify_outgoing(unit: Combatant, target: Combatant, dmg: int, is_skill: bool, is_full_energy: bool) -> int:
 	var pct := 0.0
-	# 凝神：技能伤害 +12%（只吃技能）
+	# 凝神：技能伤害 +表值（只吃技能）——读 tr_focus.skill_dmg_pct
 	if is_skill and has_trait("tr_focus"):
-		pct += 0.12
+		pct += float(_effect_of("tr_focus").get("skill_dmg_pct", 0.12))
 	# 处决者：对 HP<20% 目标 +25%（普攻/技能都吃）
 	var e := _effect_of("tr_execute")
 	if not e.is_empty() and target != null and target.alive:
 		var ratio := float(target.hp) / float(maxi(target.get_max_hp(), 1))
 		if ratio < float(e.get("vs_hp_below", 0.2)):
 			pct += float(e.get("dmg_pct", 0.25))
-	# 碎冰：对受控目标 +20%（普攻/技能都吃）
+	# 碎冰：对受控目标 +表值（普攻/技能都吃）——读 tr_ctrl_2.vs_controlled_pct
 	if has_trait("tr_ctrl_2") and target != null \
 			and (target.has_buff("stun") or target.has_buff("fear") or target.has_buff("confusion")):
-		pct += 0.20
+		pct += float(_effect_of("tr_ctrl_2").get("vs_controlled_pct", 0.20))
 	# 超载：满能量时技能伤害 +表值（只吃技能）
 	if is_skill and is_full_energy:
 		var e_ov := _effect_of("tr_energy_2")
@@ -326,9 +331,9 @@ func on_behit(sim: BattleSim, unit: Combatant, src: Combatant, dmg: int) -> void
 
 
 func on_kill(sim: BattleSim, unit: Combatant, victim: Combatant) -> void:
-	# 越战越勇叠层
+	# 越战越勇叠层（层数上限读表 tr_rampage.stack）
 	if has_trait("tr_rampage"):
-		unit.rampage_stacks = mini(unit.rampage_stacks + 1, 5)
+		unit.rampage_stacks = mini(unit.rampage_stacks + 1, maxi(1, int(_effect_of("tr_rampage").get("stack", 5))))
 	# 威吓：击杀后恐惧敌方全体 1s（时长倍率取击杀者 unit——A3）
 	var e := _effect_of("tr_fear_aura")
 	if not e.is_empty():

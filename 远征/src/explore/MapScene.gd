@@ -24,6 +24,8 @@ const MON_COLOR := {
 }
 const INTERACT_R := 44.0      # 非战斗物件交互半径（maps.json 无此字段时的口径）
 const ThirdActGroundScript := preload("res://src/explore/ThirdActGround.gd")
+const FourthActGroundScript := preload("res://src/explore/FourthActGround.gd")
+const ReturnJourneyPropsScript := preload("res://src/explore/ReturnJourneyProps.gd")
 const MINI_W := 78.0          # 小地图尺寸：与 32×42 格地图同比例（1536:2016 ≈ 0.762）
 const MINI_H := 102.0
 const _MiniMapPos := Vector2(390, 14)
@@ -240,6 +242,7 @@ func _ready() -> void:
 		if not story_result.is_empty():
 			_toast("主线完成：%s" % String(story_result.get("title", "")))
 			_refresh_hud()
+			_refresh_quest_entities.call_deferred()
 	_refresh_explore_hud()   # 恢复的探索分/击杀数要在 HUD 上显出来
 	if _mode == "main_world":
 		var campaign_note := G.take_campaign_note()
@@ -439,8 +442,17 @@ func _build_world() -> void:
 		ground.map_id = _main_map_id
 		ground.use_reference_ground = _main_map_id == "frost_post" and not String(_main_cfg.get("background", "")).is_empty()
 		add_child(ground)
+	elif _mode == "main_world" and _main_map_id in ["stele_entry", "stele_resonance", "stele_core"]:
+		var ground := FourthActGroundScript.new()
+		ground.map_id = _main_map_id
+		add_child(ground)
 
 	_world.y_sort_enabled = true
+	if _mode=="main_world" and _main_map_id in ["maple_road","old_salt_road","tideflat","frost_boardwalk","frost_post","stele_core"]:
+		var return_props:=ReturnJourneyPropsScript.new()
+		return_props.map_id=_main_map_id
+		return_props.y_sort_enabled=true
+		_world.add_child(return_props)
 	add_child(_world)
 
 	_build_decos(cols, rows)
@@ -911,6 +923,10 @@ func _build_optional_bosses() -> void:
 		if not (row_v is Dictionary):
 			continue
 		var o := row_v as Dictionary
+		var required := String(o.get("requires_story", ""))
+		if not required.is_empty() and not G.story_step_done(required):
+			idx += 1
+			continue
 		var mon_id := String(o.get("mon_id", ""))
 		if mon_id.is_empty():
 			continue
@@ -921,6 +937,7 @@ func _build_optional_bosses() -> void:
 			"sprite": String(o.get("sprite", "")),
 			"height": float(o.get("height", 0.0)),
 			"level_offset": int(o.get("level_offset", 0)),
+			"level": int(o.get("level", 0)),
 			"contact_radius": float(o.get("contact_radius", 0.0)),
 			"wander_radius": float(o.get("wander_radius", 0.0)),
 			"respawn_seconds": float(o.get("respawn_seconds", 600.0)),
@@ -1633,6 +1650,15 @@ func _build_quest_entities() -> void:
 			continue
 		var row := row_v as Dictionary
 		var quest := String(row.get("quest", ""))
+		if String(row.get("kind", "")) == "puzzle":
+			var required := String(row.get("requires_story", ""))
+			if not required.is_empty() and not G.story_step_done(required): continue
+			if bool(G.prog.get("flags", {}).get(String(row.get("flag", "")), false)) \
+				or WorldSession.entity_taken(_main_world_state(), eid): continue
+		var flags_ready := true
+		for key in row.get("requires_flags", []):
+			if not bool(G.prog.get("flags", {}).get(String(key), false)): flags_ready = false
+		if not flags_ready: continue
 		if String(row.get("kind", "")) == "story":
 			var step_id := String(row.get("story_step", ""))
 			var shown: Array = row.get("show_steps", [step_id])
@@ -1688,6 +1714,18 @@ func on_quest_entity(e: _QuestEntity) -> void:
 		_mark_nav_dirty()
 		_toast("主线完成：%s" % String(result.get("title", "")))
 		_refresh_hud()
+		return
+	if e.kind == "puzzle":
+		var result := G.world_puzzle_interact(_main_map_id, e.eid)
+		if not bool(result.get("ok", false)):
+			_toast("机关尚未齐备" if String(result.get("reason", "")) == "locked" else "机关未保存，请稍后重试")
+			return
+		e.used = true
+		e.queue_free()
+		_mark_nav_dirty()
+		_toast(String(result.get("line", "")))
+		_refresh_hud()
+		_refresh_quest_entities.call_deferred()
 		return
 	var res := G.claim_waystone_cache() if e.kind == "cache" and e.eid == G.WAYSTONE_CACHE_ID \
 		else G.side_entity_interact(e.kind, e.eid, _main_map_id, e.quest)
@@ -2513,6 +2551,13 @@ func _check_world_exits() -> void:
 			_world_exit_cd = 2.0
 			_toast(String(row.get("locked_hint", "前路尚未开放——先完成当前主线")))
 			return
+		var blocked := false
+		for key in row.get("requires_flags", []):
+			if not bool(G.prog.get("flags", {}).get(String(key), false)): blocked = true
+		if blocked:
+			_world_exit_cd = 2.0
+			_toast(String(row.get("locked_hint", "先点亮本房的归路锚点")))
+			return
 		var target := String(row.get("to", ""))
 		var target_cfg := TableCache.main_world_map(target)
 		if target_cfg.is_empty() or not G.can_go("res://src/explore/MapScene.tscn"):
@@ -2709,7 +2754,7 @@ func _launch_battle(m: _MapMonster) -> void:
 		# P03：撤退规则。主线首领（失声碑灵）不可撤退——按钮置灰并写明后果，
 		# 由 BattleScene 直接读这一项，规则不写在表现层里。
 		# P05-C：可选首领（失路兽）可自由撤退——不是必经关，撤退不该把玩家钉死在巢穴边。
-		"flee_rule": "blocked" if (_mode == "main_world" and m.tier == "boss" and not m.optional) else "free",
+		"flee_rule": "blocked" if _boss_flee_blocked(m.tier, m.optional) else "free",
 		"player_name": G.display_name(),
 		"seed": st.next_battle_seed(),
 	}
@@ -2760,7 +2805,7 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 	# P03：撤退规则写在按钮上（flee_rule=blocked）；万一表现层仍然发出 flee，这里兜住，
 	# 不让玩家从主线首领手里溜走（按败收场，与超时口径一致）。
 	# P05-C：可选首领不在兜住范围内——它的 flee_rule 本就是 free，撤退按正常撤退走。
-	if result == "flee" and _mode == "main_world" and monster_tier == "boss" and not _last_battle_optional:
+	if result == "flee" and _boss_flee_blocked(monster_tier, _last_battle_optional):
 		push_warning("首领战不允许撤退，按战败处理")
 		result = "defeat"
 
@@ -2801,7 +2846,7 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 		var settle_res := _settle_main_world(monster_tier, defeated_mon_id)
 		if settle_res == "dup":
 			_toast("这场战斗已经结算过了")
-		elif settle_res in ["save_failed", "quest_missing"]:
+		elif settle_res in ["save_failed", "quest_missing", "quest_failed", "settle_failed"]:
 			# 战利和刷点都已回滚；留在地图上可重新接触同一只怪。
 			_encounter = {}
 			if _contact_mon != null:
@@ -2857,6 +2902,11 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 ## 主世界胜利结算（P03 §1.1）：唯一发奖入口，按 result_id 幂等。
 ## 返回 "ok" = 本场第一次结算且已落盘；"dup" = 重复上报，什么都没做；
 ## "save_failed" = 已经结算但写盘失败（R-04：战利不算入袋，不显示成功提示）。
+func _boss_flee_blocked(tier: String, optional: bool) -> bool:
+	return _mode == "main_world" and tier == "boss" and not optional \
+		and not bool(_main_cfg.get("allow_boss_flee", false))
+
+
 func _story_battle_ready(mon_id: String) -> bool:
 	var row := G.story_current()
 	if String(row.get("event", "")) != "defeat" or String(row.get("target", "")) != mon_id:
@@ -2916,15 +2966,50 @@ func _settle_main_world(tier: String, defeated_mon_id: String) -> String:
 	st.exp += exp
 	_restore_after_battle()
 	var reward_msg := _bank_main_world_rewards(_encounter_tx_id())
+	if reward_msg.is_empty():
+		# R-08：奖励事务未落地（账本拒绝/装备预检不通过）。与写盘失败同一条回滚路径：
+		# 战利、刷点、遭遇推进与临时状态全部退回，磁盘上只剩可重打的 battle。
+		# 不能带着"已推进"的世界状态留下一场没发奖的胜利。
+		G.prog = before_prog
+		G.wallet = before_wallet
+		G.items = before_items
+		_main_respawn_at = before_respawn
+		st.gold = before_gold
+		st.exp = before_exp
+		st.level = before_level
+		st.hp = before_hp
+		st.growth_bonus = before_growth
+		_toast("战利未落袋（结算未通过），本场可重新挑战")
+		return "settle_failed"
 	# P05-C：可选首领首胜（固定职业适配蓝装 + 图鉴条目 + 世界旗）。单事务、同一 ID 只发一次；
 	# 调用返回快照，写盘失败时用它把首胜那部分（钱包/物品/进度含账本与背包）整体回滚。
+	var first_row: Dictionary = _optional_boss_row(defeated_mon_id) if _last_battle_optional else {}
+	var first_cfg: Dictionary = first_row.get("first_kill", {})
+	var first_needed := not first_cfg.is_empty() and not RewardLedger.applied(G.ledger(),
+		RewardLedger.tx_id(String(first_cfg.get("tx_scope", "act1")), String(first_row.get("id", defeated_mon_id)), "first"))
 	var first_kill := _apply_optional_first_kill(defeated_mon_id) if _last_battle_optional else {}
 	# 战利、主线目标与遭遇状态一起写盘。中间任何一步退出时，磁盘上
 	# 要么还是可重打的 battle，要么已完整结算，不能只留下半份奖励。
 	# P05-B：支线讨伐计数（只对已接支线生效）。与主线、遭遇状态同一次写盘：
 	# 写盘失败时连支线计数一起退回，磁盘上不留半份。
 	var side_touched := G.side_report("defeat", defeated_mon_id, _main_map_id, false)
+	var expected_story := G.story_current()
 	var story_result := G.story_event("defeat", defeated_mon_id, _main_map_id, false)
+	if (String(expected_story.get("event", "")) == "defeat" \
+		and String(expected_story.get("target", "")) == defeated_mon_id and story_result.is_empty()) \
+		or (first_needed and first_kill.is_empty()):
+		# A cleared story boss and its quest item must commit together.
+		G.prog = before_prog
+		G.wallet = before_wallet
+		G.items = before_items
+		_main_respawn_at = before_respawn
+		st.gold = before_gold
+		st.exp = before_exp
+		st.level = before_level
+		st.hp = before_hp
+		st.growth_bonus = before_growth
+		_toast("主线战利未保存，本场可重新挑战")
+		return "save_failed" if G.save_locked else "quest_failed"
 	if not _encounter.is_empty() and G.story_step_done(String(CompanionService.config().get("requires_story","s24"))):
 		CompanionService.record_win(G.prog,_last_battle_pets)
 	if not G.save_game():
@@ -3099,7 +3184,7 @@ func _bank_main_world_rewards(txid := "") -> String:
 				material_parts.append("%s ×%d" % [G.item_name(iid), n])
 			# P05-C：可选首领不掷随机装备——首胜的定向蓝装由 _apply_optional_first_kill
 			# 单发；重打只给材料／金币／经验（spec §5「再次挑战只给普通材料、经验和有上限的金币」）。
-			if not _last_battle_optional:
+			if not _last_battle_optional and not bool(_main_cfg.get("fixed_boss_rewards", false)):
 				var drop := Inventory.roll_drop(G.equip_cfg(), TableCache.drops_config(),
 					_last_battle_tier, _rng)
 				if not drop.is_empty():
@@ -3109,8 +3194,14 @@ func _bank_main_world_rewards(txid := "") -> String:
 		var tx := RewardLedger.make(txid, {}, grants, {})
 		var res := RewardLedger.apply(tx, G.ledger(), G)
 		if not bool(res.get("ok", false)):
+			# R-08：奖励事务未落地时**既不能吞掉战利，也不能继续报喜**。
+			# 旧实现只清掉装备后缀就往下走：st.gold/st.exp 在下面被无条件清零、
+			# 金币经验根本没进钱包，而调用方仍把「遭遇已推进、刷点已重置」写盘 ——
+			# 玩家看到「战利 · 铜钱 +N」却没到账，且因为遭遇已推进而无法重打这批怪。
+			# 现在返回空串表示本场未入账，调用方按与写盘失败同一条路径整体回滚，
+			# 磁盘上仍然只留下可重打的 battle。
 			push_warning("战斗结算未落地：%s" % String(res.get("err", "")))
-			msg_suffix = ""
+			return ""
 		elif bool(res.get("duplicate", false)):
 			_toast("这场战斗已经结算过了")
 			msg_suffix = ""
@@ -3920,6 +4011,13 @@ class _QuestEntity extends Node2D:
 		draw_circle(Vector2.ZERO, 22.0, Color(0, 0, 0, 0.24))   # 落地影
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		match art:
+			"return_lamp", "return_letter", "return_tidebud", "return_snowflower", "return_rune":
+				MapScene.ReturnJourneyPropsScript.draw_prop(self,art)
+			"stele_anchor":
+				draw_rect(Rect2(-20,-44,40,45),Color("475365"))
+				draw_rect(Rect2(-23,-48,46,8),Color("a99c80"))
+				draw_line(Vector2(-5,-37),Vector2(6,-13),Color("a2d8cf"),3)
+				draw_arc(Vector2(0,-23),12,0,TAU,12,Color("b3e0cf"),2)
 			"resonance":
 				# 地表原图承接碑座本体；程序层只叠加可交互的三地共鸣光纹。
 				for i in 3:

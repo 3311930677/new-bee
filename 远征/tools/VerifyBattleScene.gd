@@ -55,6 +55,7 @@ func _run() -> void:
 	_check(await _draw_text_seen("arena", "未分胜负"), "演武平局应显示「未分胜负」，不能写成失利")
 	_check(await _run_classic_commands(), "经典战斗的攻/技/物/逃入口应可用且共用原战斗规则")
 	_check(await _run_ranged_presentation(), "远程普攻应先飞弹、抵达后再显示伤害反馈且血条同步")
+	_check(await _run_contact_presentation(), "两种战斗模式均我方左敌方右，近战到达目标身前命中并回位")
 	_check(await _run_omens_and_phase(),
 		"P03 敌方施法应出图形预兆（施法者+目标环）与含技能名的蓄力倒数；阶段事件应出居中横幅并把阶段名写进首领血条")
 	_check(await _run_boss_flee_blocked(), "P03 剧情首领战「逃」应置灰且点击不产生撤退结算（其余三枚不受影响）")
@@ -111,7 +112,7 @@ func _run_classic_commands() -> bool:
 	if role != null and not enemies.is_empty():
 		var enemy := enemies[0]
 		ok = ok and scene._grid_pos(enemy.side, enemy.row, enemy.col).x \
-			< scene._grid_pos(role.side, role.row, role.col).x
+			> scene._grid_pos(role.side, role.row, role.col).x
 		ok = ok and (scene._views[enemy.uid] as BattleScene.UnitView).position \
 			== scene._grid_pos(enemy.side, enemy.row, enemy.col)
 		ok = ok and role_view.position == scene._grid_pos(role.side, role.row, role.col)
@@ -132,7 +133,7 @@ func _run_classic_commands() -> bool:
 				ok = ok and not tile.intersects(other)
 			tiles.append(tile)
 		# 原版风名牌：挂身右、纯文字无底板（name_bg 从不创建）
-		ok = ok and role_view.name_l.position == Vector2(38, -58) \
+		ok = ok and role_view.name_l.position.x < 0 \
 			and role_view.name_bg == null \
 			and String(role_view.name_l.text) == "旅人 5"
 		# 身侧宠物（经典模式整体偏移）不压任何一枚指令
@@ -323,6 +324,43 @@ func _run_ranged_presentation() -> bool:
 	scene.queue_free()
 	await get_tree().process_frame
 	return launched and arrived
+
+
+func _run_contact_presentation() -> bool:
+	var ok := true
+	for mode in ["classic_inline", "default"]:
+		BattleScene.pending_cfg = {"ally":{"role_id":"zs","level":20,"traits":[]},
+			"enemy":{"theme":"forest","node_type":"normal","lead_mon":"mon_wolf","solo":true},
+			"presentation":mode,"seed":417}
+		var scene := _spawn()
+		scene.speed = 0
+		await get_tree().process_frame
+		var role := scene.sim.role_unit()
+		var target: Combatant = scene.sim.alive_units("enemy")[0]
+		var actor: BattleScene.UnitView = scene._views[role.uid]
+		var enemy: BattleScene.UnitView = scene._views[target.uid]
+		ok = ok and actor.position.x < enemy.position.x
+		var before := target.hp
+		target.hp -= 5
+		scene._on_event({"t":"basic","src":role.uid,"uid":target.uid})
+		scene._on_event({"t":"dmg","src":role.uid,"uid":target.uid,"amount":5,"crit":false,"dot":false})
+		scene._sync_views()
+		ok = ok and enemy._hp_hold_count > 0 and is_equal_approx(enemy._hp_ratio,float(before)/target.get_max_hp())
+		await get_tree().create_timer(.20).timeout
+		var contact := actor.position+actor.body.position
+		ok = ok and contact.x > actor.position.x+95 and contact.distance_to(enemy.position+enemy._body_home)<65
+		ok = ok and enemy._hp_hold_count == 0 and scene._fx_layer.get_child_count()>0
+		await get_tree().create_timer(.42).timeout
+		ok = ok and actor.body.position.is_equal_approx(actor._body_home) and scene._ranged_waiting.is_empty()
+		# An AOE creates several feedback callbacks, while one motion still returns to its home.
+		scene._on_event({"t":"cast","uid":role.uid,"skill":"zs_huifeng"})
+		for i in 3:
+			scene._on_event({"t":"dmg","src":role.uid,"uid":target.uid,"amount":2,"crit":false,"dot":false})
+		await get_tree().create_timer(.65).timeout
+		ok = ok and enemy._hp_hold_count == 0 and actor.body.position.is_equal_approx(actor._body_home) and scene._ranged_waiting.is_empty()
+		scene.queue_free()
+		await get_tree().process_frame
+	return ok
 
 
 func _texts(root: Node, out: Array = []) -> Array:

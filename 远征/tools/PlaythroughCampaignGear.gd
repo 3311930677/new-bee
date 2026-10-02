@@ -150,6 +150,7 @@ func _campaign_gear_checkpoint(chapter: String) -> bool:
 	for row in CampaignGear.config().get("rewards", []):
 		var step := String(row.step)
 		if not G.prog.story.done.has(step): continue
+		if chapter == "fourth_back" and not step in ["s34", "s35", "s36"]: continue
 		if chapter == "act2" and step in ["s10", "s12"]: continue
 		if chapter == "act3" and step in ["s10", "s12", "s19", "s20"]: continue
 		var expected := CampaignGear.reward(step, role_id)
@@ -157,6 +158,8 @@ func _campaign_gear_checkpoint(chapter: String) -> bool:
 		for item in _gear_records():
 			if String(item.source_id) == expected.transaction_id: uid = int(item.uid)
 		if uid == 0: return _bad("缺少保底实例 "+step)
+		var slot := String(G.equip_tpl(String(expected.tpl)).slot)
+		if int(G._equip_map().get(slot, 0)) == uid: continue
 		if _pending_has(uid):
 			if not await _free_slot(bag) or not await _tab(bag, "pending", "待领取"): return _bad("无法准备待领取")
 			var claim := await _page_to(bag, uid)
@@ -166,7 +169,6 @@ func _campaign_gear_checkpoint(chapter: String) -> bool:
 		var select := await _page_to(bag, uid)
 		if select == null or not await _click_until(select, func(): return bag._sel_uid == uid, 30, "select_"+step): return _bad("选中保底失败 "+step)
 		await _wait_frames(4)
-		var slot := String(G.equip_tpl(String(expected.tpl)).slot)
 		if not await _click_until(_button(bag._detail, "装 备"), func(): return int(G._equip_map().get(slot, 0)) == uid, 30, "wear_"+step): return _bad("实际装备失败 "+step)
 		await _wait_frames(4)
 		print("PLAY_EVENT gear_worn chapter=%s step=%s uid=%d tpl=%s level=%d" % [chapter, step, uid, expected.tpl, int(G.prog.level)])

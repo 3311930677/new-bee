@@ -33,7 +33,11 @@
     "s29": {"target_level": 43, "exp": 5924},
     "s30": {"target_level": 45, "exp": 13104},
     "s31": {"target_level": 47, "exp": 15178},
-    "s32": {"target_level": 49, "exp": 17885}
+    "s32": {"target_level": 49, "exp": 17885},
+    "s33": {"target_level": 50, "exp": 10220},
+    "s34": {"target_level": 53, "exp": 37514},
+    "s35": {"target_level": 57, "exp": 74216},
+    "s36": {"target_level": 60, "exp": 85935}
   },
   "enemy_levels": {
     "lorin_wilds": 2,
@@ -50,6 +54,9 @@
     "rift_mine_vault": 34,
     "frost_boardwalk": 36,
     "frost_pass": 40,
-    "abyss_ring": 45
+    "abyss_ring": 45,
+    "stele_entry": 50,
+    "stele_resonance": 53,
+    "stele_core": 53
   }
 }

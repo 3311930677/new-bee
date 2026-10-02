@@ -182,6 +182,65 @@ func _init() -> void:
 		fails += 1
 		push_error("FAIL: 偏置命中率 %.2f 应显著高于无偏置 %.2f" % [rb, rp])
 
+	# 9. 硬编码归表（N-05）：代码取值必须等于 traits.json / growth.json 表值（防「改表不生效」）
+	#    先发制人 ×2、越战越勇 0.06/5 层、碎冰 0.20、凝神 0.12、普攻能量 20 都已改为读表。
+	var e_fs := _eff("tr_first_strike")
+	var ts_fs := TraitSystem.new(["tr_first_strike"])
+	if not ts_fs.has_first_strike() \
+			or not _num_ok(ts_fs.first_strike_k(), float(e_fs.get("first_hit_k", 2.0))):
+		fails += 1
+		push_error("FAIL: 先发制人倍率应取表值 %.2f，实为 %.2f"
+			% [float(e_fs.get("first_hit_k", 2.0)), ts_fs.first_strike_k()])
+	var e_rp := _eff("tr_rampage")
+	var sim_rp := BattleSim.new()
+	sim_rp.record_events = false
+	sim_rp.setup(70, {"role_id": "zs", "level": 10, "traits": ["tr_rampage"]},
+		{"theme": "forest", "node_type": "normal", "layer": 1})
+	var u_rp := sim_rp.role_unit()
+	u_rp.rampage_stacks = 3
+	var want_rp := float(e_rp.get("atk_pct_per_kill", 0.06)) * 3.0
+	if absf(u_rp.traits.dynamic_atk_pct(u_rp) - want_rp) > 0.0001:
+		fails += 1
+		push_error("FAIL: 越战越勇 3 层 ATK 加成应为 %.2f，实为 %.2f"
+			% [want_rp, u_rp.traits.dynamic_atk_pct(u_rp)])
+	var cap_rp := maxi(1, int(e_rp.get("stack", 5)))
+	for i in cap_rp + 3:
+		u_rp.traits.on_kill(sim_rp, u_rp, u_rp)
+	if u_rp.rampage_stacks != cap_rp:
+		fails += 1
+		push_error("FAIL: 越战越勇叠层上限应取表值 %d，实为 %d" % [cap_rp, u_rp.rampage_stacks])
+	var e_ct := _eff("tr_ctrl_2")
+	var sim_ct := BattleSim.new()
+	sim_ct.record_events = false
+	sim_ct.setup(71, {"role_id": "zs", "level": 10, "traits": ["tr_ctrl_2"]},
+		{"theme": "forest", "node_type": "normal", "layer": 1})
+	var u_ct := sim_ct.role_unit()
+	var foe_ct := sim_ct.alive_units("enemy")[0]
+	foe_ct.add_buff("stun", 30, {})
+	var want_ct := int(100.0 * (1.0 + float(e_ct.get("vs_controlled_pct", 0.20))))
+	if u_ct.traits.modify_outgoing(u_ct, foe_ct, 100, false, false) != want_ct:
+		fails += 1
+		push_error("FAIL: 碎冰对受控目标 100 → 期望 %d（表值 %.2f）"
+			% [want_ct, float(e_ct.get("vs_controlled_pct", 0.20))])
+	var e_fc := _eff("tr_focus")
+	var ts_fc := TraitSystem.new(["tr_focus"])
+	var want_fc := int(100.0 * (1.0 + float(e_fc.get("skill_dmg_pct", 0.12))))
+	if ts_fc.modify_outgoing(u_ct, foe_ct, 100, true, false) != want_fc:
+		fails += 1
+		push_error("FAIL: 凝神技能伤害 100 → 期望 %d（表值 %.2f）"
+			% [want_fc, float(e_fc.get("skill_dmg_pct", 0.12))])
+	var e_pe := int((TableCache.growth().get("energy", {}) as Dictionary).get("per_basic_attack", 20))
+	var sim_pe := BattleSim.new()
+	sim_pe.record_events = false
+	sim_pe.setup(72, {"role_id": "zs", "level": 10, "traits": []},
+		{"theme": "forest", "node_type": "normal", "layer": 1})
+	var u_pe := sim_pe.role_unit()
+	u_pe.energy = 0
+	u_pe.do_basic_attack(sim_pe)
+	if u_pe.energy != e_pe:
+		fails += 1
+		push_error("FAIL: 普攻应回 %d 能量（growth.json 表值），实为 %d" % [e_pe, u_pe.energy])
+
 	if fails == 0:
 		print("TRAIT_OK all tests passed")
 	else:

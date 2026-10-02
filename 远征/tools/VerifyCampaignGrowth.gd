@@ -50,7 +50,7 @@ func _simple_map(level: int, mode := "main_world") -> MapScene:
 func _run() -> void:
 	_reset()
 	var cfg := CampaignGrowth.config()
-	_check(cfg.steps.size() == 32 and cfg.enemy_levels.size() == 15, "主线和地图完整配置")
+	_check(cfg.steps.size() == 36 and cfg.enemy_levels.size() == 18, "四幕主线与三间深处地图配置完整")
 	var legacy_sum := 0
 	var current_sum := 0
 	var rows := CampaignGrowth.story_rows()
@@ -60,8 +60,8 @@ func _run() -> void:
 		current_sum += int(row.reward.exp)
 		G.gain_exp(int(row.reward.exp), false)
 		_check(int(G.prog.level) == int(cfg.steps[row.id].target_level), "主线单独达到 %s 的目标等级" % row.id)
-	_check(legacy_sum == 2525 and current_sum == 148127, "前三幕旧经验预算保留，第四幕前半达到49级并保留第一幕90经验余量")
-	_check(G.level_cap() == 60 and int(G.prog.level) == 49, "等级公式与上限保留")
+	_check(legacy_sum == 2525 and current_sum == 356012, "前三幕旧经验预算保留，第四幕补207885经验")
+	_check(G.level_cap() == 60 and int(G.prog.level) == 60, "四幕首通独立达到原60级上限")
 	rows[0].reward.gold = 99999
 	_check(int(TableCache.story_quests_config().steps[0].reward.gold) == 40, "覆盖表必须深拷贝")
 	_reset()

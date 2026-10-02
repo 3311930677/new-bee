@@ -1,5 +1,6 @@
 # Expedition main-world playthrough runner (ASCII only - PS 5.1 reads BOM-less .ps1 as ANSI)
 # Usage: powershell -NoProfile -File tools/run_playthrough.ps1 [-Godot <exe>] [-Proj <dir>] [-Roles zs,fs]
+# Post-campaign: -ReturnJobs -SourceDir <verified 36-step ending saves> -Roles zs,ck
 #
 # What this proves (review issue R-06):
 #   On a fresh save, the whole real-input chain of s01..s12 is walked and the player returns to
@@ -31,6 +32,8 @@ param(
   [switch]$CampaignBudget,
   [switch]$Curriculum,
   [switch]$FourthFront,
+  [switch]$FourthBack,
+  [switch]$ReturnJobs,
   [string]$SourceDir = "",
   [int]$TimeoutSec = 2400,
   [string]$LogDir = ""
@@ -41,8 +44,8 @@ $ErrorActionPreference = "Stop"
 if ($Proj -eq "") { $Proj = Split-Path -Parent $PSScriptRoot }
 if ($LogDir -eq "") { $LogDir = Join-Path $PSScriptRoot "_logs" }
 if (-not (Test-Path $LogDir)) { New-Item -ItemType Directory -Path $LogDir -Force | Out-Null }
-if (($ThirdSide -or $Companions -or $CampaignGrowth -or $Curriculum -or $FourthFront) -and ($SourceDir -eq "" -or -not (Test-Path -LiteralPath $SourceDir -PathType Container))) {
-    Write-Host "FATAL: continuation requires an existing -SourceDir with verified s01-s28 saves."
+if (($ThirdSide -or $Companions -or $CampaignGrowth -or $Curriculum -or $FourthFront -or $FourthBack -or $ReturnJobs) -and ($SourceDir -eq "" -or -not (Test-Path -LiteralPath $SourceDir -PathType Container))) {
+    Write-Host "FATAL: continuation requires an existing -SourceDir with verified saves; each scene checks its required campaign stage."
     exit 2
 }
 
@@ -214,8 +217,10 @@ foreach ($role in $roleList) {
 	if ($CampaignBudget) { $playScene = "res://tools/PlaythroughCampaignBudget.tscn" }
 	if ($Curriculum) { $playScene = "res://tools/PlaythroughCurriculum.tscn" }
 	if ($FourthFront) { $playScene = "res://tools/PlaythroughFourthFront.tscn" }
+	if ($FourthBack) { $playScene = "res://tools/PlaythroughFourthBack.tscn" }
+	if ($ReturnJobs) { $playScene = "res://tools/PlaythroughReturnJobs.tscn" }
 	$argsA = @("--headless", "--path", $Proj, $playScene, "--", $role, "a")
-	if ($ThirdSide -or $Companions -or $CampaignGrowth -or $Curriculum -or $FourthFront -or ($CampaignGear -and $SourceDir -ne "")) { $argsA += ("--source-dir=" + [System.IO.Path]::GetFullPath($SourceDir)) }
+	if ($ThirdSide -or $Companions -or $CampaignGrowth -or $Curriculum -or $FourthFront -or $FourthBack -or $ReturnJobs -or ($CampaignGear -and $SourceDir -ne "")) { $argsA += ("--source-dir=" + [System.IO.Path]::GetFullPath($SourceDir)) }
 	if ($Act3) { $argsA += "act3" } elseif ($Act3Front) { $argsA += "act3_front" } elseif ($Act2) { $argsA += "act2" }
 	$argsA += ("--save-dir=" + [System.IO.Path]::GetFullPath($LogDir))
 	$ra = Invoke-Engine -Exe $Godot -ArgList $argsA -TimeoutSec $TimeoutSec -WorkDir $Proj

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://tools/VerifyFourthBudget.gd" id="1"]
+
+[node name="VerifyFourthBudget" type="Node"]
+script = ExtResource("1")

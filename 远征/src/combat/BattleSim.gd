@@ -54,7 +54,9 @@ func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 	theme_id = String(enemy_cfg.get("theme", "forest"))
 	theme_rule = TableCache.theme_rule(theme_id)
 	rule_timer = rule_interval_ticks()
-	enemy_scale = 1.0 + 0.12 * float(int(enemy_cfg.get("layer", 1)))
+	# 层难度系数读 nodes.json difficulty_scale_per_layer（禁止硬编码；与表说明「第N层 ×(1+0.12N)」同源）
+	var per_layer: float = float(TableCache.nodes_config().get("difficulty_scale_per_layer", 0.12))
+	enemy_scale = 1.0 + per_layer * float(int(enemy_cfg.get("layer", 1)))
 	if bool(enemy_cfg.get("solo", false)) and int(enemy_cfg.get("display_level", 0)) > 0:
 		enemy_scale = 1.0 + 0.16 * float(int(enemy_cfg.get("display_level", 1)) - 1)
 	enemy_scale *= maxf(0.1, float(enemy_cfg.get("enemy_mult", 1.0)))
