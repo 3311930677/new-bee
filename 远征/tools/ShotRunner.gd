@@ -13,6 +13,7 @@ var _source_save := ""
 
 
 func _ready() -> void:
+	G.set_meta("ui_review_mode", true)
 	# 截图工具绝不能碰真实存档：_demo_prog()/ensure_starter_equip() 会就地改写 G.prog 并落盘，
 	# 直接把玩家的 prog 换成演示档。与 PreviewMainWorld 同一做法，重定向到 tools/_logs/。
 	G.SAVE_PATH = "res://tools/_logs/save_shot_runner.json"
@@ -46,6 +47,14 @@ func _ready() -> void:
 	else:
 		print("SHOT_SAVED ", _output)
 	get_tree().quit()
+
+
+func _find_info(node: Node, title: String) -> Control:
+	if node is Control and node.get_meta("info_title", "") == title: return node as Control
+	for child in node.get_children():
+		var found := _find_info(child, title)
+		if found != null: return found
+	return null
 
 
 func _demo_prog() -> void:
@@ -203,6 +212,7 @@ func _companion_demo() -> void:
 		add_child(panel)
 		if _scene in ["companion_locked","companion_second"]:
 			panel._slot = 1
+			panel._tab = 1
 			if _scene == "companion_locked": panel._message = "需与这只伙伴胜利协战3次，才能训练第二项。"
 			panel._build()
 		if _scene == "companion_help":
@@ -387,7 +397,135 @@ func _gear_demo() -> void:
 			if String(item.get("source_id", "")) == "campaign_gear|s28|first|": bag._sel_uid = int(item.uid)
 	bag._refresh()
 
+## 主世界地图直拍：14 张地图各一张，站位取地图出生点（用户实际进图所见）。
+func _mapview_demo() -> void:
+	var mid := _scene.trim_prefix("mw_")
+	var cfg := TableCache.main_world_map(mid)
+	if cfg.is_empty():
+		push_error("SHOT_SETUP_FAILED 未知主世界地图 " + mid)
+		return
+	G.SAVE_PATH = "res://tools/_logs/save_shot_mapview.json"
+	_demo_prog()
+	G.account = "演示账号"
+	G.player_name = "角色昵称"
+	G.selected_role = "zs"
+	G.prog["main_world"] = {"map_id": mid}
+	var mv_run := RunState.new()
+	mv_run.setup({"theme": String(cfg.get("theme", "forest")), "role_id": "zs",
+		"level": int(G.prog.get("level", 12)), "active_pet": "pet_rockturtle",
+		"bench_pet": "", "potions": 2, "seed": 7})
+	MapScene.pending_cfg = {"mode": "main_world", "main_map_id": mid,
+		"node": {"type": String(cfg.get("node_type", "normal")), "layer": 0, "index": 0},
+		"run": mv_run}
+	var mv: MapScene = load("res://src/explore/MapScene.tscn").instantiate()
+	add_child(mv)
+	await get_tree().process_frame
+	if mv._city_content != null:
+		mv._city_content.call("_close_panel")
+
+
+## 随机秘境八主题的路线图（进本前的节点选择页）
+func _route_theme_demo() -> void:
+	var th := _scene.trim_prefix("route_")
+	RouteScene.pending_run = {
+		"theme": th, "role_id": "zs", "level": 5,
+		"active_pet": "pet_rockturtle", "bench_pet": "pet_thunderhawk",
+		"potions": 2, "seed": 7,
+	}
+	add_child(load("res://src/run/RouteScene.tscn").instantiate())
+
+
+## 八主题的战斗场景（背景／敌人／色调随主题变化）
+func _battle_theme_demo() -> void:
+	var th := _scene.trim_prefix("battlebg_")
+	BattleScene.pending_cfg = {
+		"ally": {
+			"role_id": "zs", "level": 5, "traits": [],
+			"active_pet": "pet_rockturtle", "bench_pet": "pet_thunderhawk",
+			"potions": 2, "hp_override": -1,
+		},
+		"enemy": {"theme": th, "node_type": "normal", "layer": 1},
+		"seed": 7,
+	}
+	add_child(load("res://src/battle/BattleScene.tscn").instantiate())
+
+
+## 城内浮层面板：物资铺／布告栏／访客簿／建造与经营详情／港口服务／两处定路抉择
+func _city_panel_demo() -> void:
+	G.SAVE_PATH = "res://tools/_logs/save_shot_city_panel.json"
+	_demo_prog()
+	G.account = "演示账号"
+	G.player_name = "角色昵称"
+	G.selected_role = "zs"
+	G.wallet["gold"] = 999999
+	G.wallet["soul"] = 9999
+	G.wallet["expedition"] = 9999
+	G.prog["level"] = 20
+	# 落成建筑才长出货铺／布告栏等入口；建造面板反之必须留一座未落成的工地
+	for bid in ["archive", "kennel", "barracks", "storehouse", "shrine", "forge"]:
+		if _scene == "city_build_panel" and bid == "archive":
+			continue
+		G.build(bid)
+	var use_port := _scene in ["port_services", "city_tide_choice"]
+	if use_port:
+		G.prog["story"] = {"step": "s20", "done": [], "goals": {}}
+	var mid := "shenyuan_port" if use_port else "lorin_wilds"
+	G.prog["main_world"] = {"map_id": mid}
+	var cfg := TableCache.main_world_map(mid)
+	var cp_run := RunState.new()
+	cp_run.setup({"theme": String(cfg.get("theme", "forest")), "role_id": "zs",
+		"level": int(G.prog.get("level", 12)), "active_pet": "pet_rockturtle",
+		"bench_pet": "", "potions": 2, "seed": 7})
+	MapScene.pending_cfg = {"mode": "main_world", "main_map_id": mid,
+		"node": {"type": "normal", "layer": 0, "index": 0}, "run": cp_run}
+	var cp_world: MapScene = load("res://src/explore/MapScene.tscn").instantiate()
+	add_child(cp_world)
+	await get_tree().process_frame
+	var cc: Node = cp_world._city_content
+	if cc == null:
+		push_error("SHOT_SETUP_FAILED 城内内容缺失 " + mid)
+		return
+	var target_bid := "archive" if not use_port else "gate"
+	match _scene:
+		"city_shop":
+			cc.call("_open_shop")
+		"city_notice":
+			cc.call("_show_notice")
+		"city_guests":
+			cc.call("_show_guests")
+		"city_build_panel":
+			for bd_v in TableCache.city_config_for(mid).get("buildings", []):
+				if String((bd_v as Dictionary).get("id", "")) == target_bid:
+					cc.call("_show_build_panel", bd_v)
+		"city_built_panel":
+			for bd_v in TableCache.city_config_for(mid).get("buildings", []):
+				if String((bd_v as Dictionary).get("id", "")) == target_bid:
+					cc.call("_show_built_panel", bd_v)
+		"city_frost_choice":
+			cc.call("_open_frost_choice_panel")
+		"city_tide_choice":
+			cc.call("_open_tide_choice_panel")
+		"port_services":
+			cc.call("_open_port_services")
+
+
 func _setup() -> void:
+	if _scene.begins_with("mw_"):
+		await _mapview_demo()
+		return
+	if _scene.begins_with("route_"):
+		_route_theme_demo()
+		return
+	if _scene.begins_with("battlebg_"):
+		_battle_theme_demo()
+		return
+	if _scene in ["city_shop", "city_notice", "city_guests", "city_build_panel",
+			"city_built_panel", "city_frost_choice", "city_tide_choice", "port_services"]:
+		await _city_panel_demo()
+		return
+	if _scene == "namerecover":
+		add_child(load("res://src/ui/NameRecovery.tscn").instantiate())
+		return
 	if _scene.begins_with("terrain_") or _scene.begins_with("curriculum_") or _scene.begins_with("frost_art_"):
 		await _curriculum_region_demo()
 		return
@@ -416,9 +554,32 @@ func _setup() -> void:
 		"third_side_choice", "third_side_coal", "third_side_shield", "third_side_nameplate", "third_side_lichen", "third_side_vents", "third_side_parcel", "third_side_echo":
 			await _third_side_demo()
 		"load":
-			add_child(load("res://src/ui/LoadScreen.tscn").instantiate())
+			# 加载页满 1s 会自动切 Title，节点在截帧前就被释放（报 data.tree is null）；
+			# 关掉自动推进让它停在页面上，纯为出图。
+			var ls: Node = load("res://src/ui/LoadScreen.tscn").instantiate()
+			ls.set("auto_advance", false)
+			add_child(ls)
 		"title":
 			add_child(load("res://src/ui/Title.tscn").instantiate())
+		"title_intro", "title_intro_party", "title_intro_journey":
+			var intro_title: Node = load("res://src/ui/Title.tscn").instantiate()
+			add_child(intro_title)
+			intro_title.call("_show_intro")
+			var introduction: Control = intro_title.get("_intro_panel")
+			var index := 1 if _scene == "title_intro_party" else 2 if _scene == "title_intro_journey" else 0
+			(introduction.get("_deck") as Control).call("go", index, true)
+		"reading_help", "reading_help2":
+			_growth_demo()
+			var equipment := (load("res://src/ui/EquipPanel.gd") as GDScript).new() as Control
+			add_child(equipment)
+			var information := _find_info(equipment, "装备玩法")
+			if information != null:
+				var click := InputEventMouseButton.new()
+				click.button_index = MOUSE_BUTTON_LEFT
+				click.pressed = true
+				information.gui_input.emit(click)
+				if _scene == "reading_help2" and not G._modals.is_empty():
+					(G._modals.back().get("reader") as Control).call("go", 1, true)
 		"title_settings":
 			# 标题页 → 游戏设置（验证外置设置入口不再是「开发中」）
 			var ts: Node = load("res://src/ui/Title.tscn").instantiate()
@@ -626,6 +787,17 @@ func _setup() -> void:
 			var ps := TraitPicker.new()
 			add_child(ps)
 			ps.setup(rows2)
+		"picker_long":
+			# 取描述最长的三个词条：描述行必须按卡片宽度换行。
+			# 旧写法（先 size 后 autowrap）会把标签夹到整行文字宽，描述横着顶出卡片右缘。
+			var rows3: Array = []
+			for t in TableCache.traits():
+				rows3.append(t)
+			rows3.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+				return String(a.get("desc", "")).length() > String(b.get("desc", "")).length())
+			var pl := TraitPicker.new()
+			add_child(pl)
+			pl.setup(rows3.slice(0, 3))
 		"city":
 			_demo_prog()
 			add_child(load("res://src/city/CityScene.tscn").instantiate())
@@ -1122,7 +1294,7 @@ func _setup() -> void:
 			var he: Node = load("res://src/ui/GameHome.tscn").instantiate()
 			add_child(he)
 			he.call("_open_exchange")
-		"settings", "settings2":
+		"settings", "settings2", "settings_profile":
 			_demo_prog()
 			var hs: Node = load("res://src/ui/GameHome.tscn").instantiate()
 			add_child(hs)
@@ -1130,11 +1302,11 @@ func _setup() -> void:
 			es.pressed = true
 			es.button_index = MOUSE_BUTTON_LEFT
 			hs.call("_open_settings", es)
-			if _scene == "settings2":   # 第二页（存档与系统）：翻页后再截
+			if _scene != "settings":   # 用名称定位新设置页
 				await get_tree().process_frame
 				var sp: Node = hs.get("_settings")
 				if sp != null:
-					(sp.get("_deck") as Node).call("go", 1, true)
+					(sp.get("_deck") as Node).call("go", 2 if _scene == "settings2" else 1, true)
 		"growth":
 			_growth_demo()
 			var hgr: Node = load("res://src/ui/GameHome.tscn").instantiate()

@@ -37,9 +37,8 @@ var _pity_sub: Label = null
 var _pity_bar: Panel = null
 var _pity_gem: Panel = null               # 保底进度条末端菱形标记
 var _hint: Label = null
-var _free_btn: Control = null             # 每日免费召唤条
+var _free_btn: Control = null             # 每日免费召唤条（G.InsetBand，免费时描边外有呼吸金线）
 var _free_l: Label = null
-var _free_glow: Panel = null              # 免费可用时的呼吸金边
 var _free_available := false
 # ---- 结果层 ----
 var _result: Control = null
@@ -59,6 +58,7 @@ var _results: Array = []
 
 
 func _ready() -> void:
+	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_build()
 	_build_result()
@@ -146,7 +146,7 @@ func _build() -> void:
 	fpic.position = Vector2(14, 18)
 	head.add_child(fpic)
 	var fraw := String(feat.get("rarity", "white"))
-	var kicker := G.gold_label("本 期 主 打", G.FS_XS, false, Color("7a5a2e"), false)
+	var kicker := G.gold_label("本 期 主 打", G.FS_XS, false, G.TEXT_MUTED, false)
 	kicker.position = Vector2(92, 14)
 	kicker.size = Vector2(120, 16)
 	kicker.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
@@ -161,7 +161,6 @@ func _build() -> void:
 	chip.size = Vector2(64, 20)
 	var csb := StyleBoxFlat.new()
 	csb.bg_color = RARITY_HUE.get(fraw, G.C_HINT)
-	csb.set_corner_radius_all(4)
 	csb.set_border_width_all(1)
 	csb.border_color = Color(0.25, 0.16, 0.06, 0.55)
 	chip.add_theme_stylebox_override("panel", csb)
@@ -183,7 +182,6 @@ func _build() -> void:
 	bar_bg.size = Vector2(172, 10)
 	var bsb := StyleBoxFlat.new()
 	bsb.bg_color = Color(0.35, 0.26, 0.14, 0.35)
-	bsb.set_corner_radius_all(5)
 	bar_bg.add_theme_stylebox_override("panel", bsb)
 	bar_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	head.add_child(bar_bg)
@@ -192,7 +190,6 @@ func _build() -> void:
 	_pity_bar.size = Vector2(0, 8)
 	var pbsb := StyleBoxFlat.new()
 	pbsb.bg_color = G.C_RARE
-	pbsb.set_corner_radius_all(4)
 	_pity_bar.add_theme_stylebox_override("panel", pbsb)
 	_pity_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	head.add_child(_pity_bar)
@@ -206,7 +203,7 @@ func _build() -> void:
 	gsb.bg_color = Color("f6e4a6")
 	gsb.set_corner_radius_all(1)
 	gsb.set_border_width_all(1)
-	gsb.border_color = Color("8a6a34")
+	gsb.border_color = G.TEXT_MUTED
 	_pity_gem.add_theme_stylebox_override("panel", gsb)
 	_pity_gem.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	head.add_child(_pity_gem)
@@ -270,22 +267,8 @@ func _build() -> void:
 	# 每日免费召唤（设计 §4.2）：每天 1 次、零点刷新；连续 7 天送灵魂石 ×50。
 	# 替掉原来的纯装饰小字——免费抽是"每天回来看看"的钩子，值得一个实体入口。
 	_free_btn = _inset_band(Vector2(CONTENT_W, 26), Vector2(0, 240))
-	# 呼吸金边：可用时把「今天还有一次免费」变成会动的钩子；已领则整条隐藏
-	# 独立 Panel 挂在 content 上（不开内边距），避免挤掉条带自身的布局
-	_free_glow = Panel.new()
-	_free_glow.position = Vector2(-2, 238)
-	_free_glow.size = Vector2(CONTENT_W + 4, 30)
-	var fgsb := StyleBoxFlat.new()
-	fgsb.bg_color = Color(0, 0, 0, 0)
-	fgsb.set_corner_radius_all(8)
-	fgsb.set_border_width_all(2)
-	fgsb.border_color = Color("e8b84a")
-	fgsb.shadow_color = Color(0.91, 0.72, 0.29, 0.4)
-	fgsb.shadow_size = 6
-	_free_glow.add_theme_stylebox_override("panel", fgsb)
-	_free_glow.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_free_glow.visible = false
-	content.add_child(_free_glow)
+	# 呼吸金线（可用时的动态钩子）画在条带描边外——见 InsetBand.glow 与 _process，
+	# 不再用独立的圆角软影 Panel（那套是"现代 UI 光晕"，与像素语言不合）
 	_free_l = G.gold_label("", G.FS_SM, false, G.TEXT_DARK, false)
 	_free_l.position = Vector2(0, 4)
 	_free_l.size = Vector2(CONTENT_W, 18)
@@ -300,7 +283,7 @@ func _build() -> void:
 	content.add_child(_free_btn)
 
 	# 本期奖池预览（pets.json 全量，稀有度色条一眼分档）
-	var sec := G.gold_label("本期奖池", G.FS_SM, false, Color("7a5a2e"), false)
+	var sec := G.gold_label("本期奖池", G.FS_SM, false, G.TEXT_MUTED, false)
 	sec.position = Vector2(0, 274)
 	sec.custom_minimum_size = Vector2(CONTENT_W, 0)
 	content.add_child(sec)
@@ -319,29 +302,16 @@ func _build() -> void:
 	content.add_child(back_btn)
 
 
-## 奖池小卡：立绘 + 名字（悬停看稀有度），样式同 DeployPanel 宠物卡
+## 奖池小卡：立绘 + 名字（悬停看稀有度）。内凹贴片语言（G.InsetBand），
+## 左沿一条稀有度色带收进切角内侧——直角色块比"四角各不一样"的圆角更像素。
 func _pool_card(p: Dictionary) -> Panel:
 	var pid := String(p.get("id", ""))
 	var rar := String(p.get("rarity", "white"))
-	# 用 Panel + 手动布局：PanelContainer 会按文字最小宽度自己撑大，长名卡片会顶出面板右边界
-	var root := Panel.new()
+	var root := G.InsetBand.new()
 	root.custom_minimum_size = Vector2(196, 50)
 	root.size = Vector2(196, 50)
-	root.clip_contents = true
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = G.BOX_BG
-	sb.corner_radius_top_left = 5
-	sb.corner_radius_top_right = 7
-	sb.corner_radius_bottom_left = 6
-	sb.corner_radius_bottom_right = 4
-	sb.set_border_width_all(2)
-	sb.border_color = G.BOX_EDGE
-	G._apply_shadow(sb, 4.0, 2.0, 0.3)
-	sb.content_margin_left = 6.0
-	sb.content_margin_right = 5.0
-	sb.content_margin_top = 4.0
-	sb.content_margin_bottom = 4.0
-	root.add_theme_stylebox_override("panel", sb)
+	root.set_surface(Color("e2d4ae"), Color("b1a181"))
+	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var pic := _tex_rect(pid, 36, 36, RARITY_HUE.get(rar, G.C_HINT))
 	pic.position = Vector2(14, 7)
 	root.add_child(pic)
@@ -352,18 +322,13 @@ func _pool_card(p: Dictionary) -> Panel:
 	l.clip_text = true
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(l)
-	# 左沿一条稀有度色带：比"四个角各不一样"的圆角更克制，也更容易一眼分档
-	var strip := Panel.new()
-	strip.position = Vector2(0, 0)
-	strip.size = Vector2(6, 50)
-	var ssb := StyleBoxFlat.new()
-	ssb.bg_color = RARITY_HUE.get(rar, G.C_HINT)
-	ssb.corner_radius_top_left = 5
-	ssb.corner_radius_bottom_left = 5
-	strip.add_theme_stylebox_override("panel", ssb)
+	# 左沿稀有度色带：从 (3,4) 起、避开切角，色块完整落在八边形内
+	var strip := ColorRect.new()
+	strip.position = Vector2(3, 4)
+	strip.size = Vector2(5, 42)
+	strip.color = RARITY_HUE.get(rar, G.C_HINT)
 	strip.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(strip)
-	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.tooltip_text = "%s · %s" % [String(p.get("name", pid)), String(RARITY_NAME.get(rar, "普通"))]
 	return root
 
@@ -408,27 +373,19 @@ func _tex_rect(res_name: String, w: float, h: float, fallback: Color,
 	p.size = Vector2(w, h)
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = fallback
-	sb.set_corner_radius_all(4)
 	p.add_theme_stylebox_override("panel", sb)
 	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return p
 
 
-## 木色内嵌带（比羊皮纸深一档 + 棕描边）：把成组信息收进同一块底，别让控件飘在纸面上
+## 木色内凹条带（G.InsetBand：切角 + 顶暗底亮 + 金描边）：把成组信息收进同一块底，
+## 别让控件飘在纸面上。子控件仍是手动布局（Panel 语义），换肤走 set_surface。
 func _inset_band(sz: Vector2, at: Vector2) -> Panel:
-	var p := Panel.new()
+	var p := G.InsetBand.new()
 	p.custom_minimum_size = sz
 	p.size = sz
 	p.position = at
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color("d3bd92")
-	sb.set_corner_radius_all(6)
-	sb.set_border_width_all(2)
-	sb.border_color = Color(G.BOX_EDGE.r, G.BOX_EDGE.g, G.BOX_EDGE.b, 0.55)
-	sb.shadow_color = Color(0.24, 0.16, 0.06, 0.18)
-	sb.shadow_size = 3
-	sb.shadow_offset = Vector2(0, 1)
-	p.add_theme_stylebox_override("panel", sb)
+	p.set_surface(Color("d3bd92"), Color("b99a5e"))
 	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return p
 
@@ -468,44 +425,34 @@ func _refresh_top() -> void:
 	_refresh_free()
 
 
-## 免费条两种皮肤：可用 = 暖金底 + 金描边（"金钮"）；已领 = 灰扑扑压暗
-func _free_band_style(active: bool) -> StyleBoxFlat:
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color("e6cd93") if active else Color("cfc6b0")
-	sb.set_corner_radius_all(6)
-	sb.set_border_width_all(2)
-	sb.border_color = (Color("b8892e") if active
-		else Color(G.BOX_EDGE.r, G.BOX_EDGE.g, G.BOX_EDGE.b, 0.4))
-	sb.shadow_color = Color(0.24, 0.16, 0.06, 0.18)
-	sb.shadow_size = 3
-	sb.shadow_offset = Vector2(0, 1)
-	return sb
-
-
-## 免费条状态刷新（可用 = 暖金底 + 深金字 + 呼吸金边；已领 = 灰底灰字 + 压暗）
+## 免费条状态刷新（可用 = 暖金底 + 金边 + 呼吸金线；已领 = 灰底灰字 + 压暗）
+## 换肤走 InsetBand.set_surface，不再整块替换 StyleBoxFlat（圆角+软影的旧皮已弃用）
 func _refresh_free() -> void:
 	if _free_l == null:
 		return
 	_free_available = G.gacha_free_available()
-	_free_btn.add_theme_stylebox_override("panel", _free_band_style(_free_available))
+	var band := _free_btn as G.InsetBand
 	if _free_available:
+		band.set_surface(Color("e6cd93"), Color("b8892e"))
 		_free_l.text = "今日免费 · 灵宠结缘（每日 1 次）"
 		_free_l.add_theme_color_override("font_color", Color("7a4a0e"))
 		_free_btn.modulate = Color.WHITE
 	else:
+		band.set_surface(Color("cfc6b0"), Color("a49878"))
+		band.glow = 0.0
 		_free_l.text = "今日免费已领 · 明日再来"
 		_free_l.add_theme_color_override("font_color", Color("8a8a8a"))
 		_free_btn.modulate = Color(1, 1, 1, 0.72)
-	if _free_glow != null:
-		_free_glow.visible = _free_available
 
 
-## 呼吸金边：仅可用时脉动 alpha；已领时不动、省电
+## 呼吸金线（画在 InsetBand 描边外）：仅可用时脉动；已领时不动、省电
 func _process(_delta: float) -> void:
-	if _free_glow == null or not _free_available:
+	if _free_btn == null or not _free_available:
 		return
 	var ph := float(Time.get_ticks_msec() % 1500) / 1500.0
-	_free_glow.modulate.a = 0.4 + 0.6 * absf(sin(ph * PI))
+	var band := _free_btn as G.InsetBand
+	band.glow = 0.35 + 0.5 * absf(sin(ph * PI))
+	band.queue_redraw()
 
 
 # ================= 结果层 =================
@@ -711,7 +658,6 @@ func _make_card(res: Dictionary, big: bool) -> Control:
 	name_bar.size = Vector2(w - (8 if big else 6), 26 if big else 20)
 	var nbsb := StyleBoxFlat.new()
 	nbsb.bg_color = Color(0.06, 0.04, 0.02, 0.55)
-	nbsb.set_corner_radius_all(3)
 	name_bar.add_theme_stylebox_override("panel", nbsb)
 	name_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	face.add_child(name_bar)
@@ -739,13 +685,10 @@ func _make_card(res: Dictionary, big: bool) -> Control:
 		badge.size = Vector2(30, 22) if big else Vector2(24, 19)
 		var bsb := StyleBoxFlat.new()
 		bsb.bg_color = G.GOLD_BTN
-		bsb.corner_radius_top_left = 4
-		bsb.corner_radius_top_right = 6
-		bsb.corner_radius_bottom_left = 5
-		bsb.corner_radius_bottom_right = 4
 		bsb.set_border_width_all(1)
 		bsb.border_color = G.GOLD_BTN_EDGE
-		G._apply_shadow(bsb, 3.0, 1.5, 0.3)
+		# 像素角标：直角 + 描边 + 底边加重 1px（凸起厚度），弃用"四角各不同"圆角与软影
+		bsb.border_width_bottom = 2
 		badge.add_theme_stylebox_override("panel", bsb)
 		var bl := G.gold_label("新", G.FS_XS, true, G.TEXT_DARK, false)
 		bl.set_anchors_preset(Control.PRESET_FULL_RECT)

@@ -1,5 +1,6 @@
-# QuestPanel.gd —— 主城委托板：今日委托的接取 / 交付
+# QuestPanel.gd —— 任务窗口：主线目标 + 今日委托
 # 循环：在委托板接取 → 出征办事（击杀 / 讨伐首领 / 备齐道具）→ 回城交付领赏。
+# 主线目标原来直接压在营帐首页的背景上，既难读也杂；收进这里统一看。
 # 数据全在 data/quests.json；状态在 G.quest（跨日重刷，跨日未交付作废）。
 extends Control
 
@@ -11,7 +12,10 @@ const CONTENT_W := 408.0
 # 行高 108：奖励从「状态行右半」挪到独立一行（原来伸到按钮底下被压住），多要 12px
 const ROW_H := 108.0
 const ROW_GAP := 8.0
-const TOP := 46.0
+# 主线卡：标题/状态一行 + 目标 + 前往 + 奖励，四行 92px；主线暂尽时收成一行
+const STORY_H := 92.0
+const STORY_DONE_H := 44.0
+const SECTION_H := 20.0   # 分区标题行高（主线 / 今日委托）
 # 卡片内排版（问题 #13）：row 的 content_margin 左右各 12 → 内宽 384。
 # 任务名/委托人同占一行各限宽，目标与奖励各自限宽，右列留给操作按钮。
 const CARD_PAD := 12.0
@@ -25,9 +29,11 @@ var _content: Control = null
 var _list: Control = null
 var _toast: Label = null
 var _rows := 0
+var _story_h := STORY_H
 
 
 func _ready() -> void:
+	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	Audio.sfx("ui_open")
 	_build()
@@ -39,13 +45,16 @@ func _build() -> void:
 	G.veil(self, 0.74)
 
 	# 浮层自己的 rect 要等一帧才结算，锚点会算到 0：坐标一律写死
-	var banner := G.banner_box("委 托 板", 280, 50)
+	var banner := G.banner_box("任务", 280, 50)
 	banner.position = Vector2((VIEW_W - 280.0) * 0.5, 40)
 	add_child(banner)
 
-	# 委托条数决定面板高（2 条时 ≈ 420）
+	# 委托条数决定面板高（2 条时 ≈ 470）
 	_rows = maxi(1, G.quest_offer().size())
-	var h := clampf(TOP + 26.0 + float(_rows) * (ROW_H + ROW_GAP) + 66.0, 260.0, 620.0)
+	var story := G.story_current()
+	_story_h = STORY_H if not story.is_empty() else STORY_DONE_H
+	var list_y := SECTION_H + _story_h + 10.0 + SECTION_H + 2.0
+	var h := clampf(28.0 + list_y + float(_rows) * (ROW_H + ROW_GAP) + 66.0, 300.0, 640.0)
 	_panel = G.parchment_box(440, h, 16.0)
 	_panel.position = Vector2((VIEW_W - 440.0) * 0.5, (VIEW_H - h) * 0.5 + 14.0)
 	add_child(_panel)
@@ -55,24 +64,106 @@ func _build() -> void:
 	_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_panel.add_child(_content)
 
-	var tip := G.gold_label("今日的活计就这些。接下、办完、回来交付——跨日作废。",
-		G.FS_XS, false, Color("7a5a2e"), false)
-	tip.position = Vector2(0, 0)
-	tip.custom_minimum_size = Vector2(CONTENT_W, 0)
+	# —— 分区一：主线 ——
+	var sl := G.gold_label("主 线", G.FS_SM, false, Color("8a734a"), false)
+	sl.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	sl.position = Vector2(0, 0)
+	sl.custom_minimum_size = Vector2(CONTENT_W, 0)
+	_content.add_child(sl)
+	_story_card(SECTION_H, story)
+
+	# —— 分区二：今日委托 ——
+	var dl_y := SECTION_H + _story_h + 10.0
+	var dl := G.gold_label("今 日 委 托", G.FS_SM, false, Color("8a734a"), false)
+	dl.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	dl.position = Vector2(0, dl_y)
+	dl.custom_minimum_size = Vector2(120, 0)
+	_content.add_child(dl)
+	var tip := G.gold_label("跨日未交付作废", G.FS_XS, false, G.TEXT_MUTED, false)
+	tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	tip.position = Vector2(CONTENT_W - 200.0, dl_y + 3)
+	tip.size = Vector2(200, 0)
+	tip.tooltip_text = "接下、办完、回城交付——跨日作废"
 	_content.add_child(tip)
 
 	_list = Control.new()
 	_list.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_list.position = Vector2(0, 26.0)
+	_list.position = Vector2(0, list_y)
 	_content.add_child(_list)
 
 	var back := G.gold_button("返 回", 120, 38)
-	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 26.0 + float(_rows) * (ROW_H + ROW_GAP) + 12.0)
+	back.position = Vector2((CONTENT_W - 120.0) * 0.5, list_y + float(_rows) * (ROW_H + ROW_GAP) + 12.0)
 	back.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			Audio.sfx("ui_close")
 			closed.emit())
 	_content.add_child(back)
+
+
+## 主线卡：标题/状态 + 目标 + 前往 + 奖励。主线暂尽时收成一行自由探索提示。
+func _story_card(y: float, story: Dictionary) -> void:
+	# 内凹贴片（写字区语义）：比外层纸深一档 + 顶暗底亮，替代纯色圆角卡
+	var card := G.InsetPanel.new()
+	card.position = Vector2(0, y)
+	var h := _story_h
+	card.custom_minimum_size = Vector2(CONTENT_W, h)
+	card.setup(Color("e6d8b4"), Color("b99a5e"))
+	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_content.add_child(card)
+
+	var inner := Control.new()
+	inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	card.add_child(inner)
+
+	if story.is_empty():
+		var done := G.gold_label(G.story_goal_short(), G.FS_SM, false, Color("6a5330"), false)
+		done.position = Vector2(0, (h - 24.0) * 0.5)
+		done.custom_minimum_size = Vector2(INNER_W, 0)
+		inner.add_child(done)
+		return
+
+	var title_l := G.serif_label("主线 · %s" % String(story.get("title", "")),
+		G.FS_MD, Color("3a2a14"))
+	title_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	title_l.position = Vector2(0, 0)
+	title_l.custom_minimum_size = Vector2(NAME_W, 0)
+	title_l.clip_text = true
+	inner.add_child(title_l)
+
+	var st_l := G.gold_label("进行中", G.FS_XS, false, Color("a06020"), false)
+	st_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	st_l.position = Vector2(NAME_W, 3)
+	st_l.custom_minimum_size = Vector2(INNER_W - NAME_W, 0)
+	inner.add_child(st_l)
+
+	var goal_l := G.gold_label("目标：%s" % String(story.get("goal", "")),
+		G.FS_SM, false, Color("5a4020"), false)
+	goal_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	goal_l.position = Vector2(0, 26)
+	goal_l.custom_minimum_size = Vector2(INNER_W, 0)
+	goal_l.clip_text = true
+	inner.add_child(goal_l)
+
+	var target_cfg := TableCache.main_world_map(String(story.get("map", "")))
+	var to_l := G.gold_label("前往：%s" % String(target_cfg.get("name", "昭元边城")),
+		G.FS_XS, false, G.TEXT_MUTED, false)
+	to_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	to_l.position = Vector2(0, 50)
+	to_l.custom_minimum_size = Vector2(INNER_W, 0)
+	to_l.clip_text = true
+	inner.add_child(to_l)
+
+	# 奖励可能很长（主线保底会带四五条），窗口里只给一行概览
+	var parts: Array = G.reward_lines(story.get("reward", {}))
+	if parts.size() > 3:
+		parts = parts.slice(0, 3)
+		parts.append("…")
+	var rw_l := G.gold_label(" · ".join(parts), G.FS_XS, false, Color("8a6a34", 0.9), false)
+	rw_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	rw_l.position = Vector2(0, 70)
+	rw_l.custom_minimum_size = Vector2(INNER_W, 0)
+	rw_l.clip_text = true
+	inner.add_child(rw_l)
 
 
 # ---------- 列表 ----------
@@ -95,19 +186,10 @@ func _row(qid: String, y: float) -> void:
 	var d := G.quest_def(qid)
 	if d.is_empty():
 		return
-	var row := PanelContainer.new()
+	var row := G.InsetPanel.new()
 	row.position = Vector2(0, y)
 	row.custom_minimum_size = Vector2(CONTENT_W, ROW_H)
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color("e6d8b4")
-	sb.set_corner_radius_all(5)
-	sb.set_border_width_all(1)
-	sb.border_color = Color("b99a5e")
-	sb.content_margin_left = 12.0
-	sb.content_margin_right = 12.0
-	sb.content_margin_top = 8.0
-	sb.content_margin_bottom = 8.0
-	row.add_theme_stylebox_override("panel", sb)
+	row.setup(Color("e6d8b4"), Color("b99a5e"))
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_list.add_child(row)
 
@@ -133,7 +215,7 @@ func _row(qid: String, y: float) -> void:
 	name_l.clip_text = true
 	inner.add_child(name_l)
 
-	var who_l := G.gold_label(who, G.FS_XS, false, Color("8a6a34"), false)
+	var who_l := G.gold_label(who, G.FS_XS, false, G.TEXT_MUTED, false)
 	who_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	who_l.position = Vector2(NAME_W, 3)
 	who_l.custom_minimum_size = Vector2(INNER_W - NAME_W, 0)
@@ -148,7 +230,7 @@ func _row(qid: String, y: float) -> void:
 	inner.add_child(goal_l)
 
 	var state := G.quest_state(qid)
-	var state_col := Color("8a6a34")
+	var state_col := G.TEXT_MUTED
 	if state == "可交付":
 		state_col = Color("3a7a3a")
 	elif state == "今日已交付":

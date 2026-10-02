@@ -27,6 +27,7 @@ var _go_btn: Control = null
 
 
 func _ready() -> void:
+	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	Audio.sfx("ui_open")
 	_foe_lv = maxi(1, int(G.prog.get("level", 1)))
@@ -120,7 +121,6 @@ func _build() -> void:
 	bar_bg.size = Vector2(CONTENT_W, 10)
 	var bbg := StyleBoxFlat.new()
 	bbg.bg_color = Color(0.35, 0.26, 0.14, 0.35)
-	bbg.set_corner_radius_all(5)
 	bar_bg.add_theme_stylebox_override("panel", bbg)
 	bar_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.add_child(bar_bg)
@@ -130,7 +130,6 @@ func _build() -> void:
 	_rank_bar.size = Vector2(0, 8)
 	var pbsb := StyleBoxFlat.new()
 	pbsb.bg_color = G.C_RARE
-	pbsb.set_corner_radius_all(4)
 	_rank_bar.add_theme_stylebox_override("panel", pbsb)
 	_rank_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.add_child(_rank_bar)
@@ -149,16 +148,14 @@ func _build() -> void:
 	content.add_child(divider2)
 
 	# ── 区块三：对手预览卡（图标 + 名称 + 模式提示）
-	# 用 Panel（非 PanelContainer）：PanelContainer 会把所有子节点拉伸铺满整卡，手摆的图标/两行字会互相重叠。
-	var foe_card := Panel.new()
+	# PixelButton 皮（切角 + 厚度 + 硬影）+ 内层 Control 手动布局：
+	# PanelContainer 会把直接子节点拉伸铺满整卡，手摆的图标/两行字要挂在内层上。
+	var foe_card := G.PixelButton.new()
 	foe_card.position = Vector2(0, 152)
 	foe_card.size = Vector2(CONTENT_W, 84)
-	var foe_sb := StyleBoxFlat.new()
-	foe_sb.bg_color = Color(0.32, 0.23, 0.13, 0.16)
-	foe_sb.set_corner_radius_all(10)
-	foe_sb.set_border_width_all(1)
-	foe_sb.border_color = Color("a07a3a", 0.48)
-	foe_card.add_theme_stylebox_override("panel", foe_sb)
+	foe_card.custom_minimum_size = Vector2(CONTENT_W, 84)
+	foe_card.set_content_margin(0.0)
+	foe_card.set_surface(Color("dccfa4"), Color("b99a5e"))
 	# 点卡片切换对手类型（傀儡/镜影）：原来单独的「对手：傀儡」钮悬在按钮行上方，
 	# 和换对手/开始切磋错成三级台阶；收进卡片后下方只剩一组主次分明的按钮
 	foe_card.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -169,6 +166,9 @@ func _build() -> void:
 			Audio.sfx("ui_confirm")
 			_refresh())
 	content.add_child(foe_card)
+	var foe_inner := Control.new()
+	foe_inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	foe_card.add_child(foe_inner)
 	var foe_icon := TextureRect.new()
 	foe_icon.texture = G.res_tex("icon_double_edge")
 	foe_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -176,17 +176,17 @@ func _build() -> void:
 	foe_icon.position = Vector2(18, 16)
 	foe_icon.size = Vector2(68, 68)
 	foe_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	foe_card.add_child(foe_icon)
+	foe_inner.add_child(foe_icon)
 	_foe_l = G.gold_label("", G.FS_LG, true, Color("4a3010"), false)
 	_foe_l.position = Vector2(104, 20)
 	_foe_l.custom_minimum_size = Vector2(280, 0)
 	_foe_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	foe_card.add_child(_foe_l)
+	foe_inner.add_child(_foe_l)
 	_foe_tip = G.gold_label("", G.FS_XS, false, Color("6a5230"), false)
 	_foe_tip.position = Vector2(104, 58)
 	_foe_tip.custom_minimum_size = Vector2(280, 0)
 	_foe_tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	foe_card.add_child(_foe_tip)
+	foe_inner.add_child(_foe_tip)
 
 	# ── 区块四：赛季奖励（连胜荣誉积累）／战绩（胜负与胜率）
 	# 演武场此前只显示段位分，看不出"打了这么多场攒下了什么"。

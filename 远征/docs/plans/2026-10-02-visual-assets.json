@@ -1,0 +1,32 @@
+[
+  {
+    "asset": "image/background/courtyard_visual_v2.png",
+    "prompt": "Create a production-ready portrait game background image, vertical aspect ratio 3:5, for a refined classic Chinese fantasy pixel RPG titled Expedition. This is an environment bitmap asset, NOT a mockup. NO text, logos, UI panels, borders, interface elements, people, creatures, or readable signs. Depict a quiet border-town traveller's courtyard at dusk: dark timber eaves and stone walls at the left and right edges, a small warm camp lantern near the lower-left edge, a distant gate and mountain silhouettes near the upper third. Central 70 percent of the image and the lower-middle foreground must be calm, spacious, with subtle flat stone paving and atmospheric depth, suitable behind interface panels and a displayed character. Palette: muted midnight teal, charcoal brown timber, stone greys, warm parchment amber light; restrained saturation with no glowing neon. Crisp pixel-painted 2D game art with consistent small pixel clusters, clean silhouettes and hard readable edges, no photorealism, no 3D, no oil painting, no blurry painterly texture, no huge blocky retro pixels. Fine environment detail only around edges, restrained central contrast, stable soft dusk light from upper left. Compose as one coherent full-screen scene that can crop modestly on tall phone screens. All corners must contain environment, no white or transparent areas.",
+    "size": [
+      971,
+      1619
+    ],
+    "sha256": "6071b1cc6c614c0c21911bbe94fd4029325506ae22ac96fe495746933033f2fb",
+    "transparent": false
+  },
+  {
+    "asset": "image/main_world/rail_texture_visual_v2.png",
+    "prompt": "Create ONE seamless vertically repeatable top-down 2D game railway ground tile. It is a production bitmap texture, NO UI, text, margins, borders, perspective horizon, people, carts or extra illustrations. Portrait 2:3 aspect ratio. Exactly two parallel weathered dull iron rails run continuously from the very top edge to the very bottom edge at 25% and 75% of width. Wooden sleepers are horizontal under both rails and repeat at equal intervals; endpoints of the tile must join seamlessly when stacked vertically. Dark brown timber, restrained steel highlights, grey-brown gravel bed with scattered small stones, irregular rocky side shoulders, subtle tiny moss. Finely detailed crisp pixel-painted game art for a muted Chinese fantasy RPG, top-down with very shallow consistent upper-left lighting, same pixel density throughout, no photorealism, no 3D, no watercolor, no smooth geometric blank bands, no neon. Tile fills the entire image. Rails must be dead straight and parallel, sleepers must be readable at small display size.",
+    "size": [
+      1024,
+      1536
+    ],
+    "sha256": "5269f099f176897c760f4c1d1b7a870942707e928df1cef4823f17956e653d02",
+    "transparent": false
+  },
+  {
+    "asset": "image/main_world/board_texture_visual_v2.png",
+    "prompt": "Create ONE seamless repeatable top-down 2D game timber boardwalk texture tile, square aspect ratio. Production bitmap texture, NO UI, text, margins, ornamental frame, perspective horizon, people, water, snow, buildings or extra illustration. Entire image filled by horizontal weathered wood planks, varied restrained dark brown and warm grey grain, narrow dark seams, small worn nail heads, subtly chipped edges. Natural compact fine pixel clusters, crisp pixel-painted Chinese fantasy RPG game environment art, upper-left gentle lighting, no glossy shine, no photorealism, no 3D, no watercolor, no giant blocky pixels. Tile must repeat seamlessly both horizontally and vertically. Planks run horizontally so that a path created by repeating vertically reads as a wooden walkway. Keep contrast quiet, no dramatic diagonal shadow or huge cracks.",
+    "size": [
+      1254,
+      1254
+    ],
+    "sha256": "c720682906b7e040c542b6f89e9a91d19d0444a26e1faf65a0cc6572cd79419b",
+    "transparent": false
+  }
+]

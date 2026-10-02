@@ -25,6 +25,7 @@ var _group_names := ["修行之路", "秘境征服", "荣誉兑换"]
 
 
 func _ready() -> void:
+	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_build()
 
@@ -155,7 +156,7 @@ func _group_head(gi: int) -> Control:
 	var head := Control.new()
 	head.custom_minimum_size = Vector2(CARD_W, HEAD_H)
 	head.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var l := G.serif_label(_group_names[gi], G.FS_MD, Color("7a5a2e"))
+	var l := G.serif_label(_group_names[gi], G.FS_MD, G.TEXT_MUTED)
 	l.position = Vector2(4, 4)
 	l.custom_minimum_size = Vector2(CARD_W - 8, 0)
 	head.add_child(l)
@@ -174,14 +175,11 @@ func _group_head(gi: int) -> Control:
 ## 「未达成」灰描边棕字。这样"能点的"（金）和"状态"（绿/灰）在列表里一眼分得开。
 func _state_button(text: String, active: bool) -> Control:
 	var btn := G.gold_button(text, G.BTN_S.x - 24, 34, G.FS_SM)
-	var sb: StyleBoxFlat = btn.get_theme_stylebox("panel")
 	if active:
-		sb.bg_color = Color("1f5a2e")
-		sb.border_color = Color("3e7a44")
+		(btn as G.PixelButton).set_surface(Color("1f5a2e"), Color("3e7a44"))
 		(btn.get_child(0) as Label).add_theme_color_override("font_color", Color("eef6e8"))
 	else:
-		sb.bg_color = Color("9a8a6a4d")   # #9a8a6a 30% 透明
-		sb.border_color = Color("8a7a5a")
+		(btn as G.PixelButton).set_surface(Color("9a8a6a4d"), Color("8a7a5a"))
 		(btn.get_child(0) as Label).add_theme_color_override("font_color", Color("8a7a5a"))
 	return btn
 
@@ -192,16 +190,13 @@ func _title_card(t: Dictionary) -> Control:
 	var is_active := G.title_active() == tid
 	var met := G.title_cond_met(t)
 
-	var root := PanelContainer.new()
+	# 内凹贴片语言（G.InsetPanel）：切角 + 顶暗底亮 + 1px 描边，替代圆角8+软影的"模板脸"
+	var root := G.InsetPanel.new()
 	# 坐标一律以 CARD_W 为右边界（滚动条隐藏后 CARD_W = CONTENT_W，卡片吃满内宽）
 	root.custom_minimum_size = Vector2(CARD_W, CARD_H)
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color("f0e2bc") if owned else Color("e2d2a8")
-	sb.set_corner_radius_all(8)
-	sb.set_border_width_all(2)
-	sb.border_color = G.GOLD_BRIGHT if is_active else Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.45)
-	G._apply_shadow(sb, 3.0, 2.0, 0.22)
-	root.add_theme_stylebox_override("panel", sb)
+	root.setup(Color("f0e2bc") if owned else Color("e2d2a8"),
+		G.GOLD_BRIGHT if is_active else Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.45),
+		0.0, 0.0, 0.0, 0.0)
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 	var inner := Control.new()
@@ -209,9 +204,10 @@ func _title_card(t: Dictionary) -> Control:
 	root.add_child(inner)
 
 	# 左缘色条：已拥有亮金 / 可领取橙 / 未达成灰，一眼区分状态
+	# （从 (2,2) 起、避开切角，色块完整落在八边形内）
 	var bar := ColorRect.new()
-	bar.position = Vector2(0, 0)
-	bar.size = Vector2(5, 94)
+	bar.position = Vector2(2, 2)
+	bar.size = Vector2(5, CARD_H - 4.0)
 	if is_active:
 		bar.color = G.GOLD_BRIGHT
 	elif owned:

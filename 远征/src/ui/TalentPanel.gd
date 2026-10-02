@@ -31,6 +31,7 @@ var _pulse_nodes: Array = []
 
 
 func _ready() -> void:
+	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_build()
 
@@ -101,8 +102,8 @@ func _build_branch(b: Dictionary, idx: int) -> void:
 	var total_w := COL_W * 3.0 + COL_GAP * 2.0
 	var col_x := (CONTENT_W - total_w) * 0.5 + idx * (COL_W + COL_GAP)
 	var bid := String(b.get("id", ""))
-	var hue: Color = BRANCH_HUES.get(bid, Color("8a6a34"))
-	var name_col: Color = BRANCH_TEXT.get(bid, Color("7a5a2e"))
+	var hue: Color = BRANCH_HUES.get(bid, G.TEXT_MUTED)
+	var name_col: Color = BRANCH_TEXT.get(bid, G.TEXT_MUTED)
 
 	var name_l := G.serif_label(String(b.get("name", "")), G.FS_MD, name_col)
 	name_l.custom_minimum_size = Vector2(COL_W, 0)

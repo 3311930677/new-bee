@@ -5,7 +5,9 @@ extends Node2D
 func _draw() -> void:
 	for side in [0, 1]:
 		var x := 0.0 if side == 0 else 610.0
-		draw_rect(Rect2(x, 0, 350, 1248), Color("315b67"))
+		preload("res://src/explore/TerrainSurface.gd").tiled(self,
+			"res://image/main_world/shenyuan_port_ground_reference_v2.png",
+			Rect2(x, 0, 350, 1248), Vector2(175, 220), Color("89b2bb"), Rect2(12, 120, 270, 320))
 		for y in range(65, 1200, 78):
 			draw_line(Vector2(x + 35, y), Vector2(x + 245, y - 13),
 				Color("95bfc0", 0.6), 2)

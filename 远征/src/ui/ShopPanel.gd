@@ -14,6 +14,7 @@ var _hint: Label = null
 
 
 func _ready() -> void:
+	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_build()
 	_refresh()
@@ -33,7 +34,7 @@ func _build() -> void:
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.add_child(content)
 
-	var tip := G.gold_label("路上捡来的材料可回收；购价和回收价各自明示。", G.FS_XS, false, Color("7a5a2e"), false)
+	var tip := G.gold_label("路上捡来的材料可回收；购价和回收价各自明示。", G.FS_XS, false, G.TEXT_MUTED, false)
 	tip.position = Vector2(0, 2)
 	tip.custom_minimum_size = Vector2(CONTENT_W, 0)
 	content.add_child(tip)
@@ -89,16 +90,12 @@ func _make_row(idx: int, row: Dictionary) -> void:
 	if price <= 0:
 		return
 	var y := float(idx) * 46.0
-	var band := Panel.new()
+	var band := G.InsetBand.new()
 	band.position = Vector2(0, y)
 	band.custom_minimum_size = Vector2(CONTENT_W, 42)
 	band.size = Vector2(CONTENT_W, 42)
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = G.BOX_BG
-	sb.set_border_width_all(2)
-	sb.border_color = G.BOX_EDGE
-	sb.set_corner_radius_all(6)
-	band.add_theme_stylebox_override("panel", sb)
+	# 内凹条带（切角 + 顶暗底亮 + 1px 描边），替代圆角6+2px 粗边的旧皮
+	band.set_surface(G.BOX_BG, G.BOX_EDGE)
 	_rows_box.add_child(band)
 
 	var nm := G.gold_label("%s　持有 ×%d" % [G.item_name(iid), G.item_count(iid)],

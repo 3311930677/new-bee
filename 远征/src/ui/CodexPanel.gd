@@ -34,6 +34,7 @@ var _claim_btn: Control = null
 
 
 func _ready() -> void:
+	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_build()
 
@@ -59,7 +60,7 @@ func _build() -> void:
 	var owned_n := G.owned_pets().size()
 	var tip := G.gold_label("已收集 %d / %d · 通关世界首领可结伴同行"
 		% [owned_n, pets.size()],
-		G.FS_XS, false, Color("7a5a2e"), false)
+		G.FS_XS, false, G.TEXT_MUTED, false)
 	tip.position = Vector2(0, 2)
 	tip.custom_minimum_size = Vector2(CONTENT_W, 0)
 	tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -77,7 +78,7 @@ func _build() -> void:
 
 	# 收集里程（轮次 20）：图鉴此前只有一行计数，收集本身没有回报。
 	# 进度行放在大卡与按钮行之间，领取按钮插在「进化 / 返回」中间的空档。
-	_ms_l = G.gold_label("", G.FS_XS, false, Color("7a5a2e"), false)
+	_ms_l = G.gold_label("", G.FS_XS, false, G.TEXT_MUTED, false)
 	_ms_l.position = Vector2(0, 436)
 	_ms_l.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_ms_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -206,7 +207,7 @@ func _refresh_milestone() -> void:
 		_ms_l.add_theme_color_override("font_color", Color("8a4a3a"))
 	elif states.is_empty():
 		_ms_l.text = "收集里程 · 已集 %d 只" % owned
-		_ms_l.add_theme_color_override("font_color", Color("7a5a2e"))
+		_ms_l.add_theme_color_override("font_color", G.TEXT_MUTED)
 	else:
 		var nxt: Dictionary = {}
 		for s in states:
@@ -218,7 +219,7 @@ func _refresh_milestone() -> void:
 		else:
 			_ms_l.text = "收集里程 · 已集 %d 只 · 再集 %d 只可领「%s」" % [
 				owned, int(nxt.get("missing", 0)), String(nxt.get("name", ""))]
-		_ms_l.add_theme_color_override("font_color", Color("7a5a2e"))
+		_ms_l.add_theme_color_override("font_color", G.TEXT_MUTED)
 	if _claim_btn != null:
 		var can := not ready.is_empty()
 		_claim_btn.modulate = Color.WHITE if can else Color(1, 1, 1, 0.5)

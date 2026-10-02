@@ -24,6 +24,12 @@ var current := 0
 var key_mode := "both"
 ## 首尾循环：末尾再往右回到第一张，箭头常驻
 var wrap := false
+## 有名称的页签由宿主提供时，隐藏中部箭头与重复圆点。
+var navigation_visible := true:
+	set(value):
+		navigation_visible = value
+		_refresh_arrows()
+		_dots.visible = navigation_visible
 ## 页间留白（px）：相邻页紧贴排布时，其左侧控件的 StyleBox 阴影会向左越过
 ## 裁切边界渗漏 2-3px（设置页右缘的虚线竖条就是这么来的），留缝后阴影落在缝里
 var page_gap := 0.0
@@ -292,7 +298,7 @@ func _rebuild_dots() -> void:
 		d.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		hit.add_child(d)
 		_dots.add_child(hit)
-	_dots.visible = page_count > 1
+	_dots.visible = navigation_visible and page_count > 1
 	_refresh_dots()
 
 
@@ -307,6 +313,6 @@ func _refresh_dots() -> void:
 
 
 func _refresh_arrows() -> void:
-	var multi := page_count > 1
+	var multi := navigation_visible and page_count > 1
 	_prev_btn.visible = multi and (wrap or current > 0)
 	_next_btn.visible = multi and (wrap or current < page_count - 1)

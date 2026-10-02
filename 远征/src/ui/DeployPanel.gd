@@ -53,7 +53,6 @@ var _deck = null          # PageDeck（类型不写死，避免全局类缓存�
 var _hint: Label = null
 var _step := 0
 var _tab_btns: Array = []
-var _tab_sbs: Array = []
 var _cards := {}          # "步骤:选项id" -> SlideCard（选中态只改样式，不重建卡）
 var _sweep_btn: Control = null   # 扫荡按钮（持有引用用于刷新券余量）
 var _help_btn: Control = null    # 右上角「?」操作说明
@@ -73,6 +72,7 @@ const TIPS := [
 ]
 
 func _ready() -> void:
+	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	if G.selected_role != "":
 		_role = G.selected_role
@@ -100,25 +100,20 @@ func _build() -> void:
 	panel.add_child(_content)
 
 	# 三页签：点哪个进哪个，↑↓/WS 也能切（比再套一层横向分页更好认）
+	# PixelButton 皮 + tab_selected 金线（与 G.page_tabs 同一套页签语言），弃用药丸圆角
 	var gap := (CONTENT_W - GUTTER * 2.0 - TAB_W * float(STEPS.size())) / 2.0
 	for i in STEPS.size():
-		var tab := PanelContainer.new()
+		var tab := G.PixelButton.new()
 		tab.custom_minimum_size = Vector2(TAB_W, TAB_H)
 		tab.position = Vector2(GUTTER + float(i) * (TAB_W + gap), 0.0)
-		var sb := StyleBoxFlat.new()
-		sb.set_corner_radius_all(15)
-		sb.set_border_width_all(1)
-		sb.content_margin_top = 4.0
-		sb.content_margin_bottom = 4.0
-		tab.add_theme_stylebox_override("panel", sb)
+		tab.set_content_margin(0.0)
 		tab.add_child(G.gold_label(STEPS[i], G.FS_MD, true, G.TEXT_DARK, false))
 		tab.mouse_filter = Control.MOUSE_FILTER_STOP
 		tab.gui_input.connect(func(e: InputEvent): _on_tab_click(e, i))
 		_content.add_child(tab)
 		_tab_btns.append(tab)
-		_tab_sbs.append(sb)
 
-	_hint = G.gold_label("", G.FS_XS, false, Color("8a6a34"), false)
+	_hint = G.gold_label("", G.FS_XS, false, G.TEXT_MUTED, false)
 	_hint.position = Vector2(0, 410)
 	_hint.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -190,11 +185,12 @@ func _goto_step(i: int) -> void:
 
 func _refresh_tabs() -> void:
 	for i in _tab_btns.size():
-		var sb: StyleBoxFlat = _tab_sbs[i]
+		var tab := _tab_btns[i] as G.PixelButton
 		var on := i == _step
-		sb.bg_color = G.GOLD_BTN if on else Color("ddd0ae")
-		sb.border_color = G.GOLD_BTN_EDGE if on else Color("c0a068")
-		(_tab_btns[i] as Control).modulate = Color.WHITE if on else Color(0.86, 0.84, 0.80)
+		tab.set_surface(G.GOLD_BTN if on else Color("ddd0ae"),
+			G.GOLD_BTN_EDGE if on else Color("c0a068"))
+		tab.set_meta("tab_selected", on)
+		tab.modulate = Color.WHITE if on else Color(0.86, 0.84, 0.80)
 
 # ---------- 选项页（一屏一项） ----------
 func _rebuild_step() -> void:
@@ -424,7 +420,7 @@ func _refresh_supply() -> void:
 func _set_hint_default() -> void:
 	# 平常留空：操作说明交给右上角「?」，这行只用来报错与提示结果
 	_hint.text = ""
-	_hint.add_theme_color_override("font_color", Color("8a6a34"))
+	_hint.add_theme_color_override("font_color", G.TEXT_MUTED)
 
 func _warn(msg: String) -> void:
 	if _hint == null:

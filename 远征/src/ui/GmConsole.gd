@@ -113,7 +113,7 @@ func _build() -> void:
 			_try_unlock())
 	content.add_child(_unlock_btn)
 
-	_hint = G.gold_label("", G.FS_XS, false, Color("8a6a34"), false)
+	_hint = G.gold_label("", G.FS_XS, false, G.TEXT_MUTED, false)
 	_hint.position = Vector2(0, 58)
 	_hint.custom_minimum_size = Vector2(384, 0)
 	content.add_child(_hint)
@@ -211,7 +211,7 @@ func _sync_state() -> void:
 	if _hint != null:
 		_hint.text = "开发者权限已开启 · 点选下方调试项" if unlocked else "输入开发者口令以解锁调试功能"
 		_hint.add_theme_color_override("font_color",
-			Color("6a8a4a") if unlocked else Color("8a6a34"))
+			Color("6a8a4a") if unlocked else G.TEXT_MUTED)
 	# 未解锁时收紧面板：不留一大片空白
 	if _panel != null:
 		_panel.custom_minimum_size = Vector2(PANEL_W, PANEL_H_OPEN if unlocked else PANEL_H_LOCKED)

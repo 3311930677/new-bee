@@ -378,15 +378,10 @@ func _build_hud() -> void:
 	_hud.add_child(go)
 
 	# 右下：操作提示
-	var hint_chip := PanelContainer.new()
-	var hsb := StyleBoxFlat.new()
-	hsb.bg_color = Color(0.13, 0.09, 0.05, 0.55)
-	hsb.set_corner_radius_all(4)
-	hsb.content_margin_left = 8.0
-	hsb.content_margin_right = 8.0
-	hsb.content_margin_top = 2.0
-	hsb.content_margin_bottom = 2.0
-	hint_chip.add_theme_stylebox_override("panel", hsb)
+	var hint_chip := G.InsetPanel.new()
+	# 提示条：切角 + 内凹光（顶暗底亮），弃用圆角4的半透明块
+	hint_chip.setup(Color(0.13, 0.09, 0.05, 0.55), Color("ffd9a0", 0.18),
+		8.0, 8.0, 2.0, 2.0)
 	hint_chip.position = Vector2(VIEW_W - 216, VIEW_H - 44)
 	# 提示条是装饰，但它原本会吃掉「出征」按钮右下角的点击（实测有 71×20 的死区）
 	hint_chip.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -535,7 +530,7 @@ func _check_interact() -> void:
 			best_d = nd
 		n.hover = nd < NPC_R + 24.0
 		n.label_near = (nd < 122.0 and not _npc_plate_overlaps_player(n)) \
-			if _embedded_map != null else true
+			if _embedded_map != null else nd < 190.0
 		if nd > REARM_R:
 			n.cooled = false
 	if best != null and not (best as Object).get("cooled"):
@@ -836,16 +831,10 @@ func _show_notice() -> void:
 		var a := acts[i] as Dictionary
 		var aid := String(a.get("id", ""))
 		var y := 28.0 + i * 60.0
-		var row := PanelContainer.new()
+		var row := G.InsetPanel.new()
 		row.custom_minimum_size = Vector2(368, 52)
 		row.position = Vector2(0, y)
-		var sb := StyleBoxFlat.new()
-		sb.bg_color = Color("d8c8a0")
-		sb.set_corner_radius_all(4)
-		sb.content_margin_left = 10.0
-		sb.content_margin_right = 10.0
-		sb.content_margin_top = 4.0
-		row.add_theme_stylebox_override("panel", sb)
+		row.setup(Color("d8c8a0"), Color("b1a181"), 10.0, 10.0, 4.0, 0.0)
 		row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		content.add_child(row)
 
@@ -874,16 +863,10 @@ func _show_notice() -> void:
 	# P05-C：布告栏「路西兽影」悬赏行（spec §5：城内布告栏给线索）。
 	# 状态文案与支线／世界旗同源：未见 → 已接 → 已见过 → 首胜已了。
 	var by := 28.0 + acts.size() * 60.0 + 6.0
-	var brow := PanelContainer.new()
+	var brow := G.InsetPanel.new()
 	brow.custom_minimum_size = Vector2(368, 66)
 	brow.position = Vector2(0, by)
-	var bsb := StyleBoxFlat.new()
-	bsb.bg_color = Color("cbb890")
-	bsb.set_corner_radius_all(4)
-	bsb.content_margin_left = 10.0
-	bsb.content_margin_right = 10.0
-	bsb.content_margin_top = 4.0
-	brow.add_theme_stylebox_override("panel", bsb)
+	brow.setup(Color("cbb890"), Color("a5906a"), 10.0, 10.0, 4.0, 0.0)
 	brow.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.add_child(brow)
 	var b_title := G.gold_label("路西兽影 · 悬赏", G.FS_MD, false, Color("3a2a14"), false)
@@ -2085,6 +2068,7 @@ class _Deco extends StaticBody2D:
 
 ## 城内建筑：程序绘制（按 style 分支），未落成的是圈起来的工地
 class _Building extends StaticBody2D:
+	const Grounding := preload("res://src/world/BuildingGrounding.gd")
 	const TIMBER := Color("6b4a28")
 	const TIMBER_D := Color("4a3018")
 	const PLASTER := Color("e0d0ac")
@@ -2101,6 +2085,7 @@ class _Building extends StaticBody2D:
 	# 这样新素材到位时立刻生效，将来某张图缺失也不会让那座楼凭空消失。
 	var art: Texture2D = null
 	var _reference_art := false
+	var _grounding: Dictionary = {}
 	const REFERENCE_ART_IDS := ["hall", "archive", "barracks", "kennel", "storehouse", "gate", "shrine", "forge", "frost_lodge", "frost_supply", "frost_guardhouse"]
 	# 贴图统一按 0.75 倍画（256×192 → 192×144，正好 4×3 格）。
 	# 这批楼是同一台等距相机、同一比例出的：内容高都落在 161~181px，宽随楼本身宽窄变化
@@ -2137,6 +2122,10 @@ class _Building extends StaticBody2D:
 		shape.shape = rect
 		shape.position = Vector2(0, _h * 0.5 - _h * 0.15)
 		add_child(shape)
+		if art != null:
+			var displayed_height := ART_W * float(art.get_height()) / float(art.get_width()) if _reference_art else ART_H
+			_grounding = Grounding.prepare(art, roundi(ART_W), roundi(displayed_height))
+			Grounding.attach(self, _grounding, ART_BOTTOM - displayed_height, art_id.begins_with("frost_"))
 
 	func built() -> bool:
 		return bool(data.get("port_built", false)) or G.is_built(String(data.get("id", "")))
@@ -2150,6 +2139,8 @@ class _Building extends StaticBody2D:
 
 	func _process(delta: float) -> void:
 		_t += delta
+		var foundation := get_node_or_null("FoundationGround") as Node2D
+		if foundation != null: foundation.visible = built()
 		if hover:
 			queue_redraw()
 
@@ -2213,18 +2204,23 @@ class _Building extends StaticBody2D:
 	## 木牌：名字 (+ 状态)。P01 样板 §5：最小可读字号为 FS_XS(13)，
 	## 状态行原来画 10px（低于任何一档），牌高与行距随之加高。
 	func _plaque(txt: String, sub: String, y: float) -> void:
-		var pw := 76.0
-		var ph := 18.0
+		var pw := maxf(80.0, G.font_bold.get_string_size(txt, HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS).x + 20)
+		var ph := 24.0
+		# Clip signs at the viewport edge instead of leaving detached half-labels.
+		var screen_at: Vector2 = get_global_transform_with_canvas() * Vector2(0, y)
+		var view := get_viewport_rect().size
+		if screen_at.x < pw * 0.5 or screen_at.x > view.x - pw * 0.5 or screen_at.y < 90 or screen_at.y > view.y - 80:
+			return
 		if sub != "":
-			ph = 34.0
+			ph = 44.0
 		draw_rect(Rect2(-pw / 2, y, pw, ph), Color("e8d5a3"))
 		draw_rect(Rect2(-pw / 2, y, pw, ph), Color("8a6220"), false, 1.5)
 		var ts := G.font_bold.get_string_size(txt, HORIZONTAL_ALIGNMENT_CENTER, -1, G.FS_XS)
-		draw_string(G.font_bold, Vector2(-ts.x / 2, y + 14), txt,
+		draw_string(G.font_bold, Vector2(-ts.x / 2, y + 18), txt,
 			HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS, Color("3a2a14"))
 		if sub != "":
 			var ss := G.font_reg.get_string_size(sub, HORIZONTAL_ALIGNMENT_CENTER, -1, G.FS_XS)
-			draw_string(G.font_reg, Vector2(-ss.x / 2, y + 30), sub,
+			draw_string(G.font_reg, Vector2(-ss.x / 2, y + 37), sub,
 				HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS, Color("8a4a2a"))
 
 	func _draw_plot() -> void:
@@ -2232,7 +2228,7 @@ class _Building extends StaticBody2D:
 		var h := _h
 		# 工地自身的落地影（原来在外层 _draw 统一画，现在各分支自管）
 		draw_set_transform(Vector2(0, h * 0.5 - 4.0), 0.0, Vector2(1.0, 0.30))
-		draw_circle(Vector2.ZERO, w * 0.46, Color(0, 0, 0, 0.22))
+		draw_circle(Vector2.ZERO, w * 0.46, Color(0, 0, 0, 0.10))
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		# 翻过的地
 		draw_rect(Rect2(-w / 2 + 6, -h / 2 + 6, w - 12, h - 12), Color(0.42, 0.35, 0.24, 0.30))
@@ -2258,18 +2254,18 @@ class _Building extends StaticBody2D:
 		draw_line(Vector2(w * 0.13, h * 0.26), Vector2(w * 0.35, h * 0.21), TIMBER_D, 5.0)
 		_plaque(String(data.get("name", "空地")), "待建", -h * 0.5 + 2.0)
 
+	func _contact_shadow(width: float, bottom: float) -> void:
+		draw_colored_polygon(PackedVector2Array([Vector2(-width * 0.45, bottom - 2),
+			Vector2(width * 0.45, bottom - 2), Vector2(width * 0.50, bottom + 7),
+			Vector2(-width * 0.39, bottom + 7)]), Color("17211d", 0.14))
+
 	func _draw_built() -> void:
 		# 贴图路径：不再叠程序绘制的石台（贴图自带台基），只补一圈贴地的接影。
 		if art != null:
-			draw_set_transform(Vector2(0, 4), 0.0, Vector2(1.0, 0.34))
-			draw_circle(Vector2.ZERO, ART_W * 0.42, Color(0, 0, 0, 0.20))
-			draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 			_draw_art()
 			return
 		# 程序绘制路径：统一的落地影 + 石台基
-		draw_set_transform(Vector2(0, 4), 0.0, Vector2(1.0, 0.34))
-		draw_circle(Vector2.ZERO, _w * 0.54, Color(0, 0, 0, 0.30))
-		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+		_contact_shadow(_w, 2.0)
 		draw_colored_polygon(PackedVector2Array([
 			Vector2(-_w * 0.5, 2), Vector2(_w * 0.5, 2),
 			Vector2(_w * 0.46, -9), Vector2(-_w * 0.46, -9)]), Color("6b5a42"))
@@ -2606,7 +2602,7 @@ class _CityNPC extends Node2D:
 		# 半透明深底衬 + 居中，长名字也不会飘出屏幕
 		var txt := String(data.get("name", "???"))
 		var title := String(data.get("title", ""))
-		if title != "":
+		if title != "" and embedded:
 			txt += " · " + title
 		# 名牌高度随形象变：像素小人身高 80（含头）→ -108；立绘 104 → -114；色块小人 → -52
 		_plate_top = -108.0 if frames != null else (-114.0 if art != null else -52.0)
@@ -2615,8 +2611,8 @@ class _CityNPC extends Node2D:
 			_plate_top = -78.0 if String(data.get("id", "")) == "npc_child" else -108.0
 		_plate_w = clampf(G.font_bold.get_string_size(txt,
 			HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_SM).x + 16.0, 76.0, 156.0) \
-			if embedded else 160.0
-		_plate_h = 22.0 if embedded else 18.0
+			if embedded else maxf(64.0, G.font_bold.get_string_size(txt, HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS).x + 20)
+		_plate_h = 22.0 if embedded else 26.0
 		# 字号收进六档（P01 样板 §5）：主世界里的城务 NPC 名签原来是不在档里的字面量 14
 		_name_l = G.gold_label(txt, G.FS_SM if embedded else G.FS_XS,
 			embedded, Color("fff5df"), false)
@@ -2630,7 +2626,7 @@ class _CityNPC extends Node2D:
 		var psb := StyleBoxFlat.new()
 		# 深木硬边名牌与新的纸页/金钮共用材质语言。
 		# 名牌按文字内容收紧，_clamp_plate() 按实际宽度钳制屏内位置。
-		psb.bg_color = Color(0.08, 0.05, 0.03, 0.82 if embedded else 0.62)
+		psb.bg_color = Color("203437", 0.96)
 		psb.set_corner_radius_all(0)
 		psb.set_border_width_all(1)
 		psb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.45)
@@ -2646,7 +2642,7 @@ class _CityNPC extends Node2D:
 	func _process(delta: float) -> void:
 		_t += delta
 		queue_redraw()
-		if embedded and _pad != null and _name_l != null:
+		if _pad != null and _name_l != null:
 			var alpha := move_toward(_pad.modulate.a, 1.0 if label_near else 0.0,
 				delta * 5.0)
 			_pad.modulate.a = alpha
@@ -2675,6 +2671,9 @@ class _CityNPC extends Node2D:
 			py -= 40.0 / z   # 摇杆区上抬（屏幕 40px 折回本地坐标）
 		_pad.position = Vector2(px, py)
 		_name_l.position = Vector2(px, py + 2)
+		var in_view := sx >= 0.0 and sx <= get_viewport_rect().size.x and sy > 95.0 and sy < get_viewport_rect().size.y - 65.0
+		_pad.visible = in_view
+		_name_l.visible = in_view
 
 	func _draw() -> void:
 		var bob := sin(_t * 2.0 + float(hue)) * 1.2

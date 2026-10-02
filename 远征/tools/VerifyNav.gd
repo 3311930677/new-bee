@@ -13,6 +13,7 @@ const PANEL_DIR := "res://src/ui"
 # 不需要"返回键/ESC"的脚本：autoload / 纯组件 / 无 UI / 过渡页
 const SKIP_FILES := [
 	"G.gd", "Audio.gd", "DataManager.gd", "GmConsole.gd", "PageDeck.gd", "SlideCard.gd",
+	"UIIcons.gd", "UIWordmark.gd",  # 绘图/标题组件，不是可返回的页面
 	"Main.gd",        # 无 UI
 	"LoadScreen.gd",  # 过渡页：加载中途不该能返回（返回了等于卡在半路）
 ]
@@ -77,6 +78,7 @@ func _verify_panel_affordance() -> void:
 		["ExchangePanel", "res://src/ui/ExchangePanel.gd"],
 		["GachaPanel", "res://src/ui/GachaPanel.gd"],
 		["SettingsPanel", "res://src/ui/SettingsPanel.gd"],
+		["IntroductionPanel", "res://src/ui/IntroductionPanel.gd"],
 		["GrowthPanel", "res://src/ui/GrowthPanel.gd"],
 		["BagPanel", "res://src/ui/BagPanel.gd"],
 		["TalentPanel", "res://src/ui/TalentPanel.gd"],

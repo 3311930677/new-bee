@@ -19,8 +19,10 @@ func _draw() -> void:
 	draw_colored_polygon(PackedVector2Array([
 		Vector2(495, 393), Vector2(634, 390), Vector2(609, 487), Vector2(496, 491)]),
 		Color("62462f"))
-	for x in range(502, 620, 14):
-		draw_line(Vector2(x, 397), Vector2(x - 4, 484), Color("b28a58"), 6)
+	draw_polygon(PackedVector2Array([Vector2(495, 393), Vector2(634, 390),
+		Vector2(609, 487), Vector2(496, 491)]), PackedColorArray([Color.WHITE]),
+		PackedVector2Array([Vector2(0, 0), Vector2(1, 0), Vector2(1, 1), Vector2(0, 1)]),
+		preload("res://image/main_world/board_texture_visual_v2.png"))
 	for p in [Vector2(622, 405), Vector2(612, 450), Vector2(605, 484)]:
 		draw_line(p, p + Vector2(16, 6), Color("382d28"), 3)
 	for p in [Vector2(566, 518), Vector2(594, 527), Vector2(627, 504)]:

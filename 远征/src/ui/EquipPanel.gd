@@ -69,7 +69,7 @@ func _build() -> void:
 		btn.set_meta("sid", sid)
 		_slots_row.add_child(btn)
 
-	_hint = G.text_label("", G.FS_XS, Color("8a6a34"))
+	_hint = G.text_label("", G.FS_XS, G.TEXT_MUTED)
 	_hint.position = Vector2(0, 70)
 	_hint.custom_minimum_size = Vector2(CONTENT_W - 40.0, 0)
 	content.add_child(_hint)
@@ -89,8 +89,9 @@ func _build() -> void:
 	content.add_child(info)
 
 	# 背包直达（P04）：换下来的装备、待领取箱、卖装备都在背包里，不再要求先退回主城
-	var bag_btn := G.gold_button("背 包", 88, 38, G.FS_SM)
-	bag_btn.position = Vector2(368 + panel_shift_x, 36 + panel_shift)
+	var bag_btn := G.ghost_button("背包", 108, 38, G.FS_SM, G.TEXT_LIGHT)
+	G.button_icon(bag_btn, "bag", G.TEXT_LIGHT)
+	bag_btn.position = Vector2(348 + panel_shift_x, 36 + panel_shift)
 	bag_btn.tooltip_text = "打开背包：装备实例 / 材料 / 宝石 / 待领取箱"
 	bag_btn.gui_input.connect(func(ev: InputEvent):
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
@@ -115,19 +116,11 @@ func _build() -> void:
 # ---------- 槽位按钮 ----------
 func _slot_button(s: Dictionary) -> Control:
 	var sid := String(s.get("id", ""))
-	var root := PanelContainer.new()
-	root.custom_minimum_size = Vector2(SLOT_W, 62)
+	var root := G.PixelButton.new()
+	root.custom_minimum_size = Vector2(SLOT_W, 68)
+	root.set_content_margin(0.0)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
-	var sb := StyleBoxFlat.new()
-	sb.set_corner_radius_all(5)
-	sb.set_border_width_all(2)
-	sb.bg_color = Color("f0e2bc") if sid == _sel else Color("d8c9a0")
-	sb.border_color = G.GOLD_BRIGHT if sid == _sel else Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.5)
-	# 当前角色武器槽：金底提示「本职业」
-	if sid == G.equip_weapon_slot():
-		sb.border_color = Color("c05030")
-	G._apply_shadow(sb, 2.0, 1.0, 0.25)
-	root.add_theme_stylebox_override("panel", sb)
+	_slot_surface(root, sid)
 
 	var inner := Control.new()
 	inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -140,15 +133,15 @@ func _slot_button(s: Dictionary) -> Control:
 		tr.custom_minimum_size = Vector2(30, 30)
 		tr.size = Vector2(30, 30)
 		tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		tr.position = Vector2(16, 2)
+		tr.position = Vector2(16, 1)
 		inner.add_child(tr)
 	var nm := G.gold_label(String(s.get("name", "")), G.FS_XS - 1, false, G.TEXT_DARK, false)
-	nm.position = Vector2(0, 32)
+	nm.position = Vector2(0, 29)
 	nm.custom_minimum_size = Vector2(SLOT_W, 0)
 	inner.add_child(nm)
 	var lv := G.gold_label("+%d" % int(G.equip_state(sid).get("lv", 0)), G.FS_XS - 1, true,
 		Color("a06020"), false)
-	lv.position = Vector2(0, 46)
+	lv.position = Vector2(0, 47)
 	lv.custom_minimum_size = Vector2(SLOT_W, 0)
 	inner.add_child(lv)
 	_slot_lv[sid] = lv   # 直引用，刷新时不再数节点下标
@@ -161,15 +154,19 @@ func _slot_button(s: Dictionary) -> Control:
 
 
 # ---------- 详情区 ----------
+## 槽位皮：选中金亮底/普通米底；本职业武器槽红边提示（PixelButton.set_surface）
+func _slot_surface(btn: Control, sid: String) -> void:
+	if btn is G.PixelButton:
+		var edge := G.GOLD_BRIGHT if sid == _sel else Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.5)
+		if sid == G.equip_weapon_slot():
+			edge = Color("d06840") if sid == _sel else Color("c05030")
+		(btn as G.PixelButton).set_surface(
+			Color("f0e2bc") if sid == _sel else Color("d8c9a0"), edge)
+
 func _refresh() -> void:
 	for c in _slots_row.get_children():
 		var sid := String(c.get_meta("sid"))
-		var sb := c.get_theme_stylebox("panel") as StyleBoxFlat
-		if sb != null:
-			sb.bg_color = Color("f0e2bc") if sid == _sel else Color("d8c9a0")
-			sb.border_color = G.GOLD_BRIGHT if sid == _sel else Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.5)
-			if sid == G.equip_weapon_slot():
-				sb.border_color = Color("c05030") if sid != _sel else Color("d06840")
+		_slot_surface(c, sid)
 		var lv_l := _slot_lv.get(sid) as Label
 		if lv_l != null:
 			lv_l.text = "+%d" % int(G.equip_state(sid).get("lv", 0))
@@ -209,6 +206,7 @@ func _refresh() -> void:
 		var tab_btn := G.gold_button(String(tab[1]), 132, 36, G.FS_SM) \
 			if _work_tab == tab_id else G.ghost_button(String(tab[1]), 132, 36, G.FS_SM)
 		tab_btn.set_meta("work_tab", tab_id)
+		G.button_icon(tab_btn, {"enhance": "hammer", "gem": "gem", "refine": "spark"}[tab_id])
 		tab_btn.position = Vector2(float(tab[2]), 52)
 		tab_btn.gui_input.connect(func(ev: InputEvent):
 			if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
@@ -258,8 +256,8 @@ func _refresh() -> void:
 	enh_l.position = Vector2(0, 138)
 	enh_group.add_child(enh_l)
 	var guaranteed := int(G.equip_cfg().get("enhance", {}).get("guaranteed_target", 3))
-	var rate_text := "成功率100% · 低阶确定成功，消耗本次金币与强化石" \
-		if level + 1 <= guaranteed else "成功率%.1f%% · 失败扣费、不掉级\n积累%d/%d · 每失败+%d个百分点，成功清零" % [
+	var rate_text := "成功率 100% · 本次确定成功" \
+		if level + 1 <= guaranteed else "成功率%.1f%% · 失败扣费、不掉级\n积累%d/%d · 失败 +%d%%，成功重置" % [
 			rate * 100.0, int(st.get("enhance_failures", 0)), G.equip_enhance_failure_limit(_sel),
 			roundi(float(G.equip_cfg().get("enhance", {}).get("failure_rate_bonus", 0.15)) * 100.0)]
 	var rate_l := G.text_label("请先点右上角背包，为这个槽位穿上装备" if not has_worn else
@@ -275,6 +273,7 @@ func _refresh() -> void:
 		"可以强化" if enough and not maxed else \
 		"材料不足，请先去背包或委托补足" if not maxed else "此装备已到强化上限")
 	var enh_btn := G.gold_button("确认强化", 160, 40, G.FS_MD)
+	G.button_icon(enh_btn, "hammer")
 	enh_btn.tooltip_text = ready_text
 	enh_btn.position = Vector2(124, 220)
 	enh_btn.set_meta("work_action", "enhance")
@@ -291,7 +290,7 @@ func _refresh() -> void:
 	_detail.add_child(gem_group)
 
 	# 宝石行：3 孔 + 背包宝石
-	var gem_t := G.serif_label("宝 石", G.FS_MD, Color("7a5a2e"))
+	var gem_t := G.serif_label("宝 石", G.FS_MD, G.TEXT_MUTED)
 	gem_t.position = Vector2(0, 0)
 	gem_group.add_child(gem_t)
 	# 镶嵌 / 合成 两种动作共用这一排宝石格（P04 §6.2）
@@ -316,13 +315,13 @@ func _refresh() -> void:
 	if _gem_mode == "merge":
 		fee_txt = "合成费 %d 金币/次 · 同级同色 %d 颗 → 1 颗更高级" % [
 			_gem_merge_cost(), _gem_merge_need()]
-	var fee := G.text_label(fee_txt, G.FS_XS, Color("7a5a2e"))
+	var fee := G.text_label(fee_txt, G.FS_XS, G.TEXT_MUTED)
 	fee.position = Vector2(0, 132)
 	gem_group.add_child(fee)
 	var gem_guide := G.text_label("右侧点同色同级宝石合成；已镶宝石仍可拆除。"
 		if _gem_mode == "merge" else "先从背包装备，再镶嵌宝石。" if not has_worn
 		else "右侧选宝石镶嵌；左侧点已镶宝石可拆除。",
-		G.FS_XS, Color("8a6a34"))
+		G.FS_XS, G.TEXT_MUTED)
 	gem_guide.position = Vector2(0, 204)
 	gem_group.add_child(gem_guide)
 
@@ -330,7 +329,7 @@ func _refresh() -> void:
 	# 后面的永远选不到。改成 4 列 × 2 行 = 8 格一页，翻页按钮只在多于 1 页时出现。
 	var inv := _gem_inventory()
 	if inv.is_empty():
-		var none := G.text_label("背包暂无宝石（兑换商店有售）", G.FS_XS, Color("8a6a34"))
+		var none := G.text_label("背包暂无宝石（兑换商店有售）", G.FS_XS, G.TEXT_MUTED)
 		none.position = Vector2(184, 56)
 		gem_group.add_child(none)
 	else:
@@ -344,7 +343,7 @@ func _refresh() -> void:
 			gem_group.add_child(chip)
 		if pages > 1:
 			var pg := G.gold_label("%d/%d" % [_gem_page + 1, pages], G.FS_XS, false,
-				Color("7a5a2e"), false)
+				G.TEXT_MUTED, false)
 			pg.position = Vector2(300, 0)
 			pg.custom_minimum_size = Vector2(44, 0)
 			pg.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -366,15 +365,15 @@ func _refresh() -> void:
 	_detail.add_child(ref_group)
 
 	# 精炼区
-	var rf_t := G.serif_label("精 炼", G.FS_MD, Color("7a5a2e"))
+	var rf_t := G.serif_label("精 炼", G.FS_MD, G.TEXT_MUTED)
 	rf_t.position = Vector2(0, 0)
 	ref_group.add_child(rf_t)
-	var rf_hint := G.text_label("锁住满意词条，再洗其余位置", G.FS_XS, Color("7a5a2e"))
+	var rf_hint := G.text_label("锁住满意词条，再洗其余位置", G.FS_XS, G.TEXT_MUTED)
 	rf_hint.position = Vector2(80, 2)
 	ref_group.add_child(rf_hint)
 	var affixes: Array = st.get("affixes", [])
 	if affixes.is_empty():
-		var none := G.text_label("尚未精炼出词条", G.FS_XS, Color("8a6a34"))
+		var none := G.text_label("尚未精炼出词条", G.FS_XS, G.TEXT_MUTED)
 		none.position = Vector2(0, 48)
 		ref_group.add_child(none)
 	else:
@@ -402,14 +401,14 @@ func _refresh() -> void:
 	ref_group.add_child(rf_btn)
 	var rf_cost := G.text_label("先从背包装备一件物品" if not has_worn else
 		"精炼石×%d%s" % [int(rc.get("cost_item_n", 2)),
-		" + 锁符×%d" % lock_n if lock_n > 0 else ""], G.FS_XS, Color("7a5a2e"))
+		" + 锁符×%d" % lock_n if lock_n > 0 else ""], G.FS_XS, G.TEXT_MUTED)
 	rf_cost.position = Vector2(0, 200)
 	ref_group.add_child(rf_cost)
 
 	# 背包材料余量
 	var mats := G.text_label("背包：强化石×%d · 精炼石×%d · 锁符×%d · 金币 %d" % [
 		G.item_count("enhance_stone"), G.item_count("refine_stone"), G.item_count("lock_rune"),
-		int(G.wallet.get("gold", 0))], G.FS_XS, Color("8a6a34"))
+		int(G.wallet.get("gold", 0))], G.FS_XS, G.TEXT_MUTED)
 	mats.position = Vector2(0, 380)
 	_detail.add_child(mats)
 
@@ -420,7 +419,7 @@ func _refresh() -> void:
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 			_on_unequip())
 	_detail.add_child(un_btn)
-	var un_hint := G.text_label("卸下后回到背包（背包满时会拒绝）", G.FS_XS, Color("8a6a34"))
+	var un_hint := G.text_label("卸下后回到背包（背包满时会拒绝）", G.FS_XS, G.TEXT_MUTED)
 	un_hint.position = Vector2(130, 420)
 	_detail.add_child(un_hint)
 
@@ -439,14 +438,9 @@ func _bonus_summary(bonus: Dictionary) -> String:
 
 ## 宝石孔。已镶孔位可点：拆除宝石回背包（P04，修掉「只能镶不能拆」的旧问题）
 func _socket_box(uid: int, gems: Array, idx: int) -> Control:
-	var root := PanelContainer.new()
-	root.custom_minimum_size = Vector2(48, 48)
-	var sb := StyleBoxFlat.new()
-	sb.set_corner_radius_all(5)
-	sb.set_border_width_all(2)
-	sb.bg_color = Color("e0d0a8")
-	sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.5)
-	root.add_theme_stylebox_override("panel", sb)
+	# 内凹镶嵌槽（与背包宝石孔同一语言）
+	var root := G.inset_slot(48, 48)
+	root.setup(Color("e0d0a8"), Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.5))
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	if idx < gems.size():
 		var gid := String(gems[idx])
@@ -458,7 +452,7 @@ func _socket_box(uid: int, gems: Array, idx: int) -> Control:
 			tr.custom_minimum_size = Vector2(34, 34)
 			tr.size = Vector2(34, 34)
 			tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-			tr.position = Vector2(7, 4)
+			tr.position = Vector2(7, 5)
 			tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			root.add_child(tr)
 		var v := G.gold_label("+%d" % G.equip_gem_value(gid), G.FS_XS - 2, false, G.TEXT_DARK, false)
@@ -477,6 +471,8 @@ func _socket_box(uid: int, gems: Array, idx: int) -> Control:
 	else:
 		var l := G.gold_label("空", G.FS_XS, false, Color("a89468"), false)
 		l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		l.custom_minimum_size = Vector2(48, 0)
+		l.position = Vector2(0, 15)
 		root.add_child(l)
 	return root
 
@@ -510,15 +506,11 @@ func gem_page_ids() -> Array:
 
 
 func _gem_chip(gid: String) -> Control:
-	var root := PanelContainer.new()
+	var root := G.PixelButton.new()
 	root.custom_minimum_size = Vector2(48, 36)
+	root.set_content_margin(0.0)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color("f0e2bc")
-	sb.set_corner_radius_all(4)
-	sb.set_border_width_all(1)
-	sb.border_color = G.GOLD
-	root.add_theme_stylebox_override("panel", sb)
+	root.set_surface(Color("f0e2bc"), G.GOLD)
 	var inner := Control.new()
 	inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(inner)

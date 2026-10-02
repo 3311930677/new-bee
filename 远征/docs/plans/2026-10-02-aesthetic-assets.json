@@ -1,0 +1,49 @@
+{
+  "generated": [
+    {
+      "asset": "image/ui/expedition_wordmark_v1.png",
+      "source": "Built-in ImageGen",
+      "prompt": "Use case: game title wordmark. Production transparent PNG asset for a classic 2D fantasy RPG. Text (verbatim): \"远征\". Exactly these TWO Simplified Chinese characters, side by side, 远 on the left and 征 on the right. Design confident hand-drawn brush lettering with correct, unmistakably readable Chinese strokes and controlled dry-brush edges. Broad compact characters with strong silhouettes, a restrained warm ivory / aged gold palette, subtle flat dark-brown edge for contrast against detailed pixel-art scenery. Matte painted ink with slight wear, not glossy metal. Horizontal composition about 2:1, both characters same visual weight, centered and filling the available canvas with a small clear margin. Refined artisan game logo, clean readable at 250 pixels wide. No scene, no background, no border, no frame, no English, no subtitle, no seal, no extra characters, no dragon, no weapon, no ornaments, no swirling trails, no giant flare, no glow, no 3D bevel. Background must be genuinely transparent; all brush texture should live within the lettering, not spread outside it.",
+      "transparent": true,
+      "original_size": [
+        1774,
+        887
+      ],
+      "used_alpha_rect": [
+        39,
+        23,
+        1756,
+        887
+      ],
+      "runtime": "AtlasTexture crops transparent margins; alpha reveal shader animates the wordmark.",
+      "sha256": "86ae39478274e05825324c7720f2a06d52109c7659f5db7439d33483e8ba7193",
+      "size_bytes": 1915738
+    }
+  ],
+  "fonts": [
+    {
+      "asset": "assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+      "source": "https://github.com/notofonts/noto-cjk/tree/main/Serif/OTF/SimplifiedChinese",
+      "license": "SIL Open Font License 1.1",
+      "license_file": "assets/fonts/NotoSerifCJK-OFL.txt",
+      "sha256": "d627b53dbcde61e07de1498d2623a8b287f78585ffbc90cc0618d0caaa2ed6b0",
+      "size_bytes": 24700256
+    }
+  ],
+  "icons": {
+    "directory": "assets/ui/navigation",
+    "source": "Original code-native SVG drawings",
+    "count": 24,
+    "runtime": "Home, growth tiles, settings tabs, equipment workshop, login and paged help"
+  },
+  "entrance_buttons": {
+    "source": "Original Godot drawing code in Title.gd",
+    "material": "Runtime wood grain, stepped brass frame, inset bevel, rivets and bespoke 9x9 pixel signs",
+    "runtime": "All four title buttons, keyboard focus, hover and press"
+  },
+  "references": [
+    "https://news.blizzard.com/en-us/article/23837944/get-into-the-grid-of-things-with-the-updated-ui-and-hud",
+    "https://na.finalfantasyxiv.com/game_manual/view/",
+    "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/101"
+  ]
+}
