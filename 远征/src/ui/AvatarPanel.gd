@@ -29,6 +29,7 @@ var _toast_l: Label = null
 
 
 func _ready() -> void:
+	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	Audio.sfx("ui_open")
 	_build()
@@ -59,10 +60,10 @@ func _build() -> void:
 	frame.size = Vector2(PREVIEW, PREVIEW)
 	var fs := StyleBoxFlat.new()
 	fs.bg_color = Color(0.16, 0.11, 0.06, 0.10)
-	fs.set_corner_radius_all(6)
+	# 像素方框：2px 切角语义的微倒角，弃用大圆角与软影
+	fs.set_corner_radius_all(2)
 	fs.set_border_width_all(3)
 	fs.border_color = Color(G.BOX_EDGE.r, G.BOX_EDGE.g, G.BOX_EDGE.b, 0.85)
-	_apply_shadow(fs)
 	frame.add_theme_stylebox_override("panel", fs)
 	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_content.add_child(frame)
@@ -77,7 +78,7 @@ func _build() -> void:
 	frame.add_child(_preview)
 
 	# 当前状态一行（用哪张图、从哪来），换完立刻能对得上
-	_state_l = G.gold_label("", G.FS_XS, false, Color("8a6a34"), false)
+	_state_l = G.gold_label("", G.FS_XS, false, G.TEXT_MUTED, false)
 	_state_l.position = Vector2(0, PREVIEW + 8.0)
 	_state_l.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_state_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -108,7 +109,7 @@ func _build() -> void:
 	_build_role_row()
 
 	var tip := G.gold_label("图片只保存在本机，不联网、不上传",
-		G.FS_XS, false, Color("8a6a34"), false)
+		G.FS_XS, false, G.TEXT_MUTED, false)
 	tip.position = Vector2(0, PREVIEW + 212.0)
 	tip.custom_minimum_size = Vector2(CONTENT_W, 0)
 	tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -159,7 +160,7 @@ func _role_card(id: String) -> Control:
 	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = Color("dcc9a0")
-	sb.set_corner_radius_all(5)
+	sb.set_corner_radius_all(2)
 	sb.set_border_width_all(2)
 	sb.border_color = G.BOX_EDGE
 	card.add_theme_stylebox_override("panel", sb)
@@ -186,7 +187,7 @@ func _role_card(id: String) -> Control:
 	mark.visible = false
 	card.add_child(mark)
 
-	var nm := G.gold_label(String(ROLE_NAMES.get(id, id)), G.FS_XS, false, Color("7a5a2e"), false)
+	var nm := G.gold_label(String(ROLE_NAMES.get(id, id)), G.FS_XS, false, G.TEXT_MUTED, false)
 	nm.position = Vector2(0, ROLE_CARD + 1.0)
 	nm.size = Vector2(ROLE_CARD, ROLE_NAME_H)
 	nm.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

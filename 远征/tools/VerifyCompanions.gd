@@ -87,6 +87,9 @@ func _run() -> void:
 		await get_tree().process_frame
 		var paragraph := _paragraph(panel)
 		_check(paragraph != null and paragraph.size.x <= 382 and paragraph.get_line_count() >= 2,"中文训练规则必须在面板宽度内换行")
+		_press(_find_button(panel, "训练"))
+		await get_tree().create_timer(0.25).timeout
+		_check(int(panel._deck.current) == 1, "训练页签必须打开真实训练操作")
 		var guard := _find_button(panel,"护卫")
 		_check(guard != null and guard.size.y >= 44,"真实训练按钮可点")
 		_press(guard)

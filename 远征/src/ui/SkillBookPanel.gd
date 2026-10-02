@@ -18,6 +18,7 @@ var _sids: Array = []
 
 
 func _ready() -> void:
+	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_build()
 
@@ -114,15 +115,10 @@ func _skill_page(sid: String) -> Control:
 	page.custom_minimum_size = Vector2(CONTENT_W, DECK_H)
 	page.size = Vector2(CONTENT_W, DECK_H)
 
-	var root := PanelContainer.new()
+	# 内凹贴片语言（G.InsetPanel）：切角 + 顶暗底亮，替代圆角10+软影
+	var root := G.InsetPanel.new()
 	root.custom_minimum_size = Vector2(CONTENT_W, DECK_H)
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color("f0e2bc")
-	sb.set_corner_radius_all(10)
-	sb.set_border_width_all(2)
-	sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.5)
-	G._apply_shadow(sb, 3.0, 2.0, 0.22)
-	root.add_theme_stylebox_override("panel", sb)
+	root.setup(Color("f0e2bc"), Color("c9ab5e"), 0.0, 0.0, 0.0, 0.0)
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.position = Vector2(0, 0)
 	page.add_child(root)
@@ -233,16 +229,12 @@ func _pct_text(pct: int) -> String:
 
 ## 对比区单元格：等宽小牌，三行（标题 / 数值 / 副标）；accent=true 用于"升级后"一侧
 func _cmp_cell(w: float, h: float, title: String, value: String, sub: String, accent: bool) -> Control:
-	var cell := Panel.new()
+	var cell := G.InsetSlot.new()
 	cell.custom_minimum_size = Vector2(w, h)
 	cell.size = Vector2(w, h)
 	cell.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color("f7ecc8") if accent else Color("e6dab6")
-	sb.set_corner_radius_all(8)
-	sb.set_border_width_all(2)
-	sb.border_color = G.GOLD_BTN_EDGE if accent else Color("c0a868")
-	cell.add_theme_stylebox_override("panel", sb)
+	cell.setup(Color("f7ecc8") if accent else Color("e6dab6"),
+		G.GOLD_BTN_EDGE if accent else Color("c0a868"))
 
 	var t := G.gold_label(title, G.FS_XS, false, Color("8a5a1a") if accent else Color("6a5230"), false)
 	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

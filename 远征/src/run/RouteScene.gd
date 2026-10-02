@@ -75,6 +75,7 @@ func _build() -> void:
 		tr.texture = scroll
 		tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		tr.stretch_mode = TextureRect.STRETCH_SCALE
+		tr.modulate = Color.WHITE.lerp(tint, 0.24)
 		tr.set_anchors_preset(Control.PRESET_FULL_RECT)
 		tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(tr)
@@ -101,6 +102,7 @@ func _build() -> void:
 	add_child(glow)
 
 	_field.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_field.position.y = maxf(0.0, get_viewport_rect().size.y - VIEW_H) * 0.5
 	_field.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_field)
 	_lines = _RouteLines.new()
@@ -154,7 +156,7 @@ func _build_top(tint: Color) -> void:
 	add_child(_layer_l)
 
 	var quit := _chip("放弃远征")
-	quit.position = Vector2(VIEW_W - 96, 16)
+	quit.position = Vector2(VIEW_W - 96, 94)
 	quit.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			if _map == null and _end_ui == null:
@@ -163,19 +165,11 @@ func _build_top(tint: Color) -> void:
 
 
 func _chip(text: String) -> PanelContainer:
-	var root := PanelContainer.new()
+	# 深色小签：切角 + 内凹光（顶暗底亮），弃用"四角故意不一致的圆角 + 软影"
+	var root := G.InsetPanel.new()
 	root.custom_minimum_size = Vector2(84, 30)
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color(0.15, 0.10, 0.05, 0.78)
-	# 手绘感：四角半径刻意不一致（6/4/7/3），不要做成一个规整的圆角矩形
-	sb.corner_radius_top_left = 6
-	sb.corner_radius_top_right = 4
-	sb.corner_radius_bottom_left = 7
-	sb.corner_radius_bottom_right = 3
-	sb.set_border_width_all(1)
-	sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.36)
-	G._apply_shadow(sb, 4.0, 2.0, 0.34)
-	root.add_theme_stylebox_override("panel", sb)
+	root.setup(Color(0.15, 0.10, 0.05, 0.78), Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.36),
+		0.0, 0.0, 0.0, 0.0)
 	root.add_child(G.gold_label(text, G.FS_XS, false, Color("e6c684"), false))
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	return root
@@ -184,7 +178,7 @@ func _chip(text: String) -> PanelContainer:
 func _build_bottom() -> void:
 	# 底部状态条：HP 条 + 药剂 + 词条数（#9 换正式词条面板）
 	var panel := G.parchment_box(432, 96, 16.0)
-	panel.position = Vector2(24, 672)
+	panel.position = Vector2(24, 672 + maxf(0.0, get_viewport_rect().size.y - VIEW_H))
 	add_child(panel)
 
 	var box := VBoxContainer.new()
@@ -223,10 +217,10 @@ func _build_bottom() -> void:
 		_hp_fill.add_theme_stylebox_override("panel", fill_sb)
 		_hp_fill.custom_minimum_size = Vector2(186, 12)
 	else:
-		# 素材缺失回退：深色轨道 + 陶红平色
+		# 素材缺失回退：深色轨道 + 陶红平色（切角语言，不用圆角）
 		var bar_sb := StyleBoxFlat.new()
 		bar_sb.bg_color = Color("3a2a18")
-		bar_sb.set_corner_radius_all(4)
+		bar_sb.set_corner_radius_all(2)
 		bar_sb.content_margin_left = 2.0
 		bar_sb.content_margin_top = 2.0
 		bar_sb.content_margin_right = 2.0
@@ -236,7 +230,7 @@ func _build_bottom() -> void:
 		hp_row.add_child(hp_bar)
 		var fill_flat := StyleBoxFlat.new()
 		fill_flat.bg_color = Color("c05a3a")
-		fill_flat.set_corner_radius_all(3)
+		fill_flat.set_corner_radius_all(1)
 		_hp_fill.add_theme_stylebox_override("panel", fill_flat)
 		_hp_fill.custom_minimum_size = Vector2(186, 14)
 	hp_bar.add_child(_hp_fill)
@@ -511,7 +505,7 @@ class _RouteNode extends Control:
 		var meta: Array = RouteScene.NODE_META.get(t, ["？", Color.GRAY, ""])
 		var is_boss := t == "boss"
 		var r := 30.0 if is_boss else 25.0   # 图标半宽
-		var alpha := 1.0 if state != "future" else 0.42
+		var alpha := 1.0 if state != "future" else 0.65
 
 		# 落地投影：贴纸压在羊皮纸上的厚度
 		draw_set_transform(center + Vector2(0, 4.0), 0.0, Vector2(1.0, 0.86))
@@ -554,13 +548,13 @@ class _RouteNode extends Control:
 		# 类型小字：图标下方，先影后字
 		var font := G.font_bold
 		var label := String(meta[0])
-		var fs := 13
+		var fs := 15
 		var ts := font.get_string_size(label, HORIZONTAL_ALIGNMENT_CENTER, -1, fs)
 		var tp := Vector2(center.x - ts.x / 2.0, center.y + r + fs + 2.0)
 		draw_string(font, tp + Vector2(0, 1.0), label, HORIZONTAL_ALIGNMENT_CENTER, -1, fs,
-			Color(0.0, 0.0, 0.0, 0.4 * alpha))
+			Color.TRANSPARENT)
 		draw_string(font, tp, label, HORIZONTAL_ALIGNMENT_CENTER, -1, fs,
-			Color(0.99, 0.95, 0.86, alpha))
+			Color("393c32"))
 
 		# 已清：右上一枚小金牌 ✓
 		if state == "done":
@@ -589,4 +583,4 @@ class _RouteNode extends Control:
 		var tp := Vector2(center.x - ts.x / 2.0, center.y + 30.0)
 		draw_string(font, tp + Vector2(0, 1.0), "起点", HORIZONTAL_ALIGNMENT_CENTER, -1, 13,
 			Color(0.0, 0.0, 0.0, 0.40))
-		draw_string(font, tp, "起点", HORIZONTAL_ALIGNMENT_CENTER, -1, 13, Color("f2e3c0"))
+		draw_string(font, tp, "起点", HORIZONTAL_ALIGNMENT_CENTER, -1, 13, Color("393c32"))

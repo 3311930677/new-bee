@@ -27,6 +27,7 @@ var _deck: Control = null   # 大卡轮播（工厂模式：卡用到才建）
 
 
 func _ready() -> void:
+	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_build()
 
@@ -52,7 +53,7 @@ func _build() -> void:
 	var unlocked_n: int = int(G.prog.get("worlds_unlocked", 1))
 	var tip := G.gold_label("已解锁 %d / %d · 已通关 %d · 通关首领即揭开下一片大陆"
 		% [unlocked_n, order.size(), G.cleared_world_count()],
-		G.FS_XS, false, Color("7a5a2e"), false)
+		G.FS_XS, false, G.TEXT_MUTED, false)
 	tip.position = Vector2(0, 2)
 	tip.custom_minimum_size = Vector2(CONTENT_W, 0)
 	tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

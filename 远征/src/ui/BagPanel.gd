@@ -58,7 +58,7 @@ func _build() -> void:
 	_tabs.position = Vector2(0, 0)
 	content.add_child(_tabs)
 
-	_count_l = G.gold_label("", G.FS_XS, false, Color("7a5a2e"), false)
+	_count_l = G.gold_label("", G.FS_XS, false, G.TEXT_MUTED, false)
 	_count_l.position = Vector2(CONTENT_W - 70.0, 8)
 	_count_l.custom_minimum_size = Vector2(68, 0)
 	_count_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -160,7 +160,7 @@ func _build_equip_tab() -> void:
 	_layout_panel(clampi(items.size() - _page * ROWS_PER_PAGE, 0, ROWS_PER_PAGE), page_header)
 	if items.is_empty():
 		var none := G.text_label("背包里没有装备。打怪掉落会自动入包，满了先进待领取箱。",
-			G.FS_SM, Color("8a6a34"))
+			G.FS_SM, G.TEXT_MUTED)
 		none.position = Vector2(4, 8)
 		_list.add_child(none)
 	else:
@@ -170,7 +170,7 @@ func _build_equip_tab() -> void:
 			row.position = Vector2(0, page_header + (i - begin) * ROW_H)
 			_list.add_child(row)
 		if pages > 1:
-			var pg := G.gold_label("%d/%d" % [_page + 1, pages], G.FS_XS, false, Color("7a5a2e"), false)
+			var pg := G.gold_label("%d/%d" % [_page + 1, pages], G.FS_XS, false, G.TEXT_MUTED, false)
 			pg.position = Vector2(CONTENT_W - 216.0, 8)
 			pg.custom_minimum_size = Vector2(60, 0)
 			pg.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -191,16 +191,16 @@ func _build_equip_tab() -> void:
 func _item_row(inst: Dictionary) -> Control:
 	var uid := int(inst.get("uid", 0))
 	var rarity := int(inst.get("rarity", 1))
-	var root := PanelContainer.new()
+	# PixelButton 皮：切角+厚度+硬影；选中态换金底深边（原先是直角纯色块）
+	var root := G.PixelButton.new()
 	root.set_meta("gear_uid", uid)
 	root.custom_minimum_size = Vector2(CONTENT_W - 12.0, ROW_H - 2.0)
+	root.set_content_margin(0.0)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
-	var sb := StyleBoxFlat.new()
-	sb.set_corner_radius_all(0)
-	sb.set_border_width_all(2 if uid == _sel_uid else 1)
-	sb.bg_color = Color("e2c275") if uid == _sel_uid else G.PARCHMENT
-	sb.border_color = G.WOOD_DARK if uid == _sel_uid else Color("c2ad7b")
-	root.add_theme_stylebox_override("panel", sb)
+	if uid == _sel_uid:
+		root.set_surface(Color("e2c275"), G.WOOD_DARK)
+	else:
+		root.set_surface(G.PARCHMENT, Color("c2ad7b"))
 	var inner := Control.new()
 	inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(inner)
@@ -236,7 +236,7 @@ func _item_row(inst: Dictionary) -> Control:
 func _build_detail() -> void:
 	var inst := G.inv_find(_sel_uid)
 	if inst.is_empty():
-		var hint := G.text_label("选中一件装备查看详情与比较", G.FS_SM, Color("8a6a34"))
+		var hint := G.text_label("选中一件装备查看详情与比较", G.FS_SM, G.TEXT_MUTED)
 		hint.position = Vector2(4, 4)
 		_detail.add_child(hint)
 		return
@@ -249,23 +249,23 @@ func _build_detail() -> void:
 
 	var title := "%s  [%s]%s" % [String(tpl.get("name", "?")), G.equip_rarity_name(rarity),
 		"（在身）" if worn else ""]
-	var title_l := G.gold_label(title, G.FS_MD, true, G.equip_rarity_color(rarity), false)
+	var title_l := G.gold_label(title, G.FS_MD, true, G.paper_ink(G.equip_rarity_color(rarity)), false)
 	title_l.position = Vector2(0, 0)
 	_detail.add_child(title_l)
 
 	var parts := _stat_parts(bonus)
 	var stat_l := G.text_label("+%d · %s" % [int(inst.get("lv", 0)),
-		" · ".join(parts) if not parts.is_empty() else "暂无加成"], G.FS_XS, Color("7a5a2e"))
+		" · ".join(parts) if not parts.is_empty() else "暂无加成"], G.FS_XS, G.TEXT_MUTED)
 	stat_l.position = Vector2(0, 26)
 	_detail.add_child(stat_l)
 
 	# 比较：与在身同槽实例逐项差值
-	var cmp_l := G.text_label(_compare_text(slot, inst), G.FS_XS, Color("7a5a2e"))
+	var cmp_l := G.text_label(_compare_text(slot, inst), G.FS_XS, G.TEXT_MUTED)
 	cmp_l.position = Vector2(0, 46)
 	_detail.add_child(cmp_l)
 
 	# 宝石孔（点已镶孔位 = 拆除宝石）
-	var gem_t := G.gold_label("宝石孔（点已镶孔位拆除）", G.FS_XS, false, Color("7a5a2e"), false)
+	var gem_t := G.gold_label("宝石孔（点已镶孔位拆除）", G.FS_XS, false, G.TEXT_MUTED, false)
 	gem_t.position = Vector2(0, 70)
 	_detail.add_child(gem_t)
 	var gems: Array = inst.get("gems", [])
@@ -289,14 +289,14 @@ func _build_detail() -> void:
 			ap.append("%s+%0.1f%%" % [String(names.get(s, s)), float(ad.get("v", 0.0)) * 100.0])
 		if not ap.is_empty():
 			aff_txt = "词条：" + " · ".join(ap)
-	var aff_l := G.text_label(aff_txt, G.FS_XS, Color("8a6a34"))
+	var aff_l := G.text_label(aff_txt, G.FS_XS, G.TEXT_MUTED)
 	aff_l.position = Vector2(0, 140)
 	_detail.add_child(aff_l)
 	var provenance := CampaignGear.source_text(inst)
 	var need := int(tpl.get("requires_level", 0))
 	if need > 0 or not provenance.is_empty():
 		var line := "需求 Lv%d · %s" % [maxi(1, need), provenance] if need > 0 else provenance
-		var source_l := G.text_label(line, G.FS_XS, Color("7a5a2e"))
+		var source_l := G.text_label(line, G.FS_XS, G.TEXT_MUTED)
 		source_l.position = Vector2(0, 160)
 		_detail.add_child(source_l)
 
@@ -406,14 +406,9 @@ func _stat_parts(bonus: Dictionary) -> PackedStringArray:
 
 
 func _socket_box(uid: int, gems: Array, idx: int) -> Control:
-	var root := PanelContainer.new()
-	root.custom_minimum_size = Vector2(40, 40)
-	var sb := StyleBoxFlat.new()
-	sb.set_corner_radius_all(4)
-	sb.set_border_width_all(1)
-	sb.bg_color = Color("e0d0a8")
-	sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.5)
-	root.add_theme_stylebox_override("panel", sb)
+	# 宝石孔：内凹槽（凹进去的镶嵌位），宝石浮在槽里；空槽躺一枚浅「空」字
+	var root := G.inset_slot(40, 40)
+	root.setup(Color("e0d0a8"), Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.5))
 	if idx < gems.size():
 		var gid := String(gems[idx])
 		root.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -426,7 +421,7 @@ func _socket_box(uid: int, gems: Array, idx: int) -> Control:
 			tr.custom_minimum_size = Vector2(28, 28)
 			tr.size = Vector2(28, 28)
 			tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-			tr.position = Vector2(6, 4)
+			tr.position = Vector2(6, 6)
 			tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			root.add_child(tr)
 		root.gui_input.connect(func(ev: InputEvent):
@@ -439,6 +434,8 @@ func _socket_box(uid: int, gems: Array, idx: int) -> Control:
 		root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		var l := G.gold_label("空", G.FS_XS, false, Color("a89468"), false)
 		l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		l.custom_minimum_size = Vector2(40, 0)
+		l.position = Vector2(0, 11)
 		root.add_child(l)
 	return root
 
@@ -455,7 +452,7 @@ func _build_mat_tab() -> void:
 	ids.sort()
 	if ids.is_empty():
 		var none := G.text_label("暂无材料。打怪掉落的强化石、精炼石等会堆叠在这里（不占背包格）。",
-			G.FS_SM, Color("8a6a34"))
+			G.FS_SM, G.TEXT_MUTED)
 		none.position = Vector2(4, 8)
 		_list.add_child(none)
 	else:
@@ -466,7 +463,7 @@ func _build_mat_tab() -> void:
 			row.position = Vector2(8, i * 26.0)
 			_list.add_child(row)
 	var hint := G.text_label("材料与宝石不占背包格；加工操作在「养成 → 装备」里。",
-		G.FS_XS, Color("8a6a34"))
+		G.FS_XS, G.TEXT_MUTED)
 	hint.position = Vector2(4, 0)
 	_detail.add_child(hint)
 
@@ -481,7 +478,7 @@ func _build_gem_tab() -> void:
 	ids.sort()
 	if ids.is_empty():
 		var none := G.text_label("暂无宝石（兑换商店有售）。镶嵌与 3 合 1 合成在「养成 → 装备」。",
-			G.FS_SM, Color("8a6a34"))
+			G.FS_SM, G.TEXT_MUTED)
 		none.position = Vector2(4, 8)
 		_list.add_child(none)
 	else:
@@ -492,7 +489,7 @@ func _build_gem_tab() -> void:
 			row.position = Vector2(8, i * 26.0)
 			_list.add_child(row)
 	var hint := G.text_label("3 颗同级同色可合成 1 颗更高级（在「养成 → 装备 → 宝石」操作）。",
-		G.FS_XS, Color("8a6a34"))
+		G.FS_XS, G.TEXT_MUTED)
 	hint.position = Vector2(4, 0)
 	_detail.add_child(hint)
 
@@ -506,12 +503,12 @@ func _build_pending_tab() -> void:
 	_layout_panel(clampi(pend.size()-_page*ROWS_PER_PAGE,0,ROWS_PER_PAGE),header)
 	if pend.is_empty():
 		var none := G.text_label("待领取箱是空的。背包满时掉落会先存这里，绝不会丢。",
-			G.FS_SM, Color("8a6a34"))
+			G.FS_SM, G.TEXT_MUTED)
 		none.position = Vector2(4, 8)
 		_list.add_child(none)
 		return
 	if pages > 1:
-		var page_l := G.gold_label("%d/%d" % [_page+1,pages],G.FS_XS,false,Color("7a5a2e"),false)
+		var page_l := G.gold_label("%d/%d" % [_page+1,pages],G.FS_XS,false,G.TEXT_MUTED,false)
 		page_l.position = Vector2(CONTENT_W-216,8)
 		page_l.custom_minimum_size.x = 60
 		page_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -530,14 +527,10 @@ func _build_pending_tab() -> void:
 		var inst := pend[i] as Dictionary
 		var uid := int(inst.get("uid", 0))
 		var tpl := G.equip_tpl(String(inst.get("tpl", "")))
-		var row := PanelContainer.new()
+		var row := G.PixelButton.new()
 		row.custom_minimum_size = Vector2(CONTENT_W - 12.0, ROW_H - 2.0)
-		var sb := StyleBoxFlat.new()
-		sb.set_corner_radius_all(4)
-		sb.set_border_width_all(2)
-		sb.bg_color = Color("e6d8b0")
-		sb.border_color = G.equip_rarity_color(int(inst.get("rarity", 1)))
-		row.add_theme_stylebox_override("panel", sb)
+		row.set_content_margin(0.0)
+		row.set_surface(Color("e6d8b0"), G.equip_rarity_color(int(inst.get("rarity", 1))))
 		var inner := Control.new()
 		inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		row.add_child(inner)

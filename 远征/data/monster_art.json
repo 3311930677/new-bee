@@ -1,0 +1,36 @@
+{
+  "monsters": {
+    "mon_zombie": {
+      "path": "res://image/main_world/mon_zombie_reference_v2.png",
+      "source_size": [
+        1312,
+        1199
+      ],
+      "region": [
+        366,
+        118,
+        591,
+        997
+      ],
+      "sha256": "13e8a42896e4370ec7e63a665e70775f4d65251beb5e2d026dbd7d13621e086d",
+      "map_max_width": 96,
+      "battle_max_width": 128
+    },
+    "mon_wolf": {
+      "path": "res://image/main_world/mon_wolf_reference_v2.png",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "region": [
+        104,
+        182,
+        1121,
+        975
+      ],
+      "sha256": "f7c4e785503902741b504ea5b2f955da56dc1addf0e3f5dc0fb6f971d2fb8ad1",
+      "map_max_width": 96,
+      "battle_max_width": 128
+    }
+  }
+}

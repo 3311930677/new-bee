@@ -9,6 +9,7 @@ const VIEW_H := 800.0
 
 
 func _ready() -> void:
+	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	G.veil(self, 0.72, true)
@@ -22,7 +23,7 @@ func _ready() -> void:
 	content.set_anchors_preset(Control.PRESET_FULL_RECT)
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.add_child(content)
-	var hint := G.gold_label("沿地图出口步行前往；亮金节点是当前位置", G.FS_XS,
+	var hint := G.gold_label("沿路牌前往相邻地区", G.FS_XS,
 		false, G.TEXT_DARK, false)
 	hint.position = Vector2(4, 6)
 	hint.size = Vector2(376, 24)
@@ -102,9 +103,9 @@ class _RegionGraph extends Control:
 			if id == _current:
 				current_point = pos
 			var name := String(row.get("name", id))
-			var button := G.gold_button(name, 142, 36, G.FS_SM) if id == _current \
-				else G.ghost_button(name, 142, 36, G.FS_SM)
-			button.position = pos - Vector2(71, 18)
+			var button := G.gold_button(name, 156, 42, G.FS_SM) if id == _current \
+				else G.ghost_button(name, 156, 42, G.FS_SM)
+			button.position = pos - Vector2(78, 21)
 			button.gui_input.connect(func(e: InputEvent):
 				if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 					var info := TableCache.main_world_map(id)
@@ -115,11 +116,14 @@ class _RegionGraph extends Control:
 						String(info.get("goal", "沿道路探索")),
 						"请从相邻地图的路牌进入。",
 					]))
+			button.z_index = 1
+			if id != _current:
+				(button as G.PixelButton).set_surface(Color("e1d8bf"), Color("b1a181"))
 			add_child(button)
 			var levels: Array = row.get("level", [1, 12])
 			var lv := G.gold_label("Lv%d–%d" % [int(levels[0]), int(levels[1])],
 				G.FS_XS, false, G.TEXT_DARK, false)
-			lv.position = pos + Vector2(-72, 21)
+			lv.position = pos + Vector2(-72, 26)
 			lv.size = Vector2(144, 20)
 			lv.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			lv.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -148,5 +152,9 @@ class _RegionGraph extends Control:
 				if seen.has(key):
 					continue
 				seen[key] = true
-				draw_line(positions[id], positions[to], Color("95784e"), 7.0)
-				draw_line(positions[id], positions[to], Color("e1c88a"), 3.0)
+				var delta: Vector2 = positions[to] - positions[id]
+				var unit := delta.normalized()
+				var inset := minf(78.0 / maxf(absf(unit.x), 0.001), 23.0 / maxf(absf(unit.y), 0.001))
+				var from: Vector2 = positions[id] + unit * inset
+				var end: Vector2 = positions[to] - unit * inset
+				draw_line(from, end, Color("8a907d"), 3.0)

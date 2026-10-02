@@ -151,8 +151,10 @@ func _run() -> void:
 		var enemy: Combatant = map._battle.sim.alive_units("enemy")[0]
 		_check(enemy.base_max_hp > int((TableCache.get_monster("mon_zombie").get("base", {}) as Dictionary).get("hp", 0)),
 			"主世界明雷的实际战斗属性应随显示等级成长")
+		var expected_sprite := MonsterArt.path("mon_zombie") if MonsterArt.has("mon_zombie") \
+			else String(cfg.get("monster_sprite", ""))
 		_check(String((map._battle._cfg.get("enemy", {}) as Dictionary).get("sprite_path", "")) \
-			== String(cfg.get("monster_sprite", "")), "战斗形象应与地图怪物一致")
+			== expected_sprite, "战斗形象应与地图怪物一致")
 		map._battle.sim.finished = true
 		map._battle.sim.result = "victory"
 		map._battle.confirm_result()

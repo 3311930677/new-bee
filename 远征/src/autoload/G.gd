@@ -1,15 +1,20 @@
 # G.gd —— 全局单例：主题、字体、共享状态
 extends Node
+const NavigationIcons := preload("res://src/ui/UIIcons.gd")
 
 # ---------- 配色（模仿参考游戏：暖棕 + 羊皮纸 + 金） ----------
-const BG_DEEP := Color("2a1f14")        # 深棕黑（选人底）
+const BG_DEEP := Color("192629")        # 深棕黑（选人底）
 const BANNER := Color("5a3a1e")          # 棕色横幅
-const PARCHMENT := Color("eedbaa")       # 参考风纸色底，安静的大色块
-const GOLD := Color("f0c060")            # 金字/金边
-const GOLD_BRIGHT := Color("ffd97a")     # 选中亮金
+const PARCHMENT := Color("f1e7cf")       # 参考风纸色底，安静的大色块
+const GOLD := Color("cbb586")            # 金字/金边
+const GOLD_BRIGHT := Color("ead8af")     # 选中浅金
 const NAME_GREEN := Color("84c48c")      # 角色名（柔玉绿，非荧光绿）
 const LV_ORANGE := Color("f0a030")      # 等级橙
-const TEXT_DARK := Color("3a2a14")      # 羊皮纸上的深字
+const TEXT_DARK := Color("292f2b")      # 羊皮纸上的深字
+const TEXT_MUTED := Color("645d4c")
+const C_GAIN_INK := Color("286845")
+const PAGE_BACKGROUND := "res://image/background/courtyard_visual_v2.png"
+var _vignette_tex: GradientTexture2D = null
 const TEXT_LIGHT := Color("f5ead0")      # 深底上的浅字
 
 # ---------- 语义色（按「含义」取色，不按「好看」取色） ----------
@@ -31,11 +36,11 @@ const RARITY_NAME := {"white": "普通", "blue": "稀有", "purple": "史诗", "
 # ---------- 参考风（创建角色页）配色 ----------
 const WOOD := Color("6b4a28")            # 木框/顶栏棕
 const WOOD_DARK := Color("4a3018")       # 木框暗部
-const GOLD_BTN := Color("d7b668")        # 低饱和金色选中/操作底
+const GOLD_BTN := Color("c6a264")        # 低饱和金色选中/操作底
 const GOLD_BTN_EDGE := Color("8a6220")   # 金按钮描边
-const INPUT_BG := Color("cdc4ab")        # 输入框灰米底
+const INPUT_BG := Color("fbf5e7")        # 输入框灰米底
 const INPUT_BG_FOCUS := Color("ece5cf")
-const BOX_BG := Color("c2b79b")          # 选择框底
+const BOX_BG := Color("e6ddc8")          # 选择框底
 const BOX_EDGE := Color("7c5f2c")        # 选择框描边
 
 # ---------- 浮层背景（§46 遮罩不该是一整块死黑纯灰） ----------
@@ -48,20 +53,20 @@ const VEIL_VIGNETTE_A := 0.55                 # 暗角强度（相对弹窗级�
 const VEIL_GRID := 8.0                        # 斜纹间距（远看是布纹，近看无规律）
 
 # ---------- 字体 ----------
-# 黑体：界面正文/按钮/数字（清晰优先）；宋体（站酷小薇）：标题/横幅/书卷文字（自然手写感）
+# 黑体用于正文、操作与数值；思源宋体用于大标题，不加人工字距。
 const FONT_REG := "res://assets/fonts/NotoSansSC-Regular.otf"
 const FONT_BOLD := "res://assets/fonts/NotoSansSC-Bold.otf"
-const FONT_SERIF := "res://assets/fonts/ZCOOLXiaoWei-Regular.ttf"
+const FONT_SERIF := "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf"
 var font_reg: FontFile
 var font_bold: FontFile
 var font_serif: FontFile
 
 # 字号阶梯（统一收敛，禁止随手调参；层间比例 13/16/18/22/30/56）
-const FS_XS := 13    # 角标 / 最小辅助
-const FS_SM := 16    # 提示 / 描述文字
+const FS_XS := 15    # 角标 / 最小辅助
+const FS_SM := 17    # 提示 / 描述文字
 const FS_MD := 18    # 按钮 / 输入框 / 正文
-const FS_LG := 22    # 面板标题 / 特写字段（角色名）
-const FS_BIG := 30   # 木匾 / 区块标题
+const FS_LG := 24    # 面板标题 / 特写字段（角色名）
+const FS_BIG := 28   # 木匾 / 区块标题
 const FS_HERO := 56  # 主界面大标题
 
 # ---------- UI 规格（§6 有限尺寸：同一层级只用同一档，禁止逐页手调宽高） ----------
@@ -313,6 +318,7 @@ func _tune_font_rendering() -> void:
 		f.force_autohinter = false
 		f.hinting = TextServer.HINTING_NONE if _is_small_face(f) else TextServer.HINTING_LIGHT
 		f.antialiasing = TextServer.FONT_ANTIALIASING_GRAY
+		f.oversampling = 2.0
 
 
 ## 小字号字体（正文字体）：全局关 hinting；标题用宋体保留轻 hinting
@@ -4703,6 +4709,8 @@ func _scan_png_dir(dir_path: String, strip_prefix: bool) -> void:
 
 ## 按名称取完整路径（无此素材返回空串）
 func res_path(res_name: String) -> String:
+	if res_name.begins_with("mon_") and MonsterArt.has(res_name):
+		return MonsterArt.path(res_name)
 	if not _res_indexed:
 		_build_res_index()
 	return String(_res_index.get("%s.png" % res_name, ""))
@@ -4716,6 +4724,10 @@ var _tex_cache := {}
 func res_tex(res_name: String) -> Texture2D:
 	if _tex_cache.has(res_name):
 		return _tex_cache[res_name]
+	if res_name.begins_with("mon_") and MonsterArt.has(res_name):
+		var registered := MonsterArt.texture(res_name)
+		_tex_cache[res_name] = registered
+		return registered
 	var p := res_path(res_name)
 	var t: Texture2D = null
 	if not p.is_empty():
@@ -4727,17 +4739,12 @@ func res_tex(res_name: String) -> Texture2D:
 # ---------- 通用 UI 工厂 ----------
 
 ## 参考像素界面用硬边；保留工厂签名，不再铺大面积软投影。
-func _apply_shadow(sb: StyleBoxFlat, _size: float, _off_y: float, _alpha: float) -> void:
-	sb.shadow_color = Color.TRANSPARENT
-	sb.shadow_size = 0
-	sb.shadow_offset = Vector2.ZERO
+func _apply_shadow(sb: StyleBoxFlat, size: float, off_y: float, alpha: float) -> void:
+	sb.shadow_color = Color(0.02, 0.03, 0.03, minf(alpha, 0.18))
+	sb.shadow_size = int(minf(size, 4.0))
+	sb.shadow_offset = Vector2(0, minf(off_y, 2.0))
 
 
-# ---------- 浮层背景工厂 ----------
-## 浮层底衬（深棕 + 暗角 + 极淡斜纹）。
-## 只写一个 ColorRect 铺满的纯灰遮罩，是"没设计"的典型：底色发闷、四角和中心一样亮，
-## 面板浮在上面像贴纸。这里用三层叠出纵深——底色定调、暗角收边、斜纹给材质。
-## eat_input=true 时吞掉点击（模态弹窗用）。四层全部 IGNORE 鼠标，不会挡住上层按钮。
 func veil(parent: Control, strength := VEIL_MODAL_A, eat_input := true, a := -1.0) -> Control:
 	return _veil_into(parent, strength, eat_input, a)
 
@@ -4753,7 +4760,7 @@ func _veil_into(parent: Node, strength: float, eat_input: bool, a: float) -> Con
 		a = strength
 	var root := Control.new()
 	root.name = "Veil"
-	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	root.size = _veil_viewport_size(parent)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP if eat_input else Control.MOUSE_FILTER_IGNORE
 	parent.add_child(root)
 
@@ -4761,6 +4768,21 @@ func _veil_into(parent: Node, strength: float, eat_input: bool, a: float) -> Con
 	# 坑：父级还没布局时 set_anchors_and_offsets_preset 只写 anchors，size 要等下一帧
 	# 才结算，这一帧里 TextureRect 是 0×0 → 贴图根本不画。
 	var vp := _veil_viewport_size(parent)
+	var base := ColorRect.new()
+	base.size = vp
+	base.color = Color(0.035, 0.06, 0.065, a * 0.65)
+	base.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(base)
+	var backdrop := TextureRect.new()
+	backdrop.name = "Atmosphere"
+	backdrop.texture = _interface_texture()
+	backdrop.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	backdrop.stretch_mode = TextureRect.STRETCH_TILE
+	backdrop.size = vp
+	backdrop.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	backdrop.modulate = Color(1, 1, 1, clampf((a - 0.70) * 2.0, 0, 0.4))
+	backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(backdrop)
 
 	# 暗角 TextureRect：自带 darken 模式，同时承担"色底"+"四角压暗"两件事。
 	# 关键：把 VEIL 颜色直接喂进 modulate（而不是先画一层 ColorRect 再叠暗角）——
@@ -4788,29 +4810,66 @@ func _veil_into(parent: Node, strength: float, eat_input: bool, a: float) -> Con
 
 ## 浮层要铺多大：优先问父级尺寸，拿不到（headless 早期/未入树）再退回项目基准 480×800
 func _veil_viewport_size(parent: Node) -> Vector2:
-	if parent is Control:
-		var cs := (parent as Control).size
-		if cs.x > 1.0 and cs.y > 1.0:
-			return cs
-	# 坑：父级还没进树时 parent.get_tree() 在 4.7 会直接刷
-	#   ERROR: Parameter "data.tree" is null. at: get_tree (scene/main/node.h:559)
-	# （TraitPicker.setup 在 add_child 之前就建浮层，headless 测试里每局刷 7 条）。
-	# 必须先 is_inside_tree() 再问 get_tree()，拿不到就退回 480×800 基准。
-	if not parent.is_inside_tree():
-		return Vector2(480, 800)
-	var tree := parent.get_tree()
-	if tree != null and tree.root != null:
-		var vs := tree.root.size
-		if vs.x > 1.0 and vs.y > 1.0:
-			return vs
+	if parent.is_inside_tree():
+		var vp := parent.get_viewport()
+		if vp != null:
+			var dimensions := vp.get_visible_rect().size
+			if dimensions.x > 1 and dimensions.y > 1:
+				return dimensions
+	if parent is Control and (parent as Control).size.x > 1 and (parent as Control).size.y > 1:
+		return (parent as Control).size
 	return Vector2(480, 800)
 
+var _interface_backdrop: ImageTexture = null
 
-## 暗角贴图（径向渐变：中心全透 → 四边压暗）。
-## 关键：fill_to 必须指到 mid-edge（offset (0.5,0) 表示半径 = 半宽），
-## 若指到角点则半径放大 √2 倍，渐变只能铺到对角线的 71%，四角永远到不了最深——
-## 表现就是"中心亮、四角也不够暗"，跟没做暗角一样。四角靠调制值封顶即可。
-var _vignette_tex: GradientTexture2D = null
+func _interface_texture() -> ImageTexture:
+	if _interface_backdrop != null: return _interface_backdrop
+	var image := Image.create(96, 96, false, Image.FORMAT_RGBA8)
+	for y in 96:
+		for x in 96:
+			var grain := float((x * 17 + y * 31 + x * y * 3) % 7 - 3) / 255.0
+			image.set_pixel(x, y, Color(0.135 + grain, 0.147 + grain, 0.135 + grain))
+	_interface_backdrop = ImageTexture.create_from_image(image)
+	return _interface_backdrop
+
+func page_background(parent: Control, dim := 0.25, asset_path := "") -> TextureRect:
+	var background := TextureRect.new()
+	background.name = "PageBackground"
+	background.texture = load(asset_path) as Texture2D if asset_path != "" else _interface_texture()
+	background.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	background.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED if asset_path != "" else TextureRect.STRETCH_TILE
+	background.size = _veil_viewport_size(parent)
+	background.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	background.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	parent.add_child(background)
+	var shade := ColorRect.new()
+	shade.name = "BackgroundShade"
+	shade.color = Color(0.025, 0.055, 0.06, dim)
+	shade.size = background.size
+	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	parent.add_child(shade)
+	parent.resized.connect(func():
+		background.size = _veil_viewport_size(parent)
+		shade.size = background.size)
+	return background
+
+func paper_ink(color: Color) -> Color:
+	if color == C_GAIN or color == NAME_GREEN: return C_GAIN_INK
+	if color == C_HINT: return TEXT_MUTED
+	if color.get_luminance() > 0.4:
+		return Color.from_hsv(color.h, minf(color.s, 0.7), 0.43, 1.0)
+	return Color(color.r, color.g, color.b, 1.0)
+
+func center_fixed_page(parent: Control) -> void:
+	if parent.get_meta("visual_centered", false): return
+	parent.set_meta("visual_centered", true)
+	var lift := maxf(0, _veil_viewport_size(parent).y - 800) * 0.5
+	if lift <= 0: return
+	for child in parent.get_children():
+		if child is Control and child.name not in ["Veil", "PageBackground", "BackgroundShade"] \
+				and not (child.anchor_right == 1.0 and child.anchor_bottom == 1.0):
+			(child as Control).position.y += lift
+
 
 func _build_vignette_tex() -> GradientTexture2D:
 	if _vignette_tex != null:
@@ -4854,7 +4913,7 @@ func gold_label(text: String, size: int, bold := true,
 	l.text = text
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	l.add_theme_font_override("font", font_bold if bold else font_reg)
-	l.add_theme_font_size_override("font_size", size)
+	l.add_theme_font_size_override("font_size", maxi(size, 14))
 	l.add_theme_color_override("font_color", color)
 	if outline:
 		var osize := roundi(size / 18.0)
@@ -4870,8 +4929,8 @@ func serif_label(text: String, size: int, color := GOLD,
 	var l := Label.new()
 	l.text = text
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	l.add_theme_font_override("font", font_serif)
-	l.add_theme_font_size_override("font_size", size)
+	l.add_theme_font_override("font", font_serif if size >= FS_LG else font_reg)
+	l.add_theme_font_size_override("font_size", maxi(size, 14))
 	l.add_theme_color_override("font_color", color)
 	if outline:
 		l.add_theme_color_override("font_outline_color", Color("2a1a0a", 0.85))
@@ -4885,8 +4944,9 @@ func text_label(text: String, size := FS_SM, color := TEXT_DARK) -> Label:
 	l.text = text
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	l.add_theme_font_override("font", font_reg)
-	l.add_theme_font_size_override("font_size", size)
-	l.add_theme_color_override("font_color", color)
+	l.add_theme_font_size_override("font_size", maxi(size, 14))
+	l.add_theme_color_override("font_color", color if color.get_luminance() > 0.70 else paper_ink(color))
+	l.add_theme_constant_override("line_spacing", 4)
 	return l
 
 
@@ -4905,8 +4965,8 @@ func spaced_font(glyph_spacing: int, bold := true, serif := false) -> FontVariat
 func menu_button(text: String) -> Control:
 	var root := PanelContainer.new()
 	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color(0.15, 0.10, 0.05, 0.66)
-	sb.set_corner_radius_all(0)
+	sb.bg_color = Color("203437", 0.96)
+	sb.set_corner_radius_all(5)
 	sb.set_border_width_all(1)
 	sb.border_color = Color(GOLD.r, GOLD.g, GOLD.b, 0.28)
 	_apply_shadow(sb, 4.0, 2.0, 0.3)
@@ -4915,9 +4975,11 @@ func menu_button(text: String) -> Control:
 	sb.content_margin_top = 8.0
 	sb.content_margin_bottom = 8.0
 	root.add_theme_stylebox_override("panel", sb)
-	var l := serif_label(text, FS_MD, Color("d9b96e"))
+	var l := gold_label(text, FS_MD, false, Color("eee5ce"), false)
 	root.add_child(l)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
+	var key: String = {"开始游戏": "door", "游戏介绍": "book", "游戏设置": "settings", "退出游戏": "back"}.get(text, "")
+	if key != "": NavigationIcons.button_icon(root, String(key), GOLD_BRIGHT)
 	return root
 
 
@@ -4927,15 +4989,82 @@ func set_button_active(btn: Control, active: bool) -> void:
 	if sb == null:
 		return
 	if active:
-		sb.bg_color = Color(0.22, 0.13, 0.05, 0.88)
+		sb.bg_color = Color("365356", 0.98)
 		sb.border_color = Color(GOLD_BRIGHT.r, GOLD_BRIGHT.g, GOLD_BRIGHT.b, 0.85)
 	else:
-		sb.bg_color = Color(0.15, 0.10, 0.05, 0.66)
+		sb.bg_color = Color("203437", 0.96)
 		sb.border_color = Color(GOLD.r, GOLD.g, GOLD.b, 0.28)
 	var l := btn.get_child(0) as Label
 	if l:
 		l.add_theme_color_override("font_color",
-			GOLD_BRIGHT if active else Color("d9b96e"))
+			GOLD_BRIGHT if active else Color("eee5ce"))
+	if bool(btn.get_meta("title_primary", false)):
+		sb.bg_color = Color("d1bc8c") if active else Color("b8a47a")
+		sb.border_color = Color("f1e3c2") if active else Color("a6936c")
+		if l: l.add_theme_color_override("font_color", Color("302c22"))
+		var holder := btn.get_node_or_null("NavigationIcon")
+		if holder != null:
+			(holder.get_child(0) as CanvasItem).modulate = Color("302c22")
+
+
+func ui_icon(key: String, dimensions := Vector2(20, 20), tint := TEXT_MUTED) -> TextureRect:
+	return NavigationIcons.image(key, dimensions, tint)
+
+
+func button_icon(button: Control, key: String, tint := TEXT_DARK) -> void:
+	NavigationIcons.button_icon(button, key, tint)
+
+
+## 带名称的页签，不要求玩家记住圆点分别是哪一页。
+func page_tabs(deck: Control, labels: Array, icons: Array, width: float) -> Control:
+	var strip := Control.new()
+	strip.name = "PageTabs"
+	strip.size = Vector2(width, 42)
+	strip.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var buttons: Array[Control] = []
+	var tab_w := (width - 8.0 * (labels.size() - 1)) / labels.size()
+	for i in labels.size():
+		var index := i
+		var tab := ghost_button(String(labels[i]), tab_w, 42, FS_SM)
+		tab.name = "PageTab%d" % i
+		tab.position = Vector2(i * (tab_w + 8.0), 0)
+		tab.set_meta("page_index", i)
+		button_icon(tab, String(icons[i]))
+		buttons.append(tab)
+		strip.add_child(tab)
+		tab.gui_input.connect(func(event: InputEvent):
+			if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+				deck.call("go", index))
+	var sync := func(index: int):
+		for i in buttons.size():
+			var tab := buttons[i]
+			var selected := i == index
+			# PixelButton 自绘皮：换肤走 set_surface，选中页签另加底部旧金线
+			if tab is PixelButton:
+				(tab as PixelButton).set_surface(
+					Color("2a4648") if selected else Color("e4dcc8"),
+					Color("647a72") if selected else Color("b9ad93"))
+				tab.set_meta("tab_selected", selected)
+			var tint := TEXT_LIGHT if selected else TEXT_MUTED
+			(tab.get_child(0) as Label).add_theme_color_override("font_color", tint)
+			var icon_holder := tab.get_node("NavigationIcon")
+			(icon_holder.get_child(0) as CanvasItem).modulate = tint
+	deck.connect("page_changed", sync)
+	sync.call(int(deck.get("current")))
+	deck.set("navigation_visible", false)
+	return strip
+
+
+## 只做一次短淡入；不改热区、页面坐标或字号。
+func reveal_control(control: Control, delay := 0.0) -> void:
+	if DisplayServer.get_name() == "headless" or get_meta("ui_review_mode", false): return
+	if control.get_meta("ui_revealed", false): return
+	control.set_meta("ui_revealed", true)
+	control.modulate.a = 0.0
+	var tw := control.create_tween()
+	tw.tween_interval(delay)
+	tw.tween_property(control, "modulate:a", 1.0, 0.18)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 
 # ---------- 参考风控件（创建角色 / 登录页） ----------
@@ -4948,44 +5077,363 @@ func _banner_text(text: String) -> String:
 	return text.replace(" ", "")
 
 
-## 顶部棕色木匾横幅（宋体 + 柔金边；边框降饱和避免荧光感）
-func banner_box(text: String, w := 260, h := 52, font_size := FS_BIG) -> PanelContainer:
-	var root := PanelContainer.new()
+## 顶部木匾横幅（宋体 + 旧金包边 + 角饰）。此前是"纯色圆角矩形 + 1px 细金框"，
+## 那是模板工具的默认脸；换成有纹理、有厚度、有工艺细节的实心木牌。
+func banner_box(text: String, w := 260, h := 52, font_size := FS_BIG) -> Control:
+	var root := WoodPlaque.new()
 	root.custom_minimum_size = Vector2(w, h)
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color(0.30, 0.18, 0.08, 0.92)
-	sb.set_corner_radius_all(0)
-	sb.set_border_width_all(2)
-	sb.border_color = Color(GOLD.r, GOLD.g, GOLD.b, 0.65)
-	_apply_shadow(sb, 5.0, 2.0, 0.4)
-	# 左右必须等值：以前是 28/20 的「偏左留白」写法，实测文字中心落在 242.5（面板中心 240），
-	# 肉眼看就是字往右歪。木匾文字本来就是居中的，左右各留一样多才不歪
-	sb.content_margin_left = 24.0
-	sb.content_margin_right = 24.0
-	root.add_theme_stylebox_override("panel", sb)
 	var l := serif_label(_banner_text(text), font_size, GOLD_BRIGHT)
-	l.add_theme_font_override("font", spaced_font(maxi(1, font_size / 10), true, true))
-	root.add_child(l)
-	root.add_child(_ReferenceFrame.new())
+	l.add_theme_color_override("font_shadow_color", Color("141008", 0.9))
+	l.add_theme_constant_override("shadow_offset_y", 1)
+	root.setup(l, Color("3a2c1c"))
+	root.set_meta("banner_surface", true)
 	return root
 
 
-## 羊皮纸面板（金边，内部留白）
+## 木纹贴图（按底色缓存）：横匾与木质入口共用的底材，颗粒沿水平方向走。
+## 公式与标题页木钮同源，保证全游戏是"同一批木料"的观感。
+var _wood_tex_cache := {}
+
+func wood_grain(base := Color("3a2c1c")) -> ImageTexture:
+	var key := base.to_html()
+	if _wood_tex_cache.has(key):
+		return _wood_tex_cache[key]
+	var w := 256
+	var h := 64
+	var canvas := Image.create(w, h, false, Image.FORMAT_RGBA8)
+	for y in h:
+		for x in w:
+			var grain := float(posmod(x * 7 + y * 29 + x / 9 * y, 17) - 8) / 1050.0
+			var striation := 0.013 if posmod(y + x / 40, 9) == 0 else 0.0
+			canvas.set_pixel(x, y, Color(
+				base.r + grain + striation,
+				base.g + grain * 0.75 + striation,
+				base.b + grain * 0.5, 1.0))
+	var tex := ImageTexture.create_from_image(canvas)
+	_wood_tex_cache[key] = tex
+	return tex
+
+
+## 木牌面板：木纹底 + 旧金包边 + 顶高光/底压暗 + 四角金饰。banner_box 与
+## 营帐入口共用；纯 StyleBoxFlat 画不出"厚度"，所以走自绘。
+class WoodPlaque extends Panel:
+	var _label: Control = null
+	var _tex: ImageTexture = null
+	var _cut := 3.0   # 切角像素：比直角柔和，比大圆角"机床感"低
+
+	func setup(label: Control, base := Color("3a2c1c"), cut := 3.0) -> void:
+		_label = label
+		_cut = cut
+		add_child(label)
+		add_theme_stylebox_override("panel", StyleBoxEmpty.new())
+		_tex = G.wood_grain(base)
+		item_rect_changed.connect(_place_label)
+		_place_label()
+
+	func _place_label() -> void:
+		if _label == null:
+			return
+		var ms := _label.get_combined_minimum_size()
+		_label.position = Vector2((size.x - ms.x) * 0.5, (size.y - ms.y) * 0.5)
+
+	func _draw() -> void:
+		G.draw_wood_body(self, size, _tex, _cut)
+		if size.x < 8.0 or size.y < 8.0:
+			return
+		# 四角短金饰（L 形角线）：比整圈亮边克制，比无装饰"生成感"低
+		var arm := 5.0
+		for corner in [Vector2(3, 3), Vector2(size.x - 4, 3),
+				Vector2(3, size.y - 4), Vector2(size.x - 4, size.y - 4)]:
+			var sx := -1.0 if corner.x > size.x * 0.5 else 1.0
+			var sy := -1.0 if corner.y > size.y * 0.5 else 1.0
+			draw_line(corner, corner + Vector2(arm * sx, 0), Color("c9ab72", 0.9), 1.0)
+			draw_line(corner, corner + Vector2(0, arm * sy), Color("c9ab72", 0.9), 1.0)
+
+
+## 木牌体的通用绘制（横匾与功能入口共用同一套"厚度语言"）：
+## 落影 → 深边 → 木纹 → 旧金包边 → 顶高光/底压暗。五层都是 1px 级的细节，
+## 远看是一块整木，近看才有工艺——避免大圆角+纯色块的"模板脸"。
+static func draw_wood_body(item: CanvasItem, sz: Vector2, tex: Texture2D, cut := 3.0) -> void:
+	if sz.x < 8.0 or sz.y < 8.0:
+		return
+	var octa := func(inset: float) -> PackedVector2Array:
+		var x1 := inset
+		var y1 := inset
+		var x2 := sz.x - inset
+		var y2 := sz.y - inset
+		return PackedVector2Array([
+			Vector2(x1 + cut, y1), Vector2(x2 - cut, y1),
+			Vector2(x2, y1 + cut), Vector2(x2, y2 - cut),
+			Vector2(x2 - cut, y2), Vector2(x1 + cut, y2),
+			Vector2(x1, y2 - cut), Vector2(x1, y1 + cut),
+		])
+	var shadow: PackedVector2Array = octa.call(0.0)
+	for i in shadow.size():
+		shadow[i] += Vector2(0.0, 2.5)
+	item.draw_colored_polygon(shadow, Color("0d0a06", 0.40))
+	item.draw_colored_polygon(octa.call(0.0), Color("241b12"))
+	if tex != null:
+		item.draw_texture_rect(tex, Rect2(Vector2(2, 2), sz - Vector2(4, 4)), false)
+	var rim: PackedVector2Array = octa.call(1.0)
+	rim.append(rim[0])
+	item.draw_polyline(rim, Color("8b704c"), 1.0)
+	item.draw_line(Vector2(7, 3), Vector2(sz.x - 7, 3), Color("b49a6b", 0.5), 1.0)
+	item.draw_line(Vector2(7, sz.y - 3), Vector2(sz.x - 7, sz.y - 3), Color("14100a"), 1.0)
+
+
+## 斜切角八边形路径：纸面/按钮/木牌共用的"倒角语言"。像素风不放大圆角——
+## 机床感的圆弧与手作感的 2-3px 切角是两种审美，全项目统一走切角。
+static func octagon_path(sz: Vector2, inset: float, cut: float) -> PackedVector2Array:
+	var x1 := inset
+	var y1 := inset
+	var x2 := sz.x - inset
+	var y2 := sz.y - inset
+	return PackedVector2Array([
+		Vector2(x1 + cut, y1), Vector2(x2 - cut, y1),
+		Vector2(x2, y1 + cut), Vector2(x2, y2 - cut),
+		Vector2(x2 - cut, y2), Vector2(x1 + cut, y2),
+		Vector2(x1, y2 - cut), Vector2(x1, y1 + cut),
+	])
+
+
+## 硬边落影：偏移的深色多边形，替代 StyleBoxFlat 的软模糊阴影。
+## 软影是"现代 UI 渲染感"的来源之一；像素界面用贴近实物的短硬影。
+static func draw_hard_shadow(item: CanvasItem, sz: Vector2, cut: float,
+		drop := 2.5, color := Color("170f07", 0.35)) -> void:
+	var shadow := octagon_path(sz, 0.0, cut)
+	for i in shadow.size():
+		shadow[i] += Vector2(0.0, drop)
+	item.draw_colored_polygon(shadow, color)
+
+
+var _paper_tex: ImageTexture = null
+
+## 纸纹贴图（一次性生成缓存）：低幅度规则颗粒 + 稀疏横向纤维。
+## 与 wood_grain 同族——不用随机数，同参数恒定输出；颗粒幅度压在 ±5/255，
+## 远看是纸的均匀肌理，近看也不结块（规范 §43：不许噪点冒充细节）。
+func paper_grain() -> ImageTexture:
+	if _paper_tex != null:
+		return _paper_tex
+	var n := 128
+	var img := Image.create(n, n, false, Image.FORMAT_RGBA8)
+	for y in n:
+		for x in n:
+			var grain := float(posmod(x * 23 + y * 41 + x * y * 5, 11) - 5) / 520.0
+			if posmod(y * 13 + x / 17, 31) < 2:
+				grain -= 0.016
+			img.set_pixel(x, y, Color(
+				PARCHMENT.r + grain,
+				PARCHMENT.g + grain,
+				PARCHMENT.b + grain * 0.9, 1.0))
+	_paper_tex = ImageTexture.create_from_image(img)
+	return _paper_tex
+
+
+## 羊皮纸面板：自绘五层（硬影 → 纸底 → 纸纹 → 内缘做旧 → 描边/厚度）。
+## 之前是 StyleBoxFlat 纯色 + 圆角5 + 软影——全游戏几十个面板共用同一张
+## "模板脸"。纸感靠纹理与做旧，不靠换底色。
+class PaperPanel extends PanelContainer:
+	var _tex: ImageTexture = null
+	var _cut := 3.0
+
+	func setup(pad := 18.0) -> void:
+		_tex = G.paper_grain()
+		# StyleBoxEmpty 只贡献 content margin（子控件布局不变），
+		# 视觉全部走 _draw，与 WoodPlaque 同构。
+		var sb := StyleBoxEmpty.new()
+		sb.content_margin_left = pad
+		sb.content_margin_right = pad
+		sb.content_margin_top = pad * 0.7
+		sb.content_margin_bottom = pad * 0.6
+		add_theme_stylebox_override("panel", sb)
+
+	func _draw() -> void:
+		var sz := size
+		if sz.x < 8.0 or sz.y < 8.0:
+			return
+		G.draw_hard_shadow(self, sz, _cut)
+		draw_colored_polygon(G.octagon_path(sz, 0.0, _cut), G.PARCHMENT)
+		if _tex != null:
+			draw_texture_rect(_tex, Rect2(Vector2(2, 2), sz - Vector2(4, 4)), true)
+		# 内缘做旧：一圈暗线 + 更内一圈轻晕（新纸是"白块"，做旧才像旧纸）
+		var i1 := _cut + 2.0
+		var i2 := _cut + 5.0
+		draw_line(Vector2(i1, i1), Vector2(sz.x - i1, i1), Color("8a744f", 0.30), 1.0)
+		draw_line(Vector2(i1, sz.y - i1), Vector2(sz.x - i1, sz.y - i1), Color("8a744f", 0.30), 1.0)
+		draw_line(Vector2(i1, i1), Vector2(i1, sz.y - i1), Color("8a744f", 0.22), 1.0)
+		draw_line(Vector2(sz.x - i1, i1), Vector2(sz.x - i1, sz.y - i1), Color("8a744f", 0.22), 1.0)
+		draw_rect(Rect2(Vector2(i2, i2), sz - Vector2(i2 * 2.0, i2 * 2.0)),
+			Color("8a744f", 0.05), false, 1.0)
+		# 顶高光 / 底压暗：纸也有厚度，只是比木牌轻
+		draw_line(Vector2(_cut + 3, 1), Vector2(sz.x - _cut - 3, 1), Color("fff6dd", 0.55), 1.0)
+		draw_line(Vector2(_cut + 3, sz.y - 1), Vector2(sz.x - _cut - 3, sz.y - 1), Color("6d5a3a", 0.25), 1.0)
+		# 外缘描边（做旧棕，比纯 a3957a 深）
+		var rim := G.octagon_path(sz, 0.5, _cut)
+		rim.append(rim[0])
+		draw_polyline(rim, Color("95815f"), 1.0)
+
+
+## 像素按钮：斜切角 + 顶高光/底压暗 + 硬影 + 描边，与纸面/木牌同一套厚度语言。
+## 保留 StyleBoxFlat 作为 panel override（透明、无边、无圆角）——UIIcons 仍可
+## 通过 stylebox 的 content_margin 加图标内边距；换肤色一律走 set_surface。
+class PixelButton extends PanelContainer:
+	var surface_bg := Color("e4dcc8")
+	var surface_edge := Color("b1a181")
+	var _cut := 2.0
+
+	func set_surface(bg: Color, edge: Color) -> void:
+		surface_bg = bg
+		surface_edge = edge
+		queue_redraw()
+
+	func set_content_margin(m: float) -> void:
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = Color.TRANSPARENT
+		sb.content_margin_left = m
+		sb.content_margin_right = m
+		add_theme_stylebox_override("panel", sb)
+
+	func _draw() -> void:
+		var sz := size
+		if sz.x < 6.0 or sz.y < 6.0:
+			return
+		G.draw_hard_shadow(self, sz, _cut, 2.0, Color("170f07", 0.30))
+		draw_colored_polygon(G.octagon_path(sz, 0.0, _cut), surface_bg)
+		draw_line(Vector2(_cut + 2, 1), Vector2(sz.x - _cut - 2, 1),
+			surface_bg.lightened(0.16), 1.0)
+		draw_line(Vector2(_cut + 2, sz.y - 1), Vector2(sz.x - _cut - 2, sz.y - 1),
+			surface_bg.darkened(0.22), 1.0)
+		var rim := G.octagon_path(sz, 0.5, _cut)
+		rim.append(rim[0])
+		draw_polyline(rim, surface_edge, 1.0)
+		# 页签选中态：底边旧金粗线（与内容区相连的视觉暗示）
+		if bool(get_meta("tab_selected", false)):
+			draw_line(Vector2(_cut + 2, sz.y - 1.5), Vector2(sz.x - _cut - 2, sz.y - 1.5),
+				Color("c9ab72"), 2.0)
+
+
+## 内凹槽（图标槽 / 宝石孔 / 镶嵌位）：底色深一档 + 顶压暗/底透光——
+## "凹进去"而不是"浮起来"，与 PixelButton 的凸起厚度正好相反。
+## 纸面用浅槽（inset_slot），木牌/深底用暗槽（dark=true）。
+class InsetSlot extends Panel:
+	var slot_bg := Color("ddd0ae")
+	var slot_edge := Color("a99a76")
+	var _cut := 2.0
+
+	func setup(bg := Color("ddd0ae"), edge := Color("a99a76")) -> void:
+		slot_bg = bg
+		slot_edge = edge
+		add_theme_stylebox_override("panel", StyleBoxEmpty.new())
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	func _draw() -> void:
+		var sz := size
+		if sz.x < 6.0 or sz.y < 6.0:
+			return
+		draw_colored_polygon(G.octagon_path(sz, 0.0, _cut), slot_bg)
+		var rim := G.octagon_path(sz, 0.5, _cut)
+		rim.append(rim[0])
+		draw_polyline(rim, slot_edge, 1.0)
+		# 内凹方向的光：顶边压暗、底边透光（凸起物正好相反）
+		draw_line(Vector2(_cut + 2, 1), Vector2(sz.x - _cut - 2, 1),
+			slot_bg.darkened(0.30), 1.0)
+		draw_line(Vector2(_cut + 2, sz.y - 1), Vector2(sz.x - _cut - 2, sz.y - 1),
+			slot_bg.lightened(0.35), 1.0)
+
+
+## 内凹面板（大号写字区）：任务卡/信息区嵌在大纸面里的"贴片"——
+## 底色深一档 + 内凹方向的光（顶暗底亮）+ 描边。与 InsetSlot 同语义、
+## 带布局 margin，用于 PanelContainer 语义的信息卡。
+class InsetPanel extends PanelContainer:
+	var panel_bg := Color("e6d8b4")
+	var panel_edge := Color("b99a5e")
+	var _cut := 2.0
+
+	func setup(bg: Color, edge: Color, ml := 12.0, mr := 12.0, mt := 8.0, mb := 8.0) -> void:
+		panel_bg = bg
+		panel_edge = edge
+		var sb := StyleBoxEmpty.new()
+		sb.content_margin_left = ml
+		sb.content_margin_right = mr
+		sb.content_margin_top = mt
+		sb.content_margin_bottom = mb
+		add_theme_stylebox_override("panel", sb)
+
+	## 换肤（不动布局 margin）：与 InsetBand/PixelButton 同名入口，交互态切换用
+	func set_surface(bg: Color, edge: Color) -> void:
+		panel_bg = bg
+		panel_edge = edge
+		queue_redraw()
+
+	func _draw() -> void:
+		var sz := size
+		if sz.x < 8.0 or sz.y < 8.0:
+			return
+		draw_colored_polygon(G.octagon_path(sz, 0.0, _cut), panel_bg)
+		var rim := G.octagon_path(sz, 0.5, _cut)
+		rim.append(rim[0])
+		draw_polyline(rim, panel_edge, 1.0)
+		# 内凹方向的光：顶边压暗、底边透光（与凸起按钮相反）
+		draw_line(Vector2(_cut + 2, 1), Vector2(sz.x - _cut - 2, 1),
+			panel_bg.darkened(0.24), 1.0)
+		draw_line(Vector2(_cut + 2, sz.y - 1), Vector2(sz.x - _cut - 2, sz.y - 1),
+			panel_bg.lightened(0.30), 1.0)
+
+
+## 内凹条带（非容器版 InsetPanel）：信息带/余额条/免费召唤条用。
+## 子控件手动布局（Panel 语义，不接管 child 位置）；换肤走 set_surface；
+## glow > 0 时在描边外画一圈呼吸金线——比软影光晕更"像素"的动态钩子。
+class InsetBand extends Panel:
+	var band_bg := Color("d3bd92")
+	var band_edge := Color("b99a5e")
+	var glow := 0.0
+	var _cut := 2.0
+
+	func set_surface(bg: Color, edge: Color) -> void:
+		band_bg = bg
+		band_edge = edge
+		queue_redraw()
+
+	func _draw() -> void:
+		var sz := size
+		if sz.x < 8.0 or sz.y < 8.0:
+			return
+		if glow > 0.004:
+			# 呼吸金线画在描边外 1.5px：一圈清晰的亮环，不用模糊光晕
+			var ring := G.octagon_path(sz, -1.5, _cut + 1.5)
+			ring.append(ring[0])
+			draw_polyline(ring, Color("e8b84a", glow), 2.0)
+		draw_colored_polygon(G.octagon_path(sz, 0.0, _cut), band_bg)
+		var rim := G.octagon_path(sz, 0.5, _cut)
+		rim.append(rim[0])
+		draw_polyline(rim, band_edge, 1.0)
+		# 内凹方向的光：顶边压暗、底边透光（与凸起按钮相反）
+		draw_line(Vector2(_cut + 2, 1), Vector2(sz.x - _cut - 2, 1),
+			band_bg.darkened(0.24), 1.0)
+		draw_line(Vector2(_cut + 2, sz.y - 1), Vector2(sz.x - _cut - 2, sz.y - 1),
+			band_bg.lightened(0.30), 1.0)
+
+
+## 内凹槽快捷工厂：尺寸 + 底色（浅槽配纸面，深槽配木牌）
+func inset_slot(w: float, h: float, dark := false) -> InsetSlot:
+	var s := InsetSlot.new()
+	s.custom_minimum_size = Vector2(w, h)
+	s.size = Vector2(w, h)
+	if dark:
+		s.setup(Color("221a11"), Color("6f5a38"))
+	else:
+		s.setup(Color("ddd0ae"), Color("a99a76"))
+	return s
+
+
+## 羊皮纸面板（纸纹+做旧+切角，内部留白）
 func parchment_box(w := 400, h := 200, pad := 18.0) -> PanelContainer:
-	var root := PanelContainer.new()
+	var root := PaperPanel.new()
 	root.custom_minimum_size = Vector2(w, h)
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = PARCHMENT
-	sb.set_corner_radius_all(0)
-	sb.set_border_width_all(3)
-	sb.border_color = WOOD_DARK
-	_apply_shadow(sb, 7.0, 3.0, 0.38)
-	sb.content_margin_left = pad
-	sb.content_margin_right = pad
-	sb.content_margin_top = pad * 0.7
-	sb.content_margin_bottom = pad * 0.6
-	root.add_theme_stylebox_override("panel", sb)
-	root.add_child(_ReferenceFrame.new(), false, Node.INTERNAL_MODE_BACK)
+	root.setup(pad)
+	root.set_meta("paper_surface", true)
+	if w >= 380 and h >= 250:
+		root.tree_entered.connect(func(): reveal_control(root), CONNECT_ONE_SHOT)
 	return root
 
 
@@ -5013,23 +5461,18 @@ func _bind_press_feedback(root: Control) -> void:
 				tw.parallel().tween_property(root, "scale", Vector2.ONE, 0.12))
 
 
-## 金色实心按钮（棕字）：主操作用，一个页面里同一时刻通常只该有一个
+## 金色实心按钮（棕字）：主操作用，一个页面里同一时刻通常只该有一个。
+## PixelButton 皮：切角 + 顶高光/底压暗 + 硬影——金色不再是"一块平面色"。
 func gold_button(text: String, w := 0.0, h := 42.0, font_size := FS_MD) -> Control:
-	var root := PanelContainer.new()
+	var root := PixelButton.new()
 	if w > 0.0:
 		root.custom_minimum_size = Vector2(w, h)
 	else:
 		root.custom_minimum_size = Vector2(0, h)
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = GOLD_BTN
-	sb.set_corner_radius_all(0)
-	sb.set_border_width_all(2)
-	sb.border_color = GOLD_BTN_EDGE
-	_apply_shadow(sb, 4.0, 2.0, 0.35)
-	sb.content_margin_left = 16.0
-	sb.content_margin_right = 16.0
-	root.add_theme_stylebox_override("panel", sb)
-	root.add_child(gold_label(_button_text(text), font_size, true, TEXT_DARK, false))
+	root.set_surface(GOLD_BTN, GOLD_BTN_EDGE)
+	root.set_content_margin(16.0)
+	root.add_child(gold_label(_button_text(text), font_size, false, TEXT_DARK, false))
+	root.set_meta("primary_action", true)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	root.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	_bind_press_feedback(root)
@@ -5040,7 +5483,7 @@ func gold_button(text: String, w := 0.0, h := 42.0, font_size := FS_MD) -> Contr
 ## 与 gold_button 同尺寸档位、同交互反馈，只换皮——页面里不再出现第二套按钮设计。
 func ghost_button(text: String, w := 0.0, h := 38.0, font_size := FS_SM,
 		text_color := Color("6a4a1e")) -> Control:
-	var root := PanelContainer.new()
+	var root := PixelButton.new()
 	if w > 0.0:
 		root.custom_minimum_size = Vector2(w, h)
 	else:
@@ -5048,16 +5491,12 @@ func ghost_button(text: String, w := 0.0, h := 38.0, font_size := FS_SM,
 	# 幽灵钮的深棕字在羊皮纸上好看，压在整屏暗底（如召唤结果层）上就看不见了：
 	# 传浅色字时自动换成"暗底 + 金描边"，别再出现"按钮在、字没了"。
 	var on_dark := text_color.get_luminance() > 0.5
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color(0.10, 0.07, 0.04, 0.55) if on_dark else Color(0.28, 0.19, 0.08, 0.10)
-	sb.set_corner_radius_all(0)
-	sb.set_border_width_all(2)
-	sb.border_color = Color(GOLD.r, GOLD.g, GOLD.b, 0.60) if on_dark \
-		else Color(BOX_EDGE.r, BOX_EDGE.g, BOX_EDGE.b, 0.70)
-	sb.content_margin_left = 14.0
-	sb.content_margin_right = 14.0
-	root.add_theme_stylebox_override("panel", sb)
-	root.add_child(gold_label(_button_text(text), font_size, true, text_color, false))
+	if on_dark:
+		root.set_surface(Color("203437", 0.95), Color(GOLD.r, GOLD.g, GOLD.b, 0.60))
+	else:
+		root.set_surface(Color("e4dcc8"), Color("b1a181"))
+	root.set_content_margin(14.0)
+	root.add_child(gold_label(_button_text(text), font_size, false, text_color, false))
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	root.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	_bind_press_feedback(root)
@@ -5409,38 +5848,36 @@ func _ensure_veil() -> void:
 # 长文案收纳处：规则/概率/说明不再平铺在面板上（一屏堆字显乱），
 # 缩成小圆圈按钮，点开出羊皮纸弹层细看。各面板统一用这两个工厂。
 
-## 小圆圈按钮（默认 24px，木质圆底贴图 + 深棕「?」），点击弹详情层
+## 同一套细线帮助图标；浅纸底保证叠在深色场景上仍清晰。
 func info_button(title: String, lines: Array, d := 24.0) -> Control:
-	var root := PanelContainer.new()
+	var root := Panel.new()
 	root.custom_minimum_size = Vector2(d, d)
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color(0.30, 0.20, 0.10, 0.0)   # 底交给贴图，扁平色仅留投影载体
-	sb.set_corner_radius_all(int(d * 0.5))
-	_apply_shadow(sb, 3.0, 1.5, 0.3)
-	root.add_theme_stylebox_override("panel", sb)
-	var bg_tex := res_tex("round_brown")
-	if bg_tex != null:
-		var bg := TextureRect.new()
-		bg.texture = bg_tex
-		bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		bg.stretch_mode = TextureRect.STRETCH_SCALE
-		bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		root.add_child(bg)
-		var l := gold_label("?", FS_XS if d < 26.0 else FS_SM, true, Color("4a2f16"), false)
-		root.add_child(l)
-	else:
-		sb.bg_color = Color(0.30, 0.20, 0.10, 0.92)
-		sb.set_border_width_all(1)
-		sb.border_color = Color(GOLD.r, GOLD.g, GOLD.b, 0.7)
-		root.add_child(gold_label("?", FS_XS if d < 26.0 else FS_SM, true, GOLD_BRIGHT, false))
+	root.size = Vector2(d, d)
+	# 外圈：旧金底圆（兼作 2px 边）
+	var surface := StyleBoxFlat.new()
+	surface.bg_color = Color("b39a68")
+	surface.set_corner_radius_all(roundi(d * 0.5))
+	root.add_theme_stylebox_override("panel", surface)
+	# 内圈：做旧纸底圆（父 Panel 非容器，子层自由叠放）——双层描出"外金内纸"的边
+	var inner := Panel.new()
+	var inner_sb := StyleBoxFlat.new()
+	inner_sb.bg_color = Color("efe3c4")
+	inner_sb.set_corner_radius_all(roundi((d - 4.0) * 0.5))
+	inner.add_theme_stylebox_override("panel", inner_sb)
+	inner.position = Vector2(2, 2)
+	inner.size = Vector2(d - 4.0, d - 4.0)
+	inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(inner)
+	var icon := ui_icon("help", Vector2(d - 8, d - 8), Color("7a6a48"))
+	icon.position = Vector2(4, 4)
+	root.add_child(icon)
+	root.set_meta("info_title", title)
+	root.tooltip_text = title
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
-	root.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+	root.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	root.gui_input.connect(func(event: InputEvent):
+		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 			_sfx("ui_click")
-			root.pivot_offset = root.size * 0.5
-			var tw := root.create_tween()
-			tw.tween_property(root, "scale", Vector2.ONE * 0.92, 0.05)
-			tw.tween_property(root, "scale", Vector2.ONE, 0.1)
 			show_info_popup(root, title, lines))
 	return root
 
@@ -5495,6 +5932,40 @@ func show_choice_popup(anchor: Control, title: String, lines: Array, choices: Ar
 	return _build_popup(anchor, title, lines, owner, choices)
 
 
+## 按段落分组，保留原文；每页最多约八行，超长单段仍可纵向滚动。
+func _reading_groups(lines: Array) -> Array:
+	var pages: Array = []
+	var page: Array = []
+	var length := 0
+	for line in lines:
+		var words := String(line)
+		if length + words.length() > 145 and not page.is_empty():
+			pages.append(page)
+			page = []
+			length = 0
+		page.append(words)
+		length += words.length() + 12
+	if not page.is_empty(): pages.append(page)
+	return pages
+
+
+func _reading_page(lines: Array, width: float, height: float) -> ScrollContainer:
+	var scroll := ScrollContainer.new()
+	scroll.size = Vector2(width, height)
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 10)
+	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(box)
+	for line in lines:
+		var label := text_label(String(line), FS_SM, TEXT_DARK)
+		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		label.custom_minimum_size = Vector2(width - 16, 0)
+		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		box.add_child(label)
+	return scroll
+
+
 func _build_popup(anchor: Control, title: String, lines: Array, owner: Node,
 		choices: Array) -> CanvasLayer:
 	var tree := anchor.get_tree()
@@ -5503,7 +5974,7 @@ func _build_popup(anchor: Control, title: String, lines: Array, owner: Node,
 	var own: Node = owner if owner != null else _top_owner_for(anchor)
 	var layer := CanvasLayer.new()
 	layer.layer = 90   # 低于 GM 控制台(100)，高于一切面板
-	tree.root.add_child(layer)
+	anchor.get_viewport().add_child(layer)
 
 	# 统一浮层底衬（深棕 + 暗角 + 斜纹）；要能接 gui_input 以便点空白关闭，
 	# 所以不再走独立 ColorRect，直接用 veil 返回的那层 Control。
@@ -5531,13 +6002,16 @@ func _build_popup(anchor: Control, title: String, lines: Array, owner: Node,
 	const LINE_W := 360.0
 	var est := 0.0
 	for ln in lines:
-		var rows := maxi(1, int(ceil(String(ln).length() / 22.0)))
-		est += rows * 22.0 + 6.0
-	var content_h := clampf(est, 30.0, 380.0)
+		var rows := maxi(1, int(ceil(String(ln).length() / 19.0)))
+		est += rows * 27.0 + 12.0
+	var reading_groups := _reading_groups(lines)
+	var paged := choices.is_empty() and reading_groups.size() > 1
+	var content_h := 300.0 if paged else clampf(est + 12.0, 40.0, 360.0)
 	var ph := 14.0 + 34.0 + 8.0 + content_h + 12.0 + 40.0 + 14.0
 
 	var panel := parchment_box(PW, ph, 16.0)
-	panel.position = Vector2((480.0 - PW) * 0.5, (800.0 - ph) * 0.5)
+	var popup_view := _veil_viewport_size(anchor)
+	panel.position = Vector2((popup_view.x - PW) * 0.5, (popup_view.y - ph) * 0.5)
 	layer.add_child(panel)
 
 	var content := Control.new()
@@ -5550,21 +6024,46 @@ func _build_popup(anchor: Control, title: String, lines: Array, owner: Node,
 	title_l.custom_minimum_size = Vector2(PW - 32.0, 34.0)
 	content.add_child(title_l)
 
-	var scroll := ScrollContainer.new()
-	scroll.position = Vector2(0, 42.0)
-	scroll.size = Vector2(PW - 32.0, content_h)
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	content.add_child(scroll)
-	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 6)
-	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.add_child(vbox)
-	for ln in lines:
-		var t := text_label(String(ln), FS_SM, TEXT_DARK)
-		t.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY   # 中文无空格，按字符断行
-		t.custom_minimum_size = Vector2(LINE_W, 0)
-		t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		vbox.add_child(t)
+	if paged:
+		var deck := (load("res://src/ui/PageDeck.gd") as GDScript).new(PW - 32.0, 234.0) as Control
+		deck.name = "ReadingPages"
+		deck.position = Vector2(0, 42)
+		deck.set("key_mode", "none")
+		deck.set("navigation_visible", false)
+		deck.set("page_gap", 14.0)
+		for group in reading_groups:
+			deck.call("add_page", _reading_page(group, PW - 32.0, 234.0), Vector2(PW - 32.0, 234.0))
+		content.add_child(deck)
+		_modals.back()["reader"] = deck
+		var previous := ghost_button("上一页", 110, 42, FS_XS)
+		previous.position = Vector2(0, 294)
+		button_icon(previous, "back")
+		content.add_child(previous)
+		var next := ghost_button("下一页", 110, 42, FS_XS)
+		next.position = Vector2(258, 294)
+		button_icon(next, "forward")
+		content.add_child(next)
+		var counter := gold_label("", FS_XS, false, TEXT_MUTED, false)
+		counter.position = Vector2(116, 305)
+		counter.size = Vector2(136, 26)
+		content.add_child(counter)
+		var sync := func(index: int):
+			counter.text = "%d / %d" % [index + 1, reading_groups.size()]
+			previous.modulate.a = 0.35 if index == 0 else 1.0
+			next.modulate.a = 0.35 if index == reading_groups.size() - 1 else 1.0
+		previous.gui_input.connect(func(event: InputEvent):
+			if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+				deck.call("prev_page"))
+		next.gui_input.connect(func(event: InputEvent):
+			if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+				deck.call("next_page"))
+		deck.connect("page_changed", sync)
+		sync.call(0)
+	else:
+		var scroll := _reading_page(lines, PW - 32.0, content_h)
+		scroll.position = Vector2(0, 42)
+		content.add_child(scroll)
+	reveal_control(panel)
 
 	var btn_y := 42.0 + content_h + 12.0
 	var picks: Array = []
@@ -5634,6 +6133,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	_prune_modals()
 	if _modals.is_empty():
 		return
+	var reader: Variant = _modals.back().get("reader")
+	if reader != null and is_instance_valid(reader):
+		if event.is_action_pressed("ui_left") or event.is_action_pressed("ui_right"):
+			(reader as Control).call("prev_page" if event.is_action_pressed("ui_left") else "next_page")
+			get_viewport().set_input_as_handled()
+			return
 	if event.is_action_pressed("ui_cancel"):
 		# 只关栈顶：底下的弹层/面板必须等下一次 ESC，不能再出现"一次 ESC 关两层"
 		close_info_popup_by_id(int(_modals.back().get("id", -1)))

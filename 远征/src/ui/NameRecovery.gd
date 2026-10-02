@@ -6,16 +6,9 @@ var _hint: Label
 
 
 func _ready() -> void:
+	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
-	var bg := TextureRect.new()
-	bg.texture = load("res://image/background/enter.png")
-	bg.position = Vector2(0, -26)
-	bg.size = Vector2(480, 852)
-	bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	bg.stretch_mode = TextureRect.STRETCH_SCALE
-	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(bg)
-	G.veil(self, 0.52)
+	G.page_background(self, 0.32)
 	var banner := G.banner_box("补全旅人姓名", 300, 48, G.FS_LG)
 	banner.position = Vector2(90, 198)
 	add_child(banner)

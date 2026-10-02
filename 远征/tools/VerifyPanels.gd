@@ -147,9 +147,9 @@ func _verify_settings() -> void:
 	_check(not sp.do_import("这不是存档码"), "乱码应导入失败")
 	_check(not sp.do_import("[1,2,3]"), "数组 JSON 应导入失败")
 
-	# 3.5 轮次 15：两页设置 + 开关项真的写进存档
+	# 三页设置仍保留开关落盘、昵称与存档功能。
 	var deck: Control = sp.get("_deck")
-	_check(deck != null and int(deck.get("page_count")) == 2, "设置应分两页（常规 / 存档与系统）")
+	_check(deck != null and int(deck.get("page_count")) == 3, "设置应分常规、旅人、存档三页")
 	_check(bool(G.setting_get("shake", true)), "震屏默认应为开")
 	sp.get("_shake_btn").gui_input.emit(_click_ev())
 	_check(not bool(G.setting_get("shake", true)), "点震屏开关应写入 shake=false")

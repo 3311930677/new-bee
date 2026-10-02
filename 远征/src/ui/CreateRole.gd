@@ -6,7 +6,7 @@ const BG_H := 1619.0
 const VIEW_W := 480.0
 const VIEW_H := 800.0
 
-const SPRITE_SCALE := 1.9      # 单角色放大展示
+const SPRITE_SCALE := 1.45      # 单角色放大展示
 const PED_Y := 530.0           # 金色圆台中心 y
 const BASE_OFFSET := 59.0      # 清理后素材脚底相对帧中心的偏移（基线 y=123）
 const ANIM_Y := PED_Y - BASE_OFFSET * SPRITE_SCALE
@@ -26,6 +26,7 @@ var _role_art: TextureRect = null
 
 
 func _ready() -> void:
+	G.center_fixed_page.call_deferred(self)
 	_build_background()
 	_build_header()
 	_build_name_row()
@@ -46,19 +47,7 @@ func _ready() -> void:
 
 # ---------- 背景 ----------
 func _build_background() -> void:
-	var tr := TextureRect.new()
-	tr.texture = G.res_tex("bg_abyss") if G.res_tex("bg_abyss") != null \
-		else load("res://image/background/enter.png")  # 深渊暗调：托底四职业立绘
-	tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	tr.stretch_mode = TextureRect.STRETCH_SCALE
-	tr.size = Vector2(VIEW_W, VIEW_W * BG_H / BG_W)
-	tr.position = Vector2(0, VIEW_H - tr.size.y)
-	tr.modulate = Color(0.72, 0.68, 0.66)   # 压暗去色，避免背景立绘与展示角色抢视线
-	tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(tr)
-
-	# 创建角色页的氛围压暗：不吃点击（还要能点下面的职业卡）
-	G.veil(self, 0.70, false)
+	G.page_background(self, 0.25)
 
 
 func _build_header() -> void:
@@ -133,7 +122,8 @@ func _build_stage_art() -> void:
 	_role_art_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = Color(0.06, 0.04, 0.03, 0.35)
-	sb.set_corner_radius_all(10)
+	# 3px 圆角 ≈ 八边形切角语言，弃用大圆角
+	sb.set_corner_radius_all(3)
 	sb.set_border_width_all(2)
 	sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.16)
 	_role_art_frame.add_theme_stylebox_override("panel", sb)
@@ -143,7 +133,7 @@ func _build_stage_art() -> void:
 	_role_art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_role_art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	# 压成氛围层：这张立绘和台上的像素小人画的是同一个角色，太实会"两个破军"打架
-	_role_art.modulate = Color(0.82, 0.78, 0.76, 0.34)
+	_role_art.modulate = Color.WHITE
 	_role_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_role_art_frame.add_child(_role_art)
 	_refresh_role_art()
@@ -158,28 +148,16 @@ func _refresh_role_art() -> void:
 		tex = G.res_tex("role_%s" % rid)
 	_role_art.texture = tex
 	_role_art_frame.visible = tex != null
+	if _anim != null: _anim.visible = tex == null
 
 
 func _build_stage() -> void:
-	var pad := _Pedestal.new()
-	pad.position = Vector2(VIEW_W / 2.0, PED_Y)
-	pad.rx = 62.0
-	pad.ry = 36.0
-	add_child(pad)
-
-	var ring := _RingDrawer.new()
-	ring.position = Vector2(VIEW_W / 2.0, PED_Y + 6)
-	ring.rx = 76.0
-	ring.ry = 40.0
-	add_child(ring)
-
 	_anim = AnimatedSprite2D.new()
 	_anim.scale = Vector2.ONE * SPRITE_SCALE
 	_anim.position = Vector2(VIEW_W / 2.0, ANIM_Y)
 	add_child(_anim)
 
 
-## 滑动切职业：舞台上横向拖 40px 就换人（与 ←→ 键同口径），手机拖拽 / 电脑鼠标都能用
 func _build_swipe() -> void:
 	var hint := G.gold_label("← → 或左右拖动切换职业", G.FS_XS, false, Color("cdb088", 0.8), false)
 	hint.position = Vector2(0, 272)
@@ -269,16 +247,16 @@ func _build_info_panel() -> void:
 
 	var rname := G.serif_label("破军", G.FS_LG, G.BANNER)
 	title_row.add_child(rname)
-	var job := G.gold_label("战士 · 大剑", G.FS_SM, false, Color("7a5a2e"), false)
+	var job := G.gold_label("战士 · 大剑", G.FS_SM, false, G.TEXT_MUTED, false)
 	job.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 	title_row.add_child(job)
 
-	var tags := G.gold_label("近战物理 · 能抗能打", G.FS_SM, false, Color("8a6a34"), false)
+	var tags := G.gold_label("近战物理 · 能抗能打", G.FS_SM, false, G.TEXT_MUTED, false)
 	tags.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	box.add_child(tags)
 
 	var desc := Label.new()
-	desc.add_theme_font_override("font", G.font_serif)
+	desc.add_theme_font_override("font", G.font_reg)
 	desc.add_theme_font_size_override("font_size", G.FS_SM)
 	desc.add_theme_color_override("font_color", G.TEXT_DARK)
 	desc.add_theme_constant_override("line_spacing", 5)

@@ -34,6 +34,7 @@ const PET_TIPS := [
 
 
 func _ready() -> void:
+	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_owned = G.owned_pets()
 	if not _owned.is_empty():
@@ -153,7 +154,7 @@ func _build_detail() -> void:
 		_detail.remove_child(c)
 		c.queue_free()
 	if _owned.is_empty():
-		var none := G.text_label("尚未收集任何灵宠", G.FS_SM, Color("8a6a34"))
+		var none := G.text_label("尚未收集任何灵宠", G.FS_SM, G.TEXT_MUTED)
 		none.position = Vector2(0, 40)
 		_detail.add_child(none)
 		return
@@ -165,7 +166,7 @@ func _build_detail() -> void:
 
 	# 突破进度（名字/星级已在上方轮播卡里，这里不重复画一遍）
 	var brk_l := G.gold_label("突破 %d / 5 层（每层全属性 +8%%）" % brk, G.FS_XS, false,
-		Color("7a5a2e"), false)
+		G.TEXT_MUTED, false)
 	brk_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	brk_l.position = Vector2(40, 0)
 	_detail.add_child(brk_l)
@@ -187,7 +188,7 @@ func _build_detail() -> void:
 	bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_detail.add_child(bar)
 	var exp_l := G.text_label("本级满（达人物等级上限）" if lv >= cap else "经验 %d / %d" % [cur, need],
-		G.FS_XS, Color("7a5a2e"))
+		G.FS_XS, G.TEXT_MUTED)
 	exp_l.position = Vector2(286, 22)
 	_detail.add_child(exp_l)
 
@@ -233,16 +234,13 @@ func _build_detail() -> void:
 
 
 func _op_btn(label: String, sub: String) -> Control:
-	var root := PanelContainer.new()
+	# PixelButton 皮（切角 + 厚度 + 硬影）：与 gold_button 同一套按钮语言，
+	# 弃用圆角12+软影的旧皮；内层 Control 承载手摆的两行字
+	var root := G.PixelButton.new()
 	root.custom_minimum_size = Vector2(CONTENT_W - 80.0, 56)
+	root.set_content_margin(0.0)
+	root.set_surface(G.GOLD_BTN, G.GOLD_BTN_EDGE)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = G.GOLD_BTN
-	sb.set_corner_radius_all(12)
-	sb.set_border_width_all(2)
-	sb.border_color = G.GOLD_BTN_EDGE
-	G._apply_shadow(sb, 4.0, 2.0, 0.3)
-	root.add_theme_stylebox_override("panel", sb)
 	var inner := Control.new()
 	inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(inner)

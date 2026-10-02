@@ -932,6 +932,8 @@ func _spawn_monster(slot: Dictionary) -> void:
 			m.sprite_path = String(slot["sprite"])
 		if float(slot.get("height", 0.0)) > 0.0:
 			m.sprite_height = float(slot["height"])
+		if MonsterArt.has(m.mon_id):
+			m.sprite_path = MonsterArt.path(m.mon_id)
 		m.contact_radius = float(slot.get("contact_radius", 0.0))
 		m.wander_radius = float(slot.get("wander_radius", 0.0))
 	m.display_level = CampaignGrowth.enemy_level(_main_map_id, slot,
@@ -1072,16 +1074,12 @@ func _build_vignette() -> void:
 
 func _build_main_world_status() -> void:
 	# 生命、经验拆成两条清楚的轨道，字与底图保持足够对比。
-	var root := Panel.new()
+	var root := G.InsetBand.new()
 	root.position = Vector2(14, 12)
 	root.size = Vector2(176, 80)
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color(0.07, 0.10, 0.07, 0.91)
-	sb.set_border_width_all(1)
-	sb.border_color = Color("b6a064")
-	sb.set_corner_radius_all(0)
-	root.add_theme_stylebox_override("panel", sb)
+	# 深色信息带：切角 + 顶暗底亮（内凹），弃用圆角4的平面色块
+	root.set_surface(Color("203437", 0.96), Color("b6a064"))
 	_hud.add_child(root)
 	_main_level_l = G.gold_label("", 16, true, Color("ffdf89"), false)
 	_main_level_l.position = Vector2(7, 8)
@@ -1096,7 +1094,7 @@ func _build_main_world_status() -> void:
 	_main_hp_fill.position = Vector2(52, 12)
 	_main_hp_fill.size = Vector2(115, 10)
 	root.add_child(_main_hp_fill)
-	_main_hp_l = G.gold_label("", 13, true, Color("fff2d4"), false)
+	_main_hp_l = G.gold_label("", 15, true, Color("fff2d4"), false)
 	_main_hp_l.position = Vector2(51, 25)
 	_main_hp_l.custom_minimum_size = Vector2(117, 0)
 	root.add_child(_main_hp_l)
@@ -1109,23 +1107,18 @@ func _build_main_world_status() -> void:
 	_main_exp_fill.position = Vector2(52, 49)
 	_main_exp_fill.size = Vector2(0, 7)
 	root.add_child(_main_exp_fill)
-	_main_exp_l = G.gold_label("", 13, true, Color("c4efd1"), false)
+	_main_exp_l = G.gold_label("", 15, true, Color("c4efd1"), false)
 	_main_exp_l.position = Vector2(51, 59)
 	_main_exp_l.custom_minimum_size = Vector2(117, 0)
 	root.add_child(_main_exp_l)
 
 	# 主世界常驻只显示金币；三种专用资源点开查看，不占探索视野。
-	var gold_chip := Panel.new()
+	var gold_chip := G.InsetBand.new()
 	gold_chip.position = Vector2(202, 14)
 	gold_chip.size = Vector2(145, 34)
 	gold_chip.mouse_filter = Control.MOUSE_FILTER_STOP
 	gold_chip.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	var gold_style := StyleBoxFlat.new()
-	gold_style.bg_color = Color(0.07, 0.10, 0.07, 0.91)
-	gold_style.set_border_width_all(1)
-	gold_style.border_color = Color("b6a064")
-	gold_style.set_corner_radius_all(0)
-	gold_chip.add_theme_stylebox_override("panel", gold_style)
+	gold_chip.set_surface(Color("203437", 0.96), Color("b6a064"))
 	gold_chip.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			G.show_info_popup(gold_chip, "行囊与货币", G.wallet_info_lines()))
@@ -1158,13 +1151,8 @@ func _build_hud() -> void:
 	_build_vignette()  # 最先入层：只在画面四周压暗，不遮住下方的 HUD 控件
 	if _mode == "main_world":
 		_build_main_world_status()
-		var story_chip := Panel.new()
-		var story_style := StyleBoxFlat.new()
-		story_style.bg_color = Color(0.07, 0.10, 0.07, 0.84)
-		story_style.set_corner_radius_all(0)
-		story_style.border_color = Color("b6a064", 0.72)
-		story_style.set_border_width_all(1)
-		story_chip.add_theme_stylebox_override("panel", story_style)
+		var story_chip := G.InsetBand.new()
+		story_chip.set_surface(Color("203437", 0.94), Color("b6a064", 0.72))
 		# 城内委托快捷签占 y98–130；主线紧接在下方，野外则贴状态栏。
 		story_chip.position = Vector2(14, 138) if bool(_main_cfg.get("city", false)) \
 			else Vector2(14, 100)
@@ -1186,13 +1174,8 @@ func _build_hud() -> void:
 
 		# 追踪支线蓝签（P05-B §4）：只显示当前追踪的一条；无追踪时整签隐藏。
 		# 城内主线签在 y138–168，蓝签接 y172；野外主线签贴状态栏，蓝签接 y132。
-		_side_chip = Panel.new()
-		var side_style := StyleBoxFlat.new()
-		side_style.bg_color = Color(0.06, 0.09, 0.12, 0.84)
-		side_style.set_corner_radius_all(0)
-		side_style.border_color = Color("9fd0ff", 0.72)
-		side_style.set_border_width_all(1)
-		_side_chip.add_theme_stylebox_override("panel", side_style)
+		_side_chip = G.InsetBand.new()
+		_side_chip.set_surface(Color(0.06, 0.09, 0.12, 0.84), Color("9fd0ff", 0.72))
 		_side_chip.position = Vector2(14, 172) if bool(_main_cfg.get("city", false)) \
 			else Vector2(14, 132)
 		_side_chip.size = Vector2(334, 24)
@@ -1238,16 +1221,10 @@ func _build_hud() -> void:
 			"shop": "商队在此驻留",
 			"bonfire": "生火休整，再启程",
 		}.get(nt, goal_text)
-	# 目标小签：深色半透明底托，避免压在地图上不可读
-	var goal_chip := PanelContainer.new()
-	var gsb := StyleBoxFlat.new()
-	gsb.bg_color = Color(0.13, 0.09, 0.05, 0.62)
-	gsb.set_corner_radius_all(4)
-	gsb.content_margin_left = 10.0
-	gsb.content_margin_right = 10.0
-	gsb.content_margin_top = 3.0
-	gsb.content_margin_bottom = 3.0
-	goal_chip.add_theme_stylebox_override("panel", gsb)
+	# 目标小签：深色半透明底托（切角 + 内凹光），避免压在地图上不可读
+	var goal_chip := G.InsetPanel.new()
+	goal_chip.setup(Color(0.13, 0.09, 0.05, 0.62), Color("ffd9a0", 0.20),
+		10.0, 10.0, 3.0, 3.0)
 	goal_chip.position = Vector2(16, 52)
 	var goal := G.gold_label(goal_text, G.FS_XS, false, Color("ffd9a0"), false)
 	goal_chip.add_child(goal)
@@ -1263,15 +1240,9 @@ func _build_hud() -> void:
 
 	if _mode != "main_world":
 		# 历练进度只属于肉鸽探索，主世界不显示清剿评价。
-		var exp_chip := PanelContainer.new()
-		var esb := StyleBoxFlat.new()
-		esb.bg_color = Color(0.13, 0.09, 0.05, 0.62)
-		esb.set_corner_radius_all(4)
-		esb.content_margin_left = 10.0
-		esb.content_margin_right = 10.0
-		esb.content_margin_top = 2.0
-		esb.content_margin_bottom = 2.0
-		exp_chip.add_theme_stylebox_override("panel", esb)
+		var exp_chip := G.InsetPanel.new()
+		exp_chip.setup(Color(0.13, 0.09, 0.05, 0.62), Color("c8e0a0", 0.20),
+			10.0, 10.0, 2.0, 2.0)
 		exp_chip.position = Vector2(16, 110)
 		_explore_lbl = G.gold_label("", G.FS_XS, false, Color("c8e0a0"), false)
 		exp_chip.add_child(_explore_lbl)
@@ -1316,18 +1287,16 @@ func _build_hud() -> void:
 		else G.gold_button("药", 48, HUD_BTN_H, HUD_BTN_FS)
 	potion_btn.position = Vector2(350 + extra_w, action_y) if _mode == "main_world" else Vector2(232, action_y)
 	if _mode == "main_world":
-		var badge := PanelContainer.new()
+		var badge := G.PixelButton.new()
 		badge.position = Vector2(35, -3)
 		badge.custom_minimum_size = Vector2(19, 17)
 		badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		var badge_style := StyleBoxFlat.new()
-		badge_style.bg_color = Color("4b2817")
-		badge_style.border_color = Color("e5ba68")
-		badge_style.set_border_width_all(1)
-		badge_style.set_corner_radius_all(8)
-		badge_style.content_margin_left = 2
-		badge_style.content_margin_right = 2
-		badge.add_theme_stylebox_override("panel", badge_style)
+		# 数量角标：切角小牌（凸起 + 硬影），弃用圆角8的"药丸"
+		badge.set_content_margin(2.0)
+		var bsb := badge.get_theme_stylebox("panel") as StyleBoxFlat
+		bsb.content_margin_top = 0.0   # 竖直留白保持 0，13px 字不压
+		bsb.content_margin_bottom = 0.0
+		badge.set_surface(Color("4b2817"), Color("e5ba68"))
 		_potion_badge = G.gold_label("", G.FS_XS, true, Color("fff2c9"), true)
 		_potion_badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		badge.add_child(_potion_badge)
@@ -1774,14 +1743,9 @@ func _show_trait_remove() -> void:
 	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	sc.add_child(list)
 	for tid in st.traits:
-		var row := PanelContainer.new()
+		var row := G.InsetPanel.new()
 		row.custom_minimum_size = Vector2(0, 36)
-		var sb := StyleBoxFlat.new()
-		sb.bg_color = Color("d8c8a0")
-		sb.set_corner_radius_all(3)
-		sb.content_margin_left = 10.0
-		sb.content_margin_right = 10.0
-		row.add_theme_stylebox_override("panel", sb)
+		row.setup(Color("d8c8a0"), Color("b1a181"), 10.0, 10.0, 0.0, 0.0)
 		row.mouse_filter = Control.MOUSE_FILTER_STOP
 		var t: Dictionary = TableCache.get_trait(String(tid))
 		var lbl := G.gold_label(String(t.get("name", String(tid))), G.FS_MD,
@@ -3422,11 +3386,13 @@ class _Portal extends Node2D:
 class _WorldExit extends Node2D:
 	var caption := ""
 	var gate_style := "normal"  # 碑窟北口：修碑前灰石，修碑后暖金
+	var _caption_label: Label
 
 	func _ready() -> void:
 		var caption_color := Color("ffe2a0") if gate_style == "restored" else \
 			(Color("d7d5cd") if gate_style == "sealed" else Color("fff1c4"))
 		var label := G.gold_label(caption, G.FS_XS, true, caption_color, true)
+		_caption_label = label
 		label.position = Vector2(-72, -70)
 		label.size = Vector2(144, 20)
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -3434,14 +3400,24 @@ class _WorldExit extends Node2D:
 		add_child(label)
 		queue_redraw()
 
+	func _process(_delta: float) -> void:
+		if _caption_label == null: return
+		var screen_at := get_global_transform_with_canvas() * _caption_label.position
+		var viewport_size := get_viewport_rect().size
+		var label_rect := Rect2(screen_at, _caption_label.size)
+		var status_area := Rect2(0, 0, 352, 196)
+		var minimap_area := Rect2(viewport_size.x - 128, 0, 128, 126)
+		_caption_label.visible = not label_rect.intersects(status_area) \
+			and not label_rect.intersects(minimap_area) \
+			and screen_at.x >= 2 and label_rect.end.x <= viewport_size.x - 2
+
 	func _draw() -> void:
 		var board := Color("c49650") if gate_style == "restored" else \
 			(Color("777875") if gate_style == "sealed" else Color("b18445"))
 		var edge := Color("ffe1a0") if gate_style == "restored" else \
 			(Color("aeb0ac") if gate_style == "sealed" else Color("ead19a"))
-		draw_set_transform(Vector2(0, 0), 0.0, Vector2(1.0, 0.38))
-		draw_circle(Vector2.ZERO, 34.0, Color(0.08, 0.11, 0.08, 0.42))
-		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+		draw_colored_polygon(PackedVector2Array([Vector2(-9, -3), Vector2(10, -3),
+			Vector2(15, 4), Vector2(-4, 4)]), Color("17211d", 0.18))
 		draw_rect(Rect2(-3, -48, 6, 42), Color("765b3b") if gate_style == "restored" else Color("6e4c2c"))
 		draw_colored_polygon(PackedVector2Array([
 			Vector2(-37, -54), Vector2(32, -54), Vector2(42, -43),
@@ -3520,13 +3496,19 @@ class _MapMonster extends CharacterBody2D:
 		# 精灵体：boss 84 / elite 60 / normal 48 像素高，脚底对齐碰撞原点
 		if mon_id != "":
 			var tex: Texture2D = load(sprite_path) as Texture2D if not sprite_path.is_empty() else G.res_tex(mon_id)
+			var registered := MonsterArt.has(mon_id)
+			if registered: tex = MonsterArt.texture(mon_id)
 			if tex != null:
 				var h: float = sprite_height if not sprite_path.is_empty() else {"normal": 48.0, "elite": 60.0, "boss": 84.0}.get(tier, 48.0)
 				var s := h / float(tex.get_height())
+				if registered: s = MonsterArt.display_scale(mon_id, h)
 				_sprite = Sprite2D.new()
 				_sprite.texture = tex
 				_sprite.scale = Vector2.ONE * s
 				_sprite.offset = Vector2(0, -tex.get_height() / 2.0)
+				if registered:
+					_sprite.material = FrostCityArt.cutout_material()
+					_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 				add_child(_sprite)
 		if display_level > 0:
 			var mon_name := String(TableCache.get_monster(mon_id).get("name", "怪物"))
@@ -3541,6 +3523,8 @@ class _MapMonster extends CharacterBody2D:
 			var label_w := clampf(G.font_bold.get_string_size(txt,
 				HORIZONTAL_ALIGNMENT_LEFT, -1, label_fs).x + 10.0, 72.0, 150.0)
 			_label_top = -sprite_height - 7.0
+			if _sprite != null and MonsterArt.has(mon_id):
+				_label_top = -_sprite.texture.get_height() * _sprite.scale.y - LABEL_H - 7.0
 			level_l.position = Vector2(-label_w * 0.5, _label_top)
 			level_l.custom_minimum_size = Vector2(label_w, 0)
 			level_l.mouse_filter = Control.MOUSE_FILTER_IGNORE

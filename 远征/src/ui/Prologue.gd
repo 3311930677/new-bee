@@ -23,6 +23,7 @@ var _tw: Tween = null
 
 
 func _ready() -> void:
+	G.center_fixed_page.call_deferred(self)
 	Audio.play_bgm("bgm_title")
 	_pages = _build_pages()
 	_build()
@@ -57,22 +58,8 @@ func _build_pages() -> Array:
 
 # ---------- 构建 ----------
 func _build() -> void:
-	var bg := TextureRect.new()
-	var tex: Texture2D = load("res://image/background/enter.png")
-	if tex != null:
-		bg.texture = tex
-	bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	bg.stretch_mode = TextureRect.STRETCH_SCALE
-	bg.size = Vector2(VIEW_W, VIEW_W * 1672.0 / 941.0)
-	bg.position = Vector2(0, VIEW_H - bg.size.y)
-	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(bg)
+	G.page_background(self, 0.35)
 
-	# 序章氛围压暗：不吃点击（正文之上还有继续/跳过的按钮要能用）
-	G.veil(self, 0.62, false)
-
-	# 主标题只留「远征图志」：原来上面还压了一块「序章」木牌，双层标题打架，
-	# 而且每页 kicker 本就带"序章/第X章"，木牌是重复信息
 	var sub := G.serif_label("开卷 · 远征图志", G.FS_LG + 2, Color("ffd9a0"))
 	sub.position = Vector2(0, 46)
 	sub.custom_minimum_size = Vector2(VIEW_W, 0)
@@ -88,10 +75,10 @@ func _build() -> void:
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.add_child(content)
 
-	_kicker = G.gold_label("", G.FS_XS, false, Color("8a6a34"), false)
+	_kicker = G.gold_label("", G.FS_XS, false, G.TEXT_MUTED, false)
 	_kicker.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	_kicker.position = Vector2(0, 0)
-	_kicker.custom_minimum_size = Vector2(372, 0)
+	_kicker.custom_minimum_size = Vector2(360, 0)
 	content.add_child(_kicker)
 
 	_title = G.serif_label("", G.FS_LG + 4, Color("6a4a1e"))
@@ -125,9 +112,9 @@ func _build() -> void:
 		d.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_dots.add_child(d)
 
-	_page_lbl = G.gold_label("", G.FS_XS, false, Color("8a6a34", 0.85), false)
+	_page_lbl = G.gold_label("", G.FS_XS, false, G.TEXT_MUTED, false)
 	_page_lbl.position = Vector2(0, 408)
-	_page_lbl.custom_minimum_size = Vector2(372, 0)
+	_page_lbl.custom_minimum_size = Vector2(360, 0)
 	_page_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	content.add_child(_page_lbl)
 
@@ -152,7 +139,7 @@ func _build() -> void:
 			_advance())
 	add_child(_next_btn)
 
-	var hint := G.gold_label("点卷轴或按回车翻页", G.FS_XS, false, Color("cfb98a", 0.8), false)
+	var hint := G.gold_label("点卷轴或按回车翻页", G.FS_XS, false, Color("eee5ce"), false)
 	hint.position = Vector2(0, 712)
 	hint.custom_minimum_size = Vector2(VIEW_W, 0)
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -183,9 +170,9 @@ func _show_page(i: int) -> void:
 	var idx := 0
 	for row in rows:
 		# 段首空两格（全角空格）：中文书卷的排法，比左顶格更像"文"，不像模板
-		var l := G.text_label("　" + String(row), G.FS_MD, Color("4a3a22"))
-		l.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
-		l.custom_minimum_size = Vector2(372, 0)
+		var l := G.text_label(String(row), G.FS_MD, Color("4a3a22"))
+		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		l.custom_minimum_size = Vector2(360, 0)
 		l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		l.modulate.a = 0.0
 		_lines_box.add_child(l)

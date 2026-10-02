@@ -276,6 +276,9 @@ func _classic_presentation() -> bool:
 		and bool(G.setting_get("classic_combat_presentation", true))
 
 
+func _standard_extra_y() -> float:
+	return maxf(0.0, get_viewport_rect().size.y - VIEW_H) if not _classic_presentation() else 0.0
+
 func _classic_extra_y() -> float:
 	return maxf(0.0, get_viewport_rect().size.y - VIEW_H) if _classic_presentation() else 0.0
 
@@ -320,17 +323,17 @@ func _build_background() -> void:
 		var bg := TextureRect.new()
 		bg.texture = bg_tex
 		bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE   # 必须在 size 前：否则被钳到原图尺寸
-		bg.size = Vector2(VIEW_W, VIEW_H)
+		bg.size = Vector2(VIEW_W, maxf(VIEW_H, get_viewport_rect().size.y))
 		bg.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_shake_root.add_child(bg)
 		_add_shade_gradient(0.0, 96.0, true)     # 顶部压暗（标题可读）
-		_add_shade_gradient(520.0, 280.0, false)  # 底部压暗（技能区可读）
+		_add_shade_gradient(520.0, maxf(280.0, get_viewport_rect().size.y - 520.0), false)  # 底部压暗（技能区可读）
 	else:
 		var tint := Color(String(tc.get("tint", "ffffff")))
 		var flat := ColorRect.new()
 		flat.color = Color(tint.r * 0.22, tint.g * 0.22, tint.b * 0.24)
-		flat.size = Vector2(VIEW_W, VIEW_H)
+		flat.size = Vector2(VIEW_W, maxf(VIEW_H, get_viewport_rect().size.y))
 		flat.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_shake_root.add_child(flat)
 		# 主题 tile 平铺地面（战场区 y48~592）
@@ -399,7 +402,7 @@ func _add_shade_gradient(y: float, h: float, top: bool) -> void:
 
 
 func _build_field() -> void:
-	_field.position.y = _classic_extra_y()
+	_field.position.y = _classic_extra_y() + _standard_extra_y() * 0.5
 	# 预兆层垫在战场最底（单位之下、地面上），随震屏层一起抖；把「谁在起手、要打谁」画出来
 	_omens = _Omens.new()
 	_omens.z_index = -1
@@ -407,7 +410,7 @@ func _build_field() -> void:
 	_shake_root.add_child(_field)
 	_fx_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_fx_layer.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_fx_layer.position.y = _classic_extra_y()
+	_fx_layer.position.y = _classic_extra_y() + _standard_extra_y() * 0.5
 	# P05-C：飘字层是本层「最上」——但阶段/破绽横幅是事件发生时 add_child 的，后添加者
 	# 反而压在上面，把同时刻的飘字（如影狼死的「绽」）整块盖住。显式置顶，让"最上"成立。
 	_fx_layer.z_index = 10
@@ -432,7 +435,7 @@ func _build_danger_overlay() -> void:
 	tex.fill_to = Vector2(1.0, 0.5)
 	_danger = TextureRect.new()
 	_danger.texture = tex
-	_danger.size = Vector2(VIEW_W, VIEW_H)
+	_danger.size = Vector2(VIEW_W, maxf(VIEW_H, get_viewport_rect().size.y))
 	_danger.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR   # 项目默认 nearest，放大必须改线性
 	_danger.modulate.a = 0.0
 	_danger.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -478,8 +481,10 @@ func _build_top_bar() -> void:
 
 	_cast_tip = G.serif_label("", G.FS_SM, Color("ffe9b0"))
 	# 角色与敌怪占据 y≈240–450；施法提示放到其下方的空带。
-	_cast_tip.position = Vector2(0, 462 + _classic_extra_y())
-	_cast_tip.custom_minimum_size = Vector2(VIEW_W, 0)
+	_cast_tip.position = Vector2(0, 462 + _classic_extra_y() + _standard_extra_y() * 0.5)
+	_cast_tip.custom_minimum_size = Vector2(VIEW_W, 28)
+	_cast_tip.add_theme_color_override("font_outline_color", Color("17211d"))
+	_cast_tip.add_theme_constant_override("outline_size", 2)
 	_cast_tip.modulate.a = 0.0
 	add_child(_cast_tip)
 
@@ -539,26 +544,29 @@ func _boss_unit() -> Combatant:
 
 
 func _func_chip(text: String, w := 64.0) -> PanelContainer:
-	var root := PanelContainer.new()
+	# 深色功能签：切角 + 内凹光（顶暗底亮），弃用圆角3的平面色块；
+	# 交互态换肤走 InsetPanel.set_surface，不再直接改 StyleBoxFlat 的颜色字段
+	var root := G.InsetPanel.new()
 	root.custom_minimum_size = Vector2(w, 30)
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color(0.15, 0.10, 0.05, 0.7)
-	sb.set_corner_radius_all(3)
-	sb.set_border_width_all(1)
-	sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.3)
-	root.add_theme_stylebox_override("panel", sb)
+	root.setup(Color(0.15, 0.10, 0.05, 0.7), Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.3),
+		0.0, 0.0, 0.0, 0.0)
 	root.add_child(G.gold_label(text, G.FS_XS, false, Color("d9b96e"), false))
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	return root
 
 
+## 功能签常态底色：像素经典模式换成暗木底 + 暗金厚边（与径向指令同一套牌子语言）
+func _chip_idle_surface() -> Array:
+	if _classic_presentation():
+		return [Color(0.12, 0.08, 0.045, 0.86), WOOD_BORDER]
+	return [Color(0.15, 0.10, 0.05, 0.7), Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.3)]
+
+
 func _chip_set_active(chip: Control, active: bool) -> void:
-	var sb: StyleBoxFlat = chip.get_theme_stylebox("panel")
-	if sb != null:
-		sb.bg_color = Color(0.32, 0.2, 0.06, 0.92) if active else Color(0.15, 0.10, 0.05, 0.7)
-		var idle := WOOD_BORDER if _classic_presentation() \
-			else Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.3)
-		sb.border_color = G.GOLD_BRIGHT if active else idle
+	var panel := chip as G.InsetPanel
+	if panel != null:
+		var surf := [Color(0.32, 0.2, 0.06, 0.92), G.GOLD_BRIGHT] if active else _chip_idle_surface()
+		panel.set_surface(surf[0], surf[1])
 	var l := chip.get_child(0) as Label
 	if l != null:
 		l.add_theme_color_override("font_color", G.GOLD_BRIGHT if active else Color("d9b96e"))
@@ -568,12 +576,7 @@ func _chip_set_active(chip: Control, active: bool) -> void:
 ## 顶部速度/自动、弹出页按钮共用，和径向指令、技能格是同一套牌子语言。
 func _pixel_chip(text: String, w := 64.0) -> PanelContainer:
 	var root := _func_chip(text, w)
-	var sb := root.get_theme_stylebox("panel") as StyleBoxFlat
-	if sb != null:
-		sb.bg_color = Color(0.12, 0.08, 0.045, 0.86)
-		sb.set_corner_radius_all(2)
-		sb.set_border_width_all(2)
-		sb.border_color = WOOD_BORDER
+	(root as G.InsetPanel).set_surface(Color(0.12, 0.08, 0.045, 0.86), WOOD_BORDER)
 	return root
 
 
@@ -581,8 +584,8 @@ func _build_skill_bar() -> void:
 	var classic := _classic_presentation()
 	var bar_x := CLASSIC_BAR_X if classic else BAR_X
 	_energy_bar_w = VIEW_W - bar_x * 2.0
-	var energy_y := 598.0
-	var skill_y := CLASSIC_SKILL_Y if classic else SKILL_Y
+	var energy_y := 598.0 + _standard_extra_y()
+	var skill_y := CLASSIC_SKILL_Y if classic else SKILL_Y + _standard_extra_y()
 	var skill_w := CLASSIC_SKILL_W if classic else SKILL_W
 	var skill_h := CLASSIC_SKILL_H if classic else SKILL_H
 	var skill_step := CLASSIC_SKILL_STEP if classic else SKILL_STEP
@@ -602,13 +605,13 @@ func _build_skill_bar() -> void:
 		# 能量文字压在能量条正上方：原来 y=597 与条(y=598..612)重叠，字被条的深底吃掉一半。
 		# 上移到 578，并改用暖金 + 描边（TEXT_LIGHT 压草地上没有描边会发飘）
 		_energy_l = G.gold_label("能量 0/100", G.FS_XS, true, Color("ffe9b8"), true)
-		_energy_l.position = Vector2(0, 578)
+		_energy_l.position = Vector2(0, 578 + _standard_extra_y())
 		_energy_l.custom_minimum_size = Vector2(VIEW_W, 0)
 		add_child(_energy_l)
 
 	# 连携窗口提示：经典模式没有底部能量条，提示落在技能栏上沿与角色之间
 	_combo_tip = G.serif_label("", G.FS_SM, G.GOLD_BRIGHT)
-	_combo_tip.position = Vector2(0, 706 + _classic_extra_y() if classic else 558)
+	_combo_tip.position = Vector2(0, 706 + _classic_extra_y() if classic else 558 + _standard_extra_y())
 	_combo_tip.custom_minimum_size = Vector2(VIEW_W, 0)
 	_combo_tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_combo_tip.modulate.a = 0.0
@@ -629,9 +632,10 @@ func _build_skill_bar() -> void:
 		var btn := PanelContainer.new()
 		btn.custom_minimum_size = Vector2(skill_w, skill_h)
 		var sb := StyleBoxFlat.new()
-		# 经典模式：像素木牌（方角 + 2px 暗金厚边），与径向指令同一套牌子语言
+		# 经典模式：像素木牌（方角 + 2px 暗金厚边），与径向指令同一套牌子语言；
+		# 常规版也收成 2px 切角，不和大圆角混用
 		sb.bg_color = Color(0.12, 0.08, 0.045, 0.9) if classic else Color(0.16, 0.11, 0.06, 0.92)
-		sb.set_corner_radius_all(2 if classic else 4)
+		sb.set_corner_radius_all(2)
 		sb.set_border_width_all(2)
 		sb.border_color = WOOD_BORDER if classic else Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.45)
 		btn.add_theme_stylebox_override("panel", sb)
@@ -692,7 +696,7 @@ func _build_skill_bar() -> void:
 		glow.size = Vector2(skill_w + 6.0, skill_h + 6.0)
 		var gsb := StyleBoxFlat.new()
 		gsb.bg_color = Color(0, 0, 0, 0)
-		gsb.set_corner_radius_all(2 if classic else 6)
+		gsb.set_corner_radius_all(2)
 		gsb.set_border_width_all(2)
 		gsb.border_color = G.GOLD_BRIGHT
 		glow.add_theme_stylebox_override("panel", gsb)
@@ -709,7 +713,7 @@ func _build_func_row() -> void:
 		return   # 经典模式：药剂/换宠/撤退全部并入身周径向指令（物/逃），底部不再占行
 	var classic := _classic_presentation()
 	var row_x := CLASSIC_BAR_X if classic else BAR_X
-	var row_y := CLASSIC_FUNC_Y if classic else FUNC_Y
+	var row_y := CLASSIC_FUNC_Y if classic else FUNC_Y + _standard_extra_y()
 	var row_w := CLASSIC_SKILL_W if classic else SKILL_W
 	var row_step := CLASSIC_SKILL_STEP if classic else SKILL_STEP
 	# 药剂
@@ -1404,7 +1408,7 @@ func _refresh_hud() -> void:
 		var low := role != null and role.alive and hp_ratio < LOW_HP_RATIO
 		if low:
 			var phase := float(Time.get_ticks_msec() % 1100) / 1100.0
-			_danger.modulate.a = 0.20 + 0.32 * absf(sin(phase * PI))   # 边缘红晕：够警觉不糊屏
+			_danger.modulate.a = 0.12 + 0.23 * absf(sin(phase * PI))   # 边缘红晕：够警觉不糊屏
 			if not _danger_tip_done:
 				_danger_tip_done = true
 				_show_tip("危急 · 血量过低，补药或撤退", G.C_COST, G.FS_MD,
@@ -2008,6 +2012,12 @@ func _skill_anim(skill_id: String) -> StringName:
 func _skill_splash(caster: UnitView, skill_id: String) -> void:
 	if caster == null:
 		return
+	# A pet may trigger its own skill and a guard response on the same frame.
+	# Keep one current action card per caster so neither name is half-covered.
+	for previous in _fx_layer.get_children():
+		if previous.get_meta("skill_caster", -1) == caster.uid:
+			_fx_layer.remove_child(previous)
+			previous.queue_free()
 	var tex: Texture2D = G.res_tex("sk_%s" % skill_id)
 	var sname := String(TableCache.get_skill(skill_id).get("name", skill_id))
 	if tex == null and sim != null:
@@ -2021,17 +2031,10 @@ func _skill_splash(caster: UnitView, skill_id: String) -> void:
 					break
 	if tex == null:
 		return
-	var card := PanelContainer.new()
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color(0.12, 0.08, 0.03, 0.92)
-	sb.set_corner_radius_all(10)
-	sb.set_border_width_all(2)
-	sb.border_color = G.GOLD_BRIGHT
-	sb.content_margin_left = 6.0
-	sb.content_margin_right = 10.0
-	sb.content_margin_top = 4.0
-	sb.content_margin_bottom = 4.0
-	card.add_theme_stylebox_override("panel", sb)
+	var card := G.InsetPanel.new()
+	card.set_meta("skill_caster", caster.uid)
+	# 施法信息卡：切角 + 金描边，弃用圆角5的平面块
+	card.setup(Color("203437", 0.96), G.GOLD_BRIGHT, 6.0, 10.0, 4.0, 4.0)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 6)
 	var pic := TextureRect.new()
@@ -2051,6 +2054,7 @@ func _skill_splash(caster: UnitView, skill_id: String) -> void:
 	card.reset_size()   # 让 PanelContainer 按内容结算出真实宽高，居中定位才准
 	var w := card.size.x
 	card.position = caster.position + Vector2(-w * 0.5, -138)
+	card.position.x = clampf(card.position.x, 12.0, VIEW_W - w - 12.0)
 	card.position.y = maxf(card.position.y, 46.0)   # 后排敌人贴顶栏，牌子别钻进标题下
 	card.pivot_offset = Vector2(w * 0.5, card.size.y * 0.5)
 	card.scale = Vector2.ONE * 0.3
@@ -2318,6 +2322,8 @@ class UnitView extends Node2D:
 			var tex: Texture2D = load(monster_sprite_path) as Texture2D \
 				if _classic and u.kind == "monster" and not monster_sprite_path.is_empty() \
 				else G.res_tex(unit_id)
+			var registered := u.kind == "monster" and MonsterArt.has(unit_id)
+			if registered: tex = MonsterArt.texture(unit_id)
 			if tex != null:
 				# 精灵素材（1254×1254 透明底，自带投影）：按档位缩放到目标身高
 				var disp_h := 78.0
@@ -2330,11 +2336,19 @@ class UnitView extends Node2D:
 				sp.texture = tex
 				sp.scale = Vector2.ONE * (disp_h / float(tex.get_height()))
 				sp.position = Vector2(0, -disp_h * 0.42)  # 脚底落在站位附近
+				if registered:
+					if _classic and String(u.data.get("tier", "normal")) == "normal": disp_h = 84.0
+					sp.scale = Vector2.ONE * MonsterArt.display_scale(unit_id, disp_h, true)
+					disp_h = tex.get_height() * sp.scale.y
+					sp.position = Vector2(0, -disp_h * 0.5)
+					sp.material = FrostCityArt.cutout_material()
+					sp.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 				if u.kind == "monster" and String(u.data.get("tier", "")) == "elite":
 					sp.modulate = Color(1.06, 0.95, 1.12)  # 精英微紫晕（保档位辨识）
 				body.add_child(sp)
 				sprite = sp
 				name_y = sp.position.y - disp_h * 0.5 - 14.0
+				if registered: name_y -= 10.0
 				hp_y = sp.position.y + disp_h * 0.5 + 6.0
 			else:
 				# 回退：程序圆体

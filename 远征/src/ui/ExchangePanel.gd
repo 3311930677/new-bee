@@ -13,7 +13,7 @@ const ROW_STEP := 78.0
 # 图标缺素材时的回退色块（按 icon 名取色，拿不到就米灰一块，别让卡片开天窗）
 const ICON_FALLBACK := {
 	"cur_gold": Color("d8ab48"), "cur_soul": Color("a273c9"),
-	"cur_expedition": Color("6f9fd0"), "cur_honor": Color("e8b84a"),
+	"cur_expedition": Color("315d87"), "cur_honor": Color("e8b84a"),
 	"itm_ticket_ten": Color("c9a44a"), "itm_ticket_sweep": Color("8d8474"),
 }
 
@@ -29,6 +29,7 @@ var _toast_tw: Tween = null
 
 
 func _ready() -> void:
+	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_entries = _load_entries()
 	_build()
@@ -77,12 +78,12 @@ func _build() -> void:
 	var vault := _icon("icon_vault", 26)
 	vault.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	bar.add_child(vault)
-	_honor_l = G.gold_label("荣誉 0", G.FS_MD, false, Color("8a6a34"), false)
+	_honor_l = G.gold_label("荣誉 0", G.FS_MD, false, G.TEXT_MUTED, false)
 	_honor_l.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	bar.add_child(_honor_l)
 	_content.add_child(bar)
 
-	var tip := G.gold_label("演武场对战可获得荣誉", G.FS_XS, false, Color("7a5a2e"), false)
+	var tip := G.gold_label("演武场对战可获得荣誉", G.FS_XS, false, G.TEXT_MUTED, false)
 	tip.position = Vector2(0, 32)
 	tip.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_content.add_child(tip)
@@ -104,7 +105,7 @@ func _build() -> void:
 		row.position = Vector2(0, i * ROW_STEP)
 		rows.add_child(row)
 
-	_hint = G.gold_label("点「兑 换」消耗荣誉换取资源", G.FS_XS, false, Color("8a6a34"), false)
+	_hint = G.gold_label("点「兑 换」消耗荣誉换取资源", G.FS_XS, false, G.TEXT_MUTED, false)
 	_hint.position = Vector2(0, 528)
 	_hint.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_content.add_child(_hint)
@@ -137,25 +138,12 @@ func _icon(icon: String, px: float) -> Control:
 	return block
 
 
-## 单条兑换行：图标 + 名称/代价 + 兑换按钮（卡片底沿用 DeployPanel 的四角微差画法）
+## 单条兑换行：图标 + 名称/代价 + 兑换按钮（卡片底为切角 + 内凹光，弃用四角微差圆角）
 func _entry_row(e: Dictionary) -> Control:
 	var eid := String(e.get("id", ""))
-	var root := PanelContainer.new()
+	var root := G.InsetPanel.new()
 	root.custom_minimum_size = Vector2(CONTENT_W, 68)
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = G.BOX_BG
-	sb.corner_radius_top_left = 5
-	sb.corner_radius_top_right = 7
-	sb.corner_radius_bottom_left = 6
-	sb.corner_radius_bottom_right = 4
-	sb.set_border_width_all(2)
-	sb.border_color = G.BOX_EDGE
-	G._apply_shadow(sb, 4.0, 2.0, 0.30)
-	sb.content_margin_left = 10.0
-	sb.content_margin_right = 10.0
-	sb.content_margin_top = 6.0
-	sb.content_margin_bottom = 6.0
-	root.add_theme_stylebox_override("panel", sb)
+	root.setup(G.BOX_BG, G.BOX_EDGE, 10.0, 10.0, 6.0, 6.0)
 
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 12)
@@ -173,7 +161,7 @@ func _entry_row(e: Dictionary) -> Control:
 	var name_l := G.gold_label(String(e.get("name", eid)), G.FS_SM, false, G.TEXT_DARK, false)
 	name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	col.add_child(name_l)
-	var cost_l := G.gold_label("%d 荣誉" % int(e.get("cost", 0)), G.FS_XS, false, Color("8a6a34"), false)
+	var cost_l := G.gold_label("%d 荣誉" % int(e.get("cost", 0)), G.FS_XS, false, G.TEXT_MUTED, false)
 	cost_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	col.add_child(cost_l)
 	row.add_child(col)
@@ -230,7 +218,7 @@ func do_exchange(entry_id: String) -> bool:
 	_refresh()
 	if _hint != null:
 		_hint.text = "点「兑 换」消耗荣誉换取资源"
-		_hint.add_theme_color_override("font_color", Color("8a6a34"))
+		_hint.add_theme_color_override("font_color", G.TEXT_MUTED)
 	Audio.sfx("coin")
 	_toast("已兑换「%s」×%d" % [String(e.get("name", entry_id)), int(_times[entry_id])])
 	return true
@@ -255,7 +243,7 @@ func _refresh() -> void:
 		var cl: Label = _cost_l.get(String(id))
 		if cl != null:
 			cl.add_theme_color_override("font_color",
-				G.C_COST if poor else Color("8a6a34"))
+				G.C_COST if poor else G.TEXT_MUTED)
 
 
 func _warn(msg: String) -> void:

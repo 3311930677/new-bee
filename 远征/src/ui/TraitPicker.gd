@@ -67,6 +67,7 @@ func setup(rows: Array) -> void:
 				_emit_pick(""))
 		add_child(skip)
 
+	G.center_fixed_page.call_deferred(self)
 
 func _make_card(row: Dictionary) -> Control:
 	var t := String(row.get("type", "num"))
@@ -128,7 +129,7 @@ func _make_card(row: Dictionary) -> Control:
 
 	# 描述最长约 19 字符（「免死 1 次并回 20%HP（每场 1 次）」）：
 	# FS_XS(13px) 每行约 9 汉字，给 3 行高度；中文无空格必须按字符断行
-	var desc_l := G.text_label(String(row.get("desc", "")), G.FS_XS, Color("7a5a2e"))
+	var desc_l := G.text_label(String(row.get("desc", "")), G.FS_XS, G.TEXT_MUTED)
 	desc_l.position = Vector2(10, 78)
 	desc_l.size = Vector2(CARD_W - 20, 54)
 	desc_l.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY

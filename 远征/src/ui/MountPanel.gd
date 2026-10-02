@@ -14,6 +14,7 @@ var _toast: Label = null
 
 
 func _ready() -> void:
+	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_build()
 
@@ -72,18 +73,12 @@ func _mount_card(m: Dictionary) -> Control:
 	var tiers: Array = m.get("tiers", [])
 	var is_active := G.mount_active() == mid and tier > 0
 
-	var root := PanelContainer.new()
+	var root := G.InsetPanel.new()
 	root.custom_minimum_size = Vector2(CARD_W, CARD_H)
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color("f0e2bc") if tier > 0 else Color("d0c09a")
-	sb.corner_radius_top_left = 7
-	sb.corner_radius_top_right = 5
-	sb.corner_radius_bottom_left = 6
-	sb.corner_radius_bottom_right = 4
-	sb.set_border_width_all(2)
-	sb.border_color = G.GOLD_BRIGHT if is_active else Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.5)
-	G._apply_shadow(sb, 3.0, 2.0, 0.25)
-	root.add_theme_stylebox_override("panel", sb)
+	# 坐骑卡：切角 + 内凹光（内层是手摆的 Control，留白给 0 不影响版式）
+	root.setup(Color("f0e2bc") if tier > 0 else Color("d0c09a"),
+		G.GOLD_BRIGHT if is_active else Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.5),
+		0.0, 0.0, 0.0, 0.0)
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 	var inner := Control.new()
@@ -115,7 +110,7 @@ func _mount_card(m: Dictionary) -> Control:
 	var tinfo := tiers[show_tier] as Dictionary
 	var bonus: Dictionary = tinfo.get("bonus", {})
 	var bl := G.text_label("%s：%s" % [String(tinfo.get("name", "")), _bonus_text(bonus)],
-		G.FS_XS, Color("7a5a2e"))
+		G.FS_XS, G.TEXT_MUTED)
 	bl.position = Vector2(68, 34)
 	bl.custom_minimum_size = Vector2(122, 40)
 	bl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -134,7 +129,7 @@ func _mount_card(m: Dictionary) -> Control:
 		btn = G.gold_button("购 买" if tier <= 0 else "升 阶", 84, 30, G.FS_SM)
 		# 价格独立行：FS_XS + 限宽换行裁切。原来 12px 一行横排、资源间空格相连，
 		# 五位数金币带第二项资源时直接顶出卡右缘
-		var cost_l := G.text_label(_cost_text(cost), G.FS_XS, Color("8a6a34"))
+		var cost_l := G.text_label(_cost_text(cost), G.FS_XS, G.TEXT_MUTED)
 		cost_l.position = Vector2(96, 100)
 		cost_l.size = Vector2(CARD_W - 102.0, 44)
 		cost_l.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY

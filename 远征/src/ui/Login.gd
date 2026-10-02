@@ -19,6 +19,7 @@ const AVATAR_NAMES := {"zs": "破军", "ck": "穿杨", "fs": "霜语", "fz": "�
 
 
 func _ready() -> void:
+	G.center_fixed_page.call_deferred(self)
 	_build_background()
 	_build_banner()
 	_build_panel()
@@ -26,18 +27,7 @@ func _ready() -> void:
 
 # ---------- 背景 ----------
 func _build_background() -> void:
-	var tr := TextureRect.new()
-	tr.texture = G.res_tex("bg_main") if G.res_tex("bg_main") != null \
-		else load("res://image/background/enter.png")  # 黄昏营地：出征前的整备时刻
-	tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	tr.stretch_mode = TextureRect.STRETCH_SCALE
-	tr.size = Vector2(VIEW_W, VIEW_W * BG_H / BG_W)
-	tr.position = Vector2(0, VIEW_H - tr.size.y)
-	tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(tr)
-
-	# 登录页氛围压暗：不吃点击（下面还要能点输入框）
-	G.veil(self, 0.55, false)
+	G.page_background(self, 0.25)
 
 
 func _build_banner() -> void:
@@ -49,6 +39,7 @@ func _build_banner() -> void:
 	# 左上「返回」：登录是标题页的下级，手游必须有能点的回头路（原来只有 ESC）。
 	# 用金钮而不是幽灵钮：登录页背后是深色晚霞插画，幽灵钮的深棕字在这块底上看不清
 	var back := G.gold_button("返回", G.BTN_S.x, G.BTN_S.y, G.FS_SM)
+	G.button_icon(back, "back")
 	back.position = Vector2(16, 52)
 	back.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -58,17 +49,17 @@ func _build_banner() -> void:
 
 # ---------- 面板 ----------
 func _build_panel() -> void:
-	var panel := G.parchment_box(372, 430, 22.0)
-	panel.position = Vector2(54, 150)
+	var panel := G.parchment_box(400, 470, 22.0)
+	panel.position = Vector2(40, 160)
 	add_child(panel)
 
 	var box := VBoxContainer.new()
-	box.add_theme_constant_override("separation", 16)
+	box.add_theme_constant_override("separation", 18)
 	panel.add_child(box)
 
 	# 页面标题只在顶部木匾出现一次（"登录"）。面板里原来还有一行"账号登录"，
 	# 和木匾重复、还跟输入框抢视线——按"操作页不是海报"的原则去掉，让面板直接从说明开始。
-	var account_hint := G.gold_label("账号用于识别存档，本地保存，不联网", G.FS_XS, false, Color("65492a"), false)
+	var account_hint := G.gold_label("欢迎来到昭元", G.FS_XS, false, G.TEXT_MUTED, false)
 	box.add_child(account_hint)
 
 	var sep := ColorRect.new()
@@ -81,21 +72,23 @@ func _build_panel() -> void:
 	_build_avatar_picker(box)
 
 	# 老玩家：预填账号，提示语从「创建角色」换成「继续远征」
-	var hint_text := "首次登录将直接创建新角色"
+	var hint_text := "首次进入后创建角色"
 	if G.has_profile() or not G.selected_role.is_empty():
-		hint_text = "欢迎回来，登录后继续远征"
+		hint_text = "继续上次旅程"
 		_account.text = G.account
 		_account.caret_column = _account.text.length()
-	var hint := G.gold_label(hint_text, G.FS_XS, false, Color("65492a"), false)
+	var hint := G.gold_label(hint_text, G.FS_XS, false, G.TEXT_MUTED, false)
 	box.add_child(hint)
 
 	var row := HBoxContainer.new()
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	row.add_theme_constant_override("separation", 16)
+	row.add_theme_constant_override("separation", 18)
 	box.add_child(row)
 
 	var ok := G.gold_button("登录", G.BTN_M.x, G.BTN_M.y)
 	var guest := G.ghost_button("游客登录", G.BTN_M.x, G.BTN_M.y)
+	G.button_icon(ok, "door")
+	G.button_icon(guest, "person")
 	row.add_child(ok)
 	row.add_child(guest)
 
@@ -111,7 +104,7 @@ func _build_panel() -> void:
 	_account.grab_focus()
 
 	# 底部弱信息：登录页是操作页，不再靠大标题和背景抢中心。
-	var legal := G.gold_label("远征 v0.1 · 本地存档 · 不联网", G.FS_XS, false,
+	var legal := G.gold_label("旅途进度自动保存", G.FS_XS, false,
 		Color("ead7b0", 0.72), false)
 	legal.position = Vector2(0, 760)
 	legal.custom_minimum_size = Vector2(VIEW_W, 0)
@@ -120,7 +113,7 @@ func _build_panel() -> void:
 
 
 func _build_avatar_picker(box: VBoxContainer) -> void:
-	var title := G.gold_label("选择头像", G.FS_SM, true, G.BANNER, false)
+	var title := G.gold_label("头像", G.FS_SM, false, G.TEXT_MUTED, false)
 	box.add_child(title)
 	var row := HBoxContainer.new()
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -137,9 +130,10 @@ func _build_avatar_picker(box: VBoxContainer) -> void:
 	if not AVATAR_IDS.has(selected):
 		selected = "zs"
 	_select_avatar(selected)
-	_avatar_caption = G.gold_label("当前：%s ·「+」可上传本地图片" % String(AVATAR_NAMES.get(selected, "破军")),
-		G.FS_XS, false, Color("65492a"), false)
+	_avatar_caption = G.gold_label("头像：%s · 点击更换" % String(AVATAR_NAMES.get(selected, "破军")),
+		G.FS_XS, false, G.TEXT_MUTED, false)
 	box.add_child(_avatar_caption)
+	_avatar_caption.visible = false
 
 
 func _avatar_card(id: String) -> Control:
@@ -155,7 +149,7 @@ func _avatar_card(id: String) -> Control:
 	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = Color("dcc9a0")
-	sb.set_corner_radius_all(5)
+	sb.set_corner_radius_all(2)
 	sb.set_border_width_all(2)
 	sb.border_color = G.BOX_EDGE
 	card.add_theme_stylebox_override("panel", sb)
@@ -190,7 +184,7 @@ func _avatar_card(id: String) -> Control:
 	mark.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	mark.visible = false
 	card.add_child(mark)
-	var nm := G.gold_label(String(AVATAR_NAMES.get(id, id)), G.FS_XS, false, Color("7a5a2e"), false)
+	var nm := G.gold_label(String(AVATAR_NAMES.get(id, id)), G.FS_XS, false, G.TEXT_MUTED, false)
 	nm.position = Vector2(0, 62)
 	nm.size = Vector2(60, 16)
 	nm.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -222,7 +216,7 @@ func _select_avatar(id: String) -> void:
 		if mark != null:
 			mark.visible = active
 	if _avatar_caption != null:
-		_avatar_caption.text = "当前：%s ·「+」可上传本地图片" % String(AVATAR_NAMES.get(id, id))
+		_avatar_caption.text = "头像：%s · 点击更换" % String(AVATAR_NAMES.get(id, id))
 
 
 func _avatar_picker() -> FileDialog:
@@ -282,7 +276,7 @@ func _field(box: VBoxContainer, label: String, ph: String, secret: bool) -> Line
 	le.placeholder_text = ph
 	le.secret = secret
 	le.max_length = 16
-	le.custom_minimum_size = Vector2(248, 42)
+	le.custom_minimum_size = Vector2(260, 46)
 	le.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	G.style_line_edit(le, G.FS_MD)
 	row.add_child(le)

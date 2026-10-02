@@ -29,6 +29,7 @@ extends PanelContainer
 var cfg: Dictionary = {}
 
 var _sb: StyleBoxFlat = null
+var _sel_on := false
 var _art: PanelContainer = null
 var _inner: _ArtInner = null
 var _head: HBoxContainer = null
@@ -81,15 +82,9 @@ static func page(card: Control, deck_w: float, h: float, gutter := 40.0) -> Cont
 # ---------- 构建 ----------
 func _build() -> void:
 	_sb = StyleBoxFlat.new()
-	_sb.bg_color = Color("f0e4c4")
-	# 四角微差，避免机器感对称（与面板其它卡片同口径）
-	_sb.corner_radius_top_left = 16
-	_sb.corner_radius_top_right = 18
-	_sb.corner_radius_bottom_left = 17
-	_sb.corner_radius_bottom_right = 15
-	_sb.set_border_width_all(1)
-	_sb.border_color = Color("c0a068")
-	G._apply_shadow(_sb, 6.0, 3.0, 0.32)
+	# 只留版面留白：卡面（硬影 + 纸底 + 切角 + 做旧）全部走 _draw，
+	# 弃用四角 16–18px 的大圆角与软影——那是"现代 UI 模板脸"的来源
+	_sb.bg_color = Color.TRANSPARENT
 	_sb.content_margin_left = 18.0
 	_sb.content_margin_right = 18.0
 	_sb.content_margin_top = 14.0
@@ -107,7 +102,7 @@ func _build() -> void:
 	_head.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	col.add_child(_head)
 
-	_kicker = G.gold_label(String(cfg.get("kicker", "")), G.FS_XS, false, Color("8a6a34"), false)
+	_kicker = G.gold_label(String(cfg.get("kicker", "")), G.FS_XS, false, G.TEXT_MUTED, false)
 	_kicker.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	_kicker.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_kicker.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -115,7 +110,8 @@ func _build() -> void:
 
 	_badge_sb = StyleBoxFlat.new()
 	_badge_sb.bg_color = Color("7a7263")
-	_badge_sb.set_corner_radius_all(9)
+	# 状态标签：2px 切角（与卡面同族），弃用半径 9 的"胶囊"
+	_badge_sb.set_corner_radius_all(2)
 	_badge_sb.content_margin_left = 8.0
 	_badge_sb.content_margin_right = 8.0
 	_badge_sb.content_margin_top = 1.0
@@ -137,7 +133,8 @@ func _build() -> void:
 	_art.size_flags_stretch_ratio = 8.0
 	var asb := StyleBoxFlat.new()
 	asb.bg_color = Color("faf3e0")
-	asb.set_corner_radius_all(12)
+	# 3px 圆角 ≈ 八边形切角语言（与 PaperPanel/PixelButton 的 cut=3 同宽）
+	asb.set_corner_radius_all(3)
 	asb.set_border_width_all(1)
 	var tint: Color = cfg.get("art_tint", Color("8d8474"))
 	asb.border_color = Color(tint.r, tint.g, tint.b, 0.22)
@@ -153,7 +150,7 @@ func _build() -> void:
 
 	var sub_text := String(cfg.get("subtitle", ""))
 	if sub_text != "":
-		_subtitle = G.gold_label(sub_text, G.FS_XS, false, Color("8a6a34"), false)
+		_subtitle = G.gold_label(sub_text, G.FS_XS, false, G.TEXT_MUTED, false)
 		col.add_child(_subtitle)
 
 	var rows: Array = cfg.get("lines", [])
@@ -182,6 +179,27 @@ func _build() -> void:
 		set_selected(true)
 
 
+## 卡面自绘：硬影 → 纸底 → 内缘做旧 → 顶高光/底压暗 → 切角描边。
+## 与 G.PaperPanel 同一套厚度语言，选中态只是换底色与 2px 亮金边。
+func _draw() -> void:
+	var sz := size
+	if sz.x < 12.0 or sz.y < 12.0:
+		return
+	var cut := 3.0
+	var bg := Color("f7eed4") if _sel_on else Color("f0e4c4")
+	G.draw_hard_shadow(self, sz, cut, 2.0, Color("170f07", 0.28))
+	draw_colored_polygon(G.octagon_path(sz, 0.0, cut), bg)
+	var i1 := cut + 3.0
+	draw_line(Vector2(i1, i1), Vector2(sz.x - i1, i1), Color("8a744f", 0.28), 1.0)
+	draw_line(Vector2(i1, sz.y - i1), Vector2(sz.x - i1, sz.y - i1), Color("8a744f", 0.20), 1.0)
+	draw_line(Vector2(cut + 3.0, 1), Vector2(sz.x - cut - 3.0, 1), Color("fff6dd", 0.55), 1.0)
+	draw_line(Vector2(cut + 3.0, sz.y - 1), Vector2(sz.x - cut - 3.0, sz.y - 1),
+		Color("6d5a3a", 0.22), 1.0)
+	var rim := G.octagon_path(sz, 0.5, cut)
+	rim.append(rim[0])
+	draw_polyline(rim, G.GOLD_BRIGHT if _sel_on else Color("c0a068"), 2.0 if _sel_on else 1.0)
+
+
 ## 插画高 = 卡片高 × art_ratio，只作「下限」用：多出来的空间由 art 的 EXPAND 吸收，
 ## 所以给个小比例（0.35 上下）既让图占满，又不会把下面的文案顶出卡片
 func _apply_size() -> void:
@@ -195,9 +213,8 @@ func _apply_size() -> void:
 func set_selected(on: bool) -> void:
 	if _sb == null:
 		return
-	_sb.bg_color = Color("f7eed4") if on else Color("f0e4c4")
-	_sb.border_color = G.GOLD_BRIGHT if on else Color("c0a068")
-	_sb.set_border_width_all(2 if on else 1)
+	_sel_on = on
+	queue_redraw()
 
 
 func set_badge(text: String, color := Color("7a7263")) -> void:
@@ -278,7 +295,7 @@ class _ArtInner extends Control:
 			var fb := Panel.new()
 			var fsb := StyleBoxFlat.new()
 			fsb.bg_color = Color(0, 0, 0, 0)
-			fsb.set_corner_radius_all(10)
+			fsb.set_corner_radius_all(3)
 			fsb.set_border_width_all(2)
 			fsb.border_color = tint.darkened(0.25) if dim else tint.lightened(0.18)
 			fb.add_theme_stylebox_override("panel", fsb)

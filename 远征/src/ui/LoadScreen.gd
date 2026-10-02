@@ -1,15 +1,18 @@
-# LoadScreen.gd —— 启动加载页：旧星空秘境背景回归 + 预热资源 + 最短 1s
+# LoadScreen.gd —— 原版法师与古城背景 + 分帧预热资源 + 最短 1s
 # 流程：Main → 本页（预热 image 素材索引与常用纹理，分帧加载不卡帧）
 #       → 完成（且距进场 ≥1s）→ Title。加载文案轮换一点行军趣味话。
 extends Control
+const Wordmark := preload("res://src/ui/UIWordmark.gd")
+const Grounding := preload("res://src/world/BuildingGrounding.gd")
+const GROUND_IDS := ["hall", "gate", "barracks", "forge", "archive", "kennel", "storehouse", "shrine"]
 
 const TITLE_SCENE := "res://src/ui/Title.tscn"
 const MIN_SECONDS := 1.0
 const PER_FRAME := 8        # 每帧预热的贴图数（59 项实际引用 + 行走帧 ≈ 数十张，分帧绰绰有余）
 const CODE_PER_FRAME := 1   # 每帧顺带编译的脚本/场景数（编译只能在主线程，只能摊开几帧）
 const BAR_W := 288.0        # 外框宽（问题 #1：进度条实际可用宽 = BAR_W - 2×BAR_INSET）
-const BAR_H := 18.0
-const BAR_INSET := 3.0      # 内填充与外框的边距；9-patch 左右各 10px 拉伸区，太窄会糊角
+const BAR_H := 8.0
+const BAR_INSET := 1.0
 
 # 脚本/场景预热清单：这些「一次性开销」原本全砸在"玩家点进某个界面"的那一帧上——
 # 实测 GameHome 首次进场景 533ms、第二次 31ms，差的 500ms 就是 GDScript 编译。
@@ -47,6 +50,8 @@ const PRELOAD_AUDIO := [
 
 var _queue: Array[String] = []      # 待加载的贴图/音频
 var _code: Array[String] = []       # 待编译的脚本/场景
+var _ground: Array[String] = []
+var _warm_art: Array[Texture2D] = []  # 保持预热纹理，确保同一 RID 的地基缓存被场景复用
 var _total := 0
 var _done := false
 var _t0 := 0.0
@@ -61,8 +66,8 @@ const STAGES := [
 	"整备行囊……",
 	"点起篝火……",
 	"擦拭兵器……",
-	"查看星图……",
-	"启程。",
+	"准备启程……",
+	"整备完成",
 ]
 
 
@@ -73,17 +78,9 @@ func _ready() -> void:
 
 
 func _build() -> void:
-	# 背景：enter.png 星空秘境（941×1672 → 480×853 底对齐，同 Title 的铺法）
-	var tr := TextureRect.new()
-	tr.texture = load("res://image/background/enter.png")
-	tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	tr.stretch_mode = TextureRect.STRETCH_SCALE
-	tr.size = Vector2(480, 480.0 * 1672.0 / 941.0)
-	tr.position = Vector2(0, 800.0 - tr.size.y)
-	tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(tr)
+	G.page_background(self, 0.08, "res://image/background/enter.png")
 
-	# 上下渐隐，星空中央自然留白承载标题与进度
+	# 渐隐仅降低上下缘细节，保留背景原有光影。
 	for which in ["top", "bottom"]:
 		var grad := TextureRect.new()
 		grad.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -91,66 +88,48 @@ func _build() -> void:
 		var tex := GradientTexture2D.new()
 		var g := Gradient.new()
 		if which == "top":
-			g.colors = PackedColorArray([Color(0.02, 0.02, 0.05, 0.6), Color(0, 0, 0, 0.0)])
+			g.colors = PackedColorArray([Color(0.04, 0.035, 0.025, 0.52), Color(0, 0, 0, 0.0)])
 			g.offsets = PackedFloat32Array([0.0, 0.35])
 		else:
-			g.colors = PackedColorArray([Color(0, 0, 0, 0.0), Color(0.02, 0.02, 0.05, 0.55)])
-			g.offsets = PackedFloat32Array([0.6, 1.0])
+			g.colors = PackedColorArray([Color(0, 0, 0, 0.0), Color(0.035, 0.03, 0.025, 0.72)])
+			g.offsets = PackedFloat32Array([0.72, 1.0])
 		tex.gradient = g
 		tex.fill = GradientTexture2D.FILL_LINEAR
-		tex.fill_from = Vector2(0, 0 if which == "top" else 1)
-		tex.fill_to = Vector2(0, 1 if which == "top" else 0)
+		tex.fill_from = Vector2.ZERO
+		tex.fill_to = Vector2(0, 1)
 		grad.texture = tex
 		add_child(grad)
 
-	# 标题（轻量版：大字 + 副题，不做菜单）
-	var t := G.serif_label("远征", G.FS_HERO, Color("e8d5a8"), true)
-	t.add_theme_font_override("font", G.spaced_font(10, true, true))
-	t.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	t.position = Vector2(0, 96)
-	t.size = Vector2(480, 100)
+	var t := Wordmark.new()
+	t.name = "ExpeditionWordmark"
+	t.animated = false
+	t.position = Vector2(100, 64)
+	t.size = Vector2(280, 141)
 	add_child(t)
-	var sub := G.gold_label("EXPEDITION", G.FS_XS, false, Color("d8bd8a", 0.7))
-	sub.add_theme_font_override("font", G.spaced_font(9, false))
-	sub.position = Vector2(0, 196)
+	var sub := G.gold_label("昭元行旅录", G.FS_XS, false, Color("e3d4b8"), false)
+	sub.position = Vector2(0, 212)
 	sub.custom_minimum_size = Vector2(480, 0)
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(sub)
 
-	# 底部进度条：三段式贴图（与路线图 HP 条同款）
+	# 安静的细进度条。
 	#
 	# 坑（问题 #1）：原来外框是 PanelContainer、内填充是它"唯一的子控件"——
 	# PanelContainer 会**无视子控件的 custom_minimum_size，把它强行铺满自己的内容矩形**，
 	# 所以无论进度是多少，填充条永远是满格（0% 时看着像 100%）。
 	# 改成 Panel（普通容器，不排版子节点）+ 子 Panel 显式设 size，宽度才真的按比例。
 	var back := Panel.new()
-	var back_tex: Texture2D = G.res_tex("ui_kenney_hp_back")
-	var fill_tex: Texture2D = G.res_tex("ui_kenney_hp_fill")
-	if back_tex != null and fill_tex != null:
-		var bsb := StyleBoxTexture.new()
-		bsb.texture = back_tex
-		bsb.texture_margin_left = 10.0
-		bsb.texture_margin_right = 10.0
-		bsb.texture_margin_top = 4.0
-		bsb.texture_margin_bottom = 4.0
-		back.add_theme_stylebox_override("panel", bsb)
-		var fsb := StyleBoxTexture.new()
-		fsb.texture = fill_tex
-		fsb.texture_margin_left = 10.0
-		fsb.texture_margin_right = 10.0
-		fsb.texture_margin_top = 4.0
-		fsb.texture_margin_bottom = 4.0
-		_bar_fill.add_theme_stylebox_override("panel", fsb)
-	else:
-		var bsb := StyleBoxFlat.new()
-		bsb.bg_color = Color("2a2216")
-		bsb.set_corner_radius_all(4)
-		back.add_theme_stylebox_override("panel", bsb)
-		var fsb := StyleBoxFlat.new()
-		fsb.bg_color = Color("c69c4a")
-		fsb.set_corner_radius_all(3)
-		_bar_fill.add_theme_stylebox_override("panel", fsb)
-	back.position = Vector2(96, 690)
+	var bsb := StyleBoxFlat.new()
+	bsb.bg_color = Color("272b2b", 0.9)
+	bsb.set_border_width_all(1)
+	bsb.border_color = Color("aaa18a", 0.55)
+	bsb.set_corner_radius_all(2)
+	back.add_theme_stylebox_override("panel", bsb)
+	var fsb := StyleBoxFlat.new()
+	fsb.bg_color = Color("d2bb88")
+	fsb.set_corner_radius_all(1)
+	_bar_fill.add_theme_stylebox_override("panel", fsb)
+	back.position = Vector2(96, 748)
 	back.size = Vector2(BAR_W, BAR_H)
 	_bar_fill.position = Vector2(BAR_INSET, BAR_INSET)
 	_bar_fill.size = Vector2(0, BAR_H - BAR_INSET * 2.0)
@@ -160,10 +139,11 @@ func _build() -> void:
 	add_child(back)
 
 	_bar_l = G.gold_label("", G.FS_XS, false, Color("d8c8a8"), false)
-	_bar_l.position = Vector2(0, 664)
-	_bar_l.custom_minimum_size = Vector2(480, 0)
-	_bar_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_bar_l.position = Vector2(96, 716)
+	_bar_l.custom_minimum_size = Vector2(BAR_W, 0)
+	_bar_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	add_child(_bar_l)
+	G.center_fixed_page.call_deferred(self)
 
 
 ## 进度条填充宽度（0~1）。钳制在 0~1，0 时宽度为 0（不能像 #1 那样一开始就满格）。
@@ -202,7 +182,8 @@ func _collect_queue() -> void:
 			_queue.append(sp)
 	_code.clear()
 	_code.assign(PRELOAD_CODE)   # 注意：Array[String] 不能用 = duplicate()，类型不匹配会静默失败
-	_total = _queue.size() + _code.size()
+	_ground.assign(GROUND_IDS)
+	_total = _queue.size() + _code.size() + _ground.size()
 
 
 func _process(_d: float) -> void:
@@ -216,7 +197,14 @@ func _process(_d: float) -> void:
 		if _code.is_empty():
 			break
 		load(_code.pop_front() as String)
-	var left := _queue.size() + _code.size()
+	# 一个地基一帧；点击进城时只复用已生成的接触影纹理。
+	if not _ground.is_empty():
+		var id := _ground.pop_front() as String
+		var art := load("res://image/main_world/city_%s_reference_v2.png" % id) as Texture2D
+		if art != null:
+			_warm_art.append(art)
+			Grounding.prepare(art, 192, roundi(192.0 * art.get_height() / art.get_width()))
+	var left := _queue.size() + _code.size() + _ground.size()
 	var ratio := 0.0 if _total == 0 else clampf(float(_total - left) / float(_total), 0.0, 1.0)
 	_set_bar_ratio(ratio)
 	var stage_i := mini(STAGES.size() - 1, int(ratio * float(STAGES.size())))
