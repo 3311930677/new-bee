@@ -7,6 +7,9 @@ var _fails := 0
 
 func _ready() -> void:
 	G.SAVE_PATH = "res://tools/_logs/save_verify_story.json"
+	G._init_state_defaults()
+	G.save_locked = false
+	G.ensure_starter_buildings()
 	G.selected_role = "zs"
 	G.player_name = "行路人"
 	G.prog["level"] = 1

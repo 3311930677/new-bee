@@ -390,11 +390,12 @@ func _load_save() -> void:
 		push_warning("存档校验失败：%s（沿用默认状态，原档已备份到 %s 并锁定写盘）"
 			% [save_lock_reason, save_backup_path])
 		return
-	if String(res.get("mode", "")) == "future":
+	var future_save := String(res.get("mode", "")) == "future"
+	if future_save:
 		save_backup_path = SaveData.backup_file(SAVE_PATH, now)
-		push_warning("%s；原档已备份到 %s" % [String(res.get("err", "")), save_backup_path])
-	save_locked = false
-	save_lock_reason = ""
+		push_warning("%s；原档已备份到 %s，兼容读取并锁定写盘" % [String(res.get("err", "")), save_backup_path])
+	save_locked = future_save
+	save_lock_reason = String(res.get("err", "")) if future_save else ""
 	var data: Dictionary = res.get("data", {})
 	var w: Variant = data.get("wallet", {})
 	if w is Dictionary:
@@ -479,9 +480,12 @@ func _load_save() -> void:
 		prog["titles"] = ti if ti is Dictionary else {"owned": [], "active": ""}
 		var pst: Variant = pd.get("pet_stat", {})
 		prog["pet_stat"] = pst if pst is Dictionary else {}
-		if pd.has("companions"): prog["companions"] = (pd.companions as Dictionary).duplicate(true)
-		if pd.has("campaign_growth"): prog["campaign_growth"] = (pd.campaign_growth as Dictionary).duplicate(true)
-		if pd.has("skill_curriculum"): prog["skill_curriculum"] = (pd.skill_curriculum as Dictionary).duplicate(true)
+		# 可选养成字段以本次档案为准，不能把上一角色的版本/授业/伙伴投入带进旧档。
+		for optional_key in ["companions", "campaign_growth", "skill_curriculum"]:
+			if pd.get(optional_key) is Dictionary:
+				prog[optional_key] = (pd[optional_key] as Dictionary).duplicate(true)
+			else:
+				prog.erase(optional_key)
 		var ts: Variant = pd.get("tips_seen", {})   # 已看过的引导弹层，别每次开面板都弹
 		prog["tips_seen"] = ts if ts is Dictionary else {}
 		prog["lore_seen"] = bool(pd.get("lore_seen", false))   # 序章是否已看（看过的老档不再弹）
@@ -5617,6 +5621,9 @@ func can_go(scene_path: String) -> bool:
 ## 主世界统一入口：登录、序章、营帐与跨图只走同一份角色/地图配置。
 ## arrival 是目标地图的落地点 id；留空时恢复该地图保存位置或使用 spawn。
 func enter_main_world(map_id := "", arrival := "") -> void:
+	if save_locked:
+		go("res://src/ui/GameHome.tscn")
+		return
 	const WORLD_SCENE := "res://src/explore/MapScene.tscn"
 	if not can_go(WORLD_SCENE):
 		return

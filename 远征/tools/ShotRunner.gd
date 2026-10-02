@@ -510,6 +510,21 @@ func _city_panel_demo() -> void:
 
 
 func _setup() -> void:
+	if _scene == "save_future":
+		# 本场景在任何写入前再次指定独立路径，不能依赖外层调用者的初始化顺序。
+		G.SAVE_PATH = "res://tools/_logs/save_shot_future_recovery.json"
+		G._init_state_defaults()
+		G.selected_role = "zs"
+		G.player_name = "回档旅人"
+		var future_file := FileAccess.open(G.SAVE_PATH, FileAccess.WRITE)
+		future_file.store_string(FileAccess.get_file_as_string("res://tools/fixtures/saves/future.json"))
+		future_file.close()
+		G._load_save()
+		add_child(load("res://src/ui/GameHome.tscn").instantiate())
+		await get_tree().process_frame
+		if not G._modals.is_empty():
+			(G._modals.back().get("layer") as CanvasLayer).reparent(get_parent())
+		return
 	if _scene.begins_with("mw_"):
 		await _mapview_demo()
 		return
