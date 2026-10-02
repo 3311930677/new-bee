@@ -71,6 +71,18 @@ func _ready() -> void:
 func _prompt_save_locked() -> void:
 	if not G.save_locked:
 		return
+	if String(G.last_load_report.get("mode", "")) == "future":
+		G.show_choice_popup(self, "请使用更新版本读取", [
+			"此存档来自更新的游戏版本，已兼容读取可识别的进度。",
+			"为保留全部投入与未知字段，本版本暂不允许继续写盘。",
+			"原档已备份：",
+			G.save_backup_path if G.save_backup_path != "" else "（无备份）",
+			"请用更新版本继续，或导入本版本支持的旧档。",
+		], [
+			{"text": "返回标题", "cb": func(): G.go("res://src/ui/Title.tscn")},
+			{"text": "导入旧档", "cb": func(): _open_settings(_click_ev())},
+		])
+		return
 	var lines := [
 		"存档校验未通过，进度暂时没有读入。",
 		"原因：%s" % G.save_lock_reason,

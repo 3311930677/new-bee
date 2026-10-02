@@ -10,6 +10,7 @@ var _fails := 0
 
 func _ready() -> void:
 	G.SAVE_PATH = "user://save_verify_save.json"
+	await get_tree().process_frame
 	await _run()
 	get_tree().quit(0 if _fails == 0 else 1)
 
@@ -408,7 +409,40 @@ func _run() -> void:
 		"未来版本档仍应按兼容方式读进来（玩家进度不能凭空消失），实为 %d" % int(G.wallet.get("gold", 0)))
 	if G.save_backup_path != "":
 		_wipe(G.save_backup_path)
-	# 写回后版本号必须回到本程序支持的版本，且不再被判为 future
+	# 未来档包含本程序不认识的字段，自动写回会吞掉它们；兼容读取期间必须锁写。
+	var future_text := _read(G.SAVE_PATH)
+	_check(G.save_locked and not G.save_game(), "未来版本档兼容读取后必须拒绝自动写回")
+	_check(_read(G.SAVE_PATH) == future_text, "未来版本原档及未知字段必须逐字保留")
+	var future_home := (load("res://src/ui/GameHome.tscn") as PackedScene).instantiate()
+	add_child(future_home)
+	await get_tree().process_frame
+	_check(not G._modals.is_empty(), "未来版本锁档进入营帐必须显示恢复选项")
+	if not G._modals.is_empty():
+		var prompt: CanvasLayer = G._modals.back().get("layer")
+		var import_button := _button_with_label(prompt, "导入旧档")
+		_check(_button_with_label(prompt, "返回标题") != null
+			and _button_with_label(prompt, "继 续") == null and import_button != null,
+			"未来档提示仅提供返回标题与导入，不能暴露放弃原档的继续按钮")
+		if import_button != null:
+			var input := InputEventMouseButton.new()
+			input.button_index = MOUSE_BUTTON_LEFT
+			input.pressed = true
+			import_button.gui_input.emit(input)
+			await get_tree().process_frame
+			_check(future_home.get("_settings") != null and G.save_locked
+				and _read(G.SAVE_PATH) == future_text,
+				"点击导入旧档应打开设置且保持锁档与原档字节")
+	future_home.queue_free()
+	await get_tree().process_frame
+	# 显式切换到可支持的旧档后应解除锁写，不再残留上一档的可选养成字段。
+	G.prog["companions"] = {"active": "pet_rockturtle", "pets": {}}
+	G.prog["campaign_growth"] = {"story_revision": {"s01": 2}}
+	G.prog["skill_curriculum"] = {"fixture_from_previous_character": true}
+	_write(G.SAVE_PATH, _fixture_text("v3.json"))
+	G._load_save()
+	_check(not G.save_locked and not G.prog.has("companions")
+		and not G.prog.has("campaign_growth") and not G.prog.has("skill_curriculum"),
+		"读取缺省旧档必须清除上一角色的伙伴、经验版本和授业状态并解除锁写")
 	G.prog["level"] = 60
 	_check(G.save_game(), "正常路径 save_game 应返回成功（R-04 安全写盘）")
 	G.last_load_report = {}
@@ -487,6 +521,16 @@ func _read(path: String) -> String:
 	var t := f.get_as_text()
 	f.close()
 	return t
+
+
+func _button_with_label(node: Node, text: String) -> Control:
+	if node is Label and (node as Label).text == text:
+		return node.get_parent() as Control
+	for child in node.get_children():
+		var found := _button_with_label(child, text)
+		if found != null:
+			return found
+	return null
 
 
 ## 用**旧档的权威口径** slots[<slot>].base + 旧装备的 lv/宝石/词条，独立推一遍槽位总加成。

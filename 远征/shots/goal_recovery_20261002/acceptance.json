@@ -1,0 +1,91 @@
+{
+  "package": "P09-A",
+  "date": "2026-10-02",
+  "base_commit": "570fb43",
+  "regression": {
+    "cases": 45,
+    "passed": 45,
+    "exit_code": 0,
+    "terminal": "ALL GREEN (45 cases)",
+    "logs": "tools/_logs/goal_recovery_full_20261002",
+    "exit_diagnostics_cases": 31,
+    "exit_diagnostics_lines": 76
+  },
+  "additional_save_ui": "tools/_logs/goal_recovery_ui_final_runner_20261002.log",
+  "real_input": {
+    "roles": [
+      "zs",
+      "ck",
+      "fs",
+      "fz"
+    ],
+    "terminal": "PLAYTHROUGH_ALL_OK",
+    "runner_log": "tools/_logs/goal_recovery_playthrough_20261002/runner.log",
+    "pairs": [
+      {
+        "role": "zs",
+        "phase_a": "tools/_logs/goal_recovery_playthrough_20261002/save_playthrough_zs_a.json",
+        "phase_b": "tools/_logs/goal_recovery_playthrough_20261002/save_playthrough_zs_b.json",
+        "sha256": "A4FA24C51CA5A64D071A19E8E6505E91D82D55CA81ACC726C550A68044F0D523",
+        "bytes_identical": true
+      },
+      {
+        "role": "ck",
+        "phase_a": "tools/_logs/goal_recovery_playthrough_20261002/save_playthrough_ck_a.json",
+        "phase_b": "tools/_logs/goal_recovery_playthrough_20261002/save_playthrough_ck_b.json",
+        "sha256": "3C81E7CD60E06922BDFF8ECB330DD466B2B4EA79E866D4B2D672C107AFC5654A",
+        "bytes_identical": true
+      },
+      {
+        "role": "fs",
+        "phase_a": "tools/_logs/goal_recovery_playthrough_20261002/save_playthrough_fs_a.json",
+        "phase_b": "tools/_logs/goal_recovery_playthrough_20261002/save_playthrough_fs_b.json",
+        "sha256": "A818DC5234961CDDDFB94DC26130A7F8794862F3F465A417300E639A15EE545A",
+        "bytes_identical": true
+      },
+      {
+        "role": "fz",
+        "phase_a": "tools/_logs/goal_recovery_playthrough_20261002/save_playthrough_fz_a.json",
+        "phase_b": "tools/_logs/goal_recovery_playthrough_20261002/save_playthrough_fz_b.json",
+        "sha256": "9B88E5F4CE4233945F0328912AA4E1831D4D8283152F0362822EE49A900C413B",
+        "bytes_identical": true
+      }
+    ]
+  },
+  "player_save_sha256": "BA8054B3D2F46D21D5CFE70E6EF5EFCADCC817A8267FF67FC7522379E2805BE7",
+  "files": [
+    {
+      "path": "src/autoload/G.gd",
+      "sha256": "40955528DB2590E4C08EA88AFAAD3989CD9DADB8AEA2181DFA269A47F78686A9"
+    },
+    {
+      "path": "src/ui/GameHome.gd",
+      "sha256": "D65D481A7FCABAFD9BFE5DE3252E26C6254C58CB31A2EAE1B1AB8478D47B4EF5"
+    },
+    {
+      "path": "tools/VerifySave.gd",
+      "sha256": "ADE378470811EEA08FDC3156F1412B03DEE176F5154C2B52440FE41914D2E79F"
+    },
+    {
+      "path": "tools/VerifyStory.gd",
+      "sha256": "84CF9EE0EA7BAA8CF15EAE3F69C3223AC88F726CA49FB58BA82C14F4C786F3A8"
+    },
+    {
+      "path": "tools/ShotRunner.gd",
+      "sha256": "6D86FAB0E1EE9AC5722777B9C5DB959231A85BEF60DB8B8149A6BB1A97FC3989"
+    },
+    {
+      "path": "shots/goal_recovery_20261002/future_480800.png",
+      "sha256": "0D84BF26E68BCD0D2DBC49E0A6206D4A3FA714B4EFFCFB00A5DA896A0E18E6A0"
+    },
+    {
+      "path": "shots/goal_recovery_20261002/future_4801067.png",
+      "sha256": "9F7066551C39C271797A4360B1AE71B51698FD0F9C7AB60FAB287A911E63B16D"
+    }
+  ],
+  "limits": [
+    "Automated input is not manual duration or Android touch acceptance",
+    "Engine exit resource diagnostics remain issue43",
+    "Content still 28/36 main steps 18/36 side quests 6/8 bosses 14 maps"
+  ]
+}

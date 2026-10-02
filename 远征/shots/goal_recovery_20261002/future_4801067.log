@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 581.08 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 3070 Laptop GPU
+
+WARNING: 存档版本 99 高于本程序 6；原档已备份到 res://tools/_logs/save_shot_future_recovery_backup_1790929447.json，兼容读取并锁定写盘
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _load_save (res://src/autoload/G.gd:396)
+       [1] _setup (res://tools/ShotRunner.gd:522)
+       [2] _ready (res://tools/ShotRunner.gd:35)
+       [3] _ready (res://tools/OffscreenShotRunner.gd:29)
+WARNING: 存档处于锁定状态，本次写盘已跳过（原因：存档版本 99 高于本程序 6；备份：res://tools/_logs/save_shot_future_recovery_backup_1790929447.json）
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:591)
+       [1] _refresh_quests (res://src/autoload/G.gd:4113)
+       [2] quest_offer (res://src/autoload/G.gd:4079)
+       [3] _quest_claimable (res://src/ui/GameHome.gd:573)
+       [4] _build_top (res://src/ui/GameHome.gd:235)
+       [5] _ready (res://src/ui/GameHome.gd:61)
+       [6] _setup (res://tools/ShotRunner.gd:523)
+       [7] _ready (res://tools/ShotRunner.gd:35)
+       [8] _ready (res://tools/OffscreenShotRunner.gd:29)
+SHOT_SAVED D:\new bee\远征\shots\goal_recovery_20261002\future_4801067.png
