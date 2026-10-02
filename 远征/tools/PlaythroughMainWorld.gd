@@ -402,7 +402,7 @@ func _run_phase_b() -> void:
 		var sid := "s%02d" % i
 		if not done.has(sid):
 			missing.append(sid)
-	if (act3 and not step.is_empty()) or (act3_front and not act3 and step != "s25") or (act2 and not act3_front and step != "s21") \
+	if (act3 and step not in ["", "s29"]) or (act3_front and not act3 and step != "s25") or (act2 and not act3_front and step != "s21") \
 		or (not act2 and step not in ["", "s13"]):
 		return _bad("阶段 B 主线未走完，当前 step=%s" % step)
 	if not missing.is_empty():

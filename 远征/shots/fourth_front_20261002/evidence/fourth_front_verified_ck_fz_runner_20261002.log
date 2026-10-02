@@ -1,0 +1,27 @@
+Godot   : C:\Users\Administrator\AppData\Local\Microsoft\WinGet\Packages\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\Godot_v4.7.2-stable_win64.exe
+Version : 4.7.2.stable.official.ed1daf0bf
+Project : D:\new bee\远征
+UserDir : C:/Users/Administrator/AppData/Roaming/Godot/app_userdata/远征/
+Roles   : ck, fz
+Timeout : 2400s per process call
+Logs    : tools/_logs/fourth_front_verified_ck_fz_20261002
+RealSave: C:\Users\Administrator\AppData\Roaming\Godot\app_userdata\远征\save.json
+Hash    : BA8054B3D2F46D21D5CFE70E6EF5EFCADCC817A8267FF67FC7522379E2805BE7
+
+==== role ck ====
+  phase A log: tools\_logs\fourth_front_verified_ck_fz_20261002\playthrough_ck_a.log
+  phase A OK
+  phase B log: tools\_logs\fourth_front_verified_ck_fz_20261002\playthrough_ck_b.log
+  phase B OK
+  PASS role ck
+
+==== role fz ====
+  phase A log: tools\_logs\fourth_front_verified_ck_fz_20261002\playthrough_fz_a.log
+  phase A OK
+  phase B log: tools\_logs\fourth_front_verified_ck_fz_20261002\playthrough_fz_b.log
+  phase B OK
+  PASS role fz
+
+RealSave hash unchanged: BA8054B3D2F46D21D5CFE70E6EF5EFCADCC817A8267FF67FC7522379E2805BE7
+
+PLAYTHROUGH_ALL_OK (2 roles, A+B per role, real save untouched)

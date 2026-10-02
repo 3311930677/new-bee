@@ -1,0 +1,3 @@
+# Preserve raw engine diagnostics and exact anonymous save bytes as evidence.
+*.log -text -diff
+*.json -text

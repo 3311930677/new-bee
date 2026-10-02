@@ -1,0 +1,93 @@
+{
+  "checkpoint": "P09-B",
+  "save_version": 6,
+  "story_steps": 32,
+  "side_quests": 18,
+  "bosses": 6,
+  "maps": 15,
+  "full_regression": {
+    "cases": 46,
+    "terminal": "ALL GREEN",
+    "exit_code": 0,
+    "resource_diagnostics_cases": 32,
+    "resource_diagnostics_lines": 77,
+    "tracked_issue": 43
+  },
+  "runner_selftest_cases": 11,
+  "captures": 8,
+  "roles": [
+    {
+      "role": "zs",
+      "complete_state_equal": true,
+      "save_bytes_equal": true,
+      "save_sha256": "387C16A0FAEA247512F8B98B3BAB6DA9E0AD4E1CF8AC93887DC45016A20E22C7",
+      "source_sha256": "872942A1ADA1EBE33F02657EBC60EFF5545407DA9E1C4A8643CF3BEE8EFBBA24",
+      "level": 49,
+      "gold": 2520,
+      "preparation": "listen"
+    },
+    {
+      "role": "fs",
+      "complete_state_equal": true,
+      "save_bytes_equal": true,
+      "save_sha256": "7EB7A3C654C598B04DB2EB9B49F219CD37F68865B5AB6E5D2478ED48B82F6AB4",
+      "source_sha256": "75EBFD9EDA483B320F7B73EDC5323720C6B53A51AA34043D3A198894D4676F7B",
+      "level": 49,
+      "gold": 2520,
+      "preparation": "listen"
+    },
+    {
+      "role": "ck",
+      "complete_state_equal": true,
+      "save_bytes_equal": true,
+      "save_sha256": "59643B957024FFEED147CEA1DCE2ACBC38065213B0B9FDAA4B6194542F04241E",
+      "source_sha256": "C43CA7BB4CDA28784D0378F1E66333C5DB2B761104155E9211A5D2E967B5D703",
+      "level": 49,
+      "gold": 2520,
+      "preparation": "brace"
+    },
+    {
+      "role": "fz",
+      "complete_state_equal": true,
+      "save_bytes_equal": true,
+      "save_sha256": "9D81FAA1831C925BD6CCA4273494FBC12F3FD7DF504A473745E3BAC2AEC1967D",
+      "source_sha256": "D4DE5C3AEFD702921A190E6E1E39619FC503AF40E3EC003A0912A69B4D07C0A8",
+      "level": 49,
+      "gold": 2520,
+      "preparation": "brace"
+    }
+  ],
+  "real_save_sha256": "BA8054B3D2F46D21D5CFE70E6EF5EFCADCC817A8267FF67FC7522379E2805BE7",
+  "runtime_and_png_sha256": {
+    "data/story_quests.json": "662963CC168B4BA232781ADC60090F9A9BA404476CB2C4941D5995B4C1381C47",
+    "data/main_world_maps.json": "8A203D228FF11CDA6C17E9FAF3F841DAF6BA0A5D4ACE700235CC74CD38D4A552",
+    "data/campaign_growth.json": "A62EC0C680EE83080A8692AD8959AE35325A3DBDC9F46355D8AFD1A3A693A6F2",
+    "src/autoload/G.gd": "F27FD067A3B67AE330D8D0812E6F624D44C00A4B261E89B5D159208B4B4F9BE5",
+    "src/city/CityScene.gd": "D44CFB4D51CE65C93748B8205F7A1C58D1E349F658FF7858AE78AD1943742204",
+    "src/explore/MapScene.gd": "92A749C842D7B0FF1A512A096326CAE97EDCF5D3DD8F1557CC17FE2D76E0B7B0",
+    "src/explore/ThirdActGround.gd": "A43AD41D663EB5731BA77E46A1A3B66980ABB3659EE157FDD5B2AF35583EE5DB",
+    "tools/VerifyFourthFront.gd": "66A343054384161F3BBDD386D4948D2E5C7E647C137A6D0DFDF91F821C75E1DA",
+    "tools/PlaythroughFourthFront.gd": "709604D29A8F523F5E32575D9FF717686763BF9A0928216AA76B3179255D7E3E",
+    "tools/VerifyThirdSide.gd": "69EC2A6D41D06ECBAD9E5AFE89FF6FBB4162E24BDDE6C329C2E6DA02F7529C42",
+    "tools/VerifyStory.gd": "29736BF7212074523384FEE56E406DB0D27482C69482110AE3FDB83780421BEA",
+    "tools/VerifyCampaignGrowth.gd": "62B9C3771FBFB5AE44534EFF55A79816100C62FB9EFF9739FA5E752305B752F5",
+    "tools/ShotRunner.gd": "5B18D5A1FBE044B16C528644DD9996C7FD4F73E2A707FE1170335517AB9E463E",
+    "tools/PlaythroughMainWorld.gd": "8C541157AC0744D9D5BF767040354ED6CFD476B8F7363DCD0CB95B9FC21B3C7E",
+    "tools/run_regression.ps1": "8071B3998A264DA656C2810836368519FA8222117FA4263BD91CF65BA6477F2A",
+    "tools/run_playthrough.ps1": "5B44AB2481C2B0AC330912920444E36A5E0F7152C05C3D0EB6EDEA205088A5CB",
+    "image/main_world/abyss_ring_ground_reference_v1.png": "DFE203ACCCFE45D9394290DCAFE5CD3B4B341DF153995E902F5EF8794176D792",
+    "shots/fourth_front_20261002/fourth_battle_480x1067.png": "1223564D2DB2C13877B56196D86FD75575E45589F872FA67173576DAAADD4C85",
+    "shots/fourth_front_20261002/fourth_battle_480x800.png": "302CEABA9653BF8FB6AE393E46265F36ED6BB4DB69BCAAD224EB1D21DFE03D21",
+    "shots/fourth_front_20261002/fourth_preparation_480x1067.png": "436F2C1092B6455894EEE6402D5B6507CF6390E662599DF4D12C0DF6E4E685E3",
+    "shots/fourth_front_20261002/fourth_preparation_480x800.png": "F08E83FDFE369D5DBA1EA4510867B56904A97F6B2DC92F6A1112CC58412BB8B6",
+    "shots/fourth_front_20261002/fourth_regions_480x1067.png": "ECEBA5865122CCEBC0D1722C8353CEB51EF8C7D99F463C5F29E6E81E85473EC8",
+    "shots/fourth_front_20261002/fourth_regions_480x800.png": "77E1AA074DC90813A0AF0B14D77243EFDE46580425BA74FE5F424833EA0F7390",
+    "shots/fourth_front_20261002/fourth_ring_480x1067.png": "6EFA6EDFEF035FD7DDF961A7B94683B1D4C84E5A825805239DDB1410391536EE",
+    "shots/fourth_front_20261002/fourth_ring_480x800.png": "85551D8F87F65C32256C7E18F72A2CDDBBDDE9F758DCDBC1CB35A869F7BF854F"
+  },
+  "limits": [
+    "Automated real input is not human 30–45 minute timing or Android touch QA",
+    "Fourth-act rear half, ending, remaining S5/S6/S7 scope are not complete",
+    "Shutdown RID/resource diagnostics still occur"
+  ]
+}

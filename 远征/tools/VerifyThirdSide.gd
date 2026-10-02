@@ -14,6 +14,11 @@ func _chapter(n: int) -> void:
 	var done: Array = []
 	for i in range(1, n + 1): done.append("s%02d" % i)
 	G.prog["story"] = {"step":"" if n == 28 else "s%02d" % (n + 1), "done":done,"goals":{}}
+	# 本工具主动回退章节夹具时，也要移除回退之后的经验版本标记。
+	# 新主线 s29 会被宁砚的真实对话推进；仅重置 story 会造出不可读的夹具。
+	var marks: Dictionary = G.prog.get("campaign_growth", {}).get("story_revision", {})
+	for id in marks.keys():
+		if not done.has(id): marks.erase(id)
 
 func _entity(map: MapScene, eid: String) -> Node2D:
 	for ent in map._quest_entities:

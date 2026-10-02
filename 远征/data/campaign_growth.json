@@ -29,7 +29,11 @@
     "s25": {"target_level": 35, "exp": 11124},
     "s26": {"target_level": 37, "exp": 8315},
     "s27": {"target_level": 40, "exp": 14140},
-    "s28": {"target_level": 42, "exp": 10818}
+    "s28": {"target_level": 42, "exp": 10818},
+    "s29": {"target_level": 43, "exp": 5924},
+    "s30": {"target_level": 45, "exp": 13104},
+    "s31": {"target_level": 47, "exp": 15178},
+    "s32": {"target_level": 49, "exp": 17885}
   },
   "enemy_levels": {
     "lorin_wilds": 2,
@@ -45,6 +49,7 @@
     "rift_mine_road": 31,
     "rift_mine_vault": 34,
     "frost_boardwalk": 36,
-    "frost_pass": 40
+    "frost_pass": 40,
+    "abyss_ring": 45
   }
 }

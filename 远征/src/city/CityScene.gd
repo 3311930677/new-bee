@@ -1034,6 +1034,9 @@ func _open_dialog(nd: Dictionary, guest: bool) -> void:
 		return
 	Audio.sfx("ui_open")
 	var id := String(nd.get("id", ""))
+	if not guest and id == "npc_scribe" and String(G.story_current().get("id", "")) == "s32":
+		_open_fourth_preparation_panel()
+		return
 	if not guest:
 		var side_action := QuestService.side_npc_action(G.act1_state(), G._side_live_rows(), id)
 		var side_row := QuestService.side_row(G.side_quest_rows(), String(side_action.get("qid", "")))
@@ -1198,6 +1201,43 @@ func _open_first_order_preview(site_id := "city_market") -> void:
 		if _panel == trade:
 			_panel = null
 		_refresh_stat())
+
+
+func _open_fourth_preparation_panel() -> void:
+	var content := _panel_base("旧卷新页", 432, 354)
+	var intro := G.text_label("青姨：三地拓片缺失的名字拼成了一页。先听回声，或先稳碑座，都能为后来的人留下一条归路。", G.FS_SM, Color("4b351e"))
+	intro.position = Vector2(8, 7)
+	intro.custom_minimum_size = Vector2(384, 64)
+	intro.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(intro)
+	var choices := [
+		["listen", "先听回声", "对照三地拓片，把遗漏的声音记在归路凭证上。"],
+		["brace", "先稳碑座", "复核碑座的裂纹，把往返的锚点记在归路凭证上。"]]
+	for i in choices.size():
+		var row: Array = choices[i]
+		var desc := G.text_label(String(row[2]), G.FS_SM, Color("3d5360"))
+		desc.position = Vector2(12, 82 + i * 108)
+		desc.custom_minimum_size = Vector2(376, 48)
+		desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		content.add_child(desc)
+		var button := G.gold_button(String(row[1]), 176, 44, G.FS_SM)
+		button.position = Vector2(112, 132 + i * 108)
+		button.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				_commit_fourth_preparation(String(row[0])))
+		content.add_child(button)
+	_panel_back(content, 304.0)
+
+
+func _commit_fourth_preparation(method: String) -> void:
+	var result := G.story_event("talk", "npc_scribe", _city_id, true, {"method": method})
+	if result.is_empty():
+		_toast("请带回渊口回响，并检查存档状态")
+		return
+	_close_panel()
+	_toast("主线完成：%s · 归路凭证已入袋" % String(result.get("title", "")))
+	_refresh_stat()
+	if _embedded_map != null: _embedded_map.call("_refresh_hud")
 
 
 func _open_frost_choice_panel() -> void:

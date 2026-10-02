@@ -33,7 +33,7 @@ param(
   [string]$List = "",
   [int]$QuitAfter = 6000,
   [int]$TimeoutSec = 240,
-  [int]$Expected = 45,
+  [int]$Expected = 46,
   [string]$LogDir = "",
   [switch]$AllowAnyVersion
 )
@@ -98,6 +98,7 @@ $cases = @(
 	@{ N = "VerifySecondAct";   K = "scene";  T = "SECOND_ACT_OK" },
 	@{ N = "VerifyThirdAct";    K = "scene";  T = "THIRD_ACT_OK" },
 	@{ N = "VerifyThirdBack";   K = "scene";  T = "THIRD_BACK_OK" },
+	@{ N = "VerifyFourthFront"; K = "scene";  T = "FOURTH_FRONT_OK" },
 	@{ N = "VerifyThirdSide";   K = "scene";  T = "THIRD_SIDE_OK" },
 	@{ N = "VerifyCompanions";  K = "scene";  T = "COMPANIONS_OK" },
 	@{ N = "VerifyCampaignGrowth"; K = "scene"; T = "CAMPAIGN_GROWTH_OK" },
