@@ -36,7 +36,7 @@ func _run() -> void:
 	var rows: Array = []
 	for row in G.side_quest_rows():
 		if String(row.id).begins_with("a3_"): rows.append(row)
-	_check(rows.size() == 6 and G.side_quest_rows().size() == 18, "霜关新增六条且保留旧十二条")
+	_check(rows.size() == 6 and G.side_quest_rows().size() == 24, "霜关六条保留，归路托付扩为24条")
 	_chapter(23)
 	for row in rows: _check(not bool(G.side_accept(String(row.id)).get("ok",false)), "矿道记录前不可接霜关托付")
 	_chapter(24)

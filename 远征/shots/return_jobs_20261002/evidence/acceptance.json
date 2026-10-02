@@ -1,0 +1,184 @@
+{
+  "batch": "P09-D return journey jobs",
+  "side_quests": "24/36",
+  "main_steps": 36,
+  "new_jobs": [
+    "a4_rel_waylight",
+    "a4_rel_letter",
+    "a4_eco_tidebuds",
+    "a4_eco_snowflowers",
+    "a4_trade_reply",
+    "a4_secret_runes"
+  ],
+  "new_entities": [
+    [
+      "maple_road",
+      "a4_waylight"
+    ],
+    [
+      "old_salt_road",
+      "a4_old_letter"
+    ],
+    [
+      "tideflat",
+      "a4_tidebud_south"
+    ],
+    [
+      "tideflat",
+      "a4_tidebud_north"
+    ],
+    [
+      "frost_post",
+      "a4_reply_courier"
+    ],
+    [
+      "frost_boardwalk",
+      "a4_snowflower_south"
+    ],
+    [
+      "frost_boardwalk",
+      "a4_snowflower_north"
+    ],
+    [
+      "stele_core",
+      "a4_rune_forest"
+    ],
+    [
+      "stele_core",
+      "a4_rune_tide"
+    ],
+    [
+      "stele_core",
+      "a4_rune_snow"
+    ]
+  ],
+  "old_18_quests_and_maps_preserved": true,
+  "regression_cases": 48,
+  "runner_fault_selftests": 11,
+  "real_input": {
+    "zs": {
+      "real_input": true,
+      "jobs_done": 6,
+      "tracking_clicks": 6,
+      "choices": [
+        "beacon",
+        "trace"
+      ],
+      "source_sha256": "858D1F969E5F85BAE9F1D7335D58A6C33201A8E985D8EC3E1B1A09847B2175F5",
+      "a_b_sha256": "53C7EAC12C9EC85E631354B8C803097B02E69BB9F0A27420F628E2FE19A37F47",
+      "a_b_bytes_identical": true,
+      "letter_reload": true,
+      "old_investments_preserved": true
+    },
+    "ck": {
+      "real_input": true,
+      "jobs_done": 6,
+      "tracking_clicks": 6,
+      "choices": [
+        "marker",
+        "quiet"
+      ],
+      "source_sha256": "DD565686919D47592AE4D5D3733C615FE64BB0AB72FAB8F413C7D43DEF166030",
+      "a_b_sha256": "4939201B4F3BAE24FDAFF6B8C9081F66309AF2609878CAB661D81EF576D52C7F",
+      "a_b_bytes_identical": true,
+      "letter_reload": true,
+      "old_investments_preserved": true
+    }
+  },
+  "visual_captures": [
+    {
+      "file": "active.png",
+      "sha256": "763651F37ECF444E4E07496ECE0FAE59CD19D01A81CD39244CB6FE0D0D89464A",
+      "evidence_type": "staged_production_visual_only"
+    },
+    {
+      "file": "choice.png",
+      "sha256": "9559FC5525A04B4BE6CC3154CF112035AC3064F4FDA50CC3958E8325AE53A966",
+      "evidence_type": "staged_production_visual_only"
+    },
+    {
+      "file": "lamp_beacon.png",
+      "sha256": "9A08D98D8CE08E146BF63087A2DDF4C2DA48321486412559ED3E500EC5AFFA78",
+      "evidence_type": "staged_production_visual_only"
+    },
+    {
+      "file": "lamp_marker.png",
+      "sha256": "8D986DC77AC663F6DC58124E9AFD7D7530B944A439FE84E25BB8F9C146C9A50E",
+      "evidence_type": "staged_production_visual_only"
+    },
+    {
+      "file": "letter_target.png",
+      "sha256": "46DA8F285A9528E69B5F3ED46B453C28AB5319AB64BE33F2D4752856C1CA84F0",
+      "evidence_type": "staged_production_visual_only"
+    },
+    {
+      "file": "mail_finished.png",
+      "sha256": "D6F45D34D5F30E25393D18FD084DC8A537582820380FBF3A03057FFC3D83CCB8",
+      "evidence_type": "staged_production_visual_only"
+    },
+    {
+      "file": "mail_target.png",
+      "sha256": "D39F093038EBB54CAFAF57E1D22573ADFDA5505F9816989F9E0D7B35A8A57BF3",
+      "evidence_type": "staged_production_visual_only"
+    },
+    {
+      "file": "offer.png",
+      "sha256": "76A0B596B6C0B7B6608DC21BD4C7084933D7BAE6448E302B71E1CBEE7FAB794B",
+      "evidence_type": "staged_production_visual_only"
+    },
+    {
+      "file": "rune_choice.png",
+      "sha256": "3666AC195F3CE158C1E12408850EA520EFFE987EEF59037B064226132B5A3EB5",
+      "evidence_type": "staged_production_visual_only"
+    },
+    {
+      "file": "rune_quiet.png",
+      "sha256": "F57BEA14B9D276665921E2A77FF2A2831CB52AE5981A420D343551AE9C79D144",
+      "evidence_type": "staged_production_visual_only"
+    },
+    {
+      "file": "rune_trace.png",
+      "sha256": "EFCDC9A5C985ACFFA12DDA06E5782AC90651AB883DA8E3BA17D90FE8BB80E714",
+      "evidence_type": "staged_production_visual_only"
+    },
+    {
+      "file": "snow_finished.png",
+      "sha256": "1725188D27D24EACB1F35CDCC37322B0C292A7BF316867E24D98FEB73849273C",
+      "evidence_type": "staged_production_visual_only"
+    },
+    {
+      "file": "snow_target.png",
+      "sha256": "254D186C7BE0AECFA5B299AEB0C39C44EF74361BFCC611A72638A1301DD39E74",
+      "evidence_type": "staged_production_visual_only"
+    },
+    {
+      "file": "tide_finished.png",
+      "sha256": "C970BA94D76E84181BBD199BD44606EFC065FA5047434632E759D5B19CBB9EBF",
+      "evidence_type": "staged_production_visual_only"
+    }
+  ],
+  "real_user_files": 121,
+  "real_user_unchanged": true,
+  "runtime_sha256": {
+    "data/side_quests.json": "F19F9D8264F5CCC799652F4A8E7E875A7D47CF613CDEB93D5B7B47DEEA134DBA",
+    "data/main_world_maps.json": "11E7716C6213480802FAEE81F499212441A70ECD2CAAA75DDC107085769249C0",
+    "src/autoload/G.gd": "095DD2DDD145AA30CDE9418035F0E667B6FA635BE342535E97E86FE7638E6C40",
+    "src/city/CityScene.gd": "984C313FC14BB5512D6FA089661E174792FF599F4F4F5FAE3999AE41132F7A53",
+    "src/explore/MapScene.gd": "2010A9BAC1324EC6FE3A917BFDC72459B680CE1E7D73EE618479CEDEB7E163ED",
+    "src/explore/ReturnJourneyProps.gd": "8375DD0F263C2BB665DF967F0FD5BADBC645399A241979F49101881343C80F40",
+    "tools/VerifyReturnJobs.gd": "CD17DF4AAE2C1BE3B58A17670269154CB82CE85407C5C7F6AE818A4DFAF0ED2E",
+    "tools/VerifyReturnJobs.tscn": "9146CA068FE44B20C6498FDD0AD932CCB558D31764E7D47A5DD6C018DBC6606A",
+    "tools/VerifyThirdSide.gd": "04C338FD54D346A59499B7D495C12F1900E4DC1AF52B751F44CDC758623A5DC3",
+    "tools/PlaythroughReturnJobs.gd": "AD89B3716D60E504B80DD8DD59536257ADB176AF23BAB4BAF361FE677BD9FAC2",
+    "tools/PlaythroughReturnJobs.tscn": "9A97DDF7BF7AAD8DF9AC990A58FE71240F794D24FD99325F3AEBB7D08EDF9175",
+    "tools/CaptureReturnJobs.gd": "A8B9038796911928E2D6DE5FEF39EC854B93566468A6A55133EAE13F8F4E608E",
+    "tools/CaptureReturnJobs.tscn": "D31A087A3FEBAE97821B1DBD1D2ADB71F1D923258A1661E62820D3F3A2BFBEC7",
+    "tools/run_regression.ps1": "4A44C58DE9D67FFAAF1E74E5CA04CF99BB453DB96964F01867B9345529AA327E",
+    "tools/run_playthrough.ps1": "FEB2E217DDCC9000BAFBEB0D1BEB8A80BFFBA7F20D5A64AF36149BD15046887E"
+  },
+  "known_limitations": [
+    "issue43 engine exit-time resource diagnostics persist",
+    "visual captures are staged and are separate from real-input completion",
+    "full single-player scope and human/device/audio acceptance remain"
+  ]
+}

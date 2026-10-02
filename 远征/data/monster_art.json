@@ -31,6 +31,54 @@
       "sha256": "f7c4e785503902741b504ea5b2f955da56dc1addf0e3f5dc0fb6f971d2fb8ad1",
       "map_max_width": 96,
       "battle_max_width": 128
+    },
+    "mon_abyss_avatar": {
+      "path": "res://image/fourth_act/mon_abyss_avatar_v1.png",
+      "source_size": [
+        1254,
+        1254
+      ],
+      "region": [
+        0,
+        14,
+        1228,
+        1240
+      ],
+      "sha256": "29ce95e2369228743a7a19693333495d48e32d13ed65de6b137eae2c64dcbc9f",
+      "map_max_width": 140,
+      "battle_max_width": 190
+    },
+    "mon_nameless_warden": {
+      "path": "res://image/fourth_act/mon_nameless_warden_v1.png",
+      "source_size": [
+        1073,
+        1466
+      ],
+      "region": [
+        0,
+        9,
+        1057,
+        1457
+      ],
+      "sha256": "bceae9553681f92e50e3e2d358ba703a8463c4609a178f155feb24dd936a7dd7",
+      "map_max_width": 140,
+      "battle_max_width": 190
+    },
+    "mon_triad_echo": {
+      "path": "res://image/fourth_act/mon_triad_echo.svg",
+      "source_size": [
+        96,
+        96
+      ],
+      "region": [
+        6,
+        2,
+        84,
+        92
+      ],
+      "sha256": "652db12d210ba0fca303a2f438a89d7d8f051835b6136b306ea8647979f51fb3",
+      "map_max_width": 56,
+      "battle_max_width": 58
     }
   }
 }

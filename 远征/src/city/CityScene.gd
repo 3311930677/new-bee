@@ -738,6 +738,15 @@ func _show_built_panel(bd: Dictionary) -> void:
 			_close_panel()
 			_built_action(act))
 	content.add_child(go)
+	if act == "worlds":
+		go.position.y = 116
+		var bosses := G.gold_button("深渊首领图志", 240, 44)
+		bosses.position = Vector2(44, 176)
+		bosses.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				_close_panel()
+				_open_abyss_boss_codex())
+		content.add_child(bosses)
 	if String(bd.get("id","")) == "frost_lodge":
 		go.position.y = 116
 		var training := G.gold_button("伙伴协战",240,44)
@@ -1029,11 +1038,20 @@ func _npc_portrait_tex(npc_id: String, guest: bool) -> Texture2D:
 	return tex
 
 
-func _open_dialog(nd: Dictionary, guest: bool) -> void:
+func _open_dialog(nd: Dictionary, guest: bool, offer_return_job := true) -> void:
 	if _panel != null:
 		return
 	Audio.sfx("ui_open")
 	var id := String(nd.get("id", ""))
+	if not guest and offer_return_job and not G.return_job_row(id).is_empty():
+		_open_return_job(nd)
+		return
+	if not guest and id == "npc_steward" and String(G.story_current().get("id", "")) == "s36":
+		_open_campaign_ending()
+		return
+	if not guest and G.story_step_done("s36") and id in ["npc_steward", "npc_harbormaster", "npc_frost_envoy"]:
+		_open_campaign_response(id)
+		return
 	if not guest and id == "npc_scribe" and String(G.story_current().get("id", "")) == "s32":
 		_open_fourth_preparation_panel()
 		return
@@ -1201,6 +1219,199 @@ func _open_first_order_preview(site_id := "city_market") -> void:
 		if _panel == trade:
 			_panel = null
 		_refresh_stat())
+
+
+func _open_return_job(nd: Dictionary, reply := "") -> void:
+	var row := G.return_job_row(String(nd.get("id", "")))
+	if row.is_empty(): return
+	var qid := String(row.id)
+	var status := G.side_status_of(qid)
+	var content := _panel_base("归路托付",432,496)
+	var task_title := G.text_label(String(row.title),G.FS_MD,Color("815326"))
+	task_title.position=Vector2(8,10)
+	content.add_child(task_title)
+	var words := reply
+	if words.is_empty():
+		words = String(row.get("accept_dialogue", "")) if status.is_empty() else G.side_npc_line(String(nd.id))
+		if status == QuestService.SIDE_ACTIVE: words = String(row.progress_dialogue)
+		elif status == QuestService.SIDE_READY: words = String(row.ready_dialogue)
+		elif status == QuestService.SIDE_DONE:
+			var choice := String(QuestService.side_get(G.act1_state(),qid).get("choice", ""))
+			words = String((row.get("choices", {}) as Dictionary).get(choice, {}).get("dialogue",row.completion_dialogue))
+	var intro := G.text_label(words,G.FS_SM,Color("493724"))
+	intro.position=Vector2(8,52)
+	intro.custom_minimum_size=Vector2(384,116)
+	intro.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(intro)
+	var progress := QuestService.side_get(G.act1_state(),qid)
+	var caption := "未接取" if status.is_empty() else ("已完成 · 变化已留在归路上" if status == QuestService.SIDE_DONE \
+		else "进度 %d/%d%s" % [int(progress.get("progress",0)),QuestService.side_need(row)," · 可交付" if status==QuestService.SIDE_READY else ""])
+	var state_label := G.text_label(caption,G.FS_SM,Color("3c6070"))
+	state_label.position=Vector2(8,178)
+	content.add_child(state_label)
+	var goal := G.text_label(String(row.objective_text),G.FS_SM,Color("493724"))
+	goal.position=Vector2(8,210)
+	goal.custom_minimum_size=Vector2(384,64)
+	goal.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(goal)
+	var rewards := G.text_label("报酬："+" · ".join(G._side_reward_toasts(row.reward)),G.FS_SM,Color("815326"))
+	rewards.position=Vector2(8,282)
+	rewards.custom_minimum_size=Vector2(384,62)
+	rewards.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(rewards)
+	if status.is_empty():
+		_return_job_button(content,"接下这份托付",Vector2(108,350),184,func():
+			var result:=G.side_accept(qid)
+			if not bool(result.get("ok",false)):
+				_toast("托付未能保存，请稍后再试")
+				return
+			_close_panel()
+			_open_return_job(nd,String(result.get("line",""))))
+	elif status == QuestService.SIDE_READY:
+		var choices: Dictionary=row.get("choices",{})
+		if choices.is_empty():
+			_return_job_button(content,"交付 · 领取报酬",Vector2(108,350),184,func(): _finish_return_job(nd,qid,""))
+		else:
+			var index:=0
+			for key in choices:
+				var choice:=String(key)
+				_return_job_button(content,String(choices[key].title),Vector2(8+index*196,350),188,
+					func(): _finish_return_job(nd,qid,choice))
+				index+=1
+	elif status == QuestService.SIDE_ACTIVE:
+		_return_job_button(content,"追踪这份托付",Vector2(108,350),184,func():
+			if not G.side_track(qid):
+				_toast("追踪未能保存，请稍后再试")
+				return
+			_close_panel()
+			_open_return_job(nd,"已追踪这份托付；地图任务栏和罗盘会指向下一处目标。"))
+	_return_job_button(content,"原有事务",Vector2(8,414),184,func():
+		_close_panel()
+		_open_dialog(nd,false,false))
+	_panel_back(content,414,120)
+	# Keep the back button beside the original-service entry.
+	(content.get_child(content.get_child_count()-1) as Control).position.x=260
+	if _embedded_map!=null:
+		_embedded_map.call("_refresh_quest_entities")
+		_embedded_map.call("_refresh_hud")
+
+
+func _return_job_button(content: Control, title: String, at: Vector2, width: float, action: Callable) -> void:
+	var button:=G.gold_button(title,width,44,G.FS_SM)
+	button.position=at
+	button.gui_input.connect(func(event: InputEvent):
+		if event is InputEventMouseButton and event.pressed and event.button_index==MOUSE_BUTTON_LEFT:
+			action.call())
+	content.add_child(button)
+
+
+func _finish_return_job(nd: Dictionary, qid: String, choice: String) -> void:
+	var result:=G._side_complete(qid,true,choice)
+	if result.is_empty():
+		_toast("本次交付未能保存，任务与物品仍保留")
+		return
+	_close_panel()
+	for toast in result.get("toasts",[]): _toast(String(toast))
+	_open_return_job(nd,String(result.get("line","")))
+
+
+func _open_campaign_ending() -> void:
+	var content := _panel_base("归路仍在", 432, 386)
+	var intro := G.text_label(String(G.story_current().get("dialogue", "")), G.FS_SM, Color("4b351e"))
+	intro.position = Vector2(8,7)
+	intro.custom_minimum_size = Vector2(384,112)
+	intro.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(intro)
+	var choices := [["seal", "封渊留路", "封住渊脉，留下归路碑与三地往返的名字。"],
+		["echo", "留声守望", "让回声留在碑中，交由三城共同守望。"]]
+	for i in choices.size():
+		var row: Array = choices[i]
+		var desc := G.text_label(String(row[2]), G.FS_SM, Color("3d5360"))
+		desc.position = Vector2(8,129 + i*91)
+		desc.custom_minimum_size = Vector2(384,42)
+		desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		content.add_child(desc)
+		var button := G.gold_button(String(row[1]), 176, 44, G.FS_SM)
+		button.position = Vector2(112,172 + i*91)
+		button.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				var result := G.story_event("talk","npc_steward",_city_id,true,{"method":String(row[0])})
+				if result.is_empty():
+					_toast("请带回碑心记录，并检查存档状态")
+					return
+				_close_panel()
+				_refresh_stat()
+				if _embedded_map != null: _embedded_map.call("_refresh_hud")
+				_open_campaign_response("npc_steward"))
+		content.add_child(button)
+	_panel_back(content,330)
+
+
+func _campaign_response(id: String) -> String:
+	var sealed := String(G.prog.get("flags",{}).get("act4_ending","")) == "seal"
+	match id:
+		"npc_steward":
+			return "闻叔：归路碑立稳了，渊脉也已封住。青姨替那些往返的人补上名字。远征告一段落，这些路仍归你走。" if sealed else "闻叔：碑里留下了三地的声音。我们轮流守望，让后来的人听清来路。远征告一段落，这些路仍归你走。"
+		"npc_harbormaster":
+			return "沈澜：封记的拓片到了。潮钟照旧报时，归路碑的名字也刻进了港簿。下一班盐船，不必再摸黑。" if sealed else "沈澜：潮钟与碑声对上了。码头把守望的日子排进港簿，旧盐道的灯会一直亮着。"
+		"npc_frost_envoy":
+			return "宁砚：雪关收到封记了。岑雪终于能换岗，商队带回了碑上缺失的名字。关外有归路，我们也该让人回来。" if sealed else "宁砚：守关人的号角留在碑中了。岑雪会把换岗的人记下来，三城轮值，谁都不必独守到天亮。"
+	return ""
+
+
+func _open_campaign_response(id: String) -> void:
+	var content := _panel_base("归路仍在 · " + ("封渊留路" if String(G.prog.flags.get("act4_ending","")) == "seal" else "留声守望"),432,300)
+	var intro := G.text_label(_campaign_response(id),G.FS_SM,Color("4b351e"))
+	intro.position = Vector2(8,12)
+	intro.custom_minimum_size = Vector2(384,112)
+	intro.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(intro)
+	var note := G.text_label("三城与归路碑仍可往返。渊口外环北侧出现了无名巡界者，可自由撤退。",G.FS_SM,Color("3d5360"))
+	note.position = Vector2(8,132)
+	note.custom_minimum_size = Vector2(384,65)
+	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(note)
+	if id == "npc_harbormaster":
+		var services := G.gold_button("港务事务",176,44,G.FS_SM)
+		services.position = Vector2(112,197)
+		services.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				_close_panel()
+				_open_port_services())
+		content.add_child(services)
+	_panel_back(content,246)
+
+
+func _open_abyss_boss_codex(mid := "mon_abyss_avatar") -> void:
+	var content := _panel_base("深渊首领图志",432,540)
+	for i in 2:
+		var id: String = ["mon_abyss_avatar","mon_nameless_warden"][i]
+		var tab := G.gold_button(String(TableCache.get_monster(id).get("name",id)),184,44,G.FS_SM)
+		tab.position = Vector2(8+i*200,8)
+		tab.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				_close_panel()
+				_open_abyss_boss_codex(id))
+		content.add_child(tab)
+	var known := (G.act1_state()["discoveries"] as Array).has(mid)
+	var tex := MonsterArt.texture(mid)
+	if tex != null:
+		var pic := TextureRect.new()
+		pic.texture = tex
+		pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		pic.position = Vector2(80,66)
+		pic.size = Vector2(240,226)
+		if not known: pic.modulate = Color(.26,.26,.31)
+		content.add_child(pic)
+	var info := "已记入图志 · 首胜奖励只领一次" if known else "尚未击败 · 沿主线抵达巢穴"
+	info += "\n碑心 · 补齐三地碑声后可挑战\n蓄力碑震后出现破绽；击破余响可使本体失衡。\n首通保底：归路武器与碑心记录。" if mid == "mon_abyss_avatar" else "\n渊口外环北侧 · 完成归路仍在后出现\n巡界横戟后出现破绽；挑战可自由撤退。\n首胜保底：本职业巡界武器。"
+	var text_l := G.text_label(info,G.FS_SM,Color("4b351e"))
+	text_l.position = Vector2(8,304)
+	text_l.custom_minimum_size = Vector2(384,155)
+	text_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	content.add_child(text_l)
+	_panel_back(content,486)
 
 
 func _open_fourth_preparation_panel() -> void:

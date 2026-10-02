@@ -1,0 +1,135 @@
+﻿Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAY_SOURCE done_steps=36 sha256=dd565686919d47592ae4d5d3733c615fe64bb0ab72fab8f413c7d43def166030
+PLAY_MAP enter=stele_core pos=(480.0, 1030.0) monsters=0
+PLAY_MAP enter=stele_resonance pos=(480.0, 185.0) monsters=0
+PLAY_MAP enter=stele_entry pos=(480.0, 185.0) monsters=0
+PLAY_MAP enter=abyss_ring pos=(480.0, 230.0) monsters=5
+PLAY_MAP enter=frost_pass pos=(760.0, 660.0) monsters=0
+PLAY_MAP enter=frost_boardwalk pos=(480.0, 210.0) monsters=4
+PLAY_DIAG click_ok mode=0 tag=speed
+PLAY_DIAG click_ok mode=0 tag=auto
+PLAY_DIAG click_ok mode=0 tag=result_btn
+PLAY_MAP enter=frost_post pos=(480.0, 210.0) monsters=0
+PLAY_MAP enter=red_sand_route pos=(480.0, 230.0) monsters=4
+PLAY_MAP enter=shenyuan_port pos=(480.0, 230.0) monsters=0
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_MAP enter=old_salt_road pos=(760.0, 659.8511) monsters=4
+PLAY_MAP enter=maple_road pos=(760.0, 660.0) monsters=5
+PLAY_MAP enter=lorin_wilds pos=(480.0, 180.0) monsters=4
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_DIAG click_ok mode=0 tag=return_job_a4_rel_waylight
+PLAY_EVENT job_click qid=a4_rel_waylight title=接下这份托付 real_input=true
+PLAY_DIAG click_ok mode=0 tag=return_job_track_a4_rel_waylight
+PLAY_EVENT job_track qid=a4_rel_waylight real_input=true
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_DIAG click_ok mode=0 tag=return_job_a4_trade_reply
+PLAY_EVENT job_click qid=a4_trade_reply title=接下这份托付 real_input=true
+PLAY_DIAG click_ok mode=0 tag=return_job_track_a4_trade_reply
+PLAY_EVENT job_track qid=a4_trade_reply real_input=true
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_MAP enter=maple_road pos=(480.0, 1060.0) monsters=5
+PLAY_EVENT job_entity qid=a4_rel_waylight eid=a4_waylight real_input=true
+PLAY_MAP enter=old_salt_road pos=(160.0, 660.0) monsters=4
+PLAY_MAP enter=shenyuan_port pos=(210.0, 660.0) monsters=0
+PLAY_DIAG click_ok mode=0 tag=travel_back
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_DIAG click_ok mode=0 tag=return_job_a4_rel_letter
+PLAY_EVENT job_click qid=a4_rel_letter title=接下这份托付 real_input=true
+PLAY_DIAG click_ok mode=0 tag=return_job_track_a4_rel_letter
+PLAY_EVENT job_track qid=a4_rel_letter real_input=true
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_DIAG click_ok mode=0 tag=return_job_a4_eco_tidebuds
+PLAY_EVENT job_click qid=a4_eco_tidebuds title=接下这份托付 real_input=true
+PLAY_DIAG click_ok mode=0 tag=return_job_track_a4_eco_tidebuds
+PLAY_EVENT job_track qid=a4_eco_tidebuds real_input=true
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_MAP enter=old_salt_road pos=(760.0, 659.8511) monsters=4
+PLAY_MAP enter=maple_road pos=(760.0, 660.0) monsters=5
+PLAY_MAP enter=lorin_wilds pos=(480.0, 180.0) monsters=4
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_DIAG click_ok mode=0 tag=return_job_a4_rel_waylight
+PLAY_EVENT job_click qid=a4_rel_waylight title=刻石 · 留清楚路标 real_input=true
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_MAP enter=maple_road pos=(480.0, 1060.0) monsters=5
+PLAY_MAP enter=old_salt_road pos=(160.0, 660.0) monsters=4
+PLAY_EVENT job_entity qid=a4_rel_letter eid=a4_old_letter real_input=true reached_on_route=true
+PLAY_MAP enter=old_salt_road pos=(160.0, 660.0) monsters=4
+PLAY_EVENT job_letter_reloaded item=1
+PLAY_MAP enter=shenyuan_port pos=(210.0, 660.0) monsters=0
+PLAY_DIAG click_ok mode=0 tag=travel_back
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_DIAG click_ok mode=0 tag=return_job_a4_rel_letter
+PLAY_EVENT job_click qid=a4_rel_letter title=交付 · 领取报酬 real_input=true
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_MAP enter=tideflat pos=(165.0, 700.0) monsters=5
+PLAY_DIAG click_ok mode=0 tag=travel_back
+PLAY_EVENT job_entity qid=a4_eco_tidebuds eid=a4_tidebud_south real_input=true
+PLAY_EVENT job_entity qid=a4_eco_tidebuds eid=a4_tidebud_north real_input=true
+PLAY_MAP enter=shenyuan_port pos=(760.0, 700.0) monsters=0
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_DIAG click_ok mode=0 tag=return_job_a4_eco_tidebuds
+PLAY_EVENT job_click qid=a4_eco_tidebuds title=交付 · 领取报酬 real_input=true
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_MAP enter=red_sand_route pos=(480.0, 1050.0) monsters=4
+PLAY_MAP enter=frost_post pos=(480.0, 1030.0) monsters=0
+PLAY_EVENT job_entity qid=a4_trade_reply eid=a4_reply_courier real_input=true
+PLAY_DIAG click_ok mode=0 tag=return_job_a4_eco_snowflowers
+PLAY_EVENT job_click qid=a4_eco_snowflowers title=接下这份托付 real_input=true
+PLAY_EVENT job_track qid=a4_eco_snowflowers real_input=true
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_DIAG click_ok mode=0 tag=return_job_a4_secret_runes
+PLAY_EVENT job_click qid=a4_secret_runes title=接下这份托付 real_input=true
+PLAY_DIAG click_ok mode=0 tag=return_job_track_a4_secret_runes
+PLAY_EVENT job_track qid=a4_secret_runes real_input=true
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_MAP enter=frost_boardwalk pos=(480.0, 1030.0) monsters=4
+PLAY_DIAG click_ok mode=0 tag=speed
+PLAY_DIAG click_ok mode=0 tag=auto
+PLAY_DIAG click_ok mode=0 tag=result_btn
+PLAY_EVENT job_entity qid=a4_eco_snowflowers eid=a4_snowflower_south real_input=true
+PLAY_EVENT job_entity qid=a4_eco_snowflowers eid=a4_snowflower_north real_input=true
+PLAY_MAP enter=frost_pass pos=(480.0, 1050.0) monsters=0
+PLAY_MAP enter=abyss_ring pos=(480.0, 1030.0) monsters=5
+PLAY_MAP enter=stele_entry pos=(480.0, 1030.0) monsters=0
+PLAY_MAP enter=stele_resonance pos=(480.0, 1030.0) monsters=0
+PLAY_MAP enter=stele_core pos=(480.0, 1030.0) monsters=0
+PLAY_EVENT job_entity qid=a4_secret_runes eid=a4_rune_forest real_input=true
+PLAY_EVENT job_entity qid=a4_secret_runes eid=a4_rune_tide real_input=true
+PLAY_EVENT job_entity qid=a4_secret_runes eid=a4_rune_snow real_input=true reached_on_route=true
+PLAY_MAP enter=stele_resonance pos=(480.0, 185.0) monsters=0
+PLAY_MAP enter=stele_entry pos=(480.0, 185.0) monsters=0
+PLAY_MAP enter=abyss_ring pos=(480.0, 230.0) monsters=5
+PLAY_MAP enter=frost_pass pos=(760.0, 660.0) monsters=0
+PLAY_MAP enter=frost_boardwalk pos=(480.0, 210.0) monsters=3
+PLAY_MAP enter=frost_post pos=(480.0, 210.0) monsters=0
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_DIAG click_ok mode=0 tag=return_job_a4_eco_snowflowers
+PLAY_EVENT job_click qid=a4_eco_snowflowers title=交付 · 领取报酬 real_input=true
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_DIAG click_ok mode=0 tag=return_job_a4_secret_runes
+PLAY_EVENT job_click qid=a4_secret_runes title=告别 · 让碑心歇息 real_input=true
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_EVENT return_jobs_all_done choices=marker/quiet
+PLAY_A_STATE {"items":{"aptitude_fruit":4.0,"enhance_stone":30.0,"evolve_crystal":2.0,"frost_letter":0.0,"frost_reply":0.0,"gate_clue":0.0,"gate_stamp":0.0,"lock_rune":1.0,"mine_record":0.0,"pet_food":13.0,"refine_stone":17.0,"return_mailbag":0.0,"return_old_letter":0.0,"rift_echo":0.0,"salt_ledger":0.0,"salt_pack":1.0,"stable_seal":0.0,"stele_fragment":0.0,"stele_key":0.0,"stele_record":0.0,"ticket_sweep":1.0,"ticket_ten":0.0,"tide_core":0.0,"veil_seal":0.0},"prog":{"act1":{"discoveries":["mon_abyss_avatar","mon_nameless_warden","act1_waystone_cache"],"first_kills":["mon_nameless_warden"],"mentor":{"mastery":{"ck_guanjia":1.0},"unlocked":["ck_guanjia"],"variants":{}},"repair_method":"forge","side_quests":{"a1_eco_roots":{"progress":0.0,"seen":[],"status":"active"},"a1_elite_beast":{"progress":0.0,"seen":[],"status":"active"},"a1_rel_child":{"progress":0.0,"seen":[],"status":"active"},"a1_trade_cart":{"progress":0.0,"seen":[],"status":"active"},"a2_elite_scale":{"progress":0.0,"seen":[],"status":"active"},"a2_trade_message":{"progress":0.0,"seen":[],"status":"active"},"a3_eco_lichen":{"progress":0.0,"seen":[],"status":"active"},"a4_eco_snowflowers":{"progress":2.0,"seen":["a4_snowflower_south","a4_snowflower_north"],"status":"done"},"a4_eco_tidebuds":{"progress":2.0,"seen":["a4_tidebud_south","a4_tidebud_north"],"status":"done"},"a4_rel_letter":{"progress":1.0,"seen":["a4_old_letter"],"status":"done"},"a4_rel_waylight":{"choice":"marker","progress":1.0,"seen":["a4_waylight"],"status":"done"},"a4_secret_runes":{"choice":"quiet","progress":3.0,"seen":["a4_rune_snow","a4_rune_forest","a4_rune_tide"],"status":"done"},"a4_trade_reply":{"progress":1.0,"seen":[],"status":"done"}},"tracked":""},"campaign_growth":{"story_revision":{"s01":2.0,"s02":2.0,"s03":2.0,"s04":2.0,"s05":2.0,"s06":2.0,"s07":2.0,"s08":2.0,"s09":2.0,"s10":2.0,"s11":2.0,"s12":2.0,"s13":2.0,"s14":2.0,"s15":2.0,"s16":2.0,"s17":2.0,"s18":2.0,"s19":2.0,"s20":2.0,"s21":2.0,"s22":2.0,"s23":2.0,"s24":2.0,"s25":2.0,"s26":2.0,"s27":2.0,"s28":2.0,"s29":2.0,"s30":2.0,"s31":2.0,"s32":2.0,"s33":2.0,"s34":2.0,"s35":2.0,"s36":2.0}},"codex_claimed":[],"economy":{"bought":{},"day":1.0,"frost_event":"wardens","history":{},"next_tx":1.0,"orders":{},"port_event":"dredge","seed":7919.0,"sold":{},"work":{}},"equip":{"accessory":21.0,"armor":19.0,"hammer":4.0,"spear":20.0,"staff":3.0,"sword":1.0},"exp":0.0,"fishing":{"counts":{},"day":1.0,"discoveries":[],"pending":{}},"flags":{"act1_repair_method":"forge","act1_route_open":true,"act1_stele_repaired":true,"act1_waystone_cache_found":true,"act2_port_choice":"dredge","act2_tide_gate_open":true,"act3_pass_open":true,"act3_supply_choice":"wardens","act4_avatar_down":true,"act4_depth_entered":true,"act4_depth_ready":true,"act4_ending":"echo","act4_forest_voice":true,"act4_nameless_down":true,"act4_old_letter_returned":true,"act4_preparation":"brace","act4_reply_route_open":true,"act4_resonance_found":true,"act4_return_anchor":true,"act4_rune_memory":"quiet","act4_snow_voice":true,"act4_snowflowers_kept":true,"act4_tide_voice":true,"act4_tidebuds_kept":true,"act4_voices_aligned":true,"act4_waylight":"marker","campaign_complete":true},"gacha":{"free_day":"","free_last":"","free_streak":0.0,"pity":0.0},"inventory":{"instances":[{"affixes":[],"gems":[],"locked":false,"lv":0.0,"rarity":1.0,"slot":"sword","sockets":3.0,"tpl":"tpl_sword_basic","uid":1.0},{"affixes":[],"gems":[],"locked":false,"lv":0.0,"rarity":1.0,"slot":"spear","sockets":3.0,"tpl":"tpl_spear_basic","uid":2.0},{"affixes":[],"gems":[],"locked":false,"lv":0.0,"rarity":1.0,"slot":"staff","sockets":3.0,"tpl":"tpl_staff_basic","uid":3.0},{"affixes":[],"gems":[],"locked":false,"lv":0.0,"rarity":1.0,"slot":"hammer","sockets":3.0,"tpl":"tpl_hammer_basic","uid":4.0},{"affixes":[],"gems":[],"locked":false,"lv":0.0,"rarity":1.0,"slot":"armor","sockets":3.0,"tpl":"tpl_armor_basic","uid":5.0},{"affixes":[],"gems":[],"locked":false,"lv":0.0,"rarity":1.0,"slot":"accessory","sockets":3.0,"tpl":"tpl_accessory_basic","uid":6.0},{"affixes":[],"gems":[],"locked":false,"lv":0.0,"rarity":1.0,"slot":"spear","sockets":3.0,"source_id":"res|maple_road#maple_road:4#14221443|victory","tpl":"tpl_spear_basic","uid":7.0},{"affixes":[],"gems":[],"locked":false,"lv":0.0,"rarity":2.0,"slot":"armor","sockets":3.0,"source_id":"res|stele_cavern#stele_cavern:0#99557350|victory","tpl":"tpl_armor_scale","uid":8.0},{"affixes":[],"enhance_failures":0.0,"gems":[],"locked":false,"lv":2.0,"rarity":3.0,"slot":"spear","sockets":3.0,"source_id":"campaign_gear|s10|first|","tpl":"tpl_spear_stele","uid":9.0},{"affixes":[],"enhance_failures":0.0,"gems":[],"locked":false,"lv":1.0,"rarity":3.0,"slot":"armor","sockets":3.0,"source_id":"campaign_gear|s12|first|","tpl":"tpl_armor_stele","uid":10.0},{"affixes":[],"gems":[],"locked":false,"lv":0.0,"rarity":2.0,"slot":"armor","sockets":3.0,"source_id":"res|tidal_gate#tidal_gate:0#225776089|victory","tpl":"tpl_armor_scale","uid":11.0},{"affixes":[],"enhance_failures":0.0,"gems":[],"locked":false,"lv":3.0,"rarity":3.0,"slot":"spear","sockets":3.0,"source_id":"campaign_gear|s19|first|","tpl":"tpl_spear_tidegate","uid":12.0},{"affixes":[],"enhance_failures":0.0,"gems":[],"locked":false,"lv":2.0,"rarity":3.0,"slot":"armor","sockets":3.0,"source_id":"campaign_gear|s20|first|","tpl":"tpl_armor_tidegate","uid":13.0},{"affixes":[],"gems":[],"locked":false,"lv":0.0,"rarity":2.0,"slot":"spear","sockets":3.0,"source_id":"res|rift_mine_vault#rift_mine_vault:0#330182403|victory","tpl":"tpl_spear_iron","uid":14.0},{"affixes":[],"enhance_failures":0.0,"gems":[],"locked":false,"lv":3.0,"rarity":3.0,"slot":"spear","sockets":3.0,"source_id":"campaign_gear|s25|first|","tpl":"tpl_spear_frostgate","uid":15.0},{"affixes":[],"gems":[],"locked":false,"lv":0.0,"rarity":2.0,"slot":"accessory","sockets":3.0,"source_id":"res|frost_pass#frost_pass:0#396163297|victory","tpl":"tpl_accessory_moon","uid":16.0},{"affixes":[],"enhance_failures":0.0,"gems":[],"locked":false,"lv":3.0,"rarity":3.0,"slot":"armor","sockets":3.0,"source_id":"campaign_gear|s27|first|","tpl":"tpl_armor_frostgate","uid":17.0},{"affixes":[],"enhance_failures":0.0,"gems":[],"locked":false,"lv":2.0,"rarity":3.0,"slot":"accessory","sockets":3.0,"source_id":"campaign_gear|s28|first|","tpl":"tpl_accessory_twinpass","uid":18.0},{"affixes":[],"gems":[],"locked":false,"lv":0.0,"rarity":4.0,"slot":"armor","sockets":3.0,"source_id":"campaign_gear|s34|first|","tpl":"tpl_armor_abyss","uid":19.0},{"affixes":[],"gems":[],"locked":false,"lv":0.0,"rarity":4.0,"slot":"spear","sockets":3.0,"source_id":"campaign_gear|s35|first|","tpl":"tpl_spear_abyss","uid":20.0},{"affixes":[],"gems":[],"locked":false,"lv":0.0,"rarity":4.0,"slot":"accessory","sockets":3.0,"source_id":"campaign_gear|s36|first|","tpl":"tpl_accessory_return","uid":21.0},{"affixes":[],"gems":[],"locked":false,"lv":0.0,"rarity":4.0,"slot":"spear","sockets":3.0,"source_id":"act4|nameless_warden|first|","tpl":"tpl_spear_boundary","uid":22.0}],"next_uid":23.0,"pending":[]},"last_ts":1790954749.0,"ledger":{"applied":["story|s01|talk|lorin_wilds|npc_steward|","story|s02|visit|maple_road|maple_road|","res|maple_road#maple_road:4#14221443|victory","story|s03|defeat|maple_road|mon_goblin|","story|s04|talk|lorin_wilds|npc_smith|","story|s05|visit|broken_slope|broken_slope|","res|broken_slope#broken_slope:4#49078936|victory","story|s06|defeat|broken_slope|mon_wolf|","story|s07|talk|lorin_wilds|npc_steward|","story|s08|talk|lorin_wilds|npc_scribe|","story|s09|visit|stele_cavern|stele_cavern|","res|stele_cavern#stele_cavern:0#99557350|victory","story|s10|defeat|stele_cavern|mon_stele_warden|","campaign_gear|s10|first|","story|s11|craft|lorin_wilds|npc_smith|","story|s12|talk|lorin_wilds|npc_steward|","campaign_gear|s12|first|","story|s13|talk|lorin_wilds|npc_warden|","story|s14|visit|old_salt_road|old_salt_road|","story|s15|collect|old_salt_road|salt_cart_ledger|","story|s16|talk|shenyuan_port|npc_harbormaster|","story|s17|observe|tideflat|tide_cargo|","res|tideflat#tideflat:2#202842750|victory","story|s18|defeat|tideflat|mon_tidal_guard|","res|tidal_gate#tidal_gate:0#225776089|victory","story|s19|defeat|tidal_gate|mon_tide_priest|","campaign_gear|s19|first|","story|s20|talk|shenyuan_port|npc_harbormaster|","campaign_gear|s20|first|","story|s21|talk|shenyuan_port|npc_harbormaster|","story|s22|visit|red_sand_route|red_sand_route|","res|red_sand_route#red_sand_route:3#280888782|victory","story|s23|talk|frost_post|npc_frost_envoy|","story|s24|collect|rift_mine_road|overturned_mine_cart|","res|rift_mine_vault#rift_mine_vault:0#330182403|victory","story|s25|defeat|rift_mine_vault|mon_redsand_guard|","campaign_gear|s25|first|","res|frost_boardwalk#frost_boardwalk:3#380544084|victory","story|s26|observe|frost_boardwalk|signal_ribbons|","res|frost_pass#frost_pass:0#396163297|victory","story|s27|defeat|frost_pass|mon_snowveil_lord|","campaign_gear|s27|first|","story|s28|talk|frost_post|npc_frost_envoy|","campaign_gear|s28|first|","story|s29|talk|frost_post|npc_frost_envoy|","res|frost_boardwalk#frost_boardwalk:3#7361308|victory","story|s30|visit|abyss_ring|abyss_ring|","story|s31|observe|abyss_ring|breach_resonance|","story|s32|talk|lorin_wilds|npc_scribe|","res|frost_boardwalk#frost_boardwalk:3#45602685|victory","story|s33|visit|stele_entry|stele_entry|","world_puzzle|return_anchor|once|","world_puzzle|forest_voice|once|","world_puzzle|tide_voice|once|","world_puzzle|snow_voice|once|","story|s34|observe|stele_resonance|aligned_voices|","campaign_gear|s34|first|","res|stele_core#stele_core:0#101376927|victory","story|s35|defeat|stele_core|mon_abyss_avatar|","campaign_gear|s35|first|","res|frost_boardwalk#frost_boardwalk:3#177732454|victory","story|s36|talk|lorin_wilds|npc_steward|","campaign_gear|s36|first|","res|abyss_ring#abyss_ring:1000#293183062|victory","act4|nameless_warden|first|","res|frost_boardwalk#frost_boardwalk:3#44474702|victory","act1|waystone_cache|first|","side|a4_rel_waylight|complete|","side|a4_rel_letter|complete|","side|a4_eco_tidebuds|complete|","side|a4_trade_reply|complete|","res|frost_boardwalk#frost_boardwalk:3#261117624|victory","side|a4_eco_snowflowers|complete|","side|a4_secret_runes|complete|"]},"level":60.0,"lore_beats":{},"lore_seen":false,"main_world":{"bosses_cleared":["stele_cavern","tidal_gate","rift_mine_vault","frost_pass","stele_core"],"encounters":{"abyss_ring#abyss_ring:1#290904774":{"enemy_id":"mon_cultist","spawn_id":"abyss_ring:1","status":"return","tick":290904774.0},"abyss_ring#abyss_ring:1000#293183062":{"enemy_id":"mon_nameless_warden","result":"victory","result_id":"res|abyss_ring#abyss_ring:1000#293183062|victory","spawn_id":"abyss_ring:1000","status":"return","tick":293183062.0},"broken_slope#broken_slope:4#49078936":{"enemy_id":"mon_wolf","result":"victory","result_id":"res|broken_slope#broken_slope:4#49078936|victory","spawn_id":"broken_slope:4","status":"return","tick":49078936.0},"frost_boardwalk#frost_boardwalk:3#177732454":{"enemy_id":"mon_icebat","result":"victory","result_id":"res|frost_boardwalk#frost_boardwalk:3#177732454|victory","spawn_id":"frost_boardwalk:3","status":"return","tick":177732454.0},"frost_boardwalk#frost_boardwalk:3#261117624":{"enemy_id":"mon_icebat","result":"victory","result_id":"res|frost_boardwalk#frost_boardwalk:3#261117624|victory","spawn_id":"frost_boardwalk:3","status":"return","tick":261117624.0},"frost_boardwalk#frost_boardwalk:3#377959018":{"enemy_id":"mon_icebat","spawn_id":"frost_boardwalk:3","status":"return","tick":377959018.0},"frost_boardwalk#frost_boardwalk:3#380544084":{"enemy_id":"mon_icebat","result":"victory","result_id":"res|frost_boardwalk#frost_boardwalk:3#380544084|victory","spawn_id":"frost_boardwalk:3","status":"return","tick":380544084.0},"frost_boardwalk#frost_boardwalk:3#44474702":{"enemy_id":"mon_icebat","result":"victory","result_id":"res|frost_boardwalk#frost_boardwalk:3#44474702|victory","spawn_id":"frost_boardwalk:3","status":"return","tick":44474702.0},"frost_boardwalk#frost_boardwalk:3#45602685":{"enemy_id":"mon_icebat","result":"victory","result_id":"res|frost_boardwalk#frost_boardwalk:3#45602685|victory","spawn_id":"frost_boardwalk:3","status":"return","tick":45602685.0},"frost_boardwalk#frost_boardwalk:3#7361308":{"enemy_id":"mon_icebat","result":"victory","result_id":"res|frost_boardwalk#frost_boardwalk:3#7361308|victory","spawn_id":"frost_boardwalk:3","status":"return","tick":7361308.0},"frost_pass#frost_pass:0#396163297":{"enemy_id":"mon_snowveil_lord","result":"victory","result_id":"res|frost_pass#frost_pass:0#396163297|victory","spawn_id":"frost_pass:0","status":"return","tick":396163297.0},"maple_road#maple_road:2#18492985":{"enemy_id":"mon_goblin","spawn_id":"maple_road:2","status":"return","tick":18492985.0},"maple_road#maple_road:4#14221443":{"enemy_id":"mon_goblin","result":"victory","result_id":"res|maple_road#maple_road:4#14221443|victory","spawn_id":"maple_road:4","status":"return","tick":14221443.0},"red_sand_route#red_sand_route:3#280888782":{"enemy_id":"mon_scorp","result":"victory","result_id":"res|red_sand_route#red_sand_route:3#280888782|victory","spawn_id":"red_sand_route:3","status":"return","tick":280888782.0},"rift_mine_vault#rift_mine_vault:0#327663282":{"enemy_id":"mon_redsand_guard","spawn_id":"rift_mine_vault:0","status":"failed","tick":327663282.0},"rift_mine_vault#rift_mine_vault:0#330182403":{"enemy_id":"mon_redsand_guard","result":"victory","result_id":"res|rift_mine_vault#rift_mine_vault:0#330182403|victory","spawn_id":"rift_mine_vault:0","status":"return","tick":330182403.0},"stele_cavern#stele_cavern:0#97809090":{"enemy_id":"mon_stele_warden","spawn_id":"stele_cavern:0","status":"failed","tick":97809090.0},"stele_cavern#stele_cavern:0#99557350":{"enemy_id":"mon_stele_warden","result":"victory","result_id":"res|stele_cavern#stele_cavern:0#99557350|victory","spawn_id":"stele_cavern:0","status":"return","tick":99557350.0},"stele_core#stele_core:0#100121448":{"enemy_id":"mon_abyss_avatar","spawn_id":"stele_core:0","status":"return","tick":100121448.0},"stele_core#stele_core:0#101376927":{"enemy_id":"mon_abyss_avatar","result":"victory","result_id":"res|stele_core#stele_core:0#101376927|victory","spawn_id":"stele_core:0","status":"return","tick":101376927.0},"stele_core#stele_core:0#97470929":{"enemy_id":"mon_abyss_avatar","spawn_id":"stele_core:0","status":"failed","tick":97470929.0},"tidal_gate#tidal_gate:0#223279350":{"enemy_id":"mon_tide_priest","spawn_id":"tidal_gate:0","status":"failed","tick":223279350.0},"tidal_gate#tidal_gate:0#225776089":{"enemy_id":"mon_tide_priest","result":"victory","result_id":"res|tidal_gate#tidal_gate:0#225776089|victory","spawn_id":"tidal_gate:0","status":"return","tick":225776089.0},"tideflat#tideflat:2#200144402":{"enemy_id":"mon_tidal_guard","spawn_id":"tideflat:2","status":"return","tick":200144402.0},"tideflat#tideflat:2#202842750":{"enemy_id":"mon_tidal_guard","result":"victory","result_id":"res|tideflat#tideflat:2#202842750|victory","spawn_id":"tideflat:2","status":"return","tick":202842750.0}},"entities":{"act1_waystone_cache":"once","forest_voice":"once","return_anchor":"once","snow_voice":"once","tide_voice":"once"},"layout_version":1.0,"map_id":"frost_post","position":[480.0,210.0],"respawn_at":{"3":1790954972.641},"respawn_by_map":{"abyss_ring":{},"broken_slope":{"4":1790839208.799},"frost_boardwalk":{"3":1790954972.641},"frost_pass":{},"frost_post":{},"lorin_wilds":{},"maple_road":{},"old_salt_road":{},"red_sand_route":{},"rift_mine_road":{},"rift_mine_vault":{},"shenyuan_port":{},"stele_cavern":{},"stele_core":{},"stele_entry":{},"stele_resonance":{},"tidal_gate":{},"tideflat":{}}},"mounts":{"active":"","owned":{},"riding":false},"pet_stat":{},"pets":[],"settings":{},"skills":{},"story":{"choices":{"s11":"forge","s20":"dredge","s28":"wardens","s32":"brace","s36":"echo"},"done":["s01","s02","s03","s04","s05","s06","s07","s08","s09","s10","s11","s12","s13","s14","s15","s16","s17","s18","s19","s20","s21","s22","s23","s24","s25","s26","s27","s28","s29","s30","s31","s32","s33","s34","s35","s36"],"goals":{"s01":"done","s02":"done","s03":"done","s04":"done","s05":"done","s06":"done","s07":"done","s08":"done","s09":"done","s10":"done","s11":"done","s12":"done","s13":"done","s14":"done","s15":"done","s16":"done","s17":"done","s18":"done","s19":"done","s20":"done","s21":"done","s22":"done","s23":"done","s24":"done","s25":"done","s26":"done","s27":"done","s28":"done","s29":"done","s30":"done","s31":"done","s32":"done","s33":"done","s34":"done","s35":"done","s36":"done"},"step":""},"talents":{},"tips_seen":{},"titles":{"active":"","owned":[]},"world_cleared":{},"worlds_unlocked":1.0},"role":"ck","wallet":{"expedition":0.0,"gold":5990.0,"honor":0.0,"soul":0.0}}
+PLAY_A_OK role=ck return_jobs=6 real_input=true
+ERROR: 1 RID allocations of type 'PN18TextServerAdvanced12FontAdvancedE' were leaked at exit.
+WARNING: 9 RIDs of type "Canvas" were leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2735)
+WARNING: 65 RIDs of type "CanvasItem" were leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2735)
+WARNING: 139 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+

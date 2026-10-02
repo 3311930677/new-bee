@@ -1,0 +1,92 @@
+[
+  {
+    "scene": "home",
+    "image": "home",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false,
+    "passed": true,
+    "path": "D:\\new bee\\远征\\shots\\aesthetic_refinement_20261002\\pass2\\home.png"
+  },
+  {
+    "scene": "city",
+    "image": "city",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false,
+    "passed": true,
+    "path": "D:\\new bee\\远征\\shots\\aesthetic_refinement_20261002\\pass2\\city.png"
+  },
+  {
+    "scene": "town_north_right",
+    "image": "town_north_right",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true,
+    "passed": true,
+    "path": "D:\\new bee\\远征\\shots\\aesthetic_refinement_20261002\\pass2\\town_north_right.png"
+  },
+  {
+    "scene": "town_middle_left",
+    "image": "town_middle_left",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true,
+    "passed": true,
+    "path": "D:\\new bee\\远征\\shots\\aesthetic_refinement_20261002\\pass2\\town_middle_left.png"
+  },
+  {
+    "scene": "frost_art_north",
+    "image": "frost_art_north",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true,
+    "passed": true,
+    "path": "D:\\new bee\\远征\\shots\\aesthetic_refinement_20261002\\pass2\\frost_art_north.png"
+  },
+  {
+    "scene": "frost_art_north_left",
+    "image": "frost_art_north_left",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true,
+    "passed": true,
+    "path": "D:\\new bee\\远征\\shots\\aesthetic_refinement_20261002\\pass2\\frost_art_north_left.png"
+  },
+  {
+    "scene": "terrain_port",
+    "image": "terrain_port",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true,
+    "passed": true,
+    "path": "D:\\new bee\\远征\\shots\\aesthetic_refinement_20261002\\pass2\\terrain_port.png"
+  },
+  {
+    "scene": "city",
+    "image": "city",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true,
+    "passed": true,
+    "path": "D:\\new bee\\远征\\shots\\aesthetic_refinement_20261002\\pass2\\long_480x1067\\city.png"
+  },
+  {
+    "scene": "home",
+    "image": "home",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true,
+    "passed": true,
+    "path": "D:\\new bee\\远征\\shots\\aesthetic_refinement_20261002\\pass2\\long_480x1067\\home.png"
+  }
+]

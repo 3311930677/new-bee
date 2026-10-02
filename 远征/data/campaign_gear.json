@@ -8,6 +8,9 @@
     {"step": "s20", "name": "潮关护甲", "equip": "tpl_armor_tidegate", "materials": {"enhance_stone": 4}},
     {"step": "s25", "name": "霜关武器", "role_equips": {"zs": "tpl_sword_frostgate", "ck": "tpl_spear_frostgate", "fs": "tpl_staff_frostgate", "fz": "tpl_hammer_frostgate"}, "materials": {"enhance_stone": 5}},
     {"step": "s27", "name": "霜关护甲", "equip": "tpl_armor_frostgate", "materials": {"enhance_stone": 5}},
-    {"step": "s28", "name": "双关坠饰", "equip": "tpl_accessory_twinpass", "materials": {"pet_food": 3}}
+    {"step": "s28", "name": "双关坠饰", "equip": "tpl_accessory_twinpass", "materials": {"pet_food": 3}},
+    {"step": "s34", "name": "三声护甲", "equip": "tpl_armor_abyss", "materials": {"enhance_stone": 5}},
+    {"step": "s35", "name": "归路武器", "role_equips": {"zs": "tpl_sword_abyss", "ck": "tpl_spear_abyss", "fs": "tpl_staff_abyss", "fz": "tpl_hammer_abyss"}, "materials": {"enhance_stone": 6}},
+    {"step": "s36", "name": "归路留声佩", "equip": "tpl_accessory_return", "materials": {"pet_food": 3}}
   ]
 }

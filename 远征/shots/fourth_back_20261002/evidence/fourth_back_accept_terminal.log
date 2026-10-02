@@ -1,0 +1,58 @@
+Godot  : C:\Users\Administrator\AppData\Local\Microsoft\WinGet\Packages\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\Godot_v4.7.2-stable_win64_console.exe
+Version: 4.7.2.stable.official.ed1daf0bf
+Project: D:\new bee\远征
+UserDir: D:/new bee/远征/tools/_sandbox_appdata/fourth_back_20261002/Godot/app_userdata/远征/
+Cases  : 47  (timeout 240s, quit-after 6000 frames)
+Logs   : D:\new bee\远征\tools\_logs\fourth_back_accept_20261002
+Commit : f8dedff
+
+PASS  VerifyAssets
+PASS  VerifyBattleScene
+PASS  VerifySave
+PASS  VerifyUiLayout
+PASS  VerifyVisualRefresh
+PASS  VerifySweep
+PASS  VerifyCity
+PASS  VerifyGameHome
+PASS  VerifyMapScene
+PASS  VerifyMainWorld
+PASS  VerifyWorldSession
+PASS  VerifyStory
+PASS  VerifyEconomy
+PASS  VerifyTradeWorld
+PASS  VerifySecondAct
+PASS  VerifyThirdAct
+PASS  VerifyThirdBack
+PASS  VerifyFourthFront
+PASS  VerifyFourthBack
+PASS  VerifyThirdSide
+PASS  VerifyCompanions
+PASS  VerifyCampaignGrowth
+PASS  VerifyCampaignGear
+PASS  VerifyWorkshop
+PASS  VerifyCurriculum
+PASS  VerifyFrostArt
+PASS  VerifyPortGrowth
+PASS  VerifyShipping
+PASS  VerifyFishing
+PASS  VerifyRouteScene
+PASS  VerifyGacha
+PASS  VerifyPanels
+PASS  VerifyGrowth
+PASS  VerifyPerf
+PASS  VerifyLore
+PASS  VerifyQuests
+PASS  VerifyAudio
+PASS  VerifyTransit
+PASS  VerifyDrops
+PASS  VerifyArena
+PASS  VerifyAvatar
+PASS  VerifyNav
+PASS  verify_data
+PASS  verify_battle
+PASS  verify_route
+PASS  verify_trait
+PASS  verify_walk_assets
+
+NOTE: 34 case(s) emitted 86 engine exit-time resource diagnostic(s) (leaked RIDs / resources still in use). Not counted as failures - tracked as issue #43.
+ALL GREEN  (47 cases, every case: exit 0 + own _OK line + no error pattern)

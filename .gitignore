@@ -20,3 +20,10 @@ _shots/
 # 夜间迭代产物：回归日志与快照备份
 regression.log
 _backups/
+
+# 工作区记忆与本地配置（当前目录名；旧名 .workbuddy-ai 见上）
+.workbuddy/
+
+# 工作区根的临时草稿（审计/调试脚本与输出，下划线前缀）
+/_*.py
+/_*.txt

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "comment": "第一幕、港口与霜关地区各六条支线。沿用 prog.act1.side_quests 和 QuestService.side_*，奖励走 RewardLedger（tx=side|<id>|complete）；同一时间只追踪 1 条。requires_story 控制接取；choices 控制明确选择后交付。",
+  "comment": "第一幕、港口、霜关与结局归路托付各六条支线。沿用 prog.act1.side_quests 和 QuestService.side_*，奖励走 RewardLedger（tx=side|<id>|complete）；同一时间只追踪 1 条。requires_story 控制接取；choices 控制明确选择后交付。",
   "quests": [
     {
       "id": "a1_rel_guard",
@@ -411,6 +411,239 @@
       "completion_dialogue": "岑雪记录了雪幕余痕：关口的风已经停了，界碑更深处仍有人需要一条回路。",
       "world_feedback": "已清首领不重刷也能调查；保存后续界碑线索",
       "discovery": "frost_echo_secret"
+    },
+    {
+      "id": "a4_rel_waylight",
+      "category": "关系",
+      "title": "路口再亮一盏",
+      "requires_story": "s36",
+      "giver": "npc_guard",
+      "map": "maple_road",
+      "clue": "渊口安静了，夜归的人还是会踩进路边的沟。古道中段那盏旧灯，替我看看还能不能用。",
+      "objective": {
+        "kind": "observe",
+        "map": "maple_road",
+        "count": 1,
+        "target_entity": "a4_waylight"
+      },
+      "objective_text": "查看枫林古道中段的旧路灯，再回昭元找老赵商量修法",
+      "turn_in": "npc_guard",
+      "turn_in_map": "lorin_wilds",
+      "reward": {
+        "gold": 240,
+        "items": {
+          "enhance_stone": 2
+        }
+      },
+      "accept_dialogue": "渊口安静了，夜归的人还是会踩进路边的沟。古道中段那盏旧灯，替我看看还能不能用。",
+      "progress_dialogue": "查看枫林古道中段的旧路灯，再回昭元找老赵商量修法",
+      "ready_dialogue": "灯芯能换，石座也稳。点一盏夜灯，或刻一块认路石，两样都能把人带回来。",
+      "completion_dialogue": "老赵把路口重新收拾了。晚归的人知道，这里还有人替他们留着路。",
+      "world_feedback": "古道留下暖色路灯或青色认路石；老赵记住修法",
+      "choices": {
+        "beacon": {
+          "title": "点灯 · 照夜归人",
+          "flags": {
+            "act4_waylight": "beacon"
+          },
+          "dialogue": "老赵添好灯芯：晚归的人不用摸黑认路了。"
+        },
+        "marker": {
+          "title": "刻石 · 留清楚路标",
+          "flags": {
+            "act4_waylight": "marker"
+          },
+          "dialogue": "老赵刻下北门与归途的方向：灯灭了，石头也认得路。"
+        }
+      }
+    },
+    {
+      "id": "a4_rel_letter",
+      "category": "关系",
+      "title": "未寄出的页角",
+      "requires_story": "s36",
+      "giver": "npc_port_worker",
+      "map": "old_salt_road",
+      "clue": "盐车底下压着一封没寄出的信。如今路通了，我想把那句“还会回来”真正送到家里。替我找找。",
+      "objective": {
+        "kind": "collect",
+        "map": "old_salt_road",
+        "count": 1,
+        "target_entity": "a4_old_letter"
+      },
+      "objective_text": "在旧盐道的盐车旁找回折角家书，交给沉渊港的老鹭",
+      "turn_in": "npc_port_worker",
+      "turn_in_map": "shenyuan_port",
+      "reward": {
+        "gold": 220,
+        "items": {
+          "pet_food": 2
+        }
+      },
+      "accept_dialogue": "盐车底下压着一封没寄出的信。如今路通了，我想把那句“还会回来”真正送到家里。替我找找。",
+      "progress_dialogue": "在旧盐道的盐车旁找回折角家书，交给沉渊港的老鹭",
+      "ready_dialogue": "这个页角是我折的。盐把纸磨薄了，字还没丢。",
+      "completion_dialogue": "老鹭把家书重新封好，放进下一船的邮袋。等信的人终于能等到一句平安。",
+      "world_feedback": "家书交还并移出任务物；老鹭重新封信，留下一段寄往归途的答复",
+      "collect_item": "return_old_letter",
+      "turn_in_item": "return_old_letter",
+      "completion_flags": {
+        "act4_old_letter_returned": true
+      }
+    },
+    {
+      "id": "a4_eco_tidebuds",
+      "category": "生态采集",
+      "title": "潮退后的新芽",
+      "requires_story": "s36",
+      "giver": "npc_port_keeper",
+      "map": "tideflat",
+      "clue": "潮水退得稳了，滩上冒出两种新芽。各取一片叶子就好，根留给下一个春天，也留给随行兽。",
+      "objective": {
+        "kind": "collect",
+        "map": "tideflat",
+        "count": 2,
+        "target_entities": [
+          "a4_tidebud_south",
+          "a4_tidebud_north"
+        ]
+      },
+      "objective_text": "在潮痕滩南北两处各取一片新芽，回港交给阿棠",
+      "turn_in": "npc_port_keeper",
+      "turn_in_map": "shenyuan_port",
+      "reward": {
+        "gold": 260,
+        "items": {
+          "pet_food": 3
+        }
+      },
+      "accept_dialogue": "潮水退得稳了，滩上冒出两种新芽。各取一片叶子就好，根留给下一个春天，也留给随行兽。",
+      "progress_dialogue": "在潮痕滩南北两处各取一片新芽，回港交给阿棠",
+      "ready_dialogue": "两片叶子都有清甜气。让伙伴先闻一闻，别急着拿整株喂它。",
+      "completion_dialogue": "阿棠把叶样收进兽栏的识草册。滩上两丛根继续长，过路的伙伴有了新的气味可认。",
+      "world_feedback": "取样后蓝标消失，原地保留开花的新芽",
+      "completion_flags": {
+        "act4_tidebuds_kept": true
+      }
+    },
+    {
+      "id": "a4_eco_snowflowers",
+      "category": "生态采集",
+      "title": "雪线下的花",
+      "requires_story": "s36",
+      "giver": "npc_frost_guard",
+      "map": "frost_boardwalk",
+      "clue": "雪底下开花了。替我看看南北两段，各带一片花瓣回来；守夜的人想知道春天走到哪里了。",
+      "objective": {
+        "kind": "collect",
+        "map": "frost_boardwalk",
+        "count": 2,
+        "target_entities": [
+          "a4_snowflower_south",
+          "a4_snowflower_north"
+        ]
+      },
+      "objective_text": "在霜林栈道南北雪线各取一片花瓣，回驿交给岑雪",
+      "turn_in": "npc_frost_guard",
+      "turn_in_map": "frost_post",
+      "reward": {
+        "gold": 260,
+        "items": {
+          "refine_stone": 1
+        }
+      },
+      "accept_dialogue": "雪底下开花了。替我看看南北两段，各带一片花瓣回来；守夜的人想知道春天走到哪里了。",
+      "progress_dialogue": "在霜林栈道南北雪线各取一片花瓣，回驿交给岑雪",
+      "ready_dialogue": "南边淡，北边深。这不是雪要一下化完，是路一点一点暖起来了。",
+      "completion_dialogue": "岑雪把两片花瓣夹进轮岗簿。守夜的人在交班时，也能念一念明天的春意。",
+      "world_feedback": "取样留根，南北两处花色与驿站回应保留",
+      "completion_flags": {
+        "act4_snowflowers_kept": true
+      }
+    },
+    {
+      "id": "a4_trade_reply",
+      "category": "商旅",
+      "title": "三城的回信",
+      "requires_story": "s36",
+      "giver": "npc_scribe",
+      "map": "frost_post",
+      "clue": "碑里存了三地的声音，路上也该有来回的信。这一袋写着昭元和港口的平安，送到霜关，第一趟回信就算开了。",
+      "objective": {
+        "kind": "deliver",
+        "map": "frost_post",
+        "count": 1,
+        "target_entity": "a4_reply_courier",
+        "item": "return_mailbag"
+      },
+      "objective_text": "把青姨封好的归路邮袋带到霜关驿中段，交给归路信使",
+      "turn_in": "a4_reply_courier",
+      "turn_in_map": "frost_post",
+      "reward": {
+        "gold": 300,
+        "items": {
+          "enhance_stone": 2
+        }
+      },
+      "accept_dialogue": "碑里存了三地的声音，路上也该有来回的信。这一袋写着昭元和港口的平安，送到霜关，第一趟回信就算开了。",
+      "progress_dialogue": "把青姨封好的归路邮袋带到霜关驿中段，交给归路信使",
+      "ready_dialogue": "信使接过邮袋，按三城次序把名字核了一遍。",
+      "completion_dialogue": "第一袋回信到驿。信使立起归路邮箱，今后的平安不必只留在碑里。",
+      "world_feedback": "邮袋当面消费、报酬一次结清；驿站留下一只三城邮箱",
+      "accept_item": "return_mailbag",
+      "turn_in_item": "return_mailbag",
+      "completion_flags": {
+        "act4_reply_route_open": true
+      }
+    },
+    {
+      "id": "a4_secret_runes",
+      "category": "精英秘闻",
+      "title": "碑心留下的温度",
+      "requires_story": "s36",
+      "giver": "npc_frost_miner",
+      "map": "stele_core",
+      "clue": "碑心停下了，石头未必冷透。替我看看三道余纹，我想知道工匠能把什么留给后来人；不用再打一次首领。",
+      "objective": {
+        "kind": "observe",
+        "map": "stele_core",
+        "count": 3,
+        "target_entities": [
+          "a4_rune_forest",
+          "a4_rune_tide",
+          "a4_rune_snow"
+        ]
+      },
+      "objective_text": "重返碑心房查看三道余纹，回霜关找陶铎决定如何记录",
+      "turn_in": "npc_frost_miner",
+      "turn_in_map": "frost_post",
+      "reward": {
+        "gold": 340,
+        "items": {
+          "refine_stone": 1
+        }
+      },
+      "accept_dialogue": "碑心停下了，石头未必冷透。替我看看三道余纹，我想知道工匠能把什么留给后来人；不用再打一次首领。",
+      "progress_dialogue": "重返碑心房查看三道余纹，回霜关找陶铎决定如何记录",
+      "ready_dialogue": "林纹柔，潮纹亮，雪纹稳。拓下来给后来人读，或只记在心里，都能给这段路一个交代。",
+      "completion_dialogue": "陶铎收好碑心的记录：造路的人，也记得走过路的人。",
+      "world_feedback": "碑心保留明亮拓纹或安静余温，两种选择等值",
+      "choices": {
+        "trace": {
+          "title": "拓纹 · 留给后来人",
+          "flags": {
+            "act4_rune_memory": "trace"
+          },
+          "dialogue": "陶铎把三道纹路拓进工匠册。后来人能读到这段归路。"
+        },
+        "quiet": {
+          "title": "告别 · 让碑心歇息",
+          "flags": {
+            "act4_rune_memory": "quiet"
+          },
+          "dialogue": "陶铎合上空白的纸，把三道余温记在心里。碑心终于可以歇一歇。"
+        }
+      }
     }
   ]
 }

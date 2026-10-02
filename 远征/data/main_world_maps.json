@@ -9,14 +9,17 @@
     {"id": "old_salt_road", "name": "旧盐道", "kind": "野外", "level": [10, 16], "point": [445, 75]},
     {"id": "shenyuan_port", "name": "沉渊港", "kind": "城镇", "level": [10, 18], "point": [620, 75]},
     {"id": "tideflat", "name": "潮痕滩", "kind": "野外", "level": [13, 20], "point": [795, 75]},
-    {"id": "tidal_gate", "name": "退潮水闸", "kind": "首领", "level": [16, 22], "point": [795, 240]},
+    {"id": "tidal_gate", "name": "退潮水闸", "kind": "首领", "level": [16, 23], "point": [795, 240]},
     {"id": "red_sand_route", "name": "赤砂商路", "kind": "野外", "level": [20, 28], "point": [620, 240]},
     {"id": "frost_post", "name": "霜关驿", "kind": "城镇", "level": [22, 32], "point": [620, 400]},
     {"id": "rift_mine_road", "name": "裂谷矿道", "kind": "野外", "level": [24, 34], "point": [795, 400]},
     {"id": "rift_mine_vault", "name": "裂谷矿脉", "kind": "首领", "level": [26, 36], "point": [970, 400]},
     {"id": "frost_boardwalk", "name": "霜林栈道", "kind": "野外", "level": [26, 36], "point": [620, 560]},
-    {"id": "frost_pass", "name": "冰隘", "kind": "首领", "level": [26, 36], "point": [795, 560]},
-    {"id": "abyss_ring", "name": "渊口外环", "kind": "野外", "level": [43, 49], "point": [970, 560]}
+    {"id": "frost_pass", "name": "冰隘", "kind": "首领", "level": [26, 40], "point": [795, 560]},
+    {"id": "abyss_ring", "name": "渊口外环", "kind": "野外", "level": [43, 49], "point": [970, 560]},
+    {"id": "stele_entry", "name": "归路门厅", "kind": "副本", "level": [49, 50], "point": [1150, 240]},
+    {"id": "stele_resonance", "name": "三声共鸣廊", "kind": "副本", "level": [50, 53], "point": [1150, 400]},
+    {"id": "stele_core", "name": "碑心", "kind": "首领", "level": [53, 57], "point": [1150, 560]}
   ],
   "maps": {
     "lorin_wilds": {
@@ -70,27 +73,106 @@
       "city": false,
       "theme": "forest",
       "tint": "ffd9a3",
-      "decos": ["028_deco_forest_tree", "031_deco_forest_shrub", "032_deco_forest_grass",
-        "033_deco_forest_ruin"],
+      "decos": [
+        "028_deco_forest_tree",
+        "031_deco_forest_shrub",
+        "032_deco_forest_grass",
+        "033_deco_forest_ruin"
+      ],
       "background": "",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 2,
       "player_scale": 0.54,
       "camera_zoom": 1.15,
-      "spawn": [480, 1040],
-      "spawn_points": {"from_city": [480, 1060], "from_broken_slope": [480, 190], "from_old_salt_road": [760, 660]},
+      "spawn": [
+        480,
+        1040
+      ],
+      "spawn_points": {
+        "from_city": [
+          480,
+          1060
+        ],
+        "from_broken_slope": [
+          480,
+          190
+        ],
+        "from_old_salt_road": [
+          760,
+          660
+        ]
+      },
       "exits": [
-        {"id": "south_gate", "at": [480, 1152], "to": "lorin_wilds", "arrival": "from_maple_road", "label": "昭元边城"},
-        {"id": "north_path", "at": [480, 96], "to": "broken_slope", "arrival": "from_maple_road", "label": "断碑坡"},
-        {"id": "east_salt_path", "at": [864, 660], "to": "old_salt_road", "arrival": "from_maple_road", "label": "旧盐道", "requires_story": "s12", "locked_hint": "先回边城向闻叔复命，再走旧盐道"}
+        {
+          "id": "south_gate",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "lorin_wilds",
+          "arrival": "from_maple_road",
+          "label": "昭元边城"
+        },
+        {
+          "id": "north_path",
+          "at": [
+            480,
+            96
+          ],
+          "to": "broken_slope",
+          "arrival": "from_maple_road",
+          "label": "断碑坡"
+        },
+        {
+          "id": "east_salt_path",
+          "at": [
+            864,
+            660
+          ],
+          "to": "old_salt_road",
+          "arrival": "from_maple_road",
+          "label": "旧盐道",
+          "requires_story": "s12",
+          "locked_hint": "先回边城向闻叔复命，再走旧盐道"
+        }
       ],
       "goal": "循古道前往断碑坡，留意路旁游荡的敌影",
       "node_type": "normal",
       "monster_count": 5,
-      "monster_positions": [[210, 390], [750, 470], [185, 705], [780, 830], [305, 915]],
-      "monster_ids": ["mon_wolf", "mon_spider", "mon_goblin"],
-      "battle_rewards": {"normal": {"gold": 38, "exp": 28}},
+      "monster_positions": [
+        [
+          210,
+          390
+        ],
+        [
+          750,
+          470
+        ],
+        [
+          185,
+          705
+        ],
+        [
+          780,
+          830
+        ],
+        [
+          305,
+          915
+        ]
+      ],
+      "monster_ids": [
+        "mon_wolf",
+        "mon_spider",
+        "mon_goblin"
+      ],
+      "battle_rewards": {
+        "normal": {
+          "gold": 38,
+          "exp": 28
+        }
+      },
       "monster_sprite": "",
       "monster_height": 62,
       "monster_level_offset": 1,
@@ -100,18 +182,76 @@
       "monster_contact_radius": 40,
       "encounter_solo": true,
       "entities": {
-        "a1_chime": {"kind": "collect", "quest": "a1_rel_child", "art": "chime",
-          "name": "旧风铃", "at": [330, 640]},
-        "act1_waystone_cache": {"kind": "cache", "quest": "", "art": "cache",
-          "name": "旧路石匣", "at": [540, 590]},
-        "a1_roots_a": {"kind": "collect", "quest": "a1_eco_roots", "art": "root",
-          "name": "草根", "at": [245, 545]},
-        "a1_roots_b": {"kind": "collect", "quest": "a1_eco_roots", "art": "root",
-          "name": "草根", "at": [700, 985]},
-        "a1_postrider": {"kind": "deliver", "quest": "a1_trade_cart", "art": "post",
-          "name": "交付盐袋", "at": [600, 300]},
-        "trade_maple_post": {"kind": "trade", "quest": "", "art": "post",
-          "name": "驿亭交易", "at": [685, 310]}
+        "a1_chime": {
+          "kind": "collect",
+          "quest": "a1_rel_child",
+          "art": "chime",
+          "name": "旧风铃",
+          "at": [
+            330,
+            640
+          ]
+        },
+        "act1_waystone_cache": {
+          "kind": "cache",
+          "quest": "",
+          "art": "cache",
+          "name": "旧路石匣",
+          "at": [
+            540,
+            590
+          ]
+        },
+        "a1_roots_a": {
+          "kind": "collect",
+          "quest": "a1_eco_roots",
+          "art": "root",
+          "name": "草根",
+          "at": [
+            245,
+            545
+          ]
+        },
+        "a1_roots_b": {
+          "kind": "collect",
+          "quest": "a1_eco_roots",
+          "art": "root",
+          "name": "草根",
+          "at": [
+            700,
+            985
+          ]
+        },
+        "a1_postrider": {
+          "kind": "deliver",
+          "quest": "a1_trade_cart",
+          "art": "post",
+          "name": "交付盐袋",
+          "at": [
+            600,
+            300
+          ]
+        },
+        "trade_maple_post": {
+          "kind": "trade",
+          "quest": "",
+          "art": "post",
+          "name": "驿亭交易",
+          "at": [
+            685,
+            310
+          ]
+        },
+        "a4_waylight": {
+          "quest": "a4_rel_waylight",
+          "kind": "observe",
+          "art": "return_lamp",
+          "name": "古道路灯",
+          "at": [
+            520,
+            460
+          ]
+        }
       }
     },
     "broken_slope": {
@@ -172,32 +312,163 @@
       }
     },
     "old_salt_road": {
-      "name": "旧盐道", "city": false, "theme": "desert", "tint": "e5d4b6",
-      "decos": ["030_deco_forest_rocks", "029_deco_forest_deadtree", "033_deco_forest_ruin"],
-      "background": "", "map_cols": 20, "map_rows": 26, "layout_version": 1,
-      "player_scale": 0.54, "camera_zoom": 1.15, "spawn": [160, 660],
-      "spawn_points": {"from_maple_road": [160, 660], "from_shenyuan_port": [760, 660]},
+      "name": "旧盐道",
+      "city": false,
+      "theme": "desert",
+      "tint": "e5d4b6",
+      "decos": [
+        "030_deco_forest_rocks",
+        "029_deco_forest_deadtree",
+        "033_deco_forest_ruin"
+      ],
+      "background": "",
+      "map_cols": 20,
+      "map_rows": 26,
+      "layout_version": 1,
+      "player_scale": 0.54,
+      "camera_zoom": 1.15,
+      "spawn": [
+        160,
+        660
+      ],
+      "spawn_points": {
+        "from_maple_road": [
+          160,
+          660
+        ],
+        "from_shenyuan_port": [
+          760,
+          660
+        ]
+      },
       "exits": [
-        {"id": "west_path", "at": [90, 660], "to": "maple_road", "arrival": "from_old_salt_road", "label": "枫林古道"},
-        {"id": "east_port", "at": [864, 660], "to": "shenyuan_port", "arrival": "from_old_salt_road", "label": "沉渊港"}
+        {
+          "id": "west_path",
+          "at": [
+            90,
+            660
+          ],
+          "to": "maple_road",
+          "arrival": "from_old_salt_road",
+          "label": "枫林古道"
+        },
+        {
+          "id": "east_port",
+          "at": [
+            864,
+            660
+          ],
+          "to": "shenyuan_port",
+          "arrival": "from_old_salt_road",
+          "label": "沉渊港"
+        }
       ],
       "goal": "沿旧盐道查看断桥盐车，再往东到沉渊港",
-      "node_type": "normal", "monster_count": 4,
-      "monster_positions": [[270, 390], [710, 410], [275, 870], [735, 940]],
-      "monster_ids": ["mon_wolf", "mon_skeleton"],
-      "battle_rewards": {"normal": {"gold": 60, "exp": 42}},
-      "monster_sprite": "", "monster_height": 70, "monster_level_offset": 2,
-      "monster_wander_only": true, "monster_wander_radius": 42,
-      "monster_respawn_seconds": 120, "monster_contact_radius": 40,
+      "node_type": "normal",
+      "monster_count": 4,
+      "monster_positions": [
+        [
+          270,
+          390
+        ],
+        [
+          710,
+          410
+        ],
+        [
+          275,
+          870
+        ],
+        [
+          735,
+          940
+        ]
+      ],
+      "monster_ids": [
+        "mon_wolf",
+        "mon_skeleton"
+      ],
+      "battle_rewards": {
+        "normal": {
+          "gold": 60,
+          "exp": 42
+        }
+      },
+      "monster_sprite": "",
+      "monster_height": 70,
+      "monster_level_offset": 2,
+      "monster_wander_only": true,
+      "monster_wander_radius": 42,
+      "monster_respawn_seconds": 120,
+      "monster_contact_radius": 40,
       "encounter_solo": true,
       "entities": {
-        "salt_cart_ledger": {"kind": "story", "quest": "", "story_step": "s15",
-          "show_steps": ["s14", "s15"], "story_event": "collect", "art": "salt_cart",
-          "name": "断桥盐车 · 账页", "at": [480, 500]},
-        "fish_salt_spring": {"kind": "fishing", "quest": "", "art": "fishing", "name": "断桥盐泉 · 垂钓", "at": [625, 535]},
-        "a2_salt_mark_a": {"kind": "observe", "quest": "a2_eco_salt", "art": "salt_marks", "name": "断桥北 · 白纹", "at": [640, 345]},
-        "a2_salt_mark_b": {"kind": "observe", "quest": "a2_eco_salt", "art": "salt_marks", "name": "断桥南 · 白纹", "at": [325, 985]},
-        "a2_salt_courier": {"kind": "deliver", "quest": "a2_trade_message", "art": "courier", "name": "断桥盐客 · 口信", "at": [550, 830]}
+        "salt_cart_ledger": {
+          "kind": "story",
+          "quest": "",
+          "story_step": "s15",
+          "show_steps": [
+            "s14",
+            "s15"
+          ],
+          "story_event": "collect",
+          "art": "salt_cart",
+          "name": "断桥盐车 · 账页",
+          "at": [
+            480,
+            500
+          ]
+        },
+        "fish_salt_spring": {
+          "kind": "fishing",
+          "quest": "",
+          "art": "fishing",
+          "name": "断桥盐泉 · 垂钓",
+          "at": [
+            625,
+            535
+          ]
+        },
+        "a2_salt_mark_a": {
+          "kind": "observe",
+          "quest": "a2_eco_salt",
+          "art": "salt_marks",
+          "name": "断桥北 · 白纹",
+          "at": [
+            640,
+            345
+          ]
+        },
+        "a2_salt_mark_b": {
+          "kind": "observe",
+          "quest": "a2_eco_salt",
+          "art": "salt_marks",
+          "name": "断桥南 · 白纹",
+          "at": [
+            325,
+            985
+          ]
+        },
+        "a2_salt_courier": {
+          "kind": "deliver",
+          "quest": "a2_trade_message",
+          "art": "courier",
+          "name": "断桥盐客 · 口信",
+          "at": [
+            550,
+            830
+          ]
+        },
+        "a4_old_letter": {
+          "quest": "a4_rel_letter",
+          "kind": "collect",
+          "art": "return_letter",
+          "name": "折角家书",
+          "at": [
+            480,
+            480
+          ]
+        }
       }
     },
     "shenyuan_port": {
@@ -228,51 +499,226 @@
       }
     },
     "tideflat": {
-      "name": "潮痕滩", "city": false, "theme": "desert", "tint": "b9d7d3",
-      "decos": ["030_deco_forest_rocks", "031_deco_forest_shrub", "034_deco_forest_bones"],
-      "background": "", "map_cols": 20, "map_rows": 26, "layout_version": 1,
-      "player_scale": 0.54, "camera_zoom": 1.15, "spawn": [165, 700],
-      "spawn_points": {"from_shenyuan_port": [165, 700], "from_tidal_gate": [480, 200]},
+      "name": "潮痕滩",
+      "city": false,
+      "theme": "desert",
+      "tint": "b9d7d3",
+      "decos": [
+        "030_deco_forest_rocks",
+        "031_deco_forest_shrub",
+        "034_deco_forest_bones"
+      ],
+      "background": "",
+      "map_cols": 20,
+      "map_rows": 26,
+      "layout_version": 1,
+      "player_scale": 0.54,
+      "camera_zoom": 1.15,
+      "spawn": [
+        165,
+        700
+      ],
+      "spawn_points": {
+        "from_shenyuan_port": [
+          165,
+          700
+        ],
+        "from_tidal_gate": [
+          480,
+          200
+        ]
+      },
       "exits": [
-        {"id": "west_port", "at": [90, 700], "to": "shenyuan_port", "arrival": "from_tideflat", "label": "沉渊港"},
-        {"id": "north_gate", "at": [480, 96], "to": "tidal_gate", "arrival": "from_tideflat", "label": "退潮水闸", "requires_story": "s18", "locked_hint": "先击败闸门守卫，取得闸门线索"}
+        {
+          "id": "west_port",
+          "at": [
+            90,
+            700
+          ],
+          "to": "shenyuan_port",
+          "arrival": "from_tideflat",
+          "label": "沉渊港"
+        },
+        {
+          "id": "north_gate",
+          "at": [
+            480,
+            96
+          ],
+          "to": "tidal_gate",
+          "arrival": "from_tideflat",
+          "label": "退潮水闸",
+          "requires_story": "s18",
+          "locked_hint": "先击败闸门守卫，取得闸门线索"
+        }
       ],
       "goal": "查看涨潮货堆，击败守卫取得水闸线索",
-      "node_type": "normal", "monster_count": 4,
-      "monster_positions": [[550, 525], [600, 655], [330, 900], [610, 945]],
-      "monster_ids": ["mon_tidal_guard", "mon_salt_crab", "mon_tidal_guard", "mon_salt_crab"],
-      "monster_slot_ids": ["mon_tidal_guard", "mon_salt_crab", "mon_tidal_guard", "mon_salt_crab"],
-      "battle_rewards": {"normal": {"gold": 75, "exp": 56}},
-      "monster_sprite": "", "monster_height": 76, "monster_level_offset": 2,
+      "node_type": "normal",
+      "monster_count": 4,
+      "monster_positions": [
+        [
+          550,
+          525
+        ],
+        [
+          600,
+          655
+        ],
+        [
+          330,
+          900
+        ],
+        [
+          610,
+          945
+        ]
+      ],
+      "monster_ids": [
+        "mon_tidal_guard",
+        "mon_salt_crab",
+        "mon_tidal_guard",
+        "mon_salt_crab"
+      ],
+      "monster_slot_ids": [
+        "mon_tidal_guard",
+        "mon_salt_crab",
+        "mon_tidal_guard",
+        "mon_salt_crab"
+      ],
+      "battle_rewards": {
+        "normal": {
+          "gold": 75,
+          "exp": 56
+        }
+      },
+      "monster_sprite": "",
+      "monster_height": 76,
+      "monster_level_offset": 2,
       "monster_sprite_paths": {
         "mon_salt_crab": "res://image/main_world/mon_salt_crab.png",
         "mon_tidal_guard": "res://image/main_world/mon_tidal_guard.png",
         "mon_salt_scale": "res://image/main_world/mon_salt_scale.png"
       },
-      "monster_wander_only": true, "monster_wander_radius": 38,
-      "monster_respawn_seconds": 110, "monster_contact_radius": 42,
+      "monster_wander_only": true,
+      "monster_wander_radius": 38,
+      "monster_respawn_seconds": 110,
+      "monster_contact_radius": 42,
       "encounter_solo": true,
       "optional_bosses": [
-        {"id": "salt_scale_king", "mon_id": "mon_salt_scale", "at": [270, 1000],
-          "level_offset": 4, "height": 106, "sprite": "res://image/main_world/mon_salt_scale.png", "contact_radius": 56,
-          "wander_radius": 20, "respawn_seconds": 600,
-          "first_kill": {"tx_scope": "act2", "flag": "act2_salt_scale_down", "discovery": "mon_salt_scale",
+        {
+          "id": "salt_scale_king",
+          "mon_id": "mon_salt_scale",
+          "at": [
+            270,
+            1000
+          ],
+          "level_offset": 4,
+          "height": 106,
+          "sprite": "res://image/main_world/mon_salt_scale.png",
+          "contact_radius": 56,
+          "wander_radius": 20,
+          "respawn_seconds": 600,
+          "first_kill": {
+            "tx_scope": "act2",
+            "flag": "act2_salt_scale_down",
+            "discovery": "mon_salt_scale",
             "equips": {
-              "zs": {"tpl": "tpl_sword_ruin", "rarity": 3},
-              "ck": {"tpl": "tpl_spear_iron", "rarity": 3},
-              "fs": {"tpl": "tpl_staff_frost", "rarity": 3},
-              "fz": {"tpl": "tpl_hammer_dawn", "rarity": 3}
-            }}
+              "zs": {
+                "tpl": "tpl_sword_ruin",
+                "rarity": 3
+              },
+              "ck": {
+                "tpl": "tpl_spear_iron",
+                "rarity": 3
+              },
+              "fs": {
+                "tpl": "tpl_staff_frost",
+                "rarity": 3
+              },
+              "fz": {
+                "tpl": "tpl_hammer_dawn",
+                "rarity": 3
+              }
+            }
+          }
         }
       ],
       "entities": {
-        "tide_cargo": {"kind": "story", "quest": "", "story_step": "s17",
-          "show_steps": ["s17"], "story_event": "observe", "art": "tide_cargo",
-          "name": "潮印货堆", "at": [410, 700]},
-        "fish_tide_pool": {"kind": "fishing", "quest": "", "art": "fishing", "name": "潮痕浅池 · 垂钓", "at": [310, 560]},
-        "a2_drift_feather": {"kind": "collect", "quest": "a2_rel_feather", "art": "feather", "name": "避风浅池 · 漂羽", "at": [625, 850]},
-        "a2_tide_grass_a": {"kind": "collect", "quest": "a2_eco_grass", "art": "root", "name": "北浅水 · 潮草", "at": [580, 380]},
-        "a2_tide_grass_b": {"kind": "collect", "quest": "a2_eco_grass", "art": "root", "name": "南盐纹 · 潮草", "at": [585, 1015]}
+        "tide_cargo": {
+          "kind": "story",
+          "quest": "",
+          "story_step": "s17",
+          "show_steps": [
+            "s17"
+          ],
+          "story_event": "observe",
+          "art": "tide_cargo",
+          "name": "潮印货堆",
+          "at": [
+            410,
+            700
+          ]
+        },
+        "fish_tide_pool": {
+          "kind": "fishing",
+          "quest": "",
+          "art": "fishing",
+          "name": "潮痕浅池 · 垂钓",
+          "at": [
+            310,
+            560
+          ]
+        },
+        "a2_drift_feather": {
+          "kind": "collect",
+          "quest": "a2_rel_feather",
+          "art": "feather",
+          "name": "避风浅池 · 漂羽",
+          "at": [
+            625,
+            850
+          ]
+        },
+        "a2_tide_grass_a": {
+          "kind": "collect",
+          "quest": "a2_eco_grass",
+          "art": "root",
+          "name": "北浅水 · 潮草",
+          "at": [
+            580,
+            380
+          ]
+        },
+        "a2_tide_grass_b": {
+          "kind": "collect",
+          "quest": "a2_eco_grass",
+          "art": "root",
+          "name": "南盐纹 · 潮草",
+          "at": [
+            585,
+            1015
+          ]
+        },
+        "a4_tidebud_south": {
+          "quest": "a4_eco_tidebuds",
+          "kind": "collect",
+          "art": "return_tidebud",
+          "name": "南滩新芽",
+          "at": [
+            480,
+            390
+          ]
+        },
+        "a4_tidebud_north": {
+          "quest": "a4_eco_tidebuds",
+          "kind": "collect",
+          "art": "return_tidebud",
+          "name": "北滩新芽",
+          "at": [
+            480,
+            810
+          ]
+        }
       }
     },
     "tidal_gate": {
@@ -538,6 +984,16 @@
           "at": [
             365,
             660
+          ]
+        },
+        "a4_reply_courier": {
+          "quest": "a4_trade_reply",
+          "kind": "deliver",
+          "art": "frost_courier",
+          "name": "归路信使",
+          "at": [
+            480,
+            630
           ]
         }
       }
@@ -1012,6 +1468,26 @@
             525,
             310
           ]
+        },
+        "a4_snowflower_south": {
+          "quest": "a4_eco_snowflowers",
+          "kind": "collect",
+          "art": "return_snowflower",
+          "name": "南段雪线花",
+          "at": [
+            480,
+            835
+          ]
+        },
+        "a4_snowflower_north": {
+          "quest": "a4_eco_snowflowers",
+          "kind": "collect",
+          "art": "return_snowflower",
+          "name": "北段雪线花",
+          "at": [
+            480,
+            400
+          ]
         }
       }
     },
@@ -1035,6 +1511,10 @@
         "from_frost_pass": [
           480,
           1030
+        ],
+        "from_stele_entry": [
+          480,
+          185
         ]
       },
       "exits": [
@@ -1047,10 +1527,22 @@
           "to": "frost_pass",
           "arrival": "from_abyss_ring",
           "label": "冰隘"
+        },
+        {
+          "id": "north_depth",
+          "at": [
+            480,
+            96
+          ],
+          "to": "stele_entry",
+          "arrival": "from_abyss_ring",
+          "label": "归路门厅",
+          "requires_story": "s32",
+          "locked_hint": "先把渊口回响交给青姨，取得归路凭证"
         }
       ],
       "decos": [],
-      "goal": "查看三地共鸣，留下归路后再往界碑深处",
+      "goal": "沿北门入界碑深处，归路仍能往返",
       "node_type": "normal",
       "monster_count": 4,
       "monster_positions": [
@@ -1095,6 +1587,12 @@
           100,
           260,
           1080
+        ],
+        [
+          580,
+          205,
+          180,
+          180
         ]
       ],
       "block_rects": [
@@ -1116,13 +1614,453 @@
           "kind": "story",
           "quest": "",
           "story_step": "s31",
-          "show_steps": ["s30", "s31"],
+          "show_steps": [
+            "s30",
+            "s31"
+          ],
           "story_event": "observe",
           "art": "resonance",
           "name": "共鸣碑座",
           "at": [
             480,
             625
+          ]
+        }
+      },
+    "optional_bosses": [
+      {
+        "id": "nameless_warden",
+          "mon_id": "mon_nameless_warden",
+          "at": [
+            675,
+            285
+          ],
+          "requires_story": "s36",
+          "level_offset": 15,
+          "height": 112,
+          "contact_radius": 40,
+          "wander_radius": 20,
+          "respawn_seconds": 600,
+          "first_kill": {
+            "tx_scope": "act4",
+            "flag": "act4_nameless_down",
+            "discovery": "mon_nameless_warden",
+            "equips": {
+              "zs": {
+                "tpl": "tpl_sword_boundary",
+                "rarity": 4
+              },
+              "ck": {
+                "tpl": "tpl_spear_boundary",
+                "rarity": 4
+              },
+              "fs": {
+                "tpl": "tpl_staff_boundary",
+                "rarity": 4
+              },
+              "fz": {
+                "tpl": "tpl_hammer_boundary",
+                "rarity": 4
+              }
+            }
+          }
+        }
+      ]
+    },
+    "stele_entry": {
+      "name": "归路门厅",
+      "theme": "abyss",
+      "tint": "b7b8c8",
+      "map_cols": 20,
+      "map_rows": 26,
+      "layout_version": 1,
+      "player_scale": 0.66,
+      "camera_zoom": 1.15,
+      "spawn": [
+        480,
+        1030
+      ],
+      "spawn_points": {
+        "from_abyss_ring": [
+          480,
+          1030
+        ],
+        "from_resonance": [
+          480,
+          185
+        ]
+      },
+      "exits": [
+        {
+          "id": "south",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "abyss_ring",
+          "arrival": "from_stele_entry",
+          "label": "渊口外环"
+        },
+        {
+          "id": "north",
+          "at": [
+            480,
+            96
+          ],
+          "to": "stele_resonance",
+          "arrival": "from_entry",
+          "label": "三声共鸣廊",
+          "requires_flags": [
+            "act4_return_anchor"
+          ],
+          "locked_hint": "先点亮门厅中央的归路锚，留下返回方向"
+        }
+      ],
+      "exit": [
+        480,
+        96
+      ],
+      "goal": "点亮归路锚，向北校准三地碑声",
+      "node_type": "normal",
+      "monster_count": 0,
+      "monster_ids": [
+        "mon_voidling"
+      ],
+      "monster_positions": [],
+      "battle_rewards": {
+        "boss": {
+          "gold": 180,
+          "exp": 0
+        }
+      },
+      "monster_height": 122,
+      "monster_level_offset": 0,
+      "monster_wander_only": true,
+      "monster_wander_radius": 16,
+      "monster_respawn_seconds": 600,
+      "monster_contact_radius": 40,
+      "encounter_solo": true,
+      "dismount_on_entry": true,
+      "decos": [
+        "041_deco_tomb_gravestone"
+      ],
+      "clear_rects": [
+        [
+          210,
+          80,
+          540,
+          1100
+        ]
+      ],
+      "block_rects": [
+        [
+          0,
+          0,
+          180,
+          1248
+        ],
+        [
+          780,
+          0,
+          180,
+          1248
+        ]
+      ],
+      "entities": {
+        "return_anchor": {
+          "kind": "puzzle",
+          "art": "stele_anchor",
+          "name": "归路锚",
+          "at": [
+            480,
+            625
+          ],
+          "requires_story": "s33",
+          "flag": "act4_return_anchor",
+          "completion": "归路锚亮起。来时的门仍然开着，三地的碑声在北廊等待。"
+        }
+      }
+    },
+    "stele_resonance": {
+      "name": "三声共鸣廊",
+      "theme": "abyss",
+      "tint": "b7b8c8",
+      "map_cols": 20,
+      "map_rows": 26,
+      "layout_version": 1,
+      "player_scale": 0.66,
+      "camera_zoom": 1.15,
+      "spawn": [
+        480,
+        1030
+      ],
+      "spawn_points": {
+        "from_entry": [
+          480,
+          1030
+        ],
+        "from_core": [
+          480,
+          185
+        ]
+      },
+      "exits": [
+        {
+          "id": "south",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "stele_entry",
+          "arrival": "from_resonance",
+          "label": "归路门厅"
+        },
+        {
+          "id": "north",
+          "at": [
+            480,
+            96
+          ],
+          "to": "stele_core",
+          "arrival": "from_resonance",
+          "label": "碑心",
+          "requires_story": "s34",
+          "locked_hint": "先校准三块声碑，再在北侧碑座汇成稳定封记"
+        }
+      ],
+      "exit": [
+        480,
+        96
+      ],
+      "goal": "先林声、再潮声、后雪声；在北侧共鸣座汇成封记",
+      "node_type": "normal",
+      "monster_count": 0,
+      "monster_ids": [
+        "mon_voidling"
+      ],
+      "monster_positions": [],
+      "battle_rewards": {
+        "boss": {
+          "gold": 180,
+          "exp": 0
+        }
+      },
+      "monster_height": 122,
+      "monster_level_offset": 0,
+      "monster_wander_only": true,
+      "monster_wander_radius": 16,
+      "monster_respawn_seconds": 600,
+      "monster_contact_radius": 40,
+      "encounter_solo": true,
+      "dismount_on_entry": true,
+      "decos": [
+        "041_deco_tomb_gravestone"
+      ],
+      "clear_rects": [
+        [
+          210,
+          80,
+          540,
+          1100
+        ]
+      ],
+      "block_rects": [
+        [
+          0,
+          0,
+          180,
+          1248
+        ],
+        [
+          780,
+          0,
+          180,
+          1248
+        ]
+      ],
+      "entities": {
+        "forest_voice": {
+          "kind": "puzzle",
+          "art": "stele_anchor",
+          "name": "林声碑",
+          "at": [
+            335,
+            880
+          ],
+          "requires_story": "s33",
+          "requires_flags": [
+            "act4_return_anchor"
+          ],
+          "flag": "act4_forest_voice",
+          "completion": "林间送信人的脚步归入碑声。下一块潮声碑在廊道东侧。"
+        },
+        "tide_voice": {
+          "kind": "puzzle",
+          "art": "stele_anchor",
+          "name": "潮声碑",
+          "at": [
+            625,
+            625
+          ],
+          "requires_story": "s33",
+          "requires_flags": [
+            "act4_forest_voice"
+          ],
+          "flag": "act4_tide_voice",
+          "completion": "港口的潮钟与林声对齐。雪声碑在北侧等候。"
+        },
+        "snow_voice": {
+          "kind": "puzzle",
+          "art": "stele_anchor",
+          "name": "雪声碑",
+          "at": [
+            335,
+            375
+          ],
+          "requires_story": "s33",
+          "requires_flags": [
+            "act4_tide_voice"
+          ],
+          "flag": "act4_snow_voice",
+          "completion": "雪关的换岗号角归入同一页。到北侧共鸣座收拢封记。"
+        },
+        "aligned_voices": {
+          "kind": "story",
+          "art": "resonance",
+          "name": "三声共鸣座",
+          "at": [
+            480,
+            230
+          ],
+          "story_step": "s34",
+          "show_steps": [
+            "s34"
+          ],
+          "story_event": "observe",
+          "requires_flags": [
+            "act4_snow_voice"
+          ]
+        }
+      }
+    },
+    "stele_core": {
+      "name": "碑心",
+      "theme": "abyss",
+      "tint": "b7b8c8",
+      "map_cols": 20,
+      "map_rows": 26,
+      "layout_version": 1,
+      "player_scale": 0.66,
+      "camera_zoom": 1.15,
+      "spawn": [
+        480,
+        1030
+      ],
+      "spawn_points": {
+        "from_resonance": [
+          480,
+          1030
+        ]
+      },
+      "exits": [
+        {
+          "id": "south",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "stele_resonance",
+          "arrival": "from_core",
+          "label": "三声共鸣廊"
+        }
+      ],
+      "exit": [
+        480,
+        96
+      ],
+      "goal": "击破三地余响，趁碑震后破绽对抗渊脉化身",
+      "node_type": "boss",
+      "monster_count": 0,
+      "monster_ids": [
+        "mon_abyss_avatar"
+      ],
+      "monster_positions": [
+        [
+          480,
+          570
+        ]
+      ],
+      "battle_rewards": {
+        "boss": {
+          "gold": 180,
+          "exp": 0
+        }
+      },
+      "monster_height": 122,
+      "monster_level_offset": 0,
+      "monster_wander_only": true,
+      "monster_wander_radius": 16,
+      "monster_respawn_seconds": 600,
+      "monster_contact_radius": 40,
+      "encounter_solo": true,
+      "dismount_on_entry": true,
+      "decos": [
+        "041_deco_tomb_gravestone"
+      ],
+      "clear_rects": [
+        [
+          210,
+          80,
+          540,
+          1100
+        ]
+      ],
+      "block_rects": [
+        [
+          0,
+          0,
+          180,
+          1248
+        ],
+        [
+          780,
+          0,
+          180,
+          1248
+        ]
+      ],
+      "boss_id": "mon_abyss_avatar",
+      "allow_boss_flee": true,
+      "fixed_boss_rewards": true,
+      "entities": {
+        "a4_rune_forest": {
+          "quest": "a4_secret_runes",
+          "kind": "observe",
+          "art": "return_rune",
+          "name": "林声余纹",
+          "at": [
+            350,
+            370
+          ]
+        },
+        "a4_rune_tide": {
+          "quest": "a4_secret_runes",
+          "kind": "observe",
+          "art": "return_rune",
+          "name": "潮声余纹",
+          "at": [
+            610,
+            600
+          ]
+        },
+        "a4_rune_snow": {
+          "quest": "a4_secret_runes",
+          "kind": "observe",
+          "art": "return_rune",
+          "name": "雪声余纹",
+          "at": [
+            350,
+            850
           ]
         }
       }

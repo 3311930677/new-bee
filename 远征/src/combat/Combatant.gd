@@ -5,8 +5,8 @@ extends RefCounted
 
 const ROW_FRONT := 0
 const ROW_BACK := 1
-const MAX_ENERGY := 100
-const BASIC_INTERVAL_TICKS := 60  # 普攻基准 2.0s = 60 ticks（÷SPD 在 getter 计算）
+const MAX_ENERGY := 100            # 同 data/growth.json energy.max（编译期常量，改表须同步——UI 按静态访问）
+const BASIC_INTERVAL_TICKS := 60   # 普攻基准 2.0s = 60 ticks（÷SPD 在 getter）；同 growth.json basic_attack_interval
 
 var uid: int = 0
 var kind: String = ""            # "role" / "monster" / "pet"
@@ -429,11 +429,11 @@ func do_basic_attack(sim: BattleSim) -> void:
 	if has_buff("confusion"):
 		dmg = maxi(1, dmg / 2)
 		halved = true
-	# 词条：先发制人（本场首次普攻 ×2）
+	# 词条：先发制人（本场首次普攻 ×表值 first_hit_k）
 	if traits != null and not once_flags.has("first_strike"):
 		once_flags["first_strike"] = true
 		if traits.has_first_strike():
-			dmg *= 2
+			dmg = int(float(dmg) * traits.first_strike_k())
 	# 词条出手修正（处决者/碎冰等与技能共用——修「处决者只对技能生效」，P1-12）
 	if traits != null:
 		dmg = traits.modify_outgoing(self, target, dmg, false, false)
@@ -459,5 +459,6 @@ func do_basic_attack(sim: BattleSim) -> void:
 		traits.on_hit(sim, self, target, dealt, is_crit, false)
 		if is_crit:
 			traits.on_crit(sim, self, target)
-	# 普攻 +20 能量
-	gain_energy(20)
+	# 普攻 +表值能量（growth.json energy.per_basic_attack）
+	var energy_cfg: Dictionary = TableCache.growth().get("energy", {})
+	gain_energy(int(energy_cfg.get("per_basic_attack", 20)))

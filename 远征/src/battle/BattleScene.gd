@@ -6,6 +6,8 @@ extends Control
 
 signal battle_finished(result: String, hp_left: int)
 
+const CombatFX := preload("res://src/battle/BattleEffects.gd")
+
 const TICK_SEC := 1.0 / 30.0
 const VIEW_W := 480.0
 const VIEW_H := 800.0
@@ -129,10 +131,10 @@ const ALLY_FRONT_Y := 402.0
 const ALLY_BACK_Y := 474.0
 const CLASSIC_COL_Y := 180.0
 const CLASSIC_COL_GAP := 80.0
-const CLASSIC_ENEMY_BACK_X := 82.0
-const CLASSIC_ENEMY_FRONT_X := 150.0
-const CLASSIC_ALLY_FRONT_X := 360.0
-const CLASSIC_ALLY_BACK_X := 410.0
+const CLASSIC_ENEMY_BACK_X := 395.0
+const CLASSIC_ENEMY_FRONT_X := 335.0
+const CLASSIC_ALLY_FRONT_X := 130.0
+const CLASSIC_ALLY_BACK_X := 75.0
 
 const ROLE_SPRITE := {  # 人物战斗行走帧（探索/进出场用）
 	"zs": ["res://image/role/zs/pojun_walk_frames.tres", "pojun"],
@@ -253,6 +255,7 @@ var _cmd_btns: Array[Dictionary] = []  # {key, root, tile_sb, label}
 var _page_panel: Panel = null          # 技能页 / 道具页弹出条（PAGE_PANEL_POS）
 var _command_page := "root"            # root / skills / items
 var _ranged_waiting: Dictionary = {}  # "src:dst" -> 命中前正在飞行的弹道状态
+var _skill_motion_sources: Dictionary = {} # Casts resolved in the current event batch.
 var _cast_tip := Label.new()
 var _tip_tween: Tween = null
 var _combo_tip := Label.new()      # 连携窗口提示（能量条上方）
@@ -1150,7 +1153,7 @@ func _spawn_view(u: Combatant) -> UnitView:
 			# 原版功能机风：名牌贴角色身右、纯绿字无底板，格式去掉「Lv」前缀
 			v.set_classic_name("%s %d" % [player_name,
 				int((_cfg.get("ally", {}) as Dictionary).get("level", 1))],
-				Color("d7ffb0"), true)
+				Color("d7ffb0"))
 		elif u.kind == "monster":
 			var lv := int(enemy_cfg.get("display_level", 0))
 			v._hideable_name = false
@@ -1174,12 +1177,7 @@ func _spawn_view(u: Combatant) -> UnitView:
 
 
 func _grid_pos(side: String, row: int, col: int) -> Vector2:
-	if _classic_presentation():
-		return classic_grid_pos(side, row, col)
-	var x := COL_X + col * COL_GAP
-	if side == "enemy":
-		return Vector2(x, ENEMY_BACK_Y if row == Combatant.ROW_BACK else ENEMY_FRONT_Y)
-	return Vector2(x, ALLY_BACK_Y if row == Combatant.ROW_BACK else ALLY_FRONT_Y)
+	return classic_grid_pos(side, row, col)
 
 
 static func classic_grid_pos(side: String, row: int, col: int) -> Vector2:
@@ -1192,12 +1190,26 @@ static func classic_grid_pos(side: String, row: int, col: int) -> Vector2:
 
 
 func _sync_views() -> void:
+	var spread_boss := false
+	var enemy_count := 0
+	for unit in sim.units:
+		if unit.side == "enemy":
+			enemy_count += 1
+			if unit.kind == "monster" and String(unit.data.get("tier", "")) == "boss":
+				spread_boss = true
+	spread_boss = spread_boss and enemy_count > 1
 	for u in sim.units:
 		if not _views.has(u.uid):
 			_views[u.uid] = _spawn_view(u)
 			if sim.tick_count > 0:  # 战斗中入场（召唤/换宠）
 				_views[u.uid].pop_in()
-		_views[u.uid].sync(u)
+		var view: UnitView = _views[u.uid]
+		# Large boss art and summoned front units need separate horizontal lanes.
+		view._formation_offset = Vector2.ZERO
+		if spread_boss and u.side == "enemy":
+			view._formation_offset.x = -50.0 if String(u.data.get("tier", "")) == "boss" \
+				else (65.0 if u.row == Combatant.ROW_FRONT else 0.0)
+		view.sync(u)
 		(_views[u.uid] as UnitView).set_focused(
 			u.alive and u.uid == sim.role_focus_target_uid)
 	var gone: Array = []
@@ -1237,6 +1249,7 @@ func _process(delta: float) -> void:
 
 
 func _consume_events() -> void:
+	_skill_motion_sources.clear()
 	for e in sim.events:
 		_on_event(e)
 	sim.events.clear()
@@ -1251,10 +1264,11 @@ func _on_event(e: Dictionary) -> void:
 			if src != null and dst != null and t == "basic":
 				src.play_state(&"attack")
 				var attacker := sim.unit_by_uid(src.uid)
-				if _classic_presentation() and attacker != null and attacker.attack_range == "range":
+				if attacker != null and attacker.attack_range == "range":
 					_launch_ranged_shot(src, dst)
 				else:
-					src.lunge(dst.position)  # 近战：挥剑动作 + 前冲
+					_launch_melee_strike(src, dst)
+			if t == "cast": _skill_motion_sources[int(e.get("uid", -1))] = true
 			# 连携触发：施法者头顶飘"连携"金字（e.combo 为连携名）
 			if t == "cast" and String(e.get("combo", "")) != "":
 				var cu: UnitView = _views.get(int(e.get("uid", -1)))
@@ -1312,10 +1326,17 @@ func _on_event(e: Dictionary) -> void:
 					_dmg_in += amount
 				if not dot and _defer_ranged_hit(e):
 					return
+				if not dot and src != null and _skill_motion_sources.has(src.uid):
+					var attacker := sim.unit_by_uid(src.uid)
+					if attacker != null and attacker.side != target.side:
+						if attacker.attack_range == "range": _launch_ranged_shot(src, dst)
+						else: _launch_melee_strike(src, dst)
+						if _defer_ranged_hit(e): return
 				_present_damage_feedback(dst, e, heavy, to_role)
 		"heal":
 			if dst != null:
 				_float(dst.position, "+%d" % int(e.amount), G.C_GAIN, G.FS_MD)
+				CombatFX.impact(_fx_layer, dst.body.global_position-_fx_layer.global_position+Vector2(0,-24), "heal",Color("a6efbc"))
 		"shield_add":
 			if dst != null:
 				_float(dst.position, "+盾", Color("8cc4ff"), G.FS_SM)
@@ -1866,6 +1887,31 @@ func _companion_effect(src: UnitView, dst: UnitView, tid: String) -> void:
 
 
 ## 远程普攻先飞弹，再播放命中反馈；伤害结算仍在 BattleSim 原 tick 完成。
+func _strike_style(src: UnitView) -> Dictionary:
+	var unit := sim.unit_by_uid(src.uid)
+	var id := String(unit.data.get("id", "")) if unit != null else ""
+	match id:
+		"ck": return {"kind":"pierce", "tint":Color("9de6ef")}
+		"fs": return {"kind":"arcane", "tint":Color("91c7ff")}
+		"fz": return {"kind":"hammer", "tint":Color("ffe4a3")}
+	return {"kind":"slash", "tint":Color("ffe08a") if src.side == "ally" else Color("ff9a73")}
+
+
+func _launch_melee_strike(src: UnitView, dst: UnitView) -> void:
+	var key := "%d:%d" % [src.uid,dst.uid]
+	var state := {"key":key,"event":{},"target":null,"dst":dst,"arrived":false,"shot":null}
+	var waiting: Array = _ranged_waiting.get(key,[])
+	waiting.append(state)
+	_ranged_waiting[key] = waiting
+	dst.hold_hp_bar()
+	var style := _strike_style(src)
+	CombatFX.trail(_fx_layer,src.body,style.tint)
+	var duration := src.lunge(dst.position+dst._body_home)
+	var tw := create_tween()
+	tw.tween_interval(duration)
+	tw.tween_callback(Callable(self,"_on_ranged_shot_arrived").bind(key,state))
+
+
 func _launch_ranged_shot(src: UnitView, dst: UnitView) -> void:
 	var key := "%d:%d" % [src.uid, dst.uid]
 	var state := {"key": key, "event": {}, "target": null, "dst": dst,
@@ -1876,9 +1922,11 @@ func _launch_ranged_shot(src: UnitView, dst: UnitView) -> void:
 	dst.hold_hp_bar()
 
 	var shot := _RangedShot.new()
-	shot.tint = Color("ffe08a") if src.side == "ally" else Color("ff7652")
-	var start: Vector2 = src.global_position + Vector2(0, -8) - _fx_layer.global_position
-	var finish: Vector2 = dst.global_position + Vector2(0, -8) - _fx_layer.global_position
+	var style := _strike_style(src)
+	shot.tint = style.tint
+	shot.kind = style.kind
+	var start: Vector2 = src.body.global_position + Vector2(0, -28) - _fx_layer.global_position
+	var finish: Vector2 = dst.body.global_position + Vector2(0, -28) - _fx_layer.global_position
 	shot.position = start
 	shot.rotation = (finish - start).angle()
 	state["shot"] = shot
@@ -1941,7 +1989,7 @@ func _present_damage_feedback(dst: UnitView, e: Dictionary, heavy: bool, to_role
 	var amount := int(e.get("amount", 0))
 	var crit := bool(e.get("crit", false))
 	var dot := bool(e.get("dot", false))
-	var fx_pos: Vector2 = dst.global_position - _fx_layer.global_position
+	var fx_pos: Vector2 = dst.body.global_position - _fx_layer.global_position
 	if dot:
 		dst.hit_flash(0.4)
 		_float_dmg(fx_pos, amount, "dot")
@@ -1963,8 +2011,12 @@ func _present_damage_feedback(dst: UnitView, e: Dictionary, heavy: bool, to_role
 		Audio.sfx("hit_light")
 		if to_role:
 			_shake(SHAKE_HIT)
-	if not dot and _classic_presentation():
+	if not dot:
 		_hit_burst(fx_pos + Vector2(0, -22), crit or heavy)
+		var source: UnitView = _views.get(int(e.get("src",-1)))
+		var style := _strike_style(source) if source != null else {"kind":"slash","tint":Color("ffce92")}
+		CombatFX.impact(_fx_layer,fx_pos+Vector2(0,-28),style.kind,style.tint,crit or heavy)
+		if source != null: dst.recoil(source.position)
 	if to_role and not dot:
 		dst.play_state(&"hit")
 
@@ -2223,9 +2275,17 @@ class _HitBurst extends Node2D:
 ## 横向小箭矢只作远程普攻表现，不承载命中判定或伤害数值。
 class _RangedShot extends Node2D:
 	var tint := Color("ffe08a")
+	var kind := "pierce"
 	func _ready() -> void:
 		queue_redraw()
 	func _draw() -> void:
+		draw_line(Vector2(-36,0),Vector2(2,0),Color(tint,.22),8)
+		draw_line(Vector2(-28,-2),Vector2(4,-2),Color(tint,.65),2)
+		if kind == "arcane":
+			draw_circle(Vector2(6,0),9,Color(tint,.3))
+			draw_colored_polygon(PackedVector2Array([Vector2(16,0),Vector2(6,-6),Vector2(-2,0),Vector2(6,6)]),tint)
+			draw_line(Vector2(6,-9),Vector2(6,9),Color("eef9ff"),2)
+			return
 		draw_line(Vector2(-16, 2), Vector2(7, 2), Color(0.16, 0.09, 0.04, 0.7), 6.0, true)
 		draw_line(Vector2(-18, 0), Vector2(5, 0), tint.darkened(0.35), 3.0, true)
 		draw_line(Vector2(-17, -1), Vector2(3, -1), tint.lightened(0.26), 1.2, true)
@@ -2259,6 +2319,7 @@ class UnitView extends Node2D:
 	## body.position 是战斗动画共用通道（lunge / 复位都往它写），直接改会被下一次
 	## 动作抹掉——所以基准位移必须单独存，动画只做"基准 + 摆动"。
 	var _body_home := Vector2.ZERO
+	var _formation_offset := Vector2.ZERO
 	var _dead := false
 	var _radius := 22.0
 	var _draw_color := Color.WHITE
@@ -2271,6 +2332,10 @@ class UnitView extends Node2D:
 	var _hp_hold_count := 0
 	var _ghost_ratio := 1.0            # B2 残影条比例（_process 缓动追赶）
 	var _classic := false
+	var _motion_tween: Tween
+	var _contact_msec := 0
+	var _recoil_tween: Tween
+	var _sprite_home := Vector2.ZERO
 
 
 	func setup(u: Combatant, role_sprites: Dictionary, mon_colors: Dictionary,
@@ -2308,6 +2373,7 @@ class UnitView extends Node2D:
 				asp.scale = Vector2.ONE * role_scale
 				asp.position = Vector2(0, 5.0-56.0*role_scale)
 				asp.play()
+				asp.flip_h = side == "enemy"
 				# 一次性动作（普攻/施法/受击）播完自动回待机
 				asp.animation_finished.connect(func():
 					if not _dead and asp.animation != &"idle":
@@ -2333,6 +2399,7 @@ class UnitView extends Node2D:
 				else:
 					disp_h = 64.0
 				var sp := Sprite2D.new()
+				sp.flip_h = side == "enemy"
 				sp.texture = tex
 				sp.scale = Vector2.ONE * (disp_h / float(tex.get_height()))
 				sp.position = Vector2(0, -disp_h * 0.42)  # 脚底落在站位附近
@@ -2371,6 +2438,7 @@ class UnitView extends Node2D:
 				body.position = _body_home
 				name_y = -_radius - 14.0
 				hp_y = _radius + 6.0
+		if sprite != null: _sprite_home = sprite.position
 		# 名字（头顶）——亮底战场上必须带描边，否则敌方名字糊成一片白
 		name_l = G.gold_label(u.name, G.FS_XS, false,
 			Color("ffd0d0") if side == "enemy" else Color("c8e8c8"), true)
@@ -2546,19 +2614,30 @@ class UnitView extends Node2D:
 
 
 	func _owner_grid(u: Combatant) -> Vector2:
-		if _classic:
-			return BattleScene.classic_grid_pos(u.side, u.row, u.col)
-		var x := BattleScene.COL_X + u.col * BattleScene.COL_GAP
-		if u.side == "enemy":
-			return Vector2(x, BattleScene.ENEMY_BACK_Y if u.row == 1 else BattleScene.ENEMY_FRONT_Y)
-		return Vector2(x, BattleScene.ALLY_BACK_Y if u.row == 1 else BattleScene.ALLY_FRONT_Y)
+		return BattleScene.classic_grid_pos(u.side, u.row, u.col)+_formation_offset
 
 
-	func lunge(target_pos: Vector2) -> void:
-		var dir := (target_pos - _base_pos).normalized() * 16.0
-		var tw := body.create_tween()
-		tw.tween_property(body, "position", _body_home + dir, 0.09).set_ease(Tween.EASE_OUT)
-		tw.tween_property(body, "position", _body_home, 0.14).set_ease(Tween.EASE_IN)
+	func lunge(target_pos: Vector2) -> float:
+		if _dead: return .01
+		if _motion_tween != null and _motion_tween.is_running():
+			return maxf(.01,float(_contact_msec-Time.get_ticks_msec())/1000.0)
+		var delta := target_pos-(_base_pos+_body_home)
+		var travel := delta.normalized()*maxf(0,delta.length()-48.0)
+		var duration := clampf(travel.length()/1050.0,.12,.23)
+		_contact_msec = Time.get_ticks_msec()+int(duration*1000)
+		_motion_tween = body.create_tween()
+		_motion_tween.tween_property(body,"position",_body_home+travel,duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		_motion_tween.tween_interval(.09)
+		_motion_tween.tween_property(body,"position",_body_home,.21).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		return duration
+
+	func recoil(from: Vector2) -> void:
+		if sprite == null or _dead: return
+		if _recoil_tween != null and _recoil_tween.is_running(): _recoil_tween.kill()
+		var push := (position-from).normalized()*7
+		_recoil_tween = sprite.create_tween()
+		_recoil_tween.tween_property(sprite,"position",_sprite_home+push,.06)
+		_recoil_tween.tween_property(sprite,"position",_sprite_home,.15)
 
 
 	## 经典模式站位微调（宠物挪到角色左下）：写基准位移，动画结束后能准确回位

@@ -1,0 +1,42 @@
+[
+  {
+    "scene": "home",
+    "image": "home",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false,
+    "passed": true,
+    "path": "D:\\new bee\\远征\\shots\\ui_wood_20261002\\home.png"
+  },
+  {
+    "scene": "quests",
+    "image": "quests",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false,
+    "passed": true,
+    "path": "D:\\new bee\\远征\\shots\\ui_wood_20261002\\quests.png"
+  },
+  {
+    "scene": "home",
+    "image": "home",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true,
+    "passed": true,
+    "path": "D:\\new bee\\远征\\shots\\ui_wood_20261002\\long_480x1067\\home.png"
+  },
+  {
+    "scene": "quests",
+    "image": "quests",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true,
+    "passed": true,
+    "path": "D:\\new bee\\远征\\shots\\ui_wood_20261002\\long_480x1067\\quests.png"
+  }
+]

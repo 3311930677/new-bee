@@ -1126,6 +1126,7 @@ func _click_until(c: Control, done: Callable, budget := 60, tag := "") -> bool:
 	if c == null or not is_instance_valid(c) or not c.is_inside_tree():
 		return false
 	for mode in 3:
+		if not is_instance_valid(c) or not c.is_inside_tree(): return false
 		await _click_mode(c, mode)
 		for i in budget:
 			if bool(done.call()):

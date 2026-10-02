@@ -1,0 +1,101 @@
+﻿Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PLAY_SOURCE sha256=387c16a0faea247512f8b98b3bab6da9e0ad4e1cf8ac93887dc45016a20e22c7
+PLAY_MAP enter=lorin_wilds pos=(480.0, 180.0) monsters=4
+PLAY_MAP enter=maple_road pos=(480.0, 1060.0) monsters=5
+PLAY_MAP enter=old_salt_road pos=(160.0, 660.0) monsters=4
+PLAY_MAP enter=shenyuan_port pos=(210.0, 660.0) monsters=0
+PLAY_MAP enter=red_sand_route pos=(480.0, 1050.0) monsters=4
+PLAY_MAP enter=frost_post pos=(480.0, 1030.0) monsters=0
+PLAY_MAP enter=frost_boardwalk pos=(480.0, 1030.0) monsters=4
+PLAY_DIAG click_ok mode=0 tag=speed
+PLAY_DIAG click_ok mode=0 tag=auto
+PLAY_DIAG click_ok mode=0 tag=result_btn
+PLAY_MAP enter=frost_pass pos=(480.0, 1050.0) monsters=0
+PLAY_MAP enter=abyss_ring pos=(480.0, 1030.0) monsters=4
+PLAY_MAP enter=stele_entry pos=(480.0, 1030.0) monsters=0
+PLAY_EVENT puzzle_real_input id=return_anchor
+PLAY_MAP enter=stele_resonance pos=(480.0, 1030.0) monsters=0
+PLAY_EVENT puzzle_real_input id=forest_voice
+PLAY_EVENT puzzle_real_input id=tide_voice
+PLAY_EVENT puzzle_real_input id=snow_voice
+PLAY_STEP s34 done via aligned_voices
+PLAY_DIAG click_ok mode=0 tag=camp
+PLAY_DIAG click_ok mode=0 tag=leave_to_camp
+PLAY_DIAG click_ok mode=0 tag=open_bag
+PLAY_DIAG click_ok mode=0 tag=select_s34
+PLAY_DIAG click_ok mode=0 tag=wear_s34
+PLAY_EVENT gear_worn chapter=fourth_back step=s34 uid=19 tpl=tpl_armor_abyss level=53
+PLAY_DIAG click_ok mode=0 tag=close_bag
+PLAY_DIAG click_ok mode=0 tag=return_world
+PLAY_MAP enter=stele_core pos=(480.0, 1030.0) monsters=1
+PLAY_SETUP injured_boundary hp=1 no_resource_grants=true
+PLAY_DIAG click_ok mode=0 tag=speed
+PLAY_DIAG click_ok mode=0 tag=result_btn
+PLAY_BATTLE policy=lose mon=mon_abyss_avatar tier=boss result=defeat
+PLAY_MAP enter=stele_core pos=(482.1812, 665.9752) monsters=1
+PLAY_EVENT fourth_defeat_reenter seal=1
+PLAY_DIAG click_ok mode=0 tag=speed
+PLAY_DIAG click_ok mode=0 tag=flee_arm
+PLAY_DIAG click_ok mode=0 tag=flee_confirm
+PLAY_DIAG click_ok mode=0 tag=result_btn
+PLAY_BATTLE policy=flee mon=mon_abyss_avatar tier=boss result=flee
+PLAY_EVENT fourth_flee_recovery seal=1
+PLAY_MAP enter=stele_core pos=(483.0, 672.0) monsters=1
+PLAY_DIAG click_ok mode=0 tag=speed
+PLAY_DIAG click_ok mode=0 tag=auto
+PLAY_DIAG click_ok mode=0 tag=result_btn
+PLAY_BATTLE policy=win mon=mon_abyss_avatar tier=boss result=victory
+PLAY_DIAG click_ok mode=0 tag=camp
+PLAY_DIAG click_ok mode=0 tag=leave_to_camp
+PLAY_DIAG click_ok mode=0 tag=open_bag
+PLAY_DIAG click_ok mode=0 tag=select_s35
+PLAY_DIAG click_ok mode=0 tag=wear_s35
+PLAY_EVENT gear_worn chapter=fourth_back step=s35 uid=20 tpl=tpl_sword_abyss level=57
+PLAY_DIAG click_ok mode=0 tag=close_bag
+PLAY_DIAG click_ok mode=0 tag=return_world
+PLAY_MAP enter=stele_resonance pos=(480.0, 185.0) monsters=0
+PLAY_MAP enter=stele_entry pos=(480.0, 185.0) monsters=0
+PLAY_MAP enter=abyss_ring pos=(480.0, 230.0) monsters=4
+PLAY_MAP enter=frost_pass pos=(760.0, 660.0) monsters=0
+PLAY_MAP enter=frost_boardwalk pos=(480.0, 210.0) monsters=4
+PLAY_DIAG click_ok mode=0 tag=speed
+PLAY_DIAG click_ok mode=0 tag=auto
+PLAY_DIAG click_ok mode=0 tag=result_btn
+PLAY_MAP enter=frost_post pos=(480.0, 210.0) monsters=0
+PLAY_MAP enter=red_sand_route pos=(480.0, 230.0) monsters=4
+PLAY_MAP enter=shenyuan_port pos=(480.0, 230.0) monsters=0
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_MAP enter=old_salt_road pos=(760.0, 659.8511) monsters=4
+PLAY_MAP enter=maple_road pos=(760.0, 660.0) monsters=5
+PLAY_MAP enter=lorin_wilds pos=(480.0, 180.0) monsters=4
+PLAY_DIAG click_ok mode=0 tag=campaign_ending
+PLAY_STEP s36 done via 封渊留路
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_DIAG click_ok mode=0 tag=camp
+PLAY_DIAG click_ok mode=0 tag=leave_to_camp
+PLAY_DIAG click_ok mode=0 tag=open_bag
+PLAY_DIAG click_ok mode=0 tag=select_s36
+PLAY_DIAG click_ok mode=0 tag=wear_s36
+PLAY_EVENT gear_worn chapter=fourth_back step=s36 uid=21 tpl=tpl_accessory_return level=60
+PLAY_DIAG click_ok mode=0 tag=close_bag
+PLAY_DIAG click_ok mode=0 tag=return_world
+PLAY_DIAG click_ok mode=0 tag=close_modal
+PLAY_MAP enter=maple_road pos=(480.0, 1060.0) monsters=5
+PLAY_MAP enter=old_salt_road pos=(160.0, 660.0) monsters=4
+PLAY_MAP enter=shenyuan_port pos=(210.0, 660.0) monsters=0
+PLAY_MAP enter=red_sand_route pos=(480.0, 1050.0) monsters=4
+PLAY_MAP enter=frost_post pos=(480.0, 1030.0) monsters=0
+PLAY_MAP enter=frost_boardwalk pos=(480.0, 1030.0) monsters=3
+PLAY_MAP enter=frost_pass pos=(480.0, 1050.0) monsters=0
+PLAY_MAP enter=abyss_ring pos=(480.0, 1030.0) monsters=5
+PLAY_STUCK target=(731.4647, 311.7308) pos=(725.621, 600.7418) colliders=["@StaticBody2D@7361@(703.125, 595.7369)", "@StaticBody2D@7364@(759.8499, 589.6962)"]
+PLAY_BAD role=zs phase=a pos=(725.621, 600.7418) reason=接近 mon_nameless_warden 未触发接触（failed）
+ERROR: 1 RID allocations of type 'PN18TextServerAdvanced12FontAdvancedE' were leaked at exit.
+WARNING: 9 RIDs of type "Canvas" were leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2735)
+WARNING: 102 RIDs of type "CanvasItem" were leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2735)
+WARNING: 208 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+

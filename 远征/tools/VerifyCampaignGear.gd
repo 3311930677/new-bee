@@ -28,7 +28,7 @@ func _gear() -> Array:
 
 func _run() -> void:
 	var cfg := CampaignGear.config()
-	_check(cfg.rewards.size() == 7 and G.equip_templates().size() == 30, "七节点和16新模板配置完整")
+	_check(cfg.rewards.size() == 10 and G.equip_templates().size() == 40, "四幕十个保底节点和40装备模板配置完整")
 	for role in ["zs", "ck", "fs", "fz"]:
 		_reset(28, role)
 		var worn: Dictionary = G.prog.equip.duplicate(true)

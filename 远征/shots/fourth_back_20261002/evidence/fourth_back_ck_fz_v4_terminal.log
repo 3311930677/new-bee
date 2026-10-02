@@ -1,0 +1,67 @@
+Godot   : C:\Users\Administrator\AppData\Local\Microsoft\WinGet\Packages\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\Godot_v4.7.2-stable_win64_console.exe
+Version : 4.7.2.stable.official.ed1daf0bf
+Project : D:\new bee\远征
+UserDir : D:/new bee/远征/tools/_sandbox_appdata/fourth_back_20261002/Godot/app_userdata/远征/
+Roles   : ck, fz
+Timeout : 2400s per process call
+Logs    : D:\new bee\远征\tools\_logs\fourth_back_ck_fz_v4_20261002
+RealSave: <none found before run>
+
+==== role ck ====
+  phase A log: D:\new bee\远征\tools\_logs\fourth_back_ck_fz_v4_20261002\playthrough_ck_a.log
+  phase A OK
+  phase B log: D:\new bee\远征\tools\_logs\fourth_back_ck_fz_v4_20261002\playthrough_ck_b.log
+  phase B OK
+  PASS role ck
+
+==== role fz ====
+  phase A log: D:\new bee\远征\tools\_logs\fourth_back_ck_fz_v4_20261002\playthrough_fz_a.log
+  FAIL phase A: exit code 1; missing completion line 'PLAY_A_OK'; PLAY_BAD reported: PLAY_BAD role=fz phase=a pos=(745.8928, 594.701) reason=接近 mon_nameless_warden 未触发接触（failed）
+      PLAY_MAP enter=lorin_wilds pos=(480.0, 180.0) monsters=4
+      PLAY_MAP enter=maple_road pos=(480.0, 1060.0) monsters=5
+      PLAY_MAP enter=old_salt_road pos=(160.0, 660.0) monsters=4
+      PLAY_MAP enter=shenyuan_port pos=(210.0, 660.0) monsters=0
+      PLAY_MAP enter=red_sand_route pos=(480.0, 1050.0) monsters=4
+      PLAY_MAP enter=frost_post pos=(480.0, 1030.0) monsters=0
+      PLAY_MAP enter=frost_boardwalk pos=(480.0, 1030.0) monsters=4
+      PLAY_MAP enter=frost_pass pos=(480.0, 1050.0) monsters=0
+      PLAY_MAP enter=abyss_ring pos=(480.0, 1030.0) monsters=4
+      PLAY_MAP enter=stele_entry pos=(480.0, 1030.0) monsters=0
+      PLAY_EVENT puzzle_real_input id=return_anchor
+      PLAY_MAP enter=stele_resonance pos=(480.0, 1030.0) monsters=0
+      PLAY_EVENT puzzle_real_input id=forest_voice
+      PLAY_EVENT puzzle_real_input id=tide_voice
+      PLAY_EVENT puzzle_real_input id=snow_voice
+      PLAY_EVENT gear_worn chapter=fourth_back step=s34 uid=19 tpl=tpl_armor_abyss level=53
+      PLAY_MAP enter=stele_core pos=(480.0, 1030.0) monsters=1
+      PLAY_SETUP injured_boundary hp=1 no_resource_grants=true
+      PLAY_MAP enter=stele_core pos=(480.0, 666.0) monsters=1
+      PLAY_EVENT fourth_defeat_reenter seal=1
+      PLAY_EVENT fourth_flee_recovery seal=1
+      PLAY_MAP enter=stele_core pos=(479.0, 668.0) monsters=1
+      PLAY_EVENT potion_used left=1
+      PLAY_EVENT gear_worn chapter=fourth_back step=s35 uid=20 tpl=tpl_hammer_abyss level=57
+      PLAY_MAP enter=stele_resonance pos=(480.0, 185.0) monsters=0
+      PLAY_MAP enter=stele_entry pos=(480.0, 185.0) monsters=0
+      PLAY_MAP enter=abyss_ring pos=(480.0, 230.0) monsters=4
+      PLAY_MAP enter=frost_pass pos=(760.0, 660.0) monsters=0
+      PLAY_MAP enter=frost_boardwalk pos=(480.0, 210.0) monsters=4
+      PLAY_MAP enter=frost_post pos=(480.0, 210.0) monsters=0
+      PLAY_MAP enter=red_sand_route pos=(480.0, 230.0) monsters=4
+      PLAY_MAP enter=shenyuan_port pos=(480.0, 230.0) monsters=0
+      PLAY_MAP enter=old_salt_road pos=(760.0, 659.8511) monsters=4
+      PLAY_MAP enter=maple_road pos=(760.0, 660.0) monsters=5
+      PLAY_MAP enter=lorin_wilds pos=(480.0, 180.0) monsters=4
+      PLAY_EVENT gear_worn chapter=fourth_back step=s36 uid=21 tpl=tpl_accessory_return level=60
+      PLAY_MAP enter=maple_road pos=(480.0, 1060.0) monsters=5
+      PLAY_MAP enter=old_salt_road pos=(160.0, 660.0) monsters=4
+      PLAY_MAP enter=shenyuan_port pos=(210.0, 660.0) monsters=0
+      PLAY_MAP enter=red_sand_route pos=(480.0, 1050.0) monsters=4
+      PLAY_MAP enter=frost_post pos=(480.0, 1030.0) monsters=0
+      PLAY_MAP enter=frost_boardwalk pos=(480.0, 1030.0) monsters=3
+      PLAY_MAP enter=frost_pass pos=(480.0, 1050.0) monsters=0
+      PLAY_MAP enter=abyss_ring pos=(480.0, 1030.0) monsters=5
+      PLAY_STUCK target=(750.9992, 333.6573) pos=(745.8928, 594.701) colliders=["@StaticBody2D@7676@(867.5, 624.0)", "@StaticBody2D@7610@(703.125, 595.7369)", "@StaticBody2D@7613@(759.8499, 589.6962)"]
+      PLAY_BAD role=fz phase=a pos=(745.8928, 594.701) reason=接近 mon_nameless_warden 未触发接触（failed）
+
+PLAYTHROUGH_FAILED: 1 problem(s)

@@ -1,0 +1,64 @@
+{
+  "full_regression": {
+    "passed": 47,
+    "scheduled": 47,
+    "engine_exit_resource_cases": 34,
+    "engine_exit_resource_diagnostics": 86,
+    "issue43_resolved": false
+  },
+  "runner_fault_checks": 11,
+  "ordinary_budget_simulations": 80,
+  "roles": {
+    "zs": {
+      "source_sha256": "387C16A0FAEA247512F8B98B3BAB6DA9E0AD4E1CF8AC93887DC45016A20E22C7",
+      "final_sha256": "858D1F969E5F85BAE9F1D7335D58A6C33201A8E985D8EC3E1B1A09847B2175F5",
+      "done_steps": 36,
+      "level": 60,
+      "ending": "seal",
+      "old_instances_preserved": 18,
+      "validation": "primary ending + checkpoint recovery A+B"
+    },
+    "fs": {
+      "source_sha256": "7EB7A3C654C598B04DB2EB9B49F219CD37F68865B5AB6E5D2478ED48B82F6AB4",
+      "final_sha256": "CD0270472BABF08F5705393AD93FC41580B26EFB87D4EFFFB2538D39F60BE554",
+      "done_steps": 36,
+      "level": 60,
+      "ending": "seal",
+      "old_instances_preserved": 18,
+      "validation": "primary ending + checkpoint recovery A+B"
+    },
+    "ck": {
+      "source_sha256": "59643B957024FFEED147CEA1DCE2ACBC38065213B0B9FDAA4B6194542F04241E",
+      "final_sha256": "DD565686919D47592AE4D5D3733C615FE64BB0AB72FAB8F413C7D43DEF166030",
+      "done_steps": 36,
+      "level": 60,
+      "ending": "echo",
+      "old_instances_preserved": 18,
+      "validation": "single A+B"
+    },
+    "fz": {
+      "source_sha256": "9D81FAA1831C925BD6CCA4273494FBC12F3FD7DF504A473745E3BAC2AEC1967D",
+      "final_sha256": "A75805B624E0E15E3CE994CFD804FC3D0D3D86BA413C35D0C2458A5C2EBAD704",
+      "done_steps": 36,
+      "level": 60,
+      "ending": "echo",
+      "old_instances_preserved": 18,
+      "validation": "primary ending + checkpoint recovery A+B"
+    }
+  },
+  "real_user_files": {
+    "before_count": 121,
+    "after_count": 121,
+    "changed_or_missing": [],
+    "added": [],
+    "main_save_sha256": "BA8054B3D2F46D21D5CFE70E6EF5EFCADCC817A8267FF67FC7522379E2805BE7"
+  },
+  "visual_capture": "staged QA; runtime PNG/GIF; exit-only GPU/font/RID diagnostics remain",
+  "combat_defeat_fixture": "hp=1 only, no resource grants",
+  "content": {
+    "story": 36,
+    "maps": 18,
+    "bosses": 8,
+    "side_quests": 18
+  }
+}

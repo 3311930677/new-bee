@@ -1,0 +1,2058 @@
+[
+  {
+    "scene": "load",
+    "image": "load",
+    "frames": "30",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "title",
+    "image": "title",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "title_settings",
+    "image": "title_settings",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "login",
+    "image": "login",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "namerecover",
+    "image": "namerecover",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "prologue",
+    "image": "prologue",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "createrole",
+    "image": "createrole",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "home",
+    "image": "home",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "avatar",
+    "image": "avatar",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "deploy",
+    "image": "deploy",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "deploy_role",
+    "image": "deploy_role",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "deploy_pet",
+    "image": "deploy_pet",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "worlds",
+    "image": "worlds",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "codex",
+    "image": "codex",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "arena",
+    "image": "arena",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "gacha",
+    "image": "gacha",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "exchange",
+    "image": "exchange",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "settings",
+    "image": "settings",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "settings2",
+    "image": "settings2",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "growth",
+    "image": "growth",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "bag",
+    "image": "bag",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "bag_full",
+    "image": "bag_full",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "quests",
+    "image": "quests",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "city_deploy",
+    "image": "city_deploy",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "gm",
+    "image": "gm",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "gm_open",
+    "image": "gm_open",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "talent",
+    "image": "talent",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "equip",
+    "image": "equip",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "pet_raise",
+    "image": "pet_raise",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "skillbook",
+    "image": "skillbook",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "mount",
+    "image": "mount",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "titles",
+    "image": "titles",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "forge_enhance",
+    "image": "forge_enhance",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "forge_gem",
+    "image": "forge_gem",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "forge_refine",
+    "image": "forge_refine",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "workshop_low",
+    "image": "workshop_low",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "workshop_progress",
+    "image": "workshop_progress",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "city",
+    "image": "city",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "city_repair",
+    "image": "city_repair",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "city_built",
+    "image": "city_built",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "city_all",
+    "image": "city_all",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "city_mix",
+    "image": "city_mix",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "city_shop",
+    "image": "city_shop",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "city_notice",
+    "image": "city_notice",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "city_guests",
+    "image": "city_guests",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "city_build_panel",
+    "image": "city_build_panel",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "city_built_panel",
+    "image": "city_built_panel",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "city_frost_choice",
+    "image": "city_frost_choice",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "city_tide_choice",
+    "image": "city_tide_choice",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "port_services",
+    "image": "port_services",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "side_city_accept",
+    "image": "side_city_accept",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "beast_notice",
+    "image": "beast_notice",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "mentor_choice",
+    "image": "mentor_choice",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "order_preview",
+    "image": "order_preview",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "trade_warden_dialog",
+    "image": "trade_warden_dialog",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "mount_claim",
+    "image": "mount_claim",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "pet_claim",
+    "image": "pet_claim",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "mw_lorin_wilds",
+    "image": "mw_lorin_wilds",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "mw_maple_road",
+    "image": "mw_maple_road",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "mw_broken_slope",
+    "image": "mw_broken_slope",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "mw_old_salt_road",
+    "image": "mw_old_salt_road",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "mw_shenyuan_port",
+    "image": "mw_shenyuan_port",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "mw_tideflat",
+    "image": "mw_tideflat",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "mw_tidal_gate",
+    "image": "mw_tidal_gate",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "mw_stele_cavern",
+    "image": "mw_stele_cavern",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "mw_red_sand_route",
+    "image": "mw_red_sand_route",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "mw_frost_post",
+    "image": "mw_frost_post",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "mw_rift_mine_road",
+    "image": "mw_rift_mine_road",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "mw_rift_mine_vault",
+    "image": "mw_rift_mine_vault",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "mw_frost_pass",
+    "image": "mw_frost_pass",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "mw_frost_boardwalk",
+    "image": "mw_frost_boardwalk",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "route_forest",
+    "image": "route_forest",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "route_snow",
+    "image": "route_snow",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "route_volcano",
+    "image": "route_volcano",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "route_tomb",
+    "image": "route_tomb",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "route_desert",
+    "image": "route_desert",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "route_glacier",
+    "image": "route_glacier",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "route_abyss",
+    "image": "route_abyss",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "route_castle",
+    "image": "route_castle",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "map",
+    "image": "map",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "map_boss",
+    "image": "map_boss",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "main_world",
+    "image": "main_world",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "mentor_world",
+    "image": "mentor_world",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "chapter_archive",
+    "image": "chapter_archive",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "chapter_gate",
+    "image": "chapter_gate",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "waystone_world",
+    "image": "waystone_world",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "beast_world",
+    "image": "beast_world",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "side_world_chime",
+    "image": "side_world_chime",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "side_world_tracks",
+    "image": "side_world_tracks",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "trade_slope_world",
+    "image": "trade_slope_world",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "trade_slope_panel",
+    "image": "trade_slope_panel",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "battle",
+    "image": "battle",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "battle_cast",
+    "image": "battle_cast",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "battle_low",
+    "image": "battle_low",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "battlebg_snow",
+    "image": "battlebg_snow",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "battlebg_volcano",
+    "image": "battlebg_volcano",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "battlebg_tomb",
+    "image": "battlebg_tomb",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "battlebg_desert",
+    "image": "battlebg_desert",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "battlebg_glacier",
+    "image": "battlebg_glacier",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "battlebg_abyss",
+    "image": "battlebg_abyss",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "battlebg_castle",
+    "image": "battlebg_castle",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "main_world_battle",
+    "image": "main_world_battle",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "main_world_battle_commands",
+    "image": "main_world_battle_commands",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "main_world_battle_skills",
+    "image": "main_world_battle_skills",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "main_world_battle_projectile",
+    "image": "main_world_battle_projectile",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "main_world_pet_guard",
+    "image": "main_world_pet_guard",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "beast_windup",
+    "image": "beast_windup",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "beast_break",
+    "image": "beast_break",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "picker",
+    "image": "picker",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "picker_school",
+    "image": "picker_school",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "story_intro",
+    "image": "story_intro",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "story_outro",
+    "image": "story_outro",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "act1_blue_weapon",
+    "image": "act1_blue_weapon_zs",
+    "frames": "45",
+    "options": [
+      "--role=zs"
+    ],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "act1_blue_weapon",
+    "image": "act1_blue_weapon_ck",
+    "frames": "45",
+    "options": [
+      "--role=ck"
+    ],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "act1_blue_weapon",
+    "image": "act1_blue_weapon_fs",
+    "frames": "45",
+    "options": [
+      "--role=fs"
+    ],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "act1_blue_weapon",
+    "image": "act1_blue_weapon_fz",
+    "frames": "45",
+    "options": [
+      "--role=fz"
+    ],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "second_salt",
+    "image": "second_salt",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "second_port",
+    "image": "second_port",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "second_port_south",
+    "image": "second_port_south",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "second_hatch",
+    "image": "second_hatch",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "second_relation",
+    "image": "second_relation",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "second_shipping",
+    "image": "second_shipping",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "second_fishing",
+    "image": "second_fishing",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "second_tideflat",
+    "image": "second_tideflat",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "second_gate",
+    "image": "second_gate",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "second_gate_battle",
+    "image": "second_gate_battle",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "second_gate_windup",
+    "image": "second_gate_windup",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "second_gate_ebb",
+    "image": "second_gate_ebb",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "second_crab_battle",
+    "image": "second_crab_battle",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "second_side_rope",
+    "image": "second_side_rope",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "second_side_choice",
+    "image": "second_side_choice",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "second_side_grass",
+    "image": "second_side_grass",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "second_side_courier",
+    "image": "second_side_courier",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "second_side_repaired",
+    "image": "second_side_repaired",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_route",
+    "image": "third_route",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_post",
+    "image": "third_post",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_post_south",
+    "image": "third_post_south",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_mine",
+    "image": "third_mine",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_dialog",
+    "image": "third_dialog",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_regions",
+    "image": "third_regions",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_items",
+    "image": "third_items",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_vault",
+    "image": "third_vault",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_vault_windup",
+    "image": "third_vault_windup",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_boardwalk",
+    "image": "third_boardwalk",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_pass",
+    "image": "third_pass",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_eye",
+    "image": "third_eye",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_break",
+    "image": "third_break",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_choice",
+    "image": "third_choice",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_merchant",
+    "image": "third_merchant",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_wardens",
+    "image": "third_wardens",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_market",
+    "image": "third_market",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_back_regions",
+    "image": "third_back_regions",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_side_choice",
+    "image": "third_side_choice",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_side_coal",
+    "image": "third_side_coal",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_side_shield",
+    "image": "third_side_shield",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_side_nameplate",
+    "image": "third_side_nameplate",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_side_lichen",
+    "image": "third_side_lichen",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_side_vents",
+    "image": "third_side_vents",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_side_parcel",
+    "image": "third_side_parcel",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "third_side_echo",
+    "image": "third_side_echo",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": false
+  },
+  {
+    "scene": "companion_locked",
+    "image": "companion_locked",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "companion_first",
+    "image": "companion_first",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "companion_second",
+    "image": "companion_second",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "companion_help",
+    "image": "companion_help",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "companion_world",
+    "image": "companion_world",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "companion_lodge",
+    "image": "companion_lodge",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "companion_guard",
+    "image": "companion_guard",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "companion_pursuit",
+    "image": "companion_pursuit",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "companion_resonance",
+    "image": "companion_resonance",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "curriculum_list",
+    "image": "curriculum_list",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "curriculum_detail",
+    "image": "curriculum_detail",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "curriculum_branch",
+    "image": "curriculum_branch",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "gear_pending",
+    "image": "gear_pending",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "gear_preview",
+    "image": "gear_preview",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "gear_detail",
+    "image": "gear_detail",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "campaign_catchup",
+    "image": "campaign_catchup",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "campaign_mine",
+    "image": "campaign_mine",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "campaign_return",
+    "image": "campaign_return",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "town_north",
+    "image": "town_north",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "town_north_left",
+    "image": "town_north_left",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "town_north_right",
+    "image": "town_north_right",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "town_middle",
+    "image": "town_middle",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "town_middle_left",
+    "image": "town_middle_left",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "town_middle_right",
+    "image": "town_middle_right",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "town_south",
+    "image": "town_south",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "town_south_left",
+    "image": "town_south_left",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "town_south_right",
+    "image": "town_south_right",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "frost_art_north",
+    "image": "frost_art_north",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "frost_art_north_left",
+    "image": "frost_art_north_left",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "frost_art_north_right",
+    "image": "frost_art_north_right",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "frost_art_south",
+    "image": "frost_art_south",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "frost_art_south_left",
+    "image": "frost_art_south_left",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "frost_art_south_right",
+    "image": "frost_art_south_right",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "frost_art_coal",
+    "image": "frost_art_coal",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "frost_art_shield",
+    "image": "frost_art_shield",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "frost_art_envoy",
+    "image": "frost_art_envoy",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "frost_art_guard",
+    "image": "frost_art_guard",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "frost_art_miner",
+    "image": "frost_art_miner",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "terrain_port",
+    "image": "terrain_port",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "terrain_port_south",
+    "image": "terrain_port_south",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "terrain_frost",
+    "image": "terrain_frost",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "terrain_frost_south",
+    "image": "terrain_frost_south",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "style_city",
+    "image": "style_city",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "style_battle",
+    "image": "style_battle",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "style_forge",
+    "image": "style_forge",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "style_bag",
+    "image": "style_bag",
+    "frames": "45",
+    "options": [],
+    "size": "480x800",
+    "source": true
+  },
+  {
+    "scene": "mw_lorin_wilds",
+    "image": "mw_lorin_wilds",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "mw_maple_road",
+    "image": "mw_maple_road",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "mw_broken_slope",
+    "image": "mw_broken_slope",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "mw_old_salt_road",
+    "image": "mw_old_salt_road",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "mw_shenyuan_port",
+    "image": "mw_shenyuan_port",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "mw_tideflat",
+    "image": "mw_tideflat",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "mw_tidal_gate",
+    "image": "mw_tidal_gate",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "mw_stele_cavern",
+    "image": "mw_stele_cavern",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "mw_red_sand_route",
+    "image": "mw_red_sand_route",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "mw_frost_post",
+    "image": "mw_frost_post",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "mw_rift_mine_road",
+    "image": "mw_rift_mine_road",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "mw_rift_mine_vault",
+    "image": "mw_rift_mine_vault",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "mw_frost_pass",
+    "image": "mw_frost_pass",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "mw_frost_boardwalk",
+    "image": "mw_frost_boardwalk",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "city",
+    "image": "city",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "city_all",
+    "image": "city_all",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "city_shop",
+    "image": "city_shop",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "city_notice",
+    "image": "city_notice",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "city_guests",
+    "image": "city_guests",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "battle",
+    "image": "battle",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "battle_cast",
+    "image": "battle_cast",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "battle_low",
+    "image": "battle_low",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "main_world_battle",
+    "image": "main_world_battle",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "main_world_battle_commands",
+    "image": "main_world_battle_commands",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "main_world_battle_skills",
+    "image": "main_world_battle_skills",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "route_forest",
+    "image": "route_forest",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "map",
+    "image": "map",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "map_boss",
+    "image": "map_boss",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "home",
+    "image": "home",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "growth",
+    "image": "growth",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "talent",
+    "image": "talent",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "equip",
+    "image": "equip",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "bag",
+    "image": "bag",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "bag_full",
+    "image": "bag_full",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "settings",
+    "image": "settings",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "settings2",
+    "image": "settings2",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "gacha",
+    "image": "gacha",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "exchange",
+    "image": "exchange",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "codex",
+    "image": "codex",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "worlds",
+    "image": "worlds",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "arena",
+    "image": "arena",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "quests",
+    "image": "quests",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "deploy",
+    "image": "deploy",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "avatar",
+    "image": "avatar",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "forge_enhance",
+    "image": "forge_enhance",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "forge_gem",
+    "image": "forge_gem",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "forge_refine",
+    "image": "forge_refine",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "picker",
+    "image": "picker",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "mentor_choice",
+    "image": "mentor_choice",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  },
+  {
+    "scene": "order_preview",
+    "image": "order_preview",
+    "frames": "45",
+    "options": [],
+    "size": "480x1067",
+    "source": true
+  }
+]

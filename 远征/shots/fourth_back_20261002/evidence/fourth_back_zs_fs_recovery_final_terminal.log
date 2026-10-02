@@ -1,0 +1,25 @@
+Godot   : C:\Users\Administrator\AppData\Local\Microsoft\WinGet\Packages\GodotEngine.GodotEngine_Microsoft.Winget.Source_8wekyb3d8bbwe\Godot_v4.7.2-stable_win64_console.exe
+Version : 4.7.2.stable.official.ed1daf0bf
+Project : D:\new bee\远征
+UserDir : D:/new bee/远征/tools/_sandbox_appdata/fourth_back_20261002/Godot/app_userdata/远征/
+Roles   : zs, fs
+Timeout : 2400s per process call
+Logs    : D:\new bee\远征\tools\_logs\fourth_back_zs_fs_recovery_final_20261002
+RealSave: <none found before run>
+
+==== role zs ====
+  phase A log: D:\new bee\远征\tools\_logs\fourth_back_zs_fs_recovery_final_20261002\playthrough_zs_a.log
+  phase A OK
+  phase B log: D:\new bee\远征\tools\_logs\fourth_back_zs_fs_recovery_final_20261002\playthrough_zs_b.log
+  phase B OK
+  PASS role zs
+
+==== role fs ====
+  phase A log: D:\new bee\远征\tools\_logs\fourth_back_zs_fs_recovery_final_20261002\playthrough_fs_a.log
+  phase A OK
+  phase B log: D:\new bee\远征\tools\_logs\fourth_back_zs_fs_recovery_final_20261002\playthrough_fs_b.log
+  phase B OK
+  PASS role fs
+
+
+PLAYTHROUGH_ALL_OK (2 roles, A+B per role, real save untouched)

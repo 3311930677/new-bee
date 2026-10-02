@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://tools/PreviewUIArtV2.gd" id="1"]
+
+[node name="PreviewUIArtV2" type="SubViewport"]
+size = Vector2i(1120,1190)
+render_target_update_mode = 4
+script = ExtResource("1")
