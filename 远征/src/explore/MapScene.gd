@@ -320,6 +320,8 @@ func _build_ground() -> void:
 
 
 func _build_ground_detail(cols: int, rows: int) -> void:
+	if _mode == "main_world" and bool(_main_cfg.get("authored_ground", false)):
+		return
 	if _mode == "main_world" and bool(_main_cfg.get("city", false)):
 		return
 	# 地面细节层：主题土路套件（path_sheet，4×4＝16 块位掩码地形）+ 程序磨损斑块。
@@ -445,6 +447,7 @@ func _build_world() -> void:
 	_build_portal(map_w)
 	if _mode == "main_world":
 		_build_world_exits()
+		_build_world_blockers()
 	_build_player(map_w, map_h)
 	_sync_world_companion()
 	_build_monsters(map_w, map_h)
@@ -543,6 +546,22 @@ func _build_portal(map_w: float) -> void:
 
 
 ## 世界图谱出口是道路指示牌；历练传送阵继续只服务随机节点。
+func _build_world_blockers() -> void:
+	for rect_v in (_main_cfg.get("block_rects", []) as Array):
+		if not (rect_v is Array) or (rect_v as Array).size() != 4: continue
+		var row: Array = rect_v
+		var body := StaticBody2D.new()
+		body.collision_layer = 2
+		body.collision_mask = 0
+		body.position = Vector2(float(row[0]) + float(row[2]) / 2, float(row[1]) + float(row[3]) / 2)
+		var shape := RectangleShape2D.new()
+		shape.size = Vector2(float(row[2]), float(row[3]))
+		var collider := CollisionShape2D.new()
+		collider.shape = shape
+		body.add_child(collider)
+		_world.add_child(body)
+
+
 func _build_world_exits() -> void:
 	var exits: Variant = _main_cfg.get("exits", [])
 	if not (exits is Array):
@@ -3901,6 +3920,14 @@ class _QuestEntity extends Node2D:
 		draw_circle(Vector2.ZERO, 22.0, Color(0, 0, 0, 0.24))   # 落地影
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		match art:
+			"resonance":
+				# 地表原图承接碑座本体；程序层只叠加可交互的三地共鸣光纹。
+				for i in 3:
+					var p := Vector2(-24 + i * 24, -18)
+					var color: Color = [Color("93bf95"), Color("82bacb"), Color("d1dceb")][i]
+					draw_arc(p, 9, 0, TAU, 12, color, 2)
+					draw_line(p + Vector2(-3, 0), p + Vector2(3, 0), color, 2)
+				draw_arc(Vector2(0, -18), 44, .2, PI - .2, 20, Color(.74, .58, .87, .45), 2)
 			"frost_brazier":
 				# The permanent scene prop owns the body; this entity owns only the quest marker.
 				if not _uses_ground_art:

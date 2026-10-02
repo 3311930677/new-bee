@@ -15,7 +15,8 @@
     {"id": "rift_mine_road", "name": "裂谷矿道", "kind": "野外", "level": [24, 34], "point": [795, 400]},
     {"id": "rift_mine_vault", "name": "裂谷矿脉", "kind": "首领", "level": [26, 36], "point": [970, 400]},
     {"id": "frost_boardwalk", "name": "霜林栈道", "kind": "野外", "level": [26, 36], "point": [620, 560]},
-    {"id": "frost_pass", "name": "冰隘", "kind": "首领", "level": [26, 36], "point": [795, 560]}
+    {"id": "frost_pass", "name": "冰隘", "kind": "首领", "level": [26, 36], "point": [795, 560]},
+    {"id": "abyss_ring", "name": "渊口外环", "kind": "野外", "level": [43, 49], "point": [970, 560]}
   ],
   "maps": {
     "lorin_wilds": {
@@ -779,6 +780,10 @@
         "from_frost_boardwalk": [
           480,
           1050
+        ],
+        "from_abyss_ring": [
+          760,
+          660
         ]
       },
       "exits": [
@@ -791,6 +796,18 @@
           "to": "frost_boardwalk",
           "arrival": "from_frost_pass",
           "label": "霜林栈道"
+        },
+        {
+          "id": "east_abyss",
+          "at": [
+            864,
+            660
+          ],
+          "to": "abyss_ring",
+          "arrival": "from_frost_pass",
+          "label": "渊口外环",
+          "requires_story": "s29",
+          "locked_hint": "先回霜关驿向宁砚询问关外回声"
         }
       ],
       "goal": "击破风眼，让雪幕领主露出破绽",
@@ -831,6 +848,12 @@
           130,
           240,
           1045
+        ],
+        [
+          460,
+          605,
+          430,
+          110
         ]
       ],
       "entities": {
@@ -988,6 +1011,118 @@
           "at": [
             525,
             310
+          ]
+        }
+      }
+    },
+    "abyss_ring": {
+      "name": "渊口外环",
+      "city": false,
+      "theme": "abyss",
+      "tint": "ffffff",
+      "background": "res://image/main_world/abyss_ring_ground_reference_v1.png",
+      "authored_ground": true,
+      "map_cols": 20,
+      "map_rows": 26,
+      "layout_version": 1,
+      "player_scale": 0.54,
+      "camera_zoom": 1.15,
+      "spawn": [
+        480,
+        1030
+      ],
+      "spawn_points": {
+        "from_frost_pass": [
+          480,
+          1030
+        ]
+      },
+      "exits": [
+        {
+          "id": "south_pass",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "frost_pass",
+          "arrival": "from_abyss_ring",
+          "label": "冰隘"
+        }
+      ],
+      "decos": [],
+      "goal": "查看三地共鸣，留下归路后再往界碑深处",
+      "node_type": "normal",
+      "monster_count": 4,
+      "monster_positions": [
+        [
+          295,
+          350
+        ],
+        [
+          665,
+          415
+        ],
+        [
+          290,
+          850
+        ],
+        [
+          680,
+          970
+        ]
+      ],
+      "monster_ids": [
+        "mon_voidling",
+        "mon_cultist"
+      ],
+      "battle_rewards": {
+        "normal": {
+          "gold": 105,
+          "exp": 80
+        }
+      },
+      "monster_sprite": "",
+      "monster_height": 76,
+      "monster_level_offset": 0,
+      "monster_wander_only": true,
+      "monster_wander_radius": 30,
+      "monster_respawn_seconds": 120,
+      "monster_contact_radius": 40,
+      "encounter_solo": true,
+      "clear_rects": [
+        [
+          350,
+          100,
+          260,
+          1080
+        ]
+      ],
+      "block_rects": [
+        [
+          0,
+          0,
+          185,
+          1248
+        ],
+        [
+          775,
+          0,
+          185,
+          1248
+        ]
+      ],
+      "entities": {
+        "breach_resonance": {
+          "kind": "story",
+          "quest": "",
+          "story_step": "s31",
+          "show_steps": ["s30", "s31"],
+          "story_event": "observe",
+          "art": "resonance",
+          "name": "共鸣碑座",
+          "at": [
+            480,
+            625
           ]
         }
       }

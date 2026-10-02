@@ -510,6 +510,39 @@ func _city_panel_demo() -> void:
 
 
 func _setup() -> void:
+	if _scene.begins_with("fourth_"):
+		G.SAVE_PATH = "res://tools/_logs/save_shot_fourth_front.json"
+		var source := _source_save if not _source_save.is_empty() else "res://shots/fourth_front_20261002/preview_source.json"
+		var raw := FileAccess.get_file_as_string(source)
+		if not JSON.parse_string(raw) is Dictionary:
+			push_error("SHOT_FOURTH_SOURCE_INVALID")
+			return
+		var file := FileAccess.open(G.SAVE_PATH, FileAccess.WRITE)
+		file.store_string(raw)
+		file.close()
+		if not G.reload_save() or G.save_locked:
+			push_error("SHOT_FOURTH_LOAD_FAILED")
+			return
+		if _scene == "fourth_regions":
+			add_child(RegionMapPanel.new())
+			return
+		var mid := "abyss_ring"
+		if _scene == "fourth_preparation":
+			# 演示夹具通过生产事务准备选择态；真实输入证据另存PlaythroughFourthFront。
+			G.story_event("observe", "breach_resonance", "abyss_ring")
+			mid = "lorin_wilds"
+		var run := RunState.new()
+		run.setup({"theme": "abyss", "role_id": G.selected_role, "level": int(G.prog.level),
+			"active_pet": G.companion_active(), "potions": 2, "seed": 61})
+		MapScene.pending_cfg = {"mode": "main_world", "main_map_id": mid, "run": run,
+			"node": {"type": "normal", "layer": 0, "index": 0}}
+		var map := (load("res://src/explore/MapScene.tscn") as PackedScene).instantiate() as MapScene
+		add_child(map)
+		await get_tree().process_frame
+		map._player.position = Vector2(480, 820) if mid == "abyss_ring" else Vector2(480, 640)
+		if _scene == "fourth_preparation": map._city_content._open_dialog(G.city_npc("npc_scribe"), false)
+		if _scene == "fourth_battle": map._start_battle(map._monsters[0])
+		return
 	if _scene == "save_future":
 		# 本场景在任何写入前再次指定独立路径，不能依赖外层调用者的初始化顺序。
 		G.SAVE_PATH = "res://tools/_logs/save_shot_future_recovery.json"

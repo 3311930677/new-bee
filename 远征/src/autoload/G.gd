@@ -125,6 +125,7 @@ const ITEM_NAMES := {
 	"gate_clue": "闸门线索", "tide_core": "潮蚀闸芯",
 	"frost_letter": "霜关来信", "mine_record": "矿道记录",
 	"gate_stamp": "关闸铁印", "frost_reply": "双关回讯", "veil_seal": "雪幕印",
+	"rift_echo": "渊口回响", "stele_key": "归路凭证",
 	"frost_nameplate": "裂纹名牌", "frost_parcel": "寒路药包",
 	"tide_egg": "潮纹蛋",
 	"fish_salt": "盐泉鲫", "fish_port": "港湾银鳞", "fish_tide": "潮纹鳞",
@@ -811,6 +812,8 @@ func story_current() -> Dictionary:
 func story_goal_short() -> String:
 	var row := story_current()
 	if row.is_empty():
+		if story_step_done("s32"):
+			return "渊口线索已归档 · 自由探索"
 		if story_step_done("s28"):
 			return "双关已互通 · 自由探索"
 		if story_step_done("s20"):
@@ -845,7 +848,9 @@ func normalize_story_state() -> Dictionary:
 	# 不重放复命事件，也不碰奖励账本、位置或其他养成状态。
 	if String(state.get("step", "")) == "":
 		var done: Array = state.get("done", [])
-		if done.has("s24") and not done.has("s25"):
+		if done.has("s28") and not done.has("s29"):
+			state["step"] = "s29"
+		elif done.has("s24") and not done.has("s25"):
 			state["step"] = "s25"
 		elif done.has("s20") and not done.has("s21"):
 			state["step"] = "s21"
@@ -897,6 +902,10 @@ func story_event(kind: String, target: String, map_id: String, persist := true,
 		flags = {"act2_tide_gate_open": true, "act2_port_choice": choice}
 	elif step_id == "s28" and not choice.is_empty():
 		flags = {"act3_supply_choice": choice, "act3_pass_open": true}
+	elif step_id == "s31":
+		flags = {"act4_resonance_found": true}
+	elif step_id == "s32" and not choice.is_empty():
+		flags = {"act4_preparation": choice, "act4_depth_ready": true}
 	var tx := RewardLedger.make(RewardLedger.tx_id("story", step_id,
 		String(event.get("event_id", ""))), costs, grants, flags)
 	var res := RewardLedger.apply(tx, ledger(), self)
@@ -2912,6 +2921,8 @@ func has_profile() -> bool:
 
 ## 道具图标名：背包 id 无 itm_ 前缀，素材名有；gem_* 素材与 id 同名
 func item_icon(item_id: String) -> String:
+	if item_id == "rift_echo": return "itm_stele_fragment"
+	if item_id == "stele_key": return "itm_gate_stamp"
 	if item_id in ["fish_salt", "fish_port", "fish_tide"]:
 		return "itm_fish_common"
 	if item_id.begins_with("gem_"):

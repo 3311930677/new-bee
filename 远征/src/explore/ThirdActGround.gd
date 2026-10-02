@@ -98,6 +98,9 @@ func _draw() -> void:
 				draw_line(Vector2(x, 175), Vector2(x, 1160), Color("c6c4b0"), 5)
 		"frost_pass":
 			preload("res://src/explore/TerrainSurface.gd").tiled(self,
+				"res://image/map_proc/017_tile_glacier_2.png", Rect2(480, 620, 398, 82),
+				Vector2(72, 72), Color("d3e4e7"))
+			preload("res://src/explore/TerrainSurface.gd").tiled(self,
 				"res://image/map_proc/017_tile_glacier_2.png", Rect2(370, 135, 220, 1045),
 				Vector2(72, 72), Color("d3e4e7"))
 			for y in [230.0, 540.0, 880.0]:
