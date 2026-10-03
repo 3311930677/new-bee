@@ -56,6 +56,19 @@ func _run() -> void:
 	var expected_reward := int(G.economy_first_order()["payout_gold"])
 	var before_gold := int(G.wallet["gold"])
 	var slope := await _enter_map("broken_slope")
+	var walk_bridge := _entity(slope, "first_order_walk_bridge")
+	_check(walk_bridge != null and _entity(slope, "first_order_ride_bridge") != null,
+		"铁料运单在坡口提供步行与骑乘两种桥面处理")
+	if walk_bridge != null: slope.on_quest_entity(walk_bridge)
+	_check(bool(G.economy_first_order()["bridge_aided"]) and
+		String(G.economy_first_order()["bridge_mode"]) == "walk" and
+		int(G.economy_first_order()["payout_gold"]) == expected_reward + 8,
+		"步行系绳可为本批运单减免运费")
+	expected_reward = int(G.economy_first_order()["payout_gold"])
+	_check(not bool(G.first_order_bridge("broken_slope", "first_order_ride_bridge").get("ok", false))
+		and G.reload_save() and bool(G.economy_first_order()["bridge_aided"]),
+		"不能重复桥面折让，读档仍保留")
+	await get_tree().process_frame
 	var camp := _entity(slope, "trade_slope_camp")
 	_check(camp != null, "断碑营地应有常驻可交互交易实体")
 	if camp != null:
@@ -98,3 +111,23 @@ func _run() -> void:
 		if maple._trade_panel != null:
 			maple._trade_panel.close()
 	maple.queue_free()
+	await get_tree().process_frame
+	G._init_state_defaults()
+	G.save_locked = false
+	G.selected_role = "zs"
+	G.act1_state()["side_quests"] = {"a1_trade_cart": {"status": "done"}}
+	G.prog["mounts"] = {"owned": {"horse": 1}, "active": "horse", "riding": true}
+	G.items["trade_salt"] = 2
+	G.items["trade_iron"] = 1
+	_check(G.mount_riding() and bool(G.economy_first_order_accept().get("ok", false)),
+		"骑乘测试可接新运单")
+	var base_payout := int(G.economy_first_order()["payout_gold"])
+	slope = await _enter_map("broken_slope")
+	var ride_bridge := _entity(slope, "first_order_ride_bridge")
+	if ride_bridge != null: slope.on_quest_entity(ride_bridge)
+	_check(bool(G.economy_first_order()["bridge_aided"]) and
+		String(G.economy_first_order()["bridge_mode"]) == "ride" and
+		int(G.economy_first_order()["payout_gold"]) == base_payout + 14,
+		"骑乘牵引给另一种折让，步行始终可替代")
+	slope.queue_free()
+	await get_tree().process_frame

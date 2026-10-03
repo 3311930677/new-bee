@@ -75,6 +75,17 @@ func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 		_build_enemies(String(enemy_cfg.get("theme", "forest")),
 			String(enemy_cfg.get("node_type", "normal")),
 			String(enemy_cfg.get("lead_mon", "")), bool(enemy_cfg.get("solo", false)))
+	# 地图机关造成的短暂护甲破绽在战斗创建时生效，计时走同一 tick 时钟。
+	var opening_break: Dictionary = enemy_cfg.get("opening_def_break", {})
+	var break_target := String(opening_break.get("monster_id", ""))
+	if not break_target.is_empty():
+		var break_ticks := clampi(int(opening_break.get("ticks", 0)), 1, 600)
+		var break_pct := clampf(float(opening_break.get("pct", 0.0)), 0.0, 0.3)
+		if break_pct > 0.0:
+			for unit in units:
+				if unit.side == "enemy" and String(unit.data.get("id", "")) == break_target:
+					unit.add_buff("def_break", break_ticks, {"pct": break_pct,
+						"stack_cap": 1})
 	# 开场词条钩子
 	for u in units:
 		if u.traits != null:

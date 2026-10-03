@@ -10,7 +10,8 @@
 #   1. the godot process exit code is 0
 #   2. the output contains THAT case's own completion line "<TOKEN>_OK ..." anchored at
 #      line start (no substring guessing)
-#   3. the output contains no failure marker and no engine error pattern
+#   3. the output contains no failure marker and no engine error pattern, except narrowly
+#      identified Windows host CA-store / engine-shutdown diagnostics counted below
 #   4. the case finished inside the wall-clock budget (--quit-after is a frame cap, not a
 #      wall-clock cap; a wedged script still needs an external timeout)
 #   5. the case did not write the real player save (user://save.json hash unchanged)
@@ -33,7 +34,7 @@ param(
   [string]$List = "",
   [int]$QuitAfter = 6000,
   [int]$TimeoutSec = 240,
-  [int]$Expected = 48,
+  [int]$Expected = 52,
   [string]$LogDir = "",
   [switch]$AllowAnyVersion
 )
@@ -110,6 +111,10 @@ $cases = @(
 	@{ N = "VerifyFrostArt"; K = "scene"; T = "FROST_ART_OK" },
 	@{ N = "VerifyPortGrowth";  K = "scene";  T = "PORT_GROWTH_OK" },
 	@{ N = "VerifyShipping";    K = "scene";  T = "SHIPPING_OK" },
+	@{ N = "VerifyFrostHerbOrder"; K = "scene"; T = "FROST_HERB_OK" },
+	@{ N = "VerifyRoadMail";    K = "scene";  T = "ROAD_MAIL_OK" },
+	@{ N = "VerifyStelePuzzle"; K = "scene";  T = "STELE_PUZZLE_OK" },
+	@{ N = "VerifyBossPuzzles"; K = "scene";  T = "BOSS_PUZZLES_OK" },
 	@{ N = "VerifyFishing";     K = "scene";  T = "FISHING_OK" },
 	@{ N = "VerifyRouteScene";  K = "scene";  T = "ROUTE_SCENE_OK" },
 	@{ N = "VerifyGacha";       K = "scene";  T = "GACHA_OK" },
@@ -245,6 +250,11 @@ $errPatterns = @(
 $exitNoise = @(
 	"were leaked at exit", "resources still in use at exit"
 )
+# This sandboxed Windows host can run Godot scenes and save files but cannot read its system
+# CA store. Count only this exact startup line as host noise; other ERROR lines still fail.
+$hostNoise = @(
+	"ERROR: Failed to read the root certificate store."
+)
 $noiseCases = 0
 $noiseLines = 0
 
@@ -281,6 +291,7 @@ foreach ($c in $cases) {
 		if ($t -eq "") { continue }
 		$isNoise = $false
 		foreach ($n in $exitNoise) { if ($t -cmatch [regex]::Escape($n)) { $isNoise = $true } }
+		foreach ($n in $hostNoise) { if ($t -ceq $n) { $isNoise = $true } }
 		if ($isNoise) { $caseNoise++; continue }
 		foreach ($p in $errPatterns) {
 			if ($t -cmatch [regex]::Escape($p)) { $sigErr[$p] = $true }

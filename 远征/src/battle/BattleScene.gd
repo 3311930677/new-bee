@@ -308,6 +308,16 @@ func _ready() -> void:
 	_build_func_row()
 	_build_classic_command_ui()
 	_sync_views()
+	if bool(_cfg.get("stele_echo_ready", false)):
+		_show_tip("碑声已稳：听见两声轻响后注意首领蓄力", Color("ffe2a0"))
+	var tide_route := String(_cfg.get("tide_route", ""))
+	if tide_route in ["bridge", "cargo", "both"]:
+		var tide_tip := "栈桥水线已通" if tide_route == "bridge" else \
+			"货箱暗渠已通" if tide_route == "cargo" else \
+			"双闸同开：司祭开场 6 秒防护降低 15%"
+		if bool(_cfg.get("tide_supply_bonus", false)):
+			tide_tip += " · 药剂 +1"
+		_show_tip(tide_tip, Color("9fe2db"))
 	sim.events.clear()
 
 
@@ -1551,6 +1561,16 @@ func _refresh_windup_tip() -> void:
 func _announce_windup() -> void:
 	var prefix := "首领技" if _windup_tier == "boss" else "敌方"
 	var color := Color("ff8a6a") if _windup_tier == "boss" else Color("ffb0a0")
+	if _windup_tier == "boss" and bool(_cfg.get("stele_echo_ready", false)):
+		prefix = "碑声双响 · 首领技"
+		color = Color("ffe2a0")
+	if _windup_tier == "boss":
+		match String(_cfg.get("tide_route", "")):
+			"bridge": prefix = "栈桥水线 · 首领技"
+			"cargo": prefix = "货箱暗渠 · 首领技"
+			"both":
+				prefix = "双闸退潮 · 首领技"
+				color = Color("9fe2db")
 	var secs := _windup_remain_sec()
 	if secs > 0.0:
 		_show_tip("%s · %s · 蓄力 %.1fs" % [prefix, _windup_name, secs], color)

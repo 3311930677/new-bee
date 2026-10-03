@@ -466,9 +466,13 @@ func _city_panel_demo() -> void:
 		if _scene == "city_build_panel" and bid == "archive":
 			continue
 		G.build(bid)
-	var use_port := _scene in ["port_services", "city_tide_choice"]
+	var use_port := _scene == "port_services" or _scene.begins_with("city_tide_choice")
 	if use_port:
 		G.prog["story"] = {"step": "s20", "done": [], "goals": {}}
+		if _scene == "city_tide_choice_bridge":
+			G.prog["flags"] = {"act2_tide_route_bridge": true, "act2_tide_bridge_open": true}
+		elif _scene == "city_tide_choice_cargo":
+			G.prog["flags"] = {"act2_tide_route_cargo": true, "act2_tide_cargo_saved": true}
 	var mid := "shenyuan_port" if use_port else "lorin_wilds"
 	G.prog["main_world"] = {"map_id": mid}
 	var cfg := TableCache.main_world_map(mid)
@@ -503,7 +507,7 @@ func _city_panel_demo() -> void:
 					cc.call("_show_built_panel", bd_v)
 		"city_frost_choice":
 			cc.call("_open_frost_choice_panel")
-		"city_tide_choice":
+		"city_tide_choice", "city_tide_choice_bridge", "city_tide_choice_cargo":
 			cc.call("_open_tide_choice_panel")
 		"port_services":
 			cc.call("_open_port_services")
@@ -568,7 +572,8 @@ func _setup() -> void:
 		_battle_theme_demo()
 		return
 	if _scene in ["city_shop", "city_notice", "city_guests", "city_build_panel",
-			"city_built_panel", "city_frost_choice", "city_tide_choice", "port_services"]:
+			"city_built_panel", "city_frost_choice", "city_tide_choice",
+			"city_tide_choice_bridge", "city_tide_choice_cargo", "port_services"]:
 		await _city_panel_demo()
 		return
 	if _scene == "namerecover":
@@ -1034,6 +1039,116 @@ func _setup() -> void:
 			add_child(order_city)
 			await get_tree().process_frame
 			order_city.call("_open_first_order_preview")
+		"stele_rooms_entry":
+			G.SAVE_PATH = "res://tools/_logs/save_shot_stele_rooms.json"
+			G._init_state_defaults()
+			G.selected_role = "zs"
+			G.player_name = "碑窟行者"
+			G.prog["story"] = {"step": "s09", "done": ["s08"], "goals": {}}
+			var stele_run := RunState.new()
+			stele_run.setup({"theme": "tomb", "role_id": "zs", "level": 12,
+				"active_pet": "pet_rockturtle", "potions": 2, "seed": 613})
+			MapScene.pending_cfg = {"mode": "main_world", "main_map_id": "stele_cavern",
+				"run": stele_run, "node": {"type": "boss", "layer": 0, "index": 0}}
+			var stele_world: MapScene = load("res://src/explore/MapScene.tscn").instantiate()
+			add_child(stele_world)
+			await get_tree().process_frame
+			stele_world._player.position = Vector2(480, 870)
+		"stele_shadow_mid":
+			G.SAVE_PATH = "res://tools/_logs/save_shot_stele_shadow.json"
+			G._init_state_defaults()
+			G.prog["level"] = 12
+			G.selected_role = "zs"
+			G.player_name = "碑窟行者"
+			G.prog["story"] = {"step": "s10", "done": ["s09"], "goals": {}}
+			G.prog["flags"] = {"act1_stele_rooms_v1": true,
+				"act1_echo_crack_left": true, "act1_echo_crack_middle": true,
+				"act1_echo_crack_right": true, "act1_stele_clue": true,
+				"act1_stele_seat_1": true}
+			var shadow_run := RunState.new()
+			shadow_run.setup({"theme": "tomb", "role_id": "zs", "level": 12,
+				"active_pet": "pet_rockturtle", "potions": 2, "seed": 614})
+			MapScene.pending_cfg = {"mode": "main_world", "main_map_id": "stele_cavern",
+				"run": shadow_run, "node": {"type": "boss", "layer": 0, "index": 0}}
+			var shadow_world: MapScene = load("res://src/explore/MapScene.tscn").instantiate()
+			add_child(shadow_world)
+			await get_tree().process_frame
+			shadow_world._player.position = Vector2(480, 690)
+		"tidal_rooms_entry", "tidal_rooms_upper", "tidal_choice", "tidal_route_bridge", "tidal_route_cargo":
+			G.SAVE_PATH = "res://tools/_logs/save_shot_tidal_rooms.json"
+			G._init_state_defaults()
+			G.prog["level"] = 20
+			G.selected_role = "zs"
+			G.player_name = "水闸行者"
+			G.items["gate_clue"] = 1
+			G.prog["story"] = {"step": "s19", "done": ["s18"], "goals": {}}
+			G.prog["flags"] = {"act2_tidal_rooms_v1": true}
+			if _scene != "tidal_rooms_entry":
+				G.prog["flags"]["act2_tide_clue"] = true
+				G.prog["flags"]["act2_tide_gate_1"] = true
+			if _scene in ["tidal_route_bridge", "tidal_route_cargo"]:
+				G.prog["flags"]["act2_tide_gate_2"] = true
+				var route_name := "bridge" if _scene == "tidal_route_bridge" else "cargo"
+				G.prog["flags"]["act2_tide_route_%s" % route_name] = true
+				G.prog["flags"]["act2_tide_bridge_open" if route_name == "bridge" else "act2_tide_cargo_saved"] = true
+			var tidal_run := RunState.new()
+			tidal_run.setup({"theme": "tomb", "role_id": "zs", "level": 20,
+				"active_pet": "pet_rockturtle", "potions": 2, "seed": 919})
+			MapScene.pending_cfg = {"mode": "main_world", "main_map_id": "tidal_gate",
+				"run": tidal_run, "node": {"type": "boss", "layer": 0, "index": 0}}
+			var tidal_world: MapScene = load("res://src/explore/MapScene.tscn").instantiate()
+			add_child(tidal_world)
+			await get_tree().process_frame
+			tidal_world._player.position = Vector2(480, 970 if _scene == "tidal_rooms_entry" else 580)
+			if _scene == "tidal_choice":
+				for tidal_entity in tidal_world._quest_entities:
+					if tidal_entity.eid == "act2_tide_bridge":
+						tidal_world.on_quest_entity(tidal_entity)
+						break
+		"frost_herb_contract", "frost_herb_contract_error":
+			_demo_prog()
+			G.selected_role = "zs"
+			G.prog["story"] = {"step": "s29", "done": ["s28"], "goals": {}}
+			G.wallet["gold"] = 0 if _scene == "frost_herb_contract_error" else 1000
+			var contract_trade := TradePanel.new()
+			add_child(contract_trade)
+			contract_trade.open_site("shenyuan_market")
+			contract_trade._open_frost_contract()
+			if _scene == "frost_herb_contract_error":
+				contract_trade._contract_panel._act("accept_self")
+		"road_mail_choice":
+			_demo_prog()
+			var choice_panel := preload("res://src/ui/WorldPuzzlePanel.gd").new()
+			add_child(choice_panel)
+			choice_panel.open_puzzle({"name": "邮 路 · 风 口",
+				"clue": "路标缺了一角。可以先查看附近风蚀石的旧刻痕，自己辨路；也可付 18 金请驿亭引路。两种办法都能把信送到。",
+				"choices": {"pass_observe": "照旧刻痕辨路 · 免费",
+					"pass_supply": "付 18 金，请驿亭引路"}})
+		"road_mail_archive":
+			_demo_prog()
+			G.prog["road_mail"] = {"status": "claimed", "phase": "", "route": "quick",
+				"run_id": "shot-mail-1", "run_seq": 1, "deliveries": 1,
+				"last_claim_day": 1, "archive": [{"run_id": "shot-mail-1", "day": 1,
+					"route": "quick", "solution": "observe",
+					"letter": "给阿澜：北岸栈桥修好了，霜关的灯还亮着。等你回信。",
+					"reply": "阿澜说：我以为那盏灯早灭了。请告诉守灯的人，港口这边也会留一盏。"}]}
+			var mail_panel := preload("res://src/ui/RoadMailPanel.gd").new()
+			add_child(mail_panel)
+			mail_panel.open_board()
+			mail_panel._act("archive")
+		"road_mail_board":
+			_demo_prog()
+			var board_panel := preload("res://src/ui/RoadMailPanel.gd").new()
+			add_child(board_panel)
+			board_panel.open_board()
+		"road_mail_hazard":
+			_demo_prog()
+			var hazard_panel := preload("res://src/ui/WorldPuzzlePanel.gd").new()
+			add_child(hazard_panel)
+			hazard_panel.open_puzzle({"name": "邮 路 · 受 伤 信 使",
+				"clue": "背风驿亭边有位信使扭伤了脚。付 12 金请驿亭包扎，可以按时送信；免费扶他慢行到港口，本趟报酬会少 20 金。",
+				"choices": {"hazard_help": "付 12 金包扎 · 报酬不减",
+					"hazard_escort": "扶他慢行 · 少 20 金"}})
 		"trade_warden_dialog":
 			_demo_prog()
 			G.account = "演示账号"

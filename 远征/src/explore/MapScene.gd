@@ -38,6 +38,9 @@ const HUD_BTN_RIGHT := 468.0    # = _MiniMapPos.x + MINI_W（右上角小地图�
 const AUTO_TIMEOUT := 26.0    # 自动前往超时（秒）：到不了就交还控制权，不把玩家困住
 const FLEE_CONTACT_CD := 1.6  # 战斗撤退后的接触冷静期（秒）：防"刚退又被同一只怪拽回去"
 const StoryBeatScript := preload("res://src/ui/StoryBeat.gd")   # 首领剧情演出层（对峙/余韵）
+const RoadMailPanelScript := preload("res://src/ui/RoadMailPanel.gd")
+const RoadMailServiceScript := preload("res://src/world/RoadMailService.gd")
+const WorldPuzzlePanelScript := preload("res://src/ui/WorldPuzzlePanel.gd")
 const MountVisual := preload("res://src/world/MountVisual.gd")
 const FirstActWeaponVisual := preload("res://src/world/FirstActWeaponVisual.gd")
 
@@ -60,10 +63,16 @@ var _portal: _Portal
 var _monsters: Array[_MapMonster] = []
 var _contact_mon: _MapMonster = null
 var _quest_entities: Array[_QuestEntity] = []   # P05-B：支线实体（采集/观察/送达）
+var _stele_room_gates: Dictionary = {}            # 失声碑窟内部两道可恢复的实体门
+var _tidal_room_gates: Dictionary = {}            # 退潮水闸的隔水门，随闸态拆除
+var _tidal_water_bounds: Array[StaticBody2D] = [] # 两侧深水有实体边界，不能绕闸游过去
+var _tidal_ground: TidalGateGround = null
 var _interactable: _Interactable = null   # 非战斗节点物件（宝箱/事件/商店/篝火）
 var _remover: Control = null              # 篝火词条删除浮层
 var _exit_ui: Control = null              # 撤离确认浮层
 var _trade_panel: TradePanel = null        # P06 野外驿点现货/订单
+var _road_mail_panel: Control = null       # 通关后归路邮驿
+var _puzzle_panel: Control = null          # 带线索的两选一机关
 var _fishing_panel: FishingPanel = null
 var _beat: Control = null                 # 首领剧情演出层（对峙/余韵）
 var _battle_layer: CanvasLayer = null
@@ -436,7 +445,12 @@ func _build_world() -> void:
 	elif _mode == "main_world" and _main_map_id == "tideflat":
 		add_child(TideflatGround.new())
 	elif _mode == "main_world" and _main_map_id == "tidal_gate":
-		add_child(TidalGateGround.new())
+		_tidal_ground = TidalGateGround.new()
+		_tidal_ground.dynamic_water = _tidal_rooms_enabled()
+		_tidal_ground.upper_released = bool(G.prog.get("flags", {}).get("act2_tide_gate_1", false))
+		_tidal_ground.bridge_drained = bool(G.prog.get("flags", {}).get("act2_tide_gate_2", false))
+		_tidal_ground.passages = _tidal_passages()
+		add_child(_tidal_ground)
 	elif _mode == "main_world" and _main_map_id in ["red_sand_route", "frost_post", "rift_mine_road", "rift_mine_vault", "frost_boardwalk", "frost_pass"]:
 		var ground := ThirdActGroundScript.new()
 		ground.map_id = _main_map_id
@@ -460,6 +474,9 @@ func _build_world() -> void:
 	if _mode == "main_world":
 		_build_world_exits()
 		_build_world_blockers()
+		_build_stele_room_gates()
+		_build_tidal_water_bounds()
+		_build_tidal_room_gates()
 	_build_player(map_w, map_h)
 	_sync_world_companion()
 	_build_monsters(map_w, map_h)
@@ -572,6 +589,115 @@ func _build_world_blockers() -> void:
 		collider.shape = shape
 		body.add_child(collider)
 		_world.add_child(body)
+
+
+func _stele_rooms_enabled() -> bool:
+	return _mode == "main_world" and _main_map_id == "stele_cavern" and \
+		(bool(G.prog.get("flags", {}).get("act1_stele_rooms_v1", false)) or \
+		String(G.story_current().get("id", "")) == "s09")
+
+
+func _stele_room_one_ready() -> bool:
+	var flags: Dictionary = G.prog.get("flags", {})
+	for key in ["act1_stele_clue", "act1_echo_crack_left", "act1_echo_crack_middle",
+			"act1_echo_crack_right"]:
+		if not bool(flags.get(key, false)): return false
+	return true
+
+
+func _build_stele_room_gates() -> void:
+	if not _stele_rooms_enabled(): return
+	if not _stele_room_one_ready():
+		var first := _SteleRoomGate.new()
+		first.position = Vector2(480, 755)
+		first.caption = "听清三处石缝，再读青姨拓片"
+		_world.add_child(first)
+		_stele_room_gates["echo"] = first
+	if not bool(G.prog.get("flags", {}).get("act1_stele_seat_2", false)):
+		var second := _SteleRoomGate.new()
+		second.position = Vector2(480, 540)
+		second.caption = "两枚碑座未归位"
+		_world.add_child(second)
+		_stele_room_gates["heart"] = second
+
+
+func _sync_stele_room_gates() -> void:
+	if not _stele_rooms_enabled(): return
+	if _stele_room_one_ready() and _stele_room_gates.has("echo"):
+		(_stele_room_gates["echo"] as Node).queue_free()
+		_stele_room_gates.erase("echo")
+	if bool(G.prog.get("flags", {}).get("act1_stele_seat_2", false)) and \
+			_stele_room_gates.has("heart"):
+		(_stele_room_gates["heart"] as Node).queue_free()
+		_stele_room_gates.erase("heart")
+	_mark_nav_dirty()
+
+
+func _tidal_rooms_enabled() -> bool:
+	return _mode == "main_world" and _main_map_id == "tidal_gate" and \
+		(bool(G.prog.get("flags", {}).get("act2_tidal_rooms_v1", false)) or \
+		String(G.story_current().get("id", "")) == "s18")
+
+
+func _tidal_passages() -> String:
+	var flags: Dictionary = G.prog.get("flags", {})
+	if not bool(flags.get("act2_tide_gate_2", false)):
+		return "sealed"
+	var bridge := bool(flags.get("act2_tide_bridge_open", false))
+	var cargo := bool(flags.get("act2_tide_cargo_saved", false))
+	if bridge and cargo: return "both"
+	if bridge: return "bridge"
+	if cargo: return "cargo"
+	return "both"  # 旧档已校准侧闸，但没有路线旗：保留原可走区域。
+
+
+func _build_tidal_water_bounds() -> void:
+	if not _tidal_rooms_enabled(): return
+	for bounds in [Rect2(0, 0, 330, 1248), Rect2(630, 0, 330, 1248)]:
+		var body := StaticBody2D.new()
+		body.collision_layer = 2
+		body.collision_mask = 0
+		body.position = bounds.get_center()
+		var collider := CollisionShape2D.new()
+		var rect := RectangleShape2D.new()
+		rect.size = bounds.size
+		collider.shape = rect
+		body.add_child(collider)
+		_world.add_child(body)
+		_tidal_water_bounds.append(body)
+
+
+func _build_tidal_room_gates() -> void:
+	if not _tidal_rooms_enabled(): return
+	var flags: Dictionary = G.prog.get("flags", {})
+	if not bool(flags.get("act2_tide_clue", false)):
+		var record_gate := _TidalRoomGate.new()
+		record_gate.position = Vector2(480, 770)
+		record_gate.caption = "先读港务水痕，再进上闸"
+		_world.add_child(record_gate)
+		_tidal_room_gates["record"] = record_gate
+	var priest_gate := _TidalRoomGate.new()
+	priest_gate.position = Vector2(480, 475)
+	priest_gate.caption = "排清栈桥侧闸积水"
+	priest_gate.route = _tidal_passages()
+	_world.add_child(priest_gate)
+	_tidal_room_gates["priest"] = priest_gate
+
+
+func _sync_tidal_room_gates() -> void:
+	if not _tidal_rooms_enabled(): return
+	var flags: Dictionary = G.prog.get("flags", {})
+	if bool(flags.get("act2_tide_clue", false)) and _tidal_room_gates.has("record"):
+		(_tidal_room_gates["record"] as Node).queue_free()
+		_tidal_room_gates.erase("record")
+	if _tidal_room_gates.has("priest"):
+		(_tidal_room_gates["priest"] as _TidalRoomGate).set_route(_tidal_passages())
+	if _tidal_ground != null:
+		_tidal_ground.upper_released = bool(flags.get("act2_tide_gate_1", false))
+		_tidal_ground.bridge_drained = bool(flags.get("act2_tide_gate_2", false))
+		_tidal_ground.passages = _tidal_passages()
+		_tidal_ground.queue_redraw()
+	_mark_nav_dirty()
 
 
 func _build_world_exits() -> void:
@@ -907,6 +1033,47 @@ func _build_monsters(map_w: float, map_h: float) -> void:
 		_spawn_monster(slot)
 	_total_monsters = comp.size() if _mode == "main_world" else _monsters.size()
 	_build_optional_bosses()
+	_build_road_mail_ambush()
+	_build_stele_shadow()
+
+
+func _stele_shadow_resolved() -> bool:
+	var flags: Dictionary = G.prog.get("flags", {})
+	return bool(flags.get("act1_stele_shadow_avoided", false)) or \
+		bool(flags.get("act1_stele_shadow_defeated", false))
+
+
+func _build_stele_shadow() -> void:
+	if not _stele_rooms_enabled() or _main_boss_cleared(): return
+	var flags: Dictionary = G.prog.get("flags", {})
+	if not bool(flags.get("act1_stele_shadow_challenged", false)) or \
+			bool(flags.get("act1_stele_shadow_defeated", false)):
+		return
+	for existing in _monsters:
+		if existing.idx == 3000: return
+	var slot := {"idx": 3000, "tier": "normal", "mon_id": "mon_ghost",
+		"position": Vector2(430, 570), "level_offset": 0,
+		"wander_radius": 18.0, "contact_radius": 36.0}
+	_main_spawn_slots.append(slot)
+	_spawn_monster(slot)
+
+
+func _road_mail_ambush_idx() -> int:
+	return 2000 + int(G.road_mail_state().get("run_seq", 0))
+
+
+func _build_road_mail_ambush() -> void:
+	if _mode != "main_world" or _main_map_id != "red_sand_route":
+		return
+	var mail := G.road_mail_state()
+	if String(mail.get("status", "")) != "active" or \
+			String(mail.get("phase", "")) != "hazard" or String(mail.get("route", "")) != "quick":
+		return
+	var slot := {"idx": _road_mail_ambush_idx(), "tier": "normal",
+		"mon_id": "mon_scorp", "position": Vector2(410, 860),
+		"level_offset": 0, "wander_radius": 20.0, "contact_radius": 40.0}
+	_main_spawn_slots.append(slot)
+	_spawn_monster(slot)
 
 
 ## 可选首领刷点（P05-C）：独立于 monster_ids 随机池，序号从 1000 起（不与普通槽撞键）。
@@ -1650,9 +1817,23 @@ func _build_quest_entities() -> void:
 			continue
 		var row := row_v as Dictionary
 		var quest := String(row.get("quest", ""))
-		if String(row.get("kind", "")) == "puzzle":
+		if String(row.get("kind", "")) == "road_mail" and not G.road_mail_entity_visible(eid):
+			continue
+		if String(row.get("kind", "")) == "shipping_aid" and not G.shipping_aid_visible(
+				String(row.get("shipping_id", "")), eid):
+			continue
+		if String(row.get("kind", "")) == "frost_herb_route" and not G.frost_herb_route_visible(eid):
+			continue
+		if String(row.get("kind", "")) == "first_order_bridge" and not G.first_order_bridge_visible(eid):
+			continue
+		if String(row.get("kind", "")) in ["puzzle", "puzzle_choice"]:
 			var required := String(row.get("requires_story", ""))
 			if not required.is_empty() and not G.story_step_done(required): continue
+			if eid == "act1_echo_west" and _stele_rooms_enabled() and not _stele_room_one_ready():
+				continue
+			if eid == "act1_echo_shadow" and not _stele_rooms_enabled(): continue
+			if eid == "act1_echo_east" and _stele_rooms_enabled() and not _stele_shadow_resolved():
+				continue
 			if bool(G.prog.get("flags", {}).get(String(row.get("flag", "")), false)) \
 				or WorldSession.entity_taken(_main_world_state(), eid): continue
 		var flags_ready := true
@@ -1672,6 +1853,8 @@ func _build_quest_entities() -> void:
 		ent.eid = eid
 		ent.quest = quest
 		ent.kind = String(row.get("kind", "collect"))
+		ent.mail_action = String(row.get("mail_action", ""))
+		ent.shipping_id = String(row.get("shipping_id", ""))
 		ent.story_event_kind = String(row.get("story_event", "collect"))
 		ent.art = String(row.get("art", "root"))
 		ent.caption = String(row.get("name", ""))
@@ -1704,6 +1887,63 @@ func on_quest_entity(e: _QuestEntity) -> void:
 				e.trade_cooled = true
 				return
 		return
+	if e.kind == "road_mail":
+		if e.mail_action == "board":
+			_open_road_mail_panel()
+			e.trade_cooled = true
+			return
+		if e.mail_action in ["quick", "safe"]:
+			_open_road_mail_choice(e)
+			e.trade_cooled = true
+			return
+		if e.mail_action == "safe_hazard":
+			_open_road_mail_hazard(e)
+			e.trade_cooled = true
+			return
+		var mail_result := G.road_mail_action(e.mail_action, _main_map_id)
+		if not bool(mail_result.get("ok", false)):
+			_toast("邮路状态未保存，请回驿站核对")
+			return
+		e.used = true
+		e.queue_free()
+		_toast(String(mail_result.get("line", "")))
+		_refresh_quest_entities.call_deferred()
+		_refresh_hud()
+		return
+	if e.kind == "shipping_aid":
+		var aid_result := G.shipping_route_aid(e.shipping_id, _main_map_id, e.eid)
+		if not bool(aid_result.get("ok", false)):
+			_toast(String(aid_result.get("err", "船单路况未保存")))
+			return
+		e.used = true
+		e.queue_free()
+		_toast(String(aid_result.get("line", "")))
+		_refresh_hud()
+		return
+	if e.kind == "frost_herb_route":
+		var route_result := G.frost_herb_route(_main_map_id, e.eid)
+		if not bool(route_result.get("ok", false)):
+			_toast(String(route_result.get("err", "药箱路线未记录")))
+			e.trade_cooled = true
+			return
+		e.used = true
+		e.queue_free()
+		_toast(String(route_result.get("line", "")))
+		_refresh_quest_entities.call_deferred()
+		_refresh_hud()
+		return
+	if e.kind == "first_order_bridge":
+		var bridge_result := G.first_order_bridge(_main_map_id, e.eid)
+		if not bool(bridge_result.get("ok", false)):
+			_toast(String(bridge_result.get("err", "桥面处理未保存")))
+			e.trade_cooled = true
+			return
+		e.used = true
+		e.queue_free()
+		_toast(String(bridge_result.get("line", "")))
+		_refresh_quest_entities.call_deferred()
+		_refresh_hud()
+		return
 	if e.kind == "story":
 		var result := G.story_event(e.story_event_kind, e.eid, _main_map_id)
 		if result.is_empty():
@@ -1722,10 +1962,16 @@ func on_quest_entity(e: _QuestEntity) -> void:
 			return
 		e.used = true
 		e.queue_free()
+		_sync_stele_room_gates()
+		_sync_tidal_room_gates()
 		_mark_nav_dirty()
 		_toast(String(result.get("line", "")))
 		_refresh_hud()
 		_refresh_quest_entities.call_deferred()
+		return
+	if e.kind == "puzzle_choice":
+		_open_world_puzzle_panel(e)
+		e.trade_cooled = true
 		return
 	var res := G.claim_waystone_cache() if e.kind == "cache" and e.eid == G.WAYSTONE_CACHE_ID \
 		else G.side_entity_interact(e.kind, e.eid, _main_map_id, e.quest)
@@ -2318,6 +2564,19 @@ func _map_extent() -> Vector2:
 ## 当前该去哪：优先未使用过的物件（宝箱/事件/商店/篝火），
 ## 传送阵被封印时先指向守阵首领，其余一律指向传送阵
 func _nav_info() -> Dictionary:
+	if _stele_rooms_enabled() and not _main_boss_cleared():
+		for objective in ["act1_echo_crack_left", "act1_echo_crack_middle",
+				"act1_echo_crack_right", "act1_echo_rubbing", "act1_echo_west",
+				"act1_echo_shadow", "act1_echo_east"]:
+			for entity in _quest_entities:
+				if is_instance_valid(entity) and not entity.used and entity.eid == objective:
+					return {"name": entity.caption, "pos": entity.position, "kind": "puzzle"}
+	if _tidal_rooms_enabled() and not _main_boss_cleared():
+		for objective in ["act2_tide_record", "act2_tide_upper", "act2_tide_bridge",
+				"act2_tide_rescue_cargo", "act2_tide_repair_bridge"]:
+			for entity in _quest_entities:
+				if is_instance_valid(entity) and not entity.used and entity.eid == objective:
+					return {"name": entity.caption, "pos": entity.position, "kind": "puzzle"}
 	if _interactable != null and not _interactable.used:
 		var kind := String(_interactable.kind)
 		var n: String = {"chest": "宝箱", "event": "奇遇", "shop": "商队",
@@ -2637,7 +2896,8 @@ func _finish_map(result: String) -> void:
 func _modal_open() -> bool:
 	return _battle != null or _map_done or _picker != null or _remover != null \
 		or _big_map != null or _altar_ui != null or _exit_ui != null or _beat != null \
-		or _trade_panel != null or _fishing_panel != null \
+		or _trade_panel != null or _road_mail_panel != null or _puzzle_panel != null \
+		or _fishing_panel != null \
 		or (_city_content != null and bool(_city_content.call("has_modal"))) \
 		or G.ui_blocked   # 转场 / GM 控制台：玩家被冻结时怪物也该冻结
 
@@ -2651,6 +2911,94 @@ func _open_trade_panel(site_id: String) -> void:
 	_trade_panel.closed.connect(func():
 		_trade_panel = null
 		_refresh_hud())
+
+
+func _open_road_mail_panel() -> void:
+	if _road_mail_panel != null:
+		return
+	_road_mail_panel = RoadMailPanelScript.new()
+	_hud.add_child(_road_mail_panel)
+	_road_mail_panel.open_board()
+	_road_mail_panel.action_requested.connect(func(action: String):
+		var result := G.road_mail_action(action, _main_map_id)
+		_toast(String(result.get("line", "")) if bool(result.get("ok", false)) else
+			"邮驿未能保存这次操作，请稍后重试")
+		if bool(result.get("ok", false)):
+			_refresh_quest_entities.call_deferred()
+			_refresh_hud())
+	_road_mail_panel.closed.connect(func(): _road_mail_panel = null)
+
+
+func _open_road_mail_choice(e: _QuestEntity) -> void:
+	if _puzzle_panel != null:
+		return
+	var state := G.road_mail_state()
+	var clues: Array = state.get("observed_clues", [])
+	var choices := {"pass_supply": "付 18 金，请驿亭引路"}
+	if "stone" in clues:
+		choices = {"pass_observe": "照旧刻痕辨路 · 免费",
+			"pass_supply": "付 18 金，请驿亭引路"}
+	_puzzle_panel = WorldPuzzlePanelScript.new()
+	_hud.add_child(_puzzle_panel)
+	_puzzle_panel.open_puzzle({"name": "邮 路 · 风 口",
+		"clue": "路标缺了一角。可以先查看附近风蚀石的旧刻痕，自己辨路；也可付 18 金请驿亭引路。两种办法都能把信送到。",
+		"choices": choices})
+	_puzzle_panel.choice_selected.connect(func(choice: String):
+		var result := G.road_mail_action(choice, _main_map_id)
+		_toast(String(result.get("line", "")) if bool(result.get("ok", false)) else
+			"邮路未能结算；请核对金币与存档后重试")
+		if bool(result.get("ok", false)):
+			e.used = true
+			e.queue_free()
+			_build_road_mail_ambush()
+			_refresh_quest_entities.call_deferred()
+			_refresh_hud())
+	_puzzle_panel.closed.connect(func(): _puzzle_panel = null)
+
+
+func _open_road_mail_hazard(e: _QuestEntity) -> void:
+	if _puzzle_panel != null:
+		return
+	_puzzle_panel = WorldPuzzlePanelScript.new()
+	_hud.add_child(_puzzle_panel)
+	_puzzle_panel.open_puzzle({"name": "邮 路 · 受 伤 信 使",
+		"clue": "背风驿亭边有位信使扭伤了脚。付 12 金请驿亭包扎，可以按时送信；免费扶他慢行到港口，本趟报酬会少 20 金。",
+		"choices": {"hazard_help": "付 12 金包扎 · 报酬不减",
+			"hazard_escort": "扶他慢行 · 少 20 金"}})
+	_puzzle_panel.choice_selected.connect(func(choice: String):
+		var result := G.road_mail_action(choice, _main_map_id)
+		_toast(String(result.get("line", "")) if bool(result.get("ok", false)) else
+			"邮路未能结算；请核对金币与存档后重试")
+		if bool(result.get("ok", false)):
+			e.used = true
+			e.queue_free()
+			_refresh_quest_entities.call_deferred()
+			_refresh_hud())
+	_puzzle_panel.closed.connect(func(): _puzzle_panel = null)
+
+
+func _open_world_puzzle_panel(e: _QuestEntity) -> void:
+	if _puzzle_panel != null:
+		return
+	var row: Dictionary = _main_cfg.get("entities", {}).get(e.eid, {})
+	_puzzle_panel = WorldPuzzlePanelScript.new()
+	_hud.add_child(_puzzle_panel)
+	_puzzle_panel.open_puzzle(row)
+	_puzzle_panel.choice_selected.connect(func(choice: String):
+		var result := G.world_puzzle_interact(_main_map_id, e.eid, choice)
+		if not String(result.get("line", "")).is_empty():
+			_toast(String(result.get("line", "")))
+		elif not bool(result.get("ok", false)):
+			_toast("机关未能保存，请稍后重试")
+		if bool(result.get("ok", false)):
+			e.used = true
+			e.queue_free()
+			_sync_stele_room_gates()
+			_sync_tidal_room_gates()
+			_build_stele_shadow()
+			_refresh_quest_entities.call_deferred()
+			_refresh_hud())
+	_puzzle_panel.closed.connect(func(): _puzzle_panel = null)
 
 
 func on_monster_contact(m: _MapMonster) -> void:
@@ -2723,6 +3071,21 @@ func _launch_battle(m: _MapMonster) -> void:
 		m.retreat_home()
 		_contact_mon = null
 		return
+	var tide_boss := _mode == "main_world" and _main_map_id == "tidal_gate" and \
+		m.mon_id == "mon_tide_priest"
+	var tide_flags: Dictionary = G.prog.get("flags", {}) if tide_boss else {}
+	var tide_route := ""
+	if tide_boss:
+		var bridge_open := bool(tide_flags.get("act2_tide_bridge_open", false))
+		var cargo_saved := bool(tide_flags.get("act2_tide_cargo_saved", false))
+		tide_route = "both" if bridge_open and cargo_saved else \
+			"bridge" if bridge_open else "cargo" if cargo_saved else "legacy"
+	var tide_preclear := tide_boss and not G.story_step_done("s19")
+	var tide_supply := tide_preclear and (bool(tide_flags.get("act2_tide_bridge_supply_claimed", false)) \
+		or bool(tide_flags.get("act2_tide_cargo_supply_claimed", false)))
+	var tide_break := tide_preclear and tide_route == "both"
+	var battle_potions := mini(G.run_potions_max(), st.potions + (1 if tide_supply else 0)) \
+		if tide_boss else st.potions
 	BattleScene.pending_cfg = {
 		"ally": {
 			"role_id": st.role_id,
@@ -2730,7 +3093,7 @@ func _launch_battle(m: _MapMonster) -> void:
 			"traits": st.traits.duplicate(),
 			"active_pet": st.active_pet,
 			"bench_pet": st.bench_pet,
-			"potions": st.potions,
+			"potions": battle_potions,
 			"hp_override": st.hp,
 			# 局外养成 6 线加成（天赋/装备/坐骑/称号 + 技能书等级 + 宠物养成快照）
 			"growth": G.growth_bonuses(st.role_id),
@@ -2747,9 +3110,17 @@ func _launch_battle(m: _MapMonster) -> void:
 			# P05-C：召唤物（失路兽召的影狼）按单位 id 取自己的立绘，覆盖 leader 那张
 			"sprite_paths": _main_cfg.get("monster_sprite_paths", {}) if _mode == "main_world" else {},
 			# 苦行局（轮次 22）：敌人强度倍率由 RunState 决定，战斗内核只吃数字
-			"enemy_mult": st.enemy_mult()},
+			"enemy_mult": st.enemy_mult(),
+			"opening_def_break": {"monster_id": "mon_tide_priest", "pct": 0.15,
+				"ticks": 180} if tide_break else {}},
 		"mode": "pve",   # 超时按远征失利显示（口径 D3；问题 #21）
 		"presentation": "classic_inline" if _mode == "main_world" else "default",
+		"stele_echo_ready": _mode == "main_world" and _main_map_id == "stele_cavern" \
+			and m.mon_id == "mon_stele_warden" and \
+			bool(G.prog.get("flags", {}).get("act1_stele_seat_2", false)),
+		"tide_route": tide_route,
+		"tide_supply_bonus": tide_supply,
+		"tide_dual_route_ready": tide_break,
 		"region_floor_tint": _ground_tint().to_html(false),
 		# P03：撤退规则。主线首领（失声碑灵）不可撤退——按钮置灰并写明后果，
 		# 由 BattleScene 直接读这一项，规则不写在表现层里。
@@ -2908,9 +3279,26 @@ func _boss_flee_blocked(tier: String, optional: bool) -> bool:
 
 
 func _story_battle_ready(mon_id: String) -> bool:
+	if _stele_rooms_enabled() and mon_id == "mon_stele_warden" and \
+			(not _stele_room_one_ready() or \
+			not _stele_shadow_resolved() or \
+			not bool(G.prog.get("flags", {}).get("act1_stele_seat_2", false))):
+		_toast("先听清石缝，处理守影，再调稳两枚碑座")
+		return false
+	if _tidal_rooms_enabled() and mon_id == "mon_tide_priest" and \
+			not bool(G.prog.get("flags", {}).get("act2_tide_gate_2", false)):
+		_toast("先核对水痕、泄向旧渠，再排清栈桥侧闸")
+		return false
 	var row := G.story_current()
 	if String(row.get("event", "")) != "defeat" or String(row.get("target", "")) != mon_id:
 		return true
+	if mon_id == String(_main_cfg.get("boss_id", "")):
+		var gate: Dictionary = _main_cfg.get("boss_puzzle_gate", {})
+		var flags: Dictionary = G.prog.get("flags", {})
+		if not gate.is_empty() and bool(flags.get(String(gate.get("start_flag", "")), false)) \
+				and not bool(flags.get(String(gate.get("finish_flag", "")), false)):
+			_toast(String(gate.get("hint", "先处理地图机关")))
+			return false
 	var item := String(row.get("requires_item", ""))
 	if not item.is_empty() and G.item_count(item) < 1:
 		_toast("先备好%s，再挑战首领" % G.item_name(item))
@@ -2939,6 +3327,13 @@ func _settle_main_world(tier: String, defeated_mon_id: String) -> String:
 	if reward is Dictionary:
 		gold = maxi(0, int((reward as Dictionary).get("gold", 0)))
 		exp = maxi(0, int((reward as Dictionary).get("exp", 0)))
+	var is_mail_ambush := _main_map_id == "red_sand_route" and _contact_mon != null \
+		and _contact_mon.idx == _road_mail_ambush_idx()
+	var is_stele_shadow := _main_map_id == "stele_cavern" and _contact_mon != null \
+		and _contact_mon.idx == 3000
+	if is_mail_ambush:
+		gold = 0
+		exp = 0  # 邮路每日已有固定报酬；伏击不额外变成刷金点。
 	var ws := _main_world_state()
 	# 去重闸门：同一个 result_id 只落地一次（重复上报 false → 一分钱不发、一件材料不掉）
 	var settled := _encounter.is_empty() \
@@ -3012,6 +3407,25 @@ func _settle_main_world(tier: String, defeated_mon_id: String) -> String:
 		return "save_failed" if G.save_locked else "quest_failed"
 	if not _encounter.is_empty() and G.story_step_done(String(CompanionService.config().get("requires_story","s24"))):
 		CompanionService.record_win(G.prog,_last_battle_pets)
+	if is_mail_ambush:
+		var mail_plan: Dictionary = RoadMailServiceScript.transition(G.road_mail_state(),
+			"hazard_battle", _main_map_id, int(G.economy_state().get("day", 1)))
+		if not bool(mail_plan.get("ok", false)):
+			G.prog = before_prog
+			G.wallet = before_wallet
+			G.items = before_items
+			_main_respawn_at = before_respawn
+			st.gold = before_gold
+			st.exp = before_exp
+			st.level = before_level
+			st.hp = before_hp
+			st.growth_bonus = before_growth
+			return "quest_failed"
+		G.prog["road_mail"] = mail_plan["next"]
+	if is_stele_shadow:
+		var flags: Dictionary = G.prog.get("flags", {})
+		flags["act1_stele_shadow_defeated"] = true
+		G.prog["flags"] = flags
 	if not G.save_game():
 		G.prog = before_prog
 		G.wallet = before_wallet
@@ -3033,6 +3447,9 @@ func _settle_main_world(tier: String, defeated_mon_id: String) -> String:
 		var s_title := String(QuestService.side_row(G.side_quest_rows(), String(qid_v)).get("title", ""))
 		if not s_title.is_empty():
 			_toast("支线推进：%s" % s_title)
+	if is_stele_shadow:
+		_toast("守影退去，第二枚碑座重新显露")
+		_refresh_quest_entities.call_deferred()
 	_refresh_hud()
 	return "ok"
 
@@ -3447,6 +3864,105 @@ class _Spot extends Node2D:
 		draw_circle(flame, 13.0, Color(0.55, 0.9, 1.0, 0.20))
 		draw_circle(flame, 6.5, Color("7ae0ff"))
 		draw_circle(flame + Vector2(0, -2), 3.0, Color(1, 1, 1, 0.85))
+
+
+## 失声碑窟的内部门：完整横断地图，线索写档成功后才拆除碰撞。
+class _SteleRoomGate extends StaticBody2D:
+	var caption := ""
+
+	func _ready() -> void:
+		collision_layer = 2
+		collision_mask = 0
+		var collider := CollisionShape2D.new()
+		var rect := RectangleShape2D.new()
+		rect.size = Vector2(960, 36)
+		collider.shape = rect
+		add_child(collider)
+		var label := G.gold_label(caption, G.FS_XS, true, Color("f0dfbd"), true)
+		label.position = Vector2(-192, -54)
+		label.size = Vector2(384, 24)
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(label)
+		queue_redraw()
+
+	func _draw() -> void:
+		draw_rect(Rect2(-480, -22, 960, 44), Color("352d42"))
+		draw_rect(Rect2(-480, -19, 960, 5), Color("746887"))
+		draw_rect(Rect2(-480, 14, 960, 5), Color("15131d"))
+		for i in 20:
+			var x := -460.0 + i * 48.0
+			draw_line(Vector2(x, -13), Vector2(x + 18, 13), Color("625773", 0.55), 2.0)
+		draw_circle(Vector2.ZERO, 21, Color("8e789f"))
+		draw_circle(Vector2.ZERO, 11, Color("d9c39b"))
+
+
+## 水闸的隔水堰：第二闸按选择打开左侧栈桥或右侧货箱暗渠。
+class _TidalRoomGate extends StaticBody2D:
+	var caption := ""
+	var route := "sealed"
+	var _colliders: Array[CollisionShape2D] = []
+	var _label: Label = null
+
+	func _ready() -> void:
+		collision_layer = 2
+		collision_mask = 0
+		_label = G.gold_label(caption, G.FS_XS, true, Color("e7f5ee"), true)
+		_label.position = Vector2(-200, -57)
+		_label.size = Vector2(400, 24)
+		_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(_label)
+		_rebuild()
+
+	func set_route(value: String) -> void:
+		if value == route: return
+		route = value
+		if is_inside_tree(): _rebuild()
+
+	func _segments() -> Array[Vector2]:
+		match route:
+			"bridge": return [Vector2(-480, -115), Vector2(-15, 480)]
+			"cargo": return [Vector2(-480, 15), Vector2(115, 480)]
+			"both": return [Vector2(-480, -115), Vector2(-15, 15), Vector2(115, 480)]
+		return [Vector2(-480, 480)]
+
+	func _rebuild() -> void:
+		for collider in _colliders:
+			remove_child(collider)
+			collider.queue_free()
+		_colliders.clear()
+		for segment in _segments():
+			var collider := CollisionShape2D.new()
+			var rect := RectangleShape2D.new()
+			rect.size = Vector2(segment.y - segment.x, 40)
+			collider.shape = rect
+			collider.position.x = (segment.x + segment.y) / 2.0
+			add_child(collider)
+			_colliders.append(collider)
+		if _label != null:
+			_label.text = caption if route == "sealed" else \
+				("栈桥与暗渠均可通行" if route == "both" else \
+				("栈桥步道已通" if route == "bridge" else "货箱暗渠已通"))
+		queue_redraw()
+
+	func _draw() -> void:
+		for segment in _segments():
+			var width := segment.y - segment.x
+			draw_rect(Rect2(segment.x, -24, width, 48), Color("304d58"))
+			draw_rect(Rect2(segment.x, -24, width, 6), Color("8db5b5"))
+			draw_rect(Rect2(segment.x, 17, width, 7), Color("1b323b"))
+			for i in range(int(width / 48.0)):
+				var x := segment.x + 24.0 + i * 48.0
+				draw_line(Vector2(x, -14), Vector2(x + 18, 12), Color("9ac9c8", 0.45), 2.0)
+		if route == "sealed":
+			draw_circle(Vector2.ZERO, 23, Color("657b77"))
+			draw_circle(Vector2.ZERO, 13, Color("bdad81"))
+		else:
+			for x in ([-65.0] if route == "bridge" else \
+				([65.0] if route == "cargo" else [-65.0, 65.0])):
+				draw_line(Vector2(x - 44, -22), Vector2(x - 44, 22), Color("cce5db"), 3)
+				draw_line(Vector2(x + 44, -22), Vector2(x + 44, 22), Color("cce5db"), 3)
 
 
 ## 散件（origin 底部 + 脚部碰撞，参与 Y-sort）
@@ -3967,6 +4483,8 @@ class _QuestEntity extends Node2D:
 	var eid := ""
 	var quest := ""
 	var kind := "collect"        # collect / observe / deliver
+	var mail_action := ""
+	var shipping_id := ""
 	var story_event_kind := "collect"
 	var art := "root"            # chime / root / tracks / post
 	var caption := ""
@@ -3982,7 +4500,7 @@ class _QuestEntity extends Node2D:
 			_trade_tex = G.res_tex("trade_stall")
 		_uses_ground_art = art == "frost_brazier" and map_ref != null and map_ref._main_map_id == "frost_post"
 		var label := G.gold_label(caption, G.FS_XS, true,
-			Color("ffe2a0") if kind in ["cache", "trade", "story"] else Color("cfe3ff"), true)
+			Color("ffe2a0") if kind in ["cache", "trade", "story", "road_mail", "puzzle_choice", "shipping_aid", "frost_herb_route", "first_order_bridge"] else Color("cfe3ff"), true)
 		label.position = Vector2(-84, -124 if art in ["trade_stall", "salt_cart", "tide_cargo"] else -70)
 		if _uses_ground_art: label.position.y = -98
 		label.size = Vector2(168, 20)
@@ -3995,7 +4513,8 @@ class _QuestEntity extends Node2D:
 		_t += delta
 		if used or map_ref == null or map_ref._player == null:
 			return
-		if kind in ["trade", "fishing"]:
+		if kind in ["trade", "fishing", "puzzle_choice", "frost_herb_route", "first_order_bridge"] or \
+				(kind == "road_mail" and mail_action == "board"):
 			if position.distance_to(map_ref._player.position) > MapScene.INTERACT_R + 32:
 				trade_cooled = false
 			elif trade_cooled:
@@ -4156,15 +4675,23 @@ class _QuestEntity extends Node2D:
 		draw_rect(Rect2(-37, 5, 25, 12), Color("705738"))
 
 	func _draw_tide_cargo() -> void:
-		# 水浸的木箱，白盐结晶与蓝色潮印提示调查目标。
-		draw_rect(Rect2(-49, -58, 98, 42), Color("665541"))
-		draw_rect(Rect2(-45, -65, 90, 13), Color("a9875e"))
-		for x in [-34.0, 0.0, 34.0]:
-			draw_line(Vector2(x, -60), Vector2(x + 6, -19), Color("3e352d"), 4)
-		draw_circle(Vector2(0, -42), 11, Color("4b7984"))
-		draw_line(Vector2(-8, -41), Vector2(7, -41), Color("b5d6d0"), 3)
-		for p in [Vector2(-55, -16), Vector2(52, -12), Vector2(28, -7)]:
-			draw_circle(p, 5, Color("e2e8d9", 0.86))
+		# 与地面箱堆使用同一木色和绑带；暗潮印留作可交互线索。
+		draw_rect(Rect2(-51, -14, 103, 8), Color(0.08, 0.16, 0.17, 0.3))
+		draw_colored_polygon(PackedVector2Array([
+			Vector2(-49, -58), Vector2(-34, -69), Vector2(42, -69),
+			Vector2(49, -58)]), Color("ac8961"))
+		draw_rect(Rect2(-49, -58, 98, 43), Color("6d5038"))
+		draw_rect(Rect2(-49, -58, 98, 43), Color("302f2c"), false, 3)
+		for y in [-44.0, -30.0]:
+			draw_line(Vector2(-46, y), Vector2(46, y), Color("3f382f"), 3)
+		for x in [-33.0, 32.0]:
+			draw_line(Vector2(x, -56), Vector2(x, -17), Color("c1a374"), 5)
+			for y in [-51.0, -22.0]:
+				draw_circle(Vector2(x, y), 2, Color("e2d0a2"))
+		draw_circle(Vector2(0, -39), 8, Color("315e67"))
+		draw_line(Vector2(-6, -39), Vector2(6, -39), Color("a4c9c7"), 2)
+		for p in [Vector2(-53, -17), Vector2(49, -14), Vector2(28, -11)]:
+			draw_circle(p, 3, Color("d4dbcf", 0.8))
 
 	## 旧路石匣：有石质基座与金属封边，区别于野外普通掉落包。
 	func _draw_cache() -> void:
