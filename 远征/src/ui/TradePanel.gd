@@ -2,6 +2,8 @@
 class_name TradePanel
 extends Control
 
+const FrostContractPanelScript := preload("res://src/ui/FrostContractPanel.gd")
+
 signal closed
 
 var site_id := ""
@@ -9,10 +11,11 @@ var selected_good := "trade_grain"
 var quantity := 1
 var _body: Control
 var _message := ""
+var _contract_panel: Control = null
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if G.ui_blocked:
+	if G.ui_blocked or _contract_panel != null:
 		return
 	if event.is_action_pressed("ui_cancel"):
 		close()
@@ -146,10 +149,8 @@ func _rebuild() -> void:
 
 
 func _build_order_section(content: Control) -> void:
-	if site_id == "frost_market":
-		_label(content, "霜关补给", Vector2(8,391),395,Color("8a4a2a"),G.FS_SM)
-		_label(content, "商货与守关物资在此成交；歇脚后补充每日库存。",Vector2(8,423),395)
-		_label(content, "驿站分货每日一次，报酬当场入账。",Vector2(8,451),395)
+	if site_id in ["shenyuan_market", "frost_market"]:
+		_build_frost_herb_order(content)
 		return
 	var order := G.economy_first_order()
 	var status := String(order.get("status", "locked"))
@@ -164,7 +165,9 @@ func _build_order_section(content: Control) -> void:
 			int(order.get("payout_gold", 0)), int(order.get("reward_exp", 0)),
 			int(order.get("purchase_gold", 0))], Vector2(8, 423), 395)
 	if status == "active":
-		_label(content, "第 %d 日前送到断碑营地；已接订单的报酬固定" % int(order.get("deadline_day", 0)),
+		var bridge_note := "桥绳已稳，折让计入本批" if bool(order.get("bridge_aided", false)) \
+			else "可在坡口步行系绳或骑乘牵引"
+		_label(content, "第 %d 日前送达 · %s" % [int(order.get("deadline_day", 0)), bridge_note],
 			Vector2(8, 451), 390, Color("6b4925"))
 	elif status == "locked":
 		_label(content, "替驿商送完盐包后可接取", Vector2(8, 451), 390, Color("6b4925"))
@@ -175,6 +178,50 @@ func _build_order_section(content: Control) -> void:
 		_button(content, "接取运单", Vector2(8, 478), 130, func(): _order_accept())
 	if status == "active" and site_id == String(order.get("destination_site", "")):
 		_button(content, "交付货物", Vector2(8, 478), 130, func(): _order_deliver())
+
+
+func _build_frost_herb_order(content: Control) -> void:
+	var order := G.frost_herb_order()
+	var status := String(order.get("status", "locked"))
+	var status_name: String = {"locked": "未解锁", "available": "可接", "active": "运送中",
+		"expired": "已过期", "done": "已交付", "abandoned": "已退单",
+		"settled": "到期结清"}.get(status, status)
+	_label(content, "霜关缺药 · %s" % status_name, Vector2(8, 391), 395,
+		Color("8a4a2a"), G.FS_SM)
+	if status == "locked":
+		_label(content, "完成霜关双关定路后，港口开放这张药单。", Vector2(8, 423), 395)
+		_label(content, "药草与谷物仍可照常在两地市集买卖。", Vector2(8, 451), 395)
+		return
+	_label(content, "药草 %d/3 · 谷物 %d/1 · 到手 %d 金 · 参考采购 %d 金" % [
+		G.item_count("trade_herb"), G.item_count("trade_grain"),
+		int(order.get("payout_gold", 0)), int(order.get("purchase_gold", 0))],
+		Vector2(8, 423), 395)
+	var route := String(order.get("route", ""))
+	var route_line := "赤砂近路原价；旧驿绕路多付 18 金。"
+	if status == "active":
+		route_line = "第 %d 日前交付 · %s" % [int(order.get("deadline_day", 0)),
+			"尚未过路口" if route.is_empty() else ("风沙近路" if route == "quick" else "旧驿绕路")]
+	elif status == "expired":
+		route_line = "已逾期；查看条款可延期一次或退单。"
+	elif status == "done":
+		route_line = "药箱已入霜关药架；下一游戏日可接新一批。"
+	elif status == "abandoned":
+		route_line = "本批保证金已结清；下一游戏日可重新签约。"
+	elif status == "settled":
+		route_line = "逾期自动结清；货物仍在行囊，明日可签新单。"
+	_label(content, route_line, Vector2(8, 451), 395, Color("6b4925"))
+	_button(content, "查看药单条款", Vector2(8, 478), 160, func(): _open_frost_contract())
+
+
+func _open_frost_contract() -> void:
+	if _contract_panel != null: return
+	_contract_panel = FrostContractPanelScript.new()
+	add_child(_contract_panel)
+	_contract_panel.open_contract(site_id)
+	_contract_panel.action_applied.connect(func(message: String):
+		_message = message
+		_rebuild())
+	_contract_panel.closed.connect(func(): _contract_panel = null)
 
 
 func _trade(action: String) -> void:

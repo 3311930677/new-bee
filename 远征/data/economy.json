@@ -50,16 +50,35 @@
     {"id": "salt_ship", "name": "盐铁备舱", "unlock_step": "s16", "dispatch_site": "shenyuan_market",
       "purchase_site": "city_market", "cargo": {"trade_salt": 2, "trade_iron": 1},
       "gross_reward_gold": 540, "freight_gold": 45, "event_freight": {"dredge": -10, "embank": -5},
-      "reward_exp": 32, "deadline_days": 3, "travel_days": 1},
+      "reward_exp": 32, "deadline_days": 3, "travel_days": 1,
+      "route_aid_map": "old_salt_road", "route_aid_entity": "salt_ship_bridge_aid",
+      "route_aid_discount_gold": 12, "route_aid_note": "旧盐道加固桥绳，可少付 12 金运费"},
     {"id": "herb_ship", "name": "沿岸药粮", "unlock_step": "s16", "dispatch_site": "shenyuan_market",
       "purchase_site": "shenyuan_market", "cargo": {"trade_herb": 2, "trade_grain": 3},
       "gross_reward_gold": 490, "freight_gold": 40, "event_freight": {"dredge": -5, "embank": -10},
-      "reward_exp": 24, "deadline_days": 3, "travel_days": 1}
+      "reward_exp": 24, "deadline_days": 3, "travel_days": 1,
+      "route_aid_map": "tideflat", "route_aid_entity": "herb_ship_tide_aid",
+      "route_aid_discount_gold": 10, "route_aid_note": "潮痕滩核准浅水标记，可少付 10 金运费"}
   ],
   "first_order": {
     "id": "a1_broken_slope_supply", "unlock_side_quest": "a1_trade_cart",
     "origin_site": "city_market", "destination_site": "slope_camp",
     "cargo": {"trade_salt": 2, "trade_iron": 1},
-    "gross_reward_gold": 520, "reward_exp": 35, "deadline_days": 3
+    "gross_reward_gold": 520, "reward_exp": 35, "deadline_days": 3,
+    "bridge_map": "broken_slope", "bridge_walk_entity": "first_order_walk_bridge",
+    "bridge_ride_entity": "first_order_ride_bridge",
+    "bridge_walk_discount_gold": 8, "bridge_ride_discount_gold": 14
+  },
+  "frost_herb_order": {
+    "id": "frost_herb_supply", "name": "霜关缺药", "unlock_step": "s28",
+    "origin_site": "shenyuan_market", "destination_site": "frost_market",
+    "cargo": {"trade_herb": 3, "trade_grain": 1},
+    "gross_reward_gold": 505, "base_freight_gold": 56,
+    "safe_extra_freight_gold": 18, "reward_exp": 42, "deadline_days": 4,
+    "deposit_gold": 40, "extension_fee_gold": 12, "extension_days": 2,
+    "abandon_refund_pct": 75, "protected_refund_pct": 100,
+    "protected_payout_discount_gold": 12, "auto_settle_grace_days": 2,
+    "route_map": "red_sand_route", "quick_entity": "frost_herb_quick_pass",
+    "safe_entity": "frost_herb_safe_post"
   }
 }

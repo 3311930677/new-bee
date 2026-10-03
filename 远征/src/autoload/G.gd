@@ -463,6 +463,7 @@ func _load_save() -> void:
 		var ec: Variant = pd.get("economy", {})
 		prog["economy"] = EconomyService.ensure(ec if ec is Dictionary else {},
 			TableCache.economy_config())
+		prog["road_mail"] = preload("res://src/world/RoadMailService.gd").ensure(pd.get("road_mail", {}))
 		var fishing: Variant = pd.get("fishing", {})
 		prog["fishing"] = fishing if fishing is Dictionary else {}
 		# P04：装备实例拥有池（SaveData 的 v5 迁移已补齐，这里再兜一层）
@@ -904,7 +905,11 @@ func story_event(kind: String, target: String, map_id: String, persist := true,
 		grants["item:%s" % reward_item] = maxi(1, int(reward.get("count", 1)))
 	var choice := String(plan.get("choice", ""))
 	var flags := {}
-	if step_id == "s11" and not choice.is_empty():
+	if step_id == "s09":
+		flags = {"act1_stele_rooms_v1": true}
+	elif step_id == "s18":
+		flags = {"act2_tidal_rooms_v1": true}
+	elif step_id == "s11" and not choice.is_empty():
 		flags = {"act1_stele_repaired": true, "act1_route_open": true,
 			"act1_repair_method": choice}
 	elif step_id == "s20" and not choice.is_empty():
@@ -965,25 +970,56 @@ func story_event(kind: String, target: String, map_id: String, persist := true,
 
 
 ## 主世界一次性机关：实体、世界旗和去重账本同一次落盘；旧存档结构无需升级。
-func world_puzzle_interact(map_id: String, eid: String) -> Dictionary:
+func world_puzzle_interact(map_id: String, eid: String, choice := "") -> Dictionary:
 	if save_locked: return {"ok": false, "reason": "save_locked"}
 	var row: Dictionary = TableCache.main_world_map(map_id).get("entities", {}).get(eid, {})
-	if String(row.get("kind", "")) != "puzzle": return {"ok": false, "reason": "unknown"}
+	var kind := String(row.get("kind", ""))
+	if kind not in ["puzzle", "puzzle_choice"]: return {"ok": false, "reason": "unknown"}
 	var required := String(row.get("requires_story", ""))
 	if not required.is_empty() and not story_step_done(required):
 		return {"ok": false, "reason": "locked"}
 	for key in row.get("requires_flags", []):
 		if not bool(prog.get("flags", {}).get(String(key), false)):
 			return {"ok": false, "reason": "locked"}
+	if map_id == "stele_cavern" and eid == "act1_echo_west" and \
+			bool(prog.get("flags", {}).get("act1_stele_rooms_v1", false)):
+		for crack in ["act1_echo_crack_left", "act1_echo_crack_middle", "act1_echo_crack_right"]:
+			if not bool(prog.get("flags", {}).get(crack, false)):
+				return {"ok": false, "reason": "locked"}
+	if map_id == "stele_cavern" and eid == "act1_echo_east" and \
+			bool(prog.get("flags", {}).get("act1_stele_rooms_v1", false)) and \
+			not bool(prog.get("flags", {}).get("act1_stele_shadow_avoided", false)) and \
+			not bool(prog.get("flags", {}).get("act1_stele_shadow_defeated", false)):
+		return {"ok": false, "reason": "locked"}
 	var flag := String(row.get("flag", ""))
 	if flag.is_empty(): return {"ok": false, "reason": "unknown"}
 	var state: Dictionary = prog.get("main_world", {})
 	if WorldSession.entity_taken(state, eid) or bool(prog.get("flags", {}).get(flag, false)):
 		return {"ok": false, "reason": "done"}
+	if kind == "puzzle_choice":
+		var choices: Dictionary = row.get("choices", {})
+		if not choices.has(choice): return {"ok": false, "reason": "invalid_choice"}
+		if eid not in ["act1_echo_shadow", "act2_tide_bridge"] and choice != String(row.get("correct", "")):
+			return {"ok": false, "reason": "wrong_choice",
+				"line": String(row.get("wrong", "这个方向不对，可以再试。"))}
 	var before_prog := prog.duplicate(true)
 	var before_wallet := wallet.duplicate(true)
 	var before_items := items.duplicate(true)
-	var tx := RewardLedger.make(RewardLedger.tx_id("world_puzzle", eid, "once"), {}, {}, {flag: true})
+	var puzzle_flags := {flag: true}
+	var puzzle_grants := {}
+	var reward_items: Dictionary = row.get("reward_items", {})
+	for item_id in reward_items:
+		var count := maxi(0, int(reward_items[item_id]))
+		if count > 0:
+			puzzle_grants["item:%s" % String(item_id)] = count
+	if eid == "act1_echo_shadow":
+		puzzle_flags["act1_stele_shadow_avoided" if choice == "avoid" else \
+			"act1_stele_shadow_challenged"] = true
+	if map_id == "tidal_gate" and eid == "act2_tide_bridge":
+		puzzle_flags["act2_tide_route_%s" % choice] = true
+		puzzle_flags["act2_tide_bridge_open" if choice == "bridge" else \
+			"act2_tide_cargo_saved"] = true
+	var tx := RewardLedger.make(RewardLedger.tx_id("world_puzzle", eid, "once"), {}, puzzle_grants, puzzle_flags)
 	var applied := RewardLedger.apply(tx, ledger(), self)
 	if not bool(applied.get("ok", false)):
 		prog = before_prog
@@ -997,7 +1033,12 @@ func world_puzzle_interact(map_id: String, eid: String) -> Dictionary:
 		wallet = before_wallet
 		items = before_items
 		return {"ok": false, "reason": "save_failed"}
-	return {"ok": true, "line": String(row.get("completion", "归路锚点已点亮"))}
+	var completion := String(row.get("completion", "归路锚点已点亮"))
+	if eid == "act1_echo_shadow" and choice == "fight":
+		completion = String(row.get("fight_line", completion))
+	elif eid == "act2_tide_bridge" and choice == "cargo":
+		completion = String(row.get("cargo_completion", completion))
+	return {"ok": true, "line": completion}
 
 
 # ---------- 第一幕支线（P05-B） ----------
@@ -1248,6 +1289,62 @@ func economy_state() -> Dictionary:
 	return state
 
 
+## 归路邮驿沿用单机主世界存档；只有现有归路邮袋托付完成后开放。
+func road_mail_unlocked() -> bool:
+	return story_step_done("s36") and bool((prog.get("flags", {}) as Dictionary).get(
+		"act4_reply_route_open", false))
+
+
+func road_mail_state() -> Dictionary:
+	return preload("res://src/world/RoadMailService.gd").ensure(prog.get("road_mail", {}))
+
+
+func road_mail_entity_visible(eid: String) -> bool:
+	return preload("res://src/world/RoadMailService.gd").visible(eid, road_mail_state(),
+		int(economy_state().get("day", 1)), road_mail_unlocked())
+
+
+## 途中观察和交付只推进状态；回驿领奖走原 RewardLedger，写盘失败整单回滚。
+func road_mail_action(action: String, map_id: String) -> Dictionary:
+	if save_locked: return {"ok": false, "reason": "save_locked"}
+	if not road_mail_unlocked(): return {"ok": false, "reason": "locked"}
+	if action == "hazard_battle": return {"ok": false, "reason": "battle_required"}
+	var day := int(economy_state().get("day", 1))
+	var plan: Dictionary = preload("res://src/world/RoadMailService.gd").transition(road_mail_state(), action, map_id, day)
+	if not bool(plan.get("ok", false)): return plan
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var before_items := items.duplicate(true)
+	var next: Dictionary = plan.get("next", {})
+	var cost := int(plan.get("cost_gold", 0))
+	if cost > 0:
+		var cost_tid := RewardLedger.tx_id("road_mail", String(next.get("run_id", "")), action)
+		var paid := RewardLedger.apply(RewardLedger.make(cost_tid, {"gold": cost}, {}, {}), ledger(), self)
+		if not bool(paid.get("applied", false)):
+			prog = before_prog
+			wallet = before_wallet
+			items = before_items
+			return {"ok": false, "reason": "insufficient_supply_gold"}
+	if action == "claim":
+		var tid := RewardLedger.tx_id("road_mail", String(next.get("run_id", "")), "claim")
+		var tx := RewardLedger.make(tid, {}, plan.get("reward", {}),
+			{"road_mail_first_completed": true})
+		var applied := RewardLedger.apply(tx, ledger(), self)
+		if not bool(applied.get("applied", false)):
+			prog = before_prog
+			wallet = before_wallet
+			items = before_items
+			return {"ok": false, "reason": "transaction"}
+	prog["road_mail"] = next
+	if not save_game():
+		prog = before_prog
+		wallet = before_wallet
+		items = before_items
+		return {"ok": false, "reason": "save_failed"}
+	return {"ok": true, "line": String(plan.get("line", "")), "goal":
+		preload("res://src/world/RoadMailService.gd").goal(next, day)}
+
+
 func economy_quote(site_id: String, good_id: String) -> Dictionary:
 	var cfg := TableCache.economy_config()
 	var state := economy_state()
@@ -1330,12 +1427,43 @@ func economy_rest(site_id: String) -> Dictionary:
 	state["next_tx"] = int(state.get("next_tx", 1)) + 1
 	var day := EconomyService.advance_day(cfg, state,
 		String(act1_state().get("repair_method", "")))
+	var expired_contract := _auto_settle_frost_herb(state, day)
+	if not bool(expired_contract.get("ok", false)):
+		prog = before_prog
+		wallet = before_wallet
+		items = before_items
+		return {"ok": false, "err": "旧药单自动结算失败，歇脚已回滚"}
 	if not save_game():
 		prog = before_prog
 		wallet = before_wallet
 		items = before_items
 		return {"ok": false, "err": "歇脚写盘失败，已回滚"}
-	return {"ok": true, "day": day, "fee_gold": fee}
+	return {"ok": true, "day": day, "fee_gold": fee,
+		"auto_settled": bool(expired_contract.get("settled", false)),
+		"contract_refund_gold": int(expired_contract.get("refund_gold", 0))}
+
+
+## 游戏日推进时自动收束长期逾期的药单；与歇脚费用在同一次写盘内提交。
+func _auto_settle_frost_herb(state: Dictionary, day: int) -> Dictionary:
+	var cfg: Dictionary = TableCache.economy_config().get("frost_herb_order", {})
+	if cfg.is_empty(): return {"ok": true, "settled": false}
+	var orders: Dictionary = state.get("orders", {})
+	var id := String(cfg.get("id", ""))
+	var record: Dictionary = orders.get(id, {})
+	if String(record.get("status", "")) != "active" or \
+			day <= int(record.get("deadline_day", 0)) + int(cfg.get("auto_settle_grace_days", 2)):
+		return {"ok": true, "settled": false}
+	var protection := String(record.get("protection", "self"))
+	var refund_pct := int(cfg.get("protected_refund_pct", 100)) if protection == "insured" else \
+		int(cfg.get("abandon_refund_pct", 75))
+	var refund := maxi(0, int(int(record.get("deposit_gold", 0)) * refund_pct / 100.0))
+	var tid := RewardLedger.tx_id("frost_herb", id, "auto_close", str(int(record.get("attempt", 0))))
+	var applied := RewardLedger.apply(RewardLedger.make(tid, {}, {"gold": refund}, {}), ledger(), self)
+	if not bool(applied.get("applied", false)):
+		return {"ok": false}
+	record["status"] = "settled"
+	record["closed_day"] = day
+	return {"ok": true, "settled": true, "refund_gold": refund}
 
 
 ## 工作每日每种只完成一次，收益低且稳定；事务 ID 含游戏日，读档不能重复领。
@@ -1400,6 +1528,13 @@ func economy_first_order() -> Dictionary:
 		"origin_site": String(config.get("origin_site", "")),
 		"destination_site": String(config.get("destination_site", "")),
 		"cargo": cargo, "freight_gold": freight, "payout_gold": payout,
+		"bridge_map": String(config.get("bridge_map", "")),
+		"bridge_walk_entity": String(config.get("bridge_walk_entity", "")),
+		"bridge_ride_entity": String(config.get("bridge_ride_entity", "")),
+		"bridge_walk_discount_gold": int(config.get("bridge_walk_discount_gold", 0)),
+		"bridge_ride_discount_gold": int(config.get("bridge_ride_discount_gold", 0)),
+		"bridge_aided": bool(record.get("bridge_aided", false)),
+		"bridge_mode": String(record.get("bridge_mode", "")),
 		"purchase_gold": purchase, "expected_profit_gold": payout - purchase,
 		"reward_exp": int(config.get("reward_exp", 0)),
 		"day": int(state.get("day", 1)), "deadline_day": int(record.get("deadline_day", 0)),
@@ -1427,6 +1562,43 @@ func economy_first_order_accept() -> Dictionary:
 		prog = before
 		return {"ok": false, "err": "接单写盘失败，已回滚"}
 	return {"ok": true, "deadline_day": deadline, "attempt": int((orders[id] as Dictionary)["attempt"])}
+
+
+func first_order_bridge_visible(eid: String) -> bool:
+	var info := economy_first_order()
+	return String(info.get("status", "")) == "active" and not bool(info.get("bridge_aided", false)) \
+		and eid in [String(info.get("bridge_walk_entity", "")), String(info.get("bridge_ride_entity", ""))]
+
+
+func first_order_bridge(map_id: String, eid: String) -> Dictionary:
+	if save_locked: return {"ok": false, "err": "存档暂不可写"}
+	var info := economy_first_order()
+	if String(info.get("status", "")) != "active" or bool(info.get("bridge_aided", false)) \
+			or map_id != String(info.get("bridge_map", "")):
+		return {"ok": false, "err": "当前没有待处理的修桥铁料运单"}
+	var mode := "walk" if eid == String(info.get("bridge_walk_entity", "")) else \
+		"ride" if eid == String(info.get("bridge_ride_entity", "")) else ""
+	if mode.is_empty(): return {"ok": false, "err": "这不是运单桥面"}
+	if mode == "ride" and not mount_riding():
+		return {"ok": false, "err": "骑乘牵引须先上马；也可步行系绳"}
+	for gid in (info["cargo"] as Dictionary):
+		if item_count(String(gid)) < int((info["cargo"] as Dictionary)[gid]):
+			return {"ok": false, "err": "先带上运单所需的盐与铁料"}
+	var before := prog.duplicate(true)
+	var discount := int(info.get("bridge_ride_discount_gold", 0)) if mode == "ride" else \
+		int(info.get("bridge_walk_discount_gold", 0))
+	discount = mini(maxi(discount, 0), int(info["freight_gold"]))
+	var record: Dictionary = (economy_state()["orders"] as Dictionary)[String(info["id"])]
+	record["bridge_aided"] = true
+	record["bridge_mode"] = mode
+	record["freight_gold"] = int(record["freight_gold"]) - discount
+	record["payout_gold"] = int(record["payout_gold"]) + discount
+	if not save_game():
+		prog = before
+		return {"ok": false, "err": "桥面处理未保存，运单维持原价"}
+	return {"ok": true, "discount_gold": discount,
+		"line": "步行系稳桥绳，运费少 %d 金。" % discount if mode == "walk" else \
+			"骑乘牵引铁料过桥，运费少 %d 金。" % discount}
 
 
 func economy_first_order_deliver(site_id: String) -> Dictionary:
@@ -1467,6 +1639,206 @@ func economy_first_order_deliver(site_id: String) -> Dictionary:
 		"transaction_id": tid}
 
 
+## 第三幕跨城药单：实物随身过赤砂路口，收货才扣货与发奖。
+func frost_herb_order() -> Dictionary:
+	var cfg: Dictionary = TableCache.economy_config().get("frost_herb_order", {})
+	if cfg.is_empty(): return {}
+	var state := economy_state()
+	var record: Dictionary = (state["orders"] as Dictionary).get(String(cfg["id"]), {})
+	var day := int(state["day"])
+	var status := String(record.get("status", "available"))
+	if not story_step_done(String(cfg["unlock_step"])):
+		status = "locked"
+	elif status == "active" and day > int(record.get("deadline_day", 0)):
+		status = "expired"
+	elif status == "done" and day > int(record.get("completed_day", 0)):
+		status = "available"
+	elif status in ["abandoned", "settled"] and day > int(record.get("closed_day", 0)):
+		status = "available"
+	var freight := int(cfg.get("base_freight_gold", 0))
+	var payout := maxi(0, int(cfg.get("gross_reward_gold", 0)) - freight)
+	var route := ""
+	if status in ["active", "expired", "done", "abandoned", "settled"]:
+		freight = int(record.get("freight_gold", freight))
+		payout = int(record.get("payout_gold", payout))
+		route = String(record.get("route", ""))
+	var purchase := 0
+	for gid in (cfg["cargo"] as Dictionary):
+		purchase += int(economy_quote(String(cfg["origin_site"]), String(gid)).get("buy_gold", 0)) \
+			* int((cfg["cargo"] as Dictionary)[gid])
+	var out := cfg.duplicate(true)
+	var protection := String(record.get("protection", "self")) if status in ["active", "expired", "done", "abandoned", "settled"] else "self"
+	var refund_pct := int(cfg.get("protected_refund_pct", 100)) if protection == "insured" else \
+		int(cfg.get("abandon_refund_pct", 75))
+	out.merge({"status": status, "day": day, "route": route, "freight_gold": freight,
+		"payout_gold": payout, "purchase_gold": purchase,
+		"expected_profit_gold": payout - purchase,
+		"deposit_held_gold": int(record.get("deposit_gold", 0)) if status in ["active", "expired"] else 0,
+		"extended": bool(record.get("extended", false)) if status in ["active", "expired"] else false,
+		"protection": protection, "refund_pct": refund_pct,
+		"abandon_refund_gold": int(int(record.get("deposit_gold", 0)) * refund_pct / 100.0),
+		"attempt": int(record.get("attempt", 0)),
+		"deadline_day": int(record.get("deadline_day", 0))}, true)
+	return out
+
+
+func frost_herb_accept(site_id: String, insured := false) -> Dictionary:
+	var info := frost_herb_order()
+	if save_locked or info.is_empty() or site_id != String(info.get("origin_site", "")):
+		return {"ok": false, "err": "请在沉渊港接取药单"}
+	if String(info["status"]) != "available":
+		return {"ok": false, "err": "这份药单尚未开放或正在运送；过期请先延期或放弃"}
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var state := economy_state()
+	var day := int(state["day"])
+	var orders: Dictionary = state["orders"]
+	var attempt := int(info["attempt"]) + 1
+	var deposit := maxi(0, int(info.get("deposit_gold", 0)))
+	var protection := "insured" if insured else "self"
+	var payout := maxi(0, int(info["payout_gold"]) -
+		(int(info.get("protected_payout_discount_gold", 0)) if insured else 0))
+	var tid := RewardLedger.tx_id("frost_herb", String(info["id"]), "deposit", str(attempt))
+	var applied := RewardLedger.apply(RewardLedger.make(tid, {"gold": deposit}, {}, {}), ledger(), self)
+	if not bool(applied.get("applied", false)):
+		prog = before_prog
+		wallet = before_wallet
+		return {"ok": false, "err": "保证金不足或这批药单已接取"}
+	orders[String(info["id"])] = {"status": "active", "attempt": attempt,
+		"accepted_day": day, "deadline_day": day + int(info["deadline_days"]),
+		"freight_gold": int(info["freight_gold"]), "payout_gold": payout,
+		"deposit_gold": deposit, "protection": protection, "extended": false, "route": ""}
+	if not save_game():
+		prog = before_prog
+		wallet = before_wallet
+		return {"ok": false, "err": "药单未保存，已回滚"}
+	return {"ok": true, "deadline_day": day + int(info["deadline_days"]),
+		"deposit_gold": deposit, "protection": protection, "payout_gold": payout}
+
+
+func frost_herb_extend(site_id: String) -> Dictionary:
+	var info := frost_herb_order()
+	if save_locked or info.is_empty() or site_id not in [String(info.get("origin_site", "")),
+			String(info.get("destination_site", ""))]:
+		return {"ok": false, "err": "请在港口或霜关办理延期"}
+	if String(info["status"]) != "expired" or bool(info.get("extended", false)):
+		return {"ok": false, "err": "只有首次过期的药单可延期一次"}
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var fee := maxi(0, int(info.get("extension_fee_gold", 0)))
+	var tid := RewardLedger.tx_id("frost_herb", String(info["id"]), "extend", str(int(info["attempt"])))
+	var applied := RewardLedger.apply(RewardLedger.make(tid, {"gold": fee}, {}, {}), ledger(), self)
+	if not bool(applied.get("applied", false)):
+		prog = before_prog
+		wallet = before_wallet
+		return {"ok": false, "err": "延期费用不足或这批已经延期"}
+	var state := economy_state()
+	var record: Dictionary = (state["orders"] as Dictionary)[String(info["id"])]
+	record["deadline_day"] = int(state["day"]) + maxi(1, int(info.get("extension_days", 1)))
+	record["extended"] = true
+	if not save_game():
+		prog = before_prog
+		wallet = before_wallet
+		return {"ok": false, "err": "延期未保存，费用已退回"}
+	return {"ok": true, "deadline_day": int(record["deadline_day"]), "fee_gold": fee}
+
+
+func frost_herb_abandon(site_id: String) -> Dictionary:
+	var info := frost_herb_order()
+	if save_locked or info.is_empty() or site_id not in [String(info.get("origin_site", "")),
+			String(info.get("destination_site", ""))]:
+		return {"ok": false, "err": "请在港口或霜关办理退单"}
+	if String(info["status"]) not in ["active", "expired"]:
+		return {"ok": false, "err": "当前没有可放弃的药单"}
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var refund := maxi(0, int(info.get("abandon_refund_gold", 0)))
+	var tid := RewardLedger.tx_id("frost_herb", String(info["id"]), "abandon", str(int(info["attempt"])))
+	var applied := RewardLedger.apply(RewardLedger.make(tid, {}, {"gold": refund}, {}), ledger(), self)
+	if not bool(applied.get("applied", false)):
+		prog = before_prog
+		wallet = before_wallet
+		return {"ok": false, "err": "这批退单已经结算"}
+	var state := economy_state()
+	var record: Dictionary = (state["orders"] as Dictionary)[String(info["id"])]
+	record["status"] = "abandoned"
+	record["closed_day"] = int(state["day"])
+	if not save_game():
+		prog = before_prog
+		wallet = before_wallet
+		return {"ok": false, "err": "退单未保存，保证金仍在合约中"}
+	return {"ok": true, "refund_gold": refund,
+		"line": "药单已退，返还保证金 %d 金；未交货物仍在行囊。" % refund}
+
+
+func frost_herb_route_visible(eid: String) -> bool:
+	var info := frost_herb_order()
+	return not info.is_empty() and String(info["status"]) == "active" \
+		and String(info["route"]).is_empty() and eid in [
+			String(info.get("quick_entity", "")), String(info.get("safe_entity", ""))]
+
+
+func frost_herb_route(map_id: String, eid: String) -> Dictionary:
+	if save_locked: return {"ok": false, "err": "存档暂不可写"}
+	var info := frost_herb_order()
+	if info.is_empty() or String(info["status"]) != "active" or not String(info["route"]).is_empty() \
+			or map_id != String(info.get("route_map", "")):
+		return {"ok": false, "err": "当前没有待通行的霜关药单"}
+	var route := "quick" if eid == String(info.get("quick_entity", "")) else \
+		"safe" if eid == String(info.get("safe_entity", "")) else ""
+	if route.is_empty(): return {"ok": false, "err": "这不是药单路线"}
+	for gid in (info["cargo"] as Dictionary):
+		if item_count(String(gid)) < int((info["cargo"] as Dictionary)[gid]):
+			return {"ok": false, "err": "先备齐药草与谷物，再携货经过路口"}
+	var before := prog.duplicate(true)
+	var record: Dictionary = (economy_state()["orders"] as Dictionary)[String(info["id"])]
+	var extra := int(info.get("safe_extra_freight_gold", 0)) if route == "safe" else 0
+	record["route"] = route
+	record["freight_gold"] = int(record["freight_gold"]) + extra
+	record["payout_gold"] = maxi(0, int(record["payout_gold"]) - extra)
+	if not save_game():
+		prog = before
+		return {"ok": false, "err": "路况未保存，药单保持原样"}
+	return {"ok": true, "line": "药箱走旧驿绕路，运费增加 %d 金；可去霜关交货。" % extra
+		if route == "safe" else "药箱穿过风沙近路；可去霜关交货。"}
+
+
+func frost_herb_deliver(site_id: String) -> Dictionary:
+	var info := frost_herb_order()
+	if save_locked or info.is_empty() or site_id != String(info.get("destination_site", "")):
+		return {"ok": false, "err": "请到霜关驿交付药箱"}
+	if String(info["status"]) != "active" or String(info["route"]).is_empty():
+		return {"ok": false, "err": "药单未接取、已过期或未携货经过赤砂路口"}
+	var costs := {}
+	for gid in (info["cargo"] as Dictionary):
+		costs["item:%s" % String(gid)] = int((info["cargo"] as Dictionary)[gid])
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var before_items := items.duplicate(true)
+	var tid := RewardLedger.tx_id("frost_herb", String(info["id"]), "deliver", str(int(info["attempt"])))
+	var total_gold := int(info["payout_gold"]) + int(info.get("deposit_held_gold", 0))
+	var applied := RewardLedger.apply(RewardLedger.make(tid, costs,
+		{"gold": total_gold, "exp": int(info["reward_exp"])},
+		{"frost_herb_first_done": true}), ledger(), self)
+	if not bool(applied.get("applied", false)):
+		prog = before_prog
+		wallet = before_wallet
+		items = before_items
+		return {"ok": false, "err": "药草与谷物不足或这批药单已结算"}
+	var state := economy_state()
+	var record: Dictionary = (state["orders"] as Dictionary)[String(info["id"])]
+	record["status"] = "done"
+	record["completed_day"] = int(state["day"])
+	if not save_game():
+		prog = before_prog
+		wallet = before_wallet
+		items = before_items
+		return {"ok": false, "err": "交付未保存，物资已退回"}
+	return {"ok": true, "gold": total_gold, "payout_gold": int(info["payout_gold"]),
+		"deposit_return_gold": int(info.get("deposit_held_gold", 0)), "exp": int(info["reward_exp"]),
+		"line": "药架重新摆满，驿站的伤员终于等到药了；保证金原额退回。"}
+
+
 ## P07-D：现货备货 → 港口装船 → 下一游戏日领取。与 P06 共用实物和订单账本。
 func shipping_config(id: String) -> Dictionary:
 	for row in (TableCache.economy_config().get("shipping_orders", []) as Array):
@@ -1505,9 +1877,40 @@ func shipping_order(id: String) -> Dictionary:
 	var out := cfg.duplicate(true)
 	out.merge({"status": status, "day": day, "freight_gold": freight, "payout_gold": payout,
 		"purchase_gold": purchase, "expected_profit_gold": payout - purchase,
+		"aid_applied": bool(record.get("aid_applied", false)),
 		"attempt": int(record.get("attempt", 0)), "deadline_day": int(record.get("deadline_day", 0)),
 		"arrival_day": int(record.get("arrival_day", 0))}, true)
 	return out
+
+
+## 船单可选的实地排障：同一批订单至多一次，折让在装船前锁定。
+func shipping_aid_visible(id: String, eid: String) -> bool:
+	var info := shipping_order(id)
+	return not info.is_empty() and String(info.get("status", "")) == "active" \
+		and not bool(info.get("aid_applied", false)) \
+		and String(info.get("route_aid_entity", "")) == eid
+
+
+func shipping_route_aid(id: String, map_id: String, eid: String) -> Dictionary:
+	if save_locked: return {"ok": false, "err": "存档暂不可写"}
+	var info := shipping_order(id)
+	if info.is_empty() or String(info.get("status", "")) != "active" \
+			or bool(info.get("aid_applied", false)) \
+			or String(info.get("route_aid_map", "")) != map_id \
+			or String(info.get("route_aid_entity", "")) != eid:
+		return {"ok": false, "err": "这处路障不属于当前船单"}
+	var before := prog.duplicate(true)
+	var record: Dictionary = (economy_state()["orders"] as Dictionary)[id]
+	var discount := mini(maxi(0, int(info.get("route_aid_discount_gold", 0))),
+		int(record.get("freight_gold", 0)))
+	record["freight_gold"] = int(record.get("freight_gold", 0)) - discount
+	record["payout_gold"] = int(record.get("payout_gold", 0)) + discount
+	record["aid_applied"] = true
+	if not save_game():
+		prog = before
+		return {"ok": false, "err": "排障未保存，船单维持原价"}
+	return {"ok": true, "discount_gold": discount,
+		"line": "路障已处理，运费少 %d 金；回港装船时按新价结算。" % discount}
 
 
 func shipping_accept(id: String, site_id: String) -> Dictionary:

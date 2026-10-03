@@ -1491,7 +1491,7 @@ func _commit_frost_choice(method: String) -> void:
 
 func _open_tide_choice_panel() -> void:
 	var content := _panel_base("回港定路", 432, 354)
-	var intro := G.text_label("沈澜：潮闸已开，港里只能先修一条供货路。两种选择的任务奖励相同；行情变化会显示在栈桥市集。",
+	var intro := G.text_label("沈澜：%s。港里先修一条供货路；两选奖励相同。" % _tide_route_reply(),
 		G.FS_SM, Color("4b351e"))
 	intro.position = Vector2(8, 7)
 	intro.custom_minimum_size = Vector2(384, 64)
@@ -1522,6 +1522,16 @@ func _open_tide_choice_panel() -> void:
 			_commit_tide_choice("embank"))
 	content.add_child(embank_btn)
 	_panel_back(content, 304.0)
+
+
+func _tide_route_reply() -> String:
+	var flags: Dictionary = G.prog.get("flags", {})
+	var bridge := bool(flags.get("act2_tide_bridge_open", false))
+	var cargo := bool(flags.get("act2_tide_cargo_saved", false))
+	if bridge and cargo: return "栈桥与货箱都保住"
+	if bridge: return "栈桥先通，货箱可再救"
+	if cargo: return "货箱先上岸，栈桥可再修"
+	return "潮闸已开" if G.story_step_done("s19") else "潮闸仍待处理"
 
 
 func _commit_tide_choice(method: String) -> void:
@@ -1846,7 +1856,7 @@ func _open_rockturtle_panel() -> void:
 func _open_port_services() -> void:
 	var content := _panel_base("沈澜 · 港务人", 432, 390)
 	var stage := int((G.prog.get("flags", {}) as Dictionary).get("act2_shenlan_relation_stage", 0))
-	var intro := G.text_label("港里的船照潮位走，账要一页一页核。\n备齐实物可托船运出；潮闸事了，也可坐下谈谈。\n\n关系：%s" % ("潮声旧账 · 已完成" if stage >= 1 else "尚未深谈"), G.FS_SM, Color("493724"))
+	var intro := G.text_label("港里的船照潮位走，账要一页一页核。\n%s。备齐实物可托船运出。\n\n关系：%s" % [_tide_route_reply(), "潮声旧账 · 已完成" if stage >= 1 else "尚未深谈"], G.FS_SM, Color("493724"))
 	intro.position = Vector2(20, 24)
 	intro.custom_minimum_size = Vector2(380, 120)
 	intro.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -1979,10 +1989,13 @@ func _open_shipping_panel(order_id := "salt_ship") -> void:
 	var timing := "接单后 %d 日内备货，装船后 %d 日到港。" % [int(info.get("deadline_days", 3)), int(info.get("travel_days", 1))]
 	if status == "active": timing = "当前第 %d 日 · 最迟第 %d 日装船" % [int(info["day"]), int(info["deadline_day"])]
 	if status in ["transit", "ready"]: timing = "当前第 %d 日 · 第 %d 日到港" % [int(info["day"]), int(info["arrival_day"])]
-	var body := "%s\n\n备货（持有 / 所需）\n%s\n\n到手 %d 铜钱 · 已扣运费 %d\n采购参考 %d · 预计净收益 %d\n经验 +%d\n\n%s\n接单锁定报酬；市集歇脚推进游戏日。" % [
+	var aid_line := String(info.get("route_aid_note", ""))
+	if bool(info.get("aid_applied", false)):
+		aid_line = "路障已处理，运费折让已计入本批船单"
+	var body := "%s\n\n备货（持有 / 所需）\n%s\n\n到手 %d 铜钱 · 已扣运费 %d\n采购参考 %d · 预计净收益 %d\n经验 +%d\n\n%s\n%s\n接单锁定报酬；市集歇脚推进游戏日。" % [
 		String(status_names.get(status, status)), "\n".join(cargo_lines), int(info.get("payout_gold", 0)),
 		int(info.get("freight_gold", 0)), int(info.get("purchase_gold", 0)), int(info.get("expected_profit_gold", 0)),
-		int(info.get("reward_exp", 0)), timing]
+		int(info.get("reward_exp", 0)), timing, aid_line]
 	var label := G.text_label(body, G.FS_SM, Color("493724"))
 	label.position = Vector2(20, 72)
 	label.custom_minimum_size = Vector2(382, 324)
@@ -2171,6 +2184,13 @@ func _show_dialog_line() -> void:
 				and String(_dlg.get("id", "")) == "npc_steward" \
 				and bool((G.prog.get("flags", {}) as Dictionary).get("act1_lost_beast_down", false)):
 			txt = "路西的兽影散了——碑坡那边的路，如今走得安心。"
+		if txt == "" and int(_dlg.get("turn", 0)) == 0 \
+				and String(_dlg.get("id", "")) == "npc_frost_miner" \
+				and bool((G.prog.get("flags", {}) as Dictionary).get("frost_herb_first_done", false)):
+			var herb_record: Dictionary = (G.economy_state().get("orders", {}) as Dictionary).get("frost_herb_supply", {})
+			txt = "药箱绕旧驿到了，药架终于有货；多走的路没白费。" \
+				if String(herb_record.get("route", "")) == "safe" else \
+				"药箱穿过风沙近路到了，药架终于有货；今晚能替伤员换药。"
 		if txt == "":
 			txt = G.side_npc_line(String(_dlg.get("id", "")))
 		if txt == "" and int(_dlg.get("turn", 0)) == 0 \

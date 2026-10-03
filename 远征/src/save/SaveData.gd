@@ -438,6 +438,42 @@ static func validate(data: Dictionary, now_sec: int) -> Dictionary:
 						return {"ok": false, "err": "船运订单到港日期非法"}
 				if status == "done" and (int(order["completed_day"]) > int(ec["day"]) or int(order["completed_day"]) < int(order["arrival_day"])):
 					return {"ok": false, "err": "船运订单结算日期非法"}
+			if (ec["orders"] as Dictionary).has("frost_herb_supply"):
+				var herb_value: Variant = ec["orders"]["frost_herb_supply"]
+				if not (herb_value is Dictionary):
+					return {"ok": false, "err": "霜关药单应为对象"}
+				var herb := herb_value as Dictionary
+				if String(herb.get("status", "")) not in ["active", "done", "abandoned", "settled"] or \
+						String(herb.get("route", "")) not in ["", "quick", "safe"]:
+					return {"ok": false, "err": "霜关药单状态非法"}
+				if herb.has("protection") and String(herb["protection"]) not in ["self", "insured"]:
+					return {"ok": false, "err": "霜关药单保价方式非法"}
+				for field in ["attempt", "accepted_day", "deadline_day", "freight_gold", "payout_gold"]:
+					var value: Variant = herb.get(field)
+					var minimum := 0 if field in ["freight_gold", "payout_gold"] else 1
+					if not (value is int or value is float) or float(value) < minimum \
+							or not is_equal_approx(float(value), roundf(float(value))):
+						return {"ok": false, "err": "霜关药单数值非法"}
+				if int(herb["accepted_day"]) > int(ec["day"]) or int(herb["deadline_day"]) < int(herb["accepted_day"]):
+					return {"ok": false, "err": "霜关药单期限非法"}
+				var herb_deposit: Variant = herb.get("deposit_gold", 0)
+				if not (herb_deposit is int or herb_deposit is float) or float(herb_deposit) < 0.0 \
+						or not is_equal_approx(float(herb_deposit), roundf(float(herb_deposit))):
+					return {"ok": false, "err": "霜关药单保证金非法"}
+				if herb.has("extended") and not (herb["extended"] is bool):
+					return {"ok": false, "err": "霜关药单延期标记非法"}
+				if String(herb["status"]) == "done":
+					var completion: Variant = herb.get("completed_day")
+					if String(herb["route"]).is_empty() or not (completion is int or completion is float) \
+							or float(completion) < int(herb["accepted_day"]) or float(completion) > int(ec["day"]) \
+							or not is_equal_approx(float(completion), roundf(float(completion))):
+						return {"ok": false, "err": "霜关药单交付日期非法"}
+				if String(herb["status"]) in ["abandoned", "settled"]:
+					var closed: Variant = herb.get("closed_day")
+					if not (closed is int or closed is float) or float(closed) < int(herb["accepted_day"]) \
+							or float(closed) > int(ec["day"]) \
+							or not is_equal_approx(float(closed), roundf(float(closed))):
+						return {"ok": false, "err": "霜关药单退单日期非法"}
 			for ek in ["bought", "sold"]:
 				for sk in (ec[ek] as Dictionary):
 					var n: Variant = (ec[ek] as Dictionary)[sk]
@@ -463,6 +499,33 @@ static func validate(data: Dictionary, now_sec: int) -> Dictionary:
 							or int((row as Dictionary).get("mid_gold", 0)) < 1:
 						return {"ok": false, "err": "prog.economy.history.%s 含非法行情" % str(hk)}
 					previous_day = rd
+		var road_mail: Variant = pd.get("road_mail")
+		if road_mail != null:
+			if not (road_mail is Dictionary):
+				return {"ok": false, "err": "prog.road_mail 应为对象"}
+			var rm := road_mail as Dictionary
+			if not rm.is_empty():
+				var mail_status := String(rm.get("status", "idle"))
+				var mail_phase := String(rm.get("phase", ""))
+				if mail_status not in ["idle", "active", "delivered", "claimed"] or \
+						(mail_status == "active" and mail_phase not in ["travel", "clue", "hazard", "pass"]) or \
+						(mail_status != "active" and not mail_phase.is_empty()):
+					return {"ok": false, "err": "prog.road_mail 进度非法"}
+				if mail_status in ["active", "delivered", "claimed"] and \
+						String(rm.get("route", "")) not in ["quick", "safe"]:
+					return {"ok": false, "err": "prog.road_mail 路线非法"}
+				if not (rm.get("observed_clues", []) is Array) or \
+						String(rm.get("solution", "")) not in ["", "observe", "supply"] or \
+						String(rm.get("encounter", "")) not in ["", "ambush", "help", "escort"] or \
+						not (rm.get("archive", []) is Array) or (rm.get("archive", []) as Array).size() > 8:
+					return {"ok": false, "err": "prog.road_mail 记录非法"}
+				var mail_penalty: Variant = rm.get("penalty_gold", 0)
+				if not (mail_penalty is int or mail_penalty is float) or \
+						float(mail_penalty) not in [0.0, 20.0]:
+					return {"ok": false, "err": "prog.road_mail 报酬调整非法"}
+				for clue in (rm.get("observed_clues", []) as Array):
+					if String(clue) not in ["sand", "stone"]:
+						return {"ok": false, "err": "prog.road_mail 线索非法"}
 		var fishing: Variant = pd.get("fishing")
 		if fishing is Dictionary and not (fishing as Dictionary).is_empty():
 			var fs := fishing as Dictionary

@@ -163,7 +163,9 @@ func _run() -> void:
 	_check(flat._apply_optional_first_kill("mon_salt_scale").is_empty(),
 		"盐鳞王首胜事务不可重复发放")
 	_check(String(G.story_event("defeat", "mon_tidal_guard", "tideflat").get("id", "")) == "s18"
-		and G.item_count("gate_clue") == 1, "守卫胜利应给闸门线索并开放水闸")
+		and G.item_count("gate_clue") == 1
+		and bool(G.prog.get("flags", {}).get("act2_tidal_rooms_v1", false)),
+		"守卫胜利应给闸门线索并开放新三段水闸")
 	flat.queue_free()
 	await get_tree().process_frame
 	var gate := await _enter("tidal_gate")

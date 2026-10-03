@@ -308,7 +308,11 @@
         "a1_tracks_b": {"kind": "observe", "quest": "a1_eco_tracks", "art": "tracks",
           "name": "足迹", "at": [255, 950]},
         "trade_slope_camp": {"kind": "trade", "quest": "", "art": "trade_stall",
-          "name": "断碑营地", "at": [475, 930]}
+          "name": "断碑营地", "at": [475, 930]},
+        "first_order_walk_bridge": {"kind": "first_order_bridge", "art": "rope",
+          "name": "修桥·步行系绳", "at": [245, 990]},
+        "first_order_ride_bridge": {"kind": "first_order_bridge", "art": "salt_cart",
+          "name": "修桥·骑乘牵引", "at": [710, 990]}
       }
     },
     "old_salt_road": {
@@ -468,6 +472,10 @@
             480,
             480
           ]
+        },
+        "salt_ship_bridge_aid": {
+          "kind": "shipping_aid", "shipping_id": "salt_ship", "art": "rope",
+          "name": "船运桥绳", "at": [690, 725]
         }
       }
     },
@@ -495,7 +503,8 @@
       "encounter_solo": true,
       "entities": {
         "fish_port_pier": {"kind": "fishing", "quest": "", "art": "fishing", "name": "栈桥水边 · 垂钓", "at": [260, 700]},
-        "a2_loose_rope": {"kind": "observe", "quest": "a2_rel_rope", "art": "rope", "name": "松缆", "at": [570, 715]}
+        "a2_loose_rope": {"kind": "observe", "quest": "a2_rel_rope", "art": "rope", "name": "松缆", "at": [570, 715]},
+        "road_mail_port_receiver": {"kind": "road_mail", "mail_action": "deliver", "art": "frost_courier", "name": "归路收信人", "at": [470, 715]}
       }
     },
     "tideflat": {
@@ -718,6 +727,10 @@
             480,
             810
           ]
+        },
+        "herb_ship_tide_aid": {
+          "kind": "shipping_aid", "shipping_id": "herb_ship", "art": "salt_marks",
+          "name": "船运潮线", "at": [750, 665]
         }
       }
     },
@@ -729,7 +742,8 @@
       "exits": [
         {"id": "south_tideflat", "at": [480, 1152], "to": "tideflat", "arrival": "from_tidal_gate", "label": "潮痕滩"}
       ],
-      "goal": "观察预兆，抓住潮蚀司祭蓄力后的破绽",
+      "goal": "读港务水痕，调整两道闸线，再迎战潮蚀司祭",
+      "boss_puzzle_gate": {"start_flag": "act2_tide_clue", "finish_flag": "act2_tide_gate_2", "hint": "先核对水痕与港务记录，把两道闸线调稳"},
       "node_type": "boss", "boss_id": "mon_tide_priest", "monster_count": 1,
       "monster_positions": [[480, 410]], "monster_ids": ["mon_tide_priest"],
       "battle_rewards": {"boss": {"gold": 410, "exp": 290}},
@@ -738,7 +752,54 @@
       "monster_height": 116, "monster_level_offset": 3,
       "monster_wander_only": true, "monster_wander_radius": 18,
       "monster_respawn_seconds": 86400, "monster_contact_radius": 52,
-      "encounter_solo": true
+      "encounter_solo": true,
+      "entities": {
+        "act2_tide_record": {
+          "kind": "puzzle", "art": "salt_marks", "name": "港务水痕记录", "at": [480, 870],
+          "requires_story": "s18", "flag": "act2_tide_clue",
+          "completion": "记录写着：上闸先泄向旧渠，再开栈桥侧闸；急开主渠会倒灌货箱。"
+        },
+        "act2_tide_upper": {
+          "kind": "puzzle_choice", "art": "stele_anchor", "name": "上闸水线", "at": [310, 690],
+          "requires_story": "s18", "requires_flags": ["act2_tide_clue"], "flag": "act2_tide_gate_1",
+          "clue": "旧渠的水痕低于货箱，主渠水痕却高过栈桥。港务记录说第一道闸先泄向旧渠。",
+          "choices": {"old": "先向旧渠泄水", "main": "直接打开主渠"}, "correct": "old",
+          "wrong": "主渠水位压向货箱，水痕证明这条线会倒灌；闸柄仍可重调。",
+          "completion": "旧渠接下第一股潮水，栈桥侧闸的压力降了。"
+        },
+        "act2_tide_bridge": {
+          "kind": "puzzle_choice", "art": "stele_anchor", "name": "栈桥侧闸", "at": [650, 535],
+          "requires_story": "s18", "requires_flags": ["act2_tide_gate_1"], "flag": "act2_tide_gate_2",
+          "clue": "旧渠接下第一股潮水。现在只能先开一条干路：放栈桥水，先让人通过；或先把货箱侧的潮水引走。另一侧仍可沿堤边回去补救。",
+          "choices": {"bridge": "先通栈桥步道", "cargo": "先护货箱暗渠"}, "correct": "bridge",
+          "completion": "栈桥水位退去，左侧步道可以通向司祭；货箱仍在右侧，沿堤边可再救回。",
+          "cargo_completion": "货箱旁的暗渠先排清，右侧步道可以通向司祭；栈桥仍可沿堤边回去修复。"
+        },
+        "act2_tide_rescue_cargo": {
+          "kind": "puzzle", "art": "salt_marks", "name": "堤边货箱", "at": [650, 590],
+          "requires_story": "s18", "requires_flags": ["act2_tide_route_bridge"],
+          "flag": "act2_tide_cargo_saved",
+          "completion": "你沿堤边旧踏点把货箱拖上高处。右侧暗渠也排开一条回路，两边都能通行。"
+        },
+        "act2_tide_repair_bridge": {
+          "kind": "puzzle", "art": "salt_marks", "name": "断栈桥板", "at": [310, 590],
+          "requires_story": "s18", "requires_flags": ["act2_tide_route_cargo"],
+          "flag": "act2_tide_bridge_open",
+          "completion": "你沿堤边把桥板扶回石槽。左侧栈桥恢复通行，两边都能抵达司祭房。"
+        },
+        "act2_tide_bridge_supply": {
+          "kind": "puzzle", "art": "tide_cargo", "name": "栈桥干燥补给", "at": [405, 570],
+          "requires_story": "s18", "requires_flags": ["act2_tide_bridge_open"],
+          "flag": "act2_tide_bridge_supply_claimed", "reward_items": {"trade_herb": 1},
+          "completion": "桥边药包仍干燥。收下药草一份；击败司祭前可多带一瓶药剂，两处战斗补给不叠加。"
+        },
+        "act2_tide_cargo_supply": {
+          "kind": "puzzle", "art": "tide_cargo", "name": "货箱留存药包", "at": [555, 570],
+          "requires_story": "s18", "requires_flags": ["act2_tide_cargo_saved"],
+          "flag": "act2_tide_cargo_supply_claimed", "reward_items": {"trade_herb": 1},
+          "completion": "货箱中的药包没有受潮。收下药草一份；击败司祭前可多带一瓶药剂，两处战斗补给不叠加。"
+        }
+      }
     },
     "stele_cavern": {
       "name": "失声碑窟",
@@ -756,7 +817,8 @@
       "exits": [
         {"id": "south_path", "at": [480, 1152], "to": "broken_slope", "arrival": "from_stele_cavern", "label": "断碑坡"}
       ],
-      "goal": "击败碑窟守卫，取回缺失的碑文",
+      "goal": "先读石缝回声与拓片，再调整两枚碑座，击败碑窟守卫",
+      "boss_puzzle_gate": {"start_flag": "act1_stele_clue", "finish_flag": "act1_stele_seat_2", "hint": "碑声尚未接稳；先把两枚碑座调回旧位"},
       "node_type": "boss",
       "boss_id": "mon_stele_warden",
       "monster_count": 1,
@@ -770,7 +832,56 @@
       "monster_wander_radius": 24,
       "monster_respawn_seconds": 86400,
       "monster_contact_radius": 48,
-      "encounter_solo": true
+      "encounter_solo": true,
+      "entities": {
+        "act1_echo_crack_left": {
+          "kind": "puzzle", "art": "stele_anchor", "name": "左侧石缝·双响",
+          "at": [210, 940], "requires_story": "s09", "flag": "act1_echo_crack_left",
+          "completion": "左缝先是一声短响，末尾又轻轻应了两次；像有人曾沿岩层凿出回声。"
+        },
+        "act1_echo_crack_middle": {
+          "kind": "puzzle", "art": "stele_anchor", "name": "中侧石缝·长尾",
+          "at": [480, 955], "requires_story": "s09", "flag": "act1_echo_crack_middle",
+          "completion": "中缝的声音拖得很长，没有回到碑面的第二次轻响；它更像渊底的回音。"
+        },
+        "act1_echo_crack_right": {
+          "kind": "puzzle", "art": "stele_anchor", "name": "右侧石缝·旧缺口",
+          "at": [750, 940], "requires_story": "s09", "flag": "act1_echo_crack_right",
+          "completion": "右缝旁有一处修补过的缺口。声音从这里折回，正朝向北面的碑心。"
+        },
+        "act1_echo_rubbing": {
+          "kind": "puzzle", "art": "stele_anchor", "name": "石缝拓痕",
+          "at": [480, 830], "requires_story": "s09", "flag": "act1_stele_clue",
+          "completion": "青姨的拓片记着：旧碑回声末尾有两声轻响；第二枚碑座的缺口应朝向碑心。"
+        },
+        "act1_echo_west": {
+          "kind": "puzzle_choice", "art": "stele_anchor", "name": "辨声碑座",
+          "at": [315, 680], "requires_story": "s09", "requires_flags": ["act1_stele_clue"],
+          "flag": "act1_stele_seat_1",
+          "clue": "两种回声重叠着。拓片说旧碑声在末尾有两声轻响，渊底回音只剩拖长的尾音。",
+          "choices": {"old": "引回两声轻响", "abyss": "引回拖长尾音"}, "correct": "old",
+          "wrong": "拖长的尾音像是渊的回响，拓片上的两声轻响没有出现。可以重新调整。",
+          "completion": "旧碑的两声轻响回到石面，前方另一枚碑座有了回应。"
+        },
+        "act1_echo_shadow": {
+          "kind": "puzzle_choice", "art": "stele_anchor", "name": "碑座旁的守影",
+          "at": [480, 635], "requires_story": "s09", "requires_flags": ["act1_stele_seat_1"],
+          "flag": "act1_stele_shadow_decided",
+          "clue": "两声轻响惊醒了守在中廊的碑影。侧壁有旧刻出的窄路，可以绕行；敲响残碑也能把它引出正面迎战。两路最终都通向第二枚碑座。",
+          "choices": {"avoid": "循侧壁阴刻绕过", "fight": "敲响残碑迎战守影"},
+          "completion": "你循侧壁阴刻绕过守影，前方碑座仍在。",
+          "fight_line": "残碑响起，守影怨灵在中廊现身。击退它后才能继续调整第二枚碑座。"
+        },
+        "act1_echo_east": {
+          "kind": "puzzle_choice", "art": "stele_anchor", "name": "定向碑座",
+          "at": [650, 610], "requires_story": "s09", "requires_flags": ["act1_stele_seat_1"],
+          "flag": "act1_stele_seat_2",
+          "clue": "第二枚碑座有一处缺口。青姨拓片画着它面向碑心的旧位置。",
+          "choices": {"heart": "缺口朝碑心", "mouth": "缺口朝洞口"}, "correct": "heart",
+          "wrong": "声音反弹向来路，没能抵达碑心。缺口方向仍可重调。",
+          "completion": "两座碑声相接，守影的蓄力节拍也清楚了。可以进入碑窟深处。"
+        }
+      }
     },
     "red_sand_route": {
       "name": "赤砂商路",
@@ -872,6 +983,34 @@
             525,
             950
           ]
+        },
+        "road_mail_sand_signal": {
+          "kind": "road_mail", "mail_action": "inspect", "art": "signal_ribbons",
+          "name": "风沙旧路标", "at": [580, 735]
+        },
+        "road_mail_stone_trace": {
+          "kind": "road_mail", "mail_action": "trace", "art": "signal_ribbons",
+          "name": "风蚀石·旧刻痕", "at": [435, 905]
+        },
+        "road_mail_quick_marker": {
+          "kind": "road_mail", "mail_action": "quick", "art": "signal_ribbons",
+          "name": "西侧风沙路标", "at": [300, 605]
+        },
+        "road_mail_safe_shelter": {
+          "kind": "road_mail", "mail_action": "safe", "art": "post",
+          "name": "东侧背风驿亭", "at": [685, 615]
+        },
+        "road_mail_safe_courier": {
+          "kind": "road_mail", "mail_action": "safe_hazard", "art": "frost_courier",
+          "name": "受伤信使", "at": [650, 865]
+        },
+        "frost_herb_quick_pass": {
+          "kind": "frost_herb_route", "route": "quick", "art": "signal_ribbons",
+          "name": "药箱·风沙近路", "at": [610, 535]
+        },
+        "frost_herb_safe_post": {
+          "kind": "frost_herb_route", "route": "safe", "art": "post",
+          "name": "药箱·旧驿绕路", "at": [95, 645]
         }
       }
     },
@@ -995,6 +1134,10 @@
             480,
             630
           ]
+        },
+        "road_mail_board": {
+          "kind": "road_mail", "mail_action": "board", "art": "frost_courier",
+          "name": "归路邮驿", "at": [625, 630]
         }
       }
     },
@@ -1176,7 +1319,8 @@
           "label": "裂谷矿道"
         }
       ],
-      "goal": "观察首领预兆，抓住过热破绽",
+      "goal": "查看翻车记录，调风轮和道岔，再迎战矿脉械卫",
+      "boss_puzzle_gate": {"start_flag": "act3_mine_clue", "finish_flag": "act3_mine_switch", "hint": "先看翻车记录，调好风轮与道岔让矿车避开烟道"},
       "node_type": "boss",
       "boss_id": "mon_redsand_guard",
       "monster_count": 1,
@@ -1207,6 +1351,29 @@
       "monster_respawn_seconds": 86400,
       "monster_contact_radius": 52,
       "encounter_solo": true,
+      "entities": {
+        "act3_mine_record": {
+          "kind": "puzzle", "art": "salt_marks", "name": "翻车记录", "at": [480, 865],
+          "requires_story": "s24", "flag": "act3_mine_clue",
+          "completion": "矿工记下：烟从东井灌进来；先让风轮向西排烟，再将矿车拨上北侧避烟线。"
+        },
+        "act3_mine_wheel": {
+          "kind": "puzzle_choice", "art": "stele_anchor", "name": "排烟风轮", "at": [325, 690],
+          "requires_story": "s24", "requires_flags": ["act3_mine_clue"], "flag": "act3_mine_wind",
+          "clue": "翻车记录说烟由东井灌入，西侧仍有通风口。要把烟推出矿工撤离线。",
+          "choices": {"west": "向西排烟", "east": "向东送风"}, "correct": "west",
+          "wrong": "东井的烟被推回撤离线，记录中的西侧风口才是出口；风轮可重调。",
+          "completion": "烟雾开始向西散去，北侧道岔的轨面显了出来。"
+        },
+        "act3_mine_switch": {
+          "kind": "puzzle_choice", "art": "stele_anchor", "name": "矿车道岔", "at": [640, 535],
+          "requires_story": "s24", "requires_flags": ["act3_mine_wind"], "flag": "act3_mine_switch",
+          "clue": "南轨正穿过烟道，北轨通向矿工等候的安全侧；风轮已经把烟吹离道口。",
+          "choices": {"north": "拨向北侧避烟线", "south": "沿南轨冲过烟道"}, "correct": "north",
+          "wrong": "南轨正对烟道，矿车会把矿工带回浓烟里；道岔仍可重拨。",
+          "completion": "矿车沿北轨停稳，矿工能够撤离；械卫的过热声也更容易辨认。"
+        }
+      },
       "dismount_on_entry": true,
       "clear_rects": [
         [
