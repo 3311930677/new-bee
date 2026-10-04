@@ -7,6 +7,7 @@ from zipfile import ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
 BLOCKED = ('tools/', 'docs/', 'shots/', 'exports/', 'Godot/', 'assets_regen/',
+	       'image/style_review_20261005/',
            'src/preview/', 'image/role_lpc/', 'image/role_pixel_studio/',
            'image/role/zs/source/', 'image/role/ck/source/', 'image/role/fs/source/',
            'image/role/fz/source/', 'image/role/walk_4dir_review/', 'assets/source/', 'assets/role/')
