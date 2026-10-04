@@ -1856,10 +1856,20 @@ func _show_trait_picker(rows: Array) -> void:
 
 
 func _on_trait_picked(tid: String) -> void:
+	if not _prog.has("pending_choices"):return
+	if not tid.is_empty() and not (_prog.pending_choices as Array).any(func(row):return String(row.get("id",""))==tid):return
+	var before_run:=st.snapshot()
+	var choices:Array=_prog.get("pending_choices",[]).duplicate(true)
 	_prog.erase("pending_choices")
 	_picker = null
 	if tid != "":
 		st.traits.append(tid)
+	if not _checkpoint_run():
+		st.restore(before_run)
+		_prog=st.map_progress(int(node.get("layer",1)),int(node.get("index",0)))
+		_show_trait_picker.call_deferred(choices)
+		return
+	if tid != "":
 		var tname := String(TableCache.get_trait(tid).get("name", ""))
 		_toast("获得词条：%s" % tname)
 	else:
@@ -2467,7 +2477,12 @@ func _on_remove_row(e: InputEvent, tid: String) -> void:
 	if not (e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT):
 		return
 	var tname := String(TableCache.get_trait(tid).get("name", tid))
+	var before_run:=st.snapshot()
 	st.traits.erase(tid)
+	if not _checkpoint_run():
+		st.restore(before_run)
+		_prog=st.map_progress(int(node.get("layer",1)),int(node.get("index",0)))
+		return
 	_close_remover("舍弃词条：%s" % tname)
 
 
@@ -2930,10 +2945,13 @@ func _open_altar(s: _Spot) -> void:
 
 
 func _altar_pay(s: _Spot, cost: int) -> void:
+	if G.save_locked or (s!=null and s.used):return
 	if st.gold < cost:
 		Audio.sfx("ui_locked")
 		_toast("金币不足，碑灵沉默不语")
 		return
+	var before_run:=st.snapshot()
+	var before_rng:=_rng.state
 	st.gold -= cost
 	Audio.sfx("altar")
 	var choices := st.roll_trait_choices(_rng)
@@ -2942,8 +2960,16 @@ func _altar_pay(s: _Spot, cost: int) -> void:
 		_toast("碑灵无言——词条池已尽，金子退你了")
 		st.gold += cost
 		return
-	_close_altar(s, true)   # 献过金且真能重择，祭坛才熄，不再重复打扰
+	if s!=null and not _prog["spots"].has(s.idx):_prog["spots"].append(s.idx)
+	_prog["pending_choices"]=choices.duplicate(true)
 	_add_score(_cfg_int("pickup_score", 6), "祭坛")
+	if not _checkpoint_run():
+		st.restore(before_run)
+		_rng.state=before_rng
+		_prog=st.map_progress(int(node.get("layer",1)),int(node.get("index",0)))
+		_score=int(_prog.get("score",0))
+		return
+	_close_altar(s, true)   # 保存成功后才熄灯。
 	_toast("碑灵应声 · 祝福重择")
 	_show_trait_picker(choices)
 
@@ -2964,12 +2990,12 @@ func _close_altar(s: _Spot, leave: bool) -> void:
 
 
 ## 拾取结算：金 + 远征币 + 探索分，一条 toast（同一帧捡两个也不刷屏——后一个覆盖前一个）
-func on_pickup(p: _Pickup) -> void:
-	if _map_done or _pickups.is_empty():
-		return
+func on_pickup(p: _Pickup) -> bool:
+	if _map_done or G.save_locked or not _pickups.has(p):return false
+	var before_run:=st.snapshot()
+	var before_rng:=_rng.state
 	if not _prog["taken"].has(p.idx):
 		_prog["taken"].append(p.idx)   # 进度落表：重进不再撒同一个（P0-1）
-	_pickups.erase(p)
 	var g := _cfg_range("pickup_gold", [18, 42])
 	var c := _cfg_range("pickup_currency_amount", [3, 8])
 	var gold := _rng.randi_range(int(g[0]) if g.size() > 0 else 18,
@@ -2981,7 +3007,15 @@ func on_pickup(p: _Pickup) -> void:
 	Audio.sfx("pickup")   # 与战斗后的 coin 区分：一局要捡好几次，听感不能太重
 	_toast("拾获 · 金币 +%d · 远征币 +%d" % [gold, cur])
 	_add_score(_cfg_int("pickup_score", 6), "拾取")
+	if not _checkpoint_run():
+		st.restore(before_run)
+		_rng.state=before_rng
+		_prog=st.map_progress(int(node.get("layer",1)),int(node.get("index",0)))
+		_score=int(_prog.get("score",0))
+		return false
+	_pickups.erase(p)
 	_mark_nav_dirty()   # 拾取物消失要立刻从地图上抹掉（问题 #15：节流不能让"点了没反应"）
+	return true
 
 
 # ================= 导航三件套（小地图 / 目标罗盘 / 疾行） =================
@@ -4299,9 +4333,12 @@ class _Pickup extends Node2D:
 	var map_ref: MapScene = null
 	var used := false
 	var _t := 0.0
+	var _retry_cd:=0.0
 
 	func _process(delta: float) -> void:
 		_t += delta
+		_retry_cd=maxf(0,_retry_cd-delta)
+		if _retry_cd>0:return
 		if used or map_ref == null or map_ref._player == null:
 			return
 		if map_ref._map_done or map_ref._battle != null:
@@ -4309,8 +4346,10 @@ class _Pickup extends Node2D:
 		var r := float(map_ref._cfg_int("pickup_radius", 30))
 		if position.distance_to(map_ref._player.position) < r:
 			used = true
-			map_ref.on_pickup(self)
-			queue_free()
+			if map_ref.on_pickup(self):queue_free()
+			else:
+				used=false
+				_retry_cd=1.0
 			return
 		queue_redraw()
 

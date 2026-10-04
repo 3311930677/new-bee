@@ -1,8 +1,37 @@
 {
   "daily_limit": 3,
   "spots": [
-    {"id": "fish_salt_spring", "map": "old_salt_road", "name": "断桥盐泉", "item": "fish_salt", "fish_name": "盐泉鲫"},
-    {"id": "fish_port_pier", "map": "shenyuan_port", "name": "沉渊港栈桥", "item": "fish_port", "fish_name": "港湾银鳞"},
-    {"id": "fish_tide_pool", "map": "tideflat", "name": "潮痕浅池", "item": "fish_tide", "fish_name": "潮纹鳞"}
+    {
+      "id": "fish_salt_spring",
+      "map": "old_salt_road",
+      "name": "断桥盐泉",
+      "item": "fish_salt",
+      "fish_name": "盐泉鲫",
+      "environment_hint": "盐泉鲫伏在桥下背阴处。等浮标越过碎石的回水，再在绿色区域收竿。"
+    },
+    {
+      "id": "fish_port_pier",
+      "map": "shenyuan_port",
+      "name": "沉渊港栈桥",
+      "item": "fish_port",
+      "fish_name": "港湾银鳞",
+      "environment_hint": "港湾银鳞沿栈桥绳影游动。涨潮水线靠近旧钉时，留意浮标的绿色区域。"
+    },
+    {
+      "id": "fish_tide_pool",
+      "map": "tideflat",
+      "name": "潮痕浅池",
+      "item": "fish_tide",
+      "fish_name": "潮纹鳞",
+      "environment_hint": "潮纹鳞藏在浅池波纹之间。看清退潮留下的细涟漪，再在绿色区域收竿。"
+    },
+    {
+      "id": "fish_frost_pool",
+      "map": "frost_post",
+      "name": "霜关冰缘池",
+      "item": "fish_frost",
+      "fish_name": "霜鳍鳟",
+      "environment_hint": "霜鳍鳟藏在冰缘暗水。看缓流，等浮标进入绿色区域再收竿。"
+    }
   ]
 }

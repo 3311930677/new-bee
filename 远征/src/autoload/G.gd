@@ -135,7 +135,7 @@ const ITEM_NAMES := {
 	"stable_seal": "稳定封记", "stele_record": "碑心记录",
 	"frost_nameplate": "裂纹名牌", "frost_parcel": "寒路药包",
 	"tide_egg": "潮纹蛋",
-	"fish_salt": "盐泉鲫", "fish_port": "港湾银鳞", "fish_tide": "潮纹鳞",
+	"fish_salt": "盐泉鲫", "fish_port": "港湾银鳞", "fish_tide": "潮纹鳞", "fish_frost": "霜鳍鳟",
 	"wind_chime": "旧风铃", "salt_pack": "封好的盐包",
 	"return_old_letter": "折角家书", "return_mailbag": "归路邮袋",
 	"trade_grain": "谷物", "trade_salt": "盐", "trade_herb": "药草", "trade_iron": "铁料",
@@ -2809,7 +2809,7 @@ func fishing_finish(token: String, hit: bool, persist := true) -> Dictionary:
 
 
 func fishing_cook(iid: String, persist := true) -> Dictionary:
-	if save_locked or not ["fish_salt", "fish_port", "fish_tide"].has(iid) or item_count(iid) < 1:
+	if save_locked or not (TableCache.fishing_config().get("spots",[]) as Array).any(func(row):return String(row.get("item",""))==iid) or item_count(iid) < 1:
 		return {"ok": false, "reason": "fish"}
 	var before_items := items.duplicate(true)
 	items[iid] = item_count(iid) - 1
@@ -3457,7 +3457,7 @@ func item_icon(item_id: String) -> String:
 	if item_id == "rift_echo": return "itm_stele_fragment"
 	if item_id in ["stele_key", "stable_seal"]: return "itm_gate_stamp"
 	if item_id == "stele_record": return "itm_mine_record"
-	if item_id in ["fish_salt", "fish_port", "fish_tide"]:
+	if item_id in ["fish_salt", "fish_port", "fish_tide", "fish_frost"]:
 		return "itm_fish_common"
 	if item_id.begins_with("gem_"):
 		return item_id

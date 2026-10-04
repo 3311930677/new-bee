@@ -6,6 +6,7 @@ class_name TraitPicker
 extends Control
 
 signal picked(tid: String)  # 选中的词条 id；"" = 放弃
+var _picked_once:=false
 
 const VIEW_W := 480.0
 const CARD_W := 140.0
@@ -184,6 +185,8 @@ func _make_card(row: Dictionary) -> Control:
 
 
 func _emit_pick(tid: String) -> void:
+	if _picked_once:return
+	_picked_once=true
 	if tid == "":
 		Audio.sfx("ui_cancel")   # 放弃（双刃代价划不来时）
 	else:

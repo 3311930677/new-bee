@@ -2,24 +2,240 @@
   "version": 2,
   "default_map": "lorin_wilds",
   "regions": [
-    {"id": "lorin_wilds", "name": "昭元边城", "kind": "城镇", "level": [1, 12], "point": [90, 75]},
-    {"id": "maple_road", "name": "枫林古道", "kind": "野外", "level": [1, 8], "point": [270, 75]},
-    {"id": "broken_slope", "name": "断碑坡", "kind": "野外", "level": [6, 12], "point": [270, 240]},
-    {"id": "stele_cavern", "name": "失声碑窟", "kind": "首领", "level": [9, 14], "point": [90, 240]},
-    {"id": "old_salt_road", "name": "旧盐道", "kind": "野外", "level": [10, 16], "point": [445, 75]},
-    {"id": "shenyuan_port", "name": "沉渊港", "kind": "城镇", "level": [10, 18], "point": [620, 75]},
-    {"id": "tideflat", "name": "潮痕滩", "kind": "野外", "level": [13, 20], "point": [795, 75]},
-    {"id": "tidal_gate", "name": "退潮水闸", "kind": "首领", "level": [16, 23], "point": [795, 240]},
-    {"id": "red_sand_route", "name": "赤砂商路", "kind": "野外", "level": [20, 28], "point": [620, 240]},
-    {"id": "frost_post", "name": "霜关驿", "kind": "城镇", "level": [22, 32], "point": [620, 400]},
-    {"id": "rift_mine_road", "name": "裂谷矿道", "kind": "野外", "level": [24, 34], "point": [795, 400]},
-    {"id": "rift_mine_vault", "name": "裂谷矿脉", "kind": "首领", "level": [26, 36], "point": [970, 400]},
-    {"id": "frost_boardwalk", "name": "霜林栈道", "kind": "野外", "level": [26, 36], "point": [620, 560]},
-    {"id": "frost_pass", "name": "冰隘", "kind": "首领", "level": [26, 40], "point": [795, 560]},
-    {"id": "abyss_ring", "name": "渊口外环", "kind": "野外", "level": [43, 49], "point": [970, 560]},
-    {"id": "stele_entry", "name": "归路门厅", "kind": "副本", "level": [49, 50], "point": [1150, 240]},
-    {"id": "stele_resonance", "name": "三声共鸣廊", "kind": "副本", "level": [50, 53], "point": [1150, 400]},
-    {"id": "stele_core", "name": "碑心", "kind": "首领", "level": [53, 57], "point": [1150, 560]}
+    {
+      "id": "lorin_wilds",
+      "name": "昭元边城",
+      "kind": "城镇",
+      "level": [
+        1,
+        12
+      ],
+      "point": [
+        90,
+        75
+      ]
+    },
+    {
+      "id": "maple_road",
+      "name": "枫林古道",
+      "kind": "野外",
+      "level": [
+        1,
+        8
+      ],
+      "point": [
+        270,
+        75
+      ]
+    },
+    {
+      "id": "broken_slope",
+      "name": "断碑坡",
+      "kind": "野外",
+      "level": [
+        6,
+        12
+      ],
+      "point": [
+        270,
+        240
+      ]
+    },
+    {
+      "id": "stele_cavern",
+      "name": "失声碑窟",
+      "kind": "首领",
+      "level": [
+        9,
+        14
+      ],
+      "point": [
+        90,
+        240
+      ]
+    },
+    {
+      "id": "old_salt_road",
+      "name": "旧盐道",
+      "kind": "野外",
+      "level": [
+        10,
+        16
+      ],
+      "point": [
+        445,
+        75
+      ]
+    },
+    {
+      "id": "shenyuan_port",
+      "name": "沉渊港",
+      "kind": "城镇",
+      "level": [
+        10,
+        18
+      ],
+      "point": [
+        620,
+        75
+      ]
+    },
+    {
+      "id": "tideflat",
+      "name": "潮痕滩",
+      "kind": "野外",
+      "level": [
+        13,
+        20
+      ],
+      "point": [
+        795,
+        75
+      ]
+    },
+    {
+      "id": "tidal_gate",
+      "name": "退潮水闸",
+      "kind": "首领",
+      "level": [
+        16,
+        23
+      ],
+      "point": [
+        795,
+        240
+      ]
+    },
+    {
+      "id": "red_sand_route",
+      "name": "赤砂商路",
+      "kind": "野外",
+      "level": [
+        20,
+        28
+      ],
+      "point": [
+        620,
+        240
+      ]
+    },
+    {
+      "id": "frost_post",
+      "name": "霜关驿",
+      "kind": "城镇",
+      "level": [
+        22,
+        32
+      ],
+      "point": [
+        620,
+        400
+      ]
+    },
+    {
+      "id": "rift_mine_road",
+      "name": "裂谷矿道",
+      "kind": "野外",
+      "level": [
+        24,
+        34
+      ],
+      "point": [
+        795,
+        400
+      ]
+    },
+    {
+      "id": "rift_mine_vault",
+      "name": "裂谷矿脉",
+      "kind": "首领",
+      "level": [
+        26,
+        36
+      ],
+      "point": [
+        970,
+        400
+      ]
+    },
+    {
+      "id": "frost_boardwalk",
+      "name": "霜林栈道",
+      "kind": "野外",
+      "level": [
+        26,
+        36
+      ],
+      "point": [
+        620,
+        560
+      ]
+    },
+    {
+      "id": "frost_pass",
+      "name": "冰隘",
+      "kind": "首领",
+      "level": [
+        26,
+        40
+      ],
+      "point": [
+        795,
+        560
+      ]
+    },
+    {
+      "id": "abyss_ring",
+      "name": "渊口外环",
+      "kind": "野外",
+      "level": [
+        43,
+        49
+      ],
+      "point": [
+        970,
+        560
+      ]
+    },
+    {
+      "id": "stele_entry",
+      "name": "归路门厅",
+      "kind": "副本",
+      "level": [
+        49,
+        50
+      ],
+      "point": [
+        1150,
+        240
+      ]
+    },
+    {
+      "id": "stele_resonance",
+      "name": "三声共鸣廊",
+      "kind": "副本",
+      "level": [
+        50,
+        53
+      ],
+      "point": [
+        1150,
+        400
+      ]
+    },
+    {
+      "id": "stele_core",
+      "name": "碑心",
+      "kind": "首领",
+      "level": [
+        53,
+        57
+      ],
+      "point": [
+        1150,
+        560
+      ]
+    }
   ],
   "maps": {
     "lorin_wilds": {
@@ -1325,1064 +1541,1064 @@
       ]
     },
     "tideflat": {
-    "name": "潮痕滩",
-    "city": false,
-    "theme": "desert",
-    "tint": "b9d7d3",
-    "decos": [
+      "name": "潮痕滩",
+      "city": false,
+      "theme": "desert",
+      "tint": "b9d7d3",
+      "decos": [
         "030_deco_forest_rocks",
         "031_deco_forest_shrub",
         "034_deco_forest_bones"
-    ],
-    "background": "",
-    "map_cols": 20,
-    "map_rows": 26,
-    "layout_version": 1,
-    "player_scale": 0.54,
-    "camera_zoom": 1.15,
-    "spawn": [
+      ],
+      "background": "",
+      "map_cols": 20,
+      "map_rows": 26,
+      "layout_version": 1,
+      "player_scale": 0.54,
+      "camera_zoom": 1.15,
+      "spawn": [
         165,
         700
-    ],
-    "spawn_points": {
+      ],
+      "spawn_points": {
         "from_shenyuan_port": [
-            165,
-            700
+          165,
+          700
         ],
         "from_tidal_gate": [
-            480,
-            200
+          480,
+          200
         ]
-    },
-    "exits": [
+      },
+      "exits": [
         {
-            "id": "west_port",
-            "at": [
-                90,
-                700
-            ],
-            "to": "shenyuan_port",
-            "arrival": "from_tideflat",
-            "label": "沉渊港"
+          "id": "west_port",
+          "at": [
+            90,
+            700
+          ],
+          "to": "shenyuan_port",
+          "arrival": "from_tideflat",
+          "label": "沉渊港"
         },
         {
-            "id": "north_gate",
-            "at": [
-                480,
-                96
-            ],
-            "to": "tidal_gate",
-            "arrival": "from_tideflat",
-            "label": "退潮水闸",
-            "requires_story": "s18",
-            "locked_hint": "先击败闸门守卫，取得闸门线索"
+          "id": "north_gate",
+          "at": [
+            480,
+            96
+          ],
+          "to": "tidal_gate",
+          "arrival": "from_tideflat",
+          "label": "退潮水闸",
+          "requires_story": "s18",
+          "locked_hint": "先击败闸门守卫，取得闸门线索"
         }
-    ],
-    "goal": "查看涨潮货堆，击败守卫取得水闸线索",
-    "node_type": "normal",
-    "monster_count": 4,
-    "monster_positions": [
+      ],
+      "goal": "查看涨潮货堆，击败守卫取得水闸线索",
+      "node_type": "normal",
+      "monster_count": 4,
+      "monster_positions": [
         [
-            550,
-            525
+          550,
+          525
         ],
         [
-            600,
-            655
+          600,
+          655
         ],
         [
-            330,
-            900
+          330,
+          900
         ],
         [
-            610,
-            945
+          610,
+          945
         ]
-    ],
-    "monster_ids": [
+      ],
+      "monster_ids": [
         "mon_tidal_guard",
         "mon_salt_crab",
         "mon_tidal_guard",
         "mon_salt_crab"
-    ],
-    "monster_slot_ids": [
+      ],
+      "monster_slot_ids": [
         "mon_tidal_guard",
         "mon_salt_crab",
         "mon_tidal_guard",
         "mon_salt_crab"
-    ],
-    "battle_rewards": {
+      ],
+      "battle_rewards": {
         "normal": {
-            "gold": 75,
-            "exp": 56
+          "gold": 75,
+          "exp": 56
         }
-    },
-    "monster_sprite": "",
-    "monster_height": 76,
-    "monster_level_offset": 2,
-    "monster_sprite_paths": {
+      },
+      "monster_sprite": "",
+      "monster_height": 76,
+      "monster_level_offset": 2,
+      "monster_sprite_paths": {
         "mon_salt_crab": "res://image/main_world/mon_salt_crab.png",
         "mon_tidal_guard": "res://image/main_world/mon_tidal_guard.png",
         "mon_salt_scale": "res://image/main_world/mon_salt_scale.png"
-    },
-    "monster_wander_only": true,
-    "monster_wander_radius": 38,
-    "monster_respawn_seconds": 110,
-    "monster_contact_radius": 42,
-    "encounter_solo": true,
-    "optional_bosses": [
+      },
+      "monster_wander_only": true,
+      "monster_wander_radius": 38,
+      "monster_respawn_seconds": 110,
+      "monster_contact_radius": 42,
+      "encounter_solo": true,
+      "optional_bosses": [
         {
-            "id": "salt_scale_king",
-            "mon_id": "mon_salt_scale",
-            "at": [
-                270,
-                1000
-            ],
-            "level_offset": 4,
-            "height": 106,
-            "sprite": "res://image/main_world/mon_salt_scale.png",
-            "contact_radius": 56,
-            "wander_radius": 20,
-            "respawn_seconds": 600,
-            "first_kill": {
-                "tx_scope": "act2",
-                "flag": "act2_salt_scale_down",
-                "discovery": "mon_salt_scale",
-                "equips": {
-                    "zs": {
-                        "tpl": "tpl_sword_ruin",
-                        "rarity": 3
-                    },
-                    "ck": {
-                        "tpl": "tpl_spear_iron",
-                        "rarity": 3
-                    },
-                    "fs": {
-                        "tpl": "tpl_staff_frost",
-                        "rarity": 3
-                    },
-                    "fz": {
-                        "tpl": "tpl_hammer_dawn",
-                        "rarity": 3
-                    }
-                }
+          "id": "salt_scale_king",
+          "mon_id": "mon_salt_scale",
+          "at": [
+            270,
+            1000
+          ],
+          "level_offset": 4,
+          "height": 106,
+          "sprite": "res://image/main_world/mon_salt_scale.png",
+          "contact_radius": 56,
+          "wander_radius": 20,
+          "respawn_seconds": 600,
+          "first_kill": {
+            "tx_scope": "act2",
+            "flag": "act2_salt_scale_down",
+            "discovery": "mon_salt_scale",
+            "equips": {
+              "zs": {
+                "tpl": "tpl_sword_ruin",
+                "rarity": 3
+              },
+              "ck": {
+                "tpl": "tpl_spear_iron",
+                "rarity": 3
+              },
+              "fs": {
+                "tpl": "tpl_staff_frost",
+                "rarity": 3
+              },
+              "fz": {
+                "tpl": "tpl_hammer_dawn",
+                "rarity": 3
+              }
             }
+          }
         }
-    ],
-    "entities": {
+      ],
+      "entities": {
         "tide_cargo": {
-            "kind": "story",
-            "quest": "",
-            "story_step": "s17",
-            "show_steps": [
-                "s17"
-            ],
-            "story_event": "observe",
-            "art": "tide_cargo",
-            "name": "潮印货堆",
-            "at": [
-                410,
-                700
-            ]
+          "kind": "story",
+          "quest": "",
+          "story_step": "s17",
+          "show_steps": [
+            "s17"
+          ],
+          "story_event": "observe",
+          "art": "tide_cargo",
+          "name": "潮印货堆",
+          "at": [
+            410,
+            700
+          ]
         },
         "fish_tide_pool": {
-            "kind": "fishing",
-            "quest": "",
-            "art": "fishing",
-            "name": "潮痕浅池 · 垂钓",
-            "at": [
-                310,
-                560
-            ]
+          "kind": "fishing",
+          "quest": "",
+          "art": "fishing",
+          "name": "潮痕浅池 · 垂钓",
+          "at": [
+            310,
+            560
+          ]
         },
         "a2_drift_feather": {
-            "kind": "collect",
-            "quest": "a2_rel_feather",
-            "art": "feather",
-            "name": "避风浅池 · 漂羽",
-            "at": [
-                625,
-                850
-            ]
+          "kind": "collect",
+          "quest": "a2_rel_feather",
+          "art": "feather",
+          "name": "避风浅池 · 漂羽",
+          "at": [
+            625,
+            850
+          ]
         },
         "a2_tide_grass_a": {
-            "kind": "collect",
-            "quest": "a2_eco_grass",
-            "art": "root",
-            "name": "北浅水 · 潮草",
-            "at": [
-                580,
-                380
-            ]
+          "kind": "collect",
+          "quest": "a2_eco_grass",
+          "art": "root",
+          "name": "北浅水 · 潮草",
+          "at": [
+            580,
+            380
+          ]
         },
         "a2_tide_grass_b": {
-            "kind": "collect",
-            "quest": "a2_eco_grass",
-            "art": "root",
-            "name": "南盐纹 · 潮草",
-            "at": [
-                585,
-                1015
-            ]
+          "kind": "collect",
+          "quest": "a2_eco_grass",
+          "art": "root",
+          "name": "南盐纹 · 潮草",
+          "at": [
+            585,
+            1015
+          ]
         },
         "a4_tidebud_south": {
-            "quest": "a4_eco_tidebuds",
-            "kind": "collect",
-            "art": "return_tidebud",
-            "name": "南滩新芽",
-            "at": [
-                480,
-                390
-            ]
+          "quest": "a4_eco_tidebuds",
+          "kind": "collect",
+          "art": "return_tidebud",
+          "name": "南滩新芽",
+          "at": [
+            480,
+            390
+          ]
         },
         "a4_tidebud_north": {
-            "quest": "a4_eco_tidebuds",
-            "kind": "collect",
-            "art": "return_tidebud",
-            "name": "北滩新芽",
-            "at": [
-                480,
-                810
-            ]
+          "quest": "a4_eco_tidebuds",
+          "kind": "collect",
+          "art": "return_tidebud",
+          "name": "北滩新芽",
+          "at": [
+            480,
+            810
+          ]
         },
         "herb_ship_tide_aid": {
-            "kind": "shipping_aid",
-            "shipping_id": "herb_ship",
-            "art": "salt_marks",
-            "name": "船运潮线",
-            "at": [
-                750,
-                665
-            ]
+          "kind": "shipping_aid",
+          "shipping_id": "herb_ship",
+          "art": "salt_marks",
+          "name": "船运潮线",
+          "at": [
+            750,
+            665
+          ]
         },
         "a2_secret_tide_clock_step_1": {
-            "kind": "inspect",
-            "quest": "a2_secret_tide_clock",
-            "name": "高水痕",
-            "art": "salt_marks",
-            "at": [
-                390,
-                970
-            ]
+          "kind": "inspect",
+          "quest": "a2_secret_tide_clock",
+          "name": "高水痕",
+          "art": "salt_marks",
+          "at": [
+            390,
+            970
+          ]
         },
         "a2_secret_tide_clock_step_2": {
-            "kind": "inspect",
-            "quest": "a2_secret_tide_clock",
-            "name": "低水痕",
-            "art": "salt_marks",
-            "at": [
-                570,
-                790
-            ]
+          "kind": "inspect",
+          "quest": "a2_secret_tide_clock",
+          "name": "低水痕",
+          "art": "salt_marks",
+          "at": [
+            570,
+            790
+          ]
         },
         "a2_secret_tide_clock_step_3": {
-            "kind": "inspect",
-            "quest": "a2_secret_tide_clock",
-            "name": "回潮线",
-            "art": "salt_marks",
-            "at": [
-                390,
-                610
-            ]
+          "kind": "inspect",
+          "quest": "a2_secret_tide_clock",
+          "name": "回潮线",
+          "art": "salt_marks",
+          "at": [
+            390,
+            610
+          ]
         },
         "a2_secret_tide_clock_step_4": {
-            "kind": "align",
-            "quest": "a2_secret_tide_clock",
-            "name": "编排闸门时序",
-            "art": "post",
-            "at": [
-                570,
-                900
-            ]
+          "kind": "align",
+          "quest": "a2_secret_tide_clock",
+          "name": "编排闸门时序",
+          "art": "post",
+          "at": [
+            570,
+            900
+          ]
         },
         "a2_eco_driftwood_step_1": {
-            "kind": "inspect",
-            "quest": "a2_eco_driftwood",
-            "name": "巢位与浅痕",
-            "art": "return_tidebud",
-            "at": [
-                580,
-                1000
-            ]
+          "kind": "inspect",
+          "quest": "a2_eco_driftwood",
+          "name": "巢位与浅痕",
+          "art": "return_tidebud",
+          "at": [
+            580,
+            1000
+          ]
         },
         "a2_eco_driftwood_step_2": {
-            "kind": "repair",
-            "quest": "a2_eco_driftwood",
-            "name": "搬开第一块漂木",
-            "art": "post",
-            "at": [
-                390,
-                900
-            ]
+          "kind": "repair",
+          "quest": "a2_eco_driftwood",
+          "name": "搬开第一块漂木",
+          "art": "post",
+          "at": [
+            390,
+            900
+          ]
         },
         "a2_eco_driftwood_step_3": {
-            "kind": "repair",
-            "quest": "a2_eco_driftwood",
-            "name": "搬开第二块漂木",
-            "art": "post",
-            "at": [
-                580,
-                740
-            ]
+          "kind": "repair",
+          "quest": "a2_eco_driftwood",
+          "name": "搬开第二块漂木",
+          "art": "post",
+          "at": [
+            580,
+            740
+          ]
         },
         "a2_eco_driftwood_step_4": {
-            "kind": "escort",
-            "quest": "a2_eco_driftwood",
-            "name": "沿浅线送木回岸",
-            "art": "post",
-            "at": [
-                390,
-                1060
-            ]
+          "kind": "escort",
+          "quest": "a2_eco_driftwood",
+          "name": "沿浅线送木回岸",
+          "art": "post",
+          "at": [
+            390,
+            1060
+          ]
         },
         "a2_eco_driftwood_feedback_0": {
-            "kind": "feedback",
-            "quest": "a2_eco_driftwood",
-            "art": "return_tidebud",
-            "name": "未受扰动的巢边",
-            "at": [
-                580,
-                990
-            ]
+          "kind": "feedback",
+          "quest": "a2_eco_driftwood",
+          "art": "return_tidebud",
+          "name": "未受扰动的巢边",
+          "at": [
+            580,
+            990
+          ]
         },
         "a4_eco_returnpath_step_1": {
-            "kind": "inspect",
-            "quest": "a4_eco_returnpath",
-            "name": "观察潮芽根际",
-            "art": "return_tidebud",
-            "at": [
-                390,
-                1020
-            ]
+          "kind": "inspect",
+          "quest": "a4_eco_returnpath",
+          "name": "观察潮芽根际",
+          "art": "return_tidebud",
+          "at": [
+            390,
+            1020
+          ]
         },
         "a4_eco_returnpath_step_3": {
-            "kind": "mark",
-            "quest": "a4_eco_returnpath",
-            "name": "设立轻触观察标记",
-            "art": "post",
-            "at": [
-                580,
-                1040
-            ]
+          "kind": "mark",
+          "quest": "a4_eco_returnpath",
+          "name": "设立轻触观察标记",
+          "art": "post",
+          "at": [
+            580,
+            1040
+          ]
         },
         "a4_eco_returnpath_feedback_0": {
-            "kind": "feedback",
-            "quest": "a4_eco_returnpath",
-            "art": "post",
-            "name": "复苏观察标记",
-            "at": [
-                580,
-                1020
-            ]
-        }
-    },
-    "clear_rects": [
-        [
-            340,
-            905,
-            100,
-            110
-        ],
-        [
-            520,
-            725,
-            100,
-            110
-        ],
-        [
-            340,
-            545,
-            100,
-            110
-        ],
-        [
-            520,
-            835,
-            100,
-            110
-        ],
-        [
-            530,
-            935,
-            100,
-            110
-        ],
-        [
-            340,
-            835,
-            100,
-            110
-        ],
-        [
-            530,
-            675,
-            100,
-            110
-        ],
-        [
-            340,
-            995,
-            100,
-            110
-        ],
-        [
-            340,
-            955,
-            100,
-            110
-        ],
-        [
-            530,
-            975,
-            100,
-            110
-        ],
-        [
-            205,
+          "kind": "feedback",
+          "quest": "a4_eco_returnpath",
+          "art": "post",
+          "name": "复苏观察标记",
+          "at": [
             580,
-            130,
-            120
+            1020
+          ]
+        }
+      },
+      "clear_rects": [
+        [
+          340,
+          905,
+          100,
+          110
         ],
         [
-            415,
-            480,
-            130,
-            120
+          520,
+          725,
+          100,
+          110
         ],
         [
-            575,
-            350,
-            130,
-            120
+          340,
+          545,
+          100,
+          110
         ],
         [
-            505,
-            280,
-            130,
-            120
+          520,
+          835,
+          100,
+          110
+        ],
+        [
+          530,
+          935,
+          100,
+          110
+        ],
+        [
+          340,
+          835,
+          100,
+          110
+        ],
+        [
+          530,
+          675,
+          100,
+          110
+        ],
+        [
+          340,
+          995,
+          100,
+          110
+        ],
+        [
+          340,
+          955,
+          100,
+          110
+        ],
+        [
+          530,
+          975,
+          100,
+          110
+        ],
+        [
+          205,
+          580,
+          130,
+          120
+        ],
+        [
+          415,
+          480,
+          130,
+          120
+        ],
+        [
+          575,
+          350,
+          130,
+          120
+        ],
+        [
+          505,
+          280,
+          130,
+          120
         ]
-    ]
-},
+      ]
+    },
     "tidal_gate": {
-    "name": "退潮水闸",
-    "city": false,
-    "theme": "tomb",
-    "tint": "9fc3c4",
-    "background": "",
-    "map_cols": 20,
-    "map_rows": 26,
-    "layout_version": 1,
-    "player_scale": 0.54,
-    "camera_zoom": 1.15,
-    "spawn": [
+      "name": "退潮水闸",
+      "city": false,
+      "theme": "tomb",
+      "tint": "9fc3c4",
+      "background": "",
+      "map_cols": 20,
+      "map_rows": 26,
+      "layout_version": 1,
+      "player_scale": 0.54,
+      "camera_zoom": 1.15,
+      "spawn": [
         480,
         1050
-    ],
-    "spawn_points": {
+      ],
+      "spawn_points": {
         "from_tideflat": [
-            480,
-            1050
+          480,
+          1050
         ]
-    },
-    "exits": [
+      },
+      "exits": [
         {
-            "id": "south_tideflat",
-            "at": [
-                480,
-                1152
-            ],
-            "to": "tideflat",
-            "arrival": "from_tidal_gate",
-            "label": "潮痕滩"
+          "id": "south_tideflat",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "tideflat",
+          "arrival": "from_tidal_gate",
+          "label": "潮痕滩"
         }
-    ],
-    "goal": "读港务水痕，调整两道闸线，再迎战潮蚀司祭",
-    "boss_puzzle_gate": {
+      ],
+      "goal": "读港务水痕，调整两道闸线，再迎战潮蚀司祭",
+      "boss_puzzle_gate": {
         "start_flag": "act2_tide_clue",
         "finish_flag": "act2_tide_gate_2",
         "hint": "先核对水痕与港务记录，把两道闸线调稳"
-    },
-    "node_type": "boss",
-    "boss_id": "mon_tide_priest",
-    "monster_count": 1,
-    "monster_positions": [
+      },
+      "node_type": "boss",
+      "boss_id": "mon_tide_priest",
+      "monster_count": 1,
+      "monster_positions": [
         [
-            480,
-            410
+          480,
+          410
         ]
-    ],
-    "monster_ids": [
+      ],
+      "monster_ids": [
         "mon_tide_priest"
-    ],
-    "battle_rewards": {
+      ],
+      "battle_rewards": {
         "boss": {
-            "gold": 410,
-            "exp": 290
+          "gold": 410,
+          "exp": 290
         }
-    },
-    "monster_sprite": "res://image/main_world/mon_tide_priest.png",
-    "monster_sprite_paths": {
+      },
+      "monster_sprite": "res://image/main_world/mon_tide_priest.png",
+      "monster_sprite_paths": {
         "mon_tide_priest": "res://image/main_world/mon_tide_priest.png"
-    },
-    "monster_height": 116,
-    "monster_level_offset": 3,
-    "monster_wander_only": true,
-    "monster_wander_radius": 18,
-    "monster_respawn_seconds": 86400,
-    "monster_contact_radius": 52,
-    "encounter_solo": true,
-    "entities": {
+      },
+      "monster_height": 116,
+      "monster_level_offset": 3,
+      "monster_wander_only": true,
+      "monster_wander_radius": 18,
+      "monster_respawn_seconds": 86400,
+      "monster_contact_radius": 52,
+      "encounter_solo": true,
+      "entities": {
         "act2_tide_record": {
-            "kind": "puzzle",
-            "art": "salt_marks",
-            "name": "港务水痕记录",
-            "at": [
-                480,
-                870
-            ],
-            "requires_story": "s18",
-            "flag": "act2_tide_clue",
-            "completion": "记录写着：上闸先泄向旧渠，再开栈桥侧闸；急开主渠会倒灌货箱。"
+          "kind": "puzzle",
+          "art": "salt_marks",
+          "name": "港务水痕记录",
+          "at": [
+            480,
+            870
+          ],
+          "requires_story": "s18",
+          "flag": "act2_tide_clue",
+          "completion": "记录写着：上闸先泄向旧渠，再开栈桥侧闸；急开主渠会倒灌货箱。"
         },
         "act2_tide_upper": {
-            "kind": "puzzle_choice",
-            "art": "stele_anchor",
-            "name": "上闸水线",
-            "at": [
-                310,
-                690
-            ],
-            "requires_story": "s18",
-            "requires_flags": [
-                "act2_tide_clue"
-            ],
-            "flag": "act2_tide_gate_1",
-            "clue": "旧渠的水痕低于货箱，主渠水痕却高过栈桥。港务记录说第一道闸先泄向旧渠。",
-            "choices": {
-                "old": "先向旧渠泄水",
-                "main": "直接打开主渠"
-            },
-            "correct": "old",
-            "wrong": "主渠水位压向货箱，水痕证明这条线会倒灌；闸柄仍可重调。",
-            "completion": "旧渠接下第一股潮水，栈桥侧闸的压力降了。"
+          "kind": "puzzle_choice",
+          "art": "stele_anchor",
+          "name": "上闸水线",
+          "at": [
+            310,
+            690
+          ],
+          "requires_story": "s18",
+          "requires_flags": [
+            "act2_tide_clue"
+          ],
+          "flag": "act2_tide_gate_1",
+          "clue": "旧渠的水痕低于货箱，主渠水痕却高过栈桥。港务记录说第一道闸先泄向旧渠。",
+          "choices": {
+            "old": "先向旧渠泄水",
+            "main": "直接打开主渠"
+          },
+          "correct": "old",
+          "wrong": "主渠水位压向货箱，水痕证明这条线会倒灌；闸柄仍可重调。",
+          "completion": "旧渠接下第一股潮水，栈桥侧闸的压力降了。"
         },
         "act2_tide_bridge": {
-            "kind": "puzzle_choice",
-            "art": "stele_anchor",
-            "name": "栈桥侧闸",
-            "at": [
-                650,
-                535
-            ],
-            "requires_story": "s18",
-            "requires_flags": [
-                "act2_tide_gate_1"
-            ],
-            "flag": "act2_tide_gate_2",
-            "clue": "旧渠接下第一股潮水。现在只能先开一条干路：放栈桥水，先让人通过；或先把货箱侧的潮水引走。另一侧仍可沿堤边回去补救。",
-            "choices": {
-                "bridge": "先通栈桥步道",
-                "cargo": "先护货箱暗渠"
-            },
-            "correct": "bridge",
-            "completion": "栈桥水位退去，左侧步道可以通向司祭；货箱仍在右侧，沿堤边可再救回。",
-            "cargo_completion": "货箱旁的暗渠先排清，右侧步道可以通向司祭；栈桥仍可沿堤边回去修复。"
+          "kind": "puzzle_choice",
+          "art": "stele_anchor",
+          "name": "栈桥侧闸",
+          "at": [
+            650,
+            535
+          ],
+          "requires_story": "s18",
+          "requires_flags": [
+            "act2_tide_gate_1"
+          ],
+          "flag": "act2_tide_gate_2",
+          "clue": "旧渠接下第一股潮水。现在只能先开一条干路：放栈桥水，先让人通过；或先把货箱侧的潮水引走。另一侧仍可沿堤边回去补救。",
+          "choices": {
+            "bridge": "先通栈桥步道",
+            "cargo": "先护货箱暗渠"
+          },
+          "correct": "bridge",
+          "completion": "栈桥水位退去，左侧步道可以通向司祭；货箱仍在右侧，沿堤边可再救回。",
+          "cargo_completion": "货箱旁的暗渠先排清，右侧步道可以通向司祭；栈桥仍可沿堤边回去修复。"
         },
         "act2_tide_rescue_cargo": {
-            "kind": "puzzle",
-            "art": "salt_marks",
-            "name": "堤边货箱",
-            "at": [
-                585,
-                610
-            ],
-            "requires_story": "s18",
-            "requires_flags": [
-                "act2_tide_route_bridge"
-            ],
-            "flag": "act2_tide_cargo_saved",
-            "completion": "你沿堤边旧踏点把货箱拖上高处。右侧暗渠也排开一条回路，两边都能通行。"
+          "kind": "puzzle",
+          "art": "salt_marks",
+          "name": "堤边货箱",
+          "at": [
+            585,
+            610
+          ],
+          "requires_story": "s18",
+          "requires_flags": [
+            "act2_tide_route_bridge"
+          ],
+          "flag": "act2_tide_cargo_saved",
+          "completion": "你沿堤边旧踏点把货箱拖上高处。右侧暗渠也排开一条回路，两边都能通行。"
         },
         "act2_tide_repair_bridge": {
-            "kind": "puzzle",
-            "art": "salt_marks",
-            "name": "断栈桥板",
-            "at": [
-                310,
-                590
-            ],
-            "requires_story": "s18",
-            "requires_flags": [
-                "act2_tide_route_cargo"
-            ],
-            "flag": "act2_tide_bridge_open",
-            "completion": "你沿堤边把桥板扶回石槽。左侧栈桥恢复通行，两边都能抵达司祭房。"
+          "kind": "puzzle",
+          "art": "salt_marks",
+          "name": "断栈桥板",
+          "at": [
+            310,
+            590
+          ],
+          "requires_story": "s18",
+          "requires_flags": [
+            "act2_tide_route_cargo"
+          ],
+          "flag": "act2_tide_bridge_open",
+          "completion": "你沿堤边把桥板扶回石槽。左侧栈桥恢复通行，两边都能抵达司祭房。"
         },
         "act2_tide_bridge_supply": {
-            "kind": "puzzle",
-            "art": "tide_cargo",
-            "name": "栈桥干燥补给",
-            "at": [
-                405,
-                570
-            ],
-            "requires_story": "s18",
-            "requires_flags": [
-                "act2_tide_bridge_open"
-            ],
-            "flag": "act2_tide_bridge_supply_claimed",
-            "reward_items": {
-                "trade_herb": 1
-            },
-            "completion": "桥边药包仍干燥。收下药草一份；击败司祭前可多带一瓶药剂，两处战斗补给不叠加。"
+          "kind": "puzzle",
+          "art": "tide_cargo",
+          "name": "栈桥干燥补给",
+          "at": [
+            405,
+            570
+          ],
+          "requires_story": "s18",
+          "requires_flags": [
+            "act2_tide_bridge_open"
+          ],
+          "flag": "act2_tide_bridge_supply_claimed",
+          "reward_items": {
+            "trade_herb": 1
+          },
+          "completion": "桥边药包仍干燥。收下药草一份；击败司祭前可多带一瓶药剂，两处战斗补给不叠加。"
         },
         "act2_tide_cargo_supply": {
-            "kind": "puzzle",
-            "art": "tide_cargo",
-            "name": "货箱留存药包",
-            "at": [
-                555,
-                570
-            ],
-            "requires_story": "s18",
-            "requires_flags": [
-                "act2_tide_cargo_saved"
-            ],
-            "flag": "act2_tide_cargo_supply_claimed",
-            "reward_items": {
-                "trade_herb": 1
-            },
-            "completion": "货箱中的药包没有受潮。收下药草一份；击败司祭前可多带一瓶药剂，两处战斗补给不叠加。"
+          "kind": "puzzle",
+          "art": "tide_cargo",
+          "name": "货箱留存药包",
+          "at": [
+            555,
+            570
+          ],
+          "requires_story": "s18",
+          "requires_flags": [
+            "act2_tide_cargo_saved"
+          ],
+          "flag": "act2_tide_cargo_supply_claimed",
+          "reward_items": {
+            "trade_herb": 1
+          },
+          "completion": "货箱中的药包没有受潮。收下药草一份；击败司祭前可多带一瓶药剂，两处战斗补给不叠加。"
         }
-    },
-    "clear_rects": [
+      },
+      "clear_rects": [
         [
-            355,
-            875,
-            130,
-            120
+          355,
+          875,
+          130,
+          120
         ],
         [
-            495,
-            770,
-            130,
-            120
+          495,
+          770,
+          130,
+          120
         ],
         [
-            355,
-            615,
-            130,
-            120
+          355,
+          615,
+          130,
+          120
         ],
         [
-            415,
-            280,
-            130,
-            120
+          415,
+          280,
+          130,
+          120
         ],
         [
-            535,
-            875,
-            130,
-            120
+          535,
+          875,
+          130,
+          120
         ],
         [
-            400,
-            795,
-            160,
-            150
+          400,
+          795,
+          160,
+          150
         ],
         [
-            230,
-            615,
-            160,
-            150
+          230,
+          615,
+          160,
+          150
         ],
         [
-            570,
-            460,
-            160,
-            150
+          570,
+          460,
+          160,
+          150
         ],
         [
-            570,
-            515,
-            160,
-            150
+          570,
+          515,
+          160,
+          150
         ],
         [
-            230,
-            515,
-            160,
-            150
+          230,
+          515,
+          160,
+          150
         ],
         [
-            325,
-            495,
-            160,
-            150
+          325,
+          495,
+          160,
+          150
         ],
         [
-            475,
-            495,
-            160,
-            150
+          475,
+          495,
+          160,
+          150
         ],
         [
-            505,
-            535,
-            160,
-            150
+          505,
+          535,
+          160,
+          150
         ]
-    ]
-},
+      ]
+    },
     "stele_cavern": {
-    "name": "失声碑窟",
-    "city": false,
-    "theme": "tomb",
-    "tint": "cdbede",
-    "background": "",
-    "map_cols": 20,
-    "map_rows": 26,
-    "layout_version": 1,
-    "player_scale": 0.54,
-    "camera_zoom": 1.15,
-    "spawn": [
+      "name": "失声碑窟",
+      "city": false,
+      "theme": "tomb",
+      "tint": "cdbede",
+      "background": "",
+      "map_cols": 20,
+      "map_rows": 26,
+      "layout_version": 1,
+      "player_scale": 0.54,
+      "camera_zoom": 1.15,
+      "spawn": [
         480,
         1050
-    ],
-    "spawn_points": {
+      ],
+      "spawn_points": {
         "from_broken_slope": [
-            480,
-            1050
+          480,
+          1050
         ]
-    },
-    "exits": [
+      },
+      "exits": [
         {
-            "id": "south_path",
-            "at": [
-                480,
-                1152
-            ],
-            "to": "broken_slope",
-            "arrival": "from_stele_cavern",
-            "label": "断碑坡"
+          "id": "south_path",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "broken_slope",
+          "arrival": "from_stele_cavern",
+          "label": "断碑坡"
         }
-    ],
-    "goal": "先读石缝回声与拓片，再调整两枚碑座，击败碑窟守卫",
-    "boss_puzzle_gate": {
+      ],
+      "goal": "先读石缝回声与拓片，再调整两枚碑座，击败碑窟守卫",
+      "boss_puzzle_gate": {
         "start_flag": "act1_stele_clue",
         "finish_flag": "act1_stele_seat_2",
         "hint": "碑声尚未接稳；先把两枚碑座调回旧位"
-    },
-    "node_type": "boss",
-    "boss_id": "mon_stele_warden",
-    "monster_count": 1,
-    "monster_positions": [
+      },
+      "node_type": "boss",
+      "boss_id": "mon_stele_warden",
+      "monster_count": 1,
+      "monster_positions": [
         [
-            480,
-            400
+          480,
+          400
         ]
-    ],
-    "monster_ids": [
+      ],
+      "monster_ids": [
         "mon_stele_warden"
-    ],
-    "battle_rewards": {
+      ],
+      "battle_rewards": {
         "boss": {
-            "gold": 320,
-            "exp": 210
+          "gold": 320,
+          "exp": 210
         }
-    },
-    "monster_sprite": "res://image/main_world/mon_stele_warden.png",
-    "monster_height": 106,
-    "monster_level_offset": 3,
-    "monster_wander_only": true,
-    "monster_wander_radius": 24,
-    "monster_respawn_seconds": 86400,
-    "monster_contact_radius": 48,
-    "encounter_solo": true,
-    "entities": {
+      },
+      "monster_sprite": "res://image/main_world/mon_stele_warden.png",
+      "monster_height": 106,
+      "monster_level_offset": 3,
+      "monster_wander_only": true,
+      "monster_wander_radius": 24,
+      "monster_respawn_seconds": 86400,
+      "monster_contact_radius": 48,
+      "encounter_solo": true,
+      "entities": {
         "act1_echo_crack_left": {
-            "kind": "puzzle",
-            "art": "stele_anchor",
-            "name": "左侧石缝·双响",
-            "at": [
-                210,
-                940
-            ],
-            "requires_story": "s09",
-            "flag": "act1_echo_crack_left",
-            "completion": "左缝先是一声短响，末尾又轻轻应了两次；像有人曾沿岩层凿出回声。"
+          "kind": "puzzle",
+          "art": "stele_anchor",
+          "name": "左侧石缝·双响",
+          "at": [
+            210,
+            940
+          ],
+          "requires_story": "s09",
+          "flag": "act1_echo_crack_left",
+          "completion": "左缝先是一声短响，末尾又轻轻应了两次；像有人曾沿岩层凿出回声。"
         },
         "act1_echo_crack_middle": {
-            "kind": "puzzle",
-            "art": "stele_anchor",
-            "name": "中侧石缝·长尾",
-            "at": [
-                480,
-                955
-            ],
-            "requires_story": "s09",
-            "flag": "act1_echo_crack_middle",
-            "completion": "中缝的声音拖得很长，没有回到碑面的第二次轻响；它更像渊底的回音。"
+          "kind": "puzzle",
+          "art": "stele_anchor",
+          "name": "中侧石缝·长尾",
+          "at": [
+            480,
+            955
+          ],
+          "requires_story": "s09",
+          "flag": "act1_echo_crack_middle",
+          "completion": "中缝的声音拖得很长，没有回到碑面的第二次轻响；它更像渊底的回音。"
         },
         "act1_echo_crack_right": {
-            "kind": "puzzle",
-            "art": "stele_anchor",
-            "name": "右侧石缝·旧缺口",
-            "at": [
-                750,
-                940
-            ],
-            "requires_story": "s09",
-            "flag": "act1_echo_crack_right",
-            "completion": "右缝旁有一处修补过的缺口。声音从这里折回，正朝向北面的碑心。"
+          "kind": "puzzle",
+          "art": "stele_anchor",
+          "name": "右侧石缝·旧缺口",
+          "at": [
+            750,
+            940
+          ],
+          "requires_story": "s09",
+          "flag": "act1_echo_crack_right",
+          "completion": "右缝旁有一处修补过的缺口。声音从这里折回，正朝向北面的碑心。"
         },
         "act1_echo_rubbing": {
-            "kind": "puzzle",
-            "art": "stele_anchor",
-            "name": "石缝拓痕",
-            "at": [
-                480,
-                830
-            ],
-            "requires_story": "s09",
-            "flag": "act1_stele_clue",
-            "completion": "青姨的拓片记着：旧碑回声末尾有两声轻响；第二枚碑座的缺口应朝向碑心。"
+          "kind": "puzzle",
+          "art": "stele_anchor",
+          "name": "石缝拓痕",
+          "at": [
+            480,
+            830
+          ],
+          "requires_story": "s09",
+          "flag": "act1_stele_clue",
+          "completion": "青姨的拓片记着：旧碑回声末尾有两声轻响；第二枚碑座的缺口应朝向碑心。"
         },
         "act1_echo_west": {
-            "kind": "puzzle_choice",
-            "art": "stele_anchor",
-            "name": "辨声碑座",
-            "at": [
-                315,
-                680
-            ],
-            "requires_story": "s09",
-            "requires_flags": [
-                "act1_stele_clue"
-            ],
-            "flag": "act1_stele_seat_1",
-            "clue": "两种回声重叠着。拓片说旧碑声在末尾有两声轻响，渊底回音只剩拖长的尾音。",
-            "choices": {
-                "old": "引回两声轻响",
-                "abyss": "引回拖长尾音"
-            },
-            "correct": "old",
-            "wrong": "拖长的尾音像是渊的回响，拓片上的两声轻响没有出现。可以重新调整。",
-            "completion": "旧碑的两声轻响回到石面，前方另一枚碑座有了回应。"
+          "kind": "puzzle_choice",
+          "art": "stele_anchor",
+          "name": "辨声碑座",
+          "at": [
+            315,
+            680
+          ],
+          "requires_story": "s09",
+          "requires_flags": [
+            "act1_stele_clue"
+          ],
+          "flag": "act1_stele_seat_1",
+          "clue": "两种回声重叠着。拓片说旧碑声在末尾有两声轻响，渊底回音只剩拖长的尾音。",
+          "choices": {
+            "old": "引回两声轻响",
+            "abyss": "引回拖长尾音"
+          },
+          "correct": "old",
+          "wrong": "拖长的尾音像是渊的回响，拓片上的两声轻响没有出现。可以重新调整。",
+          "completion": "旧碑的两声轻响回到石面，前方另一枚碑座有了回应。"
         },
         "act1_echo_shadow": {
-            "kind": "puzzle_choice",
-            "art": "stele_anchor",
-            "name": "碑座旁的守影",
-            "at": [
-                480,
-                635
-            ],
-            "requires_story": "s09",
-            "requires_flags": [
-                "act1_stele_seat_1"
-            ],
-            "flag": "act1_stele_shadow_decided",
-            "clue": "两声轻响惊醒了守在中廊的碑影。侧壁有旧刻出的窄路，可以绕行；敲响残碑也能把它引出正面迎战。两路最终都通向第二枚碑座。",
-            "choices": {
-                "avoid": "循侧壁阴刻绕过",
-                "fight": "敲响残碑迎战守影"
-            },
-            "completion": "你循侧壁阴刻绕过守影，前方碑座仍在。",
-            "fight_line": "残碑响起，守影怨灵在中廊现身。击退它后才能继续调整第二枚碑座。"
+          "kind": "puzzle_choice",
+          "art": "stele_anchor",
+          "name": "碑座旁的守影",
+          "at": [
+            480,
+            635
+          ],
+          "requires_story": "s09",
+          "requires_flags": [
+            "act1_stele_seat_1"
+          ],
+          "flag": "act1_stele_shadow_decided",
+          "clue": "两声轻响惊醒了守在中廊的碑影。侧壁有旧刻出的窄路，可以绕行；敲响残碑也能把它引出正面迎战。两路最终都通向第二枚碑座。",
+          "choices": {
+            "avoid": "循侧壁阴刻绕过",
+            "fight": "敲响残碑迎战守影"
+          },
+          "completion": "你循侧壁阴刻绕过守影，前方碑座仍在。",
+          "fight_line": "残碑响起，守影怨灵在中廊现身。击退它后才能继续调整第二枚碑座。"
         },
         "act1_echo_east": {
-            "kind": "puzzle_choice",
-            "art": "stele_anchor",
-            "name": "定向碑座",
-            "at": [
-                650,
-                610
-            ],
-            "requires_story": "s09",
-            "requires_flags": [
-                "act1_stele_seat_1"
-            ],
-            "flag": "act1_stele_seat_2",
-            "clue": "第二枚碑座有一处缺口。青姨拓片画着它面向碑心的旧位置。",
-            "choices": {
-                "heart": "缺口朝碑心",
-                "mouth": "缺口朝洞口"
-            },
-            "correct": "heart",
-            "wrong": "声音反弹向来路，没能抵达碑心。缺口方向仍可重调。",
-            "completion": "两座碑声相接，守影的蓄力节拍也清楚了。可以进入碑窟深处。"
+          "kind": "puzzle_choice",
+          "art": "stele_anchor",
+          "name": "定向碑座",
+          "at": [
+            650,
+            610
+          ],
+          "requires_story": "s09",
+          "requires_flags": [
+            "act1_stele_seat_1"
+          ],
+          "flag": "act1_stele_seat_2",
+          "clue": "第二枚碑座有一处缺口。青姨拓片画着它面向碑心的旧位置。",
+          "choices": {
+            "heart": "缺口朝碑心",
+            "mouth": "缺口朝洞口"
+          },
+          "correct": "heart",
+          "wrong": "声音反弹向来路，没能抵达碑心。缺口方向仍可重调。",
+          "completion": "两座碑声相接，守影的蓄力节拍也清楚了。可以进入碑窟深处。"
         },
         "a1_secret_rubbing_step_1": {
-            "kind": "inspect",
-            "quest": "a1_secret_rubbing",
-            "name": "岩纹拓片",
-            "art": "salt_marks",
-            "at": [
-                380,
-                960
-            ]
+          "kind": "inspect",
+          "quest": "a1_secret_rubbing",
+          "name": "岩纹拓片",
+          "art": "salt_marks",
+          "at": [
+            380,
+            960
+          ]
         },
         "a1_secret_rubbing_step_2": {
-            "kind": "inspect",
-            "quest": "a1_secret_rubbing",
-            "name": "刀痕拓片",
-            "art": "salt_marks",
-            "at": [
-                580,
-                880
-            ]
+          "kind": "inspect",
+          "quest": "a1_secret_rubbing",
+          "name": "刀痕拓片",
+          "art": "salt_marks",
+          "at": [
+            580,
+            880
+          ]
         },
         "a1_secret_rubbing_step_3": {
-            "kind": "inspect",
-            "quest": "a1_secret_rubbing",
-            "name": "缺口拓片",
-            "art": "salt_marks",
-            "at": [
-                380,
-                830
-            ]
+          "kind": "inspect",
+          "quest": "a1_secret_rubbing",
+          "name": "缺口拓片",
+          "art": "salt_marks",
+          "at": [
+            380,
+            830
+          ]
         },
         "a1_secret_rubbing_step_4": {
-            "kind": "align",
-            "quest": "a1_secret_rubbing",
-            "name": "拼合残页",
-            "art": "salt_marks",
-            "at": [
-                580,
-                950
-            ]
+          "kind": "align",
+          "quest": "a1_secret_rubbing",
+          "name": "拼合残页",
+          "art": "salt_marks",
+          "at": [
+            580,
+            950
+          ]
         },
         "a1_secret_rubbing_feedback_0": {
-            "kind": "feedback",
-            "quest": "a1_secret_rubbing",
-            "art": "salt_marks",
-            "name": "留下的拓印台",
-            "at": [
-                370,
-                1020
-            ]
+          "kind": "feedback",
+          "quest": "a1_secret_rubbing",
+          "art": "salt_marks",
+          "name": "留下的拓印台",
+          "at": [
+            370,
+            1020
+          ]
         }
-    },
-    "clear_rects": [
+      },
+      "clear_rects": [
         [
-            330,
-            895,
-            100,
-            110
+          330,
+          895,
+          100,
+          110
         ],
         [
-            530,
-            815,
-            100,
-            110
+          530,
+          815,
+          100,
+          110
         ],
         [
-            330,
-            765,
-            100,
-            110
+          330,
+          765,
+          100,
+          110
         ],
         [
-            530,
-            885,
-            100,
-            110
+          530,
+          885,
+          100,
+          110
         ],
         [
-            355,
-            880,
-            130,
-            120
+          355,
+          880,
+          130,
+          120
         ],
         [
-            465,
-            805,
-            130,
-            120
+          465,
+          805,
+          130,
+          120
         ],
         [
-            355,
-            720,
-            130,
-            120
+          355,
+          720,
+          130,
+          120
         ],
         [
-            415,
-            615,
-            130,
-            120
+          415,
+          615,
+          130,
+          120
         ],
         [
-            415,
-            280,
-            130,
-            120
+          415,
+          280,
+          130,
+          120
         ],
         [
-            535,
-            875,
-            130,
-            120
+          535,
+          875,
+          130,
+          120
         ],
         [
-            150,
-            820,
-            660,
-            220
+          150,
+          820,
+          660,
+          220
         ],
         [
-            250,
-            540,
-            480,
-            210
+          250,
+          540,
+          480,
+          210
         ],
         [
-            130,
-            865,
-            160,
-            150
+          130,
+          865,
+          160,
+          150
         ],
         [
-            400,
-            880,
-            160,
-            150
+          400,
+          880,
+          160,
+          150
         ],
         [
-            670,
-            865,
-            160,
-            150
+          670,
+          865,
+          160,
+          150
         ],
         [
-            400,
-            755,
-            160,
-            150
+          400,
+          755,
+          160,
+          150
         ],
         [
-            235,
-            605,
-            160,
-            150
+          235,
+          605,
+          160,
+          150
         ],
         [
-            400,
-            560,
-            160,
-            150
+          400,
+          560,
+          160,
+          150
         ],
         [
-            570,
-            535,
-            160,
-            150
+          570,
+          535,
+          160,
+          150
         ]
-    ]
-},
+      ]
+    },
     "red_sand_route": {
       "name": "赤砂商路",
       "city": false,
@@ -2734,6 +2950,16 @@
             390,
             1080
           ]
+        },
+        "fish_frost_pool": {
+          "kind": "fishing",
+          "quest": "",
+          "art": "fishing",
+          "name": "冰缘暗水 · 垂钓",
+          "at": [
+            200,
+            1080
+          ]
         }
       },
       "clear_rects": [
@@ -3061,243 +3287,243 @@
       }
     },
     "rift_mine_vault": {
-    "name": "裂谷矿脉",
-    "city": false,
-    "theme": "tomb",
-    "tint": "ffffff",
-    "background": "",
-    "map_cols": 20,
-    "map_rows": 26,
-    "layout_version": 1,
-    "player_scale": 0.54,
-    "camera_zoom": 1.15,
-    "spawn": [
+      "name": "裂谷矿脉",
+      "city": false,
+      "theme": "tomb",
+      "tint": "ffffff",
+      "background": "",
+      "map_cols": 20,
+      "map_rows": 26,
+      "layout_version": 1,
+      "player_scale": 0.54,
+      "camera_zoom": 1.15,
+      "spawn": [
         480,
         1050
-    ],
-    "spawn_points": {
+      ],
+      "spawn_points": {
         "from_rift_mine_road": [
-            480,
-            1050
+          480,
+          1050
         ]
-    },
-    "exits": [
+      },
+      "exits": [
         {
-            "id": "south_return",
-            "at": [
-                480,
-                1152
-            ],
-            "to": "rift_mine_road",
-            "arrival": "from_rift_mine_vault",
-            "label": "裂谷矿道"
+          "id": "south_return",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "rift_mine_road",
+          "arrival": "from_rift_mine_vault",
+          "label": "裂谷矿道"
         }
-    ],
-    "goal": "查看翻车记录，调风轮和道岔，再迎战矿脉械卫",
-    "boss_puzzle_gate": {
+      ],
+      "goal": "查看翻车记录，调风轮和道岔，再迎战矿脉械卫",
+      "boss_puzzle_gate": {
         "start_flag": "act3_mine_clue",
         "finish_flag": "act3_mine_switch",
         "hint": "先看翻车记录，调好风轮与道岔让矿车避开烟道"
-    },
-    "node_type": "boss",
-    "boss_id": "mon_redsand_guard",
-    "monster_count": 1,
-    "monster_positions": [
+      },
+      "node_type": "boss",
+      "boss_id": "mon_redsand_guard",
+      "monster_count": 1,
+      "monster_positions": [
         [
-            480,
-            410
+          480,
+          410
         ]
-    ],
-    "monster_ids": [
+      ],
+      "monster_ids": [
         "mon_redsand_guard"
-    ],
-    "battle_rewards": {
+      ],
+      "battle_rewards": {
         "boss": {
-            "gold": 460,
-            "exp": 320
+          "gold": 460,
+          "exp": 320
         }
-    },
-    "monster_sprite": "res://image/third_act/mon_redsand_guard.png",
-    "monster_sprite_paths": {
+      },
+      "monster_sprite": "res://image/third_act/mon_redsand_guard.png",
+      "monster_sprite_paths": {
         "mon_redsand_guard": "res://image/third_act/mon_redsand_guard.png",
         "mon_frost_eye": "res://image/third_act/mon_frost_eye.svg"
-    },
-    "monster_height": 120,
-    "monster_level_offset": 3,
-    "monster_wander_only": true,
-    "monster_wander_radius": 18,
-    "monster_respawn_seconds": 86400,
-    "monster_contact_radius": 52,
-    "encounter_solo": true,
-    "entities": {
+      },
+      "monster_height": 120,
+      "monster_level_offset": 3,
+      "monster_wander_only": true,
+      "monster_wander_radius": 18,
+      "monster_respawn_seconds": 86400,
+      "monster_contact_radius": 52,
+      "encounter_solo": true,
+      "entities": {
         "act3_mine_record": {
-            "kind": "puzzle",
-            "art": "salt_marks",
-            "name": "翻车记录",
-            "at": [
-                480,
-                865
-            ],
-            "requires_story": "s24",
-            "flag": "act3_mine_clue",
-            "completion": "矿工记下：烟从东井灌进来；先让风轮向西排烟，再将矿车拨上北侧避烟线。"
+          "kind": "puzzle",
+          "art": "salt_marks",
+          "name": "翻车记录",
+          "at": [
+            480,
+            865
+          ],
+          "requires_story": "s24",
+          "flag": "act3_mine_clue",
+          "completion": "矿工记下：烟从东井灌进来；先让风轮向西排烟，再将矿车拨上北侧避烟线。"
         },
         "act3_mine_wheel": {
-            "kind": "puzzle_choice",
-            "art": "stele_anchor",
-            "name": "排烟风轮",
-            "at": [
-                340,
-                680
-            ],
-            "requires_story": "s24",
-            "requires_flags": [
-                "act3_mine_clue"
-            ],
-            "flag": "act3_mine_wind",
-            "clue": "翻车记录说烟由东井灌入，西侧仍有通风口。要把烟推出矿工撤离线。",
-            "choices": {
-                "west": "向西排烟",
-                "east": "向东送风"
-            },
-            "correct": "west",
-            "wrong": "东井的烟被推回撤离线，记录中的西侧风口才是出口；风轮可重调。",
-            "completion": "烟雾开始向西散去，北侧道岔的轨面显了出来。"
+          "kind": "puzzle_choice",
+          "art": "stele_anchor",
+          "name": "排烟风轮",
+          "at": [
+            340,
+            680
+          ],
+          "requires_story": "s24",
+          "requires_flags": [
+            "act3_mine_clue"
+          ],
+          "flag": "act3_mine_wind",
+          "clue": "翻车记录说烟由东井灌入，西侧仍有通风口。要把烟推出矿工撤离线。",
+          "choices": {
+            "west": "向西排烟",
+            "east": "向东送风"
+          },
+          "correct": "west",
+          "wrong": "东井的烟被推回撤离线，记录中的西侧风口才是出口；风轮可重调。",
+          "completion": "烟雾开始向西散去，北侧道岔的轨面显了出来。"
         },
         "act3_mine_switch": {
-            "kind": "puzzle_choice",
-            "art": "stele_anchor",
-            "name": "矿车道岔",
-            "at": [
-                480,
-                535
-            ],
-            "requires_story": "s24",
-            "requires_flags": [
-                "act3_mine_wind"
-            ],
-            "flag": "act3_mine_switch",
-            "clue": "南轨正穿过烟道，北轨通向矿工等候的安全侧；风轮已经把烟吹离道口。",
-            "choices": {
-                "north": "拨向北侧避烟线",
-                "south": "沿南轨冲过烟道"
-            },
-            "correct": "north",
-            "wrong": "南轨正对烟道，矿车会把矿工带回浓烟里；道岔仍可重拨。",
-            "completion": "矿车把等候的矿工带到安全停靠点，入口留下三顶工帽。械卫的过热声再也不被烟道盖住。"
+          "kind": "puzzle_choice",
+          "art": "stele_anchor",
+          "name": "矿车道岔",
+          "at": [
+            480,
+            535
+          ],
+          "requires_story": "s24",
+          "requires_flags": [
+            "act3_mine_wind"
+          ],
+          "flag": "act3_mine_switch",
+          "clue": "南轨正穿过烟道，北轨通向矿工等候的安全侧；风轮已经把烟吹离道口。",
+          "choices": {
+            "north": "拨向北侧避烟线",
+            "south": "沿南轨冲过烟道"
+          },
+          "correct": "north",
+          "wrong": "南轨正对烟道，矿车会把矿工带回浓烟里；道岔仍可重拨。",
+          "completion": "矿车把等候的矿工带到安全停靠点，入口留下三顶工帽。械卫的过热声再也不被烟道盖住。"
         },
         "act3_mine_second_wheel": {
-            "kind": "puzzle_choice",
-            "art": "mine_vent",
-            "name": "回风风轮",
-            "at": [
-                620,
-                590
-            ],
-            "requires_story": "s24",
-            "requires_flags": [
-                "act3_mine_rooms_v1",
-                "act3_mine_wind"
-            ],
-            "flag": "act3_mine_second_wind",
-            "clue": "西侧排风已开，但北轨仍有回烟。记录背面写着：南井引入清风，北井留给矿工。",
-            "choices": {
-                "south": "从南井引入清风",
-                "north": "从北井引入清风"
-            },
-            "correct": "south",
-            "wrong": "北井风压把烟送回等候区。先由南井引清风，再拨北轨，仍可重调。",
-            "completion": "两座风轮形成通风，烟从北侧轨面散去。矿工举灯示意可以发车。"
+          "kind": "puzzle_choice",
+          "art": "mine_vent",
+          "name": "回风风轮",
+          "at": [
+            620,
+            590
+          ],
+          "requires_story": "s24",
+          "requires_flags": [
+            "act3_mine_rooms_v1",
+            "act3_mine_wind"
+          ],
+          "flag": "act3_mine_second_wind",
+          "clue": "西侧排风已开，但北轨仍有回烟。记录背面写着：南井引入清风，北井留给矿工。",
+          "choices": {
+            "south": "从南井引入清风",
+            "north": "从北井引入清风"
+          },
+          "correct": "south",
+          "wrong": "北井风压把烟送回等候区。先由南井引清风，再拨北轨，仍可重调。",
+          "completion": "两座风轮形成通风，烟从北侧轨面散去。矿工举灯示意可以发车。"
         }
-    },
-    "dismount_on_entry": true,
-    "clear_rects": [
+      },
+      "dismount_on_entry": true,
+      "clear_rects": [
         [
-            360,
-            130,
-            240,
-            1045
+          360,
+          130,
+          240,
+          1045
         ],
         [
-            275,
-            500,
-            410,
-            280
+          275,
+          500,
+          410,
+          280
         ],
         [
-            300,
-            800,
-            360,
-            340
+          300,
+          800,
+          360,
+          340
         ],
         [
-            415,
-            865,
-            130,
-            120
+          415,
+          865,
+          130,
+          120
         ],
         [
-            415,
-            630,
-            130,
-            120
+          415,
+          630,
+          130,
+          120
         ],
         [
-            415,
-            280,
-            130,
-            120
+          415,
+          280,
+          130,
+          120
         ],
         [
-            535,
-            875,
-            130,
-            120
+          535,
+          875,
+          130,
+          120
         ],
         [
-            400,
-            790,
-            160,
-            150
+          400,
+          790,
+          160,
+          150
         ],
         [
-            260,
-            605,
-            160,
-            150
+          260,
+          605,
+          160,
+          150
         ],
         [
-            400,
-            460,
-            160,
-            150
+          400,
+          460,
+          160,
+          150
         ],
         [
-            540,
-            515,
-            160,
-            150
+          540,
+          515,
+          160,
+          150
         ]
-    ],
-    "rooms": {
+      ],
+      "rooms": {
         "record": {
-            "gate_at": [
-                480,
-                785
-            ],
-            "open_flag": "act3_mine_clue",
-            "hint": "先读翻车记录，核对东烟西风"
+          "gate_at": [
+            480,
+            785
+          ],
+          "open_flag": "act3_mine_clue",
+          "hint": "先读翻车记录，核对东烟西风"
         },
         "rescue": {
-            "gate_at": [
-                480,
-                475
-            ],
-            "open_flag": "act3_mine_switch",
-            "hint": "调稳双风轮，让矿车带人撤离"
+          "gate_at": [
+            480,
+            475
+          ],
+          "open_flag": "act3_mine_switch",
+          "hint": "调稳双风轮，让矿车带人撤离"
         }
-    }
-},
+      }
+    },
     "frost_pass": {
       "name": "冰隘",
       "city": false,
@@ -3822,9 +4048,9 @@
           ]
         }
       },
-    "optional_bosses": [
-      {
-        "id": "nameless_warden",
+      "optional_bosses": [
+        {
+          "id": "nameless_warden",
           "mon_id": "mon_nameless_warden",
           "at": [
             675,

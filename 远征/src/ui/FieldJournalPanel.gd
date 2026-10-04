@@ -41,6 +41,7 @@ func _ready() -> void:
 		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT: closed.emit())
 	content.add_child(back)
 	_refresh()
+	G.fit_mobile_page.call_deferred(self)
 
 func _paragraph(text: String, heading := false) -> void:
 	var label := G.text_label(text, G.FS_MD if heading else G.FS_SM, G.TEXT_DARK)
@@ -57,6 +58,11 @@ func _refresh() -> void:
 	var world: Dictionary = G.prog.get("main_world", {})
 	if _volume == 0:
 		var visited: Array = (world.get("visited_maps", []) as Array).duplicate()
+		for fish in TableCache.fishing_config().get("spots",[]):
+			if not (G.fishing_state().discoveries as Array).has(String(fish.item)):continue
+			_paragraph(String(fish.fish_name),true)
+			_paragraph("来源：亲自钓获，"+String(fish.name)+"。\n"+String(fish.environment_hint)+"\n鲜鱼可一换一制成伙伴粮。")
+			count+=1
 		var current := String(world.get("map_id", ""))
 		if not current.is_empty() and not visited.has(current): visited.append(current)
 		# 旧档有地图刷点记录的地点也是确实走过的来源。
