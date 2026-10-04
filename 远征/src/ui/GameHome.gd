@@ -11,7 +11,7 @@ const GrowthPanelScript := preload("res://src/ui/GrowthPanel.gd")
 const BagPanelScript := preload("res://src/ui/BagPanel.gd")
 const QuestPanelScript := preload("res://src/ui/QuestPanel.gd")
 const Journal := preload("res://src/ui/JournalUI.gd")
-const Finesse := preload("res://src/ui/UIFinesse.gd")
+const Field := preload("res://src/ui/FieldUI.gd")
 
 const SPRITE_SCALE := 1.35       # 营帐的角色预览不盖住导航与主世界入口
 const PED_Y := 374.0            # 营地展示人物的脚底位置
@@ -45,10 +45,13 @@ var _avatar_frame: Panel = null     # 头像外框（悬停亮边用）
 var _avatar_pic: TextureRect = null
 var _home_content_hidden := false
 var _gathering:Control=null
+var _wallet_row: HBoxContainer = null
+var _wallet_labels: Array = []
 
 
 func _set_home_content_visible(visible: bool) -> void:
 	_home_content_hidden = not visible
+	if visible: _refresh_wallet()
 	for child in get_children():
 		if child != _deploy and child != _worlds and child != _codex and child != _gacha \
 			and child != _exchange and child != _settings and child != _arena and child != _growth \
@@ -108,106 +111,64 @@ func _prompt_save_locked() -> void:
 
 # ---------- 背景（黄昏营地插画 + 轻压暗，保持暖调通透） ----------
 func _build_background() -> void:
-	G.page_background(self, 0.16, "res://image/background/home.png")
+	G.page_background(self, 0.30)
 
 
-func _build_profile(role: Dictionary) -> void:
-	# 头像：登录页选过的/上传过的都从 G 取；点它就能换（含上传本地图片）
-	_avatar_frame = Journal.AvatarMedallion.new()
-	_avatar_frame.position = Vector2(16, 18)
-	_avatar_frame.custom_minimum_size = Vector2(56, 56)
-	_avatar_frame.size = Vector2(56, 56)
+func _build_profile(_role: Dictionary) -> void:
+	_avatar_frame = Panel.new()
+	_avatar_frame.position = Vector2(24, 24)
+	_avatar_frame.size = Vector2(48, 48)
 	var fs := StyleBoxFlat.new()
-	fs.bg_color = Color(0.10, 0.07, 0.04, 0.55)
-	# 金边方框：2px 微倒角（切角语言），弃用大圆角
-	fs.set_corner_radius_all(2)
-	fs.set_border_width_all(2)
-	fs.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.60)
-	fs.bg_color = Color("29423d")
-	(_avatar_frame as Journal.AvatarMedallion).slot_style = fs
+	fs.bg_color = G.FIELD_DARK
+	fs.border_color = G.FIELD_COPPER
+	fs.set_border_width_all(1)
 	_avatar_frame.add_theme_stylebox_override("panel", fs)
-	_avatar_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(_avatar_frame)
-
-	_avatar_pic = TextureRect.new()
-	_avatar_pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	_avatar_pic.texture = G.avatar_texture()
-	_avatar_pic.custom_minimum_size = Vector2(42, 42)
-	_avatar_pic.position = Vector2(7, 7)
-	_avatar_pic.size = Vector2(42, 42)
-	_avatar_pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	_avatar_pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_avatar_frame.add_child(_avatar_pic)
-	if _avatar_pic.texture == null:
-		var nm := String(role.get("name", "旅"))
-		var d := _disc_panel(50, nm.substr(0, 1))
-		d.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		_avatar_frame.add_child(d)
-
-	# 整块头像都是热区：悬停亮边、点击开更换头像浮层（§26 状态齐全，不做无反馈的装饰图）
-	var hit := Control.new()
-	hit.position = Vector2(16, 18)
-	hit.custom_minimum_size = Vector2(56, 56)
-	hit.size = Vector2(56, 56)
-	hit.mouse_filter = Control.MOUSE_FILTER_STOP
-	hit.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	hit.tooltip_text = "点击更换头像"
-	hit.mouse_entered.connect(func():
-		fs.bg_color = Color("3c5a4d"))
-	hit.mouse_exited.connect(func():
-		fs.bg_color = Color("29423d"))
-	hit.gui_input.connect(func(e: InputEvent):
+	_avatar_frame.mouse_filter = Control.MOUSE_FILTER_STOP
+	_avatar_frame.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	_avatar_frame.tooltip_text = "更换头像"
+	_avatar_frame.mouse_entered.connect(func(): fs.border_color = G.FIELD_PAPER_LIGHT)
+	_avatar_frame.mouse_exited.connect(func(): fs.border_color = G.FIELD_COPPER)
+	_avatar_frame.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_open_avatar_panel())
-	add_child(hit)
-
-	var name_txt: String = G.display_name()
-	var nl := G.serif_label(name_txt, G.FS_MD + 1, Color("dcf2d3"), true)
-	nl.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	nl.position = Vector2(82, 20)
-	nl.custom_minimum_size = Vector2(160, 0)
-	add_child(nl)
-
+	add_child(_avatar_frame)
+	_avatar_pic = TextureRect.new()
+	_avatar_pic.texture = G.avatar_texture()
+	_avatar_pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_avatar_pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	_avatar_pic.position = Vector2(5, 5)
+	_avatar_pic.size = Vector2(38, 38)
+	_avatar_pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_avatar_frame.add_child(_avatar_pic)
+	var name_l := Field.label(G.display_name(), Vector2(84, 20), Vector2(248, 30), 20, G.FIELD_PAPER_LIGHT, true)
+	name_l.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	add_child(name_l)
 	var lv := int(G.prog.get("level", 1))
-	var cur := int(G.prog.get("exp", 0))
-	var need := G.exp_to_next(lv)
-	var lv_l := G.gold_label("LV %d" % lv, G.FS_MD, true, Color("efe6cd"), true)
-	lv_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	lv_l.position = Vector2(82, 52)
-	lv_l.custom_minimum_size = Vector2(52, 0)
-	add_child(lv_l)
-	_add_exp_bar(Vector2(136, 58), 118.0, cur, need)
-
+	add_child(Field.label("LV %02d" % lv, Vector2(84, 48), Vector2(64, 24), 14, G.FIELD_COPPER, true))
+	_add_exp_bar(Vector2(150, 58), 116, int(G.prog.get("exp",0)), G.exp_to_next(lv))
+	var settings := Field.action("", Vector2(404,24), Vector2(52,48))
+	settings.quiet = true
+	settings.tooltip_text = "设置"
+	var icon := G.ui_icon("settings", Vector2(22,22))
+	icon.position = Vector2(15,13)
+	settings.add_child(icon)
+	settings.activated.connect(func(): _open_settings(_click_ev()))
+	add_child(settings)
 
 ## 顶部经验条（金色圆角，满级时按满格画）
 func _add_exp_bar(at: Vector2, w: float, cur: int, need: int) -> void:
 	var ratio := 1.0 if need <= 0 else clampf(float(cur) / float(need), 0.0, 1.0)
-	var track := Control.new()
+	var track := ColorRect.new()
+	track.color = G.FIELD_DARK
 	track.position = at
-	track.custom_minimum_size = Vector2(w, 12)
-	track.size = Vector2(w, 12)
-	track.clip_contents = true
+	track.size = Vector2(w, 4)
 	track.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(track)
-	var ts := StyleBoxFlat.new()
-	ts.bg_color = Color("4a3a24")
-	track.add_theme_stylebox_override("panel", ts)   # 只为了复用圆角画风，实际用 Panel 画
-	var bg := Panel.new()
-	bg.custom_minimum_size = Vector2(w, 12)
-	bg.size = Vector2(w, 12)
-	bg.add_theme_stylebox_override("panel", ts)
-	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	track.add_child(bg)
-	var fs := StyleBoxFlat.new()
-	fs.bg_color = Color("e8b84a")
-	var fg := Panel.new()
-	fg.position = Vector2(1, 1)
-	fg.custom_minimum_size = Vector2(maxf(0.0, (w - 2.0) * ratio), 10)
-	fg.size = Vector2(maxf(0.0, (w - 2.0) * ratio), 10)
-	fg.add_theme_stylebox_override("panel", fs)
-	fg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	track.add_child(fg)
-
+	var fill := ColorRect.new()
+	fill.color = G.FIELD_COPPER
+	fill.size = Vector2(w * ratio, 4)
+	fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	track.add_child(fill)
 
 ## 金边圆牌（头像缺素材时的回退）
 func _disc_panel(px: float, glyph: String) -> Control:
@@ -226,96 +187,60 @@ func _disc_panel(px: float, glyph: String) -> Control:
 
 # ---------- 顶部：徽标 + 账号小字 + 重建入口 ----------
 func _build_top(role: Dictionary) -> void:
-	# 营帐是整备页，实际探索主界面已经在可走的昭元边城。
-	var b := G.banner_box("行旅营帐", 230, 50)
-	b.set_anchors_preset(Control.PRESET_CENTER_TOP)
-	b.position = Vector2(-115, 86)
-	add_child(b)
-
-	# 主线目标与今日委托收进「任务」窗口，首页只留一个木质入口；
-	# 目标文字直接压在营地背景上既难读也显得杂（这里原来就是那行主线小字）。
-	var quests_btn := _wood_entry("任务", "", _QUEST_SIGN, "主线与今日委托")
-	quests_btn.set_meta("home_entry", true)
-	quests_btn.position = Vector2((VIEW_W - 320.0) * 0.5, 142)
-	quests_btn.tooltip_text = "查看主线目标与今日委托"
-	if _quest_claimable():
-		G.badge_dot(quests_btn, Vector2(301, 7))
-	quests_btn.gui_input.connect(func(e: InputEvent):
+	add_child(Field.surface(Vector2(24,86),Vector2(432,44)))
+	# 固定四等份宽度；大额缩写，完整数字留在提示中，永不挤出屏幕。
+	var wallet_row := HBoxContainer.new()
+	_wallet_row = wallet_row
+	wallet_row.position = Vector2(32,86)
+	wallet_row.size = Vector2(416,44)
+	wallet_row.add_theme_constant_override("separation", 0)
+	wallet_row.mouse_filter = Control.MOUSE_FILTER_STOP
+	wallet_row.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	wallet_row.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_open_quests())
+			G.show_info_popup(wallet_row, "资源说明", [wallet_row.tooltip_text] + G.wallet_info_lines()))
+	add_child(wallet_row)
+	for data in [["金币","gold","cur_gold"],["远征币","expedition","cur_expedition"],
+			["魂晶","soul","cur_soul"],["荣誉","honor","cur_honor"]]:
+		var icon := TextureRect.new()
+		icon.texture = G.res_tex(data[2])
+		icon.custom_minimum_size = Vector2(18,18)
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		wallet_row.add_child(icon)
+		var key := Field.label(data[0], Vector2.ZERO,Vector2.ZERO)
+		key.visible = false
+		wallet_row.add_child(key)
+		var n := int(G.wallet.get(data[1],0))
+		var words := str(n) if n < 1000000 else ("%.1f万" % (n / 10000.0) if n < 100000000 else "%.1f亿" % (n / 100000000.0))
+		var amount := Field.label(words, Vector2.ZERO,Vector2(86,44),14,G.FIELD_PAPER_LIGHT,true)
+		amount.tooltip_text = "%s：%d" % [data[0],n]
+		amount.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		wallet_row.add_child(amount)
+		_wallet_labels.append({"label":amount,"key":data[1],"name":data[0]})
+	_refresh_wallet()
+	add_child(Field.label("行旅营帐",Vector2(28,156),Vector2(180,36),24,G.FIELD_PAPER_LIGHT,false,true))
+	add_child(Field.label("%s · %s" % [role.get("name",""),role.get("job","")],Vector2(30,194),Vector2(175,24),14,G.FIELD_COPPER))
+	var quests_btn := Field.action("",Vector2(24,238),Vector2(140,64))
+	quests_btn.caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	quests_btn.caption.text = "任务"
+	quests_btn.caption.size = Vector2(100,34)
+	quests_btn.add_child(Field.label("主线 / 今日委托",Vector2(16,34),Vector2(115,24),14,G.FIELD_COPPER))
+	quests_btn.activated.connect(_open_quests)
+	if _quest_claimable(): G.badge_dot(quests_btn,Vector2(126,9))
 	add_child(quests_btn)
-	G.reveal_control(quests_btn, 0.05)
 
-	# 账号小字与「重新创建角色」撤出顶栏：一个和头像/名字挤在一起，一个压住货币条。
-	# 账号不再常驻主页（游客没信息量），重建入口挪进「设置」面板。
 
-	# 资源栏统一底框（§15）：四币共用一条横带、同一套 [图标][数值] 结构，
-	# 而不是几个裸数字各自飘在背景上——资源栏最能体现"是不是真产品"
-	var strip := G.InsetBand.new()
-	strip.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	# 内凹条带（切角 + 顶暗底亮 + 1px 金描边），替代圆角9的"药丸横带"
-	strip.set_surface(Color("203437", 0.94), Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.22))
-	add_child(strip)
-
-	# 钱包四币（金/远征币/魂石/荣誉——存档累计，远征结算入账）
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 4)   # 图标与数字贴紧，币种之间靠间隔件分开
-	row.position = Vector2(206.0, 30)   # 顶部横带：四币（图标+数字）靠右一行
-	# 点货币条 → 讲清四种币各是什么、从哪来
-	row.mouse_filter = Control.MOUSE_FILTER_STOP
-	row.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	row.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			G.show_info_popup(row, "资源说明", G.wallet_info_lines()))
-	add_child(row)
-	var wallet_meta := [
-		["金币", "f0c060", "gold", "cur_gold"], ["远征币", "7ac0c8", "expedition", "cur_expedition"],
-		["魂晶", "b08ad0", "soul", "cur_soul"], ["荣誉", "d07a5a", "honor", "cur_honor"],
-	]
-	for i in wallet_meta.size():
-		var meta: Array = wallet_meta[i]
-		if i > 0:
-			var gap := Control.new()
-			gap.custom_minimum_size = Vector2(8, 0)
-			gap.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			row.add_child(gap)
-		# 货币图标（无素材回退小圆点色标）
-		var icon_tex: Texture2D = G.res_tex(String(meta[3]))
-		if icon_tex != null:
-			var icon := TextureRect.new()
-			icon.texture = icon_tex
-			icon.custom_minimum_size = Vector2(G.ICON_WALLET, G.ICON_WALLET)
-			icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-			icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-			icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-			icon.mouse_filter = Control.MOUSE_FILTER_IGNORE   # 别把货币条的点击吃掉
-			row.add_child(icon)
-		else:
-			var dot := Panel.new()
-			dot.custom_minimum_size = Vector2(7, 7)
-			dot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-			var dot_sb := StyleBoxFlat.new()
-			dot_sb.bg_color = Color(String(meta[1]))
-			dot_sb.set_corner_radius_all(4)
-			dot.add_theme_stylebox_override("panel", dot_sb)
-			dot.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			row.add_child(dot)
-		var name_l := G.gold_label(String(meta[0]), G.FS_XS, false, G.TEXT_MUTED, false)
-		name_l.tooltip_text = String(meta[0])
-		name_l.visible = false   # 顶栏只留 图标+数字（参考手游主页的货币条），名字进悬停提示
-		row.add_child(name_l)
-		var num_l := G.gold_label(str(int(G.wallet.get(String(meta[2]), 0))),
-			G.FS_XS, true, Color(String(meta[1])), false)
-		num_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		row.add_child(num_l)
-
-	# 底框按资源栏实际宽度贴合（数字长度会变，不能写死宽度）
-	var ms := row.get_combined_minimum_size()
-	strip.position = row.position - Vector2(9.0, 5.0)
-	strip.size = ms + Vector2(18.0, 10.0)
-
-	# 召唤 / 养成 / 兑换移到右侧竖列（见 _build_entries），这里只留钱包与玩家条
-
+func _refresh_wallet() -> void:
+	if _wallet_row == null: return
+	var lines: Array[String] = []
+	for entry in _wallet_labels:
+		var n := int(G.wallet.get(entry.key,0))
+		entry.label.text = str(n) if n < 1000000 else ("%.1f万" % (n / 10000.0) if n < 100000000 else "%.1f亿" % (n / 100000000.0))
+		lines.append("%s：%d" % [entry.name,n])
+	_wallet_row.tooltip_text = "\n".join(lines)
 
 # ---------- 角色展示台（金色圆台 + 光圈 + 待机动画） ----------
 func _build_stage(role: Dictionary) -> void:
@@ -350,16 +275,13 @@ func _build_stage(role: Dictionary) -> void:
 
 
 func _layout_tall_home() -> void:
-	var extra := maxf(0.0, get_viewport_rect().size.y - 800.0)
+	var extra := maxf(0.0, get_viewport_rect().size.y - VIEW_H)
 	if extra <= 0: return
-	_anim.position.y += extra * 0.5
+	_anim.position.y += extra * .45
 	for child in get_children():
-		if child is Node2D and child.get_meta("actor_shadow", false):
-			child.position.y += extra * 0.5
-		if child is Control and child.get_meta("home_entry", false):
-			child.position.y += extra * 0.5
-	var return_button := get_node("ReturnToWorld") as Control
-	return_button.position.y += extra
+		if child is Node2D and child.get_meta("actor_shadow",false): child.position.y += extra * .45
+		if child is Control and child.has_meta("home_shift"):
+			child.position.y += extra * float(child.get_meta("home_shift"))
 
 func _frames(role_id: String) -> SpriteFrames:
 	var tex: Texture2D = load(G.role_dir(role_id) + _role_name(role_id) + "_idle.png")
@@ -391,173 +313,74 @@ func _role_name(id: String) -> String:
 	return id
 
 
-## 右侧竖列：活动与系统入口（出征已搬进主城）
-const RAIL_R := [
-	["世界", "界", "world"], ["竞技", "武", "swords"],
-	["图鉴", "图", "book"], ["养成", "养", "growth"],
-	["背包", "包", "bag"],
-	["兑换", "兑", "exchange"], ["召唤", "召", "summon"],
-	["设置", "设", "settings"],
-]
-
+# 四件行旅器物为主导航，活动在下方独立排列。
 func _build_entries() -> void:
-	if G.side_status_of("a4_rel_nighttable")==QuestService.SIDE_DONE:
-		var gathering:=G.gold_button("归路小聚",208,44,G.FS_MD)
-		gathering.position=Vector2(24,588)
-		gathering.set_meta("home_entry",true)
-		gathering.gui_input.connect(func(e:InputEvent):
-			if e is InputEventMouseButton and e.pressed and e.button_index==MOUSE_BUTTON_LEFT:_open_gathering())
-		add_child(gathering)
-	# 右侧竖列：活动与系统入口（出征已搬进主城，主页只留浏览与设置）
-	for i in RAIL_R.size():
-		var b := _round_entry(String(RAIL_R[i][0]), String(RAIL_R[i][1]), String(RAIL_R[i][2]))
-		b.set_meta("home_entry", true)
-		b.position = Vector2(24 + (i % 2) * 220, 388 if i < 2 else 496 + ((i-2) / 2) * 64)
+	var shelf := Field.surface(Vector2(24,414),Vector2(432,118))
+	shelf.set_meta("home_shift",.6)
+	add_child(shelf)
+	var section := Field.label("行前整备",Vector2(28,383),Vector2(250,24),14,G.FIELD_PAPER_LIGHT)
+	section.set_meta("home_shift",.6)
+	add_child(section)
+	var entries := [["世界","world"],["背包","bag"],["养成","growth"],["图鉴","book"]]
+	for i in entries.size():
+		var b := Field.action(entries[i][0],Vector2(24+i*108,415),Vector2(108,116))
+		b.quiet = true
+		b.set_meta("home_shift",.6)
+		b.caption.position = Vector2(0,76)
+		b.caption.size = Vector2(108,32)
+		b.caption.set_meta("fixed_y",76)
+		var prop := Field.Prop.new()
+		prop.key = entries[i][1]
+		prop.position = Vector2(26,10)
+		prop.size = Vector2(56,56)
+		b.add_child(prop)
+		var words: String = entries[i][0]
+		b.activated.connect(func(): _dispatch_entry(words))
 		add_child(b)
-		G.reveal_control(b, 0.08 + i * 0.025)
-
-	# 明确的主要动作；不再用底部无边界的整屏隐形热区。
-	var state: Variant = G.prog.get("main_world", {})
-	var map_id := String((state as Dictionary).get("map_id", "lorin_wilds")) \
-		if state is Dictionary else "lorin_wilds"
-	var map_name := String(TableCache.main_world_map(map_id).get("name", "昭元边城"))
-	var back_to_world := G.gold_button("继续旅程", 412, 56, 24)
-	G.button_icon(back_to_world, "world")
-	back_to_world.name = "ReturnToWorld"
-	back_to_world.position = Vector2(34, 709)
-	back_to_world.tooltip_text = "返回主世界 · %s" % map_name
-	back_to_world.gui_input.connect(_open_city)
-	add_child(back_to_world)
-
-
-## 任务卷宗的像素符号（9×9，2px/格）：与标题页按钮的像素符号同一语言。
-const _QUEST_SIGN := [
-	"111111111",
-	"100000001",
-	"101111101",
-	"100000001",
-	"101111101",
-	"100000001",
-	"101111101",
-	"100000001",
-	"111111111",
-]
-
-
-## 木质入口构造（八宫格与「任务」宽钮共用）：木纹底 + 图标槽/像素符号 + 铆钉。
-func _wood_entry(label: String, icon_name: String, sign: Array = [],
-		subtitle := "", glyph := "") -> Control:
-	var root := _WoodEntry.new()
-	root.custom_minimum_size = Vector2(320, 44) if subtitle != "" else Vector2(208, 62)
-	root.size = root.custom_minimum_size
-	root.setup(label, icon_name, sign, subtitle, glyph)
-	G._bind_press_feedback(root)
-	return root
-
-
-## 八宫格入口：图标 + 木牌 + 角标（glyph 是图标缺素材时的字母回退）
-func _round_entry(label: String, glyph: String, icon_name: String) -> Control:
-	var root := _wood_entry(label, icon_name, [], "", glyph)
-	if _entry_has_badge(label): G.badge_dot(root, Vector2(187, 10))
-	root.gui_input.connect(func(event: InputEvent):
-		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-			_dispatch_entry(label))
-	return root
+	var activities := Field.label("营地事务",Vector2(28,555),Vector2(250,24),14,G.FIELD_COPPER)
+	activities.set_meta("home_shift",.75)
+	add_child(activities)
+	for i in 3:
+		var e: Array = [["竞技","swords"],["召唤","summon"],["兑换","exchange"]][i]
+		var b := Field.action(e[0],Vector2(24+i*148,587),Vector2(136,52))
+		b.set_meta("home_shift",.75)
+		var icon := G.ui_icon(e[1],Vector2(24,24))
+		icon.position = Vector2(14,14)
+		b.add_child(icon)
+		b.caption.position.x = 42
+		b.caption.size.x = 78
+		var words: String = e[0]
+		if _entry_has_badge(words): G.badge_dot(b,Vector2(122,8))
+		b.activated.connect(func(): _dispatch_entry(words))
+		add_child(b)
+	if G.side_status_of("a4_rel_nighttable") == QuestService.SIDE_DONE:
+		var gathering := Field.action("归路小聚",Vector2(24,644),Vector2(432,44))
+		gathering.quiet = true
+		gathering.set_meta("home_shift",.85)
+		gathering.activated.connect(_open_gathering)
+		add_child(gathering)
+	var state: Dictionary = G.prog.get("main_world",{})
+	var map_name := String(TableCache.main_world_map(String(state.get("map_id","lorin_wilds"))).get("name","昭元边城"))
+	var travel := Field.action("继续旅程",Vector2(24,704),Vector2(432,60),true)
+	travel.name = "ReturnToWorld"
+	travel.set_meta("home_shift",1.0)
+	travel.tooltip_text = "返回主世界 · " + map_name
+	travel.caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	travel.caption.position.x = 24
+	travel.caption.size.x = 160
+	travel.caption.add_theme_font_override("font",G.font_serif)
+	travel.caption.add_theme_font_size_override("font_size",22)
+	var destination := Field.label(map_name,Vector2(226,0),Vector2(165,60),14,G.FIELD_PAPER_LIGHT)
+	destination.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	destination.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	travel.add_child(destination)
+	var arrow := G.ui_icon("forward",Vector2(16,16))
+	arrow.position = Vector2(402,22)
+	travel.add_child(arrow)
+	travel.activated.connect(func(): _open_city(_click_ev()))
+	add_child(travel)
 
 
-## 木质功能入口：此前是"平面蓝绿圆角矩形 + 1px 细金框"，八块一模一样的
-## 色块排成阵列正是"AI 生成界面"的典型长相；换成与标题页同料的木牌——
-## 有纹理、有厚度、图标嵌在内凹的槽里，四角钉上铆钉。
-class _WoodEntry extends Panel:
-	var _label: Label
-	var _sub: Label
-	var _icon: TextureRect
-	var _key := "journal"
-	var _feature := false
-	var _hover := 0.0
-	var _motion: Tween
-	var _emblem: Finesse.Emblem
-
-	func setup(text: String, icon_name: String, sign: Array = [], subtitle := "", glyph := "") -> void:
-		_key = {"世界":"atlas","竞技":"arena","图鉴":"arcane","养成":"garden","背包":"forge","兑换":"market","召唤":"arcane","设置":"quiet"}.get(text,"journal")
-		set_meta("visual_family",_key)
-		_feature = text in ["世界","竞技"]
-		custom_minimum_size.y = 96 if _feature else (44 if subtitle != "" else 54)
-		size = custom_minimum_size
-		add_theme_stylebox_override("panel",StyleBoxEmpty.new())
-		mouse_filter = Control.MOUSE_FILTER_STOP
-		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-		var c := G.Visuals.colors(_key)
-		var ink: Color = c.light if _feature or subtitle != "" else c.ink
-		_label = G.serif_label(text,28,ink)
-		_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		add_child(_label)
-		var details := {"世界":"行路图志","竞技":"演武切磋"}
-		if _feature or subtitle != "":
-			_sub = G.gold_label(details.get(text,subtitle),14,false,Color(c.light,0.78),false)
-			_sub.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			add_child(_sub)
-		_emblem = Finesse.Emblem.new()
-		_emblem.key = "book" if icon_name == "" else icon_name
-		_emblem.family = _key
-		_emblem.size = Vector2(62,62) if _feature else Vector2(42,42)
-		add_child(_emblem)
-		_icon = G.ui_icon("book" if icon_name == "" else icon_name,Vector2(38,38) if _feature else Vector2(28,28))
-		_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		_emblem.add_child(_icon)
-		item_rect_changed.connect(_layout)
-		mouse_entered.connect(func(): _animate_hover(1.0))
-		mouse_exited.connect(func(): _animate_hover(0.0))
-		_layout()
-
-	func _animate_hover(to: float) -> void:
-		if _motion != null and _motion.is_valid(): _motion.kill()
-		_motion = create_tween()
-		_motion.tween_method(func(v: float):
-			_hover = v
-			_emblem.position.y = roundf((size.y-_emblem.size.y)*0.5-v*2)
-			_emblem.lift = v
-			_emblem.queue_redraw()
-			queue_redraw(),_hover,to,0.18).set_trans(Tween.TRANS_SINE)
-
-	func _layout() -> void:
-		if _label == null: return
-		_emblem.position = Vector2(12,(size.y-_emblem.size.y)*0.5)
-		_icon.position = (_emblem.size-_icon.size)*.5
-		_label.position = Vector2(84 if _feature else 64,18 if _feature else (size.y-_label.get_combined_minimum_size().y)*0.5)
-		if _sub != null:
-			_sub.position = Vector2(84,54) if _feature else Vector2(size.x-_sub.get_combined_minimum_size().x-16,13)
-		queue_redraw()
-
-	func _draw() -> void:
-		if size.x < 8: return
-		var c := G.Visuals.colors(_key)
-		var dark := _feature or _sub != null
-		var fill: Color = c.dark if dark else c.paper
-		fill = fill.lightened(_hover*0.045)
-		var surface := StyleBoxFlat.new()
-		surface.bg_color = fill
-		surface.shadow_color = Color("0b1015",.3)
-		surface.shadow_size = 2
-		surface.shadow_offset = Vector2(0,3)
-		surface.set_corner_radius_all(4 if dark else 9)
-		surface.border_color = Color(c.accent,.5)
-		surface.border_width_top = 1
-		surface.border_width_bottom = 1
-		draw_style_box(surface,Rect2(Vector2.ZERO,size))
-		if _feature:
-			# 世界的地理刻度与竞技的悬旗，各有自己的轮廓。
-			if _key == "atlas":
-				for i in 5:
-					draw_line(Vector2(size.x-12-i*7,8),Vector2(size.x-12-i*7,12 if i%2 else 15),Color(c.accent,.5))
-			else:
-				draw_colored_polygon(PackedVector2Array([Vector2(size.x-22,0),Vector2(size.x-10,0),Vector2(size.x-10,30),Vector2(size.x-16,25),Vector2(size.x-22,30)]),Color(c.accent,.4))
-		else:
-			draw_line(Vector2(62,size.y-7),Vector2(size.x-16,size.y-7),Color(c.accent,.28))
-		# 小箭头在悬停时显现，图标保持独立造型。
-		if _hover > 0:
-			var q := Vector2(size.x-14,size.y*.5)
-			draw_polyline(PackedVector2Array([q+Vector2(-3,-4),q+Vector2(1,0),q+Vector2(-3,4)]),Color(c.accent,_hover),1)
 
 
 func _entry_has_badge(label: String) -> bool:

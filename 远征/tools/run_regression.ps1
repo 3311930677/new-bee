@@ -34,7 +34,7 @@ param(
   [string]$List = "",
   [int]$QuitAfter = 6000,
   [int]$TimeoutSec = 240,
-    [int]$Expected = 69,
+    [int]$Expected = 70,
   [string]$LogDir = "",
   [switch]$AllowAnyVersion
 )
@@ -106,6 +106,7 @@ $cases = @(
 	@{ N = "VerifySave";        K = "scene";  T = "SAVE_OK" },
 	@{ N = "VerifyUiLayout";    K = "scene";  T = "UI_LAYOUT_OK" },
 	@{ N = "VerifyVisualRefresh";K = "scene";  T = "VISUAL_REFRESH_OK" },
+	@{ N = "VerifyFieldUI";     K = "scene";  T = "FIELD_UI_OK" },
 	@{ N = "VerifySweep";       K = "scene";  T = "SWEEP_OK" },
 	@{ N = "VerifyCity";        K = "scene";  T = "CITY_OK" },
 	@{ N = "VerifyGameHome";    K = "scene";  T = "GAME_HOME_OK" },

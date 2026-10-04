@@ -18,6 +18,20 @@ const PAGE_BACKGROUND := "res://image/background/courtyard_visual_v2.png"
 var _vignette_tex: GradientTexture2D = null
 const TEXT_LIGHT := Color("f5ead0")      # 深底上的浅字
 
+# 边城行旅账册：底材与信息语义分开，三个整备页面共用。
+const FIELD_DARK := Color("222b2d")
+const FIELD_DEEP := Color("171e20")
+const FIELD_PAPER := Color("e9e1cd")
+const FIELD_PAPER_LIGHT := Color("f4eddb")
+const FIELD_INK := Color("313b3a")
+const FIELD_MUTED := Color("646b60")
+const FIELD_LINE := Color("b6ae96")
+const FIELD_COPPER := Color("b79867")
+const FIELD_RED := Color("87554b")
+const FIELD_LEATHER := Color("785b45")
+const FIELD_ROLE := {"zs": Color("a76353"), "ck": Color("6e866b"),
+	"fs": Color("7093a3"), "fz": Color("9184a5")}
+
 # ---------- 语义色（按「含义」取色，不按「好看」取色） ----------
 # 凡是表达「获得/代价/提示/稀有」语义的地方一律引用这里，禁止再写散落的字面色值。
 const C_GAIN := Color("7ddb6a")          # 获得 / 治疗 / 增益（绿）

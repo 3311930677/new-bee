@@ -1,260 +1,231 @@
-# SkillBookPanel.gd —— 技能书（当前角色 5 技能，每级 k+5%，上限 10 级，耗远征币）
-# 一屏一项（皇室战争式大卡聚焦）：PageDeck 翻页，每张卡大留白 + 大号等级珠 + 大升级按钮，
-# 不再把 5 张带等级珠的卡片平铺在一屏。
+# 技能研习：具名导航、招式图示和同一行的升级收益。
 class_name SkillBookPanel
 extends Control
 
 signal closed
-
-const CONTENT_W := 408.0
-const DECK_H := 400.0
+const CONTENT_W := 376.0
+const DECK_H := 456.0
 const PageDeckScript := preload("res://src/ui/PageDeck.gd")
-
+const Field := preload("res://src/ui/FieldUI.gd")
 var _deck: Control = null
 var _expedition_l: Label = null
 var _toast: Label = null
 var _content: Control = null
+var _tabs: Array = []
 var _sids: Array = []
-
 
 func _ready() -> void:
 	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
+	_sids = G.get_role(G.selected_role).get("skills",[])
 	_build()
 
-
 func _build() -> void:
-	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），不再各写一块纯灰
-	G.veil(self, 0.78)
-
-	var banner := G.banner_box("技 能 书", 240, 50)
-	banner.position = Vector2(120, 30)
-	add_child(banner)
-
-	var panel := G.parchment_box(440, 600, 16.0)
-	panel.position = Vector2(20, 96)
-	add_child(panel)
-	var content := Control.new()
-	content.set_anchors_preset(Control.PRESET_FULL_RECT)
-	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	panel.add_child(content)
-	_content = content
-
-	var role := G.get_role(G.selected_role)
-	_expedition_l = G.gold_label("", G.FS_SM, true, Color("4a7a8a"), false)
-	_expedition_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	_expedition_l.position = Vector2(0, 0)
-	content.add_child(_expedition_l)
-	# 升级规则收进 ⓘ 弹层，主面板不再铺说明文字
-	var info := G.info_button("技能书规则", [
-		"每个技能最高 %d 级，每升一级伤害/效果系数 +%d％。" % [
-			G.skill_max_level(),
-			roundi(float(TableCache.skillbook_config().get("k_per_level", 0.05)) * 100.0)],
-		"升级消耗远征币，等级越高费用越贵。",
-		"远征币由远征战斗结算产出，战败也有份。",
-	], 24.0)
-	info.position = Vector2(CONTENT_W - 28.0, -2)
-	content.add_child(info)
-
-	# 一屏一项大卡翻页（技能 id 列表由 _refresh 填）
-	_deck = PageDeckScript.new(CONTENT_W, DECK_H, 30.0)
-	_deck.position = Vector2(0, 40)
-	_deck.key_mode = "both"
-	content.add_child(_deck)
-
-	var close_btn := G.gold_button("返 回", G.BTN_S.x, G.BTN_S.y, G.FS_SM)
-	close_btn.position = Vector2((CONTENT_W - G.BTN_S.x) * 0.5, 466)
-	close_btn.gui_input.connect(func(ev: InputEvent):
-		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
-			closed.emit())
-	content.add_child(close_btn)
-
+	G.veil(self,.90)
+	Field.heading(self,"技能书","招式研习 / " + String(G.get_role(G.selected_role).get("name","")))
+	var paper := Field.surface(Vector2(24,128),Vector2(432,572),true)
+	add_child(paper)
+	_content = Control.new()
+	_content.position = Vector2(28,0)
+	_content.size = Vector2(CONTENT_W,572)
+	_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	paper.add_child(_content)
+	_expedition_l = Field.label("",Vector2(0,14),Vector2(318,28),16,G.FIELD_INK,true)
+	_content.add_child(_expedition_l)
+	var info := Field.action("?",Vector2(332,4),Vector2(44,44),false,true)
+	info.quiet = true
+	info.tooltip_text = "技能书规则"
+	info.activated.connect(func(): G.show_info_popup(info,"技能书规则",[
+		"每门招式最高 %d 级；每级增幅作用于基础伤害系数。" % G.skill_max_level(),
+		"研习消耗远征币，后续等级所需远征币更多。",
+		"效果型技能的持续时间、效果与冷却不随研习等级改变。" ]))
+	_content.add_child(info)
+	for i in _sids.size():
+		var width := CONTENT_W / maxf(1,_sids.size())
+		var words := String(TableCache.get_skill(String(_sids[i])).get("name",_sids[i]))
+		var tab := Field.action(words,Vector2(i*width,52),Vector2(width,44),false,true)
+		tab.quiet = true
+		tab.accent = G.FIELD_ROLE.get(G.selected_role,G.FIELD_COPPER)
+		tab.caption.position.x = 0
+		tab.caption.size.x = width
+		tab.caption.add_theme_font_size_override("font_size",16)
+		var index := i
+		tab.activated.connect(func(): _deck.go(index,true))
+		_content.add_child(tab)
+		_tabs.append(tab)
+	var back := Field.action("返回",Vector2(24,720),Vector2(432,48))
+	back.tooltip_text = "返回养成"
+	back.activated.connect(func(): closed.emit())
+	add_child(back)
 	_refresh()
 
-
-## 重建卡片。preserve=true 时保留当前页（升级一个技能后不该被弹回第 1 页——问题 #3）；
-## preserve=false（首次打开）时落在第一个未满级技能上。
 func _refresh(preserve := false) -> void:
-	_expedition_l.text = "远征币 %d · 「%s」" % [
-		int(G.wallet.get("expedition", 0)),
-		String(G.get_role(G.selected_role).get("name", ""))]
-	var role := G.get_role(G.selected_role)
+	_expedition_l.text = "远征币  %d" % int(G.wallet.get("expedition",0))
 	var prev := row_want(preserve)
-	_sids = role.get("skills", [])
-	# 重建 PageDeck：技能升级会改变等级珠与按钮文案，整块重建（技能少，开销可忽略）
 	if _deck != null:
+		_content.remove_child(_deck)
 		_deck.queue_free()
-	_deck = PageDeckScript.new(CONTENT_W, DECK_H, 30.0)
-	_deck.position = Vector2(0, 40)
+	_deck = PageDeckScript.new(CONTENT_W,DECK_H,0.0)
+	_deck.position = Vector2(0,108)
 	_deck.key_mode = "both"
-	_deck.set_factory(_sids.size(), func(i: int) -> Control:
-		return _skill_page(String(_sids[i])), Vector2(CONTENT_W, DECK_H))
+	_deck.navigation_visible = false
+	_deck.set_factory(_sids.size(),func(i: int) -> Control:
+		return _skill_page(String(_sids[i])),Vector2(CONTENT_W,DECK_H))
 	_content.add_child(_deck)
-	# 重建后回到原来的页（列表变短时钳制回退），而不是无条件 go(0)
-	_deck.go(clampi(prev, 0, maxi(0, _sids.size() - 1)), true)
+	_deck.page_changed.connect(_select_tab)
+	_deck.go(clampi(prev,0,maxi(0,_sids.size()-1)),true)
+	_select_tab(int(_deck.current))
 
+func _select_tab(index: int) -> void:
+	for i in _tabs.size():
+		_tabs[i].selected = i == index
+		_tabs[i].queue_redraw()
 
-## 重建后该回哪一页：保留态就回原页；首次打开则找第一个未满级技能。
 func row_want(preserve: bool) -> int:
-	if preserve and _deck != null:
-		return int(_deck.current)
+	if preserve and _deck != null: return int(_deck.current)
 	for i in _sids.size():
-		if G.skill_level(String(_sids[i])) < G.skill_max_level():
-			return i
+		if G.skill_level(String(_sids[i])) < G.skill_max_level(): return i
 	return 0
 
-
-## 一页一个大卡片：技能名 + 大号等级珠 + 描述 + 大升级按钮
 func _skill_page(sid: String) -> Control:
 	var sd := TableCache.get_skill(sid)
 	var lv := G.skill_level(sid)
 	var mx := G.skill_max_level()
 	var cost := G.skill_upgrade_cost(sid)
-
+	var hue: Color = G.FIELD_ROLE.get(G.selected_role,G.FIELD_COPPER)
 	var page := Control.new()
-	page.custom_minimum_size = Vector2(CONTENT_W, DECK_H)
-	page.size = Vector2(CONTENT_W, DECK_H)
-
-	# 内凹贴片语言（G.InsetPanel）：切角 + 顶暗底亮，替代圆角10+软影
-	var root := G.InsetPanel.new()
-	root.custom_minimum_size = Vector2(CONTENT_W, DECK_H)
-	root.setup(Color("f0e2bc"), Color("c9ab5e"), 0.0, 0.0, 0.0, 0.0)
-	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	root.position = Vector2(0, 0)
-	page.add_child(root)
-
-	var inner := Control.new()
-	inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	root.add_child(inner)
-
-	# 技能名：宋体大标题，居中
-	var name_l := G.serif_label(String(sd.get("name", sid)), G.FS_BIG, G.TEXT_DARK)
-	name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	name_l.position = Vector2(0, 20)
-	name_l.custom_minimum_size = Vector2(CONTENT_W, 0)
-	inner.add_child(name_l)
-
-	# 大号等级珠：10 颗，居中横排，一眼看出等级
-	var dots_w := mx * 30.0
-	var dot_x := (CONTENT_W - dots_w) * 0.5
+	page.size = Vector2(CONTENT_W,DECK_H)
+	page.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var hero := Field.surface(Vector2.ZERO,Vector2(CONTENT_W,192))
+	page.add_child(hero)
+	var marker := ColorRect.new()
+	marker.color = hue
+	marker.size = Vector2(3,192)
+	marker.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hero.add_child(marker)
+	var number := _sids.find(sid)+1
+	hero.add_child(Field.label("招式 %02d / %s" % [number,G.get_role(G.selected_role).get("job","")],Vector2(18,14),Vector2(224,24),14,G.FIELD_COPPER))
+	hero.add_child(Field.label(String(sd.get("name",sid)),Vector2(18,42),Vector2(236,52),32,G.FIELD_PAPER_LIGHT,false,true))
+	var description := String(sd.get("desc","")).replace("MaxHP","最大生命").replace("ATK","攻击").replace("DEF","防御").replace("HP","生命")
+	description = description.replace("回复 ","回复\n").replace("+"," + ")
+	var desc := Field.label(description,Vector2(20,99),Vector2(218,54),16,G.FIELD_PAPER_LIGHT)
+	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	hero.add_child(desc)
+	var cooldown := float(sd.get("cd",0))
+	var cooldown_words := str(int(cooldown)) if is_equal_approx(cooldown,roundf(cooldown)) else str(cooldown)
+	hero.add_child(Field.label("冷却 %s秒    耗能 %d" % [cooldown_words,int(sd.get("cost",0))],Vector2(20,159),Vector2(330,24),14,G.FIELD_PAPER_LIGHT))
+	var diagram := SkillDiagram.new()
+	diagram.role_id = G.selected_role
+	diagram.index = number-1
+	diagram.position = Vector2(242,18)
+	diagram.size = Vector2(120,128)
+	diagram.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hero.add_child(diagram)
+	page.add_child(Field.label("研习等级",Vector2(0,211),Vector2(196,28),16,G.FIELD_MUTED))
+	var level := Field.label("LV %02d / %02d" % [lv,mx],Vector2(208,209),Vector2(168,30),18,G.FIELD_INK,true)
+	level.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	page.add_child(level)
 	for i in mx:
-		var dot := Panel.new()
-		dot.position = Vector2(dot_x + i * 30.0, 68)
-		dot.size = Vector2(22, 22)
-		dot.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		var dsb := StyleBoxFlat.new()
-		dsb.set_corner_radius_all(11)
-		dsb.bg_color = Color("4a7a9a") if i < lv else Color("d0c09a")
-		if i == lv and lv < mx:
-			dsb.border_color = G.GOLD_BRIGHT
-			dsb.set_border_width_all(2)
-		dot.add_theme_stylebox_override("panel", dsb)
-		inner.add_child(dot)
-
-	# 等级文字：「LV3 / 10」
-	var lv_l := G.gold_label("LV%d / %d" % [lv, mx], G.FS_MD, true, Color("4a7a8a"), false)
-	lv_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	lv_l.position = Vector2(0, 96)
-	lv_l.custom_minimum_size = Vector2(CONTENT_W, 0)
-	inner.add_child(lv_l)
-
-	# 效果描述：一行，居中（强度百分比移到下面的对比区，不在同一屏说两遍）
-	var k0 := float(sd.get("k", 0.0))
-	var k_l := G.text_label(String(sd.get("desc", "")), G.FS_SM, Color("5a3a1e"))
-	k_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	k_l.position = Vector2(20, 128)
-	k_l.custom_minimum_size = Vector2(CONTENT_W - 40, 0)
-	k_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	inner.add_child(k_l)
-
-	# ── 升级对比区：把"当前等级 → 下一等级"的强度变化并排摆出来，升级前就能看到收益
-	# 数值口径与 BattleSim 一致：等级只缩放伤害系数 k（k × (1 + k_per×(lv-1))）；
-	# 效果型技能（k=0）在战斗里确实不吃等级加成，这里如实说明，不编造缩放数字。
-	var k_per := float(TableCache.skillbook_config().get("k_per_level", 0.05))
-	var cmp := Control.new()
-	cmp.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	cmp.position = Vector2(0, 172)
-	cmp.custom_minimum_size = Vector2(CONTENT_W, 96)
-	inner.add_child(cmp)
-
-	# 左右各留 28：PageDeck 的翻页箭头骑在页宽最外侧 26px，留 28 才不会被箭头压住边角
-	var m := 28.0
-	var inner_w := CONTENT_W - m * 2.0
-
-	if k0 <= 0.0:
-		var eff_cell := _cmp_cell(inner_w, 96.0, "效果型技能 LV%d" % lv,
-			"效果固定", "升级不改变强度数值", false)
-		eff_cell.position = Vector2(m, 0)
-		cmp.add_child(eff_cell)
+		Field.line(page,Vector2(i*(CONTENT_W/mx),252), CONTENT_W/mx-4, hue if i<lv else G.FIELD_LINE)
+	var k0 := float(sd.get("k",0.0))
+	var k_per := float(TableCache.skillbook_config().get("k_per_level",.05))
+	page.add_child(Field.label("伤害系数" if k0>0 else "技能效果",Vector2(0,276),Vector2(376,24),14,G.FIELD_MUTED))
+	if k0 <= 0:
+		page.add_child(Field.label("效果固定",Vector2(0,304),Vector2(376,36),24,G.FIELD_INK,true))
+		page.add_child(Field.label("研习等级不改变效果数值",Vector2(0,347),Vector2(376,24),14,G.FIELD_MUTED))
 	elif lv >= mx:
-		var cap_cell := _cmp_cell(inner_w, 96.0, "已达最高等级 LV%d" % mx,
-			"×%.2f" % (k0 * (1.0 + k_per * float(mx - 1))),
-			_pct_text(roundi(k_per * float(mx - 1) * 100.0)), true)
-		cap_cell.position = Vector2(m, 0)
-		cmp.add_child(cap_cell)
+		page.add_child(Field.label("×%.2f" % (k0*(1+k_per*(lv-1))),Vector2(0,304),Vector2(376,36),30,G.FIELD_INK,true))
+		page.add_child(Field.label("研习已满 · 基础系数提升 %d%%" % roundi(k_per*(lv-1)*100),Vector2(0,347),Vector2(376,24),14,G.FIELD_MUTED))
 	else:
-		var gap := 24.0
-		var cw := (inner_w - gap) * 0.5
-		var cur_cell := _cmp_cell(cw, 96.0, "当前 LV%d" % lv,
-			"×%.2f" % (k0 * (1.0 + k_per * float(lv - 1))),
-			_pct_text(roundi(k_per * float(lv - 1) * 100.0)), false)
-		cur_cell.position = Vector2(m, 0)
-		cmp.add_child(cur_cell)
-		var next_cell := _cmp_cell(cw, 96.0, "升级后 LV%d" % (lv + 1),
-			"×%.2f" % (k0 * (1.0 + k_per * float(lv))),
-			_pct_text(roundi(k_per * float(lv) * 100.0)), true)
-		next_cell.position = Vector2(CONTENT_W - m - cw, 0)
-		cmp.add_child(next_cell)
-		var arrow := G.gold_label("→", G.FS_LG, true, Color("8a5a1a"), false)
-		arrow.position = Vector2(m + cw, 34)
-		arrow.custom_minimum_size = Vector2(gap, 0)
-		cmp.add_child(arrow)
-
-	# 大升级按钮：底部居中
-	var btn := G.gold_button("已满级" if cost <= 0 else "升 级 · %d 远征币" % cost,
-		G.BTN_L.x, G.BTN_L.y, G.FS_MD)
-	btn.position = Vector2((CONTENT_W - G.BTN_L.x) * 0.5, 286)
-	btn.mouse_filter = Control.MOUSE_FILTER_STOP
-	btn.gui_input.connect(func(ev: InputEvent):
-		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
-			_on_upgrade(sid))
-	inner.add_child(btn)
+		page.add_child(Field.label("×%.2f" % (k0*(1+k_per*(lv-1))),Vector2(0,304),Vector2(150,36),30,G.FIELD_INK,true))
+		page.add_child(Field.label("→",Vector2(157,304),Vector2(40,36),24,G.FIELD_MUTED))
+		var next_value := Field.label("×%.2f" % (k0*(1+k_per*lv)),Vector2(215,304),Vector2(161,36),30,G.FIELD_INK,true)
+		next_value.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		page.add_child(next_value)
+		page.add_child(Field.label("当前 LV%d" % lv,Vector2(0,347),Vector2(180,24),14,G.FIELD_MUTED))
+		var next_note := Field.label("LV%d · 基础系数 +%d%%" % [lv+1,roundi(k_per*100)],Vector2(180,347),Vector2(196,24),14,G.FIELD_MUTED)
+		next_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		page.add_child(next_note)
+	var can_pay := int(G.wallet.get("expedition",0)) >= cost
+	var words := "研习已满" if lv>=mx else ("研习升级 · %d 远征币" % cost if can_pay else "远征币不足 · 需要 %d" % cost)
+	var upgrade := Field.action(words,Vector2(0,397),Vector2(CONTENT_W,52),true)
+	upgrade.disabled = lv>=mx or not can_pay
+	upgrade.activated.connect(func(): _on_upgrade(sid))
+	page.add_child(upgrade)
 	return page
 
-
-## 强度百分比文案：0% 说成"基础强度"，避免出现"+0％"这种废话
-func _pct_text(pct: int) -> String:
-	return "基础强度" if pct <= 0 else "强度 +%d％" % pct
-
-
-## 对比区单元格：等宽小牌，三行（标题 / 数值 / 副标）；accent=true 用于"升级后"一侧
-func _cmp_cell(w: float, h: float, title: String, value: String, sub: String, accent: bool) -> Control:
-	var cell := G.InsetSlot.new()
-	cell.custom_minimum_size = Vector2(w, h)
-	cell.size = Vector2(w, h)
-	cell.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	cell.setup(Color("f7ecc8") if accent else Color("e6dab6"),
-		G.GOLD_BTN_EDGE if accent else Color("c0a868"))
-
-	var t := G.gold_label(title, G.FS_XS, false, Color("8a5a1a") if accent else Color("6a5230"), false)
-	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	t.position = Vector2(0, 12)
-	t.custom_minimum_size = Vector2(w, 0)
-	cell.add_child(t)
-
-	var v := G.gold_label(value, G.FS_LG, true, Color("8a5a1a") if accent else G.TEXT_DARK, false)
-	v.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	v.position = Vector2(0, 34)
-	v.custom_minimum_size = Vector2(w, 0)
-	cell.add_child(v)
-
-	var s := G.gold_label(sub, G.FS_XS, false, Color("6a5230"), false)
-	s.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	s.position = Vector2(0, 66)
-	s.custom_minimum_size = Vector2(w, 0)
-	cell.add_child(s)
-	return cell
-
+# 原生像素招式图，四职业采用同一笔宽；图形跟招式种类变化。
+class SkillDiagram extends Control:
+	var role_id := "fs"
+	var index := 0
+	func _draw() -> void:
+		var hue: Color = G.FIELD_ROLE.get(role_id,G.FIELD_COPPER)
+		draw_set_transform(Vector2(10,8),0,Vector2(2,2))
+		var p := Vector2(25,25)
+		if role_id == "fs":
+			if index in [0,2,4]:
+				var shard := PackedVector2Array([Vector2(36,3),Vector2(34,20),Vector2(25,28),Vector2(16,46),Vector2(17,26),Vector2(24,18)])
+				draw_colored_polygon(shard,hue)
+				draw_colored_polygon(PackedVector2Array([Vector2(36,3),Vector2(26,25),Vector2(16,46),Vector2(17,26),Vector2(24,18)]),G.FIELD_PAPER_LIGHT)
+				draw_line(Vector2(31,15),Vector2(25,22),G.FIELD_COPPER,1)
+				draw_line(Vector2(21,30),Vector2(26,25),hue,1)
+				draw_rect(Rect2(11,17,2,3),G.FIELD_PAPER_LIGHT)
+				draw_rect(Rect2(39,34,3,2),hue)
+				if index == 2:
+					draw_line(Vector2(16,7),Vector2(7,26),hue,2)
+					draw_line(Vector2(45,16),Vector2(36,35),hue,2)
+					draw_line(Vector2(20,8),Vector2(13,21),G.FIELD_PAPER_LIGHT,1)
+				elif index == 4:
+					for i in 5:
+						var v := Vector2.from_angle(i*TAU/5+.4)
+						draw_line((p+v*18).round(),(p+v*27).round(),hue,2)
+						draw_line((p+v*27).round(),(p+v*29).round(),G.FIELD_PAPER_LIGHT,1)
+			else:
+				for i in 6:
+					var v := Vector2.from_angle(i*TAU/6)
+					draw_line((p+v*5).round(),(p+v*20).round(),G.FIELD_PAPER_LIGHT,2)
+					var q := (p+v*14).round()
+					draw_line(q,(q+v.rotated(.7)*7).round(),hue,1)
+					draw_line(q,(q+v.rotated(-.7)*7).round(),hue,1)
+				if index == 3:
+					var shield := PackedVector2Array([Vector2(7,8),Vector2(25,4),Vector2(43,8),Vector2(40,31),Vector2(25,47),Vector2(10,31),Vector2(7,8)])
+					draw_polyline(shield,hue,1)
+		elif role_id == "zs":
+			var blade := PackedVector2Array([Vector2(38,3),Vector2(42,14),Vector2(17,39),Vector2(10,32)])
+			draw_colored_polygon(blade,G.FIELD_PAPER_LIGHT)
+			draw_line(Vector2(39,8),Vector2(17,33),hue,2)
+			draw_line(Vector2(8,28),Vector2(23,43),G.FIELD_COPPER,3)
+			draw_line(Vector2(15,36),Vector2(6,45),hue,4)
+			for i in index+1: draw_line(Vector2(7+i*7,10),Vector2(3+i*7,15),hue,1)
+		elif role_id == "ck":
+			for i in (3 if index==4 else (2 if index==0 else 1)):
+				var off := Vector2(i*7,-i*5)
+				draw_line(Vector2(7,43)+off,Vector2(33,9)+off,G.FIELD_COPPER,2)
+				draw_colored_polygon(PackedVector2Array([Vector2(33,4)+off,Vector2(37,16)+off,Vector2(27,13)+off]),G.FIELD_PAPER_LIGHT)
+				draw_line(Vector2(10,36)+off,Vector2(3,36)+off,hue,2)
+		else:
+			if index in [0,1]:
+				draw_rect(Rect2(22,9,6,32),G.FIELD_PAPER_LIGHT)
+				draw_rect(Rect2(11,20,28,6),G.FIELD_PAPER_LIGHT)
+				draw_rect(Rect2(24,11,2,28),G.FIELD_COPPER)
+				if index == 1:
+					for q in [Vector2(6,5),Vector2(40,5),Vector2(39,38)]:
+						draw_rect(Rect2(q,Vector2(2,9)),hue)
+						draw_rect(Rect2(q+Vector2(-3,3),Vector2(8,2)),hue)
+			elif index == 2:
+				draw_colored_polygon(PackedVector2Array([Vector2(25,4),Vector2(33,20),Vector2(29,34),Vector2(19,34),Vector2(15,20)]),G.FIELD_PAPER_LIGHT)
+				draw_line(Vector2(24,13),Vector2(20,27),hue,2)
+				draw_line(Vector2(7,41),Vector2(42,41),G.FIELD_COPPER,1)
+			elif index == 3:
+				draw_colored_polygon(PackedVector2Array([Vector2(25,3),Vector2(29,21),Vector2(47,25),Vector2(29,29),Vector2(25,47),Vector2(21,29),Vector2(3,25),Vector2(21,21)]),G.FIELD_PAPER_LIGHT)
+				draw_rect(Rect2(23,23,4,4),G.FIELD_COPPER)
+			else:
+				for i in 7:
+					var v := Vector2.from_angle(PI+i*PI/6)
+					draw_line((Vector2(25,34)+v*13).round(),(Vector2(25,34)+v*23).round(),hue,2)
+				draw_rect(Rect2(17,23,16,12),G.FIELD_PAPER_LIGHT)
+				draw_line(Vector2(5,36),Vector2(45,36),G.FIELD_COPPER,2)
+		draw_set_transform(Vector2.ZERO)
 
 func _on_upgrade(sid: String) -> void:
 	if G.skill_upgrade(sid):
@@ -267,10 +238,9 @@ func _on_upgrade(sid: String) -> void:
 func _toast_msg(msg: String) -> void:
 	if _toast != null:
 		_toast.queue_free()
-	_toast = G.gold_label(msg, G.FS_SM, false, Color("ffd0d0"))
-	_toast.position = Vector2(0, 706)
-	_toast.custom_minimum_size = Vector2(480, 0)
-	add_child(_toast)
+	_toast = G.toast_label(msg)
+	_toast.position = Vector2(-28,4)
+	_content.add_child(_toast)
 	var tw := create_tween()
 	tw.tween_interval(1.2)
 	tw.tween_property(_toast, "modulate:a", 0.0, 0.4)
