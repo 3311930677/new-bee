@@ -73,7 +73,7 @@ func _build() -> void:
 	_detail.position = Vector2(6, 322)
 	content.add_child(_detail)
 
-	_close_btn = G.gold_button("返 回", 130, 36, G.FS_MD)
+	_close_btn = G.ghost_button("返回", 130, 44, G.FS_MD)
 	_close_btn.position = Vector2(CONTENT_W / 2.0 - 65, 556)
 	_close_btn.gui_input.connect(func(ev: InputEvent):
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
@@ -94,10 +94,12 @@ func _refresh() -> void:
 	for i in TABS.size():
 		var tid := String(TABS[i][0])
 		var active := tid == _tab
-		var b := G.gold_button(String(TABS[i][1]), 82, 30, G.FS_SM)
+		var b := G.ghost_button(String(TABS[i][1]), 82, 36, G.FS_SM)
 		b.position = Vector2(2 + i * 83.0, 0)
-		if not active:
-			b.modulate = Color(0.78, 0.78, 0.78)
+		b.set_meta("tab_selected", active)
+		if active:
+			(b as G.PixelButton).set_surface(G.BANNER, G.GOLD)
+			(b.get_child(0) as Label).add_theme_color_override("font_color", G.GOLD_BRIGHT)
 		var t := tid
 		b.gui_input.connect(func(ev: InputEvent):
 			if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
@@ -161,6 +163,8 @@ func _build_equip_tab() -> void:
 	if items.is_empty():
 		var none := G.text_label("背包里没有装备。打怪掉落会自动入包，满了先进待领取箱。",
 			G.FS_SM, G.TEXT_MUTED)
+		none.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		none.custom_minimum_size = Vector2(CONTENT_W-24, 0)
 		none.position = Vector2(4, 8)
 		_list.add_child(none)
 	else:
@@ -198,7 +202,7 @@ func _item_row(inst: Dictionary) -> Control:
 	root.set_content_margin(0.0)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	if uid == _sel_uid:
-		root.set_surface(Color("e2c275"), G.WOOD_DARK)
+		root.set_surface(Color("d6ddc7"), G.BANNER)
 	else:
 		root.set_surface(G.PARCHMENT, Color("c2ad7b"))
 	var inner := Control.new()
@@ -249,7 +253,7 @@ func _build_detail() -> void:
 
 	var title := "%s  [%s]%s" % [String(tpl.get("name", "?")), G.equip_rarity_name(rarity),
 		"（在身）" if worn else ""]
-	var title_l := G.gold_label(title, G.FS_MD, true, G.paper_ink(G.equip_rarity_color(rarity)), false)
+	var title_l := G.serif_label(title, 22, G.paper_ink(G.equip_rarity_color(rarity)))
 	title_l.position = Vector2(0, 0)
 	_detail.add_child(title_l)
 
@@ -318,7 +322,7 @@ func _build_detail_buttons(inst: Dictionary, worn: bool) -> void:
 
 	# 锁定 / 解锁
 	var locked := bool(inst.get("locked", false))
-	var lk := G.gold_button("解 锁" if locked else "锁 定", 110, 34, G.FS_SM)
+	var lk := G.ghost_button("解锁" if locked else "锁定", 110, 34, G.FS_SM)
 	lk.position = Vector2(120, y)
 	lk.gui_input.connect(func(ev: InputEvent):
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
@@ -329,7 +333,7 @@ func _build_detail_buttons(inst: Dictionary, worn: bool) -> void:
 
 	# 卖出（在身/锁定拒绝；强化过或稀有需二次确认）
 	var price := G.inv_sell_price(uid)
-	var sell := G.gold_button("卖出 %d 金" % price if price > 0 else "卖 出", 150, 34, G.FS_SM)
+	var sell := G.ghost_button("卖出 %d 金" % price if price > 0 else "卖出", 150, 34, G.FS_SM)
 	sell.position = Vector2(240, y)
 	sell.gui_input.connect(func(ev: InputEvent):
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:

@@ -52,6 +52,33 @@ func _run() -> void:
 	city._open_dialog(G.city_npc("npc_warden"), false)
 	_check(String(city._dlg.get("id", "")) == "npc_warden" and city._panel != null,
 		"行脚商人应先保留原对话/委托入口")
+	var dialogue: Label = city._dlg["line"]
+	dialogue.text = "北面的驿站已经补齐药箱，码头的盐车也该到了。把这份路书交给门口的守卫，沿着旧碑上的箭头就能找到旅人留下的营火。".repeat(2)
+	city._layout_dialogue()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var hint: Label = city._dlg["hint"]
+	var paper: Control = city._dlg["paper"]
+	_check(dialogue.get_global_rect().end.y + 8.0 <= hint.global_position.y,
+		"长对话应完整显示在继续提示上方")
+	_check(hint.get_global_rect().end.y < paper.get_global_rect().end.y,
+		"对话页脚应留在纸页内")
+	city._toast("主线完成：北路通行")
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_check(city._toast_lbl.get_global_rect().end.y + 10.0 <= paper.global_position.y,
+		"任务提示需避让自适应对话框")
+	city._close_panel()
+	city._open_shipping_panel()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var shipping: ScrollContainer = city._panel.find_child("ShippingDetails", true, false)
+	_check(shipping != null and shipping.position.y + shipping.size.y < 414.0,
+		"船单长文阅读区应与接单按钮留出间距")
+	if shipping != null:
+		var details := shipping.get_child(0) as Label
+		_check(details.text.ends_with("接单锁定报酬；市集歇脚推进游戏日。") and shipping.clip_contents,
+			"船单需保留最后一段说明，并在阅读区域内滚动")
 	city._close_panel()
 	city._open_first_order_preview()
 	_check(city._panel is TradePanel and city.has_modal(), "行脚商人应能打开现货交易页")

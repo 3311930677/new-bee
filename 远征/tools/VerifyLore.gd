@@ -68,35 +68,37 @@ func _run() -> void:
 
 	# ---- B. 主线目标随进度推进 ----
 	_check(not G.lore_seen(), "新档默认不该是「已看序章」")
-	var goal := G.main_goal()
+	var goal := G.trial_goal()
 	_check(String(goal.get("theme", "")) == "forest",
 		"初始主线目标应指向主世界 forest，实为「%s」" % String(goal.get("theme", "")))
 	_check(String(goal.get("title", "")).contains("森林之主"),
 		"目标标题应点出首领名「森林之主」，实为「%s」" % String(goal.get("title", "")))
 	var joined := " ".join(PackedStringArray(goal.get("lines", [])))
 	_check(joined.contains("出征"), "可达成的目标应给出「出征」指引，实为「%s」" % joined)
-	_check(G.main_goal_short().contains("苍绿林海"),
-		"主页那一行摘要应含大陆名，实为「%s」" % G.main_goal_short())
+	_check(G.trial_goal_short().contains("苍绿林海"),
+		"主页那一行摘要应含大陆名，实为「%s」" % G.trial_goal_short())
 
+	var campaign_before := G.main_goal_short()
 	G.on_world_cleared("forest")
-	_check(String(G.main_goal().get("theme", "")) == "snow",
-		"通关 forest 后目标应推进到 snow，实为「%s」" % String(G.main_goal().get("theme", "")))
+	_check(G.main_goal_short() == campaign_before, "回境通关不冒充归路主线推进")
+	_check(String(G.trial_goal().get("theme", "")) == "snow",
+		"通关 forest 后目标应推进到 snow，实为「%s」" % String(G.trial_goal().get("theme", "")))
 	# 解锁数落后于通关数的档（改档/老档）：目标仍指向下一片，但指引要说清"碑门推不开"
 	G.prog["world_cleared"] = {"forest": true, "snow": true}
 	G.prog["worlds_unlocked"] = 1
-	var g3 := G.main_goal()
+	var g3 := G.trial_goal()
 	_check(String(g3.get("theme", "")) == "volcano", "应继续推进到 volcano")
 	var j3 := " ".join(PackedStringArray(g3.get("lines", [])))
 	_check(j3.contains("推不开"), "未解锁秘境的指引应说明需要先打前一片，实为「%s」" % j3)
 	G.prog["worlds_unlocked"] = 3   # 解锁到位后，指引应回到「出征」
-	var j4 := " ".join(PackedStringArray(G.main_goal().get("lines", [])))
+	var j4 := " ".join(PackedStringArray(G.trial_goal().get("lines", [])))
 	_check(j4.contains("出征"), "解锁到位后应给可出征指引，实为「%s」" % j4)
 
 	G.gm_clear_all_worlds()
-	var g_end := G.main_goal()
+	var g_end := G.trial_goal()
 	_check(String(g_end.get("theme", "")).is_empty(), "全通关后不应再指向某片秘境")
 	var j_end := " ".join(PackedStringArray(g_end.get("lines", [])))
-	_check(j_end.contains("王城"), "全通关目标应收束到王城，实为「%s」" % j_end)
+	_check(j_end.contains("仍未解开") and not j_end.contains("八碑归位"), "回境全通仍保留八碑未解状态，实为「%s」" % j_end)
 
 	# ---- C. 序章看完落盘，重新读档仍然记得 ----
 	_baseline()

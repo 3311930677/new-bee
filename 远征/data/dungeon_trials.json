@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "trials": {
+    "stele_cavern": {
+      "name":"回声辨位","requires_story":"s10","desc":"三处石缝只留下声音描述。先听，再分辨旧碑回声的去向，最后与碑灵残影练习。首次挑战记录回声附注并给强化石×2；再挑战只练习，不发首通物、金币或经验。",
+      "note":"三次短回响贴着旧碑面折返；深处长回音才是渊影。回声能帮助定位，不能替代三处观察。",
+      "reward":{"item:enhance_stone":2},"steps":[
+        {"id":"trial_echo_1","name":"听第一道石缝","kind":"listen","at":[420,940],"art":"chime","line":"一声短响，贴着石壁向中央折返。"},
+        {"id":"trial_echo_2","name":"听第二道石缝","kind":"listen","at":[530,865],"art":"chime","line":"两声长响，向深处散去，没有返回碑面。"},
+        {"id":"trial_echo_3","name":"听第三道石缝","kind":"listen","at":[420,780],"art":"chime","line":"短响比第一道轻，却仍折回中央碑面。"},
+        {"id":"trial_echo_align","name":"只凭回声辨位","kind":"align","at":[480,675],"art":"post","clue":"两处短响折回中央；长回音向深处散去。哪一类才来自旧碑面？","choices":{"short":"按两处短回响定位","deep":"追随深处长回音"},"correct":"short","wrong":"长回音散往深处，不能在旧碑面形成返回；再想想两处短响。"},
+        {"id":"trial_echo_boss","name":"碑灵残影练习","kind":"defeat","at":[480,340],"enemy":"mon_stele_warden"}
+      ]
+    },
+    "tidal_gate": {
+      "name":"两箱同归","requires_story":"s19","desc":"查港务水线，再把栈桥和旧渠两处货箱都带回安全位，最后练习司祭潮汐预兆。首次记录保货附注并给强化石×2；再挑战只练习，不发首通物、金币或经验。",
+      "note":"水位下降先留栈桥货，旧渠货沿低槽接回。两处货箱都有去处，不需要舍掉其中一箱。",
+      "reward":{"item:enhance_stone":2},"steps":[
+        {"id":"trial_tide_record","name":"核对港务水线","kind":"inspect","at":[420,935],"art":"tide_mark","line":"桥脚水线已落，旧渠水线仍高。先搬桥侧箱，再沿低槽接旧渠箱。"},
+        {"id":"trial_tide_bridge","name":"接回栈桥货箱","kind":"escort","at":[560,830],"art":"tide_cargo","line":"桥侧箱移到了安全的桥柱后。"},
+        {"id":"trial_tide_canal","name":"接回旧渠货箱","kind":"escort","at":[420,675],"art":"tide_cargo","line":"旧渠箱沿低槽接回，两箱都离开水口。"},
+        {"id":"trial_tide_boss","name":"司祭残影练习","kind":"defeat","at":[480,340],"enemy":"mon_tide_priest"}
+      ]
+    },
+    "rift_mine_vault": {
+      "name":"无药轮岗","requires_story":"s25","no_potions":true,"desc":"查看两处风口与空轨，再挑战矿脉守卫残影。本次副本内不能使用药剂，失败可重来；离开副本可正常补给。首次记录轮岗附注并给强化石×2；再挑战不发首通物、金币或经验。",
+      "note":"先确认炉息与空轨，再留下换岗的人。无需依赖补给点也能读清守卫蓄力；这一条是自愿练习，不要求主线玩家参加。",
+      "reward":{"item:enhance_stone":2},"steps":[
+        {"id":"trial_mine_wind","name":"核对两处炉息","kind":"listen","at":[480,925],"art":"mine_vent","line":"两处风口都通，蓄力时的炉声会先停一拍。"},
+        {"id":"trial_mine_rail","name":"确认空轨轮岗","kind":"inspect","at":[480,690],"art":"mine_cart","line":"矿车靠空轨停稳，轮岗的人都在灯下。"},
+        {"id":"trial_mine_boss","name":"矿卫残影练习","kind":"defeat","at":[480,340],"enemy":"mon_redsand_guard"}
+      ]
+    }
+  }
+}

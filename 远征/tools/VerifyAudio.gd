@@ -92,6 +92,18 @@ func _run() -> void:
 	Audio.preload_all()   # 不崩即过
 	_check(not Audio.has_no_stream(), "素材齐全时 has_no_stream 应为 false")
 
+	for region in ["forest","snow","volcano","tomb","desert","glacier","abyss","castle","port","mine"]:
+		Audio.play_ambience(region)
+		_check(Audio.current_ambience()=="ambient_"+region, "地区音景可解析："+region)
+		_check(Audio._ambient.stream is AudioStreamWAV and Audio._ambient.stream.loop_mode==AudioStreamWAV.LOOP_FORWARD,"音景明确循环")
+	Audio.set_mute(true)
+	_check(Audio._ambient.volume_db <= -79, "静音同步覆盖地区音景")
+	Audio.set_mute(false)
+	Audio.play_bgm("bgm_battle")
+	_check(Audio.current_ambience().is_empty(), "战斗提示不与地区音景叠加")
+	Audio.play_ambience("missing_region")
+	_check(Audio.current_ambience().is_empty(), "缺音景静默降级")
+
 	# ---- I. 防回退：G 与 Audio 两个 autoload 之间零编译期引用 ----
 	# 曾踩：Audio 里写 G.audio / G.save_game()，同时 G 里写 Audio.sfx()，双向依赖让编译器
 	# 互等对方先编译 → 全项目级联 `Identifier not found: Audio`（编辑期表现为满屏红字）。

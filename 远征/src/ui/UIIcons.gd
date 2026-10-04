@@ -5,7 +5,8 @@ static var _cache: Dictionary = {}
 
 static func texture(key: String) -> Texture2D:
 	if not _cache.has(key):
-		var path := "res://assets/ui/navigation/%s.svg" % key
+		var path := "res://assets/ui/pixel_icons/%s.png" % key
+		if not ResourceLoader.exists(path): path = "res://assets/ui/navigation/%s.svg" % key
 		_cache[key] = load(path) if ResourceLoader.exists(path) else null
 	return _cache[key] as Texture2D
 
@@ -16,8 +17,8 @@ static func image(key: String, dimensions := Vector2(20, 20), tint := Color.WHIT
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	icon.size = dimensions
 	icon.custom_minimum_size = dimensions
-	icon.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-	icon.modulate = tint
+	icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	icon.modulate = Color.WHITE if ResourceLoader.exists("res://assets/ui/pixel_icons/%s.png" % key) else tint
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return icon
 

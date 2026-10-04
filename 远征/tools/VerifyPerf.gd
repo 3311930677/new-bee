@@ -54,6 +54,8 @@ func _hit(node: Node, pos: Vector2) -> Control:
 
 
 func _find_btn(root: Node, text: String) -> Control:
+	if root is Button and root.text.replace(" ","") == text.replace(" ",""):
+		return root as Control
 	var want := text.replace(" ", "")
 	for c in root.get_children():
 		if c is PanelContainer:
@@ -171,7 +173,7 @@ func _run() -> void:
 	# 建筑浮层（点议事厅）里的返回
 	city.call("_open_building", G.city_building("hall"))
 	await get_tree().process_frame
-	_assert_clickable(city, "返 回", "主城：建筑浮层返回")
+	_assert_clickable(city, "返回城内", "主城：建筑浮层返回")
 	city.call("_close_panel")
 	await get_tree().process_frame
 	city.queue_free()

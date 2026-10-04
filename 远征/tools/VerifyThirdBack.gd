@@ -220,6 +220,8 @@ func _test_bosses() -> void:
 
 
 func _find_button(node: Node, text: String, interactive := true) -> Control:
+	if node is Button and (node as Button).text.replace(" ", "") == text.replace(" ", ""):
+		return node as Control
 	if node is Label and (node as Label).text == text:
 		var parent := node.get_parent() as Control
 		if parent != null and (not interactive or not parent.gui_input.get_connections().is_empty()): return parent

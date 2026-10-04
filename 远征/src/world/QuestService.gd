@@ -185,8 +185,18 @@ static func side_status(act1: Dictionary, qid: String) -> String:
 
 
 static func side_need(row: Dictionary) -> int:
+	var steps: Variant = row.get("steps", [])
+	if steps is Array and not (steps as Array).is_empty(): return (steps as Array).size()
 	var obj: Variant = row.get("objective", {})
 	return maxi(1, int((obj as Dictionary).get("count", 1))) if obj is Dictionary else 1
+
+
+static func side_objective(row: Dictionary, state: Dictionary) -> Dictionary:
+	var steps: Array = row.get("steps", [])
+	if not steps.is_empty():
+		var index := int(state.get("progress", 0))
+		return steps[index] if index >= 0 and index < steps.size() else {}
+	return row.get("objective", {})
 
 
 ## 接取支线。任务不存在或已接过一律失败；当前没有追踪中的支线时自动追踪本条。
@@ -234,17 +244,23 @@ static func side_report(act1: Dictionary, rows: Array, event: Dictionary,
 		var qs := state as Dictionary
 		if String(qs.get("status", "")) != SIDE_ACTIVE:
 			continue
-		var obj: Variant = row.get("objective", {})
+		var obj: Variant = side_objective(row, qs)
 		if not (obj is Dictionary):
 			continue
 		var o := obj as Dictionary
 		if not _side_match(o, event):
 			continue
+		var options: Dictionary = o.get("choices", {})
+		var choice := String(event.get("payload", {}).get("choice", ""))
+		if not options.is_empty():
+			if not options.has(choice): continue
+			var correct := String(o.get("correct", ""))
+			if not correct.is_empty() and correct != choice: continue
 		var need_item := String(o.get("item", ""))
 		if not need_item.is_empty() and int(inventory.get(need_item, 0)) < 1:
 			continue
 		var kind := String(o.get("kind", ""))
-		if kind == "collect" or kind == "observe":
+		if kind in ["collect", "observe", "inspect", "align", "switch", "escort", "repair", "listen", "mark"]:
 			var seen: Variant = qs.get("seen")
 			if not (seen is Array):
 				seen = []
@@ -253,6 +269,9 @@ static func side_report(act1: Dictionary, rows: Array, event: Dictionary,
 			if (seen as Array).has(sid):
 				continue
 			(seen as Array).append(sid)
+		if not choice.is_empty():
+			if not (qs.get("branch_flags") is Dictionary): qs["branch_flags"] = {}
+			(qs["branch_flags"] as Dictionary)[String(event.get("source_id", ""))] = choice
 		var need := side_need(row)
 		var progress := mini(need, int(qs.get("progress", 0)) + 1)
 		qs["progress"] = progress
@@ -275,6 +294,8 @@ static func _side_match(o: Dictionary, event: Dictionary) -> bool:
 			return etype == "collect" and _side_entity_match(o, event)
 		"observe":
 			return etype == "observe" and _side_entity_match(o, event)
+		"inspect", "align", "switch", "escort", "repair", "listen", "mark":
+			return etype == kind and _side_entity_match(o, event)
 		"deliver":
 			return etype == "deliver" and _side_entity_match(o, event)
 		"boss":

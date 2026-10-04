@@ -13,3 +13,9 @@ docs/ref_video/
 
 # 原版解包素材导出的 AI 参考图库（版权素材，仅本地参照，不进仓库）
 assets_regen/refs/
+
+# Local distributables are verified separately, never committed.
+exports/
+*.apk
+*.aab
+*.pck

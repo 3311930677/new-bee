@@ -20,6 +20,7 @@ var auto_mode := false                # 托管
 var role_focus_target_uid := -1        # 玩家“攻”指令指定目标；不覆盖嘲讽/混乱与近战前排规则
 var potions_left := 0                 # 治疗药剂
 var potion_cd_ticks := 0              # 药剂 CD（8 秒一瓶，防连点误用）
+var potion_effect_mult := 1.0
 const POTION_CD := 8 * 30
 ## 药剂回复比例（占最大生命）。表现层「道具页」直接读它写详情，避免两处各写一份 0.35。
 const POTION_HEAL_PCT := 0.35
@@ -68,6 +69,7 @@ func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 	if String(ally_cfg.get("bench_pet", "")) != "":
 		pet_bench_id = String(ally_cfg.bench_pet)
 	potions_left = int(ally_cfg.get("potions", 0))
+	potion_effect_mult = clampf(float(ally_cfg.get("potion_effect_mult",1.0)),0.9,1.1)
 	var cm: Variant = enemy_cfg.get("custom_mon", null)
 	if cm is Dictionary and not (cm as Dictionary).is_empty():
 		_build_custom_mon(cm as Dictionary)   # 演武场等：不走怪物池，直接给对手数据
@@ -433,7 +435,7 @@ func use_potion() -> bool:
 		return false
 	potions_left -= 1
 	potion_cd_ticks = POTION_CD
-	var amt := DamageCalc.heal_amount(role.get_max_hp(), 0, POTION_HEAL_PCT, 0.0)
+	var amt := DamageCalc.heal_amount(role.get_max_hp(), 0, POTION_HEAL_PCT * potion_effect_mult, 0.0)
 	role.heal(amt, role, self)
 	return true
 

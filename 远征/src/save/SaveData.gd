@@ -380,10 +380,24 @@ static func validate(data: Dictionary, now_sec: int) -> Dictionary:
 				return {"ok": false, "err": "prog.%s 应为数组" % k}
 		for k in ["talents", "equip", "skills", "mounts", "titles", "pet_stat",
 				"tips_seen", "settings", "gacha", "world_cleared", "lore_beats", "main_world", "story",
-				"ledger", "flags", "economy", "fishing"]:
+				"ledger", "flags", "economy", "fishing", "active_run", "quest_postings", "world_commissions"]:
 			var dv: Variant = pd.get(k)
 			if dv != null and not (dv is Dictionary):
 				return {"ok": false, "err": "prog.%s 应为对象" % k}
+		var active: Dictionary = pd.get("active_run", {})
+		if not WorldCommission.validate(pd.get("world_commissions",{})):
+			return {"ok":false,"err":"世界事务公布或阶段字段非法"}
+		if not pd.get("oaths",{}) is Dictionary or not preload("res://src/world/OathService.gd").validate(pd.get("oaths",{})):
+			return {"ok":false,"err":"守碑誓约快照字段非法"}
+		if not pd.get("dungeon_trials",{}) is Dictionary or not preload("res://src/world/DungeonTrial.gd").validate(pd.get("dungeon_trials",{})):
+			return {"ok":false,"err":"副本附加挑战字段非法"}
+		if not pd.get("trade_contracts",{}) is Dictionary or not preload("res://src/world/TradeContracts.gd").validate(pd.get("trade_contracts",{})):
+			return {"ok":false,"err":"商路合约字段非法"}
+		if not active.is_empty():
+			if not (active.get("state") is Dictionary) or not (active.get("current_node", {}) is Dictionary):
+				return {"ok": false, "err": "历练续局快照结构错误"}
+			var run := RunState.new()
+			if not run.restore(active.state): return {"ok": false, "err": "历练续局快照字段错误，保留原档"}
 		# v4 嵌套结构（P02）：存在就必须是正确类型，否则事务去重与遭遇锁会静默失效
 		var story: Variant = pd.get("story")
 		if story is Dictionary:

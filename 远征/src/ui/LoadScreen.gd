@@ -1,13 +1,13 @@
-# LoadScreen.gd —— 原版法师与古城背景 + 分帧预热资源 + 最短 1s
+# LoadScreen.gd —— 清晰法师与古城背景 + 分帧预热资源 + 最短 3.5s
 # 流程：Main → 本页（预热 image 素材索引与常用纹理，分帧加载不卡帧）
-#       → 完成（且距进场 ≥1s）→ Title。加载文案轮换一点行军趣味话。
+#       → 完成（且距进场 ≥3.5s）→ Title。加载文案轮换一点行军趣味话。
 extends Control
 const Wordmark := preload("res://src/ui/UIWordmark.gd")
 const Grounding := preload("res://src/world/BuildingGrounding.gd")
 const GROUND_IDS := ["hall", "gate", "barracks", "forge", "archive", "kennel", "storehouse", "shrine"]
 
 const TITLE_SCENE := "res://src/ui/Title.tscn"
-const MIN_SECONDS := 1.0
+const MIN_SECONDS := 3.5
 const PER_FRAME := 8        # 每帧预热的贴图数（59 项实际引用 + 行走帧 ≈ 数十张，分帧绰绰有余）
 const CODE_PER_FRAME := 1   # 每帧顺带编译的脚本/场景数（编译只能在主线程，只能摊开几帧）
 const BAR_W := 288.0        # 外框宽（问题 #1：进度条实际可用宽 = BAR_W - 2×BAR_INSET）
@@ -78,7 +78,7 @@ func _ready() -> void:
 
 
 func _build() -> void:
-	G.page_background(self, 0.08, "res://image/background/enter.png")
+	G.page_background(self, 0.08, "res://image/background/enter.png", false)
 
 	# 渐隐仅降低上下缘细节，保留背景原有光影。
 	for which in ["top", "bottom"]:
@@ -169,7 +169,7 @@ func _collect_queue() -> void:
 	_queue.append("res://image/role/fs/shuangyu_walk_4dir.png")
 	_queue.append("res://image/role/fz/chenxing_walk_4dir.png")
 	# 三张界面大背景（1.5~2.4MB 一张，不预热的话进主城/回主页会各卡一下）
-	for bg in ["home", "enter", "title", "login"]:
+	for bg in ["home", "enter", "title", "login", "courtyard_visual_v2"]:
 		if ResourceLoader.exists("res://image/background/%s.png" % bg):
 			_queue.append("res://image/background/%s.png" % bg)
 	for a in PRELOAD_AUDIO:
@@ -187,7 +187,7 @@ func _collect_queue() -> void:
 
 
 func _process(_d: float) -> void:
-	if _done:
+	if _done and not auto_advance:
 		return
 	for i in PER_FRAME:
 		if _queue.is_empty():
@@ -206,17 +206,15 @@ func _process(_d: float) -> void:
 			Grounding.prepare(art, 192, roundi(192.0 * art.get_height() / art.get_width()))
 	var left := _queue.size() + _code.size() + _ground.size()
 	var ratio := 0.0 if _total == 0 else clampf(float(_total - left) / float(_total), 0.0, 1.0)
+	var elapsed := float(Time.get_ticks_msec() - _t0) / 1000.0
+	# 预热和入场动画都完成后才满格，避免快速加载后进度条长时间停在 100%。
+	if auto_advance:
+		ratio = minf(ratio, clampf(elapsed / MIN_SECONDS, 0.0, 1.0))
 	_set_bar_ratio(ratio)
 	var stage_i := mini(STAGES.size() - 1, int(ratio * float(STAGES.size())))
 	_bar_l.text = "%s %d％" % [String(STAGES[stage_i]), roundi(ratio * 100.0)]
 	if left == 0:
-		_done = true   # 停轮询；等计时器补足 1s 再切
-		if not auto_advance:
-			return
-		var elapsed := float(Time.get_ticks_msec() - _t0) / 1000.0
-		if elapsed >= MIN_SECONDS:
+		_done = true   # 预热结束；进度条继续走完入场动画。
+		if auto_advance and elapsed >= MIN_SECONDS:
+			set_process(false)
 			G.go(TITLE_SCENE)
-		else:
-			var tw := create_tween()
-			tw.tween_interval(MIN_SECONDS - elapsed)
-			tw.tween_callback(func(): G.go(TITLE_SCENE))

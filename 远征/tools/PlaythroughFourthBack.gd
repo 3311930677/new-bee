@@ -40,7 +40,11 @@ func _ready() -> void:
 			if G.prog.flags.get(key)!=old.prog.flags[key]: return _bad("破坏旧世界旗 "+key)
 		for inst in old.prog.inventory.get("instances",[]):
 			var found := G.inv_find(int(inst.uid))
-			if found.is_empty(): return _bad("旧装备丢失 uid="+str(inst.uid))
+			if found.is_empty():
+				var receipt:Dictionary=_fixture_sales.get(int(inst.uid),{})
+				if receipt.is_empty() or JSON.parse_string(JSON.stringify(receipt.instance))!=inst:
+					return _bad("旧装备无卖出凭据而丢失 uid="+str(inst.uid))
+		print("PLAY_EVENT verified_plain_fixture_sales="+JSON.stringify(_fixture_sales))
 	if G.prog.story.done.size()!=36 or not G.story_current().is_empty() or G.prog.level!=60 \
 		or G.item_count("stele_key")!=0 or G.item_count("stable_seal")!=0 or G.item_count("stele_record")!=0 \
 		or not bool(G.prog.flags.get("act4_nameless_down",false)):

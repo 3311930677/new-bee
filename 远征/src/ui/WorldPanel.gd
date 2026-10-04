@@ -51,7 +51,7 @@ func _build() -> void:
 
 	var order: Array = G.theme_order()
 	var unlocked_n: int = int(G.prog.get("worlds_unlocked", 1))
-	var tip := G.gold_label("已解锁 %d / %d · 已通关 %d · 通关首领即揭开下一片大陆"
+	var tip := G.gold_label("回境 %d / %d · 已历练 %d · 与归路主线分别记录"
 		% [unlocked_n, order.size(), G.cleared_world_count()],
 		G.FS_XS, false, G.TEXT_MUTED, false)
 	tip.position = Vector2(0, 2)
@@ -118,7 +118,7 @@ func _slide(tid: String, idx: int, order: Array) -> Control:
 		lines.insert(0, "「%s」" % epi)
 
 	return SlideCardScript.new({
-		"kicker": "秘 境 %02d / %02d" % [idx + 1, order.size()],
+		"kicker": "回 境 %02d / %02d" % [idx + 1, order.size()],
 		"title": G.world_name(tid),
 		"art_names": ["world_%s_art" % tid, "world_%s" % tid],
 		"art_hint": "world_%s.png" % tid,

@@ -139,8 +139,7 @@ func _mount_card(m: Dictionary) -> Control:
 			if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 				_on_buy(mid))
 	elif is_active:
-		btn = G.gold_button("骑乘中", 84, 30, G.FS_SM)
-		(btn.get_child(0) as Label).add_theme_color_override("font_color", Color("a03020"))
+		btn = G.ghost_button("骑乘中", 84, 30, G.FS_SM)
 	else:
 		btn = G.gold_button("骑 乘", 84, 30, G.FS_SM)
 		btn.gui_input.connect(func(ev: InputEvent):

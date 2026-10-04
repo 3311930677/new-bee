@@ -8,11 +8,13 @@ extends Control
 
 const VIEW_W := 480.0
 const VIEW_H := 800.0
+const DirectionalIdle := preload("res://src/world/DirectionalIdle.gd")
 const TILE := 48.0
 const NPC_R := 52.0        # 人物交互半径
 const BUILD_R := 26.0      # 建筑轮廓外扩的交互边距
 const REARM_R := 90.0      # 走出这么远才允许再次触发
 
+const Journal := preload("res://src/ui/JournalUI.gd")
 const QuestPanelScript := preload("res://src/ui/QuestPanel.gd")   # 委托板（浮层）
 const MountVisual := preload("res://src/world/MountVisual.gd")
 
@@ -303,8 +305,7 @@ func _build_player() -> void:
 	_player_anim.scale = Vector2.ONE * 0.72
 	_player_anim.position = Vector2(0, -19.3)
 	_player_anim.animation = &"walk_down"
-	_player_anim.frame = 1
-	_player_anim.stop()
+	DirectionalIdle.stop(_player_anim)
 	_player.add_child(_player_anim)
 
 	var shape := CollisionShape2D.new()
@@ -454,10 +455,11 @@ func _refresh_stat() -> void:
 func _toast(msg: String) -> void:
 	if _toast_lbl != null and not _toast_lbl.is_queued_for_deletion():
 		_toast_lbl.queue_free()
-	_toast_lbl = G.gold_label(msg, G.FS_MD, false, Color("ffe9b0"))
-	_toast_lbl.position = Vector2(0, maxf(VIEW_H, get_viewport_rect().size.y) - 240.0)
-	_toast_lbl.custom_minimum_size = Vector2(VIEW_W, 0)
+	_toast_lbl = G.toast_label(msg)
+	_toast_lbl.position = Vector2(24, maxf(VIEW_H, get_viewport_rect().size.y) - 240.0)
 	_hud.add_child(_toast_lbl)
+	_place_dialogue_toast.call_deferred()
+	G.reveal_control(_toast_lbl)
 	var tw := create_tween()
 	tw.tween_interval(1.4)
 	tw.tween_property(_toast_lbl, "modulate:a", 0.0, 0.5)
@@ -492,19 +494,14 @@ func _physics_process(delta: float) -> void:
 
 func _update_player_anim(dir: Vector2) -> void:
 	if dir.length_squared() < 0.25:
-		_player_anim.stop()
-		_player_anim.frame = 1
+		DirectionalIdle.stop(_player_anim)
 		return
 	var anim := &"walk_down"
 	if absf(dir.x) > absf(dir.y):
 		anim = &"walk_right" if dir.x > 0 else &"walk_left"
 	else:
 		anim = &"walk_down" if dir.y > 0 else &"walk_up"
-	if _player_anim.animation != anim:
-		var gait_frame := _player_anim.frame
-		var gait_progress := _player_anim.frame_progress
-		_player_anim.animation = anim
-		_player_anim.set_frame_and_progress(gait_frame, gait_progress)
+	DirectionalIdle.change_walk_direction(_player_anim, anim)
 	_player_anim.speed_scale = dir.length() / maxf(1.0, float(_cfg.get("player_speed", 92.0)))
 	if not _player_anim.is_playing():
 		_player_anim.play()
@@ -561,6 +558,7 @@ func _npc_plate_overlaps_player(n: _CityNPC) -> bool:
 # ================= 浮层骨架 =================
 func _panel_base(title: String, w: float, h: float) -> Control:
 	var layer := Control.new()
+	layer.set_meta("visual_family",G.Visuals.title_family(title))
 	layer.set_anchors_preset(Control.PRESET_FULL_RECT)
 	layer.mouse_filter = Control.MOUSE_FILTER_STOP
 	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），城内所有面板共用同一层质感
@@ -578,6 +576,7 @@ func _panel_base(title: String, w: float, h: float) -> Control:
 	panel.add_child(content)
 	_panel = layer
 	_hud.add_child(layer)
+	G.fit_mobile_page.call_deferred(layer)
 	return content
 
 
@@ -590,7 +589,7 @@ func _close_panel() -> void:
 
 
 func _panel_back(content: Control, y: float, w := 120.0) -> void:
-	var back := G.gold_button("返 回", w, 38)
+	var back := G.ghost_button("返回", w, 38)
 	back.position = Vector2(((content.get_parent() as Control).custom_minimum_size.x - 32.0 - w) * 0.5, y)
 	back.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -693,78 +692,157 @@ func _refresh_city() -> void:
 	_build_npcs()
 
 
-## 已落成：建筑简介 + 它的用途按钮
+## 已落成：标题、说明与操作放在同一张便笺，短内容不再撑出一整页空白。
 func _show_built_panel(bd: Dictionary) -> void:
 	var act := String(bd.get("action", ""))
-	var content := _panel_base(String(bd.get("name", "建筑")), 360, 300)
-
-	var desc := G.text_label(String(bd.get("desc", "")), G.FS_SM, Color("5a4020"))
-	desc.position = Vector2(0, 8)
-	desc.custom_minimum_size = Vector2(328, 0)
-	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	content.add_child(desc)
-
+	var actions: Array[Dictionary] = []
 	var btn_text := ""
 	match act:
-		"notice":
-			btn_text = "查看布告板"
-		"visit":
-			btn_text = "翻开访客簿"
-		"worlds":
-			btn_text = "翻阅世界图志"
-		"codex":
-			btn_text = "翻看宠物图鉴"
-		"hatch":
-			btn_text = "孵化潮纹蛋"
-		"deploy":
-			btn_text = "整备出征"
-		"shop":
-			btn_text = "采买物资"
-		"trade:shenyuan_market":
-			btn_text = "查看港口行情"
-		"trade:frost_market":
-			btn_text = "查看驿站行情"
-		"mount":
-			btn_text = "查看马厩"
-		"soon":
-			btn_text = "尚未开放"
+		"notice": btn_text = "查看布告板"
+		"visit": btn_text = "翻开访客簿"
+		"worlds": btn_text = "翻阅世界图志"
+		"codex": btn_text = "翻看宠物图鉴"
+		"hatch": btn_text = "孵化潮纹蛋"
+		"deploy": btn_text = "整备出征"
+		"shop": btn_text = "采买物资"
+		"trade:shenyuan_market": btn_text = "查看港口行情"
+		"trade:frost_market": btn_text = "查看驿站行情"
+		"mount": btn_text = "查看马厩"
+		"soon": btn_text = "尚未开放"
 	if act.begins_with("activity:"):
 		btn_text = "领取 · %s" % G.activity_state(act.get_slice(":", 1))
-
-	var go := G.gold_button(btn_text, 240, 44)
-	go.position = Vector2(44, 176)
-	go.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_close_panel()
-			_built_action(act))
-	content.add_child(go)
+	if not btn_text.is_empty():
+		actions.append({"text": btn_text, "action": act})
 	if act == "worlds":
-		go.position.y = 116
-		var bosses := G.gold_button("深渊首领图志", 240, 44)
-		bosses.position = Vector2(44, 176)
-		bosses.gui_input.connect(func(e: InputEvent):
-			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-				_close_panel()
-				_open_abyss_boss_codex())
-		content.add_child(bosses)
-	if String(bd.get("id","")) == "frost_lodge":
-		go.position.y = 116
-		var training := G.gold_button("伙伴协战",240,44)
-		training.position = Vector2(44,172)
-		training.gui_input.connect(func(e: InputEvent):
-			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-				_close_panel()
-				_built_action("companion_training"))
-		content.add_child(training)
-	var back := G.gold_button("返 回", 240, 38)
-	back.position = Vector2(44, 232)
-	back.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_close_panel())
+		actions.append({"text": "深渊首领图志", "action": "abyss_codex"})
+		actions.append({"text": "翻阅行旅图志", "action": "field_journal"})
+		if G.story_step_done("s12"): actions.append({"text":"选择守碑誓约","action":"oath"})
+	if String(bd.get("id", "")) == "frost_lodge":
+		actions.append({"text": "伙伴协战", "action": "companion_training"})
+	var desc := Journal.label(String(bd.get("desc", "")), 17, Journal.INK)
+	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	desc.size.x = 344
+	desc.add_theme_constant_override("line_spacing", 6)
+	# 文字高度按实际换行计算；港口和后续章节的长说明同样能装下。
+	var body_h := maxf(58, desc.get_minimum_size().y)
+	var action_y := 146.0 + body_h + 22.0
+	if act == "visit":
+		action_y += 64
+	var height := 24 + action_y + actions.size() * 56 + 44 + 24
+	var content := _building_note_card(String(bd.get("name", "建筑")), height, String(bd.get("id", "")))
+	desc.position.y = 146
+	content.add_child(desc)
+	if act == "visit":
+		var book := Panel.new()
+		book.position = Vector2(0, 158 + body_h)
+		book.size = Vector2(344, 58)
+		book.add_theme_stylebox_override("panel", Journal.surface(Color("e0d1a9"), Color("c2ad7d"), 1))
+		book.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		content.add_child(book)
+		var icon := _building_book_icon()
+		icon.position = Vector2(14, 13)
+		book.add_child(icon)
+		var book_title := Journal.art_label("访客簿", 20)
+		book_title.position = Vector2(56, 5)
+		book.add_child(book_title)
+		var book_hint := Journal.label("据点木牌 · 来访旅人", 14, Journal.MUTED)
+		book_hint.position = Vector2(56, 32)
+		book.add_child(book_hint)
+	for i in actions.size():
+		var entry := actions[i]
+		var target := String(entry["action"])
+		var go := Journal.button(String(entry["text"]), 344, 48, "primary" if i == 0 else "secondary")
+		go.name = "BuildingAction%d" % i
+		go.position.y = action_y + i * 56
+		go.disabled = target == "soon"
+		if go.disabled:
+			go.modulate.a = 0.5
+		go.pressed.connect(func():
+			_close_panel()
+			if target == "abyss_codex":
+				_open_abyss_boss_codex()
+			else:
+				_built_action(target))
+		content.add_child(go)
+	var back := Journal.button("返回城内", 344, 44, "quiet")
+	back.name = "BuildingBack"
+	back.position.y = action_y + actions.size() * 56
+	back.pressed.connect(_close_panel)
 	content.add_child(back)
 
 
+func _building_note_card(title: String, height: float, building_id: String) -> Control:
+	var layer := Control.new()
+	layer.set_meta("visual_family",G.Visuals.title_family(title))
+	layer.set_anchors_preset(Control.PRESET_FULL_RECT)
+	layer.mouse_filter = Control.MOUSE_FILTER_STOP
+	_panel = layer
+	_hud.add_child(layer)
+	G.veil(layer, 0.70, true)
+	var panel := Journal.paper(392, height)
+	panel.set("header_height", 144.0)
+	panel.name = "BuildingNote"
+	panel.position = Vector2(44, (maxf(VIEW_H, get_viewport_rect().size.y) - height) * 0.5)
+	layer.add_child(panel)
+	var content := Control.new()
+	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	panel.add_child(content)
+	var art_id := "kennel" if building_id == "stable" else building_id
+	var art_path := "res://image/main_world/city_%s_reference_v2.png" % art_id
+	var texture := load(art_path) as Texture2D if ResourceLoader.exists(art_path) else G.res_tex("city_" + art_id)
+	if texture != null:
+		var picture := TextureRect.new()
+		picture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		picture.texture = texture
+		picture.position = Vector2(170, 4)
+		picture.size = Vector2(170, 110)
+		picture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		picture.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		picture.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		content.add_child(picture)
+	var eyebrow := Journal.label("城内设施", 14, Color("c6b892"), true)
+	eyebrow.position.y = 2
+	content.add_child(eyebrow)
+	var heading := Journal.art_label(title, 38 if title.length() < 5 else 25, Journal.GOLD)
+	heading.position.y = 27
+	heading.add_theme_color_override("font_shadow_color", Color("112c2a"))
+	heading.add_theme_constant_override("shadow_offset_y", 2)
+	content.add_child(heading)
+	var location := Journal.label(String(_cfg.get("name", G.city_name())), 14, Color("c6b892"), true)
+	location.position.y = 82
+	content.add_child(location)
+	var close := Journal.button("×", 44, 44, "dark_quiet")
+	close.position = Vector2(318, -18)
+	close.tooltip_text = "关闭"
+	close.pressed.connect(_close_panel)
+	content.add_child(close)
+	return content
+
+
+func _building_book_icon() -> TextureRect:
+	var icon := TextureRect.new()
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.texture = G.res_tex("itm_pet_book")
+	icon.size = Vector2(32, 32)
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return icon
+
+
 func _built_action(act: String) -> void:
+	if act == "oath":
+		_close_panel()
+		var oath_panel := preload("res://src/ui/OathPanel.gd").new()
+		_overlay = oath_panel
+		oath_panel.closed.connect(_close_overlay)
+		_hud.visible = false
+		_overlay_layer.add_child(oath_panel)
+		return
+	if act == "field_journal":
+		_panel = preload("res://src/ui/FieldJournalPanel.gd").new()
+		_panel.closed.connect(_close_panel)
+		_hud.add_child(_panel)
+		return
 	if act == "companion_training":
 		_panel = CompanionPanel.new()
 		(_panel as CompanionPanel).closed.connect(_close_panel)
@@ -1043,9 +1121,14 @@ func _open_dialog(nd: Dictionary, guest: bool, offer_return_job := true) -> void
 		return
 	Audio.sfx("ui_open")
 	var id := String(nd.get("id", ""))
-	if not guest and offer_return_job and not G.return_job_row(id).is_empty():
+	if not guest and offer_return_job and String(G.story_current().get("target", "")) != id and not G.return_job_row(id).is_empty():
 		_open_return_job(nd)
 		return
+	if not guest and offer_return_job and G.story_step_done("s36") and id not in ["npc_steward","npc_harbormaster","npc_frost_envoy"]:
+		for row in G.side_quest_rows():
+			if String(row.get("giver",""))==id and not (row.get("steps",[]) as Array).is_empty():
+				_open_npc_jobs(nd)
+				return
 	if not guest and id == "npc_steward" and String(G.story_current().get("id", "")) == "s36":
 		_open_campaign_ending()
 		return
@@ -1102,7 +1185,7 @@ func _open_dialog(nd: Dictionary, guest: bool, offer_return_job := true) -> void
 	var head := String(nd.get("name", "???"))
 	if title != "":
 		head += " · " + title
-	var name_l := G.gold_label(head, G.FS_SM, true, Color("8a4a2a"), false)
+	var name_l := G.serif_label(head, 24, G.BANNER)
 	name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	name_l.position = Vector2(0, 0)
 	content.add_child(name_l)
@@ -1113,20 +1196,14 @@ func _open_dialog(nd: Dictionary, guest: bool, offer_return_job := true) -> void
 	var portrait := _npc_portrait_tex(String(nd.get("id", "")), guest)
 	if portrait != null:
 		var frame := PanelContainer.new()
-		var fsb := StyleBoxTexture.new()
-		var frame_tex: Texture2D = G.res_tex("panel_border_brown")
-		if frame_tex != null:
-			fsb.texture = frame_tex
-			fsb.texture_margin_left = 8.0
-			fsb.texture_margin_right = 8.0
-			fsb.texture_margin_top = 8.0
-			fsb.texture_margin_bottom = 8.0
-			fsb.content_margin_left = 6.0
-			fsb.content_margin_top = 6.0
-			fsb.content_margin_right = 6.0
-			fsb.content_margin_bottom = 6.0
-			frame.add_theme_stylebox_override("panel", fsb)
-		frame.position = Vector2(0, 26)
+		var fsb := Journal.surface(Color("203938"), G.GOLD, 2)
+		fsb.set_border_width_all(2)
+		fsb.content_margin_left = 6.0
+		fsb.content_margin_top = 6.0
+		fsb.content_margin_right = 6.0
+		fsb.content_margin_bottom = 6.0
+		frame.add_theme_stylebox_override("panel", fsb)
+		frame.position = Vector2(0, 34)
 		frame.custom_minimum_size = Vector2(76, 76)
 		var pic := TextureRect.new()
 		pic.texture = portrait
@@ -1140,8 +1217,9 @@ func _open_dialog(nd: Dictionary, guest: bool, offer_return_job := true) -> void
 		text_w = 316.0
 
 	var line := G.text_label("", G.FS_MD, Color("3a2a14"))
-	line.position = Vector2(text_x, 30)
-	line.custom_minimum_size = Vector2(text_w, 64)
+	line.position = Vector2(text_x, 34)
+	line.custom_minimum_size = Vector2(text_w, 0)
+	line.size.x = text_w
 	line.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	content.add_child(line)
 
@@ -1151,9 +1229,10 @@ func _open_dialog(nd: Dictionary, guest: bool, offer_return_job := true) -> void
 	hint.custom_minimum_size = Vector2(400, 0)
 	content.add_child(hint)
 	# 行脚商人仍先说原有的任务/修碑台词；现货从初期可逛，首单由送盐支线解锁。
+	var market: Control = null
 	if not guest and id in ["npc_warden", "npc_port_trader"]:
 		hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-		var market := G.gold_button("市集交易", 122, 44, G.FS_XS)
+		market = G.gold_button("市集交易", 122, 36, G.FS_XS)
 		market.position = Vector2(274, 89)
 		market.gui_input.connect(func(e: InputEvent):
 			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -1161,7 +1240,7 @@ func _open_dialog(nd: Dictionary, guest: bool, offer_return_job := true) -> void
 				_open_first_order_preview("shenyuan_market" if id == "npc_port_trader" else "city_market"))
 		content.add_child(market)
 
-	var leave := G.gold_button("离 开", 64, 30, G.FS_XS)
+	var leave := G.ghost_button("离开", 64, 30, G.FS_XS)
 	leave.position = Vector2(336, -4)
 	leave.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -1180,7 +1259,8 @@ func _open_dialog(nd: Dictionary, guest: bool, offer_return_job := true) -> void
 		if String(offered_story.get("event", "")) == "talk" \
 		and String(offered_story.get("target", "")) == id else ""
 	_dlg = {"id": id, "guest": guest, "data": nd, "story_dialogue": offered_dialogue,
-		"turn": 0 if not offered_dialogue.is_empty() else int(_talk_turns.get(id, 0)), "line": line}
+		"turn": 0 if not offered_dialogue.is_empty() else int(_talk_turns.get(id, 0)),
+		"line": line, "paper": panel, "hint": hint, "market": market}
 	# 支线接取/交付（P05-B）：先落地再显示第一句——接取与交付各有专属台词，写盘失败内部会回滚。
 	var side_res := {}
 	if not guest:
@@ -1221,8 +1301,9 @@ func _open_first_order_preview(site_id := "city_market") -> void:
 		_refresh_stat())
 
 
-func _open_return_job(nd: Dictionary, reply := "") -> void:
-	var row := G.return_job_row(String(nd.get("id", "")))
+func _open_return_job(nd: Dictionary, reply := "", selected_qid := "") -> void:
+	var row := G.return_job_row(String(nd.get("id", ""))) if selected_qid.is_empty() else QuestService.side_row(G.side_quest_rows(),selected_qid)
+	if not row.is_empty() and (String(row.giver)!=String(nd.get("id","")) or (not String(row.get("requires_story","")).is_empty() and not G.story_step_done(String(row.requires_story)))):return
 	if row.is_empty(): return
 	var qid := String(row.id)
 	var status := G.side_status_of(qid)
@@ -1266,7 +1347,7 @@ func _open_return_job(nd: Dictionary, reply := "") -> void:
 				_toast("托付未能保存，请稍后再试")
 				return
 			_close_panel()
-			_open_return_job(nd,String(result.get("line",""))))
+			_open_return_job(nd,String(result.get("line","")),qid))
 	elif status == QuestService.SIDE_READY:
 		var choices: Dictionary=row.get("choices",{})
 		if choices.is_empty():
@@ -1284,16 +1365,53 @@ func _open_return_job(nd: Dictionary, reply := "") -> void:
 				_toast("追踪未能保存，请稍后再试")
 				return
 			_close_panel()
-			_open_return_job(nd,"已追踪这份托付；地图任务栏和罗盘会指向下一处目标。"))
-	_return_job_button(content,"原有事务",Vector2(8,414),184,func():
+			_open_return_job(nd,"已追踪这份托付；地图任务栏和罗盘会指向下一处目标。",qid))
+	_return_job_button(content,"原有事务",Vector2(8,414),120,func():
 		_close_panel()
 		_open_dialog(nd,false,false))
+	_return_job_button(content,"其他托付",Vector2(140,414),120,func():
+		_close_panel()
+		_open_npc_jobs(nd))
 	_panel_back(content,414,120)
 	# Keep the back button beside the original-service entry.
 	(content.get_child(content.get_child_count()-1) as Control).position.x=260
 	if _embedded_map!=null:
 		_embedded_map.call("_refresh_quest_entities")
 		_embedded_map.call("_refresh_hud")
+
+
+func _open_npc_jobs(nd:Dictionary)->void:
+	var content:=_panel_base("%s · 沿路托付"%String(nd.get("name","旧识")),432,552)
+	var scroll:=ScrollContainer.new()
+	scroll.position=Vector2(8,10)
+	scroll.size=Vector2(384,446)
+	scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
+	content.add_child(scroll)
+	var list:=VBoxContainer.new()
+	list.custom_minimum_size.x=364
+	list.add_theme_constant_override("separation",12)
+	scroll.add_child(list)
+	for row in G.side_quest_rows():
+		if String(row.get("giver",""))!=String(nd.get("id","")):continue
+		if not String(row.get("requires_story","")).is_empty() and not G.story_step_done(String(row.requires_story)):continue
+		var qid:=String(row.id)
+		var status:=G.side_status_of(qid)
+		var words:={"":"未接取",QuestService.SIDE_ACTIVE:"进行中",QuestService.SIDE_READY:"可交付",QuestService.SIDE_DONE:"已完成"}
+		var button:=G.gold_button("%s · %s"%[String(row.title),String(words.get(status,"进行中"))],364,54,G.FS_SM)
+		button.set_meta("side_job_id",qid)
+		button.gui_input.connect(func(event:InputEvent):
+			if event is InputEventMouseButton and event.pressed and event.button_index==MOUSE_BUTTON_LEFT:
+				_close_panel()
+				_open_return_job(nd,"",qid))
+		list.add_child(button)
+	if list.get_child_count()==0:
+		var empty:=G.text_label("继续走访归路后，会有新的托付。",G.FS_SM)
+		list.add_child(empty)
+	_return_job_button(content,"原有事务",Vector2(8,474),176,func():
+		_close_panel()
+		_open_dialog(nd,false,false))
+	_panel_back(content,474)
+	(content.get_child(content.get_child_count()-1) as Control).position.x=260
 
 
 func _return_job_button(content: Control, title: String, at: Vector2, width: float, action: Callable) -> void:
@@ -1312,7 +1430,7 @@ func _finish_return_job(nd: Dictionary, qid: String, choice: String) -> void:
 		return
 	_close_panel()
 	for toast in result.get("toasts",[]): _toast(String(toast))
-	_open_return_job(nd,String(result.get("line","")))
+	_open_return_job(nd,String(result.get("line","")),qid)
 
 
 func _open_campaign_ending() -> void:
@@ -1371,9 +1489,13 @@ func _open_campaign_response(id: String) -> void:
 	note.custom_minimum_size = Vector2(384,65)
 	note.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	content.add_child(note)
+	if id in ["npc_harbormaster","npc_frost_envoy"]:
+		_return_job_button(content,"沿路托付",Vector2(8,197),176,func():
+			_close_panel()
+			_open_npc_jobs(G.city_npc(id)))
 	if id == "npc_harbormaster":
 		var services := G.gold_button("港务事务",176,44,G.FS_SM)
-		services.position = Vector2(112,197)
+		services.position = Vector2(208,197)
 		services.gui_input.connect(func(e: InputEvent):
 			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 				_close_panel()
@@ -1973,7 +2095,8 @@ func _open_shipping_panel(order_id := "salt_ship") -> void:
 	for i in 2:
 		var route_id := "salt_ship" if i == 0 else "herb_ship"
 		var route := G.shipping_config(route_id)
-		var tab := G.gold_button(String(route.get("name", "船单")), 184, 38, G.FS_SM)
+		var tab := G.gold_button(String(route.get("name", "船单")), 184, 38, G.FS_SM) if route_id == order_id \
+			else G.ghost_button(String(route.get("name", "船单")), 184, 38, G.FS_SM)
 		tab.position = Vector2(12 + i * 194, 16)
 		tab.gui_input.connect(func(e: InputEvent):
 			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -1997,13 +2120,28 @@ func _open_shipping_panel(order_id := "salt_ship") -> void:
 		int(info.get("freight_gold", 0)), int(info.get("purchase_gold", 0)), int(info.get("expected_profit_gold", 0)),
 		int(info.get("reward_exp", 0)), timing, aid_line]
 	var label := G.text_label(body, G.FS_SM, Color("493724"))
-	label.position = Vector2(20, 72)
-	label.custom_minimum_size = Vector2(382, 324)
+	label.custom_minimum_size = Vector2(358, 0)
+	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	content.add_child(label)
+	var reading := ScrollContainer.new()
+	reading.name = "ShippingDetails"
+	reading.position = Vector2(20, 72)
+	reading.size = Vector2(374, 324)
+	reading.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	var scroll_track := Journal.surface(Color("5b4435", 0.12), Color.TRANSPARENT, 0)
+	scroll_track.set_content_margin_all(3)
+	var scroll_grip := Journal.surface(Color("a68b63"), Color.TRANSPARENT, 0)
+	scroll_grip.set_content_margin_all(3)
+	var scrollbar := reading.get_v_scroll_bar()
+	scrollbar.add_theme_stylebox_override("scroll", scroll_track)
+	for state in ["grabber", "grabber_highlight", "grabber_pressed"]:
+		scrollbar.add_theme_stylebox_override(state, scroll_grip)
+	reading.add_child(label)
+	content.add_child(reading)
 	var actions := {"available": "接取船单", "expired": "重新接单", "active": "交货装船", "ready": "领取报酬"}
 	if actions.has(status):
 		var button := G.gold_button(String(actions[status]), 220, 42, G.FS_SM)
+		button.name = "ShippingAction"
 		button.position = Vector2(92, 414)
 		button.gui_input.connect(func(e: InputEvent):
 			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -2184,15 +2322,20 @@ func _show_dialog_line() -> void:
 				and String(_dlg.get("id", "")) == "npc_steward" \
 				and bool((G.prog.get("flags", {}) as Dictionary).get("act1_lost_beast_down", false)):
 			txt = "路西的兽影散了——碑坡那边的路，如今走得安心。"
-		if txt == "" and int(_dlg.get("turn", 0)) == 0 \
+		if int(_dlg.get("turn", 0)) == 0 \
 				and String(_dlg.get("id", "")) == "npc_frost_miner" \
 				and bool((G.prog.get("flags", {}) as Dictionary).get("frost_herb_first_done", false)):
 			var herb_record: Dictionary = (G.economy_state().get("orders", {}) as Dictionary).get("frost_herb_supply", {})
-			txt = "药箱绕旧驿到了，药架终于有货；多走的路没白费。" \
+			var delivery_line := "药箱绕旧驿到了，药架终于有货；多走的路没白费。" \
 				if String(herb_record.get("route", "")) == "safe" else \
 				"药箱穿过风沙近路到了，药架终于有货；今晚能替伤员换药。"
+			txt = delivery_line + ("\n" + txt if not txt.is_empty() else "")
 		if txt == "":
 			txt = G.side_npc_line(String(_dlg.get("id", "")))
+		if txt == "" and int(_dlg.get("turn", 0)) == 0 and String(_dlg.get("id", "")) == "npc_frost_miner" \
+				and bool(G.prog.get("flags", {}).get("act3_mine_rooms_v1", false)) \
+				and bool(G.prog.get("flags", {}).get("act3_mine_switch", false)):
+			txt = "两座风轮排清了烟，北轨的矿车把我们都带了出来。三顶工帽留在入口，轮岗簿上也记着人名。"
 		if txt == "" and int(_dlg.get("turn", 0)) == 0 \
 				and bool((G.prog.get("flags", {}) as Dictionary).get("act1_stele_repaired", false)):
 			var repair_method := String(G.act1_state().get("repair_method", ""))
@@ -2208,14 +2351,49 @@ func _show_dialog_line() -> void:
 			txt = G.npc_quest_line(String(_dlg.get("id", "")))
 		if txt == "":
 			txt = G.npc_line(String(_dlg.get("id", "")), int(_dlg.get("turn", 0)))
+		if int(_dlg.get("turn",0)) == 1:
+			var trust_line := preload("res://src/world/RegionalTrust.gd").npc_line(G,String(_dlg.get("id","")))
+			if not trust_line.is_empty(): txt = trust_line
 	line.text = txt
+	_layout_dialogue.call_deferred()
+	G.type_text(line)
 	var id := String(_dlg.get("id", ""))
 	_talk_turns[id] = int(_dlg.get("turn", 0)) + 1
+
+
+## Keep the complete wrapped sentence above a separate footer, anchored to the bottom.
+func _layout_dialogue() -> void:
+	var line: Label = _dlg.get("line", null)
+	var paper: Control = _dlg.get("paper", null)
+	var hint: Label = _dlg.get("hint", null)
+	if not is_instance_valid(line) or not is_instance_valid(paper) or not is_instance_valid(hint):
+		return
+	var body_h := maxf(76.0, line.get_minimum_size().y)
+	line.size.y = body_h
+	var footer_y := line.position.y + body_h + 14.0
+	hint.position.y = footer_y
+	var market: Control = _dlg.get("market", null)
+	if is_instance_valid(market): market.position.y = footer_y - 8.0
+	var panel_h := footer_y + (50.0 if is_instance_valid(market) else 42.0)
+	paper.custom_minimum_size = Vector2(432, panel_h)
+	paper.size = paper.custom_minimum_size
+	var safe:=G.ui_safe_rect(self)
+	paper.position.y = safe.end.y - panel_h - 40.0
+	_place_dialogue_toast()
+
+
+func _place_dialogue_toast() -> void:
+	if not is_instance_valid(_toast_lbl) or _toast_lbl.is_queued_for_deletion(): return
+	var paper: Control = _dlg.get("paper", null)
+	if is_instance_valid(paper):
+		_toast_lbl.position.y = minf(_toast_lbl.position.y, paper.position.y - _toast_lbl.size.y - 14.0)
 
 
 func _advance_dialog() -> void:
 	if _dlg.is_empty():
 		return
+	var line: Label = _dlg.get("line",null)
+	if line != null and G.finish_text(line): return
 	_dlg["turn"] = int(_dlg.get("turn", 0)) + 1
 	_show_dialog_line()
 
@@ -2256,6 +2434,10 @@ func _open_shop() -> void:
 
 
 func _open_deploy() -> void:
+	if not (G.prog.get("active_run", {}) as Dictionary).is_empty():
+		RouteScene.pending_run = {"resume": true}
+		G.go("res://src/run/RouteScene.tscn")
+		return
 	if _overlay != null:
 		return
 	Audio.sfx("ui_open")
@@ -2475,7 +2657,7 @@ class _Building extends StaticBody2D:
 	## 木牌：名字 (+ 状态)。P01 样板 §5：最小可读字号为 FS_XS(13)，
 	## 状态行原来画 10px（低于任何一档），牌高与行距随之加高。
 	func _plaque(txt: String, sub: String, y: float) -> void:
-		var pw := maxf(80.0, G.font_bold.get_string_size(txt, HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS).x + 20)
+		var pw := maxf(60.0, G.font_display.get_string_size(txt, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x + 18)
 		var ph := 24.0
 		# Clip signs at the viewport edge instead of leaving detached half-labels.
 		var screen_at: Vector2 = get_global_transform_with_canvas() * Vector2(0, y)
@@ -2486,9 +2668,9 @@ class _Building extends StaticBody2D:
 			ph = 44.0
 		draw_rect(Rect2(-pw / 2, y, pw, ph), Color("e8d5a3"))
 		draw_rect(Rect2(-pw / 2, y, pw, ph), Color("8a6220"), false, 1.5)
-		var ts := G.font_bold.get_string_size(txt, HORIZONTAL_ALIGNMENT_CENTER, -1, G.FS_XS)
-		draw_string(G.font_bold, Vector2(-ts.x / 2, y + 18), txt,
-			HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS, Color("3a2a14"))
+		var ts := G.font_display.get_string_size(txt, HORIZONTAL_ALIGNMENT_CENTER, -1, 13)
+		draw_string(G.font_display, Vector2(-ts.x / 2, y + 17), txt,
+			HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color("3a2a14"))
 		if sub != "":
 			var ss := G.font_reg.get_string_size(sub, HORIZONTAL_ALIGNMENT_CENTER, -1, G.FS_XS)
 			draw_string(G.font_reg, Vector2(-ss.x / 2, y + 37), sub,
@@ -2874,19 +3056,20 @@ class _CityNPC extends Node2D:
 		var txt := String(data.get("name", "???"))
 		var title := String(data.get("title", ""))
 		if title != "" and embedded:
-			txt += " · " + title
+			set_meta("npc_title", title)
 		# 名牌高度随形象变：像素小人身高 80（含头）→ -108；立绘 104 → -114；色块小人 → -52
 		_plate_top = -108.0 if frames != null else (-114.0 if art != null else -52.0)
 		if embedded and frames != null:
 			# 成人名牌保留原安全高度，避免与0.66倍主角名牌相交后被隐藏。
 			_plate_top = -78.0 if String(data.get("id", "")) == "npc_child" else -108.0
 		_plate_w = clampf(G.font_bold.get_string_size(txt,
-			HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_SM).x + 16.0, 76.0, 156.0) \
+			HORIZONTAL_ALIGNMENT_LEFT, -1, 14).x + 16.0, 56.0, 112.0) \
 			if embedded else maxf(64.0, G.font_bold.get_string_size(txt, HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS).x + 20)
 		_plate_h = 22.0 if embedded else 26.0
 		# 字号收进六档（P01 样板 §5）：主世界里的城务 NPC 名签原来是不在档里的字面量 14
-		_name_l = G.gold_label(txt, G.FS_SM if embedded else G.FS_XS,
-			embedded, Color("fff5df"), false)
+		_name_l = G.serif_label(txt,14,Color("fff5df"),false)
+		_name_l.add_theme_font_override("font",G.font_art)
+		_name_l.add_theme_font_size_override("font_size",16 if embedded else 14)
 		_name_l.position = Vector2(-_plate_w * 0.5, _plate_top + 2)
 		_name_l.custom_minimum_size = Vector2(_plate_w, 0)
 		_name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -2897,7 +3080,7 @@ class _CityNPC extends Node2D:
 		var psb := StyleBoxFlat.new()
 		# 深木硬边名牌与新的纸页/金钮共用材质语言。
 		# 名牌按文字内容收紧，_clamp_plate() 按实际宽度钳制屏内位置。
-		psb.bg_color = Color("203437", 0.96)
+		psb.bg_color = Color("373b36", 0.85)
 		psb.set_corner_radius_all(0)
 		psb.set_border_width_all(1)
 		psb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.45)

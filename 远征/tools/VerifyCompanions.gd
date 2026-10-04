@@ -16,6 +16,9 @@ func _chapter(n: int) -> void:
 
 func _press(button: Control) -> void:
 	if button == null: return
+	if button is BaseButton:
+		(button as BaseButton).pressed.emit()
+		return
 	var event := InputEventMouseButton.new()
 	event.button_index = MOUSE_BUTTON_LEFT
 	event.pressed = true

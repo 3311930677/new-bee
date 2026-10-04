@@ -131,6 +131,8 @@ func _run_phase_a() -> void:
 	if not await _need("s09"):
 		return
 
+	if not await _solve_dungeon_puzzles("stele_cavern"): return
+
 	# --- 第一次打碑灵：脱光装备 + 关自动，真实战败 → 主界面 ---
 	print("PLAY_EVENT boss_attempt=lose prepare")
 	if not _strip_all_equip():
@@ -251,6 +253,7 @@ func _run_second_act() -> bool:
 		if not await _fight_nearest("win", "mon_tidal_guard"): return false
 	if not await _need("s18"): return false
 	if not await _exit_to("tideflat", Vector2(480, 96), "tidal_gate"): return false
+	if not await _solve_dungeon_puzzles("tidal_gate"): return false
 	# 残血、不上宠作为失败夹具；由真实首领攻击判败，绝不写任务进度。
 	_map.st.active_pet = ""
 	_map.st.bench_pet = ""
@@ -265,6 +268,8 @@ func _run_second_act() -> bool:
 	print("PLAY_EVENT act2_defeat_reenter map=tidal_gate clue=1")
 	if not await _fight_nearest("win", "mon_tide_priest"): return false
 	if not await _need("s19"): return false
+	if not await _move_to(Vector2(420,420)): return false
+	if not await _move_to(Vector2(420,530)): return false
 	if not await _exit_to("tidal_gate", Vector2(480, 1152), "tideflat"): return false
 	if not await _exit_to("tideflat", Vector2(90, 700), "shenyuan_port"): return false
 	if not await _choose_port_route(): return false
@@ -303,6 +308,7 @@ func _run_third_act_back() -> bool:
 	_map.st.active_pet = ""
 	_map.st.bench_pet = ""
 	_map.st.hp = 1
+	if not await _solve_dungeon_puzzles("rift_mine_vault"): return false
 	if not await _fight_nearest("boss_lose", "mon_redsand_guard"): return false
 	if G.item_count("mine_record") != 1 or G.story_step_done("s25"):
 		return _bad("械卫败北误交记录或推进主线")
@@ -351,6 +357,46 @@ func _choose_frost_route() -> bool:
 			if not await _close_city_modal(): return false
 		await _wait_frames(4)
 	return _bad("未找到双关供货选择")
+
+
+func _solve_dungeon_puzzles(mid: String) -> bool:
+	var sequences := {
+		"stele_cavern": [["act1_echo_crack_left", ""], ["act1_echo_crack_middle", ""],
+			["act1_echo_crack_right", ""], ["act1_echo_rubbing", ""],
+			["act1_echo_west", "引回两声轻响"], ["act1_echo_shadow", "循侧壁阴刻绕过"],
+			["act1_echo_east", "缺口朝碑心"]],
+		"tidal_gate": [["act2_tide_record", ""], ["act2_tide_upper", "先向旧渠泄水"],
+			["act2_tide_bridge", "先通栈桥步道"], ["act2_tide_rescue_cargo", ""]],
+		"rift_mine_vault": [["act3_mine_record", ""], ["act3_mine_wheel", "向西排烟"],
+			["act3_mine_second_wheel", "从南井引入清风"], ["act3_mine_switch", "拨向北侧避烟线"]]
+	}
+	for pair in sequences.get(mid, []):
+		var eid := String(pair[0])
+		var row: Dictionary = TableCache.main_world_map(mid).get("entities", {}).get(eid, {})
+		var flag := String(row.get("flag", ""))
+		if bool(G.prog.get("flags", {}).get(flag, false)): continue
+		var entity: Node2D = null
+		for candidate in _map._quest_entities:
+			if is_instance_valid(candidate) and String(candidate.eid) == eid: entity = candidate
+		if entity == null: return _bad("机关缺失：" + eid)
+		var result := await _walk_to(entity.position, 25.0, 3600)
+		if result not in ["ok", "modal"]: return _bad("机关导航失败：%s %s" % [eid, result])
+		_release_all()
+		await _wait_frames(5)
+		if not String(pair[1]).is_empty():
+			var label := _find_label(_map._puzzle_panel, [String(pair[1]).replace(" ", "")])
+			if label == null: return _bad("机关选项缺失：" + String(pair[1]))
+			if not await _click_until(label.get_parent() as Control,
+				func() -> bool: return bool(G.prog.get("flags", {}).get(flag, false)), 40, eid):
+				return _bad("机关选项未生效：" + eid)
+		if not bool(G.prog.get("flags", {}).get(flag, false)): return _bad("机关调查未生效：" + eid)
+		print("PLAY_EVENT puzzle_done " + eid)
+		await _wait_frames(3)
+	if mid == "tidal_gate":
+		# Follow the visible bridge lane; the central pier remains a physical divider.
+		if not await _move_to(Vector2(420,530)): return false
+		if not await _move_to(Vector2(420,420)): return false
+	return true
 
 
 func _visit_entity(entity_id: String, step: String) -> bool:
@@ -879,7 +925,10 @@ func _close_city_modal() -> bool:
 		root = _map._city_content.get("_panel") as Node
 	if root == null:
 		root = _map._hud
-	var lbl := _find_label(root, ["离开", "返回"])
+	var native_back := root.find_child("BuildingBack", true, false) as Button if root != null else null
+	if native_back != null:
+		return await _click_until(native_back, func() -> bool: return not _city_modal(), 60, "close_building")
+	var lbl := _find_label(root, ["离开", "返回", "返回城内"])
 	if lbl == null:
 		print("PLAY_DIAG close_modal no_close_label")
 		return false

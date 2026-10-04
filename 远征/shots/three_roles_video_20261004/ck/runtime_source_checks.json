@@ -1,0 +1,3026 @@
+{
+  "video": "D:\\new-bee\\1791088493611..mp4",
+  "sha256": "0332afd64ed27464b8a261782e4ea099778e16ae5849ad9fff207f4e54096dfe",
+  "fps": 24.0,
+  "method": "consecutive original frames; background matte only; uniform camera registration; nearest sampling; no synthesis",
+  "directions": {
+    "down": {
+      "source_range": [
+        25,
+        48
+      ],
+      "count": 24,
+      "frames": [
+        {
+          "frame": 25,
+          "time": 1.0416666666666667,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            169,
+            89,
+            494,
+            622
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.2062062501371469,
+          "origin": [
+            -5,
+            -8
+          ],
+          "runtime_bbox": [
+            30,
+            10,
+            97,
+            120
+          ],
+          "rgba_sha256": "24bb64cffdb07860e0208774292afbcdffa3e8ab8eae61bade822e07d301c4d8",
+          "slot": 0
+        },
+        {
+          "frame": 26,
+          "time": 1.0833333333333333,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            168,
+            91,
+            496,
+            625
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20598333130239838,
+          "origin": [
+            -5,
+            -8
+          ],
+          "runtime_bbox": [
+            29,
+            11,
+            97,
+            121
+          ],
+          "rgba_sha256": "98ff849ac3ede0b37d99dd0677b66b2d41a43f2027b5f6031ebe5d66c4fe2049",
+          "slot": 1
+        },
+        {
+          "frame": 27,
+          "time": 1.125,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            168,
+            92,
+            497,
+            626
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20576089391905641,
+          "origin": [
+            -4,
+            -8
+          ],
+          "runtime_bbox": [
+            30,
+            11,
+            98,
+            121
+          ],
+          "rgba_sha256": "ffd6883a56ec7e0fb5dedab3aed9d205b332710d4a7ddbda869bed803a591875",
+          "slot": 2
+        },
+        {
+          "frame": 28,
+          "time": 1.1666666666666667,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            168,
+            93,
+            497,
+            627
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20553893642907367,
+          "origin": [
+            -4,
+            -8
+          ],
+          "runtime_bbox": [
+            30,
+            11,
+            98,
+            121
+          ],
+          "rgba_sha256": "0437b8f876e3687cacfa34c380456dd4072975b2eaa849b409401b2f7024713b",
+          "slot": 3
+        },
+        {
+          "frame": 29,
+          "time": 1.2083333333333333,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            169,
+            92,
+            497,
+            626
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20531745728111817,
+          "origin": [
+            -4,
+            -8
+          ],
+          "runtime_bbox": [
+            31,
+            11,
+            98,
+            121
+          ],
+          "rgba_sha256": "bd65b58803944cac8c75b0440cccf1f18608a3412513dcef1c46d1b6b153f4f6",
+          "slot": 4
+        },
+        {
+          "frame": 30,
+          "time": 1.25,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            170,
+            89,
+            496,
+            625
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.2050964549305373,
+          "origin": [
+            -4,
+            -8
+          ],
+          "runtime_bbox": [
+            31,
+            10,
+            98,
+            120
+          ],
+          "rgba_sha256": "f17a5622c76a30fa2c867eb1cec3680d55b0867158f9bb678b317229b0cfca75",
+          "slot": 5
+        },
+        {
+          "frame": 31,
+          "time": 1.2916666666666667,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            171,
+            88,
+            496,
+            625
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20487592783932204,
+          "origin": [
+            -4,
+            -8
+          ],
+          "runtime_bbox": [
+            31,
+            10,
+            98,
+            120
+          ],
+          "rgba_sha256": "07ee1659e50d312dfa3c8d0a3137644dac038407768c28fe398c07bdf24cb8e4",
+          "slot": 6
+        },
+        {
+          "frame": 32,
+          "time": 1.3333333333333333,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            172,
+            86,
+            495,
+            624
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20465587447607103,
+          "origin": [
+            -4,
+            -8
+          ],
+          "runtime_bbox": [
+            31,
+            10,
+            98,
+            120
+          ],
+          "rgba_sha256": "cc56fd267186f2d8b9722db662fa50baf759aea9438f185ba5f1bc2e77284e34",
+          "slot": 7
+        },
+        {
+          "frame": 33,
+          "time": 1.375,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            173,
+            85,
+            495,
+            623
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20443629331595525,
+          "origin": [
+            -4,
+            -8
+          ],
+          "runtime_bbox": [
+            31,
+            9,
+            97,
+            119
+          ],
+          "rgba_sha256": "984db8b1c12a4b91e9735403a372755f85dd36d49b4b773fdf1f347c6902a826",
+          "slot": 8
+        },
+        {
+          "frame": 34,
+          "time": 1.4166666666666667,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            174,
+            85,
+            494,
+            622
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20421718284068294,
+          "origin": [
+            -4,
+            -8
+          ],
+          "runtime_bbox": [
+            31,
+            9,
+            97,
+            119
+          ],
+          "rgba_sha256": "b4b393064d5d92b35dc10d9fe959b5a587c125cf0ebc69cfa6cd5b0122bee316",
+          "slot": 9
+        },
+        {
+          "frame": 35,
+          "time": 1.4583333333333333,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            174,
+            85,
+            494,
+            624
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20399854153846428,
+          "origin": [
+            -4,
+            -8
+          ],
+          "runtime_bbox": [
+            31,
+            9,
+            97,
+            120
+          ],
+          "rgba_sha256": "0531820a86b85fe3bf8e859e18041b70213f990af9ae8bb3840958b95d72e2c1",
+          "slot": 10
+        },
+        {
+          "frame": 36,
+          "time": 1.5,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            175,
+            86,
+            493,
+            626
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20378036790397688,
+          "origin": [
+            -4,
+            -8
+          ],
+          "runtime_bbox": [
+            32,
+            10,
+            96,
+            120
+          ],
+          "rgba_sha256": "1316b93f33abb7f5f3485eea8d45d76c0184b68fb0fb26384f5cd8a8d1921e77",
+          "slot": 11
+        },
+        {
+          "frame": 37,
+          "time": 1.5416666666666667,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            175,
+            88,
+            493,
+            627
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20356266043833127,
+          "origin": [
+            -4,
+            -8
+          ],
+          "runtime_bbox": [
+            32,
+            10,
+            96,
+            119
+          ],
+          "rgba_sha256": "d1e6f877cd97d4fd1024e0c78fc35d436f2ec960bce5bad9ec95ecf21b5c1b78",
+          "slot": 12
+        },
+        {
+          "frame": 38,
+          "time": 1.5833333333333333,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            175,
+            90,
+            492,
+            630
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20334541764903624,
+          "origin": [
+            -4,
+            -8
+          ],
+          "runtime_bbox": [
+            32,
+            10,
+            96,
+            120
+          ],
+          "rgba_sha256": "e4e6b5daaf10b70f5ddbaec61211133e7b7bea9cbed5c07958c5cf3d1d79e1d4",
+          "slot": 13
+        },
+        {
+          "frame": 39,
+          "time": 1.625,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            175,
+            91,
+            492,
+            630
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20312863804996512,
+          "origin": [
+            -4,
+            -7
+          ],
+          "runtime_bbox": [
+            32,
+            11,
+            96,
+            121
+          ],
+          "rgba_sha256": "fe71a9b4bea2fc9bb0dee9f5c2ce5f83825b674de2c193567874096f1ca9068c",
+          "slot": 14
+        },
+        {
+          "frame": 40,
+          "time": 1.6666666666666667,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            175,
+            90,
+            492,
+            631
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.2029123201613216,
+          "origin": [
+            -4,
+            -7
+          ],
+          "runtime_bbox": [
+            31,
+            11,
+            95,
+            121
+          ],
+          "rgba_sha256": "aff95f914ec2d9961d9a91d2a537b844be0517990756e1576c7f927cacaacb8a",
+          "slot": 15
+        },
+        {
+          "frame": 41,
+          "time": 1.7083333333333333,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            174,
+            89,
+            492,
+            630
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20269646250960638,
+          "origin": [
+            -3,
+            -7
+          ],
+          "runtime_bbox": [
+            32,
+            11,
+            96,
+            121
+          ],
+          "rgba_sha256": "60ee2dfd8bf3ad9a0db4b441c4661e0860496b89916f360c9b14d8009500968c",
+          "slot": 16
+        },
+        {
+          "frame": 42,
+          "time": 1.75,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            172,
+            85,
+            492,
+            629
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20248106362758334,
+          "origin": [
+            -3,
+            -7
+          ],
+          "runtime_bbox": [
+            32,
+            10,
+            96,
+            121
+          ],
+          "rgba_sha256": "93865ca76be81d855665c8797dc8556f210985a6faf6380dfa35f397c061fe6a",
+          "slot": 17
+        },
+        {
+          "frame": 43,
+          "time": 1.7916666666666667,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            172,
+            83,
+            493,
+            628
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.2022661220542465,
+          "origin": [
+            -3,
+            -7
+          ],
+          "runtime_bbox": [
+            32,
+            10,
+            97,
+            120
+          ],
+          "rgba_sha256": "94196c5899a00fc7c055bb9c52b72be6d2dd10b16db21d559c461231c3355341",
+          "slot": 18
+        },
+        {
+          "frame": 44,
+          "time": 1.8333333333333333,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            170,
+            82,
+            494,
+            628
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20205163633478704,
+          "origin": [
+            -3,
+            -7
+          ],
+          "runtime_bbox": [
+            31,
+            10,
+            97,
+            120
+          ],
+          "rgba_sha256": "d1f8732ab4164848d5b2e8f388262d7ac051aa658698f0d495d317ac04df8f83",
+          "slot": 19
+        },
+        {
+          "frame": 45,
+          "time": 1.875,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            169,
+            81,
+            495,
+            627
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20183760502056033,
+          "origin": [
+            -3,
+            -7
+          ],
+          "runtime_bbox": [
+            31,
+            9,
+            97,
+            119
+          ],
+          "rgba_sha256": "2c8e85030d45f32dacb048d8284472cdbb9983521c68f07adc6320993f5193f5",
+          "slot": 20
+        },
+        {
+          "frame": 46,
+          "time": 1.9166666666666667,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            166,
+            82,
+            496,
+            628
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20162402666905338,
+          "origin": [
+            -3,
+            -7
+          ],
+          "runtime_bbox": [
+            31,
+            10,
+            97,
+            120
+          ],
+          "rgba_sha256": "d1a9a53f7f916c8b9e9c63bdf19bf804575e15286145ba73e4629a5c1a00140d",
+          "slot": 21
+        },
+        {
+          "frame": 47,
+          "time": 1.9583333333333333,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            165,
+            83,
+            498,
+            629
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20141089984385255,
+          "origin": [
+            -3,
+            -7
+          ],
+          "runtime_bbox": [
+            30,
+            10,
+            98,
+            120
+          ],
+          "rgba_sha256": "0a680e18d4517cccdb096f8037dbb51a7e72e440f371bd66142a09ff11a24608",
+          "slot": 22
+        },
+        {
+          "frame": 48,
+          "time": 2.0,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            164,
+            85,
+            499,
+            632
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.2011982231146111,
+          "origin": [
+            -3,
+            -7
+          ],
+          "runtime_bbox": [
+            30,
+            10,
+            97,
+            120
+          ],
+          "rgba_sha256": "eb4c9220d7978ec517750b94bb043a57a0f4c0b0e2cd84e2c20413303c1ff15b",
+          "slot": 23
+        }
+      ],
+      "idle_source_frame": 37,
+      "idle_walk_slot": 12,
+      "idle_matches_walk_pixels": true
+    },
+    "left": {
+      "source_range": [
+        274,
+        299
+      ],
+      "count": 26,
+      "frames": [
+        {
+          "frame": 274,
+          "time": 11.416666666666666,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            180,
+            101,
+            516,
+            614
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21271255384957954,
+          "origin": [
+            -11,
+            -11
+          ],
+          "runtime_bbox": [
+            27,
+            11,
+            99,
+            120
+          ],
+          "rgba_sha256": "50351998dbcf405392b9f8250234c6dc34acf33c410709cec7bc880d7706694b",
+          "slot": 0
+        },
+        {
+          "frame": 275,
+          "time": 11.458333333333334,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            176,
+            101,
+            512,
+            615
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21268285061422176,
+          "origin": [
+            -9,
+            -11
+          ],
+          "runtime_bbox": [
+            28,
+            10,
+            100,
+            119
+          ],
+          "rgba_sha256": "4dccf6efe6623312e35f9a7d1cc258f65ada505d808df06d24ab6d22ea6ffc78",
+          "slot": 1
+        },
+        {
+          "frame": 276,
+          "time": 11.5,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            173,
+            102,
+            508,
+            616
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21265315567324047,
+          "origin": [
+            -7,
+            -11
+          ],
+          "runtime_bbox": [
+            30,
+            11,
+            101,
+            120
+          ],
+          "rgba_sha256": "c11ca01ead9b27d8802ef1be30cc4f572a8bbf711ace067284c4e3dd1570a0b9",
+          "slot": 2
+        },
+        {
+          "frame": 277,
+          "time": 11.541666666666666,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            155,
+            101,
+            495,
+            615
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.212623469023162,
+          "origin": [
+            -6,
+            -11
+          ],
+          "runtime_bbox": [
+            27,
+            10,
+            99,
+            119
+          ],
+          "rgba_sha256": "024d75063c442c71b809656d0f0b93d926c800a51bb8570f7dbf49a7644d6761",
+          "slot": 3
+        },
+        {
+          "frame": 278,
+          "time": 11.583333333333334,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            148,
+            99,
+            486,
+            614
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.2125937906605146,
+          "origin": [
+            -4,
+            -11
+          ],
+          "runtime_bbox": [
+            28,
+            10,
+            99,
+            119
+          ],
+          "rgba_sha256": "82a212ae6b495bf2f313ce51bae49445892e6b17f40089ef24e2a99bf56ee629",
+          "slot": 4
+        },
+        {
+          "frame": 279,
+          "time": 11.625,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            143,
+            97,
+            481,
+            614
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21256412058182836,
+          "origin": [
+            -3,
+            -11
+          ],
+          "runtime_bbox": [
+            28,
+            10,
+            99,
+            119
+          ],
+          "rgba_sha256": "ccfd5b1ec6e3bf2eeef070427a2d1f17f2a03baffee2563c0fc3dcf89fabe77c",
+          "slot": 5
+        },
+        {
+          "frame": 280,
+          "time": 11.666666666666666,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            140,
+            97,
+            478,
+            614
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21253445878363536,
+          "origin": [
+            -1,
+            -11
+          ],
+          "runtime_bbox": [
+            29,
+            10,
+            101,
+            119
+          ],
+          "rgba_sha256": "2e088b3d46bac9f2968e555069bee27c17d51279d1e86a30cfd0363ae5885480",
+          "slot": 6
+        },
+        {
+          "frame": 281,
+          "time": 11.708333333333334,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            118,
+            94,
+            460,
+            613
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.2125048052624697,
+          "origin": [
+            0,
+            -11
+          ],
+          "runtime_bbox": [
+            25,
+            9,
+            98,
+            119
+          ],
+          "rgba_sha256": "9844bdb601658ac7c69539f461c0a2d7d19fc01f193a4c1e2c43c55c2b284acc",
+          "slot": 7
+        },
+        {
+          "frame": 282,
+          "time": 11.75,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            112,
+            93,
+            454,
+            613
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21247516001486735,
+          "origin": [
+            2,
+            -11
+          ],
+          "runtime_bbox": [
+            26,
+            9,
+            99,
+            119
+          ],
+          "rgba_sha256": "8dee9859b23acbd780ce66bd1fe4d2bc115294a4c5eab1d86c0372d0793741af",
+          "slot": 8
+        },
+        {
+          "frame": 283,
+          "time": 11.791666666666666,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            107,
+            93,
+            450,
+            613
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21244552303736616,
+          "origin": [
+            4,
+            -11
+          ],
+          "runtime_bbox": [
+            27,
+            9,
+            100,
+            119
+          ],
+          "rgba_sha256": "932ba52196fc9975ffa21c61a8f517006fb053ac843aba062a4498d059cd633e",
+          "slot": 9
+        },
+        {
+          "frame": 284,
+          "time": 11.833333333333334,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            103,
+            94,
+            447,
+            613
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.212415894326506,
+          "origin": [
+            5,
+            -11
+          ],
+          "runtime_bbox": [
+            27,
+            9,
+            100,
+            119
+          ],
+          "rgba_sha256": "5f85f5a0f823addb75fa1715cadff4993cbc2dfddbe7fdaccccb905e90c48400",
+          "slot": 10
+        },
+        {
+          "frame": 285,
+          "time": 11.875,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            82,
+            97,
+            433,
+            613
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21238627387882858,
+          "origin": [
+            7,
+            -11
+          ],
+          "runtime_bbox": [
+            25,
+            10,
+            99,
+            119
+          ],
+          "rgba_sha256": "3a60c1ffa0d8637cfc30341f8d1b025d6ea345691a55dca6ac7cb602b1ed47f9",
+          "slot": 11
+        },
+        {
+          "frame": 286,
+          "time": 11.916666666666666,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            75,
+            99,
+            426,
+            614
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21235666169087766,
+          "origin": [
+            8,
+            -11
+          ],
+          "runtime_bbox": [
+            24,
+            10,
+            99,
+            119
+          ],
+          "rgba_sha256": "7dd0bd3a8f798fbadba8ec435ab083b536945160edc4e7ee8341e08a4dfc6b74",
+          "slot": 12
+        },
+        {
+          "frame": 287,
+          "time": 11.958333333333334,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            69,
+            100,
+            421,
+            616
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21232705775919883,
+          "origin": [
+            10,
+            -11
+          ],
+          "runtime_bbox": [
+            25,
+            10,
+            100,
+            120
+          ],
+          "rgba_sha256": "8adebce938c81d0b39e9794a9fa6578b739489e18b197ba12da7deb8f1f0cc09",
+          "slot": 13
+        },
+        {
+          "frame": 288,
+          "time": 12.0,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            65,
+            101,
+            418,
+            617
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21229746208033964,
+          "origin": [
+            12,
+            -11
+          ],
+          "runtime_bbox": [
+            26,
+            10,
+            101,
+            120
+          ],
+          "rgba_sha256": "d4540ff520ea81e79f0da4d8ff6a1990054fd83aecee810b2b267ca86debc648",
+          "slot": 14
+        },
+        {
+          "frame": 289,
+          "time": 12.041666666666666,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            52,
+            102,
+            403,
+            616
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21226787465084948,
+          "origin": [
+            13,
+            -11
+          ],
+          "runtime_bbox": [
+            24,
+            11,
+            99,
+            120
+          ],
+          "rgba_sha256": "03782508563d8a5ebca3ca83d69f9840e68103fbfba9619061f67be174958dee",
+          "slot": 15
+        },
+        {
+          "frame": 290,
+          "time": 12.083333333333334,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            46,
+            100,
+            394,
+            616
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21223829546727987,
+          "origin": [
+            15,
+            -11
+          ],
+          "runtime_bbox": [
+            25,
+            10,
+            99,
+            120
+          ],
+          "rgba_sha256": "1a36bbe9d8489404c7582ce49b573bd0edb070e7f1871f792d919b894e1eacf2",
+          "slot": 16
+        },
+        {
+          "frame": 291,
+          "time": 12.125,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            42,
+            99,
+            388,
+            615
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21220872452618406,
+          "origin": [
+            16,
+            -11
+          ],
+          "runtime_bbox": [
+            25,
+            10,
+            99,
+            119
+          ],
+          "rgba_sha256": "455015043ee5968e958815810eba0aff961791e295218dec3b9c3012cdb3880a",
+          "slot": 17
+        },
+        {
+          "frame": 292,
+          "time": 12.166666666666666,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            39,
+            98,
+            383,
+            616
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21217916182411728,
+          "origin": [
+            18,
+            -11
+          ],
+          "runtime_bbox": [
+            26,
+            10,
+            99,
+            120
+          ],
+          "rgba_sha256": "e2b528051b3065e0225e403b7730058de84838eec936c471e1664ca90221b2df",
+          "slot": 18
+        },
+        {
+          "frame": 293,
+          "time": 12.208333333333334,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            24,
+            95,
+            364,
+            616
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21214960735763663,
+          "origin": [
+            20,
+            -11
+          ],
+          "runtime_bbox": [
+            25,
+            9,
+            97,
+            120
+          ],
+          "rgba_sha256": "3add6ad95d4b30257e0d8801d19ca041c378f5cc65cb88cdbde1f41d219ffc33",
+          "slot": 19
+        },
+        {
+          "frame": 294,
+          "time": 12.25,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            19,
+            93,
+            356,
+            616
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21212006112330128,
+          "origin": [
+            21,
+            -10
+          ],
+          "runtime_bbox": [
+            25,
+            10,
+            96,
+            121
+          ],
+          "rgba_sha256": "1e292b99a468e231f5de7c862c1e8bd53ed24e3048941d15b63f26d3db16ed59",
+          "slot": 20
+        },
+        {
+          "frame": 295,
+          "time": 12.291666666666666,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            15,
+            93,
+            351,
+            615
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.2120905231176722,
+          "origin": [
+            23,
+            -10
+          ],
+          "runtime_bbox": [
+            26,
+            10,
+            97,
+            120
+          ],
+          "rgba_sha256": "543eb18a2ce19f12f4b8e8eea3bb8ced8943b07804e88c04d51b4d3060de4f46",
+          "slot": 21
+        },
+        {
+          "frame": 296,
+          "time": 12.333333333333334,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            11,
+            93,
+            347,
+            615
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21206099333731226,
+          "origin": [
+            24,
+            -10
+          ],
+          "runtime_bbox": [
+            26,
+            10,
+            97,
+            120
+          ],
+          "rgba_sha256": "3fbc4c4733aa9faaa468bc088fcea0f84991ce7f0f6b99ea48c6ea018a3fc56d",
+          "slot": 22
+        },
+        {
+          "frame": 297,
+          "time": 12.375,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            0,
+            98,
+            328,
+            615
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.2120314717787863,
+          "origin": [
+            26,
+            -10
+          ],
+          "runtime_bbox": [
+            26,
+            11,
+            95,
+            120
+          ],
+          "rgba_sha256": "e8f62ad63ff723442f5aac32ac8e5bf5f9913cc0e14ba4604049ab580a08f53f",
+          "slot": 23
+        },
+        {
+          "frame": 298,
+          "time": 12.416666666666666,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            0,
+            100,
+            322,
+            615
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.212001958438661,
+          "origin": [
+            28,
+            -10
+          ],
+          "runtime_bbox": [
+            28,
+            11,
+            96,
+            120
+          ],
+          "rgba_sha256": "dba477457e1dda561c7cc92e6c46befe1fc708b5aefc8b7736c784eaae5fbdc2",
+          "slot": 24
+        },
+        {
+          "frame": 299,
+          "time": 12.458333333333334,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            0,
+            101,
+            318,
+            615
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21197245331350506,
+          "origin": [
+            29,
+            -10
+          ],
+          "runtime_bbox": [
+            29,
+            11,
+            96,
+            120
+          ],
+          "rgba_sha256": "7fff834c5a54ee0c6bb5b9efc14fd97f8a3f6e7cbb4a8d8ad315593542af3859",
+          "slot": 25
+        }
+      ],
+      "idle_source_frame": 282,
+      "idle_walk_slot": 8,
+      "idle_matches_walk_pixels": true
+    },
+    "right": {
+      "source_range": [
+        317,
+        340
+      ],
+      "count": 24,
+      "frames": [
+        {
+          "frame": 317,
+          "time": 13.208333333333334,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            40,
+            92,
+            379,
+            614
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21197311706608285,
+          "origin": [
+            20,
+            -10
+          ],
+          "runtime_bbox": [
+            28,
+            10,
+            100,
+            120
+          ],
+          "rgba_sha256": "c8dc7d034d30361cfc5610c6c21ba7216652c05780da517c24771bd919f46a94",
+          "slot": 0
+        },
+        {
+          "frame": 318,
+          "time": 13.25,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            46,
+            92,
+            386,
+            614
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.2119847962036212,
+          "origin": [
+            18,
+            -10
+          ],
+          "runtime_bbox": [
+            28,
+            9,
+            100,
+            120
+          ],
+          "rgba_sha256": "efae1a49f0023bddfd969af6a4ec44a189de7e45fd12f1c96212314195eea109",
+          "slot": 1
+        },
+        {
+          "frame": 319,
+          "time": 13.291666666666666,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            51,
+            92,
+            390,
+            614
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21199647662820734,
+          "origin": [
+            17,
+            -10
+          ],
+          "runtime_bbox": [
+            28,
+            9,
+            99,
+            120
+          ],
+          "rgba_sha256": "bee2cf1b7b8733d15c76b121333c64b0763ea30291965430bf1f50afaa42fea0",
+          "slot": 2
+        },
+        {
+          "frame": 320,
+          "time": 13.333333333333334,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            54,
+            93,
+            394,
+            614
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.2120081583400541,
+          "origin": [
+            16,
+            -10
+          ],
+          "runtime_bbox": [
+            27,
+            10,
+            99,
+            120
+          ],
+          "rgba_sha256": "7b8a4bbaf5d1c4e093a93b893c6fcd48d09952584aeba75688be9aaea0cab22f",
+          "slot": 3
+        },
+        {
+          "frame": 321,
+          "time": 13.375,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            66,
+            97,
+            407,
+            614
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.2120198413393742,
+          "origin": [
+            14,
+            -10
+          ],
+          "runtime_bbox": [
+            28,
+            11,
+            100,
+            120
+          ],
+          "rgba_sha256": "e8926fbd7b1c4011c68c4df03f3eab9741451034321c42580a7baac52d79a413",
+          "slot": 4
+        },
+        {
+          "frame": 322,
+          "time": 13.416666666666666,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            72,
+            100,
+            412,
+            616
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21203152562638064,
+          "origin": [
+            13,
+            -10
+          ],
+          "runtime_bbox": [
+            28,
+            11,
+            100,
+            120
+          ],
+          "rgba_sha256": "efc18310a5e7fc422f6fe4ad0788346280b8ec8d5d8f0abb6871a888ad68ac6d",
+          "slot": 5
+        },
+        {
+          "frame": 323,
+          "time": 13.458333333333334,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            78,
+            101,
+            417,
+            616
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21204321120128614,
+          "origin": [
+            12,
+            -10
+          ],
+          "runtime_bbox": [
+            28,
+            11,
+            100,
+            121
+          ],
+          "rgba_sha256": "bc8c13a4a76a40f624bcc66067e11e0c2e6faf5ce3cf4de9f09702edac0a901d",
+          "slot": 6
+        },
+        {
+          "frame": 324,
+          "time": 13.5,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            81,
+            102,
+            420,
+            617
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.2120548980643038,
+          "origin": [
+            10,
+            -10
+          ],
+          "runtime_bbox": [
+            27,
+            12,
+            99,
+            121
+          ],
+          "rgba_sha256": "4599b2c6671b9ed28420e589d8f6090e75944248ce0b80105227a531f830cbea",
+          "slot": 7
+        },
+        {
+          "frame": 325,
+          "time": 13.541666666666666,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            93,
+            100,
+            432,
+            615
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21206658621564653,
+          "origin": [
+            9,
+            -10
+          ],
+          "runtime_bbox": [
+            29,
+            11,
+            100,
+            120
+          ],
+          "rgba_sha256": "fd0eecc4348e9fcac925c0898e01f7fa98c0f56a585b920eed6c12b3f6491e4f",
+          "slot": 8
+        },
+        {
+          "frame": 326,
+          "time": 13.583333333333334,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            100,
+            98,
+            438,
+            615
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21207827565552737,
+          "origin": [
+            8,
+            -10
+          ],
+          "runtime_bbox": [
+            29,
+            11,
+            101,
+            120
+          ],
+          "rgba_sha256": "5a1cf47031b12e91a52f41d0bd95566211221204385e8ef851ac3c4067f86114",
+          "slot": 9
+        },
+        {
+          "frame": 327,
+          "time": 13.625,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            105,
+            96,
+            442,
+            615
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.2120899663841595,
+          "origin": [
+            7,
+            -10
+          ],
+          "runtime_bbox": [
+            29,
+            10,
+            100,
+            120
+          ],
+          "rgba_sha256": "4898ebbd6bf43a977cf5ef7b9db77b4094e16c604fea91e729f2d353b9a9b866",
+          "slot": 10
+        },
+        {
+          "frame": 328,
+          "time": 13.666666666666666,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            108,
+            96,
+            444,
+            615
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21210165840175596,
+          "origin": [
+            5,
+            -10
+          ],
+          "runtime_bbox": [
+            28,
+            10,
+            99,
+            120
+          ],
+          "rgba_sha256": "d43bd3292899ec0202f026c6ab419822e505e68b95126b860edc9add4a182797",
+          "slot": 11
+        },
+        {
+          "frame": 329,
+          "time": 13.708333333333334,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            119,
+            93,
+            456,
+            615
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21211335170853002,
+          "origin": [
+            4,
+            -10
+          ],
+          "runtime_bbox": [
+            29,
+            10,
+            100,
+            120
+          ],
+          "rgba_sha256": "a6a830a083b7892204ba753989448d91187abcdd61b510f1d6ecadbadf01c5b7",
+          "slot": 12
+        },
+        {
+          "frame": 330,
+          "time": 13.75,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            124,
+            92,
+            462,
+            615
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.2121250463046948,
+          "origin": [
+            3,
+            -10
+          ],
+          "runtime_bbox": [
+            29,
+            9,
+            101,
+            120
+          ],
+          "rgba_sha256": "360d41103dd31604517832ed11f4509b28efb73e5f9064faba991545c930182a",
+          "slot": 13
+        },
+        {
+          "frame": 331,
+          "time": 13.791666666666666,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            128,
+            92,
+            468,
+            615
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21213674219046372,
+          "origin": [
+            1,
+            -10
+          ],
+          "runtime_bbox": [
+            28,
+            9,
+            100,
+            120
+          ],
+          "rgba_sha256": "2258614602a4589a418b45c652567c709667c409c3f50027c8477c1ca6d9bbc6",
+          "slot": 14
+        },
+        {
+          "frame": 332,
+          "time": 13.833333333333334,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            130,
+            92,
+            470,
+            615
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21214843936604996,
+          "origin": [
+            0,
+            -10
+          ],
+          "runtime_bbox": [
+            27,
+            9,
+            99,
+            120
+          ],
+          "rgba_sha256": "09621e6f671df032dee10f739466278181306f8d8a1b6db9d0547910785a50f4",
+          "slot": 15
+        },
+        {
+          "frame": 333,
+          "time": 13.875,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            138,
+            97,
+            482,
+            614
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.212160137831667,
+          "origin": [
+            -1,
+            -10
+          ],
+          "runtime_bbox": [
+            28,
+            11,
+            101,
+            120
+          ],
+          "rgba_sha256": "72980c815fbf9b64d5a63753a07873b10eed2ff2bda2edc18fb3ed0d5dbfa10a",
+          "slot": 16
+        },
+        {
+          "frame": 334,
+          "time": 13.916666666666666,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            142,
+            99,
+            488,
+            615
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21217183758752822,
+          "origin": [
+            -3,
+            -10
+          ],
+          "runtime_bbox": [
+            27,
+            11,
+            100,
+            120
+          ],
+          "rgba_sha256": "17563f6b46c8e83986b78b39b972ac6ad8afc01809d7e8e6369647df7ac9a327",
+          "slot": 17
+        },
+        {
+          "frame": 335,
+          "time": 13.958333333333334,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            145,
+            100,
+            492,
+            616
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.2121835386338471,
+          "origin": [
+            -4,
+            -10
+          ],
+          "runtime_bbox": [
+            27,
+            11,
+            100,
+            120
+          ],
+          "rgba_sha256": "a6cdb3e71fd9c45bf206555fff49a562eb1b3aa8521879c25b9cef65b2df328d",
+          "slot": 18
+        },
+        {
+          "frame": 336,
+          "time": 14.0,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            147,
+            102,
+            495,
+            616
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21219524097083708,
+          "origin": [
+            -5,
+            -10
+          ],
+          "runtime_bbox": [
+            27,
+            12,
+            100,
+            121
+          ],
+          "rgba_sha256": "6518f72efe360c62aa8369f2e7816d53399ead410eedc9a498567e1f6b250c90",
+          "slot": 19
+        },
+        {
+          "frame": 337,
+          "time": 14.041666666666666,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            157,
+            101,
+            503,
+            614
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21220694459871187,
+          "origin": [
+            -6,
+            -10
+          ],
+          "runtime_bbox": [
+            27,
+            11,
+            101,
+            120
+          ],
+          "rgba_sha256": "505538afbf68c4a6604fd8307ec0d0cc59fcdd478d992d6361e76ac2fc0f5241",
+          "slot": 20
+        },
+        {
+          "frame": 338,
+          "time": 14.083333333333334,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            165,
+            99,
+            508,
+            614
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21221864951768493,
+          "origin": [
+            -8,
+            -10
+          ],
+          "runtime_bbox": [
+            27,
+            11,
+            100,
+            120
+          ],
+          "rgba_sha256": "c1249f674e65d0250e1533a7e31d09961d75874eaab127ef405b39b87b7082ee",
+          "slot": 21
+        },
+        {
+          "frame": 339,
+          "time": 14.125,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            170,
+            97,
+            512,
+            614
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21223035572796997,
+          "origin": [
+            -9,
+            -10
+          ],
+          "runtime_bbox": [
+            27,
+            11,
+            100,
+            120
+          ],
+          "rgba_sha256": "f75422781fa545d7fa86de05c805be3ae7acc4ce01e2b1cc66d162b86aae2c4c",
+          "slot": 22
+        },
+        {
+          "frame": 340,
+          "time": 14.166666666666666,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            174,
+            96,
+            515,
+            614
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.21224206322978073,
+          "origin": [
+            -10,
+            -10
+          ],
+          "runtime_bbox": [
+            27,
+            10,
+            100,
+            120
+          ],
+          "rgba_sha256": "ee9bbd62e20039773b70dede5c63bd77e30f7f3fe89638f8133d6907f546341c",
+          "slot": 23
+        }
+      ],
+      "idle_source_frame": 329,
+      "idle_walk_slot": 12,
+      "idle_matches_walk_pixels": true
+    },
+    "up": {
+      "source_range": [
+        129,
+        153
+      ],
+      "count": 25,
+      "frames": [
+        {
+          "frame": 129,
+          "time": 5.375,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            171,
+            81,
+            492,
+            637
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.1990483955048593,
+          "origin": [
+            -3,
+            -7
+          ],
+          "runtime_bbox": [
+            31,
+            9,
+            95,
+            119
+          ],
+          "rgba_sha256": "95e59ec2b74e9d53dc924750ffa608de19c4aa39d739d3ca6668fbfcc054f658",
+          "slot": 0
+        },
+        {
+          "frame": 130,
+          "time": 5.416666666666667,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            170,
+            85,
+            492,
+            638
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.199280123573358,
+          "origin": [
+            -3,
+            -7
+          ],
+          "runtime_bbox": [
+            31,
+            10,
+            95,
+            121
+          ],
+          "rgba_sha256": "bafcaeff3687299755b4d835d9fe10a8b11051513c06d4f155cc51bb963cd615",
+          "slot": 1
+        },
+        {
+          "frame": 131,
+          "time": 5.458333333333333,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            169,
+            87,
+            493,
+            638
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.1995123918168674,
+          "origin": [
+            -3,
+            -7
+          ],
+          "runtime_bbox": [
+            31,
+            10,
+            95,
+            121
+          ],
+          "rgba_sha256": "ab96bd5362d63df83665eed7188d9e1fed62f0322f05a2c41bec0af8c2bb3ec4",
+          "slot": 2
+        },
+        {
+          "frame": 132,
+          "time": 5.5,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            170,
+            89,
+            494,
+            638
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.1997452021263725,
+          "origin": [
+            -3,
+            -7
+          ],
+          "runtime_bbox": [
+            31,
+            11,
+            95,
+            121
+          ],
+          "rgba_sha256": "c6494337484a9f153d2f29a9e82f77bc69b9982a9a442e404156647cf7d79b42",
+          "slot": 3
+        },
+        {
+          "frame": 133,
+          "time": 5.541666666666667,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            170,
+            90,
+            494,
+            638
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.19997855640169485,
+          "origin": [
+            -3,
+            -7
+          ],
+          "runtime_bbox": [
+            31,
+            11,
+            96,
+            121
+          ],
+          "rgba_sha256": "a06bec8b4f376c6da38157e1609ebfb9cf346234ac90c7362d033a85a7a43f17",
+          "slot": 4
+        },
+        {
+          "frame": 134,
+          "time": 5.583333333333333,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            171,
+            90,
+            494,
+            638
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20021245655154443,
+          "origin": [
+            -3,
+            -7
+          ],
+          "runtime_bbox": [
+            31,
+            11,
+            96,
+            121
+          ],
+          "rgba_sha256": "c7511703c12cf12e34517bd52af9ea012de781a6300c0924ba75a700c950835b",
+          "slot": 5
+        },
+        {
+          "frame": 135,
+          "time": 5.625,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            172,
+            89,
+            494,
+            636
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.2004469044935716,
+          "origin": [
+            -3,
+            -7
+          ],
+          "runtime_bbox": [
+            32,
+            11,
+            96,
+            120
+          ],
+          "rgba_sha256": "1b6ef69ff2be12d2ab6c20ea19da194ef6a0f6b9ef7a2676b51a78917d3c7e80",
+          "slot": 6
+        },
+        {
+          "frame": 136,
+          "time": 5.666666666666667,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            173,
+            88,
+            494,
+            635
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20068190215441933,
+          "origin": [
+            -3,
+            -8
+          ],
+          "runtime_bbox": [
+            32,
+            10,
+            96,
+            119
+          ],
+          "rgba_sha256": "fc301d76cad9d7091f57c1032b9b2c35b760b8d48e3ea708a6ecb8743b078edb",
+          "slot": 7
+        },
+        {
+          "frame": 137,
+          "time": 5.708333333333333,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            175,
+            87,
+            495,
+            632
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20091745146977633,
+          "origin": [
+            -3,
+            -8
+          ],
+          "runtime_bbox": [
+            32,
+            10,
+            96,
+            119
+          ],
+          "rgba_sha256": "72fa9f4a55976c3437aad637c399bd022506e4471a73167dc803e7c74852de0c",
+          "slot": 8
+        },
+        {
+          "frame": 138,
+          "time": 5.75,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            177,
+            85,
+            494,
+            632
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20115355438442986,
+          "origin": [
+            -3,
+            -8
+          ],
+          "runtime_bbox": [
+            33,
+            9,
+            96,
+            119
+          ],
+          "rgba_sha256": "95317b4d7fa37a795a875b09e4c61c08ecdbf16d9e7a60ca571d27d63bb03d83",
+          "slot": 9
+        },
+        {
+          "frame": 139,
+          "time": 5.791666666666667,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            177,
+            84,
+            494,
+            632
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20139021285231953,
+          "origin": [
+            -3,
+            -8
+          ],
+          "runtime_bbox": [
+            33,
+            9,
+            97,
+            119
+          ],
+          "rgba_sha256": "e1b951ef042cadc963993e78023b713c44e3090137ab33a71291b40c49906a17",
+          "slot": 10
+        },
+        {
+          "frame": 140,
+          "time": 5.833333333333333,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            178,
+            84,
+            494,
+            632
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20162742883659096,
+          "origin": [
+            -3,
+            -8
+          ],
+          "runtime_bbox": [
+            33,
+            9,
+            97,
+            119
+          ],
+          "rgba_sha256": "e0221ab7fc232f28aebb7ba7b969fb323ee46787368132a88d6940c36d24cc0c",
+          "slot": 11
+        },
+        {
+          "frame": 141,
+          "time": 5.875,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            179,
+            85,
+            494,
+            633
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20186520430965021,
+          "origin": [
+            -3,
+            -8
+          ],
+          "runtime_bbox": [
+            33,
+            9,
+            97,
+            120
+          ],
+          "rgba_sha256": "4bd430be4b78b4ea0ba79dce339b4c96825000cd2b8e97cc61dbe925d03afb8b",
+          "slot": 12
+        },
+        {
+          "frame": 142,
+          "time": 5.916666666666667,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            180,
+            88,
+            494,
+            634
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20210354125321844,
+          "origin": [
+            -4,
+            -8
+          ],
+          "runtime_bbox": [
+            32,
+            10,
+            96,
+            120
+          ],
+          "rgba_sha256": "81eee774f427717df7e23df67ccd9cbc821609aec9654089604d6236c54c8193",
+          "slot": 13
+        },
+        {
+          "frame": 143,
+          "time": 5.958333333333333,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            180,
+            89,
+            493,
+            634
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20234244165838694,
+          "origin": [
+            -4,
+            -8
+          ],
+          "runtime_bbox": [
+            32,
+            10,
+            96,
+            121
+          ],
+          "rgba_sha256": "f2849c097fc948916d71e5075cfc191f7a3f62b940b634928bf8ca5cbc080673",
+          "slot": 14
+        },
+        {
+          "frame": 144,
+          "time": 6.0,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            181,
+            92,
+            493,
+            635
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.2025819075256725,
+          "origin": [
+            -4,
+            -8
+          ],
+          "runtime_bbox": [
+            33,
+            11,
+            96,
+            121
+          ],
+          "rgba_sha256": "3784061e21fff38e21a1d4238800a700abe47c387b78cfd450bec07868a50ca9",
+          "slot": 15
+        },
+        {
+          "frame": 145,
+          "time": 6.041666666666667,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            181,
+            93,
+            492,
+            634
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20282194086507344,
+          "origin": [
+            -4,
+            -8
+          ],
+          "runtime_bbox": [
+            33,
+            11,
+            95,
+            121
+          ],
+          "rgba_sha256": "659103559a0597f9fb824ff1613b298980021501b0ad387cbc111b268473f4f3",
+          "slot": 16
+        },
+        {
+          "frame": 146,
+          "time": 6.083333333333333,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            181,
+            94,
+            491,
+            634
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20306254369612564,
+          "origin": [
+            -4,
+            -8
+          ],
+          "runtime_bbox": [
+            33,
+            11,
+            96,
+            121
+          ],
+          "rgba_sha256": "47f116dc1c2c928094d35b5e2b78f60f686f2910324cfa6a016174da52b3ddab",
+          "slot": 17
+        },
+        {
+          "frame": 147,
+          "time": 6.125,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            181,
+            93,
+            490,
+            633
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20330371804795924,
+          "origin": [
+            -4,
+            -8
+          ],
+          "runtime_bbox": [
+            33,
+            11,
+            96,
+            120
+          ],
+          "rgba_sha256": "e217cf34b79f2b98c561284cfc1f12cdd26af0fa42157bfd6ffc1da6660ab83f",
+          "slot": 18
+        },
+        {
+          "frame": 148,
+          "time": 6.166666666666667,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            181,
+            92,
+            489,
+            631
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20354546595935585,
+          "origin": [
+            -4,
+            -8
+          ],
+          "runtime_bbox": [
+            33,
+            11,
+            96,
+            120
+          ],
+          "rgba_sha256": "91842b8d4d577ead4917a3d007cc4f50289eba639f50422b3ee51e76a37b8d85",
+          "slot": 19
+        },
+        {
+          "frame": 149,
+          "time": 6.208333333333333,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            180,
+            91,
+            488,
+            628
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.2037877894788058,
+          "origin": [
+            -4,
+            -8
+          ],
+          "runtime_bbox": [
+            33,
+            11,
+            95,
+            120
+          ],
+          "rgba_sha256": "d5f5190ef51572a0e9223b184cd3a6e8d8073dfd751cb1cbc7a5a955929fa875",
+          "slot": 20
+        },
+        {
+          "frame": 150,
+          "time": 6.25,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            179,
+            90,
+            487,
+            626
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20403069066456594,
+          "origin": [
+            -4,
+            -9
+          ],
+          "runtime_bbox": [
+            32,
+            9,
+            95,
+            119
+          ],
+          "rgba_sha256": "c5c5866f05885ef48e18bbebdc45764d62c9c965b4281ea349767727b1babc78",
+          "slot": 21
+        },
+        {
+          "frame": 151,
+          "time": 6.291666666666667,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            178,
+            89,
+            487,
+            627
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20427417158471822,
+          "origin": [
+            -4,
+            -9
+          ],
+          "runtime_bbox": [
+            32,
+            9,
+            95,
+            119
+          ],
+          "rgba_sha256": "19c633de9b5f913399935e31750083204a45b1431b2e562b2a96f24c848c146a",
+          "slot": 22
+        },
+        {
+          "frame": 152,
+          "time": 6.333333333333333,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            178,
+            88,
+            486,
+            628
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20451823431722815,
+          "origin": [
+            -4,
+            -9
+          ],
+          "runtime_bbox": [
+            33,
+            9,
+            96,
+            119
+          ],
+          "rgba_sha256": "479555d7fe4e04dc74128905d384f5511d7d73012cab235aaee6ca98a72af389",
+          "slot": 23
+        },
+        {
+          "frame": 153,
+          "time": 6.375,
+          "crop": [
+            36,
+            28,
+            684,
+            698
+          ],
+          "bbox": [
+            177,
+            88,
+            486,
+            628
+          ],
+          "original_rgb_preserved": true,
+          "scale": 0.20476288095000397,
+          "origin": [
+            -4,
+            -9
+          ],
+          "runtime_bbox": [
+            32,
+            9,
+            96,
+            119
+          ],
+          "rgba_sha256": "35783b5a66fcbfe15a50493a55f98f2036b489a424d2fb8cd8c6e62ac8e846ef",
+          "slot": 24
+        }
+      ],
+      "idle_source_frame": 133,
+      "idle_walk_slot": 4,
+      "idle_matches_walk_pixels": true
+    }
+  }
+}

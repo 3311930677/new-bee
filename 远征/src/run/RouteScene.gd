@@ -45,12 +45,26 @@ var _gift_line := ""      # 连败保底礼包文案（无则空串，P1-5）
 
 
 func _ready() -> void:
+	set_meta("visual_family", {"forest":"garden","snow":"atlas","volcano":"arena","tomb":"arcane","desert":"market","glacier":"forge","abyss":"arcane","castle":"journal"}.get(String(pending_run.get("theme","forest")),"atlas"))
 	Audio.play_bgm("bgm_route")
 	var cfg := pending_run
 	pending_run = {}
-	st.setup(cfg)
-	st.growth_bonus = G.growth_bonuses(st.role_id)   # 血上限同口径（P1-6）
+	var saved: Dictionary = G.prog.get("active_run", {})
+	var resuming := not saved.is_empty() and st.restore(saved.get("state", {}))
+	if not resuming:
+		st.setup(cfg)
+		st.run_id = "%s|%d|%d" % [st.theme, st.run_seed, Time.get_ticks_usec()]
+		st.growth_bonus = G.growth_bonuses(st.role_id)
+		if not G.run_checkpoint(st):
+			G.go("res://src/ui/GameHome.tscn")
+			return
 	_build()
+	G.reveal_control(_field)
+	if resuming:
+		if st.finished or bool(st.route.get("boss", {}).get("cleared", false)):
+			_show_end(st.result == "clear" or bool(st.route.get("boss", {}).get("cleared", false)))
+		elif not (saved.get("current_node", {}) as Dictionary).is_empty():
+			_enter_node(saved.current_node)
 
 
 # ================= 布局 =================
@@ -160,7 +174,8 @@ func _build_top(tint: Color) -> void:
 	quit.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			if _map == null and _end_ui == null:
-				G.go("res://src/ui/GameHome.tscn"))
+				if G.run_abandon(): G.go("res://src/ui/GameHome.tscn")
+				else: _toast_msg("放弃未能保存，请稍后重试"))
 	add_child(quit)
 
 
@@ -305,6 +320,9 @@ func _on_node_input(e: InputEvent, nd: Dictionary) -> void:
 func _enter_node(nd: Dictionary) -> void:
 	# 全类型统一落地探索大地图（§2.7）：战斗节点有怪，非战斗节点有交互物件
 	_cur_node = nd
+	if not G.run_checkpoint(st, nd):
+		_toast_msg("进度未能保存，请稍后再进入")
+		return
 	_start_explore(nd)
 
 
@@ -322,6 +340,7 @@ func _on_map_finished(map_result: String) -> void:
 	var is_boss := RouteGenerator.is_boss_layer(st.route, int(_cur_node.get("layer", 1)))
 	_map.queue_free()
 	_map = null
+	G.run_checkpoint(st)
 	if map_result == "exited":
 		# 撤离：不判定通关、不结算、不结束本局——回到路线图，节点可再次进入
 		_toast_msg("已撤离本节点")
@@ -342,16 +361,12 @@ func _on_map_finished(map_result: String) -> void:
 func _show_end(win: bool) -> void:
 	# 结算入账钱包并落盘（战败亦保留——失败无惩罚；_settled 防重复）
 	if not _settled:
-		_settled = true
-		# 表现加成：通关且结算时满血（整局毫发无损）→ 金币 +10%
-		_bonus_gold = int(float(st.gold) * 0.10) \
-			if win and (st.hp < 0 or st.hp >= st.max_hp()) else 0
-		G.deposit(st.gold + _bonus_gold, st.expedition, st.soul, st.honor)
-		_level_ups = G.gain_exp(st.exp)
-		if win:
-			_new_world = G.on_world_cleared(st.theme)
-		# 连败兜底（P1-5）：连续 3 局失利发保底礼包（世界链卡关的唯一减压阀）
-		_gift_line = G.report_run_result(win)
+		var settlement := G.run_settle(st, win)
+		_settled = bool(settlement.get("ok", false))
+		_bonus_gold = int(settlement.get("bonus", 0))
+		_level_ups = int(settlement.get("level_ups", 0))
+		_new_world = String(settlement.get("opened", ""))
+		_gift_line = String(settlement.get("gift", ""))
 	_end_ui = Control.new()
 	_end_ui.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(_end_ui)
@@ -386,10 +401,13 @@ func _show_end(win: bool) -> void:
 	box.add_child(G.gold_label("词条 ×%d（随局重置）" % st.traits.size(), G.FS_SM,
 		false, Color("8a6a34"), false))
 
-	var btn := G.gold_button("回 到 主 城", 200, 48)
+	var btn := G.gold_button("回 到 主 城" if _settled else "重试结算 · 报酬仍保留", 260, 48)
 	btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			G.go("res://src/ui/GameHome.tscn"))
+			if _settled: G.go("res://src/ui/GameHome.tscn")
+			else:
+				_end_ui.queue_free()
+				_show_end(win))
 	box.add_child(btn)
 	_refresh()
 
@@ -546,7 +564,7 @@ class _RouteNode extends Control:
 					6, oc, 1.6, true)
 
 		# 类型小字：图标下方，先影后字
-		var font := G.font_bold
+		var font := G.font_display
 		var label := String(meta[0])
 		var fs := 15
 		var ts := font.get_string_size(label, HORIZONTAL_ALIGNMENT_CENTER, -1, fs)

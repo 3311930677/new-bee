@@ -1,17 +1,18 @@
 # G.gd —— 全局单例：主题、字体、共享状态
 extends Node
 const NavigationIcons := preload("res://src/ui/UIIcons.gd")
+const AvatarPresets := preload("res://src/ui/AvatarCatalog.gd")
 
-# ---------- 配色（模仿参考游戏：暖棕 + 羊皮纸 + 金） ----------
+# ---------- 行旅册配色：青铜绿、旧黄铜与暖纸 ----------
 const BG_DEEP := Color("192629")        # 深棕黑（选人底）
-const BANNER := Color("5a3a1e")          # 棕色横幅
-const PARCHMENT := Color("f1e7cf")       # 参考风纸色底，安静的大色块
-const GOLD := Color("cbb586")            # 金字/金边
-const GOLD_BRIGHT := Color("ead8af")     # 选中浅金
+const BANNER := Color("234746")
+const PARCHMENT := Color("eee1bf")
+const GOLD := Color("b39a67")
+const GOLD_BRIGHT := Color("e2c48c")
 const NAME_GREEN := Color("84c48c")      # 角色名（柔玉绿，非荧光绿）
 const LV_ORANGE := Color("f0a030")      # 等级橙
-const TEXT_DARK := Color("292f2b")      # 羊皮纸上的深字
-const TEXT_MUTED := Color("645d4c")
+const TEXT_DARK := Color("453d2c")
+const TEXT_MUTED := Color("6d624d")
 const C_GAIN_INK := Color("286845")
 const PAGE_BACKGROUND := "res://image/background/courtyard_visual_v2.png"
 var _vignette_tex: GradientTexture2D = null
@@ -34,14 +35,14 @@ const RARITY_HUE := {
 const RARITY_NAME := {"white": "普通", "blue": "稀有", "purple": "史诗", "gold": "传说"}
 
 # ---------- 参考风（创建角色页）配色 ----------
-const WOOD := Color("6b4a28")            # 木框/顶栏棕
-const WOOD_DARK := Color("4a3018")       # 木框暗部
-const GOLD_BTN := Color("c6a264")        # 低饱和金色选中/操作底
-const GOLD_BTN_EDGE := Color("8a6220")   # 金按钮描边
-const INPUT_BG := Color("fbf5e7")        # 输入框灰米底
-const INPUT_BG_FOCUS := Color("ece5cf")
-const BOX_BG := Color("e6ddc8")          # 选择框底
-const BOX_EDGE := Color("7c5f2c")        # 选择框描边
+const WOOD := Color("234746")
+const WOOD_DARK := Color("142d2b")
+const GOLD_BTN := Color("234746")
+const GOLD_BTN_EDGE := Color("b39a67")
+const INPUT_BG := Color("f8edcf")
+const INPUT_BG_FOCUS := Color("f6efd9")
+const BOX_BG := Color("e8dec4")
+const BOX_EDGE := Color("b39a67")
 
 # ---------- 浮层背景（§46 遮罩不该是一整块死黑纯灰） ----------
 # 全项目浮层统一走这两个工厂，禁止再各自 new ColorRect 写一个灰色。
@@ -53,13 +54,18 @@ const VEIL_VIGNETTE_A := 0.55                 # 暗角强度（相对弹窗级�
 const VEIL_GRID := 8.0                        # 斜纹间距（远看是布纹，近看无规律）
 
 # ---------- 字体 ----------
-# 黑体用于正文、操作与数值；思源宋体用于大标题，不加人工字距。
+# 小薇体用于标题、宋体用于标签与次操作、黑体用于正文和数值。
 const FONT_REG := "res://assets/fonts/NotoSansSC-Regular.otf"
 const FONT_BOLD := "res://assets/fonts/NotoSansSC-Bold.otf"
 const FONT_SERIF := "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf"
+const FONT_ART := "res://assets/fonts/MaShanZheng-Regular.ttf"
+const FONT_DISPLAY := "res://assets/fonts/ZCOOLQingKeHuangYou-Regular.ttf"
+const Visuals := preload("res://src/ui/VisualTheme.gd")
 var font_reg: FontFile
 var font_bold: FontFile
 var font_serif: FontFile
+var font_art: FontFile
+var font_display: FontFile
 
 # 字号阶梯（统一收敛，禁止随手调参；层间比例 13/16/18/22/30/56）
 const FS_XS := 15    # 角标 / 最小辅助
@@ -82,9 +88,9 @@ const ICON_MARK := 28.0           # 建筑/卡片角标图标
 var account := ""           # 登录账号（游客登录时为"游客"）
 var gender := "男"          # 玩家选择性别
 var selected_role := ""     # "zs" / "ck" / "fs" / "fz"
-var avatar_id := ""         # 职业头像 id；为空时跟随当前职业
+var avatar_id := "fox"      # 个人头像 id，与职业分开；旧存档的职业 id 在读档时转换
 var avatar_custom := ""     # 上传的自定义头像文件名（user://avatars/ 下）；空串=没上传过
-var avatar_use_custom := false   # 当前是否使用自定义头像（选职业头像后仍保留上传的图）
+var avatar_use_custom := false   # 当前是否使用自定义头像（选预设头像后仍保留自选图片）
 var player_name := ""       # 玩家起的名字
 var roles: Array = []       # data/roles.json 内容
 
@@ -285,6 +291,9 @@ func _ready() -> void:
 	font_reg = load(FONT_REG) as FontFile
 	font_bold = load(FONT_BOLD) as FontFile
 	font_serif = load(FONT_SERIF) as FontFile
+	font_art = load(FONT_ART) as FontFile
+	font_display = load(FONT_DISPLAY) as FontFile
+	if font_display != null: font_display.fallbacks = [font_serif, font_reg]
 	if font_reg == null:
 		push_warning("Noto Sans SC Regular 加载失败")
 	if font_bold == null:
@@ -295,6 +304,10 @@ func _ready() -> void:
 		# 站酷小薇个别字形损坏（「回」渲染成实心黑块，已从 cmap 删映射）；
 		# 配 fallback 后坏字/缺字自动走黑体，不再破相
 		font_serif.fallbacks = [font_bold]
+	if font_art == null:
+		font_art = font_serif
+	else:
+		font_art.fallbacks = [font_serif, font_reg]
 	_tune_font_rendering()
 	_load_roles()
 	_load_save()
@@ -314,7 +327,7 @@ func _ready() -> void:
 ## 做法：字号 < 20 时关掉 hinting、开轻量抗锯齿，笔画回到设计字形；大字号保持 hinting
 ## 让标题边缘更锐利（标题字号大，不吃 hinting 的变形）。
 func _tune_font_rendering() -> void:
-	for f in [font_reg, font_bold, font_serif]:
+	for f in [font_reg, font_bold, font_serif, font_art, font_display]:
 		if f == null:
 			continue
 		f.subpixel_positioning = TextServer.SUBPIXEL_POSITIONING_AUTO
@@ -417,8 +430,7 @@ func _load_save() -> void:
 	if not gd.is_empty():
 		gender = gd
 	var aid := String(data.get("avatar_id", ""))
-	if not aid.is_empty() and not get_role(aid).is_empty():
-		avatar_id = aid
+	avatar_id = AvatarPresets.resolve(aid)
 	# 读档可能在同一进程里被测试/导入流程再次调用，先失效缓存再验证文件，
 	# 否则上一轮的 null 缓存会让刚读回的自定义头像被误判成不存在。
 	avatar_custom = String(data.get("avatar_custom", ""))
@@ -426,7 +438,7 @@ func _load_save() -> void:
 	_avatar_tex = null
 	avatar_use_custom = bool(data.get("avatar_use_custom", false))
 	if avatar_use_custom and not has_custom_avatar():
-		avatar_use_custom = false   # 图被系统清了就退回职业头像，别让主页头像开天窗
+		avatar_use_custom = false   # 图片丢失时退回趣味头像
 	var au: Variant = data.get("audio", {})
 	if au is Dictionary:
 		var ad := au as Dictionary
@@ -464,6 +476,18 @@ func _load_save() -> void:
 		prog["economy"] = EconomyService.ensure(ec if ec is Dictionary else {},
 			TableCache.economy_config())
 		prog["road_mail"] = preload("res://src/world/RoadMailService.gd").ensure(pd.get("road_mail", {}))
+		var postings: Variant = pd.get("quest_postings", {})
+		prog["quest_postings"] = postings if postings is Dictionary else {}
+		var world_commissions: Variant = pd.get("world_commissions", {})
+		prog["world_commissions"] = world_commissions if world_commissions is Dictionary else {}
+		var oaths: Variant = pd.get("oaths", {})
+		prog["oaths"] = oaths if oaths is Dictionary else {}
+		var trials: Variant = pd.get("dungeon_trials", {})
+		prog["dungeon_trials"] = trials if trials is Dictionary else {}
+		var contracts: Variant = pd.get("trade_contracts", {})
+		prog["trade_contracts"] = contracts if contracts is Dictionary else {}
+		var active_run: Variant = pd.get("active_run", {})
+		prog["active_run"] = active_run if active_run is Dictionary else {}
 		var fishing: Variant = pd.get("fishing", {})
 		prog["fishing"] = fishing if fishing is Dictionary else {}
 		# P04：装备实例拥有池（SaveData 的 v5 迁移已补齐，这里再兜一层）
@@ -566,7 +590,7 @@ func _init_state_defaults() -> void:
 	account = ""
 	gender = "男"
 	selected_role = ""
-	avatar_id = ""
+	avatar_id = "fox"
 	avatar_use_custom = false
 	player_name = ""
 	_avatar_tex_done = false
@@ -588,6 +612,8 @@ func reload_save() -> bool:
 ## R-04：写入统一走 SaveData.save_text（临时文件 + 回读校验 + 滚动备份 + 就地替换 + 失败回滚），
 ## 不再直接 FileAccess.open(WRITE) 覆盖唯一档。返回是否真的落到盘上 ——
 ## 调用方（结算 / 领取等）据此决定要不要向玩家显示"已入袋 / 已领取"。
+var _save_batch_depth := 0
+
 func save_game() -> bool:
 	# 读档被判非法期间禁止写盘：内存是默认态，写下去就是覆盖玩家真档（A7）。
 	# 不静默跳过——必须 push_warning，否则坏档这件事没人知道。
@@ -595,6 +621,7 @@ func save_game() -> bool:
 		push_warning("存档处于锁定状态，本次写盘已跳过（原因：%s；备份：%s）"
 			% [save_lock_reason, save_backup_path])
 		return false
+	if _save_batch_depth > 0: return true
 	# v6 新档在尚未进入市集时也必须写出完整经济结构。
 	economy_state()
 	var data := {
@@ -909,6 +936,8 @@ func story_event(kind: String, target: String, map_id: String, persist := true,
 		flags = {"act1_stele_rooms_v1": true}
 	elif step_id == "s18":
 		flags = {"act2_tidal_rooms_v1": true}
+	elif step_id == "s24":
+		flags = {"act3_mine_rooms_v1": true}
 	elif step_id == "s11" and not choice.is_empty():
 		flags = {"act1_stele_repaired": true, "act1_route_open": true,
 			"act1_repair_method": choice}
@@ -981,6 +1010,9 @@ func world_puzzle_interact(map_id: String, eid: String, choice := "") -> Diction
 	for key in row.get("requires_flags", []):
 		if not bool(prog.get("flags", {}).get(String(key), false)):
 			return {"ok": false, "reason": "locked"}
+	if map_id == "rift_mine_vault" and bool(prog.get("flags", {}).get("act3_mine_rooms_v1", false)) \
+			and eid == "act3_mine_switch" and not bool(prog.get("flags", {}).get("act3_mine_second_wind", false)):
+		return {"ok": false, "reason": "locked"}
 	if map_id == "stele_cavern" and eid == "act1_echo_west" and \
 			bool(prog.get("flags", {}).get("act1_stele_rooms_v1", false)):
 		for crack in ["act1_echo_crack_left", "act1_echo_crack_middle", "act1_echo_crack_right"]:
@@ -1433,11 +1465,11 @@ func economy_rest(site_id: String) -> Dictionary:
 		wallet = before_wallet
 		items = before_items
 		return {"ok": false, "err": "旧药单自动结算失败，歇脚已回滚"}
-	if not save_game():
+	if not preload("res://src/world/TradeContracts.gd").tick(self) or not save_game():
 		prog = before_prog
 		wallet = before_wallet
 		items = before_items
-		return {"ok": false, "err": "歇脚写盘失败，已回滚"}
+		return {"ok": false, "err": "歇脚写盘或合约自动退押失败，已回滚"}
 	return {"ok": true, "day": day, "fee_gold": fee,
 		"auto_settled": bool(expired_contract.get("settled", false)),
 		"contract_refund_gold": int(expired_contract.get("refund_gold", 0))}
@@ -2080,13 +2112,17 @@ func side_entity_visible(eid: String, qid: String) -> bool:
 	var st := QuestService.side_status(act1, qid)
 	if st.is_empty() or st == QuestService.SIDE_READY or st == QuestService.SIDE_DONE:
 		return false
+	var row := QuestService.side_row(_side_live_rows(), qid)
+	if not (row.get("steps", []) as Array).is_empty():
+		var objective := QuestService.side_objective(row, QuestService.side_get(act1, qid))
+		return QuestService._side_entity_match(objective, {"source_id": eid})
 	var seen: Variant = QuestService.side_get(act1, qid).get("seen", [])
 	return not (seen is Array and (seen as Array).has(eid))
 
 
 ## 野外实体交互（MapScene 调）。kind ∈ collect／observe／deliver。
 ## 返回 { ok, reason, toasts, hide }：hide=true 时实体从地图上消失（采集/观察/送达成功）。
-func side_entity_interact(kind: String, eid: String, map_id: String, qid := "") -> Dictionary:
+func side_entity_interact(kind: String, eid: String, map_id: String, qid := "", choice := "") -> Dictionary:
 	if save_locked:
 		return {"ok": false, "reason": "locked", "toasts": [], "hide": false}
 	var before_prog := prog.duplicate(true)
@@ -2095,11 +2131,18 @@ func side_entity_interact(kind: String, eid: String, map_id: String, qid := "") 
 	var act1 := act1_state()
 	var rows := _side_live_rows()
 	var event := QuestService.world_event(kind, eid, map_id,
-		selected_role if not selected_role.is_empty() else "player")
+		selected_role if not selected_role.is_empty() else "player", {"choice": choice})
+	var step := QuestService.side_objective(QuestService.side_row(rows, qid), QuestService.side_get(act1, qid))
+	if not (step.get("choices", {}) as Dictionary).is_empty():
+		if not (step.get("choices", {}) as Dictionary).has(choice):
+			return {"ok": false, "reason": "invalid_choice", "hide": false}
+		if not String(step.get("correct", "")).is_empty() and choice != String(step["correct"]):
+			return {"ok": false, "reason": "wrong_choice", "line": String(step.get("wrong", "再核对线索，仍可重试。")), "hide": false}
 	var touched := QuestService.side_report(act1, rows, event, items)
 	if touched.is_empty():
 		return {"ok": false, "reason": "no_progress", "toasts": [], "hide": false}
 	var toasts: Array = []
+	if not String(step.get("completion", "")).is_empty(): toasts.append(String(step["completion"]))
 	if kind == "collect":
 		for qid_v in touched:
 			var row := QuestService.side_row(rows, String(qid_v))
@@ -2254,10 +2297,14 @@ func side_npc_line(npc_id: String) -> String:
 ## Explicit post-campaign offers coexist with each NPC's original services.
 func return_job_row(npc_id: String) -> Dictionary:
 	if not story_step_done("s36"): return {}
+	var candidates: Array = []
 	for row in side_quest_rows():
 		if String(row.get("id", "")).begins_with("a4_") and row.get("giver", "") == npc_id:
-			return row
-	return {}
+			candidates.append(row)
+	for wanted in [QuestService.SIDE_READY, QuestService.SIDE_ACTIVE, ""]:
+		for row in candidates:
+			if side_status_of(String(row.id)) == wanted: return row
+	return candidates[0] if not candidates.is_empty() else {}
 
 
 ## HUD 支线蓝签文案（只显示追踪中的那一条）。
@@ -2296,6 +2343,8 @@ func side_info_lines(qid := "") -> Array:
 		lines.append("进度：已完成")
 	else:
 		lines.append("进度：%d/%d" % [int(info.get("progress", 0)), int(info.get("need", 1))])
+		var current := QuestService.side_objective(row, QuestService.side_get(act1_state(), q))
+		if not String(current.get("text", "")).is_empty(): lines.append("下一步：%s" % String(current["text"]))
 	var map_name := String(TableCache.main_world_map(String(row.get("map", ""))).get("name", ""))
 	if not map_name.is_empty():
 		lines.append("地点：%s" % map_name)
@@ -2899,7 +2948,8 @@ func shop_price(item_id: String) -> int:
 	for r in shop_items():
 		var d := r as Dictionary
 		if String(d.get("item", "")) == item_id:
-			return int(d.get("price", 0))
+			var mult := preload("res://src/world/RegionalTrust.gd").shop_mult(self,String(prog.get("main_world",{}).get("map_id","lorin_wilds")))
+			return floori(float(d.get("price",0))*mult)
 	return 0
 
 
@@ -2914,6 +2964,7 @@ func shop_sell_price(item_id: String) -> int:
 ## 购买一件：id 非法 / 金币不足一律拒绝；成功扣款并发放（单件购买，防一次买爆经济）。
 ## 这里必须**独立**再校验一次：面板可以改，购买接口是唯一入口，不能只靠 UI 拦。
 func shop_buy(item_id: String) -> Dictionary:
+	if save_locked: return {"ok":false,"err":"存档暂不可写"}
 	if item_id.is_empty():
 		return {"ok": false, "err": "本店没有这件货"}
 	var price := shop_price(item_id)
@@ -2921,23 +2972,36 @@ func shop_buy(item_id: String) -> Dictionary:
 		return {"ok": false, "err": "本店没有这件货"}
 	if int(wallet.get("gold", 0)) < price:
 		return {"ok": false, "err": "金币不足（需 %d）" % price}
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var before_items := items.duplicate(true)
 	wallet["gold"] = int(wallet.get("gold", 0)) - price
 	grant_item(item_id, 1, false)
-	save_game()
+	if not save_game():
+		prog=before_prog
+		wallet=before_wallet
+		items=before_items
+		return {"ok":false,"err":"购买未保存，金币与物品已恢复"}
 	_sfx("coin", 0.0)
 	return {"ok": true, "err": ""}
 
 
 ## 回收只接受本店白名单材料，回收价严格低于买价；扣物与入金同次写档。
 func shop_sell(item_id: String) -> Dictionary:
+	if save_locked: return {"ok":false,"err":"存档暂不可写"}
 	var price := shop_sell_price(item_id)
 	if price <= 0:
 		return {"ok": false, "err": "本店不回收这件货"}
 	if item_count(item_id) <= 0:
 		return {"ok": false, "err": "背包里没有这件货"}
+	var before_wallet := wallet.duplicate(true)
+	var before_items := items.duplicate(true)
 	items[item_id] = item_count(item_id) - 1
 	wallet["gold"] = int(wallet.get("gold", 0)) + price
-	save_game()
+	if not save_game():
+		wallet=before_wallet
+		items=before_items
+		return {"ok":false,"err":"回收未保存，金币与物品已恢复"}
 	_sfx("coin", 0.0)
 	return {"ok": true, "err": "", "gold": price}
 
@@ -4134,13 +4198,13 @@ func claim_first_mount(persist := true) -> Dictionary:
 ## 装备中的马与此刻上马分开；老档只有 active 时默认是步行。
 ## 首骑素材目前只覆盖 horse，其他六线坐骑仍按原局外属性结算。
 func mount_riding() -> bool:
-	return mount_active() == String(first_mount_cfg().get("mount_id", "horse")) \
+	return mount_active() in [String(first_mount_cfg().get("mount_id", "horse")), "bear"] \
 		and mount_tier(mount_active()) > 0 \
 		and bool((prog.get("mounts", {}) as Dictionary).get("riding", false))
 
 
 func mount_set_riding(ride: bool, persist := true) -> bool:
-	if save_locked or (ride and (mount_active() != String(first_mount_cfg().get("mount_id", "horse"))
+	if save_locked or (ride and (mount_active() not in [String(first_mount_cfg().get("mount_id", "horse")), "bear"]
 			or mount_tier(mount_active()) <= 0)):
 		return false
 	var before := prog.duplicate(true)
@@ -4155,6 +4219,7 @@ func mount_set_riding(ride: bool, persist := true) -> bool:
 
 ## 购买 1 阶 / 升级 2 阶
 func mount_buy(mid: String) -> Dictionary:
+	if save_locked: return {"ok":false,"err":"存档暂不可写"}
 	var cfg := mount_cfg(mid)
 	if cfg.is_empty():
 		return {"ok": false, "err": "没有这只坐骑"}
@@ -4165,7 +4230,16 @@ func mount_buy(mid: String) -> Dictionary:
 	var cost: Dictionary = (tiers[cur] as Dictionary).get("cost", {})
 	if not has_cost(cost):
 		return {"ok": false, "err": "资源不足"}
-	pay_cost(cost)
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var before_items := items.duplicate(true)
+	var transaction := RewardLedger.make(RewardLedger.tx_id("mount",mid,"tier_%d"%(cur+1)),cost)
+	var applied := RewardLedger.apply(transaction,ledger(),self)
+	if not bool(applied.ok) or bool(applied.duplicate):
+		prog=before_prog
+		wallet=before_wallet
+		items=before_items
+		return {"ok":false,"err":"坐骑结算未通过"}
 	var mts: Dictionary = prog.get("mounts", {})
 	var owned: Dictionary = mts.get("owned", {})
 	owned[mid] = cur + 1
@@ -4173,19 +4247,25 @@ func mount_buy(mid: String) -> Dictionary:
 	if mount_active().is_empty():
 		mts["active"] = mid
 	prog["mounts"] = mts
-	save_game()
+	if not save_game():
+		prog=before_prog
+		wallet=before_wallet
+		items=before_items
+		return {"ok":false,"err":"坐骑未保存，资源已恢复"}
 	return {"ok": true, "tier": cur + 1}
 
 
 func mount_set_active(mid: String) -> bool:
-	if mount_tier(mid) <= 0:
+	if save_locked or mount_tier(mid) <= 0:
 		return false
+	var before := prog.duplicate(true)
 	var mts: Dictionary = prog.get("mounts", {})
 	mts["active"] = mid
 	mts["riding"] = false
 	prog["mounts"] = mts
-	save_game()
-	return true
+	if save_game(): return true
+	prog = before
+	return false
 
 
 # ---------- 称号（成就自动解锁 / 荣誉购买，佩戴给小幅加成） ----------
@@ -4559,12 +4639,22 @@ func quest_offer() -> Array:
 	if String(quest.get("day", "")) != today_key():
 		_refresh_quests()
 	var o: Variant = quest.get("offer", [])
-	return o if o is Array else []
+	var offer: Array = (o as Array).duplicate() if o is Array else []
+	for active_id in (quest.get("active", {}) as Dictionary):
+		if not offer.has(active_id): offer.append(active_id)
+	return offer
 
 
 ## 刷今日牌：从全部委托里按「日期 + 等级」确定性抽 daily_slots 条（改档不会随机跳）
-## 跨日未交付的委托作废——今日事今日毕，不给玩家堆一墙任务
+## 跨日只更新未接候选，已接事务保留进度与原发布日。
 func _refresh_quests() -> void:
+	if save_locked: return
+	var before_quest := quest.duplicate(true)
+	var before_prog := prog.duplicate(true)
+	var postings: Dictionary = prog.get("quest_postings", {})
+	for active_id in (quest.get("active", {}) as Dictionary):
+		if not postings.has(active_id): postings[active_id] = "%s|%s" % [active_id, String(quest.get("day", "legacy"))]
+	prog["quest_postings"] = postings
 	var pool: Array = []
 	for q in quest_defs():
 		var qd := q as Dictionary
@@ -4589,9 +4679,10 @@ func _refresh_quests() -> void:
 			pick.append(id)
 	quest["day"] = today_key()
 	quest["offer"] = pick
-	quest["active"] = {}
 	quest["claimed"] = []
-	save_game()
+	if not save_game():
+		quest = before_quest
+		prog = before_prog
 
 
 func quest_active(qid: String) -> bool:
@@ -4622,6 +4713,7 @@ func quest_completed(qid: String) -> bool:
 
 ## 接取：必须出现在今日牌上、且没交过
 func quest_accept(qid: String) -> bool:
+	if save_locked: return false
 	if quest_def(qid).is_empty() or quest_claimed(qid):
 		return false
 	if not quest_offer().has(qid):
@@ -4629,15 +4721,25 @@ func quest_accept(qid: String) -> bool:
 	var act: Dictionary = quest.get("active", {})
 	if act.has(qid):
 		return false
+	var before_quest := quest.duplicate(true)
+	var before_prog := prog.duplicate(true)
+	var postings: Dictionary = prog.get("quest_postings", {})
+	postings[qid] = "%s|%s" % [qid, String(quest.get("day", today_key()))]
+	prog["quest_postings"] = postings
 	act[qid] = 0
 	quest["active"] = act
-	save_game()
+	if not save_game():
+		quest = before_quest
+		prog = before_prog
+		return false
 	return true
 
 
 ## 进度上报：推进所有「进行中且条件匹配」的委托；返回本次刚好做满的委托标题
 ## （slay 由战斗胜利调用，clear 由 on_world_cleared 调用）
 func quest_report(kind: String, target: String, n := 1) -> Array:
+	if save_locked: return []
+	var before := quest.duplicate(true)
 	if kind == "deliver":
 		return []   # 上交类不看击杀，只在交付时结算
 	var act: Dictionary = quest.get("active", {})
@@ -4659,12 +4761,15 @@ func quest_report(kind: String, target: String, n := 1) -> Array:
 			done.append(String(d.get("title", qid)))
 	if changed:
 		quest["active"] = act
-		save_game()
+		if not save_game():
+			quest = before
+			return []
 	return done
 
 
 ## 交付：校验 → 扣物/发奖 → 记入今日已交付。返回 {ok, title, lines, npc, err}
 func quest_claim(qid: String) -> Dictionary:
+	if save_locked: return {"ok": false, "err": "存档暂不可写，请稍后重试"}
 	var d := quest_def(qid)
 	if d.is_empty():
 		return {"ok": false, "err": "没有这条委托"}
@@ -4679,19 +4784,34 @@ func quest_claim(qid: String) -> Dictionary:
 			return {"ok": false, "err": "%s 不够（要 %d 个，现有 %d）"
 				% [item_name(lack), quest_need(qid), item_count(lack)]}
 		return {"ok": false, "err": "事情还没办完"}
-	if String(d.get("kind", "")) == "deliver":
-		var iid := String(d.get("item", ""))
-		if not consume_item(iid, quest_need(qid)):
-			return {"ok": false, "err": "%s 不够" % item_name(iid)}
+	var before_quest := quest.duplicate(true)
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var before_items := items.duplicate(true)
+	var costs := {}
+	if String(d.get("kind", "")) == "deliver": costs["item:%s" % String(d.get("item", ""))] = quest_need(qid)
 	var reward: Dictionary = (d.get("reward", {}) as Dictionary).duplicate()
-	apply_reward(reward)
+	var posting := String((prog.get("quest_postings", {}) as Dictionary).get(qid,
+		"%s|%s" % [qid, String(quest.get("day", "legacy"))]))
+	var tx := RewardLedger.make(RewardLedger.tx_id("commission", posting, "claim"), costs, reward)
+	var applied := RewardLedger.apply(tx, ledger(), self)
+	if not bool(applied.get("ok", false)):
+		prog = before_prog
+		wallet = before_wallet
+		items = before_items
+		return {"ok": false, "err": "委托结算未能完成"}
 	var claimed: Array = quest.get("claimed", [])
 	claimed.append(qid)
 	quest["claimed"] = claimed
 	var act: Dictionary = quest.get("active", {})
 	act.erase(qid)
 	quest["active"] = act
-	save_game()
+	if not save_game():
+		quest = before_quest
+		prog = before_prog
+		wallet = before_wallet
+		items = before_items
+		return {"ok": false, "err": "存档失败，委托与物资已恢复"}
 	return {"ok": true, "title": String(d.get("title", "")),
 		"npc": String(d.get("npc", "")), "lines": reward_lines(reward)}
 
@@ -4857,7 +4977,7 @@ func setting_set(key: String, value: Variant) -> void:
 
 ## 当前主线目标：按 theme_order 找「第一片还没通关的秘境」，连同它的志异一起给出
 ## 返回 {theme, title, lines}；全部通关则给收束目标
-func main_goal() -> Dictionary:
+func trial_goal() -> Dictionary:
 	var goals: Variant = lore().get("goals", {})
 	var g: Dictionary = goals if goals is Dictionary else {}
 	var order := theme_order()
@@ -4891,22 +5011,86 @@ func main_goal() -> Dictionary:
 		lines.append(hint)
 		return {
 			"theme": tid,
-			"title": "当前目标 · 讨伐「%s」" % String(tl.get("boss", "首领")),
+			"title": "回境历练 · 挑战「%s」" % String(tl.get("boss", "首领")),
 			"lines": lines,
 		}
 	return {
 		"theme": "",
-		"title": "当前目标",
-		"lines": [String(g.get("after_all", "八碑归位。"))],
+		"title": "回境历练已遍历",
+		"lines": ["八个回境已完成；可重访练招。它们是图志投影，八座真实界碑的谜题仍未解开。"],
 	}
 
 
 ## 主界面那一行摘要：给个小字行用（不带换行的一行）
 func main_goal_short() -> String:
-	var goal := main_goal()
+	return story_goal_short()
+
+
+func run_checkpoint(run: RunState, current_node := {}) -> bool:
+	if run.run_id.is_empty(): return true
+	if save_locked: return false
+	var before := prog.duplicate(true)
+	prog["active_run"] = {"state": run.snapshot(), "current_node": current_node.duplicate(true)}
+	if not save_game():
+		prog = before
+		return false
+	return true
+
+
+func run_abandon() -> bool:
+	if save_locked: return false
+	var before := prog.duplicate(true)
+	prog.erase("active_run")
+	if not save_game():
+		prog = before
+		return false
+	return true
+
+
+func run_settle(run: RunState, win: bool) -> Dictionary:
+	if save_locked: return {"ok": false}
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	var before_items := items.duplicate(true)
+	var before_quest := quest.duplicate(true)
+	var bonus := int(float(run.gold) * 0.10) if win and (run.hp < 0 or run.hp >= run.max_hp()) else 0
+	var id := run.run_id if not run.run_id.is_empty() else "%s|%d" % [run.theme, run.run_seed]
+	var tx := RewardLedger.make(RewardLedger.tx_id("run", id, "settle"), {},
+		{"gold": run.gold + bonus, "expedition": run.expedition, "soul": run.soul, "honor": run.honor, "exp": run.exp})
+	_save_batch_depth += 1
+	var applied := RewardLedger.apply(tx, ledger(), self)
+	var opened := ""
+	var gift := ""
+	if bool(applied.get("ok", false)) and not bool(applied.get("duplicate", false)):
+		if win: opened = on_world_cleared(run.theme)
+		gift = report_run_result(win)
+	prog.erase("active_run")
+	_save_batch_depth -= 1
+	if not bool(applied.get("ok", false)) or not save_game():
+		prog = before_prog
+		wallet = before_wallet
+		items = before_items
+		quest = before_quest
+		return {"ok": false}
+	return {"ok": true, "bonus": bonus, "opened": opened, "gift": gift,
+		"level_ups": int(prog.get("level", 1)) - int(before_prog.get("level", 1))}
+
+
+func main_goal() -> Dictionary:
+	var row := story_current()
+	if row.is_empty():
+		return {"theme": "", "title": story_goal_short(),
+			"lines": ["归路篇的进度由三城证词与归路碑记录决定。回境历练可独立重访，八碑长线仍待追索。"]}
+	return {"theme": String(TableCache.main_world_map(String(row.get("map", ""))).get("theme", "forest")),
+		"title": "归路主线 · %s" % String(row.get("title", "")),
+		"lines": [String(row.get("goal", "")), "前往：%s" % String(TableCache.main_world_map(String(row.get("map", ""))).get("name", "昭元边城"))]}
+
+
+func trial_goal_short() -> String:
+	var goal := trial_goal()
 	var tid := String(goal.get("theme", ""))
 	if tid.is_empty():
-		return "八碑归位 · 回王城正殿"
+		return "八回境已遍历 · 可重访历练"
 	var tl := theme_lore(tid)
 	return "%s · 讨伐「%s」" % [String(tl.get("name", tid)), String(tl.get("boss", "首领"))]
 
@@ -5042,14 +5226,29 @@ var _avatar_tex: Texture2D = null
 var _avatar_tex_done := false
 
 
-## 当前头像贴图：上传过且在用 → 自定义图；否则用职业头像
+## 当前头像贴图：上传过且在用 → 自定义图；否则用独立的趣味头像。
 func avatar_texture() -> Texture2D:
 	if avatar_use_custom:
 		var t := custom_avatar_texture()
 		if t != null:
 			return t
-	var rid := avatar_id if not get_role(avatar_id).is_empty() else selected_role
-	return load(role_icon_path(rid)) as Texture2D
+	return preset_avatar_texture(current_avatar_id())
+
+
+func current_avatar_id() -> String:
+	return AvatarPresets.resolve(avatar_id)
+
+
+func preset_avatar_texture(id: String) -> Texture2D:
+	return AvatarPresets.texture(id)
+
+
+func use_preset_avatar(id: String) -> void:
+	if not AvatarPresets.IDS.has(id):
+		return
+	avatar_id = id
+	avatar_use_custom = false
+	save_game()
 
 
 ## 已上传的自定义头像贴图（没上传/文件丢了返回 null）
@@ -5094,12 +5293,10 @@ func import_avatar(src_path: String) -> String:
 	return ""
 
 
-## 切回职业头像（上传的图保留，随时能再切回来）
+## 旧调用入口兼容：职业 id 转为个人头像；职业立绘仍由 role_icon_path 提供。
 func use_role_avatar(id: String) -> void:
-	if not get_role(id).is_empty():
-		avatar_id = id
-	avatar_use_custom = false
-	save_game()
+	if AvatarPresets.LEGACY.has(id):
+		use_preset_avatar(String(AvatarPresets.LEGACY[id]))
 
 
 ## 切回上次上传的自定义头像；没上传过返回 false（调用方据此弹选文件）
@@ -5218,9 +5415,14 @@ func res_tex(res_name: String) -> Texture2D:
 	var p := res_path(res_name)
 	var t: Texture2D = null
 	if not p.is_empty():
-		t = load(p) as Texture2D
+		t = visual_texture(p)
 	_tex_cache[res_name] = t
 	return t
+
+
+func visual_texture(path: String) -> Texture2D:
+	var clean_path := path.get_base_dir()+"/refined/"+path.get_file()
+	return load(clean_path if ResourceLoader.exists(clean_path) else path) as Texture2D
 
 
 # ---------- 通用 UI 工厂 ----------
@@ -5245,7 +5447,7 @@ func veil_at(parent: Node, strength := VEIL_MODAL_A, eat_input := true, a := -1.
 func _veil_into(parent: Node, strength: float, eat_input: bool, a: float) -> Control:
 	if a < 0.0:
 		a = strength
-	var root := Control.new()
+	var root := ModalVeil.new()
 	root.name = "Veil"
 	root.size = _veil_viewport_size(parent)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP if eat_input else Control.MOUSE_FILTER_IGNORE
@@ -5260,14 +5462,10 @@ func _veil_into(parent: Node, strength: float, eat_input: bool, a: float) -> Con
 	base.color = Color(0.035, 0.06, 0.065, a * 0.65)
 	base.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(base)
-	var backdrop := TextureRect.new()
+	var backdrop := Visuals.Atmosphere.new()
 	backdrop.name = "Atmosphere"
-	backdrop.texture = _interface_texture()
-	backdrop.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	backdrop.stretch_mode = TextureRect.STRETCH_TILE
 	backdrop.size = vp
-	backdrop.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-	backdrop.modulate = Color(1, 1, 1, clampf((a - 0.70) * 2.0, 0, 0.4))
+	backdrop.modulate.a = clampf(a, 0.0, 1.0)
 	backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(backdrop)
 
@@ -5289,10 +5487,21 @@ func _veil_into(parent: Node, strength: float, eat_input: bool, a: float) -> Con
 	g.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	g.stretch_mode = TextureRect.STRETCH_TILE
 	g.size = vp
-	g.modulate.a = 0.045
+	g.modulate.a = 0.0
 	g.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(g)
 	return root
+
+
+class ModalVeil extends Control:
+	func _ready() -> void:
+		_fit()
+		get_viewport().size_changed.connect(_fit)
+
+	func _fit() -> void:
+		size = G._veil_viewport_size(self)
+		for child in get_children():
+			(child as Control).size = size
 
 
 ## 浮层要铺多大：优先问父级尺寸，拿不到（headless 早期/未入树）再退回项目基准 480×800
@@ -5319,12 +5528,14 @@ func _interface_texture() -> ImageTexture:
 	_interface_backdrop = ImageTexture.create_from_image(image)
 	return _interface_backdrop
 
-func page_background(parent: Control, dim := 0.25, asset_path := "") -> TextureRect:
+func page_background(parent: Control, dim := 0.25, asset_path := "", use_refined := true) -> TextureRect:
 	var background := TextureRect.new()
 	background.name = "PageBackground"
-	background.texture = load(asset_path) as Texture2D if asset_path != "" else _interface_texture()
 	background.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	background.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED if asset_path != "" else TextureRect.STRETCH_TILE
+	var path := asset_path if asset_path != "" else PAGE_BACKGROUND
+	var quiet_path := "res://image/background/refined/" + path.get_file()
+	background.texture = load(quiet_path if use_refined and ResourceLoader.exists(quiet_path) else path) as Texture2D
+	background.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	background.size = _veil_viewport_size(parent)
 	background.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	background.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -5335,9 +5546,14 @@ func page_background(parent: Control, dim := 0.25, asset_path := "") -> TextureR
 	shade.size = background.size
 	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	parent.add_child(shade)
+	var motes := Visuals.SceneryMotion.new()
+	motes.name = "SceneryMotion"
+	motes.size = background.size
+	parent.add_child(motes)
 	parent.resized.connect(func():
 		background.size = _veil_viewport_size(parent)
-		shade.size = background.size)
+		shade.size = background.size
+		motes.size = background.size)
 	return background
 
 func paper_ink(color: Color) -> Color:
@@ -5347,15 +5563,22 @@ func paper_ink(color: Color) -> Color:
 		return Color.from_hsv(color.h, minf(color.s, 0.7), 0.43, 1.0)
 	return Color(color.r, color.g, color.b, 1.0)
 
-func center_fixed_page(parent: Control) -> void:
+func center_fixed_page(parent: Variant) -> void:
+	# 页面可在本帧关掉；延后布局不能解引用已释放的控件。
+	if not is_instance_valid(parent) or not (parent is Control): return
 	if parent.get_meta("visual_centered", false): return
 	parent.set_meta("visual_centered", true)
-	var lift := maxf(0, _veil_viewport_size(parent).y - 800) * 0.5
-	if lift <= 0: return
-	for child in parent.get_children():
-		if child is Control and child.name not in ["Veil", "PageBackground", "BackgroundShade"] \
-				and not (child.anchor_right == 1.0 and child.anchor_bottom == 1.0):
-			(child as Control).position.y += lift
+	preload("res://src/ui/UiSafeArea.gd").fit_page(parent,ui_safe_rect(parent))
+
+func fit_mobile_page(parent:Variant)->void:
+	if not is_instance_valid(parent) or not parent is Control:return
+	if OS.get_name() not in ["Android","iOS"]:return
+	preload("res://src/ui/UiSafeArea.gd").fit_page(parent,ui_safe_rect(parent),_veil_viewport_size(parent))
+
+func ui_safe_rect(parent:Node)->Rect2:
+	var view:=Rect2(Vector2.ZERO,_veil_viewport_size(parent))
+	if OS.get_name() not in ["Android","iOS"] or DisplayServer.get_name()=="headless":return view
+	return preload("res://src/ui/UiSafeArea.gd").from_screen(view,Rect2(DisplayServer.get_display_safe_area()),parent.get_viewport().get_screen_transform())
 
 
 func _build_vignette_tex() -> GradientTexture2D:
@@ -5416,7 +5639,7 @@ func serif_label(text: String, size: int, color := GOLD,
 	var l := Label.new()
 	l.text = text
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	l.add_theme_font_override("font", font_serif if size >= FS_LG else font_reg)
+	l.add_theme_font_override("font", font_art if size >= FS_LG else (font_display if size >= 18 else font_serif))
 	l.add_theme_font_size_override("font_size", maxi(size, 14))
 	l.add_theme_color_override("font_color", color)
 	if outline:
@@ -5435,6 +5658,32 @@ func text_label(text: String, size := FS_SM, color := TEXT_DARK) -> Label:
 	l.add_theme_color_override("font_color", color if color.get_luminance() > 0.70 else paper_ink(color))
 	l.add_theme_constant_override("line_spacing", 4)
 	return l
+
+
+## Short transient notification; its own quiet surface keeps scene art out of the text.
+func toast_label(text: String) -> Label:
+	var label := Label.new()
+	label.text = text
+	label.custom_minimum_size = Vector2(432, 38)
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	label.add_theme_font_override("font", font_reg)
+	label.add_theme_font_size_override("font_size", 18)
+	label.add_theme_color_override("font_color", Color("f1e2c2"))
+	var backing := Panel.new()
+	backing.set_anchors_preset(Control.PRESET_FULL_RECT)
+	backing.show_behind_parent = true
+	backing.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color("29373e", 0.96)
+	style.border_color = Color("afbaa7")
+	style.border_width_left = 2
+	style.border_width_bottom = 1
+	backing.add_theme_stylebox_override("panel", style)
+	label.add_child(backing)
+	return label
 
 
 ## 带字间距的字体（标题用；serif=true 时基于宋体）
@@ -5499,7 +5748,8 @@ func ui_icon(key: String, dimensions := Vector2(20, 20), tint := TEXT_MUTED) -> 
 
 
 func button_icon(button: Control, key: String, tint := TEXT_DARK) -> void:
-	NavigationIcons.button_icon(button, key, tint)
+	NavigationIcons.button_icon(button, key,
+		GOLD_BRIGHT if tint == TEXT_DARK and bool(button.get_meta("primary_action", false)) else tint)
 
 
 ## 带名称的页签，不要求玩家记住圆点分别是哪一页。
@@ -5548,10 +5798,48 @@ func reveal_control(control: Control, delay := 0.0) -> void:
 	if control.get_meta("ui_revealed", false): return
 	control.set_meta("ui_revealed", true)
 	control.modulate.a = 0.0
+	control.pivot_offset = control.size * 0.5
+	control.scale = Vector2.ONE * 0.975
 	var tw := control.create_tween()
 	tw.tween_interval(delay)
-	tw.tween_property(control, "modulate:a", 1.0, 0.18)\
+	tw.tween_property(control, "modulate:a", 1.0, 0.25)\
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tw.parallel().tween_property(control, "scale", Vector2.ONE, 0.34)\
+		.set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
+
+
+func type_text(label: Label, characters_per_second := 46.0) -> void:
+	var previous: Tween = label.get_meta("text_motion") if label.has_meta("text_motion") else null
+	if previous != null and previous.is_valid(): previous.kill()
+	if DisplayServer.get_name() == "headless" or get_meta("ui_review_mode", false):
+		label.visible_characters = -1
+		return
+	label.visible_characters = 0
+	var motion := label.create_tween()
+	label.set_meta("text_motion", motion)
+	motion.tween_property(label,"visible_characters",label.text.length(),maxf(0.15,label.text.length()/characters_per_second))
+	motion.tween_callback(func(): label.visible_characters = -1)
+
+
+func finish_text(label: Label) -> bool:
+	if label.visible_characters < 0 or label.visible_characters >= label.text.length(): return false
+	var motion: Tween = label.get_meta("text_motion") if label.has_meta("text_motion") else null
+	if motion != null and motion.is_valid(): motion.kill()
+	label.visible_characters = -1
+	return true
+
+
+func animate_fill(fill: Control, width: float) -> void:
+	if is_equal_approx(float(fill.get_meta("fill_target",-1.0)),width): return
+	fill.set_meta("fill_target",width)
+	var previous: Tween = fill.get_meta("fill_motion") if fill.has_meta("fill_motion") else null
+	if previous != null and previous.is_valid(): previous.kill()
+	if DisplayServer.get_name() == "headless" or get_meta("ui_review_mode",false):
+		fill.size.x = width
+		return
+	var motion := fill.create_tween()
+	fill.set_meta("fill_motion",motion)
+	motion.tween_property(fill,"size:x",width,0.28).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
 
 
 # ---------- 参考风控件（创建角色 / 登录页） ----------
@@ -5564,15 +5852,15 @@ func _banner_text(text: String) -> String:
 	return text.replace(" ", "")
 
 
-## 顶部木匾横幅（宋体 + 旧金包边 + 角饰）。此前是"纯色圆角矩形 + 1px 细金框"，
-## 那是模板工具的默认脸；换成有纹理、有厚度、有工艺细节的实心木牌。
+## 开放式书法题签；保留横幅工厂的尺寸与调用方式。
 func banner_box(text: String, w := 260, h := 52, font_size := FS_BIG) -> Control:
 	var root := WoodPlaque.new()
 	root.custom_minimum_size = Vector2(w, h)
-	var l := serif_label(_banner_text(text), font_size, GOLD_BRIGHT)
+	root.size = root.custom_minimum_size
+	var l := serif_label(_banner_text(text), mini(font_size+12, int(h*0.82)), Color("f4dfb5"))
 	l.add_theme_color_override("font_shadow_color", Color("141008", 0.9))
 	l.add_theme_constant_override("shadow_offset_y", 1)
-	root.setup(l, Color("3a2c1c"))
+	root.setup(l, Color("203938"))
 	root.set_meta("banner_surface", true)
 	return root
 
@@ -5601,19 +5889,21 @@ func wood_grain(base := Color("3a2c1c")) -> ImageTexture:
 	return tex
 
 
-## 木牌面板：木纹底 + 旧金包边 + 顶高光/底压暗 + 四角金饰。banner_box 与
-## 营帐入口共用；纯 StyleBoxFlat 画不出"厚度"，所以走自绘。
+## 兼容旧横幅类型；现在绘制每个页面自己的题签装饰。
 class WoodPlaque extends Panel:
 	var _label: Control = null
 	var _tex: ImageTexture = null
 	var _cut := 3.0   # 切角像素：比直角柔和，比大圆角"机床感"低
+	func _ready() -> void:
+		_place_label.call_deferred()
+		G.reveal_control(self, 0.04)
 
 	func setup(label: Control, base := Color("3a2c1c"), cut := 3.0) -> void:
 		_label = label
 		_cut = cut
 		add_child(label)
+		label.minimum_size_changed.connect(_place_label.call_deferred)
 		add_theme_stylebox_override("panel", StyleBoxEmpty.new())
-		_tex = G.wood_grain(base)
 		item_rect_changed.connect(_place_label)
 		_place_label()
 
@@ -5621,20 +5911,12 @@ class WoodPlaque extends Panel:
 		if _label == null:
 			return
 		var ms := _label.get_combined_minimum_size()
+		_label.size = ms
 		_label.position = Vector2((size.x - ms.x) * 0.5, (size.y - ms.y) * 0.5)
+		queue_redraw()
 
 	func _draw() -> void:
-		G.draw_wood_body(self, size, _tex, _cut)
-		if size.x < 8.0 or size.y < 8.0:
-			return
-		# 四角短金饰（L 形角线）：比整圈亮边克制，比无装饰"生成感"低
-		var arm := 5.0
-		for corner in [Vector2(3, 3), Vector2(size.x - 4, 3),
-				Vector2(3, size.y - 4), Vector2(size.x - 4, size.y - 4)]:
-			var sx := -1.0 if corner.x > size.x * 0.5 else 1.0
-			var sy := -1.0 if corner.y > size.y * 0.5 else 1.0
-			draw_line(corner, corner + Vector2(arm * sx, 0), Color("c9ab72", 0.9), 1.0)
-			draw_line(corner, corner + Vector2(0, arm * sy), Color("c9ab72", 0.9), 1.0)
+		G.Visuals.heading(self)
 
 
 ## 木牌体的通用绘制（横匾与功能入口共用同一套"厚度语言"）：
@@ -5658,14 +5940,14 @@ static func draw_wood_body(item: CanvasItem, sz: Vector2, tex: Texture2D, cut :=
 	for i in shadow.size():
 		shadow[i] += Vector2(0.0, 2.5)
 	item.draw_colored_polygon(shadow, Color("0d0a06", 0.40))
-	item.draw_colored_polygon(octa.call(0.0), Color("241b12"))
+	item.draw_colored_polygon(octa.call(0.0), Color("142d2b"))
 	if tex != null:
 		item.draw_texture_rect(tex, Rect2(Vector2(2, 2), sz - Vector2(4, 4)), false)
 	var rim: PackedVector2Array = octa.call(1.0)
 	rim.append(rim[0])
-	item.draw_polyline(rim, Color("8b704c"), 1.0)
-	item.draw_line(Vector2(7, 3), Vector2(sz.x - 7, 3), Color("b49a6b", 0.5), 1.0)
-	item.draw_line(Vector2(7, sz.y - 3), Vector2(sz.x - 7, sz.y - 3), Color("14100a"), 1.0)
+	item.draw_polyline(rim, Color("b39a67"), 1.0)
+	item.draw_line(Vector2(7, 4), Vector2(sz.x - 7, 4), Color("e2c48c", 0.4), 1.0)
+	item.draw_line(Vector2(7, sz.y - 4), Vector2(sz.x - 7, sz.y - 4), Color("142d2b"), 1.0)
 
 
 ## 斜切角八边形路径：纸面/按钮/木牌共用的"倒角语言"。像素风不放大圆角——
@@ -5693,6 +5975,44 @@ static func draw_hard_shadow(item: CanvasItem, sz: Vector2, cut: float,
 	item.draw_colored_polygon(shadow, color)
 
 
+## 黄铜包角。按面板尺寸收放，信息小签只留短角线。
+static func draw_brass_corners(item: CanvasItem, sz: Vector2, arm := 18.0, inset := 3.0) -> void:
+	if sz.x < 30 or sz.y < 24: return
+	var length := minf(arm, minf(sz.x, sz.y) * 0.28)
+	for corner in [Vector2(inset, inset), Vector2(sz.x-inset, inset),
+			Vector2(inset, sz.y-inset), Vector2(sz.x-inset, sz.y-inset)]:
+		var sx := 1.0 if corner.x < sz.x*0.5 else -1.0
+		var sy := 1.0 if corner.y < sz.y*0.5 else -1.0
+		item.draw_line(corner + Vector2(2*sx, length*sy), corner + Vector2(2*sx, 2*sy), Color("aa814c"), 3)
+		item.draw_line(corner + Vector2(2*sx, 2*sy), corner + Vector2(length*sx, 2*sy), Color("aa814c"), 3)
+		item.draw_line(corner + Vector2(2*sx, (length-1)*sy), corner + Vector2(2*sx, 2*sy), Color("e2c48c"), 1)
+		item.draw_line(corner + Vector2(2*sx, 2*sy), corner + Vector2((length-1)*sx, 2*sy), Color("e2c48c"), 1)
+		if length >= 12:
+			item.draw_circle(corner + Vector2(7*sx, 7*sy), 1, Color("e5c99a"))
+
+
+static func draw_paper_body(item: CanvasItem, sz: Vector2, grain: Texture2D) -> void:
+	Visuals.paper(item, sz)
+	return
+
+static func _legacy_paper_body(item: CanvasItem, sz: Vector2, grain: Texture2D) -> void:
+	if sz.x < 16 or sz.y < 16: return
+	var large := sz.x >= 300 and sz.y >= 120
+	var edge := 6.0 if large else 2.0
+	var cut := 7.0 if large else 3.0
+	draw_hard_shadow(item, sz, cut, 4 if large else 2, Color("0c110d", 0.42))
+	item.draw_colored_polygon(octagon_path(sz, 0, cut), Color("1b2f2d"))
+	item.draw_rect(Rect2(Vector2.ONE*edge, sz-Vector2.ONE*edge*2), Color("eee1bf"))
+	if grain != null:
+		item.draw_texture_rect(grain, Rect2(Vector2.ONE*(edge+1), sz-Vector2.ONE*(edge+1)*2), true, Color(1,1,1,0.35))
+	var rim := octagon_path(sz, 1.5 if large else 0.5, cut-1)
+	rim.append(rim[0])
+	item.draw_polyline(rim, Color("b39a67"), 1)
+	if large:
+		item.draw_rect(Rect2(Vector2(9,9),sz-Vector2(18,18)),Color("b39a67",0.33),false,1)
+		draw_brass_corners(item, sz)
+
+
 var _paper_tex: ImageTexture = null
 
 ## 纸纹贴图（一次性生成缓存）：低幅度规则颗粒 + 稀疏横向纤维。
@@ -5716,15 +6036,12 @@ func paper_grain() -> ImageTexture:
 	return _paper_tex
 
 
-## 羊皮纸面板：自绘五层（硬影 → 纸底 → 纸纹 → 内缘做旧 → 描边/厚度）。
-## 之前是 StyleBoxFlat 纯色 + 圆角5 + 软影——全游戏几十个面板共用同一张
-## "模板脸"。纸感靠纹理与做旧，不靠换底色。
+## 按功能选择纸页、边饰和材质；保留既有内容边距。
 class PaperPanel extends PanelContainer:
 	var _tex: ImageTexture = null
 	var _cut := 3.0
 
 	func setup(pad := 18.0) -> void:
-		_tex = G.paper_grain()
 		# StyleBoxEmpty 只贡献 content margin（子控件布局不变），
 		# 视觉全部走 _draw，与 WoodPlaque 同构。
 		var sb := StyleBoxEmpty.new()
@@ -5735,29 +6052,7 @@ class PaperPanel extends PanelContainer:
 		add_theme_stylebox_override("panel", sb)
 
 	func _draw() -> void:
-		var sz := size
-		if sz.x < 8.0 or sz.y < 8.0:
-			return
-		G.draw_hard_shadow(self, sz, _cut)
-		draw_colored_polygon(G.octagon_path(sz, 0.0, _cut), G.PARCHMENT)
-		if _tex != null:
-			draw_texture_rect(_tex, Rect2(Vector2(2, 2), sz - Vector2(4, 4)), true)
-		# 内缘做旧：一圈暗线 + 更内一圈轻晕（新纸是"白块"，做旧才像旧纸）
-		var i1 := _cut + 2.0
-		var i2 := _cut + 5.0
-		draw_line(Vector2(i1, i1), Vector2(sz.x - i1, i1), Color("8a744f", 0.30), 1.0)
-		draw_line(Vector2(i1, sz.y - i1), Vector2(sz.x - i1, sz.y - i1), Color("8a744f", 0.30), 1.0)
-		draw_line(Vector2(i1, i1), Vector2(i1, sz.y - i1), Color("8a744f", 0.22), 1.0)
-		draw_line(Vector2(sz.x - i1, i1), Vector2(sz.x - i1, sz.y - i1), Color("8a744f", 0.22), 1.0)
-		draw_rect(Rect2(Vector2(i2, i2), sz - Vector2(i2 * 2.0, i2 * 2.0)),
-			Color("8a744f", 0.05), false, 1.0)
-		# 顶高光 / 底压暗：纸也有厚度，只是比木牌轻
-		draw_line(Vector2(_cut + 3, 1), Vector2(sz.x - _cut - 3, 1), Color("fff6dd", 0.55), 1.0)
-		draw_line(Vector2(_cut + 3, sz.y - 1), Vector2(sz.x - _cut - 3, sz.y - 1), Color("6d5a3a", 0.25), 1.0)
-		# 外缘描边（做旧棕，比纯 a3957a 深）
-		var rim := G.octagon_path(sz, 0.5, _cut)
-		rim.append(rim[0])
-		draw_polyline(rim, Color("95815f"), 1.0)
+		G.draw_paper_body(self, size, _tex)
 
 
 ## 像素按钮：斜切角 + 顶高光/底压暗 + 硬影 + 描边，与纸面/木牌同一套厚度语言。
@@ -5767,6 +6062,15 @@ class PixelButton extends PanelContainer:
 	var surface_bg := Color("e4dcc8")
 	var surface_edge := Color("b1a181")
 	var _cut := 2.0
+	var _hover_line := 0.0
+	var _hover_tween: Tween
+	func _ready() -> void:
+		mouse_entered.connect(func(): _set_hover(1.0))
+		mouse_exited.connect(func(): _set_hover(0.0))
+	func _set_hover(value: float) -> void:
+		if _hover_tween != null and _hover_tween.is_valid(): _hover_tween.kill()
+		_hover_tween = create_tween()
+		_hover_tween.tween_method(func(v: float): _hover_line=v; queue_redraw(),_hover_line,value,.18)
 
 	func set_surface(bg: Color, edge: Color) -> void:
 		surface_bg = bg
@@ -5784,19 +6088,36 @@ class PixelButton extends PanelContainer:
 		var sz := size
 		if sz.x < 6.0 or sz.y < 6.0:
 			return
-		G.draw_hard_shadow(self, sz, _cut, 2.0, Color("170f07", 0.30))
-		draw_colored_polygon(G.octagon_path(sz, 0.0, _cut), surface_bg)
+		var c := G.Visuals.palette(self)
+		var fill := surface_bg
+		var edge := surface_edge
+		if bool(get_meta("primary_action", false)):
+			fill = c.dark
+			edge = c.accent
+		elif bool(get_meta("tab_selected",false)):
+			fill = c.dark
+			edge = c.accent
+		elif surface_bg == Color("eae7da"):
+			fill = c.paper.lightened(0.06)
+			edge = Color(c.accent,0.7)
+		G.draw_hard_shadow(self, sz, _cut, 2.0, Color("170f07", 0.22))
+		draw_colored_polygon(G.octagon_path(sz, 0.0, _cut), fill)
 		draw_line(Vector2(_cut + 2, 1), Vector2(sz.x - _cut - 2, 1),
-			surface_bg.lightened(0.16), 1.0)
+			fill.lightened(0.16), 1.0)
 		draw_line(Vector2(_cut + 2, sz.y - 1), Vector2(sz.x - _cut - 2, sz.y - 1),
-			surface_bg.darkened(0.22), 1.0)
+			fill.darkened(0.22), 1.0)
 		var rim := G.octagon_path(sz, 0.5, _cut)
 		rim.append(rim[0])
-		draw_polyline(rim, surface_edge, 1.0)
+		draw_polyline(rim, edge, 1.0)
 		# 页签选中态：底边旧金粗线（与内容区相连的视觉暗示）
 		if bool(get_meta("tab_selected", false)):
 			draw_line(Vector2(_cut + 2, sz.y - 1.5), Vector2(sz.x - _cut - 2, sz.y - 1.5),
 				Color("c9ab72"), 2.0)
+		elif bool(get_meta("primary_action", false)) and sz.x >= 90 and sz.y >= 38:
+			draw_line(Vector2(10,sz.y-4),Vector2(sz.x-10,sz.y-4),Color(c.accent,0.35),1)
+		if _hover_line > 0 and sz.x > 40:
+			var reach := (sz.x-20)*_hover_line*.5
+			draw_line(Vector2(sz.x*.5-reach,sz.y-3),Vector2(sz.x*.5+reach,sz.y-3),Color(c.light,_hover_line*.85),1)
 
 
 ## 内凹槽（图标槽 / 宝石孔 / 镶嵌位）：底色深一档 + 顶压暗/底透光——
@@ -5899,6 +6220,8 @@ class InsetBand extends Panel:
 			band_bg.darkened(0.24), 1.0)
 		draw_line(Vector2(_cut + 2, sz.y - 1), Vector2(sz.x - _cut - 2, sz.y - 1),
 			band_bg.lightened(0.30), 1.0)
+		if band_bg.get_luminance() < 0.25:
+			draw_line(Vector2(0,3),Vector2(0,sz.y-3),band_edge,2)
 
 
 ## 内凹槽快捷工厂：尺寸 + 底色（浅槽配纸面，深槽配木牌）
@@ -5907,7 +6230,7 @@ func inset_slot(w: float, h: float, dark := false) -> InsetSlot:
 	s.custom_minimum_size = Vector2(w, h)
 	s.size = Vector2(w, h)
 	if dark:
-		s.setup(Color("221a11"), Color("6f5a38"))
+		s.setup(Color("142d2b"), Color("82744e"))
 	else:
 		s.setup(Color("ddd0ae"), Color("a99a76"))
 	return s
@@ -5938,38 +6261,46 @@ func _bind_press_feedback(root: Control) -> void:
 	root.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT:
 			root.pivot_offset = root.size * 0.5
+			var old := root.get_meta("press_motion") as Tween if root.has_meta("press_motion") else null
+			if old != null and old.is_valid(): old.kill()
 			var tw := root.create_tween()
+			root.set_meta("press_motion",tw)
 			if e.pressed:
 				_sfx("ui_click")
 				tw.tween_property(root, "modulate", Color(0.9, 0.9, 0.9), 0.06)
 				tw.parallel().tween_property(root, "scale", Vector2.ONE * 0.97, 0.06)
+				# 手指滑出热区也会自行复位；短促回弹不依赖收到松手事件。
+				tw.tween_property(root,"modulate",Color.WHITE,.18)
+				tw.parallel().tween_property(root,"scale",Vector2.ONE,.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 			else:
 				tw.tween_property(root, "modulate", Color.WHITE, 0.12)
 				tw.parallel().tween_property(root, "scale", Vector2.ONE, 0.12))
 
 
-## 金色实心按钮（棕字）：主操作用，一个页面里同一时刻通常只该有一个。
-## PixelButton 皮：切角 + 顶高光/底压暗 + 硬影——金色不再是"一块平面色"。
+## 主操作：青铜底、浅金字与菱形端饰。保留旧工厂名和交互接口。
 func gold_button(text: String, w := 0.0, h := 42.0, font_size := FS_MD) -> Control:
 	var root := PixelButton.new()
 	if w > 0.0:
 		root.custom_minimum_size = Vector2(w, h)
 	else:
 		root.custom_minimum_size = Vector2(0, h)
-	root.set_surface(GOLD_BTN, GOLD_BTN_EDGE)
+	var secondary := _button_text(text) in ["返回","关闭","取消","离开","返回城内","跳过","继续探索","暂不修复"]
+	root.set_surface(Color("eae7da") if secondary else GOLD_BTN, GOLD_BTN_EDGE)
 	root.set_content_margin(16.0)
-	root.add_child(gold_label(_button_text(text), font_size, false, TEXT_DARK, false))
-	root.set_meta("primary_action", true)
+	var label := gold_label(_button_text(text), font_size, false, TEXT_DARK if secondary else GOLD_BRIGHT, false)
+	label.add_theme_font_override("font", font_art if font_size >= 22 else (font_display if font_size >= FS_MD else font_serif))
+	root.add_child(label)
+	root.set_meta("primary_action", not secondary)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	root.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	_bind_press_feedback(root)
 	return root
 
 
-## 描边次级按钮（棕底透明 + 棕字）：切换/返回/上传这类次级操作用它。
+## 次操作：浅纸底、青铜字；深色场景使用暗底浅字。
 ## 与 gold_button 同尺寸档位、同交互反馈，只换皮——页面里不再出现第二套按钮设计。
 func ghost_button(text: String, w := 0.0, h := 38.0, font_size := FS_SM,
-		text_color := Color("6a4a1e")) -> Control:
+		text_color := Color("234746")) -> Control:
 	var root := PixelButton.new()
 	if w > 0.0:
 		root.custom_minimum_size = Vector2(w, h)
@@ -5981,9 +6312,11 @@ func ghost_button(text: String, w := 0.0, h := 38.0, font_size := FS_SM,
 	if on_dark:
 		root.set_surface(Color("203437", 0.95), Color(GOLD.r, GOLD.g, GOLD.b, 0.60))
 	else:
-		root.set_surface(Color("e4dcc8"), Color("b1a181"))
+		root.set_surface(Color("eae7da"), Color("b39a67"))
 	root.set_content_margin(14.0)
-	root.add_child(gold_label(_button_text(text), font_size, false, text_color, false))
+	var label := gold_label(_button_text(text), font_size, false, text_color, false)
+	label.add_theme_font_override("font", font_serif)
+	root.add_child(label)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	root.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	_bind_press_feedback(root)
@@ -6014,7 +6347,7 @@ func select_box(text: String, w := 132.0, h := 42.0, font_size := FS_MD) -> Pane
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = BOX_BG
 	sb.set_corner_radius_all(3)
-	sb.set_border_width_all(2)
+	sb.set_border_width_all(1)
 	sb.border_color = BOX_EDGE
 	sb.content_margin_left = 6.0
 	sb.content_margin_right = 6.0
@@ -6029,13 +6362,14 @@ func style_line_edit(le: LineEdit, font_size := FS_MD) -> void:
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = INPUT_BG
 	sb.set_corner_radius_all(3)
-	sb.set_border_width_all(2)
+	sb.set_border_width_all(1)
 	sb.border_color = BOX_EDGE
 	sb.content_margin_left = 10.0
 	sb.content_margin_right = 10.0
 	var focus := sb.duplicate() as StyleBoxFlat
 	focus.bg_color = INPUT_BG.lerp(INPUT_BG_FOCUS, 0.35)
-	focus.border_color = GOLD_BTN_EDGE
+	focus.border_color = BANNER
+	focus.set_border_width_all(2)
 	le.add_theme_stylebox_override("normal", sb)
 	le.add_theme_stylebox_override("focus", focus)
 	le.add_theme_font_override("font", font_reg)

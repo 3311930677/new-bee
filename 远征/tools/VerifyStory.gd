@@ -170,7 +170,7 @@ func _run() -> void:
 	for side_row in (TableCache.side_quests_config().get("quests", []) as Array):
 		if String((side_row as Dictionary).get("id", "")).begins_with("a1_"):
 			side_rows.append(side_row)
-	_check(side_rows.size() == 6, "第一幕应配置六条支线")
+	_check(side_rows.size() == 9, "第一幕原六条与新增三条余波齐备")
 	var live_count := 0
 	for row_v in side_rows:
 		var row: Dictionary = row_v
@@ -208,7 +208,7 @@ func _run() -> void:
 		if not one.is_empty():
 			var ents1: Dictionary = (maps[qmap] as Dictionary).get("entities", {})
 			_check(ents1.has(one), "支线单体目标必须在该图声明：%s" % one)
-	_check(live_count == 6, "P05-C 开首领线后六条支线全部可玩")
+	_check(live_count == 9, "第一幕九条配置均有运行时入口，章节前置另行控制")
 	_check(not bool(G.side_entity_interact("collect", "a1_chime", "maple_road", "a1_rel_child").get("ok", false)),
 		"接取前的目标事件不得计数")
 	_check(G.side_status_of("a1_elite_beast") == "", "未接取的首领支线不应有状态")
@@ -716,7 +716,7 @@ func _run() -> void:
 		if mount_frames != null:
 			for direction in MountVisual.DIRECTIONS:
 				_check(mount_frames.has_animation(StringName(direction))
-					and mount_frames.get_frame_count(StringName(direction)) == 1,
+					and mount_frames.get_frame_count(StringName(direction)) == 3,
 					"%s 缺 %s 骑姿" % [role_id, direction])
 	G.prog["mounts"] = {"owned": {}, "active": ""}
 	G.prog["story"] = {"step": "s06", "done": ["s01", "s02", "s03", "s04", "s05"], "goals": {}}

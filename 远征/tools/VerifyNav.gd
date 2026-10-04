@@ -14,6 +14,9 @@ const PANEL_DIR := "res://src/ui"
 const SKIP_FILES := [
 	"G.gd", "Audio.gd", "DataManager.gd", "GmConsole.gd", "PageDeck.gd", "SlideCard.gd",
 	"UIIcons.gd", "UIWordmark.gd",  # 绘图/标题组件，不是可返回的页面
+	"OathPattern.gd", # 非交互纹样绘图组件；返回由所属誓约/图志面板处理
+	"UiSafeArea.gd", # RefCounted 布局工厂，无独立可关闭页面
+	"AvatarCatalog.gd", "JournalUI.gd", "VisualTheme.gd", "UIFinesse.gd", # 目录与样式工厂，均为 RefCounted
 	"Main.gd",        # 无 UI
 	"LoadScreen.gd",  # 过渡页：加载中途不该能返回（返回了等于卡在半路）
 ]
@@ -156,13 +159,18 @@ func _read(path: String) -> String:
 	return t
 
 
-## 递归收集树里所有 Label 的文案（面板文案都写在 Label 上，够判定"有没有返回入口"）
+## 手绘控件用 Label，原生按钮使用 text / tooltip；两种返回入口都要检查。
 func _collect_texts(root: Node) -> Array:
 	var out: Array = []
 	for n in root.get_children():
+		if n is Control and not (n as Control).is_visible_in_tree():
+			continue
 		var l := n as Label
 		if l != null and not l.text.strip_edges().is_empty():
 			out.append(l.text)
+		if n is Button and not (n as Button).disabled:
+			out.append((n as Button).text)
+			out.append((n as Button).tooltip_text)
 		out.append_array(_collect_texts(n))
 	return out
 
@@ -180,6 +188,12 @@ func _has_back_text(texts: Array) -> bool:
 ## 找到那个"点了会关面板"的返回控件：文案命中返回类词的按钮所在的可点击祖先
 func _find_back_control(root: Node) -> Control:
 	for n in root.get_children():
+		if n is Button:
+			var button := n as Button
+			if button.is_visible_in_tree() and not button.disabled \
+					and _has_back_text([button.text, button.tooltip_text]) \
+					and not button.pressed.get_connections().is_empty():
+				return button
 		var c := n as Control
 		if c != null and c.mouse_filter == Control.MOUSE_FILTER_STOP \
 				and _has_back_text(_collect_texts(c)) and not c.gui_input.get_connections().is_empty():

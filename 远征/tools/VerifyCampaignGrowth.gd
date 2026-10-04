@@ -7,6 +7,7 @@ func _ready() -> void:
 	G.save_locked = false
 	G.selected_role = "zs"
 	await _run()
+	await _test_bear()
 	print("CAMPAIGN_GROWTH_OK" if _fails == 0 else "CAMPAIGN_GROWTH_FAIL fails=%d" % _fails)
 	get_tree().quit(0 if _fails == 0 else 1)
 
@@ -164,6 +165,73 @@ func _run() -> void:
 	map._sync_campaign_level()
 	_check(map.st.level == 5 and map.st.hp == 70, "历练仍持有出发时的等级与生命快照")
 	map.queue_free()
+	await get_tree().process_frame
+
+func _test_bear()->void:
+	_reset()
+	G.wallet.gold=99999
+	G.prog.mounts={"owned":{"horse":1},"active":"horse","riding":false}
+	var old_prog:=G.prog.duplicate(true)
+	var old_wallet:=G.wallet.duplicate(true)
+	G.save_locked=true
+	_check(not bool(G.mount_buy("bear").ok) and not G.mount_set_active("horse") and G.prog==old_prog and G.wallet==old_wallet,"坐骑购买和选择锁盘无副作用")
+	G.save_locked=false
+	var original:=G.SAVE_PATH
+	G.SAVE_PATH="res://tools/_logs/absent_mount_dir/save.json"
+	var print_errors:=Engine.print_error_messages
+	Engine.print_error_messages=false
+	var failed:=G.mount_buy("bear")
+	Engine.print_error_messages=print_errors
+	G.SAVE_PATH=original
+	_check(not bool(failed.ok) and G.prog==old_prog and G.wallet==old_wallet,"实际购买写盘失败退回金币与坐骑记录")
+	_check(bool(G.mount_buy("bear").ok) and G.mount_set_active("bear") and G.mount_set_riding(true),"第二骑可真实购买选择并上骑")
+	_check(G.reload_save() and G.mount_riding() and G.mount_active()=="bear","第二骑旧投入与骑乘状态可读档")
+	var frames:=preload("res://src/world/MountVisual.gd").frames_for("zs","bear")
+	for direction in ["walk_down","walk_left","walk_right","walk_up"]:
+		_check(frames.get_frame_count(direction)==3,"熊的四向各有三个实际步态帧")
+		for i in 3:
+			var texture:=frames.get_frame_texture(direction,i) as AtlasTexture
+			_check(texture!=null and texture.region.end.x<=texture.atlas.get_width() and texture.region.end.y<=texture.atlas.get_height(),"完整足部图格均在真实透明图边界内")
+	var links:=preload("res://src/world/ExplorationLinks.gd")
+	_check(is_equal_approx(links.speed_mult("horse","maple_road",Vector2(480,700),true),1.08),"首骑古道路带额外8%")
+	_check(is_equal_approx(links.speed_mult("bear","frost_post",Vector2(320,800),true),1.08),"第二骑雪地踏点额外8%")
+	_check(links.speed_mult("bear","frost_post",Vector2(200,800),true)==1.0 and links.speed_mult("bear","frost_post",Vector2(320,800),false)==1.0,"路带外和步行不受地形加成，不改通行")
+	_check(links.pet_hint(G,"pet_tide_gull","tideflat","quest")=="","未结伴不泄露专属提示")
+	G.prog.pets.append("pet_tide_gull")
+	_check(not links.pet_hint(G,"pet_tide_gull","tideflat","quest").is_empty() and links.pet_hint(G,"pet_tide_gull","tideflat","boss")=="","已结伴只给近处调查线索，不剧透首领")
+	for role in ["zs","ck","fs","fz"]:
+		G.selected_role=role
+		var run:=RunState.new()
+		run.setup({"role_id":role,"level":20,"potions":2,"seed":12})
+		MapScene.pending_cfg={"mode":"main_world","main_map_id":"frost_post","run":run,"node":{"type":"normal","layer":0,"index":0}}
+		var map:=preload("res://src/explore/MapScene.tscn").instantiate() as MapScene
+		add_child(map)
+		await get_tree().process_frame
+		map.set_physics_process(false)
+		map._player.position=Vector2(480,800)
+		map._sync_mount_visual()
+		_check(map._mount_anim.visible and map._player_anim.visible and map._player_anim.z_index>map._mount_anim.z_index,"四职业骑熊时保留角色并压在鞍上")
+		for direction in [Vector2.DOWN,Vector2.LEFT,Vector2.RIGHT,Vector2.UP]:
+			map._update_player_anim(direction)
+			_check(map._mount_anim.is_playing(),"四方向驱动实际三帧动画")
+			await get_tree().process_frame
+			if role=="zs" and OS.get_cmdline_user_args().has("--screens"):
+				await get_tree().create_timer(.15).timeout
+				await RenderingServer.frame_post_draw
+				get_viewport().get_texture().get_image().save_png("res://shots/body_content_20261004/bear_%s.png"%String(map._mount_anim.animation))
+		map.queue_free()
+		await get_tree().process_frame
+	_check(G.mount_set_active("horse") and G.mount_set_riding(true),"仍可切回原首骑")
+	var horse:=await _simple_map(20)
+	_check(horse._mount_anim.visible and horse._player_anim.visible,"首骑使用独立马步态与当前职业骑手")
+	for direction in [Vector2.DOWN,Vector2.LEFT,Vector2.RIGHT,Vector2.UP]:
+		horse._update_player_anim(direction)
+		_check(horse._mount_anim.sprite_frames.get_frame_count(horse._mount_anim.animation)==3 and horse._mount_anim.is_playing(),"首骑四向完整步态驱动")
+		if OS.get_cmdline_user_args().has("--screens"):
+			await get_tree().create_timer(.15).timeout
+			await RenderingServer.frame_post_draw
+			get_viewport().get_texture().get_image().save_png("res://shots/body_content_20261004/horse_%s.png"%String(horse._mount_anim.animation))
+	horse.queue_free()
 	await get_tree().process_frame
 
 class FailedGrowthHost extends "res://src/autoload/G.gd":

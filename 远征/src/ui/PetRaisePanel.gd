@@ -10,6 +10,7 @@ signal closed
 # 新 class_name 尚未进编辑器全局类缓存，按项目惯例 preload 路径取脚本
 const PageDeckScript := preload("res://src/ui/PageDeck.gd")
 const SlideCardScript := preload("res://src/ui/SlideCard.gd")
+const Finesse := preload("res://src/ui/UIFinesse.gd")
 
 const CONTENT_W := 408.0
 const DECK_H := 196.0        # 卡高要装得下：页眉 18 + 插画 + 名字 30 + 星级 18 + 间距
@@ -244,11 +245,12 @@ func _op_btn(label: String, sub: String) -> Control:
 	var inner := Control.new()
 	inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(inner)
-	var l := G.gold_label(label, G.FS_MD, true, G.TEXT_DARK, false)
+	var l := G.serif_label(label, 20, G.GOLD_BRIGHT)
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	l.position = Vector2(18, 6)
 	inner.add_child(l)
-	var s := G.text_label(sub, G.FS_XS, Color("5a4018"))
+	var s := G.gold_label(sub, G.FS_XS, false, Color("d0c6a8"), false)
+	s.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	s.position = Vector2(14, 32)
 	inner.add_child(s)
 	return root
@@ -263,6 +265,9 @@ func _on_feed() -> void:
 	else:
 		_toast_msg("经验 +100")
 	_refresh()
+	if bool(r.get("ok",false)):
+		Finesse.celebrate(self,Vector2(240,230),Color("aac794"),120 if int(r.get("ups",0))==0 else 190)
+		Audio.sfx("level_up" if int(r.get("ups",0))>0 else "reward",0.0)
 
 
 func _on_break() -> void:
@@ -270,6 +275,9 @@ func _on_break() -> void:
 	_toast_msg("突破成功！当前 %d 层" % int(r.get("brk", 0)) if bool(r.get("ok", false))
 		else String(r.get("err", "")))
 	_refresh()
+	if bool(r.get("ok",false)):
+		Finesse.celebrate(self,Vector2(240,230),Color("f3cf89"),200)
+		Audio.sfx("level_up",0.0)
 
 
 func _on_reroll() -> void:
@@ -277,6 +285,8 @@ func _on_reroll() -> void:
 	_toast_msg("新资质 %d 星！" % int(r.get("star", 0)) if bool(r.get("ok", false))
 		else String(r.get("err", "")))
 	_refresh()
+	if bool(r.get("ok",false)):
+		Finesse.celebrate(self,Vector2(240,230),Color("bdb1dd"),150)
 
 
 func _toast_msg(msg: String) -> void:

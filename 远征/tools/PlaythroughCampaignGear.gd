@@ -2,6 +2,7 @@
 extends "res://tools/PlaythroughMainWorld.gd"
 
 var _protected: Array = []
+var _fixture_sales: Dictionary = {}
 
 func _ready() -> void:
 	var args := OS.get_cmdline_user_args()
@@ -109,9 +110,13 @@ func _free_slot(bag: BagPanel) -> bool:
 	if row == null or not await _click_until(row, func(): return bag._sel_uid == sell_uid, 30, "select_sale"): return _bad("选中卖出失败")
 	await _wait_frames(4)
 	var sell := _button(bag._detail, "卖出 %d 金" % G.inv_sell_price(sell_uid))
+	var sold_instance:=G.inv_find(sell_uid).duplicate(true)
+	var expected_sale:=G.inv_sell_price(sell_uid)
 	var gold := int(G.wallet.gold)
 	if not await _click_until(sell, func(): return G.inv_find(sell_uid).is_empty(), 30, "sell_plain_fixture"): return _bad("实际卖出失败")
 	await _wait_frames(4)
+	if int(G.wallet.gold)-gold!=expected_sale:return _bad("普通占格装备卖价未正确到账")
+	_fixture_sales[sell_uid]={"instance":sold_instance,"gold":expected_sale}
 	print("PLAY_EVENT gear_fixture_sale uid=%d gold=%d" % [sell_uid, int(G.wallet.gold)-gold])
 	return true
 

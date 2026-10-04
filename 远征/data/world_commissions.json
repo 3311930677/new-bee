@@ -1,0 +1,531 @@
+{
+  "version": 1,
+  "templates": [
+    {
+      "id": "wc_sign",
+      "region": "zhaoyuan",
+      "title": "路标勘定",
+      "desc": "闻叔：雨后路痕会变。依次核对树根、坡石、岔口，把三处实地记录带回。",
+      "minutes": "约 3—6 分钟",
+      "steps": [
+        {
+          "name": "树根路痕",
+          "map": "maple_road",
+          "at": [
+            420,
+            920
+          ],
+          "art": "tracks",
+          "kind": "inspect",
+          "id": "wc_sign_1"
+        },
+        {
+          "name": "坡石擦痕",
+          "map": "maple_road",
+          "at": [
+            520,
+            750
+          ],
+          "art": "tracks",
+          "kind": "inspect",
+          "id": "wc_sign_2"
+        },
+        {
+          "name": "岔口旧箭",
+          "map": "broken_slope",
+          "at": [
+            480,
+            870
+          ],
+          "art": "post",
+          "kind": "inspect",
+          "id": "wc_sign_3"
+        }
+      ],
+      "reward": {
+        "gold": 75,
+        "exp": 35
+      }
+    },
+    {
+      "id": "wc_watch",
+      "region": "zhaoyuan",
+      "title": "巡界夜岗",
+      "desc": "老赵：先到路北的岗牌报到，再驱散靠近岗火的一头狼。撤退可以重来。",
+      "minutes": "约 3—6 分钟",
+      "steps": [
+        {
+          "name": "夜岗签到牌",
+          "map": "maple_road",
+          "at": [
+            480,
+            800
+          ],
+          "art": "post",
+          "kind": "inspect",
+          "id": "wc_watch_1"
+        },
+        {
+          "name": "岗火附近的狼",
+          "map": "maple_road",
+          "at": [
+            480,
+            610
+          ],
+          "art": "tracks",
+          "kind": "defeat",
+          "enemy": "mon_wolf",
+          "id": "wc_watch_2"
+        }
+      ],
+      "reward": {
+        "gold": 85,
+        "exp": 40
+      }
+    },
+    {
+      "id": "wc_bridge",
+      "region": "zhaoyuan",
+      "title": "桥板修补",
+      "desc": "石头：检查松动的桥脚，用两块强化石压紧旧桥板。材料到现场才扣，放弃不扣剩余材料。",
+      "minutes": "约 3—6 分钟",
+      "steps": [
+        {
+          "name": "桥脚裂缝",
+          "map": "broken_slope",
+          "at": [
+            480,
+            820
+          ],
+          "art": "tracks",
+          "kind": "inspect",
+          "id": "wc_bridge_1"
+        },
+        {
+          "name": "松动桥板",
+          "map": "broken_slope",
+          "at": [
+            480,
+            670
+          ],
+          "art": "post",
+          "kind": "repair",
+          "costs": {
+            "item:enhance_stone": 2
+          },
+          "id": "wc_bridge_2"
+        }
+      ],
+      "reward": {
+        "gold": 115,
+        "exp": 35
+      }
+    },
+    {
+      "id": "wc_turtle",
+      "region": "zhaoyuan",
+      "title": "岩龟寻路",
+      "desc": "闻叔：不必捕捉岩龟。沿脚印确认它走进了安全的石窝。",
+      "minutes": "约 3—6 分钟",
+      "steps": [
+        {
+          "name": "圆爪脚印",
+          "map": "broken_slope",
+          "at": [
+            420,
+            920
+          ],
+          "art": "tracks",
+          "kind": "inspect",
+          "id": "wc_turtle_1"
+        },
+        {
+          "name": "石屑脚印",
+          "map": "broken_slope",
+          "at": [
+            520,
+            750
+          ],
+          "art": "tracks",
+          "kind": "inspect",
+          "id": "wc_turtle_2"
+        },
+        {
+          "name": "岩龟石窝",
+          "map": "broken_slope",
+          "at": [
+            480,
+            570
+          ],
+          "art": "root",
+          "kind": "escort",
+          "id": "wc_turtle_3"
+        }
+      ],
+      "reward": {
+        "gold": 70,
+        "exp": 30
+      }
+    },
+    {
+      "id": "wc_tide",
+      "region": "shenyuan",
+      "title": "潮线观测",
+      "desc": "沈澜：从岸脚到浅滩记三处水线，别把单次浪头当成潮位。",
+      "minutes": "约 3—6 分钟",
+      "steps": [
+        {
+          "name": "岸脚水线",
+          "map": "tideflat",
+          "at": [
+            270,
+            640
+          ],
+          "art": "tide_mark",
+          "kind": "inspect",
+          "id": "wc_tide_1"
+        },
+        {
+          "name": "桥柱水线",
+          "map": "tideflat",
+          "at": [
+            480,
+            540
+          ],
+          "art": "tide_mark",
+          "kind": "inspect",
+          "id": "wc_tide_2"
+        },
+        {
+          "name": "浅滩水线",
+          "map": "tideflat",
+          "at": [
+            640,
+            410
+          ],
+          "art": "tide_mark",
+          "kind": "inspect",
+          "id": "wc_tide_3"
+        }
+      ],
+      "reward": {
+        "gold": 105,
+        "exp": 55
+      }
+    },
+    {
+      "id": "wc_rope",
+      "region": "shenyuan",
+      "title": "缆绳加固",
+      "desc": "老鹭：先看缆痕，再选受力点。顺着受力方向系紧，误选会解释原因，不损耗材料。",
+      "minutes": "约 3—6 分钟",
+      "steps": [
+        {
+          "name": "缆柱磨痕",
+          "map": "shenyuan_port",
+          "at": [
+            390,
+            600
+          ],
+          "art": "tracks",
+          "kind": "inspect",
+          "id": "wc_rope_1"
+        },
+        {
+          "name": "松缆受力点",
+          "map": "shenyuan_port",
+          "at": [
+            560,
+            520
+          ],
+          "art": "post",
+          "kind": "align",
+          "clue": "缆痕向岸侧压深，水侧木柱已裂。应把受力移到哪一侧？",
+          "choices": {
+            "shore": "加固岸侧石柱",
+            "water": "系回水侧裂柱"
+          },
+          "correct": "shore",
+          "wrong": "裂柱承担不了涨潮拉力；岸侧石柱的磨痕才是稳定受力点。",
+          "id": "wc_rope_2"
+        }
+      ],
+      "reward": {
+        "gold": 110,
+        "exp": 50
+      }
+    },
+    {
+      "id": "wc_salt",
+      "region": "shenyuan",
+      "title": "盐账对盘",
+      "desc": "陆七：对照市集报价和两张货签，按实记账；不需要购买或出售货物。",
+      "minutes": "约 3—6 分钟",
+      "steps": [
+        {
+          "name": "今日盐价牌",
+          "map": "shenyuan_port",
+          "at": [
+            350,
+            620
+          ],
+          "art": "post",
+          "kind": "inspect",
+          "clue": "牌上是市集当日公示价，不是旧账单。",
+          "id": "wc_salt_1"
+        },
+        {
+          "name": "旧盐道入货签",
+          "map": "old_salt_road",
+          "at": [
+            390,
+            580
+          ],
+          "art": "post",
+          "kind": "inspect",
+          "id": "wc_salt_2"
+        },
+        {
+          "name": "港口出货签",
+          "map": "shenyuan_port",
+          "at": [
+            570,
+            460
+          ],
+          "art": "post",
+          "kind": "inspect",
+          "id": "wc_salt_3"
+        }
+      ],
+      "reward": {
+        "gold": 100,
+        "exp": 50
+      }
+    },
+    {
+      "id": "wc_escort",
+      "region": "shenyuan",
+      "title": "短程押运",
+      "desc": "沈澜：货物不收保证金。可走旧盐道绕行，或走浅滩近路；报酬相同，需亲到交货点。",
+      "minutes": "约 3—6 分钟",
+      "steps": [
+        {
+          "name": "待押货签",
+          "map": "shenyuan_port",
+          "at": [
+            460,
+            580
+          ],
+          "art": "salt_cart",
+          "kind": "align",
+          "clue": "旧盐道较长但路面干燥；浅滩较短，有潮兽游荡。两路报酬相同。",
+          "choices": {
+            "road": "沿旧盐道绕行",
+            "tide": "沿浅滩近路"
+          },
+          "id": "wc_escort_1"
+        },
+        {
+          "name": "押运交货点",
+          "map": "old_salt_road",
+          "at": [
+            480,
+            380
+          ],
+          "art": "salt_cart",
+          "kind": "escort",
+          "routes": {
+            "road": {
+              "map": "old_salt_road",
+              "at": [
+                480,
+                380
+              ]
+            },
+            "tide": {
+              "map": "tideflat",
+              "at": [
+                570,
+                340
+              ]
+            }
+          },
+          "id": "wc_escort_2"
+        }
+      ],
+      "reward": {
+        "gold": 120,
+        "exp": 60
+      }
+    },
+    {
+      "id": "wc_furnace",
+      "region": "frost",
+      "title": "炉息巡查",
+      "desc": "陶铎：入口听炉息、风口查堵物、最后排清烟道。不是矿脉主线的第二份钥匙。",
+      "minutes": "约 3—6 分钟",
+      "steps": [
+        {
+          "name": "入口炉息",
+          "map": "rift_mine_road",
+          "at": [
+            310,
+            650
+          ],
+          "art": "mine_vent",
+          "kind": "listen",
+          "id": "wc_furnace_1"
+        },
+        {
+          "name": "风口堵物",
+          "map": "rift_mine_road",
+          "at": [
+            490,
+            530
+          ],
+          "art": "mine_vent",
+          "kind": "inspect",
+          "id": "wc_furnace_2"
+        },
+        {
+          "name": "烟道清理",
+          "map": "rift_mine_road",
+          "at": [
+            600,
+            390
+          ],
+          "art": "mine_vent",
+          "kind": "repair",
+          "id": "wc_furnace_3"
+        }
+      ],
+      "reward": {
+        "gold": 140,
+        "exp": 75
+      }
+    },
+    {
+      "id": "wc_switch",
+      "region": "frost",
+      "title": "矿车让道",
+      "desc": "陶铎：核对货签后把空车推向空轨，不要动矿脉主闸。错误道岔可以退回再选。",
+      "minutes": "约 3—6 分钟",
+      "steps": [
+        {
+          "name": "空矿车货签",
+          "map": "rift_mine_road",
+          "at": [
+            350,
+            650
+          ],
+          "art": "mine_cart",
+          "kind": "inspect",
+          "id": "wc_switch_1"
+        },
+        {
+          "name": "矿车让道岔",
+          "map": "rift_mine_road",
+          "at": [
+            510,
+            510
+          ],
+          "art": "mine_cart",
+          "kind": "switch",
+          "clue": "南轨工人还在装货；北轨空着，出口仍有灯。",
+          "choices": {
+            "north": "让空车走北轨",
+            "south": "让空车走南轨"
+          },
+          "correct": "north",
+          "wrong": "南轨仍有人装货，不能把空车推向作业的人。",
+          "id": "wc_switch_2"
+        }
+      ],
+      "reward": {
+        "gold": 145,
+        "exp": 70
+      }
+    },
+    {
+      "id": "wc_snow",
+      "region": "frost",
+      "title": "雪线踏勘",
+      "desc": "岑雪：辨出冰裂、兽迹与人迹，最后把巡线牌放在人迹旁。",
+      "minutes": "约 3—6 分钟",
+      "steps": [
+        {
+          "name": "雪边冰裂",
+          "map": "frost_boardwalk",
+          "at": [
+            440,
+            910
+          ],
+          "art": "tracks",
+          "kind": "inspect",
+          "id": "wc_snow_1"
+        },
+        {
+          "name": "坡侧兽迹",
+          "map": "frost_boardwalk",
+          "at": [
+            530,
+            730
+          ],
+          "art": "tracks",
+          "kind": "inspect",
+          "id": "wc_snow_2"
+        },
+        {
+          "name": "岗口人迹",
+          "map": "frost_boardwalk",
+          "at": [
+            480,
+            550
+          ],
+          "art": "tracks",
+          "kind": "mark",
+          "id": "wc_snow_3"
+        }
+      ],
+      "reward": {
+        "gold": 135,
+        "exp": 65
+      }
+    },
+    {
+      "id": "wc_supply",
+      "region": "frost",
+      "title": "轮岗补给",
+      "desc": "宁砚：到补给箱登记，再把箱子送到外岗火。只交这次配发的补给，不扣玩家药剂。",
+      "minutes": "约 3—6 分钟",
+      "steps": [
+        {
+          "name": "轮岗补给箱",
+          "map": "frost_post",
+          "at": [
+            420,
+            880
+          ],
+          "art": "post",
+          "kind": "inspect",
+          "id": "wc_supply_1"
+        },
+        {
+          "name": "外岗补给火",
+          "map": "frost_boardwalk",
+          "at": [
+            480,
+            760
+          ],
+          "art": "frost_brazier",
+          "kind": "escort",
+          "id": "wc_supply_2"
+        }
+      ],
+      "reward": {
+        "gold": 140,
+        "exp": 70
+      }
+    }
+  ]
+}

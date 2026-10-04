@@ -44,6 +44,7 @@ func _run() -> void:
 	holder.size = Vector2(480, 800)
 	add_child(holder)
 	var p := GachaPanel.new()
+	p.presentation_enabled = false
 	holder.add_child(p)
 
 	# —— 0. 配置表（v2 池结构） ——
@@ -161,7 +162,7 @@ func _run() -> void:
 	await get_tree().create_timer(0.5).timeout   # 等翻面 tween 真实走完
 	_check(not back.visible and face.visible, "翻开后应显示正面")
 	p._flip_all()
-	await get_tree().create_timer(0.8).timeout
+	await get_tree().create_timer(1.5).timeout
 	var all_flipped := true
 	for c in p._cards_box.get_children():
 		if not c.is_queued_for_deletion() and not bool(c.get_meta("flipped", false)):
@@ -303,6 +304,46 @@ func _run() -> void:
 	sc.roll_batch_with(1, RandomNumberGenerator.new())
 	_check(int(sc.seen_pity[0]) >= 60, "超过阈值的计数应被当作已达阈值处理")
 	sc.queue_free()
+
+	# 演出期间重复点击不会扣第二次钱；跳过后所有正面和摘要都正确完成。
+	p.presentation_enabled = true
+	_reset(2400,0,0)
+	p._do_ten()
+	_check(p._arriving and p._ceremony.visible,"付费召唤应播放星阵入场")
+	var balance := int(G.wallet["soul"])
+	var click := InputEventMouseButton.new()
+	click.pressed = true
+	click.button_index = MOUSE_BUTTON_LEFT
+	p._again_btn.gui_input.emit(click)
+	_check(int(G.wallet["soul"])==balance,"演出期间点再抽不能重复扣费")
+	p._flip_all(true)
+	await get_tree().create_timer(.5).timeout
+	_check(not p._arriving and not p._revealing,"跳过演出后应恢复交互")
+	_check(not p._sum_l.text.contains("轻点"),"全部揭晓才显示结算摘要")
+	for c in p._cards_box.get_children():
+		if not c.is_queued_for_deletion():
+			_check(bool(c.get_meta("revealed",false)) and (c.get_meta("face") as Control).visible,"跳过后每张卡应有真实正面")
+	# 新一批取代正在播放的旧一批，旧回调不能翻开或移动新卡。
+	var replacement := p._results.duplicate(true)
+	p._show_results("single",[replacement[0]])
+	p._show_results("ten",replacement)
+	await get_tree().create_timer(2.1).timeout
+	_check(not p._arriving and not p._ceremony.visible,"重新演出后星阵应正常收起")
+	for c in p._cards_box.get_children():
+		if not c.is_queued_for_deletion():
+			_check(c.position.is_equal_approx(c.get_meta("rest_position")),"卡牌应停在当前批次位置")
+	# 卡牌尚未揭晓时再抽仍不可用，退出途中不会留下调用已释放控件的回调。
+	var before_repeat := int(G.wallet["soul"])
+	p._again_btn.gui_input.emit(click)
+	_check(int(G.wallet["soul"])==before_repeat,"等待揭晓时再次点击不能扣费")
+	var closing := GachaPanel.new()
+	holder.add_child(closing)
+	closing.closed.connect(closing.queue_free)
+	_reset(80,0,0)
+	closing._do_single()
+	closing._close()
+	await get_tree().create_timer(.5).timeout
+	_check(not is_instance_valid(closing),"演出中返回应正常释放召唤页")
 
 	if _fails == 0:
 		print("GACHA_OK all tests passed")

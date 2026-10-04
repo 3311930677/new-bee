@@ -6,9 +6,11 @@ Usage: python tools/capture_visual_matrix.py --godot <console.exe>
 from pathlib import Path
 import argparse
 import json
+import os
 import re
 import shlex
 import subprocess
+from capture_checks import capture_ok, failures
 
 PROJECT = Path(__file__).resolve().parents[1]
 SOURCE = PROJECT / 'shots/all_scenes_20261001'
@@ -44,6 +46,13 @@ def main():
     args = parser.parse_args()
     OUTPUT = Path(args.output).resolve()
     OUTPUT.mkdir(parents=True, exist_ok=True)
+    env = os.environ.copy()
+    (PROJECT / 'tools/_logs').mkdir(parents=True, exist_ok=True)
+    if os.name == 'nt':
+        for key, folder in [('APPDATA','roaming'),('LOCALAPPDATA','local')]:
+            runtime = PROJECT / 'Godot/ui_refinement_runtime' / folder
+            runtime.mkdir(parents=True, exist_ok=True)
+            env[key] = str(runtime)
     matrix = cases()
     assert len(matrix) == 256, len(matrix)
     if args.extras:
@@ -56,6 +65,15 @@ def main():
     if args.only:
         selected = set(args.only.split(','))
         matrix = [item for item in matrix if item['scene'] in selected]
+    if any(item['source'] for item in matrix):
+        fixture = subprocess.run([args.godot, '--headless', '--path', str(PROJECT),
+                                  'res://tools/VisualSourceFixture.tscn'], env=env,
+                                 capture_output=True, timeout=60,
+                                 creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0)
+        fixture_log = (fixture.stdout+fixture.stderr).decode('utf-8',errors='replace')
+        (OUTPUT/'source_fixture.log').write_text(fixture_log,encoding='utf-8')
+        if fixture.returncode or 'VISUAL_SOURCE_FIXTURE_OK' not in fixture_log or failures(fixture_log):
+            raise RuntimeError(fixture_log)
     results = []
     if args.only and (OUTPUT / 'results.json').exists():
         results = json.loads((OUTPUT / 'results.json').read_text(encoding='utf-8'))
@@ -70,11 +88,12 @@ def main():
                    '--scene=' + item['scene'], '--size=' + item['size'],
                    '--frames=' + item['frames'], '--out=' + str(image), *item['options']]
         if item['source']:
-            command.append('--source-save=res://tools/_logs/curriculum_accept_zs_fs/save_playthrough_zs_a.json')
+            command.append('--source-save=res://tools/_logs/visual_fixture/source.json')
         try:
-            run = subprocess.run(command, capture_output=True, timeout=180)
+            run = subprocess.run(command, env=env, capture_output=True, timeout=120,
+                                 creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0)
             output = (run.stdout + run.stderr).decode('utf-8', errors='replace')
-            passed = run.returncode == 0 and 'SHOT_SAVED' in output and 'SCRIPT ERROR' not in output
+            passed = capture_ok(run.returncode, output, image)
         except subprocess.TimeoutExpired:
             passed, output = False, 'CAPTURE_TIMEOUT'
         log.write_text(output, encoding='utf-8')

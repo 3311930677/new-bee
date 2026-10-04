@@ -27,3 +27,6 @@ _backups/
 # 工作区根的临时草稿（审计/调试脚本与输出，下划线前缀）
 /_*.py
 /_*.txt
+
+/tools/godot-4.7.2/
+/tools/_logs/

@@ -277,7 +277,7 @@ func _run_port_side_quests() -> void:
 	G.prog["story"] = {"step": "s16", "done": ["s12"], "goals": {}}
 	var port_rows: Array = []
 	for row in G.side_quest_rows():
-		if String((row as Dictionary).get("id", "")).begins_with("a2_"): port_rows.append(row)
+		if String((row as Dictionary).get("id", "")).begins_with("a2_") and (row.get("steps", []) as Array).is_empty(): port_rows.append(row)
 	_check(port_rows.size() == 6, "港口地区必须交付六条支线")
 	for row in port_rows:
 		_check(not bool(G.side_accept(String(row.id)).get("ok", false)), "交账前不开放港口支线")

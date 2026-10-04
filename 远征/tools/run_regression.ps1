@@ -34,12 +34,31 @@ param(
   [string]$List = "",
   [int]$QuitAfter = 6000,
   [int]$TimeoutSec = 240,
-  [int]$Expected = 52,
+  [int]$Expected = 68,
   [string]$LogDir = "",
   [switch]$AllowAnyVersion
 )
 
 $ErrorActionPreference = "Stop"
+
+# Isolate before the first engine process (autoload runs even during discovery).
+$playerAppData = $env:APPDATA
+$playerLocalAppData = $env:LOCALAPPDATA
+$sandboxRoot = Join-Path $PSScriptRoot ("_logs\user_sandbox_" + [guid]::NewGuid().ToString("N"))
+New-Item -ItemType Directory -Path $sandboxRoot -Force | Out-Null
+
+function Get-PlayerSnapshot {
+	$roots = @((Join-Path $playerAppData "Godot\app_userdata"))
+	$result = @{}
+	foreach ($root in $roots) {
+		if (-not (Test-Path -LiteralPath $root)) { continue }
+		foreach ($file in Get-ChildItem -LiteralPath $root -Recurse -File) {
+			$result[$file.FullName] = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash
+		}
+	}
+	return $result
+}
+$playerSnapshot = Get-PlayerSnapshot
 
 if ($Proj -eq "") { $Proj = Split-Path -Parent $PSScriptRoot }
 if ($LogDir -eq "") { $LogDir = Join-Path $PSScriptRoot "_logs" }
@@ -115,8 +134,24 @@ $cases = @(
 	@{ N = "VerifyRoadMail";    K = "scene";  T = "ROAD_MAIL_OK" },
 	@{ N = "VerifyStelePuzzle"; K = "scene";  T = "STELE_PUZZLE_OK" },
 	@{ N = "VerifyBossPuzzles"; K = "scene";  T = "BOSS_PUZZLES_OK" },
+	@{ N = "VerifyAftermath"; K = "scene"; T = "AFTERMATH_OK" },
+	@{ N = "VerifyAftermathResume"; K = "scene"; T = "AFTERMATH_RESUME_OK" },
 	@{ N = "VerifyFishing";     K = "scene";  T = "FISHING_OK" },
 	@{ N = "VerifyRouteScene";  K = "scene";  T = "ROUTE_SCENE_OK" },
+	@{ N = "VerifyRunResume"; K = "scene"; T = "RUN_RESUME_OK" },
+	@{ N = "VerifyRunResumeRead"; K = "scene"; T = "RUN_RESUME_READ_OK" },
+	@{ N = "VerifyRunEvents"; K = "scene"; T = "RUN_EVENTS_OK" },
+	@{ N = "VerifyRunEventsRead"; K = "scene"; T = "RUN_EVENTS_READ_OK" },
+	@{ N = "VerifyTradeContracts"; K = "scene"; T = "TRADE_CONTRACTS_OK" },
+	@{ N = "VerifyTradeContractsRead"; K = "scene"; T = "TRADE_CONTRACTS_READ_OK" },
+	@{ N = "VerifyOathWalk"; K = "scene"; T = "OATH_WALK_OK" },
+	@{ N = "VerifyCampGathering"; K = "scene"; T = "CAMP_GATHERING_OK" },
+	@{ N = "VerifySafeArea"; K = "scene"; T = "SAFE_AREA_OK" },
+	@{ N = "VerifyAftermathPaths"; K = "scene"; T = "AFTERMATH_PATHS_OK" },
+	@{ N = "VerifyWorldCommissions"; K = "scene"; T = "WORLD_COMMISSIONS_OK" },
+	@{ N = "VerifyWorldCommissionsRead"; K = "scene"; T = "WORLD_COMMISSIONS_READ_OK" },
+	@{ N = "VerifyDungeonTrials"; K = "scene"; T = "DUNGEON_TRIALS_OK" },
+	@{ N = "VerifyDungeonTrialsRead"; K = "scene"; T = "DUNGEON_TRIALS_READ_OK" },
 	@{ N = "VerifyGacha";       K = "scene";  T = "GACHA_OK" },
 	@{ N = "VerifyPanels";      K = "scene";  T = "PANELS_OK" },
 	@{ N = "VerifyGrowth";      K = "scene";  T = "GROWTH_OK" },
@@ -177,6 +212,9 @@ function Invoke-Engine {
 	$psi.CreateNoWindow = $true
 	$psi.StandardOutputEncoding = [System.Text.Encoding]::UTF8
 	$psi.StandardErrorEncoding = [System.Text.Encoding]::UTF8
+	$psi.EnvironmentVariables["APPDATA"] = $sandboxRoot
+	$psi.EnvironmentVariables["LOCALAPPDATA"] = $sandboxRoot
+	$psi.EnvironmentVariables["XDG_DATA_HOME"] = $sandboxRoot
 	if ($WorkDir) { $psi.WorkingDirectory = $WorkDir }
 	if ($Exe -match '\.(cmd|bat)$') {
 		# Fake engine support for fault injection (see tools/selftest_regression.ps1).
@@ -272,6 +310,17 @@ foreach ($c in $cases) {
 	try { Set-Content -Path $log -Value $out -Encoding UTF8 } catch {}
 
 	$reasons = @()
+	$afterPlayer = Get-PlayerSnapshot
+	if ($afterPlayer.Count -ne $playerSnapshot.Count) {
+		$reasons += "real player directory file inventory changed"
+	} else {
+		foreach ($path in $playerSnapshot.Keys) {
+			if (-not $afterPlayer.ContainsKey($path) -or $afterPlayer[$path] -ne $playerSnapshot[$path]) {
+				$reasons += "real player directory content changed"
+				break
+			}
+		}
+	}
 	if ($r.TimedOut) {
 		$reasons += ("timeout: no exit within " + $TimeoutSec + "s")
 	} elseif ($r.Code -ne 0) {

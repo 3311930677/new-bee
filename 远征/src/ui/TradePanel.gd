@@ -129,7 +129,9 @@ func _rebuild() -> void:
 	if int(quote.get("event_pct", 0)) != 0:
 		factor += "  ·  %s %+d%%" % [String(quote.get("event_name", "")),
 			int(quote.get("event_pct", 0))]
-	_label(content, factor, Vector2(8, 358), 395, Color("6b4925"))
+	_label(content, factor, Vector2(8, 358), 280, Color("6b4925"))
+	if site_id in ["city_market","shenyuan_market","frost_market"]:
+		_button(content,"三城合约",Vector2(300,356),112,func():_open_trade_contracts())
 	_build_order_section(content)
 	_button(content, "歇脚换日 · %d 金" % int(cfg.get("rest_gold", 22)),
 		Vector2(218, 478), 194, func(): _rest())
@@ -211,6 +213,17 @@ func _build_frost_herb_order(content: Control) -> void:
 		route_line = "逾期自动结清；货物仍在行囊，明日可签新单。"
 	_label(content, route_line, Vector2(8, 451), 395, Color("6b4925"))
 	_button(content, "查看药单条款", Vector2(8, 478), 160, func(): _open_frost_contract())
+
+
+func _open_trade_contracts() -> void:
+	if _contract_panel != null: return
+	_contract_panel = preload("res://src/ui/TradeContractsPanel.gd").new()
+	add_child(_contract_panel)
+	_contract_panel.open_contracts(site_id)
+	_contract_panel.action_applied.connect(func(line:String):
+		_message=line
+		_rebuild())
+	_contract_panel.closed.connect(func():_contract_panel=null)
 
 
 func _open_frost_contract() -> void:

@@ -13,6 +13,7 @@ static var pending_cfg: Dictionary = {}
 
 const VIEW_W := 480.0
 const VIEW_H := 800.0
+const DirectionalIdle := preload("res://src/world/DirectionalIdle.gd")
 const ROLE_FRAMES := {  # 四方向行走帧（BattleScene 同款复用）
 	"zs": ["res://image/role/zs/pojun_walk_frames.tres", "pojun"],
 	"ck": ["res://image/role/ck/chuanyang_walk_frames.tres", "chuanyang"],
@@ -42,6 +43,17 @@ const RoadMailPanelScript := preload("res://src/ui/RoadMailPanel.gd")
 const RoadMailServiceScript := preload("res://src/world/RoadMailService.gd")
 const WorldPuzzlePanelScript := preload("res://src/ui/WorldPuzzlePanel.gd")
 const MountVisual := preload("res://src/world/MountVisual.gd")
+const Oaths := preload("res://src/world/OathService.gd")
+const Contracts := preload("res://src/world/TradeContracts.gd")
+const RunEvents := preload("res://src/run/RunEvents.gd")
+const Trials := preload("res://src/world/DungeonTrial.gd")
+var _last_battle_trial := false
+var _trial_saved_potions := -1
+const ExplorationLinks := preload("res://src/world/ExplorationLinks.gd")
+var _terrain_trace: Node2D = null
+var _exploration_seen := {}
+var _oath_trip := ""
+var _oath_traveler: Node2D = null
 const FirstActWeaponVisual := preload("res://src/world/FirstActWeaponVisual.gd")
 
 var st: RunState
@@ -67,6 +79,8 @@ var _stele_room_gates: Dictionary = {}            # 失声碑窟内部两道可�
 var _tidal_room_gates: Dictionary = {}            # 退潮水闸的隔水门，随闸态拆除
 var _tidal_water_bounds: Array[StaticBody2D] = [] # 两侧深水有实体边界，不能绕闸游过去
 var _tidal_ground: TidalGateGround = null
+var _mine_room_gates: Dictionary = {}
+var _mine_ground: Node2D = null
 var _interactable: _Interactable = null   # 非战斗节点物件（宝箱/事件/商店/篝火）
 var _remover: Control = null              # 篝火词条删除浮层
 var _exit_ui: Control = null              # 撤离确认浮层
@@ -157,6 +171,9 @@ var _auto_dodge_side := 1.0
 var _auto_fail := 0                  # 连续卡住计数：绕行多次无效即停手（P1-14）
 var _prev_pos := Vector2.ZERO
 var _prog := {}                      # 本节点探索进度（RunState.map_progress 的引用；P0-1）
+var _feedback_frame:=-1
+var _feedback_player_pos:=Vector2.INF
+var _feedback_focus:Node2D=null
 
 
 func _ready() -> void:
@@ -224,6 +241,7 @@ func _ready() -> void:
 		_map_cfg["map_rows"] = int(_main_cfg.get("map_rows", _map_cfg.get("map_rows", 42)))
 		st.theme = String(_main_cfg.get("theme", st.theme))
 	_theme_cfg = TableCache.theme_config(st.theme)
+	Audio.play_ambience(_ambient_region())
 	# 世界主题规则（C 批）：揭示半径这条不属于战斗 tick，只能在大地图侧按主题覆盖。
 	# 必须 duplicate 后再写——原地改 _map_cfg 就是改 TableCache 的缓存，跨场景串味。
 	var rule := TableCache.theme_rule(st.theme)
@@ -241,6 +259,7 @@ func _ready() -> void:
 	_rng.seed = hash("main_world_%s" % _main_map_id) \
 		if _mode == "main_world" else hash("%d_%d" % [st.run_seed, node_seed])
 	_prog = st.map_progress(int(node.get("layer", 1)), int(node.get("index", 0)))
+	if _mode == "main_world": _oath_trip = Oaths.enter(G,_main_map_id)
 	_build_ground()
 	_build_world()
 	_build_hud()
@@ -279,7 +298,7 @@ func _ground_tint() -> Color:
 func _build_ground() -> void:
 	if _mode == "main_world" and not String(_main_cfg.get("background", "")).is_empty():
 		var path := String(_main_cfg.get("background", ""))
-		var tex: Texture2D = load(path) if path != "" else null
+		var tex: Texture2D = G.visual_texture(path) if path != "" else null
 		if tex == null:
 			push_error("主世界背景缺失：%s" % path)
 		else:
@@ -307,7 +326,7 @@ func _build_ground() -> void:
 	var weights := [0.6, 0.2, 0.2]
 	for i in mini(3, tiles.size()):
 		var src := TileSetAtlasSource.new()
-		src.texture = load("%s/%s.png" % [asset_dir, String(tiles[i])])
+		src.texture = G.visual_texture("%s/%s.png" % [asset_dir, String(tiles[i])])
 		src.texture_region_size = Vector2i(48, 48)
 		src.create_tile(Vector2i.ZERO)
 		ts.add_source(src, i)
@@ -344,7 +363,7 @@ func _build_ground_detail(cols: int, rows: int) -> void:
 	_ground_path = path
 	var road: Array = []  # 路面格中心：主题无 4×4 套件时改用程序绘制的踩实土路
 	if sheet != "":
-		var tex: Texture2D = load("%s/%s.png" % [asset_dir, sheet])
+		var tex: Texture2D = G.visual_texture("%s/%s.png" % [asset_dir, sheet])
 		if tex != null:
 			var tl := TileMapLayer.new()
 			var ts := TileSet.new()
@@ -440,7 +459,9 @@ func _build_world() -> void:
 	var map_h := float(rows * 48)
 
 	_build_ground_detail(cols, rows)  # 先于 _world 入树：绘制在地砖之上、实体之下
-	if _mode == "main_world" and _main_map_id == "old_salt_road":
+	if _mode == "main_world" and _main_map_id == "stele_cavern":
+		add_child(preload("res://src/explore/SteleRoomGround.gd").new())
+	elif _mode == "main_world" and _main_map_id == "old_salt_road":
 		add_child(SaltRoadGround.new())
 	elif _mode == "main_world" and _main_map_id == "tideflat":
 		add_child(TideflatGround.new())
@@ -462,6 +483,10 @@ func _build_world() -> void:
 		add_child(ground)
 
 	_world.y_sort_enabled = true
+	if _mode=="main_world" and _main_map_id=="maple_road":
+		var bridge:=preload("res://src/explore/AftermathBridge.gd").new()
+		bridge.z_index=-1
+		_world.add_child(bridge)
 	if _mode=="main_world" and _main_map_id in ["maple_road","old_salt_road","tideflat","frost_boardwalk","frost_post","stele_core"]:
 		var return_props:=ReturnJourneyPropsScript.new()
 		return_props.map_id=_main_map_id
@@ -477,6 +502,7 @@ func _build_world() -> void:
 		_build_stele_room_gates()
 		_build_tidal_water_bounds()
 		_build_tidal_room_gates()
+		_build_mine_rooms()
 	_build_player(map_w, map_h)
 	_sync_world_companion()
 	_build_monsters(map_w, map_h)
@@ -639,6 +665,43 @@ func _tidal_rooms_enabled() -> bool:
 		String(G.story_current().get("id", "")) == "s18")
 
 
+func _mine_rooms_enabled() -> bool:
+	return _mode == "main_world" and _main_map_id == "rift_mine_vault" and \
+		bool(G.prog.get("flags", {}).get("act3_mine_rooms_v1", false))
+
+
+func _build_mine_rooms() -> void:
+	if not _mine_rooms_enabled(): return
+	_mine_ground = preload("res://src/explore/MineRoomGround.gd").new()
+	_mine_ground.z_index = -1
+	_world.add_child(_mine_ground)
+	var rooms: Dictionary = _main_cfg.get("rooms", {})
+	for key in rooms:
+		var row: Dictionary = rooms[key]
+		if bool(G.prog.get("flags", {}).get(String(row.get("open_flag", "")), false)): continue
+		var gate := _SteleRoomGate.new()
+		gate.position = _cfg_point(row.get("gate_at", []), Vector2.ZERO)
+		gate.caption = String(row.get("hint", "先处理前房机关"))
+		_world.add_child(gate)
+		_mine_room_gates[key] = gate
+	_sync_mine_rooms()
+
+
+func _sync_mine_rooms() -> void:
+	if not _mine_rooms_enabled(): return
+	var flags: Dictionary = G.prog.get("flags", {})
+	var rooms: Dictionary = _main_cfg.get("rooms", {})
+	for key in _mine_room_gates.keys():
+		if bool(flags.get(String(rooms.get(key, {}).get("open_flag", "")), false)):
+			(_mine_room_gates[key] as Node).queue_free()
+			_mine_room_gates.erase(key)
+	if _mine_ground != null:
+		_mine_ground.set("ventilated", bool(flags.get("act3_mine_second_wind", false)))
+		_mine_ground.set("rescued", bool(flags.get("act3_mine_switch", false)))
+		_mine_ground.queue_redraw()
+	_mark_nav_dirty()
+
+
 func _tidal_passages() -> String:
 	var flags: Dictionary = G.prog.get("flags", {})
 	if not bool(flags.get("act2_tide_gate_2", false)):
@@ -755,8 +818,7 @@ func _build_player(map_w: float, map_h: float) -> void:
 	_player_anim.scale = Vector2.ONE * player_scale
 	_player_anim.position = Vector2(0, 21.0 - 56.0 * player_scale)
 	_player_anim.animation = &"walk_down"
-	_player_anim.frame = 1 # neutral passing pose for the initial idle state
-	_player_anim.stop()
+	DirectionalIdle.stop(_player_anim)
 	_player.add_child(_player_anim)
 	if _mode == "main_world":
 		_mount_anim = AnimatedSprite2D.new()
@@ -793,7 +855,9 @@ func _build_player(map_w: float, map_h: float) -> void:
 		_first_act_weapon.visible = false
 		_player.add_child(_first_act_weapon)
 		# 字号收进六档（P01 样板 §5）：原来是不在档里的字面量 14，比 NPC 名签还小
-		_player_name_l = G.gold_label("", G.FS_SM, true, Color("f1ffe9"), false)
+		_player_name_l = G.gold_label("", 14, false, Color("f1ffe9"), false)
+		_player_name_l.add_theme_font_override("font",G.font_display)
+		_player_name_l.add_theme_font_size_override("font_size",12)
 		_player_name_l.position = Vector2(5, 1)
 		_player_name_l.size = Vector2(130, 22)
 		_player_name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -802,13 +866,13 @@ func _build_player(map_w: float, map_h: float) -> void:
 		_player_tag.add_child(_player_name_l)
 		_player_marker = Polygon2D.new()
 		_player_marker.polygon = PackedVector2Array([
-			Vector2(0, -11), Vector2(9, 0), Vector2(0, 13), Vector2(-9, 0)])
+			Vector2(0, -7), Vector2(5, 0), Vector2(0, 8), Vector2(-5, 0)])
 		_player_marker.color = Color("e54651")
 		_player_marker.position = Vector2(0, name_y - 19.0)
 		_player.add_child(_player_marker)
 		_player_marker_gleam = Polygon2D.new()
 		_player_marker_gleam.polygon = PackedVector2Array([
-			Vector2(0, -8), Vector2(5, -1), Vector2(-4, 0)])
+			Vector2(0, -5), Vector2(3, -1), Vector2(-2, 0)])
 		_player_marker_gleam.color = Color("fff0da")
 		_player_marker_gleam.position = _player_marker.position
 		_player.add_child(_player_marker_gleam)
@@ -842,8 +906,28 @@ func _sync_mount_visual() -> void:
 	if _mode != "main_world" or _mount_anim == null:
 		return
 	var riding := G.mount_riding()
+	if is_instance_valid(_terrain_trace): _terrain_trace.queue_free()
+	_terrain_trace=null
+	var terrain:=ExplorationLinks.trait_for(G.mount_active(),_main_map_id)
+	if riding and not terrain.is_empty():
+		var trail:=ExplorationLinks.Trail.new()
+		trail.area=Rect2(terrain.rect[0],terrain.rect[1],terrain.rect[2],terrain.rect[3])
+		trail.z_index=0
+		_world.add_child(trail)
+		_terrain_trace=trail
+		if not _exploration_seen.has("terrain"):
+			_exploration_seen.terrain=true
+			_toast(String(terrain.line))
+	var bear := riding and G.mount_active()=="bear"
+	_mount_anim.sprite_frames=MountVisual.frames_for(st.role_id,"bear" if bear else "horse")
+	_mount_anim.scale=Vector2.ONE*(.31 if bear else .34)
 	_mount_anim.visible = riding
-	_player_anim.visible = not riding
+	_player_anim.visible = true
+	_player_anim.z_index=1 if riding else 0
+	var player_scale:=float(_main_cfg.get("player_scale",.96))
+	_player_anim.scale=Vector2.ONE*(.38 if riding else player_scale)
+	_player_anim.position=Vector2(0,MountVisual.rider_offset(G.mount_active(),String(_mount_anim.animation)) if riding else 21.0-56.0*player_scale)
+	_mount_anim.position=MountVisual.mount_offset(G.mount_active(),String(_mount_anim.animation))
 	if _player_shape != null:
 		(_player_shape.shape as RectangleShape2D).size = Vector2(42, 28) if riding else Vector2(30, 26)
 	if _player_tag != null:
@@ -859,7 +943,7 @@ func _sync_mount_visual() -> void:
 		_player_weapon_spr.visible = _player_weapon_spr.texture != null and not riding \
 			and (_first_act_weapon == null or not _first_act_weapon.visible)
 	if _mount_btn != null:
-		_mount_btn.visible = G.mount_tier(String(G.first_mount_cfg().get("mount_id", "horse"))) > 0
+		_mount_btn.visible = G.mount_active() in ["horse","bear"] and G.mount_tier(G.mount_active()) > 0
 		_mount_btn.tooltip_text = "下马" if riding else "上马"
 
 
@@ -1282,7 +1366,7 @@ func _build_main_world_status() -> void:
 	root.size = Vector2(176, 80)
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	# 深色信息带：切角 + 顶暗底亮（内凹），弃用圆角4的平面色块
-	root.set_surface(Color("203437", 0.96), Color("b6a064"))
+	root.set_surface(Color("28343e", 0.96), Color("96a6b4",0.65))
 	_hud.add_child(root)
 	_main_level_l = G.gold_label("", 16, true, Color("ffdf89"), false)
 	_main_level_l.position = Vector2(7, 8)
@@ -1293,11 +1377,11 @@ func _build_main_world_status() -> void:
 	hp_bg.position = Vector2(51, 11)
 	hp_bg.size = Vector2(117, 12)
 	root.add_child(hp_bg)
-	_main_hp_fill.color = Color("eac54c")
+	_main_hp_fill.color = Color("a3c49a")
 	_main_hp_fill.position = Vector2(52, 12)
 	_main_hp_fill.size = Vector2(115, 10)
 	root.add_child(_main_hp_fill)
-	_main_hp_l = G.gold_label("", 15, true, Color("fff2d4"), false)
+	_main_hp_l = G.gold_label("", 15, false, Color("eee1bf"), false)
 	_main_hp_l.position = Vector2(51, 25)
 	_main_hp_l.custom_minimum_size = Vector2(117, 0)
 	root.add_child(_main_hp_l)
@@ -1306,11 +1390,11 @@ func _build_main_world_status() -> void:
 	exp_bg.position = Vector2(51, 48)
 	exp_bg.size = Vector2(117, 9)
 	root.add_child(exp_bg)
-	_main_exp_fill.color = Color("75c995")
+	_main_exp_fill.color = G.GOLD_BRIGHT
 	_main_exp_fill.position = Vector2(52, 49)
 	_main_exp_fill.size = Vector2(0, 7)
 	root.add_child(_main_exp_fill)
-	_main_exp_l = G.gold_label("", 15, true, Color("c4efd1"), false)
+	_main_exp_l = G.gold_label("", 15, false, G.GOLD_BRIGHT, false)
 	_main_exp_l.position = Vector2(51, 59)
 	_main_exp_l.custom_minimum_size = Vector2(117, 0)
 	root.add_child(_main_exp_l)
@@ -1321,7 +1405,7 @@ func _build_main_world_status() -> void:
 	gold_chip.size = Vector2(145, 34)
 	gold_chip.mouse_filter = Control.MOUSE_FILTER_STOP
 	gold_chip.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	gold_chip.set_surface(Color("203437", 0.96), Color("b6a064"))
+	gold_chip.set_surface(Color("493b29", 0.96), Color("bca478",0.65))
 	gold_chip.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			G.show_info_popup(gold_chip, "行囊与货币", G.wallet_info_lines()))
@@ -1339,8 +1423,10 @@ func _build_main_world_status() -> void:
 	_main_gold_l.size = Vector2(104, 20)
 	_main_gold_l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	gold_chip.add_child(_main_gold_l)
-	var region := G.gold_label(String(_main_cfg.get("name", "昭元边城")), G.FS_XS,
-		true, Color("f1e5bb"), true)
+	var region := G.serif_label(String(_main_cfg.get("name", "昭元边城")), 20,
+		Color("f1e5bb"), true)
+	region.add_theme_font_override("font",G.font_art)
+	region.add_theme_font_size_override("font_size",26)
 	region.position = Vector2(205, 53)
 	region.size = Vector2(147, 22)
 	region.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -1355,7 +1441,7 @@ func _build_hud() -> void:
 	if _mode == "main_world":
 		_build_main_world_status()
 		var story_chip := G.InsetBand.new()
-		story_chip.set_surface(Color("203437", 0.94), Color("b6a064", 0.72))
+		story_chip.set_surface(Color("f0e5c9", 0.96), Color("967957", 0.72))
 		# 城内委托快捷签占 y98–130；主线紧接在下方，野外则贴状态栏。
 		story_chip.position = Vector2(14, 138) if bool(_main_cfg.get("city", false)) \
 			else Vector2(14, 100)
@@ -1367,7 +1453,7 @@ func _build_hud() -> void:
 			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT \
 					and not G.ui_blocked:
 				_open_story_info(story_chip))
-		_main_story_l = G.gold_label("", G.FS_XS, false, Color("ffe0ad"), false)
+		_main_story_l = G.gold_label("", G.FS_XS, false, Color("4b4031"), false)
 		_main_story_l.position = Vector2(8, 4)
 		_main_story_l.size = Vector2(318, 22)
 		_main_story_l.clip_text = true
@@ -1378,7 +1464,7 @@ func _build_hud() -> void:
 		# 追踪支线蓝签（P05-B §4）：只显示当前追踪的一条；无追踪时整签隐藏。
 		# 城内主线签在 y138–168，蓝签接 y172；野外主线签贴状态栏，蓝签接 y132。
 		_side_chip = G.InsetBand.new()
-		_side_chip.set_surface(Color(0.06, 0.09, 0.12, 0.84), Color("9fd0ff", 0.72))
+		_side_chip.set_surface(Color("dce8e9", 0.95), Color("688790", 0.72))
 		_side_chip.position = Vector2(14, 172) if bool(_main_cfg.get("city", false)) \
 			else Vector2(14, 132)
 		_side_chip.size = Vector2(334, 24)
@@ -1389,7 +1475,7 @@ func _build_hud() -> void:
 			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT \
 					and not G.ui_blocked:
 				G.show_info_popup(_side_chip, "追踪支线", G.side_info_lines(), self))
-		_main_side_l = G.gold_label("", G.FS_XS, false, Color("cfe3ff"), false)
+		_main_side_l = G.gold_label("", G.FS_XS, false, Color("354f58"), false)
 		_main_side_l.position = Vector2(8, 2)
 		_main_side_l.size = Vector2(318, 20)
 		_main_side_l.clip_text = true
@@ -1499,7 +1585,7 @@ func _build_hud() -> void:
 		var bsb := badge.get_theme_stylebox("panel") as StyleBoxFlat
 		bsb.content_margin_top = 0.0   # 竖直留白保持 0，13px 字不压
 		bsb.content_margin_bottom = 0.0
-		badge.set_surface(Color("4b2817"), Color("e5ba68"))
+		badge.set_surface(Color("142d2b"), G.GOLD)
 		_potion_badge = G.gold_label("", G.FS_XS, true, Color("fff2c9"), true)
 		_potion_badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		badge.add_child(_potion_badge)
@@ -1561,6 +1647,7 @@ func _build_hud() -> void:
 	_joy = _Joystick.new()
 	_joy.position = Vector2(28, VIEW_H - 176 + extra_h)
 	_hud.add_child(_joy)
+	preload("res://src/ui/UiSafeArea.gd").fit_hud(_hud,G.ui_safe_rect(self),get_viewport_rect())
 	_refresh_hud()  # 覆盖换宠按钮可见性（bench 为空时隐藏）
 
 
@@ -1584,13 +1671,14 @@ func _hud_icon_button(icon_key: String, width: float, hint: String, action: Call
 	holder.size = Vector2(width, height)
 	holder.mouse_filter = Control.MOUSE_FILTER_PASS
 	var hit := G.gold_button("", width, height, HUD_BTN_FS)
+	hit.set_meta("visual_family",{"药剂":"market","伙伴":"garden","疾行":"atlas","营帐":"journal"}.get(caption,"journal"))
 	hit.tooltip_text = hint
 	hit.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			action.call())
 	holder.add_child(hit)
 	if icon_key.is_empty():
-		var mark := G.gold_label("»", 27, true, Color("3d2a16"), false)
+		var mark := G.gold_label("»", 27, true, G.GOLD_BRIGHT, false)
 		mark.position = Vector2(0, -5)
 		mark.size = Vector2(width, 37)
 		mark.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -1606,7 +1694,7 @@ func _hud_icon_button(icon_key: String, width: float, hint: String, action: Call
 			icon.scale = Vector2.ONE * (icon_px / maxf(icon.texture.get_width(), icon.texture.get_height()))
 		holder.add_child(icon)
 	if not caption.is_empty():
-		var cap := G.gold_label(caption, G.FS_XS, true, Color("3d2a16"), false)
+		var cap := G.serif_label(caption, G.FS_XS, G.GOLD_BRIGHT)
 		cap.position = Vector2(0, 32)
 		cap.size = Vector2(width, 18)
 		cap.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -1627,6 +1715,7 @@ func _sync_campaign_level() -> void:
 
 
 func _refresh_hud() -> void:
+	if _mode != "main_world" and not st.run_id.is_empty(): _checkpoint_run.call_deferred()
 	_sync_campaign_level()
 	var m := st.max_hp()
 	var hp := m if st.hp < 0 else st.hp
@@ -1637,8 +1726,8 @@ func _refresh_hud() -> void:
 		var need := G.exp_to_next(lv)
 		var exp_ratio := 1.0 if need <= 0 else clampf(float(exp) / float(need), 0.0, 1.0)
 		_main_level_l.text = "Lv%d" % lv
-		_main_hp_fill.size.x = 115.0 * clampf(float(hp) / float(maxi(m, 1)), 0.0, 1.0)
-		_main_exp_fill.size.x = 115.0 * exp_ratio
+		G.animate_fill(_main_hp_fill,115.0 * clampf(float(hp) / float(maxi(m, 1)), 0.0, 1.0))
+		G.animate_fill(_main_exp_fill,115.0 * exp_ratio)
 		_main_hp_l.text = "生命 %d/%d" % [hp, m]
 		_main_exp_l.text = "EXP %d%%" % roundi(exp_ratio * 100.0)
 		if _main_gold_l != null:
@@ -1647,13 +1736,15 @@ func _refresh_hud() -> void:
 			_main_story_l.text = G.story_goal_short()
 		if _side_chip != null:
 			var side_text := G.side_line()
+			var commissions := WorldCommission.entities(G, _main_map_id)
+			if not commissions.is_empty(): side_text = "委托 · " + String(commissions[0].name)
 			_side_chip.visible = not side_text.is_empty()
 			_main_side_l.text = side_text
 		if _player_name_l != null:
 			_player_name_l.text = "%s  Lv%d" % [G.display_name(), lv]
-			var name_width := G.font_bold.get_string_size(_player_name_l.text,
-				HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_SM).x
-			var tag_width := clampf(name_width + 16.0, 126.0, 290.0)
+			var name_width := G.font_display.get_string_size(_player_name_l.text,
+				HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
+			var tag_width := clampf(name_width + 16.0, 88.0, 180.0)
 			_player_tag.size.x = tag_width
 			_player_tag.position.x = -tag_width * 0.5
 			_player_name_l.size.x = tag_width - 10.0
@@ -1696,6 +1787,9 @@ func _refresh_player_appearance() -> void:
 
 
 func _use_potion() -> void:
+	if _mode=="main_world" and Trials.no_potions(G,_main_map_id):
+		_toast("无药轮岗：本次副本内不能使用药剂；可结束挑战后正常补给")
+		return
 	if _battle != null or _map_done:
 		return
 	if st.potions <= 0:
@@ -1706,10 +1800,17 @@ func _use_potion() -> void:
 	if hp >= m:
 		_toast("生命已满")
 		return
+	var before_run := st.snapshot()
 	st.potions -= 1
 	var pct := float(TableCache.nodes_config().get("shop", {}).get("potion_heal_pct", 0.35))
-	var amt := int(float(m) * pct)
+	var oath_mult := float(Oaths.objective(G,_oath_trip).get("potion_mult",1.0)) if _mode=="main_world" else 1.0
+	var amt := int(float(m) * pct * oath_mult)
 	st.heal(amt)
+	if not _checkpoint_run():
+		st.restore(before_run)
+		_prog=st.map_progress(int(node.get("layer",1)),int(node.get("index",0)))
+		_refresh_hud()
+		return
 	_toast("使用药剂：回复 %d 点生命" % amt)
 	_refresh_hud()
 
@@ -1717,9 +1818,14 @@ func _use_potion() -> void:
 func _swap_pet() -> void:
 	if _battle != null or _map_done or st.bench_pet == "":
 		return
+	var before_run := st.snapshot()
 	var old := st.active_pet
 	st.active_pet = st.bench_pet
 	st.bench_pet = old
+	if not _checkpoint_run():
+		st.restore(before_run)
+		_prog=st.map_progress(int(node.get("layer",1)),int(node.get("index",0)))
+		return
 	_sync_world_companion()
 	_toast("出战宠物已更换")
 	_refresh_hud()
@@ -1728,10 +1834,10 @@ func _swap_pet() -> void:
 func _toast(msg: String) -> void:
 	if _toast_lbl != null and not _toast_lbl.is_queued_for_deletion():
 		_toast_lbl.queue_free()
-	_toast_lbl = G.gold_label(msg, G.FS_MD, false, Color("ffe9b0"))
-	_toast_lbl.position = Vector2(0, 560)
-	_toast_lbl.custom_minimum_size = Vector2(VIEW_W, 0)
+	_toast_lbl = G.toast_label(msg)
+	_toast_lbl.position = Vector2(24, 560)
 	_hud.add_child(_toast_lbl)
+	G.reveal_control(_toast_lbl)
 	var tw := create_tween()
 	tw.tween_interval(1.4)
 	tw.tween_property(_toast_lbl, "modulate:a", 0.0, 0.5)
@@ -1740,13 +1846,17 @@ func _toast(msg: String) -> void:
 
 # ================= 词条三选一 =================
 func _show_trait_picker(rows: Array) -> void:
+	_prog["pending_choices"] = rows.duplicate(true)
+	_prog["pending_trait_picks"] = _pending_trait_picks
 	_picker = TraitPicker.new()
 	_picker.setup(rows)
 	_picker.picked.connect(_on_trait_picked)
 	_hud.add_child(_picker)  # HUD 同层最后添加，盖住其余 HUD
+	_checkpoint_run()
 
 
 func _on_trait_picked(tid: String) -> void:
+	_prog.erase("pending_choices")
 	_picker = null
 	if tid != "":
 		st.traits.append(tid)
@@ -1764,6 +1874,12 @@ func _on_trait_picked(tid: String) -> void:
 func on_interactable(it: _Interactable) -> void:
 	if _map_done or _battle != null or _picker != null or _remover != null:
 		return
+	if it.used or G.save_locked: return
+	if it.kind == "event":
+		_open_run_event(it)
+		return
+	var before_run := st.snapshot()
+	var before_rng := _rng.state
 	it.used = true
 	match it.kind:
 		"chest":
@@ -1789,15 +1905,55 @@ func on_interactable(it: _Interactable) -> void:
 				_toast("篝火休整：回复 %d 点生命（无词条可弃）" % amt)
 			else:
 				_toast("篝火休整：回复 %d 点生命" % amt)
-				_show_trait_remove()
 			it.queue_free()
 	_prog["interact_done"] = true   # 一次性物件记档：重进不再生成（P0-1）
+	if not _checkpoint_run():
+		st.restore(before_run)
+		_rng.state = before_rng
+		_prog = st.map_progress(int(node.get("layer", 1)), int(node.get("index", 0)))
+		_interactable = null
+		_build_interactable(float(_map_cfg.get("map_cols",32))*48, float(_map_cfg.get("map_rows",42))*48)
+		_refresh_hud()
+		return
 	_interactable = null
+	if it.kind == "bonfire" and not st.traits.is_empty(): _show_trait_remove()
+
+
+func _open_run_event(it: _Interactable) -> void:
+	if _puzzle_panel != null: return
+	it.used = true
+	_puzzle_panel = WorldPuzzlePanelScript.new()
+	_hud.add_child(_puzzle_panel)
+	_puzzle_panel.open_puzzle(RunEvents.row(st.theme))
+	_puzzle_panel.choice_selected.connect(func(choice: String):
+		var before_run := st.snapshot()
+		var before_rng := _rng.state
+		var result := RunEvents.apply(st, _prog, choice)
+		if not bool(result.ok):
+			_toast(String(result.get("message", "此选择当前不可用")))
+			return
+		if not _checkpoint_run():
+			st.restore(before_run)
+			_rng.state = before_rng
+			_prog = st.map_progress(int(node.get("layer",1)),int(node.get("index",0)))
+			return
+		Audio.sfx("reward")
+		_refresh_hud()
+		it.queue_free()
+		_interactable = null
+		_toast("已休整，继续前行" if choice == "rest" else "所得记入本局报酬与补给，继续前行"))
+	_puzzle_panel.closed.connect(func():
+		_puzzle_panel = null
+		if is_instance_valid(it) and not bool(_prog.get("interact_done", false)):
+			it.used = false
+			it.contact_cd = 1.0)
 
 
 ## 支线实体生成（P05-B）：表在 main_world_maps.json 的 entities；
 ## 生成与否完全由任务状态决定（未接不出现、采过/可交付/完成后不再出现）。
 func _refresh_quest_entities() -> void:
+	_feedback_frame=-1
+	_feedback_focus=null
 	for entity in _quest_entities:
 		if is_instance_valid(entity): entity.queue_free()
 	_quest_entities.clear()
@@ -1817,6 +1973,19 @@ func _build_quest_entities() -> void:
 			continue
 		var row := row_v as Dictionary
 		var quest := String(row.get("quest", ""))
+		if String(row.get("kind", "")) == "feedback":
+			if G.side_status_of(quest) != QuestService.SIDE_DONE: continue
+			var prop := _QuestEntity.new()
+			prop.eid = eid
+			prop.kind = "feedback"
+			prop.used = true
+			prop.art = String(row.get("art", "post"))
+			prop.caption = String(row.get("name", ""))
+			prop.position = _cfg_point(row.get("at", []), Vector2.ZERO)
+			prop.map_ref=self
+			_world.add_child(prop)
+			_quest_entities.append(prop)
+			continue
 		if String(row.get("kind", "")) == "road_mail" and not G.road_mail_entity_visible(eid):
 			continue
 		if String(row.get("kind", "")) == "shipping_aid" and not G.shipping_aid_visible(
@@ -1862,11 +2031,218 @@ func _build_quest_entities() -> void:
 		ent.map_ref = self
 		_quest_entities.append(ent)
 		_world.add_child(ent)
+	_build_commission_entities()
 	_mark_nav_dirty()
+
+
+func _build_commission_entities() -> void:
+	if is_instance_valid(_oath_traveler): _oath_traveler.queue_free()
+	_oath_traveler=null
+	var trust_script := preload("res://src/world/RegionalTrust.gd")
+	var region := String(trust_script.CITIES.get(_main_map_id,""))
+	if not region.is_empty() and int(trust_script.info(G,region).tier)>0:
+		var prop := _QuestEntity.new()
+		prop.used = true
+		prop.kind = "feedback"
+		prop.art = "trust_"+region
+		prop.feedback_tier=int(trust_script.info(G,region).tier)
+		prop.caption = {"zhaoyuan":"路簿灯架 · 留有你的名字", "shenyuan":"港务旧潮线纸", "frost":"轮岗簿的新一页"}[region]
+		prop.position = {"zhaoyuan":Vector2(580,730),"shenyuan":Vector2(610,720),"frost":Vector2(580,1010)}[region]
+		prop.map_ref=self
+		_world.add_child(prop)
+		_quest_entities.append(prop)
+	for m in _monsters.duplicate():
+		if (not m.commission_posting.is_empty() or not m.oath_trip.is_empty() or m.trial) and m != _contact_mon:
+			_monsters.erase(m)
+			m.queue_free()
+	_build_trial_entities()
+	_build_contract_entities()
+	if String(Oaths.trip(G,_oath_trip).get("status",""))=="active":
+		var oath := Oaths.objective(G,_oath_trip)
+		var at := _cfg_point(_main_cfg.get("spawn",[]),Vector2(480,1000))+Vector2(0,-180)
+		if String(oath.action)=="defeat" and not (_main_cfg.get("monster_ids",[]) as Array).is_empty():
+			_spawn_monster({"idx":800000000+absi(_oath_trip.hash()),"tier":"normal",
+				"mon_id":String(TableCache.theme_config(st.theme).get("monsters",["mon_wolf"])[0]),"position":at,"contact_radius":38.0,"wander_radius":32.0})
+			_monsters.back().oath_trip=_oath_trip
+		else:
+			var target := _QuestEntity.new()
+			target.kind="oath"
+			target.art=String(oath.art)
+			target.caption="誓约 · "+String(oath.target)
+			target.position=at
+			if String(oath.id)=="shelter":
+				if int(Oaths.trip(G,_oath_trip).get("phase",0))==0:
+					target.caption="誓约 · 接应路边旅人"
+				else:
+					target.caption="誓约 · 旅人抵达安全点"
+					target.position+=Vector2(0,-240)
+					var traveler:=_OathTraveler.new()
+					traveler.map_ref=self
+					traveler.position=_player.position
+					_world.add_child(traveler)
+					_oath_traveler=traveler
+			target.map_ref=self
+			_world.add_child(target)
+			_quest_entities.append(target)
+	for step in WorldCommission.entities(G, _main_map_id):
+		if String(step.kind) == "defeat":
+			_spawn_monster({"idx":900000000 + absi(String(step.posting).hash()),
+				"tier":"normal", "mon_id":String(step.enemy), "position":_cfg_point(step.at,Vector2.ZERO),
+				"contact_radius":38.0, "wander_radius":40.0})
+			_monsters.back().commission_posting = String(step.posting)
+			continue
+		var ent := _QuestEntity.new()
+		ent.eid = String(step.id)
+		ent.commission_posting = String(step.posting)
+		ent.kind = "world_commission"
+		ent.art = String(step.art)
+		ent.caption = "委托 · " + String(step.name)
+		ent.position = _cfg_point(step.at, Vector2.ZERO)
+		ent.map_ref = self
+		_quest_entities.append(ent)
+		_world.add_child(ent)
+
+func _commission_interact(e: _QuestEntity) -> void:
+	var step := WorldCommission.current(WorldCommission.state(G).get(e.commission_posting,{}))
+	if not (step.get("choices",{}) as Dictionary).is_empty():
+		if _puzzle_panel != null or e.trade_cooled: return
+		e.trade_cooled = true
+		_puzzle_panel = WorldPuzzlePanelScript.new()
+		_hud.add_child(_puzzle_panel)
+		_puzzle_panel.open_puzzle(step)
+		_puzzle_panel.choice_selected.connect(func(choice:String):
+			var res := WorldCommission.action(G,e.commission_posting,_main_map_id,e.eid,choice)
+			_toast(String(res.line))
+			if bool(res.ok):
+				e.used = true
+				_refresh_quest_entities.call_deferred()
+			_refresh_hud())
+		_puzzle_panel.closed.connect(func(): _puzzle_panel = null)
+		return
+	var res := WorldCommission.action(G,e.commission_posting,_main_map_id,e.eid)
+	_toast(String(res.line))
+	if bool(res.ok):
+		e.used = true
+		_refresh_quest_entities.call_deferred()
+	else: e.trade_cooled = true
+	_refresh_hud()
+
+func _build_contract_entities() -> void:
+	for id in Contracts.state(G):
+		var record:Dictionary=Contracts.state(G)[id]
+		if String(record.status)!="active" or bool(record.aid):continue
+		var definition:=Contracts.row(String(record.template))
+		if String(definition.route_map)!=_main_map_id:continue
+		var entity:=_QuestEntity.new()
+		entity.eid="contract_"+String(id)
+		entity.contract_id=String(id)
+		entity.kind="trade_contract"
+		entity.art="post"
+		entity.caption=String(definition.route_name)
+		entity.position=_cfg_point(definition.at,Vector2.ZERO)
+		entity.map_ref=self
+		_world.add_child(entity)
+		_quest_entities.append(entity)
+
+
+func _build_trial_entities()->void:
+	if not Trials.unlocked(G,_main_map_id):return
+	var board:=_QuestEntity.new()
+	board.eid="trial_board"
+	board.kind="trial_board"
+	board.art="post"
+	board.caption="首通后挑战 · "+String(Trials.row(_main_map_id).name)
+	board.position=_cfg_point(_main_cfg.get("spawn",[]),Vector2(480,1050))+Vector2(120,-115)
+	board.map_ref=self
+	_world.add_child(board)
+	_quest_entities.append(board)
+	var step:=Trials.current(G,_main_map_id)
+	if step.is_empty():return
+	if String(step.kind)=="defeat":
+		_spawn_monster({"idx":700000000+absi(("%s|%d"%[_main_map_id,int(Trials.record(G,_main_map_id).attempt)]).hash()),
+			"tier":"boss","mon_id":String(step.enemy),"position":_cfg_point(step.at,Vector2.ZERO),"optional":true})
+		_monsters.back().trial=true
+		return
+	var entity:=_QuestEntity.new()
+	entity.eid=String(step.id)
+	entity.kind="trial"
+	entity.art=String(step.art)
+	entity.caption="挑战 · "+String(step.name)
+	entity.position=_cfg_point(step.at,Vector2.ZERO)
+	entity.map_ref=self
+	_world.add_child(entity)
+	_quest_entities.append(entity)
+
+func _trial_interact(e:_QuestEntity)->void:
+	if e.trade_cooled:return
+	var board:=e.kind=="trial_board"
+	var step:=Trials.current(G,_main_map_id)
+	var choice:=board or not (step.get("choices",{}) as Dictionary).is_empty()
+	if choice:
+		if _puzzle_panel!=null:return
+		e.trade_cooled=true
+		_puzzle_panel=WorldPuzzlePanelScript.new()
+		_hud.add_child(_puzzle_panel)
+		var display:Dictionary=step.duplicate(true)
+		if board:
+			var definition:=Trials.row(_main_map_id)
+			display={"name":String(definition.name),"clue":String(definition.desc),"choices":{"begin":"继续挑战" if not step.is_empty() else "开始附加挑战","abort":"结束本次挑战"}}
+		_puzzle_panel.open_puzzle(display)
+		_puzzle_panel.choice_selected.connect(func(selected:String):
+			var result:=Trials.choose(G,_main_map_id,selected) if board else Trials.advance(G,_main_map_id,e.eid,selected)
+			_toast(String(result.line))
+			if bool(result.ok):
+				e.used=true
+				_refresh_quest_entities.call_deferred()
+			_refresh_hud())
+		_puzzle_panel.closed.connect(func():_puzzle_panel=null)
+		return
+	var result:=Trials.advance(G,_main_map_id,e.eid)
+	_toast(String(result.line))
+	if bool(result.ok):
+		e.used=true
+		_refresh_quest_entities.call_deferred()
+	else:e.trade_cooled=true
+	_refresh_hud()
 
 
 ## 支线实体交互（P05-B）：采集/观察/送达。成功推进即从地图消失，提示走 toast。
 func on_quest_entity(e: _QuestEntity) -> void:
+	if _map_done or _battle != null or e.used or _modal_open(): return
+	if e.kind in ["trial","trial_board"]:
+		_trial_interact(e)
+		return
+	if e.kind == "oath":
+		if e.trade_cooled: return
+		var shelter := String(Oaths.objective(G,_oath_trip).get("id",""))=="shelter"
+		var start_escort := shelter and int(Oaths.trip(G,_oath_trip).get("phase",0))==0
+		if shelter and not start_escort and is_instance_valid(_oath_traveler) and _oath_traveler.position.distance_to(e.position)>140:
+			_toast("等旅人也抵达路灯旁再确认")
+			return
+		var res := Oaths.begin_escort(G,_oath_trip) if start_escort else Oaths.finish(G,_oath_trip)
+		_toast(String(res.line))
+		if bool(res.ok):
+			e.used=true
+			_refresh_quest_entities.call_deferred()
+		else: e.trade_cooled=true
+		_refresh_hud()
+		return
+	if e.kind == "trade_contract":
+		if e.trade_cooled:return
+		var value:=Contracts.action(G,e.contract_id,"aid")
+		_toast(String(value.line))
+		e.trade_cooled=true
+		if bool(value.ok):_refresh_quest_entities.call_deferred()
+		return
+	if e.kind == "world_commission":
+		if not e.trade_cooled: _commission_interact(e)
+		return
+	if not e.quest.is_empty():
+		var row := QuestService.side_row(G.side_quest_rows(), e.quest)
+		var step := QuestService.side_objective(row, QuestService.side_get(G.act1_state(), e.quest))
+		if not (step.get("choices", {}) as Dictionary).is_empty():
+			_open_side_choice(e, step)
+			return
 	if _map_done or _battle != null or e.used:
 		return
 	if _modal_open():
@@ -1964,6 +2340,7 @@ func on_quest_entity(e: _QuestEntity) -> void:
 		e.queue_free()
 		_sync_stele_room_gates()
 		_sync_tidal_room_gates()
+		_sync_mine_rooms()
 		_mark_nav_dirty()
 		_toast(String(result.get("line", "")))
 		_refresh_hud()
@@ -1985,6 +2362,27 @@ func on_quest_entity(e: _QuestEntity) -> void:
 	for t in res.get("toasts", []):
 		_toast(String(t))
 	_refresh_hud()   # 蓝签进度/可交付状态即时刷新
+	_refresh_quest_entities.call_deferred()
+
+
+func _open_side_choice(e: _QuestEntity, step: Dictionary) -> void:
+	if _puzzle_panel != null or e.trade_cooled: return
+	e.trade_cooled = true
+	_puzzle_panel = WorldPuzzlePanelScript.new()
+	_hud.add_child(_puzzle_panel)
+	var display := step.duplicate(true)
+	display["name"] = e.caption
+	_puzzle_panel.open_puzzle(display)
+	_puzzle_panel.choice_selected.connect(func(choice: String):
+		var result := G.side_entity_interact(e.kind, e.eid, _main_map_id, e.quest, choice)
+		if bool(result.get("ok", false)):
+			e.used = true
+			for line in result.get("toasts", []): _toast(String(line))
+			_refresh_quest_entities.call_deferred()
+			_refresh_hud()
+		else:
+			_toast(String(result.get("line", "操作未保存，请稍后重试"))))
+	_puzzle_panel.closed.connect(func(): _puzzle_panel = null)
 
 
 ## 追踪支线在当前地图的实体坐标（P05-B 小地图蓝菱用）。
@@ -2202,6 +2600,7 @@ func _physics_process(delta: float) -> void:
 	var speed := TableCache.map_player_speed()
 	if _mode == "main_world" and G.mount_riding():
 		speed *= float(G.first_mount_cfg().get("world_speed_mult", 1.25))
+		speed *= ExplorationLinks.speed_mult(G.mount_active(),_main_map_id,_player.position,true)
 	if _sprint and not G.mount_riding():
 		speed *= float(_map_cfg.get("sprint_mult", 1.6))
 	_prev_pos = _player.position
@@ -2239,24 +2638,24 @@ func _update_player_anim(dir: Vector2) -> void:
 			else:
 				mount_dir = &"walk_down" if dir.y > 0 else &"walk_up"
 			_mount_anim.animation = mount_dir
-			_mount_anim.position.y = -50.0 + sin(float(Time.get_ticks_msec()) * 0.016) * 1.2
+			_mount_anim.play(mount_dir)
+			_player_anim.animation=mount_dir
+			DirectionalIdle.stop(_player_anim)
+			_player_anim.position.y=MountVisual.rider_offset(G.mount_active(),String(mount_dir))+sin(float(Time.get_ticks_msec())*.016)
+			_mount_anim.position=MountVisual.mount_offset(G.mount_active(),String(mount_dir))
 		else:
-			_mount_anim.position.y = -50.0
+			_mount_anim.stop()
+			_mount_anim.frame=1
 		return
 	if dir.length_squared() < 0.25:
-		_player_anim.stop()
-		_player_anim.frame = 1 # neutral passing pose, not a wide contact pose
+		DirectionalIdle.stop(_player_anim)
 		return
 	var anim := &"walk_down"
 	if absf(dir.x) > absf(dir.y):
 		anim = &"walk_right" if dir.x > 0 else &"walk_left"
 	else:
 		anim = &"walk_down" if dir.y > 0 else &"walk_up"
-	if _player_anim.animation != anim:
-		var gait_frame := _player_anim.frame
-		var gait_progress := _player_anim.frame_progress
-		_player_anim.animation = anim
-		_player_anim.set_frame_and_progress(gait_frame, gait_progress)
+	DirectionalIdle.change_walk_direction(_player_anim, anim)
 	if _first_act_weapon != null:
 		_first_act_weapon.position = Vector2(-19, -22) if anim == &"walk_left" else Vector2(19, -22)
 		_first_act_weapon.scale = Vector2(-0.7, 0.7) if anim == &"walk_left" else Vector2(0.7, 0.7)
@@ -2426,23 +2825,54 @@ func _restore_node_state() -> void:
 				s.queue_redraw()   # 熄灭态（_draw 依 used 表达）
 	_score = int(_prog.get("score", 0))
 	_cleared_bonus = bool(_prog.get("cleared_bonus", false))
+	if _mode != "main_world" and not st.run_id.is_empty():
+		if _prog.has("rng_state"): _rng.state = int(String(_prog.rng_state))
+		if _prog.has("resume_position"): _player.position = _cfg_point(_prog.resume_position, _player.position)
+		var pending: Array = _prog.get("pending_choices", [])
+		_pending_trait_picks = int(_prog.get("pending_trait_picks", 0))
+		if not pending.is_empty(): _show_trait_picker(pending)
+
+
+func _checkpoint_run() -> bool:
+	if _mode == "main_world" or st.run_id.is_empty() or _battle != null or _map_done: return true
+	if st.finished: return true
+	var active: Dictionary = G.prog.get("active_run", {})
+	if String(active.get("state", {}).get("run_id", "")) != st.run_id: return true
+	_prog["rng_state"] = str(_rng.state)
+	_prog["pending_trait_picks"] = _pending_trait_picks
+	if _player != null: _prog["resume_position"] = [roundi(_player.position.x), roundi(_player.position.y)]
+	if not G.run_checkpoint(st, node):
+		_toast("历练进度未保存，请检查存档后重试")
+		return false
+	return true
 
 
 func on_spot(s: _Spot) -> void:
 	if _map_done or _battle != null:
 		return
 	if s.kind == "vein":
+		if G.save_locked: return
+		var before_run := st.snapshot()
+		var before_items := G.items.duplicate(true)
+		var before_rng := _rng.state
 		var items: Array = _cfg_range("vein_items", ["enhance_stone"])
 		var am: Array = _cfg_range("vein_amount", [1, 2])
 		var n := _rng.randi_range(int(am[0]), int(am[1]))
 		var iid := String(items[_rng.randi_range(0, maxi(0, items.size() - 1))])
-		G.grant_item(iid, n)
+		G.grant_item(iid, n, false)
 		Audio.sfx("pickup")
 		_toast("采得矿脉：%s ×%d" % [G.item_name(iid), n])
 		_add_score(_cfg_int("pickup_score", 6), "矿脉")
 		# 进度落表：矿脉同样是一次性兴趣点，不记就会"撤离→重进"反复采（P0-1 漏网项）
 		if not _prog["spots"].has(s.idx):
 			_prog["spots"].append(s.idx)
+		if not _checkpoint_run():
+			G.items = before_items
+			st.restore(before_run)
+			_prog = st.map_progress(int(node.get("layer", 1)), int(node.get("index", 0)))
+			_score = int(_prog.get("score", 0))
+			_rng.state = before_rng
+			return
 		_spots.erase(s)
 		s.queue_free()
 		_mark_nav_dirty()   # 兴趣点用掉后要立刻从地图消失（问题 #15）
@@ -2563,7 +2993,46 @@ func _map_extent() -> Vector2:
 
 ## 当前该去哪：优先未使用过的物件（宝箱/事件/商店/篝火），
 ## 传送阵被封印时先指向守阵首领，其余一律指向传送阵
+func _closest_feedback()->Node2D:
+	if _player==null:return null
+	var frame:=Engine.get_physics_frames()
+	if frame==_feedback_frame and _player.position==_feedback_player_pos:
+		if _feedback_focus==null:return null
+		if is_instance_valid(_feedback_focus) and not _feedback_focus.is_queued_for_deletion():return _feedback_focus
+	_feedback_frame=frame
+	_feedback_player_pos=_player.position
+	_feedback_focus=null
+	var closest:=140.0*140.0
+	for entity in _quest_entities:
+		if not is_instance_valid(entity) or entity.is_queued_for_deletion() or entity.kind!="feedback":continue
+		var distance:=entity.position.distance_squared_to(_player.position)
+		if distance<closest:
+			closest=distance
+			_feedback_focus=entity
+	return _feedback_focus
+
 func _nav_info() -> Dictionary:
+	for entity in _quest_entities:
+		if is_instance_valid(entity) and not entity.used and entity.kind=="trade_contract":return {"name":entity.caption,"pos":entity.position,"kind":"quest"}
+		if is_instance_valid(entity) and not entity.used and entity.kind=="trial":return {"name":entity.caption,"pos":entity.position,"kind":"quest"}
+	for m in _monsters:
+		if m.trial:return {"name":"附加挑战 · 练习残影","pos":m.position,"kind":"monster"}
+	for entity in _quest_entities:
+		if is_instance_valid(entity) and not entity.used and not entity.commission_posting.is_empty():
+			return {"name":entity.caption, "pos":entity.position, "kind":"quest"}
+	for m in _monsters:
+		if not m.commission_posting.is_empty():
+			return {"name":"委托 · 守住岗火", "pos":m.position, "kind":"monster"}
+	for entity in _quest_entities:
+		if is_instance_valid(entity) and not entity.used and entity.kind=="oath":
+			return {"name":entity.caption,"pos":entity.position,"kind":"quest"}
+	for m in _monsters:
+		if not m.oath_trip.is_empty():return {"name":"誓约 · 前哨","pos":m.position,"kind":"monster"}
+	if _mine_rooms_enabled() and not _main_boss_cleared():
+		for objective in ["act3_mine_record", "act3_mine_wheel", "act3_mine_second_wheel", "act3_mine_switch"]:
+			for entity in _quest_entities:
+				if is_instance_valid(entity) and not entity.used and entity.eid == objective:
+					return {"name": entity.caption, "pos": entity.position, "kind": "puzzle"}
 	if _stele_rooms_enabled() and not _main_boss_cleared():
 		for objective in ["act1_echo_crack_left", "act1_echo_crack_middle",
 				"act1_echo_crack_right", "act1_echo_rubbing", "act1_echo_west",
@@ -2593,6 +3062,13 @@ func _nav_info() -> Dictionary:
 
 func _update_nav(delta: float = 0.0) -> void:
 	var info := _nav_info()
+	if _mode=="main_world" and _player!=null and st!=null:
+		var hint_key:=st.active_pet+"|"+_main_map_id
+		if not _exploration_seen.has(hint_key) and _player.position.distance_to(info.get("pos",Vector2.ZERO))<300:
+			var hint:=ExplorationLinks.pet_hint(G,st.active_pet,_main_map_id,String(info.get("kind","")))
+			if not hint.is_empty():
+				_exploration_seen[hint_key]=true
+				_toast(hint)
 	if _compass != null:
 		_compass.set_target(String(info.get("name", "")), info.get("pos", Vector2.ZERO),
 			_player.position if _player != null else Vector2.ZERO, _auto_walk)
@@ -2852,6 +3328,12 @@ func _persist_main_world_progress() -> void:
 	if previous is Dictionary:
 		state = (previous as Dictionary).duplicate(true)
 	state["map_id"] = _main_map_id
+	var visited: Array = state.get("visited_maps", [])
+	if not visited.has(_main_map_id): visited.append(_main_map_id)
+	state["visited_maps"] = visited
+	if _mine_rooms_enabled():
+		state["room_id"] = "furnace" if bool(G.prog.get("flags", {}).get("act3_mine_switch", false)) else \
+			("ventilation" if bool(G.prog.get("flags", {}).get("act3_mine_clue", false)) else "record")
 	state["layout_version"] = int(_main_cfg.get("layout_version", 1))
 	state.erase("killed")
 	state["respawn_at"] = _main_respawn_at.duplicate()
@@ -2995,6 +3477,7 @@ func _open_world_puzzle_panel(e: _QuestEntity) -> void:
 			e.queue_free()
 			_sync_stele_room_gates()
 			_sync_tidal_room_gates()
+			_sync_mine_rooms()
 			_build_stele_shadow()
 			_refresh_quest_entities.call_deferred()
 			_refresh_hud())
@@ -3086,6 +3569,14 @@ func _launch_battle(m: _MapMonster) -> void:
 	var tide_break := tide_preclear and tide_route == "both"
 	var battle_potions := mini(G.run_potions_max(), st.potions + (1 if tide_supply else 0)) \
 		if tide_boss else st.potions
+	_trial_saved_potions=-1
+	if m.trial and Trials.no_potions(G,_main_map_id):
+		_trial_saved_potions=st.potions
+		battle_potions=0
+	var battle_growth := G.growth_bonuses(st.role_id)
+	if _mode=="main_world":
+		for key in Oaths.objective(G,_oath_trip).get("bonus",{}):
+			battle_growth[key]=float(battle_growth.get(key,0))+float(Oaths.objective(G,_oath_trip).bonus[key])
 	BattleScene.pending_cfg = {
 		"ally": {
 			"role_id": st.role_id,
@@ -3096,7 +3587,8 @@ func _launch_battle(m: _MapMonster) -> void:
 			"potions": battle_potions,
 			"hp_override": st.hp,
 			# 局外养成 6 线加成（天赋/装备/坐骑/称号 + 技能书等级 + 宠物养成快照）
-			"growth": G.growth_bonuses(st.role_id),
+			"growth": battle_growth,
+			"potion_effect_mult":float(Oaths.objective(G,_oath_trip).get("potion_mult",1.0)) if _mode=="main_world" else 1.0,
 			"skill_levels": G.prog.get("skills", {}),
 			"unlocked_skills": G.act1_unlocked_skills(st.role_id),
 			"skill_variants": G.act1_skill_variants(st.role_id),
@@ -3146,6 +3638,13 @@ func _launch_battle(m: _MapMonster) -> void:
 		G.save_game()
 
 
+func _ambient_region() -> String:
+	if _mode == "main_world":
+		if _main_map_id in ["shenyuan_port", "tideflat", "tidal_gate"]: return "port"
+		if _main_map_id in ["rift_mine_road", "rift_mine_vault"]: return "mine"
+	return st.theme
+
+
 func _on_battle_end(result: String, hp_left: int) -> void:
 	var battle := _battle
 	_last_battle_pets = battle.sim.companion_participants.duplicate() if battle != null else []
@@ -3160,13 +3659,20 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 	# P05-C：可选首领标记——本场决定「可撤退、不掷装备、首胜单发」三项口径，
 	# 结算与银行都在本函数之后读它，必须在 _settle_main_world 之前算好。
 	_last_battle_optional = _contact_mon != null and _contact_mon.optional
+	_last_battle_trial = _contact_mon != null and _contact_mon.trial
 	_battle = null
+	if result in ["victory", "flee"]:
+		Audio.play_bgm("bgm_map")
+		Audio.play_ambience(_ambient_region())
 	_battle_layer.queue_free()  # 级联释放 BattleScene
 	_battle_layer = null
 	if _mode == "main_world":
 		_world.visible = true
 		_hud.visible = true
 	st.apply_battle_result(battle.sim)
+	if _trial_saved_potions>=0:
+		st.potions=_trial_saved_potions
+		_trial_saved_potions=-1
 	for mastery_line_v in mastery_lines:
 		_toast(String(mastery_line_v))
 	# P03：收到结果先落到 result_pending（仅内存）。进程死在这一步 → 存档里仍是 battle，
@@ -3279,6 +3785,10 @@ func _boss_flee_blocked(tier: String, optional: bool) -> bool:
 
 
 func _story_battle_ready(mon_id: String) -> bool:
+	if _mine_rooms_enabled() and mon_id == "mon_redsand_guard" and \
+			not bool(G.prog.get("flags", {}).get("act3_mine_switch", false)):
+		_toast("先核对翻车记录，调稳两座风轮，再让矿车带人撤离")
+		return false
 	if _stele_rooms_enabled() and mon_id == "mon_stele_warden" and \
 			(not _stele_room_one_ready() or \
 			not _stele_shadow_resolved() or \
@@ -3334,6 +3844,9 @@ func _settle_main_world(tier: String, defeated_mon_id: String) -> String:
 	if is_mail_ambush:
 		gold = 0
 		exp = 0  # 邮路每日已有固定报酬；伏击不额外变成刷金点。
+	if _last_battle_trial:
+		gold=0
+		exp=0
 	var ws := _main_world_state()
 	# 去重闸门：同一个 result_id 只落地一次（重复上报 false → 一分钱不发、一件材料不掉）
 	var settled := _encounter.is_empty() \
@@ -3387,9 +3900,9 @@ func _settle_main_world(tier: String, defeated_mon_id: String) -> String:
 	# 要么还是可重打的 battle，要么已完整结算，不能只留下半份奖励。
 	# P05-B：支线讨伐计数（只对已接支线生效）。与主线、遭遇状态同一次写盘：
 	# 写盘失败时连支线计数一起退回，磁盘上不留半份。
-	var side_touched := G.side_report("defeat", defeated_mon_id, _main_map_id, false)
+	var side_touched := G.side_report("defeat", defeated_mon_id, _main_map_id, false) if not _last_battle_trial else []
 	var expected_story := G.story_current()
-	var story_result := G.story_event("defeat", defeated_mon_id, _main_map_id, false)
+	var story_result := G.story_event("defeat", defeated_mon_id, _main_map_id, false) if not _last_battle_trial else {}
 	if (String(expected_story.get("event", "")) == "defeat" \
 		and String(expected_story.get("target", "")) == defeated_mon_id and story_result.is_empty()) \
 		or (first_needed and first_kill.is_empty()):
@@ -3426,6 +3939,15 @@ func _settle_main_world(tier: String, defeated_mon_id: String) -> String:
 		var flags: Dictionary = G.prog.get("flags", {})
 		flags["act1_stele_shadow_defeated"] = true
 		G.prog["flags"] = flags
+	if _contact_mon != null and not _contact_mon.commission_posting.is_empty():
+		var posting := _contact_mon.commission_posting
+		var objective := WorldCommission.current(WorldCommission.state(G).get(posting,{}))
+		# Participates in this encounter's single save and existing complete rollback.
+		WorldCommission.action(G,posting,_main_map_id,String(objective.get("id","")),"",true,false)
+	if _contact_mon != null and not _contact_mon.oath_trip.is_empty():
+		Oaths.finish(G,_contact_mon.oath_trip,false)
+	if _last_battle_trial:
+		Trials.advance(G,_main_map_id,String(Trials.current(G,_main_map_id).get("id","")),"",true,false)
 	if not G.save_game():
 		G.prog = before_prog
 		G.wallet = before_wallet
@@ -3449,6 +3971,15 @@ func _settle_main_world(tier: String, defeated_mon_id: String) -> String:
 			_toast("支线推进：%s" % s_title)
 	if is_stele_shadow:
 		_toast("守影退去，第二枚碑座重新显露")
+		_refresh_quest_entities.call_deferred()
+	if _contact_mon != null and not _contact_mon.commission_posting.is_empty():
+		_toast("夜岗守稳了 · 回昭元公告栏交付")
+		_refresh_quest_entities.call_deferred()
+	if _contact_mon != null and not _contact_mon.oath_trip.is_empty():
+		_toast("前哨誓约已记录 · 材料入袋")
+		_refresh_quest_entities.call_deferred()
+	if _last_battle_trial:
+		_toast("附加挑战已完成 · 主线首通奖励不重发")
 		_refresh_quest_entities.call_deferred()
 	_refresh_hud()
 	return "ok"
@@ -3589,7 +4120,7 @@ func _bank_main_world_rewards(txid := "") -> String:
 		var grants := {"gold": gold, "exp": exp}
 		# 装备掉落（P04 §5）：只在事务**尚未落地**时掷一次，并进同一笔事务。
 		# 同一 txid 重放会命中 applied → 不再掷、不再发，与金币经验同一条幂等口径。
-		if not RewardLedger.applied(G.ledger(), txid):
+		if not RewardLedger.applied(G.ledger(), txid) and not _last_battle_trial:
 			for row_v in G.roll_drops(_last_battle_tier):
 				var row := row_v as Dictionary
 				var iid := String(row.get("item", ""))
@@ -4054,6 +4585,9 @@ class _WorldExit extends Node2D:
 
 ## 怪物（mon_ 精灵优先，无素材回退程序圆体；游荡/警戒/追击/接触回调）
 class _MapMonster extends CharacterBody2D:
+	var trial := false
+	var oath_trip := ""
+	var commission_posting := ""
 	var idx := 0                      # 稳定序号（进度表按它记「已击杀」，P0-1）
 	var contact_cd := 0.0             # 接触冷静期（撤退后不再立刻重新开战）
 	var tier := "normal"
@@ -4394,6 +4928,7 @@ class _Interactable extends Node2D:
 		"chest": "node_chest", "event": "node_event",
 		"shop": "node_shop", "bonfire": "node_campfire",
 	}
+	var contact_cd := 0.0
 	var kind := "chest"  # chest / event / shop / bonfire
 	var used := false
 	var map_ref: MapScene = null
@@ -4414,6 +4949,8 @@ class _Interactable extends Node2D:
 
 	func _process(delta: float) -> void:
 		_t += delta
+		contact_cd = maxf(0, contact_cd-delta)
+		if contact_cd > 0: return
 		if used or map_ref == null or map_ref._player == null:
 			return
 		if map_ref._modal_open():
@@ -4479,9 +5016,68 @@ class _Interactable extends Node2D:
 
 ## 支线实体（P05-B）：旧风铃／草根／足迹／驿亭。是否生成完全由任务状态决定
 ## （见 _build_quest_entities），交互成功即从地图消失；头顶蓝三角与主线金标区分。
+class _OathTraveler extends CharacterBody2D:
+	var map_ref: MapScene
+	var trail:Array[Vector2]=[]
+	var last_player:=Vector2.INF
+	var sprite:AnimatedSprite2D
+	func _ready()->void:
+		motion_mode=CharacterBody2D.MOTION_MODE_FLOATING
+		collision_layer=0
+		collision_mask=2
+		var shape:=CollisionShape2D.new()
+		var rect:=RectangleShape2D.new()
+		rect.size=Vector2(18,16)
+		shape.shape=rect
+		shape.position.y=5
+		add_child(shape)
+		var texture:=G.res_tex("npc_guest_idle")
+		if texture!=null and texture.get_width()>=512:
+			var frames:=SpriteFrames.new()
+			frames.add_animation(&"idle")
+			frames.set_animation_speed(&"idle",4)
+			for i in 4:
+				var atlas:=AtlasTexture.new()
+				atlas.atlas=texture
+				atlas.region=Rect2(i*128,0,128,128)
+				frames.add_frame(&"idle",atlas)
+			sprite=AnimatedSprite2D.new()
+			sprite.sprite_frames=frames
+			sprite.scale=Vector2.ONE*.55
+			sprite.position.y=-32
+			sprite.play(&"idle")
+			add_child(sprite)
+	func _physics_process(_delta:float)->void:
+		velocity=Vector2.ZERO
+		if map_ref==null or map_ref._player==null or map_ref._battle!=null or map_ref._modal_open():return
+		var player:=map_ref._player.position
+		if last_player==Vector2.INF or last_player.distance_to(player)>18:
+			trail.append(player)
+			last_player=player
+		while trail.size()>1 and position.distance_to(trail[0])<12:trail.pop_front()
+		if not trail.is_empty() and (trail.size()>1 or position.distance_to(player)>48):
+			velocity=position.direction_to(trail[0])*145
+			move_and_slide()
+		if sprite!=null:
+			sprite.speed_scale=1.0 if velocity.length()>0 else .5
+	func _draw()->void:
+		draw_ellipse_shadow()
+		if sprite!=null:return
+		draw_rect(Rect2(-9,-26,18,24),Color("729b8e"))
+		draw_circle(Vector2(0,-33),8,Color("d6b88b"))
+		draw_line(Vector2(-5,-3),Vector2(-6,6),Color("3d4d52"),4)
+		draw_line(Vector2(5,-3),Vector2(6,6),Color("3d4d52"),4)
+	func draw_ellipse_shadow()->void:
+		draw_set_transform(Vector2(0,6),0,Vector2(1,.35))
+		draw_circle(Vector2.ZERO,16,Color(0,0,0,.2))
+		draw_set_transform(Vector2.ZERO,0,Vector2.ONE)
+
 class _QuestEntity extends Node2D:
+	var feedback_tier:=0
+	var commission_posting := ""
 	var eid := ""
 	var quest := ""
+	var contract_id := ""
 	var kind := "collect"        # collect / observe / deliver
 	var mail_action := ""
 	var shipping_id := ""
@@ -4494,6 +5090,7 @@ class _QuestEntity extends Node2D:
 	var _t := 0.0
 	var _trade_tex: Texture2D = null
 	var _uses_ground_art := false
+	var _caption_label:Label
 
 	func _ready() -> void:
 		if art == "trade_stall":
@@ -4506,14 +5103,19 @@ class _QuestEntity extends Node2D:
 		label.size = Vector2(168, 20)
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_caption_label=label
+		if kind=="feedback":label.visible=false
 		add_child(label)
 		queue_redraw()
 
 	func _process(delta: float) -> void:
 		_t += delta
+		if kind=="feedback":
+			_caption_label.visible=map_ref!=null and map_ref._closest_feedback()==self
+			return
 		if used or map_ref == null or map_ref._player == null:
 			return
-		if kind in ["trade", "fishing", "puzzle_choice", "frost_herb_route", "first_order_bridge"] or \
+		if kind in ["trade_contract", "trial", "trial_board", "oath", "world_commission", "trade", "fishing", "puzzle_choice", "align", "switch", "repair", "mark", "frost_herb_route", "first_order_bridge"] or \
 				(kind == "road_mail" and mail_action == "board"):
 			if position.distance_to(map_ref._player.position) > MapScene.INTERACT_R + 32:
 				trade_cooled = false
@@ -4530,6 +5132,8 @@ class _QuestEntity extends Node2D:
 		draw_circle(Vector2.ZERO, 22.0, Color(0, 0, 0, 0.24))   # 落地影
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		match art:
+			"trust_zhaoyuan","trust_shenyuan","trust_frost":
+				preload("res://src/explore/RegionalMemoryScenes.gd").draw_scene(self,art.trim_prefix("trust_"),feedback_tier)
 			"return_lamp", "return_letter", "return_tidebud", "return_snowflower", "return_rune":
 				MapScene.ReturnJourneyPropsScript.draw_prop(self,art)
 			"stele_anchor":
@@ -4635,6 +5239,7 @@ class _QuestEntity extends Node2D:
 				_draw_post()
 			_:
 				_draw_root()
+		if kind=="feedback":return
 		# 固定奇遇金三角，支线蓝三角：地图上可直接分辨两个事件。
 		var bob := sin(_t * 2.2) * 4.0
 		var tip := Vector2(0, (-142.0 if art in ["trade_stall", "salt_cart", "tide_cargo"] else -88.0) + bob)
@@ -4775,8 +5380,8 @@ class _Minimap extends Control:
 		var sz := size
 		if sz.x <= 1.0 or sz.y <= 1.0:
 			sz = custom_minimum_size
-		draw_rect(Rect2(Vector2.ZERO, sz), Color(0.08, 0.06, 0.04, 0.74))
-		draw_rect(Rect2(Vector2.ZERO, sz), Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.42), false, 1.5)
+		draw_colored_polygon(G.octagon_path(sz,0,3),Color("142d2b",0.9))
+		draw_rect(Rect2(Vector2.ONE, sz-Vector2.ONE*2), Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.6), false, 1)
 
 		var ext := map_ref._map_extent()
 		var s := minf(sz.x / ext.x, sz.y / ext.y)
@@ -4855,6 +5460,7 @@ class _Minimap extends Control:
 				"walk_left": face = Vector2(-1, 0)
 				_: face = Vector2(0, 1)
 		draw_line(at.call(pp), at.call(pp) + face * 6.0, Color("ffe9a8"), 1.5)
+		G.draw_brass_corners(self, sz, 10, 2)
 
 	func _pt(p: Vector2, r: float, c: Color) -> void:
 		draw_circle(p, r, c)

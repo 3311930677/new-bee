@@ -73,9 +73,11 @@ func _build() -> void:
 func _entry_row(name: String, icon: String, hue: Color, id: String) -> Control:
 	# 纸卡入口：PixelButton 皮（切角+厚度+硬影）+ 内凹图标槽——
 	# 原先是"纯色圆角5+1px 边"的平面卡，六块排一起就是模板脸
-	var root := G.PixelButton.new()
+	var root := _EntryTile.new()
 	root.custom_minimum_size = Vector2(TILE_W, 146)
-	root.set_surface(Color("e9dfc8"), Color("b9ae94"))
+	root.header_texture = G.wood_grain(hue.darkened(0.35))
+	root.set_meta("visual_family", {"talent":"garden","equip":"forge","pet":"garden","skill":"forge","mount":"market","title":"arcane"}.get(id,"garden"))
+	root.set_surface(Color("e9dfc8"), G.GOLD)
 	root.set_content_margin(0.0)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	root.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
@@ -86,17 +88,18 @@ func _entry_row(name: String, icon: String, hue: Color, id: String) -> Control:
 	root.add_child(inner)
 
 	# 内凹图标槽（与营帐木牌入口同一语言，配色换成纸面浅槽）
-	var slot := G.inset_slot(46, 46)
+	var slot := G.inset_slot(46, 46, true)
+	slot.modulate.a = 0.0
 	slot.position = Vector2(14, 16)
 	inner.add_child(slot)
-	var tr := G.ui_icon(icon, Vector2(34, 34), hue)
-	tr.position = Vector2(20, 22)
+	var tr := G.ui_icon(icon, Vector2(40, 40), G.GOLD_BRIGHT)
+	tr.position = Vector2(16, 19)
 	inner.add_child(tr)
 
 	# 名称（FS_LG 宋体深字）
-	var name_l := G.gold_label(name, G.FS_MD, false, G.TEXT_DARK, false)
+	var name_l := G.serif_label(name, 28, Color("f5e7c4"))
 	name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	name_l.position = Vector2(72, 26)
+	name_l.position = Vector2(70, 24)
 	inner.add_child(name_l)
 
 	# 状态行（FS_XS，最深棕辅助字 4a2f14；羊皮纸上对比度最高，小字也不虚）
@@ -109,7 +112,7 @@ func _entry_row(name: String, icon: String, hue: Color, id: String) -> Control:
 	_rows.append({"id": id, "label": status})
 
 	# 右侧箭头：宋体金标，垂直居中偏上
-	var arrow := G.ui_icon("forward", Vector2(14, 14), G.TEXT_MUTED)
+	var arrow := G.ui_icon("forward", Vector2(12, 12), G.GOLD_BRIGHT)
 	arrow.position = Vector2(TILE_W - 28, 34)
 	inner.add_child(arrow)
 
@@ -117,6 +120,16 @@ func _entry_row(name: String, icon: String, hue: Color, id: String) -> Control:
 		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 			_open(id))
 	return root
+
+
+class _EntryTile extends G.PixelButton:
+	var header_texture: Texture2D
+	func _draw() -> void:
+		super()
+		if size.x < 20: return
+		draw_texture_rect(header_texture,Rect2(3,3,size.x-6,70),false)
+		draw_line(Vector2(3,73),Vector2(size.x-3,73),G.GOLD,1)
+		draw_line(Vector2(3,size.y-3),Vector2(size.x-3,size.y-3),Color("648371"),1)
 
 
 # ---------- 状态行刷新 ----------
