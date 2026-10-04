@@ -2744,6 +2744,11 @@ func fishing_state() -> Dictionary:
 		state["pending"] = {}
 	return state
 
+func fishing_king_available(spot_id:String)->bool:
+	var row:=fishing_spot(spot_id)
+	var cycle:=maxi(1,int(row.get("king_cycle",3)))
+	return not row.is_empty() and int(economy_state().get("day",1))%cycle==int(row.get("king_phase",0))
+
 
 func fishing_remaining(spot_id: String) -> int:
 	if fishing_spot(spot_id).is_empty():
@@ -2770,7 +2775,7 @@ func fishing_begin(spot_id: String, persist := true) -> Dictionary:
 	state["counts"] = counts
 	var token := "fish|%d|%s|%d" % [int(state["day"]), spot_id, attempt]
 	var cast := {"spot": spot_id, "token": token,
-		"center": 0.35 + float(absi(token.hash()) % 31) / 100.0}
+		"center": 0.35 + float(absi(token.hash()) % 31) / 100.0,"king":fishing_king_available(spot_id)}
 	state["pending"] = cast
 	if persist and not save_game():
 		prog = before_prog
@@ -2801,11 +2806,13 @@ func fishing_finish(token: String, hit: bool, persist := true) -> Dictionary:
 	state["pending"] = {}
 	if hit and not (state["discoveries"] as Array).has(iid):
 		(state["discoveries"] as Array).append(iid)
+	var king:=hit and bool(pending.get("king",false))
+	if king:prog.flags["fish_king_"+String(spot.id)]=true
 	if persist and not save_game():
 		prog = before_prog
 		items = before_items
 		return {"ok": false, "reason": "save_failed"}
-	return {"ok": true, "hit": hit, "item": iid if hit else ""}
+	return {"ok": true, "hit": hit, "item": iid if hit else "","king":king}
 
 
 func fishing_cook(iid: String, persist := true) -> Dictionary:
