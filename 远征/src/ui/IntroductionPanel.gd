@@ -39,7 +39,7 @@ func _page(index: int) -> Control:
 	page.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	if index == 0:
 		var art := TextureRect.new()
-		art.texture = load("res://image/background/home.png")
+		art.texture = G.visual_texture("res://image/background/home.png")
 		art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 		art.position = Vector2(16, 0)

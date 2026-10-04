@@ -34,6 +34,7 @@ param(
   [switch]$FourthFront,
   [switch]$FourthBack,
   [switch]$ReturnJobs,
+  [switch]$Aftermath,
   [string]$SourceDir = "",
   [int]$TimeoutSec = 2400,
   [string]$LogDir = ""
@@ -41,10 +42,21 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+# Isolate discovery and every gameplay process before any autoload can run.
+$playerAppData = $env:APPDATA
+$playerFiles = @{}
+$playerRoot = Join-Path $playerAppData "Godot\app_userdata"
+if (Test-Path -LiteralPath $playerRoot) {
+    foreach ($file in Get-ChildItem -LiteralPath $playerRoot -Recurse -File) {
+        $playerFiles[$file.FullName] = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash
+    }
+}
+
+
 if ($Proj -eq "") { $Proj = Split-Path -Parent $PSScriptRoot }
 if ($LogDir -eq "") { $LogDir = Join-Path $PSScriptRoot "_logs" }
 if (-not (Test-Path $LogDir)) { New-Item -ItemType Directory -Path $LogDir -Force | Out-Null }
-if (($ThirdSide -or $Companions -or $CampaignGrowth -or $Curriculum -or $FourthFront -or $FourthBack -or $ReturnJobs) -and ($SourceDir -eq "" -or -not (Test-Path -LiteralPath $SourceDir -PathType Container))) {
+if (($ThirdSide -or $Companions -or $CampaignGrowth -or $Curriculum -or $FourthFront -or $FourthBack -or $ReturnJobs -or $Aftermath) -and ($SourceDir -eq "" -or -not (Test-Path -LiteralPath $SourceDir -PathType Container))) {
     Write-Host "FATAL: continuation requires an existing -SourceDir with verified saves; each scene checks its required campaign stage."
     exit 2
 }
@@ -72,6 +84,13 @@ if ($Godot -eq "" -or -not (Test-Path $Godot)) {
 	$Godot = $found
 }
 
+$playSandbox = Join-Path $LogDir ("user_sandbox_" + [guid]::NewGuid().ToString("N"))
+$env:APPDATA = Join-Path $playSandbox "Roaming"
+$env:LOCALAPPDATA = Join-Path $playSandbox "Local"
+$env:XDG_DATA_HOME = Join-Path $playSandbox "Data"
+foreach ($folder in @($env:APPDATA, $env:LOCALAPPDATA, $env:XDG_DATA_HOME)) {
+    New-Item -ItemType Directory -Path $folder -Force | Out-Null
+}
 $verOut = ""
 try { $verOut = (& $Godot --version 2>&1 | Out-String).Trim() } catch { $verOut = "" }
 if ($verOut -notmatch "4\.7\.") {
@@ -160,6 +179,7 @@ function Test-Output {
 	foreach ($line in ($Out -split "`r?`n")) {
 		$t = $line.Trim()
 		if ($t -eq "") { continue }
+		if ($t -ceq "ERROR: Failed to read the root certificate store.") { continue }
 		$isNoise = $false
 		foreach ($n in $Noise) { if ($t -cmatch [regex]::Escape($n)) { $isNoise = $true } }
 		if ($isNoise) { continue }
@@ -219,8 +239,19 @@ foreach ($role in $roleList) {
 	if ($FourthFront) { $playScene = "res://tools/PlaythroughFourthFront.tscn" }
 	if ($FourthBack) { $playScene = "res://tools/PlaythroughFourthBack.tscn" }
 	if ($ReturnJobs) { $playScene = "res://tools/PlaythroughReturnJobs.tscn" }
+	if ($Aftermath) { $playScene = "res://tools/PlaythroughAftermath.tscn" }
+	$checkScript = $playScene.Replace(".tscn", ".gd")
+	$preflight = Invoke-Engine -Exe $Godot -ArgList @("--headless", "--path", $Proj, "res://tools/CheckPlaythrough.tscn", "--", $checkScript) -TimeoutSec 60 -WorkDir $Proj
+	$preflightErrors = @(Test-Output -Out $preflight.Out -Token "PLAY_CHECK_OK" -ErrPatterns $errPatterns -Noise $exitNoise)
+	if ($preflight.TimedOut -or $preflight.Code -ne 0 -or $preflightErrors.Count -ne 0) {
+		Set-Content -LiteralPath (Join-Path $LogDir ("preflight_" + $role + ".log")) -Value $preflight.Out -Encoding UTF8
+		Write-Host "  FAIL preflight: playthrough script did not compile; see preflight log."
+		$fail++
+		$allOk = $false
+		continue
+	}
 	$argsA = @("--headless", "--path", $Proj, $playScene, "--", $role, "a")
-	if ($ThirdSide -or $Companions -or $CampaignGrowth -or $Curriculum -or $FourthFront -or $FourthBack -or $ReturnJobs -or ($CampaignGear -and $SourceDir -ne "")) { $argsA += ("--source-dir=" + [System.IO.Path]::GetFullPath($SourceDir)) }
+	if ($ThirdSide -or $Companions -or $CampaignGrowth -or $Curriculum -or $FourthFront -or $FourthBack -or $ReturnJobs -or $Aftermath -or ($CampaignGear -and $SourceDir -ne "")) { $argsA += ("--source-dir=" + [System.IO.Path]::GetFullPath($SourceDir)) }
 	if ($Act3) { $argsA += "act3" } elseif ($Act3Front) { $argsA += "act3_front" } elseif ($Act2) { $argsA += "act2" }
 	$argsA += ("--save-dir=" + [System.IO.Path]::GetFullPath($LogDir))
 	$ra = Invoke-Engine -Exe $Godot -ArgList $argsA -TimeoutSec $TimeoutSec -WorkDir $Proj
@@ -310,6 +341,19 @@ if ($realSave -ne "" -and (Test-Path $realSave)) {
 	}
 }
 
+$playerAfter = @{}
+if (Test-Path -LiteralPath $playerRoot) {
+    foreach ($file in Get-ChildItem -LiteralPath $playerRoot -Recurse -File) {
+        $playerAfter[$file.FullName] = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash
+    }
+}
+if ($playerAfter.Count -ne $playerFiles.Count) { $allOk = $false; $fail++; Write-Host "FAIL: player directory inventory changed" }
+foreach ($path in $playerFiles.Keys) {
+    if (-not $playerAfter.ContainsKey($path) -or $playerAfter[$path] -ne $playerFiles[$path]) {
+        $allOk = $false; $fail++; Write-Host "FAIL: player directory content changed"
+        break
+    }
+}
 Write-Host ""
 if ($allOk) {
 	Write-Host ("PLAYTHROUGH_ALL_OK (" + $roleList.Count + " roles, A+B per role, real save untouched)")

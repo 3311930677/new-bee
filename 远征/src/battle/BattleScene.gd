@@ -30,7 +30,7 @@ const CLASSIC_SKILL_Y := 738.0
 const CLASSIC_FUNC_Y := 744.0
 ## 像素木牌描边色：经典模式的底板（径向指令 / 技能格 / 小签）统一这一支暗金，
 ## 方角 + 2px 厚边压像素地图才立得住（原来 3~6px 圆角 + 1px 淡金边是现代 UI 语言）
-const WOOD_BORDER := Color("8a6524")
+const WOOD_BORDER := Color("bd8b73")
 # ---------- 主世界同图战斗指令：像素图标配可读文字，集中在战场下缘 ----------
 # 四枚 16×16 字符网格像素图标，运行时烤成 ImageTexture 后 2 倍放大（nearest，不糊）。
 # 图例：k 深褐描边 / s 钢亮 S 钢暗 / g 金亮 G 金暗 / h 木亮 H 木暗
@@ -308,6 +308,7 @@ func _ready() -> void:
 	_build_func_row()
 	_build_classic_command_ui()
 	_sync_views()
+	G.fit_mobile_page.call_deferred(self)
 	if bool(_cfg.get("stele_echo_ready", false)):
 		_show_tip("碑声已稳：听见两声轻响后注意首领蓄力", Color("ffe2a0"))
 	var tide_route := String(_cfg.get("tide_route", ""))
@@ -460,10 +461,8 @@ func _build_top_bar() -> void:
 	var nt: String = String(_cfg.get("enemy", {}).get("node_type", "normal"))
 	var nt_name: String = {"normal": "遭遇战", "elite": "精英战", "boss": "首领战"}.get(nt, "遭遇战")
 	if _classic_presentation():
-		var title := G.gold_label(nt_name, G.FS_LG, true, Color("e65b35"), true)
-		title.position = Vector2(0, 16)
-		title.custom_minimum_size = Vector2(VIEW_W, 34)
-		title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		var title := G.banner_box(nt_name,160,36,24)
+		title.position = Vector2((VIEW_W-160)*0.5,8)
 		add_child(title)
 	else:
 		# 标题垫一块与右侧按钮同族的深底 chip：亮天空下宋体金字不再糊进背景
@@ -561,7 +560,7 @@ func _func_chip(text: String, w := 64.0) -> PanelContainer:
 	# 交互态换肤走 InsetPanel.set_surface，不再直接改 StyleBoxFlat 的颜色字段
 	var root := G.InsetPanel.new()
 	root.custom_minimum_size = Vector2(w, 30)
-	root.setup(Color(0.15, 0.10, 0.05, 0.7), Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.3),
+	root.setup(Color("49323d", 0.94), Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.65),
 		0.0, 0.0, 0.0, 0.0)
 	root.add_child(G.gold_label(text, G.FS_XS, false, Color("d9b96e"), false))
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -571,14 +570,14 @@ func _func_chip(text: String, w := 64.0) -> PanelContainer:
 ## 功能签常态底色：像素经典模式换成暗木底 + 暗金厚边（与径向指令同一套牌子语言）
 func _chip_idle_surface() -> Array:
 	if _classic_presentation():
-		return [Color(0.12, 0.08, 0.045, 0.86), WOOD_BORDER]
-	return [Color(0.15, 0.10, 0.05, 0.7), Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.3)]
+		return [Color("49323d", 0.94), WOOD_BORDER]
+	return [Color("49323d", 0.94), Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.65)]
 
 
 func _chip_set_active(chip: Control, active: bool) -> void:
 	var panel := chip as G.InsetPanel
 	if panel != null:
-		var surf := [Color(0.32, 0.2, 0.06, 0.92), G.GOLD_BRIGHT] if active else _chip_idle_surface()
+		var surf := [Color("3c5a4d", 0.98), G.GOLD_BRIGHT] if active else _chip_idle_surface()
 		panel.set_surface(surf[0], surf[1])
 	var l := chip.get_child(0) as Label
 	if l != null:
@@ -589,7 +588,7 @@ func _chip_set_active(chip: Control, active: bool) -> void:
 ## 顶部速度/自动、弹出页按钮共用，和径向指令、技能格是同一套牌子语言。
 func _pixel_chip(text: String, w := 64.0) -> PanelContainer:
 	var root := _func_chip(text, w)
-	(root as G.InsetPanel).set_surface(Color(0.12, 0.08, 0.045, 0.86), WOOD_BORDER)
+	(root as G.InsetPanel).set_surface(Color("49323d", 0.94), WOOD_BORDER)
 	return root
 
 
@@ -647,7 +646,7 @@ func _build_skill_bar() -> void:
 		var sb := StyleBoxFlat.new()
 		# 经典模式：像素木牌（方角 + 2px 暗金厚边），与径向指令同一套牌子语言；
 		# 常规版也收成 2px 切角，不和大圆角混用
-		sb.bg_color = Color(0.12, 0.08, 0.045, 0.9) if classic else Color(0.16, 0.11, 0.06, 0.92)
+		sb.bg_color = Color("49323d", 0.96)
 		sb.set_corner_radius_all(2)
 		sb.set_border_width_all(2)
 		sb.border_color = WOOD_BORDER if classic else Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.45)
@@ -787,7 +786,7 @@ func _build_classic_command_ui() -> void:
 	info_bg.position = Vector2(CLASSIC_BAR_X, CLASSIC_CMD_Y - 26.0 + _classic_extra_y())
 	info_bg.size = Vector2(PAGE_PANEL_SIZE.x, 23.0)
 	var info_style := StyleBoxFlat.new()
-	info_style.bg_color = Color(0.10, 0.07, 0.04, 0.78)
+	info_style.bg_color = Color("49323d", 0.92)
 	info_style.set_corner_radius_all(2)
 	info_bg.add_theme_stylebox_override("panel", info_style)
 	info_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -799,11 +798,11 @@ func _build_classic_command_ui() -> void:
 	_cmd_root.add_child(_cmd_info_l)
 	_position_radial_menu()
 	# 技能 / 道具弹出页（默认隐藏，点在身周图标上才展开）
-	_page_panel = Panel.new()
+	_page_panel = CommandTile.new()
 	_page_panel.position = PAGE_PANEL_POS + Vector2(0, _classic_extra_y())
 	_page_panel.size = PAGE_PANEL_SIZE
 	var psb := StyleBoxFlat.new()
-	psb.bg_color = Color(0.10, 0.07, 0.04, 0.98)
+	psb.bg_color = Color("49323d", 0.98)
 	psb.set_corner_radius_all(2)
 	psb.set_border_width_all(2)
 	psb.border_color = WOOD_BORDER
@@ -828,13 +827,13 @@ func _add_radial_option(key: String, text: String, grid: Array,
 	root.custom_minimum_size = Vector2(CLASSIC_CMD_W, CLASSIC_CMD_H)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	root.tooltip_text = tooltip
-	var tile := Panel.new()
+	var tile := CommandTile.new()
 	tile.size = Vector2(CLASSIC_CMD_W, CLASSIC_CMD_H)
 	tile.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var sb := StyleBoxFlat.new()
 	# 像素木牌：方角 + 2px 暗金厚边。原来 6px 圆角 + 1px 淡金边是现代 UI 语言，
 	# 四块深色圆角贴纸上亮色草地后成了全屏最重的元素，把角色和地图都压住了。
-	sb.bg_color = Color(0.12, 0.08, 0.045, 0.86)
+	sb.bg_color = Color("49323d", 0.94)
 	sb.set_corner_radius_all(2)
 	sb.set_border_width_all(2)
 	sb.border_color = WOOD_BORDER
@@ -848,7 +847,7 @@ func _add_radial_option(key: String, text: String, grid: Array,
 	icon.stretch_mode = TextureRect.STRETCH_SCALE
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(icon)
-	var l := G.gold_label(text, G.FS_XS, true, Color("ffe9b0"), true)
+	var l := G.serif_label(text, 18, Color("e2c48c"))
 	l.position = Vector2(39, 8)
 	l.custom_minimum_size = Vector2(46, CLASSIC_CMD_H - 16)
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -862,6 +861,14 @@ func _add_radial_option(key: String, text: String, grid: Array,
 			action.call())
 	_cmd_root.add_child(root)
 	_cmd_btns.append({"key": key, "root": root, "tile_sb": sb, "label": l, "hint": tooltip})
+
+
+class CommandTile extends Panel:
+	func _draw() -> void:
+		draw_line(Vector2(4,3),Vector2(size.x-4,3),Color("e7b691",0.32),1)
+		draw_line(Vector2(4,size.y-3),Vector2(size.x-4,size.y-3),Color("180d17",0.6),1)
+		draw_colored_polygon(PackedVector2Array([Vector2(0,0),Vector2(6,0),Vector2(0,6)]),Color("bd8b73"))
+		draw_colored_polygon(PackedVector2Array([size,Vector2(size.x-6,size.y),Vector2(size.x,size.y-6)]),Color("bd8b73"))
 
 
 ## 四枚指令固定在下方操作带，战斗对象移动时按键不会跳位。
@@ -971,7 +978,7 @@ func _add_command_row(name_text: String, detail_text: String, action: Callable,
 	row.position = Vector2(0, 2.0 + float(_page_rows) * PAGE_ROW_H)
 	row.tooltip_text = tooltip
 	row.mouse_filter = Control.MOUSE_FILTER_STOP
-	var nl := G.gold_label(name_text, G.FS_SM, true, name_color, true)
+	var nl := G.serif_label(name_text, 20, name_color)
 	nl.position = Vector2(8, 8)
 	nl.custom_minimum_size = Vector2(148, PAGE_ROW_H - 16)
 	nl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -1035,7 +1042,7 @@ func _show_command_skills() -> void:
 		var usable := cd_left <= 0 and cost <= role.energy
 		_add_command_row(sname, detail, Callable(self, "_cast_command_skill").bind(sid),
 			"%s · 消耗 %d 能量" % [sname, cost],
-			Color("ffe9b0") if usable else Color("8f8068"))
+			Color("ffe9b0") if usable else Color("bcb69e"))
 	_add_command_row("返", "返回战场指令", Callable(self, "_close_page"), "返回战场指令")
 	_open_page_panel(_page_rows)
 	# 底部能量横条撤掉后，能量数值就在这一页露一次（常驻表达交给脚下蓝条）
@@ -1051,7 +1058,7 @@ func _show_command_items() -> void:
 		return
 	_command_page = "items"
 	_clear_command_options()
-	var potion_detail := "恢复 %d%% 生命" % roundi(float(BattleSim.POTION_HEAL_PCT) * 100.0)
+	var potion_detail := "恢复 %d%% 生命" % roundi(float(BattleSim.POTION_HEAL_PCT) * sim.potion_effect_mult * 100.0)
 	if sim.potion_cd_ticks > 0:
 		_add_command_row("药剂 ×%d" % sim.potions_left,
 			"冷却 %.0fs · %s" % [float(sim.potion_cd_ticks) / 30.0, potion_detail],

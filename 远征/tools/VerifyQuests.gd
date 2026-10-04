@@ -31,6 +31,8 @@ func _baseline() -> void:
 
 ## 直接指定今日牌：委托抽取是「日期+等级」随机的，用例要的是确定状态
 func _set_offer(ids: Array) -> void:
+	G.prog["ledger"] = {}
+	G.prog["quest_postings"] = {}
 	G.quest = {"day": G.today_key(), "offer": ids.duplicate(), "active": {}, "claimed": []}
 
 
@@ -78,6 +80,19 @@ func _run() -> void:
 	_check(refetched.size() > 0, "重刷后今日牌不应为空")
 
 	# ---- C. slay：接取 → 战斗上报 → 交付 ----
+	_set_offer(["q_slay_forest"])
+	G.quest_accept("q_slay_forest")
+	G.quest_report("slay", "forest", 1)
+	var original_posting := String(G.prog.quest_postings.q_slay_forest)
+	G.quest["day"] = "1900-01-01"
+	var rollover := G.quest_offer()
+	_check(G.quest_active("q_slay_forest") and G.quest_progress("q_slay_forest") == 1 and rollover.has("q_slay_forest"),
+		"模拟跨日保留已接事务、进度与交付入口")
+	_check(String(G.prog.quest_postings.q_slay_forest) == original_posting, "发布事务不会随翻日改写")
+	var before_locked := G.quest.duplicate(true)
+	G.save_locked = true
+	_check(G.quest_report("slay", "forest", 1).is_empty() and G.quest == before_locked, "锁盘不上报委托进度")
+	G.save_locked = false
 	_set_offer(["q_slay_forest"])
 	_check(not G.quest_active("q_slay_forest"), "未接取时不该是进行中")
 	_check(G.quest_accept("q_slay_forest"), "今日牌上的委托应能接取")

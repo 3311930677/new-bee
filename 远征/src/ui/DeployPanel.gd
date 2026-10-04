@@ -162,7 +162,7 @@ func _build() -> void:
 	_content.add_child(_ascetic_btn)
 	_refresh_ascetic()
 
-	var back := G.gold_button("返 回", 120, 36)
+	var back := G.ghost_button("返回", 120, 36)
 	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 502)
 	back.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -190,6 +190,7 @@ func _refresh_tabs() -> void:
 		tab.set_surface(G.GOLD_BTN if on else Color("ddd0ae"),
 			G.GOLD_BTN_EDGE if on else Color("c0a068"))
 		tab.set_meta("tab_selected", on)
+		(tab.get_child(0) as Label).add_theme_color_override("font_color", G.GOLD_BRIGHT if on else G.TEXT_DARK)
 		tab.modulate = Color.WHITE if on else Color(0.86, 0.84, 0.80)
 
 # ---------- 选项页（一屏一项） ----------
@@ -390,8 +391,8 @@ func _refresh_ascetic() -> void:
 	var c := G.ascetic_cfg()
 	var mult := float(c.get("enemy_mult", 1.0))
 	var rew := float(c.get("reward_mult", 1.0))
-	lbl.text = "%s：开（敌×%.2f）" % [String(c.get("name", "苦行")), mult] if _ascetic \
-		else "%s：关（收益×%.2f）" % [String(c.get("name", "苦行")), rew]
+	lbl.text = "%s：%s" % [String(c.get("name", "苦行")), "开" if _ascetic else "关"]
+	_ascetic_btn.tooltip_text = "敌人强度 ×%.2f · 本局收益 ×%.2f" % [mult,rew]
 	_ascetic_btn.modulate = Color(1.0, 0.92, 0.84) if _ascetic else Color.WHITE
 
 
@@ -414,12 +415,14 @@ func _refresh_supply() -> void:
 		_supply_btn.modulate = Color(1, 1, 1, 0.55)
 		return
 	_supply_btn.modulate = Color.WHITE
-	lbl.text = "补给 +1（%d金）" % G.run_supply_price(_extra_potions)
+	lbl.text = "补给 %d金" % G.run_supply_price(_extra_potions)
+	_supply_btn.tooltip_text = "额外携带一瓶药剂；出征时结算金币"
 
 
 func _set_hint_default() -> void:
 	# 平常留空：操作说明交给右上角「?」，这行只用来报错与提示结果
-	_hint.text = ""
+	var c := G.ascetic_cfg()
+	_hint.text = "苦行已开启：敌人 ×%.2f · 收益 ×%.2f" % [float(c.get("enemy_mult",1)),float(c.get("reward_mult",1))] if _ascetic else ""
 	_hint.add_theme_color_override("font_color", G.TEXT_MUTED)
 
 func _warn(msg: String) -> void:

@@ -11,6 +11,8 @@ func _ready() -> void:
 	await _run_tidal_rooms()
 	await _run_tidal_cargo_route()
 	await _run_tidal_prior_save()
+	for role in ["zs", "ck", "fs", "fz"]:
+		await _run_mine_rooms(role)
 	print("BOSS_PUZZLES_OK" if _fails == 0 else "BOSS_PUZZLES_FAIL fails=%d" % _fails)
 	get_tree().quit(0 if _fails == 0 else 1)
 
@@ -18,6 +20,112 @@ func _check(ok: bool, message: String) -> void:
 	if not ok:
 		_fails += 1
 		push_error("FAIL: " + message)
+
+
+func _enter_mine(role: String) -> MapScene:
+	var run := RunState.new()
+	run.setup({"theme": "tomb", "role_id": role, "level": 32, "seed": 921})
+	MapScene.pending_cfg = {"mode": "main_world", "main_map_id": "rift_mine_vault", "run": run,
+		"node": {"type": "boss", "layer": 0, "index": 0}}
+	var map := (load("res://src/explore/MapScene.tscn") as PackedScene).instantiate() as MapScene
+	map.map_finished.connect(_ignore_map_finish)
+	add_child(map)
+	await get_tree().process_frame
+	await get_tree().physics_frame
+	return map
+
+
+func _mine_choose(map: MapScene, eid: String, label: String) -> void:
+	var entity := _entity(map, eid)
+	_check(entity != null, "矿脉机关实体存在：" + eid)
+	if entity == null: return
+	map.on_quest_entity(entity)
+	if map._puzzle_panel != null: _click(_button(map._puzzle_panel, label))
+	await get_tree().process_frame
+	await get_tree().process_frame
+
+
+func _run_mine_rooms(role: String) -> void:
+	G._init_state_defaults()
+	G.prog["main_world"] = WorldSession.normalize_state({})
+	G.save_locked = false
+	G.selected_role = role
+	G.items["mine_record"] = 1
+	G.prog["story"] = {"step": "s25", "done": ["s24"], "goals": {}}
+	G.prog["flags"] = {"act3_mine_rooms_v1": true}
+	_check(G.save_game(), role + " 矿脉隔离档可写")
+	var map := await _enter_mine(role)
+	_check(map._mine_room_gates.size() == 2 and not map._story_battle_ready("mon_redsand_guard"),
+		role + " 两道实体门与机关首领门禁")
+	map._player.position = Vector2(550, 850)
+	await get_tree().physics_frame
+	_check(map._player.move_and_collide(Vector2(0, -110)) != null and map._player.position.y > 785,
+		"未读记录不能穿过第一房")
+	var record := _entity(map, "act3_mine_record")
+	if record != null: map.on_quest_entity(record)
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_check(map._mine_room_gates.size() == 1, "记录写盘后第一门移除")
+	await _mine_choose(map, "act3_mine_wheel", "向东送风")
+	_check(not bool(G.prog.flags.get("act3_mine_wind", false)), "错风向给反证且可重试")
+	await _mine_choose(map, "act3_mine_wheel", "向西排烟")
+	_check(not bool(G.world_puzzle_interact("rift_mine_vault", "act3_mine_switch", "north").get("ok", false)),
+		"不能绕过第二风轮直接发车")
+	await _mine_choose(map, "act3_mine_second_wheel", "从北井引入清风")
+	_check(not map._mine_ground.get("ventilated"), "回风错误保留烟区")
+	await _mine_choose(map, "act3_mine_second_wheel", "从南井引入清风")
+	_check(bool(map._mine_ground.get("ventilated")), "双轮通风后烟区可见退去")
+	map.queue_free()
+	await get_tree().process_frame
+	_check(G.reload_save(), "矿脉中段进度可从磁盘读回")
+	map = await _enter_mine(role)
+	_check(map._mine_room_gates.size() == 1 and bool(map._mine_ground.get("ventilated")), "重进恢复烟区与第二门")
+	await _mine_choose(map, "act3_mine_switch", "拨向北侧避烟线")
+	await get_tree().physics_frame
+	_check(map._mine_room_gates.is_empty() and bool(map._mine_ground.get("rescued")) and
+		map._story_battle_ready("mon_redsand_guard"), "矿车撤离与首领房同次开放")
+	map._player.position = Vector2(480, 530)
+	await get_tree().physics_frame
+	map._player.move_and_collide(Vector2(0, -95))
+	_check(map._player.position.y < 475, "救援后确实可步行进入炉房")
+	var boss: Node = null
+	for monster in map._monsters:
+		if monster.mon_id == "mon_redsand_guard": boss = monster
+	_check(boss != null, "原械卫保留")
+	if boss != null:
+		map.call("_start_battle", boss)
+		if map._battle != null:
+			map._battle.sim.finished = true
+			map._battle.sim.result = "defeat"
+			map._battle.confirm_result()
+			await get_tree().process_frame
+	_check(not G.story_step_done("s25") and G.item_count("gate_stamp") == 0, "战败不完成主线或发首通物")
+	map.queue_free()
+	await get_tree().process_frame
+	_check(G.reload_save(), "战败后矿脉救援可重读")
+	map = await _enter_mine(role)
+	_check(map._mine_room_gates.is_empty() and bool(map._mine_ground.get("rescued")), "战败不重置矿工与机关")
+	var before := G.prog.duplicate(true)
+	_check(not bool(G.world_puzzle_interact("rift_mine_vault", "act3_mine_switch", "north").get("ok", false))
+		and G.prog == before, "重复发车无奖励和状态变化")
+	boss = null
+	for monster in map._monsters:
+		if monster.mon_id == "mon_redsand_guard": boss = monster
+	if boss != null:
+		map.call("_start_battle", boss)
+		if map._battle != null:
+			map._battle.sim.finished = true
+			map._battle.sim.result = "victory"
+			map._battle.confirm_result()
+			await get_tree().process_frame
+	_check(G.story_step_done("s25") and G.item_count("gate_stamp") == 1, role + " 三房首胜只发原通关印")
+	map.queue_free()
+	await get_tree().process_frame
+	_check(G.reload_save(), "首胜进度可读回")
+	map = await _enter_mine(role)
+	_check(map._main_boss_cleared() and G.item_count("gate_stamp") == 1, "重进不复活首领或重发通关印")
+	map.queue_free()
+	await get_tree().process_frame
 
 func _ignore_map_finish(_result: String) -> void:
 	pass

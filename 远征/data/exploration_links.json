@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "mount_traits": {
+    "horse": {"map":"maple_road","rect":[380,600,200,300],"speed_mult":1.08,"line":"边城马认得古道压实的路带：骑乘时在标出的路带额外快 8%，步行可照常通过。"},
+    "bear": {"map":"frost_post","rect":[260,680,120,300],"speed_mult":1.08,"line":"铁背熊认得岗前压实雪：雪地踏点上额外快 8%；窄栈道仍需下骑步行。"}
+  },
+  "pet_hints": {
+    "pet_rockturtle": {"maps":["broken_slope","stele_cavern"],"line":"岩龟停在旧石纹旁：先逐处观察留下的痕，再决定怎么修补；它不会替你作选择。"},
+    "pet_frostwolf": {"maps":["frost_boardwalk","rift_mine_road","frost_pass"],"line":"霜狼侧耳分辨脚步与风声：看近处的脚印或风口线索，别把兽迹与人迹混在一起。"},
+    "pet_tide_gull": {"maps":["shenyuan_port","tideflat","tidal_gate"],"line":"潮鸥落向旧水线：先看水痕和受力点。近路与绕行都能回到港口，不必赌一次浪头。"}
+  }
+}

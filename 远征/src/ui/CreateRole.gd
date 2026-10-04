@@ -311,7 +311,7 @@ func _confirm() -> void:
 	G.selected_role = G.roles[_role_idx]["id"]
 	G.player_name = nm
 	if G.avatar_id.is_empty():
-		G.avatar_id = G.selected_role
+		G.avatar_id = "fox"
 	G.save_game()
 	# 捏完人先看序章：交代"你在哪、为什么出征、第一站去哪"，再进主城
 	if G.lore_seen():
@@ -396,7 +396,10 @@ class _Selector extends PanelContainer:
 	func set_active(a: bool) -> void:
 		_sb.bg_color = G.GOLD_BTN if a else Color("b5aa90")
 		_sb.border_color = G.GOLD_BTN_EDGE if a else G.BOX_EDGE
-		value.add_theme_color_override("font_color", G.TEXT_DARK)
+		value.add_theme_color_override("font_color", G.GOLD_BRIGHT if a else G.TEXT_DARK)
+		var row := get_child(0) as HBoxContainer
+		for i in [0,2]:
+			(row.get_child(i).get_child(0) as Label).add_theme_color_override("font_color", G.GOLD_BRIGHT if a else G.TEXT_DARK)
 
 
 # ---------- 自绘：金色圆台 / 脚下光圈 ----------

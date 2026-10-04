@@ -1,7 +1,7 @@
 # QuestPanel.gd —— 任务窗口：主线目标 + 今日委托
 # 循环：在委托板接取 → 出征办事（击杀 / 讨伐首领 / 备齐道具）→ 回城交付领赏。
 # 主线目标原来直接压在营帐首页的背景上，既难读也杂；收进这里统一看。
-# 数据全在 data/quests.json；状态在 G.quest（跨日重刷，跨日未交付作废）。
+# 历练委托在 data/quests.json；世界事务另有公告栏，已接进度跨日保留。
 extends Control
 
 signal closed
@@ -30,6 +30,7 @@ var _list: Control = null
 var _toast: Label = null
 var _rows := 0
 var _story_h := STORY_H
+var _world_board: Control = null
 
 
 func _ready() -> void:
@@ -45,9 +46,19 @@ func _build() -> void:
 	G.veil(self, 0.74)
 
 	# 浮层自己的 rect 要等一帧才结算，锚点会算到 0：坐标一律写死
-	var banner := G.banner_box("任务", 280, 50)
-	banner.position = Vector2((VIEW_W - 280.0) * 0.5, 40)
+	var banner := G.banner_box("任务", 264, 50)
+	banner.position = Vector2(56, 40)
 	add_child(banner)
+	var board := G.gold_button("世界事务", 108, 42, G.FS_SM)
+	board.position = Vector2(352, 44)
+	board.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT and _world_board == null:
+			_world_board = preload("res://src/ui/WorldCommissionPanel.gd").new()
+			add_child(_world_board)
+			_world_board.closed.connect(func():
+				_world_board.queue_free()
+				_world_board = null))
+	add_child(board)
 
 	# 委托条数决定面板高（2 条时 ≈ 470）
 	_rows = maxi(1, G.quest_offer().size())
@@ -65,7 +76,7 @@ func _build() -> void:
 	_panel.add_child(_content)
 
 	# —— 分区一：主线 ——
-	var sl := G.gold_label("主 线", G.FS_SM, false, Color("8a734a"), false)
+	var sl := G.serif_label("主线", G.FS_SM, G.BANNER)
 	sl.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	sl.position = Vector2(0, 0)
 	sl.custom_minimum_size = Vector2(CONTENT_W, 0)
@@ -74,25 +85,31 @@ func _build() -> void:
 
 	# —— 分区二：今日委托 ——
 	var dl_y := SECTION_H + _story_h + 10.0
-	var dl := G.gold_label("今 日 委 托", G.FS_SM, false, Color("8a734a"), false)
+	var dl := G.serif_label("今日委托", G.FS_SM, G.BANNER)
 	dl.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	dl.position = Vector2(0, dl_y)
 	dl.custom_minimum_size = Vector2(120, 0)
 	_content.add_child(dl)
-	var tip := G.gold_label("跨日未交付作废", G.FS_XS, false, G.TEXT_MUTED, false)
+	var tip := G.gold_label("已接委托跨日保留", G.FS_XS, false, G.TEXT_MUTED, false)
 	tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	tip.position = Vector2(CONTENT_W - 200.0, dl_y + 3)
 	tip.size = Vector2(200, 0)
-	tip.tooltip_text = "接下、办完、回城交付——跨日作废"
+	tip.tooltip_text = "每日更新未接候选；已接事务与进度保留，完成后回城交付"
 	_content.add_child(tip)
 
+	var scroll := ScrollContainer.new()
+	var visible_h := h - 32.0 - list_y - 66.0
+	scroll.position = Vector2(0, list_y)
+	scroll.size = Vector2(CONTENT_W, visible_h)
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_content.add_child(scroll)
 	_list = Control.new()
 	_list.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_list.position = Vector2(0, list_y)
-	_content.add_child(_list)
+	_list.custom_minimum_size = Vector2(CONTENT_W, float(_rows) * (ROW_H + ROW_GAP))
+	scroll.add_child(_list)
 
-	var back := G.gold_button("返 回", 120, 38)
-	back.position = Vector2((CONTENT_W - 120.0) * 0.5, list_y + float(_rows) * (ROW_H + ROW_GAP) + 12.0)
+	var back := G.ghost_button("返回", 120, 38)
+	back.position = Vector2((CONTENT_W - 120.0) * 0.5, list_y + visible_h + 12.0)
 	back.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			Audio.sfx("ui_close")
@@ -107,7 +124,7 @@ func _story_card(y: float, story: Dictionary) -> void:
 	card.position = Vector2(0, y)
 	var h := _story_h
 	card.custom_minimum_size = Vector2(CONTENT_W, h)
-	card.setup(Color("e6d8b4"), Color("b99a5e"))
+	card.setup(Color("e5dcc1"), Color("b39a67"))
 	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_content.add_child(card)
 
@@ -322,6 +339,7 @@ func _show_toast(msg: String) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if _world_board != null: return
 	if G.ui_blocked:   # GM 控制台等全屏层优先（轮次 14：原来这里没有守卫，
 		return         # 开着控制台按 ESC 会把背后的委托板一起关掉）
 	if event.is_action_pressed("ui_cancel"):

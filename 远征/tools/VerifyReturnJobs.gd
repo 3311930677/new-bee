@@ -18,7 +18,7 @@ func _ready() -> void:
 	G.prog.story.step="s36"
 	for qid in IDS: _check(not bool(G.side_accept(qid).get("ok",false)),"结局前不可接 "+qid)
 	G.prog.story=story
-	_check(G.side_quest_rows().size()==24,"原18条保留，新增六条")
+	_check(G.side_quest_rows().size()==36,"原24条保留，新增十二条余波")
 	var sum_gold:=0
 	for qid in IDS:
 		var row:=QuestService.side_row(G.side_quest_rows(),qid)

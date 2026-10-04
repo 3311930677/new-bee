@@ -21,6 +21,8 @@ const SFX_NAMES := [
 	"pickup", "altar", "mount_toggle", "mount_hoof",
 ]
 
+var _ambient: AudioStreamPlayer = null
+var _ambient_name := ""
 var _bgm: AudioStreamPlayer = null
 var _sfx_pool: Array[AudioStreamPlayer] = []
 var _sfx_i := 0
@@ -42,12 +44,16 @@ func _ready() -> void:
 		p.name = "Sfx%d" % i
 		add_child(p)
 		_sfx_pool.append(p)
+	_ambient = AudioStreamPlayer.new()
+	_ambient.name = "RegionAmbience"
+	add_child(_ambient)
 	_apply_vol()
 
 
 # ---------- 播放 ----------
 ## 播放背景音乐（同名不重播）。name 如 "bgm_home"
 func play_bgm(name: String) -> void:
+	if name != "bgm_map": stop_ambience()
 	if name == "" or name == _bgm_name:
 		return
 	var stream := _stream(name)
@@ -72,6 +78,7 @@ func play_bgm(name: String) -> void:
 
 
 func stop_bgm() -> void:
+	stop_ambience()
 	_bgm_name = ""
 	_bgm.stop()
 
@@ -90,6 +97,31 @@ func sfx(name: String, jitter := PITCH_JITTER) -> void:
 	_last_pitch = p.pitch_scale
 	p.play()
 
+
+## Regional sound beds sit below music and stop during battle or non-map pages.
+func play_ambience(region: String) -> void:
+	if _ambient == null: return
+	var name := "ambient_" + region
+	if _ambient_name == name and _ambient.playing: return
+	var source := _stream(name) as AudioStreamWAV
+	if source == null:
+		stop_ambience()
+		return
+	var stream := source.duplicate() as AudioStreamWAV
+	stream.loop_mode = AudioStreamWAV.LOOP_FORWARD
+	stream.loop_begin = 0
+	stream.loop_end = roundi(stream.get_length() * stream.mix_rate)
+	_ambient_name = name
+	_ambient.stream = stream
+	_ambient.volume_db = -80.0 if muted() or sfx_vol() <= 0 else linear_to_db(sfx_vol()*.075)
+	_ambient.play()
+
+func stop_ambience() -> void:
+	_ambient_name = ""
+	if _ambient != null: _ambient.stop()
+
+func current_ambience() -> String:
+	return _ambient_name
 
 # ---------- 音量（设置面板调） ----------
 func set_bgm_vol(v: float) -> void:
@@ -177,6 +209,8 @@ func _sfx_db() -> float:
 
 
 func _apply_vol() -> void:
+	if _ambient != null:
+		_ambient.volume_db = -80.0 if muted() or sfx_vol() <= 0 else linear_to_db(sfx_vol()*.075)
 	if _bgm != null and _bgm.playing:
 		_bgm.volume_db = _bgm_db()
 	for p in _sfx_pool:

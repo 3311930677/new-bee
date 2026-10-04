@@ -1,4 +1,4 @@
-# Main.gd —— 场景流：开场加载页（预热 + 最短 1s）→ Title → Login；
+# Main.gd —— 场景流：开场加载页（预热 + 最短 3.5s）→ Title → Login；
 # 有档登录后直达「主城」，无档走 CreateRole
 extends Control
 

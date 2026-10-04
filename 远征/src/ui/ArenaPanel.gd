@@ -39,9 +39,9 @@ func _build() -> void:
 	# 演武场是独立场景 → 走接管级底衬；统一工厂（深棕 + 暗角 + 斜纹）
 	G.veil(self, G.VEIL_TAKEOVER_A)
 
-	# 木匾压在面板上沿（挂牌式），整块弹窗落在屏幕视觉中心，不再悬在半空
+	# 开放式书法标题与演武卡面分开，横线留在卡面之外。
 	var banner := G.banner_box("演武场", 280, 50)
-	banner.position = Vector2((VIEW_W - 280.0) * 0.5, 150)
+	banner.position = Vector2((VIEW_W - 280.0) * 0.5, 112)
 	banner.z_index = 2
 	add_child(banner)
 

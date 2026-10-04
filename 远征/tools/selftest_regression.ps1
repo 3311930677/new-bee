@@ -13,7 +13,10 @@ $ErrorActionPreference = "Stop"
 Set-Location $PSScriptRoot
 
 $tmp = Join-Path $env:TEMP "expedition_runner_selftest"
-if (Test-Path $tmp) { Remove-Item -Path $tmp -Recurse -Force }
+$resolvedTmp = [System.IO.Path]::GetFullPath($tmp)
+$expectedTmp = [System.IO.Path]::GetFullPath((Join-Path $env:TEMP "expedition_runner_selftest"))
+if ($resolvedTmp -ne $expectedTmp -or (Split-Path -Leaf $resolvedTmp) -ne "expedition_runner_selftest") { throw "Unsafe self-test directory" }
+if (Test-Path -LiteralPath $resolvedTmp) { Remove-Item -LiteralPath $resolvedTmp -Recurse -Force }
 New-Item -ItemType Directory -Path $tmp -Force | Out-Null
 
 # Batch layout note: the --version branch uses goto instead of "&". cmd's handling of "&"

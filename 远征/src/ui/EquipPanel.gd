@@ -14,6 +14,7 @@ const GEM_ROWS := 2
 
 # 新 class_name 尚未进编辑器全局类缓存，按项目惯例 preload 路径取脚本
 const BagPanelScript := preload("res://src/ui/BagPanel.gd")
+const Finesse := preload("res://src/ui/UIFinesse.gd")
 
 var _sel := ""               # 当前选中槽位
 var _detail: Control = null  # 详情区（重绘）
@@ -555,7 +556,7 @@ func _affix_row(a: Dictionary, idx: int) -> Control:
 	l.position = Vector2(6, 2)
 	root.add_child(l)
 	var locked := bool(a.get("locked", false))
-	var lock_btn := G.gold_button("锁" if locked else "开", 52, 24, G.FS_XS)
+	var lock_btn := G.ghost_button("锁" if locked else "开", 52, 24, G.FS_XS)
 	lock_btn.position = Vector2(200, 0)
 	if locked:
 		(lock_btn.get_child(0) as Label).add_theme_color_override("font_color", Color("a03020"))
@@ -580,6 +581,9 @@ func _on_enhance() -> void:
 		_toast_msg("未成功，等级不变 · 积累%d次，下次%.1f%%" % [
 			int(r.get("failures", 0)), float(r.get("next_rate", 0.0)) * 100.0])
 	_refresh()
+	if bool(r.get("success",false)):
+		Finesse.celebrate(self,Vector2(240,330),Color("f1cc80"),180)
+		Audio.sfx("reward",0.0)
 
 
 func _on_refine() -> void:
@@ -589,6 +593,8 @@ func _on_refine() -> void:
 	var r := G.equip_refine(_sel)
 	_toast_msg("洗练完成" if bool(r.get("ok", false)) else String(r.get("err", "")))
 	_refresh()
+	if bool(r.get("ok",false)):
+		Finesse.celebrate(self,Vector2(240,340),Color("b5a7d9"),160)
 
 
 # ---------- P04：卸下 / 宝石合成 / 背包直达 ----------
@@ -615,6 +621,8 @@ func _on_gem_merge(gid: String) -> void:
 	_toast_msg("合成成功 → %s" % G.gem_label(String(r.get("gem", "")))
 		if bool(r.get("ok", false)) else String(r.get("err", "")))
 	_refresh()
+	if bool(r.get("ok",false)):
+		Finesse.celebrate(self,Vector2(240,370),Color("8fcdd3"),150)
 
 
 func _open_bag() -> void:

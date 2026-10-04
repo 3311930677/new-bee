@@ -7,6 +7,7 @@ signal closed
 signal avatar_requested   # 请求父层叠出头像浮层（设置页里放不下头像卡片）
 
 const PageDeckScript := preload("res://src/ui/PageDeck.gd")
+const Journal := preload("res://src/ui/JournalUI.gd")
 
 # 同 DeployPanel：440 羊皮纸 - 左右各 16 内边距 = 408，子控件按 408 排版才不右偏
 const CONTENT_W := 408.0
@@ -149,14 +150,19 @@ func _page_common() -> Control:
 
 func _page_profile() -> Control:
 	var page := _page_root()
+	var frame := Journal.AvatarMedallion.new()
+	frame.position = Vector2(0, 10)
+	frame.size = Vector2(72, 72)
+	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	page.add_child(frame)
 	var avatar := TextureRect.new()
-	avatar.texture = G.avatar_texture()
 	avatar.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	avatar.texture = G.avatar_texture()
 	avatar.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	avatar.position = Vector2(0, 10)
-	avatar.size = Vector2(72, 72)
+	avatar.position = Vector2(8, 8)
+	avatar.size = Vector2(56, 56)
 	avatar.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	page.add_child(avatar)
+	frame.add_child(avatar)
 	var name_l := G.serif_label(G.display_name(), G.FS_LG, G.TEXT_DARK)
 	name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	name_l.position = Vector2(92, 16)
@@ -178,7 +184,7 @@ func _page_profile() -> Control:
 	_name_hint.position = Vector2(0, 196)
 	page.add_child(_name_hint)
 	var avatar_button := _action(page, "更换头像", Vector2(0, 224), 148, _open_avatar, "person")
-	avatar_button.tooltip_text = "选择职业头像或上传本地图片"
+	avatar_button.tooltip_text = "选择趣味头像或本机图片"
 	_section(page, "旅程", 292)
 	_action(page, "重看序章", Vector2(0, 326), 128, func(): G.go("res://src/ui/Prologue.tscn"))
 	_action(page, "重选角色", Vector2(140, 326), 128, func(): G.go("res://src/ui/CreateRole.tscn"))
@@ -348,7 +354,7 @@ func _vol_row(page: Control, text: String, y: float, value: float, cb: Callable)
 ## 滑条皮肤：做旧槽 + 像素方钮（默认皮肤在羊皮纸上太灰，圆钮渐变也偏"现代"）
 func _style_slider(sl: HSlider) -> void:
 	var bg := StyleBoxFlat.new()
-	bg.bg_color = Color("cfc19a")
+	bg.bg_color = Color("d7c7a1")
 	bg.set_corner_radius_all(3)
 	bg.content_margin_top = 3.0
 	bg.content_margin_bottom = 3.0
@@ -357,8 +363,8 @@ func _style_slider(sl: HSlider) -> void:
 	sl.add_theme_stylebox_override("slider", bg)
 	sl.add_theme_stylebox_override("grabber_area", fill)
 	sl.add_theme_stylebox_override("grabber_area_highlight", fill)
-	sl.add_theme_icon_override("grabber", _pixel_grabber(18, Color("e8b84a")))
-	sl.add_theme_icon_override("grabber_highlight", _pixel_grabber(20, Color("ffd97a")))
+	sl.add_theme_icon_override("grabber", _pixel_grabber(18, G.GOLD_BRIGHT))
+	sl.add_theme_icon_override("grabber_highlight", _pixel_grabber(20, Color("f1dab1")))
 
 
 ## 像素方钮贴图（滑条把手）：斜切角方块 + 顶高光/底压暗 + 暗边——

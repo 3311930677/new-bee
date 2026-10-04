@@ -5,6 +5,34 @@ class_name RunState
 extends RefCounted
 
 var theme := "forest"
+var run_id := ""
+
+const SAVE_FIELDS := ["run_id", "theme", "role_id", "level", "active_pet", "bench_pet", "potions", "traits", "hp",
+	"route", "run_seed", "node_seq", "finished", "result", "gold", "expedition", "soul", "exp", "honor",
+	"map_state", "growth_bonus", "ascetic"]
+
+func snapshot() -> Dictionary:
+	var out := {"version": 1}
+	for field in SAVE_FIELDS:
+		var value: Variant = get(field)
+		out[field] = value.duplicate(true) if value is Dictionary or value is Array else value
+	return out
+
+func restore(data: Dictionary) -> bool:
+	if int(data.get("version", 0)) != 1 or String(data.get("run_id", "")).is_empty(): return false
+	if not (data.get("route") is Dictionary) or not (data.route.get("layers") is Array): return false
+	if (data.route.layers as Array).size() != 3: return false
+	for field in SAVE_FIELDS:
+		if not data.has(field): return false
+		var expected := typeof(get(field))
+		var actual := typeof(data[field])
+		if expected == TYPE_INT:
+			if actual not in [TYPE_INT, TYPE_FLOAT] or not is_equal_approx(float(data[field]), roundf(float(data[field]))): return false
+		elif expected != actual: return false
+	for field in SAVE_FIELDS:
+		var value: Variant = data[field]
+		set(field, value.duplicate(true) if value is Dictionary or value is Array else value)
+	return true
 var role_id := "zs"
 var level := 5
 var active_pet := "pet_rockturtle"

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "comment": "第一幕、港口、霜关与结局归路托付各六条支线。沿用 prog.act1.side_quests 和 QuestService.side_*，奖励走 RewardLedger（tx=side|<id>|complete）；同一时间只追踪 1 条。requires_story 控制接取；choices 控制明确选择后交付。",
+  "comment": "四幕各九条，共36条。新增余波采用steps顺序目标；实体与分支幂等保存，交付仍走原side事务。",
   "quests": [
     {
       "id": "a1_rel_guard",
@@ -9,11 +9,21 @@
       "giver": "npc_guard",
       "map": "maple_road",
       "clue": "城门卫老赵请你把古道上的敌影压一压。",
-      "objective": {"kind": "defeat", "map": "maple_road", "count": 2},
+      "objective": {
+        "kind": "defeat",
+        "map": "maple_road",
+        "count": 2
+      },
       "objective_text": "在枫林古道击退游荡敌影",
       "turn_in": "npc_guard",
       "turn_in_map": "lorin_wilds",
-      "reward": {"gold": 100, "exp": 45, "items": {"enhance_stone": 1}},
+      "reward": {
+        "gold": 100,
+        "exp": 45,
+        "items": {
+          "enhance_stone": 1
+        }
+      },
       "accept_dialogue": "古道上的敌影又多起来了。你顺路替我压一压，两拨就够——我这腿脚，跑不动喽。",
       "progress_dialogue": "路口的事不急，清掉两拨敌影就回来。",
       "ready_dialogue": "清干净了？我这就把路口的话改一改，往北的人能踏实些。",
@@ -27,13 +37,21 @@
       "giver": "npc_child",
       "map": "maple_road",
       "clue": "小满的风铃丢在了古道。",
-      "objective": {"kind": "collect", "map": "maple_road", "count": 1, "target_entity": "a1_chime"},
+      "objective": {
+        "kind": "collect",
+        "map": "maple_road",
+        "count": 1,
+        "target_entity": "a1_chime"
+      },
       "objective_text": "在枫林古道找回遗失的风铃",
       "turn_in": "npc_child",
       "turn_in_map": "lorin_wilds",
       "turn_in_item": "wind_chime",
       "collect_item": "wind_chime",
-      "reward": {"gold": 70, "exp": 40},
+      "reward": {
+        "gold": 70,
+        "exp": 40
+      },
       "discovery": "chime_story",
       "accept_dialogue": "我的风铃！风一吹就响的那个……昨天在古道玩，回来就找不到了。你帮我看看，好不好？",
       "progress_dialogue": "风铃会在草里轻轻响，你仔细听呀。",
@@ -48,12 +66,25 @@
       "giver": "npc_scribe",
       "map": "maple_road",
       "clue": "青姨要两丛古道草根做拓纸。",
-      "objective": {"kind": "collect", "map": "maple_road", "count": 2,
-        "target_entities": ["a1_roots_a", "a1_roots_b"]},
+      "objective": {
+        "kind": "collect",
+        "map": "maple_road",
+        "count": 2,
+        "target_entities": [
+          "a1_roots_a",
+          "a1_roots_b"
+        ]
+      },
       "objective_text": "在枫林古道采集草根",
       "turn_in": "npc_scribe",
       "turn_in_map": "lorin_wilds",
-      "reward": {"gold": 90, "exp": 45, "items": {"enhance_stone": 2}},
+      "reward": {
+        "gold": 90,
+        "exp": 45,
+        "items": {
+          "enhance_stone": 2
+        }
+      },
       "accept_dialogue": "拓碑的纸要用古道草根的筋。两丛就够，顺手的事。",
       "progress_dialogue": "草根要连筋拔，别伤着别的植株。",
       "ready_dialogue": "筋还带着土气，正好。",
@@ -67,12 +98,24 @@
       "giver": "npc_keeper",
       "map": "broken_slope",
       "clue": "兽栏师傅想弄清断碑坡上的足迹。",
-      "objective": {"kind": "observe", "map": "broken_slope", "count": 2,
-        "target_entities": ["a1_tracks_a", "a1_tracks_b"]},
+      "objective": {
+        "kind": "observe",
+        "map": "broken_slope",
+        "count": 2,
+        "target_entities": [
+          "a1_tracks_a",
+          "a1_tracks_b"
+        ]
+      },
       "objective_text": "在断碑坡查看两处足迹",
       "turn_in": "npc_keeper",
       "turn_in_map": "lorin_wilds",
-      "reward": {"gold": 60, "items": {"pet_food": 2}},
+      "reward": {
+        "gold": 60,
+        "items": {
+          "pet_food": 2
+        }
+      },
       "accept_dialogue": "岩龟最近不安生，老冲着北边嗅。你去断碑坡看看地上的足迹，两处就够。",
       "progress_dialogue": "足迹别踩乱，看清楚爪印的深浅。",
       "ready_dialogue": "两处都看过了？讲给我听听。",
@@ -86,13 +129,22 @@
       "giver": "npc_warden",
       "map": "maple_road",
       "clue": "驿商托你把封好的盐包送到古道驿亭。",
-      "objective": {"kind": "deliver", "map": "maple_road", "count": 1, "target_entity": "a1_postrider", "item": "salt_pack"},
+      "objective": {
+        "kind": "deliver",
+        "map": "maple_road",
+        "count": 1,
+        "target_entity": "a1_postrider",
+        "item": "salt_pack"
+      },
       "objective_text": "把盐包送到枫林古道的驿亭",
       "accept_item": "salt_pack",
       "turn_in": "a1_postrider",
       "turn_in_map": "maple_road",
       "turn_in_item": "salt_pack",
-      "reward": {"gold": 140, "exp": 35},
+      "reward": {
+        "gold": 140,
+        "exp": 35
+      },
       "discovery": "order_preview",
       "accept_dialogue": "北边的驿亭断了货，一包盐压在路上耽搁不起。你顺路带过去，钱在那边结。",
       "progress_dialogue": "盐包怕潮，送到古道驿亭就行。",
@@ -108,11 +160,19 @@
       "giver": "npc_steward",
       "map": "broken_slope",
       "clue": "布告栏贴着「路西兽影」的悬赏，闻叔让你去断碑坡看看。",
-      "objective": {"kind": "boss", "map": "broken_slope", "count": 1, "target": "mon_lost_beast"},
+      "objective": {
+        "kind": "boss",
+        "map": "broken_slope",
+        "count": 1,
+        "target": "mon_lost_beast"
+      },
       "objective_text": "在断碑坡找到失路兽（可战可察）",
       "turn_in": "npc_steward",
       "turn_in_map": "lorin_wilds",
-      "reward": {"gold": 80, "exp": 60},
+      "reward": {
+        "gold": 80,
+        "exp": 60
+      },
       "accept_dialogue": "布告栏上「路西兽影」那一条，你去看过没有？路西有东西在走，不像寻常野兽。",
       "progress_dialogue": "路西的巢口在坡的边上，离北口隔着一段路，别惊动它。",
       "ready_dialogue": "你见过它了？模样如何，说来听听。",
@@ -120,16 +180,41 @@
       "world_feedback": "首领巢穴、布告栏与闻叔台词同步变化"
     },
     {
-      "id": "a2_rel_rope", "category": "关系", "title": "旧缆新结",
-      "requires_story": "s16", "giver": "npc_port_worker", "map": "shenyuan_port",
+      "id": "a2_rel_rope",
+      "category": "关系",
+      "title": "旧缆新结",
+      "requires_story": "s16",
+      "giver": "npc_port_worker",
+      "map": "shenyuan_port",
       "clue": "老鹭放心不下港东栈道的松缆。",
-      "objective": {"kind": "observe", "map": "shenyuan_port", "count": 1, "target_entity": "a2_loose_rope"},
+      "objective": {
+        "kind": "observe",
+        "map": "shenyuan_port",
+        "count": 1,
+        "target_entity": "a2_loose_rope"
+      },
       "objective_text": "查看港东栈道的松缆，再找老鹭决定修法",
-      "turn_in": "npc_port_worker", "turn_in_map": "shenyuan_port",
-      "reward": {"gold": 120, "exp": 55},
+      "turn_in": "npc_port_worker",
+      "turn_in_map": "shenyuan_port",
+      "reward": {
+        "gold": 120,
+        "exp": 55
+      },
       "choices": {
-        "retie": {"title": "留旧缆 · 重新系紧", "flags": {"act2_pier_rope": "retie"}, "dialogue": "旧缆还结实。老鹭按你说的重新打结，笑说这条缆认得回港的人。"},
-        "replace": {"title": "换新缆 · 收起旧绳", "flags": {"act2_pier_rope": "replace"}, "dialogue": "新缆系好了。老鹭把旧绳叠起来，留作那些再也不靠港的船的念想。"}
+        "retie": {
+          "title": "留旧缆 · 重新系紧",
+          "flags": {
+            "act2_pier_rope": "retie"
+          },
+          "dialogue": "旧缆还结实。老鹭按你说的重新打结，笑说这条缆认得回港的人。"
+        },
+        "replace": {
+          "title": "换新缆 · 收起旧绳",
+          "flags": {
+            "act2_pier_rope": "replace"
+          },
+          "dialogue": "新缆系好了。老鹭把旧绳叠起来，留作那些再也不靠港的船的念想。"
+        }
       },
       "accept_dialogue": "港东栈道那条缆松了。替我看看磨损，回来咱们一起决定留它还是换它。",
       "progress_dialogue": "缆头在港东栈道，仔细看过再定，别急。",
@@ -138,13 +223,29 @@
       "world_feedback": "栈桥缆色、老鹭回应与所选修法一致"
     },
     {
-      "id": "a2_rel_feather", "category": "关系", "title": "归巢的羽",
-      "requires_story": "s16", "giver": "npc_port_keeper", "map": "tideflat",
+      "id": "a2_rel_feather",
+      "category": "关系",
+      "title": "归巢的羽",
+      "requires_story": "s16",
+      "giver": "npc_port_keeper",
+      "map": "tideflat",
       "clue": "阿棠在等一群被潮声惊走的海鸟。",
-      "objective": {"kind": "collect", "map": "tideflat", "count": 1, "target_entity": "a2_drift_feather"},
+      "objective": {
+        "kind": "collect",
+        "map": "tideflat",
+        "count": 1,
+        "target_entity": "a2_drift_feather"
+      },
       "objective_text": "在潮痕滩找回漂羽，带给港口阿棠",
-      "turn_in": "npc_port_keeper", "turn_in_map": "shenyuan_port",
-      "reward": {"gold": 80, "exp": 50, "items": {"pet_food": 2}},
+      "turn_in": "npc_port_keeper",
+      "turn_in_map": "shenyuan_port",
+      "reward": {
+        "gold": 80,
+        "exp": 50,
+        "items": {
+          "pet_food": 2
+        }
+      },
       "accept_dialogue": "潮声把海鸟惊散了。滩上若有带蓝纹的羽，帮我捎回来，我认得它们。",
       "progress_dialogue": "潮痕滩东侧有避风的浅池，漂羽常停在那里。",
       "ready_dialogue": "是它们的羽！羽根还暖，巢没有被放弃。",
@@ -152,13 +253,32 @@
       "world_feedback": "阿棠记住归巢海鸟，给予伙伴补给"
     },
     {
-      "id": "a2_eco_grass", "category": "生态采集", "title": "潮草留根",
-      "requires_story": "s16", "giver": "npc_port_keeper", "map": "tideflat",
+      "id": "a2_eco_grass",
+      "category": "生态采集",
+      "title": "潮草留根",
+      "requires_story": "s16",
+      "giver": "npc_port_keeper",
+      "map": "tideflat",
       "clue": "阿棠想辨认两处浅滩草，不把滩上的根拔光。",
-      "objective": {"kind": "collect", "map": "tideflat", "count": 2, "target_entities": ["a2_tide_grass_a", "a2_tide_grass_b"]},
+      "objective": {
+        "kind": "collect",
+        "map": "tideflat",
+        "count": 2,
+        "target_entities": [
+          "a2_tide_grass_a",
+          "a2_tide_grass_b"
+        ]
+      },
       "objective_text": "在潮痕滩采两处潮草样本，回兽栏复命",
-      "turn_in": "npc_port_keeper", "turn_in_map": "shenyuan_port",
-      "reward": {"gold": 100, "exp": 55, "items": {"pet_food": 2}},
+      "turn_in": "npc_port_keeper",
+      "turn_in_map": "shenyuan_port",
+      "reward": {
+        "gold": 100,
+        "exp": 55,
+        "items": {
+          "pet_food": 2
+        }
+      },
       "accept_dialogue": "新伙伴吃的潮草，得两处都看。各取一小撮叶子就好，把根留着。",
       "progress_dialogue": "北边浅水一处，南边盐纹一处；不要在同一丛重复取样。",
       "ready_dialogue": "这两撮叶子颜色不同，果然跟潮位有关。",
@@ -166,13 +286,32 @@
       "world_feedback": "两处样本各计一次，采过不再亮蓝标"
     },
     {
-      "id": "a2_eco_salt", "category": "生态观察", "title": "盐泉留痕",
-      "requires_story": "s16", "giver": "npc_port_worker", "map": "old_salt_road",
+      "id": "a2_eco_salt",
+      "category": "生态观察",
+      "title": "盐泉留痕",
+      "requires_story": "s16",
+      "giver": "npc_port_worker",
+      "map": "old_salt_road",
       "clue": "老鹭记得断桥前后的盐纹方向并不相同。",
-      "objective": {"kind": "observe", "map": "old_salt_road", "count": 2, "target_entities": ["a2_salt_mark_a", "a2_salt_mark_b"]},
+      "objective": {
+        "kind": "observe",
+        "map": "old_salt_road",
+        "count": 2,
+        "target_entities": [
+          "a2_salt_mark_a",
+          "a2_salt_mark_b"
+        ]
+      },
       "objective_text": "查看旧盐道两处盐纹，回港告诉老鹭",
-      "turn_in": "npc_port_worker", "turn_in_map": "shenyuan_port",
-      "reward": {"gold": 110, "exp": 55, "items": {"enhance_stone": 1}},
+      "turn_in": "npc_port_worker",
+      "turn_in_map": "shenyuan_port",
+      "reward": {
+        "gold": 110,
+        "exp": 55,
+        "items": {
+          "enhance_stone": 1
+        }
+      },
       "accept_dialogue": "盐泉的纹路有时比账页诚实。替我看看断桥前后两处白纹，是向哪边流的。",
       "progress_dialogue": "旧盐道南北各一处白纹，看过的别再踩。",
       "ready_dialogue": "南北的方向都记住了？说给我听。",
@@ -180,13 +319,26 @@
       "world_feedback": "盐纹调查保存，老鹭改谈倒流的泉"
     },
     {
-      "id": "a2_trade_message", "category": "商旅价格", "title": "断桥口信",
-      "requires_story": "s16", "giver": "npc_port_trader", "map": "old_salt_road",
+      "id": "a2_trade_message",
+      "category": "商旅价格",
+      "title": "断桥口信",
+      "requires_story": "s16",
+      "giver": "npc_port_trader",
+      "map": "old_salt_road",
       "clue": "陆七想告诉断桥盐客，港口已能接陆路的货。",
-      "objective": {"kind": "deliver", "map": "old_salt_road", "count": 1, "target_entity": "a2_salt_courier"},
+      "objective": {
+        "kind": "deliver",
+        "map": "old_salt_road",
+        "count": 1,
+        "target_entity": "a2_salt_courier"
+      },
       "objective_text": "到旧盐道把陆七的口信带给断桥盐客",
-      "turn_in": "a2_salt_courier", "turn_in_map": "old_salt_road",
-      "reward": {"gold": 150, "exp": 55},
+      "turn_in": "a2_salt_courier",
+      "turn_in_map": "old_salt_road",
+      "reward": {
+        "gold": 150,
+        "exp": 55
+      },
       "accept_dialogue": "路通了，人却未必知道。替我告诉断桥盐客：港口能接货，别再守空车。",
       "progress_dialogue": "盐客就在旧盐道断桥南边，口信带到就好，不用替他押货。",
       "ready_dialogue": "陆七还记得我们？这趟路总算没白等。",
@@ -194,13 +346,26 @@
       "world_feedback": "口信在盐客处当场结算，陆七台词改变"
     },
     {
-      "id": "a2_elite_scale", "category": "精英秘闻", "title": "盐鳞旧影",
-      "requires_story": "s16", "giver": "npc_harbormaster", "map": "tideflat",
+      "id": "a2_elite_scale",
+      "category": "精英秘闻",
+      "title": "盐鳞旧影",
+      "requires_story": "s16",
+      "giver": "npc_harbormaster",
+      "map": "tideflat",
       "clue": "沈澜的旧账里提过潮滩西侧的盐鳞王。",
-      "objective": {"kind": "boss", "map": "tideflat", "count": 1, "target": "mon_salt_scale"},
+      "objective": {
+        "kind": "boss",
+        "map": "tideflat",
+        "count": 1,
+        "target": "mon_salt_scale"
+      },
       "objective_text": "在潮痕滩看清盐鳞王（可战可察），回港告诉沈澜",
-      "turn_in": "npc_harbormaster", "turn_in_map": "shenyuan_port",
-      "reward": {"gold": 130, "exp": 75},
+      "turn_in": "npc_harbormaster",
+      "turn_in_map": "shenyuan_port",
+      "reward": {
+        "gold": 130,
+        "exp": 75
+      },
       "accept_dialogue": "潮滩西侧的盐鳞王，旧账上也有它的影子。别硬拼，远处看清了回来告诉我也成。",
       "progress_dialogue": "它在潮滩西侧歇着，不追人。观察和击败，都能给这页账一个交代。",
       "ready_dialogue": "盐鳞旧影还在？说说你看见的模样。",
@@ -643,6 +808,991 @@
           },
           "dialogue": "陶铎合上空白的纸，把三道余温记在心里。碑心终于可以歇一歇。"
         }
+      }
+    },
+    {
+      "id": "a1_secret_rubbing",
+      "title": "碑上有旧补",
+      "category": "秘闻",
+      "giver": "npc_scribe",
+      "turn_in": "npc_scribe",
+      "turn_in_map": "lorin_wilds",
+      "map": "stele_cavern",
+      "requires_story": "s12",
+      "clue": "碑上有三种刻向。先看岩纹、再看刀痕和缺口，把它们拼成一页，拓片不会因试错损坏。",
+      "objective": {
+        "kind": "inspect",
+        "map": "stele_cavern",
+        "target_entity": "a1_secret_rubbing_step_1",
+        "text": "岩纹拓片",
+        "choices": {},
+        "correct": "",
+        "clue": "",
+        "wrong": "",
+        "completion": "岩纹贯穿整片，属于最早的一层。"
+      },
+      "steps": [
+        {
+          "kind": "inspect",
+          "map": "stele_cavern",
+          "target_entity": "a1_secret_rubbing_step_1",
+          "text": "岩纹拓片",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "岩纹贯穿整片，属于最早的一层。"
+        },
+        {
+          "kind": "inspect",
+          "map": "stele_cavern",
+          "target_entity": "a1_secret_rubbing_step_2",
+          "text": "刀痕拓片",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "刀痕横过岩纹，是后来补刻。"
+        },
+        {
+          "kind": "inspect",
+          "map": "stele_cavern",
+          "target_entity": "a1_secret_rubbing_step_3",
+          "text": "缺口拓片",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "缺口切断刀痕，说明破损发生在补刻之后。"
+        },
+        {
+          "kind": "align",
+          "map": "stele_cavern",
+          "target_entity": "a1_secret_rubbing_step_4",
+          "text": "拼合残页",
+          "choices": {
+            "layers": "岩纹 → 刀痕 → 缺口",
+            "reverse": "缺口 → 岩纹 → 刀痕"
+          },
+          "correct": "layers",
+          "clue": "三片的交叠关系已记清。按先后排出修碑的证据。",
+          "wrong": "缺口截断刀痕，不可能比刀痕更早。拓片仍可重排。",
+          "completion": "三片的交叠关系已记清。按先后排出修碑的证据。"
+        }
+      ],
+      "objective_text": "岩纹拓片 → 刀痕拓片 → 缺口拓片 → 拼合残页",
+      "reward": {
+        "gold": 145,
+        "exp": 70
+      },
+      "discovery": "a1_secret_rubbing",
+      "accept_dialogue": "碑上有三种刻向。先看岩纹、再看刀痕和缺口，把它们拼成一页，拓片不会因试错损坏。",
+      "progress_dialogue": "现场记录可以逐项核对，错了还能重来。",
+      "ready_dialogue": "你把沿路发生的事记全了？让我看看。",
+      "completion_dialogue": "岩纹比刀痕更早，缺口又截断了补刻。碑曾被人修过，我们终于有了能复看的证据。",
+      "world_feedback": "岩纹比刀痕更早，缺口又截断了补刻。碑曾被人修过，我们终于有了能复看的证据。",
+      "completion_flags": {
+        "a1_secret_rubbing_done": true
+      }
+    },
+    {
+      "id": "a1_trade_bridge",
+      "title": "楔住归桥",
+      "category": "商旅",
+      "giver": "npc_smith",
+      "turn_in": "npc_smith",
+      "turn_in_map": "lorin_wilds",
+      "map": "maple_road",
+      "requires_story": "s12",
+      "clue": "古道桥板两头都松了。看清承重点，用我留在桥边的楔件选一侧修稳；另一侧仍能绕行。",
+      "objective": {
+        "kind": "inspect",
+        "map": "maple_road",
+        "target_entity": "a1_trade_bridge_step_1",
+        "text": "西桥承重点",
+        "choices": {},
+        "correct": "",
+        "clue": "",
+        "wrong": "",
+        "completion": "西梁干燥，适合嵌楔；背风绕行仍可走。"
+      },
+      "steps": [
+        {
+          "kind": "inspect",
+          "map": "maple_road",
+          "target_entity": "a1_trade_bridge_step_1",
+          "text": "西桥承重点",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "西梁干燥，适合嵌楔；背风绕行仍可走。"
+        },
+        {
+          "kind": "inspect",
+          "map": "maple_road",
+          "target_entity": "a1_trade_bridge_step_2",
+          "text": "东桥承重点",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "东梁靠岸，同样能修；两种修法都能保住通行。"
+        },
+        {
+          "kind": "repair",
+          "map": "maple_road",
+          "target_entity": "a1_trade_bridge_step_3",
+          "text": "嵌入桥楔",
+          "choices": {
+            "west": "先稳西侧桥板",
+            "east": "先稳东侧桥板"
+          },
+          "correct": "",
+          "clue": "楔件已经备好。选择先修的一侧，两侧报酬相同，步行绕路始终可用。",
+          "wrong": "",
+          "completion": "楔件已经备好。选择先修的一侧，两侧报酬相同，步行绕路始终可用。"
+        }
+      ],
+      "objective_text": "西桥承重点 → 东桥承重点 → 嵌入桥楔",
+      "reward": {
+        "gold": 150,
+        "exp": 65
+      },
+      "discovery": "a1_trade_bridge",
+      "accept_dialogue": "古道桥板两头都松了。看清承重点，用我留在桥边的楔件选一侧修稳；另一侧仍能绕行。",
+      "progress_dialogue": "现场记录可以逐项核对，错了还能重来。",
+      "ready_dialogue": "你把沿路发生的事记全了？让我看看。",
+      "completion_dialogue": "桥上的新楔件留住了归路。以后走到这里，会认得是哪一侧先修好。",
+      "world_feedback": "桥上的新楔件留住了归路。以后走到这里，会认得是哪一侧先修好。",
+      "completion_flags": {
+        "a1_trade_bridge_done": true
+      }
+    },
+    {
+      "id": "a1_rel_watch",
+      "title": "画在图上的巡路",
+      "category": "关系",
+      "giver": "npc_guard",
+      "turn_in": "npc_guard",
+      "turn_in_map": "lorin_wilds",
+      "map": "broken_slope",
+      "requires_story": "s12",
+      "clue": "去断碑坡巡两处瞭望点。辨清兽影和守影脚迹，再画一条可以绕开的巡路，不必再打一遍。",
+      "objective": {
+        "kind": "inspect",
+        "map": "broken_slope",
+        "target_entity": "a1_rel_watch_step_1",
+        "text": "泥中的兽迹",
+        "choices": {},
+        "correct": "",
+        "clue": "",
+        "wrong": "",
+        "completion": "泥痕有爪尖，足印连着觅食路线。"
+      },
+      "steps": [
+        {
+          "kind": "inspect",
+          "map": "broken_slope",
+          "target_entity": "a1_rel_watch_step_1",
+          "text": "泥中的兽迹",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "泥痕有爪尖，足印连着觅食路线。"
+        },
+        {
+          "kind": "inspect",
+          "map": "broken_slope",
+          "target_entity": "a1_rel_watch_step_2",
+          "text": "冷灰守影迹",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "灰上没有脚掌压痕，守影停在残碑旁。"
+        },
+        {
+          "kind": "mark",
+          "map": "broken_slope",
+          "target_entity": "a1_rel_watch_step_3",
+          "text": "绘制背风巡路",
+          "choices": {
+            "ridge": "沿背风石脊画线",
+            "mud": "沿湿泥脚迹画线"
+          },
+          "correct": "ridge",
+          "clue": "兽影沿湿泥游走，守影贴着残碑。背风石脊可以避开两者。",
+          "wrong": "湿泥正是兽影觅食的路。可以擦掉重画。",
+          "completion": "兽影沿湿泥游走，守影贴着残碑。背风石脊可以避开两者。"
+        }
+      ],
+      "objective_text": "泥中的兽迹 → 冷灰守影迹 → 绘制背风巡路",
+      "reward": {
+        "gold": 140,
+        "exp": 65
+      },
+      "discovery": "a1_rel_watch",
+      "accept_dialogue": "去断碑坡巡两处瞭望点。辨清兽影和守影脚迹，再画一条可以绕开的巡路，不必再打一遍。",
+      "progress_dialogue": "现场记录可以逐项核对，错了还能重来。",
+      "ready_dialogue": "你把沿路发生的事记全了？让我看看。",
+      "completion_dialogue": "兽迹压在泥里，守影只留冷灰。巡逻图已换了，新来的巡界人可以照着走。",
+      "world_feedback": "兽迹压在泥里，守影只留冷灰。巡逻图已换了，新来的巡界人可以照着走。",
+      "completion_flags": {
+        "a1_rel_watch_done": true
+      }
+    },
+    {
+      "id": "a2_secret_tide_clock",
+      "title": "水痕里的旧时刻",
+      "category": "秘闻",
+      "giver": "npc_harbormaster",
+      "turn_in": "npc_harbormaster",
+      "turn_in_map": "shenyuan_port",
+      "map": "tideflat",
+      "requires_story": "s20",
+      "clue": "账页写着三次开闸，却没有时刻。去潮滩比对高痕、低痕和回潮线，把旧闸序记回来。",
+      "objective": {
+        "kind": "inspect",
+        "map": "tideflat",
+        "target_entity": "a2_secret_tide_clock_step_1",
+        "text": "高水痕",
+        "choices": {},
+        "correct": "",
+        "clue": "",
+        "wrong": "",
+        "completion": "高痕盖过旧栈桥脚：上闸当时未泄水。"
+      },
+      "steps": [
+        {
+          "kind": "inspect",
+          "map": "tideflat",
+          "target_entity": "a2_secret_tide_clock_step_1",
+          "text": "高水痕",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "高痕盖过旧栈桥脚：上闸当时未泄水。"
+        },
+        {
+          "kind": "inspect",
+          "map": "tideflat",
+          "target_entity": "a2_secret_tide_clock_step_2",
+          "text": "低水痕",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "低痕露出桥脚：旧渠曾先放水。"
+        },
+        {
+          "kind": "inspect",
+          "map": "tideflat",
+          "target_entity": "a2_secret_tide_clock_step_3",
+          "text": "回潮线",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "回潮线留在货箱外侧：侧闸是在泄水后才放行。"
+        },
+        {
+          "kind": "align",
+          "map": "tideflat",
+          "target_entity": "a2_secret_tide_clock_step_4",
+          "text": "编排闸门时序",
+          "choices": {
+            "drain": "闭闸 → 旧渠泄水 → 侧闸放行",
+            "rush": "闭闸 → 侧闸放行 → 泄水"
+          },
+          "correct": "drain",
+          "clue": "高痕、低痕、回潮线分别见证了闭闸、泄水与侧闸放行。",
+          "wrong": "桥脚只有泄水后才露出，侧闸不能先于泄水放行。",
+          "completion": "高痕、低痕、回潮线分别见证了闭闸、泄水与侧闸放行。"
+        }
+      ],
+      "objective_text": "高水痕 → 低水痕 → 回潮线 → 编排闸门时序",
+      "reward": {
+        "gold": 240,
+        "exp": 120
+      },
+      "discovery": "a2_secret_tide_clock",
+      "accept_dialogue": "账页写着三次开闸，却没有时刻。去潮滩比对高痕、低痕和回潮线，把旧闸序记回来。",
+      "progress_dialogue": "现场记录可以逐项核对，错了还能重来。",
+      "ready_dialogue": "你把沿路发生的事记全了？让我看看。",
+      "completion_dialogue": "港务厅按你的记录挂出潮线图。盐渠与堤道都能通行，原先的供货选择仍然有效。",
+      "world_feedback": "港务厅按你的记录挂出潮线图。盐渠与堤道都能通行，原先的供货选择仍然有效。",
+      "completion_flags": {
+        "a2_secret_tide_clock_done": true
+      }
+    },
+    {
+      "id": "a2_trade_weight",
+      "title": "货签之外的盐数",
+      "category": "商旅",
+      "giver": "npc_port_trader",
+      "turn_in": "npc_port_trader",
+      "turn_in_map": "shenyuan_port",
+      "map": "old_salt_road",
+      "requires_story": "s20",
+      "clue": "货签的盐数和港仓实货不合。检查两张货签、秤砣和实货，再决定先补仓还是先告知商队。",
+      "objective": {
+        "kind": "inspect",
+        "map": "old_salt_road",
+        "target_entity": "a2_trade_weight_step_1",
+        "text": "出港货签",
+        "choices": {},
+        "correct": "",
+        "clue": "",
+        "wrong": "",
+        "completion": "出港签写着三袋，承运人盖了旧印。"
+      },
+      "steps": [
+        {
+          "kind": "inspect",
+          "map": "old_salt_road",
+          "target_entity": "a2_trade_weight_step_1",
+          "text": "出港货签",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "出港签写着三袋，承运人盖了旧印。"
+        },
+        {
+          "kind": "inspect",
+          "map": "old_salt_road",
+          "target_entity": "a2_trade_weight_step_2",
+          "text": "到仓货签",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "到仓签写着四袋，后补的一笔未过秤。"
+        },
+        {
+          "kind": "inspect",
+          "map": "old_salt_road",
+          "target_entity": "a2_trade_weight_step_3",
+          "text": "秤砣与实货",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "秤砣刻度正常，车上是三袋；差额来自到仓签。"
+        },
+        {
+          "kind": "switch",
+          "map": "old_salt_road",
+          "target_entity": "a2_trade_weight_step_4",
+          "text": "处理账签差额",
+          "choices": {
+            "warehouse": "先补港仓记录",
+            "caravan": "先通知承运商队"
+          },
+          "correct": "",
+          "clue": "实货三袋，差的是账签。先补港仓或先告知商队都不改变报酬，两路随后都恢复。",
+          "wrong": "",
+          "completion": "实货三袋，差的是账签。先补港仓或先告知商队都不改变报酬，两路随后都恢复。"
+        }
+      ],
+      "objective_text": "出港货签 → 到仓货签 → 秤砣与实货 → 处理账签差额",
+      "reward": {
+        "gold": 250,
+        "exp": 115
+      },
+      "discovery": "a2_trade_weight",
+      "accept_dialogue": "货签的盐数和港仓实货不合。检查两张货签、秤砣和实货，再决定先补仓还是先告知商队。",
+      "progress_dialogue": "现场记录可以逐项核对，错了还能重来。",
+      "ready_dialogue": "你把沿路发生的事记全了？让我看看。",
+      "completion_dialogue": "账页多写了一袋，实货却没少人的份。两条供货路随后都恢复，告示也写清了差额从何而来。",
+      "world_feedback": "账页多写了一袋，实货却没少人的份。两条供货路随后都恢复，告示也写清了差额从何而来。",
+      "completion_flags": {
+        "a2_trade_weight_done": true
+      }
+    },
+    {
+      "id": "a2_eco_driftwood",
+      "title": "给巢边留一条路",
+      "category": "生态",
+      "giver": "npc_port_keeper",
+      "turn_in": "npc_port_keeper",
+      "turn_in_map": "shenyuan_port",
+      "map": "tideflat",
+      "requires_story": "s20",
+      "clue": "潮滩的两块漂木堵住鸟巢回岸的安全线。先看巢位，搬开挡木，再沿浅痕送一块回岸。",
+      "objective": {
+        "kind": "inspect",
+        "map": "tideflat",
+        "target_entity": "a2_eco_driftwood_step_1",
+        "text": "巢位与浅痕",
+        "choices": {},
+        "correct": "",
+        "clue": "",
+        "wrong": "",
+        "completion": "巢在高处，回岸的浅痕绕过两块漂木。"
+      },
+      "steps": [
+        {
+          "kind": "inspect",
+          "map": "tideflat",
+          "target_entity": "a2_eco_driftwood_step_1",
+          "text": "巢位与浅痕",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "巢在高处，回岸的浅痕绕过两块漂木。"
+        },
+        {
+          "kind": "repair",
+          "map": "tideflat",
+          "target_entity": "a2_eco_driftwood_step_2",
+          "text": "搬开第一块漂木",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "漂木挪向空岸，不碰巢边植株。"
+        },
+        {
+          "kind": "repair",
+          "map": "tideflat",
+          "target_entity": "a2_eco_driftwood_step_3",
+          "text": "搬开第二块漂木",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "浅痕连通，幼鸟可以沿岸侧走。"
+        },
+        {
+          "kind": "escort",
+          "map": "tideflat",
+          "target_entity": "a2_eco_driftwood_step_4",
+          "text": "沿浅线送木回岸",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "漂木停在岸边，为后来观察的人留下参照。"
+        }
+      ],
+      "objective_text": "巢位与浅痕 → 搬开第一块漂木 → 搬开第二块漂木 → 沿浅线送木回岸",
+      "reward": {
+        "gold": 230,
+        "exp": 110
+      },
+      "discovery": "a2_eco_driftwood",
+      "accept_dialogue": "潮滩的两块漂木堵住鸟巢回岸的安全线。先看巢位，搬开挡木，再沿浅痕送一块回岸。",
+      "progress_dialogue": "现场记录可以逐项核对，错了还能重来。",
+      "ready_dialogue": "你把沿路发生的事记全了？让我看看。",
+      "completion_dialogue": "巢边的浅线清出来了，漂木留在岸侧。修路也能给不会说话的邻居留一条归路。",
+      "world_feedback": "巢边的浅线清出来了，漂木留在岸侧。修路也能给不会说话的邻居留一条归路。",
+      "completion_flags": {
+        "a2_eco_driftwood_done": true
+      }
+    },
+    {
+      "id": "a3_secret_airshaft",
+      "title": "让矿井重新呼吸",
+      "category": "秘闻",
+      "giver": "npc_frost_miner",
+      "turn_in": "npc_frost_miner",
+      "turn_in_map": "frost_post",
+      "map": "rift_mine_road",
+      "requires_story": "s28",
+      "clue": "旧炉息记录还有用。到矿道核对南北风口，调好双风轮，再把最后一队矿工领出烟线。",
+      "objective": {
+        "kind": "inspect",
+        "map": "rift_mine_road",
+        "target_entity": "a3_secret_airshaft_step_1",
+        "text": "南井清风记录",
+        "choices": {},
+        "correct": "",
+        "clue": "",
+        "wrong": "",
+        "completion": "南井空气清，北侧残烟要由西口排走。"
+      },
+      "steps": [
+        {
+          "kind": "inspect",
+          "map": "rift_mine_road",
+          "target_entity": "a3_secret_airshaft_step_1",
+          "text": "南井清风记录",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "南井空气清，北侧残烟要由西口排走。"
+        },
+        {
+          "kind": "align",
+          "map": "rift_mine_road",
+          "target_entity": "a3_secret_airshaft_step_2",
+          "text": "调整南井风轮",
+          "choices": {
+            "south": "引入南井清风",
+            "north": "把北井烟送回"
+          },
+          "correct": "south",
+          "clue": "南井引清风能把矿工等候区与烟道分开。",
+          "wrong": "北井烟会回到等候区，风轮可再调。",
+          "completion": "南井引清风能把矿工等候区与烟道分开。"
+        },
+        {
+          "kind": "align",
+          "map": "rift_mine_road",
+          "target_entity": "a3_secret_airshaft_step_3",
+          "text": "调整西口风轮",
+          "choices": {
+            "west": "向西口排烟",
+            "east": "封住西口"
+          },
+          "correct": "west",
+          "clue": "清风已经进入，必须有出口。翻车记录记的是西口。",
+          "wrong": "封住出口会积烟，打开西口再试。",
+          "completion": "清风已经进入，必须有出口。翻车记录记的是西口。"
+        },
+        {
+          "kind": "escort",
+          "map": "rift_mine_road",
+          "target_entity": "a3_secret_airshaft_step_4",
+          "text": "领矿工走安全线",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "矿工带着姓名牌回到霜关，最后一段烟线留在身后。"
+        }
+      ],
+      "objective_text": "南井清风记录 → 调整南井风轮 → 调整西口风轮 → 领矿工走安全线",
+      "reward": {
+        "gold": 340,
+        "exp": 180
+      },
+      "discovery": "a3_secret_airshaft",
+      "accept_dialogue": "旧炉息记录还有用。到矿道核对南北风口，调好双风轮，再把最后一队矿工领出烟线。",
+      "progress_dialogue": "现场记录可以逐项核对，错了还能重来。",
+      "ready_dialogue": "你把沿路发生的事记全了？让我看看。",
+      "completion_dialogue": "南井进风、西口排烟，最后一队人也出来了。轮岗簿添上名字，烟道不再遮住回路。",
+      "world_feedback": "南井进风、西口排烟，最后一队人也出来了。轮岗簿添上名字，烟道不再遮住回路。",
+      "completion_flags": {
+        "a3_secret_airshaft_done": true
+      }
+    },
+    {
+      "id": "a3_trade_switch",
+      "title": "两车都要到",
+      "category": "商旅",
+      "giver": "npc_frost_envoy",
+      "turn_in": "npc_frost_envoy",
+      "turn_in_map": "frost_post",
+      "map": "rift_mine_road",
+      "requires_story": "s28",
+      "clue": "铁料和药包都在矿道等候。先读两份货单，再选谁先发车；先后只影响停靠回应，两车最终都到。",
+      "objective": {
+        "kind": "inspect",
+        "map": "rift_mine_road",
+        "target_entity": "a3_trade_switch_step_1",
+        "text": "铁料货单",
+        "choices": {},
+        "correct": "",
+        "clue": "",
+        "wrong": "",
+        "completion": "铁料修轨，工坊等着换梁。"
+      },
+      "steps": [
+        {
+          "kind": "inspect",
+          "map": "rift_mine_road",
+          "target_entity": "a3_trade_switch_step_1",
+          "text": "铁料货单",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "铁料修轨，工坊等着换梁。"
+        },
+        {
+          "kind": "inspect",
+          "map": "rift_mine_road",
+          "target_entity": "a3_trade_switch_step_2",
+          "text": "药包货单",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "药包给守岗人换药，不能长久停在风口。"
+        },
+        {
+          "kind": "switch",
+          "map": "rift_mine_road",
+          "target_entity": "a3_trade_switch_step_3",
+          "text": "拨动双车道岔",
+          "choices": {
+            "iron": "铁料先行",
+            "medicine": "药包先行"
+          },
+          "correct": "",
+          "clue": "两辆车都能到。选择先行的一车，只影响停车位置与回应，报酬相同。",
+          "wrong": "",
+          "completion": "两辆车都能到。选择先行的一车，只影响停车位置与回应，报酬相同。"
+        },
+        {
+          "kind": "escort",
+          "map": "rift_mine_road",
+          "target_entity": "a3_trade_switch_step_4",
+          "text": "为后一车让道",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "另一辆车也顺着空轨出发，两份货单都盖上了到达印。"
+        }
+      ],
+      "objective_text": "铁料货单 → 药包货单 → 拨动双车道岔 → 为后一车让道",
+      "reward": {
+        "gold": 350,
+        "exp": 175
+      },
+      "discovery": "a3_trade_switch",
+      "accept_dialogue": "铁料和药包都在矿道等候。先读两份货单，再选谁先发车；先后只影响停靠回应，两车最终都到。",
+      "progress_dialogue": "现场记录可以逐项核对，错了还能重来。",
+      "ready_dialogue": "你把沿路发生的事记全了？让我看看。",
+      "completion_dialogue": "两车都已抵达。先后留下的是调度记录，没有任何一队的需要被永久丢下。",
+      "world_feedback": "两车都已抵达。先后留下的是调度记录，没有任何一队的需要被永久丢下。",
+      "completion_flags": {
+        "a3_trade_switch_done": true
+      }
+    },
+    {
+      "id": "a3_rel_snowwatch",
+      "title": "有人接的夜岗",
+      "category": "关系",
+      "giver": "npc_frost_guard",
+      "turn_in": "npc_frost_guard",
+      "turn_in_map": "frost_post",
+      "map": "frost_boardwalk",
+      "requires_story": "s28",
+      "clue": "沿栈道三处岗火走一圈，看清迎风和背风的位置。回程给轮岗图选一条安排，可以绕开敌影。",
+      "objective": {
+        "kind": "inspect",
+        "map": "frost_boardwalk",
+        "target_entity": "a3_rel_snowwatch_step_1",
+        "text": "南岗火",
+        "choices": {},
+        "correct": "",
+        "clue": "",
+        "wrong": "",
+        "completion": "南岗火迎风，守夜人需要换班。"
+      },
+      "steps": [
+        {
+          "kind": "inspect",
+          "map": "frost_boardwalk",
+          "target_entity": "a3_rel_snowwatch_step_1",
+          "text": "南岗火",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "南岗火迎风，守夜人需要换班。"
+        },
+        {
+          "kind": "inspect",
+          "map": "frost_boardwalk",
+          "target_entity": "a3_rel_snowwatch_step_2",
+          "text": "中岗火",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "中岗背风，可以停留交接。"
+        },
+        {
+          "kind": "inspect",
+          "map": "frost_boardwalk",
+          "target_entity": "a3_rel_snowwatch_step_3",
+          "text": "北岗火",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "北岗看得远，沿石脊回中岗不经过兽影。"
+        },
+        {
+          "kind": "mark",
+          "map": "frost_boardwalk",
+          "target_entity": "a3_rel_snowwatch_step_4",
+          "text": "补记轮岗安排",
+          "choices": {
+            "shift": "增一班守夜",
+            "shelter": "沿背风路换岗"
+          },
+          "correct": "",
+          "clue": "三处岗火都记好了。增一班守夜或沿背风路换岗都可照看整条路，报酬等值。",
+          "wrong": "",
+          "completion": "三处岗火都记好了。增一班守夜或沿背风路换岗都可照看整条路，报酬等值。"
+        }
+      ],
+      "objective_text": "南岗火 → 中岗火 → 北岗火 → 补记轮岗安排",
+      "reward": {
+        "gold": 330,
+        "exp": 170
+      },
+      "discovery": "a3_rel_snowwatch",
+      "accept_dialogue": "沿栈道三处岗火走一圈，看清迎风和背风的位置。回程给轮岗图选一条安排，可以绕开敌影。",
+      "progress_dialogue": "现场记录可以逐项核对，错了还能重来。",
+      "ready_dialogue": "你把沿路发生的事记全了？让我看看。",
+      "completion_dialogue": "轮岗图已经改好，背风灯也亮了。有人守夜，也有人知道下一班什么时候会来。",
+      "world_feedback": "轮岗图已经改好，背风灯也亮了。有人守夜，也有人知道下一班什么时候会来。",
+      "completion_flags": {
+        "a3_rel_snowwatch_done": true
+      }
+    },
+    {
+      "id": "a4_secret_oralbook",
+      "title": "三城口述",
+      "category": "秘闻",
+      "giver": "npc_scribe",
+      "turn_in": "npc_scribe",
+      "turn_in_map": "lorin_wilds",
+      "map": "lorin_wilds",
+      "requires_story": "s36",
+      "clue": "碑心的余纹已经读过。这次请你听三城亲历者说归路，记人的记忆，而不是再拓三道碑纹。",
+      "objective": {
+        "kind": "listen",
+        "map": "lorin_wilds",
+        "target_entity": "a4_secret_oralbook_step_1",
+        "text": "听城门旧识讲归路",
+        "choices": {},
+        "correct": "",
+        "clue": "",
+        "wrong": "",
+        "completion": "老赵记得的是终于能叫出名字的人。"
+      },
+      "steps": [
+        {
+          "kind": "listen",
+          "map": "lorin_wilds",
+          "target_entity": "a4_secret_oralbook_step_1",
+          "text": "听城门旧识讲归路",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "老赵记得的是终于能叫出名字的人。"
+        },
+        {
+          "kind": "listen",
+          "map": "shenyuan_port",
+          "target_entity": "a4_secret_oralbook_step_2",
+          "text": "听港口旧识讲归路",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "老鹭记得船回港时，第一声重新听见的潮钟。"
+        },
+        {
+          "kind": "listen",
+          "map": "frost_post",
+          "target_entity": "a4_secret_oralbook_step_3",
+          "text": "听霜关旧识讲归路",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "岑雪记得有人接岗，火没有在夜里熄掉。"
+        }
+      ],
+      "objective_text": "听城门旧识讲归路 → 听港口旧识讲归路 → 听霜关旧识讲归路",
+      "reward": {
+        "gold": 300,
+        "exp": 0
+      },
+      "discovery": "a4_secret_oralbook",
+      "accept_dialogue": "碑心的余纹已经读过。这次请你听三城亲历者说归路，记人的记忆，而不是再拓三道碑纹。",
+      "progress_dialogue": "现场记录可以逐项核对，错了还能重来。",
+      "ready_dialogue": "你把沿路发生的事记全了？让我看看。",
+      "completion_dialogue": "有人记得名字，有人记得货船，有人记得接班的灯。三份记忆合成一页，归路篇结案，八碑长线仍待追索。",
+      "world_feedback": "有人记得名字，有人记得货船，有人记得接班的灯。三份记忆合成一页，归路篇结案，八碑长线仍待追索。",
+      "completion_flags": {
+        "a4_secret_oralbook_done": true
+      }
+    },
+    {
+      "id": "a4_rel_nighttable",
+      "title": "归来的一桌",
+      "category": "关系",
+      "giver": "npc_port_worker",
+      "turn_in": "npc_port_worker",
+      "turn_in_map": "shenyuan_port",
+      "map": "lorin_wilds",
+      "requires_story": "s36",
+      "clue": "请边城、港口、霜关各一位旧识来短聚。顺序由你选，三段故事都会留在桌边，不再寄一次信。",
+      "objective": {
+        "kind": "listen",
+        "map": "lorin_wilds",
+        "target_entity": "a4_rel_nighttable_step_1",
+        "text": "邀请边城旧识",
+        "choices": {},
+        "correct": "",
+        "clue": "",
+        "wrong": "",
+        "completion": "边城旧识答应带一盏灯来。"
+      },
+      "steps": [
+        {
+          "kind": "listen",
+          "map": "lorin_wilds",
+          "target_entity": "a4_rel_nighttable_step_1",
+          "text": "邀请边城旧识",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "边城旧识答应带一盏灯来。"
+        },
+        {
+          "kind": "listen",
+          "map": "shenyuan_port",
+          "target_entity": "a4_rel_nighttable_step_2",
+          "text": "邀请港口旧识",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "港口旧识答应带修缆绳的旧结来。"
+        },
+        {
+          "kind": "listen",
+          "map": "frost_post",
+          "target_entity": "a4_rel_nighttable_step_3",
+          "text": "邀请霜关旧识",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "霜关旧识答应带轮岗簿来。"
+        },
+        {
+          "kind": "mark",
+          "map": "lorin_wilds",
+          "target_entity": "a4_rel_nighttable_step_4",
+          "text": "选择桌边先讲的故事",
+          "choices": {
+            "border": "先听边城的灯",
+            "port": "先听港口的绳结",
+            "frost": "先听霜关的轮岗簿"
+          },
+          "correct": "",
+          "clue": "三位旧识都在。先听一段，然后让另外两段也讲完；先后不改变奖励。",
+          "wrong": "",
+          "completion": "三位旧识都在。先听一段，然后让另外两段也讲完；先后不改变奖励。"
+        },
+        {
+          "kind": "listen",
+          "map": "lorin_wilds",
+          "target_entity": "a4_rel_nighttable_step_5",
+          "text": "听完桌边三段故事",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "灯、绳结和轮岗簿摆在同一张桌上，三段故事都收进册页。"
+        }
+      ],
+      "objective_text": "邀请边城旧识 → 邀请港口旧识 → 邀请霜关旧识 → 选择桌边先讲的故事 → 听完桌边三段故事",
+      "reward": {
+        "gold": 300,
+        "exp": 0
+      },
+      "discovery": "a4_rel_nighttable",
+      "accept_dialogue": "请边城、港口、霜关各一位旧识来短聚。顺序由你选，三段故事都会留在桌边，不再寄一次信。",
+      "progress_dialogue": "现场记录可以逐项核对，错了还能重来。",
+      "ready_dialogue": "你把沿路发生的事记全了？让我看看。",
+      "completion_dialogue": "桌边三段故事都讲完了。先听谁是自己的选择，后来的人仍能翻到每一段。",
+      "world_feedback": "桌边三段故事都讲完了。先听谁是自己的选择，后来的人仍能翻到每一段。",
+      "completion_flags": {
+        "a4_rel_nighttable_done": true
+      }
+    },
+    {
+      "id": "a4_eco_returnpath",
+      "title": "不采走的复苏",
+      "category": "生态",
+      "giver": "npc_port_keeper",
+      "turn_in": "npc_port_keeper",
+      "turn_in_map": "shenyuan_port",
+      "map": "tideflat",
+      "requires_story": "s36",
+      "clue": "回访潮芽和雪线花的恢复地点。这次只看足迹与土层，不采样；选一处放不伤植株的观察标记。",
+      "objective": {
+        "kind": "inspect",
+        "map": "tideflat",
+        "target_entity": "a4_eco_returnpath_step_1",
+        "text": "观察潮芽根际",
+        "choices": {},
+        "correct": "",
+        "clue": "",
+        "wrong": "",
+        "completion": "根际土层湿润，新足迹绕开了幼芽。"
+      },
+      "steps": [
+        {
+          "kind": "inspect",
+          "map": "tideflat",
+          "target_entity": "a4_eco_returnpath_step_1",
+          "text": "观察潮芽根际",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "根际土层湿润，新足迹绕开了幼芽。"
+        },
+        {
+          "kind": "inspect",
+          "map": "frost_boardwalk",
+          "target_entity": "a4_eco_returnpath_step_2",
+          "text": "观察雪线花土层",
+          "choices": {},
+          "correct": "",
+          "clue": "",
+          "wrong": "",
+          "completion": "花下土层回温，旧脚迹留在石脊而非根边。"
+        },
+        {
+          "kind": "mark",
+          "map": "tideflat",
+          "target_entity": "a4_eco_returnpath_step_3",
+          "text": "设立轻触观察标记",
+          "choices": {
+            "stone": "在空岸石面标记",
+            "wood": "在背风木桩标记"
+          },
+          "correct": "",
+          "clue": "把标记设在空岸石面，或背风木桩；两处都不触碰植株，报酬等值。",
+          "wrong": "",
+          "completion": "把标记设在空岸石面，或背风木桩；两处都不触碰植株，报酬等值。"
+        }
+      ],
+      "objective_text": "观察潮芽根际 → 观察雪线花土层 → 设立轻触观察标记",
+      "reward": {
+        "gold": 300,
+        "exp": 0
+      },
+      "discovery": "a4_eco_returnpath",
+      "accept_dialogue": "回访潮芽和雪线花的恢复地点。这次只看足迹与土层，不采样；选一处放不伤植株的观察标记。",
+      "progress_dialogue": "现场记录可以逐项核对，错了还能重来。",
+      "ready_dialogue": "你把沿路发生的事记全了？让我看看。",
+      "completion_dialogue": "潮芽扎稳了根，雪线花下的土层也回温。记录留在路边，植株留在原处。",
+      "world_feedback": "潮芽扎稳了根，雪线花下的土层也回温。记录留在路边，植株留在原处。",
+      "completion_flags": {
+        "a4_eco_returnpath_done": true
       }
     }
   ]

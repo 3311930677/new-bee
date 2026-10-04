@@ -1,4 +1,4 @@
-# Title.gd —— 原版古城插画、艺术字入场与右侧菜单。
+# Title.gd —— 清晰黄昏城院背景、艺术字入场与右侧菜单。
 extends Control
 const Wordmark := preload("res://src/ui/UIWordmark.gd")
 
@@ -26,7 +26,7 @@ func _ready() -> void:
 
 # ---------- 背景 ----------
 func _build_background() -> void:
-	G.page_background(self, 0.14, "res://image/background/enter.png")
+	G.page_background(self, 0.14, "res://image/background/courtyard_visual_v2.png", false)
 
 
 func _build_title() -> void:
@@ -168,7 +168,7 @@ class _EntranceButton extends Control:
 		mouse_filter = Control.MOUSE_FILTER_STOP
 		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		_label = G.serif_label(words, 20, Color("efdfbd"), false)
+		_label = G.serif_label(words, 26 if kind == 0 else 22, Color("efdfbd"), false)
 		_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		_label.add_theme_color_override("font_shadow_color", Color("0e0c09", 0.9))
 		_label.add_theme_constant_override("shadow_offset_y", 1)
@@ -183,8 +183,8 @@ class _EntranceButton extends Control:
 		_grain = _wood_texture()
 
 	func _place_label() -> void:
-		_label.position = Vector2(28, 1 if _pressed else 0)
-		_label.size = Vector2(size.x - 28, size.y)
+		_label.position = Vector2(36, 1 if _pressed else 0)
+		_label.size = Vector2(size.x - 36, size.y)
 
 	func set_active(active: bool) -> void:
 		if _hover_tween != null and _hover_tween.is_valid(): _hover_tween.kill()
@@ -217,32 +217,13 @@ class _EntranceButton extends Control:
 
 	func _draw() -> void:
 		if size.x < 1: return
-		var shift := 1.0 if _pressed else 0.0
-		draw_colored_polygon(_outline(1, 3), Color("110e0b", 0.68))
-		draw_colored_polygon(_outline(0, shift), Color("251e18"))
-		draw_colored_polygon(_outline(2, shift), Color("5c4930").lerp(Color("846742"), _light))
-		draw_texture_rect(_grain, Rect2(4, 4 + shift, size.x - 8, size.y - 8), false,
-			Color(1.0 + _light * 0.16, 1.0 + _light * 0.13, 1.0 + _light * 0.09))
-		var rim := Color("8b704c").lerp(Color("d8b97e"), _light)
-		var points := _outline(1, shift)
-		points.append(points[0])
-		draw_polyline(points, rim, 1.0)
-		draw_line(Vector2(8, 4 + shift), Vector2(size.x - 8, 4 + shift), Color("b49a6b", 0.55 + _light * 0.2), 1)
-		draw_line(Vector2(8, size.y - 4 + shift), Vector2(size.x - 8, size.y - 4 + shift), Color("130f0c"), 1)
-		draw_line(Vector2(4, 8 + shift), Vector2(4, size.y - 8 + shift), Color("a0875b", 0.6), 1)
-		draw_line(Vector2(size.x - 4, 8 + shift), Vector2(size.x - 4, size.y - 8 + shift), Color("15120d"), 1)
-		for at in [Vector2(8, size.y * 0.5 + shift), Vector2(size.x - 8, size.y * 0.5 + shift)]:
-			draw_colored_polygon(PackedVector2Array([at + Vector2(0, -4), at + Vector2(3, 0), at + Vector2(0, 4), at + Vector2(-3, 0)]), rim)
-			draw_rect(Rect2(at - Vector2.ONE, Vector2(2, 2)), Color("201a12"))
-		# 四角铆钉与短金属护片，沿背景的方形像素边缘落位。
-		for at in [Vector2(6, 8 + shift), Vector2(size.x - 8, 8 + shift),
-				Vector2(6, size.y - 10 + shift), Vector2(size.x - 8, size.y - 10 + shift)]:
-			draw_rect(Rect2(at - Vector2.ONE, Vector2(4, 4)), Color("17130e"))
-			draw_rect(Rect2(at, Vector2(2, 2)), Color("b19a70"))
-		var text_width := G.font_serif.get_string_size(_label.text, HORIZONTAL_ALIGNMENT_LEFT, -1, 20).x
-		var start := Vector2(floorf((size.x - text_width - 28) * 0.5), floorf((size.y - 18) * 0.5) + shift)
-		for y in 9:
-			for x in 9:
-				if SIGNS[_kind][y][x] == "1":
-					draw_rect(Rect2(start + Vector2(x * 2, y * 2 + 1), Vector2(2, 2)), Color("100e0a", 0.7))
-					draw_rect(Rect2(start + Vector2(x * 2, y * 2), Vector2(2, 2)), Color("beaa80").lerp(Color("f1dba3"), _light))
+		var offset := 1.0 if _pressed else 0.0
+		var fill := Color("582f36") if _kind == 0 else Color("292d33",0.92)
+		var accent := Color("d5a572") if _kind == 0 else Color("8d9994")
+		draw_colored_polygon(_outline(0,offset),fill.lightened(_light*0.06))
+		draw_line(Vector2(3,2+offset),Vector2(3,size.y-2+offset),accent,2)
+		draw_line(Vector2(7,size.y-1+offset),Vector2(size.x-1,size.y-1+offset),Color(accent,0.65),1)
+		var t := G.NavigationIcons.texture(["door","book","settings","back"][_kind])
+		if t != null: draw_texture_rect(t,Rect2(10,(size.y-24)*0.5+offset,24,24),false)
+		if _kind == 0:
+			draw_line(Vector2(size.x-10,12),Vector2(size.x-10,size.y-12),Color("e2c48c",0.4),1)

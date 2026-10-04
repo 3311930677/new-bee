@@ -92,7 +92,7 @@ func _build() -> void:
 	content.add_child(_claim_btn)
 
 	# 进化入口：对「当前页」的灵宠生效（P1-3）；与「返回」左右成对
-	var evolve := G.gold_button("进 化", 120, 38)
+	var evolve := G.ghost_button("进化", 120, 38)
 	evolve.position = Vector2(20, 480)
 	evolve.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:

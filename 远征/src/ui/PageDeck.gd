@@ -9,8 +9,8 @@ extends Control
 
 signal page_changed(i: int)
 
-const DOT_OFF := Color("9a8a68")
-const DOT_ON := Color("e2b95c")
+const DOT_OFF := Color("a99a76")
+const DOT_ON := Color("234746")
 const DOT_GAP := 8
 
 var page_count := 0:
@@ -105,17 +105,12 @@ func _arrow_btn(tex_name: String, pos: Vector2) -> Control:
 	root.custom_minimum_size = Vector2(22, 34)   # 命中区比箭头大一圈好点
 	root.position = pos
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
-	var tex: Texture2D = G.res_tex(tex_name)
-	if tex != null:
-		var pic := TextureRect.new()
-		pic.texture = tex
-		pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		pic.custom_minimum_size = Vector2(22, 21)
-		pic.size = Vector2(22, 34)
-		pic.position = Vector2(0, 6.5)
-		pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		root.add_child(pic)
+	root.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	var pic := G.ui_icon("back", Vector2(22,22), G.BANNER)
+	pic.position = Vector2(0,6)
+	if tex_name.ends_with("right"):
+		pic.flip_h = true
+	root.add_child(pic)
 	root.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			if tex_name.ends_with("left"):
@@ -197,8 +192,12 @@ func go(i: int, instant := false) -> void:
 	else:
 		Audio.sfx("ui_page")   # 翻页（instant 是初始化落位，不响）
 		_tween = create_tween()
-		_tween.tween_property(_track, "position", target, 0.22)\
-			.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		_tween.tween_property(_track, "position", target, 0.32)\
+			.set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
+		var page := _ensure_page(i)
+		if page != null:
+			page.modulate.a = 0.65
+			_tween.parallel().tween_property(page,"modulate:a",1.0,0.25)
 	_refresh_arrows()
 	_refresh_dots()
 	page_changed.emit(i)

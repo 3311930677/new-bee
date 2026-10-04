@@ -50,6 +50,15 @@ func _force_battle_end(b: BattleScene, result: String) -> void:
 	b.confirm_result()
 
 
+func _event_button(root: Node, wanted: String) -> Control:
+	if root == null: return null
+	if root is Button and String(root.text).replace(" ", "") == wanted.replace(" ", ""): return root as Control
+	for child in root.get_children():
+		if child is Label and String(child.text).replace(" ", "") == wanted.replace(" ", ""): return child.get_parent() as Control
+		var found := _event_button(child, wanted)
+		if found != null: return found
+	return null
+
 func _run() -> void:
 	# ---- A. 普通区构建 ----
 	var map := await _spawn_map("normal", 1, "pet_thunderhawk")
@@ -344,14 +353,19 @@ func _run() -> void:
 	smap.queue_free()
 	await get_tree().process_frame
 
-	# H4 事件：金币 80~150 随机
+	# H4 事件：明确选择后领取本局工钱
 	var emap := await _spawn_map("event", 1, "")
 	emap.st.gold = 0
 	emap._player.position = emap._interactable.position
 	for i in 6:
 		await get_tree().process_frame
-	_check(emap._interactable == null and emap.st.gold >= 80 and emap.st.gold <= 150,
-		"事件应得金币 80~150，实为 %d" % emap.st.gold)
+	_check(emap._puzzle_panel != null and emap.st.gold == 0, "接触事件只开选择，不能直接发钱")
+	var choice := _event_button(emap._puzzle_panel, preload("res://src/run/RunEvents.gd").row("forest").choices.work)
+	_check(choice != null, "主题事件实际行动按钮")
+	if choice != null: choice.gui_input.emit(_click())
+	await get_tree().process_frame
+	_check(emap._interactable == null and emap.st.gold == 140,
+		"行动一次领取140本局金币，实为 %d" % emap.st.gold)
 	emap.queue_free()
 	await get_tree().process_frame
 

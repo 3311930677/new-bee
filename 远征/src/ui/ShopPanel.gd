@@ -34,7 +34,9 @@ func _build() -> void:
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.add_child(content)
 
-	var tip := G.gold_label("路上捡来的材料可回收；购价和回收价各自明示。", G.FS_XS, false, G.TEXT_MUTED, false)
+	var service_mult := preload("res://src/world/RegionalTrust.gd").shop_mult(G,String(G.prog.get("main_world",{}).get("map_id","lorin_wilds")))
+	var service_line := "材料可回收；购价与回收价均明示。" if service_mult==1.0 else "本城往来便利：材料购价 -%d%%，回收价不变。"%roundi((1.0-service_mult)*100)
+	var tip := G.gold_label(service_line, G.FS_XS, false, G.TEXT_MUTED, false)
 	tip.position = Vector2(0, 2)
 	tip.custom_minimum_size = Vector2(CONTENT_W, 0)
 	content.add_child(tip)

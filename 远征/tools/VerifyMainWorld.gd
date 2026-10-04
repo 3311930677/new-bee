@@ -254,11 +254,14 @@ func _run() -> void:
 			break
 	_check(stable_npc != null, "主城应有马厩 NPC 可供名牌避让检查")
 	if stable_npc != null:
-		label_map._player.position = Vector2(480, 930)
+		# 名牌宽度、字体与角色大小可变：按实际题签位置构造相撞状态。
+		var overlap_position := stable_npc.global_position + Vector2(0,
+			float(stable_npc.get("_plate_top"))-label_map._player_tag.position.y)
+		label_map._player.global_position = overlap_position
 		label_city._check_interact()
 		_check(not bool(stable_npc.get("label_near")),
 			"玩家与马伯名牌相撞时，应优先保留玩家名牌")
-		label_map._player.position = Vector2(480, 980)
+		label_map._player.global_position = overlap_position+Vector2(0,50)
 		label_city._check_interact()
 		_check(bool(stable_npc.get("label_near")),
 			"名牌分开后，马伯名牌应恢复")
@@ -275,10 +278,10 @@ func _run() -> void:
 	add_child(mounted)
 	await get_tree().process_frame
 	_check(mounted._mount_anim != null and mounted._mount_anim.visible
-		and not mounted._player_anim.visible
+		and mounted._player_anim.visible and mounted._player_anim.z_index>mounted._mount_anim.z_index
 		and mounted._mount_btn != null and mounted._mount_btn.visible
 		and (mounted._player_shape.shape as RectangleShape2D).size == Vector2(42, 28),
-		"主世界骑乘须显示四向马、隐藏步行人物并扩大窄路碰撞盒")
+		"主世界骑乘须显示四向步态马与当前职业骑手并使用窄路碰撞盒")
 	_check(mounted._mount_clearance(), "主街空地应允许上马")
 	var toggle_slot := Audio.sfx_slot()
 	mounted._toggle_mount()

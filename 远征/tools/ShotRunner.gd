@@ -10,6 +10,9 @@ var _output := ""
 var _role := "zs"
 var _direction := "down"
 var _source_save := ""
+var _building := ""
+var _avatar := ""
+var _fresh := false
 
 
 func _ready() -> void:
@@ -30,8 +33,21 @@ func _ready() -> void:
 			_role = a.trim_prefix("--role=")
 		elif a.begins_with("--direction="):
 			_direction = a.trim_prefix("--direction=")
+		elif a.begins_with("--building="):
+			_building = a.trim_prefix("--building=")
+		elif a.begins_with("--avatar="):
+			_avatar = a.trim_prefix("--avatar=")
+		elif a == "--fresh":
+			_fresh = true
 		elif a.begins_with("--source-save="):
 			_source_save = a.trim_prefix("--source-save=")
+	if not _avatar.is_empty():
+		G.avatar_id = G.AvatarPresets.resolve(_avatar)
+		G.avatar_use_custom = false
+	if _fresh:
+		G.account = ""
+		G.player_name = ""
+		G.selected_role = ""
 	await _setup()
 	for i in _frames:
 		await get_tree().process_frame
@@ -253,7 +269,7 @@ func _companion_demo() -> void:
 	battle._on_event({"t":"companion_trait","trait":tid,"src":pet.uid,"uid":target.uid,"amount":35})
 	_frames = 8
 
-## 用已验收存档的真实字段渲染界面；只有相机/位置为截图摆位，不作为输入验证。
+## 用隔离存档的真实字段结构渲染界面；预览构图不作为自然通关或输入验证。
 func _curriculum_region_demo() -> void:
 	G.SAVE_PATH = "res://tools/_logs/save_shot_curriculum_region.json"
 	var raw := FileAccess.get_file_as_string(_source_save)
@@ -356,7 +372,7 @@ func _campaign_demo() -> void:
 		if world._battle != null: world._battle.speed = 0.0 # QA composition, not input replay.
 
 
-## Layout staging only; source files are isolated, verified playthrough saves.
+## Layout staging only; source files may be explicit visual fixtures or playthrough copies.
 func _gear_demo() -> void:
 	if _scene == "gear_world":
 		await _campaign_demo()
@@ -372,7 +388,10 @@ func _gear_demo() -> void:
 	if not G.reload_save() or G.save_locked:
 		push_error("SHOT_SOURCE_LOAD_FAILED")
 		return
-	if _scene == "gear_pending" and not bool(G.campaign_gear_claim().ok):
+	if _scene == "gear_pending":
+		var missing := G.inv_capacity() - G.inv_count()
+		if missing > 0: G.inv_grant_equip({"tpl":"tpl_armor_basic","n":missing},false)
+	if not bool(G.campaign_gear_claim().ok):
 		push_error("SHOT_GEAR_CLAIM_FAILED")
 		return
 	var home: Control = load("res://src/ui/GameHome.tscn").instantiate()
@@ -489,7 +508,7 @@ func _city_panel_demo() -> void:
 	if cc == null:
 		push_error("SHOT_SETUP_FAILED 城内内容缺失 " + mid)
 		return
-	var target_bid := "archive" if not use_port else "gate"
+	var target_bid := _building if not _building.is_empty() else ("archive" if not use_port else "gate")
 	match _scene:
 		"city_shop":
 			cc.call("_open_shop")
@@ -607,7 +626,7 @@ func _setup() -> void:
 		"third_side_choice", "third_side_coal", "third_side_shield", "third_side_nameplate", "third_side_lichen", "third_side_vents", "third_side_parcel", "third_side_echo":
 			await _third_side_demo()
 		"load":
-			# 加载页满 1s 会自动切 Title，节点在截帧前就被释放（报 data.tree is null）；
+			# 加载页完成入场动画会自动切 Title，节点在截帧前就被释放（报 data.tree is null）；
 			# 关掉自动推进让它停在页面上，纯为出图。
 			var ls: Node = load("res://src/ui/LoadScreen.tscn").instantiate()
 			ls.set("auto_advance", false)
@@ -744,6 +763,9 @@ func _setup() -> void:
 				"main_world_battle_projectile", "main_world_pet_guard"]:
 				await get_tree().process_frame
 				world._start_battle(world._monsters[0])
+				# 指令与技能截图定格模拟，避免机器较慢时截图已经跳到结算页。
+				if world._battle != null and _scene in ["main_world_battle_commands", "main_world_battle_skills"]:
+					world._battle.speed = 0.0
 				if _scene == "main_world_battle_projectile" and world._battle != null:
 					world._battle.speed = 0.0
 					var role := world._battle.sim.role_unit()
@@ -1504,6 +1526,8 @@ func _setup() -> void:
 			forge.call("_refresh")
 		"talent", "equip", "pet_raise", "skillbook", "mount", "titles":
 			_growth_demo()
+			if _scene == "pet_raise":
+				G.prog["tips_seen"] = {"pet_raise": true}
 			var h2: Node = load("res://src/ui/GameHome.tscn").instantiate()
 			add_child(h2)
 			h2.call("_open_growth")

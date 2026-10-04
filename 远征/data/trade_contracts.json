@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "deposit": 60,
+  "insured_fee": 8,
+  "insured_profit": 25,
+  "self_profit": 55,
+  "obstruction_loss": 25,
+  "deadline_days": 3,
+  "extension_days": 2,
+  "extension_fee": 12,
+  "grace_days": 3,
+  "templates": [
+    {
+      "id": "bridge_iron",
+      "name": "昭元修桥铁料",
+      "origin": "city_market",
+      "destination": "shenyuan_market",
+      "unlock": "s20",
+      "cargo": {
+        "trade_iron": 2
+      },
+      "route_map": "old_salt_road",
+      "at": [
+        420,
+        600
+      ],
+      "route_name": "核准旧盐道桥绳"
+    },
+    {
+      "id": "port_salt",
+      "name": "沉渊定价盐仓",
+      "origin": "shenyuan_market",
+      "destination": "city_market",
+      "unlock": "s20",
+      "cargo": {
+        "trade_salt": 2
+      },
+      "route_map": "old_salt_road",
+      "at": [
+        540,
+        560
+      ],
+      "route_name": "清出盐车停靠位"
+    },
+    {
+      "id": "frost_grain",
+      "name": "霜关轮岗粮箱",
+      "origin": "frost_market",
+      "destination": "shenyuan_market",
+      "unlock": "s28",
+      "cargo": {
+        "trade_grain": 2
+      },
+      "route_map": "red_sand_route",
+      "at": [
+        420,
+        650
+      ],
+      "route_name": "加固赤砂补给绳"
+    }
+  ]
+}

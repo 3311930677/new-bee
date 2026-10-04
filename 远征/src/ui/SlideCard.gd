@@ -59,6 +59,10 @@ func _init(config: Dictionary = {}) -> void:
 func _ready() -> void:
 	_build()
 	_apply_size()
+	# 换行高度要等容器分配宽度后才准确；文案变高时把空间从插画让出来。
+	if _lines != null:
+		_lines.minimum_size_changed.connect(_apply_size)
+	_apply_size.call_deferred()
 
 
 func _notification(what: int) -> void:
@@ -132,7 +136,7 @@ func _build() -> void:
 	_art.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_art.size_flags_stretch_ratio = 8.0
 	var asb := StyleBoxFlat.new()
-	asb.bg_color = Color("faf3e0")
+	asb.bg_color = G.Visuals.palette(self).paper.lightened(0.055)
 	# 3px 圆角 ≈ 八边形切角语言（与 PaperPanel/PixelButton 的 cut=3 同宽）
 	asb.set_corner_radius_all(3)
 	asb.set_border_width_all(1)
@@ -185,19 +189,11 @@ func _draw() -> void:
 	var sz := size
 	if sz.x < 12.0 or sz.y < 12.0:
 		return
-	var cut := 3.0
-	var bg := Color("f7eed4") if _sel_on else Color("f0e4c4")
-	G.draw_hard_shadow(self, sz, cut, 2.0, Color("170f07", 0.28))
-	draw_colored_polygon(G.octagon_path(sz, 0.0, cut), bg)
-	var i1 := cut + 3.0
-	draw_line(Vector2(i1, i1), Vector2(sz.x - i1, i1), Color("8a744f", 0.28), 1.0)
-	draw_line(Vector2(i1, sz.y - i1), Vector2(sz.x - i1, sz.y - i1), Color("8a744f", 0.20), 1.0)
-	draw_line(Vector2(cut + 3.0, 1), Vector2(sz.x - cut - 3.0, 1), Color("fff6dd", 0.55), 1.0)
-	draw_line(Vector2(cut + 3.0, sz.y - 1), Vector2(sz.x - cut - 3.0, sz.y - 1),
-		Color("6d5a3a", 0.22), 1.0)
-	var rim := G.octagon_path(sz, 0.5, cut)
-	rim.append(rim[0])
-	draw_polyline(rim, G.GOLD_BRIGHT if _sel_on else Color("c0a068"), 2.0 if _sel_on else 1.0)
+	G.draw_paper_body(self,sz,G.paper_grain())
+	if _sel_on:
+		var rim := G.octagon_path(sz,1.5,5)
+		rim.append(rim[0])
+		draw_polyline(rim,G.GOLD_BRIGHT,2)
 
 
 ## 插画高 = 卡片高 × art_ratio，只作「下限」用：多出来的空间由 art 的 EXPAND 吸收，
@@ -206,7 +202,19 @@ func _apply_size() -> void:
 	if _art == null:
 		return
 	var ratio := float(cfg.get("art_ratio", 0.36))
-	_art.custom_minimum_size.y = clampf(size.y * ratio, 44.0, 320.0)
+	var target_h := custom_minimum_size.y if custom_minimum_size.y > 12 else size.y
+	var fixed_h := _sb.content_margin_top + _sb.content_margin_bottom
+	var col := _art.get_parent() as VBoxContainer
+	var visible_count := 0
+	for child in col.get_children():
+		if not (child as Control).visible: continue
+		visible_count += 1
+		if child != _art:
+			fixed_h += (child as Control).get_combined_minimum_size().y
+	fixed_h += maxf(0, visible_count-1) * col.get_theme_constant("separation")
+	_art.custom_minimum_size.y = minf(clampf(target_h*ratio,44,320),maxf(44,target_h-fixed_h))
+	if size.y > target_h+1:
+		set_deferred("size",Vector2(size.x,target_h))
 
 
 # ---------- 状态 ----------
@@ -214,6 +222,10 @@ func set_selected(on: bool) -> void:
 	if _sb == null:
 		return
 	_sel_on = on
+	if on and _title != null and DisplayServer.get_name() != "headless":
+		var tw := _title.create_tween()
+		_title.modulate = Color(1.18,1.08,0.92)
+		tw.tween_property(_title,"modulate",Color.WHITE,0.32)
 	queue_redraw()
 
 

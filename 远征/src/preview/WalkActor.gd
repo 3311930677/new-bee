@@ -1,6 +1,8 @@
 extends CharacterBody2D
 ## Foot origin (64,120); pixels/second drives both translation and gait playback.
 
+const DirectionalIdle := preload("res://src/world/DirectionalIdle.gd")
+
 var controlled := false
 var movement_enabled := true
 var speed := 60.0
@@ -15,7 +17,7 @@ func configure(frames: SpriteFrames, speed_multiplier := 1.0) -> void:
 	sprite.offset = Vector2(-64, -120)
 	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	sprite.animation = &"walk_down"
-	sprite.frame = 1
+	DirectionalIdle.stop(sprite)
 	add_child(sprite)
 	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 	var collision := CollisionShape2D.new()
@@ -37,19 +39,14 @@ func _physics_process(delta: float) -> void:
 	global_position.y = clampf(global_position.y, 230.0, 690.0)
 	var actual_velocity := (global_position - before) / delta
 	if actual_velocity.length() < 0.5:
-		sprite.stop()
-		sprite.frame = 1 # passing pose is the most neutral grounded stop frame
+		DirectionalIdle.stop(sprite)
 		return
 	if absf(actual_velocity.x) > absf(actual_velocity.y):
 		facing = "right" if actual_velocity.x > 0 else "left"
 	else:
 		facing = "down" if actual_velocity.y > 0 else "up"
 	var animation := StringName("walk_" + facing)
-	if sprite.animation != animation:
-		var gait_frame := sprite.frame
-		var gait_progress := sprite.frame_progress
-		sprite.animation = animation
-		sprite.set_frame_and_progress(gait_frame, gait_progress)
-	# 4 key frames / 8 FPS = .5 seconds; playback follows actual speed.
+	DirectionalIdle.change_walk_direction(sprite, animation)
+	# Playback follows actual movement speed and the resource's authored cadence.
 	sprite.speed_scale = actual_velocity.length() / 60.0
 	sprite.play(animation)

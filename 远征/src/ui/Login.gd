@@ -1,199 +1,139 @@
-# Login.gd —— 登录界面（参考风：棕木匾 + 羊皮纸面板 + 金按钮）
+# Login.gd —— 旅人登记卡，个人头像与职业分开。
 extends Control
 
-const BG_W := 971.0
-const BG_H := 1619.0
+const UI := preload("res://src/ui/JournalUI.gd")
+const Wordmark := preload("res://src/ui/UIWordmark.gd")
 const VIEW_W := 480.0
-const VIEW_H := 800.0
+const AVATAR_IDS := ["fox", "cat", "turtle", "snow", "custom"]
 
 var _account: LineEdit
 var _password: LineEdit
-var _avatar_caption: Label = null
+var _paper: PanelContainer
+var _footer: Label
+var _wordmark: Control
+var _subtitle: Label
 var _avatar_buttons: Array[Control] = []
-var _avatar_row: HBoxContainer = null
-var _avatar_dialog: FileDialog = null
-var _toast: Label = null
-
-const AVATAR_IDS := ["zs", "ck", "fs", "fz", "custom"]
-const AVATAR_NAMES := {"zs": "破军", "ck": "穿杨", "fs": "霜语", "fz": "晨星", "custom": "自定义"}
+var _avatar_row: HBoxContainer
+var _avatar_dialog: FileDialog
+var _toast: Label
 
 
 func _ready() -> void:
-	G.center_fixed_page.call_deferred(self)
-	_build_background()
+	G.page_background(self, 0.18, "res://image/background/courtyard_visual_v2.png", false)
 	_build_banner()
 	_build_panel()
-
-
-# ---------- 背景 ----------
-func _build_background() -> void:
-	G.page_background(self, 0.25)
+	resized.connect(_layout_page)
+	_layout_page.call_deferred()
 
 
 func _build_banner() -> void:
-	var b := G.banner_box("登录", 200, 54)
-	b.set_anchors_preset(Control.PRESET_CENTER_TOP)
-	b.position = Vector2(-100, 46)
-	add_child(b)
-
-	# 左上「返回」：登录是标题页的下级，手游必须有能点的回头路（原来只有 ESC）。
-	# 用金钮而不是幽灵钮：登录页背后是深色晚霞插画，幽灵钮的深棕字在这块底上看不清
-	var back := G.gold_button("返回", G.BTN_S.x, G.BTN_S.y, G.FS_SM)
-	G.button_icon(back, "back")
-	back.position = Vector2(16, 52)
-	back.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			G.go("res://src/ui/Title.tscn"))
+	var back := UI.button("返回", 80, 44, "dark_quiet", "back")
+	back.position = Vector2(26, 38)
+	back.pressed.connect(func(): G.go("res://src/ui/Title.tscn"))
 	add_child(back)
+	_wordmark = Wordmark.new()
+	_wordmark.size = Vector2(248, 122)
+	add_child(_wordmark)
+	_subtitle = UI.label("昭元行旅录", 15, Color("ead6ad"), true)
+	_subtitle.size.x = 480
+	_subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_subtitle.add_theme_color_override("font_shadow_color", Color("152a29"))
+	_subtitle.add_theme_constant_override("shadow_offset_y", 2)
+	add_child(_subtitle)
 
 
-# ---------- 面板 ----------
 func _build_panel() -> void:
-	var panel := G.parchment_box(400, 470, 22.0)
-	panel.position = Vector2(40, 160)
-	add_child(panel)
-
-	var box := VBoxContainer.new()
-	box.add_theme_constant_override("separation", 18)
-	panel.add_child(box)
-
-	# 页面标题只在顶部木匾出现一次（"登录"）。面板里原来还有一行"账号登录"，
-	# 和木匾重复、还跟输入框抢视线——按"操作页不是海报"的原则去掉，让面板直接从说明开始。
-	var account_hint := G.gold_label("欢迎来到昭元", G.FS_XS, false, G.TEXT_MUTED, false)
-	box.add_child(account_hint)
-
-	var sep := ColorRect.new()
-	sep.color = Color(G.BANNER.r, G.BANNER.g, G.BANNER.b, 0.45)
-	sep.custom_minimum_size = Vector2(0, 2)
-	box.add_child(sep)
-
-	_account = _field(box, "账号", "请输入账号", false)
-	_password = _field(box, "密码", "请输入密码", true)
-	_build_avatar_picker(box)
-
-	# 老玩家：预填账号，提示语从「创建角色」换成「继续远征」
-	var hint_text := "首次进入后创建角色"
-	if G.has_profile() or not G.selected_role.is_empty():
-		hint_text = "继续上次旅程"
+	_paper = UI.paper(408, 512, 26)
+	_paper.name = "RegistrationCard"
+	add_child(_paper)
+	var content := Control.new()
+	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_paper.add_child(content)
+	var title := UI.art_label("旅人登记", 30, UI.GOLD)
+	title.position = Vector2(0, -1)
+	content.add_child(title)
+	var returning := G.has_profile() or not G.selected_role.is_empty()
+	_put_label(content, "欢迎回来，继续上次旅程。" if returning else "欢迎来到昭元，旅人。",
+		Vector2(0, 43), 14, Color("c4b994"), true)
+	UI.stamp(content, Vector2(318, -2))
+	_put_label(content, "账号", Vector2(0, 106), 16, UI.INK, true)
+	_account = UI.field("你的账号")
+	_account.name = "Account"
+	_account.position = Vector2(66, 96)
+	_account.size = Vector2(290, 44)
+	content.add_child(_account)
+	_put_label(content, "密码", Vector2(0, 162), 16, UI.INK, true)
+	_password = UI.field("输入密码", true)
+	_password.name = "Password"
+	_password.position = Vector2(66, 152)
+	_password.size = Vector2(290, 44)
+	content.add_child(_password)
+	if returning:
 		_account.text = G.account
-		_account.caret_column = _account.text.length()
-	var hint := G.gold_label(hint_text, G.FS_XS, false, G.TEXT_MUTED, false)
-	box.add_child(hint)
-
-	var row := HBoxContainer.new()
-	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	row.add_theme_constant_override("separation", 18)
-	box.add_child(row)
-
-	var ok := G.gold_button("登录", G.BTN_M.x, G.BTN_M.y)
-	var guest := G.ghost_button("游客登录", G.BTN_M.x, G.BTN_M.y)
-	G.button_icon(ok, "door")
-	G.button_icon(guest, "person")
-	row.add_child(ok)
-	row.add_child(guest)
-
-	ok.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed:
-			_do_login(false)
-	)
-	guest.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed:
-			_do_login(true)
-	)
-
-	_account.grab_focus()
-
-	# 底部弱信息：登录页是操作页，不再靠大标题和背景抢中心。
-	var legal := G.gold_label("旅途进度自动保存", G.FS_XS, false,
-		Color("ead7b0", 0.72), false)
-	legal.position = Vector2(0, 760)
-	legal.custom_minimum_size = Vector2(VIEW_W, 0)
-	legal.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	add_child(legal)
+	_account.text_submitted.connect(func(_text: String): _password.grab_focus())
+	_password.text_submitted.connect(func(_text: String): _do_login(false))
+	_build_avatar_picker(content)
+	var login := UI.button("登录入城", 356, 48, "primary")
+	login.name = "LoginButton"
+	login.position = Vector2(0, 350)
+	login.pressed.connect(func(): _do_login(false))
+	content.add_child(login)
+	var guest := UI.button("游客入城", 356, 44, "quiet")
+	guest.name = "GuestButton"
+	guest.position = Vector2(0, 406)
+	guest.pressed.connect(func(): _do_login(true))
+	content.add_child(guest)
+	_footer = UI.label("旅途进度自动保存在本机", 14, Color("d5c19a"))
+	_footer.size.x = VIEW_W
+	_footer.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	add_child(_footer)
 
 
-func _build_avatar_picker(box: VBoxContainer) -> void:
-	var title := G.gold_label("头像", G.FS_SM, false, G.TEXT_MUTED, false)
-	box.add_child(title)
-	var row := HBoxContainer.new()
-	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	row.add_theme_constant_override("separation", 7)
-	box.add_child(row)
-	_avatar_row = row
-	_avatar_buttons.clear()
+func _layout_page() -> void:
+	preload("res://src/ui/UiSafeArea.gd").restore_page(self)
+	var height := maxf(800, get_viewport_rect().size.y)
+	_paper.position = Vector2(36, maxf(214, (height - 512) * 0.5 + 50))
+	_wordmark.position = Vector2(116, _paper.position.y - 164)
+	_subtitle.position.y = _paper.position.y - 38
+	_footer.position = Vector2(0, height - 48)
+	G.fit_mobile_page(self)
+
+
+func _put_label(parent: Control, text: String, at: Vector2,
+		font_size := 14, color := UI.INK, serif := false) -> Label:
+	var node := UI.label(text, font_size, color, serif)
+	node.position = at
+	parent.add_child(node)
+	return node
+
+
+func _build_avatar_picker(content: Control) -> void:
+	_put_label(content, "旅人小像", Vector2(0, 216), 17, UI.INK, true)
+	var note := _put_label(content, "随时可以换", Vector2(240, 219), 14, UI.MUTED)
+	note.size.x = 116
+	note.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_avatar_row = HBoxContainer.new()
+	_avatar_row.position = Vector2(0, 246)
+	_avatar_row.size = Vector2(356, 84)
+	_avatar_row.add_theme_constant_override("separation", 19)
+	content.add_child(_avatar_row)
 	for id in AVATAR_IDS:
 		var card := _avatar_card(id)
-		row.add_child(card)
+		_avatar_row.add_child(card)
 		_avatar_buttons.append(card)
-	var selected := "custom" if G.avatar_use_custom and G.has_custom_avatar() \
-		else (G.avatar_id if AVATAR_IDS.has(G.avatar_id) else G.selected_role)
-	if not AVATAR_IDS.has(selected):
-		selected = "zs"
-	_select_avatar(selected)
-	_avatar_caption = G.gold_label("头像：%s · 点击更换" % String(AVATAR_NAMES.get(selected, "破军")),
-		G.FS_XS, false, G.TEXT_MUTED, false)
-	box.add_child(_avatar_caption)
-	_avatar_caption.visible = false
+	_refresh_avatar_selection()
 
 
-func _avatar_card(id: String) -> Control:
-	var root := Control.new()
-	root.custom_minimum_size = Vector2(60, 78)
-	root.mouse_filter = Control.MOUSE_FILTER_STOP
-	root.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	root.set_meta("avatar_id", id)
-	var card := Panel.new()
-	card.name = "Card"
-	card.size = Vector2(60, 60)
-	card.clip_contents = true
-	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color("dcc9a0")
-	sb.set_corner_radius_all(2)
-	sb.set_border_width_all(2)
-	sb.border_color = G.BOX_EDGE
-	card.add_theme_stylebox_override("panel", sb)
-	root.set_meta("style", sb)
-	root.add_child(card)
-	var tex: Texture2D = null
-	if id == "custom":
-		tex = G.custom_avatar_texture()
-	else:
-		tex = load(G.role_icon_path(id)) as Texture2D
-	if tex != null:
-		var pic := TextureRect.new()
-		pic.texture = tex
-		pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		pic.custom_minimum_size = Vector2(48, 48)
-		pic.position = Vector2(6, 6)
-		pic.size = Vector2(48, 48)
-		pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		card.add_child(pic)
-	else:
-		var plus := G.serif_label("+", G.FS_LG, G.BANNER, false)
-		plus.position = Vector2(0, 8)
-		plus.size = Vector2(60, 44)
-		plus.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		card.add_child(plus)
-	var mark := G.gold_label("✓", G.FS_XS, true, G.GOLD, false)
-	mark.name = "SelectedMark"
-	mark.position = Vector2(45, 2)
-	mark.size = Vector2(15, 18)
-	mark.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	mark.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	mark.visible = false
-	card.add_child(mark)
-	var nm := G.gold_label(String(AVATAR_NAMES.get(id, id)), G.FS_XS, false, G.TEXT_MUTED, false)
-	nm.position = Vector2(0, 62)
-	nm.size = Vector2(60, 16)
-	nm.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	root.add_child(nm)
-	root.tooltip_text = "点击上传图片" if id == "custom" else String(AVATAR_NAMES.get(id, id))
-	root.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_select_avatar(id))
-	return root
+func _avatar_card(id: String) -> Button:
+	var card := UI.avatar_card(id)
+	card.pressed.connect(func(): _select_avatar(id))
+	return card
+
+
+func _refresh_avatar_selection() -> void:
+	var selected := "custom" if G.avatar_use_custom and G.has_custom_avatar() else G.current_avatar_id()
+	for card in _avatar_buttons:
+		UI.select_card(card, String(card.get_meta("avatar_id")) == selected)
 
 
 func _select_avatar(id: String) -> void:
@@ -204,19 +144,9 @@ func _select_avatar(id: String) -> void:
 			_open_avatar_picker()
 			return
 	else:
-		G.use_role_avatar(id)
-	for card in _avatar_buttons:
-		var sb := card.get_meta("style") as StyleBoxFlat
-		var active := String(card.get_meta("avatar_id", "")) == id
-		if sb != null:
-			sb.bg_color = Color("f4e8c8") if active else Color("dcc9a0")
-			sb.border_color = G.GOLD if active else G.BOX_EDGE
-			sb.set_border_width_all(3 if active else 2)
-		var mark := card.get_node_or_null("Card/SelectedMark") as Label
-		if mark != null:
-			mark.visible = active
-	if _avatar_caption != null:
-		_avatar_caption.text = "头像：%s · 点击更换" % String(AVATAR_NAMES.get(id, id))
+		G.use_preset_avatar(id)
+	Audio.sfx("ui_click")
+	_refresh_avatar_selection()
 
 
 func _avatar_picker() -> FileDialog:
@@ -261,28 +191,6 @@ func _build_avatar_cards_again() -> void:
 	_select_avatar("custom")
 
 
-func _field(box: VBoxContainer, label: String, ph: String, secret: bool) -> LineEdit:
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 10)
-	box.add_child(row)
-
-	var l := G.gold_label(label, G.FS_MD, true, G.BANNER, false)
-	l.custom_minimum_size = Vector2(56, 0)
-	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	row.add_child(l)
-
-	var le := LineEdit.new()
-	le.placeholder_text = ph
-	le.secret = secret
-	le.max_length = 16
-	le.custom_minimum_size = Vector2(260, 46)
-	le.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	G.style_line_edit(le, G.FS_MD)
-	row.add_child(le)
-	return le
-
-
 # ---------- 登录 ----------
 func _do_login(guest: bool) -> void:
 	if guest:
@@ -312,14 +220,16 @@ func _do_login(guest: bool) -> void:
 func _toast_msg(msg: String) -> void:
 	if _toast != null:
 		_toast.queue_free()
-	_toast = G.gold_label(msg, G.FS_MD, false, Color("ffd0d0"))
-	_toast.position = Vector2(0, 620)
+	_toast = UI.label(msg, 14, Color("e5b4a2"))
+	_toast.position = Vector2(0, _paper.position.y + 524)
 	_toast.custom_minimum_size = Vector2(VIEW_W, 0)
+	_toast.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(_toast)
+	var toast := _toast
 	var tw := create_tween()
 	tw.tween_interval(1.1)
-	tw.tween_property(_toast, "modulate:a", 0.0, 0.4)
-	tw.tween_callback(_toast.queue_free)
+	tw.tween_property(toast, "modulate:a", 0.0, 0.4)
+	tw.tween_callback(toast.queue_free)
 
 
 func _unhandled_input(event: InputEvent) -> void:

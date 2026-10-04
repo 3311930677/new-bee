@@ -255,7 +255,7 @@ func _title_card(t: Dictionary) -> Control:
 				_refresh(true))
 	elif met:
 		btn = G.gold_button("领 取", G.BTN_S.x - 24, 34, G.FS_SM)
-		(btn.get_child(0) as Label).add_theme_color_override("font_color", Color("a03020"))
+		(btn.get_child(0) as Label).add_theme_color_override("font_color", Color("f1dab1"))
 		btn.gui_input.connect(func(ev: InputEvent):
 			if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
 				_on_claim(tid))

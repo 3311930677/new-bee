@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "oaths": [
+    {"id":"shelter","name":"庇护","desc":"护送路边旅人到安全点；防御 +5%，攻击 -5%，药剂回复 +5%。","action":"escort","target":"护送旅人到路旁安全点","art":"post","bonus":{"atk_pct":-0.05,"def_pct":0.05},"potion_mult":1.05,"reward":{"item:pet_food":2},"record":"守护纹样"},
+    {"id":"conquest","name":"征伐","desc":"击退地图上的誓约前哨；攻击 +5%，药剂回复 -5%。","action":"defeat","target":"誓约前哨","art":"tracks","bonus":{"atk_pct":0.05},"potion_mult":0.95,"reward":{"item:enhance_stone":2},"record":"前哨纹样"},
+    {"id":"harvest","name":"丰收","desc":"清理路边障碍、留根采样；攻击 -5%，完成目标多获一份普通培养材料。","action":"repair","target":"清理路障并留根采样","art":"root","bonus":{"atk_pct":-0.05},"potion_mult":1.0,"reward":{"item:enhance_stone":2,"item:pet_food":1},"record":"行旅营帐纹样"}
+  ]
+}

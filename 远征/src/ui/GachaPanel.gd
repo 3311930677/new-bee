@@ -14,6 +14,7 @@ const VIEW_W := 480.0
 const RARITY_ORDER := ["white", "blue", "purple", "gold"]
 # 稀有度色/名全项目唯一定义在 G.gd（C6），这里只引用，不再各自复制一份
 const GScript := preload("res://src/autoload/G.gd")
+const Finesse := preload("res://src/ui/UIFinesse.gd")
 const RARITY_NAME := GScript.RARITY_NAME
 const RARITY_HUE := GScript.RARITY_HUE
 # 十连网格：5 列 × 2 行。卡 86×115、列距 92、行距 131，整排落在 13..467，不出 480
@@ -55,14 +56,26 @@ var _again_sub: Label = null
 # 最近一次召唤（模式 + 明细），「再抽一次」按 _last_mode 重放
 var _last_mode := ""
 var _results: Array = []
+var _ceremony: Finesse.Sigil
+var _ceremony_label: Label
+var _presentation: Tween
+var _arriving := false
+var _revealing := false
+var _reveal_epoch := 0
+## 回归与静态出图可关闭入场，实际交互始终使用完整演出。
+var presentation_enabled := true
 
 
 func _ready() -> void:
-	G.center_fixed_page.call_deferred(self)
+	_center_page.call_deferred()
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_build()
 	_build_result()
 	_refresh_top()
+
+
+func _center_page() -> void:
+	G.center_fixed_page(self)
 
 
 # ================= 配置表 =================
@@ -140,18 +153,23 @@ func _build() -> void:
 	# 顶部信息带：本期主打 + 保底进度
 	# （原来是冷色「蓝城堡」横幅素材，压在暖色羊皮纸上像贴错了图；改成同族木色内嵌带）
 	var head := _inset_band(Vector2(CONTENT_W, 104), Vector2(0, 0))
+	(head as G.InsetBand).set_surface(Color("393049"),Color("9f85b0"))
 	content.add_child(head)
+	var halo := Finesse.Sigil.new()
+	halo.position = Vector2(0,-2)
+	halo.size = Vector2(96,108)
+	head.add_child(halo)
 	var feat := _featured_pet()
 	var fpic := _tex_rect(String(feat.get("id", "")), 68, 68, G.C_HINT)
 	fpic.position = Vector2(14, 18)
 	head.add_child(fpic)
 	var fraw := String(feat.get("rarity", "white"))
-	var kicker := G.gold_label("本 期 主 打", G.FS_XS, false, G.TEXT_MUTED, false)
+	var kicker := G.gold_label("本 期 主 打", G.FS_XS, false, Color("c9b9d7"), false)
 	kicker.position = Vector2(92, 14)
 	kicker.size = Vector2(120, 16)
 	kicker.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	head.add_child(kicker)
-	var fname_l := G.gold_label(String(feat.get("name", "")), G.FS_MD, true, G.BANNER, false)
+	var fname_l := G.serif_label(String(feat.get("name", "")), 24, Color("f2ddb7"))
 	fname_l.position = Vector2(92, 30)
 	fname_l.size = Vector2(120, 24)
 	fname_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
@@ -172,7 +190,7 @@ func _build() -> void:
 	chip.add_child(chip_l)
 	head.add_child(chip)
 	# 右侧：保底数字 + 进度条 + 下一档提示
-	_pity_l = G.gold_label("", G.FS_XS, false, Color("6a4a1e"), false)
+	_pity_l = G.gold_label("", G.FS_XS, false, Color("ead6b0"), false)
 	_pity_l.position = Vector2(206, 16)
 	_pity_l.size = Vector2(172, 16)
 	_pity_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -208,7 +226,7 @@ func _build() -> void:
 	_pity_gem.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	head.add_child(_pity_gem)
 	# 保底小字 8a6a34 在 d3bd92 内嵌底上约 3.4:1，13px 下偏灰；压深到 6a5230 约 5:1
-	_pity_sub = G.gold_label("", G.FS_XS, false, Color("6a5230"), false)
+	_pity_sub = G.gold_label("", G.FS_XS, false, Color("cbbdd7"), false)
 	_pity_sub.position = Vector2(206, 56)
 	_pity_sub.size = Vector2(172, 16)
 	_pity_sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -307,10 +325,15 @@ func _build() -> void:
 func _pool_card(p: Dictionary) -> Panel:
 	var pid := String(p.get("id", ""))
 	var rar := String(p.get("rarity", "white"))
-	var root := G.InsetBand.new()
+	var root := Panel.new()
 	root.custom_minimum_size = Vector2(196, 50)
 	root.size = Vector2(196, 50)
-	root.set_surface(Color("e2d4ae"), Color("b1a181"))
+	var tile := StyleBoxFlat.new()
+	tile.bg_color = Color("ded8e7")
+	tile.set_corner_radius_all(6)
+	tile.border_width_bottom = 1
+	tile.border_color = Color(RARITY_HUE.get(rar,G.C_HINT),.6)
+	root.add_theme_stylebox_override("panel",tile)
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var pic := _tex_rect(pid, 36, 36, RARITY_HUE.get(rar, G.C_HINT))
 	pic.position = Vector2(14, 7)
@@ -324,8 +347,8 @@ func _pool_card(p: Dictionary) -> Panel:
 	root.add_child(l)
 	# 左沿稀有度色带：从 (3,4) 起、避开切角，色块完整落在八边形内
 	var strip := ColorRect.new()
-	strip.position = Vector2(3, 4)
-	strip.size = Vector2(5, 42)
+	strip.position = Vector2(5, 10)
+	strip.size = Vector2(2, 30)
 	strip.color = RARITY_HUE.get(rar, G.C_HINT)
 	strip.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(strip)
@@ -339,6 +362,8 @@ func _btn2(title: String, sub: String, w: float, h: float, ghost := false) -> Pa
 	# PanelContainer 会把每个直接子控件都铺满内容区——再 add_child 一个副标 Label 会与标题
 	# 完全重叠（「十连」盖在「800 魂石」上）。必须用 VBox 把标题与副标竖排
 	var title_l := btn.get_child(0) as Label
+	title_l.add_theme_font_override("font",G.font_art)
+	title_l.add_theme_font_size_override("font_size",26)
 	btn.remove_child(title_l)
 	var box := VBoxContainer.new()
 	box.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -347,7 +372,7 @@ func _btn2(title: String, sub: String, w: float, h: float, ghost := false) -> Pa
 	box.add_child(title_l)
 	# 副标（价格/说明）压在主按钮的金底上：用比主标略浅但明显深于底色的棕，
 	# 保证"主标深棕加粗 / 副标深棕常规"两级都在金底上读得清（§17 数字与价格必须高可读）
-	var sub_l := G.gold_label(sub, G.FS_XS, false, Color("5a3c14"), false)
+	var sub_l := G.gold_label(sub, G.FS_XS, false, G.TEXT_DARK if ghost else Color("f0dbbb"), false)
 	box.add_child(sub_l)
 	btn.add_child(box)
 	return btn
@@ -466,6 +491,11 @@ func _build_result() -> void:
 	_result.mouse_filter = Control.MOUSE_FILTER_STOP   # 盖住主面板的按钮
 	_result.visible = false
 	add_child(_result)
+	var solid := ColorRect.new()
+	solid.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	solid.color = Color("211d2a")
+	solid.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_result.add_child(solid)
 
 	# 结果层底衬：整屏接管，底下不该透出任何东西。走统一浮层工厂（深棕+暗角+斜纹），
 	# 比原来单色 0.985 的大平底有纵深——顶部木匾、底部按钮各有一块暗角收边。
@@ -509,6 +539,7 @@ func _build_result() -> void:
 
 	# 摘要行 + 行内提示：摘要承载"本次结果"这一核心信息，抬到卡片区正下方并加底衬
 	_sum_l = G.gold_label("", G.FS_SM, true, Color("ffe9b8"), true)
+	_sum_l.add_theme_font_override("font",G.font_reg)
 	_sum_l.position = Vector2(0, 400)
 	_sum_l.custom_minimum_size = Vector2(VIEW_W, 0)
 	_result.add_child(_sum_l)
@@ -524,6 +555,16 @@ func _build_result() -> void:
 	_cb.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_cb.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_cards_box = _cb
+	_ceremony = Finesse.Sigil.new()
+	_ceremony.position = Vector2(100,120)
+	_ceremony.size = Vector2(280,280)
+	_ceremony.visible = false
+	_result.add_child(_ceremony)
+	_ceremony_label = G.serif_label("星阵唤灵",30,Color("efdab5"))
+	_ceremony_label.position = Vector2(0,405)
+	_ceremony_label.size = Vector2(VIEW_W,44)
+	_ceremony_label.visible = false
+	_result.add_child(_ceremony_label)
 	_result.add_child(_cards_box)
 	var _fx := Control.new()
 	_fx.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -537,7 +578,7 @@ func _build_result() -> void:
 	_flip_all_btn.visible = false
 	_flip_all_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_flip_all())
+			_flip_all(_arriving))
 	_result.add_child(_flip_all_btn)
 
 	# 底部操作行：主操作（再抽一次）+ 次操作（返回），同高同基线、左右对称留边 28。
@@ -552,7 +593,7 @@ func _build_result() -> void:
 	_again_sub = again_box.get_child(1) as Label
 	_again_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_again())
+			if _can_repeat(): _again())
 	_result.add_child(_again_btn)
 
 	# 返回是次操作：走描边款，避免和主操作抢视觉（§7 一层只有一个核心操作）
@@ -567,20 +608,26 @@ func _build_result() -> void:
 
 ## 展示一批结果：单抽一张大卡居中，十连 5×2 网格；全部背面朝上、back 缓动入场
 func _show_results(mode: String, results: Array) -> void:
+	_reveal_epoch += 1
+	_revealing = false
+	if _presentation != null and _presentation.is_valid(): _presentation.kill()
 	_last_mode = mode
 	_results = results
+	for child in get_children():
+		if child is CanvasItem and child!=_result: child.hide()
 	for c in _cards_box.get_children():
 		c.queue_free()
 	for c in _fx_layer.get_children():
 		c.queue_free()
 	var big := results.size() == 1
-	# 开卡音：出金用更亮的升级音，其余用领赏音（整批只在开头响一次，别叠成十下）
-	var has_gold := false
-	for r in results:
-		if String((r as Dictionary).get("rarity", "")) == "gold":
-			has_gold = true
-			break
-	Audio.sfx("level_up" if has_gold else "reward", 0.0)
+	_arriving = presentation_enabled
+	Audio.sfx("ui_open",0.0)
+	_ceremony.visible = _arriving
+	_ceremony_label.visible = _arriving
+	_ceremony.modulate.a = 1.0
+	_ceremony.charge = 0.0
+	_ceremony.bloom = 0.0
+	_sum_l.visible = not _arriving
 	for i in results.size():
 		var card := _make_card(results[i] as Dictionary, big)
 		if big:
@@ -589,13 +636,27 @@ func _show_results(mode: String, results: Array) -> void:
 			card.position = Vector2(GRID_X0 + (i % 5) * CARD_STEP_X,
 				GRID_Y0 + (i / 5) * CARD_STEP_Y)
 		_cards_box.add_child(card)
-		# 入场：scale 0.2→1（同 BattleScene UnitView.pop_in），逐张错峰
 		card.pivot_offset = card.size * 0.5
-		card.scale = Vector2(0.2, 0.2)
-		var tw := card.create_tween()
-		tw.tween_interval(i * 0.05)
-		tw.tween_property(card, "scale", Vector2.ONE, 0.25) \
-			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		card.set_meta("rest_position",card.position)
+		card.set_meta("ready",not _arriving)
+		if _arriving:
+			card.position = Vector2(240,260)-card.size*.5
+			card.scale = Vector2(.35,.35)
+			card.modulate.a = 0.0
+			var tw := card.create_tween()
+			card.set_meta("arrival",tw)
+			tw.tween_interval(.85+i*.045)
+			tw.tween_property(card,"position",card.get_meta("rest_position"),.38).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
+			tw.parallel().tween_property(card,"scale",Vector2.ONE,.38).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+			tw.parallel().tween_property(card,"modulate:a",1.0,.18)
+			tw.tween_callback(func(): card.set_meta("ready",true))
+	if _arriving:
+		_presentation = create_tween()
+		_presentation.tween_property(_ceremony,"charge",1.0,.65).set_trans(Tween.TRANS_SINE)
+		_presentation.tween_property(_ceremony,"bloom",1.0,.36)
+		_presentation.parallel().tween_property(_ceremony,"modulate:a",0.0,.36)
+		_presentation.tween_interval(.35+results.size()*.045)
+		_presentation.tween_callback(_finish_arrival)
 	if not _result.visible:
 		_result.visible = true
 		_result.modulate = Color(1, 1, 1, 0)
@@ -603,6 +664,30 @@ func _show_results(mode: String, results: Array) -> void:
 		ftw.tween_property(_result, "modulate:a", 1.0, 0.16)
 	_update_result_ui()
 	_refresh_top()
+
+
+func _finish_arrival() -> void:
+	if _presentation != null and _presentation.is_valid(): _presentation.kill()
+	_arriving = false
+	_ceremony.visible = false
+	_ceremony_label.visible = false
+	_sum_l.visible = true
+	for card in _cards_box.get_children():
+		if card.is_queued_for_deletion(): continue
+		var tw := card.get_meta("arrival") as Tween if card.has_meta("arrival") else null
+		if tw != null and tw.is_valid(): tw.kill()
+		card.position = card.get_meta("rest_position")
+		card.scale = Vector2.ONE
+		card.modulate.a = 1.0
+		card.set_meta("ready",true)
+	_update_result_ui()
+
+
+func _can_repeat() -> bool:
+	if _arriving or _revealing: return false
+	for card in _cards_box.get_children():
+		if not card.is_queued_for_deletion() and not bool(card.get_meta("revealed",false)): return false
+	return true
 
 
 ## 一张结果卡：背面（压暗白卡底 + 浮雕边 +「灵」字，不露稀有度）+ 正面（卡底/边框/立绘/名字）
@@ -623,13 +708,10 @@ func _make_card(res: Dictionary, big: bool) -> Control:
 	var back := Control.new()
 	back.set_anchors_preset(Control.PRESET_FULL_RECT)
 	back.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var back_base := _tex_rect("gacha_card_white", w, h, Color("4a3018"), TextureRect.STRETCH_SCALE)
-	back_base.modulate = Color(0.52, 0.42, 0.3)
+	var back_base := Finesse.CardSurface.new()
+	back_base.size = Vector2(w,h)
 	back.add_child(back_base)
-	var back_edge := _tex_rect("frame_white", w, h, Color("4a3018"), TextureRect.STRETCH_SCALE)
-	back_edge.modulate = Color(0.55, 0.45, 0.32)
-	back.add_child(back_edge)
-	var glyph := G.serif_label("灵", G.FS_BIG if big else G.FS_LG, G.GOLD_BRIGHT, true)
+	var glyph := G.serif_label("灵", 54 if big else 30, G.GOLD_BRIGHT, true)
 	glyph.set_anchors_preset(Control.PRESET_FULL_RECT)
 	glyph.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	back.add_child(glyph)
@@ -640,15 +722,18 @@ func _make_card(res: Dictionary, big: bool) -> Control:
 	face.set_anchors_preset(Control.PRESET_FULL_RECT)
 	face.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	face.visible = false
-	face.add_child(_tex_rect("gacha_card_" + rar, w, h,
-		RARITY_HUE.get(rar, G.C_HINT).darkened(0.35), TextureRect.STRETCH_SCALE))
-	face.add_child(_tex_rect("frame_" + rar, w, h, Color("8a6220"), TextureRect.STRETCH_SCALE))
+	var face_base := Finesse.CardSurface.new()
+	face_base.reverse = false
+	face_base.rarity = rar
+	face_base.size = Vector2(w,h)
+	face.add_child(face_base)
 	var pic := _tex_rect(pid, 140 if big else 66, 132 if big else 62,
 		RARITY_HUE.get(rar, G.C_HINT))
 	pic.position = Vector2(15, 12) if big else Vector2(10, 8)
 	face.add_child(pic)
 
 	var name_l := G.gold_label(pname, G.FS_LG if big else G.FS_XS, true, Color("fff3d8"), true)
+	if big: name_l.add_theme_font_override("font",G.font_art)
 	name_l.position = Vector2(0, 150 if big else 72)
 	name_l.custom_minimum_size = Vector2(w, 0)
 	# 卡名字有两种压底：卡底素材纹理 + 稀有度边框纹样，白字描边后仍会被花纹理吃掉笔画。
@@ -672,8 +757,8 @@ func _make_card(res: Dictionary, big: bool) -> Control:
 
 	# 重复卡：显示炼金所得小字
 	if int(res.get("dup", 0)) > 0:
-		var dup_l := G.gold_label("→ 金币 +%d" % int(res["dup"]),
-			G.FS_SM if big else G.FS_XS, false, Color("ffd97a"), true)
+		var dup_l := G.gold_label(("炼化 +%d 金币" if big else "+%d 金币") % int(res["dup"]),
+			G.FS_SM if big else 11, false, Color("ffd97a"), false)
 		dup_l.position = Vector2(0, 202 if big else 91)
 		dup_l.custom_minimum_size = Vector2(w, 0)
 		face.add_child(dup_l)
@@ -690,7 +775,7 @@ func _make_card(res: Dictionary, big: bool) -> Control:
 		# 像素角标：直角 + 描边 + 底边加重 1px（凸起厚度），弃用"四角各不同"圆角与软影
 		bsb.border_width_bottom = 2
 		badge.add_theme_stylebox_override("panel", bsb)
-		var bl := G.gold_label("新", G.FS_XS, true, G.TEXT_DARK, false)
+		var bl := G.gold_label("新", G.FS_XS, true, G.GOLD_BRIGHT, false)
 		bl.set_anchors_preset(Control.PRESET_FULL_RECT)
 		bl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		badge.add_child(bl)
@@ -702,17 +787,23 @@ func _make_card(res: Dictionary, big: bool) -> Control:
 	root.set_meta("face", face)
 	root.set_meta("res", res)
 	root.set_meta("flipped", false)
+	root.set_meta("revealed",false)
 	root.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_flip_card(root))
+			if not _arriving and not _revealing: _flip_card(root))
 	return root
 
 
 ## 翻一张卡：横向压缩 → 换面 → 回弹；紫/金附加爆闪帧与轻度过曝
-func _flip_card(card: Control) -> void:
+func _flip_card(card: Control, audible := true) -> void:
 	if card == null or not is_instance_valid(card) or bool(card.get_meta("flipped", false)):
 		return
 	card.set_meta("flipped", true)
+	var entry_tw := card.get_meta("arrival") as Tween if card.has_meta("arrival") else null
+	if entry_tw != null and entry_tw.is_valid(): entry_tw.kill()
+	card.position = card.get_meta("rest_position",card.position)
+	card.scale = Vector2.ONE
+	card.modulate.a = 1.0
 	var back: Control = card.get_meta("back")
 	var face: Control = card.get_meta("face")
 	var rar := String((card.get_meta("res") as Dictionary).get("rarity", "white"))
@@ -722,19 +813,26 @@ func _flip_card(card: Control) -> void:
 	tw.tween_callback(func():
 		back.visible = false
 		face.visible = true
-		_play_strip("fx_gacha_flip", center, card.size * 1.45, 0.07, Color(1, 1, 1, 0.92))
+		if audible: Audio.sfx("ui_page",0.02)
 		if rar == "purple" or rar == "gold":
-			_play_strip("fx_gacha_burst", center, card.size * 1.9, 0.09, Color(1.35, 1.25, 1.0))
-			face.modulate = Color(1.7, 1.6, 1.35)
+			Finesse.celebrate(_fx_layer,center,RARITY_HUE[rar],card.size.y*1.2)
+			if audible: Audio.sfx("level_up" if rar=="gold" else "reward",0.0)
+			face.modulate = Color(1.18,1.14,1.10)
 			var ftw := face.create_tween()
-			ftw.tween_property(face, "modulate", Color.WHITE, 0.35))
+			ftw.tween_property(face, "modulate", Color.WHITE, 0.4))
 	tw.tween_property(card, "scale:x", 1.0, 0.16) \
 		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_callback(func(): card.set_meta("revealed",true); _update_result_ui())
 	_update_result_ui()
 
 
 ## 「全部翻开」：按顺序小步错峰逐张翻
-func _flip_all() -> void:
+func _flip_all(immediate := false) -> void:
+	if _revealing: return
+	if _arriving: _finish_arrival()
+	_revealing = true
+	var epoch := _reveal_epoch
+	if immediate: Audio.sfx("reward",0.0)
 	var delay := 0.0
 	for c in _cards_box.get_children():
 		if c.is_queued_for_deletion() or bool(c.get_meta("flipped", false)):
@@ -742,8 +840,16 @@ func _flip_all() -> void:
 		var card := c as Control
 		var tw := card.create_tween()
 		tw.tween_interval(delay)
-		tw.tween_callback(func(): _flip_card(card))
-		delay += 0.06
+		tw.tween_callback(func():
+			if epoch==_reveal_epoch: _flip_card(card,not immediate))
+		delay += 0.0 if immediate else 0.105
+	var finish := create_tween()
+	finish.tween_interval(delay+.3)
+	finish.tween_callback(func():
+		if epoch!=_reveal_epoch: return
+		_revealing = false
+		_update_result_ui())
+	_update_result_ui()
 
 
 ## 播一条 3 帧横排特效（AtlasTexture 切帧，播完即自毁）
@@ -781,6 +887,9 @@ func _update_result_ui() -> void:
 		if not c.is_queued_for_deletion() and not bool(c.get_meta("flipped", false)):
 			unflipped += 1
 	_flip_all_btn.visible = unflipped > 0
+	(_flip_all_btn.get_child(0) as Label).text = "跳过演出" if _arriving else "依次揭晓"
+	_flip_all_btn.mouse_filter = Control.MOUSE_FILTER_IGNORE if _revealing else Control.MOUSE_FILTER_STOP
+	_flip_all_btn.modulate.a = .45 if _revealing else 1.0
 	var new_n := 0
 	var gold_n := 0
 	for r in _results:
@@ -791,7 +900,14 @@ func _update_result_ui() -> void:
 	# 摘要：结果层最该被看到的一句话（§18 玩家要 3 秒知道"我拿到了什么"）。
 	# 原来"皆是旧识 · 炼金 +2280"和"再抽一次/返回"挤在同一视觉带里，且全用同色同号，
 	# 现在摘要走 FS_SM 加粗描边、底部按钮独立成行，层级才分得开。
-	if new_n > 0 and gold_n > 0:
+	var pending := 0
+	for card in _cards_box.get_children():
+		if not card.is_queued_for_deletion() and not bool(card.get_meta("revealed",false)): pending+=1
+	_again_btn.mouse_filter = Control.MOUSE_FILTER_IGNORE if _arriving or _revealing or pending>0 else Control.MOUSE_FILTER_STOP
+	_again_btn.modulate.a = .45 if _arriving or _revealing or pending>0 else 1.0
+	if pending>0:
+		_sum_l.text = "轻点灵契 · 揭晓缘分" if _results.size()==1 else "已揭晓 %d / %d · 轻点灵契" % [_results.size()-pending,_results.size()]
+	elif new_n > 0 and gold_n > 0:
 		_sum_l.text = "新结缘 %d 只 · 炼金 +%d 金币" % [new_n, gold_n]
 	elif new_n > 0:
 		_sum_l.text = "新结缘 %d 只灵宠" % new_n
