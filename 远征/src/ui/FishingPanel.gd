@@ -44,7 +44,7 @@ func open_spot(id: String) -> void:
 	var spot := G.fishing_spot(spot_id)
 	_label(body, String(spot.get("name", "钓点")), Vector2(12, 103), 376, G.FS_MD)
 	_info = _label(body, "", Vector2(12, 140), 376, G.FS_SM)
-	_label(body, String(spot.get("environment_hint","抛竿后，等浮标进入绿色区域再收竿。")), Vector2(12, 174), 376, G.FS_SM)
+	_label(body, String(spot.get("king_hint","") if G.fishing_king_available(spot_id) else spot.get("environment_hint","抛竿后，等浮标进入绿色区域再收竿。")), Vector2(12, 174), 376, G.FS_SM)
 	var gauge := ColorRect.new()
 	gauge.color = Color("4b6968")
 	gauge.position = Vector2(20, 242)
@@ -116,12 +116,15 @@ func _act() -> void:
 		_started = Time.get_ticks_msec()
 		_phase = 0.0
 		_casting = true
-		_band.position.x = (float(_cast.get("center", 0.5)) - 0.12) * 360.0
+		var radius:=.08 if bool(_cast.get("king",false)) else .12
+		_band.size.x=radius*720.0
+		_band.position.x = (float(_cast.get("center", 0.5)) - radius) * 360.0
 		_action_label.text = "收 竿"
 		_message.text = "看准绿色区域。重启后在同一钓点可接回未完成的一竿。"
 		_refresh_info()
 		return
-	var hit := absf(_phase - float(_cast.get("center", 0.5))) <= 0.12
+	var radius:=.08 if bool(_cast.get("king",false)) else .12
+	var hit := absf(_phase - float(_cast.get("center", 0.5))) <= radius
 	var result := G.fishing_finish(String(_cast.get("token", "")), hit)
 	if not bool(result.get("ok", false)):
 		_message.text = "结算未保存，请再收竿一次。"
@@ -130,6 +133,7 @@ func _act() -> void:
 	_cast = {}
 	_action_label.text = "再抛一竿"
 	_message.text = "钓得 %s ×1，已入背包。" % G.item_name(String(result.get("item", ""))) if hit else "鱼挣脱了。下一竿再留意浮标位置。"
+	if bool(result.get("king",false)):_message.text="认出鱼王 · %s ×1，图志留下水情记录。"%G.item_name(String(result.item))
 	_refresh_info()
 
 

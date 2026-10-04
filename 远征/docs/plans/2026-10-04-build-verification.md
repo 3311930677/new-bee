@@ -5,8 +5,8 @@
 | 文件 | 字节 | SHA256 |
 |---|---:|---|
 | `windows/Yuanzheng.exe` | 109,156,864 | `b5aba1b80a01eee08dfa46b72800a2ff6009f86e94b615dedae78a0bc9a97f90` |
-| `windows/Yuanzheng.pck` | 426,686,340 | `91227ddc8dcf42f28277751a791ef6d6573f1a82cd3049d9bfdc45a6d9a10775` |
-| `android/Yuanzheng-debug.apk` | 454,808,315 | `d9907da9f7c20f3bba28ea55a57f7dca90f06dc532e0e4bb6a916a02ed44c572` |
+| `windows/Yuanzheng.pck` | 426,687,300 | `8b69072922050415ded4d08c415f04bc524f142702a7b611f8d0d515789392dc` |
+| `android/Yuanzheng-debug.apk` | 454,808,315 | `70ac182a74d061d6be64b19acb6861e429dafcb7893d7953934f60c0c7b782f2` |
 
 Windows 启动时同目录保留 exe 与 pck。Android 为 ARM64、API 24 起、目标 API 36、包名 `org.yuanzheng.singleplayer` 的调试签名包；不用于商店发布。
 

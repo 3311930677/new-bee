@@ -110,6 +110,31 @@ func _run() -> void:
 		"钓鱼图鉴与重置状态应可持久化")
 
 	var escape_panel := FishingPanel.new()
+	for row in TableCache.fishing_config().spots:
+		var id:=String(row.id)
+		var flag:="fish_king_"+id
+		G.prog.flags.erase(flag)
+		G.economy_state().day=6+int(row.king_phase)
+		_check(G.fishing_king_available(id),"每个鱼王由冻结的地区水情出现")
+		var king_panel:=FishingPanel.new()
+		add_child(king_panel)
+		king_panel.open_spot(id)
+		king_panel._act()
+		_check(bool(king_panel._cast.king) and is_equal_approx(king_panel._band.size.x,57.6),"鱼王实际浮标区间收窄至16%")
+		king_panel._phase=float(king_panel._cast.center)+.10
+		king_panel._act()
+		_check(not bool(G.prog.flags.get(flag,false)),"旧普通区间内但鱼王区间外收竿仍算脱钩")
+		king_panel._act()
+		var token:=String(king_panel._cast.token)
+		var old_count:=G.item_count(String(row.item))
+		_check(G.reload_save() and bool(G.fishing_begin(id).cast.king),"鱼王未收竿凭据可重读且不改变水情")
+		king_panel._phase=float(king_panel._cast.center)
+		king_panel._act()
+		_check(bool(G.prog.flags.get(flag,false)) and G.item_count(String(row.item))==old_count+1,"鱼王只给一条鱼并永久记录")
+		_check(not bool(G.fishing_finish(token,true).ok) and G.item_count(String(row.item))==old_count+1,"重放鱼王凭据不能重复奖励")
+		king_panel.close()
+		await get_tree().process_frame
+	_check(G.save_game() and G.reload_save() and bool(G.prog.flags.get("fish_king_fish_frost_pool",false)),"鱼王图志跨读档保持")
 	add_child(escape_panel)
 	escape_panel.open_spot("fish_port_pier")
 	var hits := {"closed": 0}

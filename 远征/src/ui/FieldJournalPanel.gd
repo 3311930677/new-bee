@@ -62,6 +62,8 @@ func _refresh() -> void:
 			if not (G.fishing_state().discoveries as Array).has(String(fish.item)):continue
 			_paragraph(String(fish.fish_name),true)
 			_paragraph("来源：亲自钓获，"+String(fish.name)+"。\n"+String(fish.environment_hint)+"\n鲜鱼可一换一制成伙伴粮。")
+			if bool(G.prog.flags.get("fish_king_"+String(fish.id),false)):
+				_paragraph("鱼王水情："+String(fish.king_hint)+"\n已经亲自辨认并钓获。")
 			count+=1
 		var current := String(world.get("map_id", ""))
 		if not current.is_empty() and not visited.has(current): visited.append(current)

@@ -13,6 +13,12 @@ if not any(row['id']=='fish_frost_pool' for row in data['spots']):
     data['spots'].append({'id':'fish_frost_pool','map':'frost_post','name':'霜关冰缘池','item':'fish_frost','fish_name':'霜鳍鳟'})
 for row in data['spots']:
     row['environment_hint']=clues[row['id']]
+    row['king_cycle']=3
+    row['king_phase']={'fish_salt_spring':1,'fish_port_pier':2,'fish_tide_pool':0,'fish_frost_pool':0}[row['id']]
+    row['king_hint']={'fish_salt_spring':'桥影拉长，盐泉鱼王靠近回水。绿色区间收窄，看准浮标再收竿。',
+                      'fish_port_pier':'潮线漫过旧钉，银鳞鱼王沿绳影游来。绿色区间收窄，看准浮标再收竿。',
+                      'fish_tide_pool':'浅池三圈涟漪相叠，潮纹鱼王现身。绿色区间收窄，看准浮标再收竿。',
+                      'fish_frost_pool':'冰缘出现长涟漪，霜鳍鱼王游过暗水。绿色区间收窄，看准浮标再收竿。'}[row['id']]
 path.write_text(json.dumps(data, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
 path=root / 'data/main_world_maps.json'
 maps=json.loads(path.read_text(encoding='utf-8'))
