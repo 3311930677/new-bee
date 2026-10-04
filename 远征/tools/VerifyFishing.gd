@@ -23,11 +23,12 @@ func _ready() -> void:
 
 func _run() -> void:
 	_check(G.res_tex("itm_fish_common") != null, "鲜鱼图标应接入运行时")
-	_check((TableCache.fishing_config().get("spots", []) as Array).size() == 3,
-		"应有三个独立地图钓点")
+	_check((TableCache.fishing_config().get("spots", []) as Array).size() == 4,
+		"应有四个独立地图钓点，包含霜关冷水")
 	for row in (TableCache.fishing_config()["spots"] as Array):
 		var id := String(row["id"])
 		var iid := String(row["item"])
+		_check(not String(row.get("environment_hint","")).is_empty(),"每个钓点有地区水情线索")
 		var run := RunState.new()
 		run.setup({"theme": "forest", "role_id": "zs", "level": 12, "seed": 413})
 		MapScene.pending_cfg = {"mode": "main_world", "main_map_id": String(row["map"]),
@@ -77,13 +78,24 @@ func _run() -> void:
 		_check(G.fishing_remaining(id) == 0
 			and not bool(G.fishing_begin(id).get("ok", false)) and G.item_count(iid) == 0,
 			"三竿上限、失败无鱼、重开不可绕过次数")
+		if id=="fish_frost_pool":
+			# Fixture start on the public street; actual movement must open the new spot.
+			map._player.position=Vector2(480,1080)
+			for frame in 4:await get_tree().physics_frame
+			Input.action_press("move_left")
+			for frame in 240:
+				if map._fishing_panel!=null:break
+				await get_tree().physics_frame
+			Input.action_release("move_left")
+			_check(map._fishing_panel!=null,"霜关钓点可从公共街道用实际移动触发")
+			if map._fishing_panel!=null:map._fishing_panel.close()
 		map.queue_free()
 		await get_tree().process_frame
-	_check((G.fishing_state()["discoveries"] as Array).size() == 3,
-		"三类普通鱼应记录永久图鉴")
+	_check((G.fishing_state()["discoveries"] as Array).size() == 4,
+		"四类普通鱼应记录永久图鉴")
 	G.economy_state()["day"] = int(G.economy_state()["day"]) + 1
 	_check(G.fishing_remaining("fish_port_pier") == 3
-		and (G.fishing_state()["discoveries"] as Array).size() == 3,
+		and (G.fishing_state()["discoveries"] as Array).size() == 4,
 		"翻日重置次数但保留鱼类图鉴")
 	var locked_prog := G.prog.duplicate(true)
 	var locked_items := G.items.duplicate(true)
@@ -94,7 +106,7 @@ func _run() -> void:
 		"存档锁定期间禁止预留和材料消耗")
 	G.save_locked = false
 	_check(G.save_game() and G.reload_save()
-		and (G.fishing_state()["discoveries"] as Array).size() == 3,
+		and (G.fishing_state()["discoveries"] as Array).size() == 4,
 		"钓鱼图鉴与重置状态应可持久化")
 
 	var escape_panel := FishingPanel.new()

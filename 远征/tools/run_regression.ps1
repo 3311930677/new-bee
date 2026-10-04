@@ -34,7 +34,7 @@ param(
   [string]$List = "",
   [int]$QuitAfter = 6000,
   [int]$TimeoutSec = 240,
-  [int]$Expected = 68,
+    [int]$Expected = 69,
   [string]$LogDir = "",
   [switch]$AllowAnyVersion
 )
@@ -140,6 +140,7 @@ $cases = @(
 	@{ N = "VerifyRouteScene";  K = "scene";  T = "ROUTE_SCENE_OK" },
 	@{ N = "VerifyRunResume"; K = "scene"; T = "RUN_RESUME_OK" },
 	@{ N = "VerifyRunResumeRead"; K = "scene"; T = "RUN_RESUME_READ_OK" },
+	@{ N = "VerifyRunImmediate"; K = "scene"; T = "RUN_IMMEDIATE_OK" },
 	@{ N = "VerifyRunEvents"; K = "scene"; T = "RUN_EVENTS_OK" },
 	@{ N = "VerifyRunEventsRead"; K = "scene"; T = "RUN_EVENTS_READ_OK" },
 	@{ N = "VerifyTradeContracts"; K = "scene"; T = "TRADE_CONTRACTS_OK" },

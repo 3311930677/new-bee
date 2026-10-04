@@ -309,6 +309,7 @@ func _ready() -> void:
 	_build_classic_command_ui()
 	_sync_views()
 	G.fit_mobile_page.call_deferred(self)
+	if _cmd_root!=null:G.fit_mobile_page.call_deferred(_cmd_root)
 	if bool(_cfg.get("stele_echo_ready", false)):
 		_show_tip("碑声已稳：听见两声轻响后注意首领蓄力", Color("ffe2a0"))
 	var tide_route := String(_cfg.get("tide_route", ""))
@@ -964,6 +965,9 @@ func _open_page_panel(rows: int) -> void:
 	_page_panel.size = Vector2(PAGE_PANEL_SIZE.x, float(rows) * PAGE_ROW_H + 4.0)
 	_page_panel.position = Vector2(PAGE_PANEL_POS.x,
 		PAGE_PANEL_BOTTOM + _classic_extra_y() - _page_panel.size.y)
+	if _page_panel.has_meta("safe_base_position"):
+		_page_panel.set_meta("safe_base_position",_page_panel.position)
+		G.fit_mobile_page(self)
 	if _cmd_root != null:
 		_cmd_root.hide()
 	_page_panel.show()

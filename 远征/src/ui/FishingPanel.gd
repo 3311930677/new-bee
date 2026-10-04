@@ -44,10 +44,10 @@ func open_spot(id: String) -> void:
 	var spot := G.fishing_spot(spot_id)
 	_label(body, String(spot.get("name", "钓点")), Vector2(12, 103), 376, G.FS_MD)
 	_info = _label(body, "", Vector2(12, 140), 376, G.FS_SM)
-	_label(body, "抛竿后，等浮标进入绿色区域再收竿。", Vector2(12, 178), 376, G.FS_SM)
+	_label(body, String(spot.get("environment_hint","抛竿后，等浮标进入绿色区域再收竿。")), Vector2(12, 174), 376, G.FS_SM)
 	var gauge := ColorRect.new()
 	gauge.color = Color("4b6968")
-	gauge.position = Vector2(20, 220)
+	gauge.position = Vector2(20, 242)
 	gauge.size = Vector2(360, 30)
 	gauge.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	body.add_child(gauge)
@@ -63,12 +63,13 @@ func open_spot(id: String) -> void:
 	_needle.position = Vector2(0, -4)
 	_needle.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	gauge.add_child(_needle)
-	_message = _label(body, "每处每游戏日三竿。市集歇脚可推进一日，离开会放弃当前一竿。", Vector2(12, 263), 376, G.FS_SM)
-	var action := _button(body, "抛 竿", Vector2(12, 330), 184, _act)
+	_message = _label(body, "每处每游戏日三竿。市集歇脚可推进一日，离开会放弃当前一竿。", Vector2(12, 282), 376, G.FS_SM)
+	var action := _button(body, "抛 竿", Vector2(12, 340), 184, _act)
 	_action_label = action.get_child(0) as Label
-	_button(body, "鲜鱼制粮 · 1 换 1", Vector2(206, 330), 184, _cook)
+	_button(body, "鲜鱼制粮 · 1 换 1", Vector2(206, 340), 184, _cook)
 	_button(body, "返 回", Vector2(140, 402), 120, close)
 	_refresh_info()
+	G.fit_mobile_page.call_deferred(self)
 
 
 func _label(parent: Control, value: String, at: Vector2, width: float, fs: int) -> Label:
@@ -92,8 +93,8 @@ func _button(parent: Control, value: String, at: Vector2, width: int, action: Ca
 
 func _refresh_info() -> void:
 	var iid := String(G.fishing_spot(spot_id).get("item", ""))
-	_info.text = "第 %d 日余 %d 竿 · %s %d 条 · 图鉴 %d/3" % [int(G.economy_state()["day"]), G.fishing_remaining(spot_id),
-		G.item_name(iid), G.item_count(iid), (G.fishing_state()["discoveries"] as Array).size()]
+	_info.text = "第 %d 日余 %d 竿 · %s %d 条 · 图鉴 %d/%d" % [int(G.economy_state()["day"]), G.fishing_remaining(spot_id),
+		G.item_name(iid), G.item_count(iid), (G.fishing_state()["discoveries"] as Array).size(),(TableCache.fishing_config().get("spots",[]) as Array).size()]
 
 
 func _process(_delta: float) -> void:

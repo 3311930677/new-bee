@@ -38,6 +38,8 @@ def pck_inventory(path):
             stream.seek(offset)
             content = stream.read(size)
             assert len(content) == size and hashlib.md5(content).digest() == digest, 'Corrupt entry: ' + name
+            if name.startswith('data/') and (ROOT / name).is_file():
+                assert content == (ROOT / name).read_bytes(), 'Stale packaged data: ' + name
     return {'files': len(rows), 'bytes': path.stat().st_size, 'required_data': list(REQUIRED),
             'excluded_work_files': True, 'all_entry_checksums': True}
 
@@ -50,6 +52,9 @@ def apk_inventory(path):
         resources = {name.removeprefix('assets/'): name for name in names if name.startswith('assets/')}
         assert set(REQUIRED) <= resources.keys(), 'APK production data absent'
         assert not any(name.startswith(BLOCKED) for name in resources), 'APK contains work files'
+        for name, archived_name in resources.items():
+            if name.startswith('data/') and (ROOT / name).is_file():
+                assert archive.read(archived_name) == (ROOT / name).read_bytes(), 'Stale APK data: ' + name
     return {'entries': len(names), 'bytes': path.stat().st_size, 'crc': True, 'arm64_only': True,
             'required_data': True, 'excluded_work_files': True}
 
