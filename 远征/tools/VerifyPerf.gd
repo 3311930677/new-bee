@@ -58,8 +58,9 @@ func _find_btn(root: Node, text: String) -> Control:
 		return root as Control
 	var want := text.replace(" ", "")
 	for c in root.get_children():
-		if c is PanelContainer:
-			for g in (c as PanelContainer).get_children():
+		# 原生自绘按钮也是 Control；识别实际输入接收者，继续做五点命中验证。
+		if c is Control and c.mouse_filter == Control.MOUSE_FILTER_STOP and not c.gui_input.get_connections().is_empty():
+			for g in c.get_children():
 				if g is Label and (g as Label).text.replace(" ", "") == want:
 					return c
 		var r := _find_btn(c, text)

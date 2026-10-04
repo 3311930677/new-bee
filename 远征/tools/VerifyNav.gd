@@ -16,7 +16,7 @@ const SKIP_FILES := [
 	"UIIcons.gd", "UIWordmark.gd",  # 绘图/标题组件，不是可返回的页面
 	"OathPattern.gd", # 非交互纹样绘图组件；返回由所属誓约/图志面板处理
 	"UiSafeArea.gd", # RefCounted 布局工厂，无独立可关闭页面
-	"AvatarCatalog.gd", "JournalUI.gd", "VisualTheme.gd", "UIFinesse.gd", # 目录与样式工厂，均为 RefCounted
+	"AvatarCatalog.gd", "JournalUI.gd", "VisualTheme.gd", "UIFinesse.gd", "FieldUI.gd", # 目录与样式工厂，均为 RefCounted
 	"Main.gd",        # 无 UI
 	"LoadScreen.gd",  # 过渡页：加载中途不该能返回（返回了等于卡在半路）
 ]
