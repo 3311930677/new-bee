@@ -31,6 +31,16 @@ func _ready() -> void:
 			hit += 1
 	# 主世界贴图按显式路径加载，不都经过名称索引；同样必须纳入资源契约。
 	var world_paths := {}
+	var craft := preload("res://src/ui/CraftUI.gd")
+	var props := preload("res://src/world/WorldPropArt.gd")
+	world_paths[craft.BACKGROUND] = true
+	world_paths[props.SIGN_PATH] = true
+	world_paths[props.ATLAS_PATH] = true
+	world_paths[props.STORY_ATLAS_PATH] = true
+	world_paths[props.RETURN_ATLAS_PATH] = true
+	for art_list in preload("res://src/ui/SkillShowcase.gd").ART_BY_ROLE.values():
+		for art_name in art_list:
+			world_paths["res://image/generated_362_xajh/ready/fx/e_effect_%s.png" % String(art_name)] = true
 	for map_v in (TableCache.main_world_config().get("maps", {}) as Dictionary).values():
 		var map: Dictionary = map_v
 		var leader := String(map.get("monster_sprite", ""))

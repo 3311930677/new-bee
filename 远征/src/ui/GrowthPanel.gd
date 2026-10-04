@@ -8,6 +8,7 @@ signal closed
 
 const CONTENT_W := 408.0
 const Field := preload("res://src/ui/FieldUI.gd")
+const Craft := preload("res://src/ui/CraftUI.gd")
 # 新 class_name 尚未进编辑器全局类缓存，按项目惯例 preload 路径取脚本
 const TalentPanelScript := preload("res://src/ui/TalentPanel.gd")
 const EquipPanelScript := preload("res://src/ui/EquipPanel.gd")
@@ -29,28 +30,38 @@ func _ready() -> void:
 
 
 func _build() -> void:
-	G.veil(self,.90)
-	Field.heading(self,"养成","行前整备 / 人物与同行伙伴")
-	var paper := Field.surface(Vector2(24,128),Vector2(432,572),true)
-	add_child(paper)
-	paper.add_child(Field.portrait(G.selected_role,Vector2(22,8),Vector2(80,110)))
+	Craft.scene(self,.46)
+	Craft.heading(self,"人物养成","装备与修习 / 同行与荣誉")
 	var role := G.get_role(G.selected_role)
-	paper.add_child(Field.label(String(role.get("name","旅人")),Vector2(114,19),Vector2(220,34),24,G.FIELD_INK,true,true))
-	paper.add_child(Field.label("LV %02d · %s" % [int(G.prog.get("level",1)),role.get("job","")],Vector2(116,55),Vector2(248,24),14,G.FIELD_MUTED))
-	_summary = Field.label("",Vector2(116,85),Vector2(260,24),14,G.FIELD_MUTED)
-	paper.add_child(_summary)
-	Field.line(paper,Vector2(28,128),376)
-	paper.add_child(Field.label("战斗修习",Vector2(28,138),Vector2(260,24),14,G.FIELD_MUTED))
-	var entries := [["talent","天赋","growth"],["equip","装备","swords"],["skill","技能书","book"],
-		["pet","宠物","paw"],["mount","坐骑","mount"],["title","称号","crown"]]
-	for i in entries.size():
-		var e: Array = entries[i]
-		var y := 172 + i*56 + (40 if i >= 3 else 0)
+	var crest := Craft.Crest.new()
+	crest.position = Vector2(116,148)
+	crest.size = Vector2(248,336)
+	crest.hue = Craft.ROLE_COLORS.get(G.selected_role,Craft.GOLD)
+	crest.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(crest)
+	add_child(Field.portrait(G.selected_role,Vector2(112,192),Vector2(256,256)))
+	var role_name := Craft.label(String(role.get("name","旅人")),Vector2(132,450),Vector2(216,36),28,Craft.WHITE,true,true)
+	role_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	add_child(role_name)
+	var level := Craft.label("%s · LV %02d" % [role.get("job",""),int(G.prog.get("level",1))],Vector2(142,490),Vector2(196,24),15,Craft.GOLD)
+	level.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	add_child(level)
+	var entries := [["equip","装备","swords",24,176],["talent","天赋","growth",24,286],
+		["skill","技能书","book",24,396],["pet","宠物","paw",344,176],
+		["mount","坐骑","mount",344,286],["title","称号","crown",344,396]]
+	for e in entries:
 		var row := _entry_row(e[1],e[2],e[0])
-		row.position = Vector2(28,y)
-		paper.add_child(row)
-	paper.add_child(Field.label("同行与荣誉",Vector2(28,346),Vector2(300,24),14,G.FIELD_MUTED))
-	var close_btn := Field.action("返回",Vector2(24,720),Vector2(432,48))
+		row.position = Vector2(e[3],e[4])
+		add_child(row)
+	var summary_panel := Craft.panel(Vector2(24,546),Vector2(432,128),.90)
+	add_child(summary_panel)
+	summary_panel.add_child(Craft.label("行前整备",Vector2(18,10),Vector2(200,30),18,Craft.GOLD,true))
+	_summary = Craft.label("",Vector2(18,42),Vector2(396,26),16,Craft.WHITE)
+	summary_panel.add_child(_summary)
+	var tip := Craft.label("点击角色两侧的徽章，查看装备、招式与同行伙伴。",Vector2(18,76),Vector2(396,40),14,Craft.MUTED)
+	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	summary_panel.add_child(tip)
+	var close_btn := Craft.action("返回",Vector2(24,720),Vector2(432,48))
 	close_btn.tooltip_text = "返回营帐"
 	close_btn.activated.connect(_close)
 	add_child(close_btn)
@@ -58,22 +69,18 @@ func _build() -> void:
 
 
 func _entry_row(words: String, icon: String, id: String) -> Control:
-	var row := Field.action("",Vector2.ZERO,Vector2(376,56),false,true)
-	row.quiet = true
+	var row := Craft.action(words,Vector2.ZERO,Vector2(112,100),"badge")
 	row.tooltip_text = "打开" + words
-	var tr := G.ui_icon(icon,Vector2(28,28))
-	tr.position = Vector2(2,12)
-	row.add_child(tr)
-	row.add_child(Field.label(words,Vector2(44,8),Vector2(88,36),18,G.FIELD_INK,true))
-	var status := Field.label("",Vector2(136,7),Vector2(208,40),14,G.FIELD_MUTED)
-	status.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	row.caption.position = Vector2(0,55)
+	row.caption.size = Vector2(112,25)
+	row.caption.set_meta("fixed_y",55)
+	row.caption.add_theme_font_size_override("font_size",17)
+	Craft.icon(row,icon,Vector2(36,8),Vector2(40,40))
+	var status := Craft.label("",Vector2(0,81),Vector2(112,20),12,Craft.MUTED)
+	status.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	status.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	row.add_child(status)
-	_rows.append({"id":id,"label":status})
-	Field.line(row,Vector2(0,55),376,Color(G.FIELD_LINE,.5))
-	var arrow := G.ui_icon("forward",Vector2(10,10),G.FIELD_MUTED)
-	arrow.position = Vector2(364,22)
-	row.add_child(arrow)
+	_rows.append({"id":id,"label":status,"action":row,"words":words})
 	row.activated.connect(func(): _open(id))
 	return row
 
@@ -86,10 +93,10 @@ func _refresh() -> void:
 		var l := (r as Dictionary)["label"] as Label
 		match String((r as Dictionary)["id"]):
 			"talent":
-				l.text = "可分配 %d / 共 %d 点" % [G.talent_points_left(), G.talent_points_total()]
+				l.text = "可分配 %d 点" % G.talent_points_left()
 			"equip":
 				var ws := G.equip_weapon_slot()
-				l.text = "武器 +%d · 护甲 +%d · 饰品 +%d" % [
+				l.text = "武%d / 甲%d / 饰%d" % [
 					int(G.equip_state(ws).get("lv", 0)), int(G.equip_state("armor").get("lv", 0)),
 					int(G.equip_state("accessory").get("lv", 0))]
 			"pet":
@@ -99,13 +106,15 @@ func _refresh() -> void:
 				for k in (G.prog.get("skills", {}) as Dictionary):
 					if int((G.prog["skills"] as Dictionary)[k]) > 1:
 						n += 1
-				l.text = "精研 %d 门 / 上限 %d 级" % [n, G.skill_max_level()]
+				l.text = "精研 %d 门" % n
 			"mount":
 				var mid := G.mount_active()
 				l.text = ("骑乘：%s" % String(G.mount_cfg(mid).get("name", ""))) if not mid.is_empty() else "尚未骑乘"
 			"title":
 				var tid := G.title_active()
 				l.text = ("佩戴：%s" % String(G.title_cfg(tid).get("name", ""))) if not tid.is_empty() else "未佩戴"
+
+		(r as Dictionary)["action"].tooltip_text = "打开" + String((r as Dictionary)["words"]) + " · " + l.text
 
 
 # ---------- 子面板 ----------

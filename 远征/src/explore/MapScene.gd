@@ -14,6 +14,7 @@ static var pending_cfg: Dictionary = {}
 const VIEW_W := 480.0
 const VIEW_H := 800.0
 const DirectionalIdle := preload("res://src/world/DirectionalIdle.gd")
+const WorldPropArt := preload("res://src/world/WorldPropArt.gd")
 const ROLE_FRAMES := {  # 四方向行走帧（BattleScene 同款复用）
 	"zs": ["res://image/role/zs/pojun_walk_frames.tres", "pojun"],
 	"ck": ["res://image/role/ck/chuanyang_walk_frames.tres", "chuanyang"],
@@ -4354,27 +4355,12 @@ class _Pickup extends Node2D:
 		queue_redraw()
 
 	func _draw() -> void:
-		var bob := sin(_t * 3.0) * 3.0
-		var base := Color("f0c060") if kind == "coin" else Color("8ad0e8")
-		# 地面光斑：远处也能一眼看到（配合小地图上的同色小点）
-		draw_set_transform(Vector2(0, 5), 0.0, Vector2(1.0, 0.36))
-		draw_circle(Vector2.ZERO, 13.0, Color(base.r, base.g, base.b, 0.22))
-		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
-		var c := Vector2(0, bob)
-		if kind == "coin":
-			draw_circle(c, 8.0, Color("a8761e"))
-			draw_circle(c, 6.5, base)
-			draw_circle(c + Vector2(-1.6, -1.6), 2.0, Color(1, 1, 1, 0.65))
-		else:
-			var pts := PackedVector2Array([c + Vector2(0, -10), c + Vector2(6, -1),
-				c + Vector2(0, 10), c + Vector2(-6, -1)])
-			draw_colored_polygon(pts, base)
-			draw_polyline(PackedVector2Array([pts[0], pts[1], pts[2], pts[3], pts[0]]),
-				Color(1, 1, 1, 0.5), 1.2, true)
+		MapScene.WorldPropArt.shadow(self,13)
+		var bob := roundf(sin(_t*3)*3)
+		var tex := G.res_tex("cur_gold" if kind=="coin" else "cur_soul")
+		if tex!=null: draw_texture_rect(tex,Rect2(-10,-13+bob,20,20),false)
 
 
-## 兴趣点（碑灵祭坛 / 矿脉）：走近触发一次交互。与拾取物的差别是"要不要做"——
-## 祭坛弹选择框（花金重摇祝福），矿脉白拿材料。用掉即熄，不重复打扰。
 class _Spot extends Node2D:
 	var idx := 0              # 稳定序号（进度表按它记「已用过」，P0-1）
 	var kind := "vein"        # altar / vein
@@ -4403,40 +4389,10 @@ class _Spot extends Node2D:
 		queue_redraw()
 
 	func _draw() -> void:
-		_bob = sin(_t * 2.0) * 2.0
-		if kind == "vein":
-			# 矿脉：灰蓝岩块上嵌几颗亮矿点
-			draw_set_transform(Vector2(0, 8), 0.0, Vector2(1.0, 0.36))
-			draw_circle(Vector2.ZERO, 20.0, Color(0, 0, 0, 0.26))
-			draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
-			var rock := Color("6b6f78")
-			draw_colored_polygon(PackedVector2Array([Vector2(-22, 10), Vector2(-12, -12),
-				Vector2(6, -16), Vector2(22, -2), Vector2(16, 10)]), rock)
-			draw_polyline(PackedVector2Array([Vector2(-22, 10), Vector2(-12, -12),
-				Vector2(6, -16), Vector2(22, -2), Vector2(16, 10), Vector2(-22, 10)]),
-				Color(0, 0, 0, 0.35), 2.0, true)
-			for p in [Vector2(-8, -6), Vector2(4, -9), Vector2(10, 0)]:
-				draw_circle(p + Vector2(0, _bob), 3.4, Color("9fe0f0"))
-			return
-		# 碑灵祭坛：立着的断碑 + 顶部浮动的青色碑火
-		draw_set_transform(Vector2(0, 10), 0.0, Vector2(1.0, 0.38))
-		draw_circle(Vector2.ZERO, 24.0, Color(0, 0, 0, 0.28))
-		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
-		draw_rect(Rect2(-16, -34, 32, 46), Color("7d7a86") if not used else Color("64616c"))
-		draw_rect(Rect2(-16, -34, 32, 7), Color("5f5c68") if not used else Color("4d4b55"))
-		draw_rect(Rect2(-20, 8, 40, 8), Color("57545e"))
-		for i in 3:   # 碑文：三条阴刻线（不是文字，避免烧字进图）
-			draw_line(Vector2(-9, -24 + i * 11), Vector2(9, -24 + i * 11), Color(0, 0, 0, 0.30), 2.0)
-		var flame := Vector2(0, -46 + _bob)
-		if used:
-			draw_circle(flame, 7.0, Color(0.42, 0.45, 0.5, 0.30))  # 已熄：只剩一圈冷灰
-			return
-		draw_circle(flame, 13.0, Color(0.55, 0.9, 1.0, 0.20))
-		draw_circle(flame, 6.5, Color("7ae0ff"))
-		draw_circle(flame + Vector2(0, -2), 3.0, Color(1, 1, 1, 0.85))
+		if kind=="vein": MapScene.WorldPropArt.vein(self,used)
+		else: MapScene.WorldPropArt.altar(self,used)
 
 
-## 失声碑窟的内部门：完整横断地图，线索写档成功后才拆除碰撞。
 class _SteleRoomGate extends StaticBody2D:
 	var caption := ""
 
@@ -4457,14 +4413,7 @@ class _SteleRoomGate extends StaticBody2D:
 		queue_redraw()
 
 	func _draw() -> void:
-		draw_rect(Rect2(-480, -22, 960, 44), Color("352d42"))
-		draw_rect(Rect2(-480, -19, 960, 5), Color("746887"))
-		draw_rect(Rect2(-480, 14, 960, 5), Color("15131d"))
-		for i in 20:
-			var x := -460.0 + i * 48.0
-			draw_line(Vector2(x, -13), Vector2(x + 18, 13), Color("625773", 0.55), 2.0)
-		draw_circle(Vector2.ZERO, 21, Color("8e789f"))
-		draw_circle(Vector2.ZERO, 11, Color("d9c39b"))
+		MapScene.WorldPropArt.barrier(self,-480,960,44,Color("c6bfd6"))
 
 
 ## 水闸的隔水堰：第二闸按选择打开左侧栈桥或右侧货箱暗渠。
@@ -4518,21 +4467,7 @@ class _TidalRoomGate extends StaticBody2D:
 
 	func _draw() -> void:
 		for segment in _segments():
-			var width := segment.y - segment.x
-			draw_rect(Rect2(segment.x, -24, width, 48), Color("304d58"))
-			draw_rect(Rect2(segment.x, -24, width, 6), Color("8db5b5"))
-			draw_rect(Rect2(segment.x, 17, width, 7), Color("1b323b"))
-			for i in range(int(width / 48.0)):
-				var x := segment.x + 24.0 + i * 48.0
-				draw_line(Vector2(x, -14), Vector2(x + 18, 12), Color("9ac9c8", 0.45), 2.0)
-		if route == "sealed":
-			draw_circle(Vector2.ZERO, 23, Color("657b77"))
-			draw_circle(Vector2.ZERO, 13, Color("bdad81"))
-		else:
-			for x in ([-65.0] if route == "bridge" else \
-				([65.0] if route == "cargo" else [-65.0, 65.0])):
-				draw_line(Vector2(x - 44, -22), Vector2(x - 44, 22), Color("cce5db"), 3)
-				draw_line(Vector2(x + 44, -22), Vector2(x + 44, 22), Color("cce5db"), 3)
+			MapScene.WorldPropArt.barrier(self,segment.x,segment.y-segment.x,48,Color("b9d9dc"))
 
 
 ## 散件（origin 底部 + 脚部碰撞，参与 Y-sort）
@@ -4585,12 +4520,14 @@ class _WorldExit extends Node2D:
 	var _caption_label: Label
 
 	func _ready() -> void:
+		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		if gate_style=="sealed": material = MapScene.WorldPropArt.muted_material()
 		var caption_color := Color("ffe2a0") if gate_style == "restored" else \
 			(Color("d7d5cd") if gate_style == "sealed" else Color("fff1c4"))
 		var label := G.gold_label(caption, G.FS_XS, true, caption_color, true)
 		_caption_label = label
-		label.position = Vector2(-72, -70)
-		label.size = Vector2(144, 20)
+		label.position = Vector2(-84, -116)
+		label.size = Vector2(168, 24)
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(label)
@@ -4608,21 +4545,9 @@ class _WorldExit extends Node2D:
 			and screen_at.x >= 2 and label_rect.end.x <= viewport_size.x - 2
 
 	func _draw() -> void:
-		var board := Color("c49650") if gate_style == "restored" else \
-			(Color("777875") if gate_style == "sealed" else Color("b18445"))
-		var edge := Color("ffe1a0") if gate_style == "restored" else \
-			(Color("aeb0ac") if gate_style == "sealed" else Color("ead19a"))
-		draw_colored_polygon(PackedVector2Array([Vector2(-9, -3), Vector2(10, -3),
-			Vector2(15, 4), Vector2(-4, 4)]), Color("17211d", 0.18))
-		draw_rect(Rect2(-3, -48, 6, 42), Color("765b3b") if gate_style == "restored" else Color("6e4c2c"))
-		draw_colored_polygon(PackedVector2Array([
-			Vector2(-37, -54), Vector2(32, -54), Vector2(42, -43),
-			Vector2(32, -32), Vector2(-37, -32)]), board)
-		draw_line(Vector2(-35, -52), Vector2(31, -52), edge, 2.0)
-		draw_line(Vector2(-35, -34), Vector2(31, -34), Color("5c3b25"), 2.0)
+		MapScene.WorldPropArt.signpost(self,gate_style)
 
 
-## 怪物（mon_ 精灵优先，无素材回退程序圆体；游荡/警戒/追击/接触回调）
 class _MapMonster extends CharacterBody2D:
 	var trial := false
 	var oath_trip := ""
@@ -5013,23 +4938,15 @@ class _Interactable extends Node2D:
 		# 头顶浮动金三角（可交互提示；立绘版抬高点避免压住画面）
 		var bob := sin(_t * 2.2) * 4.0
 		var tip := Vector2(0, (-_art_h - 8.0 if _art else -52.0) + bob)
-		draw_colored_polygon([tip + Vector2(0, -7), tip + Vector2(6, 3), tip + Vector2(-6, 3)],
-			Color(G.GOLD_BRIGHT.r, G.GOLD_BRIGHT.g, G.GOLD_BRIGHT.b, 0.9))
+		MapScene.WorldPropArt.marker(self,tip,G.GOLD_BRIGHT)
 
 	func _draw_chest() -> void:
-		draw_rect(Rect2(-20, -18, 40, 26), Color("7a5228"))       # 箱体
-		draw_rect(Rect2(-20, -26, 40, 12), Color("5a3a1a"))       # 箱盖
-		draw_rect(Rect2(-20, -18, 40, 3), Color("3a2812"))        # 盖缝
-		draw_rect(Rect2(-4, -20, 8, 12), Color(G.GOLD))           # 金锁
-		draw_arc(Vector2.ZERO, 2.5, 0, TAU, 10, Color("5a3a1a"), 2.0)  # 锁孔
+		MapScene.WorldPropArt.chest(self)
+
 
 	func _draw_event() -> void:
-		draw_rect(Rect2(-11, -34, 22, 40), Color("8a8578"))       # 石碑
-		draw_circle(Vector2(0, -34), 11.0, Color("8a8578"))       # 圆顶
-		draw_rect(Rect2(-13, -2, 26, 8), Color("6a655a"))         # 底座
-		var ts := G.font_bold.get_string_size("?", HORIZONTAL_ALIGNMENT_CENTER, -1, 18)
-		draw_string(G.font_bold, Vector2(-ts.x / 2.0, -16), "?",
-			HORIZONTAL_ALIGNMENT_CENTER, -1, 18, Color("3a3a30"))
+		MapScene.WorldPropArt.altar(self,used)
+
 
 	func _draw_shop() -> void:
 		draw_colored_polygon([Vector2(0, -44), Vector2(26, 4), Vector2(-26, 4)],
@@ -5176,10 +5093,7 @@ class _QuestEntity extends Node2D:
 			"return_lamp", "return_letter", "return_tidebud", "return_snowflower", "return_rune":
 				MapScene.ReturnJourneyPropsScript.draw_prop(self,art)
 			"stele_anchor":
-				draw_rect(Rect2(-20,-44,40,45),Color("475365"))
-				draw_rect(Rect2(-23,-48,46,8),Color("a99c80"))
-				draw_line(Vector2(-5,-37),Vector2(6,-13),Color("a2d8cf"),3)
-				draw_arc(Vector2(0,-23),12,0,TAU,12,Color("b3e0cf"),2)
+				MapScene.WorldPropArt.altar(self,false)
 			"resonance":
 				# 地表原图承接碑座本体；程序层只叠加可交互的三地共鸣光纹。
 				for i in 3:
@@ -5189,65 +5103,30 @@ class _QuestEntity extends Node2D:
 					draw_line(p + Vector2(-3, 0), p + Vector2(3, 0), color, 2)
 				draw_arc(Vector2(0, -18), 44, .2, PI - .2, 20, Color(.74, .58, .87, .45), 2)
 			"frost_brazier":
-				# The permanent scene prop owns the body; this entity owns only the quest marker.
-				if not _uses_ground_art:
-					draw_rect(Rect2(-7, -46, 14, 46), Color("53483c"))
-					draw_rect(Rect2(-16, -63, 32, 22), Color("c19b65"))
-					draw_rect(Rect2(-19, -68, 38, 7), Color("dddcd0"))
-					draw_line(Vector2(-3, -62), Vector2(8, -43), Color("604d3f"), 3)
+				# Permanent scene art owns the body at frost_post.
+				if not _uses_ground_art: MapScene.WorldPropArt.story(self,"frost_brazier",76)
 			"frost_nameplate":
 				var plate := G.res_tex("itm_frost_nameplate")
 				if plate != null: draw_texture_rect(plate, Rect2(-22, -42, 44, 44), false)
 			"frost_lichen":
-				for p in [Vector2(-19, -8), Vector2(0, -17), Vector2(19, -5)]:
-					draw_rect(Rect2(p - Vector2(10, 9), Vector2(20, 17)), Color("7caea5"))
-					draw_rect(Rect2(p - Vector2(6, 8), Vector2(12, 5)), Color("d5e5dc"))
+				MapScene.WorldPropArt.story(self,"frost_lichen",40)
 			"mine_vent":
-				draw_rect(Rect2(-25, -25, 50, 24), Color("53616b"))
-				draw_circle(Vector2(0, -37), 20, Color("a78553"))
-				draw_circle(Vector2(0, -37), 12, Color("42545c"))
-				for angle in [0.0, PI / 2, PI, PI * 1.5]:
-					draw_line(Vector2(0, -37), Vector2(0, -37) + Vector2.from_angle(angle) * 18, Color("c5ad7c"), 4)
+				MapScene.WorldPropArt.vent(self)
 			"frost_courier":
-				# 接应人沿用霜关 NPC 的原生人物比例，蓝绳药包握在身侧。
-				draw_rect(Rect2(-10, -64, 20, 20), Color("76533b"))
-				draw_rect(Rect2(-8, -59, 16, 16), Color("dbbd92"))
-				draw_rect(Rect2(-13, -43, 26, 28), Color("638e9e"))
-				draw_rect(Rect2(-17, -38, 6, 19), Color("83bfc6"))
-				draw_rect(Rect2(11, -38, 6, 19), Color("83bfc6"))
-				draw_rect(Rect2(-10, -15, 8, 15), Color("4e453b"))
-				draw_rect(Rect2(3, -15, 8, 15), Color("4e453b"))
-				draw_rect(Rect2(12, -25, 17, 17), Color("c9ba91"))
-				draw_line(Vector2(15, -18), Vector2(27, -18), Color("83bfc6"), 3)
+				var strip := G.res_tex("npc_port_worker_idle")
+				if strip != null:
+					draw_texture_rect_region(strip,Rect2(-42,-84,84,84),Rect2(0,0,128,128),Color("cee3e6"))
+				else: MapScene.WorldPropArt.post(self)
 			"frost_echo":
-				draw_rect(Rect2(-23, -61, 46, 60), Color("718f9b"))
-				draw_rect(Rect2(-16, -53, 32, 43), Color("bddbe1"))
-				draw_line(Vector2(-8, -46), Vector2(9, -18), Color("4e7c90"), 4)
-				draw_arc(Vector2(0, -35), 31, -PI * .75, -PI * .25, 10, Color("a0cfd3"), 2)
+				MapScene.WorldPropArt.story(self,"frost_echo",76)
 			"signal_ribbons":
-				for x in [-26.0, 26.0]:
-					draw_rect(Rect2(x - 3, -75, 6, 80), Color("635543"))
-					var flag_color := Color("c9b477") if x < 0 else Color("83bfc6")
-					draw_rect(Rect2(x, -72, 25, 38), flag_color)
-					draw_line(Vector2(x + 5, -65), Vector2(x + 18, -46), Color("f1eee0"), 3)
+				MapScene.WorldPropArt.signal_flags(self)
 			"mine_cart":
-				draw_rect(Rect2(-46, -46, 82, 34), Color("495862"))
-				draw_rect(Rect2(-48, -49, 86, 7), Color("9da9a7"))
-				for x in [-28.0, 24.0]:
-					draw_circle(Vector2(x, -10), 12, Color("272e31"))
-					draw_circle(Vector2(x, -10), 6, Color("a48a64"))
-				for p in [Vector2(-27, -51), Vector2(-5, -60), Vector2(18, -53)]:
-					draw_colored_polygon(PackedVector2Array([p + Vector2(-12, 0), p + Vector2(-8, -15), p + Vector2(9, -20), p + Vector2(15, 1)]), Color("846b4c"))
-				draw_rect(Rect2(35, -26, 22, 19), Color("e4cf9c"))
-				for y in [-22.0, -17.0, -12.0]:
-					draw_line(Vector2(38, y), Vector2(54, y), Color("745642"), 2)
+				MapScene.WorldPropArt.story(self,"mine_cart",68)
 			"rope":
-				draw_rect(Rect2(-4, -30, 8, 36), Color("5d4532"))
-				for offset in [0.0, 5.0, 10.0]:
-					draw_arc(Vector2(-12 + offset, -12), 14, 0.0, TAU * 0.85, 20, Color("b99765"), 3)
+				MapScene.WorldPropArt.story(self,"rope",48)
 			"feather":
-				draw_colored_polygon(PackedVector2Array([Vector2(-16, -6), Vector2(-8, -28), Vector2(10, -38), Vector2(14, -16), Vector2(0, 0)]), Color("92b9c7"))
-				draw_line(Vector2(-5, 1), Vector2(9, -30), Color("dddcca"), 2)
+				MapScene.WorldPropArt.story(self,"feather",44)
 			"salt_marks":
 				for offset in [0.0, 8.0, 16.0]:
 					draw_polyline(PackedVector2Array([Vector2(-23, -8 + offset), Vector2(-7, -16 + offset), Vector2(14, -11 + offset), Vector2(25, -17 + offset)]), Color("d9dbc9"), 3)
@@ -5283,97 +5162,33 @@ class _QuestEntity extends Node2D:
 		var bob := sin(_t * 2.2) * 4.0
 		var tip := Vector2(0, (-142.0 if art in ["trade_stall", "salt_cart", "tide_cargo"] else -88.0) + bob)
 		if _uses_ground_art: tip.y = -116.0 + bob
-		draw_colored_polygon([tip + Vector2(0, -7), tip + Vector2(6, 3), tip + Vector2(-6, 3)],
-			Color("ffd279") if kind in ["cache", "trade", "story"] else Color("9fd0ff"))
+		MapScene.WorldPropArt.marker(self,tip,Color("ffd279") if kind in ["cache","trade","story"] else Color("9fd0ff"))
 
 	func _draw_salt_cart() -> void:
-		# 断轴木车：白盐袋与散落账页构成固定主线识别点。
-		draw_colored_polygon(PackedVector2Array([
-			Vector2(-52, -42), Vector2(42, -42), Vector2(36, -17), Vector2(-46, -17)]),
-			Color("5b402b"))
-		draw_rect(Rect2(-46, -64, 82, 30), Color("a37a4b"))
-		draw_rect(Rect2(-48, -67, 86, 6), Color("d1a969"))
-		for wheel_x in [-32.0, 28.0]:
-			draw_circle(Vector2(wheel_x, -16), 13, Color("3e2f27"))
-			draw_circle(Vector2(wheel_x, -16), 8, Color("966e42"))
-			draw_circle(Vector2(wheel_x, -16), 3, Color("d8bd85"))
-		draw_line(Vector2(40, -44), Vector2(62, -30), Color("694b32"), 6)
-		draw_line(Vector2(66, -27), Vector2(79, -19), Color("694b32"), 6)
-		for sack_x in [-30.0, -5.0, 20.0]:
-			draw_colored_polygon(PackedVector2Array([
-				Vector2(sack_x - 13, -68), Vector2(sack_x - 11, -90),
-				Vector2(sack_x + 9, -94), Vector2(sack_x + 15, -67)]), Color("e0d1aa"))
-			draw_line(Vector2(sack_x - 10, -70), Vector2(sack_x + 13, -70),
-				Color("9f8a66"), 2)
-		draw_rect(Rect2(7, -72, 18, 15), Color("e3c486"))
-		draw_line(Vector2(10, -66), Vector2(23, -66), Color("547079"), 2)
+		MapScene.WorldPropArt.story(self,"salt_cart",94)
 
 	func _draw_fishing() -> void:
-		draw_set_transform(Vector2(0, 8), 0.0, Vector2(1.4, 0.48))
-		draw_circle(Vector2.ZERO, 34, Color("4d8a94"))
-		draw_arc(Vector2.ZERO, 23 + sin(_t * 2) * 3, 0, TAU, 24, Color("b3d5d0"), 2)
-		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
-		draw_line(Vector2(-26, 3), Vector2(-9, -46), Color("ad8350"), 4)
-		draw_line(Vector2(-9, -46), Vector2(14, -17), Color("ddd3b6"), 1)
-		draw_circle(Vector2(14, -15 + sin(_t * 3)), 4, Color("dd6e4c"))
-		draw_rect(Rect2(-37, 5, 25, 12), Color("705738"))
+		draw_set_transform(Vector2(0,8),0.0,Vector2(1.4,.48))
+		draw_circle(Vector2.ZERO,34,Color("4d8a94"))
+		draw_arc(Vector2.ZERO,23+sin(_t*2)*3,0,TAU,24,Color("b3d5d0"),2)
+		draw_set_transform(Vector2.ZERO)
+		MapScene.WorldPropArt.supplementary(self,"fishing",68)
 
 	func _draw_tide_cargo() -> void:
-		# 与地面箱堆使用同一木色和绑带；暗潮印留作可交互线索。
-		draw_rect(Rect2(-51, -14, 103, 8), Color(0.08, 0.16, 0.17, 0.3))
-		draw_colored_polygon(PackedVector2Array([
-			Vector2(-49, -58), Vector2(-34, -69), Vector2(42, -69),
-			Vector2(49, -58)]), Color("ac8961"))
-		draw_rect(Rect2(-49, -58, 98, 43), Color("6d5038"))
-		draw_rect(Rect2(-49, -58, 98, 43), Color("302f2c"), false, 3)
-		for y in [-44.0, -30.0]:
-			draw_line(Vector2(-46, y), Vector2(46, y), Color("3f382f"), 3)
-		for x in [-33.0, 32.0]:
-			draw_line(Vector2(x, -56), Vector2(x, -17), Color("c1a374"), 5)
-			for y in [-51.0, -22.0]:
-				draw_circle(Vector2(x, y), 2, Color("e2d0a2"))
-		draw_circle(Vector2(0, -39), 8, Color("315e67"))
-		draw_line(Vector2(-6, -39), Vector2(6, -39), Color("a4c9c7"), 2)
-		for p in [Vector2(-53, -17), Vector2(49, -14), Vector2(28, -11)]:
-			draw_circle(p, 3, Color("d4dbcf", 0.8))
+		MapScene.WorldPropArt.story(self,"tide_cargo",72)
 
-	## 旧路石匣：有石质基座与金属封边，区别于野外普通掉落包。
 	func _draw_cache() -> void:
-		draw_colored_polygon(PackedVector2Array([
-			Vector2(-27, -8), Vector2(-20, -22), Vector2(22, -22), Vector2(27, -8),
-			Vector2(20, 2), Vector2(-20, 2)]), Color("6d6557"))
-		draw_rect(Rect2(-22, -28, 44, 19), Color("8b795f"))
-		draw_rect(Rect2(-22, -28, 44, 4), Color("c2a36e"))
-		draw_rect(Rect2(-22, -11, 44, 4), Color("4e4338"))
-		draw_rect(Rect2(-4, -25, 8, 14), Color("c89a4c"))
-		draw_circle(Vector2(0, -18), 2.0, Color("49301b"))
+		MapScene.WorldPropArt.chest(self)
 
-	## 旧风铃：枯枝上挂一只旧铜铃，轻摆
+
 	func _draw_chime() -> void:
-		var sway := sin(_t * 2.4) * 2.5
-		draw_line(Vector2(-16, -44), Vector2(14, -38), Color("6e4c2c"), 4.0)   # 枯枝
-		draw_line(Vector2(0, -41), Vector2(0, -30), Color("8a6a44"), 2.0)      # 挂绳
-		draw_set_transform(Vector2(sway, 0), 0.0, Vector2.ONE)
-		draw_colored_polygon(PackedVector2Array([Vector2(-8, -30), Vector2(8, -30),
-			Vector2(11, -12), Vector2(-11, -12)]), Color("b8925a"))            # 铃身
-		draw_rect(Rect2(-11, -14, 22, 3), Color("8a6a44"))                     # 铃口
-		draw_line(Vector2(0, -11), Vector2(0, -5), Color("6a4a26"), 2.0)       # 铃舌
-		draw_circle(Vector2(0, -4), 3.0, Color("8a6a44"))
-		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+		MapScene.WorldPropArt.chime(self,sin(_t*2.4)*2.5)
 
-	## 草根：土块上露出的草叶与根须
+
 	func _draw_root() -> void:
-		draw_set_transform(Vector2(0, 6), 0.0, Vector2(1.0, 0.42))
-		draw_circle(Vector2.ZERO, 17.0, Color("6b4a28"))                       # 土块
-		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
-		for i in 3:
-			var a := -PI * 0.5 + (float(i) - 1.0) * 0.42
-			draw_line(Vector2(0, -2), Vector2(0, -2) + Vector2(cos(a), sin(a)) * 20.0,
-				Color("7fae5a"), 3.0)                                          # 草叶
-		draw_line(Vector2(-6, 3), Vector2(-13, 11), Color("8a6a44"), 2.0)      # 根须
-		draw_line(Vector2(5, 3), Vector2(12, 11), Color("8a6a44"), 2.0)
+		MapScene.WorldPropArt.herb(self)
 
-	## 足迹：两对爪印斜向排开（观察用，不消失于地面杂质）
+
 	func _draw_tracks() -> void:
 		for i in 2:
 			_paw(Vector2(-13.0 + float(i) * 26.0, -6.0 + float(i) * 13.0))
@@ -5386,16 +5201,9 @@ class _QuestEntity extends Node2D:
 
 	## 驿亭：柱、顶与招幡（送达点）
 	func _draw_post() -> void:
-		draw_rect(Rect2(-3, -46, 6, 50), Color("6e4c2c"))                      # 亭柱
-		draw_colored_polygon(PackedVector2Array([Vector2(-30, -46), Vector2(30, -46),
-			Vector2(22, -58), Vector2(-22, -58)]), Color("5a3a1a"))            # 亭顶
-		draw_rect(Rect2(2, -40, 14, 22), Color("c9b490"))                      # 招幡
-		draw_rect(Rect2(2, -40, 14, 4), Color("8a6a44"))
+		MapScene.WorldPropArt.post(self)
 
 
-## 小地图：把整张 32×42 的地图装进方块里——黄框是当前视野，玩家一眼知道自己在哪、
-## 出口在哪、目标物件在哪。点一下放大成大地图（看清全貌 + 图例）。
-## 敌影只在视野附近显形（reveal_radius），远处保留"未知"，不至于变成上帝视角。
 class _Minimap extends Control:
 	signal tapped
 

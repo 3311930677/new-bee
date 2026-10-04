@@ -97,6 +97,8 @@ class Action extends Control:
 	var disabled := false
 	var selected := false
 	var accent := G.FIELD_COPPER
+	# Optional crafted skins preserve the same input and disabled-state behavior.
+	var skin := ""
 	var _hover := false
 	var _down := false
 	func _ready() -> void:
@@ -122,6 +124,9 @@ class Action extends Control:
 		_down = false
 		queue_redraw()
 	func _draw() -> void:
+		if not skin.is_empty():
+			_draw_crafted()
+			return
 		var fill := G.FIELD_RED if primary else (G.FIELD_PAPER_LIGHT if light else G.FIELD_DARK)
 		if selected: fill = accent.darkened(.72) if not light else G.FIELD_PAPER_LIGHT
 		if _hover: fill = fill.lightened(.05)
@@ -138,6 +143,54 @@ class Action extends Control:
 		for child in get_children():
 			if child is CanvasItem: child.modulate.a = .48 if disabled else 1.0
 		if caption != null: caption.position.y = float(caption.get_meta("fixed_y",0)) + dy
+
+	func _draw_crafted() -> void:
+		var dy := 2.0 if _down else 0.0
+		var extent := size
+		if skin == "badge": extent.y = minf(size.y,58)
+		var edge := Color("9c8052")
+		var fill := Color("223a42",.94)
+		if skin == "primary":
+			edge = Color("f0d49c")
+			fill = Color("bc914e")
+		elif skin == "tab" and selected:
+			fill = accent.darkened(.60)
+			edge = accent.lightened(.20)
+		elif skin == "nav":
+			fill = Color("1a2c35",.35)
+			edge = Color("9c8052",.35)
+		if disabled:
+			fill = Color("34434a")
+			edge = Color("677374")
+		elif _hover or has_focus():
+			fill = fill.lightened(.10)
+			edge = edge.lightened(.20)
+		var cut := 8.0 if skin in ["primary","badge"] else 4.0
+		var bounds := Rect2(Vector2(0,dy),extent-Vector2(0,dy))
+		if skin != "nav" or _hover or selected:
+			draw_colored_polygon(_bevel(Rect2(bounds.position+Vector2(0,4),bounds.size),cut),Color("080f16",.70))
+			draw_colored_polygon(_bevel(bounds,cut),edge.darkened(.28))
+			var inner := bounds.grow(-2)
+			draw_colored_polygon(_bevel(inner,maxf(2,cut-2)),fill)
+			draw_colored_polygon(_bevel(Rect2(inner.position,Vector2(inner.size.x,inner.size.y*.46)),maxf(2,cut-2)),fill.lightened(.07))
+			draw_line(Vector2(cut,dy+2),Vector2(extent.x-cut,dy+2),edge,1)
+			draw_line(Vector2(cut,extent.y-3),Vector2(extent.x-cut,extent.y-3),fill.darkened(.45),2)
+			if skin == "primary":
+				draw_line(Vector2(14,dy+8),Vector2(extent.x-14,dy+8),Color("f4d99d",.38))
+				for x in [10.0,extent.x-12]: draw_rect(Rect2(x,extent.y*.5-1,2,2),Color("fae9c1"))
+			elif skin == "badge":
+				for x in [6.0,extent.x-8]: draw_rect(Rect2(x,7+dy,2,2),Color("dfc490"))
+		if selected and skin == "tab": draw_rect(Rect2(10,extent.y-4,extent.x-20,2),accent.lightened(.28))
+		if has_focus(): draw_polyline(_bevel(bounds.grow(-1),cut),Color("f7e6b6"),1)
+		for child in get_children():
+			if child is CanvasItem: child.modulate.a = .48 if disabled else 1.0
+		if caption != null: caption.position.y = float(caption.get_meta("fixed_y",0)) + dy
+
+	func _bevel(r: Rect2,cut: float) -> PackedVector2Array:
+		var a := r.position
+		var b := r.end
+		return PackedVector2Array([a+Vector2(cut,0),Vector2(b.x-cut,a.y),Vector2(b.x,a.y+cut),
+			b-Vector2(0,cut),b-Vector2(cut,0),Vector2(a.x+cut,b.y),Vector2(a.x,b.y-cut),a+Vector2(0,cut),a+Vector2(cut,0)])
 
 # 少量器物插画按同一像素网格画，避免导航用图标加任意几何外框。
 class Prop extends Control:

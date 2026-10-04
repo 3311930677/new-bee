@@ -43,6 +43,10 @@ func _ready() -> void:
 					_check(home.get(key)==null,"Closing page must clear reference: "+words)
 		G.wallet.expedition=1011
 		home._open_growth()
+		home._close_overlay_with_escape()
+		await get_tree().process_frame
+		_check(home._growth==null and home._anim.visible,"Escape must restore the home character after closing growth")
+		home._open_growth()
 		home._growth._open("skill")
 		var nested: Control=home._growth._sub
 		var nested_sid:=String(nested._sids[0])
@@ -73,6 +77,18 @@ func _ready() -> void:
 			book._tabs[i].gui_input.emit(_click())
 			_check(book._deck.current==i,"Named tab must select actual skill")
 			_check(book._tabs[i].selected,"Selected tab must follow PageDeck")
+		var preview: Node = book._deck._made[4].get_node_or_null("SkillPreview")
+		_check(preview!=null,"Selected skill must expose a cosmetic animation preview")
+		if preview!=null:
+			var preview_wallet := JSON.stringify(G.wallet)
+			var preview_progress := JSON.stringify(G.prog)
+			preview._play()
+			await get_tree().process_frame
+			_check(JSON.stringify(G.wallet)==preview_wallet and JSON.stringify(G.prog)==preview_progress,"Playing a preview must not spend resources or change real progress")
+			for page_index in book._deck._made:
+				var other: Node = book._deck._made[page_index].get_node_or_null("SkillPreview")
+				if int(page_index)!=4 and other!=null:
+					_check(other.process_mode==Node.PROCESS_MODE_DISABLED,"Hidden skill previews must stop processing")
 		var sid := String(book._sids[4])
 		var lv := G.skill_level(sid)
 		var before := int(G.wallet.expedition)

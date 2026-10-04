@@ -53,6 +53,9 @@ function Get-PlayerSnapshot {
 	foreach ($root in $roots) {
 		if (-not (Test-Path -LiteralPath $root)) { continue }
 		foreach ($file in Get-ChildItem -LiteralPath $root -Recurse -File) {
+			# An already-running player may hold engine logs open. These are volatile
+			# diagnostics, not player data; keep hashing every other file including saves.
+			if ($file.Directory.Name -eq "logs" -and $file.Name -like "godot*.log") { continue }
 			$result[$file.FullName] = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash
 		}
 	}

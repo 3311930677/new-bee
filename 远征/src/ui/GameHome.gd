@@ -12,9 +12,10 @@ const BagPanelScript := preload("res://src/ui/BagPanel.gd")
 const QuestPanelScript := preload("res://src/ui/QuestPanel.gd")
 const Journal := preload("res://src/ui/JournalUI.gd")
 const Field := preload("res://src/ui/FieldUI.gd")
+const Craft := preload("res://src/ui/CraftUI.gd")
 
-const SPRITE_SCALE := 1.35       # 营帐的角色预览不盖住导航与主世界入口
-const PED_Y := 374.0            # 营地展示人物的脚底位置
+const SPRITE_SCALE := 2.0       # 营帐的角色预览不盖住导航与主世界入口
+const PED_Y := 514.0            # 营地展示人物的脚底位置
 const BASE_OFFSET := 59.0       # 清理后素材脚底相对帧中心的偏移（基线 y=123）
 const ANIM_Y := PED_Y - BASE_OFFSET * SPRITE_SCALE
 
@@ -111,8 +112,7 @@ func _prompt_save_locked() -> void:
 
 # ---------- 背景（黄昏营地插画 + 轻压暗，保持暖调通透） ----------
 func _build_background() -> void:
-	G.page_background(self, 0.30)
-
+	Craft.scene(self)
 
 func _build_profile(_role: Dictionary) -> void:
 	_avatar_frame = Panel.new()
@@ -146,7 +146,7 @@ func _build_profile(_role: Dictionary) -> void:
 	var lv := int(G.prog.get("level", 1))
 	add_child(Field.label("LV %02d" % lv, Vector2(84, 48), Vector2(64, 24), 14, G.FIELD_COPPER, true))
 	_add_exp_bar(Vector2(150, 58), 116, int(G.prog.get("exp",0)), G.exp_to_next(lv))
-	var settings := Field.action("", Vector2(404,24), Vector2(52,48))
+	var settings := Craft.action("", Vector2(404,24), Vector2(52,48))
 	settings.quiet = true
 	settings.tooltip_text = "设置"
 	var icon := G.ui_icon("settings", Vector2(22,22))
@@ -187,7 +187,7 @@ func _disc_panel(px: float, glyph: String) -> Control:
 
 # ---------- 顶部：徽标 + 账号小字 + 重建入口 ----------
 func _build_top(role: Dictionary) -> void:
-	add_child(Field.surface(Vector2(24,86),Vector2(432,44)))
+	add_child(Craft.panel(Vector2(24,86),Vector2(432,44),.80))
 	# 固定四等份宽度；大额缩写，完整数字留在提示中，永不挤出屏幕。
 	var wallet_row := HBoxContainer.new()
 	_wallet_row = wallet_row
@@ -221,16 +221,23 @@ func _build_top(role: Dictionary) -> void:
 		wallet_row.add_child(amount)
 		_wallet_labels.append({"label":amount,"key":data[1],"name":data[0]})
 	_refresh_wallet()
-	add_child(Field.label("行旅营帐",Vector2(28,156),Vector2(180,36),24,G.FIELD_PAPER_LIGHT,false,true))
-	add_child(Field.label("%s · %s" % [role.get("name",""),role.get("job","")],Vector2(30,194),Vector2(175,24),14,G.FIELD_COPPER))
-	var quests_btn := Field.action("",Vector2(24,238),Vector2(140,64))
+	add_child(Craft.label("行旅营帐",Vector2(26,139),Vector2(190,30),20,Craft.GOLD,false,true))
+	var quests_btn := Craft.action("任务",Vector2(24,176),Vector2(212,70))
 	quests_btn.caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	quests_btn.caption.text = "任务"
-	quests_btn.caption.size = Vector2(100,34)
-	quests_btn.add_child(Field.label("主线 / 今日委托",Vector2(16,34),Vector2(115,24),14,G.FIELD_COPPER))
+	quests_btn.caption.position = Vector2(42,4)
+	quests_btn.caption.set_meta("fixed_y",4)
+	quests_btn.caption.size = Vector2(154,30)
+	quests_btn.caption.add_theme_font_size_override("font_size",16)
+	Craft.icon(quests_btn,"book",Vector2(12,9),Vector2(23,23))
+	var goal := String(G.story_current().get("goal","主线 / 今日委托"))
+	var goal_l := Craft.label(goal,Vector2(14,34),Vector2(184,30),13,Craft.MUTED)
+	goal_l.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	quests_btn.tooltip_text = goal + "\n查看主线与今日委托"
+	quests_btn.add_child(goal_l)
 	quests_btn.activated.connect(_open_quests)
-	if _quest_claimable(): G.badge_dot(quests_btn,Vector2(126,9))
+	if _quest_claimable(): G.badge_dot(quests_btn,Vector2(197,8))
 	add_child(quests_btn)
+
 
 
 func _refresh_wallet() -> void:
@@ -245,43 +252,35 @@ func _refresh_wallet() -> void:
 # ---------- 角色展示台（金色圆台 + 光圈 + 待机动画） ----------
 func _build_stage(role: Dictionary) -> void:
 	var contact := _HomeContact.new()
-	contact.position = Vector2(VIEW_W * 0.5, PED_Y)
-	contact.set_meta("actor_shadow", true)
+	contact.position = Vector2(240,PED_Y)
+	contact.set_meta("actor_shadow",true)
 	add_child(contact)
-	var pad := _Pedestal.new()
-	pad.rx = 42.0
-	pad.ry = 14.0
-	pad.position = Vector2(VIEW_W / 2.0, PED_Y)
-	# The courtyard already supplies a floor; no luminous platform under the actor.
-	pad.visible = false
-	add_child(pad)
-
-	var ring := _RingDrawer.new()
-	ring.rx = 48.0
-	ring.ry = 17.0
-	ring.position = Vector2(VIEW_W / 2.0, PED_Y + 6)
-	ring.visible = false
-	add_child(ring)
-
 	_anim = AnimatedSprite2D.new()
+	_anim.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	_anim.scale = Vector2.ONE * SPRITE_SCALE
-	_anim.position = Vector2(VIEW_W / 2.0, ANIM_Y)
+	_anim.position = Vector2(240,ANIM_Y)
 	add_child(_anim)
-
-	var role_id: String = String(role.get("id", "zs"))
-	_anim.sprite_frames = _frames(role_id)
+	_anim.sprite_frames = _frames(String(role.get("id","zs")))
 	_anim.animation = &"idle"
 	_anim.play()
-
+	var identity := Craft.panel(Vector2(142,540),Vector2(196,58),.77)
+	identity.set_meta("home_shift",.60)
+	add_child(identity)
+	var name_l := Craft.label(String(role.get("name","旅人")),Vector2(8,2),Vector2(180,30),22,Craft.WHITE,true,true)
+	name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	identity.add_child(name_l)
+	var job := Craft.label("%s · LV %02d" % [role.get("job",""),int(G.prog.get("level",1))],Vector2(8,30),Vector2(180,22),13,Craft.GOLD)
+	job.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	identity.add_child(job)
 
 func _layout_tall_home() -> void:
-	var extra := maxf(0.0, get_viewport_rect().size.y - VIEW_H)
-	if extra <= 0: return
-	_anim.position.y += extra * .45
+	var extra := maxf(0.0,get_viewport_rect().size.y-VIEW_H)
+	if extra<=0: return
+	_anim.position.y += extra*.60
 	for child in get_children():
-		if child is Node2D and child.get_meta("actor_shadow",false): child.position.y += extra * .45
+		if child is Node2D and child.get_meta("actor_shadow",false): child.position.y += extra*.60
 		if child is Control and child.has_meta("home_shift"):
-			child.position.y += extra * float(child.get_meta("home_shift"))
+			child.position.y += extra*float(child.get_meta("home_shift"))
 
 func _frames(role_id: String) -> SpriteFrames:
 	var tex: Texture2D = load(G.role_dir(role_id) + _role_name(role_id) + "_idle.png")
@@ -315,73 +314,60 @@ func _role_name(id: String) -> String:
 
 # 四件行旅器物为主导航，活动在下方独立排列。
 func _build_entries() -> void:
-	var shelf := Field.surface(Vector2(24,414),Vector2(432,118))
-	shelf.set_meta("home_shift",.6)
-	add_child(shelf)
-	var section := Field.label("行前整备",Vector2(28,383),Vector2(250,24),14,G.FIELD_PAPER_LIGHT)
-	section.set_meta("home_shift",.6)
-	add_child(section)
-	var entries := [["世界","world"],["背包","bag"],["养成","growth"],["图鉴","book"]]
-	for i in entries.size():
-		var b := Field.action(entries[i][0],Vector2(24+i*108,415),Vector2(108,116))
-		b.quiet = true
-		b.set_meta("home_shift",.6)
-		b.caption.position = Vector2(0,76)
-		b.caption.size = Vector2(108,32)
-		b.caption.set_meta("fixed_y",76)
-		var prop := Field.Prop.new()
-		prop.key = entries[i][1]
-		prop.position = Vector2(26,10)
-		prop.size = Vector2(56,56)
-		b.add_child(prop)
-		var words: String = entries[i][0]
-		b.activated.connect(func(): _dispatch_entry(words))
-		add_child(b)
-	var activities := Field.label("营地事务",Vector2(28,555),Vector2(250,24),14,G.FIELD_COPPER)
-	activities.set_meta("home_shift",.75)
-	add_child(activities)
+	# Secondary shortcuts frame the actor; the stable navigation lives at the bottom.
 	for i in 3:
 		var e: Array = [["竞技","swords"],["召唤","summon"],["兑换","exchange"]][i]
-		var b := Field.action(e[0],Vector2(24+i*148,587),Vector2(136,52))
-		b.set_meta("home_shift",.75)
-		var icon := G.ui_icon(e[1],Vector2(24,24))
-		icon.position = Vector2(14,14)
-		b.add_child(icon)
-		b.caption.position.x = 42
-		b.caption.size.x = 78
+		var b := Craft.action(e[0],Vector2(388,262+i*86),Vector2(68,78),"badge")
+		b.set_meta("home_shift",.45)
+		b.caption.position = Vector2(0,56)
+		b.caption.size = Vector2(68,22)
+		b.caption.set_meta("fixed_y",56)
+		b.caption.add_theme_font_size_override("font_size",14)
+		Craft.icon(b,e[1],Vector2(17,10),Vector2(34,34))
 		var words: String = e[0]
-		if _entry_has_badge(words): G.badge_dot(b,Vector2(122,8))
+		if _entry_has_badge(words): G.badge_dot(b,Vector2(58,5))
 		b.activated.connect(func(): _dispatch_entry(words))
 		add_child(b)
 	if G.side_status_of("a4_rel_nighttable") == QuestService.SIDE_DONE:
-		var gathering := Field.action("归路小聚",Vector2(24,644),Vector2(432,44))
-		gathering.quiet = true
-		gathering.set_meta("home_shift",.85)
+		var gathering := Craft.action("归路小聚",Vector2(24,268),Vector2(124,48))
+		gathering.set_meta("home_shift",.45)
+		gathering.caption.add_theme_font_size_override("font_size",15)
 		gathering.activated.connect(_open_gathering)
 		add_child(gathering)
 	var state: Dictionary = G.prog.get("main_world",{})
 	var map_name := String(TableCache.main_world_map(String(state.get("map_id","lorin_wilds"))).get("name","昭元边城"))
-	var travel := Field.action("继续旅程",Vector2(24,704),Vector2(432,60),true)
+	var travel := Craft.action("继续旅程",Vector2(32,622),Vector2(416,70),"primary")
 	travel.name = "ReturnToWorld"
 	travel.set_meta("home_shift",1.0)
 	travel.tooltip_text = "返回主世界 · " + map_name
-	travel.caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	travel.caption.position.x = 24
-	travel.caption.size.x = 160
+	travel.caption.position = Vector2(64,6)
+	travel.caption.set_meta("fixed_y",6)
+	travel.caption.size = Vector2(286,34)
+	travel.caption.add_theme_font_size_override("font_size",25)
 	travel.caption.add_theme_font_override("font",G.font_serif)
-	travel.caption.add_theme_font_size_override("font_size",22)
-	var destination := Field.label(map_name,Vector2(226,0),Vector2(165,60),14,G.FIELD_PAPER_LIGHT)
-	destination.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	var destination := Craft.label(map_name,Vector2(64,41),Vector2(286,20),13,Color("51412a"))
+	destination.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	destination.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	travel.add_child(destination)
-	var arrow := G.ui_icon("forward",Vector2(16,16))
-	arrow.position = Vector2(402,22)
-	travel.add_child(arrow)
+	Craft.icon(travel,"world",Vector2(21,17),Vector2(34,34))
+	Craft.icon(travel,"forward",Vector2(379,27),Vector2(16,16))
 	travel.activated.connect(func(): _open_city(_click_ev()))
 	add_child(travel)
-
-
-
+	var nav := Craft.panel(Vector2(12,712),Vector2(456,76),.90)
+	nav.set_meta("home_shift",1.0)
+	add_child(nav)
+	var entries := [["世界","world"],["背包","bag"],["养成","swords"],["图鉴","book"]]
+	for i in entries.size():
+		var b := Craft.action(entries[i][0],Vector2(16+i*112,714),Vector2(112,72),"nav")
+		b.set_meta("home_shift",1.0)
+		b.caption.position = Vector2(0,46)
+		b.caption.size = Vector2(112,24)
+		b.caption.set_meta("fixed_y",46)
+		b.caption.add_theme_font_size_override("font_size",16)
+		Craft.icon(b,entries[i][1],Vector2(37,7),Vector2(38,38))
+		var words: String = entries[i][0]
+		b.activated.connect(func(): _dispatch_entry(words))
+		add_child(b)
 
 func _entry_has_badge(label: String) -> bool:
 	match label:
@@ -686,14 +672,10 @@ func _close_overlay_with_escape() -> bool:
 		_exchange.closed.emit()
 		return true
 	if _arena != null:
-		Audio.sfx("ui_close")
-		_arena.queue_free()
-		_arena = null
+		_arena.closed.emit()
 		return true
 	if _growth != null:
-		Audio.sfx("ui_close")
-		_growth.queue_free()
-		_growth = null
+		_growth.closed.emit()
 		return true
 	return false
 
