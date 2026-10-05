@@ -1,0 +1,110 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started 项目初始化 (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | 正在扫描文件结构……[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | 正在加载全局类名……[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | 正在校验 GDExtension……[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | 正在创建自动加载脚本……[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | 正在初始化插件……[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | 正在启动文件扫描……[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | Started 正在注册全局类…… (13 steps)[39m[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   7% ] [90m[1mupdate_scripts_classes[22m | BattleScene[39m[0m
+[  14% ] [90m[1mupdate_scripts_classes[22m | RouteScene[39m[0m
+[  21% ] [90m[1mupdate_scripts_classes[22m | GachaPanel[39m[0m
+[  28% ] [90m[1mupdate_scripts_classes[22m | SlideCard[39m[0m
+[  35% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  42% ] [90m[1mupdate_scripts_classes[22m | WorldPuzzlePanel[39m[0m
+[  50% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  57% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  64% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  71% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  78% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  85% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[92m[ DONE ][39m [1mupdate_scripts_classes[22m
+[0m
+[   0% ] [90m[1m_update_scan_actions[22m | Started 正在扫描动作…… (46 steps)[39m[0m
+[   0% ] [90m[1m_update_scan_actions[22m | d_pet_fire_fox.png[39m[0m
+[   2% ] [90m[1m_update_scan_actions[22m | d_pet_snow_mink.png[39m[0m
+[   4% ] [90m[1m_update_scan_actions[22m | d_pet_thunder_sparrow.png[39m[0m
+[   6% ] [90m[1m_update_scan_actions[22m | d_pet_turtle_chancellor.png[39m[0m
+[   8% ] [90m[1m_update_scan_actions[22m | pet_emberling.png[39m[0m
+[  10% ] [90m[1m_update_scan_actions[22m | pet_eyescat.png[39m[0m
+[  12% ] [90m[1m_update_scan_actions[22m | pet_foxfire.png[39m[0m
+[  14% ] [90m[1m_update_scan_actions[22m | pet_frostwolf.png[39m[0m
+[  17% ] [90m[1m_update_scan_actions[22m | pet_holydeer.png[39m[0m
+[  19% ] [90m[1m_update_scan_actions[22m | pet_rockturtle.png[39m[0m
+[  21% ] [90m[1m_update_scan_actions[22m | pet_shadowviper.png[39m[0m
+[  23% ] [90m[1m_update_scan_actions[22m | pet_thunderhawk.png[39m[0m
+[  25% ] [90m[1m_update_scan_actions[22m | abyss_ring_ground_reference_v1.png[39m[0m
+[  27% ] [90m[1m_update_scan_actions[22m | frost_post_ground_reference_v2.png[39m[0m
+[  29% ] [90m[1m_update_scan_actions[22m | lorin_wilds_grass_v2.png[39m[0m
+[  31% ] [90m[1m_update_scan_actions[22m | shenyuan_port_ground_reference_v2.png[39m[0m
+[  34% ] [90m[1m_update_scan_actions[22m | 001_tile_forest_1.png[39m[0m
+[  36% ] [90m[1m_update_scan_actions[22m | 002_tile_forest_2.png[39m[0m
+[  38% ] [90m[1m_update_scan_actions[22m | 003_tile_forest_3.png[39m[0m
+[  40% ] [90m[1m_update_scan_actions[22m | 004_tile_snow_1.png[39m[0m
+[  42% ] [90m[1m_update_scan_actions[22m | 005_tile_snow_2.png[39m[0m
+[  44% ] [90m[1m_update_scan_actions[22m | 006_tile_snow_3.png[39m[0m
+[  46% ] [90m[1m_update_scan_actions[22m | 007_tile_volcano_1.png[39m[0m
+[  48% ] [90m[1m_update_scan_actions[22m | 008_tile_volcano_2.png[39m[0m
+[  51% ] [90m[1m_update_scan_actions[22m | 009_tile_volcano_3.png[39m[0m
+[  53% ] [90m[1m_update_scan_actions[22m | 010_tile_tomb_1.png[39m[0m
+[  55% ] [90m[1m_update_scan_actions[22m | 011_tile_tomb_2.png[39m[0m
+[  57% ] [90m[1m_update_scan_actions[22m | 012_tile_tomb_3.png[39m[0m
+[  59% ] [90m[1m_update_scan_actions[22m | 013_tile_desert_1.png[39m[0m
+[  61% ] [90m[1m_update_scan_actions[22m | 014_tile_desert_2.png[39m[0m
+[  63% ] [90m[1m_update_scan_actions[22m | 015_tile_desert_3.png[39m[0m
+[  65% ] [90m[1m_update_scan_actions[22m | 016_tile_glacier_1.png[39m[0m
+[  68% ] [90m[1m_update_scan_actions[22m | 017_tile_glacier_2.png[39m[0m
+[  70% ] [90m[1m_update_scan_actions[22m | 018_tile_glacier_3.png[39m[0m
+[  72% ] [90m[1m_update_scan_actions[22m | 019_tile_abyss_1.png[39m[0m
+[  74% ] [90m[1m_update_scan_actions[22m | 020_tile_abyss_2.png[39m[0m
+[  76% ] [90m[1m_update_scan_actions[22m | 021_tile_abyss_3.png[39m[0m
+[  78% ] [90m[1m_update_scan_actions[22m | 022_tile_castle_1.png[39m[0m
+[  80% ] [90m[1m_update_scan_actions[22m | 023_tile_castle_2.png[39m[0m
+[  82% ] [90m[1m_update_scan_actions[22m | 024_tile_castle_3.png[39m[0m
+[  85% ] [90m[1m_update_scan_actions[22m | 025_tile_forest_path_sheet_00_15.png[39m[0m
+[  87% ] [90m[1m_update_scan_actions[22m | 026_tile_snow_path_sheet_00_15.png[39m[0m
+[  89% ] [90m[1m_update_scan_actions[22m | 027_tile_volcano_lava_sheet_00_15.png[39m[0m
+[  91% ] [90m[1m_update_scan_actions[22m | shuangyu_walk_before_direct_v17.png[39m[0m
+[  93% ] [90m[1m_update_scan_actions[22m | shuangyu_walk_4dir.png[39m[0m
+[  95% ] [90m[1m_update_scan_actions[22m | shuangyu_walk_side_video_v17.png[39m[0m
+[92m[ DONE ][39m [1m_update_scan_actions[22m
+[0m
+[   0% ] [90m[1mreimport[22m | Started 正在导入或重新导入资产 (7 steps)[39m[0m
+[   0% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  12% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  25% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  37% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  50% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  62% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  75% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[   0% ] [90m[1mreimport[22m | 正在执行重新导入的前置操作……[39m[0m
+[   0% ] [90m[1mreimport[22m | abyss_ring_ground_reference_v1.png[39m[0m
+[  12% ] [90m[1mreimport[22m | frost_post_ground_reference_v2.png[39m[0m
+[  25% ] [90m[1mreimport[22m | lorin_wilds_grass_v2.png[39m[0m
+[  37% ] [90m[1mreimport[22m | shenyuan_port_ground_reference_v2.png[39m[0m
+[  50% ] [90m[1mreimport[22m | shuangyu_walk_before_direct_v17.png[39m[0m
+[  62% ] [90m[1mreimport[22m | shuangyu_walk_4dir.png[39m[0m
+[  75% ] [90m[1mreimport[22m | shuangyu_walk_side_video_v17.png[39m[0m
+[  87% ] [90m[1mreimport[22m | 正在结束资产导入……[39m[0m
+[92m[ DONE ][39m [1mreimport[22m
+[0m
+[   0% ] [90m[1mreimport[22m | Started 正在导入或重新导入资产 (7 steps)[39m[0m
+[   0% ] [90m[1mreimport[22m | 正在执行重新导入的后置操作……[39m[0m
+[92m[ DONE ][39m [1mreimport[22m
+[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Started 正在加载编辑器 (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | 正在加载编辑器布局……[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | 正在加载停靠面板……[39m[0m
+[  33% ] [90m[1mloading_editor_layout[22m | 正在重新打开场景……[39m[0m
+[  50% ] [90m[1mloading_editor_layout[22m | 正在加载中央编辑器布局……[39m[0m
+[  66% ] [90m[1mloading_editor_layout[22m | 正在加载插件窗口布局……[39m[0m
+[  83% ] [90m[1mloading_editor_layout[22m | 编辑器布局就绪。[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m

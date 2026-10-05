@@ -1,0 +1,277 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@Node2D@4/@Node2D@6/@Label@7",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "赤砂商路 · 封"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@Node2D@4/@CharacterBody2D@12/@Panel@15/@Label@18",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "盐路行者  Lv12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@Node2D@4/WorldCompanion/@Label@25",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "岩龟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@Node2D@4/@Node2D@95/@Label@97",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "沈澜"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@Node2D@4/@Node2D@98/@Label@100",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "陆七"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@Node2D@4/@Node2D@124/@Label@125",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "栈桥水边 · 垂钓"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Panel@29/@Label@30",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "Lv12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Panel@29/@Label@33",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "生命 690/690"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Panel@29/@Label@36",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "EXP 28%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Panel@37/@Label@39",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "12800"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 39.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Label@40",
+			"rect_height": 39.0,
+			"size": 26,
+			"text": "沉渊港"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Panel@42/@Label@41",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "主线 · 去港东潮痕滩查看涨潮货堆"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Panel@44/@Label@43",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "支线 · 旧缆新结（可交付：老鹭）"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Control@64/@PanelContainer@59/@Label@58",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Control@64/@Label@61",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "药剂"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Control@64/@PanelContainer@63/@Label@62",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Control@69/@PanelContainer@66/@Label@65",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Control@69/@Label@68",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "伙伴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Control@74/@PanelContainer@71/@Label@70",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Control@74/@Label@73",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "营帐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Control@80/@PanelContainer@77/@Label@76",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 40.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Control@80/@Label@78",
+			"rect_height": 40.0,
+			"size": 27,
+			"text": "»"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Control@80/@Label@79",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "疾行"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@PanelContainer@107/@Label@108",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "港务 · 查看行情"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 58.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Control@117/@Panel@114/@Label@113",
+			"rect_height": 58.0,
+			"size": 39,
+			"text": "老鹭 · 托付"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Control@117/@PanelContainer@115/@Control@116/@Label@118",
+			"rect_height": 100.0,
+			"size": 17,
+			"text": "旧缆有磨痕，还能使；新缆也备好了。你想怎么修？两种修法的报酬相同。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Control@117/@PanelContainer@115/@Control@116/@Label@119",
+			"rect_height": 176.0,
+			"size": 17,
+			"text": "目标：查看港东栈道的松缆，再找老鹭决定修法\n进度：目标已完成，回去交付\n地点：沉渊港\n交付：老鹭（沉渊港）\n奖励：金币 +120\n奖励：经验 +55"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Control@117/@PanelContainer@115/@Control@116/@PanelContainer@121/@Label@120",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "留旧缆·重新系紧"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Control@117/@PanelContainer@115/@Control@116/@PanelContainer@123/@Label@122",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "换新缆·收起旧绳"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@28/@Control@117/@PanelContainer@115/@Control@116/@PanelContainer@127/@Label@126",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "返回"
+		}
+	]
+}

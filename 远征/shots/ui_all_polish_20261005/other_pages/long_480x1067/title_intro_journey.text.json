@@ -1,0 +1,187 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Title/@Label@3",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "昭元行旅录"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 39.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Title/Menu/@Control@5/@Label@4",
+			"rect_height": 56.0,
+			"size": 26,
+			"text": "开始游戏"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 33.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Title/Menu/@Control@7/@Label@6",
+			"rect_height": 50.0,
+			"size": 22,
+			"text": "游戏介绍"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 33.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Title/Menu/@Control@9/@Label@8",
+			"rect_height": 50.0,
+			"size": 22,
+			"text": "游戏设置"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 33.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Title/Menu/@Control@11/@Label@10",
+			"rect_height": 50.0,
+			"size": 22,
+			"text": "退出游戏"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 59.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Title/@Control@12/@Panel@17/@Label@16",
+			"rect_height": 59.0,
+			"size": 40,
+			"text": "远征手记"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Title/@Control@12/@PanelContainer@18/@Control@19/@Control@58/@Control@20/@Control@21/@Control@30/@Label@28",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "裂隙之下"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Title/@Control@12/@PanelContainer@18/@Control@19/@Control@58/@Control@20/@Control@21/@Control@30/@Label@29",
+			"rect_height": 94.0,
+			"size": 17,
+			"text": "大陆历947年，北境裂隙撕开。\n亡国皇子与旅人在灰烬中相遇。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Title/@Control@12/@PanelContainer@18/@Control@19/@Control@58/@Control@20/@Control@21/@Control@43/@Label@34",
+			"rect_height": 28.0,
+			"size": 15,
+			"text": "破军"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Title/@Control@12/@PanelContainer@18/@Control@19/@Control@58/@Control@20/@Control@21/@Control@43/@Label@36",
+			"rect_height": 28.0,
+			"size": 15,
+			"text": "穿杨"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Title/@Control@12/@PanelContainer@18/@Control@19/@Control@58/@Control@20/@Control@21/@Control@43/@Label@38",
+			"rect_height": 28.0,
+			"size": 15,
+			"text": "霜语"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Title/@Control@12/@PanelContainer@18/@Control@19/@Control@58/@Control@20/@Control@21/@Control@43/@Label@40",
+			"rect_height": 28.0,
+			"size": 15,
+			"text": "晨星"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Title/@Control@12/@PanelContainer@18/@Control@19/@Control@58/@Control@20/@Control@21/@Control@43/@Label@41",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "四位旅人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Title/@Control@12/@PanelContainer@18/@Control@19/@Control@58/@Control@20/@Control@21/@Control@43/@Label@42",
+			"rect_height": 94.0,
+			"size": 17,
+			"text": "剑、弓、冰霜与灯火。\n选择职业，结识伙伴，组成远征队伍。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Title/@Control@12/@PanelContainer@18/@Control@19/@Control@58/@Control@20/@Control@21/@Control@51/@Label@49",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "沿先王的足迹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Title/@Control@12/@PanelContainer@18/@Control@19/@Control@58/@Control@20/@Control@21/@Control@51/@Label@50",
+			"rect_height": 94.0,
+			"size": 17,
+			"text": "穿越森林、雪原、火山与墓穴。\n构筑词条，挑战首领，失败后重整旗鼓。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Title/@Control@12/@PanelContainer@18/@Control@19/PageTabs/PageTab0/@Label@59",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "世界"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Title/@Control@12/@PanelContainer@18/@Control@19/PageTabs/PageTab1/@Label@61",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "旅人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Title/@Control@12/@PanelContainer@18/@Control@19/PageTabs/PageTab2/@Label@63",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "启程"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Title/@Control@12/@PanelContainer@18/@Control@19/@PanelContainer@66/@Label@65",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "返回"
+		}
+	]
+}

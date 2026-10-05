@@ -1,0 +1,610 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 59.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@Panel@106/@Label@105",
+			"rect_height": 59.0,
+			"size": 40,
+			"text": "天赋树"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Label@109",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "剩余天赋点 1 / 2（每 5 级 1 点）"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@270",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "狂战"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@275/@Control@272/@Label@274",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "1/3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@276",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "锐利"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@280/@Control@277/@Label@279",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@281",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "破甲"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@285/@Control@282/@Label@284",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@286",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "嗜血"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@290/@Control@287/@Label@289",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@291",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "猛进"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@295/@Control@292/@Label@294",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@296",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "怒意"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@300/@Control@297/@Label@299",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@301",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "裂伤"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@305/@Control@302/@Label@304",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@306",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "绝杀"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@310/@Control@307/@Label@309",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@311",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "狂澜"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@315/@Control@312/@Label@314",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@316",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "战意"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@320/@Control@317/@Label@319",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@321",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "破军之势"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@322",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "坚壁"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@327/@Control@324/@Label@326",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@328",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "厚甲"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@332/@Control@329/@Label@331",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@333",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "活血"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@337/@Control@334/@Label@336",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@338",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "铁骨"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@342/@Control@339/@Label@341",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@343",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "韧皮"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@347/@Control@344/@Label@346",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@348",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "沉稳"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@352/@Control@349/@Label@351",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@353",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "坚垒"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@357/@Control@354/@Label@356",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@358",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "御劲"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@362/@Control@359/@Label@361",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@363",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "磐石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@367/@Control@364/@Label@366",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@368",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "不屈"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@372/@Control@369/@Label@371",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@373",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "不动如山"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@374",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "迅捷"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@379/@Control@376/@Label@378",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@380",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "轻身"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@384/@Control@381/@Label@383",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@385",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "凝神"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@389/@Control@386/@Label@388",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@390",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "慧心"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@394/@Control@391/@Label@393",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@395",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "疾行"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@399/@Control@396/@Label@398",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@400",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "养气"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@404/@Control@401/@Label@403",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@405",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "聚灵"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@409/@Control@406/@Label@408",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@410",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "流影"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@414/@Control@411/@Label@413",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@415",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "通明"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@419/@Control@416/@Label@418",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@420",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "乘风"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@PanelContainer@424/@Control@421/@Label@423",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "0/1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Control@110/@Label@425",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "天人合一"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@Label@267",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "点击节点投入天赋点"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Control@101/@PanelContainer@107/@Control@108/@PanelContainer@269/@Label@268",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "返回"
+		}
+	]
+}

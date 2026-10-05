@@ -5,6 +5,8 @@ const ATLAS_PATH := "res://image/main_world/art_v2/props_atlas.png"
 const STORY_ATLAS_PATH := "res://image/main_world/art_v2/story_props_atlas.png"
 const RETURN_ATLAS_PATH := "res://image/main_world/art_v2/return_props_atlas.png"
 const DESATURATE := preload("res://src/world/prop_desaturate.gdshader")
+const Grounding := preload("res://src/world/BuildingGrounding.gd")
+static var _ground_sources: Dictionary = {}
 const REGIONS := {
 	"vein":Rect2(62,113,343,292),"altar":Rect2(512,26,317,394),
 	"herb":Rect2(64,513,341,314),"post":Rect2(533,454,284,406),
@@ -31,6 +33,7 @@ static func supplementary(c: CanvasItem,key: String,height: float,tint := Color.
 	if _return_atlas==null: return
 	var region: Rect2 = RETURN_REGIONS[key]
 	var width := region.size.x/region.size.y*height
+	_ground_bitmap(c,_return_atlas,Rect2(-width*.5,-height,width,height),region)
 	c.draw_texture_rect_region(_return_atlas,Rect2(-width*.5,-height,width,height),region,tint)
 
 static func barrier(c: CanvasItem,start: float,width: float,height := 48.0,tint := Color.WHITE) -> void:
@@ -51,6 +54,7 @@ static func story(c: CanvasItem,key: String,height: float) -> void:
 	if _story_atlas==null: return
 	var region: Rect2 = STORY_REGIONS[key]
 	var width := region.size.x/region.size.y*height
+	_ground_bitmap(c,_story_atlas,Rect2(-width*.5,-height,width,height),region)
 	c.draw_texture_rect_region(_story_atlas,Rect2(-width*.5,-height,width,height),region)
 
 static func muted_material() -> ShaderMaterial:
@@ -64,12 +68,26 @@ static func _bitmap(c: CanvasItem,key: String,height: float,tint := Color.WHITE)
 	if _atlas==null: return false
 	var region: Rect2 = REGIONS[key]
 	var width := region.size.x/region.size.y*height
+	_ground_bitmap(c,_atlas,Rect2(-width*.5,-height,width,height),region)
 	c.draw_texture_rect_region(_atlas,Rect2(-width*.5,-height,width,height),region,tint)
 	return true
 
+static func _ground_bitmap(c: CanvasItem,texture: Texture2D,rect: Rect2,region := Rect2()) -> void:
+	var source := texture
+	if region.has_area():
+		var key := "%s:%s" % [texture.resource_path,region]
+		if not _ground_sources.has(key):
+			var part := AtlasTexture.new()
+			part.atlas = texture
+			part.region = region
+			_ground_sources[key] = part
+		source = _ground_sources[key]
+	var row := Grounding.silhouette(source,roundi(rect.size.x),roundi(rect.size.y))
+	Grounding.draw_prop(c,row,rect.position,rect.size.x)
+
 static func signpost(canvas: CanvasItem,style := "normal") -> void:
 	if _sign==null: _sign = load(SIGN_PATH)
-	shadow(canvas,30)
+	_ground_bitmap(canvas,_sign,Rect2(-46,-94,92,96))
 	var tint := Color("bfc6c5") if style=="sealed" else (Color("ffefbb") if style=="restored" else Color.WHITE)
 	canvas.draw_texture_rect(_sign,Rect2(-46,-94,92,96),false,tint)
 	if style=="restored":

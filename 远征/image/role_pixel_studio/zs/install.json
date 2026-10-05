@@ -1,0 +1,16 @@
+{
+  "source_backup": "D:\\new-bee\\pixel-art\\pojun-pixel-studio\\backup",
+  "installed_png_sha256": "30bc9283770d1430d43d813b093cc812c187f1f828870918f311f960743d23e3",
+  "original_png_sha256": "72d378e864005c1f1519416a93ad6f0ce89d5aa3d7a3b51c7c771b49987bb454",
+  "changed_resources": [
+    "res://image/role/zs/pojun_walk_4dir.png",
+    "res://image/role/zs/pojun_walk_frames.tres"
+  ],
+  "rows": [
+    "down",
+    "left",
+    "right",
+    "up"
+  ],
+  "frames_per_direction": 8
+}

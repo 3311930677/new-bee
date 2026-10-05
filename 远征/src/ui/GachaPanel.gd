@@ -15,6 +15,7 @@ const RARITY_ORDER := ["white", "blue", "purple", "gold"]
 # 稀有度色/名全项目唯一定义在 G.gd（C6），这里只引用，不再各自复制一份
 const GScript := preload("res://src/autoload/G.gd")
 const Finesse := preload("res://src/ui/UIFinesse.gd")
+const Craft := preload("res://src/ui/CraftUI.gd")
 const RARITY_NAME := GScript.RARITY_NAME
 const RARITY_HUE := GScript.RARITY_HUE
 # 十连网格：5 列 × 2 行。卡 86×115、列距 92、行距 131，整排落在 13..467，不出 480
@@ -132,238 +133,162 @@ func _rules_lines() -> Array:
 # ================= 主面板 =================
 
 func _build() -> void:
-	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），不再各写一块纯灰
-	G.veil(self, G.VEIL_MODAL_A)
-
-	# 同 DeployPanel 的教训：浮层 rect 时机问题，横幅直接写死坐标最稳
-	var banner := G.banner_box("灵宠召唤", 300, 50)
-	banner.position = Vector2(90, 36)
-	add_child(banner)
-
-	var panel := G.parchment_box(440, 600, 16.0)
-	panel.position = Vector2(20, 108)
-	add_child(panel)
-
-	# PanelContainer 是容器，直接放子控件会被布局覆盖位置；包一层 Control 手动布局
+	G.veil(self,.97)
+	Craft.heading(self,"灵宠召唤","以魂晶结缘 · 寻找并肩而行的伙伴")
+	var info := G.info_button("召唤规则",_rules_lines(),44.0)
+	info.position = Vector2(412,24)
+	add_child(info)
 	var content := Control.new()
-	content.set_anchors_preset(Control.PRESET_FULL_RECT)
+	content.position = Vector2(24,102)
+	content.size = Vector2(432,638)
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	panel.add_child(content)
+	add_child(content)
+	var balance := Craft.panel(Vector2.ZERO,Vector2(432,36),.96)
+	content.add_child(balance)
+	var soul_icon := _tex_rect("cur_soul",20,20,G.C_RARE)
+	soul_icon.position = Vector2(22,8)
+	balance.add_child(soul_icon)
+	_soul_l = Craft.label("",Vector2(50,5),Vector2(148,26),16,Craft.WHITE,true)
+	balance.add_child(_soul_l)
+	var ticket_icon := _tex_rect("itm_ticket_ten",20,20,G.C_RARE)
+	ticket_icon.position = Vector2(238,8)
+	balance.add_child(ticket_icon)
+	_ticket_l = Craft.label("",Vector2(266,5),Vector2(148,26),16,Craft.WHITE,true)
+	balance.add_child(_ticket_l)
 
-	# 顶部信息带：本期主打 + 保底进度
-	# （原来是冷色「蓝城堡」横幅素材，压在暖色羊皮纸上像贴错了图；改成同族木色内嵌带）
-	var head := _inset_band(Vector2(CONTENT_W, 104), Vector2(0, 0))
-	(head as G.InsetBand).set_surface(Color("393049"),Color("9f85b0"))
+	var head := Craft.panel(Vector2(0,44),Vector2(432,166),.88)
 	content.add_child(head)
-	var halo := Finesse.Sigil.new()
-	halo.position = Vector2(0,-2)
-	halo.size = Vector2(96,108)
-	head.add_child(halo)
 	var feat := _featured_pet()
-	var fpic := _tex_rect(String(feat.get("id", "")), 68, 68, G.C_HINT)
-	fpic.position = Vector2(14, 18)
-	head.add_child(fpic)
-	var fraw := String(feat.get("rarity", "white"))
-	var kicker := G.gold_label("本 期 主 打", G.FS_XS, false, Color("c9b9d7"), false)
-	kicker.position = Vector2(92, 14)
-	kicker.size = Vector2(120, 16)
-	kicker.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	head.add_child(kicker)
-	var fname_l := G.serif_label(String(feat.get("name", "")), 24, Color("f2ddb7"))
-	fname_l.position = Vector2(92, 30)
-	fname_l.size = Vector2(120, 24)
-	fname_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	head.add_child(fname_l)
-	var chip := Panel.new()
-	chip.position = Vector2(92, 58)
-	chip.size = Vector2(64, 20)
-	var csb := StyleBoxFlat.new()
-	csb.bg_color = RARITY_HUE.get(fraw, G.C_HINT)
-	csb.set_border_width_all(1)
-	csb.border_color = Color(0.25, 0.16, 0.06, 0.55)
-	chip.add_theme_stylebox_override("panel", csb)
-	chip.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var chip_l := G.gold_label(String(RARITY_NAME.get(fraw, "普通")), G.FS_XS, true,
-		Color("fff6e0"), false)
-	chip_l.set_anchors_preset(Control.PRESET_FULL_RECT)
-	chip_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	chip.add_child(chip_l)
-	head.add_child(chip)
-	# 右侧：保底数字 + 进度条 + 下一档提示
-	_pity_l = G.gold_label("", G.FS_XS, false, Color("ead6b0"), false)
-	_pity_l.position = Vector2(206, 16)
-	_pity_l.size = Vector2(172, 16)
-	_pity_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	head.add_child(_pity_l)
-	var bar_bg := Panel.new()
-	bar_bg.position = Vector2(206, 38)
-	bar_bg.size = Vector2(172, 10)
-	var bsb := StyleBoxFlat.new()
-	bsb.bg_color = Color(0.35, 0.26, 0.14, 0.35)
-	bar_bg.add_theme_stylebox_override("panel", bsb)
-	bar_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	head.add_child(bar_bg)
-	_pity_bar = Panel.new()
-	_pity_bar.position = Vector2(207, 39)
-	_pity_bar.size = Vector2(0, 8)
-	var pbsb := StyleBoxFlat.new()
-	pbsb.bg_color = G.C_RARE
-	_pity_bar.add_theme_stylebox_override("panel", pbsb)
-	_pity_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	head.add_child(_pity_bar)
-	# 末端菱形标记：金填充推进到哪，菱形就停在哪，「离保底还差几抽」有可见的目标点
-	# 旋转 45° 的方块做菱形；pivot 取中心，位置按旋转后的包围盒中心对齐条带中线
-	_pity_gem = Panel.new()
-	_pity_gem.size = Vector2(9, 9)
-	_pity_gem.pivot_offset = Vector2(4.5, 4.5)
-	_pity_gem.rotation = PI / 4.0
-	var gsb := StyleBoxFlat.new()
-	gsb.bg_color = Color("f6e4a6")
-	gsb.set_corner_radius_all(1)
-	gsb.set_border_width_all(1)
-	gsb.border_color = G.TEXT_MUTED
-	_pity_gem.add_theme_stylebox_override("panel", gsb)
-	_pity_gem.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	head.add_child(_pity_gem)
-	# 保底小字 8a6a34 在 d3bd92 内嵌底上约 3.4:1，13px 下偏灰；压深到 6a5230 约 5:1
-	_pity_sub = G.gold_label("", G.FS_XS, false, Color("cbbdd7"), false)
-	_pity_sub.position = Vector2(206, 56)
-	_pity_sub.size = Vector2(172, 16)
+	var rarity := String(feat.get("rarity","white"))
+	var hue: Color = RARITY_HUE.get(rarity,Craft.GOLD)
+	head.add_child(Craft.label("本期主打",Vector2(18,10),Vector2(180,24),14,Craft.MUTED))
+	head.add_child(Craft.label(String(feat.get("name","")),Vector2(18,38),Vector2(198,44),28,Craft.WHITE,false,true))
+	head.add_child(Craft.label(String(RARITY_NAME.get(rarity,"普通"))+" · 灵宠",Vector2(20,86),Vector2(182,24),16,hue.lightened(.22)))
+	head.add_child(Craft.label("世界首领亦可结伴",Vector2(20,130),Vector2(192,24),14,Craft.MUTED))
+	var halo := Finesse.Sigil.new()
+	halo.position = Vector2(207,-17)
+	halo.size = Vector2(204,204)
+	head.add_child(halo)
+	var pic := _tex_rect(String(feat.get("id","")),128,128,hue)
+	pic.position = Vector2(245,14)
+	head.add_child(pic)
+	if not bool(G.get_meta("ui_review_mode",false)):
+		var drift := pic.create_tween().set_loops()
+		drift.tween_property(pic,"position:y",10.0,2.4).set_trans(Tween.TRANS_SINE)
+		drift.tween_property(pic,"position:y",14.0,2.4).set_trans(Tween.TRANS_SINE)
+
+	var pity := Craft.panel(Vector2(0,218),Vector2(432,66),.96)
+	content.add_child(pity)
+	_pity_l = Craft.label("",Vector2(14,7),Vector2(186,24),15,Craft.WHITE)
+	pity.add_child(_pity_l)
+	_pity_sub = Craft.label("",Vector2(216,7),Vector2(200,24),14,Craft.MUTED)
 	_pity_sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	head.add_child(_pity_sub)
-	var info := G.info_button("召唤规则", _rules_lines(), 24.0)
-	info.position = Vector2(382, 6)
-	head.add_child(info)
+	pity.add_child(_pity_sub)
+	var track := Panel.new()
+	track.position = Vector2(14,40)
+	track.size = Vector2(172,10)
+	var track_style := StyleBoxFlat.new()
+	track_style.bg_color = Color("101a28")
+	track.add_theme_stylebox_override("panel",track_style)
+	track.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pity.add_child(track)
+	_pity_bar = Panel.new()
+	_pity_bar.position = Vector2(15,41)
+	_pity_bar.size = Vector2(0,8)
+	var fill := StyleBoxFlat.new()
+	fill.bg_color = Color("bca4d6")
+	_pity_bar.add_theme_stylebox_override("panel",fill)
+	_pity_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pity.add_child(_pity_bar)
+	_pity_gem = Panel.new()
+	_pity_gem.size = Vector2(8,8)
+	_pity_gem.pivot_offset = Vector2(4,4)
+	_pity_gem.rotation = PI*.25
+	var gem := StyleBoxFlat.new()
+	gem.bg_color = Color("efe0b8")
+	_pity_gem.add_theme_stylebox_override("panel",gem)
+	_pity_gem.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pity.add_child(_pity_gem)
 
-	# 余额条：灵魂石 + 十连券（同一内嵌底，不再飘在羊皮纸上）
-	# 对称（§5 网格）：408 宽对半分，每组"图标+数字"在各自半区居中。
-	# 原来写 72/228，两组中心分别在 115 / 258，视觉上左边空、右边挤。
-	var bal := _inset_band(Vector2(CONTENT_W, 36), Vector2(0, 116))
-	content.add_child(bal)
-	var soul_icon := _tex_rect("cur_soul", 20, 20, Color("b08ad0"))
-	soul_icon.position = Vector2(60, 8)
-	bal.add_child(soul_icon)
-	_soul_l = G.gold_label("× 0", G.FS_SM, false, G.TEXT_DARK, false)
-	_soul_l.position = Vector2(84, 8)
-	_soul_l.size = Vector2(90, 20)
-	_soul_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	bal.add_child(_soul_l)
-	var tk_icon := _tex_rect("itm_ticket_ten", 20, 20, G.C_RARE)
-	tk_icon.position = Vector2(264, 8)
-	bal.add_child(tk_icon)
-	_ticket_l = G.gold_label("× 0", G.FS_SM, false, G.TEXT_DARK, false)
-	_ticket_l.position = Vector2(288, 8)
-	_ticket_l.size = Vector2(90, 20)
-	_ticket_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	bal.add_child(_ticket_l)
-
-	# 抽卡按钮（主标题 + 副标价格两行）
 	var pool := _pool()
-	var single_cost := int(pool.get("cost_soul_single", 80))
-	var ten_cost := int(pool.get("cost_soul_ten", 720))
-	# 主次分明：十连是主操作（金底），单抽降为描边次级，不再并排两个大金块
-	var b1 := _btn2("单 抽", "%d 魂石" % single_cost, 196, 56, true)
-	b1.position = Vector2(4, 160)
+	var b1 := _btn2("单次结缘","%d 魂石" % int(pool.get("cost_soul_single",80)),204,64,true)
+	b1.position = Vector2(0,296)
 	b1.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_do_single())
+		if _is_activate(e): _do_single())
 	content.add_child(b1)
-	var b2 := _btn2("十 连", "%d 魂石 / 1 券" % ten_cost, 196, 56, false)
-	b2.position = Vector2(208, 160)
+	var b2 := _btn2("十连召唤","%d 魂石 / 1 券" % int(pool.get("cost_soul_ten",720)),216,64,false)
+	b2.position = Vector2(216,296)
+	b2.set_meta("action_material","gilded")
 	b2.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_do_ten())
+		if _is_activate(e): _do_ten())
 	content.add_child(b2)
-
-	# 行内提示（红字，1.5 秒后淡出）
-	_hint = G.gold_label("", G.FS_SM, false, Color("a04a3a"), false)
-	_hint.position = Vector2(0, 222)
-	_hint.custom_minimum_size = Vector2(CONTENT_W, 0)
+	_hint = Craft.label("",Vector2(0,364),Vector2(432,24),15,Color("ffd7ba"))
+	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_hint.modulate.a = 0.0
 	content.add_child(_hint)
-
-	# 每日免费召唤（设计 §4.2）：每天 1 次、零点刷新；连续 7 天送灵魂石 ×50。
-	# 替掉原来的纯装饰小字——免费抽是"每天回来看看"的钩子，值得一个实体入口。
-	_free_btn = _inset_band(Vector2(CONTENT_W, 26), Vector2(0, 240))
-	# 呼吸金线（可用时的动态钩子）画在条带描边外——见 InsetBand.glow 与 _process，
-	# 不再用独立的圆角软影 Panel（那套是"现代 UI 光晕"，与像素语言不合）
-	_free_l = G.gold_label("", G.FS_SM, false, G.TEXT_DARK, false)
-	_free_l.position = Vector2(0, 4)
-	_free_l.size = Vector2(CONTENT_W, 18)
-	_free_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_free_btn = _inset_band(Vector2(432,44),Vector2(0,392))
+	_free_l = G.gold_label("",16,false,G.TEXT_DARK,false)
+	_free_l.position = Vector2(10,9)
+	_free_l.size = Vector2(412,26)
 	_free_l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_free_btn.add_child(_free_l)
-	# _inset_band 默认 IGNORE，收不到鼠标事件——免费条要真的能点，必须改回 STOP
 	_free_btn.mouse_filter = Control.MOUSE_FILTER_STOP
+	_free_btn.focus_mode = Control.FOCUS_ALL
 	_free_btn.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_do_free())
+		if _is_activate(e): _do_free())
 	content.add_child(_free_btn)
-
-	# 本期奖池预览（pets.json 全量，稀有度色条一眼分档）
-	var sec := G.gold_label("本期奖池", G.FS_SM, false, G.TEXT_MUTED, false)
-	sec.position = Vector2(0, 274)
-	sec.custom_minimum_size = Vector2(CONTENT_W, 0)
-	content.add_child(sec)
+	content.add_child(Craft.label("本期奖池",Vector2(0,443),Vector2(200,28),18,Craft.GOLD))
 	var pets: Array = TableCache.pets()
-	# 两列四行：卡宽 196 能放下「双头蛇·影」这类长名，四列窄卡会把名字顶出面板右边界
-	for i in mini(pets.size(), 8):
-		var pc := _pool_card(pets[i] as Dictionary)
-		pc.position = Vector2((i % 2) * 212, 298 + (i / 2) * 54)
-		content.add_child(pc)
+	for i in mini(pets.size(),8):
+		var card := _pool_card(pets[i] as Dictionary)
+		card.position = Vector2((i%4)*110,478+floori(float(i)/4)*76)
+		content.add_child(card)
+	var back := Craft.action("返回",Vector2(24,748),Vector2(432,44))
+	back.activated.connect(_close)
+	add_child(back)
 
-	var back_btn := G.gold_button("返 回", 120, 38)
-	back_btn.position = Vector2((CONTENT_W - 120.0) * 0.5, 522)
-	back_btn.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_close())
-	content.add_child(back_btn)
+func _is_activate(event: InputEvent) -> bool:
+	return (event is InputEventMouseButton and event.pressed and event.button_index==MOUSE_BUTTON_LEFT) or event.is_action_pressed("ui_accept")
 
-
-## 奖池小卡：立绘 + 名字（悬停看稀有度）。内凹贴片语言（G.InsetBand），
-## 左沿一条稀有度色带收进切角内侧——直角色块比"四角各不一样"的圆角更像素。
 func _pool_card(p: Dictionary) -> Panel:
-	var pid := String(p.get("id", ""))
-	var rar := String(p.get("rarity", "white"))
+	var pid := String(p.get("id",""))
+	var rarity := String(p.get("rarity","white"))
+	var hue: Color = RARITY_HUE.get(rarity,G.C_HINT)
 	var root := Panel.new()
-	root.custom_minimum_size = Vector2(196, 50)
-	root.size = Vector2(196, 50)
+	root.size = Vector2(102,72)
+	root.custom_minimum_size = root.size
 	var tile := StyleBoxFlat.new()
-	tile.bg_color = Color("ded8e7")
-	tile.set_corner_radius_all(6)
-	tile.border_width_bottom = 1
-	tile.border_color = Color(RARITY_HUE.get(rar,G.C_HINT),.6)
+	tile.bg_color = hue.darkened(.82)
+	tile.border_color = Color(hue,.52)
+	tile.border_width_bottom = 2
+	tile.border_width_top = 1
+	tile.set_corner_radius_all(3)
 	root.add_theme_stylebox_override("panel",tile)
-	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var pic := _tex_rect(pid, 36, 36, RARITY_HUE.get(rar, G.C_HINT))
-	pic.position = Vector2(14, 7)
+	root.mouse_filter = Control.MOUSE_FILTER_PASS
+	var pic := _tex_rect(pid,44,44,hue)
+	pic.position = Vector2(29,3)
 	root.add_child(pic)
-	var l := G.gold_label(String(p.get("name", pid)), G.FS_XS, false, G.TEXT_DARK, false)
-	l.position = Vector2(56, 15)
-	l.size = Vector2(132, 20)
-	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	l.clip_text = true
-	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	root.add_child(l)
-	# 左沿稀有度色带：从 (3,4) 起、避开切角，色块完整落在八边形内
-	var strip := ColorRect.new()
-	strip.position = Vector2(5, 10)
-	strip.size = Vector2(2, 30)
-	strip.color = RARITY_HUE.get(rar, G.C_HINT)
-	strip.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	root.add_child(strip)
-	root.tooltip_text = "%s · %s" % [String(p.get("name", pid)), String(RARITY_NAME.get(rar, "普通"))]
+	var name_l := Craft.label(String(p.get("name",pid)),Vector2(4,48),Vector2(94,22),14,Craft.WHITE)
+	name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	name_l.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	root.add_child(name_l)
+	root.tooltip_text = "%s · %s" % [String(p.get("name",pid)),String(RARITY_NAME.get(rarity,"普通"))]
 	return root
 
 
 ## 金按钮 + 副标小字（价格行）：在 gold_button 的 Label 下再叠一行
 func _btn2(title: String, sub: String, w: float, h: float, ghost := false) -> PanelContainer:
 	var btn := (G.ghost_button(title, w, h) if ghost else G.gold_button(title, w, h)) as PanelContainer
+	if not ghost: btn.set_meta("action_material","gilded")
+	btn.focus_mode = Control.FOCUS_ALL
+	btn.focus_entered.connect(func(): btn.call("_set_hover",1.0))
+	btn.focus_exited.connect(func(): btn.call("_set_hover",0.0))
 	# PanelContainer 会把每个直接子控件都铺满内容区——再 add_child 一个副标 Label 会与标题
 	# 完全重叠（「十连」盖在「800 魂石」上）。必须用 VBox 把标题与副标竖排
 	var title_l := btn.get_child(0) as Label
 	title_l.add_theme_font_override("font",G.font_art)
 	title_l.add_theme_font_size_override("font_size",26)
+	title_l.add_theme_color_override("font_color",G.TEXT_DARK)
 	btn.remove_child(title_l)
 	var box := VBoxContainer.new()
 	box.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -372,7 +297,7 @@ func _btn2(title: String, sub: String, w: float, h: float, ghost := false) -> Pa
 	box.add_child(title_l)
 	# 副标（价格/说明）压在主按钮的金底上：用比主标略浅但明显深于底色的棕，
 	# 保证"主标深棕加粗 / 副标深棕常规"两级都在金底上读得清（§17 数字与价格必须高可读）
-	var sub_l := G.gold_label(sub, G.FS_XS, false, G.TEXT_DARK if ghost else Color("f0dbbb"), false)
+	var sub_l := G.gold_label(sub, G.FS_XS, false, G.TEXT_DARK, false)
 	box.add_child(sub_l)
 	btn.add_child(box)
 	return btn
@@ -443,10 +368,9 @@ func _refresh_top() -> void:
 		if _pity_bar != null:
 			_pity_bar.size = Vector2(roundi(170.0 * ratio), 8)
 		if _pity_gem != null:
-			# 条带在 head 里是 (207,39) 起、8 高，中线 y=43；菱形 9×9 pivot 4.5 → y=38.5
-			# 中心跟金填充前沿走，并钳在槽内 [209,375]，空进度时也不会戳出左端
-			var cx := clampf(207.0 + 170.0 * ratio, 209.0, 375.0)
-			_pity_gem.position = Vector2(cx - 4.5, 38.5)
+			# Diamond stays inside the 170 px fill track, including empty/full states.
+			var cx := clampf(15.0 + 170.0 * ratio, 17.0, 183.0)
+			_pity_gem.position = Vector2(cx - 4.0, 41.0)
 	_refresh_free()
 
 
@@ -576,8 +500,9 @@ func _build_result() -> void:
 	_flip_all_btn = G.gold_button("全部翻开", 150, 44)
 	_flip_all_btn.position = Vector2((VIEW_W - 150.0) * 0.5, 456)
 	_flip_all_btn.visible = false
+	_flip_all_btn.focus_mode = Control.FOCUS_ALL
 	_flip_all_btn.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+		if _is_activate(e):
 			_flip_all(_arriving))
 	_result.add_child(_flip_all_btn)
 
@@ -592,16 +517,17 @@ func _build_result() -> void:
 	_again_l = again_box.get_child(0) as Label
 	_again_sub = again_box.get_child(1) as Label
 	_again_btn.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+		if _is_activate(e):
 			if _can_repeat(): _again())
 	_result.add_child(_again_btn)
 
 	# 返回是次操作：走描边款，避免和主操作抢视觉（§7 一层只有一个核心操作）
 	# 结果层是整屏暗底（VEIL_TAKEOVER_A）：这里必须传浅色字，否则返回键的字会被暗底吃掉
 	var back_btn := G.ghost_button("返回", btn_w, 48, G.FS_SM, Color("f0d9a0"))
+	back_btn.focus_mode = Control.FOCUS_ALL
 	back_btn.position = Vector2(pad * 2.0 + btn_w, 612)
 	back_btn.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+		if _is_activate(e):
 			_close())
 	_result.add_child(back_btn)
 
@@ -663,6 +589,7 @@ func _show_results(mode: String, results: Array) -> void:
 		var ftw := _result.create_tween()
 		ftw.tween_property(_result, "modulate:a", 1.0, 0.16)
 	_update_result_ui()
+	_flip_all_btn.grab_focus.call_deferred()
 	_refresh_top()
 
 
@@ -904,6 +831,10 @@ func _update_result_ui() -> void:
 	for card in _cards_box.get_children():
 		if not card.is_queued_for_deletion() and not bool(card.get_meta("revealed",false)): pending+=1
 	_again_btn.mouse_filter = Control.MOUSE_FILTER_IGNORE if _arriving or _revealing or pending>0 else Control.MOUSE_FILTER_STOP
+	_again_btn.focus_mode = Control.FOCUS_NONE if _arriving or _revealing or pending>0 else Control.FOCUS_ALL
+	_flip_all_btn.focus_mode = Control.FOCUS_ALL if _flip_all_btn.visible and not _revealing else Control.FOCUS_NONE
+	if pending==0 and not _arriving and not _revealing and get_viewport().gui_get_focus_owner()==null:
+		_again_btn.grab_focus.call_deferred()
 	_again_btn.modulate.a = .45 if _arriving or _revealing or pending>0 else 1.0
 	if pending>0:
 		_sum_l.text = "轻点灵契 · 揭晓缘分" if _results.size()==1 else "已揭晓 %d / %d · 轻点灵契" % [_results.size()-pending,_results.size()]
@@ -995,7 +926,7 @@ func _unhandled_input(event: InputEvent) -> void:
 ## 行内提示：默认深红警告；传 color 可换色（如奖励的金色）；1.5 秒后淡出（重复触发重置计时）
 func _warn(msg: String, color := Color(0, 0, 0, 0)) -> void:
 	var target := _hint
-	var col := Color("a04a3a")
+	var col := Color("ffb6a3")
 	if _result != null and _result.visible and _r_hint != null:
 		target = _r_hint
 		col = Color("ff9a8a")

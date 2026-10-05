@@ -1,0 +1,250 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@Node2D@4/@Node2D@62/@Label@64",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "老赵"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@Node2D@4/@Node2D@80/@Label@82",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "云游"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@Node2D@4/@Node2D@83/@Label@85",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "小满"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@Node2D@4/@Node2D@86/@Label@88",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "白桦哨"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@Node2D@4/@Node2D@89/@Label@91",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "长风关"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 59.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@Panel@117/@Label@116",
+			"rect_height": 59.0,
+			"size": 40,
+			"text": "出征筹备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@PanelContainer@118/@Control@119/@PanelContainer@121/@Label@120",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "秘境"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@PanelContainer@118/@Control@119/@PanelContainer@123/@Label@122",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "人物"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@PanelContainer@118/@Control@119/@PanelContainer@125/@Label@124",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "宠物"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@PanelContainer@118/@Control@119/@Label@126",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@PanelContainer@118/@Control@119/@PanelContainer@131/@Label@130",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "扫荡×1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@PanelContainer@118/@Control@119/@PanelContainer@133/@Label@132",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "出征"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@PanelContainer@118/@Control@119/@PanelContainer@135/@Label@134",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "补给 180金"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@PanelContainer@118/@Control@119/@PanelContainer@137/@Label@136",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "苦行：关"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@PanelContainer@118/@Control@119/@PanelContainer@139/@Label@138",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "返回"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@PanelContainer@118/@Control@119/@Control@167/@Control@140/@Control@141/@Control@164/@PanelContainer@163/@VBoxContainer@168/@HBoxContainer@169/@Label@170",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "秘 境 01 / 08"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@PanelContainer@118/@Control@119/@Control@167/@Control@140/@Control@141/@Control@164/@PanelContainer@163/@VBoxContainer@168/@HBoxContainer@169/@PanelContainer@172/@Label@171",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "出征目标"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@PanelContainer@118/@Control@119/@Control@167/@Control@140/@Control@141/@Control@164/@PanelContainer@163/@VBoxContainer@168/@Label@176",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "苍绿林海"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@PanelContainer@118/@Control@119/@Control@167/@Control@140/@Control@141/@Control@164/@PanelContainer@163/@VBoxContainer@168/@VBoxContainer@177/@Label@178",
+			"rect_height": 53.0,
+			"size": 17,
+			"text": "「年轮里刻着阵图，斧子砍下去，会听见钟声。」"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@PanelContainer@118/@Control@119/@Control@167/@Control@140/@Control@141/@Control@164/@PanelContainer@163/@VBoxContainer@168/@VBoxContainer@177/@Label@179",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "首领未讨伐 · 通关开启下一片"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@PanelContainer@118/@Control@119/@Control@167/@Control@140/@Control@141/@Control@164/@PanelContainer@163/@VBoxContainer@168/@Label@180",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "已选定 · 出征即前往此秘境"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@PanelContainer@118/@Control@119/@Control@167/@Control@140/@Control@141/@Control@166/@PanelContainer@165/@VBoxContainer@181/@HBoxContainer@182/@Label@183",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "秘 境 02 / 08"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@PanelContainer@118/@Control@119/@Control@167/@Control@140/@Control@141/@Control@166/@PanelContainer@165/@VBoxContainer@181/@HBoxContainer@182/@PanelContainer@185/@Label@184",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "已通关"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@PanelContainer@118/@Control@119/@Control@167/@Control@140/@Control@141/@Control@166/@PanelContainer@165/@VBoxContainer@181/@Label@189",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "凛风雪原"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@PanelContainer@118/@Control@119/@Control@167/@Control@140/@Control@141/@Control@166/@PanelContainer@165/@VBoxContainer@181/@VBoxContainer@190/@Label@191",
+			"rect_height": 53.0,
+			"size": 17,
+			"text": "「雪落在碑上不化，落在人身上也不化。」"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@PanelContainer@118/@Control@119/@Control@167/@Control@140/@Control@141/@Control@166/@PanelContainer@165/@VBoxContainer@181/@VBoxContainer@190/@Label@192",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "首领未讨伐 · 通关开启下一片"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/@PanelContainer@118/@Control@119/@Control@167/@Control@140/@Control@141/@Control@166/@PanelContainer@165/@VBoxContainer@181/@Label@193",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "点击选定出征目标 · 已通关可扫荡"
+		}
+	]
+}

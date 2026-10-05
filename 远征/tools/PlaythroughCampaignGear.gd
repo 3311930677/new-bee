@@ -71,8 +71,17 @@ func _state() -> Dictionary:
 	return result
 
 func _button(root: Node, text: String) -> Control:
+	var native := _native_button(root,text.replace(" ",""))
+	if native != null: return native
 	var label := _find_label(root, [text.replace(" ", "")])
 	return label.get_parent() as Control if label != null else null
+
+func _native_button(root: Node,text: String) -> Button:
+	if root is Button and root.text.replace(" ","")==text: return root
+	for child in root.get_children():
+		var found := _native_button(child,text)
+		if found != null: return found
+	return null
 
 func _uid_control(root: Node, uid: int) -> Control:
 	for child in root.get_children():

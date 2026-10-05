@@ -1,0 +1,1016 @@
+{
+  "maps": [
+    {
+      "id": "lorin_wilds",
+      "name": "昭元边城",
+      "background_sources": [
+        {
+          "configured": "res://image/style_review_20261005/ground_crisp_v1.png",
+          "actual": "image\\style_review_20261005\\ground_crisp_v1.png",
+          "size": [
+            1086,
+            1448
+          ]
+        }
+      ],
+      "theme": "forest",
+      "tint": "ffffff",
+      "authored_ground": false,
+      "spawn": [
+        480,
+        930
+      ],
+      "exits": [
+        {
+          "id": "north_gate",
+          "at": [
+            480,
+            96
+          ],
+          "to": "maple_road",
+          "arrival": "from_city",
+          "label": "枫林古道"
+        }
+      ]
+    },
+    {
+      "id": "maple_road",
+      "name": "枫林古道",
+      "background_sources": [
+        {
+          "configured": "res://image/map_proc/001_tile_forest_1.png",
+          "actual": "image\\map_proc\\refined\\001_tile_forest_1.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/002_tile_forest_2.png",
+          "actual": "image\\map_proc\\refined\\002_tile_forest_2.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/003_tile_forest_3.png",
+          "actual": "image\\map_proc\\refined\\003_tile_forest_3.png",
+          "size": [
+            48,
+            48
+          ]
+        }
+      ],
+      "theme": "forest",
+      "tint": "ffd9a3",
+      "authored_ground": false,
+      "spawn": [
+        480,
+        1040
+      ],
+      "exits": [
+        {
+          "id": "south_gate",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "lorin_wilds",
+          "arrival": "from_maple_road",
+          "label": "昭元边城"
+        },
+        {
+          "id": "north_path",
+          "at": [
+            480,
+            96
+          ],
+          "to": "broken_slope",
+          "arrival": "from_maple_road",
+          "label": "断碑坡"
+        },
+        {
+          "id": "east_salt_path",
+          "at": [
+            864,
+            660
+          ],
+          "to": "old_salt_road",
+          "arrival": "from_maple_road",
+          "label": "旧盐道",
+          "requires_story": "s12",
+          "locked_hint": "先回边城向闻叔复命，再走旧盐道"
+        }
+      ]
+    },
+    {
+      "id": "broken_slope",
+      "name": "断碑坡",
+      "background_sources": [
+        {
+          "configured": "res://image/map_proc/001_tile_forest_1.png",
+          "actual": "image\\map_proc\\refined\\001_tile_forest_1.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/002_tile_forest_2.png",
+          "actual": "image\\map_proc\\refined\\002_tile_forest_2.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/003_tile_forest_3.png",
+          "actual": "image\\map_proc\\refined\\003_tile_forest_3.png",
+          "size": [
+            48,
+            48
+          ]
+        }
+      ],
+      "theme": "forest",
+      "tint": "cfc7ba",
+      "authored_ground": false,
+      "spawn": [
+        480,
+        1040
+      ],
+      "exits": [
+        {
+          "id": "south_path",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "maple_road",
+          "arrival": "from_broken_slope",
+          "label": "枫林古道"
+        },
+        {
+          "id": "north_cavern",
+          "at": [
+            480,
+            96
+          ],
+          "to": "stele_cavern",
+          "arrival": "from_broken_slope",
+          "label": "失声碑窟",
+          "requires_story": "s08"
+        }
+      ]
+    },
+    {
+      "id": "old_salt_road",
+      "name": "旧盐道",
+      "background_sources": [
+        {
+          "configured": "res://image/map_proc/013_tile_desert_1.png",
+          "actual": "image\\map_proc\\refined\\013_tile_desert_1.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/014_tile_desert_2.png",
+          "actual": "image\\map_proc\\refined\\014_tile_desert_2.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/015_tile_desert_3.png",
+          "actual": "image\\map_proc\\refined\\015_tile_desert_3.png",
+          "size": [
+            48,
+            48
+          ]
+        }
+      ],
+      "theme": "desert",
+      "tint": "e5d4b6",
+      "authored_ground": false,
+      "spawn": [
+        160,
+        660
+      ],
+      "exits": [
+        {
+          "id": "west_path",
+          "at": [
+            90,
+            660
+          ],
+          "to": "maple_road",
+          "arrival": "from_old_salt_road",
+          "label": "枫林古道"
+        },
+        {
+          "id": "east_port",
+          "at": [
+            864,
+            660
+          ],
+          "to": "shenyuan_port",
+          "arrival": "from_old_salt_road",
+          "label": "沉渊港"
+        }
+      ]
+    },
+    {
+      "id": "shenyuan_port",
+      "name": "沉渊港",
+      "background_sources": [
+        {
+          "configured": "res://image/main_world/shenyuan_port_ground_reference_v2.png",
+          "actual": "image\\main_world\\refined\\shenyuan_port_ground_reference_v2.png",
+          "size": [
+            1100,
+            1430
+          ]
+        }
+      ],
+      "theme": "desert",
+      "tint": "d9e6e3",
+      "authored_ground": false,
+      "spawn": [
+        210,
+        660
+      ],
+      "exits": [
+        {
+          "id": "north_caravan",
+          "at": [
+            480,
+            96
+          ],
+          "to": "red_sand_route",
+          "arrival": "from_shenyuan_port",
+          "label": "赤砂商路",
+          "requires_story": "s21",
+          "locked_hint": "先完成当前主线，再沿这条路前行"
+        },
+        {
+          "id": "west_salt_path",
+          "at": [
+            90,
+            660
+          ],
+          "to": "old_salt_road",
+          "arrival": "from_shenyuan_port",
+          "label": "旧盐道"
+        },
+        {
+          "id": "east_tide_path",
+          "at": [
+            864,
+            700
+          ],
+          "to": "tideflat",
+          "arrival": "from_shenyuan_port",
+          "label": "潮痕滩",
+          "requires_story": "s16",
+          "locked_hint": "先把盐车账页交给港务人沈澜"
+        }
+      ]
+    },
+    {
+      "id": "tideflat",
+      "name": "潮痕滩",
+      "background_sources": [
+        {
+          "configured": "res://image/map_proc/013_tile_desert_1.png",
+          "actual": "image\\map_proc\\refined\\013_tile_desert_1.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/014_tile_desert_2.png",
+          "actual": "image\\map_proc\\refined\\014_tile_desert_2.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/015_tile_desert_3.png",
+          "actual": "image\\map_proc\\refined\\015_tile_desert_3.png",
+          "size": [
+            48,
+            48
+          ]
+        }
+      ],
+      "theme": "desert",
+      "tint": "b9d7d3",
+      "authored_ground": false,
+      "spawn": [
+        165,
+        700
+      ],
+      "exits": [
+        {
+          "id": "west_port",
+          "at": [
+            90,
+            700
+          ],
+          "to": "shenyuan_port",
+          "arrival": "from_tideflat",
+          "label": "沉渊港"
+        },
+        {
+          "id": "north_gate",
+          "at": [
+            480,
+            96
+          ],
+          "to": "tidal_gate",
+          "arrival": "from_tideflat",
+          "label": "退潮水闸",
+          "requires_story": "s18",
+          "locked_hint": "先击败闸门守卫，取得闸门线索"
+        }
+      ]
+    },
+    {
+      "id": "tidal_gate",
+      "name": "退潮水闸",
+      "background_sources": [
+        {
+          "configured": "res://image/map_proc/010_tile_tomb_1.png",
+          "actual": "image\\map_proc\\refined\\010_tile_tomb_1.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/011_tile_tomb_2.png",
+          "actual": "image\\map_proc\\refined\\011_tile_tomb_2.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/012_tile_tomb_3.png",
+          "actual": "image\\map_proc\\refined\\012_tile_tomb_3.png",
+          "size": [
+            48,
+            48
+          ]
+        }
+      ],
+      "theme": "tomb",
+      "tint": "9fc3c4",
+      "authored_ground": false,
+      "spawn": [
+        480,
+        1050
+      ],
+      "exits": [
+        {
+          "id": "south_tideflat",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "tideflat",
+          "arrival": "from_tidal_gate",
+          "label": "潮痕滩"
+        }
+      ]
+    },
+    {
+      "id": "stele_cavern",
+      "name": "失声碑窟",
+      "background_sources": [
+        {
+          "configured": "res://image/map_proc/010_tile_tomb_1.png",
+          "actual": "image\\map_proc\\refined\\010_tile_tomb_1.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/011_tile_tomb_2.png",
+          "actual": "image\\map_proc\\refined\\011_tile_tomb_2.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/012_tile_tomb_3.png",
+          "actual": "image\\map_proc\\refined\\012_tile_tomb_3.png",
+          "size": [
+            48,
+            48
+          ]
+        }
+      ],
+      "theme": "tomb",
+      "tint": "cdbede",
+      "authored_ground": false,
+      "spawn": [
+        480,
+        1050
+      ],
+      "exits": [
+        {
+          "id": "south_path",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "broken_slope",
+          "arrival": "from_stele_cavern",
+          "label": "断碑坡"
+        }
+      ]
+    },
+    {
+      "id": "red_sand_route",
+      "name": "赤砂商路",
+      "background_sources": [
+        {
+          "configured": "res://image/map_proc/013_tile_desert_1.png",
+          "actual": "image\\map_proc\\refined\\013_tile_desert_1.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/014_tile_desert_2.png",
+          "actual": "image\\map_proc\\refined\\014_tile_desert_2.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/015_tile_desert_3.png",
+          "actual": "image\\map_proc\\refined\\015_tile_desert_3.png",
+          "size": [
+            48,
+            48
+          ]
+        }
+      ],
+      "theme": "desert",
+      "tint": "ffffff",
+      "authored_ground": false,
+      "spawn": [
+        480,
+        1050
+      ],
+      "exits": [
+        {
+          "id": "south_port",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "shenyuan_port",
+          "arrival": "from_red_sand_route",
+          "label": "沉渊港"
+        },
+        {
+          "id": "north_post",
+          "at": [
+            480,
+            96
+          ],
+          "to": "frost_post",
+          "arrival": "from_red_sand_route",
+          "label": "霜关驿"
+        }
+      ]
+    },
+    {
+      "id": "frost_post",
+      "name": "霜关驿",
+      "background_sources": [
+        {
+          "configured": "res://image/main_world/frost_post_ground_reference_v2.png",
+          "actual": "image\\main_world\\refined\\frost_post_ground_reference_v2.png",
+          "size": [
+            1100,
+            1430
+          ]
+        }
+      ],
+      "theme": "snow",
+      "tint": "ffffff",
+      "authored_ground": false,
+      "spawn": [
+        480,
+        1030
+      ],
+      "exits": [
+        {
+          "id": "south_route",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "red_sand_route",
+          "arrival": "from_frost_post",
+          "label": "赤砂商路"
+        },
+        {
+          "id": "east_mine",
+          "at": [
+            864,
+            710
+          ],
+          "to": "rift_mine_road",
+          "arrival": "from_frost_post",
+          "label": "裂谷矿道",
+          "requires_story": "s23",
+          "locked_hint": "先完成当前主线，再沿这条路前行"
+        },
+        {
+          "id": "north_boardwalk",
+          "at": [
+            480,
+            96
+          ],
+          "to": "frost_boardwalk",
+          "arrival": "from_frost_post",
+          "label": "霜林栈道",
+          "requires_story": "s25",
+          "locked_hint": "先完成当前主线，再沿这条路前行"
+        }
+      ]
+    },
+    {
+      "id": "rift_mine_road",
+      "name": "裂谷矿道",
+      "background_sources": [
+        {
+          "configured": "res://image/map_proc/010_tile_tomb_1.png",
+          "actual": "image\\map_proc\\refined\\010_tile_tomb_1.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/011_tile_tomb_2.png",
+          "actual": "image\\map_proc\\refined\\011_tile_tomb_2.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/012_tile_tomb_3.png",
+          "actual": "image\\map_proc\\refined\\012_tile_tomb_3.png",
+          "size": [
+            48,
+            48
+          ]
+        }
+      ],
+      "theme": "tomb",
+      "tint": "ffffff",
+      "authored_ground": false,
+      "spawn": [
+        160,
+        710
+      ],
+      "exits": [
+        {
+          "id": "west_post",
+          "at": [
+            90,
+            710
+          ],
+          "to": "frost_post",
+          "arrival": "from_rift_mine_road",
+          "label": "霜关驿"
+        },
+        {
+          "id": "north_vault",
+          "at": [
+            480,
+            96
+          ],
+          "to": "rift_mine_vault",
+          "arrival": "from_rift_mine_road",
+          "label": "裂谷矿脉",
+          "requires_story": "s24",
+          "locked_hint": "先完成当前主线，再沿这条路前行"
+        }
+      ]
+    },
+    {
+      "id": "rift_mine_vault",
+      "name": "裂谷矿脉",
+      "background_sources": [
+        {
+          "configured": "res://image/map_proc/010_tile_tomb_1.png",
+          "actual": "image\\map_proc\\refined\\010_tile_tomb_1.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/011_tile_tomb_2.png",
+          "actual": "image\\map_proc\\refined\\011_tile_tomb_2.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/012_tile_tomb_3.png",
+          "actual": "image\\map_proc\\refined\\012_tile_tomb_3.png",
+          "size": [
+            48,
+            48
+          ]
+        }
+      ],
+      "theme": "tomb",
+      "tint": "ffffff",
+      "authored_ground": false,
+      "spawn": [
+        480,
+        1050
+      ],
+      "exits": [
+        {
+          "id": "south_return",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "rift_mine_road",
+          "arrival": "from_rift_mine_vault",
+          "label": "裂谷矿道"
+        }
+      ]
+    },
+    {
+      "id": "frost_pass",
+      "name": "冰隘",
+      "background_sources": [
+        {
+          "configured": "res://image/map_proc/004_tile_snow_1.png",
+          "actual": "image\\map_proc\\refined\\004_tile_snow_1.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/005_tile_snow_2.png",
+          "actual": "image\\map_proc\\refined\\005_tile_snow_2.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/006_tile_snow_3.png",
+          "actual": "image\\map_proc\\refined\\006_tile_snow_3.png",
+          "size": [
+            48,
+            48
+          ]
+        }
+      ],
+      "theme": "snow",
+      "tint": "ffffff",
+      "authored_ground": false,
+      "spawn": [
+        480,
+        1050
+      ],
+      "exits": [
+        {
+          "id": "south_return",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "frost_boardwalk",
+          "arrival": "from_frost_pass",
+          "label": "霜林栈道"
+        },
+        {
+          "id": "east_abyss",
+          "at": [
+            864,
+            660
+          ],
+          "to": "abyss_ring",
+          "arrival": "from_frost_pass",
+          "label": "渊口外环",
+          "requires_story": "s29",
+          "locked_hint": "先回霜关驿向宁砚询问关外回声"
+        }
+      ]
+    },
+    {
+      "id": "frost_boardwalk",
+      "name": "霜林栈道",
+      "background_sources": [
+        {
+          "configured": "res://image/map_proc/004_tile_snow_1.png",
+          "actual": "image\\map_proc\\refined\\004_tile_snow_1.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/005_tile_snow_2.png",
+          "actual": "image\\map_proc\\refined\\005_tile_snow_2.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/006_tile_snow_3.png",
+          "actual": "image\\map_proc\\refined\\006_tile_snow_3.png",
+          "size": [
+            48,
+            48
+          ]
+        }
+      ],
+      "theme": "snow",
+      "tint": "ffffff",
+      "authored_ground": false,
+      "spawn": [
+        480,
+        1030
+      ],
+      "exits": [
+        {
+          "id": "south_post",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "frost_post",
+          "arrival": "from_frost_boardwalk",
+          "label": "霜关驿"
+        },
+        {
+          "id": "north_pass",
+          "at": [
+            480,
+            96
+          ],
+          "to": "frost_pass",
+          "arrival": "from_frost_boardwalk",
+          "label": "冰隘",
+          "requires_story": "s26",
+          "locked_hint": "先完成当前主线，再沿这条路前行"
+        }
+      ]
+    },
+    {
+      "id": "abyss_ring",
+      "name": "渊口外环",
+      "background_sources": [
+        {
+          "configured": "res://image/main_world/abyss_ring_ground_reference_v1.png",
+          "actual": "image\\main_world\\refined\\abyss_ring_ground_reference_v1.png",
+          "size": [
+            1100,
+            1430
+          ]
+        }
+      ],
+      "theme": "abyss",
+      "tint": "ffffff",
+      "authored_ground": true,
+      "spawn": [
+        480,
+        1030
+      ],
+      "exits": [
+        {
+          "id": "south_pass",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "frost_pass",
+          "arrival": "from_abyss_ring",
+          "label": "冰隘"
+        },
+        {
+          "id": "north_depth",
+          "at": [
+            480,
+            96
+          ],
+          "to": "stele_entry",
+          "arrival": "from_abyss_ring",
+          "label": "归路门厅",
+          "requires_story": "s32",
+          "locked_hint": "先把渊口回响交给青姨，取得归路凭证"
+        }
+      ]
+    },
+    {
+      "id": "stele_entry",
+      "name": "归路门厅",
+      "background_sources": [
+        {
+          "configured": "res://image/map_proc/019_tile_abyss_1.png",
+          "actual": "image\\map_proc\\refined\\019_tile_abyss_1.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/020_tile_abyss_2.png",
+          "actual": "image\\map_proc\\refined\\020_tile_abyss_2.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/021_tile_abyss_3.png",
+          "actual": "image\\map_proc\\refined\\021_tile_abyss_3.png",
+          "size": [
+            48,
+            48
+          ]
+        }
+      ],
+      "theme": "abyss",
+      "tint": "b7b8c8",
+      "authored_ground": false,
+      "spawn": [
+        480,
+        1030
+      ],
+      "exits": [
+        {
+          "id": "south",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "abyss_ring",
+          "arrival": "from_stele_entry",
+          "label": "渊口外环"
+        },
+        {
+          "id": "north",
+          "at": [
+            480,
+            96
+          ],
+          "to": "stele_resonance",
+          "arrival": "from_entry",
+          "label": "三声共鸣廊",
+          "requires_flags": [
+            "act4_return_anchor"
+          ],
+          "locked_hint": "先点亮门厅中央的归路锚，留下返回方向"
+        }
+      ]
+    },
+    {
+      "id": "stele_resonance",
+      "name": "三声共鸣廊",
+      "background_sources": [
+        {
+          "configured": "res://image/map_proc/019_tile_abyss_1.png",
+          "actual": "image\\map_proc\\refined\\019_tile_abyss_1.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/020_tile_abyss_2.png",
+          "actual": "image\\map_proc\\refined\\020_tile_abyss_2.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/021_tile_abyss_3.png",
+          "actual": "image\\map_proc\\refined\\021_tile_abyss_3.png",
+          "size": [
+            48,
+            48
+          ]
+        }
+      ],
+      "theme": "abyss",
+      "tint": "b7b8c8",
+      "authored_ground": false,
+      "spawn": [
+        480,
+        1030
+      ],
+      "exits": [
+        {
+          "id": "south",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "stele_entry",
+          "arrival": "from_resonance",
+          "label": "归路门厅"
+        },
+        {
+          "id": "north",
+          "at": [
+            480,
+            96
+          ],
+          "to": "stele_core",
+          "arrival": "from_resonance",
+          "label": "碑心",
+          "requires_story": "s34",
+          "locked_hint": "先校准三块声碑，再在北侧碑座汇成稳定封记"
+        }
+      ]
+    },
+    {
+      "id": "stele_core",
+      "name": "碑心",
+      "background_sources": [
+        {
+          "configured": "res://image/map_proc/019_tile_abyss_1.png",
+          "actual": "image\\map_proc\\refined\\019_tile_abyss_1.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/020_tile_abyss_2.png",
+          "actual": "image\\map_proc\\refined\\020_tile_abyss_2.png",
+          "size": [
+            48,
+            48
+          ]
+        },
+        {
+          "configured": "res://image/map_proc/021_tile_abyss_3.png",
+          "actual": "image\\map_proc\\refined\\021_tile_abyss_3.png",
+          "size": [
+            48,
+            48
+          ]
+        }
+      ],
+      "theme": "abyss",
+      "tint": "b7b8c8",
+      "authored_ground": false,
+      "spawn": [
+        480,
+        1030
+      ],
+      "exits": [
+        {
+          "id": "south",
+          "at": [
+            480,
+            1152
+          ],
+          "to": "stele_resonance",
+          "arrival": "from_core",
+          "label": "三声共鸣廊"
+        }
+      ]
+    }
+  ],
+  "source_sha256": {
+    "data/maps.json": "49288ba1be4092740b376f48f5068bbbd6914f6a1196e03aad6a8ece9aa068df",
+    "data/main_world_maps.json": "b893f6f77b773bc027147adf0c59582e90ea456d7e18f092226dc57543037b49",
+    "src/explore/MapScene.gd": "21f6f91fa62ebf9d8a20ce42f71625aea1eff6bc0a08eb0bea2d85285f71017a",
+    "src/explore/ThirdActGround.gd": "a43ad41d663eb5731ba77e46a1a3b66980abb3659ee157fdd5b2af35583ee5db",
+    "src/explore/FourthActGround.gd": "ae39d421db7b3f568d02e21fef73b7d157433292b071dabd3bc0211f13f2895b"
+  }
+}

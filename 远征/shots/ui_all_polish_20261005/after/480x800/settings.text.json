@@ -1,0 +1,349 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 59.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Panel@68/@Label@67",
+			"rect_height": 59.0,
+			"size": 40,
+			"text": "设置"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Panel@73/@Label@72",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "×"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@107/@Label@85",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "声音"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@107/@Control@86/@Label@87",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "音乐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@107/@Control@86/@Label@89",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "70%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@107/@Control@90/@Label@91",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "音效"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@107/@Control@90/@Label@93",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "80%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@107/@PanelContainer@96/@Label@94",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "静音：关"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@107/@Label@97",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "音乐与音效正常播放"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@107/@Label@99",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "战斗与演出"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@107/@PanelContainer@101/@Label@100",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "震屏：开"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@107/@PanelContainer@103/@Label@102",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "剧情演出：播"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@107/@PanelContainer@105/@Label@104",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "战斗倍速：×1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@107/@Label@106",
+			"rect_height": 30.0,
+			"size": 15,
+			"text": "战斗中也可随时切换倍速"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@133/@Label@112",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "旅人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@133/@Label@113",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "旅人 · Lv.12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@133/@Label@115",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "昵称"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@133/@LineEdit@116",
+			"rect_height": 42.0,
+			"size": 17,
+			"text": "旅人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@133/@PanelContainer@119/@Label@117",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "保存昵称"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@133/@Label@120",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@133/@PanelContainer@123/@Label@121",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "更换头像"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@133/@Label@125",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "旅程"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@133/@PanelContainer@127/@Label@126",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "重看序章"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@133/@PanelContainer@129/@Label@128",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "重选角色"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@133/@PanelContainer@132/@Label@130",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "回标题"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@155/@Label@139",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "备份"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@155/@PanelContainer@142/@Label@140",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "复制存档码"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@155/@Label@143",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "复制后可备份保存"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@155/@Label@145",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "恢复存档"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@155/@LineEdit@146",
+			"rect_height": 42.0,
+			"size": 17,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@155/@PanelContainer@148/@Label@147",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "粘贴码"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@155/@PanelContainer@150/@Label@149",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "导入"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@155/@Label@151",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "导入成功后返回标题"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Control@162/@Control@77/@Control@78/@Control@155/@PanelContainer@153/@Label@152",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "重置存档"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/PageTabs/PageTab0/@Label@163",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "常规"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/PageTabs/PageTab1/@Label@165",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "旅人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/PageTabs/PageTab2/@Label@167",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "存档"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@PanelContainer@170/@Label@169",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "返回"
+		}
+	]
+}

@@ -1,0 +1,304 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 59.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Panel@108/@Label@107",
+			"rect_height": 59.0,
+			"size": 40,
+			"text": "坐骑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Label@111",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "骑乘中：烈焰马"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@123/@Control@115/@Label@117",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "烈焰马"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@123/@Control@115/@Label@118",
+			"rect_height": 50.0,
+			"size": 15,
+			"text": "烈焰马·疾风：速度+10% 攻击+3%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@123/@Control@115/@Label@119",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "一阶"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@123/@Control@115/@Label@121",
+			"rect_height": 49.0,
+			"size": 15,
+			"text": "金币·8000\n荣誉·200"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@123/@Control@115/@PanelContainer@122/@Label@120",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "升阶"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@132/@Control@124/@Label@126",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "铁背熊"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@132/@Control@124/@Label@127",
+			"rect_height": 40.0,
+			"size": 15,
+			"text": "铁背熊：防御+5%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@132/@Control@124/@Label@128",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "未拥有"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@132/@Control@124/@Label@130",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "金币·2000"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@132/@Control@124/@PanelContainer@131/@Label@129",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "购买"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@141/@Control@133/@Label@135",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "狮鹫"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@141/@Control@133/@Label@136",
+			"rect_height": 40.0,
+			"size": 15,
+			"text": "狮鹫：攻击+5%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@141/@Control@133/@Label@137",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "未拥有"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@141/@Control@133/@Label@139",
+			"rect_height": 49.0,
+			"size": 15,
+			"text": "金币·3000\n魂石·50"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@141/@Control@133/@PanelContainer@140/@Label@138",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "购买"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@150/@Control@142/@Label@144",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "梦魇"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@150/@Control@142/@Label@145",
+			"rect_height": 40.0,
+			"size": 15,
+			"text": "梦魇：暴击+3%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@150/@Control@142/@Label@146",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "未拥有"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@150/@Control@142/@Label@148",
+			"rect_height": 49.0,
+			"size": 15,
+			"text": "金币·3000\n魂石·50"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@150/@Control@142/@PanelContainer@149/@Label@147",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "购买"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@159/@Control@151/@Label@153",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "沙蜥"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@159/@Control@151/@Label@154",
+			"rect_height": 40.0,
+			"size": 15,
+			"text": "沙蜥：生命+5%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@159/@Control@151/@Label@155",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "未拥有"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@159/@Control@151/@Label@157",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "金币·2000"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@159/@Control@151/@PanelContainer@158/@Label@156",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "购买"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@168/@Control@160/@Label@162",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "披毛犀"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@168/@Control@160/@Label@163",
+			"rect_height": 50.0,
+			"size": 15,
+			"text": "披毛犀：生命+3% 防御+3%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@168/@Control@160/@Label@164",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "未拥有"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@168/@Control@160/@Label@166",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "金币·2500"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@Control@112/@PanelContainer@168/@Control@160/@PanelContainer@167/@Label@165",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "购买"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@PanelContainer@109/@Control@110/@PanelContainer@114/@Label@113",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "返回"
+		}
+	]
+}

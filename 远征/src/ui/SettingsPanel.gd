@@ -132,15 +132,15 @@ func _page_common() -> Control:
 	_section(page, "战斗与演出", 198)
 	_shake_btn = _action(page, "震屏：开", Vector2(0, 234), 194, func():
 		G.setting_set("shake", not bool(G.setting_get("shake", true)))
-		_sync_toggles())
+		_sync_toggles(), "shake")
 	_shake_btn.tooltip_text = "受击时的镜头震动"
 	_story_btn = _action(page, "剧情演出：播", Vector2(214, 234), 194, func():
 		G.setting_set("skip_story", not bool(G.setting_get("skip_story", false)))
-		_sync_toggles())
+		_sync_toggles(), "story")
 	_speed_btn = _action(page, "战斗倍速：×1", Vector2(0, 290), 194, func():
 		var cur := float(G.setting_get("battle_speed", 1.0))
 		G.setting_set("battle_speed", 2.0 if cur < 1.5 else 1.0)
-		_sync_toggles())
+		_sync_toggles(), "speed")
 	_play_hint = G.text_label("", G.FS_XS, G.TEXT_MUTED)
 	_play_hint.position = Vector2(0, 348)
 	_play_hint.size = Vector2(CONTENT_W, 30)
@@ -207,8 +207,8 @@ func _page_save() -> Control:
 	_code.position = Vector2(0, 144)
 	G.style_line_edit(_code, G.FS_SM)
 	page.add_child(_code)
-	_action(page, "粘贴码", Vector2(0, 198), 118, _on_paste)
-	_action(page, "导入", Vector2(134, 198), 118, _on_import)
+	_action(page, "粘贴码", Vector2(0, 198), 118, _on_paste, "save")
+	_action(page, "导入", Vector2(134, 198), 118, _on_import, "ticket_sweep")
 	_hint2 = G.text_label("导入成功后返回标题", G.FS_XS, G.TEXT_MUTED)
 	_hint2.position = Vector2(0, 250)
 	_hint2.size = Vector2(CONTENT_W, 26)
@@ -234,17 +234,15 @@ func _page_root() -> Control:
 	return page
 
 
-## 区块小标题：左侧金色竖条 + 左对齐粗体——原来居中的小字混在正文里看不出层级
+## 区块以器物标记区分，文字保持清楚的正文粗体。
 func _section(page: Control, text: String, y: float) -> void:
-	var bar := ColorRect.new()
-	bar.color = Color("b98c3a")
-	bar.position = Vector2(0, y + 3)
-	bar.size = Vector2(4, 15)
-	bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	page.add_child(bar)
+	var symbols := {"声音":"sound", "战斗与演出":"story", "昵称":"person", "旅程":"expedition", "备份":"save", "恢复存档":"ticket_sweep"}
+	var icon := G.ui_icon(String(symbols.get(text,"settings")),Vector2(22,22))
+	icon.position = Vector2(0,y)
+	page.add_child(icon)
 	var l := G.gold_label(text, G.FS_SM, true, G.TEXT_MUTED, false)
-	l.position = Vector2(12, y)
-	l.custom_minimum_size = Vector2(CONTENT_W - 12.0, 0)
+	l.position = Vector2(30, y)
+	l.custom_minimum_size = Vector2(CONTENT_W - 30.0, 0)
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	page.add_child(l)
 
@@ -324,9 +322,12 @@ func _vol_row(page: Control, text: String, y: float, value: float, cb: Callable)
 	row.size = Vector2(CONTENT_W, 26)
 	page.add_child(row)
 
+	var symbol := G.ui_icon("music" if text == "音乐" else "sound",Vector2(22,22))
+	symbol.position = Vector2(0,2)
+	row.add_child(symbol)
 	var l := G.text_label(text, G.FS_SM, Color("6a5a3a"))
-	l.position = Vector2(0, 3)
-	l.custom_minimum_size = Vector2(60, 0)
+	l.position = Vector2(28, 3)
+	l.custom_minimum_size = Vector2(50, 0)
 	row.add_child(l)
 
 	var sl := HSlider.new()
@@ -334,9 +335,9 @@ func _vol_row(page: Control, text: String, y: float, value: float, cb: Callable)
 	sl.max_value = 1.0
 	sl.step = 0.05
 	sl.value = value
-	sl.position = Vector2(62, 0)
-	sl.custom_minimum_size = Vector2(234, 26)
-	sl.size = Vector2(234, 26)
+	sl.position = Vector2(84, 0)
+	sl.custom_minimum_size = Vector2(212, 26)
+	sl.size = Vector2(212, 26)
 	_style_slider(sl)
 	row.add_child(sl)
 
@@ -414,10 +415,9 @@ func _close_button() -> Control:
 	inner.size = Vector2(26, 26)
 	inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	btn.add_child(inner)
-	var l := G.gold_label("×", G.FS_MD, true, G.GOLD_BRIGHT, false)
-	l.position = Vector2(0, 3)
-	l.custom_minimum_size = Vector2(30, 0)
-	btn.add_child(l)
+	var mark := G.ui_icon("close",Vector2(22,22))
+	mark.position = Vector2(4,4)
+	btn.add_child(mark)
 	btn.mouse_filter = Control.MOUSE_FILTER_STOP
 	btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	btn.gui_input.connect(func(e: InputEvent):

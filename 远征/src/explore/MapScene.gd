@@ -15,6 +15,7 @@ const VIEW_W := 480.0
 const VIEW_H := 800.0
 const DirectionalIdle := preload("res://src/world/DirectionalIdle.gd")
 const WorldPropArt := preload("res://src/world/WorldPropArt.gd")
+const WorldArtFinish := preload("res://src/world/WorldArtFinish.gd")
 const ROLE_FRAMES := {  # 四方向行走帧（BattleScene 同款复用）
 	"zs": ["res://image/role/zs/pojun_walk_frames.tres", "pojun"],
 	"ck": ["res://image/role/ck/chuanyang_walk_frames.tres", "chuanyang"],
@@ -160,6 +161,7 @@ var _nav_dirty := true               # 事件类变化置脏，下一帧立即�
 var _compass: _Compass = null        # 目标罗盘（含距离，点击开始/停止自动前往）
 var _sprint_btn: Control = null      # 疾行开关
 var _mount_btn: Control = null       # 第一幕首骑上马／下马
+var _journey_panel: Control = null
 var _big_map: Control = null         # 大地图浮层（含图例与返回按钮）
 var _sprint := false
 var _mount_hoof_timer := 0.0
@@ -813,6 +815,7 @@ func _build_player(map_w: float, map_h: float) -> void:
 	_player_anim = AnimatedSprite2D.new()
 	var frames_path := String(ROLE_FRAMES.get(st.role_id, ROLE_FRAMES["zs"])[0])
 	_player_anim.sprite_frames = load(frames_path)
+	_player_anim.material = WorldArtFinish.character_material(st.role_id)
 	# 历练保留旧比例；主地图单独校准人物占屏，不靠放大整张草地底图。
 	# 帧中心在 y=64，脚底 y=120，脚点偏移按旧比例校准，避免放大后脚底与碰撞点分离。
 	var player_scale := float(_main_cfg.get("player_scale", 0.96)) if _mode == "main_world" else 0.72
@@ -2521,6 +2524,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		_trade_panel.close()
 		if vp != null:
 			vp.set_input_as_handled()
+	elif _journey_panel != null:
+		_journey_panel.close()
+		if vp != null: vp.set_input_as_handled()
 	elif _big_map != null:   # 大地图：ESC 先收浮层，再谈撤离
 		_close_big_map()
 		if vp != null:
@@ -3260,6 +3266,8 @@ func _toggle_big_map() -> void:
 		"紫菱：碑灵祭坛（献金重摇一次祝福）· 灰点：矿脉（白拿养成材料）",
 		"点下方「前 往」自动走到当前目标；再推摇杆即可接手",
 	]
+	if _mode == "main_world":
+		lines = ["首次探索沿道路前进；已经去过的地点可乘驿车", "首次到访解锁落点，地图任务条件仍须满足", "携带商货、运单或护送途中请亲自走路"]
 	for i in lines.size():
 		var l := G.text_label(String(lines[i]), G.FS_XS, Color("5a3a1e"))
 		l.position = Vector2(16, 360 + float(i) * 21.0)
@@ -3279,6 +3287,16 @@ func _toggle_big_map() -> void:
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_close_big_map())
 	content.add_child(back)
+	if _mode == "main_world":
+		go.position.y = 432
+		back.position.y = 432
+		var journey := G.gold_button("驿路与传世",316,44,G.FS_SM)
+		journey.position = Vector2(24,484)
+		journey.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				_close_big_map()
+				_open_journey())
+		content.add_child(journey)
 
 
 func _close_big_map() -> void:
@@ -3411,7 +3429,7 @@ func _finish_map(result: String) -> void:
 # ================= 怪物接触开战 =================
 ## 任一浮层/演出/看地图打开时冻结怪物与接触判定（防"看地图被偷袭"，P1-10）
 func _modal_open() -> bool:
-	return _battle != null or _map_done or _picker != null or _remover != null \
+	return _journey_panel != null or _battle != null or _map_done or _picker != null or _remover != null \
 		or _big_map != null or _altar_ui != null or _exit_ui != null or _beat != null \
 		or _trade_panel != null or _road_mail_panel != null or _puzzle_panel != null \
 		or _fishing_panel != null \
@@ -3630,6 +3648,7 @@ func _launch_battle(m: _MapMonster) -> void:
 			"pet_stats": G.battle_pet_stats([st.active_pet, st.bench_pet]),
 		},
 		"enemy": {"theme": st.theme, "node_type": m.tier,
+			"world_map_id":_main_map_id if _mode == "main_world" else "",
 			"layer": int(node.get("layer", 1)), "lead_mon": m.mon_id,
 			"solo": _mode == "main_world" and bool(_main_cfg.get("encounter_solo", true)),
 			"display_level": m.display_level,
@@ -4076,6 +4095,9 @@ func _trait_pick_count(tier: String) -> int:
 func _after_battle_rewards() -> void:
 	if _mode == "main_world":
 		_refresh_hud()
+		if _last_battle_tier == "boss" and not _last_battle_optional and not _last_battle_trial:
+			var town := String(preload("res://src/world/JourneyService.gd").cfg().get("return_towns",{}).get(_main_map_id,""))
+			if not town.is_empty(): _open_journey(town)
 		return
 	_pending_trait_picks = _trait_pick_count(_last_battle_tier)
 	_next_trait_pick()
@@ -5045,12 +5067,15 @@ class _QuestEntity extends Node2D:
 	var map_ref: MapScene = null
 	var _t := 0.0
 	var _trade_tex: Texture2D = null
+	var _trade_ground: Dictionary = {}
 	var _uses_ground_art := false
 	var _caption_label:Label
 
 	func _ready() -> void:
 		if art == "trade_stall":
 			_trade_tex = G.res_tex("trade_stall")
+			if _trade_tex != null:
+				_trade_ground = preload("res://src/world/BuildingGrounding.gd").silhouette(_trade_tex,_trade_tex.get_width(),_trade_tex.get_height())
 		_uses_ground_art = art == "frost_brazier" and map_ref != null and map_ref._main_map_id == "frost_post"
 		var label := G.gold_label(caption, G.FS_XS, true,
 			Color("ffe2a0") if kind in ["cache", "trade", "story", "road_mail", "puzzle_choice", "shipping_aid", "frost_herb_route", "first_order_bridge"] else Color("cfe3ff"), true)
@@ -5084,9 +5109,12 @@ class _QuestEntity extends Node2D:
 		queue_redraw()
 
 	func _draw() -> void:
-		draw_set_transform(Vector2(0, 8), 0.0, Vector2(1.0, 0.36))
-		draw_circle(Vector2.ZERO, 22.0, Color(0, 0, 0, 0.24))   # 落地影
-		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+		if art == "trade_stall" and _trade_tex != null:
+			preload("res://src/world/BuildingGrounding.gd").draw_prop(self,_trade_ground,Vector2(-56,-96),_trade_tex.get_width())
+		elif art not in ["trust_zhaoyuan","trust_shenyuan","trust_frost","return_lamp","return_letter","return_tidebud","return_snowflower","return_rune","stele_anchor","frost_brazier","frost_lichen","mine_vent","frost_echo","signal_ribbons","mine_cart","rope","feather","tide_cargo","salt_cart","chime","cache","post"]:
+			draw_set_transform(Vector2(0, 8), 0.0, Vector2(1.0, 0.36))
+			draw_circle(Vector2.ZERO, 22.0, Color(0, 0, 0, 0.24))
+			draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		match art:
 			"trust_zhaoyuan","trust_shenyuan","trust_frost":
 				preload("res://src/explore/RegionalMemoryScenes.gd").draw_scene(self,art.trim_prefix("trust_"),feedback_tier)
@@ -5399,3 +5427,21 @@ class _Joystick extends Control:
 		var k := c + vector * 44.0
 		draw_circle(k, 18.0, Color(0.30, 0.20, 0.10, 0.85))
 		draw_circle(k, 15.0, Color(0.91, 0.84, 0.64, 0.92))
+
+
+## 驿路浮层冻结世界接触；首领结算完后同一入口提供返程。
+func _open_journey(recommended := "") -> void:
+	if _mode != "main_world" or _battle != null or _map_done or _journey_panel != null: return
+	_stop_auto_walk("")
+	_persist_main_world_progress()
+	var page := preload("res://src/ui/JourneyPanel.gd").new()
+	page.recommended = recommended
+	_journey_panel = page
+	_hud.add_child(page)
+	page.closed.connect(func(): _journey_panel = null)
+	page.travel_requested.connect(func(map_id: String):
+		if not G.can_go("res://src/explore/MapScene.tscn"): return
+		_persist_main_world_progress()
+		var result := preload("res://src/world/JourneyService.gd").travel(G,map_id)
+		if bool(result.ok): G.enter_main_world(map_id)
+		else: page.show_message(String(result.line)))

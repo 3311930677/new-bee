@@ -1,0 +1,331 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 42.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Label@104",
+			"rect_height": 46.0,
+			"size": 28,
+			"text": "技能书"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Label@105",
+			"rect_height": 24.0,
+			"size": 14,
+			"text": "招式研习 / 破军"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Label@108",
+			"rect_height": 32.0,
+			"size": 16,
+			"text": "远征币  240"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@110/@Label@109",
+			"rect_height": 44.0,
+			"size": 18,
+			"text": "?"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@112/@Label@111",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "裂山"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@114/@Label@113",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "破阵"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@116/@Label@115",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "回风斩"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@118/@Label@117",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "战吼"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@120/@Label@119",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "断罪"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 42.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@164/@Label@141",
+			"rect_height": 42.0,
+			"size": 28,
+			"text": "裂山"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@164/@Label@142",
+			"rect_height": 26.0,
+			"size": 14,
+			"text": "冷却 5秒 · 耗能 20"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@164/@Label@143",
+			"rect_height": 40.0,
+			"size": 16,
+			"text": "单体猛击"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@164/SkillPreview/@Label@170",
+			"rect_height": 24.0,
+			"size": 14,
+			"text": "招式预览"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@164/SkillPreview/@Control@172/@Label@171",
+			"rect_height": 44.0,
+			"size": 18,
+			"text": "▶"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@164/@Label@145",
+			"rect_height": 26.0,
+			"size": 14,
+			"text": "研习等级"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@164/@Label@146",
+			"rect_height": 30.0,
+			"size": 18,
+			"text": "LV 03 / 10"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 35.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@164/@Label@157",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "×1.65"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 33.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@164/@Label@158",
+			"rect_height": 33.0,
+			"size": 22,
+			"text": "→"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 35.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@164/@Label@159",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "×1.72"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@164/@Label@160",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "当前 LV3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@164/@Label@161",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "LV4 · 基础系数 +5%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@164/@Control@163/@Label@162",
+			"rect_height": 50.0,
+			"size": 18,
+			"text": "研习升级 · 130 远征币"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 42.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@197/@Label@174",
+			"rect_height": 42.0,
+			"size": 28,
+			"text": "破阵"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@197/@Label@175",
+			"rect_height": 26.0,
+			"size": 14,
+			"text": "冷却 9秒 · 耗能 25"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@197/@Label@176",
+			"rect_height": 40.0,
+			"size": 16,
+			"text": "目标 防御 -20%×5s"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@197/SkillPreview/@Label@203",
+			"rect_height": 24.0,
+			"size": 14,
+			"text": "招式预览"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@197/SkillPreview/@Control@205/@Label@204",
+			"rect_height": 44.0,
+			"size": 18,
+			"text": "▶"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@197/@Label@178",
+			"rect_height": 26.0,
+			"size": 14,
+			"text": "研习等级"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@197/@Label@179",
+			"rect_height": 30.0,
+			"size": 18,
+			"text": "LV 01 / 10"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 35.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@197/@Label@190",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "×1.20"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 33.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@197/@Label@191",
+			"rect_height": 33.0,
+			"size": 22,
+			"text": "→"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 35.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@197/@Label@192",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "×1.26"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@197/@Label@193",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "当前 LV1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@197/@Label@194",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "LV2 · 基础系数 +5%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@107/@Control@140/@Control@123/@Control@124/@Control@197/@Control@196/@Label@195",
+			"rect_height": 50.0,
+			"size": 18,
+			"text": "研习升级 · 60 远征币"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/@Control@103/@Control@122/@Label@121",
+			"rect_height": 48.0,
+			"size": 18,
+			"text": "返回"
+		}
+	]
+}

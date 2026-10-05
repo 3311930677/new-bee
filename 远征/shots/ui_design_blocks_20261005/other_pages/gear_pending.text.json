@@ -1,0 +1,286 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 50.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/@HBoxContainer@69/@VBoxContainer@71/@Label@72",
+			"rect_height": 50.0,
+			"size": 34,
+			"text": "行旅背包"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/@HBoxContainer@69/@VBoxContainer@71/@Label@73",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "整备随身器物 · 保管沿途收获"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/@HBoxContainer@69/CloseInventory",
+			"rect_height": 72.0,
+			"size": 15,
+			"text": "×"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/InventorySummary/Capacity",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "已用 60/60"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/InventorySummary/@Label@74",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "待领 7"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/InventorySummary/GoldBalance",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "12800"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/Categories/Tab_equip",
+			"rect_height": 44.0,
+			"size": 18,
+			"text": "装备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/Categories/Tab_mat",
+			"rect_height": 44.0,
+			"size": 18,
+			"text": "材料"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/Categories/Tab_gem",
+			"rect_height": 44.0,
+			"size": 18,
+			"text": "宝石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/Categories/Tab_pending",
+			"rect_height": 44.0,
+			"size": 18,
+			"text": "待领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@146/@PanelContainer@147/@HBoxContainer@148/@Label@150",
+			"rect_height": 49.0,
+			"size": 15,
+			"text": "碑鸣大剑\n稀有 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@146/@PanelContainer@147/@HBoxContainer@148/@Button@151",
+			"rect_height": 49.0,
+			"size": 18,
+			"text": "领 取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@146/@PanelContainer@152/@HBoxContainer@153/@Label@155",
+			"rect_height": 49.0,
+			"size": 15,
+			"text": "碑鸣护甲\n稀有 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@146/@PanelContainer@152/@HBoxContainer@153/@Button@156",
+			"rect_height": 49.0,
+			"size": 18,
+			"text": "领 取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@146/@PanelContainer@157/@HBoxContainer@158/@Label@160",
+			"rect_height": 49.0,
+			"size": 15,
+			"text": "潮关大剑\n稀有 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@146/@PanelContainer@157/@HBoxContainer@158/@Button@161",
+			"rect_height": 49.0,
+			"size": 18,
+			"text": "领 取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@146/@PanelContainer@162/@HBoxContainer@163/@Label@165",
+			"rect_height": 49.0,
+			"size": 15,
+			"text": "潮关护甲\n稀有 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@146/@PanelContainer@162/@HBoxContainer@163/@Button@166",
+			"rect_height": 49.0,
+			"size": 18,
+			"text": "领 取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@146/@PanelContainer@167/@HBoxContainer@168/@Label@170",
+			"rect_height": 49.0,
+			"size": 15,
+			"text": "霜关大剑\n稀有 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@146/@PanelContainer@167/@HBoxContainer@168/@Button@171",
+			"rect_height": 49.0,
+			"size": 18,
+			"text": "领 取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@146/@PanelContainer@172/@HBoxContainer@173/@Label@175",
+			"rect_height": 49.0,
+			"size": 15,
+			"text": "霜关护甲\n稀有 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@146/@PanelContainer@172/@HBoxContainer@173/@Button@176",
+			"rect_height": 49.0,
+			"size": 18,
+			"text": "领 取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@146/@PanelContainer@177/@HBoxContainer@178/@Label@180",
+			"rect_height": 49.0,
+			"size": 15,
+			"text": "双关坠饰\n稀有 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@146/@PanelContainer@177/@HBoxContainer@178/@Button@181",
+			"rect_height": 49.0,
+			"size": 18,
+			"text": "领 取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/Pagination/@Label@182",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "7 件 · 1/1 页"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/Pagination/@Button@183",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "◀"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/Pagination/@Button@184",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "▶"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@185/DetailScroll/@VBoxContainer@188/@Label@189",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "待领取物品会保留在这里"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@185/DetailScroll/@VBoxContainer@188/@Label@190",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "腾出装备格后即可领取；领取不会额外消耗资源。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/InventoryFooter/@Label@76",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "材料与宝石不占背包格"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@65/InventoryFrameLayout/InventoryWindow/InventoryContent/InventoryFooter/ReturnButton",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "返回"
+		}
+	]
+}

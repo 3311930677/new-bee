@@ -57,6 +57,7 @@ func _ready() -> void:
 	else:
 		DirAccess.make_dir_recursive_absolute(_output.get_base_dir())
 	var img := get_viewport().get_texture().get_image()
+	preload("res://tools/UITextAudit.gd").write(self,_output.get_basename()+".text.json")
 	var save_err := img.save_png(_output)
 	if save_err != OK:
 		push_error("SHOT_SAVE_FAILED %s (%d)" % [_output, save_err])
@@ -664,6 +665,10 @@ func _setup() -> void:
 			add_child(load("res://src/ui/Prologue.tscn").instantiate())
 		"createrole":
 			add_child(load("res://src/ui/CreateRole.tscn").instantiate())
+		"home_wallet_large":
+			_demo_prog()
+			G.wallet = {"gold":999999,"expedition":9999999,"soul":999999999,"honor":999999}
+			add_child((load("res://src/ui/GameHome.tscn") as PackedScene).instantiate())
 		"home":
 			_demo_prog()
 			add_child(load("res://src/ui/GameHome.tscn").instantiate())

@@ -1,0 +1,124 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 42.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@Label@6",
+			"rect_height": 42.0,
+			"size": 28,
+			"text": "选择一份祝福"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@Control@16/@Label@9",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "数值"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@Control@16/@Label@10",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "攻击强化·小"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@Control@16/@Label@12",
+			"rect_height": 54.0,
+			"size": 15,
+			"text": "ATK +8%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@Control@16/@Label@15",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "— 点 选 —"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@Control@26/@Label@19",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "数值"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@Control@26/@Label@20",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "攻击强化·中"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@Control@26/@Label@22",
+			"rect_height": 54.0,
+			"size": 15,
+			"text": "ATK +15%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@Control@26/@Label@25",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "— 点 选 —"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@Control@36/@Label@29",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "数值"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@Control@36/@Label@30",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "生命强化·小"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@Control@36/@Label@32",
+			"rect_height": 54.0,
+			"size": 15,
+			"text": "MaxHP +10%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@Control@36/@Label@35",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "— 点 选 —"
+		}
+	]
+}

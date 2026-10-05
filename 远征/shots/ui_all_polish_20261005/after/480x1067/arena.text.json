@@ -1,0 +1,124 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 59.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Panel@68/@Label@67",
+			"rect_height": 59.0,
+			"size": 40,
+			"text": "演武场"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Label@69",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "擂台试锋 · 不损装备，不耗资源"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@70/@Control@71/@Label@73",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "铜印 · 1000 分"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@70/@Control@71/@Label@74",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "连胜 0 · 最佳 0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@70/@Control@71/@Label@79",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "段位进度 · 铜印 → 银印"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@70/@Control@71/@Label@82",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "还差 200 分"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 35.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@70/@Control@71/@PanelContainer@84/@Control@85/@Label@87",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "对手：演武傀儡 · 12 级"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@70/@Control@71/@PanelContainer@84/@Control@85/@Label@88",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "练手对局 · 数值随等级缩放 · 点卡片换镜影"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@70/@Control@71/@Label@89",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "赛季荣誉 900 · 再胜 3 场 +40"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@70/@Control@71/@Label@90",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "0 胜 0 负 · 胜率 0%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@70/@Control@71/@PanelContainer@92/@Label@91",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "换对手"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@70/@Control@71/@PanelContainer@94/@Label@93",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "开始切磋"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@70/@Control@71/@PanelContainer@96/@Label@95",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "返回"
+		}
+	]
+}

@@ -33,8 +33,8 @@ func _run() -> void:
 	_check(ResourceLoader.exists(String(cfg.get("monster_sprite", ""))),
 		"主地图怪物像素形象应存在")
 	_check(not TableCache.get_monster("mon_zombie").is_empty(), "主地图僵尸战斗数据应存在")
-	_check(String(cfg.get("background", "")).ends_with("lorin_wilds_reference_v6.png"),
-		"主地图应实际接入参考画风地表")
+	_check(String(cfg.get("background", "")) == "res://image/style_review_20261005/ground_crisp_v1.png",
+		"主地图应实际接入已确认的清晰石板路地表")
 	var ground_tex := load(String(cfg.get("background", ""))) as Texture2D
 	if ground_tex != null:
 		var screen_pixel_scale := float(int(cfg.get("map_cols", 20)) * 48) \
@@ -364,7 +364,7 @@ func _run() -> void:
 		await get_tree().process_frame
 		_check(tall_map._battle != null
 			and absf(tall_map._battle._field.position.y - 267.0) < 1.0
-			and absf(tall_map._battle._cmd_info_l.position.y - 830.0) < 1.0,
+			and absf(tall_map._battle._cmd_info_l.position.y - (BattleScene.CLASSIC_CMD_Y-22.0+267.0)) < 1.0,
 			"长屏同图战斗人物与指令条应跟随视口下移")
 	tall_view.queue_free()
 	await get_tree().process_frame

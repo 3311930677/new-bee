@@ -1,0 +1,304 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@Node2D@3/@Node2D@5/@Label@6",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "枫林古道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@Node2D@3/@CharacterBody2D@7/@Panel@10/@Label@13",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "东方舟影  Lv42"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@Node2D@3/@Node2D@120/@Label@122",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "小满"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Panel@35/@Label@36",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "Lv42"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Panel@35/@Label@39",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "生命 1890/1890"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Panel@35/@Label@42",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "EXP 3%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Panel@43/@Label@45",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "12800"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 39.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Label@46",
+			"rect_height": 39.0,
+			"size": 26,
+			"text": "昭元边城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Panel@48/@Label@47",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "主线 · 在霜关驿向宁砚询问关外回声"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@70/@PanelContainer@65/@Label@64",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@70/@Label@67",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "药剂"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@70/@PanelContainer@69/@Label@68",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@80/@PanelContainer@77/@Label@76",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@80/@Label@79",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "营帐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@86/@PanelContainer@83/@Label@82",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 40.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@86/@Label@84",
+			"rect_height": 40.0,
+			"size": 27,
+			"text": "»"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@86/@Label@85",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "疾行"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@PanelContainer@129/@Label@130",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "委托 · 0/2 已交付"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 58.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@139/@Panel@136/@Label@135",
+			"rect_height": 58.0,
+			"size": 39,
+			"text": "巡界授业 · 后续三式"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@139/@PanelContainer@137/@Control@138/@Label@140",
+			"rect_height": 32.0,
+			"size": 17,
+			"text": "岳教头：依序学招，在实战里用活它。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@139/@PanelContainer@137/@Control@138/@Label@141",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "第3式 · 回风斩"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@139/@PanelContainer@137/@Control@138/@Label@142",
+			"rect_height": 36.0,
+			"size": 15,
+			"text": "横扫前排全体；能量 40 · 冷却 12.0秒"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@139/@PanelContainer@137/@Control@138/@Label@143",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "可学习 · 100 金"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@139/@PanelContainer@137/@Control@138/@PanelContainer@145/@Label@144",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "查看/研习"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@139/@PanelContainer@137/@Control@138/@Label@146",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "第4式 · 战吼"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@139/@PanelContainer@137/@Control@138/@Label@147",
+			"rect_height": 36.0,
+			"size": 15,
+			"text": "强制目标攻击自己 3s；能量 20 · 冷却 10.0秒"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@139/@PanelContainer@137/@Control@138/@Label@148",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "先学会「回风斩」"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@139/@PanelContainer@137/@Control@138/@PanelContainer@150/@Label@149",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "查看/研习"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@139/@PanelContainer@137/@Control@138/@Label@151",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "第5式 · 断罪"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@139/@PanelContainer@137/@Control@138/@Label@152",
+			"rect_height": 36.0,
+			"size": 15,
+			"text": "目标 HP<30% 时伤害大增；能量 60 · 冷却 15.0秒"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@139/@PanelContainer@137/@Control@138/@Label@153",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "先学会「战吼」"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@139/@PanelContainer@137/@Control@138/@PanelContainer@155/@Label@154",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "查看/研习"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@139/@PanelContainer@137/@Control@138/@PanelContainer@157/@Label@156",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "返回"
+		}
+	]
+}

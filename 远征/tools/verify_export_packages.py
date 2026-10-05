@@ -1,5 +1,6 @@
 """Read-only inventory and integrity audit for Godot 4.7 PCK/APK artifacts."""
 import hashlib
+import argparse
 import json
 from pathlib import Path
 import struct
@@ -7,13 +8,17 @@ from zipfile import ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
 BLOCKED = ('tools/', 'docs/', 'shots/', 'exports/', 'Godot/', 'assets_regen/',
-	       'image/style_review_20261005/',
            'src/preview/', 'image/role_lpc/', 'image/role_pixel_studio/',
            'image/role/zs/source/', 'image/role/ck/source/', 'image/role/fs/source/',
            'image/role/fz/source/', 'image/role/walk_4dir_review/', 'assets/source/', 'assets/role/')
 REQUIRED = ('data/main_world_maps.json', 'data/story_quests.json', 'data/side_quests.json',
             'data/world_commissions.json', 'data/trade_contracts.json', 'data/camp_gathering.json',
-            'data/run_events.json', 'data/dungeon_trials.json', 'data/oaths.json', 'project.binary')
+            'data/run_events.json', 'data/dungeon_trials.json', 'data/oaths.json',
+            'data/activities.json', 'image/battle/art_v2/command_icons.png.import',
+            'image/battle/art_v2/forest_clearing.png.import',
+            'image/style_review_20261005/character_finish.gdshader',
+            'image/style_review_20261005/ground_crisp_v1.png.import',
+            'image/style_review_20261005/turtle_matched_v1.png.import', 'project.binary')
 
 def pck_inventory(path):
     rows = []
@@ -60,8 +65,11 @@ def apk_inventory(path):
             'required_data': True, 'excluded_work_files': True}
 
 if __name__ == '__main__':
-    report = {'windows_pck': pck_inventory(ROOT / 'exports/windows/Yuanzheng.pck')}
-    apk = ROOT / 'exports/android/Yuanzheng-debug.apk'
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--build-dir',type=Path,default=ROOT / 'exports')
+    args = parser.parse_args()
+    report = {'windows_pck': pck_inventory(args.build_dir / 'windows/Yuanzheng.pck')}
+    apk = args.build_dir / 'android/Yuanzheng-debug.apk'
     if apk.exists(): report['android_apk'] = apk_inventory(apk)
     output = ROOT / 'tools/_logs/export_inventory.json'
     output.write_text(json.dumps(report, indent=2), encoding='utf-8')

@@ -1,0 +1,26 @@
+{
+  "fz": {
+    "source_sha256": "4500a90c45d7d3b18d9a458d914ab0f05262286fc76f4774e7dc5e4303457621",
+    "verified_original_rgb_frames": 114,
+    "continuous_ranges": true,
+    "idle_pixel_match": true,
+    "transparent_background": true,
+    "no_runtime_clipping": true
+  },
+  "ck": {
+    "source_sha256": "0332afd64ed27464b8a261782e4ea099778e16ae5849ad9fff207f4e54096dfe",
+    "verified_original_rgb_frames": 99,
+    "continuous_ranges": true,
+    "idle_pixel_match": true,
+    "transparent_background": true,
+    "no_runtime_clipping": true
+  },
+  "zs": {
+    "source_sha256": "912e791a25efdb3d03b5706710f19e07295429ba34fdd5f6ea3b0e7dc9fd17b0",
+    "verified_original_rgb_frames": 109,
+    "continuous_ranges": true,
+    "idle_pixel_match": true,
+    "transparent_background": true,
+    "no_runtime_clipping": true
+  }
+}

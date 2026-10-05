@@ -1,0 +1,23 @@
+{
+  "screenshots": 22,
+  "before_screenshots": 18,
+  "text_nodes": 583,
+  "text_issues": {
+    "nonlinear_text": 0,
+    "compact_art": 0,
+    "short_text_boxes": 0
+  },
+  "regressions": [
+    "VerifyAssets",
+    "VerifyUiLayout",
+    "VerifyVisualRefresh",
+    "VerifyFieldUI",
+    "VerifyGameHome",
+    "VerifyNav",
+    "VerifyGacha",
+    "VerifyPanels",
+    "VerifyPerf"
+  ],
+  "motion_frames": 20,
+  "icons": 16
+}

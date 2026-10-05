@@ -1,0 +1,205 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 30.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Label@4",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "东方舟影"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Label@5",
+			"rect_height": 24.0,
+			"size": 14,
+			"text": "LV 42"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@10/@Label@8",
+			"rect_height": 48.0,
+			"size": 18,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@HBoxContainer@12/@Label@15",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "12800"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@HBoxContainer@12/@Label@18",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "240"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@HBoxContainer@12/@Label@21",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "36"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@HBoxContainer@12/@Label@24",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "900"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 39.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Label@25",
+			"rect_height": 39.0,
+			"size": 26,
+			"text": "行旅营帐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@29/@Label@26",
+			"rect_height": 30.0,
+			"size": 16,
+			"text": "任务"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@29/@Label@28",
+			"rect_height": 30.0,
+			"size": 14,
+			"text": "在霜关驿向宁砚询问关外回声"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 33.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@32/@Label@33",
+			"rect_height": 33.0,
+			"size": 22,
+			"text": "破军"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@32/@Label@34",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "战士 · LV 42"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/ActivitiesEntry/@Label@35",
+			"rect_height": 48.0,
+			"size": 18,
+			"text": "活动"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@38/@Label@36",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "竞技"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@41/@Label@39",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "召唤"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@45/@Label@42",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "兑换"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 37.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/ReturnToWorld/@Label@46",
+			"rect_height": 37.0,
+			"size": 25,
+			"text": "继续旅程"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/ReturnToWorld/@Label@47",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "霜关驿"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@53/@Label@51",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "世界"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@56/@Label@54",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "背包"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@59/@Label@57",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "养成"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@62/@Label@60",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "图鉴"
+		}
+	]
+}

@@ -384,6 +384,8 @@ static func validate(data: Dictionary, now_sec: int) -> Dictionary:
 			var dv: Variant = pd.get(k)
 			if dv != null and not (dv is Dictionary):
 				return {"ok": false, "err": "prog.%s 应为对象" % k}
+		if not preload("res://src/world/RelicService.gd").validate(pd.get("relic_hunts",{})):
+			return {"ok":false,"err":"传世挑战记录字段非法"}
 		var active: Dictionary = pd.get("active_run", {})
 		if not WorldCommission.validate(pd.get("world_commissions",{})):
 			return {"ok":false,"err":"世界事务公布或阶段字段非法"}

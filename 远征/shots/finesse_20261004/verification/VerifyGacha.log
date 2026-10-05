@@ -1,0 +1,107 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+GACHA_OK all tests passed
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+ERROR: The object does not have any 'meta' values with the key 'arrival'.
+   at: get_meta (core/object/object.cpp:1053)
+   GDScript backtrace (most recent call first):
+       [0] _flip_card (res://src/ui/GachaPanel.gd:777)
+       [1] _run (res://tools/VerifyGacha.gd:160)
+       [2] _ready (res://tools/VerifyGacha.gd:13)
+ERROR: Condition "p_pitch_scale <= 0.0" is true.
+   at: set_pitch_scale (scene/audio/audio_stream_player_internal.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] sfx (res://src/autoload/Audio.gd:89)
+       [1] <anonymous lambda> (res://src/ui/GachaPanel.gd:791)
+ERROR: The object does not have any 'meta' values with the key 'arrival'.
+   at: get_meta (core/object/object.cpp:1053)
+   GDScript backtrace (most recent call first):
+       [0] _flip_card (res://src/ui/GachaPanel.gd:777)
+       [1] <anonymous lambda> (res://src/ui/GachaPanel.gd:818)
+ERROR: Condition "p_pitch_scale <= 0.0" is true.
+   at: set_pitch_scale (scene/audio/audio_stream_player_internal.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] sfx (res://src/autoload/Audio.gd:89)
+       [1] <anonymous lambda> (res://src/ui/GachaPanel.gd:791)
+ERROR: The object does not have any 'meta' values with the key 'arrival'.
+   at: get_meta (core/object/object.cpp:1053)
+   GDScript backtrace (most recent call first):
+       [0] _flip_card (res://src/ui/GachaPanel.gd:777)
+       [1] <anonymous lambda> (res://src/ui/GachaPanel.gd:818)
+ERROR: Condition "p_pitch_scale <= 0.0" is true.
+   at: set_pitch_scale (scene/audio/audio_stream_player_internal.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] sfx (res://src/autoload/Audio.gd:89)
+       [1] <anonymous lambda> (res://src/ui/GachaPanel.gd:791)
+ERROR: The object does not have any 'meta' values with the key 'arrival'.
+   at: get_meta (core/object/object.cpp:1053)
+   GDScript backtrace (most recent call first):
+       [0] _flip_card (res://src/ui/GachaPanel.gd:777)
+       [1] <anonymous lambda> (res://src/ui/GachaPanel.gd:818)
+ERROR: The object does not have any 'meta' values with the key 'arrival'.
+   at: get_meta (core/object/object.cpp:1053)
+   GDScript backtrace (most recent call first):
+       [0] _flip_card (res://src/ui/GachaPanel.gd:777)
+       [1] <anonymous lambda> (res://src/ui/GachaPanel.gd:818)
+ERROR: The object does not have any 'meta' values with the key 'arrival'.
+   at: get_meta (core/object/object.cpp:1053)
+   GDScript backtrace (most recent call first):
+       [0] _flip_card (res://src/ui/GachaPanel.gd:777)
+       [1] <anonymous lambda> (res://src/ui/GachaPanel.gd:818)
+ERROR: The object does not have any 'meta' values with the key 'arrival'.
+   at: get_meta (core/object/object.cpp:1053)
+   GDScript backtrace (most recent call first):
+       [0] _flip_card (res://src/ui/GachaPanel.gd:777)
+       [1] <anonymous lambda> (res://src/ui/GachaPanel.gd:818)
+ERROR: Condition "p_pitch_scale <= 0.0" is true.
+   at: set_pitch_scale (scene/audio/audio_stream_player_internal.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] sfx (res://src/autoload/Audio.gd:89)
+       [1] <anonymous lambda> (res://src/ui/GachaPanel.gd:791)
+ERROR: The object does not have any 'meta' values with the key 'arrival'.
+   at: get_meta (core/object/object.cpp:1053)
+   GDScript backtrace (most recent call first):
+       [0] _flip_card (res://src/ui/GachaPanel.gd:777)
+       [1] <anonymous lambda> (res://src/ui/GachaPanel.gd:818)
+ERROR: Condition "p_pitch_scale <= 0.0" is true.
+   at: set_pitch_scale (scene/audio/audio_stream_player_internal.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] sfx (res://src/autoload/Audio.gd:89)
+       [1] <anonymous lambda> (res://src/ui/GachaPanel.gd:791)
+ERROR: The object does not have any 'meta' values with the key 'arrival'.
+   at: get_meta (core/object/object.cpp:1053)
+   GDScript backtrace (most recent call first):
+       [0] _flip_card (res://src/ui/GachaPanel.gd:777)
+       [1] <anonymous lambda> (res://src/ui/GachaPanel.gd:818)
+ERROR: The object does not have any 'meta' values with the key 'arrival'.
+   at: get_meta (core/object/object.cpp:1053)
+   GDScript backtrace (most recent call first):
+       [0] _flip_card (res://src/ui/GachaPanel.gd:777)
+       [1] <anonymous lambda> (res://src/ui/GachaPanel.gd:818)
+ERROR: Condition "p_pitch_scale <= 0.0" is true.
+   at: set_pitch_scale (scene/audio/audio_stream_player_internal.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] sfx (res://src/autoload/Audio.gd:89)
+       [1] <anonymous lambda> (res://src/ui/GachaPanel.gd:791)
+ERROR: Condition "p_pitch_scale <= 0.0" is true.
+   at: set_pitch_scale (scene/audio/audio_stream_player_internal.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] sfx (res://src/autoload/Audio.gd:89)
+       [1] <anonymous lambda> (res://src/ui/GachaPanel.gd:794)
+ERROR: The object does not have any 'meta' values with the key 'press_motion'.
+   at: get_meta (core/object/object.cpp:1053)
+   GDScript backtrace (most recent call first):
+       [0] <anonymous lambda> (res://src/autoload/G.gd:6085)
+       [1] _run (res://tools/VerifyGacha.gd:317)
+ERROR: Condition "p_pitch_scale <= 0.0" is true.
+   at: set_pitch_scale (scene/audio/audio_stream_player_internal.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] sfx (res://src/autoload/Audio.gd:89)
+       [1] <anonymous lambda> (res://src/ui/GachaPanel.gd:791)
+ERROR: Condition "p_pitch_scale <= 0.0" is true.
+   at: set_pitch_scale (scene/audio/audio_stream_player_internal.cpp:317)
+   GDScript backtrace (most recent call first):
+       [0] sfx (res://src/autoload/Audio.gd:89)
+       [1] <anonymous lambda> (res://src/ui/GachaPanel.gd:791)
+

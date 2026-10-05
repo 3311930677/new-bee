@@ -1,0 +1,31 @@
+{
+  "captures": {
+    "matrix": {
+      "passed": 273,
+      "total": 273,
+      "sizes": [
+        "480x1067",
+        "480x800"
+      ]
+    },
+    "representative": {
+      "passed": 70,
+      "total": 70,
+      "sizes": [
+        "480x1067",
+        "480x800"
+      ]
+    }
+  },
+  "regressions": {
+    "distinct_passed": 18,
+    "core_passed": 16,
+    "final_polish_recheck_passed": 5,
+    "curriculum_gear_passed": 2
+  },
+  "original_pixel_icons": 24,
+  "refined_assets": 46,
+  "motion_previews": 3,
+  "capture_policy": "reject setup errors, script errors, nonzero exits and blank images; only specific engine shutdown and CA diagnostics excluded",
+  "real_device_touch_tested": false
+}

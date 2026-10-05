@@ -1,0 +1,88 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 39.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Prologue/@Label@2",
+			"rect_height": 39.0,
+			"size": 26,
+			"text": "开卷 · 远征图志"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Prologue/@PanelContainer@3/@Control@4/@Label@5",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "天倾纪 · 十七年"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 42.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Prologue/@PanelContainer@3/@Control@4/@Label@6",
+			"rect_height": 42.0,
+			"size": 28,
+			"text": "昭元界"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Prologue/@PanelContainer@3/@Control@4/@VBoxContainer@8/@Label@22",
+			"rect_height": 182.0,
+			"size": 18,
+			"text": "昭元界有八座镇界碑，锁着地脉之下的「渊」。天倾纪十一年，林海碑首先失声，王城随后遭灾。如今是十七年，六年来的断路仍困住三城。你先调查昭元到沉渊港、霜关的往返线索，修稳归路碑；八碑的源头与王城旧账仍是未解的长线。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Prologue/@PanelContainer@3/@Control@4/@VBoxContainer@8/@Label@23",
+			"rect_height": 58.0,
+			"size": 18,
+			"text": "你是守碑人最后一脉。城破那夜师门散尽，只余一柄无铭旧剑，与半卷《远征图志》。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Prologue/@PanelContainer@3/@Control@4/@Label@16",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "1 / 6"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Prologue/@PanelContainer@18/@Label@17",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "跳过"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Prologue/@PanelContainer@20/@Label@19",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "继 续"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/Prologue/@Label@21",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "点卷轴或按回车翻页"
+		}
+	]
+}

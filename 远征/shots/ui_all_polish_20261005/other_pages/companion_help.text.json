@@ -1,0 +1,277 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 58.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@Panel@7/@Label@6",
+			"rect_height": 58.0,
+			"size": 39,
+			"text": "伙伴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Label@11",
+			"rect_height": 30.0,
+			"size": 17,
+			"text": "岩龟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Label@12",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "协战 3 / 20"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@PanelContainer@15/@Label@13",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "上一只"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@PanelContainer@18/@Label@16",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "下一只"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@PanelContainer@21/@Label@19",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "随行中"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@79/@Control@22/@Control@23/@Control@44/@Label@29",
+			"rect_height": 30.0,
+			"size": 17,
+			"text": "当前特性"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@79/@Control@22/@Control@23/@Control@44/@PanelContainer@30/@Control@31/@Label@33",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "护卫"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@79/@Control@22/@Control@23/@Control@44/@PanelContainer@30/@Control@31/@Label@34",
+			"rect_height": 46.0,
+			"size": 15,
+			"text": "分担一次重击"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@79/@Control@22/@Control@23/@Control@44/@PanelContainer@35/@Control@36/@Label@38",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "追击"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@79/@Control@22/@Control@23/@Control@44/@PanelContainer@35/@Control@36/@Label@39",
+			"rect_height": 46.0,
+			"size": 15,
+			"text": "技能后追击"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@79/@Control@22/@Control@23/@Control@44/@Label@40",
+			"rect_height": 64.0,
+			"size": 15,
+			"text": "每次主世界参战胜利累积协战；\n3次开放第二项特性。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@79/@Control@22/@Control@23/@Control@74/@PanelContainer@48/@Label@47",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "第1项·已选"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@79/@Control@22/@Control@23/@Control@74/@PanelContainer@50/@Label@49",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "第2项"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@79/@Control@22/@Control@23/@Control@74/@Label@52",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "1 / 持有3 · 需协战0次"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@79/@Control@22/@Control@23/@Control@74/@PanelContainer@55/@Label@53",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "护卫"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@79/@Control@22/@Control@23/@Control@74/@Label@56",
+			"rect_height": 46.0,
+			"size": 15,
+			"text": "分担一次重击"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@79/@Control@22/@Control@23/@Control@74/@PanelContainer@62/@Label@60",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "追击"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@79/@Control@22/@Control@23/@Control@74/@Label@63",
+			"rect_height": 46.0,
+			"size": 15,
+			"text": "技能后追击"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@79/@Control@22/@Control@23/@Control@74/@PanelContainer@69/@Label@67",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "元素响应"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@79/@Control@22/@Control@23/@Control@74/@Label@70",
+			"rect_height": 46.0,
+			"size": 15,
+			"text": "对应技能净化负面"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/PageTabs/PageTab0/@Label@80",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "协战"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/PageTabs/PageTab1/@Label@82",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "训练"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Label@84",
+			"rect_height": 34.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@PanelContainer@86/@Label@85",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "返回"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@CanvasLayer@87/@PanelContainer@91/@Control@92/@Label@93",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "元素响应 · 对应技能"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@CanvasLayer@87/@PanelContainer@91/@Control@92/@ScrollContainer@100/@VBoxContainer@96/@Label@97",
+			"rect_height": 54.0,
+			"size": 17,
+			"text": "当前职业对应技能：裂山 / 破阵 / 回风斩 / 战吼 / 断罪"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@CanvasLayer@87/@PanelContainer@91/@Control@92/@ScrollContainer@100/@VBoxContainer@96/@Label@98",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "伙伴对应技能：冲撞 / 护主甲"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@CanvasLayer@87/@PanelContainer@91/@Control@92/@ScrollContainer@100/@VBoxContainer@96/@Label@99",
+			"rect_height": 54.0,
+			"size": 17,
+			"text": "技能必须真实生效；每次净化角色与伙伴各一项最早负面，冷却12秒。没有负面时不消耗触发。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@CanvasLayer@87/@PanelContainer@91/@Control@92/@PanelContainer@102/@Label@101",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "知道了"
+		}
+	]
+}

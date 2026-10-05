@@ -1,0 +1,25 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/LoadScreen/@Label@5",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "昭元行旅录"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/LoadScreen/@Label@8",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "整备完成 100％"
+		}
+	]
+}

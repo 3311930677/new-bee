@@ -233,12 +233,13 @@ func _direct_damage(dmg: int, src: Combatant, sim: BattleSim, is_dot := false) -
 	if has_buff("invincible"):
 		sim.emit({"t": "immune", "uid": uid})
 		return 0
+	var dealt := mini(hp, dmg)
 	hp = maxi(0, hp - dmg)
 	sim.emit({"t": "dmg", "src": src.uid if src != null else -1, "uid": uid,
-		"amount": dmg, "crit": false, "dot": is_dot})
+		"amount": dealt, "crit": false, "dot": is_dot})
 	if hp == 0:
 		_on_lethal(sim, src)
-	return dmg
+	return dealt
 
 
 ## 正式伤害入口（技能/普攻；含潜伏减伤/护盾/反伤/吸血/受击词条钩子）
@@ -249,6 +250,8 @@ func take_damage(dmg: int, src: Combatant, sim: BattleSim, is_crit := false) -> 
 		sim.emit({"t": "immune", "uid": uid})
 		return 0
 	var final := dmg
+	if src != null and src.kind == "role" and String(data.get("tier", "")) == "boss" and has_buff("break_window"):
+		final = int(final * (1.0 + float(src.data.get("relic_break_damage_pct", 0.0))))
 	# 受方「受伤加深」（狂潮）下沉到唯一入口：以前只在技能路径结算，普攻不吃这条，
 	# 双刃词条于是变成纯增益（SkillSystem 侧的同款应用已删，别再两处都算一遍）
 	if traits != null:
@@ -274,6 +277,8 @@ func take_damage(dmg: int, src: Combatant, sim: BattleSim, is_crit := false) -> 
 				sim.emit({"t": "shield_absorb", "uid": uid, "amount": absorb})
 				return 0
 	final = CompanionService.guard(sim,self,final,src)
+	# 吸血、反伤与实效统计只认真正扣掉的生命，不能靠残血目标放大收益。
+	final = mini(hp, final)
 	hp = maxi(0, hp - final)
 	sim.emit({"t": "dmg", "src": src.uid if src != null else -1, "uid": uid,
 		"amount": final, "crit": is_crit, "dot": false})
@@ -418,7 +423,9 @@ func do_basic_attack(sim: BattleSim) -> void:
 		return
 	first_basic_done = true
 	var atk := get_atk()
-	var dmg := DamageCalc.basic_damage(atk, target.get_def())
+	# 职业普攻系数只影响伤害，不抬高治疗/护盾或回能；镜影同样读取自身表值。
+	var basic_atk := int(float(atk) * float(data.get("basic_attack_k", 1.0)))
+	var dmg := DamageCalc.basic_damage(basic_atk, target.get_def())
 	var crit_chance := get_crit()
 	if traits != null:
 		crit_chance += traits.crit_vs_full_hp_bonus(target)   # 弱点洞悉（P1-12）

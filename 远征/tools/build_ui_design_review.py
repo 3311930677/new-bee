@@ -1,0 +1,101 @@
+"""Package native before/after renders, full-color motion and validation evidence."""
+from pathlib import Path
+import html
+import json
+import re
+from PIL import Image
+from capture_checks import failures
+from build_ui_readability_review import LABELS as PAGE_LABELS
+
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / 'shots/ui_design_blocks_20261005'
+LABELS = {
+    'home':'行旅营帐','bag':'行旅背包','bag_full':'装备分页','growth':'人物养成',
+    'gacha':'灵宠召唤','codex':'灵宠图鉴','quests':'主线与委托','title':'开始菜单','login':'旅人登记',
+    'settings':'设置','settings_profile':'旅人档案','settings2':'设置第二页','city_guests':'访客簿',
+    'city_notice':'城内告示','city_shop':'商铺','gate':'城门','archive':'档案馆','city_build_panel':'建筑筹备',
+    'main_world':'边城探索','main_world_battle_commands':'战斗指令','main_world_battle_skills':'战斗技能',
+    'battle':'战斗','forge_enhance':'强化','forge_gem':'镶嵌','equip':'装备详情','skillbook':'技能书',
+    'worlds':'世界地图','deploy':'出征准备','arena':'竞技','mount':'坐骑','titles':'称号',
+    'trade_warden_dialog':'守卫交谈','createrole':'职业选择','pet_raise':'灵宠培养','avatar':'旅人小像',
+    'load':'加载','title_intro':'游戏介绍','reading_help':'装备说明','reading_help2':'装备说明第二页',
+}
+LABELS = {**PAGE_LABELS,**LABELS}
+MOTION = [
+    ('finesse','altar','符环与灵宠待机'),('finesse','single','单次结缘与稀有演出'),
+    ('finesse','ten','十连入场与翻牌'),('readability','ready','可领取 · 呼吸亮边'),
+    ('readability','claim','领取 · 器物入囊'),('readability','unlock','解锁 · 招式解封'),
+    ('readability','loading','启程加载'),('readability','home','营帐待机'),
+]
+COUNTS = {'finesse':{'home':24,'altar':20,'single':56,'ten':70,'training':34},
+          'readability':{'home':24,'ready':24,'claim':50,'unlock':50,'loading':50}}
+TOKENS = ['UI_LAYOUT','VISUAL_REFRESH','FIELD_UI','GAME_HOME','NAV','PERF','QUESTS',
+          'SHIPPING','COMPANIONS','CURRICULUM','GACHA','PANELS','GROWTH','CITY','INVENTORY_UI','UI_TEXT','SUMMON_UI']
+
+def figure(src, title):
+    return f'<figure><img loading="lazy" src="{html.escape(src)}" alt="{html.escape(title)}"><figcaption>{html.escape(title)}</figcaption></figure>'
+
+def main():
+    rows, reports = [], []
+    for folder in ['after','other_pages']:
+        result = OUT/folder/'results.json'
+        if not result.is_file():
+            continue
+        source = json.loads(result.read_text(encoding='utf-8'))
+        assert source and all(item['passed'] for item in source), folder
+        for item in source:
+            path = Path(item['path'])
+            report = json.loads(path.with_suffix('.text.json').read_text(encoding='utf-8'))
+            reports.append(report)
+            key = item.get('name',item['scene'])
+            rows.append({'title':LABELS.get(key,LABELS.get(item['scene'],item['scene'])),
+                         'size':item['size'],'src':path.relative_to(OUT).as_posix()})
+    issues = {key:sum(len(report[key]) for report in reports)
+              for key in ['nonlinear_text','compact_art','short_text_boxes']}
+    assert not any(issues.values()), issues
+    logs = [(path,path.read_text(encoding='utf-8-sig')) for path in (OUT/'verification').glob('*.log')]
+    for token in TOKENS:
+        matched = [log for _,log in logs if re.search(r'^'+token+r'_OK\b',log,re.M)]
+        assert len(matched)==1 and not failures(matched[0]),token
+    frames = 0
+    for group, counts in COUNTS.items():
+        log = (OUT/'motion'/group/'capture.log').read_text(encoding='utf-8')
+        assert f'MOTION_PREVIEW_OK {group}' in log and not failures(log)
+        for key,count in counts.items():
+            assert len(list((OUT/'motion'/group/key).glob('*.png')))==count
+            frames += count
+    for group,key,_ in MOTION:
+        paths = sorted((OUT/'motion'/group/key).glob('*.png'))
+        images = [Image.open(path).convert('RGBA') for path in paths]
+        # APNG retains native text and color; GIF quantization can muddle fine strokes.
+        images[0].save(OUT/'motion'/f'{group}_{key}.png',save_all=True,
+                       append_images=images[1:],duration=90,loop=0,disposal=0,blend=0)
+        for im in images: im.close()
+    validation = {'screenshots':len(rows),'text_nodes':sum(len(r['text_nodes']) for r in reports),
+                  'text_issues':issues,'regression_cases':len(TOKENS),'motion_frames':frames}
+    (OUT/'validation.json').write_text(json.dumps(validation,ensure_ascii=False,indent=2),encoding='utf-8')
+    template = '''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>远征 · 六块界面精修</title>
+<style>
+*{box-sizing:border-box}body{margin:0;color:#ebe4d3;background:#111b23;font:16px/1.8 system-ui,sans-serif}main{max-width:1240px;margin:auto;padding:40px 24px}header{max-width:850px;margin-bottom:32px}h1{font-size:38px;font-weight:500;letter-spacing:2px;margin:8px 0 12px}h2{font-size:24px;font-weight:500;margin:32px 0 18px}p{color:#aebec3;margin:0 0 18px}small{color:#ceb382}a{color:#e3c892;text-decoration:none}nav{display:flex;gap:10px;flex-wrap:wrap}nav a{border:1px solid #42545d;border-radius:24px;padding:6px 16px}.blocks{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.block{padding:18px;background:#20313b;border:1px solid #344953;border-top:2px solid #9d8967;border-radius:4px}.block b{display:block;font-size:18px;font-weight:500;margin-bottom:7px}.block p{font-size:14px;margin:0}.compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:980px}.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.motions{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}figure{margin:0;background:#20313b;border:1px solid #354a54;border-radius:5px;overflow:hidden}figure img{display:block;width:100%;height:auto;cursor:zoom-in}figcaption{padding:9px 12px;font-size:14px;color:#c8d2d0}form{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}select,input,button{font:inherit;border:1px solid #526973;background:#21353f;color:#e8e6d9;padding:7px 12px;border-radius:4px}button{cursor:pointer}label{color:#c5d0cf}details{border:1px solid #344953;background:#172731;margin:16px 0;padding:14px 18px}summary{cursor:pointer;color:#dbc28f}table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}td,th{border-bottom:1px solid #354953;padding:12px 8px;text-align:left}th{color:#dbc28f;font-weight:500}footer{font-size:14px;color:#95a9b1;border-top:1px solid #344953;padding-top:22px;margin-top:32px}dialog{background:#14242e;color:#e9dfc9;border:1px solid #b6a177;padding:14px;max-width:96vw;max-height:95vh}dialog::backdrop{background:#071018ee}.toolbar{display:flex;justify-content:space-between;gap:20px;padding-bottom:12px}.view{max-height:81vh;max-width:92vw;overflow:auto}.view img{display:block;max-width:none;width:auto;height:auto}
+@media(max-width:850px){.gallery,.motions{grid-template-columns:repeat(2,1fr)}.blocks{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){main{padding:24px 16px}h1{font-size:30px}.blocks,.compare{grid-template-columns:1fr}.gallery,.motions{gap:10px}input{width:100%}}
+</style><main><header><small>昭元行旅录 / 界面精修</small><h1>让器物、人物和行动各有位置。</h1><p>从七张参考图提炼视觉焦点、功能轮廓、卡片层次与动作反馈，按六块落实到《远征》的像素风格。以下全部来自游戏原生运行，点击图片可按原尺寸查看。</p><nav><a href="#plan">分块方案</a><a href="#compare">修改前后</a><a href="#motion">真实动效</a><a href="#pages">逐页截图</a></nav></header>
+<h2 id="plan">六块改造</h2><div class="blocks">
+<div class="block"><b>01 · 图标与材质</b><p>地图、皮包、生长枝、双剑、晶核、天平各有轮廓；圆章、盾牌和六边章分开使用。</p></div>
+<div class="block"><b>02 · 行旅营帐</b><p>背景保留清晰像素；任务用册页，活动用布签，人物名和主操作用艺术字；导航留出开放边界。</p></div>
+<div class="block"><b>03 · 行旅背包</b><p>深色装备陈列与浅色详情页；装备图放大，品质亮边、选中切角和状态更清楚。</p></div>
+<div class="block"><b>04 · 人物养成</b><p>角色居中，六条养成线以不同器物和徽章环绕；摘要显示实际强化、天赋与灵宠进度。</p></div>
+<div class="block"><b>05 · 召唤与图鉴</b><p>召唤有主打灵宠、符环和四列奖池；图鉴用册页、开放圆环与真实剪影，翻页标记不再压住文字。</p></div>
+<div class="block"><b>06 · 公共控件与反馈</b><p>按用途选择八类材质；改善高光、接触阴影、悬停和按下反馈；保留领取与解锁的成功光效。</p></div></div>
+<details><summary>参考图带来的启发与现有问题</summary><table><tr><th>参考设计</th><th>当前差距</th><th>实施方法</th></tr><tr><td>皇室战争：大图、品质框、选中操作</td><td>物品图小，内容与容器同样平</td><td>放大装备与主打灵宠，深浅分层，品质边沿</td></tr><tr><td>王者荣耀：主体与主动作优先</td><td>背景与入口同时抢眼</td><td>局部压暗，艺术字主操作，开放导航</td></tr><tr><td>狐系角色主页：人物中心与独立道具</td><td>图标复用，侧边功能辨识弱</td><td>器物图标与多种徽章，人物两侧组织养成</td></tr><tr><td>棕黑英雄详情：衬线字、细线与圆环</td><td>框中框多，图片与文字竞争</td><td>图鉴减少厚框，分开展示主体和解锁条件</td></tr><tr><td>NIKKE：主动作与辅助入口各有形态</td><td>许多按钮只换文字，形状相同</td><td>区分纸页、布签、金属主动作和无框导航</td></tr></table><p style="margin:16px 0 0">像素角色和装备仍沿用现有素材，原画精度是后续可继续提升的一块。本轮没有用模糊、噪点或拉伸伪造细节。</p></details>
+<h2 id="compare">前后对照</h2><form onsubmit="return false"><label>模块 <select id="module"><option value="home">行旅营帐</option><option value="bag">行旅背包</option><option value="growth">人物养成</option><option value="gacha">灵宠召唤</option><option value="codex">灵宠图鉴</option><option value="quests">任务</option><option value="title">开始菜单</option><option value="login">旅人登记</option></select></label><label>比例 <select id="compareSize"><option>480x800</option><option>480x1067</option></select></label></form><div class="compare" id="comparison"></div>
+<h2 id="motion">动效与反馈</h2><p>全彩动画保留原始文字与像素边缘。稀有单抽演出为测试样例，正式抽取概率未修改。</p><div class="motions">__MOTION__</div>
+<h2 id="pages">逐页检查</h2><form onsubmit="return false"><label>比例 <select id="size"><option>480x800</option><option>480x1067</option></select></label><input id="search" placeholder="搜索页面，如背包、技能、城内"><small id="count"></small></form><div class="gallery" id="gallery"></div><footer>__CHECKS__ · 所有截图和演出使用隔离的测试存档。</footer></main>
+<dialog id="zoom"><div class="toolbar"><span>原尺寸查看 · 可滚动</span><button onclick="zoom.close()">关闭</button></div><div class="view"><img id="full" alt="原生游戏画面"></div></dialog>
+<script>const rows=__DATA__;const labels=__LABELS__;const zoom=document.querySelector('#zoom');document.addEventListener('click',e=>{if(e.target.matches('figure img')){document.querySelector('#full').src=e.target.src;zoom.showModal()}if(e.target===zoom)zoom.close()});function figure(src,title){const f=document.createElement('figure'),i=document.createElement('img'),c=document.createElement('figcaption');i.src=src;i.alt=title;i.loading='lazy';c.textContent=title;f.append(i,c);return f}function compare(){const key=document.querySelector('#module').value,size=document.querySelector('#compareSize').value,area=document.querySelector('#comparison');area.replaceChildren(figure('before/'+size+'/'+key+'.png',labels[key]+' · 修改前'),figure('after/'+size+'/'+key+'.png',labels[key]+' · 修改后'))}function gallery(){const items=rows.filter(x=>x.size===document.querySelector('#size').value&&x.title.includes(document.querySelector('#search').value)),area=document.querySelector('#gallery');area.replaceChildren(...items.map(x=>figure(x.src,x.title)));document.querySelector('#count').textContent=items.length+' 张'}document.querySelector('#module').onchange=compare;document.querySelector('#compareSize').onchange=compare;document.querySelector('#size').onchange=gallery;document.querySelector('#search').oninput=gallery;compare();gallery();</script></html>'''
+    template=template.replace('__MOTION__',''.join(figure(f'motion/{group}_{key}.png',title) for group,key,title in MOTION))
+    template=template.replace('__CHECKS__',f'{len(rows)} 张原生截图 · {len(TOKENS)} 项相关回归通过 · {validation["text_nodes"]} 个文字节点检查')
+    template=template.replace('__DATA__',json.dumps(rows,ensure_ascii=False).replace('</','<\\/')).replace('__LABELS__',json.dumps(LABELS,ensure_ascii=False))
+    (OUT/'index.html').write_text(template,encoding='utf-8')
+    print('UI_DESIGN_REVIEW_OK',validation)
+
+if __name__=='__main__': main()

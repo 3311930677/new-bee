@@ -1,0 +1,2158 @@
+{
+	"bag": {
+		"containers": 16,
+		"controls": 41,
+		"nodes": [
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					1.0,
+					1.0
+				],
+				"class": "Control",
+				"container": false,
+				"focus": 0,
+				"path": ".",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme_attached": true,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Control",
+				"container": false,
+				"focus": 0,
+				"path": "Veil",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "ColorRect",
+				"container": false,
+				"focus": 0,
+				"path": "Veil/@ColorRect@63",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Control",
+				"container": false,
+				"focus": 0,
+				"path": "Veil/Atmosphere",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "Veil/@TextureRect@64",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "Veil/@TextureRect@65",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					1.0,
+					1.0
+				],
+				"class": "CenterContainer",
+				"container": true,
+				"focus": 0,
+				"path": "InventoryFrameLayout",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "PanelContainer",
+				"container": true,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow",
+				"rect": [
+					16.0,
+					24.0,
+					448.0,
+					752.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": "BagWindow"
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "VBoxContainer",
+				"container": true,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent",
+				"rect": [
+					30.0,
+					38.0,
+					420.0,
+					724.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "HBoxContainer",
+				"container": true,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/@HBoxContainer@66",
+				"rect": [
+					30.0,
+					38.0,
+					420.0,
+					72.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/@HBoxContainer@66/@TextureRect@67",
+				"rect": [
+					30.0,
+					57.0,
+					34.0,
+					34.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "VBoxContainer",
+				"container": true,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/@HBoxContainer@66/@VBoxContainer@68",
+				"rect": [
+					72.0,
+					38.0,
+					326.0,
+					72.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/@HBoxContainer@66/@VBoxContainer@68/@Label@69",
+				"rect": [
+					72.0,
+					38.0,
+					326.0,
+					50.0
+				],
+				"text": "行旅背包",
+				"theme_attached": false,
+				"variation": "BagTitle"
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/@HBoxContainer@66/@VBoxContainer@68/@Label@70",
+				"rect": [
+					72.0,
+					88.0,
+					326.0,
+					22.0
+				],
+				"text": "整备随身器物 · 保管沿途收获",
+				"theme_attached": false,
+				"variation": "BagMuted"
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Button",
+				"container": false,
+				"focus": 2,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/@HBoxContainer@66/CloseInventory",
+				"rect": [
+					406.0,
+					38.0,
+					44.0,
+					72.0
+				],
+				"text": "×",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "HBoxContainer",
+				"container": true,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/InventorySummary",
+				"rect": [
+					30.0,
+					118.0,
+					420.0,
+					28.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/InventorySummary/Capacity",
+				"rect": [
+					30.0,
+					121.0,
+					369.0,
+					22.0
+				],
+				"text": "已用 0/60",
+				"theme_attached": false,
+				"variation": "BagMuted"
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/InventorySummary/@Label@71",
+				"rect": [
+					407.0,
+					121.0,
+					1.0,
+					22.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": "BagMuted"
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/InventorySummary/@TextureRect@72",
+				"rect": [
+					416.0,
+					118.0,
+					18.0,
+					28.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/InventorySummary/GoldBalance",
+				"rect": [
+					442.0,
+					121.0,
+					8.0,
+					22.0
+				],
+				"text": "0",
+				"theme_attached": false,
+				"variation": "BagMuted"
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "HBoxContainer",
+				"container": true,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/Categories",
+				"rect": [
+					30.0,
+					154.0,
+					420.0,
+					44.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Button",
+				"container": false,
+				"focus": 2,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/Categories/Tab_equip",
+				"rect": [
+					30.0,
+					154.0,
+					102.0,
+					44.0
+				],
+				"text": "装备",
+				"theme_attached": false,
+				"variation": "BagSelectedTab"
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Button",
+				"container": false,
+				"focus": 2,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/Categories/Tab_mat",
+				"rect": [
+					136.0,
+					154.0,
+					102.0,
+					44.0
+				],
+				"text": "材料",
+				"theme_attached": false,
+				"variation": "BagTab"
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Button",
+				"container": false,
+				"focus": 2,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/Categories/Tab_gem",
+				"rect": [
+					242.0,
+					154.0,
+					102.0,
+					44.0
+				],
+				"text": "宝石",
+				"theme_attached": false,
+				"variation": "BagTab"
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Button",
+				"container": false,
+				"focus": 2,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/Categories/Tab_pending",
+				"rect": [
+					348.0,
+					154.0,
+					102.0,
+					44.0
+				],
+				"text": "待领取",
+				"theme_attached": false,
+				"variation": "BagTab"
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "VBoxContainer",
+				"container": true,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination",
+				"rect": [
+					30.0,
+					206.0,
+					420.0,
+					260.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "ScrollContainer",
+				"container": true,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll",
+				"rect": [
+					30.0,
+					206.0,
+					420.0,
+					260.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "CenterContainer",
+				"container": true,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@CenterContainer@76",
+				"rect": [
+					30.0,
+					206.0,
+					420.0,
+					260.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "VBoxContainer",
+				"container": true,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@CenterContainer@76/@VBoxContainer@77",
+				"rect": [
+					100.0,
+					279.0,
+					280.0,
+					113.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@CenterContainer@76/@VBoxContainer@77/@TextureRect@78",
+				"rect": [
+					216.0,
+					279.0,
+					48.0,
+					48.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@CenterContainer@76/@VBoxContainer@77/@Label@79",
+				"rect": [
+					100.0,
+					335.0,
+					280.0,
+					27.0
+				],
+				"text": "背包里没有装备",
+				"theme_attached": false,
+				"variation": "BagItemTitle"
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@CenterContainer@76/@VBoxContainer@77/@Label@80",
+				"rect": [
+					100.0,
+					370.0,
+					280.0,
+					22.0
+				],
+				"text": "沿途掉落会自动入包，满包后存入待领取箱。",
+				"theme_attached": false,
+				"variation": "BagMuted"
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "PanelContainer",
+				"container": true,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail",
+				"rect": [
+					30.0,
+					474.0,
+					420.0,
+					236.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": "BagDetail"
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "VBoxContainer",
+				"container": true,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@81",
+				"rect": [
+					40.0,
+					484.0,
+					400.0,
+					216.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "ScrollContainer",
+				"container": true,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@81/DetailScroll",
+				"rect": [
+					40.0,
+					484.0,
+					400.0,
+					216.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "VBoxContainer",
+				"container": true,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@81/DetailScroll/@VBoxContainer@84",
+				"rect": [
+					40.0,
+					484.0,
+					400.0,
+					55.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@81/DetailScroll/@VBoxContainer@84/@Label@85",
+				"rect": [
+					40.0,
+					484.0,
+					400.0,
+					27.0
+				],
+				"text": "选中一件装备查看详情与比较",
+				"theme_attached": false,
+				"variation": "BagItemTitle"
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@81/DetailScroll/@VBoxContainer@84/@Label@86",
+				"rect": [
+					40.0,
+					517.0,
+					400.0,
+					22.0
+				],
+				"text": "品质从高到低排列；装备后可在养成中强化与镶嵌。",
+				"theme_attached": false,
+				"variation": "BagMuted"
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "HBoxContainer",
+				"container": true,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/InventoryFooter",
+				"rect": [
+					30.0,
+					718.0,
+					420.0,
+					44.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/InventoryFooter/@Label@73",
+				"rect": [
+					30.0,
+					729.0,
+					308.0,
+					22.0
+				],
+				"text": "材料与宝石不占背包格",
+				"theme_attached": false,
+				"variation": "BagMuted"
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Button",
+				"container": false,
+				"focus": 2,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/InventoryFooter/ReturnButton",
+				"rect": [
+					346.0,
+					718.0,
+					104.0,
+					44.0
+				],
+				"text": "返回",
+				"theme_attached": false,
+				"variation": ""
+			}
+		],
+		"themes": 1
+	},
+	"home": {
+		"containers": 1,
+		"controls": 61,
+		"nodes": [
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					1.0,
+					1.0
+				],
+				"class": "Control",
+				"container": false,
+				"focus": 0,
+				"path": ".",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme_attached": true,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "PageBackground",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "ColorRect",
+				"container": false,
+				"focus": 0,
+				"path": "BackgroundShade",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Control",
+				"container": false,
+				"focus": 0,
+				"path": "SceneryMotion",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Control",
+				"container": false,
+				"focus": 0,
+				"path": "DisplayAtmosphere",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Panel",
+				"container": false,
+				"focus": 0,
+				"path": "@Panel@2",
+				"rect": [
+					24.0,
+					24.0,
+					48.0,
+					48.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "@Panel@2/@TextureRect@3",
+				"rect": [
+					29.0,
+					29.0,
+					38.0,
+					38.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "@Label@4",
+				"rect": [
+					84.0,
+					20.0,
+					248.0,
+					30.0
+				],
+				"text": "旅人",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "@Label@5",
+				"rect": [
+					84.0,
+					48.0,
+					64.0,
+					24.0
+				],
+				"text": "LV 12",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "ColorRect",
+				"container": false,
+				"focus": 0,
+				"path": "@ColorRect@6",
+				"rect": [
+					150.0,
+					58.0,
+					116.0,
+					4.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "ColorRect",
+				"container": false,
+				"focus": 0,
+				"path": "@ColorRect@6/@ColorRect@7",
+				"rect": [
+					150.0,
+					58.0,
+					0.0,
+					4.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Control",
+				"container": false,
+				"focus": 2,
+				"path": "@Control@10",
+				"rect": [
+					404.0,
+					24.0,
+					52.0,
+					48.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@10/@Label@8",
+				"rect": [
+					420.0,
+					24.0,
+					20.0,
+					48.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@10/@TextureRect@9",
+				"rect": [
+					419.0,
+					37.0,
+					22.0,
+					22.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Control",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@11",
+				"rect": [
+					24.0,
+					86.0,
+					432.0,
+					44.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "HBoxContainer",
+				"container": true,
+				"focus": 0,
+				"path": "@HBoxContainer@12",
+				"rect": [
+					32.0,
+					86.0,
+					416.0,
+					44.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "@HBoxContainer@12/@TextureRect@13",
+				"rect": [
+					32.0,
+					99.0,
+					18.0,
+					18.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "@HBoxContainer@12/@Label@15",
+				"rect": [
+					50.0,
+					86.0,
+					86.0,
+					44.0
+				],
+				"text": "0",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "@HBoxContainer@12/@TextureRect@16",
+				"rect": [
+					136.0,
+					99.0,
+					18.0,
+					18.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "@HBoxContainer@12/@Label@18",
+				"rect": [
+					154.0,
+					86.0,
+					86.0,
+					44.0
+				],
+				"text": "0",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "@HBoxContainer@12/@TextureRect@19",
+				"rect": [
+					240.0,
+					99.0,
+					18.0,
+					18.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "@HBoxContainer@12/@Label@21",
+				"rect": [
+					258.0,
+					86.0,
+					86.0,
+					44.0
+				],
+				"text": "0",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "@HBoxContainer@12/@TextureRect@22",
+				"rect": [
+					344.0,
+					99.0,
+					18.0,
+					18.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "@HBoxContainer@12/@Label@24",
+				"rect": [
+					362.0,
+					86.0,
+					86.0,
+					44.0
+				],
+				"text": "0",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "@Label@25",
+				"rect": [
+					26.0,
+					132.0,
+					220.0,
+					39.0
+				],
+				"text": "行旅营帐",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Control",
+				"container": false,
+				"focus": 2,
+				"path": "@Control@29",
+				"rect": [
+					24.0,
+					176.0,
+					212.0,
+					70.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@29/@Label@26",
+				"rect": [
+					66.0,
+					180.0,
+					154.0,
+					30.0
+				],
+				"text": "任务",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@29/@TextureRect@27",
+				"rect": [
+					36.0,
+					185.0,
+					23.0,
+					23.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@29/@Label@28",
+				"rect": [
+					38.0,
+					210.0,
+					184.0,
+					30.0
+				],
+				"text": "与边城执事闻叔交谈",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Control",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@32",
+				"rect": [
+					142.0,
+					540.0,
+					196.0,
+					58.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@32/@Label@33",
+				"rect": [
+					150.0,
+					542.0,
+					180.0,
+					33.0
+				],
+				"text": "破军",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@32/@Label@34",
+				"rect": [
+					150.0,
+					570.0,
+					180.0,
+					23.0
+				],
+				"text": "战士 · LV 12",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Control",
+				"container": false,
+				"focus": 2,
+				"path": "ActivitiesEntry",
+				"rect": [
+					24.0,
+					264.0,
+					124.0,
+					48.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "ActivitiesEntry/@Label@35",
+				"rect": [
+					40.0,
+					264.0,
+					92.0,
+					48.0
+				],
+				"text": "活动",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Control",
+				"container": false,
+				"focus": 2,
+				"path": "@Control@38",
+				"rect": [
+					388.0,
+					262.0,
+					68.0,
+					78.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@38/@Label@36",
+				"rect": [
+					388.0,
+					318.0,
+					68.0,
+					23.0
+				],
+				"text": "竞技",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@38/@TextureRect@37",
+				"rect": [
+					405.0,
+					272.0,
+					34.0,
+					34.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Control",
+				"container": false,
+				"focus": 2,
+				"path": "@Control@41",
+				"rect": [
+					388.0,
+					348.0,
+					68.0,
+					78.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@41/@Label@39",
+				"rect": [
+					388.0,
+					404.0,
+					68.0,
+					23.0
+				],
+				"text": "召唤",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@41/@TextureRect@40",
+				"rect": [
+					405.0,
+					358.0,
+					34.0,
+					34.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Control",
+				"container": false,
+				"focus": 2,
+				"path": "@Control@44",
+				"rect": [
+					388.0,
+					434.0,
+					68.0,
+					78.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@44/@Label@42",
+				"rect": [
+					388.0,
+					490.0,
+					68.0,
+					23.0
+				],
+				"text": "兑换",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@44/@TextureRect@43",
+				"rect": [
+					405.0,
+					444.0,
+					34.0,
+					34.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Control",
+				"container": false,
+				"focus": 2,
+				"path": "ReturnToWorld",
+				"rect": [
+					32.0,
+					622.0,
+					416.0,
+					70.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "ReturnToWorld/@Label@45",
+				"rect": [
+					96.0,
+					628.0,
+					286.0,
+					37.0
+				],
+				"text": "继续旅程",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "ReturnToWorld/@Label@46",
+				"rect": [
+					96.0,
+					663.0,
+					286.0,
+					23.0
+				],
+				"text": "昭元边城",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "ReturnToWorld/@TextureRect@47",
+				"rect": [
+					53.0,
+					639.0,
+					34.0,
+					34.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "ReturnToWorld/@TextureRect@48",
+				"rect": [
+					411.0,
+					649.0,
+					16.0,
+					16.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Control",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@49",
+				"rect": [
+					12.0,
+					712.0,
+					456.0,
+					76.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Control",
+				"container": false,
+				"focus": 2,
+				"path": "@Control@52",
+				"rect": [
+					16.0,
+					714.0,
+					112.0,
+					72.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@52/@Label@50",
+				"rect": [
+					16.0,
+					760.0,
+					112.0,
+					24.0
+				],
+				"text": "世界",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@52/@TextureRect@51",
+				"rect": [
+					53.0,
+					721.0,
+					38.0,
+					38.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Control",
+				"container": false,
+				"focus": 2,
+				"path": "@Control@55",
+				"rect": [
+					128.0,
+					714.0,
+					112.0,
+					72.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@55/@Label@53",
+				"rect": [
+					128.0,
+					760.0,
+					112.0,
+					24.0
+				],
+				"text": "背包",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@55/@TextureRect@54",
+				"rect": [
+					165.0,
+					721.0,
+					38.0,
+					38.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Control",
+				"container": false,
+				"focus": 2,
+				"path": "@Control@58",
+				"rect": [
+					240.0,
+					714.0,
+					112.0,
+					72.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@58/@Label@56",
+				"rect": [
+					240.0,
+					760.0,
+					112.0,
+					24.0
+				],
+				"text": "养成",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@58/@TextureRect@57",
+				"rect": [
+					277.0,
+					721.0,
+					38.0,
+					38.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Control",
+				"container": false,
+				"focus": 2,
+				"path": "@Control@61",
+				"rect": [
+					352.0,
+					714.0,
+					112.0,
+					72.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "Label",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@61/@Label@59",
+				"rect": [
+					352.0,
+					760.0,
+					112.0,
+					24.0
+				],
+				"text": "图鉴",
+				"theme_attached": false,
+				"variation": ""
+			},
+			{
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"class": "TextureRect",
+				"container": false,
+				"focus": 0,
+				"path": "@Control@61/@TextureRect@60",
+				"rect": [
+					389.0,
+					721.0,
+					38.0,
+					38.0
+				],
+				"text": "",
+				"theme_attached": false,
+				"variation": ""
+			}
+		],
+		"themes": 1
+	}
+}

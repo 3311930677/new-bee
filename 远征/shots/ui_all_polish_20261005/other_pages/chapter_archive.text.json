@@ -1,0 +1,376 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 54.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@Panel@7/@Label@6",
+			"rect_height": 54.0,
+			"size": 37,
+			"text": "地区行路图"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Label@10",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "沿路牌前往相邻地区"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@PanelContainer@16/@Label@15",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "昭元边城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@Label@17",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv1–12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@PanelContainer@19/@Label@18",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "枫林古道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@Label@20",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv1–8"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@PanelContainer@22/@Label@21",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "断碑坡"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@Label@23",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv6–12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@PanelContainer@25/@Label@24",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "失声碑窟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@Label@26",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv9–14"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@PanelContainer@28/@Label@27",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "旧盐道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@Label@29",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv10–16"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@PanelContainer@31/@Label@30",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "沉渊港"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@Label@32",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv10–18"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@PanelContainer@34/@Label@33",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "潮痕滩"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@Label@35",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv13–20"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@PanelContainer@37/@Label@36",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "退潮水闸"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@Label@38",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv16–23"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@PanelContainer@40/@Label@39",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "赤砂商路"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@Label@41",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv20–28"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@PanelContainer@43/@Label@42",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "霜关驿"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@Label@44",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv22–32"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@PanelContainer@46/@Label@45",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "裂谷矿道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@Label@47",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv24–34"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@PanelContainer@49/@Label@48",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "裂谷矿脉"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@Label@50",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv26–36"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@PanelContainer@52/@Label@51",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "霜林栈道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@Label@53",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv26–36"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@PanelContainer@55/@Label@54",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "冰隘"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@Label@56",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv26–40"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@PanelContainer@58/@Label@57",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "渊口外环"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@Label@59",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv43–49"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@PanelContainer@61/@Label@60",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "归路门厅"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@Label@62",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv49–50"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@PanelContainer@64/@Label@63",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "三声共鸣廊"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@Label@65",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv50–53"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@PanelContainer@67/@Label@66",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "碑心"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@ScrollContainer@13/@Control@14/@Label@68",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv53–57"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Label@69",
+			"rect_height": 28.0,
+			"size": 17,
+			"text": "当前位置 · 昭元边城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Label@70",
+			"rect_height": 50.0,
+			"size": 15,
+			"text": "图志新录 · 归路碑。\n石头锻稳铁扣，北路已经重新通行。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@PanelContainer@72/@Label@71",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "返回"
+		}
+	]
+}

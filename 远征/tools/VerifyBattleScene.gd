@@ -129,6 +129,11 @@ func _run_classic_commands() -> bool:
 			var tile := Rect2(root.position, Vector2(BattleScene.CLASSIC_CMD_W,
 				BattleScene.CLASSIC_CMD_H))
 			ok = ok and not tile.intersects(sprite_rect) and not tile.intersects(bars_rect)
+			# Imported icon dimensions must not override the intended touch layout.
+			for child in root.get_children():
+				if child is TextureRect:
+					ok = ok and Rect2(Vector2.ZERO,root.size).encloses(child.get_rect())
+					ok = ok and child.texture is AtlasTexture and child.size.x<=50
 			for other in tiles:
 				ok = ok and not tile.intersects(other)
 			tiles.append(tile)
@@ -171,6 +176,23 @@ func _run_classic_commands() -> bool:
 		var row_text := " ".join(_texts(scene._page_panel.get_child(0)))
 		ok = ok and row_text.contains("Lv") and row_text.contains("耗") \
 			and row_text.contains("冷") and row_text.contains("单体")
+		role.energy = 0
+		var sid := String((role.skills[0] as Dictionary).def.get("id",""))
+		var queued := scene.sim.cast_queue.size()
+		scene._cast_command_skill(sid)
+		ok = ok and scene.sim.cast_queue.size()==queued and scene._page_panel.visible
+		ok = ok and scene._cast_tip.text.contains("能量不足")
+		role.energy = Combatant.MAX_ENERGY
+		role.skills[0].cd_left = 60
+		scene._refresh_hud()
+		var detail: Label = scene._page_panel.get_child(0).get_node("DetailText")
+		ok = ok and detail.text.contains("2.0s")
+		scene._cast_command_skill(sid)
+		ok = ok and scene.sim.cast_queue.size()==queued and scene._page_panel.visible
+		ok = ok and scene._cast_tip.text.contains("冷却中")
+		role.skills[0].cd_left = 0
+		scene._refresh_hud()
+		ok = ok and scene._page_energy_l.text.contains(str(Combatant.MAX_ENERGY))
 	scene._close_page()
 	ok = ok and not scene._page_panel.visible
 	scene._show_command_skills()

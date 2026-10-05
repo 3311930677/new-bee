@@ -1,0 +1,214 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 50.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/@HBoxContainer@6/@VBoxContainer@8/@Label@9",
+			"rect_height": 50.0,
+			"size": 34,
+			"text": "行旅背包"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/@HBoxContainer@6/@VBoxContainer@8/@Label@10",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "整备随身器物 · 保管沿途收获"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/@HBoxContainer@6/CloseInventory",
+			"rect_height": 72.0,
+			"size": 15,
+			"text": "×"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/InventorySummary/Capacity",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "已用 0/60"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/InventorySummary/@Label@11",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/InventorySummary/GoldBalance",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "12800"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/Categories/Tab_equip",
+			"rect_height": 44.0,
+			"size": 18,
+			"text": "装备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/Categories/Tab_mat",
+			"rect_height": 44.0,
+			"size": 18,
+			"text": "材料"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/Categories/Tab_gem",
+			"rect_height": 44.0,
+			"size": 18,
+			"text": "宝石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/Categories/Tab_pending",
+			"rect_height": 44.0,
+			"size": 18,
+			"text": "待领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@16/@PanelContainer@17/@HBoxContainer@18/@VBoxContainer@20/@Label@21",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "霜关来信"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@16/@PanelContainer@17/@HBoxContainer@18/@VBoxContainer@20/@Label@22",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "行旅材料 · 可堆叠"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@16/@PanelContainer@17/@HBoxContainer@18/@Label@23",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "×1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@16/@PanelContainer@24/@HBoxContainer@25/@VBoxContainer@27/@Label@28",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "矿道记录"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@16/@PanelContainer@24/@HBoxContainer@25/@VBoxContainer@27/@Label@29",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "行旅材料 · 可堆叠"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@16/@PanelContainer@24/@HBoxContainer@25/@Label@30",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "×1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@16/@PanelContainer@31/@HBoxContainer@32/@VBoxContainer@34/@Label@35",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "扫荡券"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@16/@PanelContainer@31/@HBoxContainer@32/@VBoxContainer@34/@Label@36",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "行旅材料 · 可堆叠"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/@VBoxContainer@16/@PanelContainer@31/@HBoxContainer@32/@Label@37",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "×1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@38/DetailScroll/@VBoxContainer@41/@Label@42",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "材料加工"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@38/DetailScroll/@VBoxContainer@41/@Label@43",
+			"rect_height": 47.0,
+			"size": 14,
+			"text": "强化、精炼等加工操作位于养成 → 装备。材料可堆叠，不占装备格。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/InventoryFooter/@Label@13",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "材料与宝石不占背包格"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/InventoryFrameLayout/InventoryWindow/InventoryContent/InventoryFooter/ReturnButton",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "返回"
+		}
+	]
+}

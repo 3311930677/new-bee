@@ -1,0 +1,57 @@
+[
+  {
+    "name": "VerifyAvatar",
+    "passed": true,
+    "result": "AVATAR_OK all tests passed"
+  },
+  {
+    "name": "VerifyBattleScene",
+    "passed": true,
+    "result": "BATTLE_SCENE_OK all tests passed"
+  },
+  {
+    "name": "VerifyCity",
+    "passed": true,
+    "result": "CITY_OK all tests passed"
+  },
+  {
+    "name": "VerifyGacha",
+    "passed": true,
+    "result": "GACHA_OK all tests passed"
+  },
+  {
+    "name": "VerifyGameHome",
+    "passed": true,
+    "result": "GAME_HOME_OK all tests passed"
+  },
+  {
+    "name": "VerifyGrowth",
+    "passed": true,
+    "result": "GROWTH_OK all tests passed"
+  },
+  {
+    "name": "VerifyNav",
+    "passed": true,
+    "result": "NAV_OK all tests passed"
+  },
+  {
+    "name": "VerifyPanels",
+    "passed": true,
+    "result": "PANELS_OK all tests passed"
+  },
+  {
+    "name": "VerifyUiLayout",
+    "passed": true,
+    "result": "UI_LAYOUT_OK all tests passed"
+  },
+  {
+    "name": "VerifyVisualRefresh",
+    "passed": true,
+    "result": "VISUAL_REFRESH_OK"
+  },
+  {
+    "name": "VerifyWorkshop",
+    "passed": true,
+    "result": "WORKSHOP_OK"
+  }
+]

@@ -56,8 +56,10 @@ static func paper(item: CanvasItem, sz: Vector2) -> void:
 	var large := sz.x >= 300 and sz.y >= 120
 	var bounds := Rect2(Vector2.ZERO, sz)
 	item.draw_rect(Rect2(Vector2(0, 4), sz), Color("090d13", 0.34))
-	item.draw_rect(bounds, c.dark)
+	item.draw_colored_polygon(G.octagon_path(sz,0,5 if large else 2),c.dark)
 	item.draw_rect(bounds.grow(-3 if large else -1), c.paper)
+	item.draw_line(Vector2(8,3),Vector2(sz.x-8,3),c.paper.lightened(.12),1)
+	item.draw_line(Vector2(8,sz.y-3),Vector2(sz.x-8,sz.y-3),c.paper.darkened(.13),1)
 	if not large:
 		item.draw_line(Vector2(1, 1), Vector2(sz.x-1, 1), c.paper.lightened(0.12))
 		return
@@ -80,7 +82,11 @@ static func paper(item: CanvasItem, sz: Vector2) -> void:
 					item.draw_colored_polygon(PackedVector2Array([leaf,leaf+Vector2(4,2)*flip,leaf+Vector2(1,5)*flip]),c.accent)
 		"arcane":
 			item.draw_rect(bounds.grow(-1),c.accent,false)
-			item.draw_rect(bounds.grow(-7),Color(c.accent,0.42),false)
+			# Open corner fittings leave the illustration and text room to breathe.
+			for x in [8.0,sz.x-8]:
+				var dir := 1.0 if x<sz.x*.5 else -1.0
+				item.draw_line(Vector2(x,8),Vector2(x+18*dir,8),Color(c.accent,.60))
+				item.draw_line(Vector2(x,8),Vector2(x,23),Color(c.accent,.60))
 			for p in [Vector2(8,8),Vector2(sz.x-8,8),Vector2(8,sz.y-8),Vector2(sz.x-8,sz.y-8)]:
 				diamond(item,p,5,c.dark)
 				diamond(item,p,2,c.light)
@@ -98,7 +104,7 @@ static func paper(item: CanvasItem, sz: Vector2) -> void:
 				item.draw_line(Vector2(16,y),Vector2(sz.x-16,y),c.accent)
 		"market":
 			item.draw_rect(bounds.grow(-1),c.accent,false)
-			for y in range(12,int(sz.y-10),9):
+			for y in range(12,int(sz.y-10),18):
 				item.draw_line(Vector2(5,y),Vector2(5,y+3),c.light)
 				item.draw_line(Vector2(sz.x-5,y),Vector2(sz.x-5,y+3),c.light)
 		"quiet":

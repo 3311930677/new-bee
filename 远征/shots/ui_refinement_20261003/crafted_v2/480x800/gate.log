@@ -1,0 +1,87 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 Core Profile Context 23.20.60.03.240314 - Compatibility - Using Device: ATI Technologies Inc. - AMD Radeon 780M Graphics
+
+SHOT_SAVED D:\new-bee\远征\shots\ui_refinement_20261003\crafted_v2\480x800\gate.png
+ERROR: 1 RID allocations of type 'N5GLES37TextureE' were leaked at exit.
+ERROR: 1 RID allocations of type 'PN18TextServerAdvanced12FontAdvancedE' were leaked at exit.
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+ERROR: 存档写入失败：res://tools/_logs/save_shot_city_panel.json（临时文件写入失败：res://tools/_logs/save_shot_city_panel.json.tmp）
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:625)
+       [1] collect_pet (res://src/autoload/G.gd:2435)
+       [2] _demo_prog (res://tools/ShotRunner.gd:80)
+       [3] _city_panel_demo (res://tools/ShotRunner.gd:472)
+       [4] _setup (res://tools/ShotRunner.gd:593)
+       [5] _ready (res://tools/ShotRunner.gd:51)
+       [6] _ready (res://tools/OffscreenShotRunner.gd:29)
+ERROR: 存档写入失败：res://tools/_logs/save_shot_city_panel.json（临时文件写入失败：res://tools/_logs/save_shot_city_panel.json.tmp）
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:625)
+       [1] collect_pet (res://src/autoload/G.gd:2435)
+       [2] _demo_prog (res://tools/ShotRunner.gd:81)
+       [3] _city_panel_demo (res://tools/ShotRunner.gd:472)
+       [4] _setup (res://tools/ShotRunner.gd:593)
+       [5] _ready (res://tools/ShotRunner.gd:51)
+       [6] _ready (res://tools/OffscreenShotRunner.gd:29)
+ERROR: 存档写入失败：res://tools/_logs/save_shot_city_panel.json（临时文件写入失败：res://tools/_logs/save_shot_city_panel.json.tmp）
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:625)
+       [1] collect_pet (res://src/autoload/G.gd:2435)
+       [2] _demo_prog (res://tools/ShotRunner.gd:82)
+       [3] _city_panel_demo (res://tools/ShotRunner.gd:472)
+       [4] _setup (res://tools/ShotRunner.gd:593)
+       [5] _ready (res://tools/ShotRunner.gd:51)
+       [6] _ready (res://tools/OffscreenShotRunner.gd:29)
+ERROR: 存档写入失败：res://tools/_logs/save_shot_city_panel.json（临时文件写入失败：res://tools/_logs/save_shot_city_panel.json.tmp）
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:625)
+       [1] build (res://src/autoload/G.gd:3128)
+       [2] _city_panel_demo (res://tools/ShotRunner.gd:484)
+       [3] _setup (res://tools/ShotRunner.gd:593)
+       [4] _ready (res://tools/ShotRunner.gd:51)
+       [5] _ready (res://tools/OffscreenShotRunner.gd:29)
+ERROR: 存档写入失败：res://tools/_logs/save_shot_city_panel.json（临时文件写入失败：res://tools/_logs/save_shot_city_panel.json.tmp）
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:625)
+       [1] city_code (res://src/autoload/G.gd:3327)
+       [2] today_guests (res://src/autoload/G.gd:3364)
+       [3] _build_npcs (res://src/city/CityScene.gd:254)
+       [4] _ready (res://src/city/CityScene.gd:72)
+       [5] _attach_city_content (res://src/explore/MapScene.gd:264)
+       [6] _ready (res://src/explore/MapScene.gd:248)
+       [7] _city_panel_demo (res://tools/ShotRunner.gd:502)
+       [8] _setup (res://tools/ShotRunner.gd:593)
+       [9] _ready (res://tools/ShotRunner.gd:51)
+       [10] _ready (res://tools/OffscreenShotRunner.gd:29)
+ERROR: 存档写入失败：res://tools/_logs/save_shot_city_panel.json（临时文件写入失败：res://tools/_logs/save_shot_city_panel.json.tmp）
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:625)
+       [1] _refresh_quests (res://src/autoload/G.gd:4594)
+       [2] quest_offer (res://src/autoload/G.gd:4560)
+       [3] quest_today_text (res://src/autoload/G.gd:4716)
+       [4] _refresh_stat (res://src/city/CityScene.gd:452)
+       [5] _build_embedded_hud (res://src/city/CityScene.gd:416)
+       [6] _ready (res://src/city/CityScene.gd:73)
+       [7] _attach_city_content (res://src/explore/MapScene.gd:264)
+       [8] _ready (res://src/explore/MapScene.gd:248)
+       [9] _city_panel_demo (res://tools/ShotRunner.gd:502)
+       [10] _setup (res://tools/ShotRunner.gd:593)
+       [11] _ready (res://tools/ShotRunner.gd:51)
+       [12] _ready (res://tools/OffscreenShotRunner.gd:29)
+WARNING: 1 RID of type "Canvas" was leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2733)
+WARNING: 2 RIDs of type "CanvasItem" were leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2735)
+ERROR: Texture with GL ID of 25: leaked 6628 bytes.
+   at: ~Utilities (drivers/gles3/storage/utilities.cpp:82)
+ERROR: Parameter "RenderingServer::get_singleton()" is null.
+   at: ~CompressedTexture2D (scene/resources/compressed_texture.cpp:464)
+WARNING: 8 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

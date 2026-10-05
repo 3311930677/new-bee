@@ -1,17 +1,74 @@
 {
-  "version": 2,
+  "version": 3,
   "comment": "装备线（玩法文档 §6）：武器4系绑人物，甲/饰通用。强化每级+10%；目标+1至+3确定成功，之后成功率min(100%,0.9^目标级+本实例失败次数×15个百分点)，失败扣本次金币与强化石、不掉级，成功清零失败积累。宝石3色×5级，每件3孔；精炼洗4词条，锁定耗锁符。v2实例模板决定名称/基础/孔数，稀有度只决定展示色、回收价与掉落权重。slots[].base与基础模板base逐字段相等，以保持旧档等值迁移。",
   "slots": [
-    { "id": "sword", "name": "大剑", "kind": "weapon", "role": "zs", "icon": "slot_sword", "base": {"atk": 10} },
-    { "id": "spear", "name": "长枪", "kind": "weapon", "role": "ck", "icon": "slot_spear", "base": {"atk": 10} },
-    { "id": "staff", "name": "法杖", "kind": "weapon", "role": "fs", "icon": "slot_staff", "base": {"atk": 11} },
-    { "id": "hammer", "name": "圣锤", "kind": "weapon", "role": "fz", "icon": "slot_hammer", "base": {"atk": 9, "hp": 30} },
-    { "id": "armor", "name": "护甲", "kind": "armor", "role": "", "icon": "slot_armor", "base": {"def": 6, "hp": 50} },
-    { "id": "accessory", "name": "饰品", "kind": "accessory", "role": "", "icon": "slot_accessory", "base": {"hp": 70, "crit": 0.02} }
+    {
+      "id": "sword",
+      "name": "大剑",
+      "kind": "weapon",
+      "role": "zs",
+      "icon": "slot_sword",
+      "base": {
+        "atk": 10
+      }
+    },
+    {
+      "id": "spear",
+      "name": "长枪",
+      "kind": "weapon",
+      "role": "ck",
+      "icon": "slot_spear",
+      "base": {
+        "atk": 10
+      }
+    },
+    {
+      "id": "staff",
+      "name": "法杖",
+      "kind": "weapon",
+      "role": "fs",
+      "icon": "slot_staff",
+      "base": {
+        "atk": 11
+      }
+    },
+    {
+      "id": "hammer",
+      "name": "圣锤",
+      "kind": "weapon",
+      "role": "fz",
+      "icon": "slot_hammer",
+      "base": {
+        "atk": 9,
+        "hp": 30
+      }
+    },
+    {
+      "id": "armor",
+      "name": "护甲",
+      "kind": "armor",
+      "role": "",
+      "icon": "slot_armor",
+      "base": {
+        "def": 6,
+        "hp": 50
+      }
+    },
+    {
+      "id": "accessory",
+      "name": "饰品",
+      "kind": "accessory",
+      "role": "",
+      "icon": "slot_accessory",
+      "base": {
+        "hp": 70,
+        "crit": 0.02
+      }
+    }
   ],
   "enhance": {
     "max_level": 20,
-    "pct_per_level": 0.10,
+    "pct_per_level": 0.1,
     "success_base": 0.9,
     "guaranteed_target": 3,
     "failure_rate_bonus": 0.15,
@@ -25,9 +82,45 @@
     "sockets": 3,
     "socket_cost_gold": 200,
     "colors": [
-      { "id": "atk", "name": "攻击宝石", "stat": "atk", "icon": "gem_atk_", "values": [3, 6, 10, 15, 21] },
-      { "id": "def", "name": "防御宝石", "stat": "def", "icon": "gem_def_", "values": [2, 4, 7, 11, 16] },
-      { "id": "hp", "name": "生命宝石", "stat": "hp", "icon": "gem_hp_", "values": [25, 50, 85, 130, 190] }
+      {
+        "id": "atk",
+        "name": "攻击宝石",
+        "stat": "atk",
+        "icon": "gem_atk_",
+        "values": [
+          3,
+          6,
+          10,
+          15,
+          21
+        ]
+      },
+      {
+        "id": "def",
+        "name": "防御宝石",
+        "stat": "def",
+        "icon": "gem_def_",
+        "values": [
+          2,
+          4,
+          7,
+          11,
+          16
+        ]
+      },
+      {
+        "id": "hp",
+        "name": "生命宝石",
+        "stat": "hp",
+        "icon": "gem_hp_",
+        "values": [
+          25,
+          50,
+          85,
+          130,
+          190
+        ]
+      }
     ]
   },
   "refine": {
@@ -36,85 +129,728 @@
     "cost_item_n": 2,
     "lock_item": "lock_rune",
     "pool": [
-      {"stat": "atk_pct", "name": "攻击", "min": 0.02, "max": 0.08},
-      {"stat": "def_pct", "name": "防御", "min": 0.02, "max": 0.08},
-      {"stat": "maxhp_pct", "name": "生命", "min": 0.02, "max": 0.08},
-      {"stat": "crit_add", "name": "暴击", "min": 0.01, "max": 0.04},
-      {"stat": "spd_pct", "name": "速度", "min": 0.01, "max": 0.05}
+      {
+        "stat": "atk_pct",
+        "name": "攻击",
+        "min": 0.02,
+        "max": 0.08
+      },
+      {
+        "stat": "def_pct",
+        "name": "防御",
+        "min": 0.02,
+        "max": 0.08
+      },
+      {
+        "stat": "maxhp_pct",
+        "name": "生命",
+        "min": 0.02,
+        "max": 0.08
+      },
+      {
+        "stat": "crit_add",
+        "name": "暴击",
+        "min": 0.01,
+        "max": 0.04
+      },
+      {
+        "stat": "spd_pct",
+        "name": "速度",
+        "min": 0.01,
+        "max": 0.05
+      }
     ]
   },
-  "bag": { "capacity": 60 },
-  "merge": { "gem_merge_n": 3, "gem_merge_cost_gold": 300 },
+  "bag": {
+    "capacity": 60
+  },
+  "merge": {
+    "gem_merge_n": 3,
+    "gem_merge_cost_gold": 300
+  },
   "rarity": [
-    { "id": 1, "name": "普通", "color": "b8b8b8", "sell_mult": 1.0, "drop_weight": 60 },
-    { "id": 2, "name": "精良", "color": "6cc06c", "sell_mult": 2.0, "drop_weight": 25 },
-    { "id": 3, "name": "稀有", "color": "5aa0e0", "sell_mult": 4.0, "drop_weight": 12 },
-    { "id": 4, "name": "史诗", "color": "c070e0", "sell_mult": 8.0, "drop_weight": 3 }
+    {
+      "id": 1,
+      "name": "普通",
+      "color": "b8b8b8",
+      "sell_mult": 1.0,
+      "drop_weight": 60
+    },
+    {
+      "id": 2,
+      "name": "精良",
+      "color": "6cc06c",
+      "sell_mult": 2.0,
+      "drop_weight": 25
+    },
+    {
+      "id": 3,
+      "name": "稀有",
+      "color": "5aa0e0",
+      "sell_mult": 4.0,
+      "drop_weight": 12
+    },
+    {
+      "id": 4,
+      "name": "史诗",
+      "color": "c070e0",
+      "sell_mult": 8.0,
+      "drop_weight": 3
+    },
+    {
+      "id": 5,
+      "name": "传世",
+      "color": "e5b448",
+      "sell_mult": 1.0,
+      "drop_weight": 0
+    }
   ],
   "templates": [
-    { "id": "tpl_sword_basic", "name": "生铁大剑", "slot": "sword", "rarity": 1,
-      "icon": "slot_sword", "base": {"atk": 10}, "sockets": 3, "price": 300 },
-    { "id": "tpl_spear_basic", "name": "生铁长枪", "slot": "spear", "rarity": 1,
-      "icon": "slot_spear", "base": {"atk": 10}, "sockets": 3, "price": 300 },
-    { "id": "tpl_staff_basic", "name": "生铁法杖", "slot": "staff", "rarity": 1,
-      "icon": "slot_staff", "base": {"atk": 11}, "sockets": 3, "price": 320 },
-    { "id": "tpl_hammer_basic", "name": "生铁圣锤", "slot": "hammer", "rarity": 1,
-      "icon": "slot_hammer", "base": {"atk": 9, "hp": 30}, "sockets": 3, "price": 320 },
-    { "id": "tpl_armor_basic", "name": "皮甲", "slot": "armor", "rarity": 1,
-      "icon": "slot_armor", "base": {"def": 6, "hp": 50}, "sockets": 3, "price": 400 },
-    { "id": "tpl_accessory_basic", "name": "骨饰", "slot": "accessory", "rarity": 1,
-      "icon": "slot_accessory", "base": {"hp": 70, "crit": 0.02}, "sockets": 3, "price": 420 },
-
-    { "id": "tpl_sword_wolf", "name": "狼牙大剑", "slot": "sword", "rarity": 2,
-      "icon": "slot_sword", "base": {"atk": 14}, "sockets": 3, "price": 600 },
-    { "id": "tpl_spear_iron", "name": "精铁长枪", "slot": "spear", "rarity": 2,
-      "icon": "slot_spear", "base": {"atk": 14}, "sockets": 3, "price": 600 },
-    { "id": "tpl_staff_frost", "name": "霜纹法杖", "slot": "staff", "rarity": 2,
-      "icon": "slot_staff", "base": {"atk": 15}, "sockets": 3, "price": 640 },
-    { "id": "tpl_hammer_dawn", "name": "晨光圣锤", "slot": "hammer", "rarity": 2,
-      "icon": "slot_hammer", "base": {"atk": 13, "hp": 40}, "sockets": 3, "price": 640 },
-    { "id": "tpl_armor_scale", "name": "鳞甲", "slot": "armor", "rarity": 2,
-      "icon": "slot_armor", "base": {"def": 9, "hp": 75}, "sockets": 3, "price": 700 },
-    { "id": "tpl_accessory_moon", "name": "月纹坠饰", "slot": "accessory", "rarity": 2,
-      "icon": "slot_accessory", "base": {"hp": 100, "crit": 0.03}, "sockets": 3, "price": 720 },
-
-    { "id": "tpl_sword_ruin", "name": "残锋·陨铁大剑", "slot": "sword", "rarity": 3,
-      "icon": "slot_sword", "base": {"atk": 22}, "sockets": 3, "price": 1600 },
-    { "id": "tpl_armor_bulwark", "name": "壁垒重甲", "slot": "armor", "rarity": 3,
-      "icon": "slot_armor", "base": {"def": 14, "hp": 130}, "sockets": 3, "price": 1800 },
-
-    { "id": "tpl_sword_stele", "name": "碑鸣大剑", "slot": "sword", "rarity": 3, "icon": "slot_sword", "base": {"atk": 22}, "sockets": 3, "price": 100, "requires_level": 10, "random_drop": false },
-    { "id": "tpl_spear_stele", "name": "碑鸣长枪", "slot": "spear", "rarity": 3, "icon": "slot_spear", "base": {"atk": 22}, "sockets": 3, "price": 100, "requires_level": 10, "random_drop": false },
-    { "id": "tpl_staff_stele", "name": "碑鸣法杖", "slot": "staff", "rarity": 3, "icon": "slot_staff", "base": {"atk": 23}, "sockets": 3, "price": 100, "requires_level": 10, "random_drop": false },
-    { "id": "tpl_hammer_stele", "name": "碑鸣圣锤", "slot": "hammer", "rarity": 3, "icon": "slot_hammer", "base": {"atk": 19, "hp": 60}, "sockets": 3, "price": 100, "requires_level": 10, "random_drop": false },
-    { "id": "tpl_armor_stele", "name": "碑鸣护甲", "slot": "armor", "rarity": 3, "icon": "slot_armor", "base": {"def": 14, "hp": 130}, "sockets": 3, "price": 120, "requires_level": 12, "random_drop": false },
-
-    { "id": "tpl_sword_tidegate", "name": "潮关大剑", "slot": "sword", "rarity": 3, "icon": "slot_sword", "base": {"atk": 45}, "sockets": 3, "price": 180, "requires_level": 23, "random_drop": false },
-    { "id": "tpl_spear_tidegate", "name": "潮关长枪", "slot": "spear", "rarity": 3, "icon": "slot_spear", "base": {"atk": 45}, "sockets": 3, "price": 180, "requires_level": 23, "random_drop": false },
-    { "id": "tpl_staff_tidegate", "name": "潮关法杖", "slot": "staff", "rarity": 3, "icon": "slot_staff", "base": {"atk": 46}, "sockets": 3, "price": 180, "requires_level": 23, "random_drop": false },
-    { "id": "tpl_hammer_tidegate", "name": "潮关圣锤", "slot": "hammer", "rarity": 3, "icon": "slot_hammer", "base": {"atk": 40, "hp": 120}, "sockets": 3, "price": 180, "requires_level": 23, "random_drop": false },
-    { "id": "tpl_armor_tidegate", "name": "潮关护甲", "slot": "armor", "rarity": 3, "icon": "slot_armor", "base": {"def": 26, "hp": 250}, "sockets": 3, "price": 210, "requires_level": 25, "random_drop": false },
-
-    { "id": "tpl_sword_frostgate", "name": "霜关大剑", "slot": "sword", "rarity": 3, "icon": "slot_sword", "base": {"atk": 70}, "sockets": 3, "price": 260, "requires_level": 35, "random_drop": false },
-    { "id": "tpl_spear_frostgate", "name": "霜关长枪", "slot": "spear", "rarity": 3, "icon": "slot_spear", "base": {"atk": 70}, "sockets": 3, "price": 260, "requires_level": 35, "random_drop": false },
-    { "id": "tpl_staff_frostgate", "name": "霜关法杖", "slot": "staff", "rarity": 3, "icon": "slot_staff", "base": {"atk": 71}, "sockets": 3, "price": 260, "requires_level": 35, "random_drop": false },
-    { "id": "tpl_hammer_frostgate", "name": "霜关圣锤", "slot": "hammer", "rarity": 3, "icon": "slot_hammer", "base": {"atk": 62, "hp": 200}, "sockets": 3, "price": 260, "requires_level": 35, "random_drop": false },
-    { "id": "tpl_armor_frostgate", "name": "霜关护甲", "slot": "armor", "rarity": 3, "icon": "slot_armor", "base": {"def": 42, "hp": 400}, "sockets": 3, "price": 300, "requires_level": 40, "random_drop": false },
-    { "id": "tpl_accessory_twinpass", "name": "双关坠饰", "slot": "accessory", "rarity": 3, "icon": "slot_accessory", "base": {"hp": 300, "crit": 0.03}, "sockets": 3, "price": 270, "requires_level": 42, "random_drop": false },
-    {"id": "tpl_sword_abyss", "name": "归路大剑", "slot": "sword", "rarity": 4, "icon": "slot_sword", "base": {"atk": 95}, "sockets": 3, "price": 340, "requires_level": 57, "random_drop": false},
-    {"id": "tpl_spear_abyss", "name": "归路长枪", "slot": "spear", "rarity": 4, "icon": "slot_spear", "base": {"atk": 95}, "sockets": 3, "price": 340, "requires_level": 57, "random_drop": false},
-    {"id": "tpl_staff_abyss", "name": "归路法杖", "slot": "staff", "rarity": 4, "icon": "slot_staff", "base": {"atk": 96}, "sockets": 3, "price": 340, "requires_level": 57, "random_drop": false},
-    {"id": "tpl_hammer_abyss", "name": "归路圣锤", "slot": "hammer", "rarity": 4, "icon": "slot_hammer", "base": {"atk": 87, "hp": 250}, "sockets": 3, "price": 340, "requires_level": 57, "random_drop": false},
-    {"id": "tpl_sword_boundary", "name": "巡界大剑", "slot": "sword", "rarity": 4, "icon": "slot_sword", "base": {"atk": 108}, "sockets": 3, "price": 340, "requires_level": 60, "random_drop": false},
-    {"id": "tpl_spear_boundary", "name": "巡界长枪", "slot": "spear", "rarity": 4, "icon": "slot_spear", "base": {"atk": 108}, "sockets": 3, "price": 340, "requires_level": 60, "random_drop": false},
-    {"id": "tpl_staff_boundary", "name": "巡界法杖", "slot": "staff", "rarity": 4, "icon": "slot_staff", "base": {"atk": 109}, "sockets": 3, "price": 340, "requires_level": 60, "random_drop": false},
-    {"id": "tpl_hammer_boundary", "name": "巡界圣锤", "slot": "hammer", "rarity": 4, "icon": "slot_hammer", "base": {"atk": 100, "hp": 250}, "sockets": 3, "price": 340, "requires_level": 60, "random_drop": false},
-    {"id": "tpl_armor_abyss", "name": "三声护甲", "slot": "armor", "rarity": 4, "icon": "slot_armor", "base": {"def": 52, "hp": 520}, "sockets": 3, "price": 340, "requires_level": 53, "random_drop": false},
-    {"id": "tpl_accessory_return", "name": "归路留声佩", "slot": "accessory", "rarity": 4, "icon": "slot_accessory", "base": {"hp": 420, "crit": 0.04}, "sockets": 3, "price": 380, "requires_level": 60, "random_drop": false}
+    {
+      "id": "tpl_sword_basic",
+      "name": "生铁大剑",
+      "slot": "sword",
+      "rarity": 1,
+      "icon": "slot_sword",
+      "base": {
+        "atk": 10
+      },
+      "sockets": 3,
+      "price": 300
+    },
+    {
+      "id": "tpl_spear_basic",
+      "name": "生铁长枪",
+      "slot": "spear",
+      "rarity": 1,
+      "icon": "slot_spear",
+      "base": {
+        "atk": 10
+      },
+      "sockets": 3,
+      "price": 300
+    },
+    {
+      "id": "tpl_staff_basic",
+      "name": "生铁法杖",
+      "slot": "staff",
+      "rarity": 1,
+      "icon": "slot_staff",
+      "base": {
+        "atk": 11
+      },
+      "sockets": 3,
+      "price": 320
+    },
+    {
+      "id": "tpl_hammer_basic",
+      "name": "生铁圣锤",
+      "slot": "hammer",
+      "rarity": 1,
+      "icon": "slot_hammer",
+      "base": {
+        "atk": 9,
+        "hp": 30
+      },
+      "sockets": 3,
+      "price": 320
+    },
+    {
+      "id": "tpl_armor_basic",
+      "name": "皮甲",
+      "slot": "armor",
+      "rarity": 1,
+      "icon": "slot_armor",
+      "base": {
+        "def": 6,
+        "hp": 50
+      },
+      "sockets": 3,
+      "price": 400
+    },
+    {
+      "id": "tpl_accessory_basic",
+      "name": "骨饰",
+      "slot": "accessory",
+      "rarity": 1,
+      "icon": "slot_accessory",
+      "base": {
+        "hp": 70,
+        "crit": 0.02
+      },
+      "sockets": 3,
+      "price": 420
+    },
+    {
+      "id": "tpl_sword_wolf",
+      "name": "狼牙大剑",
+      "slot": "sword",
+      "rarity": 2,
+      "icon": "slot_sword",
+      "base": {
+        "atk": 14
+      },
+      "sockets": 3,
+      "price": 600
+    },
+    {
+      "id": "tpl_spear_iron",
+      "name": "精铁长枪",
+      "slot": "spear",
+      "rarity": 2,
+      "icon": "slot_spear",
+      "base": {
+        "atk": 14
+      },
+      "sockets": 3,
+      "price": 600
+    },
+    {
+      "id": "tpl_staff_frost",
+      "name": "霜纹法杖",
+      "slot": "staff",
+      "rarity": 2,
+      "icon": "slot_staff",
+      "base": {
+        "atk": 15
+      },
+      "sockets": 3,
+      "price": 640
+    },
+    {
+      "id": "tpl_hammer_dawn",
+      "name": "晨光圣锤",
+      "slot": "hammer",
+      "rarity": 2,
+      "icon": "slot_hammer",
+      "base": {
+        "atk": 13,
+        "hp": 40
+      },
+      "sockets": 3,
+      "price": 640
+    },
+    {
+      "id": "tpl_armor_scale",
+      "name": "鳞甲",
+      "slot": "armor",
+      "rarity": 2,
+      "icon": "slot_armor",
+      "base": {
+        "def": 9,
+        "hp": 75
+      },
+      "sockets": 3,
+      "price": 700
+    },
+    {
+      "id": "tpl_accessory_moon",
+      "name": "月纹坠饰",
+      "slot": "accessory",
+      "rarity": 2,
+      "icon": "slot_accessory",
+      "base": {
+        "hp": 100,
+        "crit": 0.03
+      },
+      "sockets": 3,
+      "price": 720
+    },
+    {
+      "id": "tpl_sword_ruin",
+      "name": "残锋·陨铁大剑",
+      "slot": "sword",
+      "rarity": 3,
+      "icon": "slot_sword",
+      "base": {
+        "atk": 22
+      },
+      "sockets": 3,
+      "price": 1600
+    },
+    {
+      "id": "tpl_armor_bulwark",
+      "name": "壁垒重甲",
+      "slot": "armor",
+      "rarity": 3,
+      "icon": "slot_armor",
+      "base": {
+        "def": 14,
+        "hp": 130
+      },
+      "sockets": 3,
+      "price": 1800
+    },
+    {
+      "id": "tpl_sword_stele",
+      "name": "碑鸣大剑",
+      "slot": "sword",
+      "rarity": 3,
+      "icon": "slot_sword",
+      "base": {
+        "atk": 22
+      },
+      "sockets": 3,
+      "price": 100,
+      "requires_level": 10,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_spear_stele",
+      "name": "碑鸣长枪",
+      "slot": "spear",
+      "rarity": 3,
+      "icon": "slot_spear",
+      "base": {
+        "atk": 22
+      },
+      "sockets": 3,
+      "price": 100,
+      "requires_level": 10,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_staff_stele",
+      "name": "碑鸣法杖",
+      "slot": "staff",
+      "rarity": 3,
+      "icon": "slot_staff",
+      "base": {
+        "atk": 23
+      },
+      "sockets": 3,
+      "price": 100,
+      "requires_level": 10,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_hammer_stele",
+      "name": "碑鸣圣锤",
+      "slot": "hammer",
+      "rarity": 3,
+      "icon": "slot_hammer",
+      "base": {
+        "atk": 19,
+        "hp": 60
+      },
+      "sockets": 3,
+      "price": 100,
+      "requires_level": 10,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_armor_stele",
+      "name": "碑鸣护甲",
+      "slot": "armor",
+      "rarity": 3,
+      "icon": "slot_armor",
+      "base": {
+        "def": 14,
+        "hp": 130
+      },
+      "sockets": 3,
+      "price": 120,
+      "requires_level": 12,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_sword_tidegate",
+      "name": "潮关大剑",
+      "slot": "sword",
+      "rarity": 3,
+      "icon": "slot_sword",
+      "base": {
+        "atk": 45
+      },
+      "sockets": 3,
+      "price": 180,
+      "requires_level": 23,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_spear_tidegate",
+      "name": "潮关长枪",
+      "slot": "spear",
+      "rarity": 3,
+      "icon": "slot_spear",
+      "base": {
+        "atk": 45
+      },
+      "sockets": 3,
+      "price": 180,
+      "requires_level": 23,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_staff_tidegate",
+      "name": "潮关法杖",
+      "slot": "staff",
+      "rarity": 3,
+      "icon": "slot_staff",
+      "base": {
+        "atk": 46
+      },
+      "sockets": 3,
+      "price": 180,
+      "requires_level": 23,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_hammer_tidegate",
+      "name": "潮关圣锤",
+      "slot": "hammer",
+      "rarity": 3,
+      "icon": "slot_hammer",
+      "base": {
+        "atk": 40,
+        "hp": 120
+      },
+      "sockets": 3,
+      "price": 180,
+      "requires_level": 23,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_armor_tidegate",
+      "name": "潮关护甲",
+      "slot": "armor",
+      "rarity": 3,
+      "icon": "slot_armor",
+      "base": {
+        "def": 26,
+        "hp": 250
+      },
+      "sockets": 3,
+      "price": 210,
+      "requires_level": 25,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_sword_frostgate",
+      "name": "霜关大剑",
+      "slot": "sword",
+      "rarity": 3,
+      "icon": "slot_sword",
+      "base": {
+        "atk": 70
+      },
+      "sockets": 3,
+      "price": 260,
+      "requires_level": 35,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_spear_frostgate",
+      "name": "霜关长枪",
+      "slot": "spear",
+      "rarity": 3,
+      "icon": "slot_spear",
+      "base": {
+        "atk": 70
+      },
+      "sockets": 3,
+      "price": 260,
+      "requires_level": 35,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_staff_frostgate",
+      "name": "霜关法杖",
+      "slot": "staff",
+      "rarity": 3,
+      "icon": "slot_staff",
+      "base": {
+        "atk": 71
+      },
+      "sockets": 3,
+      "price": 260,
+      "requires_level": 35,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_hammer_frostgate",
+      "name": "霜关圣锤",
+      "slot": "hammer",
+      "rarity": 3,
+      "icon": "slot_hammer",
+      "base": {
+        "atk": 62,
+        "hp": 200
+      },
+      "sockets": 3,
+      "price": 260,
+      "requires_level": 35,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_armor_frostgate",
+      "name": "霜关护甲",
+      "slot": "armor",
+      "rarity": 3,
+      "icon": "slot_armor",
+      "base": {
+        "def": 42,
+        "hp": 400
+      },
+      "sockets": 3,
+      "price": 300,
+      "requires_level": 40,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_accessory_twinpass",
+      "name": "双关坠饰",
+      "slot": "accessory",
+      "rarity": 3,
+      "icon": "slot_accessory",
+      "base": {
+        "hp": 300,
+        "crit": 0.03
+      },
+      "sockets": 3,
+      "price": 270,
+      "requires_level": 42,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_sword_abyss",
+      "name": "归路大剑",
+      "slot": "sword",
+      "rarity": 4,
+      "icon": "slot_sword",
+      "base": {
+        "atk": 95
+      },
+      "sockets": 3,
+      "price": 340,
+      "requires_level": 57,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_spear_abyss",
+      "name": "归路长枪",
+      "slot": "spear",
+      "rarity": 4,
+      "icon": "slot_spear",
+      "base": {
+        "atk": 95
+      },
+      "sockets": 3,
+      "price": 340,
+      "requires_level": 57,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_staff_abyss",
+      "name": "归路法杖",
+      "slot": "staff",
+      "rarity": 4,
+      "icon": "slot_staff",
+      "base": {
+        "atk": 96
+      },
+      "sockets": 3,
+      "price": 340,
+      "requires_level": 57,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_hammer_abyss",
+      "name": "归路圣锤",
+      "slot": "hammer",
+      "rarity": 4,
+      "icon": "slot_hammer",
+      "base": {
+        "atk": 87,
+        "hp": 250
+      },
+      "sockets": 3,
+      "price": 340,
+      "requires_level": 57,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_sword_boundary",
+      "name": "巡界大剑",
+      "slot": "sword",
+      "rarity": 4,
+      "icon": "slot_sword",
+      "base": {
+        "atk": 108
+      },
+      "sockets": 3,
+      "price": 340,
+      "requires_level": 60,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_spear_boundary",
+      "name": "巡界长枪",
+      "slot": "spear",
+      "rarity": 4,
+      "icon": "slot_spear",
+      "base": {
+        "atk": 108
+      },
+      "sockets": 3,
+      "price": 340,
+      "requires_level": 60,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_staff_boundary",
+      "name": "巡界法杖",
+      "slot": "staff",
+      "rarity": 4,
+      "icon": "slot_staff",
+      "base": {
+        "atk": 109
+      },
+      "sockets": 3,
+      "price": 340,
+      "requires_level": 60,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_hammer_boundary",
+      "name": "巡界圣锤",
+      "slot": "hammer",
+      "rarity": 4,
+      "icon": "slot_hammer",
+      "base": {
+        "atk": 100,
+        "hp": 250
+      },
+      "sockets": 3,
+      "price": 340,
+      "requires_level": 60,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_armor_abyss",
+      "name": "三声护甲",
+      "slot": "armor",
+      "rarity": 4,
+      "icon": "slot_armor",
+      "base": {
+        "def": 52,
+        "hp": 520
+      },
+      "sockets": 3,
+      "price": 340,
+      "requires_level": 53,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_accessory_return",
+      "name": "归路留声佩",
+      "slot": "accessory",
+      "rarity": 4,
+      "icon": "slot_accessory",
+      "base": {
+        "hp": 420,
+        "crit": 0.04
+      },
+      "sockets": 3,
+      "price": 380,
+      "requires_level": 60,
+      "random_drop": false
+    },
+    {
+      "id": "tpl_sword_relic",
+      "name": "山河·传世大剑",
+      "slot": "sword",
+      "rarity": 5,
+      "icon": "slot_sword",
+      "base": {
+        "atk": 134
+      },
+      "sockets": 3,
+      "price": 25000,
+      "sell_fixed_gold": 25000,
+      "requires_level": 60,
+      "random_drop": false,
+      "auto_lock": true,
+      "special": {
+        "relic_shield_pct": 0.1,
+        "relic_break_damage_pct": 0.15
+      },
+      "special_desc": "归路守护：开场获得10%最大生命护盾。破绽追击：对处于破绽的首领伤害提高15%。"
+    },
+    {
+      "id": "tpl_spear_relic",
+      "name": "逐日·传世长枪",
+      "slot": "spear",
+      "rarity": 5,
+      "icon": "slot_spear",
+      "base": {
+        "atk": 134
+      },
+      "sockets": 3,
+      "price": 25000,
+      "sell_fixed_gold": 25000,
+      "requires_level": 60,
+      "random_drop": false,
+      "auto_lock": true,
+      "special": {
+        "relic_shield_pct": 0.1,
+        "relic_break_damage_pct": 0.15
+      },
+      "special_desc": "归路守护：开场获得10%最大生命护盾。破绽追击：对处于破绽的首领伤害提高15%。"
+    },
+    {
+      "id": "tpl_staff_relic",
+      "name": "星霜·传世法杖",
+      "slot": "staff",
+      "rarity": 5,
+      "icon": "slot_staff",
+      "base": {
+        "atk": 135
+      },
+      "sockets": 3,
+      "price": 25000,
+      "sell_fixed_gold": 25000,
+      "requires_level": 60,
+      "random_drop": false,
+      "auto_lock": true,
+      "special": {
+        "relic_shield_pct": 0.1,
+        "relic_break_damage_pct": 0.15
+      },
+      "special_desc": "归路守护：开场获得10%最大生命护盾。破绽追击：对处于破绽的首领伤害提高15%。"
+    },
+    {
+      "id": "tpl_hammer_relic",
+      "name": "永昼·传世圣锤",
+      "slot": "hammer",
+      "rarity": 5,
+      "icon": "slot_hammer",
+      "base": {
+        "atk": 124,
+        "hp": 300
+      },
+      "sockets": 3,
+      "price": 25000,
+      "sell_fixed_gold": 25000,
+      "requires_level": 60,
+      "random_drop": false,
+      "auto_lock": true,
+      "special": {
+        "relic_shield_pct": 0.1,
+        "relic_break_damage_pct": 0.15
+      },
+      "special_desc": "归路守护：开场获得10%最大生命护盾。破绽追击：对处于破绽的首领伤害提高15%。"
+    }
   ],
   "drop": {
-    "normal": { "chance": 0.12 },
-    "elite": { "chance": 0.35 },
-    "boss": { "chance": 1.0 }
+    "normal": {
+      "chance": 0.12
+    },
+    "elite": {
+      "chance": 0.35
+    },
+    "boss": {
+      "chance": 1.0
+    }
   }
 }

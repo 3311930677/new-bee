@@ -6,6 +6,36 @@ const WINDUP_TICKS := 12        # 前摇 0.4s
 const WINDUP_TICKS_ULT := 15    # 大招前摇 0.5s（cost≥60）
 
 
+## 战斗与研习预览共用；只放大表中声明的强度，控制时长不随等级膨胀。
+static func can_study(skill: Dictionary) -> bool:
+	if float(skill.get("k", 0.0)) > 0.0:
+		return true
+	var effect: Dictionary = skill.get("effect", {}) if skill.get("effect") is Dictionary else {}
+	var fields: Array = TableCache.skillbook_config().get("effect_scale_fields", {}).get(String(effect.get("type", "")), [])
+	for field in fields:
+		if float(effect.get(field, 0.0)) > 0.0:
+			return true
+	return false
+
+
+static func study_skill(base: Dictionary, level: int) -> Dictionary:
+	var out := base.duplicate(true)
+	var cfg := TableCache.skillbook_config()
+	var lv := clampi(level, 1, int(cfg.get("max_level", 10)))
+	var mult := 1.0 + float(cfg.get("k_per_level", 0.05)) * float(lv - 1)
+	out["k"] = snappedf(float(out.get("k", 0.0)) * mult, 0.001)
+	if out.get("effect") is Dictionary:
+		var effect := out["effect"] as Dictionary
+		# 处决与受控增伤会替换 k，所以替换值也必须保留同一研习倍率。
+		if effect.has("k_to"):
+			effect["k_to"] = snappedf(float(effect["k_to"]) * mult, 0.001)
+		var fields: Array = cfg.get("effect_scale_fields", {}).get(String(effect.get("type", "")), [])
+		for field in fields:
+			if effect.has(field):
+				effect[field] = snappedf(float(effect[field]) * mult, 0.001)
+	return out
+
+
 ## 施法校验：存活 / 未被控制 / CD 转好 / 能量足够 / 本单位不在施法中
 static func can_cast(sim: BattleSim, caster: Combatant, skill: Dictionary) -> bool:
 	if not caster.can_act():

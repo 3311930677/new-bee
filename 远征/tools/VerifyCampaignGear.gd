@@ -28,7 +28,7 @@ func _gear() -> Array:
 
 func _run() -> void:
 	var cfg := CampaignGear.config()
-	_check(cfg.rewards.size() == 10 and G.equip_templates().size() == 40, "四幕十个保底节点和40装备模板配置完整")
+	_check(cfg.rewards.size() == 10 and G.equip_templates().size() >= 40, "四幕十个保底节点与既有装备模板完整保留")
 	for role in ["zs", "ck", "fs", "fz"]:
 		_reset(28, role)
 		var worn: Dictionary = G.prog.equip.duplicate(true)
@@ -66,16 +66,16 @@ func _run() -> void:
 	pending_bag._refresh()
 	await get_tree().process_frame
 	var pending_buttons := 0
-	for child in pending_bag._list.get_children():
+	for child in pending_bag._item_buttons:
 		if child.has_meta("gear_uid"):
 			pending_buttons += 1
-			_check(child.position.y+child.size.y <= pending_bag._detail.position.y-pending_bag._list.position.y, "待领取分页行不得盖住详情")
+	_check(pending_bag._scroll.get_global_rect().end.y <= pending_bag._detail.get_global_rect().position.y, "待领取滚动区不得盖住详情")
 	_check(pending_buttons == 8, "超过八件的待领取必须分页")
 	pending_bag._page = 1
 	pending_bag._refresh()
 	await get_tree().process_frame
 	pending_buttons = 0
-	for child in pending_bag._list.get_children():
+	for child in pending_bag._item_buttons:
 		if child.has_meta("gear_uid"): pending_buttons += 1
 	_check(pending_buttons == 5 and pending_bag._page == 1, "第二页完整呈现剩余五件")
 	pending_bag.queue_free()
@@ -142,7 +142,7 @@ func _run() -> void:
 	bag._refresh()
 	await get_tree().process_frame
 	var found := false
-	for child in bag._detail.get_children():
+	for child in bag._detail.find_children("*","Label",true,false):
 		if child is Label and child.text.begins_with("需求 Lv"):
 			found = true
 			_check(child.size.x <= 396 and child.text == "需求 Lv42 · 主线保底 · 双关定路", "来源与需求中文详情不截断")

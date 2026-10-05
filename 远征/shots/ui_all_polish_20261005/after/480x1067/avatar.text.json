@@ -1,0 +1,151 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@67/@Control@68/@Label@69",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "昭元行旅录"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 44.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@67/@Control@68/@Label@70",
+			"rect_height": 44.0,
+			"size": 30,
+			"text": "旅人小像"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@67/@Control@68/CloseButton",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "×"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@67/@Control@68/@Panel@71/@Label@72",
+			"rect_height": 49.0,
+			"size": 12,
+			"text": "留\n影"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@67/@Control@68/@Label@75",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "当前使用：夜猫"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@67/@Control@68/@Button@77",
+			"rect_height": 92.0,
+			"size": 17,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@67/@Control@68/@Button@77/Caption",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "赤尾狐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@67/@Control@68/@Button@79",
+			"rect_height": 92.0,
+			"size": 17,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@67/@Control@68/@Button@79/Card/SelectedMark",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "✓"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@67/@Control@68/@Button@79/Caption",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "夜猫"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@67/@Control@68/@Button@81",
+			"rect_height": 92.0,
+			"size": 17,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@67/@Control@68/@Button@81/Caption",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "石龟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@67/@Control@68/@Button@83",
+			"rect_height": 92.0,
+			"size": 17,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@67/@Control@68/@Button@83/Caption",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "雪团"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 33.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@67/@Control@68/UploadButton",
+			"rect_height": 46.0,
+			"size": 22,
+			"text": "选择本机图片"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@67/@Control@68/@Label@85",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "图片与头像选择仅保存在本机"
+		}
+	]
+}

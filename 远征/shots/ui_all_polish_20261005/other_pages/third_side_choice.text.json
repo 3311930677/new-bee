@@ -1,0 +1,295 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@Node2D@5/@Node2D@7/@Label@8",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "赤砂商路"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@Node2D@5/@Node2D@11/@Label@12",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "霜林栈道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@Node2D@5/@CharacterBody2D@13/@Panel@16/@Label@19",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "霜关行者  Lv12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@Node2D@5/WorldCompanion/@Label@26",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "岩龟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@Node2D@5/@Node2D@94/@Label@96",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "宁砚"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@Node2D@5/@Node2D@97/@Label@99",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "岑雪"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@Node2D@5/@Node2D@100/@Label@102",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "陶铎"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@Node2D@5/@Node2D@120/@Label@121",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "冰缘暗水 · 垂钓"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Panel@30/@Label@31",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "Lv12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Panel@30/@Label@34",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "生命 690/690"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Panel@30/@Label@37",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "EXP 28%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Panel@38/@Label@40",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "12800"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 39.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Label@41",
+			"rect_height": 39.0,
+			"size": 26,
+			"text": "霜关驿"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Panel@43/@Label@42",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "主线 · 在霜关驿向宁砚询问关外回声"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Panel@45/@Label@44",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "支线 · 灯下的轮岗（可交付：岑雪）"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Control@65/@PanelContainer@60/@Label@59",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Control@65/@Label@62",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "药剂"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Control@65/@PanelContainer@64/@Label@63",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Control@70/@PanelContainer@67/@Label@66",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Control@70/@Label@69",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "伙伴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Control@75/@PanelContainer@72/@Label@71",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Control@75/@Label@74",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "营帐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Control@81/@PanelContainer@78/@Label@77",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 40.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Control@81/@Label@79",
+			"rect_height": 40.0,
+			"size": 27,
+			"text": "»"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Control@81/@Label@80",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "疾行"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@PanelContainer@103/@Label@104",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "驿务 · 采买物资"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 58.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Control@113/@Panel@110/@Label@109",
+			"rect_height": 58.0,
+			"size": 39,
+			"text": "岑雪 · 托付"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Control@113/@PanelContainer@111/@Control@112/@Label@114",
+			"rect_height": 100.0,
+			"size": 17,
+			"text": "灯罩有裂缝，炉膛还能烧。你想添炭，还是装挡风片？"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Control@113/@PanelContainer@111/@Control@112/@Label@115",
+			"rect_height": 176.0,
+			"size": 17,
+			"text": "目标：查看驿站风灯，回岑雪处决定修法\n进度：目标已完成，回去交付\n地点：霜关驿\n交付：岑雪（霜关驿）\n奖励：金币 +160\n奖励：经验 +90"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Control@113/@PanelContainer@111/@Control@112/@PanelContainer@117/@Label@116",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "添炭·暖灯轮岗"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Control@113/@PanelContainer@111/@Control@112/@PanelContainer@119/@Label@118",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "挡风·省炭守灯"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@29/@Control@113/@PanelContainer@111/@Control@112/@PanelContainer@123/@Label@122",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "返回"
+		}
+	]
+}

@@ -21,8 +21,8 @@ func _check(cond: bool, msg: String) -> void:
 
 func _texts(root: Node, out: Array = []) -> Array:
 	for c in root.get_children():
-		if c is Label:
-			out.append(String((c as Label).text))
+		if c is Label or c is Button:
+			out.append(String(c.text))
 		_texts(c, out)
 	return out
 

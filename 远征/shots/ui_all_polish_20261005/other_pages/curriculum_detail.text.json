@@ -1,0 +1,223 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@Node2D@3/@Node2D@5/@Label@6",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "枫林古道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@Node2D@3/@CharacterBody2D@7/@Panel@10/@Label@13",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "东方舟影  Lv42"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@Node2D@3/@Node2D@120/@Label@122",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "小满"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Panel@35/@Label@36",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "Lv42"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Panel@35/@Label@39",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "生命 1890/1890"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Panel@35/@Label@42",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "EXP 3%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Panel@43/@Label@45",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "12800"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 39.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Label@46",
+			"rect_height": 39.0,
+			"size": 26,
+			"text": "昭元边城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Panel@48/@Label@47",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "主线 · 在霜关驿向宁砚询问关外回声"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@70/@PanelContainer@65/@Label@64",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@70/@Label@67",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "药剂"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@70/@PanelContainer@69/@Label@68",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@80/@PanelContainer@77/@Label@76",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@80/@Label@79",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "营帐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@86/@PanelContainer@83/@Label@82",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 40.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@86/@Label@84",
+			"rect_height": 40.0,
+			"size": 27,
+			"text": "»"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@86/@Label@85",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "疾行"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@PanelContainer@129/@Label@130",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "委托 · 0/2 已交付"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 58.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@139/@Panel@136/@Label@135",
+			"rect_height": 58.0,
+			"size": 39,
+			"text": "回风斩 · 研习"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@139/@PanelContainer@137/@Control@138/@Label@140",
+			"rect_height": 56.0,
+			"size": 17,
+			"text": "横扫前排全体\n基础：能量 40 · 冷却 12.0秒"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@139/@PanelContainer@137/@Control@138/@Label@141",
+			"rect_height": 56.0,
+			"size": 15,
+			"text": "等级 12 · 完成边城复命\n先学「破阵」 · 学费 100 金"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@139/@PanelContainer@137/@Control@138/@Label@142",
+			"rect_height": 34.0,
+			"size": 17,
+			"text": "可学习 · 100 金"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@139/@PanelContainer@137/@Control@138/@PanelContainer@144/@Label@143",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "学习·100金"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@34/@Control@139/@PanelContainer@137/@Control@138/@PanelContainer@146/@Label@145",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "返回招式表"
+		}
+	]
+}

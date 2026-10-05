@@ -1,0 +1,61 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 53.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/NameRecovery/@Panel@3/@Label@2",
+			"rect_height": 53.0,
+			"size": 36,
+			"text": "补全旅人姓名"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/NameRecovery/@PanelContainer@4/@Control@5/@Label@6",
+			"rect_height": 54.0,
+			"size": 17,
+			"text": "旧档已保留职业与养成进度。请填写要显示在角色头顶的昵称。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/NameRecovery/@PanelContainer@4/@Control@5/@LineEdit@7",
+			"rect_height": 44.0,
+			"size": 18,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/NameRecovery/@PanelContainer@4/@Control@5/@Label@8",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/NameRecovery/@PanelContainer@4/@Control@5/@PanelContainer@10/@Label@9",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "返回登录"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/NameRecovery/@PanelContainer@4/@Control@5/@PanelContainer@12/@Label@11",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "保存并进城"
+		}
+	]
+}

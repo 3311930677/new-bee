@@ -1,0 +1,376 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 54.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@Panel@68/@Label@67",
+			"rect_height": 54.0,
+			"size": 37,
+			"text": "地区行路图"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Label@71",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "沿路牌前往相邻地区"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@PanelContainer@77/@Label@76",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "昭元边城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@Label@78",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv1–12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@PanelContainer@80/@Label@79",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "枫林古道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@Label@81",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv1–8"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@PanelContainer@83/@Label@82",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "断碑坡"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@Label@84",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv6–12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@PanelContainer@86/@Label@85",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "失声碑窟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@Label@87",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv9–14"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@PanelContainer@89/@Label@88",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "旧盐道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@Label@90",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv10–16"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@PanelContainer@92/@Label@91",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "沉渊港"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@Label@93",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv10–18"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@PanelContainer@95/@Label@94",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "潮痕滩"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@Label@96",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv13–20"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@PanelContainer@98/@Label@97",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "退潮水闸"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@Label@99",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv16–23"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@PanelContainer@101/@Label@100",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "赤砂商路"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@Label@102",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv20–28"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@PanelContainer@104/@Label@103",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "霜关驿"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@Label@105",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv22–32"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@PanelContainer@107/@Label@106",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "裂谷矿道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@Label@108",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv24–34"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@PanelContainer@110/@Label@109",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "裂谷矿脉"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@Label@111",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv26–36"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@PanelContainer@113/@Label@112",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "霜林栈道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@Label@114",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv26–36"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@PanelContainer@116/@Label@115",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "冰隘"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@Label@117",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv26–40"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@PanelContainer@119/@Label@118",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "渊口外环"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@Label@120",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv43–49"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@PanelContainer@122/@Label@121",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "归路门厅"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@Label@123",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv49–50"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@PanelContainer@125/@Label@124",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "三声共鸣廊"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@Label@126",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv50–53"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@PanelContainer@128/@Label@127",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "碑心"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@ScrollContainer@74/@Control@75/@Label@129",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv53–57"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Label@130",
+			"rect_height": 28.0,
+			"size": 17,
+			"text": "当前位置 · 昭元边城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@Label@131",
+			"rect_height": 50.0,
+			"size": 15,
+			"text": "拖动滚动条查看地区，沿路牌步行切图。\n界碑历练可从边城巡界厅进入。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/GameHome/@Control@63/@PanelContainer@69/@Control@70/@PanelContainer@133/@Label@132",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "返回"
+		}
+	]
+}

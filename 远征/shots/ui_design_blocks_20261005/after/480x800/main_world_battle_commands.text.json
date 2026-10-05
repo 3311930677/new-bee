@@ -1,0 +1,151 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@150/BattleScene/@Control@151/@Node2D@155/@Node2D@197/@Node2D@187/@Label@190",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "角色昵称 12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@150/BattleScene/@Control@151/@Node2D@155/@Node2D@197/@Node2D@187/@Label@196",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@150/BattleScene/@Control@151/@Node2D@155/@Node2D@205/@Node2D@198/@Label@200",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "岩龟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@150/BattleScene/@Control@151/@Node2D@155/@Node2D@205/@Node2D@198/@Label@204",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@150/BattleScene/@Control@151/@Node2D@155/@Node2D@214/@Node2D@206/@Label@208",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "Lv2 僵尸"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@150/BattleScene/@Control@151/@Node2D@155/@Node2D@214/@Node2D@206/@Label@213",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 43.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@150/BattleScene/@Panel@159/@Label@158",
+			"rect_height": 43.0,
+			"size": 29,
+			"text": "遭遇战"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@150/BattleScene/@PanelContainer@161/@Label@160",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "速度 ×1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@150/BattleScene/@PanelContainer@163/@Label@162",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "自动"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@150/BattleScene/@Label@164",
+			"rect_height": 28.0,
+			"size": 17,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@150/BattleScene/@Label@165",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@150/BattleScene/@Control@166/@Control@170/@Label@169",
+			"rect_height": 28.0,
+			"size": 18,
+			"text": "攻击"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@150/BattleScene/@Control@166/@Control@174/@Label@173",
+			"rect_height": 28.0,
+			"size": 18,
+			"text": "技能"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@150/BattleScene/@Control@166/@Control@178/@Label@177",
+			"rect_height": 28.0,
+			"size": 18,
+			"text": "道具"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@150/BattleScene/@Control@166/@Control@182/@Label@181",
+			"rect_height": 28.0,
+			"size": 18,
+			"text": "撤退"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/MapScene/@CanvasLayer@150/BattleScene/@Control@166/@Label@184",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "攻 自动选敌 ｜ 技 0/1 ｜ 物 药×2"
+		}
+	]
+}

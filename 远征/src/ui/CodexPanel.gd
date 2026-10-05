@@ -9,6 +9,7 @@ signal closed
 
 const PageDeckScript := preload("res://src/ui/PageDeck.gd")
 const SlideCardScript := preload("res://src/ui/SlideCard.gd")
+const Craft := preload("res://src/ui/CraftUI.gd")
 
 # 稀有度色/名全项目唯一定义在 G.gd（C6），这里只引用，不再各自复制一份
 const GScript := preload("res://src/autoload/G.gd")
@@ -19,7 +20,7 @@ const ROLE_NAME := {
 }
 # 稀有度 → 边框素材名（frame_* 为方框空心底图，叠在宠物头像外圈）
 const RARITY_FRAME := {"white": "frame_white", "blue": "frame_blue",
-	"purple": "frame_purple", "gold": "frame_gold"}
+	"purple": "frame_purple", "gold": "frame_gold", "relic": "frame_gold"}
 const RARITY_HUE := GScript.RARITY_HUE
 # 同 DeployPanel：440 羊皮纸 - 左右各 16 内边距 = 408，子控件按 408 排版才不右偏
 const CONTENT_W := 408.0
@@ -40,11 +41,9 @@ func _ready() -> void:
 
 func _build() -> void:
 	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），不再各写一块纯灰
-	G.veil(self, 0.72)
-
-	var banner := G.banner_box("宠 物 图 鉴", 300, 50)
-	banner.position = Vector2(90, 36)
-	add_child(banner)
+	set_meta("visual_family","journal")
+	G.veil(self,.97)
+	Craft.heading(self,"灵宠图鉴","沿途相识 · 珍藏每一次结伴")
 
 	var panel := G.parchment_box(440, 600, 16.0)
 	panel.position = Vector2(20, 108)
@@ -79,28 +78,28 @@ func _build() -> void:
 	# 收集里程（轮次 20）：图鉴此前只有一行计数，收集本身没有回报。
 	# 进度行放在大卡与按钮行之间，领取按钮插在「进化 / 返回」中间的空档。
 	_ms_l = G.gold_label("", G.FS_XS, false, G.TEXT_MUTED, false)
-	_ms_l.position = Vector2(0, 436)
+	_ms_l.position = Vector2(0, 460)
 	_ms_l.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_ms_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	content.add_child(_ms_l)
 
-	_claim_btn = G.gold_button("领 取", 104, 38)
-	_claim_btn.position = Vector2(152, 480)
+	_claim_btn = G.gold_button("领 取", 104, 44)
+	_claim_btn.position = Vector2(152, 496)
 	_claim_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_on_claim())
 	content.add_child(_claim_btn)
 
 	# 进化入口：对「当前页」的灵宠生效（P1-3）；与「返回」左右成对
-	var evolve := G.ghost_button("进化", 120, 38)
-	evolve.position = Vector2(20, 480)
+	var evolve := G.ghost_button("进化", 120, 44)
+	evolve.position = Vector2(20, 496)
 	evolve.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_on_evolve())
 	content.add_child(evolve)
 
-	var back := G.gold_button("返 回", 120, 38)
-	back.position = Vector2(268, 480)
+	var back := G.ghost_button("返 回", 120, 44)
+	back.position = Vector2(268, 496)
 	back.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			closed.emit())
@@ -153,9 +152,10 @@ func _card(p: Dictionary, idx: int, total: int) -> Control:
 		"art_tint": hue,
 		"art_fit": "contain",
 		"art_dim": not owned,
-		"art_frame": RARITY_FRAME.get(rarity, "frame_white"),
+		"art_stage": true,
+		"editorial": true,
 		"art_ratio": 0.44,
-		"badge": "已收集" if owned else "未收集",
+		"badge": "已结伴" if owned else "待结缘",
 		"badge_color": Color("4a7a44") if owned else Color("7a7263"),
 		"lines": lines,
 		"footer": "← → 翻阅 · 未收集的会标出解锁途径",
@@ -247,7 +247,7 @@ func _toast(msg: String) -> void:
 		return
 	var l := G.gold_label(msg, G.FS_SM, false, Color("8a4a3a"), false)
 	# 452 会和收集里程行（436 起）抢位置；移到按钮行之下
-	l.position = Vector2(0, 524)
+	l.position = Vector2(0, 546)
 	l.custom_minimum_size = Vector2(CONTENT_W, 0)
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_content.add_child(l)

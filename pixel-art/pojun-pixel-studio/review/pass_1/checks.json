@@ -1,0 +1,379 @@
+{
+  "tool": "Gamezxz/pixel-art-studio",
+  "pass": 1,
+  "source_sha256": "72d378e864005c1f1519416a93ad6f0ce89d5aa3d7a3b51c7c771b49987bb454",
+  "source_unchanged": true,
+  "frame_size": [
+    128,
+    128
+  ],
+  "frame_count": 8,
+  "duration_ms": 110,
+  "poses": [
+    {
+      "index": 0,
+      "body_offset": [
+        -3,
+        20
+      ],
+      "near": {
+        "hip": [
+          61,
+          98
+        ],
+        "knee": [
+          72,
+          101
+        ],
+        "ankle": [
+          70,
+          114
+        ],
+        "planted": true,
+        "phase": 0
+      },
+      "far": {
+        "hip": [
+          57,
+          98
+        ],
+        "knee": [
+          62,
+          108
+        ],
+        "ankle": [
+          50,
+          114
+        ],
+        "planted": true,
+        "phase": 4
+      }
+    },
+    {
+      "index": 1,
+      "body_offset": [
+        -3,
+        21
+      ],
+      "near": {
+        "hip": [
+          61,
+          99
+        ],
+        "knee": [
+          72,
+          102
+        ],
+        "ankle": [
+          66,
+          114
+        ],
+        "planted": true,
+        "phase": 1
+      },
+      "far": {
+        "hip": [
+          57,
+          99
+        ],
+        "knee": [
+          64,
+          108
+        ],
+        "ankle": [
+          51,
+          110
+        ],
+        "planted": false,
+        "phase": 5
+      }
+    },
+    {
+      "index": 2,
+      "body_offset": [
+        -3,
+        20
+      ],
+      "near": {
+        "hip": [
+          61,
+          98
+        ],
+        "knee": [
+          70,
+          105
+        ],
+        "ankle": [
+          61,
+          114
+        ],
+        "planted": true,
+        "phase": 2
+      },
+      "far": {
+        "hip": [
+          57,
+          98
+        ],
+        "knee": [
+          68,
+          99
+        ],
+        "ankle": [
+          59,
+          108
+        ],
+        "planted": false,
+        "phase": 6
+      }
+    },
+    {
+      "index": 3,
+      "body_offset": [
+        -3,
+        19
+      ],
+      "near": {
+        "hip": [
+          61,
+          97
+        ],
+        "knee": [
+          67,
+          107
+        ],
+        "ankle": [
+          56,
+          114
+        ],
+        "planted": true,
+        "phase": 3
+      },
+      "far": {
+        "hip": [
+          57,
+          97
+        ],
+        "knee": [
+          68,
+          97
+        ],
+        "ankle": [
+          67,
+          110
+        ],
+        "planted": false,
+        "phase": 7
+      }
+    },
+    {
+      "index": 4,
+      "body_offset": [
+        -3,
+        20
+      ],
+      "near": {
+        "hip": [
+          61,
+          98
+        ],
+        "knee": [
+          63,
+          109
+        ],
+        "ankle": [
+          51,
+          114
+        ],
+        "planted": true,
+        "phase": 4
+      },
+      "far": {
+        "hip": [
+          57,
+          98
+        ],
+        "knee": [
+          68,
+          101
+        ],
+        "ankle": [
+          69,
+          114
+        ],
+        "planted": true,
+        "phase": 0
+      }
+    },
+    {
+      "index": 5,
+      "body_offset": [
+        -3,
+        21
+      ],
+      "near": {
+        "hip": [
+          61,
+          99
+        ],
+        "knee": [
+          65,
+          110
+        ],
+        "ankle": [
+          52,
+          110
+        ],
+        "planted": false,
+        "phase": 5
+      },
+      "far": {
+        "hip": [
+          57,
+          99
+        ],
+        "knee": [
+          68,
+          101
+        ],
+        "ankle": [
+          65,
+          114
+        ],
+        "planted": true,
+        "phase": 1
+      }
+    },
+    {
+      "index": 6,
+      "body_offset": [
+        -3,
+        20
+      ],
+      "near": {
+        "hip": [
+          61,
+          98
+        ],
+        "knee": [
+          72,
+          102
+        ],
+        "ankle": [
+          60,
+          108
+        ],
+        "planted": false,
+        "phase": 6
+      },
+      "far": {
+        "hip": [
+          57,
+          98
+        ],
+        "knee": [
+          67,
+          103
+        ],
+        "ankle": [
+          60,
+          114
+        ],
+        "planted": true,
+        "phase": 2
+      }
+    },
+    {
+      "index": 7,
+      "body_offset": [
+        -3,
+        19
+      ],
+      "near": {
+        "hip": [
+          61,
+          97
+        ],
+        "knee": [
+          72,
+          98
+        ],
+        "ankle": [
+          68,
+          110
+        ],
+        "planted": false,
+        "phase": 7
+      },
+      "far": {
+        "hip": [
+          57,
+          97
+        ],
+        "knee": [
+          65,
+          105
+        ],
+        "ankle": [
+          55,
+          114
+        ],
+        "planted": true,
+        "phase": 3
+      }
+    }
+  ],
+  "unique_frames": 8,
+  "bounding_boxes": [
+    [
+      6,
+      23,
+      122,
+      122
+    ],
+    [
+      6,
+      24,
+      122,
+      123
+    ],
+    [
+      6,
+      23,
+      122,
+      124
+    ],
+    [
+      6,
+      22,
+      122,
+      123
+    ],
+    [
+      6,
+      23,
+      122,
+      122
+    ],
+    [
+      6,
+      24,
+      122,
+      123
+    ],
+    [
+      6,
+      23,
+      122,
+      124
+    ],
+    [
+      6,
+      22,
+      122,
+      123
+    ]
+  ],
+  "method": "original upper-body layers; separately articulated and shaded legs; original knee/boot samples",
+  "palette_policy": "Preserve source colors instead of reducing the original game artwork to a new style."
+}

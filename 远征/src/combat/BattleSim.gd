@@ -39,6 +39,9 @@ var rule_timer := 0        # 距下次触发的 tick 数（测试把它置 1 即
 var _next_uid := 1
 var _by_uid: Dictionary = {}
 
+var campaign_profile: Dictionary = {}
+const CampaignPressure := preload("res://src/world/CampaignPressure.gd")
+
 var role_uid: int = 0
 var companion_used: Dictionary = {} # 物种/特性 -> 一次标记或冷却截止 tick
 var companion_participants: Array = []
@@ -51,6 +54,9 @@ var companion_participants: Array = []
 ##   enemy_mult 由调用方（苦行局）给，默认 1.0；模拟器不自己读表，保持内核无配置依赖。
 func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 	rng.seed = seed
+	campaign_profile = CampaignPressure.profile(String(enemy_cfg.get("world_map_id", "")))
+	if enemy_cfg.get("difficulty_override") is Dictionary:
+		campaign_profile = (enemy_cfg.difficulty_override as Dictionary).duplicate(true)
 	role_focus_target_uid = -1
 	theme_id = String(enemy_cfg.get("theme", "forest"))
 	theme_rule = TableCache.theme_rule(theme_id)
@@ -123,6 +129,8 @@ func _build_role(cfg: Dictionary) -> void:
 		stats.def = int(float(stats.def) * (1.0 + float(gb.get("def_pct", 0.0))) + float(gb.get("def_add", 0.0)))
 		stats.spd = stats.spd * (1.0 + float(gb.get("spd_pct", 0.0)))
 		stats.crit += float(gb.get("crit_add", 0.0))
+	role = role.duplicate(true)
+	role["relic_break_damage_pct"] = float(gb.get("relic_break_damage_pct",0.0))
 	var u := Combatant.new(new_uid(), "role", "ally", role)
 	u.traits = ts
 	u.base_max_hp = maxi(1, int(stats.max_hp))
@@ -143,6 +151,8 @@ func _build_role(cfg: Dictionary) -> void:
 	var hp_override := int(cfg.get("hp_override", -1))
 	if hp_override >= 0:
 		u.hp = clampi(hp_override, 1, u.base_max_hp)
+	var shield_pct := float(gb.get("relic_shield_pct",0.0))
+	if shield_pct > 0.0: u.add_buff("shield", -1, {"pool":int(u.get_max_hp()*shield_pct)})
 	role_uid = u.uid
 	var allowed_v: Variant = cfg.get("unlocked_skills")
 	var allowed: Array = allowed_v if allowed_v is Array else []
@@ -156,12 +166,9 @@ func _build_role(cfg: Dictionary) -> void:
 		if not sd.is_empty():
 			if variants.has(String(sid)) and variants[String(sid)] is Dictionary:
 				sd = _apply_skill_variant(sd, variants[String(sid)] as Dictionary)
-			# 技能书等级：每级 k+5%（skillbook.json），局外升级局内生效
+			# 伤害与辅助强度共享研习口径；始终深拷贝，不能污染缓存表。
 			var slv := int((cfg.get("skill_levels", {}) as Dictionary).get(String(sid), 1))
-			if slv > 1:
-				sd = sd.duplicate()
-				var k_per := float(TableCache.skillbook_config().get("k_per_level", 0.05))
-				sd["k"] = snappedf(float(sd.get("k", 0.0)) * (1.0 + k_per * float(slv - 1)), 0.001)
+			sd = SkillSystem.study_skill(sd, slv)
 			u.skills.append({"id": String(sid), "def": sd, "cd_left": 0})
 	_add_unit(u)
 
@@ -330,11 +337,19 @@ func _spawn_monster(mon_id: String, row: int, col: int, hp_atk_mult := 1.0,
 		return null
 	m = m.duplicate(true)
 	m["tier"] = tier
+	if not campaign_profile.is_empty() and tier == "boss":
+		var phases: Array = m.get("phases", []).duplicate(true)
+		for phase in CampaignPressure.extra_phases(mon_id): phases.append(phase)
+		m["phases"] = phases
 	var base: Dictionary = m.get("base", {})
 	var u := Combatant.new(new_uid(), "monster", "enemy", m)
 	u.base_max_hp = maxi(1, int(float(int(base.get("hp", 50))) * hp_atk_mult * enemy_scale))
 	u.base_atk = maxi(1, int(float(int(base.get("atk", 10))) * hp_atk_mult * enemy_scale))
 	u.base_def = maxi(0, int(float(int(base.get("def", 5))) * def_mult * enemy_scale))
+	var prefix := "boss_" if tier == "boss" else ""
+	u.base_max_hp = maxi(1,int(u.base_max_hp*float(campaign_profile.get(prefix+"hp",1.0))))
+	u.base_atk = maxi(1,int(u.base_atk*float(campaign_profile.get(prefix+"atk",1.0))))
+	u.base_def = maxi(0,int(u.base_def*float(campaign_profile.get(prefix+"def",1.0))))
 	u.base_spd = float(base.get("spd", 1.0))
 	u.base_crit = 0.05
 	u.attack_range = String(m.get("attack_range", "melee"))
@@ -736,6 +751,12 @@ func summon_monsters(caster: Combatant, mon_id: String, count: int, cap: int,
 	var cols := [3, 1, 4, 0]
 	var ci := 0
 	for i in n:
-		_spawn_monster(mon_id, row, int(cols[ci % cols.size()]))
+		var summoned := _spawn_monster(mon_id, row, int(cols[ci % cols.size()]))
+		if summoned != null:
+			var scale := float(campaign_profile.get("summon_scale",1.0))
+			summoned.base_max_hp = maxi(1,int(summoned.base_max_hp*scale))
+			summoned.base_atk = maxi(1,int(summoned.base_atk*scale))
+			summoned.base_def = maxi(0,int(summoned.base_def*scale))
+			summoned.hp = summoned.base_max_hp
 		ci += 1
 	emit({"t": "summon", "uid": caster.uid, "count": n})

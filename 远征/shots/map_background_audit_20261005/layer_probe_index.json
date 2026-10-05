@@ -1,0 +1,90 @@
+[
+	{
+		"flags": {
+			"act3_mine_rooms_v1": true
+		},
+		"focus": [
+			480.0,
+			1050.0
+		],
+		"id": "rift_mine_vault_layer_probe",
+		"mine_ground_present": true,
+		"mine_ground_z": 0,
+		"name": "裂谷矿脉",
+		"path": "res://shots/map_background_audit_20261005/spawn_800/rift_mine_vault_layer_probe.png",
+		"seed": 7,
+		"size": [
+			480,
+			800
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "spawn_800"
+	},
+	{
+		"flags": {
+			"act3_mine_rooms_v1": true
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "rift_mine_vault_layer_probe",
+		"mine_ground_present": true,
+		"mine_ground_z": 0,
+		"name": "裂谷矿脉",
+		"path": "res://shots/map_background_audit_20261005/center_800/rift_mine_vault_layer_probe.png",
+		"seed": 7,
+		"size": [
+			480,
+			800
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "center_800"
+	},
+	{
+		"flags": {
+			"act3_mine_rooms_v1": true
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "rift_mine_vault_layer_probe",
+		"mine_ground_present": true,
+		"mine_ground_z": 0,
+		"name": "裂谷矿脉",
+		"path": "res://shots/map_background_audit_20261005/overview/rift_mine_vault_layer_probe.png",
+		"seed": 7,
+		"size": [
+			960,
+			1248
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "overview"
+	},
+	{
+		"flags": {
+			"act3_mine_rooms_v1": true
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "rift_mine_vault_layer_probe",
+		"mine_ground_present": true,
+		"mine_ground_z": 0,
+		"name": "裂谷矿脉",
+		"path": "res://shots/map_background_audit_20261005/center_1067/rift_mine_vault_layer_probe.png",
+		"seed": 7,
+		"size": [
+			480,
+			1067
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "center_1067"
+	}
+]

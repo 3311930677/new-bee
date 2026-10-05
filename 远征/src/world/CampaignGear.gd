@@ -29,6 +29,8 @@ static func source_text(inst: Dictionary) -> String:
 		if parts.size() > 1:
 			var row := QuestService.step_by_id(TableCache.story_quests_config().get("steps", []), String(parts[1]))
 			return "主线保底 · %s" % String(row.get("title", "已完成任务"))
+	if source.begins_with("relic_hunt|"): return "传世挑战"
+	if source.begins_with("relic_buy|"): return "珍品购入"
 	if source.begins_with("res|"): return "随机战利"
 	if source.begins_with("side|"): return "支线奖励"
 	if not source.is_empty(): return "探索奖励"

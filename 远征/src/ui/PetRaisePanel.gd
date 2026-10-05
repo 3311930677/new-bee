@@ -27,6 +27,8 @@ var _help_btn: Control = null    # 右上角「?」养成说明
 
 # 养成说明：? 弹层与首次进入的引导共用同一份文案
 const PET_TIPS := [
+	"品阶分普通、稀有、史诗、传说、传世；与资质星级是两回事。",
+	"传世归路圣鹿在通关后的传世挑战累计120胜结缘，可群体治疗与护盾。",
 	"喂养消耗宠物粮：每份 100 经验，宠物等级上限跟随人物等级。",
 	"突破每层全属性 +8%，共 5 层，需突破晶与魂石。",
 	"洗资质消耗资质果，资质决定每级成长（1星×0.8 ~ 5星×1.6）。",
@@ -139,10 +141,10 @@ func _pet_card(pid: String, idx: int) -> Control:
 	return SlideCardScript.new({
 		"kicker": "灵 宠 %02d / %02d" % [idx + 1, _owned.size()],
 		"title": "%s  Lv%d" % [String(pd.get("name", pid)), lv],
-		"subtitle": "%s · 突破 %d / 5" % [stars, brk],
+		"subtitle": "%s · %s · 突破%d/5" % [String(G.RARITY_NAME.get(String(pd.get("rarity","white")),"普通")), stars, brk],
 		"art_names": ["%s_art" % pid, pid],
 		"art_hint": "%s.png" % pid,
-		"art_tint": Color("c09a55"),
+		"art_tint": G.RARITY_HUE.get(String(pd.get("rarity","white")),G.C_HINT),
 		"art_fit": "contain",
 		"art_ratio": 0.34,
 		"badge": "出战主力" if idx == 0 else "",

@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "points": [
+    {
+      "map": "lorin_wilds",
+      "name": "昭元边城",
+      "at": [
+        480,
+        930
+      ],
+      "requires_story": ""
+    },
+    {
+      "map": "maple_road",
+      "name": "枫林古道",
+      "at": [
+        480,
+        1040
+      ],
+      "requires_story": ""
+    },
+    {
+      "map": "broken_slope",
+      "name": "断碑坡",
+      "at": [
+        480,
+        1040
+      ],
+      "requires_story": ""
+    },
+    {
+      "map": "stele_cavern",
+      "name": "失声碑窟",
+      "at": [
+        480,
+        1050
+      ],
+      "requires_story": "s08"
+    },
+    {
+      "map": "shenyuan_port",
+      "name": "沉渊港",
+      "at": [
+        210,
+        660
+      ],
+      "requires_story": "s12"
+    },
+    {
+      "map": "tidal_gate",
+      "name": "退潮水闸",
+      "at": [
+        480,
+        1050
+      ],
+      "requires_story": "s18"
+    },
+    {
+      "map": "frost_post",
+      "name": "霜关驿",
+      "at": [
+        480,
+        1030
+      ],
+      "requires_story": "s21"
+    },
+    {
+      "map": "rift_mine_vault",
+      "name": "裂谷矿脉",
+      "at": [
+        480,
+        1050
+      ],
+      "requires_story": "s24"
+    },
+    {
+      "map": "frost_pass",
+      "name": "冰隘",
+      "at": [
+        480,
+        1050
+      ],
+      "requires_story": "s26"
+    },
+    {
+      "map": "abyss_ring",
+      "name": "渊口外环",
+      "at": [
+        480,
+        1030
+      ],
+      "requires_story": "s29"
+    },
+    {
+      "map": "stele_entry",
+      "name": "归路门厅",
+      "at": [
+        480,
+        1030
+      ],
+      "requires_story": "s32"
+    },
+    {
+      "map": "stele_core",
+      "name": "碑心",
+      "at": [
+        480,
+        1030
+      ],
+      "requires_story": "s34"
+    }
+  ],
+  "return_towns": {
+    "stele_cavern": "lorin_wilds",
+    "tidal_gate": "shenyuan_port",
+    "rift_mine_vault": "frost_post",
+    "frost_pass": "frost_post",
+    "stele_core": "lorin_wilds"
+  }
+}

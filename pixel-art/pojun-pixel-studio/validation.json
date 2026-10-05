@@ -1,0 +1,77 @@
+{
+  "sheet_size": [
+    1024,
+    128
+  ],
+  "gif_frames": 8,
+  "gif_durations_ms": [
+    110,
+    110,
+    110,
+    110,
+    110,
+    110,
+    110,
+    110
+  ],
+  "frames": [
+    {
+      "frame": 0,
+      "head_changed_pixels": 0,
+      "sword_changed_pixels": 0,
+      "feet_bottom": 120,
+      "has_clear_margin": true
+    },
+    {
+      "frame": 1,
+      "head_changed_pixels": 0,
+      "sword_changed_pixels": 0,
+      "feet_bottom": 120,
+      "has_clear_margin": true
+    },
+    {
+      "frame": 2,
+      "head_changed_pixels": 0,
+      "sword_changed_pixels": 0,
+      "feet_bottom": 120,
+      "has_clear_margin": true
+    },
+    {
+      "frame": 3,
+      "head_changed_pixels": 0,
+      "sword_changed_pixels": 0,
+      "feet_bottom": 120,
+      "has_clear_margin": true
+    },
+    {
+      "frame": 4,
+      "head_changed_pixels": 0,
+      "sword_changed_pixels": 0,
+      "feet_bottom": 120,
+      "has_clear_margin": true
+    },
+    {
+      "frame": 5,
+      "head_changed_pixels": 0,
+      "sword_changed_pixels": 0,
+      "feet_bottom": 120,
+      "has_clear_margin": true
+    },
+    {
+      "frame": 6,
+      "head_changed_pixels": 0,
+      "sword_changed_pixels": 0,
+      "feet_bottom": 120,
+      "has_clear_margin": true
+    },
+    {
+      "frame": 7,
+      "head_changed_pixels": 0,
+      "sword_changed_pixels": 0,
+      "feet_bottom": 120,
+      "has_clear_margin": true
+    }
+  ],
+  "head_checked_pixels_per_frame": 1486,
+  "sword_checked_pixels_per_frame": 942
+}

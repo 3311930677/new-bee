@@ -1,0 +1,4183 @@
+{
+	"bag": {
+		"containers": 44,
+		"control_count": 119,
+		"controls": [
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					1.0,
+					1.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": ".",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": true,
+				"type": "Control"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "Veil",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Control"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "Veil/@ColorRect@64",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "ColorRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "Veil/Atmosphere",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Control"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "Veil/@TextureRect@65",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "Veil/@TextureRect@66",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					1.0,
+					1.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "CenterContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow",
+				"rect": [
+					16.0,
+					24.0,
+					448.0,
+					752.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "PanelContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent",
+				"rect": [
+					30.0,
+					38.0,
+					420.0,
+					724.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "VBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/@HBoxContainer@67",
+				"rect": [
+					30.0,
+					38.0,
+					420.0,
+					64.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "HBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/@HBoxContainer@67/@TextureRect@68",
+				"rect": [
+					30.0,
+					53.0,
+					34.0,
+					34.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/@HBoxContainer@67/@VBoxContainer@69",
+				"rect": [
+					72.0,
+					38.0,
+					326.0,
+					64.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "VBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/@HBoxContainer@67/@VBoxContainer@69/@Label@70",
+				"rect": [
+					72.0,
+					38.0,
+					326.0,
+					44.0
+				],
+				"text": "行旅背包",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/@HBoxContainer@67/@VBoxContainer@69/@Label@71",
+				"rect": [
+					72.0,
+					82.0,
+					326.0,
+					20.0
+				],
+				"text": "整备随身器物 · 保管沿途收获",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/@HBoxContainer@67/CloseInventory",
+				"rect": [
+					406.0,
+					38.0,
+					44.0,
+					64.0
+				],
+				"text": "×",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/InventorySummary",
+				"rect": [
+					30.0,
+					110.0,
+					420.0,
+					28.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "HBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/InventorySummary/Capacity",
+				"rect": [
+					30.0,
+					114.0,
+					333.0,
+					20.0
+				],
+				"text": "已用 12/60",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/InventorySummary/@Label@72",
+				"rect": [
+					371.0,
+					114.0,
+					1.0,
+					20.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/InventorySummary/@TextureRect@73",
+				"rect": [
+					380.0,
+					110.0,
+					18.0,
+					28.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/InventorySummary/GoldBalance",
+				"rect": [
+					406.0,
+					114.0,
+					44.0,
+					20.0
+				],
+				"text": "101376",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/Categories",
+				"rect": [
+					30.0,
+					146.0,
+					420.0,
+					44.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "HBoxContainer"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/Categories/Tab_equip",
+				"rect": [
+					30.0,
+					146.0,
+					102.0,
+					44.0
+				],
+				"text": "装备",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/Categories/Tab_mat",
+				"rect": [
+					136.0,
+					146.0,
+					102.0,
+					44.0
+				],
+				"text": "材料",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/Categories/Tab_gem",
+				"rect": [
+					242.0,
+					146.0,
+					102.0,
+					44.0
+				],
+				"text": "宝石",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/Categories/Tab_pending",
+				"rect": [
+					348.0,
+					146.0,
+					102.0,
+					44.0
+				],
+				"text": "待领取",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination",
+				"rect": [
+					30.0,
+					198.0,
+					420.0,
+					268.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "VBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll",
+				"rect": [
+					30.0,
+					198.0,
+					420.0,
+					216.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "ScrollContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid",
+				"rect": [
+					30.0,
+					198.0,
+					420.0,
+					208.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "GridContainer"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_17",
+				"rect": [
+					30.0,
+					198.0,
+					99.0,
+					100.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					1.0,
+					1.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 4,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_17/@MarginContainer@144",
+				"rect": [
+					30.0,
+					198.0,
+					99.0,
+					100.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "MarginContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_17/@MarginContainer@144/@VBoxContainer@145",
+				"rect": [
+					36.0,
+					204.0,
+					87.0,
+					88.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "VBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_17/@MarginContainer@144/@VBoxContainer@145/@HBoxContainer@146",
+				"rect": [
+					36.0,
+					204.0,
+					87.0,
+					20.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "HBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_17/@MarginContainer@144/@VBoxContainer@145/@HBoxContainer@146/@Label@147",
+				"rect": [
+					36.0,
+					204.0,
+					64.0,
+					20.0
+				],
+				"text": "稀有",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_17/@MarginContainer@144/@VBoxContainer@145/@HBoxContainer@146/@Label@148",
+				"rect": [
+					108.0,
+					204.0,
+					15.0,
+					20.0
+				],
+				"text": "+0",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_17/@MarginContainer@144/@VBoxContainer@145/@TextureRect@149",
+				"rect": [
+					58.0,
+					226.0,
+					42.0,
+					42.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_17/@MarginContainer@144/@VBoxContainer@145/@Label@150",
+				"rect": [
+					36.0,
+					270.0,
+					87.0,
+					22.0
+				],
+				"text": "月纹坠饰",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_18",
+				"rect": [
+					137.0,
+					198.0,
+					99.0,
+					100.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					1.0,
+					1.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 4,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_18/@MarginContainer@151",
+				"rect": [
+					137.0,
+					198.0,
+					99.0,
+					100.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "MarginContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_18/@MarginContainer@151/@VBoxContainer@152",
+				"rect": [
+					143.0,
+					204.0,
+					87.0,
+					88.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "VBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_18/@MarginContainer@151/@VBoxContainer@152/@HBoxContainer@153",
+				"rect": [
+					143.0,
+					204.0,
+					87.0,
+					20.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "HBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_18/@MarginContainer@151/@VBoxContainer@152/@HBoxContainer@153/@Label@154",
+				"rect": [
+					143.0,
+					204.0,
+					64.0,
+					20.0
+				],
+				"text": "稀有",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_18/@MarginContainer@151/@VBoxContainer@152/@HBoxContainer@153/@Label@155",
+				"rect": [
+					215.0,
+					204.0,
+					15.0,
+					20.0
+				],
+				"text": "+0",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_18/@MarginContainer@151/@VBoxContainer@152/@TextureRect@156",
+				"rect": [
+					165.0,
+					226.0,
+					42.0,
+					42.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_18/@MarginContainer@151/@VBoxContainer@152/@Label@157",
+				"rect": [
+					143.0,
+					270.0,
+					87.0,
+					22.0
+				],
+				"text": "月纹坠饰",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_7",
+				"rect": [
+					244.0,
+					198.0,
+					99.0,
+					100.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					1.0,
+					1.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 4,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_7/@MarginContainer@158",
+				"rect": [
+					244.0,
+					198.0,
+					99.0,
+					100.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "MarginContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_7/@MarginContainer@158/@VBoxContainer@159",
+				"rect": [
+					250.0,
+					204.0,
+					87.0,
+					88.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "VBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_7/@MarginContainer@158/@VBoxContainer@159/@HBoxContainer@160",
+				"rect": [
+					250.0,
+					204.0,
+					87.0,
+					20.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "HBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_7/@MarginContainer@158/@VBoxContainer@159/@HBoxContainer@160/@Label@161",
+				"rect": [
+					250.0,
+					204.0,
+					64.0,
+					20.0
+				],
+				"text": "精良",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_7/@MarginContainer@158/@VBoxContainer@159/@HBoxContainer@160/@Label@162",
+				"rect": [
+					322.0,
+					204.0,
+					15.0,
+					20.0
+				],
+				"text": "+0",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_7/@MarginContainer@158/@VBoxContainer@159/@TextureRect@163",
+				"rect": [
+					272.0,
+					226.0,
+					42.0,
+					42.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_7/@MarginContainer@158/@VBoxContainer@159/@Label@164",
+				"rect": [
+					250.0,
+					270.0,
+					87.0,
+					22.0
+				],
+				"text": "狼牙大剑",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_8",
+				"rect": [
+					351.0,
+					198.0,
+					99.0,
+					100.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					1.0,
+					1.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 4,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_8/@MarginContainer@165",
+				"rect": [
+					351.0,
+					198.0,
+					99.0,
+					100.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "MarginContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_8/@MarginContainer@165/@VBoxContainer@166",
+				"rect": [
+					357.0,
+					204.0,
+					87.0,
+					88.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "VBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_8/@MarginContainer@165/@VBoxContainer@166/@HBoxContainer@167",
+				"rect": [
+					357.0,
+					204.0,
+					87.0,
+					20.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "HBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_8/@MarginContainer@165/@VBoxContainer@166/@HBoxContainer@167/@Label@168",
+				"rect": [
+					357.0,
+					204.0,
+					64.0,
+					20.0
+				],
+				"text": "精良",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_8/@MarginContainer@165/@VBoxContainer@166/@HBoxContainer@167/@Label@169",
+				"rect": [
+					429.0,
+					204.0,
+					15.0,
+					20.0
+				],
+				"text": "+0",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_8/@MarginContainer@165/@VBoxContainer@166/@TextureRect@170",
+				"rect": [
+					379.0,
+					226.0,
+					42.0,
+					42.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_8/@MarginContainer@165/@VBoxContainer@166/@Label@171",
+				"rect": [
+					357.0,
+					270.0,
+					87.0,
+					22.0
+				],
+				"text": "狼牙大剑",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_9",
+				"rect": [
+					30.0,
+					306.0,
+					99.0,
+					100.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					1.0,
+					1.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 4,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_9/@MarginContainer@172",
+				"rect": [
+					30.0,
+					306.0,
+					99.0,
+					100.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "MarginContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_9/@MarginContainer@172/@VBoxContainer@173",
+				"rect": [
+					36.0,
+					312.0,
+					87.0,
+					88.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "VBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_9/@MarginContainer@172/@VBoxContainer@173/@HBoxContainer@174",
+				"rect": [
+					36.0,
+					312.0,
+					87.0,
+					20.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "HBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_9/@MarginContainer@172/@VBoxContainer@173/@HBoxContainer@174/@Label@175",
+				"rect": [
+					36.0,
+					312.0,
+					64.0,
+					20.0
+				],
+				"text": "精良",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_9/@MarginContainer@172/@VBoxContainer@173/@HBoxContainer@174/@Label@176",
+				"rect": [
+					108.0,
+					312.0,
+					15.0,
+					20.0
+				],
+				"text": "+0",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_9/@MarginContainer@172/@VBoxContainer@173/@TextureRect@177",
+				"rect": [
+					58.0,
+					334.0,
+					42.0,
+					42.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_9/@MarginContainer@172/@VBoxContainer@173/@Label@178",
+				"rect": [
+					36.0,
+					378.0,
+					87.0,
+					22.0
+				],
+				"text": "狼牙大剑",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_10",
+				"rect": [
+					137.0,
+					306.0,
+					99.0,
+					100.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					1.0,
+					1.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 4,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_10/@MarginContainer@179",
+				"rect": [
+					137.0,
+					306.0,
+					99.0,
+					100.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "MarginContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_10/@MarginContainer@179/@VBoxContainer@180",
+				"rect": [
+					143.0,
+					312.0,
+					87.0,
+					88.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "VBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_10/@MarginContainer@179/@VBoxContainer@180/@HBoxContainer@181",
+				"rect": [
+					143.0,
+					312.0,
+					87.0,
+					20.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "HBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_10/@MarginContainer@179/@VBoxContainer@180/@HBoxContainer@181/@Label@182",
+				"rect": [
+					143.0,
+					312.0,
+					64.0,
+					20.0
+				],
+				"text": "精良",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_10/@MarginContainer@179/@VBoxContainer@180/@HBoxContainer@181/@Label@183",
+				"rect": [
+					215.0,
+					312.0,
+					15.0,
+					20.0
+				],
+				"text": "+0",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_10/@MarginContainer@179/@VBoxContainer@180/@TextureRect@184",
+				"rect": [
+					165.0,
+					334.0,
+					42.0,
+					42.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_10/@MarginContainer@179/@VBoxContainer@180/@Label@185",
+				"rect": [
+					143.0,
+					378.0,
+					87.0,
+					22.0
+				],
+				"text": "狼牙大剑",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_11",
+				"rect": [
+					244.0,
+					306.0,
+					99.0,
+					100.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					1.0,
+					1.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 4,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_11/@MarginContainer@186",
+				"rect": [
+					244.0,
+					306.0,
+					99.0,
+					100.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "MarginContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_11/@MarginContainer@186/@VBoxContainer@187",
+				"rect": [
+					250.0,
+					312.0,
+					87.0,
+					88.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "VBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_11/@MarginContainer@186/@VBoxContainer@187/@HBoxContainer@188",
+				"rect": [
+					250.0,
+					312.0,
+					87.0,
+					20.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "HBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_11/@MarginContainer@186/@VBoxContainer@187/@HBoxContainer@188/@Label@189",
+				"rect": [
+					250.0,
+					312.0,
+					64.0,
+					20.0
+				],
+				"text": "精良",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_11/@MarginContainer@186/@VBoxContainer@187/@HBoxContainer@188/@Label@190",
+				"rect": [
+					322.0,
+					312.0,
+					15.0,
+					20.0
+				],
+				"text": "+0",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_11/@MarginContainer@186/@VBoxContainer@187/@TextureRect@191",
+				"rect": [
+					272.0,
+					334.0,
+					42.0,
+					42.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_11/@MarginContainer@186/@VBoxContainer@187/@Label@192",
+				"rect": [
+					250.0,
+					378.0,
+					87.0,
+					22.0
+				],
+				"text": "狼牙大剑",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_12",
+				"rect": [
+					351.0,
+					306.0,
+					99.0,
+					100.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					1.0,
+					1.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 4,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_12/@MarginContainer@193",
+				"rect": [
+					351.0,
+					306.0,
+					99.0,
+					100.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "MarginContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_12/@MarginContainer@193/@VBoxContainer@194",
+				"rect": [
+					357.0,
+					312.0,
+					87.0,
+					88.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "VBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_12/@MarginContainer@193/@VBoxContainer@194/@HBoxContainer@195",
+				"rect": [
+					357.0,
+					312.0,
+					87.0,
+					20.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "HBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_12/@MarginContainer@193/@VBoxContainer@194/@HBoxContainer@195/@Label@196",
+				"rect": [
+					357.0,
+					312.0,
+					64.0,
+					20.0
+				],
+				"text": "精良",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_12/@MarginContainer@193/@VBoxContainer@194/@HBoxContainer@195/@Label@197",
+				"rect": [
+					429.0,
+					312.0,
+					15.0,
+					20.0
+				],
+				"text": "+0",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_12/@MarginContainer@193/@VBoxContainer@194/@TextureRect@198",
+				"rect": [
+					379.0,
+					334.0,
+					42.0,
+					42.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/ItemScroll/EquipmentGrid/Equipment_12/@MarginContainer@193/@VBoxContainer@194/@Label@199",
+				"rect": [
+					357.0,
+					378.0,
+					87.0,
+					22.0
+				],
+				"text": "狼牙大剑",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/Pagination",
+				"rect": [
+					30.0,
+					422.0,
+					420.0,
+					44.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "HBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/Pagination/@Label@200",
+				"rect": [
+					30.0,
+					434.0,
+					316.0,
+					20.0
+				],
+				"text": "12 件 · 1/2 页",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/Pagination/@Button@201",
+				"rect": [
+					354.0,
+					422.0,
+					44.0,
+					44.0
+				],
+				"text": "◀",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/ItemsAndPagination/Pagination/@Button@202",
+				"rect": [
+					406.0,
+					422.0,
+					44.0,
+					44.0
+				],
+				"text": "▶",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail",
+				"rect": [
+					30.0,
+					474.0,
+					420.0,
+					236.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "PanelContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@203",
+				"rect": [
+					40.0,
+					484.0,
+					400.0,
+					216.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "VBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@203/DetailScroll",
+				"rect": [
+					40.0,
+					484.0,
+					400.0,
+					164.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "ScrollContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@203/DetailScroll/@VBoxContainer@206",
+				"rect": [
+					40.0,
+					484.0,
+					400.0,
+					154.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "VBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@203/DetailScroll/@VBoxContainer@206/@HBoxContainer@207",
+				"rect": [
+					40.0,
+					484.0,
+					400.0,
+					49.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "HBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@203/DetailScroll/@VBoxContainer@206/@HBoxContainer@207/@TextureRect@208",
+				"rect": [
+					40.0,
+					484.0,
+					46.0,
+					49.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@203/DetailScroll/@VBoxContainer@206/@HBoxContainer@207/@VBoxContainer@209",
+				"rect": [
+					94.0,
+					484.0,
+					346.0,
+					49.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "VBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@203/DetailScroll/@VBoxContainer@206/@HBoxContainer@207/@VBoxContainer@209/@Label@210",
+				"rect": [
+					94.0,
+					484.0,
+					346.0,
+					27.0
+				],
+				"text": "月纹坠饰",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@203/DetailScroll/@VBoxContainer@206/@HBoxContainer@207/@VBoxContainer@209/@Label@211",
+				"rect": [
+					94.0,
+					513.0,
+					346.0,
+					20.0
+				],
+				"text": "稀有 · 强化 +0",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@203/DetailScroll/@VBoxContainer@206/@Label@212",
+				"rect": [
+					40.0,
+					539.0,
+					400.0,
+					23.0
+				],
+				"text": "生命 +100 · 暴击 +3%",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@203/DetailScroll/@VBoxContainer@206/EquipmentComparison",
+				"rect": [
+					40.0,
+					568.0,
+					400.0,
+					20.0
+				],
+				"text": "比较：生命 +30 · 暴击 +1%",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@203/DetailScroll/@VBoxContainer@206/@HBoxContainer@217",
+				"rect": [
+					40.0,
+					594.0,
+					400.0,
+					44.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "HBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@203/DetailScroll/@VBoxContainer@206/@HBoxContainer@217/@Label@213",
+				"rect": [
+					40.0,
+					606.0,
+					39.0,
+					20.0
+				],
+				"text": "宝石孔",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@203/DetailScroll/@VBoxContainer@206/@HBoxContainer@217/@Button@214",
+				"rect": [
+					87.0,
+					594.0,
+					44.0,
+					44.0
+				],
+				"text": "空",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@203/DetailScroll/@VBoxContainer@206/@HBoxContainer@217/@Button@215",
+				"rect": [
+					139.0,
+					594.0,
+					44.0,
+					44.0
+				],
+				"text": "空",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@203/DetailScroll/@VBoxContainer@206/@HBoxContainer@217/@Button@216",
+				"rect": [
+					191.0,
+					594.0,
+					44.0,
+					44.0
+				],
+				"text": "空",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@203/EquipmentActions",
+				"rect": [
+					40.0,
+					656.0,
+					400.0,
+					44.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "HBoxContainer"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@203/EquipmentActions/@Button@218",
+				"rect": [
+					40.0,
+					656.0,
+					128.0,
+					44.0
+				],
+				"text": "装 备",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@203/EquipmentActions/@Button@219",
+				"rect": [
+					176.0,
+					656.0,
+					128.0,
+					44.0
+				],
+				"text": "锁定",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/SelectedItemDetail/@VBoxContainer@203/EquipmentActions/@Button@220",
+				"rect": [
+					312.0,
+					656.0,
+					128.0,
+					44.0
+				],
+				"text": "卖出 2880 金",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/InventoryFooter",
+				"rect": [
+					30.0,
+					718.0,
+					420.0,
+					44.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "HBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/InventoryFooter/@Label@74",
+				"rect": [
+					30.0,
+					730.0,
+					308.0,
+					20.0
+				],
+				"text": "材料与宝石不占背包格",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "InventoryFrameLayout/InventoryWindow/InventoryContent/InventoryFooter/ReturnButton",
+				"rect": [
+					346.0,
+					718.0,
+					104.0,
+					44.0
+				],
+				"text": "返回",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Button"
+			}
+		],
+		"explicit_themes": 1,
+		"focusable": 22,
+		"small_targets": []
+	},
+	"home": {
+		"containers": 1,
+		"control_count": 62,
+		"controls": [
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					1.0,
+					1.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": ".",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Control"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "PageBackground",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "BackgroundShade",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "ColorRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "SceneryMotion",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Control"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "DisplayAtmosphere",
+				"rect": [
+					0.0,
+					0.0,
+					480.0,
+					800.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Control"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "@Panel@2",
+				"rect": [
+					24.0,
+					24.0,
+					48.0,
+					48.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Panel"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "@Panel@2/@TextureRect@3",
+				"rect": [
+					29.0,
+					29.0,
+					38.0,
+					38.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "@Label@4",
+				"rect": [
+					84.0,
+					20.0,
+					248.0,
+					30.0
+				],
+				"text": "沈舟",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "@Label@5",
+				"rect": [
+					84.0,
+					48.0,
+					64.0,
+					24.0
+				],
+				"text": "LV 12",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "@ColorRect@6",
+				"rect": [
+					150.0,
+					58.0,
+					116.0,
+					4.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "ColorRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "@ColorRect@6/@ColorRect@7",
+				"rect": [
+					150.0,
+					58.0,
+					0.0,
+					4.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "ColorRect"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "@Control@10",
+				"rect": [
+					404.0,
+					24.0,
+					52.0,
+					48.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Control"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "@Control@10/@Label@8",
+				"rect": [
+					420.0,
+					24.0,
+					20.0,
+					48.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "@Control@10/@TextureRect@9",
+				"rect": [
+					419.0,
+					37.0,
+					22.0,
+					22.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "@Control@11",
+				"rect": [
+					24.0,
+					86.0,
+					432.0,
+					44.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Control"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": true,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "@HBoxContainer@12",
+				"rect": [
+					32.0,
+					86.0,
+					416.0,
+					44.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "HBoxContainer"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "@HBoxContainer@12/@TextureRect@13",
+				"rect": [
+					32.0,
+					99.0,
+					18.0,
+					18.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "@HBoxContainer@12/@Label@15",
+				"rect": [
+					50.0,
+					86.0,
+					86.0,
+					44.0
+				],
+				"text": "101376",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "@HBoxContainer@12/@TextureRect@16",
+				"rect": [
+					136.0,
+					99.0,
+					18.0,
+					18.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "@HBoxContainer@12/@Label@18",
+				"rect": [
+					154.0,
+					86.0,
+					86.0,
+					44.0
+				],
+				"text": "1011",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "@HBoxContainer@12/@TextureRect@19",
+				"rect": [
+					240.0,
+					99.0,
+					18.0,
+					18.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "@HBoxContainer@12/@Label@21",
+				"rect": [
+					258.0,
+					86.0,
+					86.0,
+					44.0
+				],
+				"text": "259",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "@HBoxContainer@12/@TextureRect@22",
+				"rect": [
+					344.0,
+					99.0,
+					18.0,
+					18.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "@HBoxContainer@12/@Label@24",
+				"rect": [
+					362.0,
+					86.0,
+					86.0,
+					44.0
+				],
+				"text": "580",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "@Label@25",
+				"rect": [
+					26.0,
+					139.0,
+					190.0,
+					30.0
+				],
+				"text": "行旅营帐",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "@Control@29",
+				"rect": [
+					24.0,
+					176.0,
+					212.0,
+					70.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Control"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "@Control@29/@Label@26",
+				"rect": [
+					66.0,
+					180.0,
+					154.0,
+					30.0
+				],
+				"text": "任务",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "@Control@29/@TextureRect@27",
+				"rect": [
+					36.0,
+					185.0,
+					23.0,
+					23.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "@Control@29/@Label@28",
+				"rect": [
+					38.0,
+					210.0,
+					184.0,
+					30.0
+				],
+				"text": "与边城执事闻叔交谈",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "@Control@32",
+				"rect": [
+					142.0,
+					540.0,
+					196.0,
+					58.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Control"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "@Control@32/@Label@33",
+				"rect": [
+					150.0,
+					542.0,
+					180.0,
+					33.0
+				],
+				"text": "破军",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "@Control@32/@Label@34",
+				"rect": [
+					150.0,
+					570.0,
+					180.0,
+					23.0
+				],
+				"text": "战士 · LV 12",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "ActivitiesEntry",
+				"rect": [
+					24.0,
+					264.0,
+					124.0,
+					48.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Control"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "ActivitiesEntry/@Label@35",
+				"rect": [
+					40.0,
+					264.0,
+					92.0,
+					48.0
+				],
+				"text": "活动",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "@Control@38",
+				"rect": [
+					388.0,
+					262.0,
+					68.0,
+					78.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Control"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "@Control@38/@Label@36",
+				"rect": [
+					388.0,
+					318.0,
+					68.0,
+					23.0
+				],
+				"text": "竞技",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "@Control@38/@TextureRect@37",
+				"rect": [
+					405.0,
+					272.0,
+					34.0,
+					34.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "@Control@41",
+				"rect": [
+					388.0,
+					348.0,
+					68.0,
+					78.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Control"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "@Control@41/@Label@39",
+				"rect": [
+					388.0,
+					404.0,
+					68.0,
+					23.0
+				],
+				"text": "召唤",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "@Control@41/@TextureRect@40",
+				"rect": [
+					405.0,
+					358.0,
+					34.0,
+					34.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "@Control@45",
+				"rect": [
+					388.0,
+					434.0,
+					68.0,
+					78.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Control"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "@Control@45/@Label@42",
+				"rect": [
+					388.0,
+					490.0,
+					68.0,
+					23.0
+				],
+				"text": "兑换",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "@Control@45/@TextureRect@43",
+				"rect": [
+					405.0,
+					444.0,
+					34.0,
+					34.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 1,
+				"path": "@Control@45/@Panel@44",
+				"rect": [
+					446.0,
+					439.0,
+					9.0,
+					9.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Panel"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "ReturnToWorld",
+				"rect": [
+					32.0,
+					622.0,
+					416.0,
+					70.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Control"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "ReturnToWorld/@Label@46",
+				"rect": [
+					96.0,
+					628.0,
+					286.0,
+					37.0
+				],
+				"text": "继续旅程",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "ReturnToWorld/@Label@47",
+				"rect": [
+					96.0,
+					663.0,
+					286.0,
+					23.0
+				],
+				"text": "昭元边城",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "ReturnToWorld/@TextureRect@48",
+				"rect": [
+					53.0,
+					639.0,
+					34.0,
+					34.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "ReturnToWorld/@TextureRect@49",
+				"rect": [
+					411.0,
+					649.0,
+					16.0,
+					16.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "@Control@50",
+				"rect": [
+					12.0,
+					712.0,
+					456.0,
+					76.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Control"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "@Control@53",
+				"rect": [
+					16.0,
+					714.0,
+					112.0,
+					72.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Control"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "@Control@53/@Label@51",
+				"rect": [
+					16.0,
+					760.0,
+					112.0,
+					24.0
+				],
+				"text": "世界",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "@Control@53/@TextureRect@52",
+				"rect": [
+					53.0,
+					721.0,
+					38.0,
+					38.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "@Control@56",
+				"rect": [
+					128.0,
+					714.0,
+					112.0,
+					72.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Control"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "@Control@56/@Label@54",
+				"rect": [
+					128.0,
+					760.0,
+					112.0,
+					24.0
+				],
+				"text": "背包",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "@Control@56/@TextureRect@55",
+				"rect": [
+					165.0,
+					721.0,
+					38.0,
+					38.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "@Control@59",
+				"rect": [
+					240.0,
+					714.0,
+					112.0,
+					72.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Control"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "@Control@59/@Label@57",
+				"rect": [
+					240.0,
+					760.0,
+					112.0,
+					24.0
+				],
+				"text": "养成",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "@Control@59/@TextureRect@58",
+				"rect": [
+					277.0,
+					721.0,
+					38.0,
+					38.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			},
+			{
+				"action": true,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 2,
+				"overrides": 0,
+				"path": "@Control@62",
+				"rect": [
+					352.0,
+					714.0,
+					112.0,
+					72.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Control"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 7,
+				"path": "@Control@62/@Label@60",
+				"rect": [
+					352.0,
+					760.0,
+					112.0,
+					24.0
+				],
+				"text": "图鉴",
+				"theme": "",
+				"theme_attached": false,
+				"type": "Label"
+			},
+			{
+				"action": false,
+				"anchors": [
+					0.0,
+					0.0,
+					0.0,
+					0.0
+				],
+				"container": false,
+				"focus_mode": 0,
+				"overrides": 0,
+				"path": "@Control@62/@TextureRect@61",
+				"rect": [
+					389.0,
+					721.0,
+					38.0,
+					38.0
+				],
+				"text": "",
+				"theme": "",
+				"theme_attached": false,
+				"type": "TextureRect"
+			}
+		],
+		"explicit_themes": 0,
+		"focusable": 11,
+		"small_targets": []
+	}
+}

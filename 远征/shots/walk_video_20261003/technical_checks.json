@@ -1,0 +1,289 @@
+{
+  "source": "image/role/fs/source/shuangyu_walk_video_v15.png",
+  "fps": 12,
+  "grid": [
+    6,
+    4
+  ],
+  "cell": [
+    128,
+    128
+  ],
+  "shared_crop": [
+    36,
+    19,
+    224,
+    235
+  ],
+  "scale": 0.5185185185185185,
+  "origin": [
+    16,
+    9
+  ],
+  "frames": [
+    {
+      "direction": "down",
+      "slot": 0,
+      "bbox": [
+        16,
+        14,
+        110,
+        121
+      ],
+      "sha256": "a653216081ca1ae67634d3fd1fb6d85c3f7e63d15593838a59223bccadec3239"
+    },
+    {
+      "direction": "down",
+      "slot": 1,
+      "bbox": [
+        17,
+        14,
+        110,
+        121
+      ],
+      "sha256": "6dc04544d25c5de74242fdb483d3ba13185d82ae0bc5e8013d4d3714647f07d3"
+    },
+    {
+      "direction": "down",
+      "slot": 2,
+      "bbox": [
+        17,
+        14,
+        110,
+        120
+      ],
+      "sha256": "c7b9680be6743d17bb3ec12fcb5a3f6f61e72dcbeb85436766be003ee2605f7d"
+    },
+    {
+      "direction": "down",
+      "slot": 3,
+      "bbox": [
+        17,
+        13,
+        110,
+        121
+      ],
+      "sha256": "2ed2a179d3d009a8cf6ffb05d59dd36ce1fd6022c957204ea790629403987265"
+    },
+    {
+      "direction": "down",
+      "slot": 4,
+      "bbox": [
+        17,
+        14,
+        110,
+        121
+      ],
+      "sha256": "ab0dbc35b60989f67f0fd27913466b8cccfbdce52909ec407f52cf6b56dfc6a1"
+    },
+    {
+      "direction": "down",
+      "slot": 5,
+      "bbox": [
+        17,
+        13,
+        110,
+        120
+      ],
+      "sha256": "27b7178df81908d9fd0de29fb6fbbe1a5f092ad7a6b35184a311bbfac3160b26"
+    },
+    {
+      "direction": "left",
+      "slot": 0,
+      "bbox": [
+        18,
+        14,
+        112,
+        120
+      ],
+      "sha256": "b316e745527db014b6d909b0ca2c2f5179e33b52a705b0691fa2ba0d26ebd61a"
+    },
+    {
+      "direction": "left",
+      "slot": 1,
+      "bbox": [
+        18,
+        14,
+        112,
+        119
+      ],
+      "sha256": "e5b4c0d6369c9c6b1514fe6e9c79150f811c4220680609b31a9718d57444949f"
+    },
+    {
+      "direction": "left",
+      "slot": 2,
+      "bbox": [
+        19,
+        14,
+        112,
+        119
+      ],
+      "sha256": "b9d254f3ea8e2025885138b5f200bc437dc1358a477d0c74d041b09440f4d063"
+    },
+    {
+      "direction": "left",
+      "slot": 3,
+      "bbox": [
+        22,
+        14,
+        112,
+        120
+      ],
+      "sha256": "067c42c6d1930b89128dc43ee7d8fd6e0e957e5631461338e5c4d2a64b9be3d1"
+    },
+    {
+      "direction": "left",
+      "slot": 4,
+      "bbox": [
+        21,
+        14,
+        111,
+        120
+      ],
+      "sha256": "1ff15b94f062d8176ffd1253b8dbb673b89d107b7e4e75121b1632fcedaa097c"
+    },
+    {
+      "direction": "left",
+      "slot": 5,
+      "bbox": [
+        18,
+        14,
+        111,
+        120
+      ],
+      "sha256": "825cae60cf6068dc108ba4704505c7ff0eb5df021971c4fb86399653e88dc266"
+    },
+    {
+      "direction": "right",
+      "slot": 0,
+      "bbox": [
+        16,
+        12,
+        109,
+        119
+      ],
+      "sha256": "4aa88043a4db6e15af83cc087dbb24848e7b4107414fcc162ef37019e4188a3a"
+    },
+    {
+      "direction": "right",
+      "slot": 1,
+      "bbox": [
+        17,
+        12,
+        109,
+        119
+      ],
+      "sha256": "53bc0b8b5c3feca52f0f0c5293365c3a1521bf503d7770953c71796649097b55"
+    },
+    {
+      "direction": "right",
+      "slot": 2,
+      "bbox": [
+        16,
+        12,
+        110,
+        120
+      ],
+      "sha256": "ee6b8373fa4759b53ab2701fe5dd558258872e0e1fbfedad753b62a90f033a01"
+    },
+    {
+      "direction": "right",
+      "slot": 3,
+      "bbox": [
+        16,
+        12,
+        109,
+        119
+      ],
+      "sha256": "b96a92021ce63c2ca41df084353f81ef682f8cede675d239e37cb70c85a02a2c"
+    },
+    {
+      "direction": "right",
+      "slot": 4,
+      "bbox": [
+        17,
+        12,
+        110,
+        120
+      ],
+      "sha256": "531b6f9e43c30e277ebb6becb1e13b0857349339ae8326e58341db369358a230"
+    },
+    {
+      "direction": "right",
+      "slot": 5,
+      "bbox": [
+        17,
+        12,
+        110,
+        119
+      ],
+      "sha256": "b538de95325c8d0b15a804a0eda604128b440d428432386ba1493542c8cb057d"
+    },
+    {
+      "direction": "up",
+      "slot": 0,
+      "bbox": [
+        17,
+        10,
+        113,
+        119
+      ],
+      "sha256": "e529ce664fd3894e0e25ebd494e7b535a3d67d7dad43e1267707cd064cbed761"
+    },
+    {
+      "direction": "up",
+      "slot": 1,
+      "bbox": [
+        17,
+        10,
+        113,
+        118
+      ],
+      "sha256": "9377f3bb09672566b625303996ab8155d758989bf669870441865366772f3df3"
+    },
+    {
+      "direction": "up",
+      "slot": 2,
+      "bbox": [
+        17,
+        9,
+        112,
+        118
+      ],
+      "sha256": "324cc57f0dbaec1673e563f7d32fc9fe13562b69d15e580ba2ae8cc92d8e1988"
+    },
+    {
+      "direction": "up",
+      "slot": 3,
+      "bbox": [
+        17,
+        10,
+        112,
+        120
+      ],
+      "sha256": "e4dc9b07504ebe9c39497906ff6f1473ab7602523c46b0d5c9f34638fdceaa29"
+    },
+    {
+      "direction": "up",
+      "slot": 4,
+      "bbox": [
+        19,
+        10,
+        111,
+        120
+      ],
+      "sha256": "a17f291f7a01c964cce1eca217b5cdd15bfedbc0aa91fe463706017847967db7"
+    },
+    {
+      "direction": "up",
+      "slot": 5,
+      "bbox": [
+        19,
+        9,
+        110,
+        119
+      ],
+      "sha256": "96e11c85ee8b392b82d11868abd42984077059937263933e90fd96ef5acd0c32"
+    }
+  ]
+}

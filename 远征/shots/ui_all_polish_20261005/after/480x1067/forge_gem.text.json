@@ -1,0 +1,304 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 59.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@Panel@7/@Label@6",
+			"rect_height": 59.0,
+			"size": 40,
+			"text": "装备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@10/@PanelContainer@15/@Control@11/@Label@13",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@10/@PanelContainer@15/@Control@11/@Label@14",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "+3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@10/@PanelContainer@20/@Control@16/@Label@18",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "长枪"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@10/@PanelContainer@20/@Control@16/@Label@19",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@10/@PanelContainer@25/@Control@21/@Label@23",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "法杖"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@10/@PanelContainer@25/@Control@21/@Label@24",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@10/@PanelContainer@30/@Control@26/@Label@28",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "圣锤"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@10/@PanelContainer@30/@Control@26/@Label@29",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@10/@PanelContainer@35/@Control@31/@Label@33",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "护甲"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@10/@PanelContainer@35/@Control@31/@Label@34",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "+2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@10/@PanelContainer@40/@Control@36/@Label@38",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "饰品"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@10/@PanelContainer@40/@Control@36/@Label@39",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "+1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Label@41",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "红框为「破军」本职业武器"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@48/@Label@118",
+			"rect_height": 53.0,
+			"size": 17,
+			"text": "大剑  +3\n攻击 +23"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@48/@PanelContainer@121/@Label@119",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "强化"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@48/@PanelContainer@124/@Label@122",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "宝石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@48/@PanelContainer@127/@Label@125",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "精炼"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@48/@Control@143/@Label@144",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "宝 石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@48/@Control@143/@PanelContainer@146/@Label@145",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "合成"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@48/@Control@143/@Panel@149/@Label@148",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "+10"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@48/@Control@143/@Panel@151/@Label@150",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "空"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@48/@Control@143/@Panel@153/@Label@152",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "空"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@48/@Control@143/@Label@154",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "镶嵌费 200 金币/次 · 每次镶嵌即扣"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@48/@Control@143/@Label@155",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "右侧选宝石镶嵌；左侧点已镶宝石可拆除。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@48/@Control@143/@PanelContainer@159/@Control@156/@Label@158",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "×1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@48/@Control@143/@PanelContainer@163/@Control@160/@Label@162",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "×2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@48/@Control@143/@PanelContainer@167/@Control@164/@Label@166",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "×1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@48/@Label@181",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "背包：强化石×12 · 精炼石×6 · 锁符×3 · 金币 12800"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@48/@PanelContainer@183/@Label@182",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "卸下"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Control@48/@Label@184",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "卸下后回到背包（背包满时会拒绝）"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@PanelContainer@50/@Label@49",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "返回"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/OffscreenShotRunner/ShotRunner/@Control@2/@PanelContainer@47/@Label@45",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "背包"
+		}
+	]
+}

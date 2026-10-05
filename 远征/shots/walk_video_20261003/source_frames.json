@@ -1,0 +1,300 @@
+{
+  "video": "C:\\Users\\tsz\\Downloads\\video_20261003_204732.mp4",
+  "fps": 29.99802644562858,
+  "directions": [
+    "down",
+    "left",
+    "right",
+    "up"
+  ],
+  "frames": [
+    {
+      "direction": "down",
+      "slot": 0,
+      "frame": 3,
+      "seconds": 0.10000657894736842,
+      "crop": [
+        103,
+        508,
+        956,
+        1521
+      ]
+    },
+    {
+      "direction": "down",
+      "slot": 1,
+      "frame": 7,
+      "seconds": 0.2333486842105263,
+      "crop": [
+        108,
+        503,
+        951,
+        1523
+      ]
+    },
+    {
+      "direction": "down",
+      "slot": 2,
+      "frame": 11,
+      "seconds": 0.36669078947368416,
+      "crop": [
+        111,
+        500,
+        950,
+        1522
+      ]
+    },
+    {
+      "direction": "down",
+      "slot": 3,
+      "frame": 15,
+      "seconds": 0.5000328947368421,
+      "crop": [
+        104,
+        502,
+        955,
+        1521
+      ]
+    },
+    {
+      "direction": "down",
+      "slot": 4,
+      "frame": 19,
+      "seconds": 0.6333749999999999,
+      "crop": [
+        94,
+        510,
+        964,
+        1541
+      ]
+    },
+    {
+      "direction": "down",
+      "slot": 5,
+      "frame": 23,
+      "seconds": 0.7667171052631578,
+      "crop": [
+        97,
+        508,
+        962,
+        1542
+      ]
+    },
+    {
+      "direction": "left",
+      "slot": 0,
+      "frame": 153,
+      "seconds": 5.1003355263157895,
+      "crop": [
+        414,
+        500,
+        1080,
+        1319
+      ]
+    },
+    {
+      "direction": "left",
+      "slot": 1,
+      "frame": 159,
+      "seconds": 5.300348684210526,
+      "crop": [
+        372,
+        492,
+        1038,
+        1319
+      ]
+    },
+    {
+      "direction": "left",
+      "slot": 2,
+      "frame": 165,
+      "seconds": 5.500361842105263,
+      "crop": [
+        344,
+        494,
+        1003,
+        1315
+      ]
+    },
+    {
+      "direction": "left",
+      "slot": 3,
+      "frame": 171,
+      "seconds": 5.700374999999999,
+      "crop": [
+        312,
+        498,
+        967,
+        1325
+      ]
+    },
+    {
+      "direction": "left",
+      "slot": 4,
+      "frame": 177,
+      "seconds": 5.900388157894737,
+      "crop": [
+        248,
+        488,
+        906,
+        1322
+      ]
+    },
+    {
+      "direction": "left",
+      "slot": 5,
+      "frame": 183,
+      "seconds": 6.100401315789473,
+      "crop": [
+        200,
+        498,
+        870,
+        1318
+      ]
+    },
+    {
+      "direction": "right",
+      "slot": 0,
+      "frame": 240,
+      "seconds": 8.000526315789473,
+      "crop": [
+        5,
+        497,
+        690,
+        1322
+      ]
+    },
+    {
+      "direction": "right",
+      "slot": 1,
+      "frame": 246,
+      "seconds": 8.20053947368421,
+      "crop": [
+        60,
+        503,
+        745,
+        1321
+      ]
+    },
+    {
+      "direction": "right",
+      "slot": 2,
+      "frame": 252,
+      "seconds": 8.400552631578947,
+      "crop": [
+        104,
+        494,
+        780,
+        1319
+      ]
+    },
+    {
+      "direction": "right",
+      "slot": 3,
+      "frame": 258,
+      "seconds": 8.600565789473684,
+      "crop": [
+        136,
+        507,
+        820,
+        1326
+      ]
+    },
+    {
+      "direction": "right",
+      "slot": 4,
+      "frame": 264,
+      "seconds": 8.80057894736842,
+      "crop": [
+        192,
+        498,
+        867,
+        1325
+      ]
+    },
+    {
+      "direction": "right",
+      "slot": 5,
+      "frame": 270,
+      "seconds": 9.000592105263157,
+      "crop": [
+        231,
+        496,
+        926,
+        1322
+      ]
+    },
+    {
+      "direction": "up",
+      "slot": 0,
+      "frame": 93,
+      "seconds": 3.100203947368421,
+      "crop": [
+        180,
+        486,
+        923,
+        1365
+      ]
+    },
+    {
+      "direction": "up",
+      "slot": 1,
+      "frame": 97,
+      "seconds": 3.2335460526315787,
+      "crop": [
+        180,
+        483,
+        921,
+        1354
+      ]
+    },
+    {
+      "direction": "up",
+      "slot": 2,
+      "frame": 101,
+      "seconds": 3.3668881578947367,
+      "crop": [
+        190,
+        475,
+        915,
+        1339
+      ]
+    },
+    {
+      "direction": "up",
+      "slot": 3,
+      "frame": 105,
+      "seconds": 3.5002302631578943,
+      "crop": [
+        197,
+        473,
+        906,
+        1341
+      ]
+    },
+    {
+      "direction": "up",
+      "slot": 4,
+      "frame": 109,
+      "seconds": 3.6335723684210524,
+      "crop": [
+        214,
+        486,
+        896,
+        1347
+      ]
+    },
+    {
+      "direction": "up",
+      "slot": 5,
+      "frame": 113,
+      "seconds": 3.7669144736842104,
+      "crop": [
+        218,
+        484,
+        886,
+        1337
+      ]
+    }
+  ]
+}

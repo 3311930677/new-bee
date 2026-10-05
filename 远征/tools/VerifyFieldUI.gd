@@ -1,5 +1,6 @@
 extends Node
 const Field := preload("res://src/ui/FieldUI.gd")
+const Activities := preload("res://src/ui/ActivityPanel.gd")
 var _fails := 0
 
 func _ready() -> void:
@@ -28,13 +29,13 @@ func _ready() -> void:
 			for child in wallet.get_children():
 				if child is Control and child.visible:
 					_check(child.get_global_rect().end.x<=456,"Currency content must fit, including nine digit amounts")
-		for words in ["世界","背包","养成","图鉴","竞技","召唤","兑换"]:
+		for words in ["世界","背包","养成","图鉴","竞技","召唤","兑换","活动"]:
 			var action := _action(home,words)
 			_check(action!=null,"Missing home action: "+words)
 			if action!=null:
 				action.gui_input.emit(_click())
 				await get_tree().process_frame
-				var key: String = {"世界":"_worlds","背包":"_bag","养成":"_growth","图鉴":"_codex","竞技":"_arena","召唤":"_gacha","兑换":"_exchange"}[words]
+				var key: String = {"世界":"_worlds","背包":"_bag","养成":"_growth","图鉴":"_codex","竞技":"_arena","召唤":"_gacha","兑换":"_exchange","活动":"_activities"}[words]
 				var panel: Control = home.get(key)
 				_check(panel!=null,"Visible home action must open its actual page: "+words)
 				if panel!=null:
@@ -62,6 +63,27 @@ func _ready() -> void:
 			if child is Label and child.visible: amount_words.append(child.text)
 		_check(amount_words.has(str(1011-nested_cost)),"Visible home balance must refresh after spending")
 		G.wallet.expedition=999999999
+		home._open_activities()
+		var activities: Control = home._activities
+		_check(activities._events.is_empty(),"Default activity page must not invent active events")
+		home._close_overlay_with_escape()
+		await get_tree().process_frame
+		_check(home._activities==null and home._anim.visible,"Activity back must restore home")
+		var event_page := Activities.new()
+		event_page.events_override = [{"id":"test","title":"活动排版回归", "summary":"这是临时测试配置，不是开放活动。", "body":["长说明。".repeat(240),"第二段说明"],"starts_at":2000,"ends_at":3000}]
+		viewport.add_child(event_page)
+		await get_tree().process_frame
+		var before_progress := JSON.stringify(G.prog)
+		var before_wallet := JSON.stringify(G.wallet)
+		var entry: Control = event_page._content.find_child("Event_test",true,false)
+		_check(entry!=null,"Configured event must appear in activity list")
+		if entry!=null: entry.gui_input.emit(_click())
+		_check(event_page._detail_id=="test","Activity card must open its own detail")
+		_check(event_page._back.get_global_rect().end.y<=height,"Activity return action must fit on phone")
+		event_page.go_back()
+		_check(event_page._detail_id.is_empty(),"Activity detail back must return to list")
+		_check(JSON.stringify(G.prog)==before_progress and JSON.stringify(G.wallet)==before_wallet,"Activities must not change progress or balances")
+		event_page.queue_free()
 		home.queue_free()
 		viewport.queue_free()
 		await get_tree().process_frame
@@ -111,7 +133,13 @@ func _ready() -> void:
 		_check(capped!=null and capped.disabled,"Maxed skill must disable upgrade")
 		book.queue_free()
 		await get_tree().process_frame
-	print("FIELD_UI_OK all actions, roles, currency and skill states" if _fails==0 else "FIELD_UI_FAIL %d" % _fails)
+	_check(Activities.event_status({"starts_at":100,"ends_at":200},99)=="即将开启","Upcoming activity status")
+	_check(Activities.event_status({"starts_at":100,"ends_at":200},100)=="进行中","Start boundary inclusive")
+	_check(Activities.event_status({"starts_at":100,"ends_at":200},200)=="已结束","End boundary exclusive")
+	_check(Activities.event_status({"enabled":false},150)=="未开放","Disabled activity status")
+	_check(Activities.event_status({"starts_at":200,"ends_at":100},150)=="未开放","Invalid date range stays closed")
+	_check(Activities.valid_events([null,{}, {"id":"a","title":"A"}, {"id":"a","title":"duplicate"},{"id":"b","title":"hidden","visible":false}]).size()==1,"Invalid, duplicate and hidden activity records must be skipped")
+	print("FIELD_UI_OK all actions, roles, currency, activities and skill states" if _fails==0 else "FIELD_UI_FAIL %d" % _fails)
 	get_tree().quit(0 if _fails==0 else 1)
 
 func _actions(node: Node) -> Array:

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>昭元边城 · 美术调整对照</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#18231f;color:#f0ead7;font:15px/1.6 system-ui,sans-serif;padding:24px}main{max-width:1000px;margin:auto}h1{font-size:24px;margin:0 0 6px}p{color:#bfc9b9;margin:0 0 18px}.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}button{background:#33453b;color:#f0ead7;border:1px solid #64775b;padding:8px 14px;cursor:pointer;border-radius:5px}button.active{background:#c4aa6c;color:#18231f;border-color:#e5cf98}.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}figure{margin:0}figcaption{padding:9px 12px;background:#29382e;font-weight:600;border-top:2px solid #64775b}figure:last-child figcaption{border-color:#dbc58c}img{display:block;width:100%;height:auto;image-rendering:pixelated}.note{margin-top:18px;font-size:13px}@media(max-width:520px){body{padding:12px}.pair{gap:8px}h1{font-size:21px}figcaption{padding:6px;font-size:13px}}
+</style>
+<main>
+<h1>昭元边城 · 美术调整对照</h1>
+<p>同一场景、同一位置。道路边缘重整，乌龟配色与细节调整，主角明暗和轮廓轻度统一。</p>
+<div class="controls" id="locations"><button class="active" data-location="north">角色与街道</button><button data-location="south">下城区</button></div>
+<div class="controls" id="sizes"><button class="active" data-height="800">480 × 800</button><button data-height="1067">480 × 1067</button></div>
+<div class="pair"><figure><figcaption>原版</figcaption><img id="before" src="north_before_800.png" alt="原版实机场景"></figure><figure><figcaption>调整版</figcaption><img id="after" src="north_after_800.png" alt="调整版实机场景"></figure></div>
+<p class="note">这是游戏引擎实际渲染的对照截图。调整版已接入正式游戏，原素材保留供对照。建筑、NPC、角色造型和动画资源沿用现有素材。</p>
+</main>
+<script>
+let locationName='north',height='800';
+function update(){document.getElementById('before').src=`${locationName}_before_${height}.png`;document.getElementById('after').src=`${locationName}_after_${height}.png`;}
+document.querySelectorAll('[data-location]').forEach(b=>b.onclick=()=>{locationName=b.dataset.location;document.querySelectorAll('[data-location]').forEach(x=>x.classList.toggle('active',x===b));update()});
+document.querySelectorAll('[data-height]').forEach(b=>b.onclick=()=>{height=b.dataset.height;document.querySelectorAll('[data-height]').forEach(x=>x.classList.toggle('active',x===b));update()});
+</script>
+</html>
