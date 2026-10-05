@@ -4601,6 +4601,8 @@ class _MapMonster extends CharacterBody2D:
 	var _wander_r := 96.0
 	var _t := 0.0
 	var _sprite: Sprite2D = null    # 有 mon_ 素材时的精灵体
+	var _grounding: Dictionary = {}
+	var _art_rect := Rect2()
 	var _lobe: Array = []  # 每只固定不变的轮廓起伏，避免看着像同一个圆
 	# 卡住检测（问题 #23）：move_and_slide 顶着散件时"速度有值、位置不动"，
 	# 所以只能用**实际位移**判断有没有进展。连续卡住就绕行，绕不动就放弃当前目标。
@@ -4656,6 +4658,9 @@ class _MapMonster extends CharacterBody2D:
 					_sprite.material = FrostCityArt.cutout_material()
 					_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 				add_child(_sprite)
+				var display_size := Vector2(tex.get_size()) * s
+				_art_rect = Rect2(Vector2(-display_size.x*.5,-display_size.y),display_size)
+				_grounding = preload("res://src/world/BuildingGrounding.gd").actor(tex,roundi(display_size.x),roundi(display_size.y))
 		if display_level > 0:
 			var mon_name := String(TableCache.get_monster(mon_id).get("name", "怪物"))
 			var txt := "Lv%d %s" % [display_level, mon_name]
@@ -4815,15 +4820,15 @@ class _MapMonster extends CharacterBody2D:
 		var bob := sin(_t * 5.0) * 1.6
 		var r := _radius
 
-		# 地面投影
-		draw_set_transform(Vector2(0, r * 0.72), 0.0, Vector2(1.0, 0.38))
-		draw_circle(Vector2.ZERO, r * 1.02, Color(0, 0, 0, 0.32))
-		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
-
 		if _sprite != null:
+			preload("res://src/world/BuildingGrounding.gd").draw_prop(self,_grounding,_art_rect.position,_art_rect.size.x)
 			if _state == "chase":
 				draw_arc(Vector2.ZERO, r + 8.0, 0.0, TAU, 20, Color(1.0, 0.4, 0.3, 0.85), 2.0)
 			return
+		# Procedural fallbacks have no alpha contour; their bodies reach this plane.
+		draw_set_transform(Vector2(0,r*.72),0.0,Vector2(1.0,.38))
+		draw_circle(Vector2.ZERO,r*1.02,Color(0,0,0,.32))
+		draw_set_transform(Vector2.ZERO,0.0,Vector2.ONE)
 		if mon_id == "mon_salt_crab":
 			_draw_salt_crab(bob)
 			return
@@ -4921,6 +4926,8 @@ class _Interactable extends Node2D:
 	var _t := 0.0
 	var _art := false       # 已用素材立绘（程序体跳过）
 	var _art_h := 64.0      # 立绘显示高（三角提示的高度基准）
+	var _grounding: Dictionary = {}
+	var _art_rect := Rect2()
 
 	func _ready() -> void:
 		var tex: Texture2D = G.res_tex(String(KIND_ART.get(kind, "")))
@@ -4932,6 +4939,9 @@ class _Interactable extends Node2D:
 			spr.offset = Vector2(0, -tex.get_height() / 2.0)
 			add_child(spr)
 			_art = true
+			var display_size := Vector2(tex.get_size()) * s
+			_art_rect = Rect2(Vector2(-display_size.x*.5,-display_size.y),display_size)
+			_grounding = preload("res://src/world/BuildingGrounding.gd").silhouette(tex,roundi(display_size.x),roundi(display_size.y))
 
 	func _process(delta: float) -> void:
 		_t += delta
@@ -4946,8 +4956,12 @@ class _Interactable extends Node2D:
 		queue_redraw()
 
 	func _draw() -> void:
-		draw_circle(Vector2(0, 6), 30.0, Color(0, 0, 0, 0.22))  # 落地影
-		if not _art:
+		if _art:
+			preload("res://src/world/BuildingGrounding.gd").draw_prop(self,_grounding,_art_rect.position,_art_rect.size.x)
+		else:
+			draw_set_transform(Vector2(0,6),0,Vector2(1,.3))
+			draw_circle(Vector2.ZERO,30,Color(0,0,0,.22))
+			draw_set_transform(Vector2.ZERO,0,Vector2.ONE)
 			match kind:
 				"chest":
 					_draw_chest()
