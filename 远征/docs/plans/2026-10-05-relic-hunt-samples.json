@@ -1,0 +1,113 @@
+{
+  "cases": [
+    {
+      "hunt": "relic_mine",
+      "mean_hp_pct": 22.3735603405108,
+      "mean_potions": 2.0,
+      "median_seconds": 62.0,
+      "n": 20,
+      "role": "zs",
+      "wins": 20
+    },
+    {
+      "hunt": "relic_mine",
+      "mean_hp_pct": 51.6019172552977,
+      "mean_potions": 2.0,
+      "median_seconds": 52.7,
+      "n": 20,
+      "role": "ck",
+      "wins": 20
+    },
+    {
+      "hunt": "relic_mine",
+      "mean_hp_pct": 45.1757713707638,
+      "mean_potions": 1.05,
+      "median_seconds": 53.2,
+      "n": 20,
+      "role": "fs",
+      "wins": 20
+    },
+    {
+      "hunt": "relic_mine",
+      "mean_hp_pct": 59.6825759305778,
+      "mean_potions": 0.15,
+      "median_seconds": 84.0,
+      "n": 20,
+      "role": "fz",
+      "wins": 20
+    },
+    {
+      "hunt": "relic_snow",
+      "mean_hp_pct": 47.263395092639,
+      "mean_potions": 1.1,
+      "median_seconds": 58.1666666666667,
+      "n": 20,
+      "role": "zs",
+      "wins": 20
+    },
+    {
+      "hunt": "relic_snow",
+      "mean_hp_pct": 58.9026236125126,
+      "mean_potions": 0.8,
+      "median_seconds": 50.2666666666667,
+      "n": 20,
+      "role": "ck",
+      "wins": 20
+    },
+    {
+      "hunt": "relic_snow",
+      "mean_hp_pct": 42.4898836621143,
+      "mean_potions": 0.15,
+      "median_seconds": 57.7666666666667,
+      "n": 20,
+      "role": "fs",
+      "wins": 20
+    },
+    {
+      "hunt": "relic_snow",
+      "mean_hp_pct": 65.9362868234757,
+      "mean_potions": 0.0,
+      "median_seconds": 85.6666666666667,
+      "n": 20,
+      "role": "fz",
+      "wins": 20
+    },
+    {
+      "hunt": "relic_core",
+      "mean_hp_pct": 10.6096644967451,
+      "mean_potions": 2.0,
+      "median_seconds": 70.0,
+      "n": 20,
+      "role": "zs",
+      "wins": 18
+    },
+    {
+      "hunt": "relic_core",
+      "mean_hp_pct": 54.8940464177599,
+      "mean_potions": 2.0,
+      "median_seconds": 58.3333333333333,
+      "n": 20,
+      "role": "ck",
+      "wins": 20
+    },
+    {
+      "hunt": "relic_core",
+      "mean_hp_pct": 57.5037936267071,
+      "mean_potions": 1.7,
+      "median_seconds": 68.6,
+      "n": 20,
+      "role": "fs",
+      "wins": 20
+    },
+    {
+      "hunt": "relic_core",
+      "mean_hp_pct": 57.2859100251199,
+      "mean_potions": 0.0,
+      "median_seconds": 102.9,
+      "n": 20,
+      "role": "fz",
+      "wins": 20
+    }
+  ],
+  "profile": "60级；巡界武器/三声护甲/归路佩均+6；常用技能研习3级；25级4星岩龟；两瓶药低于35%使用；无天赋宝石精炼；托管"
+}

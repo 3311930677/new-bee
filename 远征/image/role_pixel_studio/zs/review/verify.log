@@ -1,0 +1,9 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+PIXEL_DIRECTION_OK: down
+PIXEL_DIRECTION_OK: left
+PIXEL_DIRECTION_OK: right
+PIXEL_DIRECTION_OK: up
+PIXEL_WORLD_VERIFY_OK: 32 frames; moved and stopped in all four directions; original comparison works.

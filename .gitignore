@@ -30,3 +30,12 @@ _backups/
 
 /tools/godot-4.7.2/
 /tools/_logs/
+
+# Local MCP checkout, dependencies and verification captures
+/tools/godot-mcp/
+/tools/godot-ui-control-review.md
+/远征/shots/mcp-install-check/
+
+# Host caches created by local tools
+/%SystemDrive%/
+**/__pycache__/

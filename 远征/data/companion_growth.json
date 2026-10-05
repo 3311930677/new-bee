@@ -68,7 +68,9 @@
     "pw_dragonbreath": "fire",
     "pw_ember": "fire",
     "pw_venomfang": "shadow",
-    "pw_constrict": "shadow"
+    "pw_constrict": "shadow",
+    "pw_return_heal": "holy",
+    "pw_return_guard": "holy"
   },
   "pet_elements": {
     "pet_rockturtle": [
@@ -98,6 +100,9 @@
     ],
     "pet_shadowviper": [
       "shadow"
+    ],
+    "pet_return_deer": [
+      "holy"
     ]
   },
   "element_names": {

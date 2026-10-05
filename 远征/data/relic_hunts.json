@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "unlock_story": "s36",
+  "unlock_level": 60,
+  "drop_chance": 0.004,
+  "pity_wins": 400,
+  "buy_gold": 150000,
+  "buy_requires_wins": 20,
+  "rewards": {
+    "item:refine_stone": 1,
+    "item:pet_food": 2
+  },
+  "weapons": {
+    "zs": "tpl_sword_relic",
+    "ck": "tpl_spear_relic",
+    "fs": "tpl_staff_relic",
+    "fz": "tpl_hammer_relic"
+  },
+  "hunts": [
+    {
+      "id": "relic_mine",
+      "name": "传世·炉芯试炼",
+      "map": "rift_mine_vault",
+      "theme": "tomb",
+      "boss": "mon_redsand_guard",
+      "level": 60,
+      "hint": "提前准备护盾或药剂；击破援兵后把爆发留给破绽。",
+      "difficulty": {
+        "hp": 1.0,
+        "atk": 1.0,
+        "def": 1.0,
+        "boss_hp": 1.85,
+        "boss_atk": 2.65,
+        "boss_def": 1.12,
+        "summon_scale": 0.4
+      }
+    },
+    {
+      "id": "relic_snow",
+      "name": "传世·雪幕试炼",
+      "map": "frost_pass",
+      "theme": "snow",
+      "boss": "mon_snowveil_lord",
+      "level": 60,
+      "hint": "提前准备护盾或药剂；击破援兵后把爆发留给破绽。",
+      "difficulty": {
+        "hp": 1.0,
+        "atk": 1.0,
+        "def": 1.0,
+        "boss_hp": 1.85,
+        "boss_atk": 2.65,
+        "boss_def": 1.12,
+        "summon_scale": 0.4
+      }
+    },
+    {
+      "id": "relic_core",
+      "name": "传世·碑心试炼",
+      "map": "stele_core",
+      "theme": "abyss",
+      "boss": "mon_abyss_avatar",
+      "level": 60,
+      "hint": "提前准备护盾或药剂；击破援兵后把爆发留给破绽。",
+      "difficulty": {
+        "hp": 1.0,
+        "atk": 1.0,
+        "def": 1.0,
+        "boss_hp": 1.85,
+        "boss_atk": 2.65,
+        "boss_def": 1.12,
+        "summon_scale": 0.4
+      }
+    }
+  ],
+  "pet_id": "pet_return_deer",
+  "pet_requires_wins": 120,
+  "pet_start_level": 25,
+  "pet_start_star": 4,
+  "roll_range": 1000000
+}

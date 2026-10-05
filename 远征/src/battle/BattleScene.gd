@@ -7,6 +7,10 @@ extends Control
 signal battle_finished(result: String, hp_left: int)
 
 const CombatFX := preload("res://src/battle/BattleEffects.gd")
+const Craft := preload("res://src/ui/CraftUI.gd")
+const COMMAND_ATLAS := "res://image/battle/art_v2/command_icons.png"
+const FOREST_CLEARING := "res://image/battle/art_v2/forest_clearing.png"
+const WorldArtFinish := preload("res://src/world/WorldArtFinish.gd")
 
 const TICK_SEC := 1.0 / 30.0
 const VIEW_W := 480.0
@@ -30,7 +34,7 @@ const CLASSIC_SKILL_Y := 738.0
 const CLASSIC_FUNC_Y := 744.0
 ## 像素木牌描边色：经典模式的底板（径向指令 / 技能格 / 小签）统一这一支暗金，
 ## 方角 + 2px 厚边压像素地图才立得住（原来 3~6px 圆角 + 1px 淡金边是现代 UI 语言）
-const WOOD_BORDER := Color("bd8b73")
+const WOOD_BORDER := Color("a98b58")
 # ---------- 主世界同图战斗指令：像素图标配可读文字，集中在战场下缘 ----------
 # 四枚 16×16 字符网格像素图标，运行时烤成 ImageTexture 后 2 倍放大（nearest，不糊）。
 # 图例：k 深褐描边 / s 钢亮 S 钢暗 / g 金亮 G 金暗 / h 木亮 H 木暗
@@ -117,8 +121,8 @@ const CMD_ICON_FLEE := [  # 撤退靴：靴筒 + 靴头右探 + 深色靴底
 const RADIAL_BTN := 38.0      # 图标 tile 边长（32 图标 + 3 内边距 ×2）
 const RADIAL_LABEL_H := 16.0  # tile 下方文字带高
 const CLASSIC_CMD_W := 88.0
-const CLASSIC_CMD_H := 50.0
-const CLASSIC_CMD_Y := 585.0
+const CLASSIC_CMD_H := 86.0
+const CLASSIC_CMD_Y := 670.0
 const PAGE_PANEL_POS := Vector2(39.0, 740.0)
 const PAGE_PANEL_SIZE := Vector2(402.0, 42.0)
 # 技能/道具页整宽竖排；每行 44px，触屏不会挤到相邻技能。
@@ -379,6 +383,22 @@ func _build_background() -> void:
 
 func _build_classic_region_floor() -> void:
 	var theme := String(_cfg.get("enemy", {}).get("theme", "forest"))
+	var backdrop: Texture2D = load(FOREST_CLEARING) if theme == "forest" else G.res_tex(String(TableCache.theme_config(theme).get("battle_bg", "")))
+	if backdrop != null:
+		var scenery := TextureRect.new()
+		scenery.name = "ClassicRegionFloor"
+		scenery.texture = backdrop
+		scenery.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		scenery.stretch_mode = TextureRect.STRETCH_SCALE
+		scenery.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+		# Bring the open ground up to the rearmost row of the combat grid.
+		scenery.position = Vector2(0,-110)
+		scenery.size = Vector2(VIEW_W,maxf(VIEW_H,get_viewport_rect().size.y)+110)
+		scenery.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_shake_root.add_child(scenery)
+		_add_shade_gradient(0,100,true)
+		_add_shade_gradient(590+_classic_extra_y(),210,false)
+		return
 	var tiles: Array = TableCache.theme_config(theme).get("tiles", [])
 	if tiles.is_empty(): return
 	var asset_dir := String(TableCache.maps_config().get("asset_dir", "res://image/map_proc"))
@@ -563,7 +583,9 @@ func _func_chip(text: String, w := 64.0) -> PanelContainer:
 	root.custom_minimum_size = Vector2(w, 30)
 	root.setup(Color("49323d", 0.94), Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.65),
 		0.0, 0.0, 0.0, 0.0)
-	root.add_child(G.gold_label(text, G.FS_XS, false, Color("d9b96e"), false))
+	var caption := G.gold_label(text, G.FS_XS, false, Craft.WHITE, false)
+	Craft.clean_label(caption)
+	root.add_child(caption)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	return root
 
@@ -571,7 +593,7 @@ func _func_chip(text: String, w := 64.0) -> PanelContainer:
 ## 功能签常态底色：像素经典模式换成暗木底 + 暗金厚边（与径向指令同一套牌子语言）
 func _chip_idle_surface() -> Array:
 	if _classic_presentation():
-		return [Color("49323d", 0.94), WOOD_BORDER]
+		return [Color("192d37", 0.96), WOOD_BORDER]
 	return [Color("49323d", 0.94), Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.65)]
 
 
@@ -582,14 +604,14 @@ func _chip_set_active(chip: Control, active: bool) -> void:
 		panel.set_surface(surf[0], surf[1])
 	var l := chip.get_child(0) as Label
 	if l != null:
-		l.add_theme_color_override("font_color", G.GOLD_BRIGHT if active else Color("d9b96e"))
+		l.add_theme_color_override("font_color", G.GOLD_BRIGHT if active else Craft.WHITE)
 
 
 ## 经典模式像素木牌小签：在 _func_chip 上换皮——方角、2px 暗金厚边、深木底。
 ## 顶部速度/自动、弹出页按钮共用，和径向指令、技能格是同一套牌子语言。
 func _pixel_chip(text: String, w := 64.0) -> PanelContainer:
 	var root := _func_chip(text, w)
-	(root as G.InsetPanel).set_surface(Color("49323d", 0.94), WOOD_BORDER)
+	(root as G.InsetPanel).set_surface(Color("192d37", 0.96), WOOD_BORDER)
 	return root
 
 
@@ -624,7 +646,7 @@ func _build_skill_bar() -> void:
 
 	# 连携窗口提示：经典模式没有底部能量条，提示落在技能栏上沿与角色之间
 	_combo_tip = G.serif_label("", G.FS_SM, G.GOLD_BRIGHT)
-	_combo_tip.position = Vector2(0, 706 + _classic_extra_y() if classic else 558 + _standard_extra_y())
+	_combo_tip.position = Vector2(0, CLASSIC_CMD_Y-62 + _classic_extra_y() if classic else 558 + _standard_extra_y())
 	_combo_tip.custom_minimum_size = Vector2(VIEW_W, 0)
 	_combo_tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_combo_tip.modulate.a = 0.0
@@ -787,12 +809,13 @@ func _build_classic_command_ui() -> void:
 	info_bg.position = Vector2(CLASSIC_BAR_X, CLASSIC_CMD_Y - 26.0 + _classic_extra_y())
 	info_bg.size = Vector2(PAGE_PANEL_SIZE.x, 23.0)
 	var info_style := StyleBoxFlat.new()
-	info_style.bg_color = Color("49323d", 0.92)
+	info_style.bg_color = Color("152832", 0.94)
 	info_style.set_corner_radius_all(2)
 	info_bg.add_theme_stylebox_override("panel", info_style)
 	info_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_cmd_root.add_child(info_bg)
 	_cmd_info_l = G.gold_label("", G.FS_XS, true, Color("e8d9a8"), true)
+	Craft.clean_label(_cmd_info_l)
 	_cmd_info_l.position = Vector2(CLASSIC_BAR_X, CLASSIC_CMD_Y - 22.0 + _classic_extra_y())
 	_cmd_info_l.custom_minimum_size = Vector2(PAGE_PANEL_SIZE.x, 0)
 	_cmd_info_l.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -803,7 +826,7 @@ func _build_classic_command_ui() -> void:
 	_page_panel.position = PAGE_PANEL_POS + Vector2(0, _classic_extra_y())
 	_page_panel.size = PAGE_PANEL_SIZE
 	var psb := StyleBoxFlat.new()
-	psb.bg_color = Color("49323d", 0.98)
+	psb.bg_color = Color("152832", 0.98)
 	psb.set_corner_radius_all(2)
 	psb.set_border_width_all(2)
 	psb.border_color = WOOD_BORDER
@@ -813,6 +836,7 @@ func _build_classic_command_ui() -> void:
 	add_child(_page_panel)
 	# 能量读数：底部横条撤掉后，数值只在「技」页展开时给一眼（常驻信息交给脚下蓝条）
 	_page_energy_l = G.gold_label("", G.FS_XS, true, Color("ffe9b8"), true)
+	Craft.clean_label(_page_energy_l)
 	_page_energy_l.position = PAGE_PANEL_POS + Vector2(0, _classic_extra_y() - 20)
 	_page_energy_l.custom_minimum_size = Vector2(PAGE_PANEL_SIZE.x, 0)
 	_page_energy_l.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -834,23 +858,29 @@ func _add_radial_option(key: String, text: String, grid: Array,
 	var sb := StyleBoxFlat.new()
 	# 像素木牌：方角 + 2px 暗金厚边。原来 6px 圆角 + 1px 淡金边是现代 UI 语言，
 	# 四块深色圆角贴纸上亮色草地后成了全屏最重的元素，把角色和地图都压住了。
-	sb.bg_color = Color("49323d", 0.94)
-	sb.set_corner_radius_all(2)
+	sb.bg_color = Color("29414b", 0.97) if key=="attack" else Color("192d37", 0.97)
+	sb.set_corner_radius_all(5)
 	sb.set_border_width_all(2)
 	sb.border_color = WOOD_BORDER
 	tile.add_theme_stylebox_override("panel", sb)
 	root.add_child(tile)
 	var icon := TextureRect.new()
-	icon.texture = cmd_icon_tex(grid)
-	icon.position = Vector2(6, 9)
-	icon.size = Vector2(32, 32)
 	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	var sheet: Texture2D = load(COMMAND_ATLAS)
+	var part := AtlasTexture.new()
+	part.atlas = sheet
+	var index: int = {"attack":0,"skill":1,"item":2,"flee":3}.get(key,0)
+	var cell := sheet.get_size()*.5 if sheet!=null else Vector2.ZERO
+	part.region = Rect2(Vector2(index%2,floori(index/2.0))*cell,cell)
+	icon.texture = part if sheet!=null else cmd_icon_tex(grid)
+	icon.position = Vector2(19, 5)
+	icon.size = Vector2(50, 50)
+	icon.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	icon.stretch_mode = TextureRect.STRETCH_SCALE
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(icon)
-	var l := G.serif_label(text, 18, Color("e2c48c"))
-	l.position = Vector2(39, 8)
-	l.custom_minimum_size = Vector2(46, CLASSIC_CMD_H - 16)
+	var l := Craft.label(text,Vector2(0,54),Vector2(CLASSIC_CMD_W,28),18,Craft.WHITE,true)
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(l)
 	root.gui_input.connect(func(e: InputEvent):
@@ -866,10 +896,8 @@ func _add_radial_option(key: String, text: String, grid: Array,
 
 class CommandTile extends Panel:
 	func _draw() -> void:
-		draw_line(Vector2(4,3),Vector2(size.x-4,3),Color("e7b691",0.32),1)
-		draw_line(Vector2(4,size.y-3),Vector2(size.x-4,size.y-3),Color("180d17",0.6),1)
-		draw_colored_polygon(PackedVector2Array([Vector2(0,0),Vector2(6,0),Vector2(0,6)]),Color("bd8b73"))
-		draw_colored_polygon(PackedVector2Array([size,Vector2(size.x-6,size.y),Vector2(size.x,size.y-6)]),Color("bd8b73"))
+		draw_line(Vector2(6,3),Vector2(size.x-6,3),Color("e4c68e",0.30),1)
+		draw_line(Vector2(6,size.y-3),Vector2(size.x-6,size.y-3),Color("081820",0.7),2)
 
 
 ## 四枚指令固定在下方操作带，战斗对象移动时按键不会跳位。
@@ -955,6 +983,7 @@ func _clear_command_options() -> void:
 	if _page_panel == null:
 		return
 	for child in _page_panel.get_children():
+		_page_panel.remove_child(child)
 		child.queue_free()
 
 
@@ -982,7 +1011,9 @@ func _add_command_row(name_text: String, detail_text: String, action: Callable,
 	row.position = Vector2(0, 2.0 + float(_page_rows) * PAGE_ROW_H)
 	row.tooltip_text = tooltip
 	row.mouse_filter = Control.MOUSE_FILTER_STOP
-	var nl := G.serif_label(name_text, 20, name_color)
+	var nl := G.gold_label(name_text, 18, true, name_color, false)
+	nl.name = "NameText"
+	Craft.clean_label(nl)
 	nl.position = Vector2(8, 8)
 	nl.custom_minimum_size = Vector2(148, PAGE_ROW_H - 16)
 	nl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -990,6 +1021,8 @@ func _add_command_row(name_text: String, detail_text: String, action: Callable,
 	nl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(nl)
 	var dl := G.gold_label(detail_text, G.FS_XS, false, Color("e5d4ac"), true)
+	dl.name = "DetailText"
+	Craft.clean_label(dl)
 	dl.position = Vector2(158, 8)
 	dl.custom_minimum_size = Vector2(PAGE_PANEL_SIZE.x - 166.0, PAGE_ROW_H - 16)
 	dl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -997,6 +1030,12 @@ func _add_command_row(name_text: String, detail_text: String, action: Callable,
 	dl.clip_text = true
 	dl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(dl)
+	var divider := ColorRect.new()
+	divider.color = Color("a9bec0",.18)
+	divider.position = Vector2(12,PAGE_ROW_H-1)
+	divider.size = Vector2(PAGE_PANEL_SIZE.x-24,1)
+	divider.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(divider)
 	row.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			action.call())
@@ -1044,9 +1083,10 @@ func _show_command_skills() -> void:
 		var detail := "Lv%d · 耗%d · 冷 %s · %s" % [self._skill_lv(sid), cost, cd_txt,
 			_range_text(String(sdef.get("target", "")))]
 		var usable := cd_left <= 0 and cost <= role.energy
-		_add_command_row(sname, detail, Callable(self, "_cast_command_skill").bind(sid),
+		var row := _add_command_row(sname, detail, Callable(self, "_cast_command_skill").bind(sid),
 			"%s · 消耗 %d 能量" % [sname, cost],
 			Color("ffe9b0") if usable else Color("bcb69e"))
+		row.set_meta("skill_id",sid)
 	_add_command_row("返", "返回战场指令", Callable(self, "_close_page"), "返回战场指令")
 	_open_page_panel(_page_rows)
 	# 底部能量横条撤掉后，能量数值就在这一页露一次（常驻表达交给脚下蓝条）
@@ -1111,8 +1151,46 @@ func _command_attack() -> void:
 
 
 func _cast_command_skill(sid: String) -> void:
-	_try_cast(sid)
-	_close_page()
+	var role := sim.role_unit()
+	if sim.finished or role==null or not role.alive: return
+	var skill := _command_skill_def(role,sid)
+	var cost := int(skill.get("cost",0))
+	var cd := _skill_cd(role,sid)
+	if cd>0:
+		_show_tip("技能冷却中 · %.1f 秒" % (float(cd)/30.0))
+		return
+	if role.energy<cost:
+		_show_tip("能量不足 · 需要 %d，当前 %d" % [cost,role.energy])
+		return
+	if sim.cast_skill(role.uid,sid):
+		_consume_events()
+		_close_page()
+	else: _show_tip("当前无法施放这个技能")
+
+func _command_skill_def(role: Combatant,sid: String) -> Dictionary:
+	# Gear/traits may alter costs. Read the exact definition used by this battle.
+	for entry in role.skills:
+		if String(entry.def.get("id",""))==sid: return entry.def
+	return TableCache.get_skill(sid)
+
+func _refresh_command_page() -> void:
+	if _page_panel==null or not _page_panel.visible or _command_page!="skills": return
+	var role := sim.role_unit()
+	if role==null: return
+	_page_energy_l.text = "能量 %d/%d" % [role.energy,Combatant.MAX_ENERGY]
+	for row in _page_panel.get_children():
+		if not row.has_meta("skill_id"): continue
+		var sid := String(row.get_meta("skill_id"))
+		var skill := _command_skill_def(role,sid)
+		var cost := int(skill.get("cost",0))
+		var cd := _skill_cd(role,sid)
+		var ready := cd<=0 and cost<=role.energy
+		var nl: Label = row.get_node("NameText")
+		var dl: Label = row.get_node("DetailText")
+		nl.add_theme_color_override("font_color",Craft.WHITE if ready else Craft.MUTED)
+		var cooling := "就绪" if cd<=0 else "%.1fs" % (float(cd)/30.0)
+		dl.text = "Lv%d · 耗%d · 冷 %s · %s" % [_skill_lv(sid),cost,cooling,_range_text(String(skill.get("target","")))]
+		row.tooltip_text = "能量不足" if cost>role.energy else ("冷却中" if cd>0 else "点击施放")
 
 
 ## 「物」：开道具页（药剂 / 换宠），不再直接喝药——与底部功能行撤掉后的入口对齐
@@ -1526,6 +1604,7 @@ func _refresh_hud() -> void:
 	# P03：敌方前摇实时倒数（预兆环在地面同步收缩）
 	_refresh_windup_tip()
 	_refresh_cmd_info()
+	_refresh_command_page()
 
 
 ## P03 常驻信息条：四枚指令之上的一行事实——攻谁 / 几个技能放得出来 / 药还剩几瓶。
@@ -2399,6 +2478,7 @@ class UnitView extends Node2D:
 			if frames != null:
 				var asp := AnimatedSprite2D.new()
 				asp.sprite_frames = frames
+				asp.material = BattleScene.WorldArtFinish.character_material(role_id)
 				asp.animation = &"idle" if frames.has_animation(&"idle") else &"walk_down"
 				var role_scale := 0.75 if _classic else 0.55
 				asp.scale = Vector2.ONE * role_scale

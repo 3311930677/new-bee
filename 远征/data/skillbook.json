@@ -1,7 +1,13 @@
 {
-  "version": 1,
-  "comment": "技能书线（玩法文档 §6）：20 技能（4 角色×5）入池，每升 1 级技能 k 系数 +5%，上限 10 级。消耗远征币（局内三选一保留产出）。cost_expedition[i] = 升到 i+1 级的花费。",
+  "version": 2,
+  "comment": "技能研习每级提高基础及条件伤害系数5%；治疗、护盾与攻击增益按effect_scale_fields提高数值。冷却、能耗、持续时间、控制、减防与穿透不变。纯嘲讽/潜伏/净化没有研习收益，禁止升级，旧投入一次退回远征币。cost_expedition[i]为升到i+2级的花费。",
   "max_level": 10,
   "k_per_level": 0.05,
+  "effect_scale_fields": {
+    "heal": ["hp_pct", "atk_k"],
+    "shield": ["hp_pct"],
+    "atk_up": ["pct"],
+    "invincible_heal": ["hp_pct"]
+  },
   "cost_expedition": [60, 90, 130, 180, 240, 310, 390, 480, 580]
 }

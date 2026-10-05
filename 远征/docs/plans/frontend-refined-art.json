@@ -1,0 +1,432 @@
+[
+  {
+    "source": "image\\map_proc\\001_tile_forest_1.png",
+    "output": "image\\map_proc\\refined\\001_tile_forest_1.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 10,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\002_tile_forest_2.png",
+    "output": "image\\map_proc\\refined\\002_tile_forest_2.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 9,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\003_tile_forest_3.png",
+    "output": "image\\map_proc\\refined\\003_tile_forest_3.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 12,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\004_tile_snow_1.png",
+    "output": "image\\map_proc\\refined\\004_tile_snow_1.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 15,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\005_tile_snow_2.png",
+    "output": "image\\map_proc\\refined\\005_tile_snow_2.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 13,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\006_tile_snow_3.png",
+    "output": "image\\map_proc\\refined\\006_tile_snow_3.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 14,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\007_tile_volcano_1.png",
+    "output": "image\\map_proc\\refined\\007_tile_volcano_1.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 10,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\008_tile_volcano_2.png",
+    "output": "image\\map_proc\\refined\\008_tile_volcano_2.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 8,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\009_tile_volcano_3.png",
+    "output": "image\\map_proc\\refined\\009_tile_volcano_3.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 7,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\010_tile_tomb_1.png",
+    "output": "image\\map_proc\\refined\\010_tile_tomb_1.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 11,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\011_tile_tomb_2.png",
+    "output": "image\\map_proc\\refined\\011_tile_tomb_2.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 11,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\012_tile_tomb_3.png",
+    "output": "image\\map_proc\\refined\\012_tile_tomb_3.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 12,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\013_tile_desert_1.png",
+    "output": "image\\map_proc\\refined\\013_tile_desert_1.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 8,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\014_tile_desert_2.png",
+    "output": "image\\map_proc\\refined\\014_tile_desert_2.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 8,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\015_tile_desert_3.png",
+    "output": "image\\map_proc\\refined\\015_tile_desert_3.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 9,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\016_tile_glacier_1.png",
+    "output": "image\\map_proc\\refined\\016_tile_glacier_1.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 13,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\017_tile_glacier_2.png",
+    "output": "image\\map_proc\\refined\\017_tile_glacier_2.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 14,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\018_tile_glacier_3.png",
+    "output": "image\\map_proc\\refined\\018_tile_glacier_3.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 12,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\019_tile_abyss_1.png",
+    "output": "image\\map_proc\\refined\\019_tile_abyss_1.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 8,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\020_tile_abyss_2.png",
+    "output": "image\\map_proc\\refined\\020_tile_abyss_2.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 7,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\021_tile_abyss_3.png",
+    "output": "image\\map_proc\\refined\\021_tile_abyss_3.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 9,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\022_tile_castle_1.png",
+    "output": "image\\map_proc\\refined\\022_tile_castle_1.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 9,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\023_tile_castle_2.png",
+    "output": "image\\map_proc\\refined\\023_tile_castle_2.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 10,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\024_tile_castle_3.png",
+    "output": "image\\map_proc\\refined\\024_tile_castle_3.png",
+    "size": [
+      48,
+      48
+    ],
+    "colors": 14,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\025_tile_forest_path_sheet_00_15.png",
+    "output": "image\\map_proc\\refined\\025_tile_forest_path_sheet_00_15.png",
+    "size": [
+      192,
+      192
+    ],
+    "colors": 23,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\026_tile_snow_path_sheet_00_15.png",
+    "output": "image\\map_proc\\refined\\026_tile_snow_path_sheet_00_15.png",
+    "size": [
+      192,
+      192
+    ],
+    "colors": 24,
+    "terrain": true
+  },
+  {
+    "source": "image\\map_proc\\027_tile_volcano_lava_sheet_00_15.png",
+    "output": "image\\map_proc\\refined\\027_tile_volcano_lava_sheet_00_15.png",
+    "size": [
+      192,
+      192
+    ],
+    "colors": 26,
+    "terrain": true
+  },
+  {
+    "source": "image\\main_world\\abyss_ring_ground_reference_v1.png",
+    "output": "image\\main_world\\refined\\abyss_ring_ground_reference_v1.png",
+    "size": [
+      1100,
+      1430
+    ],
+    "colors": 50,
+    "terrain": true
+  },
+  {
+    "source": "image\\main_world\\frost_post_ground_reference_v2.png",
+    "output": "image\\main_world\\refined\\frost_post_ground_reference_v2.png",
+    "size": [
+      1100,
+      1430
+    ],
+    "colors": 20,
+    "terrain": true
+  },
+  {
+    "source": "image\\main_world\\shenyuan_port_ground_reference_v2.png",
+    "output": "image\\main_world\\refined\\shenyuan_port_ground_reference_v2.png",
+    "size": [
+      1100,
+      1430
+    ],
+    "colors": 33,
+    "terrain": true
+  },
+  {
+    "source": "image\\main_world\\lorin_wilds_grass_v2.png",
+    "output": "image\\main_world\\refined\\lorin_wilds_grass_v2.png",
+    "size": [
+      1086,
+      1448
+    ],
+    "colors": 16,
+    "terrain": true
+  },
+  {
+    "source": "image\\generated_362_xajh\\ready\\pet\\d_pet_fire_fox.png",
+    "output": "image\\generated_362_xajh\\ready\\pet\\refined\\d_pet_fire_fox.png",
+    "size": [
+      96,
+      96
+    ],
+    "colors": 36,
+    "terrain": false
+  },
+  {
+    "source": "image\\generated_362_xajh\\ready\\pet\\d_pet_snow_mink.png",
+    "output": "image\\generated_362_xajh\\ready\\pet\\refined\\d_pet_snow_mink.png",
+    "size": [
+      96,
+      96
+    ],
+    "colors": 30,
+    "terrain": false
+  },
+  {
+    "source": "image\\generated_362_xajh\\ready\\pet\\d_pet_thunder_sparrow.png",
+    "output": "image\\generated_362_xajh\\ready\\pet\\refined\\d_pet_thunder_sparrow.png",
+    "size": [
+      96,
+      96
+    ],
+    "colors": 38,
+    "terrain": false
+  },
+  {
+    "source": "image\\generated_362_xajh\\ready\\pet\\d_pet_turtle_chancellor.png",
+    "output": "image\\generated_362_xajh\\ready\\pet\\refined\\d_pet_turtle_chancellor.png",
+    "size": [
+      96,
+      96
+    ],
+    "colors": 37,
+    "terrain": false
+  },
+  {
+    "source": "image\\generated_362_xajh\\ready\\pet\\pet_emberling.png",
+    "output": "image\\generated_362_xajh\\ready\\pet\\refined\\pet_emberling.png",
+    "size": [
+      96,
+      96
+    ],
+    "colors": 36,
+    "terrain": false
+  },
+  {
+    "source": "image\\generated_362_xajh\\ready\\pet\\pet_eyescat.png",
+    "output": "image\\generated_362_xajh\\ready\\pet\\refined\\pet_eyescat.png",
+    "size": [
+      96,
+      96
+    ],
+    "colors": 23,
+    "terrain": false
+  },
+  {
+    "source": "image\\generated_362_xajh\\ready\\pet\\pet_foxfire.png",
+    "output": "image\\generated_362_xajh\\ready\\pet\\refined\\pet_foxfire.png",
+    "size": [
+      96,
+      96
+    ],
+    "colors": 36,
+    "terrain": false
+  },
+  {
+    "source": "image\\generated_362_xajh\\ready\\pet\\pet_frostwolf.png",
+    "output": "image\\generated_362_xajh\\ready\\pet\\refined\\pet_frostwolf.png",
+    "size": [
+      96,
+      96
+    ],
+    "colors": 30,
+    "terrain": false
+  },
+  {
+    "source": "image\\generated_362_xajh\\ready\\pet\\pet_holydeer.png",
+    "output": "image\\generated_362_xajh\\ready\\pet\\refined\\pet_holydeer.png",
+    "size": [
+      96,
+      96
+    ],
+    "colors": 31,
+    "terrain": false
+  },
+  {
+    "source": "image\\generated_362_xajh\\ready\\pet\\pet_rockturtle.png",
+    "output": "image\\generated_362_xajh\\ready\\pet\\refined\\pet_rockturtle.png",
+    "size": [
+      96,
+      96
+    ],
+    "colors": 37,
+    "terrain": false
+  },
+  {
+    "source": "image\\generated_362_xajh\\ready\\pet\\pet_shadowviper.png",
+    "output": "image\\generated_362_xajh\\ready\\pet\\refined\\pet_shadowviper.png",
+    "size": [
+      96,
+      96
+    ],
+    "colors": 40,
+    "terrain": false
+  },
+  {
+    "source": "image\\generated_362_xajh\\ready\\pet\\pet_thunderhawk.png",
+    "output": "image\\generated_362_xajh\\ready\\pet\\refined\\pet_thunderhawk.png",
+    "size": [
+      96,
+      96
+    ],
+    "colors": 38,
+    "terrain": false
+  }
+]

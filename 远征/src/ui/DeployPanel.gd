@@ -35,7 +35,7 @@ const GScript := preload("res://src/autoload/G.gd")
 const RARITY_HUE := GScript.RARITY_HUE
 const RARITY_NAME := GScript.RARITY_NAME
 const RARITY_FRAME := {"white": "frame_white", "blue": "frame_blue",
-	"purple": "frame_purple", "gold": "frame_gold"}
+	"purple": "frame_purple", "gold": "frame_gold", "relic": "frame_gold"}
 const ROLE_NAME := {
 	"tank": "护卫", "ranged_dps": "远程", "fast_dps": "速攻", "control": "控制",
 	"healer": "治疗", "aoe_dps": "群攻", "poison_control": "毒控",

@@ -4,7 +4,7 @@ extends RefCounted
 static func label(words: String, at: Vector2, extent: Vector2, font_size := 16,
 		ink := G.FIELD_INK, bold := false, title := false) -> Label:
 	var l := G.gold_label(words, font_size, bold, ink, false)
-	if title: l.add_theme_font_override("font", G.font_serif)
+	if title: l.add_theme_font_override("font", G.font_art if font_size >= 26 else G.font_serif)
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	l.position = at
@@ -147,6 +147,15 @@ class Action extends Control:
 	func _draw_crafted() -> void:
 		var dy := 2.0 if _down else 0.0
 		var extent := size
+		if skin == "tool":
+			var center := size * .5 + Vector2(0,dy)
+			draw_circle(center, minf(size.x,size.y) * .47, Color("172b37",.72))
+			if _hover or has_focus():
+				draw_arc(center, minf(size.x,size.y) * .47, -PI * .85, PI * .60, 48, Color("e4c58e",.85),1,true)
+				if has_focus(): draw_circle(center, minf(size.x,size.y) * .48, Color("f7e6b6"),false,1,true)
+			for child in get_children():
+				if child is CanvasItem: child.modulate.a = .48 if disabled else 1.0
+			return
 		if skin == "badge": extent.y = minf(size.y,58)
 		var edge := Color("9c8052")
 		var fill := Color("223a42",.94)
@@ -159,6 +168,12 @@ class Action extends Control:
 		elif skin == "nav":
 			fill = Color("1a2c35",.35)
 			edge = Color("9c8052",.35)
+		elif skin == "scroll":
+			fill = Color("d8cfb4")
+			edge = Color("a79872")
+		elif skin == "ribbon":
+			fill = Color("654c47")
+			edge = Color("b99574")
 		if disabled:
 			fill = Color("34434a")
 			edge = Color("677374")
@@ -167,6 +182,36 @@ class Action extends Control:
 			edge = edge.lightened(.20)
 		var cut := 8.0 if skin in ["primary","badge"] else 4.0
 		var bounds := Rect2(Vector2(0,dy),extent-Vector2(0,dy))
+		if skin == "badge":
+			var center := Vector2(extent.x*.5,28+dy)
+			var radius := minf(extent.x*.43,27)
+			var shape := String(get_meta("badge_shape","circle"))
+			var hue: Color = get_meta("badge_hue",edge)
+			fill = fill.lerp(hue.darkened(.78),.40)
+			if shape == "circle":
+				draw_circle(center+Vector2(0,3),radius,Color("080f16",.55))
+				draw_circle(center,radius,fill)
+				draw_arc(center,radius,-PI*.8,PI*.35,40,hue,1,true)
+				draw_arc(center,radius-3,PI*.4,PI*1.2,24,Color(hue,.32),1,true)
+			else:
+				var rim := PackedVector2Array()
+				if shape == "shield":
+					rim = PackedVector2Array([center+Vector2(-radius,-radius*.72),center+Vector2(0,-radius),center+Vector2(radius,-radius*.72),center+Vector2(radius*.8,radius*.45),center+Vector2(0,radius),center+Vector2(-radius*.8,radius*.45)])
+				elif shape == "diamond":
+					rim = PackedVector2Array([center+Vector2(0,-radius),center+Vector2(radius,0),center+Vector2(0,radius),center+Vector2(-radius,0)])
+				else:
+					for i in 6: rim.append(center+Vector2.from_angle(-PI*.5+i*TAU/6)*radius)
+				draw_set_transform(Vector2(0,3))
+				draw_colored_polygon(rim,Color("080f16",.55))
+				draw_set_transform(Vector2.ZERO)
+				draw_colored_polygon(rim,fill)
+				rim.append(rim[0])
+				draw_polyline(rim,Color(hue,.8),1,true)
+			draw_line(center+Vector2(-10,-radius+5),center+Vector2(10,-radius+5),Color("f7e5bc",.22),1)
+			if has_focus(): draw_circle(center,radius+2,Color("f7e6b6"),false,1,true)
+			for child in get_children():
+				if child is CanvasItem: child.modulate.a = .48 if disabled else 1.0
+			return
 		if skin != "nav" or _hover or selected:
 			draw_colored_polygon(_bevel(Rect2(bounds.position+Vector2(0,4),bounds.size),cut),Color("080f16",.70))
 			draw_colored_polygon(_bevel(bounds,cut),edge.darkened(.28))
@@ -180,6 +225,9 @@ class Action extends Control:
 				for x in [10.0,extent.x-12]: draw_rect(Rect2(x,extent.y*.5-1,2,2),Color("fae9c1"))
 			elif skin == "badge":
 				for x in [6.0,extent.x-8]: draw_rect(Rect2(x,7+dy,2,2),Color("dfc490"))
+			elif skin == "scroll":
+				draw_line(Vector2(8,8),Vector2(8,extent.y-8),Color("b5a989"),1)
+				for y in [12,extent.y-13]: draw_rect(Rect2(4,y,4,2),Color("a89977"))
 		if selected and skin == "tab": draw_rect(Rect2(10,extent.y-4,extent.x-20,2),accent.lightened(.28))
 		if has_focus(): draw_polyline(_bevel(bounds.grow(-1),cut),Color("f7e6b6"),1)
 		for child in get_children():
@@ -234,17 +282,15 @@ class Prop extends Control:
 				draw_rect(Rect2(33,20,3,11),G.FIELD_LEATHER)
 				for x in [10,14,26,30]: draw_rect(Rect2(x,29,1,2),gold)
 			"growth":
-				draw_rect(Rect2(7,30,26,6),G.FIELD_LEATHER)
-				draw_rect(Rect2(15,22,11,9),ink)
-				draw_rect(Rect2(3,19,33,6),G.FIELD_MUTED)
-				draw_rect(Rect2(6,17,26,3),G.FIELD_LINE)
-				draw_rect(Rect2(18,6,4,20),G.FIELD_ROLE.zs)
-				draw_rect(Rect2(19,3,2,22),paper)
-				draw_rect(Rect2(13,9,14,3),gold)
-				draw_rect(Rect2(20,4,2,5),G.FIELD_LINE)
-				draw_line(Vector2(4,20),Vector2(32,20),paper)
-				draw_rect(Rect2(14,25,3,4),G.FIELD_MUTED)
-				draw_line(Vector2(8,31),Vector2(31,31),gold)
+				draw_rect(Rect2(7,33,26,4),ink)
+				draw_rect(Rect2(10,32,20,3),gold)
+				draw_line(Vector2(20,33),Vector2(20,12),Color("41664d"),4)
+				draw_line(Vector2(19,31),Vector2(19,10),Color("b4d38c"),1)
+				draw_colored_polygon(PackedVector2Array([Vector2(19,24),Vector2(8,22),Vector2(4,13),Vector2(13,12),Vector2(19,17)]),ink)
+				draw_colored_polygon(PackedVector2Array([Vector2(18,22),Vector2(9,20),Vector2(7,15),Vector2(13,14),Vector2(18,18)]),Color("78b586"))
+				draw_colored_polygon(PackedVector2Array([Vector2(20,17),Vector2(24,7),Vector2(35,4),Vector2(33,14),Vector2(26,19)]),ink)
+				draw_colored_polygon(PackedVector2Array([Vector2(22,16),Vector2(26,9),Vector2(32,7),Vector2(30,13),Vector2(26,16)]),Color("a4ce83"))
+				draw_line(Vector2(22,16),Vector2(30,9),Color("d9e8af"),1)
 			"book":
 				draw_rect(Rect2(3,11,34,24),ink)
 				draw_rect(Rect2(4,8,15,24),paper.darkened(.1))
@@ -257,5 +303,52 @@ class Prop extends Control:
 				draw_line(Vector2(21,7),Vector2(35,7),G.FIELD_PAPER_LIGHT)
 				draw_line(Vector2(4,32),Vector2(18,32),gold)
 				draw_line(Vector2(21,32),Vector2(35,32),gold)
+			"swords":
+				for flip in [false,true]:
+					draw_set_transform(Vector2(20,20)*s,PI*.25 if flip else -PI*.25,Vector2.ONE*s)
+					draw_colored_polygon(PackedVector2Array([Vector2(-3,4),Vector2(-3,-13),Vector2(0,-18),Vector2(3,-13),Vector2(3,4)]),ink)
+					draw_colored_polygon(PackedVector2Array([Vector2(-2,3),Vector2(-2,-12),Vector2(0,-16),Vector2(2,-12),Vector2(2,3)]),Color("99b7c7"))
+					draw_line(Vector2(-1,2),Vector2(-1,-12),Color("ecf3e5"),1)
+					draw_rect(Rect2(-7,3,14,3),gold)
+					draw_rect(Rect2(-2,6,4,9),G.FIELD_RED)
+					draw_rect(Rect2(-3,14,6,3),gold)
+			"summon":
+				draw_circle(Vector2(20,22),15,ink)
+				draw_arc(Vector2(20,22),14,.2,TAU-.2,32,Color("8d75b0"),2)
+				draw_colored_polygon(PackedVector2Array([Vector2(20,3),Vector2(30,17),Vector2(20,32),Vector2(10,17)]),ink)
+				draw_colored_polygon(PackedVector2Array([Vector2(20,5),Vector2(27,17),Vector2(20,29),Vector2(13,17)]),Color("779ed7"))
+				draw_colored_polygon(PackedVector2Array([Vector2(20,5),Vector2(20,29),Vector2(13,17)]),Color("b6e1ea"))
+				draw_line(Vector2(20,7),Vector2(25,17),Color("f3f3dc"),1)
+				draw_rect(Rect2(11,33,18,3),gold)
+			"exchange":
+				draw_rect(Rect2(7,34,26,3),ink)
+				draw_rect(Rect2(10,32,20,3),gold)
+				draw_line(Vector2(20,32),Vector2(20,6),gold,3)
+				draw_line(Vector2(7,12),Vector2(33,9),gold,3)
+				for x in [9,31]:
+					var y := 12 if x==9 else 10
+					draw_line(Vector2(x,y),Vector2(x-5,24),paper,1)
+					draw_line(Vector2(x,y),Vector2(x+5,24),paper,1)
+					draw_colored_polygon(PackedVector2Array([Vector2(x-7,24),Vector2(x+7,24),Vector2(x+4,29),Vector2(x-4,29)]),Color("7caaa9"))
+					draw_line(Vector2(x-7,24),Vector2(x+7,24),gold,2)
+				draw_rect(Rect2(18,4,4,4),Color("f0d19a"))
+			"paw":
+				for at in [Vector2(7,12),Vector2(15,7),Vector2(25,7),Vector2(33,12)]:
+					draw_circle(at+Vector2(0,1),4,ink)
+					draw_circle(at,3,Color("c8b087"))
+				draw_colored_polygon(PackedVector2Array([Vector2(9,28),Vector2(12,21),Vector2(20,17),Vector2(28,21),Vector2(31,28),Vector2(25,33),Vector2(15,33)]),ink)
+				draw_colored_polygon(PackedVector2Array([Vector2(12,27),Vector2(15,22),Vector2(20,19),Vector2(25,22),Vector2(28,27),Vector2(24,30),Vector2(16,30)]),Color("86c3ad"))
+			"crown":
+				draw_colored_polygon(PackedVector2Array([Vector2(6,11),Vector2(15,18),Vector2(20,5),Vector2(25,18),Vector2(34,11),Vector2(30,31),Vector2(10,31)]),ink)
+				draw_colored_polygon(PackedVector2Array([Vector2(9,15),Vector2(16,21),Vector2(20,10),Vector2(24,21),Vector2(31,15),Vector2(28,28),Vector2(12,28)]),gold)
+				draw_rect(Rect2(12,29,16,4),Color("b7793e"))
+				draw_rect(Rect2(18,22,4,5),Color("82c4de"))
+				draw_line(Vector2(12,31),Vector2(28,31),paper,1)
+			"mount":
+				draw_colored_polygon(PackedVector2Array([Vector2(6,11),Vector2(12,6),Vector2(17,17),Vector2(26,17),Vector2(32,8),Vector2(36,14),Vector2(30,29),Vector2(11,29)]),ink)
+				draw_colored_polygon(PackedVector2Array([Vector2(9,12),Vector2(12,10),Vector2(17,20),Vector2(27,20),Vector2(32,12),Vector2(33,15),Vector2(28,26),Vector2(13,26)]),Color("a16e50"))
+				draw_rect(Rect2(15,25,4,10),gold)
+				draw_rect(Rect2(14,33,7,3),ink)
+				draw_line(Vector2(15,23),Vector2(28,23),Color("e2c18a"),1)
 			_: draw_texture_rect(G.NavigationIcons.texture(key),Rect2(4,4,32,32),false)
 		draw_set_transform(Vector2.ZERO)

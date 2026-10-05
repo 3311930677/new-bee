@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://cn3ucgv5m232p"
+
+[deps]
+
+files=["res://image/role_lpc/ck/credits.notes.translation", "res://image/role_lpc/ck/credits.authors.translation", "res://image/role_lpc/ck/credits.licenses.translation", "res://image/role_lpc/ck/credits.urls.translation"]
+
+source_file="res://image/role_lpc/ck/credits.csv"
+dest_files=["res://image/role_lpc/ck/credits.notes.translation", "res://image/role_lpc/ck/credits.authors.translation", "res://image/role_lpc/ck/credits.licenses.translation", "res://image/role_lpc/ck/credits.urls.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

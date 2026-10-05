@@ -2,6 +2,7 @@
 extends Node
 const NavigationIcons := preload("res://src/ui/UIIcons.gd")
 const AvatarPresets := preload("res://src/ui/AvatarCatalog.gd")
+const WorldArtFinish := preload("res://src/world/WorldArtFinish.gd")
 
 # ---------- 行旅册配色：青铜绿、旧黄铜与暖纸 ----------
 const BG_DEEP := Color("192629")        # 深棕黑（选人底）
@@ -44,9 +45,9 @@ const C_COMPANION_GUARD := Color("6f9fd0") # 伙伴护卫
 # ---------- 稀有度四档（全项目唯一定义，各面板只引用，禁止再各自复制一份） ----------
 const RARITY_HUE := {
 	"white": C_HINT, "blue": Color("6f9fd0"),
-	"purple": Color("a273c9"), "gold": C_RARE,
+	"purple": Color("a273c9"), "gold": C_RARE, "relic": Color("e8a36c"),
 }
-const RARITY_NAME := {"white": "普通", "blue": "稀有", "purple": "史诗", "gold": "传说"}
+const RARITY_NAME := {"white": "普通", "blue": "稀有", "purple": "史诗", "gold": "传说", "relic": "传世"}
 
 # ---------- 参考风（创建角色页）配色 ----------
 const WOOD := Color("234746")
@@ -68,13 +69,16 @@ const VEIL_VIGNETTE_A := 0.55                 # 暗角强度（相对弹窗级�
 const VEIL_GRID := 8.0                        # 斜纹间距（远看是布纹，近看无规律）
 
 # ---------- 字体 ----------
-# 小薇体用于标题、宋体用于标签与次操作、黑体用于正文和数值。
+# 毛笔字用于大标题、宋体用于按钮与题签、黑体用于正文和数值。
 const FONT_REG := "res://assets/fonts/NotoSansSC-Regular.otf"
 const FONT_BOLD := "res://assets/fonts/NotoSansSC-Bold.otf"
 const FONT_SERIF := "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf"
 const FONT_ART := "res://assets/fonts/MaShanZheng-Regular.ttf"
 const FONT_DISPLAY := "res://assets/fonts/ZCOOLQingKeHuangYou-Regular.ttf"
 const Visuals := preload("res://src/ui/VisualTheme.gd")
+const Readability := preload("res://src/ui/UIReadability.gd")
+const Feedback := preload("res://src/ui/UIFeedback.gd")
+var _interface_theme: Theme
 var font_reg: FontFile
 var font_bold: FontFile
 var font_serif: FontFile
@@ -315,14 +319,15 @@ func _ready() -> void:
 	if font_serif == null:
 		font_serif = font_bold
 	elif font_bold != null:
-		# 站酷小薇个别字形损坏（「回」渲染成实心黑块，已从 cmap 删映射）；
-		# 配 fallback 后坏字/缺字自动走黑体，不再破相
+		# 不常见字符交给完整黑体字库，保持字形覆盖。
 		font_serif.fallbacks = [font_bold]
 	if font_art == null:
 		font_art = font_serif
 	else:
 		font_art.fallbacks = [font_serif, font_reg]
 	_tune_font_rendering()
+	_interface_theme = Readability.theme_for_text()
+	get_tree().node_added.connect(_on_ui_node_added)
 	_load_roles()
 	_load_save()
 	ensure_starter_buildings()
@@ -334,12 +339,7 @@ func _ready() -> void:
 	_build_hatch_tex()
 
 
-## 字体渲染调优（"字体难看"的根治点，全部集中在 G 一处，页面不准各自设）
-## 问题：字体的 .import 里 hinting=3（全量 hinting）+ force_autohinter=false。
-## Noto Sans SC 这类大字库在小字号（13/16px）下走 hinting 会把汉字笔画强行对齐像素格，
-## 「攒/攀」这类多笔画字会糊成一团、横竖粗细不均——这就是界面里"字很丑"的主因。
-## 做法：字号 < 20 时关掉 hinting、开轻量抗锯齿，笔画回到设计字形；大字号保持 hinting
-## 让标题边缘更锐利（标题字号大，不吃 hinting 的变形）。
+## Smooth sampling is applied separately to text nodes; art textures remain pixel sharp.
 func _tune_font_rendering() -> void:
 	for f in [font_reg, font_bold, font_serif, font_art, font_display]:
 		if f == null:
@@ -349,6 +349,32 @@ func _tune_font_rendering() -> void:
 		f.hinting = TextServer.HINTING_NONE if _is_small_face(f) else TextServer.HINTING_LIGHT
 		f.antialiasing = TextServer.FONT_ANTIALIASING_GRAY
 		f.oversampling = 2.0
+
+
+func _on_ui_node_added(node: Node) -> void:
+	if node is Label or node is Button or node is LineEdit or node is RichTextLabel or node is TextEdit:
+		_apply_ui_text.call_deferred(weakref(node))
+
+
+func _apply_ui_text(reference: WeakRef) -> void:
+	var node := reference.get_ref() as Node
+	if node != null: Readability.apply_to(node)
+
+
+func register_ui_page(parent: Node) -> void:
+	if not (parent is Control): return
+	if parent.theme == null: parent.theme = _interface_theme
+	if not parent.is_in_group("ui_feedback_page"): parent.add_to_group("ui_feedback_page")
+
+
+func present_reward(title: String, detail := "", kind := "reward") -> void:
+	if bool(get_meta("ui_review_mode",false)): return
+	var pages := get_tree().get_nodes_in_group("ui_feedback_page")
+	pages.reverse()
+	for page in pages:
+		if is_instance_valid(page) and not page.is_queued_for_deletion() and page.is_visible_in_tree() and page.size.x >= 240:
+			Feedback.present(page,title,detail,kind)
+			return
 
 
 ## 小字号字体（正文字体）：全局关 hinting；标题用宋体保留轻 hinting
@@ -500,6 +526,8 @@ func _load_save() -> void:
 		prog["dungeon_trials"] = trials if trials is Dictionary else {}
 		var contracts: Variant = pd.get("trade_contracts", {})
 		prog["trade_contracts"] = contracts if contracts is Dictionary else {}
+		var relic_hunts: Variant = pd.get("relic_hunts", {})
+		prog["relic_hunts"] = relic_hunts if relic_hunts is Dictionary else {}
 		var active_run: Variant = pd.get("active_run", {})
 		prog["active_run"] = active_run if active_run is Dictionary else {}
 		var fishing: Variant = pd.get("fishing", {})
@@ -578,6 +606,7 @@ func _load_save() -> void:
 		quest["active"] = aq if aq is Dictionary else {}
 		var cl: Variant = qd.get("claimed", [])
 		quest["claimed"] = cl if cl is Array else []
+	skill_study_refund()
 
 
 ## 把「进度类」内存态重置为初始默认值（导入重读 / 重置存档共用，P0-3/P0-4）。
@@ -833,6 +862,7 @@ func campaign_gear_claim(persist := true) -> Dictionary:
 		items = before_items
 		wallet = before_wallet
 		return {"ok": false, "count": 0, "err": "保底未保存，已回滚"}
+	if persist and not names.is_empty(): present_reward("旅装入囊"," · ".join(names))
 	return {"ok": true, "count": names.size(), "names": names}
 
 
@@ -1219,7 +1249,10 @@ func act1_skill_variants(role_id := "") -> Dictionary:
 	return out
 
 func curriculum_apply(sid: String, action: String, choice := "", persist := true) -> Dictionary:
-	return MentorCurriculum.apply(self, sid, action, choice, persist)
+	var result := MentorCurriculum.apply(self, sid, action, choice, persist)
+	if persist and bool(result.get("ok",false)):
+		present_reward("招式解封" if action == "learn" else "招式领悟",String(TableCache.get_skill(sid).get("name",sid)),"unlock")
+	return result
 
 func curriculum_report_effective(skills: Array, encounter_id: String, persist := true) -> Array:
 	return MentorCurriculum.report(self, skills, encounter_id, persist)
@@ -1234,6 +1267,7 @@ func mentor_unlock_second(persist := true) -> Dictionary:
 	if persist and not save_game():
 		prog = before
 		return {"ok": false, "reason": "save_failed"}
+	if persist: present_reward("招式解封",String(TableCache.get_skill(sid).get("name",sid)),"unlock")
 	return {"ok": true, "skill": sid, "name": String(TableCache.get_skill(sid).get("name", sid))}
 
 
@@ -1276,6 +1310,7 @@ func mentor_choose_variant(choice: String, persist := true) -> Dictionary:
 		prog = before
 		return {"ok": false, "reason": "save_failed"}
 	var row := (variants_v as Dictionary)[choice] as Dictionary
+	if persist: present_reward("招式领悟",String(row.get("name",choice)),"unlock")
 	return {"ok": true, "skill": sid, "choice": choice,
 		"name": String(row.get("name", choice)), "desc": String(row.get("desc", ""))}
 
@@ -2031,6 +2066,7 @@ func shipping_claim(id: String, site_id: String) -> Dictionary:
 		prog = before_prog
 		wallet = before_wallet
 		return {"ok": false, "err": "领取未保存，已回滚"}
+	present_reward("船单已结算","金币 +%d · 经验 +%d" % [int(info["payout_gold"]),int(info["reward_exp"])])
 	return {"ok": true, "gold": int(info["payout_gold"]), "exp": int(info["reward_exp"])}
 
 
@@ -2234,6 +2270,7 @@ func _side_complete(qid: String, persist := true, choice := "") -> Dictionary:
 		wallet = before_wallet
 		items = before_items
 		return {}
+	if persist: present_reward("行旅有获",String(row.get("title","")))
 	return {"ok": true, "qid": qid, "reward": reward,
 		"title": String(row.get("title", "")),
 		"line": String(chosen.get("dialogue", row.get("completion_dialogue", ""))),
@@ -2587,7 +2624,7 @@ func codex_claim(mid: String) -> Dictionary:
 	var claimed: Array = codex_claimed()
 	claimed.append(mid)
 	prog["codex_claimed"] = claimed
-	save_game()
+	if save_game(): present_reward("图鉴嘉奖",String(target.get("name",mid)))
 	_sfx("reward", 0.0)
 	return {"ok": true, "err": "", "name": String(target.get("name", mid)),
 		"lines": lines, "need": need}
@@ -2642,6 +2679,8 @@ func pet_unlock_text(pid: String) -> String:
 			return "通关「%s」首领" % world_name(String(u.get("world", "")))
 		"egg":
 			return "沉渊港兽栏孵化潮纹蛋"
+		"relic_hunt":
+			return "通关后传世挑战累计%d次胜利" % int(u.get("wins",120))
 	return "未知途径"
 
 
@@ -2671,6 +2710,7 @@ func claim_rockturtle(persist := true) -> Dictionary:
 	if persist and not save_game():
 		prog = before
 		return {"ok": false, "reason": "save_failed"}
+	if persist: present_reward("伙伴结伴","岩龟已加入同行队伍","unlock")
 	return {"ok": true, "pet": "pet_rockturtle", "name": "岩龟"}
 
 
@@ -2729,6 +2769,7 @@ func port_egg_hatch(persist := true) -> Dictionary:
 		prog = before_prog
 		items = before_items
 		return {"ok": false, "reason": "save_failed"}
+	if persist: present_reward("孵化有获" if duplicate_pet else "伙伴结伴","宠物粮 ×2" if duplicate_pet else "潮羽雏鸥已加入同行队伍","reward" if duplicate_pet else "unlock")
 	return {"ok": true, "pet": "pet_tide_gull", "duplicate": duplicate_pet,
 		"food": 2 if duplicate_pet else 0}
 
@@ -2880,6 +2921,7 @@ func claim_waystone_cache(persist := true) -> Dictionary:
 		wallet = before_wallet
 		items = before_items
 		return {"ok": false, "reason": "save_failed", "toasts": []}
+	if persist: present_reward("石匣启封","强化石 ×1 · 金币 +30")
 	return {"ok": true, "reason": "", "toasts": [
 		"旧路石匣：箱盖内刻着断碑坡方位",
 		"获得 精炼石 ×1 · 金币 +30",
@@ -3210,7 +3252,7 @@ func build(id: String) -> bool:
 	var arr: Array = city.get("built", [])
 	arr.append(id)
 	city["built"] = arr
-	save_game()
+	if save_game(): present_reward("新建筑落成",String(city_building(id).get("name",id)),"unlock")
 	return true
 
 
@@ -3396,8 +3438,9 @@ func do_activity(id: String) -> Dictionary:
 	var acts: Dictionary = city.get("acts", {})
 	acts[id] = now_ts()
 	city["acts"] = acts
-	save_game()
+	var committed := save_game()
 	lines.append_array(reward_lines(reward))
+	if committed: present_reward("收获入囊",String(a.get("name","")))
 	return {"ok": true, "name": String(a.get("name", "")), "lines": lines}
 
 
@@ -3553,7 +3596,7 @@ func talent_add(node_id: String) -> bool:
 	var tl: Dictionary = prog.get("talents", {})
 	tl[node_id] = int(tl.get(node_id, 0)) + 1
 	prog["talents"] = tl
-	save_game()
+	if save_game(): present_reward("天赋点亮",String(talent_node(node_id).get("name",node_id)),"unlock")
 	return true
 
 
@@ -3758,6 +3801,7 @@ func inv_claim(uid: int) -> Dictionary:
 	if not save_game():
 		Inventory.return_to_pending(inv, uid)
 		return {"ok": false, "err": "存档写入失败，领取未生效（装备仍在待领取箱）"}
+	present_reward("器物入囊",String(equip_tpl(String(inv_find(uid).get("tpl",""))).get("name","装备已领取")))
 	return r
 
 
@@ -4087,6 +4131,8 @@ func equip_instance_bonus(inst: Dictionary) -> Dictionary:
 			out["crit"] = float(base[k])  # 暴击值不吃强化倍率
 		else:
 			out[k] = int(roundf(float(base[k]) * mult))
+	for key in equip_tpl(String(inst.get("tpl", ""))).get("special", {}):
+		out[key] = float(equip_tpl(String(inst.get("tpl", ""))).special[key])
 	for g in (inst.get("gems", []) as Array):
 		var gid := String(g)
 		var v := equip_gem_value(gid)
@@ -4125,6 +4171,8 @@ func skill_max_level() -> int:
 
 ## 升到下一级所需远征币；满级返回 0
 func skill_upgrade_cost(sid: String) -> int:
+	if not SkillSystem.can_study(TableCache.get_skill(sid)):
+		return 0
 	var lv := skill_level(sid)
 	if lv >= skill_max_level():
 		return 0
@@ -4135,17 +4183,55 @@ func skill_upgrade_cost(sid: String) -> int:
 
 
 func skill_upgrade(sid: String) -> bool:
+	if save_locked:
+		return false
 	var cost := skill_upgrade_cost(sid)
 	if cost <= 0:
 		return false
 	if int(wallet.get("expedition", 0)) < cost:
 		return false
+	var before_wallet := wallet.duplicate(true)
+	var before_prog := prog.duplicate(true)
 	wallet["expedition"] = int(wallet.get("expedition", 0)) - cost
-	var sk: Dictionary = prog.get("skills", {})
+	var sk: Dictionary = prog.get("skills", {}).duplicate(true)
 	sk[sid] = skill_level(sid) + 1
 	prog["skills"] = sk
-	save_game()
+	if not save_game():
+		wallet = before_wallet
+		prog = before_prog
+		return false
+	present_reward("招式精进","%s · %d级" % [String(TableCache.get_skill(sid).get("name",sid)),skill_level(sid)],"unlock")
 	return true
+
+
+## 旧版纯功能技能的无效投入按原阶梯全额退款；等级重置与钱包一起写盘。
+## 重置后无可退等级，重复读档/打开面板也不会再次给钱。
+func skill_study_refund(persist := true) -> Dictionary:
+	if save_locked:
+		return {"ok": false, "amount": 0}
+	var learned: Dictionary = prog.get("skills", {})
+	var costs: Array = TableCache.skillbook_config().get("cost_expedition", [])
+	var refund := 0
+	var reset_ids: Array = []
+	for sid in learned:
+		var skill := TableCache.get_skill(String(sid))
+		if skill.is_empty() or SkillSystem.can_study(skill) or int(learned[sid]) <= 1:
+			continue
+		for index in range(mini(int(learned[sid]) - 1, costs.size())):
+			refund += int(costs[index])
+		reset_ids.append(sid)
+	if reset_ids.is_empty():
+		return {"ok": true, "amount": 0}
+	var before_prog := prog.duplicate(true)
+	var before_wallet := wallet.duplicate(true)
+	for sid in reset_ids:
+		learned.erase(sid)
+	wallet["expedition"] = int(wallet.get("expedition", 0)) + refund
+	if persist and not save_game():
+		prog = before_prog
+		wallet = before_wallet
+		return {"ok": false, "amount": 0}
+	return {"ok": true, "amount": refund}
 
 
 ## 技能 k 系数加成倍率（每级 +5%）
@@ -4212,6 +4298,7 @@ func claim_first_mount(persist := true) -> Dictionary:
 	if persist and not save_game():
 		prog = before
 		return {"ok": false, "reason": "save_failed"}
+	if persist: present_reward("坐骑结伴",String(mount_cfg(mid).get("name",mid)),"unlock")
 	return {"ok": true, "mount_id": mid,
 		"name": String(mount_cfg(mid).get("name", mid))}
 
@@ -4273,6 +4360,7 @@ func mount_buy(mid: String) -> Dictionary:
 		wallet=before_wallet
 		items=before_items
 		return {"ok":false,"err":"坐骑未保存，资源已恢复"}
+	present_reward("坐骑结伴" if cur == 0 else "坐骑进阶",String(cfg.get("name",mid)),"unlock")
 	return {"ok": true, "tier": cur + 1}
 
 
@@ -4344,7 +4432,7 @@ func title_claim(tid: String) -> Dictionary:
 	if String(ts.get("active", "")).is_empty():
 		ts["active"] = tid
 	prog["titles"] = ts
-	save_game()
+	if save_game(): present_reward("名号解锁",String(t.get("name",tid)),"unlock")
 	return {"ok": true}
 
 
@@ -4585,7 +4673,8 @@ func companion_train(pid: String, slot: int, tid: String) -> Dictionary:
 ## 返回 {atk_pct, def_pct, maxhp_pct, spd_pct, crit_add, atk_add, def_add, hp_add, energy_pct}
 func growth_bonuses(role_id := "") -> Dictionary:
 	var out := {"atk_pct": 0.0, "def_pct": 0.0, "maxhp_pct": 0.0, "spd_pct": 0.0,
-		"crit_add": 0.0, "atk_add": 0.0, "def_add": 0.0, "hp_add": 0, "energy_pct": 0.0}
+		"crit_add": 0.0, "atk_add": 0.0, "def_add": 0.0, "hp_add": 0, "energy_pct": 0.0,
+		"relic_shield_pct":0.0, "relic_break_damage_pct":0.0}
 	# 天赋
 	var tl: Dictionary = prog.get("talents", {})
 	for nid in tl.keys():
@@ -4607,7 +4696,7 @@ func growth_bonuses(role_id := "") -> Dictionary:
 		out["def_add"] = float(out["def_add"]) + float(b.get("def", 0))
 		out["hp_add"] = int(out["hp_add"]) + int(b.get("hp", 0))
 		out["crit_add"] = float(out["crit_add"]) + float(b.get("crit", 0.0))
-		for k in ["atk_pct", "def_pct", "maxhp_pct", "spd_pct", "crit_add"]:
+		for k in ["atk_pct", "def_pct", "maxhp_pct", "spd_pct", "crit_add", "relic_shield_pct", "relic_break_damage_pct"]:
 			out[k] = float(out[k]) + float(b.get(k, 0.0))
 	# 坐骑
 	var mid := mount_active()
@@ -4833,6 +4922,7 @@ func quest_claim(qid: String) -> Dictionary:
 		wallet = before_wallet
 		items = before_items
 		return {"ok": false, "err": "存档失败，委托与物资已恢复"}
+	present_reward("委托交付",String(d.get("title","")))
 	return {"ok": true, "title": String(d.get("title", "")),
 		"npc": String(d.get("npc", "")), "lines": reward_lines(reward)}
 
@@ -5414,6 +5504,8 @@ func _scan_png_dir(dir_path: String, strip_prefix: bool) -> void:
 
 ## 按名称取完整路径（无此素材返回空串）
 func res_path(res_name: String) -> String:
+	var ui_path := NavigationIcons.resource_path(res_name)
+	if not ui_path.is_empty(): return ui_path
 	if res_name.begins_with("mon_") and MonsterArt.has(res_name):
 		return MonsterArt.path(res_name)
 	if not _res_indexed:
@@ -5427,8 +5519,14 @@ func res_path(res_name: String) -> String:
 var _tex_cache := {}
 
 func res_tex(res_name: String) -> Texture2D:
+	if res_name in ["pet_return_deer", "pet_return_deer_art"]:
+		return res_tex("pet_holydeer_art" if res_name.ends_with("_art") else "pet_holydeer")
 	if _tex_cache.has(res_name):
 		return _tex_cache[res_name]
+	if res_name == "pet_rockturtle":
+		var matched := WorldArtFinish.turtle_texture()
+		_tex_cache[res_name] = matched
+		return matched
 	if res_name.begins_with("mon_") and MonsterArt.has(res_name):
 		var registered := MonsterArt.texture(res_name)
 		_tex_cache[res_name] = registered
@@ -5466,6 +5564,7 @@ func veil_at(parent: Node, strength := VEIL_MODAL_A, eat_input := true, a := -1.
 
 
 func _veil_into(parent: Node, strength: float, eat_input: bool, a: float) -> Control:
+	register_ui_page(parent)
 	if a < 0.0:
 		a = strength
 	var root := ModalVeil.new()
@@ -5550,6 +5649,7 @@ func _interface_texture() -> ImageTexture:
 	return _interface_backdrop
 
 func page_background(parent: Control, dim := 0.25, asset_path := "", use_refined := true) -> TextureRect:
+	register_ui_page(parent)
 	var background := TextureRect.new()
 	background.name = "PageBackground"
 	background.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -5642,6 +5742,7 @@ func gold_label(text: String, size: int, bold := true,
 		color := GOLD, outline := true) -> Label:
 	var l := Label.new()
 	l.text = text
+	l.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	l.add_theme_font_override("font", font_bold if bold else font_reg)
 	l.add_theme_font_size_override("font_size", maxi(size, 14))
@@ -5659,8 +5760,9 @@ func serif_label(text: String, size: int, color := GOLD,
 		outline := false) -> Label:
 	var l := Label.new()
 	l.text = text
+	l.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	l.add_theme_font_override("font", font_art if size >= FS_LG else (font_display if size >= 18 else font_serif))
+	l.add_theme_font_override("font", font_art if size >= FS_LG else font_serif)
 	l.add_theme_font_size_override("font_size", maxi(size, 14))
 	l.add_theme_color_override("font_color", color)
 	if outline:
@@ -5673,6 +5775,7 @@ func serif_label(text: String, size: int, color := GOLD,
 func text_label(text: String, size := FS_SM, color := TEXT_DARK) -> Label:
 	var l := Label.new()
 	l.text = text
+	l.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	l.add_theme_font_override("font", font_reg)
 	l.add_theme_font_size_override("font_size", maxi(size, 14))
@@ -5806,7 +5909,8 @@ func page_tabs(deck: Control, labels: Array, icons: Array, width: float) -> Cont
 			var tint := TEXT_LIGHT if selected else TEXT_MUTED
 			(tab.get_child(0) as Label).add_theme_color_override("font_color", tint)
 			var icon_holder := tab.get_node("NavigationIcon")
-			(icon_holder.get_child(0) as CanvasItem).modulate = tint
+			var tab_icon := icon_holder.get_child(0) as CanvasItem
+			tab_icon.modulate = Color.WHITE if tab_icon.get_meta("colored_icon", false) else tint
 	deck.connect("page_changed", sync)
 	sync.call(int(deck.get("current")))
 	deck.set("navigation_visible", false)
@@ -6085,9 +6189,14 @@ class PixelButton extends PanelContainer:
 	var _cut := 2.0
 	var _hover_line := 0.0
 	var _hover_tween: Tween
+	var _pressed := false
 	func _ready() -> void:
 		mouse_entered.connect(func(): _set_hover(1.0))
-		mouse_exited.connect(func(): _set_hover(0.0))
+		mouse_exited.connect(func(): _pressed=false; _set_hover(0.0))
+		gui_input.connect(func(event: InputEvent):
+			if event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_LEFT:
+				_pressed=event.pressed
+				queue_redraw())
 	func _set_hover(value: float) -> void:
 		if _hover_tween != null and _hover_tween.is_valid(): _hover_tween.kill()
 		_hover_tween = create_tween()
@@ -6121,7 +6230,11 @@ class PixelButton extends PanelContainer:
 		elif surface_bg == Color("eae7da"):
 			fill = c.paper.lightened(0.06)
 			edge = Color(c.accent,0.7)
-		G.draw_hard_shadow(self, sz, _cut, 2.0, Color("170f07", 0.22))
+		if String(get_meta("action_material","")) == "gilded":
+			fill = Color("c4a56b")
+			edge = Color("eddbad")
+		fill = fill.lightened(_hover_line*.035).darkened(.045 if _pressed else 0.0)
+		G.draw_hard_shadow(self, sz, _cut, 1.0 if _pressed else 3.0, Color("170f07", 0.26))
 		draw_colored_polygon(G.octagon_path(sz, 0.0, _cut), fill)
 		draw_line(Vector2(_cut + 2, 1), Vector2(sz.x - _cut - 2, 1),
 			fill.lightened(0.16), 1.0)
@@ -6130,6 +6243,8 @@ class PixelButton extends PanelContainer:
 		var rim := G.octagon_path(sz, 0.5, _cut)
 		rim.append(rim[0])
 		draw_polyline(rim, edge, 1.0)
+		if bool(get_meta("primary_action",false)) and sz.y>=44:
+			draw_line(Vector2(12,5),Vector2(sz.x-12,5),Color(edge,.20),1)
 		# 页签选中态：底边旧金粗线（与内容区相连的视觉暗示）
 		if bool(get_meta("tab_selected", false)):
 			draw_line(Vector2(_cut + 2, sz.y - 1.5), Vector2(sz.x - _cut - 2, sz.y - 1.5),
@@ -6309,12 +6424,13 @@ func gold_button(text: String, w := 0.0, h := 42.0, font_size := FS_MD) -> Contr
 	root.set_surface(Color("eae7da") if secondary else GOLD_BTN, GOLD_BTN_EDGE)
 	root.set_content_margin(16.0)
 	var label := gold_label(_button_text(text), font_size, false, TEXT_DARK if secondary else GOLD_BRIGHT, false)
-	label.add_theme_font_override("font", font_art if font_size >= 22 else (font_display if font_size >= FS_MD else font_serif))
+	label.add_theme_font_override("font", font_art if font_size >= 24 else font_serif)
 	root.add_child(label)
 	root.set_meta("primary_action", not secondary)
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	root.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	_bind_press_feedback(root)
+	if _button_text(text) in ["领取","交付","领取奖励","解封","启封"]: Feedback.mark_ready(root)
 	return root
 
 
@@ -6578,16 +6694,12 @@ func make_arena_mirror(role_id: String, level: int) -> Dictionary:
 	stats.spd = stats.spd * (1.0 + float(gb.get("spd_pct", 0.0)))
 	var skills: Array = []
 	var learned: Dictionary = prog.get("skills", {})
-	var k_per := float(TableCache.skillbook_config().get("k_per_level", 0.05))
 	for sid in role.get("skills", []):
 		var sd := TableCache.get_skill(String(sid))
 		if sd.is_empty():
 			continue
 		var slv := int(learned.get(String(sid), 1))
-		if slv > 1:
-			sd = sd.duplicate()
-			sd["k"] = snappedf(float(sd.get("k", 0.0)) * (1.0 + k_per * float(slv - 1)), 0.001)
-		skills.append(sd)
+		skills.append(SkillSystem.study_skill(sd, slv))
 	if skills.is_empty():   # 角色表没给技能：至少给一手重击，别让它站着挨打
 		skills = [{"id": "boss_slam", "name": "震地", "k": 1.6, "cd": 9,
 			"target": "enemy_front_all"}]
@@ -6600,6 +6712,7 @@ func make_arena_mirror(role_id: String, level: int) -> Dictionary:
 			"def": int(stats.def), "spd": float(stats.spd)},
 		"skills": skills,
 		"mirror": true,
+		"basic_attack_k": float(role.get("basic_attack_k", 1.0)),
 	}
 
 

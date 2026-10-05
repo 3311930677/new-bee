@@ -137,11 +137,13 @@ func _build() -> void:
 	_art.size_flags_stretch_ratio = 8.0
 	var asb := StyleBoxFlat.new()
 	asb.bg_color = G.Visuals.palette(self).paper.lightened(0.055)
+	if bool(cfg.get("art_stage",false)): asb.bg_color = Color("1d2d39")
 	# 3px 圆角 ≈ 八边形切角语言（与 PaperPanel/PixelButton 的 cut=3 同宽）
 	asb.set_corner_radius_all(3)
 	asb.set_border_width_all(1)
 	var tint: Color = cfg.get("art_tint", Color("8d8474"))
 	asb.border_color = Color(tint.r, tint.g, tint.b, 0.22)
+	if bool(cfg.get("art_stage",false)): asb.set_border_width_all(0)
 	_art.add_theme_stylebox_override("panel", asb)
 	col.add_child(_art)
 
@@ -189,7 +191,12 @@ func _draw() -> void:
 	var sz := size
 	if sz.x < 12.0 or sz.y < 12.0:
 		return
-	G.draw_paper_body(self,sz,G.paper_grain())
+	if bool(cfg.get("editorial",false)):
+		draw_rect(Rect2(0,3,sz.x,sz.y),Color("101924",.28))
+		draw_rect(Rect2(Vector2.ZERO,sz),Color("eee8d6"))
+		draw_line(Vector2(12,0),Vector2(sz.x-12,0),Color("a1a08e"),1)
+	else:
+		G.draw_paper_body(self,sz,G.paper_grain())
 	if _sel_on:
 		var rim := G.octagon_path(sz,1.5,5)
 		rim.append(rim[0])
@@ -276,6 +283,7 @@ class _ArtInner extends Control:
 	var tint := Color("8d8474")
 	var hint := ""
 	var dim := false
+	var stage := false
 	var _h1: Label = null
 	var _h2: Label = null
 
@@ -285,6 +293,7 @@ class _ArtInner extends Control:
 		fit = String(c.get("art_fit", "contain"))
 		hint = String(c.get("art_hint", ""))
 		dim = bool(c.get("art_dim", false))
+		stage = bool(c.get("art_stage",false))
 		tex = _first_tex(c.get("art_names", []), String(c.get("art_fallback", "")))
 		if tex != null:
 			var pic := TextureRect.new()
@@ -297,7 +306,13 @@ class _ArtInner extends Control:
 			# 大图缩小显示会起锯齿：铺满类插画走线性过滤，像素小图保持 nearest
 			if fit == "cover":
 				pic.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-			if dim:
+			if dim and stage:
+				var silhouette := Shader.new()
+				silhouette.code = "shader_type canvas_item; void fragment(){ vec4 t=texture(TEXTURE,UV); COLOR=vec4(vec3(0.055,0.095,0.13),t.a); }"
+				var material := ShaderMaterial.new()
+				material.shader = silhouette
+				pic.material = material
+			elif dim:
 				pic.modulate = Color(0.34, 0.31, 0.29, 0.9)
 			add_child(pic)
 		# 稀有度外框：矢量描边。外框贴图（方括号形）被 STRETCH_SCALE 拉到宽矩形后
@@ -336,6 +351,17 @@ class _ArtInner extends Control:
 		_h2.position = Vector2(0, size.y - 28.0)
 
 	func _draw() -> void:
+		if stage and size.x>0 and size.y>0:
+			var center := size*.5
+			var r := minf(size.x,size.y)*.45
+			for i in range(4,0,-1): draw_circle(center,r*float(i)/4,Color(tint,.016))
+			draw_arc(center,r,PI*.08,PI*.92,48,Color(tint,.36),1,true)
+			draw_arc(center,r,PI*1.08,PI*1.92,48,Color(tint,.36),1,true)
+			for angle in [0.0,PI]:
+				G.Visuals.diamond(self,center+Vector2.from_angle(angle)*r,3,Color(tint,.65))
+			draw_set_transform(Vector2(center.x,size.y-12),0,Vector2(1,.20))
+			draw_circle(Vector2.ZERO,r*.65,Color("07121b",.60))
+			draw_set_transform(Vector2.ZERO)
 		if tex != null or size.x <= 0.0 or size.y <= 0.0:
 			return
 		var w := size.x

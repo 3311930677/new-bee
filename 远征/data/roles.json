@@ -40,6 +40,7 @@
     "tags": "治疗辅助 · 可独立刷怪",
     "desc": "持圣锤的牧者，圣光庇佑同行之人，亦可独行荡魔。晨星高悬之处，伤病与黑暗一并退散。",
     "attack_range": "melee",
+    "basic_attack_k": 1.35,
     "base": { "hp": 115, "atk": 22, "def": 12, "spd": 0.95, "crit": 0.05 },
     "skills": ["fz_shengyu", "fz_puzhao", "fz_jinghua", "fz_zhudao", "fz_poxiao"]
   }

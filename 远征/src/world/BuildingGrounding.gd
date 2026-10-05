@@ -73,8 +73,75 @@ static func prepare(art: Texture2D, width: int, height: int) -> Dictionary:
 		"cast": ImageTexture.create_from_image(cast), "wear": ImageTexture.create_from_image(wear),
 		"offset": Vector2(-width * 0.5 - pad, top), "visible_floor": floor_y,
 		"visible_width": right - left + 1, "image_height": height}
+	var projection := silhouette(art, width, height)
+	if not projection.is_empty():
+		row["cast"] = projection.cast
+		row["cast_offset"] = projection.offset
 	_cache[key] = row
 	return row
+
+# A finite, flattened silhouette rather than an ellipse or infinite 2D light shadow.
+# Alpha bounds determine the contact plane, so transparent export padding cannot
+# leave the prop floating. The same upper-left light direction serves every prop.
+static func silhouette(art: Texture2D, width: int, height: int) -> Dictionary:
+	var source_key := art.resource_path if not art.resource_path.is_empty() else str(art.get_rid().get_id())
+	var key := "silhouette:%s:%d:%d" % [source_key, width, height]
+	if _cache.has(key): return _cache[key]
+	var source := art.get_image()
+	if source == null or source.is_empty(): return {}
+	if source.is_compressed(): source.decompress()
+	source.convert(Image.FORMAT_RGBA8)
+	source.resize(width, height, Image.INTERPOLATE_NEAREST)
+	var bounds := source.get_used_rect()
+	if not bounds.has_area(): return {}
+	var floor_y := bounds.end.y - 1
+	var pad := 6
+	var extent := Vector2i(width + ceili(height * .38) + pad * 2, height + ceili(height * .24) + pad)
+	var mask := Image.create(extent.x,extent.y,false,Image.FORMAT_RGBA8)
+	var cast := Image.create(extent.x,extent.y,false,Image.FORMAT_RGBA8)
+	var contact := Image.create(extent.x,extent.y,false,Image.FORMAT_RGBA8)
+	mask.fill(Color.TRANSPARENT)
+	cast.fill(Color.TRANSPARENT)
+	contact.fill(Color.TRANSPARENT)
+	for x in width:
+		var foot := -1
+		for y in height:
+			var alpha := source.get_pixel(x,y).a
+			if alpha < .5: continue
+			foot = y
+			var above := float(floor_y - y)
+			var px := roundi(x + above * .38) + pad
+			var py := roundi(floor_y + above * .24)
+			# Preserve roof edges and pole gaps instead of filling a generic oval.
+			mask.set_pixel(px,py,Color(1,1,1,.20 - .06 * above / maxf(1,height)))
+		if foot < floor_y - height * .26: continue
+		for dx in range(-2,3):
+			for dy in range(-3,5):
+				var distance := maxf(absf(dx)*1.4,absf(dy)*.9)
+				var px := x + dx + pad
+				var py := foot + dy
+				if px < 0 or py < 0 or px >= extent.x or py >= extent.y: continue
+				var alpha := .30 * clampf(1-distance/4.5,0,1)
+				if alpha > contact.get_pixel(px,py).a: contact.set_pixel(px,py,Color(1,1,1,alpha))
+	# A one-pixel penumbra softens stair steps without blurring pixel artwork.
+	for x in range(1,extent.x-1):
+		for y in range(maxi(1,floor_y-2),extent.y-1):
+			var core := mask.get_pixel(x,y).a
+			var edge := 0.0
+			for offset in [Vector2i(-1,0),Vector2i(1,0),Vector2i(0,-1),Vector2i(0,1)]:
+				edge = maxf(edge,mask.get_pixel(x+offset.x,y+offset.y).a*.45)
+			cast.set_pixel(x,y,Color(1,1,1,maxf(core,edge)))
+	var row := {"cast":ImageTexture.create_from_image(cast),"contact":ImageTexture.create_from_image(contact),
+		"offset":Vector2(-width*.5-pad,0),"visible_floor":floor_y}
+	_cache[key] = row
+	return row
+
+static func draw_prop(canvas: CanvasItem, row: Dictionary, art_at: Vector2, width: float, snow := false) -> void:
+	if row.is_empty(): return
+	var at := art_at + Vector2(width*.5,0) + Vector2(row.offset)
+	var ink := Color("273337") if snow else Color("293126")
+	canvas.draw_texture(row.cast,at,ink)
+	canvas.draw_texture(row.contact,at,ink)
 
 static func attach(parent: Node2D, row: Dictionary, art_top: float, snow: bool) -> void:
 	if row.is_empty(): return
@@ -89,7 +156,7 @@ static func attach(parent: Node2D, row: Dictionary, art_top: float, snow: bool) 
 		sprite.name = kind.capitalize()
 		sprite.centered = false
 		sprite.texture = row[kind]
-		sprite.position = row.offset
+		sprite.position = row.get("cast_offset",row.offset) if kind == "cast" else row.offset
 		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		sprite.use_parent_material = false
 		sprite.modulate = Color("626363") if snow and kind == "wear" else Color("6c5b3d") if kind == "wear" else Color("273337") if snow else Color("293126")

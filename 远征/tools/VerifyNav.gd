@@ -18,6 +18,8 @@ const SKIP_FILES := [
 	"UiSafeArea.gd", # RefCounted 布局工厂，无独立可关闭页面
 	"SkillShowcase.gd", # 非独立页面的招式动画，返回由技能书负责
 	"AvatarCatalog.gd", "JournalUI.gd", "VisualTheme.gd", "UIFinesse.gd", "FieldUI.gd", "CraftUI.gd", # 目录与样式工厂，均为 RefCounted
+	"InventoryTheme.gd", # 背包 Theme 工厂，无独立页面
+	"UIReadability.gd", "UIFeedback.gd", # Text policy and non-interactive effect components.
 	"Main.gd",        # 无 UI
 	"LoadScreen.gd",  # 过渡页：加载中途不该能返回（返回了等于卡在半路）
 ]
@@ -94,6 +96,7 @@ func _verify_panel_affordance() -> void:
 		["QuestPanel", "res://src/ui/QuestPanel.gd"],
 		["AvatarPanel", "res://src/ui/AvatarPanel.gd"],
 		["ArenaPanel", "res://src/ui/ArenaPanel.gd"],
+		["ActivityPanel", "res://src/ui/ActivityPanel.gd"],
 	]
 	for c in cases:
 		var name := String(c[0])

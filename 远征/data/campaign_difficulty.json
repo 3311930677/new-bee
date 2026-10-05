@@ -1,0 +1,209 @@
+{
+  "version": 1,
+  "maps": {
+    "old_salt_road": {
+      "hp": 1.16,
+      "atk": 1.3,
+      "def": 1.0,
+      "boss_hp": 1.22,
+      "boss_atk": 1.45,
+      "boss_def": 1.0,
+      "summon_scale": 0.4
+    },
+    "shenyuan_port": {
+      "hp": 1.16,
+      "atk": 1.3,
+      "def": 1.0,
+      "boss_hp": 1.22,
+      "boss_atk": 1.45,
+      "boss_def": 1.0,
+      "summon_scale": 0.4
+    },
+    "tideflat": {
+      "hp": 1.16,
+      "atk": 1.3,
+      "def": 1.0,
+      "boss_hp": 1.22,
+      "boss_atk": 1.45,
+      "boss_def": 1.0,
+      "summon_scale": 0.4
+    },
+    "tidal_gate": {
+      "hp": 1.16,
+      "atk": 1.3,
+      "def": 1.0,
+      "boss_hp": 1.22,
+      "boss_atk": 1.45,
+      "boss_def": 1.0,
+      "summon_scale": 0.4
+    },
+    "red_sand_route": {
+      "hp": 1.22,
+      "atk": 1.5,
+      "def": 1.02,
+      "boss_hp": 1.4,
+      "boss_atk": 1.85,
+      "boss_def": 1.05,
+      "summon_scale": 0.4
+    },
+    "frost_post": {
+      "hp": 1.22,
+      "atk": 1.5,
+      "def": 1.02,
+      "boss_hp": 1.4,
+      "boss_atk": 1.85,
+      "boss_def": 1.05,
+      "summon_scale": 0.4
+    },
+    "rift_mine_road": {
+      "hp": 1.22,
+      "atk": 1.5,
+      "def": 1.02,
+      "boss_hp": 1.4,
+      "boss_atk": 1.85,
+      "boss_def": 1.05,
+      "summon_scale": 0.4
+    },
+    "rift_mine_vault": {
+      "hp": 1.22,
+      "atk": 1.5,
+      "def": 1.02,
+      "boss_hp": 1.4,
+      "boss_atk": 1.6,
+      "boss_def": 1.05,
+      "summon_scale": 0.4
+    },
+    "frost_boardwalk": {
+      "hp": 1.22,
+      "atk": 1.5,
+      "def": 1.02,
+      "boss_hp": 1.4,
+      "boss_atk": 1.85,
+      "boss_def": 1.05,
+      "summon_scale": 0.4
+    },
+    "frost_pass": {
+      "hp": 1.22,
+      "atk": 1.5,
+      "def": 1.02,
+      "boss_hp": 1.4,
+      "boss_atk": 1.85,
+      "boss_def": 1.05,
+      "summon_scale": 0.4
+    },
+    "abyss_ring": {
+      "hp": 1.28,
+      "atk": 1.7,
+      "def": 1.04,
+      "boss_hp": 1.55,
+      "boss_atk": 2.2,
+      "boss_def": 1.08,
+      "summon_scale": 0.4
+    },
+    "stele_entry": {
+      "hp": 1.28,
+      "atk": 1.7,
+      "def": 1.04,
+      "boss_hp": 1.55,
+      "boss_atk": 2.2,
+      "boss_def": 1.08,
+      "summon_scale": 0.4
+    },
+    "stele_resonance": {
+      "hp": 1.28,
+      "atk": 1.7,
+      "def": 1.04,
+      "boss_hp": 1.55,
+      "boss_atk": 2.2,
+      "boss_def": 1.08,
+      "summon_scale": 0.4
+    },
+    "stele_core": {
+      "hp": 1.28,
+      "atk": 1.7,
+      "def": 1.04,
+      "boss_hp": 1.55,
+      "boss_atk": 2.2,
+      "boss_def": 1.08,
+      "summon_scale": 0.4
+    }
+  },
+  "extra_phases": {
+    "mon_redsand_guard": [
+      {
+        "id": "reinforcement",
+        "hp_below": 0.62,
+        "name": "援兵入场",
+        "announce": "援兵入场——先击破前排援兵，抓住首领破绽！",
+        "add_skills": [
+          {
+            "id": "boss_reinforcements",
+            "name": "呼援",
+            "k": 0,
+            "cd": 99,
+            "windup": 1.5,
+            "target": "self",
+            "effect": {
+              "type": "summon"
+            },
+            "once": true,
+            "summon": "mon_triad_echo",
+            "summon_row": "front",
+            "summon_count": 2,
+            "summon_cap": 3
+          }
+        ],
+        "on_death": {
+          "mon_id": "mon_triad_echo",
+          "self_buff": {
+            "type": "break_window",
+            "dur": 5,
+            "pct": 0.4
+          },
+          "announce": "援兵被击破——首领露出五秒破绽！"
+        }
+      }
+    ],
+    "mon_snowveil_lord": [
+      {
+        "id": "reinforcement",
+        "hp_below": 0.62,
+        "name": "援兵入场",
+        "announce": "援兵入场——先击破前排援兵，抓住首领破绽！",
+        "add_skills": [
+          {
+            "id": "boss_reinforcements",
+            "name": "呼援",
+            "k": 0,
+            "cd": 99,
+            "windup": 1.5,
+            "target": "self",
+            "effect": {
+              "type": "summon"
+            },
+            "once": true,
+            "summon": "mon_triad_echo",
+            "summon_row": "front",
+            "summon_count": 2,
+            "summon_cap": 3
+          }
+        ],
+        "on_death": {
+          "mon_id": "mon_triad_echo",
+          "self_buff": {
+            "type": "break_window",
+            "dur": 5,
+            "pct": 0.4
+          },
+          "announce": "援兵被击破——首领露出五秒破绽！"
+        }
+      }
+    ]
+  },
+  "stage_notes": [
+    "第一幕：上手与探索",
+    "第二幕：注意预兆、药剂和破绽",
+    "第三幕：先处理援兵，再打首领",
+    "第四幕：多阶段战，整备技能与装备"
+  ]
+}

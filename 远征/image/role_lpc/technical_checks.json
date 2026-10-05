@@ -1,0 +1,54 @@
+[
+  {
+    "role": "zs",
+    "name": "破军",
+    "size": [
+      1152,
+      512
+    ],
+    "walk_frames": 32,
+    "idle_frames": 4,
+    "unique_walk_poses": 32,
+    "generator_url": "http://127.0.0.1:18764/#sex=male&body=Body_Color_light&head=Human_Male_light&expression=Neutral_light&hair=Spiked_chestnut&legs=Long_Pants_black&shoes=Basic_Boots_black&armour=Plate_all.lpcr.black&shoulders=Legion_gold&cape=Solid_red&weapon=Longsword_longsword",
+    "sha256": "8d29df080966cadec1b7b28b8a1c3598efe0c5ab1c1a2953f14c5d190aa2cad7"
+  },
+  {
+    "role": "ck",
+    "name": "穿杨",
+    "size": [
+      1152,
+      512
+    ],
+    "walk_frames": 32,
+    "idle_frames": 4,
+    "unique_walk_poses": 32,
+    "generator_url": "http://127.0.0.1:18764/#sex=male&body=Body_Color_light&head=Human_Male_light&expression=Neutral_light&hair=High_ponytail_raven&legs=Long_Pants_navy&shoes=Basic_Boots_black&armour=Leather_charcoal&shoulders=Legion_bronze&cape=Solid_teal&weapon=Spear_steel",
+    "sha256": "0114c0e840b967773895e960834cfa478a6c921cc72c10ab9dd4f13091a5c970"
+  },
+  {
+    "role": "fs",
+    "name": "霜语",
+    "size": [
+      1152,
+      512
+    ],
+    "walk_frames": 32,
+    "idle_frames": 4,
+    "unique_walk_poses": 32,
+    "generator_url": "http://127.0.0.1:18764/#sex=female&body=Body_Color_light&head=Human_Female_light&expression=Neutral_light&hair=Long_white&clothes=Robe_blue&shoes=Basic_Boots_black&cape=Solid_navy&weapon_magic_crystal=Crystal_blue",
+    "sha256": "501c0fe5b80770ef8d16f2980ecf5bd16b758e2b27dd74445c80984d71a594a4"
+  },
+  {
+    "role": "fz",
+    "name": "晨星",
+    "size": [
+      1152,
+      512
+    ],
+    "walk_frames": 32,
+    "idle_frames": 4,
+    "unique_walk_poses": 32,
+    "generator_url": "http://127.0.0.1:18764/#sex=female&body=Body_Color_light&head=Human_Female_light&expression=Neutral_light&hair=Long_blonde&clothes=Robe_white&shoes=Basic_Boots_tan&cape=Solid_white&hat=Hijab_white&weapon=Hammer_gold",
+    "sha256": "52759305cd138efa2a452f9218aab8a9178d39f246d735609bfdb005aa43216d"
+  }
+]

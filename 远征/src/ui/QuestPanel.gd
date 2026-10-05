@@ -13,9 +13,9 @@ const CONTENT_W := 408.0
 const ROW_H := 108.0
 const ROW_GAP := 8.0
 # 主线卡：标题/状态一行 + 目标 + 前往 + 奖励，四行 92px；主线暂尽时收成一行
-const STORY_H := 92.0
+const STORY_H := 108.0
 const STORY_DONE_H := 44.0
-const SECTION_H := 20.0   # 分区标题行高（主线 / 今日委托）
+const SECTION_H := 26.0   # Complete serif ascenders/descenders with room above the next card.
 # 卡片内排版（问题 #13）：row 的 content_margin 左右各 12 → 内宽 384。
 # 任务名/委托人同占一行各限宽，目标与奖励各自限宽，右列留给操作按钮。
 const CARD_PAD := 12.0

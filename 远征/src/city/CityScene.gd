@@ -9,6 +9,7 @@ extends Control
 const VIEW_W := 480.0
 const VIEW_H := 800.0
 const DirectionalIdle := preload("res://src/world/DirectionalIdle.gd")
+const WorldArtFinish := preload("res://src/world/WorldArtFinish.gd")
 const TILE := 48.0
 const NPC_R := 52.0        # 人物交互半径
 const BUILD_R := 26.0      # 建筑轮廓外扩的交互边距
@@ -301,6 +302,7 @@ func _build_player() -> void:
 	_player_anim = AnimatedSprite2D.new()
 	var frames_path: String = ROLE_FRAMES.get(G.selected_role, ROLE_FRAMES["zs"])
 	_player_anim.sprite_frames = load(frames_path)
+	_player_anim.material = WorldArtFinish.character_material(G.selected_role)
 	# 与 MapScene 同一套标定：0.72 倍 + 上移 19.3px，让脚踩在碰撞盒下沿
 	_player_anim.scale = Vector2.ONE * 0.72
 	_player_anim.position = Vector2(0, -19.3)

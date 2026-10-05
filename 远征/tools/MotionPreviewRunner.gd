@@ -20,8 +20,14 @@ func _ready() -> void:
 	G.prog["tips_seen"] = {"deploy":true,"pet_raise":true}
 	G.wallet = {"gold":12800,"expedition":240,"soul":36,"honor":900}
 	G.ensure_starter_pets()
+	if mode=="readability":
+		await _readability()
+		return
 	if mode=="finesse":
 		await _finesse()
+		return
+	if mode=="icons":
+		await _icons()
 		return
 	var home := (load("res://src/ui/GameHome.tscn") as PackedScene).instantiate()
 	add_child(home)
@@ -67,6 +73,23 @@ func capture(key: String, count: int, on_frame := Callable()) -> void:
 		await get_tree().create_timer(0.05).timeout
 
 
+func _icons() -> void:
+	var home := (load("res://src/ui/GameHome.tscn") as PackedScene).instantiate()
+	add_child(home)
+	await get_tree().create_timer(.45).timeout
+	var gear: Control = null
+	for child in home.get_children():
+		if child is Control and child.get("skin") == "tool": gear = child
+	if gear == null:
+		push_error("ICON_PREVIEW_MISSING_GEAR")
+		get_tree().quit(1)
+		return
+	await capture("gear",20,func(i: int):
+		if i == 3: gear.mouse_entered.emit()
+		if i == 12: gear.mouse_exited.emit())
+	print("MOTION_PREVIEW_OK icons")
+	get_tree().quit()
+
 func _finesse() -> void:
 	G.wallet["soul"] = 2400
 	var home := (load("res://src/ui/GameHome.tscn") as PackedScene).instantiate()
@@ -101,4 +124,46 @@ func _finesse() -> void:
 	training.queue_free()
 	await get_tree().process_frame
 	print("MOTION_PREVIEW_OK finesse")
+	get_tree().quit()
+
+
+func _readability() -> void:
+	G._init_state_defaults()
+	G.save_locked = false
+	G.selected_role = "zs"
+	G.player_name = "沈舟"
+	G.prog.level = 12
+	G.wallet = {"gold":12800,"expedition":240,"soul":36,"honor":900}
+	G.ensure_starter_equip(true)
+	var home := preload("res://src/ui/GameHome.tscn").instantiate()
+	add_child(home)
+	await capture("home",24)
+	G.inv_grant_equip({"tpl":"tpl_sword_wolf","rarity":2,"n":G.inv_capacity()+1},false)
+	for item in G.inv_instances():
+		if not G.inv_worn_uids().has(int(item.uid)):
+			G.inv_sell(int(item.uid),true)
+			break
+	home._open_bag()
+	await get_tree().process_frame
+	var bag: BagPanel = home._bag
+	bag._select_tab("pending")
+	await capture("ready",24)
+	var pending_uid := int(G.inv_pending()[0].uid)
+	assert(bool(G.inv_claim(pending_uid).get("ok",false)))
+	bag._refresh()
+	await capture("claim",50)
+	bag._close()
+	await get_tree().process_frame
+	G.prog.story.done = ["s01","s02",String(G.mentor_cfg().get("unlock_after","s03"))]
+	assert(bool(G.mentor_unlock_second().get("ok",false)))
+	await capture("unlock",50)
+	home.queue_free()
+	await get_tree().process_frame
+	var loading := preload("res://src/ui/LoadScreen.tscn").instantiate()
+	loading.auto_advance = false
+	add_child(loading)
+	await capture("loading",50)
+	loading.queue_free()
+	await get_tree().process_frame
+	print("MOTION_PREVIEW_OK readability")
 	get_tree().quit()

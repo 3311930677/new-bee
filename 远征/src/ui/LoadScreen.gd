@@ -102,11 +102,11 @@ func _build() -> void:
 
 	var t := Wordmark.new()
 	t.name = "ExpeditionWordmark"
-	t.animated = false
+	t.animated = not bool(G.get_meta("ui_review_mode",false))
 	t.position = Vector2(100, 64)
 	t.size = Vector2(280, 141)
 	add_child(t)
-	var sub := G.gold_label("昭元行旅录", G.FS_XS, false, Color("e3d4b8"), false)
+	var sub := G.serif_label("昭元行旅录", 20, Color("e3d4b8"))
 	sub.position = Vector2(0, 212)
 	sub.custom_minimum_size = Vector2(480, 0)
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -138,7 +138,7 @@ func _build() -> void:
 	back.add_child(_bar_fill)
 	add_child(back)
 
-	_bar_l = G.gold_label("", G.FS_XS, false, Color("d8c8a8"), false)
+	_bar_l = G.gold_label("", 16, false, Color("e4d1aa"), false)
 	_bar_l.position = Vector2(96, 716)
 	_bar_l.custom_minimum_size = Vector2(BAR_W, 0)
 	_bar_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT

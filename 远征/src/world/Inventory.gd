@@ -84,7 +84,7 @@ static func new_instance(inv: Dictionary, tpl: Dictionary, rarity := 0) -> Dicti
 		"sockets": maxi(0, int(tpl.get("sockets", 3))),
 		"gems": [],
 		"affixes": [],
-		"locked": false,
+		"locked": bool(tpl.get("auto_lock", false)),
 	}
 
 
@@ -200,6 +200,7 @@ static func rarity_mult(cfg: Dictionary, rarity_id: int) -> float:
 ## 强化过的装备不会以"0 级白装价"被卖掉（旧强化投入在经济上被承认）。
 static func sell_price(cfg: Dictionary, tpl: Dictionary, inst: Dictionary) -> int:
 	var ec: Dictionary = cfg.get("enhance", {})
+	if tpl.has("sell_fixed_gold"): return maxi(0, int(tpl.sell_fixed_gold))
 	var price := float(tpl.get("price", 0)) * rarity_mult(cfg, int(inst.get("rarity", 1)))
 	var g_base := float(ec.get("cost_gold_base", 150))
 	var g_step := float(ec.get("cost_gold_step", 150))

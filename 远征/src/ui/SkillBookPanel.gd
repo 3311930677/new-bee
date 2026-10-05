@@ -17,6 +17,7 @@ var _tabs: Array = []
 var _sids: Array = []
 
 func _ready() -> void:
+	G.skill_study_refund()
 	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_sids = G.get_role(G.selected_role).get("skills",[])
@@ -35,9 +36,9 @@ func _build() -> void:
 	var info := Craft.action("?",Vector2(388,-6),Vector2(44,44))
 	info.tooltip_text = "技能书规则"
 	info.activated.connect(func(): G.show_info_popup(info,"技能书规则",[
-		"每门招式最高 %d 级；每级增幅作用于基础伤害系数。" % G.skill_max_level(),
+		"可研习招式最高 %d 级；每级伤害、治疗、护盾或攻击增益强度增加5%%。" % G.skill_max_level(),
 		"研习消耗远征币，后续等级所需远征币更多。",
-		"效果型技能的持续时间、效果与冷却不随研习等级改变。" ]))
+		"持续时间、控制、冷却与耗能保持原值；纯功能招式无需研习。" ]))
 	_content.add_child(info)
 	for i in _sids.size():
 		var width := CONTENT_W/maxf(1,_sids.size())
@@ -129,9 +130,18 @@ func _skill_page(sid: String) -> Control:
 		page.add_child(segment)
 	var k0 := float(sd.get("k",0))
 	var k_per := float(TableCache.skillbook_config().get("k_per_level",.05))
-	if k0<=0:
+	var studyable := SkillSystem.can_study(sd)
+	if not studyable:
 		page.add_child(Craft.label("效果固定",Vector2(14,356),Vector2(404,30),20,Craft.WHITE,true))
-		page.add_child(Craft.label("研习等级不改变效果数值",Vector2(14,384),Vector2(404,20),12,Craft.MUTED))
+		page.add_child(Craft.label("纯功能招式无需研习 · 原有功能保留",Vector2(14,384),Vector2(404,20),12,Craft.MUTED))
+	elif k0<=0:
+		var effect: Dictionary = sd.get("effect", {})
+		var kind := String(effect.get("type", ""))
+		var strength_name := "治疗量" if kind in ["heal", "invincible_heal"] else ("护盾量" if kind == "shield" else "攻击增益")
+		var words := "%s ×%.2f" % [strength_name, 1.0 + k_per * (lv - 1)]
+		if lv < mx: words += " → ×%.2f" % (1.0 + k_per * lv)
+		page.add_child(Craft.label(words,Vector2(14,356),Vector2(404,30),20,Craft.WHITE,true))
+		page.add_child(Craft.label("持续时间、冷却与耗能保持原值",Vector2(14,384),Vector2(404,20),12,Craft.MUTED))
 	elif lv>=mx:
 		page.add_child(Craft.label("×%.2f" % (k0*(1+k_per*(lv-1))),Vector2(14,354),Vector2(220,30),24,Craft.WHITE,true))
 		page.add_child(Craft.label("研习已满 · 基础系数提升 %d%%" % roundi(k_per*(lv-1)*100),Vector2(14,384),Vector2(404,20),12,Craft.MUTED))
@@ -146,9 +156,9 @@ func _skill_page(sid: String) -> Control:
 		next_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		page.add_child(next_note)
 	var can_pay := int(G.wallet.get("expedition",0))>=cost
-	var words := "研习已满" if lv>=mx else ("研习升级 · %d 远征币" % cost if can_pay else "远征币不足 · 需要 %d" % cost)
+	var words := "无需研习" if not studyable else ("研习已满" if lv>=mx else ("研习升级 · %d 远征币" % cost if can_pay else "远征币不足 · 需要 %d" % cost))
 	var upgrade := Craft.action(words,Vector2(0,418),Vector2(CONTENT_W,50),"primary")
-	upgrade.disabled = lv>=mx or not can_pay
+	upgrade.disabled = not studyable or lv>=mx or not can_pay
 	if upgrade.disabled: upgrade.caption.add_theme_color_override("font_color",Craft.WHITE)
 	upgrade.activated.connect(func(): _on_upgrade(sid))
 	page.add_child(upgrade)
@@ -158,7 +168,7 @@ func _on_upgrade(sid: String) -> void:
 	if G.skill_upgrade(sid):
 		_toast_msg("「%s」升至 LV%d" % [String(TableCache.get_skill(sid).get("name", sid)), G.skill_level(sid)])
 	else:
-		_toast_msg("远征币不足或已满级")
+		_toast_msg("研习未成功，请检查远征币或存档状态")
 	_refresh(true)   # 升级后留在同一页（问题 #3：以前会跳回第 1 页）
 
 

@@ -34,7 +34,7 @@ param(
   [string]$List = "",
   [int]$QuitAfter = 6000,
   [int]$TimeoutSec = 240,
-    [int]$Expected = 70,
+    [int]$Expected = 72,
   [string]$LogDir = "",
   [switch]$AllowAnyVersion
 )
@@ -171,6 +171,8 @@ $cases = @(
 	@{ N = "VerifyNav";         K = "scene";  T = "NAV_OK" },
 	@{ N = "verify_data";       K = "script"; T = "DATA_OK" },
 	@{ N = "verify_battle";     K = "script"; T = "BATTLE_OK" },
+	@{ N = "VerifyGameplayBalance"; K = "scene"; T = "GAMEPLAY_BALANCE_OK" },
+	@{ N = "VerifyJourneyRelics"; K = "scene"; T = "JOURNEY_RELICS_OK" },
 	@{ N = "verify_route";      K = "script"; T = "ROUTE_OK" },
 	@{ N = "verify_trait";      K = "script"; T = "TRAIT_OK" },
 	@{ N = "verify_walk_assets";K = "script"; T = "WALK_ASSETS_OK" }

@@ -1,0 +1,28 @@
+{
+  "mode": "builtin_imagegen",
+  "date": "2026-10-05",
+  "assets": [
+    {
+      "target": "res://image/battle/art_v2/forest_clearing.png",
+      "source": "C:/Users/tsz/.codex/generated_images/01a105b9-4d56-7053-b6bf-ac99389f43d9/exec-31ef67c5-ffea-4603-8595-950b3c677ad2.png",
+      "prompt": "Edit this pixel fantasy battle background for readability on a SMALL PHONE. Keep its restrained green forest and warm earth palette. Simplify it dramatically into broad, clean pixel clusters and large readable shapes. Remove tiny grass speckles, scattered texture noise, small flowers and fiddly branches. Move all distant trees, bridge and scenery into the TOP 18 percent. The entire middle from 20 percent to 72 percent must be a calm open grassy-earth fighting clearing, including both left and right edges, with clear flat ground for multiple fighters. No bushes or rocks in that space. A few large foliage shapes only at extreme bottom corners. The bottom center must be quiet and darker for a row of controls. Shallow overhead viewpoint, coherent ground plane. Pixel clusters at least 5 to 8 pixels at full output resolution; limited tonal groups, three main light values, no painterly blur. Broad dappled light, not glitter. Portrait composition. No characters, text, UI, labels, circles or effects. Final image should remain clear when reduced to 480 pixels wide.",
+      "reference": "C:/Users/tsz/.codex/generated_images/01a105b9-4d56-7053-b6bf-ac99389f43d9/exec-ab012898-0ba9-47f8-8f43-2499b5d6c997.png",
+      "reference_prompt": "Use case: stylized-concept. Asset type: finished portrait pixel-art battle background for a Chinese-influenced fantasy RPG. Composition in 3:5 aspect ratio, target 960 by 1600. No characters, enemies, animals, text, UI, icons, borders or combat effects. A beautiful believable woodland encounter clearing along an old border-town road in late afternoon. This is a SIDE-FACING battle stage viewed slightly from above at a shallow angle, not a top-down tile map. Top 28%: soft-value distant blue-green forest and an old stone footbridge/road through distant hills; weathered tree trunks and leafy branches frame far LEFT and RIGHT, detailed controlled pixel clusters, very coherent perspective. Middle y32%-60%: a wide QUIET unobstructed walkable grassy-earth clearing across the screen, a warm dusty gravel road surface with natural small patches of muted grass; both the left hero at x25%,y44% and right enemy at x80%,y44% need clear visible grounded space with NO rocks, bushes, tree roots or props underneath either. Another companion stands around x12%,y56%, also clear. Ground must not be a yellow uniform wash or repeating tiles. A small weathered marker stone and roots may sit at the extreme right edge above the fighting plane. Bottom y65%-100%: darker foreground earth and mossy rocks/plants confined to the extreme edges; leave the middle 85% width at y72%-95% calm to carry code-rendered controls. Lighting from upper left, directional pools of warm sunlight on the open combat plane, cool forest recesses, clear foreground/middle/background hierarchy. Real hand-placed-looking pixel art, precise 3-5px clusters at output, stepped edges, no photographic texture, no soft painted blur, no high-frequency random speckles, no giant glowing circles, no decorative hero pedestal. Mature restrained desaturated forest greens, warm stone and ochre path, dark teal shadows. High finished game art quality, atmospheric but readable, no clutter behind health bars and character labels.",
+      "display": "480 logical pixels wide, background shifted upward 110 pixels to open rear combat row"
+    },
+    {
+      "target": "res://image/battle/art_v2/command_icons.png",
+      "source": "C:/Users/tsz/.codex/generated_images/01a105b9-4d56-7053-b6bf-ac99389f43d9/exec-b1539605-6697-4238-95f5-59dde5e84af1.png",
+      "prompt": "Create exactly FOUR small game action icons in a clean 2 by 2 ATLAS, square 1024 by 1024 canvas, TRANSPARENT background. Icons centered precisely at (256,256), (768,256), (256,768), (768,768); each object fits within a 330 by 330 box. Upper left: a single silver sword angled up-right, strong broad blade and simple gold guard. Upper right: an open blue skill book with two cream pages and ONE large cyan diamond on the page. Lower left: a round glass potion bottle with a broad RED liquid body and plain tan cork. Lower right: a single brown traveling boot facing right, clear cuff and thick sole. Designed for actual display at just 40 by 40 pixels on a PHONE. Extremely simple chunky pixel shapes, consistent dark outline, 4 to 6 large color regions per icon, one broad highlight only. Carefully readable silhouettes. No micro-details, no engraving, no patterns, no tiny dots, no text, no badges, no backdrop, no container frames, no sparkles, no glows. Calm medieval pixel fantasy aesthetic, warm gold accents and cool silver, matches a dark teal mobile game interface. Keep the four icons equally sized, separated completely with generous transparent gutters.",
+      "transparent": true,
+      "layout": "2x2 equal quadrants, cells at half of actual generated texture dimensions",
+      "display": "50x50 logical-pixel slot, object silhouette ~36-42 pixels",
+      "order": [
+        "attack",
+        "skill",
+        "item",
+        "flee"
+      ]
+    }
+  ]
+}

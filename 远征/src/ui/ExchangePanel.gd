@@ -75,7 +75,7 @@ func _build() -> void:
 	bar.add_theme_constant_override("separation", 6)
 	bar.position = Vector2(0, 0)
 	bar.custom_minimum_size = Vector2(CONTENT_W, 0)
-	var vault := _icon("icon_vault", 26)
+	var vault := _icon("cur_honor", 28)
 	vault.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	bar.add_child(vault)
 	_honor_l = G.gold_label("荣誉 0", G.FS_MD, false, G.TEXT_MUTED, false)

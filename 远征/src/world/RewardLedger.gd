@@ -76,11 +76,12 @@ static func apply(tx: Dictionary, ledger: Dictionary, host: Object) -> Dictionar
 		if String(k).begins_with(ITEM_PREFIX):
 			var iid := String(k).substr(ITEM_PREFIX.length())
 			if int(items.get(iid, 0)) < need:
+				var item_label := String(host.call("item_name", iid)) if host.has_method("item_name") else "所需物品"
 				return _fail("缺少物品 %s（需 %d，实有 %d）"
-					% [iid, need, int(items.get(iid, 0))])
+					% [item_label, need, int(items.get(iid, 0))])
 		elif int(wallet.get(String(k), 0)) < need:
 			return _fail("货币 %s 不足（需 %d，实有 %d）"
-				% [String(k), need, int(wallet.get(String(k), 0))])
+				% [String({"gold":"金币", "expedition":"远征币", "soul":"魂石", "honor":"荣誉"}.get(String(k), "余额")), need, int(wallet.get(String(k), 0))])
 	# 预检能拦住表错，但宿主回调仍可能失败。回调期间禁止持久化，
 	# 因此在第一笔扣款前保留内存快照；失败时连已发的经验/材料/装备一起退回。
 	var prog: Dictionary = host.get("prog")

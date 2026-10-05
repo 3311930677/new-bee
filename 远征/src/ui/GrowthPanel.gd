@@ -30,7 +30,7 @@ func _ready() -> void:
 
 
 func _build() -> void:
-	Craft.scene(self,.46)
+	Craft.scene(self,.62)
 	Craft.heading(self,"人物养成","装备与修习 / 同行与荣誉")
 	var role := G.get_role(G.selected_role)
 	var crest := Craft.Crest.new()
@@ -39,6 +39,11 @@ func _build() -> void:
 	crest.hue = Craft.ROLE_COLORS.get(G.selected_role,Craft.GOLD)
 	crest.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(crest)
+	var stage := Craft.Stage.new()
+	stage.position = Vector2(132,214)
+	stage.size = Vector2(216,256)
+	stage.hue = crest.hue
+	add_child(stage)
 	add_child(Field.portrait(G.selected_role,Vector2(112,192),Vector2(256,256)))
 	var role_name := Craft.label(String(role.get("name","旅人")),Vector2(132,450),Vector2(216,36),28,Craft.WHITE,true,true)
 	role_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -53,12 +58,13 @@ func _build() -> void:
 		var row := _entry_row(e[1],e[2],e[0])
 		row.position = Vector2(e[3],e[4])
 		add_child(row)
-	var summary_panel := Craft.panel(Vector2(24,546),Vector2(432,128),.90)
+	var summary_panel := Craft.panel(Vector2(24,546),Vector2(432,128),.96)
 	add_child(summary_panel)
-	summary_panel.add_child(Craft.label("行前整备",Vector2(18,10),Vector2(200,30),18,Craft.GOLD,true))
-	_summary = Craft.label("",Vector2(18,42),Vector2(396,26),16,Craft.WHITE)
+	summary_panel.add_child(Craft.label("行前整备",Vector2(18,10),Vector2(200,30),24,Craft.GOLD,false,true))
+	_summary = Craft.label("",Vector2(18,45),Vector2(396,26),16,Craft.WHITE)
 	summary_panel.add_child(_summary)
-	var tip := Craft.label("点击角色两侧的徽章，查看装备、招式与同行伙伴。",Vector2(18,76),Vector2(396,40),14,Craft.MUTED)
+	var tip := Craft.label("",Vector2(18,77),Vector2(396,40),14,Craft.MUTED)
+	tip.name = "GrowthBonusSummary"
 	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	summary_panel.add_child(tip)
 	var close_btn := Craft.action("返回",Vector2(24,720),Vector2(432,48))
@@ -70,6 +76,8 @@ func _build() -> void:
 
 func _entry_row(words: String, icon: String, id: String) -> Control:
 	var row := Craft.action(words,Vector2.ZERO,Vector2(112,100),"badge")
+	row.set_meta("badge_shape",{"equip":"shield","talent":"circle","skill":"hex","pet":"circle","mount":"hex","title":"shield"}.get(id,"circle"))
+	row.set_meta("badge_hue",{"equip":Color("d7b382"),"talent":Color("96c79b"),"skill":Color("90bbd0"),"pet":Color("91c6b3"),"mount":Color("bd9478"),"title":Color("dcc47c")}.get(id,Craft.GOLD))
 	row.tooltip_text = "打开" + words
 	row.caption.position = Vector2(0,55)
 	row.caption.size = Vector2(112,25)
@@ -89,6 +97,9 @@ func _entry_row(words: String, icon: String, id: String) -> Control:
 func _refresh() -> void:
 	var left := G.talent_points_left()
 	_summary.text = "尚有 %d 点天赋待分配" % left if left > 0 else "天赋点已分配完毕"
+	var tip := find_child("GrowthBonusSummary",true,false) as Label
+	if tip != null:
+		tip.text = "装备强化 %d / %d / %d  ·  灵宠 %d 只\n精研招式与同行伙伴，整备下一段旅程。" % [int(G.equip_state(G.equip_weapon_slot()).get("lv",0)),int(G.equip_state("armor").get("lv",0)),int(G.equip_state("accessory").get("lv",0)),G.owned_pets().size()]
 	for r in _rows:
 		var l := (r as Dictionary)["label"] as Label
 		match String((r as Dictionary)["id"]):

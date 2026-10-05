@@ -13,6 +13,7 @@ const QuestPanelScript := preload("res://src/ui/QuestPanel.gd")
 const Journal := preload("res://src/ui/JournalUI.gd")
 const Field := preload("res://src/ui/FieldUI.gd")
 const Craft := preload("res://src/ui/CraftUI.gd")
+const ActivityPanelScript := preload("res://src/ui/ActivityPanel.gd")
 
 const SPRITE_SCALE := 2.0       # 营帐的角色预览不盖住导航与主世界入口
 const PED_Y := 514.0            # 营地展示人物的脚底位置
@@ -46,6 +47,7 @@ var _avatar_frame: Panel = null     # 头像外框（悬停亮边用）
 var _avatar_pic: TextureRect = null
 var _home_content_hidden := false
 var _gathering:Control=null
+var _activities: Control = null
 var _wallet_row: HBoxContainer = null
 var _wallet_labels: Array = []
 
@@ -56,7 +58,7 @@ func _set_home_content_visible(visible: bool) -> void:
 	for child in get_children():
 		if child != _deploy and child != _worlds and child != _codex and child != _gacha \
 			and child != _exchange and child != _settings and child != _arena and child != _growth \
-			and child != _bag and child != _avatar_panel and child != _quests and child != _gathering:
+			and child != _bag and child != _avatar_panel and child != _quests and child != _gathering and child != _activities:
 			child.visible = visible
 
 
@@ -68,9 +70,14 @@ func _ready() -> void:
 	_build_top(role)
 	_build_stage(role)
 	_build_entries()
+	_clean_home_text(self)
 	_layout_tall_home()
 	G.fit_mobile_page.call_deferred(self)
 	_prompt_save_locked()
+
+func _clean_home_text(node: Node) -> void:
+	if node is Label: Craft.clean_label(node)
+	for child in node.get_children(): _clean_home_text(child)
 
 
 # ---------- 坏档提示（A7） ----------
@@ -121,7 +128,10 @@ func _build_profile(_role: Dictionary) -> void:
 	var fs := StyleBoxFlat.new()
 	fs.bg_color = G.FIELD_DARK
 	fs.border_color = G.FIELD_COPPER
-	fs.set_border_width_all(1)
+	fs.set_border_width_all(2)
+	fs.set_corner_radius_all(24)
+	fs.shadow_color = Color("050c12",.45)
+	fs.shadow_size = 3
 	_avatar_frame.add_theme_stylebox_override("panel", fs)
 	_avatar_frame.mouse_filter = Control.MOUSE_FILTER_STOP
 	_avatar_frame.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
@@ -148,10 +158,23 @@ func _build_profile(_role: Dictionary) -> void:
 	_add_exp_bar(Vector2(150, 58), 116, int(G.prog.get("exp",0)), G.exp_to_next(lv))
 	var settings := Craft.action("", Vector2(404,24), Vector2(52,48))
 	settings.quiet = true
+	settings.skin = "tool"
 	settings.tooltip_text = "设置"
-	var icon := G.ui_icon("settings", Vector2(22,22))
-	icon.position = Vector2(15,13)
+	var icon := G.ui_icon("settings", Vector2(34,34))
+	icon.position = Vector2(9,7)
+	icon.pivot_offset = Vector2(17,17)
 	settings.add_child(icon)
+	var turn_icon := func(active: bool):
+		if G.get_meta("ui_review_mode", false): return
+		var old: Tween = icon.get_meta("gear_motion") if icon.has_meta("gear_motion") else null
+		if old != null and old.is_valid(): old.kill()
+		var motion := icon.create_tween()
+		icon.set_meta("gear_motion", motion)
+		motion.tween_property(icon,"rotation",PI / 12.0 if active else 0.0,.22).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	settings.mouse_entered.connect(func(): turn_icon.call(true))
+	settings.mouse_exited.connect(func(): turn_icon.call(settings.has_focus()))
+	settings.focus_entered.connect(func(): turn_icon.call(true))
+	settings.focus_exited.connect(func(): turn_icon.call(false))
 	settings.activated.connect(func(): _open_settings(_click_ev()))
 	add_child(settings)
 
@@ -187,7 +210,7 @@ func _disc_panel(px: float, glyph: String) -> Control:
 
 # ---------- 顶部：徽标 + 账号小字 + 重建入口 ----------
 func _build_top(role: Dictionary) -> void:
-	add_child(Craft.panel(Vector2(24,86),Vector2(432,44),.80))
+	add_child(Craft.panel(Vector2(24,86),Vector2(432,44),.88))
 	# 固定四等份宽度；大额缩写，完整数字留在提示中，永不挤出屏幕。
 	var wallet_row := HBoxContainer.new()
 	_wallet_row = wallet_row
@@ -204,7 +227,7 @@ func _build_top(role: Dictionary) -> void:
 			["魂晶","soul","cur_soul"],["荣誉","honor","cur_honor"]]:
 		var icon := TextureRect.new()
 		icon.texture = G.res_tex(data[2])
-		icon.custom_minimum_size = Vector2(18,18)
+		icon.custom_minimum_size = Vector2(24,24)
 		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
@@ -215,14 +238,14 @@ func _build_top(role: Dictionary) -> void:
 		wallet_row.add_child(key)
 		var n := int(G.wallet.get(data[1],0))
 		var words := str(n) if n < 1000000 else ("%.1f万" % (n / 10000.0) if n < 100000000 else "%.1f亿" % (n / 100000000.0))
-		var amount := Field.label(words, Vector2.ZERO,Vector2(86,44),14,G.FIELD_PAPER_LIGHT,true)
+		var amount := Field.label(words, Vector2.ZERO,Vector2(80,44),16,G.FIELD_PAPER_LIGHT,true)
 		amount.tooltip_text = "%s：%d" % [data[0],n]
 		amount.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		wallet_row.add_child(amount)
 		_wallet_labels.append({"label":amount,"key":data[1],"name":data[0]})
 	_refresh_wallet()
-	add_child(Craft.label("行旅营帐",Vector2(26,139),Vector2(190,30),20,Craft.GOLD,false,true))
-	var quests_btn := Craft.action("任务",Vector2(24,176),Vector2(212,70))
+	add_child(Craft.label("行旅营帐",Vector2(26,132),Vector2(220,38),26,Craft.GOLD,false,true))
+	var quests_btn := Craft.action("任务",Vector2(24,176),Vector2(212,70),"scroll")
 	quests_btn.caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	quests_btn.caption.position = Vector2(42,4)
 	quests_btn.caption.set_meta("fixed_y",4)
@@ -231,6 +254,7 @@ func _build_top(role: Dictionary) -> void:
 	Craft.icon(quests_btn,"book",Vector2(12,9),Vector2(23,23))
 	var goal := String(G.story_current().get("goal","主线 / 今日委托"))
 	var goal_l := Craft.label(goal,Vector2(14,34),Vector2(184,30),13,Craft.MUTED)
+	goal_l.add_theme_color_override("font_color",Color("656c60"))
 	goal_l.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	quests_btn.tooltip_text = goal + "\n查看主线与今日委托"
 	quests_btn.add_child(goal_l)
@@ -251,6 +275,12 @@ func _refresh_wallet() -> void:
 
 # ---------- 角色展示台（金色圆台 + 光圈 + 待机动画） ----------
 func _build_stage(role: Dictionary) -> void:
+	var stage := Craft.Stage.new()
+	stage.position = Vector2(144,294)
+	stage.size = Vector2(192,248)
+	stage.hue = Craft.ROLE_COLORS.get(G.selected_role,Craft.GOLD)
+	stage.set_meta("home_shift",.60)
+	add_child(stage)
 	var contact := _HomeContact.new()
 	contact.position = Vector2(240,PED_Y)
 	contact.set_meta("actor_shadow",true)
@@ -263,13 +293,13 @@ func _build_stage(role: Dictionary) -> void:
 	_anim.sprite_frames = _frames(String(role.get("id","zs")))
 	_anim.animation = &"idle"
 	_anim.play()
-	var identity := Craft.panel(Vector2(142,540),Vector2(196,58),.77)
+	var identity := Craft.panel(Vector2(142,536),Vector2(196,66),.88)
 	identity.set_meta("home_shift",.60)
 	add_child(identity)
-	var name_l := Craft.label(String(role.get("name","旅人")),Vector2(8,2),Vector2(180,30),22,Craft.WHITE,true,true)
+	var name_l := Craft.label(String(role.get("name","旅人")),Vector2(8,0),Vector2(180,40),28,Craft.WHITE,false,true)
 	name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	identity.add_child(name_l)
-	var job := Craft.label("%s · LV %02d" % [role.get("job",""),int(G.prog.get("level",1))],Vector2(8,30),Vector2(180,22),13,Craft.GOLD)
+	var job := Craft.label("%s · LV %02d" % [role.get("job",""),int(G.prog.get("level",1))],Vector2(8,40),Vector2(180,22),14,Craft.GOLD)
 	job.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	identity.add_child(job)
 
@@ -314,22 +344,32 @@ func _role_name(id: String) -> String:
 
 # 四件行旅器物为主导航，活动在下方独立排列。
 func _build_entries() -> void:
+	var activities := Craft.action("活动",Vector2(24,264),Vector2(124,48),"ribbon")
+	activities.caption.position.x = 40
+	activities.caption.size.x = 72
+	Craft.icon(activities,"spark",Vector2(12,12),Vector2(24,24))
+	activities.name = "ActivitiesEntry"
+	activities.set_meta("home_shift",.45)
+	activities.activated.connect(_open_activities)
+	add_child(activities)
 	# Secondary shortcuts frame the actor; the stable navigation lives at the bottom.
 	for i in 3:
 		var e: Array = [["竞技","swords"],["召唤","summon"],["兑换","exchange"]][i]
 		var b := Craft.action(e[0],Vector2(388,262+i*86),Vector2(68,78),"badge")
+		b.set_meta("badge_shape",["shield","circle","hex"][i])
+		b.set_meta("badge_hue",[Color("dda775"),Color("a6aadf"),Color("82b7b0")][i])
 		b.set_meta("home_shift",.45)
 		b.caption.position = Vector2(0,56)
 		b.caption.size = Vector2(68,22)
 		b.caption.set_meta("fixed_y",56)
 		b.caption.add_theme_font_size_override("font_size",14)
-		Craft.icon(b,e[1],Vector2(17,10),Vector2(34,34))
+		Craft.icon(b,e[1],Vector2(14,7),Vector2(40,40))
 		var words: String = e[0]
 		if _entry_has_badge(words): G.badge_dot(b,Vector2(58,5))
 		b.activated.connect(func(): _dispatch_entry(words))
 		add_child(b)
 	if G.side_status_of("a4_rel_nighttable") == QuestService.SIDE_DONE:
-		var gathering := Craft.action("归路小聚",Vector2(24,268),Vector2(124,48))
+		var gathering := Craft.action("归路小聚",Vector2(24,324),Vector2(124,48))
 		gathering.set_meta("home_shift",.45)
 		gathering.caption.add_theme_font_size_override("font_size",15)
 		gathering.activated.connect(_open_gathering)
@@ -344,19 +384,19 @@ func _build_entries() -> void:
 	travel.caption.set_meta("fixed_y",6)
 	travel.caption.size = Vector2(286,34)
 	travel.caption.add_theme_font_size_override("font_size",25)
-	travel.caption.add_theme_font_override("font",G.font_serif)
+	travel.caption.add_theme_font_override("font",G.font_art)
 	var destination := Craft.label(map_name,Vector2(64,41),Vector2(286,20),13,Color("51412a"))
 	destination.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	destination.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	travel.add_child(destination)
-	Craft.icon(travel,"world",Vector2(21,17),Vector2(34,34))
+	Craft.icon(travel,"world",Vector2(18,13),Vector2(42,42))
 	Craft.icon(travel,"forward",Vector2(379,27),Vector2(16,16))
 	travel.activated.connect(func(): _open_city(_click_ev()))
 	add_child(travel)
 	var nav := Craft.panel(Vector2(12,712),Vector2(456,76),.90)
 	nav.set_meta("home_shift",1.0)
 	add_child(nav)
-	var entries := [["世界","world"],["背包","bag"],["养成","swords"],["图鉴","book"]]
+	var entries := [["世界","world"],["背包","bag"],["养成","growth"],["图鉴","book"]]
 	for i in entries.size():
 		var b := Craft.action(entries[i][0],Vector2(16+i*112,714),Vector2(112,72),"nav")
 		b.set_meta("home_shift",1.0)
@@ -397,6 +437,7 @@ func _dispatch_entry(label: String) -> void:
 		"兑换": _open_exchange()
 		"召唤": _open_gacha()
 		"设置": _open_settings(_click_ev())
+		"活动": _open_activities()
 
 
 ## 几个入口函数按鼠标事件判定，这里补一个"左键按下"事件喂给它们
@@ -451,6 +492,17 @@ func _open_gathering()->void:
 		_set_home_content_visible(true))
 	_set_home_content_visible(false)
 	add_child(_gathering)
+
+func _open_activities() -> void:
+	if _activities!=null: return
+	Audio.sfx("ui_open")
+	_activities = ActivityPanelScript.new()
+	_activities.closed.connect(func():
+		_activities.queue_free()
+		_activities = null
+		_set_home_content_visible(true))
+	_set_home_content_visible(false)
+	add_child(_activities)
 
 func _open_quests() -> void:
 	if _quests != null:
@@ -566,6 +618,7 @@ func _open_bag() -> void:
 		return
 	Audio.sfx("ui_open")
 	_bag = BagPanelScript.new()
+	_bag._focus_return = get_viewport().gui_get_focus_owner()
 	_bag.closed.connect(func():
 		Audio.sfx("ui_close")
 		_bag.queue_free()
@@ -647,6 +700,9 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _close_overlay_with_escape() -> bool:
+	if _activities!=null:
+		_activities.go_back()
+		return true
 	if _gathering!=null:
 		_gathering.closed.emit()
 		return true

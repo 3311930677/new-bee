@@ -1,0 +1,98 @@
+extends RefCounted
+## Ink-blue equipment cabinet, brass fittings and an ivory detail sheet.
+const INK := Color("33434e")
+const MUTED := Color("a7b8bc")
+const GOLD := Color("a88b55")
+const PAPER := Color("eee9da")
+
+static func _box(fill: Color,border: Color,padding := 8,width := 1) -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = fill
+	style.border_color = border
+	style.set_border_width_all(width)
+	style.set_corner_radius_all(2)
+	style.set_content_margin_all(padding)
+	return style
+
+static func create() -> Theme:
+	var t := Theme.new()
+	t.default_font = G.font_reg
+	t.default_font_size = 15
+	t.set_color("font_color","Label",Color("ede5ce"))
+	t.set_color("font_shadow_color","Label",Color.TRANSPARENT)
+	t.set_constant("outline_size","Label",0)
+	t.set_constant("separation","VBoxContainer",8)
+	t.set_constant("separation","HBoxContainer",8)
+	t.set_constant("h_separation","GridContainer",8)
+	t.set_constant("v_separation","GridContainer",8)
+	t.set_stylebox("panel","PanelContainer",_box(Color("263944"),Color("607272"),12))
+	t.set_type_variation("BagWindow","PanelContainer")
+	var window := _box(Color("182b36"),Color("647675"),14,2)
+	window.shadow_color = Color("111719",.42)
+	window.shadow_size = 7
+	window.shadow_offset = Vector2(0,4)
+	t.set_stylebox("panel","BagWindow",window)
+	t.set_type_variation("BagDetail","PanelContainer")
+	t.set_stylebox("panel","BagDetail",_box(PAPER,Color("b8aa86"),10))
+	t.set_type_variation("BagQuietPanel","PanelContainer")
+	t.set_stylebox("panel","BagQuietPanel",_box(Color("243a45"),Color("536b71"),7))
+	t.set_type_variation("BagTitle","Label")
+	t.set_font("font","BagTitle",G.font_art)
+	t.set_font_size("font_size","BagTitle",34)
+	t.set_color("font_color","BagTitle",Color("ead4a3"))
+	t.set_type_variation("BagItemTitle","Label")
+	t.set_font("font","BagItemTitle",G.font_bold)
+	t.set_font_size("font_size","BagItemTitle",18)
+	t.set_type_variation("BagMuted","Label")
+	t.set_font_size("font_size","BagMuted",14)
+	t.set_color("font_color","BagMuted",MUTED)
+	t.set_type_variation("BagNumber","Label")
+	t.set_font("font","BagNumber",G.font_bold)
+	t.set_font_size("font_size","BagNumber",18)
+	t.set_stylebox("normal","Button",_box(Color("2e4550"),Color("647b7e"),6))
+	t.set_stylebox("hover","Button",_box(Color("3b5561"),GOLD,6))
+	t.set_stylebox("pressed","Button",_box(Color("192e38"),Color("687c84"),6))
+	t.set_stylebox("disabled","Button",_box(Color("35434a"),Color("526167"),6))
+	var focus := _box(Color.TRANSPARENT,Color("d9aa53"),0,2)
+	t.set_stylebox("focus","Button",focus)
+	t.set_color("font_color","Button",Color("ede5ce"))
+	t.set_color("font_hover_color","Button",Color("fff1ce"))
+	t.set_color("font_pressed_color","Button",Color("ede5ce"))
+	t.set_color("font_focus_color","Button",Color("ede5ce"))
+	t.set_color("font_disabled_color","Button",Color("899398"))
+	t.set_constant("outline_size","Button",0)
+	t.set_font("font","Button",G.font_bold)
+	t.set_font_size("font_size","Button",15)
+	for kind in ["BagTab","BagSelectedTab","BagGear","BagSelectedGear","BagPrimary","BagDanger","BagSocket"]:
+		t.set_type_variation(kind,"Button")
+	for kind in ["BagTab","BagSelectedTab","BagPrimary"]:
+		t.set_font("font",kind,G.font_serif)
+		t.set_font_size("font_size",kind,18)
+	t.set_stylebox("normal","BagTab",_box(Color("20343e"),Color("50656c"),5))
+	t.set_stylebox("normal","BagSelectedTab",_box(Color("c7ac76"),Color("ead5a4"),5))
+	for state in ["font_color","font_hover_color","font_focus_color"]: t.set_color(state,"BagSelectedTab",Color("26343a"))
+	t.set_stylebox("hover","BagSelectedTab",_box(Color("dac18e"),Color("f0dbab"),5))
+	t.set_stylebox("normal","BagGear",_box(Color("233641"),Color("4e646c"),5))
+	t.set_stylebox("hover","BagGear",_box(Color("324954"),Color("ac9673"),5))
+	t.set_stylebox("normal","BagSelectedGear",_box(Color("3a4d52"),Color("dbc18b"),5,2))
+	t.set_stylebox("normal","BagPrimary",_box(Color("344657"),GOLD,6))
+	t.set_stylebox("hover","BagPrimary",_box(Color("465e6e"),Color("d7b871"),6))
+	t.set_color("font_color","BagPrimary",Color("f4ddb0"))
+	t.set_color("font_hover_color","BagPrimary",Color("fff1ce"))
+	t.set_color("font_focus_color","BagPrimary",Color("f4ddb0"))
+	t.set_stylebox("normal","BagDanger",_box(Color("eee4d7"),Color("b59b80"),6))
+	t.set_color("font_color","BagDanger",Color("855043"))
+	t.set_stylebox("normal","BagSocket",_box(Color("d9d2bd"),Color("b1a584"),4))
+	t.set_stylebox("scroll","VScrollBar",_box(Color("162832"),Color("162832"),3,0))
+	t.set_stylebox("grabber","VScrollBar",_box(Color("899c9e"),Color("899c9e"),3,0))
+	t.set_stylebox("grabber_highlight","VScrollBar",_box(GOLD,GOLD,3,0))
+	t.set_stylebox("grabber_pressed","VScrollBar",_box(INK,INK,3,0))
+	return t
+
+static func detail() -> Theme:
+	var t := Theme.new()
+	t.set_color("font_color","Label",INK)
+	t.set_color("font_color","BagMuted",Color("637279"))
+	t.set_color("font_color","BagItemTitle",INK)
+	t.set_color("font_color","BagNumber",INK)
+	return t
