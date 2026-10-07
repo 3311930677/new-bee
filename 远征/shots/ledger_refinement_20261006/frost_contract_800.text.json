@@ -1,0 +1,79 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 39.0,
+			"path": "/root/LedgerPanelCapture/@CanvasLayer@827/@Control@828/@Label@834",
+			"rect_height": 42.0,
+			"size": 26,
+			"text": "霜关缺药 · 运单"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/LedgerPanelCapture/@CanvasLayer@827/@Control@828/StatusBadge/@Label@835",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "待签"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/LedgerPanelCapture/@CanvasLayer@827/@Control@828/@Label@836",
+			"rect_height": 28.0,
+			"size": 14,
+			"text": "第 10 日 · 运单条款"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/LedgerPanelCapture/@CanvasLayer@827/@Control@828/@Label@837",
+			"rect_height": 296.0,
+			"size": 14,
+			"text": "货物：药草 ×3、谷物 ×1  （现持 0 / 0）\n港口采购参考 313 金；随当天行情变化。\n交货报酬 449 金 · 运费 56 金 · 参考净利 136 金。\n保证金 40 金；交货时原额退回。\n签约日起 4 日内交货\n未过路口；近路不加费，旧驿绕路加 18 金。\n逾期可付 12 金延期一次，补 2 游戏日。\n自担退 30 金、最多损 22 金；保价退 40 金、最多损 12 金。\n保价报酬 437 金（少 12 金）；退单不扣货。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/LedgerPanelCapture/@CanvasLayer@827/@Control@828/@Label@838",
+			"rect_height": 48.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/LedgerPanelCapture/@CanvasLayer@827/@Control@828/@PanelContainer@840/@Label@839",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "自担签约·押40"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/LedgerPanelCapture/@CanvasLayer@827/@Control@828/@PanelContainer@842/@Label@841",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "保价签约·押40"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/LedgerPanelCapture/@CanvasLayer@827/@Control@828/@PanelContainer@844/@Label@843",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "返回市集"
+		}
+	]
+}

@@ -7,7 +7,7 @@ signal changed
 
 const UI := preload("res://src/ui/JournalUI.gd")
 const Avatars := preload("res://src/ui/AvatarCatalog.gd")
-const AVATAR_IDS := Avatars.IDS
+const AVATAR_IDS := []
 const PICK_FILTERS := ["*.png,*.jpg,*.jpeg,*.webp,*.bmp ; 图片文件"]
 
 var _paper: PanelContainer
@@ -44,13 +44,12 @@ func _build() -> void:
 	_content.add_child(title)
 	var close := UI.button("×", 44, 44, "dark_quiet")
 	close.name = "CloseButton"
-	close.position = Vector2(302, -8)
+	close.position = Vector2(278, -8)
 	close.tooltip_text = "关闭"
 	close.pressed.connect(_close)
 	_content.add_child(close)
-	UI.stamp(_content, Vector2(260, 20), "留影")
 	var frame := Panel.new()
-	frame.position = Vector2(114, 88)
+	frame.position = Vector2(102, 88)
 	frame.size = Vector2(112, 112)
 	var portrait_style := UI.surface(Color("29423d"), Color("b79d68"), 2)
 	portrait_style.set_border_width_all(3)
@@ -66,30 +65,28 @@ func _build() -> void:
 	frame.add_child(_preview)
 	_state_l = UI.label("", 14, UI.MUTED)
 	_state_l.position.y = 210
-	_state_l.size.x = 340
+	_state_l.size.x = 316
 	_state_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_content.add_child(_state_l)
-	for i in AVATAR_IDS.size():
-		var id := String(AVATAR_IDS[i])
-		var card := UI.avatar_card(id, 64)
-		card.position = Vector2(24 + i * 76, 248)
-		card.pressed.connect(func(): _pick_role(id))
-		_content.add_child(card)
-		_role_cards.append(card)
-	var upload := UI.button("选择本机图片", 340, 46, "primary")
+	var instructions := UI.label("上传你喜欢的图片作为旅人小像。\n可随时更换，不使用职业或宠物头像。",14,UI.MUTED,true)
+	instructions.position = Vector2(0,248)
+	instructions.size = Vector2(316,56)
+	instructions.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_content.add_child(instructions)
+	var upload := UI.button("选择本机图片", 316, 46, "primary")
 	upload.name = "UploadButton"
-	upload.position.y = 366
+	upload.position.y = 318
 	upload.pressed.connect(_open_picker)
 	_content.add_child(upload)
-	_use_custom_btn = UI.button("用上次上传的图", 340, 44, "quiet")
-	_use_custom_btn.position.y = 422
+	_use_custom_btn = UI.button("用上次上传的图", 316, 44, "quiet")
+	_use_custom_btn.position.y = 374
 	_use_custom_btn.pressed.connect(func():
 		if G.use_custom_avatar():
 			_refresh()
 			changed.emit())
 	_content.add_child(_use_custom_btn)
 	_tip = UI.label("图片与头像选择仅保存在本机", 14, UI.MUTED)
-	_tip.size.x = 340
+	_tip.size.x = 316
 	_tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_content.add_child(_tip)
 
@@ -152,14 +149,14 @@ func _refresh() -> void:
 		_preview.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR if G.avatar_use_custom else CanvasItem.TEXTURE_FILTER_NEAREST
 	var using_custom := G.avatar_use_custom and G.has_custom_avatar()
 	var has_custom := G.has_custom_avatar()
-	_state_l.text = "当前使用：自选图片" if using_custom else "当前使用：%s" % String(Avatars.NAMES[G.current_avatar_id()])
+	_state_l.text = "当前使用：自定义图片" if using_custom else "尚未上传 · 默认行旅标记"
 	_use_custom_btn.visible = has_custom
 	_use_custom_btn.disabled = using_custom
 	_use_custom_btn.modulate.a = 0.6 if using_custom else 1.0
 	_use_custom_btn.add_theme_color_override("font_disabled_color", UI.MUTED)
-	_paper.custom_minimum_size.y = 548 if has_custom else 500
+	_paper.custom_minimum_size.y = 492 if has_custom else 444
 	_paper.size.y = _paper.custom_minimum_size.y
-	_tip.position.y = 474 if has_custom else 430
+	_tip.position.y = 430 if has_custom else 374
 	_layout_panel()
 	for card in _role_cards:
 		UI.select_card(card, not using_custom and String(card.get_meta("avatar_id")) == G.current_avatar_id())
@@ -170,7 +167,7 @@ func _toast(msg: String) -> void:
 		_toast_l.queue_free()
 	_toast_l = UI.label(msg, 14, Color("9d5139"))
 	_toast_l.position.y = _tip.position.y
-	_toast_l.size.x = 340
+	_toast_l.size.x = 316
 	_toast_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_toast_l.add_theme_stylebox_override("normal", UI.surface(UI.PAPER))
 	_content.add_child(_toast_l)

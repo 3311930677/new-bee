@@ -1,0 +1,123 @@
+{
+	"account": "界面检查",
+	"arena": {
+		"best_streak": 0,
+		"losses": 0,
+		"score": 1000,
+		"streak": 0,
+		"wins": 0
+	},
+	"audio": {
+		"bgm": 0.7,
+		"mute": false,
+		"sfx": 0.8
+	},
+	"avatar_custom": "",
+	"avatar_id": "fox",
+	"avatar_use_custom": false,
+	"city": {
+		"acts": {},
+		"built": [
+			"hall",
+			"gate"
+		],
+		"code": "",
+		"day": "",
+		"streak": 0,
+		"visits": []
+	},
+	"gender": "男",
+	"items": {
+		"ticket_sweep": 1,
+		"ticket_ten": 0
+	},
+	"player_name": "沈舟",
+	"prog": {
+		"codex_claimed": [],
+		"economy": {
+			"bought": {},
+			"day": 1,
+			"history": {},
+			"next_tx": 1,
+			"orders": {},
+			"seed": 7919,
+			"sold": {},
+			"work": {}
+		},
+		"equip": {},
+		"exp": 658,
+		"flags": {},
+		"gacha": {
+			"free_day": "",
+			"free_last": "",
+			"free_streak": 0,
+			"pity": 0
+		},
+		"inventory": {
+			"instances": [],
+			"next_uid": 1,
+			"pending": []
+		},
+		"last_ts": 1791361791,
+		"ledger": {
+			"applied": []
+		},
+		"level": 13,
+		"lore_beats": {},
+		"lore_seen": false,
+		"main_world": {
+			"map_id": "lorin_wilds"
+		},
+		"mounts": {
+			"active": "",
+			"owned": {}
+		},
+		"pet_stat": {},
+		"pets": [],
+		"quest_postings": {},
+		"settings": {},
+		"skills": {},
+		"special_events": {
+			"records": {},
+			"tracked": ""
+		},
+		"story": {
+			"done": [
+				"s01",
+				"s02",
+				"s03"
+			],
+			"goals": {
+				"s01": "done",
+				"s02": "done",
+				"s03": "done"
+			},
+			"step": "s04"
+		},
+		"talents": {},
+		"tips_seen": {},
+		"titles": {
+			"active": "",
+			"owned": []
+		},
+		"world_cleared": {},
+		"worlds_unlocked": 1
+	},
+	"quest": {
+		"active": {},
+		"claimed": [],
+		"day": "2026-10-07",
+		"offer": [
+			"q_deliver_food",
+			"q_deliver_sweep"
+		]
+	},
+	"selected_role": "zs",
+	"version": 7,
+	"wallet": {
+		"expedition": 1011,
+		"gold": 100174,
+		"honor": 560,
+		"soul": 599
+	}
+}

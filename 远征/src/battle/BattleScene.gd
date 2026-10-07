@@ -2285,9 +2285,13 @@ func _show_result() -> void:
 	box.add_child(G.gold_label("战报 · 用时 %.1fs · 最高单击 %d · 输出 %d · 承伤 %d"
 		% [secs, _best_hit, _dmg_out, _dmg_in], G.FS_XS, false, Color("8a6a34"), false))
 
-	if win:
+	if win and not String(_cfg.get("special_event_id","")).is_empty():
+		box.add_child(G.gold_label("奇遇已办妥 · 回城复命时选谢礼",G.FS_SM,false,Color("8a6a34"),false))
+	elif win and arena_mode:
+		box.add_child(G.gold_label("段位与荣誉将在返回演武后结算",G.FS_SM,false,Color("8a6a34"),false))
+	elif win:
 		var nt: String = String(_cfg.get("enemy", {}).get("node_type", "normal"))
-		var rw: Dictionary = TableCache.nodes_config().get("rewards", {}).get(nt, {})
+		var rw: Dictionary = _cfg.get("reward_preview",TableCache.nodes_config().get("rewards", {}).get(nt, {}))
 		var lines := PackedStringArray()
 		if rw.has("gold"):
 			lines.append("金币 +%d" % int(rw.gold))

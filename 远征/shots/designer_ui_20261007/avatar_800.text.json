@@ -1,0 +1,79 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/FrontendCapture/@Control@315/@PanelContainer@319/@Control@320/@Label@321",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "昭元行旅录"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 44.0,
+			"path": "/root/FrontendCapture/@Control@315/@PanelContainer@319/@Control@320/@Label@322",
+			"rect_height": 44.0,
+			"size": 30,
+			"text": "旅人小像"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/FrontendCapture/@Control@315/@PanelContainer@319/@Control@320/CloseButton",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "×"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/FrontendCapture/@Control@315/@PanelContainer@319/@Control@320/@Label@325",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "尚未上传 · 默认行旅标记"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/FrontendCapture/@Control@315/@PanelContainer@319/@Control@320/@Label@326",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "上传你喜欢的图片作为旅人小像。\n可随时更换，不使用职业或宠物头像。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 33.0,
+			"path": "/root/FrontendCapture/@Control@315/@PanelContainer@319/@Control@320/UploadButton",
+			"rect_height": 46.0,
+			"size": 22,
+			"text": "选择本机图片"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/FrontendCapture/@Control@315/@PanelContainer@319/@Control@320/UploadButton/@Label@327",
+			"rect_height": 46.0,
+			"size": 24,
+			"text": "选择本机图片"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/FrontendCapture/@Control@315/@PanelContainer@319/@Control@320/@Label@329",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "图片与头像选择仅保存在本机"
+		}
+	]
+}

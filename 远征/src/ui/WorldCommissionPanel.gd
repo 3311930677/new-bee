@@ -1,18 +1,19 @@
 extends Control
 signal closed
 const Trust := preload("res://src/world/RegionalTrust.gd")
+const Style := preload("res://src/ui/LedgerStyle.gd")
 
 var _list: VBoxContainer
 var _line: Label
 var _region := "zhaoyuan"
 var _confirm := ""
+var _tabs: Array[Control] = []
 
 func _ready() -> void:
 	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	G.veil(self, 0.86)
-	var paper := G.parchment_box(440, 690, 16)
-	paper.position = Vector2(20,55)
+	var paper := Style.panel(Vector2(20,56),Vector2(440,688))
 	add_child(paper)
 	var content := Control.new()
 	paper.add_child(content)
@@ -20,6 +21,7 @@ func _ready() -> void:
 	content.add_child(title)
 	for i in 3:
 		var tab := G.gold_button(WorldCommission.NAMES[i],130,42,G.FS_SM)
+		Style.apply_button(tab,"secondary")
 		tab.position = Vector2(i*138,45)
 		tab.gui_input.connect(func(e: InputEvent):
 			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
@@ -27,7 +29,8 @@ func _ready() -> void:
 				_confirm=""
 				_refresh())
 		content.add_child(tab)
-	_line = G.text_label("未接候选每日更换 · 已接目标跨日保留",G.FS_XS,G.TEXT_DARK)
+		_tabs.append(tab)
+	_line = Style.text("未接候选每日更换 · 已接目标跨日保留",14,Style.MUTED)
 	_line.position=Vector2(0,96)
 	_line.custom_minimum_size=Vector2(408,56)
 	_line.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
@@ -42,6 +45,7 @@ func _ready() -> void:
 	_list.add_theme_constant_override("separation",12)
 	scroll.add_child(_list)
 	var back := G.ghost_button("返回历练委托",200,44)
+	Style.apply_button(back,"quiet")
 	back.position=Vector2(104,605)
 	back.gui_input.connect(func(e:InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT: closed.emit())
@@ -52,12 +56,14 @@ func _ready() -> void:
 	_refresh()
 
 func _text(parent:Node, text:String, big:=false)->void:
-	var label:=G.text_label(text,G.FS_MD if big else G.FS_SM,G.TEXT_DARK)
-	label.custom_minimum_size.x=372
+	var label:=Style.text(text,18 if big else 15,Style.JADE if big else Style.INK)
+	label.custom_minimum_size.x=348
 	label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	parent.add_child(label)
 
 func _refresh()->void:
+	for i in _tabs.size():
+		Style.apply_button(_tabs[i],"primary" if WorldCommission.REGIONS[i] == _region else "secondary")
 	for child in _list.get_children():
 		_list.remove_child(child)
 		child.queue_free()
@@ -73,10 +79,14 @@ func _refresh()->void:
 		var row:=WorldCommission.row(String(offer.template))
 		var record:Dictionary=WorldCommission.state(G).get(posting,{})
 		var status:=String(record.get("status","open"))
-		var card:=VBoxContainer.new()
-		card.add_theme_constant_override("separation",6)
-		_list.add_child(card)
-		_text(card,String(row.title),true)
+		var card := Style.list_card(_list)
+		var heading := HBoxContainer.new()
+		heading.add_theme_constant_override("separation",8)
+		card.add_child(heading)
+		var name_label := Style.text(String(row.title),18,Style.JADE)
+		name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		heading.add_child(name_label)
+		heading.add_child(Style.badge({"open":"可接取","active":"进行中","ready":"可交付","done":"已交付","abandoned":"已放弃"}.get(status,"待查看"),status))
 		_text(card,String(row.desc))
 		_text(card,"%s · %s · %s"%[String(offer.day),String(row.minutes)," / ".join(G.reward_lines(row.reward))])
 		var step:=WorldCommission.current(record)
@@ -88,6 +98,7 @@ func _refresh()->void:
 		card.add_child(buttons)
 		var labels:Dictionary={"open":"接取","active":"目标已标在地图","ready":"回本城交付","done":"已交付","abandoned":"本单已放弃"}
 		var act:=G.gold_button(String(labels.get(status,"")),220,42,G.FS_SM)
+		Style.apply_button(act,"primary" if status in ["open","ready"] else "secondary")
 		buttons.add_child(act)
 		if status in ["open","ready"]:
 			act.gui_input.connect(func(e:InputEvent):
@@ -99,6 +110,7 @@ func _refresh()->void:
 		else: act.modulate=Color(.7,.7,.7)
 		if status in ["active","ready"]:
 			var drop:=G.ghost_button("确认放弃" if _confirm==posting else "放弃",120,42)
+			Style.apply_button(drop,"danger")
 			buttons.add_child(drop)
 			drop.gui_input.connect(func(e:InputEvent):
 				if e is InputEventMouseButton and e.pressed and e.button_index==MOUSE_BUTTON_LEFT:
@@ -109,7 +121,6 @@ func _refresh()->void:
 						_line.text=String(WorldCommission.abandon(G,posting).line)
 						_confirm=""
 					_refresh())
-		_text(card,"────────────")
 
 func _unhandled_input(e:InputEvent)->void:
 	if not G.ui_blocked and e.is_action_pressed("ui_cancel"):

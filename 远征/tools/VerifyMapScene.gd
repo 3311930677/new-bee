@@ -74,17 +74,11 @@ func _run() -> void:
 	_check(map._portal != null and not map._portal.locked, "普通区传送阵应解锁")
 	_check(map._monsters.size() >= 3 and map._monsters.size() <= 4,
 		"普通区应有 3~4 小怪，实为 %d" % map._monsters.size())
-	var tile_cnt := 0
-	var layer_sizes: Array[int] = []
-	for c in map.get_children():
-		if c is TileMapLayer:
-			var n: int = (c as TileMapLayer).get_used_cells().size()
-			layer_sizes.append(n)
-			tile_cnt += n
-	_check(tile_cnt > 1000, "应平铺 TileMap 地面（>1000 格），实为 %d" % tile_cnt)
-	# 地面细节层：森林主题带 path_sheet，应多出一层蜿蜒土路（地面 + 土路 = 2 层）
-	_check(layer_sizes.size() == 2 and layer_sizes.min() >= 20,
-		"森林主题应含土路层（地面+土路），实为 %s" % str(layer_sizes))
+	_check(map._flat_ground != null and map._flat_ground.texture != null,
+		"历练应生成完整平面地表")
+	_check(map._flat_ground.extent == Vector2(1536, 2016), "地表应覆盖历练全部边界")
+	_check(not map._ground_path.is_empty(), "不规则浅色路线应有摆件避让范围")
+	_check(map._flat_ground.z_index < map._world.z_index, "人物与道具应显示在平面地表上方")
 	_check(map._pet_btn != null and map._pet_btn.visible, "有替补时应显示换宠按钮")
 
 	# ---- B. 键盘移动（move_up / WASD 与方向键同映射）----
@@ -121,6 +115,10 @@ func _run() -> void:
 	# ---- B3. 导航三件套：小地图 / 目标罗盘 / 疾行（轮次 13）----
 	_check(map._minimap != null and map._minimap.size.x > 1.0 and map._minimap.size.y > 1.0,
 		"应有已铺开尺寸的小地图")
+	for control in map._hud.get_children():
+		if control is Control and is_equal_approx(control.position.y, MapScene.HUD_BTN_Y):
+			_check(not map._minimap.get_global_rect().intersects(control.get_global_rect()),
+				"历练舆图不能覆盖药剂、换宠或撤离入口")
 	_check(map._compass != null and map._compass.size.x > 1.0, "应有目标罗盘小签")
 	var nav := map._nav_info()
 	_check(String(nav.get("kind", "")) == "portal", "普通区罗盘应指向传送阵，实为 %s" % str(nav))
@@ -310,8 +308,8 @@ func _run() -> void:
 	for i in 6:
 		await get_tree().process_frame
 	_check(cmap._interactable == null, "开启后宝箱物件应消失")
-	_check(cmap.st.gold == 200 and cmap.st.expedition == 30,
-		"宝箱应入账金币 200/远征币 30，实为 %d/%d" % [cmap.st.gold, cmap.st.expedition])
+	_check(cmap.st.gold == 120 and cmap.st.expedition == 30,
+		"宝箱应入账金币 120/远征币 30，实为 %d/%d" % [cmap.st.gold, cmap.st.expedition])
 	cmap._player.position = cmap._portal.position
 	cmap._check_portal()
 	_check(cmap._map_done and _last_result == "cleared", "宝箱区应可走传送阵通关")
@@ -484,12 +482,12 @@ func _run() -> void:
 	_check(int(kmap._rank().get("tier", -1)) == 0 and int(kmap._rank().get("bonus", -1)) == 0,
 		"低分应无评价加成，实为 %s" % str(kmap._rank()))
 	kmap._score = 999
-	_check(int(kmap._rank().get("tier", -1)) == 3 and int(kmap._rank().get("bonus", -1)) == 160,
-		"满分应为「寸土必争」+160，实为 %s" % str(kmap._rank()))
+	_check(int(kmap._rank().get("tier", -1)) == 3 and int(kmap._rank().get("bonus", -1)) == 60,
+		"满分应为「寸土必争」+60，实为 %s" % str(kmap._rank()))
 	var gb: int = kmap.st.gold
 	kmap._player.position = kmap._portal.position
 	kmap._check_portal()
-	_check(kmap.st.gold == gb + 160, "通关时应结算评价附加赏，实为 +%d" % (kmap.st.gold - gb))
+	_check(kmap.st.gold == gb + 60, "通关时应结算评价附加赏，实为 +%d" % (kmap.st.gold - gb))
 	kmap.queue_free()
 	await get_tree().process_frame
 
@@ -498,10 +496,10 @@ func _run() -> void:
 		"应记录全图怪物总数，实为 %d / %d" % [c2map._total_monsters, c2map._monsters.size()])
 	var g1: int = c2map.st.gold
 	c2map._on_area_cleared()
-	_check(c2map._cleared_bonus and c2map.st.gold == g1 + 260,
-		"清剿应给额外赏 +260，实为 +%d" % (c2map.st.gold - g1))
+	_check(c2map._cleared_bonus and c2map.st.gold == g1 + 100,
+		"清剿应给额外赏 +100，实为 +%d" % (c2map.st.gold - g1))
 	c2map._on_area_cleared()
-	_check(c2map.st.gold == g1 + 260, "清剿赏只应给一次")
+	_check(c2map.st.gold == g1 + 100, "清剿赏只应给一次")
 	var score_before: int = c2map._score
 	c2map._start_battle(c2map._monsters[0])
 	if c2map._battle != null:

@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "events": [
+    {
+      "id": "misdelivered_invitation", "title": "一封错送的喜帖", "requires_story": "s12", "seed": 61061,
+      "giver": "老赵", "art": "res://image/special_events/invitation_v1.png",
+      "board": {"map": "lorin_wilds", "at": [480, 880], "art": "return_letter"},
+      "intro": "老赵把一张红帖塞进你手里：‘上面写着请赵老爷来提亲。我连姑娘姓什么都不知道！你替我去古道问清楚，先别让石头瞧见。’\n红帖背面粘着半截戏票，落款被红绳遮住了。",
+      "clue": {"map": "maple_road", "at": [480, 840], "art": "return_letter", "name": "驿亭落下的戏票", "body": "戏票上的赵字只有半边。台边挂着一件过大的红袍，下面写着‘亲家缺一位’。一只野狼叼着红绳跑向树后，戏班信使正追得气喘。"},
+      "encounter": {"map": "maple_road", "at": [560, 460], "art": "post", "name": "戏班信使", "body": "信使见你拿着喜帖，眼睛一亮：‘赵老爷来了吗？我们等着他救场！’\n你可以先问明白，也可以替他追回红绳。战斗路线可撤退，报酬相同。"},
+      "branches": {
+        "ask": {"label": "问清戏票上的赵字", "outcome": "信使翻开名册：请的是赵老伯演亲家，喜帖只是戏里的道具。老赵听完先松了口气，又问：‘那件红袍，真有我的尺寸？’石头从门后探头：‘我连台词都替你背好了。’"},
+        "chase": {"label": "替信使追回红绳 · 战斗", "enemy": "mon_wolf", "theme": "forest", "level": 10, "outcome": "你追回红绳，信使才解开落款：‘请赵老伯，饰亲家。’老赵拎着红绳回城，石头已在戏台边等他：‘大侠都替你护住行头了，你还推什么？’老赵耳朵一红，接过了戏袍。"}
+      },
+      "return_line": "老赵：‘这趟让你白跑了……这两份谢礼，你挑一份。戏开场时，可别站最前头笑我！’",
+      "gold": 480,
+      "rewards": {"partner": {"label": "伙伴粮 ×3", "grants": {"item:pet_food": 3}, "use": "在伙伴养成中喂养常用伙伴。"}, "gear": {"label": "攻击宝石Ⅰ ×1", "grants": {"item:gem_atk_1": 1}, "use": "在工坊镶嵌到装备空孔中。"}},
+      "aftermath": {"map": "lorin_wilds", "at": [560, 940], "art": "return_letter", "name": "老赵的戏班喜帖"},
+      "note": "边城多了一张戏班喜帖。老赵终于肯演亲家，石头负责在台下递词。"
+    },
+    {
+      "id": "choosy_chest", "title": "会挑主人的宝箱", "requires_story": "s20", "seed": 61062,
+      "giver": "陆七", "art": "res://image/special_events/chest_v1.png",
+      "board": {"map": "shenyuan_port", "at": [360, 740], "art": "cache"},
+      "intro": "陆七压低声音：‘滩上捞来一只宝箱，我一靠近它就敲三声，换了人它又不响。难道宝贝还会挑主人？’\n他把一小包试喂的鱼干交给你，请你去潮痕滩看看。鱼干由陆七提供，不消耗背包物品。",
+      "clue": {"map": "tideflat", "at": [430, 820], "art": "tide_cargo", "name": "宝箱外的抓痕", "body": "箱盖有细小爪印，锁眼挂着白羽。箱里传出三声轻响，紧接着是一声肚子叫。你把耳朵贴近，听见翅膀扑动。"},
+      "encounter": {"map": "tideflat", "at": [480, 650], "art": "cache", "name": "敲三声的宝箱", "body": "白羽从锁眼里探出来。旁边的盐甲蟹正夹着箱扣，像守着一整顿午饭。\n可以用陆七给的鱼干引开它们，也可以赶走盐甲蟹再开箱。报酬相同，不要求拥有潮鸥伙伴。"},
+      "branches": {
+        "feed": {"label": "用试喂鱼干引出箱中客", "outcome": "鱼干刚放下，一只潮鸥顶开暗扣，衔着钥匙跳了出来。它把钥匙交给你，又把鱼干拖回箱里。陆七看着空箱叹气：‘宝贝确实挑主人，它挑的是管饭的。’港口从此留了一只喂鸟箱。"},
+        "drive": {"label": "赶走夹箱扣的盐甲蟹 · 战斗", "enemy": "mon_salt_crab", "theme": "desert", "level": 22, "outcome": "盐甲蟹退开后，潮鸥从暗扣钻出来，把钥匙丢到陆七脚边。陆七刚想夸它懂事，它已叼走他的鱼干。‘行吧，’陆七把箱子放在码头，‘宝贝没捞着，伙计倒添了一位。’"}
+      },
+      "return_line": "陆七：‘这箱子就给潮鸥住了。答应你的谢礼照给，挑你用得上的。’",
+      "gold": 800,
+      "rewards": {"partner": {"label": "伙伴粮 ×5", "grants": {"item:pet_food": 5}, "use": "喂养伙伴，推进它的等级成长。"}, "gear": {"label": "精炼石 ×2", "grants": {"item:refine_stone": 2}, "use": "在工坊精炼装备词条。"}},
+      "aftermath": {"map": "shenyuan_port", "at": [420, 820], "art": "cache", "name": "陆七留下的喂鸟箱"},
+      "note": "码头的空宝箱变成了喂鸟箱，陆七每次经过都要确认钥匙还在。"
+    },
+    {
+      "id": "snow_supper", "title": "雪关夜炊", "requires_story": "s28", "seed": 61063,
+      "giver": "宁砚", "art": "res://image/special_events/supper_v1.png",
+      "board": {"map": "frost_post", "at": [480, 860], "art": "return_lamp"},
+      "intro": "宁砚指着北边：‘栈道有人偷偷借岗火，烟一阵一阵的。我问岑雪，她只说今晚风大。你去瞧瞧，别先吹警哨。’\n纸条背面还写着：闻到药味就回来，闻到肉味……也回来。",
+      "clue": {"map": "frost_boardwalk", "at": [480, 920], "art": "return_lamp", "name": "雪里的面粉脚印", "body": "脚印旁有一撮面粉，背风处传来勺子碰锅的声音。烟里带着萝卜和胡椒的香味，近处却有兽影在绕圈。"},
+      "encounter": {"map": "frost_boardwalk", "at": [550, 700], "art": "frost_brazier", "name": "背风处的小锅", "body": "岑雪蹲在锅前，冻红了手：‘轮岗的人还没吃上热饭。宁砚生辰也快到了，我想给他个惊喜。’\n可以替她遮风端汤，也可以先赶走被香味引来的兽影。报酬相同。"},
+      "branches": {
+        "help": {"label": "替岑雪遮风，把汤端回驿站", "outcome": "你和岑雪沿背风路端回了汤。宁砚还想问路况，闻到胡椒味就停了笔：‘我只写了也回来，可没写空手回来。’岑雪把第一碗推给他，驿站值夜的人都笑了。"},
+        "guard": {"label": "先赶走闻香的兽影 · 战斗", "enemy": "mon_shadow_wolf", "theme": "forest", "level": 35, "outcome": "兽影退去，岑雪护住了锅。回驿站时宁砚先看你的兵器，再看热汤：‘这份生辰礼，阵仗是不是大了些？’岑雪说巡界人就该吃上热饭，连刚换岗的新兵也分到了一碗。"}
+      },
+      "return_line": "宁砚：‘夜炊留在轮岗簿里。今晚你也算值了一班，这份谢礼自己挑。’",
+      "gold": 1200,
+      "rewards": {"partner": {"label": "资质果 ×1（可能洗低）", "grants": {"item:aptitude_fruit": 1}, "use": "在伙伴养成中重置资质；结果可能升高或降低。"}, "gear": {"label": "精炼石 ×3", "grants": {"item:refine_stone": 3}, "use": "在工坊精炼装备，已有词条可按规则锁定。"}},
+      "aftermath": {"map": "frost_post", "at": [550, 960], "art": "return_lamp", "name": "驿站夜炊灯"},
+      "note": "霜关夜岗添了一盏夜炊灯。宁砚的轮岗簿里夹着那张带胡椒香的纸条。"
+    }
+  ]
+}

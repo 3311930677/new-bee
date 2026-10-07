@@ -3,6 +3,7 @@ extends Node2D
 # 第三幕可走地貌；识别图形在实体下层，不用装饰性裂谷充当隐形碰撞。
 var map_id := ""
 var use_reference_ground := false
+var flat_floor := false
 var _choice := ""
 var _brazier_choice := ""
 var _brazier_art: Texture2D
@@ -24,6 +25,14 @@ func _process(_delta: float) -> void:
 
 
 func _draw() -> void:
+	if flat_floor and map_id != "frost_post":
+		# Keep rails as flat material markings; raised rock/ravine/port-water art is superseded.
+		if map_id == "rift_mine_road":
+			for y in range(170, 1090, 34):
+				draw_line(Vector2(435, y), Vector2(525, y), Color("8c8370"), 5)
+			for x in [444.0, 516.0]:
+				draw_line(Vector2(x, 145), Vector2(x, 1110), Color("c9c4ac"), 3)
+		return
 	match map_id:
 		"red_sand_route":
 			# 两个出口沿中轴连接；车辙说明这是运货路，路边红岩不挡主路。
@@ -43,7 +52,7 @@ func _draw() -> void:
 					draw_rect(Rect2(x - 3, 235, 6, 95), Color("635543"))
 					draw_rect(Rect2(x, 235, 34, 48), color)
 					draw_rect(Rect2(x + 8, 245, 18, 5), Color("eee7d4"))
-			if not use_reference_ground:
+			if not use_reference_ground and not flat_floor:
 				# 雪地木栈道：宽主街与东向矿道支路，两侧房屋独立留出 NPC 空间。
 				_boardwalk(Rect2(426, 80, 108, 1100))
 				_boardwalk(Rect2(335, 420, 260, 60))
@@ -64,7 +73,7 @@ func _draw() -> void:
 						p + Vector2(3, -49)]), Color("fff3cf"))
 				if repaired and _brazier_choice == "shield":
 					draw_rect(Rect2(p + Vector2(20, -71), Vector2(8, 43)), Color("6d8490"))
-			if not use_reference_ground:
+			if not use_reference_ground and not flat_floor:
 				for y in [245.0, 1040.0]:
 					_rock(Vector2(165, y), Color("889c9c"))
 		"rift_mine_road":

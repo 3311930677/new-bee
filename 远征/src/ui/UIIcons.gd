@@ -1,23 +1,33 @@
 extends RefCounted
-## 小器物图标用实色切面与清楚的轮廓；人物、装备、技能继续使用原像素素材。
+## 统一器物插画、货币别名和纹理缓存；人物、装备、技能继续使用原像素素材。
 
 const REFINED_KEYS := ["settings", "coin", "expedition", "soul", "gem", "honor",
-	"ticket", "ticket_sweep", "sound", "save", "person", "music", "shake", "story", "speed", "close"]
+	"ticket", "ticket_sweep", "sound", "save", "person", "music", "shake", "story", "quest", "speed", "close"]
 const RESOURCE_KEYS := {
 	"cur_gold": "coin", "cur_expedition": "expedition", "cur_soul": "soul", "cur_honor": "honor",
 	"itm_ticket_ten": "ticket", "itm_ticket_sweep": "ticket_sweep",
 }
+const ILLUSTRATED_KEYS := ["coin", "expedition", "soul", "honor", "spark", "world", "bag", "growth", "book", "swords", "summon", "exchange", "settings"]
+
+static func illustrated(key: String) -> bool:
+	return key in ILLUSTRATED_KEYS and ResourceLoader.exists("res://assets/ui/illustrated_icons_20261007/%s.tres" % key)
 
 static var _cache: Dictionary = {}
+
+static func badge_plate() -> Texture2D:
+	if not _cache.has("badge_plate"):
+		_cache["badge_plate"] = load("res://assets/ui/illustrated_icons_20261007/plate.tres")
+	return _cache["badge_plate"] as Texture2D
 
 static func resource_path(res_name: String) -> String:
 	return refined_path(String(RESOURCE_KEYS[res_name])) if RESOURCE_KEYS.has(res_name) else ""
 
 static func refined_path(key: String) -> String:
+	if illustrated(key): return "res://assets/ui/illustrated_icons_20261007/%s.tres" % key
 	return "res://assets/ui/refined_icons/%s.svg" % key if key in REFINED_KEYS else ""
 
 static func colored(key: String) -> bool:
-	return key in REFINED_KEYS or ResourceLoader.exists("res://assets/ui/pixel_icons/%s.png" % key)
+	return illustrated(key) or key in REFINED_KEYS or ResourceLoader.exists("res://assets/ui/pixel_icons/%s.png" % key)
 
 static func texture(key: String) -> Texture2D:
 	if not _cache.has(key):
@@ -29,12 +39,12 @@ static func texture(key: String) -> Texture2D:
 
 static func image(key: String, dimensions := Vector2(20, 20), tint := Color.WHITE) -> TextureRect:
 	var icon := TextureRect.new()
-	icon.texture = texture(key)
 	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.texture = texture(key)
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	icon.size = dimensions
 	icon.custom_minimum_size = dimensions
-	icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	icon.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS if illustrated(key) else CanvasItem.TEXTURE_FILTER_NEAREST
 	icon.set_meta("colored_icon", colored(key))
 	icon.modulate = Color.WHITE if colored(key) else tint
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE

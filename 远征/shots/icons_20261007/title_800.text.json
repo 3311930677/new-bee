@@ -1,0 +1,52 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/FrontendCapture/Title/@Label@3",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "昭元行旅录"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 39.0,
+			"path": "/root/FrontendCapture/Title/Menu/@Control@6/@Label@5",
+			"rect_height": 84.0,
+			"size": 26,
+			"text": "开始游戏"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 33.0,
+			"path": "/root/FrontendCapture/Title/Menu/@Control@8/@Label@7",
+			"rect_height": 46.0,
+			"size": 22,
+			"text": "游戏介绍"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 33.0,
+			"path": "/root/FrontendCapture/Title/Menu/@Control@10/@Label@9",
+			"rect_height": 46.0,
+			"size": 22,
+			"text": "游戏设置"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 33.0,
+			"path": "/root/FrontendCapture/Title/Menu/@Control@12/@Label@11",
+			"rect_height": 46.0,
+			"size": 22,
+			"text": "退出游戏"
+		}
+	]
+}

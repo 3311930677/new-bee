@@ -4,6 +4,7 @@ extends Control
 signal closed
 const Field := preload("res://src/ui/FieldUI.gd")
 const Craft := preload("res://src/ui/CraftUI.gd")
+const Style := preload("res://src/ui/LedgerStyle.gd")
 const FrostContractPanelScript := preload("res://src/ui/FrostContractPanel.gd")
 const INK := Color("3d4135")
 const MUTED := Color("7c715a")
@@ -33,7 +34,10 @@ func open_site(id: String) -> void:
 
 func _text(parent: Control, words: String, at: Vector2, extent: Vector2,
 		px := 16, ink := INK, bold := false) -> Label:
-	var lab := Craft.label(words, at, extent, px, ink, bold)
+	var numeric := not words.is_empty() and words[0] in "0123456789+-"
+	var lab := Style.text(words, px, ink, numeric)
+	lab.position = at
+	lab.size = extent
 	lab.custom_minimum_size = Vector2.ZERO
 	parent.add_child(lab)
 	return lab
@@ -41,25 +45,30 @@ func _text(parent: Control, words: String, at: Vector2, extent: Vector2,
 func _button(parent: Control, words: String, at: Vector2, extent: Vector2,
 		callback: Callable, primary := false, disabled := false) -> Field.Action:
 	var btn := Field.action(words, at, extent, primary, not primary)
+	btn.skin = "ledger_primary" if primary else "ledger_secondary"
+	if "规则" in words or "条款" in words or words == "？": btn.skin = "ledger_rules"
+	elif words == "返回": btn.skin = "ledger_quiet"
 	btn.disabled = disabled
 	btn.accent = JADE
-	btn.caption.add_theme_font_size_override("font_size", 17)
-	btn.caption.add_theme_color_override("font_color", Color("f5ead4") if primary else JADE)
+	btn.caption.add_theme_font_size_override("font_size", 16)
+	btn.caption.add_theme_font_override("font", G.font_serif)
+	btn.caption.add_theme_color_override("font_color", Style.LIGHT if primary or btn.skin in ["ledger_rules", "ledger_quiet"] else JADE)
 	Craft.clean_label(btn.caption)
 	btn.activated.connect(callback)
 	parent.add_child(btn)
 	return btn
 
 func _card(parent: Control, at: Vector2, extent: Vector2) -> Control:
-	var card := Panel.new()
+	var card := Control.new()
 	card.position = at
 	card.size = extent
 	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color("d9d6bb",.42)
-	style.border_color = Color("ac9c76",.5)
-	style.set_border_width_all(1)
-	card.add_theme_stylebox_override("panel",style)
+	var frame := Style.Frame.new()
+	frame.padding = 0
+	frame.size = extent
+	frame.fill = Style.LIGHT
+	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	card.add_child(frame)
 	parent.add_child(card)
 	return card
 
@@ -93,22 +102,25 @@ func _rebuild() -> void:
 	title.add_theme_font_override("font",G.font_art)
 	_text(layout,String(site.get("name","交易点")),Vector2(28,64),Vector2(370,24),17,Color("d6c199"))
 	_button(layout,"？",Vector2(410,30),Vector2(42,42),func(): _help = not _help; _rebuild())
-	var paper := G.parchment_box(440,636,16.0)
-	paper.position = Vector2(20,98)
+	var paper := Style.panel(Vector2(20,96),Vector2(440,644))
+	paper.name = "LedgerPaper"
 	layout.add_child(paper)
 	var stack := VBoxContainer.new()
 	stack.add_theme_constant_override("separation",8)
 	paper.add_child(stack)
 	var state := G.economy_state()
-	var summary := Control.new()
-	summary.custom_minimum_size = Vector2(408,54)
+	var summary := Style.panel(Vector2.ZERO, Vector2(408,56),false,0)
+	summary.custom_minimum_size = Vector2(408,56)
 	stack.add_child(summary)
-	_text(summary,"第 %d 日" % int(state.get("day",1)),Vector2(0,0),Vector2(86,48),20,JADE,true)
-	_text(summary,"钱囊",Vector2(122,0),Vector2(116,20),14,MUTED)
-	_text(summary,"%d 金" % int(G.wallet.get("gold",0)),Vector2(122,20),Vector2(150,30),21,INK,true)
-	_text(summary,"行囊",Vector2(308,0),Vector2(96,20),14,MUTED)
-	_text(summary,"%d / %d" % [EconomyService.carried_weight(cfg,G.items),int(cfg.get("carry_limit",28))],Vector2(308,20),Vector2(96,30),21,INK,true)
-	Field.line(summary,Vector2(0,53),408,Color("b9a57a",.45))
+	# Plain Control inside the frame: its children retain the shared 4px alignment grid.
+	var metrics := Control.new()
+	summary.add_child(metrics)
+	_text(metrics,"行旅日",Vector2(12,4),Vector2(72,20),12,Style.BRASS)
+	_text(metrics,"第 %d 日" % int(state.get("day",1)),Vector2(12,24),Vector2(80,28),18,Style.LIGHT,true)
+	_text(metrics,"钱囊",Vector2(112,4),Vector2(140,20),12,Style.BRASS)
+	_text(metrics,"%d 金" % int(G.wallet.get("gold",0)),Vector2(112,24),Vector2(172,28),20,Color("e9cd8e"),true)
+	_text(metrics,"行囊",Vector2(304,4),Vector2(88,20),12,Style.BRASS)
+	_text(metrics,"%d / %d" % [EconomyService.carried_weight(cfg,G.items),int(cfg.get("carry_limit",28))],Vector2(304,24),Vector2(92,28),18,Style.LIGHT,true)
 	var tabs := HBoxContainer.new()
 	tabs.add_theme_constant_override("separation",8)
 	stack.add_child(tabs)
@@ -117,9 +129,11 @@ func _rebuild() -> void:
 		var btn := _button(tabs,["货市","运单","驿站"][i],Vector2.ZERO,Vector2(130,40),func():
 			_page = index; _help = false; _message = ""; _rebuild(),i == _page)
 		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		btn.skin = "ledger_tab"
+		btn.selected = i == _page
 	var leaf := Control.new()
 	leaf.name = "LedgerLeaf"
-	leaf.custom_minimum_size = Vector2(408,438)
+	leaf.custom_minimum_size = Vector2(408,452)
 	stack.add_child(leaf)
 	if _help: _build_help(leaf,cfg)
 	else:
@@ -131,7 +145,7 @@ func _rebuild() -> void:
 	notice.text = _message
 	notice.custom_minimum_size = Vector2(408,40)
 	notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	notice.add_theme_font_override("font",G.font_reg)
+	notice.add_theme_font_override("font",G.font_serif)
 	notice.add_theme_font_size_override("font_size",15)
 	notice.add_theme_color_override("font_color",RUST)
 	Craft.clean_label(notice)
@@ -182,27 +196,50 @@ func _build_orders(parent: Control) -> void:
 	var frost := site_id in ["shenyuan_market","frost_market"]
 	var order := G.frost_herb_order() if frost else G.economy_first_order()
 	var status := String(order.get("status","locked"))
-	var card := _card(parent,Vector2(0,6),Vector2(408,326))
-	_text(card,"霜关缺药" if frost else "断碑坡运路",Vector2(18,16),Vector2(270,32),23,INK,true)
-	_text(card,_status(order),Vector2(304,20),Vector2(86,26),16,RUST)
-	_text(card,"沉渊港  →  霜关" if frost else "昭元市集  →  断碑营地",Vector2(18,56),Vector2(370,28),16,MUTED)
-	Field.line(card,Vector2(18,96),372,Color("b9a57a",.5))
+	var card := _card(parent,Vector2(0,8),Vector2(408,344))
+	var heading := Style.panel(Vector2(0,0),Vector2(408,60),false,0)
+	card.add_child(heading)
+	var heading_content := Control.new()
+	heading.add_child(heading_content)
+	_text(heading_content,"霜关缺药" if frost else "断碑坡运路",Vector2(16,12),Vector2(256,36),24,Style.LIGHT)
+	var seal := Style.badge(_status(order),status)
+	seal.position = Vector2(288,16)
+	seal.size = Vector2(104,28)
+	heading_content.add_child(seal)
+	var route := Style.RouteRibbon.new()
+	route.position = Vector2(16,76)
+	route.size = Vector2(376,44)
+	card.add_child(route)
+	_text(card,"沉渊港" if frost else "昭元市集",Vector2(16,96),Vector2(160,24),16,JADE)
+	var destination := _text(card,"霜关" if frost else "断碑营地",Vector2(232,96),Vector2(160,24),16,Style.BLUE)
+	destination.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	if status == "locked":
-		_text(card,"完成双关定路后开放" if frost else "送完驿商盐包后开放",Vector2(18,122),Vector2(370,42),19,JADE)
-		_text(card,"可先在货市备货",Vector2(18,176),Vector2(370,32),16,MUTED)
+		_text(card,"完成双关定路后开放" if frost else "送完驿商盐包后开放",Vector2(16,156),Vector2(376,44),20,JADE)
+		_text(card,"可先在货市备货",Vector2(16,212),Vector2(376,32),16,MUTED)
 	else:
 		var cargo: Dictionary = TableCache.economy_config().get("frost_herb_order" if frost else "first_order",{}).get("cargo",{})
-		var x := 18.0
+		_text(card,"备货清单",Vector2(16,128),Vector2(376,20),14,MUTED)
+		var x := 16.0
 		for gid in cargo:
-			_text(card,"%s  %d / %d" % [G.item_name(String(gid)),G.item_count(String(gid)),int(cargo[gid])],Vector2(x,112),Vector2(182,32),18,JADE)
-			x += 188
-		_text(card,"净报酬",Vector2(18,168),Vector2(130,24),14,MUTED)
-		_text(card,"%d 金" % int(order.get("payout_gold",0)),Vector2(18,198),Vector2(204,40),30,RUST,true)
-		_text(card,"经验 +%d" % int(order.get("reward_exp",42 if frost else 35)),Vector2(260,204),Vector2(130,32),17,MUTED)
+			var tile := _card(card,Vector2(x,152),Vector2(180,60))
+			for good: Dictionary in TableCache.economy_config().get("goods",[]):
+				if String(good.get("id","")) == String(gid): _icon(tile,String(good.get("icon","")),Vector2(8,14),Vector2(32,32))
+			_text(tile,G.item_name(String(gid)),Vector2(48,4),Vector2(120,24),16,INK)
+			_text(tile,"%d / %d" % [G.item_count(String(gid)),int(cargo[gid])],Vector2(48,28),Vector2(120,28),18,
+				JADE if G.item_count(String(gid)) >= int(cargo[gid]) else RUST,true)
+			x += 196
+		var reward := Style.panel(Vector2(16,224),Vector2(376,76),false,0)
+		card.add_child(reward)
+		var reward_content := Control.new()
+		reward.add_child(reward_content)
+		_text(reward_content,"净报酬",Vector2(12,4),Vector2(196,24),14,Color("bea883"))
+		_text(reward_content,"%d 金" % int(order.get("payout_gold",0)),Vector2(12,28),Vector2(204,44),28,Color("edcc88"),true)
+		_text(reward_content,"历练所得",Vector2(264,4),Vector2(100,24),14,Color("a3bdba"))
+		_text(reward_content,"经验 +%d" % int(order.get("reward_exp",42 if frost else 35)),Vector2(248,32),Vector2(116,32),17,Color("cde1ce"))
 		var note := "采购约 %d 金" % int(order.get("purchase_gold",0))
 		if status == "active": note = "第 %d 日前送达" % int(order.get("deadline_day",0))
 		if status == "expired": note = "运单逾期，可查看条款处理" if frost else "运单逾期，可在昭元市集重接"
-		_text(card,note,Vector2(18,252),Vector2(360,26),16,MUTED)
+		_text(card,note,Vector2(16,308),Vector2(376,28),14,MUTED)
 	var button_line := "查看药单条款" if frost else "查看运路规则"
 	var callback: Callable = _open_frost_contract if frost else func(): _help = true; _rebuild()
 	var primary := frost
@@ -211,11 +248,18 @@ func _build_orders(parent: Control) -> void:
 			button_line = "接取运单"; callback = _order_accept; primary = true
 		elif status == "active" and site_id == String(order.get("destination_site","")):
 			button_line = "交付货物"; callback = _order_deliver; primary = true
-	_button(parent,button_line,Vector2(0,350),Vector2(408,44),callback,primary)
+	var operation := primary and not frost
+	if operation:
+		_button(parent,button_line,Vector2(0,364),Vector2(280,44),callback,true)
+		_button(parent,"运路规则",Vector2(288,364),Vector2(120,44),func(): _help = true; _rebuild())
+	else:
+		_button(parent,button_line,Vector2(0,364),Vector2(408,44),callback,false)
 	if site_id in ["city_market","shenyuan_market","frost_market"]:
-		_button(parent,"三城合约  ›",Vector2(0,402),Vector2(408,36),_open_trade_contracts)
+		_button(parent,"三城合约  ›",Vector2(0,416),Vector2(408,36),_open_trade_contracts)
 	elif status == "active":
-		_text(parent,"在断碑营地交货",Vector2(0,402),Vector2(408,30),15,MUTED)
+		_text(parent,"在断碑营地交货",Vector2(0,412),Vector2(408,26),14,MUTED)
+	elif status == "available":
+		_text(parent,"先到昭元市集接单，再运往断碑营地",Vector2(4,416),Vector2(400,28),14,MUTED)
 
 func _build_inn(parent: Control, cfg: Dictionary, state: Dictionary) -> void:
 	var rest := _card(parent,Vector2(0,8),Vector2(408,152))
@@ -229,10 +273,13 @@ func _build_inn(parent: Control, cfg: Dictionary, state: Dictionary) -> void:
 		if String(job.get("site_id","")) != site_id: continue
 		var jid := String(job.get("id",""))
 		var done := int((state.get("work",{}) as Dictionary).get(jid,0)) >= int(state.get("day",1))
+		var left:=G.economy_work_left(jid)
+		var caption:="已完成" if done else "休整中" if left>0 else "帮忙"
 		var card := _card(parent,Vector2(0,y),Vector2(408,88))
 		_text(card,String(job.get("name","差事")),Vector2(16,10),Vector2(236,30),20,INK,true)
-		_text(card,"%d 金 · %d 经验" % [int(job.get("gold",0)),int(job.get("exp",0))],Vector2(16,48),Vector2(250,26),16,MUTED)
-		_button(card,"已完成" if done else "帮忙",Vector2(284,22),Vector2(108,44),func(): _work(jid),not done,done)
+		var reward_line:="休整剩余 "+G._left_text(left) if left>0 else "%d 金 · %d 经验" % [int(job.get("gold",0)),int(job.get("exp",0))]
+		_text(card,reward_line,Vector2(16,48),Vector2(250,26),16,MUTED)
+		_button(card,caption,Vector2(284,22),Vector2(108,44),func(): _work(jid),not done and left==0,done or left>0)
 		y += 100
 
 func _build_help(parent: Control, cfg: Dictionary) -> void:
@@ -244,7 +291,7 @@ func _build_help(parent: Control, cfg: Dictionary) -> void:
 			paragraphs = ["买入价是付给商人的单价；卖出价是你收到的单价，已计入运损。", "库存与收购额度每日有限。换日后刷新，切换地点不会重置。", "%s：每件负重 %d，运损 %d 金。行囊上限 %d。" % [G.item_name(selected_good),int(quote.get("weight",1)),int(quote.get("haul_gold",0)),int(cfg.get("carry_limit",28))], "折线为近五日中价；成交以当前买入、卖出报价为准。"]
 			if int(quote.get("event_pct",0)) != 0: paragraphs.append("路况：%s（%+d%%）。" % [String(quote.get("event_name","")),int(quote.get("event_pct",0))])
 		1: paragraphs = ["先在始发地接单，再备齐实物，到目的地交货。", "净报酬在接单时锁定，购货费用另付。截止日按游戏日计算。", "断碑坡：盐 ×2、铁料 ×1。桥绳加固可抵减本批运费。", "霜关药单：药草 ×3、谷物 ×1。保证金、路线、延期与退单规则见药单条款。"]
-		2: paragraphs = ["歇脚花费 %d 金，推进一个游戏日。" % int(cfg.get("rest_gold",22)), "换日会刷新行情、库存与收购额度，也会推进运单期限。", "每份差事每天只能完成一次，奖励直接到账。"]
+		2: paragraphs = ["歇脚花费 %d 金，推进一个游戏日。" % int(cfg.get("rest_gold",22)), "换日会刷新行情、库存与收购额度，也会推进运单期限。", "每份差事每个游戏日一次；领取后另需现实 %d 分钟休整，歇脚换日不会缩短休整。" % (int(cfg.get("work_cooldown_seconds",3600))/60)]
 	var scroll := ScrollContainer.new()
 	scroll.position = Vector2(0,58)
 	scroll.size = Vector2(408,318)

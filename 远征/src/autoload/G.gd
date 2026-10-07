@@ -551,7 +551,7 @@ func _load_save() -> void:
 		var pst: Variant = pd.get("pet_stat", {})
 		prog["pet_stat"] = pst if pst is Dictionary else {}
 		# 可选养成字段以本次档案为准，不能把上一角色的版本/授业/伙伴投入带进旧档。
-		for optional_key in ["companions", "campaign_growth", "skill_curriculum"]:
+		for optional_key in ["companions", "campaign_growth", "skill_curriculum", "special_events"]:
 			if pd.get(optional_key) is Dictionary:
 				prog[optional_key] = (pd[optional_key] as Dictionary).duplicate(true)
 			else:
@@ -622,6 +622,7 @@ func _init_state_defaults() -> void:
 		"ledger": {"applied": []}, "flags": {},
 		"inventory": {"instances": [], "pending": [], "next_uid": 1},
 		"economy": {},
+		"special_events": {"records":{},"tracked":""},
 		"talents": {}, "equip": {}, "skills": {}, "mounts": {"owned": {}, "active": ""},
 		"titles": {"owned": [], "active": ""}, "pet_stat": {}, "tips_seen": {},
 		"lore_seen": false, "lore_beats": {}, "settings": {}, "last_ts": 0,
@@ -1548,6 +1549,16 @@ func _auto_settle_frost_herb(state: Dictionary, day: int) -> Dictionary:
 
 
 ## 工作每日每种只完成一次，收益低且稳定；事务 ID 含游戏日，读档不能重复领。
+## Work is a small fallback income; sleeping advances prices, not this real-time cooldown.
+## Reuses city.acts timestamps, so old save shapes and economic-day records stay intact.
+func economy_work_left(job_id: String, at_ts := -1) -> int:
+	var stamp := int((city.get("acts",{}) as Dictionary).get("work:"+job_id,0))
+	if stamp<=0: return 0
+	var current := now_ts() if at_ts<0 else int(at_ts)
+	var cooldown := maxi(0,int(TableCache.economy_config().get("work_cooldown_seconds",3600)))
+	return maxi(0,cooldown-(current-stamp))
+
+
 func economy_work(site_id: String, job_id: String) -> Dictionary:
 	if save_locked:
 		return {"ok": false, "err": "存档暂不可写"}
@@ -1566,17 +1577,28 @@ func economy_work(site_id: String, job_id: String) -> Dictionary:
 		return {"ok": false, "err": "今天这份工作已经做过"}
 	var before_prog := prog.duplicate(true)
 	var before_wallet := wallet.duplicate(true)
+	var before_city := city.duplicate(true)
+	var now := now_ts()
+	var left := economy_work_left(job_id,now)
+	if left>0:
+		prog=before_prog
+		return {"ok":false,"err":"这份差事还需休整 %s；歇脚换日不会缩短休整。" % _left_text(left)}
 	var tid := RewardLedger.tx_id("work", site_id, job_id, str(day))
 	var grant := {"gold": int(job.get("gold", 0)), "exp": int(job.get("exp", 0))}
 	var applied := RewardLedger.apply(RewardLedger.make(tid, {}, grant, {}), ledger(), self)
 	if not bool(applied.get("applied", false)):
 		prog = before_prog
 		wallet = before_wallet
+		city = before_city
 		return {"ok": false, "err": String(applied.get("err", "工作未结算"))}
 	work[job_id] = day
+	var acts:Dictionary=city.get("acts",{})
+	acts["work:"+job_id]=now
+	city["acts"]=acts
 	if not save_game():
 		prog = before_prog
 		wallet = before_wallet
+		city = before_city
 		return {"ok": false, "err": "工作写盘失败，已回滚"}
 	return {"ok": true, "gold": int(job.get("gold", 0)), "exp": int(job.get("exp", 0))}
 

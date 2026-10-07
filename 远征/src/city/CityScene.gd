@@ -10,6 +10,7 @@ const VIEW_W := 480.0
 const VIEW_H := 800.0
 const DirectionalIdle := preload("res://src/world/DirectionalIdle.gd")
 const WorldArtFinish := preload("res://src/world/WorldArtFinish.gd")
+const HudStyle := preload("res://src/ui/WorldHUD.gd")
 const TILE := 48.0
 const NPC_R := 52.0        # 人物交互半径
 const BUILD_R := 26.0      # 建筑轮廓外扩的交互边距
@@ -41,7 +42,7 @@ var _hud := CanvasLayer.new()
 var _overlay_layer := CanvasLayer.new()  # 复用面板（世界/图鉴/出征）必须压过 HUD
 var _joy: _Joystick
 var _stat_lbl: Label = null
-var _quest_chip: PanelContainer = null
+var _quest_chip: Control = null
 var _quest_lbl: Label = null
 var _toast_lbl: Label = null
 var _panel: Control = null      # 城内浮层（对话/建筑/布告板/访客簿）
@@ -400,11 +401,13 @@ func _build_hud() -> void:
 
 func _build_embedded_hud() -> void:
 	# 主世界的地图名和金币由 MapScene 显示。两城的小签指向各自可用服务。
-	_quest_chip = G.parchment_box(130, 32, 5.0)
-	_quest_chip.position = Vector2(16, 98)
-	_quest_chip.mouse_filter = Control.MOUSE_FILTER_STOP
-	_quest_chip.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+	var task := HudStyle.task_chip(184, "daily")
+	var task_button: Button = task.root
+	_quest_chip = task_button
+	_quest_chip.position = Vector2(16, 112)
+	_quest_chip.tooltip_text = "查看城务委托" if _city_id == "border_town" else "查看城镇服务"
+	task_button.pressed.connect(func():
+		if not G.ui_blocked:
 			if _city_id == "shenyuan_port":
 				_open_first_order_preview("shenyuan_market")
 			elif _city_id == "frost_post":
@@ -412,10 +415,10 @@ func _build_embedded_hud() -> void:
 			else:
 				_open_quests())
 	_hud.add_child(_quest_chip)
-	_quest_lbl = G.gold_label("", 13, true, Color("3e2a14"), false)
-	_quest_lbl.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_quest_chip.add_child(_quest_lbl)
+	_quest_lbl = task.label
 	_refresh_stat()
+	# 城务入口晚于地图 HUD 创建；复用同一安全区，刘海屏上保持列对齐。
+	preload("res://src/ui/UiSafeArea.gd").fit_hud(_hud, G.ui_safe_rect(self), get_viewport_rect())
 
 
 func _build_vignette() -> void:
@@ -449,9 +452,11 @@ func _refresh_stat() -> void:
 			else "Lv.%d · 金 %d" % [int(G.prog.get("level", 1)), int(G.wallet.get("gold", 0))]
 	if _quest_lbl != null:
 		match _city_id:
-			"shenyuan_port": _quest_lbl.text = "港务 · 查看行情"
-			"frost_post": _quest_lbl.text = "驿务 · 采买物资"
-			_: _quest_lbl.text = G.quest_today_text()
+			"shenyuan_port": HudStyle.update_task(_quest_lbl, "港务 · 查看行情")
+			"frost_post": HudStyle.update_task(_quest_lbl, "驿务 · 采买物资")
+			_: HudStyle.update_task(_quest_lbl, G.quest_today_text())
+		if _embedded_map != null:
+			_quest_chip.tooltip_text = _quest_lbl.text + " · 查看城镇服务"
 
 
 func _toast(msg: String) -> void:

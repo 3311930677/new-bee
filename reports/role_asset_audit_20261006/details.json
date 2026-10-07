@@ -1,0 +1,7674 @@
+{
+  "baseline": "apk_xajh/xaqd_tree; user confirmed this is the previous packet-capture resource set",
+  "summary": {
+    "笑傲角色-常规": {
+      "total_files": 108,
+      "pwd_images": 102,
+      "aef_files": 6,
+      "frame_rectangles": 154,
+      "byte_exact_old_matches": 12
+    },
+    "笑傲角色-战斗": {
+      "total_files": 118,
+      "pwd_images": 109,
+      "aef_files": 9,
+      "frame_rectangles": 404,
+      "byte_exact_old_matches": 26
+    }
+  },
+  "image_errors": [],
+  "files": [
+    {
+      "path": "笑傲角色-常规/fsnan2/cg_nan.aef",
+      "bytes": 636,
+      "sha256": "712d9c184f60e31dc7c1190459890551e61a95d6e8aebb41bd2802bdce82090b",
+      "exact_old_matches": []
+    },
+    {
+      "path": "笑傲角色-常规/fsnan2/fs_nan.pwd",
+      "bytes": 591,
+      "sha256": "c24360511b3a1fb7cd7e465a1600ee238051a3f4f79fa7ffe6f8911ea43fe31f",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/data/mount/zq_fs_nan/fs_nan.pwd"
+      ],
+      "resource_id": 7,
+      "png_size": [
+        69,
+        18
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          15
+        ],
+        [
+          23,
+          0,
+          23,
+          18
+        ],
+        [
+          46,
+          0,
+          23,
+          17
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnan2/fs_nan001.pwd",
+      "bytes": 347,
+      "sha256": "6a802fdb3ad1dfda186e06f9245448d49dce7f01b304d714b984233415f1d0aa",
+      "exact_old_matches": [],
+      "resource_id": 14,
+      "png_size": [
+        20,
+        21
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          20,
+          21
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnan2/fs_nan01.pwd",
+      "bytes": 369,
+      "sha256": "f81beea29cd2a5d0f7f1a9cc342d3c5bd392007436877da22b44992e86bd6f13",
+      "exact_old_matches": [],
+      "resource_id": 0,
+      "png_size": [
+        18,
+        21
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          18,
+          21
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnan2/fs_nan02.pwd",
+      "bytes": 360,
+      "sha256": "b94578ccebb2ee96e6d2febaefd6d5d5cc4e9a43fd25f292d2e3b84f473bdbe9",
+      "exact_old_matches": [],
+      "resource_id": 1,
+      "png_size": [
+        21,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          21,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnan2/fs_nan03.pwd",
+      "bytes": 434,
+      "sha256": "e51c744276bb6bf041a1add8ffaf528741e05d790cd744e9e18c2ecf54fb869c",
+      "exact_old_matches": [],
+      "resource_id": 2,
+      "png_size": [
+        20,
+        25
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          20,
+          25
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnan2/fs_nan04.pwd",
+      "bytes": 434,
+      "sha256": "dffb7dfcf221f12fdb0c7dd10f7c02c12c26a1945be83a50b7824c092fe14759",
+      "exact_old_matches": [],
+      "resource_id": 3,
+      "png_size": [
+        22,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnan2/fs_nan_m.pwd",
+      "bytes": 1387,
+      "sha256": "e97c679021fb5e98177e88a02f8739562b68483c9d98b7a2196a947db3ea73f3",
+      "exact_old_matches": [],
+      "resource_id": 4,
+      "png_size": [
+        69,
+        18
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          15
+        ],
+        [
+          23,
+          0,
+          23,
+          18
+        ],
+        [
+          46,
+          0,
+          23,
+          17
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnan2/fs_nanss.pwd",
+      "bytes": 585,
+      "sha256": "3676c73a68de0c69e804aba89d4cf85a5a606dfb92e25f10cd67e154956584f6",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/cgd/f/nan/fs_nanss.pwd"
+      ],
+      "resource_id": 16,
+      "png_size": [
+        54,
+        16
+      ],
+      "frame_count": 5,
+      "rectangles": [
+        [
+          0,
+          0,
+          10,
+          15
+        ],
+        [
+          10,
+          0,
+          14,
+          12
+        ],
+        [
+          24,
+          0,
+          9,
+          16
+        ],
+        [
+          33,
+          0,
+          11,
+          15
+        ],
+        [
+          44,
+          0,
+          10,
+          16
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnan2/fs_wq06.pwd",
+      "bytes": 439,
+      "sha256": "b2c331f138dfe319468d98617eb5149b7e43c655af8a7147fd7233eda229e5b1",
+      "exact_old_matches": [],
+      "resource_id": 23,
+      "png_size": [
+        25,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          25,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnan2/fs_wq07.pwd",
+      "bytes": 473,
+      "sha256": "56bd158e06bd5eed38a8bb4116afd362aef0107d5aca66a9d24e67180f26bd99",
+      "exact_old_matches": [],
+      "resource_id": 24,
+      "png_size": [
+        28,
+        30
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          28,
+          30
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnan2/fs_wq08.pwd",
+      "bytes": 494,
+      "sha256": "73adecefe8f421e923a3e337b9ddba5bb0dfcc86a82f2388b31dcc298c68053c",
+      "exact_old_matches": [],
+      "resource_id": 25,
+      "png_size": [
+        30,
+        29
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          30,
+          29
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnan2/fs_wq09.pwd",
+      "bytes": 359,
+      "sha256": "56bebc3ba9d9d2960aa93bcd9b89c2ac64ec2ee9f04fdb4371279a387875900f",
+      "exact_old_matches": [],
+      "resource_id": 26,
+      "png_size": [
+        26,
+        25
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          26,
+          25
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnan2/fscg01.pwd",
+      "bytes": 285,
+      "sha256": "0c3d2159c177c4e5dc7cc977190666f9080060e46f8b586d9c727ea2440b5c4e",
+      "exact_old_matches": [],
+      "resource_id": 18,
+      "png_size": [
+        12,
+        17
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          12,
+          17
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnan2/fscg02.pwd",
+      "bytes": 292,
+      "sha256": "fb50cb8681c45a032e34f025b391e5f5a15a421a730f2bedbbdf5d9509d04a21",
+      "exact_old_matches": [],
+      "resource_id": 19,
+      "png_size": [
+        15,
+        25
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          15,
+          25
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnan2/fscg03.pwd",
+      "bytes": 403,
+      "sha256": "c931ae8c161a84c5706c90a1447186ba93062a2d285694d594d14298f91105db",
+      "exact_old_matches": [],
+      "resource_id": 20,
+      "png_size": [
+        21,
+        26
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          21,
+          26
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnan2/fscg04.pwd",
+      "bytes": 416,
+      "sha256": "44056d1571cca7ea6dff2a76ab357eada7584f62ef87fcce69c49d4ccb279a0d",
+      "exact_old_matches": [],
+      "resource_id": 21,
+      "png_size": [
+        19,
+        40
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          19,
+          40
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnan2/fscg05.pwd",
+      "bytes": 546,
+      "sha256": "41910d6cbf8688d433e7b79ac1de50d0c8d1e33db0a655b3acc4551ac90d5236",
+      "exact_old_matches": [],
+      "resource_id": 22,
+      "png_size": [
+        18,
+        45
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          18,
+          45
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnv2/cg_nv.aef",
+      "bytes": 636,
+      "sha256": "1e578bb330e81a5ae674044dca361af74551670b2797ce68c58da9d5c5c5d3e2",
+      "exact_old_matches": []
+    },
+    {
+      "path": "笑傲角色-常规/fsnv2/fs_nv.pwd",
+      "bytes": 544,
+      "sha256": "9badf5749d657d237eb97dd8986f25f8cd7747574612c4c97baef76029753358",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/data/mount/zq_fs_nv/fs_nv.pwd"
+      ],
+      "resource_id": 8,
+      "png_size": [
+        69,
+        17
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          17
+        ],
+        [
+          23,
+          0,
+          23,
+          17
+        ],
+        [
+          46,
+          0,
+          23,
+          16
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnv2/fs_nv001.pwd",
+      "bytes": 359,
+      "sha256": "ad4834855f5d0677d032eff1a4945f7d15d04fc6525c2791fd00dc7675d74ab0",
+      "exact_old_matches": [],
+      "resource_id": 15,
+      "png_size": [
+        20,
+        19
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          20,
+          19
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnv2/fs_nv01.pwd",
+      "bytes": 390,
+      "sha256": "d5675758093dd4cc5bfd7fb9914b92275c46e8e3afeaafc0378c513043961397",
+      "exact_old_matches": [],
+      "resource_id": 4,
+      "png_size": [
+        21,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          21,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnv2/fs_nv02.pwd",
+      "bytes": 354,
+      "sha256": "0472faae91c732d8fababf3786febd4483600e3ab5fd7ca08ca4b7b58e970195",
+      "exact_old_matches": [],
+      "resource_id": 5,
+      "png_size": [
+        19,
+        18
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          19,
+          18
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnv2/fs_nv03.pwd",
+      "bytes": 423,
+      "sha256": "ae4fd0a8bdb3f19a52a4cc9566ce5be9f1a8150bf6086549b79539e61297b313",
+      "exact_old_matches": [],
+      "resource_id": 6,
+      "png_size": [
+        22,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnv2/fs_nv04.pwd",
+      "bytes": 403,
+      "sha256": "0cd530ccf45ab3559cf062200eb6f98d10250e73516d22e056c8ad61e1eff40a",
+      "exact_old_matches": [],
+      "resource_id": 7,
+      "png_size": [
+        22,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnv2/fs_nv_m.pwd",
+      "bytes": 1300,
+      "sha256": "4ca318f82e2c1b2da5b568d2fb0f73477699c3d66c270d32c78da53e4cf93895",
+      "exact_old_matches": [],
+      "resource_id": 0,
+      "png_size": [
+        69,
+        17
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          17
+        ],
+        [
+          23,
+          0,
+          23,
+          17
+        ],
+        [
+          46,
+          0,
+          23,
+          16
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnv2/fs_nvss.pwd",
+      "bytes": 546,
+      "sha256": "943d09d148eaf1077eca476dc0405031edbcaae72792a313249c732391da8f89",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/cgd/f/nv/fs_nvss.pwd"
+      ],
+      "resource_id": 17,
+      "png_size": [
+        37,
+        25
+      ],
+      "frame_count": 5,
+      "rectangles": [
+        [
+          0,
+          0,
+          14,
+          22
+        ],
+        [
+          14,
+          0,
+          6,
+          15
+        ],
+        [
+          20,
+          0,
+          9,
+          14
+        ],
+        [
+          29,
+          0,
+          8,
+          14
+        ],
+        [
+          14,
+          15,
+          14,
+          10
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnv2/fs_wq06.pwd",
+      "bytes": 439,
+      "sha256": "b2c331f138dfe319468d98617eb5149b7e43c655af8a7147fd7233eda229e5b1",
+      "exact_old_matches": [],
+      "resource_id": 23,
+      "png_size": [
+        25,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          25,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnv2/fs_wq07.pwd",
+      "bytes": 473,
+      "sha256": "56bd158e06bd5eed38a8bb4116afd362aef0107d5aca66a9d24e67180f26bd99",
+      "exact_old_matches": [],
+      "resource_id": 24,
+      "png_size": [
+        28,
+        30
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          28,
+          30
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnv2/fs_wq08.pwd",
+      "bytes": 494,
+      "sha256": "73adecefe8f421e923a3e337b9ddba5bb0dfcc86a82f2388b31dcc298c68053c",
+      "exact_old_matches": [],
+      "resource_id": 25,
+      "png_size": [
+        30,
+        29
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          30,
+          29
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnv2/fs_wq09.pwd",
+      "bytes": 359,
+      "sha256": "56bebc3ba9d9d2960aa93bcd9b89c2ac64ec2ee9f04fdb4371279a387875900f",
+      "exact_old_matches": [],
+      "resource_id": 26,
+      "png_size": [
+        26,
+        25
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          26,
+          25
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnv2/fscg01.pwd",
+      "bytes": 285,
+      "sha256": "0c3d2159c177c4e5dc7cc977190666f9080060e46f8b586d9c727ea2440b5c4e",
+      "exact_old_matches": [],
+      "resource_id": 18,
+      "png_size": [
+        12,
+        17
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          12,
+          17
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnv2/fscg02.pwd",
+      "bytes": 292,
+      "sha256": "fb50cb8681c45a032e34f025b391e5f5a15a421a730f2bedbbdf5d9509d04a21",
+      "exact_old_matches": [],
+      "resource_id": 19,
+      "png_size": [
+        15,
+        25
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          15,
+          25
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnv2/fscg03.pwd",
+      "bytes": 403,
+      "sha256": "c931ae8c161a84c5706c90a1447186ba93062a2d285694d594d14298f91105db",
+      "exact_old_matches": [],
+      "resource_id": 20,
+      "png_size": [
+        21,
+        26
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          21,
+          26
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnv2/fscg04.pwd",
+      "bytes": 416,
+      "sha256": "44056d1571cca7ea6dff2a76ab357eada7584f62ef87fcce69c49d4ccb279a0d",
+      "exact_old_matches": [],
+      "resource_id": 21,
+      "png_size": [
+        19,
+        40
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          19,
+          40
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/fsnv2/fscg05.pwd",
+      "bytes": 546,
+      "sha256": "41910d6cbf8688d433e7b79ac1de50d0c8d1e33db0a655b3acc4551ac90d5236",
+      "exact_old_matches": [],
+      "resource_id": 22,
+      "png_size": [
+        18,
+        45
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          18,
+          45
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnan2/cg_nan.aef",
+      "bytes": 660,
+      "sha256": "881eb41ece843825b8c4c94deae003e29c77159c6ffc404b3b17c83b308c3e68",
+      "exact_old_matches": []
+    },
+    {
+      "path": "笑傲角色-常规/lsnan2/lrcg01.pwd",
+      "bytes": 250,
+      "sha256": "1fb0aac92a544377321c0763426b0dbaf3670390345ed0f9708b98b49fc67339",
+      "exact_old_matches": [],
+      "resource_id": 18,
+      "png_size": [
+        22,
+        21
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          21
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnan2/lrcg02.pwd",
+      "bytes": 385,
+      "sha256": "5a23979918ded9a898e324ae65f9e1d54d7b7d951dcdad694499649451f97bae",
+      "exact_old_matches": [],
+      "resource_id": 19,
+      "png_size": [
+        22,
+        34
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          34
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnan2/lrcg03.pwd",
+      "bytes": 313,
+      "sha256": "081e22224faf1fd748a3a5a6c3e32bf2e7452f495933433add5e8d5703c1e1fd",
+      "exact_old_matches": [],
+      "resource_id": 20,
+      "png_size": [
+        27,
+        27
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          27,
+          27
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnan2/lrcg04.pwd",
+      "bytes": 367,
+      "sha256": "3e9593c6c3dee3c77e588458babc35cb8b386416f794fa144a3de5aaf01ed707",
+      "exact_old_matches": [],
+      "resource_id": 21,
+      "png_size": [
+        21,
+        33
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          21,
+          33
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnan2/lrcg05.pwd",
+      "bytes": 375,
+      "sha256": "e6f8def6bd289a889bcb66a5d0c24b07b255746da4ace4350a2aa90ac38075b2",
+      "exact_old_matches": [],
+      "resource_id": 22,
+      "png_size": [
+        29,
+        24
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          29,
+          24
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnan2/ls_nan.pwd",
+      "bytes": 460,
+      "sha256": "213fcc64190b550e4d4a417e333a73cefbad0445acaf54520128902d5fccd135",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/data/mount/zq_ls_nan/ls_nan.pwd"
+      ],
+      "resource_id": 5,
+      "png_size": [
+        69,
+        17
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          16
+        ],
+        [
+          23,
+          0,
+          23,
+          17
+        ],
+        [
+          46,
+          0,
+          23,
+          17
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnan2/ls_nan001.pwd",
+      "bytes": 389,
+      "sha256": "71aa8d8a6e910aad0986ecb0e50e8892f952ccee93d2df5a60067c0d6b4d340b",
+      "exact_old_matches": [],
+      "resource_id": 0,
+      "png_size": [
+        18,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          18,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnan2/ls_nan01.pwd",
+      "bytes": 414,
+      "sha256": "12aac3d77b302e0435fa04c8fabef2ca5bd4a36fe3241964aecfad5d69c4b503",
+      "exact_old_matches": [],
+      "resource_id": 1,
+      "png_size": [
+        24,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          24,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnan2/ls_nan02.pwd",
+      "bytes": 490,
+      "sha256": "58ef32a6fb68e775515b8d97f061b08452df446b85c1553f08e979b9a0ac7443",
+      "exact_old_matches": [],
+      "resource_id": 2,
+      "png_size": [
+        23,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnan2/ls_nan03.pwd",
+      "bytes": 468,
+      "sha256": "7b68a8ac2f537c5680edfba0ed6871127c5c89495f4e346109866033e320d6ad",
+      "exact_old_matches": [],
+      "resource_id": 3,
+      "png_size": [
+        22,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnan2/ls_nan04.pwd",
+      "bytes": 459,
+      "sha256": "e99b4f38872f883cb497df896c51c37c1a196010e1649e718ade62cce3f87187",
+      "exact_old_matches": [],
+      "resource_id": 4,
+      "png_size": [
+        23,
+        23
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          23
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnan2/ls_nan_m.pwd",
+      "bytes": 1075,
+      "sha256": "4faa071620e2bec9e48c75a8a6364d0d771e6f8217df741e065ff1e7b14f1a2e",
+      "exact_old_matches": [],
+      "resource_id": 6,
+      "png_size": [
+        69,
+        17
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          16
+        ],
+        [
+          23,
+          0,
+          23,
+          17
+        ],
+        [
+          46,
+          0,
+          23,
+          17
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnan2/ls_nan_ss.pwd",
+      "bytes": 683,
+      "sha256": "e3b0c0b2f70d22641aa1f64a3ec0c65ab3fc42d776dd3f950beb12f2ed9bd3da",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/cgd/l/nan/ls_nan_ss.pwd"
+      ],
+      "resource_id": 16,
+      "png_size": [
+        58,
+        24
+      ],
+      "frame_count": 6,
+      "rectangles": [
+        [
+          0,
+          0,
+          16,
+          10
+        ],
+        [
+          16,
+          0,
+          6,
+          6
+        ],
+        [
+          0,
+          10,
+          7,
+          14
+        ],
+        [
+          7,
+          10,
+          10,
+          14
+        ],
+        [
+          17,
+          6,
+          9,
+          15
+        ],
+        [
+          26,
+          0,
+          32,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnan2/wq01_3.pwd",
+      "bytes": 330,
+      "sha256": "9b7701857f62572f8c470261c2e7403725ee6d63473bb2538a7d22df13dfc1ac",
+      "exact_old_matches": [],
+      "resource_id": 23,
+      "png_size": [
+        29,
+        29
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          29,
+          29
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnan2/wq02_3.pwd",
+      "bytes": 329,
+      "sha256": "cf08cc8a499096b4106e00a4ba5aa774bfaedad9d5d7c7b7b80f85ef76b1b4ca",
+      "exact_old_matches": [],
+      "resource_id": 24,
+      "png_size": [
+        29,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          29,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnan2/wq03_3.pwd",
+      "bytes": 315,
+      "sha256": "c3ea3671ffb2e9b7ca1c1b7586dd1a5786577404592294d15d68e45658380224",
+      "exact_old_matches": [],
+      "resource_id": 25,
+      "png_size": [
+        19,
+        34
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          19,
+          34
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnan2/wq04_3.pwd",
+      "bytes": 359,
+      "sha256": "1730563b0af006241708845283ebc5ae238391f7f985f8de578079b4be3b1e8e",
+      "exact_old_matches": [],
+      "resource_id": 26,
+      "png_size": [
+        22,
+        40
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          40
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnv2/cg_nv.aef",
+      "bytes": 660,
+      "sha256": "6b22fe9f39d86c517e7a08fd8b26921b1a3d1c17b44226091d7bccd8ee3a5a66",
+      "exact_old_matches": []
+    },
+    {
+      "path": "笑傲角色-常规/lsnv2/lrcg01.pwd",
+      "bytes": 250,
+      "sha256": "1fb0aac92a544377321c0763426b0dbaf3670390345ed0f9708b98b49fc67339",
+      "exact_old_matches": [],
+      "resource_id": 18,
+      "png_size": [
+        22,
+        21
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          21
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnv2/lrcg02.pwd",
+      "bytes": 385,
+      "sha256": "5a23979918ded9a898e324ae65f9e1d54d7b7d951dcdad694499649451f97bae",
+      "exact_old_matches": [],
+      "resource_id": 19,
+      "png_size": [
+        22,
+        34
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          34
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnv2/lrcg03.pwd",
+      "bytes": 313,
+      "sha256": "081e22224faf1fd748a3a5a6c3e32bf2e7452f495933433add5e8d5703c1e1fd",
+      "exact_old_matches": [],
+      "resource_id": 20,
+      "png_size": [
+        27,
+        27
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          27,
+          27
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnv2/lrcg04.pwd",
+      "bytes": 367,
+      "sha256": "3e9593c6c3dee3c77e588458babc35cb8b386416f794fa144a3de5aaf01ed707",
+      "exact_old_matches": [],
+      "resource_id": 21,
+      "png_size": [
+        21,
+        33
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          21,
+          33
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnv2/lrcg05.pwd",
+      "bytes": 375,
+      "sha256": "e6f8def6bd289a889bcb66a5d0c24b07b255746da4ace4350a2aa90ac38075b2",
+      "exact_old_matches": [],
+      "resource_id": 22,
+      "png_size": [
+        29,
+        24
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          29,
+          24
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnv2/ls_nv.pwd",
+      "bytes": 475,
+      "sha256": "dc807caf128ee462834a2a2a0ece38fc7351602979ff28af3d1fa5003a3ff5e1",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/data/mount/zq_ls_nv/ls_nv.pwd"
+      ],
+      "resource_id": 6,
+      "png_size": [
+        69,
+        17
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          16
+        ],
+        [
+          23,
+          0,
+          23,
+          17
+        ],
+        [
+          46,
+          0,
+          23,
+          17
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnv2/ls_nv001.pwd",
+      "bytes": 402,
+      "sha256": "91aa0032dc8050c07801dc8e333e84843533f03eda61aa2b3f39f08c5fedf8d0",
+      "exact_old_matches": [],
+      "resource_id": 5,
+      "png_size": [
+        21,
+        21
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          21,
+          21
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnv2/ls_nv01.pwd",
+      "bytes": 431,
+      "sha256": "3e9a5136ce04bbceacc5b974f0c8c943eb77b735d3e59aa13e02316d46820501",
+      "exact_old_matches": [],
+      "resource_id": 0,
+      "png_size": [
+        23,
+        21
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          21
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnv2/ls_nv02.pwd",
+      "bytes": 503,
+      "sha256": "1c0ec34b4cda7e5c7d66d01c9df70f7f01c99d63f23671b7e8fe9bcb615ca799",
+      "exact_old_matches": [],
+      "resource_id": 7,
+      "png_size": [
+        24,
+        25
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          24,
+          25
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnv2/ls_nv03.pwd",
+      "bytes": 468,
+      "sha256": "75d0567dd1dc001687a2d1ade2a4efe9340fcf1f42d4fbc803d8946151055c3c",
+      "exact_old_matches": [],
+      "resource_id": 8,
+      "png_size": [
+        23,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnv2/ls_nv04.pwd",
+      "bytes": 479,
+      "sha256": "a9dfdea98050dbf1ea4e23327c85a2b12faa3501609ec6ec641f8f40ea99b3a9",
+      "exact_old_matches": [],
+      "resource_id": 9,
+      "png_size": [
+        23,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnv2/ls_nv_m.pwd",
+      "bytes": 1168,
+      "sha256": "e03ff87ec5c0fab755f665b7e35f232d896b159cf8f58cc8e4dfe0f84d13d27d",
+      "exact_old_matches": [],
+      "resource_id": 1,
+      "png_size": [
+        69,
+        17
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          16
+        ],
+        [
+          23,
+          0,
+          23,
+          17
+        ],
+        [
+          46,
+          0,
+          23,
+          17
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnv2/ls_nv_ss.pwd",
+      "bytes": 677,
+      "sha256": "d09a34705ba477ee84200b5305b287e41bcd1458ec6e01ce7c283a39c07ddb4d",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/cgd/l/nv/ls_nv_ss.pwd"
+      ],
+      "resource_id": 17,
+      "png_size": [
+        57,
+        24
+      ],
+      "frame_count": 6,
+      "rectangles": [
+        [
+          0,
+          0,
+          16,
+          10
+        ],
+        [
+          16,
+          0,
+          6,
+          6
+        ],
+        [
+          0,
+          10,
+          7,
+          14
+        ],
+        [
+          7,
+          10,
+          9,
+          13
+        ],
+        [
+          16,
+          6,
+          9,
+          13
+        ],
+        [
+          25,
+          0,
+          32,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnv2/wq01_3.pwd",
+      "bytes": 330,
+      "sha256": "9b7701857f62572f8c470261c2e7403725ee6d63473bb2538a7d22df13dfc1ac",
+      "exact_old_matches": [],
+      "resource_id": 23,
+      "png_size": [
+        29,
+        29
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          29,
+          29
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnv2/wq02_3.pwd",
+      "bytes": 329,
+      "sha256": "cf08cc8a499096b4106e00a4ba5aa774bfaedad9d5d7c7b7b80f85ef76b1b4ca",
+      "exact_old_matches": [],
+      "resource_id": 24,
+      "png_size": [
+        29,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          29,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnv2/wq03_3.pwd",
+      "bytes": 315,
+      "sha256": "c3ea3671ffb2e9b7ca1c1b7586dd1a5786577404592294d15d68e45658380224",
+      "exact_old_matches": [],
+      "resource_id": 25,
+      "png_size": [
+        19,
+        34
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          19,
+          34
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/lsnv2/wq04_3.pwd",
+      "bytes": 359,
+      "sha256": "1730563b0af006241708845283ebc5ae238391f7f985f8de578079b4be3b1e8e",
+      "exact_old_matches": [],
+      "resource_id": 26,
+      "png_size": [
+        22,
+        40
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          40
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnan2/cg_nan.aef",
+      "bytes": 660,
+      "sha256": "eff2988adc1f15786e68e19a86c71d60039602f127f95eb5437f6adf25983d88",
+      "exact_old_matches": []
+    },
+    {
+      "path": "笑傲角色-常规/zsnan2/zs_nan.pwd",
+      "bytes": 511,
+      "sha256": "6af4cd0fd24e864cdc12228a8f5f451e429749cfc5a4a6d6fb900aeb09e49794",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/data/mount/zq_zs_nan/zs_nan.pwd"
+      ],
+      "resource_id": 3,
+      "png_size": [
+        69,
+        16
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          1,
+          23,
+          15
+        ],
+        [
+          23,
+          0,
+          23,
+          16
+        ],
+        [
+          46,
+          0,
+          23,
+          16
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnan2/zs_nan001.pwd",
+      "bytes": 380,
+      "sha256": "b7f55b30d955b265a5255e526ebc57bb587446e00c5c0f4bf3449c215e516e89",
+      "exact_old_matches": [],
+      "resource_id": 14,
+      "png_size": [
+        23,
+        19
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          19
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnan2/zs_nan01.pwd",
+      "bytes": 364,
+      "sha256": "8d61bd8beb2329a3b6313c12921a47bec21528454c53c8a698732e83bbb77ae1",
+      "exact_old_matches": [],
+      "resource_id": 0,
+      "png_size": [
+        19,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          19,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnan2/zs_nan02.pwd",
+      "bytes": 391,
+      "sha256": "b2c24ffa83400fd5309b8b0768bc9b9dd0d39939812c67dd1d09d1475d4c57f1",
+      "exact_old_matches": [],
+      "resource_id": 1,
+      "png_size": [
+        23,
+        24
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          24
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnan2/zs_nan03.pwd",
+      "bytes": 403,
+      "sha256": "fd5b76b65a8646ad862502f8ffbeb057747f59f7b784af7d18d7d19ea68fd69d",
+      "exact_old_matches": [],
+      "resource_id": 2,
+      "png_size": [
+        22,
+        23
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          23
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnan2/zs_nan04.pwd",
+      "bytes": 464,
+      "sha256": "db224b071fd505ac2f0e3453907f8f0502a0b6fedd54dbb5d542d1f08fbd906d",
+      "exact_old_matches": [],
+      "resource_id": 4,
+      "png_size": [
+        24,
+        26
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          24,
+          26
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnan2/zs_nan_m.pwd",
+      "bytes": 1309,
+      "sha256": "9db364631cd1a0aa7a77ef93bb285eb08f933a4840cd9e75633668a036980c61",
+      "exact_old_matches": [],
+      "resource_id": 5,
+      "png_size": [
+        69,
+        16
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          1,
+          23,
+          15
+        ],
+        [
+          23,
+          0,
+          23,
+          16
+        ],
+        [
+          46,
+          0,
+          23,
+          16
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnan2/zs_nanss.pwd",
+      "bytes": 666,
+      "sha256": "1f74f9db8683f83933d8dfa0bdf5675672e0caf50dd99d7cfb018714d6bf9292",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/cgd/z/nan/zs_nanss.pwd"
+      ],
+      "resource_id": 16,
+      "png_size": [
+        39,
+        34
+      ],
+      "frame_count": 6,
+      "rectangles": [
+        [
+          0,
+          0,
+          13,
+          10
+        ],
+        [
+          13,
+          0,
+          7,
+          14
+        ],
+        [
+          20,
+          0,
+          9,
+          15
+        ],
+        [
+          29,
+          0,
+          10,
+          13
+        ],
+        [
+          0,
+          10,
+          7,
+          9
+        ],
+        [
+          7,
+          14,
+          24,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnan2/zs_wq01.pwd",
+      "bytes": 310,
+      "sha256": "c3adccadf9c1c714b89dc138f495ffbda3f633f5a7530527220ba4e2aca6feff",
+      "exact_old_matches": [],
+      "resource_id": 23,
+      "png_size": [
+        31,
+        21
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          31,
+          21
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnan2/zs_wq02.pwd",
+      "bytes": 418,
+      "sha256": "4343023266167f7bb5eb83ec1204edac820ac5d84857c15de14c9fcf21f4f410",
+      "exact_old_matches": [],
+      "resource_id": 24,
+      "png_size": [
+        31,
+        25
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          31,
+          25
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnan2/zs_wq03.pwd",
+      "bytes": 371,
+      "sha256": "070207d705381859df025c71869729007527180cc193922843fccbcd738ad583",
+      "exact_old_matches": [],
+      "resource_id": 25,
+      "png_size": [
+        33,
+        26
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          33,
+          26
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnan2/zs_wq04.pwd",
+      "bytes": 394,
+      "sha256": "6ebf6389a64a7332d50239ee625d48932911a62203730027c5c92e97f45eae37",
+      "exact_old_matches": [],
+      "resource_id": 26,
+      "png_size": [
+        35,
+        26
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          35,
+          26
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnan2/zscg01.pwd",
+      "bytes": 264,
+      "sha256": "24b0b53e806f401ace9758b8de6227ca695c9c0f3f88cbe4a54d0e21ca4c6ae6",
+      "exact_old_matches": [],
+      "resource_id": 18,
+      "png_size": [
+        24,
+        14
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          24,
+          14
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnan2/zscg02.pwd",
+      "bytes": 286,
+      "sha256": "318856c14911b141cbd22e91609b5c8889ed8924a690bdf7da5db8ba4dc30316",
+      "exact_old_matches": [],
+      "resource_id": 19,
+      "png_size": [
+        27,
+        16
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          27,
+          16
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnan2/zscg03.pwd",
+      "bytes": 322,
+      "sha256": "c475e99df9be1d5bf0fe3af1c7b83d75d65084cebbba8c4dacd6dc6d7d2e6cd8",
+      "exact_old_matches": [],
+      "resource_id": 20,
+      "png_size": [
+        32,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          32,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnan2/zscg04.pwd",
+      "bytes": 329,
+      "sha256": "e61b0aed0775d8fc4cceb0427aed1d684f0538189fcbfe80dec61d4a8f088251",
+      "exact_old_matches": [],
+      "resource_id": 21,
+      "png_size": [
+        36,
+        19
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          36,
+          19
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnan2/zscg05.pwd",
+      "bytes": 409,
+      "sha256": "343b1d11b9791ec08ea3fa2dcdb32e3901a6f674f79daa3c6afb2af352d9a4f0",
+      "exact_old_matches": [],
+      "resource_id": 22,
+      "png_size": [
+        35,
+        27
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          35,
+          27
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnv2/cg_nv.aef",
+      "bytes": 684,
+      "sha256": "20ab17be0f3c63bc042cf762abef97d06a58ac81f9a8b59f038b481b62a12767",
+      "exact_old_matches": []
+    },
+    {
+      "path": "笑傲角色-常规/zsnv2/zs_nv.pwd",
+      "bytes": 537,
+      "sha256": "482a90016add3208dd4d6a4e56e654548d1ba6c514f6b4286817b762f9c54d0b",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/data/mount/zq_zs_nv/zs_nv.pwd"
+      ],
+      "resource_id": 4,
+      "png_size": [
+        69,
+        19
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          2,
+          23,
+          17
+        ],
+        [
+          23,
+          0,
+          23,
+          19
+        ],
+        [
+          46,
+          0,
+          23,
+          19
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnv2/zs_nv001.pwd",
+      "bytes": 357,
+      "sha256": "2afd346cd5cf543334f911f7bcaae0066f68e58dc25e3d0e742100197a946d3f",
+      "exact_old_matches": [],
+      "resource_id": 15,
+      "png_size": [
+        19,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          19,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnv2/zs_nv01.pwd",
+      "bytes": 394,
+      "sha256": "23266105bc6afc5be12a1aeb07f159012ce6df0986bd09758b4e2aae99bdbbcc",
+      "exact_old_matches": [],
+      "resource_id": 0,
+      "png_size": [
+        20,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnv2/zs_nv02.pwd",
+      "bytes": 419,
+      "sha256": "fd426797489375a453f995d4fc83c7680b4c525d027824208617662432a760cf",
+      "exact_old_matches": [],
+      "resource_id": 5,
+      "png_size": [
+        22,
+        24
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          24
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnv2/zs_nv03.pwd",
+      "bytes": 389,
+      "sha256": "acde4488a5cb833dcfae77e9c478d337a30392e80f19402188a099b3a9db1c49",
+      "exact_old_matches": [],
+      "resource_id": 6,
+      "png_size": [
+        21,
+        23
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          21,
+          23
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnv2/zs_nv04.pwd",
+      "bytes": 429,
+      "sha256": "24c2a7ddfd90e8e6ee84ee5f62ec55a69aa6aef2921229a3d3de47d526718e93",
+      "exact_old_matches": [],
+      "resource_id": 7,
+      "png_size": [
+        22,
+        24
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          24
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnv2/zs_nv_m.pwd",
+      "bytes": 1351,
+      "sha256": "a864edeb5dbc78d566894a337b31ce3a7e7d8e6eeb32e838f57cc6f49fc3a4e3",
+      "exact_old_matches": [],
+      "resource_id": 1,
+      "png_size": [
+        69,
+        19
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          2,
+          23,
+          17
+        ],
+        [
+          23,
+          0,
+          23,
+          19
+        ],
+        [
+          46,
+          0,
+          23,
+          19
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnv2/zs_nvss.pwd",
+      "bytes": 675,
+      "sha256": "16b0e20c6264d63f7685733508265ff393041e29e409d863cfc19be950272fdf",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/cgd/z/nv/zs_nvss.pwd"
+      ],
+      "resource_id": 17,
+      "png_size": [
+        37,
+        33
+      ],
+      "frame_count": 6,
+      "rectangles": [
+        [
+          0,
+          0,
+          13,
+          10
+        ],
+        [
+          13,
+          0,
+          7,
+          14
+        ],
+        [
+          20,
+          0,
+          8,
+          13
+        ],
+        [
+          28,
+          0,
+          9,
+          13
+        ],
+        [
+          0,
+          10,
+          6,
+          9
+        ],
+        [
+          6,
+          14,
+          24,
+          19
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnv2/zs_wq01.pwd",
+      "bytes": 310,
+      "sha256": "c3adccadf9c1c714b89dc138f495ffbda3f633f5a7530527220ba4e2aca6feff",
+      "exact_old_matches": [],
+      "resource_id": 23,
+      "png_size": [
+        31,
+        21
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          31,
+          21
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnv2/zs_wq02.pwd",
+      "bytes": 418,
+      "sha256": "4343023266167f7bb5eb83ec1204edac820ac5d84857c15de14c9fcf21f4f410",
+      "exact_old_matches": [],
+      "resource_id": 24,
+      "png_size": [
+        31,
+        25
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          31,
+          25
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnv2/zs_wq03.pwd",
+      "bytes": 371,
+      "sha256": "070207d705381859df025c71869729007527180cc193922843fccbcd738ad583",
+      "exact_old_matches": [],
+      "resource_id": 25,
+      "png_size": [
+        33,
+        26
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          33,
+          26
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnv2/zs_wq04.pwd",
+      "bytes": 394,
+      "sha256": "6ebf6389a64a7332d50239ee625d48932911a62203730027c5c92e97f45eae37",
+      "exact_old_matches": [],
+      "resource_id": 26,
+      "png_size": [
+        35,
+        26
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          35,
+          26
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnv2/zscg01.pwd",
+      "bytes": 264,
+      "sha256": "24b0b53e806f401ace9758b8de6227ca695c9c0f3f88cbe4a54d0e21ca4c6ae6",
+      "exact_old_matches": [],
+      "resource_id": 18,
+      "png_size": [
+        24,
+        14
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          24,
+          14
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnv2/zscg02.pwd",
+      "bytes": 286,
+      "sha256": "318856c14911b141cbd22e91609b5c8889ed8924a690bdf7da5db8ba4dc30316",
+      "exact_old_matches": [],
+      "resource_id": 19,
+      "png_size": [
+        27,
+        16
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          27,
+          16
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnv2/zscg03.pwd",
+      "bytes": 322,
+      "sha256": "c475e99df9be1d5bf0fe3af1c7b83d75d65084cebbba8c4dacd6dc6d7d2e6cd8",
+      "exact_old_matches": [],
+      "resource_id": 20,
+      "png_size": [
+        32,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          32,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnv2/zscg04.pwd",
+      "bytes": 329,
+      "sha256": "e61b0aed0775d8fc4cceb0427aed1d684f0538189fcbfe80dec61d4a8f088251",
+      "exact_old_matches": [],
+      "resource_id": 21,
+      "png_size": [
+        36,
+        19
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          36,
+          19
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-常规/zsnv2/zscg05.pwd",
+      "bytes": 409,
+      "sha256": "343b1d11b9791ec08ea3fa2dcdb32e3901a6f674f79daa3c6afb2af352d9a4f0",
+      "exact_old_matches": [],
+      "resource_id": 22,
+      "png_size": [
+        35,
+        27
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          35,
+          27
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/14.pwd",
+      "bytes": 648,
+      "sha256": "4a24b197e78dd059a3d804de49355be569463184f418ff1a3c68cb91c7de8893",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/f/14.pwd"
+      ],
+      "resource_id": 36,
+      "png_size": [
+        88,
+        34
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          24,
+          24
+        ],
+        [
+          24,
+          0,
+          30,
+          30
+        ],
+        [
+          54,
+          0,
+          34,
+          34
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nan.pwd",
+      "bytes": 1007,
+      "sha256": "1573279e987a2d45241fea7aa8c530ab3dc4f75b3e0e0cd0244e59c8d033eb1a",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/f/fs_nan.pwd"
+      ],
+      "resource_id": 32,
+      "png_size": [
+        53,
+        46
+      ],
+      "frame_count": 10,
+      "rectangles": [
+        [
+          0,
+          0,
+          13,
+          22
+        ],
+        [
+          13,
+          0,
+          22,
+          13
+        ],
+        [
+          0,
+          22,
+          13,
+          9
+        ],
+        [
+          13,
+          13,
+          20,
+          19
+        ],
+        [
+          35,
+          0,
+          18,
+          17
+        ],
+        [
+          33,
+          17,
+          14,
+          14
+        ],
+        [
+          0,
+          32,
+          16,
+          7
+        ],
+        [
+          16,
+          32,
+          11,
+          14
+        ],
+        [
+          27,
+          32,
+          13,
+          11
+        ],
+        [
+          40,
+          31,
+          8,
+          15
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nan001.pwd",
+      "bytes": 347,
+      "sha256": "e62da4f257dda6cd912d7bac979e8afa4e62105ab0aa8a72905055ee02dc7f4b",
+      "exact_old_matches": [],
+      "resource_id": 0,
+      "png_size": [
+        20,
+        21
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          20,
+          21
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nan001_1.pwd",
+      "bytes": 354,
+      "sha256": "b7fa83a38f1b85549f8a1f3b0a26d58a025069cb67a3771851a308a927a688c5",
+      "exact_old_matches": [],
+      "resource_id": 10,
+      "png_size": [
+        20,
+        21
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          20,
+          21
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nan01.pwd",
+      "bytes": 369,
+      "sha256": "ade32fd424591a9318045fd98cb433a7b7daa8d69de282af51baba180ac7e309",
+      "exact_old_matches": [],
+      "resource_id": 1,
+      "png_size": [
+        18,
+        21
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          18,
+          21
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nan01_1.pwd",
+      "bytes": 376,
+      "sha256": "523572e488763adc380225005978a7b573170ee94c1c19e3d08261dfbf88378d",
+      "exact_old_matches": [],
+      "resource_id": 11,
+      "png_size": [
+        18,
+        21
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          18,
+          21
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nan02.pwd",
+      "bytes": 359,
+      "sha256": "a19e04a43df79ac11ce2a36c543c86dd7525ea8a6fff19e16123991b7f57cf86",
+      "exact_old_matches": [],
+      "resource_id": 2,
+      "png_size": [
+        21,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          21,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nan02_1.pwd",
+      "bytes": 364,
+      "sha256": "05f7b0fd460a923254ed01e25a60d961ce586c634d484ef73bbd3e624bb9f152",
+      "exact_old_matches": [],
+      "resource_id": 12,
+      "png_size": [
+        21,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          21,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nan03.pwd",
+      "bytes": 434,
+      "sha256": "6ac96f50543f0ec9bcb063e134599641e130049d02fe1b62913b26a40a727741",
+      "exact_old_matches": [],
+      "resource_id": 3,
+      "png_size": [
+        20,
+        25
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          20,
+          25
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nan03_1.pwd",
+      "bytes": 439,
+      "sha256": "e8a42be2380fe2357ddb4a5f05f44c67713c3c20916b626fa9dabd6f6819064f",
+      "exact_old_matches": [],
+      "resource_id": 13,
+      "png_size": [
+        20,
+        25
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          20,
+          25
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nan04.pwd",
+      "bytes": 433,
+      "sha256": "1c2a1587e55490ce5d198b978dcaee65e65e1ebefd66fa181f2f50514219fe85",
+      "exact_old_matches": [],
+      "resource_id": 4,
+      "png_size": [
+        22,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nan04_1.pwd",
+      "bytes": 441,
+      "sha256": "6cc6cf93fbfa77c8b4955782f1537431ba210632d7802121f71f66f746a24c08",
+      "exact_old_matches": [],
+      "resource_id": 14,
+      "png_size": [
+        22,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nv.pwd",
+      "bytes": 819,
+      "sha256": "9603140f090b8602eed4cd900e86fb278b346542a025b22f6e6b2c357c32241a",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/f/fs_nv.pwd"
+      ],
+      "resource_id": 33,
+      "png_size": [
+        54,
+        35
+      ],
+      "frame_count": 12,
+      "rectangles": [
+        [
+          0,
+          0,
+          13,
+          22
+        ],
+        [
+          13,
+          0,
+          13,
+          10
+        ],
+        [
+          13,
+          10,
+          13,
+          10
+        ],
+        [
+          26,
+          0,
+          12,
+          8
+        ],
+        [
+          26,
+          8,
+          12,
+          8
+        ],
+        [
+          0,
+          22,
+          14,
+          10
+        ],
+        [
+          14,
+          20,
+          13,
+          13
+        ],
+        [
+          27,
+          16,
+          11,
+          11
+        ],
+        [
+          38,
+          0,
+          15,
+          14
+        ],
+        [
+          38,
+          14,
+          8,
+          14
+        ],
+        [
+          46,
+          14,
+          8,
+          13
+        ],
+        [
+          27,
+          27,
+          7,
+          8
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nv001.pwd",
+      "bytes": 359,
+      "sha256": "a1fa258a99bf92e39be2c21780de0e10ff97171c436ae09d25dab014ec30d8d9",
+      "exact_old_matches": [],
+      "resource_id": 5,
+      "png_size": [
+        20,
+        19
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          20,
+          19
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nv001_1.pwd",
+      "bytes": 358,
+      "sha256": "21d7399145740d615c48d07466497b3c737bb1da2ec907f38a695040fcf21d4f",
+      "exact_old_matches": [],
+      "resource_id": 15,
+      "png_size": [
+        20,
+        19
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          20,
+          19
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nv01.pwd",
+      "bytes": 390,
+      "sha256": "82bca320aed95740b52b4e02bb9438a7999af1b66569814ac0c3b9431626d91b",
+      "exact_old_matches": [],
+      "resource_id": 6,
+      "png_size": [
+        21,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          21,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nv01_1.pwd",
+      "bytes": 393,
+      "sha256": "367f215f1f3f5fa1a010577c0fc8375dc1fce9c2ebbd7d3aa1fe7f356c725443",
+      "exact_old_matches": [],
+      "resource_id": 16,
+      "png_size": [
+        21,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          21,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nv02.pwd",
+      "bytes": 354,
+      "sha256": "d65ed27eb3788f90f244d4d5946d751a35c3e55117b13b18a58d0242eff99680",
+      "exact_old_matches": [],
+      "resource_id": 7,
+      "png_size": [
+        19,
+        18
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          19,
+          18
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nv02_1.pwd",
+      "bytes": 360,
+      "sha256": "b796b8b511e97464d7364489b188f322583d4d87720f0c816d859f7bb70a4bd5",
+      "exact_old_matches": [],
+      "resource_id": 17,
+      "png_size": [
+        19,
+        18
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          19,
+          18
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nv03.pwd",
+      "bytes": 423,
+      "sha256": "8f7c2d58645b12e7b8664e5394613d900f93be8a671280d35c630b4df64fac63",
+      "exact_old_matches": [],
+      "resource_id": 8,
+      "png_size": [
+        22,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nv03_1.pwd",
+      "bytes": 427,
+      "sha256": "40be8d40d9ac778f10b2624d20f1fceb5c902ff0710af2945ee85f235895e960",
+      "exact_old_matches": [],
+      "resource_id": 18,
+      "png_size": [
+        22,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nv04.pwd",
+      "bytes": 401,
+      "sha256": "adc4528e94d1e53ae21e03d675a0bee4c80875df37f1b7fb7aaba34c9dae24f4",
+      "exact_old_matches": [],
+      "resource_id": 9,
+      "png_size": [
+        22,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fs_nv04_1.pwd",
+      "bytes": 408,
+      "sha256": "9f1c79ca989b399ae48ddaff3517a81783860f12d70eaef36915a3bd13860dd4",
+      "exact_old_matches": [],
+      "resource_id": 19,
+      "png_size": [
+        22,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fszd01.pwd",
+      "bytes": 461,
+      "sha256": "af0c8645a36471281bd42056640ac924add8745a0300741fba6a8d1516fbeb02",
+      "exact_old_matches": [],
+      "resource_id": 38,
+      "png_size": [
+        24,
+        29
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          17,
+          12
+        ],
+        [
+          0,
+          12,
+          12,
+          17
+        ],
+        [
+          12,
+          12,
+          12,
+          17
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fszd02.pwd",
+      "bytes": 519,
+      "sha256": "4d9623037281b880664e6252e09a3c5e28a0490c1c70f0db058f5705a98afad8",
+      "exact_old_matches": [],
+      "resource_id": 39,
+      "png_size": [
+        30,
+        40
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          25,
+          15
+        ],
+        [
+          0,
+          15,
+          15,
+          25
+        ],
+        [
+          15,
+          15,
+          15,
+          25
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fszd03.pwd",
+      "bytes": 829,
+      "sha256": "5ace13c03fa697718c856f4d69bada0bae8c586bee851243d9cd2fb0bd645ea0",
+      "exact_old_matches": [],
+      "resource_id": 40,
+      "png_size": [
+        42,
+        47
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          26,
+          21
+        ],
+        [
+          0,
+          21,
+          21,
+          26
+        ],
+        [
+          21,
+          21,
+          21,
+          26
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fszd04.pwd",
+      "bytes": 833,
+      "sha256": "f4acc02ea64e80c2064eba936cd320b497febb90b6d06f52a4b715504b71f0bb",
+      "exact_old_matches": [],
+      "resource_id": 41,
+      "png_size": [
+        40,
+        59
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          40,
+          19
+        ],
+        [
+          0,
+          19,
+          19,
+          40
+        ],
+        [
+          19,
+          19,
+          19,
+          40
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/fszd05.pwd",
+      "bytes": 1078,
+      "sha256": "3c5fb7affc11c6539ade2c1a83d59b84e27d9c052e7c63b67411e7a1a50385a3",
+      "exact_old_matches": [],
+      "resource_id": 42,
+      "png_size": [
+        45,
+        63
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          45,
+          18
+        ],
+        [
+          0,
+          18,
+          18,
+          45
+        ],
+        [
+          18,
+          18,
+          18,
+          45
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/new_11.pwd",
+      "bytes": 1051,
+      "sha256": "4e45d8d3a1c6347747f5497416a523b10d808dbd60e7751e50f54e638d0055d4",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/f/new_11.pwd"
+      ],
+      "resource_id": 37,
+      "png_size": [
+        85,
+        67
+      ],
+      "frame_count": 11,
+      "rectangles": [
+        [
+          0,
+          0,
+          20,
+          50
+        ],
+        [
+          20,
+          0,
+          17,
+          19
+        ],
+        [
+          37,
+          0,
+          20,
+          17
+        ],
+        [
+          57,
+          0,
+          26,
+          24
+        ],
+        [
+          20,
+          19,
+          17,
+          12
+        ],
+        [
+          20,
+          31,
+          21,
+          25
+        ],
+        [
+          41,
+          34,
+          8,
+          21
+        ],
+        [
+          37,
+          17,
+          18,
+          17
+        ],
+        [
+          55,
+          24,
+          28,
+          21
+        ],
+        [
+          49,
+          45,
+          36,
+          21
+        ],
+        [
+          0,
+          56,
+          44,
+          11
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/new_13.pwd",
+      "bytes": 574,
+      "sha256": "851d95e993181df4564343b8700d1d4452a7c9952f31719d38cd6c0d68a7c92a",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/f/new_13.pwd"
+      ],
+      "resource_id": 35,
+      "png_size": [
+        49,
+        34
+      ],
+      "frame_count": 14,
+      "rectangles": [
+        [
+          0,
+          0,
+          6,
+          28
+        ],
+        [
+          6,
+          0,
+          7,
+          29
+        ],
+        [
+          13,
+          0,
+          19,
+          13
+        ],
+        [
+          13,
+          13,
+          10,
+          12
+        ],
+        [
+          15,
+          25,
+          16,
+          8
+        ],
+        [
+          23,
+          13,
+          12,
+          12
+        ],
+        [
+          0,
+          29,
+          15,
+          5
+        ],
+        [
+          31,
+          28,
+          14,
+          6
+        ],
+        [
+          35,
+          18,
+          7,
+          10
+        ],
+        [
+          32,
+          0,
+          11,
+          13
+        ],
+        [
+          40,
+          13,
+          9,
+          7
+        ],
+        [
+          45,
+          20,
+          4,
+          14
+        ],
+        [
+          43,
+          7,
+          6,
+          6
+        ],
+        [
+          43,
+          0,
+          6,
+          7
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/touying03.pwd",
+      "bytes": 244,
+      "sha256": "50778e796e07abcbdcc3d19b793711b3c2ba1ab008862eb548e3351454a2d7a9",
+      "exact_old_matches": [],
+      "resource_id": 34,
+      "png_size": [
+        23,
+        12
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          12
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/wq01_1.pwd",
+      "bytes": 867,
+      "sha256": "a87bec956a7e847cd1be3bda55ef915965f01a5e4feb01e18c86ded5ef7ab09b",
+      "exact_old_matches": [],
+      "resource_id": 43,
+      "png_size": [
+        50,
+        47
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          25,
+          22
+        ],
+        [
+          25,
+          0,
+          25,
+          22
+        ],
+        [
+          0,
+          22,
+          22,
+          25
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/wq02_1.pwd",
+      "bytes": 954,
+      "sha256": "ed3d510b9a82601725ac92242ac71a0942ef0fb657348e7a4c0fb6581feab774",
+      "exact_old_matches": [],
+      "resource_id": 44,
+      "png_size": [
+        55,
+        58
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          27,
+          30
+        ],
+        [
+          27,
+          0,
+          28,
+          30
+        ],
+        [
+          0,
+          30,
+          30,
+          28
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/wq03_1.pwd",
+      "bytes": 1014,
+      "sha256": "0cd337b10442af476f3dc0974922cd065c458eca88e6628ff7c587bf67a4b8a4",
+      "exact_old_matches": [],
+      "resource_id": 45,
+      "png_size": [
+        60,
+        58
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          30,
+          29
+        ],
+        [
+          30,
+          0,
+          30,
+          29
+        ],
+        [
+          0,
+          29,
+          29,
+          29
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/wq04_1.pwd",
+      "bytes": 737,
+      "sha256": "3847697378a18930f0862fca2089bbc82676d59240119ad10c2d1e4abbb38abb",
+      "exact_old_matches": [],
+      "resource_id": 46,
+      "png_size": [
+        52,
+        52
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          26,
+          25
+        ],
+        [
+          26,
+          0,
+          26,
+          25
+        ],
+        [
+          0,
+          25,
+          25,
+          27
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/zd_nan.aef",
+      "bytes": 4932,
+      "sha256": "c925956c2e9aab3f8a3031d827e9d63f64086207cad7d012c722db2d54cdb7ca",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/f/zd_nan.aef"
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/zd_nv.aef",
+      "bytes": 5108,
+      "sha256": "66db9d0ac94406e48d481902716ec8d08083eb7ae1517ca5cd6251808a5d3e45",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/f/zd_nv.aef"
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/120.pwd",
+      "bytes": 222,
+      "sha256": "48c47133b9a473afbc7439c415a39f40fc1799edd874c78664d5904fccd15c4f",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/l/120.pwd"
+      ],
+      "resource_id": 34,
+      "png_size": [
+        18,
+        8
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          18,
+          8
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/lrzd01.pwd",
+      "bytes": 337,
+      "sha256": "b08a200468ff64c44ce484421cbf297abb7597aa2cdec5be0927ee3f179e45db",
+      "exact_old_matches": [],
+      "resource_id": 39,
+      "png_size": [
+        23,
+        38
+      ],
+      "frame_count": 2,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          17
+        ],
+        [
+          0,
+          17,
+          23,
+          21
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/lrzd02.pwd",
+      "bytes": 580,
+      "sha256": "71d667fd389693bc2ed50a3b7ca45c7a7c338f2a7901f94dab39e6b54d59d14d",
+      "exact_old_matches": [],
+      "resource_id": 40,
+      "png_size": [
+        41,
+        34
+      ],
+      "frame_count": 2,
+      "rectangles": [
+        [
+          0,
+          0,
+          19,
+          34
+        ],
+        [
+          19,
+          0,
+          22,
+          32
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/lrzd03.pwd",
+      "bytes": 532,
+      "sha256": "83ba99afc22469f2dcbb2c4cfeeacca60cae0ed006d5af3a4bf23a10492fdc58",
+      "exact_old_matches": [],
+      "resource_id": 41,
+      "png_size": [
+        27,
+        56
+      ],
+      "frame_count": 2,
+      "rectangles": [
+        [
+          0,
+          0,
+          27,
+          27
+        ],
+        [
+          0,
+          27,
+          25,
+          28
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/lrzd04.pwd",
+      "bytes": 508,
+      "sha256": "166f5ada42d76b0137757c67d185bd2799d0fb65f18885116deab2a6eefb844a",
+      "exact_old_matches": [],
+      "resource_id": 42,
+      "png_size": [
+        42,
+        33
+      ],
+      "frame_count": 2,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          32
+        ],
+        [
+          22,
+          0,
+          20,
+          33
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/lrzd05.pwd",
+      "bytes": 601,
+      "sha256": "cdf200172f646cfa9436a7c81466ec2806b741c31da9b106a524792143277afd",
+      "exact_old_matches": [],
+      "resource_id": 43,
+      "png_size": [
+        33,
+        50
+      ],
+      "frame_count": 2,
+      "rectangles": [
+        [
+          0,
+          0,
+          33,
+          24
+        ],
+        [
+          0,
+          24,
+          31,
+          26
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/ls_nan001.pwd",
+      "bytes": 379,
+      "sha256": "48f46e11b969bf5b0a8b9d99183ba3fcbe0cada0a956f48f14a52c5e17178f8c",
+      "exact_old_matches": [],
+      "resource_id": 24,
+      "png_size": [
+        18,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          18,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/ls_nan001_1.pwd",
+      "bytes": 394,
+      "sha256": "8f57e1124394139a0ebee90cb3de4a47027308bd1edf5cb1bc111d5536c3b882",
+      "exact_old_matches": [],
+      "resource_id": 14,
+      "png_size": [
+        19,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          19,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/ls_nan01.pwd",
+      "bytes": 414,
+      "sha256": "768be57d8d7db9eb476ba116588a0a50643ef1e160949549787a11bcc2831080",
+      "exact_old_matches": [],
+      "resource_id": 0,
+      "png_size": [
+        24,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          24,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/ls_nan01_1.pwd",
+      "bytes": 423,
+      "sha256": "26d65f79429621d66db091b56478543957ed75e9a5e5e96b6efce66131ccfa19",
+      "exact_old_matches": [],
+      "resource_id": 15,
+      "png_size": [
+        24,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          24,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/ls_nan02.pwd",
+      "bytes": 489,
+      "sha256": "4a8baee7c1873b331ecddea830d02a446cbb7711955a0fae02eec06c32a29ceb",
+      "exact_old_matches": [],
+      "resource_id": 1,
+      "png_size": [
+        23,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/ls_nan02_1.pwd",
+      "bytes": 497,
+      "sha256": "cc083308fe8950d4ebb2d49f4b8caa4ad100da5d6bd7d58805d45881e125e548",
+      "exact_old_matches": [],
+      "resource_id": 16,
+      "png_size": [
+        23,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/ls_nan03.pwd",
+      "bytes": 468,
+      "sha256": "3efb5eed71d9bf9e5221c1d4c4b2c035b89eeb4ec5e689a112807e300497c67a",
+      "exact_old_matches": [],
+      "resource_id": 2,
+      "png_size": [
+        22,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/ls_nan03_1.pwd",
+      "bytes": 470,
+      "sha256": "165a2233647c556090dadeec348961587afa5d6149cbc41777ca68c3c56eb251",
+      "exact_old_matches": [],
+      "resource_id": 17,
+      "png_size": [
+        22,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/ls_nan04.pwd",
+      "bytes": 459,
+      "sha256": "6b40b983c38a1602d936f2381dd306b2490d77c0675f621eaf59e972907ce3b2",
+      "exact_old_matches": [],
+      "resource_id": 3,
+      "png_size": [
+        23,
+        23
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          23
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/ls_nan04_1.pwd",
+      "bytes": 466,
+      "sha256": "1eafd7a1ebadf9f7477efd5cce1f6ec3bec3a197482bc58a5f0199edfbb74552",
+      "exact_old_matches": [],
+      "resource_id": 18,
+      "png_size": [
+        23,
+        23
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          23
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/ls_nv001.pwd",
+      "bytes": 411,
+      "sha256": "74a1af40a9e8e63d17ad0bac27b8566de5fd5d12ef8f94125c86514dcf54ffb9",
+      "exact_old_matches": [],
+      "resource_id": 25,
+      "png_size": [
+        21,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          21,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/ls_nv001_1.pwd",
+      "bytes": 423,
+      "sha256": "e7e5dd3425c7b2221b863c78893b3ac34901b9f693c191a2af4c6f4e82862cd3",
+      "exact_old_matches": [],
+      "resource_id": 19,
+      "png_size": [
+        21,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          21,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/ls_nv01.pwd",
+      "bytes": 451,
+      "sha256": "f724ab6ab35cdce801f65d2c5399afe6d2baaa6de46529f8c0e03d7367984e74",
+      "exact_old_matches": [],
+      "resource_id": 4,
+      "png_size": [
+        23,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/ls_nv01_1.pwd",
+      "bytes": 437,
+      "sha256": "0e580bfe04b4e16bd267e7cf7a4a394669bf2c037c2862c4015562c5ca48f7ec",
+      "exact_old_matches": [],
+      "resource_id": 20,
+      "png_size": [
+        23,
+        21
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          21
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/ls_nv02.pwd",
+      "bytes": 524,
+      "sha256": "02bce37146e9b25b50cc60ec56c05e42242c2bc27b0ecbb8c5f16b782216e89e",
+      "exact_old_matches": [],
+      "resource_id": 5,
+      "png_size": [
+        24,
+        26
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          24,
+          26
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/ls_nv02_1.pwd",
+      "bytes": 510,
+      "sha256": "eb2d855e15a83f61b347142ef5375e38616ebedefa2446679e7774979a3dc908",
+      "exact_old_matches": [],
+      "resource_id": 21,
+      "png_size": [
+        24,
+        25
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          24,
+          25
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/ls_nv03.pwd",
+      "bytes": 483,
+      "sha256": "6db1ee8bc66d964e3927671f783e80df7fa0dee4faa72d5f86dee5314a0f85f3",
+      "exact_old_matches": [],
+      "resource_id": 6,
+      "png_size": [
+        23,
+        23
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          23
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/ls_nv03_1.pwd",
+      "bytes": 473,
+      "sha256": "a8e3f149cbf551e6820e735d05da76911664af6bcc64413cb7f468d13abc907b",
+      "exact_old_matches": [],
+      "resource_id": 22,
+      "png_size": [
+        23,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/ls_nv04.pwd",
+      "bytes": 479,
+      "sha256": "5a465dc8ac88317c273dca302b3598914401b8df68b6513009719203e6b25117",
+      "exact_old_matches": [],
+      "resource_id": 7,
+      "png_size": [
+        23,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/ls_nv04_1.pwd",
+      "bytes": 486,
+      "sha256": "9e1979abfb3e4c10326ee38b72f1080255dd733d5c7c747bf78acd4d983532f1",
+      "exact_old_matches": [],
+      "resource_id": 23,
+      "png_size": [
+        23,
+        22
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/nanlrzd.pwd",
+      "bytes": 1202,
+      "sha256": "40a9286d76838ff827ff9fdca01a19b852e9070c194996f03e349e3209cf8ee1",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/l/nanlrzd.pwd"
+      ],
+      "resource_id": 32,
+      "png_size": [
+        59,
+        49
+      ],
+      "frame_count": 12,
+      "rectangles": [
+        [
+          0,
+          0,
+          37,
+          12
+        ],
+        [
+          0,
+          12,
+          32,
+          21
+        ],
+        [
+          0,
+          33,
+          18,
+          16
+        ],
+        [
+          18,
+          33,
+          16,
+          16
+        ],
+        [
+          37,
+          0,
+          19,
+          15
+        ],
+        [
+          32,
+          14,
+          7,
+          7
+        ],
+        [
+          39,
+          15,
+          10,
+          13
+        ],
+        [
+          49,
+          15,
+          9,
+          13
+        ],
+        [
+          32,
+          21,
+          7,
+          7
+        ],
+        [
+          34,
+          28,
+          13,
+          8
+        ],
+        [
+          34,
+          36,
+          13,
+          8
+        ],
+        [
+          47,
+          28,
+          12,
+          12
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/new_32_1.pwd",
+      "bytes": 739,
+      "sha256": "7c177fdfaf7ce37215885b3dee07b9d67eb1c1cb365d57d7880a85120b513800",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/l/new_32_1.pwd"
+      ],
+      "resource_id": 38,
+      "png_size": [
+        84,
+        36
+      ],
+      "frame_count": 9,
+      "rectangles": [
+        [
+          0,
+          0,
+          41,
+          31
+        ],
+        [
+          41,
+          0,
+          8,
+          24
+        ],
+        [
+          41,
+          24,
+          15,
+          5
+        ],
+        [
+          56,
+          28,
+          15,
+          1
+        ],
+        [
+          49,
+          0,
+          9,
+          23
+        ],
+        [
+          58,
+          0,
+          23,
+          17
+        ],
+        [
+          59,
+          17,
+          22,
+          11
+        ],
+        [
+          0,
+          31,
+          33,
+          5
+        ],
+        [
+          40,
+          29,
+          44,
+          7
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/new_6.pwd",
+      "bytes": 1883,
+      "sha256": "d5709894d769086e430668ce505353893b90d8b5c11e9f85a0ec654fac43b225",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/l/new_6.pwd"
+      ],
+      "resource_id": 35,
+      "png_size": [
+        128,
+        88
+      ],
+      "frame_count": 9,
+      "rectangles": [
+        [
+          48,
+          0,
+          37,
+          15
+        ],
+        [
+          0,
+          0,
+          48,
+          13
+        ],
+        [
+          0,
+          13,
+          39,
+          63
+        ],
+        [
+          39,
+          15,
+          48,
+          32
+        ],
+        [
+          87,
+          0,
+          41,
+          29
+        ],
+        [
+          0,
+          77,
+          50,
+          1
+        ],
+        [
+          39,
+          47,
+          50,
+          30
+        ],
+        [
+          89,
+          29,
+          38,
+          35
+        ],
+        [
+          88,
+          64,
+          26,
+          24
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/new_7.pwd",
+      "bytes": 2656,
+      "sha256": "8cfa4f87d8b1f2b486b3b36cbc0bb7d6d86f86d82700b7977cc73e723f96680e",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/l/new_7.pwd"
+      ],
+      "resource_id": 36,
+      "png_size": [
+        164,
+        96
+      ],
+      "frame_count": 4,
+      "rectangles": [
+        [
+          0,
+          0,
+          85,
+          55
+        ],
+        [
+          0,
+          55,
+          76,
+          41
+        ],
+        [
+          76,
+          39,
+          88,
+          57
+        ],
+        [
+          85,
+          0,
+          45,
+          35
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/new_8.pwd",
+      "bytes": 1032,
+      "sha256": "21d787af9bb120a867c769a805c3422ceb341dba0da369175254aca1d6104406",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/l/new_8.pwd"
+      ],
+      "resource_id": 37,
+      "png_size": [
+        144,
+        51
+      ],
+      "frame_count": 15,
+      "rectangles": [
+        [
+          0,
+          0,
+          35,
+          19
+        ],
+        [
+          0,
+          19,
+          28,
+          21
+        ],
+        [
+          35,
+          0,
+          32,
+          6
+        ],
+        [
+          35,
+          8,
+          32,
+          6
+        ],
+        [
+          67,
+          0,
+          15,
+          9
+        ],
+        [
+          28,
+          16,
+          54,
+          28
+        ],
+        [
+          82,
+          0,
+          32,
+          25
+        ],
+        [
+          114,
+          0,
+          26,
+          24
+        ],
+        [
+          140,
+          0,
+          4,
+          16
+        ],
+        [
+          82,
+          25,
+          36,
+          19
+        ],
+        [
+          118,
+          25,
+          24,
+          11
+        ],
+        [
+          142,
+          24,
+          1,
+          12
+        ],
+        [
+          118,
+          36,
+          24,
+          11
+        ],
+        [
+          0,
+          44,
+          83,
+          7
+        ],
+        [
+          83,
+          44,
+          16,
+          6
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/nvlrzd.pwd",
+      "bytes": 1265,
+      "sha256": "b4e3b2caa50c96c4e3c09b9a1fc908d3924773df426aae601347db4926e4e6a9",
+      "exact_old_matches": [],
+      "resource_id": 33,
+      "png_size": [
+        49,
+        59
+      ],
+      "frame_count": 12,
+      "rectangles": [
+        [
+          0,
+          12,
+          32,
+          21
+        ],
+        [
+          0,
+          0,
+          37,
+          12
+        ],
+        [
+          32,
+          12,
+          16,
+          17
+        ],
+        [
+          28,
+          29,
+          19,
+          17
+        ],
+        [
+          37,
+          0,
+          12,
+          12
+        ],
+        [
+          0,
+          33,
+          10,
+          7
+        ],
+        [
+          10,
+          33,
+          10,
+          7
+        ],
+        [
+          20,
+          33,
+          7,
+          7
+        ],
+        [
+          0,
+          40,
+          18,
+          16
+        ],
+        [
+          18,
+          40,
+          9,
+          13
+        ],
+        [
+          27,
+          46,
+          7,
+          7
+        ],
+        [
+          34,
+          46,
+          11,
+          13
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/wq01.pwd",
+      "bytes": 614,
+      "sha256": "0f3822111768676df91dc8b82d92344a6a702e4e82acf6cfb33329e27ef10ff6",
+      "exact_old_matches": [],
+      "resource_id": 44,
+      "png_size": [
+        61,
+        29
+      ],
+      "frame_count": 2,
+      "rectangles": [
+        [
+          0,
+          0,
+          30,
+          27
+        ],
+        [
+          30,
+          0,
+          31,
+          29
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/wq02.pwd",
+      "bytes": 563,
+      "sha256": "8f5bff35508d203cd03ff19db89acda3c1253d01a214c9ac688fe28f65968b76",
+      "exact_old_matches": [],
+      "resource_id": 45,
+      "png_size": [
+        58,
+        23
+      ],
+      "frame_count": 2,
+      "rectangles": [
+        [
+          0,
+          0,
+          27,
+          22
+        ],
+        [
+          27,
+          0,
+          31,
+          23
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/wq03.pwd",
+      "bytes": 607,
+      "sha256": "7ac65208e32759c686b577b1da732f593ff3bacebef3f51a87fedd72b7ebea8c",
+      "exact_old_matches": [],
+      "resource_id": 46,
+      "png_size": [
+        57,
+        39
+      ],
+      "frame_count": 2,
+      "rectangles": [
+        [
+          0,
+          0,
+          27,
+          38
+        ],
+        [
+          27,
+          0,
+          30,
+          39
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/wq04.pwd",
+      "bytes": 718,
+      "sha256": "35ff838bb96fe522ce2224b92ad57d912a4c0d8b577b70fb6cbc8b0257c9a469",
+      "exact_old_matches": [],
+      "resource_id": 47,
+      "png_size": [
+        56,
+        45
+      ],
+      "frame_count": 2,
+      "rectangles": [
+        [
+          0,
+          0,
+          26,
+          44
+        ],
+        [
+          26,
+          0,
+          30,
+          45
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/zd_nan.aef",
+      "bytes": 5654,
+      "sha256": "06de57bfc72a7c6a1149b9731af0acc7173506fea33ebe0c60ea573720967d0c",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/l/zd_nan.aef"
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/zd_nv.aef",
+      "bytes": 5470,
+      "sha256": "352f6a789df2ebb51fe104ffdea94bfaf3bfe03b6c31e214d1341bb1d06d251d",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/l/zd_nv.aef"
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/tx/fstx/new_12.pwd",
+      "bytes": 1974,
+      "sha256": "a1cebe22e21f3091d11ab65a7d95962c2049f94f9850d05386b395f04d931958",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/pk/fightSpecific/new_12.pwd"
+      ],
+      "resource_id": 1,
+      "png_size": [
+        90,
+        81
+      ],
+      "frame_count": 6,
+      "rectangles": [
+        [
+          0,
+          0,
+          44,
+          38
+        ],
+        [
+          0,
+          38,
+          35,
+          43
+        ],
+        [
+          35,
+          40,
+          33,
+          41
+        ],
+        [
+          44,
+          0,
+          31,
+          31
+        ],
+        [
+          68,
+          52,
+          22,
+          22
+        ],
+        [
+          68,
+          19,
+          22,
+          33
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/tx/fstx/qgtx.aef",
+      "bytes": 158,
+      "sha256": "87df35c63b7dfc038dc62060ede4743bd1305891f5994507375594ada324f294",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/pk/fightSpecific/qgtx.aef",
+        "apk_xajh/xaqd_tree/gwy/wm1/pk/petjineng/pettx2/pettx1.aef"
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/tx/qitatx/0.aef",
+      "bytes": 1224,
+      "sha256": "855f0aca4ed58f9eb9167e906280e1ac445c4983e86265da093c3477ad2a8659",
+      "exact_old_matches": []
+    },
+    {
+      "path": "笑傲角色-战斗/tx/qitatx/0.pwd",
+      "bytes": 5470,
+      "sha256": "9653ef121e9d3c0d6c92569c7a3282af712a506d83ed5424062092c4bf85f52d",
+      "exact_old_matches": [],
+      "resource_id": 0,
+      "png_size": [
+        186,
+        123
+      ],
+      "frame_count": 91,
+      "rectangles": [
+        [
+          0,
+          0,
+          42,
+          14
+        ],
+        [
+          4,
+          14,
+          7,
+          5
+        ],
+        [
+          0,
+          14,
+          4,
+          17
+        ],
+        [
+          4,
+          19,
+          10,
+          13
+        ],
+        [
+          14,
+          29,
+          10,
+          3
+        ],
+        [
+          20,
+          14,
+          5,
+          14
+        ],
+        [
+          25,
+          14,
+          15,
+          12
+        ],
+        [
+          42,
+          0,
+          3,
+          22
+        ],
+        [
+          45,
+          0,
+          5,
+          29
+        ],
+        [
+          50,
+          0,
+          15,
+          17
+        ],
+        [
+          50,
+          17,
+          15,
+          3
+        ],
+        [
+          80,
+          0,
+          15,
+          16
+        ],
+        [
+          95,
+          0,
+          3,
+          19
+        ],
+        [
+          98,
+          0,
+          3,
+          19
+        ],
+        [
+          25,
+          26,
+          11,
+          3
+        ],
+        [
+          25,
+          29,
+          10,
+          3
+        ],
+        [
+          101,
+          0,
+          9,
+          8
+        ],
+        [
+          101,
+          8,
+          9,
+          10
+        ],
+        [
+          110,
+          0,
+          9,
+          10
+        ],
+        [
+          110,
+          10,
+          9,
+          8
+        ],
+        [
+          95,
+          19,
+          16,
+          16
+        ],
+        [
+          141,
+          0,
+          16,
+          7
+        ],
+        [
+          141,
+          7,
+          9,
+          3
+        ],
+        [
+          111,
+          33,
+          19,
+          11
+        ],
+        [
+          102,
+          35,
+          9,
+          9
+        ],
+        [
+          105,
+          44,
+          9,
+          9
+        ],
+        [
+          0,
+          32,
+          26,
+          14
+        ],
+        [
+          0,
+          46,
+          44,
+          17
+        ],
+        [
+          99,
+          36,
+          3,
+          7
+        ],
+        [
+          95,
+          36,
+          3,
+          7
+        ],
+        [
+          114,
+          44,
+          15,
+          16
+        ],
+        [
+          14,
+          20,
+          6,
+          9
+        ],
+        [
+          0,
+          63,
+          33,
+          33
+        ],
+        [
+          160,
+          13,
+          26,
+          25
+        ],
+        [
+          160,
+          38,
+          26,
+          25
+        ],
+        [
+          0,
+          96,
+          31,
+          24
+        ],
+        [
+          111,
+          60,
+          18,
+          16
+        ],
+        [
+          49,
+          96,
+          3,
+          18
+        ],
+        [
+          52,
+          96,
+          3,
+          14
+        ],
+        [
+          55,
+          96,
+          3,
+          13
+        ],
+        [
+          36,
+          26,
+          9,
+          9
+        ],
+        [
+          26,
+          32,
+          8,
+          9
+        ],
+        [
+          34,
+          36,
+          8,
+          10
+        ],
+        [
+          42,
+          35,
+          20,
+          3
+        ],
+        [
+          50,
+          20,
+          15,
+          15
+        ],
+        [
+          42,
+          38,
+          21,
+          13
+        ],
+        [
+          177,
+          0,
+          9,
+          12
+        ],
+        [
+          168,
+          0,
+          9,
+          13
+        ],
+        [
+          158,
+          0,
+          10,
+          13
+        ],
+        [
+          154,
+          7,
+          4,
+          4
+        ],
+        [
+          154,
+          11,
+          3,
+          2
+        ],
+        [
+          130,
+          23,
+          30,
+          21
+        ],
+        [
+          129,
+          44,
+          31,
+          20
+        ],
+        [
+          31,
+          95,
+          18,
+          17
+        ],
+        [
+          33,
+          67,
+          25,
+          28
+        ],
+        [
+          131,
+          100,
+          22,
+          21
+        ],
+        [
+          109,
+          100,
+          22,
+          21
+        ],
+        [
+          31,
+          112,
+          9,
+          9
+        ],
+        [
+          153,
+          82,
+          33,
+          36
+        ],
+        [
+          150,
+          64,
+          18,
+          18
+        ],
+        [
+          130,
+          64,
+          20,
+          15
+        ],
+        [
+          168,
+          64,
+          15,
+          18
+        ],
+        [
+          65,
+          108,
+          16,
+          15
+        ],
+        [
+          81,
+          108,
+          20,
+          15
+        ],
+        [
+          131,
+          15,
+          5,
+          7
+        ],
+        [
+          119,
+          0,
+          12,
+          22
+        ],
+        [
+          131,
+          0,
+          10,
+          15
+        ],
+        [
+          139,
+          10,
+          15,
+          13
+        ],
+        [
+          111,
+          18,
+          8,
+          2
+        ],
+        [
+          136,
+          18,
+          3,
+          4
+        ],
+        [
+          154,
+          15,
+          6,
+          8
+        ],
+        [
+          112,
+          20,
+          7,
+          2
+        ],
+        [
+          65,
+          0,
+          15,
+          16
+        ],
+        [
+          68,
+          31,
+          3,
+          20
+        ],
+        [
+          65,
+          30,
+          3,
+          20
+        ],
+        [
+          65,
+          16,
+          15,
+          14
+        ],
+        [
+          80,
+          16,
+          15,
+          14
+        ],
+        [
+          71,
+          30,
+          12,
+          13
+        ],
+        [
+          83,
+          30,
+          12,
+          12
+        ],
+        [
+          71,
+          43,
+          12,
+          12
+        ],
+        [
+          83,
+          42,
+          12,
+          12
+        ],
+        [
+          95,
+          44,
+          9,
+          9
+        ],
+        [
+          58,
+          70,
+          48,
+          38
+        ],
+        [
+          58,
+          67,
+          12,
+          3
+        ],
+        [
+          44,
+          51,
+          26,
+          16
+        ],
+        [
+          70,
+          55,
+          25,
+          13
+        ],
+        [
+          95,
+          53,
+          18,
+          17
+        ],
+        [
+          107,
+          79,
+          46,
+          21
+        ],
+        [
+          108,
+          76,
+          20,
+          3
+        ],
+        [
+          40,
+          112,
+          9,
+          9
+        ],
+        [
+          53,
+          110,
+          12,
+          3
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/tx/zstx/2.pwd",
+      "bytes": 2896,
+      "sha256": "76b92161aa39ca6ac7a97641476e06143facf57e74be054cf20dae76bc002f26",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/pk/fightSpecific/2.pwd"
+      ],
+      "resource_id": 2,
+      "png_size": [
+        141,
+        78
+      ],
+      "frame_count": 10,
+      "rectangles": [
+        [
+          0,
+          0,
+          32,
+          39
+        ],
+        [
+          32,
+          0,
+          39,
+          37
+        ],
+        [
+          71,
+          0,
+          40,
+          27
+        ],
+        [
+          111,
+          0,
+          23,
+          30
+        ],
+        [
+          0,
+          39,
+          45,
+          8
+        ],
+        [
+          0,
+          47,
+          57,
+          12
+        ],
+        [
+          0,
+          59,
+          63,
+          16
+        ],
+        [
+          71,
+          27,
+          28,
+          16
+        ],
+        [
+          63,
+          43,
+          37,
+          35
+        ],
+        [
+          100,
+          33,
+          41,
+          45
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/tx/zstx/jineng.aef",
+      "bytes": 118,
+      "sha256": "bb30e2c333856553cfceaa81a032e762e8187a97b3db0d54cef74e137deeb625",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/pk/fightSpecific/jineng.aef"
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/new_1.pwd",
+      "bytes": 1028,
+      "sha256": "949f273c04261b5299dd6bbad942e312e1abfbe424f98457c0d3adb55b325c0b",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/z/new_1.pwd"
+      ],
+      "resource_id": 35,
+      "png_size": [
+        103,
+        75
+      ],
+      "frame_count": 9,
+      "rectangles": [
+        [
+          0,
+          0,
+          21,
+          27
+        ],
+        [
+          21,
+          0,
+          22,
+          12
+        ],
+        [
+          21,
+          12,
+          18,
+          16
+        ],
+        [
+          0,
+          28,
+          43,
+          26
+        ],
+        [
+          43,
+          0,
+          50,
+          30
+        ],
+        [
+          54,
+          23,
+          49,
+          26
+        ],
+        [
+          9,
+          48,
+          45,
+          26
+        ],
+        [
+          54,
+          49,
+          28,
+          25
+        ],
+        [
+          82,
+          49,
+          21,
+          26
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/new_3.pwd",
+      "bytes": 1135,
+      "sha256": "2a45f59ca314b02808f01fba16e4386cc92cfea5d9d99d693553953e0867220a",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/z/new_3.pwd"
+      ],
+      "resource_id": 36,
+      "png_size": [
+        133,
+        68
+      ],
+      "frame_count": 10,
+      "rectangles": [
+        [
+          49,
+          0,
+          40,
+          17
+        ],
+        [
+          0,
+          0,
+          39,
+          24
+        ],
+        [
+          89,
+          0,
+          44,
+          50
+        ],
+        [
+          22,
+          21,
+          26,
+          27
+        ],
+        [
+          25,
+          48,
+          20,
+          13
+        ],
+        [
+          48,
+          21,
+          38,
+          18
+        ],
+        [
+          48,
+          39,
+          40,
+          20
+        ],
+        [
+          0,
+          33,
+          22,
+          26
+        ],
+        [
+          45,
+          59,
+          30,
+          9
+        ],
+        [
+          88,
+          50,
+          34,
+          17
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/new_nanzd.pwd",
+      "bytes": 435,
+      "sha256": "9763ec9b8fe80124a2027b71d311d1589cca7bf0a92d8508bf41e93db3594421",
+      "exact_old_matches": [],
+      "resource_id": 37,
+      "png_size": [
+        59,
+        31
+      ],
+      "frame_count": 5,
+      "rectangles": [
+        [
+          0,
+          0,
+          59,
+          9
+        ],
+        [
+          0,
+          9,
+          7,
+          20
+        ],
+        [
+          7,
+          9,
+          26,
+          15
+        ],
+        [
+          33,
+          9,
+          22,
+          15
+        ],
+        [
+          7,
+          24,
+          29,
+          7
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/touying03.pwd",
+      "bytes": 227,
+      "sha256": "55d5dfb058e504dcaa5eb57417c17da86a51198457f8e4d1b39fa05ca1ca69f2",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/z/touying03.pwd"
+      ],
+      "resource_id": 34,
+      "png_size": [
+        23,
+        12
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          12
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zd_nan.aef",
+      "bytes": 4780,
+      "sha256": "796b518995aed9fc014807367f377684e2a4a2a04f073cb2232d5d0956214db4",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/z/zd_nan.aef"
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zd_nv.aef",
+      "bytes": 4700,
+      "sha256": "732a73bc688efa0b141a35e13d11c6c2eb39c8f375e2598db590e85086d9769a",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/z/zd_nv.aef"
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nan.pwd",
+      "bytes": 1302,
+      "sha256": "e31426c9fe2b59180d96739eb9583754dd8ceb766be5bd9ae234f427244efc41",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/z/zs_nan.pwd"
+      ],
+      "resource_id": 32,
+      "png_size": [
+        56,
+        62
+      ],
+      "frame_count": 13,
+      "rectangles": [
+        [
+          0,
+          0,
+          18,
+          17
+        ],
+        [
+          18,
+          0,
+          16,
+          22
+        ],
+        [
+          34,
+          0,
+          13,
+          13
+        ],
+        [
+          0,
+          17,
+          20,
+          11
+        ],
+        [
+          20,
+          22,
+          11,
+          12
+        ],
+        [
+          31,
+          22,
+          10,
+          12
+        ],
+        [
+          37,
+          13,
+          13,
+          10
+        ],
+        [
+          0,
+          28,
+          16,
+          4
+        ],
+        [
+          0,
+          32,
+          15,
+          8
+        ],
+        [
+          15,
+          34,
+          13,
+          11
+        ],
+        [
+          28,
+          34,
+          28,
+          13
+        ],
+        [
+          26,
+          47,
+          24,
+          15
+        ],
+        [
+          0,
+          45,
+          26,
+          16
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nan001.pwd",
+      "bytes": 380,
+      "sha256": "3fd6a5fc1bab291364fe806d37e3af554fdd187aa66d7156184ece9524106c0f",
+      "exact_old_matches": [],
+      "resource_id": 0,
+      "png_size": [
+        23,
+        19
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          19
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nan001_1.pwd",
+      "bytes": 385,
+      "sha256": "67eafdbd066519bebd7841615b20587ceb75fea3482bcf8747d3ed555e40d065",
+      "exact_old_matches": [],
+      "resource_id": 10,
+      "png_size": [
+        23,
+        19
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          19
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nan01.pwd",
+      "bytes": 364,
+      "sha256": "a34042114c831190f000a4cf481882955ad045095c0776e09d49f5d679e624cd",
+      "exact_old_matches": [],
+      "resource_id": 1,
+      "png_size": [
+        19,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          19,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nan01_1.pwd",
+      "bytes": 374,
+      "sha256": "cd0eb3090ea52440047082a3f98815c22807610b1cb2d9f06ce69e7068ab0e60",
+      "exact_old_matches": [],
+      "resource_id": 11,
+      "png_size": [
+        19,
+        21
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          19,
+          21
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nan02.pwd",
+      "bytes": 391,
+      "sha256": "e7b6b49a4ba548dd4181e31ca758ddf78f7db9afaeac39a32c4a37f482bc7907",
+      "exact_old_matches": [],
+      "resource_id": 2,
+      "png_size": [
+        23,
+        24
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          24
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nan02_1.pwd",
+      "bytes": 400,
+      "sha256": "97cf203c6fc46d92870344b9e20e6292239c8cf11bc3407b0ce320aaa2de3605",
+      "exact_old_matches": [],
+      "resource_id": 12,
+      "png_size": [
+        23,
+        25
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          23,
+          25
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nan03.pwd",
+      "bytes": 403,
+      "sha256": "f207b75b6c23149bdd76ead395f79449e48beaaf5545a23311ba1cc104de3053",
+      "exact_old_matches": [],
+      "resource_id": 3,
+      "png_size": [
+        22,
+        23
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          23
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nan03_1.pwd",
+      "bytes": 420,
+      "sha256": "2f3e5d44050973b0279f9bc937a7e3b43b7401bae3bea6e1f77369fb34d02ba4",
+      "exact_old_matches": [],
+      "resource_id": 13,
+      "png_size": [
+        22,
+        25
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          25
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nan04.pwd",
+      "bytes": 463,
+      "sha256": "20c7172dc6ee7f55522d1fbd27ff2427f26cf07241efda11c4e7bb012125c9b9",
+      "exact_old_matches": [],
+      "resource_id": 4,
+      "png_size": [
+        24,
+        26
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          24,
+          26
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nan04_1.pwd",
+      "bytes": 474,
+      "sha256": "14a5eda6590f9f2f12042805a8445beaa94794f0a97ad2654e06c0672ee0996c",
+      "exact_old_matches": [],
+      "resource_id": 14,
+      "png_size": [
+        24,
+        26
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          24,
+          26
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nv.pwd",
+      "bytes": 1306,
+      "sha256": "ebab1a90fe9ce286c100ab2b9e23d70552e8350944e695f6d7468a350426c9d4",
+      "exact_old_matches": [
+        "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/z/zs_nv.pwd"
+      ],
+      "resource_id": 33,
+      "png_size": [
+        58,
+        59
+      ],
+      "frame_count": 13,
+      "rectangles": [
+        [
+          0,
+          0,
+          14,
+          17
+        ],
+        [
+          14,
+          0,
+          18,
+          17
+        ],
+        [
+          15,
+          18,
+          16,
+          7
+        ],
+        [
+          23,
+          29,
+          11,
+          11
+        ],
+        [
+          32,
+          0,
+          20,
+          9
+        ],
+        [
+          32,
+          9,
+          15,
+          5
+        ],
+        [
+          0,
+          18,
+          13,
+          12
+        ],
+        [
+          0,
+          31,
+          11,
+          13
+        ],
+        [
+          11,
+          30,
+          12,
+          12
+        ],
+        [
+          34,
+          26,
+          24,
+          15
+        ],
+        [
+          0,
+          46,
+          28,
+          13
+        ],
+        [
+          28,
+          43,
+          26,
+          16
+        ],
+        [
+          5,
+          0,
+          6,
+          11
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nv001.pwd",
+      "bytes": 357,
+      "sha256": "21341cbb9d36ac3798e3743b69bbe9f106272177afe9eff1c8024a712bc1409c",
+      "exact_old_matches": [],
+      "resource_id": 5,
+      "png_size": [
+        19,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          19,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nv001_1.pwd",
+      "bytes": 368,
+      "sha256": "0281436a2ae09f2f138a7aae7f6e64976721654fe5b007f8223993b0c9f50519",
+      "exact_old_matches": [],
+      "resource_id": 15,
+      "png_size": [
+        22,
+        19
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          19
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nv01.pwd",
+      "bytes": 394,
+      "sha256": "6fe8c97090ad991882c766ec4ba1c381629e36c01006dac6e537fc4d8da1b8ed",
+      "exact_old_matches": [],
+      "resource_id": 6,
+      "png_size": [
+        20,
+        20
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          20,
+          20
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nv01_1.pwd",
+      "bytes": 403,
+      "sha256": "bc7c863417a89f7345119081138b10642ba0a933220bbea652707e1250c97303",
+      "exact_old_matches": [],
+      "resource_id": 16,
+      "png_size": [
+        20,
+        21
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          20,
+          21
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nv02.pwd",
+      "bytes": 419,
+      "sha256": "060740f609bfff2a23dd7fd203497761242014c96b9889fd0cd9cd674d2c89c5",
+      "exact_old_matches": [],
+      "resource_id": 7,
+      "png_size": [
+        22,
+        24
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          24
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nv02_1.pwd",
+      "bytes": 426,
+      "sha256": "fb180d931f98f6eb4521800496e37ca425ee6ed02e0b7b7bfbd7b20c21327dc3",
+      "exact_old_matches": [],
+      "resource_id": 17,
+      "png_size": [
+        22,
+        26
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          26
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nv03.pwd",
+      "bytes": 392,
+      "sha256": "3e60c5208e551850cbe5a58f896f23c3c9c10114a37d3270b992f537f533d806",
+      "exact_old_matches": [],
+      "resource_id": 8,
+      "png_size": [
+        21,
+        23
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          21,
+          23
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nv03_1.pwd",
+      "bytes": 401,
+      "sha256": "bd536dbbab6ed166f313477bc45ffdaec453578b4c3aec886297d6d4aea32e66",
+      "exact_old_matches": [],
+      "resource_id": 18,
+      "png_size": [
+        21,
+        24
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          21,
+          24
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nv04.pwd",
+      "bytes": 429,
+      "sha256": "be7b3cfb44bcdcc11357081cd6cdcafdc8561048ff46a49b772234619be7eef0",
+      "exact_old_matches": [],
+      "resource_id": 9,
+      "png_size": [
+        22,
+        24
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          24
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zs_nv04_1.pwd",
+      "bytes": 439,
+      "sha256": "0b05d221f57520abbd7c8e9823062c70659fe0ec32737dd3da2aaa0d21dd26ec",
+      "exact_old_matches": [],
+      "resource_id": 19,
+      "png_size": [
+        22,
+        24
+      ],
+      "frame_count": 1,
+      "rectangles": [
+        [
+          0,
+          0,
+          22,
+          24
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zswq01.pwd",
+      "bytes": 542,
+      "sha256": "37a78c183bca3d7333303362c42d1311ab9d87d28e6a83009101ec682eb8d9bc",
+      "exact_old_matches": [],
+      "resource_id": 43,
+      "png_size": [
+        34,
+        53
+      ],
+      "frame_count": 4,
+      "rectangles": [
+        [
+          0,
+          0,
+          34,
+          11
+        ],
+        [
+          0,
+          11,
+          29,
+          23
+        ],
+        [
+          0,
+          34,
+          33,
+          19
+        ],
+        [
+          25,
+          10,
+          3,
+          1
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zswq02.pwd",
+      "bytes": 672,
+      "sha256": "bb7b73596c9c5eb12251f47632f344347cf2cc7d0cbf87ad02811ffa50887cd9",
+      "exact_old_matches": [],
+      "resource_id": 44,
+      "png_size": [
+        39,
+        64
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          1,
+          0,
+          38,
+          16
+        ],
+        [
+          0,
+          42,
+          36,
+          22
+        ],
+        [
+          0,
+          16,
+          33,
+          26
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zswq05.pwd",
+      "bytes": 799,
+      "sha256": "d42eee88744778cee992644888f536d9f4a10ab5a36ee5d581c7707f419d2c23",
+      "exact_old_matches": [],
+      "resource_id": 47,
+      "png_size": [
+        34,
+        71
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          34,
+          20
+        ],
+        [
+          0,
+          20,
+          31,
+          26
+        ],
+        [
+          0,
+          46,
+          31,
+          25
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zswq06.pwd",
+      "bytes": 731,
+      "sha256": "b516c10705f390fc23f05b1d189d647a2900523ca8887363b58eb936318d8d77",
+      "exact_old_matches": [],
+      "resource_id": 48,
+      "png_size": [
+        35,
+        77
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          35,
+          17
+        ],
+        [
+          0,
+          17,
+          31,
+          32
+        ],
+        [
+          0,
+          49,
+          32,
+          28
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zszd01.pwd",
+      "bytes": 453,
+      "sha256": "0390c8928668c3b6e6bdc95356fc9012be0cacbf8d9f17b870d120a166ce2988",
+      "exact_old_matches": [],
+      "resource_id": 38,
+      "png_size": [
+        27,
+        39
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          27,
+          10
+        ],
+        [
+          0,
+          10,
+          23,
+          15
+        ],
+        [
+          0,
+          25,
+          22,
+          14
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zszd02.pwd",
+      "bytes": 450,
+      "sha256": "50b5d103e3eb1c344587c4f2600d182ff8aeb471d6d5bd2631ae7d9317e31a15",
+      "exact_old_matches": [],
+      "resource_id": 39,
+      "png_size": [
+        29,
+        47
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          29,
+          13
+        ],
+        [
+          0,
+          13,
+          25,
+          18
+        ],
+        [
+          0,
+          31,
+          25,
+          16
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zszd03.pwd",
+      "bytes": 590,
+      "sha256": "ffab967e98ecdb01d7021efd7928c706f4923f729015c8f1ca7f6438c58d4cfd",
+      "exact_old_matches": [],
+      "resource_id": 40,
+      "png_size": [
+        35,
+        62
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          35,
+          15
+        ],
+        [
+          0,
+          15,
+          33,
+          26
+        ],
+        [
+          0,
+          41,
+          34,
+          21
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zszd04.pwd",
+      "bytes": 647,
+      "sha256": "aa77a921c3666e1f508eb5fd482874fea9299d25f29dbb143386b804b30cae12",
+      "exact_old_matches": [],
+      "resource_id": 41,
+      "png_size": [
+        37,
+        70
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          37,
+          17
+        ],
+        [
+          0,
+          17,
+          29,
+          31
+        ],
+        [
+          0,
+          48,
+          36,
+          22
+        ]
+      ]
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zszd05.pwd",
+      "bytes": 816,
+      "sha256": "c88d91dbbb96bfd2e0259530b68da9dc454652631c079bdc1f735883e4c28e6f",
+      "exact_old_matches": [],
+      "resource_id": 42,
+      "png_size": [
+        42,
+        70
+      ],
+      "frame_count": 3,
+      "rectangles": [
+        [
+          0,
+          0,
+          37,
+          20
+        ],
+        [
+          0,
+          21,
+          39,
+          26
+        ],
+        [
+          0,
+          47,
+          42,
+          23
+        ]
+      ]
+    }
+  ],
+  "animations": [
+    {
+      "path": "笑傲角色-常规/fsnan2/cg_nan.aef",
+      "action_count": 3,
+      "actions": [
+        {
+          "action_id": 1,
+          "layer_count": 25
+        },
+        {
+          "action_id": 2,
+          "layer_count": 25
+        },
+        {
+          "action_id": 3,
+          "layer_count": 25
+        }
+      ],
+      "unresolved_resource_ids": [
+        8,
+        9,
+        10,
+        13,
+        27,
+        28,
+        29
+      ],
+      "out_of_range_frames": [],
+      "parsed_layer_bytes": 620,
+      "remaining_group_metadata_bytes": 16
+    },
+    {
+      "path": "笑傲角色-常规/fsnv2/cg_nv.aef",
+      "action_count": 3,
+      "actions": [
+        {
+          "action_id": 4,
+          "layer_count": 25
+        },
+        {
+          "action_id": 5,
+          "layer_count": 25
+        },
+        {
+          "action_id": 6,
+          "layer_count": 25
+        }
+      ],
+      "unresolved_resource_ids": [
+        10,
+        11,
+        12,
+        13,
+        27,
+        28,
+        29
+      ],
+      "out_of_range_frames": [],
+      "parsed_layer_bytes": 620,
+      "remaining_group_metadata_bytes": 16
+    },
+    {
+      "path": "笑傲角色-常规/lsnan2/cg_nan.aef",
+      "action_count": 3,
+      "actions": [
+        {
+          "action_id": 1,
+          "layer_count": 26
+        },
+        {
+          "action_id": 2,
+          "layer_count": 26
+        },
+        {
+          "action_id": 3,
+          "layer_count": 26
+        }
+      ],
+      "unresolved_resource_ids": [
+        10,
+        11,
+        12,
+        15,
+        27,
+        28,
+        29
+      ],
+      "out_of_range_frames": [],
+      "parsed_layer_bytes": 644,
+      "remaining_group_metadata_bytes": 16
+    },
+    {
+      "path": "笑傲角色-常规/lsnv2/cg_nv.aef",
+      "action_count": 3,
+      "actions": [
+        {
+          "action_id": 4,
+          "layer_count": 26
+        },
+        {
+          "action_id": 5,
+          "layer_count": 26
+        },
+        {
+          "action_id": 6,
+          "layer_count": 26
+        }
+      ],
+      "unresolved_resource_ids": [
+        12,
+        13,
+        14,
+        15,
+        27,
+        28,
+        29
+      ],
+      "out_of_range_frames": [],
+      "parsed_layer_bytes": 644,
+      "remaining_group_metadata_bytes": 16
+    },
+    {
+      "path": "笑傲角色-常规/zsnan2/cg_nan.aef",
+      "action_count": 3,
+      "actions": [
+        {
+          "action_id": 1,
+          "layer_count": 26
+        },
+        {
+          "action_id": 2,
+          "layer_count": 26
+        },
+        {
+          "action_id": 3,
+          "layer_count": 26
+        }
+      ],
+      "unresolved_resource_ids": [
+        8,
+        9,
+        10,
+        13,
+        27,
+        28,
+        29
+      ],
+      "out_of_range_frames": [],
+      "parsed_layer_bytes": 644,
+      "remaining_group_metadata_bytes": 16
+    },
+    {
+      "path": "笑傲角色-常规/zsnv2/cg_nv.aef",
+      "action_count": 3,
+      "actions": [
+        {
+          "action_id": 4,
+          "layer_count": 27
+        },
+        {
+          "action_id": 5,
+          "layer_count": 27
+        },
+        {
+          "action_id": 6,
+          "layer_count": 27
+        }
+      ],
+      "unresolved_resource_ids": [
+        8,
+        10,
+        11,
+        12,
+        13,
+        27,
+        28,
+        29
+      ],
+      "out_of_range_frames": [],
+      "parsed_layer_bytes": 668,
+      "remaining_group_metadata_bytes": 16
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/zd_nan.aef",
+      "action_count": 21,
+      "actions": [
+        {
+          "action_id": 1,
+          "layer_count": 27
+        },
+        {
+          "action_id": 9,
+          "layer_count": 27
+        },
+        {
+          "action_id": 10,
+          "layer_count": 28
+        },
+        {
+          "action_id": 12,
+          "layer_count": 28
+        },
+        {
+          "action_id": 14,
+          "layer_count": 28
+        },
+        {
+          "action_id": 16,
+          "layer_count": 27
+        },
+        {
+          "action_id": 18,
+          "layer_count": 27
+        },
+        {
+          "action_id": 19,
+          "layer_count": 27
+        },
+        {
+          "action_id": 20,
+          "layer_count": 27
+        },
+        {
+          "action_id": 21,
+          "layer_count": 27
+        },
+        {
+          "action_id": 2,
+          "layer_count": 27
+        },
+        {
+          "action_id": 3,
+          "layer_count": 27
+        },
+        {
+          "action_id": 11,
+          "layer_count": 28
+        },
+        {
+          "action_id": 13,
+          "layer_count": 30
+        },
+        {
+          "action_id": 15,
+          "layer_count": 29
+        },
+        {
+          "action_id": 17,
+          "layer_count": 30
+        },
+        {
+          "action_id": 4,
+          "layer_count": 30
+        },
+        {
+          "action_id": 5,
+          "layer_count": 28
+        },
+        {
+          "action_id": 6,
+          "layer_count": 29
+        },
+        {
+          "action_id": 7,
+          "layer_count": 31
+        },
+        {
+          "action_id": 8,
+          "layer_count": 31
+        }
+      ],
+      "unresolved_resource_ids": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        30,
+        31,
+        47,
+        48,
+        49
+      ],
+      "out_of_range_frames": [],
+      "parsed_layer_bytes": 4872,
+      "remaining_group_metadata_bytes": 60
+    },
+    {
+      "path": "笑傲角色-战斗/fszd/zd_nv.aef",
+      "action_count": 21,
+      "actions": [
+        {
+          "action_id": 22,
+          "layer_count": 28
+        },
+        {
+          "action_id": 28,
+          "layer_count": 28
+        },
+        {
+          "action_id": 29,
+          "layer_count": 29
+        },
+        {
+          "action_id": 31,
+          "layer_count": 29
+        },
+        {
+          "action_id": 33,
+          "layer_count": 29
+        },
+        {
+          "action_id": 35,
+          "layer_count": 28
+        },
+        {
+          "action_id": 37,
+          "layer_count": 28
+        },
+        {
+          "action_id": 38,
+          "layer_count": 28
+        },
+        {
+          "action_id": 39,
+          "layer_count": 28
+        },
+        {
+          "action_id": 40,
+          "layer_count": 28
+        },
+        {
+          "action_id": 41,
+          "layer_count": 28
+        },
+        {
+          "action_id": 42,
+          "layer_count": 28
+        },
+        {
+          "action_id": 30,
+          "layer_count": 29
+        },
+        {
+          "action_id": 32,
+          "layer_count": 31
+        },
+        {
+          "action_id": 34,
+          "layer_count": 32
+        },
+        {
+          "action_id": 36,
+          "layer_count": 30
+        },
+        {
+          "action_id": 23,
+          "layer_count": 31
+        },
+        {
+          "action_id": 24,
+          "layer_count": 29
+        },
+        {
+          "action_id": 25,
+          "layer_count": 30
+        },
+        {
+          "action_id": 26,
+          "layer_count": 32
+        },
+        {
+          "action_id": 27,
+          "layer_count": 32
+        }
+      ],
+      "unresolved_resource_ids": [
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        47,
+        48,
+        49
+      ],
+      "out_of_range_frames": [],
+      "parsed_layer_bytes": 5048,
+      "remaining_group_metadata_bytes": 60
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/zd_nan.aef",
+      "action_count": 24,
+      "actions": [
+        {
+          "action_id": 1,
+          "layer_count": 27
+        },
+        {
+          "action_id": 16,
+          "layer_count": 27
+        },
+        {
+          "action_id": 17,
+          "layer_count": 28
+        },
+        {
+          "action_id": 18,
+          "layer_count": 33
+        },
+        {
+          "action_id": 19,
+          "layer_count": 28
+        },
+        {
+          "action_id": 20,
+          "layer_count": 28
+        },
+        {
+          "action_id": 21,
+          "layer_count": 26
+        },
+        {
+          "action_id": 22,
+          "layer_count": 26
+        },
+        {
+          "action_id": 23,
+          "layer_count": 26
+        },
+        {
+          "action_id": 24,
+          "layer_count": 26
+        },
+        {
+          "action_id": 2,
+          "layer_count": 27
+        },
+        {
+          "action_id": 3,
+          "layer_count": 27
+        },
+        {
+          "action_id": 4,
+          "layer_count": 28
+        },
+        {
+          "action_id": 5,
+          "layer_count": 30
+        },
+        {
+          "action_id": 6,
+          "layer_count": 30
+        },
+        {
+          "action_id": 7,
+          "layer_count": 29
+        },
+        {
+          "action_id": 8,
+          "layer_count": 28
+        },
+        {
+          "action_id": 9,
+          "layer_count": 28
+        },
+        {
+          "action_id": 10,
+          "layer_count": 28
+        },
+        {
+          "action_id": 11,
+          "layer_count": 28
+        },
+        {
+          "action_id": 12,
+          "layer_count": 28
+        },
+        {
+          "action_id": 13,
+          "layer_count": 30
+        },
+        {
+          "action_id": 14,
+          "layer_count": 31
+        },
+        {
+          "action_id": 15,
+          "layer_count": 33
+        }
+      ],
+      "unresolved_resource_ids": [
+        8,
+        9,
+        10,
+        13,
+        26,
+        27,
+        28,
+        31,
+        48,
+        49,
+        50
+      ],
+      "out_of_range_frames": [],
+      "parsed_layer_bytes": 5586,
+      "remaining_group_metadata_bytes": 68
+    },
+    {
+      "path": "笑傲角色-战斗/lszd/zd_nv.aef",
+      "action_count": 23,
+      "actions": [
+        {
+          "action_id": 25,
+          "layer_count": 27
+        },
+        {
+          "action_id": 26,
+          "layer_count": 27
+        },
+        {
+          "action_id": 27,
+          "layer_count": 28
+        },
+        {
+          "action_id": 28,
+          "layer_count": 33
+        },
+        {
+          "action_id": 29,
+          "layer_count": 28
+        },
+        {
+          "action_id": 30,
+          "layer_count": 29
+        },
+        {
+          "action_id": 45,
+          "layer_count": 27
+        },
+        {
+          "action_id": 46,
+          "layer_count": 27
+        },
+        {
+          "action_id": 47,
+          "layer_count": 27
+        },
+        {
+          "action_id": 48,
+          "layer_count": 27
+        },
+        {
+          "action_id": 43,
+          "layer_count": 27
+        },
+        {
+          "action_id": 31,
+          "layer_count": 28
+        },
+        {
+          "action_id": 32,
+          "layer_count": 30
+        },
+        {
+          "action_id": 33,
+          "layer_count": 30
+        },
+        {
+          "action_id": 34,
+          "layer_count": 29
+        },
+        {
+          "action_id": 35,
+          "layer_count": 28
+        },
+        {
+          "action_id": 36,
+          "layer_count": 28
+        },
+        {
+          "action_id": 37,
+          "layer_count": 28
+        },
+        {
+          "action_id": 38,
+          "layer_count": 28
+        },
+        {
+          "action_id": 39,
+          "layer_count": 28
+        },
+        {
+          "action_id": 40,
+          "layer_count": 30
+        },
+        {
+          "action_id": 41,
+          "layer_count": 31
+        },
+        {
+          "action_id": 42,
+          "layer_count": 33
+        }
+      ],
+      "unresolved_resource_ids": [
+        10,
+        11,
+        12,
+        13,
+        28,
+        29,
+        30,
+        31,
+        48,
+        49,
+        50
+      ],
+      "out_of_range_frames": [],
+      "parsed_layer_bytes": 5404,
+      "remaining_group_metadata_bytes": 66
+    },
+    {
+      "path": "笑傲角色-战斗/tx/fstx/qgtx.aef",
+      "action_count": 7,
+      "actions": [
+        {
+          "action_id": 5,
+          "layer_count": 2
+        },
+        {
+          "action_id": 6,
+          "layer_count": 3
+        },
+        {
+          "action_id": 7,
+          "layer_count": 1
+        },
+        {
+          "action_id": 8,
+          "layer_count": 2
+        },
+        {
+          "action_id": 9,
+          "layer_count": 2
+        },
+        {
+          "action_id": 10,
+          "layer_count": 1
+        },
+        {
+          "action_id": 11,
+          "layer_count": 1
+        }
+      ],
+      "unresolved_resource_ids": [],
+      "out_of_range_frames": [],
+      "parsed_layer_bytes": 140,
+      "remaining_group_metadata_bytes": 18
+    },
+    {
+      "path": "笑傲角色-战斗/tx/qitatx/0.aef",
+      "action_count": 23,
+      "actions": [
+        {
+          "action_id": 1,
+          "layer_count": 8
+        },
+        {
+          "action_id": 2,
+          "layer_count": 12
+        },
+        {
+          "action_id": 3,
+          "layer_count": 8
+        },
+        {
+          "action_id": 8,
+          "layer_count": 10
+        },
+        {
+          "action_id": 9,
+          "layer_count": 9
+        },
+        {
+          "action_id": 10,
+          "layer_count": 6
+        },
+        {
+          "action_id": 11,
+          "layer_count": 6
+        },
+        {
+          "action_id": 23,
+          "layer_count": 6
+        },
+        {
+          "action_id": 4,
+          "layer_count": 3
+        },
+        {
+          "action_id": 5,
+          "layer_count": 5
+        },
+        {
+          "action_id": 6,
+          "layer_count": 5
+        },
+        {
+          "action_id": 7,
+          "layer_count": 4
+        },
+        {
+          "action_id": 12,
+          "layer_count": 8
+        },
+        {
+          "action_id": 13,
+          "layer_count": 9
+        },
+        {
+          "action_id": 14,
+          "layer_count": 12
+        },
+        {
+          "action_id": 15,
+          "layer_count": 1
+        },
+        {
+          "action_id": 16,
+          "layer_count": 1
+        },
+        {
+          "action_id": 17,
+          "layer_count": 2
+        },
+        {
+          "action_id": 18,
+          "layer_count": 4
+        },
+        {
+          "action_id": 22,
+          "layer_count": 1
+        },
+        {
+          "action_id": 19,
+          "layer_count": 2
+        },
+        {
+          "action_id": 20,
+          "layer_count": 4
+        },
+        {
+          "action_id": 21,
+          "layer_count": 1
+        }
+      ],
+      "unresolved_resource_ids": [],
+      "out_of_range_frames": [],
+      "parsed_layer_bytes": 1156,
+      "remaining_group_metadata_bytes": 68
+    },
+    {
+      "path": "笑傲角色-战斗/tx/zstx/jineng.aef",
+      "action_count": 4,
+      "actions": [
+        {
+          "action_id": 1,
+          "layer_count": 1
+        },
+        {
+          "action_id": 2,
+          "layer_count": 3
+        },
+        {
+          "action_id": 3,
+          "layer_count": 3
+        },
+        {
+          "action_id": 4,
+          "layer_count": 3
+        }
+      ],
+      "unresolved_resource_ids": [],
+      "out_of_range_frames": [],
+      "parsed_layer_bytes": 106,
+      "remaining_group_metadata_bytes": 12
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zd_nan.aef",
+      "action_count": 20,
+      "actions": [
+        {
+          "action_id": 1,
+          "layer_count": 29
+        },
+        {
+          "action_id": 2,
+          "layer_count": 29
+        },
+        {
+          "action_id": 3,
+          "layer_count": 25
+        },
+        {
+          "action_id": 6,
+          "layer_count": 32
+        },
+        {
+          "action_id": 9,
+          "layer_count": 28
+        },
+        {
+          "action_id": 12,
+          "layer_count": 26
+        },
+        {
+          "action_id": 17,
+          "layer_count": 29
+        },
+        {
+          "action_id": 18,
+          "layer_count": 29
+        },
+        {
+          "action_id": 19,
+          "layer_count": 29
+        },
+        {
+          "action_id": 20,
+          "layer_count": 29
+        },
+        {
+          "action_id": 15,
+          "layer_count": 26
+        },
+        {
+          "action_id": 16,
+          "layer_count": 26
+        },
+        {
+          "action_id": 5,
+          "layer_count": 27
+        },
+        {
+          "action_id": 8,
+          "layer_count": 34
+        },
+        {
+          "action_id": 11,
+          "layer_count": 30
+        },
+        {
+          "action_id": 14,
+          "layer_count": 28
+        },
+        {
+          "action_id": 4,
+          "layer_count": 25
+        },
+        {
+          "action_id": 7,
+          "layer_count": 33
+        },
+        {
+          "action_id": 10,
+          "layer_count": 32
+        },
+        {
+          "action_id": 13,
+          "layer_count": 29
+        }
+      ],
+      "unresolved_resource_ids": [
+        20,
+        21,
+        22,
+        26,
+        27,
+        28,
+        31,
+        45,
+        46,
+        49,
+        50
+      ],
+      "out_of_range_frames": [],
+      "parsed_layer_bytes": 4722,
+      "remaining_group_metadata_bytes": 58
+    },
+    {
+      "path": "笑傲角色-战斗/zszd/zd_nv.aef",
+      "action_count": 20,
+      "actions": [
+        {
+          "action_id": 21,
+          "layer_count": 29
+        },
+        {
+          "action_id": 22,
+          "layer_count": 29
+        },
+        {
+          "action_id": 23,
+          "layer_count": 26
+        },
+        {
+          "action_id": 26,
+          "layer_count": 32
+        },
+        {
+          "action_id": 29,
+          "layer_count": 27
+        },
+        {
+          "action_id": 32,
+          "layer_count": 25
+        },
+        {
+          "action_id": 37,
+          "layer_count": 27
+        },
+        {
+          "action_id": 38,
+          "layer_count": 27
+        },
+        {
+          "action_id": 39,
+          "layer_count": 27
+        },
+        {
+          "action_id": 40,
+          "layer_count": 27
+        },
+        {
+          "action_id": 35,
+          "layer_count": 25
+        },
+        {
+          "action_id": 36,
+          "layer_count": 25
+        },
+        {
+          "action_id": 25,
+          "layer_count": 28
+        },
+        {
+          "action_id": 28,
+          "layer_count": 34
+        },
+        {
+          "action_id": 31,
+          "layer_count": 29
+        },
+        {
+          "action_id": 34,
+          "layer_count": 28
+        },
+        {
+          "action_id": 24,
+          "layer_count": 26
+        },
+        {
+          "action_id": 27,
+          "layer_count": 34
+        },
+        {
+          "action_id": 30,
+          "layer_count": 31
+        },
+        {
+          "action_id": 33,
+          "layer_count": 29
+        }
+      ],
+      "unresolved_resource_ids": [
+        23,
+        24,
+        25,
+        29,
+        30,
+        31,
+        45,
+        46,
+        49,
+        50
+      ],
+      "out_of_range_frames": [],
+      "parsed_layer_bytes": 4642,
+      "remaining_group_metadata_bytes": 58
+    }
+  ],
+  "scoped_old_comparison": [
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/cgd/f/nan/cg_nan.aef",
+      "new": "笑傲角色-常规/fsnan2/cg_nan.aef",
+      "status": "different"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/cgd/f/nan/fs_nanss.pwd",
+      "new": "笑傲角色-常规/fsnan2/fs_nanss.pwd",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/cgd/f/nv/cg_nv.aef",
+      "new": "笑傲角色-常规/fsnv2/cg_nv.aef",
+      "status": "different"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/cgd/f/nv/fs_nvss.pwd",
+      "new": "笑傲角色-常规/fsnv2/fs_nvss.pwd",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/cgd/l/nan/cg_nan.aef",
+      "new": "笑傲角色-常规/lsnan2/cg_nan.aef",
+      "status": "different"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/cgd/l/nan/ls_nan_ss.pwd",
+      "new": "笑傲角色-常规/lsnan2/ls_nan_ss.pwd",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/cgd/l/nv/cg_nv.aef",
+      "new": "笑傲角色-常规/lsnv2/cg_nv.aef",
+      "status": "different"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/cgd/l/nv/ls_nv_ss.pwd",
+      "new": "笑傲角色-常规/lsnv2/ls_nv_ss.pwd",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/cgd/z/nan/cg_nan.aef",
+      "new": "笑傲角色-常规/zsnan2/cg_nan.aef",
+      "status": "different"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/cgd/z/nan/zs_nanss.pwd",
+      "new": "笑傲角色-常规/zsnan2/zs_nanss.pwd",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/cgd/z/nv/cg_nv.aef",
+      "new": "笑傲角色-常规/zsnv2/cg_nv.aef",
+      "status": "different"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/cgd/z/nv/zs_nvss.pwd",
+      "new": "笑傲角色-常规/zsnv2/zs_nvss.pwd",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/f/14.pwd",
+      "new": "笑傲角色-战斗/fszd/14.pwd",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/f/fs_nan.pwd",
+      "new": "笑傲角色-战斗/fszd/fs_nan.pwd",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/f/fs_nv.pwd",
+      "new": "笑傲角色-战斗/fszd/fs_nv.pwd",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/f/new_11.pwd",
+      "new": "笑傲角色-战斗/fszd/new_11.pwd",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/f/new_13.pwd",
+      "new": "笑傲角色-战斗/fszd/new_13.pwd",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/f/touying03.pwd",
+      "new": "笑傲角色-战斗/fszd/touying03.pwd",
+      "status": "different"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/f/zd_nan.aef",
+      "new": "笑傲角色-战斗/fszd/zd_nan.aef",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/f/zd_nv.aef",
+      "new": "笑傲角色-战斗/fszd/zd_nv.aef",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/l/120.pwd",
+      "new": "笑傲角色-战斗/lszd/120.pwd",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/l/nanlrzd.pwd",
+      "new": "笑傲角色-战斗/lszd/nanlrzd.pwd",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/l/new_32_1.pwd",
+      "new": "笑傲角色-战斗/lszd/new_32_1.pwd",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/l/new_6.pwd",
+      "new": "笑傲角色-战斗/lszd/new_6.pwd",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/l/new_7.pwd",
+      "new": "笑傲角色-战斗/lszd/new_7.pwd",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/l/new_8.pwd",
+      "new": "笑傲角色-战斗/lszd/new_8.pwd",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/l/nvlrzd.pwd",
+      "new": "笑傲角色-战斗/lszd/nvlrzd.pwd",
+      "status": "different"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/l/zd_nan.aef",
+      "new": "笑傲角色-战斗/lszd/zd_nan.aef",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/l/zd_nv.aef",
+      "new": "笑傲角色-战斗/lszd/zd_nv.aef",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/z/new_1.pwd",
+      "new": "笑傲角色-战斗/zszd/new_1.pwd",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/z/new_3.pwd",
+      "new": "笑傲角色-战斗/zszd/new_3.pwd",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/z/new_nanzd.pwd",
+      "new": "笑傲角色-战斗/zszd/new_nanzd.pwd",
+      "status": "different"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/z/touying03.pwd",
+      "new": "笑傲角色-战斗/zszd/touying03.pwd",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/z/zd_nan.aef",
+      "new": "笑傲角色-战斗/zszd/zd_nan.aef",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/z/zd_nv.aef",
+      "new": "笑傲角色-战斗/zszd/zd_nv.aef",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/z/zs_nan.pwd",
+      "new": "笑傲角色-战斗/zszd/zs_nan.pwd",
+      "status": "identical"
+    },
+    {
+      "old": "apk_xajh/xaqd_tree/gwy/wm1/map/role/zhandou/z/zs_nv.pwd",
+      "new": "笑傲角色-战斗/zszd/zs_nv.pwd",
+      "status": "identical"
+    }
+  ]
+}

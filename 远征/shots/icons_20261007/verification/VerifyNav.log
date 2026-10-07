@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+NAV_FAIL fails=1
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+ERROR: FAIL: LoadingRelic.gd 缺少 ESC（ui_cancel）处理——浮层的返回不能只靠父层
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyNav.gd:42)
+       [1] _verify_source_rules (res://tools/VerifyNav.gd:72)
+       [2] _run (res://tools/VerifyNav.gd:46)
+       [3] _ready (res://tools/VerifyNav.gd:35)
+WARNING: 16 RIDs of type "CanvasItem" were leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2735)
+WARNING: 32 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+

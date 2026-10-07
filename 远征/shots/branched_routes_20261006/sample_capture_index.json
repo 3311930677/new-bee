@@ -1,0 +1,266 @@
+[
+	{
+		"flags": {
+
+		},
+		"focus": [
+			480.0,
+			1040.0
+		],
+		"id": "maple_road",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "枫林古道",
+		"path": "res://shots/branched_routes_20261006/spawn_800/maple_road.png",
+		"seed": 7,
+		"size": [
+			480,
+			800
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "forest",
+		"view": "spawn_800"
+	},
+	{
+		"flags": {
+
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "maple_road",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "枫林古道",
+		"path": "res://shots/branched_routes_20261006/center_800/maple_road.png",
+		"seed": 7,
+		"size": [
+			480,
+			800
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "forest",
+		"view": "center_800"
+	},
+	{
+		"flags": {
+
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "maple_road",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "枫林古道",
+		"path": "res://shots/branched_routes_20261006/overview/maple_road.png",
+		"seed": 7,
+		"size": [
+			960,
+			1248
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "forest",
+		"view": "overview"
+	},
+	{
+		"flags": {
+
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "maple_road",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "枫林古道",
+		"path": "res://shots/branched_routes_20261006/center_1067/maple_road.png",
+		"seed": 7,
+		"size": [
+			480,
+			1067
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "forest",
+		"view": "center_1067"
+	},
+	{
+		"flags": {
+
+		},
+		"focus": [
+			480.0,
+			1040.0
+		],
+		"id": "broken_slope",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "断碑坡",
+		"path": "res://shots/branched_routes_20261006/spawn_800/broken_slope.png",
+		"seed": 7,
+		"size": [
+			480,
+			800
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "forest",
+		"view": "spawn_800"
+	},
+	{
+		"flags": {
+
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "broken_slope",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "断碑坡",
+		"path": "res://shots/branched_routes_20261006/center_800/broken_slope.png",
+		"seed": 7,
+		"size": [
+			480,
+			800
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "forest",
+		"view": "center_800"
+	},
+	{
+		"flags": {
+
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "broken_slope",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "断碑坡",
+		"path": "res://shots/branched_routes_20261006/overview/broken_slope.png",
+		"seed": 7,
+		"size": [
+			960,
+			1248
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "forest",
+		"view": "overview"
+	},
+	{
+		"flags": {
+
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "broken_slope",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "断碑坡",
+		"path": "res://shots/branched_routes_20261006/center_1067/broken_slope.png",
+		"seed": 7,
+		"size": [
+			480,
+			1067
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "forest",
+		"view": "center_1067"
+	},
+	{
+		"flags": {
+
+		},
+		"focus": [
+			480.0,
+			1030.0
+		],
+		"id": "frost_boardwalk",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "霜林栈道",
+		"path": "res://shots/branched_routes_20261006/spawn_800/frost_boardwalk.png",
+		"seed": 7,
+		"size": [
+			480,
+			800
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "snow",
+		"view": "spawn_800"
+	},
+	{
+		"flags": {
+
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "frost_boardwalk",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "霜林栈道",
+		"path": "res://shots/branched_routes_20261006/center_800/frost_boardwalk.png",
+		"seed": 7,
+		"size": [
+			480,
+			800
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "snow",
+		"view": "center_800"
+	},
+	{
+		"flags": {
+
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "frost_boardwalk",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "霜林栈道",
+		"path": "res://shots/branched_routes_20261006/overview/frost_boardwalk.png",
+		"seed": 7,
+		"size": [
+			960,
+			1248
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "snow",
+		"view": "overview"
+	},
+	{
+		"flags": {
+
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "frost_boardwalk",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "霜林栈道",
+		"path": "res://shots/branched_routes_20261006/center_1067/frost_boardwalk.png",
+		"seed": 7,
+		"size": [
+			480,
+			1067
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "snow",
+		"view": "center_1067"
+	}
+]

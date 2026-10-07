@@ -16,6 +16,8 @@ const VIEW_H := 800.0
 const DirectionalIdle := preload("res://src/world/DirectionalIdle.gd")
 const WorldPropArt := preload("res://src/world/WorldPropArt.gd")
 const WorldArtFinish := preload("res://src/world/WorldArtFinish.gd")
+const HudStyle := preload("res://src/ui/WorldHUD.gd")
+const Cartography := preload("res://src/explore/MinimapCartography.gd")
 const ROLE_FRAMES := {  # 四方向行走帧（BattleScene 同款复用）
 	"zs": ["res://image/role/zs/pojun_walk_frames.tres", "pojun"],
 	"ck": ["res://image/role/ck/chuanyang_walk_frames.tres", "chuanyang"],
@@ -29,15 +31,15 @@ const INTERACT_R := 44.0      # 非战斗物件交互半径（maps.json 无此�
 const ThirdActGroundScript := preload("res://src/explore/ThirdActGround.gd")
 const FourthActGroundScript := preload("res://src/explore/FourthActGround.gd")
 const ReturnJourneyPropsScript := preload("res://src/explore/ReturnJourneyProps.gd")
-const MINI_W := 78.0          # 小地图尺寸：与 32×42 格地图同比例（1536:2016 ≈ 0.762）
-const MINI_H := 102.0
-const _MiniMapPos := Vector2(390, 14)
+const MINI_W := 104.0         # 留出舆图标题与展开提示，地图内容仍按世界比例居中。
+const MINI_H := 136.0
+const _MiniMapPos := Vector2(360, 16)
 # HUD 常驻小钮（药 / 换宠 / 撤离 / 疾行）统一口径（C8）：同一高度、同一字号档，
 # 宽度按字数给足（PanelContainer 会被文字撑大，给窄了彼此压边或出屏），右缘与小地图右缘对齐。
 const HUD_BTN_H := 44.0         # P01 样板 §4：命中区最小 44×44（原 40 达不到触控下限）
 const HUD_BTN_FS := 16          # = G.FS_SM，HUD 小钮一律这一档，不再混用 FS_MD
 const HUD_BTN_Y := 144.0        # 与左侧 HP 面板（136..192）纵向居中，三枚并排钮统一基线
-const HUD_BTN_RIGHT := 468.0    # = _MiniMapPos.x + MINI_W（右上角小地图右缘）
+const HUD_BTN_RIGHT := 464.0    # = _MiniMapPos.x + MINI_W（右上角小地图右缘）
 const AUTO_TIMEOUT := 26.0    # 自动前往超时（秒）：到不了就交还控制权，不把玩家困住
 const FLEE_CONTACT_CD := 1.6  # 战斗撤退后的接触冷静期（秒）：防"刚退又被同一只怪拽回去"
 const StoryBeatScript := preload("res://src/ui/StoryBeat.gd")   # 首领剧情演出层（对峙/余韵）
@@ -49,6 +51,11 @@ const Oaths := preload("res://src/world/OathService.gd")
 const Contracts := preload("res://src/world/TradeContracts.gd")
 const RunEvents := preload("res://src/run/RunEvents.gd")
 const Trials := preload("res://src/world/DungeonTrial.gd")
+const SpecialEvents := preload("res://src/world/SpecialEventService.gd")
+const SpecialPanel := preload("res://src/ui/SpecialEventPanel.gd")
+var _special_panel: Control = null
+var _special_battle_id := ""
+var _special_battle_token := ""
 var _last_battle_trial := false
 var _trial_saved_potions := -1
 const ExplorationLinks := preload("res://src/world/ExplorationLinks.gd")
@@ -61,6 +68,10 @@ const FirstActWeaponVisual := preload("res://src/world/FirstActWeaponVisual.gd")
 var st: RunState
 var node: Dictionary = {}
 var _rng := RandomNumberGenerator.new()
+var _deco_rng := RandomNumberGenerator.new()
+const FlatGround := preload("res://src/explore/FlatMapGround.gd")
+const GroundLayout := preload("res://src/explore/FlatGroundLayout.gd")
+var _flat_ground: Node2D = null
 
 var _world := Node2D.new()
 var _ground_path: Dictionary = {}   # 本图主路格（_build_ground_detail 生成，散件避让要用同一份）
@@ -103,9 +114,10 @@ var _main_level_l: Label = null
 var _main_exp_l: Label = null
 var _main_hp_l: Label = null
 var _main_gold_l: Label = null
+var _main_gold_chip: Button = null
 var _main_story_l: Label = null
 var _main_side_l: Label = null
-var _side_chip: Panel = null
+var _side_chip: Control = null
 var _player_name_l: Label = null
 var _player_tag: Panel = null
 var _player_tag_style: StyleBoxFlat = null   # P04：名签底板，描边色随在身武器稀有度变化
@@ -129,6 +141,7 @@ var _main_respawn_at: Dictionary = {}
 var _main_spawn_slots: Array[Dictionary] = []
 var _main_respawn_tick := 0.0
 var _world_exit_cd := 1.5
+var _arrival_exit_blocks: Dictionary = {}
 # P02：当前接战的遭遇上下文（EncounterContext，见 docs/plans/2026-09-28-p02-world-session-design.md）
 # 用来给这场战斗一个稳定 ID：结算只落地一次，重放同一 ID 不发第二次奖。
 var _encounter: Dictionary = {}
@@ -261,6 +274,7 @@ func _ready() -> void:
 	# 历练沿用原种子文本，保证旧局布局、测试 fixture 与存档恢复完全不漂移。
 	_rng.seed = hash("main_world_%s" % _main_map_id) \
 		if _mode == "main_world" else hash("%d_%d" % [st.run_seed, node_seed])
+	_deco_rng.seed = hash("ground_art_%s" % _main_map_id)
 	_prog = st.map_progress(int(node.get("layer", 1)), int(node.get("index", 0)))
 	if _mode == "main_world": _oath_trip = Oaths.enter(G,_main_map_id)
 	_build_ground()
@@ -298,7 +312,17 @@ func _ground_tint() -> Color:
 	return t
 
 
+func _uses_flat_ground() -> bool:
+	return _mode != "main_world" or String(_main_cfg.get("ground_style", "")) == "flat"
+
+
 func _build_ground() -> void:
+	if _uses_flat_ground():
+		if _mode != "main_world":
+			# Consume the old floor rolls so existing expedition encounter seeds stay unchanged.
+			for i in int(_map_cfg.get("map_cols", 32)) * int(_map_cfg.get("map_rows", 42)):
+				_rng.randf()
+		return  # The complete flat floor is built together with its visible routes below.
 	if _mode == "main_world" and not String(_main_cfg.get("background", "")).is_empty():
 		var path := String(_main_cfg.get("background", ""))
 		var tex: Texture2D = G.visual_texture(path) if path != "" else null
@@ -306,6 +330,7 @@ func _build_ground() -> void:
 			push_error("主世界背景缺失：%s" % path)
 		else:
 			var bg := TextureRect.new()
+			bg.z_index = -20
 			bg.texture = tex
 			bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			bg.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
@@ -322,6 +347,7 @@ func _build_ground() -> void:
 			return
 	# 地面层：TileMapLayer 程序构建（主题 3 种 tile 加权平铺，无碰撞）
 	var tl := TileMapLayer.new()
+	tl.z_index = -20
 	var ts := TileSet.new()
 	ts.tile_size = Vector2i(48, 48)
 	var tiles: Array = _theme_cfg.get("tiles", [])
@@ -354,6 +380,27 @@ func _build_ground() -> void:
 
 
 func _build_ground_detail(cols: int, rows: int) -> void:
+	if _mode == "main_world":
+		var routes: Array = _main_cfg.get("flat_routes", [])
+		_ground_path = GroundLayout.clearance(routes, cols, rows)
+		if _uses_flat_ground():
+			_add_flat_ground(cols, rows, routes)
+		return
+	if _uses_flat_ground():
+		var legacy_path := _path_cells(cols, rows)
+		var legacy_road: Array = []
+		if String(_theme_cfg.get("path_sheet", "")).is_empty():
+			for cell: Vector2i in legacy_path:
+				legacy_road.append(Vector2(cell.x * 48 + 24, cell.y * 48 + 24))
+		# Preserve the old random sequence for props, encounters and saved expeditions.
+		# This temporary helper is never added to the scene: no old road or circular stains render.
+		var legacy_wear := _GroundWear.new()
+		legacy_wear.setup(cols, rows, _rng, legacy_path, legacy_road, Color("6b5334"))
+		legacy_wear.free()
+		var routes := GroundLayout.expedition_routes(legacy_path, cols, rows)
+		_ground_path = GroundLayout.clearance(routes, cols, rows)
+		_add_flat_ground(cols, rows, routes)
+		return
 	if _mode == "main_world" and bool(_main_cfg.get("authored_ground", false)):
 		return
 	if _mode == "main_world" and bool(_main_cfg.get("city", false)):
@@ -395,6 +442,21 @@ func _build_ground_detail(cols: int, rows: int) -> void:
 	var wear := _GroundWear.new()
 	wear.setup(cols, rows, _rng, path, road, road_col)
 	add_child(wear)
+
+
+func _add_flat_ground(cols: int, rows: int, routes: Array) -> void:
+	_flat_ground = FlatGround.new()
+	_flat_ground.name = "FlatGround"
+	_flat_ground.setup(Vector2(cols * 48, rows * 48), routes,
+		FlatGround.palette_for(st.theme, _main_cfg), hash(_main_map_id) if _mode == "main_world" else st.run_seed,
+		FlatGround.material_for(st.theme, _main_cfg), Color(String(_main_cfg.get("surface_tint", "ffffff"))))
+	add_child(_flat_ground)
+
+
+func _add_ground_overlay(ground: Node2D) -> void:
+	ground.z_index = -10
+	if _uses_flat_ground(): ground.set("flat_floor", true)
+	add_child(ground)
 
 
 ## 蜿蜒土路：自出生点（底部中央）走向传送阵（顶部中央），随机左右游走。
@@ -463,32 +525,34 @@ func _build_world() -> void:
 
 	_build_ground_detail(cols, rows)  # 先于 _world 入树：绘制在地砖之上、实体之下
 	if _mode == "main_world" and _main_map_id == "stele_cavern":
-		add_child(preload("res://src/explore/SteleRoomGround.gd").new())
+		_add_ground_overlay(preload("res://src/explore/SteleRoomGround.gd").new())
 	elif _mode == "main_world" and _main_map_id == "old_salt_road":
-		add_child(SaltRoadGround.new())
+		_add_ground_overlay(SaltRoadGround.new())
 	elif _mode == "main_world" and _main_map_id == "tideflat":
-		add_child(TideflatGround.new())
+		_add_ground_overlay(TideflatGround.new())
+	elif _mode == "main_world" and _main_map_id == "shenyuan_port" and _uses_flat_ground():
+		_add_ground_overlay(PortGround.new())
 	elif _mode == "main_world" and _main_map_id == "tidal_gate":
 		_tidal_ground = TidalGateGround.new()
 		_tidal_ground.dynamic_water = _tidal_rooms_enabled()
 		_tidal_ground.upper_released = bool(G.prog.get("flags", {}).get("act2_tide_gate_1", false))
 		_tidal_ground.bridge_drained = bool(G.prog.get("flags", {}).get("act2_tide_gate_2", false))
 		_tidal_ground.passages = _tidal_passages()
-		add_child(_tidal_ground)
+		_add_ground_overlay(_tidal_ground)
 	elif _mode == "main_world" and _main_map_id in ["red_sand_route", "frost_post", "rift_mine_road", "rift_mine_vault", "frost_boardwalk", "frost_pass"]:
 		var ground := ThirdActGroundScript.new()
 		ground.map_id = _main_map_id
 		ground.use_reference_ground = _main_map_id == "frost_post" and not String(_main_cfg.get("background", "")).is_empty()
-		add_child(ground)
+		_add_ground_overlay(ground)
 	elif _mode == "main_world" and _main_map_id in ["stele_entry", "stele_resonance", "stele_core"]:
 		var ground := FourthActGroundScript.new()
 		ground.map_id = _main_map_id
-		add_child(ground)
+		_add_ground_overlay(ground)
 
 	_world.y_sort_enabled = true
 	if _mode=="main_world" and _main_map_id=="maple_road":
 		var bridge:=preload("res://src/explore/AftermathBridge.gd").new()
-		bridge.z_index=-1
+		bridge.z_index=-8
 		_world.add_child(bridge)
 	if _mode=="main_world" and _main_map_id in ["maple_road","old_salt_road","tideflat","frost_boardwalk","frost_post","stele_core"]:
 		var return_props:=ReturnJourneyPropsScript.new()
@@ -522,14 +586,14 @@ func _build_decos(cols: int, rows: int) -> void:
 		return
 	# 散件：随机摆放（避开出生区/传送区/中央通道），origin 底部 + 脚部碰撞，Y-sort 遮挡
 	# 主世界每图可用 decos 指定自己的地貌识别点（枫林古道＝枫树灌木、断碑坡＝枯树墓碑）
-	var decos: Array = _main_cfg.get("decos", []) if _mode == "main_world" else []
-	if decos.is_empty():
-		decos = _theme_cfg.get("decos", [])
+	var decos: Array = _main_cfg.get("decos", _theme_cfg.get("decos", [])) \
+		if _mode == "main_world" else _theme_cfg.get("decos", [])
 	if decos.is_empty():
 		return
-	var density := float(_theme_cfg.get("deco_density", 0.05))
+	var density := float(_main_cfg.get("deco_density", _theme_cfg.get("deco_density", 0.05)))
+	var art_rng := _deco_rng if _mode == "main_world" else _rng
 	var asset_dir := _map_asset_dir
-	var tint := _ground_tint()
+	var tint := Color(String(_main_cfg.get("deco_tint", "ffffff"))) if _mode == "main_world" else _ground_tint()
 	# 出生安全圈（P01 样板 §3）：按**本图真实出生点**避让 150px，不再用「地图底部中央」的估算点——
 	# 估算点与 main_world_maps.json 的 spawn 差着上百像素，出生点旁边仍可能长出树。
 	var spawn := _cfg_point(_main_cfg.get("spawn", []), Vector2.ZERO) if _mode == "main_world" \
@@ -538,24 +602,22 @@ func _build_decos(cols: int, rows: int) -> void:
 		spawn = Vector2(float(cols) * 24.0, float(rows) * 48.0 - 100.0)
 	for gy in rows - 1:
 		for gx in cols:
-			if _mode == "main_world" and absi(gx - cols / 2) <= 2:
-				continue  # 野外主路保持通行，散件留在道路两侧。
 			if _mode == "main_world" and _ground_path.has(Vector2i(gx, gy)):
 				continue  # 主路会游走出中央 5 列，凡路面格一律不落散件（P01：主路成带且不被树堵死）
 			var center_col := absi(gx - cols / 2) <= 1  # 中央通道密度略降（0.65），保证通行但不显秃
 			var d := density * (0.65 if center_col else 1.0)
-			if _rng.randf() > d:
+			if art_rng.randf() > d:
 				continue
-			var pos := Vector2(gx * 48.0 + _rng.randf_range(8, 40),
-				gy * 48.0 + _rng.randf_range(8, 40))
+			var pos := Vector2(gx * 48.0 + art_rng.randf_range(8, 40),
+				gy * 48.0 + art_rng.randf_range(8, 40))
 			if pos.distance_to(spawn) < 150.0 or pos.y < 200.0:
 				continue
-			var tex: Texture2D = load("%s/%s.png" % [asset_dir, String(decos[_rng.randi_range(0, decos.size() - 1)])])
-			var sc := _rng.randf_range(0.85, 1.18)
+			var tex: Texture2D = load("%s/%s.png" % [asset_dir, String(decos[art_rng.randi_range(0, decos.size() - 1)])])
+			var sc := art_rng.randf_range(0.85, 1.18)
 			# 散件基座是**实体碰撞**（40×s × 26 @ y=−13）：格位避让还不够——散件在格内随机偏到
 			# 右下角时，碰撞盒会溢进相邻的路面格，走路时被树根绊住（可走性实测里表现为「反复卡住」）。
 			# 这里按碰撞盒真实覆盖的格再筛一遍（RNG 次序不变，故散件布局只少了压路的那几株）。
-			if _mode == "main_world" and _foot_hits_road(pos, sc):
+			if _foot_hits_road(pos, sc):
 				continue
 			if _mode == "main_world" and _foot_hits_patrol(pos, sc):
 				continue
@@ -569,6 +631,9 @@ func _build_decos(cols: int, rows: int) -> void:
 ## 散件脚部碰撞盒是否压到本图主路格（_ground_path）。盒：40×s 宽 × 26 高，底边在原点、中心上移 13。
 func _foot_hits_road(pos: Vector2, s: float) -> bool:
 	var footprint := Rect2(pos - Vector2(20.0 * s, 26), Vector2(40.0 * s, 26)).grow(18)
+	for row: Dictionary in (_main_cfg.get("entities", {}) as Dictionary).values():
+		var at := _cfg_point(row.get("at", []), Vector2(-1000, -1000))
+		if footprint.intersects(Rect2(at - Vector2(58, 86), Vector2(116, 120))): return true
 	for rect_v in (_main_cfg.get("clear_rects", []) as Array):
 		if rect_v is Array and (rect_v as Array).size() == 4:
 			var r: Array = rect_v
@@ -576,9 +641,8 @@ func _foot_hits_road(pos: Vector2, s: float) -> bool:
 				return true
 	if _ground_path.is_empty():
 		return false
-	var hw := 20.0 * s
-	for gy in range(int(floor((pos.y - 26.0) / 48.0)), int(floor(pos.y / 48.0)) + 1):
-		for gx in range(int(floor((pos.x - hw) / 48.0)), int(floor((pos.x + hw) / 48.0)) + 1):
+	for gy in range(floori(footprint.position.y / 48.0), floori(footprint.end.y / 48.0) + 1):
+		for gx in range(floori(footprint.position.x / 48.0), floori(footprint.end.x / 48.0) + 1):
 			if _ground_path.has(Vector2i(gx, gy)):
 				return true
 	return false
@@ -676,7 +740,8 @@ func _mine_rooms_enabled() -> bool:
 func _build_mine_rooms() -> void:
 	if not _mine_rooms_enabled(): return
 	_mine_ground = preload("res://src/explore/MineRoomGround.gd").new()
-	_mine_ground.z_index = -1
+	_mine_ground.z_index = -9
+	_mine_ground.flat_floor = _uses_flat_ground()
 	_world.add_child(_mine_ground)
 	var rooms: Dictionary = _main_cfg.get("rooms", {})
 	for key in rooms:
@@ -766,6 +831,15 @@ func _sync_tidal_room_gates() -> void:
 	_mark_nav_dirty()
 
 
+func _world_exit_sign_position(row: Dictionary) -> Vector2:
+	var at := _cfg_point(row.get("at",[]),Vector2.ZERO)
+	if at.y < 180.0: at.y = 240.0
+	return at
+
+func _world_exit_touch_rect(row: Dictionary) -> Rect2:
+	# Sign art is 92x96 above its anchor. Enter near its middle, with player clearance.
+	return Rect2(_world_exit_sign_position(row) + Vector2(-52,-84),Vector2(104,88))
+
 func _build_world_exits() -> void:
 	var exits: Variant = _main_cfg.get("exits", [])
 	if not (exits is Array):
@@ -779,11 +853,7 @@ func _build_world_exits() -> void:
 			push_error("世界出口指向不存在的地图：%s" % destination)
 			continue
 		var marker := _WorldExit.new()
-		marker.position = _cfg_point(row.get("at", []), Vector2.ZERO)
-		# 北口触发圈在 y≈96；路牌若也立在那里，手机顶部状态栏会把整块牌遮住。
-		# 视觉路牌提前立在路上，真正切图判定仍读 exits.at，不改移动与触发距离。
-		if marker.position.y < 180.0:
-			marker.position.y = 240.0
+		marker.position = _world_exit_sign_position(row)
 		marker.caption = String(row.get("label", destination))
 		if destination == "stele_cavern":
 			var repaired := bool((G.prog.get("flags", {}) as Dictionary).get("act1_stele_repaired", false))
@@ -808,6 +878,10 @@ func _build_player(map_w: float, map_h: float) -> void:
 			spawn = (_portal.position + Vector2(0, 110)).clamp(
 				Vector2(48.0, 48.0), Vector2(map_w - 48.0, map_h - 48.0))
 	_player.position = spawn
+	if _mode == "main_world":
+		for exit_row: Dictionary in _main_cfg.get("exits",[]):
+			if _world_exit_touch_rect(exit_row).has_point(spawn):
+				_arrival_exit_blocks[String(exit_row.get("id",""))] = true
 	_player.collision_layer = 1
 	_player.collision_mask = 2
 	_world.add_child(_player)
@@ -1364,78 +1438,20 @@ func _build_vignette() -> void:
 
 
 func _build_main_world_status() -> void:
-	# 生命、经验拆成两条清楚的轨道，字与底图保持足够对比。
-	var root := G.InsetBand.new()
-	root.position = Vector2(14, 12)
-	root.size = Vector2(176, 80)
-	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	# 深色信息带：切角 + 顶暗底亮（内凹），弃用圆角4的平面色块
-	root.set_surface(Color("28343e", 0.96), Color("96a6b4",0.65))
-	_hud.add_child(root)
-	_main_level_l = G.gold_label("", 16, true, Color("ffdf89"), false)
-	_main_level_l.position = Vector2(7, 8)
-	_main_level_l.custom_minimum_size = Vector2(42, 0)
-	root.add_child(_main_level_l)
-	var hp_bg := ColorRect.new()
-	hp_bg.color = Color("35251e")
-	hp_bg.position = Vector2(51, 11)
-	hp_bg.size = Vector2(117, 12)
-	root.add_child(hp_bg)
-	_main_hp_fill.color = Color("a3c49a")
-	_main_hp_fill.position = Vector2(52, 12)
-	_main_hp_fill.size = Vector2(115, 10)
-	root.add_child(_main_hp_fill)
-	_main_hp_l = G.gold_label("", 15, false, Color("eee1bf"), false)
-	_main_hp_l.position = Vector2(51, 25)
-	_main_hp_l.custom_minimum_size = Vector2(117, 0)
-	root.add_child(_main_hp_l)
-	var exp_bg := ColorRect.new()
-	exp_bg.color = Color("24342b")
-	exp_bg.position = Vector2(51, 48)
-	exp_bg.size = Vector2(117, 9)
-	root.add_child(exp_bg)
-	_main_exp_fill.color = G.GOLD_BRIGHT
-	_main_exp_fill.position = Vector2(52, 49)
-	_main_exp_fill.size = Vector2(0, 7)
-	root.add_child(_main_exp_fill)
-	_main_exp_l = G.gold_label("", 15, false, G.GOLD_BRIGHT, false)
-	_main_exp_l.position = Vector2(51, 59)
-	_main_exp_l.custom_minimum_size = Vector2(117, 0)
-	root.add_child(_main_exp_l)
-
-	# 主世界常驻只显示金币；三种专用资源点开查看，不占探索视野。
-	var gold_chip := G.InsetBand.new()
-	gold_chip.position = Vector2(202, 14)
-	gold_chip.size = Vector2(145, 34)
-	gold_chip.mouse_filter = Control.MOUSE_FILTER_STOP
-	gold_chip.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	gold_chip.set_surface(Color("493b29", 0.96), Color("bca478",0.65))
-	gold_chip.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+	var status := HudStyle.status(_main_hp_fill, _main_exp_fill)
+	_hud.add_child(status.root)
+	_main_level_l = status.level
+	_main_hp_l = status.hp
+	_main_exp_l = status.exp
+	var currency := HudStyle.currency()
+	var gold_chip: Button = currency.root
+	_main_gold_chip = gold_chip
+	gold_chip.pressed.connect(func():
+		if not G.ui_blocked:
 			G.show_info_popup(gold_chip, "行囊与货币", G.wallet_info_lines()))
 	_hud.add_child(gold_chip)
-	var gold_icon := TextureRect.new()
-	gold_icon.texture = G.res_tex("cur_gold")
-	gold_icon.position = Vector2(9, 7)
-	gold_icon.size = Vector2(20, 20)
-	gold_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	gold_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	gold_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	gold_chip.add_child(gold_icon)
-	_main_gold_l = G.gold_label("", G.FS_XS, true, Color("ffdf89"), false)
-	_main_gold_l.position = Vector2(35, 7)
-	_main_gold_l.size = Vector2(104, 20)
-	_main_gold_l.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	gold_chip.add_child(_main_gold_l)
-	var region := G.serif_label(String(_main_cfg.get("name", "昭元边城")), 20,
-		Color("f1e5bb"), true)
-	region.add_theme_font_override("font",G.font_art)
-	region.add_theme_font_size_override("font_size",26)
-	region.position = Vector2(205, 53)
-	region.size = Vector2(147, 22)
-	region.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	region.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_hud.add_child(region)
+	_main_gold_l = currency.value
+	_hud.add_child(HudStyle.region_title(String(_main_cfg.get("name", "昭元边城"))))
 
 
 func _build_hud() -> void:
@@ -1444,47 +1460,29 @@ func _build_hud() -> void:
 	_build_vignette()  # 最先入层：只在画面四周压暗，不遮住下方的 HUD 控件
 	if _mode == "main_world":
 		_build_main_world_status()
-		var story_chip := G.InsetBand.new()
-		story_chip.set_surface(Color("f0e5c9", 0.96), Color("967957", 0.72))
-		# 城内委托快捷签占 y98–130；主线紧接在下方，野外则贴状态栏。
-		story_chip.position = Vector2(14, 138) if bool(_main_cfg.get("city", false)) \
-			else Vector2(14, 100)
-		story_chip.size = Vector2(334, 30)
-		story_chip.mouse_filter = Control.MOUSE_FILTER_STOP
-		story_chip.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		var story := HudStyle.task_chip(336, "story")
+		var story_chip: Button = story.root
+		var task_y := HudStyle.CITY_TASK_Y if bool(_main_cfg.get("city", false)) else HudStyle.FIELD_TASK_Y
+		story_chip.position = Vector2(16, task_y)
 		story_chip.tooltip_text = "点击查看主线目标与奖励"
-		story_chip.gui_input.connect(func(e: InputEvent):
-			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT \
-					and not G.ui_blocked:
+		story_chip.pressed.connect(func():
+			if not G.ui_blocked:
 				_open_story_info(story_chip))
-		_main_story_l = G.gold_label("", G.FS_XS, false, Color("4b4031"), false)
-		_main_story_l.position = Vector2(8, 4)
-		_main_story_l.size = Vector2(318, 22)
-		_main_story_l.clip_text = true
-		_main_story_l.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		story_chip.add_child(_main_story_l)
+		_main_story_l = story.label
 		_hud.add_child(story_chip)
 
-		# 追踪支线蓝签（P05-B §4）：只显示当前追踪的一条；无追踪时整签隐藏。
-		# 城内主线签在 y138–168，蓝签接 y172；野外主线签贴状态栏，蓝签接 y132。
-		_side_chip = G.InsetBand.new()
-		_side_chip.set_surface(Color("dce8e9", 0.95), Color("688790", 0.72))
-		_side_chip.position = Vector2(14, 172) if bool(_main_cfg.get("city", false)) \
-			else Vector2(14, 132)
-		_side_chip.size = Vector2(334, 24)
-		_side_chip.mouse_filter = Control.MOUSE_FILTER_STOP
-		_side_chip.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		var side := HudStyle.task_chip(336, "side")
+		var side_button: Button = side.root
+		_side_chip = side_button
+		_side_chip.position = Vector2(16, task_y + HudStyle.TASK_GAP)
 		_side_chip.tooltip_text = "点击查看当前追踪的支线"
-		_side_chip.gui_input.connect(func(e: InputEvent):
-			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT \
-					and not G.ui_blocked:
-				G.show_info_popup(_side_chip, "追踪支线", G.side_info_lines(), self))
-		_main_side_l = G.gold_label("", G.FS_XS, false, Color("354f58"), false)
-		_main_side_l.position = Vector2(8, 2)
-		_main_side_l.size = Vector2(318, 20)
-		_main_side_l.clip_text = true
-		_main_side_l.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		_side_chip.add_child(_main_side_l)
+		side_button.pressed.connect(func():
+			if not G.ui_blocked:
+				var special_goal := SpecialEvents.goal(G)
+				if not special_goal.is_empty():
+					G.show_info_popup(_side_chip,"追踪奇遇",[special_goal,"到标记的地点继续，谢礼在复命时领取。"],self)
+				else: G.show_info_popup(_side_chip, "追踪支线", G.side_info_lines(), self))
+		_main_side_l = side.label
 		_hud.add_child(_side_chip)
 		_side_chip.visible = false   # 由 _refresh_hud 按追踪状态显隐
 
@@ -1730,20 +1728,27 @@ func _refresh_hud() -> void:
 		var need := G.exp_to_next(lv)
 		var exp_ratio := 1.0 if need <= 0 else clampf(float(exp) / float(need), 0.0, 1.0)
 		_main_level_l.text = "Lv%d" % lv
-		G.animate_fill(_main_hp_fill,115.0 * clampf(float(hp) / float(maxi(m, 1)), 0.0, 1.0))
-		G.animate_fill(_main_exp_fill,115.0 * exp_ratio)
-		_main_hp_l.text = "生命 %d/%d" % [hp, m]
-		_main_exp_l.text = "EXP %d%%" % roundi(exp_ratio * 100.0)
+		HudStyle.progress(_main_hp_fill, float(hp) / float(maxi(m, 1)))
+		HudStyle.progress(_main_exp_fill, exp_ratio)
+		_main_hp_fill.color = Color("e99978") if float(hp) / float(maxi(m, 1)) <= 0.3 else Color("92cbaa")
+		_main_hp_l.text = "%d/%d" % [hp, m]
+		_main_hp_l.tooltip_text = "生命 %d / %d" % [hp, m]
+		_main_exp_l.text = "%d%%" % roundi(exp_ratio * 100.0)
 		if _main_gold_l != null:
-			_main_gold_l.text = str(int(G.wallet.get("gold", 0)))
+			HudStyle.update_currency(_main_gold_l, int(G.wallet.get("gold", 0)))
+			_main_gold_chip.tooltip_text = "金币 %d · 点击查看全部货币" % int(G.wallet.get("gold", 0))
 		if _main_story_l != null:
-			_main_story_l.text = G.story_goal_short()
+			HudStyle.update_task(_main_story_l, G.story_goal_short())
+			_main_story_l.get_parent().tooltip_text = G.story_goal_short() + " · 查看目标与奖励"
 		if _side_chip != null:
 			var side_text := G.side_line()
 			var commissions := WorldCommission.entities(G, _main_map_id)
 			if not commissions.is_empty(): side_text = "委托 · " + String(commissions[0].name)
+			var special_goal := SpecialEvents.goal(G)
+			if not special_goal.is_empty(): side_text = "奇遇 · " + special_goal
 			_side_chip.visible = not side_text.is_empty()
-			_main_side_l.text = side_text
+			HudStyle.update_task(_main_side_l, side_text)
+			_side_chip.tooltip_text = side_text + " · 查看追踪支线"
 		if _player_name_l != null:
 			_player_name_l.text = "%s  Lv%d" % [G.display_name(), lv]
 			var name_width := G.font_display.get_string_size(_player_name_l.text,
@@ -1898,8 +1903,10 @@ func on_interactable(it: _Interactable) -> void:
 	match it.kind:
 		"chest":
 			Audio.sfx("coin")
+			var before_gold:=st.gold
+			var before_currency:=st.expedition
 			st.add_reward("chest")
-			_toast("宝箱开启：金币 +200 · 远征币 +30")
+			_toast("宝箱开启：金币 +%d · 远征币 +%d" % [st.gold-before_gold,st.expedition-before_currency])
 			it.queue_free()
 		"event":
 			Audio.sfx("coin")
@@ -1968,10 +1975,16 @@ func _open_run_event(it: _Interactable) -> void:
 func _refresh_quest_entities() -> void:
 	_feedback_frame=-1
 	_feedback_focus=null
+	var special_cooldowns:Dictionary={}
 	for entity in _quest_entities:
-		if is_instance_valid(entity): entity.queue_free()
+		if is_instance_valid(entity):
+			if not entity.special_event_id.is_empty() and entity.trade_cooled:
+				special_cooldowns[entity.eid]=entity.position
+			entity.queue_free()
 	_quest_entities.clear()
 	_build_quest_entities()
+	for entity in _quest_entities:
+		if special_cooldowns.get(entity.eid,Vector2.INF)==entity.position: entity.trade_cooled=true
 
 
 func _build_quest_entities() -> void:
@@ -2046,7 +2059,23 @@ func _build_quest_entities() -> void:
 		_quest_entities.append(ent)
 		_world.add_child(ent)
 	_build_commission_entities()
+	_build_special_event_entities()
 	_mark_nav_dirty()
+
+
+func _build_special_event_entities() -> void:
+	for entry in SpecialEvents.entities(G,_main_map_id):
+		var entity := _QuestEntity.new()
+		entity.eid = "special|"+String(entry.id)+("|feedback" if bool(entry.feedback) else "|"+String(entry.point.map))
+		entity.special_event_id = String(entry.id)
+		entity.kind = "feedback" if bool(entry.feedback) else "special_event"
+		entity.used = bool(entry.feedback)
+		entity.art = String(entry.point.art)
+		entity.caption = String(entry.name)
+		entity.position = _cfg_point(entry.point.at,Vector2.ZERO)
+		entity.map_ref = self
+		_world.add_child(entity)
+		_quest_entities.append(entity)
 
 
 func _build_commission_entities() -> void:
@@ -2223,6 +2252,11 @@ func _trial_interact(e:_QuestEntity)->void:
 ## 支线实体交互（P05-B）：采集/观察/送达。成功推进即从地图消失，提示走 toast。
 func on_quest_entity(e: _QuestEntity) -> void:
 	if _map_done or _battle != null or e.used or _modal_open(): return
+	if e.kind=="special_event":
+		if not e.trade_cooled:
+			e.trade_cooled=true
+			_show_special_event(SpecialEvents.presentation(G,e.special_event_id,_main_map_id))
+		return
 	if e.kind in ["trial","trial_board"]:
 		_trial_interact(e)
 		return
@@ -2379,6 +2413,81 @@ func on_quest_entity(e: _QuestEntity) -> void:
 	_refresh_quest_entities.call_deferred()
 
 
+func _show_special_event(display: Dictionary) -> void:
+	if _special_panel!=null or display.is_empty(): return
+	var id := String(display.id)
+	_special_panel = SpecialPanel.new()
+	_hud.add_child(_special_panel)
+	_special_panel.open_event(display)
+	_special_panel.closed.connect(func(): _special_panel=null)
+	_special_panel.action_selected.connect(func(choice: String):
+		if choice=="battle":
+			_special_panel.close()
+			_start_special_battle(id)
+			return
+		var result := SpecialEvents.action(G,id,_main_map_id,choice)
+		if not bool(result.get("ok",false)):
+			_toast(String(result.get("line","这一步未保存，请重试。")))
+			return
+		_special_panel.close()
+		_refresh_quest_entities.call_deferred()
+		_refresh_hud()
+		if String(SpecialEvents.record(G,id).get("phase",""))=="battle":
+			_start_special_battle(id)
+			return
+		var summary := SpecialEvents.presentation(G,id,_main_map_id)
+		summary["choices"]={}
+		summary["body"]=String(result.line)+("\n\n下一步："+SpecialEvents.goal(G,id) if not SpecialEvents.goal(G,id).is_empty() else "\n\n"+String(SpecialEvents.row(id).note))
+		_show_special_event(summary))
+
+
+func _start_special_battle(id: String) -> void:
+	if _battle!=null or _modal_open(): return
+	var ally := {"role_id":st.role_id,"level":st.level,"traits":[],
+		"active_pet":st.active_pet,"bench_pet":st.bench_pet,"potions":2,"hp_override":-1,
+		"growth":G.growth_bonuses(st.role_id),"skill_levels":G.prog.get("skills",{}),
+		"unlocked_skills":G.act1_unlocked_skills(st.role_id),"skill_variants":G.act1_skill_variants(st.role_id),
+		"pet_stats":G.battle_pet_stats([st.active_pet,st.bench_pet])}
+	var prepared := SpecialEvents.prepare_battle(G,id,_main_map_id,ally)
+	if not bool(prepared.get("ok",false)):
+		_toast(String(prepared.get("line","尚未开战，请重试。")))
+		return
+	_stop_auto_walk("")
+	_special_battle_id=id
+	_special_battle_token=String(prepared.battle.token)
+	BattleScene.pending_cfg=(prepared.battle as Dictionary).duplicate(true)
+	BattleScene.pending_cfg["region_floor_tint"]=_ground_tint().to_html(false)
+	_world.visible=false
+	_hud.visible=false
+	_battle_layer=CanvasLayer.new()
+	_battle_layer.layer=2
+	add_child(_battle_layer)
+	_battle=(load("res://src/battle/BattleScene.tscn") as PackedScene).instantiate()
+	_battle.battle_finished.connect(_on_special_battle_end)
+	_battle_layer.add_child(_battle)
+
+
+func _on_special_battle_end(result: String, _hp_left: int) -> void:
+	if _special_battle_id.is_empty(): return
+	var outcome := SpecialEvents.resolve_battle(G,_special_battle_id,_main_map_id,_special_battle_token,result)
+	_battle=null
+	_battle_layer.queue_free()
+	_battle_layer=null
+	_world.visible=true
+	_hud.visible=true
+	Audio.play_bgm("bgm_map")
+	Audio.play_ambience(_ambient_region())
+	_restore_after_battle()
+	_refresh_quest_entities.call_deferred()
+	_refresh_hud()
+	var display := SpecialEvents.presentation(G,_special_battle_id,_main_map_id)
+	display["choices"]={}
+	display["body"]=String(outcome.line)+"\n\n下一步："+SpecialEvents.goal(G,_special_battle_id)
+	_show_special_event(display)
+	_special_battle_id=""
+	_special_battle_token=""
+
+
 func _open_side_choice(e: _QuestEntity, step: Dictionary) -> void:
 	if _puzzle_panel != null or e.trade_cooled: return
 	e.trade_cooled = true
@@ -2402,6 +2511,11 @@ func _open_side_choice(e: _QuestEntity, step: Dictionary) -> void:
 ## 追踪支线在当前地图的实体坐标（P05-B 小地图蓝菱用）。
 func _tracked_side_points() -> Array:
 	var out: Array = []
+	var special_id := SpecialEvents.tracked(G)
+	if not special_id.is_empty():
+		var target := SpecialEvents.objective(G,special_id)
+		if String(target.get("map",""))==_main_map_id:
+			return [_cfg_point(target.at,Vector2.ZERO)]
 	var qid := G.side_tracked()
 	if qid.is_empty():
 		return out
@@ -3053,6 +3167,12 @@ func _closest_feedback()->Node2D:
 	return _feedback_focus
 
 func _nav_info() -> Dictionary:
+	var special_id := SpecialEvents.tracked(G) if _mode=="main_world" else ""
+	if not special_id.is_empty():
+		var target := SpecialEvents.objective(G,special_id)
+		if String(target.get("map",""))==_main_map_id:
+			return {"name":"奇遇 · "+String(target.get("name",SpecialEvents.row(special_id).giver)),
+				"pos":_cfg_point(target.at,Vector2.ZERO),"kind":"quest"}
 	for entity in _quest_entities:
 		if is_instance_valid(entity) and not entity.used and entity.kind=="trade_contract":return {"name":entity.caption,"pos":entity.position,"kind":"quest"}
 		if is_instance_valid(entity) and not entity.used and entity.kind=="trial":return {"name":entity.caption,"pos":entity.position,"kind":"quest"}
@@ -3259,7 +3379,7 @@ func _toggle_big_map() -> void:
 	var lines := [
 		"全图 %d × %d 格（约 %.0f × %.0f 步）" % [int(ext.x / 48.0), int(ext.y / 48.0),
 			ext.x / 48.0, ext.y / 48.0],
-		"金点：你所在的位置 · 亮框：当前视野",
+		"金箭：你所在的位置 · 亮框：当前视野 · 铜线：道路",
 		"青点：传送阵（封印时转紫）· 金菱：宝箱 / 事件 / 商队 / 篝火",
 		"红点：敌影（视野内才会显形）· 亮点：散落的钱袋 / 魂晶（走近自动入袋）",
 		"清光全图怪物有额外赏，走的越细、离开时的评价越高",
@@ -3332,7 +3452,13 @@ func _check_world_exits() -> void:
 		if not (row_v is Dictionary):
 			continue
 		var row := row_v as Dictionary
-		if _player.position.distance_to(_cfg_point(row.get("at", []), Vector2.ZERO)) > 38.0:
+		var id := String(row.get("id",""))
+		var touching := _world_exit_touch_rect(row).has_point(_player.position)
+		# Arriving or resuming inside a sign does not immediately send the player back.
+		if _arrival_exit_blocks.has(id):
+			if not touching: _arrival_exit_blocks.erase(id)
+			continue
+		if not touching:
 			continue
 		var required := String(row.get("requires_story", ""))
 		if not required.is_empty() and not G.story_step_done(required):
@@ -3429,7 +3555,7 @@ func _finish_map(result: String) -> void:
 # ================= 怪物接触开战 =================
 ## 任一浮层/演出/看地图打开时冻结怪物与接触判定（防"看地图被偷袭"，P1-10）
 func _modal_open() -> bool:
-	return _journey_panel != null or _battle != null or _map_done or _picker != null or _remover != null \
+	return _special_panel != null or _journey_panel != null or _battle != null or _map_done or _picker != null or _remover != null \
 		or _big_map != null or _altar_ui != null or _exit_ui != null or _beat != null \
 		or _trade_panel != null or _road_mail_panel != null or _puzzle_panel != null \
 		or _fishing_panel != null \
@@ -3595,6 +3721,16 @@ func _start_battle(m: _MapMonster) -> void:
 
 
 ## 真正的开战（演出结束后 / 无演出时直接进）
+func _battle_reward_preview(m: _MapMonster) -> Dictionary:
+	if m.trial: return {}
+	if _mode=="main_world":
+		if _main_map_id=="red_sand_route" and m.idx==_road_mail_ambush_idx(): return {}
+		return (_main_cfg.get("battle_rewards",{}).get(m.tier,{}) as Dictionary).duplicate(true)
+	var reward:Dictionary=TableCache.nodes_config().get("rewards",{}).get(m.tier,{}).duplicate(true)
+	for key in reward: reward[key]=roundi(float(reward[key])*st.reward_mult())
+	return reward
+
+
 func _launch_battle(m: _MapMonster) -> void:
 	# 主题没有怪物池时拒绝开战：空池战斗会「一 tick 判胜并照发奖励」（A6 同批收口）
 	var mons: Variant = TableCache.theme_config(st.theme).get("monsters", [])
@@ -3660,6 +3796,7 @@ func _launch_battle(m: _MapMonster) -> void:
 			"opening_def_break": {"monster_id": "mon_tide_priest", "pct": 0.15,
 				"ticks": 180} if tide_break else {}},
 		"mode": "pve",   # 超时按远征失利显示（口径 D3；问题 #21）
+		"reward_preview":_battle_reward_preview(m),
 		"presentation": "classic_inline" if _mode == "main_world" else "default",
 		"stele_echo_ready": _mode == "main_world" and _main_map_id == "stele_cavern" \
 			and m.mon_id == "mon_stele_warden" and \
@@ -4561,7 +4698,7 @@ class _WorldExit extends Node2D:
 		var viewport_size := get_viewport_rect().size
 		var label_rect := Rect2(screen_at, _caption_label.size)
 		var status_area := Rect2(0, 0, 352, 196)
-		var minimap_area := Rect2(viewport_size.x - 128, 0, 128, 126)
+		var minimap_area := Rect2(viewport_size.x - 128, 0, 128, MapScene.MINI_H + MapScene._MiniMapPos.y + 4)
 		_caption_label.visible = not label_rect.intersects(status_area) \
 			and not label_rect.intersects(minimap_area) \
 			and screen_at.x >= 2 and label_rect.end.x <= viewport_size.x - 2
@@ -4717,6 +4854,8 @@ class _MapMonster extends CharacterBody2D:
 			var chip := map_ref._main_story_l.get_parent() as Control
 			if chip != null:
 				top = maxf(top, chip.position.y + chip.size.y + 2.0)
+		if map_ref != null and map_ref._side_chip != null and map_ref._side_chip.visible:
+			top = maxf(top, map_ref._side_chip.position.y + map_ref._side_chip.size.y + 2.0)
 		return top
 
 	func _pick_wander_target() -> void:
@@ -5065,6 +5204,7 @@ class _OathTraveler extends CharacterBody2D:
 		draw_set_transform(Vector2.ZERO,0,Vector2.ONE)
 
 class _QuestEntity extends Node2D:
+	var special_event_id := ""
 	var feedback_tier:=0
 	var commission_posting := ""
 	var eid := ""
@@ -5110,7 +5250,7 @@ class _QuestEntity extends Node2D:
 			return
 		if used or map_ref == null or map_ref._player == null:
 			return
-		if kind in ["trade_contract", "trial", "trial_board", "oath", "world_commission", "trade", "fishing", "puzzle_choice", "align", "switch", "repair", "mark", "frost_herb_route", "first_order_bridge"] or \
+		if kind in ["special_event", "trade_contract", "trial", "trial_board", "oath", "world_commission", "trade", "fishing", "puzzle_choice", "align", "switch", "repair", "mark", "frost_herb_route", "first_order_bridge"] or \
 				(kind == "road_mail" and mail_action == "board"):
 			if position.distance_to(map_ref._player.position) > MapScene.INTERACT_R + 32:
 				trade_cooled = false
@@ -5251,17 +5391,57 @@ class _Minimap extends Control:
 
 	var map_ref: MapScene = null
 	var big := false
+	var _frame_style := MapScene.HudStyle.surface(MapScene.HudStyle.WOOD, MapScene.HudStyle.EDGE)
+	var _shadow_style := MapScene.HudStyle.surface(Color("101f23", 0.55), Color.TRANSPARENT)
+	var _cartography := MapScene.Cartography.new()
+	var _hovered := false
 
 	func _ready() -> void:
 		mouse_filter = Control.MOUSE_FILTER_STOP
 		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		focus_mode = Control.FOCUS_ALL
+		tooltip_text = "展开地图与图例"
+		focus_entered.connect(queue_redraw)
+		focus_exited.connect(queue_redraw)
+		mouse_entered.connect(func(): _hovered = true; queue_redraw())
+		mouse_exited.connect(func(): _hovered = false; queue_redraw())
 		custom_minimum_size = Vector2(260.0, 342.0) if big \
-			else Vector2(MapScene.MINI_W, MapScene.MINI_H)
+			else Vector2(MapScene.MINI_W, MapScene.MINI_H if map_ref != null and map_ref._mode == "main_world" else 120.0)
 		size = custom_minimum_size   # 非容器控件不会自动吃最小尺寸，必须显式给宽高
+		theme = MapScene.HudStyle.hud_theme()
+		var title := MapScene.HudStyle.label("地域舆图" if big else "地图", 16 if big else 13, Color("f0d39f"), true)
+		title.position = Vector2(10, 1)
+		title.size = Vector2(size.x - 45, 28 if big else 20)
+		add_child(title)
+		var north := MapScene.HudStyle.label("北", 12, Color("c3c9b4"))
+		north.position = Vector2(size.x - 22, 2)
+		north.size = Vector2(16, 20)
+		add_child(north)
+		var footer := MapScene.HudStyle.label("金箭 · 当前位置" if big else "展开地图", 12, Color("d3c9aa"))
+		footer.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		footer.position = Vector2(9, size.y - 22)
+		footer.size = Vector2(size.x - (18 if big else 30), 20)
+		add_child(footer)
+		if map_ref != null:
+			var source: Array = map_ref._main_cfg.get("flat_routes", [])
+			if map_ref._flat_ground != null: source = map_ref._flat_ground.routes
+			elif source.is_empty() and not map_ref._ground_path.is_empty():
+				source = MapScene.GroundLayout.expedition_routes(map_ref._ground_path,
+					int(map_ref._map_cfg.get("map_cols", 32)), int(map_ref._map_cfg.get("map_rows", 42)))
+			_cartography.setup(source)
+
+	func _map_rect() -> Rect2:
+		return MapScene.Cartography.fitted_rect(size, map_ref._map_extent(), big)
+
+	func _project(point: Vector2) -> Vector2:
+		return MapScene.Cartography.project(point, map_ref._map_extent(), _map_rect())
 
 	func _gui_input(e: InputEvent) -> void:
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+		if G.ui_blocked: return
+		if (e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT) \
+				or e.is_action_pressed("ui_accept"):
 			tapped.emit()
+			accept_event()
 
 	func _draw() -> void:
 		if map_ref == null:
@@ -5269,26 +5449,38 @@ class _Minimap extends Control:
 		var sz := size
 		if sz.x <= 1.0 or sz.y <= 1.0:
 			sz = custom_minimum_size
-		draw_colored_polygon(G.octagon_path(sz,0,3),Color("142d2b",0.9))
-		draw_rect(Rect2(Vector2.ONE, sz-Vector2.ONE*2), Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.6), false, 1)
+		_frame_style.border_color = Color("ae9567") if _hovered or has_focus() else MapScene.HudStyle.EDGE
+		draw_style_box(_shadow_style, Rect2(Vector2(0, 2), sz))
+		draw_style_box(_frame_style, Rect2(Vector2.ZERO, sz))
+		MapScene.HudStyle.finish(self, sz, MapScene.HudStyle.BRASS)
 
 		var ext := map_ref._map_extent()
-		var s := minf(sz.x / ext.x, sz.y / ext.y)
-		var off := (sz - ext * s) * 0.5
-		var at := func(p: Vector2) -> Vector2: return off + p * s
-		draw_rect(Rect2(off, ext * s), Color(0.30, 0.25, 0.17, 0.50))
+		var map_rect := _map_rect()
+		var at := func(p: Vector2) -> Vector2: return _project(p)
+		var s := map_rect.size.x / ext.x
+		draw_rect(map_rect.grow(1), Color("0f2427"))
+		draw_rect(map_rect, MapScene.Cartography.ground_color(map_ref.st.theme))
+		_cartography.draw_roads(self, map_rect, ext, big)
+		if map_ref._city_content != null:
+			for building in map_ref._city_content._buildings:
+				var built: bool = building.built()
+				MapScene.Cartography.draw_house(self, at.call(building.position), big, built)
 
 		var reveal := float(map_ref._map_cfg.get("map_reveal_radius", 520.0))
 		var pp := map_ref._player.position if map_ref._player != null else Vector2.ZERO
 
-		# 当前视野框（相机 1.25 倍 ⇒ 384×640；相机带 (0,-56) 偏移，位在玩家上方）
-		var view := Vector2(384.0, 640.0)
-		var vc := pp + Vector2(0, -56.0)
-		draw_rect(Rect2(at.call(vc - view * 0.5), view * s),
-			Color(1.0, 0.98, 0.90, 0.16), false, 1.5)
+		# 视野范围仅在展开图显示，避免小图的框线盖住路线与定位箭头。
+		if big:
+			var camera := map_ref.get_viewport().get_camera_2d()
+			var zoom := camera.zoom if camera != null else Vector2(1.25, 1.25)
+			var view := map_ref.get_viewport_rect().size / zoom
+			var center := camera.get_screen_center_position() if camera != null else pp
+			var view_rect := Rect2(at.call(center - view * 0.5), view * s).intersection(map_rect)
+			draw_rect(view_rect, Color("e5efcc", 0.09))
+			draw_rect(view_rect, Color("e6d7a6", 0.62), false, 1)
 
 		# 传送阵（封印为紫）
-		if map_ref._portal != null:
+		if map_ref._portal != null and map_ref._portal.visible:
 			var pc := Color("8a6a9a") if map_ref._portal.locked else Color("7ae0ff")
 			_pt(at.call(map_ref._portal.position), 4.0, pc)
 		# 世界出口（P01 样板 §3）：北门／南道的木牌常在本屏外，小地图上补一枚绿菱指方向，
@@ -5302,32 +5494,46 @@ class _Minimap extends Control:
 				var at_arr: Variant = row.get("at", [])
 				if not (at_arr is Array) or (at_arr as Array).size() < 2:
 					continue
-				var ep: Vector2 = at.call(Vector2(float(at_arr[0]), float(at_arr[1])))
+				var ep: Vector2 = at.call(map_ref._world_exit_sign_position(row))
 				var col := Color("9fe06a")
 				var req := String(row.get("requires_story", ""))
 				if not req.is_empty() and not G.story_step_done(req):
+					if not big: continue
 					col = Color("8f8f8a")
-				draw_colored_polygon([ep + Vector2(0, -5.0), ep + Vector2(4.0, 0),
-					ep + Vector2(0, 5.0), ep + Vector2(-4.0, 0)], col)
+				var marker_scale := 1.0 if big else 0.75
+				draw_colored_polygon([ep + Vector2(0, -6.0) * marker_scale, ep + Vector2(5.0, 0) * marker_scale,
+					ep + Vector2(0, 6.0) * marker_scale, ep + Vector2(-5.0, 0) * marker_scale], Color("14292d"))
+				draw_colored_polygon([ep + Vector2(0, -4.0) * marker_scale, ep + Vector2(3.0, 0) * marker_scale,
+					ep + Vector2(0, 4.0) * marker_scale, ep + Vector2(-3.0, 0) * marker_scale], col)
 		# 目标物件（金菱）
 		if map_ref._interactable != null and not map_ref._interactable.used:
 			var ip: Vector2 = at.call(map_ref._interactable.position)
 			draw_colored_polygon([ip + Vector2(0, -4.5), ip + Vector2(3.6, 0), ip + Vector2(-3.6, 0)],
 				Color("ffd980"))
 		# 追踪支线的野外实体（蓝菱）：与主线金标区分，一眼知道该往哪采／去哪交（P05-B）
-		for qp_v in map_ref._tracked_side_points():
+		var side_points := map_ref._tracked_side_points()
+		if not big and side_points.size() > 1:
+			var nearest: Vector2 = side_points[0]
+			for candidate: Vector2 in side_points:
+				if candidate.distance_squared_to(pp) < nearest.distance_squared_to(pp): nearest = candidate
+			side_points = [nearest]
+		for qp_v in side_points:
 			var qp: Vector2 = at.call(qp_v)
+			if not big:
+				var opacity := 0.88 + 0.12 * sin(float(Time.get_ticks_msec()) * 0.002)
+				if qp.distance_to(at.call(pp)) >= 7: _pt(qp, 2.0, Color(Color("9fd0ff"), opacity))
+				continue
 			draw_colored_polygon([qp + Vector2(0, -4.5), qp + Vector2(3.6, 0),
 				qp + Vector2(0, 4.5), qp + Vector2(-3.6, 0)], Color("9fd0ff"))
 		# 未拾取的拾取物（金点=钱袋 / 淡青=魂晶）：与地面光斑同色，指路用
 		for p in map_ref._pickups:
-			if p.used:
+			if p.used or not big:
 				continue
 			_pt(at.call(p.position), 2.6, Color("ffe9a8") if p.kind == "coin" else Color("9fe0f0"))
 		# 兴趣点：紫菱=祭坛（花金重摇祝福）· 灰点=矿脉（材料）
 		# 注意别用 s 当循环名：本函数上面已经有一个 s = 地图缩放比（同名会直接编译失败）
 		for spot in map_ref._spots:
-			if spot.used:
+			if spot.used or not big:
 				continue
 			var sp: Vector2 = at.call(spot.position)
 			if spot.kind == "altar":
@@ -5335,23 +5541,34 @@ class _Minimap extends Control:
 					sp + Vector2(0, 4.5), sp + Vector2(-3.6, 0)], Color("c9a0ff"))
 			else:
 				_pt(sp, 2.4, Color("cfd6e0"))
-		# 敌影（视野内）
+		# 小图以导航为主：不铺满普通敌影，只保留首领警示；展开图显示全部已揭示敌影。
 		for m in map_ref._monsters:
+			if not big and m.tier != "boss": continue
 			if m.position.distance_to(pp) <= reveal or m.tier == "boss":
 				_pt(at.call(m.position), 2.6, Color("e0664a"))
-		# 玩家（金点 + 朝向短须）
-		draw_circle(at.call(pp), 3.4, Color("ffe9a8"))
-		var face := Vector2.ZERO
+		# 玩家金箭使用真实面向，小图去掉定位外圈，展开图保留柔和光环。
+		var face := Vector2.DOWN
 		if is_instance_valid(map_ref._player_anim):
 			match String(map_ref._player_anim.animation):
 				"walk_up": face = Vector2(0, -1)
 				"walk_down": face = Vector2(0, 1)
 				"walk_left": face = Vector2(-1, 0)
+				"walk_right": face = Vector2(1, 0)
 				_: face = Vector2(0, 1)
-		draw_line(at.call(pp), at.call(pp) + face * 6.0, Color("ffe9a8"), 1.5)
-		G.draw_brass_corners(self, sz, 10, 2)
+		MapScene.Cartography.draw_player(self, at.call(pp), face, big)
+		# 北向固定的双色罗针；下缘给出明确的展开入口。
+		var needle := Vector2(sz.x - 30, 12)
+		draw_colored_polygon(PackedVector2Array([needle + Vector2(0, -5), needle + Vector2(-3, 3), needle]), Color("efd5a0"))
+		draw_colored_polygon(PackedVector2Array([needle + Vector2(0, -5), needle + Vector2(3, 3), needle]), Color("a47a49"))
+		draw_line(Vector2(9, sz.y - 23), Vector2(sz.x - 9, sz.y - 23), Color("bca16c", 0.32), 1)
+		if not big:
+			var expand := Vector2(sz.x - 16, sz.y - 11)
+			draw_polyline(PackedVector2Array([expand + Vector2(-3, -3), expand + Vector2(3, -3), expand + Vector2(3, 3)]), Color("dfc18a"), 1, true)
+			draw_line(expand + Vector2(-3, 3), expand + Vector2(3, -3), Color("dfc18a"), 1, true)
+		if has_focus(): draw_rect(Rect2(Vector2.ONE * 2, sz - Vector2.ONE * 4), Color("f6d89a"), false, 1)
 
 	func _pt(p: Vector2, r: float, c: Color) -> void:
+		draw_circle(p, r + 1, Color("14292d", 0.85))
 		draw_circle(p, r, c)
 
 

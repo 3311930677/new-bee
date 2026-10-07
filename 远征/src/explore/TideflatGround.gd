@@ -1,8 +1,15 @@
 class_name TideflatGround
 extends Node2D
+var flat_floor := false
 
 # 潮退后露出的盐纹与浅水。中心道留空，实体碰撞仍由 MapScene 负责。
 func _draw() -> void:
+	if flat_floor:
+		# Sparse tide marks, with the main floor carrying the wet-sand material.
+		for points in [PackedVector2Array([Vector2(85,290),Vector2(170,265),Vector2(225,282),Vector2(290,250)]),
+			PackedVector2Array([Vector2(680,845),Vector2(735,865),Vector2(802,852),Vector2(880,880)])]:
+			draw_polyline(points, Color("b3c6ae"), 3)
+		return
 	var pool := Color("517e7d", 0.83)
 	var rim := Color("d4e2d2", 0.8)
 	for row in range(3):

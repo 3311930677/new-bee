@@ -17,8 +17,9 @@ const SKIP_FILES := [
 	"OathPattern.gd", # 非交互纹样绘图组件；返回由所属誓约/图志面板处理
 	"UiSafeArea.gd", # RefCounted 布局工厂，无独立可关闭页面
 	"SkillShowcase.gd", # 非独立页面的招式动画，返回由技能书负责
-	"AvatarCatalog.gd", "JournalUI.gd", "VisualTheme.gd", "UIFinesse.gd", "FieldUI.gd", "CraftUI.gd", # 目录与样式工厂，均为 RefCounted
+	"AvatarCatalog.gd", "JournalUI.gd", "VisualTheme.gd", "UIFinesse.gd", "FieldUI.gd", "CraftUI.gd", "LedgerStyle.gd", "IllustratedUI.gd", # 目录与样式工厂，均为 RefCounted
 	"InventoryTheme.gd", # 背包 Theme 工厂，无独立页面
+	"WorldHUD.gd", # 地图 HUD 的 Theme 与控件工厂，无独立页面
 	"UIReadability.gd", "UIFeedback.gd", # Text policy and non-interactive effect components.
 	"Main.gd",        # 无 UI
 	"LoadScreen.gd",  # 过渡页：加载中途不该能返回（返回了等于卡在半路）

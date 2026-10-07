@@ -1,0 +1,4 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://shots/ledger_refinement_20261006/CaptureLedger.gd" id="1"]
+[node name="CaptureTradeShadow" type="Node"]
+script = ExtResource("1")

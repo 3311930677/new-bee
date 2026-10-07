@@ -125,7 +125,7 @@ func _run() -> void:
 	map.st.hp = max_before - 35
 	G.prog.level = 8
 	map._refresh_hud()
-	_check(map.st.level == 8 and map.st.max_hp() - map.st.hp == 35 and map._main_hp_l.text == "生命 %d/%d" % [map.st.hp, map.st.max_hp()], "同图升级立即同步等级与生命且保留已损失生命")
+	_check(map.st.level == 8 and map.st.max_hp() - map.st.hp == 35 and map._main_hp_l.text.ends_with("%d/%d" % [map.st.hp, map.st.max_hp()]), "同图升级立即同步等级与生命且保留已损失生命")
 	G.ensure_starter_equip(true)
 	map._refresh_hud()
 	_check(map.st.growth_bonus == G.growth_bonuses("zs") and map.st.max_hp()-map.st.hp == 35, "装备与天赋生命加成必须纳入地图血条和战斗同口径")

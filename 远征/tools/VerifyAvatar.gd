@@ -178,12 +178,14 @@ func _verify_persist() -> void:
 
 # ---------- D. 界面接线：登录页卡片 / 主页入口 / 浮层上传 ----------
 func _verify_panels() -> void:
+	_make_source()
+	_check(G.import_avatar(TMP_SRC).is_empty(), "界面检查先准备可用的上传图片")
 	var login: Control = (load("res://src/ui/Login.tscn") as PackedScene).instantiate()
 	add_child(login)
 	await get_tree().process_frame
 	await get_tree().process_frame
 	var cards: Array = login.get("_avatar_buttons")
-	_check(cards.size() == 5, "登录页应有 5 张头像卡（4 趣味头像 + 自定义），实为 %d" % cards.size())
+	_check(cards.size() == 1, "登录页只提供自定义头像上传入口，实为 %d" % cards.size())
 	var ids: Array = []
 	for c in cards:
 		ids.append(String(c.get_meta("avatar_id", "")))
@@ -193,10 +195,11 @@ func _verify_panels() -> void:
 				_check(Rect2(Vector2.ZERO, frame.size).encloses((child as TextureRect).get_rect()),
 					"头像应缩在卡片内，不应撑出原图尺寸")
 	_check(ids.has("custom"), "登录页应有一张「自定义」上传卡")
-	_check(not ids.has("zs") and ids.has("fox") and ids.has("cat"), "选择器应提供非人物预设")
-	(cards[1] as Button).pressed.emit()
-	_check(G.current_avatar_id() == "cat", "点击夜猫卡应真正切换头像")
-	_check((cards[1].get_node("Card/SelectedMark") as Label).visible, "切换后应显示选中标记")
+	_check(ids == ["custom"], "选择器不推荐职业或宠物头像")
+	_check(not (cards[0] as Button).pressed.get_connections().is_empty(), "上传入口应有实际点击处理")
+	G.use_custom_avatar()
+	login.call("_refresh_avatar_selection")
+	_check((cards[0].get_node("Card/SelectedMark") as Label).visible, "使用上传图后应显示选中标记")
 
 	login.queue_free()
 	await get_tree().process_frame

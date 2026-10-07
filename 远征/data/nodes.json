@@ -10,11 +10,11 @@
   "bonfire": { "heal_pct": 0.40, "remove_trait": 1 },
   "shop": { "potion_price": 300, "potion_heal_pct": 0.35, "potion_cap": 3 },
   "rewards": {
-    "normal": { "gold": 120, "expedition": 20, "exp": 60, "honor": 1 },
-    "elite": { "gold": 300, "expedition": 45, "soul": 5, "exp": 140, "honor": 3 },
-    "boss": { "gold": 800, "expedition": 120, "soul": 15, "exp": 300, "honor": 15 },
-    "chest": { "gold": 200, "expedition": 30, "exp": 30, "honor": 0 },
-    "clear": { "gold": 260, "expedition": 40, "exp": 110, "honor": 2 }
+    "normal": { "gold": 60, "expedition": 20, "exp": 60, "honor": 1 },
+    "elite": { "gold": 160, "expedition": 45, "soul": 5, "exp": 140, "honor": 3 },
+    "boss": { "gold": 400, "expedition": 120, "soul": 15, "exp": 300, "honor": 15 },
+    "chest": { "gold": 120, "expedition": 30, "exp": 30, "honor": 0 },
+    "clear": { "gold": 100, "expedition": 40, "exp": 110, "honor": 2 }
   },
   "run": {
     "comment": "轮次 21：出征前补给。药剂基础 2 瓶，最多加带到 4 瓶；加带的单价递增（第 1 瓶 180，之后每瓶 +120）。金币在「出征」确认时一次性结算，返回/取消不扣钱。school_active_n：流派激活所需的同系词条数（B1）——一局只有 3~4 次三选一，阈值 3 数学上几乎凑不出三件套。",
@@ -50,14 +50,14 @@
   "explore": {
     "comment": "轮次 16：探索动机。清剿全图有额外赏，路上有散落拾取物，让'绕怪直冲传送阵'不再是最优解。",
     "pickup_count": [3, 5],
-    "pickup_gold": [18, 42],
+    "pickup_gold": [8, 20],
     "pickup_currency": "expedition",
     "pickup_currency_amount": [3, 8],
     "pickup_score": 6,
     "kill_score": 12,
     "clear_bonus_score": 30,
     "rank_thresholds": [30, 70, 105],
-    "rank_bonus_gold": [40, 90, 160],
+    "rank_bonus_gold": [15, 35, 60],
     "pickup_radius": 30,
     "reveal_radius": 380,
     "altar_chance": 0.6,

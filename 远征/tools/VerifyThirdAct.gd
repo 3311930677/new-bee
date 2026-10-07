@@ -78,7 +78,7 @@ func _run() -> void:
 	var city: CityScene = post._city_content
 	_check(city._npcs.size() == 3 and city._buildings.size() == 3,
 		"驿站应有三名居民和三栋已落成建筑")
-	_check(city._quest_lbl.text == "驿务 · 采买物资", "驿站快捷入口应显示真实本地服务")
+	_check(city._quest_lbl.text.ends_with("采买物资") and not city._quest_lbl.text.contains("今日委托"), "驿站快捷入口应显示真实本地服务")
 	for npc in city._npcs:
 		for b in city._buildings:
 			_check(b.built(), "驿站建筑须可交互")

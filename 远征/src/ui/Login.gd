@@ -4,7 +4,7 @@ extends Control
 const UI := preload("res://src/ui/JournalUI.gd")
 const Wordmark := preload("res://src/ui/UIWordmark.gd")
 const VIEW_W := 480.0
-const AVATAR_IDS := ["fox", "cat", "turtle", "snow", "custom"]
+const AVATAR_IDS := ["custom"]
 
 var _account: LineEdit
 var _password: LineEdit
@@ -55,30 +55,29 @@ func _build_panel() -> void:
 	var returning := G.has_profile() or not G.selected_role.is_empty()
 	_put_label(content, "欢迎回来，继续上次旅程。" if returning else "欢迎来到昭元，旅人。",
 		Vector2(0, 43), 14, Color("c4b994"), true)
-	UI.stamp(content, Vector2(318, -2))
 	_put_label(content, "账号", Vector2(0, 106), 16, UI.INK, true)
 	_account = UI.field("你的账号")
 	_account.name = "Account"
 	_account.position = Vector2(66, 96)
-	_account.size = Vector2(290, 44)
+	_account.size = Vector2(270, 44)
 	content.add_child(_account)
 	_put_label(content, "密码", Vector2(0, 162), 16, UI.INK, true)
 	_password = UI.field("输入密码", true)
 	_password.name = "Password"
 	_password.position = Vector2(66, 152)
-	_password.size = Vector2(290, 44)
+	_password.size = Vector2(270, 44)
 	content.add_child(_password)
 	if returning:
 		_account.text = G.account
 	_account.text_submitted.connect(func(_text: String): _password.grab_focus())
 	_password.text_submitted.connect(func(_text: String): _do_login(false))
 	_build_avatar_picker(content)
-	var login := UI.button("登录入城", 356, 48, "primary")
+	var login := UI.button("登录入城", 336, 60, "primary")
 	login.name = "LoginButton"
-	login.position = Vector2(0, 350)
+	login.position = Vector2(0, 340)
 	login.pressed.connect(func(): _do_login(false))
 	content.add_child(login)
-	var guest := UI.button("游客入城", 356, 44, "quiet")
+	var guest := UI.button("游客入城", 336, 44, "quiet")
 	guest.name = "GuestButton"
 	guest.position = Vector2(0, 406)
 	guest.pressed.connect(func(): _do_login(true))
@@ -109,18 +108,23 @@ func _put_label(parent: Control, text: String, at: Vector2,
 
 func _build_avatar_picker(content: Control) -> void:
 	_put_label(content, "旅人小像", Vector2(0, 216), 17, UI.INK, true)
-	var note := _put_label(content, "随时可以换", Vector2(240, 219), 14, UI.MUTED)
+	var note := _put_label(content, "自定义图片", Vector2(220, 219), 14, UI.MUTED)
 	note.size.x = 116
 	note.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_avatar_row = HBoxContainer.new()
 	_avatar_row.position = Vector2(0, 246)
-	_avatar_row.size = Vector2(356, 84)
+	_avatar_row.size = Vector2(336, 84)
 	_avatar_row.add_theme_constant_override("separation", 19)
 	content.add_child(_avatar_row)
 	for id in AVATAR_IDS:
 		var card := _avatar_card(id)
 		_avatar_row.add_child(card)
 		_avatar_buttons.append(card)
+	var tip := UI.label("选择你喜欢的图片\n支持常见图片格式，保存在本机",14,UI.MUTED,true)
+	tip.custom_minimum_size = Vector2(260,80)
+	tip.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_avatar_row.add_child(tip)
 	_refresh_avatar_selection()
 
 

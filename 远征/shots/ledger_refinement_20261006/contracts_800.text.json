@@ -1,0 +1,124 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/LedgerPanelCapture/@CanvasLayer@845/@Control@846/@Label@851",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "三城保价与延期合约"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/LedgerPanelCapture/@CanvasLayer@845/@Control@846/@Label@852",
+			"rect_height": 60.0,
+			"size": 15,
+			"text": "同时最多两张未结单；只看游戏日，离线不会过期。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/LedgerPanelCapture/@CanvasLayer@845/@Control@846/@ScrollContainer@855/@VBoxContainer@856/@Label@859",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "第10游戏日 · 未结0/2 · 金币101780"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/LedgerPanelCapture/@CanvasLayer@845/@Control@846/@ScrollContainer@855/@VBoxContainer@856/@PanelContainer@860/@VBoxContainer@861/@HBoxContainer@862/@Label@863",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "昭元修桥铁料"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/LedgerPanelCapture/@CanvasLayer@845/@Control@846/@ScrollContainer@855/@VBoxContainer@856/@PanelContainer@860/@VBoxContainer@861/@HBoxContainer@862/StatusBadge/@Label@864",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "可签约"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/LedgerPanelCapture/@CanvasLayer@845/@Control@846/@ScrollContainer@855/@VBoxContainer@856/@PanelContainer@860/@VBoxContainer@861/@Label@865",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "货物：铁料×2；交到沉渊栈桥市集"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/LedgerPanelCapture/@CanvasLayer@845/@Control@846/@ScrollContainer@855/@VBoxContainer@856/@PanelContainer@860/@VBoxContainer@861/@Label@866",
+			"rect_height": 49.0,
+			"size": 15,
+			"text": "签约参照货款304金，押金60金，第13日内交付。签约不扣货，交货时一次扣除。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/LedgerPanelCapture/@CanvasLayer@845/@Control@846/@ScrollContainer@855/@VBoxContainer@856/@PanelContainer@860/@VBoxContainer@861/@Label@867",
+			"rect_height": 75.0,
+			"size": 15,
+			"text": "保价：固定利差25金，保价费8金在退押中扣，退押52金。自担：利差30–55金，退押60金；路点核准可免25金路阻扣款。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/LedgerPanelCapture/@CanvasLayer@845/@Control@846/@ScrollContainer@855/@VBoxContainer@856/@PanelContainer@860/@VBoxContainer@861/@Label@868",
+			"rect_height": 75.0,
+			"size": 15,
+			"text": "最多损失：保价8金、自担30金；一次延期另付12金，补2日。长期逾期自动退押且不扣货。含延期的最大损失仍小于60金押金。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/LedgerPanelCapture/@CanvasLayer@845/@Control@846/@ScrollContainer@855/@VBoxContainer@856/@PanelContainer@860/@VBoxContainer@861/@Label@869",
+			"rect_height": 49.0,
+			"size": 15,
+			"text": "补货可正常买入；路点：核准旧盐道桥绳。不会查看或修改现实日期。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/LedgerPanelCapture/@CanvasLayer@845/@Control@846/@ScrollContainer@855/@VBoxContainer@856/@PanelContainer@860/@VBoxContainer@861/@HBoxContainer@870/@PanelContainer@872/@Label@871",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "保价签约·押60"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/LedgerPanelCapture/@CanvasLayer@845/@Control@846/@ScrollContainer@855/@VBoxContainer@856/@PanelContainer@860/@VBoxContainer@861/@HBoxContainer@870/@PanelContainer@874/@Label@873",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "自担签约·押60"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/LedgerPanelCapture/@CanvasLayer@845/@Control@846/@PanelContainer@858/@Label@857",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "返回市集"
+		}
+	]
+}

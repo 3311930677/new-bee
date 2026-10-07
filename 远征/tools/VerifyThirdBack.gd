@@ -112,11 +112,13 @@ func _run() -> void:
 	var choice_state := G.prog.duplicate(true)
 	var choice_wallet := G.wallet.duplicate(true)
 	var choice_items := G.items.duplicate(true)
+	var choice_city := G.city.duplicate(true)
 	var equal_reward_wallet := {}
 	for choice in ["merchant", "wardens"]:
 		G.prog = choice_state.duplicate(true)
 		G.wallet = choice_wallet.duplicate(true)
 		G.items = choice_items.duplicate(true)
+		G.city = choice_city.duplicate(true) # Alternative history also restores work cooldowns.
 		var return_post := await _enter("frost_post")
 		var city: CityScene = return_post._city_content
 		city._open_dialog(G.city_npc("npc_frost_envoy"), false)

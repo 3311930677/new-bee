@@ -4,6 +4,7 @@ extends Node2D
 const Surface := preload("res://src/explore/TerrainSurface.gd")
 var map_id := ""
 var _flags := ""
+var flat_floor := false
 
 func _process(_delta: float) -> void:
 	var value := JSON.stringify(G.prog.get("flags", {}))
@@ -12,14 +13,16 @@ func _process(_delta: float) -> void:
 		queue_redraw()
 
 func _draw() -> void:
-	Surface.tiled(self, "res://image/map_proc/011_tile_tomb_2.png", Rect2(180, 64, 600, 1120), Vector2(96, 96), Color("7e8791"))
-	Surface.tiled(self, "res://image/map_proc/011_tile_tomb_2.png", Rect2(404, 80, 152, 1080), Vector2(76, 76), Color("b5b7af"))
+	if not flat_floor:
+		Surface.tiled(self, "res://image/map_proc/011_tile_tomb_2.png", Rect2(180, 64, 600, 1120), Vector2(96, 96), Color("7e8791"))
+		Surface.tiled(self, "res://image/map_proc/011_tile_tomb_2.png", Rect2(404, 80, 152, 1080), Vector2(76, 76), Color("b5b7af"))
 	for x in [196.0, 762.0]:
 		for y in range(64, 1190, 96):
 			draw_rect(Rect2(x, y, 12, 86), Color("28313e"))
 			draw_line(Vector2(x + 3, y + 4), Vector2(x + 3, y + 82), Color("616876"), 2)
 	for y in [275.0, 525.0, 775.0, 1025.0]:
-		for x in [245.0, 715.0]: _pillar(Vector2(x, y))
+		if not flat_floor:
+			for x in [245.0, 715.0]: _pillar(Vector2(x, y))
 	for y in range(140, 1150, 112):
 		draw_line(Vector2(429, y), Vector2(453, y), Color("c6ae71"), 3)
 		draw_line(Vector2(507, y), Vector2(531, y), Color("c6ae71"), 3)

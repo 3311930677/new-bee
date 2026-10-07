@@ -2,6 +2,7 @@ extends Node2D
 
 var _signature:=""
 var _wait:=0.0
+var flat_floor := false
 
 func _process(delta:float)->void:
 	_wait-=delta
@@ -14,6 +15,10 @@ func _process(delta:float)->void:
 		queue_redraw()
 
 func _draw()->void:
+	if not flat_floor: _draw_floor()
+	_draw_state()
+
+func _draw_floor() -> void:
 	# 三处石缝围着听声堂，侧壁碑座围着回响庭，北端收束到碑心。
 	# 墙面为地形底图，通行与机关碰撞仍由原场景统一控制。
 	draw_rect(Rect2(0,0,960,1248),Color("232b32"))
@@ -34,6 +39,8 @@ func _draw()->void:
 		draw_rect(connector,Color("555c58"))
 		for y in range(int(connector.position.y),int(connector.end.y),26):
 			draw_line(Vector2(connector.position.x,y),Vector2(connector.end.x,y),Color("788075"),2)
+
+func _draw_state() -> void:
 	var flags:Dictionary=G.prog.get("flags",{})
 	var heard:=bool(flags.get("act1_stele_clue",false))
 	var aligned:=bool(flags.get("act1_stele_seat_2",false))

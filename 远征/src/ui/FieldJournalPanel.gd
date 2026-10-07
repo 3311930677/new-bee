@@ -111,6 +111,13 @@ func _refresh() -> void:
 			if not hint.is_empty(): _paragraph("探索本领："+String(hint.line))
 			count += 1
 	else:
+		for entry in preload("res://src/world/SpecialEventService.gd").rows():
+			var event_record: Dictionary = preload("res://src/world/SpecialEventService.gd").record(G,String(entry.id))
+			if String(event_record.get("phase",""))!="done": continue
+			_paragraph("奇遇 · "+String(entry.title),true)
+			_paragraph(String(entry.branches[String(event_record.branch)].outcome)+"\n"+String(entry.note))
+			_paragraph("当时选择："+String(entry.branches[String(event_record.branch)].label)+"\n谢礼："+String(entry.rewards[String(event_record.reward)].label))
+			count+=1
 		for map_id in preload("res://src/world/DungeonTrial.gd").rows():
 			if not bool(G.prog.get("flags",{}).get("trial_note_"+String(map_id),false)):continue
 			var trial:Dictionary=preload("res://src/world/DungeonTrial.gd").row(String(map_id))

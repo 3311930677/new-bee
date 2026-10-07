@@ -1,0 +1,590 @@
+[
+	{
+		"flags": {
+			"act3_mine_rooms_v1": true
+		},
+		"focus": [
+			480.0,
+			1050.0
+		],
+		"id": "rift_mine_vault_rooms",
+		"mine_ground_present": true,
+		"mine_ground_z": -9,
+		"name": "裂谷矿脉",
+		"path": "res://shots/flat_ground_20261006/spawn_800/rift_mine_vault_rooms.png",
+		"seed": 7,
+		"size": [
+			480,
+			800
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "spawn_800"
+	},
+	{
+		"flags": {
+			"act3_mine_rooms_v1": true
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "rift_mine_vault_rooms",
+		"mine_ground_present": true,
+		"mine_ground_z": -9,
+		"name": "裂谷矿脉",
+		"path": "res://shots/flat_ground_20261006/center_800/rift_mine_vault_rooms.png",
+		"seed": 7,
+		"size": [
+			480,
+			800
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "center_800"
+	},
+	{
+		"flags": {
+			"act3_mine_rooms_v1": true
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "rift_mine_vault_rooms",
+		"mine_ground_present": true,
+		"mine_ground_z": -9,
+		"name": "裂谷矿脉",
+		"path": "res://shots/flat_ground_20261006/overview/rift_mine_vault_rooms.png",
+		"seed": 7,
+		"size": [
+			960,
+			1248
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "overview"
+	},
+	{
+		"flags": {
+			"act3_mine_rooms_v1": true
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "rift_mine_vault_rooms",
+		"mine_ground_present": true,
+		"mine_ground_z": -9,
+		"name": "裂谷矿脉",
+		"path": "res://shots/flat_ground_20261006/center_1067/rift_mine_vault_rooms.png",
+		"seed": 7,
+		"size": [
+			480,
+			1067
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "center_1067"
+	},
+	{
+		"flags": {
+			"act3_mine_rooms_v1": true,
+			"act3_mine_second_wind": true,
+			"act3_mine_switch": true
+		},
+		"focus": [
+			480.0,
+			1050.0
+		],
+		"id": "rift_mine_vault_rescued",
+		"mine_ground_present": true,
+		"mine_ground_z": -9,
+		"name": "裂谷矿脉",
+		"path": "res://shots/flat_ground_20261006/spawn_800/rift_mine_vault_rescued.png",
+		"seed": 7,
+		"size": [
+			480,
+			800
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "spawn_800"
+	},
+	{
+		"flags": {
+			"act3_mine_rooms_v1": true,
+			"act3_mine_second_wind": true,
+			"act3_mine_switch": true
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "rift_mine_vault_rescued",
+		"mine_ground_present": true,
+		"mine_ground_z": -9,
+		"name": "裂谷矿脉",
+		"path": "res://shots/flat_ground_20261006/center_800/rift_mine_vault_rescued.png",
+		"seed": 7,
+		"size": [
+			480,
+			800
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "center_800"
+	},
+	{
+		"flags": {
+			"act3_mine_rooms_v1": true,
+			"act3_mine_second_wind": true,
+			"act3_mine_switch": true
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "rift_mine_vault_rescued",
+		"mine_ground_present": true,
+		"mine_ground_z": -9,
+		"name": "裂谷矿脉",
+		"path": "res://shots/flat_ground_20261006/overview/rift_mine_vault_rescued.png",
+		"seed": 7,
+		"size": [
+			960,
+			1248
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "overview"
+	},
+	{
+		"flags": {
+			"act3_mine_rooms_v1": true,
+			"act3_mine_second_wind": true,
+			"act3_mine_switch": true
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "rift_mine_vault_rescued",
+		"mine_ground_present": true,
+		"mine_ground_z": -9,
+		"name": "裂谷矿脉",
+		"path": "res://shots/flat_ground_20261006/center_1067/rift_mine_vault_rescued.png",
+		"seed": 7,
+		"size": [
+			480,
+			1067
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "center_1067"
+	},
+	{
+		"flags": {
+			"act2_tidal_rooms_v1": true
+		},
+		"focus": [
+			480.0,
+			1050.0
+		],
+		"id": "tidal_gate_sealed",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "退潮水闸",
+		"path": "res://shots/flat_ground_20261006/spawn_800/tidal_gate_sealed.png",
+		"seed": 7,
+		"size": [
+			480,
+			800
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "spawn_800"
+	},
+	{
+		"flags": {
+			"act2_tidal_rooms_v1": true
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "tidal_gate_sealed",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "退潮水闸",
+		"path": "res://shots/flat_ground_20261006/center_800/tidal_gate_sealed.png",
+		"seed": 7,
+		"size": [
+			480,
+			800
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "center_800"
+	},
+	{
+		"flags": {
+			"act2_tidal_rooms_v1": true
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "tidal_gate_sealed",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "退潮水闸",
+		"path": "res://shots/flat_ground_20261006/overview/tidal_gate_sealed.png",
+		"seed": 7,
+		"size": [
+			960,
+			1248
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "overview"
+	},
+	{
+		"flags": {
+			"act2_tidal_rooms_v1": true
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "tidal_gate_sealed",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "退潮水闸",
+		"path": "res://shots/flat_ground_20261006/center_1067/tidal_gate_sealed.png",
+		"seed": 7,
+		"size": [
+			480,
+			1067
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "center_1067"
+	},
+	{
+		"flags": {
+			"act2_tidal_rooms_v1": true,
+			"act2_tide_bridge_open": true,
+			"act2_tide_clue": true,
+			"act2_tide_gate_1": true,
+			"act2_tide_gate_2": true,
+			"act2_tide_route_bridge": true
+		},
+		"focus": [
+			480.0,
+			1050.0
+		],
+		"id": "tidal_gate_bridge",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "退潮水闸",
+		"path": "res://shots/flat_ground_20261006/spawn_800/tidal_gate_bridge.png",
+		"seed": 7,
+		"size": [
+			480,
+			800
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "spawn_800"
+	},
+	{
+		"flags": {
+			"act2_tidal_rooms_v1": true,
+			"act2_tide_bridge_open": true,
+			"act2_tide_clue": true,
+			"act2_tide_gate_1": true,
+			"act2_tide_gate_2": true,
+			"act2_tide_route_bridge": true
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "tidal_gate_bridge",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "退潮水闸",
+		"path": "res://shots/flat_ground_20261006/center_800/tidal_gate_bridge.png",
+		"seed": 7,
+		"size": [
+			480,
+			800
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "center_800"
+	},
+	{
+		"flags": {
+			"act2_tidal_rooms_v1": true,
+			"act2_tide_bridge_open": true,
+			"act2_tide_clue": true,
+			"act2_tide_gate_1": true,
+			"act2_tide_gate_2": true,
+			"act2_tide_route_bridge": true
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "tidal_gate_bridge",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "退潮水闸",
+		"path": "res://shots/flat_ground_20261006/overview/tidal_gate_bridge.png",
+		"seed": 7,
+		"size": [
+			960,
+			1248
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "overview"
+	},
+	{
+		"flags": {
+			"act2_tidal_rooms_v1": true,
+			"act2_tide_bridge_open": true,
+			"act2_tide_clue": true,
+			"act2_tide_gate_1": true,
+			"act2_tide_gate_2": true,
+			"act2_tide_route_bridge": true
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "tidal_gate_bridge",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "退潮水闸",
+		"path": "res://shots/flat_ground_20261006/center_1067/tidal_gate_bridge.png",
+		"seed": 7,
+		"size": [
+			480,
+			1067
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "center_1067"
+	},
+	{
+		"flags": {
+			"act2_tidal_rooms_v1": true,
+			"act2_tide_cargo_saved": true,
+			"act2_tide_clue": true,
+			"act2_tide_gate_1": true,
+			"act2_tide_gate_2": true,
+			"act2_tide_route_cargo": true
+		},
+		"focus": [
+			480.0,
+			1050.0
+		],
+		"id": "tidal_gate_cargo",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "退潮水闸",
+		"path": "res://shots/flat_ground_20261006/spawn_800/tidal_gate_cargo.png",
+		"seed": 7,
+		"size": [
+			480,
+			800
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "spawn_800"
+	},
+	{
+		"flags": {
+			"act2_tidal_rooms_v1": true,
+			"act2_tide_cargo_saved": true,
+			"act2_tide_clue": true,
+			"act2_tide_gate_1": true,
+			"act2_tide_gate_2": true,
+			"act2_tide_route_cargo": true
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "tidal_gate_cargo",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "退潮水闸",
+		"path": "res://shots/flat_ground_20261006/center_800/tidal_gate_cargo.png",
+		"seed": 7,
+		"size": [
+			480,
+			800
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "center_800"
+	},
+	{
+		"flags": {
+			"act2_tidal_rooms_v1": true,
+			"act2_tide_cargo_saved": true,
+			"act2_tide_clue": true,
+			"act2_tide_gate_1": true,
+			"act2_tide_gate_2": true,
+			"act2_tide_route_cargo": true
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "tidal_gate_cargo",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "退潮水闸",
+		"path": "res://shots/flat_ground_20261006/overview/tidal_gate_cargo.png",
+		"seed": 7,
+		"size": [
+			960,
+			1248
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "overview"
+	},
+	{
+		"flags": {
+			"act2_tidal_rooms_v1": true,
+			"act2_tide_cargo_saved": true,
+			"act2_tide_clue": true,
+			"act2_tide_gate_1": true,
+			"act2_tide_gate_2": true,
+			"act2_tide_route_cargo": true
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "tidal_gate_cargo",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "退潮水闸",
+		"path": "res://shots/flat_ground_20261006/center_1067/tidal_gate_cargo.png",
+		"seed": 7,
+		"size": [
+			480,
+			1067
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "tomb",
+		"view": "center_1067"
+	},
+	{
+		"flags": {
+			"act4_avatar_down": true,
+			"act4_forest_voice": true,
+			"act4_snow_voice": true,
+			"act4_tide_voice": true
+		},
+		"focus": [
+			480.0,
+			1030.0
+		],
+		"id": "stele_core_lit",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "碑心",
+		"path": "res://shots/flat_ground_20261006/spawn_800/stele_core_lit.png",
+		"seed": 7,
+		"size": [
+			480,
+			800
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "abyss",
+		"view": "spawn_800"
+	},
+	{
+		"flags": {
+			"act4_avatar_down": true,
+			"act4_forest_voice": true,
+			"act4_snow_voice": true,
+			"act4_tide_voice": true
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "stele_core_lit",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "碑心",
+		"path": "res://shots/flat_ground_20261006/center_800/stele_core_lit.png",
+		"seed": 7,
+		"size": [
+			480,
+			800
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "abyss",
+		"view": "center_800"
+	},
+	{
+		"flags": {
+			"act4_avatar_down": true,
+			"act4_forest_voice": true,
+			"act4_snow_voice": true,
+			"act4_tide_voice": true
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "stele_core_lit",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "碑心",
+		"path": "res://shots/flat_ground_20261006/overview/stele_core_lit.png",
+		"seed": 7,
+		"size": [
+			960,
+			1248
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "abyss",
+		"view": "overview"
+	},
+	{
+		"flags": {
+			"act4_avatar_down": true,
+			"act4_forest_voice": true,
+			"act4_snow_voice": true,
+			"act4_tide_voice": true
+		},
+		"focus": [
+			480.0,
+			624.0
+		],
+		"id": "stele_core_lit",
+		"mine_ground_present": false,
+		"mine_ground_z": null,
+		"name": "碑心",
+		"path": "res://shots/flat_ground_20261006/center_1067/stele_core_lit.png",
+		"seed": 7,
+		"size": [
+			480,
+			1067
+		],
+		"state": "isolated demo; stationary capture",
+		"theme": "abyss",
+		"view": "center_1067"
+	}
+]

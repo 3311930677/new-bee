@@ -1,0 +1,48 @@
+Godot Engine v4.6.1.stable.official.14d19694e - https://godotengine.org
+OpenGL API 3.3.0 Core Profile Context 23.20.60.03.240314 - Compatibility - Using Device: ATI Technologies Inc. - AMD Radeon 780M Graphics
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2570)
+CAPTURED lorin_wilds
+ERROR: Condition "f.is_null()" is true.
+   at: _save_to_cache (drivers/gles3/shader_gles3.cpp:645)
+CAPTURED maple_road
+CAPTURED broken_slope
+CAPTURED old_salt_road
+CAPTURED shenyuan_port
+CAPTURED tideflat
+CAPTURED tidal_gate
+CAPTURED stele_cavern
+CAPTURED red_sand_route
+ERROR: Condition "f.is_null()" is true.
+   at: _save_to_cache (drivers/gles3/shader_gles3.cpp:645)
+CAPTURED frost_post
+CAPTURED rift_mine_road
+CAPTURED rift_mine_vault
+CAPTURED frost_pass
+CAPTURED frost_boardwalk
+CAPTURED abyss_ring
+CAPTURED stele_entry
+CAPTURED stele_resonance
+CAPTURED stele_core
+CAPTURED exp_forest
+CAPTURED exp_snow
+CAPTURED exp_volcano
+CAPTURED exp_tomb
+CAPTURED exp_desert
+CAPTURED exp_glacier
+CAPTURED exp_abyss
+CAPTURED exp_castle
+MAP_BACKGROUND_AUDIT_OK images=96
+WARNING: 6 RIDs of type "Canvas" were leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2692)
+WARNING: 66 RIDs of type "CanvasItem" were leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2692)
+ERROR: 1 RID allocations of type 'N5GLES37TextureE' were leaked at exit.
+ERROR: Texture with GL ID of 26: leaked 6628 bytes.
+   at: ~Utilities (drivers/gles3/storage/utilities.cpp:77)
+ERROR: Parameter "RenderingServer::get_singleton()" is null.
+   at: ~CompressedTexture2D (scene/resources/compressed_texture.cpp:461)
+ERROR: 1 RID allocations of type 'PN18TextServerAdvanced12FontAdvancedE' were leaked at exit.
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+   at: cleanup (core/object/object.cpp:2641)

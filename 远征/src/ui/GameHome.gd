@@ -144,6 +144,7 @@ func _build_profile(_role: Dictionary) -> void:
 	add_child(_avatar_frame)
 	_avatar_pic = TextureRect.new()
 	_avatar_pic.texture = G.avatar_texture()
+	_avatar_pic.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	_avatar_pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_avatar_pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	_avatar_pic.position = Vector2(5, 5)
@@ -155,7 +156,7 @@ func _build_profile(_role: Dictionary) -> void:
 	add_child(name_l)
 	var lv := int(G.prog.get("level", 1))
 	add_child(Field.label("LV %02d" % lv, Vector2(84, 48), Vector2(64, 24), 14, G.FIELD_COPPER, true))
-	_add_exp_bar(Vector2(150, 58), 116, int(G.prog.get("exp",0)), G.exp_to_next(lv))
+	_add_exp_bar(Vector2(150, 54), 184, int(G.prog.get("exp",0)), G.exp_to_next(lv))
 	var settings := Craft.action("", Vector2(404,24), Vector2(52,48))
 	settings.quiet = true
 	settings.skin = "tool"
@@ -181,17 +182,29 @@ func _build_profile(_role: Dictionary) -> void:
 ## 顶部经验条（金色圆角，满级时按满格画）
 func _add_exp_bar(at: Vector2, w: float, cur: int, need: int) -> void:
 	var ratio := 1.0 if need <= 0 else clampf(float(cur) / float(need), 0.0, 1.0)
-	var track := ColorRect.new()
-	track.color = G.FIELD_DARK
+	var track := Panel.new()
+	var frame := StyleBoxFlat.new()
+	frame.bg_color = Color("142820")
+	frame.border_color = Color("97815b")
+	frame.set_border_width_all(1)
+	frame.set_corner_radius_all(2)
+	track.add_theme_stylebox_override("panel",frame)
 	track.position = at
-	track.size = Vector2(w, 4)
+	track.size = Vector2(w, 10)
 	track.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(track)
 	var fill := ColorRect.new()
 	fill.color = G.FIELD_COPPER
-	fill.size = Vector2(w * ratio, 4)
+	fill.position = Vector2(2,2)
+	fill.size = Vector2((w-4) * ratio, 6)
 	fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	track.add_child(fill)
+	var glint := ColorRect.new()
+	glint.color = Color("f3ddac",.45)
+	glint.position = Vector2(0,0)
+	glint.size = Vector2(fill.size.x,2)
+	glint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	fill.add_child(glint)
 
 ## 金边圆牌（头像缺素材时的回退）
 func _disc_panel(px: float, glyph: String) -> Control:
@@ -226,10 +239,11 @@ func _build_top(role: Dictionary) -> void:
 	for data in [["金币","gold","cur_gold"],["远征币","expedition","cur_expedition"],
 			["魂晶","soul","cur_soul"],["荣誉","honor","cur_honor"]]:
 		var icon := TextureRect.new()
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		icon.texture = G.res_tex(data[2])
 		icon.custom_minimum_size = Vector2(24,24)
-		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		icon.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 		icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		wallet_row.add_child(icon)
@@ -356,8 +370,8 @@ func _build_entries() -> void:
 	for i in 3:
 		var e: Array = [["竞技","swords"],["召唤","summon"],["兑换","exchange"]][i]
 		var b := Craft.action(e[0],Vector2(388,262+i*86),Vector2(68,78),"badge")
-		b.set_meta("badge_shape",["shield","circle","hex"][i])
-		b.set_meta("badge_hue",[Color("dda775"),Color("a6aadf"),Color("82b7b0")][i])
+		b.set_meta("badge_shape","shield")
+		b.set_meta("badge_hue",Color("c29a52"))
 		b.set_meta("home_shift",.45)
 		b.caption.position = Vector2(0,56)
 		b.caption.size = Vector2(68,22)
@@ -376,20 +390,19 @@ func _build_entries() -> void:
 		add_child(gathering)
 	var state: Dictionary = G.prog.get("main_world",{})
 	var map_name := String(TableCache.main_world_map(String(state.get("map_id","lorin_wilds"))).get("name","昭元边城"))
-	var travel := Craft.action("继续旅程",Vector2(32,622),Vector2(416,70),"primary")
+	var travel := Craft.action("继续旅程",Vector2(32,616),Vector2(416,88),"primary")
 	travel.name = "ReturnToWorld"
 	travel.set_meta("home_shift",1.0)
 	travel.tooltip_text = "返回主世界 · " + map_name
-	travel.caption.position = Vector2(64,6)
-	travel.caption.set_meta("fixed_y",6)
+	travel.caption.position = Vector2(64,12)
+	travel.caption.set_meta("fixed_y",12)
 	travel.caption.size = Vector2(286,34)
 	travel.caption.add_theme_font_size_override("font_size",25)
 	travel.caption.add_theme_font_override("font",G.font_art)
-	var destination := Craft.label(map_name,Vector2(64,41),Vector2(286,20),13,Color("51412a"))
+	var destination := Craft.label(map_name,Vector2(64,48),Vector2(286,20),13,Color("c3cbb2"))
 	destination.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	destination.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	travel.add_child(destination)
-	Craft.icon(travel,"world",Vector2(18,13),Vector2(42,42))
 	Craft.icon(travel,"forward",Vector2(379,27),Vector2(16,16))
 	travel.activated.connect(func(): _open_city(_click_ev()))
 	add_child(travel)

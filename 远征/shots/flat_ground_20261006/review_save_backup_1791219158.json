@@ -1,0 +1,150 @@
+{
+	"account": "",
+	"arena": {
+		"best_streak": 0,
+		"losses": 0,
+		"score": 1000,
+		"streak": 0,
+		"wins": 0
+	},
+	"audio": {
+		"bgm": 0.7,
+		"mute": false,
+		"sfx": 0.8
+	},
+	"avatar_custom": "custom_1789738666_22025941.png",
+	"avatar_id": "fox",
+	"avatar_use_custom": false,
+	"city": {
+		"acts": {
+
+		},
+		"built": [
+			"hall",
+			"gate"
+		],
+		"code": "",
+		"day": "",
+		"streak": 0,
+		"visits": []
+	},
+	"gender": "男",
+	"items": {
+		"ticket_sweep": 1,
+		"ticket_ten": 0
+	},
+	"player_name": "场景检查",
+	"prog": {
+		"codex_claimed": [],
+		"economy": {
+			"bought": {
+
+			},
+			"day": 1,
+			"history": {
+
+			},
+			"next_tx": 1,
+			"orders": {
+
+			},
+			"seed": 7919,
+			"sold": {
+
+			},
+			"work": {
+
+			}
+		},
+		"equip": {
+
+		},
+		"exp": 100,
+		"flags": {
+			"act2_tidal_rooms_v1": true,
+			"act2_tide_cargo_saved": true,
+			"act2_tide_clue": true,
+			"act2_tide_gate_1": true,
+			"act2_tide_gate_2": true,
+			"act2_tide_route_cargo": true
+		},
+		"gacha": {
+			"free_day": "",
+			"free_last": "",
+			"free_streak": 0,
+			"pity": 0
+		},
+		"inventory": {
+			"instances": [],
+			"next_uid": 1,
+			"pending": []
+		},
+		"last_ts": 0,
+		"ledger": {
+			"applied": []
+		},
+		"level": 12,
+		"lore_beats": {
+
+		},
+		"lore_seen": false,
+		"main_world": {
+			"map_id": "lorin_wilds"
+		},
+		"mounts": {
+			"active": "",
+			"owned": {
+
+			}
+		},
+		"pet_stat": {
+
+		},
+		"pets": [
+			"pet_rockturtle"
+		],
+		"settings": {
+
+		},
+		"skills": {
+
+		},
+		"story": {
+			"done": [],
+			"goals": {
+
+			},
+			"step": "s01"
+		},
+		"talents": {
+
+		},
+		"tips_seen": {
+
+		},
+		"titles": {
+			"active": "",
+			"owned": []
+		},
+		"world_cleared": {
+
+		},
+		"worlds_unlocked": 1
+	},
+	"quest": {
+		"active": {
+
+		},
+		"claimed": [],
+		"day": "",
+		"offer": []
+	},
+	"selected_role": "fs",
+	"version": 6,
+	"wallet": {
+		"expedition": 240,
+		"gold": 101576,
+		"honor": 900,
+		"soul": 36
+	}
+}

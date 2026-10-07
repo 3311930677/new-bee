@@ -5,6 +5,7 @@
   "buy_markup_pct": 110,
   "sell_bid_pct": 88,
   "rest_gold": 22,
+  "work_cooldown_seconds": 3600,
   "goods": [
     {"id": "trade_grain", "name": "谷物", "base_gold": 48, "weight": 1, "haul_gold": 2, "icon": "itm_trade_grain"},
     {"id": "trade_salt", "name": "盐", "base_gold": 70, "weight": 1, "haul_gold": 3, "icon": "itm_salt_pack"},

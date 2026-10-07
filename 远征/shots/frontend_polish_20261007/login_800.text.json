@@ -1,0 +1,169 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/FrontendCapture/Login/@Button@12",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "返回"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/FrontendCapture/Login/@Label@15",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "昭元行旅录"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 44.0,
+			"path": "/root/FrontendCapture/Login/RegistrationCard/@Control@16/@Label@17",
+			"rect_height": 44.0,
+			"size": 30,
+			"text": "旅人登记"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/FrontendCapture/Login/RegistrationCard/@Control@16/@Label@18",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "欢迎回来，继续上次旅程。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/FrontendCapture/Login/RegistrationCard/@Control@16/@Panel@19/@Label@20",
+			"rect_height": 49.0,
+			"size": 12,
+			"text": "昭\n元"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/FrontendCapture/Login/RegistrationCard/@Control@16/@Label@21",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "账号"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/FrontendCapture/Login/RegistrationCard/@Control@16/Account",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "界面检查"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/FrontendCapture/Login/RegistrationCard/@Control@16/@Label@22",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "密码"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/FrontendCapture/Login/RegistrationCard/@Control@16/Password",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/FrontendCapture/Login/RegistrationCard/@Control@16/@Label@23",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "旅人小像"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/FrontendCapture/Login/RegistrationCard/@Control@16/@Label@24",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "自定义图片"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/FrontendCapture/Login/RegistrationCard/@Control@16/@HBoxContainer@25/@Button@27",
+			"rect_height": 84.0,
+			"size": 17,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 39.0,
+			"path": "/root/FrontendCapture/Login/RegistrationCard/@Control@16/@HBoxContainer@25/@Button@27/Card/@Label@26",
+			"rect_height": 56.0,
+			"size": 26,
+			"text": "+"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/FrontendCapture/Login/RegistrationCard/@Control@16/@HBoxContainer@25/@Button@27/Caption",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "自选"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/FrontendCapture/Login/RegistrationCard/@Control@16/@HBoxContainer@25/@Label@28",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": "选择你喜欢的图片\n支持常见图片格式，保存在本机"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 33.0,
+			"path": "/root/FrontendCapture/Login/RegistrationCard/@Control@16/LoginButton",
+			"rect_height": 48.0,
+			"size": 22,
+			"text": "登录入城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/FrontendCapture/Login/RegistrationCard/@Control@16/GuestButton",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "游客入城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/FrontendCapture/Login/@Label@29",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "旅途进度自动保存在本机"
+		}
+	]
+}

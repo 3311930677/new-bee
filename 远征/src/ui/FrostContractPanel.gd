@@ -4,6 +4,7 @@ extends Control
 
 signal closed
 signal action_applied(message: String)
+const Style := preload("res://src/ui/LedgerStyle.gd")
 
 var site_id := ""
 var _message := ""
@@ -23,11 +24,11 @@ func _build() -> void:
 	var viewport_size := get_viewport_rect().size
 	_offset = Vector2((viewport_size.x - 480.0) * 0.5, (viewport_size.y - 800.0) * 0.5)
 	G.veil(self, 0.84, true)
-	var paper := G.parchment_box(440, 618, 18.0)
-	paper.position = Vector2(20, 86) + _offset
+	var paper := Style.panel(Vector2(20,86) + _offset,Vector2(440,618),true,18)
 	add_child(paper)
-	var title := G.serif_label("霜 关 缺 药 · 运 单", G.FS_LG + 2, Color("6a4a1e"))
-	title.position = Vector2(46, 118) + _offset
+	add_child(Style.panel(Vector2(36,104) + _offset,Vector2(408,60),false,0))
+	var title := G.serif_label("霜关缺药 · 运单", 26, Style.LIGHT)
+	title.position = Vector2(46, 112) + _offset
 	title.custom_minimum_size = Vector2(388, 42)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(title)
@@ -37,6 +38,10 @@ func _build() -> void:
 		"expired": "已逾期", "done": "已结清", "abandoned": "已退单",
 		"settled": "到期结清"}.get(status, status)
 	var today := int(info.get("day", 1))
+	var seal := Style.badge(status_name,status)
+	seal.position = Vector2(332,180) + _offset
+	seal.size = Vector2(104,28)
+	add_child(seal)
 	var deposit := int(info.get("deposit_held_gold", 0)) if status in ["active", "expired"] \
 		else int(info.get("deposit_gold", 0))
 	var refund := int(deposit * int(info.get("abandon_refund_pct", 0)) / 100.0)
@@ -70,12 +75,17 @@ func _build() -> void:
 			refund, maximum_loss, deposit, extension_fee]
 		lines[9] = "保价报酬 %d 金（少 %d 金）；退单不扣货。" % [
 			protected_payout, int(info.get("protected_payout_discount_gold", 0))]
-	var detail := G.text_label("\n".join(PackedStringArray(lines)), G.FS_SM, Color("493724"))
-	detail.position = Vector2(48, 185) + _offset
-	detail.custom_minimum_size = Vector2(382, 336)
+	var date := Style.text("第 %d 日" % today + (" · " + mode_name if status in ["active","expired","done","abandoned","settled"] else " · 运单条款"),14,Style.JADE)
+	date.position = Vector2(48,180) + _offset
+	date.size = Vector2(272,28)
+	add_child(date)
+	lines.remove_at(0)
+	var detail := Style.text("\n".join(PackedStringArray(lines)), 14, Style.INK)
+	detail.position = Vector2(48, 220) + _offset
+	detail.custom_minimum_size = Vector2(382, 296)
 	detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(detail)
-	var message := G.text_label(_message, G.FS_SM, Color("8a4a2a"))
+	var message := Style.text(_message,14,Style.RUST)
 	message.position = Vector2(48, 526) + _offset
 	message.custom_minimum_size = Vector2(382, 48)
 	message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -99,6 +109,7 @@ func _build() -> void:
 
 func _button(label: String, pos: Vector2, width: int, action: String) -> void:
 	var button := G.gold_button(label, width, 42, G.FS_SM)
+	Style.apply_button(button,"quiet" if action == "close" else ("danger" if action == "abandon" else "primary"))
 	button.position = pos + _offset
 	button.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
