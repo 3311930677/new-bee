@@ -111,8 +111,8 @@ func _run() -> void:
 			"event":
 				_check(scene.st.gold >= gold_b + 80, "事件应产金币 80+")
 			"chest":
-				_check(scene.st.gold == gold_b + 200 and scene.st.expedition == exp_b + 30,
-					"宝箱应入账金币 200/远征币 30")
+				_check(scene.st.gold == gold_b + 120 and scene.st.expedition == exp_b + 30,
+					"宝箱应入账金币 120/远征币 30")
 			"shop":
 				_check(scene.st.potions == pot_b + 1, "商店应得 1 药剂")
 			"bonfire":

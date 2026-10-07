@@ -1,0 +1,16 @@
+{
+  "method": "按实际生成的怪物、拾取数量和生产结算入口核算；全拾取、全清剿，事件选行动，不使用矿脉、祭坛或商店，不卖材料，不计补给成本。非真人耗时样本。",
+  "full_pass": {
+    "samples_per_profile": 12,
+    "comparison_count": 96,
+    "mean_gold": {
+      "three_normal": {"before": 3970.58, "after": 1809.33},
+      "three_elite": {"before": 4238.0, "after": 1981.0},
+      "mixed": {"before": 3301.5, "after": 1534.83},
+      "leisure": {"before": 2016.0, "after": 1044.5}
+    },
+    "source": "AuditCurrency 首次完整执行的 CURRENCY_SAMPLE 与 CURRENCY_AUDIT_OK 输出"
+  },
+  "retained_detailed_examples": "2026-10-06-currency-income-samples.json（另一次两种子执行的16份详细核算样例）",
+  "reproduction": "tools/AuditCurrency.tscn；历史节点表 tools/fixtures/currency_balance_before_nodes.json"
+}

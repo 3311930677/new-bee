@@ -83,7 +83,7 @@ func _run() -> void:
 		var city: CityScene = port_scene._city_content
 		_check(city._city_id == "shenyuan_port" and city._buildings.size() == 4
 			and city._npcs.size() == 4, "港口应加载独立的四栋建筑和四名常驻人物")
-		_check(city._quest_lbl != null and city._quest_lbl.text == "港务 · 查看行情",
+		_check(city._quest_lbl != null and city._quest_lbl.text.ends_with("查看行情") and not city._quest_lbl.text.contains("今日委托"),
 			"港口快捷入口不应误显示昭元的今日委托")
 		for b in city._buildings:
 			_check(b.built(), "港口建筑应已落成并可交互")

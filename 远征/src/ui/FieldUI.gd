@@ -145,6 +145,25 @@ class Action extends Control:
 		if caption != null: caption.position.y = float(caption.get_meta("fixed_y",0)) + dy
 
 	func _draw_crafted() -> void:
+		if skin == "primary":
+			preload("res://src/ui/IllustratedUI.gd").silk(self,Rect2(Vector2(0,2 if _down else 0),size),_hover or has_focus())
+			if caption != null: caption.position.y = float(caption.get_meta("fixed_y",0)) + (2 if _down else 0)
+			return
+		if skin.begins_with("ledger_"):
+			var style := preload("res://src/ui/LedgerStyle.gd")
+			var fill: Color = style.JADE if skin == "ledger_primary" else style.LIGHT
+			if skin == "ledger_rules": fill = style.BLUE
+			elif skin == "ledger_quiet": fill = style.WOOD
+			elif skin == "ledger_tab" and selected: fill = style.JADE
+			if disabled: fill = fill.lerp(Color("969988"), .5)
+			elif _hover or has_focus(): fill = fill.lightened(.07)
+			style.paint(self, size, fill, style.BRASS, skin in ["ledger_secondary", "ledger_tab"] and not selected)
+			if selected and skin == "ledger_tab": draw_rect(Rect2(16, size.y - 6, size.x - 32, 2), Color("e2cd91"))
+			if has_focus(): draw_rect(Rect2(5, 5, size.x - 10, size.y - 10), Color("f5dc9e"), false, 1)
+			if caption != null: caption.position.y = float(caption.get_meta("fixed_y", 0)) + (1 if _down else 0)
+			for child in get_children():
+				if child is CanvasItem: child.modulate.a = .5 if disabled else 1.0
+			return
 		var dy := 2.0 if _down else 0.0
 		var extent := size
 		if skin == "tool":
@@ -172,8 +191,8 @@ class Action extends Control:
 			fill = Color("d8cfb4")
 			edge = Color("a79872")
 		elif skin == "ribbon":
-			fill = Color("654c47")
-			edge = Color("b99574")
+			fill = Color("102833")
+			edge = Color("c29a52")
 		if disabled:
 			fill = Color("34434a")
 			edge = Color("677374")
@@ -183,32 +202,10 @@ class Action extends Control:
 		var cut := 8.0 if skin in ["primary","badge"] else 4.0
 		var bounds := Rect2(Vector2(0,dy),extent-Vector2(0,dy))
 		if skin == "badge":
-			var center := Vector2(extent.x*.5,28+dy)
-			var radius := minf(extent.x*.43,27)
-			var shape := String(get_meta("badge_shape","circle"))
-			var hue: Color = get_meta("badge_hue",edge)
-			fill = fill.lerp(hue.darkened(.78),.40)
-			if shape == "circle":
-				draw_circle(center+Vector2(0,3),radius,Color("080f16",.55))
-				draw_circle(center,radius,fill)
-				draw_arc(center,radius,-PI*.8,PI*.35,40,hue,1,true)
-				draw_arc(center,radius-3,PI*.4,PI*1.2,24,Color(hue,.32),1,true)
-			else:
-				var rim := PackedVector2Array()
-				if shape == "shield":
-					rim = PackedVector2Array([center+Vector2(-radius,-radius*.72),center+Vector2(0,-radius),center+Vector2(radius,-radius*.72),center+Vector2(radius*.8,radius*.45),center+Vector2(0,radius),center+Vector2(-radius*.8,radius*.45)])
-				elif shape == "diamond":
-					rim = PackedVector2Array([center+Vector2(0,-radius),center+Vector2(radius,0),center+Vector2(0,radius),center+Vector2(-radius,0)])
-				else:
-					for i in 6: rim.append(center+Vector2.from_angle(-PI*.5+i*TAU/6)*radius)
-				draw_set_transform(Vector2(0,3))
-				draw_colored_polygon(rim,Color("080f16",.55))
-				draw_set_transform(Vector2.ZERO)
-				draw_colored_polygon(rim,fill)
-				rim.append(rim[0])
-				draw_polyline(rim,Color(hue,.8),1,true)
-			draw_line(center+Vector2(-10,-radius+5),center+Vector2(10,-radius+5),Color("f7e5bc",.22),1)
-			if has_focus(): draw_circle(center,radius+2,Color("f7e6b6"),false,1,true)
+			var plate: Texture2D = G.NavigationIcons.badge_plate()
+			texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+			draw_texture_rect(plate,Rect2(5,dy,58,58-dy),false,Color(1.08,1.08,1.08) if _hover or has_focus() else Color.WHITE)
+			if has_focus(): draw_arc(Vector2(34,28),30,-PI,PI,48,Color("e4c77a"),1,true)
 			for child in get_children():
 				if child is CanvasItem: child.modulate.a = .48 if disabled else 1.0
 			return
@@ -228,10 +225,20 @@ class Action extends Control:
 			elif skin == "scroll":
 				draw_line(Vector2(8,8),Vector2(8,extent.y-8),Color("b5a989"),1)
 				for y in [12,extent.y-13]: draw_rect(Rect2(4,y,4,2),Color("a89977"))
+			elif skin == "ribbon":
+				for x: float in [7.0,extent.x-7]:
+					draw_circle(Vector2(x,8+dy),1.5,Color("e4c77a"))
+					draw_circle(Vector2(x,extent.y-8),1.5,Color("8b6938"))
 		if selected and skin == "tab": draw_rect(Rect2(10,extent.y-4,extent.x-20,2),accent.lightened(.28))
+		if skin == "nav" and (selected or _hover or has_focus()):
+			draw_rect(Rect2(22,2,extent.x-44,2),Color("e4c77a"))
+			draw_circle(Vector2(extent.x*.5,3),2,Color("e4c77a"))
 		if has_focus(): draw_polyline(_bevel(bounds.grow(-1),cut),Color("f7e6b6"),1)
 		for child in get_children():
 			if child is CanvasItem: child.modulate.a = .48 if disabled else 1.0
+			if skin == "nav" and child is CanvasItem:
+				child.modulate = Color.WHITE if selected or _hover or has_focus() else Color(.82,.82,.82)
+				if disabled: child.modulate.a = .48
 		if caption != null: caption.position.y = float(caption.get_meta("fixed_y",0)) + dy
 
 	func _bevel(r: Rect2,cut: float) -> PackedVector2Array:
@@ -240,12 +247,17 @@ class Action extends Control:
 		return PackedVector2Array([a+Vector2(cut,0),Vector2(b.x-cut,a.y),Vector2(b.x,a.y+cut),
 			b-Vector2(0,cut),b-Vector2(cut,0),Vector2(a.x+cut,b.y),Vector2(a.x,b.y-cut),a+Vector2(0,cut),a+Vector2(cut,0)])
 
-# 少量器物插画按同一像素网格画，避免导航用图标加任意几何外框。
+# 已替换的器物共用插画目录；其余键保留原生绘图回退。
 class Prop extends Control:
 	var key := "world"
 	func _ready() -> void:
 		mouse_filter = Control.MOUSE_FILTER_IGNORE
 	func _draw() -> void:
+		if G.NavigationIcons.illustrated(key):
+			texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+			var art: Texture2D = G.NavigationIcons.texture(key)
+			if art != null: draw_texture_rect(art, Rect2(Vector2.ZERO, size), false)
+			return
 		var s := size.x / 40.0
 		draw_set_transform(Vector2.ZERO, 0, Vector2.ONE * s)
 		var ink := G.FIELD_DEEP

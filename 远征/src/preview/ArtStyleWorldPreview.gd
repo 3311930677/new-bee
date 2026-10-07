@@ -112,7 +112,7 @@ func _capture() -> void:
 
 func _capture_production() -> void:
 	# Do not call _apply(): validate assets loaded through normal game initialization.
-	assert(ground.texture.resource_path == ART+"ground_crisp_v1.png")
+	assert(ground.texture.resource_path == String(TableCache.main_world_map("lorin_wilds").get("background", "")))
 	assert(world._player_anim.material == RuntimeArt.character_material("fs"))
 	assert(world._pet_follower_sprite.texture == G.res_tex("pet_rockturtle"))
 	assert(world._pet_follower_sprite.texture.get_size() == Vector2(96,96))

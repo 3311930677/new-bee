@@ -1,0 +1,100 @@
+[gd_resource type="SpriteFrames" load_steps=19 format=3]
+
+[ext_resource type="Texture2D" path="res://image/role/zs/pojun_walk_strip.png" id="1"]
+[ext_resource type="Texture2D" path="res://image/role/zs/pojun_walk_strip_left.png" id="2"]
+
+[sub_resource type="AtlasTexture" id="Atlas_R0"]
+atlas = ExtResource("1")
+region = Rect2(0, 0, 128, 128)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_R1"]
+atlas = ExtResource("1")
+region = Rect2(128, 0, 128, 128)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_R2"]
+atlas = ExtResource("1")
+region = Rect2(256, 0, 128, 128)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_R3"]
+atlas = ExtResource("1")
+region = Rect2(384, 0, 128, 128)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_R4"]
+atlas = ExtResource("1")
+region = Rect2(512, 0, 128, 128)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_R5"]
+atlas = ExtResource("1")
+region = Rect2(640, 0, 128, 128)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_R6"]
+atlas = ExtResource("1")
+region = Rect2(768, 0, 128, 128)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_R7"]
+atlas = ExtResource("1")
+region = Rect2(896, 0, 128, 128)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_L0"]
+atlas = ExtResource("2")
+region = Rect2(0, 0, 128, 128)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_L1"]
+atlas = ExtResource("2")
+region = Rect2(128, 0, 128, 128)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_L2"]
+atlas = ExtResource("2")
+region = Rect2(256, 0, 128, 128)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_L3"]
+atlas = ExtResource("2")
+region = Rect2(384, 0, 128, 128)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_L4"]
+atlas = ExtResource("2")
+region = Rect2(512, 0, 128, 128)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_L5"]
+atlas = ExtResource("2")
+region = Rect2(640, 0, 128, 128)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_L6"]
+atlas = ExtResource("2")
+region = Rect2(768, 0, 128, 128)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_L7"]
+atlas = ExtResource("2")
+region = Rect2(896, 0, 128, 128)
+filter_clip = true
+
+[resource]
+animations = [
+{
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_L0")}, {"duration": 1.0, "texture": SubResource("Atlas_L1")}, {"duration": 1.0, "texture": SubResource("Atlas_L2")}, {"duration": 1.0, "texture": SubResource("Atlas_L3")}, {"duration": 1.0, "texture": SubResource("Atlas_L4")}, {"duration": 1.0, "texture": SubResource("Atlas_L5")}, {"duration": 1.0, "texture": SubResource("Atlas_L6")}, {"duration": 1.0, "texture": SubResource("Atlas_L7")}],
+"loop": true,
+"name": &"walk_left",
+"speed": 10.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_R0")}, {"duration": 1.0, "texture": SubResource("Atlas_R1")}, {"duration": 1.0, "texture": SubResource("Atlas_R2")}, {"duration": 1.0, "texture": SubResource("Atlas_R3")}, {"duration": 1.0, "texture": SubResource("Atlas_R4")}, {"duration": 1.0, "texture": SubResource("Atlas_R5")}, {"duration": 1.0, "texture": SubResource("Atlas_R6")}, {"duration": 1.0, "texture": SubResource("Atlas_R7")}],
+"loop": true,
+"name": &"walk_right",
+"speed": 10.0
+}
+]

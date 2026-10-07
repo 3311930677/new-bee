@@ -10,6 +10,7 @@ const GREEN := Color("234746")
 const PAPER := Color("eee1bf")
 const EDGE := Color("b39a67")
 const GOLD := Color("e2c48c")
+const Illustrated := preload("res://src/ui/IllustratedUI.gd")
 
 static func surface(fill: Color, edge := Color.TRANSPARENT, radius := 3) -> StyleBoxFlat:
 	var style := StyleBoxFlat.new()
@@ -23,8 +24,8 @@ static func paper(w: float, h: float, pad := 24.0) -> PanelContainer:
 	var panel := LedgerFrame.new()
 	panel.custom_minimum_size = Vector2(w, h)
 	var style := StyleBoxEmpty.new()
-	style.content_margin_left = pad
-	style.content_margin_right = pad
+	style.content_margin_left = maxf(pad,48)
+	style.content_margin_right = 24
 	style.content_margin_top = pad
 	style.content_margin_bottom = pad
 	panel.add_theme_stylebox_override("panel", style)
@@ -61,13 +62,7 @@ class LedgerFrame extends PanelContainer:
 	func _draw() -> void:
 		var sz := size
 		if sz.x < 20: return
-		G.Visuals.paper(self, sz)
-		var c := G.Visuals.palette(self)
-		draw_rect(Rect2(3,3,sz.x-6,header_height),c.dark)
-		draw_line(Vector2(3,header_height+3),Vector2(sz.x-3,header_height+3),c.accent,1)
-		# 只有题头的两枚钉扣，正文边缘留白。
-		for x in [10.0,sz.x-10]:
-			draw_circle(Vector2(x,10),1.5,c.light)
+		Illustrated.folio(self,Rect2(Vector2.ZERO,sz))
 
 class EmbellishedButton extends Button:
 	var _shine := 0.0
@@ -82,6 +77,10 @@ class EmbellishedButton extends Button:
 			if state == "pressed": fill = fill.darkened(0.08)
 			style.bg_color = fill
 			style.border_color = colors.accent
+			style.set_border_width_all(2)
+			style.shadow_color = Color("101d18",.25)
+			style.shadow_size = 2
+			style.shadow_offset = Vector2(0,2)
 			add_theme_stylebox_override(state, style)
 		for state in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
 			add_theme_color_override(state, colors.light if primary else colors.ink)
@@ -100,6 +99,11 @@ class EmbellishedButton extends Button:
 		var colors: Dictionary = G.Visuals.palette(self)
 		draw_line(Vector2(12,4),Vector2(size.x-12,4),Color(colors.accent,0.5),1)
 		draw_line(Vector2(12,size.y-4),Vector2(size.x-12,size.y-4),Color(colors.accent,0.7),1)
+		for x in [6.0,size.x-8]:
+			for y in [6.0,size.y-8]: draw_rect(Rect2(x,y,2,2),Color(colors.light,.65))
+		for y in [14.0,size.y-14]:
+			draw_line(Vector2(6,y),Vector2(16,y),Color(colors.accent,.18),1)
+			draw_line(Vector2(size.x-16,y),Vector2(size.x-6,y),Color(colors.accent,.18),1)
 		if _shine > 0 and _shine < 1:
 			var x := lerpf(12,size.x-32,_shine)
 			draw_line(Vector2(x,4),Vector2(x+20,4),Color(colors.light,sin(_shine*PI)),1)
@@ -143,7 +147,7 @@ static func rule(parent: Control, y: float, width: float) -> void:
 
 static func button(text: String, width: float, height := 46.0,
 		kind := "primary", icon_key := "") -> Button:
-	var node := EmbellishedButton.new() if kind == "primary" or kind == "secondary" else Button.new()
+	var node: Button = Illustrated.SilkButton.new() if kind == "primary" else (EmbellishedButton.new() if kind == "secondary" else Button.new())
 	node.set_meta("journal_kind", kind)
 	node.text = text
 	node.custom_minimum_size = Vector2(width, height)
@@ -237,7 +241,7 @@ static func avatar_card(id: String, side := 56.0) -> Button:
 		picture.position = Vector2(7, 7)
 		picture.size = Vector2(side - 14, side - 14)
 		picture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		picture.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		picture.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR if id == "custom" else CanvasItem.TEXTURE_FILTER_NEAREST
 		picture.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		card.add_child(picture)
 	else:

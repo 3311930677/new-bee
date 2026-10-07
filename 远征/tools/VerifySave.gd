@@ -86,8 +86,8 @@ func _run() -> void:
 
 	var v3 := SaveData.migrate(_fixture("v3.json"))
 	_check(bool(v3["ok"]), "v3 档应可迁移到 v%d" % SaveData.CURRENT_VERSION)
-	_check(str(v3["steps"]) == "[\"v3→v4\", \"v4→v5\", \"v5→v6\"]",
-		"v3 应逐级走 v3→v4 → v4→v5 → v5→v6，实为 %s" % str(v3["steps"]))
+	_check(str(v3["steps"]) == "[\"v3→v4\", \"v4→v5\", \"v5→v6\", \"v6→v7\"]",
+		"v3 应逐级迁到 v7，实为 %s" % str(v3["steps"]))
 	_check(int(((v3["data"] as Dictionary).get("wallet", {}) as Dictionary).get("gold", 0)) == 777,
 		"v3 迁移不该改动数据")
 
@@ -119,8 +119,8 @@ func _run() -> void:
 	var v4raw := _fixture("v4_equip_progress.json")
 	var v4mig := SaveData.migrate(v4raw)
 	_check(bool(v4mig["ok"]), "v4 档应可迁移到 v5（%s）" % String(v4mig["err"]))
-	_check(str(v4mig["steps"]) == "[\"v4→v5\", \"v5→v6\"]",
-		"v4 应逐级走 v4→v5 → v5→v6，实为 %s" % str(v4mig["steps"]))
+	_check(str(v4mig["steps"]) == "[\"v4→v5\", \"v5→v6\", \"v6→v7\"]",
+		"v4 应逐级迁到 v7，实为 %s" % str(v4mig["steps"]))
 	var v4p: Dictionary = (v4mig["data"] as Dictionary).get("prog", {})
 	var v4eq: Dictionary = v4p.get("equip", {})
 	var v4inv: Dictionary = v4p.get("inventory", {})
@@ -176,8 +176,8 @@ func _run() -> void:
 	var v5items: Dictionary = (v5raw["items"] as Dictionary).duplicate(true)
 	var v5inventory: Dictionary = ((v5raw["prog"] as Dictionary)["inventory"] as Dictionary).duplicate(true)
 	var v5mig := SaveData.migrate(v5raw)
-	_check(bool(v5mig.get("ok", false)) and str(v5mig.get("steps", [])) == "[\"v5→v6\"]",
-		"v5 档应只走 v5→v6")
+	_check(bool(v5mig.get("ok", false)) and str(v5mig.get("steps", [])) == "[\"v5→v6\", \"v6→v7\"]",
+		"v5 档应逐级迁到 v7")
 	var v6data: Dictionary = v5mig.get("data", {})
 	var v6prog: Dictionary = v6data.get("prog", {})
 	var econ: Dictionary = v6prog.get("economy", {})

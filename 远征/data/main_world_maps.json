@@ -243,7 +243,7 @@
       "city": true,
       "theme": "forest",
       "tint": "ffffff",
-      "background": "res://image/style_review_20261005/ground_crisp_v1.png",
+      "background": "res://image/style_review_20261005/ground_soil_reference_v1.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 3,
@@ -486,7 +486,13 @@
           100,
           110
         ]
-      ]
+      ],
+      "ground_style": "reference_flat",
+      "flat_routes": [
+        {"points": [[480, 1152], [480, 1050], [480, 700], [480, 400], [480, 96]], "width": 144}
+      ],
+      "deco_tint": "ffffff",
+      "surface_tint": "ffffff"
     },
     "maple_road": {
       "name": "枫林古道",
@@ -768,7 +774,21 @@
           160,
           200
         ]
-      ]
+      ],
+      "ground_style": "flat",
+      "flat_routes": [
+        {"points": [[480, 1152], [480, 1040], [450, 950], [425, 820], [500, 695], [515, 640], [450, 400], [480, 185], [480, 96]], "width": 88},
+        {"points": [[450, 950], [315, 905], [285, 790], [355, 720], [500, 695]], "width": 62},
+        {"points": [[425, 820], [570, 875], [645, 815], [630, 695], [515, 640]], "width": 60},
+        {"points": [[515, 640], [675, 665], [864, 660]], "width": 76},
+        {"points": [[450, 400], [590, 325], [685, 310]], "width": 60},
+        {"points": [[480, 185], [335, 265], [320, 395], [450, 400]], "width": 60}
+      ],
+      "flat_palette": ["a1a34e", "adb35b", "829347", "e7d490", "cfbc75", "grass"],
+      "deco_density": 0.095,
+      "deco_tint": "ffffff",
+      "flat_material": "forest",
+      "surface_tint": "fff2d6"
     },
     "broken_slope": {
       "name": "断碑坡",
@@ -1058,7 +1078,19 @@
           130,
           120
         ]
-      ]
+      ],
+      "ground_style": "flat",
+      "flat_routes": [
+        {"points": [[480, 1152], [480, 1040], [475, 930], [525, 735], [415, 560], [505, 330], [480, 185], [480, 96]], "width": 88},
+        {"points": [[475, 930], [355, 980], [255, 950], [295, 820], [410, 755], [525, 735]], "width": 62},
+        {"points": [[475, 930], [600, 900], [655, 785], [590, 655], [415, 560]], "width": 60},
+        {"points": [[505, 330], [330, 375], [290, 500], [415, 560]], "width": 60}
+      ],
+      "flat_palette": ["7d8069", "8b8e75", "686f5b", "cec8a5", "b9b394", "stone"],
+      "deco_density": 0.095,
+      "deco_tint": "ffffff",
+      "flat_material": "stone",
+      "surface_tint": "ffffff"
     },
     "old_salt_road": {
       "name": "旧盐道",
@@ -1312,7 +1344,19 @@
           280,
           150
         ]
-      ]
+      ],
+      "ground_style": "flat",
+      "flat_routes": [
+        {"points": [[90, 660], [160, 660], [265, 640], [345, 625], [530, 680], [715, 625], [864, 660]], "width": 94},
+        {"points": [[265, 640], [300, 780], [440, 835], [530, 680]], "width": 62},
+        {"points": [[265, 640], [335, 535], [480, 500], [455, 560], [460, 660]], "width": 62},
+        {"points": [[530, 680], [610, 780], [735, 785], [715, 625]], "width": 60}
+      ],
+      "flat_palette": ["afa17b", "bcad85", "958c6b", "e9dbb5", "cdbf9b", "sand"],
+      "deco_density": 0.095,
+      "deco_tint": "ffffff",
+      "flat_material": "salt",
+      "surface_tint": "ffffff"
     },
     "shenyuan_port": {
       "name": "沉渊港",
@@ -1538,7 +1582,20 @@
           130,
           120
         ]
-      ]
+      ],
+      "ground_style": "flat",
+      "flat_routes": [
+        {"points": [[480, 1152], [480, 1050], [480, 700], [480, 400], [480, 96]], "width": 94},
+        {"points": [[90, 660], [210, 660], [265, 665], [480, 675], [690, 700], [864, 700]], "width": 84},
+        {"points": [[300, 372], [480, 400], [650, 400]], "width": 70},
+        {"points": [[300, 870], [480, 890], [650, 870]], "width": 70},
+        {"points": [[265, 665], [290, 765], [300, 870]], "width": 62},
+        {"points": [[650, 400], [705, 545], [690, 700]], "width": 62}
+      ],
+      "flat_palette": ["708f88", "819c92", "5c7d76", "cbd0b7", "b1bca7", "stone"],
+      "deco_tint": "ffffff",
+      "flat_material": "wet",
+      "surface_tint": "ffffff"
     },
     "tideflat": {
       "name": "潮痕滩",
@@ -1977,7 +2034,19 @@
           130,
           120
         ]
-      ]
+      ],
+      "ground_style": "flat",
+      "flat_routes": [
+        {"points": [[90, 700], [165, 700], [245, 720], [320, 730], [480, 650], [510, 470], [455, 270], [480, 185], [480, 96]], "width": 92},
+        {"points": [[480, 650], [455, 850], [480, 1060]], "width": 80},
+        {"points": [[245, 720], [305, 585], [425, 565], [510, 470]], "width": 62},
+        {"points": [[320, 730], [295, 830], [350, 900], [455, 850]], "width": 60}
+      ],
+      "flat_palette": ["829b82", "92ab8d", "6b8976", "d9d4ae", "bdc09e", "sand"],
+      "deco_density": 0.095,
+      "deco_tint": "ffffff",
+      "flat_material": "wet",
+      "surface_tint": "ffffff"
     },
     "tidal_gate": {
       "name": "退潮水闸",
@@ -2250,7 +2319,16 @@
           160,
           150
         ]
-      ]
+      ],
+      "ground_style": "flat",
+      "flat_routes": [
+        {"points": [[480, 1152], [480, 1050], [480, 700], [480, 400], [480, 96]], "width": 128}
+      ],
+      "flat_palette": ["537f84", "628d90", "426f77", "b7c7b6", "9eafa4", "stone"],
+      "decos": [],
+      "deco_tint": "ffffff",
+      "flat_material": "wet",
+      "surface_tint": "ffffff"
     },
     "stele_cavern": {
       "name": "失声碑窟",
@@ -2597,7 +2675,19 @@
           160,
           150
         ]
-      ]
+      ],
+      "ground_style": "flat",
+      "flat_routes": [
+        {"points": [[480, 1152], [480, 1050], [480, 700], [480, 400], [480, 96]], "width": 92},
+        {"points": [[205, 970], [480, 970], [755, 970]], "width": 274},
+        {"points": [[290, 645], [480, 645], [670, 645]], "width": 84},
+        {"points": [[335, 300], [480, 300], [625, 300]], "width": 264}
+      ],
+      "flat_palette": ["525c59", "606b65", "434f4d", "adb6a1", "939e8c", "stone"],
+      "decos": [],
+      "deco_tint": "ffffff",
+      "flat_material": "stone",
+      "surface_tint": "ccd6d8"
     },
     "red_sand_route": {
       "name": "赤砂商路",
@@ -2778,7 +2868,19 @@
           160,
           150
         ]
-      ]
+      ],
+      "ground_style": "flat",
+      "flat_routes": [
+        {"points": [[480, 1152], [480, 1050], [465, 955], [450, 860], [515, 680], [450, 465], [480, 220], [480, 96]], "width": 90},
+        {"points": [[465, 955], [315, 900], [295, 780], [395, 705], [515, 680]], "width": 62},
+        {"points": [[450, 860], [595, 825], [650, 675], [575, 550], [450, 465]], "width": 60},
+        {"points": [[450, 465], [305, 420], [335, 295], [480, 220]], "width": 60}
+      ],
+      "flat_palette": ["a47756", "b5845d", "8d644d", "dcc19a", "c3a57f", "sand"],
+      "deco_density": 0.095,
+      "deco_tint": "ffffff",
+      "flat_material": "desert",
+      "surface_tint": "ffffff"
     },
     "frost_post": {
       "name": "霜关驿",
@@ -2981,7 +3083,20 @@
           130,
           120
         ]
-      ]
+      ],
+      "ground_style": "flat",
+      "flat_routes": [
+        {"points": [[480, 1152], [480, 1050], [480, 700], [480, 400], [480, 96]], "width": 90},
+        {"points": [[480, 700], [660, 725], [864, 710]], "width": 78},
+        {"points": [[335, 450], [480, 450], [630, 450]], "width": 68},
+        {"points": [[335, 860], [480, 860], [630, 860]], "width": 68},
+        {"points": [[480, 1050], [360, 960], [335, 860], [300, 770], [480, 700]], "width": 62},
+        {"points": [[630, 450], [655, 585], [660, 725]], "width": 60}
+      ],
+      "flat_palette": ["94aeb3", "a3bbc0", "7e9da5", "e1e8dc", "c3d3cd", "snow"],
+      "deco_tint": "ffffff",
+      "flat_material": "snow",
+      "surface_tint": "ffffff"
     },
     "rift_mine_road": {
       "clear_rects": [
@@ -3284,7 +3399,19 @@
             1010
           ]
         }
-      }
+      },
+      "ground_style": "flat",
+      "flat_routes": [
+        {"points": [[480, 1152], [480, 1050], [480, 700], [480, 400], [480, 96]], "width": 98},
+        {"points": [[90, 710], [160, 710], [270, 710], [315, 710], [480, 700]], "width": 76},
+        {"points": [[270, 710], [315, 850], [415, 895], [480, 1050]], "width": 62},
+        {"points": [[480, 700], [620, 640], [655, 485], [480, 400]], "width": 62}
+      ],
+      "flat_palette": ["6b6561", "7a7269", "575859", "b7ae94", "9c947e", "stone"],
+      "deco_density": 0.095,
+      "deco_tint": "ffffff",
+      "flat_material": "stone",
+      "surface_tint": "ffffff"
     },
     "rift_mine_vault": {
       "name": "裂谷矿脉",
@@ -3522,7 +3649,19 @@
           "open_flag": "act3_mine_switch",
           "hint": "调稳双风轮，让矿车带人撤离"
         }
-      }
+      },
+      "ground_style": "flat",
+      "flat_routes": [
+        {"points": [[480, 1152], [480, 1050], [480, 700], [480, 400], [480, 96]], "width": 104},
+        {"points": [[365, 990], [480, 990], [595, 990]], "width": 266},
+        {"points": [[345, 635], [480, 635], [615, 635]], "width": 206},
+        {"points": [[375, 295], [480, 295], [585, 295]], "width": 246}
+      ],
+      "flat_palette": ["5e5758", "6d6461", "4d4b50", "b2a591", "958d7e", "stone"],
+      "decos": [],
+      "deco_tint": "ffffff",
+      "flat_material": "stone",
+      "surface_tint": "c3b6be"
     },
     "frost_pass": {
       "name": "冰隘",
@@ -3640,7 +3779,18 @@
             590
           ]
         }
-      }
+      },
+      "ground_style": "flat",
+      "flat_routes": [
+        {"points": [[480, 1152], [480, 1050], [465, 850], [480, 660], [455, 390], [480, 165]], "width": 92},
+        {"points": [[480, 660], [675, 645], [864, 660]], "width": 78},
+        {"points": [[480, 1050], [610, 970], [655, 825], [585, 720], [480, 660]], "width": 62}
+      ],
+      "flat_palette": ["79a4b2", "88b1bc", "66909f", "d6e7e8", "b7d3db", "snow"],
+      "decos": [],
+      "deco_tint": "ffffff",
+      "flat_material": "snow",
+      "surface_tint": "dcefff"
     },
     "frost_boardwalk": {
       "name": "霜林栈道",
@@ -3910,7 +4060,19 @@
             920
           ]
         }
-      }
+      },
+      "ground_style": "flat",
+      "flat_routes": [
+        {"points": [[480, 1152], [480, 1050], [470, 900], [510, 700], [460, 480], [480, 270], [480, 96]], "width": 90},
+        {"points": [[470, 900], [315, 930], [285, 800], [365, 725], [510, 700]], "width": 62},
+        {"points": [[510, 700], [630, 685], [660, 545], [585, 435], [460, 480]], "width": 60},
+        {"points": [[480, 1050], [605, 1000], [660, 880], [630, 685]], "width": 60}
+      ],
+      "flat_palette": ["8da9b4", "9cb7bf", "7695a3", "e0e9df", "c4d6d1", "snow"],
+      "deco_density": 0.095,
+      "deco_tint": "ffffff",
+      "flat_material": "snow",
+      "surface_tint": "ffffff"
     },
     "abyss_ring": {
       "name": "渊口外环",
@@ -4086,7 +4248,17 @@
             }
           }
         }
-      ]
+      ],
+      "ground_style": "flat",
+      "flat_routes": [
+        {"points": [[480, 1152], [480, 1040], [440, 850], [515, 640], [450, 400], [480, 185], [480, 96]], "width": 94},
+        {"points": [[480, 1040], [345, 975], [285, 850], [345, 715], [515, 640]], "width": 64},
+        {"points": [[440, 850], [590, 845], [665, 720], [610, 535], [450, 400]], "width": 62}
+      ],
+      "flat_palette": ["565365", "635e72", "444557", "aca7b9", "9390a5", "stone"],
+      "deco_tint": "ffffff",
+      "flat_material": "abyss",
+      "surface_tint": "ffffff"
     },
     "stele_entry": {
       "name": "归路门厅",
@@ -4162,9 +4334,7 @@
       "monster_contact_radius": 40,
       "encounter_solo": true,
       "dismount_on_entry": true,
-      "decos": [
-        "041_deco_tomb_gravestone"
-      ],
+      "decos": [],
       "clear_rects": [
         [
           210,
@@ -4200,7 +4370,16 @@
           "flag": "act4_return_anchor",
           "completion": "归路锚亮起。来时的门仍然开着，三地的碑声在北廊等待。"
         }
-      }
+      },
+      "ground_style": "flat",
+      "flat_routes": [
+        {"points": [[480, 1152], [480, 1040], [440, 850], [515, 640], [450, 400], [480, 185], [480, 96]], "width": 94},
+        {"points": [[440, 850], [340, 800], [325, 700], [515, 640]], "width": 62}
+      ],
+      "flat_palette": ["606572", "6e7380", "4f5665", "bbb9bb", "a1a3a9", "stone"],
+      "deco_tint": "ffffff",
+      "flat_material": "abyss",
+      "surface_tint": "dce5eb"
     },
     "stele_resonance": {
       "name": "三声共鸣廊",
@@ -4274,9 +4453,7 @@
       "monster_contact_radius": 40,
       "encounter_solo": true,
       "dismount_on_entry": true,
-      "decos": [
-        "041_deco_tomb_gravestone"
-      ],
+      "decos": [],
       "clear_rects": [
         [
           210,
@@ -4362,7 +4539,19 @@
             "act4_snow_voice"
           ]
         }
-      }
+      },
+      "ground_style": "flat",
+      "flat_routes": [
+        {"points": [[480, 1152], [480, 1050], [480, 700], [480, 400], [480, 96]], "width": 96},
+        {"points": [[480, 880], [405, 895], [335, 880]], "width": 70},
+        {"points": [[480, 625], [550, 640], [625, 625]], "width": 70},
+        {"points": [[480, 375], [405, 390], [335, 375]], "width": 70},
+        {"points": [[335, 880], [310, 760], [380, 670], [480, 700]], "width": 62}
+      ],
+      "flat_palette": ["656474", "757185", "525565", "c3bacd", "a79fb2", "stone"],
+      "deco_tint": "ffffff",
+      "flat_material": "abyss",
+      "surface_tint": "ece0f7"
     },
     "stele_core": {
       "name": "碑心",
@@ -4425,9 +4614,7 @@
       "monster_contact_radius": 40,
       "encounter_solo": true,
       "dismount_on_entry": true,
-      "decos": [
-        "041_deco_tomb_gravestone"
-      ],
+      "decos": [],
       "clear_rects": [
         [
           210,
@@ -4484,7 +4671,16 @@
             850
           ]
         }
-      }
+      },
+      "ground_style": "flat",
+      "flat_routes": [
+        {"points": [[480, 1152], [480, 1050], [480, 700], [480, 400], [480, 96]], "width": 96},
+        {"points": [[375, 570], [480, 570], [585, 570]], "width": 330}
+      ],
+      "flat_palette": ["5a616f", "687281", "495261", "b7c6c6", "99adaf", "stone"],
+      "deco_tint": "ffffff",
+      "flat_material": "abyss",
+      "surface_tint": "d6f0ed"
     }
   }
 }

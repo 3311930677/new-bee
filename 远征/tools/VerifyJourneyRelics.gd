@@ -99,7 +99,7 @@ func _run() -> void:
 	check(target.take_damage(100,relic.role_unit(),relic) == 114 or target.hp == 9885, "传世破绽追击真实增伤")
 	check(not Relics.buy(host,"zs").ok, "未满20胜不能金币购买")
 	host.prog.relic_hunts.wins = 20
-	host.wallet.gold = 150000
+	host.wallet.gold = int(Relics.cfg().buy_gold)
 	check(Relics.buy(host,"zs").ok and host.wallet.gold == 0, "高价购买真实扣金币")
 	check(not Relics.buy(host,"zs").ok, "余额不足拒绝购买")
 	host.prog.relic_hunts.wins = 120
@@ -123,9 +123,9 @@ func _run() -> void:
 	before = failed.prog.duplicate(true)
 	check(not Relics.finish(failed,"failed","victory").ok and failed.prog == before and failed.item_count("pet_food") == 0, "结算保存失败还原材料、装备与保底")
 	failed.prog.relic_hunts.pending = {}
-	failed.wallet.gold = 150000
+	failed.wallet.gold = int(Relics.cfg().buy_gold)
 	before = failed.prog.duplicate(true)
-	check(not Relics.buy(failed,"zs").ok and failed.wallet.gold == 150000 and failed.prog == before, "购买保存失败还原钱与装备")
+	check(not Relics.buy(failed,"zs").ok and failed.wallet.gold == int(Relics.cfg().buy_gold) and failed.prog == before, "购买保存失败还原钱与装备")
 	check(not Relics.claim_pet(failed).ok and not failed.owns_pet("pet_return_deer"), "宠物保存失败保留资格")
 	failed.free()
 	var page := preload("res://src/ui/JourneyPanel.gd").new()

@@ -1,0 +1,330 @@
+{
+  "after": {
+    "leisure": {
+      "max": 1089,
+      "mean": 1081.5,
+      "min": 1074,
+      "samples": [
+        {
+          "encounters": [
+            "boss"
+          ],
+          "expedition": 290,
+          "gold": 1089,
+          "honor": 17,
+          "seed": 1,
+          "soul": 15
+        },
+        {
+          "encounters": [
+            "boss"
+          ],
+          "expedition": 288,
+          "gold": 1074,
+          "honor": 17,
+          "seed": 2,
+          "soul": 15
+        }
+      ]
+    },
+    "mixed": {
+      "max": 1661,
+      "mean": 1617.0,
+      "min": 1573,
+      "samples": [
+        {
+          "encounters": [
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "elite",
+            "normal",
+            "normal",
+            "boss"
+          ],
+          "expedition": 517,
+          "gold": 1661,
+          "honor": 30,
+          "seed": 1,
+          "soul": 20
+        },
+        {
+          "encounters": [
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "elite",
+            "normal",
+            "normal",
+            "boss"
+          ],
+          "expedition": 505,
+          "gold": 1573,
+          "honor": 30,
+          "seed": 2,
+          "soul": 20
+        }
+      ]
+    },
+    "three_elite": {
+      "max": 2034,
+      "mean": 2013.0,
+      "min": 1992,
+      "samples": [
+        {
+          "encounters": [
+            "elite",
+            "normal",
+            "normal",
+            "elite",
+            "normal",
+            "normal",
+            "elite",
+            "normal",
+            "normal",
+            "boss"
+          ],
+          "expedition": 631,
+          "gold": 2034,
+          "honor": 38,
+          "seed": 1,
+          "soul": 30
+        },
+        {
+          "encounters": [
+            "elite",
+            "normal",
+            "normal",
+            "elite",
+            "normal",
+            "normal",
+            "elite",
+            "normal",
+            "normal",
+            "boss"
+          ],
+          "expedition": 633,
+          "gold": 1992,
+          "honor": 38,
+          "seed": 2,
+          "soul": 30
+        }
+      ]
+    },
+    "three_normal": {
+      "max": 1856,
+      "mean": 1851.0,
+      "min": 1846,
+      "samples": [
+        {
+          "encounters": [
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "boss"
+          ],
+          "expedition": 598,
+          "gold": 1856,
+          "honor": 33,
+          "seed": 1,
+          "soul": 15
+        },
+        {
+          "encounters": [
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "boss"
+          ],
+          "expedition": 600,
+          "gold": 1846,
+          "honor": 34,
+          "seed": 2,
+          "soul": 15
+        }
+      ]
+    }
+  },
+  "before": {
+    "leisure": {
+      "max": 2112,
+      "mean": 2089.0,
+      "min": 2066,
+      "samples": [
+        {
+          "encounters": [
+            "boss"
+          ],
+          "expedition": 290,
+          "gold": 2112,
+          "honor": 17,
+          "seed": 1,
+          "soul": 15
+        },
+        {
+          "encounters": [
+            "boss"
+          ],
+          "expedition": 288,
+          "gold": 2066,
+          "honor": 17,
+          "seed": 2,
+          "soul": 15
+        }
+      ]
+    },
+    "mixed": {
+      "max": 3584,
+      "mean": 3469.0,
+      "min": 3354,
+      "samples": [
+        {
+          "encounters": [
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "elite",
+            "normal",
+            "normal",
+            "boss"
+          ],
+          "expedition": 517,
+          "gold": 3584,
+          "honor": 30,
+          "seed": 1,
+          "soul": 20
+        },
+        {
+          "encounters": [
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "elite",
+            "normal",
+            "normal",
+            "boss"
+          ],
+          "expedition": 505,
+          "gold": 3354,
+          "honor": 30,
+          "seed": 2,
+          "soul": 20
+        }
+      ]
+    },
+    "three_elite": {
+      "max": 4358,
+      "mean": 4325.5,
+      "min": 4293,
+      "samples": [
+        {
+          "encounters": [
+            "elite",
+            "normal",
+            "normal",
+            "elite",
+            "normal",
+            "normal",
+            "elite",
+            "normal",
+            "normal",
+            "boss"
+          ],
+          "expedition": 631,
+          "gold": 4358,
+          "honor": 38,
+          "seed": 1,
+          "soul": 30
+        },
+        {
+          "encounters": [
+            "elite",
+            "normal",
+            "normal",
+            "elite",
+            "normal",
+            "normal",
+            "elite",
+            "normal",
+            "normal",
+            "boss"
+          ],
+          "expedition": 633,
+          "gold": 4293,
+          "honor": 38,
+          "seed": 2,
+          "soul": 30
+        }
+      ]
+    },
+    "three_normal": {
+      "max": 4075,
+      "mean": 4063.0,
+      "min": 4051,
+      "samples": [
+        {
+          "encounters": [
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "boss"
+          ],
+          "expedition": 598,
+          "gold": 4075,
+          "honor": 33,
+          "seed": 1,
+          "soul": 15
+        },
+        {
+          "encounters": [
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "normal",
+            "boss"
+          ],
+          "expedition": 600,
+          "gold": 4051,
+          "honor": 34,
+          "seed": 2,
+          "soul": 15
+        }
+      ]
+    }
+  },
+  "description": "生成实际地图的怪物与拾取数量，按生产结算核算；不是完整真人通关或耗时样本。全拾取全清剿，事件选择行动，不使用矿脉/祭坛/商店，不出售物品，不计每日委托与出征额外补给费用。",
+  "samples_per_profile": 2
+}

@@ -33,8 +33,8 @@ func _run() -> void:
 	_check(ResourceLoader.exists(String(cfg.get("monster_sprite", ""))),
 		"主地图怪物像素形象应存在")
 	_check(not TableCache.get_monster("mon_zombie").is_empty(), "主地图僵尸战斗数据应存在")
-	_check(String(cfg.get("background", "")) == "res://image/style_review_20261005/ground_crisp_v1.png",
-		"主地图应实际接入已确认的清晰石板路地表")
+	_check(String(cfg.get("background", "")) == "res://image/style_review_20261005/ground_soil_reference_v1.png",
+		"主地图应接入参考图风格的浅色不规则土路")
 	var ground_tex := load(String(cfg.get("background", ""))) as Texture2D
 	if ground_tex != null:
 		var screen_pixel_scale := float(int(cfg.get("map_cols", 20)) * 48) \
@@ -94,8 +94,9 @@ func _run() -> void:
 	map._player.position = Vector2(480, 930)
 	_check(map._main_level_l != null and map._main_level_l.text == "Lv5",
 		"主地图左上应显示角色等级")
-	_check(map._main_exp_l != null and map._main_exp_l.text.begins_with("EXP "),
+	_check(map._main_exp_l != null and map._main_exp_l.text.ends_with("%"),
 		"主地图左上应显示真实经验进度")
+	await _verify_top_hud(map)
 	_check(map._player_name_l != null and map._player_name_l.text == "测试侠客  Lv5",
 		"人物头上应显示创角昵称和等级")
 	G.account = "游客"
@@ -359,6 +360,7 @@ func _run() -> void:
 		and absf(tall_map._pet_btn.position.y - 941.0) < 1.0
 		and absf(tall_map._sprint_btn.position.y - 999.0) < 1.0,
 		"长屏主世界摇杆与拇指按钮应留在视口底缘")
+	await _verify_top_hud(tall_map, false)
 	if not tall_map._monsters.is_empty():
 		tall_map._start_battle(tall_map._monsters[0])
 		await get_tree().process_frame
@@ -368,3 +370,82 @@ func _run() -> void:
 			"长屏同图战斗人物与指令条应跟随视口下移")
 	tall_view.queue_free()
 	await get_tree().process_frame
+
+
+## 回归实际越界缺陷：容器最终尺寸、九位金币、掉血与四个可点击入口。
+func _verify_top_hud(map: MapScene, click_entries := true) -> void:
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var gold := map._hud.get_node("WorldGold") as Button
+	var icon := gold.find_child("GoldIcon", true, false) as TextureRect
+	_check(icon != null and gold.get_global_rect().encloses(icon.get_global_rect()),
+		"金币原图缩放后必须完整留在资源栏内")
+	_check(icon != null and icon.size == Vector2(24, 24), "48px 货币原图不能撑大 HUD 图标")
+	var story := map._main_story_l.get_parent() as Button
+	var daily := map._city_content._quest_chip as Button
+	var mini := map._minimap
+	var plot: Rect2 = mini._map_rect()
+	var extent: Vector2 = map._map_extent()
+	_check(not mini._cartography.routes.is_empty(), "舆图应读取本图真实道路")
+	_check(is_equal_approx(plot.size.x / plot.size.y, extent.x / extent.y), "舆图投影必须保留世界比例")
+	_check(mini._project(Vector2.ZERO).is_equal_approx(plot.position)
+		and mini._project(extent).is_equal_approx(plot.end), "地图角点与标记必须使用同一投影")
+	_check(mini._project(Vector2(-500, 9000)).is_equal_approx(Vector2(plot.position.x, plot.end.y)),
+		"越界标记应落在地图边缘，不能侵入标题或展开提示")
+	_check(not mini.get_global_rect().intersects(gold.get_global_rect())
+		and not mini.get_global_rect().intersects(story.get_global_rect()), "加宽舆图不能覆盖金币与任务的热区")
+	_check(gold.size.y >= 44 and story.size.y >= 44 and daily.size.y >= 44,
+		"货币、主线与城务入口应保留 44px 触控高度")
+	_check(not daily.get_global_rect().intersects(story.get_global_rect()), "城务与主线热区不能相互覆盖")
+	_check(map._main_hp_l.get_theme_font("font").get_height(13) <= map._main_hp_l.size.y,
+		"生命正文必须容纳字体完整高度")
+	var wallet_before := int(G.wallet.gold)
+	G.wallet.gold = 999999999
+	map._refresh_hud()
+	await get_tree().process_frame
+	var number_width := map._main_gold_l.get_theme_font("font").get_string_size(
+		map._main_gold_l.text, HORIZONTAL_ALIGNMENT_LEFT, -1, 15).x
+	_check(map._main_gold_l.text == "999999999" and number_width <= map._main_gold_l.size.x,
+		"九位金币应完整显示，不依赖裁剪")
+	G.wallet.gold = wallet_before
+	var hp_before := map.st.hp
+	map.st.hp = roundi(map.st.max_hp() * 0.22)
+	map._refresh_hud()
+	var ratio := float(map.st.hp) / float(map.st.max_hp())
+	_check(is_equal_approx(map._main_hp_fill.size.x,
+		float(map._main_hp_fill.get_meta("hud_width")) * ratio), "掉血后轨道宽度应显示真实生命比例")
+	_check(map._main_hp_fill.color == Color("e99978"), "低血量应用暖色提示")
+	map.st.hp = hp_before
+	map._refresh_hud()
+	if not click_entries: return
+	await _click_hud(map, gold)
+	_check(G.modal_count() == 1, "实际点击资源栏应打开货币详情")
+	if G.modal_count() > 0: G.close_info_popup(G._modals.back().layer)
+	await get_tree().process_frame
+	await _click_hud(map, story)
+	_check(G.modal_count() == 1, "实际点击主线签应打开目标与奖励")
+	if G.modal_count() > 0: G.close_info_popup(G._modals.back().layer)
+	await get_tree().process_frame
+	await _click_hud(map, daily)
+	_check(map._city_content.has_modal(), "实际点击城务签应打开委托板")
+	map._city_content._close_overlay()
+	await get_tree().process_frame
+	await _click_hud(map, map._minimap)
+	_check(map._big_map != null, "实际点击小地图应展开地图")
+	map._close_big_map()
+	await get_tree().process_frame
+	if gold.has_focus(): gold.release_focus()
+
+func _click_hud(map: MapScene, control: Control) -> void:
+	var point := control.get_global_rect().get_center()
+	var motion := InputEventMouseMotion.new()
+	motion.position = point
+	map.get_viewport().push_input(motion, true)
+	for down in [true, false]:
+		var event := InputEventMouseButton.new()
+		event.position = point
+		event.global_position = point
+		event.button_index = MOUSE_BUTTON_LEFT
+		event.pressed = down
+		map.get_viewport().push_input(event, true)
+		await get_tree().process_frame

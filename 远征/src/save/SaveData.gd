@@ -17,7 +17,8 @@ class_name SaveData
 ##            prog.equip 从内联状态 {lv,gems,affixes} 变成实例 uid（旧强化投入等值搬运）。
 ## v6（P06）：补 prog.economy 的游戏日、现货余量、价格历史与订单；旧档不改已有金币与物品。
 ## 读档安全位不落盘（见 docs/plans/2026-09-28-p02-world-session-design.md §3.1）。
-const CURRENT_VERSION := 6
+## v7：独立奇遇阶段、分支、已保存遭遇与二选一谢礼；旧档从空记录开始。
+const CURRENT_VERSION := 7
 ## 低于这个版本的档连迁移入口都没有，直接判定不可读。
 const MIN_READABLE_VERSION := 1
 ## 允许的时钟偏差（秒）：last_ts 超过"现在 + 这个值"就算未来水位异常档。
@@ -88,6 +89,10 @@ static func migrate(raw: Dictionary) -> Dictionary:
 				_migrate_v5_to_v6(data)
 				steps.append("v5→v6")
 				v = 6
+			6:
+				_migrate_v6_to_v7(data)
+				steps.append("v6→v7")
+				v = 7
 			_:
 				return _mig_fail(data, from, "缺少 v%d 的迁移步骤（迁移表不完整）" % v)
 	data["version"] = CURRENT_VERSION
@@ -116,6 +121,7 @@ static func _normalize(data: Dictionary) -> void:
 		# 幂等 —— 已是 uid 的槽会被跳过，所以"再迁移一次 uid 不变"。
 		_ensure_v5(p as Dictionary)
 		_ensure_v6(p as Dictionary)
+		_ensure_v7(p as Dictionary)
 
 
 static func _mig_fail(data: Dictionary, from: int, err: String) -> Dictionary:
@@ -253,6 +259,16 @@ static func _ensure_v6(prog: Dictionary) -> void:
 		prog["economy"] = EconomyService.ensure(prog["economy"], TableCache.economy_config())
 
 
+static func _migrate_v6_to_v7(data: Dictionary) -> void:
+	if not data.has("prog"): data["prog"] = {}
+	if data.get("prog") is Dictionary: _ensure_v7(data["prog"])
+
+
+static func _ensure_v7(prog: Dictionary) -> void:
+	# Only absent fields are defaulted. Malformed records remain visible to validation.
+	if not prog.has("special_events"): prog["special_events"] = {"records":{},"tracked":""}
+
+
 ## v5 结构落位；幂等，可对已是 v5 的档重复调用。
 ##
 ## 只搬运、不改数值：旧 {lv, gems, affixes} 原样复制进实例，槽位改记实例 uid；
@@ -386,6 +402,8 @@ static func validate(data: Dictionary, now_sec: int) -> Dictionary:
 				return {"ok": false, "err": "prog.%s 应为对象" % k}
 		if not preload("res://src/world/RelicService.gd").validate(pd.get("relic_hunts",{})):
 			return {"ok":false,"err":"传世挑战记录字段非法"}
+		if not preload("res://src/world/SpecialEventService.gd").validate(pd.get("special_events",{})):
+			return {"ok":false,"err":"奇遇阶段、分支或遭遇记录字段非法"}
 		var active: Dictionary = pd.get("active_run", {})
 		if not WorldCommission.validate(pd.get("world_commissions",{})):
 			return {"ok":false,"err":"世界事务公布或阶段字段非法"}

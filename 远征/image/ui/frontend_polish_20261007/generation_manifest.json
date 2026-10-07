@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-07",
+  "tool": "builtin_image_gen",
+  "asset": "res://image/ui/frontend_polish_20261007/journey_world.png",
+  "source": "C:/Users/tsz/.codex/generated_images/01a10b3e-d2d1-7bb0-b5dc-e76875619078/exec-358c8cff-4c5e-48ce-933e-23f446b30244.png",
+  "prompt": "Use case: production game illustration. Create a refined horizontal pixel-art illustration for the WORLD page of a Chinese fantasy RPG travel journal. 1536x1024 composition, landscape readable when cropped to a very wide 376x176 panel. A winding footpath leads from a quiet forest camp with a small warm lantern in the left foreground, through a distant mountain pass with patches of snow in the center, towards the silhouette of an old ruined stone gate on the right horizon. A very distant soft ember glow hints at volcanic lands, subtle and natural. Beautiful intentional crisp pixel clusters, hand-crafted 1990s/2000s premium RPG pixel illustration, restrained sage greens, warm ochres, slate blues, antique amber light, rich but controlled colors. Eye-level scenic landscape with natural depth, not a top-down playable map. Strong clear silhouettes, finely resolved pixel detail, atmospheric distance using deliberate pixel colors; no blurred or smeared image, no painterly airbrush, no generic AI noise. Focus on scene and route, no UI, no text, no logo, no characters, no collage borders, no modern buildings. Keep important landscape across the horizontal middle band so a panoramic crop preserves it.",
+  "use": "IntroductionPanel.WORLD_ART",
+  "transparent_background": false
+}

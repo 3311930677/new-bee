@@ -2,6 +2,7 @@ extends Control
 signal closed
 signal action_applied(line: String)
 const Contracts:=preload("res://src/world/TradeContracts.gd")
+const Style := preload("res://src/ui/LedgerStyle.gd")
 var site_id:=""
 var list:VBoxContainer
 var message:Label
@@ -11,13 +12,12 @@ func open_contracts(site:String) -> void:
 	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	G.veil(self,.86)
-	var paper:=G.parchment_box(440,690,16)
-	paper.position=Vector2(20,55)
+	var paper := Style.panel(Vector2(20,56),Vector2(440,688))
 	add_child(paper)
 	var title:=G.serif_label("三城保价与延期合约",G.FS_LG,G.TEXT_DARK)
 	title.position=Vector2(44,80)
 	add_child(title)
-	message=G.text_label("同时最多两张未结单；只看游戏日，离线不会过期。",G.FS_SM,G.TEXT_DARK)
+	message=Style.text("同时最多两张未结单；只看游戏日，离线不会过期。",15,Style.MUTED)
 	message.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	message.size=Vector2(392,60)
 	message.position=Vector2(44,125)
@@ -32,6 +32,7 @@ func open_contracts(site:String) -> void:
 	list.add_theme_constant_override("separation",14)
 	scroll.add_child(list)
 	var back:=G.ghost_button("返回市集",220,44)
+	Style.apply_button(back,"quiet")
 	back.position=Vector2(130,683)
 	back.gui_input.connect(func(e:InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index==MOUSE_BUTTON_LEFT:
@@ -40,12 +41,13 @@ func open_contracts(site:String) -> void:
 	add_child(back)
 	refresh()
 func text(parent:Node,line:String,big:=false) -> void:
-	var label:=G.text_label(line,G.FS_MD if big else G.FS_SM,G.TEXT_DARK)
+	var label:=Style.text(line,18 if big else 15,Style.JADE if big else Style.INK)
 	label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
-	label.custom_minimum_size.x=372
+	label.custom_minimum_size.x=348
 	parent.add_child(label)
 func button(parent:Node,line:String,callback:Callable) -> void:
-	var control:=G.gold_button(line,182,44,G.FS_SM)
+	var control:=G.gold_button(line,172,44,G.FS_SM)
+	Style.apply_button(control,"danger" if line == "退单" else "primary")
 	control.gui_input.connect(func(e:InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index==MOUSE_BUTTON_LEFT:callback.call())
 	parent.add_child(control)
@@ -69,10 +71,15 @@ func refresh() -> void:
 		if String(definition.origin)!=site_id:continue
 		var id:=String(definition.id)+"|"+str(Contracts.day(G))
 		if Contracts.state(G).has(id):continue
-		var card:=VBoxContainer.new()
-		card.add_theme_constant_override("separation",7)
-		list.add_child(card)
-		text(card,String(definition.name),true)
+		var card := Style.list_card(list)
+		var heading := HBoxContainer.new()
+		heading.add_theme_constant_override("separation",8)
+		card.add_child(heading)
+		var name_label := Style.text(String(definition.name),18,Style.JADE)
+		name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		heading.add_child(name_label)
+		heading.add_child(Style.badge("可签约" if G.story_step_done(String(definition.unlock)) else "未开放",
+			"available" if G.story_step_done(String(definition.unlock)) else "locked"))
 		if not G.story_step_done(String(definition.unlock)):
 			text(card,"沿归路主线抵达后开放，不参与合约也能通关。")
 			continue
@@ -93,10 +100,14 @@ func refresh() -> void:
 		var record:Dictionary=Contracts.state(G)[id]
 		if String(record.status)!="active":continue
 		var definition:=Contracts.row(String(record.template))
-		var card:=VBoxContainer.new()
-		card.add_theme_constant_override("separation",7)
-		list.add_child(card)
-		text(card,String(definition.name)+" · "+("保价" if record.mode=="insured" else "自担"),true)
+		var card := Style.list_card(list)
+		var heading := HBoxContainer.new()
+		heading.add_theme_constant_override("separation",8)
+		card.add_child(heading)
+		var name_label := Style.text(String(definition.name)+" · "+("保价" if record.mode=="insured" else "自担"),18,Style.JADE)
+		name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		heading.add_child(name_label)
+		heading.add_child(Style.badge("运送中","active"))
 		var payout:=Contracts.payout(record)
 		var returned:=int(record.rules.deposit)-(int(record.rules.insured_fee) if record.mode=="insured" else 0)
 		text(card,"到期第%d日 · 交货款%d金＋退押%d金 · 参照货款%d金。"%[int(record.due_day),payout,returned,int(record.reference)])

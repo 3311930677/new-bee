@@ -751,6 +751,29 @@ func _setup() -> void:
 			MapScene.pending_cfg = {
 				"node": {"type": "boss", "layer": 4, "index": 0}, "run": _make_run()}
 			add_child(load("res://src/explore/MapScene.tscn").instantiate())
+		"world_hud_city", "world_hud_low_hp", "world_hud_large_wallet", "world_hud_field", "world_minimap_expanded", "world_minimap_field_expanded":
+			_demo_prog()
+			G.account = "界面检查"
+			G.player_name = "行旅者"
+			G.prog.level = 13
+			G.prog.exp = roundi(G.exp_to_next(13) * 0.11)
+			G.prog["story"] = {"step": "s04", "done": ["s01", "s02", "s03"]}
+			G.wallet.gold = 999999999 if _scene == "world_hud_large_wallet" else 101780
+			var hud_field := _scene in ["world_hud_field", "world_minimap_field_expanded"]
+			var hud_mid := "maple_road" if hud_field else "lorin_wilds"
+			G.prog.main_world = {"map_id": hud_mid, "layout_version": 3}
+			if hud_field: G.side_accept("a1_rel_child")
+			var hud_run := _make_run()
+			hud_run.level = 13
+			MapScene.pending_cfg = {"mode": "main_world", "main_map_id": hud_mid,
+				"node": {"type": "normal", "layer": 0, "index": 0}, "run": hud_run}
+			var hud_world: MapScene = load("res://src/explore/MapScene.tscn").instantiate()
+			add_child(hud_world)
+			if _scene == "world_hud_low_hp":
+				hud_world.st.hp = roundi(hud_world.st.max_hp() * 0.22)
+				hud_world._refresh_hud()
+			if _scene in ["world_minimap_expanded", "world_minimap_field_expanded"]:
+				hud_world._toggle_big_map()
 		"main_world", "mentor_world", "main_world_battle", "main_world_battle_commands", "main_world_battle_skills", "main_world_battle_projectile", "main_world_pet_guard":
 			G.SAVE_PATH = "res://tools/_logs/save_shot_main_world.json"
 			_demo_prog()

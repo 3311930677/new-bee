@@ -2,8 +2,13 @@ extends Node2D
 
 var ventilated := false
 var rescued := false
+var flat_floor := false
 
 func _draw() -> void:
+	if not flat_floor: _draw_floor()
+	_draw_state()
+
+func _draw_floor() -> void:
 	# 独立矿井空间：入口记事房、双风轮调轨房、械卫炉房。
 	draw_rect(Rect2(0, 0, 960, 1248), Color("211f26"))
 	for room in [Rect2(300, 810, 360, 355), Rect2(280, 495, 400, 275), Rect2(300, 130, 360, 325)]:
@@ -13,6 +18,8 @@ func _draw() -> void:
 			draw_line(Vector2(room.position.x, y), Vector2(room.end.x, y), Color("44383c"), 2)
 	# 两房之间通道宽度足够步行；实体隔门由场景控制。
 	draw_rect(Rect2(385, 130, 190, 1015), Color("51443c"))
+
+func _draw_state() -> void:
 	for x in [444, 516]:
 		draw_line(Vector2(x, 200), Vector2(x, 1080), Color("a19681"), 5)
 	for y in range(220, 1080, 30):

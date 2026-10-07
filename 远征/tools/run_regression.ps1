@@ -34,7 +34,7 @@ param(
   [string]$List = "",
   [int]$QuitAfter = 6000,
   [int]$TimeoutSec = 240,
-    [int]$Expected = 72,
+    [int]$Expected = 76,
   [string]$LogDir = "",
   [switch]$AllowAnyVersion
 )
@@ -168,11 +168,15 @@ $cases = @(
 	@{ N = "VerifyDrops";       K = "scene";  T = "DROPS_OK" },
 	@{ N = "VerifyArena";       K = "scene";  T = "ARENA_OK" },
 	@{ N = "VerifyAvatar";      K = "scene";  T = "AVATAR_OK" },
+	@{ N = "VerifySignpostEntry"; K = "scene"; T = "SIGNPOST_ENTRY_OK" },
 	@{ N = "VerifyNav";         K = "scene";  T = "NAV_OK" },
 	@{ N = "verify_data";       K = "script"; T = "DATA_OK" },
 	@{ N = "verify_battle";     K = "script"; T = "BATTLE_OK" },
 	@{ N = "VerifyGameplayBalance"; K = "scene"; T = "GAMEPLAY_BALANCE_OK" },
 	@{ N = "VerifyJourneyRelics"; K = "scene"; T = "JOURNEY_RELICS_OK" },
+	@{ N = "VerifySpecialEvents"; K = "scene"; T = "SPECIAL_EVENTS_OK" },
+	@{ N = "VerifySpecialEventsRead"; K = "scene"; T = "SPECIAL_EVENTS_READ_OK" },
+	@{ N = "VerifyCurrencyBalance"; K = "scene"; T = "CURRENCY_BALANCE_OK" },
 	@{ N = "verify_route";      K = "script"; T = "ROUTE_OK" },
 	@{ N = "verify_trait";      K = "script"; T = "TRAIT_OK" },
 	@{ N = "verify_walk_assets";K = "script"; T = "WALK_ASSETS_OK" }

@@ -1,8 +1,16 @@
 class_name SaltRoadGround
 extends Node2D
+var flat_floor := false
 
 # 盐道旧桥的干河床与残桥。只作地貌，不阻断玩家通向港口的道路。
 func _draw() -> void:
+	if flat_floor:
+		# The old bridge remains a separate story landmark on a flat salt floor.
+		for y in range(402, 487, 14):
+			draw_line(Vector2(497, y), Vector2(615 - (y - 402) * .2, y), Color("bcaa86"), 10)
+		for p in [Vector2(615, 411), Vector2(607, 455), Vector2(600, 481)]:
+			draw_line(p, p + Vector2(16, 6), Color("86785f"), 3)
+		return
 	var ravine := PackedVector2Array([
 		Vector2(600, 325), Vector2(960, 280), Vector2(960, 520),
 		Vector2(610, 555), Vector2(555, 490)])

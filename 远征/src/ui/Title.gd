@@ -1,6 +1,7 @@
 # Title.gd —— 清晰黄昏城院背景、艺术字入场与右侧菜单。
 extends Control
 const Wordmark := preload("res://src/ui/UIWordmark.gd")
+const Art := preload("res://src/ui/IllustratedUI.gd")
 
 const MENU := ["开始游戏", "游戏介绍", "游戏设置", "退出游戏"]
 
@@ -32,13 +33,13 @@ func _build_background() -> void:
 func _build_title() -> void:
 	var t := Wordmark.new()
 	t.name = "ExpeditionWordmark"
-	t.position = Vector2(100, 64)
-	t.size = Vector2(280, 141)
+	t.position = Vector2(64, 48)
+	t.size = Vector2(352, 176)
 	add_child(t)
 
 	var sub := G.gold_label("昭元行旅录", G.FS_XS, false, Color("e3d4b8"), false)
 	sub.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	sub.position = Vector2(0, 212)
+	sub.position = Vector2(0, 232)
 	sub.size = Vector2(VIEW_W, 22)
 	add_child(sub)
 	G.reveal_control(sub, 0.64)
@@ -48,11 +49,15 @@ func _build_title() -> void:
 # ---------- 右侧按钮列 ----------
 
 func _build_menu() -> void:
+	var charter := Art.Charter.new()
+	charter.position = Vector2(124,272)
+	charter.size = Vector2(332,498)
+	add_child(charter)
 	var col := VBoxContainer.new()
 	col.name = "Menu"
-	col.position = Vector2(256, 416)
-	col.custom_minimum_size = Vector2(196, 0)
-	col.add_theme_constant_override("separation", 12)
+	col.position = Vector2(166,414)
+	col.custom_minimum_size = Vector2(260,0)
+	col.add_theme_constant_override("separation",8)
 	add_child(col)
 	for i in MENU.size():
 		var idx := i
@@ -164,7 +169,7 @@ class _EntranceButton extends Control:
 
 	func _init(words: String, kind: int) -> void:
 		_kind = kind
-		custom_minimum_size = Vector2(196, 56 if kind == 0 else 50)
+		custom_minimum_size = Vector2(260,84 if kind == 0 else 46)
 		mouse_filter = Control.MOUSE_FILTER_STOP
 		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -180,13 +185,15 @@ class _EntranceButton extends Control:
 				_place_label()
 				queue_redraw())
 		mouse_exited.connect(func(): _pressed = false; _place_label(); queue_redraw())
-		_grain = _wood_texture()
+		texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 
 	func _place_label() -> void:
 		_label.position = Vector2(36, 1 if _pressed else 0)
 		_label.size = Vector2(size.x - 36, size.y)
 
 	func set_active(active: bool) -> void:
+		_label.add_theme_color_override("font_color",Color("f2dfad") if active or _kind==0 else Color("365046"))
+		_label.add_theme_color_override("font_shadow_color",Color("132b21",.55) if active or _kind==0 else Color.TRANSPARENT)
 		if _hover_tween != null and _hover_tween.is_valid(): _hover_tween.kill()
 		var target := 1.0 if active else 0.0
 		if G.get_meta("ui_review_mode", false) or DisplayServer.get_name() == "headless":
@@ -195,35 +202,16 @@ class _EntranceButton extends Control:
 			_hover_tween = create_tween()
 			_hover_tween.tween_property(self, "_light", target, 0.14)
 
-	func _wood_texture() -> Texture2D:
-		var canvas := Image.create(188, 48, false, Image.FORMAT_RGBA8)
-		var base := Color("403023") if _kind == 0 else Color("292620")
-		for y in 48:
-			for x in 188:
-				var grain := float(posmod(x * 7 + y * 29 + x / 9 * y, 17) - 8) / 1050.0
-				var striation := 0.013 if posmod(y + x / 40, 9) == 0 else 0.0
-				canvas.set_pixel(x, y, Color(base.r + grain + striation, base.g + grain * 0.75 + striation, base.b + grain * 0.5, 1))
-		return ImageTexture.create_from_image(canvas)
-
-	func _outline(inset: float, shift := 0.0) -> PackedVector2Array:
-		var width := size.x - inset
-		var height := size.y - inset + shift
-		return PackedVector2Array([
-			Vector2(inset + 4, inset + shift), Vector2(width - 4, inset + shift),
-			Vector2(width, inset + 4 + shift), Vector2(width, height - 4),
-			Vector2(width - 4, height), Vector2(inset + 4, height),
-			Vector2(inset, height - 4), Vector2(inset, inset + 4 + shift),
-		])
-
 	func _draw() -> void:
-		if size.x < 1: return
-		var offset := 1.0 if _pressed else 0.0
-		var fill := Color("582f36") if _kind == 0 else Color("292d33",0.92)
-		var accent := Color("d5a572") if _kind == 0 else Color("8d9994")
-		draw_colored_polygon(_outline(0,offset),fill.lightened(_light*0.06))
-		draw_line(Vector2(3,2+offset),Vector2(3,size.y-2+offset),accent,2)
-		draw_line(Vector2(7,size.y-1+offset),Vector2(size.x-1,size.y-1+offset),Color(accent,0.65),1)
-		var t := G.NavigationIcons.texture(["door","book","settings","back"][_kind])
-		if t != null: draw_texture_rect(t,Rect2(10,(size.y-24)*0.5+offset,24,24),false)
-		if _kind == 0:
-			draw_line(Vector2(size.x-10,12),Vector2(size.x-10,size.y-12),Color("e2c48c",0.4),1)
+		var art := preload("res://src/ui/IllustratedUI.gd")
+		if _kind==0:
+			art.silk(self,Rect2(Vector2(0,1 if _pressed else 0),size),_light>.5)
+			return
+		if _light>.01:
+			var tex := art.texture("silk_action")
+			var dims := Vector2(tex.get_size())
+			draw_texture_rect_region(tex,Rect2(32,3,size.x-36,size.y-6),Rect2(dims*Vector2(.18,.34),dims*Vector2(.64,.24)),Color(1,1,1,_light))
+			draw_line(Vector2(36,size.y-4),Vector2(size.x-8,size.y-4),Color("bba16c",_light),1)
+		var icon := G.NavigationIcons.texture(["door","book","settings","back"][_kind])
+		if icon != null: draw_texture_rect(icon,Rect2(10,(size.y-22)*.5,22,22),false)
+		draw_line(Vector2(40,size.y-1),Vector2(size.x-6,size.y-1),Color("ac9366",.32),1)

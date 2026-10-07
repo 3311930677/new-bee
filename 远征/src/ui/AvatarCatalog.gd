@@ -1,5 +1,6 @@
 extends RefCounted
-## 个人头像独立于职业，复用游戏内已有的像素伙伴素材。
+## Old preset IDs stay readable in saves; the UI now offers custom pictures only.
+const PLACEHOLDER := "res://assets/ui/avatar_placeholder.svg"
 
 const IDS := ["fox", "cat", "turtle", "snow"]
 const NAMES := {"fox": "赤尾狐", "cat": "夜猫", "turtle": "石龟", "snow": "雪团"}
@@ -16,7 +17,5 @@ const LEGACY := {"zs": "fox", "ck": "cat", "fs": "snow", "fz": "turtle"}
 static func resolve(id: String) -> String:
 	return id if IDS.has(id) else String(LEGACY.get(id, "fox"))
 
-static func texture(id: String) -> Texture2D:
-	var path := String(PATHS[resolve(id)])
-	var clean_path := path.get_base_dir()+"/refined/"+path.get_file()
-	return load(clean_path if ResourceLoader.exists(clean_path) else path) as Texture2D
+static func texture(_id: String) -> Texture2D:
+	return load(PLACEHOLDER) as Texture2D

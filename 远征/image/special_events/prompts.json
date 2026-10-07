@@ -1,0 +1,17 @@
+{
+  "invitation": {
+    "prompt": "Edit this into extremely simple authentic tiny retro game PIXEL ART. Redraw the entire artwork on a uniform 64x64 logical pixel grid and enlarge by nearest neighbor; every visible mark must be a hard flat-colored square or a cluster of those squares. Only 12 colors for the whole image, uniform flat color fills, no gradients, no lighting blends, no anti-aliasing, no soft textures. Keep ONLY two tiny characters: an old brown-capped guard and a green-tunic messenger with a red invitation. Each character at most 10 pixels wide and 16 pixels high on the logical grid, 1-pixel eyes, block hands, simple tunics, no realistic anatomy or detailed hair. REMOVE the two performers, spear, backpack straps, foliage clutter and extra decoration. Backdrop: one simple wooden village gate, one EMPTY tiny red-curtained stage, two autumn tree shapes and a flat ochre ground. No symbols or text. The result should resemble a real 1990s low-resolution RPG screenshot, sparse and readable, NOT a detailed illustration with a pixel filter.",
+    "mode": "built-in image_gen",
+    "path": "image/special_events/invitation_v1.png"
+  },
+  "chest": {
+    "prompt": "Use case: illustration-story. One square event illustration for a retro Chinese fantasy RPG: a humble dockside merchant in a simple teal tunic kneels by a small wooden treasure chest while a round tiny white gull sits on the lid holding a brass key. Exactly ONE tiny human, ONE bird, ONE chest. Genuine 64x64 logical-pixel artwork enlarged by nearest-neighbor, each visible pixel a HARD solid square on the same strict grid. Human at most 10x16 logical pixels, 1-pixel eyes and block hands, no detailed hair, no complex clothing. Maximum 12 flat palette colors, simple 1-pixel outlines and two flat shades per object, no gradients, no soft shadows, no anti-aliasing, no texture noise. Background only a few timber pier planks, flat dark teal water, one rope coil and a distant sail shape. Opaque square image. Sparse 1990s handheld RPG look. No text, no UI, no watermark. Avoid high-resolution illustrated detail, painterly pixel-filtered imagery, smooth vector curves, cinematic lighting, 3D.",
+    "mode": "built-in image_gen",
+    "path": "image/special_events/chest_v1.png"
+  },
+  "supper": {
+    "prompt": "Use case: illustration-story. One square event illustration for a retro Chinese fantasy RPG: a tiny female snow-post guard in a simple blue winter cap secretly cooks soup in a black pot over a tiny orange fire, a tiny traveler in a plain green coat smells the soup. Exactly TWO very simple small characters, ONE pot and ONE fire. True hand-placed retro pixel art drawn on a strict 64x64 logical grid then enlarged by nearest neighbor; every visible mark must be a hard flat square pixel, coherent square clusters, no anti-aliasing. Characters at most 10x16 logical pixels each, 1-pixel eyes, simple block clothing, no hair detail, no jewelry, no complex equipment. At most 12 flat palette colors, 1-pixel dark outlines, two shades per object. Sparse flat navy sky, three block snow mounds, one simple square lantern on a wooden pole. Opaque square image, charming 1990s handheld RPG look. No text, no UI, no watermark. Avoid gradients, smooth shading, soft edges, pixel-filtered paintings, high-frequency details, realistic faces, 3D.",
+    "mode": "built-in image_gen",
+    "path": "image/special_events/supper_v1.png"
+  }
+}

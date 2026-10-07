@@ -4,6 +4,7 @@ extends Node2D
 var _event := ""
 var _rope := ""
 var use_reference_ground := false
+var flat_floor := false
 
 
 func _process(_delta: float) -> void:
@@ -18,7 +19,7 @@ func _process(_delta: float) -> void:
 # 沉渊港地面识别层：潮水、石堤、栈桥与双侧木板步道。
 # 作为 MapScene 地砖之上的纯视觉层，不阻挡玩家、NPC 或出口。
 func _draw() -> void:
-	if not use_reference_ground: _draw_base()
+	if not use_reference_ground and not flat_floor: _draw_base()
 	_draw_state()
 
 

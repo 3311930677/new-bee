@@ -1,8 +1,9 @@
-# LoadScreen.gd —— 清晰法师与古城背景 + 分帧预热资源 + 最短 3.5s
+# LoadScreen.gd —— 原背景 + 完整书法标识 + 黑铁魔晶剑槽 + 分帧预热
 # 流程：Main → 本页（预热 image 素材索引与常用纹理，分帧加载不卡帧）
 #       → 完成（且距进场 ≥3.5s）→ Title。加载文案轮换一点行军趣味话。
 extends Control
 const Wordmark := preload("res://src/ui/UIWordmark.gd")
+const Relic := preload("res://src/ui/LoadingRelic.gd")
 const Grounding := preload("res://src/world/BuildingGrounding.gd")
 const GROUND_IDS := ["hall", "gate", "barracks", "forge", "archive", "kennel", "storehouse", "shrine"]
 
@@ -10,9 +11,6 @@ const TITLE_SCENE := "res://src/ui/Title.tscn"
 const MIN_SECONDS := 3.5
 const PER_FRAME := 8        # 每帧预热的贴图数（59 项实际引用 + 行走帧 ≈ 数十张，分帧绰绰有余）
 const CODE_PER_FRAME := 1   # 每帧顺带编译的脚本/场景数（编译只能在主线程，只能摊开几帧）
-const BAR_W := 288.0        # 外框宽（问题 #1：进度条实际可用宽 = BAR_W - 2×BAR_INSET）
-const BAR_H := 8.0
-const BAR_INSET := 1.0
 
 # 脚本/场景预热清单：这些「一次性开销」原本全砸在"玩家点进某个界面"的那一帧上——
 # 实测 GameHome 首次进场景 533ms、第二次 31ms，差的 500ms 就是 GDScript 编译。
@@ -34,6 +32,7 @@ const PRELOAD_CODE := [
 	"res://src/ui/Prologue.tscn",      # 序章（登录后入城前的一站）
 	"res://src/ui/StoryBeat.tscn",     # 首领剧情演出（对峙/余韵）
 	"res://src/ui/Title.tscn",
+	"res://src/ui/IntroductionPanel.gd",
 	"res://src/ui/Login.tscn",
 	"res://src/ui/NameRecovery.tscn", # 旧档有职业而缺昵称时补填，不重建角色
 ]
@@ -55,8 +54,13 @@ var _warm_art: Array[Texture2D] = []  # 保持预热纹理，确保同一 RID �
 var _total := 0
 var _done := false
 var _t0 := 0.0
-var _bar_fill := Panel.new()
-var _bar_l := Label.new()
+var _bar_fill: Control
+var _bar_l: Label
+var _percent_l: Label
+var _hint_l: Label
+var _brand: Control
+var _brand_mark: TextureRect
+var _gauge: Control
 
 ## 测试接口：置 false 时预热带跑完也不切场景（tools/VerifyPerf.gd 直接驱动本页量耗时）
 var auto_advance := true
@@ -69,6 +73,11 @@ const STAGES := [
 	"准备启程……",
 	"整备完成",
 ]
+const LOADING_TIPS := [
+	"北境的夜晚比传闻中更加寒冷。",
+	"旧碑上的名字，仍有人记得。",
+	"漫长的旅途，也需要片刻歇脚。",
+]
 
 
 func _ready() -> void:
@@ -78,84 +87,162 @@ func _ready() -> void:
 
 
 func _build() -> void:
+	# Keep the original artwork, crop policy and pixel filter untouched.
 	G.page_background(self, 0.08, "res://image/background/enter.png", false)
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	theme = Theme.new()
+	theme.default_font = G.font_serif
+	theme.default_font_size = 16
+	theme.set_color("font_color","Label",Color("eadbc0"))
 
-	# 渐隐仅降低上下缘细节，保留背景原有光影。
-	for which in ["top", "bottom"]:
-		var grad := TextureRect.new()
-		grad.set_anchors_preset(Control.PRESET_FULL_RECT)
-		grad.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		var tex := GradientTexture2D.new()
-		var g := Gradient.new()
-		if which == "top":
-			g.colors = PackedColorArray([Color(0.04, 0.035, 0.025, 0.52), Color(0, 0, 0, 0.0)])
-			g.offsets = PackedFloat32Array([0.0, 0.35])
-		else:
-			g.colors = PackedColorArray([Color(0, 0, 0, 0.0), Color(0.035, 0.03, 0.025, 0.72)])
-			g.offsets = PackedFloat32Array([0.72, 1.0])
-		tex.gradient = g
-		tex.fill = GradientTexture2D.FILL_LINEAR
-		tex.fill_from = Vector2.ZERO
-		tex.fill_to = Vector2(0, 1)
-		grad.texture = tex
-		add_child(grad)
+	var bottom := TextureRect.new()
+	bottom.name = "LoadingContrast"
+	bottom.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bottom.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	bottom.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var gradient := Gradient.new()
+	gradient.colors = PackedColorArray([Color(0,0,0,0),Color(.025,.018,.012,.76)])
+	gradient.offsets = PackedFloat32Array([.80,1.0])
+	var fade := GradientTexture2D.new()
+	fade.gradient = gradient
+	fade.fill_from = Vector2.ZERO
+	fade.fill_to = Vector2(0,1)
+	bottom.texture = fade
+	add_child(bottom)
 
-	var t := Wordmark.new()
-	t.name = "ExpeditionWordmark"
-	t.animated = not bool(G.get_meta("ui_review_mode",false))
-	t.position = Vector2(100, 64)
-	t.size = Vector2(280, 141)
-	add_child(t)
-	var sub := G.serif_label("昭元行旅录", 20, Color("e3d4b8"))
-	sub.position = Vector2(0, 212)
-	sub.custom_minimum_size = Vector2(480, 0)
-	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	add_child(sub)
+	_brand = Control.new()
+	_brand.name = "LoadingBrand"
+	_brand.size = Vector2(400,148)
+	_brand.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_brand)
+	var scrim := TextureRect.new()
+	scrim.position = Vector2(34,-12)
+	scrim.size = Vector2(332,170)
+	scrim.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	scrim.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var soft := GradientTexture2D.new()
+	var shade := Gradient.new()
+	shade.colors = PackedColorArray([Color(.025,.018,.012,.38),Color(0,0,0,0)])
+	shade.offsets = PackedFloat32Array([.15,1.0])
+	soft.gradient = shade
+	soft.fill = GradientTexture2D.FILL_RADIAL
+	soft.fill_from = Vector2(.5,.5)
+	soft.fill_to = Vector2(.5,0)
+	scrim.texture = soft
+	_brand.add_child(scrim)
+	var seal := Relic.BrandSeal.new()
+	seal.name = "BrandInsignia"
+	seal.position = Vector2(72,-10)
+	seal.size = Vector2(256,152)
+	_brand.add_child(seal)
 
-	# 安静的细进度条。
-	#
-	# 坑（问题 #1）：原来外框是 PanelContainer、内填充是它"唯一的子控件"——
-	# PanelContainer 会**无视子控件的 custom_minimum_size，把它强行铺满自己的内容矩形**，
-	# 所以无论进度是多少，填充条永远是满格（0% 时看着像 100%）。
-	# 改成 Panel（普通容器，不排版子节点）+ 子 Panel 显式设 size，宽度才真的按比例。
-	var back := Panel.new()
-	var bsb := StyleBoxFlat.new()
-	bsb.bg_color = Color("272b2b", 0.9)
-	bsb.set_border_width_all(1)
-	bsb.border_color = Color("aaa18a", 0.55)
-	bsb.set_corner_radius_all(2)
-	back.add_theme_stylebox_override("panel", bsb)
-	var fsb := StyleBoxFlat.new()
-	fsb.bg_color = Color("d2bb88")
-	fsb.set_corner_radius_all(1)
-	_bar_fill.add_theme_stylebox_override("panel", fsb)
-	back.position = Vector2(96, 748)
-	back.size = Vector2(BAR_W, BAR_H)
-	_bar_fill.position = Vector2(BAR_INSET, BAR_INSET)
-	_bar_fill.size = Vector2(0, BAR_H - BAR_INSET * 2.0)
-	_bar_fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# Keep the complete two-character source rectangle; no runtime alpha crop.
+	# This also works when source PNGs are remapped to imported textures in exports.
+	var atlas := AtlasTexture.new()
+	atlas.atlas = Wordmark.ART
+	atlas.region = Rect2(Vector2.ZERO,Wordmark.ART.get_size())
+	_brand_mark = TextureRect.new()
+	_brand_mark.name = "ExpeditionWordmark"
+	_brand_mark.position = Vector2(68,0)
+	_brand_mark.size = Vector2(264,110)
+	_brand_mark.texture = atlas
+	_brand_mark.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_brand_mark.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	_brand_mark.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	_brand_mark.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_brand.add_child(_brand_mark)
+	var subtitle := _label("昭元行旅录",20,Color("e7d1a0"))
+	subtitle.name = "LoadingSubtitle"
+	subtitle.position = Vector2(60,112)
+	subtitle.size = Vector2(280,30)
+	var spaced := FontVariation.new()
+	spaced.base_font = G.font_serif
+	spaced.spacing_glyph = 2
+	subtitle.add_theme_font_override("font",spaced)
+	_brand.add_child(subtitle)
+	if not bool(G.get_meta("ui_review_mode",false)):
+		var ink_shader := Shader.new()
+		ink_shader.code = Wordmark.REVEAL_SHADER
+		var ink_material := ShaderMaterial.new()
+		ink_material.shader = ink_shader
+		ink_material.set_shader_parameter("reveal",0.0)
+		_brand_mark.material = ink_material
+		var write := create_tween()
+		write.tween_interval(.08)
+		write.tween_method(func(value:float): ink_material.set_shader_parameter("reveal",value),0.0,1.0,.86)
+
+	_gauge = Relic.new()
+	_gauge.name = "LoadingGauge"
+	_gauge.size = Vector2(416,66)
+	add_child(_gauge)
+	_bar_fill = _gauge.get("lit_blade") as Control
+	_bar_l = _label(STAGES[0],16,Color("eadbc0"))
+	_bar_l.name = "LoadingStatus"
+	_bar_l.position = Vector2(56,13)
+	_bar_l.size = Vector2(280,24)
+	_gauge.add_child(_bar_l)
+	_percent_l = _label("0%",14,Color("c7b78f"))
+	_percent_l.name = "LoadingPercent"
+	_percent_l.position = Vector2(353,35)
+	_percent_l.size = Vector2(40,22)
+	_percent_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_gauge.add_child(_percent_l)
+	# Pick once per entry; do not consume the global gameplay random stream.
+	var tip_i := 0 if bool(G.get_meta("ui_review_mode",false)) else int(Time.get_ticks_usec()%LOADING_TIPS.size())
+	_hint_l = _label("「%s」"%LOADING_TIPS[tip_i],14,Color("bfb39c"))
+	_hint_l.name = "LoadingTip"
+	_hint_l.size = Vector2(416,20)
+	add_child(_hint_l)
+	resized.connect(_layout)
+	_layout()
+	_layout.call_deferred()
 	_set_bar_ratio(0.0)
-	back.add_child(_bar_fill)
-	add_child(back)
-
-	_bar_l = G.gold_label("", 16, false, Color("e4d1aa"), false)
-	_bar_l.position = Vector2(96, 716)
-	_bar_l.custom_minimum_size = Vector2(BAR_W, 0)
-	_bar_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	add_child(_bar_l)
-	G.center_fixed_page.call_deferred(self)
 
 
-## 进度条填充宽度（0~1）。钳制在 0~1，0 时宽度为 0（不能像 #1 那样一开始就满格）。
-## 供回归用例直调：这条宽度必须真的随比例变化。
+func _label(text: String, font_size: int, ink: Color) -> Label:
+	var label := Label.new()
+	label.text = text
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	label.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	label.add_theme_font_size_override("font_size",font_size)
+	label.add_theme_color_override("font_color",ink)
+	label.add_theme_color_override("font_shadow_color",Color("100d09",.8))
+	label.add_theme_constant_override("shadow_offset_x",0)
+	label.add_theme_constant_override("shadow_offset_y",1)
+	return label
+
+
+func _layout(safe_override := Rect2()) -> void:
+	if _brand == null or _gauge == null:
+		return
+	var safe := safe_override if safe_override.has_area() else G.ui_safe_rect(self)
+	var factor := minf(1.0,minf(safe.size.x/480.0,safe.size.y/600.0))
+	var center := safe.get_center().x
+	_brand.scale = Vector2.ONE*factor
+	_brand.position = Vector2(center-200.0*factor,
+		safe.position.y+clampf(safe.size.y*.085,56.0,96.0)*factor).round()
+	_gauge.scale = Vector2.ONE*factor
+	_hint_l.scale = Vector2.ONE*factor
+	# Bottom anchoring survives tall displays and device safe-area insets.
+	var floor_y := safe.end.y-24.0*factor
+	_hint_l.position = Vector2(center-208.0*factor,floor_y-20.0*factor).round()
+	_gauge.position = Vector2(center-208.0*factor,_hint_l.position.y-74.0*factor).round()
+
+
+## Fill width, jewel position, percentage and status use one clamped value.
 func _set_bar_ratio(ratio: float) -> void:
-	var r := clampf(ratio, 0.0, 1.0)
-	_bar_fill.size = Vector2((BAR_W - BAR_INSET * 2.0) * r, BAR_H - BAR_INSET * 2.0)
+	var r := clampf(ratio,0.0,1.0)
+	_gauge.set_ratio(r)
+	_percent_l.text = "%d%%" % (100 if r>=1.0 else mini(99,floori(r*100.0)))
+	var stage_i := STAGES.size()-1 if r >= 1.0 else mini(STAGES.size()-2,int(r*float(STAGES.size())))
+	_bar_l.text = String(STAGES[stage_i])
 
 
-## 当前进度条填充宽（测试读它）
+## Regression interface: the actual lit instrument width.
 func bar_fill_width() -> float:
-	return _bar_fill.size.x
+	return _gauge.fill_width()
 
 
 ## 预热清单：素材索引只建不逐张加载（场景 load 会自动带上依赖纹理，
@@ -172,6 +259,9 @@ func _collect_queue() -> void:
 	for bg in ["home", "enter", "title", "login", "courtyard_visual_v2"]:
 		if ResourceLoader.exists("res://image/background/%s.png" % bg):
 			_queue.append("res://image/background/%s.png" % bg)
+	_queue.append("res://image/ui/frontend_polish_20261007/journey_world.png")
+	for key in ["charter_menu","silk_action","folio_window","journey_atlas"]:
+		_queue.append("res://image/ui/designer_20261007/%s.png" % key)
 	for a in PRELOAD_AUDIO:
 		if ResourceLoader.exists(a):
 			_queue.append(a)
@@ -211,8 +301,6 @@ func _process(_d: float) -> void:
 	if auto_advance:
 		ratio = minf(ratio, clampf(elapsed / MIN_SECONDS, 0.0, 1.0))
 	_set_bar_ratio(ratio)
-	var stage_i := mini(STAGES.size() - 1, int(ratio * float(STAGES.size())))
-	_bar_l.text = "%s %d％" % [String(STAGES[stage_i]), roundi(ratio * 100.0)]
 	if left == 0:
 		_done = true   # 预热结束；进度条继续走完入场动画。
 		if auto_advance and elapsed >= MIN_SECONDS:
