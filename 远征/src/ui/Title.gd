@@ -33,31 +33,25 @@ func _build_background() -> void:
 func _build_title() -> void:
 	var t := Wordmark.new()
 	t.name = "ExpeditionWordmark"
-	t.position = Vector2(64, 48)
-	t.size = Vector2(352, 176)
+	t.position = Vector2(60, 44)
+	t.size = Vector2(360, 186)
 	add_child(t)
-
-	var sub := G.gold_label("昭元行旅录", G.FS_XS, false, Color("e3d4b8"), false)
-	sub.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	sub.position = Vector2(0, 232)
-	sub.size = Vector2(VIEW_W, 22)
-	add_child(sub)
-	G.reveal_control(sub, 0.64)
-
-
 
 # ---------- 右侧按钮列 ----------
 
 func _build_menu() -> void:
-	var charter := Art.Charter.new()
-	charter.position = Vector2(124,272)
-	charter.size = Vector2(332,498)
-	add_child(charter)
+	var board := _MenuBoard.new()
+	board.name = "MenuBoard"
+	board.position = Vector2(90, 396)
+	board.size = Vector2(300, 246)
+	board.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(board)
+
 	var col := VBoxContainer.new()
 	col.name = "Menu"
-	col.position = Vector2(166,414)
-	col.custom_minimum_size = Vector2(260,0)
-	col.add_theme_constant_override("separation",8)
+	col.position = Vector2(105, 412)
+	col.custom_minimum_size = Vector2(270, 214)
+	col.add_theme_constant_override("separation", 8)
 	add_child(col)
 	for i in MENU.size():
 		var idx := i
@@ -149,17 +143,58 @@ func _show_toast(msg: String) -> void:
 	tw.tween_callback(t.queue_free)
 
 
-# ---------- 与古城同调的木底、旧金边与像素符号 ----------
+# ---------- 半透明暗色菜单底板 ----------
+class _MenuBoard extends Control:
+	func _ready() -> void:
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+		resized.connect(queue_redraw)
+
+	func _draw() -> void:
+		var w := size.x
+		var h := size.y
+		if w < 10: return
+		# 1. 深度投影
+		draw_rect(Rect2(4, 8, w - 8, h - 6), Color(0.0, 0.0, 0.0, 0.6))
+		# 2. 沉稳微暖半透明黑曜/铁木底板 (0.86 alpha，清晰隔绝背景干扰)
+		draw_rect(Rect2(0, 0, w, h), Color(0.07, 0.08, 0.11, 0.88))
+		# 3. 内部微暗层
+		draw_rect(Rect2(3, 3, w - 6, h - 6), Color(0.09, 0.11, 0.14, 0.7))
+
+		# 4. 外圈暗铁色双线框
+		draw_rect(Rect2(0, 0, w, h), Color("181e26"), false, 1.0)
+		draw_rect(Rect2(2, 2, w - 4, h - 4), Color("283240", 0.7), false, 1.0)
+
+		# 5. 上下古金饰线
+		var gold_dim := Color("8a7040", 0.5)
+		draw_line(Vector2(16, 6), Vector2(w - 16, 6), gold_dim, 1.0)
+		draw_line(Vector2(16, h - 6), Vector2(w - 16, h - 6), gold_dim, 1.0)
+
+		# 6. 精致金色铜角码 (四角 12px L形)
+		var gc := Color("c8a252")
+		var gc_hi := Color("ffe288")
+		var arm := 12.0
+		# 左上
+		draw_line(Vector2(3, 3), Vector2(3 + arm, 3), gc_hi, 1.0)
+		draw_line(Vector2(3, 3), Vector2(3, 3 + arm), gc_hi, 1.0)
+		draw_rect(Rect2(4, 4, 2, 2), gc)
+		# 右上
+		draw_line(Vector2(w - 4, 3), Vector2(w - 4 - arm, 3), gc_hi, 1.0)
+		draw_line(Vector2(w - 4, 3), Vector2(w - 4, 3 + arm), gc_hi, 1.0)
+		draw_rect(Rect2(w - 6, 4, 2, 2), gc)
+		# 左下
+		draw_line(Vector2(3, h - 4), Vector2(3 + arm, h - 4), gc, 1.0)
+		draw_line(Vector2(3, h - 4), Vector2(3, h - 4 - arm), gc, 1.0)
+		draw_rect(Rect2(4, h - 6, 2, 2), gc)
+		# 右下
+		draw_line(Vector2(w - 4, h - 4), Vector2(w - 4 - arm, h - 4), gc, 1.0)
+		draw_line(Vector2(w - 4, h - 4), Vector2(w - 4, h - 4 - arm), gc, 1.0)
+		draw_rect(Rect2(w - 6, h - 6, 2, 2), gc)
+
+
+# ---------- 精致半透明菜单按钮 ----------
 class _EntranceButton extends Control:
-	const SIGNS := [
-		["000010000", "000111000", "001010100", "011010110", "111101111", "011010110", "001010100", "000111000", "000010000"],
-		["011101110", "110111011", "100010001", "101010101", "100010001", "101010101", "100010001", "110111011", "011101110"],
-		["000111000", "010111010", "011000110", "110010011", "110111011", "110010011", "011000110", "010111010", "000111000"],
-		["011111110", "010000010", "010010010", "000001000", "111111100", "000001000", "010010010", "010000010", "011111110"],
-	]
 	var _kind: int
 	var _label: Label
-	var _grain: Texture2D
 	var _pressed := false
 	var _light := 0.0:
 		set(value):
@@ -169,13 +204,15 @@ class _EntranceButton extends Control:
 
 	func _init(words: String, kind: int) -> void:
 		_kind = kind
-		custom_minimum_size = Vector2(260,84 if kind == 0 else 46)
+		var h := 50.0 if kind == 0 else 44.0
+		custom_minimum_size = Vector2(270, h)
 		mouse_filter = Control.MOUSE_FILTER_STOP
 		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		_label = G.serif_label(words, 26 if kind == 0 else 22, Color("efdfbd"), false)
+		_label = G.serif_label(words, 21 if kind == 0 else 18, Color("f3e4c8"), false)
 		_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		_label.add_theme_color_override("font_shadow_color", Color("0e0c09", 0.9))
+		_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_label.add_theme_color_override("font_shadow_color", Color("06080a", 0.95))
 		_label.add_theme_constant_override("shadow_offset_y", 1)
 		add_child(_label)
 		resized.connect(_place_label)
@@ -185,33 +222,86 @@ class _EntranceButton extends Control:
 				_place_label()
 				queue_redraw())
 		mouse_exited.connect(func(): _pressed = false; _place_label(); queue_redraw())
-		texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 
 	func _place_label() -> void:
-		_label.position = Vector2(36, 1 if _pressed else 0)
-		_label.size = Vector2(size.x - 36, size.y)
+		var dy := 1 if _pressed else 0
+		_label.position = Vector2(0, dy)
+		_label.size = Vector2(size.x, size.y)
 
 	func set_active(active: bool) -> void:
-		_label.add_theme_color_override("font_color",Color("f2dfad") if active or _kind==0 else Color("365046"))
-		_label.add_theme_color_override("font_shadow_color",Color("132b21",.55) if active or _kind==0 else Color.TRANSPARENT)
+		_label.add_theme_color_override("font_color", Color("fff6d8") if (active or _kind == 0) else Color("c6baa4"))
 		if _hover_tween != null and _hover_tween.is_valid(): _hover_tween.kill()
 		var target := 1.0 if active else 0.0
 		if G.get_meta("ui_review_mode", false) or DisplayServer.get_name() == "headless":
 			_light = target
 		else:
 			_hover_tween = create_tween()
-			_hover_tween.tween_property(self, "_light", target, 0.14)
+			_hover_tween.tween_property(self, "_light", target, 0.12)
 
 	func _draw() -> void:
-		var art := preload("res://src/ui/IllustratedUI.gd")
-		if _kind==0:
-			art.silk(self,Rect2(Vector2(0,1 if _pressed else 0),size),_light>.5)
-			return
-		if _light>.01:
-			var tex := art.texture("silk_action")
-			var dims := Vector2(tex.get_size())
-			draw_texture_rect_region(tex,Rect2(32,3,size.x-36,size.y-6),Rect2(dims*Vector2(.18,.34),dims*Vector2(.64,.24)),Color(1,1,1,_light))
-			draw_line(Vector2(36,size.y-4),Vector2(size.x-8,size.y-4),Color("bba16c",_light),1)
-		var icon := G.NavigationIcons.texture(["door","book","settings","back"][_kind])
-		if icon != null: draw_texture_rect(icon,Rect2(10,(size.y-22)*.5,22,22),false)
-		draw_line(Vector2(40,size.y-1),Vector2(size.x-6,size.y-1),Color("ac9366",.32),1)
+		var dy := 1.0 if _pressed else 0.0
+		var w := size.x
+		var h := size.y
+		var is_primary := (_kind == 0)
+		var is_active := (_light > 0.05 or is_primary)
+
+		# 1. 投影
+		if not _pressed:
+			draw_rect(Rect2(1, 2 + dy, w - 2, h - 2), Color(0.0, 0.0, 0.0, 0.35))
+
+		# 2. 背景填充：主按钮与激活项带温暖琥珀沉稳底，未激活项通透微暗
+		if is_primary:
+			var bg_primary := Color("221a16", 0.85) if _light > 0.5 else Color("1a1618", 0.78)
+			draw_rect(Rect2(0, dy, w, h), bg_primary)
+			# 微暖渐变条
+			draw_rect(Rect2(1, dy + 1, w - 2, h * 0.45), Color(0.4, 0.3, 0.15, 0.14))
+		elif _light > 0.05:
+			var bg_hover := Color("1c1e26", 0.75)
+			draw_rect(Rect2(0, dy, w, h), bg_hover)
+		else:
+			draw_rect(Rect2(0, dy, w, h), Color("10141c", 0.45))
+
+		# 3. 边框逻辑
+		if is_primary:
+			# 亮金双重外框
+			var gold_main := Color("e2b85a") if _light > 0.5 else Color("c89e46")
+			draw_rect(Rect2(0, dy, w, h), gold_main, false, 1.0)
+			draw_line(Vector2(2, dy + 1), Vector2(w - 2, dy + 1), Color("fff0a8", 0.7), 1.0)
+			draw_line(Vector2(2, dy + h - 2), Vector2(w - 2, dy + h - 2), Color("7a5618", 0.7), 1.0)
+			# 四角金色嵌块
+			var bcol := Color("ffe490")
+			draw_line(Vector2(1, dy + 1), Vector2(5, dy + 1), bcol, 1.0)
+			draw_line(Vector2(1, dy + 1), Vector2(1, dy + 5), bcol, 1.0)
+			draw_line(Vector2(w - 2, dy + 1), Vector2(w - 6, dy + 1), bcol, 1.0)
+			draw_line(Vector2(w - 2, dy + 1), Vector2(w - 2, dy + 5), bcol, 1.0)
+			draw_line(Vector2(1, dy + h - 2), Vector2(5, dy + h - 2), bcol, 1.0)
+			draw_line(Vector2(1, dy + h - 2), Vector2(1, dy + h - 6), bcol, 1.0)
+			draw_line(Vector2(w - 2, dy + h - 2), Vector2(w - 6, dy + h - 2), bcol, 1.0)
+			draw_line(Vector2(w - 2, dy + h - 2), Vector2(w - 2, dy + h - 6), bcol, 1.0)
+		elif _light > 0.05:
+			draw_rect(Rect2(0, dy, w, h), Color("c49e52", _light * 0.8), false, 1.0)
+			draw_line(Vector2(1, dy + 1), Vector2(w - 1, dy + 1), Color("ffebaa", _light * 0.4), 1.0)
+		else:
+			draw_rect(Rect2(0, dy, w, h), Color("2e3848", 0.45), false, 1.0)
+
+		# 4. 激活/选中状态两侧装饰菱形 (左右对称，典雅大方)
+		if is_active:
+			var icon_alpha := 1.0 if is_primary else (_light * 0.9)
+			var cy := h * 0.5 + dy
+			# 左侧菱形
+			var lx := 22.0
+			var l_diamond := PackedVector2Array([
+				Vector2(lx, cy - 4), Vector2(lx + 4, cy),
+				Vector2(lx, cy + 4), Vector2(lx - 4, cy)
+			])
+			draw_colored_polygon(l_diamond, Color("eac468", icon_alpha))
+			draw_circle(Vector2(lx, cy), 1.0, Color("ffffff", icon_alpha))
+			# 右侧菱形
+			var rx := w - 22.0
+			var r_diamond := PackedVector2Array([
+				Vector2(rx, cy - 4), Vector2(rx + 4, cy),
+				Vector2(rx, cy + 4), Vector2(rx - 4, cy)
+			])
+			draw_colored_polygon(r_diamond, Color("eac468", icon_alpha))
+			draw_circle(Vector2(rx, cy), 1.0, Color("ffffff", icon_alpha))
+

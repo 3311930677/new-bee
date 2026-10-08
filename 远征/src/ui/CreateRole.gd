@@ -140,21 +140,23 @@ func _build_stage_art() -> void:
 
 
 func _refresh_role_art() -> void:
-	if _role_art == null:
-		return
-	var rid := String((G.roles[_role_idx] as Dictionary).get("id", ""))
-	var tex: Texture2D = G.res_tex("role_%s_art" % rid)
-	if tex == null:
-		tex = G.res_tex("role_%s" % rid)
-	_role_art.texture = tex
-	_role_art_frame.visible = tex != null
-	if _anim != null: _anim.visible = tex == null
+	if _role_art_frame != null:
+		_role_art_frame.visible = false
+	if _anim != null:
+		_anim.visible = true
 
 
 func _build_stage() -> void:
+	var ped := _Pedestal.new()
+	ped.position = Vector2(VIEW_W / 2.0, PED_Y)
+	add_child(ped)
+	var ring := _RingDrawer.new()
+	ring.position = Vector2(VIEW_W / 2.0, PED_Y)
+	add_child(ring)
 	_anim = AnimatedSprite2D.new()
 	_anim.scale = Vector2.ONE * SPRITE_SCALE
 	_anim.position = Vector2(VIEW_W / 2.0, ANIM_Y)
+	_anim.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	add_child(_anim)
 
 

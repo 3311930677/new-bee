@@ -1,0 +1,169 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 59.0,
+			"path": "/root/ShotRunner/CreateRole/@Panel@3/@Label@2",
+			"rect_height": 59.0,
+			"size": 40,
+			"text": "创建角色"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/CreateRole/@Label@4",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "角色昵称"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/CreateRole/@LineEdit@5",
+			"rect_height": 42.0,
+			"size": 18,
+			"text": "慕容梧离"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/CreateRole/@PanelContainer@7/@Label@6",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "随机取名"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/CreateRole/@Label@8",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "2~12 个字符，汉字 2~6 个"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/CreateRole/@PanelContainer@15/@HBoxContainer@9/@Control@11/@Label@10",
+			"rect_height": 38.0,
+			"size": 18,
+			"text": "◀"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/CreateRole/@PanelContainer@15/@HBoxContainer@9/@Label@12",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "男"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/CreateRole/@PanelContainer@15/@HBoxContainer@9/@Control@14/@Label@13",
+			"rect_height": 38.0,
+			"size": 18,
+			"text": "▶"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/CreateRole/@PanelContainer@22/@HBoxContainer@16/@Control@18/@Label@17",
+			"rect_height": 38.0,
+			"size": 18,
+			"text": "◀"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/CreateRole/@PanelContainer@22/@HBoxContainer@16/@Label@19",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "破军"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/CreateRole/@PanelContainer@22/@HBoxContainer@16/@Control@21/@Label@20",
+			"rect_height": 38.0,
+			"size": 18,
+			"text": "▶"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/CreateRole/@Label@28",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "← → 或左右拖动切换职业"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/ShotRunner/CreateRole/@PanelContainer@30/@VBoxContainer@31/@HBoxContainer@32/@Label@33",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "破军"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/CreateRole/@PanelContainer@30/@VBoxContainer@31/@HBoxContainer@32/@Label@34",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "战士 · 大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/CreateRole/@PanelContainer@30/@VBoxContainer@31/@Label@35",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "近战物理 · 能抗能打"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/CreateRole/@PanelContainer@30/@VBoxContainer@31/@Label@36",
+			"rect_height": 60.0,
+			"size": 17,
+			"text": "陷阵先登的重甲战士，一柄大剑开山裂石。身披百战余生的旧甲，越是险地，越是冲在最前。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/CreateRole/@PanelContainer@38/@Label@37",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "确定"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/CreateRole/@PanelContainer@40/@Label@39",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "取消"
+		}
+	]
+}

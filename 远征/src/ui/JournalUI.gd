@@ -24,8 +24,8 @@ static func paper(w: float, h: float, pad := 24.0) -> PanelContainer:
 	var panel := LedgerFrame.new()
 	panel.custom_minimum_size = Vector2(w, h)
 	var style := StyleBoxEmpty.new()
-	style.content_margin_left = maxf(pad,48)
-	style.content_margin_right = 24
+	style.content_margin_left = pad
+	style.content_margin_right = pad
 	style.content_margin_top = pad
 	style.content_margin_bottom = pad
 	panel.add_theme_stylebox_override("panel", style)
@@ -62,7 +62,50 @@ class LedgerFrame extends PanelContainer:
 	func _draw() -> void:
 		var sz := size
 		if sz.x < 20: return
-		Illustrated.folio(self,Rect2(Vector2.ZERO,sz))
+		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+
+		# 1. 深度柔和投影
+		draw_rect(Rect2(4, 8, sz.x - 8, sz.y - 6), Color(0.0, 0.0, 0.0, 0.55))
+
+		# 2. 外框：暗铁镶边
+		draw_rect(Rect2(0, 0, sz.x, sz.y), Color("12161e"))
+		draw_rect(Rect2(2, 2, sz.x - 4, sz.y - 4), Color("1a222e"))
+
+		# 3. 内侧高光
+		draw_line(Vector2(2, 2), Vector2(sz.x - 3, 2), Color(1.0, 1.0, 1.0, 0.08), 1.0)
+		draw_line(Vector2(2, 2), Vector2(2, sz.y - 3), Color(1.0, 1.0, 1.0, 0.05), 1.0)
+
+		# 4. 精细黄铜角码 (四角 14px L形)
+		var gc := Color("c8a050")
+		var gc_hi := Color("ffe088")
+		var arm := 14.0
+		# 左上
+		draw_line(Vector2(3, 3), Vector2(3 + arm, 3), gc_hi, 1.0)
+		draw_line(Vector2(3, 3), Vector2(3, 3 + arm), gc_hi, 1.0)
+		draw_rect(Rect2(4, 4, 2, 2), gc)
+		# 右上
+		draw_line(Vector2(sz.x - 4, 3), Vector2(sz.x - 4 - arm, 3), gc_hi, 1.0)
+		draw_line(Vector2(sz.x - 4, 3), Vector2(sz.x - 4, 3 + arm), gc_hi, 1.0)
+		draw_rect(Rect2(sz.x - 6, 4, 2, 2), gc)
+		# 左下
+		draw_line(Vector2(3, sz.y - 4), Vector2(3 + arm, sz.y - 4), gc, 1.0)
+		draw_line(Vector2(3, sz.y - 4), Vector2(3, sz.y - 4 - arm), gc, 1.0)
+		draw_rect(Rect2(4, sz.y - 6, 2, 2), gc)
+		# 右下
+		draw_line(Vector2(sz.x - 4, sz.y - 4), Vector2(sz.x - 4 - arm, sz.y - 4), gc, 1.0)
+		draw_line(Vector2(sz.x - 4, sz.y - 4), Vector2(sz.x - 4, sz.y - 4 - arm), gc, 1.0)
+		draw_rect(Rect2(sz.x - 6, sz.y - 6, 2, 2), gc)
+
+		# 5. 内部温润羊皮纸 (纯正高级古卷羊皮纸)
+		var inset := 8.0
+		var paper_w := sz.x - inset * 2
+		var paper_h := sz.y - inset * 2
+		draw_rect(Rect2(inset, inset, paper_w, paper_h), Color("f0e6cf"))
+		# 纸张边缘微暗做旧
+		draw_line(Vector2(inset, inset), Vector2(inset, inset + paper_h), Color("d8c6a0"), 1.0)
+		draw_line(Vector2(inset + paper_w - 1, inset), Vector2(inset + paper_w - 1, inset + paper_h), Color("d8c6a0"), 1.0)
+		# 内框装饰细线
+		draw_rect(Rect2(inset + 4, inset + 4, paper_w - 8, paper_h - 8), Color("c4b088", 0.45), false, 1.0)
 
 class EmbellishedButton extends Button:
 	var _shine := 0.0
@@ -147,7 +190,7 @@ static func rule(parent: Control, y: float, width: float) -> void:
 
 static func button(text: String, width: float, height := 46.0,
 		kind := "primary", icon_key := "") -> Button:
-	var node: Button = Illustrated.SilkButton.new() if kind == "primary" else (EmbellishedButton.new() if kind == "secondary" else Button.new())
+	var node: Button = EmbellishedButton.new() if (kind == "primary" or kind == "secondary") else Button.new()
 	node.set_meta("journal_kind", kind)
 	node.text = text
 	node.custom_minimum_size = Vector2(width, height)

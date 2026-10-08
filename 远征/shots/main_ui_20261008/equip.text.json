@@ -1,0 +1,286 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 59.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@Panel@107/@Label@106",
+			"rect_height": 59.0,
+			"size": 40,
+			"text": "装备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@110/@PanelContainer@115/@Control@111/@Label@113",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@110/@PanelContainer@115/@Control@111/@Label@114",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "+3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@110/@PanelContainer@120/@Control@116/@Label@118",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "长枪"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@110/@PanelContainer@120/@Control@116/@Label@119",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@110/@PanelContainer@125/@Control@121/@Label@123",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "法杖"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@110/@PanelContainer@125/@Control@121/@Label@124",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@110/@PanelContainer@130/@Control@126/@Label@128",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "圣锤"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@110/@PanelContainer@130/@Control@126/@Label@129",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@110/@PanelContainer@135/@Control@131/@Label@133",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "护甲"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@110/@PanelContainer@135/@Control@131/@Label@134",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "+2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@110/@PanelContainer@140/@Control@136/@Label@138",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "饰品"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@110/@PanelContainer@140/@Control@136/@Label@139",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "+1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Label@141",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "红框为「破军」本职业武器"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@148/@Label@151",
+			"rect_height": 53.0,
+			"size": 17,
+			"text": "大剑  +3\n攻击 +23"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@148/@PanelContainer@154/@Label@152",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "强化"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@148/@PanelContainer@157/@Label@155",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "宝石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@148/@PanelContainer@160/@Label@158",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "精炼"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@148/@Control@161/@Label@162",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "强化预览  +3 → +4"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@148/@Control@161/@PanelContainer@163/@Control@164/@Label@165",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "当前属性"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@148/@Control@161/@PanelContainer@163/@Control@164/@Label@166",
+			"rect_height": 54.0,
+			"size": 17,
+			"text": "攻击 +23"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@148/@Control@161/@PanelContainer@167/@Control@168/@Label@169",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "成功后"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@148/@Control@161/@PanelContainer@167/@Control@168/@Label@170",
+			"rect_height": 54.0,
+			"size": 17,
+			"text": "攻击 +24"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@148/@Control@161/@Label@171",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "消耗：金币 600 · 强化石×1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@148/@Control@161/@Label@172",
+			"rect_height": 50.0,
+			"size": 15,
+			"text": "成功率65.6% · 失败扣费、不掉级\n积累0/3 · 失败 +15%，成功重置"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@148/@Control@161/@PanelContainer@175/@Label@173",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "确认强化"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@148/@Label@214",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "背包：强化石×12 · 精炼石×6 · 锁符×3 · 金币 12800"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@148/@PanelContainer@216/@Label@215",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "卸下"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@Control@148/@Label@217",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "卸下后回到背包（背包满时会拒绝）"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@108/@Control@109/@PanelContainer@150/@Label@149",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "返回"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@102/@PanelContainer@147/@Label@145",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "背包"
+		}
+	]
+}

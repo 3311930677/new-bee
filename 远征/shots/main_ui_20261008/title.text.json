@@ -1,0 +1,43 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 32.0,
+			"path": "/root/ShotRunner/Title/Menu/@Control@4/@Label@3",
+			"rect_height": 50.0,
+			"size": 21,
+			"text": "开始游戏"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/Title/Menu/@Control@6/@Label@5",
+			"rect_height": 44.0,
+			"size": 18,
+			"text": "游戏介绍"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/Title/Menu/@Control@8/@Label@7",
+			"rect_height": 44.0,
+			"size": 18,
+			"text": "游戏设置"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/Title/Menu/@Control@10/@Label@9",
+			"rect_height": 44.0,
+			"size": 18,
+			"text": "退出游戏"
+		}
+	]
+}

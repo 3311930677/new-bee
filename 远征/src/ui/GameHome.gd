@@ -243,7 +243,7 @@ func _build_top(role: Dictionary) -> void:
 		icon.texture = G.res_tex(data[2])
 		icon.custom_minimum_size = Vector2(24,24)
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		icon.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		wallet_row.add_child(icon)
@@ -373,11 +373,11 @@ func _build_entries() -> void:
 		b.set_meta("badge_shape","shield")
 		b.set_meta("badge_hue",Color("c29a52"))
 		b.set_meta("home_shift",.45)
-		b.caption.position = Vector2(0,56)
-		b.caption.size = Vector2(68,22)
-		b.caption.set_meta("fixed_y",56)
-		b.caption.add_theme_font_size_override("font_size",14)
-		Craft.icon(b,e[1],Vector2(14,7),Vector2(40,40))
+		b.caption.position = Vector2(0,62)
+		b.caption.size = Vector2(68,18)
+		b.caption.set_meta("fixed_y",62)
+		b.caption.add_theme_font_size_override("font_size",13)
+		Craft.icon(b,e[1],Vector2(18,14),Vector2(32,32))
 		var words: String = e[0]
 		if _entry_has_badge(words): G.badge_dot(b,Vector2(58,5))
 		b.activated.connect(func(): _dispatch_entry(words))
@@ -390,20 +390,14 @@ func _build_entries() -> void:
 		add_child(gathering)
 	var state: Dictionary = G.prog.get("main_world",{})
 	var map_name := String(TableCache.main_world_map(String(state.get("map_id","lorin_wilds"))).get("name","昭元边城"))
-	var travel := Craft.action("继续旅程",Vector2(32,616),Vector2(416,88),"primary")
+	var travel := Craft.action("",Vector2(32,616),Vector2(416,88),"primary")
 	travel.name = "ReturnToWorld"
 	travel.set_meta("home_shift",1.0)
 	travel.tooltip_text = "返回主世界 · " + map_name
-	travel.caption.position = Vector2(64,12)
-	travel.caption.set_meta("fixed_y",12)
-	travel.caption.size = Vector2(286,34)
-	travel.caption.add_theme_font_size_override("font_size",25)
-	travel.caption.add_theme_font_override("font",G.font_art)
-	var destination := Craft.label(map_name,Vector2(64,48),Vector2(286,20),13,Color("c3cbb2"))
-	destination.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	destination.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	travel.caption.visible = false
+	var destination := Craft.label(map_name,Vector2(128,55),Vector2(160,20),13,Color("3a2618"))
+	destination.visible = false
 	travel.add_child(destination)
-	Craft.icon(travel,"forward",Vector2(379,27),Vector2(16,16))
 	travel.activated.connect(func(): _open_city(_click_ev()))
 	add_child(travel)
 	var nav := Craft.panel(Vector2(12,712),Vector2(456,76),.90)

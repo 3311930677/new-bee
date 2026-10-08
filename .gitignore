@@ -39,3 +39,9 @@ _backups/
 # Host caches created by local tools
 /%SystemDrive%/
 **/__pycache__/
+
+# 本地临时产物与大文件
+/godot_test_appdata/
+/pixel_audit/
+/参考视频（不传github）/
+*.tmp
