@@ -83,7 +83,7 @@ func _entry_row(words: String, icon: String, id: String) -> Control:
 	row.caption.size = Vector2(112,25)
 	row.caption.set_meta("fixed_y",55)
 	row.caption.add_theme_font_size_override("font_size",17)
-	Craft.icon(row,icon,Vector2(36,8),Vector2(40,40))
+	Craft.icon(row,icon,Vector2(40,16),Vector2(32,32))
 	var status := Craft.label("",Vector2(0,81),Vector2(112,20),12,Craft.MUTED)
 	status.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	status.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS

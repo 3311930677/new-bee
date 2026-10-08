@@ -146,8 +146,14 @@ class Action extends Control:
 
 	func _draw_crafted() -> void:
 		if skin == "primary":
-			preload("res://src/ui/IllustratedUI.gd").silk(self,Rect2(Vector2(0,2 if _down else 0),size),_hover or has_focus())
-			if caption != null: caption.position.y = float(caption.get_meta("fixed_y",0)) + (2 if _down else 0)
+			var banner_tex: Texture2D = preload("res://image/ui/pixel_20261008/master_expedition_banner.png")
+			var state_idx := 2 if _down else (1 if (_hover or has_focus()) else 0)
+			var src_y := float(state_idx * 88)
+			texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+			draw_texture_rect_region(banner_tex, Rect2(Vector2.ZERO, size), Rect2(0, src_y, 416, 88))
+			if caption != null: caption.position.y = float(caption.get_meta("fixed_y",12)) + (2 if _down else 0)
+			for child in get_children():
+				if child is CanvasItem: child.modulate.a = .48 if disabled else 1.0
 			return
 		if skin.begins_with("ledger_"):
 			var style := preload("res://src/ui/LedgerStyle.gd")
@@ -203,9 +209,10 @@ class Action extends Control:
 		var bounds := Rect2(Vector2(0,dy),extent-Vector2(0,dy))
 		if skin == "badge":
 			var plate: Texture2D = G.NavigationIcons.badge_plate()
-			texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-			draw_texture_rect(plate,Rect2(5,dy,58,58-dy),false,Color(1.08,1.08,1.08) if _hover or has_focus() else Color.WHITE)
-			if has_focus(): draw_arc(Vector2(34,28),30,-PI,PI,48,Color("e4c77a"),1,true)
+			texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+			var px := roundf((size.x - 64.0) * 0.5)
+			draw_texture_rect(plate, Rect2(px, dy, 64, 64), false, Color(1.15, 1.15, 1.1) if (_hover or has_focus()) else Color.WHITE)
+			if has_focus(): draw_rect(Rect2(px, dy, 64, 64), Color("e4c77a"), false, 1.0)
 			for child in get_children():
 				if child is CanvasItem: child.modulate.a = .48 if disabled else 1.0
 			return
@@ -253,10 +260,12 @@ class Prop extends Control:
 	func _ready() -> void:
 		mouse_filter = Control.MOUSE_FILTER_IGNORE
 	func _draw() -> void:
-		if G.NavigationIcons.illustrated(key):
-			texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-			var art: Texture2D = G.NavigationIcons.texture(key)
-			if art != null: draw_texture_rect(art, Rect2(Vector2.ZERO, size), false)
+		var art: Texture2D = G.NavigationIcons.texture(key)
+		if art != null:
+			texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+			var tsz := art.get_size()
+			var dst := Rect2((size - tsz) * 0.5, tsz) if (size.x >= tsz.x and size.y >= tsz.y) else Rect2(Vector2.ZERO, size)
+			draw_texture_rect(art, dst, false)
 			return
 		var s := size.x / 40.0
 		draw_set_transform(Vector2.ZERO, 0, Vector2.ONE * s)

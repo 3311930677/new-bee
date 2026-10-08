@@ -112,86 +112,45 @@ func _build() -> void:
 
 	_brand = Control.new()
 	_brand.name = "LoadingBrand"
-	_brand.size = Vector2(400,148)
+	_brand.size = Vector2(400,190)
 	_brand.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_brand)
-	var scrim := TextureRect.new()
-	scrim.position = Vector2(34,-12)
-	scrim.size = Vector2(332,170)
-	scrim.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	scrim.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var soft := GradientTexture2D.new()
-	var shade := Gradient.new()
-	shade.colors = PackedColorArray([Color(.025,.018,.012,.38),Color(0,0,0,0)])
-	shade.offsets = PackedFloat32Array([.15,1.0])
-	soft.gradient = shade
-	soft.fill = GradientTexture2D.FILL_RADIAL
-	soft.fill_from = Vector2(.5,.5)
-	soft.fill_to = Vector2(.5,0)
-	scrim.texture = soft
-	_brand.add_child(scrim)
-	var seal := Relic.BrandSeal.new()
-	seal.name = "BrandInsignia"
-	seal.position = Vector2(72,-10)
-	seal.size = Vector2(256,152)
-	_brand.add_child(seal)
 
-	# Keep the complete two-character source rectangle; no runtime alpha crop.
-	# This also works when source PNGs are remapped to imported textures in exports.
 	var atlas := AtlasTexture.new()
 	atlas.atlas = Wordmark.ART
 	atlas.region = Rect2(Vector2.ZERO,Wordmark.ART.get_size())
 	_brand_mark = TextureRect.new()
 	_brand_mark.name = "ExpeditionWordmark"
-	_brand_mark.position = Vector2(68,0)
-	_brand_mark.size = Vector2(264,110)
+	_brand_mark.position = Vector2(20,0)
+	_brand_mark.size = Vector2(360,186)
 	_brand_mark.texture = atlas
 	_brand_mark.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_brand_mark.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	_brand_mark.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	_brand_mark.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	_brand_mark.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_brand.add_child(_brand_mark)
-	var subtitle := _label("昭元行旅录",20,Color("e7d1a0"))
-	subtitle.name = "LoadingSubtitle"
-	subtitle.position = Vector2(60,112)
-	subtitle.size = Vector2(280,30)
-	var spaced := FontVariation.new()
-	spaced.base_font = G.font_serif
-	spaced.spacing_glyph = 2
-	subtitle.add_theme_font_override("font",spaced)
-	_brand.add_child(subtitle)
-	if not bool(G.get_meta("ui_review_mode",false)):
-		var ink_shader := Shader.new()
-		ink_shader.code = Wordmark.REVEAL_SHADER
-		var ink_material := ShaderMaterial.new()
-		ink_material.shader = ink_shader
-		ink_material.set_shader_parameter("reveal",0.0)
-		_brand_mark.material = ink_material
-		var write := create_tween()
-		write.tween_interval(.08)
-		write.tween_method(func(value:float): ink_material.set_shader_parameter("reveal",value),0.0,1.0,.86)
 
 	_gauge = Relic.new()
 	_gauge.name = "LoadingGauge"
 	_gauge.size = Vector2(416,66)
 	add_child(_gauge)
 	_bar_fill = _gauge.get("lit_blade") as Control
-	_bar_l = _label(STAGES[0],16,Color("eadbc0"))
+	_bar_l = _label(STAGES[0],14,Color("f2dc87"))
 	_bar_l.name = "LoadingStatus"
-	_bar_l.position = Vector2(56,13)
-	_bar_l.size = Vector2(280,24)
+	_bar_l.position = Vector2(88,10)
+	_bar_l.size = Vector2(240,20)
 	_gauge.add_child(_bar_l)
-	_percent_l = _label("0%",14,Color("c7b78f"))
+	_percent_l = _label("0%",14,Color("f5e7c8"))
 	_percent_l.name = "LoadingPercent"
-	_percent_l.position = Vector2(353,35)
-	_percent_l.size = Vector2(40,22)
-	_percent_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_percent_l.position = Vector2(356,34)
+	_percent_l.size = Vector2(48,22)
+	_percent_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_gauge.add_child(_percent_l)
 	# Pick once per entry; do not consume the global gameplay random stream.
 	var tip_i := 0 if bool(G.get_meta("ui_review_mode",false)) else int(Time.get_ticks_usec()%LOADING_TIPS.size())
-	_hint_l = _label("「%s」"%LOADING_TIPS[tip_i],14,Color("bfb39c"))
+	_hint_l = _label("「%s」"%LOADING_TIPS[tip_i],14,Color("e4d4ba"))
 	_hint_l.name = "LoadingTip"
-	_hint_l.size = Vector2(416,20)
+	_hint_l.size = Vector2(416,24)
 	add_child(_hint_l)
 	resized.connect(_layout)
 	_layout()

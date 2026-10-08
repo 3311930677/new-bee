@@ -9,25 +9,26 @@ const RESOURCE_KEYS := {
 }
 const ILLUSTRATED_KEYS := ["coin", "expedition", "soul", "honor", "spark", "world", "bag", "growth", "book", "swords", "summon", "exchange", "settings"]
 
-static func illustrated(key: String) -> bool:
-	return key in ILLUSTRATED_KEYS and ResourceLoader.exists("res://assets/ui/illustrated_icons_20261007/%s.tres" % key)
+static func illustrated(_key: String) -> bool:
+	return false
 
 static var _cache: Dictionary = {}
 
 static func badge_plate() -> Texture2D:
 	if not _cache.has("badge_plate"):
-		_cache["badge_plate"] = load("res://assets/ui/illustrated_icons_20261007/plate.tres")
+		_cache["badge_plate"] = load("res://image/ui/pixel_20261008/pixel_badge_plate.png")
 	return _cache["badge_plate"] as Texture2D
 
 static func resource_path(res_name: String) -> String:
 	return refined_path(String(RESOURCE_KEYS[res_name])) if RESOURCE_KEYS.has(res_name) else ""
 
 static func refined_path(key: String) -> String:
-	if illustrated(key): return "res://assets/ui/illustrated_icons_20261007/%s.tres" % key
+	var pixel_path := "res://assets/ui/pixel_icons/%s.png" % key
+	if ResourceLoader.exists(pixel_path): return pixel_path
 	return "res://assets/ui/refined_icons/%s.svg" % key if key in REFINED_KEYS else ""
 
 static func colored(key: String) -> bool:
-	return illustrated(key) or key in REFINED_KEYS or ResourceLoader.exists("res://assets/ui/pixel_icons/%s.png" % key)
+	return key in REFINED_KEYS or ResourceLoader.exists("res://assets/ui/pixel_icons/%s.png" % key)
 
 static func texture(key: String) -> Texture2D:
 	if not _cache.has(key):
@@ -44,7 +45,7 @@ static func image(key: String, dimensions := Vector2(20, 20), tint := Color.WHIT
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	icon.size = dimensions
 	icon.custom_minimum_size = dimensions
-	icon.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS if illustrated(key) else CanvasItem.TEXTURE_FILTER_NEAREST
+	icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	icon.set_meta("colored_icon", colored(key))
 	icon.modulate = Color.WHITE if colored(key) else tint
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
