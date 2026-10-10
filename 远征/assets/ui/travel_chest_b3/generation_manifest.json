@@ -1,0 +1,43 @@
+{
+  "tool": "built-in ImageGen",
+  "date": "2026-10-09",
+  "prompts": [
+    {
+      "key": "map",
+      "prompt": "Production illustrated MAP BACKGROUND asset for Chinese pixel fantasy RPG 'lantern-lit travel chest' art direction. Wide landscape 3:2 composition. A quiet hand-painted topographic map scroll on dark warm muted parchment, moss forest foothills on left, coastal salt flats and sheltered harbor coast in upper middle, red sand and cold mountains in lower middle/right, deep slate gorges/caverns at far right. No text, letters, numbers, labels, compass, UI panels, grid, node pins, roads, route lines or border frame: game engine will overlay all true topology, labels and routes. No literal destinations to misrepresent gameplay. Sparse low-contrast shaded terrain with generous calm open spaces for 18 dynamic landmarks, bird's eye overhead. Pixel-adjacent crisp painterly terrain, restrained material depth, earthy charcoal/moss/bronze/slate colors, NOT bright beige paper and NOT a web grid. Opaque full bleed, no decorative icons."
+    },
+    {
+      "key": "landmarks",
+      "transparent": true,
+      "prompt": "Production transparent RGBA landmark icon sprite atlas for a Chinese pixel fantasy RPG illustrated travel map. EXACTLY 4 columns by 3 rows, 12 equally spaced cells with transparent gutters, orthographic pixel-adjacent small game landmarks readable at 48px. Dark lacquer-era materials: old bronze, dark stone, moss, muted red wood, slate snow, no shiny glow. No text letters numbers frame backing circles shadows outside icon. Ordered top-left across: row1 Chinese fortified town gate; small red maple grove; broken standing stone stele on slope; dark cave mouth with rune stones. Row2 salt road rocks and small cart; Chinese coastal harbor pier with two roofed warehouses; reed marsh islet; old water sluice gate. Row3 red sandy road dunes; frost mountain outpost roof; mine tunnel with wooden supports; snowy narrow mountain pass. Filled hard silhouettes with 5-7 shade levels, coherent top-left light. Keep objects simple and identifiable, transparent background."
+    },
+    {
+      "key": "commands",
+      "transparent": true,
+      "prompt": "Production transparent RGBA combat command ICON SPRITE ATLAS for a Chinese pixel fantasy RPG using dark lacquered travel chest UI. EXACTLY FOUR COLUMNS and TWO ROWS, eight equally spaced cells with transparent gutters. Hard filled silhouettes, small dark outline, up to five shade levels, steel bronze and old paper materials. Same warm aged bronze and cream icon family as existing lantern-lit travel chest icons. No frames, discs, backing plaques, words, letters, numbers, gems, wings, glow halos. Left to right/top to bottom: row1 strong diagonal steel sword slash (attack), open martial skill book (skills), small red healing potion bottle (items), two companion animal paws with curved exchange arrow (swap partner); row2 boot leaving a doorway with outward arrow (retreat), circular automation arrows resting with a small pause notch (auto off), matching circular automation arrows with filled play triangle (auto on), double forward speed chevrons cut from bronze (speed). Designed to read at 28-40px display, pixel-adjacent game icon style."
+    },
+    {
+      "key": "attack",
+      "transparent": true,
+      "prompt": "Production transparent RGBA UI button skin for Chinese pixel fantasy RPG lantern-lit travel chest. One empty slightly portrait rectangular attack-command plaque, display ratio 152 wide x116 high, source nominal456x348. Dark cinnabar lacquer red wood center #6a2b1f/#cf4a33, restrained single structural two-tone old bronze rim #6e5434/#c29a5b, crisp 4-display-pixel cut corners, top-left lighting, very quiet grain. Empty center for live game-rendered sword icon and Chinese label, no baked text, icon, symbols, ornament, gem, wings, flourish or glow. One normal state only; code handles pressed/disabled/focus states. Corners and edges should be reusable as 9-slice, thin and crafted mature game material, no pale rounded outline. Flat orthographic."
+    }
+  ],
+  "outputs": [
+    {
+      "file": "map.png",
+      "original_file": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-fd863cd4-db35-470c-aae7-556410052b1b.png"
+    },
+    {
+      "file": "landmarks.png",
+      "original_file": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-5cff6a7d-8d75-4df9-8e00-e26796a0ff56.png"
+    },
+    {
+      "file": "commands.png",
+      "original_file": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-f4ad065c-f45f-445d-b787-a50c3fcec712.png"
+    },
+    {
+      "file": "attack.png",
+      "original_file": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-0f018262-af22-40d0-bea8-1bd7b398481f.png"
+    }
+  ]
+}

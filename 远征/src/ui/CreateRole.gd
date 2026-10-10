@@ -6,7 +6,7 @@ const BG_H := 1619.0
 const VIEW_W := 480.0
 const VIEW_H := 800.0
 
-const SPRITE_SCALE := 1.45      # 单角色放大展示
+const SPRITE_SCALE := 2.0      # 单角色放大展示
 const PED_Y := 530.0           # 金色圆台中心 y
 const BASE_OFFSET := 59.0      # 清理后素材脚底相对帧中心的偏移（基线 y=123）
 const ANIM_Y := PED_Y - BASE_OFFSET * SPRITE_SCALE
@@ -21,31 +21,22 @@ var _info: Dictionary = {}
 var _role_idx := 0
 var _gender_idx := 0
 var _toast: Label = null
+var _chest:Control
 var _role_art_frame: PanelContainer = null   # 职业插画位（有图才显形）
 var _role_art: TextureRect = null
 
 
 func _ready() -> void:
-	G.center_fixed_page.call_deferred(self)
-	_build_background()
-	_build_header()
-	_build_name_row()
-	_build_selectors()
-	_build_stage_art()
-	_build_stage()
-	_build_swipe()
-	_build_info_panel()
-	_build_buttons()
-	_sel_gender.set_text(GENDERS[_gender_idx])
-	_name_edit.text = G.random_name()
-	var start := 0
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_chest=preload("res://src/ui/CreateRoleChestView.gd").new()
+	_chest.host=self
+	add_child(_chest)
+	_name_edit.text=G.random_name()
+	var start:=0
 	for i in G.roles.size():
-		if G.roles[i]["id"] == G.selected_role:
-			start = i
-	_switch_role(start, false)
+		if G.roles[i].id==G.selected_role:start=i
+	_switch_role(start,false)
 
-
-# ---------- 背景 ----------
 func _build_background() -> void:
 	G.page_background(self, 0.25)
 
@@ -194,11 +185,7 @@ func _switch_role(idx: int, animate: bool) -> void:
 	_anim.sprite_frames = _build_frames(role["id"])
 	_anim.animation = &"idle"
 	_anim.play(&"idle")
-	_sel_class.set_text(role["name"])
-	_sel_class.set_active(true)
-	_sel_gender.set_active(false)
-	_refresh_role_art()
-	_refresh_info()
+	_chest.refresh()
 	if animate:
 		_anim.modulate.a = 0.0
 		_anim.scale = Vector2.ONE * (SPRITE_SCALE * 0.78)
@@ -322,18 +309,8 @@ func _confirm() -> void:
 		G.go("res://src/ui/Prologue.tscn")
 
 
-func _toast_msg(msg: String) -> void:
-	if _toast != null:
-		_toast.queue_free()
-	_toast = G.gold_label(msg, G.FS_MD, false, Color("ffd0d0"))
-	_toast.position = Vector2(0, 470)
-	_toast.size = Vector2(VIEW_W, 24)
-	add_child(_toast)
-	var tw := create_tween()
-	tw.tween_interval(1.1)
-	tw.tween_property(_toast, "modulate:a", 0.0, 0.4)
-	tw.tween_callback(_toast.queue_free)
-
+func _toast_msg(msg:String) -> void:
+	_chest.error(msg)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if G.ui_blocked:   # GM 控制台等全屏层优先（轮次 14）

@@ -254,9 +254,10 @@ var _auto_btn: Control = null
 var _speed_btn: Control = null
 var _flee_btn: Control = null        # 撤退按钮（二次确认要改它的文案）
 var _flee_armed := false             # 撤退已上膛（3 秒内再点才真正撤退）
+var _chest:Control
 var _cmd_root: Control = null          # 径向指令菜单根（角色周围四枚像素图标）
 var _cmd_btns: Array[Dictionary] = []  # {key, root, tile_sb, label}
-var _page_panel: Panel = null          # 技能页 / 道具页弹出条（PAGE_PANEL_POS）
+var _page_panel: Control = null          # 技能页 / 道具页弹出条（PAGE_PANEL_POS）
 var _command_page := "root"            # root / skills / items
 var _ranged_waiting: Dictionary = {}  # "src:dst" -> 命中前正在飞行的弹道状态
 var _skill_motion_sources: Dictionary = {} # Casts resolved in the current event batch.
@@ -312,8 +313,6 @@ func _ready() -> void:
 	_build_func_row()
 	_build_classic_command_ui()
 	_sync_views()
-	G.fit_mobile_page.call_deferred(self)
-	if _cmd_root!=null:G.fit_mobile_page.call_deferred(_cmd_root)
 	if bool(_cfg.get("stele_echo_ready", false)):
 		_show_tip("碑声已稳：听见两声轻响后注意首领蓄力", Color("ffe2a0"))
 	var tide_route := String(_cfg.get("tide_route", ""))
@@ -478,54 +477,10 @@ func _build_danger_overlay() -> void:
 
 
 func _build_top_bar() -> void:
-	var tc := TableCache.theme_config(String(_cfg.get("enemy", {}).get("theme", "forest")))
-	var nt: String = String(_cfg.get("enemy", {}).get("node_type", "normal"))
-	var nt_name: String = {"normal": "遭遇战", "elite": "精英战", "boss": "首领战"}.get(nt, "遭遇战")
-	if _classic_presentation():
-		var title := G.banner_box(nt_name,160,36,24)
-		title.position = Vector2((VIEW_W-160)*0.5,8)
-		add_child(title)
-	else:
-		# 标题垫一块与右侧按钮同族的深底 chip：亮天空下宋体金字不再糊进背景
-		var title_chip := _func_chip("", 178)
-		title_chip.position = Vector2(12, 12)
-		title_chip.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		var title := G.serif_label("%s · %s" % [String(tc.get("name", "未知")), nt_name], G.FS_MD, G.GOLD)
-		title_chip.add_child(title)
-		add_child(title_chip)
+	_chest=preload("res://src/battle/BattleChestView.gd").new()
+	_chest.host=self
+	add_child(_chest)
 
-	# 开局倍速读设置里的默认档（设置里改了不必每场再点一次）；进战斗后仍可随时切换。
-	# 外部已指定过 speed 的场合（负哨兵被覆盖）不会走到 cur_speed() 的默认分支。
-	var sp := cur_speed()
-	_speed_btn = _pixel_chip("速度 ×%d" % int(sp), 74) if _classic_presentation() \
-		else _func_chip("速度 ×%d" % int(sp), 74)
-	_speed_btn.position = Vector2(12, 12) if _classic_presentation() else Vector2(VIEW_W - 170, 12)
-	_speed_btn.gui_input.connect(_on_speed)
-	_chip_set_active(_speed_btn, sp >= 1.5)
-	add_child(_speed_btn)
-
-	# 自动：经典模式与速度同族像素木牌（原来常驻红底圆角按钮，与像素地图不是一套语言）。
-	# 开/关走 _chip_set_active 的亮金态，一眼能看出"现在是不是托管中"
-	_auto_btn = _pixel_chip("自动", 58) if _classic_presentation() else _func_chip("托管", 58)
-	_auto_btn.position = Vector2(VIEW_W - 74, 12) if _classic_presentation() else Vector2(VIEW_W - 96, 12)
-	_auto_btn.gui_input.connect(_on_auto)
-	_chip_set_active(_auto_btn, sim.auto_mode)
-	add_child(_auto_btn)
-
-	_cast_tip = G.serif_label("", G.FS_SM, Color("ffe9b0"))
-	# 角色与敌怪占据 y≈240–450；施法提示放到其下方的空带。
-	_cast_tip.position = Vector2(0, 462 + _classic_extra_y() + _standard_extra_y() * 0.5)
-	_cast_tip.custom_minimum_size = Vector2(VIEW_W, 28)
-	_cast_tip.add_theme_color_override("font_outline_color", Color("17211d"))
-	_cast_tip.add_theme_constant_override("outline_size", 2)
-	_cast_tip.modulate.a = 0.0
-	add_child(_cast_tip)
-
-	_build_boss_bar()
-
-
-## B4 首领战顶部大血条：标题 chip 之下（y=46）一条横贯的大血条，左名右条。
-## 首领体型大、头顶小血条既挤又看不清，改由顶部专条承担"还剩多少"的职责。
 func _build_boss_bar() -> void:
 	if not sim.has_boss():
 		return
@@ -616,6 +571,7 @@ func _pixel_chip(text: String, w := 64.0) -> PanelContainer:
 
 
 func _build_skill_bar() -> void:
+	if _chest!=null:return
 	var classic := _classic_presentation()
 	var bar_x := CLASSIC_BAR_X if classic else BAR_X
 	_energy_bar_w = VIEW_W - bar_x * 2.0
@@ -744,6 +700,7 @@ func _build_skill_bar() -> void:
 
 
 func _build_func_row() -> void:
+	if _chest!=null:return
 	if _classic_presentation():
 		return   # 经典模式：药剂/换宠/撤退全部并入身周径向指令（物/逃），底部不再占行
 	var classic := _classic_presentation()
@@ -783,6 +740,7 @@ func _build_func_row() -> void:
 ## 常驻显示无需开关；「技」「物」弹出底部页条（技能 / 道具），「逃」两步确认撤退。
 ## 关闭经典表现开关时不插入任何新 UI。
 func _build_classic_command_ui() -> void:
+	if _chest!=null:return
 	if not _classic_presentation():
 		return
 	_cmd_root = Control.new()
@@ -912,6 +870,10 @@ func _position_radial_menu() -> void:
 
 ## 径向指令"上膛"态描边（撤退二次确认用）：暖橙粗边亮起，取消时收回金边
 func _set_radial_armed(key: String, armed: bool) -> void:
+	if _chest!=null:
+		_chest._buttons[key].selected=armed
+		_chest._buttons[key].queue_redraw()
+		return
 	for cbd in _cmd_btns:
 		if String(cbd.key) != key:
 			continue
@@ -924,6 +886,10 @@ func _set_radial_armed(key: String, armed: bool) -> void:
 
 ## 径向指令置灰（P03：剧情首领战不可撤退）：灰边 + 整块压暗，点了只出文案
 func _set_radial_disabled(key: String, disabled: bool) -> void:
+	if _chest!=null:
+		for entry in _cmd_btns:
+			if entry.key==key:entry.disabled=disabled;entry.root.modulate=Color(.6,.6,.6) if disabled else Color.WHITE
+		return
 	for cbd in _cmd_btns:
 		if String(cbd.key) != key:
 			continue
@@ -1063,63 +1029,10 @@ func _skill_lv(sid: String) -> int:
 
 ## 技能页：整宽竖排——每个技能一行（名 + Lv/耗/冷/范围），底部一行返回，点按释放后收页
 func _show_command_skills() -> void:
-	if _page_panel == null:
-		return
-	var role := sim.role_unit()
-	if sim.finished or role == null or role.skills.is_empty():
-		_show_tip("当前没有可用技能")
-		_close_page()
-		return
-	_command_page = "skills"
-	_clear_command_options()
-	for i in mini(5, role.skills.size()):
-		var skill: Dictionary = role.skills[i]
-		var sdef: Dictionary = skill.def
-		var sid := String(sdef.get("id", ""))
-		var sname := String(sdef.get("name", sid))
-		var cost := int(sdef.get("cost", 0))
-		var cd_left := _skill_cd(role, sid)
-		var cd_txt := "就绪" if cd_left <= 0 else "%.1fs" % (float(cd_left) / 30.0)
-		var detail := "Lv%d · 耗%d · 冷 %s · %s" % [self._skill_lv(sid), cost, cd_txt,
-			_range_text(String(sdef.get("target", "")))]
-		var usable := cd_left <= 0 and cost <= role.energy
-		var row := _add_command_row(sname, detail, Callable(self, "_cast_command_skill").bind(sid),
-			"%s · 消耗 %d 能量" % [sname, cost],
-			Color("ffe9b0") if usable else Color("bcb69e"))
-		row.set_meta("skill_id",sid)
-	_add_command_row("返", "返回战场指令", Callable(self, "_close_page"), "返回战场指令")
-	_open_page_panel(_page_rows)
-	# 底部能量横条撤掉后，能量数值就在这一页露一次（常驻表达交给脚下蓝条）
-	if _page_energy_l != null:
-		_page_energy_l.position = Vector2(PAGE_PANEL_POS.x, _page_panel.position.y - 20.0)
-		_page_energy_l.text = "能量 %d/%d" % [role.energy, Combatant.MAX_ENERGY]
-		_page_energy_l.show()
+	_chest.show_page("skills")
 
-
-## 道具页：药剂（剩余数 / 冷却 / 回复比例）+ 换宠（每场一次 / 替补名）+ 返回
 func _show_command_items() -> void:
-	if _page_panel == null:
-		return
-	_command_page = "items"
-	_clear_command_options()
-	var potion_detail := "恢复 %d%% 生命" % roundi(float(BattleSim.POTION_HEAL_PCT) * sim.potion_effect_mult * 100.0)
-	if sim.potion_cd_ticks > 0:
-		_add_command_row("药剂 ×%d" % sim.potions_left,
-			"冷却 %.0fs · %s" % [float(sim.potion_cd_ticks) / 30.0, potion_detail],
-			Callable(self, "_command_use_potion"), "恢复生命；冷却中不可用",
-			Color("8f8068"))
-	else:
-		_add_command_row("药剂 ×%d" % sim.potions_left, potion_detail,
-			Callable(self, "_command_use_potion"), "恢复生命；冷却中不可用")
-	if sim.pet_bench_id != "":
-		var pet_name := String(TableCache.get_pet(sim.pet_bench_id).get("name", sim.pet_bench_id))
-		var swap_txt := "本场已换过" if sim.pet_swap_used else "每场一次"
-		_add_command_row("换宠", "%s · %s" % [swap_txt, pet_name],
-			Callable(self, "_command_swap_pet"), "换上替补宠物（每场一次）",
-			Color("ffe9b0") if not sim.pet_swap_used else Color("8f8068"))
-	_add_command_row("返", "返回战场指令", Callable(self, "_close_page"), "返回战场指令")
-	_open_page_panel(_page_rows)
-
+	_chest.show_page("items")
 
 func _command_attack() -> void:
 	if sim.finished:
@@ -1146,7 +1059,7 @@ func _command_attack() -> void:
 	var target: Combatant = enemies[(current + 1) % enemies.size()]
 	if sim.set_role_focus_target(target.uid):
 		_sync_views()
-		_show_tip("集火目标 · %s" % target.name, Color("ffe08a"))
+		_refresh_hud()
 	_close_page()
 
 
@@ -1174,26 +1087,8 @@ func _command_skill_def(role: Combatant,sid: String) -> Dictionary:
 	return TableCache.get_skill(sid)
 
 func _refresh_command_page() -> void:
-	if _page_panel==null or not _page_panel.visible or _command_page!="skills": return
-	var role := sim.role_unit()
-	if role==null: return
-	_page_energy_l.text = "能量 %d/%d" % [role.energy,Combatant.MAX_ENERGY]
-	for row in _page_panel.get_children():
-		if not row.has_meta("skill_id"): continue
-		var sid := String(row.get_meta("skill_id"))
-		var skill := _command_skill_def(role,sid)
-		var cost := int(skill.get("cost",0))
-		var cd := _skill_cd(role,sid)
-		var ready := cd<=0 and cost<=role.energy
-		var nl: Label = row.get_node("NameText")
-		var dl: Label = row.get_node("DetailText")
-		nl.add_theme_color_override("font_color",Craft.WHITE if ready else Craft.MUTED)
-		var cooling := "就绪" if cd<=0 else "%.1fs" % (float(cd)/30.0)
-		dl.text = "Lv%d · 耗%d · 冷 %s · %s" % [_skill_lv(sid),cost,cooling,_range_text(String(skill.get("target","")))]
-		row.tooltip_text = "能量不足" if cost>role.energy else ("冷却中" if cd>0 else "点击施放")
+	if _chest!=null and _page_panel.visible:_chest.update_page()
 
-
-## 「物」：开道具页（药剂 / 换宠），不再直接喝药——与底部功能行撤掉后的入口对齐
 func _command_item() -> void:
 	if sim.finished:
 		_close_page()
@@ -1257,7 +1152,7 @@ func _spawn_view(u: Combatant) -> UnitView:
 			var lv := int(enemy_cfg.get("display_level", 0))
 			v._hideable_name = false
 			v.set_classic_name("Lv%d %s" % [lv, u.name] if lv > 0 else u.name,
-				Color("ebbbff"))
+				Color("f2c0b6"))
 		else:
 			v.set_classic_name(u.name, Color("e8e4bd"))
 		if u.kind == "pet":
@@ -1355,6 +1250,10 @@ func _consume_events() -> void:
 
 
 func _on_event(e: Dictionary) -> void:
+	if _chest!=null and String(e.get("t","")) in ["basic","cast_start"]:
+		_chest._acting_uid=int(e.get("src",e.get("uid",-1)))
+		_chest._acting_until=Time.get_ticks_msec()+800
+		if int(e.get("src",-1))==sim.role_uid:_chest._auto_focus_uid=int(e.get("uid",-1))
 	var t := String(e.t)
 	var src: UnitView = _views.get(int(e.get("src", -1)))
 	var dst: UnitView = _views.get(int(e.get("uid", -1)))
@@ -1610,6 +1509,7 @@ func _refresh_hud() -> void:
 ## P03 常驻信息条：四枚指令之上的一行事实——攻谁 / 几个技能放得出来 / 药还剩几瓶。
 ## 只读 sim 与已缓存的 _cfg，**不调用 pick_basic_target**（混乱态会摇随机，逐帧调用会污染确定性）。
 func _refresh_cmd_info() -> void:
+	if _chest!=null:_chest.refresh();return
 	if _cmd_info_l == null:
 		return
 	var role := sim.role_unit()
@@ -1877,6 +1777,9 @@ func cur_speed() -> float:
 
 
 func _on_speed(e: InputEvent) -> void:
+	if _chest!=null:
+		if e is InputEventMouseButton and e.pressed:speed=2.0 if cur_speed()<1.5 else 1.0;_chest.refresh()
+		return
 	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 		speed = 2.0 if cur_speed() < 1.5 else 1.0
 		_chip_set_active(_speed_btn, speed >= 1.5)
@@ -1884,6 +1787,9 @@ func _on_speed(e: InputEvent) -> void:
 
 
 func _on_auto(e: InputEvent) -> void:
+	if _chest!=null:
+		if e is InputEventMouseButton and e.pressed:sim.auto_mode=not sim.auto_mode;_chest.refresh()
+		return
 	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 		sim.auto_mode = not sim.auto_mode
 		_chip_set_active(_auto_btn, sim.auto_mode)
@@ -2418,6 +2324,8 @@ class UnitView extends Node2D:
 	var is_role := false
 	var body := Node2D.new()          # 位移/闪白的载体
 	var sprite: Node2D = null         # 角色 AnimatedSprite2D / 怪宠 Sprite2D
+	var hp_value:Label
+	var _target_ring:Node2D
 	var hp_bg := ColorRect.new()
 	var hp_ghost := ColorRect.new()    # B2 白残影条：停在旧血量，缓动追上真实值
 	var hp_fg := ColorRect.new()
@@ -2442,6 +2350,7 @@ class UnitView extends Node2D:
 	var _name_fade := 0.0
 	var _last_hp := -1
 	var _hp_ratio := 1.0               # B2 真实血量比例（sync 更新）
+	var _health_width := 82.0
 	var _pending_hp_ratio := 1.0       # 远程命中抵达前暂存的新血量
 	var _hp_hold_count := 0
 	var _ghost_ratio := 1.0            # B2 残影条比例（_process 缓动追赶）
@@ -2555,10 +2464,14 @@ class UnitView extends Node2D:
 				hp_y = _radius + 6.0
 		if sprite != null: _sprite_home = sprite.position
 		# 名字（头顶）——亮底战场上必须带描边，否则敌方名字糊成一片白
-		name_l = G.gold_label(u.name, G.FS_XS, false,
+		name_l = G.gold_label(u.name.left(6), G.FS_XS, false,
 			Color("ffd0d0") if side == "enemy" else Color("c8e8c8"), true)
-		name_l.position = Vector2(-36, name_y)
-		name_l.custom_minimum_size = Vector2(72, 0)
+		name_l.position=Vector2(-48,name_y)
+		name_l.custom_minimum_size=Vector2(96,0)
+		name_l.add_theme_font_override("font",G.font_reg)
+		name_l.add_theme_font_size_override("font_size",12)
+		name_l.clip_text=true
+		name_l.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
 		body.add_child(name_l)
 		if _classic and side == "enemy":
 			_target_mark = Polygon2D.new()
@@ -2570,29 +2483,38 @@ class UnitView extends Node2D:
 			body.add_child(_target_mark)
 		# 杂兵名签常态隐藏：首领战五人同屏时名签挤成一团、比血条还抢戏。
 		# 只在受击时亮 1.4s（精英/首领/我方单位常驻显示）
-		_hideable_name = side == "enemy" and u.kind == "monster" \
-			and String(u.data.get("tier", "normal")) == "normal"
+		_hideable_name=false
 		if _hideable_name:
 			name_l.modulate.a = 0.0
 		# HP 条（脚下）
 		hp_bg.color = Color(0, 0, 0, 0.55)
-		hp_bg.position = Vector2(-22, hp_y)
-		hp_bg.size = Vector2(44, 5)
+		hp_bg.position = Vector2(-42, hp_y)
+		hp_bg.size = Vector2(84, 6)
 		body.add_child(hp_bg)
+		_target_ring=preload("res://src/battle/BattleChestView.gd").TargetRing.new()
+		_target_ring.position=Vector2(0,hp_y-8)
+		_target_ring.z_index=1
+		_target_ring.visible=false
+		body.add_child(_target_ring)
 		# B2 两段式削减：白残影条垫在前色条之下，被打时前色条瞬减、残影条停在旧值
 		# 再缓动追上（街霸式），一眼看清"这一次掉了多少"
 		hp_ghost.color = Color(1.0, 0.94, 0.86, 0.9)
 		hp_ghost.position = hp_bg.position + Vector2(1, 1)
-		hp_ghost.size = Vector2(42, 3)
+		hp_ghost.size = Vector2(82, 4)
 		body.add_child(hp_ghost)
-		hp_fg.color = Color("e05a4a") if _classic or side == "enemy" else Color("5ab464")
+		hp_fg.color = Color("cf4a33") if side=="enemy" else Color("63b784")
 		hp_fg.position = hp_bg.position + Vector2(1, 1)
-		hp_fg.size = Vector2(42, 3)
+		hp_fg.size = Vector2(82, 4)
 		body.add_child(hp_fg)
+		hp_value=preload("res://src/ui/TravelChestUI.gd").label("","tag")
+		hp_value.position=hp_bg.position+Vector2(0,8)
+		hp_value.size=Vector2(84,20)
+		hp_value.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+		body.add_child(hp_value)
 		if _classic and is_role:
 			energy_bg.color = Color(0, 0, 0, 0.65)
 			energy_bg.position = hp_bg.position + Vector2(0, 6)
-			energy_bg.size = Vector2(44, 4)
+			energy_bg.size = Vector2(84,4)
 			body.add_child(energy_bg)
 			energy_fg.color = Color("4c8fd8")
 			energy_fg.position = energy_bg.position + Vector2(1, 1)
@@ -2600,7 +2522,7 @@ class UnitView extends Node2D:
 			body.add_child(energy_fg)
 		# buff 缩写（血条正下）
 		buff_l = G.gold_label("", G.FS_XS, false, Color("a8d8ff"), false)
-		buff_l.position = Vector2(-36, hp_y + 7)
+		buff_l.position = Vector2(-42,hp_y+28)
 		buff_l.custom_minimum_size = Vector2(72, 0)
 		body.add_child(buff_l)
 		# 经典模式宠物的左下错位在 _spawn_view 里统一给（近战/远程同一位，让开身周木牌）
@@ -2611,6 +2533,8 @@ class UnitView extends Node2D:
 		# 玩家走"裸绿字"，两套画法混在一起；玩家名压亮草地几乎看不见，敌宠底板又比
 		# 名字本身抢眼。字号同时从 13 提到 16，亮底战场上先保证读得清。
 		name_l.text = value
+		name_l.add_theme_font_override("font",G.font_bold)
+		name_l.add_theme_font_size_override("font_size",12)
 		name_l.modulate.a = 1.0
 		name_l.add_theme_font_override("font", G.font_bold)
 		name_l.add_theme_font_size_override("font_size", G.FS_SM)
@@ -2672,12 +2596,14 @@ class UnitView extends Node2D:
 		_base_pos = _owner_grid(u)
 		position = _base_pos
 		var ratio := clampf(float(u.hp) / float(maxi(u.get_max_hp(), 1)), 0.0, 1.0)
+		if hp_value!=null:hp_value.text="%d/%d"%[u.hp,u.get_max_hp()]
 		_pending_hp_ratio = ratio
 		if _hp_hold_count <= 0:
 			_hp_ratio = ratio
-			hp_fg.size.x = 42.0 * ratio
+			hp_fg.size.x = _health_width * ratio
+		if side=="ally":hp_fg.color=Color("cf4a33") if ratio<.25 else Color("63b784")
 		if _classic and is_role:
-			energy_fg.size.x = 42.0 * clampf(float(u.energy) / float(Combatant.MAX_ENERGY), 0.0, 1.0)
+			energy_fg.size.x = 82.0 * clampf(float(u.energy) / float(Combatant.MAX_ENERGY), 0.0, 1.0)
 		if shield_ring != null:
 			shield_ring.visible = u.has_buff("shield")
 		# 杂兵受击亮名：掉血瞬间把名签唤出 1.4s，随后 _process 里淡掉
@@ -2704,12 +2630,27 @@ class UnitView extends Node2D:
 		_hp_hold_count = maxi(0, _hp_hold_count - 1)
 		if _hp_hold_count == 0 and not _dead:
 			_hp_ratio = _pending_hp_ratio
-			hp_fg.size.x = 42.0 * _hp_ratio
+			hp_fg.size.x = _health_width * _hp_ratio
 
 
 	func set_focused(active: bool) -> void:
+		if _target_ring!=null:_target_ring.visible=active and not _dead
 		if _target_mark != null:
 			_target_mark.visible = active and not _dead
+	func compact_health(compact:bool) -> void:
+		var width:=40.0 if compact else 84.0
+		_health_width=width-2
+		hp_bg.position.x=-width*.5;hp_bg.size=Vector2(width,4 if compact else 6)
+		for bar in [hp_fg,hp_ghost]:
+			bar.position=hp_bg.position+Vector2.ONE
+			bar.size.y=2 if compact else 4
+		hp_fg.size.x=_health_width*_hp_ratio;hp_ghost.size.x=_health_width*_ghost_ratio
+	func _actor_rect() -> Rect2:
+		if sprite is Sprite2D:return sprite.get_global_transform_with_canvas()*sprite.get_rect()
+		if sprite is AnimatedSprite2D:
+			var extent:Vector2=sprite.sprite_frames.get_frame_texture(sprite.animation,sprite.frame).get_size()
+			return sprite.get_global_transform_with_canvas()*Rect2(-extent*.5,extent)
+		return body.get_global_transform_with_canvas()*Rect2(Vector2(-28,-54),Vector2(56,64))
 
 
 	## 杂兵名签的淡出计时：最后 0.4s 线性消隐，亮名期间被打断会重新计满。
@@ -2722,10 +2663,10 @@ class UnitView extends Node2D:
 			pass
 		elif _ghost_ratio < _hp_ratio:
 			_ghost_ratio = _hp_ratio
-			hp_ghost.size.x = 42.0 * _ghost_ratio
+			hp_ghost.size.x = _health_width * _ghost_ratio
 		else:
 			_ghost_ratio = maxf(_hp_ratio, lerpf(_ghost_ratio, _hp_ratio, 1.0 - exp(-delta * 6.0)))
-			hp_ghost.size.x = 42.0 * _ghost_ratio
+			hp_ghost.size.x = _health_width * _ghost_ratio
 
 
 	func _owner_grid(u: Combatant) -> Vector2:

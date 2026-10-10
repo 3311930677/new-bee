@@ -33,9 +33,8 @@ func _run() -> void:
 	_check(ResourceLoader.exists(String(cfg.get("monster_sprite", ""))),
 		"主地图怪物像素形象应存在")
 	_check(not TableCache.get_monster("mon_zombie").is_empty(), "主地图僵尸战斗数据应存在")
-	_check(String(cfg.get("background", "")) == "res://image/style_review_20261005/ground_soil_reference_v1.png",
-		"主地图应接入参考图风格的浅色不规则土路")
-	var ground_tex := load(String(cfg.get("background", ""))) as Texture2D
+	_check(ReferenceWorldArt.active("lorin_wilds"),"主地图应接入新参考图生产素材")
+	var ground_tex := ReferenceWorldArt.texture("lorin_wilds_floor_top")
 	if ground_tex != null:
 		var screen_pixel_scale := float(int(cfg.get("map_cols", 20)) * 48) \
 			/ float(ground_tex.get_width()) * float(cfg.get("camera_zoom", 1.0))
@@ -49,7 +48,7 @@ func _run() -> void:
 	map.map_finished.connect(func(result: String): _last_result = result)
 	add_child(map)
 	await get_tree().process_frame
-	_check(map._player.position == Vector2(480, 930), "首次进入应从主路空地出生")
+	_check(map._player.position == Vector2(600, 1520), "首次进入应从主路空地出生")
 	_check(map._mode == "main_world", "应进入 main_world 模式")
 	_check(map._main_map_id == "lorin_wilds", "主地图 id 应保留")
 	_check(map._monsters.size() == 4, "昭元边城道路两侧应生成 4 个明雷")
@@ -57,23 +56,31 @@ func _run() -> void:
 		"新主城应迁入原主城全部建筑")
 	_check(map._city_content._npcs.size() >= G.city_npcs().size(),
 		"新主城应迁入常驻 NPC 和今日访客")
+	# v4 城镇重排：建筑底座在地图内且互不压住；NPC 不站进任何建筑底座。
+	var plinths: Array[Rect2] = []
 	for building in map._city_content._buildings:
-		_check(building.position.x <= 330.0 or building.position.x >= 630.0,
-			"主城店铺应分列中间道路两侧")
+		var size := Vector2(building._w,building._h)
+		var plinth := Rect2(building.position + Vector2(-size.x * 0.45,-48), Vector2(size.x * 0.9,40))
+		_check(Rect2(0, 0, 1200, 2112).encloses(plinth), "主城建筑底座应在地图内")
+		for other in plinths:
+			_check(not other.intersects(plinth), "主城建筑底座不应互相压住")
+		plinths.append(plinth)
 	for citizen in map._city_content._npcs:
-		_check(citizen.position.x <= 400.0 or citizen.position.x >= 560.0,
-			"主城 NPC 应站在道路左右两侧")
+		var inside := false
+		for plinth in plinths:
+			inside = inside or plinth.has_point(citizen.position)
+		_check(not inside, "主城 NPC 不应站进建筑底座")
 	_check(map._city_content._quest_chip != null,
 		"新主城应保留委托快捷入口")
 	_check(map._potion_badge != null and map._potion_badge.text == str(run.potions),
 		"药瓶图标应显示剩余数量")
-	_check(map._pet_btn != null and map._pet_btn.get_child(1) is Sprite2D \
-		and map._pet_btn.get_child(1).texture != null,
+	_check(map._pet_btn != null and map._pet_btn.get_node_or_null("ActionIcon") is TextureRect \
+		and map._pet_btn.get_node("ActionIcon").texture != null,
 		"换宠入口应显示宠物图标")
 	_check(map._sprint_btn != null and map._sprint_btn.size.x >= 44.0
 		and map._sprint_btn.size.y >= 44.0 and map._sprint_btn.position.y > 650.0,
 		"疾行入口应收在屏幕下方且保留触控热区")
-	_check(map._main_story_l != null and map._main_story_l.get_parent().position.y >= 136.0,
+	_check(map._main_story_l != null and not map._main_story_l.get_parent().get_global_rect().intersects(map._city_content._quest_chip.get_global_rect()),
 		"主城主线签应避开城务委托签")
 	map._city_content._check_interact()
 	_check(not map._city_content._npcs[0].label_near,
@@ -86,13 +93,13 @@ func _run() -> void:
 	map._city_content._check_interact()
 	_check(map._city_content._npcs[0].label_near,
 		"走近 NPC 时名签应出现")
-	map._player.position = map._city_content._buildings[0].position + Vector2(120, 0)
+	map._player.position = map._city_content._buildings[0].get_meta("door_world")
 	map._city_content._check_interact()
 	_check(map._city_content.has_modal() and map._modal_open(),
 		"从路边走近店铺应打开原面板并暂停接战")
 	map._city_content._close_panel()
-	map._player.position = Vector2(480, 930)
-	_check(map._main_level_l != null and map._main_level_l.text == "Lv5",
+	map._player.position = Vector2(600, 1520)
+	_check(map._main_level_l != null and map._main_level_l.text == "5",
 		"主地图左上应显示角色等级")
 	_check(map._main_exp_l != null and map._main_exp_l.text.ends_with("%"),
 		"主地图左上应显示真实经验进度")
@@ -121,9 +128,9 @@ func _run() -> void:
 	first_mon.position = map._player.position + Vector2(90, 0)
 	first_mon._physics_process(0.016)
 	_check(first_mon._state == "wander", "主世界怪物靠近玩家时不应进入追击")
-	_check(map._map_cfg.get("map_cols") == 20 and map._map_cfg.get("map_rows") == 26,
-		"主地图行走范围应缩到 20×26 格")
-	_check(is_equal_approx(map._player_anim.scale.x, 0.66), "主地图旅人应采用当前同屏样板比例")
+	_check(map._map_cfg.get("map_cols") == 25 and map._map_cfg.get("map_rows") == 44,
+		"主地图行走范围应适应左右建筑与南部荒院")
+	_check(is_equal_approx(map._player_anim.scale.x, 0.65), "主地图旅人应采用当前同屏样板比例")
 	var player_camera: Camera2D
 	for child in map._player.get_children():
 		if child is Camera2D:
@@ -138,11 +145,15 @@ func _run() -> void:
 			has_background = true
 		if child is TileMapLayer:
 			tile_layers += 1
-	_check(has_background, "主地图应铺设新加入的整图背景")
+	if preload("res://src/world/SunnyTravelArt.gd").active("lorin_wilds"):
+		has_background=map._flat_ground!=null and map._flat_ground.texture!=null and map._flat_ground.extent==Vector2(960,1248) and map._flat_ground.z_index<map._world.z_index
+	if ReferenceWorldArt.active("lorin_wilds"):
+		has_background=map._flat_ground!=null and map._flat_ground.top!=null and map._flat_ground.bottom!=null and map._flat_ground.extent==Vector2(1200,2112) and map._flat_ground.z_index<map._world.z_index
+	_check(has_background, "主地图地表完整覆盖地图且位于实体下层")
 	_check(tile_layers == 0, "主地图不应继续叠历练随机地砖")
 
 	var before_gold := int(G.wallet.get("gold", 0))
-	map._player.position = Vector2(390, 900)
+	map._player.position = Vector2(600, 1100)
 	first_mon.position = map._player.position + Vector2(20, 0)
 	first_mon._physics_process(0.016)
 	_check(map._battle != null and map._battle._classic_presentation(), "明雷应进入同图经典战斗表现")
@@ -169,8 +180,8 @@ func _run() -> void:
 	var saved: Dictionary = G.prog.get("main_world", {})
 	_check(float((saved.get("respawn_at", {}) as Dictionary).get("0", 0.0)) > Time.get_unix_time_from_system(),
 		"胜利后应保存明雷的刷新时间")
-	_check((saved.get("position", []) as Array) == [390, 900], "战利落袋时应同时保存所在坐标")
-	_check(int(saved.get("layout_version", 0)) == 3, "新出生点应标记布局版本")
+	_check((saved.get("position", []) as Array) == [600, 1100], "战利落袋时应同时保存所在坐标")
+	_check(int(saved.get("layout_version", 0)) == 6, "新出生点应标记布局版本")
 	map.queue_free()
 	await get_tree().process_frame
 	MapScene.pending_cfg = {"mode": "main_world", "main_map_id": "lorin_wilds", "run": run,
@@ -179,7 +190,7 @@ func _run() -> void:
 	map.map_finished.connect(func(result: String): _last_result = result)
 	add_child(map)
 	await get_tree().process_frame
-	_check(map._player.position == Vector2(390, 900), "回到主地图应从离开位置继续")
+	_check(map._player.position == Vector2(600, 1100), "回到主地图应从离开位置继续")
 	_check(map._monsters.size() == 3, "刷新时间前重进主城不应复活")
 	map._main_respawn_at["0"] = Time.get_unix_time_from_system() - 1.0
 	map._player.position = map._main_spawn_slots[0]["position"]
@@ -204,8 +215,8 @@ func _run() -> void:
 	map = (load("res://src/explore/MapScene.tscn") as PackedScene).instantiate() as MapScene
 	add_child(map)
 	await get_tree().process_frame
-	_check(map._player.position.distance_to(Vector2(480, 1052.38)) < 1.0,
-		"旧版主地图坐标应等比例迁移到缩小后的地图")
+	_check(map._player.position.distance_to(Vector2(600, 1520)) < 1.0,
+		"过早版本的未知坐标应迁移到可达主路，保留游戏进度")
 	map.queue_free()
 	await get_tree().process_frame
 	G.prog["main_world"] = {"map_id": "lorin_wilds", "layout_version": 2,
@@ -215,8 +226,8 @@ func _run() -> void:
 	map = (load("res://src/explore/MapScene.tscn") as PackedScene).instantiate() as MapScene
 	add_child(map)
 	await get_tree().process_frame
-	_check(map._player.position == Vector2(480, 930),
-		"旧档停在旧出生点时应迁入新主路出生点")
+	# 旧出生点 (480,930) 在 v4 里是广场中央的可走地，不强制迁移；读入后只要求不卡在建筑底座或出口牌内。
+	_check(not map._town_blocked(map._player.position), "旧档读入应避开新建筑底座与出口牌")
 	map.queue_free()
 	await get_tree().process_frame
 
@@ -356,9 +367,9 @@ func _run() -> void:
 	var tall_map := (load("res://src/explore/MapScene.tscn") as PackedScene).instantiate() as MapScene
 	tall_view.add_child(tall_map)
 	await get_tree().process_frame
-	_check(absf(tall_map._joy.position.y - 891.0) < 1.0
-		and absf(tall_map._pet_btn.position.y - 941.0) < 1.0
-		and absf(tall_map._sprint_btn.position.y - 999.0) < 1.0,
+	_check(absf(tall_map._joy.position.y - 895.0) < 1.0
+		and absf(tall_map._pet_btn.position.y - 911.0) < 1.0
+		and absf(tall_map._sprint_btn.position.y - 991.0) < 1.0,
 		"长屏主世界摇杆与拇指按钮应留在视口底缘")
 	await _verify_top_hud(tall_map, false)
 	if not tall_map._monsters.is_empty():
@@ -366,7 +377,7 @@ func _run() -> void:
 		await get_tree().process_frame
 		_check(tall_map._battle != null
 			and absf(tall_map._battle._field.position.y - 267.0) < 1.0
-			and absf(tall_map._battle._cmd_info_l.position.y - (BattleScene.CLASSIC_CMD_Y-22.0+267.0)) < 1.0,
+			and absf(tall_map._battle._chest._enemy_strip.get_global_rect().position.y - (tall_map.get_viewport_rect().size.y-208.0)) < 1.0,
 			"长屏同图战斗人物与指令条应跟随视口下移")
 	tall_view.queue_free()
 	await get_tree().process_frame
@@ -380,16 +391,17 @@ func _verify_top_hud(map: MapScene, click_entries := true) -> void:
 	var icon := gold.find_child("GoldIcon", true, false) as TextureRect
 	_check(icon != null and gold.get_global_rect().encloses(icon.get_global_rect()),
 		"金币原图缩放后必须完整留在资源栏内")
-	_check(icon != null and icon.size == Vector2(24, 24), "48px 货币原图不能撑大 HUD 图标")
+	_check(icon != null and icon.size == Vector2(18, 18), "货币原图不能撑大 18px HUD 图标")
 	var story := map._main_story_l.get_parent() as Button
 	var daily := map._city_content._quest_chip as Button
 	var mini := map._minimap
 	var plot: Rect2 = mini._map_rect()
 	var extent: Vector2 = map._map_extent()
 	_check(not mini._cartography.routes.is_empty(), "舆图应读取本图真实道路")
-	_check(is_equal_approx(plot.size.x / plot.size.y, extent.x / extent.y), "舆图投影必须保留世界比例")
-	_check(mini._project(Vector2.ZERO).is_equal_approx(plot.position)
-		and mini._project(extent).is_equal_approx(plot.end), "地图角点与标记必须使用同一投影")
+	_check(is_equal_approx(plot.size.x / plot.size.y, mini._view_bounds().size.x / mini._view_bounds().size.y), "舆图投影必须保留世界比例")
+	_check(mini._project(mini._view_bounds().position).is_equal_approx(plot.position)
+		and mini._project(mini._view_bounds().end).is_equal_approx(plot.end)
+		and mini._project(map._player.position).is_equal_approx(plot.get_center()), "地图角点与标记必须使用同一投影")
 	_check(mini._project(Vector2(-500, 9000)).is_equal_approx(Vector2(plot.position.x, plot.end.y)),
 		"越界标记应落在地图边缘，不能侵入标题或展开提示")
 	_check(not mini.get_global_rect().intersects(gold.get_global_rect())
@@ -404,9 +416,9 @@ func _verify_top_hud(map: MapScene, click_entries := true) -> void:
 	map._refresh_hud()
 	await get_tree().process_frame
 	var number_width := map._main_gold_l.get_theme_font("font").get_string_size(
-		map._main_gold_l.text, HORIZONTAL_ALIGNMENT_LEFT, -1, 15).x
-	_check(map._main_gold_l.text == "999999999" and number_width <= map._main_gold_l.size.x,
-		"九位金币应完整显示，不依赖裁剪")
+		map._main_gold_l.text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x
+	_check(map._main_gold_l.text == "9.99亿" and int(map._main_gold_l.get_meta("hud_amount")) == 999999999 and number_width <= map._main_gold_l.size.x,
+		"九位金币按规范缩写且保留完整数值，不依赖裁剪")
 	G.wallet.gold = wallet_before
 	var hp_before := map.st.hp
 	map.st.hp = roundi(map.st.max_hp() * 0.22)
@@ -414,7 +426,7 @@ func _verify_top_hud(map: MapScene, click_entries := true) -> void:
 	var ratio := float(map.st.hp) / float(map.st.max_hp())
 	_check(is_equal_approx(map._main_hp_fill.size.x,
 		float(map._main_hp_fill.get_meta("hud_width")) * ratio), "掉血后轨道宽度应显示真实生命比例")
-	_check(map._main_hp_fill.color == Color("e99978"), "低血量应用暖色提示")
+	_check(map._main_hp_fill.color == Color("cf4a33"), "低血量应用暖色提示")
 	map.st.hp = hp_before
 	map._refresh_hud()
 	if not click_entries: return

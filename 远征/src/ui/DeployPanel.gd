@@ -8,6 +8,7 @@ extends Control
 
 signal confirmed(cfg: Dictionary)
 signal canceled
+var _chest:Control
 
 # 新 class_name 尚未进编辑器全局类缓存，按项目惯例 preload 路径取脚本
 const PageDeckScript := preload("res://src/ui/PageDeck.gd")
@@ -72,106 +73,16 @@ const TIPS := [
 ]
 
 func _ready() -> void:
-	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	if G.selected_role != "":
 		_role = G.selected_role
 	_build()
 
 func _build() -> void:
-	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），不再各写一块纯灰
-	G.veil(self, 0.72)
+	_chest=preload("res://src/ui/DeployChestView.gd").new()
+	_chest.host=self
+	add_child(_chest)
 
-	# 这里别用 set_anchors_preset 定位：浮层自己的 rect 要等一帧才结算完，
-	# 锚点基准取到的是 0，横幅会被推到屏幕左边外面去，直接写死坐标最稳
-	var banner := G.banner_box("出征筹备", 300, 50)
-	banner.position = Vector2(90, 36)
-	add_child(banner)
-
-	var panel := G.parchment_box(440, 560, 16.0)
-	panel.position = Vector2(20, 108)
-	add_child(panel)
-
-	# PanelContainer 是 Container，直接放子控件会被布局系统覆盖位置；
-	# 包一层 Control 再手动布局
-	_content = Control.new()
-	_content.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	panel.add_child(_content)
-
-	# 三页签：点哪个进哪个，↑↓/WS 也能切（比再套一层横向分页更好认）
-	# PixelButton 皮 + tab_selected 金线（与 G.page_tabs 同一套页签语言），弃用药丸圆角
-	var gap := (CONTENT_W - GUTTER * 2.0 - TAB_W * float(STEPS.size())) / 2.0
-	for i in STEPS.size():
-		var tab := G.PixelButton.new()
-		tab.custom_minimum_size = Vector2(TAB_W, TAB_H)
-		tab.position = Vector2(GUTTER + float(i) * (TAB_W + gap), 0.0)
-		tab.set_content_margin(0.0)
-		tab.add_child(G.gold_label(STEPS[i], G.FS_MD, true, G.TEXT_DARK, false))
-		tab.mouse_filter = Control.MOUSE_FILTER_STOP
-		tab.gui_input.connect(func(e: InputEvent): _on_tab_click(e, i))
-		_content.add_child(tab)
-		_tab_btns.append(tab)
-
-	_hint = G.gold_label("", G.FS_XS, false, G.TEXT_MUTED, false)
-	_hint.position = Vector2(0, 410)
-	_hint.custom_minimum_size = Vector2(CONTENT_W, 0)
-	_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_content.add_child(_hint)
-
-	# 操作说明收进「?」圆钮：常驻文案会把卡片视野压掉一块，点开才看
-	var help := G.info_button("出征筹备 · 怎么操作", TIPS)
-	help.position = Vector2(CONTENT_W - 26.0, 3.0)
-	_help_btn = help
-	_content.add_child(help)
-	# 头一回打开自动弹一次（新手教程），之后只靠右上角 ? 复看
-	G.tip_once.call_deferred("deploy", "出征筹备 · 怎么操作", TIPS, self)
-
-	# 扫荡：已通关秘境 + 1 张扫荡券 = 标准路线收益一键入账（免跑图）
-	_sweep_btn = G.gold_button("扫荡×%d" % G.item_count("ticket_sweep"), 140, 44, G.FS_SM)
-	_sweep_btn.position = Vector2(GUTTER, 448)
-	_sweep_btn.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_on_sweep())
-	_content.add_child(_sweep_btn)
-
-	var go := G.gold_button("出 征", 172, 48)
-	go.position = Vector2(196, 446)
-	go.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_on_confirm())
-	_content.add_child(go)
-
-	# 补给（轮次 21）：塞进「返回」左侧的空档（返回居中占 144~264，这里 16~136 不重叠）。
-	# 点它只累计数量，金币留到「出征」确认时才算——否则玩家加带后按返回会白花钱。
-	_supply_btn = G.ghost_button("", 120, 36, G.FS_XS)
-	_supply_btn.position = Vector2(16, 502)
-	_supply_btn.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_add_supply())
-	_content.add_child(_supply_btn)
-	_refresh_supply()
-
-	# 苦行（轮次 22）：出征前一次性选择「敌人更强 / 收益更高」。塞进「返回」右侧空档
-	# （返回居中占 144~264，这里 272~392 不重叠）。
-	_ascetic_btn = G.ghost_button("", 120, 36, G.FS_XS)
-	_ascetic_btn.position = Vector2(272, 502)
-	_ascetic_btn.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_toggle_ascetic())
-	_content.add_child(_ascetic_btn)
-	_refresh_ascetic()
-
-	var back := G.ghost_button("返回", 120, 36)
-	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 502)
-	back.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			canceled.emit())
-	_content.add_child(back)
-
-	_rebuild_step()
-
-# ---------- 页签 ----------
 func _on_tab_click(e: InputEvent, i: int) -> void:
 	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 		_goto_step(i)
@@ -195,26 +106,7 @@ func _refresh_tabs() -> void:
 
 # ---------- 选项页（一屏一项） ----------
 func _rebuild_step() -> void:
-	if _deck != null:
-		_content.remove_child(_deck)
-		_deck.queue_free()
-	_deck = null
-	_cards.clear()
-	_deck = PageDeckScript.new(CONTENT_W, DECK_H, 26.0)
-	_deck.position = Vector2(0, DECK_Y)
-	_deck.key_mode = "lr"   # ↑↓/WS 留给页签，别和二级导航抢键
-	_deck.page_gap = 14.0   # 相邻卡片的阴影不再贴到当前卡的裁切边上
-	match _step:
-		0:
-			_fill_themes()
-		1:
-			_fill_roles()
-		2:
-			_fill_pets()
-	_content.add_child(_deck)
-	_refresh_tabs()
-	_set_hint_default()
-	_refresh_sel()
+	_chest.step()
 
 func _fill_themes() -> void:
 	var order: Array = G.theme_order()
@@ -383,18 +275,7 @@ func _toggle_ascetic() -> void:
 
 
 func _refresh_ascetic() -> void:
-	if _ascetic_btn == null:
-		return
-	var lbl := _ascetic_btn.get_child(0) as Label
-	if lbl == null:
-		return
-	var c := G.ascetic_cfg()
-	var mult := float(c.get("enemy_mult", 1.0))
-	var rew := float(c.get("reward_mult", 1.0))
-	lbl.text = "%s：%s" % [String(c.get("name", "苦行")), "开" if _ascetic else "关"]
-	_ascetic_btn.tooltip_text = "敌人强度 ×%.2f · 本局收益 ×%.2f" % [mult,rew]
-	_ascetic_btn.modulate = Color(1.0, 0.92, 0.84) if _ascetic else Color.WHITE
-
+	if _chest!=null:_chest.refresh()
 
 func _supply_total() -> int:
 	var sum := 0
@@ -404,20 +285,7 @@ func _supply_total() -> int:
 
 
 func _refresh_supply() -> void:
-	if _supply_btn == null:
-		return
-	var lbl := _supply_btn.get_child(0) as Label
-	if lbl == null:
-		return
-	var base := G.run_potions_base()
-	if _extra_potions >= G.run_potions_max() - base:
-		lbl.text = "补给已满 ×%d" % G.run_potions_max()
-		_supply_btn.modulate = Color(1, 1, 1, 0.55)
-		return
-	_supply_btn.modulate = Color.WHITE
-	lbl.text = "补给 %d金" % G.run_supply_price(_extra_potions)
-	_supply_btn.tooltip_text = "额外携带一瓶药剂；出征时结算金币"
-
+	if _chest!=null:_chest.refresh()
 
 func _set_hint_default() -> void:
 	# 平常留空：操作说明交给右上角「?」，这行只用来报错与提示结果
@@ -434,16 +302,7 @@ func _warn(msg: String) -> void:
 
 ## 选中态刷新：只改卡片的描边、徽标与提示行，不重建（点一下不闪屏）
 func _refresh_sel() -> void:
-	for key in _cards:
-		var card = _cards[key]
-		var s := String(key)
-		match int(s.get_slice(":", 0)):
-			0:
-				_paint_theme(card, s.get_slice(":", 1))
-			1:
-				_paint_role(card, s.get_slice(":", 1))
-			2:
-				_paint_pet(card, s.get_slice(":", 1))
+	_chest.refresh()
 
 func _paint_theme(card, tid: String) -> void:
 	var on := tid == _theme

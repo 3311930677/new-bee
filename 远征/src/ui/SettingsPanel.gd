@@ -4,6 +4,7 @@ class_name SettingsPanel
 extends Control
 
 signal closed
+var _chest:Control
 signal avatar_requested   # 请求父层叠出头像浮层（设置页里放不下头像卡片）
 
 const PageDeckScript := preload("res://src/ui/PageDeck.gd")
@@ -39,71 +40,15 @@ var standalone := false
 
 
 func _ready() -> void:
-	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_build()
 
 
 func _build() -> void:
-	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），不再各写一块纯灰。
-	# 设置页压得更暗（0.88）：它常从标题页打开，0.72 会把背后的标题 logo 透出来，
-	# 跟「设置」木牌叠成一团花
-	G.veil(self, 0.88)
+	_chest=preload("res://src/ui/SettingsChestView.gd").new()
+	_chest.host=self
+	add_child(_chest)
 
-	var banner := G.banner_box("设 置", 300, 50)
-	banner.position = Vector2(90, 26)
-	add_child(banner)
-
-	var panel := G.parchment_box(440, PANEL_H, 16.0)
-	panel.position = Vector2(20, 108)
-	add_child(panel)
-
-	# PanelContainer 是容器，直接放子控件会被布局系统接管位置，包一层 Control 手动布局
-	_content = Control.new()
-	_content.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	panel.add_child(_content)
-
-	# 右上角关闭钮（手游惯例：显眼、一定能找到出口）；「?」键位说明往左让位
-	var close := _close_button()
-	close.position = Vector2(CONTENT_W - 34.0, -4.0)
-	_content.add_child(close)
-
-	# 键位说明收进「?」：三行常驻太占版面
-	var help := G.info_button("键位与说明", [
-		"WASD / 方向键 —— 人物移动",
-		"A/D 或 ← → —— 切换卡片；W/S 或 ↑ ↓ —— 切换页签",
-		"Esc —— 主界面打开设置；浮层内关闭当前浮层",
-		"设置分三页：点上方页签或左右滑动切换",
-		"设置里的「重新选择角色」不会删除其他存档数据",
-		"F10 / ` —— 开发者控制台",
-	])
-	help.position = Vector2(CONTENT_W - 58.0, -2)
-	_content.add_child(help)
-
-	_deck = PageDeckScript.new(CONTENT_W, PAGE_H, 12.0)
-	_deck.position = Vector2(0, DECK_Y)
-	_deck.key_mode = "lr"   # 上下键不抢（设置页里没有纵向导航）
-	_deck.page_gap = 14.0   # 相邻页按钮的阴影不再越过裁切边渗进来
-	_deck.arrow_outset = 24.0   # 翻页箭头骑到羊皮纸两缘：原来压在第 2 页「剧情与角色」标题上
-	_deck.add_page(_page_common())
-	_deck.add_page(_page_profile())
-	_deck.add_page(_page_save())
-	_content.add_child(_deck)
-	var tabs := G.page_tabs(_deck, ["常规", "旅人", "存档"], ["settings", "person", "save"], CONTENT_W)
-	tabs.position = Vector2(0, 28)
-	_content.add_child(tabs)
-	G.reveal_control(panel)
-
-	var back := G.gold_button("返 回", 120, 38)
-	back.position = Vector2((CONTENT_W - 120.0) * 0.5, BACK_Y)
-	back.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_on_back())
-	_content.add_child(back)
-
-
-# ================= 常规 / 旅人 / 存档 =================
 func _action(page: Control, words: String, at: Vector2, width: float,
         callback: Callable, icon := "") -> Control:
 	var button := G.ghost_button(words, width, 42, G.FS_SM)
@@ -462,7 +407,7 @@ func do_import(code: String) -> bool:
 
 ## 剪贴板文本（已去首尾空白）；headless 没有剪贴板服务，返回空串走"没读到"分支
 func _clip_code() -> String:
-	if DisplayServer.get_name() == "headless":
+	if DisplayServer.get_name() == "headless" or G.get_meta("ui_review_mode",false):
 		return ""
 	return String(DisplayServer.clipboard_get()).strip_edges()
 
@@ -533,22 +478,10 @@ func execute_reset() -> void:
 
 ## 第一次点：亮「确认重置？」；再点：执行并回标题。点其他任意操作则解除
 func _on_reset_click() -> void:
-	if not _reset_armed:
-		_reset_armed = true
-		_set_reset_btn("确认重置？", Color("a04a3a"))
-		_reset_hint.visible = true
-		return
-	execute_reset()
-	G.go(TITLE_PATH)
-
+	_chest.reset_confirm()
 
 func _disarm_reset() -> void:
-	if not _reset_armed:
-		return
-	_reset_armed = false
-	_set_reset_btn("重置存档", G.TEXT_DARK)
-	_reset_hint.visible = false
-
+	_chest.disarm()
 
 func _set_reset_btn(text: String, color: Color) -> void:
 	_set_btn_text(_reset_btn, text)

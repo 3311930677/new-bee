@@ -1,7 +1,7 @@
 extends Control
 ## Authored brush segments reveal the original gold artwork; no whole-logo fade or loop.
 
-const ART := preload("res://image/ui/pixel_20261008/master_title_logo.png")
+const ART := preload("res://assets/ui/review_fixes_20261009/wordmark_body.png")
 const REVEAL_SHADER := """shader_type canvas_item;
 uniform float reveal : hint_range(0.0, 1.0) = 1.0;
 void fragment() {
@@ -27,7 +27,8 @@ func _ready() -> void:
 		_logo_texture.atlas = ART
 		_logo_texture.region = Rect2(ART.get_image().get_used_rect())
 	_ink.texture = _logo_texture
-	_ink.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_ink.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	_ink.modulate = Color(0.87,0.83,0.80)
 	_ink.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_ink.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	_ink.mouse_filter = Control.MOUSE_FILTER_IGNORE

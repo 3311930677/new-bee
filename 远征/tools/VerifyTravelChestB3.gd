@@ -1,0 +1,217 @@
+extends Node
+var OUT:="res://shots/travel_chest_b3_20261009/"
+var page:Control
+var checks:=0
+var failures:=0
+var capture:=false
+func check(ok:bool,words:String) -> void:
+	checks+=1
+	if not ok:failures+=1;push_error("B3_FAIL: "+words)
+func frames() -> void:
+	for i in 5:await get_tree().process_frame
+func shot(words:String) -> void:
+	await frames()
+	if page is BattleScene:page._sync_views();page._refresh_hud()
+	if not capture:return
+	await RenderingServer.frame_post_draw
+	check(get_viewport().get_texture().get_image().save_png(OUT+words+".png")==OK,"截图保存 "+words)
+	preload("res://tools/UITextAudit.gd").write(page,OUT+words+".text.json")
+func click(control:Control) -> void:
+	check(control!=null,"真实点击目标存在")
+	if control==null:return
+	var ancestor:=control.get_parent()
+	while ancestor!=null:
+		if ancestor is ScrollContainer:ancestor.ensure_control_visible(control)
+		ancestor=ancestor.get_parent()
+	await frames()
+	var point:=control.get_global_rect().get_center()
+	for pressed in [true,false]:
+		var e:=InputEventMouseButton.new()
+		e.position=point;e.global_position=point;e.pressed=pressed;e.button_index=MOUSE_BUTTON_LEFT
+		get_viewport().push_input(e,true)
+		await get_tree().process_frame
+	await frames()
+func drop() -> void:page.queue_free();await frames()
+func fixture() -> void:
+	G._init_state_defaults()
+	G.save_locked=false
+	G.selected_role="zs"
+	G.player_name="行旅人"
+	G.prog.level=12
+	G.prog.worlds_unlocked=3
+	G.prog.world_cleared={"forest":true}
+	G.prog.main_world={"map_id":"lorin_wilds","visited_maps":["lorin_wilds","maple_road"]}
+	G.prog.tips_seen={"deploy":true,"pet_raise":true}
+	G.wallet={"gold":12800,"expedition":500,"soul":36,"honor":900}
+	G.items={"evolve_crystal":6,"ticket_sweep":2}
+	G.collect_pet("pet_rockturtle")
+	G.collect_pet("pet_thunderhawk")
+	G.collect_pet("pet_frostwolf")
+func _ready() -> void:
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--out-dir=res://shots/"):OUT=arg.trim_prefix("--out-dir=").trim_suffix("/")+"/"
+	G.SAVE_PATH=OUT+"isolated_save.json"
+	G.set_meta("ui_review_mode",true)
+	capture="--capture" in OS.get_cmdline_user_args()
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT))
+	for height in [800,1067]:
+		get_window().size=Vector2i(480,height)
+		await frames()
+		fixture()
+		var safe:=Rect2(8,44,464,height-78)
+		page=preload("res://src/ui/Login.tscn").instantiate()
+		add_child(page)
+		await shot("login_%d"%height)
+		page._account.text=""
+		page._do_login(false)
+		check(page._chest._error.text.contains("账号"),"登录空账号反馈")
+		await shot("login_error_%d"%height)
+		page._chest.layout(safe)
+		check(safe.encloses(page._paper.get_global_rect()),"登记纸签容纳安全区")
+		check(not page._chest._go.get_global_rect().intersects(page._paper.get_global_rect()),"登记确认按钮不压表单")
+		await shot("login_safe_%d"%height)
+		page._chest.layout(safe,300)
+		await frames()
+		check(page._chest._go.get_global_rect().end.y<=safe.end.y-300,"软键盘模拟保留可见提交按钮")
+		check(page._chest._form_scroll.get_global_rect().end.y<page._chest._go.get_global_rect().position.y,"软键盘模拟表单可滚动且不压提交")
+		await shot("login_keyboard_sim_%d"%height)
+		await drop()
+		page=preload("res://src/ui/CreateRole.tscn").instantiate()
+		add_child(page)
+		await shot("create_role_%d"%height)
+		await click(page._chest._next)
+		check(page._role_idx==1,"切换职业真实可点")
+		await shot("create_role_next_%d"%height)
+		page._name_edit.text=""
+		page._confirm()
+		check(page._chest._confirm.disabled and page._chest._rule.text.contains("昵称"),"昵称空态禁止提交")
+		await shot("create_role_error_%d"%height)
+		page._chest.layout(safe)
+		await frames()
+		check(safe.encloses(page._chest._confirm.get_global_rect()),"建角确认适配安全区")
+		await shot("create_role_safe_%d"%height)
+		await drop()
+		page=RegionMapPanel.new()
+		add_child(page)
+		await shot("regions_%d"%height)
+		check(page._nodes.size()==TableCache.main_world_config().regions.size(),"完整地区拓扑节点")
+		page.select("stele_cavern",false)
+		check(page._selected=="stele_cavern","地标选择更新详情")
+		await shot("regions_locked_%d"%height)
+		page._graph.position.x=-400
+		page._clamp()
+		await shot("regions_dragged_%d"%height)
+		page.layout(safe)
+		check(safe.encloses(page._locator.get_global_rect()),"地区图定位入口适配安全区")
+		await shot("regions_safe_%d"%height)
+		await drop()
+		page=DeployPanel.new()
+		add_child(page)
+		await shot("deploy_%d"%height)
+		var gold:=int(G.wallet.gold)
+		await click(page._supply_btn)
+		check(page._extra_potions==1 and int(G.wallet.gold)==gold,"补给预选不扣钱")
+		await click(page._ascetic_btn)
+		check(page._ascetic,"苦行开关真实可点")
+		await shot("deploy_options_%d"%height)
+		await click(page._tab_btns[1])
+		await shot("deploy_role_%d"%height)
+		await click(page._tab_btns[2])
+		await shot("deploy_pet_%d"%height)
+		page._chest.shell.layout(safe)
+		page._chest.layout(safe)
+		await shot("deploy_safe_%d"%height)
+		await drop()
+		page=CodexPanel.new()
+		add_child(page)
+		await shot("codex_unknown_%d"%height)
+		page._deck.go(0,true)
+		await shot("codex_owned_%d"%height)
+		check(page._claim_btn.disabled==G.codex_next_ready().is_empty(),"里程领取条件同源")
+		var crystals:=G.item_count("evolve_crystal")
+		await click(page._chest._go)
+		check(G.item_count("evolve_crystal")<crystals,"图鉴实际进化扣费")
+		await shot("codex_evolved_%d"%height)
+		page._chest.layout(safe)
+		await shot("codex_safe_%d"%height)
+		await drop()
+		page=SkillBookPanel.new()
+		add_child(page)
+		await shot("skill_book_%d"%height)
+		page._deck.go(1,true)
+		var sid:=String(page._sids[1])
+		var old:=G.skill_level(sid)
+		await click(page._chest._go)
+		check(G.skill_level(sid)==old+1 and page._deck.current==1,"升级研习保留选中招式")
+		page._chest.layout(safe)
+		await shot("skill_book_safe_%d"%height)
+		await drop()
+		page=SettingsPanel.new()
+		add_child(page)
+		await shot("settings_%d"%height)
+		await click(page._mute_btn)
+		check(page._chest._sliders[0].editable==not Audio.muted(),"静音禁用滑杆，保留音量值")
+		await shot("settings_muted_%d"%height)
+		await click(page._mute_btn)
+		page._deck.go(1,true)
+		await shot("settings_profile_%d"%height)
+		page._deck.go(2,true)
+		await shot("settings_save_%d"%height)
+		var before:=FileAccess.get_file_as_string(G.SAVE_PATH)
+		await click(page._reset_btn)
+		check(is_instance_valid(page._chest._reset_modal),"重置必须打开确认弹窗")
+		await shot("settings_reset_confirm_%d"%height)
+		page._disarm_reset()
+		check(FileAccess.get_file_as_string(G.SAVE_PATH)==before,"取消重置不修改存档")
+		page._chest.shell.layout(safe)
+		await shot("settings_safe_%d"%height)
+		await drop()
+		page=preload("res://src/ui/IntroductionPanel.gd").new()
+		add_child(page)
+		await shot("introduction_%d"%height)
+		page._deck.go(2,true)
+		await shot("introduction_last_%d"%height)
+		await drop()
+		BattleScene.pending_cfg={"presentation":"classic_inline","seed":17,"ally":{"role_id":"zs","level":12,"active_pet":"pet_rockturtle","bench_pet":"pet_thunderhawk","potions":2},"enemy":{"theme":"forest","node_type":"normal","layer":1,"display_level":2}}
+		page=preload("res://src/battle/BattleScene.tscn").instantiate()
+		add_child(page)
+		page.set_process(false)
+		await shot("battle_%d"%height)
+		await click(page._chest._buttons.attack)
+		check(page.sim.role_focus_target_uid>=0,"攻击入口保留集火选择")
+		await click(page._chest._buttons.skill)
+		await shot("battle_skills_%d"%height)
+		var role:Combatant=page.sim.role_unit()
+		role.energy=100
+		page._chest.update_page()
+		await shot("battle_skills_ready_%d"%height)
+		var queued:int=page.sim.cast_queue.size()
+		await click(page._chest._page_body.get_child(0))
+		check(page.sim.cast_queue.size()>queued,"实际点击技能进入施放队列")
+		page._close_page()
+		await click(page._chest._buttons.auto)
+		check(page.sim.auto_mode,"自动状态真实切换")
+		await shot("battle_auto_%d"%height)
+		page.sim.role_unit().hp=1
+		page._refresh_hud()
+		await shot("battle_low_hp_%d"%height)
+		await click(page._chest._buttons.flee)
+		check(is_instance_valid(page._chest._modal),"撤退需要明确确认")
+		await shot("battle_retreat_confirm_%d"%height)
+		page._chest._modal.queue_free()
+		page._chest.layout(safe)
+		await shot("battle_safe_%d"%height)
+		await drop()
+		page=preload("res://src/ui/LoadScreen.tscn").instantiate()
+		page.auto_advance=false
+		add_child(page)
+		await shot("loading_%d"%height)
+		page._set_bar_ratio(.5)
+		var half:float=page.bar_fill_width()
+		page._set_bar_ratio(1)
+		check(is_equal_approx(half,page.bar_fill_width()*.5),"加载条准确反映比例")
+		page._layout(safe)
+		await shot("loading_safe_%d"%height)
+		await drop()
+	print("B3_%s checks=%d failures=%d"%["OK" if failures==0 else "FAIL",checks,failures])
+	get_tree().quit(0 if failures==0 else 1)

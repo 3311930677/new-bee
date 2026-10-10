@@ -1,0 +1,155 @@
+{
+	"crown1": {
+		"colors": 32,
+		"file": "ready/crown1.png",
+		"palette_limit": 32,
+		"size": [
+			176,
+			144
+		]
+	},
+	"crown2": {
+		"colors": 32,
+		"file": "ready/crown2.png",
+		"palette_limit": 32,
+		"size": [
+			176,
+			144
+		]
+	},
+	"guard": {
+		"colors": 48,
+		"file": "ready/guard.png",
+		"palette_limit": 48,
+		"size": [
+			512,
+			128
+		]
+	},
+	"hall": {
+		"colors": 40,
+		"file": "ready/hall.png",
+		"palette_limit": 40,
+		"size": [
+			192,
+			224
+		]
+	},
+	"leaves1": {
+		"colors": 32,
+		"file": "ready/leaves1.png",
+		"palette_limit": 32,
+		"size": [
+			32,
+			20
+		]
+	},
+	"leaves2": {
+		"colors": 32,
+		"file": "ready/leaves2.png",
+		"palette_limit": 32,
+		"size": [
+			40,
+			24
+		]
+	},
+	"rock1": {
+		"colors": 32,
+		"file": "ready/rock1.png",
+		"palette_limit": 32,
+		"size": [
+			24,
+			22
+		]
+	},
+	"rock2": {
+		"colors": 32,
+		"file": "ready/rock2.png",
+		"palette_limit": 32,
+		"size": [
+			40,
+			32
+		]
+	},
+	"rock3": {
+		"colors": 32,
+		"file": "ready/rock3.png",
+		"palette_limit": 32,
+		"size": [
+			64,
+			48
+		]
+	},
+	"rock4": {
+		"colors": 32,
+		"file": "ready/rock4.png",
+		"palette_limit": 32,
+		"size": [
+			24,
+			26
+		]
+	},
+	"rock5": {
+		"colors": 32,
+		"file": "ready/rock5.png",
+		"palette_limit": 32,
+		"size": [
+			40,
+			38
+		]
+	},
+	"rock6": {
+		"colors": 32,
+		"file": "ready/rock6.png",
+		"palette_limit": 32,
+		"size": [
+			64,
+			52
+		]
+	},
+	"signpost": {
+		"colors": 32,
+		"file": "ready/signpost.png",
+		"palette_limit": 32,
+		"size": [
+			92,
+			96
+		]
+	},
+	"steward": {
+		"colors": 48,
+		"file": "ready/steward.png",
+		"palette_limit": 48,
+		"size": [
+			512,
+			128
+		]
+	},
+	"terrain": {
+		"colors": 18,
+		"file": "ready/terrain.png",
+		"palette_limit": 20,
+		"size": [
+			192,
+			288
+		]
+	},
+	"trunk1": {
+		"colors": 32,
+		"file": "ready/trunk1.png",
+		"palette_limit": 32,
+		"size": [
+			64,
+			80
+		]
+	},
+	"trunk2": {
+		"colors": 32,
+		"file": "ready/trunk2.png",
+		"palette_limit": 32,
+		"size": [
+			64,
+			80
+		]
+	}
+}

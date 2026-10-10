@@ -20,10 +20,13 @@ var _data: Dictionary
 var _support := false
 var _self_target := false
 var _group := false
+var _scene:Node2D
+var _play_button:Control
 
 func _ready() -> void:
 	clip_contents = true
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_scene=Node2D.new();add_child(_scene)
 	_data = TableCache.get_skill(skill_id)
 	var target_name := String(_data.get("target",""))
 	_support = target_name.begins_with("ally")
@@ -31,15 +34,15 @@ func _ready() -> void:
 	_group = target_name in ["enemy_all","enemy_front_all","enemy_random","ally_all"]
 	_tint = Craft.ROLE_COLORS.get(role_id,Craft.GOLD)
 	var floor_art := TextureRect.new()
-	floor_art.texture = load(Craft.BACKGROUND)
+	floor_art.texture = load("res://image/battle/art_v2/forest_clearing.png")
 	floor_art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	floor_art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	floor_art.position = Vector2(0,-235)
 	floor_art.size = Vector2(size.x,600)
 	floor_art.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	floor_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	floor_art.modulate = Color(.55,.67,.77)
-	add_child(floor_art)
+	floor_art.modulate = Color(.5,.5,.5)
+	_scene.add_child(floor_art)
 	var sheet: Texture2D = load(G.role_dir(role_id)+G.role_art_name(role_id)+"_spritesheet.png")
 	# The legacy priest combat atlas clips limbs and depicts a different portrait.
 	# Keep the actual field character intact and animate a casting gesture instead.
@@ -61,16 +64,16 @@ func _ready() -> void:
 	_actor.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	_actor.animation_finished.connect(func(): _actor.play(&"idle"))
 	_actor.play(&"idle")
-	add_child(_actor)
+	_scene.add_child(_actor)
 	_target = PracticeTarget.new()
 	_target.position = Vector2(280,180)
-	add_child(_target)
+	_scene.add_child(_target)
 	if _group and not _support:
 		for at in [Vector2(236,177),Vector2(316,176)]:
 			var additional := PracticeTarget.new()
 			additional.position = at
 			additional.scale = Vector2.ONE*.68
-			add_child(additional)
+			_scene.add_child(additional)
 	if _self_target: _target.visible=false
 	if _support:
 		_target.visible = false
@@ -80,10 +83,10 @@ func _ready() -> void:
 		companion.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		if companion.texture != null:
 			companion.scale = Vector2.ONE*(75.0/companion.texture.get_height())
-		add_child(companion)
+		_scene.add_child(companion)
 	_effects = Control.new()
 	_effects.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(_effects)
+	_scene.add_child(_effects)
 	_illustration = TextureRect.new()
 	_illustration.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	var index := (G.get_role(role_id).get("skills",[]) as Array).find(skill_id)
@@ -97,13 +100,22 @@ func _ready() -> void:
 	var additive := CanvasItemMaterial.new()
 	additive.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
 	_illustration.material = additive
-	add_child(_illustration)
-	add_child(Craft.label("招式预览",Vector2(14,10),Vector2(240,24),13,Craft.MUTED))
+	_scene.add_child(_illustration)
 	var play := Craft.action("▶",Vector2(size.x-56,size.y-56),Vector2(44,44))
 	play.tooltip_text = "播放招式预览"
 	play.activated.connect(_play)
 	add_child(play)
+	_play_button=play
+	resized.connect(_layout)
+	_layout()
 	_play()
+
+func _layout() -> void:
+	# Fit the whole cosmetic stage while keeping its replay touch target at 44px.
+	var factor:=minf(1,minf(size.x/352.0,size.y/224.0))
+	_scene.scale=Vector2.ONE*factor
+	_scene.position=(size-Vector2(352,224)*factor)*.5
+	_play_button.position=size-Vector2(48,48)
 
 func _process(delta: float) -> void:
 	if not is_visible_in_tree(): return

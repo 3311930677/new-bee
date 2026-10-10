@@ -1,0 +1,370 @@
+{
+	"buildings": {
+		"archive": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/archive.png",
+			"size": [
+				332.0,
+				329.0
+			],
+			"source_to_world": 0.5
+		},
+		"barracks": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/barracks.png",
+			"size": [
+				376.0,
+				239.0
+			],
+			"source_to_world": 0.5
+		},
+		"forge": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/forge.png",
+			"size": [
+				392.0,
+				253.0
+			],
+			"source_to_world": 0.5
+		},
+		"hall": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/hall.png",
+			"size": [
+				420.0,
+				259.0
+			],
+			"source_to_world": 0.5
+		},
+		"kennel": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/kennel.png",
+			"size": [
+				400.0,
+				230.0
+			],
+			"source_to_world": 0.5
+		},
+		"shrine": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/shrine.png",
+			"size": [
+				240.0,
+				164.0
+			],
+			"source_to_world": 0.5
+		},
+		"stable": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/stable.png",
+			"size": [
+				360.0,
+				191.0
+			],
+			"source_to_world": 0.5
+		},
+		"storehouse": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/storehouse.png",
+			"size": [
+				395.0,
+				249.0
+			],
+			"source_to_world": 0.5
+		}
+	},
+	"foliage": {
+		"bush": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/bush.png",
+			"size": [
+				40.9217376708984,
+				52.0
+			],
+			"source_to_world": 0.5
+		},
+		"fern": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/fern.png",
+			"size": [
+				33.8048782348633,
+				42.0
+			],
+			"source_to_world": 0.5
+		},
+		"gold_maple": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/gold_maple.png",
+			"size": [
+				224.670913696289,
+				220.0
+			],
+			"source_to_world": 0.5
+		},
+		"green_tree": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/green_tree.png",
+			"size": [
+				230.942626953125,
+				230.0
+			],
+			"source_to_world": 0.5
+		},
+		"pine": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/pine.png",
+			"size": [
+				177.926681518555,
+				242.0
+			],
+			"source_to_world": 0.5
+		},
+		"red_maple": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/red_maple.png",
+			"size": [
+				223.659042358398,
+				220.0
+			],
+			"source_to_world": 0.5
+		}
+	},
+	"npcs": {
+		"npc_child": {
+			"body_world_height": 52,
+			"canvas_height": 320,
+			"idle_frames": 1,
+			"path": "res://assets/world/reference_complete_20261011/ready/npc_child.png",
+			"portrait_path": "res://assets/world/reference_complete_20261011/ready/npc_child_portrait.png",
+			"source_crop": [
+				860,
+				960,
+				260,
+				290
+			],
+			"visible_world_height": 52.0,
+			"world_height": 160
+		},
+		"npc_guard": {
+			"body_world_height": 72,
+			"canvas_height": 320,
+			"idle_frames": 1,
+			"path": "res://assets/world/reference_complete_20261011/ready/npc_guard.png",
+			"portrait_path": "res://assets/world/reference_complete_20261011/ready/npc_guard_portrait.png",
+			"source_crop": [
+				480,
+				25,
+				270,
+				440
+			],
+			"visible_world_height": 86.0,
+			"world_height": 160
+		},
+		"npc_keeper": {
+			"body_world_height": 72,
+			"canvas_height": 320,
+			"idle_frames": 1,
+			"path": "res://assets/world/reference_complete_20261011/ready/npc_keeper.png",
+			"portrait_path": "res://assets/world/reference_complete_20261011/ready/npc_keeper_portrait.png",
+			"source_crop": [
+				120,
+				475,
+				245,
+				403
+			],
+			"visible_world_height": 72.0,
+			"world_height": 160
+		},
+		"npc_mentor": {
+			"body_world_height": 72,
+			"canvas_height": 320,
+			"idle_frames": 1,
+			"path": "res://assets/world/reference_complete_20261011/ready/npc_mentor.png",
+			"portrait_path": "res://assets/world/reference_complete_20261011/ready/npc_mentor_portrait.png",
+			"source_crop": [
+				860,
+				460,
+				250,
+				418
+			],
+			"visible_world_height": 72.0,
+			"world_height": 160
+		},
+		"npc_scribe": {
+			"body_world_height": 72,
+			"canvas_height": 320,
+			"idle_frames": 1,
+			"path": "res://assets/world/reference_complete_20261011/ready/npc_scribe.png",
+			"portrait_path": "res://assets/world/reference_complete_20261011/ready/npc_scribe_portrait.png",
+			"source_crop": [
+				870,
+				95,
+				240,
+				370
+			],
+			"visible_world_height": 72.0,
+			"world_height": 160
+		},
+		"npc_smith": {
+			"body_world_height": 72,
+			"canvas_height": 320,
+			"idle_frames": 1,
+			"path": "res://assets/world/reference_complete_20261011/ready/npc_smith.png",
+			"portrait_path": "res://assets/world/reference_complete_20261011/ready/npc_smith_portrait.png",
+			"source_crop": [
+				450,
+				490,
+				320,
+				388
+			],
+			"visible_world_height": 72.0,
+			"world_height": 160
+		},
+		"npc_stablemaster": {
+			"body_world_height": 72,
+			"canvas_height": 320,
+			"idle_frames": 1,
+			"path": "res://assets/world/reference_complete_20261011/ready/npc_stablemaster.png",
+			"portrait_path": "res://assets/world/reference_complete_20261011/ready/npc_stablemaster_portrait.png",
+			"source_crop": [
+				130,
+				880,
+				250,
+				370
+			],
+			"visible_world_height": 72.0,
+			"world_height": 160
+		},
+		"npc_steward": {
+			"body_world_height": 72,
+			"canvas_height": 320,
+			"idle_frames": 1,
+			"path": "res://assets/world/reference_complete_20261011/ready/npc_steward.png",
+			"portrait_path": "res://assets/world/reference_complete_20261011/ready/npc_steward_portrait.png",
+			"source_crop": [
+				120,
+				80,
+				240,
+				385
+			],
+			"visible_world_height": 72.0,
+			"world_height": 160
+		},
+		"npc_warden": {
+			"body_world_height": 72,
+			"canvas_height": 320,
+			"idle_frames": 1,
+			"path": "res://assets/world/reference_complete_20261011/ready/npc_warden.png",
+			"portrait_path": "res://assets/world/reference_complete_20261011/ready/npc_warden_portrait.png",
+			"source_crop": [
+				460,
+				870,
+				330,
+				380
+			],
+			"visible_world_height": 72.0,
+			"world_height": 160
+		}
+	},
+	"props": {
+		"barricade": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/barricade.png",
+			"size": [
+				99.4936676025391,
+				60.0
+			],
+			"source_to_world": 0.5
+		},
+		"bridge": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/bridge.png",
+			"size": [
+				72.0,
+				128.0
+			],
+			"source_to_world": 0.5
+		},
+		"construction": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/construction.png",
+			"size": [
+				240.0,
+				145.0
+			],
+			"source_to_world": 0.5
+		},
+		"lantern": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/lantern.png",
+			"size": [
+				45.0245399475098,
+				82.0
+			],
+			"source_to_world": 0.5
+		},
+		"ledger": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/ledger.png",
+			"size": [
+				60.2490844726563,
+				64.0
+			],
+			"source_to_world": 0.5
+		},
+		"nighttable": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/nighttable.png",
+			"size": [
+				131.966293334961,
+				58.0
+			],
+			"source_to_world": 0.5
+		},
+		"rocks": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/rocks.png",
+			"size": [
+				72.8816299438477,
+				48.0
+			],
+			"source_to_world": 0.5
+		},
+		"signpost": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/signpost.png",
+			"size": [
+				61.0,
+				64.0
+			],
+			"source_to_world": 0.5
+		},
+		"stele": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/stele.png",
+			"size": [
+				57.9622650146484,
+				64.0
+			],
+			"source_to_world": 0.5
+		},
+		"stonebox": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/stonebox.png",
+			"size": [
+				51.0945930480957,
+				38.0
+			],
+			"source_to_world": 0.5
+		},
+		"windchime": {
+			"anchor": "bottom_center",
+			"path": "res://assets/world/reference_complete_20261011/ready/windchime.png",
+			"size": [
+				46.9514579772949,
+				62.0
+			],
+			"source_to_world": 0.5
+		}
+	}
+}

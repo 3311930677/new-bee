@@ -34,7 +34,7 @@ param(
   [string]$List = "",
   [int]$QuitAfter = 6000,
   [int]$TimeoutSec = 240,
-    [int]$Expected = 76,
+    [int]$Expected = 77,
   [string]$LogDir = "",
   [switch]$AllowAnyVersion
 )
@@ -115,6 +115,7 @@ $cases = @(
 	@{ N = "VerifyGameHome";    K = "scene";  T = "GAME_HOME_OK" },
 	@{ N = "VerifyMapScene";    K = "scene";  T = "MAP_SCENE_OK" },
 	@{ N = "VerifyMainWorld";   K = "scene";  T = "MAIN_WORLD_OK" },
+	@{ N = "VerifyReferenceComplete"; K = "scene"; T = "REFERENCE_COMPLETE_OK" },
 	@{ N = "VerifyWorldSession";K = "scene";  T = "WORLD_SESSION_OK" },
 	@{ N = "VerifyStory";       K = "scene";  T = "STORY_OK" },
 	@{ N = "VerifyEconomy";     K = "scene";  T = "ECONOMY_OK" },

@@ -32,7 +32,9 @@ func _ready() -> void:
 		for row: Dictionary in cfg.exits:
 			if float(row.at[1])<180: north=row; break
 		var id := String(north.id)
-		check(map._arrival_exit_blocks.has(id),mid + " resume inside sign guarded against return loop")
+		var rect := map._world_exit_touch_rect(north)
+		# 不变量：读档停在牌内时，要么已登记防回切，要么玩家已被推出触发区（传送点附近推开规则）。
+		check(map._arrival_exit_blocks.has(id) or not rect.has_point(map._player.position),mid + " resume inside sign guarded against return loop")
 		map._world_exit_cd = 0
 		map._check_world_exits()
 		check(map._world_exit_cd == 0,mid + " resume guard does not initiate transition")

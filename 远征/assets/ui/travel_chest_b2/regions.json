@@ -1,0 +1,236 @@
+{
+  "item_cell": {
+    "file": "item_cell.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "rect": [
+      0,
+      0,
+      1253,
+      1198
+    ]
+  },
+  "item_large": {
+    "file": "item_large.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "rect": [
+      0,
+      0,
+      1224,
+      1254
+    ]
+  },
+  "equip": {
+    "file": "icons.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "rect": [
+      31,
+      31,
+      282,
+      282
+    ]
+  },
+  "talent": {
+    "file": "icons.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "rect": [
+      313,
+      39,
+      308,
+      267
+    ]
+  },
+  "skill": {
+    "file": "icons.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "rect": [
+      642,
+      55,
+      266,
+      258
+    ]
+  },
+  "pet": {
+    "file": "icons.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "rect": [
+      949,
+      23,
+      276,
+      290
+    ]
+  },
+  "mount": {
+    "file": "icons.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "rect": [
+      31,
+      313,
+      282,
+      312
+    ]
+  },
+  "title": {
+    "file": "icons.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "rect": [
+      313,
+      335,
+      296,
+      273
+    ]
+  },
+  "camp": {
+    "file": "icons.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "rect": [
+      628,
+      313,
+      312,
+      302
+    ]
+  },
+  "exit": {
+    "file": "icons.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "rect": [
+      940,
+      313,
+      283,
+      313
+    ]
+  },
+  "quest": {
+    "file": "icons.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "rect": [
+      45,
+      641,
+      268,
+      299
+    ]
+  },
+  "paw": {
+    "file": "icons.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "rect": [
+      313,
+      658,
+      308,
+      282
+    ]
+  },
+  "potion": {
+    "file": "icons.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "rect": [
+      628,
+      641,
+      297,
+      296
+    ]
+  },
+  "interact": {
+    "file": "icons.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "rect": [
+      941,
+      628,
+      280,
+      312
+    ]
+  },
+  "sprint_off": {
+    "file": "icons.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "rect": [
+      19,
+      940,
+      294,
+      308
+    ]
+  },
+  "sprint_on": {
+    "file": "icons.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "rect": [
+      313,
+      940,
+      308,
+      297
+    ]
+  },
+  "ride_off": {
+    "file": "icons.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "rect": [
+      628,
+      941,
+      312,
+      312
+    ]
+  },
+  "ride_on": {
+    "file": "icons.png",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "rect": [
+      940,
+      940,
+      304,
+      289
+    ]
+  }
+}

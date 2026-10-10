@@ -151,24 +151,24 @@ func _verify_settings() -> void:
 	var deck: Control = sp.get("_deck")
 	_check(deck != null and int(deck.get("page_count")) == 3, "设置应分常规、旅人、存档三页")
 	_check(bool(G.setting_get("shake", true)), "震屏默认应为开")
-	sp.get("_shake_btn").gui_input.emit(_click_ev())
+	sp.get("_shake_btn").pressed.emit()
 	_check(not bool(G.setting_get("shake", true)), "点震屏开关应写入 shake=false")
 	var raw: Variant = JSON.parse_string(sp.do_export())
 	_check(raw is Dictionary
 		and bool(((raw as Dictionary).get("prog", {}) as Dictionary).get("settings", {}).get("shake", true)) == false,
 		"shake 应落进存档 prog.settings")
-	sp.get("_shake_btn").gui_input.emit(_click_ev())
+	sp.get("_shake_btn").pressed.emit()
 	_check(bool(G.setting_get("shake", true)), "再点一次应恢复 shake=true")
 
 	_check(not bool(G.setting_get("skip_story", false)), "剧情演出默认应为播")
-	sp.get("_story_btn").gui_input.emit(_click_ev())
+	sp.get("_story_btn").pressed.emit()
 	_check(bool(G.setting_get("skip_story", false)), "点剧情开关应写入 skip_story=true")
-	sp.get("_story_btn").gui_input.emit(_click_ev())
+	sp.get("_story_btn").pressed.emit()
 
 	_check(is_equal_approx(float(G.setting_get("battle_speed", 1.0)), 1.0), "默认倍速应为 ×1")
-	sp.get("_speed_btn").gui_input.emit(_click_ev())
+	sp.get("_speed_btn").pressed.emit()
 	_check(is_equal_approx(float(G.setting_get("battle_speed", 1.0)), 2.0), "点倍速应切到 ×2")
-	sp.get("_speed_btn").gui_input.emit(_click_ev())
+	sp._chest._speed_prev.pressed.emit()
 	_check(is_equal_approx(float(G.setting_get("battle_speed", 1.0)), 1.0), "再点应切回 ×1")
 
 	# 3.6 昵称：空值拒绝、正常值写入存档
@@ -186,7 +186,7 @@ func _verify_settings() -> void:
 	_check(bool(sp.get("_reset_armed")), "第一次点重置应进入确认态")
 	var rbtn: Control = sp.get("_reset_btn")
 	var rlabel: Label = rbtn.get_child(0) if rbtn != null else null
-	_check(rlabel != null and rlabel.text == "确认重置？", "确认态按钮应显示「确认重置？」")
+	_check(is_instance_valid(sp._chest._reset_modal), "重置必须打开独立确认弹窗")
 	sp._disarm_reset()
 	_check(not bool(sp.get("_reset_armed")), "取消后应退出确认态")
 	_check(rlabel != null and rlabel.text == "重置存档", "取消后按钮文案应还原")

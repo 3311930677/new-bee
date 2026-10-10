@@ -77,13 +77,14 @@ func _ready()->void:
 	await get_tree().process_frame
 	view=battle.get_viewport_rect()
 	safe=Rect2(8,36,view.size.x-16,view.size.y-60)
-	Safe.fit_page(battle,safe,view.size)
+	battle._chest.layout(safe)
+	await get_tree().process_frame
 	_check(battle._cmd_root!=null,"安全区用例必须构建实际经典战斗操作栏")
 	if battle._cmd_root!=null:
-		Safe.fit_page(battle._cmd_root,safe,view.size)
 		for child in battle._cmd_root.get_children():
 			if child is Control and child.mouse_filter==Control.MOUSE_FILTER_STOP:
 				_check(safe.encloses(child.get_global_rect()),"战斗攻击、技能、道具和撤退按钮在安全区内")
+		_check(safe.encloses(battle._chest._buttons.flee.get_global_rect()),"撤退入口在顶端安全区内")
 	battle.queue_free()
 	await get_tree().process_frame
 	print("SAFE_AREA_OK desktop_and_simulated_cutouts" if _fails==0 else "SAFE_AREA_FAIL count=%d"%_fails)

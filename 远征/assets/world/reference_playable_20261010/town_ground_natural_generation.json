@@ -1,0 +1,32 @@
+{
+  "tool": "built-in imagegen",
+  "prompt": "Generate a ground-only texture layer for a TWO-DIMENSIONAL overhead pixel-art RPG town.\nInput image1: the user's forest art reference, for hand-painted pixel color clusters and natural grass/soil style ONLY. Omit its character, trees and props.\nInput image2: spatial road guide ONLY. Keep the road positions and widths; do not copy its flat colors, border, smooth graphic edges or geometric caps.\nCanvas request: exactly1200x2112 pixels, corresponding to1200x2112 world units for this preview. Keep equal-sized ground details at the same scale across the whole canvas, no perspective or horizon.\nPaint calm layered natural grass and quiet pale ochre worn earth. Upper-left daytime light expressed through subtle painted colors. Coherent pixel clusters, low-contrast short-grass texture, no fine speckle carpet, no camouflage blobs. Generous quiet grass areas for independent buildings and actors.\nThe main path is approximately136px wide, enters at the top near x600, gently meanders around x583–613, and has the side approach locations from the guide. Transform side paths into softly worn access patches, not hard rectangular crossbars or rounded capsules. Grass tongues, broken soil patches and a few grouped tiny tufts soften all edges.\nMOST IMPORTANT: the lower quarter is a NATURAL GRASS CLEARING. Below y1740 the main road gently bends to the right, narrows and becomes increasingly overgrown and faint. By y2000 it dissolves completely into grass. The lower edge is grass, NOT a stripe of road that must meet the bottom border. No rounded end cap, pointed graphic end, sharp junction, strong gradient band or artificial lawn-road boundary. A few disconnected soft bare-earth traces are acceptable, with asymmetrical open grass around them.\nThis is ONLY ground: no buildings, roofs, gates, trees, trunks, bushes, rocks, logs, flowers, tall grass clusters, furniture, signs, characters, UI, labels, writing, grid or object shadows. These are separate engine layers. No3D render or photoreal lighting. Preserve the road's playable core and door-approach locations from image2 while making its surface and southern ending naturally painted. Opaque image.",
+  "references": [
+    {
+      "path": "D:/new-bee/ui_review_input/reference_world_frontend_20261010/reference/01_target_forest.jpg",
+      "role": "painting style only"
+    },
+    {
+      "path": "D:/new-bee/ui_review_input/reference_world_frontend_20261010/playable_prototype/screenshots/town_road_geometry_guide.png",
+      "role": "geometry only; candidate guide, no object layers"
+    }
+  ],
+  "original_output": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-8c26638b-8015-4c16-8164-ec0864b04244.png",
+  "project_source": "D:/new-bee/远征/assets/world/reference_playable_20261010/source/town_ground_natural_v1.png",
+  "project_preview": "D:/new-bee/远征/assets/world/reference_playable_20261010/ready/town_ground_natural.png",
+  "requested_size": [
+    1200,
+    2112
+  ],
+  "actual_source_size": [
+    945,
+    1663
+  ],
+  "runtime_size": [
+    1200,
+    2112
+  ],
+  "status": "integrated in isolated playable prototype, not the formal game map",
+  "processing": "single nearest-neighbor normalization in Godot; original retained",
+  "scope": "ground only; same building/NPC coordinates and all interaction IDs; fading southern footpath, no new exit"
+}

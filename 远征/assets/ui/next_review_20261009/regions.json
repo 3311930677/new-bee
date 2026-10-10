@@ -1,0 +1,834 @@
+{
+	"ck_dunying": {
+		"file": "pixel_skills.png",
+		"rect": [
+			180,
+			60,
+			60,
+			60
+		],
+		"source_size": [
+			300,
+			240
+		]
+	},
+	"ck_duopo": {
+		"file": "pixel_skills.png",
+		"rect": [
+			120,
+			60,
+			60,
+			60
+		],
+		"source_size": [
+			300,
+			240
+		]
+	},
+	"ck_guanjia": {
+		"file": "pixel_skills.png",
+		"rect": [
+			60,
+			60,
+			60,
+			60
+		],
+		"source_size": [
+			300,
+			240
+		]
+	},
+	"ck_lianzhu": {
+		"file": "pixel_skills.png",
+		"rect": [
+			0,
+			60,
+			60,
+			60
+		],
+		"source_size": [
+			300,
+			240
+		]
+	},
+	"ck_qingxie": {
+		"file": "pixel_skills.png",
+		"rect": [
+			240,
+			60,
+			60,
+			60
+		],
+		"source_size": [
+			300,
+			240
+		]
+	},
+	"fs_midun": {
+		"file": "pixel_skills.png",
+		"rect": [
+			180,
+			120,
+			60,
+			60
+		],
+		"source_size": [
+			300,
+			240
+		]
+	},
+	"fs_shuanghuan": {
+		"file": "pixel_skills.png",
+		"rect": [
+			60,
+			120,
+			60,
+			60
+		],
+		"source_size": [
+			300,
+			240
+		]
+	},
+	"fs_shuangren": {
+		"file": "pixel_skills.png",
+		"rect": [
+			0,
+			120,
+			60,
+			60
+		],
+		"source_size": [
+			300,
+			240
+		]
+	},
+	"fs_tianyun": {
+		"file": "pixel_skills.png",
+		"rect": [
+			120,
+			120,
+			60,
+			60
+		],
+		"source_size": [
+			300,
+			240
+		]
+	},
+	"fs_yanmie": {
+		"file": "pixel_skills.png",
+		"rect": [
+			240,
+			120,
+			60,
+			60
+		],
+		"source_size": [
+			300,
+			240
+		]
+	},
+	"fz_jinghua": {
+		"file": "pixel_skills.png",
+		"rect": [
+			120,
+			180,
+			60,
+			60
+		],
+		"source_size": [
+			300,
+			240
+		]
+	},
+	"fz_poxiao": {
+		"file": "pixel_skills.png",
+		"rect": [
+			240,
+			180,
+			60,
+			60
+		],
+		"source_size": [
+			300,
+			240
+		]
+	},
+	"fz_puzhao": {
+		"file": "pixel_skills.png",
+		"rect": [
+			60,
+			180,
+			60,
+			60
+		],
+		"source_size": [
+			300,
+			240
+		]
+	},
+	"fz_shengyu": {
+		"file": "pixel_skills.png",
+		"rect": [
+			0,
+			180,
+			60,
+			60
+		],
+		"source_size": [
+			300,
+			240
+		]
+	},
+	"fz_zhudao": {
+		"file": "pixel_skills.png",
+		"rect": [
+			180,
+			180,
+			60,
+			60
+		],
+		"source_size": [
+			300,
+			240
+		]
+	},
+	"tpl_accessory_basic": {
+		"file": "pixel_items_a.png",
+		"rect": [
+			60,
+			60,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_accessory_moon": {
+		"file": "pixel_items_a.png",
+		"rect": [
+			180,
+			120,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_accessory_return": {
+		"file": "pixel_items_c.png",
+		"rect": [
+			180,
+			60,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			180
+		]
+	},
+	"tpl_accessory_twinpass": {
+		"file": "pixel_items_b.png",
+		"rect": [
+			60,
+			180,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_armor_abyss": {
+		"file": "pixel_items_c.png",
+		"rect": [
+			120,
+			60,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			180
+		]
+	},
+	"tpl_armor_basic": {
+		"file": "pixel_items_a.png",
+		"rect": [
+			0,
+			60,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_armor_bulwark": {
+		"file": "pixel_items_a.png",
+		"rect": [
+			60,
+			180,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_armor_frostgate": {
+		"file": "pixel_items_b.png",
+		"rect": [
+			0,
+			180,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_armor_scale": {
+		"file": "pixel_items_a.png",
+		"rect": [
+			120,
+			120,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_armor_stele": {
+		"file": "pixel_items_b.png",
+		"rect": [
+			120,
+			0,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_armor_tidegate": {
+		"file": "pixel_items_b.png",
+		"rect": [
+			180,
+			60,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_hammer_abyss": {
+		"file": "pixel_items_c.png",
+		"rect": [
+			60,
+			0,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			180
+		]
+	},
+	"tpl_hammer_basic": {
+		"file": "pixel_items_a.png",
+		"rect": [
+			180,
+			0,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_hammer_boundary": {
+		"file": "pixel_items_c.png",
+		"rect": [
+			60,
+			60,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			180
+		]
+	},
+	"tpl_hammer_dawn": {
+		"file": "pixel_items_a.png",
+		"rect": [
+			60,
+			120,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_hammer_frostgate": {
+		"file": "pixel_items_b.png",
+		"rect": [
+			180,
+			120,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_hammer_relic": {
+		"file": "pixel_items_c.png",
+		"rect": [
+			180,
+			120,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			180
+		]
+	},
+	"tpl_hammer_stele": {
+		"file": "pixel_items_b.png",
+		"rect": [
+			60,
+			0,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_hammer_tidegate": {
+		"file": "pixel_items_b.png",
+		"rect": [
+			120,
+			60,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_spear_abyss": {
+		"file": "pixel_items_b.png",
+		"rect": [
+			180,
+			180,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_spear_basic": {
+		"file": "pixel_items_a.png",
+		"rect": [
+			60,
+			0,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_spear_boundary": {
+		"file": "pixel_items_c.png",
+		"rect": [
+			180,
+			0,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			180
+		]
+	},
+	"tpl_spear_frostgate": {
+		"file": "pixel_items_b.png",
+		"rect": [
+			60,
+			120,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_spear_iron": {
+		"file": "pixel_items_a.png",
+		"rect": [
+			180,
+			60,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_spear_relic": {
+		"file": "pixel_items_c.png",
+		"rect": [
+			60,
+			120,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			180
+		]
+	},
+	"tpl_spear_stele": {
+		"file": "pixel_items_a.png",
+		"rect": [
+			180,
+			180,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_spear_tidegate": {
+		"file": "pixel_items_b.png",
+		"rect": [
+			0,
+			60,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_staff_abyss": {
+		"file": "pixel_items_c.png",
+		"rect": [
+			0,
+			0,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			180
+		]
+	},
+	"tpl_staff_basic": {
+		"file": "pixel_items_a.png",
+		"rect": [
+			120,
+			0,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_staff_boundary": {
+		"file": "pixel_items_c.png",
+		"rect": [
+			0,
+			60,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			180
+		]
+	},
+	"tpl_staff_frost": {
+		"file": "pixel_items_a.png",
+		"rect": [
+			0,
+			120,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_staff_frostgate": {
+		"file": "pixel_items_b.png",
+		"rect": [
+			120,
+			120,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_staff_relic": {
+		"file": "pixel_items_c.png",
+		"rect": [
+			120,
+			120,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			180
+		]
+	},
+	"tpl_staff_stele": {
+		"file": "pixel_items_b.png",
+		"rect": [
+			0,
+			0,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_staff_tidegate": {
+		"file": "pixel_items_b.png",
+		"rect": [
+			60,
+			60,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_sword_abyss": {
+		"file": "pixel_items_b.png",
+		"rect": [
+			120,
+			180,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_sword_basic": {
+		"file": "pixel_items_a.png",
+		"rect": [
+			0,
+			0,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_sword_boundary": {
+		"file": "pixel_items_c.png",
+		"rect": [
+			120,
+			0,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			180
+		]
+	},
+	"tpl_sword_frostgate": {
+		"file": "pixel_items_b.png",
+		"rect": [
+			0,
+			120,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_sword_relic": {
+		"file": "pixel_items_c.png",
+		"rect": [
+			0,
+			120,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			180
+		]
+	},
+	"tpl_sword_ruin": {
+		"file": "pixel_items_a.png",
+		"rect": [
+			0,
+			180,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_sword_stele": {
+		"file": "pixel_items_a.png",
+		"rect": [
+			120,
+			180,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_sword_tidegate": {
+		"file": "pixel_items_b.png",
+		"rect": [
+			180,
+			0,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"tpl_sword_wolf": {
+		"file": "pixel_items_a.png",
+		"rect": [
+			120,
+			60,
+			60,
+			60
+		],
+		"source_size": [
+			240,
+			240
+		]
+	},
+	"zs_duanzui": {
+		"file": "pixel_skills.png",
+		"rect": [
+			240,
+			0,
+			60,
+			60
+		],
+		"source_size": [
+			300,
+			240
+		]
+	},
+	"zs_huifeng": {
+		"file": "pixel_skills.png",
+		"rect": [
+			120,
+			0,
+			60,
+			60
+		],
+		"source_size": [
+			300,
+			240
+		]
+	},
+	"zs_lieshan": {
+		"file": "pixel_skills.png",
+		"rect": [
+			0,
+			0,
+			60,
+			60
+		],
+		"source_size": [
+			300,
+			240
+		]
+	},
+	"zs_pozhen": {
+		"file": "pixel_skills.png",
+		"rect": [
+			60,
+			0,
+			60,
+			60
+		],
+		"source_size": [
+			300,
+			240
+		]
+	},
+	"zs_zhanhou": {
+		"file": "pixel_skills.png",
+		"rect": [
+			180,
+			0,
+			60,
+			60
+		],
+		"source_size": [
+			300,
+			240
+		]
+	}
+}

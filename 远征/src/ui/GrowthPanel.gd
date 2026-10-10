@@ -6,6 +6,21 @@ extends Control
 
 signal closed
 
+const UI := preload("res://src/ui/TravelChestUI.gd")
+const Page := preload("res://src/ui/ChestPageUI.gd")
+var _page: Control
+var _stage: Control
+var _tray: Control
+var _row_scroll: ScrollContainer
+var _heading: Control
+var _back: Button
+var _hero: Control
+var _hero_name: Label
+var _pool: TextureRect
+var _stats:VBoxContainer
+var _recommend:Button
+var _next_id:=""
+
 const CONTENT_W := 408.0
 const Field := preload("res://src/ui/FieldUI.gd")
 const Craft := preload("res://src/ui/CraftUI.gd")
@@ -24,79 +39,101 @@ var _summary: Label = null
 
 
 func _ready() -> void:
-	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_build()
 
 
 func _build() -> void:
-	Craft.scene(self,.62)
-	Craft.heading(self,"人物养成","装备与修习 / 同行与荣誉")
-	var role := G.get_role(G.selected_role)
-	var crest := Craft.Crest.new()
-	crest.position = Vector2(116,148)
-	crest.size = Vector2(248,336)
-	crest.hue = Craft.ROLE_COLORS.get(G.selected_role,Craft.GOLD)
-	crest.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(crest)
-	var stage := Craft.Stage.new()
-	stage.position = Vector2(132,214)
-	stage.size = Vector2(216,256)
-	stage.hue = crest.hue
-	add_child(stage)
-	add_child(Field.portrait(G.selected_role,Vector2(112,192),Vector2(256,256)))
-	var role_name := Craft.label(String(role.get("name","旅人")),Vector2(132,450),Vector2(216,36),28,Craft.WHITE,true,true)
-	role_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	add_child(role_name)
-	var level := Craft.label("%s · LV %02d" % [role.get("job",""),int(G.prog.get("level",1))],Vector2(142,490),Vector2(196,24),15,Craft.GOLD)
-	level.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	add_child(level)
-	var entries := [["equip","装备","swords",24,176],["talent","天赋","growth",24,286],
-		["skill","技能书","book",24,396],["pet","宠物","paw",344,176],
-		["mount","坐骑","mount",344,286],["title","称号","crown",344,396]]
-	for e in entries:
-		var row := _entry_row(e[1],e[2],e[0])
-		row.position = Vector2(e[3],e[4])
-		add_child(row)
-	var summary_panel := Craft.panel(Vector2(24,546),Vector2(432,128),.96)
-	add_child(summary_panel)
-	summary_panel.add_child(Craft.label("行前整备",Vector2(18,10),Vector2(200,30),24,Craft.GOLD,false,true))
-	_summary = Craft.label("",Vector2(18,45),Vector2(396,26),16,Craft.WHITE)
-	summary_panel.add_child(_summary)
-	var tip := Craft.label("",Vector2(18,77),Vector2(396,40),14,Craft.MUTED)
-	tip.name = "GrowthBonusSummary"
-	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	summary_panel.add_child(tip)
-	var close_btn := Craft.action("返回",Vector2(24,720),Vector2(432,48))
-	close_btn.tooltip_text = "返回营帐"
-	close_btn.activated.connect(_close)
-	add_child(close_btn)
+	theme = UI.theme()
+	_page = Control.new()
+	_page.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(_page)
+	_stage = Page.Stage.new()
+	_page.add_child(_stage)
+	_pool = Page.picture(UI.texture("stage_pool"),Vector2(256,60))
+	_pool.modulate.a = .35
+	_page.add_child(_pool)
+	_hero = Field.portrait(G.selected_role,Vector2.ZERO,Vector2(200,200))
+	_page.add_child(_hero)
+	_hero_name = UI.label("%s · Lv.%d" % [G.get_role(G.selected_role).get("name","旅人"),int(G.prog.get("level",1))],"section")
+	_hero_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_page.add_child(_hero_name)
+	_stats=VBoxContainer.new()
+	_stats.add_theme_constant_override("separation",4)
+	_page.add_child(_stats)
+	_back = UI.action("‹","back")
+	_back.tooltip_text = "返回营帐"
+	_back.pressed.connect(_close)
+	_page.add_child(_back)
+	_heading = UI.label("人物养成","title")
+	_page.add_child(_heading)
+	_tray = UI.Tray.new()
+	_page.add_child(_tray)
+	_recommend=Page.GrowthRow.new("下一步","talent")
+	_recommend.set_meta("recommendation",true)
+	_recommend.custom_minimum_size.y=44
+	_recommend.pressed.connect(func():if not _next_id.is_empty():_open(_next_id))
+	_page.add_child(_recommend)
+	_summary=_recommend.heading
+	_row_scroll = Page.scroll()
+	_page.add_child(_row_scroll)
+	var box := VBoxContainer.new()
+	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	box.add_theme_constant_override("separation",4)
+	_row_scroll.add_child(box)
+	for group in [["修习与装备",["equip","talent","skill"]],["同行与荣誉",["pet","mount","title"]]]:
+		if group[0]=="同行与荣誉":
+			var gap:=Control.new();gap.custom_minimum_size.y=12;box.add_child(gap)
+		var section := UI.label(group[0],"caption",UI.AGED)
+		section.custom_minimum_size.y = 24
+		box.add_child(section)
+		for id in group[1]:
+			box.add_child(_entry_row({"equip":"装备","talent":"天赋","skill":"技能书","pet":"宠物","mount":"坐骑","title":"称号"}[id],id,id))
 	_refresh()
+	get_viewport().size_changed.connect(_layout)
+	_layout()
 
+func _layout(safe_override: Rect2 = Rect2()) -> void:
+	var safe := safe_override if safe_override.has_area() else G.ui_safe_rect(self)
+	var x := safe.position.x
+	var y := safe.position.y
+	var top := safe.end.y-472
+	Page.place(_stage,Vector2.ZERO,get_viewport_rect().size)
+	Page.place(_back,Vector2(x+8,y+6),Vector2(44,44))
+	Page.place(_heading,Vector2(x+64,y+8),Vector2(300,40))
+	Page.place(_pool,Vector2(x+196,top-58),Vector2(256,60))
+	var stage_start:=maxf(y+60,top-232)
+	var hero_extent:=minf(200,top-stage_start-28)
+	Page.place(_hero,Vector2(x+216,top-28-hero_extent),Vector2(hero_extent,hero_extent))
+	Page.place(_hero_name,Vector2(x+192,top-42),Vector2(256,30))
+	Page.place(_stats,Vector2(x+16,stage_start),Vector2(172,184))
+	Page.place(_tray,Vector2(x,top),Vector2(safe.size.x,safe.end.y-top))
+	Page.place(_recommend,Vector2(x+16,top+8),Vector2(safe.size.x-32,44))
+	Page.place(_row_scroll,Vector2(x+16,top+60),Vector2(safe.size.x-32,safe.end.y-top-72))
 
 func _entry_row(words: String, icon: String, id: String) -> Control:
-	var row := Craft.action(words,Vector2.ZERO,Vector2(112,100),"badge")
-	row.set_meta("badge_shape",{"equip":"shield","talent":"circle","skill":"hex","pet":"circle","mount":"hex","title":"shield"}.get(id,"circle"))
-	row.set_meta("badge_hue",{"equip":Color("d7b382"),"talent":Color("96c79b"),"skill":Color("90bbd0"),"pet":Color("91c6b3"),"mount":Color("bd9478"),"title":Color("dcc47c")}.get(id,Craft.GOLD))
-	row.tooltip_text = "打开" + words
-	row.caption.position = Vector2(0,55)
-	row.caption.size = Vector2(112,25)
-	row.caption.set_meta("fixed_y",55)
-	row.caption.add_theme_font_size_override("font_size",17)
-	Craft.icon(row,icon,Vector2(40,16),Vector2(32,32))
-	var status := Craft.label("",Vector2(0,81),Vector2(112,20),12,Craft.MUTED)
-	status.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	status.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	row.add_child(status)
-	_rows.append({"id":id,"label":status,"action":row,"words":words})
-	row.activated.connect(func(): _open(id))
+	var row := Page.GrowthRow.new(words,icon)
+	row.name = "Growth_"+id
+	row.set_meta("growth_id",id)
+	row.tooltip_text = "打开"+words
+	_rows.append({"id":id,"label":row.status,"action":row,"words":words})
+	row.pressed.connect(func(): _open(id))
 	return row
 
-
-# ---------- 状态行刷新 ----------
 func _refresh() -> void:
 	var left := G.talent_points_left()
+	Page.clear(_stats)
+	var base:=TableCache.role_stats(G.selected_role,int(G.prog.get("level",1)))
+	var bonus:=G.growth_bonuses(G.selected_role)
+	var values:Dictionary={} if base.is_empty() else {"生命":TraitSystem.role_max_hp(G.selected_role,int(G.prog.get("level",1)),[],bonus),"攻击":maxi(1,int(float(base.get("atk",0))*(1+float(bonus.get("atk_pct",0)))+float(bonus.get("atk_add",0)))),"防御":maxi(0,int(float(base.get("def",0))*(1+float(bonus.get("def_pct",0)))+float(bonus.get("def_add",0)))),"暴击":"%.1f%%"%(clampf(float(base.get("crit",0))+float(bonus.get("crit_add",0)),0,.95)*100),"速度":"%.2f"%(float(base.get("spd",1))*(1+float(bonus.get("spd_pct",0))))}
+	_stats.add_child(UI.label("尚未选择人物" if base.is_empty() else "人物属性","caption",UI.AGED))
+	for key in values:
+		var row:=HBoxContainer.new();_stats.add_child(row)
+		var label:=UI.label(key,"caption",UI.AGED);label.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(label)
+		var value:=UI.label(str(values[key]),"number");value.add_theme_font_size_override("font_size",16);row.add_child(value)
+	_next_id="talent" if left>0 else ""
 	_summary.text = "尚有 %d 点天赋待分配" % left if left > 0 else "天赋点已分配完毕"
+	_summary.add_theme_color_override("font_color",UI.GOLD if left>0 else UI.AGED)
 	var tip := find_child("GrowthBonusSummary",true,false) as Label
 	if tip != null:
 		tip.text = "装备强化 %d / %d / %d  ·  灵宠 %d 只\n精研招式与同行伙伴，整备下一段旅程。" % [int(G.equip_state(G.equip_weapon_slot()).get("lv",0)),int(G.equip_state("armor").get("lv",0)),int(G.equip_state("accessory").get("lv",0)),G.owned_pets().size()]
@@ -125,7 +162,30 @@ func _refresh() -> void:
 				var tid := G.title_active()
 				l.text = ("佩戴：%s" % String(G.title_cfg(tid).get("name", ""))) if not tid.is_empty() else "未佩戴"
 
+		var action: Button = r.action
+		action.actionable = String(r.id)=="talent" and left>0
+		action.next_action.text = "分配天赋" if action.actionable else ""
+		if String(r.id)=="equip":
+			for slot in [G.equip_weapon_slot(),"armor","accessory"]:
+				var cost := G.equip_enhance_cost(slot)
+				if not G.equip_state(slot).is_empty() and int(G.equip_state(slot).get("lv",0))<G.equip_enhance_max() and int(G.wallet.get("gold",0))>=int(cost.gold) and G.item_count(String(cost.item))>=int(cost.item_n):
+					action.actionable = true
+					action.next_action.text = "可强化"
+					if left<=0:
+						_next_id="equip"
+						_summary.text = "行前推荐 · 装备材料已齐，可以强化"
+						_summary.add_theme_color_override("font_color",UI.GOLD)
+					break
+		action.queue_redraw()
 		(r as Dictionary)["action"].tooltip_text = "打开" + String((r as Dictionary)["words"]) + " · " + l.text
+	_recommend.disabled=_next_id.is_empty()
+	_recommend.actionable=not _next_id.is_empty()
+	_recommend.image.texture=Page.texture(_next_id if not _next_id.is_empty() else "equip")
+	_recommend.status.text=""
+	_recommend.next_action.text=""
+	_summary.text="下一步 · 天赋可分配 %d 点"%left if _next_id=="talent" else "下一步 · 装备材料已齐" if _next_id=="equip" else "装备强化 %d/%d/%d · 灵宠 %d/%d"%[int(G.equip_state(G.equip_weapon_slot()).get("lv",0)),int(G.equip_state("armor").get("lv",0)),int(G.equip_state("accessory").get("lv",0)),G.owned_pets().size(),TableCache.pets().size()]
+	_summary.add_theme_font_size_override("font_size",14)
+	_recommend.queue_redraw()
 
 
 # ---------- 子面板 ----------

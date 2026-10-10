@@ -58,16 +58,14 @@ func _run() -> void:
 	await get_tree().process_frame
 	_check(home._anim != null and home._anim.is_playing(), "角色待机动画应播放")
 	_check(home._deploy == null, "开局不应有 DEPLOY 浮层")
-	var world_entry := home.get_node_or_null("ReturnToWorld") as Control
+	var world_entry := home.find_child("ReturnToWorld",true,false) as Control
 	_check(world_entry != null and world_entry.size.x >= 400.0
 		and world_entry.size.y >= 44.0,
 		"营帐应有明确且可触控的返回主世界入口")
 	var wallet_txt := ""
-	for c in home.get_children():
-		if c is HBoxContainer:
-			for l in c.get_children():
-				if l is Label:
-					wallet_txt += (l as Label).text
+	for entry in home._wallet_labels:
+		wallet_txt += String(entry.button.tooltip_text)
+		_check(entry.label.text == str(int(G.wallet.get(entry.key,0))),"每格钱包数字来自对应货币")
 	_check(wallet_txt.contains("金币") and wallet_txt.contains("远征币")
 		and wallet_txt.contains("魂晶") and wallet_txt.contains("荣誉"),
 		"顶栏应显示钱包四币（金币/远征币/魂晶/荣誉），实为「%s」" % wallet_txt)
@@ -91,26 +89,28 @@ func _run() -> void:
 		# 断开 GameHome 的真实出征连接（后面会 emit confirmed，避免真的切场景）
 		_drop_confirm(dp)
 		# 三页签各自一屏一项的轮播：卡片按「步骤:选项id」登记；虚拟化后**卡用到才建**
-		_check(dp._cards.size() >= 1 and dp._cards.size() <= 3,
-			"秘境页首开只应预建少量卡（虚拟化），实为 %d" % dp._cards.size())
+		_check(dp._chest._art.texture!=null and dp._deck.page_count==G.world_count(),
+			"秘境轮播只渲染当前插画，全部选项可达")
 		_check(dp._theme == "forest" and dp._role == "zs" and dp._active_pet == "pet_rockturtle",
 			"应预填 forest/zs/岩龟出战，实为 %s/%s/%s" % [dp._theme, dp._role, dp._active_pet])
 
 		# 门禁 A：未解锁世界 / 未收集宠物应压灰（locked 元标记）；翻页把卡建出来再查
 		dp._deck.go(1, true)   # 翻到 snow
-		_check(bool(dp._cards["0:snow"].get_meta("locked", false)), "未解锁世界卡（snow）应标记 locked")
+		_check(dp._chest._go.disabled, "未解锁世界卡（snow）应标记 locked")
 		dp._deck.go(0, true)
-		_check(not bool(dp._cards["0:forest"].get_meta("locked", false)), "主世界卡（forest）不应 locked")
+		_check(not dp._chest._go.disabled, "主世界卡（forest）不应 locked")
 		dp._goto_step(1)
 		for i in 4:
 			dp._deck.go(i, true)
-		_check(dp._cards.size() == 4, "人物页翻满后应有 4 张卡，实为 %d" % dp._cards.size())
+		_check(dp._deck.page_count == 4, "人物页保留四个职业，逐个可选")
 		dp._goto_step(2)
 		for i in 8:
 			dp._deck.go(i, true)
-		_check(dp._cards.size() == 9, "宠物页翻满后应有 9 张卡，实为 %d" % dp._cards.size())
-		_check(bool(dp._cards["2:pet_holydeer"].get_meta("locked", false)), "未收集宠物卡应标记 locked")
-		_check(not bool(dp._cards["2:pet_rockturtle"].get_meta("locked", false)), "初始宠物卡不应 locked")
+		_check(dp._deck.page_count == TableCache.pets().size(), "宠物轮播保留表内全部伙伴")
+		dp._deck.go(6,true)
+		_check(dp._chest._name.text=="？？？", "未收集伙伴显示剪影与条件")
+		dp._deck.go(2,true)
+		_check(dp._chest._name.text=="岩龟", "已收集伙伴显示真实名字")
 
 		# 门禁 B：点它们应被拒绝并给出解锁提示
 		dp._select_theme("snow")
@@ -131,11 +131,12 @@ func _run() -> void:
 		if dp != null:
 			_drop_confirm(dp)
 			dp._deck.go(1, true)   # 翻到 snow（虚拟化：卡用到才建）
-			_check(not bool(dp._cards["0:snow"].get_meta("locked", false)), "解锁后 snow 卡应解除 locked")
+			_check(not dp._chest._go.disabled, "解锁后 snow 卡应解除 locked")
 			dp._goto_step(2)
 			for i in 8:
 				dp._deck.go(i, true)
-			_check(not bool(dp._cards["2:pet_frostwolf"].get_meta("locked", false)), "收集后 frostwolf 卡应解除 locked")
+			dp._deck.go(0,true)
+			_check(dp._chest._name.text==String(TableCache.get_pet("pet_frostwolf").name), "收集后霜狼显示真实名字")
 
 			# ---- D. 选择交互（解锁后全部可选） ----
 			dp._select_theme("snow")
@@ -150,7 +151,7 @@ func _run() -> void:
 				"取消出战应由替补转正，实为 %s/%s" % [dp._active_pet, dp._bench_pet])
 			dp._select_pet("pet_foxfire")     # 唯一出战再点 → 清空
 			_check(dp._active_pet == "", "再点唯一出战应清空出战位")
-			_check(dp._hint.text == "", "正常选择后提示行应清空（说明文案已收进 ? 弹层），实为「%s」" % dp._hint.text)
+			_check(not dp._hint.text.contains("未解锁") and not dp._hint.text.contains("未收集"), "正常选择后解除错误提示，保留补给结算说明")
 
 			# ---- E. 出征校验与配置 ----
 			_got_cfg = {}
@@ -176,14 +177,14 @@ func _run() -> void:
 	home._open_worlds(_click())
 	_check(home._worlds != null, "点「世界」入口应打开世界图志浮层")
 	if home._worlds != null:
-		_check(home._worlds.get_child_count() >= 3, "世界图志应有横幅/面板/返回等内容")
+		_check(home._worlds._shell.back.size.y>=44, "地区图有可触控的返回入口")
 		home._worlds.closed.emit()
 		_check(home._worlds == null, "关闭后应释放世界图志引用")
 		await get_tree().process_frame
 	home._open_codex(_click())
 	_check(home._codex != null, "点「图鉴」入口应打开宠物图鉴浮层")
 	if home._codex != null:
-		_check(home._codex.get_child_count() >= 3, "宠物图鉴应有横幅/面板/返回等内容")
+		_check(home._codex._chest.shell.back.size.y>=44, "宠物图鉴应有横幅/面板/返回等内容")
 		home._codex.closed.emit()
 		_check(home._codex == null, "关闭后应释放宠物图鉴引用")
 		await get_tree().process_frame

@@ -6,6 +6,8 @@ class_name TitlePanel
 extends Control
 
 signal closed
+const Chest := preload("res://src/ui/TravelChestUI.gd")
+var _chest: Control
 
 const CONTENT_W := 408.0
 const LIST_Y := 30.0
@@ -17,7 +19,7 @@ const GAP := 10.0           # 列表间距（VBox separation）
 
 var _scroll: ScrollContainer = null
 var _active_l: Label = null
-var _toast: Label = null
+var _toast: Control = null
 var _content: Control = null
 # 三组：修行（等级/宠物/金币养成）/ 征服（通关秘境）/ 荣誉（荣誉兑换）
 var _groups: Array = []
@@ -25,46 +27,16 @@ var _group_names := ["修行之路", "秘境征服", "荣誉兑换"]
 
 
 func _ready() -> void:
-	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_build()
 
 
 func _build() -> void:
-	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），不再各写一块纯灰
-	G.veil(self, 0.78)
+	_chest=preload("res://src/ui/GrowthChestView.gd").new()
+	_chest.host=self
+	_chest.system="title"
+	add_child(_chest)
 
-	var banner := G.banner_box("称 号", 240, 50)
-	banner.position = Vector2(120, 30)
-	add_child(banner)
-
-	var panel := G.parchment_box(440, 620, 16.0)
-	panel.position = Vector2(20, 96)
-	add_child(panel)
-	var content := Control.new()
-	content.set_anchors_preset(Control.PRESET_FULL_RECT)
-	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	panel.add_child(content)
-	_content = content
-
-	_active_l = G.gold_label("", G.FS_SM, true, Color("a06020"), false)
-	_active_l.position = Vector2(0, 0)
-	_active_l.custom_minimum_size = Vector2(CONTENT_W, 0)
-	content.add_child(_active_l)
-
-	# 滚动列表由 _refresh 统一建（首次 + 交互后重建共用一条路径）
-
-	var close_btn := G.gold_button("返 回", G.BTN_S.x, G.BTN_S.y, G.FS_SM)
-	close_btn.position = Vector2((CONTENT_W - G.BTN_S.x) * 0.5, 566)
-	close_btn.gui_input.connect(func(ev: InputEvent):
-		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
-			closed.emit())
-	content.add_child(close_btn)
-
-	_refresh()
-
-
-## 按 cond 类型把称号拆成三组：修行(level/pets/gold) / 征服(clear_world) / 荣誉(有 cost)
 func _split_groups() -> void:
 	_groups = [[], [], []]
 	for t in G.titles_cfg():
@@ -108,40 +80,8 @@ func _sorted_group(gi: int) -> Array:
 ## preserve=true 时留在当前滚动位置（佩戴/领取后不该被弹回顶部——问题 #10）；
 ## preserve=false（首次打开）滚到「有未领取的那组」的组名头。
 func _refresh(preserve := false) -> void:
-	var tid := G.title_active()
-	_active_l.text = "佩戴：%s" % String(G.title_cfg(tid).get("name", "")) if not tid.is_empty() \
-		else "尚未佩戴称号"
-	_split_groups()
-	var prev_scroll := int(_scroll.scroll_vertical) if (preserve and _scroll != null) else -1
-	if _scroll != null:
-		_scroll.queue_free()
-	_scroll = ScrollContainer.new()
-	_scroll.position = Vector2(0, LIST_Y)
-	_scroll.size = Vector2(CONTENT_W, LIST_H)
-	_scroll.custom_minimum_size = Vector2(CONTENT_W, LIST_H)
-	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER   # 藏滚动条，卡片吃满 408
-	_scroll.mouse_filter = Control.MOUSE_FILTER_STOP
-	_content.add_child(_scroll)
+	if _chest!=null:_chest.refresh()
 
-	var box := VBoxContainer.new()
-	box.add_theme_constant_override("separation", GAP)
-	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_scroll.add_child(box)
-	for gi in _groups.size():
-		if _groups[gi].is_empty():
-			continue
-		box.add_child(_group_head(gi))
-		for t in _sorted_group(gi):
-			box.add_child(_title_card(t as Dictionary))
-
-	var want_y := prev_scroll if prev_scroll >= 0 else _group_offset(_default_group())
-	# 布局还没结算，直接设会被钳回 0；延迟一帧再设
-	_scroll.set_deferred("scroll_vertical", want_y)
-
-
-## 第 gi 组组名头在列表里的 y：组块 = 组名头(40) + 每张卡(10 间距 + 94)
 func _group_offset(gi: int) -> int:
 	var y := 0.0
 	for j in mini(gi, _groups.size()):
@@ -279,8 +219,8 @@ func _title_card(t: Dictionary) -> Control:
 func _bonus_text(bonus: Dictionary) -> String:
 	if bonus.is_empty():
 		return ""
-	var names := {"atk_pct": "攻", "def_pct": "防", "maxhp_pct": "血", "spd_pct": "速",
-		"crit_add": "暴", "atk_add": "攻", "def_add": "防", "hp_add": "血"}
+	var names := {"atk_pct": "攻击", "def_pct": "防御", "maxhp_pct": "生命", "spd_pct": "速度",
+		"crit_add": "暴击", "atk_add": "攻击", "def_add": "防御", "hp_add": "生命"}
 	var parts := PackedStringArray()
 	for k in bonus.keys():
 		var v := float(bonus[k])
@@ -299,17 +239,9 @@ func _on_claim(tid: String) -> void:
 
 
 func _toast_msg(msg: String) -> void:
-	if _toast != null:
-		_toast.queue_free()
-	_toast = G.gold_label(msg, G.FS_SM, false, Color("ffd0d0"))
-	_toast.position = Vector2(0, 726)
-	_toast.custom_minimum_size = Vector2(480, 0)
-	add_child(_toast)
-	var tw := create_tween()
-	tw.tween_interval(1.2)
-	tw.tween_property(_toast, "modulate:a", 0.0, 0.4)
-	tw.tween_callback(_toast.queue_free)
-
+	if is_instance_valid(_toast):_toast.queue_free()
+	_toast=Chest.toast(self,msg)
+	_toast.position.y=G.ui_safe_rect(self).end.y-116
 
 func _unhandled_input(event: InputEvent) -> void:
 	if G.ui_blocked:   # GM 控制台等全屏层优先（轮次 14）

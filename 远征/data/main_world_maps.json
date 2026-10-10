@@ -243,122 +243,132 @@
       "city": true,
       "theme": "forest",
       "tint": "ffffff",
-      "background": "res://image/style_review_20261005/ground_soil_reference_v1.png",
-      "map_cols": 20,
-      "map_rows": 26,
-      "layout_version": 3,
-      "player_scale": 0.66,
+      "background": "res://assets/world/natural_ground_20261011/ready/lorin_wilds_floor.png",
+      "map_cols": 25,
+      "map_rows": 44,
+      "layout_version": 6,
+      "player_scale": 0.65,
       "camera_zoom": 1.15,
       "spawn": [
-        480,
-        930
+        600,
+        1520
       ],
       "spawn_points": {
         "from_maple_road": [
-          480,
-          180
+          600,
+          300
         ]
       },
       "exits": [
         {
           "id": "north_gate",
           "at": [
-            480,
-            96
+            616,
+            140
           ],
           "to": "maple_road",
           "arrival": "from_city",
-          "label": "枫林古道"
+          "label": "枫林古道",
+          "sign_at": [
+            640,
+            160
+          ],
+          "authored_sign_position": true,
+          "caption_below": true
         }
       ],
       "exit": [
         480,
-        96
+        250
       ],
+      "city_passable": [
+        "gate"
+      ],
+      "plazas": [],
       "city_building_positions": {
-        "hall": [
-          245,
-          260
-        ],
-        "archive": [
-          245,
-          520
+        "stable": [
+          298,
+          640
         ],
         "barracks": [
-          245,
-          790
-        ],
-        "forge": [
-          245,
-          1080
-        ],
-        "kennel": [
-          715,
-          260
+          898,
+          660
         ],
         "storehouse": [
-          715,
-          520
+          298,
+          916
+        ],
+        "forge": [
+          898,
+          940
+        ],
+        "hall": [
+          288,
+          1230
+        ],
+        "archive": [
+          298,
+          1640
+        ],
+        "kennel": [
+          898,
+          1380
         ],
         "shrine": [
-          715,
-          790
-        ],
-        "stable": [
-          715,
-          935
+          898,
+          1670
         ],
         "gate": [
-          715,
-          1080
+          108,
+          1290
         ]
       },
       "city_npc_positions": {
-        "npc_steward": [
-          375,
-          300
-        ],
-        "npc_scribe": [
-          375,
-          560
-        ],
-        "npc_smith": [
-          375,
-          830
-        ],
-        "npc_mentor": [
-          375,
-          710
-        ],
-        "npc_warden": [
-          375,
-          1120
-        ],
-        "npc_keeper": [
-          585,
-          300
-        ],
-        "npc_child": [
-          585,
-          830
+        "npc_guard": [
+          458,
+          500
         ],
         "npc_stablemaster": [
-          585,
-          965
+          418,
+          735
         ],
-        "npc_guard": [
-          585,
-          1120
+        "npc_mentor": [
+          778,
+          750
+        ],
+        "npc_smith": [
+          733,
+          1030
+        ],
+        "npc_steward": [
+          418,
+          1325
+        ],
+        "npc_child": [
+          468,
+          1460
+        ],
+        "npc_warden": [
+          698,
+          1580
+        ],
+        "npc_scribe": [
+          418,
+          1740
+        ],
+        "npc_keeper": [
+          778,
+          1490
         ]
       },
       "city_guest_positions": [
         [
-          375,
-          1210
+          483,
+          960
         ],
         [
-          585,
-          1210
+          710,
+          500
         ]
       ],
       "goal": "沿主街走访闻叔，从北门前往枫林古道",
@@ -366,20 +376,20 @@
       "monster_count": 4,
       "monster_positions": [
         [
-          82,
-          560
+          108,
+          2050
         ],
         [
-          878,
-          565
+          248,
+          2050
         ],
         [
-          82,
-          970
+          850,
+          2030
         ],
         [
-          878,
-          970
+          1100,
+          2050
         ]
       ],
       "monster_ids": [
@@ -406,8 +416,8 @@
           "name": "听城门旧识讲归路",
           "art": "post",
           "at": [
-            570,
-            1080
+            486,
+            610
           ]
         },
         "a4_secret_oralbook_feedback_0": {
@@ -416,8 +426,8 @@
           "art": "salt_marks",
           "name": "三城口述册",
           "at": [
-            590,
-            685
+            488,
+            1860
           ]
         },
         "a4_rel_nighttable_step_1": {
@@ -426,8 +436,8 @@
           "name": "邀请边城旧识",
           "art": "post",
           "at": [
-            390,
-            1060
+            728,
+            860
           ]
         },
         "a4_rel_nighttable_step_4": {
@@ -436,8 +446,8 @@
           "name": "选择桌边先讲的故事",
           "art": "return_lamp",
           "at": [
-            480,
-            1000
+            868,
+            1040
           ]
         },
         "a4_rel_nighttable_step_5": {
@@ -446,8 +456,8 @@
           "name": "听完桌边三段故事",
           "art": "post",
           "at": [
-            580,
-            1000
+            788,
+            1130
           ]
         },
         "a4_rel_nighttable_feedback_0": {
@@ -456,43 +466,835 @@
           "art": "post",
           "name": "三城小聚留桌",
           "at": [
-            580,
-            990
+            728,
+            1240
           ]
         }
       },
       "clear_rects": [
         [
-          520,
-          1015,
-          100,
-          110
+          276,
+          396,
+          108,
+          108
         ],
         [
-          340,
-          995,
-          100,
-          110
+          236,
+          1396,
+          108,
+          108
         ],
         [
-          430,
-          935,
-          100,
-          110
+          536,
+          866,
+          108,
+          108
         ],
         [
-          530,
-          935,
-          100,
-          110
+          586,
+          1081,
+          108,
+          108
+        ],
+        [
+          691,
+          1081,
+          108,
+          108
+        ],
+        [
+          636,
+          1136,
+          108,
+          108
         ]
       ],
       "ground_style": "reference_flat",
       "flat_routes": [
-        {"points": [[480, 1152], [480, 1050], [480, 700], [480, 400], [480, 96]], "width": 144}
+        {
+          "kind": "main",
+          "width": 136,
+          "points": [
+            [
+              600,
+              -48
+            ],
+            [
+              600,
+              410
+            ],
+            [
+              583,
+              710
+            ],
+            [
+              613,
+              1030
+            ],
+            [
+              593,
+              1410
+            ],
+            [
+              600,
+              1932
+            ]
+          ]
+        }
       ],
       "deco_tint": "ffffff",
-      "surface_tint": "ffffff"
+      "surface_tint": "ffffff",
+      "reference_art": true,
+      "reference_doors": {
+        "gate": [
+          480,
+          400
+        ],
+        "stable": [
+          200,
+          560
+        ],
+        "barracks": [
+          790,
+          560
+        ],
+        "storehouse": [
+          170,
+          800
+        ],
+        "forge": [
+          780,
+          820
+        ],
+        "hall": [
+          360,
+          950
+        ],
+        "archive": [
+          200,
+          1420
+        ],
+        "kennel": [
+          740,
+          1430
+        ],
+        "shrine": [
+          480,
+          1440
+        ]
+      },
+      "reference_building_sizes": {
+        "hall": [
+          320,
+          230
+        ],
+        "gate": [
+          380,
+          280
+        ]
+      },
+      "reference_migration": {
+        "spawn_points:from_maple_road": {
+          "old": [
+            480,
+            300
+          ],
+          "new": [
+            480,
+            450
+          ]
+        },
+        "city_npc_positions:npc_steward": {
+          "old": [
+            366,
+            862
+          ],
+          "new": [
+            450,
+            990
+          ]
+        },
+        "city_npc_positions:npc_scribe": {
+          "old": [
+            288,
+            1138
+          ],
+          "new": [
+            110,
+            1440
+          ]
+        },
+        "city_npc_positions:npc_guard": {
+          "old": [
+            280,
+            170
+          ],
+          "new": [
+            420,
+            435
+          ]
+        },
+        "city_npc_positions:npc_stablemaster": {
+          "old": [
+            118,
+            328
+          ],
+          "new": [
+            275,
+            570
+          ]
+        },
+        "city_npc_positions:npc_mentor": {
+          "old": [
+            534,
+            608
+          ],
+          "new": [
+            700,
+            590
+          ]
+        },
+        "city_npc_positions:npc_smith": {
+          "old": [
+            606,
+            628
+          ],
+          "new": [
+            870,
+            840
+          ]
+        },
+        "city_npc_positions:npc_keeper": {
+          "old": [
+            556,
+            780
+          ],
+          "new": [
+            650,
+            1450
+          ]
+        },
+        "city_npc_positions:npc_warden": {
+          "old": [
+            562,
+            690
+          ],
+          "new": [
+            560,
+            1210
+          ]
+        },
+        "city_npc_positions:npc_child": {
+          "old": [
+            418,
+            698
+          ],
+          "new": [
+            320,
+            1110
+          ]
+        },
+        "city_building_positions:hall": {
+          "old": [
+            480,
+            1060
+          ],
+          "new": [
+            360,
+            850
+          ]
+        },
+        "city_building_positions:gate": {
+          "old": [
+            480,
+            120
+          ],
+          "new": [
+            480,
+            300
+          ]
+        },
+        "city_building_positions:archive": {
+          "old": [
+            290,
+            1000
+          ],
+          "new": [
+            200,
+            1320
+          ]
+        },
+        "city_building_positions:kennel": {
+          "old": [
+            706,
+            780
+          ],
+          "new": [
+            770,
+            1330
+          ]
+        },
+        "city_building_positions:barracks": {
+          "old": [
+            670,
+            300
+          ],
+          "new": [
+            790,
+            470
+          ]
+        },
+        "city_building_positions:storehouse": {
+          "old": [
+            300,
+            500
+          ],
+          "new": [
+            170,
+            720
+          ]
+        },
+        "city_building_positions:shrine": {
+          "old": [
+            670,
+            1000
+          ],
+          "new": [
+            480,
+            1500
+          ]
+        },
+        "city_building_positions:stable": {
+          "old": [
+            290,
+            300
+          ],
+          "new": [
+            170,
+            480
+          ]
+        },
+        "city_building_positions:forge": {
+          "old": [
+            660,
+            500
+          ],
+          "new": [
+            800,
+            740
+          ]
+        },
+        "spawn": {
+          "old": [
+            480,
+            930
+          ],
+          "new": [
+            500,
+            1050
+          ]
+        },
+        "entity:a4_secret_oralbook_step_1": {
+          "old": [
+            400,
+            200
+          ],
+          "new": [
+            330,
+            450
+          ]
+        },
+        "entity:a4_secret_oralbook_feedback_0": {
+          "old": [
+            200,
+            1100
+          ],
+          "new": [
+            290,
+            1450
+          ]
+        },
+        "entity:a4_rel_nighttable_step_1": {
+          "old": [
+            480,
+            560
+          ],
+          "new": [
+            590,
+            920
+          ]
+        },
+        "entity:a4_rel_nighttable_step_4": {
+          "old": [
+            300,
+            730
+          ],
+          "new": [
+            640,
+            1135
+          ]
+        },
+        "entity:a4_rel_nighttable_step_5": {
+          "old": [
+            440,
+            800
+          ],
+          "new": [
+            745,
+            1135
+          ]
+        },
+        "entity:a4_rel_nighttable_feedback_0": {
+          "old": [
+            370,
+            770
+          ],
+          "new": [
+            690,
+            1190
+          ]
+        },
+        "exit:north_gate": {
+          "old": [
+            480,
+            220
+          ],
+          "new": [
+            480,
+            250
+          ]
+        }
+      },
+      "art_profile": "reference_complete",
+      "city_building_sizes": {
+        "stable": [
+          360.0,
+          191.0
+        ],
+        "barracks": [
+          376.0,
+          239.0
+        ],
+        "storehouse": [
+          395.0,
+          249.0
+        ],
+        "forge": [
+          392.0,
+          253.0
+        ],
+        "hall": [
+          420.0,
+          259.0
+        ],
+        "archive": [
+          332.0,
+          329.0
+        ],
+        "kennel": [
+          400.0,
+          230.0
+        ],
+        "shrine": [
+          240.0,
+          164.0
+        ],
+        "gate": [
+          60.2490844726563,
+          64.0
+        ]
+      },
+      "city_building_approaches": {
+        "stable": [
+          298,
+          682
+        ],
+        "barracks": [
+          898,
+          702
+        ],
+        "storehouse": [
+          298,
+          958
+        ],
+        "forge": [
+          898,
+          982
+        ],
+        "hall": [
+          288,
+          1272
+        ],
+        "archive": [
+          298,
+          1682
+        ],
+        "kennel": [
+          898,
+          1422
+        ],
+        "shrine": [
+          898,
+          1712
+        ],
+        "gate": [
+          108,
+          1290
+        ]
+      },
+      "reference_scenery": [
+        {
+          "id": "green_tree",
+          "at": [
+            350,
+            300
+          ],
+          "solid": true
+        },
+        {
+          "id": "green_tree",
+          "at": [
+            850,
+            300
+          ],
+          "solid": true
+        },
+        {
+          "id": "green_tree",
+          "at": [
+            1048,
+            1146
+          ],
+          "solid": true
+        },
+        {
+          "id": "green_tree",
+          "at": [
+            148,
+            1980
+          ],
+          "solid": true
+        },
+        {
+          "id": "green_tree",
+          "at": [
+            1048,
+            1890
+          ],
+          "solid": true
+        },
+        {
+          "id": "bush",
+          "at": [
+            92,
+            870
+          ],
+          "group": "foliage"
+        },
+        {
+          "id": "bush",
+          "at": [
+            1110,
+            1550
+          ],
+          "group": "foliage"
+        },
+        {
+          "id": "fern",
+          "at": [
+            94,
+            1530
+          ],
+          "group": "foliage"
+        },
+        {
+          "id": "fern",
+          "at": [
+            1080,
+            830
+          ],
+          "group": "foliage"
+        },
+        {
+          "id": "nighttable",
+          "at": [
+            728,
+            1298
+          ],
+          "group": "props"
+        }
+      ],
+      "position_migration": {
+        "from_version": 5,
+        "extent": [
+          960,
+          1920
+        ],
+        "anchors": [
+          {
+            "old": [
+              500,
+              1050
+            ],
+            "new": [
+              600,
+              1520
+            ]
+          },
+          {
+            "old": [
+              480,
+              300
+            ],
+            "new": [
+              108,
+              1290
+            ]
+          },
+          {
+            "old": [
+              170,
+              480
+            ],
+            "new": [
+              298,
+              640
+            ]
+          },
+          {
+            "old": [
+              790,
+              470
+            ],
+            "new": [
+              898,
+              660
+            ]
+          },
+          {
+            "old": [
+              170,
+              720
+            ],
+            "new": [
+              298,
+              916
+            ]
+          },
+          {
+            "old": [
+              800,
+              740
+            ],
+            "new": [
+              898,
+              940
+            ]
+          },
+          {
+            "old": [
+              360,
+              850
+            ],
+            "new": [
+              288,
+              1230
+            ]
+          },
+          {
+            "old": [
+              200,
+              1320
+            ],
+            "new": [
+              298,
+              1640
+            ]
+          },
+          {
+            "old": [
+              770,
+              1330
+            ],
+            "new": [
+              898,
+              1380
+            ]
+          },
+          {
+            "old": [
+              480,
+              1500
+            ],
+            "new": [
+              898,
+              1670
+            ]
+          },
+          {
+            "old": [
+              420,
+              435
+            ],
+            "new": [
+              458,
+              500
+            ]
+          },
+          {
+            "old": [
+              275,
+              570
+            ],
+            "new": [
+              418,
+              735
+            ]
+          },
+          {
+            "old": [
+              700,
+              590
+            ],
+            "new": [
+              778,
+              750
+            ]
+          },
+          {
+            "old": [
+              870,
+              840
+            ],
+            "new": [
+              733,
+              1030
+            ]
+          },
+          {
+            "old": [
+              450,
+              990
+            ],
+            "new": [
+              418,
+              1325
+            ]
+          },
+          {
+            "old": [
+              320,
+              1110
+            ],
+            "new": [
+              468,
+              1460
+            ]
+          },
+          {
+            "old": [
+              560,
+              1210
+            ],
+            "new": [
+              698,
+              1580
+            ]
+          },
+          {
+            "old": [
+              110,
+              1440
+            ],
+            "new": [
+              418,
+              1740
+            ]
+          },
+          {
+            "old": [
+              650,
+              1450
+            ],
+            "new": [
+              778,
+              1490
+            ]
+          },
+          {
+            "old": [
+              480,
+              450
+            ],
+            "new": [
+              600,
+              300
+            ]
+          },
+          {
+            "old": [
+              330,
+              450
+            ],
+            "new": [
+              486,
+              610
+            ]
+          },
+          {
+            "old": [
+              290,
+              1450
+            ],
+            "new": [
+              488,
+              1860
+            ]
+          },
+          {
+            "old": [
+              590,
+              920
+            ],
+            "new": [
+              728,
+              860
+            ]
+          },
+          {
+            "old": [
+              640,
+              1135
+            ],
+            "new": [
+              868,
+              1040
+            ]
+          },
+          {
+            "old": [
+              745,
+              1135
+            ],
+            "new": [
+              788,
+              1130
+            ]
+          },
+          {
+            "old": [
+              690,
+              1190
+            ],
+            "new": [
+              728,
+              1240
+            ]
+          }
+        ]
+      },
+      "minimap_show_roads": false,
+      "reference_floor_root": "res://assets/world/natural_ground_20261011/ready/"
     },
     "maple_road": {
       "name": "枫林古道",
@@ -505,28 +1307,28 @@
         "032_deco_forest_grass",
         "033_deco_forest_ruin"
       ],
-      "background": "",
+      "background": "res://assets/world/natural_ground_20261011/ready/maple_road_floor.png",
       "map_cols": 20,
-      "map_rows": 26,
-      "layout_version": 2,
-      "player_scale": 0.54,
+      "map_rows": 44,
+      "layout_version": 5,
+      "player_scale": 0.65,
       "camera_zoom": 1.15,
       "spawn": [
         480,
-        1040
+        1860
       ],
       "spawn_points": {
         "from_city": [
           480,
-          1060
+          1860
         ],
         "from_broken_slope": [
           480,
-          190
+          270
         ],
         "from_old_salt_road": [
-          760,
-          660
+          840,
+          985
         ]
       },
       "exits": [
@@ -534,7 +1336,7 @@
           "id": "south_gate",
           "at": [
             480,
-            1152
+            1990
           ],
           "to": "lorin_wilds",
           "arrival": "from_maple_road",
@@ -544,7 +1346,7 @@
           "id": "north_path",
           "at": [
             480,
-            96
+            150
           ],
           "to": "broken_slope",
           "arrival": "from_maple_road",
@@ -553,8 +1355,8 @@
         {
           "id": "east_salt_path",
           "at": [
-            864,
-            660
+            940,
+            970
           ],
           "to": "old_salt_road",
           "arrival": "from_maple_road",
@@ -568,24 +1370,24 @@
       "monster_count": 5,
       "monster_positions": [
         [
-          210,
-          390
-        ],
-        [
-          750,
-          470
-        ],
-        [
-          185,
-          705
+          200,
+          1460
         ],
         [
           780,
-          830
+          1560
         ],
         [
-          305,
-          915
+          760,
+          680
+        ],
+        [
+          200,
+          820
+        ],
+        [
+          760,
+          420
         ]
       ],
       "monster_ids": [
@@ -600,7 +1402,7 @@
         }
       },
       "monster_sprite": "",
-      "monster_height": 62,
+      "monster_height": 52,
       "monster_level_offset": 1,
       "monster_wander_only": true,
       "monster_wander_radius": 48,
@@ -614,8 +1416,8 @@
           "art": "chime",
           "name": "旧风铃",
           "at": [
-            330,
-            640
+            210,
+            1640
           ]
         },
         "act1_waystone_cache": {
@@ -624,8 +1426,8 @@
           "art": "cache",
           "name": "旧路石匣",
           "at": [
-            540,
-            590
+            230,
+            1080
           ]
         },
         "a1_roots_a": {
@@ -634,8 +1436,8 @@
           "art": "root",
           "name": "草根",
           "at": [
-            245,
-            545
+            240,
+            600
           ]
         },
         "a1_roots_b": {
@@ -644,8 +1446,8 @@
           "art": "root",
           "name": "草根",
           "at": [
-            700,
-            985
+            660,
+            1720
           ]
         },
         "a1_postrider": {
@@ -654,8 +1456,8 @@
           "art": "post",
           "name": "交付盐袋",
           "at": [
-            600,
-            300
+            730,
+            1080
           ]
         },
         "trade_maple_post": {
@@ -664,8 +1466,8 @@
           "art": "post",
           "name": "驿亭交易",
           "at": [
-            685,
-            310
+            625,
+            1050
           ]
         },
         "a4_waylight": {
@@ -674,8 +1476,8 @@
           "art": "return_lamp",
           "name": "古道路灯",
           "at": [
-            520,
-            460
+            540,
+            640
           ]
         },
         "a1_trade_bridge_step_1": {
@@ -684,8 +1486,8 @@
           "name": "西桥承重点",
           "art": "post",
           "at": [
-            380,
-            735
+            430,
+            1300
           ]
         },
         "a1_trade_bridge_step_2": {
@@ -694,8 +1496,8 @@
           "name": "东桥承重点",
           "art": "post",
           "at": [
-            580,
-            665
+            575,
+            1300
           ]
         },
         "a1_trade_bridge_step_3": {
@@ -704,8 +1506,8 @@
           "name": "嵌入桥楔",
           "art": "post",
           "at": [
-            480,
-            595
+            500,
+            1235
           ]
         },
         "a1_trade_bridge_feedback_0": {
@@ -714,81 +1516,656 @@
           "art": "post",
           "name": "新楔归桥",
           "at": [
-            420,
-            590
+            500,
+            1160
           ]
         }
       },
       "clear_rects": [
         [
-          330,
-          670,
-          100,
-          110
+          156,
+          1586,
+          108,
+          108
         ],
         [
-          530,
-          600,
-          100,
-          110
+          176,
+          1026,
+          108,
+          108
         ],
         [
-          430,
-          530,
-          100,
-          110
+          186,
+          546,
+          108,
+          108
         ],
         [
-          355,
-          860,
-          130,
-          120
+          606,
+          1666,
+          108,
+          108
         ],
         [
-          455,
-          690,
-          130,
-          120
+          676,
+          1026,
+          108,
+          108
         ],
         [
-          415,
-          740,
-          130,
-          120
+          571,
+          996,
+          108,
+          108
         ],
         [
-          415,
-          550,
-          130,
-          120
+          486,
+          586,
+          108,
+          108
         ],
         [
-          300,
-          490,
-          160,
-          200
+          376,
+          1246,
+          108,
+          108
         ],
         [
-          540,
-          490,
-          160,
-          200
+          521,
+          1246,
+          108,
+          108
+        ],
+        [
+          446,
+          1181,
+          108,
+          108
+        ],
+        [
+          446,
+          1106,
+          108,
+          108
         ]
       ],
       "ground_style": "flat",
+      "river": {
+        "y": 1230,
+        "half": 32,
+        "points": [
+          [
+            0,
+            1200
+          ],
+          [
+            960,
+            1260
+          ]
+        ],
+        "crossing": [
+          464,
+          536
+        ]
+      },
       "flat_routes": [
-        {"points": [[480, 1152], [480, 1040], [450, 950], [425, 820], [500, 695], [515, 640], [450, 400], [480, 185], [480, 96]], "width": 88},
-        {"points": [[450, 950], [315, 905], [285, 790], [355, 720], [500, 695]], "width": 62},
-        {"points": [[425, 820], [570, 875], [645, 815], [630, 695], [515, 640]], "width": 60},
-        {"points": [[515, 640], [675, 665], [864, 660]], "width": 76},
-        {"points": [[450, 400], [590, 325], [685, 310]], "width": 60},
-        {"points": [[480, 185], [335, 265], [320, 395], [450, 400]], "width": 60}
+        {
+          "points": [
+            [
+              480,
+              1990
+            ],
+            [
+              480,
+              1860
+            ],
+            [
+              510,
+              1700
+            ],
+            [
+              440,
+              1530
+            ],
+            [
+              500,
+              1350
+            ],
+            [
+              500,
+              1230
+            ],
+            [
+              500,
+              1100
+            ],
+            [
+              570,
+              1000
+            ],
+            [
+              480,
+              820
+            ],
+            [
+              540,
+              640
+            ],
+            [
+              470,
+              420
+            ],
+            [
+              480,
+              270
+            ],
+            [
+              480,
+              150
+            ]
+          ],
+          "width": 124
+        }
       ],
-      "flat_palette": ["a1a34e", "adb35b", "829347", "e7d490", "cfbc75", "grass"],
+      "flat_palette": [
+        "a1a34e",
+        "adb35b",
+        "829347",
+        "e7d490",
+        "cfbc75",
+        "grass"
+      ],
       "deco_density": 0.095,
       "deco_tint": "ffffff",
       "flat_material": "forest",
-      "surface_tint": "fff2d6"
+      "surface_tint": "fff2d6",
+      "reference_art": true,
+      "exit": [
+        480,
+        150
+      ],
+      "reference_migration": {
+        "spawn_points:from_city": {
+          "old": [
+            480,
+            1060
+          ],
+          "new": [
+            480,
+            1860
+          ]
+        },
+        "spawn_points:from_broken_slope": {
+          "old": [
+            480,
+            190
+          ],
+          "new": [
+            480,
+            270
+          ]
+        },
+        "spawn_points:from_old_salt_road": {
+          "old": [
+            760,
+            660
+          ],
+          "new": [
+            840,
+            985
+          ]
+        },
+        "spawn": {
+          "old": [
+            480,
+            1040
+          ],
+          "new": [
+            480,
+            1860
+          ]
+        },
+        "entity:a1_chime": {
+          "old": [
+            330,
+            640
+          ],
+          "new": [
+            210,
+            1640
+          ]
+        },
+        "entity:act1_waystone_cache": {
+          "old": [
+            590,
+            520
+          ],
+          "new": [
+            230,
+            1080
+          ]
+        },
+        "entity:a1_roots_a": {
+          "old": [
+            245,
+            545
+          ],
+          "new": [
+            240,
+            600
+          ]
+        },
+        "entity:a1_roots_b": {
+          "old": [
+            700,
+            985
+          ],
+          "new": [
+            660,
+            1720
+          ]
+        },
+        "entity:a1_postrider": {
+          "old": [
+            600,
+            300
+          ],
+          "new": [
+            730,
+            1080
+          ]
+        },
+        "entity:trade_maple_post": {
+          "old": [
+            685,
+            310
+          ],
+          "new": [
+            625,
+            1050
+          ]
+        },
+        "entity:a4_waylight": {
+          "old": [
+            520,
+            460
+          ],
+          "new": [
+            540,
+            640
+          ]
+        },
+        "entity:a1_trade_bridge_step_1": {
+          "old": [
+            452,
+            628
+          ],
+          "new": [
+            430,
+            1300
+          ]
+        },
+        "entity:a1_trade_bridge_step_2": {
+          "old": [
+            548,
+            628
+          ],
+          "new": [
+            575,
+            1300
+          ]
+        },
+        "entity:a1_trade_bridge_step_3": {
+          "old": [
+            500,
+            578
+          ],
+          "new": [
+            500,
+            1235
+          ]
+        },
+        "entity:a1_trade_bridge_feedback_0": {
+          "old": [
+            500,
+            530
+          ],
+          "new": [
+            500,
+            1160
+          ]
+        },
+        "exit:south_gate": {
+          "old": [
+            480,
+            1152
+          ],
+          "new": [
+            480,
+            1990
+          ]
+        },
+        "exit:north_path": {
+          "old": [
+            480,
+            96
+          ],
+          "new": [
+            480,
+            150
+          ]
+        },
+        "exit:east_salt_path": {
+          "old": [
+            864,
+            660
+          ],
+          "new": [
+            940,
+            970
+          ]
+        }
+      },
+      "art_profile": "reference_complete",
+      "reference_scenery": [
+        {
+          "id": "green_tree",
+          "at": [
+            250,
+            1900
+          ],
+          "solid": true
+        },
+        {
+          "id": "green_tree",
+          "at": [
+            750,
+            1950
+          ],
+          "solid": true
+        },
+        {
+          "id": "green_tree",
+          "at": [
+            295,
+            1430
+          ],
+          "solid": true
+        },
+        {
+          "id": "green_tree",
+          "at": [
+            865,
+            1645
+          ],
+          "solid": true
+        },
+        {
+          "id": "pine",
+          "at": [
+            90,
+            1180
+          ],
+          "solid": true
+        },
+        {
+          "id": "gold_maple",
+          "at": [
+            745,
+            955
+          ],
+          "solid": true
+        },
+        {
+          "id": "gold_maple",
+          "at": [
+            285,
+            795
+          ],
+          "solid": true
+        },
+        {
+          "id": "red_maple",
+          "at": [
+            265,
+            480
+          ],
+          "solid": true
+        },
+        {
+          "id": "red_maple",
+          "at": [
+            730,
+            280
+          ],
+          "solid": true
+        },
+        {
+          "id": "red_maple",
+          "at": [
+            865,
+            245
+          ],
+          "solid": true
+        },
+        {
+          "id": "bush",
+          "at": [
+            300,
+            1830
+          ],
+          "group": "foliage"
+        },
+        {
+          "id": "bush",
+          "at": [
+            760,
+            1750
+          ],
+          "group": "foliage"
+        },
+        {
+          "id": "fern",
+          "at": [
+            290,
+            1430
+          ],
+          "group": "foliage"
+        },
+        {
+          "id": "bush",
+          "at": [
+            725,
+            730
+          ],
+          "group": "foliage"
+        },
+        {
+          "id": "fern",
+          "at": [
+            325,
+            395
+          ],
+          "group": "foliage"
+        },
+        {
+          "id": "rocks",
+          "at": [
+            135,
+            1000
+          ],
+          "group": "props"
+        },
+        {
+          "id": "rocks",
+          "at": [
+            800,
+            1390
+          ],
+          "group": "props"
+        }
+      ],
+      "position_migration": {
+        "from_version": 4,
+        "extent": [
+          960,
+          2112
+        ],
+        "anchors": [
+          {
+            "old": [
+              480,
+              1860
+            ],
+            "new": [
+              480,
+              1860
+            ]
+          },
+          {
+            "old": [
+              480,
+              1860
+            ],
+            "new": [
+              480,
+              1860
+            ]
+          },
+          {
+            "old": [
+              480,
+              270
+            ],
+            "new": [
+              480,
+              270
+            ]
+          },
+          {
+            "old": [
+              840,
+              985
+            ],
+            "new": [
+              840,
+              985
+            ]
+          },
+          {
+            "old": [
+              210,
+              1640
+            ],
+            "new": [
+              210,
+              1640
+            ]
+          },
+          {
+            "old": [
+              230,
+              1080
+            ],
+            "new": [
+              230,
+              1080
+            ]
+          },
+          {
+            "old": [
+              240,
+              600
+            ],
+            "new": [
+              240,
+              600
+            ]
+          },
+          {
+            "old": [
+              660,
+              1720
+            ],
+            "new": [
+              660,
+              1720
+            ]
+          },
+          {
+            "old": [
+              730,
+              1080
+            ],
+            "new": [
+              730,
+              1080
+            ]
+          },
+          {
+            "old": [
+              625,
+              1050
+            ],
+            "new": [
+              625,
+              1050
+            ]
+          },
+          {
+            "old": [
+              540,
+              640
+            ],
+            "new": [
+              540,
+              640
+            ]
+          },
+          {
+            "old": [
+              430,
+              1300
+            ],
+            "new": [
+              430,
+              1300
+            ]
+          },
+          {
+            "old": [
+              575,
+              1300
+            ],
+            "new": [
+              575,
+              1300
+            ]
+          },
+          {
+            "old": [
+              500,
+              1235
+            ],
+            "new": [
+              500,
+              1235
+            ]
+          },
+          {
+            "old": [
+              500,
+              1160
+            ],
+            "new": [
+              500,
+              1160
+            ]
+          }
+        ]
+      },
+      "minimap_show_roads": false,
+      "reference_floor_root": "res://assets/world/natural_ground_20261011/ready/"
     },
     "broken_slope": {
       "name": "断碑坡",
@@ -1081,12 +2458,127 @@
       ],
       "ground_style": "flat",
       "flat_routes": [
-        {"points": [[480, 1152], [480, 1040], [475, 930], [525, 735], [415, 560], [505, 330], [480, 185], [480, 96]], "width": 88},
-        {"points": [[475, 930], [355, 980], [255, 950], [295, 820], [410, 755], [525, 735]], "width": 62},
-        {"points": [[475, 930], [600, 900], [655, 785], [590, 655], [415, 560]], "width": 60},
-        {"points": [[505, 330], [330, 375], [290, 500], [415, 560]], "width": 60}
+        {
+          "points": [
+            [
+              480,
+              1152
+            ],
+            [
+              480,
+              1040
+            ],
+            [
+              475,
+              930
+            ],
+            [
+              525,
+              735
+            ],
+            [
+              415,
+              560
+            ],
+            [
+              505,
+              330
+            ],
+            [
+              480,
+              185
+            ],
+            [
+              480,
+              96
+            ]
+          ],
+          "width": 88
+        },
+        {
+          "points": [
+            [
+              475,
+              930
+            ],
+            [
+              355,
+              980
+            ],
+            [
+              255,
+              950
+            ],
+            [
+              295,
+              820
+            ],
+            [
+              410,
+              755
+            ],
+            [
+              525,
+              735
+            ]
+          ],
+          "width": 62
+        },
+        {
+          "points": [
+            [
+              475,
+              930
+            ],
+            [
+              600,
+              900
+            ],
+            [
+              655,
+              785
+            ],
+            [
+              590,
+              655
+            ],
+            [
+              415,
+              560
+            ]
+          ],
+          "width": 60
+        },
+        {
+          "points": [
+            [
+              505,
+              330
+            ],
+            [
+              330,
+              375
+            ],
+            [
+              290,
+              500
+            ],
+            [
+              415,
+              560
+            ]
+          ],
+          "width": 60
+        }
       ],
-      "flat_palette": ["7d8069", "8b8e75", "686f5b", "cec8a5", "b9b394", "stone"],
+      "flat_palette": [
+        "7d8069",
+        "8b8e75",
+        "686f5b",
+        "cec8a5",
+        "b9b394",
+        "stone"
+      ],
       "deco_density": 0.095,
       "deco_tint": "ffffff",
       "flat_material": "stone",
@@ -1347,12 +2839,115 @@
       ],
       "ground_style": "flat",
       "flat_routes": [
-        {"points": [[90, 660], [160, 660], [265, 640], [345, 625], [530, 680], [715, 625], [864, 660]], "width": 94},
-        {"points": [[265, 640], [300, 780], [440, 835], [530, 680]], "width": 62},
-        {"points": [[265, 640], [335, 535], [480, 500], [455, 560], [460, 660]], "width": 62},
-        {"points": [[530, 680], [610, 780], [735, 785], [715, 625]], "width": 60}
+        {
+          "points": [
+            [
+              90,
+              660
+            ],
+            [
+              160,
+              660
+            ],
+            [
+              265,
+              640
+            ],
+            [
+              345,
+              625
+            ],
+            [
+              530,
+              680
+            ],
+            [
+              715,
+              625
+            ],
+            [
+              864,
+              660
+            ]
+          ],
+          "width": 94
+        },
+        {
+          "points": [
+            [
+              265,
+              640
+            ],
+            [
+              300,
+              780
+            ],
+            [
+              440,
+              835
+            ],
+            [
+              530,
+              680
+            ]
+          ],
+          "width": 62
+        },
+        {
+          "points": [
+            [
+              265,
+              640
+            ],
+            [
+              335,
+              535
+            ],
+            [
+              480,
+              500
+            ],
+            [
+              455,
+              560
+            ],
+            [
+              460,
+              660
+            ]
+          ],
+          "width": 62
+        },
+        {
+          "points": [
+            [
+              530,
+              680
+            ],
+            [
+              610,
+              780
+            ],
+            [
+              735,
+              785
+            ],
+            [
+              715,
+              625
+            ]
+          ],
+          "width": 60
+        }
       ],
-      "flat_palette": ["afa17b", "bcad85", "958c6b", "e9dbb5", "cdbf9b", "sand"],
+      "flat_palette": [
+        "afa17b",
+        "bcad85",
+        "958c6b",
+        "e9dbb5",
+        "cdbf9b",
+        "sand"
+      ],
       "deco_density": 0.095,
       "deco_tint": "ffffff",
       "flat_material": "salt",
@@ -1585,14 +3180,137 @@
       ],
       "ground_style": "flat",
       "flat_routes": [
-        {"points": [[480, 1152], [480, 1050], [480, 700], [480, 400], [480, 96]], "width": 94},
-        {"points": [[90, 660], [210, 660], [265, 665], [480, 675], [690, 700], [864, 700]], "width": 84},
-        {"points": [[300, 372], [480, 400], [650, 400]], "width": 70},
-        {"points": [[300, 870], [480, 890], [650, 870]], "width": 70},
-        {"points": [[265, 665], [290, 765], [300, 870]], "width": 62},
-        {"points": [[650, 400], [705, 545], [690, 700]], "width": 62}
+        {
+          "points": [
+            [
+              480,
+              1152
+            ],
+            [
+              480,
+              1050
+            ],
+            [
+              480,
+              700
+            ],
+            [
+              480,
+              400
+            ],
+            [
+              480,
+              96
+            ]
+          ],
+          "width": 94
+        },
+        {
+          "points": [
+            [
+              90,
+              660
+            ],
+            [
+              210,
+              660
+            ],
+            [
+              265,
+              665
+            ],
+            [
+              480,
+              675
+            ],
+            [
+              690,
+              700
+            ],
+            [
+              864,
+              700
+            ]
+          ],
+          "width": 84
+        },
+        {
+          "points": [
+            [
+              300,
+              372
+            ],
+            [
+              480,
+              400
+            ],
+            [
+              650,
+              400
+            ]
+          ],
+          "width": 70
+        },
+        {
+          "points": [
+            [
+              300,
+              870
+            ],
+            [
+              480,
+              890
+            ],
+            [
+              650,
+              870
+            ]
+          ],
+          "width": 70
+        },
+        {
+          "points": [
+            [
+              265,
+              665
+            ],
+            [
+              290,
+              765
+            ],
+            [
+              300,
+              870
+            ]
+          ],
+          "width": 62
+        },
+        {
+          "points": [
+            [
+              650,
+              400
+            ],
+            [
+              705,
+              545
+            ],
+            [
+              690,
+              700
+            ]
+          ],
+          "width": 62
+        }
       ],
-      "flat_palette": ["708f88", "819c92", "5c7d76", "cbd0b7", "b1bca7", "stone"],
+      "flat_palette": [
+        "708f88",
+        "819c92",
+        "5c7d76",
+        "cbd0b7",
+        "b1bca7",
+        "stone"
+      ],
       "deco_tint": "ffffff",
       "flat_material": "wet",
       "surface_tint": "ffffff"
@@ -2037,12 +3755,115 @@
       ],
       "ground_style": "flat",
       "flat_routes": [
-        {"points": [[90, 700], [165, 700], [245, 720], [320, 730], [480, 650], [510, 470], [455, 270], [480, 185], [480, 96]], "width": 92},
-        {"points": [[480, 650], [455, 850], [480, 1060]], "width": 80},
-        {"points": [[245, 720], [305, 585], [425, 565], [510, 470]], "width": 62},
-        {"points": [[320, 730], [295, 830], [350, 900], [455, 850]], "width": 60}
+        {
+          "points": [
+            [
+              90,
+              700
+            ],
+            [
+              165,
+              700
+            ],
+            [
+              245,
+              720
+            ],
+            [
+              320,
+              730
+            ],
+            [
+              480,
+              650
+            ],
+            [
+              510,
+              470
+            ],
+            [
+              455,
+              270
+            ],
+            [
+              480,
+              185
+            ],
+            [
+              480,
+              96
+            ]
+          ],
+          "width": 92
+        },
+        {
+          "points": [
+            [
+              480,
+              650
+            ],
+            [
+              455,
+              850
+            ],
+            [
+              480,
+              1060
+            ]
+          ],
+          "width": 80
+        },
+        {
+          "points": [
+            [
+              245,
+              720
+            ],
+            [
+              305,
+              585
+            ],
+            [
+              425,
+              565
+            ],
+            [
+              510,
+              470
+            ]
+          ],
+          "width": 62
+        },
+        {
+          "points": [
+            [
+              320,
+              730
+            ],
+            [
+              295,
+              830
+            ],
+            [
+              350,
+              900
+            ],
+            [
+              455,
+              850
+            ]
+          ],
+          "width": 60
+        }
       ],
-      "flat_palette": ["829b82", "92ab8d", "6b8976", "d9d4ae", "bdc09e", "sand"],
+      "flat_palette": [
+        "829b82",
+        "92ab8d",
+        "6b8976",
+        "d9d4ae",
+        "bdc09e",
+        "sand"
+      ],
       "deco_density": 0.095,
       "deco_tint": "ffffff",
       "flat_material": "wet",
@@ -2322,9 +4143,40 @@
       ],
       "ground_style": "flat",
       "flat_routes": [
-        {"points": [[480, 1152], [480, 1050], [480, 700], [480, 400], [480, 96]], "width": 128}
+        {
+          "points": [
+            [
+              480,
+              1152
+            ],
+            [
+              480,
+              1050
+            ],
+            [
+              480,
+              700
+            ],
+            [
+              480,
+              400
+            ],
+            [
+              480,
+              96
+            ]
+          ],
+          "width": 128
+        }
       ],
-      "flat_palette": ["537f84", "628d90", "426f77", "b7c7b6", "9eafa4", "stone"],
+      "flat_palette": [
+        "537f84",
+        "628d90",
+        "426f77",
+        "b7c7b6",
+        "9eafa4",
+        "stone"
+      ],
       "decos": [],
       "deco_tint": "ffffff",
       "flat_material": "wet",
@@ -2678,12 +4530,91 @@
       ],
       "ground_style": "flat",
       "flat_routes": [
-        {"points": [[480, 1152], [480, 1050], [480, 700], [480, 400], [480, 96]], "width": 92},
-        {"points": [[205, 970], [480, 970], [755, 970]], "width": 274},
-        {"points": [[290, 645], [480, 645], [670, 645]], "width": 84},
-        {"points": [[335, 300], [480, 300], [625, 300]], "width": 264}
+        {
+          "points": [
+            [
+              480,
+              1152
+            ],
+            [
+              480,
+              1050
+            ],
+            [
+              480,
+              700
+            ],
+            [
+              480,
+              400
+            ],
+            [
+              480,
+              96
+            ]
+          ],
+          "width": 92
+        },
+        {
+          "points": [
+            [
+              205,
+              970
+            ],
+            [
+              480,
+              970
+            ],
+            [
+              755,
+              970
+            ]
+          ],
+          "width": 274
+        },
+        {
+          "points": [
+            [
+              290,
+              645
+            ],
+            [
+              480,
+              645
+            ],
+            [
+              670,
+              645
+            ]
+          ],
+          "width": 84
+        },
+        {
+          "points": [
+            [
+              335,
+              300
+            ],
+            [
+              480,
+              300
+            ],
+            [
+              625,
+              300
+            ]
+          ],
+          "width": 264
+        }
       ],
-      "flat_palette": ["525c59", "606b65", "434f4d", "adb6a1", "939e8c", "stone"],
+      "flat_palette": [
+        "525c59",
+        "606b65",
+        "434f4d",
+        "adb6a1",
+        "939e8c",
+        "stone"
+      ],
       "decos": [],
       "deco_tint": "ffffff",
       "flat_material": "stone",
@@ -2871,12 +4802,123 @@
       ],
       "ground_style": "flat",
       "flat_routes": [
-        {"points": [[480, 1152], [480, 1050], [465, 955], [450, 860], [515, 680], [450, 465], [480, 220], [480, 96]], "width": 90},
-        {"points": [[465, 955], [315, 900], [295, 780], [395, 705], [515, 680]], "width": 62},
-        {"points": [[450, 860], [595, 825], [650, 675], [575, 550], [450, 465]], "width": 60},
-        {"points": [[450, 465], [305, 420], [335, 295], [480, 220]], "width": 60}
+        {
+          "points": [
+            [
+              480,
+              1152
+            ],
+            [
+              480,
+              1050
+            ],
+            [
+              465,
+              955
+            ],
+            [
+              450,
+              860
+            ],
+            [
+              515,
+              680
+            ],
+            [
+              450,
+              465
+            ],
+            [
+              480,
+              220
+            ],
+            [
+              480,
+              96
+            ]
+          ],
+          "width": 90
+        },
+        {
+          "points": [
+            [
+              465,
+              955
+            ],
+            [
+              315,
+              900
+            ],
+            [
+              295,
+              780
+            ],
+            [
+              395,
+              705
+            ],
+            [
+              515,
+              680
+            ]
+          ],
+          "width": 62
+        },
+        {
+          "points": [
+            [
+              450,
+              860
+            ],
+            [
+              595,
+              825
+            ],
+            [
+              650,
+              675
+            ],
+            [
+              575,
+              550
+            ],
+            [
+              450,
+              465
+            ]
+          ],
+          "width": 60
+        },
+        {
+          "points": [
+            [
+              450,
+              465
+            ],
+            [
+              305,
+              420
+            ],
+            [
+              335,
+              295
+            ],
+            [
+              480,
+              220
+            ]
+          ],
+          "width": 60
+        }
       ],
-      "flat_palette": ["a47756", "b5845d", "8d644d", "dcc19a", "c3a57f", "sand"],
+      "flat_palette": [
+        "a47756",
+        "b5845d",
+        "8d644d",
+        "dcc19a",
+        "c3a57f",
+        "sand"
+      ],
       "deco_density": 0.095,
       "deco_tint": "ffffff",
       "flat_material": "desert",
@@ -3086,14 +5128,133 @@
       ],
       "ground_style": "flat",
       "flat_routes": [
-        {"points": [[480, 1152], [480, 1050], [480, 700], [480, 400], [480, 96]], "width": 90},
-        {"points": [[480, 700], [660, 725], [864, 710]], "width": 78},
-        {"points": [[335, 450], [480, 450], [630, 450]], "width": 68},
-        {"points": [[335, 860], [480, 860], [630, 860]], "width": 68},
-        {"points": [[480, 1050], [360, 960], [335, 860], [300, 770], [480, 700]], "width": 62},
-        {"points": [[630, 450], [655, 585], [660, 725]], "width": 60}
+        {
+          "points": [
+            [
+              480,
+              1152
+            ],
+            [
+              480,
+              1050
+            ],
+            [
+              480,
+              700
+            ],
+            [
+              480,
+              400
+            ],
+            [
+              480,
+              96
+            ]
+          ],
+          "width": 90
+        },
+        {
+          "points": [
+            [
+              480,
+              700
+            ],
+            [
+              660,
+              725
+            ],
+            [
+              864,
+              710
+            ]
+          ],
+          "width": 78
+        },
+        {
+          "points": [
+            [
+              335,
+              450
+            ],
+            [
+              480,
+              450
+            ],
+            [
+              630,
+              450
+            ]
+          ],
+          "width": 68
+        },
+        {
+          "points": [
+            [
+              335,
+              860
+            ],
+            [
+              480,
+              860
+            ],
+            [
+              630,
+              860
+            ]
+          ],
+          "width": 68
+        },
+        {
+          "points": [
+            [
+              480,
+              1050
+            ],
+            [
+              360,
+              960
+            ],
+            [
+              335,
+              860
+            ],
+            [
+              300,
+              770
+            ],
+            [
+              480,
+              700
+            ]
+          ],
+          "width": 62
+        },
+        {
+          "points": [
+            [
+              630,
+              450
+            ],
+            [
+              655,
+              585
+            ],
+            [
+              660,
+              725
+            ]
+          ],
+          "width": 60
+        }
       ],
-      "flat_palette": ["94aeb3", "a3bbc0", "7e9da5", "e1e8dc", "c3d3cd", "snow"],
+      "flat_palette": [
+        "94aeb3",
+        "a3bbc0",
+        "7e9da5",
+        "e1e8dc",
+        "c3d3cd",
+        "snow"
+      ],
       "deco_tint": "ffffff",
       "flat_material": "snow",
       "surface_tint": "ffffff"
@@ -3402,12 +5563,107 @@
       },
       "ground_style": "flat",
       "flat_routes": [
-        {"points": [[480, 1152], [480, 1050], [480, 700], [480, 400], [480, 96]], "width": 98},
-        {"points": [[90, 710], [160, 710], [270, 710], [315, 710], [480, 700]], "width": 76},
-        {"points": [[270, 710], [315, 850], [415, 895], [480, 1050]], "width": 62},
-        {"points": [[480, 700], [620, 640], [655, 485], [480, 400]], "width": 62}
+        {
+          "points": [
+            [
+              480,
+              1152
+            ],
+            [
+              480,
+              1050
+            ],
+            [
+              480,
+              700
+            ],
+            [
+              480,
+              400
+            ],
+            [
+              480,
+              96
+            ]
+          ],
+          "width": 98
+        },
+        {
+          "points": [
+            [
+              90,
+              710
+            ],
+            [
+              160,
+              710
+            ],
+            [
+              270,
+              710
+            ],
+            [
+              315,
+              710
+            ],
+            [
+              480,
+              700
+            ]
+          ],
+          "width": 76
+        },
+        {
+          "points": [
+            [
+              270,
+              710
+            ],
+            [
+              315,
+              850
+            ],
+            [
+              415,
+              895
+            ],
+            [
+              480,
+              1050
+            ]
+          ],
+          "width": 62
+        },
+        {
+          "points": [
+            [
+              480,
+              700
+            ],
+            [
+              620,
+              640
+            ],
+            [
+              655,
+              485
+            ],
+            [
+              480,
+              400
+            ]
+          ],
+          "width": 62
+        }
       ],
-      "flat_palette": ["6b6561", "7a7269", "575859", "b7ae94", "9c947e", "stone"],
+      "flat_palette": [
+        "6b6561",
+        "7a7269",
+        "575859",
+        "b7ae94",
+        "9c947e",
+        "stone"
+      ],
       "deco_density": 0.095,
       "deco_tint": "ffffff",
       "flat_material": "stone",
@@ -3652,12 +5908,91 @@
       },
       "ground_style": "flat",
       "flat_routes": [
-        {"points": [[480, 1152], [480, 1050], [480, 700], [480, 400], [480, 96]], "width": 104},
-        {"points": [[365, 990], [480, 990], [595, 990]], "width": 266},
-        {"points": [[345, 635], [480, 635], [615, 635]], "width": 206},
-        {"points": [[375, 295], [480, 295], [585, 295]], "width": 246}
+        {
+          "points": [
+            [
+              480,
+              1152
+            ],
+            [
+              480,
+              1050
+            ],
+            [
+              480,
+              700
+            ],
+            [
+              480,
+              400
+            ],
+            [
+              480,
+              96
+            ]
+          ],
+          "width": 104
+        },
+        {
+          "points": [
+            [
+              365,
+              990
+            ],
+            [
+              480,
+              990
+            ],
+            [
+              595,
+              990
+            ]
+          ],
+          "width": 266
+        },
+        {
+          "points": [
+            [
+              345,
+              635
+            ],
+            [
+              480,
+              635
+            ],
+            [
+              615,
+              635
+            ]
+          ],
+          "width": 206
+        },
+        {
+          "points": [
+            [
+              375,
+              295
+            ],
+            [
+              480,
+              295
+            ],
+            [
+              585,
+              295
+            ]
+          ],
+          "width": 246
+        }
       ],
-      "flat_palette": ["5e5758", "6d6461", "4d4b50", "b2a591", "958d7e", "stone"],
+      "flat_palette": [
+        "5e5758",
+        "6d6461",
+        "4d4b50",
+        "b2a591",
+        "958d7e",
+        "stone"
+      ],
       "decos": [],
       "deco_tint": "ffffff",
       "flat_material": "stone",
@@ -3782,11 +6117,86 @@
       },
       "ground_style": "flat",
       "flat_routes": [
-        {"points": [[480, 1152], [480, 1050], [465, 850], [480, 660], [455, 390], [480, 165]], "width": 92},
-        {"points": [[480, 660], [675, 645], [864, 660]], "width": 78},
-        {"points": [[480, 1050], [610, 970], [655, 825], [585, 720], [480, 660]], "width": 62}
+        {
+          "points": [
+            [
+              480,
+              1152
+            ],
+            [
+              480,
+              1050
+            ],
+            [
+              465,
+              850
+            ],
+            [
+              480,
+              660
+            ],
+            [
+              455,
+              390
+            ],
+            [
+              480,
+              165
+            ]
+          ],
+          "width": 92
+        },
+        {
+          "points": [
+            [
+              480,
+              660
+            ],
+            [
+              675,
+              645
+            ],
+            [
+              864,
+              660
+            ]
+          ],
+          "width": 78
+        },
+        {
+          "points": [
+            [
+              480,
+              1050
+            ],
+            [
+              610,
+              970
+            ],
+            [
+              655,
+              825
+            ],
+            [
+              585,
+              720
+            ],
+            [
+              480,
+              660
+            ]
+          ],
+          "width": 62
+        }
       ],
-      "flat_palette": ["79a4b2", "88b1bc", "66909f", "d6e7e8", "b7d3db", "snow"],
+      "flat_palette": [
+        "79a4b2",
+        "88b1bc",
+        "66909f",
+        "d6e7e8",
+        "b7d3db",
+        "snow"
+      ],
       "decos": [],
       "deco_tint": "ffffff",
       "flat_material": "snow",
@@ -4063,12 +6473,119 @@
       },
       "ground_style": "flat",
       "flat_routes": [
-        {"points": [[480, 1152], [480, 1050], [470, 900], [510, 700], [460, 480], [480, 270], [480, 96]], "width": 90},
-        {"points": [[470, 900], [315, 930], [285, 800], [365, 725], [510, 700]], "width": 62},
-        {"points": [[510, 700], [630, 685], [660, 545], [585, 435], [460, 480]], "width": 60},
-        {"points": [[480, 1050], [605, 1000], [660, 880], [630, 685]], "width": 60}
+        {
+          "points": [
+            [
+              480,
+              1152
+            ],
+            [
+              480,
+              1050
+            ],
+            [
+              470,
+              900
+            ],
+            [
+              510,
+              700
+            ],
+            [
+              460,
+              480
+            ],
+            [
+              480,
+              270
+            ],
+            [
+              480,
+              96
+            ]
+          ],
+          "width": 90
+        },
+        {
+          "points": [
+            [
+              470,
+              900
+            ],
+            [
+              315,
+              930
+            ],
+            [
+              285,
+              800
+            ],
+            [
+              365,
+              725
+            ],
+            [
+              510,
+              700
+            ]
+          ],
+          "width": 62
+        },
+        {
+          "points": [
+            [
+              510,
+              700
+            ],
+            [
+              630,
+              685
+            ],
+            [
+              660,
+              545
+            ],
+            [
+              585,
+              435
+            ],
+            [
+              460,
+              480
+            ]
+          ],
+          "width": 60
+        },
+        {
+          "points": [
+            [
+              480,
+              1050
+            ],
+            [
+              605,
+              1000
+            ],
+            [
+              660,
+              880
+            ],
+            [
+              630,
+              685
+            ]
+          ],
+          "width": 60
+        }
       ],
-      "flat_palette": ["8da9b4", "9cb7bf", "7695a3", "e0e9df", "c4d6d1", "snow"],
+      "flat_palette": [
+        "8da9b4",
+        "9cb7bf",
+        "7695a3",
+        "e0e9df",
+        "c4d6d1",
+        "snow"
+      ],
       "deco_density": 0.095,
       "deco_tint": "ffffff",
       "flat_material": "snow",
@@ -4251,11 +6768,98 @@
       ],
       "ground_style": "flat",
       "flat_routes": [
-        {"points": [[480, 1152], [480, 1040], [440, 850], [515, 640], [450, 400], [480, 185], [480, 96]], "width": 94},
-        {"points": [[480, 1040], [345, 975], [285, 850], [345, 715], [515, 640]], "width": 64},
-        {"points": [[440, 850], [590, 845], [665, 720], [610, 535], [450, 400]], "width": 62}
+        {
+          "points": [
+            [
+              480,
+              1152
+            ],
+            [
+              480,
+              1040
+            ],
+            [
+              440,
+              850
+            ],
+            [
+              515,
+              640
+            ],
+            [
+              450,
+              400
+            ],
+            [
+              480,
+              185
+            ],
+            [
+              480,
+              96
+            ]
+          ],
+          "width": 94
+        },
+        {
+          "points": [
+            [
+              480,
+              1040
+            ],
+            [
+              345,
+              975
+            ],
+            [
+              285,
+              850
+            ],
+            [
+              345,
+              715
+            ],
+            [
+              515,
+              640
+            ]
+          ],
+          "width": 64
+        },
+        {
+          "points": [
+            [
+              440,
+              850
+            ],
+            [
+              590,
+              845
+            ],
+            [
+              665,
+              720
+            ],
+            [
+              610,
+              535
+            ],
+            [
+              450,
+              400
+            ]
+          ],
+          "width": 62
+        }
       ],
-      "flat_palette": ["565365", "635e72", "444557", "aca7b9", "9390a5", "stone"],
+      "flat_palette": [
+        "565365",
+        "635e72",
+        "444557",
+        "aca7b9",
+        "9390a5",
+        "stone"
+      ],
       "deco_tint": "ffffff",
       "flat_material": "abyss",
       "surface_tint": "ffffff"
@@ -4373,10 +6977,69 @@
       },
       "ground_style": "flat",
       "flat_routes": [
-        {"points": [[480, 1152], [480, 1040], [440, 850], [515, 640], [450, 400], [480, 185], [480, 96]], "width": 94},
-        {"points": [[440, 850], [340, 800], [325, 700], [515, 640]], "width": 62}
+        {
+          "points": [
+            [
+              480,
+              1152
+            ],
+            [
+              480,
+              1040
+            ],
+            [
+              440,
+              850
+            ],
+            [
+              515,
+              640
+            ],
+            [
+              450,
+              400
+            ],
+            [
+              480,
+              185
+            ],
+            [
+              480,
+              96
+            ]
+          ],
+          "width": 94
+        },
+        {
+          "points": [
+            [
+              440,
+              850
+            ],
+            [
+              340,
+              800
+            ],
+            [
+              325,
+              700
+            ],
+            [
+              515,
+              640
+            ]
+          ],
+          "width": 62
+        }
       ],
-      "flat_palette": ["606572", "6e7380", "4f5665", "bbb9bb", "a1a3a9", "stone"],
+      "flat_palette": [
+        "606572",
+        "6e7380",
+        "4f5665",
+        "bbb9bb",
+        "a1a3a9",
+        "stone"
+      ],
       "deco_tint": "ffffff",
       "flat_material": "abyss",
       "surface_tint": "dce5eb"
@@ -4542,13 +7205,112 @@
       },
       "ground_style": "flat",
       "flat_routes": [
-        {"points": [[480, 1152], [480, 1050], [480, 700], [480, 400], [480, 96]], "width": 96},
-        {"points": [[480, 880], [405, 895], [335, 880]], "width": 70},
-        {"points": [[480, 625], [550, 640], [625, 625]], "width": 70},
-        {"points": [[480, 375], [405, 390], [335, 375]], "width": 70},
-        {"points": [[335, 880], [310, 760], [380, 670], [480, 700]], "width": 62}
+        {
+          "points": [
+            [
+              480,
+              1152
+            ],
+            [
+              480,
+              1050
+            ],
+            [
+              480,
+              700
+            ],
+            [
+              480,
+              400
+            ],
+            [
+              480,
+              96
+            ]
+          ],
+          "width": 96
+        },
+        {
+          "points": [
+            [
+              480,
+              880
+            ],
+            [
+              405,
+              895
+            ],
+            [
+              335,
+              880
+            ]
+          ],
+          "width": 70
+        },
+        {
+          "points": [
+            [
+              480,
+              625
+            ],
+            [
+              550,
+              640
+            ],
+            [
+              625,
+              625
+            ]
+          ],
+          "width": 70
+        },
+        {
+          "points": [
+            [
+              480,
+              375
+            ],
+            [
+              405,
+              390
+            ],
+            [
+              335,
+              375
+            ]
+          ],
+          "width": 70
+        },
+        {
+          "points": [
+            [
+              335,
+              880
+            ],
+            [
+              310,
+              760
+            ],
+            [
+              380,
+              670
+            ],
+            [
+              480,
+              700
+            ]
+          ],
+          "width": 62
+        }
       ],
-      "flat_palette": ["656474", "757185", "525565", "c3bacd", "a79fb2", "stone"],
+      "flat_palette": [
+        "656474",
+        "757185",
+        "525565",
+        "c3bacd",
+        "a79fb2",
+        "stone"
+      ],
       "deco_tint": "ffffff",
       "flat_material": "abyss",
       "surface_tint": "ece0f7"
@@ -4674,10 +7436,57 @@
       },
       "ground_style": "flat",
       "flat_routes": [
-        {"points": [[480, 1152], [480, 1050], [480, 700], [480, 400], [480, 96]], "width": 96},
-        {"points": [[375, 570], [480, 570], [585, 570]], "width": 330}
+        {
+          "points": [
+            [
+              480,
+              1152
+            ],
+            [
+              480,
+              1050
+            ],
+            [
+              480,
+              700
+            ],
+            [
+              480,
+              400
+            ],
+            [
+              480,
+              96
+            ]
+          ],
+          "width": 96
+        },
+        {
+          "points": [
+            [
+              375,
+              570
+            ],
+            [
+              480,
+              570
+            ],
+            [
+              585,
+              570
+            ]
+          ],
+          "width": 330
+        }
       ],
-      "flat_palette": ["5a616f", "687281", "495261", "b7c6c6", "99adaf", "stone"],
+      "flat_palette": [
+        "5a616f",
+        "687281",
+        "495261",
+        "b7c6c6",
+        "99adaf",
+        "stone"
+      ],
       "deco_tint": "ffffff",
       "flat_material": "abyss",
       "surface_tint": "d6f0ed"

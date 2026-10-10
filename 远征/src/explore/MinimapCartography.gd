@@ -3,6 +3,91 @@ extends RefCounted
 const Layout := preload("res://src/explore/FlatGroundLayout.gd")
 var routes: Array = []
 
+func terrain_thumbnail(map: Node) -> Texture2D:
+	var cfg: Dictionary = map.get("_main_cfg")
+	var extent: Vector2 = map.call("_map_extent")
+	var city: Node = map.get("_city_content")
+	var show_roads:=bool(cfg.get("minimap_show_roads",true))
+	var signature := str(cfg.get("background","")) + str(extent)+str(show_roads)
+	if city != null:
+		for b in city.get("_buildings"): signature += str(b.position) + str(b.built())
+	if map.get_meta("terrain_signature","") == signature:
+		return map.get_meta("terrain_thumbnail") as Texture2D
+	var dimensions := Vector2i((extent / maxf(extent.x,extent.y) * 256).round())
+	var image := Image.create(dimensions.x,dimensions.y,false,Image.FORMAT_RGBA8)
+	var grass := Color("5e7a45").darkened(0.25)
+	var road := Color("c9b88a")
+	var building := Color("3a3238")
+	image.fill(grass)
+	var path := String(cfg.get("background",""))
+	if not show_roads:
+		# User requested a location map without road diagrams; retain water and landmark silhouettes.
+		var river:Dictionary=cfg.get("river",{})
+		if not river.is_empty():
+			var points:Array=river.get("points",[])
+			for x in dimensions.x:
+				var wx:=(float(x)+.5)/dimensions.x*extent.x
+				var center:=float(river.get("y",0))
+				if points.size()>=2:center=lerpf(float(points[0][1]),float(points[-1][1]),clampf((wx-points[0][0])/maxf(1,points[-1][0]-points[0][0]),0,1))
+				var y:=roundi(center/extent.y*dimensions.y)
+				var height:=maxi(1,roundi(float(river.get("half",20))*2/extent.y*dimensions.y))
+				image.fill_rect(Rect2i(x,clampi(y-height/2,0,dimensions.y-height),1,height),Color("405c60"))
+	elif not path.is_empty():
+		var source := G.visual_texture(path)
+		if source != null:
+			var pixels := source.get_image()
+			if pixels.is_compressed(): pixels.decompress()
+			# Match the actual background's aspect-cover crop; keep road forks from the art.
+			var source_size := Vector2(pixels.get_size())
+			var factor := maxf(extent.x/source_size.x,extent.y/source_size.y)
+			var visible := extent/factor
+			var origin := (source_size-visible)*0.5
+			for y in dimensions.y:
+				for x in dimensions.x:
+					var pos := origin + Vector2((x+0.5)/dimensions.x,(y+0.5)/dimensions.y)*visible
+					var c := pixels.get_pixel(clampi(int(pos.x),0,pixels.get_width()-1),clampi(int(pos.y),0,pixels.get_height()-1))
+					var palette := building
+					if c.g > c.r*1.05 and c.g > c.b*1.1: palette = grass
+					elif c.r > 0.35 and c.r > c.b*1.25 and c.g > c.b*1.2: palette = road
+					image.set_pixel(x,y,palette)
+	else:
+		# Worlds without a ground illustration use their visible sampled road geometry.
+		for route: Dictionary in routes:
+			var radius := maxf(1.0,float(route.width)*0.5/extent.x*dimensions.x)
+			for point: Vector2 in route.points:
+				var center := point/extent*Vector2(dimensions)
+				for y in range(maxi(0,int(center.y-radius)),mini(dimensions.y,ceili(center.y+radius))):
+					for x in range(maxi(0,int(center.x-radius)),mini(dimensions.x,ceili(center.x+radius))):
+						if Vector2(x,y).distance_squared_to(center)<=radius*radius: image.set_pixel(x,y,road)
+	if city != null:
+		for b in city.get("_buildings"):
+			if not b.built(): continue
+			var p: Vector2 = b.position/extent*Vector2(dimensions)
+			var w := maxi(3,roundi(float(b.get("_w"))/extent.x*dimensions.x))
+			var h := maxi(3,roundi(float(b.get("_h"))/extent.y*dimensions.y))
+			var rect := Rect2i(roundi(p.x-w*0.5),roundi(p.y-h),w,h).intersection(Rect2i(Vector2i.ZERO,dimensions))
+			image.fill_rect(rect,building)
+			if rect.has_area(): image.fill_rect(Rect2i(rect.position,Vector2i(rect.size.x,1)),Color("6e5434"))
+	var texture := ImageTexture.create_from_image(image)
+	map.set_meta("terrain_signature",signature)
+	map.set_meta("terrain_thumbnail",texture)
+	return texture
+
+static func marker(canvas: CanvasItem, point: Vector2, kind: String, facing: Vector2 = Vector2.DOWN) -> void:
+	var p := point.round()
+	var shadow := Color("0a090b")
+	if kind == "npc":
+		canvas.draw_rect(Rect2(p-Vector2(3,3),Vector2(6,6)),shadow)
+		canvas.draw_rect(Rect2(p-Vector2(2,2),Vector2(5,5)),Color("bfb096"))
+	elif kind == "target":
+		var poly := PackedVector2Array([p+Vector2(0,-5),p+Vector2(5,0),p+Vector2(0,5),p+Vector2(-5,0),p+Vector2(0,-5)])
+		canvas.draw_polyline(poly,shadow,3)
+		canvas.draw_colored_polygon(PackedVector2Array([p+Vector2(0,-4),p+Vector2(4,0),p+Vector2(0,4),p+Vector2(-4,0)]),Color("f0b95a"))
+	else:
+		var side := Vector2(-facing.y,facing.x)
+		canvas.draw_colored_polygon(PackedVector2Array([p+facing*5,p-facing*4+side*4,p-facing*4-side*4]),shadow)
+		canvas.draw_colored_polygon(PackedVector2Array([p+facing*4,p-facing*3+side*3,p-facing*3-side*3]),Color("f3e8d0"))
+
 func setup(source: Array) -> void:
 	routes.clear()
 	for route: Dictionary in Layout.sample_routes(source):
