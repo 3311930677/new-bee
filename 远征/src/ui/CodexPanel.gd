@@ -6,6 +6,7 @@ class_name CodexPanel
 extends Control
 
 signal closed
+var _chest:Control
 
 const PageDeckScript := preload("res://src/ui/PageDeck.gd")
 const SlideCardScript := preload("res://src/ui/SlideCard.gd")
@@ -35,81 +36,19 @@ var _claim_btn: Control = null
 
 
 func _ready() -> void:
-	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_build()
 
 func _build() -> void:
-	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），不再各写一块纯灰
-	set_meta("visual_family","journal")
-	G.veil(self,.97)
-	Craft.heading(self,"灵宠图鉴","沿途相识 · 珍藏每一次结伴")
+	_pets=TableCache.pets()
+	_chest=preload("res://src/ui/CollectionChestView.gd").new()
+	_chest.host=self
+	add_child(_chest)
+	var start:=0
+	for i in _pets.size():
+		if not G.owns_pet(String(_pets[i].id)):start=i;break
+	_deck.go(start,true)
 
-	var panel := G.parchment_box(440, 600, 16.0)
-	panel.position = Vector2(20, 108)
-	add_child(panel)
-
-	var content := Control.new()
-	content.set_anchors_preset(Control.PRESET_FULL_RECT)
-	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	panel.add_child(content)
-	_content = content
-
-	var pets: Array = TableCache.pets()
-	var owned_n := G.owned_pets().size()
-	var tip := G.gold_label("已收集 %d / %d · 通关世界首领可结伴同行"
-		% [owned_n, pets.size()],
-		G.FS_XS, false, G.TEXT_MUTED, false)
-	tip.position = Vector2(0, 2)
-	tip.custom_minimum_size = Vector2(CONTENT_W, 0)
-	tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	content.add_child(tip)
-
-	# 一屏一只：拖拽、两侧箭头、←→/AD 翻页，圆点在卡下页脚
-	# 卡「用到才建」（同 WorldPanel）：先把起始页算出来，卡由工厂按需建
-	_pets = pets
-	var start := -1
-	for i in pets.size():
-		var p: Dictionary = pets[i]
-		if not G.owns_pet(String(p.get("id", ""))) and start < 0:
-			start = i   # 打开先落在「还没收集到的那只」上（-1 哨兵：索引 0 也正确）
-	_build_deck(maxi(0, start))
-
-	# 收集里程（轮次 20）：图鉴此前只有一行计数，收集本身没有回报。
-	# 进度行放在大卡与按钮行之间，领取按钮插在「进化 / 返回」中间的空档。
-	_ms_l = G.gold_label("", G.FS_XS, false, G.TEXT_MUTED, false)
-	_ms_l.position = Vector2(0, 460)
-	_ms_l.custom_minimum_size = Vector2(CONTENT_W, 0)
-	_ms_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	content.add_child(_ms_l)
-
-	_claim_btn = G.gold_button("领 取", 104, 44)
-	_claim_btn.position = Vector2(152, 496)
-	_claim_btn.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_on_claim())
-	content.add_child(_claim_btn)
-
-	# 进化入口：对「当前页」的灵宠生效（P1-3）；与「返回」左右成对
-	var evolve := G.ghost_button("进化", 120, 44)
-	evolve.position = Vector2(20, 496)
-	evolve.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_on_evolve())
-	content.add_child(evolve)
-
-	var back := G.ghost_button("返 回", 120, 44)
-	back.position = Vector2(268, 496)
-	back.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			closed.emit())
-	content.add_child(back)
-
-	# 必须在里程行与领取按钮都建好之后再刷新一次（放在 _build_deck 旁边会因为节点还没建而空跑）
-	_refresh_milestone()
-
-
-## ESC / 返回手势关闭本浮层（轮次 14 统一口径）
 func _unhandled_input(event: InputEvent) -> void:
 	if G.ui_blocked:
 		return
@@ -163,23 +102,9 @@ func _card(p: Dictionary, idx: int, total: int) -> Control:
 
 
 ## 建/重建卡组（进化后数据变了要整组重建；start = 落在哪一页）
-func _build_deck(start: int) -> void:
-	if _deck != null:
-		_deck.queue_free()
-		_deck = null
-	_deck = PageDeckScript.new(CONTENT_W, DECK_H, 26.0)
-	_deck.position = Vector2(0, DECK_Y)
-	_deck.key_mode = "both"   # 方向键 / WASD 都能翻
-	var total := _pets.size()
-	_deck.set_factory(total, func(i: int) -> Control:
-		return SlideCardScript.page(_card(_pets[i] as Dictionary, i, total), CONTENT_W, DECK_H),
-		Vector2(CONTENT_W, DECK_H))
-	if _content != null:
-		_content.add_child(_deck)
-	_deck.go(start, true)
+func _build_deck(start:int) -> void:
+	_deck.go(start,true)
 
-
-## 进化当前页的灵宠（数据/素材变化 → 整组重建刷新）
 func _on_evolve() -> void:
 	if _deck == null or _pets.is_empty():
 		return
@@ -242,16 +167,6 @@ func _on_claim() -> void:
 
 
 ## 一句话提示（图鉴没有行内提示位，用临时金字）
-func _toast(msg: String) -> void:
-	if _content == null:
-		return
-	var l := G.gold_label(msg, G.FS_SM, false, Color("8a4a3a"), false)
-	# 452 会和收集里程行（436 起）抢位置；移到按钮行之下
-	l.position = Vector2(0, 546)
-	l.custom_minimum_size = Vector2(CONTENT_W, 0)
-	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_content.add_child(l)
-	var tw := l.create_tween()
-	tw.tween_interval(1.6)
-	tw.tween_property(l, "modulate:a", 0.0, 0.4)
-	tw.tween_callback(l.queue_free)
+func _toast(msg:String) -> void:
+	var toast:=preload("res://src/ui/TravelChestUI.gd").toast(self,msg)
+	toast.position.y=G.ui_safe_rect(self).end.y-116

@@ -29,7 +29,7 @@ func _texts(root: Node, out: Array = []) -> Array:
 
 func _gem_chip_with_tooltip(root: Node) -> Control:
 	for c in root.get_children():
-		if c is PanelContainer and String((c as Control).tooltip_text).contains("宝石"):
+		if c is Control and c.has_meta("gem_id"):
 			return c as Control
 		var nested := _gem_chip_with_tooltip(c)
 		if nested != null:
@@ -41,6 +41,9 @@ func _forge_child(root: Control, meta_key: String, meta_value: String) -> Contro
 	for child in root.get_children():
 		if child is Control and String(child.get_meta(meta_key, "")) == meta_value:
 			return child as Control
+		if child is Control:
+			var nested := _forge_child(child,meta_key,meta_value)
+			if nested!=null:return nested
 	return null
 
 
@@ -110,7 +113,7 @@ func _run() -> void:
 		var got_cards := 0
 		var last: Control = null
 		for c in box.get_children():
-			if c is PanelContainer:
+			if c is Button and c.has_meta("growth_selection"):
 				got_cards += 1
 				last = c
 		_check(got_cards == want_cards, "滚动列表应放下全部 %d 张称号卡，实为 %d" % [want_cards, got_cards])
@@ -184,6 +187,7 @@ func _run() -> void:
 	var lv_refs: Dictionary = ep.get("_slot_lv")
 	_check(lv_refs.size() == slot_n, "应持有全部 %d 个槽位的等级 Label 直引用，实为 %d" % [slot_n, lv_refs.size()])
 	ep._refresh()   # 缺图/多图都不该让刷新崩掉或取错节点
+	lv_refs=ep.get("_slot_lv")
 	var ok_lv := true
 	for sid in lv_refs:
 		var l: Label = lv_refs[sid]
@@ -196,13 +200,13 @@ func _run() -> void:
 	tab_press.button_index = MOUSE_BUTTON_LEFT
 	tab_press.pressed = true
 	if gem_tab != null:
-		gem_tab.gui_input.emit(tab_press)
+		(gem_tab as Button).pressed.emit()
 	await get_tree().process_frame
 	var gem_page := _forge_child(ep.get("_detail") as Control, "work_page", "gem")
 	var enhance_page := _forge_child(ep.get("_detail") as Control, "work_page", "enhance")
 	_check(ep.get("_work_tab") == "gem"
 		and gem_page != null and gem_page.visible
-		and enhance_page != null and not enhance_page.visible,
+		and enhance_page == null,
 		"工坊页签应把宝石操作单独显示")
 	# 分页可覆盖全部宝石
 	var pages := int(ep.gem_page_count())
@@ -229,7 +233,7 @@ func _run() -> void:
 	await get_tree().process_frame
 	var refine_tab := _forge_child(ep.get("_detail") as Control, "work_tab", "refine")
 	if refine_tab != null:
-		refine_tab.gui_input.emit(tab_press)
+		(refine_tab as Button).pressed.emit()
 	await get_tree().process_frame
 	var refine_page := _forge_child(ep.get("_detail") as Control, "work_page", "refine")
 	_check(ep.get("_work_tab") == "refine"
@@ -256,9 +260,9 @@ func _run() -> void:
 	_check(bag_txt.contains("装备") and bag_txt.contains("材料") and bag_txt.contains("宝石")
 		and bag_txt.contains("待领取"),
 		"背包应有四个页签（装备/材料/宝石/待领取），现有文案：%s" % bag_txt)
-	_check(bag_txt.contains("已用") and bag_txt.contains(str(G.inv_capacity())),
+	_check(bag_txt.contains("装备 %d / %d" % [G.inv_count(),G.inv_capacity()]),
 		"背包应显示「已用/容量」（容量 %d），现有文案：%s" % [G.inv_capacity(), bag_txt])
-	_check(bag_txt.contains("选中一件装备") or bag_txt.contains("背包里没有装备"),
+	_check(bag_txt.contains("选中器物") or bag_txt.contains("背包里没有装备"),
 		"背包装备页应给出可操作的空态/选中指引，现有文案：%s" % bag_txt)
 	bp.queue_free()
 	await get_tree().process_frame

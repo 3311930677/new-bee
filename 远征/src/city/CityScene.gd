@@ -10,6 +10,7 @@ const VIEW_W := 480.0
 const VIEW_H := 800.0
 const DirectionalIdle := preload("res://src/world/DirectionalIdle.gd")
 const WorldArtFinish := preload("res://src/world/WorldArtFinish.gd")
+const SunnyArt:=preload("res://src/world/SunnyTravelArt.gd")
 const HudStyle := preload("res://src/ui/WorldHUD.gd")
 const TILE := 48.0
 const NPC_R := 52.0        # 人物交互半径
@@ -68,6 +69,8 @@ func _ready() -> void:
 	_cols = int(_cfg.get("map_cols", 24))
 	_rows = int(_cfg.get("map_rows", 20))
 	if _embedded_map != null:
+		_world.free()
+		_hud.free()
 		_world = _embedded_map._world
 		_player = _embedded_map._player
 		_hud = _embedded_map._hud
@@ -239,6 +242,13 @@ func _build_decos() -> void:
 func _build_buildings() -> void:
 	for bd in _cfg.get("buildings", []):
 		var b := _Building.new()
+		b.set_meta("reference_complete",_embedded_map!=null and ReferenceWorldArt.active(_city_id))
+		if bool(b.get_meta("reference_complete")):
+			var approach:Array=_embedded_map._main_cfg.get("city_building_approaches",{}).get(String(bd.get("id","")),[0,42])
+			b.set_meta("door_world",Vector2(approach[0],approach[1]))
+		b.set_meta("sunny_sample",_embedded_map!=null and SunnyArt.active(_city_id))
+		var passable: Array = _embedded_map._main_cfg.get("city_passable", []) if _embedded_map != null else []
+		b.set_meta("passable", String(bd.get("id", "")) in passable)
 		b.setup(bd)
 		var p: Array = (bd as Dictionary).get("pos", [12.0, 10.0])
 		b.position = _embedded_city_point("city_building_positions", String(bd.get("id", "")),
@@ -279,6 +289,8 @@ func _spawn_npc(nd: Dictionary, guest: bool, at := Vector2.ZERO) -> void:
 	n.data = nd
 	n.guest = guest
 	n.embedded = _embedded_map != null
+	n.set_meta("reference_complete",_embedded_map!=null and ReferenceWorldArt.active(_city_id))
+	n.set_meta("sunny_npc",_embedded_map!=null and SunnyArt.active(_city_id) and npc_id in ["npc_steward","npc_guard"])
 	n.hue = int(nd.get("hue", 0))
 	n.frames = _npc_idle_frames(npc_id, guest)   # 首选：idle 四帧条（像素小人会呼吸）
 	# 四帧已可用时不再加载只供兜底的半身像；城务首次进场无需解码所有 NPC 立绘。
@@ -401,10 +413,10 @@ func _build_hud() -> void:
 
 func _build_embedded_hud() -> void:
 	# 主世界的地图名和金币由 MapScene 显示。两城的小签指向各自可用服务。
-	var task := HudStyle.task_chip(184, "daily")
+	var task := HudStyle.task_chip(216, "daily")
 	var task_button: Button = task.root
 	_quest_chip = task_button
-	_quest_chip.position = Vector2(16, 112)
+	_quest_chip.position = Vector2(12, 126)
 	_quest_chip.tooltip_text = "查看城务委托" if _city_id == "border_town" else "查看城镇服务"
 	task_button.pressed.connect(func():
 		if not G.ui_blocked:
@@ -418,7 +430,7 @@ func _build_embedded_hud() -> void:
 	_quest_lbl = task.label
 	_refresh_stat()
 	# 城务入口晚于地图 HUD 创建；复用同一安全区，刘海屏上保持列对齐。
-	preload("res://src/ui/UiSafeArea.gd").fit_hud(_hud, G.ui_safe_rect(self), get_viewport_rect())
+	_embedded_map.register_city_task(_quest_chip)
 
 
 func _build_vignette() -> void:
@@ -1059,6 +1071,12 @@ var _idle_frame_cache := {}
 
 
 func _npc_idle_frames(npc_id: String, guest: bool) -> SpriteFrames:
+	if _embedded_map!=null and ReferenceWorldArt.active(_city_id):
+		var fine:=ReferenceWorldArt.npc_frames("npc_warden" if guest else npc_id)
+		if fine!=null:return fine
+	if not guest and _embedded_map!=null and SunnyArt.active(_city_id):
+		var sample:=SunnyArt.npc_frames(npc_id)
+		if sample!=null:return sample
 	if not guest and FrostCityArt.rows().has(npc_id):
 		return FrostCityArt.idle(npc_id)
 	var key := "npc_guest_idle" if guest else "%s_idle" % npc_id
@@ -1096,6 +1114,9 @@ func _npc_world_tex(npc_id: String, guest: bool) -> Texture2D:
 
 
 func _npc_portrait_tex(npc_id: String, guest: bool) -> Texture2D:
+	if _embedded_map!=null and ReferenceWorldArt.active(_city_id):
+		var id:="npc_warden" if guest else npc_id
+		if ReferenceWorldArt.manifest().npcs.has(id):return ReferenceWorldArt.texture(id+"_portrait")
 	if not guest and FrostCityArt.rows().has(npc_id):
 		return FrostCityArt.portrait(npc_id)
 	if guest:
@@ -2558,6 +2579,15 @@ class _Building extends StaticBody2D:
 
 	func setup(d: Dictionary) -> void:
 		data = d
+		if bool(get_meta("reference_complete",false)):
+			var id:=String(d.get("id",""));var dimensions:=ReferenceWorldArt.building_size(id)
+			_w=dimensions.x;_h=dimensions.y;art=ReferenceWorldArt.building_texture(id)
+			texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+			collision_layer=2;collision_mask=0
+			if id!="gate":
+				var shape:=CollisionShape2D.new();var rect:=RectangleShape2D.new()
+				rect.size=Vector2(_w*.9,40);shape.shape=rect;shape.position=Vector2(0,-28);add_child(shape)
+			return
 		var s: Array = d.get("size", [2.0, 2.0])
 		_w = float(s[0]) * 48.0
 		_h = float(s[1]) * 48.0
@@ -2573,15 +2603,20 @@ class _Building extends StaticBody2D:
 		if art_id.begins_with("frost_") and _reference_art:
 			art = FrostCityArt.prop("city_" + art_id)
 			material = FrostCityArt.cutout_material()
+		if bool(get_meta("sunny_sample",false)) and art_id=="hall":
+			art=SunnyTravelArt.texture("hall")
+			_reference_art=true
 		collision_layer = 2
 		collision_mask = 0
-		var shape := CollisionShape2D.new()
-		var rect := RectangleShape2D.new()
-		# 只有基座挡人：楼体能从后面走过（Y-sort 遮挡），脚下穿不过去
-		rect.size = Vector2(_w * 0.80, _h * 0.30)
-		shape.shape = rect
-		shape.position = Vector2(0, _h * 0.5 - _h * 0.15)
-		add_child(shape)
+		# 可穿过的门楼（gate）：只作画面，不挡路；出口牌在门洞下方触发。
+		if not bool(get_meta("passable", false)):
+			var shape := CollisionShape2D.new()
+			var rect := RectangleShape2D.new()
+			# 只有基座挡人：楼体能从后面走过（Y-sort 遮挡），脚下穿不过去
+			rect.size = Vector2(_w * 0.80, _h * 0.30)
+			shape.shape = rect
+			shape.position = Vector2(0, _h * 0.5 - _h * 0.15)
+			add_child(shape)
 		if art != null:
 			var displayed_height := ART_W * float(art.get_height()) / float(art.get_width()) if _reference_art else ART_H
 			_grounding = Grounding.prepare(art, roundi(ART_W), roundi(displayed_height))
@@ -2592,6 +2627,7 @@ class _Building extends StaticBody2D:
 
 	## 玩家到建筑轮廓的距离（矩形外距；轮廓内为 0）
 	func dist_to(p: Vector2) -> float:
+		if bool(get_meta("reference_complete",false)):return maxf(0,p.distance_to(get_meta("door_world",global_position+Vector2(0,42)))-18)
 		var d := (p - global_position).abs()
 		var dx := maxf(0.0, d.x - _w * 0.5)
 		var dy := maxf(0.0, d.y - _h * 0.5)
@@ -2610,6 +2646,7 @@ class _Building extends StaticBody2D:
 	## 楼体可见轮廓的最高点（负值，越小越高）。木牌、功能图标、悬停指示都挂在这条线之上，
 	## 免得贴图比程序绘制高时，装饰还按老高度摆就被楼顶顶穿。
 	func _art_top() -> float:
+		if bool(get_meta("reference_complete",false)):return -_h
 		if art != null:
 			if _reference_art:
 				return ART_BOTTOM - ART_W * float(art.get_height()) / float(art.get_width())
@@ -2617,6 +2654,17 @@ class _Building extends StaticBody2D:
 		return -_h * 0.5
 
 	func _draw() -> void:
+		if bool(get_meta("reference_complete",false)):
+			draw_set_transform(Vector2(0,-4),0,Vector2(1,.17));draw_circle(Vector2.ZERO,_w*.43,Color("35402a",.13));draw_set_transform(Vector2.ZERO)
+			var tex:=art if built() else ReferenceWorldArt.texture("construction")
+			var size:=Vector2(_w,_h) if built() else Vector2(_w,minf(145,_h))
+			draw_texture_rect(tex,Rect2(Vector2(-size.x*.5,-size.y),size),false)
+			if hover:
+				var text:=String(data.get("name",""))+(" · 待建" if not built() else "")
+				var width:=G.font_bold.get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x+16
+				draw_rect(Rect2(-width*.5,-_h-28,width,22),Color("322e26",.86))
+				draw_string(G.font_bold,Vector2(-width*.5+8,-_h-12),text,HORIZONTAL_ALIGNMENT_LEFT,-1,13,Color("fff0ce"))
+			return
 		# 落地影统一由 _draw_built / _draw_plot 各自画（两者尺寸口径不同），这里不再重复。
 		if built():
 			_draw_built()
@@ -2684,6 +2732,10 @@ class _Building extends StaticBody2D:
 				HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS, Color("8a4a2a"))
 
 	func _draw_plot() -> void:
+		if bool(get_meta("sunny_sample",false)):
+			SunnyTravelArt.construction(self,_w,_h)
+			_plaque(String(data.get("name","空地")),"待建",-_h*.5+2)
+			return
 		var w := _w
 		var h := _h
 		# 工地自身的落地影（原来在外层 _draw 统一画，现在各分支自管）
@@ -3042,6 +3094,7 @@ class _CityNPC extends Node2D:
 			var sp := AnimatedSprite2D.new()
 			sp.name = "Idle"   # 显式命名：引擎自动名是 @AnimatedSprite2D@xx，回归断言没法按名找
 			sp.sprite_frames = frames
+			sp.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
 			sp.animation = &"idle"
 			var display_scale := 0.64 if embedded else IDLE_SCALE
 			sp.scale = Vector2.ONE * display_scale
@@ -3052,12 +3105,16 @@ class _CityNPC extends Node2D:
 				if not embedded: display_scale *= 84.0 / 76.0
 				sp.scale = Vector2.ONE * display_scale
 				sp.position = Vector2(0, -canvas_height * display_scale * 0.5)
-				sp.material = FrostCityArt.cutout_material()
+				if not bool(frames.get_meta("fine_art",false)):sp.material = FrostCityArt.cutout_material()
 				sp.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 			# 错开起始帧：一排 NPC 齐步呼吸，会像同一张贴图复制了八份
-			sp.frame = int(absf(position.x + position.y)) % 4
+			sp.frame = int(absf(position.x + position.y)) % maxi(1,frames.get_frame_count(&"idle"))
 			sp.play()
 			add_child(sp)
+		if bool(get_meta("reference_complete",false)):
+			var body:=StaticBody2D.new();body.collision_layer=2;body.collision_mask=0
+			var shape:=CollisionShape2D.new();var circle:=CircleShape2D.new();circle.radius=12
+			shape.shape=circle;body.add_child(shape);add_child(body)
 		# 名字牌挂头顶（脚下会被 Y-sort 的建筑/行人来回遮挡，裁剪观感差）：
 		# 半透明深底衬 + 居中，长名字也不会飘出屏幕
 		var txt := String(data.get("name", "???"))
@@ -3075,8 +3132,8 @@ class _CityNPC extends Node2D:
 		_plate_h = 22.0 if embedded else 26.0
 		# 字号收进六档（P01 样板 §5）：主世界里的城务 NPC 名签原来是不在档里的字面量 14
 		_name_l = G.serif_label(txt,14,Color("fff5df"),false)
-		_name_l.add_theme_font_override("font",G.font_art)
-		_name_l.add_theme_font_size_override("font_size",16 if embedded else 14)
+		_name_l.add_theme_font_override("font",G.font_bold)
+		_name_l.add_theme_font_size_override("font_size",12 if embedded else 14)
 		_name_l.position = Vector2(-_plate_w * 0.5, _plate_top + 2)
 		_name_l.custom_minimum_size = Vector2(_plate_w, 0)
 		_name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -3087,9 +3144,9 @@ class _CityNPC extends Node2D:
 		var psb := StyleBoxFlat.new()
 		# 深木硬边名牌与新的纸页/金钮共用材质语言。
 		# 名牌按文字内容收紧，_clamp_plate() 按实际宽度钳制屏内位置。
-		psb.bg_color = Color("373b36", 0.85)
+		psb.bg_color = Color.TRANSPARENT if embedded else Color("373b36",0.85)
 		psb.set_corner_radius_all(0)
-		psb.set_border_width_all(1)
+		psb.set_border_width_all(0 if embedded else 1)
 		psb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.45)
 		psb.shadow_color = Color.TRANSPARENT
 		psb.shadow_size = 0
@@ -3141,7 +3198,7 @@ class _CityNPC extends Node2D:
 		# 落地影
 		var sr := 11.0 if frames != null else 13.0   # 像素小人比立绘瘦一圈，影子跟着收
 		draw_set_transform(Vector2(0, 3), 0.0, Vector2(1.0, 0.38))
-		draw_circle(Vector2.ZERO, sr, Color(0, 0, 0, 0.30))
+		draw_circle(Vector2.ZERO, sr, Color("483b2e",.40) if bool(get_meta("sunny_npc",false)) else Color(0,0,0,.30))
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		if frames != null:
 			# 本体交给 AnimatedSprite2D（5fps 呼吸），这里只管影子与悬停金三角

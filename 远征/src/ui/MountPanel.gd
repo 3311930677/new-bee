@@ -3,6 +3,8 @@ class_name MountPanel
 extends Control
 
 signal closed
+const Chest := preload("res://src/ui/TravelChestUI.gd")
+var _chest: Control
 
 const CONTENT_W := 408.0
 const CARD_W := 198.0
@@ -10,62 +12,22 @@ const CARD_H := 148.0
 
 var _grid: Control = null
 var _active_l: Label = null
-var _toast: Label = null
+var _toast: Control = null
 
 
 func _ready() -> void:
-	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_build()
 
 
 func _build() -> void:
-	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），不再各写一块纯灰
-	G.veil(self, 0.78)
-
-	var banner := G.banner_box("坐 骑", 240, 50)
-	banner.position = Vector2(120, 30)
-	add_child(banner)
-
-	var panel := G.parchment_box(440, 620, 16.0)
-	panel.position = Vector2(20, 96)
-	add_child(panel)
-	var content := Control.new()
-	content.set_anchors_preset(Control.PRESET_FULL_RECT)
-	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	panel.add_child(content)
-
-	_active_l = G.gold_label("", G.FS_SM, true, Color("a06020"), false)
-	_active_l.position = Vector2(0, 0)
-	_active_l.custom_minimum_size = Vector2(CONTENT_W, 0)
-	content.add_child(_active_l)
-
-	_grid = Control.new()
-	_grid.position = Vector2(0, 28)
-	content.add_child(_grid)
-
-	var close_btn := G.gold_button("返 回", 130, 36, G.FS_MD)
-	close_btn.position = Vector2(CONTENT_W / 2.0 - 65, 556)
-	close_btn.gui_input.connect(func(ev: InputEvent):
-		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
-			closed.emit())
-	content.add_child(close_btn)
-
-	_refresh()
-
+	_chest=preload("res://src/ui/GrowthChestView.gd").new()
+	_chest.host=self
+	_chest.system="mount"
+	add_child(_chest)
 
 func _refresh() -> void:
-	var mid := G.mount_active()
-	_active_l.text = "骑乘中：%s" % String(G.mount_cfg(mid).get("name", "")) if not mid.is_empty() \
-		else "尚未骑乘任何坐骑（购入后自动骑乘）"
-	for c in _grid.get_children():
-		c.queue_free()
-	var mounts := G.mounts_cfg()
-	for i in mounts.size():
-		var card := _mount_card(mounts[i] as Dictionary)
-		card.position = Vector2((i % 2) * (CARD_W + 8.0), (i / 2) * (CARD_H + 8.0))
-		_grid.add_child(card)
-
+	if _chest!=null:_chest.refresh()
 
 func _mount_card(m: Dictionary) -> Control:
 	var mid := String(m.get("id", ""))
@@ -180,17 +142,9 @@ func _on_buy(mid: String) -> void:
 
 
 func _toast_msg(msg: String) -> void:
-	if _toast != null:
-		_toast.queue_free()
-	_toast = G.gold_label(msg, G.FS_SM, false, Color("ffd0d0"))
-	_toast.position = Vector2(0, 726)
-	_toast.custom_minimum_size = Vector2(480, 0)
-	add_child(_toast)
-	var tw := create_tween()
-	tw.tween_interval(1.2)
-	tw.tween_property(_toast, "modulate:a", 0.0, 0.4)
-	tw.tween_callback(_toast.queue_free)
-
+	if is_instance_valid(_toast):_toast.queue_free()
+	_toast=Chest.toast(self,msg)
+	_toast.position.y=G.ui_safe_rect(self).end.y-116
 
 func _unhandled_input(event: InputEvent) -> void:
 	if G.ui_blocked:   # GM 控制台等全屏层优先（轮次 14）

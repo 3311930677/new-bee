@@ -6,6 +6,8 @@ class_name PetRaisePanel
 extends Control
 
 signal closed
+const Chest := preload("res://src/ui/TravelChestUI.gd")
+var _chest: Control
 
 # 新 class_name 尚未进编辑器全局类缓存，按项目惯例 preload 路径取脚本
 const PageDeckScript := preload("res://src/ui/PageDeck.gd")
@@ -22,7 +24,7 @@ var _content: Control = null
 var _deck_holder: Control = null
 var _deck = null            # PageDeck（类型不写死，避免全局类缓存未刷新时报错）
 var _detail: Control = null
-var _toast: Label = null
+var _toast: Control = null
 var _help_btn: Control = null    # 右上角「?」养成说明
 
 # 养成说明：? 弹层与首次进入的引导共用同一份文案
@@ -37,7 +39,6 @@ const PET_TIPS := [
 
 
 func _ready() -> void:
-	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_owned = G.owned_pets()
 	if not _owned.is_empty():
@@ -46,58 +47,14 @@ func _ready() -> void:
 
 
 func _build() -> void:
-	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），不再各写一块纯灰
-	G.veil(self, 0.78)
-
-	var banner := G.banner_box("灵宠养成", 240, 50)
-	banner.position = Vector2(120, 30)
-	add_child(banner)
-
-	var panel := G.parchment_box(440, 620, 16.0)
-	panel.position = Vector2(20, 96)
-	add_child(panel)
-	var content := Control.new()
-	content.set_anchors_preset(Control.PRESET_FULL_RECT)
-	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	panel.add_child(content)
-	_content = content
-
-	# 灵宠轮播（一屏一只）：←→/AD 或拖拽切换，圆点在卡下页脚
-	_deck_holder = Control.new()
-	_deck_holder.position = Vector2(0, 0)
-	_deck_holder.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	content.add_child(_deck_holder)
-
-	_detail = Control.new()
-	_detail.position = Vector2(0, DETAIL_Y)
-	_detail.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	content.add_child(_detail)
-
-	var close_btn := G.gold_button("返 回", 130, 36, G.FS_MD)
-	close_btn.position = Vector2(CONTENT_W / 2.0 - 65, 544)
-	close_btn.gui_input.connect(func(ev: InputEvent):
-		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
-			closed.emit())
-	content.add_child(close_btn)
-
-	# 养成说明收进「?」（只建一次：_build_detail 是反复重建的，放那里会叠出一摞）
-	_help_btn = G.info_button("灵宠养成 · 怎么玩", PET_TIPS)
-	_help_btn.position = Vector2(CONTENT_W - 24.0, 6.0)   # 贴在卡右侧的空白里，不压按钮
-	content.add_child(_help_btn)
-	G.tip_once.call_deferred("pet_raise", "灵宠养成 · 怎么玩", PET_TIPS, self)
-
-	_refresh()
-
+	_chest=preload("res://src/ui/GrowthChestView.gd").new()
+	_chest.host=self
+	_chest.system="pet"
+	add_child(_chest)
 
 func _refresh() -> void:
-	_owned = G.owned_pets()
-	if not _owned.is_empty() and (_sel.is_empty() or not _owned.has(_sel)):
-		_sel = String(_owned[0])
-	_rebuild_deck()
-	_build_detail()
+	if _chest!=null:_chest.refresh()
 
-
-## 重建轮播：技能/突破会改变卡片上的数值，干脆整块重建（灵宠通常只有几只，开销可忽略）
 func _rebuild_deck() -> void:
 	if _deck != null:
 		_deck_holder.remove_child(_deck)
@@ -292,17 +249,9 @@ func _on_reroll() -> void:
 
 
 func _toast_msg(msg: String) -> void:
-	if _toast != null:
-		_toast.queue_free()
-	_toast = G.gold_label(msg, G.FS_SM, false, Color("ffd0d0"))
-	_toast.position = Vector2(0, 726)
-	_toast.custom_minimum_size = Vector2(480, 0)
-	add_child(_toast)
-	var tw := create_tween()
-	tw.tween_interval(1.2)
-	tw.tween_property(_toast, "modulate:a", 0.0, 0.4)
-	tw.tween_callback(_toast.queue_free)
-
+	if is_instance_valid(_toast):_toast.queue_free()
+	_toast=Chest.toast(self,msg)
+	_toast.position.y=G.ui_safe_rect(self).end.y-116
 
 func _unhandled_input(event: InputEvent) -> void:
 	if G.ui_blocked:   # GM 控制台等全屏层优先（轮次 14）

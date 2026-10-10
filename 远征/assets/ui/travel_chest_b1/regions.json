@@ -1,0 +1,295 @@
+{
+  "primary_normal": {
+    "file": "primary_states.png",
+    "source_size": [
+      1190,
+      1322
+    ],
+    "rect": [
+      49,
+      56,
+      1092,
+      357
+    ],
+    "alpha_max": 255
+  },
+  "primary_pressed": {
+    "file": "primary_states.png",
+    "source_size": [
+      1190,
+      1322
+    ],
+    "rect": [
+      49,
+      458,
+      1091,
+      361
+    ],
+    "alpha_max": 255
+  },
+  "primary_disabled": {
+    "file": "primary_states.png",
+    "source_size": [
+      1190,
+      1322
+    ],
+    "rect": [
+      49,
+      866,
+      1092,
+      360
+    ],
+    "alpha_max": 255
+  },
+  "hero_normal": {
+    "file": "hero_states.png",
+    "source_size": [
+      1672,
+      941
+    ],
+    "rect": [
+      31,
+      87,
+      1610,
+      241
+    ],
+    "alpha_max": 255
+  },
+  "hero_pressed": {
+    "file": "hero_states.png",
+    "source_size": [
+      1672,
+      941
+    ],
+    "rect": [
+      31,
+      358,
+      1610,
+      243
+    ],
+    "alpha_max": 255
+  },
+  "hero_disabled": {
+    "file": "hero_states.png",
+    "source_size": [
+      1672,
+      941
+    ],
+    "rect": [
+      31,
+      632,
+      1610,
+      243
+    ],
+    "alpha_max": 255
+  },
+  "world": {
+    "file": "icons.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      32,
+      89,
+      307,
+      270
+    ],
+    "alpha_max": 255
+  },
+  "bag": {
+    "file": "icons.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      386,
+      66,
+      311,
+      296
+    ],
+    "alpha_max": 255
+  },
+  "growth": {
+    "file": "icons.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      752,
+      83,
+      334,
+      278
+    ],
+    "alpha_max": 255
+  },
+  "codex": {
+    "file": "icons.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      1086,
+      105,
+      330,
+      248
+    ],
+    "alpha_max": 255
+  },
+  "event": {
+    "file": "icons.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      39,
+      440,
+      311,
+      245
+    ],
+    "alpha_max": 255
+  },
+  "arena": {
+    "file": "icons.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      406,
+      362,
+      280,
+      326
+    ],
+    "alpha_max": 255
+  },
+  "summon": {
+    "file": "icons.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      766,
+      398,
+      257,
+      312
+    ],
+    "alpha_max": 255
+  },
+  "exchange": {
+    "file": "icons.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      1096,
+      407,
+      300,
+      283
+    ],
+    "alpha_max": 255
+  },
+  "reunion": {
+    "file": "icons.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      45,
+      781,
+      308,
+      223
+    ],
+    "alpha_max": 255
+  },
+  "settings": {
+    "file": "icons.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      406,
+      739,
+      276,
+      282
+    ],
+    "alpha_max": 255
+  },
+  "back": {
+    "file": "icons.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      748,
+      767,
+      338,
+      235
+    ],
+    "alpha_max": 255
+  },
+  "journey": {
+    "file": "icons.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      1086,
+      739,
+      322,
+      289
+    ],
+    "alpha_max": 255
+  },
+  "tray_rim": {
+    "file": "tray_rim.png",
+    "source_size": [
+      1983,
+      793
+    ],
+    "rect": [
+      20,
+      311,
+      1943,
+      98
+    ],
+    "alpha_max": 255
+  },
+  "stage_pool": {
+    "file": "stage_pool.png",
+    "source_size": [
+      1983,
+      793
+    ],
+    "rect": [
+      239,
+      277,
+      1502,
+      237
+    ],
+    "alpha_max": 210
+  },
+  "camp_sky": {
+    "file": "camp_sky.png",
+    "source_size": [
+      835,
+      1883
+    ],
+    "rect": [
+      0,
+      0,
+      835,
+      1883
+    ]
+  }
+}

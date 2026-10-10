@@ -3,6 +3,8 @@
 #       → 完成（且距进场 ≥3.5s）→ Title。加载文案轮换一点行军趣味话。
 extends Control
 const Wordmark := preload("res://src/ui/UIWordmark.gd")
+const Chest := preload("res://src/ui/TravelChestUI.gd")
+const ReviewFix:=preload("res://src/ui/ReviewFixUI.gd")
 const Relic := preload("res://src/ui/LoadingRelic.gd")
 const Grounding := preload("res://src/world/BuildingGrounding.gd")
 const GROUND_IDS := ["hall", "gate", "barracks", "forge", "archive", "kennel", "storehouse", "shrine"]
@@ -88,7 +90,7 @@ func _ready() -> void:
 
 func _build() -> void:
 	# Keep the original artwork, crop policy and pixel filter untouched.
-	G.page_background(self, 0.08, "res://image/background/enter.png", false)
+	G.page_background(self,0.08,"res://image/background/enter.png",false)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	theme = Theme.new()
 	theme.default_font = G.font_serif
@@ -121,29 +123,37 @@ func _build() -> void:
 	atlas.region = Rect2(Vector2.ZERO,Wordmark.ART.get_size())
 	_brand_mark = TextureRect.new()
 	_brand_mark.name = "ExpeditionWordmark"
-	_brand_mark.position = Vector2(20,0)
-	_brand_mark.size = Vector2(360,186)
+	_brand_mark.position = Vector2(90,0)
+	_brand_mark.size = Vector2(220,88)
 	_brand_mark.texture = atlas
 	_brand_mark.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_brand_mark.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	_brand_mark.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_brand_mark.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	_brand_mark.modulate = Color.WHITE
+	var outline:=Shader.new();outline.code="shader_type canvas_item; void fragment(){vec4 t=texture(TEXTURE,UV);float a=0.0;for(int x=-1;x<=1;x++){for(int y=-1;y<=1;y++){a=max(a,texture(TEXTURE,UV+vec2(float(x),float(y))*TEXTURE_PIXEL_SIZE).a);}}COLOR=t.a>0.1?t:vec4(vec3(.102,.078,.063),a);}"
+	var ink:=ShaderMaterial.new();ink.shader=outline;_brand_mark.material=ink
 	_brand_mark.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_brand.add_child(_brand_mark)
+	var shadow:=TextureRect.new()
+	var gradient2:=Gradient.new();gradient2.colors=PackedColorArray([Color("0a090b",.85),Color("0a090b",0)])
+	var halo:=GradientTexture2D.new();halo.gradient=gradient2;halo.width=320;halo.height=160;halo.fill=GradientTexture2D.FILL_RADIAL;halo.fill_from=Vector2(.5,.5);halo.fill_to=Vector2(1,.5)
+	shadow.texture=halo;shadow.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;shadow.size=Vector2(320,160);shadow.position=Vector2(40,-28);shadow.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	_brand.add_child(shadow);_brand.move_child(shadow,0)
 
-	_gauge = Relic.new()
+	_gauge = preload("res://src/ui/LoadingChestGauge.gd").new()
 	_gauge.name = "LoadingGauge"
 	_gauge.size = Vector2(416,66)
 	add_child(_gauge)
 	_bar_fill = _gauge.get("lit_blade") as Control
 	_bar_l = _label(STAGES[0],14,Color("f2dc87"))
 	_bar_l.name = "LoadingStatus"
-	_bar_l.position = Vector2(88,10)
-	_bar_l.size = Vector2(240,20)
+	_bar_l.position = Vector2(0,0)
+	_bar_l.size = Vector2(300,24)
 	_gauge.add_child(_bar_l)
 	_percent_l = _label("0%",14,Color("f5e7c8"))
 	_percent_l.name = "LoadingPercent"
-	_percent_l.position = Vector2(356,34)
-	_percent_l.size = Vector2(48,22)
+	_percent_l.position = Vector2(344,0)
+	_percent_l.size = Vector2(72,24)
 	_percent_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_gauge.add_child(_percent_l)
 	# Pick once per entry; do not consume the global gameplay random stream.
@@ -173,24 +183,17 @@ func _label(text: String, font_size: int, ink: Color) -> Label:
 	return label
 
 
-func _layout(safe_override := Rect2()) -> void:
-	if _brand == null or _gauge == null:
-		return
-	var safe := safe_override if safe_override.has_area() else G.ui_safe_rect(self)
-	var factor := minf(1.0,minf(safe.size.x/480.0,safe.size.y/600.0))
-	var center := safe.get_center().x
-	_brand.scale = Vector2.ONE*factor
-	_brand.position = Vector2(center-200.0*factor,
-		safe.position.y+clampf(safe.size.y*.085,56.0,96.0)*factor).round()
-	_gauge.scale = Vector2.ONE*factor
-	_hint_l.scale = Vector2.ONE*factor
-	# Bottom anchoring survives tall displays and device safe-area insets.
-	var floor_y := safe.end.y-24.0*factor
-	_hint_l.position = Vector2(center-208.0*factor,floor_y-20.0*factor).round()
-	_gauge.position = Vector2(center-208.0*factor,_hint_l.position.y-74.0*factor).round()
+func _layout(safe_override:=Rect2()) -> void:
+	if _brand==null or _gauge==null:return
+	var safe:=safe_override if safe_override.has_area() else G.ui_safe_rect(self)
+	var center:=safe.get_center().x
+	_brand.position=Vector2(center-200,safe.position.y+40)
+	_gauge.position=Vector2(safe.position.x+24,safe.end.y-142)
+	_gauge.size=Vector2(safe.size.x-48,66)
+	_hint_l.position=Vector2(safe.position.x+24,safe.end.y-64)
+	_hint_l.size=Vector2(safe.size.x-48,44)
+	_hint_l.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 
-
-## Fill width, jewel position, percentage and status use one clamped value.
 func _set_bar_ratio(ratio: float) -> void:
 	var r := clampf(ratio,0.0,1.0)
 	_gauge.set_ratio(r)
@@ -210,6 +213,9 @@ func bar_fill_width() -> float:
 ## 只热：行走帧 + 界面大背景 + 音频 + 脚本/场景编译。
 func _collect_queue() -> void:
 	G._build_res_index()
+	Chest.theme()
+	for id in ["primary_normal","primary_pressed","primary_disabled","hero_normal","hero_pressed","hero_disabled","world","bag","growth","codex","event","arena","summon","exchange","reunion","settings","back","journey","tray_rim","stage_pool","camp_sky"]:
+		_queue.append("chest:"+id)
 	_queue.append("res://image/role/zs/pojun_walk_4dir.png")
 	_queue.append("res://image/role/ck/chuanyang_walk_4dir.png")
 	_queue.append("res://image/role/fs/shuangyu_walk_4dir.png")
@@ -230,6 +236,16 @@ func _collect_queue() -> void:
 		if sp != "":
 			_queue.append(sp)
 	_code.clear()
+	# Warm the new atlas regions in the existing loading queue, before any panel opens.
+	var review_regions:Dictionary=JSON.parse_string(FileAccess.get_file_as_string(ReviewFix.ROOT+"regions.json"))
+	for id in review_regions:_queue.append("reviewfix:"+String(id))
+	_queue.append("res://assets/ui/next_review_20261009/map.png")
+	if ReferenceWorldArt.active("lorin_wilds"):
+		for group in ["buildings","npcs","foliage","props"]:
+			for id in ReferenceWorldArt.manifest().get(group,{}):_queue.append(ReferenceWorldArt.ROOT+String(id)+".png")
+		# Load the current town's ground only; field chunks load when entering the field.
+		for suffix in ["_floor_top","_floor_bottom"]:_queue.append(String(TableCache.main_world_map("lorin_wilds").get("reference_floor_root",ReferenceWorldArt.ROOT))+"lorin_wilds"+suffix+".png")
+	if preload("res://src/world/SunnyTravelArt.gd").active("lorin_wilds"):_queue.append("sunny:prepare")
 	_code.assign(PRELOAD_CODE)   # 注意：Array[String] 不能用 = duplicate()，类型不匹配会静默失败
 	_ground.assign(GROUND_IDS)
 	_total = _queue.size() + _code.size() + _ground.size()
@@ -241,7 +257,11 @@ func _process(_d: float) -> void:
 	for i in PER_FRAME:
 		if _queue.is_empty():
 			break
-		load(_queue.pop_front() as String)
+		var path := _queue.pop_front() as String
+		if path.begins_with("chest:"): Chest.texture(path.trim_prefix("chest:"))
+		elif path.begins_with("reviewfix:"):ReviewFix.texture(path.trim_prefix("reviewfix:"))
+		elif path=="sunny:prepare":preload("res://src/world/SunnyTravelArt.gd").prepare()
+		else: load(path)
 	for i in CODE_PER_FRAME:
 		if _code.is_empty():
 			break

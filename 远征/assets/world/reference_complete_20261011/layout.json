@@ -1,0 +1,971 @@
+{
+  "regions": {
+    "lorin_wilds": {
+      "extent": [
+        1200,
+        2112
+      ],
+      "layout": {
+        "version": 3,
+        "composition": "Varied left/right buildings around one continuous, moderately narrow grassland road; roadside sign exit; sparse independent trees; map extent fits content.",
+        "world_size": [
+          1200,
+          2112
+        ],
+        "anchor_convention": "bottom center of front steps; door approach is a separate point",
+        "min_roof_gap": 24,
+        "buildings": [
+          {
+            "id": "stable",
+            "name": "马厩",
+            "anchor": [
+              298,
+              640
+            ],
+            "size": [
+              360.0,
+              191.0
+            ],
+            "approach": [
+              298,
+              682
+            ],
+            "side": "left"
+          },
+          {
+            "id": "barracks",
+            "name": "巡界厅",
+            "anchor": [
+              898,
+              660
+            ],
+            "size": [
+              376.0,
+              239.0
+            ],
+            "approach": [
+              898,
+              702
+            ],
+            "side": "right"
+          },
+          {
+            "id": "storehouse",
+            "name": "仓廪",
+            "anchor": [
+              298,
+              916
+            ],
+            "size": [
+              395.0,
+              249.0
+            ],
+            "approach": [
+              298,
+              958
+            ],
+            "side": "left"
+          },
+          {
+            "id": "forge",
+            "name": "锻造铺",
+            "anchor": [
+              898,
+              940
+            ],
+            "size": [
+              392.0,
+              253.0
+            ],
+            "approach": [
+              898,
+              982
+            ],
+            "side": "right"
+          },
+          {
+            "id": "hall",
+            "name": "议事厅",
+            "anchor": [
+              288,
+              1230
+            ],
+            "size": [
+              420.0,
+              259.0
+            ],
+            "approach": [
+              288,
+              1272
+            ],
+            "side": "left"
+          },
+          {
+            "id": "archive",
+            "name": "图志阁",
+            "anchor": [
+              298,
+              1640
+            ],
+            "size": [
+              332.0,
+              329.0
+            ],
+            "approach": [
+              298,
+              1682
+            ],
+            "side": "left"
+          },
+          {
+            "id": "kennel",
+            "name": "兽栏",
+            "anchor": [
+              898,
+              1380
+            ],
+            "size": [
+              400.0,
+              230.0
+            ],
+            "approach": [
+              898,
+              1422
+            ],
+            "side": "right"
+          },
+          {
+            "id": "shrine",
+            "name": "祭坛",
+            "anchor": [
+              898,
+              1670
+            ],
+            "size": [
+              240.0,
+              164.0
+            ],
+            "approach": [
+              898,
+              1712
+            ],
+            "side": "right"
+          }
+        ],
+        "routes": [
+          {
+            "kind": "main",
+            "width": 136,
+            "points": [
+              [
+                600,
+                -48
+              ],
+              [
+                600,
+                410
+              ],
+              [
+                583,
+                710
+              ],
+              [
+                613,
+                1030
+              ],
+              [
+                593,
+                1410
+              ],
+              [
+                600,
+                1932
+              ]
+            ]
+          }
+        ],
+        "trees": [
+          [
+            148,
+            250
+          ],
+          [
+            1048,
+            250
+          ],
+          [
+            1048,
+            1146
+          ],
+          [
+            148,
+            1858
+          ],
+          [
+            1048,
+            1890
+          ]
+        ],
+        "spawn": [
+          600,
+          1520
+        ],
+        "arrival_from_field": [
+          600,
+          300
+        ],
+        "plaza": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "exit": {
+          "id": "north_gate",
+          "at": [
+            616,
+            140
+          ],
+          "to": "maple_road",
+          "arrival": "from_city",
+          "label": "出城 · 枫林古道",
+          "radius": 80,
+          "formal_source_at": [
+            480,
+            250
+          ],
+          "sign_at": [
+            640,
+            160
+          ],
+          "presentation": "single roadside signpost, no gatehouse or wall",
+          "authored_sign_position": true,
+          "caption_below": true
+        },
+        "prototype_field_exit": {
+          "id": "south_gate",
+          "at": [
+            264,
+            700
+          ],
+          "to": "lorin_wilds",
+          "arrival": "from_maple_road",
+          "label": "返回 · 昭元边城",
+          "radius": 56,
+          "formal_source_at": [
+            480,
+            1990
+          ],
+          "sign_at": [
+            352,
+            700
+          ]
+        },
+        "prototype_field_arrival": [
+          264,
+          600
+        ],
+        "reserved_interactions": [
+          {
+            "id": "npc_guard",
+            "name": "城门卫",
+            "position": [
+              458,
+              500
+            ],
+            "kind": "npc",
+            "radius": 52
+          },
+          {
+            "id": "npc_stablemaster",
+            "name": "马厩管事",
+            "position": [
+              418,
+              735
+            ],
+            "kind": "npc",
+            "radius": 52
+          },
+          {
+            "id": "npc_mentor",
+            "name": "巡界导师",
+            "position": [
+              778,
+              750
+            ],
+            "kind": "npc",
+            "radius": 52
+          },
+          {
+            "id": "npc_smith",
+            "name": "铁匠",
+            "position": [
+              733,
+              1030
+            ],
+            "kind": "npc",
+            "radius": 52
+          },
+          {
+            "id": "npc_steward",
+            "name": "执事",
+            "position": [
+              418,
+              1325
+            ],
+            "kind": "npc",
+            "radius": 52
+          },
+          {
+            "id": "npc_child",
+            "name": "孩童",
+            "position": [
+              468,
+              1460
+            ],
+            "kind": "npc",
+            "radius": 52
+          },
+          {
+            "id": "npc_warden",
+            "name": "行脚商人",
+            "position": [
+              698,
+              1580
+            ],
+            "kind": "npc",
+            "radius": 52
+          },
+          {
+            "id": "npc_scribe",
+            "name": "图志阁掌事",
+            "position": [
+              418,
+              1740
+            ],
+            "kind": "npc",
+            "radius": 52
+          },
+          {
+            "id": "npc_keeper",
+            "name": "兽栏伙计",
+            "position": [
+              778,
+              1490
+            ],
+            "kind": "npc",
+            "radius": 52
+          },
+          {
+            "id": "a4_secret_oralbook_step_1",
+            "name": "旧识石凳",
+            "position": [
+              486,
+              610
+            ],
+            "kind": "quest",
+            "radius": 52
+          },
+          {
+            "id": "a4_secret_oralbook_feedback_0",
+            "name": "口述册桌",
+            "position": [
+              488,
+              1860
+            ],
+            "kind": "quest",
+            "radius": 52
+          },
+          {
+            "id": "a4_rel_nighttable_step_1",
+            "name": "旧识邀约",
+            "position": [
+              728,
+              860
+            ],
+            "kind": "quest",
+            "radius": 52
+          },
+          {
+            "id": "a4_rel_nighttable_step_4",
+            "name": "夜桌席位",
+            "position": [
+              868,
+              1040
+            ],
+            "kind": "quest",
+            "radius": 52
+          },
+          {
+            "id": "a4_rel_nighttable_step_5",
+            "name": "夜桌交谈",
+            "position": [
+              788,
+              1130
+            ],
+            "kind": "quest",
+            "radius": 52
+          },
+          {
+            "id": "a4_rel_nighttable_feedback_0",
+            "name": "归路反馈",
+            "position": [
+              728,
+              1240
+            ],
+            "kind": "quest",
+            "radius": 52
+          },
+          {
+            "id": "gate",
+            "name": "访客簿",
+            "position": [
+              108,
+              1290
+            ],
+            "kind": "building",
+            "radius": 58
+          }
+        ],
+        "guest_slots": [
+          [
+            483,
+            960
+          ],
+          [
+            710,
+            500
+          ]
+        ],
+        "prototype_note": "Grassland central-street spatial prototype. Floor is a layout guide, trees and buildings remain independent assets. Exit/NPC interactions are isolated demonstrations preserving original IDs and destinations; no game save, quest or building-state mutation.",
+        "extent_policy": "fit_content",
+        "extent_alignment": 48,
+        "edge_padding": {
+          "right": 64,
+          "bottom": 180
+        },
+        "min_world_size": [
+          1104,
+          1920
+        ],
+        "extent_calculation": {
+          "rightmost_content": 1134.5,
+          "bottommost_content": 1904,
+          "description": "Working extent derived from content plus padding; not a frozen art canvas."
+        },
+        "south_ground": {
+          "style": "open grassy verge with fading worn footpath",
+          "fade_start": 1740,
+          "fade_end": 2000,
+          "tail_offset_x": 70,
+          "description": "Ground appearance only; no new exit, collision or layout change."
+        }
+      },
+      "routes": [
+        {
+          "kind": "main",
+          "width": 136,
+          "points": [
+            [
+              600,
+              -48
+            ],
+            [
+              600,
+              410
+            ],
+            [
+              583,
+              710
+            ],
+            [
+              613,
+              1030
+            ],
+            [
+              593,
+              1410
+            ],
+            [
+              600,
+              1932
+            ]
+          ]
+        }
+      ],
+      "river": {},
+      "version": 6
+    },
+    "maple_road": {
+      "extent": [
+        960,
+        2112
+      ],
+      "layout": {},
+      "routes": [
+        {
+          "points": [
+            [
+              480,
+              1990
+            ],
+            [
+              480,
+              1860
+            ],
+            [
+              510,
+              1700
+            ],
+            [
+              440,
+              1530
+            ],
+            [
+              500,
+              1350
+            ],
+            [
+              500,
+              1230
+            ],
+            [
+              500,
+              1100
+            ],
+            [
+              570,
+              1000
+            ],
+            [
+              480,
+              820
+            ],
+            [
+              540,
+              640
+            ],
+            [
+              470,
+              420
+            ],
+            [
+              480,
+              270
+            ],
+            [
+              480,
+              150
+            ]
+          ],
+          "width": 124
+        }
+      ],
+      "river": {
+        "y": 1230,
+        "half": 32,
+        "points": [
+          [
+            0,
+            1200
+          ],
+          [
+            960,
+            1260
+          ]
+        ],
+        "crossing": [
+          464,
+          536
+        ]
+      },
+      "version": 5
+    }
+  },
+  "ground_jobs": [
+    {
+      "id": "lorin_wilds_0_0",
+      "map": "lorin_wilds",
+      "core": [
+        0,
+        0,
+        600,
+        528
+      ],
+      "context": [
+        -32,
+        -32,
+        664,
+        592
+      ],
+      "master": [
+        1328,
+        1184
+      ],
+      "grid": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "lorin_wilds_1_0",
+      "map": "lorin_wilds",
+      "core": [
+        600,
+        0,
+        600,
+        528
+      ],
+      "context": [
+        568,
+        -32,
+        664,
+        592
+      ],
+      "master": [
+        1328,
+        1184
+      ],
+      "grid": [
+        1,
+        0
+      ]
+    },
+    {
+      "id": "lorin_wilds_0_1",
+      "map": "lorin_wilds",
+      "core": [
+        0,
+        528,
+        600,
+        528
+      ],
+      "context": [
+        -32,
+        496,
+        664,
+        592
+      ],
+      "master": [
+        1328,
+        1184
+      ],
+      "grid": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": "lorin_wilds_1_1",
+      "map": "lorin_wilds",
+      "core": [
+        600,
+        528,
+        600,
+        528
+      ],
+      "context": [
+        568,
+        496,
+        664,
+        592
+      ],
+      "master": [
+        1328,
+        1184
+      ],
+      "grid": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "lorin_wilds_0_2",
+      "map": "lorin_wilds",
+      "core": [
+        0,
+        1056,
+        600,
+        528
+      ],
+      "context": [
+        -32,
+        1024,
+        664,
+        592
+      ],
+      "master": [
+        1328,
+        1184
+      ],
+      "grid": [
+        0,
+        2
+      ]
+    },
+    {
+      "id": "lorin_wilds_1_2",
+      "map": "lorin_wilds",
+      "core": [
+        600,
+        1056,
+        600,
+        528
+      ],
+      "context": [
+        568,
+        1024,
+        664,
+        592
+      ],
+      "master": [
+        1328,
+        1184
+      ],
+      "grid": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "lorin_wilds_0_3",
+      "map": "lorin_wilds",
+      "core": [
+        0,
+        1584,
+        600,
+        528
+      ],
+      "context": [
+        -32,
+        1552,
+        664,
+        592
+      ],
+      "master": [
+        1328,
+        1184
+      ],
+      "grid": [
+        0,
+        3
+      ]
+    },
+    {
+      "id": "lorin_wilds_1_3",
+      "map": "lorin_wilds",
+      "core": [
+        600,
+        1584,
+        600,
+        528
+      ],
+      "context": [
+        568,
+        1552,
+        664,
+        592
+      ],
+      "master": [
+        1328,
+        1184
+      ],
+      "grid": [
+        1,
+        3
+      ]
+    },
+    {
+      "id": "maple_road_0_0",
+      "map": "maple_road",
+      "core": [
+        0,
+        0,
+        480,
+        528
+      ],
+      "context": [
+        -32,
+        -32,
+        544,
+        592
+      ],
+      "master": [
+        1088,
+        1184
+      ],
+      "grid": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "maple_road_1_0",
+      "map": "maple_road",
+      "core": [
+        480,
+        0,
+        480,
+        528
+      ],
+      "context": [
+        448,
+        -32,
+        544,
+        592
+      ],
+      "master": [
+        1088,
+        1184
+      ],
+      "grid": [
+        1,
+        0
+      ]
+    },
+    {
+      "id": "maple_road_0_1",
+      "map": "maple_road",
+      "core": [
+        0,
+        528,
+        480,
+        528
+      ],
+      "context": [
+        -32,
+        496,
+        544,
+        592
+      ],
+      "master": [
+        1088,
+        1184
+      ],
+      "grid": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": "maple_road_1_1",
+      "map": "maple_road",
+      "core": [
+        480,
+        528,
+        480,
+        528
+      ],
+      "context": [
+        448,
+        496,
+        544,
+        592
+      ],
+      "master": [
+        1088,
+        1184
+      ],
+      "grid": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "maple_road_0_2",
+      "map": "maple_road",
+      "core": [
+        0,
+        1056,
+        480,
+        528
+      ],
+      "context": [
+        -32,
+        1024,
+        544,
+        592
+      ],
+      "master": [
+        1088,
+        1184
+      ],
+      "grid": [
+        0,
+        2
+      ]
+    },
+    {
+      "id": "maple_road_1_2",
+      "map": "maple_road",
+      "core": [
+        480,
+        1056,
+        480,
+        528
+      ],
+      "context": [
+        448,
+        1024,
+        544,
+        592
+      ],
+      "master": [
+        1088,
+        1184
+      ],
+      "grid": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "maple_road_0_3",
+      "map": "maple_road",
+      "core": [
+        0,
+        1584,
+        480,
+        528
+      ],
+      "context": [
+        -32,
+        1552,
+        544,
+        592
+      ],
+      "master": [
+        1088,
+        1184
+      ],
+      "grid": [
+        0,
+        3
+      ]
+    },
+    {
+      "id": "maple_road_1_3",
+      "map": "maple_road",
+      "core": [
+        480,
+        1584,
+        480,
+        528
+      ],
+      "context": [
+        448,
+        1552,
+        544,
+        592
+      ],
+      "master": [
+        1088,
+        1184
+      ],
+      "grid": [
+        1,
+        3
+      ]
+    }
+  ]
+}

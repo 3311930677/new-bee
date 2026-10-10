@@ -3660,6 +3660,7 @@ func equip_rarity_cfg(rarity_id: int) -> Dictionary:
 
 ## 稀有度展示色（缺省回落普通灰，避免空串造出黑框）
 func equip_rarity_color(rarity_id: int) -> Color:
+	if rarity_id==5:return Color("e07038")
 	var hex := String(equip_rarity_cfg(rarity_id).get("color", ""))
 	return Color(hex) if not hex.is_empty() else Color("b8b8b8")
 

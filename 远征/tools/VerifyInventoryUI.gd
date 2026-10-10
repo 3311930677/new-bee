@@ -12,7 +12,7 @@ func _ready() -> void:
 	G.prog.level = 50
 	G.wallet.gold = 100000
 	G.ensure_starter_equip(true)
-	G.inv_grant_equip({"tpl":"tpl_sword_wolf","rarity":2,"n":9},false)
+	G.inv_grant_equip({"tpl":"tpl_sword_wolf","rarity":2,"n":19},false)
 	G.inv_grant_equip({"tpl":"tpl_accessory_moon","rarity":3,"n":1},false)
 	G.items = {"enhance_stone":24,"gem_atk_1":3,"gem_atk_2":2,"gem_atk_3":1,
 		"gem_atk_4":1,"gem_atk_5":1,"gem_def_1":2,"gem_def_2":1,"gem_def_3":1,
@@ -28,10 +28,12 @@ func _ready() -> void:
 	_check(bag.theme!=null,"inventory inherits a central Theme")
 	_check(get_viewport().gui_get_focus_owner()==bag._tab_buttons.equip,"opening selects keyboard focus")
 	_layout_check()
-	await _click(bag._list.find_child("Pagination",true,false).get_child(2))
-	_check(bag._page==1,"next equipment page responds to real input")
-	await _click(bag._list.find_child("Pagination",true,false).get_child(1))
-	_check(bag._page==0,"previous page responds to real input")
+	_check(bag._item_buttons.size()==bag._bag_items().size(),"every equipment item is in the scrolling grid")
+	_check(bag._scroll.get_child(0).columns==5,"equipment grid has five columns")
+	bag._scroll.scroll_vertical=10000
+	await _frames()
+	_check(bag._scroll.scroll_vertical>0,"equipment scroll reaches later rows")
+	bag._scroll.scroll_vertical=0
 	var rare_uid := int(bag._bag_items()[0].uid)
 	await _click(bag._item_buttons[0])
 	_check(bag._sel_uid==rare_uid,"equipment card responds to real input")
@@ -43,7 +45,7 @@ func _ready() -> void:
 	var sell_price := G.inv_sell_price(rare_uid)
 	await _click(_sell_button())
 	_check(not G.inv_find(rare_uid).is_empty() and int(G.wallet.gold)==gold_before,"rare sale requires confirmation")
-	await _click(_sell_button())
+	await _click(_button("确认",bag._modal))
 	_check(G.inv_find(rare_uid).is_empty() and int(G.wallet.gold)==gold_before+sell_price,"confirmed sale credits the correct gold")
 	var sword_uid := int(bag._bag_items()[0].uid)
 	await _click(bag._item_buttons[0])
@@ -60,11 +62,14 @@ func _ready() -> void:
 	await _click(sockets[0])
 	_check(G.inv_find(sword_uid).gems.is_empty() and G.item_count("gem_atk_1")==gem_before+1,"clicking an occupied socket returns its gem")
 	await _click(bag._tab_buttons.gem)
-	_check(bag._tab=="gem" and bag._scroll.get_v_scroll_bar().visible,"long gem list has a visible scrollbar")
+	_check(bag._tab=="gem" and bag._item_buttons.size()==15,"all 15 gem types are visible in the scrolling inventory")
+	bag._resize_frame(Rect2(0,44,480,722))
+	await _frames()
 	var bottom := int(bag._scroll.get_v_scroll_bar().max_value)
 	bag._scroll.scroll_vertical = bottom
 	await _frames()
 	_check(bag._scroll.scroll_vertical>0,"gem list can scroll to later entries")
+	bag._resize_frame()
 	_layout_check()
 	await _click(bag._tab_buttons.mat)
 	_check(bag._tab=="mat" and _has_icon(bag._scroll),"material view loads its existing artwork")
@@ -151,6 +156,10 @@ func _check(condition: bool,message: String) -> void:
 func _click(control: Control) -> void:
 	_check(control!=null,"click target exists")
 	if control==null: return
+	var ancestor := control.get_parent()
+	while ancestor!=null:
+		if ancestor is ScrollContainer: ancestor.ensure_control_visible(control)
+		ancestor=ancestor.get_parent()
 	await _frames()
 	var point := control.get_global_rect().get_center()
 	var motion := InputEventMouseMotion.new()

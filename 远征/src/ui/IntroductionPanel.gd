@@ -34,50 +34,10 @@ class _IntroBoard extends Control:
 			draw_circle(c + Vector2(6, 6), 2.0, Color("5c3a10"))
 
 func _ready() -> void:
-	set_anchors_preset(Control.PRESET_FULL_RECT)
-	G.veil(self,.86)
-	var top := roundf((maxf(800,get_viewport_rect().size.y)-688)/2)
-	var panel := _IntroBoard.new()
-	panel.position = Vector2(20,top)
-	panel.size = Vector2(440,688)
-	add_child(panel)
-	var content := Control.new()
-	content.position = Vector2.ZERO
-	content.size = panel.size
-	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	panel.add_child(content)
-	_label(content,"远征手记",Vector2(32,24),Vector2(376,36),28,Color("ffe894"),true)
-	_label(content,"昭元行旅录  /  旅途档案",Vector2(34,56),Vector2(376,22),12,Color("b4d0c4"))
-	_deck = Deck.new(380,440)
-	_deck.position = Vector2(30,154)
-	_deck.key_mode = "lr"
-	_deck.page_gap = 20
-	_deck.navigation_visible = false
-	for i in 3: _deck.add_page(_page(i),Vector2(380,440))
-	content.add_child(_deck)
-	_deck.page_changed.connect(func(i: int):
-		if i==2 and is_instance_valid(_route_preview): _route_preview.call("play"))
-	var tabs := _build_tab_row(_deck,["世界","旅人","启程"],380)
-	tabs.position = Vector2(30,98)
-	content.add_child(tabs)
-	var back := Button.new()
-	back.text = "返回"
-	back.custom_minimum_size = Vector2(144, 40)
-	back.size = Vector2(144, 40)
-	back.position = Vector2(148, 622)
-	back.add_theme_font_override("font", G.font_serif)
-	back.add_theme_font_size_override("font_size", 16)
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color("142e26")
-	sb.border_color = Color("d8a846")
-	sb.set_border_width_all(1)
-	sb.set_corner_radius_all(2)
-	for state in ["normal","hover","pressed"]: back.add_theme_stylebox_override(state, sb)
-	for state in ["font_color","font_hover_color","font_pressed_color"]: back.add_theme_color_override(state, Color("ffe894"))
-	back.pressed.connect(func(): closed.emit())
-	content.add_child(back)
-	G.reveal_control(panel)
-
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var view:=preload("res://src/ui/IntroductionChestView.gd").new()
+	view.host=self
+	add_child(view)
 func _build_tab_row(deck: Control, names: Array, width: float) -> HBoxContainer:
 	var row := HBoxContainer.new()
 	row.custom_minimum_size = Vector2(width, 38)

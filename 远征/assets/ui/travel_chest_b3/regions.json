@@ -1,0 +1,288 @@
+{
+  "town": {
+    "file": "landmarks.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      0,
+      33,
+      362,
+      329
+    ]
+  },
+  "maple": {
+    "file": "landmarks.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      362,
+      35,
+      362,
+      327
+    ]
+  },
+  "stele": {
+    "file": "landmarks.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      724,
+      27,
+      362,
+      335
+    ]
+  },
+  "cavern": {
+    "file": "landmarks.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      1086,
+      21,
+      350,
+      341
+    ]
+  },
+  "salt": {
+    "file": "landmarks.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      0,
+      362,
+      362,
+      362
+    ]
+  },
+  "port": {
+    "file": "landmarks.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      362,
+      362,
+      362,
+      362
+    ]
+  },
+  "marsh": {
+    "file": "landmarks.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      724,
+      362,
+      362,
+      362
+    ]
+  },
+  "sluice": {
+    "file": "landmarks.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      1086,
+      362,
+      352,
+      362
+    ]
+  },
+  "sand": {
+    "file": "landmarks.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      0,
+      724,
+      362,
+      362
+    ]
+  },
+  "frost": {
+    "file": "landmarks.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      362,
+      724,
+      362,
+      362
+    ]
+  },
+  "mine": {
+    "file": "landmarks.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      724,
+      724,
+      362,
+      362
+    ]
+  },
+  "pass": {
+    "file": "landmarks.png",
+    "source_size": [
+      1448,
+      1086
+    ],
+    "rect": [
+      1086,
+      724,
+      362,
+      362
+    ]
+  },
+  "attack_icon": {
+    "file": "commands.png",
+    "source_size": [
+      1774,
+      887
+    ],
+    "rect": [
+      17,
+      33,
+      421,
+      410
+    ]
+  },
+  "skill": {
+    "file": "commands.png",
+    "source_size": [
+      1774,
+      887
+    ],
+    "rect": [
+      444,
+      33,
+      442,
+      410
+    ]
+  },
+  "potion": {
+    "file": "commands.png",
+    "source_size": [
+      1774,
+      887
+    ],
+    "rect": [
+      887,
+      0,
+      443,
+      443
+    ]
+  },
+  "partner": {
+    "file": "commands.png",
+    "source_size": [
+      1774,
+      887
+    ],
+    "rect": [
+      1330,
+      23,
+      426,
+      420
+    ]
+  },
+  "retreat": {
+    "file": "commands.png",
+    "source_size": [
+      1774,
+      887
+    ],
+    "rect": [
+      51,
+      443,
+      392,
+      412
+    ]
+  },
+  "auto_off": {
+    "file": "commands.png",
+    "source_size": [
+      1774,
+      887
+    ],
+    "rect": [
+      443,
+      443,
+      443,
+      426
+    ]
+  },
+  "auto_on": {
+    "file": "commands.png",
+    "source_size": [
+      1774,
+      887
+    ],
+    "rect": [
+      887,
+      443,
+      443,
+      428
+    ]
+  },
+  "speed": {
+    "file": "commands.png",
+    "source_size": [
+      1774,
+      887
+    ],
+    "rect": [
+      1330,
+      443,
+      438,
+      425
+    ]
+  },
+  "attack": {
+    "file": "attack.png",
+    "source_size": [
+      1437,
+      1095
+    ],
+    "rect": [
+      46,
+      0,
+      1347,
+      1095
+    ]
+  },
+  "map": {
+    "file": "map.png",
+    "source_size": [
+      1536,
+      1024
+    ],
+    "rect": [
+      0,
+      0,
+      1536,
+      1024
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "steward": {
+    "size": [
+      512,
+      128
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "colors": 48,
+    "feet": [
+      123,
+      123,
+      123,
+      123
+    ],
+    "lower_body_identical": true,
+    "frame_differences": [
+      0,
+      2013,
+      1426,
+      2137
+    ]
+  },
+  "guard": {
+    "size": [
+      512,
+      128
+    ],
+    "alpha_values": [
+      0,
+      255
+    ],
+    "colors": 48,
+    "feet": [
+      123,
+      123,
+      123,
+      123
+    ],
+    "lower_body_identical": true,
+    "frame_differences": [
+      0,
+      2139,
+      1530,
+      2081
+    ]
+  }
+}

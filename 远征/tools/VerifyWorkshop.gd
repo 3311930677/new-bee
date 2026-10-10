@@ -109,13 +109,27 @@ func _run() -> void:
 	await get_tree().process_frame
 	var rate_label: Label = null
 	var action: Control = null
-	for group in panel._detail.get_children():
-		if String(group.get_meta("work_page", "")) != "enhance": continue
-		for child in group.get_children():
-			if child is Label and child.text.begins_with("成功率"): rate_label = child
-			if child is Control and child.get_meta("work_action", "") == "enhance": action = child
-	_check(rate_label != null and rate_label.text.contains("95.6%") and rate_label.text.contains("积累2/3") and rate_label.text.contains("失败扣费"), "当前实例公开概率、积累与失败费用后果")
-	_check(rate_label != null and action != null and rate_label.get_global_rect().end.y <= action.get_global_rect().position.y and action.position.y+action.size.y <= 268, "两行说明不盖按钮，按钮不挤下方材料")
+	var words:=PackedStringArray()
+	var pending:Array[Node]=[panel._view._body]
+	var rule_button:Button
+	while not pending.is_empty():
+		var child:Node=pending.pop_back()
+		pending.append_array(child.get_children())
+		if child is Label:
+			words.append(child.text)
+			if child.text.begins_with("成功率"):rate_label=child
+		if child is Button and child.text=="说明":rule_button=child
+	_check(rule_button!=null,"详细费用后果有可点击说明入口")
+	if rule_button!=null:
+		rule_button.pressed.emit()
+		await get_tree().process_frame
+		for dialog in panel._view._body.find_children("*","Control",true,false):
+			if dialog is Label:words.append(dialog.text)
+	for child in panel._view._actions.get_children():
+		if child.get_meta("work_action","")=="enhance":action=child
+	var joined:=" ".join(words).replace(" ","")
+	_check(rate_label!=null and joined.contains("95.6%") and joined.contains("积累2/3") and joined.contains("失败扣费"),"概率和积累常驻，点击说明后公开失败费用后果")
+	_check(rate_label!=null and action!=null and rate_label.get_global_rect().end.y<=action.get_global_rect().position.y and panel._view._scroll.get_global_rect().end.y<action.get_global_rect().position.y,"概率与费用说明不会覆盖底部确认操作")
 	panel.queue_free()
 	await get_tree().process_frame
 

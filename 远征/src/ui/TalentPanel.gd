@@ -5,6 +5,8 @@ class_name TalentPanel
 extends Control
 
 signal closed
+const Chest := preload("res://src/ui/TravelChestUI.gd")
+var _chest: Control
 
 const CONTENT_W := 408.0
 const COL_W := 122.0
@@ -31,64 +33,16 @@ var _pulse_nodes: Array = []
 
 
 func _ready() -> void:
-	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_build()
 
 
 func _build() -> void:
-	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），不再各写一块纯灰
-	G.veil(self, 0.78)
+	_chest=preload("res://src/ui/GrowthChestView.gd").new()
+	_chest.host=self
+	_chest.system="talent"
+	add_child(_chest)
 
-	# 木匾文案不手打空格：字距由 G.banner_box 内部的 spaced_font 统一处理（规范 §30/§31）
-	var banner := G.banner_box("天赋树", 240, 50)
-	banner.position = Vector2(120, 30)
-	add_child(banner)
-
-	var panel := G.parchment_box(440, 620, 16.0)
-	panel.position = Vector2(20, 96)
-	add_child(panel)
-	var content := Control.new()
-	content.set_anchors_preset(Control.PRESET_FULL_RECT)
-	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	panel.add_child(content)
-
-	# 顶行：剩余点数
-	_points_l = G.gold_label("", G.FS_MD, true, Color("a06020"), false)
-	_points_l.position = Vector2(0, 0)
-	_points_l.custom_minimum_size = Vector2(CONTENT_W, 0)
-	content.add_child(_points_l)
-
-	# 三系列
-	_cols = Control.new()
-	_cols.position = Vector2(0, 0)
-	_cols.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	content.add_child(_cols)
-	var branches: Array = G.talents_cfg().get("branches", [])
-	for i in branches.size():
-		_build_branch(branches[i], i)
-
-	# 底部信息行（点击节点后显示详情）
-	_info_l = G.text_label("点击节点投入天赋点", G.FS_XS, Color("6a4a1e"))
-	_info_l.position = Vector2(0, 544)
-	_info_l.custom_minimum_size = Vector2(CONTENT_W, 0)
-	_info_l.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
-	_info_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	content.add_child(_info_l)
-
-	# 返回按钮走 BTN_S 档（120×38），字号 FS_SM——与全项目次级按钮同一规格，
-	# 原来写死 130×36 + FS_MD，既不在档位上，字也比同类按钮大一号
-	var close_btn := G.ghost_button("返回", G.BTN_S.x, G.BTN_S.y, G.FS_SM)
-	close_btn.position = Vector2((CONTENT_W - G.BTN_S.x) * 0.5, 572)
-	close_btn.gui_input.connect(func(ev: InputEvent):
-		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
-			closed.emit())
-	content.add_child(close_btn)
-
-	_refresh()
-
-
-## ESC / 返回手势关闭本浮层（轮次 14 统一口径；本面板是「养成」的子面板，先关自己）
 func _unhandled_input(event: InputEvent) -> void:
 	if G.ui_blocked:
 		return
@@ -280,17 +234,8 @@ func _on_node(nid: String) -> void:
 
 
 func _refresh() -> void:
-	_points_l.text = "剩余天赋点 %d / %d（每 5 级 1 点）" % [G.talent_points_left(), G.talent_points_total()]
-	# 整列重建重绘（节点少，重建最省心）；呼吸队列随重建一并清空重登记
-	_pulse_nodes.clear()
-	for c in _cols.get_children():
-		c.queue_free()
-	var branches: Array = G.talents_cfg().get("branches", [])
-	for i in branches.size():
-		_build_branch(branches[i], i)
+	if _chest!=null:_chest.refresh()
 
-
-## 可点节点的金色呼吸（仅存在待分配天赋点时才有队列，否则直接返回，不空转）
 func _process(_delta: float) -> void:
 	if _pulse_nodes.is_empty():
 		return

@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-09",
+  "mode": "built-in image_gen; no external API/CLI",
+  "assets": [
+    {
+      "id": "b1_primary",
+      "file": "primary_states.png",
+      "workspace_path": "D:/new-bee/远征/assets/ui/travel_chest_b1/primary_states.png",
+      "prompt": "Production game UI asset for a Chinese ancient-city travel fantasy pixel RPG. Art direction lantern-lit travel chest: restrained dark lacquer #17141A, aged bronze #6E5434/#C29A5B only structural, deep vermilion #6A2B1F for primary action. Front orthographic view, subtle craft, light from upper left. Transparent RGBA background, no text, no numbers, no labels, no symbols pretending to be writing, no gems, wings, compass roses, ribbons, glow halos, random grain or ornament. Create a single production sprite atlas of THREE identical compact button plates, stacked vertically in a strict 1-column 3-row equal-size grid. Every row fills the same bounding rectangle and alignment, each plate nominal 240x168 SOURCE pixels, designed for nine-slice stretch into 200-456 by 56 LOGICAL pixels. States top to bottom: normal red lacquer, pressed 12% darker red face with top highlight removed, disabled dark lacquer #221E26 with muted bronze edges. Each plate has exactly a thin two-tone bronze frame and chamfered corners, one tiny round bronze rivet at each side center. Large calm undecorated center. No cast shadow. All three frame outlines must be pixel-aligned and identical. Small clear transparent gutter between rows, no text identifying states. This is one button-state atlas, not a screen mockup.",
+      "transparent_background": true,
+      "reference_images": [],
+      "output_hint": "Generated images are saved to C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b as C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-dfce9c9f-acc4-41fb-992e-faebb28db660.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "id": "b1_hero",
+      "file": "hero_states.png",
+      "workspace_path": "D:/new-bee/远征/assets/ui/travel_chest_b1/hero_states.png",
+      "prompt": "Production game UI asset for a Chinese ancient-city travel fantasy pixel RPG. Art direction lantern-lit travel chest: restrained dark lacquer #17141A, aged bronze #6E5434/#C29A5B only structural, deep vermilion #6A2B1F for primary action. Front orthographic view, subtle craft, light from upper left. Transparent RGBA background, no text, no numbers, no labels, no symbols pretending to be writing, no gems, wings, compass roses, ribbons, glow halos, random grain or ornament. One single wide HERO action-button-state sprite atlas: three identical wide horizontal plates stacked vertically, strict equal 1-column 3-row grid. Each nominal 1200x216 SOURCE pixels, display 400x72, red lacquer with a thin dark-bronze outer frame and light-bronze inner edge, restrained 4-logical-pixel chamfered corners. Left side has a single EMPTY 40x40-logical-pixel square recessed seal slot (do not draw anything inside). Large quiet empty center for two lines of future live text. No oversized trim. Top normal, middle pressed darker face/no top highlight, bottom disabled dark lacquer/desaturated edges. Identical silhouette and clear transparent gutters, no baked labels/text/icons, no arrow, no medallion. Transparent background.",
+      "transparent_background": true,
+      "reference_images": [],
+      "output_hint": "Generated images are saved to C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b as C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-f2f5ab99-a816-4856-b880-fa0fd322c55b.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "id": "b1_sky",
+      "file": "camp_sky.png",
+      "workspace_path": "D:/new-bee/远征/assets/ui/travel_chest_b1/camp_sky.png",
+      "prompt": "Edit target: this existing pixel-art camp at blue hour. Outpaint ONLY upward by approximately 600 pixels at the same original width and pixel density. Preserve all original camp, gate, tents, characters (if any), stairs, mountains, original moon, lanterns and lower 1619 pixels unchanged, shifted downward. Added sky is deep indigo/blue-black, a few thin subtle cloud bands with faint warm light at the bottom, a few tiny stars near top only. No additional moon, bright galaxy, meteor, new buildings, new logo or UI. Add natural cloud texture so the extra sky does not look like a flat color stripe. Match the existing top edge seamlessly. The new upper sky is a 480x300 display extension; do not add a focal object there. Existing lower camp will remain a separate original texture in the game.",
+      "transparent_background": false,
+      "reference_images": [
+        "D:/new-bee/远征/image/background/art_v2/camp_bluehour.png"
+      ],
+      "output_hint": "Generated images are saved to C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b as C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-bcbeb49d-6b07-412b-a594-91c6caea4fb1.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "id": "b1_tray",
+      "file": "tray_rim.png",
+      "workspace_path": "D:/new-bee/远征/assets/ui/travel_chest_b1/tray_rim.png",
+      "prompt": "Production UI asset for the Chinese pixel travel-fantasy RPG lantern-lit travel chest direction. Dark lacquer #17141A, restrained structural old bronze #6E5434/#C29A5B, warm paper accents #BFB096. Front orthographic. Transparent background. No writing, numbers, text, gems, wings, ribbons, compass roses, ornamental scrollwork, glow halos or glitter. A SINGLE horizontal drawer rim strip texture. Very long 40:1 content silhouette, nominal 1440x36 source pixels. Ultra-thin aged bronze top lip (2 LOGICAL pixels when displayed at 480px width), one dark shadow line beneath. At each extreme end a compact L-shaped bronze corner cap extending down to 12 LOGICAL pixels, mirrored left/right, one tiny quiet rivet only per cap. Center must stay a very narrow straight horizontal rim with fully transparent space below, NOT a full rectangle, NOT a banner or panel. Sparse low-contrast patina but no engraving. Frame should be structurally crafted and slim, not chunky golden trim. This source is one rim with integrated corner caps; middle will be stretched, corners will be kept fixed.",
+      "transparent_background": true,
+      "reference_images": [],
+      "output_hint": "Generated images are saved to C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b as C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-8937121f-1c03-48e0-8842-0f9fab0aaf6b.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "id": "b1_icons",
+      "file": "icons.png",
+      "workspace_path": "D:/new-bee/远征/assets/ui/travel_chest_b1/icons.png",
+      "prompt": "Production UI asset for the Chinese pixel travel-fantasy RPG lantern-lit travel chest direction. Dark lacquer #17141A, restrained structural old bronze #6E5434/#C29A5B, warm paper accents #BFB096. Front orthographic. Transparent background. No writing, numbers, text, gems, wings, ribbons, compass roses, ornamental scrollwork, glow halos or glitter. A SINGLE production ICON SPRITE ATLAS, exactly FOUR COLUMNS by THREE ROWS, 12 icons. Equal-sized cells, centered glyphs with large transparent gutters, no background discs or frames. Hard filled silhouettes, display-scale 1px dark outline #1A1410, each icon at most 5 shade levels plus one muted object color, top-left lighting. Designed for 24-40px mobile display, strongly legible. Ordered left to right, top to bottom: row 1 a folded world map, a travel loot backpack, a sturdy green sapling for growth, an open illustrated bestiary book; row 2 a sealed festival invitation, two crossed swords for arena, a tame-pet silhouette emerging from a dim purple summoning vessel, simple bronze balance scales for exchange; row 3 two modest tea cups for reunion, a solid bronze gear, a filled bent left-return arrow, a weathered traveller boot crossing a tiny path for journey. No icon contains a compass rose, gem, decorative circle or letters. All 12 match the same crafted pixel-adjacent restrained game-UI material. Exactly 12 separate icons, one per cell, flat orthographic, no extra objects.",
+      "transparent_background": true,
+      "reference_images": [],
+      "output_hint": "Generated images are saved to C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b as C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-45817da8-fe99-44e3-98b8-123dad802173.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "id": "b1_pool",
+      "file": "stage_pool.png",
+      "workspace_path": "D:/new-bee/远征/assets/ui/travel_chest_b1/stage_pool.png",
+      "prompt": "Production game ground-light asset: a very soft elongated horizontal ellipse of warm lantern light #F0B95A, intended to sit UNDER the feet of a pixel hero in a night camp. Wide 200:48 content ratio, center gently warm with max 18% opacity, fading smoothly to fully transparent at all edges, no solid disc, no visible rim, no rays, no aura around a character, no sparkle, no object, no text. This is just a low-frequency floor illumination mask, not a magical effect. Transparent RGBA, subtle warm field; no contact shadow baked in because the game draws that separately. Fill the width with the elongated ellipse, leaving small transparent outer padding.",
+      "transparent_background": true,
+      "reference_images": [],
+      "output_hint": "Generated images are saved to C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b as C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-bec6231f-a99f-45af-bf6d-cac9479fca19.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    }
+  ],
+  "processing": "Original generated PNGs preserved. regions.json stores read-only alpha bounds for state frames and the 4x3 icon atlas. Godot renders native live text, 9-slice borders, opacity-capped light pool and the sky blend. No artwork is resized or repainted on disk."
+}

@@ -1,0 +1,25 @@
+{
+  "aspect_error": 0.000120264582080365,
+  "contains_objects": false,
+  "requested": [
+    1200,
+    2112
+  ],
+  "runtime": [
+    1200,
+    2112
+  ],
+  "source": "../source/town_ground_natural_v1.png",
+  "source_native": [
+    945,
+    1663
+  ],
+  "south_treatment": "tapered worn path fades into grass clearing, no bottom road stripe",
+  "status": "ground preview candidate, not a final pixel-grid-certified map",
+  "technical_processing": "single native nearest-neighbor normalization; no color quantization or painted retouch",
+  "tool": "built-in imagegen",
+  "world_extent": [
+    1200,
+    2112
+  ]
+}

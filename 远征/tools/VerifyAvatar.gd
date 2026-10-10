@@ -184,22 +184,15 @@ func _verify_panels() -> void:
 	add_child(login)
 	await get_tree().process_frame
 	await get_tree().process_frame
-	var cards: Array = login.get("_avatar_buttons")
-	_check(cards.size() == 1, "登录页只提供自定义头像上传入口，实为 %d" % cards.size())
-	var ids: Array = []
-	for c in cards:
-		ids.append(String(c.get_meta("avatar_id", "")))
-		var frame := c.get_node("Card") as Control
-		for child in frame.get_children():
-			if child is TextureRect:
-				_check(Rect2(Vector2.ZERO, frame.size).encloses((child as TextureRect).get_rect()),
-					"头像应缩在卡片内，不应撑出原图尺寸")
-	_check(ids.has("custom"), "登录页应有一张「自定义」上传卡")
-	_check(ids == ["custom"], "选择器不推荐职业或宠物头像")
-	_check(not (cards[0] as Button).pressed.get_connections().is_empty(), "上传入口应有实际点击处理")
-	G.use_custom_avatar()
+	var upload := login.get("_avatar_card_btn") as Button
+	var medallion := login.get("_avatar_medallion") as Control
+	_check(upload != null and not upload.pressed.get_connections().is_empty(), "登录页自定义头像入口有实际处理")
+	_check(login.get_script().AVATAR_IDS == ["custom"], "登录页只提供自定义头像")
+	_check(medallion != null and medallion.size.x <= 56 and medallion.size.y <= 56, "上传大图不会撑大头像区域")
+	G.avatar_use_custom = false
+	if upload != null: upload.pressed.emit()
+	_check(G.avatar_use_custom and G.has_custom_avatar(), "真实上传入口启用已导入头像")
 	login.call("_refresh_avatar_selection")
-	_check((cards[0].get_node("Card/SelectedMark") as Label).visible, "使用上传图后应显示选中标记")
 
 	login.queue_free()
 	await get_tree().process_frame

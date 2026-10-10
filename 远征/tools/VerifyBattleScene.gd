@@ -124,11 +124,11 @@ func _run_classic_commands() -> bool:
 		for i in scene._cmd_btns.size():
 			var cbd: Dictionary = scene._cmd_btns[i]
 			var root := cbd.root as Control
-			var want := Vector2(39.0 + i * 101.0, BattleScene.CLASSIC_CMD_Y)
-			ok = ok and root.position == want
-			var tile := Rect2(root.position, Vector2(BattleScene.CLASSIC_CMD_W,
-				BattleScene.CLASSIC_CMD_H))
-			ok = ok and not tile.intersects(sprite_rect) and not tile.intersects(bars_rect)
+			var tile:=root.get_global_rect()
+			ok=ok and tile.size.x>=44 and tile.size.y>=44
+			ok=ok and not tile.intersects(sprite_rect) and not tile.intersects(bars_rect)
+			if String(cbd.key)=="attack":ok=ok and tile.size.y>=100
+			if String(cbd.key)=="flee":ok=ok and tile.end.y<=56
 			# Imported icon dimensions must not override the intended touch layout.
 			for child in root.get_children():
 				if child is TextureRect:
@@ -161,19 +161,14 @@ func _run_classic_commands() -> bool:
 	await get_tree().process_frame  # 页条按钮 queue_free 后再核对技能页
 	var expected_skills := mini(5, role.skills.size()) if role != null else 0
 	# 技能页底边固定、按行数向上长；每行至少 44px，触屏易点且不会透出旧指令。
-	ok = ok and scene._page_panel.get_child_count() == expected_skills + 1 \
-		and BattleScene.PAGE_ROW_H >= 44.0 and not scene._cmd_root.visible \
-		and is_equal_approx(scene._page_panel.position.x, BattleScene.PAGE_PANEL_POS.x) \
-		and is_equal_approx(scene._page_panel.size.x, BattleScene.PAGE_PANEL_SIZE.x) \
-		and is_equal_approx(scene._page_panel.position.y + scene._page_panel.size.y,
-			BattleScene.PAGE_PANEL_BOTTOM)
-	if scene._page_panel.get_child_count() > 0:
-		var row0 := scene._page_panel.get_child(0) as Control
-		ok = ok and is_equal_approx(row0.size.x, BattleScene.PAGE_PANEL_SIZE.x) \
-			and is_equal_approx(row0.size.y, BattleScene.PAGE_ROW_H)
+	ok=ok and scene._chest._page_body.get_child_count()==expected_skills and not scene._cmd_root.visible
+	ok=ok and scene._page_panel.get_global_rect().end.y<=scene.get_viewport_rect().size.y
+	if expected_skills>0:
+		var row0:Control=scene._chest._page_body.get_child(0)
+		ok=ok and row0.size.y>=44 and row0.size.x>=400
 	if expected_skills > 0:
 		# 每行「左名 + 右侧灰色详情」：技能行必须写清 Lv/耗/冷/范围
-		var row_text := " ".join(_texts(scene._page_panel.get_child(0)))
+		var row_text := " ".join(_texts(scene._chest._page_body.get_child(0)))
 		ok = ok and row_text.contains("Lv") and row_text.contains("耗") \
 			and row_text.contains("冷") and row_text.contains("单体")
 		role.energy = 0
@@ -185,14 +180,15 @@ func _run_classic_commands() -> bool:
 		role.energy = Combatant.MAX_ENERGY
 		role.skills[0].cd_left = 60
 		scene._refresh_hud()
-		var detail: Label = scene._page_panel.get_child(0).get_node("DetailText")
-		ok = ok and detail.text.contains("2.0s")
+		var detail: Label = scene._chest._page_body.get_child(0).get_node("DetailText")
+		ok = ok and detail.text.contains("2.0秒")
 		scene._cast_command_skill(sid)
 		ok = ok and scene.sim.cast_queue.size()==queued and scene._page_panel.visible
 		ok = ok and scene._cast_tip.text.contains("冷却中")
 		role.skills[0].cd_left = 0
 		scene._refresh_hud()
-		ok = ok and scene._page_energy_l.text.contains(str(Combatant.MAX_ENERGY))
+		ok = ok and scene._chest._page_energy_graph.current==Combatant.MAX_ENERGY
+		ok = ok and not scene._page_energy_l.visible
 	scene._close_page()
 	ok = ok and not scene._page_panel.visible
 	scene._show_command_skills()
@@ -212,10 +208,13 @@ func _run_classic_commands() -> bool:
 	# P03：道具行必须写清「数量 + 效果」（药剂 ×N / 恢复 X% 生命）
 	var item_text := _join_texts(scene._page_panel)
 	ok = ok and item_text.contains("药剂 ×") and item_text.contains("恢复")
-	# P03 常驻信息条：四枚指令之上的一行，把攻/技/物三件事都说出来
-	var info: Label = scene.get("_cmd_info_l")
-	ok = ok and info != null and String(info.text).contains("攻") \
-		and String(info.text).contains("技") and String(info.text).contains("物")
+	# Focus chips and gauges replace the old sentence without losing target/HP/energy.
+	ok=ok and scene._chest._enemy_strip.get_child_count()>0 and scene._chest._hp_graph.maximum==role.get_max_hp()
+	var highlighted:=false
+	for chip in scene._chest._enemy_strip.get_children():
+		if chip.unit.uid==focus_id:highlighted=chip.focused
+	ok=ok and highlighted and scene._chest._buttons.attack.subtitle.text.contains("集火")
+	ok=ok and scene._chest._buttons.skill.caption.text.contains("可放") and scene._chest._buttons.item.caption.text.contains("道具")
 	scene._command_use_potion()
 	ok = ok and scene.sim.potions_left == potions_before - 1
 	scene._flee_armed = true # 模拟二次确认的第二击，验证仍落到既有撤退结算

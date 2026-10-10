@@ -92,16 +92,10 @@ func _ready() -> void:
 		await get_tree().process_frame
 		await get_tree().process_frame
 		await get_tree().process_frame
-		var forest := deploy._cards.get("0:forest") as Control
-		_check(forest != null, "Deploy must build the current forest card")
-		if forest != null:
-			var footer := forest.get("_footer") as Label
-			_check(forest.size.y <= DeployPanel.DECK_H+1, "Wrapped copy must fit within its carousel card")
-			_check(footer != null and footer.get_global_rect().end.y <= forest.get_global_rect().end.y-8,
-				"Deploy card footer must remain visible after body text wraps")
-		for button in [deploy._supply_btn,deploy._ascetic_btn]:
-			_check(button.position.x+button.size.x <= DeployPanel.CONTENT_W+1,
-				"Preparation controls must fit inside the paper page")
+		_check(deploy._chest._art.texture!=null,"出征使用实际秘境插画")
+		var safe:=G.ui_safe_rect(deploy)
+		for control in [deploy._chest._go,deploy._sweep_btn,deploy._chest.shell.scroll]:
+			_check(safe.grow(1).encloses(control.get_global_rect()),"出征控件适配当前安全区")
 		deploy.queue_free()
 		await get_tree().process_frame
 		var growth := GrowthPanel.new()

@@ -3,6 +3,7 @@ class_name SkillBookPanel
 extends Control
 
 signal closed
+var _chest:Control
 const CONTENT_W := 432.0
 const DECK_H := 468.0
 const PageDeckScript := preload("res://src/ui/PageDeck.gd")
@@ -11,69 +12,27 @@ const Craft := preload("res://src/ui/CraftUI.gd")
 const Showcase := preload("res://src/ui/SkillShowcase.gd")
 var _deck: Control = null
 var _expedition_l: Label = null
-var _toast: Label = null
+var _toast: Control = null
 var _content: Control = null
 var _tabs: Array = []
 var _sids: Array = []
 
 func _ready() -> void:
 	G.skill_study_refund()
-	G.center_fixed_page.call_deferred(self)
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_sids = G.get_role(G.selected_role).get("skills",[])
 	_build()
 
 func _build() -> void:
-	Craft.scene(self,.52)
-	Craft.heading(self,"技能书","招式研习 / " + String(G.get_role(G.selected_role).get("name","")))
-	_content = Control.new()
-	_content.position = Vector2(24,126)
-	_content.size = Vector2(CONTENT_W,572)
-	_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(_content)
-	_expedition_l = Craft.label("",Vector2(0,0),Vector2(370,32),16,Craft.GOLD,true)
-	_content.add_child(_expedition_l)
-	var info := Craft.action("?",Vector2(388,-6),Vector2(44,44))
-	info.tooltip_text = "技能书规则"
-	info.activated.connect(func(): G.show_info_popup(info,"技能书规则",[
-		"可研习招式最高 %d 级；每级伤害、治疗、护盾或攻击增益强度增加5%%。" % G.skill_max_level(),
-		"研习消耗远征币，后续等级所需远征币更多。",
-		"持续时间、控制、冷却与耗能保持原值；纯功能招式无需研习。" ]))
-	_content.add_child(info)
-	for i in _sids.size():
-		var width := CONTENT_W/maxf(1,_sids.size())
-		var words := String(TableCache.get_skill(String(_sids[i])).get("name",_sids[i]))
-		var tab := Craft.action(words,Vector2(i*width,46),Vector2(width-3,44),"tab")
-		tab.accent = Craft.ROLE_COLORS.get(G.selected_role,Craft.GOLD)
-		tab.caption.position.x = 0
-		tab.caption.size.x = width-3
-		tab.caption.add_theme_font_size_override("font_size",16)
-		var index := i
-		tab.activated.connect(func(): _deck.go(index,true))
-		_content.add_child(tab)
-		_tabs.append(tab)
-	var back := Craft.action("返回",Vector2(24,720),Vector2(432,48))
-	back.tooltip_text = "返回养成"
-	back.activated.connect(func(): closed.emit())
-	add_child(back)
+	_chest=preload("res://src/ui/CollectionChestView.gd").new()
+	_chest.system="skill"
+	_chest.host=self
+	add_child(_chest)
 	_refresh()
 
-func _refresh(preserve := false) -> void:
-	_expedition_l.text = "远征币  %d" % int(G.wallet.get("expedition",0))
-	var prev := row_want(preserve)
-	if _deck != null:
-		_content.remove_child(_deck)
-		_deck.queue_free()
-	_deck = PageDeckScript.new(CONTENT_W,DECK_H,0.0)
-	_deck.position = Vector2(0,104)
-	_deck.key_mode = "both"
-	_deck.navigation_visible = false
-	_deck.set_factory(_sids.size(),func(i: int) -> Control:
-		return _skill_page(String(_sids[i])),Vector2(CONTENT_W,DECK_H))
-	_content.add_child(_deck)
-	_deck.page_changed.connect(_select_tab)
-	_deck.go(clampi(prev,0,maxi(0,_sids.size()-1)),true)
-	_select_tab(int(_deck.current))
+func _refresh(preserve:=false) -> void:
+	var wanted:=row_want(preserve)
+	_deck.go(wanted,true)
 
 func _select_tab(index: int) -> void:
 	for i in _tabs.size():
@@ -172,17 +131,10 @@ func _on_upgrade(sid: String) -> void:
 	_refresh(true)   # 升级后留在同一页（问题 #3：以前会跳回第 1 页）
 
 
-func _toast_msg(msg: String) -> void:
-	if _toast != null:
-		_toast.queue_free()
-	_toast = G.toast_label(msg)
-	_toast.position = Vector2(-24,-70)
-	_content.add_child(_toast)
-	var tw := create_tween()
-	tw.tween_interval(1.2)
-	tw.tween_property(_toast, "modulate:a", 0.0, 0.4)
-	tw.tween_callback(_toast.queue_free)
-
+func _toast_msg(msg:String) -> void:
+	if is_instance_valid(_toast):_toast.queue_free()
+	_toast=preload("res://src/ui/TravelChestUI.gd").toast(self,msg)
+	_toast.position.y=G.ui_safe_rect(self).end.y-116
 
 func _unhandled_input(event: InputEvent) -> void:
 	if G.ui_blocked:   # GM 控制台等全屏层优先（轮次 14）

@@ -1,0 +1,190 @@
+{
+  "bush": {
+    "alpha": true,
+    "anchor": [
+      28.0,
+      48
+    ],
+    "extraction_rect": [
+      720,
+      0,
+      534,
+      850
+    ],
+    "magenta_residual_pixels": 0,
+    "native_sheet": [
+      1254,
+      1254
+    ],
+    "ready": [
+      56,
+      48
+    ],
+    "trim": [
+      78,
+      434,
+      358,
+      305
+    ]
+  },
+  "hall": {
+    "alpha": true,
+    "anchor": [
+      210.0,
+      259
+    ],
+    "door_height_approx": 88.2302158273381,
+    "magenta_residual_pixels": 0,
+    "native": [
+      1448,
+      1086
+    ],
+    "nominal_blueprint_width": 320,
+    "ready": [
+      420,
+      259
+    ],
+    "status": "prototype enlarged uniformly for doorway scale; full-town spacing not yet checked",
+    "trim": [
+      29,
+      114,
+      1390,
+      858
+    ]
+  },
+  "log": {
+    "alpha": true,
+    "anchor": [
+      42.0,
+      48
+    ],
+    "extraction_rect": [
+      627,
+      850,
+      627,
+      404
+    ],
+    "magenta_residual_pixels": 0,
+    "native_sheet": [
+      1254,
+      1254
+    ],
+    "ready": [
+      84,
+      48
+    ],
+    "trim": [
+      77,
+      42,
+      446,
+      256
+    ]
+  },
+  "meadow": {
+    "alpha": false,
+    "logical_extent": [
+      512,
+      768
+    ],
+    "magenta_residual_pixels": 0,
+    "native": [
+      1024,
+      1536
+    ],
+    "ready": [
+      512,
+      768
+    ],
+    "scale": 0.5
+  },
+  "plaza": {
+    "alpha": false,
+    "logical_extent": [
+      512,
+      768
+    ],
+    "magenta_residual_pixels": 0,
+    "native": [
+      1024,
+      1536
+    ],
+    "ready": [
+      512,
+      768
+    ],
+    "scale": 0.5
+  },
+  "rock": {
+    "alpha": true,
+    "anchor": [
+      35.5,
+      44
+    ],
+    "extraction_rect": [
+      0,
+      850,
+      627,
+      404
+    ],
+    "magenta_residual_pixels": 0,
+    "native_sheet": [
+      1254,
+      1254
+    ],
+    "ready": [
+      71,
+      44
+    ],
+    "trim": [
+      168,
+      71,
+      336,
+      209
+    ]
+  },
+  "signpost": {
+    "alpha": true,
+    "anchor": [
+      30.5,
+      64
+    ],
+    "magenta_residual_pixels": 0,
+    "native": [
+      92,
+      96
+    ],
+    "ready": [
+      61,
+      64
+    ],
+    "source": "existing sunny_travel signpost; reused, not newly generated"
+  },
+  "tree": {
+    "alpha": true,
+    "anchor": [
+      86.5,
+      192
+    ],
+    "extraction_rect": [
+      0,
+      0,
+      720,
+      850
+    ],
+    "magenta_residual_pixels": 0,
+    "native_sheet": [
+      1254,
+      1254
+    ],
+    "ready": [
+      173,
+      192
+    ],
+    "trim": [
+      58,
+      63,
+      614,
+      683
+    ]
+  }
+}

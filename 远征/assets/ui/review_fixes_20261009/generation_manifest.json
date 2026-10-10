@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-09",
+  "mode": "Built-in image_gen; no CLI or external API calls",
+  "assets": [
+    {
+      "id": "T-LOGO-WORD",
+      "file": "wordmark_body.png",
+      "generated_source_size": [1983, 793],
+      "godot_import_size_limit": 900,
+      "display_size": [300, 120],
+      "transparency": true,
+      "layers": "Body texture plus separate native shadow at logical offset (2,2). Subtitle is an editable Label and is not baked into the image.",
+      "sampling": "Linear with mipmaps; original generated source preserved",
+      "prompt": "Use case: logo-brand. Production raster game wordmark asset, landscape 900x360 transparent RGBA. Only the exact two Chinese brush-calligraphy characters \"远征\" (远 on left, 征 on right). Masterful mature Chinese fantasy journey RPG title calligraphy, restrained old bronze and lacquer, warm aged copper #C29A5B with subdued dark bronze #6E5434 depth, subtle worn metal ink surface, strong clear readable silhouettes. Wide elegant dynamic horizontal composition filling a 2.5:1 content area, preserve fine calligraphic strokes, clean alpha edges, designed to display at 300x120. Absolutely no English, no subtitle, no wings, no gem, no green ribbon, no teal, no crest, no frame, no badge, no sword, no ornaments, no backing plate, no separate drop shadow, no glow, no background, no watermark. Transparent space around glyphs. This is the formal replacement logo, not a mockup. Characters must be correct and legible."
+    },
+    {
+      "id": "T-BG-SKY-EXT",
+      "file": "sky_outpaint.png",
+      "generated_source_size": [852, 1846],
+      "reference": "res://image/background/courtyard_visual_v2.png",
+      "reference_role": "Edit target for upward sky outpainting",
+      "display": "480px wide; long-screen extension plus 33px overlap",
+      "production": "Only the painted upper sky is sampled. The original street texture remains in use, unchanged. A native shader blends across 40px above and 33px below its upper boundary; generated lower-city content is not used.",
+      "sampling": "Nearest for sky artwork and original background",
+      "prompt": "Edit target: the attached Chinese ancient city sunset pixel-art background. Extend ONLY the image canvas UPWARD with approximately 600 new pixels of painted twilight sky at the same pixel density and original width (original is 971x1619; desired extended canvas roughly 971x2219). Preserve the original street, city gate, side buildings, foreground lantern, mountains, sunset, and all original content in the lower original 1619 pixels unchanged, shifted down by the new sky extent. The added upper sky must smoothly continue the existing dark muted plum/slate twilight sky, with 2-3 sparse long painterly pixel cloud bands gently warmed by the sunset. At its lower edge it should blend imperceptibly into the original sky: no horizontal seam, no flat gradient stripe, no abrupt cloud boundary. No stars, no moon, no extra sun, no logo, no text, no UI. Preserve crisp coherent pixel-art clusters and the existing restrained dusk palette. The added sky will be separated as a 480x300 extension asset in a portrait game; do not put any strong visual focal object in it. This is an outpainting task, not a reinterpretation of the city or foreground."
+    },
+    {
+      "id": "I-CAMP",
+      "file": "camp_tent.svg",
+      "source_size": [72,72],
+      "display_size": [24,24],
+      "mode": "Native vector asset extending the existing SVG icon system",
+      "notes": "Five-color filled tent silhouette with dark entrance. The old node_campfire asset is a fire, not a tent."
+    }
+  ],
+  "native_components": ["Editable subtitle", "Bronze rules and divider dots", "Filled sprint arrow and speed marks", "Potion count plaque and zero-state shader", "Lacquer joystick", "Terrain thumbnail derived from actual ground artwork and building geometry"],
+  "unchanged_inputs": "Original logo, courtyard background, previous screenshots and authored specs have not been overwritten."
+}

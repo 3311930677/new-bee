@@ -220,7 +220,7 @@ func _run() -> void:
 	for mo in gmap._monsters:
 		tiers.append(mo.tier)
 	_check(tiers.has("elite") and tiers.count("normal") == 2, "编成应为 elite+2normal，实为 %s" % str(tiers))
-	_check(gmap._pet_btn == null or not gmap._pet_btn.visible, "无替补时换宠按钮应隐藏")
+	_check(gmap._pet_btn != null and gmap._pet_btn.visible, "仅有出战宠物时保留伙伴说明入口")
 	gmap._start_battle(gmap._monsters[0])
 	_check(gmap._battle != null, "精英战应挂载")
 	if gmap._battle != null:

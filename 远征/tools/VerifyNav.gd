@@ -20,6 +20,16 @@ const SKIP_FILES := [
 	"AvatarCatalog.gd", "JournalUI.gd", "VisualTheme.gd", "UIFinesse.gd", "FieldUI.gd", "CraftUI.gd", "LedgerStyle.gd", "IllustratedUI.gd", # 目录与样式工厂，均为 RefCounted
 	"InventoryTheme.gd", # 背包 Theme 工厂，无独立页面
 	"WorldHUD.gd", # 地图 HUD 的 Theme 与控件工厂，无独立页面
+	"LacquerUI.gd", # RefCounted 样式工厂，按钮的导航归所属页面管理
+	"FlowChestUI.gd", "RegionChestMap.gd", "LoginChestView.gd", "CreateRoleChestView.gd", "CollectionChestView.gd", "DeployChestView.gd", "SettingsChestView.gd", "IntroductionChestView.gd", "LoadingChestGauge.gd", # Shared flow renderers; owning panels handle navigation.
+	"TravelChestUI.gd", # Shared factory, not an independently navigable page.
+	"ReviewFixUI.gd", # Shared costs, gauges and native furniture; parent pages own navigation.
+	"ReferenceFrontend.gd", # RefCounted background/hero factory; Title and Login own navigation.
+	"NameTagLayout.gd", # Screen-space nameplate renderer, no independent navigation.
+	"GrowthChestView.gd", # Growth systems own the shared template navigation.
+	"ChestPageUI.gd", "EquipChestView.gd", # Shared furniture and equipment view; panels own navigation.
+	"CampChestView.gd", # Camp visual subtree; GameHome owns ESC and overlays.
+	"LoadingRelic.gd", # mouse_filter=IGNORE 的加载进度绘图组件，无可关闭浮层
 	"UIReadability.gd", "UIFeedback.gd", # Text policy and non-interactive effect components.
 	"Main.gd",        # 无 UI
 	"LoadScreen.gd",  # 过渡页：加载中途不该能返回（返回了等于卡在半路）

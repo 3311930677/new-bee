@@ -17,15 +17,14 @@ var _avatar_card_btn: Button
 var _avatar_medallion: Control
 var _avatar_dialog: FileDialog
 var _toast: Label
+var _chest:Control
 
 
 func _ready() -> void:
-	G.page_background(self, 0.18, "res://image/background/courtyard_visual_v2.png", false)
-	_build_banner()
-	_build_panel()
-	resized.connect(_layout_page)
-	_layout_page.call_deferred()
-
+	preload("res://src/ui/ReferenceFrontend.gd").backdrop(self,"login_portrait")
+	_chest=preload("res://src/ui/LoginChestView.gd").new()
+	_chest.host=self
+	add_child(_chest)
 
 func _build_banner() -> void:
 	var back := UI.button("返回", 80, 44, "dark_quiet", "back")
@@ -202,16 +201,10 @@ func _create_input_field(placeholder: String, secret := false) -> LineEdit:
 
 
 func _layout_page() -> void:
-	preload("res://src/ui/UiSafeArea.gd").restore_page(self)
-	var height := maxf(800, get_viewport_rect().size.y)
-	_paper.position = Vector2(36, maxf(214, (height - 512) * 0.5 + 50))
-	_wordmark.position = Vector2(116, _paper.position.y - 164)
-	_subtitle.position.y = _paper.position.y - 38
-	_footer.position = Vector2(0, height - 48)
-	G.fit_mobile_page(self)
-
+	_chest.layout()
 
 func _refresh_avatar_selection() -> void:
+	if _chest!=null:_chest.refresh_avatar()
 	if _avatar_medallion != null and is_instance_valid(_avatar_medallion):
 		_avatar_medallion.queue_redraw()
 	if _avatar_card_btn != null and is_instance_valid(_avatar_card_btn):
@@ -286,20 +279,8 @@ func _do_login(guest: bool) -> void:
 		G.go("res://src/ui/CreateRole.tscn")
 
 
-func _toast_msg(msg: String) -> void:
-	if _toast != null:
-		_toast.queue_free()
-	_toast = UI.label(msg, 14, Color("e5b4a2"))
-	_toast.position = Vector2(0, _paper.position.y + 524)
-	_toast.custom_minimum_size = Vector2(VIEW_W, 0)
-	_toast.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	add_child(_toast)
-	var toast := _toast
-	var tw := create_tween()
-	tw.tween_interval(1.1)
-	tw.tween_property(toast, "modulate:a", 0.0, 0.4)
-	tw.tween_callback(toast.queue_free)
-
+func _toast_msg(msg:String) -> void:
+	_chest.error(msg)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if G.ui_blocked:

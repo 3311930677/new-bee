@@ -16,6 +16,8 @@ const VIEW_H := 800.0
 const DirectionalIdle := preload("res://src/world/DirectionalIdle.gd")
 const WorldPropArt := preload("res://src/world/WorldPropArt.gd")
 const WorldArtFinish := preload("res://src/world/WorldArtFinish.gd")
+const SunnyArt:=preload("res://src/world/SunnyTravelArt.gd")
+const Lacquer := preload("res://src/ui/LacquerUI.gd")
 const HudStyle := preload("res://src/ui/WorldHUD.gd")
 const Cartography := preload("res://src/explore/MinimapCartography.gd")
 const ROLE_FRAMES := {  # 四方向行走帧（BattleScene 同款复用）
@@ -94,6 +96,16 @@ var _tidal_water_bounds: Array[StaticBody2D] = [] # 两侧深水有实体边界�
 var _tidal_ground: TidalGateGround = null
 var _mine_room_gates: Dictionary = {}
 var _mine_ground: Node2D = null
+var _round_tasks: Array[Button] = []
+const ChestPage := preload("res://src/ui/ChestPageUI.gd")
+const NameTags := preload("res://src/ui/NameTagLayout.gd")
+var _round_fold: Button
+var _round_expanded := false
+var _round_collapsed := false
+var _round_potion: Button
+var _round_interact: Button
+var _round_target: Node2D
+var _round_safe := Rect2()
 var _interactable: _Interactable = null   # 非战斗节点物件（宝箱/事件/商店/篝火）
 var _remover: Control = null              # 篝火词条删除浮层
 var _exit_ui: Control = null              # 撤离确认浮层
@@ -212,19 +224,27 @@ func _ready() -> void:
 			var saved_pos: Variant = (world_state as Dictionary).get("position", [])
 			if saved_pos is Array and (saved_pos as Array).size() >= 2:
 				_main_resume_pos = Vector2(float((saved_pos as Array)[0]), float((saved_pos as Array)[1]))
+			if ReferenceWorldArt.active(_main_map_id):
+				_main_resume_pos=preload("res://src/world/ReferencePosition.gd").migrate(_main_resume_pos,int(world_state.get("layout_version",1)),_main_cfg)
 			# 首版洛林郊野是 32×42 格；缩图时把旧档坐标按比例迁移，
 			# 避免只做边界钳制而把旅人挤到新地图的右下角。
-			if _main_map_id == "lorin_wilds" \
+			if not ReferenceWorldArt.active(_main_map_id) and _main_map_id == "lorin_wilds" \
 					and int((world_state as Dictionary).get("layout_version", 1)) < 2 \
 					and _main_resume_pos.x >= 0.0 and _main_resume_pos.y >= 0.0:
 				_main_resume_pos *= Vector2(
 					float(int(_main_cfg.get("map_cols", 20))) / 32.0,
 					float(int(_main_cfg.get("map_rows", 26))) / 42.0)
 			# 上版旧出生点在道路中段。只迁移仍停在那里的角色，不动玩家自行走到的坐标。
-			if _main_map_id == "lorin_wilds" \
+			if not ReferenceWorldArt.active(_main_map_id) and _main_map_id == "lorin_wilds" \
 					and int((world_state as Dictionary).get("layout_version", 1)) == 2 \
 					and _main_resume_pos.distance_to(Vector2(480, 980)) < 25.0:
 				_main_resume_pos = _cfg_point(_main_cfg.get("spawn", []), Vector2(480, 930))
+			# Independently validate both maps; these repairs were incorrectly nested under the v2-town branch.
+			if _main_resume_pos.x>=0 and bool(_main_cfg.get("city",false)) and _town_blocked(_main_resume_pos):
+				_main_resume_pos=_cfg_point(_main_cfg.get("spawn",[]),Vector2(480,930))
+			if _main_map_id=="maple_road" and _main_resume_pos.x>=0 and _in_river_zone(_main_resume_pos,6) and not _on_river_crossing(_main_resume_pos):
+				var bank_y:=_river_center_y(_main_resume_pos.x)
+				_main_resume_pos.y=bank_y+(-1 if _main_resume_pos.y<bank_y else 1)*(float(_main_cfg.river.get("half",22))+40)
 			var per_map: Variant = (world_state as Dictionary).get("respawn_by_map", {})
 			var saved_respawn: Variant = {}
 			if per_map is Dictionary and (per_map as Dictionary).has(_main_map_id):
@@ -299,6 +319,10 @@ func _attach_city_content() -> void:
 	_city_content.call("embed_in", self, _main_map_id)
 	add_child(_city_content)
 
+func _exit_tree()->void:
+	# Legacy health fill is still used as a compatibility value, but is not parented by the current HUD.
+	if is_instance_valid(_hp_fill) and _hp_fill.get_parent()==null:_hp_fill.free()
+
 
 # ================= 构建 =================
 ## 地表光色（P01 样板 §7）：主题 tint 乘以本图 tint，让边城／古道／断碑坡／碑窟一眼可分。
@@ -317,6 +341,8 @@ func _uses_flat_ground() -> bool:
 
 
 func _build_ground() -> void:
+	if _mode=="main_world" and ReferenceWorldArt.active(_main_map_id):return
+	if _mode=="main_world" and SunnyArt.active(_main_map_id):return
 	if _uses_flat_ground():
 		if _mode != "main_world":
 			# Consume the old floor rolls so existing expedition encounter seeds stay unchanged.
@@ -383,6 +409,17 @@ func _build_ground_detail(cols: int, rows: int) -> void:
 	if _mode == "main_world":
 		var routes: Array = _main_cfg.get("flat_routes", [])
 		_ground_path = GroundLayout.clearance(routes, cols, rows)
+		if ReferenceWorldArt.active(_main_map_id):
+			var floor:=preload("res://src/world/ReferenceFloor.gd").new();floor.name="ReferenceFineTerrain"
+			floor.setup(_main_map_id,_main_cfg)
+			_flat_ground=floor;add_child(floor);return
+		if SunnyArt.active(_main_map_id):
+			var sample_ground:=SunnyArt.Ground.new()
+			sample_ground.name="SunnySampleGround"
+			sample_ground.setup(_main_map_id,Vector2(cols*48,rows*48),routes,SunnyArt.extras_for(_main_cfg))
+			_flat_ground=sample_ground
+			add_child(sample_ground)
+			return
 		if _uses_flat_ground():
 			_add_flat_ground(cols, rows, routes)
 		return
@@ -517,6 +554,52 @@ func _cfg_point(value: Variant, fallback: Vector2) -> Vector2:
 	return fallback
 
 
+## 枫溪河道带（含 margin）：横贯全图，只有石桥段（crossing）可以走过。
+func _in_river_zone(pos: Vector2, margin := 0.0) -> bool:
+	var river: Dictionary = _main_cfg.get("river", {})
+	return not river.is_empty() and absf(pos.y - _river_center_y(pos.x)) < float(river.get("half", 16.0)) + margin
+
+func _river_center_y(x:float)->float:
+	var river:Dictionary=_main_cfg.get("river",{})
+	var points:Array=river.get("points",[])
+	if points.size()>=2:
+		var a:=Vector2(points[0][0],points[0][1])
+		var b:=Vector2(points[-1][0],points[-1][1])
+		return lerpf(a.y,b.y,clampf((x-a.x)/maxf(1,b.x-a.x),0,1))
+	return float(river.get("y",0))
+
+
+func _on_river_crossing(pos: Vector2) -> bool:
+	var crossing: Array = _main_cfg.get("river", {}).get("crossing", [0, 0])
+	return pos.x >= float(crossing[0]) and pos.x <= float(crossing[1])
+
+
+## 城镇重排后，旧存档坐标若落在建筑底座（外加余量）内，返回 true。出口牌不在此列：
+## 停在牌内的读档由 _arrival_exit_blocks 的防回切逻辑处理，不能被挪回出生点。
+func _town_blocked(pos: Vector2) -> bool:
+	if ReferenceWorldArt.active(_main_map_id):
+		for id in _main_cfg.get("city_building_positions",{}):
+			if id in _main_cfg.get("city_passable",[]):continue
+			var at:=_cfg_point(_main_cfg.city_building_positions[id],Vector2.ZERO)
+			var dimensions:Array=_main_cfg.city_building_sizes.get(id,[280,200])
+			if Rect2(at-Vector2(float(dimensions[0])*.45,48),Vector2(float(dimensions[0])*.9,40)).grow(16).has_point(pos):return true
+		return false
+	var passable: Array = _main_cfg.get("city_passable", [])
+	var positions: Dictionary = _main_cfg.get("city_building_positions", {})
+	for bd_v in TableCache.city_config_for(_main_map_id).get("buildings", []):
+		var bd := bd_v as Dictionary
+		var id := String(bd.get("id", ""))
+		if passable.has(id) or not positions.has(id):
+			continue
+		var size: Array = bd.get("size", [2.0, 2.0])
+		var at := _cfg_point(positions[id], Vector2.ZERO)
+		var w := float(size[0]) * 48.0
+		var h := float(size[1]) * 48.0
+		if Rect2(at.x - w * 0.4, at.y + h * 0.2, w * 0.8, h * 0.3).grow(16.0).has_point(pos):
+			return true
+	return false
+
+
 func _build_world() -> void:
 	var cols := int(_map_cfg.get("map_cols", 32))
 	var rows := int(_map_cfg.get("map_rows", 42))
@@ -550,8 +633,11 @@ func _build_world() -> void:
 		_add_ground_overlay(ground)
 
 	_world.y_sort_enabled = true
+	if _mode=="main_world" and ReferenceWorldArt.active(_main_map_id):ReferenceWorldArt.scenery(self)
+	if _mode=="main_world" and _main_map_id in ["maple_road","lorin_wilds"] and SunnyArt.active(_main_map_id):SunnyArt.scenery(self)
 	if _mode=="main_world" and _main_map_id=="maple_road":
 		var bridge:=preload("res://src/explore/AftermathBridge.gd").new()
+		bridge.setup(_main_cfg)
 		bridge.z_index=-8
 		_world.add_child(bridge)
 	if _mode=="main_world" and _main_map_id in ["maple_road","old_salt_road","tideflat","frost_boardwalk","frost_post","stele_core"]:
@@ -582,6 +668,7 @@ func _build_world() -> void:
 
 
 func _build_decos(cols: int, rows: int) -> void:
+	if _mode=="main_world" and ReferenceWorldArt.active(_main_map_id):return
 	if _mode == "main_world" and bool(_main_cfg.get("city", false)):
 		return
 	# 散件：随机摆放（避开出生区/传送区/中央通道），origin 底部 + 脚部碰撞，Y-sort 遮挡
@@ -610,6 +697,8 @@ func _build_decos(cols: int, rows: int) -> void:
 				continue
 			var pos := Vector2(gx * 48.0 + art_rng.randf_range(8, 40),
 				gy * 48.0 + art_rng.randf_range(8, 40))
+			if _mode == "main_world" and _in_river_zone(pos, 10.0):
+				continue  # 河道与岸线不落散件：枫溪两侧与石桥都要保持清楚
 			if pos.distance_to(spawn) < 150.0 or pos.y < 200.0:
 				continue
 			var tex: Texture2D = load("%s/%s.png" % [asset_dir, String(decos[art_rng.randi_range(0, decos.size() - 1)])])
@@ -832,11 +921,14 @@ func _sync_tidal_room_gates() -> void:
 
 
 func _world_exit_sign_position(row: Dictionary) -> Vector2:
-	var at := _cfg_point(row.get("at",[]),Vector2.ZERO)
-	if at.y < 180.0: at.y = 240.0
+	var at := _cfg_point(row.get("sign_at",row.get("at",[])),Vector2.ZERO)
+	if at.y < 180.0 and not bool(row.get("authored_sign_position",false)): at.y = 240.0
 	return at
 
 func _world_exit_touch_rect(row: Dictionary) -> Rect2:
+	if ReferenceWorldArt.active(_main_map_id):
+		var approach:=Rect2(_cfg_point(row.get("at",[]),Vector2.ZERO)+Vector2(-36,-42),Vector2(72,68))
+		return approach.merge(Rect2(_world_exit_sign_position(row)+Vector2(-36,-64),Vector2(72,68)))
 	# Sign art is 92x96 above its anchor. Enter near its middle, with player clearance.
 	return Rect2(_world_exit_sign_position(row) + Vector2(-52,-84),Vector2(104,88))
 
@@ -853,6 +945,9 @@ func _build_world_exits() -> void:
 			push_error("世界出口指向不存在的地图：%s" % destination)
 			continue
 		var marker := _WorldExit.new()
+		marker.set_meta("reference_complete",ReferenceWorldArt.active(_main_map_id))
+		marker.set_meta("caption_below",bool(row.get("caption_below",false)))
+		marker.set_meta("sunny_sample",SunnyArt.active(_main_map_id))
 		marker.position = _world_exit_sign_position(row)
 		marker.caption = String(row.get("label", destination))
 		if destination == "stele_cavern":
@@ -868,6 +963,7 @@ func _build_world_exits() -> void:
 
 func _build_player(map_w: float, map_h: float) -> void:
 	_player = CharacterBody2D.new()
+	_player.add_to_group("reference_hero")
 	_player.motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 	var spawn := _cfg_point(_main_cfg.get("spawn", []), Vector2(map_w / 2.0, map_h - 120.0)) \
 		if _mode == "main_world" else Vector2(map_w / 2.0, map_h - 120.0)
@@ -909,13 +1005,13 @@ func _build_player(map_w: float, map_h: float) -> void:
 		_player.add_child(_mount_anim)
 	if _mode == "main_world":
 		# 深底名牌保证绿地、浅色道路上都可读；红色菱形仍标识玩家。
-		_player_tag = Panel.new()
+		_player_tag = Lacquer.CutPanel.new()
 		var name_y := -38.0 - 60.0 * player_scale
 		_player_tag.position = Vector2(-70, name_y)
 		_player_tag.size = Vector2(140, 24)
 		_player_tag.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		var tag_style := StyleBoxFlat.new()
-		tag_style.bg_color = Color(0.07, 0.13, 0.09, 0.91)
+		tag_style.bg_color = Color("17151a",0.85)
 		tag_style.border_color = Color("90c79c", 0.8)
 		tag_style.set_border_width_all(1)
 		tag_style.set_corner_radius_all(0)
@@ -934,7 +1030,10 @@ func _build_player(map_w: float, map_h: float) -> void:
 		_player.add_child(_first_act_weapon)
 		# 字号收进六档（P01 样板 §5）：原来是不在档里的字面量 14，比 NPC 名签还小
 		_player_name_l = G.gold_label("", 14, false, Color("f1ffe9"), false)
-		_player_name_l.add_theme_font_override("font",G.font_display)
+		_player_name_l.add_theme_font_override("font",G.font_bold)
+		_player_name_l.add_theme_color_override("font_color",Lacquer.PAPER)
+		_player_name_l.clip_text = true
+		_player_name_l.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		_player_name_l.add_theme_font_size_override("font_size",12)
 		_player_name_l.position = Vector2(5, 1)
 		_player_name_l.size = Vector2(130, 22)
@@ -945,7 +1044,7 @@ func _build_player(map_w: float, map_h: float) -> void:
 		_player_marker = Polygon2D.new()
 		_player_marker.polygon = PackedVector2Array([
 			Vector2(0, -7), Vector2(5, 0), Vector2(0, 8), Vector2(-5, 0)])
-		_player_marker.color = Color("e54651")
+		_player_marker.color = Lacquer.PAPER
 		_player_marker.position = Vector2(0, name_y - 19.0)
 		_player.add_child(_player_marker)
 		_player_marker_gleam = Polygon2D.new()
@@ -1023,6 +1122,8 @@ func _sync_mount_visual() -> void:
 	if _mount_btn != null:
 		_mount_btn.visible = G.mount_active() in ["horse","bear"] and G.mount_tier(G.mount_active()) > 0
 		_mount_btn.tooltip_text = "下马" if riding else "上马"
+		_mount_btn.get_node("Caption").text = "下马" if riding else "骑乘"
+		_mount_btn.call("set_texture",ChestPage.texture("ride_on" if riding else "ride_off"))
 
 
 func _mount_clearance() -> bool:
@@ -1096,7 +1197,15 @@ func _sync_world_companion() -> void:
 
 	var pet_name := String(TableCache.get_pet(pid).get("name", pid))
 	var tag := G.gold_label(pet_name, G.FS_XS, true, Color("f3e7c4"), false)
+	tag.add_theme_font_override("font",G.font_bold)
+	tag.add_theme_font_size_override("font_size",12)
+	tag.add_theme_color_override("font_color",Color("bfb096"))
+	tag.add_theme_color_override("font_shadow_color",Color("0a090b"))
+	tag.add_theme_constant_override("shadow_offset_y",1)
 	tag.position = Vector2(-35, -63)
+	if _pet_follower_sprite.texture!=null:
+		var used:=preload("res://src/ui/NameTagLayout.gd").opaque_bounds(_pet_follower_sprite.texture)
+		tag.position.y=_pet_follower_sprite.position.y+(used.position.y-_pet_follower_sprite.texture.get_height()*.5)*_pet_follower_sprite.scale.y-20
 	tag.size = Vector2(70, 20)
 	tag.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	tag.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -1455,203 +1564,8 @@ func _build_main_world_status() -> void:
 
 
 func _build_hud() -> void:
-	_hud.layer = 1
-	add_child(_hud)
-	_build_vignette()  # 最先入层：只在画面四周压暗，不遮住下方的 HUD 控件
-	if _mode == "main_world":
-		_build_main_world_status()
-		var story := HudStyle.task_chip(336, "story")
-		var story_chip: Button = story.root
-		var task_y := HudStyle.CITY_TASK_Y if bool(_main_cfg.get("city", false)) else HudStyle.FIELD_TASK_Y
-		story_chip.position = Vector2(16, task_y)
-		story_chip.tooltip_text = "点击查看主线目标与奖励"
-		story_chip.pressed.connect(func():
-			if not G.ui_blocked:
-				_open_story_info(story_chip))
-		_main_story_l = story.label
-		_hud.add_child(story_chip)
-
-		var side := HudStyle.task_chip(336, "side")
-		var side_button: Button = side.root
-		_side_chip = side_button
-		_side_chip.position = Vector2(16, task_y + HudStyle.TASK_GAP)
-		_side_chip.tooltip_text = "点击查看当前追踪的支线"
-		side_button.pressed.connect(func():
-			if not G.ui_blocked:
-				var special_goal := SpecialEvents.goal(G)
-				if not special_goal.is_empty():
-					G.show_info_popup(_side_chip,"追踪奇遇",[special_goal,"到标记的地点继续，谢礼在复命时领取。"],self)
-				else: G.show_info_popup(_side_chip, "追踪支线", G.side_info_lines(), self))
-		_main_side_l = side.label
-		_hud.add_child(_side_chip)
-		_side_chip.visible = false   # 由 _refresh_hud 按追踪状态显隐
-
-	var tc_name := String(_main_cfg.get("name", "江湖")) if _mode == "main_world" \
-		else String(_theme_cfg.get("name", "未知"))
-	var nt := String(node.get("type", "normal"))
-	var nt_name: String = "主地图" if _mode == "main_world" else {
-		"normal": "遭遇区", "elite": "精英区", "boss": "首领巢穴",
-		"chest": "藏宝地", "event": "奇遇", "shop": "商队", "bonfire": "篝火地",
-	}.get(nt, "探索")
-	var top := G.parchment_box(300, 34, 8.0)
-	top.position = Vector2(16, 12)
-	_hud.add_child(top)
-	top.visible = _mode != "main_world"
-	var title := G.gold_label("%s · %s" % [tc_name, nt_name], G.FS_SM, false, Color("5a3a1e"), false)
-	title.set_anchors_preset(Control.PRESET_FULL_RECT)
-	top.add_child(title)
-
-	var goal_text := String(_main_cfg.get("goal", "沿道路探索")) if _mode == "main_world" \
-		else "寻找传送阵"
-	if _portal.locked:
-		goal_text = "击败首领，解除传送阵封印"
-	else:
-		goal_text = {
-			"chest": "开启宝箱，然后前往传送阵",
-			"event": "前方似乎有人影……",
-			"shop": "商队在此驻留",
-			"bonfire": "生火休整，再启程",
-		}.get(nt, goal_text)
-	# 目标小签：深色半透明底托（切角 + 内凹光），避免压在地图上不可读
-	var goal_chip := G.InsetPanel.new()
-	goal_chip.setup(Color(0.13, 0.09, 0.05, 0.62), Color("ffd9a0", 0.20),
-		10.0, 10.0, 3.0, 3.0)
-	goal_chip.position = Vector2(16, 52)
-	var goal := G.gold_label(goal_text, G.FS_XS, false, Color("ffd9a0"), false)
-	goal_chip.add_child(goal)
-	_hud.add_child(goal_chip)
-	goal_chip.visible = _mode != "main_world"
-
-	# 目标罗盘：一眼看到"该往哪走、还有多远"，点它开始自动前往（手游不用一直搓摇杆）
-	_compass = _Compass.new()
-	_compass.position = Vector2(16, 78)
-	_compass.tapped.connect(_on_compass_tapped)
-	_hud.add_child(_compass)
-	_compass.visible = _mode != "main_world"
-
-	if _mode != "main_world":
-		# 历练进度只属于肉鸽探索，主世界不显示清剿评价。
-		var exp_chip := G.InsetPanel.new()
-		exp_chip.setup(Color(0.13, 0.09, 0.05, 0.62), Color("c8e0a0", 0.20),
-			10.0, 10.0, 2.0, 2.0)
-		exp_chip.position = Vector2(16, 110)
-		_explore_lbl = G.gold_label("", G.FS_XS, false, Color("c8e0a0"), false)
-		exp_chip.add_child(_explore_lbl)
-		_hud.add_child(exp_chip)
-		_refresh_explore_hud()
-
-	# HP 条 + 药剂 + 换宠（整行下移让位给目标罗盘与探索小签）
-	var panel := G.parchment_box(206, 56, 10.0)
-	panel.position = Vector2(16, 136)
-	_hud.add_child(panel)
-	panel.visible = _mode != "main_world"
-	var box := VBoxContainer.new()
-	box.add_theme_constant_override("separation", 2)
-	panel.add_child(box)
-	var hp_row := HBoxContainer.new()
-	hp_row.add_theme_constant_override("separation", 6)
-	box.add_child(hp_row)
-	var bar_bg := Control.new()  # 不用容器布局——手动控制填充条宽度
-	bar_bg.custom_minimum_size = Vector2(120, 12)
-	bar_bg.clip_contents = true
-	hp_row.add_child(bar_bg)
-	var bar_sbg := ColorRect.new()
-	bar_sbg.color = Color("3a2a18")
-	bar_sbg.size = Vector2(120, 12)
-	bar_bg.add_child(bar_sbg)
-	_hp_fill.color = Color("c05a3a")
-	_hp_fill.position = Vector2(2, 2)
-	_hp_fill.size = Vector2(116, 8)
-	bar_bg.add_child(_hp_fill)
-	_pot_l = G.gold_label("", G.FS_XS, false, Color("5a3a1e"), false)
-	_pot_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	hp_row.add_child(_pot_l)
-	_refresh_hud()
-	# 主世界以 480×800 为基准；长屏把拇指按钮贴住视口底部，
-	# 右侧按钮和小地图也跟随右边缘，避免 720×1600 下悬在画面中段。
-	var extra_h := maxf(0.0, get_viewport_rect().size.y - VIEW_H) if _mode == "main_world" else 0.0
-	var extra_w := maxf(0.0, get_viewport_rect().size.x - VIEW_W) if _mode == "main_world" else 0.0
-	var action_y := 674.0 + extra_h if _mode == "main_world" else HUD_BTN_Y
-
-	var potion_btn := _hud_icon_button("itm_potion_hp_s", 52.0,
-		"使用药剂", func(): _use_potion(), "药剂", 52.0) if _mode == "main_world" \
-		else G.gold_button("药", 48, HUD_BTN_H, HUD_BTN_FS)
-	potion_btn.position = Vector2(350 + extra_w, action_y) if _mode == "main_world" else Vector2(232, action_y)
-	if _mode == "main_world":
-		var badge := G.PixelButton.new()
-		badge.position = Vector2(35, -3)
-		badge.custom_minimum_size = Vector2(19, 17)
-		badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		# 数量角标：切角小牌（凸起 + 硬影），弃用圆角8的"药丸"
-		badge.set_content_margin(2.0)
-		var bsb := badge.get_theme_stylebox("panel") as StyleBoxFlat
-		bsb.content_margin_top = 0.0   # 竖直留白保持 0，13px 字不压
-		bsb.content_margin_bottom = 0.0
-		badge.set_surface(Color("142d2b"), G.GOLD)
-		_potion_badge = G.gold_label("", G.FS_XS, true, Color("fff2c9"), true)
-		_potion_badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		badge.add_child(_potion_badge)
-		potion_btn.add_child(badge)
-	else:
-		potion_btn.gui_input.connect(func(e: InputEvent):
-			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-				_use_potion())
-	_hud.add_child(potion_btn)
-
-	_pet_btn = _hud_icon_button("f6_icon_pet", 52.0,
-		"切换出战宠物", func(): _swap_pet(), "伙伴", 52.0) if _mode == "main_world" \
-		else G.gold_button("换宠", 66, HUD_BTN_H, HUD_BTN_FS)
-	_pet_btn.position = Vector2(408 + extra_w, action_y) if _mode == "main_world" else Vector2(288, action_y)
-	if _mode != "main_world":
-		_pet_btn.gui_input.connect(func(e: InputEvent):
-			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-				_swap_pet())
-	_hud.add_child(_pet_btn)
-
-	# 撤离：手边就必须能退出去（PC 亦可按 ESC），点按后二次确认防误触
-	# 位置让给右上角小地图（小地图 y 到 116），下移到地图正下方仍是拇指热区；右缘与小地图对齐
-	var exit_btn := _hud_icon_button("node_campfire", 52.0,
-		"返回营帐", func(): _ask_exit(), "营帐", 52.0) if _mode == "main_world" \
-		else G.gold_button("撤离", 66, HUD_BTN_H, HUD_BTN_FS)
-	exit_btn.position = Vector2(408 + extra_w, 732 + extra_h) if _mode == "main_world" \
-		else Vector2(HUD_BTN_RIGHT - 66.0, action_y)
-	if _mode != "main_world":
-		exit_btn.gui_input.connect(func(e: InputEvent):
-			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-				_ask_exit())
-	_hud.add_child(exit_btn)
-
-	# 右上角小地图：全局位置感（"我在哪、出口在哪、还有几个人"）
-	_minimap = _Minimap.new()
-	_minimap.map_ref = self
-	_minimap.position = Vector2(_MiniMapPos.x + extra_w, _MiniMapPos.y)
-	_minimap.tapped.connect(_toggle_big_map)
-	_hud.add_child(_minimap)
-
-	# 疾行：地图纵深远、步行慢，空跑的那段路要能加速（数据配置 sprint_mult）
-	_sprint_btn = _hud_icon_button("", 52.0,
-		"疾行：关闭", func(): _toggle_sprint(), "疾行", 52.0) if _mode == "main_world" \
-		else G.gold_button("疾行 · 关", 100, HUD_BTN_H, HUD_BTN_FS)
-	_sprint_btn.position = Vector2(350 + extra_w, 732 + extra_h) if _mode == "main_world" \
-		else Vector2(HUD_BTN_RIGHT - 100.0, VIEW_H - 200)
-	if _mode != "main_world":
-		_sprint_btn.gui_input.connect(func(e: InputEvent):
-			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-				_toggle_sprint())
-	_hud.add_child(_sprint_btn)
-	if _mode == "main_world":
-		_mount_btn = _hud_icon_button("f6_icon_mount", 52.0,
-			"上马／下马", func(): _toggle_mount(), "骑乘", 52.0)
-		_mount_btn.position = Vector2(292 + extra_w, 732 + extra_h)
-		_hud.add_child(_mount_btn)
-		_sync_mount_visual()
-
-	_joy = _Joystick.new()
-	_joy.position = Vector2(28, VIEW_H - 176 + extra_h)
-	_hud.add_child(_joy)
-	preload("res://src/ui/UiSafeArea.gd").fit_hud(_hud,G.ui_safe_rect(self),get_viewport_rect())
-	_refresh_hud()  # 覆盖换宠按钮可见性（bench 为空时隐藏）
-
+	_build_round1_hud()
+	return
 
 func _open_story_info(anchor: Control) -> void:
 	var row := G.story_current()
@@ -1665,44 +1579,6 @@ func _open_story_info(anchor: Control) -> void:
 	for reward_line in G.reward_lines(reward):
 		lines.append(String(reward_line))
 	G.show_info_popup(anchor, title, lines, self)
-
-
-func _hud_icon_button(icon_key: String, width: float, hint: String, action: Callable,
-		caption := "", height := HUD_BTN_H) -> Control:
-	var holder := Control.new()
-	holder.size = Vector2(width, height)
-	holder.mouse_filter = Control.MOUSE_FILTER_PASS
-	var hit := G.gold_button("", width, height, HUD_BTN_FS)
-	hit.set_meta("visual_family",{"药剂":"market","伙伴":"garden","疾行":"atlas","营帐":"journal"}.get(caption,"journal"))
-	hit.tooltip_text = hint
-	hit.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			action.call())
-	holder.add_child(hit)
-	if icon_key.is_empty():
-		var mark := G.gold_label("»", 27, true, G.GOLD_BRIGHT, false)
-		mark.position = Vector2(0, -5)
-		mark.size = Vector2(width, 37)
-		mark.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		mark.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		holder.add_child(mark)
-	else:
-		var icon := Sprite2D.new()
-		icon.texture = load("res://image/generated_362_xajh/ready/ui/%s.png" % icon_key) as Texture2D \
-			if icon_key.begins_with("f6_") else G.res_tex(icon_key)
-		icon.position = Vector2(width * 0.5, 19.0 if not caption.is_empty() else height * 0.5)
-		if icon.texture != null:
-			var icon_px := 28.0 if not caption.is_empty() else 34.0
-			icon.scale = Vector2.ONE * (icon_px / maxf(icon.texture.get_width(), icon.texture.get_height()))
-		holder.add_child(icon)
-	if not caption.is_empty():
-		var cap := G.serif_label(caption, G.FS_XS, G.GOLD_BRIGHT)
-		cap.position = Vector2(0, 32)
-		cap.size = Vector2(width, 18)
-		cap.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		cap.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		holder.add_child(cap)
-	return holder
 
 
 func _sync_campaign_level() -> void:
@@ -1727,10 +1603,12 @@ func _refresh_hud() -> void:
 		var exp := int(G.prog.get("exp", 0))
 		var need := G.exp_to_next(lv)
 		var exp_ratio := 1.0 if need <= 0 else clampf(float(exp) / float(need), 0.0, 1.0)
-		_main_level_l.text = "Lv%d" % lv
+		_main_level_l.text = str(lv)
+		_main_level_l.add_theme_font_size_override("font_size", 16 if lv >= 100 else 20)
 		HudStyle.progress(_main_hp_fill, float(hp) / float(maxi(m, 1)))
 		HudStyle.progress(_main_exp_fill, exp_ratio)
-		_main_hp_fill.color = Color("e99978") if float(hp) / float(maxi(m, 1)) <= 0.3 else Color("92cbaa")
+		_main_hp_fill.color = Lacquer.RED if float(hp) / float(maxi(m, 1)) <= 0.3 else Lacquer.JADE
+		_main_hp_l.add_theme_color_override("font_color", Lacquer.RED if float(hp) / maxi(m, 1) <= 0.3 else Lacquer.PAPER)
 		_main_hp_l.text = "%d/%d" % [hp, m]
 		_main_hp_l.tooltip_text = "生命 %d / %d" % [hp, m]
 		_main_exp_l.text = "%d%%" % roundi(exp_ratio * 100.0)
@@ -1750,8 +1628,10 @@ func _refresh_hud() -> void:
 			HudStyle.update_task(_main_side_l, side_text)
 			_side_chip.tooltip_text = side_text + " · 查看追踪支线"
 		if _player_name_l != null:
-			_player_name_l.text = "%s  Lv%d" % [G.display_name(), lv]
-			var name_width := G.font_display.get_string_size(_player_name_l.text,
+			var player_name := G.display_name()
+			_player_name_l.text = "%s  Lv%d" % [player_name.left(8)+"…" if player_name.length()>8 else player_name, lv]
+			_player_name_l.tooltip_text = player_name
+			var name_width := G.font_bold.get_string_size(_player_name_l.text,
 				HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
 			var tag_width := clampf(name_width + 16.0, 88.0, 180.0)
 			_player_tag.size.x = tag_width
@@ -1763,9 +1643,17 @@ func _refresh_hud() -> void:
 	_pot_l.text = "药剂 ×%d" % st.potions if not st.ascetic \
 		else "苦行 · 药剂 ×%d" % st.potions
 	if _potion_badge != null:
-		_potion_badge.text = str(st.potions)
+		_potion_badge.text = str(st.potions) if st.potions < 100 else "99+"
+		_round_potion.call("set_count",st.potions)
 	if _pet_btn != null:
-		_pet_btn.visible = st.bench_pet != ""
+		_pet_btn.visible = not st.active_pet.is_empty() or not st.bench_pet.is_empty()
+		_pet_btn.set_meta("partner_available",not st.bench_pet.is_empty());_pet_btn.queue_redraw()
+		_pet_btn.tooltip_text = "切换出战与替补伙伴" if not st.bench_pet.is_empty() else "查看当前同行伙伴"
+	_layout_round_tasks()
+	if _mode != "main_world" and _main_level_l != null:
+		_main_level_l.text = str(st.level)
+		_main_hp_l.text = "%d/%d" % [hp,m]
+		HudStyle.progress(_main_hp_fill,float(hp)/maxi(m,1))
 
 
 ## 可见换装（P04 §6.4）：在身武器的稀有度决定名签描边色，并在手中画一件武器小图标。
@@ -1779,6 +1667,7 @@ func _refresh_player_appearance() -> void:
 		_player_tag_style.border_color = Color("90c79c", 0.8)
 	else:
 		_player_tag_style.border_color = Color(hex)
+	_player_tag.queue_redraw()
 	if _player_weapon_spr == null:
 		return
 	var icon := String(app.get("weapon_icon", ""))
@@ -1825,7 +1714,12 @@ func _use_potion() -> void:
 
 
 func _swap_pet() -> void:
-	if _battle != null or _map_done or st.bench_pet == "":
+	if _battle != null or _map_done:
+		return
+	if st.bench_pet.is_empty():
+		if not st.active_pet.is_empty():
+			var pet:=TableCache.get_pet(st.active_pet)
+			G.show_info_popup(_pet_btn,String(pet.get("name","同行伙伴")),["当前同行伙伴",G.pet_unlock_text(st.active_pet),"暂无替补伙伴；可在营帐的出征筹备中选择已结缘伙伴。"],self)
 		return
 	var before_run := st.snapshot()
 	var old := st.active_pet
@@ -2622,6 +2516,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if not event.is_action_pressed("ui_cancel"):
 		return
+	if _round_expanded:
+		_round_expanded = false
+		_layout_round_tasks()
+		get_viewport().set_input_as_handled()
+		return
 	var vp := get_viewport()  # 切场景途中本节点可能已离场，viewport 会是 null
 	if _altar_ui != null:  # 祭坛选择框在最上层（只关它，不动大地图/撤离）
 		for s in _spots:
@@ -2716,6 +2615,8 @@ func _cancel_exit() -> void:
 
 # ================= 主循环 =================
 func _physics_process(delta: float) -> void:
+	_tick_round_interaction()
+	_resolve_name_tags()
 	_tick_main_respawns(delta)
 	_world_exit_cd = maxf(0.0, _world_exit_cd - delta)
 	if _modal_open():
@@ -2835,6 +2736,9 @@ func _rank() -> Dictionary:
 
 
 func _refresh_explore_hud() -> void:
+	if _mode != "main_world" and _main_story_l != null:
+		var info := _nav_info()
+		HudStyle.update_task(_main_story_l,"主 · " + String(info.get("name","寻找传送阵")))
 	if _explore_lbl == null:
 		return
 	var total := _total_monsters
@@ -3166,6 +3070,20 @@ func _closest_feedback()->Node2D:
 			_feedback_focus=entity
 	return _feedback_focus
 
+func _hud_target_info() -> Dictionary:
+	# Resolve the displayed quest marker without changing the existing autowalk destination.
+	if _mode == "main_world" and SpecialEvents.tracked(G).is_empty():
+		var story := G.story_current()
+		if String(story.get("map","")) == _main_map_id:
+			var target := String(story.get("target",""))
+			if _city_content != null and String(story.get("event","")) == "talk":
+				for npc in _city_content._npcs:
+					if String(npc.data.get("id","")) == target:
+						return {"pos":npc.position,"kind":"quest","name":String(story.get("goal",""))}
+			for entity in _quest_entities:
+				if entity.eid == target and not entity.used: return {"pos":entity.position,"kind":"quest","name":entity.caption}
+	return _nav_info()
+
 func _nav_info() -> Dictionary:
 	var special_id := SpecialEvents.tracked(G) if _mode=="main_world" else ""
 	if not special_id.is_empty():
@@ -3233,6 +3151,7 @@ func _update_nav(delta: float = 0.0) -> void:
 	if _compass != null:
 		_compass.set_target(String(info.get("name", "")), info.get("pos", Vector2.ZERO),
 			_player.position if _player != null else Vector2.ZERO, _auto_walk)
+	if _compass != null: _compass.visible = false
 	if _minimap == null:
 		return
 	# 小地图重绘上限 ~10Hz（问题 #15）：一次 _draw 要遍历怪物/拾取物/兴趣点/传送阵多个集合，
@@ -3287,7 +3206,8 @@ func _stop_auto_walk(msg: String) -> void:
 ## 自动前往的转向：直线朝目标；被散件挡住时先沿切线绕一段再回来
 func _auto_dir(delta: float) -> Vector2:
 	var info := _nav_info()
-	var to := (info.get("pos", Vector2.ZERO) as Vector2) - _player.position
+	var target := info.get("pos", Vector2.ZERO) as Vector2
+	var to := target - _player.position
 	if to.length() < 24.0:
 		_stop_auto_walk("")
 		return Vector2.ZERO
@@ -3297,11 +3217,30 @@ func _auto_dir(delta: float) -> Vector2:
 	if _auto_time > allowed:
 		_stop_auto_walk("走得太久——请你亲自来")
 		return Vector2.ZERO
+	var steer := _river_detour(_player.position, target) - _player.position
 	if _auto_dodge > 0.0:
 		_auto_dodge -= delta
-		var side := to.normalized().rotated(PI * 0.5 * _auto_dodge_side)
+		var side := steer.normalized().rotated(PI * 0.5 * _auto_dodge_side)
 		return side
-	return to.normalized()
+	return steer.normalized()
+
+
+## 枫溪只留石桥可过：跨河时先走到桥轴同侧，再直线去目标；同岸或已在桥上则直取目标。
+func _river_detour(from: Vector2, target: Vector2) -> Vector2:
+	var river: Dictionary = _main_cfg.get("river", {})
+	if river.is_empty():
+		return target
+	var crossing: Array = river.get("crossing", [0, 0])
+	var axis_x := (float(crossing[0]) + float(crossing[1])) * 0.5
+	var from_side:=signf(from.y-_river_center_y(from.x))
+	var target_side:=signf(target.y-_river_center_y(target.x))
+	if _in_river_zone(from,18):
+		if _in_river_zone(target) and _on_river_crossing(target):return target
+		return Vector2(axis_x,_river_center_y(axis_x)+target_side*(float(river.get("half",22))+48))
+	if from_side==target_side:
+		return target
+	if absf(from.x-axis_x)>8:return Vector2(axis_x,from.y)
+	return Vector2(axis_x,_river_center_y(axis_x)+target_side*(float(river.get("half",22))+48))
 
 
 ## 卡住判定：实际位移远低于预期持续一小段，就换一侧绕行（树林/岩石多的图不会卡死）
@@ -3329,94 +3268,83 @@ func _tick_auto_walk(delta: float) -> void:
 func _toggle_sprint() -> void:
 	_sprint = not _sprint
 	if _sprint_btn != null:
-		if _mode == "main_world":
-			var mark := _sprint_btn.get_child(1) as Label
-			if mark != null:
-				mark.text = "»»" if _sprint else "»"
-			(_sprint_btn.get_child(0) as Control).tooltip_text = \
-				"疾行：开启" if _sprint else "疾行：关闭"
-		else:
-			var l := _sprint_btn.get_child(0) as Label
-			if l != null:
-				l.text = "疾行 · 开" if _sprint else "疾行 · 关"
+		_sprint_btn.set("active", _sprint)
+		_sprint_btn.call("set_texture",ChestPage.texture("sprint_on" if _sprint else "sprint_off"))
+		_sprint_btn.get_node("Caption").text = "疾行中" if _sprint else "疾行"
+		_sprint_btn.get_node("Glyph").text = "»»" if _sprint else "»"
+		_sprint_btn.tooltip_text = "疾行：开启" if _sprint else "疾行：关闭"
+		_sprint_btn.queue_redraw()
+		if _sprint_btn.get_node_or_null("MotionIcon") != null: _sprint_btn.get_node("MotionIcon").queue_redraw()
 	Audio.sfx("ui_click")
-
 
 ## 大地图：点小地图呼出，看清整片地形与全部目标；带图例与返回按钮
 func _toggle_big_map() -> void:
 	if _big_map != null:
 		_close_big_map()
 		return
-	if _map_done or _battle != null:
-		return
+	if _map_done or _battle != null or G.ui_blocked: return
 	Audio.sfx("ui_open")
-	_mark_nav_dirty()   # 打开大地图时数据必须是最新的（问题 #15）
+	_mark_nav_dirty()
+	var safe := G.ui_safe_rect(self)
 	_big_map = Control.new()
-	_big_map.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_big_map.name = "ExpandedMap"
+	_big_map.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_big_map.mouse_filter = Control.MOUSE_FILTER_STOP
 	_hud.add_child(_big_map)
-	G.veil(_big_map, 0.74, true)
-
-	var banner := G.banner_box("地 图", 200, 46)
-	banner.position = Vector2((VIEW_W - 200.0) * 0.5, 40)
-	_big_map.add_child(banner)
-
-	var panel := G.parchment_box(400, 560, 16.0)
-	panel.position = Vector2(40, 108)
+	G.veil(_big_map,0.30,true)
+	var panel := Lacquer.Surface.new()
+	panel.position = safe.position + Vector2(24,72)
+	panel.size = Vector2(safe.size.x - 48, safe.size.y - 200)
+	panel.bg = Color("17151a",0.96)
 	_big_map.add_child(panel)
-	var content := Control.new()
-	content.set_anchors_preset(Control.PRESET_FULL_RECT)
-	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	panel.add_child(content)
-
+	var name_text := String(_main_cfg.get("name","地域舆图")) if _mode == "main_world" else String(_theme_cfg.get("name","地域舆图"))
+	var title := Lacquer.label(name_text,18,Lacquer.PAPER,true)
+	title.position = Vector2(16,8)
+	title.size = Vector2(panel.size.x - 76,30)
+	title.clip_text = true
+	title.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	panel.add_child(title)
+	var close := Lacquer.Action.new("×")
+	close.position = Vector2(panel.size.x-44,4)
+	close.size = Vector2(44,44)
+	close.quiet = true
+	close.pressed.connect(_close_big_map)
+	panel.add_child(close)
 	var mm := _Minimap.new()
-	mm.map_ref = self
 	mm.big = true
-	mm.position = Vector2(54, 6)
-	content.add_child(mm)
-
-	var ext := _map_extent()
-	var lines := [
-		"全图 %d × %d 格（约 %.0f × %.0f 步）" % [int(ext.x / 48.0), int(ext.y / 48.0),
-			ext.x / 48.0, ext.y / 48.0],
-		"金箭：你所在的位置 · 亮框：当前视野 · 铜线：道路",
-		"青点：传送阵（封印时转紫）· 金菱：宝箱 / 事件 / 商队 / 篝火",
-		"红点：敌影（视野内才会显形）· 亮点：散落的钱袋 / 魂晶（走近自动入袋）",
-		"清光全图怪物有额外赏，走的越细、离开时的评价越高",
-		"紫菱：碑灵祭坛（献金重摇一次祝福）· 灰点：矿脉（白拿养成材料）",
-		"点下方「前 往」自动走到当前目标；再推摇杆即可接手",
-	]
+	mm.map_ref = self
+	mm.position = Vector2(16,44)
+	panel.add_child(mm)
+	mm.size = Vector2(panel.size.x-32,maxf(260,panel.size.y-246))
+	for child in mm.get_children():
+		if child is Label: child.visible = false
+	mm.tapped.connect(_close_big_map)
+	var terrain_key:="白箭：当前位置 · 暗块：建筑 · 蓝绿：水域" if not bool(_main_cfg.get("minimap_show_roads",true)) else "白箭：当前位置 · 沙色：道路 · 暗块：建筑"
+	var lines := [terrain_key, "金菱：目标 · 方点：NPC · 红点：敌影"]
 	if _mode == "main_world":
-		lines = ["首次探索沿道路前进；已经去过的地点可乘驿车", "首次到访解锁落点，地图任务条件仍须满足", "携带商货、运单或护送途中请亲自走路"]
+		lines.append("首次探索沿道路前进；已访地点可乘驿车")
+		lines.append("商货、运单或护送途中请亲自走路")
+	else:
+		lines.append("亮点：拾取物 · 紫菱：祭坛 · 灰点：矿脉")
+		lines.append("点「前往」自动走到目标；推动摇杆接手")
 	for i in lines.size():
-		var l := G.text_label(String(lines[i]), G.FS_XS, Color("5a3a1e"))
-		l.position = Vector2(16, 360 + float(i) * 21.0)
-		l.custom_minimum_size = Vector2(336, 0)
-		content.add_child(l)
-
-	var go := G.gold_button("前 往", 148, 44)
-	go.position = Vector2(24, 474)
-	go.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_close_big_map()
-			_start_auto_walk())
-	content.add_child(go)
-	var back := G.gold_button("返 回", 148, 44)
-	back.position = Vector2(192, 474)
-	back.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_close_big_map())
-	content.add_child(back)
+		var l := Lacquer.label(lines[i],12,Lacquer.AGED)
+		l.position = Vector2(16,panel.size.y-190+i*20)
+		l.size = Vector2(panel.size.x-32,20)
+		panel.add_child(l)
+	for entry in [["前往",16.0,func(): _close_big_map(); _start_auto_walk()],
+		["返回",panel.size.x-164,func(): _close_big_map()]]:
+		var button := Lacquer.Action.new(entry[0])
+		button.position = Vector2(entry[1],panel.size.y-96)
+		button.size = Vector2(148,44)
+		button.pressed.connect(entry[2])
+		panel.add_child(button)
 	if _mode == "main_world":
-		go.position.y = 432
-		back.position.y = 432
-		var journey := G.gold_button("驿路与传世",316,44,G.FS_SM)
-		journey.position = Vector2(24,484)
-		journey.gui_input.connect(func(e: InputEvent):
-			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-				_close_big_map()
-				_open_journey())
-		content.add_child(journey)
+		var journey := Lacquer.Action.new("驿路与传世")
+		journey.position = Vector2(16,panel.size.y-46)
+		journey.size = Vector2(panel.size.x-32,44)
+		journey.pressed.connect(func(): _close_big_map(); _open_journey())
+		panel.add_child(journey)
 
 
 func _close_big_map() -> void:
@@ -4685,8 +4613,13 @@ class _WorldExit extends Node2D:
 			(Color("d7d5cd") if gate_style == "sealed" else Color("fff1c4"))
 		var label := G.gold_label(caption, G.FS_XS, true, caption_color, true)
 		_caption_label = label
-		label.position = Vector2(-84, -116)
-		label.size = Vector2(168, 24)
+		label.position = Vector2(32,-54)
+		label.add_theme_font_override("font",G.font_bold)
+		label.add_theme_font_size_override("font_size",12)
+		label.size = Vector2(clampf(G.font_bold.get_string_size(caption,HORIZONTAL_ALIGNMENT_LEFT,-1,12).x+10,60,144),24)
+		if bool(get_meta("caption_below",false)):label.position=Vector2(-label.size.x*.5,16)
+		label.clip_text=true
+		label.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(label)
@@ -4694,6 +4627,12 @@ class _WorldExit extends Node2D:
 
 	func _process(_delta: float) -> void:
 		if _caption_label == null: return
+		var xf:=get_global_transform_with_canvas()
+		var scale_x:=absf(xf.x.x)
+		if bool(get_meta("caption_below",false)):
+			_caption_label.position.x=-_caption_label.size.x*.5
+		else:
+			_caption_label.position.x=32 if xf.origin.x+(32+_caption_label.size.x)*scale_x<get_viewport_rect().size.x-4 else -32-_caption_label.size.x
 		var screen_at := get_global_transform_with_canvas() * _caption_label.position
 		var viewport_size := get_viewport_rect().size
 		var label_rect := Rect2(screen_at, _caption_label.size)
@@ -4704,7 +4643,12 @@ class _WorldExit extends Node2D:
 			and screen_at.x >= 2 and label_rect.end.x <= viewport_size.x - 2
 
 	func _draw() -> void:
-		MapScene.WorldPropArt.signpost(self,gate_style)
+		if bool(get_meta("reference_complete",false)):
+			draw_texture_rect(ReferenceWorldArt.texture("signpost"),Rect2(-30.5,-64,61,64),false)
+		elif bool(get_meta("sunny_sample",false)):
+			draw_set_transform(Vector2(2,1),0,Vector2(1,.3));draw_circle(Vector2.ZERO,23,Color("483b2e",.4));draw_set_transform(Vector2.ZERO)
+			draw_texture_rect(MapScene.SunnyArt.texture("signpost"),Rect2(-46,-94,92,96),false)
+		else:MapScene.WorldPropArt.signpost(self,gate_style)
 
 
 class _MapMonster extends CharacterBody2D:
@@ -4802,10 +4746,11 @@ class _MapMonster extends CharacterBody2D:
 			var mon_name := String(TableCache.get_monster(mon_id).get("name", "怪物"))
 			var txt := "Lv%d %s" % [display_level, mon_name]
 			# 普通明雷的信息层压低一档；精英／首领仍保留醒目的紫色等级提示。
-			var label_fs := G.FS_SM if tier in ["elite", "boss"] else G.FS_XS
-			var label_color := Color("c46cdd") if tier in ["elite", "boss"] \
-				else Color("c9b2d1", 0.9)
+			var label_fs := 12
+			var label_color := Color("e58a72")
 			level_l = G.gold_label(txt, label_fs, true, label_color, true)
+			level_l.add_theme_font_size_override("font_size",12)
+			level_l.add_theme_color_override("font_shadow_color",Color("0a090b"));level_l.add_theme_constant_override("shadow_offset_y",1)
 			# P01 样板 §6：盒宽按文本实测（旧值固定 132，长名截断、短名留白），
 			# 位置再按画布坐标钳回屏内，避免怪物走到屏缘时名签被裁掉半边。
 			var label_w := clampf(G.font_bold.get_string_size(txt,
@@ -4817,6 +4762,9 @@ class _MapMonster extends CharacterBody2D:
 			level_l.custom_minimum_size = Vector2(label_w, 0)
 			level_l.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			add_child(level_l)
+			var badge:=PanelContainer.new();badge.mouse_filter=Control.MOUSE_FILTER_IGNORE;badge.position=Vector2(1,2)
+			var badge_style:=StyleBoxFlat.new();badge_style.bg_color=Color("17141a",.95);badge_style.content_margin_left=3;badge_style.content_margin_right=3;badge.add_theme_stylebox_override("panel",badge_style)
+			var number:=Lacquer.label("Lv%d"%display_level,12,Color("e58a72"));number.add_theme_font_override("font",G.font_bold);badge.add_child(number);level_l.add_child(badge)
 		var h := float(absi(hash(Vector2(position).floor())))
 		for i in 18:
 			_lobe.append(sin(float(i) * 2.1 + h) * 0.13 + sin(float(i) * 0.7 + h * 0.5) * 0.09)
@@ -4845,7 +4793,8 @@ class _MapMonster extends CharacterBody2D:
 		# 名签不得盖住 HUD（P01 样板 §6）：落进上方状态面板／主线条或下方按钮与摇杆区
 		# 就隐藏——HUD 是半透明的，压在下面照样透出来。
 		var scr_top := xf.origin.y + _label_top * z
-		level_l.visible = scr_top >= _hud_safe_top() and scr_top + LABEL_H * z <= 600.0
+		var screen_box := Rect2(Vector2(xf.origin.x+px*z,scr_top),Vector2(w,LABEL_H)*z)
+		level_l.visible = map_ref==null or not map_ref._name_tag_hits_hud(screen_box)
 
 	## 上方 HUD 禁区下缘：取状态面板与主线签的实际落位（城内主线签更低），不是写死 116
 	func _hud_safe_top() -> float:
@@ -5263,6 +5212,19 @@ class _QuestEntity extends Node2D:
 		queue_redraw()
 
 	func _draw() -> void:
+		if map_ref!=null and ReferenceWorldArt.active(map_ref._main_map_id):
+			var prop:=""
+			match art:
+				"chime":prop="windchime"
+				"cache":prop="stonebox"
+				"return_lamp":prop="lantern"
+				"root":prop="fern"
+				"post":prop="ledger" if kind=="trade" else "signpost"
+			if not prop.is_empty():
+				var group:="foliage" if prop=="fern" else "props"
+				var size:=ReferenceWorldArt.dimensions(group,prop)
+				draw_texture_rect(ReferenceWorldArt.texture(prop),Rect2(Vector2(-size.x*.5,-size.y),size),false)
+				return
 		if art == "trade_stall" and _trade_tex != null:
 			preload("res://src/world/BuildingGrounding.gd").draw_prop(self,_trade_ground,Vector2(-56,-96),_trade_tex.get_width())
 		elif art not in ["trust_zhaoyuan","trust_shenyuan","trust_frost","return_lamp","return_letter","return_tidebud","return_snowflower","return_rune","stele_anchor","frost_brazier","frost_lichen","mine_vent","frost_echo","signal_ribbons","mine_cart","rope","feather","tide_cargo","salt_cart","chime","cache","post"]:
@@ -5406,10 +5368,11 @@ class _Minimap extends Control:
 		mouse_entered.connect(func(): _hovered = true; queue_redraw())
 		mouse_exited.connect(func(): _hovered = false; queue_redraw())
 		custom_minimum_size = Vector2(260.0, 342.0) if big \
-			else Vector2(MapScene.MINI_W, MapScene.MINI_H if map_ref != null and map_ref._mode == "main_world" else 120.0)
+			else Vector2(104, 104)
 		size = custom_minimum_size   # 非容器控件不会自动吃最小尺寸，必须显式给宽高
 		theme = MapScene.HudStyle.hud_theme()
 		var title := MapScene.HudStyle.label("地域舆图" if big else "地图", 16 if big else 13, Color("f0d39f"), true)
+		title.visible = big
 		title.position = Vector2(10, 1)
 		title.size = Vector2(size.x - 45, 28 if big else 20)
 		add_child(title)
@@ -5418,6 +5381,7 @@ class _Minimap extends Control:
 		north.size = Vector2(16, 20)
 		add_child(north)
 		var footer := MapScene.HudStyle.label("金箭 · 当前位置" if big else "展开地图", 12, Color("d3c9aa"))
+		footer.visible = big
 		footer.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		footer.position = Vector2(9, size.y - 22)
 		footer.size = Vector2(size.x - (18 if big else 30), 20)
@@ -5431,10 +5395,18 @@ class _Minimap extends Control:
 			_cartography.setup(source)
 
 	func _map_rect() -> Rect2:
-		return MapScene.Cartography.fitted_rect(size, map_ref._map_extent(), big)
+		if big: return MapScene.Cartography.fitted_rect(size,map_ref._map_extent(),true)
+		return Rect2(4,4,96,96)
+
+	func _view_bounds() -> Rect2:
+		if big: return Rect2(Vector2.ZERO,map_ref._map_extent())
+		var player := map_ref._player.position if map_ref._player != null else Vector2.ZERO
+		return Rect2(player-Vector2(400,400),Vector2(800,800))
 
 	func _project(point: Vector2) -> Vector2:
-		return MapScene.Cartography.project(point, map_ref._map_extent(), _map_rect())
+		var view := _view_bounds()
+		var rect := _map_rect()
+		return rect.position + ((point-view.position)/view.size).clamp(Vector2.ZERO,Vector2.ONE)*rect.size
 
 	func _gui_input(e: InputEvent) -> void:
 		if G.ui_blocked: return
@@ -5450,21 +5422,34 @@ class _Minimap extends Control:
 		if sz.x <= 1.0 or sz.y <= 1.0:
 			sz = custom_minimum_size
 		_frame_style.border_color = Color("ae9567") if _hovered or has_focus() else MapScene.HudStyle.EDGE
-		draw_style_box(_shadow_style, Rect2(Vector2(0, 2), sz))
-		draw_style_box(_frame_style, Rect2(Vector2.ZERO, sz))
-		MapScene.HudStyle.finish(self, sz, MapScene.HudStyle.BRASS)
+		MapScene.Lacquer.plate(self,Rect2(Vector2.ZERO,sz),MapScene.Lacquer.INK,_frame_style.border_color)
+		for corner in [Vector2(3,3),Vector2(sz.x-3,3),Vector2(3,sz.y-3),sz-Vector2(3,3)]:
+			var direction := Vector2(1 if corner.x < sz.x*0.5 else -1,1 if corner.y < sz.y*0.5 else -1)
+			draw_line(corner,corner+Vector2(direction.x*6,0),MapScene.Lacquer.LIT,1)
+			draw_line(corner,corner+Vector2(0,direction.y*6),MapScene.Lacquer.LIT,1)
 
 		var ext := map_ref._map_extent()
 		var map_rect := _map_rect()
 		var at := func(p: Vector2) -> Vector2: return _project(p)
 		var s := map_rect.size.x / ext.x
-		draw_rect(map_rect.grow(1), Color("0f2427"))
-		draw_rect(map_rect, MapScene.Cartography.ground_color(map_ref.st.theme))
-		_cartography.draw_roads(self, map_rect, ext, big)
+		draw_rect(map_rect.grow(1),Color("0a090b"))
+		var terrain := _cartography.terrain_thumbnail(map_ref)
+		var bounds := _view_bounds()
+		var visible := bounds.intersection(Rect2(Vector2.ZERO,ext))
+		var target_rect := Rect2(map_rect.position+(visible.position-bounds.position)/bounds.size*map_rect.size,visible.size/bounds.size*map_rect.size)
+		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		draw_texture_rect_region(terrain,target_rect,Rect2(visible.position/ext*terrain.get_size(),visible.size/ext*terrain.get_size()))
 		if map_ref._city_content != null:
-			for building in map_ref._city_content._buildings:
-				var built: bool = building.built()
-				MapScene.Cartography.draw_house(self, at.call(building.position), big, built)
+			for npc in map_ref._city_content._npcs:
+				if big or bounds.has_point(npc.position): MapScene.Cartography.marker(self,_project(npc.position).clamp(map_rect.position+Vector2(4,4),map_rect.end-Vector2(4,4)),"npc")
+		var objective: Dictionary = map_ref._hud_target_info()
+		if not String(objective.get("kind","")).is_empty():
+			var objective_pos: Vector2 = objective.get("pos",Vector2.ZERO)
+			var marker_pos := _project(objective_pos).clamp(map_rect.position+Vector2(6,6),map_rect.end-Vector2(6,6))
+			MapScene.Cartography.marker(self,marker_pos,"target")
+			if not bounds.has_point(objective_pos):
+				var direction := (objective_pos-bounds.get_center()).normalized()
+				draw_line(marker_pos+direction*2,marker_pos+direction*6,MapScene.Lacquer.GOLD,2)
 
 		var reveal := float(map_ref._map_cfg.get("map_reveal_radius", 520.0))
 		var pp := map_ref._player.position if map_ref._player != null else Vector2.ZERO
@@ -5555,12 +5540,12 @@ class _Minimap extends Control:
 				"walk_left": face = Vector2(-1, 0)
 				"walk_right": face = Vector2(1, 0)
 				_: face = Vector2(0, 1)
-		MapScene.Cartography.draw_player(self, at.call(pp), face, big)
+		MapScene.Cartography.marker(self,at.call(pp),"player",face)
 		# 北向固定的双色罗针；下缘给出明确的展开入口。
 		var needle := Vector2(sz.x - 30, 12)
 		draw_colored_polygon(PackedVector2Array([needle + Vector2(0, -5), needle + Vector2(-3, 3), needle]), Color("efd5a0"))
 		draw_colored_polygon(PackedVector2Array([needle + Vector2(0, -5), needle + Vector2(3, 3), needle]), Color("a47a49"))
-		draw_line(Vector2(9, sz.y - 23), Vector2(sz.x - 9, sz.y - 23), Color("bca16c", 0.32), 1)
+		if big: draw_line(Vector2(9, sz.y - 23), Vector2(sz.x - 9, sz.y - 23), Color("bca16c", 0.32), 1)
 		if not big:
 			var expand := Vector2(sz.x - 16, sz.y - 11)
 			draw_polyline(PackedVector2Array([expand + Vector2(-3, -3), expand + Vector2(3, -3), expand + Vector2(3, 3)]), Color("dfc18a"), 1, true)
@@ -5630,12 +5615,32 @@ class _Joystick extends Control:
 	var vector := Vector2.ZERO
 	var _base := Vector2.ZERO
 	var _active := false
+	var _touch_index := -1
 
 	func _ready() -> void:
-		custom_minimum_size = Vector2(124, 124)
+		custom_minimum_size = Vector2(144, 144)
+		size = custom_minimum_size
 		mouse_filter = Control.MOUSE_FILTER_STOP
 
 	func _gui_input(e: InputEvent) -> void:
+		if e is InputEventScreenTouch:
+			if e.pressed and _touch_index == -1:
+				_touch_index = e.index
+				_active = true
+				_base = e.position
+			elif not e.pressed and e.index == _touch_index:
+				_touch_index = -1
+				_active = false
+				vector = Vector2.ZERO
+			queue_redraw()
+			accept_event()
+			return
+		if e is InputEventScreenDrag and e.index == _touch_index:
+			vector = (e.position - _base).limit_length(44.0) / 44.0
+			queue_redraw()
+			accept_event()
+			return
+		if _touch_index >= 0: return
 		if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT:
 			if e.pressed:
 				_active = true
@@ -5650,14 +5655,14 @@ class _Joystick extends Control:
 
 	func _draw() -> void:
 		var c := custom_minimum_size / 2.0
-		# 底盘：深木色半透明 + 细金环
-		draw_circle(c, 46.0, Color(0.12, 0.09, 0.05, 0.40))
-		draw_arc(c, 46.0, 0, TAU, 40, Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.45), 1.5)
-		draw_arc(c, 30.0, 0, TAU, 32, Color(1, 1, 1, 0.07), 1.0)
-		# 摇杆头：羊皮纸色 + 木色底圈
-		var k := c + vector * 44.0
-		draw_circle(k, 18.0, Color(0.30, 0.20, 0.10, 0.85))
-		draw_circle(k, 15.0, Color(0.91, 0.84, 0.64, 0.92))
+		draw_circle(c,52.0,Color("17151a",0.70 if _active else 0.35))
+		draw_arc(c,52.0,0,TAU,64,Color("0a090b",0.40),3,true)
+		draw_arc(c,51.0,0,TAU,64,Color("6e5434"),1,true)
+		var k := c + vector*44.0
+		draw_circle(k,22.0,Color("17151a",0.85))
+		draw_arc(k,22.0,0,TAU,48,Color("6e5434"),1,true)
+		draw_arc(k,21.0,PI*1.15,PI*1.85,20,Color("c29a5b",0.8),1,true)
+
 
 
 ## 驿路浮层冻结世界接触；首领结算完后同一入口提供返程。
@@ -5676,3 +5681,228 @@ func _open_journey(recommended := "") -> void:
 		var result := preload("res://src/world/JourneyService.gd").travel(G,map_id)
 		if bool(result.ok): G.enter_main_world(map_id)
 		else: page.show_message(String(result.line)))
+
+
+func _round_action(words: String, glyph: String, at: Vector2, diameter: float, cb: Callable, round_shape: bool = true) -> Button:
+	var b := Lacquer.Action.new(words, glyph)
+	b.name = "Action_" + words
+	b.disc = round_shape
+	b.position = at
+	b.size = Vector2(diameter, diameter)
+	b.pressed.connect(func():
+		if not G.ui_blocked and not _modal_open(): cb.call())
+	_hud.add_child(b)
+	return b
+
+func _build_round1_hud() -> void:
+	_hud.layer = 1
+	add_child(_hud)
+	var shade := Lacquer.scrim(Vector2(get_viewport_rect().size.x,160))
+	shade.name = "TopScrim"
+	_hud.add_child(shade)
+	_build_main_world_status()
+	var story := HudStyle.task_chip(216, "story")
+	_main_story_l = story.label
+	_round_tasks.append(story.root)
+	_hud.add_child(story.root)
+	story.root.pressed.connect(func():
+		if not G.ui_blocked:
+			if _mode == "main_world": _open_story_info(story.root)
+			else: _on_compass_tapped())
+	var side := HudStyle.task_chip(216, "side")
+	_side_chip = side.root
+	_main_side_l = side.label
+	_round_tasks.append(_side_chip)
+	_hud.add_child(_side_chip)
+	_side_chip.pressed.connect(func():
+		if not G.ui_blocked:
+			var special_goal := SpecialEvents.goal(G)
+			if not special_goal.is_empty():
+				G.show_info_popup(_side_chip,"追踪奇遇",[special_goal,"到标记的地点继续，谢礼在复命时领取。"],self)
+			else: G.show_info_popup(_side_chip,"追踪目标",G.side_info_lines(),self))
+	_side_chip.visible = false
+	_round_fold = _round_action("", "≡", Vector2(228,76),44,func():
+		if _round_collapsed:
+			_round_collapsed = false
+			_round_expanded = true
+		elif _round_expanded:
+			_round_expanded = false
+			_round_collapsed = true
+		else: _round_expanded = true
+		_layout_round_tasks(), false)
+	_round_fold.set("icon_size",24.0)
+	_round_fold.call("set_texture",ChestPage.texture("quest"))
+	_round_fold.tooltip_text = "展开全部任务 / 收起任务"
+	_round_interact = _round_action("交互","◇",Vector2(324,628),76,_round_interact_pressed)
+	_round_interact.visible = false
+	_round_interact.call("set_texture",ChestPage.texture("interact"))
+	_pet_btn = _round_action("伙伴","伴",Vector2(412,644),56,_swap_pet)
+	_round_potion = _round_action("药剂","",Vector2(404,716),64,_use_potion)
+	_round_potion.call("set_texture",ChestPage.texture("potion"))
+	_pet_btn.call("set_texture",ChestPage.texture("paw"))
+	_round_potion.call("set_count",st.potions)
+	_potion_badge = _round_potion.get_node("CountBadge/Count")
+	_sprint_btn = _round_action("疾行","»",Vector2(328,724),56,_toggle_sprint)
+	_sprint_btn.call("set_texture",ChestPage.texture("sprint_off"))
+	var exit_button := _round_action("营帐" if _mode == "main_world" else "撤离","⌂" if _mode == "main_world" else "↗",Vector2(312,12),44,_ask_exit,false)
+	exit_button.set("warning",_mode != "main_world")
+	exit_button.set("icon_size",24.0)
+	exit_button.call("set_texture",ChestPage.texture("camp" if _mode=="main_world" else "exit"))
+	_minimap = _Minimap.new()
+	_minimap.name = "Minimap"
+	_minimap.map_ref = self
+	_minimap.position = Vector2(364,12)
+	_minimap.tapped.connect(_toggle_big_map)
+	_hud.add_child(_minimap)
+	_joy = _Joystick.new()
+	_joy.position = Vector2(12,628)
+	_hud.add_child(_joy)
+	if _mode == "main_world":
+		_mount_btn = _round_action("骑乘","",Vector2(252,724),56,_toggle_mount)
+		_mount_btn.call("set_texture",ChestPage.texture("ride_off"))
+		_sync_mount_visual()
+	_compass = _Compass.new()
+	_compass.visible = false
+	_hud.add_child(_compass)
+	if is_instance_valid(_pot_l) and _pot_l.get_parent()==null:_pot_l.free()
+	_pot_l = Lacquer.label("",12)
+	_pot_l.visible = false
+	_hud.add_child(_pot_l)
+	if _mode != "main_world":
+		var explore := HudStyle.task_chip(216,"daily")
+		_explore_lbl = explore.label
+		_round_tasks.append(explore.root)
+		_hud.add_child(explore.root)
+		_explore_lbl.text = "探索"
+		_main_story_l.text = "寻找传送阵"
+		_side_chip.visible = false
+		_refresh_explore_hud()
+	_refresh_hud()
+	_layout_round1_hud()
+	get_viewport().size_changed.connect(_layout_round1_hud)
+
+func register_city_task(chip: Button) -> void:
+	# City services keep their existing callbacks and are parented in the shared HUD.
+	chip.reparent(_hud)
+	_round_tasks.append(chip)
+	_layout_round_tasks()
+
+func _layout_round1_hud(safe_override: Rect2 = Rect2()) -> void:
+	var view := get_viewport_rect()
+	var safe := safe_override if safe_override.has_area() else G.ui_safe_rect(self)
+	_round_safe = safe
+	_main_gold_chip.size.x = 92 if safe.size.x < 480 else 104
+	_main_gold_l.size.x = _main_gold_chip.size.x - 32
+	for child in _hud.get_children():
+		if not child is Control or child.name == "TopScrim": continue
+		if child.has_meta("safe_hud_position"): child.remove_meta("safe_hud_position")
+		if not child.has_meta("round_base"): child.set_meta("round_base",child.position)
+		var base: Vector2 = child.get_meta("round_base")
+		child.position = base + Vector2(safe.position.x if base.x < 240 else safe.end.x - 480,
+			safe.position.y if base.y < 400 else safe.end.y - 800)
+		child.set_meta("safe_hud_position",base + Vector2(view.size.x - 480 if base.x >= 240 else 0,view.size.y - 800 if base.y >= 400 else 0))
+	_layout_round_tasks()
+
+func _layout_round_tasks() -> void:
+	if _round_fold == null: return
+	var safe := _round_safe if _round_safe.has_area() else G.ui_safe_rect(self)
+	var available: Array[Button] = []
+	for chip in _round_tasks:
+		if chip == _side_chip and (_main_side_l == null or _main_side_l.text.is_empty()): continue
+		available.append(chip)
+	if _city_content != null:
+		var daily: Button = _city_content._quest_chip
+		var ready := false
+		if String(_city_content._city_id) == "border_town":
+			for qid in G.quest_offer():
+				if G.quest_active(String(qid)) and G.quest_completed(String(qid)): ready = true
+		if daily != null:
+			daily.set("accent",Lacquer.JADE if ready else Lacquer.AGED)
+			daily.queue_redraw()
+			if ready and daily in available:
+				available.erase(daily)
+				available.push_front(daily)
+	var y := safe.position.y + 76
+	var limit := safe.position.y + (300 if _round_expanded else (236 if safe.size.y >= 960 else 190))
+	var hidden := 0
+	for i in available.size():
+		var chip := available[i]
+		chip.size.x = 264 if i==0 else 216
+		chip.position = Vector2(safe.position.x + 12,y)
+		chip.visible = i==0 or (not _round_collapsed and y+chip.size.y<=limit)
+		if chip.visible: y+=chip.size.y+6
+		else: hidden+=1
+	if not available.is_empty():
+		if _round_fold.get_parent()!=available[0]: _round_fold.reparent(available[0])
+		_round_fold.position=Vector2(216,0)
+		_round_fold.size=Vector2(44,44)
+		_round_fold.quiet=true
+	_round_fold.call("set_count",hidden if hidden > 0 else -1,Vector2(27,-4))
+	_round_fold.set("active",_round_expanded)
+	_round_fold.queue_redraw()
+	_round_fold.tooltip_text = "还有 %d 项任务；点击展开 / 收起" % hidden
+
+func _tick_round_interaction() -> void:
+	if _round_interact == null or _player == null: return
+	_round_interact.visible = false
+	_round_target = null
+	if _modal_open() or G.ui_blocked: return
+	var best := 100.0
+	if _city_content != null:
+		for npc in _city_content._npcs:
+			var d: float = npc.position.distance_to(_player.position)
+			if d < best and not npc.cooled:
+				best = d
+				_round_target = npc
+	for entity in _quest_entities:
+		var d := entity.position.distance_to(_player.position)
+		if d < best and not entity.used:
+			best = d
+			_round_target = entity
+	if _interactable != null and not _interactable.used and _interactable.position.distance_to(_player.position) < best:
+		_round_target = _interactable
+		best = _interactable.position.distance_to(_player.position)
+	if _round_target == null: return
+	_round_interact.visible = true
+	var radius := 52.0 if (not _round_target is _QuestEntity and not _round_target is _Interactable) else INTERACT_R
+	_round_interact.disabled = best >= radius
+	_round_interact.get_node("Caption").text = "靠近" if best >= radius else ("交谈" if (not _round_target is _QuestEntity and not _round_target is _Interactable) else "交互")
+
+func _round_interact_pressed() -> void:
+	if not is_instance_valid(_round_target) or _modal_open(): return
+	var radius := 52.0 if (not _round_target is _QuestEntity and not _round_target is _Interactable) else INTERACT_R
+	if _round_target.position.distance_to(_player.position) >= radius: return
+	if _round_target is _QuestEntity: on_quest_entity(_round_target)
+	elif _round_target is _Interactable: on_interactable(_round_target)
+	elif _city_content != null:
+		_round_target.set("cooled",true)
+		_city_content._open_dialog(_round_target.data,_round_target.guest)
+
+func _name_tag_exclusions() -> Array[Rect2]:
+	var areas: Array[Rect2]=[]
+	for child in _hud.get_children():
+		if child is Control and child.visible and child.name!="TopScrim" and child.size.x>0 and child.size.y>0:
+			areas.append(child.get_global_rect().grow(4))
+	return areas
+
+func _name_tag_hits_hud(box: Rect2) -> bool:
+	for rect in _name_tag_exclusions():
+		if box.intersects(rect): return true
+	return false
+
+func _resolve_name_tags() -> void:
+	var candidates: Array=[]
+	if is_instance_valid(_player_tag):candidates.append({"label":_player_tag,"priority":0})
+	if _city_content!=null:
+		for npc in _city_content._npcs:
+			if npc._name_l!=null:candidates.append({"label":npc._name_l,"pad":npc._pad,"priority":1 if npc==_round_target else 3 if npc.guest else 4})
+	for monster in _monsters:
+		if monster.level_l!=null:candidates.append({"label":monster.level_l,"priority":2})
+	for entity in _quest_entities:
+		if entity._caption_label!=null:candidates.append({"label":entity._caption_label,"priority":1 if entity==_round_target else 5})
+	if is_instance_valid(_pet_follower):
+		for child in _pet_follower.get_children():
+			if child is Label:candidates.append({"label":child,"priority":6,"alpha":.85,"alternatives":[Vector2(0,-8),Vector2(0,-16)]})
+	for child in _world.get_children():
+		if child is _WorldExit and child._caption_label!=null:candidates.append({"label":child._caption_label,"priority":5})
+	NameTags.resolve(candidates,_name_tag_exclusions())

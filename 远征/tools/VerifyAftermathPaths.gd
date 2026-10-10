@@ -6,7 +6,8 @@ func check(ok:bool,line:String)->void:
 		fails+=1
 		push_error("FAIL: "+line)
 func blocked(x:float)->bool:
-	var query:=PhysicsRayQueryParameters2D.create(Vector2(x,535),Vector2(x,655),2)
+	var y:=map._river_center_y(x)
+	var query:=PhysicsRayQueryParameters2D.create(Vector2(x,y-64),Vector2(x,y+64),2)
 	return not map._player.get_world_2d().direct_space_state.intersect_ray(query).is_empty()
 func settle()->void:
 	await get_tree().create_timer(.4).timeout

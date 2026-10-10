@@ -75,6 +75,7 @@ func _find_info(node: Node, title: String) -> Control:
 
 
 func _demo_prog() -> void:
+	G.selected_role = _role
 	G.prog = {"level": 12, "exp": 340, "worlds_unlocked": 3,
 		"world_cleared": {"forest": true, "snow": true}, "pets": [],
 		"main_world": {"map_id": "lorin_wilds"}}

@@ -1,0 +1,34 @@
+{
+  "steward": {
+    "feet": [
+      123,
+      123,
+      123,
+      123
+    ],
+    "source_visible_height": 105,
+    "colors": 48,
+    "alpha": [
+      0,
+      255
+    ],
+    "lower_body_identical": true,
+    "animation": "keyframe +1px local chest/head or cloth motion; rigid guard spear preserved"
+  },
+  "guard": {
+    "feet": [
+      123,
+      123,
+      123,
+      123
+    ],
+    "source_visible_height": 119,
+    "colors": 48,
+    "alpha": [
+      0,
+      255
+    ],
+    "lower_body_identical": true,
+    "animation": "keyframe +1px local chest/head or cloth motion; rigid guard spear preserved"
+  }
+}

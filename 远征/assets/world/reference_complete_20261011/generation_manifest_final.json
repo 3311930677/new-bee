@@ -1,0 +1,183 @@
+{
+  "tool": "built-in image_gen",
+  "seed_supported": false,
+  "records": [
+    {
+      "id": "lorin_wilds_1_2",
+      "prompt": "TWO-DIMENSIONAL hand-drawn JRPG pixel artwork, fine crisp pixel density matching the existing hero reference. Image1 forest sets palette and painted clustering; image2 geometric crop sets positions ONLY; image3 existing hero sets FINE DETAIL DENSITY ONLY, do not redraw him. Use fine single working pixels and tiny2-pixel clusters, not enlarged4–8-pixel mosaic blocks, not dithering or a photographic noise filter. Orthographic overhead game plane, no horizon, no perspective scaling, no3D rendering. Grass low contrast and calm, path quiet ochre with natural worn irregular grass-tongue edges. Upper-left light expressed in subtle painted colors. No object shadows, characters, buildings, props, trees or bushes: this is a ground-only texture layer. Grass blades are tiny flat groups, not large upright tufts. No text, numbers, UI, borders, labels or grid. Keep colors consistent across all chunks.\nProduce exactly the geometric crop in image2. This crop covers 664x592 world units, requested source1328x1184 pixels (2x artwork); ONE source pixel is approximately HALF a world unit, comparable to the hero's line detail. Do not fill it with coarse square patches. Keep all road centerlines and door approaches from the guide, but make edges naturally worn. The green/pale-brown flat guide is not an art reference. Paint quiet grass and soil only. This is part of the town grassland street. Source output must be dense enough to be displayed smaller than native resolution, not enlarged.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/lorin_wilds_1_2.png",
+      "original_path": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-16c4559a-52e5-4a36-8212-c7bdc7f74bdc.png",
+      "status": "terrain_trial_not_deployed",
+      "notes": ""
+    },
+    {
+      "id": "lorin_wilds_0_1",
+      "prompt": "TWO-DIMENSIONAL hand-drawn JRPG pixel artwork, fine crisp pixel density matching the existing hero reference. Image1 forest sets palette and painted clustering; image2 geometric crop sets positions ONLY; image3 existing hero sets FINE DETAIL DENSITY ONLY, do not redraw him. Use fine single working pixels and tiny2-pixel clusters, not enlarged4–8-pixel mosaic blocks, not dithering or a photographic noise filter. Orthographic overhead game plane, no horizon, no perspective scaling, no3D rendering. Grass low contrast and calm, path quiet ochre with natural worn irregular grass-tongue edges. Upper-left light expressed in subtle painted colors. No object shadows, characters, buildings, props, trees or bushes: this is a ground-only texture layer. Grass blades are tiny flat groups, not large upright tufts. No text, numbers, UI, borders, labels or grid. Keep colors consistent across all chunks.\nCrop lorin_wilds_0_1: context -32,496,664,592, source canvas1328x1184 at2x world density. Follow only the geometric road and soil footprint of image2. Image4 is an already-approved fine ground color/density reference, not a composition to copy. Town crop: natural grass, dirt and tiny short grass groups only. Do not add trees or objects. Road edges worn, not geometric round ends. Road enters/exits cropped boundaries wherever guide specifies; never add an unrelated extra road.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/lorin_wilds_0_1.png",
+      "original_path": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-04ba5b99-6143-47b2-a442-58fc8933d551.png",
+      "status": "terrain_trial_not_deployed",
+      "notes": ""
+    },
+    {
+      "id": "lorin_wilds_0_0",
+      "prompt": "TWO-DIMENSIONAL hand-drawn JRPG pixel artwork, fine crisp pixel density matching the existing hero reference. Image1 forest sets palette and painted clustering; image2 geometric crop sets positions ONLY; image3 existing hero sets FINE DETAIL DENSITY ONLY, do not redraw him. Use fine single working pixels and tiny2-pixel clusters, not enlarged4–8-pixel mosaic blocks, not dithering or a photographic noise filter. Orthographic overhead game plane, no horizon, no perspective scaling, no3D rendering. Grass low contrast and calm, path quiet ochre with natural worn irregular grass-tongue edges. Upper-left light expressed in subtle painted colors. No object shadows, characters, buildings, props, trees or bushes: this is a ground-only texture layer. Grass blades are tiny flat groups, not large upright tufts. No text, numbers, UI, borders, labels or grid. Keep colors consistent across all chunks.\nCrop lorin_wilds_0_0: context -32,-32,664,592, source canvas1328x1184 at2x world density. Follow only the geometric road and soil footprint of image2. Image4 is an already-approved fine ground color/density reference, not a composition to copy. Town crop: natural grass, dirt and tiny short grass groups only. Do not add trees or objects. Road edges worn, not geometric round ends. Road enters/exits cropped boundaries wherever guide specifies; never add an unrelated extra road.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/lorin_wilds_0_0.png",
+      "original_path": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-13207de9-4bc9-4366-a370-b89e6b01b190.png",
+      "status": "terrain_trial_not_deployed",
+      "notes": "Rejected: geometry did not match road guide"
+    },
+    {
+      "id": "lorin_wilds_1_1",
+      "prompt": "TWO-DIMENSIONAL hand-drawn JRPG pixel artwork, fine crisp pixel density matching the existing hero reference. Image1 forest sets palette and painted clustering; image2 geometric crop sets positions ONLY; image3 existing hero sets FINE DETAIL DENSITY ONLY, do not redraw him. Use fine single working pixels and tiny2-pixel clusters, not enlarged4–8-pixel mosaic blocks, not dithering or a photographic noise filter. Orthographic overhead game plane, no horizon, no perspective scaling, no3D rendering. Grass low contrast and calm, path quiet ochre with natural worn irregular grass-tongue edges. Upper-left light expressed in subtle painted colors. No object shadows, characters, buildings, props, trees or bushes: this is a ground-only texture layer. Grass blades are tiny flat groups, not large upright tufts. No text, numbers, UI, borders, labels or grid. Keep colors consistent across all chunks.\nCrop lorin_wilds_1_1: context 568,496,664,592, source canvas1328x1184 at2x world density. Follow only the geometric road and soil footprint of image2. Image4 is an already-approved fine ground color/density reference, not a composition to copy. Town crop: natural grass, dirt and tiny short grass groups only. Do not add trees or objects. Road edges worn, not geometric round ends. Road enters/exits cropped boundaries wherever guide specifies; never add an unrelated extra road.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/lorin_wilds_1_1.png",
+      "original_path": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-7ba2ad8d-e64c-4d9f-9ba7-882fa568d190.png",
+      "status": "terrain_trial_not_deployed",
+      "notes": ""
+    },
+    {
+      "id": "lorin_wilds_1_0",
+      "prompt": "TWO-DIMENSIONAL hand-drawn JRPG pixel artwork, fine crisp pixel density matching the existing hero reference. Image1 forest sets palette and painted clustering; image2 geometric crop sets positions ONLY; image3 existing hero sets FINE DETAIL DENSITY ONLY, do not redraw him. Use fine single working pixels and tiny2-pixel clusters, not enlarged4–8-pixel mosaic blocks, not dithering or a photographic noise filter. Orthographic overhead game plane, no horizon, no perspective scaling, no3D rendering. Grass low contrast and calm, path quiet ochre with natural worn irregular grass-tongue edges. Upper-left light expressed in subtle painted colors. No object shadows, characters, buildings, props, trees or bushes: this is a ground-only texture layer. Grass blades are tiny flat groups, not large upright tufts. No text, numbers, UI, borders, labels or grid. Keep colors consistent across all chunks.\nCrop lorin_wilds_1_0: context 568,-32,664,592, source canvas1328x1184 at2x world density. Follow only the geometric road and soil footprint of image2. Image4 is an already-approved fine ground color/density reference, not a composition to copy. Town crop: natural grass, dirt and tiny short grass groups only. Do not add trees or objects. Road edges worn, not geometric round ends. Road enters/exits cropped boundaries wherever guide specifies; never add an unrelated extra road.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/lorin_wilds_1_0.png",
+      "original_path": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-43d03975-417f-415b-aa0d-bf2c231aa0a4.png",
+      "status": "terrain_trial_not_deployed",
+      "notes": "Rejected: geometry did not match road guide"
+    },
+    {
+      "id": "ground_materials",
+      "prompt": "Create a2x2 sheet of FOUR GROUND MATERIAL TEXTURES for a two-dimensional overhead pixel JRPG. Each quadrant is one full square texture; exact requested canvas1536x1536, no gutters, frames, labels or text.\nImage1 is the existing128px hero, used ONLY to match FINE pixel density. Image2 is forest art palette/style only. Do not draw the hero, road layout, trees, bushes or objects.\nTop-left: calm mid-green SHORT grass, mostly quiet solid ground with subtle painted clustered blades, no flower dots or dark clumps.\nTop-right: a slightly cooler shaded short-grass variant in the SAME close palette, not dramatically darker, similarly quiet.\nBottom-left: calm pale ochre compacted soil, low contrast, a few tiny pebbles and faint worn traces. Entire quadrant earth, NO grass edge or path shape.\nBottom-right: clear shallow muted teal creek water, delicate ripples and a few small stones visible on the bottom, entire quadrant water, NO banks, bridges or objects.\nAll four textures top-down FLAT GROUND, tiny1–2 source-pixel details and clean discrete color ramps; each texture will display at256x256 world units, so fine strokes should stay comparable to the hero. At least80% of grass quiet; do not make a dotted carpet, camouflage patches, giant square pixel blocks or photographic noise. No dither, no3D lighting, no perspective, no plants taller than flat grass. Edges of each material should be naturally tileable without high-contrast border features. Natural hand-painted pixel surfaces, not a picture of a texture board.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/ground_materials.png",
+      "original_path": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-2e551d22-fd0f-4534-9053-5911c6d44631.png",
+      "status": "production_source",
+      "notes": ""
+    },
+    {
+      "id": "stable",
+      "prompt": "Two-dimensional hand-drawn overhead JRPG game sprite with fine pixel density matching image1 (existing hero). Orthographic projection: south-facing front straight on, horizontal eaves and steps, vertical posts, roof visible from above. No receding side facade or rotated isometric base, no3D toy rendering. Image2 forest is palette and painting reference. Fine1–2 working pixel edges, deliberate clean color clusters, upper-left light, muted natural materials. COMPLETE silhouette with transparent margins. No surrounding ground, cast shadow, writing, UI or labels. Do not draw the hero.\nAsset: Frontier stable, warm timber open central human-sized bay, grey tile roof with modest thatch accents, saddle rail, tiny hay bales and water trough contained inside the lot, no animals. Clear front doorway88worldunits high, roof only upper30% so the door is not tiny.\nApproved visible world bounds280x200; requested2x working object art560x400 with transparent margin. Door approximately88worldunits high, about44% of the whole building height, so an adult72unit hero fits naturally. Keep roof shallow and doorway prominent. No schematic rectangles; finished commercial pixel sprite. Genuine transparent background.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/stable.png",
+      "original_path": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-6d388386-d950-4ae3-86df-9f7151bde8cb.png",
+      "status": "production_source",
+      "notes": ""
+    },
+    {
+      "id": "barracks",
+      "prompt": "Two-dimensional hand-drawn overhead JRPG game sprite with fine pixel density matching image1 (existing hero). Orthographic projection: south-facing front straight on, horizontal eaves and steps, vertical posts, roof visible from above. No receding side facade or rotated isometric base, no3D toy rendering. Image2 forest is palette and painting reference. Fine1–2 working pixel edges, deliberate clean color clusters, upper-left light, muted natural materials. COMPLETE silhouette with transparent margins. No surrounding ground, cast shadow, writing, UI or labels. Do not draw the hero.\nAsset: Frontier patrol hall, grey tiles, restrained dark-red cloth banners, horizontal stone steps, two slender upright spear racks by the central door. Door88worldunits high; roof upper30%, large clear front, no people.\nRequested2x working art for nominal280x210 world footprint. Central door must be approximately88worldunits high, at least40% of visible total height. Keep upper roof shallow and facade readable, a LARGE human doorway not doll-house miniature. Restrained painted pixel materials, no smooth gloss. Real alpha transparency.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/barracks.png",
+      "original_path": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-9a3ba40e-01af-4641-8a57-623a82df2587.png",
+      "status": "production_source",
+      "notes": ""
+    },
+    {
+      "id": "storehouse",
+      "prompt": "Two-dimensional hand-drawn overhead JRPG game sprite with fine pixel density matching image1 (existing hero). Orthographic projection: south-facing front straight on, horizontal eaves and steps, vertical posts, roof visible from above. No receding side facade or rotated isometric base, no3D toy rendering. Image2 forest is palette and painting reference. Fine1–2 working pixel edges, deliberate clean color clusters, upper-left light, muted natural materials. COMPLETE silhouette with transparent margins. No surrounding ground, cast shadow, writing, UI or labels. Do not draw the hero.\nAsset: Ventilated timber granary on low stone piers, short loading ramp, a few tied sacks and grain baskets along front sides. Grey roof upper30%, central tall door88worldunits high. No cart blocking the doorway.\nRequested2x working art for nominal280x200 world footprint. Central door must be approximately88worldunits high, at least40% of visible total height. Keep upper roof shallow and facade readable, a LARGE human doorway not doll-house miniature. Restrained painted pixel materials, no smooth gloss. Real alpha transparency.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/storehouse.png",
+      "original_path": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-9f2799d0-e36a-4bc4-9cd5-f7d98e21158b.png",
+      "status": "production_source",
+      "notes": ""
+    },
+    {
+      "id": "forge",
+      "prompt": "Two-dimensional hand-drawn overhead JRPG game sprite with fine pixel density matching image1 (existing hero). Orthographic projection: south-facing front straight on, horizontal eaves and steps, vertical posts, roof visible from above. No receding side facade or rotated isometric base, no3D toy rendering. Image2 forest is palette and painting reference. Fine1–2 working pixel edges, deliberate clean color clusters, upper-left light, muted natural materials. COMPLETE silhouette with transparent margins. No surrounding ground, cast shadow, writing, UI or labels. Do not draw the hero.\nAsset: Compact blacksmith workshop with open central front bay88worldunits high, furnace inside the bay, short stone chimney, anvil and quench trough at outer front corners. Grey roof upper30%, no exaggerated smoke or glowing lava.\nRequested2x working art for nominal280x200 world footprint. Central door must be approximately88worldunits high, at least40% of visible total height. Keep upper roof shallow and facade readable, a LARGE human doorway not doll-house miniature. Restrained painted pixel materials, no smooth gloss. Real alpha transparency.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/forge.png",
+      "original_path": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-29b640e3-fbf8-4605-9372-e82b797827eb.png",
+      "status": "production_source",
+      "notes": ""
+    },
+    {
+      "id": "kennel",
+      "prompt": "Two-dimensional hand-drawn overhead JRPG game sprite with fine pixel density matching image1 (existing hero). Orthographic projection: south-facing front straight on, horizontal eaves and steps, vertical posts, roof visible from above. No receding side facade or rotated isometric base, no3D toy rendering. Image2 forest is palette and painting reference. Fine1–2 working pixel edges, deliberate clean color clusters, upper-left light, muted natural materials. COMPLETE silhouette with transparent margins. No surrounding ground, cast shadow, writing, UI or labels. Do not draw the hero.\nAsset: Timber companion barn and fenced side pen, central human doorway88worldunits high, feeding trough and tiny straw bundle inside the approved outline, low rail fencing at side corners, no animals or people.\nRequested2x working art for nominal280x210 world silhouette. Adult doorway about88worldunits tall whenever the facility has a doorway; roof compact, not a tiny doll-house door. Preserve complete outline and the bottom-center approach. Fine painted pixels with restrained highlights, not realistic material shaders. Real alpha transparency.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/kennel.png",
+      "original_path": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-1788c0cf-bdae-47c5-804d-a967b7fe905e.png",
+      "status": "production_source",
+      "notes": ""
+    },
+    {
+      "id": "archive",
+      "prompt": "Two-dimensional hand-drawn overhead JRPG game sprite with fine pixel density matching image1 (existing hero). Orthographic projection: south-facing front straight on, horizontal eaves and steps, vertical posts, roof visible from above. No receding side facade or rotated isometric base, no3D toy rendering. Image2 forest is palette and painting reference. Fine1–2 working pixel edges, deliberate clean color clusters, upper-left light, muted natural materials. COMPLETE silhouette with transparent margins. No surrounding ground, cast shadow, writing, UI or labels. Do not draw the hero.\nAsset: Compact archive/map pavilion, two-tier facade with a low upper balcony, ink-blue cloth accent, scroll rack tucked inside. Central door88worldunits high, keep upper floor and roof compact rather than dwarfing the doorway, horizontal front steps.\nRequested2x working art for nominal280x220 world silhouette. Adult doorway about88worldunits tall whenever the facility has a doorway; roof compact, not a tiny doll-house door. Preserve complete outline and the bottom-center approach. Fine painted pixels with restrained highlights, not realistic material shaders. Real alpha transparency.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/archive.png",
+      "original_path": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-febda9ed-732c-4601-93b2-787b781312e0.png",
+      "status": "production_source",
+      "notes": ""
+    },
+    {
+      "id": "shrine",
+      "prompt": "Two-dimensional hand-drawn overhead JRPG game sprite with fine pixel density matching image1 (existing hero). Orthographic projection: south-facing front straight on, horizontal eaves and steps, vertical posts, roof visible from above. No receding side facade or rotated isometric base, no3D toy rendering. Image2 forest is palette and painting reference. Fine1–2 working pixel edges, deliberate clean color clusters, upper-left light, muted natural materials. COMPLETE silhouette with transparent margins. No surrounding ground, cast shadow, writing, UI or labels. Do not draw the hero.\nAsset: Open altar terrace, horizontal three shallow stone steps, a bronze incense burner, restrained cloth ribbons and two narrow stone posts, no roof or enclosed building. Entire platform complete and uncropped, no large trees.\nRequested2x working art for nominal240x180 world silhouette. Adult doorway about88worldunits tall whenever the facility has a doorway; roof compact, not a tiny doll-house door. Preserve complete outline and the bottom-center approach. Fine painted pixels with restrained highlights, not realistic material shaders. Real alpha transparency.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/shrine.png",
+      "original_path": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-51f338b8-290e-48ea-9241-3bee23d3b212.png",
+      "status": "production_source",
+      "notes": ""
+    },
+    {
+      "id": "npcs",
+      "prompt": "Two-dimensional hand-drawn JRPG NPC sprite sheet, EXACTLY3columns x3rows,9different down-facing full-body standing NPCs, each centered in its own cell with generous transparent margins. Image1 existing hero sets projection, body proportions and fine painted pixel density; image2 forest sets natural palette. Do NOT redraw or include the hero. Fine pixel color ramps and crisp tiny edges, not3D miniatures or smooth plastic. Same upper-left light, no cast shadow or ground. Adults about3.3heads tall, complete feet.\nRow1: elderly steward, grey topknot, short beard, indigo robe, holding ledger; middle-aged gate guard, red headband, leather/lamellar vest and upright spear; middle-aged woman archivist, hair bun, muted teal robe and map roll.\nRow2: cheerful young beast keeper with brown apron and feed bucket; stocky smith with leather apron and hammer; tall patrol instructor in dark red uniform with one armored shoulder and sword at hip.\nRow3: elderly stable keeper with straw hat and grooming brush; bamboo-hatted peddler with ochre cloak and loaded backpack; noticeably shorter child with twin buns, pale-yellow clothes and paper pinwheel.\nEvery adult SAME relative visible height; child0.72 adult height. All front-facing and idle, no action poses. No cells overlap, no labels, writing, borders or accessories outside cells. Requested canvas1536x1536 with genuine alpha transparency.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/npcs.png",
+      "original_path": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-25a4f17b-272c-434d-855d-aa23ae314120.png",
+      "status": "production_source",
+      "notes": ""
+    },
+    {
+      "id": "foliage",
+      "prompt": "A finished TWO-DIMENSIONAL overhead JRPG sprite sheet, exactly3columns x2rows,6complete isolated vegetation sprites. Image1 existing hero controls fine pixel density, image2 forest controls hand-painted leaf clusters. Natural green, ochre and warm red palette; upper-left light, same scale/projection throughout. No3D render, no smooth plastic, no coarse oversized blocks. Trees have visibly rooted trunks and complete canopies.\nRow1: one summer broadleaf tree, one early-autumn maple with green/orange clumps, one red/amber mature maple.\nRow2: one layered conifer, one rounded leafy bush, one low fern/grass group.\nEach tree visible height about384 working pixels for192 world-unit height; bush and fern smaller. One object per cell, transparent15% margins, no overlaps/cropping, no ground, soil discs, shadows, labels or text. Genuine transparency. Requested1536x1024.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/foliage.png",
+      "original_path": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-ceb64334-d908-4c31-b3c6-650f4299b14e.png",
+      "status": "superseded_by_alpha_variant",
+      "notes": ""
+    },
+    {
+      "id": "foliage_alpha",
+      "prompt": "Edit target: six sprite sheet attached. Remove ALL colored gradient background, all background glow and ALL dark rectangular backdrop. Preserve exactly the six fine 2D hand-drawn pixel trees/bush/fern, same positions, same colors, complete roots, same 3 columns 2 rows. Genuine transparent alpha around each separate sprite, no checkerboard baked into image, no floor or cast shadow. Do not turn this into 3D. Output a transparent sprite sheet.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/foliage_alpha.png",
+      "original_path": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-01125541-cbcc-42ec-b2b7-c050a43df2b8.png",
+      "status": "production_source",
+      "notes": ""
+    },
+    {
+      "id": "props",
+      "prompt": "Production sprite sheet for a pure 2D hand-drawn fine-pixel Chinese travel RPG. Transparent alpha, nine isolated objects in 3 columns and 3 rows, generous clear gutters, no background, no ground, no people, no letters. Straight camera aligned: see front face and top surfaces from elevated top-down view, never isometric or 3D rendered. Restrained natural wood, bronze, stone and lantern gold. Row1: wooden footbridge aligned north-south, open center deck no obstruction, width suited to one human and length twice width; wooden road barricade front-facing; small low gray stone treasure coffer. Row2: low wooden night table with two stools, open wooden visitor ledger stand with blank book; hanging bronze lantern on short timber post. Row3: hanging wind chime on small wooden stand; small upright weathered stone marker; group of three gray rocks. Match fine hand-painted pixel edge texture, light from upper left. Every object fully visible, flat illustrated game sprite with carefully clustered tiny pixels, no smooth gradient background, no extrusion or perspective rotation.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/props.png",
+      "original_path": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-a2418703-d308-4537-839f-2eeeb71cc11a.png",
+      "status": "production_source",
+      "notes": ""
+    },
+    {
+      "id": "construction",
+      "prompt": "Single small unfinished Chinese village building site for pure 2D top-down hand-drawn pixel RPG. Front-facing camera elevated enough to see top surfaces, no diagonal isometric walls, no 3D rendered model. Transparent alpha, full object isolated, no ground patch/background/people/text. Low stone foundation, a few vertical timber posts, stacked planks and rolled muted beige canvas on one side. Center opening accessible, incomplete shrine lot clearly under construction without a gray placeholder signboard. Fine crisp clustered hand-painted pixels, restrained natural colors and upper-left light, wide shallow silhouette. Human opening roughly one third of total visible object height.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/construction.png",
+      "original_path": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-11a0dfc7-b1b3-4027-a8cc-32093f6fd0b2.png",
+      "status": "production_source",
+      "notes": ""
+    },
+    {
+      "id": "frontend_loading",
+      "prompt": "Pure 2D hand-drawn fine pixel game background for a Chinese travel RPG, polished illustrated sprite art, NOT 3D rendering, no isometric diagonal camera, no smooth vector or photo, no people or letters or UI. Match attached forest reference in natural muted bright grass, warm ochre dirt, finely clustered foliage with upper-left sunlight. Tall portrait composition. All visible pixels delicate, same density as a small RPG hero rather than large blocky mosaic. Forest entrance at morning: a gently curved ochre path through open green meadow, trees grouped at left and right edges with natural roots, a few small flowers and rocks. Elevated straight top-down RPG camera. Center and lower middle are quiet and open for existing hero and loading progress overlay. Upper quarter has quiet hazy pale green foliage backdrop suitable for live title overlay, no blinding sunlight streaks. Road fades naturally into lower grass instead of a hard straight stripe. No buildings, no archway, no gate.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/frontend_loading.png",
+      "original_path": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-b830c34d-f707-4ca6-9221-cd46c73107d0.png",
+      "status": "production_source",
+      "notes": ""
+    },
+    {
+      "id": "frontend_title",
+      "prompt": "Pure 2D hand-drawn fine pixel game background for a Chinese travel RPG, polished illustrated sprite art, NOT 3D rendering, no isometric diagonal camera, no smooth vector or photo, no people or letters or UI. Match attached forest reference in natural muted bright grass, warm ochre dirt, finely clustered foliage with upper-left sunlight. Tall portrait composition. All visible pixels delicate, same density as a small RPG hero rather than large blocky mosaic. Village edge leading toward forest: one winding dirt road in grass, traditional modest wooden buildings partially visible on far left and right, trees as sparse accents, a single small wooden road sign beside path near upper middle. NO city gate, NO archway, NO walls. Top-down elevated camera consistent with game map, front-facing building facades and visible roofs, no horizon forced 3D cinematic view. Upper third calm dark leafy green suitable for live gold logo; middle path clear for existing hero; lower third quiet natural meadow for one main button. Foreground road bends and fades with grass, not a straight rectangular strip.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/frontend_title.png",
+      "original_path": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-c7eef297-aa6d-4a98-9ef1-de163412116b.png",
+      "status": "production_source",
+      "notes": ""
+    },
+    {
+      "id": "frontend_login",
+      "prompt": "Pure 2D hand-drawn fine pixel portrait illustration of an open travel chest seen directly from above on a rustic timber desk. Flat illustrated game art, NOT 3D render, no perspective skew, no smooth volumetric rendering, fine small pixel clusters matching a detailed RPG. Dark lacquer wooden chest rim and restrained old bronze corners at the sides, warm blank parchment in center 75 percent width with generous 55 percent height clear writing area, NO letters, NO ruler marks, NO UI fields, NO characters. Small folded cloth and inkbrush at far right edge, soft warm lantern light from upper left but no harsh glow. Top 18 percent calm dark wood for live logo, lower 22 percent dark quiet wood for buttons. Mature restrained craftsmanship, paper only in center, no bright gold trim everywhere.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/frontend_login.png",
+      "original_path": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-1046ba6e-9c50-42a0-89db-0b719db7bd11.png",
+      "status": "superseded_by_portrait_variant",
+      "notes": ""
+    },
+    {
+      "id": "frontend_login_portrait",
+      "prompt": "Edit the attached travel-chest illustration into a TALL PORTRAIT 9:20 game screen background, approximately 960 wide by 2134 high. Actual output must be tall portrait, NOT landscape. Keep pure flat 2D hand-painted fine pixel art, no 3D render. Recompose chest as a vertically elongated open lacquer travel chest seen directly from above. Quiet dark wood top 20 percent for live title. Middle 58 percent contains a single large VERTICAL blank parchment sheet, width 80 percent canvas, no text or ruler marks. Chest sides have very restrained bronze corners and small supplies OUTSIDE blank writing region. Lower22percent quiet dark wood for login buttons. Tiny lantern at upper-left edge only. Do not draw UI or labels or characters. Expand canvas vertically; don't rotate or enlarge a horizontal image to fill portrait.",
+      "source_path": "D:/new-bee/远征/assets/world/reference_complete_20261011/source/frontend_login_portrait.png",
+      "original_path": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-76c05418-7b2b-4da3-b803-81fdc3c03d24.png",
+      "status": "production_source",
+      "notes": ""
+    }
+  ],
+  "terrain_delivery": "Generated material tiles + authored road/river masks, baked into two 2x-density halves per region; trial scene chunks not deployed."
+}

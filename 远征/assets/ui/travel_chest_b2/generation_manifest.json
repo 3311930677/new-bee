@@ -1,0 +1,41 @@
+{
+  "tool": "built-in imagegen",
+  "date": "2026-10-09",
+  "prompts": [
+    {
+      "key": "b2_cell",
+      "args": {
+        "transparent_background": true,
+        "prompt": "Production game UI sprite asset for Chinese pixel fantasy travel RPG. Match lantern-lit travel chest: dark lacquer #17141A/#221E26, restrained structural bronze #6E5434/#C29A5B, top-left light, hard readable silhouettes. Transparent RGBA, no text, no numbers, no letters, no ornamental circles, wings, gems, scrollwork or glow halos. A single square ITEM SLOT plate, nominal source 120x120, calm dark recessed center, very slim 1-display-pixel neutral border, one tiny aged bronze corner cap only at top-left, 2-pixel display chamfered corners. Designed as a nine-slice to display at 70x80 and 84x92; all borders quiet, no rarity colour baked in (rarity line drawn later by code), no object inside. Minimal restrained crafted inventory tray inset, not a beige tile or ornate frame. Orthographic, centered and flat."
+      }
+    },
+    {
+      "key": "b2_large",
+      "args": {
+        "transparent_background": true,
+        "prompt": "Production game UI sprite asset for Chinese pixel fantasy travel RPG. Match lantern-lit travel chest: dark lacquer #17141A/#221E26, restrained structural bronze #6E5434/#C29A5B, top-left light, hard readable silhouettes. Transparent RGBA, no text, no numbers, no letters, no ornamental circles, wings, gems, scrollwork or glow halos. One square LARGE ITEM DISPLAY frame asset, source nominal 288x288, display 96x96. Dark lacquer recessed inner backing, one slim two-tone bronze structural rim with small quiet top corner joins, no engraving. Center must be empty and low contrast for an inventory object drawn later. No glow, no floating pedestal, no text. Same material and thin outline weight as the smaller inventory slots; crisp discreet 2px chamfered corners."
+      }
+    },
+    {
+      "key": "b2_icons",
+      "args": {
+        "transparent_background": true,
+        "prompt": "Production game UI sprite asset for Chinese pixel fantasy travel RPG. Match lantern-lit travel chest: dark lacquer #17141A/#221E26, restrained structural bronze #6E5434/#C29A5B, top-left light, hard readable silhouettes. Transparent RGBA, no text, no numbers, no letters, no ornamental circles, wings, gems, scrollwork or glow halos. A single coherent ICON SPRITE ATLAS in exactly FOUR COLUMNS and FOUR ROWS, 16 evenly spaced square cells with transparent gutters. Each glyph a single hard filled silhouette, 1-display-pixel dark outline, max five shade levels plus one subdued material colour. No backing discs, circles, frames or labels. Ordered left to right/top to bottom: row1 a warrior equipment sword with small armor shoulder, a talent branching sapling with three tips, a closed spell-training book, a tame wolf-pet head; row2 a travel horse head, a simple cloth honor pennant/crown, a camping canvas tent, a filled doorway exit arrow; row3 a rolled quest paper slip, a companion paw, a red potion bottle, a hand reaching to talk/interact; row4 a running boot (sprint off), same boot with two short speed streaks (sprint on), saddle reins at rest (ride off), same saddle reins with small raised stirrup (ride on). Exact 4x4 layout, each icon centered in its own cell. Pixel-adjacent crafted game UI look matching the prior chest navigation icon family, no photoreal texture and no shiny sparkles. Designed for 24-40px display, legibility first."
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "file": "item_cell.png",
+      "original_file": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-218232fe-17bd-4ffb-ba84-19f1e2a1e31f.png"
+    },
+    {
+      "file": "item_large.png",
+      "original_file": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-b526eccf-8f38-4aad-a703-26d65fd5af7f.png"
+    },
+    {
+      "file": "icons.png",
+      "original_file": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-fcf4db82-ff58-4ccc-a55d-f9ec47f22f47.png"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "core_screens": 9,
+  "state_screens": 15,
+  "latest_regression_cases_passed": 7,
+  "integration_checks": 179,
+  "art_mode": "pure 2D maps",
+  "hero_preserved": true,
+  "player_save_changed": false,
+  "android_hardware_tested": false,
+  "review_quality_approval_pending": true,
+  "branch_roads": false,
+  "minimap_roads": false,
+  "loading_and_title_backgrounds": "restored original"
+}

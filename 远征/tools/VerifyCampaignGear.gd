@@ -70,14 +70,13 @@ func _run() -> void:
 		if child.has_meta("gear_uid"):
 			pending_buttons += 1
 	_check(pending_bag._scroll.get_global_rect().end.y <= pending_bag._detail.get_global_rect().position.y, "待领取滚动区不得盖住详情")
-	_check(pending_buttons == 8, "超过八件的待领取必须分页")
-	pending_bag._page = 1
-	pending_bag._refresh()
+	_check(pending_buttons == 13, "十三件待领取完整保留在纵向列表")
+	pending_bag._scroll.ensure_control_visible(pending_bag._item_buttons[-1])
 	await get_tree().process_frame
 	pending_buttons = 0
 	for child in pending_bag._item_buttons:
 		if child.has_meta("gear_uid"): pending_buttons += 1
-	_check(pending_buttons == 5 and pending_bag._page == 1, "第二页完整呈现剩余五件")
+	_check(pending_buttons == 13 and pending_bag._scroll.get_global_rect().grow(1).encloses(pending_bag._item_buttons[-1].get_global_rect()), "滚动可达最后一件，详情不遮挡领取")
 	pending_bag.queue_free()
 	await get_tree().process_frame
 	_reset()
@@ -145,7 +144,7 @@ func _run() -> void:
 	for child in bag._detail.find_children("*","Label",true,false):
 		if child is Label and child.text.begins_with("需求 Lv"):
 			found = true
-			_check(child.size.x <= 396 and child.text == "需求 Lv42 · 主线保底 · 双关定路", "来源与需求中文详情不截断")
+			_check(bag._detail_scroll.size.x >= child.size.x and child.text == "需求 Lv.42 · 主线保底 · 双关定路", "来源与需求中文详情不截断")
 	_check(found, "背包必须显示实际装备来源")
 	bag.queue_free()
 	await get_tree().process_frame
