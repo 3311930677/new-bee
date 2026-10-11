@@ -156,10 +156,26 @@ func _present_enhance(r: Dictionary) -> void:
 	else:
 		_toast_msg("未成功，等级不变 · 积累%d次，下次%.1f%%" % [
 			int(r.get("failures", 0)), float(r.get("next_rate", 0.0)) * 100.0])
-	_refresh()
 	if bool(r.get("success",false)):
-		Finesse.celebrate(self,Vector2(240,330),Color("f1cc80"),180)
-		Audio.sfx("reward",0.0)
+		var new_lv := int(r.get("lv", 0))
+		var eq := G.equip_state(_sel)
+		var tpl: Dictionary = G.equip_tpl(String(eq.get("tpl", "")))
+		var rarity: int = int(eq.get("rarity", tpl.get("rarity", 1)))
+		if new_lv in [4, 7, 10] or rarity >= 4:
+			G.present_rare_gear_ceremony({
+				"tpl": String(eq.get("tpl", "")),
+				"name": String(tpl.get("name", "宝具")),
+				"rarity": maxi(rarity, 4 if new_lv >= 4 else 3),
+				"lv": new_lv,
+				"type_name": G.equip_slot_name(_sel),
+				"stats": [
+					"基础攻击 +%d" % (new_lv * 12 + 20),
+					"强化阶层 · 达成突破"
+				]
+			})
+		else:
+			Finesse.celebrate(self,Vector2(240,330),Color("f1cc80"),180)
+			Audio.sfx("reward",0.0)
 
 
 func _on_refine() -> void:

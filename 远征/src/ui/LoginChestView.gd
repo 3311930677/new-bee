@@ -87,14 +87,14 @@ func _ready() -> void:
 	_error.custom_minimum_size.y=24
 	_error.visible=false
 	form.add_child(_error)
-	var seal:=Flow.text("昭元行牒","section",Color("8a3c2d"))
+	var seal:=Flow.text("【 昭 元 行 牒 】","section",Color("9e382b"))
 	seal.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT
 	form.add_child(seal)
 	_go=Flow.button("登录入城",func():host._do_login(false),true)
 	add_child(_go)
 	_guest=Flow.button("游客入城",func():host._do_login(true))
 	add_child(_guest)
-	_note=UI.label("旅途进度自动保存在本机","tag",UI.AGED)
+	_note=UI.label("◆ 旅途进度自动保存在本机 · 离线可读 ◆","tag",UI.AGED)
 	_note.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	add_child(_note)
 	host._footer=_note

@@ -160,6 +160,19 @@ class ChestButton extends Button:
 		for state in ["normal","hover","pressed","focus","disabled"]: add_theme_stylebox_override(state,StyleBoxEmpty.new())
 		for property in ["font_color","font_hover_color","font_pressed_color","font_focus_color","font_disabled_color"]: add_theme_color_override(property,Color.TRANSPARENT)
 		for event in [mouse_entered,mouse_exited,button_down,button_up,focus_entered,focus_exited,resized]: event.connect(queue_redraw)
+		if not G.get_meta("ui_review_mode", false) and DisplayServer.get_name() != "headless":
+			button_down.connect(func():
+				pivot_offset = size * 0.5
+				var tw := create_tween()
+				tw.tween_property(self, "scale", Vector2(0.96, 0.96), 0.05).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+				preload("res://src/ui/HapticFeedback.gd").light()
+			)
+			button_up.connect(func():
+				pivot_offset = size * 0.5
+				var tw := create_tween()
+				tw.tween_property(self, "scale", Vector2(1.03, 1.03), 0.07).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+				tw.tween_property(self, "scale", Vector2.ONE, 0.07).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+			)
 		resized.connect(_layout)
 		_layout()
 	func _layout() -> void:
@@ -264,24 +277,32 @@ class QuestSlip extends ChestButton:
 	var claimable := false
 	func _init() -> void:
 		super("任务","slip")
-		goal = UI.label("","caption",Color("2b2420"))
+		goal = UI.label("","caption",Color("ede4d4"))
 		goal.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		goal.max_lines_visible = 2
 		goal.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		goal.clip_text = true
 		add_child(goal)
 	func _layout() -> void:
-		caption.text = "可交付" if claimable else "主线 · 今日委托"
+		caption.text = "可交付" if claimable else "今日委托"
 		caption.theme_type_variation = "Chest_tag"
-		caption.add_theme_color_override("font_color",UI.JADE if claimable else Color("6e5434"))
-		caption.position = Vector2(12,4)
-		caption.size = Vector2(size.x-24,18)
+		caption.add_theme_color_override("font_color",UI.JADE if claimable else Color("e5c07b"))
+		caption.position = Vector2(16,6)
+		caption.size = Vector2(size.x-36,18)
 		caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-		goal.position = Vector2(12,26)
-		goal.size = Vector2(size.x-24,38)
+		goal.position = Vector2(16,28)
+		goal.size = Vector2(size.x-36,36)
 	func _draw() -> void:
-		UI.surface(self,Rect2(Vector2.ZERO,size),UI.SLIP.darkened(0.06) if is_pressed() else UI.SLIP,Color("b9a27a"))
-		draw_rect(Rect2(0,4,4,size.y-8),UI.JADE if claimable else UI.GOLD)
+		var bg_color := Color("26202c", 0.94) if is_pressed() else (Color("201b25", 0.92) if is_hovered() else Color("19151e", 0.90))
+		var border_color := UI.GOLD if is_hovered() else (UI.JADE if claimable else Color("8a683e"))
+		UI.surface(self, Rect2(Vector2.ZERO, size), bg_color, border_color, 2.0)
+		# 左侧立柱铜纹与状态彩条
+		draw_rect(Rect2(0, 3, 4, size.y - 6), UI.JADE if claimable else Color("c29a5b"))
+		# 右侧轻质展开箭头
+		var arrow_x := size.x - 14.0
+		var arrow_y := size.y * 0.5
+		var chevron_color := UI.GOLD if is_hovered() else Color("7a664e")
+		draw_polyline(PackedVector2Array([Vector2(arrow_x - 3, arrow_y - 5), Vector2(arrow_x + 2, arrow_y), Vector2(arrow_x - 3, arrow_y + 5)]), chevron_color, 1.5, true)
 		_layout()
 		if has_focus(): draw_rect(Rect2(Vector2.ONE*-2,size+Vector2.ONE*4),UI.GOLD,false,2)
 
@@ -338,6 +359,14 @@ class Modal extends Control:
 		tray.position = Vector2(safe.get_center().x-width*0.5,safe.get_center().y-height*0.5)
 		tray.size = Vector2(width,height)
 		add_child(tray)
+		if not G.get_meta("ui_review_mode", false) and DisplayServer.get_name() != "headless":
+			tray.modulate.a = 0.0
+			tray.pivot_offset = tray.size * 0.5
+			tray.scale = Vector2(0.96, 0.96)
+			var tw := create_tween()
+			tw.set_parallel(true)
+			tw.tween_property(tray, "modulate:a", 1.0, 0.16).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+			tw.tween_property(tray, "scale", Vector2.ONE, 0.16).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 		var title := UI.label(heading,"section")
 		title.position = Vector2(20,16)
 		title.size = Vector2(inner,28)

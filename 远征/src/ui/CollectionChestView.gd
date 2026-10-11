@@ -31,14 +31,14 @@ func _ready() -> void:
 	host._deck.page_changed.connect(func(_i:int):refresh())
 	add_child(host._deck)
 	_pool=Page.picture(UI.texture("stage_pool"),Vector2(256,60))
-	_pool.modulate.a=.25
+	_pool.modulate.a=.75
 	shell.stage.add_child(_pool)
 	_frame=Showcase.new();shell.stage.add_child(_frame)
 	_shadow=ContactShadow.new();shell.stage.add_child(_shadow)
 	_pedestal=Page.picture(Fix.texture("pedestal"),Vector2(200,48));shell.stage.add_child(_pedestal)
 	shell.stage.move_child(_shadow,shell.stage.get_child_count()-1)
-	_prev=Flow.button("‹",func():host._deck.go(host._deck.current-1))
-	_next=Flow.button("›",func():host._deck.go(host._deck.current+1))
+	_prev=Flow.button("◀",func():HapticFeedback.light();host._deck.go(host._deck.current-1))
+	_next=Flow.button("▶",func():HapticFeedback.light();host._deck.go(host._deck.current+1))
 	shell.stage.add_child(_prev)
 	shell.stage.add_child(_next)
 	_index=UI.label("","caption",UI.AGED)
@@ -76,8 +76,24 @@ func _codex() -> void:
 	_art.modulate=Color.WHITE
 	if not owned:
 		var shader:=Shader.new()
-		shader.code="shader_type canvas_item; void fragment(){vec4 t=texture(TEXTURE,UV); float a=0.0; for(int x=-1;x<=1;x++){for(int y=-1;y<=1;y++){a=max(a,texture(TEXTURE,UV+vec2(float(x),float(y))/64.0).a);}} COLOR=t.a>0.1?vec4(vec3(0.169,0.141,0.125),t.a):vec4(vec3(0.761,0.604,0.357),a*0.5);}"
-		var material:=ShaderMaterial.new();material.shader=shader;_art.material=material
+		shader.code="""shader_type canvas_item;
+void fragment() {
+	vec4 t = texture(TEXTURE, UV);
+	if (t.a > 0.08) {
+		COLOR = vec4(0.14, 0.12, 0.16, t.a * 0.95);
+	} else {
+		float aura = 0.0;
+		for (int x = -1; x <= 1; x++) {
+			for (int y = -1; y <= 1; y++) {
+				aura = max(aura, texture(TEXTURE, UV + vec2(float(x), float(y)) * TEXTURE_PIXEL_SIZE * 1.2).a);
+			}
+		}
+		COLOR = vec4(0.76, 0.60, 0.35, aura * 0.38);
+	}
+}"""
+		var material:=ShaderMaterial.new()
+		material.shader=shader
+		_art.material=material
 	_pool.modulate.a=.25 if owned else .08
 	shell.stage.add_child(_art)
 	_index.text="灵宠 %02d / %02d · %s"%[host._deck.current+1,host._pets.size(),"已结伴" if owned else "待结缘"]
@@ -105,7 +121,7 @@ func _codex() -> void:
 		var b:=Page.ItemCell.new()
 		b.custom_minimum_size=Vector2(56,64)
 		b.item_image.texture=Fix.pet(String(cfg.id))
-		b.item_image.modulate=Color.WHITE if G.owns_pet(String(cfg.id)) else Color("17141a")
+		b.item_image.modulate=Color.WHITE if G.owns_pet(String(cfg.id)) else Color("504256", 0.75)
 		b.heading.text=""
 		b.selected=i==host._deck.current
 		var index:int=i
@@ -116,13 +132,14 @@ func _codex() -> void:
 	shell.body.add_child(mile)
 	host._ms_l=Flow.text("","caption",UI.AGED)
 	mile.add_child(host._ms_l)
-	host._claim_btn=Flow.button("领取",host._on_claim)
-	host._claim_btn.custom_minimum_size.x=88
+	var ready_claim := not G.codex_next_ready().is_empty()
+	host._claim_btn=Flow.button("领取",host._on_claim, ready_claim)
+	host._claim_btn.custom_minimum_size=Vector2(92, 38)
 	host._claim_btn.size_flags_horizontal=Control.SIZE_SHRINK_END
 	mile.add_child(host._claim_btn)
 	host._refresh_milestone()
-	host._ms_l.add_theme_color_override("font_color",UI.GOLD if not G.codex_next_ready().is_empty() else UI.AGED)
-	host._claim_btn.disabled=G.codex_next_ready().is_empty()
+	host._ms_l.add_theme_color_override("font_color",UI.GOLD if ready_claim else UI.AGED)
+	host._claim_btn.disabled = not ready_claim
 	host._claim_btn.caption.add_theme_font_size_override("font_size",14)
 	var ev:Dictionary=p.get("evolve",{})
 	var n:=maxi(1,int(ev.get("cost",{}).get("evolve_crystal",3)))

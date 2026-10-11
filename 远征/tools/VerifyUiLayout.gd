@@ -338,7 +338,7 @@ func _run() -> void:
 	var inner_w: float = float(qp.get("INNER_W"))
 	var cards := 0
 	for card in list.get_children():
-		if not (card is PanelContainer):
+		if not (card is PanelContainer or card is Panel):
 			continue
 		cards += 1
 		_check(card.get_child_count() == 1,

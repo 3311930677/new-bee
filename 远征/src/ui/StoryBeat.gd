@@ -88,16 +88,27 @@ func _build() -> void:
 	hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(hint)
 
+	# 电影感信箱遮罩 (Cinematic Letterbox Bars)
+	for y in [0.0, VIEW_H - 42.0]:
+		var bar := ColorRect.new()
+		bar.color = Color(0.04, 0.03, 0.05, 0.95)
+		bar.position = Vector2(0, y)
+		bar.size = Vector2(VIEW_W, 42.0)
+		bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(bar)
+
 	var skip := G.gold_button("跳 过", 96, 34, G.FS_XS)
-	skip.position = Vector2(VIEW_W - 108, 26)
+	skip.position = Vector2(VIEW_W - 108, 48)
 	skip.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			HapticFeedback.light()
 			_skip())
 	add_child(skip)
 
 	# 点任意处推进（与序章同一个操作习惯）
 	gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			HapticFeedback.light()
 			_advance())
 
 

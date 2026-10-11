@@ -377,6 +377,37 @@ func present_reward(title: String, detail := "", kind := "reward") -> void:
 			return
 
 
+## 统一二级页面关闭动效：缩小 -> 透明度降低 -> 弹簧收回 -> 发出关闭信号由宿主安全释放
+func close_page(panel: Control, on_finish: Callable = Callable()) -> void:
+	if not is_instance_valid(panel) or panel.is_queued_for_deletion():
+		return
+	if get_meta("ui_review_mode", false) or DisplayServer.get_name() == "headless":
+		if on_finish.is_valid(): on_finish.call()
+		return
+	panel.pivot_offset = panel.size * 0.5
+	var tw := panel.create_tween()
+	tw.set_parallel(true)
+	tw.tween_property(panel, "modulate:a", 0.0, 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tw.tween_property(panel, "scale", Vector2(0.94, 0.94), 0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tw.chain().tween_callback(func():
+		if on_finish.is_valid(): on_finish.call()
+	)
+
+
+## 全屏稀有装备仪式浮层展示
+func present_rare_gear_ceremony(gear_data: Dictionary, on_closed: Callable = Callable()) -> void:
+	if bool(get_meta("ui_review_mode", false)) and not bool(get_meta("force_ceremony_render", false)):
+		if on_closed.is_valid(): on_closed.call()
+		return
+	var scene_root := get_tree().current_scene if get_tree() != null else null
+	if scene_root == null: return
+	var ceremony_script: GDScript = load("res://src/ui/RareGearCeremony.gd")
+	var ceremony: Control = ceremony_script.new(gear_data)
+	if on_closed.is_valid():
+		ceremony.closed.connect(on_closed)
+	scene_root.add_child(ceremony)
+
+
 ## 小字号字体（正文字体）：全局关 hinting；标题用宋体保留轻 hinting
 func _is_small_face(f: FontFile) -> bool:
 	return f == font_reg or f == font_bold
@@ -3635,6 +3666,10 @@ func equip_slot_cfg(slot_id: String) -> Dictionary:
 	return {}
 
 
+func equip_slot_name(slot_id: String) -> String:
+	return String(equip_slot_cfg(slot_id).get("name", "装备"))
+
+
 func equip_templates() -> Array:
 	return equip_cfg().get("templates", [])
 
@@ -5564,7 +5599,17 @@ func res_tex(res_name: String) -> Texture2D:
 
 func visual_texture(path: String) -> Texture2D:
 	var clean_path := path.get_base_dir()+"/refined/"+path.get_file()
-	return load(clean_path if ResourceLoader.exists(clean_path) else path) as Texture2D
+	var target := clean_path if ResourceLoader.exists(clean_path) else path
+	if ResourceLoader.exists(target):
+		var res = load(target)
+		if res is Texture2D:
+			return res as Texture2D
+	var os_p := ProjectSettings.globalize_path(target)
+	if FileAccess.file_exists(target) or FileAccess.file_exists(os_p):
+		var img := Image.load_from_file(os_p if FileAccess.file_exists(os_p) else target)
+		if img != null:
+			return ImageTexture.create_from_image(img)
+	return null
 
 
 # ---------- 通用 UI 工厂 ----------
@@ -6426,14 +6471,16 @@ func _bind_press_feedback(root: Control) -> void:
 			root.set_meta("press_motion",tw)
 			if e.pressed:
 				_sfx("ui_click")
-				tw.tween_property(root, "modulate", Color(0.9, 0.9, 0.9), 0.06)
-				tw.parallel().tween_property(root, "scale", Vector2.ONE * 0.97, 0.06)
-				# 手指滑出热区也会自行复位；短促回弹不依赖收到松手事件。
-				tw.tween_property(root,"modulate",Color.WHITE,.18)
-				tw.parallel().tween_property(root,"scale",Vector2.ONE,.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+				preload("res://src/ui/HapticFeedback.gd").light()
+				tw.tween_property(root, "modulate", Color(0.9, 0.9, 0.9), 0.05)
+				tw.parallel().tween_property(root, "scale", Vector2.ONE * 0.96, 0.05)
+				# 移动端弹性回弹：1.0 -> 0.96 -> 1.03 -> 1.0
+				tw.tween_property(root, "modulate", Color.WHITE, 0.08)
+				tw.parallel().tween_property(root, "scale", Vector2.ONE * 1.03, 0.08).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+				tw.tween_property(root, "scale", Vector2.ONE, 0.08).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 			else:
-				tw.tween_property(root, "modulate", Color.WHITE, 0.12)
-				tw.parallel().tween_property(root, "scale", Vector2.ONE, 0.12))
+				tw.tween_property(root, "modulate", Color.WHITE, 0.10)
+				tw.parallel().tween_property(root, "scale", Vector2.ONE, 0.10))
 
 
 ## 主操作：青铜底、浅金字与菱形端饰。保留旧工厂名和交互接口。

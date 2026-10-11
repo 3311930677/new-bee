@@ -18,6 +18,7 @@ var _close_btn: Button
 var _count_l: Label
 var _pending_l: Label
 var _gold: Label
+var _gold_bg: Panel = null
 var _tabs: HBoxContainer
 var _list: Control
 var _scroll: ScrollContainer
@@ -60,9 +61,19 @@ func _build() -> void:
 	_panel_root.add_child(_count_l)
 	_pending_l=UI.label("","caption",UI.AGED)
 	_panel_root.add_child(_pending_l)
+	_gold_bg=Panel.new()
+	_gold_bg.name="GoldPill"
+	_gold_bg.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	var gstyle:=StyleBoxFlat.new()
+	gstyle.bg_color=Color("141118",0.86)
+	gstyle.border_color=Color("6a5338",0.75)
+	gstyle.set_border_width_all(1)
+	gstyle.set_corner_radius_all(3)
+	_gold_bg.add_theme_stylebox_override("panel",gstyle)
+	_panel_root.add_child(_gold_bg)
 	_gold=UI.label("","number",UI.GOLD)
 	_gold.name="GoldBalance"
-	_gold.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT
+	_gold.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	_panel_root.add_child(_gold)
 	_tabs=HBoxContainer.new()
 	_tabs.name="Categories"
@@ -110,7 +121,8 @@ func _resize_frame(safe_override: Rect2=Rect2()) -> void:
 	Page.place(_banner,Vector2(64,8),Vector2(300,40))
 	Page.place(_count_l,Vector2(12,52),Vector2(176,44))
 	Page.place(_pending_l,Vector2(172,52),Vector2(130,44))
-	Page.place(_gold,Vector2(safe.size.x-172,52),Vector2(160,44))
+	if _gold_bg!=null:Page.place(_gold_bg,Vector2(safe.size.x-164,54),Vector2(152,36))
+	Page.place(_gold,Vector2(safe.size.x-164,54),Vector2(152,36))
 	Page.place(_tabs,Vector2(12,100),Vector2(safe.size.x-24,44))
 	var tray_top:=safe.size.y-328
 	Page.place(_list,Vector2(12,152),Vector2(safe.size.x-24,maxf(148,tray_top-156)))
@@ -191,7 +203,12 @@ func _build_equip_tab() -> void:
 		cell.pressed.connect(_select_item.bind(uid))
 		grid.add_child(cell)
 		_item_buttons.append(cell)
-	if items.is_empty():_empty("背包里没有装备","沿途掉落会自动入包，满包后存入待领取箱。")
+	var min_slots: int = maxi(20, int(ceil(float(items.size()) / 5.0)) * 5)
+	for i in range(items.size(), min_slots):
+		var empty_cell := Page.ItemCell.new()
+		empty_cell.disabled = true
+		empty_cell.focus_mode = Control.FOCUS_NONE
+		grid.add_child(empty_cell)
 	_build_detail()
 
 func _select_item(uid: int) -> void:
@@ -220,18 +237,40 @@ func _build_detail() -> void:
 	var slot:=String(inst.get("slot",""))
 	var worn:=G.inv_worn_uids().has(uid)
 	var top:=HBoxContainer.new()
+	top.add_theme_constant_override("separation", 12)
 	_detail_body.add_child(top)
-	top.add_child(Page.picture(Fix.item(String(inst.tpl)),Vector2(80,80)))
+	var icon_cell := Page.ItemCell.new()
+	icon_cell.custom_minimum_size = Vector2(80, 80)
+	icon_cell.size = Vector2(80, 80)
+	icon_cell.rarity_rank = int(inst.get("rarity", 1))
+	icon_cell.rarity = G.equip_rarity_color(icon_cell.rarity_rank)
+	icon_cell.item_image.texture = Fix.item(String(inst.tpl))
+	icon_cell.image_px = 64
+	icon_cell.disabled = true
+	icon_cell.focus_mode = Control.FOCUS_NONE
+	top.add_child(icon_cell)
 	var names:=VBoxContainer.new()
 	names.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	top.add_child(names)
 	names.add_child(Page.line(String(tpl.get("name","装备")),"object",G.equip_rarity_color(int(inst.get("rarity",1))).darkened(.15)))
 	names.add_child(Page.line("%s · 强化 +%d%s" % [G.equip_rarity_name(int(inst.get("rarity",1))),int(inst.get("lv",0))," · 在身" if worn else ""],"caption",UI.AGED))
-	_detail_body.add_child(Page.line(" · ".join(_stat_parts(G.equip_instance_bonus(inst))),"body"))
+	var stat_box := PanelContainer.new()
+	var stat_sb := StyleBoxFlat.new()
+	stat_sb.bg_color = Color("141118", 0.65)
+	stat_sb.border_color = Color("382e22", 0.60)
+	stat_sb.set_border_width_all(1)
+	stat_sb.set_corner_radius_all(3)
+	stat_sb.set_content_margin_all(8)
+	stat_box.add_theme_stylebox_override("panel", stat_sb)
+	_detail_body.add_child(stat_box)
+	var stat_vbox := VBoxContainer.new()
+	stat_vbox.add_theme_constant_override("separation", 4)
+	stat_box.add_child(stat_vbox)
+	stat_vbox.add_child(Page.line(" · ".join(_stat_parts(G.equip_instance_bonus(inst))),"body", UI.PAPER))
 	var comparison:=HBoxContainer.new()
 	comparison.name="EquipmentComparison"
 	comparison.add_child(UI.label("对比已装备：","tag",UI.AGED))
-	_detail_body.add_child(comparison)
+	stat_vbox.add_child(comparison)
 	var mine:=G.equip_instance_bonus(inst)
 	var theirs:=G.equip_slot_bonus(slot)
 	var differences:=0
@@ -269,6 +308,7 @@ func _build_detail() -> void:
 func _action(words: String,skin: String,id: String, callback: Callable) -> Button:
 	var b:=UI.action(words,skin)
 	b.set_meta("action",id)
+	b.pressed.connect(func(): HapticFeedback.light())
 	b.pressed.connect(callback)
 	_actions.add_child(b)
 	_action_buttons.append(b)
@@ -299,7 +339,15 @@ func _build_supplies(gems: bool) -> void:
 		b.pressed.connect(func():_sel_supply=id;_refresh())
 		grid.add_child(b)
 		_item_buttons.append(b)
-	if ids.is_empty():_empty("暂无宝石" if gems else "暂无材料","沿途掉落和兑换所得会收纳在这里。")
+	var min_slots: int = maxi(20, int(ceil(float(ids.size()) / 5.0)) * 5)
+	for i in range(ids.size(), min_slots):
+		var empty_cell := Page.ItemCell.new()
+		empty_cell.disabled = true
+		empty_cell.focus_mode = Control.FOCUS_NONE
+		grid.add_child(empty_cell)
+	if ids.is_empty():
+		_detail_body.add_child(Page.line("暂无宝石" if gems else "暂无材料", "section"))
+		_detail_body.add_child(Page.line("沿途掉落和兑换所得会收纳在这里。", "caption", UI.AGED))
 	_detail_body.add_child(Page.line(G.gem_label(_sel_supply) if gems and not _sel_supply.is_empty() else G.item_name(_sel_supply) if not _sel_supply.is_empty() else "宝石镶嵌与合成" if gems else "行旅材料","object"))
 	if not _sel_supply.is_empty():_detail_body.add_child(Page.line("持有 ×%d%s" % [G.item_count(_sel_supply)," · 属性加成 +%d" % G.equip_gem_value(_sel_supply) if gems else ""],"body"))
 	_detail_body.add_child(Page.line("3 颗同级同色宝石可合成更高级宝石；前往养成 → 装备 → 宝石。" if gems else "材料可堆叠，不占装备格。强化、精炼等加工操作位于养成 → 装备。","caption",UI.AGED))
@@ -358,7 +406,7 @@ func _toast_msg(msg: String) -> void:
 
 func _close() -> void:
 	if is_instance_valid(_focus_return):_focus_return.grab_focus.call_deferred()
-	closed.emit()
+	G.close_page(self, func(): closed.emit())
 
 func _unhandled_input(event: InputEvent) -> void:
 	if G.ui_blocked:return

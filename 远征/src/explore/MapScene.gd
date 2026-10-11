@@ -646,6 +646,8 @@ func _build_world() -> void:
 		return_props.y_sort_enabled=true
 		_world.add_child(return_props)
 	add_child(_world)
+	if _mode == "main_world":
+		(preload("res://src/explore/SecondaryMapEnhancer.gd") as GDScript).setup(self)
 
 	_build_decos(cols, rows)
 	_build_portal(map_w)
@@ -1006,15 +1008,15 @@ func _build_player(map_w: float, map_h: float) -> void:
 	if _mode == "main_world":
 		# 深底名牌保证绿地、浅色道路上都可读；红色菱形仍标识玩家。
 		_player_tag = Lacquer.CutPanel.new()
-		var name_y := -38.0 - 60.0 * player_scale
-		_player_tag.position = Vector2(-70, name_y)
-		_player_tag.size = Vector2(140, 24)
+		var name_y := -40.0 - 62.0 * player_scale
+		_player_tag.position = Vector2(-45, name_y)
+		_player_tag.size = Vector2(90, 20)
 		_player_tag.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		var tag_style := StyleBoxFlat.new()
-		tag_style.bg_color = Color("17151a",0.85)
-		tag_style.border_color = Color("90c79c", 0.8)
+		tag_style.bg_color = Color("141118", 0.80)
+		tag_style.border_color = Color("c29a5b", 0.85)
 		tag_style.set_border_width_all(1)
-		tag_style.set_corner_radius_all(0)
+		tag_style.set_corner_radius_all(3)
 		_player_tag.add_theme_stylebox_override("panel", tag_style)
 		_player_tag_style = tag_style
 		_player.add_child(_player_tag)
@@ -1028,15 +1030,14 @@ func _build_player(map_w: float, map_h: float) -> void:
 		_first_act_weapon.scale = Vector2.ONE * 0.7
 		_first_act_weapon.visible = false
 		_player.add_child(_first_act_weapon)
-		# 字号收进六档（P01 样板 §5）：原来是不在档里的字面量 14，比 NPC 名签还小
-		_player_name_l = G.gold_label("", 14, false, Color("f1ffe9"), false)
-		_player_name_l.add_theme_font_override("font",G.font_bold)
-		_player_name_l.add_theme_color_override("font_color",Lacquer.PAPER)
+		_player_name_l = G.gold_label("", 11, false, Lacquer.PAPER, false)
+		_player_name_l.add_theme_font_override("font", G.font_bold)
+		_player_name_l.add_theme_color_override("font_color", Lacquer.PAPER)
 		_player_name_l.clip_text = true
 		_player_name_l.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-		_player_name_l.add_theme_font_size_override("font_size",12)
-		_player_name_l.position = Vector2(5, 1)
-		_player_name_l.size = Vector2(130, 22)
+		_player_name_l.add_theme_font_size_override("font_size", 11)
+		_player_name_l.position = Vector2(0, 1)
+		_player_name_l.size = Vector2(90, 18)
 		_player_name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		_player_name_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		_player_name_l.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -1523,27 +1524,42 @@ func _build_interactable(map_w: float, map_h: float) -> void:
 ## 暗角：中心留亮、四周渐暗（椭圆半径按 480×800 观感取），把视线收到人物身上，
 ## 同时压掉地图边缘那条直的"贴图断头"。纯视觉层，mouse_filter IGNORE 不吃点击。
 func _build_vignette() -> void:
-	if _mode == "main_world":
-		return  # 原版草地主场景明亮平坦；历练暗角不带进常驻江湖
+	if _mode == "main_world" and _main_map_id == "lorin_wilds":
+		return  # 第一个主城昭元边城保持原版明亮开阔
 	var grad := Gradient.new()
-	grad.offsets = PackedFloat32Array([0.0, 0.42, 0.78])
+	grad.offsets = PackedFloat32Array([0.0, 0.46, 0.88])
+	var edge_color := Color(0.04, 0.03, 0.02, 0.45)
+	if _mode == "main_world":
+		if _main_map_id in ["frost_post", "frost_boardwalk", "frost_pass"]:
+			edge_color = Color(0.06, 0.10, 0.16, 0.32)
+		elif _main_map_id in ["stele_cavern", "abyss_ring", "rift_mine_vault"]:
+			edge_color = Color(0.05, 0.03, 0.08, 0.42)
+		elif _main_map_id in ["broken_slope", "old_salt_road"]:
+			edge_color = Color(0.10, 0.07, 0.04, 0.30)
+		else:
+			edge_color = Color(0.06, 0.05, 0.04, 0.28)
 	grad.colors = PackedColorArray([
-		Color(0.06, 0.04, 0.02, 0.0),
-		Color(0.06, 0.04, 0.02, 0.0),
-		Color(0.04, 0.03, 0.02, 0.60),
+		Color(edge_color.r, edge_color.g, edge_color.b, 0.0),
+		Color(edge_color.r, edge_color.g, edge_color.b, 0.0),
+		edge_color,
 	])
 	var tex := GradientTexture2D.new()
 	tex.gradient = grad
-	tex.width = 480
-	tex.height = 800
+	tex.width = 120
+	tex.height = 200
 	tex.fill = GradientTexture2D.FILL_RADIAL
 	tex.fill_from = Vector2(0.5, 0.5)
 	tex.fill_to = Vector2(1.0, 0.5)
 	var vig := TextureRect.new()
+	vig.name = "AmbientVignette"
 	vig.texture = tex
-	vig.size = Vector2(VIEW_W, VIEW_H)
+	vig.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	vig.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	vig.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_hud.add_child(vig)
+	var weather := preload("res://src/explore/WeatherVFX.gd").new(_main_map_id)
+	weather.name = "WeatherVFX"
+	_hud.add_child(weather)
 
 
 func _build_main_world_status() -> void:
@@ -1632,11 +1648,12 @@ func _refresh_hud() -> void:
 			_player_name_l.text = "%s  Lv%d" % [player_name.left(8)+"…" if player_name.length()>8 else player_name, lv]
 			_player_name_l.tooltip_text = player_name
 			var name_width := G.font_bold.get_string_size(_player_name_l.text,
-				HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
-			var tag_width := clampf(name_width + 16.0, 88.0, 180.0)
-			_player_tag.size.x = tag_width
+				HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x
+			var tag_width := clampf(name_width + 12.0, 64.0, 150.0)
+			_player_tag.size = Vector2(tag_width, 20)
 			_player_tag.position.x = -tag_width * 0.5
-			_player_name_l.size.x = tag_width - 10.0
+			_player_name_l.size = Vector2(tag_width, 18)
+			_player_name_l.position = Vector2(0, 1)
 		_refresh_player_appearance()
 	# 苦行局要在 HUD 上一直看得见：玩家必须清楚"这局敌人更强、收益更高"，
 	# 而不是打着打着忘了自己开过什么
@@ -5421,24 +5438,46 @@ class _Minimap extends Control:
 		var sz := size
 		if sz.x <= 1.0 or sz.y <= 1.0:
 			sz = custom_minimum_size
-		_frame_style.border_color = Color("ae9567") if _hovered or has_focus() else MapScene.HudStyle.EDGE
-		MapScene.Lacquer.plate(self,Rect2(Vector2.ZERO,sz),MapScene.Lacquer.INK,_frame_style.border_color)
-		for corner in [Vector2(3,3),Vector2(sz.x-3,3),Vector2(3,sz.y-3),sz-Vector2(3,3)]:
-			var direction := Vector2(1 if corner.x < sz.x*0.5 else -1,1 if corner.y < sz.y*0.5 else -1)
-			draw_line(corner,corner+Vector2(direction.x*6,0),MapScene.Lacquer.LIT,1)
-			draw_line(corner,corner+Vector2(0,direction.y*6),MapScene.Lacquer.LIT,1)
+		if big:
+			_frame_style.border_color = Color("ae9567") if _hovered or has_focus() else MapScene.HudStyle.EDGE
+			MapScene.Lacquer.plate(self,Rect2(Vector2.ZERO,sz),MapScene.Lacquer.INK,_frame_style.border_color)
+			for corner in [Vector2(3,3),Vector2(sz.x-3,3),Vector2(3,sz.y-3),sz-Vector2(3,3)]:
+				var direction := Vector2(1 if corner.x < sz.x*0.5 else -1,1 if corner.y < sz.y*0.5 else -1)
+				draw_line(corner,corner+Vector2(direction.x*6,0),MapScene.Lacquer.LIT,1)
+				draw_line(corner,corner+Vector2(0,direction.y*6),MapScene.Lacquer.LIT,1)
+		else:
+			var center := sz * 0.5
+			var radius := minf(sz.x, sz.y) * 0.48
+			draw_circle(center, radius + 2.0, Color("0b0a0e", 0.82))
+			draw_circle(center, radius, Color("cca564", 0.9), false, 1.5)
+			draw_circle(center, radius - 2.0, Color("4a3c24", 0.6), false, 1.0)
+			var n_col := Color("ffd980") if _hovered else Color("dfc282")
+			draw_line(center + Vector2(0, -radius), center + Vector2(0, -radius + 5), n_col, 1.5)
+			draw_line(center + Vector2(0, radius), center + Vector2(0, radius - 3), Color("a68d5a"), 1.0)
+			draw_line(center + Vector2(-radius, 0), center + Vector2(-radius + 3, 0), Color("a68d5a"), 1.0)
+			draw_line(center + Vector2(radius, 0), center + Vector2(radius - 3, 0), Color("a68d5a"), 1.0)
 
 		var ext := map_ref._map_extent()
 		var map_rect := _map_rect()
 		var at := func(p: Vector2) -> Vector2: return _project(p)
 		var s := map_rect.size.x / ext.x
-		draw_rect(map_rect.grow(1),Color("0a090b"))
+		if big:
+			draw_rect(map_rect.grow(1),Color("0a090b"))
 		var terrain := _cartography.terrain_thumbnail(map_ref)
 		var bounds := _view_bounds()
 		var visible := bounds.intersection(Rect2(Vector2.ZERO,ext))
 		var target_rect := Rect2(map_rect.position+(visible.position-bounds.position)/bounds.size*map_rect.size,visible.size/bounds.size*map_rect.size)
 		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		draw_texture_rect_region(terrain,target_rect,Rect2(visible.position/ext*terrain.get_size(),visible.size/ext*terrain.get_size()))
+		draw_texture_rect_region(terrain, target_rect, Rect2(visible.position / ext * terrain.get_size(), visible.size / ext * terrain.get_size()))
+		if big:
+			draw_rect(map_rect.grow(1), Color("b89358", 0.85), false, 1.0)
+			draw_rect(map_rect, Color("594426", 0.65), false, 1.0)
+			for cp in [map_rect.position, Vector2(map_rect.end.x, map_rect.position.y), Vector2(map_rect.position.x, map_rect.end.y), map_rect.end]:
+				draw_circle(cp, 1.5, Color("dfc282"))
+		else:
+			var center := sz * 0.5
+			var radius := minf(sz.x, sz.y) * 0.46
+			draw_circle(center, radius, Color("cca564", 0.85), false, 1.0)
 		if map_ref._city_content != null:
 			for npc in map_ref._city_content._npcs:
 				if big or bounds.has_point(npc.position): MapScene.Cartography.marker(self,_project(npc.position).clamp(map_rect.position+Vector2(4,4),map_rect.end-Vector2(4,4)),"npc")
@@ -5700,6 +5739,7 @@ func _build_round1_hud() -> void:
 	var shade := Lacquer.scrim(Vector2(get_viewport_rect().size.x,160))
 	shade.name = "TopScrim"
 	_hud.add_child(shade)
+	_build_vignette()
 	_build_main_world_status()
 	var story := HudStyle.task_chip(216, "story")
 	_main_story_l = story.label
@@ -5794,7 +5834,7 @@ func _layout_round1_hud(safe_override: Rect2 = Rect2()) -> void:
 	_main_gold_chip.size.x = 92 if safe.size.x < 480 else 104
 	_main_gold_l.size.x = _main_gold_chip.size.x - 32
 	for child in _hud.get_children():
-		if not child is Control or child.name == "TopScrim": continue
+		if not child is Control or child.name in ["TopScrim", "AmbientVignette", "WeatherVFX", "DirectionalSunbeams", "ForegroundCanopy"]: continue
 		if child.has_meta("safe_hud_position"): child.remove_meta("safe_hud_position")
 		if not child.has_meta("round_base"): child.set_meta("round_base",child.position)
 		var base: Vector2 = child.get_meta("round_base")

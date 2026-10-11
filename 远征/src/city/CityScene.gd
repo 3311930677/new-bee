@@ -2719,17 +2719,19 @@ class _Building extends StaticBody2D:
 		var view := get_viewport_rect().size
 		if screen_at.x < pw * 0.5 or screen_at.x > view.x - pw * 0.5 or screen_at.y < 90 or screen_at.y > view.y - 80:
 			return
+		if screen_at.x < 180.0 and screen_at.y > view.y - 190.0:
+			return
 		if sub != "":
 			ph = 44.0
-		draw_rect(Rect2(-pw / 2, y, pw, ph), Color("e8d5a3"))
-		draw_rect(Rect2(-pw / 2, y, pw, ph), Color("8a6220"), false, 1.5)
+		draw_rect(Rect2(-pw / 2, y, pw, ph), Color("17141a", 0.90))
+		draw_rect(Rect2(-pw / 2, y, pw, ph), Color("b88c4a", 0.90), false, 1.2)
 		var ts := G.font_display.get_string_size(txt, HORIZONTAL_ALIGNMENT_CENTER, -1, 13)
 		draw_string(G.font_display, Vector2(-ts.x / 2, y + 17), txt,
-			HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color("3a2a14"))
+			HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color("fff2d8"))
 		if sub != "":
 			var ss := G.font_reg.get_string_size(sub, HORIZONTAL_ALIGNMENT_CENTER, -1, G.FS_XS)
 			draw_string(G.font_reg, Vector2(-ss.x / 2, y + 37), sub,
-				HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS, Color("8a4a2a"))
+				HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS, Color("d99050"))
 
 	func _draw_plot() -> void:
 		if bool(get_meta("sunny_sample",false)):
@@ -3144,8 +3146,8 @@ class _CityNPC extends Node2D:
 		var psb := StyleBoxFlat.new()
 		# 深木硬边名牌与新的纸页/金钮共用材质语言。
 		# 名牌按文字内容收紧，_clamp_plate() 按实际宽度钳制屏内位置。
-		psb.bg_color = Color.TRANSPARENT if embedded else Color("373b36",0.85)
-		psb.set_corner_radius_all(0)
+		psb.bg_color = Color.TRANSPARENT if embedded else Color("16121a",0.88)
+		psb.set_corner_radius_all(3)
 		psb.set_border_width_all(0 if embedded else 1)
 		psb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.45)
 		psb.shadow_color = Color.TRANSPARENT

@@ -146,6 +146,12 @@ class ItemCell extends Button:
 		for state in ["normal","hover","pressed","focus","disabled"]: add_theme_stylebox_override(state,StyleBoxEmpty.new())
 		for event in [resized,mouse_entered,mouse_exited,focus_entered,focus_exited]: event.connect(queue_redraw)
 	func _draw() -> void:
+		if disabled and item_image.texture == null:
+			UI.surface(self, Rect2(Vector2.ZERO, size), Color("120f15", 0.65), Color("382e22", 0.45), 2.0)
+			var c := size * 0.5
+			draw_line(Vector2(c.x - 4, c.y), Vector2(c.x + 4, c.y), Color("382e22", 0.5), 1.0)
+			draw_line(Vector2(c.x, c.y - 4), Vector2(c.x, c.y + 4), Color("382e22", 0.5), 1.0)
+			return
 		UI.surface(self,Rect2(Vector2.ZERO,size),UI.SELECTED if selected else Color("17141a",.92),UI.GOLD if selected or has_focus() else UI.BRONZE)
 		if rarity_rank>1:
 			for radius in [34,28,20]:draw_circle(size*.5,radius,Color(rarity,.045))
@@ -194,34 +200,109 @@ class GrowthRow extends Button:
 	var status: Label
 	var next_action: Label
 	var actionable := false
-	func _init(words: String, id: String) -> void:
+
+	func _init(words: String, id_or_tex: Variant = "") -> void:
 		text = words
-		custom_minimum_size = Vector2(0,52)
-		image = Page.picture(Page.texture(id),Vector2(40,40))
+		custom_minimum_size = Vector2(0, 52)
+		var tex: Texture2D = null
+		if id_or_tex is Texture2D:
+			tex = id_or_tex
+		elif id_or_tex is String:
+			var s_id: String = String(id_or_tex)
+			if s_id.begins_with("pet_"):
+				tex = preload("res://src/ui/ReviewFixUI.gd").pet(s_id)
+			elif s_id in ["fury", "guard", "spirit"] or s_id.begins_with("fury_") or s_id.begins_with("guard_") or s_id.begins_with("spirit_"):
+				var talent_map := {
+					"fury": "zs_pozhen", "fury_1": "zs_lieshan", "fury_2": "zs_pozhen", "fury_3": "zs_zhanhou",
+					"fury_4": "zs_huifeng", "fury_5": "zs_duanzui", "fury_6": "fs_yanmie", "fury_7": "ck_duopo",
+					"fury_8": "ck_qingxie", "fury_9": "zs_zhanhou", "fury_10": "zs_pozhen",
+					"guard": "fs_midun", "guard_1": "fs_midun", "guard_2": "fz_shengyu", "guard_3": "fz_zhudao",
+					"guard_4": "fz_jinghua", "guard_5": "fs_midun", "guard_6": "fz_zhudao", "guard_7": "fs_midun",
+					"guard_8": "fz_poxiao", "guard_9": "fz_shengyu", "guard_10": "fz_poxiao",
+					"spirit": "ck_dunying", "spirit_1": "ck_dunying", "spirit_2": "ck_guanjia", "spirit_3": "ck_lianzhu",
+					"spirit_4": "ck_dunying", "spirit_5": "fz_puzhao", "spirit_6": "fs_tianyun", "spirit_7": "ck_qingxie",
+					"spirit_8": "fs_shuanghuan", "spirit_9": "fs_shuangren", "spirit_10": "fs_tianyun"
+				}
+				var k: String = String(talent_map.get(s_id, "zs_pozhen"))
+				tex = preload("res://src/ui/ReviewFixUI.gd").texture(k)
+			elif s_id in ["horse", "bear", "griffin", "nightmare", "sandlizard", "woolyrhino"]:
+				tex = G.res_tex("mount_" + s_id)
+			elif s_id.begins_with("title_") or s_id in ["title", "titles"]:
+				tex = preload("res://src/ui/ReviewFixUI.gd").texture("crown")
+			if tex == null and not s_id.is_empty():
+				tex = Page.texture(s_id)
+		image = Page.picture(tex if tex != null else Page.texture("talent"), Vector2(40, 40))
+		image.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(image)
-		heading = UI.label(words,"section")
+		heading = UI.label(words, "section")
+		heading.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(heading)
-		status = UI.label("","caption",UI.AGED)
+		status = UI.label("", "caption", UI.AGED)
+		status.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(status)
-		next_action = UI.label("","tag",UI.GOLD)
-		next_action.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		next_action = UI.label("", "tag", UI.GOLD)
+		next_action.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		next_action.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(next_action)
+
 	func _ready() -> void:
-		for state in ["normal","hover","pressed","focus","disabled"]: add_theme_stylebox_override(state,StyleBoxEmpty.new())
-		for property in ["font_color","font_hover_color","font_focus_color","font_pressed_color"]: add_theme_color_override(property,Color.TRANSPARENT)
-		for event in [resized,mouse_entered,mouse_exited,focus_entered,focus_exited]: event.connect(queue_redraw)
+		for state in ["normal", "hover", "pressed", "focus", "disabled"]:
+			add_theme_stylebox_override(state, StyleBoxEmpty.new())
+		for property in ["font_color", "font_hover_color", "font_focus_color", "font_pressed_color"]:
+			add_theme_color_override(property, Color.TRANSPARENT)
+		for event in [resized, mouse_entered, mouse_exited, focus_entered, focus_exited]:
+			event.connect(queue_redraw)
+
 	func _draw() -> void:
-		UI.surface(self,Rect2(Vector2.ZERO,size),UI.SELECTED if is_hovered() else UI.FACE,UI.COPPER if has_focus() else Color("3a3037"))
-		if actionable: draw_rect(Rect2(0,5,2,size.y-10),UI.GOLD)
-		image.position = Vector2(12,6)
-		heading.position = Vector2(64,0)
-		heading.size = Vector2(210,27)
-		if get_meta("recommendation",false):heading.size=Vector2(size.x-88,44)
-		status.position = Vector2(64,27)
-		status.size = Vector2(210,22)
-		next_action.position = Vector2(size.x-154,8)
-		next_action.size = Vector2(120,36)
-		if actionable and not next_action.text.is_empty():
-			UI.surface(self,Rect2(size.x-138,14,112,24),UI.NIGHT,UI.BRONZE)
-		next_action.add_theme_color_override("font_color",UI.GOLD if actionable else UI.AGED)
-		draw_polyline(PackedVector2Array([Vector2(size.x-20,21),Vector2(size.x-15,26),Vector2(size.x-20,31)]),UI.COPPER if actionable else UI.AGED,2)
+		UI.surface(self, Rect2(Vector2.ZERO, size), UI.SELECTED if is_hovered() else UI.FACE, UI.COPPER if has_focus() else Color("3a3037"))
+		if actionable:
+			draw_rect(Rect2(0, 5, 2.5, size.y - 10), UI.GOLD)
+
+		# 图标与边框
+		draw_rect(Rect2(Vector2(10, 4), Vector2(44, 44)), Color("110e15"))
+		draw_rect(Rect2(Vector2(10, 4), Vector2(44, 44)), Color("3e3228"), false, 1.0)
+		image.position = Vector2(12, 6)
+
+		# 标题与副标题位置：保证宽度充分，杜绝折行或文字遮挡
+		var text_w := maxf(120.0, size.x - 180.0)
+		heading.position = Vector2(64, 2)
+		heading.size = Vector2(text_w, 26)
+		if get_meta("recommendation", false):
+			heading.size = Vector2(size.x - 88, 44)
+		status.position = Vector2(64, 26)
+		status.size = Vector2(text_w, 22)
+
+		# 右侧徽章按钮
+		var badge_w := 96.0
+		var badge_h := 26.0
+		var badge_x := size.x - badge_w - 28.0
+		var badge_y := (size.y - badge_h) * 0.5
+		var badge_rect := Rect2(badge_x, badge_y, badge_w, badge_h)
+
+		if not next_action.text.is_empty():
+			var act_text := next_action.text
+			if act_text.contains("已选"):
+				UI.surface(self, badge_rect, Color("282015"), Color("c29a5b"))
+				next_action.add_theme_color_override("font_color", Color("ebd197"))
+			elif act_text.contains("可强化"):
+				UI.surface(self, badge_rect, Color("2e1c10"), Color("e28b38"))
+				next_action.add_theme_color_override("font_color", Color("f7b565"))
+			elif act_text.contains("分配天赋"):
+				UI.surface(self, badge_rect, Color("0f241e"), Color("38bca8"))
+				next_action.add_theme_color_override("font_color", Color("5de4ce"))
+			elif actionable:
+				UI.surface(self, badge_rect, UI.NIGHT, UI.BRONZE)
+				next_action.add_theme_color_override("font_color", UI.GOLD)
+			else:
+				UI.surface(self, badge_rect, Color("16121b", 0.6), Color("3d3340"))
+				next_action.add_theme_color_override("font_color", Color("8a7f76"))
+
+			next_action.position = Vector2(badge_x, badge_y - 1.0)
+			next_action.size = Vector2(badge_w, badge_h)
+
+		# 右侧微型箭头
+		draw_polyline(PackedVector2Array([
+			Vector2(size.x - 18, size.y * 0.5 - 5),
+			Vector2(size.x - 13, size.y * 0.5),
+			Vector2(size.x - 18, size.y * 0.5 + 5)
+		]), UI.COPPER if actionable else Color("5a4e46"), 1.5)

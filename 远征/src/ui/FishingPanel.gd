@@ -86,6 +86,7 @@ func _button(parent: Control, value: String, at: Vector2, width: int, action: Ca
 	btn.position = at
 	btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			HapticFeedback.light()
 			action.call())
 	parent.add_child(btn)
 	return btn

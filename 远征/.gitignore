@@ -19,3 +19,8 @@ exports/
 *.apk
 *.aab
 *.pck
+
+# 临时测试截图与运行日志
+tools/*_log.txt
+shots/test_*
+shots/round4_test_*

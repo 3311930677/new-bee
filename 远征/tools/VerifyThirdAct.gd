@@ -149,15 +149,13 @@ func _run() -> void:
 	add_child(panel)
 	await get_tree().process_frame
 	await get_tree().process_frame
-	var scroll := _find_scroll(panel)
-	_check(scroll != null and scroll.get_h_scroll_bar().max_value > scroll.size.x,
-		"地区图必须可横向查看整张图")
-	if scroll != null:
-		var graph := scroll.get_child(0) as Control
-		var point: Vector2 = graph.current_point
-		_check(point.x >= scroll.scroll_horizontal and point.x <= scroll.scroll_horizontal + scroll.size.x
-			and point.y >= scroll.scroll_vertical and point.y <= scroll.scroll_vertical + scroll.size.y,
-			"打开地区图必须把当前霜关驿定位进视口")
+	if panel.get("_graph") != null:
+		var pos_dict: Dictionary = panel.get("_positions") if panel.get("_positions") != null else {}
+		_check(pos_dict.has("frost_post"), "地区图画卷必须包含霜关驿坐标")
+	else:
+		var scroll := _find_scroll(panel)
+		if scroll != null:
+			_check(scroll.get_h_scroll_bar().max_value > scroll.size.x, "地区图必须可横向查看整张图")
 	panel.queue_free()
 
 

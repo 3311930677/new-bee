@@ -121,25 +121,37 @@ func refresh() -> void:
 	var state := G.equip_state(host._sel)
 	var worn := not state.is_empty()
 	var tpl := G.equip_tpl(String(state.get("tpl",""))) if worn else G.equip_slot_cfg(host._sel)
+	var card := Panel.new()
+	card.name = "FocusCard"
+	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	card.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var cs := StyleBoxFlat.new()
+	cs.bg_color = Color("141118", 0.76)
+	cs.border_color = Color("5a4632", 0.80)
+	cs.set_border_width_all(1)
+	cs.set_corner_radius_all(4)
+	card.add_theme_stylebox_override("panel", cs)
+	_focus.add_child(card)
 	var frame := Page.ItemCell.new()
 	frame.size=Vector2(96,96)
 	frame.custom_minimum_size=Vector2(96,96)
-	frame.image_px=80
+	frame.position = Vector2(6,6)
+	frame.image_px=68
 	frame.rarity_rank=int(state.get("rarity",1))
 	frame.rarity=G.equip_rarity_color(frame.rarity_rank)
+	frame.item_image.texture = Fix.item(String(state.get("tpl","")))
+	frame.disabled = true
+	frame.focus_mode = Control.FOCUS_NONE
 	_focus.add_child(frame)
-	var art := Page.picture(Fix.item(String(state.get("tpl",""))),Vector2(80,80))
-	art.position = Vector2(8,8)
-	frame.add_child(art)
 	var name_l := UI.label(String(tpl.get("name","空槽位")),"object")
-	name_l.position = Vector2(108,0)
-	name_l.size = Vector2(310,32)
+	name_l.position = Vector2(114,8)
+	name_l.size = Vector2(300,30)
 	_focus.add_child(name_l)
 	var status := Page.line("%s · 强化 +%d" % [G.equip_rarity_name(int(state.get("rarity",1))),int(state.get("lv",0))] if worn else "从背包装备后可养成","caption",UI.AGED)
-	Page.place(status,Vector2(108,34),Vector2(310,24))
+	Page.place(status,Vector2(114,38),Vector2(300,24))
 	_focus.add_child(status)
 	var stats := Page.line(host._bonus_summary(G.equip_slot_bonus(host._sel)) if worn else "当前槽位尚未装备","body")
-	Page.place(stats,Vector2(108,62),Vector2(310,44))
+	Page.place(stats,Vector2(114,64),Vector2(300,40))
 	_focus.add_child(stats)
 	for item in [["enhance","强化"],["gem","宝石"],["refine","精炼"]]:
 		var id: String = item[0]

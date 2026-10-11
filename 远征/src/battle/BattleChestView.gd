@@ -21,7 +21,7 @@ var _modal:Control
 var _safe:=Rect2()
 var _acting_uid:=-1
 var _acting_until:=0
-var _title:Label
+var _title:Control
 var _enemy_strip:HBoxContainer
 var _hp_graph:Control
 var _pet_graph:Control
@@ -70,7 +70,8 @@ func _ready() -> void:
 	host._speed_btn=_buttons.speed
 	_buttons.attack.tooltip_text="普通攻击持续进行；点击切换集火目标"
 	_buttons.target.tooltip_text="循环选择可攻击的敌方目标"
-	var title:=UI.label({"normal":"遭遇战","elite":"精英战","boss":"首领战"}.get(String(host._cfg.get("enemy",{}).get("node_type","normal")),"遭遇战"),"section")
+	var title_text: String = {"normal":"遭遇战","elite":"精英战","boss":"首领战"}.get(String(host._cfg.get("enemy",{}).get("node_type","normal")),"遭遇战")
+	var title := BattleTitleBanner.new(title_text)
 	_title=title
 	title.position=Vector2(160,12)
 	title.size=Vector2(150,36)
@@ -368,9 +369,35 @@ class Attack extends UI.ChestButton:
 		subtitle.add_theme_font_size_override("font_size",12)
 	func _draw() -> void:
 		UI.nine(self,Flow.texture("attack"),size)
-		if is_pressed():draw_rect(Rect2(Vector2.ZERO,size),Color(0,0,0,.2))
-		if has_focus():draw_rect(Rect2(2,2,size.x-4,size.y-4),UI.GOLD,false,2)
+		if is_hovered() or has_focus():
+			draw_rect(Rect2(2,2,size.x-4,size.y-4),UI.GOLD,false,2.0)
+		if is_pressed():
+			draw_rect(Rect2(Vector2.ZERO,size),Color(0,0,0,0.25))
 		_layout()
+
+class BattleTitleBanner extends Control:
+	const UI=preload("res://src/ui/TravelChestUI.gd")
+	var label: Label
+	func _init(txt: String) -> void:
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+		custom_minimum_size = Vector2(150, 36)
+		label = UI.label("【 "+txt+" 】", "section", Color("fff2d8"))
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		add_child(label)
+	func _draw() -> void:
+		var r := Rect2(Vector2.ZERO, size)
+		draw_rect(r, Color("141118", 0.88))
+		draw_rect(r, Color("8a6b3d", 0.85), false, 1.2)
+		draw_line(Vector2(2, 2), Vector2(8, 2), UI.GOLD, 1.5)
+		draw_line(Vector2(2, 2), Vector2(2, 8), UI.GOLD, 1.5)
+		draw_line(Vector2(size.x - 2, 2), Vector2(size.x - 8, 2), UI.GOLD, 1.5)
+		draw_line(Vector2(size.x - 2, 2), Vector2(size.x - 2, 8), UI.GOLD, 1.5)
+		draw_line(Vector2(2, size.y - 2), Vector2(8, size.y - 2), UI.GOLD, 1.5)
+		draw_line(Vector2(2, size.y - 2), Vector2(2, size.y - 8), UI.GOLD, 1.5)
+		draw_line(Vector2(size.x - 2, size.y - 2), Vector2(size.x - 8, size.y - 2), UI.GOLD, 1.5)
+		draw_line(Vector2(size.x - 2, size.y - 2), Vector2(size.x - 2, size.y - 8), UI.GOLD, 1.5)
 
 class TargetButton extends UI.ChestButton:
 	func _init() -> void:super("换目标","rail")
