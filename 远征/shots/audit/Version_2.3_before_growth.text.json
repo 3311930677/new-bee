@@ -1,0 +1,412 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Label@34",
+			"rect_height": 30.0,
+			"size": 17,
+			"text": "破军 · Lv.12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@VBoxContainer@35/@Label@75",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "人物属性"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@VBoxContainer@35/@HBoxContainer@76/@Label@77",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "生命"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@VBoxContainer@35/@HBoxContainer@76/@Label@78",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "807"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@VBoxContainer@35/@HBoxContainer@79/@Label@80",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "攻击"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@VBoxContainer@35/@HBoxContainer@79/@Label@81",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "93"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@VBoxContainer@35/@HBoxContainer@82/@Label@83",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "防御"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@VBoxContainer@35/@HBoxContainer@82/@Label@84",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "43"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@VBoxContainer@35/@HBoxContainer@85/@Label@86",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "暴击"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@VBoxContainer@35/@HBoxContainer@85/@Label@87",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "8.1%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@VBoxContainer@35/@HBoxContainer@88/@Label@89",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "速度"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@VBoxContainer@35/@HBoxContainer@88/@Label@90",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "1.05"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Button@36",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Button@36/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Label@37",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "人物养成"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Button@43",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "下一步"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Button@43/@Label@40",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "下一步 · 天赋可分配 1 点"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Button@43/@Label@41",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Button@43/@Label@42",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/@Label@48",
+			"rect_height": 24.0,
+			"size": 13,
+			"text": "修习与装备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_equip",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "装备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_equip/@Label@50",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "装备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_equip/@Label@51",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "武3 / 甲2 / 饰1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_equip/@Label@52",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "可强化"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_talent",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "天赋"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_talent/@Label@54",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "天赋"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_talent/@Label@55",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "可分配 1 点"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_talent/@Label@56",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "分配天赋"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_skill",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "技能书"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_skill/@Label@58",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "技能书"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_skill/@Label@59",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "精研 1 门"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_skill/@Label@60",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/@Label@62",
+			"rect_height": 24.0,
+			"size": 13,
+			"text": "同行与荣誉"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_pet",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "宠物"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_pet/@Label@64",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "宠物"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_pet/@Label@65",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "已收 3 / 10"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_pet/@Label@66",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_mount",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "坐骑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_mount/@Label@68",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "坐骑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_mount/@Label@69",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "骑乘：烈焰马"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_mount/@Label@70",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_title",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "称号"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_title/@Label@72",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "称号"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_title/@Label@73",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "佩戴：初出茅庐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@ScrollContainer@46/@VBoxContainer@47/Growth_title/@Label@74",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": ""
+		}
+	]
+}

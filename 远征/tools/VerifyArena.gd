@@ -20,6 +20,7 @@ func _run() -> void:
 	# 动态演武单位也必须有真实素材，不能静默回退为程序圆体。
 	_check(G.res_tex("mon_arena_dummy") != null, "演武傀儡素材 mon_arena_dummy 应可解析")
 	# A. 傀儡生成：数值随等级递增
+	G.selected_role = "zs"
 	var f1 := G.make_arena_foe(1)
 	var f5 := G.make_arena_foe(5)
 	_check(String(f1.get("name", "")).contains("1 级"), "傀儡名应带等级")

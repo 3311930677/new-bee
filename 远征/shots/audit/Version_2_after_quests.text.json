@@ -1,0 +1,259 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/CityScene/@Node2D@4/@Node2D@62/@Label@64",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "老赵"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/CityScene/@Node2D@4/@Node2D@80/@Label@82",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "云游"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/CityScene/@Node2D@4/@Node2D@83/@Label@85",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "小满"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/CityScene/@Node2D@4/@Node2D@86/@Label@88",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "白桦哨"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/CityScene/@Node2D@4/@Node2D@89/@Label@91",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "夜航港"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Panel@116/@Label@117",
+			"rect_height": 33.0,
+			"size": 22,
+			"text": "任 务 卷 宗"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Panel@116/@Button@118",
+			"rect_height": 32.0,
+			"size": 12,
+			"text": "世界事务"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Control@119/@Label@120",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "◆ 主线传书"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Control@119/@Panel@121/@Control@122/@Label@123",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "主线 · 城门来信"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Control@119/@Panel@121/@Control@122/@Label@124",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "进行中"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Control@119/@Panel@121/@Control@122/@Label@125",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "目标: 与边城执事闻叔交谈"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Control@119/@Panel@121/@Control@122/@Label@126",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "前往: 昭元边城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Control@119/@Panel@121/@Control@122/@Label@127",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "奖励: 金币 +40 · 经验 +102"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Control@119/@Label@128",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "◆ 边城委托"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Control@119/@Label@129",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "已接委托跨日保留 · 完成后回城交付"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Control@119/@ScrollContainer@132/@Control@133/@Panel@135/@Control@136/@Label@137",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "清出道来"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Control@119/@ScrollContainer@132/@Control@133/@Panel@135/@Control@136/@Label@138",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "老赵 · 城门卫"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Control@119/@ScrollContainer@132/@Control@133/@Panel@135/@Control@136/@Label@139",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "在「苍绿林海」击杀 3 只"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Control@119/@ScrollContainer@132/@Control@133/@Panel@135/@Control@136/@Label@140",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "可交付"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Control@119/@ScrollContainer@132/@Control@133/@Panel@135/@Control@136/@Label@141",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "奖励: 金币+140 · 经验+40"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Control@119/@ScrollContainer@132/@Control@133/@Panel@135/@Control@136/@Button@142",
+			"rect_height": 34.0,
+			"size": 13,
+			"text": "交 付"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Control@119/@ScrollContainer@132/@Control@133/@Panel@143/@Control@144/@Label@145",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "兽栏的份例"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Control@119/@ScrollContainer@132/@Control@133/@Panel@143/@Control@144/@Label@146",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "阿豆 · 兽栏伙计"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Control@119/@ScrollContainer@132/@Control@133/@Panel@143/@Control@144/@Label@147",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "上交 宠物粮 ×2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Control@119/@ScrollContainer@132/@Control@133/@Panel@143/@Control@144/@Label@148",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "备齐 0/2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Control@119/@ScrollContainer@132/@Control@133/@Panel@143/@Control@144/@Label@149",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "奖励: 金币+150 · 魂晶+6 · 经验+35"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Control@119/@ScrollContainer@132/@Control@133/@Panel@143/@Control@144/@Button@150",
+			"rect_height": 34.0,
+			"size": 13,
+			"text": "进行中"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/CityScene/@CanvasLayer@111/@Control@112/QuestBoard/@Control@119/@Button@134",
+			"rect_height": 36.0,
+			"size": 14,
+			"text": "返 回"
+		}
+	]
+}

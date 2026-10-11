@@ -1,0 +1,421 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@166/@Node2D@170/@Node2D@235/@Node2D@223/@Label@226",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "角色昵称 12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@166/@Node2D@170/@Node2D@235/@Node2D@223/@Label@231",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "690/690"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@166/@Node2D@170/@Node2D@235/@Node2D@223/@Label@234",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@166/@Node2D@170/@Node2D@245/@Node2D@236/@Label@238",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "岩龟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@166/@Node2D@170/@Node2D@245/@Node2D@236/@Label@243",
+			"rect_height": 23.0000019073486,
+			"size": 12,
+			"text": "80/80"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@166/@Node2D@170/@Node2D@245/@Node2D@236/@Label@244",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@166/@Node2D@170/@Node2D@256/@Node2D@246/@Label@248",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "Lv10 失路兽"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@166/@Node2D@170/@Node2D@256/@Node2D@246/@Label@254",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "585/585"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@166/@Node2D@170/@Node2D@256/@Node2D@246/@Label@255",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@HBoxContainer@179/@Control@222/@Label@219",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "失路兽"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@HBoxContainer@179/@Control@222/@Label@220",
+			"rect_height": 19.0,
+			"size": 12,
+			"text": "585/585"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@HBoxContainer@179/@Control@222/@Label@221",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@182/@Label@180",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "旅人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@182/@Label@181",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "690/690"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@185/@Label@183",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "岩龟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@185/@Label@184",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "80/80"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@188/@Label@186",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "能量"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@188/@Label@187",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "0/100"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@189/@Button@190",
+			"rect_height": 104.0,
+			"size": 14,
+			"text": "攻击"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@189/@Button@190/Caption",
+			"rect_height": 33.0,
+			"size": 22,
+			"text": "攻击"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@189/@Button@190/Subtitle",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "自动选敌"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@189/@Button@191",
+			"rect_height": 50.0,
+			"size": 14,
+			"text": "技能"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@189/@Button@191/Caption",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "可放 0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@189/@Button@191/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@189/@Button@192",
+			"rect_height": 50.0,
+			"size": 14,
+			"text": "道具"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@189/@Button@192/Caption",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "道具 2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@189/@Button@192/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@189/@Button@193",
+			"rect_height": 50.0,
+			"size": 14,
+			"text": "伙伴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@189/@Button@193/Caption",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "伙伴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@189/@Button@193/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@189/@Button@194",
+			"rect_height": 50.0,
+			"size": 14,
+			"text": "换目标"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@189/@Button@194/Caption",
+			"rect_height": 28.0,
+			"size": 15,
+			"text": "换目标"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@189/@Button@194/Subtitle",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "下个 · 失路兽"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Button@195",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "撤退"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Button@195/Caption",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "撤退"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Button@195/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Button@196",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "×1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Button@196/Caption",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "×0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Button@196/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Button@197",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "自动"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Button@197/Caption",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "自动"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Button@197/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Control@199/@Label@198",
+			"rect_height": 36.0,
+			"size": 17,
+			"text": "【 首领战 】"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Label@211",
+			"rect_height": 40.0,
+			"size": 17,
+			"text": "首领技 · 嗅踪 · 蓄力 1.2s"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Control@173/@Label@212",
+			"rect_height": 24.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@165/BattleScene/@Label@213",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "失路兽  100%"
+		}
+	]
+}

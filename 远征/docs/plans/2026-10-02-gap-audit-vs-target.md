@@ -226,6 +226,8 @@ grep -rn "界碑深处|deep_stele|stele_deep" data/ src/ → 仅一处 goal 文�
 
 ### A.5 视觉证据（实机截图）
 
+> 10-01 图集已于 2026-10-07 作为过期内容删除，下列证据图不再随仓库提供；结论本身（程序几何外观、UI 与地图层级断裂）仍成立。
+
 - `shots/all_scenes_20261001/mw_rift_mine_road.png`（裂谷矿道）：路面为**大块纯色矩形**、地面光斑为**正圆**、建筑/树木为**硬边椭圆阴影**——肉眼可辨的"程序几何"外观，正是 `2026-10-01-reference-style-diagnosis.md` 所述根因。
 - `shots/all_scenes_20261001/_overview_2_city.png`（城镇总览）：同一批截图内 UI 风格与地图层仍有明显层级断裂。→ 佐证 G-04。
 

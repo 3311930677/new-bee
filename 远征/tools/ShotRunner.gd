@@ -235,7 +235,7 @@ func _companion_demo() -> void:
 			panel._build()
 		if _scene == "companion_help":
 			await get_tree().process_frame
-			var popup := G.show_info_popup(panel,"元素响应 · 对应技能",panel._response_tips("pet_rockturtle"),panel)
+			var popup: CanvasLayer = G.show_info_popup(panel,"元素响应 · 对应技能",panel._response_tips("pet_rockturtle"),panel)
 			# Offscreen demo: place the actual popup on the viewport being captured.
 			popup.reparent(self)
 		return
@@ -335,7 +335,7 @@ func _campaign_demo() -> void:
 	if not G.reload_save() or G.save_locked:
 		push_error("SHOT_SOURCE_LOAD_FAILED")
 		return
-	var catchup := G.campaign_growth_catchup()
+	var catchup: Dictionary = G.campaign_growth_catchup()
 	if not bool(catchup.ok):
 		push_error("SHOT_CATCHUP_FAILED")
 		return
@@ -391,7 +391,7 @@ func _gear_demo() -> void:
 		push_error("SHOT_SOURCE_LOAD_FAILED")
 		return
 	if _scene == "gear_pending":
-		var missing := G.inv_capacity() - G.inv_count()
+		var missing: int = G.inv_capacity() - G.inv_count()
 		if missing > 0: G.inv_grant_equip({"tpl":"tpl_armor_basic","n":missing},false)
 	if not bool(G.campaign_gear_claim().ok):
 		push_error("SHOT_GEAR_CLAIM_FAILED")
@@ -400,10 +400,10 @@ func _gear_demo() -> void:
 	add_child(home)
 	await get_tree().process_frame
 	if _scene == "gear_preview":
-		var row := G.story_current()
+		var row: Dictionary = G.story_current()
 		var lines: Array = ["目标：%s" % String(row.get("goal", ""))]
 		lines.append_array(G.reward_lines(row.get("reward", {})))
-		var popup := G.show_info_popup(home, String(row.get("title", "主线")), lines, home)
+		var popup: CanvasLayer = G.show_info_popup(home, String(row.get("title", "主线")), lines, home)
 		# Put the production popup in the same screenshot viewport as its owner.
 		popup.reparent(get_parent())
 		return
@@ -670,6 +670,22 @@ func _setup() -> void:
 			_demo_prog()
 			G.wallet = {"gold":999999,"expedition":9999999,"soul":999999999,"honor":999999}
 			add_child((load("res://src/ui/GameHome.tscn") as PackedScene).instantiate())
+		"rare_ceremony":
+			_growth_demo()
+			var h2: Node = load("res://src/ui/GameHome.tscn").instantiate()
+			add_child(h2)
+			h2.call("_open_growth")
+			(h2.get("_growth") as Control).call("_open", "equip")
+			var ceremony: Control = (load("res://src/ui/RareGearCeremony.gd") as GDScript).new({
+				"tpl": "tpl_sword_relic",
+				"name": "赤霄玄龙古剑",
+				"rarity": 4,
+				"lv": 7,
+				"type_name": "武器 · 破军大剑",
+				"stats": ["基础攻击 +118", "暴击率 +8.5%", "绝技：烈火燎原"]
+			})
+			ceremony.size = Vector2(480, 800)
+			h2.add_child(ceremony)
 		"home":
 			_demo_prog()
 			add_child(load("res://src/ui/GameHome.tscn").instantiate())
@@ -1562,6 +1578,15 @@ func _setup() -> void:
 			h2.call("_open_growth")
 			var sub_id := _scene.replace("pet_raise", "pet").replace("skillbook", "skill").replace("titles", "title")
 			(h2.get("_growth") as Control).call("_open", sub_id)
+		"shop":
+			_demo_prog()
+			var shop_node := (load("res://src/ui/ShopPanel.gd") as GDScript).new() as Control
+			add_child(shop_node)
+		"fishing":
+			_demo_prog()
+			var fp := (load("res://src/ui/FishingPanel.gd") as GDScript).new() as Control
+			add_child(fp)
+			fp.call("open_spot", "spot_lorin")
 		_:
 			push_error("未知场景：" + _scene)
 			get_tree().quit(1)

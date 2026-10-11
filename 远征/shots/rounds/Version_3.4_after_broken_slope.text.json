@@ -1,0 +1,331 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@4/@Node2D@37/@Label@38",
+			"rect_height": 24.0,
+			"size": 12,
+			"text": "断碑坡"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@4/@StaticBody2D@39/@Label@41",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "听清三处石缝，再读青姨拓片"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@4/@StaticBody2D@42/@Label@44",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "两枚碑座未归位"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 17.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@4/@CharacterBody2D@45/@Panel@48/@Label@51",
+			"rect_height": 18.0,
+			"size": 11,
+			"text": "碑窟行者  Lv6"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@4/@CharacterBody2D@56/@Label@59",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "Lv10 失声碑灵"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@4/@CharacterBody2D@56/@Label@59/@PanelContainer@61/@Label@60",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "Lv10"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@4/@Node2D@96/@Label@97",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "左侧石缝·双响"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@4/@Node2D@98/@Label@99",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "中侧石缝·长尾"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@4/@Node2D@100/@Label@101",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "右侧石缝·旧缺口"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/WorldStatus/@Label@63",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/WorldStatus/@Label@64",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "6"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/WorldStatus/@Label@65",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "690/690"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/WorldStatus/@Label@66",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "♥"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 17.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/WorldStatus/@Label@67",
+			"rect_height": 23.0,
+			"size": 11,
+			"text": "历练"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 17.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/WorldStatus/@Label@68",
+			"rect_height": 23.0,
+			"size": 11,
+			"text": "22%"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/WorldGold",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/WorldGold/@Label@73",
+			"rect_height": 28.0,
+			"size": 13,
+			"text": "80"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/RegionTitle/@Label@74",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "失声碑窟"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/WorldTask_story",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 17.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/WorldTask_story/TaskBadge",
+			"rect_height": 23.0,
+			"size": 11,
+			"text": "主"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/WorldTask_story/@Label@75",
+			"rect_height": 34.0,
+			"size": 13,
+			"text": "击败碑窟深处的失声碑灵"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/WorldTask_story/Action_",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/WorldTask_story/Action_/Caption",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/Action_交互",
+			"rect_height": 76.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/Action_交互/Caption",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "靠近"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/Action_伙伴",
+			"rect_height": 56.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/Action_伙伴/Caption",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "伙伴"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/Action_药剂",
+			"rect_height": 64.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/Action_药剂/Caption",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "药剂"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/Action_药剂/CountBadge/Count",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "2"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/Action_疾行",
+			"rect_height": 56.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/Action_疾行/Caption",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "疾行"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/Action_营帐",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/Action_营帐/Caption",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "营帐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/Minimap/@Label@78",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "北"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@62/@Label@95",
+			"rect_height": 57.0,
+			"size": 18,
+			"text": "青姨的拓片记着：旧碑回声末尾有两声轻响；第二枚碑座的缺口应朝向碑心。"
+		}
+	]
+}

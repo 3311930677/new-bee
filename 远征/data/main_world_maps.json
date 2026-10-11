@@ -1307,7 +1307,7 @@
         "032_deco_forest_grass",
         "033_deco_forest_ruin"
       ],
-      "background": "res://assets/world/natural_ground_20261011/ready/maple_road_floor.png",
+      "background": "res://image/main_world/maple_road_ground_v4.png",
       "map_cols": 20,
       "map_rows": 44,
       "layout_version": 5,
@@ -1589,7 +1589,7 @@
           108
         ]
       ],
-      "ground_style": "flat",
+      "ground_style": "background",
       "river": {
         "y": 1230,
         "half": 32,
@@ -2178,7 +2178,7 @@
         "033_deco_forest_ruin",
         "034_deco_forest_bones"
       ],
-      "background": "",
+      "background": "res://image/main_world/broken_slope_ground_v4.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 2,
@@ -2456,7 +2456,7 @@
           120
         ]
       ],
-      "ground_style": "flat",
+      "ground_style": "background",
       "flat_routes": [
         {
           "points": [
@@ -2594,7 +2594,7 @@
         "029_deco_forest_deadtree",
         "033_deco_forest_ruin"
       ],
-      "background": "",
+      "background": "res://image/main_world/old_salt_road_ground_v4.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -2837,7 +2837,7 @@
           150
         ]
       ],
-      "ground_style": "flat",
+      "ground_style": "background",
       "flat_routes": [
         {
           "points": [
@@ -2959,7 +2959,7 @@
       "city_config": "res://data/shenyuan_port.json",
       "theme": "desert",
       "tint": "d9e6e3",
-      "background": "res://image/main_world/shenyuan_port_ground_reference_v2.png",
+      "background": "res://image/main_world/shenyuan_port_ground_v4.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -3178,7 +3178,7 @@
           120
         ]
       ],
-      "ground_style": "flat",
+      "ground_style": "background",
       "flat_routes": [
         {
           "points": [
@@ -3325,7 +3325,7 @@
         "031_deco_forest_shrub",
         "034_deco_forest_bones"
       ],
-      "background": "",
+      "background": "res://image/main_world/tideflat_ground_v4.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -3753,7 +3753,7 @@
           120
         ]
       ],
-      "ground_style": "flat",
+      "ground_style": "background",
       "flat_routes": [
         {
           "points": [
@@ -3874,7 +3874,7 @@
       "city": false,
       "theme": "tomb",
       "tint": "9fc3c4",
-      "background": "",
+      "background": "res://image/main_world/tidal_gate_ground_v4.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -4141,7 +4141,7 @@
           150
         ]
       ],
-      "ground_style": "flat",
+      "ground_style": "background",
       "flat_routes": [
         {
           "points": [
@@ -4187,7 +4187,7 @@
       "city": false,
       "theme": "tomb",
       "tint": "cdbede",
-      "background": "",
+      "background": "res://image/main_world/stele_cavern_ground_v4.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -4528,7 +4528,7 @@
           150
         ]
       ],
-      "ground_style": "flat",
+      "ground_style": "background",
       "flat_routes": [
         {
           "points": [
@@ -4625,7 +4625,7 @@
       "city": false,
       "theme": "desert",
       "tint": "ffffff",
-      "background": "",
+      "background": "res://image/main_world/red_sand_route_ground_v4.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -4800,7 +4800,7 @@
           150
         ]
       ],
-      "ground_style": "flat",
+      "ground_style": "background",
       "flat_routes": [
         {
           "points": [
@@ -4930,7 +4930,7 @@
       "city_config": "res://data/frost_post.json",
       "theme": "snow",
       "tint": "ffffff",
-      "background": "res://image/main_world/frost_post_ground_reference_v2.png",
+      "background": "res://image/main_world/frost_post_ground_v4.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -5126,7 +5126,7 @@
           120
         ]
       ],
-      "ground_style": "flat",
+      "ground_style": "background",
       "flat_routes": [
         {
           "points": [
@@ -5350,7 +5350,7 @@
       "city": false,
       "theme": "tomb",
       "tint": "ffffff",
-      "background": "",
+      "background": "res://image/main_world/rift_mine_road_ground_v4.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -5561,7 +5561,7 @@
           ]
         }
       },
-      "ground_style": "flat",
+      "ground_style": "background",
       "flat_routes": [
         {
           "points": [
@@ -5674,7 +5674,7 @@
       "city": false,
       "theme": "tomb",
       "tint": "ffffff",
-      "background": "",
+      "background": "res://image/main_world/rift_mine_vault_ground_v4.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -5906,7 +5906,7 @@
           "hint": "调稳双风轮，让矿车带人撤离"
         }
       },
-      "ground_style": "flat",
+      "ground_style": "background",
       "flat_routes": [
         {
           "points": [
@@ -6003,7 +6003,7 @@
       "city": false,
       "theme": "snow",
       "tint": "ffffff",
-      "background": "",
+      "background": "res://image/main_world/frost_pass_ground_v4.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -6115,7 +6115,7 @@
           ]
         }
       },
-      "ground_style": "flat",
+      "ground_style": "background",
       "flat_routes": [
         {
           "points": [
@@ -6207,7 +6207,7 @@
       "city": false,
       "theme": "snow",
       "tint": "ffffff",
-      "background": "",
+      "background": "res://image/main_world/frost_boardwalk_ground_v4.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -6471,7 +6471,7 @@
           ]
         }
       },
-      "ground_style": "flat",
+      "ground_style": "background",
       "flat_routes": [
         {
           "points": [
@@ -6596,7 +6596,7 @@
       "city": false,
       "theme": "abyss",
       "tint": "ffffff",
-      "background": "res://image/main_world/abyss_ring_ground_reference_v1.png",
+      "background": "res://image/main_world/abyss_ring_ground_v4.png",
       "authored_ground": true,
       "map_cols": 20,
       "map_rows": 26,
@@ -6766,7 +6766,7 @@
           }
         }
       ],
-      "ground_style": "flat",
+      "ground_style": "background",
       "flat_routes": [
         {
           "points": [
@@ -6975,7 +6975,7 @@
           "completion": "归路锚亮起。来时的门仍然开着，三地的碑声在北廊等待。"
         }
       },
-      "ground_style": "flat",
+      "ground_style": "background",
       "flat_routes": [
         {
           "points": [
@@ -7042,7 +7042,8 @@
       ],
       "deco_tint": "ffffff",
       "flat_material": "abyss",
-      "surface_tint": "dce5eb"
+      "surface_tint": "dce5eb",
+      "background": "res://image/main_world/stele_entry_ground_v4.png"
     },
     "stele_resonance": {
       "name": "三声共鸣廊",
@@ -7203,7 +7204,7 @@
           ]
         }
       },
-      "ground_style": "flat",
+      "ground_style": "background",
       "flat_routes": [
         {
           "points": [
@@ -7313,7 +7314,8 @@
       ],
       "deco_tint": "ffffff",
       "flat_material": "abyss",
-      "surface_tint": "ece0f7"
+      "surface_tint": "ece0f7",
+      "background": "res://image/main_world/stele_resonance_ground_v4.png"
     },
     "stele_core": {
       "name": "碑心",
@@ -7434,7 +7436,7 @@
           ]
         }
       },
-      "ground_style": "flat",
+      "ground_style": "background",
       "flat_routes": [
         {
           "points": [
@@ -7489,7 +7491,8 @@
       ],
       "deco_tint": "ffffff",
       "flat_material": "abyss",
-      "surface_tint": "d6f0ed"
+      "surface_tint": "d6f0ed",
+      "background": "res://image/main_world/stele_core_ground_v4.png"
     }
   }
 }

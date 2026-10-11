@@ -6,7 +6,8 @@
 
 ## 本次证据与边界
 
-- 查看 [最新截图目录](</D:/new bee/远征/shots/all_scenes_20261001/README.md>) 的六张分类总览，并按原尺寸复查登录、标题、创角、序章、营帐、装备、地区图、天赋、召唤、伙伴帮助、商路、地图、建筑、战斗及长屏代表画面。
+- 查看 10-01 截图集（`shots/all_scenes_20261001/`）的六张分类总览，并按原尺寸复查登录、标题、创角、序章、营帐、装备、地区图、天赋、召唤、伙伴帮助、商路、地图、建筑、战斗及长屏代表画面。
+- **图集状态（2026-10-07 补记）**：该 10-01 图集记录的是 10-02 UI 重做**之前**的画面，已作为过期内容删除。当前可对照的截图集为 `shots/main_ui_20261007/`（61 张，480×800）。本文的问题清单与结论是当时状态的存档，不代表现状。
 - 对照本地原游戏的登录、探索和战斗参考截图；参考截图中的模拟器按键和系统栏不作为设计目标。
 - 核对当前字体配置、建筑阴影绘制及截图方式。这里只记录视觉审查结果，本次没有修改运行代码或重新拍摄全部场景。
 - 长屏图片来自独立 SubViewport，截图说明明确提示不能替代真机验收。因此灰底是已观察到的截图缺陷，是否在正常窗口／手机出现仍需验证。
@@ -83,7 +84,9 @@
 
 ## 代表截图
 
-- [登录](</D:/new bee/远征/shots/all_scenes_20261001/login.png>)、[创角](</D:/new bee/远征/shots/all_scenes_20261001/createrole.png>)、[序章](</D:/new bee/远征/shots/all_scenes_20261001/prologue.png>)、[营帐](</D:/new bee/远征/shots/all_scenes_20261001/home.png>)。
-- [装备](</D:/new bee/远征/shots/all_scenes_20261001/equip.png>)、[设置](</D:/new bee/远征/shots/all_scenes_20261001/title_settings.png>)、[伙伴帮助](</D:/new bee/远征/shots/all_scenes_20261001/companion_help.png>)、[地区图](</D:/new bee/远征/shots/all_scenes_20261001/worlds.png>)。
-- [城镇与阴影](</D:/new bee/远征/shots/all_scenes_20261001/town_north.png>)、[霜关建筑](</D:/new bee/远征/shots/all_scenes_20261001/frost_art_north_left.png>)、[矿道轨道](</D:/new bee/远征/shots/all_scenes_20261001/mw_rift_mine_vault.png>)、[主世界技能页](</D:/new bee/远征/shots/all_scenes_20261001/main_world_battle_skills.png>)。
-- [长屏背包](</D:/new bee/远征/shots/all_scenes_20261001/long_480x1067/bag.png>)、[长屏装备](</D:/new bee/远征/shots/all_scenes_20261001/long_480x1067/equip.png>)、[长屏战斗](</D:/new bee/远征/shots/all_scenes_20261001/long_480x1067/battle.png>)。
+> 下列文件名原属 10-01 图集（已退役删除）。同名新图见 `shots/main_ui_20261007/`；长屏版与 `companion_help` / `town_north` / `frost_art_north_left` 暂无对应新图。此处保留文件名以便回溯当时状态。
+
+- 登录 `login.png`、创角 `createrole.png`、序章 `prologue.png`、营帐 `home.png`。
+- 装备 `equip.png`、设置 `title_settings.png`、伙伴帮助 `companion_help.png`、地区图 `worlds.png`。
+- 城镇与阴影 `town_north.png`、霜关建筑 `frost_art_north_left.png`、矿道轨道 `mw_rift_mine_vault.png`、主世界技能页 `main_world_battle_skills.png`。
+- 长屏背包 `long_480x1067/bag.png`、长屏装备 `long_480x1067/equip.png`、长屏战斗 `long_480x1067/battle.png`。

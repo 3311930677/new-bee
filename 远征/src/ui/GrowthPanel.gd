@@ -58,9 +58,27 @@ func _build() -> void:
 	_hero_name = UI.label("%s · Lv.%d" % [G.get_role(G.selected_role).get("name","旅人"),int(G.prog.get("level",1))],"section")
 	_hero_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_page.add_child(_hero_name)
-	_stats=VBoxContainer.new()
-	_stats.add_theme_constant_override("separation",4)
-	_page.add_child(_stats)
+	var stats_card := PanelContainer.new()
+	stats_card.name = "StatsCard"
+	var sc_box := StyleBoxFlat.new()
+	sc_box.bg_color = Color("120f18", 0.78)
+	sc_box.border_color = Color("3d3128", 0.6)
+	sc_box.set_border_width_all(1)
+	sc_box.corner_radius_top_left = 6
+	sc_box.corner_radius_top_right = 6
+	sc_box.corner_radius_bottom_left = 6
+	sc_box.corner_radius_bottom_right = 6
+	sc_box.content_margin_left = 10
+	sc_box.content_margin_right = 10
+	sc_box.content_margin_top = 8
+	sc_box.content_margin_bottom = 8
+	stats_card.add_theme_stylebox_override("panel", sc_box)
+	_page.add_child(stats_card)
+
+	_stats = VBoxContainer.new()
+	_stats.add_theme_constant_override("separation", 4)
+	stats_card.add_child(_stats)
+
 	_back = UI.action("‹","back")
 	_back.tooltip_text = "返回营帐"
 	_back.pressed.connect(_close)
@@ -69,7 +87,7 @@ func _build() -> void:
 	_page.add_child(_heading)
 	_tray = UI.Tray.new()
 	_page.add_child(_tray)
-	_recommend=Page.GrowthRow.new("下一步","talent")
+	_recommend=Page.GrowthRow.new("下一步","fury")
 	_recommend.set_meta("recommendation",true)
 	_recommend.custom_minimum_size.y=44
 	_recommend.pressed.connect(func():if not _next_id.is_empty():_open(_next_id))
@@ -88,7 +106,7 @@ func _build() -> void:
 		section.custom_minimum_size.y = 24
 		box.add_child(section)
 		for id in group[1]:
-			box.add_child(_entry_row({"equip":"装备","talent":"天赋","skill":"技能书","pet":"宠物","mount":"坐骑","title":"称号"}[id],id,id))
+			box.add_child(_entry_row({"equip":"装备","talent":"天赋","skill":"技能书","pet":"宠物","mount":"坐骑","title":"称号"}[id], "fury" if id == "talent" else id, id))
 	_refresh()
 	get_viewport().size_changed.connect(_layout)
 	_layout()
@@ -106,7 +124,11 @@ func _layout(safe_override: Rect2 = Rect2()) -> void:
 	var hero_extent:=minf(200,top-stage_start-28)
 	Page.place(_hero,Vector2(x+216,top-28-hero_extent),Vector2(hero_extent,hero_extent))
 	Page.place(_hero_name,Vector2(x+192,top-42),Vector2(256,30))
-	Page.place(_stats,Vector2(x+16,stage_start),Vector2(172,184))
+	var sc: Control = _page.get_node_or_null("StatsCard")
+	if sc != null:
+		Page.place(sc, Vector2(x+16, stage_start), Vector2(172, 172))
+	else:
+		Page.place(_stats,Vector2(x+16,stage_start),Vector2(172,172))
 	Page.place(_tray,Vector2(x,top),Vector2(safe.size.x,safe.end.y-top))
 	Page.place(_recommend,Vector2(x+16,top+8),Vector2(safe.size.x-32,44))
 	Page.place(_row_scroll,Vector2(x+16,top+60),Vector2(safe.size.x-32,safe.end.y-top-72))
@@ -144,7 +166,7 @@ func _refresh() -> void:
 				l.text = "可分配 %d 点" % G.talent_points_left()
 			"equip":
 				var ws := G.equip_weapon_slot()
-				l.text = "武%d / 甲%d / 饰%d" % [
+				l.text = "兵刃 +%d · 铠甲 +%d · 宝饰 +%d" % [
 					int(G.equip_state(ws).get("lv", 0)), int(G.equip_state("armor").get("lv", 0)),
 					int(G.equip_state("accessory").get("lv", 0))]
 			"pet":
@@ -180,7 +202,8 @@ func _refresh() -> void:
 		(r as Dictionary)["action"].tooltip_text = "打开" + String((r as Dictionary)["words"]) + " · " + l.text
 	_recommend.disabled=_next_id.is_empty()
 	_recommend.actionable=not _next_id.is_empty()
-	_recommend.image.texture=Page.texture(_next_id if not _next_id.is_empty() else "equip")
+	var rec_tex: Texture2D = preload("res://src/ui/ReviewFixUI.gd").texture("zs_pozhen") if _next_id == "talent" else Page.texture("equip")
+	_recommend.image.texture = rec_tex if rec_tex != null else Page.texture("equip")
 	_recommend.status.text=""
 	_recommend.next_action.text=""
 	_summary.text="下一步 · 天赋可分配 %d 点"%left if _next_id=="talent" else "下一步 · 装备材料已齐" if _next_id=="equip" else "装备强化 %d/%d/%d · 灵宠 %d/%d"%[int(G.equip_state(G.equip_weapon_slot()).get("lv",0)),int(G.equip_state("armor").get("lv",0)),int(G.equip_state("accessory").get("lv",0)),G.owned_pets().size(),TableCache.pets().size()]

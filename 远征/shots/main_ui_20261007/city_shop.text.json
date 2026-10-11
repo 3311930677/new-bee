@@ -1,0 +1,313 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@Node2D@5/@Label@6",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "枫林古道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@CharacterBody2D@7/@Panel@10/@Label@13",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "角色昵称  Lv20"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/WorldCompanion/@Label@20",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "岩龟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@Node2D@126/@Label@128",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "老赵"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@Node2D@135/@Label@137",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "石头"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@Node2D@138/@Label@140",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "岳教头"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@Node2D@141/@Label@143",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "马伯"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@Node2D@144/@Label@146",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "云游"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@Node2D@147/@Label@149",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "小满"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 59.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@Panel@164/@Label@163",
+			"rect_height": 59.0,
+			"size": 40,
+			"text": "物资铺"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Label@167",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "材料可回收；购价与回收价均明示。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Label@168",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "金币 ×999739"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Label@169",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Control@170/@Panel@173/@Label@174",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "强化石　持有 ×0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Control@170/@Panel@173/@Label@175",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "购120 / 售48"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Control@170/@Panel@173/@PanelContainer@177/@Label@176",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "购入"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Control@170/@Panel@173/@PanelContainer@179/@Label@178",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "出售"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Control@170/@Panel@180/@Label@181",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "精炼石　持有 ×0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Control@170/@Panel@180/@Label@182",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "购260 / 售104"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Control@170/@Panel@180/@PanelContainer@184/@Label@183",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "购入"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Control@170/@Panel@180/@PanelContainer@186/@Label@185",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "出售"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Control@170/@Panel@187/@Label@188",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "宠物粮　持有 ×0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Control@170/@Panel@187/@Label@189",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "购90 / 售36"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Control@170/@Panel@187/@PanelContainer@191/@Label@190",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "购入"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Control@170/@Panel@187/@PanelContainer@193/@Label@192",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "出售"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Control@170/@Panel@194/@Label@195",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "资质果　持有 ×0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Control@170/@Panel@194/@Label@196",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "购420 / 售168"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Control@170/@Panel@194/@PanelContainer@198/@Label@197",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "购入"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Control@170/@Panel@194/@PanelContainer@200/@Label@199",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "出售"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Control@170/@Panel@201/@Label@202",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "进化晶石　持有 ×0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Control@170/@Panel@201/@Label@203",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "购600 / 售240"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Control@170/@Panel@201/@PanelContainer@205/@Label@204",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "购入"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@Control@170/@Panel@201/@PanelContainer@207/@Label@206",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "出售"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/MapScene/CityScene/@CanvasLayer@158/@Control@159/@PanelContainer@165/@Control@166/@PanelContainer@172/@Label@171",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "返回"
+		}
+	]
+}

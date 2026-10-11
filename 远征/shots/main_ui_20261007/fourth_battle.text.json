@@ -1,0 +1,133 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@109/BattleScene/@Control@110/@Node2D@114/@Node2D@156/@Node2D@146/@Label@149",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "回放 45"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@109/BattleScene/@Control@110/@Node2D@114/@Node2D@156/@Node2D@146/@Label@155",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@109/BattleScene/@Control@110/@Node2D@114/@Node2D@165/@Node2D@157/@Label@159",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "Lv45 深渊教徒"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@109/BattleScene/@Control@110/@Node2D@114/@Node2D@165/@Node2D@157/@Label@164",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 43.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@109/BattleScene/@Panel@118/@Label@117",
+			"rect_height": 43.0,
+			"size": 29,
+			"text": "遭遇战"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@109/BattleScene/@PanelContainer@120/@Label@119",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "速度 ×1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@109/BattleScene/@PanelContainer@122/@Label@121",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "自动"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@109/BattleScene/@Label@123",
+			"rect_height": 28.0,
+			"size": 17,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@109/BattleScene/@Label@124",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@109/BattleScene/@Control@125/@Control@129/@Label@128",
+			"rect_height": 28.0,
+			"size": 18,
+			"text": "攻击"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@109/BattleScene/@Control@125/@Control@133/@Label@132",
+			"rect_height": 28.0,
+			"size": 18,
+			"text": "技能"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@109/BattleScene/@Control@125/@Control@137/@Label@136",
+			"rect_height": 28.0,
+			"size": 18,
+			"text": "道具"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@109/BattleScene/@Control@125/@Control@141/@Label@140",
+			"rect_height": 28.0,
+			"size": 18,
+			"text": "撤退"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@109/BattleScene/@Control@125/@Label@143",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "攻 自动选敌 ｜ 技 0/2 ｜ 物 药×2"
+		}
+	]
+}

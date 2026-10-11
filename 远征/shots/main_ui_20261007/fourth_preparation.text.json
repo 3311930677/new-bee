@@ -1,0 +1,376 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@Node2D@5/@Label@6",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "枫林古道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@CharacterBody2D@7/@Panel@10/@Label@13",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "回放  Lv47"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@Node2D@34/@Label@35",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "奇遇 · 一封错送的喜帖"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@Node2D@128/@Label@130",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "青姨"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@Node2D@134/@Label@136",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "石头"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@Node2D@137/@Label@139",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "岳教头"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@Node2D@146/@Label@148",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "小满"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldStatus/@MarginContainer@37/@VBoxContainer@38/@HBoxContainer@39/@Label@40",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "Lv47"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldStatus/@MarginContainer@37/@VBoxContainer@38/@HBoxContainer@39/@Label@42",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "2850/2850"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldStatus/@MarginContainer@37/@VBoxContainer@38/@HBoxContainer@45/@Label@46",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "历练"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldStatus/@MarginContainer@37/@VBoxContainer@38/@HBoxContainer@45/@Label@47",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "18%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldGold",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldGold/@MarginContainer@50/@HBoxContainer@51/@Label@52",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "2260"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 42.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/@Control@54/@Label@53",
+			"rect_height": 42.0,
+			"size": 28,
+			"text": "昭元边城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldTask_story",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldTask_story/TaskBadge",
+			"rect_height": 28.0,
+			"size": 12,
+			"text": "主线"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldTask_story/@Label@56",
+			"rect_height": 28.0,
+			"size": 14,
+			"text": "带渊口回响回昭元，请青姨对照三地拓片"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldTask_side",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldTask_side/TaskBadge",
+			"rect_height": 28.0,
+			"size": 12,
+			"text": "支线"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldTask_side/@Label@58",
+			"rect_height": 28.0,
+			"size": 14,
+			"text": "两丛草根 0/2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/@Control@78/@PanelContainer@73/@Label@72",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/@Control@78/@Label@75",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "药剂"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/@Control@78/@PanelContainer@77/@Label@76",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/@Control@88/@PanelContainer@85/@Label@84",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/@Control@88/@Label@87",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "营帐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/@Control@89/@Label@90",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "地图"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/@Control@89/@Label@91",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "北"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/@Control@89/@Label@92",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "展开地图"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/@Control@97/@PanelContainer@94/@Label@93",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 40.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/@Control@97/@Label@95",
+			"rect_height": 40.0,
+			"size": 27,
+			"text": "»"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/@Control@97/@Label@96",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "疾行"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldTask_daily",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldTask_daily/TaskBadge",
+			"rect_height": 28.0,
+			"size": 12,
+			"text": "委托"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldTask_daily/@Label@156",
+			"rect_height": 28.0,
+			"size": 14,
+			"text": "0/2 已交付"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 58.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/@Control@165/@Panel@162/@Label@161",
+			"rect_height": 58.0,
+			"size": 39,
+			"text": "旧卷新页"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/@Control@165/@PanelContainer@163/@Control@164/@Label@166",
+			"rect_height": 64.0,
+			"size": 17,
+			"text": "青姨：三地拓片缺失的名字拼成了一页。先听回声，或先稳碑座，都能为后来的人留下一条归路。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/@Control@165/@PanelContainer@163/@Control@164/@Label@167",
+			"rect_height": 48.0,
+			"size": 17,
+			"text": "对照三地拓片，把遗漏的声音记在归路凭证上。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/@Control@165/@PanelContainer@163/@Control@164/@PanelContainer@169/@Label@168",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "先听回声"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/@Control@165/@PanelContainer@163/@Control@164/@Label@170",
+			"rect_height": 48.0,
+			"size": 17,
+			"text": "复核碑座的裂纹，把往返的锚点记在归路凭证上。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/@Control@165/@PanelContainer@163/@Control@164/@PanelContainer@172/@Label@171",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "先稳碑座"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/@Control@165/@PanelContainer@163/@Control@164/@PanelContainer@174/@Label@173",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "返回"
+		}
+	]
+}

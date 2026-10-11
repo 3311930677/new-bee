@@ -1,0 +1,538 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@Label@98",
+			"rect_height": 32.0,
+			"size": 20,
+			"text": "锐利"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@Label@99",
+			"rect_height": 26.0,
+			"size": 13,
+			"text": "剩余天赋点 1 / 2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@Button@100",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@Button@100/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@Label@101",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "天赋修习"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@HBoxContainer@103/@Button@116",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "狂战"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@HBoxContainer@103/@Button@116/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "狂战"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@HBoxContainer@103/@Button@116/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@HBoxContainer@103/@Button@167",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "坚壁"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@HBoxContainer@103/@Button@167/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "坚壁"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@HBoxContainer@103/@Button@167/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@HBoxContainer@103/@Button@168",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "迅捷"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@HBoxContainer@103/@Button@168/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "迅捷"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@HBoxContainer@103/@Button@168/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@121",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "锐利"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@121/@Label@118",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "锐利"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@121/@Label@119",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "第1阶 · 1 / 3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@121/@Label@120",
+			"rect_height": 26.0,
+			"size": 12,
+			"text": "已选"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@126",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "破甲"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@126/@Label@123",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "破甲"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@126/@Label@124",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "第2阶 · 0 / 3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@126/@Label@125",
+			"rect_height": 26.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@131",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "嗜血"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@131/@Label@128",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "嗜血"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@131/@Label@129",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "第3阶 · 0 / 2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@131/@Label@130",
+			"rect_height": 26.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@136",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "猛进"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@136/@Label@133",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "猛进"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@136/@Label@134",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "第4阶 · 0 / 3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@136/@Label@135",
+			"rect_height": 26.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@141",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "怒意"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@141/@Label@138",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "怒意"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@141/@Label@139",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "第5阶 · 0 / 2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@141/@Label@140",
+			"rect_height": 26.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@146",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "裂伤"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@146/@Label@143",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "裂伤"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@146/@Label@144",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "第6阶 · 0 / 3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@146/@Label@145",
+			"rect_height": 26.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@151",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "绝杀"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@151/@Label@148",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "绝杀"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@151/@Label@149",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "第7阶 · 0 / 2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@151/@Label@150",
+			"rect_height": 26.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@156",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "狂澜"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@156/@Label@153",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "狂澜"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@156/@Label@154",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "第8阶 · 0 / 3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@156/@Label@155",
+			"rect_height": 26.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@161",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "战意"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@161/@Label@158",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "战意"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@161/@Label@159",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "第9阶 · 0 / 2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@161/@Label@160",
+			"rect_height": 26.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@166",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "破军之势"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@166/@Label@163",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "破军之势"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@166/@Label@164",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "第10阶 · 0 / 1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@106/@VBoxContainer@107/@Button@166/@Label@165",
+			"rect_height": 26.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@ScrollContainer@111/@Label@110",
+			"rect_height": 47.0,
+			"size": 14,
+			"text": "每点 攻击+2%\n每 5 级获得 1 点；需本系投入 0 点"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@Label@112",
+			"rect_height": 24.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@Button@113",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "分配天赋"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@Button@113/Caption",
+			"rect_height": 56.0,
+			"size": 22,
+			"text": "分配天赋"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@91/@Control@92/@Button@113/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		}
+	]
+}

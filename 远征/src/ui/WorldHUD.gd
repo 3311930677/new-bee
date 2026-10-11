@@ -23,6 +23,9 @@ static func surface(bg: Color, edge: Color, _radius: int = 2) -> StyleBoxFlat:
 	s.bg_color = bg
 	s.border_color = edge
 	s.set_border_width_all(1)
+	s.set_corner_radius_all(maxi(2, _radius))
+	s.shadow_color = Color(0, 0, 0, 0.45)
+	s.shadow_size = 4
 	return s
 
 static func finish(canvas: CanvasItem, dimensions: Vector2, _accent: Color, _paper: bool = false) -> void:
@@ -37,7 +40,7 @@ static func status(hp_fill: ColorRect, exp_fill: ColorRect) -> Dictionary:
 	lv_caption.position = Vector2(8, 3)
 	lv_caption.size = Vector2(36, 16)
 	root.add_child(lv_caption)
-	var level := label("", 20, UI.PAPER, true)
+	var level := label("", 18, UI.GOLD, true)
 	level.position = Vector2(8, 20)
 	level.size = Vector2(36, 26)
 	root.add_child(level)
@@ -50,11 +53,11 @@ static func status(hp_fill: ColorRect, exp_fill: ColorRect) -> Dictionary:
 	heart.position = Vector2(52, 2)
 	heart.size = Vector2(14, 18)
 	root.add_child(heart)
-	var caption := label("历练", 12, UI.AGED)
+	var caption := label("历练", 11, UI.AGED)
 	caption.position = Vector2(52, 31)
 	caption.size = Vector2(40, 16)
 	root.add_child(caption)
-	var exp := label("", 12, UI.AGED)
+	var exp := label("", 11, UI.AGED)
 	exp.position = Vector2(92, 31)
 	exp.size = Vector2(80, 16)
 	exp.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -117,10 +120,11 @@ static func task_chip(width: float, kind: String) -> Dictionary:
 	root.size = Vector2(width, 44)
 	root.task_kind = kind
 	root.accent = {"story":UI.GOLD, "daily":UI.AGED, "side":UI.FROST}.get(kind, UI.AGED)
-	var badge := label({"story":"主", "daily":"委", "side":"支"}.get(kind, "事"), 12, root.accent, true)
+	var badge := label({"story":"主", "daily":"委", "side":"支"}.get(kind, "事"), 11, root.accent, true)
 	badge.name = "TaskBadge"
-	badge.position = Vector2(10, 12)
+	badge.position = Vector2(8, 12)
 	badge.size = Vector2(20, 20)
+	badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	root.add_child(badge)
 	var l := label("", 13, UI.PAPER)
 	l.position = Vector2(34, 5)
@@ -140,7 +144,6 @@ static func update_task(l: Label, words: String) -> void:
 	if pieces.size() == 2:
 		var first := pieces[0].strip_edges()
 		(chip.get_node("TaskBadge") as Label).text = first.left(1)
-	# Reserve an actual 60px row for wrapped text; the owning map packs by height.
 	var width := G.font_reg.get_string_size(l.text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x
 	chip.size.y = 60 if width > l.size.x else 44
 	l.size.y = chip.size.y - 10
@@ -149,12 +152,7 @@ static func update_task(l: Label, words: String) -> void:
 static func format_currency(amount: int) -> String:
 	if amount >= 100000000: return "%d.%02d亿" % [amount / 100000000, (amount % 100000000) / 1000000]
 	if amount >= 1000000: return "%d.%d万" % [amount / 10000, (amount % 10000) / 1000]
-	var raw := str(amount)
-	var out := ""
-	for i in raw.length():
-		if i > 0 and (raw.length() - i) % 3 == 0: out += ","
-		out += raw[i]
-	return out
+	return str(amount)
 
 static func update_currency(value: Label, amount: int) -> void:
 	value.text = format_currency(amount)
@@ -168,11 +166,14 @@ class MaterialPanel extends Control:
 	func _ready() -> void:
 		mouse_filter = Control.MOUSE_FILTER_IGNORE
 		resized.connect(queue_redraw)
-	func _draw() -> void: L.plate(self, Rect2(Vector2.ZERO, size))
+	func _draw() -> void:
+		L.plate(self, Rect2(Vector2.ZERO, size))
+		# 状态栏内外阴阳微刻线与左部分割线
+		draw_line(Vector2(46, 6), Vector2(46, size.y - 6), Color("5c4834", 0.6), 1.0)
 
 class ActionChip extends Button:
 	const L = preload("res://src/ui/LacquerUI.gd")
-	var bg := Color("17151a", 0.78)
+	var bg := Color("15121a", 0.85)
 	var edge := Color("6e5434")
 	var accent := Color("c29a5b")
 	var task_kind := ""
@@ -187,7 +188,10 @@ class ActionChip extends Button:
 		for event in [mouse_entered, mouse_exited, button_down, button_up, focus_entered, focus_exited, resized]:
 			event.connect(queue_redraw)
 	func _draw() -> void:
-		L.plate(self, Rect2(0, inset_y, size.x, size.y - inset_y * 2), L.RAISED if is_pressed() else bg, L.LIT if is_hovered() else edge)
-		if not task_kind.is_empty(): draw_rect(Rect2(2, 3, 4, size.y - 6), accent)
+		var r := Rect2(0, inset_y, size.x, size.y - inset_y * 2)
+		L.plate(self, r, L.RAISED if is_pressed() else bg, L.LIT if is_hovered() else edge)
+		if not task_kind.is_empty():
+			draw_rect(Rect2(2, inset_y + 4, 3, r.size.y - 8), accent)
+			draw_rect(Rect2(7, inset_y + 11, 20, 20), accent, false, 1.0)
 		if has_focus(): L.plate(self, Rect2(Vector2.ONE * -2, size + Vector2.ONE * 4), Color.TRANSPARENT, L.PAPER)
 	func pulse() -> void: queue_redraw()

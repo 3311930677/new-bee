@@ -1,0 +1,259 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "",
+			"height": 39.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@Control@8/@Label@18",
+			"rect_height": 44.0,
+			"size": 26,
+			"text": "霜语"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@Control@8/@Label@19",
+			"rect_height": 24.0,
+			"size": 13,
+			"text": "法师 · 法杖"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@Control@8/@Label@20",
+			"rect_height": 24.0,
+			"size": 13,
+			"text": "远程群伤 · 控制"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@Control@8/@Button@23",
+			"rect_height": 64.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@Control@8/@Button@23/Caption",
+			"rect_height": 64.0,
+			"size": 17,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@Control@8/@Button@23/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@Control@8/@Button@24",
+			"rect_height": 64.0,
+			"size": 14,
+			"text": "›"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@Control@8/@Button@24/Caption",
+			"rect_height": 64.0,
+			"size": 17,
+			"text": "›"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@Control@8/@Button@24/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@Button@10",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@Button@10/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@Label@11",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "创建角色"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@HBoxContainer@25/@Button@26",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "男"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@HBoxContainer@25/@Button@26/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "男"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@HBoxContainer@25/@Button@26/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@HBoxContainer@25/@Button@27",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "女"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@HBoxContainer@25/@Button@27/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "女"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@HBoxContainer@25/@Button@27/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@Label@28",
+			"rect_height": 47.0,
+			"size": 14,
+			"text": "掌霜执杖的法师，抬手间霜刃环列、寒雾锁敌。体魄虽弱，冰封千里之地无人敢近。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@Label@29",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "角色昵称"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@HBoxContainer@30/@LineEdit@31",
+			"rect_height": 48.0,
+			"size": 14,
+			"text": "沈隐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@HBoxContainer@30/@Button@32",
+			"rect_height": 48.0,
+			"size": 14,
+			"text": "随机"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@HBoxContainer@30/@Button@32/Caption",
+			"rect_height": 48.0,
+			"size": 17,
+			"text": "随机"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@HBoxContainer@30/@Button@32/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@Label@33",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "昵称最长 12 个字符"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@HBoxContainer@17/@Button@34",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "确定"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@HBoxContainer@17/@Button@34/Caption",
+			"rect_height": 56.0,
+			"size": 22,
+			"text": "确定"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/CreateRole/@Control@2/@Control@3/@HBoxContainer@17/@Button@34/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		}
+	]
+}

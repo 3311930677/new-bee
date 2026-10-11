@@ -31,14 +31,14 @@ func _ready() -> void:
 	_tags.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	shell.stage.add_child(_tags)
 	_pool=Page.picture(UI.texture("stage_pool"),Vector2(256,60))
-	_pool.modulate.a=.35
+	_pool.modulate.a=.85
 	shell.stage.add_child(_pool)
 	host._anim=AnimatedSprite2D.new()
 	host._anim.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
 	host._anim.scale=Vector2(2,2)
 	shell.stage.add_child(host._anim)
-	_prev=Flow.button("‹",func():host._switch_role(host._role_idx-1,true))
-	_next=Flow.button("›",func():host._switch_role(host._role_idx+1,true))
+	_prev=Flow.button("◀",func():host._switch_role(host._role_idx-1,true))
+	_next=Flow.button("▶",func():host._switch_role(host._role_idx+1,true))
 	shell.stage.add_child(_prev)
 	shell.stage.add_child(_next)
 	_sex=HBoxContainer.new()
@@ -61,7 +61,7 @@ func _ready() -> void:
 	row.add_child(random)
 	_rule=Flow.text("昵称最长 12 个字符","caption",UI.AGED)
 	shell.body.add_child(_rule)
-	_confirm=Flow.button("确定",host._confirm,true)
+	_confirm=Flow.button("踏入昭元 · 开启征途",host._confirm,true)
 	shell.footer.add_child(_confirm)
 	host._name_edit.text_changed.connect(func(_words:String):_sync_name())
 	_touch=Control.new()

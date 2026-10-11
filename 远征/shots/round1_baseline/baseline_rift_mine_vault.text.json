@@ -1,0 +1,268 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@Node2D@14/@Label@15",
+			"rect_height": 24.0,
+			"size": 12,
+			"text": "裂谷矿道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 17.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@CharacterBody2D@16/@Panel@19/@Label@22",
+			"rect_height": 18.0,
+			"size": 11,
+			"text": "角色昵称  Lv12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/WorldCompanion/@Label@29",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "岩龟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@CharacterBody2D@30/@Label@33",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "Lv34 赤砂械卫"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@CharacterBody2D@30/@Label@33/@PanelContainer@35/@Label@34",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "Lv34"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldStatus/@Label@37",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldStatus/@Label@38",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldStatus/@Label@39",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "690/690"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldStatus/@Label@40",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "♥"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 17.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldStatus/@Label@41",
+			"rect_height": 23.0,
+			"size": 11,
+			"text": "历练"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 17.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldStatus/@Label@42",
+			"rect_height": 23.0,
+			"size": 11,
+			"text": "28%"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldGold",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldGold/@Label@47",
+			"rect_height": 28.0,
+			"size": 13,
+			"text": "12800"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/RegionTitle/@Label@48",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "裂谷矿脉"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldTask_story",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 17.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldTask_story/TaskBadge",
+			"rect_height": 23.0,
+			"size": 11,
+			"text": "主"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldTask_story/@Label@49",
+			"rect_height": 34.0,
+			"size": 13,
+			"text": "与边城执事闻叔交谈"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldTask_story/Action_",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/WorldTask_story/Action_/Caption",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/Action_伙伴",
+			"rect_height": 56.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/Action_伙伴/Caption",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "伙伴"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/Action_药剂",
+			"rect_height": 64.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/Action_药剂/Caption",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "药剂"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/Action_药剂/CountBadge/Count",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "2"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/Action_疾行",
+			"rect_height": 56.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/Action_疾行/Caption",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "疾行"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/Action_营帐",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/Action_营帐/Caption",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "营帐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@36/Minimap/@Label@52",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "北"
+		}
+	]
+}

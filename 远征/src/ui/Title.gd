@@ -56,6 +56,10 @@ void fragment() {
 	add_child(_sky_extension)
 	_shade = Lacquer.scrim(Vector2(480, 280), true)
 	add_child(_shade)
+	var motes := _AmbientMotes.new()
+	motes.name = "AmbientMotes"
+	motes.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(motes)
 	_brand = _TravelWordmark.new()
 	_brand.name = "ExpeditionWordmark"
 	_brand.size = Vector2(280,120)
@@ -190,3 +194,31 @@ class _TravelWordmark extends Control:
 			image.modulate = Color(0.04,0.035,0.043,0.85) if shadow else Color(0.87,0.83,0.80)
 			image.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			add_child(image)
+
+class _AmbientMotes extends Control:
+	var _particles: Array = []
+	func _ready() -> void:
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+		for i in 22:
+			_particles.append({
+				"pos": Vector2(randf_range(20.0, 460.0), randf_range(60.0, 780.0)),
+				"vel": Vector2(randf_range(-4.0, 4.0), randf_range(-10.0, -22.0)),
+				"r": randf_range(1.2, 2.5),
+				"a": randf_range(0.25, 0.75),
+				"phase": randf_range(0.0, TAU)
+			})
+	func _process(delta: float) -> void:
+		for p in _particles:
+			p.pos += p.vel * delta
+			p.phase += delta * 1.8
+			if p.pos.y < 30.0:
+				p.pos.y = 780.0
+				p.pos.x = randf_range(20.0, 460.0)
+		queue_redraw()
+	func _draw() -> void:
+		for p in _particles:
+			var alpha: float = p.a * (0.6 + 0.4 * sin(p.phase))
+			draw_circle(p.pos, p.r, Color(0.96, 0.85, 0.58, alpha))
+			# Subtle golden halo
+			draw_circle(p.pos, p.r * 2.2, Color(0.96, 0.82, 0.48, alpha * 0.28))
+

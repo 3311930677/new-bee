@@ -37,6 +37,14 @@ func setup(dimensions: Vector2, centerlines: Array, palette: Array, seed_value: 
 		finish.set_shader_parameter("surface_atlas", load(atlas_path))
 		finish.set_shader_parameter("surface_tint", tint)
 		finish.set_shader_parameter("surface_scale", dimensions / Vector2(768, 998.4))
+		finish.set_shader_parameter("map_dimensions", dimensions)
+		var b_type := 0
+		if material_id in ["snow", "glacier"]: b_type = 1
+		elif material_id in ["desert", "salt"]: b_type = 2
+		elif material_id in ["stone", "tomb"]: b_type = 3
+		elif material_id in ["abyss"]: b_type = 4
+		elif material_id in ["wet", "volcano"]: b_type = 5
+		finish.set_shader_parameter("biome_type", b_type)
 		material = finish
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	z_index = -20

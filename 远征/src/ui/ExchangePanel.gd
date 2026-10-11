@@ -59,7 +59,24 @@ func _build() -> void:
 	banner.position = Vector2(90, 36)
 	add_child(banner)
 
-	var panel := G.parchment_box(440, 668, 16.0)
+	# 统一黑漆墨玉金边主面板
+	var panel := PanelContainer.new()
+	var box := StyleBoxFlat.new()
+	box.bg_color = Color("141118", 0.96)
+	box.border_color = Color("4d3b2c")
+	box.set_border_width_all(2)
+	box.corner_radius_top_left = 8
+	box.corner_radius_top_right = 8
+	box.corner_radius_bottom_left = 8
+	box.corner_radius_bottom_right = 8
+	box.shadow_color = Color(0, 0, 0, 0.55)
+	box.shadow_size = 10
+	box.content_margin_left = 16.0
+	box.content_margin_right = 16.0
+	box.content_margin_top = 16.0
+	box.content_margin_bottom = 16.0
+	panel.add_theme_stylebox_override("panel", box)
+	panel.custom_minimum_size = Vector2(440, 668)
 	panel.position = Vector2(20, 108)
 	add_child(panel)
 
@@ -72,26 +89,26 @@ func _build() -> void:
 	# 顶部荣誉余额：金库图标 + 数字（HBox 居中排，免得手算文字宽度）
 	var bar := HBoxContainer.new()
 	bar.alignment = BoxContainer.ALIGNMENT_CENTER
-	bar.add_theme_constant_override("separation", 6)
-	bar.position = Vector2(0, 0)
+	bar.add_theme_constant_override("separation", 8)
+	bar.position = Vector2(0, 4)
 	bar.custom_minimum_size = Vector2(CONTENT_W, 0)
 	var vault := _icon("cur_honor", 28)
 	vault.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	bar.add_child(vault)
-	_honor_l = G.gold_label("荣誉 0", G.FS_MD, false, G.TEXT_MUTED, false)
+	_honor_l = G.gold_label("荣誉 0", G.FS_MD, false, Color("ffd875"), false)
 	_honor_l.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	bar.add_child(_honor_l)
 	_content.add_child(bar)
 
-	var tip := G.gold_label("演武场对战可获得荣誉", G.FS_XS, false, G.TEXT_MUTED, false)
-	tip.position = Vector2(0, 32)
+	var tip := G.gold_label("演武场对战可获得荣誉", G.FS_XS, false, Color("a69784"), false)
+	tip.position = Vector2(0, 36)
 	tip.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_content.add_child(tip)
 
 	# 14 条兑换项放不进一屏：装进滚动容器，返回/提示行固定在底部不再被行压住
 	var scroll := ScrollContainer.new()
-	scroll.position = Vector2(0, 54)
-	scroll.size = Vector2(CONTENT_W, 462)
+	scroll.position = Vector2(0, 58)
+	scroll.size = Vector2(CONTENT_W, 458)
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	scroll.mouse_filter = Control.MOUSE_FILTER_PASS
 	_content.add_child(scroll)
@@ -105,13 +122,27 @@ func _build() -> void:
 		row.position = Vector2(0, i * ROW_STEP)
 		rows.add_child(row)
 
-	_hint = G.gold_label("点「兑 换」消耗荣誉换取资源", G.FS_XS, false, G.TEXT_MUTED, false)
+	_hint = G.gold_label("点「兑 换」消耗荣誉换取资源", G.FS_XS, false, Color("b5a796"), false)
 	_hint.position = Vector2(0, 528)
 	_hint.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_content.add_child(_hint)
 
-	var back := G.gold_button("返 回", 120, 38)
-	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 600)
+	var back := G.gold_button("返 回", 130, 40)
+	back.position = Vector2((CONTENT_W - 130.0) * 0.5, 598)
+	var back_box := StyleBoxFlat.new()
+	back_box.bg_color = Color("231c26")
+	back_box.border_color = Color("8c6f42")
+	back_box.set_border_width_all(1)
+	back_box.corner_radius_top_left = 6
+	back_box.corner_radius_top_right = 6
+	back_box.corner_radius_bottom_left = 6
+	back_box.corner_radius_bottom_right = 6
+	for st in ["normal", "hover", "pressed", "focus"]:
+		back.add_theme_stylebox_override(st, back_box)
+	back.add_theme_color_override("font_color", Color("e8d2a0"))
+	var bl := back.get_child(0) as Label
+	if bl != null:
+		bl.add_theme_color_override("font_color", Color("e8d2a0"))
 	back.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			_on_back())
@@ -123,6 +154,11 @@ func _build() -> void:
 ## 取图标：G.res_tex 有图用图，缺素材回退一块纯色方
 func _icon(icon: String, px: float) -> Control:
 	var tex: Texture2D = G.res_tex(icon)
+	if tex == null:
+		if icon == "cur_honor":
+			tex = G.res_tex("honor")
+		elif icon.begins_with("itm_"):
+			tex = G.res_tex(icon.substr(4))
 	if tex != null:
 		var pic := TextureRect.new()
 		pic.texture = tex
@@ -138,30 +174,39 @@ func _icon(icon: String, px: float) -> Control:
 	return block
 
 
-## 单条兑换行：图标 + 名称/代价 + 兑换按钮（卡片底为切角 + 内凹光，弃用四角微差圆角）
+## 单条兑换行：图标 + 名称/代价 + 兑换按钮（卡片底为黑金切角，高品质商业手游质感）
 func _entry_row(e: Dictionary) -> Control:
 	var eid := String(e.get("id", ""))
 	var root := G.InsetPanel.new()
 	root.custom_minimum_size = Vector2(CONTENT_W, 68)
-	root.setup(G.BOX_BG, G.BOX_EDGE, 10.0, 10.0, 6.0, 6.0)
+	root.setup(Color("1b1622"), Color("423428"), 10.0, 10.0, 6.0, 6.0)
 
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 12)
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
+	# 物品图标卡槽
+	var icon_slot := PanelContainer.new()
+	var slot_box := StyleBoxFlat.new()
+	slot_box.bg_color = Color("100d14")
+	slot_box.border_color = Color("3d3128")
+	slot_box.set_border_width_all(1)
+	slot_box.set_content_margin_all(2)
+	icon_slot.add_theme_stylebox_override("panel", slot_box)
+	icon_slot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	var pic := _icon(String(e.get("icon", "")), 44)
-	pic.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	row.add_child(pic)
+	icon_slot.add_child(pic)
+	row.add_child(icon_slot)
 
 	var col := VBoxContainer.new()
 	col.add_theme_constant_override("separation", 2)
 	col.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	col.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	var name_l := G.gold_label(String(e.get("name", eid)), G.FS_SM, false, G.TEXT_DARK, false)
+	var name_l := G.gold_label(String(e.get("name", eid)), G.FS_SM, false, Color("f3ece0"), false)
 	name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	col.add_child(name_l)
-	var cost_l := G.gold_label("%d 荣誉" % int(e.get("cost", 0)), G.FS_XS, false, G.TEXT_MUTED, false)
+	var cost_l := G.gold_label("%d 荣誉" % int(e.get("cost", 0)), G.FS_XS, false, Color("dcb564"), false)
 	cost_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	col.add_child(cost_l)
 	row.add_child(col)
@@ -170,6 +215,7 @@ func _entry_row(e: Dictionary) -> Control:
 	btn.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	btn.gui_input.connect(func(e2: InputEvent):
 		if e2 is InputEventMouseButton and e2.pressed and e2.button_index == MOUSE_BUTTON_LEFT:
+			HapticFeedback.light()
 			do_exchange(eid))
 	row.add_child(btn)
 
@@ -243,7 +289,7 @@ func _refresh() -> void:
 		var cl: Label = _cost_l.get(String(id))
 		if cl != null:
 			cl.add_theme_color_override("font_color",
-				G.C_COST if poor else G.TEXT_MUTED)
+				G.C_COST if poor else Color("dcb564"))
 
 
 func _warn(msg: String) -> void:

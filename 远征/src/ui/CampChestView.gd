@@ -117,11 +117,11 @@ func _build_identity() -> void:
 	_percent.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	content.add_child(_percent)
 	_exp_bg = ColorRect.new()
-	_exp_bg.color = UI.FACE
+	_exp_bg.color = Color("191420")
 	_exp_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.add_child(_exp_bg)
 	_exp_fill = ColorRect.new()
-	_exp_fill.color = UI.BLUE
+	_exp_fill.color = Color("40cbb8")
 	_exp_fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_exp_bg.add_child(_exp_fill)
 	_settings = UI.action("","icon","settings")
@@ -130,10 +130,24 @@ func _build_identity() -> void:
 	_settings.pressed.connect(func(): host._open_settings(host._click_ev()))
 	content.add_child(_settings)
 
+var _wallet_bg: Panel
+var _hero_plate: Panel
+
 func _build_wallet() -> void:
+	_wallet_bg = Panel.new()
+	_wallet_bg.name = "WalletBackdrop"
+	_wallet_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var wstyle := StyleBoxFlat.new()
+	wstyle.bg_color = Color("141119", 0.92)
+	wstyle.border_color = Color("8c7047", 0.85)
+	wstyle.set_border_width_all(1)
+	wstyle.set_corner_radius_all(4)
+	_wallet_bg.add_theme_stylebox_override("panel", wstyle)
+	content.add_child(_wallet_bg)
+
 	var row := HBoxContainer.new()
 	row.name = "CurrencyRow"
-	row.add_theme_constant_override("separation",4)
+	row.add_theme_constant_override("separation", 4)
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.add_child(row)
 	host._wallet_row = row
@@ -162,8 +176,20 @@ func _build_stage() -> void:
 	host._anim.animation = &"idle"
 	host._anim.play()
 	content.add_child(host._anim)
+
+	_hero_plate = Panel.new()
+	_hero_plate.name = "HeroPlinth"
+	_hero_plate.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var hstyle := StyleBoxFlat.new()
+	hstyle.bg_color = Color("141018", 0.94)
+	hstyle.border_color = Color("c29a5b", 0.90)
+	hstyle.set_border_width_all(1)
+	hstyle.set_corner_radius_all(4)
+	_hero_plate.add_theme_stylebox_override("panel", hstyle)
+	content.add_child(_hero_plate)
+
 	var role := G.get_role(G.selected_role)
-	_role_name = UI.label(String(role.get("name","旅人")),"title")
+	_role_name = G.serif_label(String(role.get("name","旅人")), 18, Color("fce2a6"), true)
 	_role_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	content.add_child(_role_name)
 	_job = UI.label("","caption",UI.AGED)
@@ -187,12 +213,15 @@ func layout(safe_override: Rect2 = Rect2()) -> void:
 	_name.size = Vector2(172,26)
 	_level.position = origin+Vector2(72,34)
 	_level.size = Vector2(52,22)
-	_exp_bg.position = origin+Vector2(128,46)
-	_exp_bg.size = Vector2(64,4)
-	_percent.position = origin+Vector2(196,34)
-	_percent.size = Vector2(48,22)
+	_exp_bg.position = origin+Vector2(128,45)
+	_exp_bg.size = Vector2(74,6)
+	_percent.position = origin+Vector2(206,34)
+	_percent.size = Vector2(44,22)
 	_settings.position = Vector2(right-56,origin.y+10)
 	_settings.size = Vector2(44,44)
+	if _wallet_bg != null:
+		_wallet_bg.position = origin+Vector2(8,65)
+		_wallet_bg.size = Vector2(_safe.size.x-16,46)
 	host._wallet_row.position = origin+Vector2(12,66)
 	host._wallet_row.size = Vector2(_safe.size.x-24,44)
 	_quest.position = origin+Vector2(12,120)
@@ -208,10 +237,13 @@ func layout(safe_override: Rect2 = Rect2()) -> void:
 	_shadow.position = Vector2(_safe.get_center().x,feet)
 	_pool.position = Vector2(_safe.get_center().x-100,feet-32)
 	_pool.size = Vector2(200,48)
-	_role_name.position = Vector2(_safe.get_center().x-100,feet)
-	_role_name.size = Vector2(200,32)
-	_job.position = Vector2(_safe.get_center().x-100,feet+34)
-	_job.size = Vector2(200,18)
+	if _hero_plate != null:
+		_hero_plate.position = Vector2(_safe.get_center().x-80,feet+2)
+		_hero_plate.size = Vector2(160,48)
+	_role_name.position = Vector2(_safe.get_center().x-80,feet+6)
+	_role_name.size = Vector2(160,22)
+	_job.position = Vector2(_safe.get_center().x-80,feet+28)
+	_job.size = Vector2(160,18)
 	var tray := content.get_node("NavigationTray") as Control
 	tray.position = Vector2(0,_safe.end.y-88)
 	tray.size = Vector2(view.size.x,view.size.y-tray.position.y)
@@ -231,7 +263,7 @@ func refresh() -> void:
 	var need := G.exp_to_next(level)
 	var ratio := 1.0 if need<=0 else clampf(float(G.prog.get("exp",0))/need,0,1)
 	_percent.text = "%d%%" % roundi(ratio*100)
-	_exp_fill.size = Vector2(_exp_bg.size.x*ratio,4)
+	_exp_fill.size = Vector2(_exp_bg.size.x*ratio,6)
 	var goal := String(G.story_current().get("goal","查看主线与今日委托"))
 	_quest.goal.text = goal
 	_quest.claimable = host._quest_claimable()
@@ -250,6 +282,7 @@ func refresh() -> void:
 	_hero.subtitle.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_hero.tooltip_text = "返回主世界 · "+place
 	var role := G.get_role(G.selected_role)
+	_role_name.text = "【 %s 】" % String(role.get("name","旅人"))
 	_job.text = "%s · LV %02d" % [role.get("job",""),level]
 	for entry in host._wallet_labels:
 		var value := int(G.wallet.get(entry.key,0))

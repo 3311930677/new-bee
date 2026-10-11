@@ -1,0 +1,115 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@525/@PanelContainer@527/@Label@528",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "苍绿林海 · 首领巢穴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@525/@PanelContainer@530/@Label@529",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "击败首领，解除传送阵封印"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@525/@Control@531/@Label@532",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "首领 · 还有 34 步"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@525/@PanelContainer@534/@Label@533",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "清剿 0/1 · 匆匆过客"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@525/@PanelContainer@535/@VBoxContainer@536/@HBoxContainer@537/@Label@541",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "药剂 ×2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@525/@PanelContainer@543/@Label@542",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "药"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@525/@PanelContainer@545/@Label@544",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "换宠"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@525/@PanelContainer@547/@Label@546",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "撤离"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@525/@Control@548/@Label@549",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "地图"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@525/@Control@548/@Label@550",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "北"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@525/@Control@548/@Label@551",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "展开地图"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@525/@PanelContainer@553/@Label@552",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "疾行·关"
+		}
+	]
+}

@@ -210,6 +210,7 @@ func _build() -> void:
 	reroll.position = Vector2(0, btn_cy - G.BTN_M.y * 0.5)
 	reroll.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			HapticFeedback.light()
 			Audio.sfx("ui_page")
 			_foe_lv = clampi(_foe_lv + (1 if randf() < 0.5 else -1), 1, 99)
 			_refresh())
@@ -219,6 +220,7 @@ func _build() -> void:
 	_go_btn.position = Vector2(CONTENT_W - G.BTN_L.x, btn_cy - G.BTN_L.y * 0.5)
 	_go_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			HapticFeedback.medium()
 			_start_battle())
 	content.add_child(_go_btn)
 

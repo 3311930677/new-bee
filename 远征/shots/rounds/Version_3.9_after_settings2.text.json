@@ -1,0 +1,313 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@Button@35",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@Button@35/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@Label@36",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "设置"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@HBoxContainer@37/@Button@44",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "常规"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@HBoxContainer@37/@Button@44/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "常规"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@HBoxContainer@37/@Button@44/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@HBoxContainer@37/@Button@46",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "旅人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@HBoxContainer@37/@Button@46/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "旅人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@HBoxContainer@37/@Button@46/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@HBoxContainer@37/@Button@48",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "存档"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@HBoxContainer@37/@Button@48/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "存档"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@HBoxContainer@37/@Button@48/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@ScrollContainer@40/@VBoxContainer@41/@VBoxContainer@49/@Label@88",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "备份"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@ScrollContainer@40/@VBoxContainer@41/@VBoxContainer@49/@Button@89",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "复制存档码"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@ScrollContainer@40/@VBoxContainer@41/@VBoxContainer@49/@Button@89/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "复制存档码"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@ScrollContainer@40/@VBoxContainer@41/@VBoxContainer@49/@Button@89/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@ScrollContainer@40/@VBoxContainer@41/@VBoxContainer@49/@Label@90",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "复制后可备份保存"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@ScrollContainer@40/@VBoxContainer@41/@VBoxContainer@49/@Label@91",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "恢复存档"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@ScrollContainer@40/@VBoxContainer@41/@VBoxContainer@49/@LineEdit@92",
+			"rect_height": 48.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@ScrollContainer@40/@VBoxContainer@41/@VBoxContainer@49/@Button@93",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "粘贴码"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@ScrollContainer@40/@VBoxContainer@41/@VBoxContainer@49/@Button@93/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "粘贴码"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@ScrollContainer@40/@VBoxContainer@41/@VBoxContainer@49/@Button@93/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@ScrollContainer@40/@VBoxContainer@41/@VBoxContainer@49/@Button@94",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "导入"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@ScrollContainer@40/@VBoxContainer@41/@VBoxContainer@49/@Button@94/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "导入"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@ScrollContainer@40/@VBoxContainer@41/@VBoxContainer@49/@Button@94/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@ScrollContainer@40/@VBoxContainer@41/@VBoxContainer@49/@Label@95",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "导入成功后返回标题"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@ScrollContainer@40/@VBoxContainer@41/@VBoxContainer@49/@Label@96",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "重置"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@ScrollContainer@40/@VBoxContainer@41/@VBoxContainer@49/@Button@97",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "重置存档"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@ScrollContainer@40/@VBoxContainer@41/@VBoxContainer@49/@Button@97/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "重置存档"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@ScrollContainer@40/@VBoxContainer@41/@VBoxContainer@49/@Button@97/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Control@28/@ScrollContainer@40/@VBoxContainer@41/@VBoxContainer@49/@Label@98",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "重置会清除本机当前存档"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Button@99",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "说明"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Button@99/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "说明"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@26/@Control@27/@Button@99/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		}
+	]
+}

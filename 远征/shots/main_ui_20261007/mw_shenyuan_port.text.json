@@ -1,0 +1,268 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@Node2D@7/@Label@8",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "旧盐道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@CharacterBody2D@11/@Panel@14/@Label@17",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "角色昵称  Lv12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/WorldCompanion/@Label@24",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "岩龟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@Node2D@25/@Label@26",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "栈桥水边 · 垂钓"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@3/@Node2D@103/@Label@105",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "沈澜"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/WorldStatus/@MarginContainer@28/@VBoxContainer@29/@HBoxContainer@30/@Label@31",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "Lv12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/WorldStatus/@MarginContainer@28/@VBoxContainer@29/@HBoxContainer@30/@Label@33",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "690/690"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/WorldStatus/@MarginContainer@28/@VBoxContainer@29/@HBoxContainer@36/@Label@37",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "历练"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/WorldStatus/@MarginContainer@28/@VBoxContainer@29/@HBoxContainer@36/@Label@38",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "28%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/WorldGold",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/WorldGold/@MarginContainer@41/@HBoxContainer@42/@Label@43",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "12800"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 42.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/@Control@45/@Label@44",
+			"rect_height": 42.0,
+			"size": 28,
+			"text": "沉渊港"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/WorldTask_story",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/WorldTask_story/TaskBadge",
+			"rect_height": 28.0,
+			"size": 12,
+			"text": "主线"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/WorldTask_story/@Label@47",
+			"rect_height": 28.0,
+			"size": 14,
+			"text": "与边城执事闻叔交谈"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/@Control@69/@PanelContainer@64/@Label@63",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/@Control@69/@Label@66",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "药剂"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/@Control@69/@PanelContainer@68/@Label@67",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/@Control@79/@PanelContainer@76/@Label@75",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/@Control@79/@Label@78",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "营帐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/@Control@80/@Label@81",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "地图"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/@Control@80/@Label@82",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "北"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/@Control@80/@Label@83",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "展开地图"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/@Control@88/@PanelContainer@85/@Label@84",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 40.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/@Control@88/@Label@86",
+			"rect_height": 40.0,
+			"size": 27,
+			"text": "»"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/@Control@88/@Label@87",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "疾行"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/WorldTask_daily",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/WorldTask_daily/TaskBadge",
+			"rect_height": 28.0,
+			"size": 12,
+			"text": "港务"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@27/WorldTask_daily/@Label@116",
+			"rect_height": 28.0,
+			"size": 14,
+			"text": "查看行情"
+		}
+	]
+}

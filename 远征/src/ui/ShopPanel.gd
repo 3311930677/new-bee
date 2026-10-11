@@ -1,14 +1,19 @@
-# ShopPanel.gd —— 主城物资铺（锻造铺落成后开放）：金币换养成材料（P1-2）
-# 版式与其它浮层一致：统一 veil 底衬 + 木匾 + 羊皮纸；单列货架，行内明示买卖价。
+# ShopPanel.gd —— 主城物资铺：金币换养成材料
+# 商业级手游排版：深漆木箱质感 + 完整物品像素图标 + 规整货架货品卡片 + 双向交易
 class_name ShopPanel
 extends Control
 
 signal closed
 
-# 同 DeployPanel/CodexPanel：440 羊皮纸 - 左右各 16 内边距 = 408
+const UI := preload("res://src/ui/TravelChestUI.gd")
+const VIEW_W := 480.0
+const VIEW_H := 800.0
+const PANEL_W := 440.0
+const PANEL_H := 540.0
 const CONTENT_W := 408.0
 
-var _rows_box: Control = null
+var _panel: Panel = null
+var _rows_box: VBoxContainer = null
 var _gold_l: Label = null
 var _hint: Label = null
 
@@ -21,61 +26,128 @@ func _ready() -> void:
 
 
 func _build() -> void:
-	G.veil(self, G.VEIL_MODAL_A)
-	var banner := G.banner_box("物 资 铺", 300, 50)
-	banner.position = Vector2(90, 36)
-	add_child(banner)
+	G.veil(self, 0.76)
 
-	var panel := G.parchment_box(440, 600, 16.0)
-	panel.position = Vector2(20, 108)
-	add_child(panel)
-	var content := Control.new()
-	content.set_anchors_preset(Control.PRESET_FULL_RECT)
-	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	panel.add_child(content)
+	# 居中典雅外框
+	_panel = Panel.new()
+	_panel.name = "ShopCabinet"
+	_panel.size = Vector2(PANEL_W, PANEL_H)
+	_panel.position = Vector2((VIEW_W - PANEL_W) * 0.5, (VIEW_H - PANEL_H) * 0.5)
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color("141118", 0.96)
+	style.border_color = Color("c29a5b", 0.90)
+	style.set_border_width_all(1)
+	style.set_corner_radius_all(4)
+	style.shadow_color = Color(0, 0, 0, 0.6)
+	style.shadow_size = 16
+	_panel.add_theme_stylebox_override("panel", style)
+	add_child(_panel)
 
-	var service_mult := preload("res://src/world/RegionalTrust.gd").shop_mult(G,String(G.prog.get("main_world",{}).get("map_id","lorin_wilds")))
-	var service_line := "材料可回收；购价与回收价均明示。" if service_mult==1.0 else "本城往来便利：材料购价 -%d%%，回收价不变。"%roundi((1.0-service_mult)*100)
-	var tip := G.gold_label(service_line, G.FS_XS, false, G.TEXT_MUTED, false)
-	tip.position = Vector2(0, 2)
-	tip.custom_minimum_size = Vector2(CONTENT_W, 0)
-	content.add_child(tip)
-	_gold_l = G.gold_label("", G.FS_SM, false, G.TEXT_DARK, false)
-	_gold_l.position = Vector2(0, 24)
-	_gold_l.custom_minimum_size = Vector2(CONTENT_W, 0)
-	content.add_child(_gold_l)
-	_hint = G.gold_label("", G.FS_SM, false, Color("a04a3a"), false)
-	_hint.position = Vector2(0, 46)
-	_hint.custom_minimum_size = Vector2(CONTENT_W, 0)
+	# 顶部标题匾牌
+	var header := Panel.new()
+	header.size = Vector2(PANEL_W, 54)
+	header.position = Vector2(0, 0)
+	var h_style := StyleBoxFlat.new()
+	h_style.bg_color = Color("231c26", 0.95)
+	h_style.border_color = Color("6a5338", 0.6)
+	h_style.border_width_bottom = 1
+	h_style.corner_radius_top_left = 4
+	h_style.corner_radius_top_right = 4
+	header.add_theme_stylebox_override("panel", h_style)
+	_panel.add_child(header)
+
+	var title_l := UI.label("物 资 铺", "title", UI.GOLD)
+	title_l.position = Vector2(16, 12)
+	title_l.size = Vector2(120, 28)
+	header.add_child(title_l)
+
+	# 钱包余额标签
+	var gold_chip := Panel.new()
+	gold_chip.size = Vector2(148, 30)
+	gold_chip.position = Vector2(PANEL_W - 164, 12)
+	var chip_style := StyleBoxFlat.new()
+	chip_style.bg_color = Color("120f14", 0.8)
+	chip_style.border_color = Color("6e5434", 0.7)
+	chip_style.set_border_width_all(1)
+	chip_style.set_corner_radius_all(3)
+	gold_chip.add_theme_stylebox_override("panel", chip_style)
+	header.add_child(gold_chip)
+
+	var coin_ico := G.ui_icon("coin", Vector2(18, 18))
+	coin_ico.position = Vector2(8, 6)
+	gold_chip.add_child(coin_ico)
+
+	_gold_l = UI.label("", "caption", UI.GOLD)
+	_gold_l.position = Vector2(30, 4)
+	_gold_l.size = Vector2(110, 22)
+	_gold_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	gold_chip.add_child(_gold_l)
+
+	# 提示小说明
+	var service_mult := preload("res://src/world/RegionalTrust.gd").shop_mult(G, String(G.prog.get("main_world",{}).get("map_id","lorin_wilds")))
+	var service_line := "材料可自由买卖 · 购价与回收价均明示" if service_mult == 1.0 else "边城特惠：材料购价 -%d%% · 回收价不变" % roundi((1.0 - service_mult) * 100)
+	var tip := UI.label(service_line, "tag", UI.AGED)
+	tip.position = Vector2(16, 58)
+	tip.size = Vector2(CONTENT_W, 20)
+	_panel.add_child(tip)
+
+	# 商品行容器
+	_rows_box = VBoxContainer.new()
+	_rows_box.name = "GoodsRows"
+	_rows_box.position = Vector2(16, 82)
+	_rows_box.size = Vector2(CONTENT_W, 370)
+	_rows_box.add_theme_constant_override("separation", 8)
+	_panel.add_child(_rows_box)
+
+	# 交易提示气泡
+	_hint = UI.label("", "caption", UI.JADE)
+	_hint.position = Vector2(16, 458)
+	_hint.size = Vector2(CONTENT_W, 20)
+	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_hint.modulate.a = 0.0
-	content.add_child(_hint)
+	_panel.add_child(_hint)
 
-	_rows_box = Control.new()
-	_rows_box.position = Vector2(0, 74)
-	_rows_box.size = Vector2(CONTENT_W, 380)
-	content.add_child(_rows_box)
+	# 底部返回按钮
+	var back_btn := Button.new()
+	back_btn.text = "返 回"
+	back_btn.size = Vector2(140, 36)
+	back_btn.position = Vector2((PANEL_W - 140) * 0.5, 488)
+	var btn_norm := StyleBoxFlat.new()
+	btn_norm.bg_color = Color("231d27", 0.9)
+	btn_norm.border_color = Color("6e5434", 0.8)
+	btn_norm.set_border_width_all(1)
+	btn_norm.set_corner_radius_all(3)
+	var btn_hover := StyleBoxFlat.new()
+	btn_hover.bg_color = Color("2e2634", 1.0)
+	btn_hover.border_color = UI.COPPER
+	btn_hover.set_border_width_all(1)
+	btn_hover.set_corner_radius_all(3)
+	back_btn.add_theme_stylebox_override("normal", btn_norm)
+	back_btn.add_theme_stylebox_override("hover", btn_hover)
+	back_btn.add_theme_stylebox_override("pressed", btn_hover)
+	back_btn.add_theme_color_override("font_color", UI.PAPER)
+	back_btn.add_theme_font_override("font", G.font_reg)
+	back_btn.add_theme_font_size_override("font_size", 14)
+	back_btn.pressed.connect(_close_self)
+	_panel.add_child(back_btn)
 
-	var back := G.gold_button("返 回", 120, 38)
-	back.position = Vector2((CONTENT_W - 120.0) * 0.5, 500)
-	back.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			closed.emit())
-	content.add_child(back)
+
+func _close_self() -> void:
+	G.close_page(self, func(): closed.emit())
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if G.ui_blocked:
 		return
 	if event.is_action_pressed("ui_cancel"):
-		closed.emit()
+		_close_self()
 		get_viewport().set_input_as_handled()
 
 
-## 刷新余额 + 重建货架（购买后持有数/价格文案同步）
 func _refresh() -> void:
 	if _gold_l == null:
 		return
-	_gold_l.text = "金币 ×%d" % int(G.wallet.get("gold", 0))
+	_gold_l.text = "%s 金" % UI.format_number(int(G.wallet.get("gold", 0)))
 	for c in _rows_box.get_children():
 		c.queue_free()
 	var rows := G.shop_items()
@@ -83,69 +155,143 @@ func _refresh() -> void:
 		_make_row(i, rows[i] as Dictionary)
 
 
-func _make_row(idx: int, row: Dictionary) -> void:
+func _make_row(_idx: int, row: Dictionary) -> void:
 	var iid := String(row.get("item", ""))
 	if iid.is_empty():
 		return
-	# 货架已由 G.shop_items() 校验过；这里只做"非法不上屏"，不再兜底成 1（问题 #20）
 	var price := int(row.get("price", 0))
 	if price <= 0:
 		return
-	var y := float(idx) * 46.0
-	var band := G.InsetBand.new()
-	band.position = Vector2(0, y)
-	band.custom_minimum_size = Vector2(CONTENT_W, 42)
-	band.size = Vector2(CONTENT_W, 42)
-	# 内凹条带（切角 + 顶暗底亮 + 1px 描边），替代圆角6+2px 粗边的旧皮
-	band.set_surface(G.BOX_BG, G.BOX_EDGE)
-	_rows_box.add_child(band)
-
-	var nm := G.gold_label("%s　持有 ×%d" % [G.item_name(iid), G.item_count(iid)],
-		G.FS_XS, false, G.TEXT_DARK, false)
-	nm.position = Vector2(10, 11)
-	nm.size = Vector2(164, 20)
-	band.add_child(nm)
 	var sell_price := int(row.get("sell_price", 0))
-	var pr := G.gold_label("购%d / 售%d" % [price, sell_price], G.FS_XS, false,
-		Color("8a4a3a"), false)
-	pr.position = Vector2(170, 11)
-	pr.size = Vector2(94, 20)
-	pr.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	band.add_child(pr)
-	var buy := G.gold_button("购入", 64, 32, G.FS_XS)
-	buy.position = Vector2(269, 5)
-	buy.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_on_buy(iid))
-	band.add_child(buy)
-	var sell := G.ghost_button("出售", 64, 32, G.FS_XS)
-	sell.position = Vector2(338, 5)
-	sell.modulate.a = 0.5 if G.item_count(iid) <= 0 or sell_price <= 0 else 1.0
-	sell.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_on_sell(iid))
-	band.add_child(sell)
+	var stock := G.item_count(iid)
+
+	var card := Panel.new()
+	card.custom_minimum_size = Vector2(CONTENT_W, 64)
+	card.size = Vector2(CONTENT_W, 64)
+	var card_style := StyleBoxFlat.new()
+	card_style.bg_color = Color("211b26", 0.92)
+	card_style.border_color = Color("4b3b2c", 0.7)
+	card_style.set_border_width_all(1)
+	card_style.set_corner_radius_all(3)
+	card.add_theme_stylebox_override("panel", card_style)
+	_rows_box.add_child(card)
+
+	# 1. 物品图标插槽
+	var icon_slot := Panel.new()
+	icon_slot.size = Vector2(48, 48)
+	icon_slot.position = Vector2(8, 8)
+	var slot_style := StyleBoxFlat.new()
+	slot_style.bg_color = Color("120f14", 0.85)
+	slot_style.border_color = Color("6e5434", 0.8)
+	slot_style.set_border_width_all(1)
+	slot_style.set_corner_radius_all(2)
+	icon_slot.add_theme_stylebox_override("panel", slot_style)
+	card.add_child(icon_slot)
+
+	var item_icon := TextureRect.new()
+	var icon_name := G.item_icon(iid)
+	item_icon.texture = G.res_tex(icon_name)
+	item_icon.size = Vector2(36, 36)
+	item_icon.position = Vector2(6, 6)
+	item_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	item_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	item_icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	icon_slot.add_child(item_icon)
+
+	# 2. 物品名称与持有数量
+	var name_l := UI.label(G.item_name(iid), "object", UI.PAPER)
+	name_l.position = Vector2(64, 10)
+	name_l.size = Vector2(120, 22)
+	name_l.clip_text = true
+	card.add_child(name_l)
+
+	var stock_l := UI.label("持有: %d" % stock, "tag", UI.JADE if stock > 0 else UI.AGED)
+	stock_l.position = Vector2(64, 34)
+	stock_l.size = Vector2(100, 18)
+	card.add_child(stock_l)
+
+	# 3. 价格标签
+	var price_panel := VBoxContainer.new()
+	price_panel.position = Vector2(188, 12)
+	price_panel.size = Vector2(80, 40)
+	price_panel.add_theme_constant_override("separation", 2)
+	card.add_child(price_panel)
+
+	var buy_price_l := UI.label("购: %d 金" % price, "caption", UI.GOLD)
+	price_panel.add_child(buy_price_l)
+
+	var sell_price_l := UI.label("售: %d 金" % sell_price, "tag", Color("b8865d"))
+	price_panel.add_child(sell_price_l)
+
+	# 4. 购买按钮 (深红金漆)
+	var buy_btn := Button.new()
+	buy_btn.text = "购 入"
+	buy_btn.size = Vector2(60, 32)
+	buy_btn.position = Vector2(276, 16)
+	var buy_style := StyleBoxFlat.new()
+	buy_style.bg_color = Color("7a2e20", 0.95)
+	buy_style.border_color = Color("d99748", 0.8)
+	buy_style.set_border_width_all(1)
+	buy_style.set_corner_radius_all(2)
+	var buy_hover := StyleBoxFlat.new()
+	buy_hover.bg_color = Color("963827", 1.0)
+	buy_hover.border_color = UI.GOLD
+	buy_hover.set_border_width_all(1)
+	buy_hover.set_corner_radius_all(2)
+	buy_btn.add_theme_stylebox_override("normal", buy_style)
+	buy_btn.add_theme_stylebox_override("hover", buy_hover)
+	buy_btn.add_theme_stylebox_override("pressed", buy_hover)
+	buy_btn.add_theme_color_override("font_color", UI.PAPER)
+	buy_btn.add_theme_font_override("font", G.font_reg)
+	buy_btn.add_theme_font_size_override("font_size", 13)
+	buy_btn.pressed.connect(func(): _on_buy(iid))
+	card.add_child(buy_btn)
+
+	# 5. 出售按钮 (幽灵黑铜)
+	var sell_btn := Button.new()
+	sell_btn.text = "出 售"
+	sell_btn.size = Vector2(60, 32)
+	sell_btn.position = Vector2(342, 16)
+	var sell_style := StyleBoxFlat.new()
+	sell_style.bg_color = Color("231e28", 0.9)
+	sell_style.border_color = Color("5e4b38", 0.8)
+	sell_style.set_border_width_all(1)
+	sell_style.set_corner_radius_all(2)
+	var sell_hover := StyleBoxFlat.new()
+	sell_hover.bg_color = Color("312937", 1.0)
+	sell_hover.border_color = UI.COPPER
+	sell_hover.set_border_width_all(1)
+	sell_hover.set_corner_radius_all(2)
+	sell_btn.add_theme_stylebox_override("normal", sell_style)
+	sell_btn.add_theme_stylebox_override("hover", sell_hover)
+	sell_btn.add_theme_stylebox_override("pressed", sell_hover)
+	sell_btn.add_theme_color_override("font_color", UI.PAPER if stock > 0 else Color(0.5, 0.5, 0.5))
+	sell_btn.add_theme_font_override("font", G.font_reg)
+	sell_btn.add_theme_font_size_override("font_size", 13)
+	sell_btn.disabled = stock <= 0 or sell_price <= 0
+	sell_btn.modulate.a = 0.5 if stock <= 0 else 1.0
+	sell_btn.pressed.connect(func(): _on_sell(iid))
+	card.add_child(sell_btn)
 
 
 func _on_buy(iid: String) -> void:
 	var res := G.shop_buy(iid)
 	if bool(res.get("ok", false)):
-		_note("已购入 %s" % G.item_name(iid), Color("4a7a44"))
+		_note("已购入 %s" % G.item_name(iid), UI.JADE)
 	else:
-		_note(String(res.get("err", "买不了")), Color("a04a3a"))
+		_note(String(res.get("err", "金币不足")), Color("d95448"))
 	_refresh()
 
 
 func _on_sell(iid: String) -> void:
 	var res := G.shop_sell(iid)
 	if bool(res.get("ok", false)):
-		_note("已出售 %s，金币 +%d" % [G.item_name(iid), int(res.get("gold", 0))], Color("4a7a44"))
+		_note("已出售 %s · 获得 %d 金币" % [G.item_name(iid), int(res.get("gold", 0))], UI.JADE)
 	else:
-		_note(String(res.get("err", "卖不了")), Color("a04a3a"))
+		_note(String(res.get("err", "未能出售")), Color("d95448"))
 	_refresh()
 
 
-## 行内提示：1.5 秒后淡出（重复触发重置计时）
 func _note(msg: String, color: Color) -> void:
 	if _hint == null:
 		return
@@ -155,7 +301,7 @@ func _note(msg: String, color: Color) -> void:
 	var old: Tween = null
 	if _hint.has_meta("fade_tw"):
 		old = _hint.get_meta("fade_tw") as Tween
-	if old != null:
+	if old != null and old.is_valid():
 		old.kill()
 	var tw := _hint.create_tween()
 	_hint.set_meta("fade_tw", tw)

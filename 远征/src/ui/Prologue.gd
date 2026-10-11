@@ -118,6 +118,12 @@ func _build() -> void:
 	_page_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	content.add_child(_page_lbl)
 
+	var seal := G.serif_label("【昭元史官印】", 12, Color("9e3226", 0.75))
+	seal.position = Vector2(252, 406)
+	seal.size = Vector2(110, 22)
+	seal.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	content.add_child(seal)
+
 	# 卷轴本身可点（手游习惯：点哪都能翻页）
 	panel.mouse_filter = Control.MOUSE_FILTER_STOP
 	panel.gui_input.connect(func(e: InputEvent):

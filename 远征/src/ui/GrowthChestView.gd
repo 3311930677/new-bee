@@ -63,10 +63,12 @@ func _ready() -> void:
 	_info.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
 	add_child(_info)
 	_main=UI.action("","primary")
+	_main.pressed.connect(func(): HapticFeedback.light())
 	_main.pressed.connect(_activate)
 	add_child(_main)
 	_secondary=UI.action("切换骑乘","secondary")
 	_secondary.pressed.connect(func():
+		HapticFeedback.light()
 		if system=="mount" and G.mount_set_active(selection):host._toast_msg("已选择坐骑");refresh())
 	add_child(_secondary)
 	_help=UI.action("说明","quiet")
@@ -113,7 +115,7 @@ func _tab(words: String,id: String,current: String,callback: Callable) -> void:
 	_tabs.add_child(b)
 
 func _row(words: String,hint: String,id: String,selected: bool,ready: bool=false) -> void:
-	var b:=Page.GrowthRow.new(words,system)
+	var b:=Page.GrowthRow.new(words, id)
 	b.custom_minimum_size.x=0
 	b.set_meta("growth_selection",id)
 	b.status.text=hint
@@ -163,7 +165,9 @@ func _talent() -> void:
 		for node in branch.nodes:
 			var n:=int((G.prog.get("talents",{}) as Dictionary).get(String(node.id),0))
 			_row(String(node.name),"第%d阶 · %d / %d" % [int(node.get("tier",1)),n,int(node.get("max",1))],String(node.id),String(node.id)==selection,G.talent_can_add(String(node.id)))
-	_art.texture=Page.texture("talent")
+	var t_row := Page.GrowthRow.new("", selection)
+	_art.texture = t_row.image.texture if t_row.image != null and t_row.image.texture != null else Page.texture("skill")
+	_art.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	_name.text=String(selected.get("name","天赋修习"))
 	_status.text="剩余天赋点 %d / %d" % [G.talent_points_left(),G.talent_points_total()]
 	_details.text=String(selected.get("desc",""))+"\n每 5 级获得 1 点；需本系投入 %d 点" % maxi(0,int(selected.get("tier",1))-1)

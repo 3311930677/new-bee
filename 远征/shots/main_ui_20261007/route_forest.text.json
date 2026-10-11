@@ -1,0 +1,70 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 59.0,
+			"path": "/root/ShotRunner/RouteScene/@Panel@9/@Label@8",
+			"rect_height": 59.0,
+			"size": 40,
+			"text": "远征 · 苍绿林海"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/RouteScene/@Label@10",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "第 1 层 · 点亮节点前进"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/RouteScene/@PanelContainer@12/@Label@11",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "放弃远征"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/RouteScene/@PanelContainer@13/@VBoxContainer@14/@HBoxContainer@15/@Label@16",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "生命"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/RouteScene/@PanelContainer@13/@VBoxContainer@14/@HBoxContainer@15/@Label@19",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "410 / 410"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/RouteScene/@PanelContainer@13/@VBoxContainer@14/@HBoxContainer@20/@Label@22",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "×2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/RouteScene/@PanelContainer@13/@VBoxContainer@14/@HBoxContainer@20/@Label@25",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "×0"
+		}
+	]
+}
