@@ -1,6 +1,7 @@
 extends Control
 const ChestUI := preload("res://src/ui/TravelChestUI.gd")
 const Lacquer := preload("res://src/ui/LacquerUI.gd")
+const Kit := preload("res://src/ui/PixelKit.gd")
 const MENU := ["开始游戏", "游戏介绍", "游戏设置", "退出游戏"]
 var _btns: Array[Control] = []
 var _focus := 0
@@ -84,28 +85,32 @@ void fragment() {
 		line.size = Vector2(48,1)
 		line.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_subtitle_group.add_child(line)
+	# 主按钮：朱漆铁框 + 周期扫光 + 点击火星；次级菜单：铁铜像素按钮。全部按 2px 网格绘制。
 	for i in MENU.size():
 		var idx := i
-		var b: Button = ChestUI.action(MENU[i],"primary") if i==0 else Lacquer.Action.new(MENU[i])
+		var b: Button
+		if i == 0:
+			var hero := Kit.PixelButton.new(MENU[i], "crimson", 24)
+			hero.shine = true
+			hero.kit = "hero"
+			hero.trim = Color("c9963f")
+			b = hero
+		else:
+			b = Kit.PixelButton.new(MENU[i], "iron", 16)
+			(b as Kit.PixelButton).kit = "btn"
+			if i == 3: (b as Kit.PixelButton).caption.add_theme_color_override("font_color", Color("a89c88"))
 		b.name = ["StartGame", "Introduction", "Settings", "Quit"][i]
-		if i != 0: b.quiet = true
-		if i != 0: b.caption.add_theme_font_override("font", G.font_serif)
-		b.caption.add_theme_font_size_override("font_size", 22 if i == 0 else 17)
-		b.caption.add_theme_color_override("font_color", Color("f6d9a0") if i == 0 else (Color("9e9381") if i == 3 else Lacquer.AGED))
 		b.pressed.connect(_activate.bind(idx))
 		b.focus_entered.connect(func(): _focus = idx)
 		add_child(b)
 		_btns.append(b)
-	for i in 2:
-		var dot := ColorRect.new()
-		dot.color = Lacquer.LIT
-		dot.size = Vector2(4,4)
-		dot.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		add_child(dot)
-		_separators.append(dot)
 	get_viewport().size_changed.connect(_layout_page)
 	_layout_page()
 	_update_focus(0, false)
+	# 入场：标识自上落下、副标题随后、按钮自下逐个推入。
+	Kit.enter(_brand, 0.0, Vector2(0, -18))
+	Kit.enter(_subtitle_group, 0.14, Vector2(0, -10))
+	for i in _btns.size(): Kit.enter(_btns[i], 0.28 + i * 0.07)
 
 func _layout_page(safe_override: Rect2 = Rect2()) -> void:
 	var view := get_viewport_rect()
@@ -121,13 +126,13 @@ func _layout_page(safe_override: Rect2 = Rect2()) -> void:
 	var brand_y := 72 + 0.4 * maxf(0, safe.size.y - 800)
 	_brand.position = Vector2(safe.get_center().x - 140, safe.position.y + brand_y)
 	_subtitle_group.position = Vector2(safe.get_center().x-130,safe.position.y+brand_y+128)
-	_btns[0].size = Vector2(280, 64)
-	_btns[0].position = Vector2(safe.get_center().x - 140, safe.end.y - 252)
+	# 菜单上提并放大：画面中段不再是一大片空街面，主按钮落在视线自然停留处。
+	_btns[0].size = Vector2(304, 72)
+	_btns[0].position = Vector2(safe.get_center().x - 152, safe.end.y - 304)
+	# 次级按钮宽 112：两端铆钉角块（各 16px）不被挤压。
 	for i in range(1, 4):
-		_btns[i].size = Vector2(88, 44)
-		_btns[i].position = Vector2(safe.get_center().x - 148 + (i - 1) * 104, safe.end.y - 164)
-	for i in _separators.size():
-		_separators[i].position = Vector2(safe.get_center().x-54+i*104,safe.end.y-144)
+		_btns[i].size = Vector2(112, 48)
+		_btns[i].position = Vector2(safe.get_center().x - 176 + (i - 1) * 120, safe.end.y - 212)
 	for i in _btns.size():
 		_btns[i].focus_neighbor_top = _btns[0].get_path() if i > 0 else _btns[1].get_path()
 		_btns[i].focus_neighbor_bottom = _btns[1].get_path() if i == 0 else _btns[0].get_path()
@@ -216,9 +221,11 @@ class _AmbientMotes extends Control:
 				p.pos.x = randf_range(20.0, 460.0)
 		queue_redraw()
 	func _draw() -> void:
+		# 火星按 2px 像素方块绘制，与画面像素颗粒一致（不用平滑圆点）。
 		for p in _particles:
 			var alpha: float = p.a * (0.6 + 0.4 * sin(p.phase))
-			draw_circle(p.pos, p.r, Color(0.96, 0.85, 0.58, alpha))
-			# Subtle golden halo
-			draw_circle(p.pos, p.r * 2.2, Color(0.96, 0.82, 0.48, alpha * 0.28))
+			var at: Vector2 = (p.pos / 2.0).floor() * 2.0
+			var big: bool = p.r > 1.9
+			draw_rect(Rect2(at, Vector2(4, 4) if big else Vector2(2, 2)), Color(0.98, 0.86, 0.56, alpha))
+			if big: draw_rect(Rect2(at + Vector2(1, 1), Vector2(2, 2)), Color(1, .97, .86, alpha))
 

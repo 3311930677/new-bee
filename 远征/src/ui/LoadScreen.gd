@@ -63,6 +63,7 @@ var _hint_l: Label
 var _brand: Control
 var _brand_mark: TextureRect
 var _gauge: Control
+var _plate: Panel
 
 ## 测试接口：置 false 时预热带跑完也不切场景（tools/VerifyPerf.gd 直接驱动本页量耗时）
 var auto_advance := true
@@ -103,8 +104,9 @@ func _build() -> void:
 	bottom.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	bottom.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var gradient := Gradient.new()
-	gradient.colors = PackedColorArray([Color(0,0,0,0),Color(.025,.018,.012,.76)])
-	gradient.offsets = PackedFloat32Array([.80,1.0])
+	# 暗化带从 66% 起：进度文字和百分比落在人物靴子与亮色背景上时仍清楚可读。
+	gradient.colors = PackedColorArray([Color(0,0,0,0),Color(.025,.018,.012,.55),Color(.025,.018,.012,.86)])
+	gradient.offsets = PackedFloat32Array([.66,.80,1.0])
 	var fade := GradientTexture2D.new()
 	fade.gradient = gradient
 	fade.fill_from = Vector2.ZERO
@@ -139,6 +141,18 @@ func _build() -> void:
 	var halo:=GradientTexture2D.new();halo.gradient=gradient2;halo.width=320;halo.height=160;halo.fill=GradientTexture2D.FILL_RADIAL;halo.fill_from=Vector2(.5,.5);halo.fill_to=Vector2(1,.5)
 	shadow.texture=halo;shadow.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;shadow.size=Vector2(320,160);shadow.position=Vector2(40,-28);shadow.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	_brand.add_child(shadow);_brand.move_child(shadow,0)
+
+	# 进度区底板：背景人物与亮色建筑会吃掉文字，单独给进度与提示一块半透明暗板。
+	_plate = Panel.new()
+	_plate.name = "LoadingPlate"
+	_plate.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var plate_style := StyleBoxFlat.new()
+	plate_style.bg_color = Color(.035,.026,.02,.78)
+	plate_style.border_color = Color("8a6a3a",.55)
+	plate_style.border_width_top = 1
+	plate_style.border_width_bottom = 1
+	_plate.add_theme_stylebox_override("panel",plate_style)
+	add_child(_plate)
 
 	_gauge = preload("res://src/ui/LoadingChestGauge.gd").new()
 	_gauge.name = "LoadingGauge"
@@ -193,6 +207,9 @@ func _layout(safe_override:=Rect2()) -> void:
 	_hint_l.position=Vector2(safe.position.x+24,safe.end.y-64)
 	_hint_l.size=Vector2(safe.size.x-48,44)
 	_hint_l.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+	if _plate!=null:
+		_plate.position=Vector2(0,safe.end.y-156)
+		_plate.size=Vector2(get_viewport_rect().size.x,get_viewport_rect().size.y-_plate.position.y)
 
 func _set_bar_ratio(ratio: float) -> void:
 	var r := clampf(ratio,0.0,1.0)
