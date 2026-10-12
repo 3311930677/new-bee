@@ -328,12 +328,18 @@ func _exit_tree()->void:
 ## 地表光色（P01 样板 §7）：主题 tint 乘以本图 tint，让边城／古道／断碑坡／碑窟一眼可分。
 ## 边城（整图底图）与碑窟（墓砖）保留各自原色，只给两张野外 forest 图叠地区色。
 func _ground_tint() -> Color:
+	if _painted_ground(): return Color.WHITE  # 手绘地面已是终稿配色，不再叠主题色
 	var t := Color(String(_theme_cfg.get("tint", "ffffff")))
 	if _mode == "main_world":
 		t *= Color(String(_main_cfg.get("tint", "ffffff")))
 		if _main_map_id == "broken_slope" and bool((G.prog.get("flags", {}) as Dictionary).get("act1_stele_repaired", false)):
 			t *= Color("fff0d8")
 	return t
+
+
+## 手绘整图地面（painted_ground）：地面即终稿，跳过程序叠加层、随机散件与重复道具层。
+func _painted_ground() -> bool:
+	return _mode == "main_world" and bool(_main_cfg.get("painted_ground", false))
 
 
 func _uses_flat_ground() -> bool:
@@ -611,7 +617,7 @@ func _build_world() -> void:
 		_add_ground_overlay(preload("res://src/explore/SteleRoomGround.gd").new())
 	elif _mode == "main_world" and _main_map_id == "old_salt_road":
 		_add_ground_overlay(SaltRoadGround.new())
-	elif _mode == "main_world" and _main_map_id == "tideflat":
+	elif _mode == "main_world" and _main_map_id == "tideflat" and not _painted_ground():
 		_add_ground_overlay(TideflatGround.new())
 	elif _mode == "main_world" and _main_map_id == "shenyuan_port" and _uses_flat_ground():
 		_add_ground_overlay(PortGround.new())
@@ -654,6 +660,7 @@ func _build_world() -> void:
 	if _mode == "main_world":
 		_build_world_exits()
 		_build_world_blockers()
+		_build_painted_props()
 		_build_stele_room_gates()
 		_build_tidal_water_bounds()
 		_build_tidal_room_gates()
@@ -773,6 +780,54 @@ func _build_world_blockers() -> void:
 		collider.shape = shape
 		body.add_child(collider)
 		_world.add_child(body)
+
+
+## 手绘地面配套物件：[贴图名, x, y, (脚底碰撞 [宽, 高])]，原点在贴图底边中点，参与 Y 排序遮挡。
+func _build_painted_props() -> void:
+	if not _painted_ground(): return
+	var mask_path := String(_main_cfg.get("painted_water_mask", ""))
+	if not mask_path.is_empty():
+		var mask: Texture2D = G.visual_texture(mask_path)
+		if mask != null:
+			var glint := Sprite2D.new()
+			glint.name = "WaterGlint"
+			glint.texture = mask
+			glint.centered = false
+			glint.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+			glint.z_index = -19  # 地面之上、物件与角色之下
+			var mat := ShaderMaterial.new()
+			mat.shader = preload("res://src/explore/WaterGlint.gdshader")
+			mat.set_shader_parameter("extent", Vector2(mask.get_width(), mask.get_height()))
+			glint.material = mat
+			add_child(glint)
+	var dir := String(_main_cfg.get("painted_props_dir", ""))
+	for row_v in (_main_cfg.get("painted_props", []) as Array):
+		if not (row_v is Array) or (row_v as Array).size() < 3: continue
+		var row: Array = row_v
+		var tex: Texture2D = G.visual_texture("%s/%s.png" % [dir, String(row[0])])
+		if tex == null:
+			push_error("手绘物件缺失：%s/%s" % [dir, String(row[0])])
+			continue
+		var holder := Node2D.new()
+		holder.name = "Prop_" + String(row[0])
+		holder.position = Vector2(float(row[1]), float(row[2]))
+		var sprite := Sprite2D.new()
+		sprite.texture = tex
+		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		sprite.offset = Vector2(0, -tex.get_height() * 0.5)
+		holder.add_child(sprite)
+		if row.size() > 3 and row[3] is Array and (row[3] as Array).size() == 2:
+			var body := StaticBody2D.new()
+			body.collision_layer = 2
+			body.collision_mask = 0
+			var shape := RectangleShape2D.new()
+			shape.size = Vector2(float(row[3][0]), float(row[3][1]))
+			var collider := CollisionShape2D.new()
+			collider.shape = shape
+			collider.position = Vector2(0, -float(row[3][1]) * 0.5)
+			body.add_child(collider)
+			holder.add_child(body)
+		_world.add_child(holder)
 
 
 func _stele_rooms_enabled() -> bool:
@@ -958,7 +1013,7 @@ func _build_world_exits() -> void:
 			if repaired:
 				marker.caption = "%s · %s" % [G.restored_stele_name(), marker.caption]
 		var required := String(row.get("requires_story", ""))
-		if not required.is_empty() and not G.story_step_done(required):
+		if not required.is_empty() and not G.story_step_done(required) and not G.world_gate_open():
 			marker.caption += " · 封"
 		_world.add_child(marker)
 
@@ -3101,6 +3156,32 @@ func _hud_target_info() -> Dictionary:
 				if entity.eid == target and not entity.used: return {"pos":entity.position,"kind":"quest","name":entity.caption}
 	return _nav_info()
 
+
+## 主线目标不在本图时，沿世界出口图（广度优先）找出下一步该走的出口，给 HUD 与罗盘一个可走的方向。
+func _story_route_info() -> Dictionary:
+	if _mode != "main_world": return {}
+	var goal_map := String(G.story_current().get("map", ""))
+	if goal_map.is_empty() or goal_map == _main_map_id: return {}
+	var maps: Dictionary = TableCache.main_world_config().get("maps", {})
+	var first_hop := {}
+	var queue: Array = [_main_map_id]
+	var seen := {_main_map_id: true}
+	while not queue.is_empty():
+		var at := String(queue.pop_front())
+		for row_v in ((maps.get(at, {}) as Dictionary).get("exits", []) as Array):
+			if not (row_v is Dictionary): continue
+			var to := String((row_v as Dictionary).get("to", ""))
+			if to.is_empty() or seen.has(to): continue
+			var required := String((row_v as Dictionary).get("requires_story", ""))
+			if not required.is_empty() and not G.story_step_done(required) and not G.world_gate_open(): continue
+			seen[to] = true
+			first_hop[to] = row_v if at == _main_map_id else first_hop[at]
+			if to == goal_map:
+				var name := String(TableCache.main_world_map(goal_map).get("name", goal_map))
+				return {"pos": _world_exit_sign_position(first_hop[to]), "kind": "quest", "name": "前往" + name}
+			queue.append(to)
+	return {}
+
 func _nav_info() -> Dictionary:
 	var special_id := SpecialEvents.tracked(G) if _mode=="main_world" else ""
 	if not special_id.is_empty():
@@ -3142,6 +3223,8 @@ func _nav_info() -> Dictionary:
 			for entity in _quest_entities:
 				if is_instance_valid(entity) and not entity.used and entity.eid == objective:
 					return {"name": entity.caption, "pos": entity.position, "kind": "puzzle"}
+	var story_route := _story_route_info()
+	if not story_route.is_empty(): return story_route
 	if _interactable != null and not _interactable.used:
 		var kind := String(_interactable.kind)
 		var n: String = {"chest": "宝箱", "event": "奇遇", "shop": "商队",
@@ -3406,13 +3489,13 @@ func _check_world_exits() -> void:
 		if not touching:
 			continue
 		var required := String(row.get("requires_story", ""))
-		if not required.is_empty() and not G.story_step_done(required):
+		if not required.is_empty() and not G.story_step_done(required) and not G.world_gate_open():
 			_world_exit_cd = 2.0
 			_toast(String(row.get("locked_hint", "前路尚未开放——先完成当前主线")))
 			return
 		var blocked := false
 		for key in row.get("requires_flags", []):
-			if not bool(G.prog.get("flags", {}).get(String(key), false)): blocked = true
+			if not bool(G.prog.get("flags", {}).get(String(key), false)) and not G.world_gate_open(): blocked = true
 		if blocked:
 			_world_exit_cd = 2.0
 			_toast(String(row.get("locked_hint", "先点亮本房的归路锚点")))
@@ -5521,7 +5604,7 @@ class _Minimap extends Control:
 				var ep: Vector2 = at.call(map_ref._world_exit_sign_position(row))
 				var col := Color("9fe06a")
 				var req := String(row.get("requires_story", ""))
-				if not req.is_empty() and not G.story_step_done(req):
+				if not req.is_empty() and not G.story_step_done(req) and not G.world_gate_open():
 					if not big: continue
 					col = Color("8f8f8a")
 				var marker_scale := 1.0 if big else 0.75

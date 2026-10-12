@@ -15,6 +15,18 @@ func terrain_thumbnail(map: Node) -> Texture2D:
 		return map.get_meta("terrain_thumbnail") as Texture2D
 
 	var dimensions := Vector2i((extent / maxf(extent.x, extent.y) * 256).round())
+	# 手绘整图地面：小地图直接缩略地面本身，跟随美术，不再叠程序路线。
+	if bool(cfg.get("painted_ground", false)):
+		var ground: Texture2D = G.visual_texture(String(cfg.get("background", "")))
+		if ground != null:
+			var thumb := ground.get_image()
+			thumb.convert(Image.FORMAT_RGBA8)
+			thumb.resize(dimensions.x, dimensions.y, Image.INTERPOLATE_LANCZOS)
+			thumb.adjust_bcs(0.82, 1.18, 0.9)  # 压暗提对比，让标记点更醒目
+			var painted := ImageTexture.create_from_image(thumb)
+			map.set_meta("terrain_signature", signature)
+			map.set_meta("terrain_thumbnail", painted)
+			return painted
 	var image := Image.create(dimensions.x, dimensions.y, false, Image.FORMAT_RGBA8)
 
 	var theme: String = String(cfg.get("theme", "forest"))

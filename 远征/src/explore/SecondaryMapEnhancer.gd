@@ -26,6 +26,14 @@ static func setup(map: Node) -> void:
 	var rows: int = int(map.get("_map_cfg").get("map_rows", 26))
 	var map_size := Vector2(cols * 48.0, rows * 48.0)
 
+	# 手绘整图地面已含地貌与道具，只保留氛围粒子，避免重复叠加。
+	if bool((map.get("_main_cfg") as Dictionary).get("painted_ground", false)):
+		var ambient := AmbientAtmosphereLayer.new(map_id, map_size)
+		ambient.name = "AmbientAtmosphereLayer"
+		ambient.z_index = 9
+		world.add_child(ambient)
+		return
+
 	# 1. 地表纵深与微地貌过渡层 (z_index = -11, 位于地砖之上、实体之下)
 	var floor_depth := FloorDepthLayer.new(map, map_id, map_size)
 	floor_depth.name = "SecondaryFloorDepth"
@@ -532,13 +540,15 @@ class PropGlow extends Node2D:
 		z_index = -2 # 渲染在阴影和实体下方，直接照亮地表
 
 	func _draw() -> void:
-		var glow_col := Color("ff9d3b", 0.08) # 温暖琥珀黄
+		# 只在灯脚地面留一小片压扁的暖光：旧版 4 层叠圆会在像素地面上叠出明显同心环。
+		var glow_col := Color("ffb36b", 0.10)
 		if prop_id == "cavern_crystal":
-			glow_col = Color("9d65ff", 0.09) # 溶洞紫晶光
+			glow_col = Color("b48cff", 0.10)
 		elif prop_id == "shrine":
-			glow_col = Color("ffe070", 0.07) # 神圣金辉
-		for r in [56.0, 42.0, 28.0, 14.0]:
-			draw_circle(Vector2(0, -12), r, glow_col)
+			glow_col = Color("ffe3a0", 0.09)
+		draw_set_transform(Vector2(0, -2), 0.0, Vector2(1.0, 0.45))
+		draw_circle(Vector2.ZERO, 24.0, glow_col)
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 
 # ==============================================================================
