@@ -5279,6 +5279,7 @@ func gm_grant_all() -> void:
 	prog["level"] = level_cap()
 	prog["exp"] = 0
 	prog["worlds_unlocked"] = maxi(1, world_count())
+	gm_world_open = true
 	var pets: Array = []
 	for p in TableCache.pets():
 		var pid := String((p as Dictionary).get("id", ""))
@@ -5312,7 +5313,15 @@ func gm_max_level() -> void:
 ## 「解锁全部世界」= 全部可出征，但不等于「已通关」：world_cleared 保持原样，等玩家自己打掉首领
 func gm_unlock_all_worlds() -> void:
 	prog["worlds_unlocked"] = maxi(1, world_count())
+	gm_world_open = true
 	save_game()
+
+
+## 调试放行：本次运行内主世界出口与驿路不再校验剧情/旗标/到访门槛。不落盘，不改剧情进度。
+var gm_world_open := false
+
+func world_gate_open() -> bool:
+	return gm_unlocked and gm_world_open
 
 
 ## 调试用：把所有世界直接标记为已通关（与「解锁」分开，便于单独验证通关态 UI）
