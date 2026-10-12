@@ -190,6 +190,23 @@ class Switch extends Button:
 		value.text=words_on if on else words_off
 		value.position=Vector2(size.x-140,0)
 		value.size=Vector2(68,size.y)
-		var p:=Vector2(size.x-64,(size.y-24)*.5)
-		draw_rect(Rect2(p,Vector2(52,24)),UI.BRONZE if on else UI.NIGHT)
-		draw_rect(Rect2(p+Vector2(29 if on else 3,3),Vector2(20,18)),UI.GOLD if on else UI.ASH)
+		# 轨道 + 滑块：开时滑块在右、轨道亮铜；关时滑块在左、轨道暗槽，一眼可辨是开关。
+		var p:=Vector2(size.x-66,(size.y-26)*.5)
+		var track:=Rect2(p,Vector2(54,26))
+		draw_rect(track,UI.BRONZE if on else UI.NIGHT)
+		draw_rect(track,UI.GOLD if on else UI.ASH,false,1.0)
+		var knob:=Rect2(p+Vector2(30 if on else 4,4),Vector2(20,18))
+		draw_rect(knob,UI.GOLD if on else UI.ASH)
+		draw_rect(Rect2(knob.position,Vector2(knob.size.x,2)),Color(1,1,1,.35))
+		draw_rect(Rect2(knob.position+Vector2(0,knob.size.y-2),Vector2(knob.size.x,2)),Color(0,0,0,.25))
+
+## 行卡片：和 Switch 同一种底色与描边，让滑条行、倍速行与开关行视觉一致。
+class Card extends MarginContainer:
+	const UI=preload("res://src/ui/TravelChestUI.gd")
+	func _init() -> void:
+		size_flags_horizontal=Control.SIZE_EXPAND_FILL
+		for side in ["margin_left","margin_right"]:add_theme_constant_override(side,12)
+	func _ready() -> void:
+		resized.connect(queue_redraw)
+	func _draw() -> void:
+		UI.surface(self,Rect2(Vector2.ZERO,size),UI.FACE,Color("3a3037"))

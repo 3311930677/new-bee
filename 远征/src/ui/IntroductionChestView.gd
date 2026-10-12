@@ -68,7 +68,7 @@ func refresh() -> void:
 	layout()
 func layout(safe_override:Rect2=Rect2()) -> void:
 	var safe:=safe_override if safe_override.has_area() else G.ui_safe_rect(self)
-	var text_height:=maxf(180,shell.body.get_combined_minimum_size().y)
+	var text_height:=maxf(120,shell.body.get_combined_minimum_size().y)
 	var art_height:=maxf(240,safe.size.y-112-text_height-116)
 	shell.tray_height=safe.size.y-112-art_height
 	shell.layout(safe_override)
@@ -77,7 +77,8 @@ func layout(safe_override:Rect2=Rect2()) -> void:
 		Page.place(_art,Vector2((shell.stage.size.x-380)*.5,0) if host._deck.current==2 else Vector2.ZERO,Vector2(380,240) if host._deck.current==2 else shell.stage.size)
 func _fit_reading() -> void:
 	if not is_instance_valid(shell):return
-	var desired:=maxf(180,shell.body.get_combined_minimum_size().y)+116
+	# 阅读区按正文实际高度收紧，多出的高度给插画，避免文字下方留一大片空白。
+	var desired:=maxf(120,shell.body.get_combined_minimum_size().y)+116
 	if absf(shell.tray_height-desired)>1 and shell.safe.has_area():
 		shell.tray_height=desired;shell.layout(shell.safe)
 		if is_instance_valid(_art):Page.place(_art,Vector2((shell.stage.size.x-380)*.5,0) if host._deck.current==2 else Vector2.ZERO,Vector2(380,240) if host._deck.current==2 else shell.stage.size)

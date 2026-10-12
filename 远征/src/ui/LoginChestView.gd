@@ -72,12 +72,18 @@ func _ready() -> void:
 	host._password.text_submitted.connect(func(_words:String):host._do_login(false))
 	host._avatar_card_btn=Flow.button("",func():host._select_avatar("custom"))
 	host._avatar_card_btn.custom_minimum_size.y=64
+	# 画像卡改成纸面浅底 + 墨色描边，和羊皮纸表单同一材质，不再是一条深色横条。
+	host._avatar_card_btn.skin="quiet"
+	var card_btn:Button=host._avatar_card_btn
+	card_btn.draw.connect(func():
+		card_btn.draw_rect(Rect2(Vector2.ZERO,card_btn.size),Color("e6d6b2") if not card_btn.is_hovered() else Color("eedfbd"))
+		card_btn.draw_rect(Rect2(Vector2.ZERO,card_btn.size),Color("8a6a3a"),false,1.0))
 	form.add_child(host._avatar_card_btn)
 	_avatar=Page.picture(G.avatar_texture(),Vector2(48,48))
 	_avatar.position=Vector2(8,8)
 	host._avatar_card_btn.add_child(_avatar)
 	host._avatar_medallion=_avatar
-	var words:=UI.label("自选旅人画像 · 导入图片","caption",UI.PAPER)
+	var words:=UI.label("自选旅人画像 · 导入图片","caption",Color("4a3622"))
 	words.position=Vector2(68,0)
 	words.size=Vector2(180,64)
 	words.add_theme_font_size_override("font_size",12)
@@ -117,7 +123,9 @@ func layout(safe_override:Rect2=Rect2(),keyboard_override:float=-1) -> void:
 	host._subtitle.visible=true
 	_guest.visible=true
 	_note.visible=true
-	_form.add_theme_constant_override("separation",4)
+	# 羊皮纸画在背景图里，高屏时纸面变大；按屏高拉开行距，让表单铺满纸面而不是挤在上半截。
+	var spread:=clampf((safe.size.y-800)*.04,0,10)
+	_form.add_theme_constant_override("separation",4+roundi(spread))
 	_gap.custom_minimum_size.y=0
 	var paper_height:=clampf(360.0+(safe.size.y-800)*.25,320,450)+(24 if _error.visible else 0)
 	host._paper.custom_minimum_size.y=paper_height

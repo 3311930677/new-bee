@@ -233,9 +233,10 @@ func layout(safe_override: Rect2 = Rect2()) -> void:
 	_hero.position = Vector2(origin.x+40,_safe.end.y-204)
 	_hero.size = Vector2(_safe.size.x-80,72)
 	var feet := _hero.position.y-56
-	host._anim.position = Vector2(_safe.get_center().x,feet-118)
-	_shadow.position = Vector2(_safe.get_center().x,feet)
-	_pool.position = Vector2(_safe.get_center().x-100,feet-32)
+	# 人物整体上提 10px，脚底与名牌之间留出空隙，名牌不再压住靴子。
+	host._anim.position = Vector2(_safe.get_center().x,feet-128)
+	_shadow.position = Vector2(_safe.get_center().x,feet-10)
+	_pool.position = Vector2(_safe.get_center().x-100,feet-42)
 	_pool.size = Vector2(200,48)
 	if _hero_plate != null:
 		_hero_plate.position = Vector2(_safe.get_center().x-80,feet+2)

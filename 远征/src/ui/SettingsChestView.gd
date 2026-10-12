@@ -43,11 +43,13 @@ func _select(index:int) -> void:
 	Flow.wire_focus(self)
 func _section(parent:Control,words:String) -> void:parent.add_child(Flow.text(words,"section",UI.AGED))
 func _volume(parent:Control,words:String,value:float,callback:Callable) -> void:
+	var card:=Flow.Card.new()
+	parent.add_child(card)
 	var row:=HBoxContainer.new()
 	row.custom_minimum_size.y=52
-	parent.add_child(row)
+	card.add_child(row)
 	var title:=UI.label(words,"body")
-	title.custom_minimum_size.x=88
+	title.custom_minimum_size.x=76
 	row.add_child(title)
 	var slider:=HSlider.new()
 	slider.min_value=0
@@ -80,24 +82,28 @@ func _common(parent:Control) -> void:
 	host._story_btn=Flow.Switch.new("剧情演出",not bool(G.setting_get("skip_story",false)),"播放","省略")
 	host._story_btn.pressed.connect(func():G.setting_set("skip_story",not bool(G.setting_get("skip_story",false)));sync())
 	parent.add_child(host._story_btn)
+	var card:=Flow.Card.new()
+	parent.add_child(card)
 	var row:=HBoxContainer.new()
 	row.custom_minimum_size.y=52
-	parent.add_child(row)
+	card.add_child(row)
 	var title:=UI.label("战斗倍速","body")
 	title.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	row.add_child(title)
 	var prev:=Flow.button("‹",func():G.setting_set("battle_speed",1.0);sync())
 	_speed_prev=prev
-	prev.custom_minimum_size.x=44
+	prev.custom_minimum_size=Vector2(40,36)
 	prev.size_flags_horizontal=Control.SIZE_SHRINK_END
+	prev.size_flags_vertical=Control.SIZE_SHRINK_CENTER
 	row.add_child(prev)
 	_speed_value=UI.label("","number")
 	_speed_value.custom_minimum_size.x=52
 	_speed_value.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	row.add_child(_speed_value)
 	host._speed_btn=Flow.button("›",func():G.setting_set("battle_speed",2.0);sync())
-	host._speed_btn.custom_minimum_size.x=44
+	host._speed_btn.custom_minimum_size=Vector2(40,36)
 	host._speed_btn.size_flags_horizontal=Control.SIZE_SHRINK_END
+	host._speed_btn.size_flags_vertical=Control.SIZE_SHRINK_CENTER
 	row.add_child(host._speed_btn)
 	parent.add_child(Flow.text("战斗中也可随时切换倍速","caption",UI.AGED))
 	sync()
