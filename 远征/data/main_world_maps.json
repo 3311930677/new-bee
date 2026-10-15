@@ -2172,13 +2172,327 @@
       "city": false,
       "theme": "forest",
       "tint": "cfc7ba",
-      "decos": [
-        "029_deco_forest_deadtree",
-        "030_deco_forest_rocks",
-        "033_deco_forest_ruin",
-        "034_deco_forest_bones"
+      "decos": [],
+      "background": "res://image/main_world/broken_slope_ground_v5.png",
+      "painted_ground": true,
+      "painted_water_mask": "res://image/main_world/broken_slope_water_mask.png",
+      "painted_props_dir": "res://image/main_world/broken_slope_props",
+      "painted_props": [
+        [
+          "gate_cavern",
+          480,
+          170
+        ],
+        [
+          "stele_giant",
+          850,
+          640,
+          [
+            84,
+            24
+          ]
+        ],
+        [
+          "stele_fallen_a",
+          190,
+          560,
+          [
+            78,
+            16
+          ]
+        ],
+        [
+          "stele_fallen_b",
+          690,
+          300,
+          [
+            72,
+            16
+          ]
+        ],
+        [
+          "stele_mid_a",
+          290,
+          260,
+          [
+            34,
+            14
+          ]
+        ],
+        [
+          "stele_mid_b",
+          388,
+          440,
+          [
+            30,
+            12
+          ]
+        ],
+        [
+          "stele_small_a",
+          610,
+          380,
+          [
+            18,
+            10
+          ]
+        ],
+        [
+          "stele_small_b",
+          350,
+          680,
+          [
+            18,
+            10
+          ]
+        ],
+        [
+          "cairn",
+          560,
+          235
+        ],
+        [
+          "tree_big_a",
+          30,
+          250,
+          [
+            24,
+            16
+          ]
+        ],
+        [
+          "tree_big_b",
+          935,
+          250,
+          [
+            24,
+            16
+          ]
+        ],
+        [
+          "tree_big_c",
+          30,
+          560,
+          [
+            24,
+            16
+          ]
+        ],
+        [
+          "tree_big_d",
+          950,
+          880,
+          [
+            24,
+            16
+          ]
+        ],
+        [
+          "tree_dead_a",
+          90,
+          800,
+          [
+            22,
+            14
+          ]
+        ],
+        [
+          "tree_dead_b",
+          720,
+          600,
+          [
+            22,
+            14
+          ]
+        ],
+        [
+          "tree_maple",
+          90,
+          1205,
+          [
+            24,
+            16
+          ]
+        ],
+        [
+          "tree_mid_a",
+          235,
+          1185,
+          [
+            22,
+            14
+          ]
+        ],
+        [
+          "tree_big_a",
+          935,
+          1190,
+          [
+            24,
+            16
+          ]
+        ],
+        [
+          "camp_tent",
+          700,
+          1190,
+          [
+            90,
+            20
+          ]
+        ],
+        [
+          "camp_banner",
+          775,
+          1185,
+          [
+            12,
+            8
+          ]
+        ],
+        [
+          "campfire_0",
+          615,
+          1140
+        ],
+        [
+          "camp_barrel_a",
+          630,
+          1200
+        ],
+        [
+          "camp_bench",
+          590,
+          1215
+        ],
+        [
+          "shrub_a",
+          60,
+          420
+        ],
+        [
+          "shrub_b",
+          905,
+          470
+        ],
+        [
+          "shrub_c",
+          330,
+          1085
+        ],
+        [
+          "shrub_rust",
+          610,
+          1075
+        ],
+        [
+          "bramble",
+          45,
+          1065
+        ],
+        [
+          "fern_a",
+          760,
+          340
+        ],
+        [
+          "fern_b",
+          150,
+          300
+        ],
+        [
+          "fern_c",
+          880,
+          800
+        ],
+        [
+          "boulder_a",
+          820,
+          205,
+          [
+            70,
+            20
+          ]
+        ],
+        [
+          "boulder_c",
+          330,
+          1235,
+          [
+            80,
+            20
+          ]
+        ],
+        [
+          "rock_m_0",
+          255,
+          640,
+          [
+            30,
+            12
+          ]
+        ],
+        [
+          "rock_m_2",
+          640,
+          520
+        ],
+        [
+          "rock_m_4",
+          140,
+          1000
+        ]
       ],
-      "background": "res://image/main_world/broken_slope_ground_v4.png",
+      "block_rects": [
+        [
+          0,
+          0,
+          410,
+          150
+        ],
+        [
+          550,
+          0,
+          410,
+          150
+        ],
+        [
+          320,
+          110,
+          100,
+          60
+        ],
+        [
+          540,
+          110,
+          100,
+          60
+        ],
+        [
+          0,
+          975,
+          205,
+          40
+        ],
+        [
+          285,
+          975,
+          145,
+          40
+        ],
+        [
+          530,
+          975,
+          140,
+          40
+        ],
+        [
+          750,
+          975,
+          210,
+          40
+        ]
+      ],
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 2,
@@ -2588,13 +2902,9 @@
       "name": "旧盐道",
       "city": false,
       "theme": "desert",
-      "tint": "e5d4b6",
-      "decos": [
-        "030_deco_forest_rocks",
-        "029_deco_forest_deadtree",
-        "033_deco_forest_ruin"
-      ],
-      "background": "res://image/main_world/old_salt_road_ground_v4.png",
+      "tint": "ffffff",
+      "decos": [],
+      "background": "res://assets/world/maps_rebuild_20261015/old_salt_road_floor.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -2948,18 +3258,119 @@
         "cdbf9b",
         "sand"
       ],
-      "deco_density": 0.095,
+      "deco_density": 0,
       "deco_tint": "ffffff",
       "flat_material": "salt",
-      "surface_tint": "ffffff"
+      "surface_tint": "ffffff",
+      "painted_ground": true,
+      "ground_art_version": 20261015,
+      "minimap_show_roads": false,
+      "illustrated_scenery": [
+        {
+          "id": "044_deco_desert_cactus_0",
+          "texture": "res://image/map_proc/044_deco_desert_cactus.png",
+          "at": [
+            130,
+            310
+          ],
+          "size": [
+            84,
+            84
+          ],
+          "footprint": [
+            42,
+            22
+          ]
+        },
+        {
+          "id": "045_deco_desert_sandstone_1",
+          "texture": "res://image/map_proc/045_deco_desert_sandstone.png",
+          "at": [
+            825,
+            345
+          ],
+          "size": [
+            84,
+            84
+          ],
+          "footprint": [
+            42,
+            22
+          ]
+        },
+        {
+          "id": "045_deco_desert_sandstone_2",
+          "texture": "res://image/map_proc/045_deco_desert_sandstone.png",
+          "at": [
+            75,
+            570
+          ],
+          "size": [
+            84,
+            84
+          ],
+          "footprint": [
+            42,
+            22
+          ]
+        },
+        {
+          "id": "044_deco_desert_cactus_3",
+          "texture": "res://image/map_proc/044_deco_desert_cactus.png",
+          "at": [
+            880,
+            880
+          ],
+          "size": [
+            84,
+            84
+          ],
+          "footprint": [
+            42,
+            22
+          ]
+        },
+        {
+          "id": "045_deco_desert_sandstone_4",
+          "texture": "res://image/map_proc/045_deco_desert_sandstone.png",
+          "at": [
+            170,
+            1015
+          ],
+          "size": [
+            84,
+            84
+          ],
+          "footprint": [
+            42,
+            22
+          ]
+        },
+        {
+          "id": "045_deco_desert_sandstone_5",
+          "texture": "res://image/map_proc/045_deco_desert_sandstone.png",
+          "at": [
+            790,
+            1085
+          ],
+          "size": [
+            84,
+            84
+          ],
+          "footprint": [
+            42,
+            22
+          ]
+        }
+      ]
     },
     "shenyuan_port": {
       "name": "沉渊港",
       "city": true,
       "city_config": "res://data/shenyuan_port.json",
       "theme": "desert",
-      "tint": "d9e6e3",
-      "background": "res://image/main_world/shenyuan_port_ground_v4.png",
+      "tint": "ffffff",
+      "background": "res://assets/world/maps_rebuild_20261015/shenyuan_port_floor.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -3313,19 +3724,521 @@
       ],
       "deco_tint": "ffffff",
       "flat_material": "wet",
-      "surface_tint": "ffffff"
+      "surface_tint": "ffffff",
+      "painted_ground": true,
+      "ground_art_version": 20261015,
+      "decos": [],
+      "deco_density": 0,
+      "minimap_show_roads": false,
+      "illustrated_scenery": [],
+      "illustrated_walkable_rects": [
+        [
+          330,
+          0,
+          300,
+          1248
+        ],
+        [
+          0,
+          610,
+          396,
+          94
+        ],
+        [
+          562,
+          652,
+          398,
+          94
+        ],
+        [
+          250,
+          154,
+          146,
+          180
+        ],
+        [
+          562,
+          292,
+          148,
+          182
+        ],
+        [
+          296,
+          334,
+          266,
+          74
+        ],
+        [
+          250,
+          824,
+          146,
+          214
+        ],
+        [
+          562,
+          858,
+          148,
+          220
+        ],
+        [
+          396,
+          864,
+          166,
+          80
+        ]
+      ],
+      "block_rects": [
+        [
+          0,
+          0,
+          330,
+          154
+        ],
+        [
+          630,
+          0,
+          330,
+          154
+        ],
+        [
+          0,
+          154,
+          250,
+          138
+        ],
+        [
+          630,
+          154,
+          330,
+          138
+        ],
+        [
+          0,
+          292,
+          250,
+          42
+        ],
+        [
+          710,
+          292,
+          250,
+          42
+        ],
+        [
+          0,
+          334,
+          296,
+          74
+        ],
+        [
+          710,
+          334,
+          250,
+          74
+        ],
+        [
+          0,
+          408,
+          330,
+          66
+        ],
+        [
+          710,
+          408,
+          250,
+          66
+        ],
+        [
+          0,
+          474,
+          330,
+          136
+        ],
+        [
+          630,
+          474,
+          330,
+          136
+        ],
+        [
+          630,
+          610,
+          330,
+          42
+        ],
+        [
+          0,
+          704,
+          330,
+          42
+        ],
+        [
+          0,
+          746,
+          330,
+          78
+        ],
+        [
+          630,
+          746,
+          330,
+          78
+        ],
+        [
+          0,
+          824,
+          250,
+          34
+        ],
+        [
+          630,
+          824,
+          330,
+          34
+        ],
+        [
+          0,
+          858,
+          250,
+          6
+        ],
+        [
+          710,
+          858,
+          250,
+          6
+        ],
+        [
+          0,
+          864,
+          250,
+          80
+        ],
+        [
+          710,
+          864,
+          250,
+          80
+        ],
+        [
+          0,
+          944,
+          250,
+          94
+        ],
+        [
+          710,
+          944,
+          250,
+          94
+        ],
+        [
+          0,
+          1038,
+          330,
+          40
+        ],
+        [
+          710,
+          1038,
+          250,
+          40
+        ],
+        [
+          0,
+          1078,
+          330,
+          170
+        ],
+        [
+          630,
+          1078,
+          330,
+          170
+        ]
+      ]
     },
     "tideflat": {
       "name": "潮痕滩",
       "city": false,
       "theme": "desert",
-      "tint": "b9d7d3",
-      "decos": [
-        "030_deco_forest_rocks",
-        "031_deco_forest_shrub",
-        "034_deco_forest_bones"
+      "tint": "ffffff",
+      "decos": [],
+      "background": "res://assets/world/maps_rebuild_20261015/tideflat_floor.png",
+      "painted_ground": true,
+      "painted_props_dir": "res://image/main_world/tideflat_props",
+      "painted_props": [
+        [
+          "tf_boat",
+          742,
+          440,
+          [
+            120,
+            26
+          ]
+        ],
+        [
+          "tf_rowboat",
+          815,
+          900,
+          [
+            70,
+            16
+          ]
+        ],
+        [
+          "tf_drift_large_a",
+          150,
+          1185,
+          [
+            90,
+            20
+          ]
+        ],
+        [
+          "tf_drift_large_b",
+          690,
+          1235,
+          [
+            80,
+            18
+          ]
+        ],
+        [
+          "tf_drift_small_a",
+          300,
+          1180
+        ],
+        [
+          "tf_drift_small_b",
+          690,
+          730
+        ],
+        [
+          "tf_drift_small_c",
+          245,
+          1120
+        ],
+        [
+          "tf_gauge_a",
+          365,
+          470,
+          [
+            16,
+            10
+          ]
+        ],
+        [
+          "tf_gauge_b",
+          640,
+          1105,
+          [
+            16,
+            10
+          ]
+        ],
+        [
+          "tf_piles_a",
+          800,
+          1150,
+          [
+            30,
+            12
+          ]
+        ],
+        [
+          "tf_piles_b",
+          805,
+          760,
+          [
+            30,
+            12
+          ]
+        ],
+        [
+          "tf_piles_c",
+          795,
+          230,
+          [
+            30,
+            12
+          ]
+        ],
+        [
+          "tf_bollard_a",
+          835,
+          380,
+          [
+            24,
+            10
+          ]
+        ],
+        [
+          "tf_bollard_b",
+          835,
+          500,
+          [
+            24,
+            10
+          ]
+        ],
+        [
+          "tf_net_rack",
+          200,
+          560,
+          [
+            80,
+            14
+          ]
+        ],
+        [
+          "tf_cargo_crate",
+          140,
+          830,
+          [
+            36,
+            14
+          ]
+        ],
+        [
+          "tf_crab_pot_a",
+          110,
+          850
+        ],
+        [
+          "tf_barrel_a",
+          180,
+          835,
+          [
+            20,
+            10
+          ]
+        ],
+        [
+          "tf_crab_pot_b",
+          690,
+          560
+        ],
+        [
+          "tf_rock_l_a",
+          815,
+          1050,
+          [
+            70,
+            22
+          ]
+        ],
+        [
+          "tf_rock_l_b",
+          650,
+          225,
+          [
+            70,
+            20
+          ]
+        ],
+        [
+          "tf_rock_m_a",
+          125,
+          370,
+          [
+            32,
+            12
+          ]
+        ],
+        [
+          "tf_rock_m_b",
+          365,
+          1160,
+          [
+            30,
+            12
+          ]
+        ],
+        [
+          "tf_rock_m_c",
+          800,
+          610,
+          [
+            34,
+            12
+          ]
+        ],
+        [
+          "tf_rock_m_d",
+          225,
+          860,
+          [
+            30,
+            12
+          ]
+        ],
+        [
+          "tf_rock_s_a",
+          590,
+          330
+        ],
+        [
+          "tf_rock_s_b",
+          700,
+          920
+        ],
+        [
+          "tf_rock_s_c",
+          330,
+          410
+        ],
+        [
+          "tf_rock_s_d",
+          540,
+          1180
+        ],
+        [
+          "tf_grass_a",
+          40,
+          600
+        ],
+        [
+          "tf_grass_b",
+          35,
+          980
+        ],
+        [
+          "tf_samphire_a",
+          540,
+          1120
+        ],
+        [
+          "tf_samphire_b",
+          205,
+          410
+        ],
+        [
+          "tf_samphire_c",
+          690,
+          1010
+        ]
       ],
-      "background": "res://image/main_world/tideflat_ground_v4.png",
+      "block_rects": [
+        [
+          0,
+          0,
+          410,
+          140
+        ],
+        [
+          550,
+          0,
+          410,
+          140
+        ],
+        [
+          860,
+          0,
+          100,
+          1248
+        ]
+      ],
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -3864,17 +4777,20 @@
         "bdc09e",
         "sand"
       ],
-      "deco_density": 0.095,
+      "deco_density": 0,
       "deco_tint": "ffffff",
       "flat_material": "wet",
-      "surface_tint": "ffffff"
+      "surface_tint": "ffffff",
+      "ground_art_version": 20261015,
+      "minimap_show_roads": false,
+      "illustrated_scenery": []
     },
     "tidal_gate": {
       "name": "退潮水闸",
       "city": false,
       "theme": "tomb",
-      "tint": "9fc3c4",
-      "background": "res://image/main_world/tidal_gate_ground_v4.png",
+      "tint": "ffffff",
+      "background": "res://assets/world/maps_rebuild_20261015/tidal_gate_floor.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -3955,7 +4871,7 @@
           "art": "stele_anchor",
           "name": "上闸水线",
           "at": [
-            310,
+            365,
             690
           ],
           "requires_story": "s18",
@@ -3977,7 +4893,7 @@
           "art": "stele_anchor",
           "name": "栈桥侧闸",
           "at": [
-            650,
+            595,
             535
           ],
           "requires_story": "s18",
@@ -4014,7 +4930,7 @@
           "art": "salt_marks",
           "name": "断栈桥板",
           "at": [
-            310,
+            365,
             590
           ],
           "requires_story": "s18",
@@ -4180,14 +5096,41 @@
       "decos": [],
       "deco_tint": "ffffff",
       "flat_material": "wet",
-      "surface_tint": "ffffff"
+      "surface_tint": "ffffff",
+      "painted_ground": true,
+      "ground_art_version": 20261015,
+      "deco_density": 0,
+      "minimap_show_roads": false,
+      "illustrated_scenery": [],
+      "illustrated_walkable_rects": [
+        [
+          330,
+          0,
+          300,
+          1248
+        ]
+      ],
+      "block_rects": [
+        [
+          0,
+          0,
+          330,
+          1248
+        ],
+        [
+          630,
+          0,
+          330,
+          1248
+        ]
+      ]
     },
     "stele_cavern": {
       "name": "失声碑窟",
       "city": false,
       "theme": "tomb",
-      "tint": "cdbede",
-      "background": "res://image/main_world/stele_cavern_ground_v4.png",
+      "tint": "ffffff",
+      "background": "res://assets/world/maps_rebuild_20261015/stele_cavern_floor.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -4618,14 +5561,270 @@
       "decos": [],
       "deco_tint": "ffffff",
       "flat_material": "stone",
-      "surface_tint": "ccd6d8"
+      "surface_tint": "ffffff",
+      "painted_ground": true,
+      "ground_art_version": 20261015,
+      "deco_density": 0,
+      "minimap_show_roads": false,
+      "illustrated_scenery": [
+        {
+          "id": "stele_mid_a_0",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_a.png",
+          "at": [
+            180,
+            1050
+          ],
+          "size": [
+            45,
+            68
+          ],
+          "footprint": [
+            26,
+            18
+          ]
+        },
+        {
+          "id": "stele_mid_a_1",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_a.png",
+          "at": [
+            785,
+            1060
+          ],
+          "size": [
+            45,
+            68
+          ],
+          "footprint": [
+            26,
+            18
+          ]
+        },
+        {
+          "id": "stele_mid_a_2",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_a.png",
+          "at": [
+            300,
+            340
+          ],
+          "size": [
+            45,
+            68
+          ],
+          "footprint": [
+            26,
+            18
+          ]
+        },
+        {
+          "id": "stele_mid_a_3",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_a.png",
+          "at": [
+            665,
+            350
+          ],
+          "size": [
+            45,
+            68
+          ],
+          "footprint": [
+            26,
+            18
+          ]
+        }
+      ],
+      "illustrated_walkable_rects": [
+        [
+          270,
+          100,
+          425,
+          285
+        ],
+        [
+          428,
+          378,
+          104,
+          168
+        ],
+        [
+          225,
+          540,
+          510,
+          150
+        ],
+        [
+          428,
+          681,
+          104,
+          123
+        ],
+        [
+          145,
+          800,
+          675,
+          275
+        ],
+        [
+          428,
+          1065,
+          104,
+          183
+        ]
+      ],
+      "block_rects": [
+        [
+          0,
+          0,
+          960,
+          100
+        ],
+        [
+          0,
+          100,
+          270,
+          278
+        ],
+        [
+          695,
+          100,
+          265,
+          278
+        ],
+        [
+          0,
+          378,
+          270,
+          7
+        ],
+        [
+          695,
+          378,
+          265,
+          7
+        ],
+        [
+          0,
+          385,
+          428,
+          155
+        ],
+        [
+          532,
+          385,
+          428,
+          155
+        ],
+        [
+          0,
+          540,
+          225,
+          6
+        ],
+        [
+          735,
+          540,
+          225,
+          6
+        ],
+        [
+          0,
+          546,
+          225,
+          135
+        ],
+        [
+          735,
+          546,
+          225,
+          135
+        ],
+        [
+          0,
+          681,
+          225,
+          9
+        ],
+        [
+          735,
+          681,
+          225,
+          9
+        ],
+        [
+          0,
+          690,
+          428,
+          110
+        ],
+        [
+          532,
+          690,
+          428,
+          110
+        ],
+        [
+          0,
+          800,
+          145,
+          4
+        ],
+        [
+          820,
+          800,
+          140,
+          4
+        ],
+        [
+          0,
+          804,
+          145,
+          261
+        ],
+        [
+          820,
+          804,
+          140,
+          261
+        ],
+        [
+          0,
+          1065,
+          145,
+          10
+        ],
+        [
+          820,
+          1065,
+          140,
+          10
+        ],
+        [
+          0,
+          1075,
+          428,
+          173
+        ],
+        [
+          532,
+          1075,
+          428,
+          173
+        ]
+      ],
+      "illustrated_echo_gate": [
+        480,
+        730
+      ],
+      "illustrated_heart_gate": [
+        480,
+        510
+      ]
     },
     "red_sand_route": {
       "name": "赤砂商路",
       "city": false,
       "theme": "desert",
       "tint": "ffffff",
-      "background": "res://image/main_world/red_sand_route_ground_v4.png",
+      "background": "res://assets/world/maps_rebuild_20261015/red_sand_route_floor.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -4667,10 +5866,7 @@
           "label": "霜关驿"
         }
       ],
-      "decos": [
-        "044_deco_desert_cactus",
-        "045_deco_desert_sandstone"
-      ],
+      "decos": [],
       "goal": "沿赤砂商路北上，把霜关来信交给宁砚",
       "node_type": "normal",
       "monster_count": 4,
@@ -4919,10 +6115,95 @@
         "c3a57f",
         "sand"
       ],
-      "deco_density": 0.095,
+      "deco_density": 0,
       "deco_tint": "ffffff",
       "flat_material": "desert",
-      "surface_tint": "ffffff"
+      "surface_tint": "ffffff",
+      "painted_ground": true,
+      "ground_art_version": 20261015,
+      "minimap_show_roads": false,
+      "illustrated_scenery": [
+        {
+          "id": "044_deco_desert_cactus_0",
+          "texture": "res://image/map_proc/044_deco_desert_cactus.png",
+          "at": [
+            130,
+            310
+          ],
+          "size": [
+            84,
+            84
+          ],
+          "footprint": [
+            42,
+            22
+          ]
+        },
+        {
+          "id": "045_deco_desert_sandstone_1",
+          "texture": "res://image/map_proc/045_deco_desert_sandstone.png",
+          "at": [
+            825,
+            345
+          ],
+          "size": [
+            84,
+            84
+          ],
+          "footprint": [
+            42,
+            22
+          ]
+        },
+        {
+          "id": "044_deco_desert_cactus_2",
+          "texture": "res://image/map_proc/044_deco_desert_cactus.png",
+          "at": [
+            880,
+            880
+          ],
+          "size": [
+            84,
+            84
+          ],
+          "footprint": [
+            42,
+            22
+          ]
+        },
+        {
+          "id": "045_deco_desert_sandstone_3",
+          "texture": "res://image/map_proc/045_deco_desert_sandstone.png",
+          "at": [
+            170,
+            1015
+          ],
+          "size": [
+            84,
+            84
+          ],
+          "footprint": [
+            42,
+            22
+          ]
+        },
+        {
+          "id": "045_deco_desert_sandstone_4",
+          "texture": "res://image/map_proc/045_deco_desert_sandstone.png",
+          "at": [
+            790,
+            1085
+          ],
+          "size": [
+            84,
+            84
+          ],
+          "footprint": [
+            42,
+            22
+          ]
+        }
+      ]
     },
     "frost_post": {
       "name": "霜关驿",
@@ -4930,7 +6211,7 @@
       "city_config": "res://data/frost_post.json",
       "theme": "snow",
       "tint": "ffffff",
-      "background": "res://image/main_world/frost_post_ground_v4.png",
+      "background": "res://assets/world/maps_rebuild_20261015/frost_post_floor.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -5257,7 +6538,131 @@
       ],
       "deco_tint": "ffffff",
       "flat_material": "snow",
-      "surface_tint": "ffffff"
+      "surface_tint": "ffffff",
+      "painted_ground": true,
+      "ground_art_version": 20261015,
+      "decos": [],
+      "deco_density": 0,
+      "minimap_show_roads": false,
+      "illustrated_scenery": [
+        {
+          "id": "035_deco_snow_pine_0",
+          "texture": "res://image/map_proc/035_deco_snow_pine.png",
+          "at": [
+            80,
+            360
+          ],
+          "size": [
+            128,
+            144
+          ],
+          "footprint": [
+            30,
+            22
+          ],
+          "canopy": true
+        },
+        {
+          "id": "035_deco_snow_pine_1",
+          "texture": "res://image/map_proc/035_deco_snow_pine.png",
+          "at": [
+            875,
+            400
+          ],
+          "size": [
+            128,
+            144
+          ],
+          "footprint": [
+            30,
+            22
+          ],
+          "canopy": true
+        },
+        {
+          "id": "037_deco_snow_snowdrift_2",
+          "texture": "res://image/map_proc/037_deco_snow_snowdrift.png",
+          "at": [
+            70,
+            570
+          ],
+          "size": [
+            90,
+            56
+          ],
+          "footprint": [
+            44,
+            16
+          ]
+        },
+        {
+          "id": "035_deco_snow_pine_3",
+          "texture": "res://image/map_proc/035_deco_snow_pine.png",
+          "at": [
+            890,
+            900
+          ],
+          "size": [
+            128,
+            144
+          ],
+          "footprint": [
+            30,
+            22
+          ],
+          "canopy": true
+        },
+        {
+          "id": "037_deco_snow_snowdrift_4",
+          "texture": "res://image/map_proc/037_deco_snow_snowdrift.png",
+          "at": [
+            795,
+            1140
+          ],
+          "size": [
+            90,
+            56
+          ],
+          "footprint": [
+            44,
+            16
+          ]
+        },
+        {
+          "id": "035_deco_snow_pine_5",
+          "texture": "res://image/map_proc/035_deco_snow_pine.png",
+          "at": [
+            160,
+            790
+          ],
+          "size": [
+            128,
+            144
+          ],
+          "footprint": [
+            30,
+            22
+          ],
+          "canopy": true
+        },
+        {
+          "id": "035_deco_snow_pine_6",
+          "texture": "res://image/map_proc/035_deco_snow_pine.png",
+          "at": [
+            800,
+            270
+          ],
+          "size": [
+            128,
+            144
+          ],
+          "footprint": [
+            30,
+            22
+          ],
+          "canopy": true
+        }
+      ]
     },
     "rift_mine_road": {
       "clear_rects": [
@@ -5350,7 +6755,7 @@
       "city": false,
       "theme": "tomb",
       "tint": "ffffff",
-      "background": "res://image/main_world/rift_mine_road_ground_v4.png",
+      "background": "res://assets/world/maps_rebuild_20261015/rift_mine_road_floor.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -5394,10 +6799,7 @@
           "locked_hint": "先完成当前主线，再沿这条路前行"
         }
       ],
-      "decos": [
-        "030_deco_forest_rocks",
-        "043_deco_tomb_brazier"
-      ],
+      "decos": [],
       "goal": "调查翻倒矿车，查清封关与失踪的线索",
       "node_type": "normal",
       "monster_count": 4,
@@ -5664,17 +7066,118 @@
         "9c947e",
         "stone"
       ],
-      "deco_density": 0.095,
+      "deco_density": 0,
       "deco_tint": "ffffff",
       "flat_material": "stone",
-      "surface_tint": "ffffff"
+      "surface_tint": "ffffff",
+      "painted_ground": true,
+      "ground_art_version": 20261015,
+      "minimap_show_roads": false,
+      "illustrated_scenery": [
+        {
+          "id": "boulder_b_0",
+          "texture": "res://image/main_world/broken_slope_props/boulder_b.png",
+          "at": [
+            90,
+            330
+          ],
+          "size": [
+            104,
+            59
+          ],
+          "footprint": [
+            66,
+            26
+          ]
+        },
+        {
+          "id": "boulder_a_1",
+          "texture": "res://image/main_world/broken_slope_props/boulder_a.png",
+          "at": [
+            840,
+            350
+          ],
+          "size": [
+            104,
+            59
+          ],
+          "footprint": [
+            66,
+            26
+          ]
+        },
+        {
+          "id": "boulder_b_2",
+          "texture": "res://image/main_world/broken_slope_props/boulder_b.png",
+          "at": [
+            75,
+            980
+          ],
+          "size": [
+            104,
+            59
+          ],
+          "footprint": [
+            66,
+            26
+          ]
+        },
+        {
+          "id": "boulder_a_3",
+          "texture": "res://image/main_world/broken_slope_props/boulder_a.png",
+          "at": [
+            880,
+            960
+          ],
+          "size": [
+            104,
+            59
+          ],
+          "footprint": [
+            66,
+            26
+          ]
+        },
+        {
+          "id": "boulder_b_4",
+          "texture": "res://image/main_world/broken_slope_props/boulder_b.png",
+          "at": [
+            220,
+            1100
+          ],
+          "size": [
+            104,
+            59
+          ],
+          "footprint": [
+            66,
+            26
+          ]
+        },
+        {
+          "id": "boulder_a_5",
+          "texture": "res://image/main_world/broken_slope_props/boulder_a.png",
+          "at": [
+            750,
+            1130
+          ],
+          "size": [
+            104,
+            59
+          ],
+          "footprint": [
+            66,
+            26
+          ]
+        }
+      ]
     },
     "rift_mine_vault": {
       "name": "裂谷矿脉",
       "city": false,
       "theme": "tomb",
       "tint": "ffffff",
-      "background": "res://image/main_world/rift_mine_vault_ground_v4.png",
+      "background": "res://assets/world/maps_rebuild_20261015/rift_mine_vault_floor.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -5996,14 +7499,190 @@
       "decos": [],
       "deco_tint": "ffffff",
       "flat_material": "stone",
-      "surface_tint": "c3b6be"
+      "surface_tint": "ffffff",
+      "painted_ground": true,
+      "ground_art_version": 20261015,
+      "deco_density": 0,
+      "minimap_show_roads": false,
+      "illustrated_scenery": [
+        {
+          "id": "rock_m_0_0",
+          "texture": "res://image/main_world/broken_slope_props/rock_m_0.png",
+          "at": [
+            323,
+            1030
+          ],
+          "size": [
+            48,
+            42
+          ],
+          "footprint": [
+            28,
+            18
+          ]
+        },
+        {
+          "id": "rock_m_0_1",
+          "texture": "res://image/main_world/broken_slope_props/rock_m_0.png",
+          "at": [
+            638,
+            1030
+          ],
+          "size": [
+            48,
+            42
+          ],
+          "footprint": [
+            28,
+            18
+          ]
+        },
+        {
+          "id": "rock_m_0_2",
+          "texture": "res://image/main_world/broken_slope_props/rock_m_0.png",
+          "at": [
+            315,
+            390
+          ],
+          "size": [
+            48,
+            42
+          ],
+          "footprint": [
+            28,
+            18
+          ]
+        },
+        {
+          "id": "rock_m_0_3",
+          "texture": "res://image/main_world/broken_slope_props/rock_m_0.png",
+          "at": [
+            645,
+            390
+          ],
+          "size": [
+            48,
+            42
+          ],
+          "footprint": [
+            28,
+            18
+          ]
+        }
+      ],
+      "illustrated_walkable_rects": [
+        [
+          300,
+          130,
+          360,
+          325
+        ],
+        [
+          280,
+          495,
+          400,
+          275
+        ],
+        [
+          300,
+          810,
+          360,
+          355
+        ],
+        [
+          385,
+          130,
+          190,
+          1118
+        ]
+      ],
+      "block_rects": [
+        [
+          0,
+          0,
+          960,
+          130
+        ],
+        [
+          0,
+          130,
+          300,
+          325
+        ],
+        [
+          660,
+          130,
+          300,
+          325
+        ],
+        [
+          0,
+          455,
+          385,
+          40
+        ],
+        [
+          575,
+          455,
+          385,
+          40
+        ],
+        [
+          0,
+          495,
+          280,
+          275
+        ],
+        [
+          680,
+          495,
+          280,
+          275
+        ],
+        [
+          0,
+          770,
+          385,
+          40
+        ],
+        [
+          575,
+          770,
+          385,
+          40
+        ],
+        [
+          0,
+          810,
+          300,
+          355
+        ],
+        [
+          660,
+          810,
+          300,
+          355
+        ],
+        [
+          0,
+          1165,
+          385,
+          83
+        ],
+        [
+          575,
+          1165,
+          385,
+          83
+        ]
+      ]
     },
     "frost_pass": {
       "name": "冰隘",
       "city": false,
       "theme": "snow",
       "tint": "ffffff",
-      "background": "res://image/main_world/frost_pass_ground_v4.png",
+      "background": "res://assets/world/maps_rebuild_20261015/frost_pass_floor.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -6200,14 +7879,154 @@
       "decos": [],
       "deco_tint": "ffffff",
       "flat_material": "snow",
-      "surface_tint": "dcefff"
+      "surface_tint": "ffffff",
+      "painted_ground": true,
+      "ground_art_version": 20261015,
+      "deco_density": 0,
+      "minimap_show_roads": false,
+      "illustrated_scenery": [
+        {
+          "id": "035_deco_snow_pine_0",
+          "texture": "res://image/map_proc/035_deco_snow_pine.png",
+          "at": [
+            80,
+            360
+          ],
+          "size": [
+            128,
+            144
+          ],
+          "footprint": [
+            30,
+            22
+          ],
+          "canopy": true
+        },
+        {
+          "id": "035_deco_snow_pine_1",
+          "texture": "res://image/map_proc/035_deco_snow_pine.png",
+          "at": [
+            875,
+            400
+          ],
+          "size": [
+            128,
+            144
+          ],
+          "footprint": [
+            30,
+            22
+          ],
+          "canopy": true
+        },
+        {
+          "id": "037_deco_snow_snowdrift_2",
+          "texture": "res://image/map_proc/037_deco_snow_snowdrift.png",
+          "at": [
+            70,
+            570
+          ],
+          "size": [
+            90,
+            56
+          ],
+          "footprint": [
+            44,
+            16
+          ]
+        },
+        {
+          "id": "035_deco_snow_pine_3",
+          "texture": "res://image/map_proc/035_deco_snow_pine.png",
+          "at": [
+            890,
+            900
+          ],
+          "size": [
+            128,
+            144
+          ],
+          "footprint": [
+            30,
+            22
+          ],
+          "canopy": true
+        },
+        {
+          "id": "035_deco_snow_pine_4",
+          "texture": "res://image/map_proc/035_deco_snow_pine.png",
+          "at": [
+            170,
+            1130
+          ],
+          "size": [
+            128,
+            144
+          ],
+          "footprint": [
+            30,
+            22
+          ],
+          "canopy": true
+        },
+        {
+          "id": "037_deco_snow_snowdrift_5",
+          "texture": "res://image/map_proc/037_deco_snow_snowdrift.png",
+          "at": [
+            795,
+            1140
+          ],
+          "size": [
+            90,
+            56
+          ],
+          "footprint": [
+            44,
+            16
+          ]
+        },
+        {
+          "id": "035_deco_snow_pine_6",
+          "texture": "res://image/map_proc/035_deco_snow_pine.png",
+          "at": [
+            160,
+            790
+          ],
+          "size": [
+            128,
+            144
+          ],
+          "footprint": [
+            30,
+            22
+          ],
+          "canopy": true
+        },
+        {
+          "id": "035_deco_snow_pine_7",
+          "texture": "res://image/map_proc/035_deco_snow_pine.png",
+          "at": [
+            800,
+            270
+          ],
+          "size": [
+            128,
+            144
+          ],
+          "footprint": [
+            30,
+            22
+          ],
+          "canopy": true
+        }
+      ]
     },
     "frost_boardwalk": {
       "name": "霜林栈道",
       "city": false,
       "theme": "snow",
       "tint": "ffffff",
-      "background": "res://image/main_world/frost_boardwalk_ground_v4.png",
+      "background": "res://assets/world/maps_rebuild_20261015/frost_boardwalk_floor.png",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -6251,10 +8070,7 @@
           "locked_hint": "先完成当前主线，再沿这条路前行"
         }
       ],
-      "decos": [
-        "035_deco_snow_pine",
-        "037_deco_snow_snowdrift"
-      ],
+      "decos": [],
       "goal": "查看双关讯号，循冰隘方向找到回讯",
       "node_type": "normal",
       "monster_count": 4,
@@ -6586,17 +8402,156 @@
         "c4d6d1",
         "snow"
       ],
-      "deco_density": 0.095,
+      "deco_density": 0,
       "deco_tint": "ffffff",
       "flat_material": "snow",
-      "surface_tint": "ffffff"
+      "surface_tint": "ffffff",
+      "painted_ground": true,
+      "ground_art_version": 20261015,
+      "minimap_show_roads": false,
+      "illustrated_scenery": [
+        {
+          "id": "035_deco_snow_pine_0",
+          "texture": "res://image/map_proc/035_deco_snow_pine.png",
+          "at": [
+            80,
+            360
+          ],
+          "size": [
+            128,
+            144
+          ],
+          "footprint": [
+            30,
+            22
+          ],
+          "canopy": true
+        },
+        {
+          "id": "035_deco_snow_pine_1",
+          "texture": "res://image/map_proc/035_deco_snow_pine.png",
+          "at": [
+            875,
+            400
+          ],
+          "size": [
+            128,
+            144
+          ],
+          "footprint": [
+            30,
+            22
+          ],
+          "canopy": true
+        },
+        {
+          "id": "037_deco_snow_snowdrift_2",
+          "texture": "res://image/map_proc/037_deco_snow_snowdrift.png",
+          "at": [
+            70,
+            570
+          ],
+          "size": [
+            90,
+            56
+          ],
+          "footprint": [
+            44,
+            16
+          ]
+        },
+        {
+          "id": "035_deco_snow_pine_3",
+          "texture": "res://image/map_proc/035_deco_snow_pine.png",
+          "at": [
+            890,
+            900
+          ],
+          "size": [
+            128,
+            144
+          ],
+          "footprint": [
+            30,
+            22
+          ],
+          "canopy": true
+        },
+        {
+          "id": "035_deco_snow_pine_4",
+          "texture": "res://image/map_proc/035_deco_snow_pine.png",
+          "at": [
+            170,
+            1130
+          ],
+          "size": [
+            128,
+            144
+          ],
+          "footprint": [
+            30,
+            22
+          ],
+          "canopy": true
+        },
+        {
+          "id": "037_deco_snow_snowdrift_5",
+          "texture": "res://image/map_proc/037_deco_snow_snowdrift.png",
+          "at": [
+            795,
+            1140
+          ],
+          "size": [
+            90,
+            56
+          ],
+          "footprint": [
+            44,
+            16
+          ]
+        },
+        {
+          "id": "035_deco_snow_pine_6",
+          "texture": "res://image/map_proc/035_deco_snow_pine.png",
+          "at": [
+            160,
+            790
+          ],
+          "size": [
+            128,
+            144
+          ],
+          "footprint": [
+            30,
+            22
+          ],
+          "canopy": true
+        },
+        {
+          "id": "035_deco_snow_pine_7",
+          "texture": "res://image/map_proc/035_deco_snow_pine.png",
+          "at": [
+            800,
+            270
+          ],
+          "size": [
+            128,
+            144
+          ],
+          "footprint": [
+            30,
+            22
+          ],
+          "canopy": true
+        }
+      ]
     },
     "abyss_ring": {
       "name": "渊口外环",
       "city": false,
       "theme": "abyss",
       "tint": "ffffff",
-      "background": "res://image/main_world/abyss_ring_ground_v4.png",
+      "background": "res://assets/world/maps_rebuild_20261015/abyss_ring_floor.png",
       "authored_ground": true,
       "map_cols": 20,
       "map_rows": 26,
@@ -6706,6 +8661,18 @@
           775,
           0,
           185,
+          1248
+        ],
+        [
+          0,
+          0,
+          225,
+          1248
+        ],
+        [
+          735,
+          0,
+          225,
           1248
         ]
       ],
@@ -6862,12 +8829,106 @@
       ],
       "deco_tint": "ffffff",
       "flat_material": "abyss",
-      "surface_tint": "ffffff"
+      "surface_tint": "ffffff",
+      "painted_ground": true,
+      "ground_art_version": 20261015,
+      "deco_density": 0,
+      "minimap_show_roads": false,
+      "illustrated_scenery": [
+        {
+          "id": "stele_mid_a_0",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_a.png",
+          "at": [
+            695,
+            320
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        },
+        {
+          "id": "stele_mid_b_1",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_b.png",
+          "at": [
+            250,
+            740
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        },
+        {
+          "id": "stele_mid_a_2",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_a.png",
+          "at": [
+            710,
+            760
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        },
+        {
+          "id": "stele_mid_b_3",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_b.png",
+          "at": [
+            265,
+            1110
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        },
+        {
+          "id": "stele_mid_a_4",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_a.png",
+          "at": [
+            695,
+            1120
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        }
+      ],
+      "illustrated_walkable_rects": [
+        [
+          225,
+          0,
+          510,
+          1248
+        ]
+      ]
     },
     "stele_entry": {
       "name": "归路门厅",
       "theme": "abyss",
-      "tint": "b7b8c8",
+      "tint": "ffffff",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -6959,6 +9020,18 @@
           0,
           180,
           1248
+        ],
+        [
+          0,
+          0,
+          190,
+          1248
+        ],
+        [
+          770,
+          0,
+          190,
+          1248
         ]
       ],
       "entities": {
@@ -7042,13 +9115,123 @@
       ],
       "deco_tint": "ffffff",
       "flat_material": "abyss",
-      "surface_tint": "dce5eb",
-      "background": "res://image/main_world/stele_entry_ground_v4.png"
+      "surface_tint": "ffffff",
+      "background": "res://assets/world/maps_rebuild_20261015/stele_entry_floor.png",
+      "painted_ground": true,
+      "ground_art_version": 20261015,
+      "deco_density": 0,
+      "minimap_show_roads": false,
+      "illustrated_scenery": [
+        {
+          "id": "stele_mid_b_0",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_b.png",
+          "at": [
+            265,
+            310
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        },
+        {
+          "id": "stele_mid_a_1",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_a.png",
+          "at": [
+            695,
+            320
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        },
+        {
+          "id": "stele_mid_b_2",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_b.png",
+          "at": [
+            250,
+            740
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        },
+        {
+          "id": "stele_mid_a_3",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_a.png",
+          "at": [
+            710,
+            760
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        },
+        {
+          "id": "stele_mid_b_4",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_b.png",
+          "at": [
+            265,
+            1110
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        },
+        {
+          "id": "stele_mid_a_5",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_a.png",
+          "at": [
+            695,
+            1120
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        }
+      ],
+      "illustrated_walkable_rects": [
+        [
+          190,
+          0,
+          580,
+          1248
+        ]
+      ]
     },
     "stele_resonance": {
       "name": "三声共鸣廊",
       "theme": "abyss",
-      "tint": "b7b8c8",
+      "tint": "ffffff",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -7137,6 +9320,18 @@
           780,
           0,
           180,
+          1248
+        ],
+        [
+          0,
+          0,
+          190,
+          1248
+        ],
+        [
+          770,
+          0,
+          190,
           1248
         ]
       ],
@@ -7314,13 +9509,123 @@
       ],
       "deco_tint": "ffffff",
       "flat_material": "abyss",
-      "surface_tint": "ece0f7",
-      "background": "res://image/main_world/stele_resonance_ground_v4.png"
+      "surface_tint": "ffffff",
+      "background": "res://assets/world/maps_rebuild_20261015/stele_resonance_floor.png",
+      "painted_ground": true,
+      "ground_art_version": 20261015,
+      "deco_density": 0,
+      "minimap_show_roads": false,
+      "illustrated_scenery": [
+        {
+          "id": "stele_mid_b_0",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_b.png",
+          "at": [
+            265,
+            310
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        },
+        {
+          "id": "stele_mid_a_1",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_a.png",
+          "at": [
+            695,
+            320
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        },
+        {
+          "id": "stele_mid_b_2",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_b.png",
+          "at": [
+            250,
+            740
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        },
+        {
+          "id": "stele_mid_a_3",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_a.png",
+          "at": [
+            710,
+            760
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        },
+        {
+          "id": "stele_mid_b_4",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_b.png",
+          "at": [
+            265,
+            1110
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        },
+        {
+          "id": "stele_mid_a_5",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_a.png",
+          "at": [
+            695,
+            1120
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        }
+      ],
+      "illustrated_walkable_rects": [
+        [
+          190,
+          0,
+          580,
+          1248
+        ]
+      ]
     },
     "stele_core": {
       "name": "碑心",
       "theme": "abyss",
-      "tint": "b7b8c8",
+      "tint": "ffffff",
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
@@ -7398,6 +9703,18 @@
           780,
           0,
           180,
+          1248
+        ],
+        [
+          0,
+          0,
+          190,
+          1248
+        ],
+        [
+          770,
+          0,
+          190,
           1248
         ]
       ],
@@ -7491,8 +9808,118 @@
       ],
       "deco_tint": "ffffff",
       "flat_material": "abyss",
-      "surface_tint": "d6f0ed",
-      "background": "res://image/main_world/stele_core_ground_v4.png"
+      "surface_tint": "ffffff",
+      "background": "res://assets/world/maps_rebuild_20261015/stele_core_floor.png",
+      "painted_ground": true,
+      "ground_art_version": 20261015,
+      "deco_density": 0,
+      "minimap_show_roads": false,
+      "illustrated_scenery": [
+        {
+          "id": "stele_mid_b_0",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_b.png",
+          "at": [
+            265,
+            310
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        },
+        {
+          "id": "stele_mid_a_1",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_a.png",
+          "at": [
+            695,
+            320
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        },
+        {
+          "id": "stele_mid_b_2",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_b.png",
+          "at": [
+            250,
+            740
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        },
+        {
+          "id": "stele_mid_a_3",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_a.png",
+          "at": [
+            710,
+            760
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        },
+        {
+          "id": "stele_mid_b_4",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_b.png",
+          "at": [
+            265,
+            1110
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        },
+        {
+          "id": "stele_mid_a_5",
+          "texture": "res://image/main_world/broken_slope_props/stele_mid_a.png",
+          "at": [
+            695,
+            1120
+          ],
+          "size": [
+            56,
+            84
+          ],
+          "footprint": [
+            36,
+            20
+          ]
+        }
+      ],
+      "illustrated_walkable_rects": [
+        [
+          190,
+          0,
+          580,
+          1248
+        ]
+      ]
     }
   }
 }

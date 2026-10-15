@@ -1,0 +1,81 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 Core Profile Context 23.20.60.03.240314 - Compatibility - Using Device: ATI Technologies Inc. - AMD Radeon 780M Graphics
+
+ERROR: ROUND1_FAIL: 实际点击疾行开启，文字与图形均变化
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyRound1UI.gd:12)
+       [1] _ready (res://tools/VerifyRound1UI.gd:209)
+       [2] click (res://tools/VerifyRound1UI.gd:23)
+ERROR: ROUND1_FAIL: 实际点击任务展开
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyRound1UI.gd:12)
+       [1] _ready (res://tools/VerifyRound1UI.gd:215)
+       [2] click (res://tools/VerifyRound1UI.gd:23)
+ERROR: ROUND1_FAIL: 实际点击任务收起
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyRound1UI.gd:12)
+       [1] _ready (res://tools/VerifyRound1UI.gd:218)
+       [2] click (res://tools/VerifyRound1UI.gd:23)
+ERROR: ROUND1_FAIL: 缩写金币点击仍可查看完整详情
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyRound1UI.gd:12)
+       [1] _ready (res://tools/VerifyRound1UI.gd:239)
+       [2] click (res://tools/VerifyRound1UI.gd:23)
+ERROR: ROUND1_FAIL: 真实点击药剂治疗并扣除数量
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyRound1UI.gd:12)
+       [1] _ready (res://tools/VerifyRound1UI.gd:246)
+       [2] click (res://tools/VerifyRound1UI.gd:23)
+ERROR: ROUND1_FAIL: 真实点击小地图展开
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyRound1UI.gd:12)
+       [1] _ready (res://tools/VerifyRound1UI.gd:251)
+       [2] click (res://tools/VerifyRound1UI.gd:23)
+ERROR: ROUND1_FAIL: 实际点击疾行开启，文字与图形均变化
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyRound1UI.gd:12)
+       [1] _ready (res://tools/VerifyRound1UI.gd:209)
+       [2] click (res://tools/VerifyRound1UI.gd:23)
+ERROR: ROUND1_FAIL: 实际点击任务展开
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyRound1UI.gd:12)
+       [1] _ready (res://tools/VerifyRound1UI.gd:215)
+       [2] click (res://tools/VerifyRound1UI.gd:23)
+ERROR: ROUND1_FAIL: 实际点击任务收起
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyRound1UI.gd:12)
+       [1] _ready (res://tools/VerifyRound1UI.gd:218)
+       [2] click (res://tools/VerifyRound1UI.gd:23)
+ERROR: ROUND1_FAIL: 缩写金币点击仍可查看完整详情
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyRound1UI.gd:12)
+       [1] _ready (res://tools/VerifyRound1UI.gd:239)
+       [2] click (res://tools/VerifyRound1UI.gd:23)
+ERROR: ROUND1_FAIL: 真实点击药剂治疗并扣除数量
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyRound1UI.gd:12)
+       [1] _ready (res://tools/VerifyRound1UI.gd:246)
+       [2] click (res://tools/VerifyRound1UI.gd:23)
+ERROR: ROUND1_FAIL: 真实点击小地图展开
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyRound1UI.gd:12)
+       [1] _ready (res://tools/VerifyRound1UI.gd:251)
+       [2] click (res://tools/VerifyRound1UI.gd:23)
+ROUND1_UI_FAIL cases=561 failures=12
+ERROR: 1 RID allocations of type 'N5GLES37TextureE' were leaked at exit.
+ERROR: Texture with GL ID of 25: leaked 6628 bytes.
+   at: ~Utilities (drivers/gles3/storage/utilities.cpp:82)
+ERROR: Parameter "RenderingServer::get_singleton()" is null.
+   at: ~CompressedTexture2D (scene/resources/compressed_texture.cpp:464)

@@ -1,0 +1,8 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SCRIPT ERROR: Parse Error: Too few arguments for "seed()" call. Expected at least 1 but received 0.
+   at: GDScript::reload (res://tools/VerifyTravelChestB2.gd:77)
+SCRIPT ERROR: Parse Error: Too few arguments for "seed()" call. Expected at least 1 but received 0.
+   at: GDScript::reload (res://tools/VerifyTravelChestB2.gd:153)
+ERROR: Failed to load script "res://tools/VerifyTravelChestB2.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)

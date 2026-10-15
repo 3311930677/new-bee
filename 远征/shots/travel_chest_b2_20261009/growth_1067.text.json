@@ -1,0 +1,286 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@Label@2167",
+			"rect_height": 30.0,
+			"size": 17,
+			"text": "破军 · Lv.12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@Button@2168",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@Button@2168/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@Label@2169",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "人物养成"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@Label@2171",
+			"rect_height": 44.0,
+			"size": 13,
+			"text": "尚有 2 点天赋待分配"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/@Label@2176",
+			"rect_height": 24.0,
+			"size": 13,
+			"text": "修习与装备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_equip",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "装备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_equip/@Label@2178",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "装备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_equip/@Label@2179",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "武0 / 甲0 / 饰0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_equip/@Label@2180",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "可强化"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_talent",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "天赋"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_talent/@Label@2182",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "天赋"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_talent/@Label@2183",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "可分配 2 点"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_talent/@Label@2184",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "分配天赋"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_skill",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "技能书"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_skill/@Label@2186",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "技能书"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_skill/@Label@2187",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "精研 0 门"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_skill/@Label@2188",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "查看"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/@Label@2189",
+			"rect_height": 24.0,
+			"size": 13,
+			"text": "同行与荣誉"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_pet",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "宠物"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_pet/@Label@2191",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "宠物"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_pet/@Label@2192",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "已收 1 / 10"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_pet/@Label@2193",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "查看"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_mount",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "坐骑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_mount/@Label@2195",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "坐骑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_mount/@Label@2196",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "尚未骑乘"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_mount/@Label@2197",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "查看"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_title",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "称号"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_title/@Label@2199",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "称号"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_title/@Label@2200",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "未佩戴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2159/@Control@2160/@ScrollContainer@2174/@VBoxContainer@2175/Growth_title/@Label@2201",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "查看"
+		}
+	]
+}

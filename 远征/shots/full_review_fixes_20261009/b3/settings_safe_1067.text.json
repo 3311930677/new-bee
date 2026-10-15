@@ -1,0 +1,313 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@Button@1396",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@Button@1396/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@Label@1397",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "设置"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@HBoxContainer@1398/@Button@1405",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "常规"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@HBoxContainer@1398/@Button@1405/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "常规"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@HBoxContainer@1398/@Button@1405/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@HBoxContainer@1398/@Button@1407",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "旅人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@HBoxContainer@1398/@Button@1407/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "旅人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@HBoxContainer@1398/@Button@1407/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@HBoxContainer@1398/@Button@1409",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "存档"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@HBoxContainer@1398/@Button@1409/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "存档"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@HBoxContainer@1398/@Button@1409/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@ScrollContainer@1401/@VBoxContainer@1402/@VBoxContainer@1410/@Label@1449",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "备份"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@ScrollContainer@1401/@VBoxContainer@1402/@VBoxContainer@1410/@Button@1450",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "复制存档码"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@ScrollContainer@1401/@VBoxContainer@1402/@VBoxContainer@1410/@Button@1450/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "复制存档码"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@ScrollContainer@1401/@VBoxContainer@1402/@VBoxContainer@1410/@Button@1450/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@ScrollContainer@1401/@VBoxContainer@1402/@VBoxContainer@1410/@Label@1451",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "复制后可备份保存"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@ScrollContainer@1401/@VBoxContainer@1402/@VBoxContainer@1410/@Label@1452",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "恢复存档"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@ScrollContainer@1401/@VBoxContainer@1402/@VBoxContainer@1410/@LineEdit@1453",
+			"rect_height": 48.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@ScrollContainer@1401/@VBoxContainer@1402/@VBoxContainer@1410/@Button@1454",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "粘贴码"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@ScrollContainer@1401/@VBoxContainer@1402/@VBoxContainer@1410/@Button@1454/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "粘贴码"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@ScrollContainer@1401/@VBoxContainer@1402/@VBoxContainer@1410/@Button@1454/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@ScrollContainer@1401/@VBoxContainer@1402/@VBoxContainer@1410/@Button@1455",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "导入"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@ScrollContainer@1401/@VBoxContainer@1402/@VBoxContainer@1410/@Button@1455/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "导入"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@ScrollContainer@1401/@VBoxContainer@1402/@VBoxContainer@1410/@Button@1455/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@ScrollContainer@1401/@VBoxContainer@1402/@VBoxContainer@1410/@Label@1456",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "导入成功后返回标题"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@ScrollContainer@1401/@VBoxContainer@1402/@VBoxContainer@1410/@Label@1457",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "重置"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@ScrollContainer@1401/@VBoxContainer@1402/@VBoxContainer@1410/@Button@1458",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "重置存档"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@ScrollContainer@1401/@VBoxContainer@1402/@VBoxContainer@1410/@Button@1458/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "重置存档"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@ScrollContainer@1401/@VBoxContainer@1402/@VBoxContainer@1410/@Button@1458/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Control@1389/@ScrollContainer@1401/@VBoxContainer@1402/@VBoxContainer@1410/@Label@1459",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "重置会清除本机当前存档"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Button@1460",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "说明"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Button@1460/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "说明"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@1387/@Control@1388/@Button@1460/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		}
+	]
+}

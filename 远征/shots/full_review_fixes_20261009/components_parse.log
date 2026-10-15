@@ -1,0 +1,26 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SCRIPT ERROR: Parse Error: Cannot infer the type of "delta" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://src/ui/EquipChestView.gd:189)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://src/ui/EquipPanel.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://src/ui/GrowthPanel.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://tools/VerifyGrowth.gd:0)
+ERROR: Failed to load script "res://tools/VerifyGrowth.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+   at: EquipPanel._build (res://src/ui/EquipPanel.gd:56)
+   GDScript backtrace (most recent call first):
+       [0] _build (res://src/ui/EquipPanel.gd:56)
+       [1] _ready (res://src/ui/EquipPanel.gd:52)
+       [2] _open (res://src/ui/GrowthPanel.gd:217)
+       [3] _run (res://tools/VerifyGrowth.gd:702)
+GROWTH_OK all tests passed
+WARNING: 2 RIDs of type "CanvasItem" were leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2735)
+WARNING: 11 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

@@ -1,0 +1,520 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Button@2208",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Button@2208/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Label@2209",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "装备整备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Button@2210",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "背包"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Button@2210/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "背包"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Button@2210/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2225",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2225/@Label@2222",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2225/@Label@2223",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2225/@Label@2224",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2230",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2230/@Label@2227",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "长枪"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2230/@Label@2228",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2230/@Label@2229",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2235",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2235/@Label@2232",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "法杖"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2235/@Label@2233",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2235/@Label@2234",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2240",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2240/@Label@2237",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "圣锤"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2240/@Label@2238",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2240/@Label@2239",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2245",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2245/@Label@2242",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "护甲"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2245/@Label@2243",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2245/@Label@2244",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2250",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2250/@Label@2247",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "饰品"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2250/@Label@2248",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2211/@Button@2250/@Label@2249",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2212/@Label@2253",
+			"rect_height": 32.0,
+			"size": 20,
+			"text": "生铁大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2212/@Label@2254",
+			"rect_height": 24.0,
+			"size": 13,
+			"text": "普通 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2212/@Label@2255",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "攻击 +10"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@HBoxContainer@2214/@Button@2256",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "强化"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@HBoxContainer@2214/@Button@2256/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "强化"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@HBoxContainer@2214/@Button@2256/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@HBoxContainer@2214/@Button@2257",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "宝石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@HBoxContainer@2214/@Button@2257/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "宝石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@HBoxContainer@2214/@Button@2257/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@HBoxContainer@2214/@Button@2258",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "精炼"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@HBoxContainer@2214/@Button@2258/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "精炼"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@HBoxContainer@2214/@Button@2258/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@ScrollContainer@2217/@VBoxContainer@2218/@Label@2260",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "+0  →  +1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@ScrollContainer@2217/@VBoxContainer@2218/@HBoxContainer@2261/@Label@2262",
+			"rect_height": 64.0,
+			"size": 14,
+			"text": "当前属性\n攻击 +10"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@ScrollContainer@2217/@VBoxContainer@2218/@HBoxContainer@2261/@Label@2263",
+			"rect_height": 64.0,
+			"size": 14,
+			"text": "成功后\n攻击 +11"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@ScrollContainer@2217/@VBoxContainer@2218/@Label@2264",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "成功率 100.0%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@ScrollContainer@2217/@VBoxContainer@2218/@Label@2265",
+			"rect_height": 43.0,
+			"size": 13,
+			"text": "积累 0/0 · 失败 +15%，成功后重置\n失败扣费、不掉级"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@ScrollContainer@2217/@VBoxContainer@2218/@Label@2266",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "最高 +20 · +1 至 +3 确定成功"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@ScrollContainer@2217/@VBoxContainer@2218/@HBoxContainer@2267/@Label@2268",
+			"rect_height": 47.0,
+			"size": 14,
+			"text": "金币    150 / 12800\n需要 / 持有"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@ScrollContainer@2217/@VBoxContainer@2218/@HBoxContainer@2267/@Label@2269",
+			"rect_height": 47.0,
+			"size": 14,
+			"text": "强化石    1 / 12\n需要 / 持有"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2219/@Button@2259",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "卸下"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2219/@Button@2259/Caption",
+			"rect_height": 56.0,
+			"size": 17,
+			"text": "卸下"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2219/@Button@2259/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2219/@Button@2270",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "确认强化"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2219/@Button@2270/Caption",
+			"rect_height": 56.0,
+			"size": 22,
+			"text": "确认强化"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Control@2219/@Button@2270/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@2202/@Control@2203/@Label@2220",
+			"rect_height": 32.0,
+			"size": 13,
+			"text": "材料已齐 · 可以强化"
+		}
+	]
+}

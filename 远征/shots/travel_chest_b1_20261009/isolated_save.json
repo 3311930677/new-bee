@@ -12,7 +12,7 @@
 		"mute": false,
 		"sfx": 0.8
 	},
-	"avatar_custom": "custom_1789879008_58882110.png",
+	"avatar_custom": "",
 	"avatar_id": "fox",
 	"avatar_use_custom": false,
 	"city": {
@@ -58,7 +58,7 @@
 			"next_uid": 1,
 			"pending": []
 		},
-		"last_ts": 1791698953,
+		"last_ts": 1791888483,
 		"ledger": {
 			"applied": []
 		},
@@ -98,10 +98,10 @@
 	"quest": {
 		"active": {},
 		"claimed": [],
-		"day": "2026-10-11",
+		"day": "2026-10-13",
 		"offer": [
-			"q_slay_forest",
-			"q_deliver_crystal"
+			"q_deliver_crystal",
+			"q_slay_forest"
 		]
 	},
 	"selected_role": "zs",

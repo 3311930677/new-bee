@@ -1,0 +1,362 @@
+{
+ "hero_normal": {
+  "sheet": "UI-01_hero_button",
+  "source_box": [
+   458,
+   229,
+   619,
+   150
+  ],
+  "aspect_error": 0.023,
+  "group": "hero",
+  "colors": 32
+ },
+ "hero_pressed": {
+  "sheet": "UI-01_hero_button",
+  "source_box": [
+   458,
+   443,
+   619,
+   149
+  ],
+  "aspect_error": 0.016,
+  "group": "hero",
+  "colors": 32
+ },
+ "hero_disabled": {
+  "sheet": "UI-01_hero_button",
+  "source_box": [
+   458,
+   653,
+   619,
+   148
+  ],
+  "aspect_error": 0.009,
+  "group": "hero",
+  "colors": 32
+ },
+ "btn_normal": {
+  "sheet": "UI-02_buttons_tabs",
+  "source_box": [
+   321,
+   372,
+   255,
+   100
+  ],
+  "aspect_error": 0.044,
+  "group": "btn",
+  "colors": 32
+ },
+ "btn_pressed": {
+  "sheet": "UI-02_buttons_tabs",
+  "source_box": [
+   640,
+   372,
+   256,
+   100
+  ],
+  "aspect_error": 0.04,
+  "group": "btn",
+  "colors": 31
+ },
+ "btn_disabled": {
+  "sheet": "UI-02_buttons_tabs",
+  "source_box": [
+   960,
+   372,
+   256,
+   100
+  ],
+  "aspect_error": 0.04,
+  "group": "btn",
+  "colors": 32
+ },
+ "tab_normal": {
+  "sheet": "UI-02_buttons_tabs",
+  "source_box": [
+   364,
+   543,
+   292,
+   93
+  ],
+  "aspect_error": 0.041,
+  "group": "tab",
+  "colors": 32
+ },
+ "tab_selected": {
+  "sheet": "UI-02_buttons_tabs",
+  "source_box": [
+   714,
+   543,
+   292,
+   93
+  ],
+  "aspect_error": 0.041,
+  "group": "tab",
+  "colors": 32
+ },
+ "btn_round": {
+  "sheet": "UI-02_buttons_tabs",
+  "source_box": [
+   1056,
+   527,
+   124,
+   128
+  ],
+  "aspect_error": 0.031,
+  "colors": 32
+ },
+ "panel_iron": {
+  "sheet": "UI-03_panels",
+  "source_box": [
+   216,
+   243,
+   529,
+   494
+  ],
+  "aspect_error": 0.071,
+  "colors": 32
+ },
+ "card_paper": {
+  "sheet": "UI-03_panels",
+  "source_box": [
+   794,
+   313,
+   526,
+   389
+  ],
+  "aspect_error": 0.014,
+  "colors": 32
+ },
+ "plaque_title": {
+  "sheet": "UI-04_plaques",
+  "source_box": [
+   363,
+   355,
+   810,
+   160
+  ],
+  "aspect_error": 0.08,
+  "colors": 32
+ },
+ "plaque_small": {
+  "sheet": "UI-04_plaques",
+  "source_box": [
+   298,
+   562,
+   399,
+   88
+  ],
+  "aspect_error": 0.055,
+  "colors": 32
+ },
+ "divider": {
+  "sheet": "UI-04_plaques",
+  "source_box": [
+   756,
+   575,
+   481,
+   61
+  ],
+  "aspect_error": 0.343,
+  "colors": 32
+ },
+ "slot_common": {
+  "sheet": "UI-05_rarity_slots",
+  "source_box": [
+   156,
+   282,
+   203,
+   199
+  ],
+  "aspect_error": 0.02,
+  "group": "slot",
+  "colors": 32
+ },
+ "slot_uncommon": {
+  "sheet": "UI-05_rarity_slots",
+  "source_box": [
+   411,
+   282,
+   203,
+   199
+  ],
+  "aspect_error": 0.02,
+  "group": "slot",
+  "colors": 32
+ },
+ "slot_rare": {
+  "sheet": "UI-05_rarity_slots",
+  "source_box": [
+   666,
+   282,
+   203,
+   199
+  ],
+  "aspect_error": 0.02,
+  "group": "slot",
+  "colors": 32
+ },
+ "slot_epic": {
+  "sheet": "UI-05_rarity_slots",
+  "source_box": [
+   922,
+   282,
+   203,
+   199
+  ],
+  "aspect_error": 0.02,
+  "group": "slot",
+  "colors": 32
+ },
+ "slot_legend": {
+  "sheet": "UI-05_rarity_slots",
+  "source_box": [
+   1178,
+   282,
+   203,
+   199
+  ],
+  "aspect_error": 0.02,
+  "group": "slot",
+  "colors": 32
+ },
+ "slot_empty": {
+  "sheet": "UI-05_rarity_slots",
+  "source_box": [
+   537,
+   548,
+   204,
+   200
+  ],
+  "aspect_error": 0.02,
+  "group": "slot",
+  "colors": 32
+ },
+ "slot_selected": {
+  "sheet": "UI-05_rarity_slots",
+  "source_box": [
+   794,
+   548,
+   204,
+   200
+  ],
+  "aspect_error": 0.02,
+  "group": "slot",
+  "colors": 32
+ },
+ "nav_base": {
+  "sheet": "UI-06_nav",
+  "source_box": [
+   129,
+   251,
+   1278,
+   222
+  ],
+  "aspect_error": 0.055,
+  "colors": 32
+ },
+ "nav_socket": {
+  "sheet": "UI-06_nav",
+  "source_box": [
+   300,
+   534,
+   242,
+   238
+  ],
+  "aspect_error": 0.017,
+  "group": "nav_socket",
+  "colors": 32
+ },
+ "nav_socket_selected": {
+  "sheet": "UI-06_nav",
+  "source_box": [
+   576,
+   534,
+   244,
+   238
+  ],
+  "aspect_error": 0.025,
+  "group": "nav_socket",
+  "colors": 32
+ },
+ "rail_socket": {
+  "sheet": "UI-06_nav",
+  "source_box": [
+   863,
+   573,
+   167,
+   168
+  ],
+  "aspect_error": 0.065,
+  "group": "rail_socket",
+  "colors": 32
+ },
+ "rail_socket_selected": {
+  "sheet": "UI-06_nav",
+  "source_box": [
+   1059,
+   571,
+   173,
+   171
+  ],
+  "aspect_error": 0.084,
+  "group": "rail_socket",
+  "colors": 32
+ },
+ "bar_frame": {
+  "sheet": "UI-07_bars",
+  "source_box": [
+   509,
+   316,
+   518,
+   61
+  ],
+  "aspect_error": 0.151,
+  "colors": 32
+ },
+ "bar_fill_exp": {
+  "sheet": "UI-07_bars",
+  "source_box": [
+   275,
+   439,
+   461,
+   24
+  ],
+  "aspect_error": 0.165,
+  "colors": 31
+ },
+ "bar_fill_hp": {
+  "sheet": "UI-07_bars",
+  "source_box": [
+   800,
+   439,
+   474,
+   24
+  ],
+  "aspect_error": 0.141,
+  "colors": 31
+ },
+ "currency_capsule": {
+  "sheet": "UI-07_bars",
+  "source_box": [
+   227,
+   562,
+   382,
+   95
+  ],
+  "aspect_error": 0.005,
+  "colors": 32
+ },
+ "quest_slip": {
+  "sheet": "UI-07_bars",
+  "source_box": [
+   660,
+   515,
+   654,
+   185
+  ],
+  "aspect_error": 0.006,
+  "colors": 32
+ }
+}

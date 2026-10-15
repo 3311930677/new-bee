@@ -1,0 +1,235 @@
+{
+  "engine": "Godot 4.7.2",
+  "actual_native_render": true,
+  "isolated_demo_save": true,
+  "files": [
+    {
+      "file": "screenshots/states/bag_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/core/bag_800.png",
+      "group": "core"
+    },
+    {
+      "file": "screenshots/states/bag_empty_gems_800.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/bag_full_pending_800.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/bag_gems_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/bag_gems_800.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/bag_level_locked_800.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/bag_locked_800.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/bag_safe_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/bag_safe_800.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/equipment_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/core/equipment_800.png",
+      "group": "core"
+    },
+    {
+      "file": "screenshots/states/equipment_failure_800.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/equipment_safe_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/equipment_safe_800.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/equipment_shortage_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/equipment_shortage_800.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/equipment_success_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/equipment_success_800.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/field_dark_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/gems_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/core/gems_800.png",
+      "group": "core"
+    },
+    {
+      "file": "screenshots/states/growth_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/core/growth_800.png",
+      "group": "core"
+    },
+    {
+      "file": "screenshots/states/growth_no_action_800.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/growth_safe_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/growth_safe_800.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/mount_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/core/mount_800.png",
+      "group": "core"
+    },
+    {
+      "file": "screenshots/states/mount_safe_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/mount_safe_800.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/mount_unlocked_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/mount_unlocked_800.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/pet_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/core/pet_800.png",
+      "group": "core"
+    },
+    {
+      "file": "screenshots/states/pet_safe_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/pet_safe_800.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/refine_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/core/refine_800.png",
+      "group": "core"
+    },
+    {
+      "file": "screenshots/states/riding_on_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/riding_on_800.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/sprint_on_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/sprint_on_800.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/talent_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/core/talent_800.png",
+      "group": "core"
+    },
+    {
+      "file": "screenshots/states/talent_safe_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/talent_safe_800.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/tasks_expanded_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/tasks_expanded_800.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/titles_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/core/titles_800.png",
+      "group": "core"
+    },
+    {
+      "file": "screenshots/states/titles_safe_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/titles_safe_800.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/town_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/core/town_800.png",
+      "group": "core"
+    },
+    {
+      "file": "screenshots/states/town_safe_1067.png",
+      "group": "state"
+    },
+    {
+      "file": "screenshots/states/town_safe_800.png",
+      "group": "state"
+    }
+  ]
+}

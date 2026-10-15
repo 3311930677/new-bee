@@ -1,0 +1,215 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+ERROR: Could not create editor data directory: C:/Users/tsz/AppData/Roaming/Godot
+   at: EditorPaths (editor/file_system/editor_paths.cpp:201)
+ERROR: Could not create editor config directory: C:/Users/tsz/AppData/Roaming/Godot
+   at: EditorPaths (editor/file_system/editor_paths.cpp:216)
+
+ERROR: Could not open 'user://' directory: 'user://'.
+   at: _get_and_create_snapshot_storage_dir (modules/objectdb_profiler/editor/objectdb_profiler_panel.cpp:157)
+ERROR: Safe save failed. This may be a permissions problem, but also may happen because you are running a paranoid antivirus. If this is the case, please switch to Windows Defender or disable the 'safe save' option in editor settings. This makes it work, but increases the risk of file corruption in a crash.
+   at: _close (drivers/windows/file_access_windows.cpp:277)
+ERROR: Cannot open directory 'C:/Users/tsz/AppData/Roaming/Godot/feature_profiles'.
+   at: _update_profile_list (editor/settings/editor_feature_profile.cpp:392)
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started 项目初始化 (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | 正在扫描文件结构……[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | 正在加载全局类名……[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | 正在校验 GDExtension……[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | 正在创建自动加载脚本……[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | 正在初始化插件……[39m[0m
+MCP_BRIDGE_LISTENING: 38900
+[  83% ] [90m[1mfirst_scan_filesystem[22m | 正在启动文件扫描……[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | Started 正在注册全局类…… (14 steps)[39m[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   6% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  13% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  20% ] [90m[1mupdate_scripts_classes[22m | GrowthPanel[39m[0m
+[  26% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  33% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  40% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  46% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  53% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  60% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  66% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  73% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  80% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  86% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[92m[ DONE ][39m [1mupdate_scripts_classes[22m
+[0m
+[   0% ] [90m[1m_update_scan_actions[22m | Started 正在扫描动作…… (51 steps)[39m[0m
+[   0% ] [90m[1m_update_scan_actions[22m | bag.png[39m[0m
+[   1% ] [90m[1m_update_scan_actions[22m | book.png[39m[0m
+[   3% ] [90m[1m_update_scan_actions[22m | coin.png[39m[0m
+[   5% ] [90m[1m_update_scan_actions[22m | exchange.png[39m[0m
+[   7% ] [90m[1m_update_scan_actions[22m | expedition.png[39m[0m
+[   9% ] [90m[1m_update_scan_actions[22m | growth.png[39m[0m
+[  11% ] [90m[1m_update_scan_actions[22m | honor.png[39m[0m
+[  13% ] [90m[1m_update_scan_actions[22m | soul.png[39m[0m
+[  15% ] [90m[1m_update_scan_actions[22m | spark.png[39m[0m
+[  17% ] [90m[1m_update_scan_actions[22m | summon.png[39m[0m
+[  19% ] [90m[1m_update_scan_actions[22m | swords.png[39m[0m
+[  21% ] [90m[1m_update_scan_actions[22m | world.png[39m[0m
+[  23% ] [90m[1m_update_scan_actions[22m | bag.png[39m[0m
+[  25% ] [90m[1m_update_scan_actions[22m | book.png[39m[0m
+[  26% ] [90m[1m_update_scan_actions[22m | coin.png[39m[0m
+[  28% ] [90m[1m_update_scan_actions[22m | exchange.png[39m[0m
+[  30% ] [90m[1m_update_scan_actions[22m | expedition.png[39m[0m
+[  32% ] [90m[1m_update_scan_actions[22m | growth.png[39m[0m
+[  34% ] [90m[1m_update_scan_actions[22m | honor.png[39m[0m
+[  36% ] [90m[1m_update_scan_actions[22m | soul.png[39m[0m
+[  38% ] [90m[1m_update_scan_actions[22m | spark.png[39m[0m
+[  40% ] [90m[1m_update_scan_actions[22m | summon.png[39m[0m
+[  42% ] [90m[1m_update_scan_actions[22m | swords.png[39m[0m
+[  44% ] [90m[1m_update_scan_actions[22m | world.png[39m[0m
+[  46% ] [90m[1m_update_scan_actions[22m | expedition_banner_clean.png[39m[0m
+[  48% ] [90m[1m_update_scan_actions[22m | expedition_banner_pixel.png[39m[0m
+[  50% ] [90m[1m_update_scan_actions[22m | icon_bag.png[39m[0m
+[  51% ] [90m[1m_update_scan_actions[22m | icon_book.png[39m[0m
+[  53% ] [90m[1m_update_scan_actions[22m | icon_coin.png[39m[0m
+[  55% ] [90m[1m_update_scan_actions[22m | icon_exchange.png[39m[0m
+[  57% ] [90m[1m_update_scan_actions[22m | icon_expedition.png[39m[0m
+[  59% ] [90m[1m_update_scan_actions[22m | icon_growth.png[39m[0m
+[  61% ] [90m[1m_update_scan_actions[22m | icon_honor.png[39m[0m
+[  63% ] [90m[1m_update_scan_actions[22m | icon_soul.png[39m[0m
+[  65% ] [90m[1m_update_scan_actions[22m | icon_spark.png[39m[0m
+[  67% ] [90m[1m_update_scan_actions[22m | icon_summon.png[39m[0m
+[  69% ] [90m[1m_update_scan_actions[22m | icon_swords.png[39m[0m
+[  71% ] [90m[1m_update_scan_actions[22m | icon_world.png[39m[0m
+[  73% ] [90m[1m_update_scan_actions[22m | loading_fill_pixel.png[39m[0m
+[  75% ] [90m[1m_update_scan_actions[22m | loading_gauge_pixel.png[39m[0m
+[  76% ] [90m[1m_update_scan_actions[22m | login_folio_pixel.png[39m[0m
+[  78% ] [90m[1m_update_scan_actions[22m | master_expedition_banner.png[39m[0m
+[  80% ] [90m[1m_update_scan_actions[22m | master_loading_gauge.png[39m[0m
+[  82% ] [90m[1m_update_scan_actions[22m | master_title_logo.png[39m[0m
+[  84% ] [90m[1m_update_scan_actions[22m | pixel_badge_plate.png[39m[0m
+[  86% ] [90m[1m_update_scan_actions[22m | relic_gauge_clean.png[39m[0m
+[  88% ] [90m[1m_update_scan_actions[22m | title_logo_360.png[39m[0m
+[  90% ] [90m[1m_update_scan_actions[22m | title_logo_pixel.png[39m[0m
+[  92% ] [90m[1m_update_scan_actions[22m | title_menu_board.png[39m[0m
+[  94% ] [90m[1m_update_scan_actions[22m | title_menu_buttons_pixel.png[39m[0m
+[  96% ] [90m[1m_update_scan_actions[22m | expedition_wordmark_pixel.png[39m[0m
+[92m[ DONE ][39m [1m_update_scan_actions[22m
+[0m
+[   0% ] [90m[1mreimport[22m | Started 正在导入或重新导入资产 (50 steps)[39m[0m
+[   0% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[   1% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[   3% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[   5% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[   7% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[   9% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  11% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  13% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  15% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  17% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  19% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  21% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  23% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  25% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  27% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  29% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  31% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  33% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  35% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  37% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  39% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  41% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  43% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  45% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  47% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  49% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  50% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  52% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  54% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  56% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  58% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  60% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  62% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  64% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  66% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  68% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  70% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  72% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  74% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  76% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  78% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  80% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  82% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  84% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  86% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  88% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  90% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  92% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  94% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[  96% ] [90m[1mreimport[22m | 正在准备重新导入文件……[39m[0m
+[   0% ] [90m[1mreimport[22m | 正在执行重新导入的前置操作……[39m[0m
+[   0% ] [90m[1mreimport[22m | expedition_banner_pixel.png[39m[0m
+[   1% ] [90m[1mreimport[22m | icon_bag.png[39m[0m
+[   3% ] [90m[1mreimport[22m | icon_book.png[39m[0m
+[   5% ] [90m[1mreimport[22m | icon_coin.png[39m[0m
+[   7% ] [90m[1mreimport[22m | icon_exchange.png[39m[0m
+[   9% ] [90m[1mreimport[22m | icon_expedition.png[39m[0m
+[  11% ] [90m[1mreimport[22m | icon_growth.png[39m[0m
+[  13% ] [90m[1mreimport[22m | icon_honor.png[39m[0m
+[  15% ] [90m[1mreimport[22m | icon_soul.png[39m[0m
+[  17% ] [90m[1mreimport[22m | icon_spark.png[39m[0m
+[  19% ] [90m[1mreimport[22m | icon_summon.png[39m[0m
+[  21% ] [90m[1mreimport[22m | icon_swords.png[39m[0m
+[  23% ] [90m[1mreimport[22m | icon_world.png[39m[0m
+[  25% ] [90m[1mreimport[22m | loading_fill_pixel.png[39m[0m
+[  27% ] [90m[1mreimport[22m | loading_gauge_pixel.png[39m[0m
+[  29% ] [90m[1mreimport[22m | login_folio_pixel.png[39m[0m
+[  31% ] [90m[1mreimport[22m | master_loading_gauge.png[39m[0m
+[  33% ] [90m[1mreimport[22m | master_title_logo.png[39m[0m
+[  35% ] [90m[1mreimport[22m | pixel_badge_plate.png[39m[0m
+[  37% ] [90m[1mreimport[22m | relic_gauge_clean.png[39m[0m
+[  39% ] [90m[1mreimport[22m | title_logo_360.png[39m[0m
+[  41% ] [90m[1mreimport[22m | title_logo_pixel.png[39m[0m
+[  43% ] [90m[1mreimport[22m | title_menu_board.png[39m[0m
+[  45% ] [90m[1mreimport[22m | title_menu_buttons_pixel.png[39m[0m
+[  47% ] [90m[1mreimport[22m | expedition_wordmark_pixel.png[39m[0m
+[  49% ] [90m[1mreimport[22m | bag.png[39m[0m
+[  50% ] [90m[1mreimport[22m | book.png[39m[0m
+[  52% ] [90m[1mreimport[22m | coin.png[39m[0m
+[  54% ] [90m[1mreimport[22m | exchange.png[39m[0m
+[  56% ] [90m[1mreimport[22m | expedition.png[39m[0m
+[  58% ] [90m[1mreimport[22m | growth.png[39m[0m
+[  60% ] [90m[1mreimport[22m | honor.png[39m[0m
+[  62% ] [90m[1mreimport[22m | soul.png[39m[0m
+[  64% ] [90m[1mreimport[22m | spark.png[39m[0m
+[  66% ] [90m[1mreimport[22m | summon.png[39m[0m
+[  68% ] [90m[1mreimport[22m | swords.png[39m[0m
+[  70% ] [90m[1mreimport[22m | world.png[39m[0m
+[  72% ] [90m[1mreimport[22m | bag.png[39m[0m
+[  74% ] [90m[1mreimport[22m | book.png[39m[0m
+[  76% ] [90m[1mreimport[22m | coin.png[39m[0m
+[  78% ] [90m[1mreimport[22m | exchange.png[39m[0m
+[  80% ] [90m[1mreimport[22m | expedition.png[39m[0m
+[  82% ] [90m[1mreimport[22m | growth.png[39m[0m
+[  84% ] [90m[1mreimport[22m | honor.png[39m[0m
+[  86% ] [90m[1mreimport[22m | soul.png[39m[0m
+[  88% ] [90m[1mreimport[22m | spark.png[39m[0m
+[  90% ] [90m[1mreimport[22m | summon.png[39m[0m
+[  92% ] [90m[1mreimport[22m | swords.png[39m[0m
+[  94% ] [90m[1mreimport[22m | world.png[39m[0m
+[  96% ] [90m[1mreimport[22m | expedition_banner_clean.png[39m[0m
+[  98% ] [90m[1mreimport[22m | 正在结束资产导入……[39m[0m
+[92m[ DONE ][39m [1mreimport[22m
+[0m
+[   0% ] [90m[1mreimport[22m | Started 正在导入或重新导入资产 (50 steps)[39m[0m
+[   0% ] [90m[1mreimport[22m | 正在执行重新导入的后置操作……[39m[0m
+[92m[ DONE ][39m [1mreimport[22m
+[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Started 正在加载编辑器 (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | 正在加载编辑器布局……[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | 正在加载停靠面板……[39m[0m
+[  33% ] [90m[1mloading_editor_layout[22m | 正在重新打开场景……[39m[0m
+[  50% ] [90m[1mloading_editor_layout[22m | 正在加载中央编辑器布局……[39m[0m
+[  66% ] [90m[1mloading_editor_layout[22m | 正在加载插件窗口布局……[39m[0m
+[  83% ] [90m[1mloading_editor_layout[22m | 编辑器布局就绪。[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m
+ERROR: Can't save resource to empty path. Provide non-empty path or a Resource with non-empty resource_path.
+   at: save (core/io/resource_saver.cpp:108)
+ERROR: Error saving editor settings to 
+   at: save (editor/settings/editor_settings.cpp:1525)

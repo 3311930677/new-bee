@@ -1,0 +1,1114 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/ReturnButton",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/ReturnButton/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/@Label@997",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "行旅背包"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Capacity",
+			"rect_height": 44.0,
+			"size": 13,
+			"text": "装备 20 / 60"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/@Label@998",
+			"rect_height": 44.0,
+			"size": 13,
+			"text": "待领取 0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/GoldBalance",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "金币 11,150"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_equip",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "装备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_equip/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "装备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_equip/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_mat",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "材料"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_mat/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "材料"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_mat/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_gem",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "宝石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_gem/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "宝石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_gem/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_pending",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "待领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_pending/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "待领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_pending/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_7",
+			"rect_height": 92.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_7/@Label@1379",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "月纹坠饰"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_7/@Label@1380",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_7/@Label@1381",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "锁"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_8",
+			"rect_height": 92.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_8/@Label@1383",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "狼牙大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_8/@Label@1384",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_8/@Label@1385",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_9",
+			"rect_height": 92.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_9/@Label@1387",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "狼牙大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_9/@Label@1388",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_9/@Label@1389",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_10",
+			"rect_height": 92.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_10/@Label@1391",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "狼牙大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_10/@Label@1392",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_10/@Label@1393",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_11",
+			"rect_height": 92.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_11/@Label@1395",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "狼牙大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_11/@Label@1396",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_11/@Label@1397",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_12",
+			"rect_height": 92.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_12/@Label@1399",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "狼牙大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_12/@Label@1400",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_12/@Label@1401",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_13",
+			"rect_height": 92.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_13/@Label@1403",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "狼牙大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_13/@Label@1404",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_13/@Label@1405",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_14",
+			"rect_height": 92.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_14/@Label@1407",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "狼牙大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_14/@Label@1408",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_14/@Label@1409",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_15",
+			"rect_height": 92.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_15/@Label@1411",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "狼牙大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_15/@Label@1412",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_15/@Label@1413",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_16",
+			"rect_height": 92.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_16/@Label@1415",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "狼牙大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_16/@Label@1416",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_16/@Label@1417",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_17",
+			"rect_height": 92.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_17/@Label@1419",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "狼牙大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_17/@Label@1420",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_17/@Label@1421",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_18",
+			"rect_height": 92.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_18/@Label@1423",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "狼牙大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_18/@Label@1424",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_18/@Label@1425",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_19",
+			"rect_height": 92.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_19/@Label@1427",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "狼牙大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_19/@Label@1428",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_19/@Label@1429",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_20",
+			"rect_height": 92.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_20/@Label@1431",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "狼牙大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_20/@Label@1432",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_20/@Label@1433",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_21",
+			"rect_height": 92.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_21/@Label@1435",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "狼牙大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_21/@Label@1436",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_21/@Label@1437",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_22",
+			"rect_height": 92.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_22/@Label@1439",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "狼牙大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_22/@Label@1440",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_22/@Label@1441",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_23",
+			"rect_height": 92.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_23/@Label@1443",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "狼牙大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_23/@Label@1444",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_23/@Label@1445",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_24",
+			"rect_height": 92.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_24/@Label@1447",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "狼牙大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_24/@Label@1448",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_24/@Label@1449",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_25",
+			"rect_height": 92.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_25/@Label@1451",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "狼牙大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_25/@Label@1452",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_25/@Label@1453",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_26",
+			"rect_height": 92.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_26/@Label@1455",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "狼牙大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_26/@Label@1456",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/EquipmentGrid/Equipment_26/@Label@1457",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/DetailScroll/@VBoxContainer@1004/@HBoxContainer@1458/@VBoxContainer@1460/@Label@1461",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "月纹坠饰"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/DetailScroll/@VBoxContainer@1004/@HBoxContainer@1458/@VBoxContainer@1460/@Label@1462",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "稀有 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/DetailScroll/@VBoxContainer@1004/@Label@1463",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "生命 +100 · 暴击 +3%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/DetailScroll/@VBoxContainer@1004/EquipmentComparison/@Label@1464",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "生命 +30"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/DetailScroll/@VBoxContainer@1004/EquipmentComparison/@Label@1465",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "暴击 +1%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/DetailScroll/@VBoxContainer@1004/@Label@1466",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "需求 Lv.1 · "
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/DetailScroll/@VBoxContainer@1004/@HBoxContainer@1471/@Label@1467",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "宝石孔"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/DetailScroll/@VBoxContainer@1004/@HBoxContainer@1471/@Button@1468",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "空"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/DetailScroll/@VBoxContainer@1004/@HBoxContainer@1471/@Button@1468/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "空"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/DetailScroll/@VBoxContainer@1004/@HBoxContainer@1471/@Button@1468/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/DetailScroll/@VBoxContainer@1004/@HBoxContainer@1471/@Button@1469",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "空"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/DetailScroll/@VBoxContainer@1004/@HBoxContainer@1471/@Button@1469/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "空"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/DetailScroll/@VBoxContainer@1004/@HBoxContainer@1471/@Button@1469/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/DetailScroll/@VBoxContainer@1004/@HBoxContainer@1471/@Button@1470",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "空"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/DetailScroll/@VBoxContainer@1004/@HBoxContainer@1471/@Button@1470/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "空"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/DetailScroll/@VBoxContainer@1004/@HBoxContainer@1471/@Button@1470/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/EquipmentActions/@Button@1472",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "卖出 2880 金"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/EquipmentActions/@Button@1472/Caption",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "卖出 2880 金"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/EquipmentActions/@Button@1472/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/EquipmentActions/@Button@1473",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "解锁"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/EquipmentActions/@Button@1473/Caption",
+			"rect_height": 56.0,
+			"size": 17,
+			"text": "解锁"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/EquipmentActions/@Button@1473/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/EquipmentActions/@Button@1474",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "装备"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/EquipmentActions/@Button@1474/Caption",
+			"rect_height": 56.0,
+			"size": 22,
+			"text": "装备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/EquipmentActions/@Button@1474/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		}
+	]
+}

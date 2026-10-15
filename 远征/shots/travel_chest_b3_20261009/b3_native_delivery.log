@@ -1,0 +1,40 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 Core Profile Context 23.20.60.03.240314 - Compatibility - Using Device: ATI Technologies Inc. - AMD Radeon 780M Graphics
+
+SCRIPT ERROR: Invalid call. Nonexistent function 'get' in base 'Nil'.
+   at: _skill (res://src/ui/CollectionChestView.gd:136)
+   GDScript backtrace (most recent call first):
+       [0] _skill (res://src/ui/CollectionChestView.gd:136)
+       [1] refresh (res://src/ui/CollectionChestView.gd:52)
+       [2] <anonymous lambda> (res://src/ui/CollectionChestView.gd:24)
+       [3] go (res://src/ui/FlowChestUI.gd:76)
+       [4] _refresh (res://src/ui/SkillBookPanel.gd:35)
+       [5] _build (res://src/ui/SkillBookPanel.gd:31)
+       [6] _ready (res://src/ui/SkillBookPanel.gd:24)
+       [7] _ready (res://tools/VerifyTravelChestB3.gd:131)
+       [8] drop (res://tools/VerifyTravelChestB3.gd:33)
+       [9] frames (res://tools/VerifyTravelChestB3.gd:11)
+SCRIPT ERROR: Invalid call. Nonexistent function 'get' in base 'Nil'.
+   at: _skill (res://src/ui/CollectionChestView.gd:136)
+   GDScript backtrace (most recent call first):
+       [0] _skill (res://src/ui/CollectionChestView.gd:136)
+       [1] refresh (res://src/ui/CollectionChestView.gd:52)
+       [2] <anonymous lambda> (res://src/ui/CollectionChestView.gd:24)
+       [3] go (res://src/ui/FlowChestUI.gd:76)
+       [4] _refresh (res://src/ui/SkillBookPanel.gd:35)
+       [5] _build (res://src/ui/SkillBookPanel.gd:31)
+       [6] _ready (res://src/ui/SkillBookPanel.gd:24)
+       [7] _ready (res://tools/VerifyTravelChestB3.gd:131)
+       [8] drop (res://tools/VerifyTravelChestB3.gd:33)
+       [9] frames (res://tools/VerifyTravelChestB3.gd:11)
+B3_OK checks=152 failures=0
+WARNING: 50 RIDs of type "CanvasItem" were leaked.
+ERROR: 1 RID allocations of type 'N5GLES37TextureE' were leaked at exit.
+ERROR: 1 RID allocations of type 'PN18TextServerAdvanced12FontAdvancedE' were leaked at exit.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2735)
+ERROR: Texture with GL ID of 28: leaked 6628 bytes.
+   at: ~Utilities (drivers/gles3/storage/utilities.cpp:82)
+ERROR: Parameter "RenderingServer::get_singleton()" is null.
+   at: ~CompressedTexture2D (scene/resources/compressed_texture.cpp:464)
+WARNING: 104 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

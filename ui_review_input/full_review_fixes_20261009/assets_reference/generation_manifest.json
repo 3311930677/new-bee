@@ -1,0 +1,106 @@
+{
+  "tool": "built-in ImageGen",
+  "date": "2026-10-09",
+  "jobs": [
+    {
+      "key": "items1",
+      "transparent": true,
+      "prompt": "Production game asset for Chinese ancient-city travel fantasy pixel RPG 远征, lantern-lit travel chest direction. Dark lacquer #17141A, old bronze #6E5434/#C29A5B on structural edges, warm paper cream, top-left light. No words, letters, numbers, watermark or UI labels. One transparent item sprite atlas EXACTLY FOUR COLUMNS and THREE ROWS, 12 isolated objects in evenly spaced cells with generous transparent gutters. Single-layer real objects only: no baked frames, squares, discs, backing, glow or rarity-colour tint. Strong 3/4 silhouettes, crisp pixel art with ≤16 colours per object, source art should read as a 60x60 pixel grid enlarged cleanly, readable at 60 or80 display. Each object fills about80% of its cell. Different templates must have visibly different material and silhouette. Ordered left to right/top to bottom: iron broad sword with leather grip; plain iron spear on wooden shaft; worn wooden magic staff with small blue stone; plain iron square holy hammer; brown leather chest armor; plain dark iron ring; wolf-fang sword with saw-tooth back, bone-white guard and dark-red wrap; iron-scaled spear with red tassel and bronze collars; frost rune staff with pale icy branches; dawn holy hammer with restrained sun relief; overlapping iron-scale chest armor; silver crescent pendant on blue cord"
+    },
+    {
+      "key": "items2",
+      "transparent": true,
+      "prompt": "Production game asset for Chinese ancient-city travel fantasy pixel RPG 远征, lantern-lit travel chest direction. Dark lacquer #17141A, old bronze #6E5434/#C29A5B on structural edges, warm paper cream, top-left light. No words, letters, numbers, watermark or UI labels. One transparent item sprite atlas EXACTLY FOUR COLUMNS and THREE ROWS, 12 isolated objects in evenly spaced cells with generous transparent gutters. Single-layer real objects only: no baked frames, squares, discs, backing, glow or rarity-colour tint. Strong 3/4 silhouettes, crisp pixel art with ≤16 colours per object, source art should read as a 60x60 pixel grid enlarged cleanly, readable at 60 or80 display. Each object fills about80% of its cell. Different templates must have visibly different material and silhouette. Ordered left to right/top to bottom: broken rusty ruin sword with chipped stone-like edge; heavy bulwark layered plate armor; ancient stele rune sword; ancient stele rune spear; ancient stele rune staff; ancient stele rune holy hammer; ancient stele layered armor; tidegate wavy forged steel sword; tidegate sea-rope spear; tidegate driftwood staff with sea glass; tidegate bronze holy hammer with water groove; tidegate dark riveted armor"
+    },
+    {
+      "key": "items3",
+      "transparent": true,
+      "prompt": "Production game asset for Chinese ancient-city travel fantasy pixel RPG 远征, lantern-lit travel chest direction. Dark lacquer #17141A, old bronze #6E5434/#C29A5B on structural edges, warm paper cream, top-left light. No words, letters, numbers, watermark or UI labels. One transparent item sprite atlas EXACTLY FOUR COLUMNS and THREE ROWS, 12 isolated objects in evenly spaced cells with generous transparent gutters. Single-layer real objects only: no baked frames, squares, discs, backing, glow or rarity-colour tint. Strong 3/4 silhouettes, crisp pixel art with ≤16 colours per object, source art should read as a 60x60 pixel grid enlarged cleanly, readable at 60 or80 display. Each object fills about80% of its cell. Different templates must have visibly different material and silhouette. Ordered left to right/top to bottom: frostgate icy steel sword; frostgate icy steel spear; frostgate white wooden magic staff; frostgate silver holy hammer; frostgate fur-lined armor; twin pass pendant with two joined bronze badges; abyss-return dark-steel sword; abyss-return dark spear; abyss-return black wood staff; abyss-return black iron holy hammer; boundary patrol sword with small worn red tassel; boundary patrol spear with worn cloth streamer"
+    },
+    {
+      "key": "items4",
+      "transparent": true,
+      "prompt": "Production game asset for Chinese ancient-city travel fantasy pixel RPG 远征, lantern-lit travel chest direction. Dark lacquer #17141A, old bronze #6E5434/#C29A5B on structural edges, warm paper cream, top-left light. No words, letters, numbers, watermark or UI labels. One transparent item sprite atlas EXACTLY FOUR COLUMNS and TWO ROWS, 8 isolated objects in evenly spaced cells with generous transparent gutters. Single-layer real objects only: no baked frames, squares, discs, backing, glow or rarity-colour tint. Strong 3/4 silhouettes, crisp pixel art with ≤16 colours per object, source art should read as a 60x60 pixel grid enlarged cleanly, readable at 60 or80 display. Each object fills about80% of its cell. Different templates must have visibly different material and silhouette. Ordered left to right/top to bottom: boundary patrol staff with old bronze wraps; boundary patrol holy hammer with old bronze hoops; abyss-return layered charcoal armor; return-route oath pendant with plain paired jade leaves; relic mountain-river dawn sword with subtle engraved waves; relic sun-chasing spear with narrow gilded point; relic roaming-frost staff with complex ice-prism tip; relic soul-crossing holy hammer with engraved cream prayer cloth"
+    },
+    {
+      "key": "skills",
+      "transparent": true,
+      "prompt": "Production game asset for Chinese ancient-city travel fantasy pixel RPG 远征, lantern-lit travel chest direction. Dark lacquer #17141A, old bronze #6E5434/#C29A5B on structural edges, warm paper cream, top-left light. No words, letters, numbers, watermark or UI labels. A transparent SKILL ICON ATLAS EXACTLY FIVE COLUMNS and FOUR ROWS (20 evenly spaced cells). Each is a dark lacquer cut-corner disc with very slim bronze rim, clear dynamic hard silhouette, six tones plus one subdued accent, designed to read at40px. No letters or text. ORDER: row1 broad sword smashing cracked rock, sword point breaking shield formation, sweeping circular sword slash, warrior roaring with three sound waves, vertical sword severing chain; row2 three flying arrows, arrow piercing plate armor, arrow striking soul-shaped flame, archer melting into shadow, arrow shower; row3 icy crescent blade, encircling frost ring, ice meteors falling, translucent ice shield, collapsing frost nova; row4 beam of warm healing light, holy shield with simple cross-free glyph, cleansing leaf-water swirl, blessed courage lantern flare, radiant judgment hammer. Every icon distinct even in greyscale. Generous transparent gutters, no glossy web icons."
+    },
+    {
+      "key": "chest",
+      "transparent": false,
+      "prompt": "Production game asset for Chinese ancient-city travel fantasy pixel RPG 远征, lantern-lit travel chest direction. Dark lacquer #17141A, old bronze #6E5434/#C29A5B on structural edges, warm paper cream, top-left light. No words, letters, numbers, watermark or UI labels. Opaque portrait background 480x1067 display: inside an open dark lacquer travel chest seen from overhead, shallow compartments near outside edges, folded dark cloth, thin aged bronze corner joints, faint lantern light entering from top. Very quiet central60% with low detail and low contrast for an inventory grid; dark toward bottom. No castle, city gate, lantern landscape, character, object icons, UI frame, labels or slots drawn in center. Refined crafted pixel-adjacent texture, dark #17141A to#2F2832, restrained brown/bronze edges. Flat orthographic."
+    },
+    {
+      "key": "niche",
+      "transparent": false,
+      "prompt": "Production game asset for Chinese ancient-city travel fantasy pixel RPG 远征, lantern-lit travel chest direction. Dark lacquer #17141A, old bronze #6E5434/#C29A5B on structural edges, warm paper cream, top-left light. No words, letters, numbers, watermark or UI labels. Opaque portrait background 480x1067 display: quiet display alcove in an old Chinese study at night, recessed niche, low dark lacquer wooden pedestal at45% height, soft paper-lattice screen behind, one small hanging lantern casting a pool, scroll shelves disappear at both side edges. Center clean with no creature. No castle, city gate, UI buttons or text. Dark charcoal lacquer, warm old bronze and soft paper tan, contrast restrained. Hand-crafted detailed pixel art, not a photoreal museum."
+    },
+    {
+      "key": "pets",
+      "transparent": true,
+      "prompt": "Production game asset for Chinese ancient-city travel fantasy pixel RPG 远征, lantern-lit travel chest direction. Dark lacquer #17141A, old bronze #6E5434/#C29A5B on structural edges, warm paper cream, top-left light. No words, letters, numbers, watermark or UI labels. Transparent creature SHOWCASE SPRITE ATLAS, EXACTLY FIVE COLUMNS by TWO ROWS,10 creatures in generous transparent gutters. Refined crisp pixel art designed on a64x64 virtual pixel grid per creature enlarged cleanly, ≤32 colours each, one-pixel dark outline,3/4 facing right, full feet visible, no platform, shadow disc, background, text, badges, frame or motion lines. Preserve species and palette: row1 white frost wolf with blue scarf and ice-crystal tail tip (wolf muzzle, NOT fox kitten); orange fire fox with dark crimson ears and warm tail; moss green rock turtle with chunky stone-pattern shell; purple/blue lightning falcon with gold beak; small white turquoise tide gull with shell accents. Row2 dusk-purple eerie-eyed cat; cream/golden holy deer with small luminous antlers (no halo); charcoal/red ember baby dragon with tiny wings; purple/black TWO-headed shadow snake with green eyes; dignified pale jade return-route holy deer with aged bronze neck wrap and branching antlers. Cute but dignified companions, consistent density with the existing128px pixel characters. Each identity legible at192px display."
+    },
+    {
+      "key": "showcase",
+      "transparent": true,
+      "prompt": "Production game asset for Chinese ancient-city travel fantasy pixel RPG 远征, lantern-lit travel chest direction. Dark lacquer #17141A, old bronze #6E5434/#C29A5B on structural edges, warm paper cream, top-left light. No words, letters, numbers, watermark or UI labels. Transparent UI sprite sheet of TWO SEPARATE objects with a large transparent gap: upper65% contains one empty square thin dark-bronze display FRAME, quiet1-display-pixel structural line, tiny corner caps, central opening fully transparent, orthographic designed for nine-slice display448x280. Lower35% contains one separate low dark lacquer wooden PEDESTAL, ellipse-topped shallow platform,200x48 display ratio, calm aged bronze front edge, transparent exterior. No gems, wings, decoration, text, icons or glowing halos. Frame and pedestal must never touch. Quiet mature crafted inventory showcase."
+    }
+  ],
+  "outputs": [
+    {
+      "key": "items1",
+      "original": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-59d87e20-5b99-4d20-b987-888865876da3.png",
+      "file": "items1.png"
+    },
+    {
+      "key": "items2",
+      "original": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-63364cae-b28e-4a3d-a058-583eb12ef461.png",
+      "file": "items2.png"
+    },
+    {
+      "key": "items3",
+      "original": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-e586e4b9-ccdc-4b38-90c1-6545e06e95f7.png",
+      "file": "items3.png"
+    },
+    {
+      "key": "items4",
+      "original": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-0a2a4823-e8eb-44b6-bd90-0573f8036844.png",
+      "file": "items4.png"
+    },
+    {
+      "key": "skills",
+      "original": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-6136fe5a-8ad6-48c6-9b29-09d19133c027.png",
+      "file": "skills.png"
+    },
+    {
+      "key": "chest",
+      "original": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-58ac8d87-4550-4b9b-a272-5b184f7e1af9.png",
+      "file": "chest.png"
+    },
+    {
+      "key": "niche",
+      "original": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-fe21b12b-ee19-4311-a4f1-c98a873c5e5f.png",
+      "file": "niche.png"
+    },
+    {
+      "key": "pets",
+      "original": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-431e75e1-6f14-41df-bfc4-a087a95477f6.png",
+      "file": "pets.png"
+    },
+    {
+      "key": "showcase",
+      "original": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-0878d438-39d0-49b7-86b1-dfdaba87c33b.png",
+      "file": "showcase.png"
+    }
+  ],
+  "map": {
+    "tool": "built-in ImageGen",
+    "prompt": "Transform the supplied layout guide into the final opaque painted travel map for Chinese pixel fantasy RPG 远征. The image is a STRICT GEOMETRY REFERENCE, not artwork style. Preserve every pale circular clearing CENTER and every connecting ROAD CURVE at the same normalized position. There are exactly18 clearings and17 connections. Do NOT add connections or move road geometry. Replace pale discs by quiet flat low-detail64px clearings, remove all guide glyphs. Make the paths beige dirt roads with subtle dark verges, integrated into terrain instead of bright diagram lines. Road width around10-14px on1440x1600. Top-down detailed pixel-adjacent cartographic terrain: green frontier foothills and forests around northwest four clearings; a coast/harbor near upper-right clearing; marsh and sluice around northeast lower pair; muted red sand around middle clearing on the descending main route; snow mountains/outpost/mine around lower middle-right branches; slate gorges and ancient stele caves around far southeast. Arrange terrain AROUND the specified roads, never across them. Generous space at clearings for live48px landmark sprites. Muted green/ochre/slate/bronze palette, no labels, text, numbers, pins, buildings in clearings, compass or decorative frame. Keep exact3:3.333 portrait map proportions and full composition, no 3D perspective, no grid, no right-angle road segments. This is terrain-and-roads background only; landmarks and location names are drawn by game engine.\n",
+    "reference": "map_guide.png",
+    "source_original": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-f24e0d07-9622-49ba-b8e7-a8f009b7eb73.png",
+    "final": "map.png",
+    "transparent": false
+  }
+}

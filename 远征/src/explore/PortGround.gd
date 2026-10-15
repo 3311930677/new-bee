@@ -87,11 +87,11 @@ func _draw_state() -> void:
 			draw_line(Vector2(x + 3, 465), Vector2(x + 22, 465), Color("9a8b70"), 2)
 		draw_line(Vector2(268, 450), Vector2(329, 479), Color("b59c70"), 2)
 	elif _event == "embank":
-		draw_rect(Rect2(717, 460, 121, 57), Color("7b634c"))
+		draw_rect(Rect2(704, 460, 134, 57), Color("7b634c"))
 		for x in range(725, 835, 23):
 			draw_line(Vector2(x, 464), Vector2(x, 513), Color("b1936d"), 2)
 		for x in [735, 775, 807]:
 			draw_rect(Rect2(x, 469, 24, 30), Color("c4a46a"))
 			draw_line(Vector2(x + 3, 480), Vector2(x + 21, 480), Color("745638"), 3)
-		draw_line(Vector2(717, 458), Vector2(717, 526), Color("463526"), 6)
+		draw_line(Vector2(704, 458), Vector2(704, 526), Color("463526"), 6)
 		draw_line(Vector2(841, 458), Vector2(841, 526), Color("463526"), 6)

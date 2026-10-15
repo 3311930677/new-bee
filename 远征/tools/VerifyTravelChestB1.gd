@@ -49,6 +49,7 @@ func _ready() -> void:
 	capture = "--capture" in OS.get_cmdline_user_args()
 	G.SAVE_PATH = OUT+"isolated_save.json"
 	G.set_meta("ui_review_mode",true)
+	G.set_meta("legacy_camp_home",true)   # 本测试针对旧营帐视图 CampChestView 的布局
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT))
 	for height in [800,1067]:
 		get_window().size = Vector2i(480,height)

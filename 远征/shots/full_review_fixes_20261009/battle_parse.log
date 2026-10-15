@@ -1,0 +1,101 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SCRIPT ERROR: Parse Error: Invalid operands "Vector2i" and "Vector2" for "+" operator.
+   at: GDScript::reload (res://src/battle/BattleChestView.gd:278)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://src/battle/BattleScene.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://src/explore/MapScene.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://src/autoload/G.gd:0)
+ERROR: Failed to load script "res://src/autoload/G.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+   at: BattleScene._build_top_bar (res://src/battle/BattleScene.gd:480)
+   GDScript backtrace (most recent call first):
+       [0] _build_top_bar (res://src/battle/BattleScene.gd:480)
+       [1] _ready (res://src/battle/BattleScene.gd:311)
+       [2] _spawn (res://tools/VerifyBattleScene.gd:479)
+       [3] _drive (res://tools/VerifyBattleScene.gd:485)
+       [4] _run_one (res://tools/VerifyBattleScene.gd:401)
+       [5] _run (res://tools/VerifyBattleScene.gd:24)
+       [6] _ready (res://tools/VerifyBattleScene.gd:12)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+   at: UnitView.setup (res://src/battle/BattleScene.gd:2493)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://src/battle/BattleScene.gd:2493)
+       [1] _spawn_view (res://src/battle/BattleScene.gd:1140)
+       [2] _sync_views (res://src/battle/BattleScene.gd:1197)
+       [3] _ready (res://src/battle/BattleScene.gd:315)
+       [4] _spawn (res://tools/VerifyBattleScene.gd:479)
+       [5] _drive (res://tools/VerifyBattleScene.gd:485)
+       [6] _run_one (res://tools/VerifyBattleScene.gd:401)
+       [7] _run (res://tools/VerifyBattleScene.gd:24)
+       [8] _ready (res://tools/VerifyBattleScene.gd:12)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+   at: UnitView.setup (res://src/battle/BattleScene.gd:2493)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://src/battle/BattleScene.gd:2493)
+       [1] _spawn_view (res://src/battle/BattleScene.gd:1140)
+       [2] _sync_views (res://src/battle/BattleScene.gd:1197)
+       [3] _ready (res://src/battle/BattleScene.gd:315)
+       [4] _spawn (res://tools/VerifyBattleScene.gd:479)
+       [5] _drive (res://tools/VerifyBattleScene.gd:485)
+       [6] _run_one (res://tools/VerifyBattleScene.gd:401)
+       [7] _run (res://tools/VerifyBattleScene.gd:24)
+       [8] _ready (res://tools/VerifyBattleScene.gd:12)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+   at: UnitView.setup (res://src/battle/BattleScene.gd:2493)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://src/battle/BattleScene.gd:2493)
+       [1] _spawn_view (res://src/battle/BattleScene.gd:1140)
+       [2] _sync_views (res://src/battle/BattleScene.gd:1197)
+       [3] _ready (res://src/battle/BattleScene.gd:315)
+       [4] _spawn (res://tools/VerifyBattleScene.gd:479)
+       [5] _drive (res://tools/VerifyBattleScene.gd:485)
+       [6] _run_one (res://tools/VerifyBattleScene.gd:401)
+       [7] _run (res://tools/VerifyBattleScene.gd:24)
+       [8] _ready (res://tools/VerifyBattleScene.gd:12)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+   at: UnitView.setup (res://src/battle/BattleScene.gd:2493)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://src/battle/BattleScene.gd:2493)
+       [1] _spawn_view (res://src/battle/BattleScene.gd:1140)
+       [2] _sync_views (res://src/battle/BattleScene.gd:1197)
+       [3] _ready (res://src/battle/BattleScene.gd:315)
+       [4] _spawn (res://tools/VerifyBattleScene.gd:479)
+       [5] _drive (res://tools/VerifyBattleScene.gd:485)
+       [6] _run_one (res://tools/VerifyBattleScene.gd:401)
+       [7] _run (res://tools/VerifyBattleScene.gd:24)
+       [8] _ready (res://tools/VerifyBattleScene.gd:12)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+   at: UnitView.setup (res://src/battle/BattleScene.gd:2493)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://src/battle/BattleScene.gd:2493)
+       [1] _spawn_view (res://src/battle/BattleScene.gd:1140)
+       [2] _sync_views (res://src/battle/BattleScene.gd:1197)
+       [3] _ready (res://src/battle/BattleScene.gd:315)
+       [4] _spawn (res://tools/VerifyBattleScene.gd:479)
+       [5] _drive (res://tools/VerifyBattleScene.gd:485)
+       [6] _run_one (res://tools/VerifyBattleScene.gd:401)
+       [7] _run (res://tools/VerifyBattleScene.gd:24)
+       [8] _ready (res://tools/VerifyBattleScene.gd:12)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+   at: UnitView.setup (res://src/battle/BattleScene.gd:2493)
+   GDScript backtrace (most recent call first):
+       [0] setup (res://src/battle/BattleScene.gd:2493)
+       [1] _spawn_view (res://src/battle/BattleScene.gd:1140)
+       [2] _sync_views (res://src/battle/BattleScene.gd:1197)
+       [3] _ready (res://src/battle/BattleScene.gd:315)
+       [4] _spawn (res://tools/VerifyBattleScene.gd:479)
+       [5] _drive (res://tools/VerifyBattleScene.gd:485)
+       [6] _run_one (res://tools/VerifyBattleScene.gd:401)
+       [7] _run (res://tools/VerifyBattleScene.gd:24)
+       [8] _ready (res://tools/VerifyBattleScene.gd:12)
+ERROR: 1 RID allocations of type 'PN18TextServerAdvanced12FontAdvancedE' were leaked at exit.
+WARNING: 39 RIDs of type "CanvasItem" were leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2735)
+WARNING: 86 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 2 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

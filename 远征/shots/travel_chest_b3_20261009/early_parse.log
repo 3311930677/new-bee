@@ -1,0 +1,26 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SCRIPT ERROR: Parse Error: Cannot infer the type of "index" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://src/ui/CollectionChestView.gd:44)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "index" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://src/ui/CollectionChestView.gd:92)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://src/ui/SkillBookPanel.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://src/ui/GrowthPanel.gd:0)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://tools/VerifyGrowth.gd:0)
+ERROR: Failed to load script "res://tools/VerifyGrowth.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+   at: SkillBookPanel._build (res://src/ui/SkillBookPanel.gd:27)
+   GDScript backtrace (most recent call first):
+       [0] _build (res://src/ui/SkillBookPanel.gd:27)
+       [1] _ready (res://src/ui/SkillBookPanel.gd:24)
+       [2] _open (res://src/ui/GrowthPanel.gd:185)
+       [3] _run (res://tools/VerifyGrowth.gd:702)
+GROWTH_OK all tests passed
+WARNING: 2 RIDs of type "CanvasItem" were leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2735)
+WARNING: 4 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

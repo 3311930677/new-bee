@@ -1,0 +1,304 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/ReturnButton",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/ReturnButton/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/@Label@853",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "行旅背包"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Capacity",
+			"rect_height": 44.0,
+			"size": 13,
+			"text": "装备 14 / 60"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/@Label@854",
+			"rect_height": 44.0,
+			"size": 13,
+			"text": "待领取 0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/GoldBalance",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "金币 12,800"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Categories/Tab_equip",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "装备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Categories/Tab_equip/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "装备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Categories/Tab_equip/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Categories/Tab_mat",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "材料"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Categories/Tab_mat/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "材料"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Categories/Tab_mat/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Categories/Tab_gem",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "宝石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Categories/Tab_gem/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "宝石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Categories/Tab_gem/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Categories/Tab_pending",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "待领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Categories/Tab_pending/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "待领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Categories/Tab_pending/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Items/ItemScroll/SupplyGrid/@Button@1081",
+			"rect_height": 84.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Items/ItemScroll/SupplyGrid/@Button@1081/@Label@1079",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "×12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Items/ItemScroll/SupplyGrid/@Button@1081/@Label@1080",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Items/ItemScroll/SupplyGrid/@Button@1086",
+			"rect_height": 84.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Items/ItemScroll/SupplyGrid/@Button@1086/@Label@1084",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "×6"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Items/ItemScroll/SupplyGrid/@Button@1086/@Label@1085",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Items/ItemScroll/SupplyGrid/@Button@1091",
+			"rect_height": 84.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Items/ItemScroll/SupplyGrid/@Button@1091/@Label@1089",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "×3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Items/ItemScroll/SupplyGrid/@Button@1091/@Label@1090",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Items/ItemScroll/SupplyGrid/@Button@1096",
+			"rect_height": 84.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Items/ItemScroll/SupplyGrid/@Button@1096/@Label@1094",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "×6"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/Items/ItemScroll/SupplyGrid/@Button@1096/@Label@1095",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/SelectedItemDetail/DetailScroll/@VBoxContainer@860/@Label@1097",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "行旅材料"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@852/SelectedItemDetail/DetailScroll/@VBoxContainer@860/@Label@1098",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "材料可堆叠，不占装备格。强化、精炼等加工操作位于养成 → 装备。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@849/@Control@997/@Label@998",
+			"rect_height": 36.0,
+			"size": 14,
+			"text": "已锁定"
+		}
+	]
+}

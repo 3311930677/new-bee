@@ -1,0 +1,394 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@Control@969/@Label@986",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "苍绿林海"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@Control@969/@Label@987",
+			"rect_height": 243.0,
+			"size": 14,
+			"text": "「年轮里刻着阵图，斧子砍下去，会听见钟声。」\n首领已讨伐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@Control@969/@Label@988",
+			"rect_height": 24.0,
+			"size": 13,
+			"text": "秘境 01 / 08"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@Control@969/@Button@989",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@Control@969/@Button@989/Caption",
+			"rect_height": 56.0,
+			"size": 17,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@Control@969/@Button@989/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@Control@969/@Button@990",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "›"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@Control@969/@Button@990/Caption",
+			"rect_height": 56.0,
+			"size": 17,
+			"text": "›"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@Control@969/@Button@990/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@Button@971",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@Button@971/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@Label@972",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "出征筹备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@HBoxContainer@973/@Button@981",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "1 秘境"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@HBoxContainer@973/@Button@981/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "1 秘境"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@HBoxContainer@973/@Button@981/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@HBoxContainer@973/@Button@982",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "2 人物"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@HBoxContainer@973/@Button@982/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "2 人物"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@HBoxContainer@973/@Button@982/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@HBoxContainer@973/@Button@983",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "3 宠物"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@HBoxContainer@973/@Button@983/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "3 宠物"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@HBoxContainer@973/@Button@983/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@ScrollContainer@976/@VBoxContainer@977/@Button@1022",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "人物 · 破军 · Lv.12  ›"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@ScrollContainer@976/@VBoxContainer@977/@Button@1022/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "人物 · 破军 · Lv.12  ›"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@ScrollContainer@976/@VBoxContainer@977/@Button@1022/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@ScrollContainer@976/@VBoxContainer@977/@Button@1023",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "伙伴 · 岩龟  ›"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@ScrollContainer@976/@VBoxContainer@977/@Button@1023/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "伙伴 · 岩龟  ›"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@ScrollContainer@976/@VBoxContainer@977/@Button@1023/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@ScrollContainer@976/@VBoxContainer@977/@Button@1024",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "补给 300 金 · 已加带 1 瓶"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@ScrollContainer@976/@VBoxContainer@977/@Button@1024/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "补给 300 金 · 已加带 1 瓶"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@ScrollContainer@976/@VBoxContainer@977/@Button@1024/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@ScrollContainer@976/@VBoxContainer@977/@Button@1027",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "苦行 · 敌人 ×1.15 / 收益 ×1.30"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@ScrollContainer@976/@VBoxContainer@977/@Button@1027/@Label@1025",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "苦行 · 敌人 ×1.15 / 收益 ×1.30"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@ScrollContainer@976/@VBoxContainer@977/@Button@1027/@Label@1026",
+			"rect_height": 52.0,
+			"size": 13,
+			"text": "开"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@ScrollContainer@976/@VBoxContainer@977/@Label@1028",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "补给在出征时结算；返回不扣金币。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@HBoxContainer@978/@Button@991",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "扫荡 ×2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@HBoxContainer@978/@Button@991/Caption",
+			"rect_height": 56.0,
+			"size": 17,
+			"text": "扫荡 ×2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@HBoxContainer@978/@Button@991/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@HBoxContainer@978/@Button@992",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "出征"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@HBoxContainer@978/@Button@992/Caption",
+			"rect_height": 56.0,
+			"size": 22,
+			"text": "出征"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Control@964/@HBoxContainer@978/@Button@992/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Button@993",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "说明"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Button@993/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "说明"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@962/@Control@963/@Button@993/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		}
+	]
+}

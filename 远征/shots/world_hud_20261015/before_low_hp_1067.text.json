@@ -1,0 +1,277 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@Node2D@212/@Node2D@245/@Label@246",
+			"rect_height": 24.0,
+			"size": 12,
+			"text": "昭元边城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@Node2D@212/@Node2D@247/@Label@248",
+			"rect_height": 24.0,
+			"size": 12,
+			"text": "断碑坡"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 17.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@Node2D@212/@CharacterBody2D@251/@Panel@254/@Label@257",
+			"rect_height": 18.0,
+			"size": 11,
+			"text": "沈舟  Lv60"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@Node2D@212/WorldCompanion/@Label@264",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "岩龟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@Node2D@212/@Node2D@295/@Label@296",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "旧路石匣"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@Node2D@212/@Node2D@297/@Label@298",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "驿亭交易"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/WorldStatus/@Label@300",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 30.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/WorldStatus/@Label@301",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "60"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 20.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/WorldStatus/@Label@302",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "522/2610"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/WorldStatus/@Label@303",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "♥"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 17.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/WorldStatus/@Label@304",
+			"rect_height": 23.0,
+			"size": 11,
+			"text": "历练"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 17.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/WorldStatus/@Label@305",
+			"rect_height": 23.0,
+			"size": 11,
+			"text": "100%"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/WorldGold",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 20.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/WorldGold/@Label@310",
+			"rect_height": 28.0,
+			"size": 13,
+			"text": "100.0万"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/RegionTitle/@Label@311",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "枫林古道"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/WorldTask_story",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 17.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/WorldTask_story/TaskBadge",
+			"rect_height": 23.0,
+			"size": 11,
+			"text": "主"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/WorldTask_story/@Label@312",
+			"rect_height": 34.0,
+			"size": 13,
+			"text": "与边城执事闻叔交谈"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/WorldTask_story/Action_",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/WorldTask_story/Action_/Caption",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/Action_伙伴",
+			"rect_height": 56.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/Action_伙伴/Caption",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "伙伴"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/Action_药剂",
+			"rect_height": 64.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/Action_药剂/Caption",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "药剂"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/Action_药剂/CountBadge/Count",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "2"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/Action_疾行",
+			"rect_height": 56.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/Action_疾行/Caption",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "疾行"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/Action_营帐",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/Action_营帐/Caption",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "营帐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/ReviewPixelWorldHUD/MapScene/@CanvasLayer@299/Minimap/@Label@315",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "北"
+		}
+	]
+}

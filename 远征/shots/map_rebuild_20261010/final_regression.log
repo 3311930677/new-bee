@@ -1,0 +1,34 @@
+WARN: engine version is not 4.7.x: '4.6.1.stable.official.14d19694e' (allowed by -AllowAnyVersion)
+Godot  : D:/godot/Godot_v4.6.1-stable_win64.exe
+Version: 4.6.1.stable.official.14d19694e
+Project: D:\new-bee\远征
+UserDir: D:/new-bee/远征/tools/_logs/user_sandbox_537b3ab470e348baac9bf20b6c152b21/Godot/app_userdata/远征/
+Cases  : 18  (timeout 400s, quit-after 6000 frames)
+Logs   : D:\new-bee\远征\tools\_logs
+Commit : 3b9819f8
+
+PASS  VerifySave
+FAIL  VerifyFieldUI  <- exit code 1; missing completion line 'FIELD_UI_OK'; output contains [ERROR:]; output contains [FAIL:]; output contains [_FAIL]
+      FIELD_UI_FAIL 4
+      ERROR: FAIL: Currency shortage must explain the blocked action
+      log: D:\new-bee\远征\tools\_logs\VerifyFieldUI.log
+PASS  VerifyCity
+PASS  VerifyMapScene
+PASS  VerifyMainWorld
+PASS  VerifyWorldSession
+PASS  VerifyStory
+PASS  VerifyTradeWorld
+PASS  VerifySecondAct
+PASS  VerifyRoadMail
+PASS  VerifyAftermath
+PASS  VerifyAftermathResume
+PASS  VerifyRouteScene
+PASS  VerifyAftermathPaths
+PASS  VerifyQuests
+PASS  VerifyTransit
+PASS  VerifySignpostEntry
+PASS  VerifyNav
+
+NOTE: 13 case(s) emitted 26 engine exit-time resource diagnostic(s) (leaked RIDs / resources still in use). Not counted as failures - tracked as issue #43.
+FAILED: 1 / 18
+runner exit=1

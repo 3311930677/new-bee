@@ -5,6 +5,7 @@ signal closed
 const UI := preload("res://src/ui/TravelChestUI.gd")
 const Page := preload("res://src/ui/ChestPageUI.gd")
 const Fix:=preload("res://src/ui/ReviewFixUI.gd")
+const Art := preload("res://src/ui/InventoryQuestSkin.gd")
 const TABS := [["equip","装备"],["mat","材料"],["gem","宝石"],["pending","待领取"]]
 var _tab := "equip"
 var _page := 0
@@ -33,61 +34,66 @@ var _tab_buttons: Dictionary = {}
 var _item_buttons: Array[Button] = []
 var _action_buttons: Array[Button] = []
 var _focus_return: Control
+var _header: Panel
+var _list_plate: Panel
+var _bag_mark: Control
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	if _focus_return==null: _focus_return=get_viewport().gui_get_focus_owner()
-	theme=UI.theme()
+	theme=Art.theme()
 	_build()
 	get_viewport().size_changed.connect(_resize_frame)
 	_refresh()
 	_tab_buttons[_tab].grab_focus.call_deferred()
 
 func _build() -> void:
-	_stage=Fix.ContextStage.new("chest")
+	_stage=Art.Stage.new()
 	add_child(_stage)
 	_panel_root=Control.new()
 	_panel_root.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	add_child(_panel_root)
-	_close_btn=UI.action("‹","back")
+	_header=Art.plate("header")
+	_panel_root.add_child(_header)
+	_bag_mark=G.ui_icon("bag",Vector2(28,28),Art.GOLD)
+	_panel_root.add_child(_bag_mark)
+	_close_btn=Art.action("‹","back")
 	_close_btn.name="ReturnButton"
 	_close_btn.tooltip_text="返回"
 	_close_btn.pressed.connect(_close)
 	_panel_root.add_child(_close_btn)
-	_banner=UI.label("行旅背包","title")
+	_banner=Art.label("行旅背包","title",Art.GOLD)
 	_panel_root.add_child(_banner)
-	_count_l=UI.label("","caption",UI.AGED)
+	_count_l=Art.label("","caption",Art.MUTED)
 	_count_l.name="Capacity"
 	_panel_root.add_child(_count_l)
-	_pending_l=UI.label("","caption",UI.AGED)
+	_pending_l=Art.label("","caption",Art.MUTED)
 	_panel_root.add_child(_pending_l)
 	_gold_bg=Panel.new()
 	_gold_bg.name="GoldPill"
 	_gold_bg.mouse_filter=Control.MOUSE_FILTER_IGNORE
-	var gstyle:=StyleBoxFlat.new()
-	gstyle.bg_color=Color("141118",0.86)
-	gstyle.border_color=Color("6a5338",0.75)
-	gstyle.set_border_width_all(1)
-	gstyle.set_corner_radius_all(3)
-	_gold_bg.add_theme_stylebox_override("panel",gstyle)
+	_gold_bg.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+	_gold_bg.add_theme_stylebox_override("panel",Art.box("secondary",0))
 	_panel_root.add_child(_gold_bg)
-	_gold=UI.label("","number",UI.GOLD)
+	_gold=Art.label("","number",Art.GOLD)
 	_gold.name="GoldBalance"
 	_gold.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	_panel_root.add_child(_gold)
 	_tabs=HBoxContainer.new()
 	_tabs.name="Categories"
-	_tabs.add_theme_constant_override("separation",4)
+	_tabs.add_theme_constant_override("separation",6)
 	_panel_root.add_child(_tabs)
 	for entry in TABS:
 		var key: String=entry[0]
-		var b=UI.action(entry[1],"tab")
+		var b=Art.action(entry[1],"tab")
 		b.custom_minimum_size.y=44
 		b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 		b.name="Tab_"+key
 		b.pressed.connect(_select_tab.bind(key))
 		_tabs.add_child(b)
 		_tab_buttons[key]=b
+	_list_plate=Art.plate("card")
+	_panel_root.add_child(_list_plate)
 	_list=Control.new()
 	_list.name="Items"
 	_panel_root.add_child(_list)
@@ -95,7 +101,7 @@ func _build() -> void:
 	_scroll.name="ItemScroll"
 	_scroll.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_list.add_child(_scroll)
-	_tray=UI.Tray.new()
+	_tray=Art.plate("paper")
 	_panel_root.add_child(_tray)
 	_detail=Control.new()
 	_detail.name="SelectedItemDetail"
@@ -105,7 +111,7 @@ func _build() -> void:
 	_detail.add_child(_detail_scroll)
 	_detail_body=VBoxContainer.new()
 	_detail_body.size_flags_horizontal=Control.SIZE_EXPAND_FILL
-	_detail_body.add_theme_constant_override("separation",6)
+	_detail_body.add_theme_constant_override("separation",4)
 	_detail_scroll.add_child(_detail_body)
 	_actions=Control.new()
 	_actions.name="EquipmentActions"
@@ -117,28 +123,35 @@ func _resize_frame(safe_override: Rect2=Rect2()) -> void:
 	var safe:=safe_override if safe_override.has_area() else G.ui_safe_rect(self)
 	Page.place(_stage,Vector2.ZERO,get_viewport_rect().size)
 	Page.place(_panel_root,safe.position,safe.size)
-	Page.place(_close_btn,Vector2(8,6),Vector2(44,44))
-	Page.place(_banner,Vector2(64,8),Vector2(300,40))
-	Page.place(_count_l,Vector2(12,52),Vector2(176,44))
-	Page.place(_pending_l,Vector2(172,52),Vector2(130,44))
-	if _gold_bg!=null:Page.place(_gold_bg,Vector2(safe.size.x-164,54),Vector2(152,36))
-	Page.place(_gold,Vector2(safe.size.x-164,54),Vector2(152,36))
-	Page.place(_tabs,Vector2(12,100),Vector2(safe.size.x-24,44))
-	var tray_top:=safe.size.y-328
-	Page.place(_list,Vector2(12,152),Vector2(safe.size.x-24,maxf(148,tray_top-156)))
+	var w:=safe.size.x
+	Page.place(_header,Vector2(16,10),Vector2(w-32,60))
+	Page.place(_close_btn,Vector2(22,18),Vector2(44,44))
+	Page.place(_bag_mark,Vector2(80,26),Vector2(28,28))
+	Page.place(_banner,Vector2(120,20),Vector2(w-148,40))
+	Page.place(_count_l,Vector2(24,78),Vector2(136,34))
+	Page.place(_pending_l,Vector2(164,78),Vector2(110,34))
+	if _gold_bg!=null:Page.place(_gold_bg,Vector2(w-182,78),Vector2(158,34))
+	Page.place(_gold,Vector2(w-182,78),Vector2(158,34))
+	Page.place(_tabs,Vector2(24,120),Vector2(w-48,44))
+	var compact:=_tab=="pending" or _tab in ["mat","gem"] or G.inv_find(_sel_uid).is_empty()
+	var tray_h:=112.0 if compact else 294.0
+	var tray_top:=safe.size.y-tray_h-16
+	Page.place(_list_plate,Vector2(16,174),Vector2(w-32,maxf(148,tray_top-182)))
+	Page.place(_list,Vector2(24,182),Vector2(w-48,maxf(132,tray_top-198)))
 	if _scroll.get_child_count()>0 and _scroll.get_child(0) is GridContainer:
 		for cell in _scroll.get_child(0).get_children():
-			cell.custom_minimum_size.x = floorf((_list.size.x-36)/5)
+			var cell_w:=floorf((_list.size.x-32)/5)
+			cell.custom_minimum_size = Vector2(cell_w,cell_w)
 			cell.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	Page.place(_tray,Vector2(0,tray_top),Vector2(safe.size.x,328))
-	Page.place(_detail,Vector2(12,tray_top+16),Vector2(safe.size.x-24,300))
-	Page.place(_detail_scroll,Vector2(8,0),Vector2(_detail.size.x-16,232))
-	Page.place(_actions,Vector2(0,244),Vector2(_detail.size.x,56))
+	Page.place(_tray,Vector2(16,tray_top),Vector2(w-32,tray_h))
+	Page.place(_detail,Vector2(38,tray_top+20),Vector2(w-76,tray_h-40))
+	Page.place(_detail_scroll,Vector2(0,0),Vector2(_detail.size.x,72 if compact else 196))
+	Page.place(_actions,Vector2(0,208),Vector2(_detail.size.x,48))
 	for b in _action_buttons:
 		match b.get_meta("action",""):
-			"sell":Page.place(b,Vector2.ZERO,Vector2(120,56))
-			"lock":Page.place(b,Vector2(128,0),Vector2(56,56))
-			_:Page.place(b,Vector2(192,0),Vector2(_actions.size.x-192,56))
+			"sell":Page.place(b,Vector2.ZERO,Vector2(128,48))
+			"lock":Page.place(b,Vector2(136,0),Vector2(72,48))
+			_:Page.place(b,Vector2(216,0),Vector2(_actions.size.x-216,48))
 
 func _select_tab(key: String) -> void:
 	_tab=key
@@ -168,6 +181,7 @@ func _refresh() -> void:
 		"mat":_build_supplies(false)
 		"gem":_build_supplies(true)
 		"pending":_build_pending_tab()
+	Art.paper_ink(_detail_body)
 	_resize_frame()
 	_wire_focus()
 	_scroll.set_deferred("scroll_vertical",offset)
@@ -176,7 +190,7 @@ func _grid() -> GridContainer:
 	var grid:=GridContainer.new()
 	grid.columns=5
 	grid.name="EquipmentGrid" if _tab=="equip" else "SupplyGrid"
-	grid.add_theme_constant_override("h_separation",9)
+	grid.add_theme_constant_override("h_separation",8)
 	grid.add_theme_constant_override("v_separation",8)
 	grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	_scroll.add_child(grid)
@@ -186,7 +200,7 @@ func _build_equip_tab() -> void:
 	var items:=_bag_items()
 	var grid:=_grid()
 	for inst in items:
-		var cell:=Page.ItemCell.new()
+		var cell:=Art.ItemCell.new()
 		var uid:=int(inst.uid)
 		var tpl:=G.equip_tpl(String(inst.tpl))
 		cell.name="Equipment_"+str(uid)
@@ -205,7 +219,7 @@ func _build_equip_tab() -> void:
 		_item_buttons.append(cell)
 	var min_slots: int = maxi(20, int(ceil(float(items.size()) / 5.0)) * 5)
 	for i in range(items.size(), min_slots):
-		var empty_cell := Page.ItemCell.new()
+		var empty_cell := Art.ItemCell.new()
 		empty_cell.disabled = true
 		empty_cell.focus_mode = Control.FOCUS_NONE
 		grid.add_child(empty_cell)
@@ -221,10 +235,23 @@ func _select_item(uid: int) -> void:
 
 func _empty(words: String, hint: String) -> void:
 	var box:=VBoxContainer.new()
+	box.name="PendingEmptyState"
 	box.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	box.custom_minimum_size.y=maxf(280,_list.size.y)
+	box.alignment=BoxContainer.ALIGNMENT_CENTER
+	box.add_theme_constant_override("separation",12)
 	_scroll.add_child(box)
-	box.add_child(Page.line(words,"section"))
-	box.add_child(Page.line(hint,"caption",UI.AGED))
+	var picture:=Page.picture(Art.texture("chest"),Vector2(260,220))
+	picture.name="PendingChestArtwork"
+	picture.size_flags_horizontal=Control.SIZE_SHRINK_CENTER
+	box.add_child(picture)
+	var heading:=Art.label(words,"object",Art.GOLD)
+	heading.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	box.add_child(heading)
+	var caption:=Art.label(hint,"caption",Art.MUTED)
+	caption.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
+	caption.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	box.add_child(caption)
 
 func _build_detail() -> void:
 	var inst:=G.inv_find(_sel_uid)
@@ -239,13 +266,13 @@ func _build_detail() -> void:
 	var top:=HBoxContainer.new()
 	top.add_theme_constant_override("separation", 12)
 	_detail_body.add_child(top)
-	var icon_cell := Page.ItemCell.new()
-	icon_cell.custom_minimum_size = Vector2(80, 80)
-	icon_cell.size = Vector2(80, 80)
+	var icon_cell := Art.ItemCell.new()
+	icon_cell.custom_minimum_size = Vector2(64, 64)
+	icon_cell.size = Vector2(64, 64)
 	icon_cell.rarity_rank = int(inst.get("rarity", 1))
 	icon_cell.rarity = G.equip_rarity_color(icon_cell.rarity_rank)
 	icon_cell.item_image.texture = Fix.item(String(inst.tpl))
-	icon_cell.image_px = 64
+	icon_cell.image_px = 52
 	icon_cell.disabled = true
 	icon_cell.focus_mode = Control.FOCUS_NONE
 	top.add_child(icon_cell)
@@ -256,11 +283,11 @@ func _build_detail() -> void:
 	names.add_child(Page.line("%s · 强化 +%d%s" % [G.equip_rarity_name(int(inst.get("rarity",1))),int(inst.get("lv",0))," · 在身" if worn else ""],"caption",UI.AGED))
 	var stat_box := PanelContainer.new()
 	var stat_sb := StyleBoxFlat.new()
-	stat_sb.bg_color = Color("141118", 0.65)
-	stat_sb.border_color = Color("382e22", 0.60)
+	stat_sb.bg_color = Color("987a4f", 0.16)
+	stat_sb.border_color = Color("856843", 0.5)
 	stat_sb.set_border_width_all(1)
-	stat_sb.set_corner_radius_all(3)
-	stat_sb.set_content_margin_all(8)
+	stat_sb.set_corner_radius_all(0)
+	stat_sb.set_content_margin_all(6)
 	stat_box.add_theme_stylebox_override("panel", stat_sb)
 	_detail_body.add_child(stat_box)
 	var stat_vbox := VBoxContainer.new()
@@ -306,7 +333,7 @@ func _build_detail() -> void:
 	wear.tooltip_text="需求 Lv.%d，当前 Lv.%d" % [level,int(G.prog.get("level",1))] if wear.disabled else "卸下回背包" if worn else "装备到对应部位"
 
 func _action(words: String,skin: String,id: String, callback: Callable) -> Button:
-	var b:=UI.action(words,skin)
+	var b:=Art.action(words,skin)
 	b.set_meta("action",id)
 	b.pressed.connect(func(): HapticFeedback.light())
 	b.pressed.connect(callback)
@@ -330,7 +357,7 @@ func _build_supplies(gems: bool) -> void:
 	ids.sort()
 	var grid:=_grid()
 	for id in ids:
-		var b:=Page.ItemCell.new()
+		var b:=Art.ItemCell.new()
 		b.item_image.texture=G.res_tex(G.item_icon(id))
 		b.heading.text=G.gem_label(id) if gems else G.item_name(id)
 		b.amount.text="×%d" % G.item_count(id)
@@ -341,7 +368,7 @@ func _build_supplies(gems: bool) -> void:
 		_item_buttons.append(b)
 	var min_slots: int = maxi(20, int(ceil(float(ids.size()) / 5.0)) * 5)
 	for i in range(ids.size(), min_slots):
-		var empty_cell := Page.ItemCell.new()
+		var empty_cell := Art.ItemCell.new()
 		empty_cell.disabled = true
 		empty_cell.focus_mode = Control.FOCUS_NONE
 		grid.add_child(empty_cell)
@@ -366,7 +393,7 @@ func _build_pending_tab() -> void:
 		var title:=Page.line("%s
 %s · 强化 +%d" % [tpl.get("name","装备"),G.equip_rarity_name(int(inst.get("rarity",1))),int(inst.get("lv",0))],"body")
 		row.add_child(title)
-		var b:=UI.action("领取","secondary")
+		var b:=Art.action("领取","primary")
 		var uid:=int(inst.uid)
 		b.custom_minimum_size=Vector2(80,56)
 		b.set_meta("gear_uid",uid)
@@ -375,7 +402,7 @@ func _build_pending_tab() -> void:
 		b.pressed.connect(func():_toast_msg(_ok_msg(G.inv_claim(uid),"已领取"));_refresh())
 		row.add_child(b)
 		_item_buttons.append(b)
-	if G.inv_pending().is_empty():_empty("待领取箱是空的","背包满时，沿途掉落会暂存这里。")
+	if G.inv_pending().is_empty():_empty("暂无待领取物品","背包满时，掉落将暂存于此")
 	_detail_body.add_child(Page.line("待领取物品会保留在这里","section"))
 	_detail_body.add_child(Page.line("腾出装备格后即可领取；领取不会额外消耗资源。","caption",UI.AGED))
 

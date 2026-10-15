@@ -1,0 +1,22 @@
+[
+  {
+    "name": "import",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "name": "verify",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "name": "navigation",
+    "passed": true,
+    "exit_code": 0
+  },
+  {
+    "name": "entry",
+    "passed": false,
+    "exit_code": 1
+  }
+]

@@ -1,0 +1,610 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@763/@Node2D@767/@Node2D@841/@Node2D@829/@Label@832",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "旅人 12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@763/@Node2D@767/@Node2D@841/@Node2D@829/@Label@837",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "1/570"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@763/@Node2D@767/@Node2D@841/@Node2D@829/@Label@840",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@763/@Node2D@767/@Node2D@851/@Node2D@842/@Label@844",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "岩龟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@763/@Node2D@767/@Node2D@851/@Node2D@842/@Label@849",
+			"rect_height": 23.0000019073486,
+			"size": 12,
+			"text": "201/201"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@763/@Node2D@767/@Node2D@851/@Node2D@842/@Label@850",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@763/@Node2D@767/@Node2D@862/@Node2D@852/@Label@861",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@763/@Node2D@767/@Node2D@873/@Node2D@863/@Label@872",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@763/@Node2D@767/@Node2D@884/@Node2D@874/@Label@883",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@763/@Node2D@767/@Node2D@895/@Node2D@885/@Label@894",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@768/@PanelContainer@918/@HBoxContainer@917/@Label@916",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "裂山"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@HBoxContainer@776/@Control@813/@Label@810",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "树妖·1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@HBoxContainer@776/@Control@813/@Label@811",
+			"rect_height": 19.0,
+			"size": 12,
+			"text": "91/91"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@HBoxContainer@776/@Control@813/@Label@812",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@HBoxContainer@776/@Control@818/@Label@815",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "毒蛛"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@HBoxContainer@776/@Control@818/@Label@816",
+			"rect_height": 19.0,
+			"size": 12,
+			"text": "56/56"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@HBoxContainer@776/@Control@818/@Label@817",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@HBoxContainer@776/@Control@823/@Label@820",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "哥布林掠盗"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@HBoxContainer@776/@Control@823/@Label@821",
+			"rect_height": 19.0,
+			"size": 12,
+			"text": "51/51"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@HBoxContainer@776/@Control@823/@Label@822",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@HBoxContainer@776/@Control@828/@Label@825",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "树妖·4"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@HBoxContainer@776/@Control@828/@Label@826",
+			"rect_height": 19.0,
+			"size": 12,
+			"text": "91/91"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@HBoxContainer@776/@Control@828/@Label@827",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@779/@Label@777",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "旅人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@779/@Label@778",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "1/570"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@782/@Label@780",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "岩龟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@782/@Label@781",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "201/201"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@785/@Label@783",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "能量"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@785/@Label@784",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "100/100"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@786/@Button@787",
+			"rect_height": 104.0,
+			"size": 14,
+			"text": "攻击"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@786/@Button@787/Caption",
+			"rect_height": 33.0,
+			"size": 22,
+			"text": "攻击"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@786/@Button@787/Subtitle",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "集火 · 树妖"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@786/@Button@788",
+			"rect_height": 50.0,
+			"size": 14,
+			"text": "技能"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@786/@Button@788/Caption",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "可放 5"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@786/@Button@788/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@786/@Button@789",
+			"rect_height": 50.0,
+			"size": 14,
+			"text": "道具"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@786/@Button@789/Caption",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "道具 2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@786/@Button@789/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@786/@Button@790",
+			"rect_height": 50.0,
+			"size": 14,
+			"text": "伙伴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@786/@Button@790/Caption",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "伙伴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@786/@Button@790/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@786/@Button@791",
+			"rect_height": 50.0,
+			"size": 14,
+			"text": "换目标"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@786/@Button@791/Caption",
+			"rect_height": 28.0,
+			"size": 15,
+			"text": "换目标"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@786/@Button@791/Subtitle",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "下个 · 哥布林掠盗"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Button@792",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "撤退"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Button@792/Caption",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "撤退"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Button@792/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Button@793",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "×1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Button@793/Caption",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "×1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Button@793/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Button@794",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "自动"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Button@794/Caption",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "自动中"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Button@794/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Label@795",
+			"rect_height": 36.0,
+			"size": 17,
+			"text": "遭遇战"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 27.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Label@807",
+			"rect_height": 40.0,
+			"size": 18,
+			"text": "危急 · 血量过低，补药或撤退"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Label@808",
+			"rect_height": 24.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@919/@Control@921/@Label@922",
+			"rect_height": 28.0,
+			"size": 17,
+			"text": "撤退确认"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@919/@Control@921/BodyScroll/@VBoxContainer@925/@Label@926",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "退出本节点，保留战损与节点进度，确定撤退？"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@919/@Control@921/@Button@927",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "取消"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@919/@Control@921/@Button@927/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "取消"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@919/@Control@921/@Button@927/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@919/@Control@921/@Button@928",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "确认"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@919/@Control@921/@Button@928/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "确认"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@919/@Control@921/@Button@928/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@919/@Control@921/@Button@929",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "关闭"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@919/@Control@921/@Button@929/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "关闭"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/BattleScene/@Control@770/@Control@919/@Control@921/@Button@929/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		}
+	]
+}

@@ -1,0 +1,259 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "",
+			"height": 39.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@Control@34/@Label@44",
+			"rect_height": 44.0,
+			"size": 26,
+			"text": "穿杨"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@Control@34/@Label@45",
+			"rect_height": 24.0,
+			"size": 13,
+			"text": "枪骑 · 长枪"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@Control@34/@Label@46",
+			"rect_height": 24.0,
+			"size": 13,
+			"text": "中远程物理 · 灵动输出"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@Control@34/@Button@49",
+			"rect_height": 64.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@Control@34/@Button@49/Caption",
+			"rect_height": 64.0,
+			"size": 17,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@Control@34/@Button@49/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@Control@34/@Button@50",
+			"rect_height": 64.0,
+			"size": 14,
+			"text": "›"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@Control@34/@Button@50/Caption",
+			"rect_height": 64.0,
+			"size": 17,
+			"text": "›"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@Control@34/@Button@50/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@Button@36",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@Button@36/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@Label@37",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "创建角色"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@ScrollContainer@41/@VBoxContainer@42/@HBoxContainer@51/@Button@52",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "男"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@ScrollContainer@41/@VBoxContainer@42/@HBoxContainer@51/@Button@52/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "男"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@ScrollContainer@41/@VBoxContainer@42/@HBoxContainer@51/@Button@52/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@ScrollContainer@41/@VBoxContainer@42/@HBoxContainer@51/@Button@53",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "女"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@ScrollContainer@41/@VBoxContainer@42/@HBoxContainer@51/@Button@53/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "女"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@ScrollContainer@41/@VBoxContainer@42/@HBoxContainer@51/@Button@53/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@ScrollContainer@41/@VBoxContainer@42/@Label@54",
+			"rect_height": 47.0,
+			"size": 14,
+			"text": "马背上的枪骑，长枪连珠、挑落飞影。身法轻灵，进退之间总能找到破绽，一击致命。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@ScrollContainer@41/@VBoxContainer@42/@Label@55",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "角色昵称"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@ScrollContainer@41/@VBoxContainer@42/@HBoxContainer@56/@LineEdit@57",
+			"rect_height": 48.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@ScrollContainer@41/@VBoxContainer@42/@HBoxContainer@56/@Button@58",
+			"rect_height": 48.0,
+			"size": 14,
+			"text": "随机"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@ScrollContainer@41/@VBoxContainer@42/@HBoxContainer@56/@Button@58/Caption",
+			"rect_height": 48.0,
+			"size": 17,
+			"text": "随机"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@ScrollContainer@41/@VBoxContainer@42/@HBoxContainer@56/@Button@58/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@ScrollContainer@41/@VBoxContainer@42/@Label@59",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "请输入角色昵称"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@HBoxContainer@43/@Button@60",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "确定"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@HBoxContainer@43/@Button@60/Caption",
+			"rect_height": 56.0,
+			"size": 22,
+			"text": "确定"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/CreateRole/@Control@28/@Control@29/@HBoxContainer@43/@Button@60/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		}
+	]
+}

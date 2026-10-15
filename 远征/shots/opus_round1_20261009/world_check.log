@@ -1,0 +1,72 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: FAIL: 换宠入口应显示宠物图标
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyMainWorld.gd:26)
+       [1] _run (res://tools/VerifyMainWorld.gd:70)
+ERROR: FAIL: 主城主线签应避开城务委托签
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyMainWorld.gd:26)
+       [1] _run (res://tools/VerifyMainWorld.gd:76)
+ERROR: FAIL: 主地图左上应显示角色等级
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyMainWorld.gd:26)
+       [1] _run (res://tools/VerifyMainWorld.gd:95)
+ERROR: FAIL: 金币原图缩放后必须完整留在资源栏内
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyMainWorld.gd:26)
+       [1] _verify_top_hud (res://tools/VerifyMainWorld.gd:381)
+ERROR: FAIL: 48px 货币原图不能撑大 HUD 图标
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyMainWorld.gd:26)
+       [1] _verify_top_hud (res://tools/VerifyMainWorld.gd:383)
+ERROR: FAIL: 九位金币应完整显示，不依赖裁剪
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyMainWorld.gd:26)
+       [1] _verify_top_hud (res://tools/VerifyMainWorld.gd:408)
+ERROR: FAIL: 低血量应用暖色提示
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyMainWorld.gd:26)
+       [1] _verify_top_hud (res://tools/VerifyMainWorld.gd:417)
+ERROR: FAIL: 长屏主世界摇杆与拇指按钮应留在视口底缘
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyMainWorld.gd:26)
+       [1] _run (res://tools/VerifyMainWorld.gd:359)
+ERROR: FAIL: 金币原图缩放后必须完整留在资源栏内
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyMainWorld.gd:26)
+       [1] _verify_top_hud (res://tools/VerifyMainWorld.gd:381)
+ERROR: FAIL: 48px 货币原图不能撑大 HUD 图标
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyMainWorld.gd:26)
+       [1] _verify_top_hud (res://tools/VerifyMainWorld.gd:383)
+ERROR: FAIL: 九位金币应完整显示，不依赖裁剪
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyMainWorld.gd:26)
+       [1] _verify_top_hud (res://tools/VerifyMainWorld.gd:408)
+ERROR: FAIL: 低血量应用暖色提示
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyMainWorld.gd:26)
+       [1] _verify_top_hud (res://tools/VerifyMainWorld.gd:417)
+MAIN_WORLD_FAIL fails=12
+ERROR: 1 RID allocations of type 'PN18TextServerAdvanced12FontAdvancedE' were leaked at exit.
+WARNING: 7 RIDs of type "Canvas" were leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2735)
+WARNING: 68 RIDs of type "CanvasItem" were leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2735)
+WARNING: 146 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

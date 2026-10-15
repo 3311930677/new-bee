@@ -1,0 +1,157 @@
+{
+	"checks": 234,
+	"failures": 0,
+	"maps": [
+		{
+			"extent": "(960.0, 1248.0)",
+			"ground": "res://assets/world/maps_rebuild_20261015/stele_cavern_floor.png",
+			"map": "stele_cavern",
+			"phase": "after",
+			"size": [
+				960,
+				1248
+			]
+		},
+		{
+			"extent": "(960.0, 1248.0)",
+			"ground": "res://assets/world/maps_rebuild_20261015/old_salt_road_floor.png",
+			"map": "old_salt_road",
+			"phase": "after",
+			"size": [
+				960,
+				1248
+			]
+		},
+		{
+			"extent": "(960.0, 1248.0)",
+			"ground": "res://assets/world/maps_rebuild_20261015/shenyuan_port_floor.png",
+			"map": "shenyuan_port",
+			"phase": "after",
+			"size": [
+				960,
+				1248
+			]
+		},
+		{
+			"extent": "(960.0, 1248.0)",
+			"ground": "res://assets/world/maps_rebuild_20261015/tideflat_floor.png",
+			"map": "tideflat",
+			"phase": "after",
+			"size": [
+				960,
+				1248
+			]
+		},
+		{
+			"extent": "(960.0, 1248.0)",
+			"ground": "res://assets/world/maps_rebuild_20261015/tidal_gate_floor.png",
+			"map": "tidal_gate",
+			"phase": "after",
+			"size": [
+				960,
+				1248
+			]
+		},
+		{
+			"extent": "(960.0, 1248.0)",
+			"ground": "res://assets/world/maps_rebuild_20261015/red_sand_route_floor.png",
+			"map": "red_sand_route",
+			"phase": "after",
+			"size": [
+				960,
+				1248
+			]
+		},
+		{
+			"extent": "(960.0, 1248.0)",
+			"ground": "res://assets/world/maps_rebuild_20261015/frost_post_floor.png",
+			"map": "frost_post",
+			"phase": "after",
+			"size": [
+				960,
+				1248
+			]
+		},
+		{
+			"extent": "(960.0, 1248.0)",
+			"ground": "res://assets/world/maps_rebuild_20261015/rift_mine_road_floor.png",
+			"map": "rift_mine_road",
+			"phase": "after",
+			"size": [
+				960,
+				1248
+			]
+		},
+		{
+			"extent": "(960.0, 1248.0)",
+			"ground": "res://assets/world/maps_rebuild_20261015/rift_mine_vault_floor.png",
+			"map": "rift_mine_vault",
+			"phase": "after",
+			"size": [
+				960,
+				1248
+			]
+		},
+		{
+			"extent": "(960.0, 1248.0)",
+			"ground": "res://assets/world/maps_rebuild_20261015/frost_boardwalk_floor.png",
+			"map": "frost_boardwalk",
+			"phase": "after",
+			"size": [
+				960,
+				1248
+			]
+		},
+		{
+			"extent": "(960.0, 1248.0)",
+			"ground": "res://assets/world/maps_rebuild_20261015/frost_pass_floor.png",
+			"map": "frost_pass",
+			"phase": "after",
+			"size": [
+				960,
+				1248
+			]
+		},
+		{
+			"extent": "(960.0, 1248.0)",
+			"ground": "res://assets/world/maps_rebuild_20261015/abyss_ring_floor.png",
+			"map": "abyss_ring",
+			"phase": "after",
+			"size": [
+				960,
+				1248
+			]
+		},
+		{
+			"extent": "(960.0, 1248.0)",
+			"ground": "res://assets/world/maps_rebuild_20261015/stele_entry_floor.png",
+			"map": "stele_entry",
+			"phase": "after",
+			"size": [
+				960,
+				1248
+			]
+		},
+		{
+			"extent": "(960.0, 1248.0)",
+			"ground": "res://assets/world/maps_rebuild_20261015/stele_resonance_floor.png",
+			"map": "stele_resonance",
+			"phase": "after",
+			"size": [
+				960,
+				1248
+			]
+		},
+		{
+			"extent": "(960.0, 1248.0)",
+			"ground": "res://assets/world/maps_rebuild_20261015/stele_core_floor.png",
+			"map": "stele_core",
+			"phase": "after",
+			"size": [
+				960,
+				1248
+			]
+		}
+	],
+	"phase": "after"
+}

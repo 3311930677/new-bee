@@ -1,0 +1,124 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "",
+			"height": 24.0,
+			"path": "/root/VerifyRound1UI/Title/@Control@6/@Label@7",
+			"rect_height": 28.0,
+			"size": 16,
+			"text": "点击开始旅程"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyRound1UI/Title/StartGame",
+			"rect_height": 60.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 30.0,
+			"path": "/root/VerifyRound1UI/Title/StartGame/@Label@10",
+			"rect_height": 60.0,
+			"size": 20,
+			"text": "开始游戏"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyRound1UI/Title/ContinueGame",
+			"rect_height": 52.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 27.0,
+			"path": "/root/VerifyRound1UI/Title/ContinueGame/@Label@11",
+			"rect_height": 52.0,
+			"size": 18,
+			"text": "继续冒险"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyRound1UI/Title/Settings",
+			"rect_height": 52.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 27.0,
+			"path": "/root/VerifyRound1UI/Title/Settings/@Label@12",
+			"rect_height": 52.0,
+			"size": 18,
+			"text": "设置"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyRound1UI/Title/Notice",
+			"rect_height": 60.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 18.0,
+			"path": "/root/VerifyRound1UI/Title/Notice/@Label@13",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "公告"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyRound1UI/Title/Credits",
+			"rect_height": 60.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 18.0,
+			"path": "/root/VerifyRound1UI/Title/Credits/@Label@14",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "制作组"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyRound1UI/Title/Version",
+			"rect_height": 60.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 18.0,
+			"path": "/root/VerifyRound1UI/Title/Version/@Label@15",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "版本信息"
+		}
+	]
+}

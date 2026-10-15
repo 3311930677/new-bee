@@ -1,0 +1,223 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@Button@3",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@Button@3/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@Label@5",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "昭元行旅录"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@PanelContainer@6/@ScrollContainer@10/@VBoxContainer@9/@Label@11",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "旅人登记"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@PanelContainer@6/@ScrollContainer@10/@VBoxContainer@9/@Label@13",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "通关文牒"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@PanelContainer@6/@ScrollContainer@10/@VBoxContainer@9/@LineEdit@14",
+			"rect_height": 48.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@PanelContainer@6/@ScrollContainer@10/@VBoxContainer@9/@Label@15",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "通关秘钥"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@PanelContainer@6/@ScrollContainer@10/@VBoxContainer@9/@HBoxContainer@16/@LineEdit@17",
+			"rect_height": 48.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@PanelContainer@6/@ScrollContainer@10/@VBoxContainer@9/@HBoxContainer@16/@Button@18",
+			"rect_height": 48.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@PanelContainer@6/@ScrollContainer@10/@VBoxContainer@9/@HBoxContainer@16/@Button@18/Caption",
+			"rect_height": 48.0,
+			"size": 17,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@PanelContainer@6/@ScrollContainer@10/@VBoxContainer@9/@HBoxContainer@16/@Button@18/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@PanelContainer@6/@ScrollContainer@10/@VBoxContainer@9/@Button@19",
+			"rect_height": 64.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@PanelContainer@6/@ScrollContainer@10/@VBoxContainer@9/@Button@19/Caption",
+			"rect_height": 64.0,
+			"size": 17,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@PanelContainer@6/@ScrollContainer@10/@VBoxContainer@9/@Button@19/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@PanelContainer@6/@ScrollContainer@10/@VBoxContainer@9/@Button@19/@Label@21",
+			"rect_height": 64.0,
+			"size": 13,
+			"text": "自选旅人画像 · 导入图片"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@PanelContainer@6/@ScrollContainer@10/@VBoxContainer@9/@Label@22",
+			"rect_height": 24.0,
+			"size": 13,
+			"text": "请输入账号"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@PanelContainer@6/@ScrollContainer@10/@VBoxContainer@9/@Label@23",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "昭元行牒"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@Button@24",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "登录入城"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@Button@24/Caption",
+			"rect_height": 56.0,
+			"size": 22,
+			"text": "登录入城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@Button@24/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@Button@25",
+			"rect_height": 48.0,
+			"size": 14,
+			"text": "游客入城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@Button@25/Caption",
+			"rect_height": 48.0,
+			"size": 17,
+			"text": "游客入城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@Button@25/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/Login/@Control@2/@Label@26",
+			"rect_height": 24.0,
+			"size": 12,
+			"text": "旅途进度自动保存在本机"
+		}
+	]
+}

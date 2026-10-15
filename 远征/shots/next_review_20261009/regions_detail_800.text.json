@@ -1,0 +1,637 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_lorin_wilds",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_lorin_wilds/@Label@1426",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "昭元边城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_lorin_wilds/@Label@1427",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv1–12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_maple_road",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_maple_road/@Label@1428",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "枫林古道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_maple_road/@Label@1429",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv1–8"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_broken_slope",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_broken_slope/@Label@1430",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "断碑坡"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_broken_slope/@Label@1431",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv6–12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_stele_cavern",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_stele_cavern/@Label@1432",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "失声碑窟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_stele_cavern/@Label@1433",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv9–14"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_old_salt_road",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_old_salt_road/@Label@1434",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "旧盐道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_old_salt_road/@Label@1435",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv10–16"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_shenyuan_port",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_shenyuan_port/@Label@1436",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "沉渊港"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_shenyuan_port/@Label@1437",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv10–18"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_tideflat",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_tideflat/@Label@1438",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "潮痕滩"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_tideflat/@Label@1439",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv13–20"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_tidal_gate",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_tidal_gate/@Label@1440",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "退潮水闸"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_tidal_gate/@Label@1441",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv16–23"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_red_sand_route",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_red_sand_route/@Label@1442",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "赤砂商路"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_red_sand_route/@Label@1443",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv20–28"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_frost_post",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_frost_post/@Label@1444",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "霜关驿"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_frost_post/@Label@1445",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv22–32"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_rift_mine_road",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_rift_mine_road/@Label@1446",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "裂谷矿道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_rift_mine_road/@Label@1447",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv24–34"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_rift_mine_vault",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_rift_mine_vault/@Label@1448",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "裂谷矿脉"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_rift_mine_vault/@Label@1449",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv26–36"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_frost_boardwalk",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_frost_boardwalk/@Label@1450",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "霜林栈道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_frost_boardwalk/@Label@1451",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv26–36"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_frost_pass",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_frost_pass/@Label@1452",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "冰隘"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_frost_pass/@Label@1453",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv26–40"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_abyss_ring",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_abyss_ring/@Label@1454",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "渊口外环"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_abyss_ring/@Label@1455",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv43–49"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_stele_entry",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_stele_entry/@Label@1456",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "归路门厅"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_stele_entry/@Label@1457",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv49–50"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_stele_resonance",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_stele_resonance/@Label@1458",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "三声共鸣廊"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_stele_resonance/@Label@1459",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv50–53"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_stele_core",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_stele_core/@Label@1460",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "碑心"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Control@1425/Map_stele_core/@Label@1461",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv53–57"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Button@1464",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "⌖"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Button@1464/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "⌖"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Button@1464/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Button@1465",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "详图"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Button@1465/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "全览"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Button@1465/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Control@1414/@Control@1424/@Label@1466",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "拖动查看 · 双击空白切换缩放"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Button@1416",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Button@1416/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@Label@1417",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "地区行路图"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@ScrollContainer@1421/@VBoxContainer@1422/@Label@1471",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "昭元边城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@ScrollContainer@1421/@VBoxContainer@1422/@Label@1472",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "Lv1–12 · 当前位置"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Control@1409/@ScrollContainer@1421/@VBoxContainer@1422/@Label@1473",
+			"rect_height": 66.0,
+			"size": 13,
+			"text": "沿主街走访闻叔，从北门前往枫林古道\n沿相邻路牌步行前往\n界碑历练从巡界厅进入。"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Button@1467",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "图例"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Button@1467/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "图例"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1408/@Button@1467/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		}
+	]
+}

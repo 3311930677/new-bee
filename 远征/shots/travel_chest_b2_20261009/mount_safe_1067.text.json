@@ -1,0 +1,313 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@Label@3429",
+			"rect_height": 32.0,
+			"size": 20,
+			"text": "烈焰马"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@Label@3430",
+			"rect_height": 26.0,
+			"size": 13,
+			"text": "未拥有"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@Button@3431",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@Button@3431/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@Label@3432",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "坐骑结伴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3451",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "烈焰马"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3451/@Label@3448",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "烈焰马"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3451/@Label@3449",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "未拥有"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3451/@Label@3450",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "已选"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3456",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "铁背熊"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3456/@Label@3453",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "铁背熊"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3456/@Label@3454",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "未拥有"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3456/@Label@3455",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3461",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "狮鹫"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3461/@Label@3458",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "狮鹫"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3461/@Label@3459",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "未拥有"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3461/@Label@3460",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3466",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "梦魇"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3466/@Label@3463",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "梦魇"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3466/@Label@3464",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "未拥有"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3466/@Label@3465",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3471",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "沙蜥"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3471/@Label@3468",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "沙蜥"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3471/@Label@3469",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "未拥有"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3471/@Label@3470",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3476",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "披毛犀"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3476/@Label@3473",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "披毛犀"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3476/@Label@3474",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "未拥有"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3437/@VBoxContainer@3438/@Button@3476/@Label@3475",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@ScrollContainer@3442/@Label@3441",
+			"rect_height": 47.0,
+			"size": 14,
+			"text": "速度+5%\n金币 2000 / 12800（需要 / 持有）"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@Label@3443",
+			"rect_height": 24.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@Button@3444",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "购买坐骑"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@Button@3444/Caption",
+			"rect_height": 56.0,
+			"size": 22,
+			"text": "购买坐骑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3422/@Control@3423/@Button@3444/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		}
+	]
+}

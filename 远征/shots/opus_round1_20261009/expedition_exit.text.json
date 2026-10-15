@@ -1,0 +1,277 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/WorldStatus/@Label@1368",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 30.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/WorldStatus/@Label@1369",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 20.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/WorldStatus/@Label@1370",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "570/570"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/WorldStatus/@Label@1371",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "♥"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/WorldStatus/@Label@1372",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "历练"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/WorldStatus/@Label@1373",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/WorldGold",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 20.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/WorldGold/@Label@1378",
+			"rect_height": 28.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/RegionTitle/@Label@1379",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "昭元边城"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/WorldTask_story",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/WorldTask_story/TaskBadge",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "主"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/WorldTask_story/@Label@1380",
+			"rect_height": 34.0,
+			"size": 13,
+			"text": "传送阵"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/Action_",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/Action_/Caption",
+			"rect_height": 18.0000019073486,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 35.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/Action_/Glyph",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "≡"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/Action_伙伴",
+			"rect_height": 56.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/Action_伙伴/Caption",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "伙伴"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/Action_药剂",
+			"rect_height": 64.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/Action_药剂/Caption",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "药剂"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/Action_药剂/@Label@1382",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "2"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/Action_疾行",
+			"rect_height": 56.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/Action_疾行/Caption",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "疾行"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 35.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/Action_疾行/Glyph",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "»"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/Action_撤离",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/Action_撤离/Caption",
+			"rect_height": 18.0000019073486,
+			"size": 12,
+			"text": "撤离"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 35.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/Action_撤离/Glyph",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "↗"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/Minimap/@Label@1384",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "北"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/WorldTask_daily",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/WorldTask_daily/TaskBadge",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "委"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyRound1UI/MapScene/@CanvasLayer@1367/WorldTask_daily/@Label@1390",
+			"rect_height": 34.0,
+			"size": 13,
+			"text": "清剿 0/3 · 匆匆过客"
+		}
+	]
+}

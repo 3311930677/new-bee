@@ -1,0 +1,346 @@
+{
+  "date": "2026-10-12",
+  "generation_mode": "built_in_imagegen",
+  "raw_png_preserved": true,
+  "game_code_modified": false,
+  "selected_assets": [
+    {
+      "id": "TF-G01",
+      "file": "TF-G01_ground_v3.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "mode": "RGB",
+      "sha256": "84ce285ad887b0811b134b79dc6f60ca066f445f725a5196f0dbf691644aa08e",
+      "crop_box_exclusive": [
+        0,
+        102,
+        1024,
+        1433
+      ],
+      "world_size": [
+        960,
+        1248
+      ],
+      "status": "generated_source_visual_review_complete_game_alignment_pending"
+    },
+    {
+      "id": "TF-P01",
+      "file": "TF-P01_boats.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "sha256": "179b11f1cb865963b8a4a5a9891c7558133b8b9ede10d96785a9a1448a555006",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "status": "generated_source_requires_slicing_and_target_size_scaling"
+    },
+    {
+      "id": "TF-P02",
+      "file": "TF-P02_driftwood.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "sha256": "26d42880bf5b4238c296cfbfcc4a295d514d15256a0a10069e1c91e47baec24d",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "status": "generated_source_requires_slicing_and_target_size_scaling"
+    },
+    {
+      "id": "TF-P03",
+      "file": "TF-P03_posts.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "sha256": "f22fbd11eb37c8c00a2b06b8769a78a80b445714c6a22f6020111c7da107dc4a",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "status": "generated_source_requires_slicing_and_target_size_scaling"
+    },
+    {
+      "id": "TF-P04",
+      "file": "TF-P04_fishing_props_v2.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "sha256": "499b84e68efeaec5ade509a05d3f2c8c024a663c27d59feb78fab1eaa25f9086",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "status": "generated_source_requires_slicing_and_target_size_scaling"
+    },
+    {
+      "id": "TF-P05",
+      "file": "TF-P05_rocks.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "sha256": "bfe77ea8eeff67b1fa7cc19bb7afb895e9d2f846355590624ee7b2ec41327c2c",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "status": "generated_source_requires_slicing_and_target_size_scaling"
+    },
+    {
+      "id": "TF-P06",
+      "file": "TF-P06_grass.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "sha256": "20a6174d65a631af65bba91128967b6b8d2408c612a14626b1579bd631a79976",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "status": "generated_source_requires_slicing_and_target_size_scaling"
+    },
+    {
+      "id": "TF-P07",
+      "file": "TF-P07_boardwalk.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "sha256": "0c799160ddf1183d0970aa728951fe9b3d1d7069dce052b6e41606074bea9a0f",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "status": "generated_source_requires_slicing_and_target_size_scaling"
+    },
+    {
+      "id": "TF-P08",
+      "file": "TF-P08_water_animation_v2.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "sha256": "d529433ca131d59c76b74218ebd652e96efb23412c841bccf7dd4a3a365368e5",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "status": "animation_art_source_requires_locked_silhouette_anchor_and_tile_seam_validation"
+    }
+  ],
+  "guide_checks": {
+    "annotated_size": [
+      960,
+      1248
+    ],
+    "gpt_size": [
+      1024,
+      1536
+    ],
+    "map_top": 102,
+    "map_bottom_exclusive": 1433,
+    "uniform_ground_bands_verified": true,
+    "route_count": 4,
+    "entity_count": 20
+  },
+  "annotated_entity_index": [
+    {
+      "label": "P01",
+      "id": "tide_cargo",
+      "name": "潮印货堆",
+      "at": [
+        410,
+        700
+      ]
+    },
+    {
+      "label": "P02",
+      "id": "fish_tide_pool",
+      "name": "潮痕浅池 · 垂钓",
+      "at": [
+        310,
+        560
+      ]
+    },
+    {
+      "label": "P03",
+      "id": "a2_drift_feather",
+      "name": "避风浅池 · 漂羽",
+      "at": [
+        625,
+        850
+      ]
+    },
+    {
+      "label": "P04",
+      "id": "a2_tide_grass_a",
+      "name": "北浅水 · 潮草",
+      "at": [
+        580,
+        380
+      ]
+    },
+    {
+      "label": "P05",
+      "id": "a2_tide_grass_b",
+      "name": "南盐纹 · 潮草",
+      "at": [
+        585,
+        1015
+      ]
+    },
+    {
+      "label": "P06",
+      "id": "a4_tidebud_south",
+      "name": "南滩新芽",
+      "at": [
+        480,
+        390
+      ]
+    },
+    {
+      "label": "P07",
+      "id": "a4_tidebud_north",
+      "name": "北滩新芽",
+      "at": [
+        480,
+        810
+      ]
+    },
+    {
+      "label": "P08",
+      "id": "herb_ship_tide_aid",
+      "name": "船运潮线",
+      "at": [
+        750,
+        665
+      ]
+    },
+    {
+      "label": "P09",
+      "id": "a2_secret_tide_clock_step_1",
+      "name": "高水痕",
+      "at": [
+        390,
+        970
+      ]
+    },
+    {
+      "label": "P10",
+      "id": "a2_secret_tide_clock_step_2",
+      "name": "低水痕",
+      "at": [
+        570,
+        790
+      ]
+    },
+    {
+      "label": "P11",
+      "id": "a2_secret_tide_clock_step_3",
+      "name": "回潮线",
+      "at": [
+        390,
+        610
+      ]
+    },
+    {
+      "label": "P12",
+      "id": "a2_secret_tide_clock_step_4",
+      "name": "编排闸门时序",
+      "at": [
+        570,
+        900
+      ]
+    },
+    {
+      "label": "P13",
+      "id": "a2_eco_driftwood_step_1",
+      "name": "巢位与浅痕",
+      "at": [
+        580,
+        1000
+      ]
+    },
+    {
+      "label": "P14",
+      "id": "a2_eco_driftwood_step_2",
+      "name": "搬开第一块漂木",
+      "at": [
+        390,
+        900
+      ]
+    },
+    {
+      "label": "P15",
+      "id": "a2_eco_driftwood_step_3",
+      "name": "搬开第二块漂木",
+      "at": [
+        580,
+        740
+      ]
+    },
+    {
+      "label": "P16",
+      "id": "a2_eco_driftwood_step_4",
+      "name": "沿浅线送木回岸",
+      "at": [
+        390,
+        1060
+      ]
+    },
+    {
+      "label": "P17",
+      "id": "a2_eco_driftwood_feedback_0",
+      "name": "未受扰动的巢边",
+      "at": [
+        580,
+        990
+      ]
+    },
+    {
+      "label": "P18",
+      "id": "a4_eco_returnpath_step_1",
+      "name": "观察潮芽根际",
+      "at": [
+        390,
+        1020
+      ]
+    },
+    {
+      "label": "P19",
+      "id": "a4_eco_returnpath_step_3",
+      "name": "设立轻触观察标记",
+      "at": [
+        580,
+        1040
+      ]
+    },
+    {
+      "label": "P20",
+      "id": "a4_eco_returnpath_feedback_0",
+      "name": "复苏观察标记",
+      "at": [
+        580,
+        1020
+      ]
+    }
+  ]
+}

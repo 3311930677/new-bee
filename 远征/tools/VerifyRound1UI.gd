@@ -101,23 +101,37 @@ func _ready() -> void:
 		page = preload("res://src/ui/Title.tscn").instantiate()
 		add_child(page)
 		await get_tree().process_frame
-		check(page._btns.size()==4,"四个启动动作保留")
+		# 2026-10-15 参考稿布局：三个竖排主按钮 + 底部公告/制作组/版本信息。
+		check(page._btns.size()==3,"三个主按钮")
+		check(page._links.size()==4,"底部四个小入口（含退出游戏）")
+		check(page._btns[1].name == "Introduction" and not page._btns[1].disabled,"第二个主按钮为游戏介绍且可用")
 		check(page._btns[0].has_focus(),"开始游戏默认焦点")
 		var key := InputEventKey.new()
 		key.keycode = KEY_DOWN
 		key.pressed = true
 		get_viewport().push_input(key,true)
 		await get_tree().process_frame
-		check(page._btns[1].has_focus(),"真实向下键进入次级入口")
+		check(page._btns[1].has_focus(),"真实向下键进入游戏介绍")
+		page._update_focus(2,false)
+		key = InputEventKey.new()
+		key.keycode = KEY_DOWN
+		key.pressed = true
+		get_viewport().push_input(key,true)
+		await get_tree().process_frame
+		check(page._links[0].has_focus(),"真实向下键从设置进入底部入口")
 		key = InputEventKey.new()
 		key.keycode = KEY_RIGHT
 		key.pressed = true
 		get_viewport().push_input(key,true)
 		await get_tree().process_frame
-		check(page._btns[2].has_focus(),"真实向右键移到设置")
+		check(page._links[1].has_focus(),"真实向右键移到退出游戏")
 		page._update_focus(0,false)
-		for i in page._btns.size():
-			for j in range(i+1,page._btns.size()): check(not page._btns[i].get_global_rect().intersects(page._btns[j].get_global_rect()),"菜单热区不重叠")
+		var hits: Array[Control] = []
+		hits.append_array(page._btns)
+		hits.append_array(page._links)
+		for i in hits.size():
+			check(hits[i].size.x >= 44 and hits[i].size.y >= 44,"触控尺寸 " + hits[i].name)
+			for j in range(i+1,hits.size()): check(not hits[i].get_global_rect().intersects(hits[j].get_global_rect()),"菜单热区不重叠 " + hits[i].name + "/" + hits[j].name)
 		await shot("title_%d" % height)
 		if OUT.contains("opus_review"):
 			check(page._subtitle.text=="昭元行旅录","副标题为原生可修改文字")
@@ -129,6 +143,7 @@ func _ready() -> void:
 		var safe := Rect2(8,44,464,height-78)
 		page._layout_page(safe)
 		for b in page._btns: check(safe.encloses(b.get_global_rect()),"菜单安全区")
+		for b in page._links: check(safe.encloses(b.get_global_rect()),"底部入口安全区 " + b.name)
 		await shot("title_safe_%d" % height)
 		page._layout_page()
 		page._update_focus(2,false)
@@ -138,10 +153,28 @@ func _ready() -> void:
 		page._settings.queue_free()
 		page._settings = null
 		await get_tree().process_frame
+		await click(page._links[0])
+		check(G.modal_count() > 0,"实际点击公告打开弹层")
+		await shot("title_notice_%d" % height)
+		while G.modal_count() > 0:
+			G.close_info_popup(G._modals.back().get("layer"))
+			await get_tree().process_frame
+		await click(page._links[1])
+		check(G.modal_count() > 0,"实际点击退出游戏先弹确认，不直接退出")
+		while G.modal_count() > 0:
+			G.close_info_popup(G._modals.back().get("layer"))
+			await get_tree().process_frame
+		await click(page._links[3])
+		check(G.modal_count() > 0,"实际点击版本信息打开弹层")
+		while G.modal_count() > 0:
+			G.close_info_popup(G._modals.back().get("layer"))
+			await get_tree().process_frame
 		await click(page._btns[1])
-		check(page._intro_panel != null,"实际点击介绍打开现有手记")
+		check(page._intro_panel != null,"实际点击游戏介绍打开现有手记")
 		await close_page()
 		var map := await make_map("lorin_wilds",height)
+		# HUD 点击回归固定城务接触，避免测试站位自动打开建筑弹层并挡住后续按钮。
+		if map._city_content != null: map._city_content.set_physics_process(false)
 		map._player.position = Vector2(480,930)
 		var touch := InputEventScreenTouch.new()
 		touch.index = 0

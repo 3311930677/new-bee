@@ -1,0 +1,124 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "",
+			"height": 27.0,
+			"path": "/root/VerifyNextReview/Title/@Control@1865/@Label@1866",
+			"rect_height": 28.0,
+			"size": 18,
+			"text": "昭元行旅录"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/Title/StartGame",
+			"rect_height": 64.0,
+			"size": 13,
+			"text": "开始游戏"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyNextReview/Title/StartGame/Caption",
+			"rect_height": 64.0,
+			"size": 22,
+			"text": "开始游戏"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/Title/StartGame/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/Title/Introduction",
+			"rect_height": 44.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/Title/Introduction/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "游戏介绍"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 35.0,
+			"path": "/root/VerifyNextReview/Title/Introduction/Glyph",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/Title/Settings",
+			"rect_height": 44.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/Title/Settings/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "游戏设置"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 35.0,
+			"path": "/root/VerifyNextReview/Title/Settings/Glyph",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/Title/Quit",
+			"rect_height": 44.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/Title/Quit/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "退出游戏"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 35.0,
+			"path": "/root/VerifyNextReview/Title/Quit/Glyph",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": ""
+		}
+	]
+}

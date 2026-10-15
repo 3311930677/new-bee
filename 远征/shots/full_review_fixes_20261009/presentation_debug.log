@@ -1,0 +1,12 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 Core Profile Context 23.20.60.03.240314 - Compatibility - Using Device: ATI Technologies Inc. - AMD Radeon 780M Graphics
+
+BACKDROP (0.0902, 0.0784, 0.102, 1.0) (0.0, 0.0) true
+BACKDROP_PIXEL (0.3137, 0.3176, 0.2196, 1.0)
+PET_GRID (64.0, 64.0) FILTER 1 RECT [P: (144.0, 164.0), S: (192.0, 192.0)]
+PET_PIXELS (0.4196, 0.5333, 0.1412, 1.0) (0.4196, 0.5333, 0.1412, 1.0) (0.4235, 0.5333, 0.1451, 1.0)
+ERROR: 1 RID allocations of type 'N5GLES37TextureE' were leaked at exit.
+ERROR: Texture with GL ID of 25: leaked 6628 bytes.
+   at: ~Utilities (drivers/gles3/storage/utilities.cpp:82)
+ERROR: Parameter "RenderingServer::get_singleton()" is null.
+   at: ~CompressedTexture2D (scene/resources/compressed_texture.cpp:464)

@@ -1,0 +1,17 @@
+{
+  "tool": "built-in image_gen",
+  "sources": {
+    "world": "exec-a8bfc296-de2d-4a29-8466-434b7eb0302e.png",
+    "travelers": "exec-434ad66d-bf9d-4d26-9eb0-8b1ce506a598.png",
+    "route": "exec-2a8740d1-31ad-421f-8348-6cf3ffc989bf.png",
+    "travelers_tall": "exec-cfea0023-37f4-4dea-aa58-961ad1b2fcec.png",
+    "route_tall": "exec-2f8c3680-76b8-4652-a912-9d92f2388a28.png"
+  },
+  "prompts": {
+    "world": "Remove all Chinese text and digits from the complete reference UI; preserve landscape, gold frames, red active tab, pictograms, banners and compass watermark; reconstruct blank dark backgrounds.",
+    "travelers": "Extract the central castle illustration; preserve all four characters and weapons; remove Chinese character names/jobs and all surrounding UI.",
+    "route": "Extract the central parchment-map courtyard illustration; remove glowing route, nodes and Chinese text; retain blank parchment plaques, geography, lanterns and banners.",
+    "tall_variants": "Outpaint each illustration to portrait 2:3; preserve characters/map in the central full-width band; add naturally continuing moonlit sky/castle above and courtyard/street/table foreground below; no duplicated or reflected elements, no stretched bodies, no text."
+  },
+  "packaging": "Crop/resize art; isolate existing tab pictograms; extract panel alpha; code-native divider."
+}

@@ -1,0 +1,127 @@
+[
+  {
+    "file": "assets\\world\\maps_rebuild_20261015\\abyss_ring_floor.png",
+    "existed": false,
+    "sha256": "c04d68338c165be14726ac8c7b9c22fa8c5edf9bc3840bc14d3555600de48d41"
+  },
+  {
+    "file": "assets\\world\\maps_rebuild_20261015\\frost_boardwalk_floor.png",
+    "existed": false,
+    "sha256": "9ce72257f929e38d736532a20061497c0ab509a8532f529e34b58460f2cc0f66"
+  },
+  {
+    "file": "assets\\world\\maps_rebuild_20261015\\frost_pass_floor.png",
+    "existed": false,
+    "sha256": "a2eed5085aeedcfb4e0042a448b12c7549c6bbe669c8769d689d69cab6afd8e3"
+  },
+  {
+    "file": "assets\\world\\maps_rebuild_20261015\\frost_post_floor.png",
+    "existed": false,
+    "sha256": "f68d647879b4089ef3d8c92314d9e354df357139aad58ac814be6d8635a3443e"
+  },
+  {
+    "file": "assets\\world\\maps_rebuild_20261015\\old_salt_road_floor.png",
+    "existed": false,
+    "sha256": "2712dfe0a2ebf0af42ee29224bd9080cc2b264e94a5412ec8309f0a0fcb7020f"
+  },
+  {
+    "file": "assets\\world\\maps_rebuild_20261015\\red_sand_route_floor.png",
+    "existed": false,
+    "sha256": "b4f11717bfc37320b24f0b27470d07f0e3031ad0559adbb710fe2f225e9565b9"
+  },
+  {
+    "file": "assets\\world\\maps_rebuild_20261015\\rift_mine_road_floor.png",
+    "existed": false,
+    "sha256": "01c5a6f96a604043b9b97bb4e16e45d80b350d74a34ec82ea7c40ac02fdadf3f"
+  },
+  {
+    "file": "assets\\world\\maps_rebuild_20261015\\rift_mine_vault_floor.png",
+    "existed": false,
+    "sha256": "870689ca5b1338621a7471fd932196778f687427a8dd9d4d9ac2f8a49c60388b"
+  },
+  {
+    "file": "assets\\world\\maps_rebuild_20261015\\shenyuan_port_floor.png",
+    "existed": false,
+    "sha256": "1905d41f3139c0e35c7071bbe73ee605d6ff463fbeaa9e9ba50a658428ec8cf7"
+  },
+  {
+    "file": "assets\\world\\maps_rebuild_20261015\\stele_cavern_floor.png",
+    "existed": false,
+    "sha256": "5751c4e4a2a7b22500db700837d76fba139875c99438b0b9055d337bcda4e5c5"
+  },
+  {
+    "file": "assets\\world\\maps_rebuild_20261015\\stele_core_floor.png",
+    "existed": false,
+    "sha256": "3c8240d36b7bf7a4d75df08909e2708efaf2e8dfa2d41f6f15ecff1889a640fd"
+  },
+  {
+    "file": "assets\\world\\maps_rebuild_20261015\\stele_entry_floor.png",
+    "existed": false,
+    "sha256": "be508504a2107f71a6710487541f8d95b9bf534a76bc4d7820ef25f8652f9b26"
+  },
+  {
+    "file": "assets\\world\\maps_rebuild_20261015\\stele_resonance_floor.png",
+    "existed": false,
+    "sha256": "07138890659fada57e166bfebe4abd467d9b8b3dd6a71c3257b5f585cdb8d69e"
+  },
+  {
+    "file": "assets\\world\\maps_rebuild_20261015\\tidal_gate_floor.png",
+    "existed": false,
+    "sha256": "83b9c1a4f9f7df002ddeca87f33ca8d4942e3042ceb191d3b2c042f6eb0a296a"
+  },
+  {
+    "file": "assets\\world\\maps_rebuild_20261015\\tideflat_floor.png",
+    "existed": false,
+    "sha256": "a866657a3f7c16f6611581d787e25d6d7c5d4130b2cf36c42a4e619af5117a40"
+  },
+  {
+    "file": "data\\main_world_maps.json",
+    "existed": true,
+    "sha256": "bc9930b1d5afb837b597fd94cc55b83f1e27e38e91138024951b859c86c4b605"
+  },
+  {
+    "file": "src\\explore\\FourthActGround.gd",
+    "existed": true,
+    "sha256": "05b484831cbb235aec485b2ef4e18d1b02268c6466831088ef3ae0155a6a94a0"
+  },
+  {
+    "file": "src\\explore\\IllustratedNavigation.gd",
+    "existed": false,
+    "sha256": "a07402f988592e684b23da394e2c0eafa1161f89eb02c8cf140c0c47b8b959fb"
+  },
+  {
+    "file": "src\\explore\\IllustratedScenery.gd",
+    "existed": false,
+    "sha256": "5a77fe61780e727e6271ecc9d6ae905974f67d9fde21fe2c569ce74e14d1ce77"
+  },
+  {
+    "file": "src\\explore\\MapScene.gd",
+    "existed": true,
+    "sha256": "ea42454e96a071255369c9b93ce62f19d569daa222963ea3734fd74004ab7b15"
+  },
+  {
+    "file": "src\\explore\\PortGround.gd",
+    "existed": true,
+    "sha256": "c5f9675eb55698c5a47e97063fa3ade846b815262f9dffcd98aa29a575b19a26"
+  },
+  {
+    "file": "src\\explore\\ThirdActGround.gd",
+    "existed": true,
+    "sha256": "87743536d22dd90faf6d7a926a7e9d9c87537990af1d3fa6e8768c0372e749cc"
+  },
+  {
+    "file": "src\\explore\\TidalGateGround.gd",
+    "existed": true,
+    "sha256": "f9b30397a37755373c861e60fab02d702b891dd801cef61c9bbed37fa0d92c8e"
+  },
+  {
+    "file": "tools\\ReviewRebuiltMaps.gd",
+    "existed": true,
+    "sha256": "b08bc73be3356735c8ad7aeb9b074d09d14ab720f38451a1eca7efcb59824b87"
+  },
+  {
+    "file": "tools\\ReviewRebuiltMaps.tscn",
+    "existed": true,
+    "sha256": "17766c07fc5d240b2d5ae2fe7bb164fb10208311fb98ea45057a8a3755319cb3"
+  }
+]

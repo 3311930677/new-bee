@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "created_date": "2026-10-15",
+  "generator": "built-in image_gen.imagegen",
+  "task_scope": "海岸盐路4张地图：参考原图后生成地表并规范到正式地图尺寸。未改D盘项目文件。",
+  "style": "正交俯视成熟手游像素地表，终稿严格2x2像素簇，无UI/文字/人物，立体道具由引擎独立呈现。",
+  "size_policy": "内置输出保持10:13附近比例；仅NEAREST缩放到480x624再2倍到960x1248。没有用程序补画、覆盖或替代最终艺术。",
+  "maps": [
+    {
+      "id": "old_salt_road",
+      "file": "C:/Users/tsz/Documents/Codex/2026-10-15/new-chat/outputs/maps_rebuild/coast/old_salt_road_ground.png",
+      "reference_file": "C:/Users/tsz/Documents/Codex/2026-10-15/new-chat/outputs/maps_rebuild/coast/old_salt_road_ground_source.png",
+      "actual_size": [
+        960,
+        1248
+      ],
+      "source_size": [
+        1100,
+        1430
+      ],
+      "prompt": "Use case: stylized-concept.\nAsset type: production ground-only background for a Chinese fantasy 2D mobile pixel RPG, old salt caravan wilderness.\nCreate a completely new, exceptionally polished top-down game terrain image, EXACT canvas 960 x 1248 pixels, portrait 10:13 aspect ratio, full bleed, no border.\nStyle: mature artisan pixel art, coherent 2px pixel clusters at the final resolution, clear restrained cluster shading, no antialiasing or smudgy painting; visually rich but readable, orthographic top-down camera at uniform scale. No perspective horizon, no isometric objects.\nScene: an old sun-bleached salt plain near a dry coastal river. Warm ivory salt crust fractured into irregular natural plates, ochre mineral sand, subdued olive remnants at far edges. The entire central field is open flat walkable ground. A broad diffuse horizontal band of faint wagon wear crosses LEFT TO RIGHT at y=660, blending into surrounding salt flats; it is 220-300 pixels wide with irregular faded margins, no literal outlined trail. The western entrance at (90,660), spawn (160,660), eastern arrival (760,660) and exit (864,660) must all land on clear dry ground. Ground remains clear at (480,500), (625,535), (640,345), (325,985), (550,830), (690,725), (390,910), (570,805), (390,650), (570,715); connect these broadly via open salt/sand terrain.\nA shallow dry riverbed depression may occupy only the upper-right outer corner x720-960 y250-430, a subdued flat erosion texture; it must not cut across central traversable ground. Sparse shells, mineral stains, flat pebbles and tiny dry grass tufts restricted to peripheral corners, never tall objects. Intricate salt edges and tonal regions give terrain identity.\nCRITICAL: GROUND ONLY. Do NOT bake in salt carts, bridge ruins, cairns, vertical boulders, dead trees, bones, signposts, buildings, barrels, people, enemies, labels, text, UI, coins, icons, target markers, grids, shadows of unseen objects. Interactive objects will be separately placed by the engine. No narrow winding road, no vertical road, no branching noodle paths, no geometric repeated tile texture, no fake holes in walkable areas.\nUse soft midday directional consistency, creamy ivory and warm clay mineral palette. It must look like premium final game terrain art, not a concept illustration or a diagram.",
+      "must_preserve_dynamic_layers": [
+        "所有existing quest entities（salt_cart_ledger等），出生、出口与交互碰撞逻辑"
+      ],
+      "recommended_remove_static_layers": [
+        "SaltRoadGround所有静态干河床、残桥和白圈绘制（地表已完整；新图无桥烘焙）",
+        "flat_routes绘制，仅可保留clearance逻辑",
+        "随机地面散件/噪声叠色；地表tint应ffffff"
+      ],
+      "layout_notes": "整片开阔盐壳荒原。东西向y660宽磨损带。没有旧纵向弯路，所有交互点可站立。"
+    },
+    {
+      "id": "shenyuan_port",
+      "file": "C:/Users/tsz/Documents/Codex/2026-10-15/new-chat/outputs/maps_rebuild/coast/shenyuan_port_ground.png",
+      "reference_file": "C:/Users/tsz/Documents/Codex/2026-10-15/new-chat/outputs/maps_rebuild/coast/shenyuan_port_ground_source.png",
+      "actual_size": [
+        960,
+        1248
+      ],
+      "source_size": [
+        1100,
+        1430
+      ],
+      "prompt": "Use case: style-transfer.\nAsset type: final ground-only background for premium Chinese fantasy 2D mobile pixel RPG, Shenyuan harbor.\nInput image 1 is a composition reference: preserve its basic central stone quay, side water and four wooden shop floor foundations, but rebuild the art and widen circulation areas. Input image 2 is surface rendering/style reference only (craftsmanship and controlled rich natural pixel texture), do not copy its meadow or roads.\nOutput EXACT 960x1248 portrait 10:13, edge-to-edge orthographic top-down map. Uniform 2px pixel clusters, hand-placed readable premium pixel art with crisp edges. Soft restrained late-morning lighting. Weathered warm gray limestone, muted ocher wood, deep teal coastal water with measured little wave accents. Ground should have detail at several scales but unobtrusive underneath characters.\nGeometry in FINAL pixel coordinates: main wide stone harbor quay runs north-south from y0 to1248 between x300 and660; its open 150px-wide center x405..555 is entirely free of obstacles. Connect western edge to center by a broad horizontal wooden causeway x0..420 y620..710, and center to east edge by a broad wooden causeway x540..960 y655..745; their endpoints (90,660),(210,660),(760,700),(864,700) remain clearly dry walkable deck. North entrance (480,96),(480,190) remains stone clear.\nKeep FOUR EMPTY GROUND-LEVEL WOOD FLOOR PLATFORMS for separately rendered shop buildings: upper-left footprint x250..415 y195..390, upper-right footprint x545..710 y325..520, lower-left footprint x250..415 y820..1045, lower-right footprint x545..710 y825..1080. Make platforms integrated into stone quay with walkable paving around the fronts. Wide crosswalk deck bands at y370..450 and y835..915 connect left and right platforms without rails across the route. All main ground points (390,395),(570,525),(570,1035),(390,1020),(260,700),(570,715),(470,715),(365,610),(585,850),(390,990),(570,990) must sit on unobstructed dry stone or wood. Water occupies remaining outer areas only, with restrained foam along quay edges.\nCRITICAL: this is ONLY a FLAT GROUND TEXTURE. Four actual shop buildings already exist as independent game sprites; do not paint ANY buildings or rooftops! No boats, bollards, pillars, railings, piers upright supports, lamp posts, signs, crates, sacks, barrels, trees, benches, people, creatures, letters, UI, text, grids, markers or decorative circles. No fake walkable water. No narrow noodle paths; navigation comes from broad continuous stone and deck surfaces. Slight moss in stone seams and discrete wet stains near water edges, not a uniformly noisy tiled grid.",
+      "must_preserve_dynamic_layers": [
+        "PortGround._draw_state: act2_pier_rope船缆、port_event=dredge船货与embank供货反馈",
+        "独立CityScene建筑、NPC及脚底碰撞"
+      ],
+      "recommended_remove_static_layers": [
+        "PortGround._draw_base静态水面、石堤、木平台、木桥、牌子",
+        "flat_routes绘制和随机地面散件",
+        "避免对参考图额外乘主题tint"
+      ],
+      "layout_notes": "宽中央石码头+两岸空木平台；西y660东y700水平木栈出口；四个独立建筑不重复烘焙。",
+      "walkable_rects_file": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\coast\\shenyuan_port_walkable_rects.json"
+    },
+    {
+      "id": "tideflat",
+      "file": "C:/Users/tsz/Documents/Codex/2026-10-15/new-chat/outputs/maps_rebuild/coast/tideflat_ground.png",
+      "reference_file": "C:/Users/tsz/Documents/Codex/2026-10-15/new-chat/outputs/maps_rebuild/coast/tideflat_ground_source.png",
+      "actual_size": [
+        960,
+        1248
+      ],
+      "source_size": [
+        1100,
+        1429
+      ],
+      "prompt": "Use case: style-transfer.\nAsset type: production ground-only terrain background, Tide-mark Shoal, for a premium 2D Chinese fantasy mobile pixel RPG.\nInput is the EXISTING LEVEL GROUND and its topology reference. Repaint at higher artistic quality, keeping the shoreline, tide pools, top northern entrance and western landing in the same composition. Output exactly 960x1248 pixels portrait 10:13, edge-to-edge, no border.\nCritical desired change: REMOVE EVERY drawn little path and narrow winding route from the old image. Replace the entire old branching dark noodle-road system with broad continuous naturally rippled walkable wet sand. Sand wear is diffuse tonal variation rather than distinct roads. No outlines tracing where the old roads were.\nArt direction: mature crisp hand-authored pixel terrain, consistent 2px pixel clusters at final resolution, orthographic overhead, no camera perspective. Warm muted wet beige sand with pale salt crust accents, olive-beige edge grasses, blue-green clear rock pools, deep teal sea on the right edge. Restrained richer detail in tidal rim edges, rippled sand forms and sea foam; quiet central playfield, coherent cluster shading. Match polished artisan game terrain rather than a tiny 16bit tileset, photoreal texture or flat geometric sketch.\nTOPOLOGY in 960x1248 coordinates: unobstructed open sand is dominant from x180..810, y145..1248. Broad clear access from western map edge at y640..760 to central sandy field. Small flat wooden landing x0..78 y660..730 leads into sand at the west edge. Keep western exit (90,700) and spawn (165,700) clearly on dry accessible ground. Northern entrance remains open at x415..545 y0..210 with exit (480,96) and spawn (480,200) clear; the northern top corners may be flat old gray coastal stone pavement, not a tall blocking wall or roof.\nPreserve FIVE irregular shallow WATER POOLS with positions and extents very close to original: oval pools at center (220,310) size150x65; (700,300) size175x80; (300,495) size205x90; (720,790) size170x75; (650,1140) size195x75. Keep right ocean restricted mostly to x835..960, a gently irregular foam shoreline close to original, never swallow central playable field. Tiny tide-pool pebbles are flat, not protruding obstacles. Existing separate ships, driftwood, rocks, crab pots, net rack, posts and gauges will be placed by game engine; keep their sites clear and DO NOT paint them into terrain.\nLeave open sand around all gameplay points (410,700),(310,560),(625,850),(580,380),(585,1015),(480,390),(480,810),(750,665),(390,970),(570,790),(390,610),(570,900),(580,1000),(390,900),(580,740),(390,1060),(390,1020),(580,1040).\nNo boats, trees, boulders, vertical rocks, stumps, signs, stakes, buildings, cart wheels, cargo, crates, debris, people, monsters, text, UI, markers, symbols, grids, or overly deep trenches. Terrain only. No baked vertical obstacles in sand.",
+      "must_preserve_dynamic_layers": [
+        "painted_props目录内所有独立船只、木桩、岩石、漂木、渔具及其脚底碰撞",
+        "主线、支线、采集、钓鱼、怪物、出生出口实体"
+      ],
+      "recommended_remove_static_layers": [
+        "TideflatGround所有旧静态椭圆池、盐纹弧和木牌",
+        "旧地面flat_routes绘制",
+        "旧painted_water_mask建议停用：5池与海岸构图接近但生成边缘有偏移，需按新图另制mask才可动画"
+      ],
+      "layout_notes": "五个潮池、右海岸、北入口及西码头保持原构图，全部旧分叉细路改为开阔湿沙地。"
+    },
+    {
+      "id": "tidal_gate",
+      "file": "C:/Users/tsz/Documents/Codex/2026-10-15/new-chat/outputs/maps_rebuild/coast/tidal_gate_ground.png",
+      "reference_file": "C:/Users/tsz/Documents/Codex/2026-10-15/new-chat/outputs/maps_rebuild/coast/tidal_gate_ground_source.png",
+      "actual_size": [
+        960,
+        1248
+      ],
+      "source_size": [
+        1100,
+        1430
+      ],
+      "prompt": "Use case: sketch-to-render.\nAsset type: production ground-only background for Tide-receding Sluice boss puzzle in a premium 2D Chinese fantasy mobile pixel RPG.\nInput image1 is the EXACT LEVEL GEOMETRY GUIDE. Preserve its pixel-relative land/water regions and proportions precisely; replace flat guide fills with superb final pixel art. Input image2 is STYLE REFERENCE for artisan stone and teal coastal water only; do not import its wooden docks or its buildings platform layout.\nOutput exactly 960x1248 pixels portrait 10:13, orthographic overhead, no perspective, full bleed. Coherent 2px clusters, crisp mature premium pixel art and artfully arranged texture variation; weathered gray-green ancient hydraulic masonry and deep desaturated teal water, warm small limestone highlights, sparse dark moss.\nExact geometry: CENTRAL WALKABLE STONE DECK x330..630 spans the ENTIRE image height y0..1248. It is a continuous wide 300px stone hydraulic structure, not a drawn narrow dirt path. BOTH OUTER SIDES x0..329 and x630..959 are DEEP WATER CANALS throughout the whole image. Match these long straight stone-water boundary lines to the guide (x330 and630). The playfield x350..610 must remain entirely clear and flat. No stone floor or stepping stones beyond the edges to imply players can walk into water. No hidden third bank.\nRender central ground as spacious old sluice maintenance terraces with irregular large stone slab groupings, quiet paving wear, a few dark algae stains and shallow erosion at outer edge. Indicate three connected functional terrace sections subtly via stone slab orientation around y485 and y770, with no raised partitions. Do NOT paint repeated 48px grid or hard dark tile outlines. No narrower pill-shaped lane inside the walkway, no outlined roads. Outer masonry rims at x330..349 and610..629 are low flush surface edging, never tall walls or railing, because actors must see and approach the bank.\nCritical reserved gameplay zones: entrance/spawn/exit at (480,1050),(480,1152), clue record (480,870), boss footprint around (480,410). Interaction controls (310,690),(650,535),(310,590) will be independently drawn by engine on the edges; do not bake them in. Existing engine dynamically floods or dries the CENTER floor across rectangle x350..610 y485..548 and changes water states along both canals below y750 or900. Therefore image must show dry stone under the entire central rectangle; no permanent crossing water, holes, fences or gates. Horizontal gates at y475 and770 remain dynamic game objects. Supplies around (408,625) and(555,625) also remain separate objects.\nCanal surface: gentle flat top-down tide ripples, nuanced underwater stone and silt near edges; deep teal far out, sparse pale foam. Any side ornamental hydraulic stonework must stay fully beyond x0 or960, not intrude. No dam towers, bridges spanning the canals, chains, wheels, gate beams, railings, statues, pillars, crates, cargo, sacks, boats, buildings, signposts, ladders, people, enemies, text, labels, icons, UI or markers. NO tall or solid objects are baked into the walkable floor. Map visual must match actual physical boundaries exactly.",
+      "must_preserve_dynamic_layers": [
+        "TidalGateGround.dynamic_water/upper_released/bridge_drained/passages状态",
+        "中央(350,485,260,63)积水/退潮通路变化",
+        "两岸y750或900以下水位",
+        "_draw_supply_cache动态补给",
+        "MapScene._build_tidal_water_bounds碰撞x0..330与x630..960",
+        "MapScene._build_tidal_room_gates:record@480,770与priest@480,475",
+        "所有独立解谜实体和首领"
+      ],
+      "recommended_remove_static_layers": [
+        "TidalGateGround静态water tiled源纹理、固定双岸水平线",
+        "x332/x610的固定直条岸墙（新地表已烘焙）",
+        "每64px中央横线、x365/x595线柱、y175横闸、悬链（旧静态机械线稿）",
+        "旧flat_routes细长128px路径绘制"
+      ],
+      "layout_notes": "两侧水渠与中央300px宽连续石堤。中央x330..630严格按真实边界构图，无细长胶囊路，无固定机关。"
+    }
+  ]
+}

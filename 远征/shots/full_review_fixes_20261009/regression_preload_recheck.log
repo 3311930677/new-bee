@@ -1,0 +1,13 @@
+Godot  : D:/new-bee/tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe
+Version: 4.7.2.stable.official.ed1daf0bf
+Project: D:/new-bee/远征
+UserDir: D:/new-bee/远征/tools/_logs/user_sandbox_8296689cfaa34ea0922a17f0ff10eac1/Godot/app_userdata/远征/
+Cases  : 2  (timeout 60s, quit-after 6000 frames)
+Logs   : D:/new-bee/远征/shots/full_review_fixes_20261009/regressions
+Commit : 3b9819f8
+
+PASS  VerifyCampaignGear
+PASS  VerifyPerf
+
+NOTE: 1 case(s) emitted 2 engine exit-time resource diagnostic(s) (leaked RIDs / resources still in use). Not counted as failures - tracked as issue #43.
+ALL GREEN  (2 cases, every case: exit 0 + own _OK line + no error pattern)

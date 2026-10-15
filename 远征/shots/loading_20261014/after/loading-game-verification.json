@@ -1,0 +1,85 @@
+{
+	"checks": [
+		{
+			"fill_width": 0.0,
+			"gauge_rect": "[P: (10.0, 625.0), S: (461.0, 109.0)]",
+			"image": "loading-game-800-00.png",
+			"percent": "0%",
+			"ratio": 0.0,
+			"size": [
+				480,
+				800
+			],
+			"status": "整备行囊……"
+		},
+		{
+			"fill_width": 164.0,
+			"gauge_rect": "[P: (10.0, 625.0), S: (461.0, 109.0)]",
+			"image": "loading-game-800-49.png",
+			"percent": "49%",
+			"ratio": 0.49,
+			"size": [
+				480,
+				800
+			],
+			"status": "擦拭兵器……"
+		},
+		{
+			"fill_width": 334.0,
+			"gauge_rect": "[P: (10.0, 625.0), S: (461.0, 109.0)]",
+			"image": "loading-game-800-100.png",
+			"percent": "100%",
+			"ratio": 1.0,
+			"size": [
+				480,
+				800
+			],
+			"status": "整备完成"
+		},
+		{
+			"fill_width": 0.0,
+			"gauge_rect": "[P: (10.0, 892.0), S: (461.0, 109.0)]",
+			"image": "loading-game-1067-00.png",
+			"percent": "0%",
+			"ratio": 0.0,
+			"size": [
+				480,
+				1067
+			],
+			"status": "整备行囊……"
+		},
+		{
+			"fill_width": 164.0,
+			"gauge_rect": "[P: (10.0, 892.0), S: (461.0, 109.0)]",
+			"image": "loading-game-1067-49.png",
+			"percent": "49%",
+			"ratio": 0.49,
+			"size": [
+				480,
+				1067
+			],
+			"status": "擦拭兵器……"
+		},
+		{
+			"fill_width": 334.0,
+			"gauge_rect": "[P: (10.0, 892.0), S: (461.0, 109.0)]",
+			"image": "loading-game-1067-100.png",
+			"percent": "100%",
+			"ratio": 1.0,
+			"size": [
+				480,
+				1067
+			],
+			"status": "整备完成"
+		},
+		{
+			"completed": true,
+			"warmup_frames": 23
+		},
+		{
+			"gauge_clock": 1.05439533333333,
+			"logo_alpha": 1.0
+		}
+	],
+	"failures": 0
+}

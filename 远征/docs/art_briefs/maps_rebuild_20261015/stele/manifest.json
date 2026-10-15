@@ -1,0 +1,271 @@
+{
+  "version": 1,
+  "date": "2026-10-15",
+  "tool": "built-in image_gen.imagegen",
+  "asset_kind": "reference_and_runtime_floor",
+  "world_extent": [
+    960,
+    1248
+  ],
+  "mapping": "Map each full source image to the 960x1248 world extent with no crop. Four are exact 10:13; abyss_ring differs by one source pixel in height. Originals preserved; no Pillow-generated art.",
+  "art_rules": [
+    "orthographic overhead",
+    "fine-pixel stone surfaces",
+    "broad walkable floors",
+    "no narrow paths",
+    "no characters or UI",
+    "no baked dynamic mechanisms"
+  ],
+  "notes": [
+    "Layout guide fidelity is approximate; the generated floor edges and thresholds visibly shifted from the guide.",
+    "illustrated_walkable_rects use world [x,y,width,height], conservatively inset from visible raised border masonry. They are suggested bounds for collision QA, not proof of runtime navigation.",
+    "For final halls, retain existing dynamic rune/altar code but suppress legacy static floor and pillars.",
+    "Stele cavern has no north exit. It must remain a three-room interior with its sole south exit."
+  ],
+  "assets": [
+    {
+      "id": "stele_cavern",
+      "file": "stele_cavern_floor.png",
+      "prompt_file": "stele_cavern_prompt.txt",
+      "source_file": "C:\\Users\\tsz\\.codex\\generated_images\\01a13e3c-5ba0-7230-9447-ba73f2dadcbf\\exec-a4b60663-4bac-4215-bde4-f53797e1e5e9.png",
+      "source_size": [
+        1100,
+        1430
+      ],
+      "world_extent": [
+        960,
+        1248
+      ],
+      "guide": "../../../work/stele_maps/stele_cavern_layout.png",
+      "prompt": "Use case: stylized-concept. Asset type: finished floor-only texture for a 2D top-down fantasy mobile RPG level, Silent Stele Cavern. Generate one high quality mature hand-crafted pixel-art image, exactly 960 x 1248 pixels if possible, portrait 10:13. Input image is a precise LAYOUT GUIDE ONLY, not art to imitate. Preserve its room silhouettes and positions. Gray=walkable floor; dark=unwalkable cavern border; yellow rings and lines and pale green dots are editor safety marks and MUST NOT appear in final art. Three spacious connected halls: south hall x160..800 y795..1145; middle hall x210..750 y555..730; north hall x260..700 y125..470; connecting 150px-wide passages centered x480 span y440..825, and south entrance x405..555 down to bottom edge. Keep gate thresholds centered x480 at y540 and y755 clear and flat, no doors. Important gameplay points (210,940),(480,955),(750,940),(480,830),(315,680),(650,610),(480,315) must be open low contrast stone floor. Create ancient grey-green stone paving with fine 2-pixel clusters, hand-placed irregular slab shapes, weathered edges, subtle dry moss, occasional tiny chips at outer wall foot, archaeological stonework suggesting echoes and age. Rich readable floor materials and designed large-scale visual rhythms, fine texture density comparable to a detailed 70px-tall game character, no large repeated tiles or coarse blurry texture. Boundary cavern rock and ruined wall texture only in the dark areas outside the walkable shapes; never extend wall mass onto gray. Soft restrained cool cyan-grey ambient light, readable mid-value slate floor, slightly warm limestone worn edges. Strict orthographic straight overhead XY ground projection; no horizon, no isometric diagonals, no camera perspective. Floor only: no upright monuments, columns, trees, statues, torches, chests, props, creatures or people. No runes, circles, activated magic or altar baked into floor, these are dynamic game layers. No narrow dirt paths, no branches, no tube-like tracks, no hollow loop road, no UI, no text, labels, grid or watermark. Make the halls feel organically aged and professionally painted, not a simplistic rectangular diagram.",
+      "illustrated_walkable_rects": [
+        [
+          270,
+          100,
+          425,
+          285
+        ],
+        [
+          428,
+          378,
+          104,
+          168
+        ],
+        [
+          225,
+          540,
+          510,
+          150
+        ],
+        [
+          428,
+          681,
+          104,
+          123
+        ],
+        [
+          145,
+          800,
+          675,
+          275
+        ],
+        [
+          428,
+          1065,
+          104,
+          183
+        ]
+      ],
+      "suggested_gate_thresholds": {
+        "echo": [
+          480,
+          730
+        ],
+        "heart": [
+          480,
+          510
+        ]
+      },
+      "reserved_dynamic_centers": [
+        [
+          210,
+          940
+        ],
+        [
+          480,
+          955
+        ],
+        [
+          750,
+          940
+        ],
+        [
+          480,
+          830
+        ],
+        [
+          315,
+          680
+        ],
+        [
+          650,
+          610
+        ],
+        [
+          480,
+          315
+        ]
+      ],
+      "qa": "All seven main mechanism points lie on flat stone in the generated image; gate art moved approximately y755->730 and y540->510. Verify actual gate hitboxes and actor feet in game before accepting collisions. South room is broader than old geometry; do not blindly reuse the old room rects."
+    },
+    {
+      "id": "abyss_ring",
+      "file": "abyss_ring_floor.png",
+      "prompt_file": "abyss_ring_prompt.txt",
+      "source_file": "C:\\Users\\tsz\\.codex\\generated_images\\01a13e3c-5ba0-7230-9447-ba73f2dadcbf\\exec-18f811bb-f9d5-4240-8598-64d83aed2bbd.png",
+      "source_size": [
+        1100,
+        1429
+      ],
+      "world_extent": [
+        960,
+        1248
+      ],
+      "guide": "../../../work/stele_maps/abyss_ring_layout.png",
+      "prompt": "Use case: stylized-concept. Asset type: finished floor-only map texture for a 2D fantasy mobile RPG, Abyss Outer Ring. One portrait 10:13 image, intended game extent 960x1248, exact 960x1248 preferred. The input image is an EXACT LAYOUT GUIDE ONLY. Gray means walkable ground; dark side strips x0..185 and x775..960 are blocked rock cliff borders. Yellow circle and pale green dots are editor safety markings and must vanish, they are not objects. Paint a striking mature hand-crafted detailed pixel-art rocky pass approaching an ancient underground sanctuary. Use fine deliberate 2-pixel clusters, comparable to the pixel density of a 70px tall finely drawn game hero; crisp tiny edges without photographic grain or blur. Most of the image is a broad spacious continuous slate and worn gravel walkable corridor x185..775 from top to bottom, without a narrow road. Overlapping mineral strata, cool desaturated grey-purple basalt, dry silty earth, low cracked flat stone patches and faint old paving fragments should form natural large shapes. Keep x350..610 across entire y80..1180 fully open and low contrast, and leave a clear east-side exploration pocket x580..760 y205..385. Central point (480,625) and its 115px radius must be plain low contrast flat floor to receive a separate live mechanism. Entrance/exit at (480,96) and (480,1152), arrival points (480,185)/(480,1030), must stay on clear flat ground all the way through image edges. Rugged boundary basalt cliffs and shadowy fissures ONLY in side strips x0..185 and x775..960; detailed sidewall top textures, cool cracks, occasional tiny restrained purple mineral glints integrated in border rock, no giant crystals. Side cliffs stay away from all open floor and do not pinch the passage. Flat orthographic overhead projection, no isometric angles, no horizon, no perspective. Soft readable ambient light; no dramatic bloom, fog covering ground or heavy vignette. NO upright pillars, steles, shrines, statues, torches, tree foliage, chests, props, people, creatures, UI, text, labels, grid or watermark. No circular altar, runic seal, activated magic, dirt road, narrow trail, tubular track, branches, hollow road loop or raised stairway. Ground-only environmental art with rich material depth and professional map composition.",
+      "illustrated_walkable_rects": [
+        [
+          225,
+          0,
+          510,
+          1248
+        ]
+      ],
+      "reserved_dynamic_centers": [
+        [
+          480,
+          625
+        ]
+      ],
+      "qa": "Inspected image: floor remains open at all requested key points, no activated-state art, no upright obstacles in central playable space."
+    },
+    {
+      "id": "stele_entry",
+      "file": "stele_entry_floor.png",
+      "prompt_file": "stele_entry_prompt.txt",
+      "source_file": "C:\\Users\\tsz\\.codex\\generated_images\\01a13e3c-5ba0-7230-9447-ba73f2dadcbf\\exec-c7954598-ad4d-4144-9c77-49fddb7f57d6.png",
+      "source_size": [
+        1100,
+        1430
+      ],
+      "world_extent": [
+        960,
+        1248
+      ],
+      "guide": "../../../work/stele_maps/stele_entry_layout.png",
+      "prompt": "Use case: stylized-concept. Asset type: finished 2D fantasy RPG ground-layer texture, Hall of Return, first of three ancient stele sanctuary maps. One portrait image 10:13, intended world 960x1248, exact 960x1248 preferred. The input is an exact LAYOUT GUIDE ONLY: grey is all fully walkable hall floor between x180..780, continuing unbroken through top and bottom; dark side strips are blocked architectural boundary; yellow ring and green dots are editor overlays that must NOT appear. Design a mature high-quality hand-painted pixel-art ceremonial entry hall floor, with fine crisp deliberate 2px pixel clusters at the scale of a finely detailed 70px game hero. Strict orthographic overhead ground plan, no horizon, no tilted/isometric scene. Broad ancient slate paving x180..780, complex irregular joint layout and subtle centuries of erosion; desaturated blue grey basalt with restrained warm limestone corner inlay and very fine muted antique bronze accents. Grand archaeological architectural rhythm, not a modern interior or checkerboard. Distinct visual identity: ENTRY HALL, warm worn welcome threshold, horizontal bands of weathered stone near the south, gentle engraved directional chevron stonework along floor edges, large quiet worn central area. Keep entire central x240..720 y65..1190 clear walkable floor; central (480,625) radius115 blank low contrast stone for a separately rendered live anchor. Top and bottom centered openings x400..560 must remain open to image edge. Border masonry and shallow wall-foot shadow confined to x0..180 and x780..960, no intrusions; blackened recessed ruin masonry, low relief stone edges and fragments embedded in boundary, no freestanding columns. Materials vary in large intentional patches, micro detail secondary, no repetitive rectangular tile carpet. Subtle ambient readable neutral illumination. No ritual ring, circle, runic symbols, activated magic, altar, pillars, statues, fire, props, doors, people, creatures, UI, text, labels, watermark or overlay markers. No narrow roads, no dirt trail, no tubular tracks, no branches, no hollow loops, no objects baked into the walkable floor. This is final floor art to receive separate characters and mechanisms.",
+      "illustrated_walkable_rects": [
+        [
+          190,
+          0,
+          580,
+          1248
+        ]
+      ],
+      "reserved_dynamic_centers": [
+        [
+          480,
+          625
+        ]
+      ],
+      "qa": "Inspected image: floor remains open at all requested key points, no activated-state art, no upright obstacles in central playable space."
+    },
+    {
+      "id": "stele_resonance",
+      "file": "stele_resonance_floor.png",
+      "prompt_file": "stele_resonance_prompt.txt",
+      "source_file": "C:\\Users\\tsz\\.codex\\generated_images\\01a13e3c-5ba0-7230-9447-ba73f2dadcbf\\exec-00bef0dc-d761-4073-bec2-1dadb62b5fdc.png",
+      "source_size": [
+        1100,
+        1430
+      ],
+      "world_extent": [
+        960,
+        1248
+      ],
+      "guide": "../../../work/stele_maps/stele_resonance_layout.png",
+      "prompt": "Use case: stylized-concept. Asset type: final floor texture for a top-down 2D fantasy RPG map, Three Voices Resonance Gallery, second of three ancient stele sanctuary halls. One portrait 10:13 image, intended extent 960x1248, exact 960x1248 preferred. Input image is precise LAYOUT GUIDE ONLY, NOT a style guide: gray x180..780 is entirely walkable floor and must remain continuous from top edge to bottom edge; dark side strips are blocked boundary masonry. Yellow rings and pale green dots are editor safety overlays and must vanish. Create a mature professional hand-painted pixel-art archaeological gallery floor matching old blue-grey basalt sanctuary stone with finely crisp 2px clusters at the scale of a detailed 70px-tall RPG hero. Orthographic overhead straight ground plan, no isometric perspective. This hall should have its OWN visual identity: three subtle bands of material memories fade into the stone in ascending sequence, lower left very restrained dry olive moss staining near (335,880), middle right muted sea-grey mineral abrasion near (625,625), upper left pale silver limestone veining near (335,375). These are ONLY gentle floor color/material shifts, NOT three circular pads, NOT murals, not bright colors, no actual sea, trees or snow. Restrained pale blue-grey and old bronze ornamental stone inlay along the side edges quietly links the architecture. Complex irregular slabs, hairline cracks, worn corners, fine chips, hand-painted mottling and occasional repaired stones. Each gameplay point (335,880),(625,625),(335,375),(480,230) has an open plain flat low contrast area radius75..95 for separate live mechanisms. Central lane x400..560 runs open from bottom edge to top edge. Entire walkable width x210..750 y60..1190 contains NO obstacles. Side ruin masonry and recessed dark wall footing only x0..180 and x780..960. Do not bake a circle, rune, seal, magic glow, altar, upright pillar, statue, door, prop, brazier, tree, character or creature into the floor. No activated state lighting. No narrow dirt paths, no tubular tracks, no loop roads, no grid, text, labels, UI or watermark. Readable mid-value blue slate floor, artistic large-scale patch arrangement; rich detail without repeated uniform tiles or noisy high-contrast center. This ground receives dynamic symbols later; keep it beautifully quiet and broad.",
+      "illustrated_walkable_rects": [
+        [
+          190,
+          0,
+          580,
+          1248
+        ]
+      ],
+      "reserved_dynamic_centers": [
+        [
+          335,
+          880
+        ],
+        [
+          625,
+          625
+        ],
+        [
+          335,
+          375
+        ],
+        [
+          480,
+          230
+        ]
+      ],
+      "qa": "Inspected image: floor remains open at all requested key points, no activated-state art, no upright obstacles in central playable space."
+    },
+    {
+      "id": "stele_core",
+      "file": "stele_core_floor.png",
+      "prompt_file": "stele_core_prompt.txt",
+      "source_file": "C:\\Users\\tsz\\.codex\\generated_images\\01a13e3c-5ba0-7230-9447-ba73f2dadcbf\\exec-8f1c0a1e-f1f4-4131-9687-3205c34a9351.png",
+      "source_size": [
+        1100,
+        1430
+      ],
+      "world_extent": [
+        960,
+        1248
+      ],
+      "guide": "../../../work/stele_maps/stele_core_layout.png",
+      "prompt": "Use case: stylized-concept. Asset type: final floor-only 2D fantasy RPG map texture, Stele Heart Sanctum, finale of three ancient stele sanctuary halls. One portrait 10:13 image, target world 960x1248; exact 960x1248 preferred. Input is a precise LAYOUT GUIDE ONLY. Gray x180..780 means ALL walkable floor, dark side margins are blocked architecture; yellow circles and green dots are editor annotations and MUST NOT appear. Create beautiful mature hand-crafted fine pixel-art ancient blue-grey basalt sanctum paving, finely deliberate 2px clusters, matching detailed 70px game character pixel density. Strict orthographic straight overhead ground plan, flat 2D, zero isometric tilt or perspective. Distinct final-boss hall identity: an unusually broad calm center with four massive low-value irregular slate plates seamlessly joined around the center; surrounding worn radial stone joint arrangement only subtly hints at an ancient architectural focus. Avoid explicit ring or circular shape: dynamic altar and symbols will be drawn separately later. A few broad dark slate slabs, subtle silver-grey mineral veining, muted antique bronze inlay on far side borders, generous negative space so the boss is readable. Central battle safe region around (480,570) radius195 and side interaction spots (350,370),(610,600),(350,850) radius60 stay fully flat open low contrast paving; no debris piles, cracked chasms or structures there. Keep the whole rectangle x210..750 y60..1190 traversable; south arrival (480,1030), exit (480,1152) and centered floor to bottom edge are open. North end may visually end in quiet worn stone but no wall across middle x240..720 within y0..1248. All architectural relief, wall-foot shadow and ruined masonry confined to x0..180 or x780..960. Fine professional material transitions, rich stone age and restrained lighting, cool desaturated clean readable ambient, no bloom or vignette. NO baked altar, runic seal, circles, magical glow, activated effects, upright columns, monuments, statues, braziers, props, people, monsters, doors, UI, text, grid, labels or watermark. No thin pathways, dirt roads, branches, tubular track or hollow road loops. Deliver only the full edge-to-edge game ground layer, beautifully painted yet spacious and gameplay readable.",
+      "illustrated_walkable_rects": [
+        [
+          190,
+          0,
+          580,
+          1248
+        ]
+      ],
+      "reserved_dynamic_centers": [
+        [
+          480,
+          570
+        ],
+        [
+          350,
+          370
+        ],
+        [
+          610,
+          600
+        ],
+        [
+          350,
+          850
+        ]
+      ],
+      "qa": "Inspected image: floor remains open at all requested key points, no activated-state art, no upright obstacles in central playable space."
+    }
+  ],
+  "source_size_note": "Four images are 1100x1430. abyss_ring is 1100x1429 (one source-pixel aspect difference; scale to world extent with no crop)."
+}

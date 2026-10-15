@@ -1,0 +1,241 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 42.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Label@68",
+			"rect_height": 46.0,
+			"size": 28,
+			"text": "灵宠图鉴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Label@69",
+			"rect_height": 24.0,
+			"size": 14,
+			"text": "沿途相识 · 珍藏每一次结伴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@Label@73",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "已收集 3 / 10 · 通关世界首领可结伴同行"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@Control@101/@Control@74/@Control@75/@Control@103/@PanelContainer@102/@VBoxContainer@104/@HBoxContainer@105/@Label@106",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "灵 宠 02 / 10"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@Control@101/@Control@74/@Control@75/@Control@103/@PanelContainer@102/@VBoxContainer@104/@HBoxContainer@105/@PanelContainer@108/@Label@107",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "待结缘"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@Control@101/@Control@74/@Control@75/@Control@103/@PanelContainer@102/@VBoxContainer@104/@Label@112",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "？？？"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@Control@101/@Control@74/@Control@75/@Control@103/@PanelContainer@102/@VBoxContainer@104/@VBoxContainer@113/@Label@114",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "通关「焚天火山」首领"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@Control@101/@Control@74/@Control@75/@Control@103/@PanelContainer@102/@VBoxContainer@104/@Label@115",
+			"rect_height": 30.0,
+			"size": 15,
+			"text": "← → 翻阅 · 未收集的会标出解锁途径"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@Control@101/@Control@74/@Control@75/@Control@117/@PanelContainer@116/@VBoxContainer@118/@HBoxContainer@119/@Label@120",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "灵 宠 01 / 10"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@Control@101/@Control@74/@Control@75/@Control@117/@PanelContainer@116/@VBoxContainer@118/@HBoxContainer@119/@PanelContainer@122/@Label@121",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "已结伴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@Control@101/@Control@74/@Control@75/@Control@117/@PanelContainer@116/@VBoxContainer@118/@Label@126",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "霜狼"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@Control@101/@Control@74/@Control@75/@Control@117/@PanelContainer@116/@VBoxContainer@118/@Label@127",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "稀有 · 护卫"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@Control@101/@Control@74/@Control@75/@Control@117/@PanelContainer@116/@VBoxContainer@118/@VBoxContainer@128/@Label@129",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "血 60 · 攻 14 · 防 6"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@Control@101/@Control@74/@Control@75/@Control@117/@PanelContainer@116/@VBoxContainer@118/@VBoxContainer@128/@Label@130",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "技能 · 撕咬 · 寒嚎"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@Control@101/@Control@74/@Control@75/@Control@117/@PanelContainer@116/@VBoxContainer@118/@Label@131",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "← → 翻阅 · 未收集的会标出解锁途径"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@Control@101/@Control@74/@Control@75/@Control@133/@PanelContainer@132/@VBoxContainer@134/@HBoxContainer@135/@Label@136",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "灵 宠 03 / 10"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@Control@101/@Control@74/@Control@75/@Control@133/@PanelContainer@132/@VBoxContainer@134/@HBoxContainer@135/@PanelContainer@138/@Label@137",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "已结伴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@Control@101/@Control@74/@Control@75/@Control@133/@PanelContainer@132/@VBoxContainer@134/@Label@142",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "岩龟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@Control@101/@Control@74/@Control@75/@Control@133/@PanelContainer@132/@VBoxContainer@134/@Label@143",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "普通 · 护卫"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@Control@101/@Control@74/@Control@75/@Control@133/@PanelContainer@132/@VBoxContainer@134/@VBoxContainer@144/@Label@145",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "血 80 · 攻 9 · 防 10"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@Control@101/@Control@74/@Control@75/@Control@133/@PanelContainer@132/@VBoxContainer@134/@VBoxContainer@144/@Label@146",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "技能 · 冲撞 · 护主甲"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@Control@101/@Control@74/@Control@75/@Control@133/@PanelContainer@132/@VBoxContainer@134/@Label@147",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "← → 翻阅 · 未收集的会标出解锁途径"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@Label@148",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "收集里程 · 已集 3 只 · 可领取「初识灵宠」"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@PanelContainer@150/@Label@149",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@PanelContainer@152/@Label@151",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "进化"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@PanelContainer@71/@Control@72/@PanelContainer@154/@Label@153",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "返回"
+		}
+	]
+}

@@ -1,0 +1,376 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@Control@2522/@Label@2540",
+			"rect_height": 26.0,
+			"size": 13,
+			"text": "招式预览"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@Control@2522/@Control@2548/@Control@2556/@Label@2555",
+			"rect_height": 44.0,
+			"size": 18,
+			"text": "▶"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@Control@2522/@Button@2538",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@Control@2522/@Button@2538/Caption",
+			"rect_height": 56.0,
+			"size": 17,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@Control@2522/@Button@2538/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@Control@2522/@Button@2539",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "›"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@Control@2522/@Button@2539/Caption",
+			"rect_height": 56.0,
+			"size": 17,
+			"text": "›"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@Control@2522/@Button@2539/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@Button@2524",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@Button@2524/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@Label@2525",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "技能研习"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@HBoxContainer@2526/@Button@2543",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "裂山"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@HBoxContainer@2526/@Button@2543/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "裂山"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@HBoxContainer@2526/@Button@2543/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@HBoxContainer@2526/@Button@2544",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "破阵"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@HBoxContainer@2526/@Button@2544/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "破阵"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@HBoxContainer@2526/@Button@2544/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@HBoxContainer@2526/@Button@2545",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "回风斩"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@HBoxContainer@2526/@Button@2545/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "回风斩"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@HBoxContainer@2526/@Button@2545/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@HBoxContainer@2526/@Button@2546",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "战吼"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@HBoxContainer@2526/@Button@2546/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "战吼"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@HBoxContainer@2526/@Button@2546/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@HBoxContainer@2526/@Button@2547",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "断罪"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@HBoxContainer@2526/@Button@2547/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "断罪"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@HBoxContainer@2526/@Button@2547/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@ScrollContainer@2529/@VBoxContainer@2530/@Label@2558",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "裂山"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@ScrollContainer@2529/@VBoxContainer@2530/@Label@2559",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "冷却 5.0 秒 · 耗能 20 · 单体"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@ScrollContainer@2529/@VBoxContainer@2530/@Label@2560",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "单体猛击"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@ScrollContainer@2529/@VBoxContainer@2530/@Control@2563/@Label@2561",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "研习等级"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@ScrollContainer@2529/@VBoxContainer@2530/@Control@2563/@Label@2562",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "1/10"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 33.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@ScrollContainer@2529/@VBoxContainer@2530/@VBoxContainer@2567/@Label@2564",
+			"rect_height": 33.0,
+			"size": 22,
+			"text": "伤害系数 ×1.50 → ×1.58"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@ScrollContainer@2529/@VBoxContainer@2530/@VBoxContainer@2567/@Label@2565",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "持续时间、控制、冷却与耗能保持原值"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@ScrollContainer@2529/@VBoxContainer@2530/@VBoxContainer@2567/@HBoxContainer@2566/@Control@2573/@Label@2569",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "远征币"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 30.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@ScrollContainer@2529/@VBoxContainer@2530/@VBoxContainer@2567/@HBoxContainer@2566/@Control@2573/@Label@2570",
+			"rect_height": 32.0,
+			"size": 20,
+			"text": "60"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@ScrollContainer@2529/@VBoxContainer@2530/@VBoxContainer@2567/@HBoxContainer@2566/@Control@2573/@Label@2571",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "持有 500"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@ScrollContainer@2529/@VBoxContainer@2530/@VBoxContainer@2567/@HBoxContainer@2566/@Control@2573/@Label@2572",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@HBoxContainer@2531/@Button@2542",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "研习升级"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@HBoxContainer@2531/@Button@2542/Caption",
+			"rect_height": 34.0,
+			"size": 22,
+			"text": "研习升级"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Control@2517/@HBoxContainer@2531/@Button@2542/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "远征币 60"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/@Control@2515/@Control@2516/@Label@2541",
+			"rect_height": 28.0,
+			"size": 13,
+			"text": "远征币 500"
+		}
+	]
+}

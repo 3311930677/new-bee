@@ -1,0 +1,907 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/ReturnButton",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/ReturnButton/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/@Label@997",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "行旅背包"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Capacity",
+			"rect_height": 44.0,
+			"size": 13,
+			"text": "装备 60 / 60"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/@Label@998",
+			"rect_height": 44.0,
+			"size": 13,
+			"text": "待领取 20"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/GoldBalance",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "金币 11,150"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_equip",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "装备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_equip/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "装备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_equip/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_mat",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "材料"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_mat/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "材料"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_mat/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_gem",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "宝石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_gem/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "宝石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_gem/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_pending",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "待领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_pending/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "待领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Categories/Tab_pending/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1503/@Label@1505",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "狼牙大剑\r\n普通 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1503/@Button@1506",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1503/@Button@1506/Caption",
+			"rect_height": 72.0,
+			"size": 17,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1503/@Button@1506/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1507/@Label@1509",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "狼牙大剑\r\n普通 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1507/@Button@1510",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1507/@Button@1510/Caption",
+			"rect_height": 72.0,
+			"size": 17,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1507/@Button@1510/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1511/@Label@1513",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "狼牙大剑\r\n普通 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1511/@Button@1514",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1511/@Button@1514/Caption",
+			"rect_height": 72.0,
+			"size": 17,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1511/@Button@1514/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1515/@Label@1517",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "狼牙大剑\r\n普通 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1515/@Button@1518",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1515/@Button@1518/Caption",
+			"rect_height": 72.0,
+			"size": 17,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1515/@Button@1518/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1519/@Label@1521",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "狼牙大剑\r\n普通 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1519/@Button@1522",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1519/@Button@1522/Caption",
+			"rect_height": 72.0,
+			"size": 17,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1519/@Button@1522/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1523/@Label@1525",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "狼牙大剑\r\n普通 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1523/@Button@1526",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1523/@Button@1526/Caption",
+			"rect_height": 72.0,
+			"size": 17,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1523/@Button@1526/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1527/@Label@1529",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "狼牙大剑\r\n普通 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1527/@Button@1530",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1527/@Button@1530/Caption",
+			"rect_height": 72.0,
+			"size": 17,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1527/@Button@1530/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1531/@Label@1533",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "狼牙大剑\r\n普通 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1531/@Button@1534",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1531/@Button@1534/Caption",
+			"rect_height": 72.0,
+			"size": 17,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1531/@Button@1534/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1535/@Label@1537",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "狼牙大剑\r\n普通 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1535/@Button@1538",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1535/@Button@1538/Caption",
+			"rect_height": 72.0,
+			"size": 17,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1535/@Button@1538/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1539/@Label@1541",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "狼牙大剑\r\n普通 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1539/@Button@1542",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1539/@Button@1542/Caption",
+			"rect_height": 72.0,
+			"size": 17,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1539/@Button@1542/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1543/@Label@1545",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "狼牙大剑\r\n普通 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1543/@Button@1546",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1543/@Button@1546/Caption",
+			"rect_height": 72.0,
+			"size": 17,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1543/@Button@1546/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1547/@Label@1549",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "狼牙大剑\r\n普通 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1547/@Button@1550",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1547/@Button@1550/Caption",
+			"rect_height": 72.0,
+			"size": 17,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1547/@Button@1550/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1551/@Label@1553",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "狼牙大剑\r\n普通 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1551/@Button@1554",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1551/@Button@1554/Caption",
+			"rect_height": 72.0,
+			"size": 17,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1551/@Button@1554/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1555/@Label@1557",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "狼牙大剑\r\n普通 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1555/@Button@1558",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1555/@Button@1558/Caption",
+			"rect_height": 72.0,
+			"size": 17,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1555/@Button@1558/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1559/@Label@1561",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "狼牙大剑\r\n普通 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1559/@Button@1562",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1559/@Button@1562/Caption",
+			"rect_height": 72.0,
+			"size": 17,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1559/@Button@1562/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1563/@Label@1565",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "狼牙大剑\r\n普通 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1563/@Button@1566",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1563/@Button@1566/Caption",
+			"rect_height": 72.0,
+			"size": 17,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1563/@Button@1566/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1567/@Label@1569",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "狼牙大剑\r\n普通 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1567/@Button@1570",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1567/@Button@1570/Caption",
+			"rect_height": 72.0,
+			"size": 17,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1567/@Button@1570/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1571/@Label@1573",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "狼牙大剑\r\n普通 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1571/@Button@1574",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1571/@Button@1574/Caption",
+			"rect_height": 72.0,
+			"size": 17,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1571/@Button@1574/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1575/@Label@1577",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "狼牙大剑\r\n普通 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1575/@Button@1578",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1575/@Button@1578/Caption",
+			"rect_height": 72.0,
+			"size": 17,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1575/@Button@1578/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1579/@Label@1581",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "狼牙大剑\r\n普通 · 强化 +0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1579/@Button@1582",
+			"rect_height": 72.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1579/@Button@1582/Caption",
+			"rect_height": 72.0,
+			"size": 17,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/Items/ItemScroll/@VBoxContainer@1502/@HBoxContainer@1579/@Button@1582/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/DetailScroll/@VBoxContainer@1004/@Label@1583",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "待领取物品会保留在这里"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@991/@Control@996/SelectedItemDetail/DetailScroll/@VBoxContainer@1004/@Label@1584",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "腾出装备格后即可领取；领取不会额外消耗资源。"
+		}
+	]
+}

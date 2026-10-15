@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://shots/town_home_20261013/compare/CompareTownHome.gd" id="1_cmp"]
+
+[node name="CompareTownHome" type="Node"]
+script = ExtResource("1_cmp")

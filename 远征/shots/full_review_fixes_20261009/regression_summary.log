@@ -1,0 +1,58 @@
+Godot  : D:/new-bee/tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe
+Version: 4.7.2.stable.official.ed1daf0bf
+Project: D:/new-bee/远征
+UserDir: D:/new-bee/远征/tools/_logs/user_sandbox_e96f69405a1b48c19f6dddbf697340fa/Godot/app_userdata/远征/
+Cases  : 19  (timeout 240s, quit-after 6000 frames)
+Logs   : D:/new-bee/远征/shots/full_review_fixes_20261009/regressions
+Commit : 3b9819f8
+
+PASS  VerifyAssets
+PASS  VerifyBattleScene
+PASS  VerifyUiLayout
+FAIL  VerifyVisualRefresh  <- output contains [SCRIPT ERROR]; output contains [ERROR:]
+      SCRIPT ERROR: Invalid access to property or key 'max_hp' on a base object of type 'Dictionary'.
+      log: D:\new-bee\远征\shots\full_review_fixes_20261009\regressions\VerifyVisualRefresh.log
+FAIL  VerifyFieldUI  <- missing completion line 'FIELD_UI_OK'; output contains [SCRIPT ERROR]; output contains [ERROR:]; output contains [FAIL:]
+      ERROR: FAIL: Four large currencies must fit inside page margin
+      ERROR: FAIL: Missing home action: 世界
+      ERROR: FAIL: Missing home action: 背包
+      ERROR: FAIL: Missing home action: 养成
+      ERROR: FAIL: Missing home action: 图鉴
+      ERROR: FAIL: Missing home action: 竞技
+      ERROR: FAIL: Missing home action: 召唤
+      ERROR: FAIL: Missing home action: 兑换
+      ERROR: FAIL: Missing home action: 活动
+      ERROR: FAIL: Returning from upgrade must refresh exact home balance
+      ERROR: FAIL: Visible home balance must refresh after spending
+      ERROR: FAIL: Each profession must expose five named skills
+      log: D:\new-bee\远征\shots\full_review_fixes_20261009\regressions\VerifyFieldUI.log
+PASS  VerifyCity
+FAIL  VerifyGameHome  <- exit code 1; missing completion line 'GAME_HOME_OK'; output contains [SCRIPT ERROR]; output contains [ERROR:]; output contains [FAIL:]
+      ERROR: FAIL: 秘境页首开只应预建少量卡（虚拟化），实为 0
+      SCRIPT ERROR: Invalid access to property or key '0:snow' on a base object of type 'Dictionary'.
+      log: D:\new-bee\远征\shots\full_review_fixes_20261009\regressions\VerifyGameHome.log
+FAIL  VerifyMapScene  <- exit code 1; missing completion line 'MAP_SCENE_OK'; output contains [ERROR:]; output contains [FAIL:]; output contains [_FAIL]
+      MAP_SCENE_FAIL fails=1
+      ERROR: FAIL: 无替补时换宠按钮应隐藏
+      log: D:\new-bee\远征\shots\full_review_fixes_20261009\regressions\VerifyMapScene.log
+PASS  VerifyMainWorld
+PASS  VerifyWorldSession
+PASS  VerifyCampaignGrowth
+FAIL  VerifyCampaignGear  <- exit code 1; missing completion line 'CAMPAIGN_GEAR_OK'; output contains [ERROR:]; output contains [FAIL:]; output contains [_FAIL]
+      CAMPAIGN_GEAR_FAIL fails=3
+      ERROR: FAIL: 超过八件的待领取必须分页
+      ERROR: FAIL: 第二页完整呈现剩余五件
+      ERROR: FAIL: 来源与需求中文详情不截断
+      log: D:\new-bee\远征\shots\full_review_fixes_20261009\regressions\VerifyCampaignGear.log
+PASS  VerifyWorkshop
+PASS  VerifyCurriculum
+PASS  VerifyPanels
+PASS  VerifyGrowth
+PASS  VerifyPerf
+PASS  VerifyAvatar
+FAIL  VerifyNav  <- output contains [SCRIPT ERROR]; output contains [ERROR:]
+      SCRIPT ERROR: Invalid access to property or key 'max_hp' on a base object of type 'Dictionary'.
+      log: D:\new-bee\远征\shots\full_review_fixes_20261009\regressions\VerifyNav.log
+
+NOTE: 14 case(s) emitted 30 engine exit-time resource diagnostic(s) (leaked RIDs / resources still in use). Not counted as failures - tracked as issue #43.
+FAILED: 6 / 19

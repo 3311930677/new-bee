@@ -1,0 +1,554 @@
+{
+  "name": "潮痕滩",
+  "city": false,
+  "theme": "desert",
+  "tint": "b9d7d3",
+  "decos": [
+    "030_deco_forest_rocks",
+    "031_deco_forest_shrub",
+    "034_deco_forest_bones"
+  ],
+  "background": "res://image/main_world/tideflat_ground_v4.png",
+  "map_cols": 20,
+  "map_rows": 26,
+  "layout_version": 1,
+  "player_scale": 0.54,
+  "camera_zoom": 1.15,
+  "spawn": [
+    165,
+    700
+  ],
+  "spawn_points": {
+    "from_shenyuan_port": [
+      165,
+      700
+    ],
+    "from_tidal_gate": [
+      480,
+      200
+    ]
+  },
+  "exits": [
+    {
+      "id": "west_port",
+      "at": [
+        90,
+        700
+      ],
+      "to": "shenyuan_port",
+      "arrival": "from_tideflat",
+      "label": "沉渊港"
+    },
+    {
+      "id": "north_gate",
+      "at": [
+        480,
+        96
+      ],
+      "to": "tidal_gate",
+      "arrival": "from_tideflat",
+      "label": "退潮水闸",
+      "requires_story": "s18",
+      "locked_hint": "先击败闸门守卫，取得闸门线索"
+    }
+  ],
+  "goal": "查看涨潮货堆，击败守卫取得水闸线索",
+  "node_type": "normal",
+  "monster_count": 4,
+  "monster_positions": [
+    [
+      550,
+      525
+    ],
+    [
+      600,
+      655
+    ],
+    [
+      330,
+      900
+    ],
+    [
+      610,
+      945
+    ]
+  ],
+  "monster_ids": [
+    "mon_tidal_guard",
+    "mon_salt_crab",
+    "mon_tidal_guard",
+    "mon_salt_crab"
+  ],
+  "monster_slot_ids": [
+    "mon_tidal_guard",
+    "mon_salt_crab",
+    "mon_tidal_guard",
+    "mon_salt_crab"
+  ],
+  "battle_rewards": {
+    "normal": {
+      "gold": 75,
+      "exp": 56
+    }
+  },
+  "monster_sprite": "",
+  "monster_height": 76,
+  "monster_level_offset": 2,
+  "monster_sprite_paths": {
+    "mon_salt_crab": "res://image/main_world/mon_salt_crab.png",
+    "mon_tidal_guard": "res://image/main_world/mon_tidal_guard.png",
+    "mon_salt_scale": "res://image/main_world/mon_salt_scale.png"
+  },
+  "monster_wander_only": true,
+  "monster_wander_radius": 38,
+  "monster_respawn_seconds": 110,
+  "monster_contact_radius": 42,
+  "encounter_solo": true,
+  "optional_bosses": [
+    {
+      "id": "salt_scale_king",
+      "mon_id": "mon_salt_scale",
+      "at": [
+        270,
+        1000
+      ],
+      "level_offset": 4,
+      "height": 106,
+      "sprite": "res://image/main_world/mon_salt_scale.png",
+      "contact_radius": 56,
+      "wander_radius": 20,
+      "respawn_seconds": 600,
+      "first_kill": {
+        "tx_scope": "act2",
+        "flag": "act2_salt_scale_down",
+        "discovery": "mon_salt_scale",
+        "equips": {
+          "zs": {
+            "tpl": "tpl_sword_ruin",
+            "rarity": 3
+          },
+          "ck": {
+            "tpl": "tpl_spear_iron",
+            "rarity": 3
+          },
+          "fs": {
+            "tpl": "tpl_staff_frost",
+            "rarity": 3
+          },
+          "fz": {
+            "tpl": "tpl_hammer_dawn",
+            "rarity": 3
+          }
+        }
+      }
+    }
+  ],
+  "entities": {
+    "tide_cargo": {
+      "kind": "story",
+      "quest": "",
+      "story_step": "s17",
+      "show_steps": [
+        "s17"
+      ],
+      "story_event": "observe",
+      "art": "tide_cargo",
+      "name": "潮印货堆",
+      "at": [
+        410,
+        700
+      ]
+    },
+    "fish_tide_pool": {
+      "kind": "fishing",
+      "quest": "",
+      "art": "fishing",
+      "name": "潮痕浅池 · 垂钓",
+      "at": [
+        310,
+        560
+      ]
+    },
+    "a2_drift_feather": {
+      "kind": "collect",
+      "quest": "a2_rel_feather",
+      "art": "feather",
+      "name": "避风浅池 · 漂羽",
+      "at": [
+        625,
+        850
+      ]
+    },
+    "a2_tide_grass_a": {
+      "kind": "collect",
+      "quest": "a2_eco_grass",
+      "art": "root",
+      "name": "北浅水 · 潮草",
+      "at": [
+        580,
+        380
+      ]
+    },
+    "a2_tide_grass_b": {
+      "kind": "collect",
+      "quest": "a2_eco_grass",
+      "art": "root",
+      "name": "南盐纹 · 潮草",
+      "at": [
+        585,
+        1015
+      ]
+    },
+    "a4_tidebud_south": {
+      "quest": "a4_eco_tidebuds",
+      "kind": "collect",
+      "art": "return_tidebud",
+      "name": "南滩新芽",
+      "at": [
+        480,
+        390
+      ]
+    },
+    "a4_tidebud_north": {
+      "quest": "a4_eco_tidebuds",
+      "kind": "collect",
+      "art": "return_tidebud",
+      "name": "北滩新芽",
+      "at": [
+        480,
+        810
+      ]
+    },
+    "herb_ship_tide_aid": {
+      "kind": "shipping_aid",
+      "shipping_id": "herb_ship",
+      "art": "salt_marks",
+      "name": "船运潮线",
+      "at": [
+        750,
+        665
+      ]
+    },
+    "a2_secret_tide_clock_step_1": {
+      "kind": "inspect",
+      "quest": "a2_secret_tide_clock",
+      "name": "高水痕",
+      "art": "salt_marks",
+      "at": [
+        390,
+        970
+      ]
+    },
+    "a2_secret_tide_clock_step_2": {
+      "kind": "inspect",
+      "quest": "a2_secret_tide_clock",
+      "name": "低水痕",
+      "art": "salt_marks",
+      "at": [
+        570,
+        790
+      ]
+    },
+    "a2_secret_tide_clock_step_3": {
+      "kind": "inspect",
+      "quest": "a2_secret_tide_clock",
+      "name": "回潮线",
+      "art": "salt_marks",
+      "at": [
+        390,
+        610
+      ]
+    },
+    "a2_secret_tide_clock_step_4": {
+      "kind": "align",
+      "quest": "a2_secret_tide_clock",
+      "name": "编排闸门时序",
+      "art": "post",
+      "at": [
+        570,
+        900
+      ]
+    },
+    "a2_eco_driftwood_step_1": {
+      "kind": "inspect",
+      "quest": "a2_eco_driftwood",
+      "name": "巢位与浅痕",
+      "art": "return_tidebud",
+      "at": [
+        580,
+        1000
+      ]
+    },
+    "a2_eco_driftwood_step_2": {
+      "kind": "repair",
+      "quest": "a2_eco_driftwood",
+      "name": "搬开第一块漂木",
+      "art": "post",
+      "at": [
+        390,
+        900
+      ]
+    },
+    "a2_eco_driftwood_step_3": {
+      "kind": "repair",
+      "quest": "a2_eco_driftwood",
+      "name": "搬开第二块漂木",
+      "art": "post",
+      "at": [
+        580,
+        740
+      ]
+    },
+    "a2_eco_driftwood_step_4": {
+      "kind": "escort",
+      "quest": "a2_eco_driftwood",
+      "name": "沿浅线送木回岸",
+      "art": "post",
+      "at": [
+        390,
+        1060
+      ]
+    },
+    "a2_eco_driftwood_feedback_0": {
+      "kind": "feedback",
+      "quest": "a2_eco_driftwood",
+      "art": "return_tidebud",
+      "name": "未受扰动的巢边",
+      "at": [
+        580,
+        990
+      ]
+    },
+    "a4_eco_returnpath_step_1": {
+      "kind": "inspect",
+      "quest": "a4_eco_returnpath",
+      "name": "观察潮芽根际",
+      "art": "return_tidebud",
+      "at": [
+        390,
+        1020
+      ]
+    },
+    "a4_eco_returnpath_step_3": {
+      "kind": "mark",
+      "quest": "a4_eco_returnpath",
+      "name": "设立轻触观察标记",
+      "art": "post",
+      "at": [
+        580,
+        1040
+      ]
+    },
+    "a4_eco_returnpath_feedback_0": {
+      "kind": "feedback",
+      "quest": "a4_eco_returnpath",
+      "art": "post",
+      "name": "复苏观察标记",
+      "at": [
+        580,
+        1020
+      ]
+    }
+  },
+  "clear_rects": [
+    [
+      340,
+      905,
+      100,
+      110
+    ],
+    [
+      520,
+      725,
+      100,
+      110
+    ],
+    [
+      340,
+      545,
+      100,
+      110
+    ],
+    [
+      520,
+      835,
+      100,
+      110
+    ],
+    [
+      530,
+      935,
+      100,
+      110
+    ],
+    [
+      340,
+      835,
+      100,
+      110
+    ],
+    [
+      530,
+      675,
+      100,
+      110
+    ],
+    [
+      340,
+      995,
+      100,
+      110
+    ],
+    [
+      340,
+      955,
+      100,
+      110
+    ],
+    [
+      530,
+      975,
+      100,
+      110
+    ],
+    [
+      205,
+      580,
+      130,
+      120
+    ],
+    [
+      415,
+      480,
+      130,
+      120
+    ],
+    [
+      575,
+      350,
+      130,
+      120
+    ],
+    [
+      505,
+      280,
+      130,
+      120
+    ]
+  ],
+  "ground_style": "background",
+  "flat_routes": [
+    {
+      "points": [
+        [
+          90,
+          700
+        ],
+        [
+          165,
+          700
+        ],
+        [
+          245,
+          720
+        ],
+        [
+          320,
+          730
+        ],
+        [
+          480,
+          650
+        ],
+        [
+          510,
+          470
+        ],
+        [
+          455,
+          270
+        ],
+        [
+          480,
+          185
+        ],
+        [
+          480,
+          96
+        ]
+      ],
+      "width": 92
+    },
+    {
+      "points": [
+        [
+          480,
+          650
+        ],
+        [
+          455,
+          850
+        ],
+        [
+          480,
+          1060
+        ]
+      ],
+      "width": 80
+    },
+    {
+      "points": [
+        [
+          245,
+          720
+        ],
+        [
+          305,
+          585
+        ],
+        [
+          425,
+          565
+        ],
+        [
+          510,
+          470
+        ]
+      ],
+      "width": 62
+    },
+    {
+      "points": [
+        [
+          320,
+          730
+        ],
+        [
+          295,
+          830
+        ],
+        [
+          350,
+          900
+        ],
+        [
+          455,
+          850
+        ]
+      ],
+      "width": 60
+    }
+  ],
+  "flat_palette": [
+    "829b82",
+    "92ab8d",
+    "6b8976",
+    "d9d4ae",
+    "bdc09e",
+    "sand"
+  ],
+  "deco_density": 0.095,
+  "deco_tint": "ffffff",
+  "flat_material": "wet",
+  "surface_tint": "ffffff"
+}

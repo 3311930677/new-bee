@@ -19,10 +19,11 @@ const SKIP_FILES := [
 	"SkillShowcase.gd", # 非独立页面的招式动画，返回由技能书负责
 	"AvatarCatalog.gd", "JournalUI.gd", "VisualTheme.gd", "UIFinesse.gd", "FieldUI.gd", "CraftUI.gd", "LedgerStyle.gd", "IllustratedUI.gd", # 目录与样式工厂，均为 RefCounted
 	"InventoryTheme.gd", # 背包 Theme 工厂，无独立页面
-	"WorldHUD.gd", # 地图 HUD 的 Theme 与控件工厂，无独立页面
+	"WorldHUD.gd", "WorldHUDSkin.gd", # 地图 HUD 的 Theme、绘图与控件工厂，无独立页面
 	"LacquerUI.gd", # RefCounted 样式工厂，按钮的导航归所属页面管理
 	"FlowChestUI.gd", "RegionChestMap.gd", "LoginChestView.gd", "CreateRoleChestView.gd", "CollectionChestView.gd", "DeployChestView.gd", "SettingsChestView.gd", "IntroductionChestView.gd", "LoadingChestGauge.gd", # Shared flow renderers; owning panels handle navigation.
 	"TravelChestUI.gd", # Shared factory, not an independently navigable page.
+	"PixelKit.gd", "UiKit.gd", "SettingsSkin.gd", # RefCounted 像素/素材包/设置页皮肤工厂，无独立页面
 	"ReviewFixUI.gd", # Shared costs, gauges and native furniture; parent pages own navigation.
 	"ReferenceFrontend.gd", # RefCounted background/hero factory; Title and Login own navigation.
 	"NameTagLayout.gd", # Screen-space nameplate renderer, no independent navigation.

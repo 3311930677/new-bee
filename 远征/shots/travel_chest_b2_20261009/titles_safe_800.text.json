@@ -1,0 +1,781 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@Label@1854",
+			"rect_height": 32.0,
+			"size": 20,
+			"text": "初出茅庐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@Label@1855",
+			"rect_height": 26.0,
+			"size": 13,
+			"text": "当前佩戴 · 初出茅庐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@Button@1856",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@Button@1856/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@Label@1857",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "称号荣誉"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Label@1967",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "修行之路"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1972",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "初出茅庐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1972/@Label@1969",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "初出茅庐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1972/@Label@1970",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "佩戴中"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1972/@Label@1971",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "已选"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1977",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "身经百战"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1977/@Label@1974",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "身经百战"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1977/@Label@1975",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "角色达到 20 级"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1977/@Label@1976",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1982",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "远征传说"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1982/@Label@1979",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "远征传说"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1982/@Label@1980",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "角色达到 60 级"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1982/@Label@1981",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1987",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "驯兽大师"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1987/@Label@1984",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "驯兽大师"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1987/@Label@1985",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "收集 6 只灵宠"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1987/@Label@1986",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1992",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "腰缠万贯"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1992/@Label@1989",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "腰缠万贯"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1992/@Label@1990",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "持有金币超过 50000"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1992/@Label@1991",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1997",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "万兽之友"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1997/@Label@1994",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "万兽之友"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1997/@Label@1995",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "收集至少 8 只灵宠"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@1997/@Label@1996",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Label@1998",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "秘境征服"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2003",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "林海征服者"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2003/@Label@2000",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "林海征服者"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2003/@Label@2001",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "通关「苍绿林海」首领"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2003/@Label@2002",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2008",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "雪原猎手"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2008/@Label@2005",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "雪原猎手"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2008/@Label@2006",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "通关「封冻雪原」首领"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2008/@Label@2007",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2013",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "深渊行者"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2013/@Label@2010",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "深渊行者"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2013/@Label@2011",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "通关「无底深渊」首领"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2013/@Label@2012",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2018",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "王座终结者"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2018/@Label@2015",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "王座终结者"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2018/@Label@2016",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "通关「失落王城」首领"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2018/@Label@2017",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2023",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "熔炉拾薪"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2023/@Label@2020",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "熔炉拾薪"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2023/@Label@2021",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "通关「焚天火山」首领"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2023/@Label@2022",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2028",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "墓道点灯人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2028/@Label@2025",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "墓道点灯人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2028/@Label@2026",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "通关「幽暗古墓」首领"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2028/@Label@2027",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2033",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "沙海识途"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2033/@Label@2030",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "沙海识途"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2033/@Label@2031",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "通关「流沙荒漠」首领"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2033/@Label@2032",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2038",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "冰河引路人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2038/@Label@2035",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "冰河引路人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2038/@Label@2036",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "通关「万载冰川」首领"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2038/@Label@2037",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Label@2039",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "荣誉兑换"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2044",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "荣耀之证"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2044/@Label@2041",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "荣耀之证"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2044/@Label@2042",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "荣誉商店兑换"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2044/@Label@2043",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2049",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "百战之徽"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2049/@Label@2046",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "百战之徽"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2049/@Label@2047",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "荣誉商店兑换"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2049/@Label@2048",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2054",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "不朽勋章"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2054/@Label@2051",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "不朽勋章"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2054/@Label@2052",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "荣誉商店兑换"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2054/@Label@2053",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2059",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "初次受勋"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2059/@Label@2056",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "初次受勋"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2059/@Label@2057",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "荣誉商店兑换"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1862/@VBoxContainer@1863/@Button@2059/@Label@2058",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@ScrollContainer@1867/@Label@1866",
+			"rect_height": 47.0,
+			"size": 14,
+			"text": "角色达到 5 级\n（生命+50） "
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@Label@1868",
+			"rect_height": 24.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@Button@1869",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "卸下称号"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@Button@1869/Caption",
+			"rect_height": 56.0,
+			"size": 22,
+			"text": "卸下称号"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1848/@Button@1869/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@1847/@Control@1965/@Label@1966",
+			"rect_height": 36.0,
+			"size": 14,
+			"text": "称号「初出茅庐」入手！"
+		}
+	]
+}

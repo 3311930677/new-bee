@@ -1,0 +1,22 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SCRIPT ERROR: Parse Error: Cannot infer the type of "delta" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://src/ui/RegionChestMap.gd:117)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tools/ProbeB3.gd:4)
+ERROR: Failed to load script "res://src/ui/RegionChestMap.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tools/ProbeB3.gd:4)
+B3_COMPILE res://src/ui/RegionChestMap.gd false
+B3_COMPILE res://src/ui/FlowChestUI.gd true
+SCRIPT ERROR: Parse Error: Cannot infer the type of "index" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://src/ui/CreateRoleChestView.gd:47)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tools/ProbeB3.gd:4)
+ERROR: Failed to load script "res://src/ui/CreateRoleChestView.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tools/ProbeB3.gd:4)
+B3_COMPILE res://src/ui/CreateRoleChestView.gd false
+B3_COMPILE res://src/ui/SettingsChestView.gd true
