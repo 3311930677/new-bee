@@ -1,17 +1,24 @@
 extends Control
 const ChestUI := preload("res://src/ui/TravelChestUI.gd")
 const Lacquer := preload("res://src/ui/LacquerUI.gd")
-const MENU := ["开始游戏", "游戏介绍", "游戏设置", "退出游戏"]
+const Kit := preload("res://src/ui/PixelKit.gd")
+const MENU := ["开始游戏", "游戏介绍", "游戏设置"]
+const MENU_ICONS := ["expedition", "book", "settings"]
+const LINKS := ["公告", "退出游戏", "制作组", "版本信息"]
+const LINK_ICONS := ["notice", "gate", "hero", "quest"]  # 主城米金图标：号角 / 城门 / 头盔 / 卷轴
+const BG_SIZE := Vector2(841, 1870)  # title_bg.png 原图尺寸
+const BRAND_SIZE := Vector2(320, 138)  # title_logo.png 1654×713 等比
 var _btns: Array[Control] = []
+var _links: Array[Control] = []
 var _focus := 0
 var _intro_panel: Control = null
 var _settings: SettingsPanel = null
 var _brand: Control
 var _street: TextureRect
 var _shade: TextureRect
-var _sky_extension:TextureRect
 var _subtitle: Label
 var _subtitle_group: Control
+var _footer: Control
 var _separators: Array[ColorRect] = []
 
 func _ready() -> void:
@@ -22,39 +29,29 @@ func _ready() -> void:
 	sky.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	sky.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(sky)
+	# 2026-10-14 标题背景：黄昏边城远眺（细颗粒插画，线性过滤）。整张按 480 宽显示，
+	# 长屏显示全图，480×800 从第 140px 起取，Logo 始终落在晚霞天空里。
 	_street = TextureRect.new()
-	_street.texture = load("res://image/background/courtyard_visual_v2.png")
-	_street.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+	_street.texture = load("res://assets/ui/title_20261014/title_bg.png")
+	_street.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	_street.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_street.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	_street.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_street)
-	var sky_source:=load("res://assets/ui/review_fixes_20261009/sky_outpaint.png") as Texture2D
-	_sky_extension=TextureRect.new()
-	_sky_extension.texture=sky_source
-	_sky_extension.expand_mode=TextureRect.EXPAND_IGNORE_SIZE
-	_sky_extension.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
-	var shader:=Shader.new()
-	shader.code="""shader_type canvas_item;
-uniform sampler2D original : filter_nearest;
-uniform float extra_height = 267.0;
-uniform float layer_height = 300.0;
-uniform float sky_fraction = 0.2885;
-void fragment() {
- float y = UV.y * layer_height;
- vec4 sky = texture(TEXTURE, vec2(UV.x,UV.y*sky_fraction));
- vec4 base = texture(original, vec2(UV.x, clamp((y-extra_height)/800.0,0.0,1.0)));
- float merge = smoothstep(extra_height-40.0,extra_height+33.0,y);
- COLOR = mix(sky,base,merge);
-}"""
-	var sky_material:=ShaderMaterial.new()
-	sky_material.shader=shader
-	sky_material.set_shader_parameter("original",_street.texture)
-	sky_material.set_shader_parameter("sky_fraction",sky_source.get_width()*300.0/480.0/sky_source.get_height())
-	_sky_extension.material=sky_material
-	_sky_extension.mouse_filter=Control.MOUSE_FILTER_IGNORE
-	add_child(_sky_extension)
-	_shade = Lacquer.scrim(Vector2(480, 280), true)
+	# 底部压暗：盖住中路水洼高光，保证按钮和次级入口文字清楚。
+	var grad := Gradient.new()
+	grad.offsets = PackedFloat32Array([0.0, 0.45, 1.0])
+	grad.colors = PackedColorArray([Color("0a090b", 0.0), Color("0a090b", 0.42), Color("0a090b", 0.78)])
+	var shade_tex := GradientTexture2D.new()
+	shade_tex.gradient = grad
+	shade_tex.width = 4
+	shade_tex.height = 256
+	shade_tex.fill_to = Vector2(0, 1)
+	_shade = TextureRect.new()
+	_shade.texture = shade_tex
+	_shade.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_shade.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	_shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_shade)
 	var motes := _AmbientMotes.new()
 	motes.name = "AmbientMotes"
@@ -62,16 +59,16 @@ void fragment() {
 	add_child(motes)
 	_brand = _TravelWordmark.new()
 	_brand.name = "ExpeditionWordmark"
-	_brand.size = Vector2(280,120)
+	_brand.size = BRAND_SIZE
 	add_child(_brand)
 	_subtitle_group = Control.new()
 	_subtitle_group.size = Vector2(260,28)
 	_subtitle_group.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_subtitle_group)
-	_subtitle = Lacquer.label("昭元行旅录",18,Color("d9be8a"),true)
+	_subtitle = Lacquer.label("点击开始旅程",16,Color("e6cf9c"),true)
 	var subtitle_font := FontVariation.new()
 	subtitle_font.base_font = G.font_serif
-	subtitle_font.spacing_glyph = 6
+	subtitle_font.spacing_glyph = 4
 	_subtitle.add_theme_font_override("font",subtitle_font)
 	_subtitle.position = Vector2(56,0)
 	_subtitle.size = Vector2(148,28)
@@ -84,69 +81,137 @@ void fragment() {
 		line.size = Vector2(48,1)
 		line.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_subtitle_group.add_child(line)
+	# 2026-10-15 按参考稿：三个竖排主按钮（左侧图标），首个朱漆，其余铁铜。
 	for i in MENU.size():
 		var idx := i
-		var b: Button = ChestUI.action(MENU[i],"primary") if i==0 else Lacquer.Action.new(MENU[i])
-		b.name = ["StartGame", "Introduction", "Settings", "Quit"][i]
-		if i != 0: b.quiet = true
-		if i != 0: b.caption.add_theme_font_override("font", G.font_serif)
-		b.caption.add_theme_font_size_override("font_size", 22 if i == 0 else 17)
-		b.caption.add_theme_color_override("font_color", Color("f6d9a0") if i == 0 else (Color("9e9381") if i == 3 else Lacquer.AGED))
+		var b := Kit.PixelButton.new(MENU[i], "crimson" if i == 0 else "iron", 20 if i == 0 else 18)
+		b.kit = "hero" if i == 0 else "btn"
+		if i == 0:
+			b.shine = true
+			b.trim = Color("c9963f")
+		# 手绘插画图标（与标题背景同一画风）；先设 expand_mode 再赋贴图，否则尺寸被夹回原图大小。
+		var icon := TextureRect.new()
+		icon.name = "Icon"
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		icon.texture = load("res://assets/ui/illustrated_icons_20261007/%s.png" % MENU_ICONS[i])
+		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		b.caption.add_child(icon)  # 挂在文字上：跟随按钮的悬停上浮 / 按下下沉
+		b.focus_marks = true
+		b.nav_marks = false
+		b.name = ["StartGame", "Introduction", "Settings"][i]
 		b.pressed.connect(_activate.bind(idx))
 		b.focus_entered.connect(func(): _focus = idx)
 		add_child(b)
 		_btns.append(b)
-	for i in 2:
-		var dot := ColorRect.new()
-		dot.color = Lacquer.LIT
-		dot.size = Vector2(4,4)
-		dot.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		add_child(dot)
-		_separators.append(dot)
+	_footer = _FooterRule.new()
+	_footer.name = "FooterRule"
+	add_child(_footer)
+	for i in LINKS.size():
+		var link := _FooterLink.new(LINKS[i], LINK_ICONS[i])
+		link.name = ["Notice", "Quit", "Credits", "Version"][i]
+		link.pressed.connect(_open_link.bind(i))
+		add_child(link)
+		_links.append(link)
 	get_viewport().size_changed.connect(_layout_page)
 	_layout_page()
 	_update_focus(0, false)
+	# 入场：标识自上落下、副标题随后、按钮自下逐个推入。
+	Kit.enter(_brand, 0.0, Vector2(0, -18))
+	Kit.enter(_subtitle_group, 0.14, Vector2(0, -10))
+	for i in _btns.size(): Kit.enter(_btns[i], 0.28 + i * 0.07)
+	for link in _links: Kit.enter(link, 0.5, Vector2(0, 10))
+	_pulse_hint()
 
 func _layout_page(safe_override: Rect2 = Rect2()) -> void:
 	var view := get_viewport_rect()
 	var safe := safe_override if safe_override.has_area() else G.ui_safe_rect(self)
-	_street.position=Vector2((view.size.x-480)*.5,view.size.y-800)
-	_street.size=Vector2(480,800)
-	_sky_extension.visible=view.size.y>800
-	_sky_extension.size=Vector2(view.size.x,maxf(1,view.size.y-800+33))
-	(_sky_extension.material as ShaderMaterial).set_shader_parameter("extra_height",maxf(0,view.size.y-800))
-	(_sky_extension.material as ShaderMaterial).set_shader_parameter("layer_height",_sky_extension.size.y)
-	_shade.position = Vector2(0, view.size.y - 280)
-	_shade.size.x = view.size.x
-	var brand_y := 72 + 0.4 * maxf(0, safe.size.y - 800)
-	_brand.position = Vector2(safe.get_center().x - 140, safe.position.y + brand_y)
-	_subtitle_group.position = Vector2(safe.get_center().x-130,safe.position.y+brand_y+128)
-	_btns[0].size = Vector2(280, 64)
-	_btns[0].position = Vector2(safe.get_center().x - 140, safe.end.y - 252)
-	for i in range(1, 4):
-		_btns[i].size = Vector2(88, 44)
-		_btns[i].position = Vector2(safe.get_center().x - 148 + (i - 1) * 104, safe.end.y - 164)
-	for i in _separators.size():
-		_separators[i].position = Vector2(safe.get_center().x-54+i*104,safe.end.y-144)
+	var bg_h := maxf(480.0 * BG_SIZE.y / BG_SIZE.x, view.size.y)
+	var bg_w := bg_h * BG_SIZE.x / BG_SIZE.y
+	# 800 高时上移 140，长屏逐步回到 0；更高的屏幕等比放大铺满。
+	var top := -clampf((1067.0 - view.size.y) * 140.0 / 267.0, 0.0, 140.0)
+	_street.position = Vector2((view.size.x - bg_w) * .5, top)
+	_street.size = Vector2(bg_w, bg_h)
+	_shade.position = Vector2(0, view.size.y - 380)
+	_shade.size = Vector2(view.size.x, 380)
+	var brand_y := 24 + 0.17 * maxf(0, safe.size.y - 800)
+	_brand.position = Vector2(safe.get_center().x - BRAND_SIZE.x * .5, safe.position.y + brand_y)
+	_subtitle_group.position = Vector2(safe.get_center().x-130,safe.position.y+brand_y+BRAND_SIZE.y+2)
+	# 菜单落在底部石阶暗区：主角和路牌在按钮上方完整露出（参考稿三键约在 73% / 79% / 86% 高度）。
+	var cx := safe.get_center().x
+	var sizes := [Vector2(280, 60), Vector2(256, 52), Vector2(256, 52)]
+	var tops := [safe.end.y - 272, safe.end.y - 204, safe.end.y - 144]
 	for i in _btns.size():
-		_btns[i].focus_neighbor_top = _btns[0].get_path() if i > 0 else _btns[1].get_path()
-		_btns[i].focus_neighbor_bottom = _btns[1].get_path() if i == 0 else _btns[0].get_path()
-		if i > 0:
-			_btns[i].focus_neighbor_left = _btns[3 if i == 1 else i - 1].get_path()
-			_btns[i].focus_neighbor_right = _btns[1 if i == 3 else i + 1].get_path()
+		_btns[i].size = sizes[i]
+		_btns[i].position = Vector2(cx - sizes[i].x * .5, tops[i])
+		var icon := _btns[i].caption.get_node("Icon") as TextureRect
+		icon.size = Vector2(36, 36)
+		icon.position = Vector2(sizes[i].x * .5 - 86, (sizes[i].y - 36) * .5)
+	# 底部：左侧公告 / 退出游戏，右侧制作组 / 版本信息，最底一条罗盘细线。
+	var link_y := safe.end.y - 90
+	_links[0].position = Vector2(safe.position.x + 14, link_y)
+	_links[1].position = Vector2(safe.position.x + 14 + _FooterLink.W + 6, link_y)
+	_links[2].position = Vector2(safe.end.x - 14 - 2 * _FooterLink.W - 6, link_y)
+	_links[3].position = Vector2(safe.end.x - 14 - _FooterLink.W, link_y)
+	_footer.position = Vector2(safe.position.x, safe.end.y - 14)
+	_footer.size = Vector2(safe.size.x, 12)
+	# 焦点：主按钮上下循环，最后一个向下进入底部入口。
+	var live: Array[Control] = []
+	for b in _btns:
+		if b.focus_mode != Control.FOCUS_NONE: live.append(b)
+	for i in live.size():
+		live[i].focus_neighbor_top = live[i - 1].get_path() if i > 0 else _links[0].get_path()
+		live[i].focus_neighbor_bottom = live[i + 1].get_path() if i < live.size() - 1 else _links[0].get_path()
+		live[i].focus_neighbor_left = live[i].get_path()
+		live[i].focus_neighbor_right = live[i].get_path()
+	for i in _links.size():
+		_links[i].focus_neighbor_top = live.back().get_path()
+		_links[i].focus_neighbor_bottom = live[0].get_path()
+		_links[i].focus_neighbor_left = _links[(i + _links.size() - 1) % _links.size()].get_path()
+		_links[i].focus_neighbor_right = _links[(i + 1) % _links.size()].get_path()
+
+## 引导语呼吸闪烁。
+func _pulse_hint() -> void:
+	if G.get_meta("ui_review_mode", false) or DisplayServer.get_name() == "headless": return
+	var tw := _subtitle.create_tween().set_loops()
+	tw.tween_property(_subtitle, "modulate:a", 0.45, 1.1).set_trans(Tween.TRANS_SINE)
+	tw.tween_property(_subtitle, "modulate:a", 1.0, 1.1).set_trans(Tween.TRANS_SINE)
 
 func _update_focus(idx: int, _sfx: bool) -> void:
 	if idx < 0 or idx >= _btns.size(): return
 	_focus = idx
 	_btns[idx].grab_focus()
 
+func _busy() -> bool:
+	return G.ui_blocked or _settings != null or _intro_panel != null or G.modal_count() > 0
+
 func _activate(idx: int) -> void:
-	if G.ui_blocked or _settings != null or _intro_panel != null: return
+	if _busy(): return
 	match idx:
 		0: G.go("res://src/ui/Login.tscn")
 		1: _show_intro()
 		2: _open_settings()
-		3: get_tree().quit()
+
+func _open_link(idx: int) -> void:
+	if _busy(): return
+	Audio.sfx("ui_open")
+	match idx:
+		0: G.show_info_popup(_links[0], "旅途公告", [
+				"欢迎来到昭元大陆。当前为测试版本，存档保存在本机。",
+				"首次游玩建议先看「游戏介绍」，了解远征、市集与养成的基本玩法。"], self)
+		1: _confirm_quit()
+		2: G.show_info_popup(_links[2], "制作组", [
+				"远征 · 昭元行旅录",
+				"引擎：Godot Engine（MIT 许可）",
+				"字体：Noto Serif CJK、马善政楷书、站酷小薇、站酷庆科黄油体（SIL OFL 1.1）"], self)
+		3: G.show_info_popup(_links[3], "版本信息", [
+				"版本：%s" % String(ProjectSettings.get_setting("application/config/version", "0.2.0")),
+				"引擎：Godot %s" % String(Engine.get_version_info().get("string", ""))], self)
+
+## 退出：底部「退出游戏」或返回键 / Esc，都先弹确认。
+func _confirm_quit() -> void:
+	G.show_choice_popup(self, "退出游戏", ["确定要离开远征吗？进度已保存在本机。"],
+		[{"text": "退出", "cb": func(): get_tree().quit()}, {"text": "再看看", "cb": func(): pass}], self)
 
 func _open_settings() -> void:
 	if _settings != null: return
@@ -168,32 +233,98 @@ func _show_intro() -> void:
 		_update_focus(1, false))
 	add_child(_intro_panel)
 
+## 焦点光标只在键盘 / 手柄操作时显示；一旦点按屏幕或鼠标就收起，默认焦点不再常亮。
+func _input(event: InputEvent) -> void:
+	var nav: Variant = null
+	if (event is InputEventKey or event is InputEventJoypadButton) and event.is_pressed(): nav = true
+	elif event is InputEventJoypadMotion and absf((event as InputEventJoypadMotion).axis_value) > 0.5: nav = true
+	elif (event is InputEventMouseButton or event is InputEventScreenTouch) and event.is_pressed(): nav = false
+	if nav == null: return
+	for b in _btns:
+		if (b as Kit.PixelButton).nav_marks != nav:
+			(b as Kit.PixelButton).nav_marks = nav
+			b.queue_redraw()
+
 func _unhandled_input(event: InputEvent) -> void:
 	if G.ui_blocked or _settings != null: return
-	if _intro_panel != null and event.is_action_pressed("ui_cancel"):
+	if not event.is_action_pressed("ui_cancel"): return
+	if _intro_panel != null:
 		_intro_panel.queue_free()
 		_intro_panel = null
 		_update_focus(1, false)
+		get_viewport().set_input_as_handled()
+	elif G.modal_count() == 0:
+		_confirm_quit()
 		get_viewport().set_input_as_handled()
 
 class _TravelWordmark extends Control:
 	func _ready() -> void:
 		mouse_filter = Control.MOUSE_FILTER_IGNORE
-		var source := load("res://assets/ui/review_fixes_20261009/wordmark_body.png") as Texture2D
-		var atlas := AtlasTexture.new()
-		atlas.atlas = source
-		atlas.region = Rect2(source.get_image().get_used_rect())
-		for shadow in [true,false]:
-			var image := TextureRect.new()
-			image.texture = atlas
-			image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-			image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-			image.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-			image.position = Vector2(2,2) if shadow else Vector2.ZERO
-			image.size = Vector2(280,120)
-			image.modulate = Color(0.04,0.035,0.043,0.85) if shadow else Color(0.87,0.83,0.80)
-			image.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			add_child(image)
+		var image := TextureRect.new()
+		image.texture = load("res://assets/ui/title_20261014/title_logo.png")
+		image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		image.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		image.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		image.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(image)
+
+## 底部小入口：素材包金边圆座 + 主城米金图标（高清 2 倍图）+ 下方小字。
+class _FooterLink extends Button:
+	const W := 56.0
+	const KIT := "res://assets/ui/kit_20261013/"
+	var _socket: TextureRect
+	var _icon: TextureRect
+	var _hover := false
+	func _init(words: String, icon_id: String) -> void:
+		size = Vector2(W, 74)
+		focus_mode = Control.FOCUS_ALL
+		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		_socket = TextureRect.new()
+		_socket.texture = load(KIT + "rail_socket.png")
+		_socket.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		_socket.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(_socket)
+		_icon = TextureRect.new()
+		_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		_icon.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		_icon.texture = load("res://assets/ui/home/icons/%s_40.png" % icon_id)
+		_icon.size = Vector2(34, 34)
+		_icon.position = Vector2(11, 11)
+		_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(_icon)
+		var l := preload("res://src/ui/PixelKit.gd").label(words, 12, Color("e6d2a4"), 1)
+		l.position = Vector2(-12, 58)
+		l.size = Vector2(W + 24, 16)
+		add_child(l)
+	func _ready() -> void:
+		for s in ["normal", "hover", "pressed", "focus", "disabled"]: add_theme_stylebox_override(s, StyleBoxEmpty.new())
+		mouse_entered.connect(func(): _hover = true; _refresh())
+		mouse_exited.connect(func(): _hover = false; _refresh())
+		for e in [button_down, button_up, focus_entered, focus_exited]: e.connect(_refresh)
+	func _refresh() -> void:
+		var lit := _hover or has_focus() or is_pressed()
+		_socket.texture = load(KIT + ("rail_socket_selected.png" if lit else "rail_socket.png"))
+		_icon.position = Vector2(11, 12 if is_pressed() else 11)
+
+## 底部装饰线：两段向外渐隐的金线，中间一枚菱形罗盘点。
+class _FooterRule extends Control:
+	func _ready() -> void:
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+		resized.connect(queue_redraw)
+	func _draw() -> void:
+		var y := 6.0
+		var mid := size.x * .5
+		var gold := Color("c9a25e")
+		var steps := 24
+		for side in [-1.0, 1.0]:
+			for k in steps:
+				var a := 0.55 * (1.0 - float(k) / steps)
+				var x0: float = mid + side * (10 + k * (mid - 24) / steps)
+				var x1: float = mid + side * (10 + (k + 1) * (mid - 24) / steps)
+				draw_line(Vector2(x0, y), Vector2(x1, y), Color(gold, a), 1.0)
+		draw_colored_polygon(PackedVector2Array([Vector2(mid, y - 6), Vector2(mid + 4, y), Vector2(mid, y + 6), Vector2(mid - 4, y)]), gold)
+		draw_colored_polygon(PackedVector2Array([Vector2(mid, y - 3), Vector2(mid + 2, y), Vector2(mid, y + 3), Vector2(mid - 2, y)]), Color("fff1c8"))
 
 class _AmbientMotes extends Control:
 	var _particles: Array = []
@@ -216,9 +347,11 @@ class _AmbientMotes extends Control:
 				p.pos.x = randf_range(20.0, 460.0)
 		queue_redraw()
 	func _draw() -> void:
+		# 火星按 2px 像素方块绘制，与画面像素颗粒一致（不用平滑圆点）。
 		for p in _particles:
 			var alpha: float = p.a * (0.6 + 0.4 * sin(p.phase))
-			draw_circle(p.pos, p.r, Color(0.96, 0.85, 0.58, alpha))
-			# Subtle golden halo
-			draw_circle(p.pos, p.r * 2.2, Color(0.96, 0.82, 0.48, alpha * 0.28))
+			var at: Vector2 = (p.pos / 2.0).floor() * 2.0
+			var big: bool = p.r > 1.9
+			draw_rect(Rect2(at, Vector2(4, 4) if big else Vector2(2, 2)), Color(0.98, 0.86, 0.56, alpha))
+			if big: draw_rect(Rect2(at + Vector2(1, 1), Vector2(2, 2)), Color(1, .97, .86, alpha))
 

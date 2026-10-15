@@ -1,0 +1,65 @@
+{
+  "date": "2026-10-14",
+  "tool": "built-in image_gen.imagegen",
+  "requirements": "D:/new-bee/ui_design_input/round1_main_scenes/UI_KIT_V3_IMAGE_REQUIREMENTS.md",
+  "original_pngs_preserved": true,
+  "status": "generated_originals_require_restoration_and_strict_pixel_validation",
+  "sheets": [
+    {
+      "name": "UI3-01_primary",
+      "output": "UI3-01_primary.png",
+      "prompt_file": "UI3-01_primary.prompt.txt",
+      "revision_prompt_file": "UI3-01_primary.revision.prompt.txt",
+      "source_original": "C:\\Users\\tsz\\.codex\\generated_images\\01a136fd-3189-7bf1-87ee-88dd6e6b27f5\\exec-75ca01c0-b507-4814-a8d1-d6da0b9adfcb.png"
+    },
+    {
+      "name": "UI3-02_buttons",
+      "output": "UI3-02_buttons.png",
+      "prompt_file": "UI3-02_buttons.prompt.txt",
+      "revision_prompt_file": "UI3-02_buttons.revision.prompt.txt",
+      "source_original": "C:\\Users\\tsz\\.codex\\generated_images\\01a136fd-3189-7bf1-87ee-88dd6e6b27f5\\exec-0cd58f51-8a8b-459d-922e-68a9a5b20356.png"
+    },
+    {
+      "name": "UI3-03_panels",
+      "output": "UI3-03_panels.png",
+      "prompt_file": "UI3-03_panels.prompt.txt",
+      "revision_prompt_file": "UI3-03_panels.revision.prompt.txt",
+      "source_original": "C:\\Users\\tsz\\.codex\\generated_images\\01a136fd-3189-7bf1-87ee-88dd6e6b27f5\\exec-4ab7f123-c6b5-4e35-abb0-43e8fa3c4946.png"
+    },
+    {
+      "name": "UI3-04_plaques",
+      "output": "UI3-04_plaques.png",
+      "prompt_file": "UI3-04_plaques.prompt.txt",
+      "revision_prompt_file": null,
+      "source_original": "C:\\Users\\tsz\\.codex\\generated_images\\01a136fd-3189-7bf1-87ee-88dd6e6b27f5\\exec-833b6a9c-5906-4ab5-9b97-291035d6bdd1.png"
+    },
+    {
+      "name": "UI3-05_controls",
+      "output": "UI3-05_controls.png",
+      "prompt_file": "UI3-05_controls.prompt.txt",
+      "revision_prompt_file": "UI3-05_controls.revision.prompt.txt",
+      "source_original": "C:\\Users\\tsz\\.codex\\generated_images\\01a136fd-3189-7bf1-87ee-88dd6e6b27f5\\exec-1e62eb97-d09a-44b4-bdb3-15f8be45cef7.png"
+    },
+    {
+      "name": "UI3-06_slots",
+      "output": "UI3-06_slots.png",
+      "prompt_file": "UI3-06_slots.prompt.txt",
+      "revision_prompt_file": null,
+      "source_original": "C:\\Users\\tsz\\.codex\\generated_images\\01a136fd-3189-7bf1-87ee-88dd6e6b27f5\\exec-fd3beba5-f4d6-4dac-9fca-ae34fab68f50.png"
+    },
+    {
+      "name": "UI3-07_nav",
+      "output": "UI3-07_nav.png",
+      "prompt_file": "UI3-07_nav.prompt.txt",
+      "revision_prompt_file": "UI3-07_nav.revision.prompt.txt",
+      "source_original": "C:\\Users\\tsz\\.codex\\generated_images\\01a136fd-3189-7bf1-87ee-88dd6e6b27f5\\exec-b90380d6-61d0-4b9e-aa66-ff2421caea66.png"
+    },
+    {
+      "name": "UI3-08_bars",
+      "output": "UI3-08_bars.png",
+      "prompt_file": "UI3-08_bars.prompt.txt",
+      "revision_prompt_file": "UI3-08_bars.revision.prompt.txt",
+      "source_original": "C:\\Users\\tsz\\.codex\\generated_images\\01a136fd-3189-7bf1-87ee-88dd6e6b27f5\\exec-9f6669ad-b3a0-4531-81f6-23678eaeb350.png"
+    }
+  ]
+}

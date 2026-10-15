@@ -1,0 +1,1619 @@
+{
+  "version": 3,
+  "extent_policy": "fit_content",
+  "town_extent": [
+    1200,
+    2112
+  ],
+  "production_stage": "preflight passed; no new generation in this turn",
+  "style_reference": "D:\\new-bee\\ui_review_input\\reference_world_frontend_20261010\\reference\\01_target_forest.jpg",
+  "geometry_reference": "D:\\new-bee\\ui_review_input\\reference_world_frontend_20261010\\playable_prototype\\screenshots\\town_road_geometry_guide.png",
+  "geometry_is_not_style": true,
+  "building_and_npc_ids_preserved": true,
+  "exit_targets_preserved": true,
+  "exit_is_signpost": true,
+  "all_trees_separate": true,
+  "world_data_modified": false,
+  "chunk_recipes": [
+    {
+      "id": "town_c0_r0",
+      "core_world_rect": [
+        0,
+        0,
+        600,
+        528
+      ],
+      "context_world_rect": [
+        -32,
+        -32,
+        664,
+        592
+      ],
+      "requested_master": [
+        1328,
+        1184
+      ],
+      "assembled_runtime_crop": [
+        32,
+        32,
+        600,
+        528
+      ],
+      "geometry_points_local": [
+        {
+          "kind": "main",
+          "width": 136,
+          "points": [
+            [
+              632,
+              212
+            ],
+            [
+              632,
+              442
+            ],
+            [
+              615,
+              742
+            ],
+            [
+              645,
+              1062
+            ],
+            [
+              625,
+              1442
+            ],
+            [
+              632,
+              1964
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              616,
+              714
+            ],
+            [
+              330,
+              714
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              615,
+              734
+            ],
+            [
+              930,
+              734
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              638,
+              984
+            ],
+            [
+              330,
+              984
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              640,
+              1004
+            ],
+            [
+              930,
+              1004
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 80,
+          "points": [
+            [
+              632,
+              1304
+            ],
+            [
+              320,
+              1304
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              625,
+              1454
+            ],
+            [
+              930,
+              1454
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              630,
+              1714
+            ],
+            [
+              330,
+              1714
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              631,
+              1744
+            ],
+            [
+              930,
+              1744
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 64,
+          "points": [
+            [
+              320,
+              1304
+            ],
+            [
+              140,
+              1322
+            ]
+          ]
+        }
+      ],
+      "paint_only": [
+        "grass",
+        "soil",
+        "worn road edges",
+        "short ground grass"
+      ],
+      "exclude": [
+        "buildings",
+        "building foundations",
+        "doorways",
+        "trees",
+        "bushes",
+        "NPCs",
+        "quest props",
+        "object shadows",
+        "labels"
+      ]
+    },
+    {
+      "id": "town_c1_r0",
+      "core_world_rect": [
+        600,
+        0,
+        600,
+        528
+      ],
+      "context_world_rect": [
+        568,
+        -32,
+        664,
+        592
+      ],
+      "requested_master": [
+        1328,
+        1184
+      ],
+      "assembled_runtime_crop": [
+        32,
+        32,
+        600,
+        528
+      ],
+      "geometry_points_local": [
+        {
+          "kind": "main",
+          "width": 136,
+          "points": [
+            [
+              32,
+              212
+            ],
+            [
+              32,
+              442
+            ],
+            [
+              15,
+              742
+            ],
+            [
+              45,
+              1062
+            ],
+            [
+              25,
+              1442
+            ],
+            [
+              32,
+              1964
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              16,
+              714
+            ],
+            [
+              -270,
+              714
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              15,
+              734
+            ],
+            [
+              330,
+              734
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              38,
+              984
+            ],
+            [
+              -270,
+              984
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              40,
+              1004
+            ],
+            [
+              330,
+              1004
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 80,
+          "points": [
+            [
+              32,
+              1304
+            ],
+            [
+              -280,
+              1304
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              25,
+              1454
+            ],
+            [
+              330,
+              1454
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              30,
+              1714
+            ],
+            [
+              -270,
+              1714
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              31,
+              1744
+            ],
+            [
+              330,
+              1744
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 64,
+          "points": [
+            [
+              -280,
+              1304
+            ],
+            [
+              -460,
+              1322
+            ]
+          ]
+        }
+      ],
+      "paint_only": [
+        "grass",
+        "soil",
+        "worn road edges",
+        "short ground grass"
+      ],
+      "exclude": [
+        "buildings",
+        "building foundations",
+        "doorways",
+        "trees",
+        "bushes",
+        "NPCs",
+        "quest props",
+        "object shadows",
+        "labels"
+      ]
+    },
+    {
+      "id": "town_c0_r1",
+      "core_world_rect": [
+        0,
+        528,
+        600,
+        528
+      ],
+      "context_world_rect": [
+        -32,
+        496,
+        664,
+        592
+      ],
+      "requested_master": [
+        1328,
+        1184
+      ],
+      "assembled_runtime_crop": [
+        32,
+        32,
+        600,
+        528
+      ],
+      "geometry_points_local": [
+        {
+          "kind": "main",
+          "width": 136,
+          "points": [
+            [
+              632,
+              -316
+            ],
+            [
+              632,
+              -86
+            ],
+            [
+              615,
+              214
+            ],
+            [
+              645,
+              534
+            ],
+            [
+              625,
+              914
+            ],
+            [
+              632,
+              1436
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              616,
+              186
+            ],
+            [
+              330,
+              186
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              615,
+              206
+            ],
+            [
+              930,
+              206
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              638,
+              456
+            ],
+            [
+              330,
+              456
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              640,
+              476
+            ],
+            [
+              930,
+              476
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 80,
+          "points": [
+            [
+              632,
+              776
+            ],
+            [
+              320,
+              776
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              625,
+              926
+            ],
+            [
+              930,
+              926
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              630,
+              1186
+            ],
+            [
+              330,
+              1186
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              631,
+              1216
+            ],
+            [
+              930,
+              1216
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 64,
+          "points": [
+            [
+              320,
+              776
+            ],
+            [
+              140,
+              794
+            ]
+          ]
+        }
+      ],
+      "paint_only": [
+        "grass",
+        "soil",
+        "worn road edges",
+        "short ground grass"
+      ],
+      "exclude": [
+        "buildings",
+        "building foundations",
+        "doorways",
+        "trees",
+        "bushes",
+        "NPCs",
+        "quest props",
+        "object shadows",
+        "labels"
+      ]
+    },
+    {
+      "id": "town_c1_r1",
+      "core_world_rect": [
+        600,
+        528,
+        600,
+        528
+      ],
+      "context_world_rect": [
+        568,
+        496,
+        664,
+        592
+      ],
+      "requested_master": [
+        1328,
+        1184
+      ],
+      "assembled_runtime_crop": [
+        32,
+        32,
+        600,
+        528
+      ],
+      "geometry_points_local": [
+        {
+          "kind": "main",
+          "width": 136,
+          "points": [
+            [
+              32,
+              -316
+            ],
+            [
+              32,
+              -86
+            ],
+            [
+              15,
+              214
+            ],
+            [
+              45,
+              534
+            ],
+            [
+              25,
+              914
+            ],
+            [
+              32,
+              1436
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              16,
+              186
+            ],
+            [
+              -270,
+              186
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              15,
+              206
+            ],
+            [
+              330,
+              206
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              38,
+              456
+            ],
+            [
+              -270,
+              456
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              40,
+              476
+            ],
+            [
+              330,
+              476
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 80,
+          "points": [
+            [
+              32,
+              776
+            ],
+            [
+              -280,
+              776
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              25,
+              926
+            ],
+            [
+              330,
+              926
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              30,
+              1186
+            ],
+            [
+              -270,
+              1186
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              31,
+              1216
+            ],
+            [
+              330,
+              1216
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 64,
+          "points": [
+            [
+              -280,
+              776
+            ],
+            [
+              -460,
+              794
+            ]
+          ]
+        }
+      ],
+      "paint_only": [
+        "grass",
+        "soil",
+        "worn road edges",
+        "short ground grass"
+      ],
+      "exclude": [
+        "buildings",
+        "building foundations",
+        "doorways",
+        "trees",
+        "bushes",
+        "NPCs",
+        "quest props",
+        "object shadows",
+        "labels"
+      ]
+    },
+    {
+      "id": "town_c0_r2",
+      "core_world_rect": [
+        0,
+        1056,
+        600,
+        528
+      ],
+      "context_world_rect": [
+        -32,
+        1024,
+        664,
+        592
+      ],
+      "requested_master": [
+        1328,
+        1184
+      ],
+      "assembled_runtime_crop": [
+        32,
+        32,
+        600,
+        528
+      ],
+      "geometry_points_local": [
+        {
+          "kind": "main",
+          "width": 136,
+          "points": [
+            [
+              632,
+              -844
+            ],
+            [
+              632,
+              -614
+            ],
+            [
+              615,
+              -314
+            ],
+            [
+              645,
+              6
+            ],
+            [
+              625,
+              386
+            ],
+            [
+              632,
+              908
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              616,
+              -342
+            ],
+            [
+              330,
+              -342
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              615,
+              -322
+            ],
+            [
+              930,
+              -322
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              638,
+              -72
+            ],
+            [
+              330,
+              -72
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              640,
+              -52
+            ],
+            [
+              930,
+              -52
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 80,
+          "points": [
+            [
+              632,
+              248
+            ],
+            [
+              320,
+              248
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              625,
+              398
+            ],
+            [
+              930,
+              398
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              630,
+              658
+            ],
+            [
+              330,
+              658
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              631,
+              688
+            ],
+            [
+              930,
+              688
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 64,
+          "points": [
+            [
+              320,
+              248
+            ],
+            [
+              140,
+              266
+            ]
+          ]
+        }
+      ],
+      "paint_only": [
+        "grass",
+        "soil",
+        "worn road edges",
+        "short ground grass"
+      ],
+      "exclude": [
+        "buildings",
+        "building foundations",
+        "doorways",
+        "trees",
+        "bushes",
+        "NPCs",
+        "quest props",
+        "object shadows",
+        "labels"
+      ]
+    },
+    {
+      "id": "town_c1_r2",
+      "core_world_rect": [
+        600,
+        1056,
+        600,
+        528
+      ],
+      "context_world_rect": [
+        568,
+        1024,
+        664,
+        592
+      ],
+      "requested_master": [
+        1328,
+        1184
+      ],
+      "assembled_runtime_crop": [
+        32,
+        32,
+        600,
+        528
+      ],
+      "geometry_points_local": [
+        {
+          "kind": "main",
+          "width": 136,
+          "points": [
+            [
+              32,
+              -844
+            ],
+            [
+              32,
+              -614
+            ],
+            [
+              15,
+              -314
+            ],
+            [
+              45,
+              6
+            ],
+            [
+              25,
+              386
+            ],
+            [
+              32,
+              908
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              16,
+              -342
+            ],
+            [
+              -270,
+              -342
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              15,
+              -322
+            ],
+            [
+              330,
+              -322
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              38,
+              -72
+            ],
+            [
+              -270,
+              -72
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              40,
+              -52
+            ],
+            [
+              330,
+              -52
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 80,
+          "points": [
+            [
+              32,
+              248
+            ],
+            [
+              -280,
+              248
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              25,
+              398
+            ],
+            [
+              330,
+              398
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              30,
+              658
+            ],
+            [
+              -270,
+              658
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              31,
+              688
+            ],
+            [
+              330,
+              688
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 64,
+          "points": [
+            [
+              -280,
+              248
+            ],
+            [
+              -460,
+              266
+            ]
+          ]
+        }
+      ],
+      "paint_only": [
+        "grass",
+        "soil",
+        "worn road edges",
+        "short ground grass"
+      ],
+      "exclude": [
+        "buildings",
+        "building foundations",
+        "doorways",
+        "trees",
+        "bushes",
+        "NPCs",
+        "quest props",
+        "object shadows",
+        "labels"
+      ]
+    },
+    {
+      "id": "town_c0_r3",
+      "core_world_rect": [
+        0,
+        1584,
+        600,
+        528
+      ],
+      "context_world_rect": [
+        -32,
+        1552,
+        664,
+        592
+      ],
+      "requested_master": [
+        1328,
+        1184
+      ],
+      "assembled_runtime_crop": [
+        32,
+        32,
+        600,
+        528
+      ],
+      "geometry_points_local": [
+        {
+          "kind": "main",
+          "width": 136,
+          "points": [
+            [
+              632,
+              -1372
+            ],
+            [
+              632,
+              -1142
+            ],
+            [
+              615,
+              -842
+            ],
+            [
+              645,
+              -522
+            ],
+            [
+              625,
+              -142
+            ],
+            [
+              632,
+              380
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              616,
+              -870
+            ],
+            [
+              330,
+              -870
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              615,
+              -850
+            ],
+            [
+              930,
+              -850
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              638,
+              -600
+            ],
+            [
+              330,
+              -600
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              640,
+              -580
+            ],
+            [
+              930,
+              -580
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 80,
+          "points": [
+            [
+              632,
+              -280
+            ],
+            [
+              320,
+              -280
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              625,
+              -130
+            ],
+            [
+              930,
+              -130
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              630,
+              130
+            ],
+            [
+              330,
+              130
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              631,
+              160
+            ],
+            [
+              930,
+              160
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 64,
+          "points": [
+            [
+              320,
+              -280
+            ],
+            [
+              140,
+              -262
+            ]
+          ]
+        }
+      ],
+      "paint_only": [
+        "grass",
+        "soil",
+        "worn road edges",
+        "short ground grass"
+      ],
+      "exclude": [
+        "buildings",
+        "building foundations",
+        "doorways",
+        "trees",
+        "bushes",
+        "NPCs",
+        "quest props",
+        "object shadows",
+        "labels"
+      ]
+    },
+    {
+      "id": "town_c1_r3",
+      "core_world_rect": [
+        600,
+        1584,
+        600,
+        528
+      ],
+      "context_world_rect": [
+        568,
+        1552,
+        664,
+        592
+      ],
+      "requested_master": [
+        1328,
+        1184
+      ],
+      "assembled_runtime_crop": [
+        32,
+        32,
+        600,
+        528
+      ],
+      "geometry_points_local": [
+        {
+          "kind": "main",
+          "width": 136,
+          "points": [
+            [
+              32,
+              -1372
+            ],
+            [
+              32,
+              -1142
+            ],
+            [
+              15,
+              -842
+            ],
+            [
+              45,
+              -522
+            ],
+            [
+              25,
+              -142
+            ],
+            [
+              32,
+              380
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              16,
+              -870
+            ],
+            [
+              -270,
+              -870
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              15,
+              -850
+            ],
+            [
+              330,
+              -850
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              38,
+              -600
+            ],
+            [
+              -270,
+              -600
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              40,
+              -580
+            ],
+            [
+              330,
+              -580
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 80,
+          "points": [
+            [
+              32,
+              -280
+            ],
+            [
+              -280,
+              -280
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              25,
+              -130
+            ],
+            [
+              330,
+              -130
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              30,
+              130
+            ],
+            [
+              -270,
+              130
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 72,
+          "points": [
+            [
+              31,
+              160
+            ],
+            [
+              330,
+              160
+            ]
+          ]
+        },
+        {
+          "kind": "front",
+          "width": 64,
+          "points": [
+            [
+              -280,
+              -280
+            ],
+            [
+              -460,
+              -262
+            ]
+          ]
+        }
+      ],
+      "paint_only": [
+        "grass",
+        "soil",
+        "worn road edges",
+        "short ground grass"
+      ],
+      "exclude": [
+        "buildings",
+        "building foundations",
+        "doorways",
+        "trees",
+        "bushes",
+        "NPCs",
+        "quest props",
+        "object shadows",
+        "labels"
+      ]
+    }
+  ]
+}

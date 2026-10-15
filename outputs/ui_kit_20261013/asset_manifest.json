@@ -1,0 +1,356 @@
+{
+  "generation_mode": "built_in_imagegen",
+  "date": "2026-10-13",
+  "canvas": [
+    1536,
+    1024
+  ],
+  "spec_sha256": "e2ebe6540b20f2eef18a27c4a535190ac73a8112a677d68b9c63d570c3103e92",
+  "raw_png_preserved": true,
+  "code_modified": false,
+  "sheets": [
+    {
+      "sheet": "UI-01_hero_button",
+      "file": "UI-01_hero_button.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "expected_item_count": 3,
+      "detected_component_count": 3,
+      "source_component_boxes": [
+        [
+          456,
+          223,
+          624,
+          155
+        ],
+        [
+          456,
+          437,
+          625,
+          155
+        ],
+        [
+          456,
+          651,
+          625,
+          153
+        ]
+      ],
+      "sha256": "e8e4b8415c4f24f1be021003012302bdac45dfb1ac8a7dfc05e7701b7b181b8b",
+      "background_sample_rgb": [
+        240,
+        14,
+        241
+      ],
+      "exact_ff00ff_background": false,
+      "status": "generated_art_source_requires_spec_grid_color_key_and_mask_reconstruction",
+      "revision": "independent_ruyi_cloud_corner_fittings_and_dark_brown_cinnabar",
+      "revision_prompt_files": [
+        "UI-01_hero_button_ruyi_prompt.txt",
+        "UI-01_hero_button_ruyi_final_prompt.txt"
+      ],
+      "normal_lacquer_median_rgb": [
+        107,
+        29,
+        18
+      ]
+    },
+    {
+      "sheet": "UI-02_buttons_tabs",
+      "file": "UI-02_buttons_tabs.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "expected_item_count": 6,
+      "detected_component_count": 6,
+      "source_component_boxes": [
+        [
+          320,
+          372,
+          256,
+          100
+        ],
+        [
+          640,
+          372,
+          256,
+          100
+        ],
+        [
+          960,
+          372,
+          256,
+          100
+        ],
+        [
+          1056,
+          527,
+          124,
+          128
+        ],
+        [
+          363,
+          543,
+          293,
+          93
+        ],
+        [
+          714,
+          543,
+          292,
+          93
+        ]
+      ],
+      "sha256": "d6894e33764d1f8b951f446a9c9d2fb80bd069fd6f3e4c8ba1a83f5c24f9bae1",
+      "background_sample_rgb": [
+        239,
+        14,
+        241
+      ],
+      "exact_ff00ff_background": false,
+      "status": "generated_art_source_requires_spec_grid_color_key_and_mask_reconstruction"
+    },
+    {
+      "sheet": "UI-03_panels",
+      "file": "UI-03_panels.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "expected_item_count": 2,
+      "detected_component_count": 2,
+      "source_component_boxes": [
+        [
+          215,
+          242,
+          531,
+          495
+        ],
+        [
+          794,
+          313,
+          526,
+          389
+        ]
+      ],
+      "sha256": "fcc358eb24e5a684a2e75f79eacd4ba4b2293bcae79a054435e498d081b93a01",
+      "background_sample_rgb": [
+        243,
+        13,
+        242
+      ],
+      "exact_ff00ff_background": false,
+      "status": "generated_art_source_requires_spec_grid_color_key_and_mask_reconstruction"
+    },
+    {
+      "sheet": "UI-04_plaques",
+      "file": "UI-04_plaques.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "expected_item_count": 3,
+      "detected_component_count": 3,
+      "source_component_boxes": [
+        [
+          362,
+          354,
+          812,
+          161
+        ],
+        [
+          298,
+          562,
+          399,
+          89
+        ],
+        [
+          755,
+          575,
+          483,
+          62
+        ]
+      ],
+      "sha256": "0875c3395463b28226f7933bee41c0a38ef6b9ec257ef2be05f736180a0dc46e",
+      "background_sample_rgb": [
+        242,
+        14,
+        241
+      ],
+      "exact_ff00ff_background": false,
+      "status": "generated_art_source_requires_spec_grid_color_key_and_mask_reconstruction"
+    },
+    {
+      "sheet": "UI-05_rarity_slots",
+      "file": "UI-05_rarity_slots.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "expected_item_count": 7,
+      "detected_component_count": 7,
+      "source_component_boxes": [
+        [
+          156,
+          281,
+          203,
+          200
+        ],
+        [
+          411,
+          281,
+          203,
+          200
+        ],
+        [
+          666,
+          281,
+          204,
+          200
+        ],
+        [
+          922,
+          281,
+          203,
+          200
+        ],
+        [
+          1177,
+          281,
+          204,
+          200
+        ],
+        [
+          537,
+          548,
+          204,
+          201
+        ],
+        [
+          794,
+          548,
+          205,
+          201
+        ]
+      ],
+      "sha256": "ece39ab4934b6c822c289f852c626c0a53c9d8e0b12f95e19df904d5ada4716f",
+      "background_sample_rgb": [
+        242,
+        14,
+        243
+      ],
+      "exact_ff00ff_background": false,
+      "status": "generated_art_source_requires_spec_grid_color_key_and_mask_reconstruction"
+    },
+    {
+      "sheet": "UI-06_nav",
+      "file": "UI-06_nav.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "expected_item_count": 5,
+      "detected_component_count": 5,
+      "source_component_boxes": [
+        [
+          129,
+          251,
+          1278,
+          223
+        ],
+        [
+          299,
+          534,
+          243,
+          238
+        ],
+        [
+          576,
+          534,
+          244,
+          238
+        ],
+        [
+          1059,
+          571,
+          174,
+          171
+        ],
+        [
+          862,
+          572,
+          168,
+          170
+        ]
+      ],
+      "sha256": "8439295d62728a784ffc266fae04e411d92d5fa4d924379067a2a70f02ef29d0",
+      "background_sample_rgb": [
+        242,
+        11,
+        242
+      ],
+      "exact_ff00ff_background": false,
+      "status": "generated_art_source_requires_spec_grid_color_key_and_mask_reconstruction"
+    },
+    {
+      "sheet": "UI-07_bars",
+      "file": "UI-07_bars.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "expected_item_count": 5,
+      "detected_component_count": 5,
+      "source_component_boxes": [
+        [
+          508,
+          316,
+          520,
+          61
+        ],
+        [
+          275,
+          439,
+          462,
+          24
+        ],
+        [
+          799,
+          439,
+          476,
+          24
+        ],
+        [
+          659,
+          515,
+          655,
+          185
+        ],
+        [
+          227,
+          561,
+          382,
+          96
+        ]
+      ],
+      "sha256": "cca4367be019d551f725f314f5df2f42026c278eb262d08d297f698e9c201122",
+      "background_sample_rgb": [
+        239,
+        15,
+        242
+      ],
+      "exact_ff00ff_background": false,
+      "status": "generated_art_source_requires_spec_grid_color_key_and_mask_reconstruction"
+    }
+  ]
+}

@@ -1,0 +1,2134 @@
+{
+ "ground_grass": {
+  "sheet": "bs_g01_a_grass.png",
+  "size": [
+   256,
+   256
+  ],
+  "tile": true
+ },
+ "ground_dirt": {
+  "sheet": "bs_g01_b_dirtroad.png",
+  "size": [
+   256,
+   256
+  ],
+  "tile": true
+ },
+ "ground_gravel": {
+  "sheet": "bs_g01_c_gravel.png",
+  "size": [
+   256,
+   256
+  ],
+  "tile": true
+ },
+ "ground_flagstone": {
+  "sheet": "bs_g01_d_flagstone.png",
+  "size": [
+   256,
+   256
+  ],
+  "tile": true
+ },
+ "camp_tent": {
+  "sheet": "bs_c01_camp.png",
+  "source_box": [
+   41,
+   46,
+   621,
+   516
+  ],
+  "size": [
+   118,
+   96
+  ],
+  "group": ""
+ },
+ "camp_stall": {
+  "sheet": "bs_c01_camp.png",
+  "source_box": [
+   656,
+   94,
+   1241,
+   511
+  ],
+  "size": [
+   120,
+   86
+  ],
+  "group": ""
+ },
+ "camp_banner": {
+  "sheet": "bs_c01_camp.png",
+  "source_box": [
+   1290,
+   41,
+   1499,
+   521
+  ],
+  "size": [
+   34,
+   80
+  ],
+  "group": ""
+ },
+ "campfire_0": {
+  "sheet": "bs_c01_camp.png",
+  "source_box": [
+   268,
+   589,
+   439,
+   743
+  ],
+  "size": [
+   40,
+   34
+  ],
+  "group": "campfire"
+ },
+ "campfire_1": {
+  "sheet": "bs_c01_camp.png",
+  "source_box": [
+   516,
+   584,
+   687,
+   743
+  ],
+  "size": [
+   40,
+   34
+  ],
+  "group": "campfire"
+ },
+ "campfire_2": {
+  "sheet": "bs_c01_camp.png",
+  "source_box": [
+   761,
+   567,
+   933,
+   743
+  ],
+  "size": [
+   40,
+   40
+  ],
+  "group": "campfire"
+ },
+ "campfire_3": {
+  "sheet": "bs_c01_camp.png",
+  "source_box": [
+   1007,
+   612,
+   1177,
+   743
+  ],
+  "size": [
+   40,
+   30
+  ],
+  "group": "campfire"
+ },
+ "camp_crate_a": {
+  "sheet": "bs_c01_camp.png",
+  "source_box": [
+   68,
+   803,
+   257,
+   962
+  ],
+  "size": [
+   32,
+   28
+  ],
+  "group": ""
+ },
+ "camp_crate_b": {
+  "sheet": "bs_c01_camp.png",
+  "source_box": [
+   308,
+   818,
+   545,
+   962
+  ],
+  "size": [
+   40,
+   24
+  ],
+  "group": ""
+ },
+ "camp_barrel_a": {
+  "sheet": "bs_c01_camp.png",
+  "source_box": [
+   625,
+   782,
+   783,
+   962
+  ],
+  "size": [
+   28,
+   32
+  ],
+  "group": ""
+ },
+ "camp_barrel_b": {
+  "sheet": "bs_c01_camp.png",
+  "source_box": [
+   860,
+   807,
+   1003,
+   962
+  ],
+  "size": [
+   26,
+   28
+  ],
+  "group": ""
+ },
+ "camp_bench": {
+  "sheet": "bs_c01_camp.png",
+  "source_box": [
+   1100,
+   830,
+   1445,
+   952
+  ],
+  "size": [
+   48,
+   16
+  ],
+  "group": ""
+ },
+ "fx_leaf_green_0": {
+  "sheet": "bs_e01_fx.png",
+  "source_box": [
+   284,
+   169,
+   340,
+   222
+  ],
+  "size": [
+   8,
+   6
+  ],
+  "group": "leaf_g"
+ },
+ "fx_leaf_green_1": {
+  "sheet": "bs_e01_fx.png",
+  "source_box": [
+   417,
+   171,
+   469,
+   234
+  ],
+  "size": [
+   8,
+   8
+  ],
+  "group": "leaf_g"
+ },
+ "fx_leaf_green_2": {
+  "sheet": "bs_e01_fx.png",
+  "source_box": [
+   555,
+   169,
+   590,
+   234
+  ],
+  "size": [
+   4,
+   6
+  ],
+  "group": "leaf_g"
+ },
+ "fx_leaf_green_3": {
+  "sheet": "bs_e01_fx.png",
+  "source_box": [
+   679,
+   169,
+   729,
+   225
+  ],
+  "size": [
+   8,
+   6
+  ],
+  "group": "leaf_g"
+ },
+ "fx_leaf_rust_0": {
+  "sheet": "bs_e01_fx.png",
+  "source_box": [
+   830,
+   169,
+   886,
+   222
+  ],
+  "size": [
+   8,
+   6
+  ],
+  "group": "leaf_r"
+ },
+ "fx_leaf_rust_1": {
+  "sheet": "bs_e01_fx.png",
+  "source_box": [
+   961,
+   171,
+   1014,
+   233
+  ],
+  "size": [
+   8,
+   8
+  ],
+  "group": "leaf_r"
+ },
+ "fx_leaf_rust_2": {
+  "sheet": "bs_e01_fx.png",
+  "source_box": [
+   1091,
+   168,
+   1122,
+   233
+  ],
+  "size": [
+   4,
+   6
+  ],
+  "group": "leaf_r"
+ },
+ "fx_leaf_rust_3": {
+  "sheet": "bs_e01_fx.png",
+  "source_box": [
+   1207,
+   169,
+   1254,
+   224
+  ],
+  "size": [
+   6,
+   6
+  ],
+  "group": "leaf_r"
+ },
+ "fx_firefly_0": {
+  "sheet": "bs_e01_fx.png",
+  "source_box": [
+   955,
+   364,
+   985,
+   396
+  ],
+  "size": [
+   4,
+   4
+  ],
+  "group": "firefly"
+ },
+ "fx_firefly_1": {
+  "sheet": "bs_e01_fx.png",
+  "source_box": [
+   1078,
+   364,
+   1108,
+   396
+  ],
+  "size": [
+   4,
+   4
+  ],
+  "group": "firefly"
+ },
+ "fx_mist": {
+  "sheet": "bs_e01_fx.png",
+  "source_box": [
+   34,
+   757,
+   1502,
+   846
+  ],
+  "size": [
+   320,
+   20
+  ],
+  "group": ""
+ },
+ "fg_canopy_tr": {
+  "sheet": "bs_f01_a_canopy.png",
+  "source_box": [
+   460,
+   0,
+   1536,
+   703
+  ],
+  "size": [
+   320,
+   210
+  ],
+  "group": ""
+ },
+ "fg_canopy_tl": {
+  "sheet": "bs_f01_c_canopy.png",
+  "source_box": [
+   0,
+   0,
+   935,
+   758
+  ],
+  "size": [
+   300,
+   244
+  ],
+  "group": ""
+ },
+ "fg_branch_a": {
+  "sheet": "bs_f01_b_branches_grass.png",
+  "source_box": [
+   40,
+   58,
+   706,
+   522
+  ],
+  "size": [
+   200,
+   140
+  ],
+  "group": ""
+ },
+ "fg_branch_b": {
+  "sheet": "bs_f01_b_branches_grass.png",
+  "source_box": [
+   40,
+   522,
+   720,
+   944
+  ],
+  "size": [
+   200,
+   124
+  ],
+  "group": ""
+ },
+ "fg_grass_a": {
+  "sheet": "bs_f01_b_branches_grass.png",
+  "source_box": [
+   794,
+   230,
+   1496,
+   388
+  ],
+  "size": [
+   160,
+   36
+  ],
+  "group": ""
+ },
+ "fg_grass_b": {
+  "sheet": "bs_f01_b_branches_grass.png",
+  "source_box": [
+   794,
+   699,
+   1495,
+   855
+  ],
+  "size": [
+   160,
+   36
+  ],
+  "group": ""
+ },
+ "edge_h_a": {
+  "sheet": "bs_g02_a_roadside.png",
+  "source_box": [
+   88,
+   34,
+   486,
+   128
+  ],
+  "size": [
+   64,
+   16
+  ],
+  "group": ""
+ },
+ "edge_h_b": {
+  "sheet": "bs_g02_a_roadside.png",
+  "source_box": [
+   579,
+   31,
+   955,
+   128
+  ],
+  "size": [
+   64,
+   16
+  ],
+  "group": ""
+ },
+ "edge_h_c": {
+  "sheet": "bs_g02_a_roadside.png",
+  "source_box": [
+   1048,
+   32,
+   1443,
+   128
+  ],
+  "size": [
+   64,
+   16
+  ],
+  "group": ""
+ },
+ "edge_v_a": {
+  "sheet": "bs_g02_a_roadside.png",
+  "source_box": [
+   507,
+   160,
+   616,
+   476
+  ],
+  "size": [
+   22,
+   62
+  ],
+  "group": ""
+ },
+ "edge_v_b": {
+  "sheet": "bs_g02_a_roadside.png",
+  "source_box": [
+   712,
+   164,
+   817,
+   476
+  ],
+  "size": [
+   22,
+   64
+  ],
+  "group": ""
+ },
+ "edge_v_c": {
+  "sheet": "bs_g02_a_roadside.png",
+  "source_box": [
+   919,
+   165,
+   1028,
+   476
+  ],
+  "size": [
+   22,
+   64
+  ],
+  "group": ""
+ },
+ "rut_a": {
+  "sheet": "bs_g02_a_roadside.png",
+  "source_box": [
+   80,
+   504,
+   743,
+   632
+  ],
+  "size": [
+   128,
+   24
+  ],
+  "group": ""
+ },
+ "rut_b": {
+  "sheet": "bs_g02_a_roadside.png",
+  "source_box": [
+   820,
+   504,
+   1460,
+   632
+  ],
+  "size": [
+   128,
+   26
+  ],
+  "group": ""
+ },
+ "puddle_a": {
+  "sheet": "bs_g02_a_roadside.png",
+  "source_box": [
+   86,
+   668,
+   363,
+   805
+  ],
+  "size": [
+   56,
+   26
+  ],
+  "group": ""
+ },
+ "puddle_b": {
+  "sheet": "bs_g02_a_roadside.png",
+  "source_box": [
+   442,
+   676,
+   678,
+   805
+  ],
+  "size": [
+   48,
+   26
+  ],
+  "group": ""
+ },
+ "crack_a": {
+  "sheet": "bs_g02_a_roadside.png",
+  "source_box": [
+   768,
+   708,
+   946,
+   778
+  ],
+  "size": [
+   30,
+   10
+  ],
+  "group": ""
+ },
+ "crack_b": {
+  "sheet": "bs_g02_a_roadside.png",
+  "source_box": [
+   1046,
+   679,
+   1218,
+   796
+  ],
+  "size": [
+   32,
+   20
+  ],
+  "group": ""
+ },
+ "crack_c": {
+  "sheet": "bs_g02_a_roadside.png",
+  "source_box": [
+   1326,
+   721,
+   1448,
+   778
+  ],
+  "size": [
+   20,
+   12
+  ],
+  "group": ""
+ },
+ "root_a": {
+  "sheet": "bs_g02_a_roadside.png",
+  "source_box": [
+   82,
+   846,
+   402,
+   968
+  ],
+  "size": [
+   62,
+   22
+  ],
+  "group": ""
+ },
+ "root_b": {
+  "sheet": "bs_g02_a_roadside.png",
+  "source_box": [
+   479,
+   868,
+   728,
+   970
+  ],
+  "size": [
+   48,
+   20
+  ],
+  "group": ""
+ },
+ "tuft_0": {
+  "sheet": "bs_g02_b_meadow.png",
+  "source_box": [
+   80,
+   126,
+   244,
+   248
+  ],
+  "size": [
+   18,
+   16
+  ],
+  "group": ""
+ },
+ "tuft_1": {
+  "sheet": "bs_g02_b_meadow.png",
+  "source_box": [
+   346,
+   101,
+   491,
+   255
+  ],
+  "size": [
+   12,
+   14
+  ],
+  "group": ""
+ },
+ "tuft_2": {
+  "sheet": "bs_g02_b_meadow.png",
+  "source_box": [
+   579,
+   131,
+   728,
+   254
+  ],
+  "size": [
+   18,
+   16
+  ],
+  "group": ""
+ },
+ "tuft_3": {
+  "sheet": "bs_g02_b_meadow.png",
+  "source_box": [
+   810,
+   110,
+   966,
+   248
+  ],
+  "size": [
+   14,
+   16
+  ],
+  "group": ""
+ },
+ "tuft_4": {
+  "sheet": "bs_g02_b_meadow.png",
+  "source_box": [
+   1060,
+   160,
+   1201,
+   252
+  ],
+  "size": [
+   22,
+   16
+  ],
+  "group": ""
+ },
+ "tuft_5": {
+  "sheet": "bs_g02_b_meadow.png",
+  "source_box": [
+   1294,
+   132,
+   1452,
+   250
+  ],
+  "size": [
+   18,
+   16
+  ],
+  "group": ""
+ },
+ "flower_0": {
+  "sheet": "bs_g02_b_meadow.png",
+  "source_box": [
+   188,
+   339,
+   334,
+   464
+  ],
+  "size": [
+   12,
+   12
+  ],
+  "group": ""
+ },
+ "flower_1": {
+  "sheet": "bs_g02_b_meadow.png",
+  "source_box": [
+   510,
+   338,
+   658,
+   464
+  ],
+  "size": [
+   12,
+   10
+  ],
+  "group": ""
+ },
+ "flower_2": {
+  "sheet": "bs_g02_b_meadow.png",
+  "source_box": [
+   848,
+   340,
+   1005,
+   464
+  ],
+  "size": [
+   14,
+   12
+  ],
+  "group": ""
+ },
+ "flower_3": {
+  "sheet": "bs_g02_b_meadow.png",
+  "source_box": [
+   1197,
+   344,
+   1347,
+   464
+  ],
+  "size": [
+   14,
+   12
+  ],
+  "group": ""
+ },
+ "pebbles_0": {
+  "sheet": "bs_g02_b_meadow.png",
+  "source_box": [
+   105,
+   574,
+   226,
+   647
+  ],
+  "size": [
+   18,
+   10
+  ],
+  "group": ""
+ },
+ "pebbles_1": {
+  "sheet": "bs_g02_b_meadow.png",
+  "source_box": [
+   407,
+   574,
+   527,
+   658
+  ],
+  "size": [
+   18,
+   12
+  ],
+  "group": ""
+ },
+ "pebbles_2": {
+  "sheet": "bs_g02_b_meadow.png",
+  "source_box": [
+   691,
+   580,
+   797,
+   652
+  ],
+  "size": [
+   18,
+   12
+  ],
+  "group": ""
+ },
+ "pebbles_3": {
+  "sheet": "bs_g02_b_meadow.png",
+  "source_box": [
+   956,
+   563,
+   1114,
+   658
+  ],
+  "size": [
+   18,
+   10
+  ],
+  "group": ""
+ },
+ "pebbles_4": {
+  "sheet": "bs_g02_b_meadow.png",
+  "source_box": [
+   1283,
+   574,
+   1433,
+   652
+  ],
+  "size": [
+   18,
+   10
+  ],
+  "group": ""
+ },
+ "leaves_0": {
+  "sheet": "bs_g02_b_meadow.png",
+  "source_box": [
+   78,
+   778,
+   310,
+   907
+  ],
+  "size": [
+   26,
+   16
+  ],
+  "group": ""
+ },
+ "leaves_1": {
+  "sheet": "bs_g02_b_meadow.png",
+  "source_box": [
+   388,
+   788,
+   603,
+   916
+  ],
+  "size": [
+   26,
+   16
+  ],
+  "group": ""
+ },
+ "leaves_2": {
+  "sheet": "bs_g02_b_meadow.png",
+  "source_box": [
+   692,
+   788,
+   898,
+   917
+  ],
+  "size": [
+   28,
+   16
+  ],
+  "group": ""
+ },
+ "tallgrass_a": {
+  "sheet": "bs_g02_b_meadow.png",
+  "source_box": [
+   996,
+   728,
+   1178,
+   920
+  ],
+  "size": [
+   24,
+   26
+  ],
+  "group": ""
+ },
+ "tallgrass_b": {
+  "sheet": "bs_g02_b_meadow.png",
+  "source_box": [
+   1272,
+   728,
+   1459,
+   920
+  ],
+  "size": [
+   26,
+   28
+  ],
+  "group": ""
+ },
+ "patch_earth_0": {
+  "sheet": "bs_g03_a_earth_straw.png",
+  "source_box": [
+   47,
+   87,
+   456,
+   449
+  ],
+  "size": [
+   112,
+   100
+  ],
+  "group": ""
+ },
+ "patch_earth_1": {
+  "sheet": "bs_g03_a_earth_straw.png",
+  "source_box": [
+   522,
+   72,
+   994,
+   409
+  ],
+  "size": [
+   112,
+   80
+  ],
+  "group": ""
+ },
+ "patch_earth_2": {
+  "sheet": "bs_g03_a_earth_straw.png",
+  "source_box": [
+   1074,
+   40,
+   1504,
+   480
+  ],
+  "size": [
+   112,
+   114
+  ],
+  "group": ""
+ },
+ "patch_straw_0": {
+  "sheet": "bs_g03_a_earth_straw.png",
+  "source_box": [
+   32,
+   536,
+   480,
+   968
+  ],
+  "size": [
+   112,
+   108
+  ],
+  "group": ""
+ },
+ "patch_straw_1": {
+  "sheet": "bs_g03_a_earth_straw.png",
+  "source_box": [
+   522,
+   558,
+   1012,
+   928
+  ],
+  "size": [
+   112,
+   84
+  ],
+  "group": ""
+ },
+ "patch_straw_2": {
+  "sheet": "bs_g03_a_earth_straw.png",
+  "source_box": [
+   1074,
+   558,
+   1504,
+   952
+  ],
+  "size": [
+   112,
+   102
+  ],
+  "group": ""
+ },
+ "patch_moss_0": {
+  "sheet": "bs_g03_b_moss_gravel.png",
+  "source_box": [
+   32,
+   64,
+   487,
+   472
+  ],
+  "size": [
+   112,
+   100
+  ],
+  "group": ""
+ },
+ "patch_moss_1": {
+  "sheet": "bs_g03_b_moss_gravel.png",
+  "source_box": [
+   544,
+   89,
+   1007,
+   472
+  ],
+  "size": [
+   112,
+   92
+  ],
+  "group": ""
+ },
+ "patch_moss_2": {
+  "sheet": "bs_g03_b_moss_gravel.png",
+  "source_box": [
+   1040,
+   64,
+   1504,
+   472
+  ],
+  "size": [
+   112,
+   98
+  ],
+  "group": ""
+ },
+ "patch_gravel_0": {
+  "sheet": "bs_g03_b_moss_gravel.png",
+  "source_box": [
+   32,
+   544,
+   487,
+   952
+  ],
+  "size": [
+   112,
+   100
+  ],
+  "group": ""
+ },
+ "patch_gravel_1": {
+  "sheet": "bs_g03_b_moss_gravel.png",
+  "source_box": [
+   544,
+   557,
+   1008,
+   940
+  ],
+  "size": [
+   112,
+   92
+  ],
+  "group": ""
+ },
+ "patch_gravel_2": {
+  "sheet": "bs_g03_b_moss_gravel.png",
+  "source_box": [
+   1072,
+   570,
+   1504,
+   940
+  ],
+  "size": [
+   112,
+   96
+  ],
+  "group": ""
+ },
+ "patch_leaf_0": {
+  "sheet": "bs_g03_c_leaf_damp.png",
+  "source_box": [
+   30,
+   116,
+   480,
+   464
+  ],
+  "size": [
+   104,
+   80
+  ],
+  "group": ""
+ },
+ "patch_leaf_1": {
+  "sheet": "bs_g03_c_leaf_damp.png",
+  "source_box": [
+   552,
+   104,
+   990,
+   464
+  ],
+  "size": [
+   104,
+   86
+  ],
+  "group": ""
+ },
+ "patch_leaf_2": {
+  "sheet": "bs_g03_c_leaf_damp.png",
+  "source_box": [
+   1050,
+   112,
+   1500,
+   459
+  ],
+  "size": [
+   104,
+   80
+  ],
+  "group": ""
+ },
+ "patch_damp_0": {
+  "sheet": "bs_g03_c_leaf_damp.png",
+  "source_box": [
+   48,
+   588,
+   476,
+   928
+  ],
+  "size": [
+   104,
+   82
+  ],
+  "group": ""
+ },
+ "patch_damp_1": {
+  "sheet": "bs_g03_c_leaf_damp.png",
+  "source_box": [
+   536,
+   576,
+   999,
+   938
+  ],
+  "size": [
+   104,
+   82
+  ],
+  "group": ""
+ },
+ "patch_damp_2": {
+  "sheet": "bs_g03_c_leaf_damp.png",
+  "source_box": [
+   1073,
+   581,
+   1495,
+   936
+  ],
+  "size": [
+   104,
+   88
+  ],
+  "group": ""
+ },
+ "stele_giant": {
+  "sheet": "bs_l01_a_giant_stele.png",
+  "source_box": [
+   281,
+   58,
+   973,
+   1181
+  ],
+  "size": [
+   116,
+   190
+  ],
+  "group": ""
+ },
+ "stele_fallen_a": {
+  "sheet": "bs_l01_b_markers.png",
+  "source_box": [
+   49,
+   112,
+   520,
+   321
+  ],
+  "size": [
+   100,
+   44
+  ],
+  "group": ""
+ },
+ "stele_fallen_b": {
+  "sheet": "bs_l01_b_markers.png",
+  "source_box": [
+   565,
+   119,
+   1004,
+   326
+  ],
+  "size": [
+   92,
+   44
+  ],
+  "group": ""
+ },
+ "stele_fallen_c": {
+  "sheet": "bs_l01_b_markers.png",
+  "source_box": [
+   1049,
+   112,
+   1486,
+   332
+  ],
+  "size": [
+   92,
+   46
+  ],
+  "group": ""
+ },
+ "stele_mid_a": {
+  "sheet": "bs_l01_b_markers.png",
+  "source_box": [
+   49,
+   417,
+   381,
+   912
+  ],
+  "size": [
+   56,
+   84
+  ],
+  "group": ""
+ },
+ "stele_mid_b": {
+  "sheet": "bs_l01_b_markers.png",
+  "source_box": [
+   428,
+   537,
+   716,
+   902
+  ],
+  "size": [
+   50,
+   64
+  ],
+  "group": ""
+ },
+ "stele_small_a": {
+  "sheet": "bs_l01_b_markers.png",
+  "source_box": [
+   774,
+   692,
+   963,
+   896
+  ],
+  "size": [
+   38,
+   40
+  ],
+  "group": ""
+ },
+ "stele_small_b": {
+  "sheet": "bs_l01_b_markers.png",
+  "source_box": [
+   1031,
+   708,
+   1231,
+   906
+  ],
+  "size": [
+   40,
+   40
+  ],
+  "group": ""
+ },
+ "cairn": {
+  "sheet": "bs_l01_b_markers.png",
+  "source_box": [
+   1281,
+   752,
+   1473,
+   906
+  ],
+  "size": [
+   38,
+   30
+  ],
+  "group": ""
+ },
+ "gate_cavern": {
+  "sheet": "bs_l02_a_gate.png",
+  "source_box": [
+   12,
+   46,
+   1709,
+   848
+  ],
+  "size": [
+   320,
+   152
+  ],
+  "group": ""
+ },
+ "cliff_face_a": {
+  "sheet": "bs_l02_b_cliff_face.png",
+  "source_box": [
+   32,
+   104,
+   1504,
+   460
+  ],
+  "size": [
+   320,
+   78
+  ],
+  "group": ""
+ },
+ "cliff_face_b": {
+  "sheet": "bs_l02_b_cliff_face.png",
+  "source_box": [
+   32,
+   561,
+   1504,
+   908
+  ],
+  "size": [
+   320,
+   76
+  ],
+  "group": ""
+ },
+ "cliff_rim_a": {
+  "sheet": "bs_l02_c_cliff_rim.png",
+  "source_box": [
+   39,
+   260,
+   996,
+   482
+  ],
+  "size": [
+   320,
+   74
+  ],
+  "group": ""
+ },
+ "cliff_rim_b": {
+  "sheet": "bs_l02_c_cliff_rim.png",
+  "source_box": [
+   45,
+   528,
+   992,
+   760
+  ],
+  "size": [
+   320,
+   78
+  ],
+  "group": ""
+ },
+ "cliff_end_l": {
+  "sheet": "bs_l02_c_cliff_rim.png",
+  "source_box": [
+   1055,
+   220,
+   1226,
+   759
+  ],
+  "size": [
+   54,
+   170
+  ],
+  "group": ""
+ },
+ "cliff_end_r": {
+  "sheet": "bs_l02_c_cliff_rim.png",
+  "source_box": [
+   1296,
+   214,
+   1481,
+   761
+  ],
+  "size": [
+   58,
+   170
+  ],
+  "group": ""
+ },
+ "gully_a": {
+  "sheet": "bs_l03_a_gully.png",
+  "source_box": [
+   40,
+   140,
+   1496,
+   456
+  ],
+  "size": [
+   320,
+   70
+  ],
+  "group": ""
+ },
+ "gully_b": {
+  "sheet": "bs_l03_a_gully.png",
+  "source_box": [
+   40,
+   571,
+   1496,
+   896
+  ],
+  "size": [
+   320,
+   72
+  ],
+  "group": ""
+ },
+ "bridge_stone": {
+  "sheet": "bs_l03_b_bridges.png",
+  "source_box": [
+   177,
+   51,
+   496,
+   538
+  ],
+  "size": [
+   96,
+   146
+  ],
+  "group": ""
+ },
+ "bridge_wood_broken": {
+  "sheet": "bs_l03_b_bridges.png",
+  "source_box": [
+   625,
+   71,
+   914,
+   559
+  ],
+  "size": [
+   62,
+   104
+  ],
+  "group": "bridge_wood"
+ },
+ "bridge_wood_fixed": {
+  "sheet": "bs_l03_b_bridges.png",
+  "source_box": [
+   1041,
+   71,
+   1342,
+   547
+  ],
+  "size": [
+   64,
+   102
+  ],
+  "group": "bridge_wood"
+ },
+ "gully_end_l": {
+  "sheet": "bs_l03_b_bridges.png",
+  "source_box": [
+   186,
+   584,
+   662,
+   976
+  ],
+  "size": [
+   96,
+   80
+  ],
+  "group": ""
+ },
+ "gully_end_r": {
+  "sheet": "bs_l03_b_bridges.png",
+  "source_box": [
+   874,
+   583,
+   1343,
+   976
+  ],
+  "size": [
+   96,
+   80
+  ],
+  "group": ""
+ },
+ "terrace_a": {
+  "sheet": "bs_l04_terrace.png",
+  "source_box": [
+   36,
+   161,
+   1500,
+   308
+  ],
+  "size": [
+   320,
+   32
+  ],
+  "group": ""
+ },
+ "terrace_b": {
+  "sheet": "bs_l04_terrace.png",
+  "source_box": [
+   36,
+   412,
+   1500,
+   560
+  ],
+  "size": [
+   320,
+   32
+  ],
+  "group": ""
+ },
+ "terrace_end_l": {
+  "sheet": "bs_l04_terrace.png",
+  "source_box": [
+   160,
+   698,
+   368,
+   841
+  ],
+  "size": [
+   64,
+   44
+  ],
+  "group": ""
+ },
+ "terrace_ramp": {
+  "sheet": "bs_l04_terrace.png",
+  "source_box": [
+   464,
+   684,
+   1072,
+   848
+  ],
+  "size": [
+   160,
+   44
+  ],
+  "group": ""
+ },
+ "terrace_end_r": {
+  "sheet": "bs_l04_terrace.png",
+  "source_box": [
+   1169,
+   694,
+   1376,
+   841
+  ],
+  "size": [
+   64,
+   46
+  ],
+  "group": ""
+ },
+ "prop_salt_cart": {
+  "sheet": "bs_q01_props.png",
+  "source_box": [
+   40,
+   158,
+   472,
+   480
+  ],
+  "size": [
+   96,
+   72
+  ],
+  "group": ""
+ },
+ "prop_signpost": {
+  "sheet": "bs_q01_props.png",
+  "source_box": [
+   549,
+   98,
+   792,
+   491
+  ],
+  "size": [
+   44,
+   72
+  ],
+  "group": ""
+ },
+ "prop_patrol_post": {
+  "sheet": "bs_q01_props.png",
+  "source_box": [
+   907,
+   112,
+   1119,
+   490
+  ],
+  "size": [
+   36,
+   64
+  ],
+  "group": ""
+ },
+ "prop_rope_post": {
+  "sheet": "bs_q01_props.png",
+  "source_box": [
+   1266,
+   201,
+   1468,
+   490
+  ],
+  "size": [
+   40,
+   56
+  ],
+  "group": ""
+ },
+ "prop_chest_closed": {
+  "sheet": "bs_q01_props.png",
+  "source_box": [
+   47,
+   689,
+   269,
+   883
+  ],
+  "size": [
+   40,
+   34
+  ],
+  "group": "chest"
+ },
+ "prop_chest_open": {
+  "sheet": "bs_q01_props.png",
+  "source_box": [
+   341,
+   636,
+   550,
+   883
+  ],
+  "size": [
+   38,
+   44
+  ],
+  "group": "chest"
+ },
+ "prop_tracks": {
+  "sheet": "bs_q01_props.png",
+  "source_box": [
+   627,
+   672,
+   874,
+   896
+  ],
+  "size": [
+   40,
+   36
+  ],
+  "group": ""
+ },
+ "prop_wheel": {
+  "sheet": "bs_q01_props.png",
+  "source_box": [
+   931,
+   668,
+   1225,
+   901
+  ],
+  "size": [
+   38,
+   32
+  ],
+  "group": ""
+ },
+ "prop_spear": {
+  "sheet": "bs_q01_props.png",
+  "source_box": [
+   1315,
+   568,
+   1493,
+   892
+  ],
+  "size": [
+   28,
+   54
+  ],
+  "group": ""
+ },
+ "rock_s_0": {
+  "sheet": "bs_r01_a_small_medium.png",
+  "source_box": [
+   224,
+   241,
+   367,
+   358
+  ],
+  "size": [
+   18,
+   14
+  ],
+  "group": ""
+ },
+ "rock_s_1": {
+  "sheet": "bs_r01_a_small_medium.png",
+  "source_box": [
+   531,
+   252,
+   682,
+   358
+  ],
+  "size": [
+   18,
+   12
+  ],
+  "group": ""
+ },
+ "rock_s_2": {
+  "sheet": "bs_r01_a_small_medium.png",
+  "source_box": [
+   852,
+   232,
+   1007,
+   366
+  ],
+  "size": [
+   18,
+   16
+  ],
+  "group": ""
+ },
+ "rock_s_3": {
+  "sheet": "bs_r01_a_small_medium.png",
+  "source_box": [
+   1174,
+   258,
+   1314,
+   358
+  ],
+  "size": [
+   18,
+   12
+  ],
+  "group": ""
+ },
+ "rock_m_0": {
+  "sheet": "bs_r01_a_small_medium.png",
+  "source_box": [
+   42,
+   582,
+   281,
+   798
+  ],
+  "size": [
+   44,
+   40
+  ],
+  "group": ""
+ },
+ "rock_m_1": {
+  "sheet": "bs_r01_a_small_medium.png",
+  "source_box": [
+   368,
+   572,
+   592,
+   791
+  ],
+  "size": [
+   40,
+   40
+  ],
+  "group": ""
+ },
+ "rock_m_2": {
+  "sheet": "bs_r01_a_small_medium.png",
+  "source_box": [
+   676,
+   528,
+   888,
+   806
+  ],
+  "size": [
+   36,
+   48
+  ],
+  "group": ""
+ },
+ "rock_m_3": {
+  "sheet": "bs_r01_a_small_medium.png",
+  "source_box": [
+   968,
+   589,
+   1212,
+   790
+  ],
+  "size": [
+   46,
+   38
+  ],
+  "group": ""
+ },
+ "rock_m_4": {
+  "sheet": "bs_r01_a_small_medium.png",
+  "source_box": [
+   1292,
+   582,
+   1493,
+   791
+  ],
+  "size": [
+   38,
+   40
+  ],
+  "group": ""
+ },
+ "boulder_a": {
+  "sheet": "bs_r01_b_boulders.png",
+  "source_box": [
+   66,
+   112,
+   725,
+   484
+  ],
+  "size": [
+   104,
+   58
+  ],
+  "group": ""
+ },
+ "boulder_b": {
+  "sheet": "bs_r01_b_boulders.png",
+  "source_box": [
+   796,
+   90,
+   1470,
+   488
+  ],
+  "size": [
+   108,
+   64
+  ],
+  "group": ""
+ },
+ "boulder_c": {
+  "sheet": "bs_r01_b_boulders.png",
+  "source_box": [
+   376,
+   584,
+   1167,
+   955
+  ],
+  "size": [
+   120,
+   56
+  ],
+  "group": ""
+ },
+ "tree_big_a": {
+  "sheet": "bs_t01_a.png",
+  "source_box": [
+   47,
+   19,
+   1207,
+   1216
+  ],
+  "size": [
+   214,
+   220
+  ],
+  "group": ""
+ },
+ "tree_big_b": {
+  "sheet": "bs_t01_b.png",
+  "source_box": [
+   16,
+   17,
+   1242,
+   1225
+  ],
+  "size": [
+   216,
+   212
+  ],
+  "group": ""
+ },
+ "tree_big_c": {
+  "sheet": "bs_t01_c.png",
+  "source_box": [
+   255,
+   24,
+   1000,
+   1193
+  ],
+  "size": [
+   146,
+   228
+  ],
+  "group": ""
+ },
+ "tree_big_d": {
+  "sheet": "bs_t01_d.png",
+  "source_box": [
+   25,
+   24,
+   1229,
+   1236
+  ],
+  "size": [
+   214,
+   216
+  ],
+  "group": ""
+ },
+ "tree_maple": {
+  "sheet": "bs_t01_e_maple.png",
+  "source_box": [
+   18,
+   12,
+   1240,
+   1235
+  ],
+  "size": [
+   200,
+   200
+  ],
+  "group": ""
+ },
+ "tree_mid_a": {
+  "sheet": "bs_t02_a_broadleaf.png",
+  "source_box": [
+   124,
+   172,
+   784,
+   863
+  ],
+  "size": [
+   152,
+   160
+  ],
+  "group": ""
+ },
+ "tree_mid_b": {
+  "sheet": "bs_t02_a_broadleaf.png",
+  "source_box": [
+   856,
+   123,
+   1376,
+   863
+  ],
+  "size": [
+   120,
+   172
+  ],
+  "group": ""
+ },
+ "tree_dead_a": {
+  "sheet": "bs_t02_b_dead.png",
+  "source_box": [
+   48,
+   66,
+   719,
+   928
+  ],
+  "size": [
+   136,
+   174
+  ],
+  "group": ""
+ },
+ "tree_dead_b": {
+  "sheet": "bs_t02_b_dead.png",
+  "source_box": [
+   801,
+   104,
+   1487,
+   936
+  ],
+  "size": [
+   126,
+   160
+  ],
+  "group": ""
+ },
+ "shrub_a": {
+  "sheet": "bs_t03_a_shrubs.png",
+  "source_box": [
+   70,
+   87,
+   486,
+   453
+  ],
+  "size": [
+   56,
+   50
+  ],
+  "group": ""
+ },
+ "shrub_b": {
+  "sheet": "bs_t03_a_shrubs.png",
+  "source_box": [
+   556,
+   87,
+   966,
+   461
+  ],
+  "size": [
+   52,
+   48
+  ],
+  "group": ""
+ },
+ "shrub_rust": {
+  "sheet": "bs_t03_a_shrubs.png",
+  "source_box": [
+   1036,
+   87,
+   1471,
+   454
+  ],
+  "size": [
+   56,
+   48
+  ],
+  "group": ""
+ },
+ "shrub_c": {
+  "sheet": "bs_t03_a_shrubs.png",
+  "source_box": [
+   252,
+   549,
+   693,
+   917
+  ],
+  "size": [
+   60,
+   50
+  ],
+  "group": ""
+ },
+ "bramble": {
+  "sheet": "bs_t03_a_shrubs.png",
+  "source_box": [
+   800,
+   560,
+   1336,
+   924
+  ],
+  "size": [
+   68,
+   46
+  ],
+  "group": ""
+ },
+ "fern_a": {
+  "sheet": "bs_t03_b_ferns.png",
+  "source_box": [
+   57,
+   136,
+   518,
+   512
+  ],
+  "size": [
+   48,
+   40
+  ],
+  "group": ""
+ },
+ "fern_b": {
+  "sheet": "bs_t03_b_ferns.png",
+  "source_box": [
+   576,
+   105,
+   977,
+   520
+  ],
+  "size": [
+   44,
+   44
+  ],
+  "group": ""
+ },
+ "fern_c": {
+  "sheet": "bs_t03_b_ferns.png",
+  "source_box": [
+   1056,
+   136,
+   1493,
+   512
+  ],
+  "size": [
+   48,
+   42
+  ],
+  "group": ""
+ },
+ "grass_tall_a": {
+  "sheet": "bs_t03_b_ferns.png",
+  "source_box": [
+   331,
+   584,
+   704,
+   903
+  ],
+  "size": [
+   40,
+   34
+  ],
+  "group": ""
+ },
+ "grass_tall_b": {
+  "sheet": "bs_t03_b_ferns.png",
+  "source_box": [
+   818,
+   577,
+   1231,
+   903
+  ],
+  "size": [
+   44,
+   34
+  ],
+  "group": ""
+ }
+}

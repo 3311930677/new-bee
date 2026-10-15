@@ -9,7 +9,7 @@ const AVATAR_IDS := ["custom"]
 
 var _account: LineEdit
 var _password: LineEdit
-var _paper: PanelContainer
+var _paper: Control
 var _footer: Label
 var _wordmark: Control
 var _subtitle: Label
@@ -21,7 +21,8 @@ var _chest:Control
 
 
 func _ready() -> void:
-	preload("res://src/ui/ReferenceFrontend.gd").backdrop(self,"login_portrait")
+	# 背景由 LoginChestView 画（login_20261014 参考稿），不再叠旧的 login_portrait。
+	G.register_ui_page(self)
 	_chest=preload("res://src/ui/LoginChestView.gd").new()
 	_chest.host=self
 	add_child(_chest)

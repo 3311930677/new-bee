@@ -1,0 +1,18 @@
+Original 2D UI asset sheet for a portrait mobile RPG with an East-Asian frontier theme. Top-tier commercial mobile game quality.
+Match the UI style of the two attached STYLE references (the game's home screen and settings screen) exactly: near-black lacquer (#1A1412) and dark lacquered wood as the main surface, thin aged-gold (#C9A45C) rims and fine gold inner lines, small cloud-scroll (ruyi) corner ornaments, tiny red-garnet rivets, vermilion (#9E2B25) used only as a small accent. Elegant and restrained, not chunky.
+Follow the attached LAYOUT reference exactly: every grey box is one asset, drawn at that exact position and size; darker grey areas are decorated end caps / corners, light grey areas are plain stretchable middles that must contain only seamless lacquer texture and straight rim lines.
+Rendering: fine-grain HD pixel art, crisp edges, consistent fine pixel size across the whole sheet; light from the upper left, lit top rims, darker bottom rims, small bright highlights on gold; subtle lacquer sheen and faint wood grain inside panels.
+Background: flat pure #FF00FF magenta everywhere outside the boxes. Never use magenta inside any asset.
+NO text, NO letters, NO numbers, NO icons or symbols, NO characters, NO cast shadows, NO outer glow, NO soft halo, NO tassels, NO jade pendants, NO dragons, NO 3D render look, NO photorealism, NO watermark.
+
+Sheet UI3-06, scale 3. Seven square item slots with IDENTICAL outline and inner recess (dark recessed lacquer square inside a thin beveled frame, empty centre). Top row, five rarity tiers, only the frame colour and a tiny corner gem change: common (dull grey-bronze), uncommon (jade green), rare (deep blue), epic (violet), legend (bright aged gold with tiny cloud-scroll corner flourishes and an amber gem). Bottom row: empty slot (dim frame, faint dashed inner edge) and selected slot (bright gold frame with four small inward corner ticks).
+
+Input image 1 is the LAYOUT template. Input images 2 and 3 are STYLE references only; do not reproduce their scenes, text or icons. Output one 1536x1024 PNG asset sheet. Preserve the entire magenta canvas and exact layout geometry. No labels or guide markings. Everything, including decoration, must stay inside its assigned box. Empty centres are solid lacquer or parchment, not holes. Geometry on the 1536x1024 canvas (origin top left):
+slot_common: x,y,width,height=160,288,192,192; nine-slice art margins=
+slot_uncommon: x,y,width,height=416,288,192,192; nine-slice art margins=
+slot_rare: x,y,width,height=672,288,192,192; nine-slice art margins=
+slot_epic: x,y,width,height=928,288,192,192; nine-slice art margins=
+slot_legend: x,y,width,height=1184,288,192,192; nine-slice art margins=
+slot_empty: x,y,width,height=544,544,192,192; nine-slice art margins=
+slot_selected: x,y,width,height=800,544,192,192; nine-slice art margins=
+All seven outer square silhouettes and border widths must be identical. Do not make legendary slot bigger or protruding; all flourishes within its square. Recesses empty solid near-black, never magenta. Small gems same position in each tier.

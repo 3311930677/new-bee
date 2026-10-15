@@ -1,0 +1,19 @@
+Original 2D UI asset sheet for a portrait mobile RPG with an East-Asian frontier theme. Top-tier commercial mobile game quality.
+Match the UI style of the two attached STYLE references (the game's home screen and settings screen) exactly: near-black lacquer (#1A1412) and dark lacquered wood as the main surface, thin aged-gold (#C9A45C) rims and fine gold inner lines, small cloud-scroll (ruyi) corner ornaments, tiny red-garnet rivets, vermilion (#9E2B25) used only as a small accent. Elegant and restrained, not chunky.
+Follow the attached LAYOUT reference exactly: every grey box is one asset, drawn at that exact position and size; darker grey areas are decorated end caps / corners, light grey areas are plain stretchable middles that must contain only seamless lacquer texture and straight rim lines.
+Rendering: fine-grain HD pixel art, crisp edges, consistent fine pixel size across the whole sheet; light from the upper left, lit top rims, darker bottom rims, small bright highlights on gold; subtle lacquer sheen and faint wood grain inside panels.
+Background: flat pure #FF00FF magenta everywhere outside the boxes. Never use magenta inside any asset.
+NO text, NO letters, NO numbers, NO icons or symbols, NO characters, NO cast shadows, NO outer glow, NO soft halo, NO tassels, NO jade pendants, NO dragons, NO 3D render look, NO photorealism, NO watermark.
+
+Sheet UI3-08, scale 2.5.
+Top: a thin bar frame: recessed black channel with a fine gold rim and small gold end caps, plain middle.
+Middle row: two fills the size of the channel interior: experience (teal-jade with a lighter top pixel row) and health (crimson with a lighter top pixel row).
+Bottom row: a currency capsule (black lacquer pill with a thin gold rim; left end is a round recessed socket for a coin icon; plain middle for numbers) and a quest slip (cream parchment strip on a thin black lacquer backing with a gold rim; left end has a small vermilion seal disc; plain middle for two lines of text).
+
+Input image 1 is the LAYOUT template. Input images 2 and 3 are STYLE references only; do not reproduce their scenes, text or icons. Output one 1536x1024 PNG asset sheet. Preserve the entire magenta canvas and exact layout geometry. No labels or guide markings. Everything, including decoration, must stay inside its assigned box. Empty centres are solid lacquer or parchment, not holes. Geometry on the 1536x1024 canvas (origin top left):
+bar_frame: x,y,width,height=518,323,500,50; nine-slice art margins=20,0,20,0
+bar_fill_exp: x,y,width,height=276,437,460,20; nine-slice art margins=
+bar_fill_hp: x,y,width,height=800,437,460,20; nine-slice art margins=
+currency_capsule: x,y,width,height=236,566,360,90; nine-slice art margins=40,0,20,0
+quest_slip: x,y,width,height=660,521,640,180; nine-slice art margins=40,20,24,20
+The quest slip has only a small blank vermilion disc seal, no emblem or stamp writing. Place seal in upper-left decorated corner only, entirely within left100px and top50px, never in stretchable vertical middle. Coin socket outer diameter at most90px wholly inside360x90 capsule. All progress fills are plain thin strips without frames.

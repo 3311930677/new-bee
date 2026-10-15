@@ -1,0 +1,282 @@
+[
+  {
+    "pass": true,
+    "test": "tree trunk blocks walking"
+  },
+  {
+    "pass": true,
+    "test": "canopy fades while trunk stays opaque"
+  },
+  {
+    "pass": true,
+    "test": "canopy restores when actor leaves"
+  },
+  {
+    "pass": true,
+    "test": "camera zoom 1.0"
+  },
+  {
+    "pass": true,
+    "test": "camera zoom 1.15"
+  },
+  {
+    "pass": true,
+    "test": "camera zoom 1.25"
+  },
+  {
+    "pass": true,
+    "test": "hall facade blocks walking"
+  },
+  {
+    "pass": true,
+    "test": "hall entry is reachable"
+  },
+  {
+    "pass": true,
+    "test": "tall viewport follows keep_width"
+  },
+  {
+    "pass": true,
+    "test": "tall view fits painted world without blank margins"
+  },
+  {
+    "pass": true,
+    "test": "world edge blocks walking"
+  },
+  {
+    "pass": true,
+    "test": "neighborhood stable approach is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "neighborhood barracks approach is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "neighborhood storehouse approach is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "neighborhood forge approach is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "neighborhood hall approach is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "neighborhood archive approach is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "neighborhood kennel approach is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "neighborhood shrine approach is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "natural painted ground matches current world extent"
+  },
+  {
+    "pass": true,
+    "test": "south road is configured to dissolve into grass before map edge"
+  },
+  {
+    "pass": true,
+    "test": "stable selects its original facility ID"
+  },
+  {
+    "pass": true,
+    "test": "barracks selects its original facility ID"
+  },
+  {
+    "pass": true,
+    "test": "storehouse selects its original facility ID"
+  },
+  {
+    "pass": true,
+    "test": "forge selects its original facility ID"
+  },
+  {
+    "pass": true,
+    "test": "hall selects its original facility ID"
+  },
+  {
+    "pass": true,
+    "test": "archive selects its original facility ID"
+  },
+  {
+    "pass": true,
+    "test": "kennel selects its original facility ID"
+  },
+  {
+    "pass": true,
+    "test": "shrine selects its original facility ID"
+  },
+  {
+    "pass": true,
+    "test": "npc_guard interaction stand is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "npc_guard selects the matching original interaction ID"
+  },
+  {
+    "pass": true,
+    "test": "npc_stablemaster interaction stand is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "npc_stablemaster selects the matching original interaction ID"
+  },
+  {
+    "pass": true,
+    "test": "npc_mentor interaction stand is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "npc_mentor selects the matching original interaction ID"
+  },
+  {
+    "pass": true,
+    "test": "npc_smith interaction stand is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "npc_smith selects the matching original interaction ID"
+  },
+  {
+    "pass": true,
+    "test": "npc_steward interaction stand is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "npc_steward selects the matching original interaction ID"
+  },
+  {
+    "pass": true,
+    "test": "npc_child interaction stand is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "npc_child selects the matching original interaction ID"
+  },
+  {
+    "pass": true,
+    "test": "npc_warden interaction stand is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "npc_warden selects the matching original interaction ID"
+  },
+  {
+    "pass": true,
+    "test": "npc_scribe interaction stand is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "npc_scribe selects the matching original interaction ID"
+  },
+  {
+    "pass": true,
+    "test": "npc_keeper interaction stand is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "npc_keeper selects the matching original interaction ID"
+  },
+  {
+    "pass": true,
+    "test": "a4_secret_oralbook_step_1 interaction stand is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "a4_secret_oralbook_step_1 selects the matching original interaction ID"
+  },
+  {
+    "pass": true,
+    "test": "a4_secret_oralbook_feedback_0 interaction stand is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "a4_secret_oralbook_feedback_0 selects the matching original interaction ID"
+  },
+  {
+    "pass": true,
+    "test": "a4_rel_nighttable_step_1 interaction stand is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "a4_rel_nighttable_step_1 selects the matching original interaction ID"
+  },
+  {
+    "pass": true,
+    "test": "a4_rel_nighttable_step_4 interaction stand is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "a4_rel_nighttable_step_4 selects the matching original interaction ID"
+  },
+  {
+    "pass": true,
+    "test": "a4_rel_nighttable_step_5 interaction stand is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "a4_rel_nighttable_step_5 selects the matching original interaction ID"
+  },
+  {
+    "pass": true,
+    "test": "a4_rel_nighttable_feedback_0 interaction stand is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "a4_rel_nighttable_feedback_0 selects the matching original interaction ID"
+  },
+  {
+    "pass": true,
+    "test": "gate interaction stand is physically clear"
+  },
+  {
+    "pass": true,
+    "test": "gate selects the matching original interaction ID"
+  },
+  {
+    "pass": true,
+    "test": "NPC interaction opens its sample dialog"
+  },
+  {
+    "pass": true,
+    "test": "main road reaches roadside exit sign without a wall"
+  },
+  {
+    "pass": true,
+    "test": "exit has one sign and no gatehouse"
+  },
+  {
+    "pass": true,
+    "test": "north exit opens field with original target and arrival"
+  },
+  {
+    "pass": true,
+    "test": "field arrival does not immediately return to town"
+  },
+  {
+    "pass": true,
+    "test": "field south return is reachable"
+  },
+  {
+    "pass": true,
+    "test": "field return opens town with original arrival ID"
+  },
+  {
+    "pass": true,
+    "test": "town return does not immediately send player back out"
+  },
+  {
+    "pass": true,
+    "test": "pure 2D scene nodes"
+  }
+]

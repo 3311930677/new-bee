@@ -1,0 +1,496 @@
+{
+ "tf_boat": {
+  "sheet": "TF-P01_boats.png",
+  "source_box": [
+   75,
+   157,
+   1213,
+   774
+  ],
+  "size": [
+   170,
+   92
+  ]
+ },
+ "tf_rowboat": {
+  "sheet": "TF-P01_boats.png",
+  "source_box": [
+   295,
+   903,
+   974,
+   1142
+  ],
+  "size": [
+   90,
+   32
+  ]
+ },
+ "tf_drift_large_a": {
+  "sheet": "TF-P02_driftwood.png",
+  "source_box": [
+   27,
+   180,
+   627,
+   672
+  ],
+  "size": [
+   120,
+   98
+  ]
+ },
+ "tf_drift_large_b": {
+  "sheet": "TF-P02_driftwood.png",
+  "source_box": [
+   660,
+   216,
+   1237,
+   684
+  ],
+  "size": [
+   110,
+   89
+  ]
+ },
+ "tf_drift_small_a": {
+  "sheet": "TF-P02_driftwood.png",
+  "source_box": [
+   48,
+   894,
+   441,
+   1100
+  ],
+  "size": [
+   64,
+   34
+  ]
+ },
+ "tf_drift_small_b": {
+  "sheet": "TF-P02_driftwood.png",
+  "source_box": [
+   483,
+   905,
+   857,
+   1100
+  ],
+  "size": [
+   60,
+   31
+  ]
+ },
+ "tf_drift_small_c": {
+  "sheet": "TF-P02_driftwood.png",
+  "source_box": [
+   921,
+   935,
+   1220,
+   1100
+  ],
+  "size": [
+   52,
+   29
+  ]
+ },
+ "tf_gauge_a": {
+  "sheet": "TF-P03_posts.png",
+  "source_box": [
+   358,
+   59,
+   509,
+   415
+  ],
+  "size": [
+   27,
+   64
+  ]
+ },
+ "tf_gauge_b": {
+  "sheet": "TF-P03_posts.png",
+  "source_box": [
+   764,
+   59,
+   901,
+   419
+  ],
+  "size": [
+   24,
+   64
+  ]
+ },
+ "tf_piles_a": {
+  "sheet": "TF-P03_posts.png",
+  "source_box": [
+   59,
+   504,
+   385,
+   841
+  ],
+  "size": [
+   44,
+   45
+  ]
+ },
+ "tf_piles_b": {
+  "sheet": "TF-P03_posts.png",
+  "source_box": [
+   464,
+   485,
+   811,
+   832
+  ],
+  "size": [
+   44,
+   44
+  ]
+ },
+ "tf_piles_c": {
+  "sheet": "TF-P03_posts.png",
+  "source_box": [
+   904,
+   488,
+   1203,
+   850
+  ],
+  "size": [
+   44,
+   53
+  ]
+ },
+ "tf_bollard_a": {
+  "sheet": "TF-P03_posts.png",
+  "source_box": [
+   268,
+   939,
+   551,
+   1178
+  ],
+  "size": [
+   34,
+   29
+  ]
+ },
+ "tf_bollard_b": {
+  "sheet": "TF-P03_posts.png",
+  "source_box": [
+   706,
+   939,
+   996,
+   1192
+  ],
+  "size": [
+   34,
+   30
+  ]
+ },
+ "tf_net_rack": {
+  "sheet": "TF-P04_fishing_props_v2.png",
+  "source_box": [
+   67,
+   47,
+   809,
+   469
+  ],
+  "size": [
+   96,
+   55
+  ]
+ },
+ "tf_cargo_crate": {
+  "sheet": "TF-P04_fishing_props_v2.png",
+  "source_box": [
+   864,
+   254,
+   1177,
+   484
+  ],
+  "size": [
+   48,
+   35
+  ]
+ },
+ "tf_crab_pot_a": {
+  "sheet": "TF-P04_fishing_props_v2.png",
+  "source_box": [
+   190,
+   613,
+   548,
+   866
+  ],
+  "size": [
+   32,
+   23
+  ]
+ },
+ "tf_crab_pot_b": {
+  "sheet": "TF-P04_fishing_props_v2.png",
+  "source_box": [
+   730,
+   607,
+   1054,
+   870
+  ],
+  "size": [
+   32,
+   26
+  ]
+ },
+ "tf_barrel_a": {
+  "sheet": "TF-P04_fishing_props_v2.png",
+  "source_box": [
+   254,
+   942,
+   480,
+   1206
+  ],
+  "size": [
+   26,
+   30
+  ]
+ },
+ "tf_barrel_b": {
+  "sheet": "TF-P04_fishing_props_v2.png",
+  "source_box": [
+   776,
+   942,
+   1002,
+   1206
+  ],
+  "size": [
+   26,
+   30
+  ]
+ },
+ "tf_rock_l_a": {
+  "sheet": "TF-P05_rocks.png",
+  "source_box": [
+   24,
+   139,
+   595,
+   570
+  ],
+  "size": [
+   100,
+   75
+  ]
+ },
+ "tf_rock_l_b": {
+  "sheet": "TF-P05_rocks.png",
+  "source_box": [
+   642,
+   221,
+   1226,
+   569
+  ],
+  "size": [
+   96,
+   57
+  ]
+ },
+ "tf_rock_m_a": {
+  "sheet": "TF-P05_rocks.png",
+  "source_box": [
+   39,
+   707,
+   289,
+   901
+  ],
+  "size": [
+   44,
+   34
+  ]
+ },
+ "tf_rock_m_b": {
+  "sheet": "TF-P05_rocks.png",
+  "source_box": [
+   350,
+   691,
+   608,
+   896
+  ],
+  "size": [
+   40,
+   32
+  ]
+ },
+ "tf_rock_m_c": {
+  "sheet": "TF-P05_rocks.png",
+  "source_box": [
+   649,
+   702,
+   906,
+   905
+  ],
+  "size": [
+   46,
+   36
+  ]
+ },
+ "tf_rock_m_d": {
+  "sheet": "TF-P05_rocks.png",
+  "source_box": [
+   963,
+   710,
+   1214,
+   905
+  ],
+  "size": [
+   42,
+   33
+  ]
+ },
+ "tf_rock_s_a": {
+  "sheet": "TF-P05_rocks.png",
+  "source_box": [
+   125,
+   1070,
+   225,
+   1149
+  ],
+  "size": [
+   18,
+   14
+  ]
+ },
+ "tf_rock_s_b": {
+  "sheet": "TF-P05_rocks.png",
+  "source_box": [
+   413,
+   1059,
+   552,
+   1149
+  ],
+  "size": [
+   20,
+   13
+  ]
+ },
+ "tf_rock_s_c": {
+  "sheet": "TF-P05_rocks.png",
+  "source_box": [
+   713,
+   1041,
+   838,
+   1156
+  ],
+  "size": [
+   16,
+   15
+  ]
+ },
+ "tf_rock_s_d": {
+  "sheet": "TF-P05_rocks.png",
+  "source_box": [
+   1016,
+   1070,
+   1157,
+   1148
+  ],
+  "size": [
+   20,
+   11
+  ]
+ },
+ "tf_grass_a": {
+  "sheet": "TF-P06_grass.png",
+  "source_box": [
+   14,
+   293,
+   302,
+   609
+  ],
+  "size": [
+   40,
+   44
+  ]
+ },
+ "tf_grass_b": {
+  "sheet": "TF-P06_grass.png",
+  "source_box": [
+   349,
+   254,
+   604,
+   608
+  ],
+  "size": [
+   33,
+   46
+  ]
+ },
+ "tf_grass_c": {
+  "sheet": "TF-P06_grass.png",
+  "source_box": [
+   651,
+   333,
+   966,
+   610
+  ],
+  "size": [
+   45,
+   40
+  ]
+ },
+ "tf_grass_d": {
+  "sheet": "TF-P06_grass.png",
+  "source_box": [
+   1006,
+   281,
+   1229,
+   611
+  ],
+  "size": [
+   30,
+   44
+  ]
+ },
+ "tf_samphire_a": {
+  "sheet": "TF-P06_grass.png",
+  "source_box": [
+   52,
+   851,
+   416,
+   1129
+  ],
+  "size": [
+   34,
+   26
+  ]
+ },
+ "tf_samphire_b": {
+  "sheet": "TF-P06_grass.png",
+  "source_box": [
+   483,
+   725,
+   807,
+   1135
+  ],
+  "size": [
+   32,
+   40
+  ]
+ },
+ "tf_samphire_c": {
+  "sheet": "TF-P06_grass.png",
+  "source_box": [
+   897,
+   912,
+   1205,
+   1121
+  ],
+  "size": [
+   30,
+   20
+  ]
+ },
+ "tf_boardwalk": {
+  "sheet": "TF-P07_boardwalk.png",
+  "source_box": [
+   218,
+   322,
+   1152,
+   980
+  ],
+  "size": [
+   140,
+   99
+  ]
+ }
+}

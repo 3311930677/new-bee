@@ -1,0 +1,515 @@
+{
+ "hero_normal": {
+  "sheet": "UI3-01_primary",
+  "source_box": [
+   463,
+   230,
+   611,
+   141
+  ],
+  "aspect_error": 0.026,
+  "despilled_px": 90,
+  "group": "hero",
+  "colors": 32
+ },
+ "hero_pressed": {
+  "sheet": "UI3-01_primary",
+  "source_box": [
+   463,
+   440,
+   611,
+   140
+  ],
+  "aspect_error": 0.034,
+  "despilled_px": 80,
+  "group": "hero",
+  "colors": 32
+ },
+ "hero_disabled": {
+  "sheet": "UI3-01_primary",
+  "source_box": [
+   463,
+   649,
+   611,
+   141
+  ],
+  "aspect_error": 0.026,
+  "despilled_px": 352,
+  "group": "hero",
+  "colors": 32
+ },
+ "btn_normal": {
+  "sheet": "UI3-02_buttons",
+  "source_box": [
+   319,
+   376,
+   258,
+   93
+  ],
+  "aspect_error": 0.04,
+  "despilled_px": 64,
+  "group": "btn",
+  "colors": 32
+ },
+ "btn_pressed": {
+  "sheet": "UI3-02_buttons",
+  "source_box": [
+   638,
+   376,
+   259,
+   94
+  ],
+  "aspect_error": 0.033,
+  "despilled_px": 93,
+  "group": "btn",
+  "colors": 32
+ },
+ "btn_disabled": {
+  "sheet": "UI3-02_buttons",
+  "source_box": [
+   958,
+   376,
+   259,
+   93
+  ],
+  "aspect_error": 0.044,
+  "despilled_px": 66,
+  "group": "btn",
+  "colors": 32
+ },
+ "tab_normal": {
+  "sheet": "UI3-02_buttons",
+  "source_box": [
+   196,
+   541,
+   305,
+   89
+  ],
+  "aspect_error": 0.047,
+  "despilled_px": 184,
+  "group": "tab",
+  "colors": 32
+ },
+ "tab_selected": {
+  "sheet": "UI3-02_buttons",
+  "source_box": [
+   545,
+   541,
+   304,
+   90
+  ],
+  "aspect_error": 0.032,
+  "despilled_px": 141,
+  "group": "tab",
+  "colors": 32
+ },
+ "pill": {
+  "sheet": "UI3-02_buttons",
+  "source_box": [
+   895,
+   542,
+   276,
+   87
+  ],
+  "aspect_error": 0.091,
+  "despilled_px": 59,
+  "colors": 32
+ },
+ "btn_round": {
+  "sheet": "UI3-02_buttons",
+  "source_box": [
+   1218,
+   520,
+   127,
+   129
+  ],
+  "aspect_error": 0.016,
+  "despilled_px": 43,
+  "colors": 32
+ },
+ "panel_iron": {
+  "sheet": "UI3-03_panels",
+  "source_box": [
+   225,
+   177,
+   511,
+   490
+  ],
+  "aspect_error": 0.043,
+  "despilled_px": 276,
+  "colors": 32
+ },
+ "card_paper": {
+  "sheet": "UI3-03_panels",
+  "source_box": [
+   800,
+   240,
+   512,
+   371
+  ],
+  "aspect_error": 0.035,
+  "despilled_px": 69,
+  "colors": 32
+ },
+ "group_header": {
+  "sheet": "UI3-03_panels",
+  "source_box": [
+   527,
+   731,
+   494,
+   121
+  ],
+  "aspect_error": 0.183,
+  "despilled_px": 40,
+  "colors": 32
+ },
+ "plaque_title": {
+  "sheet": "UI3-04_plaques",
+  "source_box": [
+   411,
+   369,
+   714,
+   128
+  ],
+  "aspect_error": 0.014,
+  "despilled_px": 624,
+  "colors": 32
+ },
+ "plaque_small": {
+  "sheet": "UI3-04_plaques",
+  "source_box": [
+   104,
+   565,
+   394,
+   79
+  ],
+  "aspect_error": 0.039,
+  "despilled_px": 32,
+  "colors": 32
+ },
+ "building_tag": {
+  "sheet": "UI3-04_plaques",
+  "source_box": [
+   555,
+   554,
+   331,
+   101
+  ],
+  "aspect_error": 0.181,
+  "despilled_px": 35,
+  "colors": 32
+ },
+ "divider": {
+  "sheet": "UI3-04_plaques",
+  "source_box": [
+   943,
+   584,
+   489,
+   39
+  ],
+  "aspect_error": 0.045,
+  "despilled_px": 400,
+  "colors": 32
+ },
+ "toggle_off": {
+  "sheet": "UI3-05_controls",
+  "source_box": [
+   542,
+   342,
+   205,
+   85
+  ],
+  "aspect_error": 0.085,
+  "despilled_px": 18,
+  "group": "toggle",
+  "colors": 32
+ },
+ "toggle_on": {
+  "sheet": "UI3-05_controls",
+  "source_box": [
+   789,
+   342,
+   205,
+   85
+  ],
+  "aspect_error": 0.085,
+  "despilled_px": 20,
+  "group": "toggle",
+  "colors": 32
+ },
+ "slider_track": {
+  "sheet": "UI3-05_controls",
+  "source_box": [
+   260,
+   493,
+   487,
+   29
+  ],
+  "aspect_error": 0.16,
+  "despilled_px": 10,
+  "colors": 32
+ },
+ "slider_fill": {
+  "sheet": "UI3-05_controls",
+  "source_box": [
+   809,
+   500,
+   463,
+   15
+  ],
+  "aspect_error": 0.202,
+  "despilled_px": 0,
+  "colors": 32
+ },
+ "slider_knob": {
+  "sheet": "UI3-05_controls",
+  "source_box": [
+   538,
+   589,
+   70,
+   71
+  ],
+  "aspect_error": 0.014,
+  "despilled_px": 11,
+  "colors": 32
+ },
+ "stepper": {
+  "sheet": "UI3-05_controls",
+  "source_box": [
+   662,
+   583,
+   335,
+   82
+  ],
+  "aspect_error": 0.021,
+  "despilled_px": 235,
+  "colors": 32
+ },
+ "slot_common": {
+  "sheet": "UI3-06_slots",
+  "source_box": [
+   150,
+   275,
+   214,
+   211
+  ],
+  "aspect_error": 0.014,
+  "despilled_px": 3,
+  "group": "slot",
+  "colors": 32
+ },
+ "slot_uncommon": {
+  "sheet": "UI3-06_slots",
+  "source_box": [
+   406,
+   275,
+   213,
+   211
+  ],
+  "aspect_error": 0.009,
+  "despilled_px": 3,
+  "group": "slot",
+  "colors": 32
+ },
+ "slot_rare": {
+  "sheet": "UI3-06_slots",
+  "source_box": [
+   661,
+   275,
+   214,
+   211
+  ],
+  "aspect_error": 0.014,
+  "despilled_px": 20,
+  "group": "slot",
+  "colors": 32
+ },
+ "slot_epic": {
+  "sheet": "UI3-06_slots",
+  "source_box": [
+   917,
+   275,
+   214,
+   211
+  ],
+  "aspect_error": 0.014,
+  "despilled_px": 0,
+  "group": "slot",
+  "colors": 32
+ },
+ "slot_legend": {
+  "sheet": "UI3-06_slots",
+  "source_box": [
+   1172,
+   275,
+   216,
+   212
+  ],
+  "aspect_error": 0.019,
+  "despilled_px": 36,
+  "group": "slot",
+  "colors": 32
+ },
+ "slot_empty": {
+  "sheet": "UI3-06_slots",
+  "source_box": [
+   533,
+   537,
+   214,
+   211
+  ],
+  "aspect_error": 0.014,
+  "despilled_px": 62,
+  "group": "slot",
+  "colors": 32
+ },
+ "slot_selected": {
+  "sheet": "UI3-06_slots",
+  "source_box": [
+   789,
+   537,
+   214,
+   211
+  ],
+  "aspect_error": 0.014,
+  "despilled_px": 5,
+  "group": "slot",
+  "colors": 32
+ },
+ "nav_base": {
+  "sheet": "UI3-07_nav",
+  "source_box": [
+   166,
+   231,
+   1204,
+   221
+  ],
+  "aspect_error": 0.001,
+  "despilled_px": 1,
+  "colors": 32
+ },
+ "nav_socket": {
+  "sheet": "UI3-07_nav",
+  "source_box": [
+   157,
+   558,
+   205,
+   198
+  ],
+  "aspect_error": 0.035,
+  "despilled_px": 53,
+  "group": "nav_socket",
+  "colors": 32
+ },
+ "nav_socket_selected": {
+  "sheet": "UI3-07_nav",
+  "source_box": [
+   419,
+   556,
+   206,
+   200
+  ],
+  "aspect_error": 0.03,
+  "despilled_px": 51,
+  "group": "nav_socket",
+  "colors": 32
+ },
+ "rail_socket": {
+  "sheet": "UI3-07_nav",
+  "source_box": [
+   688,
+   583,
+   143,
+   152
+  ],
+  "aspect_error": 0.008,
+  "despilled_px": 31,
+  "group": "rail_socket",
+  "colors": 31
+ },
+ "rail_socket_selected": {
+  "sheet": "UI3-07_nav",
+  "source_box": [
+   884,
+   583,
+   143,
+   152
+  ],
+  "aspect_error": 0.008,
+  "despilled_px": 29,
+  "group": "rail_socket",
+  "colors": 32
+ },
+ "sortie_medal": {
+  "sheet": "UI3-07_nav",
+  "source_box": [
+   1090,
+   517,
+   285,
+   276
+  ],
+  "aspect_error": 0.033,
+  "despilled_px": 71,
+  "colors": 32
+ },
+ "bar_frame": {
+  "sheet": "UI3-08_bars",
+  "source_box": [
+   496,
+   315,
+   544,
+   52
+  ],
+  "aspect_error": 0.046,
+  "despilled_px": 8,
+  "colors": 32
+ },
+ "bar_fill_exp": {
+  "sheet": "UI3-08_bars",
+  "source_box": [
+   199,
+   436,
+   539,
+   21
+  ],
+  "aspect_error": 0.116,
+  "despilled_px": 0,
+  "colors": 31
+ },
+ "bar_fill_hp": {
+  "sheet": "UI3-08_bars",
+  "source_box": [
+   798,
+   436,
+   540,
+   20
+  ],
+  "aspect_error": 0.174,
+  "despilled_px": 7,
+  "colors": 31
+ },
+ "currency_capsule": {
+  "sheet": "UI3-08_bars",
+  "source_box": [
+   165,
+   551,
+   457,
+   116
+  ],
+  "aspect_error": 0.015,
+  "despilled_px": 72,
+  "colors": 32
+ },
+ "quest_slip": {
+  "sheet": "UI3-08_bars",
+  "source_box": [
+   683,
+   518,
+   692,
+   180
+  ],
+  "aspect_error": 0.081,
+  "despilled_px": 232,
+  "colors": 32
+ }
+}

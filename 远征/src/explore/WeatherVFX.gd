@@ -115,10 +115,9 @@ func _draw() -> void:
 	if weather_type == "none":
 		return
 
-	# 1. 幽深薄雾流动层（双层柔和渐变水平带）
-	_draw_mist_bands()
+	# 屏幕固定的硬边雾带不随地图移动，看起来像贴在屏幕上的色条，已停用（_draw_mist_bands 保留备查）。
 
-	# 2. 粒子渲染
+	# 粒子渲染
 	match weather_type:
 		"snow":
 			for p in _particles:

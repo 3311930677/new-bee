@@ -1,0 +1,924 @@
+{
+  "bs_c01_camp.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      14.0,
+      13.25
+    ],
+    "grid_confidence": [
+      1.403,
+      1.247
+    ],
+    "chunk_ratio": 3.41,
+    "source_colors": 214221,
+    "art_colors": 24,
+    "key_fringe_share": 0.664,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_e01_fx.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      12.5,
+      13.25
+    ],
+    "grid_confidence": [
+      1.293,
+      1.482
+    ],
+    "chunk_ratio": 3.22,
+    "source_colors": 23021,
+    "art_colors": 12,
+    "key_fringe_share": 0.954,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_f01_a_canopy.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      8.0,
+      8.0
+    ],
+    "grid_confidence": [
+      2.589,
+      3.164
+    ],
+    "chunk_ratio": 2.0,
+    "source_colors": 57994,
+    "art_colors": 24,
+    "key_fringe_share": 0.801,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_f01_b_branches_grass.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      8.0,
+      12.75
+    ],
+    "grid_confidence": [
+      1.626,
+      1.712
+    ],
+    "chunk_ratio": 2.59,
+    "source_colors": 131184,
+    "art_colors": 24,
+    "key_fringe_share": 0.734,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_f01_c_canopy.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      8.0,
+      8.0
+    ],
+    "grid_confidence": [
+      2.432,
+      2.153
+    ],
+    "chunk_ratio": 2.0,
+    "source_colors": 70766,
+    "art_colors": 24,
+    "key_fringe_share": 0.753,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_g01_a_grass.png": {
+    "source_size": [
+      1254,
+      1254
+    ],
+    "art_size": [
+      256,
+      256
+    ],
+    "scale": 0.2041,
+    "expected_block_px": 4.9,
+    "detected_block_px": [
+      12.5,
+      12.5
+    ],
+    "grid_confidence": [
+      1.343,
+      1.413
+    ],
+    "chunk_ratio": 2.55,
+    "source_colors": 45575,
+    "art_colors": 8,
+    "key_fringe_share": 0.0,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ],
+    "seam_ratio": 0.81
+  },
+  "bs_g01_b_dirtroad.png": {
+    "source_size": [
+      1254,
+      1254
+    ],
+    "art_size": [
+      256,
+      256
+    ],
+    "scale": 0.2041,
+    "expected_block_px": 4.9,
+    "detected_block_px": [
+      12.5,
+      12.0
+    ],
+    "grid_confidence": [
+      1.389,
+      1.702
+    ],
+    "chunk_ratio": 2.5,
+    "source_colors": 49533,
+    "art_colors": 8,
+    "key_fringe_share": 0.0,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ],
+    "seam_ratio": 1.2
+  },
+  "bs_g01_c_gravel.png": {
+    "source_size": [
+      1254,
+      1254
+    ],
+    "art_size": [
+      256,
+      256
+    ],
+    "scale": 0.2041,
+    "expected_block_px": 4.9,
+    "detected_block_px": [
+      12.5,
+      12.0
+    ],
+    "grid_confidence": [
+      1.396,
+      1.158
+    ],
+    "chunk_ratio": 2.5,
+    "source_colors": 118511,
+    "art_colors": 8,
+    "key_fringe_share": 0.0,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ],
+    "seam_ratio": 1.14
+  },
+  "bs_g01_d_flagstone.png": {
+    "source_size": [
+      1254,
+      1254
+    ],
+    "art_size": [
+      256,
+      256
+    ],
+    "scale": 0.2041,
+    "expected_block_px": 4.9,
+    "detected_block_px": [
+      12.75,
+      12.25
+    ],
+    "grid_confidence": [
+      1.32,
+      1.828
+    ],
+    "chunk_ratio": 2.55,
+    "source_colors": 69985,
+    "art_colors": 8,
+    "key_fringe_share": 0.0,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ],
+    "seam_ratio": 0.77
+  },
+  "bs_g02_a_roadside.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      8.0,
+      8.0
+    ],
+    "grid_confidence": [
+      2.015,
+      2.231
+    ],
+    "chunk_ratio": 2.0,
+    "source_colors": 185773,
+    "art_colors": 24,
+    "key_fringe_share": 0.759,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_g02_b_meadow.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      8.0,
+      12.0
+    ],
+    "grid_confidence": [
+      1.863,
+      1.803
+    ],
+    "chunk_ratio": 2.5,
+    "source_colors": 143910,
+    "art_colors": 24,
+    "key_fringe_share": 0.876,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_g03_a_earth_straw.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      8.0,
+      8.0
+    ],
+    "grid_confidence": [
+      2.414,
+      2.54
+    ],
+    "chunk_ratio": 2.0,
+    "source_colors": 125079,
+    "art_colors": 10,
+    "key_fringe_share": 0.595,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_g03_b_moss_gravel.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      8.0,
+      8.0
+    ],
+    "grid_confidence": [
+      2.211,
+      2.401
+    ],
+    "chunk_ratio": 2.0,
+    "source_colors": 205573,
+    "art_colors": 10,
+    "key_fringe_share": 0.562,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_g03_c_leaf_damp.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      8.0,
+      8.0
+    ],
+    "grid_confidence": [
+      2.507,
+      2.317
+    ],
+    "chunk_ratio": 2.0,
+    "source_colors": 178058,
+    "art_colors": 10,
+    "key_fringe_share": 0.66,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_l01_a_giant_stele.png": {
+    "source_size": [
+      1254,
+      1254
+    ],
+    "art_size": [
+      256,
+      256
+    ],
+    "scale": 0.2041,
+    "expected_block_px": 4.9,
+    "detected_block_px": [
+      7.25,
+      12.25
+    ],
+    "grid_confidence": [
+      1.404,
+      1.563
+    ],
+    "chunk_ratio": 1.99,
+    "source_colors": 168400,
+    "art_colors": 24,
+    "key_fringe_share": 0.704,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_l01_b_markers.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      12.0,
+      12.0
+    ],
+    "grid_confidence": [
+      1.36,
+      1.847
+    ],
+    "chunk_ratio": 3.0,
+    "source_colors": 209639,
+    "art_colors": 24,
+    "key_fringe_share": 0.724,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_l02_a_gate.png": {
+    "source_size": [
+      1721,
+      914
+    ],
+    "art_size": [
+      325,
+      172
+    ],
+    "scale": 0.1886,
+    "expected_block_px": 5.3,
+    "detected_block_px": [
+      11.75,
+      11.75
+    ],
+    "grid_confidence": [
+      1.306,
+      1.509
+    ],
+    "chunk_ratio": 2.22,
+    "source_colors": 179805,
+    "art_colors": 24,
+    "key_fringe_share": 0.315,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_l02_b_cliff_face.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      8.0,
+      8.0
+    ],
+    "grid_confidence": [
+      2.55,
+      2.514
+    ],
+    "chunk_ratio": 2.0,
+    "source_colors": 175380,
+    "art_colors": 24,
+    "key_fringe_share": 0.396,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_l02_c_cliff_rim.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      12.0,
+      8.0
+    ],
+    "grid_confidence": [
+      2.076,
+      2.252
+    ],
+    "chunk_ratio": 2.5,
+    "source_colors": 210230,
+    "art_colors": 24,
+    "key_fringe_share": 0.671,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_l03_a_gully.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      8.0,
+      8.0
+    ],
+    "grid_confidence": [
+      2.137,
+      2.51
+    ],
+    "chunk_ratio": 2.0,
+    "source_colors": 240699,
+    "art_colors": 24,
+    "key_fringe_share": 0.497,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_l03_b_bridges.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      14.0,
+      12.0
+    ],
+    "grid_confidence": [
+      1.23,
+      1.779
+    ],
+    "chunk_ratio": 3.25,
+    "source_colors": 234251,
+    "art_colors": 24,
+    "key_fringe_share": 0.594,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_l04_terrace.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      12.0,
+      12.0
+    ],
+    "grid_confidence": [
+      2.006,
+      2.456
+    ],
+    "chunk_ratio": 3.0,
+    "source_colors": 162903,
+    "art_colors": 16,
+    "key_fringe_share": 0.68,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_q01_props.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      13.25,
+      9.5
+    ],
+    "grid_confidence": [
+      1.316,
+      1.388
+    ],
+    "chunk_ratio": 2.84,
+    "source_colors": 187281,
+    "art_colors": 24,
+    "key_fringe_share": 0.742,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_r01_a_small_medium.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      8.0,
+      8.0
+    ],
+    "grid_confidence": [
+      2.754,
+      3.448
+    ],
+    "chunk_ratio": 2.0,
+    "source_colors": 99721,
+    "art_colors": 16,
+    "key_fringe_share": 0.843,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_r01_b_boulders.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      8.0,
+      8.0
+    ],
+    "grid_confidence": [
+      3.662,
+      3.369
+    ],
+    "chunk_ratio": 2.0,
+    "source_colors": 131740,
+    "art_colors": 16,
+    "key_fringe_share": 0.625,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_t01_a.png": {
+    "source_size": [
+      1254,
+      1254
+    ],
+    "art_size": [
+      256,
+      256
+    ],
+    "scale": 0.2041,
+    "expected_block_px": 4.9,
+    "detected_block_px": [
+      9.75,
+      9.25
+    ],
+    "grid_confidence": [
+      1.544,
+      1.6
+    ],
+    "chunk_ratio": 1.94,
+    "source_colors": 120998,
+    "art_colors": 24,
+    "key_fringe_share": 0.427,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_t01_b.png": {
+    "source_size": [
+      1254,
+      1254
+    ],
+    "art_size": [
+      256,
+      256
+    ],
+    "scale": 0.2041,
+    "expected_block_px": 4.9,
+    "detected_block_px": [
+      11.75,
+      11.75
+    ],
+    "grid_confidence": [
+      1.412,
+      1.802
+    ],
+    "chunk_ratio": 2.4,
+    "source_colors": 115716,
+    "art_colors": 24,
+    "key_fringe_share": 0.409,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_t01_c.png": {
+    "source_size": [
+      1254,
+      1254
+    ],
+    "art_size": [
+      256,
+      256
+    ],
+    "scale": 0.2041,
+    "expected_block_px": 4.9,
+    "detected_block_px": [
+      6.25,
+      12.25
+    ],
+    "grid_confidence": [
+      1.427,
+      1.453
+    ],
+    "chunk_ratio": 1.89,
+    "source_colors": 127638,
+    "art_colors": 24,
+    "key_fringe_share": 0.646,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_t01_d.png": {
+    "source_size": [
+      1254,
+      1254
+    ],
+    "art_size": [
+      256,
+      256
+    ],
+    "scale": 0.2041,
+    "expected_block_px": 4.9,
+    "detected_block_px": [
+      12.25,
+      6.25
+    ],
+    "grid_confidence": [
+      1.446,
+      1.747
+    ],
+    "chunk_ratio": 1.89,
+    "source_colors": 104513,
+    "art_colors": 24,
+    "key_fringe_share": 0.431,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_t01_e_maple.png": {
+    "source_size": [
+      1254,
+      1254
+    ],
+    "art_size": [
+      256,
+      256
+    ],
+    "scale": 0.2041,
+    "expected_block_px": 4.9,
+    "detected_block_px": [
+      12.5,
+      12.25
+    ],
+    "grid_confidence": [
+      1.413,
+      1.432
+    ],
+    "chunk_ratio": 2.53,
+    "source_colors": 172508,
+    "art_colors": 24,
+    "key_fringe_share": 0.435,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_t02_a_broadleaf.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      8.0,
+      8.0
+    ],
+    "grid_confidence": [
+      4.187,
+      4.387
+    ],
+    "chunk_ratio": 2.0,
+    "source_colors": 79836,
+    "art_colors": 24,
+    "key_fringe_share": 0.674,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_t02_b_dead.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      8.0,
+      8.0
+    ],
+    "grid_confidence": [
+      3.527,
+      3.54
+    ],
+    "chunk_ratio": 2.0,
+    "source_colors": 101852,
+    "art_colors": 24,
+    "key_fringe_share": 0.812,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_t03_a_shrubs.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      8.0,
+      8.0
+    ],
+    "grid_confidence": [
+      2.558,
+      2.843
+    ],
+    "chunk_ratio": 2.0,
+    "source_colors": 163498,
+    "art_colors": 24,
+    "key_fringe_share": 0.649,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  },
+  "bs_t03_b_ferns.png": {
+    "source_size": [
+      1536,
+      1024
+    ],
+    "art_size": [
+      384,
+      256
+    ],
+    "scale": 0.25,
+    "expected_block_px": 4.0,
+    "detected_block_px": [
+      8.0,
+      8.0
+    ],
+    "grid_confidence": [
+      2.733,
+      3.538
+    ],
+    "chunk_ratio": 2.0,
+    "source_colors": 124644,
+    "art_colors": 24,
+    "key_fringe_share": 0.76,
+    "flags": [
+      "source pixels coarser than spec; regenerate finer or accept chunkier look"
+    ]
+  }
+}

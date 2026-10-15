@@ -1,0 +1,338 @@
+{
+ "camp_tent": {
+  "sheet": "bs_c01_camp.png",
+  "size": [
+   118,
+   96
+  ]
+ },
+ "camp_banner": {
+  "sheet": "bs_c01_camp.png",
+  "size": [
+   35,
+   80
+  ]
+ },
+ "campfire_0": {
+  "sheet": "bs_c01_camp.png",
+  "size": [
+   40,
+   36
+  ]
+ },
+ "campfire_1": {
+  "sheet": "bs_c01_camp.png",
+  "size": [
+   40,
+   37
+  ]
+ },
+ "campfire_2": {
+  "sheet": "bs_c01_camp.png",
+  "size": [
+   40,
+   41
+  ]
+ },
+ "campfire_3": {
+  "sheet": "bs_c01_camp.png",
+  "size": [
+   40,
+   31
+  ]
+ },
+ "camp_crate_b": {
+  "sheet": "bs_c01_camp.png",
+  "size": [
+   40,
+   24
+  ]
+ },
+ "camp_barrel_a": {
+  "sheet": "bs_c01_camp.png",
+  "size": [
+   28,
+   32
+  ]
+ },
+ "camp_bench": {
+  "sheet": "bs_c01_camp.png",
+  "size": [
+   47,
+   17
+  ]
+ },
+ "stele_giant": {
+  "sheet": "bs_l01_a_giant_stele.png",
+  "size": [
+   117,
+   190
+  ]
+ },
+ "stele_fallen_a": {
+  "sheet": "bs_l01_b_markers.png",
+  "size": [
+   100,
+   44
+  ]
+ },
+ "stele_fallen_b": {
+  "sheet": "bs_l01_b_markers.png",
+  "size": [
+   92,
+   43
+  ]
+ },
+ "stele_fallen_c": {
+  "sheet": "bs_l01_b_markers.png",
+  "size": [
+   92,
+   46
+  ]
+ },
+ "stele_mid_a": {
+  "sheet": "bs_l01_b_markers.png",
+  "size": [
+   56,
+   84
+  ]
+ },
+ "stele_mid_b": {
+  "sheet": "bs_l01_b_markers.png",
+  "size": [
+   50,
+   64
+  ]
+ },
+ "stele_small_a": {
+  "sheet": "bs_l01_b_markers.png",
+  "size": [
+   37,
+   40
+  ]
+ },
+ "stele_small_b": {
+  "sheet": "bs_l01_b_markers.png",
+  "size": [
+   40,
+   40
+  ]
+ },
+ "cairn": {
+  "sheet": "bs_l01_b_markers.png",
+  "size": [
+   37,
+   30
+  ]
+ },
+ "gate_cavern": {
+  "sheet": "bs_l02_a_gate.png",
+  "size": [
+   320,
+   151
+  ]
+ },
+ "bridge_wood_broken": {
+  "sheet": "bs_l03_b_bridges.png",
+  "size": [
+   62,
+   104
+  ]
+ },
+ "bridge_wood_fixed": {
+  "sheet": "bs_l03_b_bridges.png",
+  "size": [
+   64,
+   101
+  ]
+ },
+ "prop_signpost": {
+  "sheet": "bs_q01_props.png",
+  "size": [
+   45,
+   72
+  ]
+ },
+ "prop_patrol_post": {
+  "sheet": "bs_q01_props.png",
+  "size": [
+   36,
+   64
+  ]
+ },
+ "rock_m_0": {
+  "sheet": "bs_r01_a_small_medium.png",
+  "size": [
+   44,
+   40
+  ]
+ },
+ "rock_m_1": {
+  "sheet": "bs_r01_a_small_medium.png",
+  "size": [
+   40,
+   39
+  ]
+ },
+ "rock_m_2": {
+  "sheet": "bs_r01_a_small_medium.png",
+  "size": [
+   36,
+   47
+  ]
+ },
+ "rock_m_3": {
+  "sheet": "bs_r01_a_small_medium.png",
+  "size": [
+   46,
+   38
+  ]
+ },
+ "rock_m_4": {
+  "sheet": "bs_r01_a_small_medium.png",
+  "size": [
+   38,
+   40
+  ]
+ },
+ "boulder_a": {
+  "sheet": "bs_r01_b_boulders.png",
+  "size": [
+   104,
+   59
+  ]
+ },
+ "boulder_b": {
+  "sheet": "bs_r01_b_boulders.png",
+  "size": [
+   108,
+   64
+  ]
+ },
+ "boulder_c": {
+  "sheet": "bs_r01_b_boulders.png",
+  "size": [
+   120,
+   56
+  ]
+ },
+ "tree_big_a": {
+  "sheet": "bs_t01_a.png",
+  "size": [
+   213,
+   220
+  ]
+ },
+ "tree_big_b": {
+  "sheet": "bs_t01_b.png",
+  "size": [
+   215,
+   212
+  ]
+ },
+ "tree_big_c": {
+  "sheet": "bs_t01_c.png",
+  "size": [
+   145,
+   228
+  ]
+ },
+ "tree_big_d": {
+  "sheet": "bs_t01_d.png",
+  "size": [
+   215,
+   216
+  ]
+ },
+ "tree_maple": {
+  "sheet": "bs_t01_e_maple.png",
+  "size": [
+   200,
+   200
+  ]
+ },
+ "tree_mid_a": {
+  "sheet": "bs_t02_a_broadleaf.png",
+  "size": [
+   153,
+   160
+  ]
+ },
+ "tree_mid_b": {
+  "sheet": "bs_t02_a_broadleaf.png",
+  "size": [
+   121,
+   172
+  ]
+ },
+ "tree_dead_a": {
+  "sheet": "bs_t02_b_dead.png",
+  "size": [
+   137,
+   176
+  ]
+ },
+ "tree_dead_b": {
+  "sheet": "bs_t02_b_dead.png",
+  "size": [
+   135,
+   164
+  ]
+ },
+ "shrub_a": {
+  "sheet": "bs_t03_a_shrubs.png",
+  "size": [
+   56,
+   49
+  ]
+ },
+ "shrub_b": {
+  "sheet": "bs_t03_a_shrubs.png",
+  "size": [
+   52,
+   47
+  ]
+ },
+ "shrub_rust": {
+  "sheet": "bs_t03_a_shrubs.png",
+  "size": [
+   56,
+   47
+  ]
+ },
+ "shrub_c": {
+  "sheet": "bs_t03_a_shrubs.png",
+  "size": [
+   60,
+   50
+  ]
+ },
+ "bramble": {
+  "sheet": "bs_t03_a_shrubs.png",
+  "size": [
+   67,
+   46
+  ]
+ },
+ "fern_a": {
+  "sheet": "bs_t03_b_ferns.png",
+  "size": [
+   48,
+   39
+  ]
+ },
+ "fern_b": {
+  "sheet": "bs_t03_b_ferns.png",
+  "size": [
+   44,
+   46
+  ]
+ },
+ "fern_c": {
+  "sheet": "bs_t03_b_ferns.png",
+  "size": [
+   48,
+   41
+  ]
+ }
+}

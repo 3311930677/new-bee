@@ -1,0 +1,128 @@
+{
+  "date": "2026-10-10",
+  "reference_supplied_by_user": true,
+  "new_images_generated": false,
+  "new_game_run": false,
+  "files": [
+    {
+      "file": "reference/01_target_forest.jpg",
+      "title": "用户目标参考，画风与场景组织",
+      "source": "C:\\Users\\tsz\\AppData\\Local\\Temp\\codex-clipboard-78b727fa-1f33-4504-a42a-0d9078827c6b.jpg",
+      "size": [
+        1411,
+        1114
+      ],
+      "sha256": "0028b8564c8394e7e4afe7dc093a539ba90cced8332fb64dfa0d9225a8001984",
+      "source_mtime": 1791625077.6316845,
+      "optional": false
+    },
+    {
+      "file": "current/maps/02_town_plaza.png",
+      "title": "当前城镇广场",
+      "source": "D:\\new-bee\\远征\\shots\\map_rebuild_20261010\\after\\lorin_plaza_hud.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "1dc3a69fc0cb49b94dd8210aa625c865ace90925939985ae59c5023fd2b4a117",
+      "source_mtime": 1791622943.437889,
+      "optional": false
+    },
+    {
+      "file": "current/maps/03_field_spawn.png",
+      "title": "当前野外进入视口",
+      "source": "D:\\new-bee\\远征\\shots\\map_rebuild_20261010\\after\\maple_spawn_hud.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "fe770d6fc968d13eb3242da8e01c903195045538df2601eac54a5318a1b5c4b4",
+      "source_mtime": 1791622944.179616,
+      "optional": false
+    },
+    {
+      "file": "current/maps/04_field_junction.png",
+      "title": "当前野外岔口/桥",
+      "source": "D:\\new-bee\\远征\\shots\\map_rebuild_20261010\\after\\maple_junction_hud.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "823b17b70475bba9deced3d82c297ebd6b2f0e6e131a899297fd48c6ea93668a",
+      "source_mtime": 1791622944.295879,
+      "optional": false
+    },
+    {
+      "file": "current/frontend/05_loading.png",
+      "title": "加载",
+      "source": "D:\\new-bee\\ui_review_input\\next_review_20261010\\current\\13_loading.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "0203e46cafad7aa1422ad14dbcad8272c78f1f10397f94fc3019546239e35b1a",
+      "source_mtime": 1791562267.3782783,
+      "optional": false
+    },
+    {
+      "file": "current/frontend/06_login.png",
+      "title": "旅人登记/登录",
+      "source": "D:\\new-bee\\ui_review_input\\next_review_20261010\\current\\11_login.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "9133865c980fac8236c2a10a449af67db0eb7d1a67de86d71bc3a7f3d4a56eb3",
+      "source_mtime": 1791562263.0856402,
+      "optional": false
+    },
+    {
+      "file": "current/frontend/07_title.png",
+      "title": "标题/开始",
+      "source": "D:\\new-bee\\ui_review_input\\next_review_20261010\\current\\01_title.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "75a805959df36919e37f3bc5665ce8a000f72c7fe380530a81799d3e3c99f613",
+      "source_mtime": 1791562267.6046638,
+      "optional": false
+    },
+    {
+      "file": "optional/08_introduction.png",
+      "title": "手记/介绍，范围备用",
+      "source": "D:\\new-bee\\ui_review_input\\next_review_20261010\\current\\16_introduction.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "537e6ba1a199e4ce856812fe286ae1e6b9e30e4ef5bbc96823ec9809340d434d",
+      "source_mtime": 1791562263.444591,
+      "optional": true
+    },
+    {
+      "file": "optional/09_town_overview_nohud.png",
+      "title": "城镇全景调试，隐藏HUD",
+      "source": "D:\\new-bee\\远征\\shots\\map_rebuild_20261010\\after\\lorin_overview_nohud.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "df051745d14721fa8adfa5038f45826747e55f79dd61225e25a21f093bf15cd8",
+      "source_mtime": 1791622943.799913,
+      "optional": true
+    },
+    {
+      "file": "optional/10_field_overview_nohud.png",
+      "title": "野外全景调试，隐藏HUD",
+      "source": "D:\\new-bee\\远征\\shots\\map_rebuild_20261010\\after\\maple_overview_nohud.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "ebc7dcc419ca95f32549014401a9a1c0403a7a0f9192f36d020879bb9063ad63",
+      "source_mtime": 1791622944.654019,
+      "optional": true
+    }
+  ]
+}

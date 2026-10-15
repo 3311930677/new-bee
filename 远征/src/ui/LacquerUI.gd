@@ -65,16 +65,21 @@ static func scrim(dimensions: Vector2, bottom: bool = false) -> TextureRect:
 
 class Surface extends Control:
 	const Lacquer = preload("res://src/ui/LacquerUI.gd")
+	const WorldSkin = preload("res://src/ui/WorldHUDSkin.gd")
+	var world_skin := false
 	var bg := Color("17151a", 0.78)
 	var edge := Color("6e5434")
 	func _ready() -> void:
 		mouse_filter = Control.MOUSE_FILTER_IGNORE
 		resized.connect(queue_redraw)
 	func _draw() -> void:
-		Lacquer.plate(self, Rect2(Vector2.ZERO, size), bg, edge)
+		if world_skin: WorldSkin.plate(self,Rect2(Vector2.ZERO,size),bg,WorldSkin.BRONZE,false)
+		else: Lacquer.plate(self, Rect2(Vector2.ZERO, size), bg, edge)
 
 class CutPanel extends Panel:
 	const Lacquer = preload("res://src/ui/LacquerUI.gd")
+	const WorldSkin = preload("res://src/ui/WorldHUDSkin.gd")
+	var world_skin := false
 	var surface_style: StyleBoxFlat
 	func _ready() -> void:
 		surface_style = get_theme_stylebox("panel") as StyleBoxFlat
@@ -83,10 +88,13 @@ class CutPanel extends Panel:
 		resized.connect(queue_redraw)
 	func _draw() -> void:
 		if surface_style != null:
-			Lacquer.plate(self,Rect2(Vector2.ZERO,size),surface_style.bg_color,surface_style.border_color)
+			if world_skin: WorldSkin.plate(self,Rect2(Vector2.ZERO,size),surface_style.bg_color,surface_style.border_color,false)
+			else: Lacquer.plate(self,Rect2(Vector2.ZERO,size),surface_style.bg_color,surface_style.border_color)
 
 class Action extends Button:
 	const Lacquer = preload("res://src/ui/LacquerUI.gd")
+	const WorldSkin = preload("res://src/ui/WorldHUDSkin.gd")
+	var world_skin := false
 	var caption: Label
 	var glyph_label: Label
 	var disc := false
@@ -127,6 +135,7 @@ class Action extends Button:
 	func set_count(value: int, at: Vector2 = Vector2(44,-4)) -> void:
 		if count_badge == null:
 			count_badge = Lacquer.Surface.new()
+			count_badge.world_skin = world_skin
 			count_badge.name = "CountBadge"
 			count_badge.size = Vector2(24,18)
 			count_badge.set("bg",Color("17151a",0.96))
@@ -155,7 +164,7 @@ class Action extends Button:
 			art.name = "ActionIcon"
 			art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-			art.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+			art.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST if world_skin else CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 			art.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			add_child(art)
 		if texture is AtlasTexture: art.texture=texture
@@ -189,7 +198,21 @@ class Action extends Button:
 		if primary: caption.position.y = 1 if is_pressed() else 0
 		caption.modulate = Color(Lacquer.ASH) if disabled else Color.WHITE
 		if not quiet:
-			if disc:
+			if world_skin:
+				var trim := WorldSkin.JADE if active else (Lacquer.RED if warning else WorldSkin.BRONZE)
+				if is_hovered() or has_focus(): trim = trim.lightened(0.25)
+				if disabled: trim = Color("514f45")
+				if disc:
+					WorldSkin.ring(self,size*0.5,size.x*0.5-1,trim,WorldSkin.FACE if active else WorldSkin.INK,is_pressed())
+					draw_line(Vector2(size.x*0.27,size.y-19),Vector2(size.x*0.73,size.y-19),Color(trim,0.4),1)
+					if active:
+						WorldSkin.diamond(self,Vector2(size.x-9,9),3,WorldSkin.JADE)
+					if bool(get_meta("partner_available",false)):
+						WorldSkin.diamond(self,Vector2(size.x-6,6),5,WorldSkin.DARK)
+						WorldSkin.diamond(self,Vector2(size.x-6,6),4,Lacquer.RED)
+						draw_rect(Rect2(size.x-8,3,2,1),Lacquer.PAPER)
+				else: WorldSkin.plate(self,Rect2(Vector2.ZERO,size),WorldSkin.INK,trim,false,is_pressed())
+			elif disc:
 				draw_arc(size * 0.5, size.x * 0.5, 0, TAU, 64, Color("0a090b",0.4), 1, true)
 				draw_circle(size * 0.5, size.x * 0.5 - 1, bg)
 				draw_arc(size * 0.5, size.x * 0.5 - 1, 0, TAU, 64, edge, 2 if active else 1, true)
@@ -200,13 +223,14 @@ class Action extends Button:
 					Lacquer.plate(self, Rect2(Vector2.ONE * 2, size - Vector2.ONE * 4), Color.TRANSPARENT, Lacquer.LIT)
 					for x in [14.0, size.x - 14]: draw_circle(Vector2(x, size.y * 0.5), 2, Lacquer.LIT)
 		if has_focus():
-			if disc: draw_line(Vector2(size.x*.3,size.y+3),Vector2(size.x*.7,size.y+3),Lacquer.BRONZE,1)
+			if world_skin: WorldSkin.diamond(self,Vector2(size.x*.5,size.y+2),2,Lacquer.PAPER)
+			elif disc: draw_line(Vector2(size.x*.3,size.y+3),Vector2(size.x*.7,size.y+3),Lacquer.BRONZE,1)
 			elif primary:
 				# Separate keyboard indication from the bronze button outline.
 				draw_line(Vector2(20,size.y+5),Vector2(size.x-20,size.y+5),Lacquer.PAPER,2)
 				for x in [-5.0,size.x+5]: draw_rect(Rect2(x,size.y*0.5-3,2,6),Lacquer.PAPER)
 			else: Lacquer.plate(self, Rect2(Vector2.ONE * -3, size + Vector2.ONE * 6), Color.TRANSPARENT, Lacquer.PAPER)
-		elif is_hovered() and disc:
+		elif is_hovered() and disc and not world_skin:
 			draw_arc(size * 0.5, size.x * 0.5 - 1, 0, TAU, 64, Lacquer.LIT, 1, true)
 		if quiet and (is_pressed() or has_focus()):
 			draw_line(Vector2(size.x * 0.5 - 12, size.y - 6), Vector2(size.x * 0.5 + 12, size.y - 6), Lacquer.LIT, 1)

@@ -136,6 +136,11 @@ class ChestButton extends Button:
 	var hint_dot := false
 	var icon_px := 24.0
 	var pressed_content := false
+	## 换皮用：有值时用这块九宫格替换默认底板（设置页的像素素材），为空时画法不变
+	var plate: StyleBox
+	var plate_selected: StyleBox
+	## 换皮用：文字区左缩进（左侧放图标时用），默认 0 时文字铺满按钮居中
+	var caption_inset := 0.0
 	var _state_material: ShaderMaterial
 	func _init(words: String = "", family: String = "secondary", icon: String = "") -> void:
 		text = words
@@ -183,7 +188,11 @@ class ChestButton extends Button:
 			caption.add_theme_color_override("font_color",UI.ASH if disabled else Color("f6d9a0"))
 			subtitle.position = Vector2(64,45+offset)
 			subtitle.size = Vector2(size.x-88,20)
-		elif skin in ["nav","rail"]:
+		elif skin == "nav":
+			# 图标 + 文字作为一组在按钮内垂直居中（图标 40、间距 4、文字 22）。
+			caption.position = Vector2(0,(size.y-66)*0.5+44+offset)
+			caption.size = Vector2(size.x,22)
+		elif skin == "rail":
 			caption.position = Vector2(0,size.y-24+offset)
 			caption.size = Vector2(size.x,22)
 		elif not subtitle.text.is_empty():
@@ -192,14 +201,17 @@ class ChestButton extends Button:
 			subtitle.position=Vector2(8,34+offset)
 			subtitle.size=Vector2(size.x-16,20)
 		else:
-			caption.position = Vector2(0,offset)
-			caption.size = size
+			caption.position = Vector2(caption_inset,offset)
+			caption.size = Vector2(size.x-caption_inset,size.y)
 	func _draw() -> void:
 		_layout()
 		if _state_material != null: _state_material.set_shader_parameter("gray",1.0 if disabled else 0.0)
 		var primary := skin in ["primary","hero"]
 		var bg := UI.SELECTED if selected else UI.FACE
-		if primary:
+		if plate != null:
+			draw_style_box(plate_selected if selected and plate_selected != null else plate,Rect2(Vector2.ZERO,size))
+			if is_pressed() or disabled: draw_rect(Rect2(Vector2.ZERO,size),Color(0,0,0,.22 if is_pressed() else .38))
+		elif primary:
 			var state := "disabled" if disabled else ("pressed" if is_pressed() else "normal")
 			var tex := UI.texture(skin+"_"+state)
 			if tex != null: UI.nine(self,tex,size,skin=="hero")
@@ -210,7 +222,7 @@ class ChestButton extends Button:
 		elif skin not in ["quiet","back","nav","currency"]:
 			UI.surface(self,Rect2(Vector2.ZERO,size),UI.NIGHT if skin=="rail" else bg,UI.COPPER if is_hovered() else UI.BRONZE)
 		elif is_pressed(): UI.surface(self,Rect2(Vector2.ZERO,size),UI.FACE)
-		if skin == "tab" and selected: draw_rect(Rect2(8,size.y-2,size.x-16,2),UI.COPPER)
+		if skin == "tab" and selected and plate == null: draw_rect(Rect2(8,size.y-2,size.x-16,2),UI.COPPER)
 		if skin == "back":
 			caption.visible = false
 			var p := size*.5
@@ -219,8 +231,9 @@ class ChestButton extends Button:
 		if not icon_id.is_empty():
 			var icon := UI.texture(icon_id)
 			if icon != null:
-				var px := 40.0 if skin=="hero" else (32.0 if skin=="nav" else (28.0 if skin=="rail" else icon_px))
-				var p := Vector2(12,16) if skin=="hero" else Vector2((size.x-px)*0.5,6 if skin in ["nav","rail"] else (size.y-px)*0.5)
+				var px := 40.0 if skin in ["hero","nav"] else (28.0 if skin=="rail" else icon_px)
+				var icon_y := (size.y-66)*0.5 if skin=="nav" else (6.0 if skin=="rail" else (size.y-px)*0.5)
+				var p := Vector2(12,16) if skin=="hero" else Vector2((size.x-px)*0.5,icon_y)
 				var dimensions := icon.get_size()*minf(px/icon.get_width(),px/icon.get_height())
 				draw_texture_rect(icon,Rect2(p+(Vector2.ONE*px-dimensions)*0.5,dimensions),false,Color(0.5,0.5,0.5) if locked or disabled else Color.WHITE)
 		if locked:
@@ -258,7 +271,7 @@ class CurrencyChip extends ChestButton:
 		custom_minimum_size = Vector2(72,44)
 		size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		amount = UI.label("","number")
-		amount.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		amount.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT  # 数字紧跟图标，四枚货币间距一致
 		add_child(amount)
 		currency_image = TextureRect.new()
 		currency_image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -284,7 +297,7 @@ class QuestSlip extends ChestButton:
 		goal.clip_text = true
 		add_child(goal)
 	func _layout() -> void:
-		caption.text = "可交付" if claimable else "今日委托"
+		caption.text = "委托可交付" if claimable else "主线目标"
 		caption.theme_type_variation = "Chest_tag"
 		caption.add_theme_color_override("font_color",UI.JADE if claimable else Color("e5c07b"))
 		caption.position = Vector2(16,6)

@@ -27,8 +27,7 @@ func _ready() -> void:
 	page.set_process(false)
 	await get_tree().process_frame
 	await get_tree().process_frame
-	print("LOGO_SOURCE imported_size=",preload("res://image/ui/expedition_wordmark_v1.png").get_size(),
-		" alpha_bounds=",preload("res://image/ui/expedition_wordmark_v1.png").get_image().get_used_rect())
+	var full: float = page.call("full_fill_width")
 	for height in [800,1067]:
 		view.size = Vector2i(480,height)
 		await get_tree().process_frame
@@ -39,7 +38,7 @@ func _ready() -> void:
 			var percent: Label = gauge.get_node("LoadingPercent")
 			var status: Label = gauge.get_node("LoadingStatus")
 			var width: float = page.call("bar_fill_width")
-			_check(is_equal_approx(width,300.0*progress),"filled width tracks "+str(progress))
+			_check(is_equal_approx(width,roundf(full*progress)),"filled width tracks "+str(progress))
 			_check(percent.text == "%d%%"%roundi(progress*100),"percent matches rail")
 			_check((status.text == "整备完成") == (progress == 1.0),"completion text only at 100%")
 			_check(gauge.get_global_rect().end.y <= height-44,"panel clears lore and bottom")
@@ -58,7 +57,7 @@ func _ready() -> void:
 	# Check out-of-range progress, resize and a simulated device safe area.
 	for progress in [-.5,1.5]:
 		page.call("_set_bar_ratio",progress)
-		_check(is_equal_approx(float(page.call("bar_fill_width")),300.0*clampf(progress,0,1)),
+		_check(is_equal_approx(float(page.call("bar_fill_width")),roundf(full*clampf(progress,0,1))),
 			"progress clamped")
 	var tips: Label = page.get_node("LoadingTip")
 	_check(tips.size.x >= tips.get_minimum_size().x,"lore hint fits its rect")
@@ -90,12 +89,10 @@ func _ready() -> void:
 	animated.call("_set_bar_ratio",.49)
 	await get_tree().create_timer(1.05).timeout
 	var mark: TextureRect = animated.get_node("LoadingBrand/ExpeditionWordmark")
-	_check(is_equal_approx(float(mark.material.get_shader_parameter("reveal")),1.0),
-		"ink animation completes")
+	_check(is_equal_approx(mark.modulate.a,1.0),"logo fade-in completes")
 	var live_gauge: Control = animated.get_node("LoadingGauge")
-	_check(float(live_gauge.get("_clock"))>0.0,"crystal breathing advances")
-	_reports.append({"ink_reveal":mark.material.get_shader_parameter("reveal"),
-		"crystal_clock":live_gauge.get("_clock")})
+	_check(float(live_gauge.get("_clock"))>0.0,"lead node breathing advances")
+	_reports.append({"logo_alpha":mark.modulate.a,"gauge_clock":live_gauge.get("_clock")})
 	animated.queue_free()
 	G.set_meta("ui_review_mode",true)
 	await get_tree().process_frame

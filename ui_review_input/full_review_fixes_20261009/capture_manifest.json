@@ -1,0 +1,259 @@
+{
+  "engine": "Godot 4.7.2",
+  "native_render": true,
+  "isolated_demo_save": true,
+  "core": [
+    {
+      "id": "01_title",
+      "title": "标题",
+      "source": "远征\\shots\\full_review_fixes_20261009\\title_800.png",
+      "current": "current/01_title.png",
+      "before": "before/01_title.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "75a805959df36919e37f3bc5665ce8a000f72c7fe380530a81799d3e3c99f613"
+    },
+    {
+      "id": "02_home",
+      "title": "营帐",
+      "source": "远征\\shots\\full_review_fixes_20261009\\b1\\home_800.png",
+      "current": "current/02_home.png",
+      "before": "before/02_home.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "cb1c1ad70de4dc1039361f2686cf2930f8e07a8eb8c30d68cffe731ad6ee956c"
+    },
+    {
+      "id": "03_town_hud",
+      "title": "城镇 HUD",
+      "source": "远征\\shots\\full_review_fixes_20261009\\hud_lorin_wilds_partner_800.png",
+      "current": "current/03_town_hud.png",
+      "before": "before/03_town_hud.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "8db0577606ae00d7aa600780699fd9b78f82fb205017ccb517465fe54e2d0fdb"
+    },
+    {
+      "id": "04_field_hud",
+      "title": "野外 HUD",
+      "source": "远征\\shots\\full_review_fixes_20261009\\hud_maple_road_partner_800.png",
+      "current": "current/04_field_hud.png",
+      "before": "before/04_field_hud.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "3a013ad2f05c84faeec55ed025bbc9bf7c939f9aceb8e2264e29bea049021679"
+    },
+    {
+      "id": "05_growth",
+      "title": "人物养成",
+      "source": "远征\\shots\\full_review_fixes_20261009\\growth_800.png",
+      "current": "current/05_growth.png",
+      "before": "before/05_growth.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "2f3150a330aaa7b7ceae45df68816a732c9125346f947096022476a91c7084aa"
+    },
+    {
+      "id": "06_equipment",
+      "title": "装备整备",
+      "source": "远征\\shots\\full_review_fixes_20261009\\equipment_800.png",
+      "current": "current/06_equipment.png",
+      "before": "before/06_equipment.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "bcf2cfa68463d15401ba1f86bd95080c887eaeb388d779d42bb097fd5af3554f"
+    },
+    {
+      "id": "07_inventory",
+      "title": "行旅背包",
+      "source": "远征\\shots\\full_review_fixes_20261009\\bag_800.png",
+      "current": "current/07_inventory.png",
+      "before": "before/07_inventory.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "0b13d08d0eae14c6385bfe95eea9afae864dc208a804a7fd2633b0455f00a916"
+    },
+    {
+      "id": "08_battle",
+      "title": "连续战斗",
+      "source": "远征\\shots\\full_review_fixes_20261009\\battle_focus_800.png",
+      "current": "current/08_battle.png",
+      "before": "before/08_battle.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "132fa22df89011a2d4bfe44bc4264b09f6287ca0e047c17940f69f2c91863cc5"
+    },
+    {
+      "id": "09_region_map",
+      "title": "地区行路图",
+      "source": "远征\\shots\\full_review_fixes_20261009\\regions_800.png",
+      "current": "current/09_region_map.png",
+      "before": "before/09_region_map.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "d100e59dd7b68a420e8aa7bd20793f2145ccfc1714a75c3035b4018661159a70"
+    },
+    {
+      "id": "10_departure",
+      "title": "出征筹备",
+      "source": "远征\\shots\\full_review_fixes_20261009\\departure_800.png",
+      "current": "current/10_departure.png",
+      "before": "before/10_departure.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "73903e0b7644b66ea3e1a70c7ccbeb7461535e472c72bfaea071e6a7c7b1bb45"
+    },
+    {
+      "id": "11_login",
+      "title": "旅人登记",
+      "source": "远征\\shots\\full_review_fixes_20261009\\login_800.png",
+      "current": "current/11_login.png",
+      "before": "before/11_login.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "bb23c2f920327420bebd19b76f3b96c482ff2bdfc37d6dc1d5be8c84f8c2377e"
+    },
+    {
+      "id": "12_create_role",
+      "title": "建立旅人",
+      "source": "远征\\shots\\full_review_fixes_20261009\\b3\\create_role_800.png",
+      "current": "current/12_create_role.png",
+      "before": "before/12_create_role.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "cafacd442f92922548f9b886f022ed7f5d9a8df4ac8323ddbe4fb0068f6c953c"
+    },
+    {
+      "id": "13_loading",
+      "title": "加载",
+      "source": "远征\\shots\\full_review_fixes_20261009\\loading_800.png",
+      "current": "current/13_loading.png",
+      "before": "before/13_loading.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "73329ea2519d0e81bcc437bdc18089664c80b459f25793af79e87ae1a3460fd1"
+    },
+    {
+      "id": "14_codex",
+      "title": "灵宠图鉴",
+      "source": "远征\\shots\\full_review_fixes_20261009\\codex_owned_800.png",
+      "current": "current/14_codex.png",
+      "before": "before/14_codex.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "e407f808e8d55a76e2027cc771fc2c6a5c8e3d056b901dab5caf60b6dc0c5da0"
+    },
+    {
+      "id": "15_settings",
+      "title": "设置",
+      "source": "远征\\shots\\full_review_fixes_20261009\\b3\\settings_800.png",
+      "current": "current/15_settings.png",
+      "before": "before/15_settings.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "7e0821ae12941c238813a2da5e26414ce4aaf107f683ccf8b4c7bfc43bd7f957"
+    },
+    {
+      "id": "16_introduction",
+      "title": "远征手记",
+      "source": "远征\\shots\\full_review_fixes_20261009\\introduction_800.png",
+      "current": "current/16_introduction.png",
+      "before": "before/16_introduction.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "a733089b2695a55ee8d7d6646fc17de69c38961880f4c83f8366d1d5c32c727a"
+    },
+    {
+      "id": "17_battle_skills",
+      "title": "战斗技能",
+      "source": "远征\\shots\\full_review_fixes_20261009\\battle_energy30_800.png",
+      "current": "current/17_battle_skills.png",
+      "before": "before/17_battle_skills.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "4389c7cfebf90ac5d7da96abb30c0b67cf83ce3761c372e41f6089dab7129d6d"
+    },
+    {
+      "id": "18_skill_book",
+      "title": "技能研习",
+      "source": "远征\\shots\\full_review_fixes_20261009\\skill_study_800.png",
+      "current": "current/18_skill_book.png",
+      "before": "before/18_skill_book.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "efea65c9aaa2dba959f6afadd14a470d28aabf44b65eed65286e373f6dcad75e"
+    }
+  ],
+  "state_count": 32,
+  "state_files": [
+    "states/battle_cooldown_800.png",
+    "states/battle_safe_low_800.png",
+    "states/battle_focus_1067.png",
+    "states/battle_energy30_1067.png",
+    "states/regions_deep_800.png",
+    "states/regions_safe_1067.png",
+    "states/regions_1067.png",
+    "states/equipment_result_800.png",
+    "states/equipment_shortage_800.png",
+    "states/equipment_gems_800.png",
+    "states/equipment_safe_800.png",
+    "states/equipment_1067.png",
+    "states/bag_locked_800.png",
+    "states/bag_safe_800.png",
+    "states/bag_material_800.png",
+    "states/bag_1067.png",
+    "states/growth_no_action_800.png",
+    "states/growth_safe_800.png",
+    "states/growth_1067.png",
+    "states/codex_unknown_800.png",
+    "states/codex_evolved_800.png",
+    "states/codex_owned_1067.png",
+    "states/skill_study_safe_800.png",
+    "states/skill_study_1067.png",
+    "states/departure_safe_1067.png",
+    "states/login_keyboard_800.png",
+    "states/introduction_last_800.png",
+    "states/introduction_1067.png",
+    "states/loading_1067.png",
+    "states/hud_lorin_wilds_partner_1067.png",
+    "states/hud_maple_road_partner_1067.png",
+    "states/hud_lorin_wilds_swap_feedback_800.png"
+  ],
+  "device_tested": "Windows desktop; portrait sizes 480x800 and 480x1067; safe area and keyboard simulated"
+}

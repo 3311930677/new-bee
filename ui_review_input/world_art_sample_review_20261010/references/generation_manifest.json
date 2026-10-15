@@ -1,0 +1,50 @@
+{
+  "tool": "built-in ImageGen",
+  "date": "2026-10-10",
+  "jobs": [
+    {
+      "key": "steward",
+      "transparent": true,
+      "refs": [
+        "D:/new-bee/远征/image/role/zs/pojun_idle_video_v19.png",
+        "D:/new-bee/远征/image/generated_201_333/ready/npcs/npc_steward_idle.png"
+      ],
+      "prompt": "Use case: stylized-concept. Production NPC sprite sheet for top-down 3/4 mobile pixel RPG 远征, approved direction 晴野行旅. Input1 is the existing hero: MATCH its hand placed pixel clusters and colored dark outline, do not redraw the hero. Input2 is old steward identity reference, replace its painterly noisy style. Exactly FOUR equal square cells in ONE horizontal row, NO other rows. Elderly town steward: kindly round face, small grey topknot under dark official cap, short grey beard, wide sleeved rust-brown and ochre robe, cream inner collar, deep red sash, thin bound ledger held with left arm, right hand on belly. Calm slightly plump, about three heads tall. Front slightly turned 3/4 left, visible head top, left-upper sunlight. Crisp coherent 2px logical clusters at a128px frame scale, max48-color appearance, no smooth gradients or noisy AA. Same face, outfit, height, silhouette and spear-free ledger in every frame. Feet and robe hem planted at fixed identical baseline in every cell, entire lower half PIXEL IDENTICAL. Four frames: neutral, chest1px rise, neutral, sleeves1px sway. No overall shift. Occupied height about110 logical pixels of128; feet y123, x64 centered. Gen high res if necessary but render a clean logical128px grid. Genuine transparent background, no magenta matte, no floor/shadow, no text/numbers/UI/frame borders/watermarks. Generous transparent gutters and fully contained figure per cell."
+    },
+    {
+      "key": "guard",
+      "transparent": true,
+      "refs": [
+        "D:/new-bee/远征/image/role/zs/pojun_idle_video_v19.png",
+        "D:/new-bee/远征/image/generated_201_333/ready/npcs/npc_guard_idle.png"
+      ],
+      "prompt": "Use case: stylized-concept. Production NPC sprite sheet for top-down 3/4 mobile pixel RPG 远征, approved 晴野行旅. Input1 hero pixel clustering/colored dark selout is STYLE ANCHOR, do not redraw hero. Input2 existing patrol guard is identity reference, replace painterly microtexture. EXACTLY FOUR equal square cells in ONE horizontal row and no other rows. Same sturdy frontier patrol guard in each: short black beard, red cloth headband with trailing tails, brown leather lamellar vest over muted dark-red tunic, restrained iron shoulder plates, bracers, boots, upright straight long spear held right hand, left hand on belt. Front slightly 3/4 left, top of head visible. Three-head proportions, character visibleheight110px of128logicalframe excluding spearhead (spear fully contained y>=4), feet fixed x64 y123. Hard hand placed pixels,2logicalpixelclusters, controlled max48-color appearance, no blur, glow, gradients, image noise or full black outline. Left-upper sunshine warm lower-right shade. All four lower bodies/feet/pole shapes IDENTICAL; upper chest rises1px in frames2/4, headband tips sway1–2px, hands and spear do not morph. Genuine transparent background with generous gutters, no floor/shadow, magenta, text, UI, frames, other characters or watermark."
+    },
+    {
+      "key": "terrain",
+      "transparent": false,
+      "prompt": "Use case: stylized-concept. Production ground tileset for top-down orthographic 3/4 hand-placed pixel RPG 晴野行旅. EXACT4 COLUMNS by6 ROWS,24 equal SQUARE tiles tightly packed, NO gaps, borders, labels or background margins. Tiles logical48x48, hard pixels with2–3pixel clusters, no noise/AA/gradients/photo detail. Entire set about20 coherent muted natural colours. Row1 FOUR seamless grass variants: quiet sage/olive ground, sparse2pixel grass group clusters, no flowers. Row2 FOUR seamless compressed pale-ochre dirt road tiles with quiet centers, only subtle low contrast cart-ruts. Rows3–6 SIXTEEN grass/dirt transition tiles: smooth readable dirt meeting grass,1logicalpixel darker edge, small grass overhang, varied corners/edges. Top-left sunlight expressed as restrained flat value steps, no cast shadows or objects, no characters, text, arrows, UI or watermark. Ground contrast LOWER than hero. Earth road clearly lighter than grass by1–2value steps but subdued; avoids shiny lemon-yellow. Each tile seamless, perimeter values consistent across sheet. Natural crisp hand-placed pixel asset, no isometric perspective. Opaque full sheet."
+    },
+    {
+      "key": "vegetation",
+      "transparent": true,
+      "prompt": "Use case: stylized-concept. Production vegetation/rock atlas for 远征 晴野行旅 top-down3/4 hand-placed pixel RPG. EXACT THREE COLUMNS by FOUR ROWS,12 isolated sprites in equal-square cells with transparent generous gutters. Match crisp detailed hero sprite with dark colored contour and2px foliage clusters; left-upper warm sunshine, moderate natural saturation, flat limited color bands, no smooth gradient/AA/noise. Ordered top-left to bottom-right: row1 TWO maple tree root/trunk bases (NO foliage) and one small maple-leaf ground cluster; row2 TWO separate matching maple CANOPIES with NO trunks and one sparse ochre-leaf patch; row3 small grey-brown weathered rock1, mediumrock1, largerock1; row4 smallrock2,mediumrock2,largerock2. Canopies use vermilion orange, warm ochre, a little deep green, shaded underside in clustered masses, NO individual floating leaf specks. Orthographic light3/4 frontal, not isometric2:1. Bottom-center canopy matingpoint aligns top-center trunk. Trunk/root target64x80, canopy176x144; rocks target24/40/64width, no platform/baked huge shadow. Every sprite pixel-native look. True transparency, no magenta ground, texts/UI/letters/watermarks/frames. Clear separation of12objects."
+    },
+    {
+      "key": "hall",
+      "transparent": true,
+      "refs": [
+        "D:/new-bee/远征/image/main_world/city_hall_reference_v2.png"
+      ],
+      "prompt": "Use case: stylized-concept. Redraw the reference frontier town hall as ONE production building asset in approved 晴野行旅 top-down3/4 hand-placed pixel style, preserve recognizable blue-grey tiled roof, timber, stone foundation and red flag/banner semantic landmark. More modest ancient frontier administrative house: rammed-earth warm beige plaster, dark wood frame, blue-grey clay tiled upturned roof with roof40–55%visibleheight, one front wooden door and lattice windows, blank signboard NO writing. Orthographic front with roof visible and slight side, NO vanishing point or isometric2:1 diamond. Footprint4x3logical48px tiles, native target192x224body maximum40-colour appearance; hard2px clusters, restrained materials, no noisy miniature pattern/gradient/blur. Left-upper sun, warm lower-right shade. Complete intact roof/eaves/wallbase must be solid/opaque internally, clean transparent exterior. Bottom-center wallbase anchor. NO baked long cast shadow or ground/platform outsidefoundation. Red only flag/door trim, no glowing gold (ordinary civic house). Match hero-scale pixel readability, moderate contrasting structure. Single asset centered with transparent gutter, no extra mini images, UI/text/numbers/watermark."
+    }
+  ],
+  "originals": {
+    "steward": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-90afb4e0-d6c1-4859-a099-2bf7b1023a7b.png",
+    "guard": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-75a2c45f-63c2-4642-a607-706881452d86.png",
+    "terrain": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-27d54410-6ac9-46f7-ad8f-d12d566f3bcb.png",
+    "vegetation": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-46d26780-828d-4938-98cf-6a2d5b7cbbe7.png",
+    "hall": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-e27754f7-414b-40ca-83df-4b482f540b5b.png"
+  },
+  "note": "Transparent outputs requested instead of magenta mattes. Originals preserved; native import supplies required engine sizes and palette constraints."
+}

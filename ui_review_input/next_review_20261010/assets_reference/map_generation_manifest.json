@@ -1,0 +1,14 @@
+{
+  "tool": "built-in imagegen",
+  "final": "map.png",
+  "passes": [
+    {
+      "prompt": "Precise local edit of the supplied regional RPG map. Preserve every existing terrain band, all seventeen existing sand-colored round clearings, all existing painted dirt roads, coastline, mountains and original composition EXACTLY. Add ONLY one missing sand clearing of diameter 55 pixels at (1135, 765) on the supplied 1189 x 1323 image, in the snowy eastern mountain terrain, and a short narrow dirt-road branch from the existing clearing at (887, 762), through (965,740), (1050,750), to the new clearing at (1135,765). Match the surrounding terrain style and sand color. No other new roads or clearings, no labels, no text, no UI. This is a missing mine-vault location. Keep output at same dimensions, hard edged map detail.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a1213f-a39b-7603-8c18-ec7a72398e17\\exec-f3055abe-0050-430e-8696-9fa6787b20bc.png"
+    },
+    {
+      "prompt": "Precise surgical correction to this supplied map. Keep image dimensions and all terrain, roads, clearings exactly unchanged except REMOVE the extra round sand clearing centered at (1069,711) in the snowy right side (above the fork of the dirt road). Replace only that round flat sand disc with matching snowy rocky terrain and retain its intersecting narrow dirt roads as a simple narrow road junction. Preserve the new far-right round clearing centered at (1155,762) and its road, and all other original clearings. Total should be exactly 18 round clearings. No text/UI. Do not repaint any other part of the map.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a1213f-a39b-7603-8c18-ec7a72398e17\\exec-10523baf-bbf0-4e5d-b347-051acbf59d2d.png"
+    }
+  ]
+}

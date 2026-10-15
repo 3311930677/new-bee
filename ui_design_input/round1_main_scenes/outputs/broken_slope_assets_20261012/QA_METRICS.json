@@ -1,0 +1,512 @@
+[
+  {
+    "file": "bs_g01_a_grass.png",
+    "width": 1254,
+    "height": 1254,
+    "expected_width": 1024,
+    "expected_height": 1024,
+    "size_ok": false,
+    "mode": "RGB",
+    "colors": 45575,
+    "corner_rgb": [
+      117,
+      125,
+      63
+    ]
+  },
+  {
+    "file": "bs_g01_b_dirtroad.png",
+    "width": 1254,
+    "height": 1254,
+    "expected_width": 1024,
+    "expected_height": 1024,
+    "size_ok": false,
+    "mode": "RGB",
+    "colors": 49533,
+    "corner_rgb": [
+      184,
+      138,
+      80
+    ]
+  },
+  {
+    "file": "bs_g01_c_gravel.png",
+    "width": 1254,
+    "height": 1254,
+    "expected_width": 1024,
+    "expected_height": 1024,
+    "size_ok": false,
+    "mode": "RGB",
+    "colors": 118511,
+    "corner_rgb": [
+      168,
+      132,
+      85
+    ]
+  },
+  {
+    "file": "bs_g01_d_flagstone.png",
+    "width": 1254,
+    "height": 1254,
+    "expected_width": 1024,
+    "expected_height": 1024,
+    "size_ok": false,
+    "mode": "RGB",
+    "colors": 69985,
+    "corner_rgb": [
+      149,
+      141,
+      104
+    ]
+  },
+  {
+    "file": "bs_g03_a_earth_straw.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 145089,
+    "corner_rgb": [
+      242,
+      28,
+      237
+    ]
+  },
+  {
+    "file": "bs_g03_b_moss_gravel.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 227492,
+    "corner_rgb": [
+      241,
+      28,
+      237
+    ]
+  },
+  {
+    "file": "bs_g03_c_leaf_damp.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 200752,
+    "corner_rgb": [
+      242,
+      29,
+      238
+    ]
+  },
+  {
+    "file": "bs_g02_a_roadside.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 223947,
+    "corner_rgb": [
+      242,
+      30,
+      239
+    ]
+  },
+  {
+    "file": "bs_g02_b_meadow.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 169708,
+    "corner_rgb": [
+      242,
+      29,
+      240
+    ]
+  },
+  {
+    "file": "bs_t01_a.png",
+    "width": 1254,
+    "height": 1254,
+    "expected_width": 1024,
+    "expected_height": 1024,
+    "size_ok": false,
+    "mode": "RGB",
+    "colors": 131644,
+    "corner_rgb": [
+      242,
+      30,
+      237
+    ]
+  },
+  {
+    "file": "bs_t01_b.png",
+    "width": 1254,
+    "height": 1254,
+    "expected_width": 1024,
+    "expected_height": 1024,
+    "size_ok": false,
+    "mode": "RGB",
+    "colors": 128152,
+    "corner_rgb": [
+      241,
+      27,
+      236
+    ]
+  },
+  {
+    "file": "bs_t01_c.png",
+    "width": 1254,
+    "height": 1254,
+    "expected_width": 1024,
+    "expected_height": 1024,
+    "size_ok": false,
+    "mode": "RGB",
+    "colors": 139612,
+    "corner_rgb": [
+      242,
+      29,
+      239
+    ]
+  },
+  {
+    "file": "bs_t01_d.png",
+    "width": 1254,
+    "height": 1254,
+    "expected_width": 1024,
+    "expected_height": 1024,
+    "size_ok": false,
+    "mode": "RGB",
+    "colors": 116902,
+    "corner_rgb": [
+      241,
+      27,
+      237
+    ]
+  },
+  {
+    "file": "bs_t01_e_maple.png",
+    "width": 1254,
+    "height": 1254,
+    "expected_width": 1024,
+    "expected_height": 1024,
+    "size_ok": false,
+    "mode": "RGB",
+    "colors": 190862,
+    "corner_rgb": [
+      241,
+      30,
+      237
+    ]
+  },
+  {
+    "file": "bs_t02_a_broadleaf.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 89488,
+    "corner_rgb": [
+      244,
+      29,
+      240
+    ]
+  },
+  {
+    "file": "bs_t02_b_dead.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 120644,
+    "corner_rgb": [
+      242,
+      28,
+      239
+    ]
+  },
+  {
+    "file": "bs_t03_a_shrubs.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 179889,
+    "corner_rgb": [
+      242,
+      28,
+      238
+    ]
+  },
+  {
+    "file": "bs_t03_b_ferns.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 146961,
+    "corner_rgb": [
+      243,
+      27,
+      239
+    ]
+  },
+  {
+    "file": "bs_r01_a_small_medium.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 107670,
+    "corner_rgb": [
+      243,
+      28,
+      240
+    ]
+  },
+  {
+    "file": "bs_r01_b_boulders.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 140489,
+    "corner_rgb": [
+      244,
+      29,
+      239
+    ]
+  },
+  {
+    "file": "bs_l01_a_giant_stele.png",
+    "width": 1254,
+    "height": 1254,
+    "expected_width": 1024,
+    "expected_height": 1024,
+    "size_ok": false,
+    "mode": "RGB",
+    "colors": 175098,
+    "corner_rgb": [
+      244,
+      28,
+      240
+    ]
+  },
+  {
+    "file": "bs_l01_b_markers.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 226106,
+    "corner_rgb": [
+      240,
+      28,
+      238
+    ]
+  },
+  {
+    "file": "bs_l02_a_gate.png",
+    "width": 1721,
+    "height": 914,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": false,
+    "mode": "RGB",
+    "colors": 194316,
+    "corner_rgb": [
+      242,
+      29,
+      236
+    ]
+  },
+  {
+    "file": "bs_l02_b_cliff_face.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 187644,
+    "corner_rgb": [
+      242,
+      29,
+      235
+    ]
+  },
+  {
+    "file": "bs_l02_c_cliff_rim.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 223553,
+    "corner_rgb": [
+      240,
+      27,
+      238
+    ]
+  },
+  {
+    "file": "bs_l03_a_gully.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 261961,
+    "corner_rgb": [
+      243,
+      28,
+      238
+    ]
+  },
+  {
+    "file": "bs_l03_b_bridges.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 253946,
+    "corner_rgb": [
+      241,
+      29,
+      237
+    ]
+  },
+  {
+    "file": "bs_l04_terrace.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 178849,
+    "corner_rgb": [
+      242,
+      28,
+      237
+    ]
+  },
+  {
+    "file": "bs_c01_camp.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 235706,
+    "corner_rgb": [
+      237,
+      28,
+      237
+    ]
+  },
+  {
+    "file": "bs_q01_props.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 206178,
+    "corner_rgb": [
+      241,
+      30,
+      240
+    ]
+  },
+  {
+    "file": "bs_f01_a_canopy.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 66877,
+    "corner_rgb": [
+      243,
+      26,
+      241
+    ]
+  },
+  {
+    "file": "bs_f01_b_branches_grass.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 159390,
+    "corner_rgb": [
+      242,
+      27,
+      239
+    ]
+  },
+  {
+    "file": "bs_f01_c_canopy.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 82779,
+    "corner_rgb": [
+      242,
+      26,
+      241
+    ]
+  },
+  {
+    "file": "bs_e01_fx.png",
+    "width": 1536,
+    "height": 1024,
+    "expected_width": 1536,
+    "expected_height": 1024,
+    "size_ok": true,
+    "mode": "RGB",
+    "colors": 31567,
+    "corner_rgb": [
+      244,
+      29,
+      241
+    ]
+  }
+]
