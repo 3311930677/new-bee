@@ -1,0 +1,99 @@
+Godot  : D:\new-bee\tools\godot-4.7.2\Godot_v4.7.2-stable_win64_console.exe
+Version: 4.7.2.stable.official.ed1daf0bf
+Project: D:\new-bee\远征
+UserDir: D:/new-bee/远征/tools/_logs/user_sandbox_767a7db4bd824611b988c77abcc0dfd2/Godot/app_userdata/远征/
+Cases  : 77  (timeout 240s, quit-after 6000 frames)
+Logs   : D:\new-bee\远征\tools\_logs
+Commit : e1aa5d2b
+
+PASS  VerifyAssets
+PASS  VerifyBattleScene
+PASS  VerifySave
+PASS  VerifyUiLayout
+PASS  VerifyVisualRefresh
+PASS  VerifyFieldUI
+PASS  VerifySweep
+PASS  VerifyCity
+PASS  VerifyGameHome
+PASS  VerifyMapScene
+PASS  VerifyMainWorld
+PASS  VerifyReferenceComplete
+PASS  VerifyWorldSession
+PASS  VerifyStory
+PASS  VerifyEconomy
+PASS  VerifyTradeWorld
+PASS  VerifySecondAct
+PASS  VerifyThirdAct
+FAIL  VerifyThirdBack  <- output contains [SCRIPT ERROR]; output contains [ERROR:]
+      SCRIPT ERROR: Invalid access to property or key 'position' on a base object of type 'previously freed'.
+      SCRIPT ERROR: Invalid access to property or key '_caption_label' on a base object of type 'previously freed'.
+      log: D:\new-bee\远征\tools\_logs\VerifyThirdBack.log
+PASS  VerifyFourthFront
+PASS  VerifyFourthBack
+PASS  VerifyReturnJobs
+PASS  VerifyThirdSide
+PASS  VerifyCompanions
+PASS  VerifyCampaignGrowth
+PASS  VerifyCampaignGear
+PASS  VerifyWorkshop
+PASS  VerifyCurriculum
+FAIL  VerifyFrostArt  <- output contains [SCRIPT ERROR]; output contains [ERROR:]
+      SCRIPT ERROR: Invalid access to property or key 'size' on a base object of type 'previously freed'.
+      log: D:\new-bee\远征\tools\_logs\VerifyFrostArt.log
+PASS  VerifyPortGrowth
+PASS  VerifyShipping
+PASS  VerifyFrostHerbOrder
+PASS  VerifyRoadMail
+PASS  VerifyStelePuzzle
+PASS  VerifyBossPuzzles
+PASS  VerifyAftermath
+PASS  VerifyAftermathResume
+PASS  VerifyFishing
+PASS  VerifyRouteScene
+PASS  VerifyRunResume
+PASS  VerifyRunResumeRead
+PASS  VerifyRunImmediate
+PASS  VerifyRunEvents
+PASS  VerifyRunEventsRead
+PASS  VerifyTradeContracts
+PASS  VerifyTradeContractsRead
+PASS  VerifyOathWalk
+FAIL  VerifyCampGathering  <- exit code 1; missing completion line 'CAMP_GATHERING_OK'; output contains [ERROR:]; output contains [FAIL:]; output contains [_FAIL]
+      CAMP_GATHERING_FAIL fails=3
+      ERROR: FAIL: 已交付邀约显示营帐入口
+      ERROR: FAIL: 实际按钮打开三城小聚
+      ERROR: FAIL: 重看小聚不发重复报酬、不改任务
+      log: D:\new-bee\远征\tools\_logs\VerifyCampGathering.log
+PASS  VerifySafeArea
+PASS  VerifyAftermathPaths
+PASS  VerifyWorldCommissions
+PASS  VerifyWorldCommissionsRead
+PASS  VerifyDungeonTrials
+PASS  VerifyDungeonTrialsRead
+PASS  VerifyGacha
+PASS  VerifyPanels
+PASS  VerifyGrowth
+PASS  VerifyPerf
+PASS  VerifyLore
+PASS  VerifyQuests
+PASS  VerifyAudio
+PASS  VerifyTransit
+PASS  VerifyDrops
+PASS  VerifyArena
+PASS  VerifyAvatar
+PASS  VerifySignpostEntry
+PASS  VerifyNav
+PASS  verify_data
+PASS  verify_battle
+PASS  VerifyGameplayBalance
+PASS  VerifyJourneyRelics
+PASS  VerifySpecialEvents
+PASS  VerifySpecialEventsRead
+PASS  VerifyCurrencyBalance
+PASS  verify_route
+PASS  verify_trait
+PASS  verify_walk_assets
+
+NOTE: 44 case(s) emitted 110 engine exit-time resource diagnostic(s) (leaked RIDs / resources still in use). Not counted as failures - tracked as issue #43.
+FAILED: 3 / 77
+exit 3

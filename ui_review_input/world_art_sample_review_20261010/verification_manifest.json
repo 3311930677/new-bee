@@ -1,0 +1,23 @@
+{
+  "native_checks": 227,
+  "regressions": [
+    "VerifyAssets",
+    "VerifyMapScene",
+    "VerifyMainWorld",
+    "VerifyWorldSession",
+    "VerifyCity",
+    "VerifyStory",
+    "VerifyQuests",
+    "VerifyNav",
+    "VerifyPerf",
+    "VerifyFrostArt",
+    "VerifyPortGrowth",
+    "VerifySignpostEntry"
+  ],
+  "final_case_logs_pass": true,
+  "notes": [
+    "主世界旧整图背景断言更新为地表覆盖及层级检查后单独复测通过。",
+    "退出资源诊断按既有issue43单列。",
+    "未进行Android真机或最终商业美术验收。"
+  ]
+}

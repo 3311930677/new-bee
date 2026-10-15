@@ -99,6 +99,8 @@ class Shell extends Control:
 	var safe:=Rect2()
 	var closed: Callable
 	var header_actions:Array[Control]=[]
+	## 换皮用：layout 末尾再调一次，页面可按自己的底图重排标题栏/页签/滚动区；为空时布局不变
+	var skin_layout: Callable
 	func _init(words: String="",height: float=352) -> void:
 		heading=words
 		tray_height=height
@@ -152,6 +154,7 @@ class Shell extends Control:
 		Page.place(footer,Vector2(safe.position.x+12,safe.end.y-68),Vector2(safe.size.x-24,56))
 		footer.visible=has_footer
 		for action in header_actions:Page.place(action,Vector2(safe.end.x-72,safe.position.y+6),Vector2(64,44))
+		if skin_layout.is_valid():skin_layout.call(safe)
 	func tab(words: String,callback: Callable) -> Button:
 		var b:=UI.action(words,"tab")
 		b.custom_minimum_size.y=44
@@ -167,6 +170,11 @@ class Switch extends Button:
 	var on:=false
 	var words_on: String
 	var words_off: String
+	## 换皮用：底板九宫格、开 / 关两张开关贴图、标题左缩进（左侧放图标框时加大）
+	var plate: StyleBox
+	var knob_on: Texture2D
+	var knob_off: Texture2D
+	var inset:=12.0
 	func _init(words: String,active: bool=false,yes: String="开",no: String="关") -> void:
 		text=words
 		on=active
@@ -184,12 +192,17 @@ class Switch extends Button:
 		for property in ["font_color","font_hover_color","font_pressed_color","font_focus_color"]:add_theme_color_override(property,Color.TRANSPARENT)
 		for event in [resized,focus_entered,focus_exited,mouse_entered,mouse_exited]:event.connect(queue_redraw)
 	func _draw() -> void:
-		UI.surface(self,Rect2(Vector2.ZERO,size),UI.FACE,UI.COPPER if has_focus() else Color("3a3037"))
-		heading.position=Vector2(12,0)
-		heading.size=Vector2(size.x-156,size.y)
+		if plate!=null:draw_style_box(plate,Rect2(Vector2.ZERO,size))
+		else:UI.surface(self,Rect2(Vector2.ZERO,size),UI.FACE,UI.COPPER if has_focus() else Color("3a3037"))
+		heading.position=Vector2(inset,0)
+		heading.size=Vector2(size.x-inset-144,size.y)
 		value.text=words_on if on else words_off
 		value.position=Vector2(size.x-140,0)
 		value.size=Vector2(68,size.y)
+		var skin_knob:=knob_on if on else knob_off
+		if skin_knob!=null:
+			draw_texture(skin_knob,(Vector2(size.x-12-skin_knob.get_width(),(size.y-skin_knob.get_height())*.5)).floor())
+			return
 		# 轨道 + 滑块：开时滑块在右、轨道亮铜；关时滑块在左、轨道暗槽，一眼可辨是开关。
 		var p:=Vector2(size.x-66,(size.y-26)*.5)
 		var track:=Rect2(p,Vector2(54,26))
@@ -208,5 +221,7 @@ class Card extends MarginContainer:
 		for side in ["margin_left","margin_right"]:add_theme_constant_override(side,12)
 	func _ready() -> void:
 		resized.connect(queue_redraw)
+	var plate: StyleBox  # 换皮用，为空时画法不变
 	func _draw() -> void:
-		UI.surface(self,Rect2(Vector2.ZERO,size),UI.FACE,Color("3a3037"))
+		if plate!=null:draw_style_box(plate,Rect2(Vector2.ZERO,size))
+		else:UI.surface(self,Rect2(Vector2.ZERO,size),UI.FACE,Color("3a3037"))

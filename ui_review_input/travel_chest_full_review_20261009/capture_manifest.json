@@ -1,0 +1,134 @@
+{
+  "engine": "Godot 4.7.2",
+  "actual_native_render": true,
+  "core_count": 17,
+  "b3_native_states": 80,
+  "core": [
+    {
+      "id": "01_title",
+      "title": "标题",
+      "current": "current/01_title.png",
+      "before": "before/01_title.png",
+      "source": "远征\\shots\\travel_chest_b1_20261009\\title_800.png"
+    },
+    {
+      "id": "02_home",
+      "title": "营帐",
+      "current": "current/02_home.png",
+      "before": "before/02_home.png",
+      "source": "远征\\shots\\travel_chest_b1_20261009\\home_800.png"
+    },
+    {
+      "id": "03_town_hud",
+      "title": "城镇 HUD",
+      "current": "current/03_town_hud.png",
+      "before": "before/03_town_hud.png",
+      "source": "远征\\shots\\travel_chest_b2_20261009\\town_800.png"
+    },
+    {
+      "id": "04_field_hud",
+      "title": "野外 HUD",
+      "current": "current/04_field_hud.png",
+      "before": "before/04_field_hud.png",
+      "source": "远征\\shots\\travel_chest_b2_20261009\\field_dark_1067.png"
+    },
+    {
+      "id": "05_growth",
+      "title": "养成",
+      "current": "current/05_growth.png",
+      "before": "before/05_growth.png",
+      "source": "远征\\shots\\travel_chest_b2_20261009\\growth_800.png"
+    },
+    {
+      "id": "06_equipment",
+      "title": "装备",
+      "current": "current/06_equipment.png",
+      "before": "before/06_equipment.png",
+      "source": "远征\\shots\\travel_chest_b2_20261009\\equipment_800.png"
+    },
+    {
+      "id": "07_inventory",
+      "title": "背包",
+      "current": "current/07_inventory.png",
+      "before": "before/07_inventory.png",
+      "source": "远征\\shots\\travel_chest_b2_20261009\\bag_800.png"
+    },
+    {
+      "id": "08_battle",
+      "title": "战斗",
+      "current": "current/08_battle.png",
+      "before": "before/08_battle.png",
+      "source": "远征\\shots\\travel_chest_b3_20261009\\battle_800.png"
+    },
+    {
+      "id": "09_region_map",
+      "title": "地区图",
+      "current": "current/09_region_map.png",
+      "before": "before/09_region_map.png",
+      "source": "远征\\shots\\travel_chest_b3_20261009\\regions_800.png"
+    },
+    {
+      "id": "10_departure",
+      "title": "出征",
+      "current": "current/10_departure.png",
+      "before": "before/10_departure.png",
+      "source": "远征\\shots\\travel_chest_b3_20261009\\deploy_800.png"
+    },
+    {
+      "id": "11_login",
+      "title": "登记",
+      "current": "current/11_login.png",
+      "before": "before/11_login.png",
+      "source": "远征\\shots\\travel_chest_b3_20261009\\login_800.png"
+    },
+    {
+      "id": "12_create_role",
+      "title": "建角",
+      "current": "current/12_create_role.png",
+      "before": "before/12_create_role.png",
+      "source": "远征\\shots\\travel_chest_b3_20261009\\create_role_800.png"
+    },
+    {
+      "id": "13_loading",
+      "title": "加载",
+      "current": "current/13_loading.png",
+      "before": "before/13_loading.png",
+      "source": "远征\\shots\\travel_chest_b3_20261009\\loading_800.png"
+    },
+    {
+      "id": "14_codex",
+      "title": "图鉴",
+      "current": "current/14_codex.png",
+      "before": "before/14_codex.png",
+      "source": "远征\\shots\\travel_chest_b3_20261009\\codex_unknown_800.png"
+    },
+    {
+      "id": "15_settings",
+      "title": "设置",
+      "current": "current/15_settings.png",
+      "before": "before/15_settings.png",
+      "source": "远征\\shots\\travel_chest_b3_20261009\\settings_800.png"
+    },
+    {
+      "id": "16_introduction",
+      "title": "介绍",
+      "current": "current/16_introduction.png",
+      "before": "before/16_introduction.png",
+      "source": "远征\\shots\\travel_chest_b3_20261009\\introduction_800.png"
+    },
+    {
+      "id": "17_battle_skills",
+      "title": "战斗技能",
+      "current": "current/17_battle_skills.png",
+      "before": "before/17_battle_skills.png",
+      "source": "远征\\shots\\travel_chest_b3_20261009\\battle_skills_800.png"
+    }
+  ],
+  "additional_growth_page": "current/18_skill_book.png",
+  "notes": [
+    "旧图来自全面重构设计输入包。",
+    "当前图沿用同一日期三批的实际运行结果；B3战斗暂停步进以固定状态。",
+    "04为1067高暗场野外，旧图与新图位置不同，不能作为同地图美术对照。",
+    "安全区、软键盘为模拟；各状态用隔离演示存档，不使用真实玩家存档。"
+  ]
+}

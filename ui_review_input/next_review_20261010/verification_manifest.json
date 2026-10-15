@@ -1,0 +1,34 @@
+{
+  "native_ui": {
+    "checks": 308,
+    "failures": 0,
+    "log": "logs/native_stdout.log"
+  },
+  "hud": {
+    "checks": 16,
+    "failures": 0,
+    "log": "logs/hud_stdout.log"
+  },
+  "camp": {
+    "checks": 758,
+    "failures": 0,
+    "log": "logs/b1_native_stdout.log"
+  },
+  "flow": {
+    "checks": 158,
+    "failures": 0,
+    "log": "logs/b3_native_stdout.log"
+  },
+  "performance": {
+    "passed": true,
+    "city_entry_ms": 217,
+    "city_budget_ms": 320,
+    "initial_parallel_city_ms": 350,
+    "log": "logs/VerifyPerf.log"
+  },
+  "text_audit": {
+    "compact_art": 0,
+    "nonlinear_text": 0,
+    "short_text_boxes": 0
+  }
+}

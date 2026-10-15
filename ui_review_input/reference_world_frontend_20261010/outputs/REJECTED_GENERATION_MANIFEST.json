@@ -1,0 +1,109 @@
+{
+  "status": "rejected_do_not_integrate",
+  "reason": "User rejected both batches for a 3D / prerendered appearance; no generated candidate has been integrated.",
+  "original_reference": "D:/new-bee/ui_review_input/reference_world_frontend_20261010/reference/01_target_forest.jpg",
+  "first_batch_prompts": [
+    {
+      "key": "field_floor",
+      "transparent": false,
+      "refs": [
+        "D:/new-bee/ui_review_input/reference_world_frontend_20261010/reference/01_target_forest.jpg",
+        "D:/new-bee/远征/assets/world/reference_rebuild_20261010/maple_road_guide.png"
+      ],
+      "prompt": "Original top-down3/4 JRPG hand-painted pixel art MATCHING the supplied forest reference, not imitation noise. Rich natural grass lit/mid/shaded layers, coherent pixel clusters, crisp edges, no blur, warm upper-left sunlight and lower-right short contact shadows, natural non-neon greens, quiet ochre path and irregular8–24px worn grass tongue edges. No text, UI, numbers, logos, watermark, grid/camouflage/repeating stamp pattern. Create opaque production GROUND-ONLY floor patch. Input1 is STYLE; input2 is STRICT ROAD/RIVER GEOMETRY, its normalized coordinates/widths must stay fixed. Canvas960x1092logicalpixels; don't change road topology. Apply reference-quality hand-painted grass, subtle clear natural tonal fields, quiet path with slight wear. Broad shade masses at forest edges planned for later tree sprites. At guide top a narrow clear stream crosses gently diagonally with stone/reed banks and an empty crossing corridor centered atx500 (don't drawbridge—we add it separately). ROAD CORE precisely matchesguide; irregular wornfringe only. Do NOT bake trees, shrubs, rocks, logs, buildings, props, people, any castshadow or labels into this floor. Rich nuanced grass material in deliberate calm/detail zones, no program blotches, obvious tile seams or uniform noise. It must support independent game actors and scatterassets. Full bleed no margin, ratio960:1092."
+    },
+    {
+      "key": "town_floor",
+      "transparent": false,
+      "refs": [
+        "D:/new-bee/ui_review_input/reference_world_frontend_20261010/reference/01_target_forest.jpg",
+        "D:/new-bee/远征/assets/world/reference_rebuild_20261010/lorin_wilds_guide.png"
+      ],
+      "prompt": "Original top-down3/4 JRPG hand-painted pixel art MATCHING the supplied forest reference, not imitation noise. Rich natural grass lit/mid/shaded layers, coherent pixel clusters, crisp edges, no blur, warm upper-left sunlight and lower-right short contact shadows, natural non-neon greens, quiet ochre path and irregular8–24px worn grass tongue edges. No text, UI, numbers, logos, watermark, grid/camouflage/repeating stamp pattern. Create opaque GROUND-ONLY civic plaza/street patch for original East-Asian frontier town. Input1 STYLE natural daylight/materialdensity; input2 STRICT street/plaza geometry. Canvas960x860logicalpixels, full bleed. Worn grey-ochre flagstones in irregular plaza at lower-middle, grass in occasional cracks, natural eroded borders blending packed earth and rich calm green grass. Paths followguide normalized routeposition widths unchanged. Clear ground around reserved hall/top-left and future tree/table right; don't draw reserved objects. Low-contrast pavement, intentional coherent subtle color layers, NOT graphpaper smalltiles or largecamo blobs. No buildings/trees/props/characters/shadows/UI/text bakedin, all willbe separate. Shade only natural broadambient grass layers. Full opaque patch, no border."
+    },
+    {
+      "key": "flora",
+      "transparent": true,
+      "refs": [
+        "D:/new-bee/ui_review_input/reference_world_frontend_20261010/reference/01_target_forest.jpg"
+      ],
+      "prompt": "Original top-down3/4 JRPG hand-painted pixel art MATCHING the supplied forest reference, not imitation noise. Rich natural grass lit/mid/shaded layers, coherent pixel clusters, crisp edges, no blur, warm upper-left sunlight and lower-right short contact shadows, natural non-neon greens, quiet ochre path and irregular8–24px worn grass tongue edges. No text, UI, numbers, logos, watermark, grid/camouflage/repeating stamp pattern. PRODUCTION SPRITE ATLAS, genuine transparency and no baked castshadows/ground. Exactly3columns4rows12isolated objects, everyobject within70%own equalcell leaving15%gutter EACHside. NO touch/overlap/cropping. Ordered row1: broadleaf treeROOT+TRUNK onlyA64x72target, medium treeROOT+TRUNK onlyB56x64, coniferROOT+TRUNK32x56. Row2 corresponding separate CANOPIES with no trunks: round lush broadleaf168x140, medium broadleaf136x118, tall conifer100x164. Full rounded layeredleafvolumes withyellow-green top-left groups, deepblue-green undersides, noindividualsparse flecks. Row3: roundedbush64x48, distinct roundedbush48x36, mossygrey-rock group64x44. Row4: grass tuft16x24, white/yellowflower group40x24, fallenmossylog104x40. Style exactly supplied natural vibrantforest coherentpixelclusters, proper3/4view, no gradientblur/noise/photo. No text/grid/magenta background, allsprites clean transparent, trunkroots standbasecenter and canopy aligns totrunk atop."
+    },
+    {
+      "key": "civic",
+      "transparent": true,
+      "refs": [
+        "D:/new-bee/ui_review_input/reference_world_frontend_20261010/reference/01_target_forest.jpg"
+      ],
+      "prompt": "Original top-down3/4 JRPG hand-painted pixel art MATCHING the supplied forest reference, not imitation noise. Rich natural grass lit/mid/shaded layers, coherent pixel clusters, crisp edges, no blur, warm upper-left sunlight and lower-right short contact shadows, natural non-neon greens, quiet ochre path and irregular8–24px worn grass tongue edges. No text, UI, numbers, logos, watermark, grid/camouflage/repeating stamp pattern. PRODUCTION TOWN SPRITE SHEET, exactly TWO COLUMNS THREE ROWS,6isolated objects, generous transparentgutters20%eachcell, nooverlap/crop/numbers/grid. Row1: single councilhall300x230target, EastAsian greytileroof/wood/creamplaster/stonefoundation withone clearlyvisible tall south-facing doorway88pxlogical (adult72px), roof upper40%, redlacquerpillars understated, no writing on blankboard; unfinished constructionlot220x145 withstonefoundationframe/bambooscaffold/tarp-coveredwood/roof tiles/blankwood noticeboard, clearly3Dsceneworksite notgreyUIrectangle. Row2: long nighttable withtwo benches160x70 andtiny unlit lantern, stonewell64x64. Row3: rustic timberbridge96x140withone missingwedge andloose ropes (surfacestillcontinuouswalkable), timber barricade88x40 (closededition). All3/4ortho topsvisible, roofsunlightupperleft. Preservecomplete silhouettes, no groundplane/castshadow, true transparency, no people/text/letters/logo/UI/watermark."
+    },
+    {
+      "key": "loading",
+      "transparent": false,
+      "refs": [
+        "D:/new-bee/ui_review_input/reference_world_frontend_20261010/reference/01_target_forest.jpg",
+        "D:/new-bee/远征/image/role/zs/pojun_idle_video_v19.png"
+      ],
+      "prompt": "Original top-down3/4 JRPG hand-painted pixel art MATCHING the supplied forest reference, not imitation noise. Rich natural grass lit/mid/shaded layers, coherent pixel clusters, crisp edges, no blur, warm upper-left sunlight and lower-right short contact shadows, natural non-neon greens, quiet ochre path and irregular8–24px worn grass tongue edges. No text, UI, numbers, logos, watermark, grid/camouflage/repeating stamp pattern. Portrait GAME LOADING BACKGROUND480x1067logical, tall9:20. STYLE input1; input2hero identity (redhair, redcape,darkarmor) use small backview, NOTgirlfromreference. Forestgateway dawn, quiet dirt path entersbottomcenter gentle S intoupper-right woods, hintsredmaplesdistance. Lush volumetric green trees frame sides with natural shadowgrass. Hero90pxlogical high, backview onlowerthird path, holdingonewarm lantern andsmallbrass-cornered dark travelchest, cleanhands, noovergrownhero. Upperthird calm softblue/cream sky betweenleafgroups forliveLogo. Bottomquarter calm earth forprogress overlay. Cohesivepixel keyillustration highobliqueview, warmmorning sunlight, no text/logos/UI/buttons/actualprogressbar/numbers/watermark. Fullbleed noframe, center480x800focus preserved in tallcomposition."
+    },
+    {
+      "key": "title",
+      "transparent": false,
+      "refs": [
+        "D:/new-bee/ui_review_input/reference_world_frontend_20261010/reference/01_target_forest.jpg",
+        "D:/new-bee/远征/image/role/zs/pojun_idle_video_v19.png"
+      ],
+      "prompt": "Original top-down3/4 JRPG hand-painted pixel art MATCHING the supplied forest reference, not imitation noise. Rich natural grass lit/mid/shaded layers, coherent pixel clusters, crisp edges, no blur, warm upper-left sunlight and lower-right short contact shadows, natural non-neon greens, quiet ochre path and irregular8–24px worn grass tongue edges. No text, UI, numbers, logos, watermark, grid/camouflage/repeating stamp pattern. Portrait GAME TITLE BACKGROUND480x1067logical, tall9:20. Original EastAsian town interior looking toward northgate timbertowerandgreytiledroof, gatepassage opens onbright greenforestroad—the brightest visualfocus atverticalmiddle around300–440in800crop. Worn flagstone street withgrasscracks convergesgate, not40%emptyplainstone. Existingredhair/redcape/darkarmorhero small100px backview facinggate, identityfrominput2; input1forestpaintedpixelstyle. Foregroundright woodenlamp post withwarm hanginglantern andbrass-cornered smalllacquertravelcase. Sidehouses/planters/cratesframe scene naturally. Upperquarter calm morning skyabove roof forlogo; lowerquarter calmstreetforstartcontrols. Strong cleanvolumetricpixelclusters/naturalgreens andgreyroof warmstone, no noisyphoto/gradientblur. No text/logo/UI/buttons/labels/watermark. Fullbleed andcenter800cropmainfocusintact."
+    },
+    {
+      "key": "login",
+      "transparent": false,
+      "prompt": "Original pixel-art still-life background for Chinese fantasy mobile RPG, clean coherent pixelclusters/no blur, top-down tableview, portrait480x1067logical tall9:20. Warm wooden table, oil lantern upperleft castssoftwarmlight lower-right. Center open darkred-brown lacquered traveller chest witholdbrasscorners/leatherstraps, innerlid holdsanunlabelleddrawnmap. Large BLANK creamtravelpapersheet overchest, slightcurlededges andfinepapertexture, completelyblank, evenlylit. Sheet spansx6–94% andy20–55% oftotalcomposition, enoughblankflatspaceforliveform. Details onlyouteredges: mapleleaf,brush/inkstone,coiledrope andblankclothluggagetag. Keep lowerquarterquiet forbuttons. Nocharacters, no text/writing/numbers/logos/printedlines/UI/buttons/stampswithcharacters/watermark. Fullbleed pixelhandpaint style, notphotoreal smooth woodgrain."
+    }
+  ],
+  "first_batch_outputs": {
+    "field_floor": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-4dbf2406-143b-4d6e-a4c7-aeb2cb58a583.png",
+    "town_floor": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-4f337e02-4d85-45bc-8a09-c41aded50405.png",
+    "flora": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-0dc56f04-b0ca-4059-9213-f3d730334a0b.png",
+    "civic": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-9c079d07-fd0f-4c3f-8799-03e621ac8fe9.png",
+    "loading": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-af8d0a08-f020-4d08-9fd4-59c12a8d2780.png",
+    "title": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-37afad71-3b07-4901-bb8e-c906d159ae0a.png",
+    "login": "C:\\Users\\tsz\\.codex\\generated_images\\01a11c61-6523-7133-8715-94487b30415b\\exec-e1708ef7-23c5-434f-8895-d438da3416ad.png"
+  },
+  "second_batch_prompts": [
+    {
+      "key": "civic",
+      "prompt": "STYLE CORRECTION requested by the user. Redraw as clearly TWO-DIMENSIONAL HAND-DRAWN PIXEL ART matching image2, classic detailed16-bit/32-bit JRPG game artwork. Image1 is current composition only; it looks too3Dpre-rendered and must not supply material/rendering style. Visible clean stair-step pixel contours, painted discrete colour clusters and colour ramps, no smooth continuous shader lighting, no PBR, no raytraced look, no photo woodgrain, no shinyplastic/metal, no ambient-occlusion creases, no miniature/toy3Drender appearance. Rich natural reference greens and depth via painted colour bands allowed, not flat monochrome. Keep layout/content unchanged and remove excessive realistic texture. Preserve TWOcolumns THREErows6objects identities/order. Complete south-facing hall, scaffold worksite, nighttable,well,bridge,barricade; equalclear cells with20%transparentgutters no overlap. Hero72logicalpix, door88high, clearflatpainted2Dfrontfacades+roof tops, not perspective3Dminiature. Genuine transparency, no ground/shadow/text/UI. Eachobject readable in gamepixelgrid."
+    },
+    {
+      "key": "loading",
+      "prompt": "STYLE CORRECTION requested by the user. Redraw as clearly TWO-DIMENSIONAL HAND-DRAWN PIXEL ART matching image2, classic detailed16-bit/32-bit JRPG game artwork. Image1 is current composition only; it looks too3Dpre-rendered and must not supply material/rendering style. Visible clean stair-step pixel contours, painted discrete colour clusters and colour ramps, no smooth continuous shader lighting, no PBR, no raytraced look, no photo woodgrain, no shinyplastic/metal, no ambient-occlusion creases, no miniature/toy3Drender appearance. Rich natural reference greens and depth via painted colour bands allowed, not flat monochrome. Keep layout/content unchanged and remove excessive realistic texture. Keep forest morningpath, smallredcapeherobackview, lantern/travelcase, calmupperlogozone/lowerprogresszone. Make screen2Dpixelillustration, reduce cinematic photoreal depthand smooth gradients, nature volumes painted like suppliedforestreference. Heroabout90logicalpx with visiblypixelcontours. Tall9:20, opaque, no text/logo/UI."
+    },
+    {
+      "key": "title",
+      "prompt": "STYLE CORRECTION requested by the user. Redraw as clearly TWO-DIMENSIONAL HAND-DRAWN PIXEL ART matching image2, classic detailed16-bit/32-bit JRPG game artwork. Image1 is current composition only; it looks too3Dpre-rendered and must not supply material/rendering style. Visible clean stair-step pixel contours, painted discrete colour clusters and colour ramps, no smooth continuous shader lighting, no PBR, no raytraced look, no photo woodgrain, no shinyplastic/metal, no ambient-occlusion creases, no miniature/toy3Drender appearance. Rich natural reference greens and depth via painted colour bands allowed, not flat monochrome. Keep layout/content unchanged and remove excessive realistic texture. Keep the gate with brightforestroadahead, smallredcapeherobackview, uppercalmlogozone/loweractionzone, lampandtravelcase. Render as2Dpixelgamefrontendscene, simpleorthographic/highobliquepaintedview withgentle perspective only; no architectural3Dviewport or PBRstone. Tall9:20, opaque, no text/logo/UI."
+    },
+    {
+      "key": "login",
+      "prompt": "STYLE CORRECTION requested by the user. Redraw as clearly TWO-DIMENSIONAL HAND-DRAWN PIXEL ART matching image2, classic detailed16-bit/32-bit JRPG game artwork. Image1 is current composition only; it looks too3Dpre-rendered and must not supply material/rendering style. Visible clean stair-step pixel contours, painted discrete colour clusters and colour ramps, no smooth continuous shader lighting, no PBR, no raytraced look, no photo woodgrain, no shinyplastic/metal, no ambient-occlusion creases, no miniature/toy3Drender appearance. Rich natural reference greens and depth via painted colour bands allowed, not flat monochrome. Keep layout/content unchanged and remove excessive realistic texture. Keep travelchest/openblankcreamdocument/map-lid/table/lantern scene andcentralreadableformzone. Simplify toward illustrated2Dpixelstill-life, gentlertopdownprojection, wood/chest/brass usepaintedflatcolourramps without realisticgrain/sharpgloss. Crisp pixelgeometry, blankpaper no marks. Tall9:20, opaque, no characters/text/logo/UI."
+    }
+  ],
+  "second_batch_outputs": [
+    {
+      "key": "civic",
+      "path": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-fae6127b-9fbf-461c-a3f5-efe5725131ba.png"
+    },
+    {
+      "key": "loading",
+      "path": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-1f6a085d-ad75-40c8-bf07-b81f3bef7f03.png"
+    },
+    {
+      "key": "title",
+      "path": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-d40eb391-eaf6-4fbb-9133-912a1e8580a5.png"
+    },
+    {
+      "key": "login",
+      "path": "C:/Users/tsz/.codex/generated_images/01a11c61-6523-7133-8715-94487b30415b/exec-1dc309f0-f697-4e56-935a-2acd5bde3771.png"
+    }
+  ]
+}

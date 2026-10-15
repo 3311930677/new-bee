@@ -1,0 +1,20 @@
+{
+ "_note": "Art-layout decisions for tideflat (world px, map 960x1248). Gameplay positions come from main_world_maps.json.",
+ "sea": [[860, 0, 100, 1248]],
+ "surf": [[836, 0, 24, 1248]],
+ "walls": [[0, 0, 410, 140], [550, 0, 410, 140]],
+ "gate": [[420, 20, 120, 110]],
+ "pools": [[300, 495, 95, 34], [700, 300, 85, 32], [725, 790, 80, 30], [215, 315, 70, 26], [640, 1140, 90, 30]],
+ "salt": [[270, 1000, 95, 55], [150, 880, 45, 22], [730, 470, 40, 18]],
+ "lair": [],
+ "grass": [[70, 1080, 90, 140], [60, 440, 70, 90], [480, 1210, 300, 40]],
+ "block": [[0, 0, 410, 140], [550, 0, 410, 140], [860, 0, 100, 1248]],
+ "labels": {
+  "SLUICE EMBANKMENT (collision)": [20, 60],
+  "OPEN SEA + SURF (collision)": [720, 1180],
+  "POOL fishing": [250, 470],
+  "SALT-SCALE LAIR": [210, 1065],
+  "PORT BOARDWALK ->": [10, 650],
+  "SOUTH DUNE / BEACH GRASS": [380, 1220]
+ }
+}

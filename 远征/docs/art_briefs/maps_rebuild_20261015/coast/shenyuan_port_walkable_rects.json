@@ -1,0 +1,100 @@
+{
+  "map": "shenyuan_port",
+  "ground": "shenyuan_port_ground.png",
+  "coordinate_system": "960x1248, Rect2(x,y,w,h)",
+  "method": "read-only inspection of generated final art; union walkable rectangles, complement is deep water",
+  "rectangles": [
+    {
+      "name": "central_stone_quay",
+      "rect": [
+        330,
+        0,
+        300,
+        1248
+      ]
+    },
+    {
+      "name": "west_exit_deck",
+      "rect": [
+        0,
+        610,
+        396,
+        94
+      ]
+    },
+    {
+      "name": "east_exit_deck",
+      "rect": [
+        562,
+        652,
+        398,
+        94
+      ]
+    },
+    {
+      "name": "upper_left_empty_shop_floor",
+      "rect": [
+        250,
+        154,
+        146,
+        180
+      ]
+    },
+    {
+      "name": "upper_right_empty_shop_floor",
+      "rect": [
+        562,
+        292,
+        148,
+        182
+      ]
+    },
+    {
+      "name": "upper_cross_deck",
+      "rect": [
+        296,
+        334,
+        266,
+        74
+      ]
+    },
+    {
+      "name": "lower_left_empty_shop_floor",
+      "rect": [
+        250,
+        824,
+        146,
+        214
+      ]
+    },
+    {
+      "name": "lower_right_empty_shop_floor",
+      "rect": [
+        562,
+        858,
+        148,
+        220
+      ]
+    },
+    {
+      "name": "lower_cross_deck",
+      "rect": [
+        396,
+        864,
+        166,
+        80
+      ]
+    }
+  ],
+  "all_configured_points_inside_union": true,
+  "notes": [
+    "所有现有spawn/spawn_points/exits/city_building_positions/city_npc_positions/entities.at中心均在建议union内。最终仍需由主代理加水域碰撞后验证建筑基座collider对实际角色半径的影响。",
+    "西侧钓鱼点(260,700)距木栈下沿4px。保留实体位置；角色在(260,680)可正常靠近交互，不应为容纳脚底半径把木栈外水面设为可走。",
+    "上横桥和主堤重合，保持union而非逐块先收缩；不要在矩形相接处生成墙，以免阻断路口。",
+    "可走区补集碰撞应严格覆盖地图内深水；外边界由已有地图边界处理。",
+    "动态dredge船位于水面(158..274,438..504)，这是正常船位，保持；其绳索到(329,479)近主堤。",
+    "动态embank供货自带Rect2(717,460,121,57)木台，距右上平台x710边缘有7px断缝。建议只将动态木台左缘延到704、宽134，形成y460..474的贴岸连接。无任务实体在台上，不必将整台加入可走union；避免盲目搬到西出口线压住(90,660)/(210,660)。",
+    "动态rope脚点(624,730)位于东木栈，可保留。",
+    "固定PortGround._draw_base禁用；四座现有独立建筑和全部NPC继续保留。"
+  ]
+}

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/ui/home/TownHome.gd" id="1_town"]
+
+[node name="TownHome" type="Control"]
+layout_mode = 3
+offset_right = 480.0
+offset_bottom = 800.0
+script = ExtResource("1_town")

@@ -1,0 +1,19 @@
+Original 2D UI asset sheet for a portrait mobile RPG with an East-Asian frontier theme. Top-tier commercial mobile game quality.
+Match the UI style of the two attached STYLE references (the game's home screen and settings screen) exactly: near-black lacquer (#1A1412) and dark lacquered wood as the main surface, thin aged-gold (#C9A45C) rims and fine gold inner lines, small cloud-scroll (ruyi) corner ornaments, tiny red-garnet rivets, vermilion (#9E2B25) used only as a small accent. Elegant and restrained, not chunky.
+Follow the attached LAYOUT reference exactly: every grey box is one asset, drawn at that exact position and size; darker grey areas are decorated end caps / corners, light grey areas are plain stretchable middles that must contain only seamless lacquer texture and straight rim lines.
+Rendering: fine-grain HD pixel art, crisp edges, consistent fine pixel size across the whole sheet; light from the upper left, lit top rims, darker bottom rims, small bright highlights on gold; subtle lacquer sheen and faint wood grain inside panels.
+Background: flat pure #FF00FF magenta everywhere outside the boxes. Never use magenta inside any asset.
+NO text, NO letters, NO numbers, NO icons or symbols, NO characters, NO cast shadows, NO outer glow, NO soft halo, NO tassels, NO jade pendants, NO dragons, NO 3D render look, NO photorealism, NO watermark.
+
+Sheet UI3-04, scale 2. Top: a wide page-title plaque: black lacquer with a thin gold rim, gold cloud-scroll end caps on both short sides, plain centre for text.
+Bottom row, left to right:
+- a small name plaque in the same style with simpler end caps;
+- a building name tag: slim black lacquer tag with a gold rim; left end is a round gold-ringed medallion (empty centre, for an icon); right end is a small gold arrow-like point; plain middle for a short name;
+- a thin divider: a fine gold line with a small ruyi cloud ornament at each end, plain middle.
+
+Input image 1 is the LAYOUT template. Input images 2 and 3 are STYLE references only; do not reproduce their scenes, text or icons. Output one 1536x1024 PNG asset sheet. Preserve the entire magenta canvas and exact layout geometry. No labels or guide markings. Everything, including decoration, must stay inside its assigned box. Empty centres are solid lacquer or parchment, not holes. Geometry on the 1536x1024 canvas (origin top left):
+plaque_title: x,y,width,height=416,376,704,128; nine-slice art margins=80,0,80,0
+plaque_small: x,y,width,height=112,568,384,80; nine-slice art margins=40,0,40,0
+building_tag: x,y,width,height=560,568,320,80; nine-slice art margins=44,0,24,0
+divider: x,y,width,height=944,588,480,40; nine-slice art margins=48,0,48,0
+The building tag medallion outer diameter must be at most 80 canvas pixels, wholly inside its 320x80 box including every gold tick. Fine gold lines only; faint grain. The divider ends must stay within its 40px height.

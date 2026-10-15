@@ -165,6 +165,8 @@ class PixelButton extends Button:
 	var ornate := false  # 主按钮两端的金色像素菱形（代码绘制模式）
 	var kit := ""        # 素材包前缀：hero / btn / tab；设置后用 *_normal/_pressed/_disabled 贴图代替代码框体
 	var selected := false
+	var focus_marks := false  # 焦点 / 悬停改为两侧金色菱形光标（不画矩形框），标题页用
+	var nav_marks := true     # 仅焦点（无悬停）时是否显示菱形：标题页在键盘 / 手柄操作后才打开
 	var _t := 0.0
 	var _hover := false
 	var _sparks: Array = []
@@ -180,6 +182,14 @@ class PixelButton extends Button:
 		mouse_exited.connect(func(): _hover = false; queue_redraw())
 		for e in [button_down, button_up, focus_entered, focus_exited, resized]: e.connect(queue_redraw)
 		button_down.connect(_burst)
+	## 两侧菱形光标：金色外菱形 + 奶油色芯，落在按钮外 12px。
+	func _draw_marks(r: Rect2) -> void:
+		var cy := floorf(r.get_center().y)
+		for cx in [r.position.x - 12.0, r.end.x + 12.0]:
+			var outer := PackedVector2Array([Vector2(cx, cy - 7), Vector2(cx + 5, cy), Vector2(cx, cy + 7), Vector2(cx - 5, cy)])
+			draw_colored_polygon(outer, Color("1b110b", .8))
+			draw_colored_polygon(PackedVector2Array([Vector2(cx, cy - 6), Vector2(cx + 4, cy), Vector2(cx, cy + 6), Vector2(cx - 4, cy)]), Color("f2c76a"))
+			draw_colored_polygon(PackedVector2Array([Vector2(cx, cy - 3), Vector2(cx + 2, cy), Vector2(cx, cy + 3), Vector2(cx - 2, cy)]), Color("fff1c8"))
 	func _burst() -> void:
 		if G.get_meta("ui_review_mode", false): return
 		var at := get_local_mouse_position()
@@ -207,7 +217,9 @@ class PixelButton extends Button:
 			if skin == null: skin = UiKitLib.style(kit + "_normal")
 		if skin != null:
 			draw_style_box(skin, UiKitLib.snap(r))
-			if (_hover or has_focus()) and not disabled and not is_pressed():
+			if focus_marks:
+				if not disabled and (_hover or (has_focus() and nav_marks)): _draw_marks(UiKitLib.snap(r))
+			elif (_hover or has_focus()) and not disabled and not is_pressed():
 				# 悬停：亮金框；仅键盘焦点：淡金框（默认焦点不再常亮一圈框）。
 				var o := UiKitLib.snap(r).grow(2)
 				var col := Color("ffe08a", .85) if _hover else Color("e8c06a", .32)

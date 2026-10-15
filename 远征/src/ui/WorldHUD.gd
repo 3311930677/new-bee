@@ -1,11 +1,11 @@
 class_name WorldHUD
 extends RefCounted
 const UI := preload("res://src/ui/LacquerUI.gd")
-const STATUS_SIZE := Vector2(176, 56)
+const STATUS_SIZE := Vector2(176, 64)
 const GOLD_POS := Vector2(196, 8)
 const GOLD_SIZE := Vector2(104, 44)
-const CITY_TASK_Y := 76.0
-const FIELD_TASK_Y := 76.0
+const CITY_TASK_Y := 86.0
+const FIELD_TASK_Y := 86.0
 const TASK_GAP := 50.0
 const WOOD := Color("17151a", 0.78)
 const EDGE := Color("6e5434")
@@ -34,48 +34,56 @@ static func finish(canvas: CanvasItem, dimensions: Vector2, _accent: Color, _pap
 static func status(hp_fill: ColorRect, exp_fill: ColorRect) -> Dictionary:
 	var root := MaterialPanel.new()
 	root.name = "WorldStatus"
+	root.kind = "status"
 	root.position = Vector2(12, 12)
 	root.size = STATUS_SIZE
 	var lv_caption := label("Lv", 12, UI.AGED)
-	lv_caption.position = Vector2(8, 3)
+	lv_caption.position = Vector2(8, 5)
 	lv_caption.size = Vector2(36, 16)
+	lv_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	root.add_child(lv_caption)
 	var level := label("", 18, UI.GOLD, true)
-	level.position = Vector2(8, 20)
-	level.size = Vector2(36, 26)
+	level.position = Vector2(8, 24)
+	level.size = Vector2(36, 28)
+	level.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	root.add_child(level)
 	var hp := label("", 13, UI.PAPER, true)
-	hp.position = Vector2(52, 2)
-	hp.size = Vector2(120, 18)
+	hp.position = Vector2(72, 5)
+	hp.size = Vector2(96, 18)
 	hp.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	root.add_child(hp)
 	var heart := label("♥", 12, UI.JADE)
-	heart.position = Vector2(52, 2)
+	heart.position = Vector2(56, 5)
 	heart.size = Vector2(14, 18)
 	root.add_child(heart)
 	var caption := label("历练", 11, UI.AGED)
-	caption.position = Vector2(52, 31)
+	caption.position = Vector2(56, 36)
 	caption.size = Vector2(40, 16)
 	root.add_child(caption)
 	var exp := label("", 11, UI.AGED)
-	exp.position = Vector2(92, 31)
-	exp.size = Vector2(80, 16)
+	exp.position = Vector2(96, 36)
+	exp.size = Vector2(72, 16)
 	exp.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	root.add_child(exp)
-	for item in [[hp_fill, 8, 20, UI.JADE], [exp_fill, 4, 48, UI.FROST]]:
+	for item in [[hp_fill, 10, 24, UI.JADE], [exp_fill, 6, 52, UI.FROST]]:
 		var fill := item[0] as ColorRect
-		var bg := ColorRect.new()
-		bg.color = UI.RAISED
-		bg.position = Vector2(52, item[2])
-		bg.size = Vector2(122, item[1])
+		var bg := BarTrack.new()
+		bg.position = Vector2(56, item[2])
+		bg.size = Vector2(112, item[1])
 		bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		root.add_child(bg)
-		fill.position = Vector2.ONE
-		fill.size = Vector2(0, int(item[1]) - 2)
+		fill.position = Vector2(2, 2)
+		fill.size = Vector2(0, int(item[1]) - 4)
 		fill.color = item[3]
-		fill.set_meta("hud_width", 120.0)
+		fill.set_meta("hud_width", 108.0)
 		fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		bg.add_child(fill)
+		var glint := ColorRect.new()
+		glint.color = Color(1, 1, 1, 0.25)
+		glint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		fill.add_child(glint)
+		glint.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
+		glint.offset_bottom = 1
 	return {"root":root, "level":level, "hp":hp, "exp":exp}
 
 static func progress(fill: ColorRect, ratio: float) -> void:
@@ -90,11 +98,12 @@ static func currency() -> Dictionary:
 	root.inset_y = 8
 	var icon := G.ui_icon("coin", Vector2(18, 18))
 	icon.name = "GoldIcon"
-	icon.position = Vector2(6, 13)
+	icon.position = Vector2(7, 13)
+	icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	root.add_child(icon)
 	var value := label("", 13, UI.GOLD, true)
 	value.position = Vector2(28, 8)
-	value.size = Vector2(72, 28)
+	value.size = Vector2(68, 28)
 	value.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	root.add_child(value)
 	return {"root":root, "value":value}
@@ -102,11 +111,12 @@ static func currency() -> Dictionary:
 static func region_title(text: String) -> Control:
 	var root := MaterialPanel.new()
 	root.name = "RegionTitle"
+	root.kind = "region"
 	var width := clampf(G.font_serif.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 15).x + 20, 128, 200)
 	root.position = Vector2(468 - width, 122)
-	root.size = Vector2(width, 26)
+	root.size = Vector2(width, 28)
 	var l := UI.label(text, 15, UI.PAPER, true)
-	l.position = Vector2(10, 2)
+	l.position = Vector2(10, 3)
 	l.size = Vector2(width - 20, 22)
 	l.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	l.clip_text = true
@@ -122,13 +132,18 @@ static func task_chip(width: float, kind: String) -> Dictionary:
 	root.accent = {"story":UI.GOLD, "daily":UI.AGED, "side":UI.FROST}.get(kind, UI.AGED)
 	var badge := label({"story":"主", "daily":"委", "side":"支"}.get(kind, "事"), 11, root.accent, true)
 	badge.name = "TaskBadge"
-	badge.position = Vector2(8, 12)
-	badge.size = Vector2(20, 20)
+	badge.position = Vector2(8, 10)
+	badge.size = Vector2(22, 24)
 	badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	root.add_child(badge)
+	var heading := label({"story":"当前主线", "daily":"行旅委托", "side":"追踪目标"}.get(kind,"行旅记事"), 10, root.accent)
+	heading.name = "TaskHeading"
+	heading.position = Vector2(38, 4)
+	heading.size = Vector2(width - 46, 14)
+	root.add_child(heading)
 	var l := label("", 13, UI.PAPER)
-	l.position = Vector2(34, 5)
-	l.size = Vector2(width - 42, 34)
+	l.position = Vector2(38, 19)
+	l.size = Vector2(width - 46, 20)
 	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	l.max_lines_visible = 2
 	l.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
@@ -145,8 +160,8 @@ static func update_task(l: Label, words: String) -> void:
 		var first := pieces[0].strip_edges()
 		(chip.get_node("TaskBadge") as Label).text = first.left(1)
 	var width := G.font_reg.get_string_size(l.text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x
-	chip.size.y = 60 if width > l.size.x else 44
-	l.size.y = chip.size.y - 10
+	chip.size.y = 68 if width > l.size.x else 44
+	l.size.y = chip.size.y - 23
 	chip.queue_redraw()
 
 static func format_currency(amount: int) -> String:
@@ -163,18 +178,30 @@ static func motion_enabled() -> bool:
 
 class MaterialPanel extends Control:
 	const L = preload("res://src/ui/LacquerUI.gd")
+	const S = preload("res://src/ui/WorldHUDSkin.gd")
+	var kind := ""
 	func _ready() -> void:
 		mouse_filter = Control.MOUSE_FILTER_IGNORE
 		resized.connect(queue_redraw)
 	func _draw() -> void:
-		L.plate(self, Rect2(Vector2.ZERO, size))
-		# 状态栏内外阴阳微刻线与左部分割线
-		draw_line(Vector2(46, 6), Vector2(46, size.y - 6), Color("5c4834", 0.6), 1.0)
+		S.plate(self, Rect2(Vector2.ZERO, size))
+		if kind == "status":
+			S.medallion(self,Rect2(6,6,40,51))
+			draw_line(Vector2(50,6),Vector2(50,size.y-6),Color(S.BRONZE,0.65),1)
+		elif kind == "region":
+			for x in [5.0,size.x-6]: S.diamond(self,Vector2(x,size.y*0.5),2,S.GOLD)
+
+class BarTrack extends Control:
+	func _draw() -> void:
+		draw_rect(Rect2(Vector2.ZERO,size),Color("715337"))
+		draw_rect(Rect2(Vector2.ONE,size-Vector2.ONE*2),Color("090e0d"))
+		draw_line(Vector2(1,size.y-1),Vector2(size.x-1,size.y-1),Color("b18c58",0.65),1)
 
 class ActionChip extends Button:
 	const L = preload("res://src/ui/LacquerUI.gd")
-	var bg := Color("15121a", 0.85)
-	var edge := Color("6e5434")
+	const S = preload("res://src/ui/WorldHUDSkin.gd")
+	var bg := Color("171c1b", 0.95)
+	var edge := S.BRONZE
 	var accent := Color("c29a5b")
 	var task_kind := ""
 	var inset_y := 0.0
@@ -189,9 +216,9 @@ class ActionChip extends Button:
 			event.connect(queue_redraw)
 	func _draw() -> void:
 		var r := Rect2(0, inset_y, size.x, size.y - inset_y * 2)
-		L.plate(self, r, L.RAISED if is_pressed() else bg, L.LIT if is_hovered() else edge)
+		S.plate(self, r, bg, S.GOLD if is_hovered() or has_focus() else edge, true, is_pressed())
 		if not task_kind.is_empty():
-			draw_rect(Rect2(2, inset_y + 4, 3, r.size.y - 8), accent)
-			draw_rect(Rect2(7, inset_y + 11, 20, 20), accent, false, 1.0)
+			draw_rect(Rect2(4, inset_y + 8, 1, r.size.y - 16), accent)
+			S.plate(self,Rect2(8,inset_y+9,22,26),Color("463824"),accent,false)
 		if has_focus(): L.plate(self, Rect2(Vector2.ONE * -2, size + Vector2.ONE * 4), Color.TRANSPARENT, L.PAPER)
 	func pulse() -> void: queue_redraw()

@@ -1,6 +1,7 @@
 extends RefCounted
 ## 只将真实道路抽象成地图线条；不生成装饰性、不可通行的假路线。
 const Layout := preload("res://src/explore/FlatGroundLayout.gd")
+const ReferenceArt := preload("res://src/world/ReferenceWorldArt.gd")
 var routes: Array = []
 
 func terrain_thumbnail(map: Node) -> Texture2D:
@@ -15,14 +16,31 @@ func terrain_thumbnail(map: Node) -> Texture2D:
 		return map.get_meta("terrain_thumbnail") as Texture2D
 
 	var dimensions := Vector2i((extent / maxf(extent.x, extent.y) * 256).round())
+	var map_id := String(map.get("_main_map_id"))
+	# Use the two floor layers actually rendered by ReferenceFloor, rather than its older background field.
+	if ReferenceArt.active(map_id):
+		var thumb := Image.create(dimensions.x,dimensions.y,false,Image.FORMAT_RGBA8)
+		var half_height := dimensions.y / 2
+		for index in 2:
+			var part := ReferenceArt.texture(map_id + ("_floor_top" if index == 0 else "_floor_bottom")).get_image()
+			part.convert(Image.FORMAT_RGBA8)
+			part.resize(dimensions.x,half_height if index == 0 else dimensions.y-half_height,Image.INTERPOLATE_LANCZOS)
+			thumb.blit_rect(part,Rect2i(Vector2i.ZERO,part.get_size()),Vector2i(0,index*half_height))
+		thumb.adjust_bcs(0.9,1.1,0.86)
+		_paint_buildings(thumb,city,extent,dimensions)
+		var reference := ImageTexture.create_from_image(thumb)
+		map.set_meta("terrain_signature",signature)
+		map.set_meta("terrain_thumbnail",reference)
+		return reference
 	# 手绘整图地面：小地图直接缩略地面本身，跟随美术，不再叠程序路线。
-	if bool(cfg.get("painted_ground", false)):
+	if bool(cfg.get("painted_ground", false)) or String(cfg.get("ground_style", "")) == "background":
 		var ground: Texture2D = G.visual_texture(String(cfg.get("background", "")))
 		if ground != null:
 			var thumb := ground.get_image()
 			thumb.convert(Image.FORMAT_RGBA8)
 			thumb.resize(dimensions.x, dimensions.y, Image.INTERPOLATE_LANCZOS)
 			thumb.adjust_bcs(0.82, 1.18, 0.9)  # 压暗提对比，让标记点更醒目
+			_paint_buildings(thumb,city,extent,dimensions)
 			var painted := ImageTexture.create_from_image(thumb)
 			map.set_meta("terrain_signature", signature)
 			map.set_meta("terrain_thumbnail", painted)
@@ -35,7 +53,6 @@ func terrain_thumbnail(map: Node) -> Texture2D:
 	var terrain_bg: Color
 	var road_col: Color
 	var edge_col: Color
-	var building_col: Color = Color("242226")
 	var water_col: Color = Color("294757")
 
 	if not flat_pal.is_empty() and flat_pal.size() >= 5:
@@ -114,21 +131,23 @@ func terrain_thumbnail(map: Node) -> Texture2D:
 						if Vector2(x, y).distance_squared_to(center) <= radius * radius:
 							image.set_pixel(x, y, road_col)
 
-	if city != null:
-		for b in city.get("_buildings"):
-			if not b.built(): continue
-			var p: Vector2 = b.position / extent * Vector2(dimensions)
-			var w := maxi(3, roundi(float(b.get("_w")) / extent.x * float(dimensions.x)))
-			var h := maxi(3, roundi(float(b.get("_h")) / extent.y * float(dimensions.y)))
-			var rect := Rect2i(roundi(p.x - w * 0.5), roundi(p.y - h), w, h).intersection(Rect2i(Vector2i.ZERO, dimensions))
-			image.fill_rect(rect, building_col)
-			if rect.has_area():
-				image.fill_rect(Rect2i(rect.position, Vector2i(rect.size.x, 1)), Color("c29a5b"))
+	_paint_buildings(image,city,extent,dimensions)
 
 	var texture := ImageTexture.create_from_image(image)
 	map.set_meta("terrain_signature", signature)
 	map.set_meta("terrain_thumbnail", texture)
 	return texture
+
+func _paint_buildings(image: Image, city: Node, extent: Vector2, dimensions: Vector2i) -> void:
+	if city == null: return
+	for b in city.get("_buildings"):
+		if not b.built(): continue
+		var p: Vector2 = b.position / extent * Vector2(dimensions)
+		var w := maxi(3,roundi(float(b.get("_w")) / extent.x * float(dimensions.x)))
+		var h := maxi(3,roundi(float(b.get("_h")) / extent.y * float(dimensions.y)))
+		var rect := Rect2i(roundi(p.x-w*0.5),roundi(p.y-h),w,h).intersection(Rect2i(Vector2i.ZERO,dimensions))
+		image.fill_rect(rect,Color("242226"))
+		if rect.has_area(): image.fill_rect(Rect2i(rect.position,Vector2i(rect.size.x,1)),Color("c29a5b"))
 
 static func marker(canvas: CanvasItem, point: Vector2, kind: String, facing: Vector2 = Vector2.DOWN) -> void:
 	var p := point.round()

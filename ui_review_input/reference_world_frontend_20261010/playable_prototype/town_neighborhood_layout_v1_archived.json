@@ -1,0 +1,439 @@
+{
+  "version": 1,
+  "world_size": [
+    960,
+    1920
+  ],
+  "anchor_convention": "bottom center of front steps; door approach is a separate point",
+  "min_roof_gap": 24,
+  "buildings": [
+    {
+      "id": "gate",
+      "name": "北门楼",
+      "anchor": [
+        480,
+        400
+      ],
+      "size": [
+        380,
+        280
+      ],
+      "approach": [
+        480,
+        430
+      ],
+      "passable": true
+    },
+    {
+      "id": "stable",
+      "name": "马厩",
+      "anchor": [
+        190,
+        630
+      ],
+      "size": [
+        280,
+        200
+      ],
+      "approach": [
+        190,
+        672
+      ]
+    },
+    {
+      "id": "barracks",
+      "name": "巡界厅",
+      "anchor": [
+        770,
+        650
+      ],
+      "size": [
+        280,
+        210
+      ],
+      "approach": [
+        770,
+        692
+      ]
+    },
+    {
+      "id": "storehouse",
+      "name": "仓廪",
+      "anchor": [
+        180,
+        880
+      ],
+      "size": [
+        280,
+        200
+      ],
+      "approach": [
+        180,
+        922
+      ]
+    },
+    {
+      "id": "forge",
+      "name": "锻造铺",
+      "anchor": [
+        780,
+        900
+      ],
+      "size": [
+        280,
+        200
+      ],
+      "approach": [
+        780,
+        942
+      ]
+    },
+    {
+      "id": "hall",
+      "name": "议事厅",
+      "anchor": [
+        320,
+        1200
+      ],
+      "size": [
+        420,
+        259
+      ],
+      "approach": [
+        320,
+        1242
+      ]
+    },
+    {
+      "id": "archive",
+      "name": "图志阁",
+      "anchor": [
+        190,
+        1580
+      ],
+      "size": [
+        280,
+        220
+      ],
+      "approach": [
+        190,
+        1622
+      ]
+    },
+    {
+      "id": "kennel",
+      "name": "兽栏",
+      "anchor": [
+        780,
+        1580
+      ],
+      "size": [
+        280,
+        210
+      ],
+      "approach": [
+        780,
+        1622
+      ]
+    },
+    {
+      "id": "shrine",
+      "name": "祭坛",
+      "anchor": [
+        485,
+        1700
+      ],
+      "size": [
+        240,
+        180
+      ],
+      "approach": [
+        485,
+        1742
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "kind": "main",
+      "width": 128,
+      "points": [
+        [
+          480,
+          400
+        ],
+        [
+          480,
+          780
+        ],
+        [
+          600,
+          900
+        ],
+        [
+          620,
+          1050
+        ],
+        [
+          620,
+          1235
+        ],
+        [
+          500,
+          1350
+        ],
+        [
+          500,
+          1460
+        ]
+      ]
+    },
+    {
+      "kind": "front",
+      "width": 80,
+      "points": [
+        [
+          480,
+          672
+        ],
+        [
+          190,
+          672
+        ]
+      ]
+    },
+    {
+      "kind": "front",
+      "width": 80,
+      "points": [
+        [
+          480,
+          692
+        ],
+        [
+          770,
+          692
+        ]
+      ]
+    },
+    {
+      "kind": "front",
+      "width": 80,
+      "points": [
+        [
+          600,
+          900
+        ],
+        [
+          180,
+          922
+        ]
+      ]
+    },
+    {
+      "kind": "front",
+      "width": 80,
+      "points": [
+        [
+          600,
+          900
+        ],
+        [
+          780,
+          942
+        ]
+      ]
+    },
+    {
+      "kind": "front",
+      "width": 96,
+      "points": [
+        [
+          620,
+          1242
+        ],
+        [
+          320,
+          1242
+        ]
+      ]
+    },
+    {
+      "kind": "front",
+      "width": 80,
+      "points": [
+        [
+          500,
+          1350
+        ],
+        [
+          350,
+          1350
+        ],
+        [
+          350,
+          1622
+        ],
+        [
+          190,
+          1622
+        ]
+      ]
+    },
+    {
+      "kind": "front",
+      "width": 80,
+      "points": [
+        [
+          500,
+          1460
+        ],
+        [
+          620,
+          1460
+        ],
+        [
+          620,
+          1622
+        ],
+        [
+          780,
+          1622
+        ]
+      ]
+    },
+    {
+      "kind": "front",
+      "width": 80,
+      "points": [
+        [
+          620,
+          1460
+        ],
+        [
+          630,
+          1750
+        ],
+        [
+          485,
+          1742
+        ]
+      ]
+    }
+  ],
+  "trees": [
+    [
+      95,
+      270
+    ],
+    [
+      855,
+      275
+    ],
+    [
+      800,
+      1230
+    ],
+    [
+      180,
+      1860
+    ],
+    [
+      810,
+      1860
+    ]
+  ],
+  "spawn": [
+    500,
+    1300
+  ],
+  "plaza": [
+    240,
+    1200,
+    540,
+    170
+  ],
+  "prototype_note": "Full-neighborhood spatial prototype. Non-hall facility silhouettes are placeholders unless explicitly assigned new art. No game state changes.",
+  "reserved_interactions": [
+    {
+      "id": "npc_guard",
+      "name": "城门卫",
+      "position": [
+        420,
+        470
+      ]
+    },
+    {
+      "id": "npc_stablemaster",
+      "name": "马厩管事",
+      "position": [
+        240,
+        680
+      ]
+    },
+    {
+      "id": "npc_mentor",
+      "name": "巡界导师",
+      "position": [
+        710,
+        700
+      ]
+    },
+    {
+      "id": "npc_smith",
+      "name": "铁匠",
+      "position": [
+        860,
+        950
+      ]
+    },
+    {
+      "id": "npc_steward",
+      "name": "执事",
+      "position": [
+        400,
+        1270
+      ]
+    },
+    {
+      "id": "npc_child",
+      "name": "孩童",
+      "position": [
+        410,
+        1340
+      ]
+    },
+    {
+      "id": "npc_warden",
+      "name": "行脚商人",
+      "position": [
+        610,
+        1370
+      ]
+    },
+    {
+      "id": "npc_scribe",
+      "name": "图志阁掌事",
+      "position": [
+        110,
+        1660
+      ]
+    },
+    {
+      "id": "npc_keeper",
+      "name": "兽栏伙计",
+      "position": [
+        860,
+        1650
+      ]
+    },
+    {
+      "id": "night_table",
+      "name": "古枫旁夜桌预留",
+      "position": [
+        760,
+        1290
+      ]
+    }
+  ]
+}

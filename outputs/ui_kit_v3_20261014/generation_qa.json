@@ -1,0 +1,951 @@
+{
+  "UI3-01_primary": {
+    "format": "PNG",
+    "canvas": [
+      1536,
+      1024
+    ],
+    "components": 3,
+    "background_exact_percent": 0.0,
+    "items": {
+      "hero_normal": {
+        "guide_box": [
+          464,
+          232,
+          608,
+          144
+        ],
+        "source_box": [
+          463,
+          230,
+          611,
+          141
+        ],
+        "aspect_error": 0.0263,
+        "overflow_px": [
+          1,
+          2,
+          2,
+          0
+        ]
+      },
+      "hero_pressed": {
+        "guide_box": [
+          464,
+          440,
+          608,
+          144
+        ],
+        "source_box": [
+          463,
+          440,
+          611,
+          140
+        ],
+        "aspect_error": 0.0336,
+        "overflow_px": [
+          1,
+          0,
+          2,
+          0
+        ]
+      },
+      "hero_disabled": {
+        "guide_box": [
+          464,
+          648,
+          608,
+          144
+        ],
+        "source_box": [
+          463,
+          649,
+          611,
+          141
+        ],
+        "aspect_error": 0.0263,
+        "overflow_px": [
+          1,
+          0,
+          2,
+          0
+        ]
+      }
+    }
+  },
+  "UI3-02_buttons": {
+    "format": "PNG",
+    "canvas": [
+      1536,
+      1024
+    ],
+    "components": 7,
+    "background_exact_percent": 0.0,
+    "items": {
+      "btn_normal": {
+        "guide_box": [
+          320,
+          376,
+          256,
+          96
+        ],
+        "source_box": [
+          319,
+          376,
+          258,
+          93
+        ],
+        "aspect_error": 0.0403,
+        "overflow_px": [
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      "btn_pressed": {
+        "guide_box": [
+          640,
+          376,
+          256,
+          96
+        ],
+        "source_box": [
+          638,
+          376,
+          259,
+          94
+        ],
+        "aspect_error": 0.0332,
+        "overflow_px": [
+          2,
+          0,
+          1,
+          0
+        ]
+      },
+      "btn_disabled": {
+        "guide_box": [
+          960,
+          376,
+          256,
+          96
+        ],
+        "source_box": [
+          958,
+          376,
+          259,
+          93
+        ],
+        "aspect_error": 0.0444,
+        "overflow_px": [
+          2,
+          0,
+          1,
+          0
+        ]
+      },
+      "tab_normal": {
+        "guide_box": [
+          200,
+          548,
+          288,
+          88
+        ],
+        "source_box": [
+          196,
+          541,
+          305,
+          89
+        ],
+        "aspect_error": 0.0471,
+        "overflow_px": [
+          4,
+          7,
+          13,
+          0
+        ]
+      },
+      "tab_selected": {
+        "guide_box": [
+          552,
+          548,
+          288,
+          88
+        ],
+        "source_box": [
+          545,
+          541,
+          304,
+          90
+        ],
+        "aspect_error": 0.0321,
+        "overflow_px": [
+          7,
+          7,
+          9,
+          0
+        ]
+      },
+      "pill": {
+        "guide_box": [
+          904,
+          548,
+          256,
+          88
+        ],
+        "source_box": [
+          895,
+          542,
+          276,
+          87
+        ],
+        "aspect_error": 0.0905,
+        "overflow_px": [
+          9,
+          6,
+          11,
+          0
+        ]
+      },
+      "btn_round": {
+        "guide_box": [
+          1224,
+          536,
+          112,
+          112
+        ],
+        "source_box": [
+          1218,
+          520,
+          127,
+          129
+        ],
+        "aspect_error": 0.0155,
+        "overflow_px": [
+          6,
+          16,
+          9,
+          1
+        ]
+      }
+    }
+  },
+  "UI3-03_panels": {
+    "format": "PNG",
+    "canvas": [
+      1536,
+      1024
+    ],
+    "components": 3,
+    "background_exact_percent": 0.0,
+    "items": {
+      "panel_iron": {
+        "guide_box": [
+          224,
+          176,
+          512,
+          512
+        ],
+        "source_box": [
+          225,
+          177,
+          511,
+          490
+        ],
+        "aspect_error": 0.0429,
+        "overflow_px": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "card_paper": {
+        "guide_box": [
+          800,
+          240,
+          512,
+          384
+        ],
+        "source_box": [
+          800,
+          240,
+          512,
+          371
+        ],
+        "aspect_error": 0.035,
+        "overflow_px": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "group_header": {
+        "guide_box": [
+          528,
+          752,
+          480,
+          96
+        ],
+        "source_box": [
+          527,
+          731,
+          494,
+          121
+        ],
+        "aspect_error": 0.1835,
+        "overflow_px": [
+          1,
+          21,
+          13,
+          4
+        ]
+      }
+    }
+  },
+  "UI3-04_plaques": {
+    "format": "PNG",
+    "canvas": [
+      1536,
+      1024
+    ],
+    "components": 4,
+    "background_exact_percent": 0.0,
+    "items": {
+      "plaque_title": {
+        "guide_box": [
+          416,
+          376,
+          704,
+          128
+        ],
+        "source_box": [
+          411,
+          369,
+          714,
+          128
+        ],
+        "aspect_error": 0.0142,
+        "overflow_px": [
+          5,
+          7,
+          5,
+          0
+        ]
+      },
+      "plaque_small": {
+        "guide_box": [
+          112,
+          568,
+          384,
+          80
+        ],
+        "source_box": [
+          104,
+          565,
+          394,
+          79
+        ],
+        "aspect_error": 0.039,
+        "overflow_px": [
+          8,
+          3,
+          2,
+          0
+        ]
+      },
+      "building_tag": {
+        "guide_box": [
+          560,
+          568,
+          320,
+          80
+        ],
+        "source_box": [
+          555,
+          554,
+          331,
+          101
+        ],
+        "aspect_error": 0.1807,
+        "overflow_px": [
+          5,
+          14,
+          6,
+          7
+        ]
+      },
+      "divider": {
+        "guide_box": [
+          944,
+          588,
+          480,
+          40
+        ],
+        "source_box": [
+          943,
+          584,
+          489,
+          39
+        ],
+        "aspect_error": 0.0449,
+        "overflow_px": [
+          1,
+          4,
+          8,
+          0
+        ]
+      }
+    }
+  },
+  "UI3-05_controls": {
+    "format": "PNG",
+    "canvas": [
+      1536,
+      1024
+    ],
+    "components": 6,
+    "background_exact_percent": 0.0,
+    "items": {
+      "toggle_off": {
+        "guide_box": [
+          576,
+          360,
+          160,
+          72
+        ],
+        "source_box": [
+          542,
+          342,
+          205,
+          85
+        ],
+        "aspect_error": 0.0853,
+        "overflow_px": [
+          34,
+          18,
+          11,
+          0
+        ]
+      },
+      "toggle_on": {
+        "guide_box": [
+          800,
+          360,
+          160,
+          72
+        ],
+        "source_box": [
+          789,
+          342,
+          205,
+          85
+        ],
+        "aspect_error": 0.0853,
+        "overflow_px": [
+          11,
+          18,
+          34,
+          0
+        ]
+      },
+      "slider_track": {
+        "guide_box": [
+          264,
+          496,
+          480,
+          24
+        ],
+        "source_box": [
+          260,
+          493,
+          487,
+          29
+        ],
+        "aspect_error": 0.1603,
+        "overflow_px": [
+          4,
+          3,
+          3,
+          2
+        ]
+      },
+      "slider_fill": {
+        "guide_box": [
+          808,
+          502,
+          464,
+          12
+        ],
+        "source_box": [
+          809,
+          500,
+          463,
+          15
+        ],
+        "aspect_error": 0.2017,
+        "overflow_px": [
+          0,
+          2,
+          0,
+          1
+        ]
+      },
+      "slider_knob": {
+        "guide_box": [
+          548,
+          596,
+          56,
+          56
+        ],
+        "source_box": [
+          538,
+          589,
+          70,
+          71
+        ],
+        "aspect_error": 0.0141,
+        "overflow_px": [
+          10,
+          7,
+          4,
+          8
+        ]
+      },
+      "stepper": {
+        "guide_box": [
+          668,
+          584,
+          320,
+          80
+        ],
+        "source_box": [
+          662,
+          583,
+          335,
+          82
+        ],
+        "aspect_error": 0.0213,
+        "overflow_px": [
+          6,
+          1,
+          9,
+          1
+        ]
+      }
+    }
+  },
+  "UI3-06_slots": {
+    "format": "PNG",
+    "canvas": [
+      1536,
+      1024
+    ],
+    "components": 7,
+    "background_exact_percent": 0.0,
+    "items": {
+      "slot_common": {
+        "guide_box": [
+          160,
+          288,
+          192,
+          192
+        ],
+        "source_box": [
+          150,
+          275,
+          214,
+          211
+        ],
+        "aspect_error": 0.0142,
+        "overflow_px": [
+          10,
+          13,
+          12,
+          6
+        ]
+      },
+      "slot_uncommon": {
+        "guide_box": [
+          416,
+          288,
+          192,
+          192
+        ],
+        "source_box": [
+          406,
+          275,
+          213,
+          211
+        ],
+        "aspect_error": 0.0095,
+        "overflow_px": [
+          10,
+          13,
+          11,
+          6
+        ]
+      },
+      "slot_rare": {
+        "guide_box": [
+          672,
+          288,
+          192,
+          192
+        ],
+        "source_box": [
+          661,
+          275,
+          214,
+          211
+        ],
+        "aspect_error": 0.0142,
+        "overflow_px": [
+          11,
+          13,
+          11,
+          6
+        ]
+      },
+      "slot_epic": {
+        "guide_box": [
+          928,
+          288,
+          192,
+          192
+        ],
+        "source_box": [
+          917,
+          275,
+          214,
+          211
+        ],
+        "aspect_error": 0.0142,
+        "overflow_px": [
+          11,
+          13,
+          11,
+          6
+        ]
+      },
+      "slot_legend": {
+        "guide_box": [
+          1184,
+          288,
+          192,
+          192
+        ],
+        "source_box": [
+          1172,
+          275,
+          216,
+          212
+        ],
+        "aspect_error": 0.0189,
+        "overflow_px": [
+          12,
+          13,
+          12,
+          7
+        ]
+      },
+      "slot_empty": {
+        "guide_box": [
+          544,
+          544,
+          192,
+          192
+        ],
+        "source_box": [
+          533,
+          537,
+          214,
+          211
+        ],
+        "aspect_error": 0.0142,
+        "overflow_px": [
+          11,
+          7,
+          11,
+          12
+        ]
+      },
+      "slot_selected": {
+        "guide_box": [
+          800,
+          544,
+          192,
+          192
+        ],
+        "source_box": [
+          789,
+          537,
+          214,
+          211
+        ],
+        "aspect_error": 0.0142,
+        "overflow_px": [
+          11,
+          7,
+          11,
+          12
+        ]
+      }
+    }
+  },
+  "UI3-07_nav": {
+    "format": "PNG",
+    "canvas": [
+      1536,
+      1024
+    ],
+    "components": 6,
+    "background_exact_percent": 0.001,
+    "items": {
+      "nav_base": {
+        "guide_box": [
+          168,
+          230,
+          1200,
+          220
+        ],
+        "source_box": [
+          166,
+          231,
+          1204,
+          221
+        ],
+        "aspect_error": 0.0012,
+        "overflow_px": [
+          2,
+          0,
+          2,
+          2
+        ]
+      },
+      "nav_socket": {
+        "guide_box": [
+          160,
+          554,
+          200,
+          200
+        ],
+        "source_box": [
+          157,
+          558,
+          205,
+          198
+        ],
+        "aspect_error": 0.0354,
+        "overflow_px": [
+          3,
+          0,
+          2,
+          2
+        ]
+      },
+      "nav_socket_selected": {
+        "guide_box": [
+          424,
+          554,
+          200,
+          200
+        ],
+        "source_box": [
+          419,
+          556,
+          206,
+          200
+        ],
+        "aspect_error": 0.03,
+        "overflow_px": [
+          5,
+          0,
+          1,
+          2
+        ]
+      },
+      "rail_socket": {
+        "guide_box": [
+          688,
+          579,
+          140,
+          150
+        ],
+        "source_box": [
+          688,
+          583,
+          143,
+          152
+        ],
+        "aspect_error": 0.008,
+        "overflow_px": [
+          0,
+          0,
+          3,
+          6
+        ]
+      },
+      "rail_socket_selected": {
+        "guide_box": [
+          892,
+          579,
+          140,
+          150
+        ],
+        "source_box": [
+          884,
+          583,
+          143,
+          152
+        ],
+        "aspect_error": 0.008,
+        "overflow_px": [
+          8,
+          0,
+          0,
+          6
+        ]
+      },
+      "sortie_medal": {
+        "guide_box": [
+          1096,
+          514,
+          280,
+          280
+        ],
+        "source_box": [
+          1090,
+          517,
+          285,
+          276
+        ],
+        "aspect_error": 0.0326,
+        "overflow_px": [
+          6,
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  },
+  "UI3-08_bars": {
+    "format": "PNG",
+    "canvas": [
+      1536,
+      1024
+    ],
+    "components": 5,
+    "background_exact_percent": 0.0,
+    "items": {
+      "bar_frame": {
+        "guide_box": [
+          518,
+          323,
+          500,
+          50
+        ],
+        "source_box": [
+          496,
+          315,
+          544,
+          52
+        ],
+        "aspect_error": 0.0462,
+        "overflow_px": [
+          22,
+          8,
+          22,
+          0
+        ]
+      },
+      "bar_fill_exp": {
+        "guide_box": [
+          276,
+          437,
+          460,
+          20
+        ],
+        "source_box": [
+          199,
+          436,
+          539,
+          21
+        ],
+        "aspect_error": 0.1159,
+        "overflow_px": [
+          77,
+          1,
+          2,
+          0
+        ]
+      },
+      "bar_fill_hp": {
+        "guide_box": [
+          800,
+          437,
+          460,
+          20
+        ],
+        "source_box": [
+          798,
+          436,
+          540,
+          20
+        ],
+        "aspect_error": 0.1739,
+        "overflow_px": [
+          2,
+          1,
+          78,
+          0
+        ]
+      },
+      "currency_capsule": {
+        "guide_box": [
+          236,
+          566,
+          360,
+          90
+        ],
+        "source_box": [
+          165,
+          551,
+          457,
+          116
+        ],
+        "aspect_error": 0.0151,
+        "overflow_px": [
+          71,
+          15,
+          26,
+          11
+        ]
+      },
+      "quest_slip": {
+        "guide_box": [
+          660,
+          521,
+          640,
+          180
+        ],
+        "source_box": [
+          683,
+          518,
+          692,
+          180
+        ],
+        "aspect_error": 0.0813,
+        "overflow_px": [
+          0,
+          3,
+          75,
+          0
+        ]
+      }
+    }
+  }
+}

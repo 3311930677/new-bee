@@ -1,0 +1,632 @@
+{
+  "canvas": [
+    1440,
+    1600
+  ],
+  "visual_layout_only": true,
+  "nodes": [
+    {
+      "id": "lorin_wilds",
+      "name": "昭元边城",
+      "point": [
+        200,
+        201
+      ],
+      "original_point": [
+        90,
+        75
+      ],
+      "level": [
+        1,
+        12
+      ],
+      "kind": "城镇",
+      "measured_source_center": [
+        165,
+        166
+      ]
+    },
+    {
+      "id": "maple_road",
+      "name": "枫林古道",
+      "point": [
+        436,
+        250
+      ],
+      "original_point": [
+        270,
+        75
+      ],
+      "level": [
+        1,
+        8
+      ],
+      "kind": "野外",
+      "measured_source_center": [
+        360,
+        207
+      ]
+    },
+    {
+      "id": "broken_slope",
+      "name": "断碑坡",
+      "point": [
+        540,
+        543
+      ],
+      "original_point": [
+        270,
+        240
+      ],
+      "level": [
+        6,
+        12
+      ],
+      "kind": "野外",
+      "measured_source_center": [
+        446,
+        449
+      ]
+    },
+    {
+      "id": "stele_cavern",
+      "name": "失声碑窟",
+      "point": [
+        280,
+        577
+      ],
+      "original_point": [
+        90,
+        240
+      ],
+      "level": [
+        9,
+        14
+      ],
+      "kind": "首领",
+      "measured_source_center": [
+        231,
+        477
+      ]
+    },
+    {
+      "id": "old_salt_road",
+      "name": "旧盐道",
+      "point": [
+        740,
+        227
+      ],
+      "original_point": [
+        445,
+        75
+      ],
+      "level": [
+        10,
+        16
+      ],
+      "kind": "野外",
+      "measured_source_center": [
+        611,
+        188
+      ]
+    },
+    {
+      "id": "shenyuan_port",
+      "name": "沉渊港",
+      "point": [
+        1088,
+        215
+      ],
+      "original_point": [
+        620,
+        75
+      ],
+      "level": [
+        10,
+        18
+      ],
+      "kind": "城镇",
+      "measured_source_center": [
+        898,
+        178
+      ]
+    },
+    {
+      "id": "tideflat",
+      "name": "潮痕滩",
+      "point": [
+        1257,
+        415
+      ],
+      "original_point": [
+        795,
+        75
+      ],
+      "level": [
+        13,
+        20
+      ],
+      "kind": "野外",
+      "measured_source_center": [
+        1038,
+        343
+      ]
+    },
+    {
+      "id": "tidal_gate",
+      "name": "退潮水闸",
+      "point": [
+        1080,
+        648
+      ],
+      "original_point": [
+        795,
+        240
+      ],
+      "level": [
+        16,
+        23
+      ],
+      "kind": "首领",
+      "measured_source_center": [
+        892,
+        536
+      ]
+    },
+    {
+      "id": "red_sand_route",
+      "name": "赤砂商路",
+      "point": [
+        845,
+        565
+      ],
+      "original_point": [
+        620,
+        240
+      ],
+      "level": [
+        20,
+        28
+      ],
+      "kind": "野外",
+      "measured_source_center": [
+        698,
+        467
+      ]
+    },
+    {
+      "id": "frost_post",
+      "name": "霜关驿",
+      "point": [
+        780,
+        889
+      ],
+      "original_point": [
+        620,
+        400
+      ],
+      "level": [
+        22,
+        32
+      ],
+      "kind": "城镇",
+      "measured_source_center": [
+        644,
+        735
+      ]
+    },
+    {
+      "id": "rift_mine_road",
+      "name": "裂谷矿道",
+      "point": [
+        1075,
+        923
+      ],
+      "original_point": [
+        795,
+        400
+      ],
+      "level": [
+        24,
+        34
+      ],
+      "kind": "野外",
+      "measured_source_center": [
+        888,
+        763
+      ]
+    },
+    {
+      "id": "rift_mine_vault",
+      "name": "裂谷矿脉",
+      "point": [
+        1398,
+        926
+      ],
+      "original_point": [
+        970,
+        400
+      ],
+      "level": [
+        26,
+        36
+      ],
+      "kind": "首领",
+      "measured_source_center": [
+        1154,
+        766
+      ]
+    },
+    {
+      "id": "frost_boardwalk",
+      "name": "霜林栈道",
+      "point": [
+        762,
+        1167
+      ],
+      "original_point": [
+        620,
+        560
+      ],
+      "level": [
+        26,
+        36
+      ],
+      "kind": "野外",
+      "measured_source_center": [
+        629,
+        965
+      ]
+    },
+    {
+      "id": "frost_pass",
+      "name": "冰隘",
+      "point": [
+        1010,
+        1296
+      ],
+      "original_point": [
+        795,
+        560
+      ],
+      "level": [
+        26,
+        40
+      ],
+      "kind": "首领",
+      "measured_source_center": [
+        834,
+        1072
+      ]
+    },
+    {
+      "id": "abyss_ring",
+      "name": "渊口外环",
+      "point": [
+        1251,
+        1257
+      ],
+      "original_point": [
+        970,
+        560
+      ],
+      "level": [
+        43,
+        49
+      ],
+      "kind": "野外",
+      "measured_source_center": [
+        1033,
+        1039
+      ]
+    },
+    {
+      "id": "stele_entry",
+      "name": "归路门厅",
+      "point": [
+        1224,
+        680
+      ],
+      "original_point": [
+        1150,
+        240
+      ],
+      "level": [
+        49,
+        50
+      ],
+      "kind": "副本",
+      "measured_source_center": [
+        1011,
+        562
+      ]
+    },
+    {
+      "id": "stele_resonance",
+      "name": "三声共鸣廊",
+      "point": [
+        1261,
+        1039
+      ],
+      "original_point": [
+        1150,
+        400
+      ],
+      "level": [
+        50,
+        53
+      ],
+      "kind": "副本",
+      "measured_source_center": [
+        1041,
+        859
+      ]
+    },
+    {
+      "id": "stele_core",
+      "name": "碑心",
+      "point": [
+        1303,
+        1456
+      ],
+      "original_point": [
+        1150,
+        560
+      ],
+      "level": [
+        53,
+        57
+      ],
+      "kind": "首领",
+      "measured_source_center": [
+        1076,
+        1204
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "from": "lorin_wilds",
+      "to": "maple_road",
+      "controls": [
+        [
+          261,
+          338
+        ],
+        [
+          371,
+          292
+        ]
+      ]
+    },
+    {
+      "from": "maple_road",
+      "to": "broken_slope",
+      "controls": [
+        [
+          404,
+          432
+        ],
+        [
+          526,
+          524
+        ]
+      ]
+    },
+    {
+      "from": "maple_road",
+      "to": "old_salt_road",
+      "controls": [
+        [
+          534,
+          380
+        ],
+        [
+          649,
+          290
+        ]
+      ]
+    },
+    {
+      "from": "broken_slope",
+      "to": "stele_cavern",
+      "controls": [
+        [
+          455,
+          572
+        ],
+        [
+          360,
+          655
+        ]
+      ]
+    },
+    {
+      "from": "old_salt_road",
+      "to": "shenyuan_port",
+      "controls": [
+        [
+          846,
+          369
+        ],
+        [
+          977,
+          267
+        ]
+      ]
+    },
+    {
+      "from": "shenyuan_port",
+      "to": "red_sand_route",
+      "controls": [
+        [
+          947,
+          347
+        ],
+        [
+          935,
+          542
+        ]
+      ]
+    },
+    {
+      "from": "shenyuan_port",
+      "to": "tideflat",
+      "controls": [
+        [
+          1088,
+          383
+        ],
+        [
+          1218,
+          417
+        ]
+      ]
+    },
+    {
+      "from": "tideflat",
+      "to": "tidal_gate",
+      "controls": [
+        [
+          1158,
+          522
+        ],
+        [
+          1154,
+          660
+        ]
+      ]
+    },
+    {
+      "from": "red_sand_route",
+      "to": "frost_post",
+      "controls": [
+        [
+          759,
+          721
+        ],
+        [
+          819,
+          868
+        ]
+      ]
+    },
+    {
+      "from": "frost_post",
+      "to": "rift_mine_road",
+      "controls": [
+        [
+          863,
+          1035
+        ],
+        [
+          992,
+          964
+        ]
+      ]
+    },
+    {
+      "from": "frost_post",
+      "to": "frost_boardwalk",
+      "controls": [
+        [
+          712,
+          1040
+        ],
+        [
+          781,
+          1157
+        ]
+      ]
+    },
+    {
+      "from": "rift_mine_road",
+      "to": "rift_mine_vault",
+      "controls": [
+        [
+          1108,
+          1066
+        ],
+        [
+          1213,
+          1064
+        ]
+      ]
+    },
+    {
+      "from": "frost_boardwalk",
+      "to": "frost_pass",
+      "controls": [
+        [
+          809,
+          1331
+        ],
+        [
+          942,
+          1310
+        ]
+      ]
+    },
+    {
+      "from": "frost_pass",
+      "to": "abyss_ring",
+      "controls": [
+        [
+          1089,
+          1404
+        ],
+        [
+          1176,
+          1326
+        ]
+      ]
+    },
+    {
+      "from": "abyss_ring",
+      "to": "stele_entry",
+      "controls": [
+        [
+          1317,
+          1152
+        ],
+        [
+          1210,
+          925
+        ]
+      ]
+    },
+    {
+      "from": "stele_entry",
+      "to": "stele_resonance",
+      "controls": [
+        [
+          1201,
+          819
+        ],
+        [
+          1279,
+          872
+        ]
+      ]
+    },
+    {
+      "from": "stele_resonance",
+      "to": "stele_core",
+      "controls": [
+        [
+          1217,
+          1105
+        ],
+        [
+          1316,
+          1336
+        ]
+      ]
+    }
+  ],
+  "measurement_source": "next_review_20261009/map.png",
+  "source_size": [
+    1189,
+    1323
+  ]
+}

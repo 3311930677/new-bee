@@ -1,0 +1,186 @@
+{
+  "tool": "built-in image_gen.imagegen",
+  "created_date": "2026-10-15",
+  "canvas": [
+    960,
+    1248
+  ],
+  "pixel_processing": "Generated raster art only; final raster normalized to 480x624 with box resampling then integer nearest-neighbor 2x for consistent 2px clusters. No procedural ground art was painted.",
+  "maps": [
+    {
+      "id": "red_sand_route",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a13e3e-0e47-7a80-ad88-44b54f05723b\\exec-79741127-6841-4deb-a122-0ee30723bf6f.png",
+      "prompt": "Use case: stylized-concept\nAsset type: production ground-only bitmap for a portrait mobile pixel RPG map, \"Red Sand Caravan Country\".\nPrimary request: Create one finished 960 x 1248 pixel portrait map, orthographic directly overhead, 2D pixel art, premium hand-painted pixel RPG quality with consistent crisp 2px pixel clusters. The supplied diagram is a rough composition reference ONLY; transform every synthetic edge into natural contiguous ground. Fill full canvas edge to edge.\nScene: broad red sandstone desert plain, softly wind-swept ochre sand, dry warm terracotta earth and shallow low-contrast stone strata. Huge navigable sandy central open area, not a narrow road. Give it appealing environmental composition using large subtle material zones, gently scattered granular gravel, fine natural wind ripples and a few very faint caravan wheel marks. The center and lower-middle are broad open gameplay terrain; warm afternoon palette ivory-sand, ochre, rust and muted sienna, not overly dark or orange.\nConstraints: entire terrain stays visually walkable, including all center x=200..780 and y=180..1130, endpoints x=480 y=96 and x=480 y=1152. Keep the left-middle x=70..420 y=470..850 and right-middle x=550..820 y=430..960 clear for encounters and objects rendered separately. No outlined routes, no paths drawn as pipes, no hollow loops, no visible square tile grid. No buildings, rocks or boulders sticking up, no trees, cactus, shadows of absent props, cliffs, ravines, pools or barriers. Ground texture only; flat stone fragments can be embedded and subtle. No characters, objects, props, UI, lettering, symbols, labels, title, border, vignette or watermark. This is playable floor art not a dramatic scene. Exact portrait aspect ratio 960:1248, overhead perspective, flat even lighting, true pixel art without blur, no isometric perspective.",
+      "revision_prompt": null,
+      "reference_file": "red_sand_route_reference.png",
+      "ground_file": "red_sand_route_ground.png",
+      "overlay_guidance": {
+        "disable": [
+          "ThirdActGround red_sand_route old thin rectangular sand strip, wheel-line drawing and baked decorative rocks",
+          "FlatMapGround route strokes / tile grid"
+        ],
+        "keep": [
+          "All quest entities, courier, markers, monster positions and exits"
+        ]
+      },
+      "source_dimensions": [
+        1100,
+        1430
+      ],
+      "actual_dimensions": [
+        960,
+        1248
+      ],
+      "ground_absolute_path": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\snow\\red_sand_route_ground.png",
+      "reference_absolute_path": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\snow\\red_sand_route_reference.png",
+      "revision_status": "not requested"
+    },
+    {
+      "id": "frost_post",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a13e3e-0e47-7a80-ad88-44b54f05723b\\exec-3f95f9b9-0cba-4d21-82d5-dd2351b28555.png",
+      "prompt": "Use case: stylized-concept\nAsset type: production ground-only bitmap, \"Frost Border Post\", portrait 960 x 1248.\nPrimary request: Draw premium 2D pixel RPG ground terrain, exact orthographic direct overhead view, crisp consistent 2px pixel clusters. A broad open snowy inn and guard-post courtyard in a mountain frontier. Absolutely NO buildings or trees or tall objects, because those are separate game sprites. Entire visible ground remains traversable.\nScene: naturally drifted pale ivory-blue snow, softly compressed large irregular snow surface through the central two-thirds, subtle exposed old grey stone paving in broad patches, small wind-blown snow crust, a few low-contrast scattered footprints. Broad quiet composition, artisan pixel texture with large calm readable zones, icy teal shadows, parchment-white snow, tiny desaturated warm stone accents. Ground at center x=300..680 should stay open for gameplay. Southern entrance at (480,1152), northern entrance at (480,96), eastern entrance at (864,710), all flow through broad open natural snow ground with no narrow path or route outline.\nKeep fully flat and quiet clear regions where separate buildings will be placed: rectangles x=140..370 y=230..420, x=140..370 y=650..855, x=590..820 y=650..855. Keep every other area open for NPCs and objects, especially around (395,430),(395,870),(565,870),(365,660),(625,630),(480,630),(390,1080),(570,1080),(200,1080).\nStyle: mature handcrafted mobile RPG pixel ground, 480x624 effective pixel canvas displayed at 2x; naturally shaped texture transitions, avoid repeated grid. Crisp pixels with carefully chosen clusters, no smooth brushwork, no photographic noise. Strictly ground only edge to edge, no buildings, trees, walls, gates, towers, lamps, poles, rocks, boulders, raised objects, shadows of unseen props, cliffs, frozen lakes, dark holes, barriers. No drawn paths, pipe-shaped roads or looping routes. No UI, text, labels, icons, characters, title, frame or watermark. Even diffuse daylight. Exact portrait ratio 960:1248.",
+      "revision_prompt": null,
+      "reference_file": "frost_post_reference.png",
+      "ground_file": "frost_post_ground.png",
+      "overlay_guidance": {
+        "disable": [
+          "All old baked background buildings, palisades, gate, trees, lamps and tube-shaped route overlays",
+          "ThirdActGround static boardwalk rectangles and decorative rock drawing"
+        ],
+        "keep": [
+          "Three separate city building sprites at configured positions",
+          "NPC sprites, dynamic supply-choice flags, repaired brazier/flame state and all quest entities"
+        ]
+      },
+      "source_dimensions": [
+        1100,
+        1430
+      ],
+      "actual_dimensions": [
+        960,
+        1248
+      ],
+      "ground_absolute_path": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\snow\\frost_post_ground.png",
+      "reference_absolute_path": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\snow\\frost_post_reference.png",
+      "revision_status": "not requested"
+    },
+    {
+      "id": "rift_mine_road",
+      "source": "C:/Users/tsz/.codex/generated_images/01a13e3e-0e47-7a80-ad88-44b54f05723b/exec-e7093607-d16c-477e-8499-98f8267f2c5c.png",
+      "prompt": "Use case: stylized-concept. Asset type: production floor-only bitmap for portrait mobile pixel RPG. One image, exact 960 x 1248 portrait ratio, orthographic directly overhead, premium cohesive 2D 16-bit pixel art, consistent 2px pixel clusters (480x624 effective canvas at 2x), clean deliberate texture clusters, no blurry brushwork or photographic noise. Ground fills entire frame. No UI, letters, labels, symbols, characters, enemies, title, border, vignette or watermark. No tall props, trees, buildings, freestanding rocks, boulders, poles, lamps, crates or barriers; these are rendered separately. No shadows of absent objects. No tile-grid seams, no outlined paths, no pipe-shaped road, no hollow looping routes. Use natural wide ground material zones for readable gameplay.\nScene: the Rift Mine Road, an abandoned slate-and-iron open quarry floor at the snow frontier. Broad open walkable worn grey-brown stone earth and muted shale, large irregular contiguous rocky ground textures, mineral-stained packed ground, subtle slate fragments embedded flush in the floor. Desaturated blue-grey and warm stone palette, tiny restrained rusty ore accents at very outer edges. An unbroken broad dry central floor x=210..780 from y=0 to1248, opening into a generous western approach at y=610..800 all the way to x=0. Traversable space around all four encounter points (260,345),(750,405),(245,960),(720,1020). Keep a clear broad central and west-middle apron for many separate quest objects, including (480,525),(430,950),(430,805),(530,340),(390,650),(570,620),(570,800),(390,1010). No actual rail track because a dynamic railway overlay will be added by game. No abyss, black pits or trenches anywhere; convey quarry by material variation only. Calm even light and muted contrast so separate game characters remain readable. Ground-only, no set dressing.",
+      "revision_prompt": null,
+      "reference_file": "rift_mine_road_reference.png",
+      "ground_file": "rift_mine_road_ground.png",
+      "overlay_guidance": {
+        "disable": [
+          "Old dark ravine polygon, tiled rail-background rectangles and boardwalk rectangle",
+          "FlatMapGround route strokes / grid"
+        ],
+        "keep": [
+          "Flat railway marking at x444 and516 only if desired; generated floor contains no rails",
+          "All mine-cart/vent/switch interactive entities and monster positions"
+        ]
+      },
+      "source_dimensions": [
+        1100,
+        1430
+      ],
+      "actual_dimensions": [
+        960,
+        1248
+      ],
+      "ground_absolute_path": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\snow\\rift_mine_road_ground.png",
+      "reference_absolute_path": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\snow\\rift_mine_road_reference.png",
+      "revision_status": "applied: removed raised edge cliffs using built-in imagegen"
+    },
+    {
+      "id": "rift_mine_vault",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a13e3e-0e47-7a80-ad88-44b54f05723b\\exec-cb3da5cb-a6b1-466b-a953-13d1b114b401.png",
+      "prompt": "Use case: stylized-concept. Asset type: production floor-only bitmap for portrait mobile pixel RPG. One image, exact 960 x 1248 portrait ratio, orthographic directly overhead, premium cohesive 2D 16-bit pixel art, consistent 2px pixel clusters (480x624 effective canvas at 2x), clean deliberate texture clusters, no blurry brushwork or photographic noise. Ground fills entire frame. No UI, letters, labels, symbols, characters, enemies, title, border, vignette or watermark. No tall props, trees, buildings, freestanding rocks, boulders, poles, lamps, crates or barriers; these are rendered separately. No shadows of absent objects. No tile-grid seams, no outlined paths, no pipe-shaped road, no hollow looping routes. Use natural wide ground material zones for readable gameplay.\nInput image is an EXACT floor-plan geometry guide, not a style reference. Rebuild it as refined mine-cavern ground art while preserving EVERY room and corridor edge at the supplied coordinates, scaled to 960 x 1248. All light beige areas are unobstructed flat walkable floor and must stay clear. Dark areas outside the plan may become low-contrast dark bedrock, no extra passages, no doors, no built architecture. Top room x=300..660, y=130..455. Middle room x=280..680, y=495..770. Bottom room x=300..660, y=810..1165. Vertical corridor x=385..575 from y=130 through bottom image edge y=1248. The two narrow connecting corridor portions y=455..495 and y=770..810 stay completely open, exact width190. Room corners may be irregular by at most 4 pixels OUTSIDE floor, not inside.\nScene: deep slate-grey mine floor, muted warm grey worn stone inside the three chambers, restrained rusty ochre traces of mineral seams in dark outside bedrock, carefully placed flat gravel texture at room margins, clean subdued central floor. The view is strictly overhead, not cutaway or isometric. No tall walls casting shadows onto floor, no furniture, no railway tracks because runtime will render rails, no wind wheels, no carts, no fans, no lamps or portals. Flat unobstructed circles radius60 around (340,680),(620,590),(480,535),(480,865),(480,410) and entrances/gates (480,1152),(480,785),(480,475). This room floor geometry is mandatory. Ground texture much calmer within rooms than outside so rooms read naturally; avoid perfectly black empty void, bright outlines or capsule-shaped rooms.",
+      "revision_prompt": null,
+      "reference_file": "rift_mine_vault_reference.png",
+      "ground_file": "rift_mine_vault_ground.png",
+      "overlay_guidance": {
+        "disable": [
+          "MineRoomGround._draw_floor old solid room fills when using this image",
+          "ThirdActGround rift_mine_vault static tiled rail strip and large gear circles"
+        ],
+        "keep": [
+          "MineRoomGround._draw_state dynamic rails, twin wind wheels, smoke, cart, rescued workers' hats and lamps",
+          "Runtime room gates and all puzzle entities"
+        ],
+        "known_limitations": [
+          "Generated natural room edges approximate guide; some top/bottom boundaries drift around 20 px. No further revision performed because user requested stop after current round. Keep gameplay geometry authoritative."
+        ]
+      },
+      "source_dimensions": [
+        1100,
+        1430
+      ],
+      "actual_dimensions": [
+        960,
+        1248
+      ],
+      "ground_absolute_path": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\snow\\rift_mine_vault_ground.png",
+      "reference_absolute_path": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\snow\\rift_mine_vault_reference.png",
+      "revision_status": "not applied: tool turn interrupted; selected source is initial complete three-room image"
+    },
+    {
+      "id": "frost_pass",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a13e3e-0e47-7a80-ad88-44b54f05723b\\exec-69317420-fd98-4d96-a137-08cd37381bb5.png",
+      "prompt": "Use case: stylized-concept. Asset type: production floor-only bitmap for portrait mobile pixel RPG. One image, exact 960 x 1248 portrait ratio, orthographic directly overhead, premium cohesive 2D 16-bit pixel art, consistent 2px pixel clusters (480x624 effective canvas at 2x), clean deliberate texture clusters, no blurry brushwork or photographic noise. Ground fills entire frame. No UI, letters, labels, symbols, characters, enemies, title, border, vignette or watermark. No tall props, trees, buildings, freestanding rocks, boulders, poles, lamps, crates or barriers; these are rendered separately. No shadows of absent objects. No tile-grid seams, no outlined paths, no pipe-shaped road, no hollow looping routes. Use natural wide ground material zones for readable gameplay.\nScene: Frost Pass, a broad snowy alpine basin with a large clear ice-and-snow combat clearing. Pale icy cyan, muted deep blue frost and off-white wind-packed snow. A calm spacious center, low-contrast natural sheet-ice patches with fine cracks beneath translucent frost, softly shaped banks of wind-drifted snow ONLY at outer edges. Do not enclose the map with cliffs. All terrain is shallow and traversable. Broad open area x=240..740 from y=130..1248; roomy main battle clearing centered (480,410), radius200, completely flat. Wide eastward apron at y=540..780 continuing all the way to right edge, clear at exit (864,660). Southern entrance at (480,1152) remains wide open. Keep interactions (430,855),(530,590) open and quiet. No ruined pillars, no shrine, no crest, no magic circle, no rocks, no ice spikes, no deep ravines, water or dark holes. Just beautiful readable alpine ground material with occasional very sparse faint footprints; no illustrated narrow path. Crisp mature pixel ground with deliberately sized clusters and gentle restrained texture.",
+      "revision_prompt": null,
+      "reference_file": "frost_pass_reference.png",
+      "ground_file": "frost_pass_ground.png",
+      "overlay_guidance": {
+        "disable": [
+          "ThirdActGround old narrow glacier strip, protruding decorative rocks and pillars",
+          "FlatMapGround route strokes / grid"
+        ],
+        "keep": [
+          "Boss, frost echo quest entities, gates and exits"
+        ]
+      },
+      "source_dimensions": [
+        1100,
+        1430
+      ],
+      "actual_dimensions": [
+        960,
+        1248
+      ],
+      "ground_absolute_path": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\snow\\frost_pass_ground.png",
+      "reference_absolute_path": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\snow\\frost_pass_reference.png",
+      "revision_status": "not requested"
+    },
+    {
+      "id": "frost_boardwalk",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a13e3e-0e47-7a80-ad88-44b54f05723b\\exec-fac93fb7-02f6-4c85-a538-5b3d9f864fb3.png",
+      "prompt": "Use case: stylized-concept. Asset type: production floor-only bitmap for portrait mobile pixel RPG. One image, exact 960 x 1248 portrait ratio, orthographic directly overhead, premium cohesive 2D 16-bit pixel art, consistent 2px pixel clusters (480x624 effective canvas at 2x), clean deliberate texture clusters, no blurry brushwork or photographic noise. Ground fills entire frame. No UI, letters, labels, symbols, characters, enemies, title, border, vignette or watermark. No tall props, trees, buildings, freestanding rocks, boulders, poles, lamps, crates or barriers; these are rendered separately. No shadows of absent objects. No tile-grid seams, no outlined paths, no pipe-shaped road, no hollow looping routes. Use natural wide ground material zones for readable gameplay.\nScene: Frost Forest Approach. The old narrow boardwalk has been replaced with a broad natural snowy forest floor clearing, no visible drawn route or track. Wind-combed ivory snow, patches of desaturated powder blue frost, a few flat scattered dry needles half buried in the snow, quiet bare earth flecks and very sparse faded footprint clusters. The central 70 percent stays wide open and walkable; the edges can be slightly darker compressed snow, absolutely no baked trees. Large organic cohesive snow material zones with no artificial band or pipe. Northern exit (480,96), southern exit (480,1152), spawns (480,1030),(480,210) connect through open snow plain. Clear ground for encounters at (225,350),(740,435),(215,895),(480,860), and interactions at (435,875),(525,310),(480,835),(480,400),(390,970),(580,790),(390,580),(580,1000),(570,920). No frozen lake, canyon, bridges, boards, fences, houses, plants or large rocks; those sprites can be added separately. Cool pearl-grey snow with subtle spruce-green undertones at margins, pale azure shadow tints and quiet contrast. Beautiful high quality gameplay floor, not a dramatic landscape vista.",
+      "revision_prompt": null,
+      "reference_file": "frost_boardwalk_reference.png",
+      "ground_file": "frost_boardwalk_ground.png",
+      "overlay_guidance": {
+        "disable": [
+          "ThirdActGround old tiled ice strip, narrow boardwalk, posts and rope lines",
+          "FlatMapGround route strokes / grid"
+        ],
+        "keep": [
+          "Separate snow pines and drift sprites only where their footprints do not overlap configured clear areas",
+          "All signal, lichen, flower and watchfire quest entities"
+        ]
+      },
+      "source_dimensions": [
+        1100,
+        1430
+      ],
+      "actual_dimensions": [
+        960,
+        1248
+      ],
+      "ground_absolute_path": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\snow\\frost_boardwalk_ground.png",
+      "reference_absolute_path": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\snow\\frost_boardwalk_reference.png",
+      "revision_status": "not requested"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+Original 2D UI asset sheet for a portrait mobile RPG with an East-Asian frontier theme. Top-tier commercial mobile game quality.
+Match the UI style of the two attached STYLE references (the game's home screen and settings screen) exactly: near-black lacquer (#1A1412) and dark lacquered wood as the main surface, thin aged-gold (#C9A45C) rims and fine gold inner lines, small cloud-scroll (ruyi) corner ornaments, tiny red-garnet rivets, vermilion (#9E2B25) used only as a small accent. Elegant and restrained, not chunky.
+Follow the attached LAYOUT reference exactly: every grey box is one asset, drawn at that exact position and size; darker grey areas are decorated end caps / corners, light grey areas are plain stretchable middles that must contain only seamless lacquer texture and straight rim lines.
+Rendering: fine-grain HD pixel art, crisp edges, consistent fine pixel size across the whole sheet; light from the upper left, lit top rims, darker bottom rims, small bright highlights on gold; subtle lacquer sheen and faint wood grain inside panels.
+Background: flat pure #FF00FF magenta everywhere outside the boxes. Never use magenta inside any asset.
+NO text, NO letters, NO numbers, NO icons or symbols, NO characters, NO cast shadows, NO outer glow, NO soft halo, NO tassels, NO jade pendants, NO dragons, NO 3D render look, NO photorealism, NO watermark.
+
+Sheet UI3-03, scale 2. Top left: a large panel: near-black lacquer surface with faint wood grain and a subtle inner shadow, framed by a thin aged-gold rim and a second fine gold inner line; each corner has a small gold cloud-scroll bracket with one tiny red-garnet rivet; edges between corners are plain straight lines.
+Top right: a parchment card: cream aged parchment with darker worn edges, a thin brown ink border and small gold corner tacks; plain parchment middle.
+Bottom: a group header plaque: horizontal black lacquer plaque with a gold rim; its left end is a large round gold-ringed seal (empty centre, for an icon) slightly overlapping the plaque; its right end is a gold swallowtail point; plain middle for a title.
+
+Input image 1 is the LAYOUT template. Input images 2 and 3 are STYLE references only; do not reproduce their scenes, text or icons. Output one 1536x1024 PNG asset sheet. Preserve the entire magenta canvas and exact layout geometry. No labels or guide markings. Everything, including decoration, must stay inside its assigned box. Empty centres are solid lacquer or parchment, not holes. Geometry on the 1536x1024 canvas (origin top left):
+panel_iron: x,y,width,height=224,176,512,512; nine-slice art margins=48,48,48,48
+card_paper: x,y,width,height=800,240,512,384; nine-slice art margins=32,32,32,32
+group_header: x,y,width,height=528,752,480,96; nine-slice art margins=56,0,36,0

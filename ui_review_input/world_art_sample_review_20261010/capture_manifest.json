@@ -1,0 +1,62 @@
+{
+  "engine": "Godot4.7.2",
+  "native_render": true,
+  "isolated_demo_save": true,
+  "pairs": [
+    {
+      "file": "before\\01_town.png",
+      "source": "远征\\shots\\world_art_samples_20261010\\before\\lorin_wilds_spawn_800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "98647254b88f90daf8f1fe7e477985312e85d579beaa5cbef5de7adfb3ca3843"
+    },
+    {
+      "file": "current\\01_town.png",
+      "source": "远征\\shots\\world_art_samples_20261010\\after\\lorin_wilds_spawn_800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "0e201b6558558c9439af23a7b1e835e2d90f5695a7b50395d0e8060a2fdc3c29"
+    },
+    {
+      "file": "before\\02_field.png",
+      "source": "远征\\shots\\world_art_samples_20261010\\before\\maple_road_spawn_800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "ef5e50812cfd6f16503470578043d835e16150c586ddff5d0454938d7e2ee995"
+    },
+    {
+      "file": "current\\02_field.png",
+      "source": "远征\\shots\\world_art_samples_20261010\\after\\maple_road_spawn_800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "6fee4b2f8cf7c17b844454fe5bf91bf419016226249a0180a7422959f67d373a"
+    },
+    {
+      "file": "before\\03_hall_npc_debug.png",
+      "source": "远征\\shots\\world_art_samples_20261010\\before\\hall_npc_art_debug_800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "b7706d267fa098dfc9e4903910d569fa8b4f38d3094f59727496751fd268c799"
+    },
+    {
+      "file": "current\\03_hall_npc_debug.png",
+      "source": "远征\\shots\\world_art_samples_20261010\\after\\hall_npc_art_debug_800.png",
+      "size": [
+        480,
+        800
+      ],
+      "sha256": "0a153294221c06ac367eec190bec227a9389b7f7933cb50daa974656d01d521b"
+    }
+  ],
+  "states": 8
+}

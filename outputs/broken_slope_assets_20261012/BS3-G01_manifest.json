@@ -1,0 +1,50 @@
+{
+  "id": "BS3-G01",
+  "selected_file": "BS3-G01_ground_v3.png",
+  "size": [
+    1024,
+    1536
+  ],
+  "mode": "RGB",
+  "sha256": "f6af3c6d71f0daddcc93ae11d45f58e1a8fdb23715778fb444bd26c96225cdcc",
+  "generation_mode": "built_in_imagegen",
+  "date": "2026-10-12",
+  "crop_box_exclusive": [
+    0,
+    102,
+    1024,
+    1433
+  ],
+  "cropped_size": [
+    1024,
+    1331
+  ],
+  "world_size": [
+    960,
+    1248
+  ],
+  "raw_png_preserved": true,
+  "game_code_modified": false,
+  "props_regenerated": false,
+  "gameplay_coordinate_checks": {
+    "monsters": 5,
+    "bosses": 1,
+    "entities": 9,
+    "exits": 2
+  },
+  "design_crossing_x_ranges": [
+    [
+      205,
+      285
+    ],
+    [
+      430,
+      530
+    ],
+    [
+      670,
+      750
+    ]
+  ],
+  "status": "generated_source_visual_review_complete_game_alignment_and_collision_validation_pending"
+}

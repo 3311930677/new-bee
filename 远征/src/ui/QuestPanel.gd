@@ -1,402 +1,272 @@
-# QuestPanel.gd —— 任务窗口：主线目标 + 今日委托
-# 商业级手游排版：官驿委任板质感 + 漆器木框 + 明晰印戳状态 + 精致奖励标示
+# Quest journal: responsive containers, pixel material plates, existing quest operations.
 class_name QuestPanel
 extends Control
-
 signal closed
-
 const UI := preload("res://src/ui/TravelChestUI.gd")
-const VIEW_W := 480.0
-const VIEW_H := 800.0
-const PANEL_W := 440.0
-const CONTENT_W := 408.0
-
-const ROW_H := 104.0
-const ROW_GAP := 8.0
-const STORY_H := 108.0
-const STORY_DONE_H := 44.0
-const SECTION_H := 26.0
-
-const CARD_PAD := 12.0
-const INNER_W := CONTENT_W - CARD_PAD * 2.0
-const BTN_W := 84.0
-const NAME_W := 236.0
-const GOAL_W := INNER_W - BTN_W - 24.0
-
-var _panel: Panel = null
-var _content: Control = null
-var _list: Control = null
-var _toast: Label = null
-var _rows := 0
-var _story_h := STORY_H
-var _world_board: Control = null
-
+const Art := preload("res://src/ui/InventoryQuestSkin.gd")
+const Page := preload("res://src/ui/ChestPageUI.gd")
+var _panel: PanelContainer
+var _content: VBoxContainer
+var _list: VBoxContainer
+var _scroll: ScrollContainer
+var _world_board: Control
+var _toast: Control
+var _back: Button
+var _world_button: Button
+var _focus_return: Control
 
 func _ready() -> void:
-	G.center_fixed_page.call_deferred(self)
-	set_anchors_preset(Control.PRESET_FULL_RECT)
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_focus_return = get_viewport().gui_get_focus_owner()
+	theme = Art.theme()
 	Audio.sfx("ui_open")
 	_build()
 	_refresh()
-
+	get_viewport().size_changed.connect(_resize_frame)
+	_content.minimum_size_changed.connect(_resize_frame.call_deferred)
+	_resize_frame()
+	_world_button.grab_focus.call_deferred()
 
 func _build() -> void:
-	G.veil(self, 0.76)
-
-	_rows = maxi(1, G.quest_offer().size())
-	var story := G.story_current()
-	_story_h = STORY_H if not story.is_empty() else STORY_DONE_H
-	var rel_list_y := SECTION_H + _story_h + 10.0 + SECTION_H + 4.0
-	var list_content_h := float(_rows) * (ROW_H + ROW_GAP)
-	var h := clampf(60.0 + rel_list_y + list_content_h + 58.0, 380.0, 720.0)
-
-	_panel = Panel.new()
+	var stage := Art.Stage.new()
+	stage.name = "PageBackground"
+	stage.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(stage)
+	_panel = PanelContainer.new()
 	_panel.name = "QuestBoard"
-	_panel.size = Vector2(PANEL_W, h)
-	_panel.position = Vector2((VIEW_W - PANEL_W) * 0.5, (VIEW_H - h) * 0.5)
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color("17141b", 0.96)
-	style.border_color = Color("8c6f47", 0.85)
-	style.set_border_width_all(1)
-	style.set_corner_radius_all(4)
-	style.shadow_color = Color(0, 0, 0, 0.5)
-	style.shadow_size = 12
-	_panel.add_theme_stylebox_override("panel", style)
+	_panel.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_panel.add_theme_stylebox_override("panel", Art.box("card", 14))
 	add_child(_panel)
-
-	# 顶部标题栏
-	var header := Panel.new()
-	header.size = Vector2(PANEL_W, 52)
-	header.position = Vector2(0, 0)
-	var h_style := StyleBoxFlat.new()
-	h_style.bg_color = Color("231c26", 0.95)
-	h_style.border_color = Color("6a5338", 0.6)
-	h_style.border_width_bottom = 1
-	h_style.corner_radius_top_left = 4
-	h_style.corner_radius_top_right = 4
-	header.add_theme_stylebox_override("panel", h_style)
-	_panel.add_child(header)
-
-	var title_l := UI.label("任 务 卷 宗", "title", UI.GOLD)
-	title_l.position = Vector2(16, 12)
-	title_l.size = Vector2(140, 28)
-	header.add_child(title_l)
-
-	var board_btn := Button.new()
-	board_btn.text = "世界事务"
-	board_btn.size = Vector2(96, 32)
-	board_btn.position = Vector2(PANEL_W - 112, 10)
-	var b_style := StyleBoxFlat.new()
-	b_style.bg_color = Color("1e1724", 0.9)
-	b_style.border_color = Color("6e5434", 0.8)
-	b_style.set_border_width_all(1)
-	b_style.set_corner_radius_all(2)
-	board_btn.add_theme_stylebox_override("normal", b_style)
-	board_btn.add_theme_stylebox_override("hover", b_style)
-	board_btn.add_theme_stylebox_override("pressed", b_style)
-	board_btn.add_theme_color_override("font_color", UI.PAPER)
-	board_btn.add_theme_font_override("font", G.font_reg)
-	board_btn.add_theme_font_size_override("font_size", 12)
-	board_btn.pressed.connect(func():
-		if _world_board == null:
-			_world_board = preload("res://src/ui/WorldCommissionPanel.gd").new()
-			add_child(_world_board)
-			_world_board.closed.connect(func():
-				_world_board.queue_free()
-				_world_board = null))
-	header.add_child(board_btn)
-
-	_content = Control.new()
-	_content.position = Vector2(16, 60)
-	_content.size = Vector2(CONTENT_W, h - 70)
+	_content = VBoxContainer.new()
+	_content.name = "JournalContent"
+	_content.add_theme_constant_override("separation", 10)
 	_panel.add_child(_content)
-
-	# —— 分区一：主线 ——
-	var sl := UI.label("◆ 主线传书", "section", UI.GOLD)
-	sl.position = Vector2(0, 0)
-	sl.size = Vector2(CONTENT_W, 22)
-	_content.add_child(sl)
-	_story_card(SECTION_H, story)
-
-	# —— 分区二：今日委托 ——
-	var dl_y := SECTION_H + _story_h + 10.0
-	var dl := UI.label("◆ 边城委托", "section", UI.COPPER)
-	dl.position = Vector2(0, dl_y)
-	dl.size = Vector2(140, 22)
-	_content.add_child(dl)
-
-	var tip := UI.label("已接委托跨日保留 · 完成后回城交付", "tag", UI.AGED)
-	tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	tip.position = Vector2(CONTENT_W - 240.0, dl_y + 2)
-	tip.size = Vector2(240, 20)
+	var header := PanelContainer.new()
+	header.custom_minimum_size.y = 60
+	header.add_theme_stylebox_override("panel", Art.box("header", 8))
+	_content.add_child(header)
+	var head_row := HBoxContainer.new()
+	head_row.add_theme_constant_override("separation", 12)
+	header.add_child(head_row)
+	var mark := G.ui_icon("quest", Vector2(28,28), Art.GOLD)
+	mark.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	head_row.add_child(mark)
+	var title := Art.label("任务卷宗", "title", Art.GOLD)
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	head_row.add_child(title)
+	_world_button = Art.action("世界事务")
+	_world_button.name = "WorldAffairsButton"
+	_world_button.custom_minimum_size = Vector2(104,44)
+	_world_button.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	_world_button.caption.add_theme_font_size_override("font_size", 13)
+	_world_button.pressed.connect(_open_world_board)
+	head_row.add_child(_world_button)
+	_content.add_child(_section("主线传书", "quest"))
+	_story_card(G.story_current())
+	_content.add_child(_section("边城委托", "swords"))
+	var tip := Art.label("已接委托跨日保留 · 完成后回城交付", "caption", Art.MUTED)
+	tip.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_content.add_child(tip)
+	_scroll = Page.scroll()
+	_scroll.name = "CommissionScroll"
+	_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_content.add_child(_scroll)
+	_list = VBoxContainer.new()
+	_list.name = "CommissionCards"
+	_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_list.add_theme_constant_override("separation", 10)
+	_scroll.add_child(_list)
+	_back = Art.action("返回")
+	_back.name = "ReturnButton"
+	_back.custom_minimum_size = Vector2(160,48)
+	_back.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	_back.pressed.connect(_close_self)
+	_content.add_child(_back)
 
-	var scroll := ScrollContainer.new()
-	var visible_h := minf(list_content_h, h - 60.0 - rel_list_y - 56.0)
-	scroll.position = Vector2(0, rel_list_y)
-	scroll.size = Vector2(CONTENT_W, visible_h)
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	_content.add_child(scroll)
+func _resize_frame(safe_override := Rect2()) -> void:
+	if _panel == null: return
+	var safe: Rect2 = safe_override if safe_override.has_area() else G.ui_safe_rect(self)
+	var height := minf(800,safe.size.y-32)
+	_panel.position = safe.position + Vector2(16,roundf((safe.size.y-height)*.5))
+	_panel.size = Vector2(safe.size.x-32,height)
 
-	_list = Control.new()
-	_list.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_list.custom_minimum_size = Vector2(CONTENT_W, list_content_h)
-	scroll.add_child(_list)
+func _section(words: String, icon: String) -> Control:
+	var panel := PanelContainer.new()
+	panel.custom_minimum_size.y = 30
+	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	panel.add_theme_stylebox_override("panel", Art.box("secondary", 6))
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	panel.add_child(row)
+	var mark := G.ui_icon(icon, Vector2(20,20), Art.GOLD)
+	mark.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	row.add_child(mark)
+	row.add_child(Art.label(words,"section",Art.GOLD))
+	return panel
 
-	# 底部返回按钮
-	var back := Button.new()
-	back.text = "返 回"
-	back.size = Vector2(140, 36)
-	back.position = Vector2((CONTENT_W - 140.0) * 0.5, rel_list_y + visible_h + 10.0)
-	var back_style := StyleBoxFlat.new()
-	back_style.bg_color = Color("231d27", 0.9)
-	back_style.border_color = Color("6e5434", 0.8)
-	back_style.set_border_width_all(1)
-	back_style.set_corner_radius_all(3)
-	back.add_theme_stylebox_override("normal", back_style)
-	back.add_theme_stylebox_override("hover", back_style)
-	back.add_theme_stylebox_override("pressed", back_style)
-	back.add_theme_color_override("font_color", UI.PAPER)
-	back.add_theme_font_override("font", G.font_reg)
-	back.add_theme_font_size_override("font_size", 14)
-	back.pressed.connect(_close_self)
-	_content.add_child(back)
+func _story_card(story: Dictionary) -> void:
+	var card := PanelContainer.new()
+	card.name = "MainStoryCard"
+	card.custom_minimum_size.y = 128 if not story.is_empty() else 56
+	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	card.add_theme_stylebox_override("panel", Art.box("card", 12))
+	_content.add_child(card)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 12)
+	card.add_child(row)
+	var mark := G.ui_icon("quest", Vector2(44,44), Art.GOLD)
+	mark.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	row.add_child(mark)
+	var info := VBoxContainer.new()
+	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	info.add_theme_constant_override("separation", 5)
+	row.add_child(info)
+	if story.is_empty():
+		info.add_child(_line(G.story_goal_short(),"caption",Art.MUTED))
+		return
+	var top := HBoxContainer.new()
+	info.add_child(top)
+	var title := _line(String(story.get("title","")),"object",Art.PAPER)
+	title.name = "MainStoryTitle"
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	top.add_child(title)
+	var badge := PanelContainer.new()
+	badge.add_theme_stylebox_override("panel",_badge_box())
+	badge.add_child(Art.label("进行中","tag",Art.JADE))
+	badge.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	top.add_child(badge)
+	info.add_child(_line("目标：" + String(story.get("goal","")),"body"))
+	var target := TableCache.main_world_map(String(story.get("map","")))
+	info.add_child(_line("前往：" + String(target.get("name","昭元边城")),"caption",Art.MUTED))
+	info.add_child(_line("奖励：" + " · ".join(G.reward_lines(story.get("reward",{}))),"tag",Art.GOLD))
 
+func _badge_box() -> StyleBoxFlat:
+	var box := StyleBoxFlat.new()
+	box.bg_color = Color("21433e")
+	box.border_color = Color("527e66")
+	box.set_border_width_all(1)
+	box.content_margin_left = 8
+	box.content_margin_right = 8
+	box.content_margin_top = 3
+	box.content_margin_bottom = 3
+	return box
+
+func _line(words: String, role := "body", color := Art.PAPER) -> Label:
+	var l := Art.label(words,role,color)
+	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	return l
+
+func _refresh() -> void:
+	var offset := _scroll.scroll_vertical
+	var focused_id := ""
+	var owner := get_viewport().gui_get_focus_owner()
+	if owner != null: focused_id = String(owner.get_meta("quest_id",""))
+	Page.clear(_list)
+	for id in G.quest_offer(): _row(String(id))
+	if _list.get_child_count() == 0:
+		_list.add_child(_line("今日暂无委托，请明日再来。","body",Art.MUTED))
+	_scroll.set_deferred("scroll_vertical",offset)
+	var controls: Array[Button] = [_world_button]
+	for row in _list.get_children():
+		var b := row.find_child("QuestAction", true, false) as Button
+		if b != null and not b.disabled: controls.append(b)
+		if b != null and String(b.get_meta("quest_id","")) == focused_id:
+			(b if not b.disabled else _back).grab_focus.call_deferred()
+	controls.append(_back)
+	for i in controls.size():
+		controls[i].focus_next = controls[(i+1)%controls.size()].get_path()
+		controls[i].focus_previous = controls[posmod(i-1,controls.size())].get_path()
+
+func _row(qid: String) -> void:
+	var d := G.quest_def(qid)
+	if d.is_empty(): return
+	var card := PanelContainer.new()
+	card.name = "Quest_" + qid
+	card.custom_minimum_size.y = 132
+	card.add_theme_stylebox_override("panel",Art.box("card",12))
+	_list.add_child(card)
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation",10)
+	card.add_child(row)
+	var mark := G.ui_icon("swords" if String(d.get("kind","")) == "slay" else "quest",Vector2(32,32),Art.GOLD)
+	mark.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	row.add_child(mark)
+	var info := VBoxContainer.new()
+	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	info.add_theme_constant_override("separation",4)
+	row.add_child(info)
+	info.add_child(_line(String(d.get("title",qid)),"object"))
+	info.add_child(_line(String(d.get("goal","")),"caption"))
+	var state := G.quest_state(qid)
+	info.add_child(_line(state,"tag",Art.JADE if state == "可交付" else Art.GOLD if state.begins_with("进行中") else Art.MUTED))
+	info.add_child(_line(" · ".join(G.reward_lines(d.get("reward",{}))),"tag",Art.GOLD))
+	var side := VBoxContainer.new()
+	side.custom_minimum_size.x = 108
+	side.alignment = BoxContainer.ALIGNMENT_CENTER
+	side.add_theme_constant_override("separation",8)
+	row.add_child(side)
+	var npc := G.city_npc(String(d.get("npc","")))
+	var who := String(npc.get("name",""))
+	if not String(npc.get("title","")).is_empty(): who += " · " + String(npc.title)
+	var who_label := _line(who,"tag",Art.MUTED)
+	who_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	who_label.custom_minimum_size.x = 108
+	who_label.add_theme_font_size_override("font_size",11)
+	side.add_child(who_label)
+	var enabled := not G.quest_claimed(qid) and (not G.quest_active(qid) or G.quest_completed(qid))
+	var words := "已交付" if G.quest_claimed(qid) else "接取" if not G.quest_active(qid) else "交付" if G.quest_completed(qid) else "进行中"
+	var btn := Art.action(words,"primary" if enabled else "secondary")
+	btn.name = "QuestAction"
+	btn.set_meta("quest_id",qid)
+	btn.custom_minimum_size = Vector2(108,44)
+	btn.caption.add_theme_font_size_override("font_size",16)
+	btn.disabled = not enabled
+	btn.pressed.connect(_act.bind(qid))
+	btn.focus_entered.connect(func(): _scroll.ensure_control_visible(btn))
+	side.add_child(btn)
+
+func _open_world_board() -> void:
+	if _world_board != null: return
+	_world_board = preload("res://src/ui/WorldCommissionPanel.gd").new()
+	add_child(_world_board)
+	_world_board.closed.connect(func():
+		_world_board.queue_free()
+		_world_board = null
+		_world_button.grab_focus.call_deferred())
 
 func _close_self() -> void:
 	Audio.sfx("ui_close")
+	if is_instance_valid(_focus_return): _focus_return.grab_focus.call_deferred()
 	G.close_page(self, func(): closed.emit())
-
-
-func _story_card(y: float, story: Dictionary) -> void:
-	var card := Panel.new()
-	card.position = Vector2(0, y)
-	card.size = Vector2(CONTENT_W, _story_h)
-	var card_style := StyleBoxFlat.new()
-	card_style.bg_color = Color("221a28", 0.92)
-	card_style.border_color = Color("c29a5b", 0.75)
-	card_style.set_border_width_all(1)
-	card_style.set_corner_radius_all(3)
-	card.add_theme_stylebox_override("panel", card_style)
-	_content.add_child(card)
-
-	var inner := Control.new()
-	inner.position = Vector2(12, 10)
-	inner.size = Vector2(INNER_W, _story_h - 20)
-	inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	card.add_child(inner)
-
-	if story.is_empty():
-		var done := UI.label(G.story_goal_short(), "caption", UI.AGED)
-		done.position = Vector2(0, 10)
-		done.size = Vector2(INNER_W, 20)
-		inner.add_child(done)
-		return
-
-	var title_l := UI.label("主线 · %s" % String(story.get("title", "")), "object", UI.GOLD)
-	title_l.position = Vector2(0, 0)
-	title_l.size = Vector2(NAME_W, 22)
-	title_l.clip_text = true
-	inner.add_child(title_l)
-
-	var st_l := UI.label("进行中", "tag", UI.COPPER)
-	st_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	st_l.position = Vector2(NAME_W, 2)
-	st_l.size = Vector2(INNER_W - NAME_W, 18)
-	inner.add_child(st_l)
-
-	var goal_l := UI.label("目标: %s" % String(story.get("goal", "")), "body", UI.PAPER)
-	goal_l.position = Vector2(0, 24)
-	goal_l.size = Vector2(INNER_W, 20)
-	goal_l.clip_text = true
-	inner.add_child(goal_l)
-
-	var target_cfg := TableCache.main_world_map(String(story.get("map", "")))
-	var to_l := UI.label("前往: %s" % String(target_cfg.get("name", "昭元边城")), "caption", UI.AGED)
-	to_l.position = Vector2(0, 46)
-	to_l.size = Vector2(INNER_W, 18)
-	inner.add_child(to_l)
-
-	var parts: Array = G.reward_lines(story.get("reward", {}))
-	if parts.size() > 3:
-		parts = parts.slice(0, 3)
-		parts.append("…")
-	var rw_l := UI.label("奖励: " + " · ".join(parts), "tag", UI.GOLD)
-	rw_l.position = Vector2(0, 66)
-	rw_l.size = Vector2(INNER_W, 18)
-	rw_l.clip_text = true
-	inner.add_child(rw_l)
-
-
-func _refresh() -> void:
-	for c in _list.get_children():
-		c.queue_free()
-	var offer := G.quest_offer()
-	if offer.is_empty():
-		var none := UI.label("今日暂无委托，请明日再来。", "body", UI.AGED)
-		none.position = Vector2(0, 16)
-		none.size = Vector2(CONTENT_W, 24)
-		none.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		_list.add_child(none)
-		return
-	for i in offer.size():
-		var qid := String(offer[i])
-		_row(qid, float(i) * (ROW_H + ROW_GAP))
-
-
-func _row(qid: String, y: float) -> void:
-	var d := G.quest_def(qid)
-	if d.is_empty():
-		return
-
-	var row := Panel.new()
-	row.position = Vector2(0, y)
-	row.size = Vector2(CONTENT_W, ROW_H)
-	var row_style := StyleBoxFlat.new()
-	row_style.bg_color = Color("201a24", 0.92)
-	row_style.border_color = Color("5c4834", 0.75)
-	row_style.set_border_width_all(1)
-	row_style.set_corner_radius_all(3)
-	row.add_theme_stylebox_override("panel", row_style)
-	_list.add_child(row)
-
-	var inner := Control.new()
-	inner.position = Vector2(12, 8)
-	inner.size = Vector2(INNER_W, ROW_H - 16)
-	inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	row.add_child(inner)
-
-	var npc := G.city_npc(String(d.get("npc", "")))
-	var who := String(npc.get("name", ""))
-	var npc_title := String(npc.get("title", ""))
-	if npc_title != "":
-		who += " · " + npc_title
-
-	var name_l := UI.label(String(d.get("title", qid)), "object", UI.PAPER)
-	name_l.position = Vector2(0, 0)
-	name_l.size = Vector2(NAME_W, 22)
-	name_l.clip_text = true
-	inner.add_child(name_l)
-
-	var who_l := UI.label(who, "tag", UI.AGED)
-	who_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	who_l.position = Vector2(NAME_W, 2)
-	who_l.size = Vector2(INNER_W - NAME_W, 18)
-	who_l.clip_text = true
-	inner.add_child(who_l)
-
-	var goal_l := UI.label(String(d.get("goal", "")), "caption", UI.PAPER)
-	goal_l.position = Vector2(0, 24)
-	goal_l.size = Vector2(GOAL_W, 20)
-	goal_l.clip_text = true
-	inner.add_child(goal_l)
-
-	var state := G.quest_state(qid)
-	var state_col := UI.AGED
-	if state == "可交付":
-		state_col = UI.JADE
-	elif state.begins_with("进行中"):
-		state_col = UI.GOLD
-	var st_l := UI.label(state, "tag", state_col)
-	st_l.position = Vector2(0, 46)
-	st_l.size = Vector2(150, 18)
-	st_l.clip_text = true
-	inner.add_child(st_l)
-
-	var reward: Dictionary = d.get("reward", {})
-	var parts := PackedStringArray()
-	for k in G.REWARD_KEYS:
-		if int(reward.get(k, 0)) > 0:
-			parts.append("%s+%d" % [String(G.REWARD_NAMES.get(k, k)), int(reward[k])])
-	if parts.size() > 0:
-		var rw_l := UI.label("奖励: " + " · ".join(parts), "tag", UI.GOLD)
-		rw_l.position = Vector2(0, 66)
-		rw_l.size = Vector2(INNER_W, 18)
-		rw_l.clip_text = true
-		inner.add_child(rw_l)
-
-	var btn_text := ""
-	var enabled := true
-	var is_claim := false
-	if G.quest_claimed(qid):
-		btn_text = "已交付"
-		enabled = false
-	elif not G.quest_active(qid):
-		btn_text = "接 取"
-	elif G.quest_completed(qid):
-		btn_text = "交 付"
-		is_claim = true
-	else:
-		btn_text = "进行中"
-		enabled = false
-
-	var btn := Button.new()
-	btn.text = btn_text
-	btn.size = Vector2(BTN_W, 34)
-	btn.position = Vector2(INNER_W - BTN_W, 26)
-	var btn_style := StyleBoxFlat.new()
-	if is_claim:
-		btn_style.bg_color = Color("7a2e20", 0.95)
-		btn_style.border_color = UI.GOLD
-	else:
-		btn_style.bg_color = Color("231e28", 0.9)
-		btn_style.border_color = Color("5e4b38", 0.8)
-	btn_style.set_border_width_all(1)
-	btn_style.set_corner_radius_all(2)
-	btn.add_theme_stylebox_override("normal", btn_style)
-	btn.add_theme_stylebox_override("hover", btn_style)
-	btn.add_theme_stylebox_override("pressed", btn_style)
-	btn.add_theme_color_override("font_color", UI.GOLD if is_claim else (UI.PAPER if enabled else UI.AGED))
-	btn.add_theme_font_override("font", G.font_reg)
-	btn.add_theme_font_size_override("font_size", 13)
-	btn.disabled = not enabled
-	if enabled:
-		btn.pressed.connect(func(): _act(qid))
-	inner.add_child(btn)
-
 
 func _act(qid: String) -> void:
 	if G.quest_active(qid):
 		var res := G.quest_claim(qid)
-		if bool(res.get("ok", false)):
+		if bool(res.get("ok",false)):
 			Audio.sfx("reward")
-			_show_toast("「%s」交付 · %s" % [String(res.get("title", "")),
-				" · ".join(PackedStringArray(res.get("lines", [])))])
+			_show_toast("「%s」交付 · %s" % [String(res.get("title","")), " · ".join(PackedStringArray(res.get("lines",[])))])
 		else:
 			Audio.sfx("ui_locked")
-			_show_toast(String(res.get("err", "还不能交付")))
+			_show_toast(String(res.get("err","还不能交付")))
 	else:
 		if G.quest_accept(qid):
 			Audio.sfx("ui_confirm")
 			var d := G.quest_def(qid)
-			_show_toast("接下委托: %s" % String(d.get("title", "")))
-			var desc := String(d.get("desc", ""))
-			if desc != "":
-				G.show_info_popup(self, String(d.get("title", "")), [desc, "", "目标：" + String(d.get("goal", ""))])
+			_show_toast("接下委托：" + String(d.get("title","")))
+			var desc := String(d.get("desc",""))
+			if not desc.is_empty(): G.show_info_popup(self,String(d.get("title","")),[desc,"","目标：" + String(d.get("goal",""))])
 		else:
 			Audio.sfx("ui_locked")
 			_show_toast("该委托无法接取")
 	_refresh()
 
-
 func _show_toast(msg: String) -> void:
-	if _toast != null and is_instance_valid(_toast):
-		_toast.queue_free()
-	_toast = UI.label(msg, "caption", UI.GOLD)
-	_toast.position = Vector2(0, 96)
-	_toast.size = Vector2(VIEW_W, 24)
-	_toast.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	add_child(_toast)
-	var tw := create_tween()
-	tw.tween_interval(1.6)
-	tw.tween_property(_toast, "modulate:a", 0.0, 0.4)
-	tw.tween_callback(_toast.queue_free)
-
+	if is_instance_valid(_toast): _toast.queue_free()
+	_toast = UI.toast(self,msg)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _world_board != null: return
-	if G.ui_blocked:
-		return
+	if _world_board != null or G.ui_blocked: return
 	if event.is_action_pressed("ui_cancel"):
 		_close_self()
 		get_viewport().set_input_as_handled()
