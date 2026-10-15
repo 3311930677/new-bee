@@ -5,6 +5,9 @@ extends Control
 
 const ChestUI := preload("res://src/ui/TravelChestUI.gd")
 const ChestView := preload("res://src/ui/CampChestView.gd")
+# 主城首页（月下山城）。旧营帐视图 CampChestView 保留：G 上设 meta legacy_camp_home=true 时仍用旧版，
+# 供旧版布局测试（VerifyTravelChestB1）和必要时回退。
+const TownView := preload("res://src/ui/home/TownHome.gd")
 const VIEW_W := 480.0
 const VIEW_H := 800.0
 
@@ -76,8 +79,9 @@ func _set_home_content_visible(visible: bool) -> void:
 
 func _ready() -> void:
 	Audio.play_bgm("bgm_home")
-	_chest_view = ChestView.new()
-	_chest_view.name = "CampChest"
+	var legacy := bool(G.get_meta("legacy_camp_home", false))
+	_chest_view = ChestView.new() if legacy else TownView.new()
+	_chest_view.name = "CampChest" if legacy else "TownHome"
 	_chest_view.host = self
 	add_child(_chest_view)
 	_prompt_save_locked()

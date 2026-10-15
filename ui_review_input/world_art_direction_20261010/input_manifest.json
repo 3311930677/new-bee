@@ -1,0 +1,84 @@
+{
+  "prepared": "2026-10-10",
+  "new_game_run": false,
+  "image_generation": false,
+  "sources": [
+    {
+      "file": "screenshots/01_town_current.png",
+      "source": "ui_review_input/next_review_20261010/current/03_town_hud.png",
+      "title": "当前 · 昭元边城",
+      "size": [
+        480,
+        800
+      ],
+      "required": true,
+      "sha256": "acdb3c0b84cf0c4af863774da4bfd75a4f1aebcc438e27afdd874b99f0769bfb"
+    },
+    {
+      "file": "screenshots/02_field_current.png",
+      "source": "ui_review_input/next_review_20261010/current/04_field_hud.png",
+      "title": "当前 · 枫林古道",
+      "size": [
+        480,
+        800
+      ],
+      "required": true,
+      "sha256": "6641b5ac7db891c1915c6a7ff55d4778bff1455115d163564c96c769eb888675"
+    },
+    {
+      "file": "references/03_steward_idle.png",
+      "source": "远征/image/generated_201_333/ready/npcs/npc_steward_idle.png",
+      "title": "NPC源帧条 · 执事",
+      "size": [
+        512,
+        128
+      ],
+      "required": true,
+      "sha256": "c304e073529bdec7c6207fd052b9267bbe3788b7295f185538fe3630ec2a3e29"
+    },
+    {
+      "file": "references/04_guard_idle.png",
+      "source": "远征/image/generated_201_333/ready/npcs/npc_guard_idle.png",
+      "title": "NPC源帧条 · 巡界人",
+      "size": [
+        512,
+        128
+      ],
+      "required": true,
+      "sha256": "875d77f340bb268cba6da33a769f3db596415933518f0bac12afa081d762b413"
+    },
+    {
+      "file": "optional/port_older_20261005.png",
+      "source": "远征/shots/craft_ui_20261005/world_shenyuan_port.png",
+      "title": "可选旧图 · 港口，HUD非当前版",
+      "size": [
+        480,
+        800
+      ],
+      "required": false,
+      "sha256": "324c61d0eb665403f7a354b4b3e0492125163eb6c77de909385d48f898db3c75"
+    },
+    {
+      "file": "optional/smith_idle.png",
+      "source": "远征/image/generated_201_333/ready/npcs/npc_smith_idle.png",
+      "title": "可选 · 铁匠",
+      "size": [
+        512,
+        128
+      ],
+      "required": false,
+      "sha256": "e289595157dadcd740e3d2d9afa4c9c1efdfb3e8596e1d74b243081f571663e2"
+    },
+    {
+      "file": "optional/child_idle.png",
+      "source": "远征/image/generated_201_333/ready/npcs/npc_child_idle.png",
+      "title": "可选 · 孩童",
+      "size": [
+        512,
+        128
+      ],
+      "required": false,
+      "sha256": "6db7d63862b626ecfb32e551a03f8f3b6bd9fab3301862e56101b236b9d09eea"
+    }
+  ]
+}

@@ -1,0 +1,249 @@
+{
+	"account": "",
+	"arena": {
+		"best_streak": 0,
+		"losses": 0,
+		"score": 1000,
+		"streak": 0,
+		"wins": 0
+	},
+	"audio": {
+		"bgm": 0.7,
+		"mute": false,
+		"sfx": 0.8
+	},
+	"avatar_custom": "",
+	"avatar_id": "fox",
+	"avatar_use_custom": false,
+	"city": {
+		"acts": {},
+		"built": [
+			"hall",
+			"gate"
+		],
+		"code": "",
+		"day": "",
+		"streak": 0,
+		"visits": []
+	},
+	"gender": "男",
+	"items": {
+		"enhance_stone": 24,
+		"gem_atk_1": 9,
+		"gem_def_1": 6,
+		"gem_hp_1": 3,
+		"refine_stone": 9
+	},
+	"player_name": "沈舟",
+	"prog": {
+		"codex_claimed": [],
+		"economy": {
+			"bought": {},
+			"day": 1,
+			"history": {},
+			"next_tx": 1,
+			"orders": {},
+			"seed": 7919,
+			"sold": {},
+			"work": {}
+		},
+		"equip": {
+			"accessory": 6,
+			"armor": 5,
+			"hammer": 4,
+			"spear": 2,
+			"staff": 3,
+			"sword": 1
+		},
+		"exp": 0,
+		"flags": {},
+		"gacha": {
+			"free_day": "",
+			"free_last": "",
+			"free_streak": 0,
+			"pity": 0
+		},
+		"inventory": {
+			"instances": [
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 1,
+					"slot": "sword",
+					"sockets": 3,
+					"tpl": "tpl_sword_basic",
+					"uid": 1
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 1,
+					"slot": "spear",
+					"sockets": 3,
+					"tpl": "tpl_spear_basic",
+					"uid": 2
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 1,
+					"slot": "staff",
+					"sockets": 3,
+					"tpl": "tpl_staff_basic",
+					"uid": 3
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 1,
+					"slot": "hammer",
+					"sockets": 3,
+					"tpl": "tpl_hammer_basic",
+					"uid": 4
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 1,
+					"slot": "armor",
+					"sockets": 3,
+					"tpl": "tpl_armor_basic",
+					"uid": 5
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 1,
+					"slot": "accessory",
+					"sockets": 3,
+					"tpl": "tpl_accessory_basic",
+					"uid": 6
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 3,
+					"slot": "accessory",
+					"sockets": 3,
+					"tpl": "tpl_accessory_moon",
+					"uid": 7
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 2,
+					"slot": "staff",
+					"sockets": 3,
+					"tpl": "tpl_staff_basic",
+					"uid": 8
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 2,
+					"slot": "staff",
+					"sockets": 3,
+					"tpl": "tpl_staff_basic",
+					"uid": 9
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 2,
+					"slot": "staff",
+					"sockets": 3,
+					"tpl": "tpl_staff_basic",
+					"uid": 10
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 2,
+					"slot": "spear",
+					"sockets": 3,
+					"tpl": "tpl_spear_basic",
+					"uid": 11
+				}
+			],
+			"next_uid": 12,
+			"pending": []
+		},
+		"last_ts": 1792008236,
+		"ledger": {},
+		"level": 50,
+		"lore_beats": {},
+		"lore_seen": false,
+		"main_world": {
+			"map_id": "lorin_wilds"
+		},
+		"mounts": {
+			"active": "",
+			"owned": {}
+		},
+		"pet_stat": {},
+		"pets": [],
+		"quest_postings": {
+			"q_slay_forest": "q_slay_forest|2026-10-14"
+		},
+		"settings": {},
+		"skills": {},
+		"special_events": {
+			"records": {},
+			"tracked": ""
+		},
+		"story": {
+			"done": [],
+			"goals": {},
+			"step": "s08"
+		},
+		"talents": {},
+		"tips_seen": {},
+		"titles": {
+			"active": "",
+			"owned": []
+		},
+		"world_cleared": {},
+		"worlds_unlocked": 1
+	},
+	"quest": {
+		"active": {
+			"q_slay_forest": 3
+		},
+		"claimed": [],
+		"day": "2026-10-14",
+		"offer": [
+			"q_slay_forest",
+			"q_slay_abyss"
+		]
+	},
+	"selected_role": "zs",
+	"version": 7,
+	"wallet": {
+		"expedition": 0,
+		"gold": 1000000,
+		"honor": 0,
+		"soul": 0
+	}
+}

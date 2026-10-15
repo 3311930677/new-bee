@@ -16,16 +16,8 @@ func _draw() -> void:
 	if not flat_floor:
 		Surface.tiled(self, "res://image/map_proc/011_tile_tomb_2.png", Rect2(180, 64, 600, 1120), Vector2(96, 96), Color("7e8791"))
 		Surface.tiled(self, "res://image/map_proc/011_tile_tomb_2.png", Rect2(404, 80, 152, 1080), Vector2(76, 76), Color("b5b7af"))
-	for x in [196.0, 762.0]:
-		for y in range(64, 1190, 96):
-			draw_rect(Rect2(x, y, 12, 86), Color("28313e"))
-			draw_line(Vector2(x + 3, y + 4), Vector2(x + 3, y + 82), Color("616876"), 2)
-	for y in [275.0, 525.0, 775.0, 1025.0]:
-		if not flat_floor:
-			for x in [245.0, 715.0]: _pillar(Vector2(x, y))
-	for y in range(140, 1150, 112):
-		draw_line(Vector2(429, y), Vector2(453, y), Color("c6ae71"), 3)
-		draw_line(Vector2(507, y), Vector2(531, y), Color("c6ae71"), 3)
+	if not bool(get_meta("illustrated_floor", false)):
+		_draw_legacy_trim()
 	match map_id:
 		"stele_entry":
 			_seal(Vector2(480, 625), 80, "act4_return_anchor", Color("9adad0"))
@@ -45,6 +37,18 @@ func _draw() -> void:
 				var angle := TAU * i / 3.0 - PI / 2
 				var p := Vector2(480,570) + Vector2(cos(angle),sin(angle)) * 133
 				draw_circle(p, 14, [Color("93bf95"),Color("82bacb"),Color("d1dceb")][i])
+
+func _draw_legacy_trim() -> void:
+	for x in [196.0, 762.0]:
+		for y in range(64, 1190, 96):
+			draw_rect(Rect2(x, y, 12, 86), Color("28313e"))
+			draw_line(Vector2(x + 3, y + 4), Vector2(x + 3, y + 82), Color("616876"), 2)
+	for y in [275.0, 525.0, 775.0, 1025.0]:
+		if not flat_floor:
+			for x in [245.0, 715.0]: _pillar(Vector2(x, y))
+	for y in range(140, 1150, 112):
+		draw_line(Vector2(429, y), Vector2(453, y), Color("c6ae71"), 3)
+		draw_line(Vector2(507, y), Vector2(531, y), Color("c6ae71"), 3)
 
 func _pillar(p: Vector2) -> void:
 	draw_set_transform(p + Vector2(8,8),0,Vector2(1,.36))

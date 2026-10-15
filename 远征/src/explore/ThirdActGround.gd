@@ -27,7 +27,7 @@ func _process(_delta: float) -> void:
 func _draw() -> void:
 	if flat_floor and map_id != "frost_post":
 		# Keep rails as flat material markings; raised rock/ravine/port-water art is superseded.
-		if map_id == "rift_mine_road":
+		if map_id == "rift_mine_road" and not bool(get_meta("illustrated_floor", false)):
 			for y in range(170, 1090, 34):
 				draw_line(Vector2(435, y), Vector2(525, y), Color("8c8370"), 5)
 			for x in [444.0, 516.0]:

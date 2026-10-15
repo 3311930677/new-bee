@@ -1,0 +1,21 @@
+Original 2D UI asset sheet for a portrait mobile RPG with an East-Asian frontier theme. Top-tier commercial mobile game quality.
+Match the UI style of the two attached STYLE references (the game's home screen and settings screen) exactly: near-black lacquer (#1A1412) and dark lacquered wood as the main surface, thin aged-gold (#C9A45C) rims and fine gold inner lines, small cloud-scroll (ruyi) corner ornaments, tiny red-garnet rivets, vermilion (#9E2B25) used only as a small accent. Elegant and restrained, not chunky.
+Follow the attached LAYOUT reference exactly: every grey box is one asset, drawn at that exact position and size; darker grey areas are decorated end caps / corners, light grey areas are plain stretchable middles that must contain only seamless lacquer texture and straight rim lines.
+Rendering: fine-grain HD pixel art, crisp edges, consistent fine pixel size across the whole sheet; light from the upper left, lit top rims, darker bottom rims, small bright highlights on gold; subtle lacquer sheen and faint wood grain inside panels.
+Background: flat pure #FF00FF magenta everywhere outside the boxes. Never use magenta inside any asset.
+NO text, NO letters, NO numbers, NO icons or symbols, NO characters, NO cast shadows, NO outer glow, NO soft halo, NO tassels, NO jade pendants, NO dragons, NO 3D render look, NO photorealism, NO watermark.
+
+Sheet UI3-02, scale 2. Top row: a secondary button in three states with identical outline: normal (black lacquer plate, thin aged-gold rim, tiny gold corner ticks), pressed (pushed in, darker, dark inner top line), disabled (dull grey lacquer, dim rim).
+Bottom row, left to right:
+- a tab in two states with identical outline: normal (flat black lacquer, dim gold outline), selected (vermilion lacquer fill with a bright gold rim and two tiny gold diamond ornaments near the ends);
+- a pill button: rounded capsule of black lacquer with a thin gold rim; its left end is a raised round gold-ringed socket (empty centre, for an icon); plain middle for text;
+- a round icon button: black lacquer disc with a thin gold ring and four tiny gold ticks, empty centre.
+
+Input image 1 is the LAYOUT template. Input images 2 and 3 are STYLE references only; do not reproduce their scenes, text or icons. Output one 1536x1024 PNG asset sheet. Preserve the entire magenta canvas and exact layout geometry. No labels or guide markings. Everything, including decoration, must stay inside its assigned box. Empty centres are solid lacquer or parchment, not holes. Geometry on the 1536x1024 canvas (origin top left):
+btn_normal: x,y,width,height=320,376,256,96; nine-slice art margins=16,12,16,12
+btn_pressed: x,y,width,height=640,376,256,96; nine-slice art margins=16,12,16,12
+btn_disabled: x,y,width,height=960,376,256,96; nine-slice art margins=16,12,16,12
+tab_normal: x,y,width,height=200,548,288,88; nine-slice art margins=16,12,16,12
+tab_selected: x,y,width,height=552,548,288,88; nine-slice art margins=16,12,16,12
+pill: x,y,width,height=904,548,256,88; nine-slice art margins=44,10,20,10
+btn_round: x,y,width,height=1224,536,112,112; nine-slice art margins=

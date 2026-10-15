@@ -1,0 +1,321 @@
+{
+  "maps": [
+    {
+      "id": "old_salt_road",
+      "name": "旧盐道",
+      "source": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\coast\\old_salt_road_ground.png",
+      "asset": "res://assets/world/maps_rebuild_20261015/old_salt_road_floor.png",
+      "size": [
+        960,
+        1248
+      ]
+    },
+    {
+      "id": "shenyuan_port",
+      "name": "沉渊港",
+      "source": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\coast\\shenyuan_port_ground.png",
+      "asset": "res://assets/world/maps_rebuild_20261015/shenyuan_port_floor.png",
+      "size": [
+        960,
+        1248
+      ]
+    },
+    {
+      "id": "tideflat",
+      "name": "潮痕滩",
+      "source": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\coast\\tideflat_ground.png",
+      "asset": "res://assets/world/maps_rebuild_20261015/tideflat_floor.png",
+      "size": [
+        960,
+        1248
+      ]
+    },
+    {
+      "id": "tidal_gate",
+      "name": "退潮水闸",
+      "source": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\coast\\tidal_gate_ground.png",
+      "asset": "res://assets/world/maps_rebuild_20261015/tidal_gate_floor.png",
+      "size": [
+        960,
+        1248
+      ]
+    },
+    {
+      "id": "stele_cavern",
+      "name": "失声碑窟",
+      "source": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\stele\\stele_cavern_floor.png",
+      "asset": "res://assets/world/maps_rebuild_20261015/stele_cavern_floor.png",
+      "size": [
+        960,
+        1248
+      ]
+    },
+    {
+      "id": "red_sand_route",
+      "name": "赤砂商路",
+      "source": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\snow\\red_sand_route_ground.png",
+      "asset": "res://assets/world/maps_rebuild_20261015/red_sand_route_floor.png",
+      "size": [
+        960,
+        1248
+      ]
+    },
+    {
+      "id": "frost_post",
+      "name": "霜关驿",
+      "source": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\snow\\frost_post_ground.png",
+      "asset": "res://assets/world/maps_rebuild_20261015/frost_post_floor.png",
+      "size": [
+        960,
+        1248
+      ]
+    },
+    {
+      "id": "rift_mine_road",
+      "name": "裂谷矿道",
+      "source": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\snow\\rift_mine_road_ground.png",
+      "asset": "res://assets/world/maps_rebuild_20261015/rift_mine_road_floor.png",
+      "size": [
+        960,
+        1248
+      ]
+    },
+    {
+      "id": "rift_mine_vault",
+      "name": "裂谷矿脉",
+      "source": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\snow\\rift_mine_vault_ground.png",
+      "asset": "res://assets/world/maps_rebuild_20261015/rift_mine_vault_floor.png",
+      "size": [
+        960,
+        1248
+      ]
+    },
+    {
+      "id": "frost_pass",
+      "name": "冰隘",
+      "source": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\snow\\frost_pass_ground.png",
+      "asset": "res://assets/world/maps_rebuild_20261015/frost_pass_floor.png",
+      "size": [
+        960,
+        1248
+      ]
+    },
+    {
+      "id": "frost_boardwalk",
+      "name": "霜林栈道",
+      "source": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\snow\\frost_boardwalk_ground.png",
+      "asset": "res://assets/world/maps_rebuild_20261015/frost_boardwalk_floor.png",
+      "size": [
+        960,
+        1248
+      ]
+    },
+    {
+      "id": "abyss_ring",
+      "name": "渊口外环",
+      "source": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\stele\\abyss_ring_floor.png",
+      "asset": "res://assets/world/maps_rebuild_20261015/abyss_ring_floor.png",
+      "size": [
+        960,
+        1248
+      ]
+    },
+    {
+      "id": "stele_entry",
+      "name": "归路门厅",
+      "source": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\stele\\stele_entry_floor.png",
+      "asset": "res://assets/world/maps_rebuild_20261015/stele_entry_floor.png",
+      "size": [
+        960,
+        1248
+      ]
+    },
+    {
+      "id": "stele_resonance",
+      "name": "三声共鸣廊",
+      "source": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\stele\\stele_resonance_floor.png",
+      "asset": "res://assets/world/maps_rebuild_20261015/stele_resonance_floor.png",
+      "size": [
+        960,
+        1248
+      ]
+    },
+    {
+      "id": "stele_core",
+      "name": "碑心",
+      "source": "C:\\Users\\tsz\\Documents\\Codex\\2026-10-15\\new-chat\\outputs\\maps_rebuild\\stele\\stele_core_floor.png",
+      "asset": "res://assets/world/maps_rebuild_20261015/stele_core_floor.png",
+      "size": [
+        960,
+        1248
+      ]
+    }
+  ],
+  "walkable_regions": {
+    "stele_cavern": [
+      [
+        270,
+        100,
+        425,
+        285
+      ],
+      [
+        428,
+        378,
+        104,
+        168
+      ],
+      [
+        225,
+        540,
+        510,
+        150
+      ],
+      [
+        428,
+        681,
+        104,
+        123
+      ],
+      [
+        145,
+        800,
+        675,
+        275
+      ],
+      [
+        428,
+        1065,
+        104,
+        183
+      ]
+    ],
+    "rift_mine_vault": [
+      [
+        300,
+        130,
+        360,
+        325
+      ],
+      [
+        280,
+        495,
+        400,
+        275
+      ],
+      [
+        300,
+        810,
+        360,
+        355
+      ],
+      [
+        385,
+        130,
+        190,
+        1118
+      ]
+    ],
+    "tidal_gate": [
+      [
+        330,
+        0,
+        300,
+        1248
+      ]
+    ],
+    "abyss_ring": [
+      [
+        225,
+        0,
+        510,
+        1248
+      ]
+    ],
+    "stele_entry": [
+      [
+        190,
+        0,
+        580,
+        1248
+      ]
+    ],
+    "stele_resonance": [
+      [
+        190,
+        0,
+        580,
+        1248
+      ]
+    ],
+    "stele_core": [
+      [
+        190,
+        0,
+        580,
+        1248
+      ]
+    ],
+    "shenyuan_port": [
+      [
+        330,
+        0,
+        300,
+        1248
+      ],
+      [
+        0,
+        610,
+        396,
+        94
+      ],
+      [
+        562,
+        652,
+        398,
+        94
+      ],
+      [
+        250,
+        154,
+        146,
+        180
+      ],
+      [
+        562,
+        292,
+        148,
+        182
+      ],
+      [
+        296,
+        334,
+        266,
+        74
+      ],
+      [
+        250,
+        824,
+        146,
+        214
+      ],
+      [
+        562,
+        858,
+        148,
+        220
+      ],
+      [
+        396,
+        864,
+        166,
+        80
+      ]
+    ]
+  },
+  "notes": [
+    "Built-in imagegen images; nearest-neighbor import normalization only.",
+    "Original thin route art and duplicate static terrain disabled.",
+    "Dynamic quest states remain separate; physical water and wall boundaries added."
+  ]
+}

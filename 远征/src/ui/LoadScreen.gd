@@ -1,15 +1,17 @@
-# LoadScreen.gd —— 原背景 + 完整书法标识 + 黑铁魔晶剑槽 + 分帧预热
+# LoadScreen.gd —— 参考稿背景 + 罗盘 Logo + 城堡灯塔进度条 + 分帧预热
 # 流程：Main → 本页（预热 image 素材索引与常用纹理，分帧加载不卡帧）
 #       → 完成（且距进场 ≥3.5s）→ Title。加载文案轮换一点行军趣味话。
 extends Control
-const Wordmark := preload("res://src/ui/UIWordmark.gd")
 const Chest := preload("res://src/ui/TravelChestUI.gd")
 const ReviewFix:=preload("res://src/ui/ReviewFixUI.gd")
-const Relic := preload("res://src/ui/LoadingRelic.gd")
 const Grounding := preload("res://src/world/BuildingGrounding.gd")
 const GROUND_IDS := ["hall", "gate", "barracks", "forge", "archive", "kennel", "storehouse", "shrine"]
 
 const TITLE_SCENE := "res://src/ui/Title.tscn"
+const KIT := "res://assets/ui/loading_20261014/"
+const BRAND_SIZE := Vector2(320, 138)  # title_logo.png 1654×713 等比，与标题页一致
+const STATUS_GAP := 4.0
+const TIP_H := 36.0
 const MIN_SECONDS := 3.5
 const PER_FRAME := 8        # 每帧预热的贴图数（59 项实际引用 + 行走帧 ≈ 数十张，分帧绰绰有余）
 const CODE_PER_FRAME := 1   # 每帧顺带编译的脚本/场景数（编译只能在主线程，只能摊开几帧）
@@ -62,8 +64,11 @@ var _percent_l: Label
 var _hint_l: Label
 var _brand: Control
 var _brand_mark: TextureRect
-var _gauge: Control
-var _plate: Panel
+var _gauge: Gauge
+var _kit: Dictionary
+var _backdrop: TextureRect
+var _floor: ColorRect
+var _art: TextureRect
 
 ## 测试接口：置 false 时预热带跑完也不切场景（tools/VerifyPerf.gd 直接驱动本页量耗时）
 var auto_advance := true
@@ -90,23 +95,53 @@ func _ready() -> void:
 
 
 func _build() -> void:
-	# Keep the original artwork, crop policy and pixel filter untouched.
-	G.page_background(self,0.08,"res://image/background/enter.png",false)
+	# 背景、Logo、进度条都来自加载页参考稿（assets/ui/loading_20261014，build_loading_kit.py 生成）。
+	# 背景里原本烙死在 63% 的进度条已抹掉，改由 Gauge 按真实进度点亮；背景跟着进度条走，二者始终对齐。
+	G.register_ui_page(self)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	theme = Theme.new()
 	theme.default_font = G.font_serif
 	theme.default_font_size = 16
 	theme.set_color("font_color","Label",Color("eadbc0"))
+	_kit = JSON.parse_string(FileAccess.get_file_as_string(KIT + "loading_kit.json"))
+	# 屏幕比原图高时露出的部分：原图天空段的模糊放大版铺底，下沿补地面色。
+	_backdrop = TextureRect.new()
+	_backdrop.name = "LoadingBackdrop"
+	_backdrop.texture = load(KIT + "loading_backdrop.png")
+	_backdrop.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_backdrop.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	_backdrop.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	_backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_backdrop)
+	_floor = ColorRect.new()
+	_floor.name = "LoadingGround"
+	_floor.color = Color(String(_kit.ground_color))
+	_floor.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(_floor)
+	_art = TextureRect.new()
+	_art.name = "PageBackground"
+	_art.texture = load(KIT + "loading_bg.png")
+	_art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_art.stretch_mode = TextureRect.STRETCH_SCALE
+	_art.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# 高屏时原图上沿渐隐进天空铺底，不留硬边。
+	var edge := Shader.new()
+	edge.code = "shader_type canvas_item; uniform float fade_px = 0.0; uniform float art_h = 853.0; void fragment(){ vec4 c = texture(TEXTURE, UV); if (fade_px > 0.0) { c.a *= smoothstep(0.0, fade_px / art_h, UV.y); } COLOR = c; }"
+	var edge_mat := ShaderMaterial.new()
+	edge_mat.shader = edge
+	_art.material = edge_mat
+	add_child(_art)
 
+	# 底部压暗：阶段文字与行军小话落在岩石上时仍可读。
 	var bottom := TextureRect.new()
 	bottom.name = "LoadingContrast"
 	bottom.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	bottom.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	bottom.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var gradient := Gradient.new()
-	# 暗化带从 66% 起：进度文字和百分比落在人物靴子与亮色背景上时仍清楚可读。
-	gradient.colors = PackedColorArray([Color(0,0,0,0),Color(.025,.018,.012,.55),Color(.025,.018,.012,.86)])
-	gradient.offsets = PackedFloat32Array([.66,.80,1.0])
+	gradient.colors = PackedColorArray([Color(0,0,0,0),Color(.03,.02,.02,.5),Color(.03,.02,.02,.85)])
+	gradient.offsets = PackedFloat32Array([.8,.9,1.0])
 	var fade := GradientTexture2D.new()
 	fade.gradient = gradient
 	fade.fill_from = Vector2.ZERO
@@ -116,65 +151,43 @@ func _build() -> void:
 
 	_brand = Control.new()
 	_brand.name = "LoadingBrand"
-	_brand.size = Vector2(400,190)
+	_brand.size = BRAND_SIZE
 	_brand.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_brand)
-
-	var atlas := AtlasTexture.new()
-	atlas.atlas = Wordmark.ART
-	atlas.region = Rect2(Vector2.ZERO,Wordmark.ART.get_size())
 	_brand_mark = TextureRect.new()
 	_brand_mark.name = "ExpeditionWordmark"
-	_brand_mark.position = Vector2(90,0)
-	_brand_mark.size = Vector2(220,88)
-	_brand_mark.texture = atlas
+	_brand_mark.texture = load("res://assets/ui/title_20261014/title_logo.png")
 	_brand_mark.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_brand_mark.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	_brand_mark.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	_brand_mark.modulate = Color.WHITE
-	var outline:=Shader.new();outline.code="shader_type canvas_item; void fragment(){vec4 t=texture(TEXTURE,UV);float a=0.0;for(int x=-1;x<=1;x++){for(int y=-1;y<=1;y++){a=max(a,texture(TEXTURE,UV+vec2(float(x),float(y))*TEXTURE_PIXEL_SIZE).a);}}COLOR=t.a>0.1?t:vec4(vec3(.102,.078,.063),a);}"
-	var ink:=ShaderMaterial.new();ink.shader=outline;_brand_mark.material=ink
+	_brand_mark.size = BRAND_SIZE
 	_brand_mark.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_brand.add_child(_brand_mark)
-	var shadow:=TextureRect.new()
-	var gradient2:=Gradient.new();gradient2.colors=PackedColorArray([Color("0a090b",.85),Color("0a090b",0)])
-	var halo:=GradientTexture2D.new();halo.gradient=gradient2;halo.width=320;halo.height=160;halo.fill=GradientTexture2D.FILL_RADIAL;halo.fill_from=Vector2(.5,.5);halo.fill_to=Vector2(1,.5)
-	shadow.texture=halo;shadow.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;shadow.size=Vector2(320,160);shadow.position=Vector2(40,-28);shadow.mouse_filter=Control.MOUSE_FILTER_IGNORE
-	_brand.add_child(shadow);_brand.move_child(shadow,0)
+	# 进场淡入；审查模式直接显示，截图稳定。
+	if not bool(G.get_meta("ui_review_mode",false)):
+		_brand_mark.modulate.a = 0.0
+		create_tween().tween_property(_brand_mark,"modulate:a",1.0,0.6).set_delay(0.15)
 
-	# 进度区底板：背景人物与亮色建筑会吃掉文字，单独给进度与提示一块半透明暗板。
-	_plate = Panel.new()
-	_plate.name = "LoadingPlate"
-	_plate.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var plate_style := StyleBoxFlat.new()
-	plate_style.bg_color = Color(.035,.026,.02,.78)
-	plate_style.border_color = Color("8a6a3a",.55)
-	plate_style.border_width_top = 1
-	plate_style.border_width_bottom = 1
-	_plate.add_theme_stylebox_override("panel",plate_style)
-	add_child(_plate)
-
-	_gauge = preload("res://src/ui/LoadingChestGauge.gd").new()
+	_gauge = Gauge.new(_kit)
 	_gauge.name = "LoadingGauge"
-	_gauge.size = Vector2(416,66)
 	add_child(_gauge)
-	_bar_fill = _gauge.get("lit_blade") as Control
+	_bar_fill = _gauge.lit_blade
+	_percent_l = _label("0%",15,Color("f5e7c8"))
+	_percent_l.name = "LoadingPercent"
+	var box: Array = _kit.percent_box
+	_percent_l.position = Vector2(box[0],box[1]) - _gauge.origin
+	_percent_l.size = Vector2(box[2]-box[0],box[3]-box[1])
+	_gauge.add_child(_percent_l)
 	_bar_l = _label(STAGES[0],14,Color("f2dc87"))
 	_bar_l.name = "LoadingStatus"
-	_bar_l.position = Vector2(0,0)
-	_bar_l.size = Vector2(300,24)
+	_bar_l.position = Vector2(0,_gauge.size.y+STATUS_GAP)
+	_bar_l.size = Vector2(_gauge.size.x,20)
 	_gauge.add_child(_bar_l)
-	_percent_l = _label("0%",14,Color("f5e7c8"))
-	_percent_l.name = "LoadingPercent"
-	_percent_l.position = Vector2(344,0)
-	_percent_l.size = Vector2(72,24)
-	_percent_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_gauge.add_child(_percent_l)
 	# Pick once per entry; do not consume the global gameplay random stream.
 	var tip_i := 0 if bool(G.get_meta("ui_review_mode",false)) else int(Time.get_ticks_usec()%LOADING_TIPS.size())
-	_hint_l = _label("「%s」"%LOADING_TIPS[tip_i],14,Color("e4d4ba"))
+	_hint_l = _label("「%s」"%LOADING_TIPS[tip_i],13,Color("e4d4ba"))
 	_hint_l.name = "LoadingTip"
-	_hint_l.size = Vector2(416,24)
+	_hint_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(_hint_l)
 	resized.connect(_layout)
 	_layout()
@@ -191,25 +204,30 @@ func _label(text: String, font_size: int, ink: Color) -> Label:
 	label.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	label.add_theme_font_size_override("font_size",font_size)
 	label.add_theme_color_override("font_color",ink)
-	label.add_theme_color_override("font_shadow_color",Color("100d09",.8))
-	label.add_theme_constant_override("shadow_offset_x",0)
-	label.add_theme_constant_override("shadow_offset_y",1)
+	label.add_theme_color_override("font_outline_color",Color("100d09"))
+	label.add_theme_constant_override("outline_size",3)
 	return label
 
 
+## 自下而上排：行军小话贴安全区底，阶段文字在其上，再上是进度条；背景 1:1 跟着进度条定位。
 func _layout(safe_override:=Rect2()) -> void:
 	if _brand==null or _gauge==null:return
 	var safe:=safe_override if safe_override.has_area() else G.ui_safe_rect(self)
-	var center:=safe.get_center().x
-	_brand.position=Vector2(center-200,safe.position.y+40)
-	_gauge.position=Vector2(safe.position.x+24,safe.end.y-142)
-	_gauge.size=Vector2(safe.size.x-48,66)
-	_hint_l.position=Vector2(safe.position.x+24,safe.end.y-64)
-	_hint_l.size=Vector2(safe.size.x-48,44)
-	_hint_l.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
-	if _plate!=null:
-		_plate.position=Vector2(0,safe.end.y-156)
-		_plate.size=Vector2(get_viewport_rect().size.x,get_viewport_rect().size.y-_plate.position.y)
+	var view := get_viewport_rect().size
+	_hint_l.position = Vector2(safe.position.x+24, safe.end.y-TIP_H-6)
+	_hint_l.size = Vector2(safe.size.x-48, TIP_H)
+	_gauge.position = Vector2(roundf(safe.get_center().x-_gauge.size.x*.5),
+		_hint_l.position.y-STATUS_GAP-20-_gauge.size.y)
+	_art.size = _art.texture.get_size()
+	_art.position = _gauge.position - _gauge.origin
+	var mat := _art.material as ShaderMaterial
+	mat.set_shader_parameter("art_h", _art.size.y)
+	mat.set_shader_parameter("fade_px", 64.0 if _art.position.y > 0.5 else 0.0)
+	_backdrop.position = Vector2.ZERO
+	_backdrop.size = view
+	_floor.position = Vector2(0, _art.position.y+_art.size.y)
+	_floor.size = Vector2(view.x, maxf(0.0, view.y-_floor.position.y))
+	_brand.position = Vector2(roundf(safe.get_center().x-BRAND_SIZE.x*.5), safe.position.y+36)
 
 func _set_bar_ratio(ratio: float) -> void:
 	var r := clampf(ratio,0.0,1.0)
@@ -222,6 +240,72 @@ func _set_bar_ratio(ratio: float) -> void:
 ## Regression interface: the actual lit instrument width.
 func bar_fill_width() -> float:
 	return _gauge.fill_width()
+
+## 满格时的点亮宽度（审查脚本按它核对比例）。
+func full_fill_width() -> float:
+	return _gauge.full_width
+
+
+## 参考稿进度条：未点亮底板 + 从左裁切的点亮管 + 逐个点亮的节点（灯塔 + 圆盘）。
+## 全部 1:1，位置读 loading_kit.json；最前面那个已点亮节点缓慢呼吸。
+class Gauge extends Control:
+	const KIT := "res://assets/ui/loading_20261014/"
+	var lit_blade: Control
+	var origin := Vector2.ZERO
+	var full_width := 0.0
+	var _nodes: Array[TextureRect] = []
+	var _node_x: Array[float] = []
+	var _clock := 0.0
+	var _ratio := 0.0
+	func _init(kit: Dictionary) -> void:
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var layers: Dictionary = kit.layers
+		var base: Dictionary = layers.bar_base
+		origin = Vector2(base.pos[0], base.pos[1])
+		size = Vector2(base.size[0], base.size[1])
+		add_child(_layer("bar_base", base))
+		var fill: Dictionary = layers.bar_fill
+		full_width = float(fill.size[0])
+		lit_blade = Control.new()
+		lit_blade.name = "LitBlade"
+		lit_blade.clip_contents = true
+		lit_blade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		lit_blade.position = Vector2(fill.pos[0], fill.pos[1]) - origin
+		lit_blade.size = Vector2(0, fill.size[1])
+		var strip := _layer("bar_fill", fill)
+		strip.position = Vector2.ZERO
+		lit_blade.add_child(strip)
+		add_child(lit_blade)
+		for i in (kit.node_x as Array).size():
+			var n := _layer("node_%d" % i, layers["node_%d" % i])
+			n.visible = false
+			add_child(n)
+			_nodes.append(n)
+			_node_x.append(float(kit.node_x[i]) - float(fill.pos[0]))
+	func _layer(id: String, info: Dictionary) -> TextureRect:
+		var t := TextureRect.new()
+		t.name = id
+		t.texture = load(KIT + id + ".png")
+		t.position = Vector2(info.pos[0], info.pos[1]) - origin
+		t.size = Vector2(info.size[0], info.size[1])
+		t.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		t.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		return t
+	func set_ratio(r: float) -> void:
+		_ratio = clampf(r, 0.0, 1.0)
+		lit_blade.size.x = roundf(full_width * _ratio)
+		for i in _nodes.size():
+			_nodes[i].visible = lit_blade.size.x >= _node_x[i]
+	func fill_width() -> float:
+		return lit_blade.size.x
+	func _process(delta: float) -> void:
+		_clock += delta
+		var lead := -1
+		for i in _nodes.size():
+			if _nodes[i].visible: lead = i
+		for i in _nodes.size():
+			var glow := .5+.5*sin(_clock*3.0)
+			_nodes[i].modulate = Color(1.0+.2*glow,1.0+.12*glow,1.0) if i == lead and _ratio < 1.0 else Color.WHITE
 
 
 ## 预热清单：素材索引只建不逐张加载（场景 load 会自动带上依赖纹理，

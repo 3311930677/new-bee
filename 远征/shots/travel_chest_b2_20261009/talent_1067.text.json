@@ -1,0 +1,538 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@Label@3318",
+			"rect_height": 32.0,
+			"size": 20,
+			"text": "锐利"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@Label@3319",
+			"rect_height": 26.0,
+			"size": 13,
+			"text": "剩余天赋点 2 / 2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@Button@3320",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@Button@3320/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@Label@3321",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "天赋修习"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@HBoxContainer@3323/@Button@3336",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "狂战"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@HBoxContainer@3323/@Button@3336/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "狂战"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@HBoxContainer@3323/@Button@3336/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@HBoxContainer@3323/@Button@3387",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "坚壁"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@HBoxContainer@3323/@Button@3387/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "坚壁"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@HBoxContainer@3323/@Button@3387/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@HBoxContainer@3323/@Button@3388",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "迅捷"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@HBoxContainer@3323/@Button@3388/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "迅捷"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@HBoxContainer@3323/@Button@3388/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3341",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "锐利"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3341/@Label@3338",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "锐利"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3341/@Label@3339",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "第1阶 · 0 / 3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3341/@Label@3340",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "已选"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3346",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "破甲"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3346/@Label@3343",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "破甲"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3346/@Label@3344",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "第2阶 · 0 / 3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3346/@Label@3345",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3351",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "嗜血"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3351/@Label@3348",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "嗜血"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3351/@Label@3349",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "第3阶 · 0 / 2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3351/@Label@3350",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3356",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "猛进"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3356/@Label@3353",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "猛进"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3356/@Label@3354",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "第4阶 · 0 / 3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3356/@Label@3355",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3361",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "怒意"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3361/@Label@3358",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "怒意"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3361/@Label@3359",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "第5阶 · 0 / 2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3361/@Label@3360",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3366",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "裂伤"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3366/@Label@3363",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "裂伤"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3366/@Label@3364",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "第6阶 · 0 / 3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3366/@Label@3365",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3371",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "绝杀"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3371/@Label@3368",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "绝杀"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3371/@Label@3369",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "第7阶 · 0 / 2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3371/@Label@3370",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3376",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "狂澜"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3376/@Label@3373",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "狂澜"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3376/@Label@3374",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "第8阶 · 0 / 3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3376/@Label@3375",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3381",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "战意"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3381/@Label@3378",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "战意"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3381/@Label@3379",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "第9阶 · 0 / 2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3381/@Label@3380",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3386",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "破军之势"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3386/@Label@3383",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "破军之势"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3386/@Label@3384",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "第10阶 · 0 / 1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3326/@VBoxContainer@3327/@Button@3386/@Label@3385",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@ScrollContainer@3331/@Label@3330",
+			"rect_height": 47.0,
+			"size": 14,
+			"text": "每点 攻击+2%\n每 5 级获得 1 点；需本系投入 0 点"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@Label@3332",
+			"rect_height": 24.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@Button@3333",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "分配天赋"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@Button@3333/Caption",
+			"rect_height": 56.0,
+			"size": 22,
+			"text": "分配天赋"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB2/@Control@3311/@Control@3312/@Button@3333/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		}
+	]
+}

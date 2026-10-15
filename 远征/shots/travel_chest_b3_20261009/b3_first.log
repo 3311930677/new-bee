@@ -1,0 +1,6 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SCRIPT ERROR: Parse Error: Cannot infer the type of "queued" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://tools/VerifyTravelChestB3.gd:179)
+ERROR: Failed to load script "res://tools/VerifyTravelChestB3.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)

@@ -8,7 +8,7 @@ closest to the spec guide box -> area-average (foreground only) to the spec art 
 binarize alpha -> quantize. Items in the same group share one outline (majority vote of
 their alpha masks) so states and rarity tiers line up exactly. Writes:
     art/<id>.png      spec art size (1 art px)
-    game/<id>.png     x2 nearest, what Godot loads (1 art px = 2 screen px)
+    game/<id>.png     what Godot loads: art x spec["art_to_screen"] nearest (1 = same as art/)
     report.json       aspect error and colour count per item
     preview.png       every game-size item on a dark board, x1
 """
@@ -28,8 +28,19 @@ GROUPS = {
     "slot": ["slot_common", "slot_uncommon", "slot_rare", "slot_epic", "slot_legend", "slot_empty", "slot_selected"],
     "nav_socket": ["nav_socket", "nav_socket_selected"],
     "rail_socket": ["rail_socket", "rail_socket_selected"],
+    "toggle": ["toggle_off", "toggle_on"],
 }
 COLORS = 32
+# 品红溢色：边缘像素 R、B 都明显高于 G。把 B 压到不超过 G，粉紫边就回到暖棕/金色。
+# 紫色描边是设计本身的素材不处理。
+DESPILL_SKIP = {"slot_epic"}
+
+
+def despill(rgba):
+    r, g, b = (rgba[..., i].astype(int) for i in range(3))
+    pink = (rgba[..., 3] > 0) & (r - g > 25) & (b - g > 25)
+    rgba[..., 2] = np.where(pink, np.minimum(b, g), b).astype(np.uint8)
+    return int(pink.sum())
 
 
 def key(rgb):
@@ -87,6 +98,7 @@ def main():
     with open(spec_path, encoding="utf-8") as f:
         spec = json.load(f)
     items = spec["items"]
+    k = int(spec.get("art_to_screen", 1))
     by_sheet = {}
     for item_id, it in items.items():
         by_sheet.setdefault(it["sheet"], []).append(item_id)
@@ -106,12 +118,15 @@ def main():
             mask = (labels[y0:y1, x0:x1] == idx) & fg[y0:y1, x0:x1]
             aw, ah = items[item_id]["art"]
             art[item_id] = area_down(rgb[y0:y1, x0:x1], mask, (aw, ah))
+            spill = 0 if item_id in DESPILL_SKIP else despill(art[item_id])
             src_ratio = (x1 - x0) / (y1 - y0)
             report[item_id] = {"sheet": sheet, "source_box": [int(x0), int(y0), int(x1 - x0), int(y1 - y0)],
-                               "aspect_error": round(abs(src_ratio / (aw / ah) - 1), 3)}
+                               "aspect_error": round(abs(src_ratio / (aw / ah) - 1), 3), "despilled_px": spill}
 
     # One outline per group: majority vote of members' alpha.
     for group, ids in GROUPS.items():
+        if not all(i in art for i in ids):
+            continue  # 该版本素材包没有这一组
         stack = np.stack([art[i][..., 3] > 0 for i in ids])
         shared = stack.sum(0) * 2 >= len(ids)
         for i in ids:
@@ -125,7 +140,7 @@ def main():
         report[item_id]["colors"] = n
         img = Image.fromarray(q, "RGBA")
         img.save(os.path.join(out, "art", item_id + ".png"))
-        big = img.resize((img.width * 2, img.height * 2), Image.NEAREST)
+        big = img.resize((img.width * k, img.height * k), Image.NEAREST)
         big.save(os.path.join(out, "game", item_id + ".png"))
         tiles.append((item_id, big))
 

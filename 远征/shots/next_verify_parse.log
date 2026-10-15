@@ -1,0 +1,23 @@
+ERROR: Failed to open log file for writing: user://logs/godot.log
+   at: rotate_file (core/io/logger.cpp:169)
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SCRIPT ERROR: Parse Error: Cannot infer the type of "box" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://src/ui/LoginChestView.gd:57)
+SCRIPT ERROR: Compile Error: Failed to compile depended scripts.
+   at: GDScript::reload (res://src/ui/Login.gd:0)
+ERROR: Failed to load script "res://src/ui/Login.gd" with error "Compilation failed".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+SCRIPT ERROR: Invalid call. Nonexistent function 'new' in base 'GDScript'.
+   at: _ready (res://src/ui/Login.gd:25)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://src/ui/Login.gd:25)
+       [1] _ready (res://tools/VerifyFullReviewFixes.gd:105)
+       [2] drop (res://tools/VerifyFullReviewFixes.gd:44)
+       [3] frames (res://tools/VerifyFullReviewFixes.gd:9)
+SCRIPT ERROR: Invalid access to property or key 'size' on a base object of type 'Nil'.
+   at: _ready (res://tools/VerifyFullReviewFixes.gd:106)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tools/VerifyFullReviewFixes.gd:106)
+       [1] shot (res://tools/VerifyFullReviewFixes.gd:13)
+       [2] frames (res://tools/VerifyFullReviewFixes.gd:9)

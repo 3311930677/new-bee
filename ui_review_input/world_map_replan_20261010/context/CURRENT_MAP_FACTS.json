@@ -1,0 +1,637 @@
+{
+  "lorin_wilds": {
+    "name": "昭元边城",
+    "map_cols": 20,
+    "map_rows": 26,
+    "player_scale": 0.66,
+    "camera_zoom": 1.15,
+    "spawn": [
+      480,
+      930
+    ],
+    "spawn_points": {
+      "from_maple_road": [
+        480,
+        180
+      ]
+    },
+    "exits": [
+      {
+        "id": "north_gate",
+        "at": [
+          480,
+          96
+        ],
+        "to": "maple_road",
+        "arrival": "from_city",
+        "label": "枫林古道"
+      }
+    ],
+    "flat_routes": [
+      {
+        "points": [
+          [
+            480,
+            1152
+          ],
+          [
+            480,
+            1050
+          ],
+          [
+            480,
+            700
+          ],
+          [
+            480,
+            400
+          ],
+          [
+            480,
+            96
+          ]
+        ],
+        "width": 144
+      }
+    ],
+    "city_building_positions": {
+      "hall": [
+        245,
+        260
+      ],
+      "archive": [
+        245,
+        520
+      ],
+      "barracks": [
+        245,
+        790
+      ],
+      "forge": [
+        245,
+        1080
+      ],
+      "kennel": [
+        715,
+        260
+      ],
+      "storehouse": [
+        715,
+        520
+      ],
+      "shrine": [
+        715,
+        790
+      ],
+      "stable": [
+        715,
+        935
+      ],
+      "gate": [
+        715,
+        1080
+      ]
+    },
+    "city_npc_positions": {
+      "npc_steward": [
+        375,
+        300
+      ],
+      "npc_scribe": [
+        375,
+        560
+      ],
+      "npc_smith": [
+        375,
+        830
+      ],
+      "npc_mentor": [
+        375,
+        710
+      ],
+      "npc_warden": [
+        375,
+        1120
+      ],
+      "npc_keeper": [
+        585,
+        300
+      ],
+      "npc_child": [
+        585,
+        830
+      ],
+      "npc_stablemaster": [
+        585,
+        965
+      ],
+      "npc_guard": [
+        585,
+        1120
+      ]
+    },
+    "entities": {
+      "a4_secret_oralbook_step_1": {
+        "kind": "listen",
+        "quest": "a4_secret_oralbook",
+        "name": "听城门旧识讲归路",
+        "art": "post",
+        "at": [
+          570,
+          1080
+        ]
+      },
+      "a4_secret_oralbook_feedback_0": {
+        "kind": "feedback",
+        "quest": "a4_secret_oralbook",
+        "art": "salt_marks",
+        "name": "三城口述册",
+        "at": [
+          590,
+          685
+        ]
+      },
+      "a4_rel_nighttable_step_1": {
+        "kind": "listen",
+        "quest": "a4_rel_nighttable",
+        "name": "邀请边城旧识",
+        "art": "post",
+        "at": [
+          390,
+          1060
+        ]
+      },
+      "a4_rel_nighttable_step_4": {
+        "kind": "mark",
+        "quest": "a4_rel_nighttable",
+        "name": "选择桌边先讲的故事",
+        "art": "return_lamp",
+        "at": [
+          480,
+          1000
+        ]
+      },
+      "a4_rel_nighttable_step_5": {
+        "kind": "listen",
+        "quest": "a4_rel_nighttable",
+        "name": "听完桌边三段故事",
+        "art": "post",
+        "at": [
+          580,
+          1000
+        ]
+      },
+      "a4_rel_nighttable_feedback_0": {
+        "kind": "feedback",
+        "quest": "a4_rel_nighttable",
+        "art": "post",
+        "name": "三城小聚留桌",
+        "at": [
+          580,
+          990
+        ]
+      }
+    },
+    "clear_rects": [
+      [
+        520,
+        1015,
+        100,
+        110
+      ],
+      [
+        340,
+        995,
+        100,
+        110
+      ],
+      [
+        430,
+        935,
+        100,
+        110
+      ],
+      [
+        530,
+        935,
+        100,
+        110
+      ]
+    ],
+    "monster_positions": [
+      [
+        82,
+        560
+      ],
+      [
+        878,
+        565
+      ],
+      [
+        82,
+        970
+      ],
+      [
+        878,
+        970
+      ]
+    ]
+  },
+  "maple_road": {
+    "name": "枫林古道",
+    "map_cols": 20,
+    "map_rows": 26,
+    "player_scale": 0.54,
+    "camera_zoom": 1.15,
+    "spawn": [
+      480,
+      1040
+    ],
+    "spawn_points": {
+      "from_city": [
+        480,
+        1060
+      ],
+      "from_broken_slope": [
+        480,
+        190
+      ],
+      "from_old_salt_road": [
+        760,
+        660
+      ]
+    },
+    "exits": [
+      {
+        "id": "south_gate",
+        "at": [
+          480,
+          1152
+        ],
+        "to": "lorin_wilds",
+        "arrival": "from_maple_road",
+        "label": "昭元边城"
+      },
+      {
+        "id": "north_path",
+        "at": [
+          480,
+          96
+        ],
+        "to": "broken_slope",
+        "arrival": "from_maple_road",
+        "label": "断碑坡"
+      },
+      {
+        "id": "east_salt_path",
+        "at": [
+          864,
+          660
+        ],
+        "to": "old_salt_road",
+        "arrival": "from_maple_road",
+        "label": "旧盐道",
+        "requires_story": "s12",
+        "locked_hint": "先回边城向闻叔复命，再走旧盐道"
+      }
+    ],
+    "flat_routes": [
+      {
+        "points": [
+          [
+            480,
+            1152
+          ],
+          [
+            480,
+            1040
+          ],
+          [
+            450,
+            950
+          ],
+          [
+            425,
+            820
+          ],
+          [
+            500,
+            695
+          ],
+          [
+            515,
+            640
+          ],
+          [
+            450,
+            400
+          ],
+          [
+            480,
+            185
+          ],
+          [
+            480,
+            96
+          ]
+        ],
+        "width": 88
+      },
+      {
+        "points": [
+          [
+            450,
+            950
+          ],
+          [
+            315,
+            905
+          ],
+          [
+            285,
+            790
+          ],
+          [
+            355,
+            720
+          ],
+          [
+            500,
+            695
+          ]
+        ],
+        "width": 62
+      },
+      {
+        "points": [
+          [
+            425,
+            820
+          ],
+          [
+            570,
+            875
+          ],
+          [
+            645,
+            815
+          ],
+          [
+            630,
+            695
+          ],
+          [
+            515,
+            640
+          ]
+        ],
+        "width": 60
+      },
+      {
+        "points": [
+          [
+            515,
+            640
+          ],
+          [
+            675,
+            665
+          ],
+          [
+            864,
+            660
+          ]
+        ],
+        "width": 76
+      },
+      {
+        "points": [
+          [
+            450,
+            400
+          ],
+          [
+            590,
+            325
+          ],
+          [
+            685,
+            310
+          ]
+        ],
+        "width": 60
+      },
+      {
+        "points": [
+          [
+            480,
+            185
+          ],
+          [
+            335,
+            265
+          ],
+          [
+            320,
+            395
+          ],
+          [
+            450,
+            400
+          ]
+        ],
+        "width": 60
+      }
+    ],
+    "entities": {
+      "a1_chime": {
+        "kind": "collect",
+        "quest": "a1_rel_child",
+        "art": "chime",
+        "name": "旧风铃",
+        "at": [
+          330,
+          640
+        ]
+      },
+      "act1_waystone_cache": {
+        "kind": "cache",
+        "quest": "",
+        "art": "cache",
+        "name": "旧路石匣",
+        "at": [
+          540,
+          590
+        ]
+      },
+      "a1_roots_a": {
+        "kind": "collect",
+        "quest": "a1_eco_roots",
+        "art": "root",
+        "name": "草根",
+        "at": [
+          245,
+          545
+        ]
+      },
+      "a1_roots_b": {
+        "kind": "collect",
+        "quest": "a1_eco_roots",
+        "art": "root",
+        "name": "草根",
+        "at": [
+          700,
+          985
+        ]
+      },
+      "a1_postrider": {
+        "kind": "deliver",
+        "quest": "a1_trade_cart",
+        "art": "post",
+        "name": "交付盐袋",
+        "at": [
+          600,
+          300
+        ]
+      },
+      "trade_maple_post": {
+        "kind": "trade",
+        "quest": "",
+        "art": "post",
+        "name": "驿亭交易",
+        "at": [
+          685,
+          310
+        ]
+      },
+      "a4_waylight": {
+        "quest": "a4_rel_waylight",
+        "kind": "observe",
+        "art": "return_lamp",
+        "name": "古道路灯",
+        "at": [
+          520,
+          460
+        ]
+      },
+      "a1_trade_bridge_step_1": {
+        "kind": "inspect",
+        "quest": "a1_trade_bridge",
+        "name": "西桥承重点",
+        "art": "post",
+        "at": [
+          380,
+          735
+        ]
+      },
+      "a1_trade_bridge_step_2": {
+        "kind": "inspect",
+        "quest": "a1_trade_bridge",
+        "name": "东桥承重点",
+        "art": "post",
+        "at": [
+          580,
+          665
+        ]
+      },
+      "a1_trade_bridge_step_3": {
+        "kind": "repair",
+        "quest": "a1_trade_bridge",
+        "name": "嵌入桥楔",
+        "art": "post",
+        "at": [
+          480,
+          595
+        ]
+      },
+      "a1_trade_bridge_feedback_0": {
+        "kind": "feedback",
+        "quest": "a1_trade_bridge",
+        "art": "post",
+        "name": "新楔归桥",
+        "at": [
+          420,
+          590
+        ]
+      }
+    },
+    "clear_rects": [
+      [
+        330,
+        670,
+        100,
+        110
+      ],
+      [
+        530,
+        600,
+        100,
+        110
+      ],
+      [
+        430,
+        530,
+        100,
+        110
+      ],
+      [
+        355,
+        860,
+        130,
+        120
+      ],
+      [
+        455,
+        690,
+        130,
+        120
+      ],
+      [
+        415,
+        740,
+        130,
+        120
+      ],
+      [
+        415,
+        550,
+        130,
+        120
+      ],
+      [
+        300,
+        490,
+        160,
+        200
+      ],
+      [
+        540,
+        490,
+        160,
+        200
+      ]
+    ],
+    "monster_positions": [
+      [
+        210,
+        390
+      ],
+      [
+        750,
+        470
+      ],
+      [
+        185,
+        705
+      ],
+      [
+        780,
+        830
+      ],
+      [
+        305,
+        915
+      ]
+    ]
+  }
+}

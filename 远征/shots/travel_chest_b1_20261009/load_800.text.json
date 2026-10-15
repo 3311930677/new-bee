@@ -1,0 +1,34 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/LoadScreen/LoadingGauge/LoadingStatus",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "整备完成"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/LoadScreen/LoadingGauge/LoadingPercent",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "100%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/LoadScreen/LoadingTip",
+			"rect_height": 24.0,
+			"size": 14,
+			"text": "「北境的夜晚比传闻中更加寒冷。」"
+		}
+	]
+}

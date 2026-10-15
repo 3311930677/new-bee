@@ -1,0 +1,24 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PERF 加载页预热完（含编译）     4099 ms
+PERF GameHome 进场景              86 ms（预算 200）
+PERF 开浮层 世界     第1次       73 ms（预算 100）
+PERF 开浮层 世界     第2次       32 ms（预算 70）
+PERF 开浮层 图鉴     第1次       25 ms（预算 100）
+PERF 开浮层 图鉴     第2次       17 ms（预算 70）
+PERF 开浮层 召唤     第1次       78 ms（预算 100）
+PERF 开浮层 召唤     第2次       14 ms（预算 70）
+PERF 开浮层 兑换     第1次       24 ms（预算 100）
+PERF 开浮层 兑换     第2次       14 ms（预算 70）
+PERF 开浮层 设置     第1次       40 ms（预算 100）
+PERF 开浮层 设置     第2次       30 ms（预算 70）
+PERF 开浮层 养成     第1次       47 ms（预算 100）
+PERF 开浮层 养成     第2次       16 ms（预算 70）
+PERF CityScene 进场景            350 ms（预算 320）
+PERF_FAIL fails=1
+ERROR: FAIL: CityScene 进场景 耗时 350 ms 超出预算 320 ms（一次性开销应已在加载页付掉）
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyPerf.gd:27)
+       [1] _enter (res://tools/VerifyPerf.gd:110)
+

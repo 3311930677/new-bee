@@ -1,0 +1,62 @@
+[
+  {
+    "id": "pet_frostwolf",
+    "name": "霜狼",
+    "rarity": "blue",
+    "role": "tank"
+  },
+  {
+    "id": "pet_foxfire",
+    "name": "火狐",
+    "rarity": "blue",
+    "role": "ranged_dps"
+  },
+  {
+    "id": "pet_rockturtle",
+    "name": "岩龟",
+    "rarity": "white",
+    "role": "tank"
+  },
+  {
+    "id": "pet_thunderhawk",
+    "name": "雷隼",
+    "rarity": "white",
+    "role": "fast_dps"
+  },
+  {
+    "id": "pet_tide_gull",
+    "name": "潮羽雏鸥",
+    "rarity": "blue",
+    "role": "ranged_dps"
+  },
+  {
+    "id": "pet_eyescat",
+    "name": "幽瞳猫",
+    "rarity": "purple",
+    "role": "control"
+  },
+  {
+    "id": "pet_holydeer",
+    "name": "圣鹿",
+    "rarity": "purple",
+    "role": "healer"
+  },
+  {
+    "id": "pet_emberling",
+    "name": "幼龙·烬",
+    "rarity": "gold",
+    "role": "aoe_dps"
+  },
+  {
+    "id": "pet_shadowviper",
+    "name": "双头蛇·影",
+    "rarity": "gold",
+    "role": "poison_control"
+  },
+  {
+    "id": "pet_return_deer",
+    "name": "归路圣鹿",
+    "rarity": "relic",
+    "role": "healer"
+  }
+]

@@ -1,0 +1,2195 @@
+{
+  "checks": [
+    {
+      "test": "stable complete silhouette inside map",
+      "pass": true
+    },
+    {
+      "test": "barracks complete silhouette inside map",
+      "pass": true
+    },
+    {
+      "test": "storehouse complete silhouette inside map",
+      "pass": true
+    },
+    {
+      "test": "forge complete silhouette inside map",
+      "pass": true
+    },
+    {
+      "test": "hall complete silhouette inside map",
+      "pass": true
+    },
+    {
+      "test": "archive complete silhouette inside map",
+      "pass": true
+    },
+    {
+      "test": "kennel complete silhouette inside map",
+      "pass": true
+    },
+    {
+      "test": "shrine complete silhouette inside map",
+      "pass": true
+    },
+    {
+      "test": "stable / barracks roof gap",
+      "pass": true
+    },
+    {
+      "test": "stable / storehouse roof gap",
+      "pass": true
+    },
+    {
+      "test": "stable / forge roof gap",
+      "pass": true
+    },
+    {
+      "test": "stable / hall roof gap",
+      "pass": true
+    },
+    {
+      "test": "stable / archive roof gap",
+      "pass": true
+    },
+    {
+      "test": "stable / kennel roof gap",
+      "pass": true
+    },
+    {
+      "test": "stable / shrine roof gap",
+      "pass": true
+    },
+    {
+      "test": "barracks / storehouse roof gap",
+      "pass": true
+    },
+    {
+      "test": "barracks / forge roof gap",
+      "pass": true
+    },
+    {
+      "test": "barracks / hall roof gap",
+      "pass": true
+    },
+    {
+      "test": "barracks / archive roof gap",
+      "pass": true
+    },
+    {
+      "test": "barracks / kennel roof gap",
+      "pass": true
+    },
+    {
+      "test": "barracks / shrine roof gap",
+      "pass": true
+    },
+    {
+      "test": "storehouse / forge roof gap",
+      "pass": true
+    },
+    {
+      "test": "storehouse / hall roof gap",
+      "pass": true
+    },
+    {
+      "test": "storehouse / archive roof gap",
+      "pass": true
+    },
+    {
+      "test": "storehouse / kennel roof gap",
+      "pass": true
+    },
+    {
+      "test": "storehouse / shrine roof gap",
+      "pass": true
+    },
+    {
+      "test": "forge / hall roof gap",
+      "pass": true
+    },
+    {
+      "test": "forge / archive roof gap",
+      "pass": true
+    },
+    {
+      "test": "forge / kennel roof gap",
+      "pass": true
+    },
+    {
+      "test": "forge / shrine roof gap",
+      "pass": true
+    },
+    {
+      "test": "hall / archive roof gap",
+      "pass": true
+    },
+    {
+      "test": "hall / kennel roof gap",
+      "pass": true
+    },
+    {
+      "test": "hall / shrine roof gap",
+      "pass": true
+    },
+    {
+      "test": "archive / kennel roof gap",
+      "pass": true
+    },
+    {
+      "test": "archive / shrine roof gap",
+      "pass": true
+    },
+    {
+      "test": "kennel / shrine roof gap",
+      "pass": true
+    },
+    {
+      "test": "tree 148,250 / stable roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 148,250 / barracks roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 148,250 / storehouse roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 148,250 / forge roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 148,250 / hall roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 148,250 / archive roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 148,250 / kennel roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 148,250 / shrine roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,250 / stable roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,250 / barracks roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,250 / storehouse roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,250 / forge roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,250 / hall roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,250 / archive roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,250 / kennel roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,250 / shrine roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,1146 / stable roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,1146 / barracks roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,1146 / storehouse roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,1146 / forge roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,1146 / hall roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,1146 / archive roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,1146 / kennel roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,1146 / shrine roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 148,1858 / stable roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 148,1858 / barracks roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 148,1858 / storehouse roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 148,1858 / forge roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 148,1858 / hall roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 148,1858 / archive roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 148,1858 / kennel roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 148,1858 / shrine roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,1890 / stable roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,1890 / barracks roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,1890 / storehouse roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,1890 / forge roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,1890 / hall roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,1890 / archive roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,1890 / kennel roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "tree 1048,1890 / shrine roof avoidance",
+      "pass": true
+    },
+    {
+      "test": "stable door approach reachable",
+      "pass": true
+    },
+    {
+      "test": "barracks door approach reachable",
+      "pass": true
+    },
+    {
+      "test": "storehouse door approach reachable",
+      "pass": true
+    },
+    {
+      "test": "forge door approach reachable",
+      "pass": true
+    },
+    {
+      "test": "hall door approach reachable",
+      "pass": true
+    },
+    {
+      "test": "archive door approach reachable",
+      "pass": true
+    },
+    {
+      "test": "kennel door approach reachable",
+      "pass": true
+    },
+    {
+      "test": "shrine door approach reachable",
+      "pass": true
+    },
+    {
+      "test": "npc_guard conversation stand reachable",
+      "pass": true
+    },
+    {
+      "test": "npc_stablemaster conversation stand reachable",
+      "pass": true
+    },
+    {
+      "test": "npc_mentor conversation stand reachable",
+      "pass": true
+    },
+    {
+      "test": "npc_smith conversation stand reachable",
+      "pass": true
+    },
+    {
+      "test": "npc_steward conversation stand reachable",
+      "pass": true
+    },
+    {
+      "test": "npc_child conversation stand reachable",
+      "pass": true
+    },
+    {
+      "test": "npc_warden conversation stand reachable",
+      "pass": true
+    },
+    {
+      "test": "npc_scribe conversation stand reachable",
+      "pass": true
+    },
+    {
+      "test": "npc_keeper conversation stand reachable",
+      "pass": true
+    },
+    {
+      "test": "a4_secret_oralbook_step_1 reserved interaction reachable",
+      "pass": true
+    },
+    {
+      "test": "a4_secret_oralbook_feedback_0 reserved interaction reachable",
+      "pass": true
+    },
+    {
+      "test": "a4_rel_nighttable_step_1 reserved interaction reachable",
+      "pass": true
+    },
+    {
+      "test": "a4_rel_nighttable_step_4 reserved interaction reachable",
+      "pass": true
+    },
+    {
+      "test": "a4_rel_nighttable_step_5 reserved interaction reachable",
+      "pass": true
+    },
+    {
+      "test": "a4_rel_nighttable_feedback_0 reserved interaction reachable",
+      "pass": true
+    },
+    {
+      "test": "gate reserved interaction reachable",
+      "pass": true
+    },
+    {
+      "test": "north exit reachable from town spawn",
+      "pass": true
+    },
+    {
+      "test": "arrival from field avoids immediate exit retrigger",
+      "pass": true
+    },
+    {
+      "test": "stable / npc_guard interaction separation",
+      "pass": true
+    },
+    {
+      "test": "stable / npc_stablemaster interaction separation",
+      "pass": true
+    },
+    {
+      "test": "stable / npc_mentor interaction separation",
+      "pass": true
+    },
+    {
+      "test": "stable / npc_smith interaction separation",
+      "pass": true
+    },
+    {
+      "test": "stable / npc_steward interaction separation",
+      "pass": true
+    },
+    {
+      "test": "stable / npc_child interaction separation",
+      "pass": true
+    },
+    {
+      "test": "stable / npc_warden interaction separation",
+      "pass": true
+    },
+    {
+      "test": "stable / npc_scribe interaction separation",
+      "pass": true
+    },
+    {
+      "test": "stable / npc_keeper interaction separation",
+      "pass": true
+    },
+    {
+      "test": "barracks / npc_guard interaction separation",
+      "pass": true
+    },
+    {
+      "test": "barracks / npc_stablemaster interaction separation",
+      "pass": true
+    },
+    {
+      "test": "barracks / npc_mentor interaction separation",
+      "pass": true
+    },
+    {
+      "test": "barracks / npc_smith interaction separation",
+      "pass": true
+    },
+    {
+      "test": "barracks / npc_steward interaction separation",
+      "pass": true
+    },
+    {
+      "test": "barracks / npc_child interaction separation",
+      "pass": true
+    },
+    {
+      "test": "barracks / npc_warden interaction separation",
+      "pass": true
+    },
+    {
+      "test": "barracks / npc_scribe interaction separation",
+      "pass": true
+    },
+    {
+      "test": "barracks / npc_keeper interaction separation",
+      "pass": true
+    },
+    {
+      "test": "storehouse / npc_guard interaction separation",
+      "pass": true
+    },
+    {
+      "test": "storehouse / npc_stablemaster interaction separation",
+      "pass": true
+    },
+    {
+      "test": "storehouse / npc_mentor interaction separation",
+      "pass": true
+    },
+    {
+      "test": "storehouse / npc_smith interaction separation",
+      "pass": true
+    },
+    {
+      "test": "storehouse / npc_steward interaction separation",
+      "pass": true
+    },
+    {
+      "test": "storehouse / npc_child interaction separation",
+      "pass": true
+    },
+    {
+      "test": "storehouse / npc_warden interaction separation",
+      "pass": true
+    },
+    {
+      "test": "storehouse / npc_scribe interaction separation",
+      "pass": true
+    },
+    {
+      "test": "storehouse / npc_keeper interaction separation",
+      "pass": true
+    },
+    {
+      "test": "forge / npc_guard interaction separation",
+      "pass": true
+    },
+    {
+      "test": "forge / npc_stablemaster interaction separation",
+      "pass": true
+    },
+    {
+      "test": "forge / npc_mentor interaction separation",
+      "pass": true
+    },
+    {
+      "test": "forge / npc_smith interaction separation",
+      "pass": true
+    },
+    {
+      "test": "forge / npc_steward interaction separation",
+      "pass": true
+    },
+    {
+      "test": "forge / npc_child interaction separation",
+      "pass": true
+    },
+    {
+      "test": "forge / npc_warden interaction separation",
+      "pass": true
+    },
+    {
+      "test": "forge / npc_scribe interaction separation",
+      "pass": true
+    },
+    {
+      "test": "forge / npc_keeper interaction separation",
+      "pass": true
+    },
+    {
+      "test": "hall / npc_guard interaction separation",
+      "pass": true
+    },
+    {
+      "test": "hall / npc_stablemaster interaction separation",
+      "pass": true
+    },
+    {
+      "test": "hall / npc_mentor interaction separation",
+      "pass": true
+    },
+    {
+      "test": "hall / npc_smith interaction separation",
+      "pass": true
+    },
+    {
+      "test": "hall / npc_steward interaction separation",
+      "pass": true
+    },
+    {
+      "test": "hall / npc_child interaction separation",
+      "pass": true
+    },
+    {
+      "test": "hall / npc_warden interaction separation",
+      "pass": true
+    },
+    {
+      "test": "hall / npc_scribe interaction separation",
+      "pass": true
+    },
+    {
+      "test": "hall / npc_keeper interaction separation",
+      "pass": true
+    },
+    {
+      "test": "archive / npc_guard interaction separation",
+      "pass": true
+    },
+    {
+      "test": "archive / npc_stablemaster interaction separation",
+      "pass": true
+    },
+    {
+      "test": "archive / npc_mentor interaction separation",
+      "pass": true
+    },
+    {
+      "test": "archive / npc_smith interaction separation",
+      "pass": true
+    },
+    {
+      "test": "archive / npc_steward interaction separation",
+      "pass": true
+    },
+    {
+      "test": "archive / npc_child interaction separation",
+      "pass": true
+    },
+    {
+      "test": "archive / npc_warden interaction separation",
+      "pass": true
+    },
+    {
+      "test": "archive / npc_scribe interaction separation",
+      "pass": true
+    },
+    {
+      "test": "archive / npc_keeper interaction separation",
+      "pass": true
+    },
+    {
+      "test": "kennel / npc_guard interaction separation",
+      "pass": true
+    },
+    {
+      "test": "kennel / npc_stablemaster interaction separation",
+      "pass": true
+    },
+    {
+      "test": "kennel / npc_mentor interaction separation",
+      "pass": true
+    },
+    {
+      "test": "kennel / npc_smith interaction separation",
+      "pass": true
+    },
+    {
+      "test": "kennel / npc_steward interaction separation",
+      "pass": true
+    },
+    {
+      "test": "kennel / npc_child interaction separation",
+      "pass": true
+    },
+    {
+      "test": "kennel / npc_warden interaction separation",
+      "pass": true
+    },
+    {
+      "test": "kennel / npc_scribe interaction separation",
+      "pass": true
+    },
+    {
+      "test": "kennel / npc_keeper interaction separation",
+      "pass": true
+    },
+    {
+      "test": "shrine / npc_guard interaction separation",
+      "pass": true
+    },
+    {
+      "test": "shrine / npc_stablemaster interaction separation",
+      "pass": true
+    },
+    {
+      "test": "shrine / npc_mentor interaction separation",
+      "pass": true
+    },
+    {
+      "test": "shrine / npc_smith interaction separation",
+      "pass": true
+    },
+    {
+      "test": "shrine / npc_steward interaction separation",
+      "pass": true
+    },
+    {
+      "test": "shrine / npc_child interaction separation",
+      "pass": true
+    },
+    {
+      "test": "shrine / npc_warden interaction separation",
+      "pass": true
+    },
+    {
+      "test": "shrine / npc_scribe interaction separation",
+      "pass": true
+    },
+    {
+      "test": "shrine / npc_keeper interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_guard / npc_stablemaster interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_guard / npc_mentor interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_guard / npc_smith interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_guard / npc_steward interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_guard / npc_child interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_guard / npc_warden interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_guard / npc_scribe interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_guard / npc_keeper interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_guard / a4_secret_oralbook_step_1 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_guard / a4_secret_oralbook_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_guard / a4_rel_nighttable_step_1 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_guard / a4_rel_nighttable_step_4 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_guard / a4_rel_nighttable_step_5 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_guard / a4_rel_nighttable_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_guard / gate interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_stablemaster / npc_mentor interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_stablemaster / npc_smith interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_stablemaster / npc_steward interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_stablemaster / npc_child interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_stablemaster / npc_warden interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_stablemaster / npc_scribe interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_stablemaster / npc_keeper interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_stablemaster / a4_secret_oralbook_step_1 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_stablemaster / a4_secret_oralbook_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_stablemaster / a4_rel_nighttable_step_1 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_stablemaster / a4_rel_nighttable_step_4 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_stablemaster / a4_rel_nighttable_step_5 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_stablemaster / a4_rel_nighttable_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_stablemaster / gate interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_mentor / npc_smith interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_mentor / npc_steward interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_mentor / npc_child interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_mentor / npc_warden interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_mentor / npc_scribe interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_mentor / npc_keeper interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_mentor / a4_secret_oralbook_step_1 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_mentor / a4_secret_oralbook_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_mentor / a4_rel_nighttable_step_1 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_mentor / a4_rel_nighttable_step_4 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_mentor / a4_rel_nighttable_step_5 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_mentor / a4_rel_nighttable_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_mentor / gate interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_smith / npc_steward interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_smith / npc_child interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_smith / npc_warden interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_smith / npc_scribe interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_smith / npc_keeper interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_smith / a4_secret_oralbook_step_1 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_smith / a4_secret_oralbook_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_smith / a4_rel_nighttable_step_1 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_smith / a4_rel_nighttable_step_4 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_smith / a4_rel_nighttable_step_5 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_smith / a4_rel_nighttable_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_smith / gate interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_steward / npc_child interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_steward / npc_warden interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_steward / npc_scribe interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_steward / npc_keeper interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_steward / a4_secret_oralbook_step_1 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_steward / a4_secret_oralbook_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_steward / a4_rel_nighttable_step_1 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_steward / a4_rel_nighttable_step_4 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_steward / a4_rel_nighttable_step_5 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_steward / a4_rel_nighttable_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_steward / gate interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_child / npc_warden interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_child / npc_scribe interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_child / npc_keeper interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_child / a4_secret_oralbook_step_1 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_child / a4_secret_oralbook_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_child / a4_rel_nighttable_step_1 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_child / a4_rel_nighttable_step_4 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_child / a4_rel_nighttable_step_5 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_child / a4_rel_nighttable_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_child / gate interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_warden / npc_scribe interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_warden / npc_keeper interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_warden / a4_secret_oralbook_step_1 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_warden / a4_secret_oralbook_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_warden / a4_rel_nighttable_step_1 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_warden / a4_rel_nighttable_step_4 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_warden / a4_rel_nighttable_step_5 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_warden / a4_rel_nighttable_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_warden / gate interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_scribe / npc_keeper interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_scribe / a4_secret_oralbook_step_1 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_scribe / a4_secret_oralbook_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_scribe / a4_rel_nighttable_step_1 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_scribe / a4_rel_nighttable_step_4 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_scribe / a4_rel_nighttable_step_5 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_scribe / a4_rel_nighttable_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_scribe / gate interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_keeper / a4_secret_oralbook_step_1 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_keeper / a4_secret_oralbook_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_keeper / a4_rel_nighttable_step_1 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_keeper / a4_rel_nighttable_step_4 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_keeper / a4_rel_nighttable_step_5 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_keeper / a4_rel_nighttable_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "npc_keeper / gate interaction separation",
+      "pass": true
+    },
+    {
+      "test": "a4_secret_oralbook_step_1 / a4_secret_oralbook_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "a4_secret_oralbook_step_1 / a4_rel_nighttable_step_1 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "a4_secret_oralbook_step_1 / a4_rel_nighttable_step_4 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "a4_secret_oralbook_step_1 / a4_rel_nighttable_step_5 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "a4_secret_oralbook_step_1 / a4_rel_nighttable_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "a4_secret_oralbook_step_1 / gate interaction separation",
+      "pass": true
+    },
+    {
+      "test": "a4_secret_oralbook_feedback_0 / a4_rel_nighttable_step_1 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "a4_secret_oralbook_feedback_0 / a4_rel_nighttable_step_4 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "a4_secret_oralbook_feedback_0 / a4_rel_nighttable_step_5 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "a4_secret_oralbook_feedback_0 / a4_rel_nighttable_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "a4_secret_oralbook_feedback_0 / gate interaction separation",
+      "pass": true
+    },
+    {
+      "test": "a4_rel_nighttable_step_1 / a4_rel_nighttable_step_4 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "a4_rel_nighttable_step_1 / a4_rel_nighttable_step_5 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "a4_rel_nighttable_step_1 / a4_rel_nighttable_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "a4_rel_nighttable_step_1 / gate interaction separation",
+      "pass": true
+    },
+    {
+      "test": "a4_rel_nighttable_step_4 / a4_rel_nighttable_step_5 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "a4_rel_nighttable_step_4 / a4_rel_nighttable_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "a4_rel_nighttable_step_4 / gate interaction separation",
+      "pass": true
+    },
+    {
+      "test": "a4_rel_nighttable_step_5 / a4_rel_nighttable_feedback_0 interaction separation",
+      "pass": true
+    },
+    {
+      "test": "a4_rel_nighttable_step_5 / gate interaction separation",
+      "pass": true
+    },
+    {
+      "test": "a4_rel_nighttable_feedback_0 / gate interaction separation",
+      "pass": true
+    },
+    {
+      "test": "guest slot 0 reachable",
+      "pass": true
+    },
+    {
+      "test": "guest slot 1 reachable",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside stable roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside barracks roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside storehouse roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside forge roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside hall roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside kennel roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside archive roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    },
+    {
+      "test": "main road stays outside shrine roof",
+      "pass": true
+    }
+  ],
+  "roof_pairs": [
+    {
+      "a": "stable",
+      "b": "barracks",
+      "gap": 320.0
+    },
+    {
+      "a": "stable",
+      "b": "storehouse",
+      "gap": 70.0
+    },
+    {
+      "a": "stable",
+      "b": "forge",
+      "gap": 332.42
+    },
+    {
+      "a": "stable",
+      "b": "hall",
+      "gap": 331.0
+    },
+    {
+      "a": "stable",
+      "b": "archive",
+      "gap": 780.0
+    },
+    {
+      "a": "stable",
+      "b": "kennel",
+      "gap": 619.11
+    },
+    {
+      "a": "stable",
+      "b": "shrine",
+      "gap": 915.48
+    },
+    {
+      "a": "barracks",
+      "b": "storehouse",
+      "gap": 323.88
+    },
+    {
+      "a": "barracks",
+      "b": "forge",
+      "gap": 70.0
+    },
+    {
+      "a": "barracks",
+      "b": "hall",
+      "gap": 405.37
+    },
+    {
+      "a": "barracks",
+      "b": "archive",
+      "gap": 824.62
+    },
+    {
+      "a": "barracks",
+      "b": "kennel",
+      "gap": 510.0
+    },
+    {
+      "a": "barracks",
+      "b": "shrine",
+      "gap": 830.0
+    },
+    {
+      "a": "storehouse",
+      "b": "forge",
+      "gap": 320.0
+    },
+    {
+      "a": "storehouse",
+      "b": "hall",
+      "gap": 61.0
+    },
+    {
+      "a": "storehouse",
+      "b": "archive",
+      "gap": 510.0
+    },
+    {
+      "a": "storehouse",
+      "b": "kennel",
+      "gap": 412.31
+    },
+    {
+      "a": "storehouse",
+      "b": "shrine",
+      "gap": 672.31
+    },
+    {
+      "a": "forge",
+      "b": "hall",
+      "gap": 263.21
+    },
+    {
+      "a": "forge",
+      "b": "archive",
+      "gap": 585.23
+    },
+    {
+      "a": "forge",
+      "b": "kennel",
+      "gap": 240.0
+    },
+    {
+      "a": "forge",
+      "b": "shrine",
+      "gap": 560.0
+    },
+    {
+      "a": "hall",
+      "b": "archive",
+      "gap": 190.0
+    },
+    {
+      "a": "hall",
+      "b": "kennel",
+      "gap": 260.0
+    },
+    {
+      "a": "hall",
+      "b": "shrine",
+      "gap": 382.1
+    },
+    {
+      "a": "archive",
+      "b": "kennel",
+      "gap": 322.49
+    },
+    {
+      "a": "archive",
+      "b": "shrine",
+      "gap": 340.0
+    },
+    {
+      "a": "kennel",
+      "b": "shrine",
+      "gap": 110.0
+    }
+  ],
+  "min_roof_gap": {
+    "a": "storehouse",
+    "b": "hall",
+    "gap": 61.0
+  },
+  "reachable_cells": 35633,
+  "grid_step": 8,
+  "actor_clearance": 12,
+  "failures": 0
+}

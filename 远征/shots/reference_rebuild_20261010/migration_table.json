@@ -1,0 +1,456 @@
+{
+  "lorin_wilds": {
+    "spawn_points:from_maple_road": {
+      "old": [
+        480,
+        300
+      ],
+      "new": [
+        480,
+        450
+      ]
+    },
+    "city_npc_positions:npc_steward": {
+      "old": [
+        366,
+        862
+      ],
+      "new": [
+        450,
+        990
+      ]
+    },
+    "city_npc_positions:npc_scribe": {
+      "old": [
+        288,
+        1138
+      ],
+      "new": [
+        110,
+        1440
+      ]
+    },
+    "city_npc_positions:npc_guard": {
+      "old": [
+        280,
+        170
+      ],
+      "new": [
+        420,
+        435
+      ]
+    },
+    "city_npc_positions:npc_stablemaster": {
+      "old": [
+        118,
+        328
+      ],
+      "new": [
+        275,
+        570
+      ]
+    },
+    "city_npc_positions:npc_mentor": {
+      "old": [
+        534,
+        608
+      ],
+      "new": [
+        700,
+        590
+      ]
+    },
+    "city_npc_positions:npc_smith": {
+      "old": [
+        606,
+        628
+      ],
+      "new": [
+        870,
+        840
+      ]
+    },
+    "city_npc_positions:npc_keeper": {
+      "old": [
+        556,
+        780
+      ],
+      "new": [
+        650,
+        1450
+      ]
+    },
+    "city_npc_positions:npc_warden": {
+      "old": [
+        562,
+        690
+      ],
+      "new": [
+        560,
+        1210
+      ]
+    },
+    "city_npc_positions:npc_child": {
+      "old": [
+        418,
+        698
+      ],
+      "new": [
+        320,
+        1110
+      ]
+    },
+    "city_building_positions:hall": {
+      "old": [
+        480,
+        1060
+      ],
+      "new": [
+        360,
+        850
+      ]
+    },
+    "city_building_positions:gate": {
+      "old": [
+        480,
+        120
+      ],
+      "new": [
+        480,
+        300
+      ]
+    },
+    "city_building_positions:archive": {
+      "old": [
+        290,
+        1000
+      ],
+      "new": [
+        200,
+        1320
+      ]
+    },
+    "city_building_positions:kennel": {
+      "old": [
+        706,
+        780
+      ],
+      "new": [
+        770,
+        1330
+      ]
+    },
+    "city_building_positions:barracks": {
+      "old": [
+        670,
+        300
+      ],
+      "new": [
+        790,
+        470
+      ]
+    },
+    "city_building_positions:storehouse": {
+      "old": [
+        300,
+        500
+      ],
+      "new": [
+        170,
+        720
+      ]
+    },
+    "city_building_positions:shrine": {
+      "old": [
+        670,
+        1000
+      ],
+      "new": [
+        480,
+        1500
+      ]
+    },
+    "city_building_positions:stable": {
+      "old": [
+        290,
+        300
+      ],
+      "new": [
+        170,
+        480
+      ]
+    },
+    "city_building_positions:forge": {
+      "old": [
+        660,
+        500
+      ],
+      "new": [
+        800,
+        740
+      ]
+    },
+    "spawn": {
+      "old": [
+        480,
+        930
+      ],
+      "new": [
+        500,
+        1050
+      ]
+    },
+    "entity:a4_secret_oralbook_step_1": {
+      "old": [
+        400,
+        200
+      ],
+      "new": [
+        330,
+        450
+      ]
+    },
+    "entity:a4_secret_oralbook_feedback_0": {
+      "old": [
+        200,
+        1100
+      ],
+      "new": [
+        290,
+        1450
+      ]
+    },
+    "entity:a4_rel_nighttable_step_1": {
+      "old": [
+        480,
+        560
+      ],
+      "new": [
+        590,
+        920
+      ]
+    },
+    "entity:a4_rel_nighttable_step_4": {
+      "old": [
+        300,
+        730
+      ],
+      "new": [
+        640,
+        1135
+      ]
+    },
+    "entity:a4_rel_nighttable_step_5": {
+      "old": [
+        440,
+        800
+      ],
+      "new": [
+        745,
+        1135
+      ]
+    },
+    "entity:a4_rel_nighttable_feedback_0": {
+      "old": [
+        370,
+        770
+      ],
+      "new": [
+        690,
+        1190
+      ]
+    },
+    "exit:north_gate": {
+      "old": [
+        480,
+        220
+      ],
+      "new": [
+        480,
+        250
+      ]
+    }
+  },
+  "maple_road": {
+    "spawn_points:from_city": {
+      "old": [
+        480,
+        1060
+      ],
+      "new": [
+        480,
+        1860
+      ]
+    },
+    "spawn_points:from_broken_slope": {
+      "old": [
+        480,
+        190
+      ],
+      "new": [
+        480,
+        270
+      ]
+    },
+    "spawn_points:from_old_salt_road": {
+      "old": [
+        760,
+        660
+      ],
+      "new": [
+        840,
+        985
+      ]
+    },
+    "spawn": {
+      "old": [
+        480,
+        1040
+      ],
+      "new": [
+        480,
+        1860
+      ]
+    },
+    "entity:a1_chime": {
+      "old": [
+        330,
+        640
+      ],
+      "new": [
+        210,
+        1640
+      ]
+    },
+    "entity:act1_waystone_cache": {
+      "old": [
+        590,
+        520
+      ],
+      "new": [
+        230,
+        1080
+      ]
+    },
+    "entity:a1_roots_a": {
+      "old": [
+        245,
+        545
+      ],
+      "new": [
+        240,
+        600
+      ]
+    },
+    "entity:a1_roots_b": {
+      "old": [
+        700,
+        985
+      ],
+      "new": [
+        660,
+        1720
+      ]
+    },
+    "entity:a1_postrider": {
+      "old": [
+        600,
+        300
+      ],
+      "new": [
+        730,
+        1080
+      ]
+    },
+    "entity:trade_maple_post": {
+      "old": [
+        685,
+        310
+      ],
+      "new": [
+        625,
+        1050
+      ]
+    },
+    "entity:a4_waylight": {
+      "old": [
+        520,
+        460
+      ],
+      "new": [
+        540,
+        640
+      ]
+    },
+    "entity:a1_trade_bridge_step_1": {
+      "old": [
+        452,
+        628
+      ],
+      "new": [
+        430,
+        1300
+      ]
+    },
+    "entity:a1_trade_bridge_step_2": {
+      "old": [
+        548,
+        628
+      ],
+      "new": [
+        575,
+        1300
+      ]
+    },
+    "entity:a1_trade_bridge_step_3": {
+      "old": [
+        500,
+        578
+      ],
+      "new": [
+        500,
+        1235
+      ]
+    },
+    "entity:a1_trade_bridge_feedback_0": {
+      "old": [
+        500,
+        530
+      ],
+      "new": [
+        500,
+        1160
+      ]
+    },
+    "exit:south_gate": {
+      "old": [
+        480,
+        1152
+      ],
+      "new": [
+        480,
+        1990
+      ]
+    },
+    "exit:north_path": {
+      "old": [
+        480,
+        96
+      ],
+      "new": [
+        480,
+        150
+      ]
+    },
+    "exit:east_salt_path": {
+      "old": [
+        864,
+        660
+      ],
+      "new": [
+        940,
+        970
+      ]
+    }
+  }
+}

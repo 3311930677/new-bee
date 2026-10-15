@@ -1,0 +1,74 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SCRIPT ERROR: Parse Error: Could not resolve class "MapScene", because of a parser error.
+   at: GDScript::reload (res://src/autoload/G.gd:6644)
+ERROR: Failed to load script "res://src/autoload/G.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+ERROR: Failed to instantiate an autoload, script 'res://src/autoload/G.gd' does not inherit from 'Node'.
+   at: start (main/main.cpp:4539)
+SCRIPT ERROR: Parse Error: Could not parse global class "MapScene" from "res://src/explore/MapScene.gd".
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:376)
+SCRIPT ERROR: Parse Error: Could not parse global class "MapScene" from "res://src/explore/MapScene.gd".
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:439)
+SCRIPT ERROR: Parse Error: Could not resolve class "MapScene", because of a parser error.
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:46)
+SCRIPT ERROR: Parse Error: Could not parse global class "MapScene" from "res://src/explore/MapScene.gd".
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:48)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "map" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:48)
+SCRIPT ERROR: Parse Error: Could not resolve class "MapScene", because of a parser error.
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:176)
+SCRIPT ERROR: Parse Error: Could not parse global class "MapScene" from "res://src/explore/MapScene.gd".
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:178)
+SCRIPT ERROR: Parse Error: Could not resolve class "MapScene", because of a parser error.
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:202)
+SCRIPT ERROR: Parse Error: Could not parse global class "MapScene" from "res://src/explore/MapScene.gd".
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:204)
+SCRIPT ERROR: Parse Error: Could not resolve class "MapScene", because of a parser error.
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:213)
+SCRIPT ERROR: Parse Error: Could not parse global class "MapScene" from "res://src/explore/MapScene.gd".
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:215)
+SCRIPT ERROR: Parse Error: Could not resolve class "MapScene", because of a parser error.
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:229)
+SCRIPT ERROR: Parse Error: Could not parse global class "MapScene" from "res://src/explore/MapScene.gd".
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:231)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "slope" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:231)
+SCRIPT ERROR: Parse Error: Could not resolve class "MapScene", because of a parser error.
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:245)
+SCRIPT ERROR: Parse Error: Could not parse global class "MapScene" from "res://src/explore/MapScene.gd".
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:247)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "label_map" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:247)
+SCRIPT ERROR: Parse Error: Could not resolve class "MapScene", because of a parser error.
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:276)
+SCRIPT ERROR: Parse Error: Could not parse global class "MapScene" from "res://src/explore/MapScene.gd".
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:278)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "mounted" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:278)
+SCRIPT ERROR: Parse Error: Could not resolve class "MapScene", because of a parser error.
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:316)
+SCRIPT ERROR: Parse Error: Could not parse global class "MapScene" from "res://src/explore/MapScene.gd".
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:318)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "gate_before" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:318)
+SCRIPT ERROR: Parse Error: Could not resolve class "MapScene", because of a parser error.
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:332)
+SCRIPT ERROR: Parse Error: Could not parse global class "MapScene" from "res://src/explore/MapScene.gd".
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:334)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "gate_after" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:334)
+SCRIPT ERROR: Parse Error: Could not resolve class "MapScene", because of a parser error.
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:354)
+SCRIPT ERROR: Parse Error: Could not parse global class "MapScene" from "res://src/explore/MapScene.gd".
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:356)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "tall_map" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:356)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "mini" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:386)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "number_width" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:406)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "hp_before" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://tools/VerifyMainWorld.gd:411)
+ERROR: Failed to load script "res://tools/VerifyMainWorld.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)

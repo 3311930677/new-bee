@@ -1,0 +1,412 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@Label@1954",
+			"rect_height": 30.0,
+			"size": 17,
+			"text": "破军 · Lv.12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@VBoxContainer@1955/@Label@2105",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "人物属性"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@VBoxContainer@1955/@HBoxContainer@2106/@Label@2107",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "生命"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@VBoxContainer@1955/@HBoxContainer@2106/@Label@2108",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "267"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@VBoxContainer@1955/@HBoxContainer@2109/@Label@2110",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "攻击"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@VBoxContainer@1955/@HBoxContainer@2109/@Label@2111",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "35"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@VBoxContainer@1955/@HBoxContainer@2112/@Label@2113",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "防御"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@VBoxContainer@1955/@HBoxContainer@2112/@Label@2114",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "21"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@VBoxContainer@1955/@HBoxContainer@2115/@Label@2116",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "暴击"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@VBoxContainer@1955/@HBoxContainer@2115/@Label@2117",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "7.0%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@VBoxContainer@1955/@HBoxContainer@2118/@Label@2119",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "速度"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@VBoxContainer@1955/@HBoxContainer@2118/@Label@2120",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "1.00"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@Button@1956",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@Button@1956/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@Label@1957",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "人物养成"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@Button@1963",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "下一步"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@Button@1963/@Label@1960",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "装备强化 3/2/1 · 灵宠 2/10"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@Button@1963/@Label@1961",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@Button@1963/@Label@1962",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/@Label@1968",
+			"rect_height": 24.0,
+			"size": 13,
+			"text": "修习与装备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_equip",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "装备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_equip/@Label@1970",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "装备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_equip/@Label@1971",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "武3 / 甲2 / 饰1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_equip/@Label@1972",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_talent",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "天赋"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_talent/@Label@1974",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "天赋"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_talent/@Label@1975",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "可分配 0 点"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_talent/@Label@1976",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_skill",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "技能书"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_skill/@Label@1978",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "技能书"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_skill/@Label@1979",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "精研 0 门"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_skill/@Label@1980",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/@Label@1982",
+			"rect_height": 24.0,
+			"size": 13,
+			"text": "同行与荣誉"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_pet",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "宠物"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_pet/@Label@1984",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "宠物"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_pet/@Label@1985",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "已收 2 / 10"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_pet/@Label@1986",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_mount",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "坐骑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_mount/@Label@1988",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "坐骑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_mount/@Label@1989",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "尚未骑乘"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_mount/@Label@1990",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_title",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "称号"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_title/@Label@1992",
+			"rect_height": 27.0,
+			"size": 17,
+			"text": "称号"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_title/@Label@1993",
+			"rect_height": 22.0,
+			"size": 13,
+			"text": "未佩戴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyNextReview/@Control@1946/@Control@1947/@ScrollContainer@1966/@VBoxContainer@1967/Growth_title/@Label@1994",
+			"rect_height": 36.0,
+			"size": 12,
+			"text": ""
+		}
+	]
+}

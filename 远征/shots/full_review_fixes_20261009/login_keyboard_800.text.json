@@ -1,0 +1,178 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/Login/@Control@1236/@Button@1237",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/Login/@Control@1236/@Button@1237/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/VerifyFullReviewFixes/Login/@Control@1236/@PanelContainer@1240/@ScrollContainer@1244/@VBoxContainer@1243/@Label@1245",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "旅人登记"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/Login/@Control@1236/@PanelContainer@1240/@ScrollContainer@1244/@VBoxContainer@1243/@Label@1247",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "通关文牒"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/Login/@Control@1236/@PanelContainer@1240/@ScrollContainer@1244/@VBoxContainer@1243/@LineEdit@1248",
+			"rect_height": 48.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/Login/@Control@1236/@PanelContainer@1240/@ScrollContainer@1244/@VBoxContainer@1243/@Label@1249",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "通关秘钥"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/Login/@Control@1236/@PanelContainer@1240/@ScrollContainer@1244/@VBoxContainer@1243/@HBoxContainer@1250/@LineEdit@1251",
+			"rect_height": 48.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/Login/@Control@1236/@PanelContainer@1240/@ScrollContainer@1244/@VBoxContainer@1243/@HBoxContainer@1250/@Button@1252",
+			"rect_height": 48.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyFullReviewFixes/Login/@Control@1236/@PanelContainer@1240/@ScrollContainer@1244/@VBoxContainer@1243/@HBoxContainer@1250/@Button@1252/Caption",
+			"rect_height": 48.0,
+			"size": 17,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/Login/@Control@1236/@PanelContainer@1240/@ScrollContainer@1244/@VBoxContainer@1243/@HBoxContainer@1250/@Button@1252/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/Login/@Control@1236/@PanelContainer@1240/@ScrollContainer@1244/@VBoxContainer@1243/@Button@1253",
+			"rect_height": 64.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyFullReviewFixes/Login/@Control@1236/@PanelContainer@1240/@ScrollContainer@1244/@VBoxContainer@1243/@Button@1253/Caption",
+			"rect_height": 64.0,
+			"size": 17,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/Login/@Control@1236/@PanelContainer@1240/@ScrollContainer@1244/@VBoxContainer@1243/@Button@1253/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/Login/@Control@1236/@PanelContainer@1240/@ScrollContainer@1244/@VBoxContainer@1243/@Button@1253/@Label@1255",
+			"rect_height": 64.0,
+			"size": 13,
+			"text": "自选旅人画像 · 导入图片"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/Login/@Control@1236/@PanelContainer@1240/@ScrollContainer@1244/@VBoxContainer@1243/@Label@1256",
+			"rect_height": 24.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyFullReviewFixes/Login/@Control@1236/@PanelContainer@1240/@ScrollContainer@1244/@VBoxContainer@1243/@Label@1257",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "昭元行牒"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/Login/@Control@1236/@Button@1258",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "登录入城"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyFullReviewFixes/Login/@Control@1236/@Button@1258/Caption",
+			"rect_height": 56.0,
+			"size": 22,
+			"text": "登录入城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/Login/@Control@1236/@Button@1258/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		}
+	]
+}

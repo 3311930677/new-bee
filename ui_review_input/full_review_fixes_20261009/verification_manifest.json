@@ -1,0 +1,36 @@
+{
+  "cases": [
+    "VerifyAssets",
+    "VerifyBattleScene",
+    "VerifyUiLayout",
+    "VerifyVisualRefresh",
+    "VerifyFieldUI",
+    "VerifyCity",
+    "VerifyGameHome",
+    "VerifyMapScene",
+    "VerifyMainWorld",
+    "VerifyWorldSession",
+    "VerifyCampaignGrowth",
+    "VerifyCampaignGear",
+    "VerifyWorkshop",
+    "VerifyCurriculum",
+    "VerifyPanels",
+    "VerifyGrowth",
+    "VerifyPerf",
+    "VerifyAvatar",
+    "VerifyNav"
+  ],
+  "final_case_logs_all_pass": true,
+  "aggregate_initial_run": "regression_final.log (18 pass; performance initially101ms)",
+  "performance_final": "regression_preload_recheck.log (73ms after real loading prewarm)",
+  "preview_final": "regression_preview_recheck.log",
+  "native_checks": {
+    "full": 212,
+    "hud": 16,
+    "b1": 758,
+    "b2": 204,
+    "b3": 158,
+    "inventory_ui": 361
+  },
+  "engine_exit_diagnostics": "Retained and separately tracked under existing issue43 policy."
+}

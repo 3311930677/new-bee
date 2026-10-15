@@ -1,0 +1,392 @@
+{
+ "home_bg.png": {
+  "game": [
+   480,
+   720
+  ],
+  "art": [
+   240,
+   360
+  ]
+ },
+ "home_bg_tall.png": {
+  "game": [
+   480,
+   1120
+  ],
+  "art": [
+   240,
+   560
+  ],
+  "core_offset_game": 200
+ },
+ "background_source": {
+  "file": "home_bg_fortress_source.png",
+  "source_size": [
+   1024,
+   1536
+  ],
+  "art_size": [
+   240,
+   360
+  ],
+  "plaza_period_art": 6,
+  "sky_color": "03266c"
+ },
+ "icons/mail_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "art": [
+   16,
+   16
+  ]
+ },
+ "icons/quest_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "art": [
+   16,
+   16
+  ]
+ },
+ "icons/notice_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "art": [
+   16,
+   16
+  ]
+ },
+ "icons/tavern_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "art": [
+   16,
+   16
+  ]
+ },
+ "icons/anvil_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "art": [
+   16,
+   16
+  ]
+ },
+ "icons/market_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "art": [
+   16,
+   16
+  ]
+ },
+ "icons/gate_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "art": [
+   16,
+   16
+  ]
+ },
+ "icons/arena_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "art": [
+   16,
+   16
+  ]
+ },
+ "icons/hero_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "art": [
+   16,
+   16
+  ]
+ },
+ "icons/party_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "art": [
+   16,
+   16
+  ]
+ },
+ "icons/banner_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "art": [
+   16,
+   16
+  ]
+ },
+ "icons/settings_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "art": [
+   16,
+   16
+  ]
+ },
+ "icons/mail_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "art": [
+   20,
+   20
+  ]
+ },
+ "icons/quest_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "art": [
+   20,
+   20
+  ]
+ },
+ "icons/notice_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "art": [
+   20,
+   20
+  ]
+ },
+ "icons/tavern_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "art": [
+   20,
+   20
+  ]
+ },
+ "icons/anvil_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "art": [
+   20,
+   20
+  ]
+ },
+ "icons/market_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "art": [
+   20,
+   20
+  ]
+ },
+ "icons/gate_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "art": [
+   20,
+   20
+  ]
+ },
+ "icons/arena_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "art": [
+   20,
+   20
+  ]
+ },
+ "icons/hero_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "art": [
+   20,
+   20
+  ]
+ },
+ "icons/party_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "art": [
+   20,
+   20
+  ]
+ },
+ "icons/banner_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "art": [
+   20,
+   20
+  ]
+ },
+ "icons/settings_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "art": [
+   20,
+   20
+  ]
+ },
+ "expedition_normal.png": {
+  "game": [
+   118,
+   114
+  ],
+  "art": [
+   59,
+   57
+  ]
+ },
+ "expedition_pressed.png": {
+  "game": [
+   118,
+   114
+  ],
+  "art": [
+   59,
+   57
+  ]
+ },
+ "expedition_disabled.png": {
+  "game": [
+   118,
+   114
+  ],
+  "art": [
+   59,
+   57
+  ]
+ },
+ "avatar_portrait.png": {
+  "game": [
+   56,
+   56
+  ],
+  "art": [
+   28,
+   28
+  ]
+ },
+ "hero_town_idle.png": {
+  "game": [
+   192,
+   64
+  ],
+  "art": [
+   96,
+   32
+  ],
+  "frame_game": [
+   48,
+   64
+  ]
+ },
+ "hero_town_walk_back.png": {
+  "game": [
+   192,
+   64
+  ],
+  "art": [
+   96,
+   32
+  ],
+  "frame_game": [
+   48,
+   64
+  ]
+ },
+ "fire_xs.png": {
+  "game": [
+   60,
+   14
+  ],
+  "art": [
+   30,
+   7
+  ],
+  "frame_game": [
+   10,
+   14
+  ]
+ },
+ "fire_s.png": {
+  "game": [
+   84,
+   20
+  ],
+  "art": [
+   42,
+   10
+  ],
+  "frame_game": [
+   14,
+   20
+  ]
+ },
+ "avatar_frame.png": {
+  "game": [
+   80,
+   80
+  ],
+  "art": [
+   40,
+   40
+  ]
+ },
+ "level_badge.png": {
+  "game": [
+   32,
+   24
+  ],
+  "art": [
+   16,
+   12
+  ]
+ }
+}

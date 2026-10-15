@@ -1,0 +1,25 @@
+{
+  "native_checks": 158,
+  "native_screenshots": 80,
+  "cases": [
+    "VerifyUiLayout",
+    "VerifyPanels",
+    "VerifyNav",
+    "VerifyBattleScene",
+    "VerifyAvatar",
+    "VerifyVisualRefresh",
+    "VerifyGrowth",
+    "VerifyPerf",
+    "VerifyMainWorld",
+    "VerifySafeArea",
+    "VerifySave",
+    "VerifyRunResume",
+    "VerifyEconomy",
+    "VerifyCampaignGrowth",
+    "VerifyWorkshop",
+    "VerifyLore",
+    "VerifyTransit"
+  ],
+  "script_errors_in_accepted_native_log": false,
+  "known_exit_diagnostics": "issue #43"
+}

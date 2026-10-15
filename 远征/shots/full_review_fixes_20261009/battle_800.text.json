@@ -1,0 +1,502 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1294/@Node2D@1298/@Node2D@1372/@Node2D@1360/@Label@1363",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "行旅人 12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1294/@Node2D@1298/@Node2D@1372/@Node2D@1360/@Label@1368",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "570/570"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1294/@Node2D@1298/@Node2D@1372/@Node2D@1360/@Label@1371",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1294/@Node2D@1298/@Node2D@1382/@Node2D@1373/@Label@1375",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "岩龟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1294/@Node2D@1298/@Node2D@1382/@Node2D@1373/@Label@1380",
+			"rect_height": 23.0000019073486,
+			"size": 12,
+			"text": "201/201"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1294/@Node2D@1298/@Node2D@1382/@Node2D@1373/@Label@1381",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1294/@Node2D@1298/@Node2D@1393/@Node2D@1383/@Label@1392",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1294/@Node2D@1298/@Node2D@1404/@Node2D@1394/@Label@1403",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1294/@Node2D@1298/@Node2D@1415/@Node2D@1405/@Label@1414",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1294/@Node2D@1298/@Node2D@1426/@Node2D@1416/@Label@1425",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@HBoxContainer@1307/@Control@1344/@Label@1341",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "树妖"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@HBoxContainer@1307/@Control@1344/@Label@1342",
+			"rect_height": 19.0,
+			"size": 12,
+			"text": "91/91"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@HBoxContainer@1307/@Control@1344/@Label@1343",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@HBoxContainer@1307/@Control@1349/@Label@1346",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "毒蛛"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@HBoxContainer@1307/@Control@1349/@Label@1347",
+			"rect_height": 19.0,
+			"size": 12,
+			"text": "56/56"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@HBoxContainer@1307/@Control@1349/@Label@1348",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@HBoxContainer@1307/@Control@1354/@Label@1351",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "哥布林掠"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@HBoxContainer@1307/@Control@1354/@Label@1352",
+			"rect_height": 19.0,
+			"size": 12,
+			"text": "51/51"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@HBoxContainer@1307/@Control@1354/@Label@1353",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@HBoxContainer@1307/@Control@1359/@Label@1356",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "树妖"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@HBoxContainer@1307/@Control@1359/@Label@1357",
+			"rect_height": 19.0,
+			"size": 12,
+			"text": "91/91"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@HBoxContainer@1307/@Control@1359/@Label@1358",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Control@1310/@Label@1308",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "旅人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Control@1310/@Label@1309",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "570/570"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Control@1313/@Label@1311",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "岩龟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Control@1313/@Label@1312",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "201/201"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Control@1316/@Label@1314",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "能量"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Control@1316/@Label@1315",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "0/100"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Control@1317/@Button@1318",
+			"rect_height": 104.0,
+			"size": 14,
+			"text": "攻击"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Control@1317/@Button@1318/Caption",
+			"rect_height": 33.0,
+			"size": 22,
+			"text": "攻击"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Control@1317/@Button@1318/Subtitle",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "自动选敌"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Control@1317/@Button@1319",
+			"rect_height": 50.0,
+			"size": 14,
+			"text": "技能"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Control@1317/@Button@1319/Caption",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "可放 0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Control@1317/@Button@1319/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Control@1317/@Button@1320",
+			"rect_height": 50.0,
+			"size": 14,
+			"text": "道具"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Control@1317/@Button@1320/Caption",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "道具 2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Control@1317/@Button@1320/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Control@1317/@Button@1321",
+			"rect_height": 50.0,
+			"size": 14,
+			"text": "伙伴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Control@1317/@Button@1321/Caption",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "伙伴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Control@1317/@Button@1321/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Control@1317/@Button@1322",
+			"rect_height": 50.0,
+			"size": 14,
+			"text": "目标"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Control@1317/@Button@1322/Caption",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "集火 · 树妖"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Control@1317/@Button@1322/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Button@1323",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "撤退"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Button@1323/Caption",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "撤退"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Button@1323/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Button@1324",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "×1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Button@1324/Caption",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "×1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Button@1324/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Button@1325",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "自动"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Button@1325/Caption",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "自动"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Button@1325/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Label@1326",
+			"rect_height": 36.0,
+			"size": 17,
+			"text": "遭遇战"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Label@1338",
+			"rect_height": 40.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyFullReviewFixes/BattleScene/@Control@1301/@Label@1339",
+			"rect_height": 24.0,
+			"size": 13,
+			"text": ""
+		}
+	]
+}

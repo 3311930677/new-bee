@@ -136,6 +136,11 @@ class ChestButton extends Button:
 	var hint_dot := false
 	var icon_px := 24.0
 	var pressed_content := false
+	## 换皮用：有值时用这块九宫格替换默认底板（设置页的像素素材），为空时画法不变
+	var plate: StyleBox
+	var plate_selected: StyleBox
+	## 换皮用：文字区左缩进（左侧放图标时用），默认 0 时文字铺满按钮居中
+	var caption_inset := 0.0
 	var _state_material: ShaderMaterial
 	func _init(words: String = "", family: String = "secondary", icon: String = "") -> void:
 		text = words
@@ -196,14 +201,17 @@ class ChestButton extends Button:
 			subtitle.position=Vector2(8,34+offset)
 			subtitle.size=Vector2(size.x-16,20)
 		else:
-			caption.position = Vector2(0,offset)
-			caption.size = size
+			caption.position = Vector2(caption_inset,offset)
+			caption.size = Vector2(size.x-caption_inset,size.y)
 	func _draw() -> void:
 		_layout()
 		if _state_material != null: _state_material.set_shader_parameter("gray",1.0 if disabled else 0.0)
 		var primary := skin in ["primary","hero"]
 		var bg := UI.SELECTED if selected else UI.FACE
-		if primary:
+		if plate != null:
+			draw_style_box(plate_selected if selected and plate_selected != null else plate,Rect2(Vector2.ZERO,size))
+			if is_pressed() or disabled: draw_rect(Rect2(Vector2.ZERO,size),Color(0,0,0,.22 if is_pressed() else .38))
+		elif primary:
 			var state := "disabled" if disabled else ("pressed" if is_pressed() else "normal")
 			var tex := UI.texture(skin+"_"+state)
 			if tex != null: UI.nine(self,tex,size,skin=="hero")
@@ -214,7 +222,7 @@ class ChestButton extends Button:
 		elif skin not in ["quiet","back","nav","currency"]:
 			UI.surface(self,Rect2(Vector2.ZERO,size),UI.NIGHT if skin=="rail" else bg,UI.COPPER if is_hovered() else UI.BRONZE)
 		elif is_pressed(): UI.surface(self,Rect2(Vector2.ZERO,size),UI.FACE)
-		if skin == "tab" and selected: draw_rect(Rect2(8,size.y-2,size.x-16,2),UI.COPPER)
+		if skin == "tab" and selected and plate == null: draw_rect(Rect2(8,size.y-2,size.x-16,2),UI.COPPER)
 		if skin == "back":
 			caption.visible = false
 			var p := size*.5

@@ -1,0 +1,580 @@
+{
+  "version": 3,
+  "composition": "Varied left/right buildings around one continuous, moderately narrow grassland road; roadside sign exit; sparse independent trees; map extent fits content.",
+  "world_size": [
+    1200,
+    2112
+  ],
+  "anchor_convention": "bottom center of front steps; door approach is a separate point",
+  "min_roof_gap": 24,
+  "buildings": [
+    {
+      "id": "stable",
+      "name": "马厩",
+      "anchor": [
+        298,
+        640
+      ],
+      "size": [
+        280,
+        200
+      ],
+      "approach": [
+        298,
+        682
+      ],
+      "side": "left"
+    },
+    {
+      "id": "barracks",
+      "name": "巡界厅",
+      "anchor": [
+        898,
+        660
+      ],
+      "size": [
+        280,
+        210
+      ],
+      "approach": [
+        898,
+        702
+      ],
+      "side": "right"
+    },
+    {
+      "id": "storehouse",
+      "name": "仓廪",
+      "anchor": [
+        298,
+        910
+      ],
+      "size": [
+        280,
+        200
+      ],
+      "approach": [
+        298,
+        952
+      ],
+      "side": "left"
+    },
+    {
+      "id": "forge",
+      "name": "锻造铺",
+      "anchor": [
+        898,
+        930
+      ],
+      "size": [
+        280,
+        200
+      ],
+      "approach": [
+        898,
+        972
+      ],
+      "side": "right"
+    },
+    {
+      "id": "hall",
+      "name": "议事厅",
+      "anchor": [
+        288,
+        1230
+      ],
+      "size": [
+        420,
+        259
+      ],
+      "approach": [
+        288,
+        1272
+      ],
+      "side": "left"
+    },
+    {
+      "id": "archive",
+      "name": "图志阁",
+      "anchor": [
+        298,
+        1640
+      ],
+      "size": [
+        280,
+        220
+      ],
+      "approach": [
+        298,
+        1682
+      ],
+      "side": "left"
+    },
+    {
+      "id": "kennel",
+      "name": "兽栏",
+      "anchor": [
+        898,
+        1380
+      ],
+      "size": [
+        280,
+        210
+      ],
+      "approach": [
+        898,
+        1422
+      ],
+      "side": "right"
+    },
+    {
+      "id": "shrine",
+      "name": "祭坛",
+      "anchor": [
+        898,
+        1670
+      ],
+      "size": [
+        240,
+        180
+      ],
+      "approach": [
+        898,
+        1712
+      ],
+      "side": "right"
+    }
+  ],
+  "routes": [
+    {
+      "kind": "main",
+      "width": 136,
+      "points": [
+        [
+          600,
+          180
+        ],
+        [
+          600,
+          410
+        ],
+        [
+          583,
+          710
+        ],
+        [
+          613,
+          1030
+        ],
+        [
+          593,
+          1410
+        ],
+        [
+          600,
+          1932
+        ]
+      ]
+    },
+    {
+      "kind": "front",
+      "width": 72,
+      "points": [
+        [
+          584,
+          682
+        ],
+        [
+          298,
+          682
+        ]
+      ]
+    },
+    {
+      "kind": "front",
+      "width": 72,
+      "points": [
+        [
+          583,
+          702
+        ],
+        [
+          898,
+          702
+        ]
+      ]
+    },
+    {
+      "kind": "front",
+      "width": 72,
+      "points": [
+        [
+          606,
+          952
+        ],
+        [
+          298,
+          952
+        ]
+      ]
+    },
+    {
+      "kind": "front",
+      "width": 72,
+      "points": [
+        [
+          608,
+          972
+        ],
+        [
+          898,
+          972
+        ]
+      ]
+    },
+    {
+      "kind": "front",
+      "width": 80,
+      "points": [
+        [
+          600,
+          1272
+        ],
+        [
+          288,
+          1272
+        ]
+      ]
+    },
+    {
+      "kind": "front",
+      "width": 72,
+      "points": [
+        [
+          593,
+          1422
+        ],
+        [
+          898,
+          1422
+        ]
+      ]
+    },
+    {
+      "kind": "front",
+      "width": 72,
+      "points": [
+        [
+          598,
+          1682
+        ],
+        [
+          298,
+          1682
+        ]
+      ]
+    },
+    {
+      "kind": "front",
+      "width": 72,
+      "points": [
+        [
+          599,
+          1712
+        ],
+        [
+          898,
+          1712
+        ]
+      ]
+    },
+    {
+      "kind": "front",
+      "width": 64,
+      "points": [
+        [
+          288,
+          1272
+        ],
+        [
+          108,
+          1290
+        ]
+      ]
+    }
+  ],
+  "trees": [
+    [
+      148,
+      250
+    ],
+    [
+      1048,
+      250
+    ],
+    [
+      1048,
+      1146
+    ],
+    [
+      148,
+      1858
+    ],
+    [
+      1048,
+      1890
+    ]
+  ],
+  "spawn": [
+    600,
+    1520
+  ],
+  "arrival_from_field": [
+    600,
+    480
+  ],
+  "plaza": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "exit": {
+    "id": "north_gate",
+    "at": [
+      664,
+      300
+    ],
+    "to": "maple_road",
+    "arrival": "from_city",
+    "label": "出城 · 枫林古道",
+    "radius": 80,
+    "formal_source_at": [
+      480,
+      250
+    ],
+    "sign_at": [
+      712,
+      300
+    ],
+    "presentation": "single roadside signpost, no gatehouse or wall"
+  },
+  "prototype_field_exit": {
+    "id": "south_gate",
+    "at": [
+      264,
+      700
+    ],
+    "to": "lorin_wilds",
+    "arrival": "from_maple_road",
+    "label": "返回 · 昭元边城",
+    "radius": 56,
+    "formal_source_at": [
+      480,
+      1990
+    ],
+    "sign_at": [
+      352,
+      700
+    ]
+  },
+  "prototype_field_arrival": [
+    264,
+    600
+  ],
+  "reserved_interactions": [
+    {
+      "id": "npc_guard",
+      "name": "城门卫",
+      "position": [
+        458,
+        500
+      ],
+      "kind": "npc",
+      "radius": 52
+    },
+    {
+      "id": "npc_stablemaster",
+      "name": "马厩管事",
+      "position": [
+        418,
+        735
+      ],
+      "kind": "npc",
+      "radius": 52
+    },
+    {
+      "id": "npc_mentor",
+      "name": "巡界导师",
+      "position": [
+        778,
+        750
+      ],
+      "kind": "npc",
+      "radius": 52
+    },
+    {
+      "id": "npc_smith",
+      "name": "铁匠",
+      "position": [
+        733,
+        1030
+      ],
+      "kind": "npc",
+      "radius": 52
+    },
+    {
+      "id": "npc_steward",
+      "name": "执事",
+      "position": [
+        418,
+        1325
+      ],
+      "kind": "npc",
+      "radius": 52
+    },
+    {
+      "id": "npc_child",
+      "name": "孩童",
+      "position": [
+        468,
+        1460
+      ],
+      "kind": "npc",
+      "radius": 52
+    },
+    {
+      "id": "npc_warden",
+      "name": "行脚商人",
+      "position": [
+        698,
+        1580
+      ],
+      "kind": "npc",
+      "radius": 52
+    },
+    {
+      "id": "npc_scribe",
+      "name": "图志阁掌事",
+      "position": [
+        418,
+        1740
+      ],
+      "kind": "npc",
+      "radius": 52
+    },
+    {
+      "id": "npc_keeper",
+      "name": "兽栏伙计",
+      "position": [
+        778,
+        1490
+      ],
+      "kind": "npc",
+      "radius": 52
+    },
+    {
+      "id": "a4_secret_oralbook_step_1",
+      "name": "旧识石凳",
+      "position": [
+        486,
+        610
+      ],
+      "kind": "quest",
+      "radius": 52
+    },
+    {
+      "id": "a4_secret_oralbook_feedback_0",
+      "name": "口述册桌",
+      "position": [
+        488,
+        1860
+      ],
+      "kind": "quest",
+      "radius": 52
+    },
+    {
+      "id": "a4_rel_nighttable_step_1",
+      "name": "旧识邀约",
+      "position": [
+        728,
+        860
+      ],
+      "kind": "quest",
+      "radius": 52
+    },
+    {
+      "id": "a4_rel_nighttable_step_4",
+      "name": "夜桌席位",
+      "position": [
+        868,
+        1040
+      ],
+      "kind": "quest",
+      "radius": 52
+    },
+    {
+      "id": "a4_rel_nighttable_step_5",
+      "name": "夜桌交谈",
+      "position": [
+        788,
+        1130
+      ],
+      "kind": "quest",
+      "radius": 52
+    },
+    {
+      "id": "a4_rel_nighttable_feedback_0",
+      "name": "归路反馈",
+      "position": [
+        728,
+        1240
+      ],
+      "kind": "quest",
+      "radius": 52
+    },
+    {
+      "id": "gate",
+      "name": "访客簿",
+      "position": [
+        108,
+        1290
+      ],
+      "kind": "building",
+      "radius": 58
+    }
+  ],
+  "guest_slots": [
+    [
+      483,
+      960
+    ],
+    [
+      710,
+      500
+    ]
+  ],
+  "prototype_note": "Grassland central-street spatial prototype. Floor is a layout guide, trees and buildings remain independent assets. Exit/NPC interactions are isolated demonstrations preserving original IDs and destinations; no game save, quest or building-state mutation.",
+  "extent_policy": "fit_content",
+  "extent_alignment": 48,
+  "edge_padding": {
+    "right": 64,
+    "bottom": 180
+  },
+  "min_world_size": [
+    1104,
+    1920
+  ],
+  "extent_calculation": {
+    "rightmost_content": 1134.5,
+    "bottommost_content": 1904,
+    "description": "Working extent derived from content plus padding; not a frozen art canvas."
+  },
+  "south_ground": {
+    "style": "open grassy verge with fading worn footpath",
+    "fade_start": 1740,
+    "fade_end": 2000,
+    "tail_offset_x": 70,
+    "description": "Ground appearance only; no new exit, collision or layout change."
+  }
+}

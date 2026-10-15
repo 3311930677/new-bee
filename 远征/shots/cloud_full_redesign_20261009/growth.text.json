@@ -1,0 +1,187 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 42.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Label@65",
+			"rect_height": 46.0,
+			"size": 28,
+			"text": "人物养成"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Label@66",
+			"rect_height": 24.0,
+			"size": 14,
+			"text": "装备与修习 / 同行与荣誉"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 42.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Label@71",
+			"rect_height": 42.0,
+			"size": 28,
+			"text": "破军"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Label@72",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "战士 · LV 12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@76/@Label@73",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "装备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@76/@Label@75",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "武3 / 甲2 / 饰1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@80/@Label@77",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "天赋"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@80/@Label@79",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "可分配 1 点"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@84/@Label@81",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "技能书"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@84/@Label@83",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "精研 1 门"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@88/@Label@85",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "宠物"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@88/@Label@87",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "已收 3 / 10"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@92/@Label@89",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "坐骑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@92/@Label@91",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "骑乘：烈焰马"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@96/@Label@93",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "称号"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@96/@Label@95",
+			"rect_height": 23.0,
+			"size": 14,
+			"text": "佩戴：初出茅庐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 35.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@97/@Label@98",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "行前整备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@97/@Label@99",
+			"rect_height": 26.0,
+			"size": 16,
+			"text": "尚有 1 点天赋待分配"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@97/GrowthBonusSummary",
+			"rect_height": 47.0,
+			"size": 14,
+			"text": "装备强化 3 / 2 / 1  ·  灵宠 3 只\n精研招式与同行伙伴，整备下一段旅程。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/GameHome/@Control@64/@Control@101/@Label@100",
+			"rect_height": 48.0,
+			"size": 18,
+			"text": "返回"
+		}
+	]
+}

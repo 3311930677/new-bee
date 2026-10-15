@@ -1,0 +1,26 @@
+Godot  : D:/new-bee/tools/godot-4.7.2/Godot_v4.7.2-stable_win64_console.exe
+Version: 4.7.2.stable.official.ed1daf0bf
+Project: D:/new-bee/远征
+UserDir: D:/new-bee/远征/tools/_logs/user_sandbox_71a6733e6fdd4e489da7789b00c23281/Godot/app_userdata/远征/
+Cases  : 12  (timeout 90s, quit-after 6000 frames)
+Logs   : D:/new-bee/远征/shots/world_art_samples_20261010/regressions
+Commit : 3b9819f8
+
+PASS  VerifyAssets
+PASS  VerifyCity
+PASS  VerifyMapScene
+FAIL  VerifyMainWorld  <- exit code 1; missing completion line 'MAIN_WORLD_OK'; output contains [ERROR:]; output contains [FAIL:]; output contains [_FAIL]
+      MAIN_WORLD_FAIL fails=1
+      ERROR: FAIL: 主地图应铺设新加入的整图背景
+      log: D:\new-bee\远征\shots\world_art_samples_20261010\regressions\VerifyMainWorld.log
+PASS  VerifyWorldSession
+PASS  VerifyStory
+PASS  VerifyFrostArt
+PASS  VerifyPortGrowth
+PASS  VerifyPerf
+PASS  VerifyQuests
+PASS  VerifySignpostEntry
+PASS  VerifyNav
+
+NOTE: 10 case(s) emitted 27 engine exit-time resource diagnostic(s) (leaked RIDs / resources still in use). Not counted as failures - tracked as issue #43.
+FAILED: 1 / 12

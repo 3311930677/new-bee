@@ -1,0 +1,32 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+WARNING: Loaded resource as image file, this will not work on export: 'res://assets/world/sunny_travel_20261010/source/steward.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load (core/io/image.cpp:2770)
+   GDScript backtrace (most recent call first):
+       [0] source (res://tools/ImportSunnyTravelArt.gd:17)
+       [1] import_npc (res://tools/ImportSunnyTravelArt.gd:83)
+       [2] _ready (res://tools/ImportSunnyTravelArt.gd:8)
+WARNING: Loaded resource as image file, this will not work on export: 'res://assets/world/sunny_travel_20261010/source/guard.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load (core/io/image.cpp:2770)
+   GDScript backtrace (most recent call first):
+       [0] source (res://tools/ImportSunnyTravelArt.gd:17)
+       [1] import_npc (res://tools/ImportSunnyTravelArt.gd:83)
+       [2] _ready (res://tools/ImportSunnyTravelArt.gd:9)
+WARNING: Loaded resource as image file, this will not work on export: 'res://assets/world/sunny_travel_20261010/source/terrain_v2.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load (core/io/image.cpp:2770)
+   GDScript backtrace (most recent call first):
+       [0] source (res://tools/ImportSunnyTravelArt.gd:17)
+       [1] import_terrain (res://tools/ImportSunnyTravelArt.gd:114)
+       [2] _ready (res://tools/ImportSunnyTravelArt.gd:10)
+WARNING: Loaded resource as image file, this will not work on export: 'res://assets/world/sunny_travel_20261010/source/vegetation_v2.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load (core/io/image.cpp:2770)
+   GDScript backtrace (most recent call first):
+       [0] source (res://tools/ImportSunnyTravelArt.gd:17)
+       [1] import_props (res://tools/ImportSunnyTravelArt.gd:138)
+       [2] _ready (res://tools/ImportSunnyTravelArt.gd:11)
+WARNING: Loaded resource as image file, this will not work on export: 'res://image/main_world/art_v2/signpost.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load (core/io/image.cpp:2770)
+   GDScript backtrace (most recent call first):
+       [0] import_props (res://tools/ImportSunnyTravelArt.gd:151)
+       [1] _ready (res://tools/ImportSunnyTravelArt.gd:11)
+SUNNY_IMPORT_OK assets=17 palette_limits=48/20/40

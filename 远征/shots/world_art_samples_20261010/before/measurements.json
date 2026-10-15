@@ -1,0 +1,330 @@
+[
+	{
+		"buildings": [
+			{
+				"art": "res://image/main_world/city_hall_reference_v2.png",
+				"at": "(245.0, 260.0)",
+				"built": true,
+				"id": "hall",
+				"modulate": "(1.0, 1.0, 1.0, 1.0)",
+				"shape": "(153.6, 43.2)"
+			},
+			{
+				"art": "res://image/main_world/city_gate_reference_v2.png",
+				"at": "(715.0, 1080.0)",
+				"built": true,
+				"id": "gate",
+				"modulate": "(1.0, 1.0, 1.0, 1.0)",
+				"shape": "(192.0, 28.8)"
+			},
+			{
+				"art": "res://image/main_world/city_archive_reference_v2.png",
+				"at": "(245.0, 520.0)",
+				"built": false,
+				"id": "archive",
+				"modulate": "(1.0, 1.0, 1.0, 1.0)",
+				"shape": "(115.2, 36.0)"
+			},
+			{
+				"art": "res://image/main_world/city_kennel_reference_v2.png",
+				"at": "(715.0, 260.0)",
+				"built": false,
+				"id": "kennel",
+				"modulate": "(1.0, 1.0, 1.0, 1.0)",
+				"shape": "(115.2, 36.0)"
+			},
+			{
+				"art": "res://image/main_world/city_barracks_reference_v2.png",
+				"at": "(245.0, 790.0)",
+				"built": false,
+				"id": "barracks",
+				"modulate": "(1.0, 1.0, 1.0, 1.0)",
+				"shape": "(134.4, 36.0)"
+			},
+			{
+				"art": "res://image/main_world/city_storehouse_reference_v2.png",
+				"at": "(715.0, 520.0)",
+				"built": false,
+				"id": "storehouse",
+				"modulate": "(1.0, 1.0, 1.0, 1.0)",
+				"shape": "(134.4, 36.0)"
+			},
+			{
+				"art": "res://image/main_world/city_kennel_reference_v2.png",
+				"at": "(715.0, 935.0)",
+				"built": false,
+				"id": "stable",
+				"modulate": "(1.0, 1.0, 1.0, 1.0)",
+				"shape": "(107.52, 28.8)"
+			},
+			{
+				"art": "res://image/main_world/city_shrine_reference_v2.png",
+				"at": "(715.0, 790.0)",
+				"built": false,
+				"id": "shrine",
+				"modulate": "(1.0, 1.0, 1.0, 1.0)",
+				"shape": "(115.2, 36.0)"
+			},
+			{
+				"art": "res://image/main_world/city_forge_reference_v2.png",
+				"at": "(245.0, 1080.0)",
+				"built": false,
+				"id": "forge",
+				"modulate": "(1.0, 1.0, 1.0, 1.0)",
+				"shape": "(115.2, 28.8)"
+			}
+		],
+		"camera_zoom": "(1.15, 1.15)",
+		"grid_display": "(55.2, 55.2)",
+		"height": 800,
+		"hero": {
+			"filter": 0,
+			"frame_canvas": "(128.0, 128.0)",
+			"local_scale": "(0.66, 0.66)",
+			"visible_display": "[P: (202.05, 380.519), S: (75.90001, 83.48999)]",
+			"visible_source": "[P: (14, 11), S: (100, 110)]"
+		},
+		"map": "lorin_wilds",
+		"npcs": [
+			{
+				"at": "(375.0, 300.0)",
+				"filter": 1,
+				"frame_canvas": "(128.0, 128.0)",
+				"id": "npc_steward",
+				"local_scale": "(0.64, 0.64)",
+				"name": "闻叔",
+				"visible_display": "[P: (92.01804, -366.36), S: (53.728, 80.95999)]",
+				"visible_source": "[P: (27, 13), S: (73, 110)]"
+			},
+			{
+				"at": "(585.0, 1120.0)",
+				"filter": 1,
+				"frame_canvas": "(128.0, 128.0)",
+				"id": "npc_guard",
+				"local_scale": "(0.64, 0.64)",
+				"name": "老赵",
+				"visible_display": "[P: (335.726, 576.64), S: (50.784, 80.96002)]",
+				"visible_source": "[P: (30, 13), S: (69, 110)]"
+			},
+			{
+				"at": "(375.0, 1120.0)",
+				"filter": 1,
+				"frame_canvas": "(128.0, 128.0)",
+				"id": "npc_warden",
+				"local_scale": "(0.64, 0.64)",
+				"name": "云游",
+				"visible_display": "[P: (87.60204, 576.64), S: (63.29599, 80.96002)]",
+				"visible_source": "[P: (21, 13), S: (86, 110)]"
+			},
+			{
+				"at": "(585.0, 830.0)",
+				"filter": 1,
+				"frame_canvas": "(128.0, 128.0)",
+				"id": "npc_child",
+				"local_scale": "(0.64, 0.64)",
+				"name": "小满",
+				"visible_display": "[P: (345.294, 266.692), S: (30.91199, 57.40799)]",
+				"visible_source": "[P: (43, 45), S: (42, 78)]"
+			},
+			{
+				"at": "(375.0, 1210.0)",
+				"filter": 1,
+				"frame_canvas": "(128.0, 128.0)",
+				"id": "guest_长风关",
+				"local_scale": "(0.64, 0.64)",
+				"name": "长风关",
+				"visible_display": "[P: (89.81003, 680.14), S: (60.35199, 80.96002)]",
+				"visible_source": "[P: (24, 13), S: (82, 110)]"
+			},
+			{
+				"at": "(585.0, 1210.0)",
+				"filter": 1,
+				"frame_canvas": "(128.0, 128.0)",
+				"id": "guest_月牙屯",
+				"local_scale": "(0.64, 0.64)",
+				"name": "月牙屯",
+				"visible_display": "[P: (330.574, 680.14), S: (60.35199, 80.96002)]",
+				"visible_source": "[P: (23, 13), S: (82, 110)]"
+			}
+		]
+	},
+	{
+		"buildings": [],
+		"camera_zoom": "(1.15, 1.15)",
+		"grid_display": "(55.2, 55.2)",
+		"height": 800,
+		"hero": {
+			"filter": 0,
+			"frame_canvas": "(128.0, 128.0)",
+			"local_scale": "(0.54, 0.54)",
+			"visible_display": "[P: (208.95, 517.2611), S: (62.09999, 68.31)]",
+			"visible_source": "[P: (14, 11), S: (100, 110)]"
+		},
+		"map": "maple_road",
+		"npcs": []
+	},
+	{
+		"buildings": [
+			{
+				"art": "res://image/main_world/city_hall_reference_v2.png",
+				"at": "(245.0, 260.0)",
+				"built": true,
+				"id": "hall",
+				"modulate": "(1.0, 1.0, 1.0, 1.0)",
+				"shape": "(153.6, 43.2)"
+			},
+			{
+				"art": "res://image/main_world/city_gate_reference_v2.png",
+				"at": "(715.0, 1080.0)",
+				"built": true,
+				"id": "gate",
+				"modulate": "(1.0, 1.0, 1.0, 1.0)",
+				"shape": "(192.0, 28.8)"
+			},
+			{
+				"art": "res://image/main_world/city_archive_reference_v2.png",
+				"at": "(245.0, 520.0)",
+				"built": false,
+				"id": "archive",
+				"modulate": "(1.0, 1.0, 1.0, 1.0)",
+				"shape": "(115.2, 36.0)"
+			},
+			{
+				"art": "res://image/main_world/city_kennel_reference_v2.png",
+				"at": "(715.0, 260.0)",
+				"built": false,
+				"id": "kennel",
+				"modulate": "(1.0, 1.0, 1.0, 1.0)",
+				"shape": "(115.2, 36.0)"
+			},
+			{
+				"art": "res://image/main_world/city_barracks_reference_v2.png",
+				"at": "(245.0, 790.0)",
+				"built": false,
+				"id": "barracks",
+				"modulate": "(1.0, 1.0, 1.0, 1.0)",
+				"shape": "(134.4, 36.0)"
+			},
+			{
+				"art": "res://image/main_world/city_storehouse_reference_v2.png",
+				"at": "(715.0, 520.0)",
+				"built": false,
+				"id": "storehouse",
+				"modulate": "(1.0, 1.0, 1.0, 1.0)",
+				"shape": "(134.4, 36.0)"
+			},
+			{
+				"art": "res://image/main_world/city_kennel_reference_v2.png",
+				"at": "(715.0, 935.0)",
+				"built": false,
+				"id": "stable",
+				"modulate": "(1.0, 1.0, 1.0, 1.0)",
+				"shape": "(107.52, 28.8)"
+			},
+			{
+				"art": "res://image/main_world/city_shrine_reference_v2.png",
+				"at": "(715.0, 790.0)",
+				"built": false,
+				"id": "shrine",
+				"modulate": "(1.0, 1.0, 1.0, 1.0)",
+				"shape": "(115.2, 36.0)"
+			},
+			{
+				"art": "res://image/main_world/city_forge_reference_v2.png",
+				"at": "(245.0, 1080.0)",
+				"built": false,
+				"id": "forge",
+				"modulate": "(1.0, 1.0, 1.0, 1.0)",
+				"shape": "(115.2, 28.8)"
+			}
+		],
+		"camera_zoom": "(1.15, 1.15)",
+		"grid_display": "(55.2, 55.2)",
+		"height": 1067,
+		"hero": {
+			"filter": 0,
+			"frame_canvas": "(128.0, 128.0)",
+			"local_scale": "(0.66, 0.66)",
+			"visible_display": "[P: (202.05, 642.7191), S: (75.90001, 83.48999)]",
+			"visible_source": "[P: (14, 11), S: (100, 110)]"
+		},
+		"map": "lorin_wilds",
+		"npcs": [
+			{
+				"at": "(375.0, 300.0)",
+				"filter": 1,
+				"frame_canvas": "(128.0, 128.0)",
+				"id": "npc_steward",
+				"local_scale": "(0.64, 0.64)",
+				"name": "闻叔",
+				"visible_display": "[P: (92.01804, -104.1599), S: (53.728, 80.95999)]",
+				"visible_source": "[P: (27, 13), S: (73, 110)]"
+			},
+			{
+				"at": "(585.0, 1120.0)",
+				"filter": 1,
+				"frame_canvas": "(128.0, 128.0)",
+				"id": "npc_guard",
+				"local_scale": "(0.64, 0.64)",
+				"name": "老赵",
+				"visible_display": "[P: (335.726, 838.84), S: (50.784, 80.96002)]",
+				"visible_source": "[P: (30, 13), S: (69, 110)]"
+			},
+			{
+				"at": "(375.0, 1120.0)",
+				"filter": 1,
+				"frame_canvas": "(128.0, 128.0)",
+				"id": "npc_warden",
+				"local_scale": "(0.64, 0.64)",
+				"name": "云游",
+				"visible_display": "[P: (87.60204, 838.84), S: (63.29599, 80.96002)]",
+				"visible_source": "[P: (21, 13), S: (86, 110)]"
+			},
+			{
+				"at": "(585.0, 830.0)",
+				"filter": 1,
+				"frame_canvas": "(128.0, 128.0)",
+				"id": "npc_child",
+				"local_scale": "(0.64, 0.64)",
+				"name": "小满",
+				"visible_display": "[P: (345.294, 528.8921), S: (30.91199, 57.40802)]",
+				"visible_source": "[P: (43, 45), S: (42, 78)]"
+			},
+			{
+				"at": "(375.0, 1210.0)",
+				"filter": 1,
+				"frame_canvas": "(128.0, 128.0)",
+				"id": "guest_长风关",
+				"local_scale": "(0.64, 0.64)",
+				"name": "长风关",
+				"visible_display": "[P: (89.81003, 942.34), S: (60.35199, 80.96002)]",
+				"visible_source": "[P: (24, 13), S: (82, 110)]"
+			},
+			{
+				"at": "(585.0, 1210.0)",
+				"filter": 1,
+				"frame_canvas": "(128.0, 128.0)",
+				"id": "guest_月牙屯",
+				"local_scale": "(0.64, 0.64)",
+				"name": "月牙屯",
+				"visible_display": "[P: (330.574, 942.34), S: (60.35199, 80.96002)]",
+				"visible_source": "[P: (23, 13), S: (82, 110)]"
+			}
+		]
+	},
+	{
+		"buildings": [],
+		"camera_zoom": "(1.15, 1.15)",
+		"grid_display": "(55.2, 55.2)",
+		"height": 1067,
+		"hero": {
+			"filter": 0,
+			"frame_canvas": "(128.0, 128.0)",
+			"local_scale": "(0.54, 0.54)",
+			"visible_display": "[P: (208.95, 784.2611), S: (62.09999, 68.31)]",
+			"visible_source": "[P: (14, 11), S: (100, 110)]"
+		},
+		"map": "maple_road",
+		"npcs": []
+	}
+]

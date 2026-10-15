@@ -1,0 +1,18 @@
+Godot Engine v4.6.1.stable.official.14d19694e - https://godotengine.org
+
+DIAG steward_at=(366.0, 862.0) player_before=(480.0, 860.0)
+DIAG has_modal=true player=(390.0, 880.0)
+DIAG panel_class=Control script=none
+DIAG       Label text=闻叔 · 执事
+DIAG       Label text=北门古道的界碑忽然失了声。先去枫林古道看看，碰上敌影不要硬撑。
+DIAG       Label text=轻点继续
+DIAG         Label text=离开
+WARNING: 1 RID of type "Canvas" was leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2690)
+WARNING: 3 RIDs of type "CanvasItem" were leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2692)
+ERROR: 1 RID allocations of type 'PN18TextServerAdvanced12FontAdvancedE' were leaked at exit.
+WARNING: ObjectDB instances leaked at exit (run with --verbose for details).
+   at: cleanup (core/object/object.cpp:2641)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:810)

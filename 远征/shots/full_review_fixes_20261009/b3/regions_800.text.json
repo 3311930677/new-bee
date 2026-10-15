@@ -1,0 +1,610 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_lorin_wilds",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_lorin_wilds/@Label@79",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "昭元边城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_lorin_wilds/@Label@80",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv1–12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_maple_road",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_maple_road/@Label@81",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "枫林古道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_maple_road/@Label@82",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv1–8"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_broken_slope",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_broken_slope/@Label@83",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "断碑坡"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_broken_slope/@Label@84",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv6–12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_stele_cavern",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_stele_cavern/@Label@85",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "失声碑窟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_stele_cavern/@Label@86",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv9–14"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_old_salt_road",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_old_salt_road/@Label@87",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "旧盐道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_old_salt_road/@Label@88",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv10–16"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_shenyuan_port",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_shenyuan_port/@Label@89",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "沉渊港"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_shenyuan_port/@Label@90",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv10–18"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_tideflat",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_tideflat/@Label@91",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "潮痕滩"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_tideflat/@Label@92",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv13–20"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_tidal_gate",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_tidal_gate/@Label@93",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "退潮水闸"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_tidal_gate/@Label@94",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv16–23"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_red_sand_route",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_red_sand_route/@Label@95",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "赤砂商路"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_red_sand_route/@Label@96",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv20–28"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_frost_post",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_frost_post/@Label@97",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "霜关驿"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_frost_post/@Label@98",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv22–32"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_rift_mine_road",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_rift_mine_road/@Label@99",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "裂谷矿道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_rift_mine_road/@Label@100",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv24–34"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_rift_mine_vault",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_rift_mine_vault/@Label@101",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "裂谷矿脉"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_rift_mine_vault/@Label@102",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv26–36"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_frost_boardwalk",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_frost_boardwalk/@Label@103",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "霜林栈道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_frost_boardwalk/@Label@104",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv26–36"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_frost_pass",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_frost_pass/@Label@105",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "冰隘"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_frost_pass/@Label@106",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv26–40"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_abyss_ring",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_abyss_ring/@Label@107",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "渊口外环"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_abyss_ring/@Label@108",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv43–49"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_stele_entry",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_stele_entry/@Label@109",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "归路门厅"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_stele_entry/@Label@110",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv49–50"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_stele_resonance",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_stele_resonance/@Label@111",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "三声共鸣廊"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_stele_resonance/@Label@112",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv50–53"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_stele_core",
+			"rect_height": 80.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_stele_core/@Label@113",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "碑心"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Control@78/Map_stele_core/@Label@114",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "Lv53–57"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Button@117",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "⌖"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Button@117/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "⌖"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Button@117/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Control@67/@Control@77/@Label@118",
+			"rect_height": 18.0,
+			"size": 12,
+			"text": "拖动查看更多地区"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Button@69",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Button@69/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@Label@70",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "地区行路图"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@ScrollContainer@74/@VBoxContainer@75/@Label@120",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "昭元边城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@ScrollContainer@74/@VBoxContainer@75/@Label@121",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "Lv1–12 · 当前位置"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Control@62/@ScrollContainer@74/@VBoxContainer@75/@Label@122",
+			"rect_height": 66.0,
+			"size": 13,
+			"text": "沿主街走访闻叔，从北门前往枫林古道\n沿相邻路牌步行前往\n界碑历练从巡界厅进入。"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Button@119",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "图例"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Button@119/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "图例"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@61/@Button@119/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		}
+	]
+}

@@ -1,0 +1,653 @@
+{
+ "art_to_screen": 2,
+ "canvas": [
+  1536,
+  1024
+ ],
+ "background": "#FF00FF",
+ "items": {
+  "hero_normal": {
+   "sheet": "UI-01_hero_button",
+   "art": [
+    152,
+    36
+   ],
+   "game": [
+    304,
+    72
+   ],
+   "slice": [
+    16,
+    8,
+    16,
+    8
+   ],
+   "guide_box": [
+    464,
+    232,
+    608,
+    144
+   ]
+  },
+  "hero_pressed": {
+   "sheet": "UI-01_hero_button",
+   "art": [
+    152,
+    36
+   ],
+   "game": [
+    304,
+    72
+   ],
+   "slice": [
+    16,
+    8,
+    16,
+    8
+   ],
+   "guide_box": [
+    464,
+    440,
+    608,
+    144
+   ]
+  },
+  "hero_disabled": {
+   "sheet": "UI-01_hero_button",
+   "art": [
+    152,
+    36
+   ],
+   "game": [
+    304,
+    72
+   ],
+   "slice": [
+    16,
+    8,
+    16,
+    8
+   ],
+   "guide_box": [
+    464,
+    648,
+    608,
+    144
+   ]
+  },
+  "btn_normal": {
+   "sheet": "UI-02_buttons_tabs",
+   "art": [
+    64,
+    24
+   ],
+   "game": [
+    128,
+    48
+   ],
+   "slice": [
+    8,
+    6,
+    8,
+    6
+   ],
+   "guide_box": [
+    320,
+    376,
+    256,
+    96
+   ]
+  },
+  "btn_pressed": {
+   "sheet": "UI-02_buttons_tabs",
+   "art": [
+    64,
+    24
+   ],
+   "game": [
+    128,
+    48
+   ],
+   "slice": [
+    8,
+    6,
+    8,
+    6
+   ],
+   "guide_box": [
+    640,
+    376,
+    256,
+    96
+   ]
+  },
+  "btn_disabled": {
+   "sheet": "UI-02_buttons_tabs",
+   "art": [
+    64,
+    24
+   ],
+   "game": [
+    128,
+    48
+   ],
+   "slice": [
+    8,
+    6,
+    8,
+    6
+   ],
+   "guide_box": [
+    960,
+    376,
+    256,
+    96
+   ]
+  },
+  "tab_normal": {
+   "sheet": "UI-02_buttons_tabs",
+   "art": [
+    72,
+    22
+   ],
+   "game": [
+    144,
+    44
+   ],
+   "slice": [
+    8,
+    6,
+    8,
+    6
+   ],
+   "guide_box": [
+    360,
+    548,
+    288,
+    88
+   ]
+  },
+  "tab_selected": {
+   "sheet": "UI-02_buttons_tabs",
+   "art": [
+    72,
+    22
+   ],
+   "game": [
+    144,
+    44
+   ],
+   "slice": [
+    8,
+    6,
+    8,
+    6
+   ],
+   "guide_box": [
+    712,
+    548,
+    288,
+    88
+   ]
+  },
+  "btn_round": {
+   "sheet": "UI-02_buttons_tabs",
+   "art": [
+    28,
+    28
+   ],
+   "game": [
+    56,
+    56
+   ],
+   "slice": null,
+   "guide_box": [
+    1064,
+    536,
+    112,
+    112
+   ]
+  },
+  "panel_iron": {
+   "sheet": "UI-03_panels",
+   "art": [
+    128,
+    128
+   ],
+   "game": [
+    256,
+    256
+   ],
+   "slice": [
+    24,
+    24,
+    24,
+    24
+   ],
+   "guide_box": [
+    224,
+    256,
+    512,
+    512
+   ]
+  },
+  "card_paper": {
+   "sheet": "UI-03_panels",
+   "art": [
+    128,
+    96
+   ],
+   "game": [
+    256,
+    192
+   ],
+   "slice": [
+    16,
+    16,
+    16,
+    16
+   ],
+   "guide_box": [
+    800,
+    320,
+    512,
+    384
+   ]
+  },
+  "plaque_title": {
+   "sheet": "UI-04_plaques",
+   "art": [
+    176,
+    32
+   ],
+   "game": [
+    352,
+    64
+   ],
+   "slice": [
+    40,
+    0,
+    40,
+    0
+   ],
+   "guide_box": [
+    416,
+    376,
+    704,
+    128
+   ]
+  },
+  "plaque_small": {
+   "sheet": "UI-04_plaques",
+   "art": [
+    96,
+    20
+   ],
+   "game": [
+    192,
+    40
+   ],
+   "slice": [
+    20,
+    0,
+    20,
+    0
+   ],
+   "guide_box": [
+    304,
+    568,
+    384,
+    80
+   ]
+  },
+  "divider": {
+   "sheet": "UI-04_plaques",
+   "art": [
+    120,
+    10
+   ],
+   "game": [
+    240,
+    20
+   ],
+   "slice": [
+    24,
+    0,
+    24,
+    0
+   ],
+   "guide_box": [
+    752,
+    588,
+    480,
+    40
+   ]
+  },
+  "slot_common": {
+   "sheet": "UI-05_rarity_slots",
+   "art": [
+    32,
+    32
+   ],
+   "game": [
+    64,
+    64
+   ],
+   "slice": null,
+   "guide_box": [
+    160,
+    288,
+    192,
+    192
+   ]
+  },
+  "slot_uncommon": {
+   "sheet": "UI-05_rarity_slots",
+   "art": [
+    32,
+    32
+   ],
+   "game": [
+    64,
+    64
+   ],
+   "slice": null,
+   "guide_box": [
+    416,
+    288,
+    192,
+    192
+   ]
+  },
+  "slot_rare": {
+   "sheet": "UI-05_rarity_slots",
+   "art": [
+    32,
+    32
+   ],
+   "game": [
+    64,
+    64
+   ],
+   "slice": null,
+   "guide_box": [
+    672,
+    288,
+    192,
+    192
+   ]
+  },
+  "slot_epic": {
+   "sheet": "UI-05_rarity_slots",
+   "art": [
+    32,
+    32
+   ],
+   "game": [
+    64,
+    64
+   ],
+   "slice": null,
+   "guide_box": [
+    928,
+    288,
+    192,
+    192
+   ]
+  },
+  "slot_legend": {
+   "sheet": "UI-05_rarity_slots",
+   "art": [
+    32,
+    32
+   ],
+   "game": [
+    64,
+    64
+   ],
+   "slice": null,
+   "guide_box": [
+    1184,
+    288,
+    192,
+    192
+   ]
+  },
+  "slot_empty": {
+   "sheet": "UI-05_rarity_slots",
+   "art": [
+    32,
+    32
+   ],
+   "game": [
+    64,
+    64
+   ],
+   "slice": null,
+   "guide_box": [
+    544,
+    544,
+    192,
+    192
+   ]
+  },
+  "slot_selected": {
+   "sheet": "UI-05_rarity_slots",
+   "art": [
+    32,
+    32
+   ],
+   "game": [
+    64,
+    64
+   ],
+   "slice": null,
+   "guide_box": [
+    800,
+    544,
+    192,
+    192
+   ]
+  },
+  "nav_base": {
+   "sheet": "UI-06_nav",
+   "art": [
+    240,
+    44
+   ],
+   "game": [
+    480,
+    88
+   ],
+   "slice": [
+    32,
+    0,
+    32,
+    0
+   ],
+   "guide_box": [
+    168,
+    270,
+    1200,
+    220
+   ]
+  },
+  "nav_socket": {
+   "sheet": "UI-06_nav",
+   "art": [
+    40,
+    40
+   ],
+   "game": [
+    80,
+    80
+   ],
+   "slice": null,
+   "guide_box": [
+    332,
+    554,
+    200,
+    200
+   ]
+  },
+  "nav_socket_selected": {
+   "sheet": "UI-06_nav",
+   "art": [
+    40,
+    40
+   ],
+   "game": [
+    80,
+    80
+   ],
+   "slice": null,
+   "guide_box": [
+    596,
+    554,
+    200,
+    200
+   ]
+  },
+  "rail_socket": {
+   "sheet": "UI-06_nav",
+   "art": [
+    28,
+    30
+   ],
+   "game": [
+    56,
+    60
+   ],
+   "slice": null,
+   "guide_box": [
+    860,
+    579,
+    140,
+    150
+   ]
+  },
+  "rail_socket_selected": {
+   "sheet": "UI-06_nav",
+   "art": [
+    28,
+    30
+   ],
+   "game": [
+    56,
+    60
+   ],
+   "slice": null,
+   "guide_box": [
+    1064,
+    579,
+    140,
+    150
+   ]
+  },
+  "bar_frame": {
+   "sheet": "UI-07_bars",
+   "art": [
+    100,
+    10
+   ],
+   "game": [
+    200,
+    20
+   ],
+   "slice": [
+    10,
+    0,
+    10,
+    0
+   ],
+   "guide_box": [
+    518,
+    323,
+    500,
+    50
+   ]
+  },
+  "bar_fill_exp": {
+   "sheet": "UI-07_bars",
+   "art": [
+    92,
+    4
+   ],
+   "game": [
+    184,
+    8
+   ],
+   "slice": null,
+   "guide_box": [
+    276,
+    437,
+    460,
+    20
+   ]
+  },
+  "bar_fill_hp": {
+   "sheet": "UI-07_bars",
+   "art": [
+    92,
+    4
+   ],
+   "game": [
+    184,
+    8
+   ],
+   "slice": null,
+   "guide_box": [
+    800,
+    437,
+    460,
+    20
+   ]
+  },
+  "currency_capsule": {
+   "sheet": "UI-07_bars",
+   "art": [
+    72,
+    18
+   ],
+   "game": [
+    144,
+    36
+   ],
+   "slice": [
+    10,
+    0,
+    10,
+    0
+   ],
+   "guide_box": [
+    236,
+    566,
+    360,
+    90
+   ]
+  },
+  "quest_slip": {
+   "sheet": "UI-07_bars",
+   "art": [
+    128,
+    36
+   ],
+   "game": [
+    256,
+    72
+   ],
+   "slice": [
+    16,
+    10,
+    16,
+    10
+   ],
+   "guide_box": [
+    660,
+    521,
+    640,
+    180
+   ]
+  }
+ }
+}

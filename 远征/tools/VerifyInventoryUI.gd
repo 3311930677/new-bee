@@ -12,7 +12,8 @@ func _ready() -> void:
 	G.prog.level = 50
 	G.wallet.gold = 100000
 	G.ensure_starter_equip(true)
-	G.inv_grant_equip({"tpl":"tpl_sword_wolf","rarity":2,"n":19},false)
+	# The compact idle detail tray leaves more space for the grid; populate enough rows to exercise scrolling.
+	G.inv_grant_equip({"tpl":"tpl_sword_wolf","rarity":2,"n":34},false)
 	G.inv_grant_equip({"tpl":"tpl_accessory_moon","rarity":3,"n":1},false)
 	G.items = {"enhance_stone":24,"gem_atk_1":3,"gem_atk_2":2,"gem_atk_3":1,
 		"gem_atk_4":1,"gem_atk_5":1,"gem_def_1":2,"gem_def_2":1,"gem_def_3":1,
@@ -63,7 +64,7 @@ func _ready() -> void:
 	_check(G.inv_find(sword_uid).gems.is_empty() and G.item_count("gem_atk_1")==gem_before+1,"clicking an occupied socket returns its gem")
 	await _click(bag._tab_buttons.gem)
 	_check(bag._tab=="gem" and bag._item_buttons.size()==15,"all 15 gem types are visible in the scrolling inventory")
-	bag._resize_frame(Rect2(0,44,480,722))
+	bag._resize_frame(Rect2(0,44,480,622))
 	await _frames()
 	var bottom := int(bag._scroll.get_v_scroll_bar().max_value)
 	bag._scroll.scroll_vertical = bottom
@@ -125,6 +126,8 @@ func _ready() -> void:
 	var entry := _home_bag_entry(home)
 	_check(entry!=null,"production home has a bag entry")
 	if entry!=null:
+		# The current home rail is touch-only; enable focus only in this fixture to test focus restoration.
+		entry.focus_mode=Control.FOCUS_ALL
 		entry.grab_focus()
 		home._open_bag()
 		await _frames()
@@ -141,8 +144,12 @@ func _frames() -> void:
 	for i in 5: await get_tree().process_frame
 
 func _home_bag_entry(root: Node) -> Control:
+	if root.name=="Rail_bag":return root as Control
 	for child in root.get_children():
-		if child is Label and child.text=="背包": return child.get_parent() as Control
+		if child is Label and child.text=="背包":
+			var candidate:=child.get_parent()
+			while candidate!=null and not candidate is BaseButton:candidate=candidate.get_parent()
+			if candidate!=null:return candidate as Control
 		var found := _home_bag_entry(child)
 		if found!=null: return found
 	return null

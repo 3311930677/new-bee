@@ -19,6 +19,7 @@ const WorldArtFinish := preload("res://src/world/WorldArtFinish.gd")
 const SunnyArt:=preload("res://src/world/SunnyTravelArt.gd")
 const Lacquer := preload("res://src/ui/LacquerUI.gd")
 const HudStyle := preload("res://src/ui/WorldHUD.gd")
+const HudSkin := preload("res://src/ui/WorldHUDSkin.gd")
 const Cartography := preload("res://src/explore/MinimapCartography.gd")
 const ROLE_FRAMES := {  # 四方向行走帧（BattleScene 同款复用）
 	"zs": ["res://image/role/zs/pojun_walk_frames.tres", "pojun"],
@@ -181,6 +182,7 @@ var _explore_lbl: Label = null
 # 三件套：小地图（全局位置感）+ 目标罗盘（方向与距离，点它自动前往）+ 疾行（缩短空跑时间）。
 var _minimap: _Minimap = null        # 右上角小地图（点击放大为大地图）
 const MINIMAP_INTERVAL := 0.1        # 小地图重绘间隔（约 10Hz；问题 #15）
+var _illustrated_navigation := preload("res://src/explore/IllustratedNavigation.gd").new()
 var _nav_acc := 0.0
 var _nav_dirty := true               # 事件类变化置脏，下一帧立即刷新（不等节流窗口）
 var _compass: _Compass = null        # 目标罗盘（含距离，点击开始/停止自动前往）
@@ -342,6 +344,11 @@ func _painted_ground() -> bool:
 	return _mode == "main_world" and bool(_main_cfg.get("painted_ground", false))
 
 
+## Illustrated floors own all static terrain. Routes remain data for clearance only.
+func _illustrated_ground() -> bool:
+	return _mode == "main_world" and int(_main_cfg.get("ground_art_version", 0)) >= 20261015
+
+
 func _uses_flat_ground() -> bool:
 	return _mode != "main_world" or String(_main_cfg.get("ground_style", "")) == "flat"
 
@@ -365,7 +372,9 @@ func _build_ground() -> void:
 			bg.z_index = -20
 			bg.texture = tex
 			bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-			bg.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+			bg.name = "IllustratedMapGround" if _illustrated_ground() else "MapBackground"
+			# A crop would move authored shorelines and doorways away from their collisions.
+			bg.stretch_mode = TextureRect.STRETCH_SCALE if _illustrated_ground() else TextureRect.STRETCH_KEEP_ASPECT_COVERED
 			bg.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 			bg.modulate = _ground_tint()
 			bg.size = Vector2(int(_map_cfg.get("map_cols", 32)) * 48,
@@ -375,6 +384,7 @@ func _build_ground() -> void:
 			if _main_map_id == "shenyuan_port":
 				var harbor_state := PortGround.new()
 				harbor_state.use_reference_ground = true
+				harbor_state.z_index = -10
 				add_child(harbor_state)
 			return
 	# 地面层：TileMapLayer 程序构建（主题 3 种 tile 加权平铺，无碰撞）
@@ -498,7 +508,8 @@ func _add_flat_ground(cols: int, rows: int, routes: Array) -> void:
 
 func _add_ground_overlay(ground: Node2D) -> void:
 	ground.z_index = -10
-	if _uses_flat_ground(): ground.set("flat_floor", true)
+	if _uses_flat_ground() or _illustrated_ground(): ground.set("flat_floor", true)
+	ground.set_meta("illustrated_floor", _illustrated_ground())
 	add_child(ground)
 
 
@@ -615,7 +626,7 @@ func _build_world() -> void:
 	_build_ground_detail(cols, rows)  # 先于 _world 入树：绘制在地砖之上、实体之下
 	if _mode == "main_world" and _main_map_id == "stele_cavern":
 		_add_ground_overlay(preload("res://src/explore/SteleRoomGround.gd").new())
-	elif _mode == "main_world" and _main_map_id == "old_salt_road":
+	elif _mode == "main_world" and _main_map_id == "old_salt_road" and not _illustrated_ground():
 		_add_ground_overlay(SaltRoadGround.new())
 	elif _mode == "main_world" and _main_map_id == "tideflat" and not _painted_ground():
 		_add_ground_overlay(TideflatGround.new())
@@ -661,6 +672,7 @@ func _build_world() -> void:
 		_build_world_exits()
 		_build_world_blockers()
 		_build_painted_props()
+		if _illustrated_ground(): preload("res://src/explore/IllustratedScenery.gd").setup(self)
 		_build_stele_room_gates()
 		_build_tidal_water_bounds()
 		_build_tidal_room_gates()
@@ -677,6 +689,7 @@ func _build_world() -> void:
 
 
 func _build_decos(cols: int, rows: int) -> void:
+	if _illustrated_ground(): return  # authored sprites use their own feet and collisions
 	if _mode=="main_world" and ReferenceWorldArt.active(_main_map_id):return
 	if _mode == "main_world" and bool(_main_cfg.get("city", false)):
 		return
@@ -848,13 +861,15 @@ func _build_stele_room_gates() -> void:
 	if not _stele_rooms_enabled(): return
 	if not _stele_room_one_ready():
 		var first := _SteleRoomGate.new()
-		first.position = Vector2(480, 755)
+		first.position = _cfg_point(_main_cfg.get("illustrated_echo_gate", []), Vector2(480,755))
+		first.span = 104.0 if _illustrated_ground() else 960.0
 		first.caption = "听清三处石缝，再读青姨拓片"
 		_world.add_child(first)
 		_stele_room_gates["echo"] = first
 	if not bool(G.prog.get("flags", {}).get("act1_stele_seat_2", false)):
 		var second := _SteleRoomGate.new()
-		second.position = Vector2(480, 540)
+		second.position = _cfg_point(_main_cfg.get("illustrated_heart_gate", []), Vector2(480,540))
+		second.span = 104.0 if _illustrated_ground() else 960.0
 		second.caption = "两枚碑座未归位"
 		_world.add_child(second)
 		_stele_room_gates["heart"] = second
@@ -887,7 +902,7 @@ func _build_mine_rooms() -> void:
 	if not _mine_rooms_enabled(): return
 	_mine_ground = preload("res://src/explore/MineRoomGround.gd").new()
 	_mine_ground.z_index = -9
-	_mine_ground.flat_floor = _uses_flat_ground()
+	_mine_ground.flat_floor = _uses_flat_ground() or _illustrated_ground()
 	_world.add_child(_mine_ground)
 	var rooms: Dictionary = _main_cfg.get("rooms", {})
 	for key in rooms:
@@ -895,6 +910,7 @@ func _build_mine_rooms() -> void:
 		if bool(G.prog.get("flags", {}).get(String(row.get("open_flag", "")), false)): continue
 		var gate := _SteleRoomGate.new()
 		gate.position = _cfg_point(row.get("gate_at", []), Vector2.ZERO)
+		gate.span = 190.0 if _illustrated_ground() else 960.0
 		gate.caption = String(row.get("hint", "先处理前房机关"))
 		_world.add_child(gate)
 		_mine_room_gates[key] = gate
@@ -950,11 +966,13 @@ func _build_tidal_room_gates() -> void:
 	if not bool(flags.get("act2_tide_clue", false)):
 		var record_gate := _TidalRoomGate.new()
 		record_gate.position = Vector2(480, 770)
+		record_gate.half_span = 150.0 if _illustrated_ground() else 480.0
 		record_gate.caption = "先读港务水痕，再进上闸"
 		_world.add_child(record_gate)
 		_tidal_room_gates["record"] = record_gate
 	var priest_gate := _TidalRoomGate.new()
 	priest_gate.position = Vector2(480, 475)
+	priest_gate.half_span = 150.0 if _illustrated_ground() else 480.0
 	priest_gate.caption = "排清栈桥侧闸积水"
 	priest_gate.route = _tidal_passages()
 	_world.add_child(priest_gate)
@@ -1063,12 +1081,13 @@ func _build_player(map_w: float, map_h: float) -> void:
 	if _mode == "main_world":
 		# 深底名牌保证绿地、浅色道路上都可读；红色菱形仍标识玩家。
 		_player_tag = Lacquer.CutPanel.new()
+		_player_tag.world_skin = true
 		var name_y := -40.0 - 62.0 * player_scale
 		_player_tag.position = Vector2(-45, name_y)
 		_player_tag.size = Vector2(90, 20)
 		_player_tag.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		var tag_style := StyleBoxFlat.new()
-		tag_style.bg_color = Color("141118", 0.80)
+		tag_style.bg_color = Color("171c1b", 0.96)
 		tag_style.border_color = Color("c29a5b", 0.85)
 		tag_style.set_border_width_all(1)
 		tag_style.set_corner_radius_all(3)
@@ -1513,6 +1532,8 @@ func _apply_safe_resume() -> void:
 		dangers.append(m.position)
 	var safe := WorldSession.safe_position(_player.position, dangers,
 		_portal.position if _portal != null else Vector2.ZERO, _map_extent())
+	if _illustrated_ground():
+		safe = _illustrated_navigation.safe_position(_main_cfg,safe)
 	if safe != _player.position:
 		_player.position = safe
 		_main_resume_pos = safe
@@ -3317,7 +3338,8 @@ func _auto_dir(delta: float) -> Vector2:
 	if _auto_time > allowed:
 		_stop_auto_walk("走得太久——请你亲自来")
 		return Vector2.ZERO
-	var steer := _river_detour(_player.position, target) - _player.position
+	var waypoint: Vector2 = _illustrated_navigation.next_point(self,_player.position,target) if _illustrated_ground() else _river_detour(_player.position,target)
+	var steer := waypoint - _player.position
 	if _auto_dodge > 0.0:
 		_auto_dodge -= delta
 		var side := steer.normalized().rotated(PI * 0.5 * _auto_dodge_side)
@@ -4581,6 +4603,7 @@ class _Spot extends Node2D:
 
 
 class _SteleRoomGate extends StaticBody2D:
+	var span := 960.0
 	var caption := ""
 
 	func _ready() -> void:
@@ -4588,7 +4611,7 @@ class _SteleRoomGate extends StaticBody2D:
 		collision_mask = 0
 		var collider := CollisionShape2D.new()
 		var rect := RectangleShape2D.new()
-		rect.size = Vector2(960, 36)
+		rect.size = Vector2(span, 36)
 		collider.shape = rect
 		add_child(collider)
 		var label := G.gold_label(caption, G.FS_XS, true, Color("f0dfbd"), true)
@@ -4600,11 +4623,12 @@ class _SteleRoomGate extends StaticBody2D:
 		queue_redraw()
 
 	func _draw() -> void:
-		MapScene.WorldPropArt.barrier(self,-480,960,44,Color("c6bfd6"))
+		MapScene.WorldPropArt.barrier(self,-span*0.5,span,44,Color("c6bfd6"))
 
 
 ## 水闸的隔水堰：第二闸按选择打开左侧栈桥或右侧货箱暗渠。
 class _TidalRoomGate extends StaticBody2D:
+	var half_span := 480.0
 	var caption := ""
 	var route := "sealed"
 	var _colliders: Array[CollisionShape2D] = []
@@ -4627,11 +4651,18 @@ class _TidalRoomGate extends StaticBody2D:
 		if is_inside_tree(): _rebuild()
 
 	func _segments() -> Array[Vector2]:
+		var source: Array[Vector2] = []
 		match route:
-			"bridge": return [Vector2(-480, -115), Vector2(-15, 480)]
-			"cargo": return [Vector2(-480, 15), Vector2(115, 480)]
-			"both": return [Vector2(-480, -115), Vector2(-15, 15), Vector2(115, 480)]
-		return [Vector2(-480, 480)]
+			"bridge": source = [Vector2(-480,-115),Vector2(-15,480)]
+			"cargo": source = [Vector2(-480,15),Vector2(115,480)]
+			"both": source = [Vector2(-480,-115),Vector2(-15,15),Vector2(115,480)]
+			_: source = [Vector2(-480,480)]
+		var clipped: Array[Vector2] = []
+		for segment in source:
+			var start := maxf(segment.x,-half_span)
+			var end := minf(segment.y,half_span)
+			if end>start: clipped.append(Vector2(start,end))
+		return clipped
 
 	func _rebuild() -> void:
 		for collider in _colliders:
@@ -5457,6 +5488,10 @@ class _Minimap extends Control:
 	var _shadow_style := MapScene.HudStyle.surface(Color("101f23", 0.55), Color.TRANSPARENT)
 	var _cartography := MapScene.Cartography.new()
 	var _hovered := false
+	var _round_terrain: ImageTexture
+	var _terrain_image: Image
+	var _terrain_source: Texture2D
+	var _terrain_origin := Vector2i(-999999,-999999)
 
 	func _ready() -> void:
 		mouse_filter = Control.MOUSE_FILTER_STOP
@@ -5506,7 +5541,33 @@ class _Minimap extends Control:
 	func _project(point: Vector2) -> Vector2:
 		var view := _view_bounds()
 		var rect := _map_rect()
-		return rect.position + ((point-view.position)/view.size).clamp(Vector2.ZERO,Vector2.ONE)*rect.size
+		var projected := rect.position + ((point-view.position)/view.size).clamp(Vector2.ZERO,Vector2.ONE)*rect.size
+		if not big: projected = rect.get_center() + (projected-rect.get_center()).limit_length(38)
+		return projected
+
+	func _round_thumbnail(terrain: Texture2D, bounds: Rect2, extent: Vector2) -> Texture2D:
+		if _terrain_source != terrain:
+			_terrain_image = terrain.get_image()
+			_terrain_source = terrain
+			_terrain_origin = Vector2i(-999999,-999999)
+		var source_size := Vector2(_terrain_image.get_size())
+		var source_origin := Vector2i((bounds.position / extent * source_size).floor())
+		if _round_terrain != null and source_origin == _terrain_origin: return _round_terrain
+		_terrain_origin = source_origin
+		var result := Image.create(96,96,false,Image.FORMAT_RGBA8)
+		result.fill(Color.TRANSPARENT)
+		var step := bounds.size / extent * source_size / 96
+		for y in 96:
+			for x in 96:
+				if Vector2(x-47.5,y-47.5).length_squared() > 45*45: continue
+				var at := source_origin + Vector2i((Vector2(x+0.5,y+0.5)*step).floor())
+				var color := Color("1c2925")
+				if at.x >= 0 and at.y >= 0 and at.x < int(source_size.x) and at.y < int(source_size.y):
+					color = _terrain_image.get_pixelv(at) * Color(0.72,0.84,0.76,1)
+				result.set_pixel(x,y,color)
+		if _round_terrain == null: _round_terrain = ImageTexture.create_from_image(result)
+		else: _round_terrain.update(result)
+		return _round_terrain
 
 	func _gui_input(e: InputEvent) -> void:
 		if G.ui_blocked: return
@@ -5530,15 +5591,8 @@ class _Minimap extends Control:
 				draw_line(corner,corner+Vector2(0,direction.y*6),MapScene.Lacquer.LIT,1)
 		else:
 			var center := sz * 0.5
-			var radius := minf(sz.x, sz.y) * 0.48
-			draw_circle(center, radius + 2.0, Color("0b0a0e", 0.82))
-			draw_circle(center, radius, Color("cca564", 0.9), false, 1.5)
-			draw_circle(center, radius - 2.0, Color("4a3c24", 0.6), false, 1.0)
-			var n_col := Color("ffd980") if _hovered else Color("dfc282")
-			draw_line(center + Vector2(0, -radius), center + Vector2(0, -radius + 5), n_col, 1.5)
-			draw_line(center + Vector2(0, radius), center + Vector2(0, radius - 3), Color("a68d5a"), 1.0)
-			draw_line(center + Vector2(-radius, 0), center + Vector2(-radius + 3, 0), Color("a68d5a"), 1.0)
-			draw_line(center + Vector2(radius, 0), center + Vector2(radius - 3, 0), Color("a68d5a"), 1.0)
+			var radius := minf(sz.x, sz.y) * 0.5 - 1
+			MapScene.HudSkin.ring(self,center,radius,MapScene.HudSkin.GOLD if _hovered or has_focus() else MapScene.HudSkin.BRONZE,Color("1c2925"))
 
 		var ext := map_ref._map_extent()
 		var map_rect := _map_rect()
@@ -5551,7 +5605,8 @@ class _Minimap extends Control:
 		var visible := bounds.intersection(Rect2(Vector2.ZERO,ext))
 		var target_rect := Rect2(map_rect.position+(visible.position-bounds.position)/bounds.size*map_rect.size,visible.size/bounds.size*map_rect.size)
 		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		draw_texture_rect_region(terrain, target_rect, Rect2(visible.position / ext * terrain.get_size(), visible.size / ext * terrain.get_size()))
+		if big: draw_texture_rect_region(terrain, target_rect, Rect2(visible.position / ext * terrain.get_size(), visible.size / ext * terrain.get_size()))
+		else: draw_texture_rect(_round_thumbnail(terrain,bounds,ext),map_rect,false)
 		if big:
 			draw_rect(map_rect.grow(1), Color("b89358", 0.85), false, 1.0)
 			draw_rect(map_rect, Color("594426", 0.65), false, 1.0)
@@ -5559,8 +5614,9 @@ class _Minimap extends Control:
 				draw_circle(cp, 1.5, Color("dfc282"))
 		else:
 			var center := sz * 0.5
-			var radius := minf(sz.x, sz.y) * 0.46
-			draw_circle(center, radius, Color("cca564", 0.85), false, 1.0)
+			for direction in [Vector2.UP,Vector2.DOWN,Vector2.LEFT,Vector2.RIGHT]:
+				MapScene.HudSkin.diamond(self,center+direction*49,3,MapScene.HudSkin.DARK)
+				MapScene.HudSkin.diamond(self,center+direction*49,2,MapScene.HudSkin.GOLD)
 		if map_ref._city_content != null:
 			for npc in map_ref._city_content._npcs:
 				if big or bounds.has_point(npc.position): MapScene.Cartography.marker(self,_project(npc.position).clamp(map_rect.position+Vector2(4,4),map_rect.end-Vector2(4,4)),"npc")
@@ -5672,7 +5728,7 @@ class _Minimap extends Control:
 			var expand := Vector2(sz.x - 16, sz.y - 11)
 			draw_polyline(PackedVector2Array([expand + Vector2(-3, -3), expand + Vector2(3, -3), expand + Vector2(3, 3)]), Color("dfc18a"), 1, true)
 			draw_line(expand + Vector2(-3, 3), expand + Vector2(3, -3), Color("dfc18a"), 1, true)
-		if has_focus(): draw_rect(Rect2(Vector2.ONE * 2, sz - Vector2.ONE * 4), Color("f6d89a"), false, 1)
+		if has_focus() and big: draw_rect(Rect2(Vector2.ONE * 2, sz - Vector2.ONE * 4), Color("f6d89a"), false, 1)
 
 	func _pt(p: Vector2, r: float, c: Color) -> void:
 		draw_circle(p, r + 1, Color("14292d", 0.85))
@@ -5777,13 +5833,7 @@ class _Joystick extends Control:
 
 	func _draw() -> void:
 		var c := custom_minimum_size / 2.0
-		draw_circle(c,52.0,Color("17151a",0.70 if _active else 0.35))
-		draw_arc(c,52.0,0,TAU,64,Color("0a090b",0.40),3,true)
-		draw_arc(c,51.0,0,TAU,64,Color("6e5434"),1,true)
-		var k := c + vector*44.0
-		draw_circle(k,22.0,Color("17151a",0.85))
-		draw_arc(k,22.0,0,TAU,48,Color("6e5434"),1,true)
-		draw_arc(k,21.0,PI*1.15,PI*1.85,20,Color("c29a5b",0.8),1,true)
+		MapScene.HudSkin.joystick(self,c,52.0,vector,_active)
 
 
 
@@ -5807,6 +5857,7 @@ func _open_journey(recommended := "") -> void:
 
 func _round_action(words: String, glyph: String, at: Vector2, diameter: float, cb: Callable, round_shape: bool = true) -> Button:
 	var b := Lacquer.Action.new(words, glyph)
+	b.world_skin = true
 	b.name = "Action_" + words
 	b.disc = round_shape
 	b.position = at
@@ -5945,7 +5996,7 @@ func _layout_round_tasks() -> void:
 			if ready and daily in available:
 				available.erase(daily)
 				available.push_front(daily)
-	var y := safe.position.y + 76
+	var y := safe.position.y + HudStyle.FIELD_TASK_Y
 	var limit := safe.position.y + (300 if _round_expanded else (236 if safe.size.y >= 960 else 190))
 	var hidden := 0
 	for i in available.size():

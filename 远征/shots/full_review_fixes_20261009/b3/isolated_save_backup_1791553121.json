@@ -1,0 +1,124 @@
+{
+	"account": "",
+	"arena": {
+		"best_streak": 0,
+		"losses": 0,
+		"score": 1000,
+		"streak": 0,
+		"wins": 0
+	},
+	"audio": {
+		"bgm": 0.7,
+		"mute": false,
+		"sfx": 0.8
+	},
+	"avatar_custom": "",
+	"avatar_id": "fox",
+	"avatar_use_custom": false,
+	"city": {
+		"acts": {},
+		"built": [
+			"hall",
+			"gate"
+		],
+		"code": "",
+		"day": "",
+		"streak": 0,
+		"visits": []
+	},
+	"gender": "男",
+	"items": {
+		"evolve_crystal": 6,
+		"ticket_sweep": 2
+	},
+	"player_name": "行旅人",
+	"prog": {
+		"codex_claimed": [],
+		"economy": {
+			"bought": {},
+			"day": 1,
+			"history": {},
+			"next_tx": 1,
+			"orders": {},
+			"seed": 7919,
+			"sold": {},
+			"work": {}
+		},
+		"equip": {},
+		"exp": 0,
+		"flags": {},
+		"gacha": {
+			"free_day": "",
+			"free_last": "",
+			"free_streak": 0,
+			"pity": 0
+		},
+		"inventory": {
+			"instances": [],
+			"next_uid": 1,
+			"pending": []
+		},
+		"last_ts": 0,
+		"ledger": {
+			"applied": []
+		},
+		"level": 12,
+		"lore_beats": {},
+		"lore_seen": false,
+		"main_world": {
+			"map_id": "lorin_wilds",
+			"visited_maps": [
+				"lorin_wilds",
+				"maple_road"
+			]
+		},
+		"mounts": {
+			"active": "",
+			"owned": {}
+		},
+		"pet_stat": {},
+		"pets": [
+			"pet_rockturtle",
+			"pet_thunderhawk",
+			"pet_frostwolf"
+		],
+		"settings": {},
+		"skills": {},
+		"special_events": {
+			"records": {},
+			"tracked": ""
+		},
+		"story": {
+			"done": [],
+			"goals": {},
+			"step": "s01"
+		},
+		"talents": {},
+		"tips_seen": {
+			"deploy": true,
+			"pet_raise": true
+		},
+		"titles": {
+			"active": "",
+			"owned": []
+		},
+		"world_cleared": {
+			"forest": true
+		},
+		"worlds_unlocked": 3
+	},
+	"quest": {
+		"active": {},
+		"claimed": [],
+		"day": "",
+		"offer": []
+	},
+	"selected_role": "zs",
+	"version": 7,
+	"wallet": {
+		"expedition": 500,
+		"gold": 12800,
+		"honor": 900,
+		"soul": 36
+	}
+}

@@ -1,0 +1,367 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@Button@1880",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@Button@1880/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@Label@1881",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "设置"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@HBoxContainer@1882/@Button@1889",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "常规"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@HBoxContainer@1882/@Button@1889/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "常规"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@HBoxContainer@1882/@Button@1889/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@HBoxContainer@1882/@Button@1891",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "旅人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@HBoxContainer@1882/@Button@1891/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "旅人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@HBoxContainer@1882/@Button@1891/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@HBoxContainer@1882/@Button@1893",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "存档"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@HBoxContainer@1882/@Button@1893/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "存档"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@HBoxContainer@1882/@Button@1893/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@Label@1895",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "声音"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@HBoxContainer@1896/@Label@1897",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "音乐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@HBoxContainer@1896/@Label@1899",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "70%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@HBoxContainer@1900/@Label@1901",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "音效"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@HBoxContainer@1900/@Label@1903",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "80%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@Button@1906",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "静音"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@Button@1906/@Label@1904",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "静音"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@Button@1906/@Label@1905",
+			"rect_height": 52.0,
+			"size": 13,
+			"text": "关"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@Label@1907",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "音乐与音效正常播放"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@Label@1908",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "战斗与演出"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@Button@1911",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "震屏"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@Button@1911/@Label@1909",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "震屏"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@Button@1911/@Label@1910",
+			"rect_height": 52.0,
+			"size": 13,
+			"text": "开"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@Button@1914",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "剧情演出"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@Button@1914/@Label@1912",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "剧情演出"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@Button@1914/@Label@1913",
+			"rect_height": 52.0,
+			"size": 13,
+			"text": "播放"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@HBoxContainer@1915/@Label@1916",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "战斗倍速"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@HBoxContainer@1915/@Button@1917",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@HBoxContainer@1915/@Button@1917/Caption",
+			"rect_height": 52.0,
+			"size": 17,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@HBoxContainer@1915/@Button@1917/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@HBoxContainer@1915/@Label@1918",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "×1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@HBoxContainer@1915/@Button@1919",
+			"rect_height": 52.0,
+			"size": 14,
+			"text": "›"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@HBoxContainer@1915/@Button@1919/Caption",
+			"rect_height": 52.0,
+			"size": 17,
+			"text": "›"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@HBoxContainer@1915/@Button@1919/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Control@1873/@ScrollContainer@1885/@VBoxContainer@1886/@VBoxContainer@1890/@Label@1920",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "战斗中也可随时切换倍速"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Button@1944",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "说明"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Button@1944/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "说明"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyNextReview/@Control@1871/@Control@1872/@Button@1944/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		}
+	]
+}

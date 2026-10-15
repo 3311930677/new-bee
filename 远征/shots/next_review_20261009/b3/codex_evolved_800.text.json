@@ -1,0 +1,538 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@Control@282/@Label@301",
+			"rect_height": 26.0,
+			"size": 13,
+			"text": "灵宠 01 / 10 · 已结伴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@Control@282/@Button@299",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@Control@282/@Button@299/Caption",
+			"rect_height": 56.0,
+			"size": 17,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@Control@282/@Button@299/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@Control@282/@Button@300",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "›"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@Control@282/@Button@300/Caption",
+			"rect_height": 56.0,
+			"size": 17,
+			"text": "›"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@Control@282/@Button@300/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@Button@284",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@Button@284/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@Label@285",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "灵宠图鉴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@Label@445",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "霜狼"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@Label@446",
+			"rect_height": 22.0,
+			"size": 14,
+			"text": "通关「凛风雪原」首领 · 稀有 · 护卫"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@Label@447",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "生命 60 · 攻击 14 · 防御 6"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@Label@448",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "技能 · 撕咬 · 寒嚎"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@457",
+			"rect_height": 64.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@457/@Label@455",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@457/@Label@456",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@462",
+			"rect_height": 64.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@462/@Label@460",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@462/@Label@461",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@467",
+			"rect_height": 64.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@467/@Label@465",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@467/@Label@466",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@472",
+			"rect_height": 64.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@472/@Label@470",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@472/@Label@471",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@477",
+			"rect_height": 64.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@477/@Label@475",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@477/@Label@476",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@482",
+			"rect_height": 64.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@482/@Label@480",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@482/@Label@481",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@487",
+			"rect_height": 64.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@487/@Label@485",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@487/@Label@486",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@492",
+			"rect_height": 64.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@492/@Label@490",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@492/@Label@491",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@497",
+			"rect_height": 64.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@497/@Label@495",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@497/@Label@496",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@502",
+			"rect_height": 64.0,
+			"size": 14,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@502/@Label@500",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@ScrollContainer@451/@HBoxContainer@452/@Button@502/@Label@501",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@HBoxContainer@503/@Label@504",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "收集里程 · 已集 3 只 · 可领取「初识灵宠」"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@HBoxContainer@503/@Button@505",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@HBoxContainer@503/@Button@505/Caption",
+			"rect_height": 44.0,
+			"size": 14,
+			"text": "领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@HBoxContainer@503/@Button@505/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@VBoxContainer@518/@HBoxContainer@506/@Label@507",
+			"rect_height": 33.0,
+			"size": 22,
+			"text": "已进化"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@VBoxContainer@518/@HBoxContainer@506/@HFlowContainer@508/@PanelContainer@509/@Label@510",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "+25%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@VBoxContainer@518/@HBoxContainer@511/@Control@517/@Label@513",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": "进化晶石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 30.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@VBoxContainer@518/@HBoxContainer@511/@Control@517/@Label@514",
+			"rect_height": 32.0,
+			"size": 20,
+			"text": "3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@VBoxContainer@518/@HBoxContainer@511/@Control@517/@Label@515",
+			"rect_height": 22.0,
+			"size": 12,
+			"text": "持有 3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 18.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@ScrollContainer@289/@VBoxContainer@290/@VBoxContainer@518/@HBoxContainer@511/@Control@517/@Label@516",
+			"rect_height": 20.0,
+			"size": 12,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@HBoxContainer@291/@Button@303",
+			"rect_height": 56.0,
+			"size": 14,
+			"text": "进化"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@HBoxContainer@291/@Button@303/Caption",
+			"rect_height": 34.0,
+			"size": 22,
+			"text": "已进化"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Control@277/@HBoxContainer@291/@Button@303/Subtitle",
+			"rect_height": 20.0,
+			"size": 13,
+			"text": "进化晶石 3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@276/@Label@302",
+			"rect_height": 28.0,
+			"size": 13,
+			"text": "3/10"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 22.0,
+			"path": "/root/VerifyTravelChestB3/@Control@275/@Control@519/@Label@520",
+			"rect_height": 36.0,
+			"size": 14,
+			"text": "进化成功 · 全属性提升"
+		}
+	]
+}

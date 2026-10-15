@@ -1,0 +1,55 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+WARNING: Loaded resource as image file, this will not work on export: 'res://assets/world/reference_complete_20261011/source/stable.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tools/ExportReferenceSprites.gd:22)
+WARNING: Loaded resource as image file, this will not work on export: 'res://assets/world/reference_complete_20261011/source/barracks.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tools/ExportReferenceSprites.gd:22)
+WARNING: Loaded resource as image file, this will not work on export: 'res://assets/world/reference_complete_20261011/source/storehouse.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tools/ExportReferenceSprites.gd:22)
+WARNING: Loaded resource as image file, this will not work on export: 'res://assets/world/reference_complete_20261011/source/forge.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tools/ExportReferenceSprites.gd:22)
+WARNING: Loaded resource as image file, this will not work on export: 'res://assets/world/reference_complete_20261011/source/archive.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tools/ExportReferenceSprites.gd:22)
+WARNING: Loaded resource as image file, this will not work on export: 'res://assets/world/reference_complete_20261011/source/kennel.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tools/ExportReferenceSprites.gd:22)
+WARNING: Loaded resource as image file, this will not work on export: 'res://assets/world/reference_complete_20261011/source/shrine.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tools/ExportReferenceSprites.gd:22)
+WARNING: Loaded resource as image file, this will not work on export: 'res://assets/world/reference_playable_20261010/source/hall.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tools/ExportReferenceSprites.gd:23)
+WARNING: Loaded resource as image file, this will not work on export: 'res://assets/world/reference_complete_20261011/source/construction.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tools/ExportReferenceSprites.gd:26)
+WARNING: Loaded resource as image file, this will not work on export: 'res://assets/world/reference_complete_20261011/source/npcs.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tools/ExportReferenceSprites.gd:28)
+WARNING: Loaded resource as image file, this will not work on export: 'res://assets/world/reference_complete_20261011/source/foliage_alpha.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tools/ExportReferenceSprites.gd:42)
+WARNING: Loaded resource as image file, this will not work on export: 'res://assets/world/reference_complete_20261011/source/props.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tools/ExportReferenceSprites.gd:51)
+WARNING: Loaded resource as image file, this will not work on export: 'res://assets/world/sunny_travel_20261010/ready/signpost.png'. Instead, import the image file as an Image resource and load it normally as a resource.
+   at: load_from_file (core/io/image.cpp:2780)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tools/ExportReferenceSprites.gd:61)
+REFERENCE_SPRITES_EXPORTED buildings=8 npcs=9 foliage=6 props=11

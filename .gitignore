@@ -45,3 +45,10 @@ _backups/
 /pixel_audit/
 /参考视频*/
 *.tmp
+
+# Local archive and engine binary exceed GitHub's regular file size limit.
+/远征.zip
+/工具/godot_4.7.2/Godot_v4.7.2-stable_win64.exe
+
+# Review prototypes create machine-local Godot runtime caches.
+**/runtime/Godot/

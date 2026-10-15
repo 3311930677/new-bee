@@ -1,0 +1,149 @@
+PASS NPC npc_steward 不站在建筑底座内
+PASS NPC npc_scribe 不站在建筑底座内
+PASS NPC npc_guard 不站在建筑底座内
+PASS NPC npc_stablemaster 不站在建筑底座内
+PASS NPC npc_mentor 不站在建筑底座内
+PASS NPC npc_smith 不站在建筑底座内
+PASS NPC npc_keeper 不站在建筑底座内
+PASS NPC npc_warden 不站在建筑底座内
+PASS NPC npc_child 不站在建筑底座内
+PASS 建筑底座不重叠 hall / archive
+PASS 建筑底座不重叠 hall / kennel
+PASS 建筑底座不重叠 hall / barracks
+PASS 建筑底座不重叠 hall / storehouse
+PASS 建筑底座不重叠 hall / shrine
+PASS 建筑底座不重叠 hall / stable
+PASS 建筑底座不重叠 hall / forge
+PASS 建筑底座不重叠 archive / kennel
+PASS 建筑底座不重叠 archive / barracks
+PASS 建筑底座不重叠 archive / storehouse
+PASS 建筑底座不重叠 archive / shrine
+PASS 建筑底座不重叠 archive / stable
+PASS 建筑底座不重叠 archive / forge
+PASS 建筑底座不重叠 kennel / barracks
+PASS 建筑底座不重叠 kennel / storehouse
+PASS 建筑底座不重叠 kennel / shrine
+PASS 建筑底座不重叠 kennel / stable
+PASS 建筑底座不重叠 kennel / forge
+PASS 建筑底座不重叠 barracks / storehouse
+PASS 建筑底座不重叠 barracks / shrine
+PASS 建筑底座不重叠 barracks / stable
+PASS 建筑底座不重叠 barracks / forge
+PASS 建筑底座不重叠 storehouse / shrine
+PASS 建筑底座不重叠 storehouse / stable
+PASS 建筑底座不重叠 storehouse / forge
+PASS 建筑底座不重叠 shrine / stable
+PASS 建筑底座不重叠 shrine / forge
+PASS 建筑底座不重叠 stable / forge
+PASS 建筑 hall 位于地图内
+PASS 建筑 gate 位于地图内
+PASS 建筑 archive 位于地图内
+PASS 建筑 kennel 位于地图内
+PASS 建筑 barracks 位于地图内
+PASS 建筑 storehouse 位于地图内
+PASS 建筑 shrine 位于地图内
+PASS 建筑 stable 位于地图内
+PASS 建筑 forge 位于地图内
+PASS 边城 出生点可走
+PASS 边城 到达点 from_maple_road 可达
+PASS 边城 出口 north_gate 触发区可达
+PASS 边城 实体 a4_secret_oralbook_step_1 40px 内可交互可达
+PASS 边城 实体 a4_secret_oralbook_step_1 不落在阻挡内
+PASS 边城 实体 a4_secret_oralbook_feedback_0 40px 内可交互可达
+PASS 边城 实体 a4_secret_oralbook_feedback_0 不落在阻挡内
+PASS 边城 实体 a4_rel_nighttable_step_1 40px 内可交互可达
+PASS 边城 实体 a4_rel_nighttable_step_1 不落在阻挡内
+PASS 边城 实体 a4_rel_nighttable_step_4 40px 内可交互可达
+PASS 边城 实体 a4_rel_nighttable_step_4 不落在阻挡内
+PASS 边城 实体 a4_rel_nighttable_step_5 40px 内可交互可达
+PASS 边城 实体 a4_rel_nighttable_step_5 不落在阻挡内
+PASS 边城 实体 a4_rel_nighttable_feedback_0 40px 内可交互可达
+PASS 边城 实体 a4_rel_nighttable_feedback_0 不落在阻挡内
+PASS 枫林·未修桥 出生点可走
+PASS 枫林·未修桥 到达点 from_city 可达
+PASS 枫林·未修桥 到达点 from_broken_slope 可达
+PASS 枫林·未修桥 到达点 from_old_salt_road 可达
+PASS 枫林·未修桥 出口 south_gate 触发区可达
+PASS 枫林·未修桥 出口 north_path 触发区可达
+PASS 枫林·未修桥 出口 east_salt_path 触发区可达
+PASS 枫林·未修桥 实体 a1_chime 40px 内可交互可达
+PASS 枫林·未修桥 实体 a1_chime 不落在阻挡内
+PASS 枫林·未修桥 实体 act1_waystone_cache 40px 内可交互可达
+PASS 枫林·未修桥 实体 act1_waystone_cache 不落在阻挡内
+PASS 枫林·未修桥 实体 a1_roots_a 40px 内可交互可达
+PASS 枫林·未修桥 实体 a1_roots_a 不落在阻挡内
+PASS 枫林·未修桥 实体 a1_roots_b 40px 内可交互可达
+PASS 枫林·未修桥 实体 a1_roots_b 不落在阻挡内
+PASS 枫林·未修桥 实体 a1_postrider 40px 内可交互可达
+PASS 枫林·未修桥 实体 a1_postrider 不落在阻挡内
+PASS 枫林·未修桥 实体 trade_maple_post 40px 内可交互可达
+PASS 枫林·未修桥 实体 trade_maple_post 不落在阻挡内
+PASS 枫林·未修桥 实体 a4_waylight 40px 内可交互可达
+PASS 枫林·未修桥 实体 a4_waylight 不落在阻挡内
+PASS 枫林·未修桥 实体 a1_trade_bridge_step_1 40px 内可交互可达
+PASS 枫林·未修桥 实体 a1_trade_bridge_step_1 不落在阻挡内
+PASS 枫林·未修桥 实体 a1_trade_bridge_step_2 40px 内可交互可达
+PASS 枫林·未修桥 实体 a1_trade_bridge_step_2 不落在阻挡内
+PASS 枫林·未修桥 实体 a1_trade_bridge_step_3 40px 内可交互可达
+PASS 枫林·未修桥 实体 a1_trade_bridge_step_3 不落在阻挡内
+PASS 枫林·未修桥 实体 a1_trade_bridge_feedback_0 40px 内可交互可达
+PASS 枫林·未修桥 实体 a1_trade_bridge_feedback_0 不落在阻挡内
+PASS 枫林·西侧修复 出生点可走
+PASS 枫林·西侧修复 到达点 from_city 可达
+PASS 枫林·西侧修复 到达点 from_broken_slope 可达
+PASS 枫林·西侧修复 到达点 from_old_salt_road 可达
+PASS 枫林·西侧修复 出口 south_gate 触发区可达
+PASS 枫林·西侧修复 出口 north_path 触发区可达
+PASS 枫林·西侧修复 出口 east_salt_path 触发区可达
+PASS 枫林·西侧修复 实体 a1_chime 40px 内可交互可达
+PASS 枫林·西侧修复 实体 a1_chime 不落在阻挡内
+PASS 枫林·西侧修复 实体 act1_waystone_cache 40px 内可交互可达
+PASS 枫林·西侧修复 实体 act1_waystone_cache 不落在阻挡内
+PASS 枫林·西侧修复 实体 a1_roots_a 40px 内可交互可达
+PASS 枫林·西侧修复 实体 a1_roots_a 不落在阻挡内
+PASS 枫林·西侧修复 实体 a1_roots_b 40px 内可交互可达
+PASS 枫林·西侧修复 实体 a1_roots_b 不落在阻挡内
+PASS 枫林·西侧修复 实体 a1_postrider 40px 内可交互可达
+PASS 枫林·西侧修复 实体 a1_postrider 不落在阻挡内
+PASS 枫林·西侧修复 实体 trade_maple_post 40px 内可交互可达
+PASS 枫林·西侧修复 实体 trade_maple_post 不落在阻挡内
+PASS 枫林·西侧修复 实体 a4_waylight 40px 内可交互可达
+PASS 枫林·西侧修复 实体 a4_waylight 不落在阻挡内
+PASS 枫林·西侧修复 实体 a1_trade_bridge_step_1 40px 内可交互可达
+PASS 枫林·西侧修复 实体 a1_trade_bridge_step_1 不落在阻挡内
+PASS 枫林·西侧修复 实体 a1_trade_bridge_step_2 40px 内可交互可达
+PASS 枫林·西侧修复 实体 a1_trade_bridge_step_2 不落在阻挡内
+PASS 枫林·西侧修复 实体 a1_trade_bridge_step_3 40px 内可交互可达
+PASS 枫林·西侧修复 实体 a1_trade_bridge_step_3 不落在阻挡内
+PASS 枫林·西侧修复 实体 a1_trade_bridge_feedback_0 40px 内可交互可达
+PASS 枫林·西侧修复 实体 a1_trade_bridge_feedback_0 不落在阻挡内
+PASS 枫林·东侧修复 出生点可走
+PASS 枫林·东侧修复 到达点 from_city 可达
+PASS 枫林·东侧修复 到达点 from_broken_slope 可达
+PASS 枫林·东侧修复 到达点 from_old_salt_road 可达
+PASS 枫林·东侧修复 出口 south_gate 触发区可达
+PASS 枫林·东侧修复 出口 north_path 触发区可达
+PASS 枫林·东侧修复 出口 east_salt_path 触发区可达
+PASS 枫林·东侧修复 实体 a1_chime 40px 内可交互可达
+PASS 枫林·东侧修复 实体 a1_chime 不落在阻挡内
+PASS 枫林·东侧修复 实体 act1_waystone_cache 40px 内可交互可达
+PASS 枫林·东侧修复 实体 act1_waystone_cache 不落在阻挡内
+PASS 枫林·东侧修复 实体 a1_roots_a 40px 内可交互可达
+PASS 枫林·东侧修复 实体 a1_roots_a 不落在阻挡内
+PASS 枫林·东侧修复 实体 a1_roots_b 40px 内可交互可达
+PASS 枫林·东侧修复 实体 a1_roots_b 不落在阻挡内
+PASS 枫林·东侧修复 实体 a1_postrider 40px 内可交互可达
+PASS 枫林·东侧修复 实体 a1_postrider 不落在阻挡内
+PASS 枫林·东侧修复 实体 trade_maple_post 40px 内可交互可达
+PASS 枫林·东侧修复 实体 trade_maple_post 不落在阻挡内
+PASS 枫林·东侧修复 实体 a4_waylight 40px 内可交互可达
+PASS 枫林·东侧修复 实体 a4_waylight 不落在阻挡内
+PASS 枫林·东侧修复 实体 a1_trade_bridge_step_1 40px 内可交互可达
+PASS 枫林·东侧修复 实体 a1_trade_bridge_step_1 不落在阻挡内
+PASS 枫林·东侧修复 实体 a1_trade_bridge_step_2 40px 内可交互可达
+PASS 枫林·东侧修复 实体 a1_trade_bridge_step_2 不落在阻挡内
+PASS 枫林·东侧修复 实体 a1_trade_bridge_step_3 40px 内可交互可达
+PASS 枫林·东侧修复 实体 a1_trade_bridge_step_3 不落在阻挡内
+PASS 枫林·东侧修复 实体 a1_trade_bridge_feedback_0 40px 内可交互可达
+PASS 枫林·东侧修复 实体 a1_trade_bridge_feedback_0 不落在阻挡内
+CHECK_DONE failures=0

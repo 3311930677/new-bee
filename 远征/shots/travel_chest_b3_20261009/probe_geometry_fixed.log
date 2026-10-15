@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+B3_COMPILE res://src/ui/RegionChestMap.gd true
+B3_COMPILE res://src/ui/FlowChestUI.gd true
+B3_COMPILE res://src/ui/CreateRoleChestView.gd true
+B3_COMPILE res://src/ui/SettingsChestView.gd true
+LOGIN_GEOMETRY [P: (24.0, 168.0), S: (432.0, 452.0)] min=(432.0, 452.0) form=(134.0, 383.0)
+Label (384.0, 30.0) min=(1.0, 30.0)
+Label (384.0, 20.0) min=(1.0, 20.0)
+Control (384.0, 12.0) min=(0.0, 12.0)
+Label (384.0, 20.0) min=(1.0, 20.0)
+LineEdit (384.0, 48.0) min=(73.1875, 48.0)
+Label (384.0, 20.0) min=(1.0, 20.0)
+HBoxContainer (384.0, 48.0) min=(134.0, 48.0)
+Button (384.0, 64.0) min=(0.0, 64.0)
+Label (384.0, 24.0) min=(1.0, 24.0)
+Label (384.0, 25.0) min=(1.0, 25.0)

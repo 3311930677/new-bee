@@ -1,0 +1,21 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+JOURNAL_GEOMETRY height=800 panel=[P: (16.0, 16.0), S: (448.0, 1798.0)] min=(296.0, 416.0) content=(268.0, 388.0) scroll=[P: (30.0, 360.0), S: (420.0, 1382.0)] back=[P: (160.0, 1752.0), S: (160.0, 48.0)]
+ERROR: INVENTORY_QUEST: journal safe area 800
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/ReviewInventoryQuest.gd:96)
+       [1] _ready (res://tools/ReviewInventoryQuest.gd:51)
+       [2] _frames (res://tools/ReviewInventoryQuest.gd:85)
+JOURNAL_GEOMETRY height=1067 panel=[P: (16.0, 16.0), S: (448.0, 1798.0)] min=(296.0, 416.0) content=(268.0, 388.0) scroll=[P: (30.0, 360.0), S: (420.0, 1382.0)] back=[P: (160.0, 1752.0), S: (160.0, 48.0)]
+ERROR: INVENTORY_QUEST: journal safe area 1067
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/ReviewInventoryQuest.gd:96)
+       [1] _ready (res://tools/ReviewInventoryQuest.gd:51)
+       [2] _frames (res://tools/ReviewInventoryQuest.gd:85)
+INVENTORY_QUEST_FAIL checks=17 failures=2
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

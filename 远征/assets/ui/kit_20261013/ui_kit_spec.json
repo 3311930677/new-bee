@@ -1,5 +1,5 @@
 {
- "art_to_screen": 2,
+ "art_to_screen": 1,
  "canvas": [
   1536,
   1024
@@ -7,20 +7,20 @@
  "background": "#FF00FF",
  "items": {
   "hero_normal": {
-   "sheet": "UI-01_hero_button",
+   "sheet": "UI3-01_primary",
    "art": [
-    152,
-    36
+    304,
+    72
    ],
    "game": [
     304,
     72
    ],
    "slice": [
-    16,
-    8,
-    16,
-    8
+    40,
+    18,
+    40,
+    18
    ],
    "guide_box": [
     464,
@@ -30,20 +30,20 @@
    ]
   },
   "hero_pressed": {
-   "sheet": "UI-01_hero_button",
+   "sheet": "UI3-01_primary",
    "art": [
-    152,
-    36
+    304,
+    72
    ],
    "game": [
     304,
     72
    ],
    "slice": [
-    16,
-    8,
-    16,
-    8
+    40,
+    18,
+    40,
+    18
    ],
    "guide_box": [
     464,
@@ -53,20 +53,20 @@
    ]
   },
   "hero_disabled": {
-   "sheet": "UI-01_hero_button",
+   "sheet": "UI3-01_primary",
    "art": [
-    152,
-    36
+    304,
+    72
    ],
    "game": [
     304,
     72
    ],
    "slice": [
-    16,
-    8,
-    16,
-    8
+    40,
+    18,
+    40,
+    18
    ],
    "guide_box": [
     464,
@@ -76,20 +76,20 @@
    ]
   },
   "btn_normal": {
-   "sheet": "UI-02_buttons_tabs",
+   "sheet": "UI3-02_buttons",
    "art": [
-    64,
-    24
+    128,
+    48
    ],
    "game": [
     128,
     48
    ],
    "slice": [
-    8,
-    6,
-    8,
-    6
+    16,
+    12,
+    16,
+    12
    ],
    "guide_box": [
     320,
@@ -99,20 +99,20 @@
    ]
   },
   "btn_pressed": {
-   "sheet": "UI-02_buttons_tabs",
+   "sheet": "UI3-02_buttons",
    "art": [
-    64,
-    24
+    128,
+    48
    ],
    "game": [
     128,
     48
    ],
    "slice": [
-    8,
-    6,
-    8,
-    6
+    16,
+    12,
+    16,
+    12
    ],
    "guide_box": [
     640,
@@ -122,20 +122,20 @@
    ]
   },
   "btn_disabled": {
-   "sheet": "UI-02_buttons_tabs",
+   "sheet": "UI3-02_buttons",
    "art": [
-    64,
-    24
+    128,
+    48
    ],
    "game": [
     128,
     48
    ],
    "slice": [
-    8,
-    6,
-    8,
-    6
+    16,
+    12,
+    16,
+    12
    ],
    "guide_box": [
     960,
@@ -145,56 +145,79 @@
    ]
   },
   "tab_normal": {
-   "sheet": "UI-02_buttons_tabs",
+   "sheet": "UI3-02_buttons",
    "art": [
-    72,
-    22
+    144,
+    44
    ],
    "game": [
     144,
     44
    ],
    "slice": [
-    8,
-    6,
-    8,
-    6
+    16,
+    12,
+    16,
+    12
    ],
    "guide_box": [
-    360,
+    200,
     548,
     288,
     88
    ]
   },
   "tab_selected": {
-   "sheet": "UI-02_buttons_tabs",
+   "sheet": "UI3-02_buttons",
    "art": [
-    72,
-    22
+    144,
+    44
    ],
    "game": [
     144,
     44
    ],
    "slice": [
-    8,
-    6,
-    8,
-    6
+    16,
+    12,
+    16,
+    12
    ],
    "guide_box": [
-    712,
+    552,
     548,
     288,
     88
    ]
   },
-  "btn_round": {
-   "sheet": "UI-02_buttons_tabs",
+  "pill": {
+   "sheet": "UI3-02_buttons",
    "art": [
-    28,
-    28
+    128,
+    44
+   ],
+   "game": [
+    128,
+    44
+   ],
+   "slice": [
+    44,
+    10,
+    20,
+    10
+   ],
+   "guide_box": [
+    904,
+    548,
+    256,
+    88
+   ]
+  },
+  "btn_round": {
+   "sheet": "UI3-02_buttons",
+   "art": [
+    56,
+    56
    ],
    "game": [
     56,
@@ -202,72 +225,95 @@
    ],
    "slice": null,
    "guide_box": [
-    1064,
+    1224,
     536,
     112,
     112
    ]
   },
   "panel_iron": {
-   "sheet": "UI-03_panels",
+   "sheet": "UI3-03_panels",
    "art": [
-    128,
-    128
+    256,
+    256
    ],
    "game": [
     256,
     256
    ],
    "slice": [
-    24,
-    24,
-    24,
-    24
+    48,
+    48,
+    48,
+    48
    ],
    "guide_box": [
     224,
-    256,
+    176,
     512,
     512
    ]
   },
   "card_paper": {
-   "sheet": "UI-03_panels",
+   "sheet": "UI3-03_panels",
    "art": [
-    128,
-    96
+    256,
+    192
    ],
    "game": [
     256,
     192
    ],
    "slice": [
-    16,
-    16,
-    16,
-    16
+    32,
+    32,
+    32,
+    32
    ],
    "guide_box": [
     800,
-    320,
+    240,
     512,
     384
    ]
   },
-  "plaque_title": {
-   "sheet": "UI-04_plaques",
+  "group_header": {
+   "sheet": "UI3-03_panels",
    "art": [
-    176,
-    32
+    240,
+    48
+   ],
+   "game": [
+    240,
+    48
+   ],
+   "slice": [
+    56,
+    0,
+    36,
+    0
+   ],
+   "guide_box": [
+    528,
+    752,
+    480,
+    96
+   ]
+  },
+  "plaque_title": {
+   "sheet": "UI3-04_plaques",
+   "art": [
+    352,
+    64
    ],
    "game": [
     352,
     64
    ],
    "slice": [
-    40,
+    80,
     0,
-    40,
+    80,
     0
    ],
    "guide_box": [
@@ -278,56 +324,197 @@
    ]
   },
   "plaque_small": {
-   "sheet": "UI-04_plaques",
+   "sheet": "UI3-04_plaques",
    "art": [
-    96,
-    20
+    192,
+    40
    ],
    "game": [
     192,
     40
    ],
    "slice": [
-    20,
+    40,
     0,
-    20,
+    40,
     0
    ],
    "guide_box": [
-    304,
+    112,
     568,
     384,
     80
    ]
   },
-  "divider": {
-   "sheet": "UI-04_plaques",
+  "building_tag": {
+   "sheet": "UI3-04_plaques",
    "art": [
-    120,
-    10
+    160,
+    40
+   ],
+   "game": [
+    160,
+    40
+   ],
+   "slice": [
+    44,
+    0,
+    24,
+    0
+   ],
+   "guide_box": [
+    560,
+    568,
+    320,
+    80
+   ]
+  },
+  "divider": {
+   "sheet": "UI3-04_plaques",
+   "art": [
+    240,
+    20
    ],
    "game": [
     240,
     20
    ],
    "slice": [
-    24,
+    48,
     0,
-    24,
+    48,
     0
    ],
    "guide_box": [
-    752,
+    944,
     588,
     480,
     40
    ]
   },
-  "slot_common": {
-   "sheet": "UI-05_rarity_slots",
+  "toggle_off": {
+   "sheet": "UI3-05_controls",
    "art": [
-    32,
-    32
+    80,
+    36
+   ],
+   "game": [
+    80,
+    36
+   ],
+   "slice": null,
+   "guide_box": [
+    576,
+    360,
+    160,
+    72
+   ]
+  },
+  "toggle_on": {
+   "sheet": "UI3-05_controls",
+   "art": [
+    80,
+    36
+   ],
+   "game": [
+    80,
+    36
+   ],
+   "slice": null,
+   "guide_box": [
+    800,
+    360,
+    160,
+    72
+   ]
+  },
+  "slider_track": {
+   "sheet": "UI3-05_controls",
+   "art": [
+    240,
+    12
+   ],
+   "game": [
+    240,
+    12
+   ],
+   "slice": [
+    12,
+    0,
+    12,
+    0
+   ],
+   "guide_box": [
+    264,
+    496,
+    480,
+    24
+   ]
+  },
+  "slider_fill": {
+   "sheet": "UI3-05_controls",
+   "art": [
+    232,
+    6
+   ],
+   "game": [
+    232,
+    6
+   ],
+   "slice": null,
+   "guide_box": [
+    808,
+    502,
+    464,
+    12
+   ]
+  },
+  "slider_knob": {
+   "sheet": "UI3-05_controls",
+   "art": [
+    28,
+    28
+   ],
+   "game": [
+    28,
+    28
+   ],
+   "slice": null,
+   "guide_box": [
+    548,
+    596,
+    56,
+    56
+   ]
+  },
+  "stepper": {
+   "sheet": "UI3-05_controls",
+   "art": [
+    160,
+    40
+   ],
+   "game": [
+    160,
+    40
+   ],
+   "slice": [
+    40,
+    0,
+    40,
+    0
+   ],
+   "guide_box": [
+    668,
+    584,
+    320,
+    80
+   ]
+  },
+  "slot_common": {
+   "sheet": "UI3-06_slots",
+   "art": [
+    64,
+    64
    ],
    "game": [
     64,
@@ -342,10 +529,10 @@
    ]
   },
   "slot_uncommon": {
-   "sheet": "UI-05_rarity_slots",
+   "sheet": "UI3-06_slots",
    "art": [
-    32,
-    32
+    64,
+    64
    ],
    "game": [
     64,
@@ -360,10 +547,10 @@
    ]
   },
   "slot_rare": {
-   "sheet": "UI-05_rarity_slots",
+   "sheet": "UI3-06_slots",
    "art": [
-    32,
-    32
+    64,
+    64
    ],
    "game": [
     64,
@@ -378,10 +565,10 @@
    ]
   },
   "slot_epic": {
-   "sheet": "UI-05_rarity_slots",
+   "sheet": "UI3-06_slots",
    "art": [
-    32,
-    32
+    64,
+    64
    ],
    "game": [
     64,
@@ -396,10 +583,10 @@
    ]
   },
   "slot_legend": {
-   "sheet": "UI-05_rarity_slots",
+   "sheet": "UI3-06_slots",
    "art": [
-    32,
-    32
+    64,
+    64
    ],
    "game": [
     64,
@@ -414,10 +601,10 @@
    ]
   },
   "slot_empty": {
-   "sheet": "UI-05_rarity_slots",
+   "sheet": "UI3-06_slots",
    "art": [
-    32,
-    32
+    64,
+    64
    ],
    "game": [
     64,
@@ -432,10 +619,10 @@
    ]
   },
   "slot_selected": {
-   "sheet": "UI-05_rarity_slots",
+   "sheet": "UI3-06_slots",
    "art": [
-    32,
-    32
+    64,
+    64
    ],
    "game": [
     64,
@@ -450,33 +637,33 @@
    ]
   },
   "nav_base": {
-   "sheet": "UI-06_nav",
+   "sheet": "UI3-07_nav",
    "art": [
-    240,
-    44
+    480,
+    88
    ],
    "game": [
     480,
     88
    ],
    "slice": [
-    32,
+    64,
     0,
-    32,
+    64,
     0
    ],
    "guide_box": [
     168,
-    270,
+    230,
     1200,
     220
    ]
   },
   "nav_socket": {
-   "sheet": "UI-06_nav",
+   "sheet": "UI3-07_nav",
    "art": [
-    40,
-    40
+    80,
+    80
    ],
    "game": [
     80,
@@ -484,17 +671,17 @@
    ],
    "slice": null,
    "guide_box": [
-    332,
+    160,
     554,
     200,
     200
    ]
   },
   "nav_socket_selected": {
-   "sheet": "UI-06_nav",
+   "sheet": "UI3-07_nav",
    "art": [
-    40,
-    40
+    80,
+    80
    ],
    "game": [
     80,
@@ -502,17 +689,17 @@
    ],
    "slice": null,
    "guide_box": [
-    596,
+    424,
     554,
     200,
     200
    ]
   },
   "rail_socket": {
-   "sheet": "UI-06_nav",
+   "sheet": "UI3-07_nav",
    "art": [
-    28,
-    30
+    56,
+    60
    ],
    "game": [
     56,
@@ -520,17 +707,17 @@
    ],
    "slice": null,
    "guide_box": [
-    860,
+    688,
     579,
     140,
     150
    ]
   },
   "rail_socket_selected": {
-   "sheet": "UI-06_nav",
+   "sheet": "UI3-07_nav",
    "art": [
-    28,
-    30
+    56,
+    60
    ],
    "game": [
     56,
@@ -538,26 +725,44 @@
    ],
    "slice": null,
    "guide_box": [
-    1064,
+    892,
     579,
     140,
     150
    ]
   },
-  "bar_frame": {
-   "sheet": "UI-07_bars",
+  "sortie_medal": {
+   "sheet": "UI3-07_nav",
    "art": [
-    100,
-    10
+    112,
+    112
+   ],
+   "game": [
+    112,
+    112
+   ],
+   "slice": null,
+   "guide_box": [
+    1096,
+    514,
+    280,
+    280
+   ]
+  },
+  "bar_frame": {
+   "sheet": "UI3-08_bars",
+   "art": [
+    200,
+    20
    ],
    "game": [
     200,
     20
    ],
    "slice": [
-    10,
+    20,
     0,
-    10,
+    20,
     0
    ],
    "guide_box": [
@@ -568,10 +773,10 @@
    ]
   },
   "bar_fill_exp": {
-   "sheet": "UI-07_bars",
+   "sheet": "UI3-08_bars",
    "art": [
-    92,
-    4
+    184,
+    8
    ],
    "game": [
     184,
@@ -586,10 +791,10 @@
    ]
   },
   "bar_fill_hp": {
-   "sheet": "UI-07_bars",
+   "sheet": "UI3-08_bars",
    "art": [
-    92,
-    4
+    184,
+    8
    ],
    "game": [
     184,
@@ -604,19 +809,19 @@
    ]
   },
   "currency_capsule": {
-   "sheet": "UI-07_bars",
+   "sheet": "UI3-08_bars",
    "art": [
-    72,
-    18
+    144,
+    36
    ],
    "game": [
     144,
     36
    ],
    "slice": [
-    10,
+    40,
     0,
-    10,
+    20,
     0
    ],
    "guide_box": [
@@ -627,20 +832,20 @@
    ]
   },
   "quest_slip": {
-   "sheet": "UI-07_bars",
+   "sheet": "UI3-08_bars",
    "art": [
-    128,
-    36
+    256,
+    72
    ],
    "game": [
     256,
     72
    ],
    "slice": [
-    16,
-    10,
-    16,
-    10
+    40,
+    20,
+    24,
+    20
    ],
    "guide_box": [
     660,

@@ -1,0 +1,428 @@
+{
+ "home_bg.png": {
+  "game": [
+   480,
+   720
+  ],
+  "file": [
+   960,
+   1440
+  ],
+  "hd": 2
+ },
+ "home_bg_tall.png": {
+  "game": [
+   480,
+   1120
+  ],
+  "file": [
+   960,
+   2240
+  ],
+  "hd": 2,
+  "core_offset_game": 200
+ },
+ "background_source": {
+  "file": "home_bg_fortress_source.png",
+  "source_size": [
+   1024,
+   1536
+  ],
+  "file_size": [
+   960,
+   1440
+  ],
+  "plaza_period_file": 24,
+  "sky_color": "02256a"
+ },
+ "icons/mail_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "file": [
+   64,
+   64
+  ],
+  "hd": 2
+ },
+ "icons/quest_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "file": [
+   64,
+   64
+  ],
+  "hd": 2
+ },
+ "icons/notice_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "file": [
+   64,
+   64
+  ],
+  "hd": 2
+ },
+ "icons/tavern_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "file": [
+   64,
+   64
+  ],
+  "hd": 2
+ },
+ "icons/anvil_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "file": [
+   64,
+   64
+  ],
+  "hd": 2
+ },
+ "icons/market_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "file": [
+   64,
+   64
+  ],
+  "hd": 2
+ },
+ "icons/gate_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "file": [
+   64,
+   64
+  ],
+  "hd": 2
+ },
+ "icons/arena_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "file": [
+   64,
+   64
+  ],
+  "hd": 2
+ },
+ "icons/hero_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "file": [
+   64,
+   64
+  ],
+  "hd": 2
+ },
+ "icons/party_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "file": [
+   64,
+   64
+  ],
+  "hd": 2
+ },
+ "icons/banner_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "file": [
+   64,
+   64
+  ],
+  "hd": 2
+ },
+ "icons/settings_32.png": {
+  "game": [
+   32,
+   32
+  ],
+  "file": [
+   64,
+   64
+  ],
+  "hd": 2
+ },
+ "icons/mail_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "file": [
+   80,
+   80
+  ],
+  "hd": 2
+ },
+ "icons/quest_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "file": [
+   80,
+   80
+  ],
+  "hd": 2
+ },
+ "icons/notice_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "file": [
+   80,
+   80
+  ],
+  "hd": 2
+ },
+ "icons/tavern_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "file": [
+   80,
+   80
+  ],
+  "hd": 2
+ },
+ "icons/anvil_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "file": [
+   80,
+   80
+  ],
+  "hd": 2
+ },
+ "icons/market_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "file": [
+   80,
+   80
+  ],
+  "hd": 2
+ },
+ "icons/gate_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "file": [
+   80,
+   80
+  ],
+  "hd": 2
+ },
+ "icons/arena_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "file": [
+   80,
+   80
+  ],
+  "hd": 2
+ },
+ "icons/hero_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "file": [
+   80,
+   80
+  ],
+  "hd": 2
+ },
+ "icons/party_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "file": [
+   80,
+   80
+  ],
+  "hd": 2
+ },
+ "icons/banner_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "file": [
+   80,
+   80
+  ],
+  "hd": 2
+ },
+ "icons/settings_40.png": {
+  "game": [
+   40,
+   40
+  ],
+  "file": [
+   80,
+   80
+  ],
+  "hd": 2
+ },
+ "expedition_normal.png": {
+  "game": [
+   118,
+   114
+  ],
+  "file": [
+   236,
+   228
+  ],
+  "hd": 2
+ },
+ "expedition_pressed.png": {
+  "game": [
+   118,
+   114
+  ],
+  "file": [
+   236,
+   228
+  ],
+  "hd": 2
+ },
+ "expedition_disabled.png": {
+  "game": [
+   118,
+   114
+  ],
+  "file": [
+   236,
+   228
+  ],
+  "hd": 2
+ },
+ "avatar_portrait.png": {
+  "game": [
+   56,
+   56
+  ],
+  "file": [
+   112,
+   112
+  ],
+  "hd": 2
+ },
+ "hero_town_idle.png": {
+  "game": [
+   192,
+   64
+  ],
+  "file": [
+   384,
+   128
+  ],
+  "hd": 2,
+  "frame_game": [
+   48,
+   64
+  ]
+ },
+ "hero_town_walk_back.png": {
+  "game": [
+   192,
+   64
+  ],
+  "file": [
+   384,
+   128
+  ],
+  "hd": 2,
+  "frame_game": [
+   48,
+   64
+  ]
+ },
+ "fire_xs.png": {
+  "game": [
+   60,
+   14
+  ],
+  "file": [
+   120,
+   28
+  ],
+  "hd": 2,
+  "frame_game": [
+   10,
+   14
+  ]
+ },
+ "fire_s.png": {
+  "game": [
+   84,
+   20
+  ],
+  "file": [
+   168,
+   40
+  ],
+  "hd": 2,
+  "frame_game": [
+   14,
+   20
+  ]
+ },
+ "avatar_frame.png": {
+  "game": [
+   80,
+   80
+  ],
+  "file": [
+   160,
+   160
+  ],
+  "hd": 2
+ },
+ "level_badge.png": {
+  "game": [
+   32,
+   24
+  ],
+  "file": [
+   64,
+   48
+  ],
+  "hd": 2
+ }
+}

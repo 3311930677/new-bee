@@ -59,7 +59,8 @@ func _run() -> void:
 	_check(home._anim != null and home._anim.is_playing(), "角色待机动画应播放")
 	_check(home._deploy == null, "开局不应有 DEPLOY 浮层")
 	var world_entry := home.find_child("ReturnToWorld",true,false) as Control
-	_check(world_entry != null and world_entry.size.x >= 400.0
+	# 主城首页的“出征”徽章即返回主世界入口（118×114），旧营帐为 400×72 横条
+	_check(world_entry != null and world_entry.size.x >= 96.0
 		and world_entry.size.y >= 44.0,
 		"营帐应有明确且可触控的返回主世界入口")
 	var wallet_txt := ""
