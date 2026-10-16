@@ -58,7 +58,7 @@ static func tab_row(deck: Control, names: Array, width: float) -> HBoxContainer:
 		button.custom_minimum_size = Vector2((width-16)/3,40)
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		button.add_theme_font_override("font",G.font_serif)
-		button.add_theme_font_size_override("font_size",17)
+		button.add_theme_font_size_override("font_size",G.FS_SM)
 		for state in ["normal","hover","pressed","disabled","focus"]: button.add_theme_stylebox_override(state,StyleBoxEmpty.new())
 		button.pressed.connect(func(): deck.call("go",index); Audio.sfx("ui_click"))
 		row.add_child(button)
@@ -106,7 +106,7 @@ class SilkButton extends Button:
 		caption = Label.new()
 		caption.text = text
 		caption.add_theme_font_override("font",G.font_art)
-		caption.add_theme_font_size_override("font_size",24)
+		caption.add_theme_font_size_override("font_size",G.FS_LG)
 		caption.add_theme_color_override("font_color",Color("f1dfb5"))
 		caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		caption.vertical_alignment = VERTICAL_ALIGNMENT_CENTER

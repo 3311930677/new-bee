@@ -287,7 +287,7 @@ func _btn2(title: String, sub: String, w: float, h: float, ghost := false) -> Pa
 	# 完全重叠（「十连」盖在「800 魂石」上）。必须用 VBox 把标题与副标竖排
 	var title_l := btn.get_child(0) as Label
 	title_l.add_theme_font_override("font",G.font_art)
-	title_l.add_theme_font_size_override("font_size",26)
+	title_l.add_theme_font_size_override("font_size",G.FS_BIG)
 	title_l.add_theme_color_override("font_color",G.TEXT_DARK)
 	btn.remove_child(title_l)
 	var box := VBoxContainer.new()

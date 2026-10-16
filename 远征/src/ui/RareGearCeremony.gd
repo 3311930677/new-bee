@@ -193,7 +193,7 @@ func _build_stat_chip(text: String) -> Control:
 	l.text = text
 	l.theme_type_variation = "Chest_caption"
 	l.add_theme_color_override("font_color", Color("f0e2cc"))
-	l.add_theme_font_size_override("font_size", 13)
+	l.add_theme_font_size_override("font_size", G.FS_XS)
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	box.add_child(l)
 	return box

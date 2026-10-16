@@ -85,17 +85,17 @@ class CostChip extends Control:
 		set_meta("cost_need",need);set_meta("cost_owned",owned)
 		picture=Page.picture(tex,Vector2(28,28));add_child(picture)
 		heading=UI.label(words,"tag",UI.AGED);add_child(heading)
-		amount=UI.label(str(need),"number",UI.RED if owned<need else UI.PAPER);amount.add_theme_font_size_override("font_size",20);add_child(amount)
+		amount=UI.label(str(need),"number",UI.RED if owned<need else UI.PAPER);amount.add_theme_font_size_override("font_size",G.FS_LG);add_child(amount)
 		holding=UI.label("持有 "+UI.format_number(owned),"tag",UI.AGED);add_child(holding)
 		lacking=UI.label("不足" if owned<need else "","tag",UI.RED);add_child(lacking)
 	func _ready() -> void:resized.connect(queue_redraw)
 	func _draw() -> void:
 		UI.surface(self,Rect2(Vector2.ZERO,size),UI.FACE,UI.RED if owned<need else Color("3a3037"))
 		picture.position=Vector2(12,14)
-		heading.position=Vector2(52,2);heading.size=Vector2(size.x-80,20)
+		heading.position=Vector2(52,2);heading.size=Vector2(size.x-80,22)
 		amount.position=Vector2(52,20);amount.size=Vector2(64,32)
 		holding.position=Vector2(116,25);holding.size=Vector2(maxf(80,size.x-122),22)
-		lacking.position=Vector2(size.x-34,2);lacking.size=Vector2(30,20)
+		lacking.position=Vector2(size.x-34,2);lacking.size=Vector2(30,22)
 
 class Investment extends VBoxContainer:
 	const UI=preload("res://src/ui/TravelChestUI.gd")
@@ -105,7 +105,7 @@ class Investment extends VBoxContainer:
 		size_flags_horizontal=Control.SIZE_EXPAND_FILL
 		add_theme_constant_override("separation",12)
 		var title:=Page.line(change,"number",UI.PAPER)
-		title.add_theme_font_size_override("font_size",22)
+		title.add_theme_font_size_override("font_size",G.FS_LG)
 		var title_row:=HBoxContainer.new();add_child(title_row);title_row.add_child(title);title.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 		if not delta.is_empty():
 			var deltas:=HFlowContainer.new();deltas.add_theme_constant_override("h_separation",8)

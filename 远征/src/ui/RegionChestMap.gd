@@ -217,7 +217,7 @@ func _update_edges() -> void:
 			if not child.is_queued_for_deletion() and child.get_meta("map_id","")==id:button=child;break
 		if button==null:
 			var target:String=id
-			button=Flow.button("",func():select(target));button.set_meta("map_id",id);button.caption.add_theme_font_size_override("font_size",12);_edge_tags.add_child(button)
+			button=Flow.button("",func():select(target));button.set_meta("map_id",id);button.caption.add_theme_font_size_override("font_size",G.FS_XS);_edge_tags.add_child(button)
 		var point:Vector2=desired[id]
 		var arrow:="←" if point.x<24 else "→" if point.x>_map.size.x-24 else "↑" if point.y<24 else "↓"
 		button.caption.text=arrow+" "+String(TableCache.main_world_map(id).get("name",id))
@@ -241,17 +241,17 @@ class _MapNode extends Button:
 		for event in [resized,focus_entered,focus_exited,mouse_entered,mouse_exited]:event.connect(queue_redraw)
 		name_l=UI.label(words,"caption")
 		name_l.position=Vector2(6,49)
-		name_l.size=Vector2(84,20)
+		name_l.size=Vector2(84,22)
 		name_l.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 		add_child(name_l)
 		lv=UI.label(levels,"tag",UI.AGED)
 		lv.position=Vector2(6,65)
-		lv.size=Vector2(84,19)
+		lv.size=Vector2(84,22)
 		lv.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 		add_child(lv)
 	func _draw() -> void:
 		var tex:=Flow.texture(marker)
-		name_l.add_theme_font_size_override("font_size",12 if overview else 14)
+		name_l.add_theme_font_size_override("font_size",G.FS_XS)
 		name_l.add_theme_color_override("font_color",UI.ASH if not reachable and not condition else UI.PAPER)
 		lv.visible=not overview or current or selected
 		name_l.position.y=42 if overview else 49

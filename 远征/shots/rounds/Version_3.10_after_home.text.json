@@ -5,533 +5,254 @@
 	"text_nodes": [
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/AvatarEntry",
-			"rect_height": 56.0,
-			"size": 14,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/Plaque_gacha",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "酒馆"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/Plaque_arena",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "竞技场"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/Plaque_craft",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "铁匠铺"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/Plaque_exchange",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "集市"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/Plaque_world",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "世界"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/AvatarEntry",
+			"rect_height": 80.0,
+			"size": 16,
 			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/AvatarEntry/@TextureRect@21/@Label@22",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "12"
 		},
 		{
 			"filter": 2,
 			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
 			"height": 25.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/@Label@7",
-			"rect_height": 26.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/@Label@23",
+			"rect_height": 25.0,
 			"size": 17,
 			"text": "顾白梦"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/@Label@8",
-			"rect_height": 22.0,
-			"size": 13,
-			"text": "LV 12"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
-			"height": 18.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/@Label@9",
-			"rect_height": 22.0,
-			"size": 12,
-			"text": "28%"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/SettingsEntry",
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_gold",
 			"rect_height": 44.0,
-			"size": 14,
-			"text": ""
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
-			"height": 25.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/SettingsEntry/Caption",
-			"rect_height": 44.0,
-			"size": 17,
-			"text": ""
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/SettingsEntry/Subtitle",
-			"rect_height": 20.0,
-			"size": 13,
-			"text": ""
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/CurrencyRow/Currency_gold",
-			"rect_height": 44.0,
-			"size": 14,
-			"text": ""
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
-			"height": 25.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/CurrencyRow/Currency_gold/Caption",
-			"rect_height": 25.0,
-			"size": 17,
-			"text": ""
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/CurrencyRow/Currency_gold/Subtitle",
-			"rect_height": 20.0,
-			"size": 13,
+			"size": 16,
 			"text": ""
 		},
 		{
 			"filter": 2,
 			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/CurrencyRow/Currency_gold/@Label@12",
-			"rect_height": 28.0,
-			"size": 14,
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_gold/@NinePatchRect@26/@Label@28",
+			"rect_height": 23.0,
+			"size": 15,
 			"text": "12800"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/CurrencyRow/Currency_expedition",
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_expedition",
 			"rect_height": 44.0,
-			"size": 14,
-			"text": ""
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
-			"height": 25.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/CurrencyRow/Currency_expedition/Caption",
-			"rect_height": 25.0,
-			"size": 17,
-			"text": ""
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/CurrencyRow/Currency_expedition/Subtitle",
-			"rect_height": 20.0,
-			"size": 13,
+			"size": 16,
 			"text": ""
 		},
 		{
 			"filter": 2,
 			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/CurrencyRow/Currency_expedition/@Label@14",
-			"rect_height": 28.0,
-			"size": 14,
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_expedition/@NinePatchRect@29/@Label@31",
+			"rect_height": 23.0,
+			"size": 15,
 			"text": "240"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/CurrencyRow/Currency_soul",
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_soul",
 			"rect_height": 44.0,
-			"size": 14,
-			"text": ""
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
-			"height": 25.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/CurrencyRow/Currency_soul/Caption",
-			"rect_height": 25.0,
-			"size": 17,
-			"text": ""
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/CurrencyRow/Currency_soul/Subtitle",
-			"rect_height": 20.0,
-			"size": 13,
+			"size": 16,
 			"text": ""
 		},
 		{
 			"filter": 2,
 			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/CurrencyRow/Currency_soul/@Label@16",
-			"rect_height": 28.0,
-			"size": 14,
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_soul/@NinePatchRect@32/@Label@34",
+			"rect_height": 23.0,
+			"size": 15,
 			"text": "36"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/CurrencyRow/Currency_honor",
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_honor",
 			"rect_height": 44.0,
-			"size": 14,
-			"text": ""
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
-			"height": 25.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/CurrencyRow/Currency_honor/Caption",
-			"rect_height": 25.0,
-			"size": 17,
-			"text": ""
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/CurrencyRow/Currency_honor/Subtitle",
-			"rect_height": 20.0,
-			"size": 13,
+			"size": 16,
 			"text": ""
 		},
 		{
 			"filter": 2,
 			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/CurrencyRow/Currency_honor/@Label@18",
-			"rect_height": 28.0,
-			"size": 14,
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_honor/@NinePatchRect@35/@Label@37",
+			"rect_height": 23.0,
+			"size": 15,
 			"text": "900"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/QuestSummary",
-			"rect_height": 68.0,
-			"size": 14,
-			"text": "任务"
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/Rail_bag/@Panel@40/@Label@41",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "背包"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
-			"height": 18.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/QuestSummary/Caption",
-			"rect_height": 18.0,
-			"size": 12,
-			"text": "今日委托"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/QuestSummary/Subtitle",
-			"rect_height": 20.0,
-			"size": 13,
-			"text": ""
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/QuestSummary/@Label@20",
-			"rect_height": 36.0,
-			"size": 13,
-			"text": "与边城执事闻叔交谈"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/ActivitiesEntry",
-			"rect_height": 60.0,
-			"size": 14,
-			"text": "活动"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
-			"height": 18.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/ActivitiesEntry/Caption",
-			"rect_height": 22.0,
-			"size": 12,
-			"text": "活动"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/ActivitiesEntry/Subtitle",
-			"rect_height": 20.0,
-			"size": 13,
-			"text": ""
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/ArenaEntry",
-			"rect_height": 60.0,
-			"size": 14,
-			"text": "竞技"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
-			"height": 18.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/ArenaEntry/Caption",
-			"rect_height": 22.0,
-			"size": 12,
-			"text": "竞技"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/ArenaEntry/Subtitle",
-			"rect_height": 20.0,
-			"size": 13,
-			"text": ""
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/SummonEntry",
-			"rect_height": 60.0,
-			"size": 14,
-			"text": "召唤"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
-			"height": 18.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/SummonEntry/Caption",
-			"rect_height": 22.0,
-			"size": 12,
-			"text": "召唤"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/SummonEntry/Subtitle",
-			"rect_height": 20.0,
-			"size": 13,
-			"text": ""
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/ExchangeEntry",
-			"rect_height": 60.0,
-			"size": 14,
-			"text": "兑换"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
-			"height": 18.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/ExchangeEntry/Caption",
-			"rect_height": 22.0,
-			"size": 12,
-			"text": "兑换"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/ExchangeEntry/Subtitle",
-			"rect_height": 20.0,
-			"size": 13,
-			"text": ""
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/ReunionEntry",
-			"rect_height": 60.0,
-			"size": 14,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/Rail_gathering/@Panel@44/@Label@45",
+			"rect_height": 23.0,
+			"size": 15,
 			"text": "小聚"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
-			"height": 18.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/ReunionEntry/Caption",
-			"rect_height": 22.0,
-			"size": 12,
-			"text": "小聚"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/ReunionEntry/Subtitle",
-			"rect_height": 20.0,
-			"size": 13,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/BottomHud/QuestSummary",
+			"rect_height": 56.0,
+			"size": 16,
 			"text": ""
 		},
 		{
 			"filter": 2,
 			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
-			"height": 27.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/@Label@24",
-			"rect_height": 27.0,
-			"size": 18,
-			"text": "【 破军 】"
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/BottomHud/QuestSummary/@Label@47",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "主线 · 城门来信"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/@Label@25",
-			"rect_height": 20.0,
-			"size": 13,
-			"text": "战士 · LV 12"
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/BottomHud/QuestSummary/@Label@48",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "与边城执事闻叔交谈"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/ReturnToWorld",
-			"rect_height": 72.0,
-			"size": 14,
-			"text": "继续旅程"
-		},
-		{
-			"filter": 2,
-			"font": "",
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
 			"height": 39.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/ReturnToWorld/Caption",
-			"rect_height": 40.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/BottomHud/QuestSummary/@Label@49",
+			"rect_height": 39.0,
 			"size": 26,
-			"text": "继续旅程"
+			"text": "›"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/ReturnToWorld/Subtitle",
-			"rect_height": 22.0,
-			"size": 14,
-			"text": "昭元边城"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/Navigation_世界",
-			"rect_height": 76.0,
-			"size": 14,
-			"text": "世界"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/Navigation_世界/Caption",
-			"rect_height": 22.0,
-			"size": 13,
-			"text": "世界"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/Navigation_世界/Subtitle",
-			"rect_height": 20.0,
-			"size": 13,
-			"text": ""
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/Navigation_背包",
-			"rect_height": 76.0,
-			"size": 14,
-			"text": "背包"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/Navigation_背包/Caption",
-			"rect_height": 22.0,
-			"size": 13,
-			"text": "背包"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/Navigation_背包/Subtitle",
-			"rect_height": 20.0,
-			"size": 13,
-			"text": ""
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/Navigation_养成",
-			"rect_height": 76.0,
-			"size": 14,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/BottomHud/Navigation_养成/@Panel@54/@Label@55",
+			"rect_height": 23.0,
+			"size": 15,
 			"text": "养成"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/Navigation_养成/Caption",
-			"rect_height": 22.0,
-			"size": 13,
-			"text": "养成"
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/BottomHud/Navigation_活动/@Panel@58/@Label@59",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "活动"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/Navigation_养成/Subtitle",
-			"rect_height": 20.0,
-			"size": 13,
-			"text": ""
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/BottomHud/Navigation_伙伴/@Panel@62/@Label@63",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "伙伴"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 22.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/Navigation_图鉴",
-			"rect_height": 76.0,
-			"size": 14,
-			"text": "图鉴"
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/BottomHud/Navigation_设置/@Panel@66/@Label@67",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "设置"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/Navigation_图鉴/Caption",
-			"rect_height": 22.0,
-			"size": 13,
-			"text": "图鉴"
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/BottomHud/ReturnToWorld/SortiePlate/@Label@68",
+			"rect_height": 40.0,
+			"size": 24,
+			"text": "出征"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/GameHome/CampChest/@Control@5/Navigation_图鉴/Subtitle",
-			"rect_height": 20.0,
-			"size": 13,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/@Label@69",
+			"rect_height": 28.0,
+			"size": 16,
 			"text": ""
 		}
 	]

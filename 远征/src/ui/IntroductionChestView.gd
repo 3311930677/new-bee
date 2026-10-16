@@ -103,7 +103,7 @@ func _ready() -> void:
 		var index := i
 		var tab := button(["世界", "旅人", "启程"][i], false)
 		tab.name = ["WorldTab", "TravelersTab", "JourneyTab"][i]
-		tab.add_theme_font_size_override("font_size", 21)
+		tab.add_theme_font_size_override("font_size", G.FS_LG)
 		tab.pressed.connect(func():
 			if not G.ui_blocked:
 				host._deck.go(index)
@@ -139,14 +139,14 @@ func _ready() -> void:
 	_body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_body.add_theme_constant_override("separation", 3)
 	_scroll.add_child(_body)
-	_chapter = label("", 13, GOLD)
+	_chapter = label("", G.FS_XS, GOLD)
 	_body.add_child(_chapter)
-	_heading = label("", 30)
+	_heading = label("", G.FS_BIG)
 	_body.add_child(_heading)
 	var divider := picture("divider")
 	divider.custom_minimum_size.y = 6
 	_body.add_child(divider)
-	_description = label("", 14)
+	_description = label("", G.FS_XS)
 	_description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_description.add_theme_constant_override("line_spacing", 3)
 	_body.add_child(_description)
@@ -157,7 +157,7 @@ func _ready() -> void:
 	_previous.name = "PreviousChapter"
 	_previous.pressed.connect(func(): navigate(-1))
 	_footer.add_child(_previous)
-	_counter = label("", 19, GOLD)
+	_counter = label("", G.FS_MD, GOLD)
 	_counter.custom_minimum_size.x = 76
 	_counter.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_counter.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -173,7 +173,7 @@ func label(words: String, font_size: int, color := INK) -> Label:
 	var node := Label.new()
 	node.text = words
 	node.add_theme_font_override("font", G.font_serif)
-	node.add_theme_font_size_override("font_size", font_size)
+	node.add_theme_font_size_override("font_size", maxi(font_size, G.FS_XS))
 	node.add_theme_color_override("font_color", color)
 	node.add_theme_color_override("font_shadow_color", Color("08090d", .9))
 	node.add_theme_constant_override("shadow_offset_x", 1)
@@ -194,7 +194,7 @@ func button(words: String, primary: bool) -> Button:
 	node.text = words
 	node.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	node.add_theme_font_override("font", G.font_serif)
-	node.add_theme_font_size_override("font_size", 22)
+	node.add_theme_font_size_override("font_size", G.FS_LG)
 	style_button(node, primary)
 	return node
 

@@ -115,7 +115,7 @@ static func enter(node: CanvasItem, delay := 0.0, from := Vector2(0, 22)) -> voi
 	tw.tween_property(node, "modulate:a", 1.0, .3)
 	tw.parallel().tween_property(node, "position", target, .46).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
-static func label(words: String, px := 16, color := Color("e9d9b6"), spacing := 1) -> Label:
+static func label(words: String, px := G.FS_SM, color := Color("e9d9b6"), spacing := 1) -> Label:
 	var l := Label.new()
 	l.text = words
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -125,7 +125,7 @@ static func label(words: String, px := 16, color := Color("e9d9b6"), spacing := 
 	f.base_font = G.font_serif
 	f.spacing_glyph = spacing
 	l.add_theme_font_override("font", f)
-	l.add_theme_font_size_override("font_size", px)
+	l.add_theme_font_size_override("font_size", maxi(px, G.FS_XS))
 	l.add_theme_color_override("font_color", color)
 	l.add_theme_color_override("font_shadow_color", Color(0, 0, 0, .85))
 	l.add_theme_constant_override("shadow_offset_x", 2)

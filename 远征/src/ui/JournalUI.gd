@@ -171,11 +171,11 @@ class AvatarMedallion extends Panel:
 		for direction in [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]:
 			draw_circle(center + direction * (radius - 2), 1.0, Color("f1dab1"))
 
-static func label(text: String, font_size := 14, color := INK, serif := false) -> Label:
+static func label(text: String, font_size := G.FS_XS, color := INK, serif := false) -> Label:
 	var node := Label.new()
 	node.text = text
 	node.add_theme_font_override("font", G.font_serif if serif else G.font_reg)
-	node.add_theme_font_size_override("font_size", font_size)
+	node.add_theme_font_size_override("font_size", maxi(font_size, G.FS_XS))
 	node.add_theme_color_override("font_color", color)
 	node.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return node
@@ -197,7 +197,7 @@ static func button(text: String, width: float, height := 46.0,
 	node.size = node.custom_minimum_size
 	node.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	node.add_theme_font_override("font", ART_FONT if kind == "primary" else G.font_serif)
-	node.add_theme_font_size_override("font_size", 22 if kind == "primary" else 17)
+	node.add_theme_font_size_override("font_size", G.FS_LG if kind == "primary" else G.FS_SM)
 	var primary := kind == "primary"
 	var quiet := kind == "quiet" or kind == "dark_quiet"
 	var text_color := GOLD if primary or kind == "dark_quiet" else GREEN
@@ -221,7 +221,7 @@ static func button(text: String, width: float, height := 46.0,
 		node.expand_icon = true
 		node.add_theme_constant_override("icon_max_width", 18)
 		node.add_theme_constant_override("h_separation", 9)
-		var text_width := G.font_reg.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, 17).x
+		var text_width := G.font_reg.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_SM).x
 		for style in [normal, hover, pressed]:
 			style.content_margin_left = maxf(8, (width - text_width - 27) * 0.5)
 			style.content_margin_right = 8
@@ -249,7 +249,7 @@ static func field(placeholder: String, secret := false) -> LineEdit:
 	node.add_theme_stylebox_override("normal", normal)
 	node.add_theme_stylebox_override("focus", focused)
 	node.add_theme_font_override("font", G.font_reg)
-	node.add_theme_font_size_override("font_size", 17)
+	node.add_theme_font_size_override("font_size", G.FS_SM)
 	node.add_theme_color_override("font_color", INK)
 	node.add_theme_color_override("font_placeholder_color", Color("999482"))
 	node.add_theme_color_override("caret_color", GREEN)
@@ -297,11 +297,11 @@ static func avatar_card(id: String, side := 56.0) -> Button:
 	mark.name = "SelectedMark"
 	mark.text = "✓"
 	mark.add_theme_font_override("font", G.font_reg)
-	mark.add_theme_font_size_override("font_size", 12)
+	mark.add_theme_font_size_override("font_size", G.FS_XS)
 	mark.add_theme_color_override("font_color", Color("f7f2e6"))
 	mark.add_theme_stylebox_override("normal", surface(Color("9b4b31"), Color("e6c68b"), 1))
 	mark.position = Vector2(side - 15, 0)
-	mark.size = Vector2(15, 16)
+	mark.size = Vector2(15, 22)
 	mark.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	mark.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	mark.visible = false

@@ -90,7 +90,7 @@ static func section(words: String, icon: String) -> Control:
 		cell.add_child(sprite("ic_" + icon))
 		row.add_child(cell)
 	var title := UI.label(words, "section", UI.PAPER)
-	title.add_theme_font_size_override("font_size", 19)
+	title.add_theme_font_size_override("font_size", G.FS_MD)
 	row.add_child(title)
 	return bar
 

@@ -140,7 +140,7 @@ void fragment() {
 	host._refresh_milestone()
 	host._ms_l.add_theme_color_override("font_color",UI.GOLD if ready_claim else UI.AGED)
 	host._claim_btn.disabled = not ready_claim
-	host._claim_btn.caption.add_theme_font_size_override("font_size",14)
+	host._claim_btn.caption.add_theme_font_size_override("font_size",G.FS_XS)
 	var ev:Dictionary=p.get("evolve",{})
 	var n:=maxi(1,int(ev.get("cost",{}).get("evolve_crystal",3)))
 	_go.visible=owned

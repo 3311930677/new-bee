@@ -50,7 +50,7 @@ func _build_tab_row(deck: Control, names: Array, width: float) -> HBoxContainer:
 		btn.custom_minimum_size = Vector2((width - 16) / 3, 38)
 		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		btn.add_theme_font_override("font", G.font_serif)
-		btn.add_theme_font_size_override("font_size", 16)
+		btn.add_theme_font_size_override("font_size", G.FS_SM)
 		for state in ["normal","hover","pressed","disabled","focus"]:
 			btn.add_theme_stylebox_override(state, StyleBoxEmpty.new())
 		btn.pressed.connect(func(): deck.call("go", index); Audio.sfx("ui_click"))

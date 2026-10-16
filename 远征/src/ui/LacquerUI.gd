@@ -14,20 +14,20 @@ const FROST := Color("8db3c7")
 static func theme() -> Theme:
 	var t := Theme.new()
 	t.default_font = G.font_reg
-	t.default_font_size = 13
+	t.default_font_size = G.FS_XS
 	t.set_color("font_color", "Label", PAPER)
 	t.set_color("font_shadow_color", "Label", Color("0a090b", 0.8))
 	t.set_constant("shadow_offset_y", "Label", 1)
 	t.set_constant("outline_size", "Label", 0)
 	return t
 
-static func label(words: String, px: int = 13, color: Color = PAPER, serif: bool = false) -> Label:
+static func label(words: String, px: int = G.FS_XS, color: Color = PAPER, serif: bool = false) -> Label:
 	var l := Label.new()
 	l.text = words
 	l.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	l.theme = theme()
 	l.add_theme_font_override("font", G.font_serif if serif else G.font_bold)
-	l.add_theme_font_size_override("font_size", px)
+	l.add_theme_font_size_override("font_size", maxi(px, G.FS_XS))
 	l.add_theme_color_override("font_color", color)
 	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -108,7 +108,7 @@ class Action extends Button:
 	var count_label: Label
 	var motion_icon: Control
 	func _init(words: String = "", glyph: String = "") -> void:
-		caption = Lacquer.label(words, 12)
+		caption = Lacquer.label(words, G.FS_XS)
 		caption.name = "Caption"
 		caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		add_child(caption)

@@ -24,7 +24,7 @@ static func field(placeholder: String,paper: bool=false) -> LineEdit:
 	edit.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	edit.texture_filter=CanvasItem.TEXTURE_FILTER_LINEAR
 	edit.add_theme_font_override("font",G.font_reg)
-	edit.add_theme_font_size_override("font_size",14)
+	edit.add_theme_font_size_override("font_size",G.FS_XS)
 	var color:=Color("2b2420") if paper else UI.PAPER
 	edit.add_theme_color_override("font_color",color)
 	edit.add_theme_color_override("font_placeholder_color",Color("77705f"))

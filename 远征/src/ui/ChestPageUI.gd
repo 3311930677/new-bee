@@ -168,9 +168,9 @@ class ItemCell extends Button:
 		heading.position = Vector2(4,size.y-30)
 		heading.size = Vector2(size.x-8,22)
 		amount.position = Vector2(4,0)
-		amount.size = Vector2(size.x-10,20)
+		amount.size = Vector2(size.x-10,22)
 		flag.position = Vector2(6,0)
-		flag.size = Vector2(30,20)
+		flag.size = Vector2(30,22)
 		flag.text="装" if worn else ""
 		flag.position=Vector2(5,size.y-24)
 		if locked:

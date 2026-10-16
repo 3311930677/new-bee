@@ -21,7 +21,7 @@ const Z_CONTENT := 30
 const Z_TRAY := 40
 const Z_FEEDBACK := 50
 const Z_MODAL := 60
-const FONT_SIZES := {"title":22,"section":17,"object":20,"body":14,"caption":13,"tag":12,"number":14,"primary":22,"hero":26,"secondary":17}
+const FONT_SIZES := {"title":22,"section":17,"object":20,"body":15,"caption":15,"tag":15,"number":15,"primary":22,"hero":26,"secondary":17}
 static var _theme: Theme
 static var _regions: Dictionary = {}
 static var _sources: Dictionary = {}
@@ -38,7 +38,7 @@ static func theme() -> Theme:
 	if _theme != null: return _theme
 	_theme = Theme.new()
 	_theme.default_font = G.font_reg
-	_theme.default_font_size = 14
+	_theme.default_font_size = G.FS_XS
 	for role in FONT_SIZES:
 		var variant: String = "Chest_"+str(role)
 		_theme.set_type_variation(variant,"Label")
@@ -186,8 +186,8 @@ class ChestButton extends Button:
 			caption.position = Vector2(64,4+offset)
 			caption.size = Vector2(size.x-88,40)
 			caption.add_theme_color_override("font_color",UI.ASH if disabled else Color("f6d9a0"))
-			subtitle.position = Vector2(64,45+offset)
-			subtitle.size = Vector2(size.x-88,20)
+			subtitle.position = Vector2(64,44+offset)
+			subtitle.size = Vector2(size.x-88,22)
 		elif skin == "nav":
 			# 图标 + 文字作为一组在按钮内垂直居中（图标 40、间距 4、文字 22）。
 			caption.position = Vector2(0,(size.y-66)*0.5+44+offset)
@@ -197,9 +197,9 @@ class ChestButton extends Button:
 			caption.size = Vector2(size.x,22)
 		elif not subtitle.text.is_empty():
 			caption.position=Vector2(0,offset)
-			caption.size=Vector2(size.x,34)
-			subtitle.position=Vector2(8,34+offset)
-			subtitle.size=Vector2(size.x-16,20)
+			caption.size=Vector2(size.x,32)
+			subtitle.position=Vector2(8,32+offset)
+			subtitle.size=Vector2(size.x-16,22)
 		else:
 			caption.position = Vector2(caption_inset,offset)
 			caption.size = Vector2(size.x-caption_inset,size.y)
@@ -300,8 +300,8 @@ class QuestSlip extends ChestButton:
 		caption.text = "委托可交付" if claimable else "主线目标"
 		caption.theme_type_variation = "Chest_tag"
 		caption.add_theme_color_override("font_color",UI.JADE if claimable else Color("e5c07b"))
-		caption.position = Vector2(16,6)
-		caption.size = Vector2(size.x-36,18)
+		caption.position = Vector2(16,4)
+		caption.size = Vector2(size.x-36,22)
 		caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 		goal.position = Vector2(16,28)
 		goal.size = Vector2(size.x-36,36)

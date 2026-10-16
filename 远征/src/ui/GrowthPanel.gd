@@ -152,7 +152,7 @@ func _refresh() -> void:
 	for key in values:
 		var row:=HBoxContainer.new();_stats.add_child(row)
 		var label:=UI.label(key,"caption",UI.AGED);label.size_flags_horizontal=Control.SIZE_EXPAND_FILL;row.add_child(label)
-		var value:=UI.label(str(values[key]),"number");value.add_theme_font_size_override("font_size",16);row.add_child(value)
+		var value:=UI.label(str(values[key]),"number");value.add_theme_font_size_override("font_size",G.FS_SM);row.add_child(value)
 	_next_id="talent" if left>0 else ""
 	_summary.text = "尚有 %d 点天赋待分配" % left if left > 0 else "天赋点已分配完毕"
 	_summary.add_theme_color_override("font_color",UI.GOLD if left>0 else UI.AGED)
@@ -207,7 +207,7 @@ func _refresh() -> void:
 	_recommend.status.text=""
 	_recommend.next_action.text=""
 	_summary.text="下一步 · 天赋可分配 %d 点"%left if _next_id=="talent" else "下一步 · 装备材料已齐" if _next_id=="equip" else "装备强化 %d/%d/%d · 灵宠 %d/%d"%[int(G.equip_state(G.equip_weapon_slot()).get("lv",0)),int(G.equip_state("armor").get("lv",0)),int(G.equip_state("accessory").get("lv",0)),G.owned_pets().size(),TableCache.pets().size()]
-	_summary.add_theme_font_size_override("font_size",14)
+	_summary.add_theme_font_size_override("font_size",G.FS_XS)
 	_recommend.queue_redraw()
 
 

@@ -193,7 +193,7 @@ func _create_input_field(placeholder: String, secret := false) -> LineEdit:
 	edit.add_theme_stylebox_override("normal", normal)
 	edit.add_theme_stylebox_override("focus", focused)
 	edit.add_theme_font_override("font", G.font_reg)
-	edit.add_theme_font_size_override("font_size", 16)
+	edit.add_theme_font_size_override("font_size", G.FS_SM)
 	edit.add_theme_color_override("font_color", Color("281e14"))
 	edit.add_theme_color_override("font_placeholder_color", Color("a89884"))
 	edit.add_theme_color_override("caret_color", Color("8a4820"))

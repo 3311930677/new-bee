@@ -102,7 +102,7 @@ func _build() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	theme = Theme.new()
 	theme.default_font = G.font_serif
-	theme.default_font_size = 16
+	theme.default_font_size = G.FS_SM
 	theme.set_color("font_color","Label",Color("eadbc0"))
 	_kit = JSON.parse_string(FileAccess.get_file_as_string(KIT + "loading_kit.json"))
 	# 屏幕比原图高时露出的部分：原图天空段的模糊放大版铺底，下沿补地面色。
@@ -173,20 +173,20 @@ func _build() -> void:
 	_gauge.name = "LoadingGauge"
 	add_child(_gauge)
 	_bar_fill = _gauge.lit_blade
-	_percent_l = _label("0%",15,Color("f5e7c8"))
+	_percent_l = _label("0%",G.FS_XS,Color("f5e7c8"))
 	_percent_l.name = "LoadingPercent"
 	var box: Array = _kit.percent_box
 	_percent_l.position = Vector2(box[0],box[1]) - _gauge.origin
 	_percent_l.size = Vector2(box[2]-box[0],box[3]-box[1])
 	_gauge.add_child(_percent_l)
-	_bar_l = _label(STAGES[0],14,Color("f2dc87"))
+	_bar_l = _label(STAGES[0],G.FS_XS,Color("f2dc87"))
 	_bar_l.name = "LoadingStatus"
 	_bar_l.position = Vector2(0,_gauge.size.y+STATUS_GAP)
-	_bar_l.size = Vector2(_gauge.size.x,20)
+	_bar_l.size = Vector2(_gauge.size.x,22)
 	_gauge.add_child(_bar_l)
 	# Pick once per entry; do not consume the global gameplay random stream.
 	var tip_i := 0 if bool(G.get_meta("ui_review_mode",false)) else int(Time.get_ticks_usec()%LOADING_TIPS.size())
-	_hint_l = _label("「%s」"%LOADING_TIPS[tip_i],13,Color("e4d4ba"))
+	_hint_l = _label("「%s」"%LOADING_TIPS[tip_i],G.FS_XS,Color("e4d4ba"))
 	_hint_l.name = "LoadingTip"
 	_hint_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(_hint_l)
@@ -203,7 +203,7 @@ func _label(text: String, font_size: int, ink: Color) -> Label:
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	label.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
-	label.add_theme_font_size_override("font_size",font_size)
+	label.add_theme_font_size_override("font_size",maxi(font_size, G.FS_XS))
 	label.add_theme_color_override("font_color",ink)
 	label.add_theme_color_override("font_outline_color",Color("100d09"))
 	label.add_theme_constant_override("outline_size",3)
@@ -218,7 +218,7 @@ func _layout(safe_override:=Rect2()) -> void:
 	_hint_l.position = Vector2(safe.position.x+24, safe.end.y-TIP_H-6)
 	_hint_l.size = Vector2(safe.size.x-48, TIP_H)
 	_gauge.position = Vector2(roundf(safe.get_center().x-_gauge.size.x*.5),
-		_hint_l.position.y-STATUS_GAP-20-_gauge.size.y)
+		_hint_l.position.y-STATUS_GAP-22-_gauge.size.y)
 	_art.size = _art.texture.get_size()
 	_art.position = _gauge.position - _gauge.origin
 	var mat := _art.material as ShaderMaterial

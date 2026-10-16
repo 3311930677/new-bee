@@ -6,119 +6,137 @@
 		{
 			"filter": 2,
 			"font": "",
-			"height": 27.0,
-			"path": "/root/ShotRunner/Title/@Control@8/@Label@9",
+			"height": 24.0,
+			"path": "/root/ShotRunner/Title/@Control@6/@Label@7",
 			"rect_height": 28.0,
-			"size": 18,
-			"text": "昭元行旅录"
+			"size": 16,
+			"text": "点击开始旅程"
 		},
 		{
 			"filter": 2,
 			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
+			"height": 23.0,
 			"path": "/root/ShotRunner/Title/StartGame",
-			"rect_height": 64.0,
-			"size": 13,
-			"text": "开始游戏"
+			"rect_height": 60.0,
+			"size": 15,
+			"text": ""
 		},
 		{
 			"filter": 2,
 			"font": "",
-			"height": 33.0,
-			"path": "/root/ShotRunner/Title/StartGame/Caption",
-			"rect_height": 64.0,
-			"size": 22,
+			"height": 30.0,
+			"path": "/root/ShotRunner/Title/StartGame/@Label@10",
+			"rect_height": 60.0,
+			"size": 20,
 			"text": "开始游戏"
 		},
 		{
 			"filter": 2,
 			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
-			"path": "/root/ShotRunner/Title/StartGame/Subtitle",
-			"rect_height": 20.0,
-			"size": 13,
-			"text": ""
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
+			"height": 23.0,
 			"path": "/root/ShotRunner/Title/Introduction",
-			"rect_height": 44.0,
-			"size": 13,
+			"rect_height": 52.0,
+			"size": 15,
 			"text": ""
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
-			"height": 25.0,
-			"path": "/root/ShotRunner/Title/Introduction/Caption",
-			"rect_height": 44.0,
-			"size": 17,
+			"font": "",
+			"height": 27.0,
+			"path": "/root/ShotRunner/Title/Introduction/@Label@11",
+			"rect_height": 52.0,
+			"size": 18,
 			"text": "游戏介绍"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
-			"height": 35.0,
-			"path": "/root/ShotRunner/Title/Introduction/Glyph",
-			"rect_height": 35.0,
-			"size": 24,
-			"text": ""
-		},
-		{
-			"filter": 2,
 			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
+			"height": 23.0,
 			"path": "/root/ShotRunner/Title/Settings",
-			"rect_height": 44.0,
-			"size": 13,
+			"rect_height": 52.0,
+			"size": 15,
 			"text": ""
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
-			"height": 25.0,
-			"path": "/root/ShotRunner/Title/Settings/Caption",
-			"rect_height": 44.0,
-			"size": 17,
+			"font": "",
+			"height": 27.0,
+			"path": "/root/ShotRunner/Title/Settings/@Label@12",
+			"rect_height": 52.0,
+			"size": 18,
 			"text": "游戏设置"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
-			"height": 35.0,
-			"path": "/root/ShotRunner/Title/Settings/Glyph",
-			"rect_height": 35.0,
-			"size": 24,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/Title/Notice",
+			"rect_height": 74.0,
+			"size": 15,
 			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/Title/Notice/@Label@15",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "公告"
 		},
 		{
 			"filter": 2,
 			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 20.0,
+			"height": 23.0,
 			"path": "/root/ShotRunner/Title/Quit",
-			"rect_height": 44.0,
-			"size": 13,
+			"rect_height": 74.0,
+			"size": 15,
 			"text": ""
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
-			"height": 25.0,
-			"path": "/root/ShotRunner/Title/Quit/Caption",
-			"rect_height": 44.0,
-			"size": 17,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/Title/Quit/@Label@18",
+			"rect_height": 23.0,
+			"size": 15,
 			"text": "退出游戏"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
-			"height": 35.0,
-			"path": "/root/ShotRunner/Title/Quit/Glyph",
-			"rect_height": 35.0,
-			"size": 24,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/Title/Credits",
+			"rect_height": 74.0,
+			"size": 15,
 			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/Title/Credits/@Label@21",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "制作组"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/Title/Version",
+			"rect_height": 74.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/Title/Version/@Label@24",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "版本信息"
 		}
 	]
 }
