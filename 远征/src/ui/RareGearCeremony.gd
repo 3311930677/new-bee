@@ -91,7 +91,8 @@ func _build_ui() -> void:
 
 	# 3. 顶部仪式文案
 	var rarity: int = int(_gear_data.get("rarity", 4))
-	var ceremony_title := "绝世神兵 · 启封" if rarity >= 5 else ("传说宝具 · 现世" if rarity == 4 else "史诗神装 · 突破")
+	var rname := G.equip_rarity_name(rarity)
+	var ceremony_title := "%s神兵 · 启封" % rname if rarity >= 5 else ("%s宝具 · 现世" % rname if rarity == 4 else "%s神装 · 突破" % rname)
 	var title_l := G.gold_label(ceremony_title, G.FS_LG, false, G.GOLD_BRIGHT, true)
 	title_l.position = Vector2(0, 16)
 	title_l.size = Vector2(_pedestal.size.x, 32)
@@ -201,7 +202,7 @@ func _build_stat_chip(text: String) -> Control:
 func _build_seal(rarity: int) -> Control:
 	var seal := QualitySeal.new()
 	seal.size = Vector2(52, 52)
-	seal.words = "神兵" if rarity >= 5 else ("传说" if rarity == 4 else "史诗")
+	seal.words = G.equip_rarity_name(rarity)
 	return seal
 
 

@@ -42,7 +42,7 @@ const C_RARE := Color("d8ab48")          # 稀有 / 传说强调（金）
 const C_COMPANION := Color("83cfd1")     # 伙伴协战 / 元素响应
 const C_COMPANION_GUARD := Color("6f9fd0") # 伙伴护卫
 
-# ---------- 稀有度四档（全项目唯一定义，各面板只引用，禁止再各自复制一份） ----------
+# ---------- 稀有度五档（全项目唯一定义，各面板只引用，禁止再各自复制一份） ----------
 const RARITY_HUE := {
 	"white": C_HINT, "blue": Color("6f9fd0"),
 	"purple": Color("a273c9"), "gold": C_RARE, "relic": Color("e8a36c"),
