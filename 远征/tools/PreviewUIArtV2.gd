@@ -45,7 +45,7 @@ class ArtSheet extends Control:
 	func _ready() -> void:
 		regular = load("res://assets/fonts/NotoSansSC-Regular.otf").duplicate() as FontFile
 		bold = load("res://assets/fonts/NotoSansSC-Bold.otf").duplicate() as FontFile
-		title = load("res://assets/fonts/ZCOOLXiaoWei-Regular.ttf").duplicate() as FontFile
+		title = load("res://assets/fonts/NotoSerifCJKsc-SemiBold.otf").duplicate() as FontFile
 		for f in [regular, bold, title]:
 			f.antialiasing = TextServer.FONT_ANTIALIASING_GRAY
 			f.hinting = TextServer.HINTING_LIGHT

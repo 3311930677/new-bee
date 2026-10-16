@@ -139,7 +139,7 @@
 | 地砖 / 路套件 / 散件 | `image/map_proc/*.png`（`001`–`047`） | 本作 AI 重绘（8 主题 × 3 地砖 + 4×4 路套件 + 散件） |
 | 战斗背景 | `bg_battle_*`（forest/snowfield/volcano/tomb/desert/glacier/abyss/castle） | 本作 AI 手绘竖版 |
 | 角色行走帧 | `image/role/<role>/*_walk_frames.tres`（4×5 栅格，128px） | 本作 AI 重绘，运行时重建 |
-| 字体 | `assets/fonts/NotoSansSC-{Regular,Bold}.otf`、`ZCOOLXiaoWei-Regular.ttf` | OFL 授权字体 |
+| 字体 | `assets/fonts/NotoSansSC-{Regular,Bold}.otf`、`NotoSerifCJKsc-SemiBold.otf` | OFL 授权字体 |
 
 参考视频只用于**可观察结构**对照，不引出任何素材；视频不在 Git 内（见 baseline §5）。
 

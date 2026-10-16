@@ -1,8 +1,0 @@
-WARNING: Loaded resource as image file, this will not work on export: 'res://image/role/zs/pojun_idle_video_v19.png'. Instead, import the image file as an Image resource and load it normally as a resource.
-   at: load_from_file (core/io/image.cpp:2780)
-   GDScript backtrace (most recent call first):
-       [0] _ready (res://tools/BakeReferenceGuides.gd:7)
-ERROR: Texture with GL ID of 25: leaked 6628 bytes.
-   at: ~Utilities (drivers/gles3/storage/utilities.cpp:82)
-ERROR: Parameter "RenderingServer::get_singleton()" is null.
-   at: ~CompressedTexture2D (scene/resources/compressed_texture.cpp:464)
