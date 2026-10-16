@@ -151,6 +151,19 @@ func _actions(node: Node) -> Array:
 func _action(node: Node,words: String) -> Control:
 	for b in _actions(node):
 		if b.caption.text==words: return b
+	var names: Dictionary = {
+		"世界": "Plaque_world",
+		"背包": "Rail_bag",
+		"养成": "Navigation_养成",
+		"图鉴": "Navigation_伙伴",
+		"竞技": "Plaque_arena",
+		"召唤": "Plaque_gacha",
+		"兑换": "Plaque_exchange",
+		"活动": "Navigation_活动",
+	}
+	if names.has(words):
+		var found := node.find_child(String(names[words]), true, false) as Control
+		if found != null: return found
 	return null
 
 func _action_prefix(node: Node,words: String) -> Control:
@@ -159,7 +172,7 @@ func _action_prefix(node: Node,words: String) -> Control:
 	return null
 
 func _activate(control:Control) -> void:
-	if control is Button:
+	if control is BaseButton:
 		if not control.disabled:control.pressed.emit()
 	else:control.gui_input.emit(_click())
 

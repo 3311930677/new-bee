@@ -22,7 +22,7 @@ func terrain_thumbnail(map: Node) -> Texture2D:
 		var thumb := Image.create(dimensions.x,dimensions.y,false,Image.FORMAT_RGBA8)
 		var half_height := dimensions.y / 2
 		for index in 2:
-			var part := ReferenceArt.texture(map_id + ("_floor_top" if index == 0 else "_floor_bottom")).get_image()
+			var part := ReferenceArt.texture(map_id + ("_floor_top" if index == 0 else "_floor_bottom")).get_image().duplicate() as Image
 			part.convert(Image.FORMAT_RGBA8)
 			part.resize(dimensions.x,half_height if index == 0 else dimensions.y-half_height,Image.INTERPOLATE_LANCZOS)
 			thumb.blit_rect(part,Rect2i(Vector2i.ZERO,part.get_size()),Vector2i(0,index*half_height))
@@ -36,7 +36,7 @@ func terrain_thumbnail(map: Node) -> Texture2D:
 	if bool(cfg.get("painted_ground", false)) or String(cfg.get("ground_style", "")) == "background":
 		var ground: Texture2D = G.visual_texture(String(cfg.get("background", "")))
 		if ground != null:
-			var thumb := ground.get_image()
+			var thumb := ground.get_image().duplicate() as Image
 			thumb.convert(Image.FORMAT_RGBA8)
 			thumb.resize(dimensions.x, dimensions.y, Image.INTERPOLATE_LANCZOS)
 			thumb.adjust_bcs(0.82, 1.18, 0.9)  # 压暗提对比，让标记点更醒目

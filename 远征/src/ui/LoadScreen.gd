@@ -315,6 +315,8 @@ class Gauge extends Control:
 func _collect_queue() -> void:
 	G._build_res_index()
 	Chest.theme()
+	preload("res://src/ui/SettingsSkin.gd").warm()
+	preload("res://src/ui/RegionChestMap.gd").warm()
 	for id in ["primary_normal","primary_pressed","primary_disabled","hero_normal","hero_pressed","hero_disabled","world","bag","growth","codex","event","arena","summon","exchange","reunion","settings","back","journey","tray_rim","stage_pool","camp_sky"]:
 		_queue.append("chest:"+id)
 	_queue.append("res://image/role/zs/pojun_walk_4dir.png")

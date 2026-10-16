@@ -54,6 +54,8 @@ func _hit(node: Node, pos: Vector2) -> Control:
 
 
 func _find_btn(root: Node, text: String) -> Control:
+	if root is Control and not (root as Control).is_visible_in_tree():
+		return null
 	if root is Button and root.text.replace(" ","") == text.replace(" ",""):
 		return root as Control
 	if root is Button and text=="返回" and root.tooltip_text.begins_with("返回"):

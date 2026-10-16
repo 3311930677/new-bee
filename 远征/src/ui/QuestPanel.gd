@@ -5,6 +5,7 @@ signal closed
 const UI := preload("res://src/ui/TravelChestUI.gd")
 const Art := preload("res://src/ui/InventoryQuestSkin.gd")
 const Page := preload("res://src/ui/ChestPageUI.gd")
+const INNER_W := 420.0
 var _panel: PanelContainer
 var _content: VBoxContainer
 var _list: VBoxContainer
