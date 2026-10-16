@@ -7,6 +7,14 @@ var _visual:Dictionary
 var _edge_tags:Control
 var _locator:Button
 const Flow:=preload("res://src/ui/FlowChestUI.gd")
+static var _visual_cache:Dictionary={}
+static func warm() -> void:
+	if _visual_cache.is_empty():
+		_visual_cache=JSON.parse_string(FileAccess.get_file_as_string("res://assets/ui/next_review_20261009/map_layout.json"))
+	for row in TableCache.main_world_config().get("regions",[]):
+		TableCache.main_world_map(String(row.id))
+	for m in ["town","maple","stele","cavern","salt","port","marsh","sluice","sand","frost","mine","pass"]:
+		Flow.texture(m)
 var _shell:Control
 var _map:Control
 var _graph:Control
@@ -40,7 +48,9 @@ func _ready() -> void:
 	_graph=_MapGraph.new()
 	_map.add_child(_graph)
 	_rows=TableCache.main_world_config().get("regions",[])
-	_visual=JSON.parse_string(FileAccess.get_file_as_string("res://assets/ui/next_review_20261009/map_layout.json"))
+	if _visual_cache.is_empty():
+		_visual_cache=JSON.parse_string(FileAccess.get_file_as_string("res://assets/ui/next_review_20261009/map_layout.json"))
+	_visual=_visual_cache
 	_current=String(G.prog.get("main_world",{}).get("map_id","lorin_wilds"))
 	_selected=_current
 	var ext:=Vector2(1440,1600)

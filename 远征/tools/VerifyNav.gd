@@ -18,7 +18,7 @@ const SKIP_FILES := [
 	"UiSafeArea.gd", # RefCounted 布局工厂，无独立可关闭页面
 	"SkillShowcase.gd", # 非独立页面的招式动画，返回由技能书负责
 	"AvatarCatalog.gd", "JournalUI.gd", "VisualTheme.gd", "UIFinesse.gd", "FieldUI.gd", "CraftUI.gd", "LedgerStyle.gd", "IllustratedUI.gd", # 目录与样式工厂，均为 RefCounted
-	"InventoryTheme.gd", # 背包 Theme 工厂，无独立页面
+	"InventoryTheme.gd", "InventoryQuestSkin.gd", # 背包/任务 Theme 皮肤工厂，无独立页面
 	"WorldHUD.gd", "WorldHUDSkin.gd", # 地图 HUD 的 Theme、绘图与控件工厂，无独立页面
 	"LacquerUI.gd", # RefCounted 样式工厂，按钮的导航归所属页面管理
 	"FlowChestUI.gd", "RegionChestMap.gd", "LoginChestView.gd", "CreateRoleChestView.gd", "CollectionChestView.gd", "DeployChestView.gd", "SettingsChestView.gd", "IntroductionChestView.gd", "LoadingChestGauge.gd", # Shared flow renderers; owning panels handle navigation.

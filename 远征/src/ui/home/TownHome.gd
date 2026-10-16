@@ -160,6 +160,9 @@ func refresh() -> void:
 	var gather: TextureButton = _rail["gathering"]
 	gather.modulate = Color.WHITE if _gathering_unlocked or host == null else LOCKED_TINT
 	gather.tooltip_text = "归路小聚" if _gathering_unlocked else "完成归路小聚支线后开放"
+	var gather_tag := gather.get_node_or_null("GatheringUnlockTag") as Label
+	if gather_tag != null:
+		gather_tag.text = "归路小聚" if _gathering_unlocked else ""
 	_hero.tooltip_text = "出征 · 返回主世界"
 
 
@@ -371,7 +374,7 @@ func _build_top_bar() -> void:
 	row.name = "CurrencyRow"
 	row.add_theme_constant_override("separation", 4)
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	row.position = Vector2(VIEW_W - 8.0 - 4 * CAP_W - 3 * 4.0, 6)
+	row.position = Vector2(VIEW_W - 12.0 - 4 * CAP_W - 3 * 4.0, 6)
 	row.size = Vector2(4 * CAP_W + 12, 44)
 	_top.add_child(row)
 	if host != null:
@@ -410,26 +413,37 @@ func _build_top_bar() -> void:
 	# 小入口：背包、小聚（未解锁时压灰）
 	var rx := VIEW_W - 8.0 - RAIL.size() * 56.0 - (RAIL.size() - 1) * 4.0
 	for r in RAIL:
+		var rid := String(r[0])
+		var rtitle := String(r[1])
 		var btn := TextureButton.new()
-		btn.name = "Rail_" + r[0]
+		btn.name = "Rail_" + rid
 		btn.texture_normal = load(KIT + "rail_socket.png")
 		btn.texture_hover = load(KIT + "rail_socket_selected.png")
 		btn.texture_pressed = load(KIT + "rail_socket_selected.png")
 		btn.focus_mode = Control.FOCUS_NONE
 		btn.position = Vector2(rx, 52)
-		btn.pressed.connect(_on_entry.bind(r[0], r[1]))
+		btn.pressed.connect(_on_entry.bind(rid, rtitle))
+		btn.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				_on_entry(rid, rtitle))
 		_top.add_child(btn)
 		btn.add_child(_disc(Vector2(10, 10), 36, HOLE_DARK))
 		btn.add_child(_tex(PIX + "%s.png" % r[2], Vector2(12, 12)))
 		var plate := _plate(Vector2(8, 44), Vector2(40, 16))
 		btn.add_child(plate)
-		var t := _label(r[1], FONT_SERIF, 11, CREAM, 3)
+		var t := _label(rtitle, FONT_SERIF, 11, CREAM, 3)
 		t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		t.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		t.position = Vector2(0, -1)
 		t.size = plate.size
 		plate.add_child(t)
-		_rail[r[0]] = btn
+		if rid == "gathering":
+			var unlock_tag := Label.new()
+			unlock_tag.name = "GatheringUnlockTag"
+			unlock_tag.visible = false
+			unlock_tag.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			btn.add_child(unlock_tag)
+		_rail[rid] = btn
 		rx += 60.0
 
 

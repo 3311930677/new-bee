@@ -6,10 +6,26 @@ const ROOT := "res://assets/ui/settings_20261014/"
 static var _spec: Dictionary = {}
 static var _scene: Dictionary = {}
 static var _styles: Dictionary = {}
+static var _textures: Dictionary = {}
+static var _circle_mat: ShaderMaterial = null
 
 static func texture(id: String) -> Texture2D:
+	if _textures.has(id):
+		return _textures[id]
 	var path := ROOT + id + ".png"
-	return load(path) as Texture2D if ResourceLoader.exists(path) else null
+	var tex: Texture2D = load(path) as Texture2D if ResourceLoader.exists(path) else null
+	_textures[id] = tex
+	return tex
+
+static func warm() -> void:
+	scene("bg_top")
+	for id in ["bg_top", "bg_mid", "bg_bottom", "back", "back_pressed", "tab_normal", "tab_selected", "btn_small", "row_card", "step_btn", "switch_on", "switch_off", "btn_primary", "btn_row", "btn_danger", "profile_card", "section", "icon_box", "grabber", "input", "ic_sec_sound", "ic_sec_battle", "ic_sec_name", "ic_sec_journey", "ic_sec_backup", "ic_sec_restore", "ic_sec_reset", "ic_tab_common", "ic_tab_profile", "ic_tab_save", "ib_music", "ib_sound", "ib_mute", "ib_shake", "ib_story", "ib_speed", "ic_orn", "ic_chevron", "ic_pencil", "ic_btn_avatar", "ic_btn_prologue", "ic_btn_role", "ic_btn_copy", "ic_btn_paste", "ic_btn_import", "ic_btn_reset"]:
+		texture(id)
+	for s in ["tab_normal", "tab_selected", "btn_small", "row_card", "step_btn", "btn_primary", "btn_row", "btn_danger", "profile_card"]:
+		style(s)
+	style("section", Vector2(4, 0))
+	style("input", Vector2(6, 0))
+	circle_material()
 
 ## scene.json 里一件素材的信息（size / pos / slice ...），没有时为空字典
 static func scene(id: String) -> Dictionary:
@@ -172,23 +188,25 @@ static func field(edit: LineEdit, pencil := false) -> void:
 
 ## 圆形裁切（旅人卡头像用）
 static func circle_material() -> ShaderMaterial:
+	if _circle_mat != null:
+		return _circle_mat
 	var shader := Shader.new()
 	shader.code = "shader_type canvas_item; void fragment(){ vec4 c = texture(TEXTURE, UV); float d = distance(UV, vec2(.5)); c.a *= step(d, .5); COLOR = c; }"
-	var mat := ShaderMaterial.new()
-	mat.shader = shader
-	return mat
+	_circle_mat = ShaderMaterial.new()
+	_circle_mat.shader = shader
+	return _circle_mat
 
 
 ## 整页底图：上段夜景（标题与返回键已画在里面）+ 中段面板平铺 + 下段栏杆灯笼。
 ## 横向按 480 宽美术居中，纵向上段贴安全区顶、下段贴屏幕底；安全区以上补夜空色。
 ## 屏幕比参考稿（853）矮时，下段最多下沉 40px（只裁掉地砖，栏杆完整），给内容腾出位置。
 class Backdrop extends Control:
-	const ROOT := "res://assets/ui/settings_20261014/"
+	const Kit := preload("res://src/ui/SettingsSkin.gd")
 	var safe := Rect2()
 	var art_x := 0.0
-	var _top: Texture2D = load(ROOT + "bg_top.png")
-	var _mid: Texture2D = load(ROOT + "bg_mid.png")
-	var _bottom: Texture2D = load(ROOT + "bg_bottom.png")
+	var _top: Texture2D
+	var _mid: Texture2D
+	var _bottom: Texture2D
 	var _sky := Color("0b1a2e")
 	const ART_H := 853.0
 	const MAX_SINK := 40.0
@@ -199,7 +217,10 @@ class Backdrop extends Control:
 		mouse_filter = Control.MOUSE_FILTER_IGNORE
 		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
-		var info: Dictionary = (JSON.parse_string(FileAccess.get_file_as_string(ROOT + "scene.json")) as Dictionary).items.bg_top
+		_top = Kit.texture("bg_top")
+		_mid = Kit.texture("bg_mid")
+		_bottom = Kit.texture("bg_bottom")
+		var info: Dictionary = Kit.scene("bg_top")
 		_sky = Color(String(info.get("sky", "0b1a2e")))
 	func _draw() -> void:
 		var w := float(_top.get_width())

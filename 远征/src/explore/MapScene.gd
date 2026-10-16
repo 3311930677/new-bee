@@ -1689,8 +1689,9 @@ func _refresh_hud() -> void:
 	_sync_campaign_level()
 	var m := st.max_hp()
 	var hp := m if st.hp < 0 else st.hp
-	_hp_fill.size.x = 116.0 * clampf(float(hp) / float(m), 0.0, 1.0)
-	if _mode == "main_world" and _main_level_l != null:
+	if is_instance_valid(_hp_fill):
+		_hp_fill.size.x = 116.0 * clampf(float(hp) / float(m), 0.0, 1.0)
+	if _mode == "main_world" and is_instance_valid(_main_level_l):
 		var lv := int(G.prog.get("level", st.level))
 		var exp := int(G.prog.get("exp", 0))
 		var need := G.exp_to_next(lv)
@@ -5541,9 +5542,7 @@ class _Minimap extends Control:
 	func _project(point: Vector2) -> Vector2:
 		var view := _view_bounds()
 		var rect := _map_rect()
-		var projected := rect.position + ((point-view.position)/view.size).clamp(Vector2.ZERO,Vector2.ONE)*rect.size
-		if not big: projected = rect.get_center() + (projected-rect.get_center()).limit_length(38)
-		return projected
+		return rect.position + ((point-view.position)/view.size).clamp(Vector2.ZERO,Vector2.ONE)*rect.size
 
 	func _round_thumbnail(terrain: Texture2D, bounds: Rect2, extent: Vector2) -> Texture2D:
 		if _terrain_source != terrain:
@@ -5596,7 +5595,11 @@ class _Minimap extends Control:
 
 		var ext := map_ref._map_extent()
 		var map_rect := _map_rect()
-		var at := func(p: Vector2) -> Vector2: return _project(p)
+		var at := func(p: Vector2) -> Vector2:
+			var proj := _project(p)
+			if not big:
+				proj = map_rect.get_center() + (proj - map_rect.get_center()).limit_length(38)
+			return proj
 		var s := map_rect.size.x / ext.x
 		if big:
 			draw_rect(map_rect.grow(1),Color("0a090b"))
@@ -5619,11 +5622,11 @@ class _Minimap extends Control:
 				MapScene.HudSkin.diamond(self,center+direction*49,2,MapScene.HudSkin.GOLD)
 		if map_ref._city_content != null:
 			for npc in map_ref._city_content._npcs:
-				if big or bounds.has_point(npc.position): MapScene.Cartography.marker(self,_project(npc.position).clamp(map_rect.position+Vector2(4,4),map_rect.end-Vector2(4,4)),"npc")
+				if big or bounds.has_point(npc.position): MapScene.Cartography.marker(self,(at.call(npc.position) as Vector2).clamp(map_rect.position+Vector2(4,4),map_rect.end-Vector2(4,4)),"npc")
 		var objective: Dictionary = map_ref._hud_target_info()
 		if not String(objective.get("kind","")).is_empty():
 			var objective_pos: Vector2 = objective.get("pos",Vector2.ZERO)
-			var marker_pos := _project(objective_pos).clamp(map_rect.position+Vector2(6,6),map_rect.end-Vector2(6,6))
+			var marker_pos := (at.call(objective_pos) as Vector2).clamp(map_rect.position+Vector2(6,6),map_rect.end-Vector2(6,6))
 			MapScene.Cartography.marker(self,marker_pos,"target")
 			if not bounds.has_point(objective_pos):
 				var direction := (objective_pos-bounds.get_center()).normalized()
@@ -6022,18 +6025,20 @@ func _tick_round_interaction() -> void:
 	_round_target = null
 	if _modal_open() or G.ui_blocked: return
 	var best := 100.0
-	if _city_content != null:
+	if is_instance_valid(_city_content):
 		for npc in _city_content._npcs:
+			if not is_instance_valid(npc): continue
 			var d: float = npc.position.distance_to(_player.position)
 			if d < best and not npc.cooled:
 				best = d
 				_round_target = npc
 	for entity in _quest_entities:
+		if not is_instance_valid(entity): continue
 		var d := entity.position.distance_to(_player.position)
 		if d < best and not entity.used:
 			best = d
 			_round_target = entity
-	if _interactable != null and not _interactable.used and _interactable.position.distance_to(_player.position) < best:
+	if is_instance_valid(_interactable) and not _interactable.used and _interactable.position.distance_to(_player.position) < best:
 		_round_target = _interactable
 		best = _interactable.position.distance_to(_player.position)
 	if _round_target == null: return
@@ -6067,16 +6072,16 @@ func _name_tag_hits_hud(box: Rect2) -> bool:
 func _resolve_name_tags() -> void:
 	var candidates: Array=[]
 	if is_instance_valid(_player_tag):candidates.append({"label":_player_tag,"priority":0})
-	if _city_content!=null:
+	if is_instance_valid(_city_content):
 		for npc in _city_content._npcs:
-			if npc._name_l!=null:candidates.append({"label":npc._name_l,"pad":npc._pad,"priority":1 if npc==_round_target else 3 if npc.guest else 4})
+			if is_instance_valid(npc) and is_instance_valid(npc._name_l):candidates.append({"label":npc._name_l,"pad":npc._pad,"priority":1 if npc==_round_target else 3 if npc.guest else 4})
 	for monster in _monsters:
-		if monster.level_l!=null:candidates.append({"label":monster.level_l,"priority":2})
+		if is_instance_valid(monster) and is_instance_valid(monster.level_l):candidates.append({"label":monster.level_l,"priority":2})
 	for entity in _quest_entities:
-		if entity._caption_label!=null:candidates.append({"label":entity._caption_label,"priority":1 if entity==_round_target else 5})
+		if is_instance_valid(entity) and is_instance_valid(entity._caption_label):candidates.append({"label":entity._caption_label,"priority":1 if entity==_round_target else 5})
 	if is_instance_valid(_pet_follower):
 		for child in _pet_follower.get_children():
 			if child is Label:candidates.append({"label":child,"priority":6,"alpha":.85,"alternatives":[Vector2(0,-8),Vector2(0,-16)]})
 	for child in _world.get_children():
-		if child is _WorldExit and child._caption_label!=null:candidates.append({"label":child._caption_label,"priority":5})
+		if child is _WorldExit and is_instance_valid(child._caption_label):candidates.append({"label":child._caption_label,"priority":5})
 	NameTags.resolve(candidates,_name_tag_exclusions())

@@ -116,7 +116,7 @@ func _ready()->void:
 		login.queue_free();await frames()
 		var loading:=preload("res://src/ui/LoadScreen.tscn").instantiate();loading.auto_advance=false;vp.add_child(loading);loading.set_process(false);await frames()
 		for ratio in [0.0,.45,1.0]:
-			loading._set_bar_ratio(ratio);check(is_equal_approx(loading.bar_fill_width(),(loading._gauge.size.x-2)*ratio),"real loading ratio "+str(ratio))
+			loading._set_bar_ratio(ratio);check(is_equal_approx(loading.bar_fill_width(),roundf(loading.full_fill_width()*ratio)),"real loading ratio "+str(ratio))
 		loading.queue_free();vp.queue_free();await frames()
 	print("REFERENCE_COMPLETE_%s checks=%d failures=%d"%["OK" if failures==0 else "FAIL",checks,failures])
 	get_tree().quit(0 if failures==0 else 1)
