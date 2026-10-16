@@ -1104,14 +1104,14 @@ func _build_player(map_w: float, map_h: float) -> void:
 		_first_act_weapon.scale = Vector2.ONE * 0.7
 		_first_act_weapon.visible = false
 		_player.add_child(_first_act_weapon)
-		_player_name_l = G.gold_label("", 11, false, Lacquer.PAPER, false)
+		_player_name_l = G.gold_label("", G.FS_XS, false, Lacquer.PAPER, false)
 		_player_name_l.add_theme_font_override("font", G.font_bold)
 		_player_name_l.add_theme_color_override("font_color", Lacquer.PAPER)
 		_player_name_l.clip_text = true
 		_player_name_l.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-		_player_name_l.add_theme_font_size_override("font_size", 11)
-		_player_name_l.position = Vector2(0, 1)
-		_player_name_l.size = Vector2(90, 18)
+		_player_name_l.add_theme_font_size_override("font_size", G.FS_XS)
+		_player_name_l.position = Vector2(0, 0)
+		_player_name_l.size = Vector2(90, 22)
 		_player_name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		_player_name_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		_player_name_l.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -1273,7 +1273,7 @@ func _sync_world_companion() -> void:
 	var pet_name := String(TableCache.get_pet(pid).get("name", pid))
 	var tag := G.gold_label(pet_name, G.FS_XS, true, Color("f3e7c4"), false)
 	tag.add_theme_font_override("font",G.font_bold)
-	tag.add_theme_font_size_override("font_size",12)
+	tag.add_theme_font_size_override("font_size",G.FS_XS)
 	tag.add_theme_color_override("font_color",Color("bfb096"))
 	tag.add_theme_color_override("font_shadow_color",Color("0a090b"))
 	tag.add_theme_constant_override("shadow_offset_y",1)
@@ -1281,7 +1281,7 @@ func _sync_world_companion() -> void:
 	if _pet_follower_sprite.texture!=null:
 		var used:=preload("res://src/ui/NameTagLayout.gd").opaque_bounds(_pet_follower_sprite.texture)
 		tag.position.y=_pet_follower_sprite.position.y+(used.position.y-_pet_follower_sprite.texture.get_height()*.5)*_pet_follower_sprite.scale.y-20
-	tag.size = Vector2(70, 20)
+	tag.size = Vector2(70, 22)
 	tag.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	tag.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_pet_follower.add_child(tag)
@@ -1697,7 +1697,7 @@ func _refresh_hud() -> void:
 		var need := G.exp_to_next(lv)
 		var exp_ratio := 1.0 if need <= 0 else clampf(float(exp) / float(need), 0.0, 1.0)
 		_main_level_l.text = str(lv)
-		_main_level_l.add_theme_font_size_override("font_size", 16 if lv >= 100 else 20)
+		_main_level_l.add_theme_font_size_override("font_size", G.FS_SM if lv >= 100 else G.FS_MD)
 		HudStyle.progress(_main_hp_fill, float(hp) / float(maxi(m, 1)))
 		HudStyle.progress(_main_exp_fill, exp_ratio)
 		_main_hp_fill.color = Lacquer.RED if float(hp) / float(maxi(m, 1)) <= 0.3 else Lacquer.JADE
@@ -1725,12 +1725,12 @@ func _refresh_hud() -> void:
 			_player_name_l.text = "%s  Lv%d" % [player_name.left(8)+"…" if player_name.length()>8 else player_name, lv]
 			_player_name_l.tooltip_text = player_name
 			var name_width := G.font_bold.get_string_size(_player_name_l.text,
-				HORIZONTAL_ALIGNMENT_LEFT, -1, 11).x
+				HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS).x
 			var tag_width := clampf(name_width + 12.0, 64.0, 150.0)
 			_player_tag.size = Vector2(tag_width, 20)
 			_player_tag.position.x = -tag_width * 0.5
-			_player_name_l.size = Vector2(tag_width, 18)
-			_player_name_l.position = Vector2(0, 1)
+			_player_name_l.size = Vector2(tag_width, 22)
+			_player_name_l.position = Vector2(0, 0)
 		_refresh_player_appearance()
 	# 苦行局要在 HUD 上一直看得见：玩家必须清楚"这局敌人更强、收益更高"，
 	# 而不是打着打着忘了自己开过什么
@@ -4747,8 +4747,8 @@ class _WorldExit extends Node2D:
 		_caption_label = label
 		label.position = Vector2(32,-54)
 		label.add_theme_font_override("font",G.font_bold)
-		label.add_theme_font_size_override("font_size",12)
-		label.size = Vector2(clampf(G.font_bold.get_string_size(caption,HORIZONTAL_ALIGNMENT_LEFT,-1,12).x+10,60,144),24)
+		label.add_theme_font_size_override("font_size",G.FS_XS)
+		label.size = Vector2(clampf(G.font_bold.get_string_size(caption,HORIZONTAL_ALIGNMENT_LEFT,-1,G.FS_XS).x+10,60,144),24)
 		if bool(get_meta("caption_below",false)):label.position=Vector2(-label.size.x*.5,16)
 		label.clip_text=true
 		label.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
@@ -4878,10 +4878,10 @@ class _MapMonster extends CharacterBody2D:
 			var mon_name := String(TableCache.get_monster(mon_id).get("name", "怪物"))
 			var txt := "Lv%d %s" % [display_level, mon_name]
 			# 普通明雷的信息层压低一档；精英／首领仍保留醒目的紫色等级提示。
-			var label_fs := 12
+			var label_fs := G.FS_XS
 			var label_color := Color("e58a72")
 			level_l = G.gold_label(txt, label_fs, true, label_color, true)
-			level_l.add_theme_font_size_override("font_size",12)
+			level_l.add_theme_font_size_override("font_size",G.FS_XS)
 			level_l.add_theme_color_override("font_shadow_color",Color("0a090b"));level_l.add_theme_constant_override("shadow_offset_y",1)
 			# P01 样板 §6：盒宽按文本实测（旧值固定 132，长名截断、短名留白），
 			# 位置再按画布坐标钳回屏内，避免怪物走到屏缘时名签被裁掉半边。

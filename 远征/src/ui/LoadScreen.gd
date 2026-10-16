@@ -55,6 +55,7 @@ var _queue: Array[String] = []      # 待加载的贴图/音频
 var _code: Array[String] = []       # 待编译的脚本/场景
 var _ground: Array[String] = []
 var _warm_art: Array[Texture2D] = []  # 保持预热纹理，确保同一 RID 的地基缓存被场景复用
+static var _warm_cache: Array[Resource] = []  # 保持预热脚本/场景/贴图常驻，避免离开加载页后引用归零被卸载
 var _total := 0
 var _done := false
 var _t0 := 0.0
@@ -342,6 +343,9 @@ func _collect_queue() -> void:
 	# Warm the new atlas regions in the existing loading queue, before any panel opens.
 	var review_regions:Dictionary=JSON.parse_string(FileAccess.get_file_as_string(ReviewFix.ROOT+"regions.json"))
 	for id in review_regions:_queue.append("reviewfix:"+String(id))
+	if FileAccess.file_exists("res://assets/ui/next_review_20261009/regions.json"):
+		var next_regions:Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://assets/ui/next_review_20261009/regions.json"))
+		for id in next_regions:_queue.append("reviewfix:"+String(id))
 	_queue.append("res://assets/ui/next_review_20261009/map.png")
 	if ReferenceWorldArt.active("lorin_wilds"):
 		for group in ["buildings","npcs","foliage","props"]:
@@ -364,11 +368,14 @@ func _process(_d: float) -> void:
 		if path.begins_with("chest:"): Chest.texture(path.trim_prefix("chest:"))
 		elif path.begins_with("reviewfix:"):ReviewFix.texture(path.trim_prefix("reviewfix:"))
 		elif path=="sunny:prepare":preload("res://src/world/SunnyTravelArt.gd").prepare()
-		else: load(path)
+		else:
+			var res := load(path)
+			if res != null: _warm_cache.append(res)
 	for i in CODE_PER_FRAME:
 		if _code.is_empty():
 			break
-		load(_code.pop_front() as String)
+		var code_res := load(_code.pop_front() as String)
+		if code_res != null: _warm_cache.append(code_res)
 	# 一个地基一帧；点击进城时只复用已生成的接触影纹理。
 	if not _ground.is_empty():
 		var id := _ground.pop_front() as String

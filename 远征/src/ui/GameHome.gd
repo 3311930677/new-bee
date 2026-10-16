@@ -162,8 +162,8 @@ func _entry_has_badge(label: String) -> bool:
 
 ## 任务红点：只在「今日委托有可交付」时亮——主线常在，常亮就是噪音（§28 口径）
 func _quest_claimable() -> bool:
-	for qid in G.quest_offer():
-		if G.quest_active(String(qid)) and G.quest_completed(String(qid)):
+	for qid in (G.quest.get("active", {}) as Dictionary).keys():
+		if G.quest_completed(String(qid)):
 			return true
 	return false
 
