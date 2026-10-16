@@ -85,7 +85,7 @@ var font_serif: FontFile
 var font_art: FontFile
 var font_display: FontFile
 
-# 字号阶梯（统一收敛，禁止随手调参；层间比例 13/16/18/22/30/56）
+# 字号阶梯（统一收敛，禁止随手调参；层间比例 15/17/18/24/28/56）
 const FS_XS := 15    # 角标 / 最小辅助
 const FS_SM := 17    # 提示 / 描述文字
 const FS_MD := 18    # 按钮 / 输入框 / 正文
