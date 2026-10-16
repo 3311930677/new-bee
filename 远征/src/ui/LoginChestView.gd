@@ -126,7 +126,7 @@ func _field(hint:String) -> LineEdit:
 	for state in ["normal","read_only"]:edit.add_theme_stylebox_override(state,clear)
 	edit.add_theme_stylebox_override("focus",focus)
 	edit.add_theme_font_override("font",G.font_reg)
-	edit.add_theme_font_size_override("font_size",16)
+	edit.add_theme_font_size_override("font_size",G.FS_SM)
 	edit.add_theme_color_override("font_color",Color("2b2014"))
 	edit.add_theme_color_override("font_placeholder_color",Color("8f7a5c"))
 	edit.add_theme_color_override("caret_color",Color("8a3a1c"))
@@ -141,7 +141,7 @@ func _caption(words:String,color:Color) -> Label:
 	l.vertical_alignment=VERTICAL_ALIGNMENT_CENTER
 	l.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	l.add_theme_font_override("font",G.font_serif)
-	l.add_theme_font_size_override("font_size",13)
+	l.add_theme_font_size_override("font_size",G.FS_XS)
 	l.add_theme_color_override("font_color",color)
 	l.add_theme_color_override("font_shadow_color",Color("140a05"))
 	l.add_theme_constant_override("shadow_offset_x",1);l.add_theme_constant_override("shadow_offset_y",1)

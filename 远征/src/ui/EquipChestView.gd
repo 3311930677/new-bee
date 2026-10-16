@@ -77,7 +77,7 @@ func layout(safe_override: Rect2 = Rect2()) -> void:
 			Page.place(child,Vector2(slot_i*(cell_width+4)+(12 if slot_i>=4 else 0),0),Vector2(cell_width,70))
 			slot_i+=1
 		else:
-			Page.place(child,Vector2((slot_i-1)*(cell_width+4)+(12 if slot_i>4 else 0),72),Vector2(cell_width,20))
+			Page.place(child,Vector2((slot_i-1)*(cell_width+4)+(12 if slot_i>4 else 0),72),Vector2(cell_width,22))
 	Page.place(_focus,Vector2(x+20,y+160+(tray_top-y-300)*.5),Vector2(safe.size.x-40,108))
 	Page.place(_tray,Vector2(x,tray_top),Vector2(safe.size.x,safe.end.y-tray_top))
 	Page.place(_tabs,Vector2(x+12,tray_top+8),Vector2(safe.size.x-24,44))
@@ -114,7 +114,7 @@ func refresh() -> void:
 		_slots.add_child(cell)
 		var label:=UI.label(String(cfg.get("name","")),"tag",UI.AGED)
 		label.position=Vector2(cell.position.x,72)
-		label.size=Vector2(70,20)
+		label.size=Vector2(70,22)
 		label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 		_slots.add_child(label)
 		host._slot_lv[id]=cell.amount

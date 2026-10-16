@@ -134,10 +134,10 @@ func _plain_row(icon:String) -> Array:
 	wrap.add_child(row)
 	row.add_child(Kit.icon_box(icon))
 	return [wrap,row]
-## 行标题：参考稿用衬线 16 号
+## 行标题：参考稿用衬线 17 号（G.FS_SM）
 func _row_title(words:String) -> Label:
 	var title:=UI.label(words,"section")
-	title.add_theme_font_size_override("font_size",16)
+	title.add_theme_font_size_override("font_size",G.FS_SM)
 	return title
 ## 说明文字前的 ◆（参考稿：棕色菱形，重置提示是红色）。返回原 Label，宿主照常改它的文字
 func _caption(parent:Control,label:Label,ink:=Color("8a6a4e")) -> Label:
@@ -244,7 +244,7 @@ func _switch_row(box:VBoxContainer,sw,icon:String) -> Button:
 	sw.plate=StyleBoxEmpty.new()
 	sw.custom_minimum_size.y=ROW_H
 	sw.heading.add_theme_font_override("font",G.font_serif)
-	sw.heading.add_theme_font_size_override("font_size",16)
+	sw.heading.add_theme_font_size_override("font_size",G.FS_SM)
 	var wrap:=MarginContainer.new()
 	for side in ["margin_left","margin_right"]:wrap.add_theme_constant_override(side,0)
 	wrap.add_child(sw)

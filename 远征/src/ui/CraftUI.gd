@@ -25,7 +25,7 @@ static func action(words: String,at: Vector2,extent: Vector2,skin := "secondary"
 	var b := Field.action(words,at,extent)
 	b.skin = skin
 	b.caption.add_theme_color_override("font_color",Color("f1dfb5") if skin=="primary" else WHITE)
-	b.caption.add_theme_font_size_override("font_size",18)
+	b.caption.add_theme_font_size_override("font_size",G.FS_MD)
 	b.caption.add_theme_font_override("font",G.font_serif)
 	if skin=="scroll": b.caption.add_theme_color_override("font_color",Color("3d433b"))
 	clean_label(b.caption)

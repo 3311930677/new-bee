@@ -244,7 +244,7 @@ func _plaque(id: String, text: String, icon: String) -> Button:
 	b.add_theme_constant_override("icon_max_width", 32)
 	b.focus_mode = Control.FOCUS_NONE
 	b.add_theme_font_override("font", FONT_SERIF)
-	b.add_theme_font_size_override("font_size", 15)
+	b.add_theme_font_size_override("font_size", G.FS_XS)
 	b.add_theme_constant_override("outline_size", 4)
 	b.add_theme_constant_override("h_separation", 8)
 	for state in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
@@ -337,17 +337,17 @@ func _build_top_bar() -> void:
 	_avatar.add_child(_tex(DIR + "avatar_frame.png", Vector2.ZERO))
 	var badge := _tex(DIR + "level_badge.png", Vector2(24, 64))
 	_avatar.add_child(badge)
-	_level = _label("", FONT_BOLD, 12, CREAM, 3)
+	_level = _label("", FONT_BOLD, G.FS_XS, CREAM, 3)
 	_level.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_level.position = Vector2(0, -2)
-	_level.size = Vector2(32, 20)
+	_level.size = Vector2(32, 22)
 	badge.add_child(_level)
 	if host != null:
 		host._avatar_frame = _avatar
 		host._avatar_pic = _avatar_pic
 
 	# 名字 + 经验条
-	_name = _label("", FONT_SERIF, 16, CREAM, 4)
+	_name = _label("", FONT_SERIF, G.FS_SM, CREAM, 4)
 	_name.position = Vector2(96, 50)
 	_name.size = Vector2(150, 24)
 	_name.clip_text = true
@@ -401,7 +401,7 @@ func _build_top_bar() -> void:
 		cap.mouse_entered.connect(func(): skin.modulate = Color(1.15, 1.1, 1.05))
 		cap.mouse_exited.connect(func(): skin.modulate = Color.WHITE)
 		skin.add_child(_tex(PIX + "%s.png" % c[2], Vector2(1, 2)))
-		var num := _label(_fmt(int(_wallet().get(c[0], 0))), FONT_BOLD, 13, CREAM, 3)
+		var num := _label(_fmt(int(_wallet().get(c[0], 0))), FONT_BOLD, G.FS_XS, CREAM, 3)
 		num.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		num.position = Vector2(30, 6)
 		num.size = Vector2(CAP_W - 38, 22)
@@ -429,9 +429,9 @@ func _build_top_bar() -> void:
 		_top.add_child(btn)
 		btn.add_child(_disc(Vector2(10, 10), 36, HOLE_DARK))
 		btn.add_child(_tex(PIX + "%s.png" % r[2], Vector2(12, 12)))
-		var plate := _plate(Vector2(8, 44), Vector2(40, 16))
+		var plate := _plate(Vector2(8, 42), Vector2(40, 22))
 		btn.add_child(plate)
-		var t := _label(rtitle, FONT_SERIF, 11, CREAM, 3)
+		var t := _label(rtitle, FONT_SERIF, G.FS_XS, CREAM, 3)
 		t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		t.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		t.position = Vector2(0, -1)
@@ -473,14 +473,14 @@ func _build_bottom() -> void:
 	_quest.pressed.connect(_on_entry.bind("quest", "主线任务"))
 	_hud_bottom.add_child(_quest)
 	_quest.add_child(_tex(DIR + "icons/quest_32.png", Vector2(14, 12)))
-	_quest_title = _label("主线 · 夜叩边城", FONT_SERIF, 14, INK, 0)
-	_quest_title.position = Vector2(52, 7)
-	_quest_title.size = Vector2(226, 20)
+	_quest_title = _label("主线 · 夜叩边城", FONT_SERIF, G.FS_XS, INK, 0)
+	_quest_title.position = Vector2(52, 6)
+	_quest_title.size = Vector2(226, 22)
 	_quest_title.clip_text = true
 	_quest.add_child(_quest_title)
-	_quest_goal = _label("与城门守将交谈  1/3", FONT_BOLD, 12, INK_MUTED, 0)
-	_quest_goal.position = Vector2(52, 28)
-	_quest_goal.size = Vector2(226, 18)
+	_quest_goal = _label("与城门守将交谈  1/3", FONT_BOLD, G.FS_XS, INK_MUTED, 0)
+	_quest_goal.position = Vector2(52, 27)
+	_quest_goal.size = Vector2(226, 22)
 	_quest_goal.clip_text = true
 	_quest_goal.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_quest.add_child(_quest_goal)
@@ -615,9 +615,9 @@ func _nav_button(def: Array, pos: Vector2) -> TextureButton:
 	# 内孔垫深色圆底，图标居中在孔里；文字放在下方的小牌子上，压住下沿金属环但不碰图标
 	btn.add_child(_disc(Vector2(20, 20), 40, HOLE_DARK))
 	btn.add_child(_tex(DIR + "icons/%s_32.png" % def[2], Vector2(24, 20)))
-	var plate := _plate(Vector2(18, 56), Vector2(44, 18))
+	var plate := _plate(Vector2(18, 54), Vector2(44, 22))
 	btn.add_child(plate)
-	var t := _label(def[1], FONT_SERIF, 12, CREAM, 3)
+	var t := _label(def[1], FONT_SERIF, G.FS_XS, CREAM, 3)
 	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	t.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	t.position = Vector2(0, -1)
@@ -698,7 +698,7 @@ func _label(text: String, font: Font, size_px: int, color: Color, outline: int) 
 	var l := Label.new()
 	l.text = text
 	l.add_theme_font_override("font", font)
-	l.add_theme_font_size_override("font_size", size_px)
+	l.add_theme_font_size_override("font_size", maxi(size_px, G.FS_XS))
 	l.add_theme_color_override("font_color", color)
 	if outline > 0:
 		l.add_theme_constant_override("outline_size", outline)

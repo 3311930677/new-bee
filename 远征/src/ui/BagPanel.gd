@@ -321,7 +321,7 @@ func _build_detail() -> void:
 	if not affixes.is_empty():_detail_body.add_child(Page.line("词条："+" · ".join(affixes),"caption",UI.AGED))
 	var locked:=bool(inst.get("locked",false))
 	var sell:=_action("卖出 %d 金" % G.inv_sell_price(uid),"secondary","sell",_do_sell.bind(uid))
-	sell.caption.add_theme_font_size_override("font_size",14)
+	sell.caption.add_theme_font_size_override("font_size",G.FS_XS)
 	sell.caption.add_theme_color_override("font_color",UI.RED)
 	sell.disabled=locked or worn
 	sell.tooltip_text="已锁定，不能卖出" if locked else "请先卸下装备" if worn else "高品质装备需再次确认"

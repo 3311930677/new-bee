@@ -59,7 +59,7 @@ func _build() -> void:
 	_world_button.name = "WorldAffairsButton"
 	_world_button.custom_minimum_size = Vector2(104,44)
 	_world_button.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	_world_button.caption.add_theme_font_size_override("font_size", 13)
+	_world_button.caption.add_theme_font_size_override("font_size", G.FS_XS)
 	_world_button.pressed.connect(_open_world_board)
 	head_row.add_child(_world_button)
 	_content.add_child(_section("主线传书", "quest"))
@@ -213,7 +213,7 @@ func _row(qid: String) -> void:
 	var who_label := _line(who,"tag",Art.MUTED)
 	who_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	who_label.custom_minimum_size.x = 108
-	who_label.add_theme_font_size_override("font_size",11)
+	who_label.add_theme_font_size_override("font_size",G.FS_XS)
 	side.add_child(who_label)
 	var enabled := not G.quest_claimed(qid) and (not G.quest_active(qid) or G.quest_completed(qid))
 	var words := "已交付" if G.quest_claimed(qid) else "接取" if not G.quest_active(qid) else "交付" if G.quest_completed(qid) else "进行中"
@@ -221,7 +221,7 @@ func _row(qid: String) -> void:
 	btn.name = "QuestAction"
 	btn.set_meta("quest_id",qid)
 	btn.custom_minimum_size = Vector2(108,44)
-	btn.caption.add_theme_font_size_override("font_size",16)
+	btn.caption.add_theme_font_size_override("font_size",G.FS_SM)
 	btn.disabled = not enabled
 	btn.pressed.connect(_act.bind(qid))
 	btn.focus_entered.connect(func(): _scroll.ensure_control_visible(btn))

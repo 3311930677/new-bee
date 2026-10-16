@@ -12,11 +12,11 @@ const JADE := Color("356653")
 const BLUE := Color("345a69")
 const RUST := Color("985b42")
 
-static func text(words: String, px := 16, ink := INK, numeric := false) -> Label:
+static func text(words: String, px := G.FS_SM, ink := INK, numeric := false) -> Label:
 	var node := Label.new()
 	node.text = words
 	node.add_theme_font_override("font", G.font_bold if numeric else G.font_serif)
-	node.add_theme_font_size_override("font_size", px)
+	node.add_theme_font_size_override("font_size", maxi(px, G.FS_XS))
 	node.add_theme_color_override("font_color", ink)
 	node.add_theme_constant_override("outline_size", 0)
 	node.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
@@ -53,7 +53,7 @@ static func badge(words: String, status: String) -> PanelContainer:
 	style.content_margin_top = 4
 	style.content_margin_bottom = 4
 	node.add_theme_stylebox_override("panel", style)
-	node.add_child(text(words, 14, Color(colors[1])))
+	node.add_child(text(words, G.FS_XS, Color(colors[1])))
 	return node
 
 static func apply_button(button: Control, kind := "primary") -> void:

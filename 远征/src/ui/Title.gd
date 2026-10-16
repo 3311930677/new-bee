@@ -293,9 +293,9 @@ class _FooterLink extends Button:
 		_icon.position = Vector2(11, 11)
 		_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(_icon)
-		var l := preload("res://src/ui/PixelKit.gd").label(words, 12, Color("e6d2a4"), 1)
-		l.position = Vector2(-12, 58)
-		l.size = Vector2(W + 24, 16)
+		var l := preload("res://src/ui/PixelKit.gd").label(words, G.FS_XS, Color("e6d2a4"), 1)
+		l.position = Vector2(-12, 55)
+		l.size = Vector2(W + 24, 22)
 		add_child(l)
 	func _ready() -> void:
 		for s in ["normal", "hover", "pressed", "focus", "disabled"]: add_theme_stylebox_override(s, StyleBoxEmpty.new())

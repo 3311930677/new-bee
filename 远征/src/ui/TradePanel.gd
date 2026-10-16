@@ -50,7 +50,7 @@ func _button(parent: Control, words: String, at: Vector2, extent: Vector2,
 	elif words == "返回": btn.skin = "ledger_quiet"
 	btn.disabled = disabled
 	btn.accent = JADE
-	btn.caption.add_theme_font_size_override("font_size", 16)
+	btn.caption.add_theme_font_size_override("font_size", G.FS_SM)
 	btn.caption.add_theme_font_override("font", G.font_serif)
 	btn.caption.add_theme_color_override("font_color", Style.LIGHT if primary or btn.skin in ["ledger_rules", "ledger_quiet"] else JADE)
 	Craft.clean_label(btn.caption)
@@ -115,11 +115,11 @@ func _rebuild() -> void:
 	# Plain Control inside the frame: its children retain the shared 4px alignment grid.
 	var metrics := Control.new()
 	summary.add_child(metrics)
-	_text(metrics,"行旅日",Vector2(12,4),Vector2(72,20),12,Style.BRASS)
+	_text(metrics,"行旅日",Vector2(12,2),Vector2(72,22),G.FS_XS,Style.BRASS)
 	_text(metrics,"第 %d 日" % int(state.get("day",1)),Vector2(12,24),Vector2(80,28),18,Style.LIGHT,true)
-	_text(metrics,"钱囊",Vector2(112,4),Vector2(140,20),12,Style.BRASS)
+	_text(metrics,"钱囊",Vector2(112,2),Vector2(140,22),G.FS_XS,Style.BRASS)
 	_text(metrics,"%d 金" % int(G.wallet.get("gold",0)),Vector2(112,24),Vector2(172,28),20,Color("e9cd8e"),true)
-	_text(metrics,"行囊",Vector2(304,4),Vector2(88,20),12,Style.BRASS)
+	_text(metrics,"行囊",Vector2(304,2),Vector2(88,22),G.FS_XS,Style.BRASS)
 	_text(metrics,"%d / %d" % [EconomyService.carried_weight(cfg,G.items),int(cfg.get("carry_limit",28))],Vector2(304,24),Vector2(92,28),18,Style.LIGHT,true)
 	var tabs := HBoxContainer.new()
 	tabs.add_theme_constant_override("separation",8)
@@ -146,7 +146,7 @@ func _rebuild() -> void:
 	notice.custom_minimum_size = Vector2(408,40)
 	notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	notice.add_theme_font_override("font",G.font_serif)
-	notice.add_theme_font_size_override("font_size",15)
+	notice.add_theme_font_size_override("font_size",G.FS_XS)
 	notice.add_theme_color_override("font_color",RUST)
 	Craft.clean_label(notice)
 	stack.add_child(notice)

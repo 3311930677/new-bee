@@ -127,7 +127,7 @@ func _build() -> void:
 	back_btn.add_theme_stylebox_override("pressed", btn_hover)
 	back_btn.add_theme_color_override("font_color", UI.PAPER)
 	back_btn.add_theme_font_override("font", G.font_reg)
-	back_btn.add_theme_font_size_override("font_size", 14)
+	back_btn.add_theme_font_size_override("font_size", G.FS_XS)
 	back_btn.pressed.connect(_close_self)
 	_panel.add_child(back_btn)
 
@@ -207,7 +207,7 @@ func _make_row(_idx: int, row: Dictionary) -> void:
 
 	var stock_l := UI.label("持有: %d" % stock, "tag", UI.JADE if stock > 0 else UI.AGED)
 	stock_l.position = Vector2(64, 34)
-	stock_l.size = Vector2(100, 18)
+	stock_l.size = Vector2(100, 22)
 	card.add_child(stock_l)
 
 	# 3. 价格标签
@@ -243,7 +243,7 @@ func _make_row(_idx: int, row: Dictionary) -> void:
 	buy_btn.add_theme_stylebox_override("pressed", buy_hover)
 	buy_btn.add_theme_color_override("font_color", UI.PAPER)
 	buy_btn.add_theme_font_override("font", G.font_reg)
-	buy_btn.add_theme_font_size_override("font_size", 13)
+	buy_btn.add_theme_font_size_override("font_size", G.FS_XS)
 	buy_btn.pressed.connect(func(): _on_buy(iid))
 	card.add_child(buy_btn)
 
@@ -267,7 +267,7 @@ func _make_row(_idx: int, row: Dictionary) -> void:
 	sell_btn.add_theme_stylebox_override("pressed", sell_hover)
 	sell_btn.add_theme_color_override("font_color", UI.PAPER if stock > 0 else Color(0.5, 0.5, 0.5))
 	sell_btn.add_theme_font_override("font", G.font_reg)
-	sell_btn.add_theme_font_size_override("font_size", 13)
+	sell_btn.add_theme_font_size_override("font_size", G.FS_XS)
 	sell_btn.disabled = stock <= 0 or sell_price <= 0
 	sell_btn.modulate.a = 0.5 if stock <= 0 else 1.0
 	sell_btn.pressed.connect(func(): _on_sell(iid))
