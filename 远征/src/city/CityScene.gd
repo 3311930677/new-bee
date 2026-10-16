@@ -3129,13 +3129,13 @@ class _CityNPC extends Node2D:
 			# 成人名牌保留原安全高度，避免与0.66倍主角名牌相交后被隐藏。
 			_plate_top = -78.0 if String(data.get("id", "")) == "npc_child" else -108.0
 		_plate_w = clampf(G.font_bold.get_string_size(txt,
-			HORIZONTAL_ALIGNMENT_LEFT, -1, 14).x + 16.0, 56.0, 112.0) \
+			HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS).x + 16.0, 56.0, 112.0) \
 			if embedded else maxf(64.0, G.font_bold.get_string_size(txt, HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS).x + 20)
 		_plate_h = 22.0 if embedded else 26.0
-		# 字号收进六档（P01 样板 §5）：主世界里的城务 NPC 名签原来是不在档里的字面量 14
-		_name_l = G.serif_label(txt,14,Color("fff5df"),false)
+		# 字号收进六档（P01 样板 §5）：主世界里的城务 NPC 名签统一用 G.FS_XS
+		_name_l = G.serif_label(txt,G.FS_XS,Color("fff5df"),false)
 		_name_l.add_theme_font_override("font",G.font_bold)
-		_name_l.add_theme_font_size_override("font_size",12 if embedded else 14)
+		_name_l.add_theme_font_size_override("font_size",G.FS_XS)
 		_name_l.position = Vector2(-_plate_w * 0.5, _plate_top + 2)
 		_name_l.custom_minimum_size = Vector2(_plate_w, 0)
 		_name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

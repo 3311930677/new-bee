@@ -149,7 +149,7 @@ func layout(safe_override:Rect2=Rect2()) -> void:
 	for id in ["partner","target","skill","item","attack"]:
 		var p:=Vector2(0,0) if id=="partner" else Vector2(0,54) if id=="target" else Vector2(column+6,0) if id=="skill" else Vector2(column+6,54) if id=="item" else Vector2((column+6)*2,0)
 		Page.place(_buttons[id],p,Vector2(commands.size.x-2*column-12 if id=="attack" else column,104 if id=="attack" else 50))
-		if id!="attack":_buttons[id].caption.add_theme_font_size_override("font_size",15)
+		if id!="attack":_buttons[id].caption.add_theme_font_size_override("font_size",G.FS_XS)
 	for item in [["flee",12,76],["speed",324,68],["auto",400,68]]:
 		var id:String=item[0]
 		Page.place(_buttons[id],Vector2(x+float(item[1])+(_safe.size.x-480 if id!="flee" else 0),_safe.position.y+8),Vector2(item[2],44))
@@ -200,7 +200,7 @@ func refresh() -> void:
 	var next:Combatant=_next_target(role)
 	_buttons.target.caption.text="换目标"
 	_target_subtitle.text="下个 · "+_enemy_name(next) if next!=null else "没有目标"
-	_target_subtitle.position=Vector2(2,29);_target_subtitle.size=Vector2(_buttons.target.size.x-4,20)
+	_target_subtitle.position=Vector2(2,28);_target_subtitle.size=Vector2(_buttons.target.size.x-4,22)
 	_buttons.target.caption.position=Vector2(30,1);_buttons.target.caption.size=Vector2(_buttons.target.size.x-34,28)
 	_buttons.target.get_node("CommandIcon").position=Vector2(4,2)
 	_sync_badges(sim)
@@ -363,10 +363,10 @@ class Attack extends UI.ChestButton:
 	func _layout() -> void:
 		caption.position=Vector2(0,size.y-55)
 		caption.size=Vector2(size.x,32)
-		caption.add_theme_font_size_override("font_size",22)
+		caption.add_theme_font_size_override("font_size",G.FS_LG)
 		subtitle.position=Vector2(5,size.y-24)
-		subtitle.size=Vector2(size.x-10,20)
-		subtitle.add_theme_font_size_override("font_size",12)
+		subtitle.size=Vector2(size.x-10,22)
+		subtitle.add_theme_font_size_override("font_size",G.FS_XS)
 	func _draw() -> void:
 		UI.nine(self,Flow.texture("attack"),size)
 		if is_hovered() or has_focus():
@@ -403,7 +403,7 @@ class TargetButton extends UI.ChestButton:
 	func _init() -> void:super("换目标","rail")
 	func _layout() -> void:
 		caption.position=Vector2(32,0);caption.size=Vector2(size.x-36,28)
-		subtitle.position=Vector2(2,29);subtitle.size=Vector2(size.x-4,20);subtitle.add_theme_font_size_override("font_size",12)
+		subtitle.position=Vector2(2,28);subtitle.size=Vector2(size.x-4,22);subtitle.add_theme_font_size_override("font_size",G.FS_XS)
 class CommandGlyph extends Control:
 	const UI=preload("res://src/ui/TravelChestUI.gd")
 	var cycle:=false

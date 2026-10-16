@@ -5822,7 +5822,7 @@ func gold_label(text: String, size: int, bold := true,
 	l.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	l.add_theme_font_override("font", font_bold if bold else font_reg)
-	l.add_theme_font_size_override("font_size", maxi(size, 14))
+	l.add_theme_font_size_override("font_size", maxi(size, FS_XS))
 	l.add_theme_color_override("font_color", color)
 	if outline:
 		var osize := roundi(size / 18.0)
@@ -5840,7 +5840,7 @@ func serif_label(text: String, size: int, color := GOLD,
 	l.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	l.add_theme_font_override("font", font_art if size >= FS_LG else font_serif)
-	l.add_theme_font_size_override("font_size", maxi(size, 14))
+	l.add_theme_font_size_override("font_size", maxi(size, FS_XS))
 	l.add_theme_color_override("font_color", color)
 	if outline:
 		l.add_theme_color_override("font_outline_color", Color("2a1a0a", 0.85))
@@ -5855,7 +5855,7 @@ func text_label(text: String, size := FS_SM, color := TEXT_DARK) -> Label:
 	l.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	l.add_theme_font_override("font", font_reg)
-	l.add_theme_font_size_override("font_size", maxi(size, 14))
+	l.add_theme_font_size_override("font_size", maxi(size, FS_XS))
 	l.add_theme_color_override("font_color", color if color.get_luminance() > 0.70 else paper_ink(color))
 	l.add_theme_constant_override("line_spacing", 4)
 	return l
@@ -5871,7 +5871,7 @@ func toast_label(text: String) -> Label:
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	label.add_theme_font_override("font", font_reg)
-	label.add_theme_font_size_override("font_size", 18)
+	label.add_theme_font_size_override("font_size", FS_MD)
 	label.add_theme_color_override("font_color", Color("f1e2c2"))
 	var backing := Panel.new()
 	backing.set_anchors_preset(Control.PRESET_FULL_RECT)

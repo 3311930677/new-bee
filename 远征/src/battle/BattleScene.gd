@@ -2467,9 +2467,9 @@ class UnitView extends Node2D:
 		name_l = G.gold_label(u.name.left(6), G.FS_XS, false,
 			Color("ffd0d0") if side == "enemy" else Color("c8e8c8"), true)
 		name_l.position=Vector2(-48,name_y)
-		name_l.custom_minimum_size=Vector2(96,0)
+		name_l.custom_minimum_size=Vector2(96,22)
 		name_l.add_theme_font_override("font",G.font_reg)
-		name_l.add_theme_font_size_override("font_size",12)
+		name_l.add_theme_font_size_override("font_size",G.FS_XS)
 		name_l.clip_text=true
 		name_l.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
 		body.add_child(name_l)
@@ -2508,7 +2508,7 @@ class UnitView extends Node2D:
 		body.add_child(hp_fg)
 		hp_value=preload("res://src/ui/TravelChestUI.gd").label("","tag")
 		hp_value.position=hp_bg.position+Vector2(0,8)
-		hp_value.size=Vector2(84,20)
+		hp_value.size=Vector2(84,22)
 		hp_value.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 		body.add_child(hp_value)
 		if _classic and is_role:
@@ -2533,8 +2533,6 @@ class UnitView extends Node2D:
 		# 玩家走"裸绿字"，两套画法混在一起；玩家名压亮草地几乎看不见，敌宠底板又比
 		# 名字本身抢眼。字号同时从 13 提到 16，亮底战场上先保证读得清。
 		name_l.text = value
-		name_l.add_theme_font_override("font",G.font_bold)
-		name_l.add_theme_font_size_override("font_size",12)
 		name_l.modulate.a = 1.0
 		name_l.add_theme_font_override("font", G.font_bold)
 		name_l.add_theme_font_size_override("font_size", G.FS_SM)
