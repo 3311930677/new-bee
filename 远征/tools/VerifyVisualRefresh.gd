@@ -131,5 +131,41 @@ func _ready() -> void:
 	_check(words.visible_characters == -1,"Finishing text must reveal all characters")
 	_check(not G.finish_text(words),"A second tap may advance after text is complete")
 	words.queue_free()
+	_check(G.FS_XS >= 15, "Minimum font size step G.FS_XS must be >= 15")
+	var chest_ui := preload("res://src/ui/TravelChestUI.gd")
+	for role_k in chest_ui.FONT_SIZES:
+		_check(int(chest_ui.FONT_SIZES[role_k]) >= G.FS_XS, "TravelChestUI role %s must be >= G.FS_XS" % str(role_k))
+	var re_lit := RegEx.new()
+	re_lit.compile('add_theme_font_size_override\\(\\s*"font_size"\\s*,\\s*\\d+')
+	var lit_hits: Array[String] = []
+	for path in _scan_files("res://src", [".gd"]):
+		if path.begins_with("res://src/preview/"): continue
+		var src_text := FileAccess.get_file_as_string(path)
+		if re_lit.search(src_text) != null:
+			lit_hits.append(path)
+	_check(lit_hits.is_empty(), "No literal font_size override outside src/preview: " + ", ".join(lit_hits))
+	var log_hits := _scan_files("res://assets", [".log", ".stdout", ".stderr"])
+	_check(log_hits.is_empty(), "No build log garbage under assets/: " + ", ".join(log_hits))
 	print("VISUAL_REFRESH_OK" if _fails == 0 else "VISUAL_REFRESH_FAIL %d" % _fails)
 	get_tree().quit(0 if _fails == 0 else 1)
+
+func _scan_files(dir_path: String, exts: Array[String]) -> Array[String]:
+	var out: Array[String] = []
+	var d := DirAccess.open(dir_path)
+	if d == null: return out
+	d.list_dir_begin()
+	var nm := d.get_next()
+	while not nm.is_empty():
+		if nm != "." and nm != "..":
+			var full := dir_path.path_join(nm)
+			if d.current_is_dir():
+				out.append_array(_scan_files(full, exts))
+			else:
+				for ext in exts:
+					if nm.ends_with(ext):
+						out.append(full)
+						break
+		nm = d.get_next()
+	d.list_dir_end()
+	return out
+
