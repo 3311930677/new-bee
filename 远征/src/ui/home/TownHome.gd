@@ -51,7 +51,7 @@ const FIRES := [
 	["xs", Vector2(198, 528)], ["xs", Vector2(282, 528)],
 	["xs", Vector2(167, 444)], ["xs", Vector2(314, 444)],
 ]
-const HERO_FEET := Vector2(240, 556)
+const HERO_FEET := Vector2(240, 540)
 # id、文字、图标（伙伴 = 伙伴图鉴）
 const NAV_LEFT := [["growth", "养成", "hero"], ["party", "伙伴", "party"]]
 const NAV_RIGHT := [["activity", "活动", "banner"], ["settings", "设置", "settings"]]
@@ -70,6 +70,16 @@ var _hero: TextureButton          # 出征徽章 = 返回主世界（节点名 R
 var _scene: Control
 var _bg: TextureRect
 var _hero_sprite: AnimatedSprite2D
+var _hero_shadow: Node2D
+var _hero_plate: Panel
+var _hero_role_label: Label
+var _hero_hit: Button
+var _switch_role_btn: Button
+var _shown_role_id := ""
+var _preview_pose_idx := 0
+const PREVIEW_POSES := [&"idle", &"walk_down", &"walk_left", &"walk_right", &"walk_up"]
+const PREVIEW_POSE_NAMES := ["待机", "朝南", "朝西", "朝东", "朝北"]
+const HERO_SCALE := 0.96
 var _top: Control
 var _hud_bottom: Control
 var _toast: Label
@@ -99,6 +109,7 @@ func _ready() -> void:
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(content)
 	_build_plaques()
+	_build_hero_interact()
 	_build_top_bar()
 	_build_bottom()
 	_toast = _label("", FONT_SERIF, 16, CREAM, 4)
@@ -122,6 +133,8 @@ func layout(safe_override: Rect2 = Rect2()) -> void:
 	for id in _plaques:
 		var b: Button = _plaques[id]
 		b.position = (Vector2(b.get_meta("center")) + Vector2(0, core_y) - b.size * 0.5).round()
+	if _hero_hit != null:
+		_hero_hit.position = Vector2(HERO_FEET.x - 44.0, HERO_FEET.y + core_y - 108.0)
 	_top.position = Vector2(0, safe.position.y)
 	_hud_bottom.position = Vector2(0, safe.end.y - 200.0)
 	_toast.position = Vector2(0, vh * 0.42)
@@ -138,6 +151,7 @@ func _safe_rect() -> Rect2:
 func refresh() -> void:
 	if _name == null:
 		return
+	_sync_hero_role(false)
 	var full := _player_name()
 	_name.text = full.left(8) + "…" if full.length() > 8 else full
 	_name.tooltip_text = full
@@ -194,11 +208,125 @@ func _build_scene() -> void:
 		fire.position = Vector2(f[1].x, f[1].y - fh * 0.5)
 		_scene.add_child(fire)
 
-	_hero_sprite = _strip_sprite(DIR + "hero_town_idle.png", 4, 5.0)
-	_hero_sprite.position = Vector2(HERO_FEET.x, HERO_FEET.y - 32.0)
+	_hero_shadow = _HeroContactShadow.new()
+	_hero_shadow.name = "HeroContactShadow"
+	_hero_shadow.position = HERO_FEET
+	_scene.add_child(_hero_shadow)
+
+	_hero_sprite = AnimatedSprite2D.new()
+	_hero_sprite.name = "HeroRoleSprite"
+	_hero_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_hero_sprite.scale = Vector2.ONE * HERO_SCALE
+	_hero_sprite.position = Vector2(HERO_FEET.x, HERO_FEET.y - 56.0 * HERO_SCALE)
 	_scene.add_child(_hero_sprite)
 	if host != null:
 		host._anim = _hero_sprite
+
+	_hero_plate = _plate(Vector2(HERO_FEET.x - 68.0, HERO_FEET.y - 6.0), Vector2(136, 24))
+	_hero_plate.name = "HeroRolePlate"
+	_scene.add_child(_hero_plate)
+	_hero_role_label = _label("", FONT_SERIF, G.FS_XS, GOLD, 3)
+	_hero_role_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_hero_role_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_hero_role_label.position = Vector2(0, -1)
+	_hero_role_label.size = _hero_plate.size
+	_hero_plate.add_child(_hero_role_label)
+	_sync_hero_role(true)
+
+
+func _build_hero_interact() -> void:
+	_hero_hit = Button.new()
+	_hero_hit.name = "HeroPreviewButton"
+	_hero_hit.focus_mode = Control.FOCUS_NONE
+	_hero_hit.flat = true
+	for st in ["normal", "hover", "pressed", "focus", "disabled"]:
+		_hero_hit.add_theme_stylebox_override(st, StyleBoxEmpty.new())
+	_hero_hit.size = Vector2(88, 108)
+	_hero_hit.position = Vector2(HERO_FEET.x - 44.0, HERO_FEET.y + CORE_Y_800 - 108.0)
+	_hero_hit.tooltip_text = "点按切换角色朝向预览"
+	_hero_hit.pressed.connect(_cycle_hero_pose)
+	content.add_child(_hero_hit)
+
+
+func _valid_role_id(raw_id: String) -> String:
+	var rid := raw_id.strip_edges()
+	if rid in ["zs", "ck", "fs", "fz"]:
+		return rid
+	return "zs"
+
+
+func _role_slug(role_id: String) -> String:
+	match role_id:
+		"zs": return "pojun"
+		"ck": return "chuanyang"
+		"fs": return "shuangyu"
+		"fz": return "chenxing"
+	return "pojun"
+
+
+func _role_sprite_frames(role_id: String) -> SpriteFrames:
+	var rid := _valid_role_id(role_id)
+	var slug := _role_slug(rid)
+	var idle_path := "res://image/role/%s/%s_idle.png" % [rid, slug]
+	var walk_path := "res://image/role/%s/%s_walk_frames.tres" % [rid, slug]
+	var tex: Texture2D = load(idle_path)
+	var frames := SpriteFrames.new()
+	if frames.has_animation(&"default"):
+		frames.remove_animation(&"default")
+	for anim_name in [&"idle", &"loop"]:
+		frames.add_animation(anim_name)
+		frames.set_animation_speed(anim_name, 5.0)
+		frames.set_animation_loop(anim_name, true)
+		if tex != null:
+			for c in 4:
+				var at := AtlasTexture.new()
+				at.atlas = tex
+				at.region = Rect2(c * 128, 0, 128, 128)
+				frames.add_frame(anim_name, at)
+	var walk_frames := load(walk_path) as SpriteFrames
+	if walk_frames != null:
+		for dir_anim in [&"walk_down", &"walk_left", &"walk_right", &"walk_up"]:
+			if walk_frames.has_animation(dir_anim):
+				frames.add_animation(dir_anim)
+				frames.set_animation_speed(dir_anim, walk_frames.get_animation_speed(dir_anim))
+				frames.set_animation_loop(dir_anim, true)
+				var cnt := walk_frames.get_frame_count(dir_anim)
+				for idx in cnt:
+					frames.add_frame(dir_anim, walk_frames.get_frame_texture(dir_anim, idx))
+	return frames
+
+
+func _sync_hero_role(force: bool = false) -> void:
+	if _hero_sprite == null:
+		return
+	var rid := _valid_role_id(G.selected_role)
+	if force or _shown_role_id != rid or _hero_sprite.sprite_frames == null:
+		_shown_role_id = rid
+		_preview_pose_idx = 0
+		_hero_sprite.sprite_frames = _role_sprite_frames(rid)
+		_hero_sprite.set_meta("role_id", rid)
+	var pose: StringName = PREVIEW_POSES[_preview_pose_idx % PREVIEW_POSES.size()]
+	if not _hero_sprite.sprite_frames.has_animation(pose):
+		pose = &"idle"
+	if _hero_sprite.animation != pose or not _hero_sprite.is_playing():
+		_hero_sprite.animation = pose
+		_hero_sprite.play(pose)
+	if host != null:
+		host._anim = _hero_sprite
+	if _hero_role_label != null:
+		var role_cfg: Dictionary = G.get_role(rid)
+		var rname := String(role_cfg.get("name", "破军"))
+		var rjob := String(role_cfg.get("job", "战士"))
+		_hero_role_label.text = "%s · %s" % [rname, rjob]
+
+
+func _cycle_hero_pose() -> void:
+	if G.ui_blocked:
+		return
+	_preview_pose_idx = (_preview_pose_idx + 1) % PREVIEW_POSES.size()
+	_sync_hero_role(false)
+	var role_cfg: Dictionary = G.get_role(_valid_role_id(G.selected_role))
+	_preview_toast("%s · %s" % [String(role_cfg.get("name", "破军")), PREVIEW_POSE_NAMES[_preview_pose_idx]])
 
 
 func _build_plaques() -> void:
@@ -346,12 +474,36 @@ func _build_top_bar() -> void:
 		host._avatar_frame = _avatar
 		host._avatar_pic = _avatar_pic
 
-	# 名字 + 经验条
+	# 名字 + 经验条 + 易职按钮
 	_name = _label("", FONT_SERIF, G.FS_SM, CREAM, 4)
 	_name.position = Vector2(96, 50)
-	_name.size = Vector2(150, 24)
+	_name.size = Vector2(142, 24)
 	_name.clip_text = true
 	_top.add_child(_name)
+	_switch_role_btn = Button.new()
+	_switch_role_btn.name = "RoleSwitchEntry"
+	_switch_role_btn.text = "易职"
+	_switch_role_btn.focus_mode = Control.FOCUS_NONE
+	_switch_role_btn.add_theme_font_override("font", FONT_SERIF)
+	_switch_role_btn.add_theme_font_size_override("font_size", G.FS_XS)
+	_switch_role_btn.add_theme_color_override("font_color", GOLD)
+	_switch_role_btn.add_theme_color_override("font_hover_color", CREAM)
+	_switch_role_btn.add_theme_color_override("font_pressed_color", GOLD)
+	var sw_sb := StyleBoxFlat.new()
+	sw_sb.bg_color = PLATE_DARK
+	sw_sb.border_color = BRONZE
+	sw_sb.set_border_width_all(1)
+	sw_sb.set_corner_radius_all(4)
+	sw_sb.content_margin_left = 4
+	sw_sb.content_margin_right = 4
+	for st_name in ["normal", "hover", "pressed"]:
+		_switch_role_btn.add_theme_stylebox_override(st_name, sw_sb)
+	_switch_role_btn.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	_switch_role_btn.position = Vector2(242, 48)
+	_switch_role_btn.size = Vector2(48, 26)
+	_switch_role_btn.tooltip_text = "重选职业或预览四角色"
+	_switch_role_btn.pressed.connect(_on_entry.bind("reselect_role", "重选职业"))
+	_top.add_child(_switch_role_btn)
 	var bar := NinePatchRect.new()
 	bar.texture = load(KIT + "bar_frame.png")
 	bar.patch_margin_left = 10
@@ -657,6 +809,10 @@ func _on_entry(id: String, title: String) -> void:
 		"party": host._open_codex(host._click_ev())
 		"activity": host._open_activities()
 		"settings": host._open_settings(host._click_ev())
+		"reselect_role":
+			if G.can_go("res://src/ui/CreateRole.tscn"):
+				G.set_meta("reselect_from_home", true)
+				G.go("res://src/ui/CreateRole.tscn")
 		"expedition": _continue_journey()
 
 
@@ -775,3 +931,12 @@ func _exp_ratio() -> float:
 	if need <= 0:
 		return 1.0   # 满级显示满条
 	return clamp(float(G.prog.get("exp", 0)) / float(need), 0.0, 1.0)
+
+
+class _HeroContactShadow extends Node2D:
+	func _draw() -> void:
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, 0.28))
+		draw_circle(Vector2(0, 2), 28.0, Color(0.04, 0.03, 0.05, 0.42))
+		draw_circle(Vector2.ZERO, 19.0, Color(0.02, 0.01, 0.03, 0.58))
+		draw_arc(Vector2.ZERO, 26.0, 0.0, TAU, 32, Color(0.95, 0.78, 0.42, 0.22), 1.5)
+

@@ -20,6 +20,8 @@ var _anim: AnimatedSprite2D
 var _info: Dictionary = {}
 var _role_idx := 0
 var _gender_idx := 0
+var _preview_pose: StringName = &"idle"
+var _reselect_mode := false
 var _toast: Label = null
 var _chest:Control
 var _role_art_frame: PanelContainer = null   # 职业插画位（有图才显形）
@@ -28,13 +30,19 @@ var _role_art: TextureRect = null
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_reselect_mode = bool(G.get_meta("reselect_from_home", false))
 	_chest=preload("res://src/ui/CreateRoleChestView.gd").new()
 	_chest.host=self
 	add_child(_chest)
-	_name_edit.text=G.random_name()
+	var existing_name := G.player_name.strip_edges()
+	_name_edit.text = existing_name if not existing_name.is_empty() else G.random_name()
+	var g_idx := GENDERS.find(G.gender)
+	if g_idx >= 0:
+		_gender_idx = g_idx
 	var start:=0
+	var target_role := G.selected_role if G.selected_role in ["zs", "ck", "fs", "fz"] else "zs"
 	for i in G.roles.size():
-		if G.roles[i].id==G.selected_role:start=i
+		if G.roles[i].id==target_role:start=i
 	_switch_role(start,false)
 
 func _build_background() -> void:
@@ -183,8 +191,9 @@ func _switch_role(idx: int, animate: bool) -> void:
 	_role_idx = wrapi(idx, 0, G.roles.size())
 	var role: Dictionary = G.roles[_role_idx]
 	_anim.sprite_frames = _build_frames(role["id"])
-	_anim.animation = &"idle"
-	_anim.play(&"idle")
+	var pose: StringName = _preview_pose if _anim.sprite_frames.has_animation(_preview_pose) else &"idle"
+	_anim.animation = pose
+	_anim.play(pose)
 	_chest.refresh()
 	if animate:
 		_anim.modulate.a = 0.0
@@ -196,8 +205,18 @@ func _switch_role(idx: int, animate: bool) -> void:
 			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
+func set_preview_pose(pose: StringName) -> void:
+	_preview_pose = pose
+	if _anim != null and _anim.sprite_frames != null and _anim.sprite_frames.has_animation(pose):
+		_anim.animation = pose
+		_anim.play(pose)
+	if _chest != null:
+		_chest.refresh()
+
+
 func _build_frames(role_id: String) -> SpriteFrames:
-	var tex: Texture2D = load(G.role_dir(role_id) + _role_name(role_id) + "_idle.png")
+	var slug := _role_name(role_id)
+	var tex: Texture2D = load(G.role_dir(role_id) + slug + "_idle.png")
 	var frames := SpriteFrames.new()
 	frames.remove_animation(&"default")
 	frames.add_animation(&"idle")
@@ -208,6 +227,16 @@ func _build_frames(role_id: String) -> SpriteFrames:
 		at.atlas = tex
 		at.region = Rect2(c * 128, 0, 128, 128)
 		frames.add_frame(&"idle", at)
+	var walk_path := G.role_dir(role_id) + slug + "_walk_frames.tres"
+	var walk_frames := load(walk_path) as SpriteFrames
+	if walk_frames != null:
+		for dir_anim in [&"walk_down", &"walk_left", &"walk_right", &"walk_up"]:
+			if walk_frames.has_animation(dir_anim):
+				frames.add_animation(dir_anim)
+				frames.set_animation_speed(dir_anim, walk_frames.get_animation_speed(dir_anim))
+				frames.set_animation_loop(dir_anim, true)
+				for idx in walk_frames.get_frame_count(dir_anim):
+					frames.add_frame(dir_anim, walk_frames.get_frame_texture(dir_anim, idx))
 	return frames
 
 
@@ -279,9 +308,17 @@ func _build_buttons() -> void:
 	cancel.position = Vector2(252, 744)
 	cancel.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed:
-			G.go("res://src/ui/Login.tscn")
+			_close_or_cancel()
 	)
 	add_child(cancel)
+
+
+func _close_or_cancel() -> void:
+	if _reselect_mode:
+		G.set_meta("reselect_from_home", false)
+		G.go("res://src/ui/GameHome.tscn")
+	else:
+		G.go("res://src/ui/Login.tscn")
 
 
 # ---------- 确认 ----------
@@ -302,6 +339,10 @@ func _confirm() -> void:
 	if G.avatar_id.is_empty():
 		G.avatar_id = "fox"
 	G.save_game()
+	if _reselect_mode:
+		G.set_meta("reselect_from_home", false)
+		G.go("res://src/ui/GameHome.tscn")
+		return
 	# 捏完人先看序章：交代"你在哪、为什么出征、第一站去哪"，再进主城
 	if G.lore_seen():
 		G.enter_main_world()
@@ -316,7 +357,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if G.ui_blocked:   # GM 控制台等全屏层优先（轮次 14）
 		return
 	if event.is_action_pressed("ui_cancel"):
-		G.go("res://src/ui/Login.tscn")
+		_close_or_cancel()
 	elif event.is_action_pressed("ui_left"):
 		_switch_role(_role_idx - 1, true)
 	elif event.is_action_pressed("ui_right"):

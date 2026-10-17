@@ -6,6 +6,7 @@ extends Control
 signal closed
 var _chest:Control
 signal avatar_requested   # 请求父层叠出头像浮层（设置页里放不下头像卡片）
+signal tutorial_requested # 请求父层重温 11 步新手指引
 
 const PageDeckScript := preload("res://src/ui/PageDeck.gd")
 const Journal := preload("res://src/ui/JournalUI.gd")
@@ -136,6 +137,14 @@ func _page_profile() -> Control:
 	if not standalone:
 		_action(page, "回标题", Vector2(280, 326), 128, _on_title, "back")
 	return page
+
+
+func _replay_tutorial() -> void:
+	preload("res://src/world/TutorialService.gd").restart(G, true)
+	if standalone:
+		G.go("res://src/ui/GameHome.tscn")
+	else:
+		tutorial_requested.emit()
 
 func _page_save() -> Control:
 	var page := _page_root()

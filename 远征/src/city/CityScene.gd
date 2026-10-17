@@ -312,6 +312,15 @@ func _build_player() -> void:
 	_player.collision_mask = 2
 	_world.add_child(_player)
 
+	var shadow := Polygon2D.new()
+	shadow.name = "PlayerContactShadow"
+	shadow.position = Vector2(0, 20.0)
+	shadow.polygon = PackedVector2Array([
+		Vector2(-14, 0), Vector2(-9, -4.5), Vector2(9, -4.5), Vector2(14, 0),
+		Vector2(9, 4.5), Vector2(-9, 4.5)])
+	shadow.color = Color(0.04, 0.03, 0.02, 0.38)
+	_player.add_child(shadow)
+
 	_player_anim = AnimatedSprite2D.new()
 	var frames_path: String = ROLE_FRAMES.get(G.selected_role, ROLE_FRAMES["zs"])
 	_player_anim.sprite_frames = load(frames_path)

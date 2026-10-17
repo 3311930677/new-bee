@@ -105,11 +105,14 @@ func _section(words: String, icon: String) -> Control:
 	row.add_child(Art.label(words,"section",Art.GOLD))
 	return panel
 
+const Journey := preload("res://src/world/JourneyService.gd")
+var _region_map: Control
+
 func _story_card(story: Dictionary) -> void:
 	var card := PanelContainer.new()
 	card.name = "MainStoryCard"
 	card.custom_minimum_size.y = 128 if not story.is_empty() else 56
-	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	card.mouse_filter = Control.MOUSE_FILTER_PASS
 	card.add_theme_stylebox_override("panel", Art.box("card", 12))
 	_content.add_child(card)
 	var row := HBoxContainer.new()
@@ -137,9 +140,24 @@ func _story_card(story: Dictionary) -> void:
 	badge.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	top.add_child(badge)
 	info.add_child(_line("目标：" + String(story.get("goal","")),"body"))
-	var target := TableCache.main_world_map(String(story.get("map","")))
-	info.add_child(_line("前往：" + String(target.get("name","昭元边城")),"caption",Art.MUTED))
-	info.add_child(_line("奖励：" + " · ".join(G.reward_lines(story.get("reward",{}))),"tag",Art.GOLD))
+	var target_map_id := String(story.get("map","lorin_wilds"))
+	var target := TableCache.main_world_map(target_map_id)
+	var bottom_row := HBoxContainer.new()
+	bottom_row.add_theme_constant_override("separation", 8)
+	info.add_child(bottom_row)
+	var text_col := VBoxContainer.new()
+	text_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	text_col.add_theme_constant_override("separation", 3)
+	bottom_row.add_child(text_col)
+	text_col.add_child(_line("前往：" + String(target.get("name","昭元边城")),"caption",Art.MUTED))
+	text_col.add_child(_line("奖励：" + " · ".join(G.reward_lines(story.get("reward",{}))),"tag",Art.GOLD))
+	var nav_btn := Art.action("行路图", "secondary")
+	nav_btn.name = "StoryMapButton"
+	nav_btn.custom_minimum_size = Vector2(88, 40)
+	nav_btn.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	nav_btn.caption.add_theme_font_size_override("font_size", G.FS_XS)
+	nav_btn.pressed.connect(func(): _open_region_map(target_map_id))
+	bottom_row.add_child(nav_btn)
 
 func _badge_box() -> StyleBoxFlat:
 	var box := StyleBoxFlat.new()
@@ -167,6 +185,7 @@ func _refresh() -> void:
 	for id in G.quest_offer(): _row(String(id))
 	if _list.get_child_count() == 0:
 		_list.add_child(_line("今日暂无委托，请明日再来。","body",Art.MUTED))
+	_append_side_quests()
 	_scroll.set_deferred("scroll_vertical",offset)
 	var controls: Array[Button] = [_world_button]
 	for row in _list.get_children():
@@ -178,6 +197,91 @@ func _refresh() -> void:
 	for i in controls.size():
 		controls[i].focus_next = controls[(i+1)%controls.size()].get_path()
 		controls[i].focus_previous = controls[posmod(i-1,controls.size())].get_path()
+
+func _append_side_quests() -> void:
+	if not G.has_method("side_status_of"): return
+	var active_rows: Array = []
+	for row_v in TableCache.side_quests_config().get("quests", []):
+		var srow := row_v as Dictionary
+		var sid := String(srow.get("id", ""))
+		var st: String = String(G.side_status_of(sid))
+		if st in ["active", "ready"]:
+			active_rows.append(srow)
+	if active_rows.is_empty(): return
+	_list.add_child(_section("支线轶事 · 寻迹与信使", "quest"))
+	var tracked_id: String = String(G.side_tracked_id()) if G.has_method("side_tracked_id") else ""
+	for srow_v in active_rows:
+		var srow := srow_v as Dictionary
+		var sid := String(srow.get("id", ""))
+		var st: String = String(G.side_status_of(sid))
+		var card := PanelContainer.new()
+		card.name = "SideQuest_" + sid
+		card.custom_minimum_size.y = 124
+		card.add_theme_stylebox_override("panel", Art.box("card", 12))
+		_list.add_child(card)
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 10)
+		card.add_child(row)
+		var mark := G.ui_icon("quest", Vector2(30, 30), Art.JADE if st == "ready" else Art.GOLD)
+		mark.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		row.add_child(mark)
+		var info := VBoxContainer.new()
+		info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		info.add_theme_constant_override("separation", 4)
+		row.add_child(info)
+		var map_id := String(srow.get("map", "lorin_wilds")) if st == "active" else String(srow.get("turn_in_map", srow.get("map", "lorin_wilds")))
+		var map_name := String(TableCache.main_world_map(map_id).get("name", map_id))
+		info.add_child(_line(String(srow.get("title", sid)) + (" [追踪中]" if sid == tracked_id else ""), "object"))
+		info.add_child(_line(String(srow.get("clue", "")), "caption"))
+		info.add_child(_line(("可交付 · " if st == "ready" else "进行中 · ") + "地点：" + map_name, "tag", Art.JADE if st == "ready" else Art.GOLD))
+		var side := VBoxContainer.new()
+		side.custom_minimum_size.x = 108
+		side.alignment = BoxContainer.ALIGNMENT_CENTER
+		side.add_theme_constant_override("separation", 6)
+		row.add_child(side)
+		var choices: Array = srow.get("choices", [])
+		var can_courier := st == "ready" and choices.is_empty()
+		var act_label := "信使交付" if can_courier else ("前往抉择" if st == "ready" else ("看地图" if sid == tracked_id else "追踪"))
+		var btn := Art.action(act_label, "primary" if st == "ready" or sid != tracked_id else "secondary")
+		btn.custom_minimum_size = Vector2(108, 42)
+		btn.caption.add_theme_font_size_override("font_size", G.FS_XS)
+		btn.pressed.connect(func(): _on_side_action(sid, st, can_courier, map_id))
+		side.add_child(btn)
+
+func _on_side_action(sid: String, st: String, can_courier: bool, map_id: String) -> void:
+	if can_courier:
+		var res: Dictionary = G._side_complete(sid, true, "")
+		if bool(res.get("ok", false)):
+			Audio.sfx("reward")
+			_show_toast("信使已代交「%s」并带回谢礼！" % String(res.get("title", sid)))
+		else:
+			Audio.sfx("ui_locked")
+			_show_toast("该任务需当面交付")
+		_refresh()
+		return
+	if st == "ready":
+		_open_region_map(map_id)
+		return
+	if G.has_method("side_track"):
+		var tracked: String = String(G.side_tracked_id())
+		if tracked == sid:
+			_open_region_map(map_id)
+		else:
+			G.side_track(sid)
+			Audio.sfx("ui_confirm")
+			_show_toast("已追踪支线：" + String(G.side_quest_def(sid).get("title", sid)))
+			_refresh()
+
+func _open_region_map(focus_map_id: String) -> void:
+	if _region_map != null: return
+	_region_map = RegionMapPanel.new()
+	add_child(_region_map)
+	if not focus_map_id.is_empty() and _region_map.has_method("select"):
+		_region_map.call_deferred("select", focus_map_id, true)
+	_region_map.closed.connect(func():
+		if is_instance_valid(_region_map):
+			_region_map.queue_free()
+		_region_map = null)
 
 func _row(qid: String) -> void:
 	var d := G.quest_def(qid)

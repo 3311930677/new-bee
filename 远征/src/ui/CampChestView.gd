@@ -282,7 +282,16 @@ func refresh() -> void:
 	_hero.subtitle.clip_text = true
 	_hero.subtitle.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	_hero.tooltip_text = "返回主世界 · "+place
-	var role := G.get_role(G.selected_role)
+	var valid_role := G.selected_role if G.selected_role in ["zs", "ck", "fs", "fz"] else "zs"
+	if host != null and host._anim != null:
+		if String(host._anim.get_meta("role_id", "")) != valid_role:
+			host._anim.sprite_frames = host._frames(valid_role)
+			host._anim.animation = &"idle"
+			host._anim.play()
+			host._anim.set_meta("role_id", valid_role)
+		elif not host._anim.is_playing():
+			host._anim.play()
+	var role := G.get_role(valid_role)
 	_role_name.text = "【 %s 】" % String(role.get("name","旅人"))
 	_job.text = "%s · LV %02d" % [role.get("job",""),level]
 	for entry in host._wallet_labels:

@@ -80,6 +80,7 @@ var _world := Node2D.new()
 var _ground_path: Dictionary = {}   # 本图主路格（_build_ground_detail 生成，散件避让要用同一份）
 var _player: CharacterBody2D
 var _player_anim: AnimatedSprite2D
+var _player_shadow: _PlayerShadow = null
 var _mount_anim: AnimatedSprite2D = null
 var _player_shape: CollisionShape2D = null
 var _player_marker: Polygon2D = null
@@ -1011,6 +1012,8 @@ func _build_world_exits() -> void:
 	var exits: Variant = _main_cfg.get("exits", [])
 	if not (exits is Array):
 		return
+	var story_hop := _first_hop_map_toward(String(G.story_current().get("map", "")))
+	var side_hop := _first_hop_map_toward(_tracked_side_map())
 	for row_v in exits:
 		if not (row_v is Dictionary):
 			continue
@@ -1025,6 +1028,10 @@ func _build_world_exits() -> void:
 		marker.set_meta("sunny_sample",SunnyArt.active(_main_map_id))
 		marker.position = _world_exit_sign_position(row)
 		marker.caption = String(row.get("label", destination))
+		if destination == story_hop:
+			marker.quest_hint = "story"
+		elif destination == side_hop:
+			marker.quest_hint = "side"
 		if destination == "stele_cavern":
 			var repaired := bool((G.prog.get("flags", {}) as Dictionary).get("act1_stele_repaired", false))
 			marker.gate_style = "restored" if repaired else "sealed"
@@ -1034,6 +1041,7 @@ func _build_world_exits() -> void:
 		if not required.is_empty() and not G.story_step_done(required) and not G.world_gate_open():
 			marker.caption += " · 封"
 		_world.add_child(marker)
+
 
 
 func _build_player(map_w: float, map_h: float) -> void:
@@ -1064,6 +1072,11 @@ func _build_player(map_w: float, map_h: float) -> void:
 	# 历练保留旧比例；主地图单独校准人物占屏，不靠放大整张草地底图。
 	# 帧中心在 y=64，脚底 y=120，脚点偏移按旧比例校准，避免放大后脚底与碰撞点分离。
 	var player_scale := float(_main_cfg.get("player_scale", 0.96)) if _mode == "main_world" else 0.72
+	_player_shadow = _PlayerShadow.new()
+	_player_shadow.name = "PlayerContactShadow"
+	_player_shadow.position = Vector2(0, 20.0)
+	_player_shadow.shadow_scale = player_scale
+	_player.add_child(_player_shadow)
 	_player_anim.scale = Vector2.ONE * player_scale
 	_player_anim.position = Vector2(0, 21.0 - 56.0 * player_scale)
 	_player_anim.animation = &"walk_down"
@@ -1180,6 +1193,10 @@ func _sync_mount_visual() -> void:
 	_player_anim.scale=Vector2.ONE*(.38 if riding else player_scale)
 	_player_anim.position=Vector2(0,MountVisual.rider_offset(G.mount_active(),String(_mount_anim.animation)) if riding else 21.0-56.0*player_scale)
 	_mount_anim.position=MountVisual.mount_offset(G.mount_active(),String(_mount_anim.animation))
+	if _player_shadow != null:
+		_player_shadow.riding = riding
+		_player_shadow.shadow_scale = player_scale
+		_player_shadow.queue_redraw()
 	if _player_shape != null:
 		(_player_shape.shape as RectangleShape2D).size = Vector2(42, 28) if riding else Vector2(30, 26)
 	if _player_tag != null:
@@ -2778,8 +2795,13 @@ func _update_player_anim(dir: Vector2) -> void:
 			_mount_anim.stop()
 			_mount_anim.frame=1
 		return
+	var base_scale := float(_main_cfg.get("player_scale", 0.96)) if _mode == "main_world" else 0.72
+	var base_y := 21.0 - 56.0 * base_scale
 	if dir.length_squared() < 0.25:
 		DirectionalIdle.stop(_player_anim)
+		_player_anim.position.y = base_y
+		if _player_shadow != null:
+			_player_shadow.set_walking(false, 0)
 		return
 	var anim := &"walk_down"
 	if absf(dir.x) > absf(dir.y):
@@ -2794,6 +2816,10 @@ func _update_player_anim(dir: Vector2) -> void:
 	_player_anim.speed_scale = dir.length() / maxf(1.0, TableCache.map_player_speed())
 	if not _player_anim.is_playing():
 		_player_anim.play()
+	var step_lift := 1.0 if (_player_anim.frame % 2 == 1) else 0.0
+	_player_anim.position.y = base_y - step_lift
+	if _player_shadow != null:
+		_player_shadow.set_walking(true, _player_anim.frame)
 
 
 # ================= 探索动机（轮次 16） =================
@@ -3179,6 +3205,40 @@ func _hud_target_info() -> Dictionary:
 	return _nav_info()
 
 
+func _tracked_side_map() -> String:
+	if _mode != "main_world": return ""
+	var tracked: String = String(G.side_tracked_id()) if G.has_method("side_tracked_id") else ""
+	if not tracked.is_empty():
+		var row: Dictionary = G.side_quest_def(tracked) if G.has_method("side_quest_def") else {}
+		var st: String = String(G.side_status_of(tracked)) if G.has_method("side_status_of") else ""
+		if st == "ready":
+			return String(row.get("turn_in_map", row.get("map", "lorin_wilds")))
+		if st == "active":
+			return String(row.get("map", ""))
+	return ""
+
+func _first_hop_map_toward(goal_map: String) -> String:
+	if _mode != "main_world" or goal_map.is_empty() or goal_map == _main_map_id:
+		return ""
+	var maps: Dictionary = TableCache.main_world_config().get("maps", {})
+	var first_hop := {}
+	var queue: Array = [_main_map_id]
+	var seen := {_main_map_id: true}
+	while not queue.is_empty():
+		var at := String(queue.pop_front())
+		for row_v in ((maps.get(at, {}) as Dictionary).get("exits", []) as Array):
+			if not (row_v is Dictionary): continue
+			var to := String((row_v as Dictionary).get("to", ""))
+			if to.is_empty() or seen.has(to): continue
+			var required := String((row_v as Dictionary).get("requires_story", ""))
+			if not required.is_empty() and not G.story_step_done(required) and not G.world_gate_open(): continue
+			seen[to] = true
+			first_hop[to] = to if at == _main_map_id else String(first_hop[at])
+			if to == goal_map:
+				return String(first_hop[to])
+			queue.append(to)
+	return ""
+
 ## 主线目标不在本图时，沿世界出口图（广度优先）找出下一步该走的出口，给 HUD 与罗盘一个可走的方向。
 func _story_route_info() -> Dictionary:
 	if _mode != "main_world": return {}
@@ -3463,11 +3523,26 @@ func _toggle_big_map() -> void:
 		button.pressed.connect(entry[2])
 		panel.add_child(button)
 	if _mode == "main_world":
+		var region_btn := Lacquer.Action.new("地区行路图")
+		region_btn.position = Vector2(16,panel.size.y-46)
+		region_btn.size = Vector2(148,44)
+		region_btn.pressed.connect(func(): _close_big_map(); _open_region_map_overlay())
+		panel.add_child(region_btn)
 		var journey := Lacquer.Action.new("驿路与传世")
-		journey.position = Vector2(16,panel.size.y-46)
-		journey.size = Vector2(panel.size.x-32,44)
+		journey.position = Vector2(panel.size.x-164,panel.size.y-46)
+		journey.size = Vector2(148,44)
 		journey.pressed.connect(func(): _close_big_map(); _open_journey())
 		panel.add_child(journey)
+
+
+func _open_region_map_overlay() -> void:
+	if _mode != "main_world" or _battle != null or _map_done: return
+	_stop_auto_walk("")
+	_persist_main_world_progress()
+	var rmap := RegionMapPanel.new()
+	_hud.add_child(rmap)
+	rmap.closed.connect(func():
+		if is_instance_valid(rmap): rmap.queue_free())
 
 
 func _close_big_map() -> void:
@@ -3873,6 +3948,7 @@ func _launch_battle(m: _MapMonster) -> void:
 	_battle = (load("res://src/battle/BattleScene.tscn") as PackedScene).instantiate()
 	_battle.battle_finished.connect(_on_battle_end)
 	_battle_layer.add_child(_battle)
+	preload("res://src/world/TutorialService.gd").notify_event(G, "battle_started")
 	if _mode == "main_world":
 		# P03：战斗层真的建起来了才写 battle（崩在中途 → 遭遇仍是 open，重打不二次发奖）
 		_advance_encounter(WorldSession.ST_BATTLE)
@@ -3925,7 +4001,7 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 	# 不让玩家从主线首领手里溜走（按败收场，与超时口径一致）。
 	# P05-C：可选首领不在兜住范围内——它的 flee_rule 本就是 free，撤退按正常撤退走。
 	if result == "flee" and _boss_flee_blocked(monster_tier, _last_battle_optional):
-		push_warning("首领战不允许撤退，按战败处理")
+		push_warning("首领战不允许撤退，按败收场处理")
 		result = "defeat"
 
 	if result == "flee":
@@ -3959,6 +4035,7 @@ func _on_battle_end(result: String, hp_left: int) -> void:
 			_advance_encounter(WorldSession.ST_FAILED)
 		_finish_map("defeat")
 		return
+	preload("res://src/world/TutorialService.gd").notify_event(G, "battle_won")
 	if _mode == "main_world":
 		# P03：唯一结算入口；已结算过（同 result_id 重复上报）则不发任何奖励。
 		# R-04：写盘失败由 _settle_main_world 自己提示，这里不再改口成"已经结算过了"误导玩家。
@@ -4736,7 +4813,9 @@ class _Portal extends Node2D:
 class _WorldExit extends Node2D:
 	var caption := ""
 	var gate_style := "normal"  # 碑窟北口：修碑前灰石，修碑后暖金
+	var quest_hint := ""        # story / side：指引当前主线或支线最优出口方向
 	var _caption_label: Label
+	var _t := 0.0
 
 	func _ready() -> void:
 		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -4757,7 +4836,10 @@ class _WorldExit extends Node2D:
 		add_child(label)
 		queue_redraw()
 
-	func _process(_delta: float) -> void:
+	func _process(delta: float) -> void:
+		_t += delta
+		if not quest_hint.is_empty():
+			queue_redraw()
 		if _caption_label == null: return
 		var xf:=get_global_transform_with_canvas()
 		var scale_x:=absf(xf.x.x)
@@ -4781,6 +4863,11 @@ class _WorldExit extends Node2D:
 			draw_set_transform(Vector2(2,1),0,Vector2(1,.3));draw_circle(Vector2.ZERO,23,Color("483b2e",.4));draw_set_transform(Vector2.ZERO)
 			draw_texture_rect(MapScene.SunnyArt.texture("signpost"),Rect2(-46,-94,92,96),false)
 		else:MapScene.WorldPropArt.signpost(self,gate_style)
+		if not quest_hint.is_empty():
+			var bob := sin(_t * 2.8) * 3.5
+			var tip_y := -104.0 if bool(get_meta("sunny_sample",false)) else -76.0
+			var col := Color("ffd46b") if quest_hint == "story" else Color("7bc8ff")
+			MapScene.WorldPropArt.marker(self, Vector2(0, tip_y + bob), col)
 
 
 class _MapMonster extends CharacterBody2D:
@@ -6085,3 +6172,25 @@ func _resolve_name_tags() -> void:
 	for child in _world.get_children():
 		if child is _WorldExit and is_instance_valid(child._caption_label):candidates.append({"label":child._caption_label,"priority":5})
 	NameTags.resolve(candidates,_name_tag_exclusions())
+
+
+class _PlayerShadow extends Node2D:
+	var shadow_scale := 0.96
+	var riding := false
+	var walking := false
+	var step_frame := 0
+
+	func set_walking(w: bool, f: int) -> void:
+		if walking != w or step_frame != f:
+			walking = w
+			step_frame = f
+			queue_redraw()
+
+	func _draw() -> void:
+		var pulse := 0.93 if (walking and step_frame % 2 == 1) else 1.0
+		var rx := (26.0 if riding else 18.0 * shadow_scale) * pulse
+		var ry := (9.5 if riding else 6.2 * shadow_scale) * pulse
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, ry / maxf(1.0, rx)))
+		draw_circle(Vector2(0, 1.5), rx, Color(0.05, 0.04, 0.03, 0.32))
+		draw_circle(Vector2.ZERO, rx * 0.66, Color(0.02, 0.02, 0.01, 0.48))
+
