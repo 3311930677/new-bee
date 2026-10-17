@@ -70,7 +70,7 @@ func _codex() -> void:
 	var owned:=G.owns_pet(pid)
 	shell.tray_height=448 if owned else 396
 	var state:=G.pet_stat(pid) if owned else {}
-	var tex:=Fix.pet_showcase(pid)
+	var tex:Texture2D=Fix.pet(pid+"_hd")
 	_art=Page.picture(tex,Vector2(184,184))
 	_art.texture_filter=CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	_art.modulate=Color.WHITE
