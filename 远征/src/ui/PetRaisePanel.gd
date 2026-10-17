@@ -248,6 +248,20 @@ func _on_reroll() -> void:
 		Finesse.celebrate(self,Vector2(240,230),Color("bdb1dd"),150)
 
 
+func _on_bond() -> void:
+	var r := G.pet_bond_interact(_sel)
+	if not bool(r.get("ok", false)):
+		_toast_msg(String(r.get("err", "")))
+	else:
+		var treasure := String(r.get("treasure", ""))
+		var tail := (" · 寻宝获赠 " + treasure) if not treasure.is_empty() else ""
+		_toast_msg("羁绊升至 %d 阶！经验+60%s" % [int(r.get("bond", 1)), tail])
+	_refresh()
+	if bool(r.get("ok", false)):
+		Finesse.celebrate(self, Vector2(240, 230), Color("f2c66d"), 180)
+		Audio.sfx("level_up", 0.0)
+
+
 func _toast_msg(msg: String) -> void:
 	if is_instance_valid(_toast):_toast.queue_free()
 	_toast=Chest.toast(self,msg)

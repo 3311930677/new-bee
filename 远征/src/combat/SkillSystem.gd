@@ -206,11 +206,20 @@ static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, c
 				sim.emit({"t": "shield_add", "uid": t.uid, "pool": real})
 				effective += pool
 		"atk_up":
+			var dur_t := int(float(effect.get("dur", 5.0)) * 30.0)
 			for t in targets:
-				t.add_buff("atk_up", int(float(effect.get("dur", 5.0)) * 30.0),
+				t.add_buff("atk_up", dur_t,
 					{"pct": effect.get("pct", 0.2)})
+				if String(skill.get("id", "")) == "fz_zhudao":
+					t.add_buff("spd_up", dur_t, {"pct": 0.18})
 				companion_effective += 1
 				sim.emit({"t": "buff", "uid": t.uid, "buff": "atk_up"})
+			if String(skill.get("id", "")) == "fz_zhudao":
+				var foes := sim.alive_units("enemy" if caster.side == "ally" else "ally")
+				if not foes.is_empty():
+					var smite_target := caster.lowest_hp(foes)
+					var smite_raw := DamageCalc.basic_damage(int(float(caster.get_atk()) * 1.45), smite_target.get_def())
+					effective += smite_target.take_damage(maxi(1, smite_raw), caster, sim, false)
 		"invincible_heal":
 			for t in targets:
 				t.add_buff("invincible", int(float(effect.get("dur", 1.5)) * 30.0), {})

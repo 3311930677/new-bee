@@ -1,0 +1,74 @@
+{
+  "npc": {
+    "id": "npc_archery_master",
+    "name": "演武教头·柳穿杨",
+    "title": "边城射圃总教习",
+    "greeting": "搭箭如满月，发矢似流星。旅人若想锤炼眼力与定力，不妨上靶场试上几壶箭！"
+  },
+  "modes": [
+    {
+      "id": "novice",
+      "name": "初试百步",
+      "subtitle": "微风缓靶 · 5箭定胜",
+      "arrows": 5,
+      "target_speed": 48.0,
+      "target_bob": 8.0,
+      "wind_max": 16.0,
+      "pass_score": 28,
+      "master_score": 42,
+      "first_reward": {
+        "gold": 250,
+        "expedition": 20,
+        "honor": 60,
+        "items": { "enhance_stone": 3 }
+      },
+      "repeat_reward": {
+        "gold": 80,
+        "honor": 15
+      }
+    },
+    {
+      "id": "wind",
+      "name": "疾风劲草",
+      "subtitle": "劲风游靶 · 6箭听风",
+      "arrows": 6,
+      "target_speed": 92.0,
+      "target_bob": 18.0,
+      "wind_max": 42.0,
+      "pass_score": 36,
+      "master_score": 50,
+      "first_reward": {
+        "gold": 480,
+        "expedition": 45,
+        "honor": 120,
+        "items": { "refine_stone": 3 }
+      },
+      "repeat_reward": {
+        "gold": 130,
+        "honor": 25
+      }
+    },
+    {
+      "id": "master",
+      "name": "飞星穿杨",
+      "subtitle": "狂风急靶 · 6箭夺魁",
+      "arrows": 6,
+      "target_speed": 142.0,
+      "target_bob": 28.0,
+      "wind_max": 64.0,
+      "pass_score": 40,
+      "master_score": 54,
+      "first_reward": {
+        "gold": 800,
+        "soul": 15,
+        "honor": 240,
+        "items": { "break_crystal": 4, "lock_rune": 2 },
+        "title": "t_archery_master"
+      },
+      "repeat_reward": {
+        "gold": 180,
+        "honor": 40
+      }
+    }
+  ]
+}

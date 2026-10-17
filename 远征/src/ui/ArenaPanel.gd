@@ -224,6 +224,15 @@ func _build() -> void:
 			_start_battle())
 	content.add_child(_go_btn)
 
+	var archery_btn := G.ghost_button("校场射艺", 118, G.BTN_S.y, G.FS_SM)
+	archery_btn.name = "OpenArcheryButton"
+	archery_btn.position = Vector2(0, 322 + top_pad)
+	archery_btn.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			Audio.sfx("ui_open")
+			_open_archery())
+	content.add_child(archery_btn)
+
 	var back := G.ghost_button("返回", G.BTN_S.x, G.BTN_S.y, G.FS_SM)
 	# 返回按钮与按钮行拉开 16，落在整个面板的底部收尾位
 	back.position = Vector2((CONTENT_W - G.BTN_S.x) * 0.5, 322 + top_pad)
@@ -232,7 +241,144 @@ func _build() -> void:
 			Audio.sfx("ui_close")
 			closed.emit())
 	content.add_child(back)
+
+	var curio_btn := G.ghost_button("古碑鉴宝", 118, G.BTN_S.y, G.FS_SM)
+	curio_btn.name = "OpenCurioButton"
+	curio_btn.position = Vector2(CONTENT_W - 118.0, 322 + top_pad)
+	curio_btn.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			Audio.sfx("ui_open")
+			_open_curio_modal())
+	content.add_child(curio_btn)
 	_refresh()
+
+
+var _archery_overlay: Control = null
+var _curio_overlay: Control = null
+
+
+func _open_archery() -> void:
+	if _archery_overlay != null or _busy:
+		return
+	var ap: Control = (load("res://src/ui/ArcheryPanel.gd") as GDScript).new()
+	_archery_overlay = ap
+	ap.z_index = 20
+	ap.closed.connect(func():
+		if _archery_overlay != null:
+			_archery_overlay.queue_free()
+			_archery_overlay = null
+		_refresh())
+	add_child(ap)
+
+
+func _open_curio_modal() -> void:
+	if _curio_overlay != null or _busy:
+		return
+	var root := Control.new()
+	root.name = "CurioLoreOverlay"
+	root.set_anchors_preset(Control.PRESET_FULL_RECT)
+	root.z_index = 20
+	_curio_overlay = root
+	add_child(root)
+	G.veil(root, G.VEIL_TAKEOVER_A)
+	var box := G.parchment_box(436, 520, 16.0)
+	box.position = Vector2(22, 140)
+	root.add_child(box)
+	var inner := Control.new()
+	inner.set_anchors_preset(Control.PRESET_FULL_RECT)
+	box.add_child(inner)
+
+	var title_l := G.gold_label("边城古碑共鸣 · 行商鉴宝", G.FS_LG, true, Color("4a3010"), false)
+	title_l.position = Vector2(0, 8)
+	title_l.custom_minimum_size = Vector2(404, 0)
+	title_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	inner.add_child(title_l)
+
+	var desc_l := G.gold_label("", G.FS_XS, false, Color("5a3e1b"), false)
+	desc_l.name = "CurioStatusLabel"
+	desc_l.position = Vector2(8, 44)
+	desc_l.custom_minimum_size = Vector2(388, 120)
+	desc_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	inner.add_child(desc_l)
+
+	var log_l := G.gold_label("点选下方「参悟古碑」可激活当前职业先祖铭文与专属称号；点选「鉴宝」可开启蒙尘古匣获取宝石、精炼石与高阶装备。", G.FS_XS, false, Color("6a5230"), false)
+	log_l.name = "CurioLogLabel"
+	log_l.position = Vector2(8, 176)
+	log_l.custom_minimum_size = Vector2(388, 168)
+	log_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	inner.add_child(log_l)
+
+	var refresh_curio := func() -> void:
+		var flags: Dictionary = G.prog.get("flags", {}) if G.prog.get("flags") is Dictionary else {}
+		var cnt := int(flags.get("curio_appraised_count", 0))
+		var resonated := bool(flags.get("lore_resonated_" + G.selected_role, false))
+		var hist: Array = flags.get("curio_history", []) if flags.get("curio_history") is Array else []
+		var hist_str := "暂无鉴宝记录" if hist.is_empty() else ("近期鉴宝：" + "；".join(hist.slice(0, 2)))
+		desc_l.text = "当前金币：%d ｜ 已鉴宝：%d 次（满3次解锁【慧眼识珍】）\n当前职业古碑共鸣：%s\n%s" % [
+			int(G.wallet.get("gold", 0)), cnt,
+			"已达成（已领专属称号）" if resonated else "未共鸣（首次免费参悟领奖）",
+			hist_str
+		]
+
+	var btn_lore := G.gold_button("参悟古碑", 124, 42, G.FS_SM)
+	btn_lore.name = "LoreResonateButton"
+	btn_lore.position = Vector2(4, 366)
+	btn_lore.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			var res := G.lore_resonate(G.selected_role)
+			var lines: Array = res.get("lines", [])
+			var reward_tail := "\n【首次共鸣】金币+180 · 远征币+40 · 魂晶+25 · 荣誉+30，解锁称号【%s】！" % String(res.get("title_name", "")) if bool(res.get("first", false)) else "\n（已参悟过该职业碑文，可随时重温铭文）"
+			log_l.text = "【%s】\n%s%s" % [String(res.get("heading", "")), "\n".join(lines), reward_tail]
+			refresh_curio.call()
+			_refresh())
+	inner.add_child(btn_lore)
+
+	var btn_c1 := G.ghost_button("鉴古匣(260金)", 132, 42, G.FS_XS)
+	btn_c1.name = "AppraiseCommonButton"
+	btn_c1.position = Vector2(134, 366)
+	btn_c1.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			var res := G.curio_appraise("common")
+			if bool(res.get("ok", false)):
+				log_l.text = "鉴定成功！开启【%s】获得：%s%s" % [
+					String(res.get("curio_name", "")),
+					String(res.get("reward_desc", "")),
+					"（达成3次鉴宝，额外解锁称号【慧眼识珍】！）" if bool(res.get("unlocked_title", false)) else ""
+				]
+			else:
+				log_l.text = String(res.get("err", "金币不足"))
+			refresh_curio.call()
+			_refresh())
+	inner.add_child(btn_c1)
+
+	var btn_c2 := G.ghost_button("鉴宝匣(680金)", 132, 42, G.FS_XS)
+	btn_c2.name = "AppraiseRareButton"
+	btn_c2.position = Vector2(272, 366)
+	btn_c2.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			var res := G.curio_appraise("rare")
+			if bool(res.get("ok", false)):
+				log_l.text = "秘宝出世！开启【%s】获得：%s%s" % [
+					String(res.get("curio_name", "")),
+					String(res.get("reward_desc", "")),
+					"（达成3次鉴宝，额外解锁称号【慧眼识珍】！）" if bool(res.get("unlocked_title", false)) else ""
+				]
+			else:
+				log_l.text = String(res.get("err", "金币不足"))
+			refresh_curio.call()
+			_refresh())
+	inner.add_child(btn_c2)
+
+	var close_b := G.ghost_button("关闭", G.BTN_S.x, G.BTN_S.y, G.FS_SM)
+	close_b.position = Vector2((404.0 - G.BTN_S.x) * 0.5, 432)
+	close_b.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			Audio.sfx("ui_close")
+			if _curio_overlay != null:
+				_curio_overlay.queue_free()
+				_curio_overlay = null)
+	inner.add_child(close_b)
+	refresh_curio.call()
 
 
 func _rank_icon_name() -> String:

@@ -179,15 +179,15 @@ func _pet() -> void:
 	host._sel=selection
 	for pet in pets:
 		var id:=String(pet)
-		_row(String(TableCache.get_pet(id).get("name",id)),"Lv.%d · 突破 %d/5" % [int(G.pet_stat(id).get("lv",1)),int(G.pet_stat(id).get("brk",0))],id,id==selection)
-	for item in [["feed","喂养"],["break","突破"],["star","洗资质"]]:
+		_row(String(TableCache.get_pet(id).get("name",id)),"Lv.%d · 突破 %d/5 · 羁绊 %d/5" % [int(G.pet_stat(id).get("lv",1)),int(G.pet_stat(id).get("brk",0)),G.pet_bond_level(id)],id,id==selection)
+	for item in [["feed","喂养"],["break","突破"],["star","洗资质"],["bond","羁绊"]]:
 		var id:String=item[0]
 		_tab(item[1],id,operation,func():operation=id;refresh())
 	var cfg:=TableCache.get_pet(selection)
 	var state:=G.pet_stat(selection) if not selection.is_empty() else {}
 	_art.texture=preload("res://src/ui/ReviewFixUI.gd").pet(selection) if not selection.is_empty() else Page.texture("pet")
 	_name.text=String(cfg.get("name","尚未收集灵宠"))
-	_status.text="Lv.%d · 资质 %d 星 · 突破 %d/5" % [int(state.get("lv",1)),int(state.get("star",3)),int(state.get("brk",0))]
+	_status.text="Lv.%d · 资质 %d 星 · 突破 %d/5 · 羁绊 %d/5" % [int(state.get("lv",1)),int(state.get("star",3)),int(state.get("brk",0)),G.pet_bond_level(selection)]
 	var enabled:=not selection.is_empty()
 	match operation:
 		"feed":
@@ -200,6 +200,10 @@ func _pet() -> void:
 		"star":
 			_details.text="资质果 1 / %d（需要 / 持有）\n重新随机 1～5 星，可能降低资质" % G.item_count("aptitude_fruit")
 			enabled=enabled and G.item_count("aptitude_fruit")>0
+		"bond":
+			var bcost:=G.pet_bond_cost(selection)
+			_details.text="已达五阶灵犀共鸣（灵宠属性+15% · 主角生命+75/攻击+10）" if bcost.is_empty() else "宠粮 %d/%d · 金币 %d（每阶属性+3%% · 主角生命+15/攻击+2）" % [int(bcost.get("pet_food",1)),G.item_count("pet_food"),int(bcost.get("gold",80))]
+			enabled=enabled and not bcost.is_empty() and G.item_count("pet_food")>=int(bcost.get("pet_food",1)) and int(G.wallet.get("gold",0))>=int(bcost.get("gold",80))
 	if not selection.is_empty():
 		var stats:PackedStringArray=[]
 		for pair in [["hp","生命",50],["atk","攻击",10],["def","防御",5]]:
@@ -208,7 +212,7 @@ func _pet() -> void:
 			var value:=int((float(base.get(pair[0],pair[2]))+float(growth.get(pair[0],0))*(int(state.get("lv",1))-1)*G.pet_growth_mult(selection))*G.pet_stat_mult(selection))
 			stats.append("%s %d"%[pair[1],value])
 		_details.text=" · ".join(stats)+"\n"+_details.text
-	_set_main({"feed":"确认喂养","break":"确认突破","star":"重洗资质"}[operation],enabled)
+	_set_main({"feed":"确认喂养","break":"确认突破","star":"重洗资质","bond":"羁绊互动"}[operation],enabled)
 
 func _mount() -> void:
 	var mounts:=G.mounts_cfg()
@@ -261,6 +265,7 @@ func _activate() -> void:
 				"feed":host._on_feed()
 				"break":host._on_break()
 				"star":Page.confirm(self,"重洗资质","新资质可能低于当前星级，确定消耗资质果？",host._on_reroll)
+				"bond":host._on_bond()
 		"mount":host._on_buy(selection)
 		"title":
 			if G.title_active()==selection:G.title_set_active("");refresh()
