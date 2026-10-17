@@ -10,9 +10,9 @@
 	"audio": {
 		"bgm": 0.7,
 		"mute": false,
-		"sfx": 0.68
+		"sfx": 0.8
 	},
-	"avatar_custom": "custom_1789738666_22025941.png",
+	"avatar_custom": "",
 	"avatar_id": "fox",
 	"avatar_use_custom": false,
 	"city": {
@@ -64,7 +64,7 @@
 			"next_uid": 1,
 			"pending": []
 		},
-		"last_ts": 1791987943,
+		"last_ts": 1792222080,
 		"ledger": {
 			"applied": []
 		},
@@ -119,10 +119,10 @@
 	"quest": {
 		"active": {},
 		"claimed": [],
-		"day": "2026-10-14",
+		"day": "2026-10-17",
 		"offer": [
-			"q_clear_forest",
-			"q_slay_forest"
+			"q_deliver_sweep",
+			"q_deliver_stone"
 		]
 	},
 	"selected_role": "zs",

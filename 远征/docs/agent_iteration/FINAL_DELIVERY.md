@@ -99,11 +99,20 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "D:\new bee\远征\tools\run
 - **修改后实机截图（After，`480×800`）**：`D:\new bee\远征\docs\agent_iteration\screenshots\after\`
 - **修改后长屏自适应截图（After，`480×1067`）**：`D:\new bee\远征\docs\agent_iteration\screenshots\long_480x1067\`
 - **左右同屏直观对比图（Comparisons）**：
-  - `D:\new bee\远征\docs\agent_iteration\screenshots\comparisons\compare_home_role_sync.png`
-  - `D:\new bee\远征\docs\agent_iteration\screenshots\comparisons\compare_world_map_travel.png`
-  - `D:\new bee\远征\docs\agent_iteration\screenshots\comparisons\compare_quest_quick_submit.png`
-  - `D:\new bee\远征\docs\agent_iteration\screenshots\comparisons\compare_bag_epic_power.png`
+  - **第二轮重点精修对比图（V2 Polish Comparisons）**：
+    - `D:\new bee\远征\docs\agent_iteration\screenshots\comparisons\compare_v2_1_archery_minigame.png`（新增小游戏【校场射艺】截图 → 视觉参考图 → 实景靶场重构精修对比）
+    - `D:\new bee\远征\docs\agent_iteration\screenshots\comparisons\compare_v2_2_curio_minigame.png`（新增小游戏【古碑鉴宝】截图 → 视觉参考图 → 双舞台实景重构精修对比）
+    - `D:\new bee\远征\docs\agent_iteration\screenshots\comparisons\compare_v2_3_tutorial_flow.png`（11 步任务驱动新手教程：全流程自动切换对应页面 + 聚光灯挖空高亮对比）
+    - `D:\new bee\远征\docs\agent_iteration\screenshots\comparisons\compare_v2_4_settings_reselect.png`（设置面板找回并置顶【重选角色 · 易职】双入口对比）
+    - `D:\new bee\远征\docs\agent_iteration\screenshots\comparisons\compare_v2_5_home_heroes.png`（主页城门下方四职业专属守望立绘重构与 2x 局部特写对比）
+  - **第一轮基础功能对比图**：
+    - `D:\new bee\远征\docs\agent_iteration\screenshots\comparisons\compare_home_role_sync.png`
+    - `D:\new bee\远征\docs\agent_iteration\screenshots\comparisons\compare_world_map_travel.png`
+    - `D:\new bee\远征\docs\agent_iteration\screenshots\comparisons\compare_quest_quick_submit.png`
+    - `D:\new bee\远征\docs\agent_iteration\screenshots\comparisons\compare_bag_epic_power.png`
 - **视觉方案参考总览图板（References）**：
+  - `D:\new bee\远征\docs\agent_iteration\references\ref_minigame_archery_v2.png`（校场射艺小游戏实景精修参考图）
+  - `D:\new bee\远征\docs\agent_iteration\references\ref_minigame_curio_v2.png`（古碑共鸣与行商鉴宝双舞台精修参考图）
   - `D:\new bee\远征\docs\agent_iteration\references\ref_role_select_concepts.png`
   - `D:\new bee\远征\docs\agent_iteration\references\ref_world_map_hud_concepts.png`
   - `D:\new bee\远征\docs\agent_iteration\references\ref_archery_curio_concepts.png`
@@ -113,10 +122,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "D:\new bee\远征\tools\run
 ## 6. 关键 Git Commit 哈希清单（`main` 分支）
 1. **`b0267992`**：`feat(core): 完成第一阶段基线审计与第二阶段五大核心体验重构（区域地图直达、任务快速交付、主页四角色动态展示、角色接地感与11步新手指引）`
 2. **`45772e96`**：`feat(content): 完成第三阶段战斗数值调优与第四阶段五轮实质性内容扩充（校场射艺、史诗装备与战力评估、古碑共鸣、灵宠羁绊、行商奇珍鉴宝）`
-3. **`f67372a3`（及最终对比图归档提交）**：`docs(delivery): 完成第五至七阶段双分辨率视觉验收、参考图板、77项全量回归门禁验证与最终交付文档`
+3. **`f67372a3` / `cc0d7d94`（及第二轮精修归档提交）**：`feat(polish): 完成小游戏参考图驱动实景重构、全流程自动切页新手教程、设置置顶重选角色与四职业主页城门守望立绘精修`
 
 ---
 
 ## 7. 当前存在的已知问题与后续优化建议
 1. **已知非阻塞引擎诊断（Issue #43）**：Godot 4.7.2 OpenGL Compatibility 渲染器在命令行进程退出时偶发输出 `1 RID allocations of type 'N5GLES37TextureE' were leaked at exit` 诊断日志，属于引擎已知退出清理顺序现象，不影响游戏运行帧率、内存或 77 项回归门禁判定。
-2. **无法完成项目的阻塞项**：**无**（全部 7 个阶段、5 大核心问题修复、5 轮内容扩充、双分辨率截图与 77/77 全量自动化测试均已 100% 完成）。
+2. **无法完成项目的阻塞项**：**无**（全部 7 个阶段、第二轮 4 项重点视觉与交互精修、双分辨率截图与 77/77 全量自动化测试均已 100% 完成）。
+

@@ -1535,7 +1535,7 @@ func _setup() -> void:
 			var ha: Node = load("res://src/ui/GameHome.tscn").instantiate()
 			add_child(ha)
 			ha.call("_open_arena")
-		"archery":
+		"archery", "archery_hit":
 			_demo_prog()
 			var harch: Node = load("res://src/ui/GameHome.tscn").instantiate()
 			add_child(harch)
@@ -1544,6 +1544,20 @@ func _setup() -> void:
 			var ap_node: Node = harch.get("_arena")
 			if ap_node != null and ap_node.has_method("_open_archery"):
 				ap_node.call("_open_archery")
+				await get_tree().process_frame
+				var arch_ov: Node = ap_node.get("_archery_overlay")
+				if arch_ov != null:
+					if _scene == "archery":
+						arch_ov.set("_charging", true)
+						arch_ov.set("_charge", 0.78)
+						arch_ov.set("_wind", 1.2)
+						arch_ov.set("_aim_pos", Vector2(216.0, 134.0))
+						arch_ov.call("_sync_ui")
+					else:
+						arch_ov.set("_wind", 0.0)
+						arch_ov.call("shoot_with_params", arch_ov.get("_target_pos") + Vector2(14.0, -8.0), 0.76)
+						arch_ov.set("_wind", 0.0)
+						arch_ov.call("shoot_with_params", arch_ov.get("_target_pos"), 0.80)
 		"arena_curio":
 			_demo_prog()
 			G.lore_resonate("zs")
@@ -1555,6 +1569,44 @@ func _setup() -> void:
 			var ap_cur: Node = hcur.get("_arena")
 			if ap_cur != null and ap_cur.has_method("_open_curio_modal"):
 				ap_cur.call("_open_curio_modal")
+				await get_tree().process_frame
+				var cur_ov: Node = ap_cur.get("_curio_overlay")
+				if cur_ov != null:
+					var st_cv: Node = cur_ov.find_child("CurioStageCanvas", true, false)
+					if st_cv != null and st_cv.get("on_chest_clicked") is Callable:
+						(st_cv.get("on_chest_clicked") as Callable).call("rare")
+		"tutorial_step1", "tutorial_step3", "tutorial_step4", "tutorial_step6", "tutorial_step7", "tutorial_step8", "tutorial_step9", "tutorial_step10":
+			_growth_demo()
+			G.inv_grant_equip({"tpl": "tpl_sword_starfall", "rarity": 4, "n": 1})
+			G.inv_grant_equip({"tpl": "tpl_sword_wolf", "rarity": 2, "n": 1})
+			G.inv_grant_equip({"tpl": "tpl_armor_scale", "rarity": 2, "n": 1})
+			G.inv_grant_equip({"tpl": "tpl_accessory_moon", "rarity": 3, "n": 1})
+			G.set_meta("force_tutorial_shot", true)
+			var step_map := {
+				"tutorial_step1": 0,
+				"tutorial_step3": 2,
+				"tutorial_step4": 3,
+				"tutorial_step6": 5,
+				"tutorial_step7": 6,
+				"tutorial_step8": 7,
+				"tutorial_step9": 8,
+				"tutorial_step10": 9,
+			}
+			var target_idx := int(step_map.get(_scene, 0))
+			G.prog["tutorial"] = {
+				"step_idx": target_idx,
+				"completed": false,
+				"skipped": false,
+				"reward_claimed": false,
+				"seen_steps": [],
+			}
+			var htut: Node = load("res://src/ui/GameHome.tscn").instantiate()
+			add_child(htut)
+			await get_tree().process_frame
+			htut.call("open_tutorial", false)
+			await get_tree().process_frame
+			if _scene == "tutorial_step6":
+				htut.call("_on_tutorial_try_step", "step_06_reward")
 		"gacha":
 			_demo_prog()
 			var hg: Node = load("res://src/ui/GameHome.tscn").instantiate()

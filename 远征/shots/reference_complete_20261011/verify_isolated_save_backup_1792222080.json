@@ -64,7 +64,7 @@
 			"next_uid": 1,
 			"pending": []
 		},
-		"last_ts": 1791824760,
+		"last_ts": 1792222080,
 		"ledger": {
 			"applied": []
 		},
@@ -93,7 +93,6 @@
 		"pets": [
 			"pet_rockturtle"
 		],
-		"quest_postings": {},
 		"settings": {},
 		"skills": {},
 		"special_events": {
@@ -119,11 +118,8 @@
 	"quest": {
 		"active": {},
 		"claimed": [],
-		"day": "2026-10-12",
-		"offer": [
-			"q_deliver_sweep",
-			"q_clear_forest"
-		]
+		"day": "",
+		"offer": []
 	},
 	"selected_role": "zs",
 	"version": 7,

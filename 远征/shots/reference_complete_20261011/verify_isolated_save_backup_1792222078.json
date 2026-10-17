@@ -28,7 +28,6 @@
 	},
 	"gender": "男",
 	"items": {
-		"salt_pack": 1,
 		"ticket_sweep": 1,
 		"ticket_ten": 0
 	},
@@ -37,34 +36,8 @@
 		"act1": {
 			"discoveries": [],
 			"first_kills": [],
-			"side_quests": {
-				"a1_elite_beast": {
-					"progress": 0,
-					"seen": [],
-					"status": "active"
-				},
-				"a1_rel_child": {
-					"progress": 0,
-					"seen": [],
-					"status": "active"
-				},
-				"a1_rel_guard": {
-					"progress": 0,
-					"seen": [],
-					"status": "active"
-				},
-				"a1_trade_cart": {
-					"progress": 0,
-					"seen": [],
-					"status": "active"
-				}
-			},
-			"tracked": "a1_elite_beast"
-		},
-		"campaign_growth": {
-			"story_revision": {
-				"s01": 2
-			}
+			"side_quests": {},
+			"tracked": ""
 		},
 		"codex_claimed": [],
 		"economy": {
@@ -78,7 +51,7 @@
 			"work": {}
 		},
 		"equip": {},
-		"exp": 102,
+		"exp": 0,
 		"flags": {},
 		"gacha": {
 			"free_day": "",
@@ -91,17 +64,26 @@
 			"next_uid": 1,
 			"pending": []
 		},
-		"last_ts": 1791987942,
+		"last_ts": 1791987943,
 		"ledger": {
-			"applied": [
-				"story|s01|talk|lorin_wilds|npc_steward|"
-			]
+			"applied": []
 		},
 		"level": 12,
 		"lore_beats": {},
 		"lore_seen": false,
 		"main_world": {
-			"map_id": "lorin_wilds"
+			"custom_progress": 42,
+			"layout_version": 5,
+			"map_id": "lorin_wilds",
+			"position": [
+				500,
+				1050
+			],
+			"respawn_by_map": {
+				"lorin_wilds": {
+					"0": 9999999999
+				}
+			}
 		},
 		"mounts": {
 			"active": "",
@@ -119,13 +101,9 @@
 			"tracked": ""
 		},
 		"story": {
-			"done": [
-				"s01"
-			],
-			"goals": {
-				"s01": "done"
-			},
-			"step": "s02"
+			"done": [],
+			"goals": {},
+			"step": "s01"
 		},
 		"talents": {},
 		"tips_seen": {
@@ -151,7 +129,7 @@
 	"version": 7,
 	"wallet": {
 		"expedition": 0,
-		"gold": 40,
+		"gold": 0,
 		"honor": 0,
 		"soul": 0
 	}

@@ -79,9 +79,11 @@ func _set_home_content_visible(visible: bool) -> void:
 			and child != _bag and child != _avatar_panel and child != _quests and child != _gathering and child != _activities and child != _tutorial:
 			child.visible = visible
 	if _tutorial != null:
-		_tutorial.visible = visible and TutorialServiceScript.should_show(G)
-		if _tutorial.visible and _tutorial.has_method("refresh"):
-			_tutorial.refresh()
+		_tutorial.visible = TutorialServiceScript.should_show(G)
+		if _tutorial.visible:
+			_tutorial.move_to_front()
+			if _tutorial.has_method("refresh"):
+				_tutorial.refresh(false)
 
 
 func _ready() -> void:
@@ -254,11 +256,14 @@ func _open_activities() -> void:
 	_set_home_content_visible(false)
 	add_child(_activities)
 
+var _in_tutorial_sync := false
+
 func _open_quests() -> void:
 	if _quests != null:
 		return
 	Audio.sfx("ui_open")
-	TutorialServiceScript.notify_event(G, "quest_tracked")
+	if not _in_tutorial_sync:
+		TutorialServiceScript.notify_event(G, "quest_tracked")
 	_quests = QuestPanelScript.new()
 	_quests.closed.connect(func():
 		Audio.sfx("ui_close")
@@ -276,7 +281,8 @@ func _open_worlds(e: InputEvent) -> void:
 	if _worlds != null:
 		return
 	Audio.sfx("ui_open")
-	TutorialServiceScript.notify_event(G, "map_switched")
+	if not _in_tutorial_sync:
+		TutorialServiceScript.notify_event(G, "map_switched")
 	_worlds = RegionMapPanel.new()
 	_worlds.closed.connect(func():
 		Audio.sfx("ui_close")
@@ -354,7 +360,8 @@ func _open_growth() -> void:
 	if _growth != null:
 		return
 	Audio.sfx("ui_open")
-	TutorialServiceScript.notify_event(G, "growth_opened")
+	if not _in_tutorial_sync:
+		TutorialServiceScript.notify_event(G, "growth_opened")
 	_growth = GrowthPanelScript.new()
 	_growth.closed.connect(func():
 		Audio.sfx("ui_close")
@@ -370,7 +377,8 @@ func _open_bag() -> void:
 	if _bag != null:
 		return
 	Audio.sfx("ui_open")
-	TutorialServiceScript.notify_event(G, "equip_worn")
+	if not _in_tutorial_sync:
+		TutorialServiceScript.notify_event(G, "equip_worn")
 	_bag = BagPanelScript.new()
 	_bag._focus_return = get_viewport().gui_get_focus_owner()
 	_bag.closed.connect(func():
@@ -433,13 +441,19 @@ func _ensure_tutorial_overlay() -> void:
 		_tutorial.name = "TutorialOverlay"
 		_tutorial.scene_context = "home"
 		_tutorial.action_router = _on_tutorial_try_step
+		_tutorial.panel_router = _sync_tutorial_panel
 		_tutorial.reward_claimed.connect(func(reward_text: String):
 			_refresh_wallet()
 			_toast_msg("启程贺礼已入囊：" + reward_text))
 		add_child(_tutorial)
-	_tutorial.visible = not _home_content_hidden and TutorialServiceScript.should_show(G)
+	_tutorial.visible = TutorialServiceScript.should_show(G)
 	if _tutorial.visible:
-		_tutorial.refresh()
+		var cur_step := TutorialServiceScript.current_step(G)
+		var want_panel := String(cur_step.get("panel", "home"))
+		if want_panel != "home":
+			_sync_tutorial_panel(want_panel, String(cur_step.get("id", "")))
+		_tutorial.move_to_front()
+		_tutorial.refresh(false)
 
 
 func open_tutorial(restart_first: bool = false) -> void:
@@ -448,29 +462,153 @@ func open_tutorial(restart_first: bool = false) -> void:
 	_ensure_tutorial_overlay()
 	if _tutorial != null:
 		_tutorial.visible = true
-		_tutorial.refresh()
+		_tutorial.refresh(true)
+
+
+func _close_subpanels_except(keep: String) -> void:
+	if keep != "quests" and _quests != null:
+		_quests.queue_free()
+		_quests = null
+	if keep != "arena" and keep != "archery" and _arena != null:
+		_arena.queue_free()
+		_arena = null
+	if keep != "bag" and _bag != null:
+		_bag.queue_free()
+		_bag = null
+	if keep != "growth" and _growth != null:
+		_growth.queue_free()
+		_growth = null
+	if keep != "worlds" and _worlds != null:
+		_worlds.queue_free()
+		_worlds = null
+	if keep != "settings" and _settings != null:
+		_settings.queue_free()
+		_settings = null
+	if keep != "codex" and _codex != null:
+		_codex.queue_free()
+		_codex = null
+	if keep != "gacha" and _gacha != null:
+		_gacha.queue_free()
+		_gacha = null
+	if keep != "exchange" and _exchange != null:
+		_exchange.queue_free()
+		_exchange = null
+	if keep != "deploy" and _deploy != null:
+		_deploy.queue_free()
+		_deploy = null
+	if keep != "activities" and _activities != null:
+		_activities.queue_free()
+		_activities = null
+	if keep != "gathering" and _gathering != null:
+		_gathering.queue_free()
+		_gathering = null
+
+
+func _sync_tutorial_panel(panel_id: String, _step_id: String = "") -> void:
+	_in_tutorial_sync = true
+	_close_subpanels_except(panel_id)
+	match panel_id:
+		"home":
+			_set_home_content_visible(true)
+		"quests":
+			if _quests == null:
+				_open_quests()
+		"arena":
+			if _arena == null:
+				_open_arena()
+			elif _arena.get("_archery_overlay") != null and is_instance_valid(_arena.get("_archery_overlay")):
+				(_arena.get("_archery_overlay") as Node).queue_free()
+				_arena.set("_archery_overlay", null)
+		"archery":
+			if _arena == null:
+				_open_arena()
+			if _arena != null and _arena.has_method("_open_archery"):
+				if _arena.get("_archery_overlay") == null or not is_instance_valid(_arena.get("_archery_overlay")):
+					_arena.call("_open_archery")
+		"bag":
+			if _bag == null:
+				_open_bag()
+			if _bag != null:
+				var sel_u := int(_bag.get("_sel_uid"))
+				if sel_u <= 0 or G.inv_find(sel_u).is_empty():
+					var worn_map: Dictionary = G.inv_worn_uids()
+					var pick_uid := 0
+					for it in G.inv_instances():
+						var dc := it as Dictionary
+						var u := int(dc.get("uid", 0))
+						if u > 0 and not worn_map.has(u):
+							pick_uid = u
+							break
+					if pick_uid <= 0 and not G.inv_instances().is_empty():
+						pick_uid = int((G.inv_instances()[0] as Dictionary).get("uid", 0))
+					if pick_uid > 0:
+						_bag.set("_sel_uid", pick_uid)
+						if _bag.has_method("_refresh"):
+							_bag.call("_refresh")
+		"growth":
+			if _growth == null:
+				_open_growth()
+		"worlds":
+			if _worlds == null:
+				_open_worlds(_click_ev())
+		"settings":
+			if _settings == null:
+				_open_settings(_click_ev())
+	_in_tutorial_sync = false
+	if _tutorial != null:
+		_tutorial.visible = TutorialServiceScript.should_show(G)
+		_tutorial.move_to_front()
 
 
 func _on_tutorial_try_step(step_id: String) -> void:
+	var step := TutorialServiceScript.current_step(G)
+	var want_panel := String(step.get("panel", "home"))
+	_sync_tutorial_panel(want_panel, step_id)
 	match step_id:
 		"step_01_role":
 			if _chest_view != null and _chest_view.has_method("_cycle_hero_pose"):
 				_chest_view.call("_cycle_hero_pose")
-			TutorialServiceScript.notify_event(G, "role_inspected")
-			if _tutorial != null: _tutorial.refresh()
-		"step_02_move", "step_03_npc", "step_05_battle", "step_06_reward":
-			_open_main_world(_click_ev())
+			if _tutorial != null:
+				_tutorial.move_to_front()
+		"step_02_move":
+			if _tutorial != null and _tutorial.has_method("_on_next"):
+				_tutorial.call("_on_next")
+		"step_03_npc":
+			if _quests != null and _quests.has_method("_show_toast"):
+				_quests.call("_show_toast", "主线指引：步入昭元边城与闻叔交谈即可推进章节", false)
 		"step_04_quest":
-			_open_quests()
+			var offers: Array = G.quest.get("offer", [])
+			if not offers.is_empty():
+				var qid := String(offers[0])
+				G.quest_accept(qid)
+			if _quests != null and _quests.has_method("_refresh"):
+				_quests.call("_refresh")
+				if _quests.has_method("_show_toast"):
+					_quests.call("_show_toast", "已为你接取并追踪边城委托，路牌方向信标已激活！", false)
+		"step_05_battle":
+			if _tutorial != null and _tutorial.has_method("_on_next"):
+				_tutorial.call("_on_next")
+		"step_06_reward":
+			if _arena != null and _arena.get("_archery_overlay") != null and is_instance_valid(_arena.get("_archery_overlay")):
+				var arch: Node = _arena.get("_archery_overlay")
+				if arch.has_method("shoot_with_params"):
+					arch.set("_wind", 0.0)
+					arch.call("shoot_with_params", arch.get("_target_pos"), 0.80)
 		"step_07_equip":
-			_open_bag()
+			if _bag != null and _bag.has_method("_refresh"):
+				_bag.call("_refresh")
 		"step_08_growth":
-			_open_growth()
+			if _growth != null and _growth.has_method("_refresh"):
+				_growth.call("_refresh")
 		"step_09_map_switch":
-			_open_worlds(_click_ev())
+			if _worlds != null and _worlds.has_method("_focus_quest_target"):
+				_worlds.call("_focus_quest_target")
 		"step_10_return_town":
-			TutorialServiceScript.notify_event(G, "returned_home")
-			if _tutorial != null: _tutorial.refresh()
+			if _settings != null and _settings.get("_deck") != null:
+				var cur_p := int(_settings.get("_deck").get("current"))
+				_settings.get("_deck").call("go", 1 if cur_p == 0 else 0, true)
+	if _tutorial != null:
+		_tutorial.move_to_front()
 
 
 # ---------- 交互 ----------

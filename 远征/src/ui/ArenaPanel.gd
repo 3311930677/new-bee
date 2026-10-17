@@ -281,96 +281,195 @@ func _open_curio_modal() -> void:
 	_curio_overlay = root
 	add_child(root)
 	G.veil(root, G.VEIL_TAKEOVER_A)
-	var box := G.parchment_box(436, 520, 16.0)
-	box.position = Vector2(22, 140)
+
+	var top_banner := G.banner_box("古碑鉴宝", 280, 48)
+	top_banner.position = Vector2((VIEW_W - 280.0) * 0.5, 54)
+	top_banner.z_index = 2
+	root.add_child(top_banner)
+
+	var box := G.parchment_box(444, 652, 16.0)
+	box.position = Vector2(18, 100)
 	root.add_child(box)
 	var inner := Control.new()
 	inner.set_anchors_preset(Control.PRESET_FULL_RECT)
 	box.add_child(inner)
 
-	var title_l := G.gold_label("边城古碑共鸣 · 行商鉴宝", G.FS_LG, true, Color("4a3010"), false)
-	title_l.position = Vector2(0, 8)
-	title_l.custom_minimum_size = Vector2(404, 0)
-	title_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	inner.add_child(title_l)
+	# 1. 顶部暗金状态横栏
+	var status_bg := Panel.new()
+	status_bg.position = Vector2(2, 4)
+	status_bg.size = Vector2(408, 54)
+	var s_sb := StyleBoxFlat.new()
+	s_sb.bg_color = Color("24160e")
+	s_sb.border_color = Color("c89c52")
+	s_sb.set_border_width_all(1)
+	s_sb.set_corner_radius_all(4)
+	status_bg.add_theme_stylebox_override("panel", s_sb)
+	inner.add_child(status_bg)
 
-	var desc_l := G.gold_label("", G.FS_XS, false, Color("5a3e1b"), false)
+	var desc_l := G.gold_label("", G.FS_XS, false, Color("f3dfb4"), false)
 	desc_l.name = "CurioStatusLabel"
-	desc_l.position = Vector2(8, 44)
-	desc_l.custom_minimum_size = Vector2(388, 120)
+	desc_l.position = Vector2(10, 8)
+	desc_l.custom_minimum_size = Vector2(392, 46)
 	desc_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	inner.add_child(desc_l)
 
-	var log_l := G.gold_label("点选下方「参悟古碑」可激活当前职业先祖铭文与专属称号；点选「鉴宝」可开启蒙尘古匣获取宝石、精炼石与高阶装备。", G.FS_XS, false, Color("6a5230"), false)
+	# 2. 双舞台像素实景交互画布（左：先祖古碑坛；右：行商鉴宝席）
+	var stage_canvas := _CurioStageCanvas.new()
+	stage_canvas.name = "CurioStageCanvas"
+	stage_canvas.position = Vector2(2, 64)
+	stage_canvas.size = Vector2(408, 212)
+	inner.add_child(stage_canvas)
+
+	# 3. 铭文与鉴宝展柜卡（左：奇珍/碑刻徽章槽；右：铭文与鉴宝详录）
+	var showcase_bg := Panel.new()
+	showcase_bg.position = Vector2(2, 282)
+	showcase_bg.size = Vector2(408, 190)
+	var c_sb := StyleBoxFlat.new()
+	c_sb.bg_color = Color("20140d")
+	c_sb.border_color = Color("b88c46")
+	c_sb.set_border_width_all(1)
+	c_sb.set_corner_radius_all(4)
+	showcase_bg.add_theme_stylebox_override("panel", c_sb)
+	inner.add_child(showcase_bg)
+
+	var slot_frame := TextureRect.new()
+	slot_frame.texture = load("res://assets/ui/kit_20261013/slot_legend.png")
+	slot_frame.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	slot_frame.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	slot_frame.position = Vector2(12, 294)
+	slot_frame.size = Vector2(64, 64)
+	inner.add_child(slot_frame)
+
+	var make_showcase_icon := func(kind: String) -> Texture2D:
+		if kind == "stele":
+			var st_tex := _CurioStageCanvas._load_png_tex("res://assets/ui/minigames/stele_monument_sheet.png")
+			if st_tex != null:
+				var at := AtlasTexture.new()
+				at.atlas = st_tex
+				at.region = Rect2(120, 0, 120, 140)
+				return at
+		else:
+			var ch_tex := _CurioStageCanvas._load_png_tex("res://assets/ui/minigames/curio_chests_sheet.png")
+			if ch_tex != null:
+				var at2 := AtlasTexture.new()
+				at2.atlas = ch_tex
+				at2.region = Rect2(192 if kind == "rare" else 0, 0, 96, 96)
+				return at2
+		return G.res_tex("rank_gold")
+
+	var item_icon := TextureRect.new()
+	item_icon.name = "CurioShowcaseIcon"
+	item_icon.texture = make_showcase_icon.call("stele")
+	item_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	item_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	item_icon.position = Vector2(8, 8)
+	item_icon.size = Vector2(48, 48)
+	slot_frame.add_child(item_icon)
+
+	var slot_tag := G.gold_label("先祖碑铭", G.FS_XS, false, Color("e6c275"), false)
+	slot_tag.name = "CurioSlotTag"
+	slot_tag.position = Vector2(6, 362)
+	slot_tag.custom_minimum_size = Vector2(76, 0)
+	slot_tag.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	inner.add_child(slot_tag)
+
+	var log_l := G.gold_label("点选上方古碑或下方「参悟古碑」可激活当前职业先祖铭文与专属称号；点选右侧宝匣或「鉴古匣/鉴宝匣」可开启蒙尘古匣获取高阶宝石、精炼石与24级史诗神兵。", G.FS_XS, false, Color("f5e6c8"), false)
 	log_l.name = "CurioLogLabel"
-	log_l.position = Vector2(8, 176)
-	log_l.custom_minimum_size = Vector2(388, 168)
+	log_l.position = Vector2(86, 290)
+	log_l.custom_minimum_size = Vector2(314, 118)
 	log_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	inner.add_child(log_l)
+
+	var sep_line := ColorRect.new()
+	sep_line.position = Vector2(14, 412)
+	sep_line.size = Vector2(384, 1)
+	sep_line.color = Color(0.72, 0.55, 0.28, 0.35)
+	inner.add_child(sep_line)
+
+	var hist_l := G.gold_label("", G.FS_XS, false, Color("d4b886"), false)
+	hist_l.name = "CurioHistoryLabel"
+	hist_l.position = Vector2(14, 418)
+	hist_l.custom_minimum_size = Vector2(384, 48)
+	hist_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	inner.add_child(hist_l)
 
 	var refresh_curio := func() -> void:
 		var flags: Dictionary = G.prog.get("flags", {}) if G.prog.get("flags") is Dictionary else {}
 		var cnt := int(flags.get("curio_appraised_count", 0))
 		var resonated := bool(flags.get("lore_resonated_" + G.selected_role, false))
 		var hist: Array = flags.get("curio_history", []) if flags.get("curio_history") is Array else []
-		var hist_str := "暂无鉴宝记录" if hist.is_empty() else ("近期鉴宝：" + "；".join(hist.slice(0, 2)))
-		desc_l.text = "当前金币：%d ｜ 已鉴宝：%d 次（满3次解锁【慧眼识珍】）\n当前职业古碑共鸣：%s\n%s" % [
+		var hist_str := "近期鉴宝：暂无记录（点击古匣即可开匣鉴宝）" if hist.is_empty() else ("近期鉴宝：" + String(hist[0]))
+		desc_l.text = "当前金币：%d ｜ 已鉴宝：%d/3 次（满3次得【慧眼识珍】）\n当前职业古碑共鸣：%s" % [
 			int(G.wallet.get("gold", 0)), cnt,
-			"已达成（已领专属称号）" if resonated else "未共鸣（首次免费参悟领奖）",
-			hist_str
+			"✦ 已达成（已领专属称号）" if resonated else "待参悟（首次免费参悟领四币重赏）",
 		]
+		hist_l.text = hist_str
+		stage_canvas.resonated = resonated
+		stage_canvas.appraised_count = cnt
+		stage_canvas.role_id = G.selected_role
+		stage_canvas.queue_redraw()
+
+	var do_resonate := func() -> void:
+		Audio.sfx("reward")
+		var res := G.lore_resonate(G.selected_role)
+		var lines: Array = res.get("lines", [])
+		var reward_tail := "\n【首次共鸣】金币+180 · 远征币+40 · 魂晶+25 · 荣誉+30，解锁称号【%s】！" % String(res.get("title_name", "")) if bool(res.get("first", false)) else "\n（已参悟过该职业碑文，可随时重温先祖铭文）"
+		log_l.text = "【%s】\n%s%s" % [String(res.get("heading", "")), "\n".join(lines), reward_tail]
+		slot_tag.text = "先祖共鸣"
+		item_icon.texture = make_showcase_icon.call("stele")
+		stage_canvas.trigger_fx("stele", "✦ 先祖铭文共鸣 · %s ✦" % String(res.get("title_name", "古碑回响")))
+		refresh_curio.call()
+		_refresh()
+
+	var do_appraise := func(tier: String) -> void:
+		var res := G.curio_appraise(tier)
+		if bool(res.get("ok", false)):
+			Audio.sfx("reward")
+			var cname := String(res.get("curio_name", "奇珍古匣"))
+			var rdesc := String(res.get("reward_desc", ""))
+			log_l.text = "【%s · 鉴定大吉】\n开启获得：%s%s" % [
+				cname,
+				rdesc,
+				"\n✦ 累计达成3次鉴宝，额外解锁称号【慧眼识珍】！" if bool(res.get("unlocked_title", false)) else ""
+			]
+			slot_tag.text = "鉴出奇珍" if tier == "common" else "绝世秘宝"
+			item_icon.texture = make_showcase_icon.call(tier)
+			stage_canvas.trigger_fx(tier, "✦ %s · 鉴定出世 ✦" % cname)
+		else:
+			Audio.sfx("ui_close")
+			log_l.text = String(res.get("err", "金币不足"))
+		refresh_curio.call()
+		_refresh()
+
+	stage_canvas.on_stele_clicked = do_resonate
+	stage_canvas.on_chest_clicked = do_appraise
 
 	var btn_lore := G.gold_button("参悟古碑", 124, 42, G.FS_SM)
 	btn_lore.name = "LoreResonateButton"
-	btn_lore.position = Vector2(4, 366)
+	btn_lore.position = Vector2(4, 480)
 	btn_lore.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			var res := G.lore_resonate(G.selected_role)
-			var lines: Array = res.get("lines", [])
-			var reward_tail := "\n【首次共鸣】金币+180 · 远征币+40 · 魂晶+25 · 荣誉+30，解锁称号【%s】！" % String(res.get("title_name", "")) if bool(res.get("first", false)) else "\n（已参悟过该职业碑文，可随时重温铭文）"
-			log_l.text = "【%s】\n%s%s" % [String(res.get("heading", "")), "\n".join(lines), reward_tail]
-			refresh_curio.call()
-			_refresh())
+			do_resonate.call())
 	inner.add_child(btn_lore)
 
 	var btn_c1 := G.ghost_button("鉴古匣(260金)", 132, 42, G.FS_XS)
 	btn_c1.name = "AppraiseCommonButton"
-	btn_c1.position = Vector2(134, 366)
+	btn_c1.position = Vector2(134, 480)
 	btn_c1.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			var res := G.curio_appraise("common")
-			if bool(res.get("ok", false)):
-				log_l.text = "鉴定成功！开启【%s】获得：%s%s" % [
-					String(res.get("curio_name", "")),
-					String(res.get("reward_desc", "")),
-					"（达成3次鉴宝，额外解锁称号【慧眼识珍】！）" if bool(res.get("unlocked_title", false)) else ""
-				]
-			else:
-				log_l.text = String(res.get("err", "金币不足"))
-			refresh_curio.call()
-			_refresh())
+			do_appraise.call("common"))
 	inner.add_child(btn_c1)
 
 	var btn_c2 := G.ghost_button("鉴宝匣(680金)", 132, 42, G.FS_XS)
 	btn_c2.name = "AppraiseRareButton"
-	btn_c2.position = Vector2(272, 366)
+	btn_c2.position = Vector2(272, 480)
 	btn_c2.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			var res := G.curio_appraise("rare")
-			if bool(res.get("ok", false)):
-				log_l.text = "秘宝出世！开启【%s】获得：%s%s" % [
-					String(res.get("curio_name", "")),
-					String(res.get("reward_desc", "")),
-					"（达成3次鉴宝，额外解锁称号【慧眼识珍】！）" if bool(res.get("unlocked_title", false)) else ""
-				]
-			else:
-				log_l.text = String(res.get("err", "金币不足"))
-			refresh_curio.call()
-			_refresh())
+			do_appraise.call("rare"))
 	inner.add_child(btn_c2)
 
 	var close_b := G.ghost_button("关闭", G.BTN_S.x, G.BTN_S.y, G.FS_SM)
-	close_b.position = Vector2((404.0 - G.BTN_S.x) * 0.5, 432)
+	close_b.position = Vector2((408.0 - G.BTN_S.x) * 0.5, 534)
 	close_b.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			Audio.sfx("ui_close")
@@ -574,3 +673,146 @@ func _unhandled_input(event: InputEvent) -> void:
 		Audio.sfx("ui_close")
 		closed.emit()
 		get_viewport().set_input_as_handled()
+
+
+class _CurioStageCanvas extends Control:
+	var _tex_stage: Texture2D
+	var _tex_stele: Texture2D
+	var _tex_chests: Texture2D
+
+	var resonated := false
+	var appraised_count := 0
+	var role_id := "zs"
+	var on_stele_clicked: Callable
+	var on_chest_clicked: Callable
+	var _t := 0.0
+	var _fx_mode := ""
+	var _fx_banner := ""
+	var _fx_t := 0.0
+
+	static func _load_png_tex(path: String) -> Texture2D:
+		if ResourceLoader.exists(path):
+			var t := load(path) as Texture2D
+			if t != null:
+				return t
+		var abs_p := ProjectSettings.globalize_path(path)
+		if FileAccess.file_exists(abs_p):
+			var img := Image.load_from_file(abs_p)
+			if img != null and not img.is_empty():
+				var it := ImageTexture.create_from_image(img)
+				it.take_over_path(path)
+				return it
+		return null
+
+	func _ready() -> void:
+		mouse_filter = Control.MOUSE_FILTER_STOP
+		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		_tex_stage = _load_png_tex("res://assets/ui/minigames/curio_stage_bg.png")
+		_tex_stele = _load_png_tex("res://assets/ui/minigames/stele_monument_sheet.png")
+		_tex_chests = _load_png_tex("res://assets/ui/minigames/curio_chests_sheet.png")
+
+	func trigger_fx(mode: String, banner: String) -> void:
+		_fx_mode = mode
+		_fx_banner = banner
+		_fx_t = 1.6
+		queue_redraw()
+
+	func _process(delta: float) -> void:
+		_t += delta
+		if _fx_t > 0.0:
+			_fx_t = maxf(0.0, _fx_t - delta)
+		queue_redraw()
+
+	func _gui_input(event: InputEvent) -> void:
+		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			if event.position.x < 204.0:
+				if on_stele_clicked.is_valid():
+					on_stele_clicked.call()
+			elif event.position.x < 306.0:
+				if on_chest_clicked.is_valid():
+					on_chest_clicked.call("common")
+			else:
+				if on_chest_clicked.is_valid():
+					on_chest_clicked.call("rare")
+
+	func _draw() -> void:
+		var w := size.x
+		var h := size.y
+		var fnt: Font = G.font_reg
+
+		# 1. 双舞台实景贴图（左：先祖古碑坛；右：行商木案灯火鉴宝席）
+		if _tex_stage != null:
+			draw_texture_rect(_tex_stage, Rect2(0, 0, w, h), false)
+		else:
+			draw_rect(Rect2(0, 0, w, h), Color("18100b"))
+
+		# 2. 左半幅：先祖古碑（未共鸣态 Frame 0 / 铭文发光共鸣态 Frame 1）
+		if _tex_stele != null:
+			var s_frame := 1 if resonated else 0
+			var s_src := Rect2(s_frame * 120.0, 0.0, 120.0, 140.0)
+			var s_dst := Rect2(41.0, 34.0, 120.0, 140.0)
+			if resonated:
+				var pulse := 0.55 + 0.35 * sin(_t * 3.8)
+				draw_circle(Vector2(101, 102), 54.0, Color(1.0, 0.82, 0.36, 0.16 * pulse))
+			draw_texture_rect_region(_tex_stele, s_dst, s_src)
+
+		# 左区顶栏与底座铭牌
+		var l_top := Rect2(10, 8, 182, 24)
+		draw_rect(l_top, Color(0.10, 0.07, 0.05, 0.88))
+		draw_rect(l_top, Color("c89c52"), false, 1.0)
+		var st_txt := "先祖古碑 · " + ("已共鸣" if resonated else "待参悟")
+		draw_string_outline(fnt, Vector2(18, 25), st_txt, HORIZONTAL_ALIGNMENT_CENTER, 166, G.FS_XS, 3, Color(0.05, 0.03, 0.02, 0.95))
+		draw_string(fnt, Vector2(18, 25), st_txt, HORIZONTAL_ALIGNMENT_CENTER, 166, G.FS_XS, Color("84f0a8") if resonated else Color("f3d486"))
+
+		var l_bot := Rect2(22, h - 28, 158, 22)
+		draw_rect(l_bot, Color(0.10, 0.06, 0.04, 0.88))
+		draw_rect(l_bot, Color("b88c46"), false, 1.0)
+		draw_string_outline(fnt, Vector2(28, h - 12), "点古碑参悟铭文", HORIZONTAL_ALIGNMENT_CENTER, 146, G.FS_XS, 3, Color(0.05, 0.03, 0.02, 0.95))
+		draw_string(fnt, Vector2(28, h - 12), "点古碑参悟铭文", HORIZONTAL_ALIGNMENT_CENTER, 146, G.FS_XS, Color("f3e3c0"))
+
+		# 3. 右半幅：慧眼识珍三段进度槽 + 双古玩宝匣（蒙尘古匣 & 鎏金秘宝匣）
+		var r_top := Rect2(214, 8, 184, 24)
+		draw_rect(r_top, Color(0.10, 0.07, 0.05, 0.88))
+		draw_rect(r_top, Color("c89c52"), false, 1.0)
+		draw_string_outline(fnt, Vector2(222, 25), "慧眼识珍进度：", HORIZONTAL_ALIGNMENT_LEFT, 110, G.FS_XS, 3, Color(0.05, 0.03, 0.02, 0.95))
+		draw_string(fnt, Vector2(222, 25), "慧眼识珍进度：", HORIZONTAL_ALIGNMENT_LEFT, 110, G.FS_XS, Color("f3e3c0"))
+		for pi in 3:
+			var pc := Vector2(342 + pi * 18, 20)
+			var lit := pi < appraised_count
+			draw_circle(pc, 6.0, Color("2a1a10"))
+			draw_circle(pc, 4.5, Color("ffd460") if lit else Color("58422c"))
+
+		if _tex_chests != null:
+			# 左侧：蒙尘古石匣 (260金)
+			var c1_open := _fx_t > 0.0 and _fx_mode == "common"
+			var c1_src := Rect2((2 if c1_open else 0) * 96.0, 0.0, 96.0, 96.0)
+			draw_texture_rect_region(_tex_chests, Rect2(210.0, 68.0, 92.0, 92.0), c1_src)
+			# 右侧：鎏金秘宝匣 (680金)
+			var c2_open := _fx_t > 0.0 and _fx_mode == "rare"
+			var c2_src := Rect2((2 if c2_open else 1) * 96.0, 0.0, 96.0, 96.0)
+			draw_texture_rect_region(_tex_chests, Rect2(306.0, 64.0, 94.0, 94.0), c2_src)
+
+		var tag1 := Rect2(214, h - 28, 86, 22)
+		draw_rect(tag1, Color(0.10, 0.06, 0.04, 0.90))
+		draw_rect(tag1, Color("b88c46"), false, 1.0)
+		draw_string_outline(fnt, Vector2(218, h - 12), "古石匣 260金", HORIZONTAL_ALIGNMENT_CENTER, 78, G.FS_XS, 3, Color(0.05, 0.03, 0.02, 0.95))
+		draw_string(fnt, Vector2(218, h - 12), "古石匣 260金", HORIZONTAL_ALIGNMENT_CENTER, 78, G.FS_XS, Color("e6cfa0"))
+
+		var tag2 := Rect2(308, h - 28, 90, 22)
+		draw_rect(tag2, Color(0.16, 0.06, 0.05, 0.92))
+		draw_rect(tag2, Color("f2c76a"), false, 1.0)
+		draw_string_outline(fnt, Vector2(312, h - 12), "秘宝匣 680金", HORIZONTAL_ALIGNMENT_CENTER, 82, G.FS_XS, 3, Color(0.05, 0.03, 0.02, 0.95))
+		draw_string(fnt, Vector2(312, h - 12), "秘宝匣 680金", HORIZONTAL_ALIGNMENT_CENTER, 82, G.FS_XS, Color("ffe28a"))
+
+		# 4. 参悟/开匣瞬间的金辉光环与顶部捷报
+		if _fx_t > 0.0:
+			var ratio := clampf(_fx_t / 1.6, 0.0, 1.0)
+			var fx_center := Vector2(101, 102) if _fx_mode == "stele" else (Vector2(256, 112) if _fx_mode == "common" else Vector2(353, 110))
+			var ring_r := (1.0 - ratio) * 62.0 + 14.0
+			draw_arc(fx_center, ring_r, 0.0, TAU, 28, Color(1.0, 0.88, 0.45, ratio * 0.85), 2.5)
+			var b_rect := Rect2(34, 38, w - 68, 26)
+			draw_rect(b_rect, Color(0.14, 0.08, 0.04, 0.94 * ratio))
+			draw_rect(b_rect, Color(0.98, 0.82, 0.42, ratio), false, 1.5)
+			draw_string_outline(fnt, Vector2(44, 57), _fx_banner, HORIZONTAL_ALIGNMENT_CENTER, w - 88, G.FS_XS, 3, Color(0.05, 0.03, 0.02, 0.95 * ratio))
+			draw_string(fnt, Vector2(44, 57), _fx_banner, HORIZONTAL_ALIGNMENT_CENTER, w - 88, G.FS_XS, Color(1.0, 0.92, 0.62, ratio))
+

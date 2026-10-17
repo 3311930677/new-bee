@@ -79,7 +79,7 @@ var _shown_role_id := ""
 var _preview_pose_idx := 0
 const PREVIEW_POSES := [&"idle", &"walk_down", &"walk_left", &"walk_right", &"walk_up"]
 const PREVIEW_POSE_NAMES := ["待机", "朝南", "朝西", "朝东", "朝北"]
-const HERO_SCALE := 0.96
+const HERO_SCALE := 0.58
 var _top: Control
 var _hud_bottom: Control
 var _toast: Label
@@ -134,7 +134,7 @@ func layout(safe_override: Rect2 = Rect2()) -> void:
 		var b: Button = _plaques[id]
 		b.position = (Vector2(b.get_meta("center")) + Vector2(0, core_y) - b.size * 0.5).round()
 	if _hero_hit != null:
-		_hero_hit.position = Vector2(HERO_FEET.x - 44.0, HERO_FEET.y + core_y - 108.0)
+		_hero_hit.position = Vector2(HERO_FEET.x - 44.0, HERO_FEET.y + core_y - 96.0)
 	_top.position = Vector2(0, safe.position.y)
 	_hud_bottom.position = Vector2(0, safe.end.y - 200.0)
 	_toast.position = Vector2(0, vh * 0.42)
@@ -217,12 +217,12 @@ func _build_scene() -> void:
 	_hero_sprite.name = "HeroRoleSprite"
 	_hero_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	_hero_sprite.scale = Vector2.ONE * HERO_SCALE
-	_hero_sprite.position = Vector2(HERO_FEET.x, HERO_FEET.y - 56.0 * HERO_SCALE)
+	_hero_sprite.position = Vector2(HERO_FEET.x, HERO_FEET.y - 61.0 * HERO_SCALE)
 	_scene.add_child(_hero_sprite)
 	if host != null:
 		host._anim = _hero_sprite
 
-	_hero_plate = _plate(Vector2(HERO_FEET.x - 68.0, HERO_FEET.y - 6.0), Vector2(136, 24))
+	_hero_plate = _plate(Vector2(HERO_FEET.x - 58.0, HERO_FEET.y + 4.0), Vector2(116, 22))
 	_hero_plate.name = "HeroRolePlate"
 	_scene.add_child(_hero_plate)
 	_hero_role_label = _label("", FONT_SERIF, G.FS_XS, GOLD, 3)
@@ -241,8 +241,8 @@ func _build_hero_interact() -> void:
 	_hero_hit.flat = true
 	for st in ["normal", "hover", "pressed", "focus", "disabled"]:
 		_hero_hit.add_theme_stylebox_override(st, StyleBoxEmpty.new())
-	_hero_hit.size = Vector2(88, 108)
-	_hero_hit.position = Vector2(HERO_FEET.x - 44.0, HERO_FEET.y + CORE_Y_800 - 108.0)
+	_hero_hit.size = Vector2(88, 96)
+	_hero_hit.position = Vector2(HERO_FEET.x - 44.0, HERO_FEET.y + CORE_Y_800 - 96.0)
 	_hero_hit.tooltip_text = "点按切换角色朝向预览"
 	_hero_hit.pressed.connect(_cycle_hero_pose)
 	content.add_child(_hero_hit)
@@ -264,15 +264,42 @@ func _role_slug(role_id: String) -> String:
 	return "pojun"
 
 
+var _town_tex_cache := {}
+
+func _load_png_tex(path: String) -> Texture2D:
+	if _town_tex_cache.has(path):
+		return _town_tex_cache[path]
+	if ResourceLoader.exists(path):
+		var t := load(path) as Texture2D
+		if t != null:
+			_town_tex_cache[path] = t
+			return t
+	var abs_p := ProjectSettings.globalize_path(path)
+	if FileAccess.file_exists(abs_p):
+		var img := Image.load_from_file(abs_p)
+		if img != null and not img.is_empty():
+			var it := ImageTexture.create_from_image(img)
+			it.take_over_path(path)
+			_town_tex_cache[path] = it
+			return it
+	return null
+
+
 func _role_sprite_frames(role_id: String) -> SpriteFrames:
 	var rid := _valid_role_id(role_id)
-	var slug := _role_slug(rid)
-	var idle_path := "res://image/role/%s/%s_idle.png" % [rid, slug]
-	var walk_path := "res://image/role/%s/%s_walk_frames.tres" % [rid, slug]
-	var tex: Texture2D = load(idle_path)
+	var town_idle_path := DIR + "hero_town_idle_%s.png" % rid
+	var town_dirs_path := DIR + "hero_town_dirs_%s.png" % rid
+	var tex: Texture2D = _load_png_tex(town_idle_path)
+	if tex == null:
+		tex = load(DIR + "hero_town_idle.png")
+	var dir_tex: Texture2D = _load_png_tex(town_dirs_path)
+	if dir_tex == null:
+		dir_tex = tex
 	var frames := SpriteFrames.new()
 	if frames.has_animation(&"default"):
 		frames.remove_animation(&"default")
+	var cell_w := int(tex.get_width() / 4) if tex != null else 96
+	var cell_h := int(tex.get_height()) if tex != null else 128
 	for anim_name in [&"idle", &"loop"]:
 		frames.add_animation(anim_name)
 		frames.set_animation_speed(anim_name, 5.0)
@@ -281,18 +308,19 @@ func _role_sprite_frames(role_id: String) -> SpriteFrames:
 			for c in 4:
 				var at := AtlasTexture.new()
 				at.atlas = tex
-				at.region = Rect2(c * 128, 0, 128, 128)
+				at.region = Rect2(c * cell_w, 0, cell_w, cell_h)
 				frames.add_frame(anim_name, at)
-	var walk_frames := load(walk_path) as SpriteFrames
-	if walk_frames != null:
-		for dir_anim in [&"walk_down", &"walk_left", &"walk_right", &"walk_up"]:
-			if walk_frames.has_animation(dir_anim):
-				frames.add_animation(dir_anim)
-				frames.set_animation_speed(dir_anim, walk_frames.get_animation_speed(dir_anim))
-				frames.set_animation_loop(dir_anim, true)
-				var cnt := walk_frames.get_frame_count(dir_anim)
-				for idx in cnt:
-					frames.add_frame(dir_anim, walk_frames.get_frame_texture(dir_anim, idx))
+	var dir_names := [&"walk_down", &"walk_left", &"walk_right", &"walk_up"]
+	for d_idx in dir_names.size():
+		var dir_anim: StringName = dir_names[d_idx]
+		frames.add_animation(dir_anim)
+		frames.set_animation_speed(dir_anim, 5.0)
+		frames.set_animation_loop(dir_anim, true)
+		if dir_tex != null:
+			var at := AtlasTexture.new()
+			at.atlas = dir_tex
+			at.region = Rect2(d_idx * cell_w, 0, cell_w, cell_h)
+			frames.add_frame(dir_anim, at)
 	return frames
 
 

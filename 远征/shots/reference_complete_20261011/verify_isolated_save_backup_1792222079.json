@@ -10,9 +10,9 @@
 	"audio": {
 		"bgm": 0.7,
 		"mute": false,
-		"sfx": 0.68
+		"sfx": 0.8
 	},
-	"avatar_custom": "custom_1789738666_22025941.png",
+	"avatar_custom": "",
 	"avatar_id": "fox",
 	"avatar_use_custom": false,
 	"city": {
@@ -28,6 +28,7 @@
 	},
 	"gender": "男",
 	"items": {
+		"salt_pack": 1,
 		"ticket_sweep": 1,
 		"ticket_ten": 0
 	},
@@ -36,8 +37,34 @@
 		"act1": {
 			"discoveries": [],
 			"first_kills": [],
-			"side_quests": {},
-			"tracked": ""
+			"side_quests": {
+				"a1_elite_beast": {
+					"progress": 0,
+					"seen": [],
+					"status": "active"
+				},
+				"a1_rel_child": {
+					"progress": 0,
+					"seen": [],
+					"status": "active"
+				},
+				"a1_rel_guard": {
+					"progress": 0,
+					"seen": [],
+					"status": "active"
+				},
+				"a1_trade_cart": {
+					"progress": 0,
+					"seen": [],
+					"status": "active"
+				}
+			},
+			"tracked": "a1_elite_beast"
+		},
+		"campaign_growth": {
+			"story_revision": {
+				"s01": 2
+			}
 		},
 		"codex_claimed": [],
 		"economy": {
@@ -51,7 +78,7 @@
 			"work": {}
 		},
 		"equip": {},
-		"exp": 0,
+		"exp": 102,
 		"flags": {},
 		"gacha": {
 			"free_day": "",
@@ -64,26 +91,17 @@
 			"next_uid": 1,
 			"pending": []
 		},
-		"last_ts": 1791987943,
+		"last_ts": 1792222079,
 		"ledger": {
-			"applied": []
+			"applied": [
+				"story|s01|talk|lorin_wilds|npc_steward|"
+			]
 		},
 		"level": 12,
 		"lore_beats": {},
 		"lore_seen": false,
 		"main_world": {
-			"custom_progress": 42,
-			"layout_version": 5,
-			"map_id": "lorin_wilds",
-			"position": [
-				500,
-				1050
-			],
-			"respawn_by_map": {
-				"lorin_wilds": {
-					"0": 9999999999
-				}
-			}
+			"map_id": "lorin_wilds"
 		},
 		"mounts": {
 			"active": "",
@@ -93,6 +111,7 @@
 		"pets": [
 			"pet_rockturtle"
 		],
+		"quest_postings": {},
 		"settings": {},
 		"skills": {},
 		"special_events": {
@@ -100,9 +119,13 @@
 			"tracked": ""
 		},
 		"story": {
-			"done": [],
-			"goals": {},
-			"step": "s01"
+			"done": [
+				"s01"
+			],
+			"goals": {
+				"s01": "done"
+			},
+			"step": "s02"
 		},
 		"talents": {},
 		"tips_seen": {
@@ -118,14 +141,17 @@
 	"quest": {
 		"active": {},
 		"claimed": [],
-		"day": "",
-		"offer": []
+		"day": "2026-10-17",
+		"offer": [
+			"q_deliver_sweep",
+			"q_deliver_stone"
+		]
 	},
 	"selected_role": "zs",
 	"version": 7,
 	"wallet": {
 		"expedition": 0,
-		"gold": 0,
+		"gold": 40,
 		"honor": 0,
 		"soul": 0
 	}
