@@ -165,7 +165,15 @@ static func battle_frames(role_id: String) -> SpriteFrames:
 	if _battle_frames_cache.has(role_id):
 		return _battle_frames_cache[role_id]
 	var path: String = ROLE_BATTLE_SHEET.get(role_id, "")
-	var tex: Texture2D = load(path) if path != "" else null
+	var tex: Texture2D = null
+	if path != "":
+		var abs_path := ProjectSettings.globalize_path(path)
+		if FileAccess.file_exists(abs_path):
+			var img := Image.load_from_file(abs_path)
+			if img != null and not img.is_empty():
+				tex = ImageTexture.create_from_image(img)
+		if tex == null:
+			tex = load(path)
 	var frames: SpriteFrames = null
 	if tex != null:
 		frames = SpriteFrames.new()
@@ -179,6 +187,7 @@ static func battle_frames(role_id: String) -> SpriteFrames:
 				var at := AtlasTexture.new()
 				at.atlas = tex
 				at.region = Rect2(c * 128, int(r[1]) * 128, 128, 128)
+				at.filter_clip = true
 				frames.add_frame(anim, at)
 	_battle_frames_cache[role_id] = frames
 	return frames
@@ -2701,7 +2710,7 @@ class UnitView extends Node2D:
 
 
 	## 播一次性动作（普攻/施法/受击）；播完由 animation_finished 带回待机。
-	## 同名动作正在播时不打断自己（受击连掉三滴血不至于鬼畜抽搐）
+	## 同名动作正在播时不打断自己；主动挥砍/施法期间不被普通受击截断动作帧。
 	func play_state(anim: StringName) -> void:
 		var asp := sprite as AnimatedSprite2D
 		if asp == null or _dead:
@@ -2710,6 +2719,9 @@ class UnitView extends Node2D:
 			return
 		if asp.animation == anim and asp.is_playing():
 			return
+		if anim == &"hit" and asp.animation in [&"attack", &"cast"] and asp.is_playing():
+			return
+		asp.frame = 0
 		asp.play(anim)
 
 
