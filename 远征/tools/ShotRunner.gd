@@ -689,6 +689,14 @@ func _setup() -> void:
 		"home":
 			_demo_prog()
 			add_child(load("res://src/ui/GameHome.tscn").instantiate())
+		"tutorial":
+			_demo_prog()
+			G.set_meta("force_tutorial_shot", true)
+			preload("res://src/world/TutorialService.gd").restart(G, false)
+			var ht: Node = load("res://src/ui/GameHome.tscn").instantiate()
+			add_child(ht)
+			if ht.has_method("open_tutorial"):
+				ht.call("open_tutorial", true)
 		"avatar":
 			_demo_prog()
 			G.selected_role = "zs"
@@ -726,14 +734,23 @@ func _setup() -> void:
 			ed.button_index = MOUSE_BUTTON_LEFT
 			hd.call("_on_expedition", ed)
 			hd.get("_deploy").call("_goto_step", 1 if _scene == "deploy_role" else 2)
-		"worlds":
+		"worlds", "worlds_travel":
 			_demo_prog()
+			G.items = {}
+			G.prog["story"] = {"step": "s02", "done": ["s01"], "goals": {}}
+			G.prog["main_world"] = {"map_id": "lorin_wilds", "visited_maps": ["lorin_wilds", "maple_road"]}
+			G.side_accept("a1_rel_child")
 			var hw: Node = load("res://src/ui/GameHome.tscn").instantiate()
 			add_child(hw)
 			var ew := InputEventMouseButton.new()
 			ew.pressed = true
 			ew.button_index = MOUSE_BUTTON_LEFT
 			hw.call("_open_worlds", ew)
+			if _scene == "worlds_travel":
+				await get_tree().process_frame
+				var wpanel: Node = hw.get("_worlds")
+				if wpanel != null and wpanel.has_method("select"):
+					wpanel.call("select", "maple_road", false)
 		"codex":
 			_demo_prog()
 			var hc: Node = load("res://src/ui/GameHome.tscn").instantiate()
@@ -965,6 +982,7 @@ func _setup() -> void:
 			_demo_prog()
 			G.quest = {"day": G.today_key(), "offer": ["q_slay_forest", "q_deliver_food"],
 				"active": {"q_slay_forest": 3, "q_deliver_food": 0}, "claimed": []}
+			G.side_accept("a1_rel_child")
 			G.items["pet_food"] = 0
 			var cq: Node = load("res://src/city/CityScene.tscn").instantiate()
 			add_child(cq)

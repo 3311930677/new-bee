@@ -19,6 +19,8 @@ const Journal := preload("res://src/ui/JournalUI.gd")
 const Field := preload("res://src/ui/FieldUI.gd")
 const Craft := preload("res://src/ui/CraftUI.gd")
 const ActivityPanelScript := preload("res://src/ui/ActivityPanel.gd")
+const TutorialServiceScript := preload("res://src/world/TutorialService.gd")
+const TutorialOverlayScript := preload("res://src/ui/TutorialOverlay.gd")
 
 const SPRITE_SCALE := 2.0       # 营帐的角色预览不盖住导航与主世界入口
 const PED_Y := 514.0            # 营地展示人物的脚底位置
@@ -53,6 +55,7 @@ var _avatar_pic: TextureRect = null
 var _home_content_hidden := false
 var _gathering:Control=null
 var _activities: Control = null
+var _tutorial: Control = null
 var _wallet_row: HBoxContainer = null
 var _wallet_labels: Array = []
 var _chest_view: Control
@@ -73,8 +76,12 @@ func _set_home_content_visible(visible: bool) -> void:
 			continue
 		if child != _deploy and child != _worlds and child != _codex and child != _gacha \
 			and child != _exchange and child != _settings and child != _arena and child != _growth \
-			and child != _bag and child != _avatar_panel and child != _quests and child != _gathering and child != _activities:
+			and child != _bag and child != _avatar_panel and child != _quests and child != _gathering and child != _activities and child != _tutorial:
 			child.visible = visible
+	if _tutorial != null:
+		_tutorial.visible = visible and TutorialServiceScript.should_show(G)
+		if _tutorial.visible and _tutorial.has_method("refresh"):
+			_tutorial.refresh()
 
 
 func _ready() -> void:
@@ -84,6 +91,7 @@ func _ready() -> void:
 	_chest_view.name = "CampChest" if legacy else "TownHome"
 	_chest_view.host = self
 	add_child(_chest_view)
+	_ensure_tutorial_overlay()
 	_prompt_save_locked()
 
 func _prompt_save_locked() -> void:
@@ -250,6 +258,7 @@ func _open_quests() -> void:
 	if _quests != null:
 		return
 	Audio.sfx("ui_open")
+	TutorialServiceScript.notify_event(G, "quest_tracked")
 	_quests = QuestPanelScript.new()
 	_quests.closed.connect(func():
 		Audio.sfx("ui_close")
@@ -267,6 +276,7 @@ func _open_worlds(e: InputEvent) -> void:
 	if _worlds != null:
 		return
 	Audio.sfx("ui_open")
+	TutorialServiceScript.notify_event(G, "map_switched")
 	_worlds = RegionMapPanel.new()
 	_worlds.closed.connect(func():
 		Audio.sfx("ui_close")
@@ -344,6 +354,7 @@ func _open_growth() -> void:
 	if _growth != null:
 		return
 	Audio.sfx("ui_open")
+	TutorialServiceScript.notify_event(G, "growth_opened")
 	_growth = GrowthPanelScript.new()
 	_growth.closed.connect(func():
 		Audio.sfx("ui_close")
@@ -359,6 +370,7 @@ func _open_bag() -> void:
 	if _bag != null:
 		return
 	Audio.sfx("ui_open")
+	TutorialServiceScript.notify_event(G, "equip_worn")
 	_bag = BagPanelScript.new()
 	_bag._focus_return = get_viewport().gui_get_focus_owner()
 	_bag.closed.connect(func():
@@ -407,8 +419,58 @@ func _open_settings(e: InputEvent) -> void:
 		if _settings != null:
 			_settings.closed.emit()
 		_open_avatar_panel())
+	_settings.tutorial_requested.connect(func():
+		if _settings != null:
+			_settings.closed.emit()
+		open_tutorial(true))
 	_set_home_content_visible(false)
 	add_child(_settings)
+
+
+func _ensure_tutorial_overlay() -> void:
+	if _tutorial == null:
+		_tutorial = TutorialOverlayScript.new()
+		_tutorial.name = "TutorialOverlay"
+		_tutorial.scene_context = "home"
+		_tutorial.action_router = _on_tutorial_try_step
+		_tutorial.reward_claimed.connect(func(reward_text: String):
+			_refresh_wallet()
+			_toast_msg("启程贺礼已入囊：" + reward_text))
+		add_child(_tutorial)
+	_tutorial.visible = not _home_content_hidden and TutorialServiceScript.should_show(G)
+	if _tutorial.visible:
+		_tutorial.refresh()
+
+
+func open_tutorial(restart_first: bool = false) -> void:
+	if restart_first:
+		TutorialServiceScript.restart(G, true)
+	_ensure_tutorial_overlay()
+	if _tutorial != null:
+		_tutorial.visible = true
+		_tutorial.refresh()
+
+
+func _on_tutorial_try_step(step_id: String) -> void:
+	match step_id:
+		"step_01_role":
+			if _chest_view != null and _chest_view.has_method("_cycle_hero_pose"):
+				_chest_view.call("_cycle_hero_pose")
+			TutorialServiceScript.notify_event(G, "role_inspected")
+			if _tutorial != null: _tutorial.refresh()
+		"step_02_move", "step_03_npc", "step_05_battle", "step_06_reward":
+			_open_main_world(_click_ev())
+		"step_04_quest":
+			_open_quests()
+		"step_07_equip":
+			_open_bag()
+		"step_08_growth":
+			_open_growth()
+		"step_09_map_switch":
+			_open_worlds(_click_ev())
+		"step_10_return_town":
+			TutorialServiceScript.notify_event(G, "returned_home")
+			if _tutorial != null: _tutorial.refresh()
 
 
 # ---------- 交互 ----------

@@ -1,0 +1,439 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/@Control@2/HeroRolePlate/@Label@11",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "破军 · 战士"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/Plaque_gacha",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "酒馆"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/Plaque_arena",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "竞技场"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/Plaque_craft",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "铁匠铺"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/Plaque_exchange",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "集市"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/Plaque_world",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "世界"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/HeroPreviewButton",
+			"rect_height": 108.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/AvatarEntry",
+			"rect_height": 80.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/AvatarEntry/@TextureRect@21/@Label@22",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/@Label@23",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "叶珩"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/RoleSwitchEntry",
+			"rect_height": 31.0,
+			"size": 15,
+			"text": "易职"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_gold",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_gold/@NinePatchRect@26/@Label@28",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "12800"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_expedition",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_expedition/@NinePatchRect@29/@Label@31",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "240"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_soul",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_soul/@NinePatchRect@32/@Label@34",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "36"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_honor",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_honor/@NinePatchRect@35/@Label@37",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "900"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/Rail_bag/@Panel@40/@Label@41",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "背包"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/TopBar/Rail_gathering/@Panel@44/@Label@45",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "小聚"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/BottomHud/QuestSummary",
+			"rect_height": 56.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/BottomHud/QuestSummary/@Label@47",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "主线 · 城门来信"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/BottomHud/QuestSummary/@Label@48",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "与边城执事闻叔交谈"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 39.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/BottomHud/QuestSummary/@Label@49",
+			"rect_height": 39.0,
+			"size": 26,
+			"text": "›"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/BottomHud/Navigation_养成/@Panel@54/@Label@55",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "养成"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/BottomHud/Navigation_活动/@Panel@58/@Label@59",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "活动"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/BottomHud/Navigation_伙伴/@Panel@62/@Label@63",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "伙伴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/BottomHud/Navigation_设置/@Panel@66/@Label@67",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "设置"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/TownContent/BottomHud/ReturnToWorld/SortiePlate/@Label@68",
+			"rect_height": 40.0,
+			"size": 24,
+			"text": "出征"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/@Label@69",
+			"rect_height": 28.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@71/@Label@72",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "【边城执事·闻叔】"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@71/@Label@73",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "新手指引 1 / 11"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@71/SkipTutorialButton",
+			"rect_height": 30.0,
+			"size": 16,
+			"text": "跳过"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@71/SkipTutorialButton/Caption",
+			"rect_height": 30.0,
+			"size": 15,
+			"text": "跳过"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@71/SkipTutorialButton/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@Label@74",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "初入昭元 · 认识命途角色"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@Label@75",
+			"rect_height": 49.0,
+			"size": 15,
+			"text": "欢迎来到昭元边城！城门前伫立着你所选的命途角色，点按人物可切换五向姿态，顶栏「易职」可随时切换四大职业。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@Label@76",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "◆ 可点按城门前的主角切换朝向，或点「下一步」继续"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@77/PrevStepButton",
+			"rect_height": 36.0,
+			"size": 16,
+			"text": "上一步"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@77/PrevStepButton/Caption",
+			"rect_height": 36.0,
+			"size": 15,
+			"text": "上一步"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@77/PrevStepButton/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@77/TryStepButton",
+			"rect_height": 36.0,
+			"size": 16,
+			"text": "前往体验"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@77/TryStepButton/Caption",
+			"rect_height": 36.0,
+			"size": 15,
+			"text": "前往体验"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@77/TryStepButton/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@77/NextStepButton",
+			"rect_height": 36.0,
+			"size": 16,
+			"text": "下一步"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@77/NextStepButton/Caption",
+			"rect_height": 36.0,
+			"size": 15,
+			"text": "下一步"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@77/NextStepButton/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		}
+	]
+}

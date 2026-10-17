@@ -333,6 +333,9 @@ func _profile(parent:Control) -> void:
 	_name_pad.visible=false
 	parent.add_child(_btn("更换头像",host._open_avatar,"row","btn_avatar"))
 	_section(parent,"旅程")
+	var tut_btn:=_btn("新手指引",host._replay_tutorial,"row","btn_prologue")
+	tut_btn.name="TutorialReplayButton"
+	parent.add_child(tut_btn)
 	parent.add_child(_btn("重看序章",func():G.go("res://src/ui/Prologue.tscn"),"row","btn_prologue"))
 	parent.add_child(_btn("重选角色",func():G.go("res://src/ui/CreateRole.tscn"),"row","btn_role"))
 	if not host.standalone:parent.add_child(_btn("回标题",host._on_title,"row","door"))

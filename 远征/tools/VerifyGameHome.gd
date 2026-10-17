@@ -50,13 +50,30 @@ func _run() -> void:
 	G.wallet = {"gold": 0, "expedition": 0, "soul": 0, "honor": 0}
 	G.save_game()
 
-	# ---- B. 主城构建 + 顶栏钱包 ----
+	# ---- B. 主城构建 + 四角色动态展示 + 顶栏钱包 ----
 	G.selected_role = "zs"
 	var packed: PackedScene = load("res://src/ui/GameHome.tscn")
 	var home: Control = packed.instantiate()
 	add_child(home)
 	await get_tree().process_frame
 	_check(home._anim != null and home._anim.is_playing(), "角色待机动画应播放")
+	var seen_textures := {}
+	for rid in ["zs", "ck", "fs", "fz"]:
+		G.selected_role = rid
+		home._refresh_wallet()
+		_check(String(home._anim.get_meta("role_id", "")) == rid, "主页小人应随 G.selected_role 立即切换为 %s" % rid)
+		_check(home._anim.is_playing(), "切换为 %s 后待机动画应继续播放" % rid)
+		var ftex: Texture2D = home._anim.sprite_frames.get_frame_texture(&"idle", 0)
+		var apath := (ftex as AtlasTexture).atlas.resource_path if ftex is AtlasTexture else ""
+		seen_textures[rid] = apath
+	_check(seen_textures.size() == 4 and seen_textures["zs"] != seen_textures["ck"]
+		and seen_textures["ck"] != seen_textures["fs"] and seen_textures["fs"] != seen_textures["fz"],
+		"四名角色主页待机贴图应互不相同：%s" % str(seen_textures))
+	G.selected_role = "invalid_role_id"
+	home._refresh_wallet()
+	_check(String(home._anim.get_meta("role_id", "")) == "zs", "异常角色 ID 应安全回退至 zs")
+	G.selected_role = "zs"
+	home._refresh_wallet()
 	_check(home._deploy == null, "开局不应有 DEPLOY 浮层")
 	var world_entry := home.find_child("ReturnToWorld",true,false) as Control
 	# 主城首页的“出征”徽章即返回主世界入口（118×114），旧营帐为 400×72 横条
@@ -471,6 +488,49 @@ func _run() -> void:
 	dp3._toggle_ascetic()
 	_check(not bool(dp3.get("_ascetic")), "再点一下应关闭苦行")
 	dp3.queue_free()
+	await get_tree().process_frame
+
+	# ---- M. 11步新手指引（Task E） ----
+	var Tut := preload("res://src/world/TutorialService.gd")
+	_check(Tut.total_steps() == 11, "新手教程应包含 11 个完整步骤，实为 %d" % Tut.total_steps())
+	G.prog.erase("tutorial")
+	G.prog["level"] = 1
+	G.prog["story"] = {"step": "s01", "done": [], "goals": {}}
+	var tut_st := Tut.ensure_state(G)
+	_check(not bool(tut_st.get("completed", true)) and int(tut_st.get("step_idx", -1)) == 0,
+		"新玩家首次进入应自动初始化为第 1 步且未完成")
+	_check(Tut.should_show(G), "新玩家首次进入应触发新手引导")
+	var home_tut: Control = load("res://src/ui/GameHome.tscn").instantiate()
+	add_child(home_tut)
+	await get_tree().process_frame
+	_check(home_tut.get("_tutorial") != null and (home_tut.get("_tutorial") as Control).visible,
+		"GameHome 首次进入应自动展示 TutorialOverlay")
+	# 验证事件推进与手动步进
+	var moved_ok := Tut.notify_event(G, "role_inspected")
+	_check(moved_ok and int(Tut.ensure_state(G).get("step_idx", 0)) == 1,
+		"触发 role_inspected 事件应推进到第 2 步")
+	Tut.skip(G, false)
+	_check(not Tut.should_show(G), "跳过后不应再自动弹出教程")
+	Tut.restart(G, false)
+	_check(Tut.should_show(G) and int(Tut.ensure_state(G).get("step_idx", -1)) == 0,
+		"在设置中重温新手指引应恢复到第 1 步")
+	var tut_gold_before := int(G.wallet.get("gold", 0))
+	var tut_exp_before := int(G.wallet.get("expedition", 0))
+	var tut_stone_before := G.item_count("enhance_stone")
+	for step_i in 11:
+		Tut.advance(G, false)
+	_check(bool(Tut.ensure_state(G).get("completed", false)), "走完 11 步后应标记 completed=true")
+	_check(int(G.wallet.get("gold", 0)) == tut_gold_before + 300
+		and int(G.wallet.get("expedition", 0)) == tut_exp_before + 30
+		and G.item_count("enhance_stone") == tut_stone_before + 3,
+		"首次完成新手引导应发放启程贺礼（金币+300、远征币+30、强化石+3）")
+	# 再次重温并完成不重复发奖（防刷奖）
+	Tut.restart(G, false)
+	var done_again := Tut.complete(G, false)
+	_check(not bool(done_again.get("reward_granted", true))
+		and int(G.wallet.get("gold", 0)) == tut_gold_before + 300,
+		"重温教程再次完成不应重复发放启程奖励")
+	home_tut.queue_free()
 	await get_tree().process_frame
 
 	if _fails == 0:
