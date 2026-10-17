@@ -1,0 +1,1042 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/@Control@2/HeroRolePlate/@Label@11",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "破军 · 战士"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/@Label@69",
+			"rect_height": 28.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@Label@150",
+			"rect_height": 32.0,
+			"size": 20,
+			"text": "初出茅庐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@Label@151",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "当前佩戴 · 初出茅庐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@Button@152",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@Button@152/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@Label@153",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "称号荣誉"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Label@168",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "修行之路"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@173",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "初出茅庐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@173/@Label@170",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "初出茅庐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@173/@Label@171",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "佩戴中"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@173/@Label@172",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@178",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "身经百战"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@178/@Label@175",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "身经百战"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@178/@Label@176",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "角色达到 20 级"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@178/@Label@177",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@183",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "远征传说"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@183/@Label@180",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "远征传说"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@183/@Label@181",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "角色达到 60 级"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@183/@Label@182",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@188",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "驯兽大师"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@188/@Label@185",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "驯兽大师"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@188/@Label@186",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "收集 6 只灵宠"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@188/@Label@187",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@193",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "腰缠万贯"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@193/@Label@190",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "腰缠万贯"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@193/@Label@191",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "持有金币超过 50000"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@193/@Label@192",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@198",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "万兽之友"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@198/@Label@195",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "万兽之友"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@198/@Label@196",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "收集至少 8 只灵宠"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@198/@Label@197",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@203",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "百步穿杨"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@203/@Label@200",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "百步穿杨"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@203/@Label@201",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "校场射艺任意档位达成神射魁首"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@203/@Label@202",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@208",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "灵犀契主"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@208/@Label@205",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "灵犀契主"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@208/@Label@206",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "任意灵宠羁绊达到 3 阶"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@208/@Label@207",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@213",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "慧眼识珍"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@213/@Label@210",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "慧眼识珍"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@213/@Label@211",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "累计鉴定 3 件边城奇珍古物"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@213/@Label@212",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@218",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "苍山誓剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@218/@Label@215",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "苍山誓剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@218/@Label@216",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "战士参悟边城古碑剑意共鸣"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@218/@Label@217",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@223",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "朔风听刃"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@223/@Label@220",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "朔风听刃"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@223/@Label@221",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "刺客参悟边城古碑疾风共鸣"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@223/@Label@222",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@228",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "霜星观脉"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@228/@Label@225",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "霜星观脉"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@228/@Label@226",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "法师参悟边城古碑星霜共鸣"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@228/@Label@227",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@233",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "晨曦守望"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@233/@Label@230",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "晨曦守望"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@233/@Label@231",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "牧师参悟边城古碑晨光共鸣"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@233/@Label@232",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Label@234",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "秘境征服"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@239",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "林海征服者"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@239/@Label@236",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "林海征服者"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@239/@Label@237",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "可领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@239/@Label@238",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@244",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "雪原猎手"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@244/@Label@241",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "雪原猎手"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@244/@Label@242",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "可领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@244/@Label@243",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@249",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "深渊行者"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@249/@Label@246",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "深渊行者"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@249/@Label@247",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "通关「无底深渊」首领"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@249/@Label@248",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@254",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "王座终结者"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@254/@Label@251",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "王座终结者"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@254/@Label@252",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "通关「失落王城」首领"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@254/@Label@253",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@259",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "熔炉拾薪"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@259/@Label@256",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "熔炉拾薪"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@259/@Label@257",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "通关「焚天火山」首领"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@259/@Label@258",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@264",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "墓道点灯人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@264/@Label@261",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "墓道点灯人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@264/@Label@262",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "通关「幽暗古墓」首领"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@264/@Label@263",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@269",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "沙海识途"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@269/@Label@266",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "沙海识途"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@269/@Label@267",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "通关「流沙荒漠」首领"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@269/@Label@268",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@274",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "冰河引路人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@274/@Label@271",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "冰河引路人"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@274/@Label@272",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "通关「万载冰川」首领"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@274/@Label@273",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Label@275",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "荣誉兑换"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@280",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "荣耀之证"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@280/@Label@277",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "荣耀之证"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@280/@Label@278",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "荣誉商店兑换"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@280/@Label@279",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@285",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "百战之徽"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@285/@Label@282",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "百战之徽"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@285/@Label@283",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "荣誉商店兑换"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@285/@Label@284",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@290",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "不朽勋章"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@290/@Label@287",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "不朽勋章"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@290/@Label@288",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "荣誉商店兑换"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@290/@Label@289",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@295",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "初次受勋"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@295/@Label@292",
+			"rect_height": 26.0,
+			"size": 17,
+			"text": "初次受勋"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@295/@Label@293",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "荣誉商店兑换"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@158/@VBoxContainer@159/@Button@295/@Label@294",
+			"rect_height": 26.0,
+			"size": 15,
+			"text": "选择"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@ScrollContainer@163/@Label@162",
+			"rect_height": 49.0,
+			"size": 15,
+			"text": "角色达到 5 级\n（生命+50） "
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@Label@164",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@Button@165",
+			"rect_height": 56.0,
+			"size": 15,
+			"text": "卸下称号"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@Button@165/Caption",
+			"rect_height": 56.0,
+			"size": 22,
+			"text": "卸下称号"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@78/@Control@143/@Control@144/@Button@165/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		}
+	]
+}

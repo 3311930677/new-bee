@@ -96,7 +96,7 @@ func _build() -> void:
 	_skip_btn = Flow.button("跳过", _on_skip)
 	_skip_btn.name = "SkipTutorialButton"
 	_skip_btn.tooltip_text = "跳过新手引导（可在设置-旅人中随时重温）"
-	_skip_btn.custom_minimum_size = Vector2(68, 30)
+	_skip_btn.custom_minimum_size = Vector2(68, 44)
 	_skip_btn.size_flags_horizontal = Control.SIZE_SHRINK_END
 	_skip_btn.caption.add_theme_font_size_override("font_size", G.FS_XS)
 	top_row.add_child(_skip_btn)
@@ -127,19 +127,19 @@ func _build() -> void:
 
 	_prev_btn = Flow.button("上一步", _on_prev)
 	_prev_btn.name = "PrevStepButton"
-	_prev_btn.custom_minimum_size = Vector2(88, 36)
+	_prev_btn.custom_minimum_size = Vector2(88, 44)
 	_prev_btn.caption.add_theme_font_size_override("font_size", G.FS_XS)
 	btn_row.add_child(_prev_btn)
 
 	_try_btn = Flow.button("前往体验", _on_try)
 	_try_btn.name = "TryStepButton"
-	_try_btn.custom_minimum_size = Vector2(104, 36)
+	_try_btn.custom_minimum_size = Vector2(104, 44)
 	_try_btn.caption.add_theme_font_size_override("font_size", G.FS_XS)
 	btn_row.add_child(_try_btn)
 
 	_next_btn = Flow.button("下一步", _on_next, true)
 	_next_btn.name = "NextStepButton"
-	_next_btn.custom_minimum_size = Vector2(136, 36)
+	_next_btn.custom_minimum_size = Vector2(136, 44)
 	_next_btn.caption.add_theme_font_size_override("font_size", G.FS_XS)
 	btn_row.add_child(_next_btn)
 
@@ -186,7 +186,7 @@ func _relayout() -> void:
 
 	var card_w := minf(448.0, vp.x - 24.0)
 	var card_x := roundf((vp.x - card_w) * 0.5)
-	var card_h := 204.0
+	var card_h := 228.0
 	var card_y := 108.0 if hy >= 340.0 else (vp.y - card_h - 108.0)
 	_card.position = Vector2(card_x, card_y)
 	_card.size = Vector2(card_w, card_h)

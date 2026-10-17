@@ -19,6 +19,13 @@
     { "id": "t_tomb", "name": "墓道点灯人", "desc": "通关「幽暗古墓」首领", "cond": {"type": "clear_world", "world": "tomb"}, "bonus": {"crit_add": 0.02} },
     { "id": "t_desert", "name": "沙海识途", "desc": "通关「流沙荒漠」首领", "cond": {"type": "clear_world", "world": "desert"}, "bonus": {"spd_pct": 0.05} },
     { "id": "t_glacier", "name": "冰河引路人", "desc": "通关「万载冰川」首领", "cond": {"type": "clear_world", "world": "glacier"}, "bonus": {"def_pct": 0.05} },
-    { "id": "t_allbeast", "name": "万兽之友", "desc": "收集至少 8 只灵宠", "cond": {"type": "pets", "n": 8}, "bonus": {"maxhp_pct": 0.08, "hp_add": 100} }
+    { "id": "t_allbeast", "name": "万兽之友", "desc": "收集至少 8 只灵宠", "cond": {"type": "pets", "n": 8}, "bonus": {"maxhp_pct": 0.08, "hp_add": 100} },
+    { "id": "t_archery_master", "name": "百步穿杨", "desc": "校场射艺任意档位达成神射魁首", "cond": {"type": "archery_master", "n": 1}, "bonus": {"atk_add": 6, "crit_add": 0.02} },
+    { "id": "t_pet_bond", "name": "灵犀契主", "desc": "任意灵宠羁绊达到 3 阶", "cond": {"type": "pet_bond", "n": 3}, "bonus": {"hp_add": 120, "atk_add": 4} },
+    { "id": "t_curio_seer", "name": "慧眼识珍", "desc": "累计鉴定 3 件边城奇珍古物", "cond": {"type": "curio_count", "n": 3}, "bonus": {"atk_pct": 0.03, "def_pct": 0.03} },
+    { "id": "t_lore_zs", "name": "苍山誓剑", "desc": "战士参悟边城古碑剑意共鸣", "cond": {"type": "flag", "flag": "lore_resonated_zs", "n": 1}, "bonus": {"atk_add": 5, "def_add": 5} },
+    { "id": "t_lore_ck", "name": "朔风听刃", "desc": "刺客参悟边城古碑疾风共鸣", "cond": {"type": "flag", "flag": "lore_resonated_ck", "n": 1}, "bonus": {"spd_pct": 0.04, "crit_add": 0.02} },
+    { "id": "t_lore_fs", "name": "霜星观脉", "desc": "法师参悟边城古碑星霜共鸣", "cond": {"type": "flag", "flag": "lore_resonated_fs", "n": 1}, "bonus": {"atk_pct": 0.04, "hp_add": 60} },
+    { "id": "t_lore_fz", "name": "晨曦守望", "desc": "牧师参悟边城古碑晨光共鸣", "cond": {"type": "flag", "flag": "lore_resonated_fz", "n": 1}, "bonus": {"maxhp_pct": 0.05, "def_add": 4} }
   ]
 }

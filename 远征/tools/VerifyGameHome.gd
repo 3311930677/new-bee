@@ -533,6 +533,65 @@ func _run() -> void:
 	home_tut.queue_free()
 	await get_tree().process_frame
 
+	# ---- N. 五轮内容扩充综合回归（Rounds 1–5） ----
+	# Round 1: 校场射艺小游戏（ArcheryPanel）
+	var arch: Control = (load("res://src/ui/ArcheryPanel.gd") as GDScript).new()
+	add_child(arch)
+	await get_tree().process_frame
+	_check(arch._modes.size() >= 3, "校场射艺应配置至少 3 档难度")
+	arch._select_mode(0)
+	var gold_a0 := int(G.wallet.get("gold", 0))
+	for shot_i in 5:
+		arch._wind = 0.0
+		var sres: Dictionary = arch.shoot_with_params(arch._target_pos, 0.80)
+		_check(int(sres.get("rings", 0)) == 10, "无风且正中靶心+0.80甜区蓄力应得 10 环")
+	_check(arch._round_finished and arch._score == 50, "5 箭 10 环应得满分 50 环并结算")
+	_check(int(G.wallet.get("gold", 0)) > gold_a0, "射艺达标结算应发放金币与荣誉奖励")
+	_check(G.title_owned("t_archery_master") or G.title_cond_met(G.title_cfg("t_archery_master")),
+		"射艺满分魁首应解锁或满足【百步穿杨】称号条件")
+	arch.queue_free()
+	await get_tree().process_frame
+
+	# Round 2: 6 件新中期/后期特技装备模板
+	for tpl_id in ["tpl_sword_starfall", "tpl_spear_windpiercer", "tpl_staff_glacierheart",
+			"tpl_hammer_dawnlight", "tpl_armor_expedition", "tpl_acc_archery_ring"]:
+		var tpl_d: Dictionary = G.equip_tpl(tpl_id)
+		_check(not tpl_d.is_empty() and not (tpl_d.get("special", {}) as Dictionary).is_empty(),
+			"新装备模板 %s 应存在且带专属被动词条" % tpl_id)
+
+	# Round 3: 四职业边城古碑共鸣（lore_resonate）
+	for rid2 in ["zs", "ck", "fs", "fz"]:
+		var lres := G.lore_resonate(rid2)
+		_check(bool(lres.get("ok", false)) and bool(lres.get("first", false)),
+			"%s 首次古碑共鸣应成功并标记 first=true" % rid2)
+		_check(G.title_owned("t_lore_" + rid2), "%s 古碑共鸣后应自动解锁专属称号 t_lore_%s" % [rid2, rid2])
+		var lres_again := G.lore_resonate(rid2)
+		_check(not bool(lres_again.get("first", true)), "%s 重复共鸣不应重复发放首通奖励" % rid2)
+
+	# Round 4: 灵宠羁绊互动与寻宝馈赠（pet_bond_interact）
+	G.prog["pets"] = ["pet_rockturtle"]
+	G.prog["level"] = 20
+	G.items["pet_food"] = 10
+	G.wallet["gold"] = 5000
+	var hp_bonus_before := int(G.growth_bonuses("zs").get("hp_add", 0))
+	var mult_before := G.pet_stat_mult("pet_rockturtle")
+	for b_step in 3:
+		var b_res := G.pet_bond_interact("pet_rockturtle")
+		_check(bool(b_res.get("ok", false)), "灵宠羁绊第 %d 阶互动应成功" % (b_step + 1))
+	_check(G.pet_bond_level("pet_rockturtle") == 3, "互动 3 次后羁绊应为 3 阶")
+	_check(G.pet_stat_mult("pet_rockturtle") > mult_before, "羁绊提升应增加灵宠属性倍率")
+	_check(int(G.growth_bonuses("zs").get("hp_add", 0)) == hp_bonus_before + 45,
+		"3 阶羁绊应为主角提供 +45 生命共鸣加成")
+	_check(G.title_cond_met(G.title_cfg("t_pet_bond")), "3 阶羁绊应满足【灵犀契主】称号条件")
+
+	# Round 5: 边城古玩鉴宝（curio_appraise）
+	G.wallet["gold"] = 5000
+	for c_i in 3:
+		var cres := G.curio_appraise("common" if c_i < 2 else "rare")
+		_check(bool(cres.get("ok", false)), "第 %d 次古玩鉴宝应成功" % (c_i + 1))
+	_check(G.title_owned("t_curio_seer") or G.title_cond_met(G.title_cfg("t_curio_seer")),
+		"累计鉴宝 3 次应解锁或达成【慧眼识珍】称号")
+
 	if _fails == 0:
 		print("GAME_HOME_OK all tests passed")
 	else:

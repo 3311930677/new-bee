@@ -48,6 +48,7 @@ func _reset(level := 1) -> void:
 	G.prog["mounts"] = {"owned": {}, "active": ""}
 	G.prog["titles"] = {"owned": [], "active": ""}
 	G.prog["pet_stat"] = {}
+	G.prog["flags"] = {}
 	G.selected_role = "zs"
 	G.save_game()
 
@@ -434,7 +435,7 @@ func _run() -> void:
 			t_bad.append("%s 既无 cond 也无 cost（永远拿不到）" % tid2)
 		if not cond.is_empty():
 			var ct := String(cond.get("type", ""))
-			if not ["level", "pets", "gold", "clear_world"].has(ct):
+			if not ["level", "pets", "gold", "clear_world", "archery_master", "pet_bond", "curio_count", "flag"].has(ct):
 				t_bad.append("%s cond.type 未支持：%s" % [tid2, ct])
 			if ct == "clear_world" and not theme_ids.has(String(cond.get("world", ""))):
 				t_bad.append("%s 的 world 不存在：%s" % [tid2, String(cond.get("world", ""))])

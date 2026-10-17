@@ -1532,6 +1532,26 @@ func _setup() -> void:
 			var ha: Node = load("res://src/ui/GameHome.tscn").instantiate()
 			add_child(ha)
 			ha.call("_open_arena")
+		"archery":
+			_demo_prog()
+			var harch: Node = load("res://src/ui/GameHome.tscn").instantiate()
+			add_child(harch)
+			harch.call("_open_arena")
+			await get_tree().process_frame
+			var ap_node: Node = harch.get("_arena")
+			if ap_node != null and ap_node.has_method("_open_archery"):
+				ap_node.call("_open_archery")
+		"arena_curio":
+			_demo_prog()
+			G.lore_resonate("zs")
+			G.curio_appraise("common")
+			var hcur: Node = load("res://src/ui/GameHome.tscn").instantiate()
+			add_child(hcur)
+			hcur.call("_open_arena")
+			await get_tree().process_frame
+			var ap_cur: Node = hcur.get("_arena")
+			if ap_cur != null and ap_cur.has_method("_open_curio_modal"):
+				ap_cur.call("_open_curio_modal")
 		"gacha":
 			_demo_prog()
 			var hg: Node = load("res://src/ui/GameHome.tscn").instantiate()
@@ -1563,6 +1583,7 @@ func _setup() -> void:
 		"bag", "bag_full":
 			# P04 背包浮层（页签/容量/列表/详情）：补几件掉落入包的实例，否则装备页只有空态
 			_growth_demo()
+			G.inv_grant_equip({"tpl": "tpl_sword_starfall", "rarity": 4, "n": 1})
 			G.inv_grant_equip({"tpl": "tpl_sword_wolf", "rarity": 2, "n": 1})
 			G.inv_grant_equip({"tpl": "tpl_armor_scale", "rarity": 2, "n": 1})
 			G.inv_grant_equip({"tpl": "tpl_accessory_moon", "rarity": 3, "n": 1})
@@ -1587,15 +1608,28 @@ func _setup() -> void:
 			add_child(forge)
 			forge.set("_work_tab", _scene.trim_prefix("forge_"))
 			forge.call("_refresh")
-		"talent", "equip", "pet_raise", "skillbook", "mount", "titles":
+		"talent", "equip", "pet_raise", "pet_bond", "skillbook", "mount", "titles":
 			_growth_demo()
-			if _scene == "pet_raise":
+			if _scene == "pet_raise" or _scene == "pet_bond":
 				G.prog["tips_seen"] = {"pet_raise": true}
+				G.pet_bond_interact("pet_rockturtle")
 			var h2: Node = load("res://src/ui/GameHome.tscn").instantiate()
 			add_child(h2)
 			h2.call("_open_growth")
-			var sub_id := _scene.replace("pet_raise", "pet").replace("skillbook", "skill").replace("titles", "title")
-			(h2.get("_growth") as Control).call("_open", sub_id)
+			var sub_id := _scene.replace("pet_raise", "pet").replace("pet_bond", "pet").replace("skillbook", "skill").replace("titles", "title")
+			var gr_ctrl := h2.get("_growth") as Control
+			gr_ctrl.call("_open", sub_id)
+			if _scene == "pet_bond":
+				await get_tree().process_frame
+				var pr_node: Node = h2.find_child("*PetRaise*", true, false)
+				if pr_node == null:
+					for ch in gr_ctrl.get_children():
+						if ch.get("_chest") != null:
+							pr_node = ch
+							break
+				if pr_node != null and pr_node.get("_chest") != null:
+					pr_node.get("_chest").set("operation", "bond")
+					pr_node.get("_chest").call("refresh")
 		"shop":
 			_demo_prog()
 			var shop_node := (load("res://src/ui/ShopPanel.gd") as GDScript).new() as Control

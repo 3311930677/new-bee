@@ -4452,11 +4452,12 @@ func title_owned(tid: String) -> bool:
 	return ((prog.get("titles", {}) as Dictionary).get("owned", []) as Array).has(tid)
 
 
-## 条件是否达成（level / clear_world / pets / gold）
+## 条件是否达成（level / clear_world / pets / gold / archery_master / pet_bond / curio_count / flag）
 func title_cond_met(t: Dictionary) -> bool:
 	var cond: Dictionary = t.get("cond", {})
 	if cond.is_empty():
 		return false
+	var flags: Dictionary = prog.get("flags", {}) if prog.get("flags") is Dictionary else {}
 	match String(cond.get("type", "")):
 		"level":
 			return int(prog.get("level", 1)) >= int(cond.get("n", 1))
@@ -4466,6 +4467,24 @@ func title_cond_met(t: Dictionary) -> bool:
 			return owned_pets().size() >= int(cond.get("n", 1))
 		"gold":
 			return int(wallet.get("gold", 0)) >= int(cond.get("n", 0))
+		"archery_master":
+			var ast: Dictionary = flags.get("archery_state", {}) if flags.get("archery_state") is Dictionary else {}
+			var bscores: Dictionary = ast.get("best_scores", {}) if ast.get("best_scores") is Dictionary else {}
+			for mid in bscores:
+				if int(bscores[mid]) >= 42:
+					return true
+			return int(ast.get("total_bullseyes", 0)) >= 5
+		"pet_bond":
+			var need_bond := int(cond.get("n", 3))
+			for pid in owned_pets():
+				if pet_bond_level(String(pid)) >= need_bond:
+					return true
+			return false
+		"curio_count":
+			return int(flags.get("curio_appraised_count", 0)) >= int(cond.get("n", 3))
+		"flag":
+			var fk := String(cond.get("flag", ""))
+			return not fk.is_empty() and bool(flags.get(fk, false))
 	return false
 
 
@@ -4642,11 +4661,237 @@ func pet_evolve(pid: String) -> Dictionary:
 	return {"ok": true, "err": ""}
 
 
-## 宠物战斗属性倍率：突破 +8%/层；进化 ×(1 + hp_pct)（表值，默认 25％）；
+## 灵宠羁绊等级（0~5 阶，存于 prog.flags.pet_bond_<pid>，兼容 SaveData v4 校验与重置）
+func pet_bond_level(pid: String) -> int:
+	if pid.is_empty():
+		return 0
+	var flags: Dictionary = prog.get("flags", {}) if prog.get("flags") is Dictionary else {}
+	return clampi(int(flags.get("pet_bond_" + pid, 0)), 0, 5)
+
+
+func pet_bond_cost(pid: String) -> Dictionary:
+	var cur := pet_bond_level(pid)
+	if cur >= 5:
+		return {}
+	return {"pet_food": 1, "gold": 80 * (cur + 1)}
+
+
+## 灵宠羁绊互动：消耗宠粮×1 + 金币，提升羁绊阶数（上限5阶），同时提供 +60 灵宠经验与寻宝馈赠
+func pet_bond_interact(pid: String) -> Dictionary:
+	if not owns_pet(pid):
+		return {"ok": false, "err": "尚未收集该灵宠"}
+	var cur := pet_bond_level(pid)
+	if cur >= 5:
+		return {"ok": false, "err": "羁绊已达最高 5 阶"}
+	var cost := pet_bond_cost(pid)
+	var need_food := int(cost.get("pet_food", 1))
+	var need_gold := int(cost.get("gold", 80))
+	if item_count("pet_food") < need_food:
+		return {"ok": false, "err": "宠物粮不足"}
+	if int(wallet.get("gold", 0)) < need_gold:
+		return {"ok": false, "err": "金币不足（需 %d）" % need_gold}
+	consume_item("pet_food", need_food)
+	wallet["gold"] = int(wallet.get("gold", 0)) - need_gold
+	if not (prog.get("flags") is Dictionary):
+		prog["flags"] = {}
+	var flags: Dictionary = prog["flags"]
+	var new_bond := cur + 1
+	flags["pet_bond_" + pid] = new_bond
+	# 互动同时增加 +60 灵宠经验（不超过主角等级上限）
+	var st := pet_stat(pid)
+	var cap := int(prog.get("level", 1))
+	var ups := 0
+	if int(st.get("lv", 1)) < cap:
+		st["exp"] = int(st.get("exp", 0)) + 60
+		while int(st["lv"]) < cap:
+			var need := pet_exp_to_next(int(st["lv"]))
+			if int(st["exp"]) < need:
+				break
+			st["exp"] = int(st["exp"]) - need
+			st["lv"] = int(st["lv"]) + 1
+			ups += 1
+		if int(st["lv"]) >= cap:
+			st["lv"] = cap
+			st["exp"] = 0
+		var all: Dictionary = prog.get("pet_stat", {})
+		all[pid] = st
+		prog["pet_stat"] = all
+	var treasure := ""
+	if new_bond == 3:
+		grant_item("enhance_stone", 2)
+		treasure = "强化石×2"
+	elif new_bond == 5:
+		grant_item("refine_stone", 2)
+		treasure = "精炼石×2"
+	save_game()
+	return {"ok": true, "bond": new_bond, "ups": ups, "lv": int(st.get("lv", 1)), "treasure": treasure}
+
+
+## 第三轮扩充：边城古碑四职业专属铭文共鸣（每名角色首次共鸣获赏并解锁专属称号）
+func lore_resonate(role_id := "") -> Dictionary:
+	var rid := selected_role if role_id.is_empty() else role_id
+	if rid not in ["zs", "ck", "fs", "fz"]:
+		rid = "zs"
+	const LORE_MAP := {
+		"zs": {
+			"heading": "破军 · 苍山铁誓碑拓",
+			"title_id": "t_lore_zs",
+			"title_name": "苍山誓剑",
+			"lines": [
+				"「重剑无锋，守关不退。昔年苍绿林海兽潮压境，破军先祖单骑立于洛林北桥，以残剑裂地三尺，护住三百边民南撤。」",
+				"你以手中重剑轻触碑面残痕，沉睡的玄铁战意顺剑脊涌入经脉——守御之志愈坚，斩击之势愈沉。",
+			],
+		},
+		"ck": {
+			"heading": "疾风 · 朔夜听刃碑拓",
+			"title_id": "t_lore_ck",
+			"title_name": "朔风听刃",
+			"lines": [
+				"「朔风卷叶，刃落无声。寒鸦古渡的斥候从不留姓名，只在风雪夜点亮渡口信标，为远征军切开敌阵咽喉。」",
+				"你循着碑阴暗刻的步法吐纳，足尖轻点间仿佛与百年前的夜行斥候身影重合——身法更敏，锋芒更烈。",
+			],
+		},
+		"fs": {
+			"heading": "冰法 · 霜星观脉碑拓",
+			"title_id": "t_lore_fs",
+			"title_name": "霜星观脉",
+			"lines": [
+				"「星垂平野，霜凝成环。古观星师曾在封冻雪原筑起七座界碑，将暴走的极寒地脉化作护佑边城的星霜大阵。」",
+				"你指尖凝聚冰晶点亮碑心星纹，散逸的古星力瞬间汇入法杖——寒潮共鸣愈发澄澈深邃。",
+			],
+		},
+		"fz": {
+			"heading": "晨星 · 破晓守望碑拓",
+			"title_id": "t_lore_fz",
+			"title_name": "晨曦守望",
+			"lines": [
+				"「长夜将尽，晨星引路。无论伤者困于深渊抑或沙海，只要圣锤微光不灭，归途便永不断绝。」",
+				"你双手合十低诵晨星祝祷，温润金辉自碑文流淌而出，化作常驻周身的破晓庇护。",
+			],
+		},
+	}
+	var entry: Dictionary = LORE_MAP.get(rid, LORE_MAP["zs"])
+	if not (prog.get("flags") is Dictionary):
+		prog["flags"] = {}
+	var flags: Dictionary = prog["flags"]
+	var fkey := "lore_resonated_" + rid
+	var is_first := not bool(flags.get(fkey, false))
+	var tid := String(entry.get("title_id", "t_lore_zs"))
+	if is_first:
+		flags[fkey] = true
+		deposit(180, 40, 25, 30)
+		var ts: Dictionary = prog.get("titles", {"owned": [], "active": ""})
+		var owned: Array = ts.get("owned", [])
+		if not owned.has(tid):
+			owned.append(tid)
+			ts["owned"] = owned
+			prog["titles"] = ts
+		save_game()
+	return {
+		"ok": true,
+		"first": is_first,
+		"role_id": rid,
+		"title_id": tid,
+		"title_name": String(entry.get("title_name", "")),
+		"heading": String(entry.get("heading", "")),
+		"lines": entry.get("lines", []),
+	}
+
+
+## 第五轮扩充：边城行商古玩鉴宝（消耗金币鉴定蒙尘古物，产出高阶宝石/精炼锁符/稀有与史诗装备）
+func curio_appraise(tier_id := "common") -> Dictionary:
+	var is_rare := (tier_id == "rare")
+	var cost := 680 if is_rare else 260
+	if int(wallet.get("gold", 0)) < cost:
+		return {"ok": false, "err": "金币不足（需 %d 金币）" % cost}
+	wallet["gold"] = int(wallet.get("gold", 0)) - cost
+	if not (prog.get("flags") is Dictionary):
+		prog["flags"] = {}
+	var flags: Dictionary = prog["flags"]
+	var cnt := int(flags.get("curio_appraised_count", 0)) + 1
+	flags["curio_appraised_count"] = cnt
+	var reward_desc := ""
+	var curio_name := ""
+	var slot := cnt % 4
+	if is_rare:
+		match slot:
+			1:
+				curio_name = "封蜡赤金星匣"
+				grant_item("gem_atk_3", 1)
+				grant_item("lock_rune", 1)
+				reward_desc = "3级红宝石×1 · 锁符×1"
+			2:
+				curio_name = "霜关古战魂匣"
+				var drop: Dictionary = inv_grant_equip({"tpl": "tpl_armor_expedition", "rarity": 4, "n": 1})
+				if bool(drop.get("ok", false)):
+					reward_desc = "鉴定出史诗真品【%s】" % String(equip_tpl("tpl_armor_expedition").get("name", "远征戍卫重铠"))
+				else:
+					grant_item("refine_stone", 4)
+					reward_desc = "精炼石×4"
+			3:
+				curio_name = "秘银灵兽契匣"
+				grant_item("evolve_crystal", 1)
+				grant_item("break_crystal", 5)
+				reward_desc = "进化晶石×1 · 突破晶×5"
+			_:
+				curio_name = "王城旧藏宝匣"
+				grant_item("gem_def_3", 1)
+				grant_item("gem_hp_3", 1)
+				reward_desc = "3级蓝宝石×1 · 3级绿宝石×1"
+	else:
+		match slot:
+			1:
+				curio_name = "洛林古铜箭囊"
+				grant_item("gem_atk_2", 1)
+				grant_item("enhance_stone", 2)
+				reward_desc = "2级红宝石×1 · 强化石×2"
+			2:
+				curio_name = "枫驿蒙尘剑匣"
+				var drop2: Dictionary = inv_grant_equip({"tpl": "tpl_acc_archery_ring", "rarity": 4, "n": 1})
+				if bool(drop2.get("ok", false)):
+					reward_desc = "鉴定出精良器物【%s】" % String(equip_tpl("tpl_acc_archery_ring").get("name", "穿杨听风扳指"))
+				else:
+					grant_item("enhance_stone", 3)
+					reward_desc = "强化石×3"
+			3:
+				curio_name = "矿道晶簇原石"
+				grant_item("refine_stone", 2)
+				grant_item("gem_hp_2", 1)
+				reward_desc = "精炼石×2 · 2级绿宝石×1"
+			_:
+				curio_name = "旧港沉船铁匣"
+				grant_item("lock_rune", 1)
+				grant_item("gem_def_2", 1)
+				reward_desc = "锁符×1 · 2级蓝宝石×1"
+	var hist: Array = flags.get("curio_history", []) if flags.get("curio_history") is Array else []
+	hist.push_front("第%d鉴【%s】→ %s" % [cnt, curio_name, reward_desc])
+	if hist.size() > 6:
+		hist.resize(6)
+	flags["curio_history"] = hist
+	var unlocked_title := false
+	if cnt >= 3 and not title_owned("t_curio_seer"):
+		var ts: Dictionary = prog.get("titles", {"owned": [], "active": ""})
+		var owned: Array = ts.get("owned", [])
+		if not owned.has("t_curio_seer"):
+			owned.append("t_curio_seer")
+			ts["owned"] = owned
+			prog["titles"] = ts
+			unlocked_title = true
+	save_game()
+	return {
+		"ok": true,
+		"count": cnt,
+		"curio_name": curio_name,
+		"reward_desc": reward_desc,
+		"unlocked_title": unlocked_title,
+	}
+
+
+## 宠物战斗属性倍率：突破 +8%/层；羁绊 +3%/阶；进化 ×(1 + hp_pct)（表值，默认 25％）；
 ## 资质影响每级成长（1星0.8 / 3星1.2 / 5星1.6）
 func pet_stat_mult(pid: String) -> float:
 	var st := pet_stat(pid)
-	var m := 1.0 + 0.08 * float(st.get("brk", 0))
+	var m := 1.0 + 0.08 * float(st.get("brk", 0)) + 0.03 * float(pet_bond_level(pid))
 	if bool(st.get("evolved", false)):
 		var ev: Dictionary = TableCache.get_pet(pid).get("evolve", {})
 		m *= 1.0 + float(ev.get("hp_pct", 0.25))
@@ -4727,7 +4972,7 @@ func companion_train(pid: String, slot: int, tid: String) -> Dictionary:
 
 # ---------- 养成总加成聚合（进战斗时由 MapScene 取走） ----------
 
-## 汇总：天赋 + 装备（当前角色武器 + 甲 + 饰）+ 骑乘坐骑 + 佩戴称号
+## 汇总：天赋 + 装备（当前角色武器 + 甲 + 饰）+ 骑乘坐骑 + 佩戴称号 + 灵宠羁绊共鸣
 ## 返回 {atk_pct, def_pct, maxhp_pct, spd_pct, crit_add, atk_add, def_add, hp_add, energy_pct}
 func growth_bonuses(role_id := "") -> Dictionary:
 	var out := {"atk_pct": 0.0, "def_pct": 0.0, "maxhp_pct": 0.0, "spd_pct": 0.0,
@@ -4773,6 +5018,12 @@ func growth_bonuses(role_id := "") -> Dictionary:
 		for k in bonus.keys():
 			if out.has(k):
 				out[k] = float(out[k]) + float(bonus[k])
+	# 灵宠羁绊共鸣（每阶提供 +15 生命与 +2 攻击）
+	for pid in owned_pets():
+		var b_lv := pet_bond_level(String(pid))
+		if b_lv > 0:
+			out["hp_add"] = int(out["hp_add"]) + 15 * b_lv
+			out["atk_add"] = float(out["atk_add"]) + 2.0 * float(b_lv)
 	return out
 
 

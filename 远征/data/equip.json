@@ -840,6 +840,126 @@
         "relic_break_damage_pct": 0.15
       },
       "special_desc": "归路守护：开场获得10%最大生命护盾。破绽追击：对处于破绽的首领伤害提高15%。"
+    },
+    {
+      "id": "tpl_sword_starfall",
+      "name": "陨星破阵重剑",
+      "slot": "sword",
+      "rarity": 4,
+      "icon": "slot_sword",
+      "base": {
+        "atk": 68,
+        "def": 12
+      },
+      "sockets": 3,
+      "price": 4200,
+      "requires_level": 24,
+      "random_drop": true,
+      "special": {
+        "atk_pct": 0.04,
+        "relic_break_damage_pct": 0.08
+      },
+      "special_desc": "陨星重锋：攻击提高4%，对破绽目标伤害额外提高8%。"
+    },
+    {
+      "id": "tpl_spear_windpiercer",
+      "name": "朔风贯影长枪",
+      "slot": "spear",
+      "rarity": 4,
+      "icon": "slot_spear",
+      "base": {
+        "atk": 72,
+        "crit": 0.03
+      },
+      "sockets": 3,
+      "price": 4200,
+      "requires_level": 24,
+      "random_drop": true,
+      "special": {
+        "spd_pct": 0.04,
+        "crit_add": 0.02
+      },
+      "special_desc": "贯影疾刺：攻速提高4%，暴击率额外提高2%。"
+    },
+    {
+      "id": "tpl_staff_glacierheart",
+      "name": "凝霜观星法杖",
+      "slot": "staff",
+      "rarity": 4,
+      "icon": "slot_staff",
+      "base": {
+        "atk": 74,
+        "hp": 90
+      },
+      "sockets": 3,
+      "price": 4200,
+      "requires_level": 24,
+      "random_drop": true,
+      "special": {
+        "atk_pct": 0.05,
+        "relic_shield_pct": 0.05
+      },
+      "special_desc": "寒脉回响：攻击提高5%，开场获得5%最大生命护盾。"
+    },
+    {
+      "id": "tpl_hammer_dawnlight",
+      "name": "破晓圣辉战锤",
+      "slot": "hammer",
+      "rarity": 4,
+      "icon": "slot_hammer",
+      "base": {
+        "atk": 64,
+        "hp": 180
+      },
+      "sockets": 3,
+      "price": 4200,
+      "requires_level": 24,
+      "random_drop": true,
+      "special": {
+        "maxhp_pct": 0.05,
+        "spd_pct": 0.03
+      },
+      "special_desc": "晨星圣辉：最大生命提高5%，施法与攻击速度提高3%。"
+    },
+    {
+      "id": "tpl_armor_expedition",
+      "name": "远征戍卫重铠",
+      "slot": "armor",
+      "rarity": 4,
+      "icon": "slot_armor",
+      "base": {
+        "def": 38,
+        "hp": 320
+      },
+      "sockets": 3,
+      "price": 4000,
+      "requires_level": 22,
+      "random_drop": true,
+      "special": {
+        "def_pct": 0.05,
+        "relic_shield_pct": 0.06
+      },
+      "special_desc": "戍卫壁垒：防御提高5%，开场获得6%最大生命护盾。"
+    },
+    {
+      "id": "tpl_acc_archery_ring",
+      "name": "穿杨听风扳指",
+      "slot": "accessory",
+      "rarity": 4,
+      "icon": "slot_accessory",
+      "base": {
+        "atk": 26,
+        "crit": 0.04
+      },
+      "sockets": 3,
+      "price": 3800,
+      "requires_level": 18,
+      "random_drop": true,
+      "special": {
+        "crit_add": 0.03,
+        "spd_pct": 0.03
+      },
+      "special_desc": "听风辨位：暴击率提高3%，行动速度提高3%。"
     }
   ],
   "drop": {

@@ -57,7 +57,12 @@ static func _auto_condition(sim: BattleSim, unit: Combatant, sid: String,
 					return true
 			return false
 		"fz_zhudao":
-			return enemies.size() >= 3 or sim.has_boss()
+			return not unit.has_buff("atk_up") or enemies.size() >= 3 or sim.has_boss()
+		"fz_poxiao":
+			for a in allies:
+				if float(a.hp) / float(maxi(a.get_max_hp(), 1)) < 0.72:
+					return true
+			return sim.has_boss() and unit.energy >= Combatant.MAX_ENERGY
 		"fs_midun":
 			for a in allies:
 				if float(a.hp) / float(maxi(a.get_max_hp(), 1)) < 0.50:
