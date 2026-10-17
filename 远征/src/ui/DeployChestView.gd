@@ -107,7 +107,7 @@ func refresh() -> void:
 			labels="人物"
 		2:
 			var cfg:=TableCache.get_pet(_choice)
-			_art.texture=preload("res://src/ui/ReviewFixUI.gd").pet_showcase(_choice)
+			_art.texture=preload("res://src/ui/ReviewFixUI.gd").pet(_choice+"_hd")
 			_art.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			_art.modulate=Color.WHITE if G.owns_pet(_choice) else Color("17141a")
 			_name.text=String(cfg.name) if G.owns_pet(_choice) else "？？？"

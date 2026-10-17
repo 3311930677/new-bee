@@ -630,7 +630,7 @@ func _run() -> void:
 	var FixUI := preload("res://src/ui/ReviewFixUI.gd")
 	for p_row in TableCache.pets():
 		var pid_chk := String((p_row as Dictionary).get("id", ""))
-		var hd_tex: Texture2D = FixUI.pet_showcase(pid_chk)
+		var hd_tex: Texture2D = FixUI.pet(pid_chk + "_hd")
 		_check(hd_tex != null and hd_tex.get_size() == Vector2(192, 192),
 			"灵宠图鉴展示贴图 %s 应为 192×192 高清完整立绘" % pid_chk)
 

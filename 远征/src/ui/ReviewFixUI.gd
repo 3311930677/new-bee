@@ -33,7 +33,7 @@ static func texture(id:String) -> Texture2D:
 	atlas.region=Rect2(Vector2(entry.rect[0],entry.rect[1])*scaling,Vector2(entry.rect[2],entry.rect[3])*scaling)
 	_textures[id]=atlas
 	if id.begins_with("pet_"):
-		pet_showcase(id)
+		pet(id+"_hd")
 	return atlas
 static func item(id:String) -> Texture2D:
 	var tex:=texture(id)
@@ -45,19 +45,22 @@ static func shortage(costs:Array) -> String:
 		if gap>0:missing.append("%s差%d"%[cost.name,gap])
 	return " · ".join(missing)
 static func pet(id:String) -> Texture2D:
+	if id.ends_with("_hd"):
+		var base_id:=id.trim_suffix("_hd")
+		if _showcase_pets.has(base_id):return _showcase_pets[base_id]
+		var hd_path:=ROOT+"pet_show/"+base_id+"_hd.png"
+		var abs_hd:=ProjectSettings.globalize_path(hd_path)
+		if FileAccess.file_exists(abs_hd):
+			var img:=Image.load_from_file(abs_hd)
+			if img!=null and not img.is_empty():
+				var it:=ImageTexture.create_from_image(img)
+				_showcase_pets[base_id]=it
+				return it
+		id=base_id
 	var tex:=texture(id)
 	return tex if tex!=null else G.res_tex(id)
 static func pet_showcase(id:String) -> Texture2D:
-	if _showcase_pets.has(id):return _showcase_pets[id]
-	var hd_path:=ROOT+"pet_show/"+id+"_hd.png"
-	var abs_hd:=ProjectSettings.globalize_path(hd_path)
-	if FileAccess.file_exists(abs_hd):
-		var img:=Image.load_from_file(abs_hd)
-		if img!=null and not img.is_empty():
-			var it:=ImageTexture.create_from_image(img)
-			_showcase_pets[id]=it
-			return it
-	return pet(id)
+	return pet(id+"_hd")
 static func skill(id:String) -> Texture2D:
 	var tex:=texture(id)
 	return tex if tex!=null else preload("res://src/ui/FlowChestUI.gd").texture("skill")
