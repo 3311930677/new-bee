@@ -1,0 +1,691 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/@Control@2/HeroRolePlate/@Label@11",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "破军 · 战士"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/@Label@69",
+			"rect_height": 28.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_lorin_wilds",
+			"rect_height": 80.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_lorin_wilds/@Label@97",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "昭元边城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_lorin_wilds/@Label@98",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv1–12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_maple_road",
+			"rect_height": 80.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_maple_road/@Label@99",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "枫林古道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_broken_slope",
+			"rect_height": 80.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_broken_slope/@Label@101",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "断碑坡"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_stele_cavern",
+			"rect_height": 80.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_stele_cavern/@Label@103",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "失声碑窟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_old_salt_road",
+			"rect_height": 80.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_old_salt_road/@Label@105",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "旧盐道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_shenyuan_port",
+			"rect_height": 80.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_shenyuan_port/@Label@107",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "沉渊港"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_tideflat",
+			"rect_height": 80.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_tideflat/@Label@109",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "潮痕滩"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_tidal_gate",
+			"rect_height": 80.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_tidal_gate/@Label@111",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "退潮水闸"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_red_sand_route",
+			"rect_height": 80.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_red_sand_route/@Label@113",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "赤砂商路"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_frost_post",
+			"rect_height": 80.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_frost_post/@Label@115",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "霜关驿"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_rift_mine_road",
+			"rect_height": 80.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_rift_mine_road/@Label@117",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "裂谷矿道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_rift_mine_vault",
+			"rect_height": 80.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_rift_mine_vault/@Label@119",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "裂谷矿脉"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_frost_boardwalk",
+			"rect_height": 80.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_frost_boardwalk/@Label@121",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "霜林栈道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_frost_pass",
+			"rect_height": 80.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_frost_pass/@Label@123",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "冰隘"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_abyss_ring",
+			"rect_height": 80.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_abyss_ring/@Label@125",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "渊口外环"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_stele_entry",
+			"rect_height": 80.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_stele_entry/@Label@127",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "归路门厅"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_stele_resonance",
+			"rect_height": 80.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_stele_resonance/@Label@129",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "三声共鸣廊"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_stele_core",
+			"rect_height": 80.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Control@96/Map_stele_core/@Label@131",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "碑心"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Button@135",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "寻迹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Button@135/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "寻迹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Button@135/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Button@136",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "⌖"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Button@136/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "⌖"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Button@136/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Button@137",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "详图"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Button@137/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "详图"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Button@137/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Control@85/@Control@95/@Label@138",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "拖动查看 · 点已访地点可乘驿车直达"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Button@87",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Button@87/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@Label@88",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "地区行路图"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@ScrollContainer@92/@VBoxContainer@93/@HBoxContainer@140/@VBoxContainer@141/@Label@142",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "昭元边城  [主线]"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@ScrollContainer@92/@VBoxContainer@93/@HBoxContainer@140/@VBoxContainer@141/@Label@143",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv1–12 · 当前位置 · 已探索"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@80/@ScrollContainer@92/@VBoxContainer@93/@Label@144",
+			"rect_height": 75.0,
+			"size": 15,
+			"text": "沿主街走访闻叔，从北门前往枫林古道\n沿相邻路牌步行前往\n界碑历练从巡界厅进入。"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Button@139",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "图例"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Button@139/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "图例"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Button@139/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@71/@Label@72",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "【驿站车夫·老马】"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@71/@Label@73",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "指引 9/11"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@71/SkipTutorialButton",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "跳过"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@71/SkipTutorialButton/Caption",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "跳过"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@71/SkipTutorialButton/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@Label@74",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "◆ 已自动切页 ▶ 地区行路图 · 区域拓扑与驿车"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@Label@75",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "第9步 · 古道远行（地区行路图与驿车直达）"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@Label@76",
+			"rect_height": 75.0,
+			"size": 15,
+			"text": "已自动打开【地区行路图】！全图直观展示 12 处边城与外野的连通拓扑。点「寻迹」可定位当前任务目的地，点选任意已探索区域即可免费「乘驿车前往」！"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@Label@77",
+			"rect_height": 49.0,
+			"size": 15,
+			"text": "▶ 实操任务：点「实操演示」定位任务区域，或点「下一步」查看易职设置"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@78/PrevStepButton",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "上一步"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@78/PrevStepButton/Caption",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "上一步"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@78/PrevStepButton/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@78/TryStepButton",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "实操演示"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@78/TryStepButton/Caption",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "实操演示"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@78/TryStepButton/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@78/NextStepButton",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "下一步"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@78/NextStepButton/Caption",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "下一步"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@78/NextStepButton/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		}
+	]
+}

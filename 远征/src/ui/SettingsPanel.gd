@@ -133,7 +133,9 @@ func _page_profile() -> Control:
 	avatar_button.tooltip_text = "选择趣味头像或本机图片"
 	_section(page, "旅程", 292)
 	_action(page, "重看序章", Vector2(0, 326), 128, func(): G.go("res://src/ui/Prologue.tscn"))
-	_action(page, "重选角色", Vector2(140, 326), 128, func(): G.go("res://src/ui/CreateRole.tscn"))
+	_action(page, "重选角色", Vector2(140, 326), 128, func():
+		G.set_meta("reselect_from_home", not standalone)
+		G.go("res://src/ui/CreateRole.tscn"))
 	if not standalone:
 		_action(page, "回标题", Vector2(280, 326), 128, _on_title, "back")
 	return page

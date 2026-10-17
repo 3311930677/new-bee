@@ -1,0 +1,448 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/@Control@2/HeroRolePlate/@Label@11",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "破军 · 战士"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/@Label@69",
+			"rect_height": 28.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 35.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/@PanelContainer@80/@HBoxContainer@81/@Label@83",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "任务卷宗"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/@PanelContainer@80/@HBoxContainer@81/WorldAffairsButton",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "世界事务"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/@PanelContainer@80/@HBoxContainer@81/WorldAffairsButton/@Label@84",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "世界事务"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/@PanelContainer@88/@HBoxContainer@85/@Label@87",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "主线传书"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 29.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/MainStoryCard/@HBoxContainer@89/@VBoxContainer@91/@HBoxContainer@92/MainStoryTitle",
+			"rect_height": 29.0,
+			"size": 19,
+			"text": "城门来信"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/MainStoryCard/@HBoxContainer@89/@VBoxContainer@91/@HBoxContainer@92/@PanelContainer@94/@Label@93",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "进行中"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/MainStoryCard/@HBoxContainer@89/@VBoxContainer@91/@Label@95",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "目标：与边城执事闻叔交谈"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/MainStoryCard/@HBoxContainer@89/@VBoxContainer@91/@HBoxContainer@96/@VBoxContainer@97/@Label@98",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "前往：昭元边城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/MainStoryCard/@HBoxContainer@89/@VBoxContainer@91/@HBoxContainer@96/@VBoxContainer@97/@Label@99",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "奖励：金币 +40 · 经验 +102"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/MainStoryCard/@HBoxContainer@89/@VBoxContainer@91/@HBoxContainer@96/StoryMapButton",
+			"rect_height": 40.0,
+			"size": 15,
+			"text": "行路图"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/MainStoryCard/@HBoxContainer@89/@VBoxContainer@91/@HBoxContainer@96/StoryMapButton/@Label@100",
+			"rect_height": 40.0,
+			"size": 15,
+			"text": "行路图"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/@PanelContainer@104/@HBoxContainer@101/@Label@103",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "边城委托"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/@Label@105",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "已接委托跨日保留 · 完成后回城交付"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 29.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/CommissionScroll/CommissionCards/Quest_q_slay_volcano/@HBoxContainer@109/@VBoxContainer@111/@Label@112",
+			"rect_height": 29.0,
+			"size": 19,
+			"text": "炉料"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/CommissionScroll/CommissionCards/Quest_q_slay_volcano/@HBoxContainer@109/@VBoxContainer@111/@Label@113",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "在「焚天火山」击杀 3 只"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/CommissionScroll/CommissionCards/Quest_q_slay_volcano/@HBoxContainer@109/@VBoxContainer@111/@Label@114",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "未接取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/CommissionScroll/CommissionCards/Quest_q_slay_volcano/@HBoxContainer@109/@VBoxContainer@111/@Label@115",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "金币 +200 · 经验 +55"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/CommissionScroll/CommissionCards/Quest_q_slay_volcano/@HBoxContainer@109/@VBoxContainer@116/@Label@117",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "石头 · 铁匠"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/CommissionScroll/CommissionCards/Quest_q_slay_volcano/@HBoxContainer@109/@VBoxContainer@116/QuestAction",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "接取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/CommissionScroll/CommissionCards/Quest_q_slay_volcano/@HBoxContainer@109/@VBoxContainer@116/QuestAction/@Label@118",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "接取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 29.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/CommissionScroll/CommissionCards/Quest_q_deliver_stone/@HBoxContainer@119/@VBoxContainer@121/@Label@122",
+			"rect_height": 29.0,
+			"size": 19,
+			"text": "炉边的料"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/CommissionScroll/CommissionCards/Quest_q_deliver_stone/@HBoxContainer@119/@VBoxContainer@121/@Label@123",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "上交 强化石 ×3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/CommissionScroll/CommissionCards/Quest_q_deliver_stone/@HBoxContainer@119/@VBoxContainer@121/@Label@124",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "未接取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/CommissionScroll/CommissionCards/Quest_q_deliver_stone/@HBoxContainer@119/@VBoxContainer@121/@Label@125",
+			"rect_height": 49.0,
+			"size": 15,
+			"text": "金币 +190 · 远征币 +18 · 经验 +50"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/CommissionScroll/CommissionCards/Quest_q_deliver_stone/@HBoxContainer@119/@VBoxContainer@126/@Label@127",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "石头 · 铁匠"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/CommissionScroll/CommissionCards/Quest_q_deliver_stone/@HBoxContainer@119/@VBoxContainer@126/QuestAction",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "接取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/CommissionScroll/CommissionCards/Quest_q_deliver_stone/@HBoxContainer@119/@VBoxContainer@126/QuestAction/@Label@128",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "接取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/ReturnButton",
+			"rect_height": 48.0,
+			"size": 15,
+			"text": "返回"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/QuestBoard/JournalContent/ReturnButton/@Label@108",
+			"rect_height": 48.0,
+			"size": 16,
+			"text": "返回"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@71/@Label@72",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "【边城执事·闻叔】"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@71/@Label@73",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "指引 3/11"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@71/SkipTutorialButton",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "跳过"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@71/SkipTutorialButton/Caption",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "跳过"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@71/SkipTutorialButton/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@Label@74",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "◆ 已自动切页 ▶ 任务卷宗 · 主线传书"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@Label@75",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "第3步 · 主线传书（寻访NPC与章节目标）"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@Label@76",
+			"rect_height": 75.0,
+			"size": 15,
+			"text": "已为你自动打开【任务卷宗】！上方「主线传书」记载着当前章节要务（如寻访闻叔、铁匠陈铁山、药师苏木）。点「定位地图」可直看目标所在区域。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@Label@77",
+			"rect_height": 49.0,
+			"size": 15,
+			"text": "▶ 实操任务：查看上方高亮的「主线传书」目标，点「下一步」了解支线委托"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@78/PrevStepButton",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "上一步"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@78/PrevStepButton/Caption",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "上一步"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@78/PrevStepButton/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@78/TryStepButton",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "实操演示"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@78/TryStepButton/Caption",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "实操演示"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@78/TryStepButton/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@78/NextStepButton",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "下一步"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@78/NextStepButton/Caption",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "下一步"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TutorialOverlay/TutorialCard/@VBoxContainer@70/@HBoxContainer@78/NextStepButton/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		}
+	]
+}

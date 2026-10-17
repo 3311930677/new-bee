@@ -4,7 +4,7 @@ const Page:=preload("res://src/ui/ChestPageUI.gd")
 const Flow:=preload("res://src/ui/FlowChestUI.gd")
 const Kit:=preload("res://src/ui/SettingsSkin.gd")
 ## 分组横幅与行图标都取自设置页参考稿（ic_sec_* / ib_*），"重置"用警示三角，"震屏"用参考稿自带的图标框
-const SECTION_ICONS:={"声音":"sec_sound","战斗与演出":"sec_battle","昵称":"sec_name","旅程":"sec_journey","备份":"sec_backup","恢复存档":"sec_restore","重置":"sec_reset"}
+const SECTION_ICONS:={"角色与旅程":"sec_journey","声音":"sec_sound","战斗与演出":"sec_battle","昵称":"sec_name","旅程":"sec_journey","备份":"sec_backup","恢复存档":"sec_restore","重置":"sec_reset"}
 const TAB_ICONS:=["tab_common","tab_profile","tab_save"]
 const ROW_H:=54.0  # 卡片内一行的高度（参考稿约 55）
 const TAB_H:=[47.0,50.0]  # 未选 / 选中（tab_normal / tab_selected 原高）：底边对齐，选中的高出一截
@@ -250,7 +250,24 @@ func _switch_row(box:VBoxContainer,sw,icon:String) -> Button:
 	wrap.add_child(sw)
 	_add_row(box,wrap)
 	return sw
+func _reselect_role() -> void:
+	G.set_meta("reselect_from_home", not host.standalone)
+	G.go("res://src/ui/CreateRole.tscn")
 func _common(parent:Control) -> void:
+	_section(parent,"角色与旅程")
+	var quick_row:=HBoxContainer.new()
+	quick_row.add_theme_constant_override("separation",10)
+	quick_row.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	parent.add_child(quick_row)
+	var reselect_quick:=_btn("重选角色 · 易职",_reselect_role,"primary","btn_role")
+	reselect_quick.name="QuickReselectRoleButton"
+	reselect_quick.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	Kit.ornaments(reselect_quick)
+	quick_row.add_child(reselect_quick)
+	var tut_quick:=_btn("新手指引 · 教学",host._replay_tutorial,"row","btn_prologue")
+	tut_quick.name="QuickTutorialReplayButton"
+	tut_quick.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	quick_row.add_child(tut_quick)
 	_section(parent,"声音")
 	var sound:=_rows_card(parent)
 	_volume(sound,"音乐",Audio.bgm_vol(),Audio.set_bgm_vol)
@@ -318,6 +335,15 @@ func _traveller_card() -> Control:
 	return card
 func _profile(parent:Control) -> void:
 	parent.add_child(_traveller_card())
+	_section(parent,"旅程")
+	var reselect_btn:=_btn("重选角色（四大命途易职）",_reselect_role,"primary","btn_role")
+	reselect_btn.name="ReselectRoleButton"
+	Kit.ornaments(reselect_btn)
+	parent.add_child(reselect_btn)
+	var tut_btn:=_btn("新手指引（完整流程教学）",host._replay_tutorial,"row","btn_prologue")
+	tut_btn.name="TutorialReplayButton"
+	parent.add_child(tut_btn)
+	parent.add_child(_btn("更换头像",host._open_avatar,"row","btn_avatar"))
 	_section(parent,"昵称")
 	var name_box:=_group_card(parent)
 	host._name_edit=Flow.field("最多 8 个字")
@@ -331,13 +357,7 @@ func _profile(parent:Control) -> void:
 	host._name_hint=_caption(parent,Flow.text("","caption",UI.AGED))
 	_name_pad=host._name_hint.get_parent().get_parent()
 	_name_pad.visible=false
-	parent.add_child(_btn("更换头像",host._open_avatar,"row","btn_avatar"))
-	_section(parent,"旅程")
-	var tut_btn:=_btn("新手指引",host._replay_tutorial,"row","btn_prologue")
-	tut_btn.name="TutorialReplayButton"
-	parent.add_child(tut_btn)
 	parent.add_child(_btn("重看序章",func():G.go("res://src/ui/Prologue.tscn"),"row","btn_prologue"))
-	parent.add_child(_btn("重选角色",func():G.go("res://src/ui/CreateRole.tscn"),"row","btn_role"))
 	if not host.standalone:parent.add_child(_btn("回标题",host._on_title,"row","door"))
 func _save(parent:Control) -> void:
 	_section(parent,"备份")
