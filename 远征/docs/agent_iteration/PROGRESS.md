@@ -1,26 +1,40 @@
 # 《远征》长程开发实时进度表（PROGRESS）
 
-- **最后更新**：2026-10-17
-- **当前阶段**：Phase 1 完成 → 正在进入 Phase 2（核心体验问题修复 Task A ~ E）
+- **当前阶段**：第七阶段（全量 77 项回归测试全绿、双分辨率截图验收与最终 Git 交付）
+- **整体完成度**：**100%（全部七个阶段与五轮内容扩充均已完成并验证）**
 
----
+## 阶段完成清单
 
-## 任务进度总览
+- [x] **第一阶段：工程审计、基线和长程计划**
+  - [x] Git 状态、分支与代理环境检查
+  - [x] 工程目录、Autoload、场景树、存档格式与 77 项测试门禁梳理
+  - [x] 基线截图采集（`docs/agent_iteration/screenshots/baseline/`）
+  - [x] 建立 `docs/agent_iteration/` 全套规划与记录文档
 
-- [x] **Step 01**：工作区与工程全量审计（Git 状态、场景树、18 张主世界地图、回归门禁、核心 Bug 定位）
-- [x] **Step 02**：建立 `docs/agent_iteration/` 文档体系与目录结构
-- [x] **Step 03**：捕获修改前基线截图（`screenshots/before/`）
-- [ ] **Step 04**：Phase 2 - 任务 A（世界行路图交互升级、一键驿车传送、路牌任务最优方向导航）与任务 B（任务系统升级、信使便捷交付、多类型任务目标）
-- [ ] **Step 05**：Phase 2 - 任务 C（修复 `TownHome` 主页四角色动态展示、舞台切换与 `CreateRole` 升级）与任务 D（角色脚底接触阴影与行走接地感校准）
-- [ ] **Step 06**：Phase 2 - 任务 E（11 步剧情融合式交互新手引导系统 `TutorialService` + `TutorialOverlay`）
-- [ ] **Step 07**：Phase 3 - 战斗与成长数值模拟（`SimBalanceReport.gd`）与战斗节奏调优
-- [ ] **Step 08**：Phase 4 - 第 1 轮内容扩充：可玩「辕门射艺」小游戏（`ArcheryPanel.gd`）与野外探索奇物互动
-- [ ] **Step 09**：Phase 4 - 第 2 轮内容扩充：特色套装/词缀装备扩充与背包装备属性对比 UI
-- [ ] **Step 10**：Phase 4 - 第 3 轮内容扩充：区域历史碑铭、分支抉择支线与 NPC 阶段叙事
-- [ ] **Step 11**：Phase 4 - 第 4 轮内容扩充：同行灵宠互动抚摸、羁绊养成与野外寻宝感知
-- [ ] **Step 12**：Phase 4 - 第 5 轮内容扩充：云游秘商、藏宝解谜、高难首领挑战与四职业身世彩蛋
-- [ ] **Step 13**：Phase 5 - 视觉参考图生成与核心界面商业级像素 UI 升级
-- [ ] **Step 14**：Phase 6 - 全量自动化回归测试（含新增验证脚本）与修复
-- [ ] **Step 15**：Phase 6 - 多分辨率（`480×800` / `480×1067`）`after/` 与 `comparisons/` 截图验收
-- [ ] **Step 16**：Phase 7 - 完善全部交付文档（`CONTENT_ROUNDS.md`、`BALANCE_REPORT.md`、`QA_REPORT.md`、`FINAL_DELIVERY.md`）
-- [ ] **Step 17**：Phase 7 - 分批次 Git 提交并推送至 `origin/main`
+- [x] **第二阶段：修复最严重的核心体验问题（Tasks A–E）**
+  - [x] **任务 A（地图探索与连通）**：`RegionChestMap.gd` 已探索区域驿车直达、当前/目标徽记、未解锁准入提示 + `MapScene.gd` 出口路牌 BFS 任务方向指引
+  - [x] **任务 B（任务系统与 NPC 体验）**：`QuestPanel.gd` 目标地图追踪导航 + 日常委托/简单差事「信使速交」
+  - [x] **任务 C（主页四角色动态展示）**：`TownHome.gd` 动态绑定 `G.selected_role`、四职业精灵/朝向预览、角色铭牌与 `CreateRoleChestView.gd` 易职重选模式
+  - [x] **任务 D（人物行走接地感）**：`MapScene.gd`、`CityScene.gd`、`TownHome.gd` 脚底双层接触阴影与步态重心相位同步
+  - [x] **任务 E（完整新手教程）**：`TutorialService.gd` + `TutorialOverlay.gd` 11 步剧情融合式引导、跳过/重温/断点恢复与完成奖励
+  - [x] **Git Batch 1 提交并推送**：`b0267992`
+
+- [x] **第三阶段：战斗、技能、数值与成长重构**
+  - [x] 编写 `tools/SimBalanceReport.gd` 执行 115,200 场四职业全阶段战斗模拟
+  - [x] 优化 `MonsterAI.gd` 蓄力重击阶段化伤害上限与 `SkillSystem.gd` 四职业平衡
+  - [x] 输出 `docs/agent_iteration/test_results/balance_sim.json` 与 `BALANCE_REPORT.md`
+
+- [x] **第四阶段：五轮真正有内容的玩法扩充**
+  - [x] **第一轮（探索与射艺小游戏）**：`data/archery.json` + `src/ui/ArcheryPanel.gd` 接入演武场 + 称号「百步穿杨」
+  - [x] **第二轮（史诗装备与战力评估）**：`data/equip.json` 新增 6 件 24 级史诗神兵 + `BagPanel.gd` 动态战力评估对比
+  - [x] **第三轮（边城古碑共鸣叙事）**：`G.lore_resonate` 四职业先祖铭文参悟 + 四货币首通赏 + 四职业专属称号
+  - [x] **第四轮（灵宠五阶灵犀羁绊）**：`GrowthChestView.gd` 第 4 页签「羁绊」+ `G.pet_bond_interact` 五阶属性/主角加成/寻宝赠礼 + 称号「灵犀契主」
+  - [x] **第五轮（行商奇珍鉴宝）**：`G.curio_appraise` 鉴古匣/鉴宝匣开匣鉴定 + 史诗神兵保底 + 称号「慧眼识珍」
+  - [x] **Git Batch 2 提交并推送**：`45772e96`
+
+- [x] **第五至七阶段：视觉升级、全量自动化测试、双分辨率截图验收与最终交付**
+  - [x] 生成 3 张视觉设计参考图板（`docs/agent_iteration/references/ref_*.png`）
+  - [x] 采集 `480×800` 与 `480×1067` 双分辨率实机截图并完成视觉检查
+  - [x] 全量 77 项自动化回归测试套件 `ALL GREEN`（77 / 77 通过）
+  - [x] 完成 `QA_REPORT.md`、`FINAL_DELIVERY.md`、`ART_DIRECTION.md`、`ASSET_LICENSES.md`、`DESIGN_DECISIONS.md`
+  - [x] **Git Batch 3 最终提交并推送至 `origin/main`**

@@ -281,8 +281,14 @@ func _build_detail() -> void:
 	top.add_child(names)
 	var level:=int(tpl.get("requires_level",1))
 	var source:=CampaignGear.source_text(inst)
+	var mine:=G.equip_instance_bonus(inst)
+	var theirs:=G.equip_slot_bonus(slot)
+	var my_power := roundi(float(mine.get("atk", 0)) * 3.0 + float(mine.get("def", 0)) * 2.5 + float(mine.get("hp", 0)) * 0.4 + float(mine.get("crit", 0.0)) * 600.0)
+	var cur_power := roundi(float(theirs.get("atk", 0)) * 3.0 + float(theirs.get("def", 0)) * 2.5 + float(theirs.get("hp", 0)) * 0.4 + float(theirs.get("crit", 0.0)) * 600.0)
+	var p_delta := my_power - cur_power
+	var p_tail := "持平" if p_delta == 0 else ("%+d%s" % [p_delta, "▲" if p_delta > 0 else "▼"])
 	names.add_child(Page.line(String(tpl.get("name","装备")),"object",G.equip_rarity_color(int(inst.get("rarity",1))).darkened(.15)))
-	names.add_child(Page.line("%s · 强化 +%d · 需求 Lv.%d%s" % [G.equip_rarity_name(int(inst.get("rarity",1))),int(inst.get("lv",0)),level," · 在身" if worn else ""],"caption",UI.RED if int(G.prog.get("level",1))<level else UI.AGED))
+	names.add_child(Page.line("%s · +%d%s · 战力评估 %d(%s)" % [G.equip_rarity_name(int(inst.get("rarity",1))),int(inst.get("lv",0))," · 在身" if worn else "", my_power, p_tail],"caption",UI.AGED))
 	var stat_box := PanelContainer.new()
 	var stat_sb := StyleBoxFlat.new()
 	stat_sb.bg_color = Color("987a4f", 0.16)
@@ -295,13 +301,11 @@ func _build_detail() -> void:
 	var stat_vbox := VBoxContainer.new()
 	stat_vbox.add_theme_constant_override("separation", 2)
 	stat_box.add_child(stat_vbox)
-	stat_vbox.add_child(Page.line(" · ".join(_stat_parts(G.equip_instance_bonus(inst))),"body", UI.PAPER))
+	stat_vbox.add_child(Page.line(" · ".join(_stat_parts(mine)),"body", UI.PAPER))
 	var comparison:=HBoxContainer.new()
 	comparison.name="EquipmentComparison"
 	comparison.add_child(UI.label("对比已装备：","tag",UI.AGED))
 	stat_vbox.add_child(comparison)
-	var mine:=G.equip_instance_bonus(inst)
-	var theirs:=G.equip_slot_bonus(slot)
 	var differences:=0
 	for pair in [["atk","攻击"],["def","防御"],["hp","生命"],["crit","暴击"]]:
 		var delta:=float(mine.get(pair[0],0))-float(theirs.get(pair[0],0))
@@ -309,13 +313,7 @@ func _build_detail() -> void:
 		differences+=1
 		comparison.add_child(UI.label("%s %+d%s %s" % [pair[1],roundi(delta*(100 if pair[0]=="crit" else 1)),"%" if pair[0]=="crit" else "","▲" if delta>0 else "▼"],"caption",UI.JADE if delta>0 else UI.RED))
 	if differences==0:comparison.add_child(UI.label("与在身持平","caption",UI.AGED))
-	var my_power := roundi(float(mine.get("atk", 0)) * 3.0 + float(mine.get("def", 0)) * 2.5 + float(mine.get("hp", 0)) * 0.4 + float(mine.get("crit", 0.0)) * 600.0)
-	var cur_power := roundi(float(theirs.get("atk", 0)) * 3.0 + float(theirs.get("def", 0)) * 2.5 + float(theirs.get("hp", 0)) * 0.4 + float(theirs.get("crit", 0.0)) * 600.0)
-	var p_delta := my_power - cur_power
-	var p_tail := "（与在身持平）" if p_delta == 0 else ("（穿戴后 %+d %s）" % [p_delta, "▲" if p_delta > 0 else "▼"])
-	stat_vbox.add_child(Page.line("战力评估：%d %s" % [my_power, p_tail], "caption", UI.JADE if p_delta > 0 else (UI.RED if p_delta < 0 else UI.AGED)))
-	if not source.is_empty():
-		_detail_body.add_child(Page.line("来源：" + source, "caption", UI.AGED))
+	_detail_body.add_child(Page.line("需求 Lv.%d"%level+(" · "+source if not source.is_empty() else ""),"caption",UI.RED if int(G.prog.get("level",1))<level else UI.AGED))
 	if not String(tpl.get("special_desc","")).is_empty():_detail_body.add_child(Page.line(tpl.special_desc,"caption",UI.AGED))
 	var sockets:=HBoxContainer.new()
 	sockets.add_child(UI.label("宝石孔","caption",UI.AGED))

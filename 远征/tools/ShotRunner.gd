@@ -39,6 +39,9 @@ func _ready() -> void:
 			_avatar = a.trim_prefix("--avatar=")
 		elif a == "--fresh":
 			_fresh = true
+		elif a == "--tall":
+			get_window().content_scale_size = Vector2i(480, 1067)
+			DisplayServer.window_set_size(Vector2i(480, 1067))
 		elif a.begins_with("--source-save="):
 			_source_save = a.trim_prefix("--source-save=")
 	if not _avatar.is_empty():
