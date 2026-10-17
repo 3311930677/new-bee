@@ -2065,7 +2065,25 @@ func _build_quest_entities() -> void:
 		_world.add_child(ent)
 	_build_commission_entities()
 	_build_special_event_entities()
+	_build_post_boss_return_entity()
 	_mark_nav_dirty()
+
+
+func _build_post_boss_return_entity() -> void:
+	if _mode != "main_world" or not _main_boss_cleared():
+		return
+	var town := String(preload("res://src/world/JourneyService.gd").cfg().get("return_towns", {}).get(_main_map_id, ""))
+	if town.is_empty():
+		return
+	var ent := _QuestEntity.new()
+	ent.eid = "post_boss_journey_return"
+	ent.kind = "journey_return"
+	ent.art = "return_rune"
+	ent.caption = "驿路归途 · 选择地图"
+	ent.position = Vector2(480, 260)
+	ent.map_ref = self
+	_quest_entities.append(ent)
+	_world.add_child(ent)
 
 
 func _build_special_event_entities() -> void:
@@ -2257,6 +2275,12 @@ func _trial_interact(e:_QuestEntity)->void:
 ## 支线实体交互（P05-B）：采集/观察/送达。成功推进即从地图消失，提示走 toast。
 func on_quest_entity(e: _QuestEntity) -> void:
 	if _map_done or _battle != null or e.used or _modal_open(): return
+	if e.kind == "journey_return":
+		if not e.trade_cooled:
+			e.trade_cooled = true
+			var town := String(preload("res://src/world/JourneyService.gd").cfg().get("return_towns", {}).get(_main_map_id, ""))
+			_open_journey(town)
+		return
 	if e.kind=="special_event":
 		if not e.trade_cooled:
 			e.trade_cooled=true
@@ -4365,6 +4389,7 @@ func _after_battle_rewards() -> void:
 	if _mode == "main_world":
 		_refresh_hud()
 		if _last_battle_tier == "boss" and not _last_battle_optional and not _last_battle_trial:
+			_refresh_quest_entities()
 			var town := String(preload("res://src/world/JourneyService.gd").cfg().get("return_towns",{}).get(_main_map_id,""))
 			if not town.is_empty(): _open_journey(town)
 		return
@@ -5404,7 +5429,7 @@ class _QuestEntity extends Node2D:
 				_trade_ground = preload("res://src/world/BuildingGrounding.gd").silhouette(_trade_tex,_trade_tex.get_width(),_trade_tex.get_height())
 		_uses_ground_art = art == "frost_brazier" and map_ref != null and map_ref._main_map_id == "frost_post"
 		var label := G.gold_label(caption, G.FS_XS, true,
-			Color("ffe2a0") if kind in ["cache", "trade", "story", "road_mail", "puzzle_choice", "shipping_aid", "frost_herb_route", "first_order_bridge"] else Color("cfe3ff"), true)
+			Color("ffe2a0") if kind in ["cache", "trade", "story", "road_mail", "puzzle_choice", "shipping_aid", "frost_herb_route", "first_order_bridge", "journey_return"] else Color("cfe3ff"), true)
 		label.position = Vector2(-84, -124 if art in ["trade_stall", "salt_cart", "tide_cargo"] else -70)
 		if _uses_ground_art: label.position.y = -98
 		label.size = Vector2(168, 20)
@@ -5422,7 +5447,7 @@ class _QuestEntity extends Node2D:
 			return
 		if used or map_ref == null or map_ref._player == null:
 			return
-		if kind in ["special_event", "trade_contract", "trial", "trial_board", "oath", "world_commission", "trade", "fishing", "puzzle_choice", "align", "switch", "repair", "mark", "frost_herb_route", "first_order_bridge"] or \
+		if kind in ["journey_return", "special_event", "trade_contract", "trial", "trial_board", "oath", "world_commission", "trade", "fishing", "puzzle_choice", "align", "switch", "repair", "mark", "frost_herb_route", "first_order_bridge"] or \
 				(kind == "road_mail" and mail_action == "board"):
 			if position.distance_to(map_ref._player.position) > MapScene.INTERACT_R + 32:
 				trade_cooled = false
@@ -5529,7 +5554,7 @@ class _QuestEntity extends Node2D:
 		var bob := sin(_t * 2.2) * 4.0
 		var tip := Vector2(0, (-142.0 if art in ["trade_stall", "salt_cart", "tide_cargo"] else -88.0) + bob)
 		if _uses_ground_art: tip.y = -116.0 + bob
-		MapScene.WorldPropArt.marker(self,tip,Color("ffd279") if kind in ["cache","trade","story"] else Color("9fd0ff"))
+		MapScene.WorldPropArt.marker(self,tip,Color("ffd279") if kind in ["cache","trade","story","journey_return"] else Color("9fd0ff"))
 
 	func _draw_salt_cart() -> void:
 		MapScene.WorldPropArt.story(self,"salt_cart",94)
@@ -5940,7 +5965,10 @@ func _open_journey(recommended := "") -> void:
 	page.recommended = recommended
 	_journey_panel = page
 	_hud.add_child(page)
-	page.closed.connect(func(): _journey_panel = null)
+	page.closed.connect(func():
+		_journey_panel = null
+		if _main_boss_cleared():
+			_toast("可随时触碰北台「驿路归途」选择地图，或沿南道返回"))
 	page.travel_requested.connect(func(map_id: String):
 		if not G.can_go("res://src/explore/MapScene.tscn"): return
 		_persist_main_world_progress()

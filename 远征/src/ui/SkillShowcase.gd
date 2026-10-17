@@ -43,21 +43,21 @@ func _ready() -> void:
 	floor_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	floor_art.modulate = Color(.5,.5,.5)
 	_scene.add_child(floor_art)
-	var sheet: Texture2D = load(G.role_dir(role_id)+G.role_art_name(role_id)+"_spritesheet.png")
-	# The legacy priest combat atlas clips limbs and depicts a different portrait.
-	# Keep the actual field character intact and animate a casting gesture instead.
-	var field_sheet: Texture2D = load(G.role_dir(role_id)+G.role_art_name(role_id)+"_idle.png") if role_id=="fz" else null
-	var frames := SpriteFrames.new()
-	frames.remove_animation(&"default")
-	for row in [["idle",0,true,5.0],["attack",1,false,11.0],["cast",2,false,8.0]]:
-		frames.add_animation(row[0])
-		frames.set_animation_loop(row[0],row[2])
-		frames.set_animation_speed(row[0],row[3])
-		for col in 4:
-			var frame := AtlasTexture.new()
-			frame.atlas = field_sheet if field_sheet!=null else sheet
-			frame.region = Rect2(col*128,0,128,128) if field_sheet!=null else Rect2(col*128,int(row[1])*128,128,128)
-			frames.add_frame(row[0],frame)
+	var frames: SpriteFrames = BattleScene.battle_frames(role_id)
+	if frames == null:
+		var sheet: Texture2D = load(G.role_dir(role_id)+G.role_art_name(role_id)+"_spritesheet.png")
+		frames = SpriteFrames.new()
+		frames.remove_animation(&"default")
+		for row in [["idle",0,true,5.0],["attack",1,false,11.0],["cast",2,false,8.0]]:
+			frames.add_animation(row[0])
+			frames.set_animation_loop(row[0],row[2])
+			frames.set_animation_speed(row[0],row[3])
+			for col in 4:
+				var frame := AtlasTexture.new()
+				frame.atlas = sheet
+				frame.region = Rect2(col*128,int(row[1])*128,128,128)
+				frame.filter_clip = true
+				frames.add_frame(row[0],frame)
 	_actor = AnimatedSprite2D.new()
 	_actor.sprite_frames = frames
 	_actor.position = Vector2(100,123)
