@@ -70,9 +70,9 @@ func _codex() -> void:
 	var owned:=G.owns_pet(pid)
 	shell.tray_height=448 if owned else 396
 	var state:=G.pet_stat(pid) if owned else {}
-	var tex:=Fix.pet(pid)
-	_art=Page.picture(tex,Vector2(192,192))
-	_art.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+	var tex:=Fix.pet_showcase(pid)
+	_art=Page.picture(tex,Vector2(184,184))
+	_art.texture_filter=CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	_art.modulate=Color.WHITE
 	if not owned:
 		var shader:=Shader.new()
@@ -208,15 +208,17 @@ func layout(safe_override:Rect2=Rect2()) -> void:
 		var dimensions:=Vector2(shell.stage.size.x-144,maxf(1,shell.stage.size.y-64))
 		if system=="codex" and (_art as TextureRect).texture!=null:
 			var source:=(_art as TextureRect).texture.get_size()
-			var factor:=minf(3,minf(dimensions.x/source.x,minf(200,dimensions.y-32)/source.y))
-			if factor>=1:factor=maxf(1,floorf(factor))
+			var max_h:=minf(184.0,maxf(96.0,shell.stage.size.y-102.0))
+			var factor:=minf(3.0,minf(dimensions.x/source.x,max_h/source.y))
+			if factor>=1.0:factor=maxf(1.0,floorf(factor))
 			dimensions=source*factor
 		var feet:=1.0
 		if system=="codex":
 			var texture:Texture2D=(_art as TextureRect).texture
 			var used:=preload("res://src/ui/NameTagLayout.gd").opaque_bounds(texture)
 			feet=float(used.end.y)/texture.get_height()
-		Page.place(_art,Vector2((shell.stage.size.x-dimensions.x)*.5,shell.stage.size.y-40-dimensions.y*feet) if system=="codex" else Vector2(72,44),dimensions)
+		var art_y:=maxf(58.0,shell.stage.size.y-40.0-dimensions.y*feet)
+		Page.place(_art,Vector2((shell.stage.size.x-dimensions.x)*.5,art_y) if system=="codex" else Vector2(72,44),dimensions)
 		var shadow_width:=64.0
 		if system=="codex":shadow_width=preload("res://src/ui/NameTagLayout.gd").opaque_bounds((_art as TextureRect).texture).size.x*dimensions.x/(_art as TextureRect).texture.get_width()*.8
 		Page.place(_shadow,Vector2((shell.stage.size.x-shadow_width)*.5,shell.stage.size.y-45),Vector2(shadow_width,10));_shadow.visible=system=="codex";_shadow.queue_redraw()

@@ -392,6 +392,24 @@ func _run() -> void:
 		nmap._toggle_sprint()
 	_check(sprint_base > walk_base * 1.3,
 		"疾行位移应明显大于步行，实为 疾行%.1f / 步行%.1f" % [sprint_base, walk_base])
+	# J1b 走路取消上下振动 & 换图保留疾行状态
+	var base_anim_y: float = nmap._player_anim.position.y
+	nmap._player_anim.frame = 1
+	nmap._update_player_anim(Vector2(0, 120))
+	var odd_anim_y: float = nmap._player_anim.position.y
+	nmap._player_anim.frame = 2
+	nmap._update_player_anim(Vector2(0, 120))
+	var even_anim_y: float = nmap._player_anim.position.y
+	_check(is_equal_approx(odd_anim_y, base_anim_y) and is_equal_approx(even_anim_y, base_anim_y),
+		"走路时奇偶帧不应产生上下振动（odd=%.2f even=%.2f base=%.2f）" % [odd_anim_y, even_anim_y, base_anim_y])
+	nmap._toggle_sprint()
+	_check(nmap._sprint, "开启疾行后当前图应处于疾行状态")
+	var nmap_next := await _spawn_map("normal", 1, "")
+	_check(nmap_next._sprint and bool(nmap_next._sprint_btn.get("active")),
+		"换图后疾行状态与 HUD 按钮高亮不应消失")
+	nmap_next._toggle_sprint()
+	nmap_next.queue_free()
+	await get_tree().process_frame
 
 	# J2 自动前往：点罗盘应自己缩短与目标的距离
 	nmap._player.position = Vector2(nmap._interactable.position.x,

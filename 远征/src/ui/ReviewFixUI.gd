@@ -6,6 +6,7 @@ const ROOT:="res://assets/ui/full_review_fixes_20261009/"
 static var _regions:Dictionary={}
 static var _textures:Dictionary={}
 static var _pixel_regions:Dictionary={}
+static var _showcase_pets:Dictionary={}
 static func texture(id:String) -> Texture2D:
 	if _textures.has(id):return _textures[id]
 	if _pixel_regions.is_empty() and FileAccess.file_exists("res://assets/ui/next_review_20261009/regions.json"):_pixel_regions=JSON.parse_string(FileAccess.get_file_as_string("res://assets/ui/next_review_20261009/regions.json"))
@@ -17,10 +18,22 @@ static func texture(id:String) -> Texture2D:
 	if not _regions.has(id):return null
 	var entry:Dictionary=_regions[id]
 	var atlas:=AtlasTexture.new()
-	atlas.atlas=load(ROOT+String(entry.file))
+	var file_rel:=String(entry.file)
+	var base_tex:Texture2D=null
+	if file_rel.begins_with("pet_show/"):
+		var abs_p:=ProjectSettings.globalize_path(ROOT+file_rel)
+		if FileAccess.file_exists(abs_p):
+			var img:=Image.load_from_file(abs_p)
+			if img!=null and not img.is_empty():
+				base_tex=ImageTexture.create_from_image(img)
+	if base_tex==null:
+		base_tex=load(ROOT+file_rel)
+	atlas.atlas=base_tex
 	var scaling:=atlas.atlas.get_size()/Vector2(entry.source_size[0],entry.source_size[1])
 	atlas.region=Rect2(Vector2(entry.rect[0],entry.rect[1])*scaling,Vector2(entry.rect[2],entry.rect[3])*scaling)
 	_textures[id]=atlas
+	if id.begins_with("pet_"):
+		pet_showcase(id)
 	return atlas
 static func item(id:String) -> Texture2D:
 	var tex:=texture(id)
@@ -34,6 +47,17 @@ static func shortage(costs:Array) -> String:
 static func pet(id:String) -> Texture2D:
 	var tex:=texture(id)
 	return tex if tex!=null else G.res_tex(id)
+static func pet_showcase(id:String) -> Texture2D:
+	if _showcase_pets.has(id):return _showcase_pets[id]
+	var hd_path:=ROOT+"pet_show/"+id+"_hd.png"
+	var abs_hd:=ProjectSettings.globalize_path(hd_path)
+	if FileAccess.file_exists(abs_hd):
+		var img:=Image.load_from_file(abs_hd)
+		if img!=null and not img.is_empty():
+			var it:=ImageTexture.create_from_image(img)
+			_showcase_pets[id]=it
+			return it
+	return pet(id)
 static func skill(id:String) -> Texture2D:
 	var tex:=texture(id)
 	return tex if tex!=null else preload("res://src/ui/FlowChestUI.gd").texture("skill")

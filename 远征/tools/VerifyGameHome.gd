@@ -592,6 +592,48 @@ func _run() -> void:
 	_check(G.title_owned("t_curio_seer") or G.title_cond_met(G.title_cfg("t_curio_seer")),
 		"累计鉴宝 3 次应解锁或达成【慧眼识珍】称号")
 
+	# ---- O. 体验精修回归（教学实操Toast / 唤灵阁更名 / 大厅隐藏易职 / 创角去待机图 / 灵宠高清完整展示） ----
+	var home_v3: Control = load("res://src/ui/GameHome.tscn").instantiate()
+	add_child(home_v3)
+	await get_tree().process_frame
+	home_v3._on_tutorial_try_step("step_03_npc")
+	home_v3._on_tutorial_try_step("step_04_quest")
+	_check(home_v3._quests != null, "新手教学 step_03/step_04 实操演示应打开任务面板且不触发 _show_toast 参数报错")
+	if home_v3._quests != null:
+		home_v3._quests.closed.emit()
+		await get_tree().process_frame
+	var gacha_plaque := home_v3.find_child("Plaque_gacha", true, false)
+	var gacha_txt := (gacha_plaque as Button).text if gacha_plaque is Button else ""
+	if gacha_plaque != null:
+		for ch in gacha_plaque.get_children():
+			if ch is Label:
+				gacha_txt += (ch as Label).text
+	_check(gacha_txt.contains("唤灵阁") and not gacha_txt.contains("酒馆"),
+		"主城召唤建筑名牌应更名为「唤灵阁」，实为「%s」" % gacha_txt)
+	var switch_btn := home_v3.find_child("RoleSwitchEntry", true, false) as Control
+	_check(switch_btn != null and not switch_btn.visible, "大厅顶栏不应展示「易职」按钮（仅在设置内提供）")
+	home_v3.queue_free()
+	await get_tree().process_frame
+
+	var cr: Control = load("res://src/ui/CreateRole.tscn").instantiate()
+	add_child(cr)
+	await get_tree().process_frame
+	_check(String(cr.get("_preview_pose")) == "walk_down", "选择角色页面默认应展示朝南姿态而非旧待机图")
+	var pose_labels: Array[String] = []
+	for p_entry in cr._chest.POSES:
+		pose_labels.append(String(p_entry[0]))
+	_check(not pose_labels.has("待机") and pose_labels.size() == 4,
+		"选择角色页面不应包含「待机」展示图页签，实为 %s" % str(pose_labels))
+	cr.queue_free()
+	await get_tree().process_frame
+
+	var FixUI := preload("res://src/ui/ReviewFixUI.gd")
+	for p_row in TableCache.pets():
+		var pid_chk := String((p_row as Dictionary).get("id", ""))
+		var hd_tex: Texture2D = FixUI.pet_showcase(pid_chk)
+		_check(hd_tex != null and hd_tex.get_size() == Vector2(192, 192),
+			"灵宠图鉴展示贴图 %s 应为 192×192 高清完整立绘" % pid_chk)
+
 	if _fails == 0:
 		print("GAME_HOME_OK all tests passed")
 	else:

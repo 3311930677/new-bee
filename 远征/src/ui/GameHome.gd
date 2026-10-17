@@ -562,6 +562,11 @@ func _sync_tutorial_panel(panel_id: String, _step_id: String = "") -> void:
 
 func _on_tutorial_try_step(step_id: String) -> void:
 	var step := TutorialServiceScript.current_step(G)
+	for s_v in TutorialServiceScript.STEPS:
+		var s: Dictionary = s_v
+		if String(s.get("id", "")) == step_id:
+			step = s
+			break
 	var want_panel := String(step.get("panel", "home"))
 	_sync_tutorial_panel(want_panel, step_id)
 	match step_id:
@@ -575,7 +580,7 @@ func _on_tutorial_try_step(step_id: String) -> void:
 				_tutorial.call("_on_next")
 		"step_03_npc":
 			if _quests != null and _quests.has_method("_show_toast"):
-				_quests.call("_show_toast", "主线指引：步入昭元边城与闻叔交谈即可推进章节", false)
+				_quests.call("_show_toast", "主线指引：步入昭元边城与闻叔交谈即可推进章节")
 		"step_04_quest":
 			var offers: Array = G.quest.get("offer", [])
 			if not offers.is_empty():
@@ -584,7 +589,7 @@ func _on_tutorial_try_step(step_id: String) -> void:
 			if _quests != null and _quests.has_method("_refresh"):
 				_quests.call("_refresh")
 				if _quests.has_method("_show_toast"):
-					_quests.call("_show_toast", "已为你接取并追踪边城委托，路牌方向信标已激活！", false)
+					_quests.call("_show_toast", "已为你接取并追踪边城委托，路牌方向信标已激活！")
 		"step_05_battle":
 			if _tutorial != null and _tutorial.has_method("_on_next"):
 				_tutorial.call("_on_next")

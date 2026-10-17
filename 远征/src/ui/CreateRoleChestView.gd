@@ -3,7 +3,6 @@ const UI:=preload("res://src/ui/TravelChestUI.gd")
 const Page:=preload("res://src/ui/ChestPageUI.gd")
 const Flow:=preload("res://src/ui/FlowChestUI.gd")
 const POSES:=[
-	["待机",&"idle"],
 	["朝南",&"walk_down"],
 	["朝西",&"walk_left"],
 	["朝东",&"walk_right"],
