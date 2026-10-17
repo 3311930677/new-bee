@@ -366,7 +366,7 @@ func _act(qid: String) -> void:
 			_show_toast("该委托无法接取")
 	_refresh()
 
-func _show_toast(msg: String) -> void:
+func _show_toast(msg: String, _err: bool = false) -> void:
 	if is_instance_valid(_toast): _toast.queue_free()
 	_toast = UI.toast(self,msg)
 

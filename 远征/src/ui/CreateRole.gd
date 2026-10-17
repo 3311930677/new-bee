@@ -20,7 +20,7 @@ var _anim: AnimatedSprite2D
 var _info: Dictionary = {}
 var _role_idx := 0
 var _gender_idx := 0
-var _preview_pose: StringName = &"idle"
+var _preview_pose: StringName = &"walk_down"
 var _reselect_mode := false
 var _toast: Label = null
 var _chest:Control
@@ -191,7 +191,7 @@ func _switch_role(idx: int, animate: bool) -> void:
 	_role_idx = wrapi(idx, 0, G.roles.size())
 	var role: Dictionary = G.roles[_role_idx]
 	_anim.sprite_frames = _build_frames(role["id"])
-	var pose: StringName = _preview_pose if _anim.sprite_frames.has_animation(_preview_pose) else &"idle"
+	var pose: StringName = _preview_pose if _anim.sprite_frames.has_animation(_preview_pose) else &"walk_down"
 	_anim.animation = pose
 	_anim.play(pose)
 	_chest.refresh()
@@ -216,17 +216,8 @@ func set_preview_pose(pose: StringName) -> void:
 
 func _build_frames(role_id: String) -> SpriteFrames:
 	var slug := _role_name(role_id)
-	var tex: Texture2D = load(G.role_dir(role_id) + slug + "_idle.png")
 	var frames := SpriteFrames.new()
 	frames.remove_animation(&"default")
-	frames.add_animation(&"idle")
-	frames.set_animation_speed(&"idle", 5.0)
-	frames.set_animation_loop(&"idle", true)
-	for c in 4:
-		var at := AtlasTexture.new()
-		at.atlas = tex
-		at.region = Rect2(c * 128, 0, 128, 128)
-		frames.add_frame(&"idle", at)
 	var walk_path := G.role_dir(role_id) + slug + "_walk_frames.tres"
 	var walk_frames := load(walk_path) as SpriteFrames
 	if walk_frames != null:
@@ -237,6 +228,12 @@ func _build_frames(role_id: String) -> SpriteFrames:
 				frames.set_animation_loop(dir_anim, true)
 				for idx in walk_frames.get_frame_count(dir_anim):
 					frames.add_frame(dir_anim, walk_frames.get_frame_texture(dir_anim, idx))
+		if walk_frames.has_animation(&"walk_down"):
+			frames.add_animation(&"idle")
+			frames.set_animation_speed(&"idle", walk_frames.get_animation_speed(&"walk_down"))
+			frames.set_animation_loop(&"idle", true)
+			for idx in walk_frames.get_frame_count(&"walk_down"):
+				frames.add_frame(&"idle", walk_frames.get_frame_texture(&"walk_down", idx))
 	return frames
 
 

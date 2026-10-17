@@ -37,9 +37,9 @@ const BRONZE := Color("c9973f")
 const LOCKED_TINT := Color(0.55, 0.55, 0.6)
 
 # id、名牌文字、图标、名牌中心（核心画面坐标，游戏像素）
-# 酒馆 = 召唤（魂石抽伙伴），铁匠铺 = 养成·装备，集市 = 荣誉兑换，世界 = 世界图志
+# 唤灵阁 = 召唤（魂石抽伙伴），铁匠铺 = 养成·装备，集市 = 荣誉兑换，世界 = 世界图志
 const PLAQUES := [
-	["gacha", "酒馆", "tavern", Vector2(130, 150)],
+	["gacha", "唤灵阁", "tavern", Vector2(130, 150)],
 	["arena", "竞技场", "arena", Vector2(352, 150)],
 	["craft", "铁匠铺", "anvil", Vector2(108, 268)],
 	["exchange", "集市", "market", Vector2(372, 284)],
@@ -531,6 +531,7 @@ func _build_top_bar() -> void:
 	_switch_role_btn.size = Vector2(48, 26)
 	_switch_role_btn.tooltip_text = "重选职业或预览四角色"
 	_switch_role_btn.pressed.connect(_on_entry.bind("reselect_role", "重选职业"))
+	_switch_role_btn.visible = false
 	_top.add_child(_switch_role_btn)
 	var bar := NinePatchRect.new()
 	bar.texture = load(KIT + "bar_frame.png")

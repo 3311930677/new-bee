@@ -185,7 +185,7 @@ func _pet() -> void:
 		_tab(item[1],id,operation,func():operation=id;refresh())
 	var cfg:=TableCache.get_pet(selection)
 	var state:=G.pet_stat(selection) if not selection.is_empty() else {}
-	_art.texture=preload("res://src/ui/ReviewFixUI.gd").pet(selection) if not selection.is_empty() else Page.texture("pet")
+	_art.texture=preload("res://src/ui/ReviewFixUI.gd").pet_showcase(selection) if not selection.is_empty() else Page.texture("pet")
 	_name.text=String(cfg.get("name","尚未收集灵宠"))
 	_status.text="Lv.%d · 资质 %d 星 · 突破 %d/5 · 羁绊 %d/5" % [int(state.get("lv",1)),int(state.get("star",3)),int(state.get("brk",0)),G.pet_bond_level(selection)]
 	var enabled:=not selection.is_empty()

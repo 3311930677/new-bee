@@ -2789,7 +2789,7 @@ func _update_player_anim(dir: Vector2) -> void:
 			_mount_anim.play(mount_dir)
 			_player_anim.animation=mount_dir
 			DirectionalIdle.stop(_player_anim)
-			_player_anim.position.y=MountVisual.rider_offset(G.mount_active(),String(mount_dir))+sin(float(Time.get_ticks_msec())*.016)
+			_player_anim.position.y=MountVisual.rider_offset(G.mount_active(),String(mount_dir))
 			_mount_anim.position=MountVisual.mount_offset(G.mount_active(),String(mount_dir))
 		else:
 			_mount_anim.stop()
@@ -2816,8 +2816,7 @@ func _update_player_anim(dir: Vector2) -> void:
 	_player_anim.speed_scale = dir.length() / maxf(1.0, TableCache.map_player_speed())
 	if not _player_anim.is_playing():
 		_player_anim.play()
-	var step_lift := 1.0 if (_player_anim.frame % 2 == 1) else 0.0
-	_player_anim.position.y = base_y - step_lift
+	_player_anim.position.y = base_y
 	if _player_shadow != null:
 		_player_shadow.set_walking(true, _player_anim.frame)
 
@@ -3450,6 +3449,12 @@ func _tick_auto_walk(delta: float) -> void:
 
 func _toggle_sprint() -> void:
 	_sprint = not _sprint
+	G.set_meta("map_sprint_active", _sprint)
+	_sync_sprint_visual()
+	Audio.sfx("ui_click")
+
+
+func _sync_sprint_visual() -> void:
 	if _sprint_btn != null:
 		_sprint_btn.set("active", _sprint)
 		_sprint_btn.call("set_texture",ChestPage.texture("sprint_on" if _sprint else "sprint_off"))
@@ -3458,7 +3463,6 @@ func _toggle_sprint() -> void:
 		_sprint_btn.tooltip_text = "疾行：开启" if _sprint else "疾行：关闭"
 		_sprint_btn.queue_redraw()
 		if _sprint_btn.get_node_or_null("MotionIcon") != null: _sprint_btn.get_node("MotionIcon").queue_redraw()
-	Audio.sfx("ui_click")
 
 ## 大地图：点小地图呼出，看清整片地形与全部目标；带图例与返回按钮
 func _toggle_big_map() -> void:
@@ -6007,7 +6011,8 @@ func _build_round1_hud() -> void:
 	_round_potion.call("set_count",st.potions)
 	_potion_badge = _round_potion.get_node("CountBadge/Count")
 	_sprint_btn = _round_action("疾行","»",Vector2(328,724),56,_toggle_sprint)
-	_sprint_btn.call("set_texture",ChestPage.texture("sprint_off"))
+	_sprint = bool(G.get_meta("map_sprint_active", false))
+	_sync_sprint_visual()
 	var exit_button := _round_action("营帐" if _mode == "main_world" else "撤离","⌂" if _mode == "main_world" else "↗",Vector2(312,12),44,_ask_exit,false)
 	exit_button.set("warning",_mode != "main_world")
 	exit_button.set("icon_size",24.0)
@@ -6187,7 +6192,7 @@ class _PlayerShadow extends Node2D:
 			queue_redraw()
 
 	func _draw() -> void:
-		var pulse := 0.93 if (walking and step_frame % 2 == 1) else 1.0
+		var pulse := 1.0
 		var rx := (26.0 if riding else 18.0 * shadow_scale) * pulse
 		var ry := (9.5 if riding else 6.2 * shadow_scale) * pulse
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, ry / maxf(1.0, rx)))
