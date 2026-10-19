@@ -1,0 +1,322 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/@Panel@6/@Label@9",
+			"rect_height": 33.0,
+			"size": 22,
+			"text": "物 资 铺"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/@Panel@6/@Panel@10/@Label@12",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "12800 金"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/@Label@13",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "◆ 材料可自由买卖 · 购价与回收价均明示"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@16/@Label@19",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "强化石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@16/@Label@20",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "持有: 99"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@16/@VBoxContainer@21/@Label@22",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "购: 120 金"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@16/@VBoxContainer@21/@Label@23",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "售: 48 金"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@16/@Button@24",
+			"rect_height": 34.0,
+			"size": 15,
+			"text": "购 入"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@16/@Button@25",
+			"rect_height": 34.0,
+			"size": 15,
+			"text": "出 售"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@26/@Label@29",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "精炼石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@26/@Label@30",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "持有: 105"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@26/@VBoxContainer@31/@Label@32",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "购: 260 金"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@26/@VBoxContainer@31/@Label@33",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "售: 104 金"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@26/@Button@34",
+			"rect_height": 34.0,
+			"size": 15,
+			"text": "购 入"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@26/@Button@35",
+			"rect_height": 34.0,
+			"size": 15,
+			"text": "出 售"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@36/@Label@39",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "宠物粮"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@36/@Label@40",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "持有: 100"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@36/@VBoxContainer@41/@Label@42",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "购: 90 金"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@36/@VBoxContainer@41/@Label@43",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "售: 36 金"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@36/@Button@44",
+			"rect_height": 34.0,
+			"size": 15,
+			"text": "购 入"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@36/@Button@45",
+			"rect_height": 34.0,
+			"size": 15,
+			"text": "出 售"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@46/@Label@49",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "资质果"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@46/@Label@50",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "持有: 101"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@46/@VBoxContainer@51/@Label@52",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "购: 420 金"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@46/@VBoxContainer@51/@Label@53",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "售: 168 金"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@46/@Button@54",
+			"rect_height": 34.0,
+			"size": 15,
+			"text": "购 入"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@46/@Button@55",
+			"rect_height": 34.0,
+			"size": 15,
+			"text": "出 售"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@56/@Label@59",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "进化晶石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@56/@Label@60",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "持有: 0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@56/@VBoxContainer@61/@Label@62",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "购: 600 金"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@56/@VBoxContainer@61/@Label@63",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "售: 240 金"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@56/@Button@64",
+			"rect_height": 34.0,
+			"size": 15,
+			"text": "购 入"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/GoodsRows/@Panel@56/@Button@65",
+			"rect_height": 34.0,
+			"size": 15,
+			"text": "出 售"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/@Label@14",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/ShopCabinet/@Button@15",
+			"rect_height": 38.0,
+			"size": 17,
+			"text": "返 回"
+		}
+	]
+}

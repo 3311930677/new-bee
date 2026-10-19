@@ -1,0 +1,124 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/ShotRunner/@Control@2/@Label@7",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "三城保价与延期合约"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Label@8",
+			"rect_height": 60.0,
+			"size": 15,
+			"text": "同时最多两张未结单；只看游戏日，离线不会过期。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/@Control@2/@ScrollContainer@11/@VBoxContainer@12/@Label@15",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "第1游戏日 · 未结0/2 · 金币12800"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/@Control@2/@ScrollContainer@11/@VBoxContainer@12/@PanelContainer@16/@VBoxContainer@17/@HBoxContainer@18/@Label@19",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "沉渊定价盐仓"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@ScrollContainer@11/@VBoxContainer@12/@PanelContainer@16/@VBoxContainer@17/@HBoxContainer@18/StatusBadge/@Label@20",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "可签约"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@ScrollContainer@11/@VBoxContainer@12/@PanelContainer@16/@VBoxContainer@17/@Label@21",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "货物：盐×2；交到昭元市集"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@ScrollContainer@11/@VBoxContainer@12/@PanelContainer@16/@VBoxContainer@17/@Label@22",
+			"rect_height": 49.0,
+			"size": 15,
+			"text": "签约参照货款204金，押金60金，第4日内交付。签约不扣货，交货时一次扣除。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@ScrollContainer@11/@VBoxContainer@12/@PanelContainer@16/@VBoxContainer@17/@Label@23",
+			"rect_height": 75.0,
+			"size": 15,
+			"text": "保价：固定利差25金，保价费8金在退押中扣，退押52金。自担：利差30–55金，退押60金；路点核准可免25金路阻扣款。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@ScrollContainer@11/@VBoxContainer@12/@PanelContainer@16/@VBoxContainer@17/@Label@24",
+			"rect_height": 75.0,
+			"size": 15,
+			"text": "最多损失：保价8金、自担30金；一次延期另付12金，补2日。长期逾期自动退押且不扣货。含延期的最大损失仍小于60金押金。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@ScrollContainer@11/@VBoxContainer@12/@PanelContainer@16/@VBoxContainer@17/@Label@25",
+			"rect_height": 49.0,
+			"size": 15,
+			"text": "补货可正常买入；路点：清出盐车停靠位。不会查看或修改现实日期。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@ScrollContainer@11/@VBoxContainer@12/@PanelContainer@16/@VBoxContainer@17/@HBoxContainer@26/@PanelContainer@28/@Label@27",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "保价签约·押60"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@ScrollContainer@11/@VBoxContainer@12/@PanelContainer@16/@VBoxContainer@17/@HBoxContainer@26/@PanelContainer@30/@Label@29",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "自担签约·押60"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@14/@Label@13",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "返回市集"
+		}
+	]
+}

@@ -287,15 +287,15 @@ func _common(parent:Control) -> void:
 	var title:=_row_title("战斗倍速")
 	title.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	row.add_child(title)
-	_speed_prev=_step("‹",func():G.setting_set("battle_speed",1.0);sync(),-1.0)
+	_speed_prev=_step("‹",func():G.setting_set("battle_speed",BattleScene.step_speed(float(G.setting_get("battle_speed",1.0)),-1));sync(),-1.0)
 	row.add_child(_speed_prev)
 	_speed_value=UI.label("","number")
 	_speed_value.custom_minimum_size.x=52
 	_speed_value.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	row.add_child(_speed_value)
-	host._speed_btn=_step("›",func():G.setting_set("battle_speed",2.0);sync(),1.0)
+	host._speed_btn=_step("›",func():G.setting_set("battle_speed",BattleScene.step_speed(float(G.setting_get("battle_speed",1.0)),1));sync(),1.0)
 	row.add_child(host._speed_btn)
-	_caption(parent,Flow.text("战斗中也可随时切换倍速","caption",UI.AGED))
+	_caption(parent,Flow.text("支持 ×1 / ×2 / ×4 / ×8 四档，战斗中也可随时切换倍速","caption",UI.AGED))
 	sync()
 func sync() -> void:
 	host._mute_btn.on=Audio.muted()
@@ -303,9 +303,10 @@ func sync() -> void:
 	host._story_btn.on=not bool(G.setting_get("skip_story",false))
 	for b in [host._mute_btn,host._shake_btn,host._story_btn]:b.queue_redraw()
 	for slider in _sliders:slider.editable=not Audio.muted();slider.modulate=Color(.5,.5,.5) if Audio.muted() else Color.WHITE
-	_speed_value.text="×%d"%int(G.setting_get("battle_speed",1))
-	_speed_prev.disabled=float(G.setting_get("battle_speed",1))<=1
-	host._speed_btn.disabled=float(G.setting_get("battle_speed",1))>=2
+	var cur_sp := int(round(BattleScene.snap_speed(float(G.setting_get("battle_speed",1.0)))))
+	_speed_value.text="×%d"%cur_sp
+	_speed_prev.disabled=cur_sp<=1
+	host._speed_btn.disabled=cur_sp>=8
 	host._mute_hint.text="已静音，音量设置已保留" if Audio.muted() else "音乐与音效正常播放"
 ## 旅人卡：参考稿月夜底板，头像裁成圆放进金环，右侧昵称与职业等级
 func _traveller_card() -> Control:

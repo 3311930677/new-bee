@@ -50,72 +50,171 @@ static func title_family(title: String, fallback := "journal") -> String:
 			if title.contains(word): return key
 	return fallback
 
+static var _tex_cache: Dictionary = {}
+
+static func _kit_tex(path: String) -> Texture2D:
+	var full_path := path
+	if not full_path.begins_with("res://"):
+		var candidate := "res://assets/ui/kit_20261013/" + full_path
+		if not ResourceLoader.exists(candidate) and not FileAccess.file_exists(candidate) and ResourceLoader.exists("res://assets/ui/battle_settle/" + full_path):
+			full_path = "res://assets/ui/battle_settle/" + full_path
+		else:
+			full_path = candidate
+	if _tex_cache.has(full_path) and _tex_cache[full_path] != null:
+		return _tex_cache[full_path]
+	var t: Texture2D = null
+	if ResourceLoader.exists(full_path):
+		t = load(full_path) as Texture2D
+	if t == null and FileAccess.file_exists(full_path):
+		var img := Image.load_from_file(ProjectSettings.globalize_path(full_path))
+		if img != null and not img.is_empty():
+			t = ImageTexture.create_from_image(img)
+	_tex_cache[full_path] = t
+	return t
+
+static func nine_slice(item: CanvasItem, tex: Texture2D, rect: Rect2, mx := 12.0, my := 12.0, tint := Color.WHITE) -> void:
+	draw_nine(item, tex, rect, maxf(mx, my), tint)
+
+static func draw_nine(item: CanvasItem, tex: Texture2D, rect: Rect2, m: float, tint := Color.WHITE) -> void:
+	if tex == null or rect.size.x < 8 or rect.size.y < 8:
+		return
+	var tw := float(tex.get_width())
+	var th := float(tex.get_height())
+	var ms := minf(m, minf(tw * 0.33, th * 0.33))
+	var md := minf(m, minf(rect.size.x * 0.33, rect.size.y * 0.33))
+	var xs := [0.0, ms, tw - ms, tw]
+	var ys := [0.0, ms, th - ms, th]
+	var xd := [rect.position.x, rect.position.x + md, rect.end.x - md, rect.end.x]
+	var yd := [rect.position.y, rect.position.y + md, rect.end.y - md, rect.end.y]
+	for iy in 3:
+		for ix in 3:
+			var dw: float = xd[ix + 1] - xd[ix]
+			var dh: float = yd[iy + 1] - yd[iy]
+			var sw: float = xs[ix + 1] - xs[ix]
+			var sh: float = ys[iy + 1] - ys[iy]
+			if dw > 0 and dh > 0 and sw > 0 and sh > 0:
+				item.draw_texture_rect_region(tex, Rect2(xd[ix], yd[iy], dw, dh), Rect2(xs[ix], ys[iy], sw, sh), tint)
+
+class _PlaqueHeader extends Control:
+	var plaque_h := 40.0
+	func _draw() -> void:
+		var w := size.x
+		var h := plaque_h
+		var r := Rect2(0, 0, w, h)
+		draw_rect(Rect2(2, 4, w - 2, h - 1), Color("090d0e", 0.42))
+		draw_colored_polygon(G.octagon_path(Vector2(w, h), 0.0, 5.0), Color("1d3635"))
+		var p_tex := G.Visuals._kit_tex("plaque_header_jade.png")
+		if p_tex != null:
+			G.Visuals.draw_nine(self, p_tex, r, 16.0, Color(1, 1, 1, 0.96))
+		var p1 := G.octagon_path(Vector2(w, h), 1.0, 5.0)
+		p1.append(p1[0])
+		draw_polyline(p1, Color("d8b268", 0.92), 1.0)
+		var p2 := G.octagon_path(Vector2(w, h), 3.0, 4.0)
+		p2.append(p2[0])
+		draw_polyline(p2, Color("9e3828", 0.55), 1.0)
+		for sx in [14.0, w - 14.0]:
+			G.Visuals.diamond(self, Vector2(sx, h * 0.5), 4.0, Color("d8b268"))
+			G.Visuals.diamond(self, Vector2(sx, h * 0.5), 2.0, Color("a63429"))
+		var div_tex := G.Visuals._kit_tex("divider_scroll_ornament.png")
+		var dw := minf(w - 20.0, 320.0)
+		if div_tex != null:
+			draw_texture_rect(div_tex, Rect2((w - dw) * 0.5, h + 1.0, dw, 12.0), false)
+		else:
+			draw_line(Vector2(16, h + 6.0), Vector2(w - 16, h + 6.0), Color("b89456", 0.65), 1.0)
+
+static func header_plaque(title_text: String, w := 360.0, h := 40.0) -> Control:
+	var root := _PlaqueHeader.new()
+	root.plaque_h = h
+	root.custom_minimum_size = Vector2(w, h + 14.0)
+	root.size = Vector2(w, h + 14.0)
+	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	var lbl := G.art_label(title_text, G.FS_LG, G.GOLD_BRIGHT, true)
+	lbl.name = "PlaqueLabel"
+	lbl.size = Vector2(w, h)
+	lbl.custom_minimum_size = Vector2(w, h)
+	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	root.add_child(lbl)
+	return root
+
+class _SubcardBox extends Control:
+	func _draw() -> void:
+		var tex := G.Visuals._kit_tex("card_frame_parchment.png")
+		if tex != null:
+			G.Visuals.draw_nine(self, tex, Rect2(Vector2.ZERO, size), 14.0, Color(1, 1, 1, 0.94))
+		else:
+			draw_rect(Rect2(Vector2.ZERO, size), Color("e6dac0", 0.92))
+			draw_rect(Rect2(Vector2.ZERO, size), Color("a88958", 0.75), false, 1.0)
+
+static func parchment_subcard(at: Vector2, sz: Vector2) -> Control:
+	var c := _SubcardBox.new()
+	c.position = at
+	c.size = sz
+	c.custom_minimum_size = sz
+	c.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	c.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	return c
+
 static func paper(item: CanvasItem, sz: Vector2) -> void:
 	if sz.x < 16 or sz.y < 16: return
 	var c := palette(item)
-	var large := sz.x >= 300 and sz.y >= 120
+	var large := sz.x >= 260 and sz.y >= 110
 	var bounds := Rect2(Vector2.ZERO, sz)
-	item.draw_rect(Rect2(Vector2(0, 4), sz), Color("090d13", 0.34))
-	item.draw_colored_polygon(G.octagon_path(sz,0,5 if large else 2),c.dark)
-	item.draw_rect(bounds.grow(-3 if large else -1), c.paper)
-	item.draw_line(Vector2(8,3),Vector2(sz.x-8,3),c.paper.lightened(.12),1)
-	item.draw_line(Vector2(8,sz.y-3),Vector2(sz.x-8,sz.y-3),c.paper.darkened(.13),1)
-	if not large:
-		item.draw_line(Vector2(1, 1), Vector2(sz.x-1, 1), c.paper.lightened(0.12))
+	item.draw_rect(Rect2(Vector2(2, 6), sz - Vector2(2, 2)), Color("08060a", 0.52))
+	var iron_tex := _kit_tex("res://assets/ui/kit_20261013/panel_iron.png")
+	var slip_tex := _kit_tex("res://assets/ui/kit_20261013/quest_slip.png")
+	var subcard_tex := _kit_tex("res://assets/ui/kit_20261013/card_frame_parchment.png")
+	if large:
+		if iron_tex != null:
+			draw_nine(item, iron_tex, bounds.grow(2.0), 16.0)
+		else:
+			item.draw_colored_polygon(G.octagon_path(sz, 0, 5), c.dark)
+		var inner_rect := bounds.grow(-4.0)
+		item.draw_rect(inner_rect, c.paper)
+		if slip_tex != null:
+			draw_nine(item, slip_tex, bounds.grow(-1.0), 14.0, Color(1, 1, 1, 0.85))
+		# 保持内芯宣纸温润纯净，避免外框暗边侵入 x=16 文本区
+		item.draw_rect(bounds.grow(-6.0), Color(c.paper, 0.92))
+		# 双层古铜与朱砂内框线（紧贴边缘不压内文）
+		item.draw_rect(bounds.grow(-5.0), Color("b89456", 0.78), false, 1.0)
+		item.draw_rect(bounds.grow(-7.0), Color("8c3b2b", 0.24), false, 1.0)
+		G.draw_brass_corners(item, sz, 15.0, 5.0)
+		var seal_tex := _kit_tex("res://assets/ui/battle_settle/seal_stamps.png")
+		if seal_tex != null and sz.x >= 320 and sz.y >= 160:
+			item.draw_texture_rect_region(seal_tex, Rect2(sz.x - 48, 10, 34, 34), Rect2(0, 0, 56, 56), Color(1, 1, 1, 0.20))
+	else:
+		item.draw_colored_polygon(G.octagon_path(sz, 0, 3), c.dark)
+		item.draw_rect(bounds.grow(-2), c.paper)
+		var small_tex := subcard_tex if subcard_tex != null else slip_tex
+		if small_tex != null:
+			draw_nine(item, small_tex, bounds.grow(-1), 12.0, Color(1, 1, 1, 0.92))
+		item.draw_rect(bounds.grow(-2), Color(c.accent, 0.65), false, 1.0)
 		return
 	match c.family:
 		"forge":
-			item.draw_rect(bounds.grow(-1), c.accent, false)
-			item.draw_rect(bounds.grow(-6), c.dark.lightened(0.18), false)
-			for x in [4.0, sz.x-5]:
-				for y in [4.0, sz.y-5]:
-					item.draw_rect(Rect2(x-1,y-1,3,3), Color("d5d9dd"))
-			item.draw_line(Vector2(8, 8),Vector2(8,sz.y-8),Color("bac4cc"))
+			item.draw_line(Vector2(9, 14), Vector2(9, sz.y - 14), Color("bac4cc", 0.45))
 		"garden":
-			item.draw_rect(bounds.grow(-1), c.accent, false)
-			for p in [Vector2(8,8), Vector2(sz.x-8,sz.y-8)]:
-				var flip := 1.0 if p.x < sz.x*0.5 else -1.0
-				item.draw_line(p,p+Vector2(25,0)*flip,c.dark,1)
-				item.draw_line(p,p+Vector2(0,25)*flip,c.dark,1)
+			for p in [Vector2(10, 10), Vector2(sz.x - 10, sz.y - 10)]:
+				var flip := 1.0 if p.x < sz.x * 0.5 else -1.0
 				for i in 3:
-					var leaf: Vector2 = p+Vector2(5+i*5,3)*flip
-					item.draw_colored_polygon(PackedVector2Array([leaf,leaf+Vector2(4,2)*flip,leaf+Vector2(1,5)*flip]),c.accent)
+					var leaf: Vector2 = p + Vector2(4 + i * 4, 3) * flip
+					item.draw_colored_polygon(PackedVector2Array([leaf, leaf + Vector2(3, 2) * flip, leaf + Vector2(1, 4) * flip]), Color(c.accent, 0.55))
 		"arcane":
-			item.draw_rect(bounds.grow(-1),c.accent,false)
-			# Open corner fittings leave the illustration and text room to breathe.
-			for x in [8.0,sz.x-8]:
-				var dir := 1.0 if x<sz.x*.5 else -1.0
-				item.draw_line(Vector2(x,8),Vector2(x+18*dir,8),Color(c.accent,.60))
-				item.draw_line(Vector2(x,8),Vector2(x,23),Color(c.accent,.60))
-			for p in [Vector2(8,8),Vector2(sz.x-8,8),Vector2(8,sz.y-8),Vector2(sz.x-8,sz.y-8)]:
-				diamond(item,p,5,c.dark)
-				diamond(item,p,2,c.light)
+			for p in [Vector2(10, 10), Vector2(sz.x - 10, 10), Vector2(10, sz.y - 10), Vector2(sz.x - 10, sz.y - 10)]:
+				diamond(item, p, 3, c.dark)
+				diamond(item, p, 1.5, c.light)
 		"atlas":
-			item.draw_rect(bounds.grow(-1),c.accent,false)
-			for y in range(16,int(sz.y-12),24):
-				item.draw_line(Vector2(6,y),Vector2(9,y),Color(c.dark,0.45))
-			for x in range(16,int(sz.x-12),24):
-				item.draw_line(Vector2(x,6),Vector2(x,9),Color(c.dark,0.45))
+			for y in range(22, int(sz.y - 18), 24):
+				item.draw_line(Vector2(8, y), Vector2(11, y), Color(c.dark, 0.35))
 		"arena":
-			item.draw_rect(bounds.grow(-1),c.accent,false)
-			item.draw_rect(Rect2(6,10,2,sz.y-20),c.dark)
-			item.draw_rect(Rect2(sz.x-8,10,2,sz.y-20),c.dark)
-			for y in [7.0,sz.y-7]:
-				item.draw_line(Vector2(16,y),Vector2(sz.x-16,y),c.accent)
+			for y in [10.0, sz.y - 10]:
+				item.draw_line(Vector2(18, y), Vector2(sz.x - 18, y), Color(c.accent, 0.55))
 		"market":
-			item.draw_rect(bounds.grow(-1),c.accent,false)
-			for y in range(12,int(sz.y-10),18):
-				item.draw_line(Vector2(5,y),Vector2(5,y+3),c.light)
-				item.draw_line(Vector2(sz.x-5,y),Vector2(sz.x-5,y+3),c.light)
-		"quiet":
-			item.draw_rect(bounds.grow(-1),c.accent,false)
-			item.draw_rect(Rect2(3,3,sz.x-6,2),c.dark)
+			for y in range(18, int(sz.y - 16), 18):
+				item.draw_line(Vector2(8, y), Vector2(11, y), Color("8c6d3f", 0.35))
 		_:
-			item.draw_rect(bounds.grow(-1),c.accent,false)
-			item.draw_line(Vector2(10,10),Vector2(10,sz.y-10),Color(c.accent,0.4))
-			for y in range(18,int(sz.y-10),30):
-				item.draw_line(Vector2(4,y),Vector2(9,y+2),c.dark)
-			item.draw_line(Vector2(15,sz.y-7),Vector2(sz.x-9,sz.y-7),Color(c.accent,0.5))
+			for y in range(22, int(sz.y - 18), 28):
+				item.draw_line(Vector2(8, y), Vector2(11, y + 1), Color(c.dark, 0.32))
 
 static func diamond(item: CanvasItem,p: Vector2,r: float,color: Color) -> void:
 	item.draw_colored_polygon(PackedVector2Array([p+Vector2(0,-r),p+Vector2(r,0),p+Vector2(0,r),p+Vector2(-r,0)]),color)
@@ -124,23 +223,18 @@ static func heading(item: Control) -> void:
 	var c := palette(item)
 	var sz := item.size
 	if sz.x < 20: return
-	# 开放式题签，留出书法笔画空间，不再把标题装进同一块木牌。
+	var plaque_tex := _kit_tex("res://assets/ui/kit_20261013/plaque_title.png")
+	if plaque_tex != null and sz.y >= 34:
+		var pw := clampf(sz.x + 28.0, 180.0, 340.0)
+		var ph := clampf(sz.y + 8.0, 44.0, 62.0)
+		var pr := Rect2((sz.x - pw) * 0.5, (sz.y - ph) * 0.5, pw, ph)
+		item.draw_texture_rect(plaque_tex, pr, false)
 	var center := Vector2(sz.x*0.5,sz.y-2)
 	var wings := maxf(10,sz.x*0.5-38)
-	item.draw_line(center+Vector2(-wings,0),center+Vector2(-9,0),Color(c.accent,0.72),1)
-	item.draw_line(center+Vector2(9,0),center+Vector2(wings,0),Color(c.accent,0.72),1)
-	match c.family:
-		"arcane":
-			item.draw_circle(center,5,Color(c.accent,0.9),false,1)
-			diamond(item,center,2,c.light)
-		"garden":
-			item.draw_line(center+Vector2(-5,1),center+Vector2(5,-3),c.light,1)
-			diamond(item,center+Vector2(-2,-2),3,c.accent)
-		"forge", "arena":
-			diamond(item,center,5,c.accent)
-			diamond(item,center,2,c.dark)
-		_:
-			item.draw_rect(Rect2(center-Vector2(3,2),Vector2(6,4)),c.accent)
+	item.draw_line(center+Vector2(-wings,0),center+Vector2(-9,0),Color("e2c48c",0.78),1)
+	item.draw_line(center+Vector2(9,0),center+Vector2(wings,0),Color("e2c48c",0.78),1)
+	diamond(item, center, 4, Color("e2c48c"))
+	diamond(item, center, 2, c.dark)
 
 class Atmosphere extends Control:
 	var theme_key := "journal"

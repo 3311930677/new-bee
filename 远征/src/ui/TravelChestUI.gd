@@ -90,10 +90,21 @@ static func cut(rect: Rect2, amount: float = 2.0) -> PackedVector2Array:
 	return PackedVector2Array([p+Vector2(amount,0),Vector2(e.x-amount,p.y),Vector2(e.x,p.y+amount),e-Vector2(0,amount),e-Vector2(amount,0),Vector2(p.x+amount,e.y),Vector2(p.x,e.y-amount),p+Vector2(0,amount)])
 
 static func surface(canvas: CanvasItem, rect: Rect2, color: Color, border: Color = BRONZE, amount: float = 2.0) -> void:
+	canvas.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	var points := cut(rect,amount)
 	canvas.draw_colored_polygon(points,color)
+	if rect.size.x >= 36.0 and rect.size.y >= 24.0:
+		var is_large := rect.size.x >= 200.0 and rect.size.y >= 90.0
+		var tex := G.Visuals._kit_tex("panel_iron.png" if is_large else "btn_row.png")
+		G.Visuals.nine_slice(canvas, tex, rect, 12.0 if is_large else 8.0, 10.0 if is_large else 6.0, Color(1, 1, 1, 0.42 if is_large else 0.30))
 	points.append(points[0])
 	canvas.draw_polyline(points,border,1,true)
+	if rect.size.x >= 44.0 and rect.size.y >= 26.0:
+		var p := rect.position
+		var e := rect.end
+		canvas.draw_line(Vector2(p.x + amount + 2, p.y + 1), Vector2(e.x - amount - 2, p.y + 1), Color(border.lightened(0.25), 0.32), 1.0)
+		for corner in [p + Vector2(3, 3), Vector2(e.x - 5, p.y + 3), Vector2(p.x + 3, e.y - 5), e - Vector2(5, 5)]:
+			canvas.draw_rect(Rect2(corner, Vector2(2, 2)), Color(border.lightened(0.18), 0.72))
 
 static func nine(canvas: CanvasItem, tex: Texture2D, dimensions: Vector2, hero: bool = false) -> void:
 	if tex == null: return
@@ -218,11 +229,15 @@ class ChestButton extends Button:
 			else: UI.surface(self,Rect2(Vector2.ZERO,size),Color("6a2b1f"),UI.COPPER,4)
 		elif skin == "tab":
 			draw_line(Vector2(8,size.y-1),Vector2(size.x-8,size.y-1),UI.BRONZE,1)
-			if selected: draw_rect(Rect2(Vector2.ZERO,size),Color("2f2832",.5))
+			if selected:
+				draw_rect(Rect2(Vector2.ZERO,size),Color("2f2832",.68))
+				G.Visuals.nine_slice(self, G.Visuals._kit_tex("button_dark.png"), Rect2(Vector2.ZERO, size), 8.0, 6.0, Color(1, 1, 1, 0.35))
 		elif skin not in ["quiet","back","nav","currency"]:
-			UI.surface(self,Rect2(Vector2.ZERO,size),UI.NIGHT if skin=="rail" else bg,UI.COPPER if is_hovered() else UI.BRONZE)
+			UI.surface(self,Rect2(Vector2.ZERO,size),UI.NIGHT if skin=="rail" else bg,UI.COPPER if (is_hovered() or selected) else UI.BRONZE)
 		elif is_pressed(): UI.surface(self,Rect2(Vector2.ZERO,size),UI.FACE)
-		if skin == "tab" and selected and plate == null: draw_rect(Rect2(8,size.y-2,size.x-16,2),UI.COPPER)
+		if skin == "tab" and selected and plate == null:
+			draw_rect(Rect2(8,size.y-2,size.x-16,2),UI.COPPER)
+			G.Visuals.diamond(self, Vector2(size.x * 0.5, size.y - 2.0), 2.5, UI.GOLD)
 		if skin == "back":
 			caption.visible = false
 			var p := size*.5
@@ -253,7 +268,12 @@ class Tray extends Control:
 		mouse_filter = Control.MOUSE_FILTER_IGNORE
 		resized.connect(queue_redraw)
 	func _draw() -> void:
+		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		draw_rect(Rect2(Vector2.ZERO,size),Color("17141a",0.96))
+		if size.x >= 80 and size.y >= 60:
+			var iron_tex := G.Visuals._kit_tex("panel_iron.png")
+			G.Visuals.nine_slice(self, iron_tex, Rect2(Vector2.ZERO, size), 16.0, 16.0, Color(1, 1, 1, 0.58))
+			draw_rect(Rect2(4, 4, size.x - 8, size.y - 8), Color(UI.COPPER, 0.25), false, 1.0)
 		var rim := UI.texture("tray_rim")
 		if rim != null:
 			var src := rim.get_size()

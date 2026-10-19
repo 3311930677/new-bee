@@ -180,12 +180,12 @@ func _build_top(tint: Color) -> void:
 
 
 func _chip(text: String) -> PanelContainer:
-	# 深色小签：切角 + 内凹光（顶暗底亮），弃用"四角故意不一致的圆角 + 软影"
+	# 深色小签：切角 + 内凹光（顶暗底亮），配玄铁镶金边
 	var root := G.InsetPanel.new()
-	root.custom_minimum_size = Vector2(84, 30)
-	root.setup(Color(0.15, 0.10, 0.05, 0.78), Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.36),
-		0.0, 0.0, 0.0, 0.0)
-	root.add_child(G.gold_label(text, G.FS_XS, false, Color("e6c684"), false))
+	root.custom_minimum_size = Vector2(88, 32)
+	root.setup(Color("1e2d2c", 0.92), Color("c8a050", 0.78),
+		4.0, 4.0, 2.0, 2.0)
+	root.add_child(G.gold_label(text, G.FS_XS, false, Color("f2ddb3"), false))
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	return root
 

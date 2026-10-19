@@ -1,0 +1,52 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 42.0,
+			"path": "/root/ShotRunner/@Control@2/@Label@4",
+			"rect_height": 46.0,
+			"size": 28,
+			"text": "活动"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Label@5",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "行旅告示 · 活动与新消息"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 35.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@7/@Label@14",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "暂无正在进行的活动"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@7/@Label@15",
+			"rect_height": 80.0,
+			"size": 17,
+			"text": "新活动开启后，将在这里显示\n时间、玩法与参与说明。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@9/@Label@8",
+			"rect_height": 48.0,
+			"size": 18,
+			"text": "返回营帐"
+		}
+	]
+}

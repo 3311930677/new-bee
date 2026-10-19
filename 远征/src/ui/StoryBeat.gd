@@ -47,20 +47,43 @@ func _build() -> void:
 
 	_build_silhouette(is_intro)
 
+	# 剧情字幕衬底框（玄铁金边暗幕匣 + 顶部雕花木匾）
+	var stage_card := TextureRect.new()
+	stage_card.texture = G.Visuals._kit_tex("panel_iron.png")
+	stage_card.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	stage_card.stretch_mode = TextureRect.STRETCH_SCALE
+	stage_card.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	stage_card.position = Vector2(32, 452)
+	stage_card.size = Vector2(VIEW_W - 64, 282)
+	stage_card.modulate = Color(1, 1, 1, 0.72)
+	stage_card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(stage_card)
+
+	var plaque := TextureRect.new()
+	plaque.texture = G.Visuals._kit_tex("plaque_title.png")
+	plaque.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	plaque.stretch_mode = TextureRect.STRETCH_SCALE
+	plaque.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	plaque.position = Vector2((VIEW_W - 268.0) * 0.5, 482)
+	plaque.size = Vector2(268, 48)
+	plaque.modulate = Color(1, 1, 1, 0.85)
+	plaque.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(plaque)
+
 	# 地名小字 + 首领名（大字）
 	var sub := G.gold_label(
-		G.world_name(theme_id) + (" · 碑 前 对 峙" if is_intro else " · 碑 灵 低 语"),
-		G.FS_XS, false, Color("cfb98a", 0.85), false)
-	sub.position = Vector2(0, 466)
+		"◆ " + G.world_name(theme_id) + (" · 碑 前 对 峙 ◆" if is_intro else " · 碑 灵 低 语 ◆"),
+		G.FS_XS, false, Color("e2c896", 0.92), false)
+	sub.position = Vector2(0, 460)
 	sub.custom_minimum_size = Vector2(VIEW_W, 0)
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	sub.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(sub)
 
-	var title := G.serif_label(G.theme_boss_name(theme_id), G.FS_LG + 6,
-		Color("e8c890") if is_intro else Color("ded0ae"))
-	title.position = Vector2(0, 488)
-	title.custom_minimum_size = Vector2(VIEW_W, 40)
+	var title := G.art_label(G.theme_boss_name(theme_id), G.FS_BIG,
+		Color("f4d89e") if is_intro else Color("e8dcb8"), true)
+	title.position = Vector2(0, 486)
+	title.custom_minimum_size = Vector2(VIEW_W, 42)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(title)
@@ -73,7 +96,7 @@ func _build() -> void:
 	box.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(box)
 	for ln in _lines:
-		var l := G.text_label(String(ln), G.FS_MD, Color("efe3c8"))
+		var l := G.text_label(String(ln), G.FS_MD, Color("f5ead0"))
 		l.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
 		l.custom_minimum_size = Vector2(360, 0)
 		l.modulate.a = 0.0
@@ -81,7 +104,7 @@ func _build() -> void:
 		box.add_child(l)
 		_rows.append(l)
 
-	var hint := G.gold_label("轻触继续 · 右上「跳过」", G.FS_XS, false, Color("cfb98a", 0.7), false)
+	var hint := G.gold_label("轻触继续 · 右上「跳过」", G.FS_XS, false, Color("cfb98a", 0.78), false)
 	hint.position = Vector2(0, 748)
 	hint.custom_minimum_size = Vector2(VIEW_W, 0)
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

@@ -1,0 +1,79 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 58.0,
+			"path": "/root/ShotRunner/@Control@2/@Panel@7/@Label@6",
+			"rect_height": 58.0,
+			"size": 39,
+			"text": "水边垂钓"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Label@12",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "钓点"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Label@13",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "第 1 日余 0 竿 ·  0 条 · 图鉴 0/4"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Label@14",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "抛竿后，等浮标进入绿色区域再收竿。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@Label@19",
+			"rect_height": 54.0,
+			"size": 17,
+			"text": "每处每游戏日三竿。市集歇脚可推进一日，离开会放弃当前一竿。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@PanelContainer@21/@Label@20",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "抛竿"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@PanelContainer@23/@Label@22",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "鲜鱼制粮·1换1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@8/@Control@9/@PanelContainer@25/@Label@24",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "返回"
+		}
+	]
+}

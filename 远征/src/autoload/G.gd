@@ -6090,12 +6090,21 @@ func serif_label(text: String, size: int, color := GOLD,
 	l.text = text
 	l.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	l.add_theme_font_override("font", font_art if size >= FS_LG else font_serif)
+	l.add_theme_font_override("font", font_serif)
 	l.add_theme_font_size_override("font_size", maxi(size, FS_XS))
 	l.add_theme_color_override("font_color", color)
 	if outline:
 		l.add_theme_color_override("font_outline_color", Color("2a1a0a", 0.85))
 		l.add_theme_constant_override("outline_size", maxi(1, roundi(size / 22.0)))
+	return l
+
+
+## 书法题签 Label（仅在 >= 24px 时使用书法字体 font_art，小字自动退回宋体防 compact_art）
+func art_label(text: String, size := FS_LG, color := GOLD_BRIGHT,
+		center := true) -> Label:
+	var l := serif_label(text, size, color, size >= FS_LG)
+	l.add_theme_font_override("font", font_art if size >= FS_LG else font_serif)
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER if center else HORIZONTAL_ALIGNMENT_LEFT
 	return l
 
 
@@ -6311,6 +6320,7 @@ func banner_box(text: String, w := 260, h := 52, font_size := FS_BIG) -> Control
 	root.custom_minimum_size = Vector2(w, h)
 	root.size = root.custom_minimum_size
 	var l := serif_label(_banner_text(text), mini(font_size+12, int(h*0.82)), Color("f4dfb5"))
+	l.add_theme_font_override("font", font_art)
 	l.add_theme_color_override("font_shadow_color", Color("141008", 0.9))
 	l.add_theme_constant_override("shadow_offset_y", 1)
 	root.setup(l, Color("203938"))
@@ -6546,42 +6556,69 @@ class PixelButton extends PanelContainer:
 		var sz := size
 		if sz.x < 6.0 or sz.y < 6.0:
 			return
+		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		var c := G.Visuals.palette(self)
 		var fill := surface_bg
 		var edge := surface_edge
-		if bool(get_meta("primary_action", false)):
+		var primary := bool(get_meta("primary_action", false))
+		var tab_sel := bool(get_meta("tab_selected", false))
+		var gilded := String(get_meta("action_material", "")) == "gilded"
+		if primary:
 			fill = c.dark
 			edge = c.accent
-		elif bool(get_meta("tab_selected",false)):
+		elif tab_sel:
 			fill = c.dark
 			edge = c.accent
-		elif surface_bg == Color("eae7da"):
-			fill = c.paper.lightened(0.06)
-			edge = Color(c.accent,0.7)
-		if String(get_meta("action_material","")) == "gilded":
+		elif surface_bg == Color("eae7da") or surface_bg == Color("e4dcc8"):
+			fill = Color("ddd0b1")
+			edge = Color("967848")
+		if gilded:
 			fill = Color("c4a56b")
 			edge = Color("eddbad")
-		fill = fill.lightened(_hover_line*.035).darkened(.045 if _pressed else 0.0)
-		G.draw_hard_shadow(self, sz, _cut, 1.0 if _pressed else 3.0, Color("170f07", 0.26))
+		fill = fill.lightened(_hover_line * 0.035).darkened(0.045 if _pressed else 0.0)
+		G.draw_hard_shadow(self, sz, _cut, 1.0 if _pressed else 3.0, Color("170f07", 0.34))
 		draw_colored_polygon(G.octagon_path(sz, 0.0, _cut), fill)
+		# 叠加精细像素九宫格底纹：主按钮/金色按钮用朱砂金边或暗铜纹，纸面次按钮用温润茶宣嵌铜框
+		if sz.x >= 44.0 and sz.y >= 26.0:
+			var btn_tex: Texture2D = null
+			var modulate_col := Color(1, 1, 1, 0.34)
+			if gilded or (primary and fill.r > fill.g * 1.15):
+				btn_tex = G.Visuals._kit_tex("button_red.png")
+				modulate_col = Color(1, 1, 1, 0.52)
+			elif primary or tab_sel or fill.get_luminance() < 0.35:
+				btn_tex = G.Visuals._kit_tex("button_dark.png")
+				modulate_col = Color(1, 1, 1, 0.48)
+			else:
+				btn_tex = G.Visuals._kit_tex("card_frame_parchment.png")
+				modulate_col = Color(1, 1, 1, 0.72)
+			G.Visuals.nine_slice(self, btn_tex, Rect2(Vector2.ZERO, sz), 10.0, 8.0, modulate_col)
 		draw_line(Vector2(_cut + 2, 1), Vector2(sz.x - _cut - 2, 1),
-			fill.lightened(0.16), 1.0)
+			fill.lightened(0.20), 1.0)
 		draw_line(Vector2(_cut + 2, sz.y - 1), Vector2(sz.x - _cut - 2, sz.y - 1),
-			fill.darkened(0.22), 1.0)
+			fill.darkened(0.25), 1.0)
 		var rim := G.octagon_path(sz, 0.5, _cut)
 		rim.append(rim[0])
 		draw_polyline(rim, edge, 1.0)
-		if bool(get_meta("primary_action",false)) and sz.y>=44:
-			draw_line(Vector2(12,5),Vector2(sz.x-12,5),Color(edge,.20),1)
+		if sz.x >= 68.0 and sz.y >= 30.0:
+			var inner_rim := G.octagon_path(sz, 2.5, maxf(1.0, _cut - 1.0))
+			inner_rim.append(inner_rim[0])
+			draw_polyline(inner_rim, Color(edge, 0.28), 1.0)
+			for p in [Vector2(4, 4), Vector2(sz.x - 6, 4), Vector2(4, sz.y - 6), Vector2(sz.x - 6, sz.y - 6)]:
+				draw_rect(Rect2(p, Vector2(2, 2)), Color(edge.lightened(0.18), 0.82))
+		if primary and sz.y >= 40:
+			draw_line(Vector2(12, 4), Vector2(sz.x - 12, 4), Color(edge.lightened(0.22), 0.36), 1.0)
+			for side_x in [8.0, sz.x - 8.0]:
+				G.Visuals.diamond(self, Vector2(side_x, sz.y * 0.5), 2.5, Color(edge.lightened(0.20), 0.78))
 		# 页签选中态：底边旧金粗线（与内容区相连的视觉暗示）
-		if bool(get_meta("tab_selected", false)):
-			draw_line(Vector2(_cut + 2, sz.y - 1.5), Vector2(sz.x - _cut - 2, sz.y - 1.5),
-				Color("c9ab72"), 2.0)
-		elif bool(get_meta("primary_action", false)) and sz.x >= 90 and sz.y >= 38:
-			draw_line(Vector2(10,sz.y-4),Vector2(sz.x-10,sz.y-4),Color(c.accent,0.35),1)
+		if tab_sel:
+			draw_line(Vector2(_cut + 2, sz.y - 2.0), Vector2(sz.x - _cut - 2, sz.y - 2.0),
+				Color("e4c77a"), 2.0)
+			G.Visuals.diamond(self, Vector2(sz.x * 0.5, sz.y - 2.5), 2.5, Color("f6e3b4"))
+		elif primary and sz.x >= 90 and sz.y >= 38:
+			draw_line(Vector2(10, sz.y - 4), Vector2(sz.x - 10, sz.y - 4), Color(c.accent, 0.42), 1)
 		if _hover_line > 0 and sz.x > 40:
-			var reach := (sz.x-20)*_hover_line*.5
-			draw_line(Vector2(sz.x*.5-reach,sz.y-3),Vector2(sz.x*.5+reach,sz.y-3),Color(c.light,_hover_line*.85),1)
+			var reach := (sz.x - 20) * _hover_line * 0.5
+			draw_line(Vector2(sz.x * 0.5 - reach, sz.y - 3), Vector2(sz.x * 0.5 + reach, sz.y - 3), Color(c.light, _hover_line * 0.85), 1)
 
 
 ## 内凹槽（图标槽 / 宝石孔 / 镶嵌位）：底色深一档 + 顶压暗/底透光——
@@ -6602,15 +6639,23 @@ class InsetSlot extends Panel:
 		var sz := size
 		if sz.x < 6.0 or sz.y < 6.0:
 			return
+		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		draw_colored_polygon(G.octagon_path(sz, 0.0, _cut), slot_bg)
+		if sz.x >= 20.0 and sz.y >= 20.0:
+			var slot_tex := G.Visuals._kit_tex("slot_rare.png")
+			var alpha := 0.52 if slot_bg.get_luminance() < 0.35 else 0.24
+			G.Visuals.nine_slice(self, slot_tex, Rect2(Vector2.ZERO, sz), 6.0, 6.0, Color(1, 1, 1, alpha))
 		var rim := G.octagon_path(sz, 0.5, _cut)
 		rim.append(rim[0])
 		draw_polyline(rim, slot_edge, 1.0)
 		# 内凹方向的光：顶边压暗、底边透光（凸起物正好相反）
 		draw_line(Vector2(_cut + 2, 1), Vector2(sz.x - _cut - 2, 1),
-			slot_bg.darkened(0.30), 1.0)
+			slot_bg.darkened(0.32), 1.0)
 		draw_line(Vector2(_cut + 2, sz.y - 1), Vector2(sz.x - _cut - 2, sz.y - 1),
-			slot_bg.lightened(0.35), 1.0)
+			slot_bg.lightened(0.36), 1.0)
+		if sz.x >= 28.0 and sz.y >= 28.0:
+			for p in [Vector2(3, 3), Vector2(sz.x - 5, 3), Vector2(3, sz.y - 5), Vector2(sz.x - 5, sz.y - 5)]:
+				draw_rect(Rect2(p, Vector2(2, 2)), Color(slot_edge, 0.65))
 
 
 ## 内凹面板（大号写字区）：任务卡/信息区嵌在大纸面里的"贴片"——
@@ -6641,7 +6686,12 @@ class InsetPanel extends PanelContainer:
 		var sz := size
 		if sz.x < 8.0 or sz.y < 8.0:
 			return
+		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		draw_colored_polygon(G.octagon_path(sz, 0.0, _cut), panel_bg)
+		if sz.x >= 32.0 and sz.y >= 24.0:
+			var is_dark := panel_bg.get_luminance() < 0.35
+			var tex := G.Visuals._kit_tex("btn_row.png" if is_dark else "quest_slip.png")
+			G.Visuals.nine_slice(self, tex, Rect2(Vector2.ZERO, sz), 10.0, 8.0, Color(1, 1, 1, 0.34 if is_dark else 0.42))
 		var rim := G.octagon_path(sz, 0.5, _cut)
 		rim.append(rim[0])
 		draw_polyline(rim, panel_edge, 1.0)
@@ -6650,6 +6700,10 @@ class InsetPanel extends PanelContainer:
 			panel_bg.darkened(0.24), 1.0)
 		draw_line(Vector2(_cut + 2, sz.y - 1), Vector2(sz.x - _cut - 2, sz.y - 1),
 			panel_bg.lightened(0.30), 1.0)
+		if sz.x >= 48.0 and sz.y >= 28.0:
+			draw_rect(Rect2(3, 3, sz.x - 6, sz.y - 6), Color(panel_edge, 0.22), false, 1.0)
+			for p in [Vector2(4, 4), Vector2(sz.x - 6, 4), Vector2(4, sz.y - 6), Vector2(sz.x - 6, sz.y - 6)]:
+				draw_rect(Rect2(p, Vector2(2, 2)), Color(panel_edge, 0.72))
 
 
 ## 内凹条带（非容器版 InsetPanel）：信息带/余额条/免费召唤条用。
@@ -6670,12 +6724,17 @@ class InsetBand extends Panel:
 		var sz := size
 		if sz.x < 8.0 or sz.y < 8.0:
 			return
+		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		if glow > 0.004:
 			# 呼吸金线画在描边外 1.5px：一圈清晰的亮环，不用模糊光晕
 			var ring := G.octagon_path(sz, -1.5, _cut + 1.5)
 			ring.append(ring[0])
 			draw_polyline(ring, Color("e8b84a", glow), 2.0)
 		draw_colored_polygon(G.octagon_path(sz, 0.0, _cut), band_bg)
+		if sz.x >= 32.0 and sz.y >= 20.0:
+			var is_dark := band_bg.get_luminance() < 0.30
+			var tex := G.Visuals._kit_tex("section.png" if is_dark else "quest_slip.png")
+			G.Visuals.nine_slice(self, tex, Rect2(Vector2.ZERO, sz), 10.0, 6.0, Color(1, 1, 1, 0.36 if is_dark else 0.38))
 		var rim := G.octagon_path(sz, 0.5, _cut)
 		rim.append(rim[0])
 		draw_polyline(rim, band_edge, 1.0)
@@ -6685,7 +6744,9 @@ class InsetBand extends Panel:
 		draw_line(Vector2(_cut + 2, sz.y - 1), Vector2(sz.x - _cut - 2, sz.y - 1),
 			band_bg.lightened(0.30), 1.0)
 		if band_bg.get_luminance() < 0.25:
-			draw_line(Vector2(0,3),Vector2(0,sz.y-3),band_edge,2)
+			draw_line(Vector2(0, 3), Vector2(0, sz.y - 3), band_edge, 2)
+		for p in [Vector2(4, 4), Vector2(sz.x - 6, 4), Vector2(4, sz.y - 6), Vector2(sz.x - 6, sz.y - 6)]:
+			draw_rect(Rect2(p, Vector2(2, 2)), Color(band_edge, 0.65))
 
 
 ## 内凹槽快捷工厂：尺寸 + 底色（浅槽配纸面，深槽配木牌）
@@ -7262,7 +7323,11 @@ func _build_popup(anchor: Control, title: String, lines: Array, owner: Node,
 	var own: Node = owner if owner != null else _top_owner_for(anchor)
 	var layer := CanvasLayer.new()
 	layer.layer = 90   # 低于 GM 控制台(100)，高于一切面板
-	anchor.get_viewport().add_child(layer)
+	var vp := anchor.get_viewport()
+	if vp != null and vp.is_node_ready():
+		vp.add_child(layer)
+	else:
+		anchor.add_child(layer)
 
 	# 统一浮层底衬（深棕 + 暗角 + 斜纹）；要能接 gui_input 以便点空白关闭，
 	# 所以不再走独立 ColorRect，直接用 veil 返回的那层 Control。
@@ -7307,15 +7372,14 @@ func _build_popup(anchor: Control, title: String, lines: Array, owner: Node,
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.add_child(content)
 
-	var title_l := serif_label(title, FS_LG, Color("6a4a1e"))
-	title_l.position = Vector2(0, 0)
-	title_l.custom_minimum_size = Vector2(PW - 32.0, 34.0)
-	content.add_child(title_l)
+	var plaque := Visuals.header_plaque(title, PW - 32.0, 34.0)
+	plaque.position = Vector2(0, -4)
+	content.add_child(plaque)
 
 	if paged:
 		var deck := (load("res://src/ui/PageDeck.gd") as GDScript).new(PW - 32.0, 234.0) as Control
 		deck.name = "ReadingPages"
-		deck.position = Vector2(0, 42)
+		deck.position = Vector2(0, 44)
 		deck.set("key_mode", "none")
 		deck.set("navigation_visible", false)
 		deck.set("page_gap", 14.0)
@@ -7348,8 +7412,9 @@ func _build_popup(anchor: Control, title: String, lines: Array, owner: Node,
 		deck.connect("page_changed", sync)
 		sync.call(0)
 	else:
-		var scroll := _reading_page(lines, PW - 32.0, content_h)
-		scroll.position = Vector2(0, 42)
+		content.add_child(Visuals.parchment_subcard(Vector2(-2, 42), Vector2(PW - 28.0, content_h + 4.0)))
+		var scroll := _reading_page(lines, PW - 44.0, content_h)
+		scroll.position = Vector2(6, 44)
 		content.add_child(scroll)
 	reveal_control(panel)
 

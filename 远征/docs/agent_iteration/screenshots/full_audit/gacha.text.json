@@ -1,0 +1,259 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/@Control@2/HeroRolePlate/@Label@11",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "破军 · 战士"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/@Label@69",
+			"rect_height": 28.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 42.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Label@83",
+			"rect_height": 46.0,
+			"size": 28,
+			"text": "灵宠召唤"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Label@84",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "以魂晶结缘 · 寻找并肩而行的伙伴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@Control@90/@Label@92",
+			"rect_height": 26.0,
+			"size": 16,
+			"text": "× 36"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@Control@90/@Label@94",
+			"rect_height": 26.0,
+			"size": 16,
+			"text": "× 99"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@Control@95/@Label@96",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "本期主打"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 42.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@Control@95/@Label@97",
+			"rect_height": 44.0,
+			"size": 28,
+			"text": "幼龙·烬"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@Control@95/@Label@98",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "传说 · 灵宠"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@Control@95/@Label@99",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "世界首领亦可结伴"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@Control@102/@Label@103",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "保底 0 / 60"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@Control@102/@Label@104",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "还差 60 抽必得史诗"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 42.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@PanelContainer@111/@VBoxContainer@110/@Label@108",
+			"rect_height": 42.0,
+			"size": 28,
+			"text": "单次结缘"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@PanelContainer@111/@VBoxContainer@110/@Label@109",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "80 魂石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 42.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@PanelContainer@115/@VBoxContainer@114/@Label@112",
+			"rect_height": 42.0,
+			"size": 28,
+			"text": "十连召唤"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@PanelContainer@115/@VBoxContainer@114/@Label@113",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "720 魂石 / 1 券"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@Label@116",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@Panel@118/@Label@117",
+			"rect_height": 26.0,
+			"size": 16,
+			"text": "今日免费 · 灵宠结缘（每日 1 次）"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@Label@119",
+			"rect_height": 28.0,
+			"size": 18,
+			"text": "本期奖池"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@Panel@122/@Label@121",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "霜狼"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@Panel@125/@Label@124",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "火狐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@Panel@128/@Label@127",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "岩龟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@Panel@131/@Label@130",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "雷隼"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@Panel@134/@Label@133",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "潮羽雏鸥"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@Panel@137/@Label@136",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "幽瞳猫"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@Panel@140/@Label@139",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "圣鹿"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@89/@Panel@143/@Label@142",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "幼龙·烬"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@145/@Label@144",
+			"rect_height": 44.0,
+			"size": 18,
+			"text": "返回"
+		}
+	]
+}

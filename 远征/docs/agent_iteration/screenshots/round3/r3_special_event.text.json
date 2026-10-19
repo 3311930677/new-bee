@@ -1,0 +1,52 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@6/@MarginContainer@7/@VBoxContainer@8/@Control@9/PlaqueLabel",
+			"rect_height": 38.0,
+			"size": 24,
+			"text": "一封错送的喜帖"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@6/@MarginContainer@7/@VBoxContainer@8/@ScrollContainer@12/@VBoxContainer@13/@Label@15",
+			"rect_height": 112.0,
+			"size": 17,
+			"text": "老赵把一张红帖塞进你手里：‘上面写着请赵老爷来提亲。我连姑娘姓什么都不知道！你替我去古道问清楚，先别让石头瞧见。’\n红帖背面粘着半截戏票，落款被红绳遮住了。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@6/@MarginContainer@7/@VBoxContainer@8/@PanelContainer@17/@Label@16",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "问清戏票上的赵字"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@6/@MarginContainer@7/@VBoxContainer@8/@PanelContainer@19/@Label@18",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "替信使追回红绳·战斗"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@6/@MarginContainer@7/@VBoxContainer@8/@PanelContainer@21/@Label@20",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "回到路上"
+		}
+	]
+}

@@ -156,15 +156,25 @@ func _build() -> void:
 	_ticket_l = Craft.label("",Vector2(266,5),Vector2(148,26),16,Craft.WHITE,true)
 	balance.add_child(_ticket_l)
 
-	var head := Craft.panel(Vector2(0,44),Vector2(432,166),.88)
+	var head := Craft.panel(Vector2(0,44),Vector2(432,166),.94)
 	content.add_child(head)
+	var head_banner := TextureRect.new()
+	head_banner.texture = G.Visuals._kit_tex("gacha_header_banner.png")
+	head_banner.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	head_banner.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	head_banner.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	head_banner.position = Vector2(4, 4)
+	head_banner.size = Vector2(424, 158)
+	head_banner.modulate = Color(1, 1, 1, 0.45)
+	head_banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	head.add_child(head_banner)
 	var feat := _featured_pet()
 	var rarity := String(feat.get("rarity","white"))
 	var hue: Color = RARITY_HUE.get(rarity,Craft.GOLD)
-	head.add_child(Craft.label("本期主打",Vector2(18,10),Vector2(180,24),14,Craft.MUTED))
-	head.add_child(Craft.label(String(feat.get("name","")),Vector2(18,38),Vector2(198,44),28,Craft.WHITE,false,true))
-	head.add_child(Craft.label(String(RARITY_NAME.get(rarity,"普通"))+" · 灵宠",Vector2(20,86),Vector2(182,24),16,hue.lightened(.22)))
-	head.add_child(Craft.label("世界首领亦可结伴",Vector2(20,130),Vector2(192,24),14,Craft.MUTED))
+	head.add_child(Craft.label("✦ 本期主打",Vector2(18,10),Vector2(180,24),G.FS_XS,Craft.GOLD))
+	head.add_child(Craft.label(String(feat.get("name","")),Vector2(18,38),Vector2(198,44),G.FS_BIG,Craft.WHITE,false,true))
+	head.add_child(Craft.label(String(RARITY_NAME.get(rarity,"普通"))+" · 灵宠",Vector2(20,86),Vector2(182,24),G.FS_SM,hue.lightened(.22)))
+	head.add_child(Craft.label("世界首领亦可结伴",Vector2(20,130),Vector2(192,24),G.FS_XS,Craft.MUTED))
 	var halo := Finesse.Sigil.new()
 	halo.position = Vector2(207,-17)
 	halo.size = Vector2(204,204)
@@ -179,9 +189,9 @@ func _build() -> void:
 
 	var pity := Craft.panel(Vector2(0,218),Vector2(432,66),.96)
 	content.add_child(pity)
-	_pity_l = Craft.label("",Vector2(14,7),Vector2(186,24),15,Craft.WHITE)
+	_pity_l = Craft.label("",Vector2(14,7),Vector2(186,24),G.FS_XS,Craft.WHITE)
 	pity.add_child(_pity_l)
-	_pity_sub = Craft.label("",Vector2(216,7),Vector2(200,24),14,Craft.MUTED)
+	_pity_sub = Craft.label("",Vector2(216,7),Vector2(200,24),G.FS_XS,Craft.MUTED)
 	_pity_sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	pity.add_child(_pity_sub)
 	var track := Panel.new()
@@ -189,6 +199,8 @@ func _build() -> void:
 	track.size = Vector2(172,10)
 	var track_style := StyleBoxFlat.new()
 	track_style.bg_color = Color("101a28")
+	track_style.border_color = Color("5e4b38")
+	track_style.set_border_width_all(1)
 	track.add_theme_stylebox_override("panel",track_style)
 	track.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	pity.add_child(track)
@@ -222,12 +234,12 @@ func _build() -> void:
 	b2.gui_input.connect(func(e: InputEvent):
 		if _is_activate(e): _do_ten())
 	content.add_child(b2)
-	_hint = Craft.label("",Vector2(0,364),Vector2(432,24),15,Color("ffd7ba"))
+	_hint = Craft.label("",Vector2(0,364),Vector2(432,24),G.FS_XS,Color("ffd7ba"))
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_hint.modulate.a = 0.0
 	content.add_child(_hint)
 	_free_btn = _inset_band(Vector2(432,44),Vector2(0,392))
-	_free_l = G.gold_label("",16,false,G.TEXT_DARK,false)
+	_free_l = G.gold_label("",G.FS_SM,false,G.TEXT_DARK,false)
 	_free_l.position = Vector2(10,9)
 	_free_l.size = Vector2(412,26)
 	_free_l.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -237,7 +249,7 @@ func _build() -> void:
 	_free_btn.gui_input.connect(func(e: InputEvent):
 		if _is_activate(e): _do_free())
 	content.add_child(_free_btn)
-	content.add_child(Craft.label("本期奖池",Vector2(0,443),Vector2(200,28),18,Craft.GOLD))
+	content.add_child(Craft.label("◆ 本期奖池",Vector2(0,443),Vector2(200,28),G.FS_MD,Craft.GOLD))
 	var pets: Array = TableCache.pets()
 	for i in mini(pets.size(),8):
 		var card := _pool_card(pets[i] as Dictionary)
@@ -259,16 +271,27 @@ func _pool_card(p: Dictionary) -> Panel:
 	root.custom_minimum_size = root.size
 	var tile := StyleBoxFlat.new()
 	tile.bg_color = hue.darkened(.82)
-	tile.border_color = Color(hue,.52)
+	tile.border_color = Color(hue,.68)
+	tile.set_border_width_all(1)
 	tile.border_width_bottom = 2
-	tile.border_width_top = 1
 	tile.set_corner_radius_all(3)
 	root.add_theme_stylebox_override("panel",tile)
 	root.mouse_filter = Control.MOUSE_FILTER_PASS
+	var frame_tex := G.Visuals._kit_tex("slot_legend.png" if rarity in ["gold", "purple"] else "slot_rare.png")
+	if frame_tex != null:
+		var frame_tr := TextureRect.new()
+		frame_tr.texture = frame_tex
+		frame_tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		frame_tr.stretch_mode = TextureRect.STRETCH_SCALE
+		frame_tr.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		frame_tr.size = root.size
+		frame_tr.modulate = Color(1, 1, 1, 0.55)
+		frame_tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		root.add_child(frame_tr)
 	var pic := _tex_rect(pid,44,44,hue)
 	pic.position = Vector2(29,3)
 	root.add_child(pic)
-	var name_l := Craft.label(String(p.get("name",pid)),Vector2(4,48),Vector2(94,22),14,Craft.WHITE)
+	var name_l := Craft.label(String(p.get("name",pid)),Vector2(4,48),Vector2(94,22),G.FS_XS,Craft.WHITE)
 	name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	name_l.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	root.add_child(name_l)

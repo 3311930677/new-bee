@@ -1778,21 +1778,48 @@ func _on_flee() -> void:
 			_set_radial_armed("flee", false))
 
 
-## 当前实际倍速：外部显式给过就照用，否则取设置里的默认档（>=1.5 视为 ×2）
+const SPEED_STEPS := [1.0, 2.0, 4.0, 8.0]
+
+static func snap_speed(raw: float) -> float:
+	if raw >= 6.0:
+		return 8.0
+	if raw >= 3.0:
+		return 4.0
+	if raw >= 1.5:
+		return 2.0
+	return 1.0
+
+
+static func next_speed(cur: float) -> float:
+	var s := snap_speed(cur)
+	var idx := SPEED_STEPS.find(s)
+	if idx < 0:
+		return 2.0
+	return float(SPEED_STEPS[(idx + 1) % SPEED_STEPS.size()])
+
+
+static func step_speed(cur: float, dir: int) -> float:
+	var s := snap_speed(cur)
+	var idx := maxi(0, SPEED_STEPS.find(s))
+	var next_idx := clampi(idx + (1 if dir >= 0 else -1), 0, SPEED_STEPS.size() - 1)
+	return float(SPEED_STEPS[next_idx])
+
+
+## 当前实际倍速：外部显式给过就照用，否则取设置里的默认档（支持 ×1 / ×2 / ×4 / ×8 四档切换）
 func cur_speed() -> float:
 	if speed >= 0.0:
 		return speed
-	return 2.0 if float(G.setting_get("battle_speed", 1.0)) >= 1.5 else 1.0
+	return snap_speed(float(G.setting_get("battle_speed", 1.0)))
 
 
 func _on_speed(e: InputEvent) -> void:
 	if _chest!=null:
-		if e is InputEventMouseButton and e.pressed:speed=2.0 if cur_speed()<1.5 else 1.0;_chest.refresh()
+		if e is InputEventMouseButton and e.pressed:speed=next_speed(cur_speed());_chest.refresh()
 		return
 	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-		speed = 2.0 if cur_speed() < 1.5 else 1.0
+		speed = next_speed(cur_speed())
 		_chip_set_active(_speed_btn, speed >= 1.5)
-		(_speed_btn.get_child(0) as Label).text = "速度 ×%d" % int(speed)
+		(_speed_btn.get_child(0) as Label).text = "速度 ×%d" % int(round(speed))
 
 
 func _on_auto(e: InputEvent) -> void:
@@ -2144,85 +2171,339 @@ func _skill_splash(caster: UnitView, skill_id: String) -> void:
 	tw.tween_callback(card.queue_free)
 
 
-# ================= 结算 =================
+static func _settle_sb_tex(path: String, l: float, t: float, r: float, b: float) -> StyleBoxTexture:
+	var sb := StyleBoxTexture.new()
+	sb.texture = G.visual_texture(path)
+	sb.texture_margin_left = l
+	sb.texture_margin_top = t
+	sb.texture_margin_right = r
+	sb.texture_margin_bottom = b
+	sb.content_margin_left = l
+	sb.content_margin_top = t
+	sb.content_margin_right = r
+	sb.content_margin_bottom = b
+	return sb
+
+
+static func _settle_font_spaced(base_font: Font, glyph_space: int) -> Font:
+	if base_font == null or glyph_space == 0:
+		return base_font
+	var fv := FontVariation.new()
+	fv.base_font = base_font
+	fv.spacing_glyph = glyph_space
+	return fv
+
+
+static func _settle_label(txt: String, fnt: Font, sz: int, col: Color,
+		align := HORIZONTAL_ALIGNMENT_LEFT, outline := 3) -> Label:
+	var l := Label.new()
+	l.text = txt
+	if fnt != null:
+		l.add_theme_font_override("font", fnt)
+	l.add_theme_font_size_override("font_size", sz)
+	l.add_theme_color_override("font_color", col)
+	if outline > 0:
+		l.add_theme_color_override("font_outline_color", Color(0.06, 0.03, 0.02, 0.94))
+		l.add_theme_constant_override("outline_size", outline)
+	l.horizontal_alignment = align
+	l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	l.clip_text = true
+	l.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return l
+
+
 func _show_result() -> void:
 	_close_page()
 	if _cmd_root != null:
 		_cmd_root.hide()
-	# 结算帧收干净低血红晕（P2-19：胜残血时不该在结算层背后留一块红）
 	if _danger != null:
 		_danger.modulate.a = 0.0
 	var win := sim.result == "victory"
 	var flee := sim.result == "flee"
 	var draw := sim.result == "draw"
-	# 超时（draw）在两种模式下说法不同（问题 #21，口径 D3）：
-	#   远征 PVE：超时就是失败——显示"超时，远征失利"，与结算一致；
-	#   演武场：不判负、不扣段位分——显示"未分胜负"。
-	# 同一个战斗场景被两处复用，所以用显式 mode 而不是靠"有没有 custom_mon"猜。
 	var arena_mode := String(_cfg.get("mode", "pve")) == "arena"
 	var role := sim.role_unit()
-	var hp_left := role.hp if role != null else 0
-	# 结算音不抖音高：这是"定局"，不是随机反馈（撤退/平局用轻音，不判负）
+	var hp_left := maxi(0, role.hp) if role != null else 0
+	var hp_max := maxi(1, role.get_max_hp()) if role != null else maxi(1, hp_left)
+	var hp_pct := clampi(roundi(float(hp_left) * 100.0 / float(hp_max)), 0, 100)
 	Audio.sfx("victory" if win else ("defeat" if not flee and not draw else "ui_close"), 0.0)
 
-	# 结算底衬：整屏接管，走统一工厂（深棕 + 暗角 + 斜纹）
 	G.veil(self, G.VEIL_TAKEOVER_A)
 
-	var panel := G.parchment_box(380, 316, 24.0)
-	panel.position = Vector2(50, 232)
+	# 外框：kit_20261013/panel_iron.png 九宫格乌木鎏金铁框
+	var panel := Panel.new()
+	panel.name = "SettlementModal"
+	panel.position = Vector2(20, 68)
+	panel.size = Vector2(440, 664)
+	panel.custom_minimum_size = Vector2(440, 664)
+	panel.add_theme_stylebox_override("panel",
+		_settle_sb_tex("res://assets/ui/kit_20261013/panel_iron.png", 36, 36, 36, 36))
 	add_child(panel)
-	var box := VBoxContainer.new()
-	box.add_theme_constant_override("separation", 10)
-	box.alignment = BoxContainer.ALIGNMENT_CENTER
-	panel.add_child(box)
 
-	var title_text := "战  败"
-	var title_col := Color("8a4a3a")
+	# 1. 顶部乌木鎏金木匾 (plaque_title.png) + 毛笔行书大题名 (G.font_art)
+	var plaque := TextureRect.new()
+	plaque.texture = G.visual_texture("res://assets/ui/kit_20261013/plaque_title.png")
+	plaque.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	plaque.stretch_mode = TextureRect.STRETCH_SCALE
+	plaque.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	plaque.position = Vector2(75, 12)
+	plaque.size = Vector2(290, 52)
+	panel.add_child(plaque)
+
+	var title_text := "折戟整备"
+	var title_col := Color("f2c0a8")
 	if win:
-		title_text = "胜  利"
-		title_col = Color("6a8a4a")
+		title_text = "凯旋战报"
+		title_col = Color("ffe8a8")
 	elif flee:
-		title_text = "已 撤 退"
-		title_col = Color("8a6a34")
+		title_text = "暂避锋芒"
+		title_col = Color("f0d494")
 	elif draw:
-		title_text = "未分胜负" if arena_mode else "超  时"
-		title_col = Color("7a5a2e") if arena_mode else Color("a04a3a")
-	box.add_child(G.serif_label(title_text, G.FS_HERO, title_col))
-	box.add_child(G.gold_label("残存生命 %d" % hp_left, G.FS_SM, false, Color("7a5a2e"), false))
+		title_text = "未分胜负" if arena_mode else "远征失利"
+		title_col = Color("f0d494") if arena_mode else Color("f2c0a8")
+
+	var title_l := _settle_label(title_text, _settle_font_spaced(G.font_art, 4), 26,
+		title_col, HORIZONTAL_ALIGNMENT_CENTER, 4)
+	title_l.position = Vector2(0, 2)
+	title_l.size = Vector2(290, 46)
+	plaque.add_child(title_l)
+
+	# 2. 像素实景横幅 (x:18, y:72, 404x108)
+	var banner_path := "res://assets/ui/battle_settle/victory_header_banner.png" if win else "res://assets/ui/battle_settle/defeat_header_banner.png"
+	var banner_rect := TextureRect.new()
+	banner_rect.position = Vector2(18, 72)
+	banner_rect.size = Vector2(404, 108)
+	banner_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	banner_rect.stretch_mode = TextureRect.STRETCH_SCALE
+	banner_rect.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	banner_rect.texture = G.visual_texture(banner_path)
+	panel.add_child(banner_rect)
+
+	var role_name := String(role.name) if role != null else G.display_name()
+	var role_lv := int(_cfg.get("ally", {}).get("level", G.prog.get("level", 1)))
+	var active_pid := String(_cfg.get("ally", {}).get("active_pet", G.companion_active()))
+	var pet_name := "无"
+	if not active_pid.is_empty():
+		var pd := TableCache.get_pet(active_pid)
+		pet_name = String(pd.get("name", active_pid))
+
+	var hero_name_l := _settle_label(role_name, _settle_font_spaced(G.font_serif, 1), 17,
+		Color("fff2d4"), HORIZONTAL_ALIGNMENT_LEFT, 3)
+	hero_name_l.position = Vector2(106, 12)
+	hero_name_l.size = Vector2(118, 24)
+	banner_rect.add_child(hero_name_l)
+
+	var name_w := clampf(G.font_serif.get_string_size(role_name, HORIZONTAL_ALIGNMENT_LEFT, -1, 17).x + 12.0, 48.0, 118.0)
+	var hero_lv_l := _settle_label("Lv.%d" % role_lv, G.font_display, 18,
+		Color("ffd470"), HORIZONTAL_ALIGNMENT_LEFT, 3)
+	hero_lv_l.position = Vector2(106.0 + name_w, 11)
+	hero_lv_l.size = Vector2(72, 24)
+	banner_rect.add_child(hero_lv_l)
+
+	var hp_line := _settle_label("残存生命 %d/%d (%d%%) · 协战：%s" % [hp_left, hp_max, hp_pct, pet_name],
+		G.font_reg, 12, Color("98f0b4") if win else Color("f4b0a0"), HORIZONTAL_ALIGNMENT_LEFT, 3)
+	hp_line.position = Vector2(106, 38)
+	hp_line.size = Vector2(246, 20)
+	banner_rect.add_child(hp_line)
+
+	var hp_track := Panel.new()
+	hp_track.position = Vector2(106, 62)
+	hp_track.size = Vector2(184, 13)
+	hp_track.add_theme_stylebox_override("panel",
+		_settle_sb_tex("res://assets/ui/kit_20261013/bar_frame.png", 8, 4, 8, 4))
+	banner_rect.add_child(hp_track)
+
+	var fill_w := roundf(178.0 * clampf(float(hp_left) / float(hp_max), 0.0, 1.0))
+	if fill_w > 0.0:
+		var hp_fill := ColorRect.new()
+		hp_fill.position = Vector2(109, 65)
+		hp_fill.size = Vector2(fill_w, 7)
+		hp_fill.color = Color("3eb86e") if hp_pct >= 30 else Color("cf4a33")
+		banner_rect.add_child(hp_fill)
+		var hp_hi := ColorRect.new()
+		hp_hi.position = Vector2(109, 65)
+		hp_hi.size = Vector2(fill_w, 2)
+		hp_hi.color = Color("96f4b8", 0.75) if hp_pct >= 30 else Color("ff9882", 0.75)
+		banner_rect.add_child(hp_hi)
+
+	var banner_sub_text := "破阵斩将 · 战利已清点入册" if win else "胜败乃兵家常事 · 整备再战"
 	if flee:
-		box.add_child(G.gold_label("节点进度已保留 · 可再次进入", G.FS_SM, false, Color("6a8a4a"), false))
+		banner_sub_text = "节点进度已保留 · 可再次进入"
 	elif draw:
-		box.add_child(G.gold_label(
-			"时间耗尽 · 本局不计胜负" if arena_mode else "时间耗尽 · 远征失利",
-			G.FS_SM, false, Color("7a5a2e") if arena_mode else Color("a04a3a"), false))
-	# 战报：打了多久、最高单击多少、谁在输出 —— 表现层统计（sim 规则未动）
+		banner_sub_text = "时间耗尽 · 未分胜负" if arena_mode else "时间耗尽 · 远征失利"
+	var banner_sub := _settle_label(banner_sub_text, G.font_reg, 12,
+		Color("ffe6a4") if win else Color("f0bcb0"), HORIZONTAL_ALIGNMENT_LEFT, 3)
+	banner_sub.position = Vector2(106, 80)
+	banner_sub.size = Vector2(246, 20)
+	banner_rect.add_child(banner_sub)
+
+	# 3. 四维战功录分栏条 (section.png + ic_orn.png) + 2x2 云锦数据牌 (btn_row.png)
+	var sec1 := Panel.new()
+	sec1.position = Vector2(18, 188)
+	sec1.size = Vector2(404, 34)
+	sec1.add_theme_stylebox_override("panel",
+		_settle_sb_tex("res://assets/ui/settings_20261014/section.png", 16, 8, 48, 8))
+	panel.add_child(sec1)
+	var orn1 := TextureRect.new()
+	orn1.texture = G.visual_texture("res://assets/ui/settings_20261014/ic_orn.png")
+	orn1.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	orn1.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	orn1.position = Vector2(14, 9)
+	orn1.size = Vector2(16, 16)
+	sec1.add_child(orn1)
+	var s1_lbl := _settle_label("四维战功录", _settle_font_spaced(G.font_serif, 1), 15, Color("f6e6c4"))
+	s1_lbl.position = Vector2(36, 0)
+	s1_lbl.size = Vector2(320, 34)
+	sec1.add_child(s1_lbl)
+
 	var secs := float(sim.tick_count) / 30.0
-	box.add_child(G.gold_label("战报 · 用时 %.1fs · 最高单击 %d · 输出 %d · 承伤 %d"
-		% [secs, _best_hit, _dmg_out, _dmg_in], G.FS_XS, false, Color("8a6a34"), false))
+	var stat_specs := [
+		["战斗用时", "%.1f" % secs, "秒", Color("ffe298")],
+		["最高单击", "%d" % _best_hit, "伤害", Color("ffca68")],
+		["我方输出", "%d" % _dmg_out, "总伤", Color("8ce8ac")],
+		["承受伤害", "%d" % _dmg_in, "战损", Color("f2a08c")],
+	]
+	for idx in stat_specs.size():
+		var spec: Array = stat_specs[idx]
+		var cell := Panel.new()
+		cell.position = Vector2(18 + (idx % 2) * 206, 228 + int(idx / 2) * 54)
+		cell.size = Vector2(198, 48)
+		cell.add_theme_stylebox_override("panel",
+			_settle_sb_tex("res://assets/ui/settings_20261014/btn_row.png", 14, 8, 14, 8))
+		panel.add_child(cell)
 
-	if win and not String(_cfg.get("special_event_id","")).is_empty():
-		box.add_child(G.gold_label("奇遇已办妥 · 回城复命时选谢礼",G.FS_SM,false,Color("8a6a34"),false))
+		var k_lbl := _settle_label(String(spec[0]), G.font_serif, 13, Color("d4c4a8"), HORIZONTAL_ALIGNMENT_LEFT, 2)
+		k_lbl.position = Vector2(12, 10)
+		k_lbl.size = Vector2(72, 28)
+		cell.add_child(k_lbl)
+
+		var v_lbl := _settle_label(String(spec[1]), G.font_display, 21, spec[3], HORIZONTAL_ALIGNMENT_RIGHT, 3)
+		v_lbl.position = Vector2(76, 8)
+		v_lbl.size = Vector2(76, 30)
+		cell.add_child(v_lbl)
+
+		var u_lbl := _settle_label(String(spec[2]), G.font_reg, 12, Color("b8a890"), HORIZONTAL_ALIGNMENT_LEFT, 2)
+		u_lbl.position = Vector2(156, 11)
+		u_lbl.size = Vector2(36, 26)
+		cell.add_child(u_lbl)
+
+	# 4. 战利品结算 / 破敌整备策 分栏条 + 内容区
+	var sec2 := Panel.new()
+	sec2.position = Vector2(18, 342)
+	sec2.size = Vector2(404, 34)
+	sec2.add_theme_stylebox_override("panel",
+		_settle_sb_tex("res://assets/ui/settings_20261014/section.png", 16, 8, 48, 8))
+	panel.add_child(sec2)
+	var orn2 := TextureRect.new()
+	orn2.texture = G.visual_texture("res://assets/ui/settings_20261014/ic_orn.png")
+	orn2.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	orn2.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	orn2.position = Vector2(14, 9)
+	orn2.size = Vector2(16, 16)
+	sec2.add_child(orn2)
+
+	var sec2_title := "凯旋战利品" if win else "破敌整备策"
+	if win and not String(_cfg.get("special_event_id", "")).is_empty():
+		sec2_title = "奇遇办妥 · 回城复命选谢礼"
 	elif win and arena_mode:
-		box.add_child(G.gold_label("段位与荣誉将在返回演武后结算",G.FS_SM,false,Color("8a6a34"),false))
-	elif win:
-		var nt: String = String(_cfg.get("enemy", {}).get("node_type", "normal"))
-		var rw: Dictionary = _cfg.get("reward_preview",TableCache.nodes_config().get("rewards", {}).get(nt, {}))
-		var lines := PackedStringArray()
-		if rw.has("gold"):
-			lines.append("金币 +%d" % int(rw.gold))
-		if rw.has("expedition"):
-			lines.append("远征币 +%d" % int(rw.expedition))
-		if rw.has("soul"):
-			lines.append("灵魂石 +%d" % int(rw.soul))
-		if rw.has("exp"):
-			lines.append("经验 +%d" % int(rw.exp))
-		box.add_child(G.gold_label("  ·  ".join(lines), G.FS_SM, false, Color("8a6a34"), false))
+		sec2_title = "演武战报 · 返回演武场结算段位"
+	var s2_lbl := _settle_label(sec2_title, _settle_font_spaced(G.font_serif, 1), 15, Color("f6e6c4"))
+	s2_lbl.position = Vector2(36, 0)
+	s2_lbl.size = Vector2(340, 34)
+	sec2.add_child(s2_lbl)
 
-	var btn := G.gold_button("返 回" if flee else "继 续", 200, 48)
+	if win:
+		var nt: String = String(_cfg.get("enemy", {}).get("node_type", "normal"))
+		var rw: Dictionary = _cfg.get("reward_preview", TableCache.nodes_config().get("rewards", {}).get(nt, {}))
+		var badge_sheet := G.visual_texture("res://assets/ui/battle_settle/reward_badge_icons.png")
+		var loot_specs := [
+			[0, "金币", "+%d" % int(rw.get("gold", 0)), Color("ffd86b")],
+			[1, "远征币", "+%d" % int(rw.get("expedition", 0)), Color("f2bc78")],
+			[2, "灵魂石", "+%d" % int(rw.get("soul", 0)), Color("98daf8")],
+			[3, "历练经验", "+%d" % int(rw.get("exp", 0)), Color("92e6aa")],
+		]
+		for i in loot_specs.size():
+			var ls: Array = loot_specs[i]
+			var slot := Panel.new()
+			slot.position = Vector2(18 + i * 103, 384)
+			slot.size = Vector2(95, 122)
+			slot.add_theme_stylebox_override("panel",
+				_settle_sb_tex("res://assets/ui/settings_20261014/btn_row.png", 12, 8, 12, 8))
+			panel.add_child(slot)
+
+			if badge_sheet != null:
+				var at := AtlasTexture.new()
+				at.atlas = badge_sheet
+				at.region = Rect2(int(ls[0]) * 48, 0, 48, 48)
+				var ic := TextureRect.new()
+				ic.texture = at
+				ic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+				ic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+				ic.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+				ic.position = Vector2(23, 10)
+				ic.size = Vector2(48, 48)
+				slot.add_child(ic)
+
+			var n_lbl := _settle_label(String(ls[1]), G.font_serif, 13, Color("e4d6bc"), HORIZONTAL_ALIGNMENT_CENTER, 2)
+			n_lbl.position = Vector2(4, 62)
+			n_lbl.size = Vector2(87, 22)
+			slot.add_child(n_lbl)
+
+			var val_lbl := _settle_label(String(ls[2]), G.font_display, 20, ls[3], HORIZONTAL_ALIGNMENT_CENTER, 3)
+			val_lbl.position = Vector2(4, 86)
+			val_lbl.size = Vector2(87, 28)
+			slot.add_child(val_lbl)
+	else:
+		var tips := [
+			["铁匠锻造", "前往铁匠铺强化武器防具、精炼高阶词条"],
+			["灵兽协战", "喂养与升星出战灵兽，分担承伤补充护盾"],
+			["招式药剂", "调整破绽爆发技能衔接，备齐药剂再战"],
+		]
+		for tidx in tips.size():
+			var row_tip: Array = tips[tidx]
+			var slip := Panel.new()
+			slip.position = Vector2(18, 384 + tidx * 42)
+			slip.size = Vector2(404, 38)
+			slip.add_theme_stylebox_override("panel",
+				_settle_sb_tex("res://assets/ui/kit_20261013/quest_slip.png", 26, 8, 14, 8))
+			panel.add_child(slip)
+
+			var tk_lbl := _settle_label(String(row_tip[0]), G.font_serif, 14, Color("5a2614"), HORIZONTAL_ALIGNMENT_LEFT, 0)
+			tk_lbl.position = Vector2(28, 4)
+			tk_lbl.size = Vector2(72, 30)
+			slip.add_child(tk_lbl)
+
+			var tv_lbl := _settle_label(String(row_tip[1]), G.font_reg, 13, Color("382618"), HORIZONTAL_ALIGNMENT_LEFT, 0)
+			tv_lbl.position = Vector2(102, 4)
+			tv_lbl.size = Vector2(290, 30)
+			slip.add_child(tv_lbl)
+
+	# 5. 底部战报摘要与鎏金雕花主按钮 (button_red.png / button_dark.png)
+	var summary_l := _settle_label("战报纪要 · 用时 %.1fs · 最高单击 %d · 输出 %d · 承伤 %d"
+		% [secs, _best_hit, _dmg_out, _dmg_in], G.font_reg, 12, Color("b6a68c"), HORIZONTAL_ALIGNMENT_CENTER, 2)
+	summary_l.position = Vector2(18, 520)
+	summary_l.size = Vector2(404, 24)
+	panel.add_child(summary_l)
+
+	var btn_caption := "返 回" if flee else ("继 续 征 途" if win else "整 备 再 战")
+	var btn := Panel.new()
+	btn.position = Vector2(86, 556)
+	btn.size = Vector2(268, 56)
+	btn.custom_minimum_size = Vector2(268, 56)
+	btn.mouse_filter = Control.MOUSE_FILTER_STOP
+	btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	var btn_tex := "res://assets/ui/introduction_20261015/button_red.png" if win else "res://assets/ui/introduction_20261015/button_dark.png"
+	btn.add_theme_stylebox_override("panel", _settle_sb_tex(btn_tex, 24, 14, 24, 14))
+	var btn_lbl := _settle_label(btn_caption, _settle_font_spaced(G.font_serif, 3), 20,
+		Color("fff2d4"), HORIZONTAL_ALIGNMENT_CENTER, 3)
+	btn_lbl.position = Vector2(8, 0)
+	btn_lbl.size = Vector2(252, 54)
+	btn.add_child(btn_lbl)
 	btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			confirm_result())
-	box.add_child(btn)
+	panel.add_child(btn)
 
 
 ## 结算确认（远征循环 #7 接管信号；无监听时回主界面——冒烟入口）

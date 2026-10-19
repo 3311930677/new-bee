@@ -59,21 +59,41 @@ static func scene(parent: Control,dim := .04) -> void:
 	parent.resized.connect(func(): atmosphere.size = G._veil_viewport_size(parent); atmosphere.queue_redraw())
 
 static func heading(parent: Control,words: String,note: String) -> void:
-	parent.add_child(label(words,Vector2(26,24),Vector2(320,46),28,WHITE,true,true))
-	parent.add_child(label(note,Vector2(28,70),Vector2(350,24),14,MUTED))
-	Field.line(parent,Vector2(28,108),424,Color(GOLD,.35))
+	var plaque := TextureRect.new()
+	plaque.texture = G.Visuals._kit_tex("plaque_title.png")
+	plaque.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	plaque.stretch_mode = TextureRect.STRETCH_SCALE
+	plaque.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	plaque.position = Vector2(20, 20)
+	plaque.size = Vector2(228, 48)
+	plaque.modulate = Color(1, 1, 1, 0.45)
+	plaque.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	parent.add_child(plaque)
+	parent.add_child(label(words,Vector2(28,22),Vector2(320,46),G.FS_BIG,WHITE,true,true))
+	parent.add_child(label(note,Vector2(28,70),Vector2(350,24),G.FS_XS,MUTED))
+	Field.line(parent,Vector2(28,108),424,Color(GOLD,.45))
 
 class MaterialPanel extends Control:
 	var opacity := .92
 	func _draw() -> void:
+		if size.x < 12 or size.y < 12:
+			return
+		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		var outline := G.octagon_path(size,0,5)
 		draw_set_transform(Vector2(0,4))
-		draw_colored_polygon(outline,Color("07121a",.40))
+		draw_colored_polygon(outline,Color("07121a",.48))
 		draw_set_transform(Vector2.ZERO)
 		draw_colored_polygon(outline,Color("152832",opacity))
-		draw_line(Vector2(5,0),Vector2(size.x-5,0),Color("d2b27a",.60))
-		draw_line(Vector2(5,size.y-1),Vector2(size.x-5,size.y-1),Color("5e7779",.35))
-		for x in [4.0,size.x-6]: draw_rect(Rect2(x,4,2,2),Color("d2b27a",.75))
+		var tex := G.Visuals._kit_tex("panel_iron.png" if (size.x >= 180 and size.y >= 90) else "btn_row.png")
+		G.Visuals.nine_slice(self, tex, Rect2(Vector2.ZERO, size), 12.0, 10.0, Color(1, 1, 1, minf(0.82, opacity * 0.78)))
+		draw_line(Vector2(5,0),Vector2(size.x-5,0),Color("d2b27a",.68))
+		draw_line(Vector2(5,size.y-1),Vector2(size.x-5,size.y-1),Color("5e7779",.42))
+		var rim := G.octagon_path(size, 1.5, 4.0)
+		rim.append(rim[0])
+		draw_polyline(rim, Color("d2b27a", 0.35), 1.0)
+		for x in [4.0,size.x-6]:
+			draw_rect(Rect2(x,4,2,2),Color("f3dca2",.85))
+			draw_rect(Rect2(x,size.y-6,2,2),Color("d2b27a",.72))
 
 class Atmosphere extends Control:
 	func _draw() -> void:

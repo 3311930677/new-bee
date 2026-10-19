@@ -14,9 +14,9 @@ func _ready() -> void:
 	add_child(panel)
 	var content := Control.new()
 	panel.add_child(content)
-	var title := G.serif_label("行旅图志", G.FS_LG, G.TEXT_DARK)
-	title.position = Vector2(12, 4)
-	content.add_child(title)
+	var plaque := G.Visuals.header_plaque("行旅图志", 388.0, 38.0)
+	plaque.position = Vector2(10, -4)
+	content.add_child(plaque)
 	var names := ["地理", "怪物", "伙伴", "人物手记"]
 	for i in names.size():
 		var tab := G.gold_button(String(names[i]), 96, 44, G.FS_SM)
@@ -26,9 +26,10 @@ func _ready() -> void:
 				_volume = i
 				_refresh())
 		content.add_child(tab)
+	content.add_child(G.Visuals.parchment_subcard(Vector2(-2, 106), Vector2(412, 466)))
 	var scroll := ScrollContainer.new()
-	scroll.position = Vector2(0, 112)
-	scroll.size = Vector2(408, 454)
+	scroll.position = Vector2(8, 114)
+	scroll.size = Vector2(392, 450)
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	content.add_child(scroll)
 	_list = VBoxContainer.new()

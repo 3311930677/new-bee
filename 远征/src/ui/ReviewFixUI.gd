@@ -90,9 +90,14 @@ class Paper extends PanelContainer:
 		var box:=StyleBoxFlat.new()
 		box.bg_color=Color("e8dcc0")
 		box.border_color=Color("b6a27b")
-		box.set_border_width_all(1)
+		box.set_border_width_all(2)
 		box.content_margin_left=16;box.content_margin_right=16;box.content_margin_top=12;box.content_margin_bottom=12
 		add_theme_stylebox_override("panel",box)
+		resized.connect(queue_redraw)
+	func _draw() -> void:
+		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		G.Visuals.nine_slice(self, G.Visuals._kit_tex("quest_slip.png"), Rect2(Vector2.ZERO, size), 12.0, 10.0, Color(1, 1, 1, 0.52))
+		draw_rect(Rect2(4, 4, size.x - 8, size.y - 8), Color("983e2b", 0.24), false, 1.0)
 
 class CostChip extends Control:
 	const UI=preload("res://src/ui/TravelChestUI.gd")
@@ -117,7 +122,11 @@ class CostChip extends Control:
 		lacking=UI.label("不足" if owned<need else "","tag",UI.RED);add_child(lacking)
 	func _ready() -> void:resized.connect(queue_redraw)
 	func _draw() -> void:
-		UI.surface(self,Rect2(Vector2.ZERO,size),UI.FACE,UI.RED if owned<need else Color("3a3037"))
+		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		UI.surface(self,Rect2(Vector2.ZERO,size),UI.FACE,UI.RED if owned<need else Color("5e4a38"))
+		var slot_box := Rect2(8, 10, 36, 36)
+		draw_rect(slot_box, Color("110e15"))
+		G.Visuals.nine_slice(self, G.Visuals._kit_tex("slot_rare.png"), slot_box, 6.0, 6.0, Color(1, 1, 1, 0.52))
 		picture.position=Vector2(12,14)
 		heading.position=Vector2(52,2);heading.size=Vector2(size.x-80,22)
 		amount.position=Vector2(52,20);amount.size=Vector2(64,32)
@@ -139,7 +148,7 @@ class Investment extends VBoxContainer:
 			if inline_delta:title_row.add_child(deltas)
 			else:add_child(deltas)
 			for part in delta.split(" · "):
-				var chip:=PanelContainer.new();var box:=StyleBoxFlat.new();box.bg_color=Color("28352c");box.set_content_margin_all(6);chip.add_theme_stylebox_override("panel",box);deltas.add_child(chip)
+				var chip:=PanelContainer.new();var box:=StyleBoxFlat.new();box.bg_color=Color("28352c");box.border_color=Color("4e7a5c");box.set_border_width_all(1);box.set_content_margin_all(6);chip.add_theme_stylebox_override("panel",box);deltas.add_child(chip)
 				chip.add_child(UI.label(part,"caption",UI.JADE))
 		if not probability.is_empty():
 			var row:=HBoxContainer.new();row.custom_minimum_size.y=44;add_child(row)
@@ -196,7 +205,11 @@ class SkillRow extends Button:
 		for p in ["font_color","font_hover_color","font_pressed_color","font_focus_color","font_disabled_color"]:add_theme_color_override(p,Color.TRANSPARENT)
 		for e in [resized,focus_entered,focus_exited,mouse_entered,mouse_exited]:e.connect(queue_redraw)
 	func _draw() -> void:
-		UI.surface(self,Rect2(Vector2.ZERO,size),UI.FACE,UI.COPPER if has_focus() else Color("3a3037"))
+		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		UI.surface(self,Rect2(Vector2.ZERO,size),UI.FACE,UI.COPPER if has_focus() else Color("4a3d33"))
+		var icon_box := Rect2(10, 10, 44, 44)
+		draw_rect(icon_box, Color("110e15"))
+		G.Visuals.nine_slice(self, G.Visuals._kit_tex("slot_rare.png"), icon_box, 6.0, 6.0, Color(1, 1, 1, 0.55))
 		image.position=Vector2(12,12);image.modulate=Color.WHITE
 		(image.material as ShaderMaterial).set_shader_parameter("gray",1.0 if disabled else 0.0)
 		heading.position=Vector2(64,1);heading.size=Vector2(size.x-180,28);heading.modulate=Color(.7,.7,.7) if disabled else Color.WHITE

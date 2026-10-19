@@ -1,0 +1,70 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@6/@Control@7/@Control@8/PlaqueLabel",
+			"rect_height": 38.0,
+			"size": 24,
+			"text": "三城世界事务"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@6/@Control@7/@PanelContainer@10/@Label@9",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "昭元"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@6/@Control@7/@PanelContainer@12/@Label@11",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "沉渊港"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@6/@Control@7/@PanelContainer@14/@Label@13",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "霜关驿"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@6/@Control@7/@Label@15",
+			"rect_height": 52.0,
+			"size": 15,
+			"text": "未接候选每日更换 · 已接目标跨日保留"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@6/@Control@7/@ScrollContainer@18/@VBoxContainer@19/@Label@22",
+			"rect_height": 49.0,
+			"size": 15,
+			"text": "尚未抵达这座城。沿归路主线推进后，公告栏会开放；事务不会阻挡主线。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@6/@Control@7/@PanelContainer@21/@Label@20",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "返回历练委托"
+		}
+	]
+}

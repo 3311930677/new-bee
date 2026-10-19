@@ -1,0 +1,106 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 42.0,
+			"path": "/root/ShotRunner/@Control@2/@Label@3",
+			"rect_height": 46.0,
+			"size": 28,
+			"text": "活动"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Label@4",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "行旅告示 · 活动与新消息"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@6/@ScrollContainer@11/@VBoxContainer@12/Event_ev_autumn/@Label@13",
+			"rect_height": 122.0,
+			"size": 18,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@6/@ScrollContainer@11/@VBoxContainer@12/Event_ev_autumn/@Label@14",
+			"rect_height": 32.0,
+			"size": 20,
+			"text": "枫林秋狩 · 秘境试炼"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@6/@ScrollContainer@11/@VBoxContainer@12/Event_ev_autumn/@Label@15",
+			"rect_height": 28.0,
+			"size": 16,
+			"text": "进行中"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@6/@ScrollContainer@11/@VBoxContainer@12/Event_ev_autumn/@Label@16",
+			"rect_height": 52.0,
+			"size": 16,
+			"text": "通关枫林古道与失声碑窟，额外掉落强化石与魂晶。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@6/@ScrollContainer@11/@VBoxContainer@12/Event_ev_port/@Label@17",
+			"rect_height": 122.0,
+			"size": 18,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@6/@ScrollContainer@11/@VBoxContainer@12/Event_ev_port/@Label@18",
+			"rect_height": 32.0,
+			"size": 20,
+			"text": "沉渊商路 · 远洋护航"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@6/@ScrollContainer@11/@VBoxContainer@12/Event_ev_port/@Label@19",
+			"rect_height": 28.0,
+			"size": 16,
+			"text": "进行中"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@6/@ScrollContainer@11/@VBoxContainer@12/Event_ev_port/@Label@20",
+			"rect_height": 52.0,
+			"size": 16,
+			"text": "完成沉渊港与霜关之间的加急运单，享双倍声望与金币。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@8/@Label@7",
+			"rect_height": 48.0,
+			"size": 18,
+			"text": "返回营帐"
+		}
+	]
+}

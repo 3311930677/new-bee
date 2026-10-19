@@ -60,11 +60,9 @@ func _build_pages() -> Array:
 func _build() -> void:
 	G.page_background(self, 0.35)
 
-	var sub := G.serif_label("开卷 · 远征图志", G.FS_LG + 2, Color("ffd9a0"))
-	sub.position = Vector2(0, 46)
-	sub.custom_minimum_size = Vector2(VIEW_W, 0)
-	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	add_child(sub)
+	var top_banner := G.banner_box("开卷 · 远征图志", 300, 50, G.FS_BIG)
+	top_banner.position = Vector2((VIEW_W - 300.0) * 0.5, 42)
+	add_child(top_banner)
 
 	var panel := G.parchment_box(408, 500, 18.0)
 	panel.position = Vector2(36, 128)
@@ -75,19 +73,19 @@ func _build() -> void:
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.add_child(content)
 
-	_kicker = G.gold_label("", G.FS_XS, false, G.TEXT_MUTED, false)
+	_kicker = G.gold_label("", G.FS_XS, false, Color("8a3b2b"), false)
 	_kicker.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
 	_kicker.position = Vector2(0, 0)
 	_kicker.custom_minimum_size = Vector2(360, 0)
 	content.add_child(_kicker)
 
-	_title = G.serif_label("", G.FS_LG + 4, Color("6a4a1e"))
-	_title.position = Vector2(0, 24)
-	_title.custom_minimum_size = Vector2(372, 34)
+	_title = G.art_label("", G.FS_BIG, Color("453d2c"), false)
+	_title.position = Vector2(0, 22)
+	_title.custom_minimum_size = Vector2(372, 36)
 	content.add_child(_title)
 
 	var rule := ColorRect.new()
-	rule.color = Color(G.BANNER.r, G.BANNER.g, G.BANNER.b, 0.35)
+	rule.color = Color("b39a67", 0.65)
 	rule.position = Vector2(0, 66)
 	rule.custom_minimum_size = Vector2(372, 2)
 	content.add_child(rule)

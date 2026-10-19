@@ -1,0 +1,61 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@8/@Label@7",
+			"rect_height": 38.0,
+			"size": 24,
+			"text": "归路小聚"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/@Control@2/@ScrollContainer@16/@Label@17",
+			"rect_height": 58.0,
+			"size": 18,
+			"text": "灯、潮纸与轮岗簿放在同一张桌上。先听谁都可以，三段故事都能重看。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@19/@Label@18",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "老赵·边城的灯"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@21/@Label@20",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "老鹭·港口的潮纸"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@23/@Label@22",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "岑雪·霜关的轮岗簿"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@25/@Label@24",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "回到营帐"
+		}
+	]
+}

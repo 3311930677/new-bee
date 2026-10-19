@@ -64,7 +64,7 @@
 			"next_uid": 1,
 			"pending": []
 		},
-		"last_ts": 1792222080,
+		"last_ts": 1792361166,
 		"ledger": {
 			"applied": []
 		},
@@ -72,13 +72,17 @@
 		"lore_beats": {},
 		"lore_seen": false,
 		"main_world": {
+			"bosses_cleared": [],
 			"custom_progress": 42,
+			"encounters": {},
+			"entities": {},
 			"layout_version": 5,
 			"map_id": "lorin_wilds",
 			"position": [
 				500,
 				1050
 			],
+			"respawn_at": {},
 			"respawn_by_map": {
 				"lorin_wilds": {
 					"0": 9999999999
@@ -119,7 +123,7 @@
 	"quest": {
 		"active": {},
 		"claimed": [],
-		"day": "2026-10-17",
+		"day": "2026-10-18",
 		"offer": [
 			"q_deliver_sweep",
 			"q_deliver_stone"

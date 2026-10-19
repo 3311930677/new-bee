@@ -1,9 +1,110 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
-<rect width="512" height="512" rx="96" fill="#172e32"/>
-<path d="M64 256L256 64l192 192-192 192z" fill="#294a4b" stroke="#bca273" stroke-width="10"/>
-<path d="M164 377V153l42-46h100l42 46v224z" fill="#7b8774" stroke="#d5c49b" stroke-width="12"/>
-<path d="M189 153h134v213H189z" fill="#293f3e"/>
-<path d="M214 201h85l-44 48 44 50h-85m41-132v168" fill="none" stroke="#bce0c5" stroke-width="14" stroke-linejoin="round"/>
-<path d="M143 389h226" stroke="#d5c49b" stroke-width="18" stroke-linecap="round"/>
-<path d="M256 43l9 18 20 9-20 9-9 18-9-18-20-9 20-9z" fill="#f2da9e"/>
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#13222b"/>
+      <stop offset="48%" stop-color="#1f3b44"/>
+      <stop offset="78%" stop-color="#4e3729"/>
+      <stop offset="100%" stop-color="#1a181b"/>
+    </linearGradient>
+    <radialGradient id="sunGlow" cx="50%" cy="46%" r="44%">
+      <stop offset="0%" stop-color="#ffdf8e" stop-opacity="0.95"/>
+      <stop offset="38%" stop-color="#e89943" stop-opacity="0.65"/>
+      <stop offset="75%" stop-color="#8c3f2b" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#13222b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff0bc"/>
+      <stop offset="35%" stop-color="#e3bc72"/>
+      <stop offset="70%" stop-color="#b58338"/>
+      <stop offset="100%" stop-color="#6e4a1c"/>
+    </linearGradient>
+    <linearGradient id="goldBright" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff6d6"/>
+      <stop offset="50%" stop-color="#ecc578"/>
+      <stop offset="100%" stop-color="#9e6d28"/>
+    </linearGradient>
+    <linearGradient id="jadeGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2c5863"/>
+      <stop offset="100%" stop-color="#142b32"/>
+    </linearGradient>
+    <linearGradient id="crimsonGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d44235"/>
+      <stop offset="60%" stop-color="#9c221b"/>
+      <stop offset="100%" stop-color="#5c100d"/>
+    </linearGradient>
+    <clipPath id="iconClip">
+      <rect x="0" y="0" width="512" height="512" rx="96" ry="96"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#iconClip)">
+    <!-- Sky & Horizon Base -->
+    <rect width="512" height="512" fill="url(#bgGrad)"/>
+    <circle cx="256" cy="236" r="220" fill="url(#sunGlow)"/>
+
+    <!-- Distant Sunset Mountains -->
+    <path d="M0 350 L68 278 L128 312 L196 244 L256 292 L322 238 L392 298 L452 262 L512 330 L512 512 L0 512 Z" fill="#2b262d" opacity="0.85"/>
+    <path d="M0 382 L84 324 L158 356 L256 296 L354 356 L428 318 L512 376 L512 512 L0 512 Z" fill="#1b262c"/>
+
+    <!-- Outer Astrolabe / Compass Ring -->
+    <circle cx="256" cy="248" r="184" fill="none" stroke="url(#goldGrad)" stroke-width="10"/>
+    <circle cx="256" cy="248" r="168" fill="none" stroke="#f6dc9b" stroke-width="2" stroke-dasharray="8 6" opacity="0.75"/>
+    <circle cx="256" cy="248" r="154" fill="url(#jadeGrad)" fill-opacity="0.58" stroke="url(#goldGrad)" stroke-width="4"/>
+
+    <!-- Sun Disc & Frontier Fortress Silhouette Inside Compass -->
+    <circle cx="256" cy="214" r="62" fill="#f9d686" opacity="0.88"/>
+    <!-- Mountain Ridges Inside Ring -->
+    <path d="M110 292 L166 238 L212 268 L256 226 L304 268 L350 234 L402 292 L402 360 L110 360 Z" fill="#2b3d44"/>
+    <!-- Frontier Pass Gatehouse (雄关城楼) -->
+    <g fill="#162429" stroke="#e4be74" stroke-width="2">
+      <!-- Main Fortress Wall -->
+      <path d="M168 336 L180 268 L332 268 L344 336 Z"/>
+      <!-- Battlements -->
+      <path d="M176 268 V256 H192 V268 H206 V256 H222 V268 H290 V256 H306 V268 H320 V256 H336 V268" fill="#162429"/>
+      <!-- Upper Watchtower Pavilion -->
+      <path d="M214 268 L222 232 L290 232 L298 268 Z"/>
+      <!-- Curved Chinese Roofs -->
+      <path d="M198 234 Q256 218 314 234 L302 222 Q256 210 210 222 Z" fill="url(#goldGrad)" stroke="none"/>
+      <path d="M212 212 Q256 198 300 212 L288 200 Q256 190 224 200 Z" fill="url(#goldGrad)" stroke="none"/>
+      <path d="M256 182 L261 198 L251 198 Z" fill="#fff0bc" stroke="none"/>
+    </g>
+    <!-- Glowing Archway Gate & Winding Expedition Road -->
+    <path d="M238 336 V298 A18 18 0 0 1 274 298 V336 Z" fill="#ffdf8e"/>
+    <path d="M244 336 L208 402 L294 402 L268 336 Z" fill="#e6b667" opacity="0.82"/>
+
+    <!-- Crimson War Banner Ribbon (绯红战旗飘带) -->
+    <path d="M126 356 Q256 326 386 356 L368 398 Q256 370 144 398 Z" fill="url(#crimsonGrad)" stroke="url(#goldGrad)" stroke-width="4"/>
+
+    <!-- Giant 8-Pointed Golden Compass Rose (鎏金八芒星罗盘指针) -->
+    <!-- Diagonal Minor Points -->
+    <g fill="#b8843b" stroke="#182429" stroke-width="2">
+      <polygon points="256,248 352,152 276,248"/>
+      <polygon points="256,248 352,344 256,268"/>
+      <polygon points="256,248 160,344 236,248"/>
+      <polygon points="256,248 160,152 256,228"/>
+    </g>
+    <!-- Cardinal Major Points (Beveled Gold) -->
+    <!-- North Needle -->
+    <polygon points="256,42 282,222 256,248" fill="#c79243"/>
+    <polygon points="256,42 230,222 256,248" fill="#fff2c2"/>
+    <!-- South Needle (Crimson & Gold) -->
+    <polygon points="256,454 282,274 256,248" fill="#9c221b"/>
+    <polygon points="256,454 230,274 256,248" fill="#df4b3b"/>
+    <!-- East Needle -->
+    <polygon points="448,248 282,224 256,248" fill="#fff0bc"/>
+    <polygon points="448,248 282,272 256,248" fill="#b8843b"/>
+    <!-- West Needle -->
+    <polygon points="64,248 230,224 256,248" fill="#e5be73"/>
+    <polygon points="64,248 230,272 256,248" fill="#8f6224"/>
+
+    <!-- Center Cyan-Jade Star Core -->
+    <circle cx="256" cy="248" r="30" fill="#162c33" stroke="url(#goldBright)" stroke-width="6"/>
+    <polygon points="256,224 276,248 256,272 236,248" fill="#3fd0d4" stroke="#bff8f5" stroke-width="2"/>
+    <polygon points="256,232 268,248 256,264 244,248" fill="#bff8f5"/>
+
+    <!-- Outer Ornate App Icon Frame -->
+    <rect x="6" y="6" width="500" height="500" rx="90" ry="90" fill="none" stroke="url(#goldGrad)" stroke-width="12"/>
+    <rect x="16" y="16" width="480" height="480" rx="82" ry="82" fill="none" stroke="#14262c" stroke-width="6"/>
+    <rect x="21" y="21" width="470" height="470" rx="78" ry="78" fill="none" stroke="#f7df9e" stroke-width="2" opacity="0.8"/>
+  </g>
 </svg>

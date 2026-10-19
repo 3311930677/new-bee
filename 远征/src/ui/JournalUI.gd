@@ -65,47 +65,66 @@ class LedgerFrame extends PanelContainer:
 		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 
 		# 1. 深度柔和投影
-		draw_rect(Rect2(4, 8, sz.x - 8, sz.y - 6), Color(0.0, 0.0, 0.0, 0.55))
+		draw_rect(Rect2(4, 8, sz.x - 8, sz.y - 4), Color(0.0, 0.0, 0.0, 0.58))
 
-		# 2. 外框：暗铁镶边
+		# 2. 外框：暗铁镶边 + 九宫格玄铁包角
 		draw_rect(Rect2(0, 0, sz.x, sz.y), Color("12161e"))
 		draw_rect(Rect2(2, 2, sz.x - 4, sz.y - 4), Color("1a222e"))
+		var iron_tex := G.Visuals._kit_tex("panel_iron.png")
+		G.Visuals.nine_slice(self, iron_tex, Rect2(Vector2.ZERO, sz), 16.0, 16.0, Color(1, 1, 1, 0.88))
 
 		# 3. 内侧高光
-		draw_line(Vector2(2, 2), Vector2(sz.x - 3, 2), Color(1.0, 1.0, 1.0, 0.08), 1.0)
-		draw_line(Vector2(2, 2), Vector2(2, sz.y - 3), Color(1.0, 1.0, 1.0, 0.05), 1.0)
+		draw_line(Vector2(2, 2), Vector2(sz.x - 3, 2), Color(1.0, 1.0, 1.0, 0.10), 1.0)
+		draw_line(Vector2(2, 2), Vector2(2, sz.y - 3), Color(1.0, 1.0, 1.0, 0.06), 1.0)
 
-		# 4. 精细黄铜角码 (四角 14px L形)
-		var gc := Color("c8a050")
-		var gc_hi := Color("ffe088")
-		var arm := 14.0
-		# 左上
-		draw_line(Vector2(3, 3), Vector2(3 + arm, 3), gc_hi, 1.0)
-		draw_line(Vector2(3, 3), Vector2(3, 3 + arm), gc_hi, 1.0)
-		draw_rect(Rect2(4, 4, 2, 2), gc)
-		# 右上
-		draw_line(Vector2(sz.x - 4, 3), Vector2(sz.x - 4 - arm, 3), gc_hi, 1.0)
-		draw_line(Vector2(sz.x - 4, 3), Vector2(sz.x - 4, 3 + arm), gc_hi, 1.0)
-		draw_rect(Rect2(sz.x - 6, 4, 2, 2), gc)
-		# 左下
-		draw_line(Vector2(3, sz.y - 4), Vector2(3 + arm, sz.y - 4), gc, 1.0)
-		draw_line(Vector2(3, sz.y - 4), Vector2(3, sz.y - 4 - arm), gc, 1.0)
-		draw_rect(Rect2(4, sz.y - 6, 2, 2), gc)
-		# 右下
-		draw_line(Vector2(sz.x - 4, sz.y - 4), Vector2(sz.x - 4 - arm, sz.y - 4), gc, 1.0)
-		draw_line(Vector2(sz.x - 4, sz.y - 4), Vector2(sz.x - 4, sz.y - 4 - arm), gc, 1.0)
-		draw_rect(Rect2(sz.x - 6, sz.y - 6, 2, 2), gc)
-
-		# 5. 内部温润羊皮纸 (纯正高级古卷羊皮纸)
+		# 4. 内部温润羊皮纸 + 九宫格宣纸肌理
 		var inset := 8.0
 		var paper_w := sz.x - inset * 2
 		var paper_h := sz.y - inset * 2
-		draw_rect(Rect2(inset, inset, paper_w, paper_h), Color("f0e6cf"))
-		# 纸张边缘微暗做旧
+		var paper_rect := Rect2(inset, inset, paper_w, paper_h)
+		draw_rect(paper_rect, Color("f0e6cf"))
+		var slip_tex := G.Visuals._kit_tex("quest_slip.png")
+		G.Visuals.nine_slice(self, slip_tex, paper_rect, 14.0, 12.0, Color(1, 1, 1, 0.55))
+
+		# 顶部玄玉金镶眉栏装饰
+		if header_height > 24.0 and paper_h > header_height + 40.0:
+			var top_rect := Rect2(inset + 2, inset + 2, paper_w - 4, minf(header_height, 140.0))
+			draw_rect(top_rect, Color("1d3635", 0.96))
+			var banner_tex := G.Visuals._kit_tex("plaque_header_jade.png")
+			if banner_tex != null:
+				G.Visuals.nine_slice(self, banner_tex, top_rect, 12.0, 10.0, Color(1, 1, 1, 0.52))
+			draw_rect(top_rect.grow(-2.0), Color("c8a050", 0.55), false, 1.0)
+			draw_line(Vector2(inset + 4, top_rect.end.y), Vector2(inset + paper_w - 4, top_rect.end.y), Color("d9b26a", 0.85), 2.0)
+			G.Visuals.diamond(self, Vector2(sz.x * 0.5, top_rect.end.y), 4.0, Color("c84b31", 0.95))
+
+		# 纸张边缘微暗做旧与朱砂双线内框
 		draw_line(Vector2(inset, inset), Vector2(inset, inset + paper_h), Color("d8c6a0"), 1.0)
 		draw_line(Vector2(inset + paper_w - 1, inset), Vector2(inset + paper_w - 1, inset + paper_h), Color("d8c6a0"), 1.0)
-		# 内框装饰细线
-		draw_rect(Rect2(inset + 4, inset + 4, paper_w - 8, paper_h - 8), Color("c4b088", 0.45), false, 1.0)
+		draw_rect(Rect2(inset + 4, inset + 4, paper_w - 8, paper_h - 8), Color("b89658", 0.58), false, 1.0)
+		draw_rect(Rect2(inset + 7, inset + 7, paper_w - 14, paper_h - 14), Color("983e2b", 0.24), false, 1.0)
+
+		# 右下角淡朱砂印章底纹
+		if sz.x >= 260.0 and sz.y >= 220.0:
+			var seal_tex := G.Visuals._kit_tex("seal_stamps.png")
+			if seal_tex != null:
+				draw_texture_rect_region(seal_tex, Rect2(sz.x - inset - 42, sz.y - inset - 42, 28, 28), Rect2(0, 0, 32, 32), Color(1, 1, 1, 0.22))
+
+		# 5. 精细黄铜角码 (四角 16px L形 + 双铆钉)
+		var gc := Color("c8a050")
+		var gc_hi := Color("ffe088")
+		var arm := 16.0
+		draw_line(Vector2(3, 3), Vector2(3 + arm, 3), gc_hi, 1.0)
+		draw_line(Vector2(3, 3), Vector2(3, 3 + arm), gc_hi, 1.0)
+		draw_rect(Rect2(4, 4, 2, 2), gc)
+		draw_line(Vector2(sz.x - 4, 3), Vector2(sz.x - 4 - arm, 3), gc_hi, 1.0)
+		draw_line(Vector2(sz.x - 4, 3), Vector2(sz.x - 4, 3 + arm), gc_hi, 1.0)
+		draw_rect(Rect2(sz.x - 6, 4, 2, 2), gc)
+		draw_line(Vector2(3, sz.y - 4), Vector2(3 + arm, sz.y - 4), gc, 1.0)
+		draw_line(Vector2(3, sz.y - 4), Vector2(3, sz.y - 4 - arm), gc, 1.0)
+		draw_rect(Rect2(4, sz.y - 6, 2, 2), gc)
+		draw_line(Vector2(sz.x - 4, sz.y - 4), Vector2(sz.x - 4 - arm, sz.y - 4), gc, 1.0)
+		draw_line(Vector2(sz.x - 4, sz.y - 4), Vector2(sz.x - 4, sz.y - 4 - arm), gc, 1.0)
+		draw_rect(Rect2(sz.x - 6, sz.y - 6, 2, 2), gc)
 
 class EmbellishedButton extends Button:
 	var _shine := 0.0
@@ -121,9 +140,9 @@ class EmbellishedButton extends Button:
 			style.bg_color = fill
 			style.border_color = colors.accent
 			style.set_border_width_all(2)
-			style.shadow_color = Color("101d18",.25)
-			style.shadow_size = 2
-			style.shadow_offset = Vector2(0,2)
+			style.shadow_color = Color("101d18", .32)
+			style.shadow_size = 3
+			style.shadow_offset = Vector2(0, 2)
 			add_theme_stylebox_override(state, style)
 		for state in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
 			add_theme_color_override(state, colors.light if primary else colors.ink)
@@ -139,17 +158,24 @@ class EmbellishedButton extends Button:
 		_shine_motion.tween_method(func(v: float): _shine=v; queue_redraw(),0.0,1.0,.48)
 
 	func _draw() -> void:
+		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		var colors: Dictionary = G.Visuals.palette(self)
-		draw_line(Vector2(12,4),Vector2(size.x-12,4),Color(colors.accent,0.5),1)
-		draw_line(Vector2(12,size.y-4),Vector2(size.x-12,size.y-4),Color(colors.accent,0.7),1)
-		for x in [6.0,size.x-8]:
-			for y in [6.0,size.y-8]: draw_rect(Rect2(x,y,2,2),Color(colors.light,.65))
-		for y in [14.0,size.y-14]:
-			draw_line(Vector2(6,y),Vector2(16,y),Color(colors.accent,.18),1)
-			draw_line(Vector2(size.x-16,y),Vector2(size.x-6,y),Color(colors.accent,.18),1)
+		var primary := String(get_meta("journal_kind", "primary")) == "primary"
+		var btn_tex := G.Visuals._kit_tex("button_dark.png" if primary else "card_frame_parchment.png")
+		G.Visuals.nine_slice(self, btn_tex, Rect2(Vector2.ZERO, size), 10.0, 8.0, Color(1, 1, 1, 0.42 if primary else 0.72))
+		draw_line(Vector2(12, 4), Vector2(size.x - 12, 4), Color(colors.accent, 0.55), 1)
+		draw_line(Vector2(12, size.y - 4), Vector2(size.x - 12, size.y - 4), Color(colors.accent, 0.75), 1)
+		for x in [6.0, size.x - 8]:
+			for y in [6.0, size.y - 8]: draw_rect(Rect2(x, y, 2, 2), Color(colors.light, .72))
+		for y in [14.0, size.y - 14]:
+			draw_line(Vector2(6, y), Vector2(16, y), Color(colors.accent, .24), 1)
+			draw_line(Vector2(size.x - 16, y), Vector2(size.x - 6, y), Color(colors.accent, .24), 1)
+		if primary and size.x >= 120:
+			for side_x in [10.0, size.x - 10.0]:
+				G.Visuals.diamond(self, Vector2(side_x, size.y * 0.5), 2.5, Color(colors.light, 0.78))
 		if _shine > 0 and _shine < 1:
-			var x := lerpf(12,size.x-32,_shine)
-			draw_line(Vector2(x,4),Vector2(x+20,4),Color(colors.light,sin(_shine*PI)),1)
+			var x := lerpf(12, size.x - 32, _shine)
+			draw_line(Vector2(x, 4), Vector2(x + 20, 4), Color(colors.light, sin(_shine * PI)), 1)
 
 class AvatarMedallion extends Panel:
 	var slot_style: StyleBoxFlat

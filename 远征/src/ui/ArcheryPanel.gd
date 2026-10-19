@@ -616,8 +616,11 @@ class _RangeCanvas extends Control:
 
 		# 7. 顶部暗金铭牌 HUD（左：风向仪；右：可视化箭囊与连中）
 		var rfnt: Font = G.font_reg
+		var hud_tex := G.Visuals._kit_tex("archery_hud_strip.png")
 		var hud_l := Rect2(10, 8, 174, 28)
 		draw_rect(hud_l, Color(0.11, 0.07, 0.05, 0.88))
+		if hud_tex != null:
+			G.Visuals.nine_slice(self, hud_tex, hud_l, 8.0, 6.0, Color(1, 1, 1, 0.92))
 		draw_rect(hud_l, Color("c89c52"), false, 1.5)
 		var w_txt := "东风 %.1f ◀" % absf(wind) if wind < -0.5 else ("西风 %.1f ▶" % absf(wind) if wind > 0.5 else "微风 0.0 ●")
 		var w_col := Color("ff9a76") if absf(wind) > 22.0 else Color("f3d486")
@@ -626,6 +629,8 @@ class _RangeCanvas extends Control:
 
 		var hud_r := Rect2(w - 194, 8, 148, 28)
 		draw_rect(hud_r, Color(0.11, 0.07, 0.05, 0.88))
+		if hud_tex != null:
+			G.Visuals.nine_slice(self, hud_tex, hud_r, 8.0, 6.0, Color(1, 1, 1, 0.92))
 		draw_rect(hud_r, Color("c89c52"), false, 1.5)
 		draw_string_outline(rfnt, Vector2(hud_r.position.x + 8, 27), "箭囊：", HORIZONTAL_ALIGNMENT_LEFT, 52, G.FS_XS, 3, Color(0.05, 0.03, 0.02, 0.95))
 		draw_string(rfnt, Vector2(hud_r.position.x + 8, 27), "箭囊：", HORIZONTAL_ALIGNMENT_LEFT, 52, G.FS_XS, Color("f3e3c0"))

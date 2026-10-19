@@ -76,10 +76,16 @@ class Portrait extends Control:
 class Surface extends Control:
 	var paper := false
 	func _draw() -> void:
+		if size.x < 12 or size.y < 12:
+			return
+		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		var fill := G.FIELD_PAPER if paper else G.FIELD_DARK
-		draw_rect(Rect2(0, 4, size.x, size.y), Color(G.FIELD_DEEP, .65))
+		draw_rect(Rect2(0, 4, size.x, size.y), Color(G.FIELD_DEEP, .68))
 		draw_rect(Rect2(Vector2.ZERO, size), fill)
+		var tex := G.Visuals._kit_tex("quest_slip.png" if paper else ("panel_iron.png" if (size.x >= 180 and size.y >= 80) else "btn_row.png"))
+		G.Visuals.nine_slice(self, tex, Rect2(Vector2.ZERO, size), 12.0, 10.0, Color(1, 1, 1, 0.45 if paper else 0.65))
 		draw_line(Vector2(0, 0), Vector2(size.x, 0), G.FIELD_COPPER, 1)
+		draw_rect(Rect2(2, 2, size.x - 4, size.y - 4), Color(G.FIELD_COPPER, 0.32), false, 1.0)
 		if paper:
 			# 装订边与穿线孔只服务“账册”结构，内容区保持干净。
 			draw_rect(Rect2(0, 1, 12, size.y - 1), G.FIELD_PAPER.darkened(.07))
@@ -87,6 +93,9 @@ class Surface extends Control:
 			for y in [28, int(size.y * .5), int(size.y - 28)]:
 				draw_rect(Rect2(4, y, 4, 2), G.FIELD_MUTED)
 			draw_colored_polygon(PackedVector2Array([Vector2(size.x-12,size.y),size,Vector2(size.x,size.y-12)]), G.FIELD_PAPER.darkened(.15))
+		else:
+			for p in [Vector2(4, 4), Vector2(size.x - 6, 4), Vector2(4, size.y - 6), size - Vector2(6, 6)]:
+				draw_rect(Rect2(p, Vector2(2, 2)), Color(G.FIELD_COPPER, 0.78))
 
 class Action extends Control:
 	signal activated
@@ -124,6 +133,7 @@ class Action extends Control:
 		_down = false
 		queue_redraw()
 	func _draw() -> void:
+		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		if not skin.is_empty():
 			_draw_crafted()
 			return
@@ -134,7 +144,10 @@ class Action extends Control:
 		var dy := 1 if _down else 0
 		if not quiet or _hover or selected:
 			draw_rect(Rect2(0, dy, size.x, size.y - dy), fill)
-			draw_line(Vector2(0, size.y-1), Vector2(size.x,size.y-1), Color(accent,.38),1)
+			if size.x >= 44 and size.y >= 26:
+				var tex := G.Visuals._kit_tex("button_red.png" if primary else ("btn_row.png" if light else "button_dark.png"))
+				G.Visuals.nine_slice(self, tex, Rect2(0, dy, size.x, size.y - dy), 10.0, 8.0, Color(1, 1, 1, 0.36))
+			draw_line(Vector2(0, size.y-1), Vector2(size.x,size.y-1), Color(accent,.45),1)
 			if primary:
 				draw_line(Vector2(0,dy),Vector2(size.x,dy), G.FIELD_COPPER,1)
 				draw_rect(Rect2(0,dy,3,size.y-dy),G.FIELD_COPPER)
@@ -221,6 +234,9 @@ class Action extends Control:
 			draw_colored_polygon(_bevel(bounds,cut),edge.darkened(.28))
 			var inner := bounds.grow(-2)
 			draw_colored_polygon(_bevel(inner,maxf(2,cut-2)),fill)
+			if bounds.size.x >= 44 and bounds.size.y >= 26:
+				var btn_tex := G.Visuals._kit_tex("quest_slip.png" if skin == "scroll" else "button_dark.png")
+				G.Visuals.nine_slice(self, btn_tex, inner, 10.0, 8.0, Color(1, 1, 1, 0.42))
 			draw_colored_polygon(_bevel(Rect2(inner.position,Vector2(inner.size.x,inner.size.y*.46)),maxf(2,cut-2)),fill.lightened(.07))
 			draw_line(Vector2(cut,dy+2),Vector2(extent.x-cut,dy+2),edge,1)
 			draw_line(Vector2(cut,extent.y-3),Vector2(extent.x-cut,extent.y-3),fill.darkened(.45),2)
@@ -236,6 +252,9 @@ class Action extends Control:
 				for x: float in [7.0,extent.x-7]:
 					draw_circle(Vector2(x,8+dy),1.5,Color("e4c77a"))
 					draw_circle(Vector2(x,extent.y-8),1.5,Color("8b6938"))
+			else:
+				for p in [Vector2(5, dy + 5), Vector2(extent.x - 7, dy + 5), Vector2(5, extent.y - 7), Vector2(extent.x - 7, extent.y - 7)]:
+					draw_rect(Rect2(p, Vector2(2, 2)), Color(edge, 0.72))
 		if selected and skin == "tab": draw_rect(Rect2(10,extent.y-4,extent.x-20,2),accent.lightened(.28))
 		if skin == "nav" and (selected or _hover or has_focus()):
 			draw_rect(Rect2(22,2,extent.x-44,2),Color("e4c77a"))

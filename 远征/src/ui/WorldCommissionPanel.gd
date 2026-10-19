@@ -17,12 +17,11 @@ func _ready() -> void:
 	add_child(paper)
 	var content := Control.new()
 	paper.add_child(content)
-	var title := G.serif_label("三城世界事务", G.FS_LG, G.TEXT_DARK)
-	content.add_child(title)
+	content.add_child(Style.header_plaque("三城世界事务", Vector2(10, -2), 388.0))
 	for i in 3:
 		var tab := G.gold_button(WorldCommission.NAMES[i],130,42,G.FS_SM)
 		Style.apply_button(tab,"secondary")
-		tab.position = Vector2(i*138,45)
+		tab.position = Vector2(i*138,52)
 		tab.gui_input.connect(func(e: InputEvent):
 			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 				_region=WorldCommission.REGIONS[i]
@@ -30,13 +29,13 @@ func _ready() -> void:
 				_refresh())
 		content.add_child(tab)
 		_tabs.append(tab)
-	_line = Style.text("未接候选每日更换 · 已接目标跨日保留",14,Style.MUTED)
-	_line.position=Vector2(0,96)
-	_line.custom_minimum_size=Vector2(408,56)
+	_line = Style.text("未接候选每日更换 · 已接目标跨日保留",G.FS_XS,Style.MUTED)
+	_line.position=Vector2(4,102)
+	_line.custom_minimum_size=Vector2(400,52)
 	_line.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
 	content.add_child(_line)
 	var scroll := ScrollContainer.new()
-	scroll.position=Vector2(0,155)
+	scroll.position=Vector2(0,158)
 	scroll.size=Vector2(408,432)
 	scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
 	content.add_child(scroll)

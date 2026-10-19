@@ -85,7 +85,7 @@ func _page_common() -> Control:
 		_sync_toggles(), "story")
 	_speed_btn = _action(page, "战斗倍速：×1", Vector2(0, 290), 194, func():
 		var cur := float(G.setting_get("battle_speed", 1.0))
-		G.setting_set("battle_speed", 2.0 if cur < 1.5 else 1.0)
+		G.setting_set("battle_speed", BattleScene.next_speed(cur))
 		_sync_toggles(), "speed")
 	_play_hint = G.text_label("", G.FS_XS, G.TEXT_MUTED)
 	_play_hint.position = Vector2(0, 348)
