@@ -26,11 +26,9 @@ func _build() -> void:
 	var paper := G.parchment_box(432, 620, 18.0)
 	paper.position = Vector2(24, 90) + _offset
 	add_child(paper)
-	var title := G.serif_label("归 路 邮 驿", G.FS_LG + 2, Color("6a4a1e"))
-	title.position = Vector2(58, 122) + _offset
-	title.custom_minimum_size = Vector2(360, 40)
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	add_child(title)
+	var plaque := G.Visuals.header_plaque("归 路 邮 驿", 384.0, 38.0)
+	plaque.position = Vector2(48, 108) + _offset
+	add_child(plaque)
 	var state := G.road_mail_state()
 	var archive: Array = state.get("archive", [])
 	if _archive_index >= 0 and not archive.is_empty():
@@ -41,6 +39,8 @@ func _build() -> void:
 
 func _build_board(state: Dictionary, archive_count: int) -> void:
 	var day := int(G.economy_state().get("day", 1))
+	add_child(G.Visuals.parchment_subcard(Vector2(52, 178) + _offset, Vector2(376, 94)))
+	add_child(G.Visuals.parchment_subcard(Vector2(52, 280) + _offset, Vector2(376, 156)))
 	_add_text("第 %d 日 · 已送达 %d 封\n%s" % [day,
 		int(state.get("deliveries", 0)), RoadMailServiceScript.goal(state, day)],
 		Vector2(66, 190), Vector2(348, 80), Color("594731"))
@@ -69,6 +69,9 @@ func _build_archive(archive: Array) -> void:
 		String(row.get("solution", "")), "旧路标通行")
 	var encounter: String = {"ambush": "击退伏沙蝎", "help": "包扎信使",
 		"escort": "扶信使慢行"}.get(String(row.get("encounter", "")), "")
+	add_child(G.Visuals.parchment_subcard(Vector2(52, 180) + _offset, Vector2(376, 88)))
+	add_child(G.Visuals.parchment_subcard(Vector2(52, 276) + _offset, Vector2(376, 108)))
+	add_child(G.Visuals.parchment_subcard(Vector2(52, 390) + _offset, Vector2(376, 112)))
 	_add_text("路簿 %d / %d · 第 %d 日\n%s · %s\n%s" % [
 		_archive_index + 1, archive.size(), int(row.get("day", 1)), route, solution,
 		encounter],

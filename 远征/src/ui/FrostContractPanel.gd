@@ -26,12 +26,8 @@ func _build() -> void:
 	G.veil(self, 0.84, true)
 	var paper := Style.panel(Vector2(20,86) + _offset,Vector2(440,618),true,18)
 	add_child(paper)
-	add_child(Style.panel(Vector2(36,104) + _offset,Vector2(408,60),false,0))
-	var title := G.serif_label("霜关缺药 · 运单", 26, Style.LIGHT)
-	title.position = Vector2(46, 112) + _offset
-	title.custom_minimum_size = Vector2(388, 42)
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	add_child(title)
+	add_child(Style.header_plaque("霜关缺药 · 运单", Vector2(46, 104) + _offset, 388.0))
+	add_child(G.Visuals.parchment_subcard(Vector2(38, 170) + _offset, Vector2(404, 348)))
 	var info := G.frost_herb_order()
 	var status := String(info.get("status", "locked"))
 	var status_name: String = {"locked": "未开放", "available": "待签", "active": "运送中",
@@ -39,7 +35,7 @@ func _build() -> void:
 		"settled": "到期结清"}.get(status, status)
 	var today := int(info.get("day", 1))
 	var seal := Style.badge(status_name,status)
-	seal.position = Vector2(332,180) + _offset
+	seal.position = Vector2(326,180) + _offset
 	seal.size = Vector2(104,28)
 	add_child(seal)
 	var deposit := int(info.get("deposit_held_gold", 0)) if status in ["active", "expired"] \
@@ -75,17 +71,17 @@ func _build() -> void:
 			refund, maximum_loss, deposit, extension_fee]
 		lines[9] = "保价报酬 %d 金（少 %d 金）；退单不扣货。" % [
 			protected_payout, int(info.get("protected_payout_discount_gold", 0))]
-	var date := Style.text("第 %d 日" % today + (" · " + mode_name if status in ["active","expired","done","abandoned","settled"] else " · 运单条款"),14,Style.JADE)
-	date.position = Vector2(48,180) + _offset
-	date.size = Vector2(272,28)
+	var date := Style.text("第 %d 日" % today + (" · " + mode_name if status in ["active","expired","done","abandoned","settled"] else " · 运单条款"),G.FS_XS,Style.JADE)
+	date.position = Vector2(52,180) + _offset
+	date.size = Vector2(268,28)
 	add_child(date)
 	lines.remove_at(0)
-	var detail := Style.text("\n".join(PackedStringArray(lines)), 14, Style.INK)
-	detail.position = Vector2(48, 220) + _offset
-	detail.custom_minimum_size = Vector2(382, 296)
+	var detail := Style.text("\n".join(PackedStringArray(lines)), G.FS_XS, Style.INK)
+	detail.position = Vector2(52, 218) + _offset
+	detail.custom_minimum_size = Vector2(376, 290)
 	detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(detail)
-	var message := Style.text(_message,14,Style.RUST)
+	var message := Style.text(_message,G.FS_XS,Style.RUST)
 	message.position = Vector2(48, 526) + _offset
 	message.custom_minimum_size = Vector2(382, 48)
 	message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

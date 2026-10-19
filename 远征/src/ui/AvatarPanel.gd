@@ -37,40 +37,50 @@ func _build() -> void:
 	_content = Control.new()
 	_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_paper.add_child(_content)
-	var eyebrow := UI.label("昭元行旅录", 14, Color("c4b994"), true)
+	var eyebrow := UI.label("◆ 昭元行旅录 · 命途印记", G.FS_XS, Color("d8c59a"), true)
 	_content.add_child(eyebrow)
-	var title := UI.art_label("旅人小像", 30, UI.GOLD)
-	title.position.y = 26
+	var title := UI.art_label("旅人小像", G.FS_BIG, Color("f4dfb5"))
+	title.position.y = 24
 	_content.add_child(title)
-	var close := UI.button("×", 44, 44, "dark_quiet")
+	var close := UI.button("×", 44, 44, "secondary")
 	close.name = "CloseButton"
-	close.position = Vector2(278, -8)
+	close.position = Vector2(278, -6)
 	close.tooltip_text = "关闭"
 	close.pressed.connect(_close)
 	_content.add_child(close)
 	var frame := Panel.new()
-	frame.position = Vector2(102, 88)
-	frame.size = Vector2(112, 112)
-	var portrait_style := UI.surface(Color("29423d"), Color("b79d68"), 2)
-	portrait_style.set_border_width_all(3)
-	frame.add_theme_stylebox_override("panel", portrait_style)
+	frame.position = Vector2(102, 86)
+	frame.size = Vector2(116, 116)
+	var slot_tex := G.Visuals._kit_tex("slot_legend.png")
+	if slot_tex != null:
+		var sb_slot := StyleBoxTexture.new()
+		sb_slot.texture = slot_tex
+		sb_slot.texture_margin_left = 12.0
+		sb_slot.texture_margin_right = 12.0
+		sb_slot.texture_margin_top = 12.0
+		sb_slot.texture_margin_bottom = 12.0
+		frame.add_theme_stylebox_override("panel", sb_slot)
+	else:
+		var portrait_style := UI.surface(Color("29423d"), Color("b79d68"), 2)
+		portrait_style.set_border_width_all(3)
+		frame.add_theme_stylebox_override("panel", portrait_style)
 	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_content.add_child(frame)
 	_preview = TextureRect.new()
-	_preview.position = Vector2(8, 8)
+	_preview.position = Vector2(10, 10)
 	_preview.size = Vector2(96, 96)
 	_preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	_preview.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	frame.add_child(_preview)
-	_state_l = UI.label("", 14, UI.MUTED)
+	_state_l = UI.label("", G.FS_XS, Color("5a4c36"), true)
 	_state_l.position.y = 210
 	_state_l.size.x = 316
 	_state_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_content.add_child(_state_l)
-	var instructions := UI.label("上传你喜欢的图片作为旅人小像。\n可随时更换，不使用职业或宠物头像。",14,UI.MUTED,true)
-	instructions.position = Vector2(0,248)
-	instructions.size = Vector2(316,56)
+	var instructions := UI.label("上传你喜欢的图片作为旅人小像。\n可随时更换，不使用职业或宠物头像。", G.FS_XS, Color("685840"), true)
+	instructions.position = Vector2(0, 248)
+	instructions.size = Vector2(316, 56)
 	instructions.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_content.add_child(instructions)
 	var upload := UI.button("选择本机图片", 316, 46, "primary")
@@ -78,14 +88,14 @@ func _build() -> void:
 	upload.position.y = 318
 	upload.pressed.connect(_open_picker)
 	_content.add_child(upload)
-	_use_custom_btn = UI.button("用上次上传的图", 316, 44, "quiet")
+	_use_custom_btn = UI.button("用上次上传的图", 316, 44, "secondary")
 	_use_custom_btn.position.y = 374
 	_use_custom_btn.pressed.connect(func():
 		if G.use_custom_avatar():
 			_refresh()
 			changed.emit())
 	_content.add_child(_use_custom_btn)
-	_tip = UI.label("图片与头像选择仅保存在本机", 14, UI.MUTED)
+	_tip = UI.label("图片与头像选择仅保存在本机", G.FS_XS, UI.MUTED)
 	_tip.size.x = 316
 	_tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_content.add_child(_tip)

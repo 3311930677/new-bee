@@ -23,144 +23,207 @@
 		},
 		{
 			"filter": 2,
+			"font": "",
+			"height": 40.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@TextureRect@86/@Label@87",
+			"rect_height": 44.0,
+			"size": 27,
+			"text": "演武校场"
+		},
+		{
+			"filter": 2,
 			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
-			"height": 59.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/@Panel@84/@Label@83",
-			"rect_height": 59.0,
-			"size": 40,
-			"text": "演武场"
+			"height": 35.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Control@91/@Label@95",
+			"rect_height": 48.0,
+			"size": 24,
+			"text": "战"
 		},
 		{
 			"filter": 2,
 			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 25.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/@Label@85",
-			"rect_height": 25.0,
-			"size": 17,
-			"text": "擂台试锋 · 不损装备，不耗资源"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
-			"height": 27.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@86/@Control@87/@Label@89",
-			"rect_height": 27.0,
-			"size": 18,
-			"text": "铜印 · 976 分"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
-			"height": 25.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@86/@Control@87/@Label@90",
-			"rect_height": 25.0,
-			"size": 17,
-			"text": "连胜 0 · 最佳 0"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 23.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@86/@Control@87/@Label@95",
+			"height": 17.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Control@91/@Label@96",
 			"rect_height": 23.0,
-			"size": 15,
+			"size": 11,
+			"text": "练手对局（随级缩放）· 点擂台换镜影"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Control@91/@Label@97",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "我方 · 叶珩 Lv.12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Control@91/@Label@98",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "对手 · 演武傀儡 · 12 级"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 29.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@99/@Label@103",
+			"rect_height": 29.0,
+			"size": 19,
+			"text": "铜印"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 34.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@99/@Label@104",
+			"rect_height": 34.0,
+			"size": 23,
+			"text": "976"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@99/@Label@105",
+			"rect_height": 24.0,
+			"size": 14,
+			"text": "分"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@99/@Label@106",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "当前连胜 0 场 · 历史最佳 0 场"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@99/@Label@107",
+			"rect_height": 23.0,
+			"size": 12,
 			"text": "段位进度 · 铜印 → 银印"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 23.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@86/@Control@87/@Label@98",
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@99/@Label@108",
 			"rect_height": 23.0,
-			"size": 15,
+			"size": 12,
 			"text": "还差 224 分"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
-			"height": 35.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@86/@Control@87/@PanelContainer@100/@Control@101/@Label@103",
-			"rect_height": 35.0,
-			"size": 24,
-			"text": "对手：演武傀儡 · 12 级"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 23.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@86/@Control@87/@PanelContainer@100/@Control@101/@Label@104",
-			"rect_height": 23.0,
-			"size": 15,
-			"text": "练手对局 · 数值随等级缩放 · 点卡片换镜影"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 23.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@86/@Control@87/@Label@105",
-			"rect_height": 23.0,
-			"size": 15,
-			"text": "赛季荣誉 930 · 再胜 3 场 +40"
-		},
-		{
-			"filter": 2,
-			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
-			"height": 23.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@86/@Control@87/@Label@106",
-			"rect_height": 23.0,
-			"size": 15,
-			"text": "0 胜 2 负 · 胜率 0%"
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@111/@Label@112",
+			"rect_height": 34.0,
+			"size": 13,
+			"text": "赛季荣誉 930 · 再胜3场+40"
 		},
 		{
 			"filter": 2,
 			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
-			"height": 25.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@86/@Control@87/@PanelContainer@108/@Label@107",
-			"rect_height": 25.0,
-			"size": 17,
-			"text": "换对手"
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@113/@Label@114",
+			"rect_height": 34.0,
+			"size": 13,
+			"text": "0胜 2负 · 胜率 0%"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
-			"height": 27.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@86/@Control@87/@PanelContainer@110/@Label@109",
-			"rect_height": 27.0,
-			"size": 18,
-			"text": "开始切磋"
+			"font": "",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@116/@Label@115",
+			"rect_height": 48.0,
+			"size": 16,
+			"text": "换 对 手"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
-			"height": 25.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@86/@Control@87/OpenArcheryButton/@Label@111",
-			"rect_height": 25.0,
-			"size": 17,
+			"font": "",
+			"height": 30.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@118/@Label@117",
+			"rect_height": 52.0,
+			"size": 20,
+			"text": "开 始 切 磋"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@119/@Label@121",
+			"rect_height": 34.0,
+			"size": 15,
+			"text": "校场武备与古碑奇珍"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/OpenArcheryButton/@Label@124",
+			"rect_height": 24.0,
+			"size": 16,
 			"text": "校场射艺"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
-			"height": 25.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@86/@Control@87/@PanelContainer@113/@Label@112",
-			"rect_height": 25.0,
-			"size": 17,
-			"text": "返回"
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 17.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/OpenArcheryButton/@Label@125",
+			"rect_height": 23.0,
+			"size": 11,
+			"text": "挽弓测风 · 赢取荣誉"
 		},
 		{
 			"filter": 2,
-			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
-			"height": 25.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@86/@Control@87/OpenCurioButton/@Label@114",
-			"rect_height": 25.0,
-			"size": 17,
+			"font": "",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/OpenCurioButton/@Label@128",
+			"rect_height": 24.0,
+			"size": 16,
 			"text": "古碑鉴宝"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 17.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/OpenCurioButton/@Label@129",
+			"rect_height": 23.0,
+			"size": 11,
+			"text": "参悟铭文 · 鉴匣得宝"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@131/@Label@130",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "返 回 主 城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Label@132",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "擂台试锋 · 不损装备，不耗资源"
 		},
 		{
 			"filter": 2,
 			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
 			"height": 58.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/CurioLoreOverlay/@Panel@119/@Label@118",
+			"path": "/root/ShotRunner/GameHome/@Control@79/CurioLoreOverlay/@Panel@137/@Label@136",
 			"rect_height": 58.0,
 			"size": 39,
 			"text": "古碑鉴宝"
@@ -169,7 +232,7 @@
 			"filter": 2,
 			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
 			"height": 23.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/CurioLoreOverlay/@PanelContainer@120/@Control@121/CurioStatusLabel",
+			"path": "/root/ShotRunner/GameHome/@Control@79/CurioLoreOverlay/@PanelContainer@138/@Control@139/CurioStatusLabel",
 			"rect_height": 75.0,
 			"size": 15,
 			"text": "当前金币：12040 ｜ 已鉴宝：2/3 次（满3次得【慧眼识珍】）\n当前职业古碑共鸣：✦ 已达成（已领专属称号）"
@@ -178,7 +241,7 @@
 			"filter": 2,
 			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
 			"height": 23.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/CurioLoreOverlay/@PanelContainer@120/@Control@121/CurioSlotTag",
+			"path": "/root/ShotRunner/GameHome/@Control@79/CurioLoreOverlay/@PanelContainer@138/@Control@139/CurioSlotTag",
 			"rect_height": 23.0,
 			"size": 15,
 			"text": "绝世秘宝"
@@ -187,7 +250,7 @@
 			"filter": 2,
 			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
 			"height": 23.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/CurioLoreOverlay/@PanelContainer@120/@Control@121/CurioLogLabel",
+			"path": "/root/ShotRunner/GameHome/@Control@79/CurioLoreOverlay/@PanelContainer@138/@Control@139/CurioLogLabel",
 			"rect_height": 118.0,
 			"size": 15,
 			"text": "【霜关古战魂匣 · 鉴定大吉】\n开启获得：鉴定出史诗真品【远征戍卫重铠】"
@@ -196,7 +259,7 @@
 			"filter": 2,
 			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
 			"height": 23.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/CurioLoreOverlay/@PanelContainer@120/@Control@121/CurioHistoryLabel",
+			"path": "/root/ShotRunner/GameHome/@Control@79/CurioLoreOverlay/@PanelContainer@138/@Control@139/CurioHistoryLabel",
 			"rect_height": 49.0,
 			"size": 15,
 			"text": "近期鉴宝：第2鉴【霜关古战魂匣】→ 鉴定出史诗真品【远征戍卫重铠】"
@@ -205,7 +268,7 @@
 			"filter": 2,
 			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
 			"height": 25.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/CurioLoreOverlay/@PanelContainer@120/@Control@121/LoreResonateButton/@Label@126",
+			"path": "/root/ShotRunner/GameHome/@Control@79/CurioLoreOverlay/@PanelContainer@138/@Control@139/LoreResonateButton/@Label@144",
 			"rect_height": 25.0,
 			"size": 17,
 			"text": "参悟古碑"
@@ -214,7 +277,7 @@
 			"filter": 2,
 			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
 			"height": 23.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/CurioLoreOverlay/@PanelContainer@120/@Control@121/AppraiseCommonButton/@Label@127",
+			"path": "/root/ShotRunner/GameHome/@Control@79/CurioLoreOverlay/@PanelContainer@138/@Control@139/AppraiseCommonButton/@Label@145",
 			"rect_height": 23.0,
 			"size": 15,
 			"text": "鉴古匣(260金)"
@@ -223,7 +286,7 @@
 			"filter": 2,
 			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
 			"height": 23.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/CurioLoreOverlay/@PanelContainer@120/@Control@121/AppraiseRareButton/@Label@128",
+			"path": "/root/ShotRunner/GameHome/@Control@79/CurioLoreOverlay/@PanelContainer@138/@Control@139/AppraiseRareButton/@Label@146",
 			"rect_height": 23.0,
 			"size": 15,
 			"text": "鉴宝匣(680金)"
@@ -232,7 +295,7 @@
 			"filter": 2,
 			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
 			"height": 25.0,
-			"path": "/root/ShotRunner/GameHome/@Control@79/CurioLoreOverlay/@PanelContainer@120/@Control@121/@PanelContainer@130/@Label@129",
+			"path": "/root/ShotRunner/GameHome/@Control@79/CurioLoreOverlay/@PanelContainer@138/@Control@139/@PanelContainer@148/@Label@147",
 			"rect_height": 25.0,
 			"size": 17,
 			"text": "关闭"

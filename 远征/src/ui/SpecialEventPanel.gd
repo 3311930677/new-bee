@@ -19,12 +19,10 @@ func open_event(display: Dictionary) -> void:
 	for side in ["left","right","top","bottom"]: margin.add_theme_constant_override("margin_"+side,18)
 	paper.add_child(margin)
 	var column := VBoxContainer.new()
-	column.add_theme_constant_override("separation",12)
+	column.add_theme_constant_override("separation",10)
 	margin.add_child(column)
-	var title := G.serif_label(String(display.get("name","路上奇遇")),24,Color("6a4a1e"))
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.custom_minimum_size.y = 34
-	column.add_child(title)
+	var plaque := G.Visuals.header_plaque(String(display.get("name","路上奇遇")), 360.0, 38.0)
+	column.add_child(plaque)
 	_scroll = ScrollContainer.new()
 	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL

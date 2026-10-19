@@ -59,17 +59,17 @@ func _build() -> void:
 	banner.position = Vector2(90, 36)
 	add_child(banner)
 
-	# 统一黑漆墨玉金边主面板
+	# 统一黑漆墨玉金边主面板 + 九宫格玄铁外框
 	var panel := PanelContainer.new()
 	var box := StyleBoxFlat.new()
 	box.bg_color = Color("141118", 0.96)
-	box.border_color = Color("4d3b2c")
+	box.border_color = Color("b89658")
 	box.set_border_width_all(2)
-	box.corner_radius_top_left = 8
-	box.corner_radius_top_right = 8
-	box.corner_radius_bottom_left = 8
-	box.corner_radius_bottom_right = 8
-	box.shadow_color = Color(0, 0, 0, 0.55)
+	box.corner_radius_top_left = 6
+	box.corner_radius_top_right = 6
+	box.corner_radius_bottom_left = 6
+	box.corner_radius_bottom_right = 6
+	box.shadow_color = Color(0, 0, 0, 0.58)
 	box.shadow_size = 10
 	box.content_margin_left = 16.0
 	box.content_margin_right = 16.0
@@ -86,6 +86,29 @@ func _build() -> void:
 	_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	panel.add_child(_content)
 
+	# 顶部像素场景横幅衬底与玄铁边框装饰
+	var header_art := TextureRect.new()
+	header_art.texture = G.Visuals._kit_tex("exchange_header_banner.png")
+	header_art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	header_art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	header_art.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	header_art.position = Vector2(0, 0)
+	header_art.size = Vector2(CONTENT_W, 54)
+	header_art.modulate = Color(1, 1, 1, 0.72)
+	header_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_content.add_child(header_art)
+
+	var header_rim := Panel.new()
+	header_rim.position = Vector2(0, 0)
+	header_rim.size = Vector2(CONTENT_W, 54)
+	header_rim.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var rim_sb := StyleBoxFlat.new()
+	rim_sb.bg_color = Color(0.08, 0.06, 0.10, 0.35)
+	rim_sb.border_color = Color("b89658", 0.65)
+	rim_sb.set_border_width_all(1)
+	header_rim.add_theme_stylebox_override("panel", rim_sb)
+	_content.add_child(header_rim)
+
 	# 顶部荣誉余额：金库图标 + 数字（HBox 居中排，免得手算文字宽度）
 	var bar := HBoxContainer.new()
 	bar.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -100,8 +123,8 @@ func _build() -> void:
 	bar.add_child(_honor_l)
 	_content.add_child(bar)
 
-	var tip := G.gold_label("演武场对战可获得荣誉", G.FS_XS, false, Color("a69784"), false)
-	tip.position = Vector2(0, 36)
+	var tip := G.gold_label("演武场对战可获得荣誉", G.FS_XS, false, Color("e6d5b8"), false)
+	tip.position = Vector2(0, 32)
 	tip.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_content.add_child(tip)
 
@@ -179,20 +202,34 @@ func _entry_row(e: Dictionary) -> Control:
 	var eid := String(e.get("id", ""))
 	var root := G.InsetPanel.new()
 	root.custom_minimum_size = Vector2(CONTENT_W, 68)
-	root.setup(Color("1b1622"), Color("423428"), 10.0, 10.0, 6.0, 6.0)
+	root.setup(Color("1b1622"), Color("6e5434"), 10.0, 10.0, 6.0, 6.0)
 
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 12)
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
-	# 物品图标卡槽
+	# 物品图标卡槽（带像素金边卡槽）
 	var icon_slot := PanelContainer.new()
-	var slot_box := StyleBoxFlat.new()
-	slot_box.bg_color = Color("100d14")
-	slot_box.border_color = Color("3d3128")
-	slot_box.set_border_width_all(1)
-	slot_box.set_content_margin_all(2)
-	icon_slot.add_theme_stylebox_override("panel", slot_box)
+	var slot_tex := G.Visuals._kit_tex("slot_rare.png")
+	if slot_tex != null:
+		var sb_tex := StyleBoxTexture.new()
+		sb_tex.texture = slot_tex
+		sb_tex.texture_margin_left = 6.0
+		sb_tex.texture_margin_right = 6.0
+		sb_tex.texture_margin_top = 6.0
+		sb_tex.texture_margin_bottom = 6.0
+		sb_tex.content_margin_left = 4.0
+		sb_tex.content_margin_right = 4.0
+		sb_tex.content_margin_top = 4.0
+		sb_tex.content_margin_bottom = 4.0
+		icon_slot.add_theme_stylebox_override("panel", sb_tex)
+	else:
+		var slot_box := StyleBoxFlat.new()
+		slot_box.bg_color = Color("100d14")
+		slot_box.border_color = Color("6e5434")
+		slot_box.set_border_width_all(1)
+		slot_box.set_content_margin_all(2)
+		icon_slot.add_theme_stylebox_override("panel", slot_box)
 	icon_slot.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	var pic := _icon(String(e.get("icon", "")), 44)
 	icon_slot.add_child(pic)

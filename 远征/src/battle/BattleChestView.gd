@@ -64,7 +64,7 @@ func _ready() -> void:
 	_add("target","换目标",host._command_attack)
 	_target_subtitle=_buttons.target.subtitle
 	_add("flee","撤退",retreat)
-	_add("speed","×1",func():host.speed=2.0 if host.cur_speed()<1.5 else 1.0;refresh())
+	_add("speed","×1",func():host.speed=BattleScene.next_speed(host.cur_speed());refresh())
 	_add("auto","自动",func():host.sim.auto_mode=not host.sim.auto_mode;refresh())
 	host._auto_btn=_buttons.auto
 	host._speed_btn=_buttons.speed

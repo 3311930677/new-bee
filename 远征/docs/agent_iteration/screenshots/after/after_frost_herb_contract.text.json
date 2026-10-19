@@ -1,0 +1,457 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 48.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/@Label@7",
+			"rect_height": 48.0,
+			"size": 32,
+			"text": "商路"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/@Label@8",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "沉渊栈桥市集"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/@Control@10/@Label@9",
+			"rect_height": 42.0,
+			"size": 17,
+			"text": "？"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/@PanelContainer@12/@Control@13/@Label@14",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "行旅日"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/@PanelContainer@12/@Control@13/@Label@15",
+			"rect_height": 28.0,
+			"size": 18,
+			"text": "第 1 日"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/@PanelContainer@12/@Control@13/@Label@16",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "钱囊"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/@PanelContainer@12/@Control@13/@Label@17",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "1000 金"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/@PanelContainer@12/@Control@13/@Label@18",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "行囊"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/@PanelContainer@12/@Control@13/@Label@19",
+			"rect_height": 28.0,
+			"size": 18,
+			"text": "3 / 28"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/@HBoxContainer@20/@Control@22/@Label@21",
+			"rect_height": 40.0,
+			"size": 17,
+			"text": "货市"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/@HBoxContainer@20/@Control@24/@Label@23",
+			"rect_height": 40.0,
+			"size": 17,
+			"text": "运单"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/@HBoxContainer@20/@Control@26/@Label@25",
+			"rect_height": 40.0,
+			"size": 17,
+			"text": "驿站"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Label@27",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "货品"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Label@28",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "买入"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Label@29",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "卖出"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Label@30",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "库存 / 收购"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@32/@Label@34",
+			"rect_height": 50.0,
+			"size": 18,
+			"text": "谷物"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@32/@Label@35",
+			"rect_height": 50.0,
+			"size": 20,
+			"text": "59"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@32/@Label@36",
+			"rect_height": 50.0,
+			"size": 20,
+			"text": "44"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@32/@Label@37",
+			"rect_height": 50.0,
+			"size": 17,
+			"text": "8 / 6"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@39/@Label@41",
+			"rect_height": 50.0,
+			"size": 18,
+			"text": "盐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@39/@Label@42",
+			"rect_height": 50.0,
+			"size": 20,
+			"text": "102"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@39/@Label@43",
+			"rect_height": 50.0,
+			"size": 20,
+			"text": "77"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@39/@Label@44",
+			"rect_height": 50.0,
+			"size": 17,
+			"text": "5 / 7"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@46/@Label@48",
+			"rect_height": 50.0,
+			"size": 18,
+			"text": "药草"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@46/@Label@49",
+			"rect_height": 50.0,
+			"size": 20,
+			"text": "90"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@46/@Label@50",
+			"rect_height": 50.0,
+			"size": 20,
+			"text": "68"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@46/@Label@51",
+			"rect_height": 50.0,
+			"size": 17,
+			"text": "6 / 5"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@53/@Label@55",
+			"rect_height": 50.0,
+			"size": 18,
+			"text": "铁料"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@53/@Label@56",
+			"rect_height": 50.0,
+			"size": 20,
+			"text": "157"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@53/@Label@57",
+			"rect_height": 50.0,
+			"size": 20,
+			"text": "118"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@53/@Label@58",
+			"rect_height": 50.0,
+			"size": 17,
+			"text": "7 / 6"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@60/@Label@61",
+			"rect_height": 28.0,
+			"size": 17,
+			"text": "谷物 · 持有 3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@60/@Label@62",
+			"rect_height": 28.0,
+			"size": 15,
+			"text": "行情 -2%"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@60/@Label@64",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "数量"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@60/@Control@66/@Label@65",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@60/@Control@68/@Label@67",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@60/@Control@70/@Label@69",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "5"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@60/@Control@72/@Label@71",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "买入"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/LedgerLeaf/@Control@60/@Control@74/@Label@73",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "卖出"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/LedgerPaper/@VBoxContainer@11/@Label@75",
+			"rect_height": 40.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/LedgerLayout/@Control@77/@Label@76",
+			"rect_height": 40.0,
+			"size": 17,
+			"text": "返回"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@78/@Control@83/PlaqueLabel",
+			"rect_height": 38.0,
+			"size": 24,
+			"text": "霜关缺药 · 运单"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@78/StatusBadge/@Label@85",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "◆ 待签"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@78/@Label@86",
+			"rect_height": 28.0,
+			"size": 15,
+			"text": "第 1 日 · 运单条款"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@78/@Label@87",
+			"rect_height": 290.0,
+			"size": 15,
+			"text": "货物：药草 ×3、谷物 ×1  （现持 0 / 3）\n港口采购参考 329 金；随当天行情变化。\n交货报酬 449 金 · 运费 56 金 · 参考净利 120 金。\n保证金 40 金；交货时原额退回。\n签约日起 4 日内交货\n未过路口；近路不加费，旧驿绕路加 18 金。\n逾期可付 12 金延期一次，补 2 游戏日。\n自担退 30 金、最多损 22 金；保价退 40 金、最多损 12 金。\n保价报酬 437 金（少 12 金）；退单不扣货。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@78/@Label@88",
+			"rect_height": 48.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@78/@PanelContainer@90/@Label@89",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "自担签约·押40"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@78/@PanelContainer@92/@Label@91",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "保价签约·押40"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@78/@PanelContainer@94/@Label@93",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "返回市集"
+		}
+	]
+}

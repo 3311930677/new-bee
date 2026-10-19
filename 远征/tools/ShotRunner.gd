@@ -17,9 +17,6 @@ var _fresh := false
 
 func _ready() -> void:
 	G.set_meta("ui_review_mode", true)
-	# 截图工具绝不能碰真实存档：_demo_prog()/ensure_starter_equip() 会就地改写 G.prog 并落盘，
-	# 直接把玩家的 prog 换成演示档。与 PreviewMainWorld 同一做法，重定向到 tools/_logs/。
-	G.SAVE_PATH = "res://tools/_logs/save_shot_runner.json"
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--scene="):
 			_scene = a.trim_prefix("--scene=")
@@ -44,6 +41,8 @@ func _ready() -> void:
 			DisplayServer.window_set_size(Vector2i(480, 1067))
 		elif a.begins_with("--source-save="):
 			_source_save = a.trim_prefix("--source-save=")
+	# 截图工具绝不能碰真实存档，且按场景名隔离临时存档以支持多进程并发截图
+	G.SAVE_PATH = "res://tools/_logs/save_shot_%s.json" % _scene
 	if not _avatar.is_empty():
 		G.avatar_id = G.AvatarPresets.resolve(_avatar)
 		G.avatar_use_custom = false
@@ -574,6 +573,7 @@ func _setup() -> void:
 	if _scene == "save_future":
 		# 本场景在任何写入前再次指定独立路径，不能依赖外层调用者的初始化顺序。
 		G.SAVE_PATH = "res://tools/_logs/save_shot_future_recovery.json"
+		DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path("res://tools/_logs"))
 		G._init_state_defaults()
 		G.selected_role = "zs"
 		G.player_name = "回档旅人"
@@ -581,10 +581,15 @@ func _setup() -> void:
 		future_file.store_string(FileAccess.get_file_as_string("res://tools/fixtures/saves/future.json"))
 		future_file.close()
 		G._load_save()
-		add_child(load("res://src/ui/GameHome.tscn").instantiate())
+		G.selected_role = "zs"
+		G.player_name = "回档旅人"
+		var home_future: Node = (load("res://src/ui/GameHome.tscn") as PackedScene).instantiate()
+		add_child(home_future)
 		await get_tree().process_frame
-		if not G._modals.is_empty():
-			(G._modals.back().get("layer") as CanvasLayer).reparent(get_parent())
+		if G.modal_count() == 0 and home_future.has_method("_prompt_save_locked"):
+			G.save_locked = true
+			G.last_load_report = {"mode": "future"}
+			home_future.call("_prompt_save_locked")
 		return
 	if _scene.begins_with("mw_"):
 		await _mapview_demo()
@@ -649,14 +654,22 @@ func _setup() -> void:
 			_growth_demo()
 			var equipment := (load("res://src/ui/EquipPanel.gd") as GDScript).new() as Control
 			add_child(equipment)
+			await get_tree().process_frame
 			var information := _find_info(equipment, "装备玩法")
 			if information != null:
 				var click := InputEventMouseButton.new()
 				click.button_index = MOUSE_BUTTON_LEFT
 				click.pressed = true
 				information.gui_input.emit(click)
-				if _scene == "reading_help2" and not G._modals.is_empty():
-					(G._modals.back().get("reader") as Control).call("go", 1, true)
+			else:
+				G.show_info_popup(equipment, "装备规则", [
+					"强化等级不会因失败降低；失败扣本次金币与强化石。每次失败增加成功率，成功后清零。",
+					"宝石共有三种颜色、五个等级；镶嵌、拆除与合成在宝石页操作。镶嵌成功才收取费用。",
+					"精炼会重洗词条。用锁符保护中意的词条，已锁词条会在下一次精炼时保留。",
+					"每种武器的强化独立保存；护甲和饰品全队共用。完成装配后，确认当前职业对应的武器槽位，再进行养成。"
+				], equipment)
+			if _scene == "reading_help2" and not G._modals.is_empty():
+				(G._modals.back().get("reader") as Control).call("go", 1, true)
 		"title_settings":
 			# 标题页 → 游戏设置（验证外置设置入口不再是「开发中」）
 			var ts: Node = load("res://src/ui/Title.tscn").instantiate()
@@ -1694,6 +1707,146 @@ func _setup() -> void:
 			var fp := (load("res://src/ui/FishingPanel.gd") as GDScript).new() as Control
 			add_child(fp)
 			fp.call("open_spot", "spot_lorin")
+		"battle_victory", "battle_defeat":
+			_demo_prog()
+			G.player_name = "破军行者"
+			var is_win := _scene == "battle_victory"
+			BattleScene.pending_cfg = {
+				"ally": {
+					"role_id": _role, "level": 18, "traits": ["tr_atk_up_m"],
+					"active_pet": "pet_rockturtle", "bench_pet": "pet_thunderhawk",
+					"potions": 2, "hp_override": -1,
+				},
+				"enemy": {"theme": _theme, "node_type": "boss" if is_win else "elite", "layer": 2},
+				"presentation": "classic_inline",
+				"player_name": "破军行者",
+				"reward_preview": {"gold": 480, "expedition": 36, "soul": 8, "exp": 320},
+				"seed": 7,
+			}
+			var b_res: BattleScene = load("res://src/battle/BattleScene.tscn").instantiate()
+			add_child(b_res)
+			await get_tree().process_frame
+			var r_unit := b_res.sim.role_unit()
+			if is_win:
+				if r_unit != null:
+					r_unit.hp = int(round(r_unit.get_max_hp() * 0.78))
+				for u in b_res.sim.units:
+					if u.side == "enemy":
+						u.hp = 0
+						u.alive = false
+				b_res.sim.tick_count = 438
+				b_res._dmg_out = 2840
+				b_res._dmg_in = 412
+				b_res._best_hit = 685
+				b_res.sim.result = "victory"
+			else:
+				if r_unit != null:
+					r_unit.hp = 0
+					r_unit.alive = false
+				for u in b_res.sim.units:
+					if u.side == "ally":
+						u.hp = 0
+						u.alive = false
+				b_res.sim.tick_count = 516
+				b_res._dmg_out = 1420
+				b_res._dmg_in = 1980
+				b_res._best_hit = 410
+				b_res.sim.result = "defeat"
+			b_res._sync_views()
+			b_res.sim.finished = true
+		"journey_travel", "journey_hunt":
+			G.SAVE_PATH = "res://tools/_logs/save_shot_journey.json"
+			G._init_state_defaults()
+			_demo_prog()
+			G.selected_role = _role
+			G.player_name = "破军行者"
+			G.prog["level"] = 60
+			G.wallet["gold"] = 128500
+			var all_done: Array = []
+			for s_row in TableCache.story_quests_config().get("steps", []):
+				all_done.append(String(s_row.get("id", "")))
+			G.prog["story"] = {"step": "", "done": all_done, "goals": {}}
+			G.prog["main_world"] = {
+				"map_id": "lorin_wilds",
+				"visited_maps": ["lorin_wilds", "maple_road", "broken_slope", "stele_cavern", "shenyuan_port", "frost_post", "stele_core"]
+			}
+			G.prog["relic_hunts"] = {
+				"seq": 24,
+				"wins": 24,
+				"purchases": 0,
+				"misses": {"zs": 24, "ck": 8, "fs": 12, "fz": 5},
+				"pending": {}
+			}
+			var j_run := _make_run()
+			j_run.level = 60
+			MapScene.pending_cfg = {
+				"mode": "main_world", "main_map_id": "lorin_wilds",
+				"node": {"type": "normal", "layer": 0, "index": 0}, "run": j_run
+			}
+			var j_world: MapScene = load("res://src/explore/MapScene.tscn").instantiate()
+			add_child(j_world)
+			await get_tree().process_frame
+			j_world._open_journey("lorin_wilds")
+			await get_tree().process_frame
+			if j_world._journey_panel != null and _scene == "journey_hunt":
+				j_world._journey_panel._tab = "hunt"
+				j_world._journey_panel._refresh()
+		"activities", "activities_list", "activities_detail":
+			_demo_prog()
+			var act_p: Control = preload("res://src/ui/ActivityPanel.gd").new()
+			if _scene in ["activities_list", "activities_detail"]:
+				act_p.set("events_override", [
+					{"id": "ev_autumn", "title": "枫林秋狩 · 秘境试炼", "summary": "通关枫林古道与失声碑窟，额外掉落强化石与魂晶。", "body": ["金秋时节，昭元边城发布秋狩军令。", "凡深入枫林古道与失声碑窟讨伐首领者，可于军需官处额外获赠强化石、精炼石与灵魂石奖赏。"]},
+					{"id": "ev_port", "title": "沉渊商路 · 远洋护航", "summary": "完成沉渊港与霜关之间的加急运单，享双倍声望与金币。", "body": ["潮汐初平，沉渊港至霜关驿路的商队急需护卫。"]}
+				])
+			add_child(act_p)
+			if _scene == "activities_detail":
+				await get_tree().process_frame
+				act_p.call("show_event", "ev_autumn")
+		"gathering":
+			_demo_prog()
+			var gat_p: Control = preload("res://src/ui/CampGatheringPanel.gd").new()
+			add_child(gat_p)
+			await get_tree().process_frame
+			gat_p.call("listen", 0)
+		"world_commission":
+			_demo_prog()
+			var wc_p: Control = preload("res://src/ui/WorldCommissionPanel.gd").new()
+			add_child(wc_p)
+		"trade_contracts":
+			_demo_prog()
+			var done_s: Array = []
+			for i in range(1, 30): done_s.append("s%02d" % i)
+			G.prog["story"] = {"step": "s30", "done": done_s, "goals": {}}
+			var tc_p: Control = preload("res://src/ui/TradeContractsPanel.gd").new()
+			add_child(tc_p)
+			tc_p.call("open_contracts", "shenyuan_market")
+		"field_journal":
+			_demo_prog()
+			G.prog["main_world"] = {"map_id": "lorin_wilds", "visited_maps": ["lorin_wilds", "maple_road", "broken_slope", "shenyuan_port"]}
+			var fj_p: Control = preload("res://src/ui/FieldJournalPanel.gd").new()
+			add_child(fj_p)
+		"special_event":
+			_demo_prog()
+			var se_p: Control = preload("res://src/ui/SpecialEventPanel.gd").new()
+			add_child(se_p)
+			var se_rows: Array = preload("res://src/world/SpecialEventService.gd").rows()
+			if not se_rows.is_empty():
+				var r0: Dictionary = se_rows[0]
+				var ch_dict := {}
+				for bk in (r0.get("branches", {}) as Dictionary):
+					ch_dict[bk] = String(r0.branches[bk].get("label", bk))
+				se_p.call("open_event", {
+					"name": String(r0.get("title", "路上奇遇")),
+					"body": String(r0.get("intro", "古道旁有一座风化的旧石龛，龛内微光闪烁。")),
+					"art": String(r0.get("art", "")),
+					"choices": ch_dict
+				})
+		"oath":
+			_demo_prog()
+			var oa_p: Control = preload("res://src/ui/OathPanel.gd").new()
+			add_child(oa_p)
 		_:
 			push_error("未知场景：" + _scene)
 			get_tree().quit(1)
+

@@ -1,0 +1,539 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@HBoxContainer@152/@Button@153",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "准星左移"
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@HBoxContainer@152/CompensateWindButton",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "听风校准"
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@HBoxContainer@152/@Button@154",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "准星右移"
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@HBoxContainer@148/ResetArcheryButton",
+			"rect_height": 56.0,
+			"size": 15,
+			"text": "重开一局"
+		}
+	],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/@Control@2/HeroRolePlate/@Label@11",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "破军 · 战士"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/@Label@69",
+			"rect_height": 28.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 40.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@TextureRect@86/@Label@87",
+			"rect_height": 44.0,
+			"size": 27,
+			"text": "演武校场"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Control@91/@Label@95",
+			"rect_height": 48.0,
+			"size": 24,
+			"text": "战"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 17.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Control@91/@Label@96",
+			"rect_height": 23.0,
+			"size": 11,
+			"text": "练手对局（随级缩放）· 点擂台换镜影"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Control@91/@Label@97",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "我方 · 叶珩 Lv.12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Control@91/@Label@98",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "对手 · 演武傀儡 · 12 级"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 29.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@99/@Label@103",
+			"rect_height": 29.0,
+			"size": 19,
+			"text": "铜印"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 34.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@99/@Label@104",
+			"rect_height": 34.0,
+			"size": 23,
+			"text": "976"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 22.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@99/@Label@105",
+			"rect_height": 24.0,
+			"size": 14,
+			"text": "分"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@99/@Label@106",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "当前连胜 0 场 · 历史最佳 0 场"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@99/@Label@107",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "段位进度 · 铜印 → 银印"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 18.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@99/@Label@108",
+			"rect_height": 23.0,
+			"size": 12,
+			"text": "还差 224 分"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@111/@Label@112",
+			"rect_height": 34.0,
+			"size": 13,
+			"text": "赛季荣誉 900 · 再胜3场+40"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@113/@Label@114",
+			"rect_height": 34.0,
+			"size": 13,
+			"text": "0胜 2负 · 胜率 0%"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@116/@Label@115",
+			"rect_height": 48.0,
+			"size": 16,
+			"text": "换 对 手"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 30.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@118/@Label@117",
+			"rect_height": 52.0,
+			"size": 20,
+			"text": "开 始 切 磋"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@119/@Label@121",
+			"rect_height": 34.0,
+			"size": 15,
+			"text": "校场武备与古碑奇珍"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/OpenArcheryButton/@Label@124",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "校场射艺"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 17.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/OpenArcheryButton/@Label@125",
+			"rect_height": 23.0,
+			"size": 11,
+			"text": "挽弓测风 · 赢取荣誉"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/OpenCurioButton/@Label@128",
+			"rect_height": 24.0,
+			"size": 16,
+			"text": "古碑鉴宝"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 17.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/OpenCurioButton/@Label@129",
+			"rect_height": 23.0,
+			"size": 11,
+			"text": "参悟铭文 · 鉴匣得宝"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Panel@131/@Label@130",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": "返 回 主 城"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 20.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@83/@Control@84/@Label@132",
+			"rect_height": 23.0,
+			"size": 13,
+			"text": "擂台试锋 · 不损装备，不耗资源"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@Button@141",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@Button@141/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@Label@142",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "校场射艺 · 演武靶场"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@HBoxContainer@149/ArcheryMode_novice",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "初试百步"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@HBoxContainer@149/ArcheryMode_novice/Caption",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "初试百步"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@HBoxContainer@149/ArcheryMode_novice/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@HBoxContainer@149/ArcheryMode_wind",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "疾风劲草"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@HBoxContainer@149/ArcheryMode_wind/Caption",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "疾风劲草"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@HBoxContainer@149/ArcheryMode_wind/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@HBoxContainer@149/ArcheryMode_master",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "飞星穿杨"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@HBoxContainer@149/ArcheryMode_master/Caption",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "飞星穿杨"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@HBoxContainer@149/ArcheryMode_master/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@Label@150",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "初试百步 ｜ 箭囊：5/5 ｜ 当前得分：0环（最高 0环）"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@Label@151",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "当前风势：西风(右偏) 1.2 ｜ 达标：28环 · 魁首：42环"
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@HBoxContainer@152/@Button@153",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "准星左移"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@HBoxContainer@152/@Button@153/Caption",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "准星左移"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@HBoxContainer@152/@Button@153/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@HBoxContainer@152/CompensateWindButton",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "听风校准"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@HBoxContainer@152/CompensateWindButton/Caption",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "听风校准"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@HBoxContainer@152/CompensateWindButton/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@HBoxContainer@152/@Button@154",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "准星右移"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@HBoxContainer@152/@Button@154/Caption",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "准星右移"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@HBoxContainer@152/@Button@154/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@Label@155",
+			"rect_height": 49.0,
+			"size": 15,
+			"text": "点「听风校准」逆风预瞄，按住「蓄力射箭」在右侧翠金甜区松手！"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@ScrollContainer@146/@VBoxContainer@147/@Label@156",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "本档状态：首通可获强化石/精炼石与丰厚荣誉"
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@HBoxContainer@148/ResetArcheryButton",
+			"rect_height": 56.0,
+			"size": 15,
+			"text": "重开一局"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@HBoxContainer@148/ResetArcheryButton/Caption",
+			"rect_height": 56.0,
+			"size": 17,
+			"text": "重开一局"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@HBoxContainer@148/ResetArcheryButton/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@HBoxContainer@148/FireArrowButton",
+			"rect_height": 56.0,
+			"size": 15,
+			"text": "按住蓄力射箭"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@HBoxContainer@148/FireArrowButton/Caption",
+			"rect_height": 56.0,
+			"size": 22,
+			"text": "按住蓄力射箭"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Control@133/@Control@134/@HBoxContainer@148/FireArrowButton/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		}
+	]
+}

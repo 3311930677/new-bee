@@ -1,0 +1,88 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@6/@Control@7/@Control@8/PlaqueLabel",
+			"rect_height": 38.0,
+			"size": 24,
+			"text": "守碑出行誓约"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@6/@Control@7/@Label@9",
+			"rect_height": 88.0,
+			"size": 17,
+			"text": "三誓约可换；本图当日已锁定的誓约不会随切换重置。每张野外图每日一个目标，报酬不含剧情首通物。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@6/@Control@7/@PanelContainer@12/@Label@11",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "庇护·立约"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@6/@Control@7/@Label@14",
+			"rect_height": 83.0,
+			"size": 17,
+			"text": "护送路边旅人到安全点；防御 +5%，攻击 -5%，药剂回复 +5%。\n可得守护纹样 · 宠物粮 × 2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@6/@Control@7/@PanelContainer@17/@Label@16",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "征伐·立约"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@6/@Control@7/@Label@19",
+			"rect_height": 83.0,
+			"size": 17,
+			"text": "击退地图上的誓约前哨；攻击 +5%，药剂回复 -5%。\n可得前哨纹样 · 强化石 × 2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@6/@Control@7/@PanelContainer@22/@Label@21",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "丰收·立约"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@6/@Control@7/@Label@24",
+			"rect_height": 83.0,
+			"size": 17,
+			"text": "清理路边障碍、留根采样；攻击 -5%，完成目标多获一份普通培养材料。\n可得行旅营帐纹样 · 强化石 × 2 / 宠物粮 × 1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@6/@Control@7/@PanelContainer@26/@Label@25",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "返回"
+		}
+	]
+}

@@ -1222,9 +1222,22 @@ func _open_dialog(nd: Dictionary, guest: bool, offer_return_job := true) -> void
 	var head := String(nd.get("name", "???"))
 	if title != "":
 		head += " · " + title
-	var name_l := G.serif_label(head, 24, G.BANNER)
+	var np_tex := G.Visuals._kit_tex("speaker_nameplate_jade.png")
+	if np_tex != null:
+		var np_tr := TextureRect.new()
+		np_tr.texture = np_tex
+		np_tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		np_tr.stretch_mode = TextureRect.STRETCH_SCALE
+		np_tr.position = Vector2(0, -2)
+		np_tr.size = Vector2(236, 30)
+		np_tr.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		np_tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		content.add_child(np_tr)
+	var name_l := G.serif_label(head, G.FS_MD, Color("f4dfb5") if np_tex != null else G.BANNER)
 	name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	name_l.position = Vector2(0, 0)
+	name_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	name_l.position = Vector2(14, -1) if np_tex != null else Vector2(0, 0)
+	name_l.custom_minimum_size = Vector2(216, 28)
 	content.add_child(name_l)
 
 	# 对话立绘：优先生成图 npc_<id>_portrait，无则走旧三杰映射（merchant/blacksmith/courier）
@@ -1253,10 +1266,11 @@ func _open_dialog(nd: Dictionary, guest: bool, offer_return_job := true) -> void
 		text_x = 84.0
 		text_w = 316.0
 
+	content.add_child(G.Visuals.parchment_subcard(Vector2(text_x, 32), Vector2(text_w, 64)))
 	var line := G.text_label("", G.FS_MD, Color("3a2a14"))
-	line.position = Vector2(text_x, 34)
-	line.custom_minimum_size = Vector2(text_w, 0)
-	line.size.x = text_w
+	line.position = Vector2(text_x + 8.0, 36)
+	line.custom_minimum_size = Vector2(text_w - 16.0, 0)
+	line.size.x = text_w - 16.0
 	line.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	content.add_child(line)
 

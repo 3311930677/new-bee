@@ -1,0 +1,728 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@23",
+			"rect_height": 70.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@29",
+			"rect_height": 70.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@35",
+			"rect_height": 70.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@41",
+			"rect_height": 70.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@47",
+			"rect_height": 70.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@53",
+			"rect_height": 70.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@10/@Button@59",
+			"rect_height": 96.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@17/@Button@66",
+			"rect_height": 56.0,
+			"size": 15,
+			"text": "卸下"
+		}
+	],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Button@6",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "‹"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Button@6/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Label@7",
+			"rect_height": 40.0,
+			"size": 22,
+			"text": "装备整备"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Button@8",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "背包"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Button@8/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "背包"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Button@8/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@23",
+			"rect_height": 70.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@23/@Label@21",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "+3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@23/@Label@22",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Label@24",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "大剑"
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@29",
+			"rect_height": 70.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@29/@Label@27",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@29/@Label@28",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Label@30",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "长枪"
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@35",
+			"rect_height": 70.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@35/@Label@33",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@35/@Label@34",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Label@36",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "法杖"
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@41",
+			"rect_height": 70.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@41/@Label@39",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "+0"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@41/@Label@40",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Label@42",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "圣锤"
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@47",
+			"rect_height": 70.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@47/@Label@45",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "+2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@47/@Label@46",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Label@48",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "护甲"
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@53",
+			"rect_height": 70.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@53/@Label@51",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "+1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Button@53/@Label@52",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@9/@Label@54",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "饰品"
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@10/@Button@59",
+			"rect_height": 96.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@10/@Button@59/@Label@57",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@10/@Button@59/@Label@58",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 30.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@10/@Label@60",
+			"rect_height": 30.0,
+			"size": 20,
+			"text": "生铁大剑"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@10/@Label@61",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "普通 · 强化 +3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@10/@Label@62",
+			"rect_height": 40.0,
+			"size": 15,
+			"text": "攻击 +23"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@HBoxContainer@12/@Button@63",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "强化"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@HBoxContainer@12/@Button@63/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "强化"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@HBoxContainer@12/@Button@63/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@HBoxContainer@12/@Button@64",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "宝石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@HBoxContainer@12/@Button@64/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "宝石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@HBoxContainer@12/@Button@64/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@HBoxContainer@12/@Button@65",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "精炼"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@HBoxContainer@12/@Button@65/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "精炼"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@HBoxContainer@12/@Button@65/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 35.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@VBoxContainer@76/@HBoxContainer@67/@Label@68",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "+3 → +4"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@VBoxContainer@76/@HFlowContainer@69/@PanelContainer@70/@Label@71",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "攻击 +1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@VBoxContainer@76/@HBoxContainer@72/@Label@73",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "成功率 65.6% · 失败不掉级"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@VBoxContainer@76/@HBoxContainer@72/@Button@74",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": "说明"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@VBoxContainer@76/@HBoxContainer@72/@Button@74/Caption",
+			"rect_height": 44.0,
+			"size": 17,
+			"text": "说明"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@VBoxContainer@76/@HBoxContainer@72/@Button@74/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@VBoxContainer@76/@HBoxContainer@75/@Control@82/@Label@78",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "金币"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 35.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@VBoxContainer@76/@HBoxContainer@75/@Control@82/@Label@79",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "600"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@VBoxContainer@76/@HBoxContainer@75/@Control@82/@Label@80",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "持有 12800"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@VBoxContainer@76/@HBoxContainer@75/@Control@82/@Label@81",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@VBoxContainer@76/@HBoxContainer@75/@Control@88/@Label@84",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "强化石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 35.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@VBoxContainer@76/@HBoxContainer@75/@Control@88/@Label@85",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@VBoxContainer@76/@HBoxContainer@75/@Control@88/@Label@86",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "持有 12"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@VBoxContainer@76/@HBoxContainer@75/@Control@88/@Label@87",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@Label@90",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "强化积累 0/3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@HBoxContainer@91/@Label@92",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "宝石"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@HBoxContainer@91/@Button@94",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@HBoxContainer@91/@Button@96",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@HBoxContainer@91/@Button@98",
+			"rect_height": 44.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@ScrollContainer@15/@VBoxContainer@16/@Label@99",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "词条：攻击 +5.0%"
+		},
+		{
+			"filter": 1,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@17/@Button@66",
+			"rect_height": 56.0,
+			"size": 15,
+			"text": "卸下"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@17/@Button@66/Caption",
+			"rect_height": 56.0,
+			"size": 17,
+			"text": "卸下"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@17/@Button@66/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@17/@Button@89",
+			"rect_height": 56.0,
+			"size": 15,
+			"text": "确认强化"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 33.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@17/@Button@89/Caption",
+			"rect_height": 33.0,
+			"size": 22,
+			"text": "确认强化"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Control@17/@Button@89/Subtitle",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "金币 600 · 强化石 1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@3/@Label@18",
+			"rect_height": 32.0,
+			"size": 15,
+			"text": ""
+		}
+	]
+}

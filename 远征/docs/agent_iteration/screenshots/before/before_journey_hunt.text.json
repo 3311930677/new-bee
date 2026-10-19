@@ -1,0 +1,557 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/WorldTask_story/@Label@79",
+			"rect_height": 21.0,
+			"size": 15,
+			"text": "三城可回访"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/WorldTask_daily/@Label@135",
+			"rect_height": 21.0,
+			"size": 15,
+			"text": "0/2 已交付"
+		}
+	],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@8/@Node2D@22/@Label@23",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "枫林古道"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@8/@CharacterBody2D@24/@Panel@27/@Label@30",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "破军行者  Lv60"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@8/WorldCompanion/@Label@37",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "岩龟"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@8/@Node2D@62/@Label@63",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "奇遇 · 一封错送的喜帖"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@8/@Node2D@105/@Label@109",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "闻叔"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@8/@Node2D@115/@Label@119",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "云游"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@Node2D@8/@Node2D@120/@Label@124",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "小满"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/WorldStatus/@Label@65",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "Lv"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/WorldStatus/@Label@66",
+			"rect_height": 28.0,
+			"size": 18,
+			"text": "60"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/WorldStatus/@Label@67",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "2610/2610"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/WorldStatus/@Label@68",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "♥"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/WorldStatus/@Label@69",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "历练"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/WorldStatus/@Label@70",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "100%"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/WorldGold",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/WorldGold/@Label@77",
+			"rect_height": 28.0,
+			"size": 15,
+			"text": "128500"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/RegionTitle/@Label@78",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "昭元边城"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/WorldTask_story",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/WorldTask_story/TaskBadge",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "归"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/WorldTask_story/TaskHeading",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "当前主线"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/WorldTask_story/@Label@79",
+			"rect_height": 21.0,
+			"size": 15,
+			"text": "三城可回访"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/WorldTask_story/Action_",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/WorldTask_story/Action_/Caption",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/Action_伙伴",
+			"rect_height": 56.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/Action_伙伴/Caption",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "伙伴"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/Action_药剂",
+			"rect_height": 64.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/Action_药剂/Caption",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "药剂"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/Action_药剂/CountBadge/Count",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "2"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/Action_疾行",
+			"rect_height": 56.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/Action_疾行/Caption",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "疾行"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/Action_营帐",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/Action_营帐/Caption",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "营帐"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/Minimap/@Label@82",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "北"
+		},
+		{
+			"filter": 2,
+			"font": "",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/WorldTask_daily",
+			"rect_height": 44.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Bold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/WorldTask_daily/TaskBadge",
+			"rect_height": 24.0,
+			"size": 15,
+			"text": "委"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/WorldTask_daily/TaskHeading",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "行旅委托"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/WorldTask_daily/@Label@135",
+			"rect_height": 21.0,
+			"size": 15,
+			"text": "0/2 已交付"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@Label@144",
+			"rect_height": 35.0,
+			"size": 24,
+			"text": "驿路与传世"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@HBoxContainer@145/@PanelContainer@147/@Label@146",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "已探索地点"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@HBoxContainer@145/@PanelContainer@149/@Label@148",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "传世挑战"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@Label@150",
+			"rect_height": 70.0,
+			"size": 17,
+			"text": "通关且60级开放 · 传世武器掉率0.4%\n本职业保底24/400 · 成功挑战24次"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@ScrollContainer@153/@VBoxContainer@154/@Label@193",
+			"rect_height": 54.0,
+			"size": 17,
+			"text": "每次胜利给精炼石×1、宠物粮×2。失败不计保底；传世挑战可立即再打。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@ScrollContainer@153/@VBoxContainer@154/@Label@194",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "传世·炉芯试炼"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@ScrollContainer@153/@VBoxContainer@154/@Label@195",
+			"rect_height": 54.0,
+			"size": 17,
+			"text": "提前准备护盾或药剂；击破援兵后把爆发留给破绽。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@ScrollContainer@153/@VBoxContainer@154/@PanelContainer@197/@Label@196",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "挑战首领"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@ScrollContainer@153/@VBoxContainer@154/@Label@198",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "传世·雪幕试炼"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@ScrollContainer@153/@VBoxContainer@154/@Label@199",
+			"rect_height": 54.0,
+			"size": 17,
+			"text": "提前准备护盾或药剂；击破援兵后把爆发留给破绽。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@ScrollContainer@153/@VBoxContainer@154/@PanelContainer@201/@Label@200",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "挑战首领"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@ScrollContainer@153/@VBoxContainer@154/@Label@202",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "传世·碑心试炼"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@ScrollContainer@153/@VBoxContainer@154/@Label@203",
+			"rect_height": 54.0,
+			"size": 17,
+			"text": "提前准备护盾或药剂；击破援兵后把爆发留给破绽。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@ScrollContainer@153/@VBoxContainer@154/@PanelContainer@205/@Label@204",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "挑战首领"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@ScrollContainer@153/@VBoxContainer@154/@Label@206",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "山河·传世大剑 · 回收25,000金币"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@ScrollContainer@153/@VBoxContainer@154/@Label@207",
+			"rect_height": 54.0,
+			"size": 17,
+			"text": "归路守护：开场获得10%最大生命护盾。破绽追击：对处于破绽的首领伤害提高15%。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@ScrollContainer@153/@VBoxContainer@154/@PanelContainer@209/@Label@208",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "购买武器·90000金币"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@ScrollContainer@153/@VBoxContainer@154/@Label@210",
+			"rect_height": 54.0,
+			"size": 17,
+			"text": "成功挑战20次后可购买；传世武器自动锁定，可解锁后回收。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@ScrollContainer@153/@VBoxContainer@154/@Label@211",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "宠物品阶：普通 → 稀有 → 史诗 → 传说 → 传世"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@ScrollContainer@153/@VBoxContainer@154/@Label@212",
+			"rect_height": 54.0,
+			"size": 17,
+			"text": "品阶代表种类与能力稀有程度；资质星级决定成长。同样等级也要看定位、技能和培养。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@ScrollContainer@153/@VBoxContainer@154/@PanelContainer@214/@Label@213",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "传世·归路圣鹿·挑战120胜领取"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@ScrollContainer@153/@VBoxContainer@154/@Label@215",
+			"rect_height": 54.0,
+			"size": 17,
+			"text": "初始25级、4星资质，群体治疗与护盾；领取后可在伙伴页培养和派出。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/MapScene/@CanvasLayer@64/@Control@137/@CenterContainer@141/@PanelContainer@142/@VBoxContainer@143/@PanelContainer@156/@Label@155",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "继续探索"
+		}
+	]
+}

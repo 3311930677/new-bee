@@ -48,6 +48,8 @@ _backups/
 
 # Local archive and engine binary exceed GitHub's regular file size limit.
 /远征.zip
+/远征/Yuanzheng.exe
+/远征/Yuanzheng.console.exe
 /工具/godot_4.7.2/Godot_v4.7.2-stable_win64.exe
 
 # Review prototypes create machine-local Godot runtime caches.

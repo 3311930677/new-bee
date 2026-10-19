@@ -146,6 +146,7 @@ class ItemCell extends Button:
 		for state in ["normal","hover","pressed","focus","disabled"]: add_theme_stylebox_override(state,StyleBoxEmpty.new())
 		for event in [resized,mouse_entered,mouse_exited,focus_entered,focus_exited]: event.connect(queue_redraw)
 	func _draw() -> void:
+		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		if disabled and item_image.texture == null:
 			UI.surface(self, Rect2(Vector2.ZERO, size), Color("120f15", 0.65), Color("382e22", 0.45), 2.0)
 			var c := size * 0.5
@@ -153,8 +154,10 @@ class ItemCell extends Button:
 			draw_line(Vector2(c.x, c.y - 4), Vector2(c.x, c.y + 4), Color("382e22", 0.5), 1.0)
 			return
 		UI.surface(self,Rect2(Vector2.ZERO,size),UI.SELECTED if selected else Color("17141a",.92),UI.GOLD if selected or has_focus() else UI.BRONZE)
+		var slot_tex := G.Visuals._kit_tex("slot_legend.png" if (rarity_rank >= 4 or selected) else "slot_rare.png")
+		G.Visuals.nine_slice(self, slot_tex, Rect2(Vector2.ZERO, size), 10.0, 10.0, Color(1, 1, 1, 0.55 if (rarity_rank >= 4 or selected) else 0.36))
 		if rarity_rank>1:
-			for radius in [34,28,20]:draw_circle(size*.5,radius,Color(rarity,.045))
+			for radius in [34,28,20]:draw_circle(size*.5,radius,Color(rarity,.05))
 			draw_colored_polygon(PackedVector2Array([Vector2(2,2),Vector2(14,2),Vector2(2,14)]),rarity)
 			if rarity_rank==5:draw_rect(Rect2(5,5,2,2),UI.PAPER)
 		if selected:draw_rect(Rect2(1,1,size.x-2,size.y-2),UI.GOLD,false,2)
@@ -254,13 +257,16 @@ class GrowthRow extends Button:
 			event.connect(queue_redraw)
 
 	func _draw() -> void:
-		UI.surface(self, Rect2(Vector2.ZERO, size), UI.SELECTED if is_hovered() else UI.FACE, UI.COPPER if has_focus() else Color("3a3037"))
+		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		UI.surface(self, Rect2(Vector2.ZERO, size), UI.SELECTED if is_hovered() else UI.FACE, UI.COPPER if (has_focus() or actionable) else Color("4a3d33"))
 		if actionable:
-			draw_rect(Rect2(0, 5, 2.5, size.y - 10), UI.GOLD)
+			draw_rect(Rect2(0, 5, 3.0, size.y - 10), UI.GOLD)
 
-		# 图标与边框
-		draw_rect(Rect2(Vector2(10, 4), Vector2(44, 44)), Color("110e15"))
-		draw_rect(Rect2(Vector2(10, 4), Vector2(44, 44)), Color("3e3228"), false, 1.0)
+		# 图标与边框（使用 slot_rare 九宫格镶边）
+		var icon_box := Rect2(Vector2(10, 4), Vector2(44, 44))
+		draw_rect(icon_box, Color("110e15"))
+		G.Visuals.nine_slice(self, G.Visuals._kit_tex("slot_rare.png"), icon_box, 6.0, 6.0, Color(1, 1, 1, 0.55))
+		draw_rect(icon_box, Color("6e5434" if actionable else "3e3228"), false, 1.0)
 		image.position = Vector2(12, 6)
 
 		# 标题与副标题位置：保证宽度充分，杜绝折行或文字遮挡

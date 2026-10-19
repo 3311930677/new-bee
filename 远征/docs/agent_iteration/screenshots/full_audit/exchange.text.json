@@ -1,0 +1,205 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/@Control@2/HeroRolePlate/@Label@11",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "破军 · 战士"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 24.0,
+			"path": "/root/ShotRunner/GameHome/TownHome/@Label@69",
+			"rect_height": 28.0,
+			"size": 16,
+			"text": ""
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 59.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@Panel@84/@Label@83",
+			"rect_height": 59.0,
+			"size": 40,
+			"text": "演武补给"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@85/@Control@86/@HBoxContainer@89/@Label@88",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "荣誉 900"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@85/@Control@86/@Label@90",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "演武场对战可获得荣誉"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@85/@Control@86/@ScrollContainer@93/@Control@94/@PanelContainer@103/@HBoxContainer@102/@VBoxContainer@99/@Label@97",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "强化石 ×3"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@85/@Control@86/@ScrollContainer@93/@Control@94/@PanelContainer@103/@HBoxContainer@102/@VBoxContainer@99/@Label@98",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "80 荣誉"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@85/@Control@86/@ScrollContainer@93/@Control@94/@PanelContainer@103/@HBoxContainer@102/@PanelContainer@101/@Label@100",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "兑换"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@85/@Control@86/@ScrollContainer@93/@Control@94/@PanelContainer@112/@HBoxContainer@111/@VBoxContainer@108/@Label@106",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "精炼石 ×2"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@85/@Control@86/@ScrollContainer@93/@Control@94/@PanelContainer@112/@HBoxContainer@111/@VBoxContainer@108/@Label@107",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "120 荣誉"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@85/@Control@86/@ScrollContainer@93/@Control@94/@PanelContainer@112/@HBoxContainer@111/@PanelContainer@110/@Label@109",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "兑换"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@85/@Control@86/@ScrollContainer@93/@Control@94/@PanelContainer@121/@HBoxContainer@120/@VBoxContainer@117/@Label@115",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "锁定符 ×1"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@85/@Control@86/@ScrollContainer@93/@Control@94/@PanelContainer@121/@HBoxContainer@120/@VBoxContainer@117/@Label@116",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "160 荣誉"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@85/@Control@86/@ScrollContainer@93/@Control@94/@PanelContainer@121/@HBoxContainer@120/@PanelContainer@119/@Label@118",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "兑换"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@85/@Control@86/@ScrollContainer@93/@Control@94/@PanelContainer@130/@HBoxContainer@129/@VBoxContainer@126/@Label@124",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "攻击宝石·叁"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@85/@Control@86/@ScrollContainer@93/@Control@94/@PanelContainer@130/@HBoxContainer@129/@VBoxContainer@126/@Label@125",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "240 荣誉"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@85/@Control@86/@ScrollContainer@93/@Control@94/@PanelContainer@130/@HBoxContainer@129/@PanelContainer@128/@Label@127",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "兑换"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@85/@Control@86/@ScrollContainer@93/@Control@94/@PanelContainer@139/@HBoxContainer@138/@VBoxContainer@135/@Label@133",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "生命宝石·叁"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@85/@Control@86/@ScrollContainer@93/@Control@94/@PanelContainer@139/@HBoxContainer@138/@VBoxContainer@135/@Label@134",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "240 荣誉"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@85/@Control@86/@ScrollContainer@93/@Control@94/@PanelContainer@139/@HBoxContainer@138/@PanelContainer@137/@Label@136",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "兑换"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 23.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@85/@Control@86/@Label@140",
+			"rect_height": 23.0,
+			"size": 15,
+			"text": "点「兑 换」消耗荣誉换取资源"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/GameHome/@Control@79/@PanelContainer@85/@Control@86/@PanelContainer@142/@Label@141",
+			"rect_height": 27.0,
+			"size": 18,
+			"text": "返回"
+		}
+	]
+}

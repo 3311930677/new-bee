@@ -43,10 +43,28 @@ func setup(rows: Array) -> void:
 	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），不再各写一块纯灰
 	G.veil(self, 0.66, true)
 
-	var title := G.serif_label("选择一份祝福", G.FS_BIG, Color("ffd9a0"))
-	title.position = Vector2(0, 158)
-	title.custom_minimum_size = Vector2(VIEW_W, 0)
-	add_child(title)
+	# 顶部古碑三选一横幅与雕花木匾
+	var header_banner := TextureRect.new()
+	header_banner.texture = G.Visuals._kit_tex("picker_header_banner.png")
+	header_banner.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	header_banner.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	header_banner.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	header_banner.position = Vector2(36, 134)
+	header_banner.size = Vector2(VIEW_W - 72, 76)
+	header_banner.modulate = Color(1, 1, 1, 0.78)
+	header_banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(header_banner)
+
+	var banner_plaque := G.banner_box("选择一份祝福", 300, 48, G.FS_BIG)
+	banner_plaque.position = Vector2((VIEW_W - 300.0) * 0.5, 148)
+	banner_plaque.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(banner_plaque)
+
+	var sub_hint := G.gold_label("◆ 碑刻赐福 · 三择其一以助远征 ◆", G.FS_XS, false, Color("e6d2a2"), false)
+	sub_hint.position = Vector2(0, 206)
+	sub_hint.custom_minimum_size = Vector2(VIEW_W, 20)
+	sub_hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(sub_hint)
 
 	var gap := 12.0
 	var x0 := (VIEW_W - (3.0 * CARD_W + 2.0 * gap)) * 0.5
@@ -86,10 +104,8 @@ func _make_card(row: Dictionary) -> Control:
 	root.add_child(panel)
 
 	# 类别色带：右端斜切，避免齐刷刷的矩形模板感。
-	# 统一金棕——原来按类型上青蓝/紫，跟羊皮纸+金棕的美术体系打架（"AI 拼贴感"来源之一）；
-	# 类型区分交给标签文字颜色与底部点选条
 	var band := Polygon2D.new()
-	band.color = Color("c9a45c")
+	band.color = Color("983e2b") if t == "double" else Color("234746")
 	band.polygon = PackedVector2Array([
 		Vector2(10, 10), Vector2(CARD_W - 10, 10), Vector2(CARD_W - 18, 16), Vector2(10, 16),
 	])
@@ -116,50 +132,70 @@ func _make_card(row: Dictionary) -> Control:
 	tag_l.size = Vector2(CARD_W - 20 - (tag_x - 10.0), 16)
 	root.add_child(tag_l)
 
-	var name_l := G.serif_label(String(row.get("name", "")), G.FS_MD, Color("5a3a1e"))
+	var name_l := G.serif_label(String(row.get("name", "")), G.FS_MD, Color("453d2c"))
 	name_l.position = Vector2(10, 40)
 	name_l.size = Vector2(CARD_W - 20, 24)
 	name_l.clip_text = true
 	root.add_child(name_l)
 
 	var line := ColorRect.new()
-	line.color = Color(0.55, 0.42, 0.24, 0.5)
-	line.position = Vector2(10, 70)
+	line.color = Color("b89658", 0.65)
+	line.position = Vector2(10, 68)
 	line.size = Vector2(CARD_W - 20, 1)
 	root.add_child(line)
 
 	# 描述最长约 19 字符（「免死 1 次并回 20%HP（每场 1 次）」）：
 	# FS_XS(13px) 每行约 9 汉字，给 3 行高度；中文无空格必须按字符断行
-	var desc_l := G.text_label(String(row.get("desc", "")), G.FS_XS, G.TEXT_MUTED)
-	desc_l.position = Vector2(10, 78)
-	desc_l.size = Vector2(CARD_W - 20, 54)
+	var desc_l := G.text_label(String(row.get("desc", "")), G.FS_XS, G.TEXT_DARK)
+	desc_l.position = Vector2(10, 74)
+	desc_l.size = Vector2(CARD_W - 20, 56)
 	desc_l.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
 	desc_l.clip_text = true
 	root.add_child(desc_l)
 
-	# 中部大号图标：按词条效果取 宝石/流派/双刃 素材，填充描述下方的空档
+	# 中部大号图标：按词条效果取 宝石/流派/双刃 素材，配像素金边底座
 	var icon_name := _trait_icon(row)
 	if icon_name != "":
 		var icon_tex: Texture2D = G.res_tex(icon_name)
 		if icon_tex != null:
+			var slot_frame := TextureRect.new()
+			slot_frame.texture = G.Visuals._kit_tex("slot_legend.png" if t in ["double", "link"] else "slot_rare.png")
+			slot_frame.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			slot_frame.stretch_mode = TextureRect.STRETCH_SCALE
+			slot_frame.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+			slot_frame.position = Vector2((CARD_W - 76.0) * 0.5, 132)
+			slot_frame.size = Vector2(76, 76)
+			slot_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			root.add_child(slot_frame)
+
 			var ic := TextureRect.new()
 			ic.texture = icon_tex
 			ic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE   # 必须在 size 前
-			ic.position = Vector2((CARD_W - 64.0) * 0.5, 136)
-			ic.size = Vector2(64, 64)
+			ic.position = Vector2((CARD_W - 56.0) * 0.5, 142)
+			ic.size = Vector2(56, 56)
 			ic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			ic.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			root.add_child(ic)
 
-	# 底部点选条：整卡唯一「按钮感」落点
+	# 底部点选条：像素铭牌底纹 + 醒目金字
+	var strip_bg := TextureRect.new()
+	strip_bg.texture = G.Visuals._kit_tex("button_red.png" if t == "double" else "button_dark.png")
+	strip_bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	strip_bg.stretch_mode = TextureRect.STRETCH_SCALE
+	strip_bg.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	strip_bg.position = Vector2(8, CARD_H - 36)
+	strip_bg.size = Vector2(CARD_W - 16, 28)
+	strip_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(strip_bg)
+
 	var strip := ColorRect.new()
 	strip.color = Color(col.r, col.g, col.b, 0.16)
-	strip.position = Vector2(8, CARD_H - 34)
-	strip.size = Vector2(CARD_W - 16, 26)
+	strip.position = Vector2(8, CARD_H - 36)
+	strip.size = Vector2(CARD_W - 16, 28)
 	strip.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root.add_child(strip)
-	var hint_l := G.gold_label("— 点 选 —", G.FS_XS, false, Color("a8895a", 0.9), false)
-	hint_l.position = Vector2(8, CARD_H - 31)
+	var hint_l := G.gold_label("— 点 选 —", G.FS_XS, false, Color("f6e4bc"), false)
+	hint_l.position = Vector2(8, CARD_H - 32)
 	hint_l.size = Vector2(CARD_W - 16, 20)
 	root.add_child(hint_l)
 

@@ -1,0 +1,61 @@
+{
+	"compact_art": [],
+	"nonlinear_text": [],
+	"short_text_boxes": [],
+	"text_nodes": [
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/MaShanZheng-Regular.ttf",
+			"height": 35.0,
+			"path": "/root/ShotRunner/@Control@2/@Control@7/PlaqueLabel",
+			"rect_height": 38.0,
+			"size": 24,
+			"text": "老赵 · 边城的灯"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSansSC-Regular.otf",
+			"height": 27.0,
+			"path": "/root/ShotRunner/@Control@2/@ScrollContainer@15/@Label@16",
+			"rect_height": 151.0,
+			"size": 18,
+			"text": "那夜巡界灯熄了一半。石头把修桥剩下的楔件递给我，我们用它顶住灯架。如今新兵看见归路，就知道灯后有人等着换班。\n\n桌上留下：桥楔与巡界灯。"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@18/@Label@17",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "老赵·边城的灯"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@20/@Label@19",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "老鹭·港口的潮纸"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@22/@Label@21",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "岑雪·霜关的轮岗簿"
+		},
+		{
+			"filter": 2,
+			"font": "res://assets/fonts/NotoSerifCJKsc-SemiBold.otf",
+			"height": 25.0,
+			"path": "/root/ShotRunner/@Control@2/@PanelContainer@24/@Label@23",
+			"rect_height": 25.0,
+			"size": 17,
+			"text": "回到营帐"
+		}
+	]
+}

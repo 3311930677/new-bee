@@ -12,9 +12,10 @@ func _ready()->void:
 	var paper:=G.parchment_box(440,690,16)
 	paper.position=Vector2(20,55)
 	add_child(paper)
-	title=G.serif_label("归路小聚",G.FS_LG,G.TEXT_DARK)
-	title.position=Vector2(44,80)
-	add_child(title)
+	var plaque := G.Visuals.header_plaque("归路小聚", 388.0, 38.0)
+	plaque.position = Vector2(46, 68)
+	add_child(plaque)
+	title = plaque.get_node("PlaqueLabel") as Label
 	var scene:=TableScene.new()
 	scene.position=Vector2(240,267)
 	add_child(scene)
@@ -36,9 +37,10 @@ func _ready()->void:
 		actor.set_meta("gathering_actor",true)
 		actor.position=[Vector2(156,200),Vector2(324,200),Vector2(240,311)][i]
 		add_child(actor)
+	add_child(G.Visuals.parchment_subcard(Vector2(38, 370), Vector2(404, 174)))
 	var scroll:=ScrollContainer.new()
-	scroll.position=Vector2(44,378)
-	scroll.size=Vector2(392,162)
+	scroll.position=Vector2(48,378)
+	scroll.size=Vector2(384,158)
 	scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
 	add_child(scroll)
 	page=G.text_label("灯、潮纸与轮岗簿放在同一张桌上。先听谁都可以，三段故事都能重看。",G.FS_MD,G.TEXT_DARK)
