@@ -41,7 +41,7 @@ func _ready() -> void:
 	fixture()
 	await frames(10)
 
-	for mid in MAP_LIST:
+	for mid: String in MAP_LIST:
 		var run := RunState.new()
 		run.setup({"role_id": "zs", "theme": "forest", "level": 15, "potions": 3, "seed": 42})
 		MapScene.pending_cfg = {
@@ -57,10 +57,10 @@ func _ready() -> void:
 		await RenderingServer.frame_post_draw
 
 		var img := get_viewport().get_texture().get_image()
-		var local_path := ProjectSettings.globalize_path(OUT + "map_" + mid + "_commercial.png")
+		var local_path: String = ProjectSettings.globalize_path(OUT + "map_" + String(mid) + "_commercial.png")
 		img.save_png(local_path)
 
-		var art_path := ARTIFACT_DIR + "map_" + mid + "_commercial.png"
+		var art_path: String = ARTIFACT_DIR + "map_" + String(mid) + "_commercial.png"
 		img.save_png(art_path)
 
 		print("CAPTURED COMMERCIAL V3: ", mid)

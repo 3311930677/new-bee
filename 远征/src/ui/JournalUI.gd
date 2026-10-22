@@ -83,8 +83,9 @@ class LedgerFrame extends PanelContainer:
 		var paper_h := sz.y - inset * 2
 		var paper_rect := Rect2(inset, inset, paper_w, paper_h)
 		draw_rect(paper_rect, Color("f0e6cf"))
-		var slip_tex := G.Visuals._kit_tex("quest_slip.png")
-		G.Visuals.nine_slice(self, slip_tex, paper_rect, 14.0, 12.0, Color(1, 1, 1, 0.55))
+		if header_height <= 24.0:
+			var slip_tex := G.Visuals._kit_tex("quest_slip.png")
+			G.Visuals.nine_slice(self, slip_tex, paper_rect, 14.0, 12.0, Color(1, 1, 1, 0.55))
 
 		# 顶部玄玉金镶眉栏装饰
 		if header_height > 24.0 and paper_h > header_height + 40.0:
@@ -129,6 +130,7 @@ class LedgerFrame extends PanelContainer:
 class EmbellishedButton extends Button:
 	var _shine := 0.0
 	var _shine_motion: Tween
+	var _caption: Label
 	func _ready() -> void:
 		var colors: Dictionary = G.Visuals.palette(self)
 		var primary := String(get_meta("journal_kind", "primary")) == "primary"
@@ -144,8 +146,19 @@ class EmbellishedButton extends Button:
 			style.shadow_size = 3
 			style.shadow_offset = Vector2(0, 2)
 			add_theme_stylebox_override(state, style)
-		for state in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
-			add_theme_color_override(state, colors.light if primary else colors.ink)
+		for state in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color", "font_disabled_color"]:
+			add_theme_color_override(state, Color.TRANSPARENT)
+		_caption = Label.new()
+		_caption.name = "Caption"
+		_caption.text = text
+		_caption.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_caption.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		_caption.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_caption.add_theme_font_override("font", get_theme_font("font"))
+		_caption.add_theme_font_size_override("font_size", get_theme_font_size("font_size"))
+		_caption.add_theme_color_override("font_color", colors.light if primary else colors.ink)
+		add_child(_caption)
 		if icon != null and icon.resource_path.ends_with(".png"):
 			for state in ["icon_normal_color", "icon_hover_color", "icon_pressed_color", "icon_focus_color"]:
 				add_theme_color_override(state, Color.WHITE)
@@ -161,6 +174,9 @@ class EmbellishedButton extends Button:
 		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		var colors: Dictionary = G.Visuals.palette(self)
 		var primary := String(get_meta("journal_kind", "primary")) == "primary"
+		if _caption != null:
+			_caption.text = text
+			_caption.add_theme_color_override("font_color", Color("8b7a57") if disabled else (colors.light if primary else colors.ink))
 		var btn_tex := G.Visuals._kit_tex("button_dark.png" if primary else "card_frame_parchment.png")
 		G.Visuals.nine_slice(self, btn_tex, Rect2(Vector2.ZERO, size), 10.0, 8.0, Color(1, 1, 1, 0.42 if primary else 0.72))
 		draw_line(Vector2(12, 4), Vector2(size.x - 12, 4), Color(colors.accent, 0.55), 1)

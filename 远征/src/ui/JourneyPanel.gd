@@ -141,8 +141,8 @@ func _ready() -> void:
 	var tabs := HBoxContainer.new()
 	tabs.add_theme_constant_override("separation", 8)
 	body.add_child(tabs)
-	_tab_travel_btn = _button(tabs, "已探索地点", func(): _tab = "travel"; _refresh())
-	_tab_hunt_btn = _button(tabs, "传世挑战", func(): _tab = "hunt"; _refresh())
+	_tab_travel_btn = _button(tabs, "已探索地点", func(): _tab = "travel"; _confirm = ""; _refresh())
+	_tab_hunt_btn = _button(tabs, "传世挑战", func(): _tab = "hunt"; _confirm = ""; _refresh())
 	_tab_travel_btn.custom_minimum_size.y = 40
 	_tab_hunt_btn.custom_minimum_size.y = 40
 
@@ -442,7 +442,7 @@ func _refresh() -> void:
 
 		var can_buy := Relics.ready(G) and wins >= int(config.buy_requires_wins) and pending.is_empty()
 		_add_card_action(w_card, Rect2(290, 12, 94, 36),
-			"9万金购入",
+			"确认购入" if _confirm == "buy" else "9万金购入",
 			_buy.bind(role), not can_buy, can_buy)
 
 		# 4) 传世·归路圣鹿结缘展柜卡
@@ -520,6 +520,7 @@ func _settle() -> void:
 func _buy(role: String) -> void:
 	if _confirm != "buy":
 		_confirm = "buy"
+		_refresh()
 		show_message("再次点购买确认花费%d金币购买本职业传世武器。" % int(Relics.cfg().buy_gold))
 		return
 	_confirm = ""

@@ -224,6 +224,7 @@ class SkillRow extends Button:
 			UI.surface(self,Rect2(size.x-88,18,72,28),UI.SELECTED,UI.COPPER)
 
 class EnemyChip extends Control:
+	signal selected(uid:int)
 	const UI=preload("res://src/ui/TravelChestUI.gd")
 	const Page=preload("res://src/ui/ChestPageUI.gd")
 	var unit:Combatant
@@ -238,7 +239,11 @@ class EnemyChip extends Control:
 	var display_name:=""
 	func _init(tex:Texture2D=null) -> void:
 		custom_minimum_size=Vector2(0,44);size_flags_horizontal=Control.SIZE_EXPAND_FILL
-		mouse_filter=Control.MOUSE_FILTER_IGNORE
+		mouse_filter=Control.MOUSE_FILTER_STOP
+		mouse_default_cursor_shape=Control.CURSOR_POINTING_HAND
+		gui_input.connect(func(e:InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index==MOUSE_BUTTON_LEFT:
+				if unit!=null and unit.alive and extra==0:selected.emit(unit.uid))
 		portrait=Page.picture(tex,Vector2(32,32));portrait.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;add_child(portrait)
 		heading=UI.label("","tag");heading.clip_text=true;heading.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS;add_child(heading)
 		value=UI.label("","tag",UI.AGED);add_child(value)

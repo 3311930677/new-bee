@@ -164,8 +164,8 @@ class ItemCell extends Page.ItemCell:
 		heading.visible = show_name
 		heading.position = Vector2(4,size.y-24)
 		heading.size = Vector2(size.x-8,20)
-		amount.position = Vector2(5,2)
-		amount.size = Vector2(size.x-10,18)
+		amount.position = Vector2(4,4)
+		amount.size = Vector2(size.x-12,20)
 		flag.text = "装" if worn else ""
 		flag.position = Vector2(6,size.y-22)
 		flag.size = Vector2(24,18)

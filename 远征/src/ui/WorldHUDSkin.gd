@@ -90,19 +90,15 @@ static func medallion(c: CanvasItem, rect: Rect2) -> void:
 
 static func joystick(c: CanvasItem, center: Vector2, radius: float, vector: Vector2, active: bool) -> void:
 	# An open ring and a translucent well preserve the terrain under the left thumb.
-	_disc(c,center,radius,Color(DARK,0.48 if active else 0.25))
-	for y in range(-int(radius),int(radius)+1):
-		var outer := floorf(sqrt(maxf(0,radius*radius-float(y*y))))
-		var inner := floorf(sqrt(maxf(0,pow(radius-2,2)-float(y*y))))
-		var tone := GOLD if y < -radius*0.35 else BRONZE
-		for sign_x in [-1,1]:
-			c.draw_rect(Rect2(center.x+sign_x*outer,center.y+y,maxf(1,outer-inner),1),Color(tone,0.82))
+	_disc(c,center,radius+1,Color(DARK,0.72 if active else 0.55))
+	_disc(c,center,radius,Color(GOLD if active else BRONZE,0.88 if active else 0.72))
+	_disc(c,center,radius-2,Color(DARK,0.62 if active else 0.44))
 	for direction in [Vector2.UP,Vector2.LEFT,Vector2.RIGHT,Vector2.DOWN]:
 		diamond(c,center+direction*(radius-1),2,GOLD)
-		diamond(c,center+direction*(radius-13),2,Color(GOLD,0.42))
+		diamond(c,center+direction*(radius-13),2,Color(GOLD,0.52))
 	var thumb := (center+vector*44).round()
 	_disc(c,thumb,22,DARK)
-	_disc(c,thumb,21,GOLD if active else BRONZE)
-	_disc(c,thumb,20,INK)
-	_disc(c,thumb-Vector2.ONE,18,FACE)
-	diamond(c,thumb,3,Color(GOLD,0.36))
+	_disc(c,thumb,21,GOLD if active else LIGHT)
+	_disc(c,thumb,19,INK)
+	_disc(c,thumb-Vector2.ONE,17,FACE)
+	diamond(c,thumb,3,Color(GOLD,0.55))

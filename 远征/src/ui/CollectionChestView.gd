@@ -41,7 +41,14 @@ func _ready() -> void:
 	_next=Flow.button("▶",func():HapticFeedback.light();host._deck.go(host._deck.current+1))
 	shell.stage.add_child(_prev)
 	shell.stage.add_child(_next)
-	_index=UI.label("","caption",UI.AGED)
+	_index=UI.label("","caption",UI.GOLD)
+	_index.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	var idx_box:=StyleBoxFlat.new()
+	idx_box.bg_color=Color("17121a",0.84)
+	idx_box.border_color=Color(UI.BRONZE,0.85)
+	idx_box.set_border_width_all(1)
+	idx_box.set_corner_radius_all(12)
+	_index.add_theme_stylebox_override("normal",idx_box)
 	shell.stage.add_child(_index)
 	_progress=UI.label("","caption",UI.GOLD)
 	_progress.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT
@@ -68,7 +75,8 @@ func _codex() -> void:
 	var p:Dictionary=host._pets[host._deck.current]
 	var pid:=String(p.id)
 	var owned:=G.owns_pet(pid)
-	shell.tray_height=448 if owned else 396
+	var extra_h := maxf(0.0, get_viewport_rect().size.y - 800.0)
+	shell.tray_height = (456.0 + minf(24.0, roundf(extra_h * 0.1))) if owned else 368.0
 	var state:=G.pet_stat(pid) if owned else {}
 	var tex:Texture2D=Fix.pet(pid+"_hd")
 	_art=Page.picture(tex,Vector2(184,184))
@@ -129,8 +137,11 @@ void fragment() {
 		thumbs.add_child(b)
 		if b.selected:_strip.ensure_control_visible.call_deferred(b)
 	var mile:=HBoxContainer.new()
+	mile.add_theme_constant_override("separation", 8)
 	shell.body.add_child(mile)
 	host._ms_l=Flow.text("","caption",UI.AGED)
+	host._ms_l.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	host._ms_l.size_flags_vertical=Control.SIZE_SHRINK_CENTER
 	mile.add_child(host._ms_l)
 	var ready_claim := not G.codex_next_ready().is_empty()
 	host._claim_btn=Flow.button("领取",host._on_claim, ready_claim)
@@ -195,20 +206,21 @@ func layout(safe_override:Rect2=Rect2()) -> void:
 	shell.layout(safe_override)
 	if system=="codex" and not _go.visible:
 		shell.footer.visible=false;shell.scroll.size.y=shell.safe.end.y-shell.scroll.position.y-16
+	var ped_base_y := minf(shell.stage.size.y - 16.0, roundf(shell.stage.size.y * 0.84))
 	Page.place(_prev,Vector2(16,shell.stage.size.y*.5-28),Vector2(44,56))
 	Page.place(_next,Vector2(shell.stage.size.x-60,shell.stage.size.y*.5-28),Vector2(44,56))
-	Page.place(_index,Vector2(28,12),Vector2(360,26))
-	Page.place(_pool,Vector2(shell.stage.size.x*.5-128,shell.stage.size.y-76),Vector2(256,60))
-	Page.place(_frame,Vector2(16,48),Vector2(shell.stage.size.x-32,shell.stage.size.y-64))
-	Page.place(_pedestal,Vector2(shell.stage.size.x*.5-100,shell.stage.size.y-64),Vector2(200,48))
+	Page.place(_index,Vector2(roundf((shell.stage.size.x-220.0)*.5),10),Vector2(220,28))
+	Page.place(_pool,Vector2(shell.stage.size.x*.5-128,ped_base_y-60),Vector2(256,60))
+	Page.place(_frame,Vector2(16,44),Vector2(shell.stage.size.x-32,shell.stage.size.y-52))
+	Page.place(_pedestal,Vector2(shell.stage.size.x*.5-100,ped_base_y-48),Vector2(200,48))
 	_pedestal.visible=system=="codex"
-	_frame.visible=system=="codex"
+	_frame.visible=false
 	Page.place(_progress,Vector2(shell.safe.end.x-172,shell.safe.position.y+14),Vector2(160,28))
 	if is_instance_valid(_art):
 		var dimensions:=Vector2(shell.stage.size.x-144,maxf(1,shell.stage.size.y-64))
 		if system=="codex" and (_art as TextureRect).texture!=null:
 			var source:=(_art as TextureRect).texture.get_size()
-			var max_h:=minf(184.0,maxf(96.0,shell.stage.size.y-102.0))
+			var max_h:=minf(184.0,maxf(96.0,ped_base_y-86.0))
 			var factor:=minf(3.0,minf(dimensions.x/source.x,max_h/source.y))
 			if factor>=1.0:factor=maxf(1.0,floorf(factor))
 			dimensions=source*factor
@@ -217,11 +229,12 @@ func layout(safe_override:Rect2=Rect2()) -> void:
 			var texture:Texture2D=(_art as TextureRect).texture
 			var used:=preload("res://src/ui/NameTagLayout.gd").opaque_bounds(texture)
 			feet=float(used.end.y)/texture.get_height()
-		var art_y:=maxf(58.0,shell.stage.size.y-40.0-dimensions.y*feet)
+		var art_y:=maxf(48.0,ped_base_y-24.0-dimensions.y*feet)
 		Page.place(_art,Vector2((shell.stage.size.x-dimensions.x)*.5,art_y) if system=="codex" else Vector2(72,44),dimensions)
 		var shadow_width:=64.0
 		if system=="codex":shadow_width=preload("res://src/ui/NameTagLayout.gd").opaque_bounds((_art as TextureRect).texture).size.x*dimensions.x/(_art as TextureRect).texture.get_width()*.8
-		Page.place(_shadow,Vector2((shell.stage.size.x-shadow_width)*.5,shell.stage.size.y-45),Vector2(shadow_width,10));_shadow.visible=system=="codex";_shadow.queue_redraw()
+		Page.place(_shadow,Vector2((shell.stage.size.x-shadow_width)*.5,ped_base_y-29),Vector2(shadow_width,10));_shadow.visible=system=="codex";_shadow.queue_redraw()
+		shell.stage.move_child(_index,shell.stage.get_child_count()-1)
 		shell.stage.move_child(_prev,shell.stage.get_child_count()-1)
 		shell.stage.move_child(_next,shell.stage.get_child_count()-1)
 

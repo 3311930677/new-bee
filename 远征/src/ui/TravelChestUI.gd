@@ -240,8 +240,9 @@ class ChestButton extends Button:
 			G.Visuals.diamond(self, Vector2(size.x * 0.5, size.y - 2.0), 2.5, UI.GOLD)
 		if skin == "back":
 			caption.visible = false
+			UI.surface(self,Rect2(Vector2.ZERO,size),Color("17141a",0.84),UI.COPPER if (is_hovered() or has_focus()) else UI.BRONZE,4.0)
 			var p := size*.5
-			draw_polyline(PackedVector2Array([p+Vector2(5,-8),p+Vector2(-4,0),p+Vector2(5,8)]),UI.PAPER,2,true)
+			draw_polyline(PackedVector2Array([p+Vector2(4,-7),p+Vector2(-4,0),p+Vector2(4,7)]),UI.PAPER,2.0,true)
 		if skin == "currency": draw_line(Vector2(4,size.y-1),Vector2(size.x-4,size.y-1),Color("3a2c1c"),1)
 		if not icon_id.is_empty():
 			var icon := UI.texture(icon_id)

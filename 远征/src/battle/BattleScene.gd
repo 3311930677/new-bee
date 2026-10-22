@@ -309,6 +309,10 @@ func _ready() -> void:
 	if seed_v == 0:
 		seed_v = randi()
 	sim.setup(seed_v, _cfg.get("ally", {}), _cfg.get("enemy", {}))
+	sim.manual_basic_attack = true
+	var init_role := sim.role_unit()
+	if init_role != null:
+		init_role.attack_timer = init_role.basic_threshold()
 	sim.events.clear()  # 丢弃 ready 事件
 	# 先摆震屏层：背景与战场都挂在它下面，受击时整屏一晃而 HUD 纹丝不动
 	_shake_root.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -1043,10 +1047,7 @@ func _show_command_skills() -> void:
 func _show_command_items() -> void:
 	_chest.show_page("items")
 
-func _command_attack() -> void:
-	if sim.finished:
-		_close_page()
-		return
+func _attackable_enemies() -> Array[Combatant]:
 	var role := sim.role_unit()
 	var enemies := sim.alive_units("enemy")
 	if role != null and role.attack_range == "melee":
@@ -1056,6 +1057,38 @@ func _command_attack() -> void:
 				front.append(enemy)
 		if not front.is_empty():
 			enemies = front
+	return enemies
+
+
+func _select_enemy_target(uid: int, from_field := false) -> void:
+	if sim.finished:
+		return
+	var enemies := _attackable_enemies()
+	if enemies.is_empty():
+		return
+	var target: Combatant = null
+	for enemy in enemies:
+		if enemy.uid == uid:
+			target = enemy
+			break
+	if target == null:
+		var raw := sim.unit_by_uid(uid)
+		if raw != null and raw.alive and raw.side == "enemy":
+			_show_tip("近战须先击破前排敌人")
+		target = enemies[0]
+	var already_focused := sim.role_focus_target_uid == target.uid
+	if sim.set_role_focus_target(target.uid):
+		_sync_views()
+		_refresh_hud()
+	if from_field and already_focused and is_processing() and speed > 0.0:
+		_command_attack()
+
+
+func _command_switch_target() -> void:
+	if sim.finished:
+		_close_page()
+		return
+	var enemies := _attackable_enemies()
 	if enemies.is_empty():
 		_show_tip("没有可攻击的目标")
 		_close_page()
@@ -1070,6 +1103,71 @@ func _command_attack() -> void:
 		_sync_views()
 		_refresh_hud()
 	_close_page()
+
+
+func _command_attack() -> void:
+	if sim.finished:
+		_close_page()
+		return
+	var enemies := _attackable_enemies()
+	if enemies.is_empty():
+		_show_tip("没有可攻击的目标")
+		_close_page()
+		return
+	var target: Combatant = null
+	for enemy in enemies:
+		if enemy.uid == sim.role_focus_target_uid:
+			target = enemy
+			break
+	if target == null:
+		target = enemies[0]
+	sim.set_role_focus_target(target.uid)
+	if is_processing() and speed > 0.0:
+		sim.trigger_manual_attack()
+		_consume_events()
+	_sync_views()
+	_refresh_hud()
+	_close_page()
+
+
+func _gui_input(event: InputEvent) -> void:
+	if sim.finished or G.ui_blocked:
+		return
+	if _page_panel != null and _page_panel.visible:
+		return
+	if _chest != null and is_instance_valid(_chest._modal):
+		return
+	var pos := Vector2.ZERO
+	var pressed := false
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		pos = event.global_position
+		pressed = true
+	elif event is InputEventScreenTouch and event.pressed:
+		pos = event.position
+		pressed = true
+	if not pressed:
+		return
+	var best_uid := -1
+	var best_dist := INF
+	for u in sim.alive_units("enemy"):
+		var view: UnitView = _views.get(u.uid)
+		if view == null:
+			continue
+		var rect := view._actor_rect().grow(14.0)
+		var hit := rect.has_point(pos)
+		if not hit and _chest != null and _chest._badges.has(u.uid):
+			var badge: Node2D = _chest._badges[u.uid]
+			if is_instance_valid(badge) and badge.global_position.distance_to(pos) <= 20.0:
+				hit = true
+		if hit:
+			var d := rect.get_center().distance_to(pos)
+			if d < best_dist:
+				best_dist = d
+				best_uid = u.uid
+	if best_uid >= 0:
+		Audio.sfx("ui_click")
+		_select_enemy_target(best_uid, true)
+		accept_event()
 
 
 func _cast_command_skill(sid: String) -> void:
@@ -1239,6 +1337,8 @@ func _process(delta: float) -> void:
 			_refresh_omens()   # 收招后预兆环必须消失，别留在结算画面上
 			_show_result()
 		return
+	if speed > 4.0:
+		sim.manual_basic_attack = false
 	_acc += delta * cur_speed() * time_scale
 	while _acc >= TICK_SEC:
 		_acc -= TICK_SEC

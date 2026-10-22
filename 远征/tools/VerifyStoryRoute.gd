@@ -50,5 +50,46 @@ func _ready() -> void:
 	slope.queue_free()
 	await frames(6)
 
+	G.prog["story"] = {"step": "s01", "done": [], "goals": {}}
+	var town := await open_map("lorin_wilds")
+	var info_s01: Dictionary = town._nav_info()
+	check(String(info_s01.get("kind", "")) == "quest", "同图主线 s01 应指向城内任务目标")
+	check((info_s01.get("pos", Vector2.ZERO) as Vector2).distance_to(Vector2(480, 120)) > 100.0, "同图主线不应再退回隐藏传送阵")
+	var goal_pt: Vector2 = info_s01.get("pos", Vector2(480, 720))
+	var near_pt := goal_pt + Vector2(0, 20)
+	check(town._illustrated_navigation.next_point(town, near_pt, goal_pt).distance_to(near_pt) > 1.0, "接近目标 20px 时寻路不应原地返回")
+	town.queue_free()
+	await frames(6)
+
+	BattleScene.pending_cfg = {
+		"presentation": "classic_inline",
+		"player_name": "行旅人",
+		"seed": 17,
+		"ally": {"role_id": "zs", "level": 12, "active_pet": "", "bench_pet": "", "potions": 2},
+		"enemy": {"theme": "forest", "node_type": "normal", "layer": 1, "display_level": 2}
+	}
+	var battle: BattleScene = preload("res://src/battle/BattleScene.tscn").instantiate()
+	add_child(battle)
+	await frames(4)
+	battle.set_process(false)
+	var enemies := battle._attackable_enemies()
+	var hp0 := enemies[0].hp
+	for i in 45:
+		battle.sim.step()
+	check(enemies[0].hp == hp0, "手动模式下未点击攻击不自动普攻")
+	battle._command_switch_target()
+	var f1 := battle.sim.role_focus_target_uid
+	battle._command_switch_target()
+	var f2 := battle.sim.role_focus_target_uid
+	check(f1 >= 0 and f2 >= 0 and f1 != f2, "换目标按钮在敌人间循环切换")
+	battle._select_enemy_target(enemies[0].uid, false)
+	check(battle.sim.role_focus_target_uid == enemies[0].uid, "可直接点选锁定指定敌方目标")
+	battle.set_process(true)
+	battle.speed = 1.0
+	battle._command_attack()
+	check(battle.sim.role_focus_target_uid == enemies[0].uid and enemies[0].hp < hp0, "点击攻击对当前选定目标立即发动普攻且不乱跳目标")
+	battle.queue_free()
+	await frames(4)
+
 	print("STORY_ROUTE_OK" if fails == 0 else "STORY_ROUTE_FAIL fails=%d" % fails)
 	get_tree().quit(0 if fails == 0 else 1)

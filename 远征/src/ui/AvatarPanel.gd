@@ -38,18 +38,19 @@ func _build() -> void:
 	_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_paper.add_child(_content)
 	var eyebrow := UI.label("◆ 昭元行旅录 · 命途印记", G.FS_XS, Color("d8c59a"), true)
+	eyebrow.position = Vector2(8, 0)
 	_content.add_child(eyebrow)
 	var title := UI.art_label("旅人小像", G.FS_BIG, Color("f4dfb5"))
-	title.position.y = 24
+	title.position = Vector2(8, 22)
 	_content.add_child(title)
 	var close := UI.button("×", 44, 44, "secondary")
 	close.name = "CloseButton"
-	close.position = Vector2(278, -6)
+	close.position = Vector2(290, -2)
 	close.tooltip_text = "关闭"
 	close.pressed.connect(_close)
 	_content.add_child(close)
 	var frame := Panel.new()
-	frame.position = Vector2(102, 86)
+	frame.position = Vector2(112, 88)
 	frame.size = Vector2(116, 116)
 	var slot_tex := G.Visuals._kit_tex("slot_legend.png")
 	if slot_tex != null:
@@ -74,28 +75,29 @@ func _build() -> void:
 	_preview.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	frame.add_child(_preview)
 	_state_l = UI.label("", G.FS_XS, Color("5a4c36"), true)
-	_state_l.position.y = 210
+	_state_l.position = Vector2(12, 212)
 	_state_l.size.x = 316
 	_state_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_content.add_child(_state_l)
 	var instructions := UI.label("上传你喜欢的图片作为旅人小像。\n可随时更换，不使用职业或宠物头像。", G.FS_XS, Color("685840"), true)
-	instructions.position = Vector2(0, 248)
+	instructions.position = Vector2(12, 248)
 	instructions.size = Vector2(316, 56)
 	instructions.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_content.add_child(instructions)
 	var upload := UI.button("选择本机图片", 316, 46, "primary")
 	upload.name = "UploadButton"
-	upload.position.y = 318
+	upload.position = Vector2(12, 318)
 	upload.pressed.connect(_open_picker)
 	_content.add_child(upload)
 	_use_custom_btn = UI.button("用上次上传的图", 316, 44, "secondary")
-	_use_custom_btn.position.y = 374
+	_use_custom_btn.position = Vector2(12, 374)
 	_use_custom_btn.pressed.connect(func():
 		if G.use_custom_avatar():
 			_refresh()
 			changed.emit())
 	_content.add_child(_use_custom_btn)
 	_tip = UI.label("图片与头像选择仅保存在本机", G.FS_XS, UI.MUTED)
+	_tip.position.x = 12
 	_tip.size.x = 316
 	_tip.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_content.add_child(_tip)

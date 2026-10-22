@@ -87,7 +87,7 @@ func _ready() -> void:
 		node.levels="Lv%d–%d"%[row.level[0],row.level[1]]
 		node.marker=_landmark(id)
 		node.current=id==_current
-		node.visited=id==_current or visited.has(id)
+		node.visited=id==_current or visited.has(id) or (G.has_method("world_gate_open") and G.world_gate_open())
 		node.reachable=_reachable.has(id)
 		node.quest_badges=_quest_badges_for(id)
 		node.condition=false
@@ -149,6 +149,7 @@ func _focus_quest_target() -> void:
 	else:
 		select(_current,true)
 func _gate(row:Dictionary) -> String:
+	if G.has_method("world_gate_open") and G.world_gate_open():return ""
 	var story:=String(row.get("requires_story",""))
 	if not story.is_empty() and not G.story_step_done(story):return String(row.get("locked_hint","先完成当前道路的主线"))
 	for flag in row.get("requires_flags",[]):
@@ -209,7 +210,13 @@ func select(id:String,animate:bool=true) -> void:
 		_travel_button.disabled=not can_travel
 		_travel_button.caption.add_theme_font_size_override("font_size",G.FS_XS)
 		head_row.add_child(_travel_button)
-	var travel_line:="驿路已通：可点击右上「乘驿车前往」直达，或沿相邻路牌步行。" if bool(j_status.get("ok",false)) and id!=_current else (String(j_status.get("line","沿相邻路牌步行前往")) if id!=_current else "沿相邻路牌步行前往")
+	else:
+		var j_btn:=Flow.button("驿路与传世",_open_journey_modal)
+		j_btn.name="OpenJourneyPanelButton"
+		j_btn.custom_minimum_size=Vector2(132,42)
+		j_btn.caption.add_theme_font_size_override("font_size",G.FS_XS)
+		head_row.add_child(j_btn)
+	var travel_line:="驿路已通：可点击右上「乘驿车前往」直达，或沿相邻路牌步行。" if bool(j_status.get("ok",false)) and id!=_current else (String(j_status.get("line","沿相邻路牌步行前往")) if id!=_current else "点击右上「驿路与传世」可打开驿站列表与传世首领挑战。")
 	var note:=String(cfg.get("goal","沿道路探索"))+"\n"+(String(_reasons.get(id,"沿相邻路牌步行前往")) if not _reachable.has(id) else travel_line)
 	if id=="lorin_wilds":note+="\n界碑历练从巡界厅进入。"
 	if id in ["broken_slope","stele_cavern"] and G.prog.get("flags",{}).get("act1_stele_repaired",false):note+="\n图志新录 · "+G.restored_stele_name()
@@ -231,6 +238,19 @@ func _on_travel_pressed(id:String) -> void:
 	else:
 		Audio.sfx("ui_locked")
 		UI.toast(self,String(res.get("line","暂不可前往")))
+func _open_journey_modal() -> void:
+	var jp:Control=preload("res://src/ui/JourneyPanel.gd").new()
+	add_child(jp)
+	jp.travel_requested.connect(func(map_id:String):
+		if not G.can_go("res://src/explore/MapScene.tscn"):return
+		var res:=Journey.travel(G,map_id)
+		if bool(res.get("ok",false)):
+			Audio.sfx("ui_confirm")
+			jp.queue_free()
+			closed.emit()
+			G.enter_main_world(map_id)
+		else:
+			jp.show_message(String(res.get("line","暂不可前往"))))
 func toggle_zoom() -> void:
 	_zoom=1.0 if _zoom<1 else .5
 	_apply_zoom();select(_selected,false)

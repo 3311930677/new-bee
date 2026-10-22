@@ -103,11 +103,12 @@ class Stage extends Control:
 	func layout() -> void:
 		if background==null: return
 		var extra := maxf(0,size.y-800)
-		background.position = Vector2(0,extra)
-		background.size = Vector2(size.x,800)
-		sky.visible = extra>0
-		sky.size = Vector2(size.x,extra+40)
-		(sky.material as ShaderMaterial).set_shader_parameter("extra",extra)
+		var sky_extra := minf(84.0, extra * 0.32)
+		background.position = Vector2(0,sky_extra)
+		background.size = Vector2(size.x,maxf(800,size.y-sky_extra))
+		sky.visible = sky_extra>0
+		sky.size = Vector2(size.x,sky_extra+40)
+		(sky.material as ShaderMaterial).set_shader_parameter("extra",sky_extra)
 		(sky.material as ShaderMaterial).set_shader_parameter("height",sky.size.y)
 		shade.size = size
 
@@ -170,8 +171,8 @@ class ItemCell extends Button:
 		heading.visible=show_name
 		heading.position = Vector2(4,size.y-30)
 		heading.size = Vector2(size.x-8,22)
-		amount.position = Vector2(4,0)
-		amount.size = Vector2(size.x-10,22)
+		amount.position = Vector2(4,4)
+		amount.size = Vector2(size.x-12,22)
 		flag.position = Vector2(6,0)
 		flag.size = Vector2(30,22)
 		flag.text="装" if worn else ""

@@ -36,7 +36,9 @@ static func template(role: String) -> String:
 	return String(cfg().get("weapons", {}).get(role, ""))
 
 static func ready(host: Object) -> bool:
-	return not host.save_locked and host.story_step_done(String(cfg().get("unlock_story", "s36"))) and int(host.prog.get("level", 1)) >= int(cfg().get("unlock_level", 60))
+	if host.save_locked: return false
+	if host.has_method("world_gate_open") and host.world_gate_open(): return true
+	return host.story_step_done(String(cfg().get("unlock_story", "s36"))) and int(host.prog.get("level", 1)) >= int(cfg().get("unlock_level", 60))
 
 static func begin(host: Object, id: String, role: String) -> Dictionary:
 	if not ready(host) or hunt(id).is_empty() or template(role).is_empty():

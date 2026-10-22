@@ -17,6 +17,8 @@ var record_events := true
 var finished := false
 var result := ""                      # "" / "victory" / "defeat"
 var auto_mode := false                # 托管
+var manual_basic_attack := false      # 手动模式：非托管时主角普攻由玩家点击触发
+var manual_attack_queued := false     # 手动模式下的待发普攻指令
 var role_focus_target_uid := -1        # 玩家“攻”指令指定目标；不覆盖嘲讽/混乱与近战前排规则
 var potions_left := 0                 # 治疗药剂
 var potion_cd_ticks := 0              # 药剂 CD（8 秒一瓶，防连点误用）
@@ -58,6 +60,7 @@ func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 	if enemy_cfg.get("difficulty_override") is Dictionary:
 		campaign_profile = (enemy_cfg.difficulty_override as Dictionary).duplicate(true)
 	role_focus_target_uid = -1
+	manual_attack_queued = false
 	theme_id = String(enemy_cfg.get("theme", "forest"))
 	theme_rule = TableCache.theme_rule(theme_id)
 	rule_timer = rule_interval_ticks()
@@ -402,6 +405,30 @@ func set_role_focus_target(uid: int) -> bool:
 	return true
 
 
+func role_attack_ready() -> bool:
+	var role := role_unit()
+	if role == null or not role.alive or finished or not role.can_act():
+		return false
+	return role.attack_timer >= role.basic_threshold()
+
+
+func trigger_manual_attack() -> String:
+	if finished:
+		return "finished"
+	var role := role_unit()
+	if role == null or not role.alive:
+		return "dead"
+	if not role.can_act():
+		return "controlled"
+	if role.attack_timer < role.basic_threshold():
+		manual_attack_queued = true
+		return "queued"
+	manual_attack_queued = false
+	role.attack_timer = 0
+	role.do_basic_attack(self)
+	return "attacked"
+
+
 func has_boss() -> bool:
 	for u in units:
 		if u.alive and u.side == "enemy" and u.ai_type == "boss":
@@ -500,8 +527,13 @@ func step() -> void:
 			if int(s.cd_left) > 0:
 				s.cd_left = int(s.cd_left) - 1
 		if u.can_act():
-			u.attack_timer += 1
-			if u.attack_timer >= u.basic_threshold():
+			var threshold := u.basic_threshold()
+			if u.attack_timer < threshold:
+				u.attack_timer += 1
+			var hold_manual := u.kind == "role" and manual_basic_attack and not auto_mode
+			if u.attack_timer >= threshold and (not hold_manual or manual_attack_queued):
+				if u.kind == "role":
+					manual_attack_queued = false
 				u.attack_timer = 0
 				u.do_basic_attack(self)
 				# 宠物攻击触发主人共鸣词条

@@ -134,7 +134,7 @@ func _resize_frame(safe_override: Rect2=Rect2()) -> void:
 	Page.place(_gold,Vector2(w-182,78),Vector2(158,34))
 	Page.place(_tabs,Vector2(24,120),Vector2(w-48,44))
 	var compact:=_tab=="pending" or _tab in ["mat","gem"] or G.inv_find(_sel_uid).is_empty()
-	var tray_h:=112.0 if compact else 294.0
+	var tray_h:=168.0 if compact else 324.0
 	var tray_top:=safe.size.y-tray_h-16
 	Page.place(_list_plate,Vector2(16,174),Vector2(w-32,maxf(148,tray_top-182)))
 	Page.place(_list,Vector2(24,182),Vector2(w-48,maxf(132,tray_top-198)))
@@ -145,8 +145,8 @@ func _resize_frame(safe_override: Rect2=Rect2()) -> void:
 			cell.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	Page.place(_tray,Vector2(16,tray_top),Vector2(w-32,tray_h))
 	Page.place(_detail,Vector2(38,tray_top+20),Vector2(w-76,tray_h-40))
-	Page.place(_detail_scroll,Vector2(0,0),Vector2(_detail.size.x,72 if compact else 196))
-	Page.place(_actions,Vector2(0,208),Vector2(_detail.size.x,48))
+	Page.place(_detail_scroll,Vector2(0,0),Vector2(_detail.size.x,128 if compact else 224))
+	Page.place(_actions,Vector2(0,232),Vector2(_detail.size.x,48))
 	for b in _action_buttons:
 		match b.get_meta("action",""):
 			"sell":Page.place(b,Vector2.ZERO,Vector2(128,48))
@@ -196,6 +196,14 @@ func _grid() -> GridContainer:
 	_scroll.add_child(grid)
 	return grid
 
+func _min_grid_slots(count: int) -> int:
+	var safe := G.ui_safe_rect(self)
+	var compact := _tab == "pending" or _tab in ["mat", "gem"] or G.inv_find(_sel_uid).is_empty()
+	var tray_h := 168.0 if compact else 324.0
+	var avail_h := maxf(320.0, safe.size.y - tray_h - 16.0 - 198.0)
+	var rows := maxi(4, int(floor((avail_h + 8.0) / 88.0)))
+	return maxi(rows * 5, int(ceil(float(count) / 5.0)) * 5)
+
 func _build_equip_tab() -> void:
 	var items:=_bag_items()
 	var grid:=_grid()
@@ -217,7 +225,7 @@ func _build_equip_tab() -> void:
 		cell.pressed.connect(_select_item.bind(uid))
 		grid.add_child(cell)
 		_item_buttons.append(cell)
-	var min_slots: int = maxi(20, int(ceil(float(items.size()) / 5.0)) * 5)
+	var min_slots: int = _min_grid_slots(items.size())
 	for i in range(items.size(), min_slots):
 		var empty_cell := Art.ItemCell.new()
 		empty_cell.disabled = true
@@ -370,7 +378,7 @@ func _build_supplies(gems: bool) -> void:
 		b.pressed.connect(func():_sel_supply=id;_refresh())
 		grid.add_child(b)
 		_item_buttons.append(b)
-	var min_slots: int = maxi(20, int(ceil(float(ids.size()) / 5.0)) * 5)
+	var min_slots: int = _min_grid_slots(ids.size())
 	for i in range(ids.size(), min_slots):
 		var empty_cell := Art.ItemCell.new()
 		empty_cell.disabled = true

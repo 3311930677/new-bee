@@ -634,6 +634,38 @@ func _run() -> void:
 		_check(hd_tex != null and hd_tex.get_size() == Vector2(192, 192),
 			"灵宠图鉴展示贴图 %s 应为 192×192 高清完整立绘" % pid_chk)
 
+	# ---- P. 手机端 ESC / GM 开发者浮标与一键全功能界面解锁回归 ----
+	G.gm_unlock_all_features()
+	_check(G.gm_unlocked and G.gm_world_open, "gm_unlock_all_features 应开启 gm_unlocked 与 gm_world_open")
+	_check(int(G.prog.get("level", 0)) == G.level_cap(), "gm_unlock_all_features 应将主角升至满级")
+	_check(G.story_step_done("s36"), "gm_unlock_all_features 应解锁全部主线至 s36")
+	_check(G.side_status_of("a4_rel_nighttable") == QuestService.SIDE_DONE, "gm_unlock_all_features 应解锁营火小聚前置支线")
+	_check(G.is_built("forge") and G.is_built("frost_lodge"), "gm_unlock_all_features 应落成全部边城与霜关建筑")
+	GmConsole.open_unlocked()
+	_check(GmConsole.visible and G.ui_blocked, "GmConsole.open_unlocked 应免密打开开发者控制台")
+	_check(GmConsole.get("_float_bar") != null, "GmConsole 应创建手机端常驻触控胶囊 _float_bar")
+	G.trigger_cancel()
+	_check(not GmConsole.visible and not G.ui_blocked, "G.trigger_cancel() 应触发 ESC 关闭当前顶层窗口")
+
+	var home_gm: Control = load("res://src/ui/GameHome.tscn").instantiate()
+	add_child(home_gm)
+	await get_tree().process_frame
+	for feat in ["gathering", "archery", "curio", "shop", "companion", "journal", "oath", "trade:city", "contract", "fishing:salt", "mail", "growth:talent", "home"]:
+		home_gm.call("open_gm_feature", feat)
+		await get_tree().process_frame
+	_check(home_gm.get("_gm_extra") == null and not home_gm._home_content_hidden,
+		"GameHome.open_gm_feature 应能遍历打开各功能界面并切回主城总览")
+	# 验证 G.trigger_cancel() 在子面板打开时也能按 ESC 关闭子面板回到主城
+	home_gm.call("open_gm_feature", "shop")
+	await get_tree().process_frame
+	_check(home_gm.get("_gm_extra") != null, "open_gm_feature('shop') 应打开物资铺")
+	G.trigger_cancel()
+	await get_tree().process_frame
+	_check(home_gm.get("_gm_extra") == null, "G.trigger_cancel() 应能关闭物资铺回到主城")
+	home_gm.queue_free()
+	await get_tree().process_frame
+	await get_tree().process_frame
+
 	if _fails == 0:
 		print("GAME_HOME_OK all tests passed")
 	else:

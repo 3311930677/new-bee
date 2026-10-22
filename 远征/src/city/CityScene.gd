@@ -550,7 +550,8 @@ func _check_interact() -> void:
 			b.cooled = false
 	for n in _npcs:
 		var nd: float = n.position.distance_to(_player.position)
-		if not n.cooled and nd < NPC_R and nd < best_d:
+		var trig_r := 24.0 if (n.guest and _embedded_map != null) else NPC_R
+		if not n.cooled and nd < trig_r and nd < best_d:
 			best = n
 			best_d = nd
 		n.hover = nd < NPC_R + 24.0
@@ -742,6 +743,7 @@ func _show_built_panel(bd: Dictionary) -> void:
 	if not btn_text.is_empty():
 		actions.append({"text": btn_text, "action": act})
 	if act == "worlds":
+		actions.append({"text": "驿路与传世", "action": "journey"})
 		actions.append({"text": "深渊首领图志", "action": "abyss_codex"})
 		actions.append({"text": "翻阅行旅图志", "action": "field_journal"})
 		if G.story_step_done("s12"): actions.append({"text":"选择守碑誓约","action":"oath"})
@@ -865,6 +867,24 @@ func _built_action(act: String) -> void:
 		oath_panel.closed.connect(_close_overlay)
 		_hud.visible = false
 		_overlay_layer.add_child(oath_panel)
+		return
+	if act == "journey":
+		_close_panel()
+		if _embedded_map != null and _embedded_map.has_method("_open_journey"):
+			_embedded_map.call("_open_journey")
+		else:
+			var jp := preload("res://src/ui/JourneyPanel.gd").new()
+			_panel = jp
+			jp.closed.connect(_close_panel)
+			jp.travel_requested.connect(func(map_id: String):
+				if not G.can_go("res://src/explore/MapScene.tscn"): return
+				var res := preload("res://src/world/JourneyService.gd").travel(G, map_id)
+				if bool(res.get("ok", false)):
+					_close_panel()
+					G.enter_main_world(map_id)
+				else:
+					jp.show_message(String(res.get("line", "暂不可前往"))))
+			_hud.add_child(jp)
 		return
 	if act == "field_journal":
 		_panel = preload("res://src/ui/FieldJournalPanel.gd").new()
@@ -3154,12 +3174,12 @@ class _CityNPC extends Node2D:
 		_plate_w = clampf(G.font_bold.get_string_size(txt,
 			HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS).x + 16.0, 56.0, 112.0) \
 			if embedded else maxf(64.0, G.font_bold.get_string_size(txt, HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS).x + 20)
-		_plate_h = 22.0 if embedded else 26.0
+		_plate_h = 24.0 if embedded else 26.0
 		# 字号收进六档（P01 样板 §5）：主世界里的城务 NPC 名签统一用 G.FS_XS
 		_name_l = G.serif_label(txt,G.FS_XS,Color("fff5df"),false)
 		_name_l.add_theme_font_override("font",G.font_bold)
 		_name_l.add_theme_font_size_override("font_size",G.FS_XS)
-		_name_l.position = Vector2(-_plate_w * 0.5, _plate_top + 2)
+		_name_l.position = Vector2(-_plate_w * 0.5, _plate_top + 1)
 		_name_l.custom_minimum_size = Vector2(_plate_w, 0)
 		_name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		_pad = PanelContainer.new()
@@ -3169,10 +3189,10 @@ class _CityNPC extends Node2D:
 		var psb := StyleBoxFlat.new()
 		# 深木硬边名牌与新的纸页/金钮共用材质语言。
 		# 名牌按文字内容收紧，_clamp_plate() 按实际宽度钳制屏内位置。
-		psb.bg_color = Color.TRANSPARENT if embedded else Color("16121a",0.88)
+		psb.bg_color = Color("16121a",0.78) if embedded else Color("16121a",0.88)
 		psb.set_corner_radius_all(3)
-		psb.set_border_width_all(0 if embedded else 1)
-		psb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.45)
+		psb.set_border_width_all(1)
+		psb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.52)
 		psb.shadow_color = Color.TRANSPARENT
 		psb.shadow_size = 0
 		_pad.add_theme_stylebox_override("panel", psb)
@@ -3210,11 +3230,12 @@ class _CityNPC extends Node2D:
 		var py := _plate_top
 		var scr_left := sx + px * z
 		var scr_top := sy + py * z
-		if scr_left < 160.0 and scr_top + _plate_h * z > 624.0:
+		var view_h := get_viewport_rect().size.y
+		if scr_left < 160.0 and scr_top + _plate_h * z > view_h - 190.0:
 			py -= 40.0 / z   # 摇杆区上抬（屏幕 40px 折回本地坐标）
 		_pad.position = Vector2(px, py)
-		_name_l.position = Vector2(px, py + 2)
-		var in_view := sx >= 0.0 and sx <= get_viewport_rect().size.x and sy > 95.0 and sy < get_viewport_rect().size.y - 65.0
+		_name_l.position = Vector2(px, py + 1)
+		var in_view := sx >= 0.0 and sx <= get_viewport_rect().size.x and sy > 95.0 and sy < view_h - 65.0
 		_pad.visible = in_view
 		_name_l.visible = in_view
 
@@ -3288,10 +3309,13 @@ class _Joystick extends Control:
 		mouse_filter = Control.MOUSE_FILTER_STOP
 
 	func _gui_input(e: InputEvent) -> void:
+		var center := (size if size.x > 1.0 else custom_minimum_size) * 0.5
 		if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT:
 			if e.pressed:
 				_active = true
-				_base = (e as InputEventMouseButton).position
+				_base = center
+				vector = ((e as InputEventMouseButton).position - _base).limit_length(44.0) / 44.0
+				queue_redraw()
 			else:
 				_active = false
 				vector = Vector2.ZERO

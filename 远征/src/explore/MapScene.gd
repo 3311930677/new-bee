@@ -1095,9 +1095,9 @@ func _build_player(map_w: float, map_h: float) -> void:
 		# 深底名牌保证绿地、浅色道路上都可读；红色菱形仍标识玩家。
 		_player_tag = Lacquer.CutPanel.new()
 		_player_tag.world_skin = true
-		var name_y := -40.0 - 62.0 * player_scale
+		var name_y := -42.0 - 62.0 * player_scale
 		_player_tag.position = Vector2(-45, name_y)
-		_player_tag.size = Vector2(90, 20)
+		_player_tag.size = Vector2(90, 24)
 		_player_tag.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		var tag_style := StyleBoxFlat.new()
 		tag_style.bg_color = Color("171c1b", 0.96)
@@ -1184,14 +1184,22 @@ func _sync_mount_visual() -> void:
 			_exploration_seen.terrain=true
 			_toast(String(terrain.line))
 	var bear := riding and G.mount_active()=="bear"
+	var walk_frames: SpriteFrames = load(String(ROLE_FRAMES.get(st.role_id, ROLE_FRAMES["zs"])[0]))
 	_mount_anim.sprite_frames=MountVisual.frames_for(st.role_id,"bear" if bear else "horse")
-	_mount_anim.scale=Vector2.ONE*(.31 if bear else .34)
+	_mount_anim.scale=Vector2.ONE*(.34 if bear else .36)
 	_mount_anim.visible = riding
+	var cur_dir := String(_mount_anim.animation) if riding else String(_player_anim.animation).replace("idle_", "walk_")
+	if not cur_dir.begins_with("walk_"):
+		cur_dir = "walk_down"
+	_player_anim.sprite_frames = MountVisual.rider_frames_for(st.role_id, walk_frames) if riding else walk_frames
+	_player_anim.animation = StringName(cur_dir)
+	if not riding:
+		DirectionalIdle.stop(_player_anim)
 	_player_anim.visible = true
 	_player_anim.z_index=1 if riding else 0
 	var player_scale:=float(_main_cfg.get("player_scale",.96))
-	_player_anim.scale=Vector2.ONE*(.38 if riding else player_scale)
-	_player_anim.position=Vector2(0,MountVisual.rider_offset(G.mount_active(),String(_mount_anim.animation)) if riding else 21.0-56.0*player_scale)
+	_player_anim.scale=Vector2.ONE*(.60 if riding else player_scale)
+	_player_anim.position=MountVisual.rider_pos(G.mount_active(),String(_mount_anim.animation)) if riding else Vector2(0, 21.0-56.0*player_scale)
 	_mount_anim.position=MountVisual.mount_offset(G.mount_active(),String(_mount_anim.animation))
 	if _player_shadow != null:
 		_player_shadow.riding = riding
@@ -1200,7 +1208,7 @@ func _sync_mount_visual() -> void:
 	if _player_shape != null:
 		(_player_shape.shape as RectangleShape2D).size = Vector2(42, 28) if riding else Vector2(30, 26)
 	if _player_tag != null:
-		var tag_y := -126.0 if riding else -38.0 - 60.0 * float(_main_cfg.get("player_scale", 0.96))
+		var tag_y := -108.0 if riding else -38.0 - 60.0 * float(_main_cfg.get("player_scale", 0.96))
 		_player_tag.position.y = tag_y
 		if _player_marker != null:
 			_player_marker.position.y = tag_y - 19.0
@@ -1228,7 +1236,12 @@ func _mount_clearance() -> bool:
 	query.transform = Transform2D(0.0, _player.global_position + Vector2(0, 8))
 	query.collision_mask = _player.collision_mask
 	query.exclude = [_player.get_rid()]
-	return get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
+	for hit in get_world_2d().direct_space_state.intersect_shape(query, 8):
+		var col: Object = hit.get("collider")
+		if col is Node and (col as Node).get_parent() != null and (col as Node).get_parent().get("guest") != null:
+			continue
+		return false
+	return true
 
 
 func _toggle_mount() -> void:
@@ -1244,12 +1257,10 @@ func _toggle_mount() -> void:
 	if not G.mount_set_riding(ride):
 		_toast("暂时不能骑乘")
 		return
-	if ride and _sprint:
-		_toggle_sprint()
 	_sync_mount_visual()
 	_mount_hoof_timer = 0.0
 	Audio.sfx("mount_toggle", 0.0)
-	_toast("已上马 · 行路更快" if ride else "已下马")
+	_toast("已上马 · 铁骑疾驰" if ride else "已下马")
 
 
 ## 主世界伙伴是探索层实体：跟随、进战后随 _world 一起隐藏，不带碰撞，也不参与触发判定。
@@ -1687,7 +1698,14 @@ func _open_story_info(anchor: Control) -> void:
 	var lines: Array = ["目标：%s" % String(row.get("goal", "")), "地点：%s" % map_name]
 	for reward_line in G.reward_lines(reward):
 		lines.append(String(reward_line))
-	G.show_info_popup(anchor, title, lines, self)
+	if not String(_nav_info().get("kind", "")).is_empty():
+		var action_text := "停止寻路" if _auto_walk else "自动前往"
+		G.show_choice_popup(anchor, title, lines, [
+			{"text": action_text, "cb": Callable(self, "_on_compass_tapped")},
+			{"text": "知道了", "cb": Callable()},
+		], self)
+	else:
+		G.show_info_popup(anchor, title, lines, self)
 
 
 func _sync_campaign_level() -> void:
@@ -1743,11 +1761,11 @@ func _refresh_hud() -> void:
 			_player_name_l.tooltip_text = player_name
 			var name_width := G.font_bold.get_string_size(_player_name_l.text,
 				HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS).x
-			var tag_width := clampf(name_width + 12.0, 64.0, 150.0)
-			_player_tag.size = Vector2(tag_width, 20)
+			var tag_width := clampf(name_width + 14.0, 68.0, 154.0)
+			_player_tag.size = Vector2(tag_width, 24)
 			_player_tag.position.x = -tag_width * 0.5
 			_player_name_l.size = Vector2(tag_width, 22)
-			_player_name_l.position = Vector2(0, 0)
+			_player_name_l.position = Vector2(0, 1)
 		_refresh_player_appearance()
 	# 苦行局要在 HUD 上一直看得见：玩家必须清楚"这局敌人更强、收益更高"，
 	# 而不是打着打着忘了自己开过什么
@@ -2583,8 +2601,9 @@ func _show_trait_remove() -> void:
 	# 浮层底衬：统一走 G.veil（深棕 + 暗角 + 斜纹），不再各写一块纯灰
 	G.veil(_remover, 0.66, true)
 
+	var view_h := get_viewport_rect().size.y
 	var panel := G.parchment_box(336, 470, 20.0)
-	panel.position = Vector2(72, 150)
+	panel.position = Vector2((VIEW_W - 336.0) * 0.5, roundf((view_h - 470.0) * 0.5))
 	_remover.add_child(panel)
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 8)
@@ -2704,12 +2723,14 @@ func _ask_exit() -> void:
 	# 撤离确认底衬：统一工厂（深棕 + 暗角 + 斜纹），保持浮层质感一致
 	G.veil(layer, 0.72, true)
 
+	var view_h := get_viewport_rect().size.y
+	var top_y := roundf((view_h - 254.0) * 0.5)
 	var banner := G.banner_box("返回营帐" if _mode == "main_world" else "撤离本节点", 260, 48)
-	banner.position = Vector2((VIEW_W - 260.0) * 0.5, 264)
+	banner.position = Vector2((VIEW_W - 260.0) * 0.5, top_y)
 	layer.add_child(banner)
 
 	var panel := G.parchment_box(340, 190, 16.0)
-	panel.position = Vector2((VIEW_W - 340.0) * 0.5, 328)
+	panel.position = Vector2((VIEW_W - 340.0) * 0.5, top_y + 64.0)
 	layer.add_child(panel)
 	var content := Control.new()
 	content.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -2771,9 +2792,11 @@ func _physics_process(delta: float) -> void:
 		dir = _auto_dir(delta)
 	var speed := TableCache.map_player_speed()
 	if _mode == "main_world" and G.mount_riding():
-		speed *= float(G.first_mount_cfg().get("world_speed_mult", 1.25))
+		speed *= float(G.first_mount_cfg().get("world_speed_mult", 1.75))
 		speed *= ExplorationLinks.speed_mult(G.mount_active(),_main_map_id,_player.position,true)
-	if _sprint and not G.mount_riding():
+		if _sprint:
+			speed *= 1.25
+	elif _sprint:
 		speed *= float(_map_cfg.get("sprint_mult", 1.6))
 	_prev_pos = _player.position
 	_player.velocity = dir * speed
@@ -2810,14 +2833,19 @@ func _update_player_anim(dir: Vector2) -> void:
 			else:
 				mount_dir = &"walk_down" if dir.y > 0 else &"walk_up"
 			_mount_anim.animation = mount_dir
-			_mount_anim.play(mount_dir)
+			_mount_anim.speed_scale = clampf(dir.length() / maxf(1.0, TableCache.map_player_speed()), 0.85, 1.75)
+			if not _mount_anim.is_playing():
+				_mount_anim.play(mount_dir)
 			_player_anim.animation=mount_dir
 			DirectionalIdle.stop(_player_anim)
-			_player_anim.position.y=MountVisual.rider_offset(G.mount_active(),String(mount_dir))
+			var bob := -1.5 if _mount_anim.frame != 1 else 0.0
+			_player_anim.position=MountVisual.rider_pos(G.mount_active(),String(mount_dir),bob)
 			_mount_anim.position=MountVisual.mount_offset(G.mount_active(),String(mount_dir))
 		else:
 			_mount_anim.stop()
 			_mount_anim.frame=1
+			_player_anim.position=MountVisual.rider_pos(G.mount_active(),String(_mount_anim.animation),0.0)
+			_mount_anim.position=MountVisual.mount_offset(G.mount_active(),String(_mount_anim.animation))
 		return
 	var base_scale := float(_main_cfg.get("player_scale", 0.96)) if _mode == "main_world" else 0.72
 	var base_y := 21.0 - 56.0 * base_scale
@@ -3076,12 +3104,14 @@ func _open_altar(s: _Spot) -> void:
 	_hud.add_child(layer)
 	G.veil(layer, 0.72, true)
 
+	var view_h := get_viewport_rect().size.y
+	var top_y := roundf((view_h - 296.0) * 0.5)
 	var banner := G.banner_box("碑 灵 祭 坛", 260, 48)
-	banner.position = Vector2((VIEW_W - 260.0) * 0.5, 236)
+	banner.position = Vector2((VIEW_W - 260.0) * 0.5, top_y)
 	layer.add_child(banner)
 
 	var panel := G.parchment_box(340, 232, 16.0)
-	panel.position = Vector2((VIEW_W - 340.0) * 0.5, 300)
+	panel.position = Vector2((VIEW_W - 340.0) * 0.5, top_y + 64.0)
 	layer.add_child(panel)
 	var content := Control.new()
 	content.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -3214,30 +3244,27 @@ func _closest_feedback()->Node2D:
 	return _feedback_focus
 
 func _hud_target_info() -> Dictionary:
-	# Resolve the displayed quest marker without changing the existing autowalk destination.
+	# Resolve the displayed quest marker and keep HUD/minimap aligned with auto-navigation.
 	if _mode == "main_world" and SpecialEvents.tracked(G).is_empty():
-		var story := G.story_current()
-		if String(story.get("map","")) == _main_map_id:
-			var target := String(story.get("target",""))
-			if _city_content != null and String(story.get("event","")) == "talk":
-				for npc in _city_content._npcs:
-					if String(npc.data.get("id","")) == target:
-						return {"pos":npc.position,"kind":"quest","name":String(story.get("goal",""))}
-			for entity in _quest_entities:
-				if entity.eid == target and not entity.used: return {"pos":entity.position,"kind":"quest","name":entity.caption}
+		var story_same := _story_same_map_info()
+		if not story_same.is_empty():
+			return story_same
 	return _nav_info()
 
 
 func _tracked_side_map() -> String:
 	if _mode != "main_world": return ""
-	var tracked: String = String(G.side_tracked_id()) if G.has_method("side_tracked_id") else ""
+	var tracked := G.side_tracked()
 	if not tracked.is_empty():
-		var row: Dictionary = G.side_quest_def(tracked) if G.has_method("side_quest_def") else {}
-		var st: String = String(G.side_status_of(tracked)) if G.has_method("side_status_of") else ""
-		if st == "ready":
-			return String(row.get("turn_in_map", row.get("map", "lorin_wilds")))
-		if st == "active":
-			return String(row.get("map", ""))
+		var rows := G._side_live_rows()
+		var row := QuestService.side_row(rows, tracked)
+		var info := QuestService.side_progress_info(G.act1_state(), rows, tracked)
+		var st_side := String(info.get("status", ""))
+		if st_side == QuestService.SIDE_READY:
+			return String(info.get("turn_in_map", row.get("map", "lorin_wilds")))
+		if st_side == QuestService.SIDE_ACTIVE:
+			var current := QuestService.side_objective(row, QuestService.side_get(G.act1_state(), tracked))
+			return String(current.get("map", row.get("map", "")))
 	return ""
 
 func _first_hop_map_toward(goal_map: String) -> String:
@@ -3262,11 +3289,9 @@ func _first_hop_map_toward(goal_map: String) -> String:
 			queue.append(to)
 	return ""
 
-## 主线目标不在本图时，沿世界出口图（广度优先）找出下一步该走的出口，给 HUD 与罗盘一个可走的方向。
-func _story_route_info() -> Dictionary:
-	if _mode != "main_world": return {}
-	var goal_map := String(G.story_current().get("map", ""))
-	if goal_map.is_empty() or goal_map == _main_map_id: return {}
+func _route_to_map_info(goal_map: String, prefix := "前往") -> Dictionary:
+	if _mode != "main_world" or goal_map.is_empty() or goal_map == _main_map_id:
+		return {}
 	var maps: Dictionary = TableCache.main_world_config().get("maps", {})
 	var first_hop := {}
 	var queue: Array = [_main_map_id]
@@ -3283,17 +3308,115 @@ func _story_route_info() -> Dictionary:
 			first_hop[to] = row_v if at == _main_map_id else first_hop[at]
 			if to == goal_map:
 				var name := String(TableCache.main_world_map(goal_map).get("name", goal_map))
-				return {"pos": _world_exit_sign_position(first_hop[to]), "kind": "quest", "name": "前往" + name}
+				return {"pos": _world_exit_sign_position(first_hop[to]), "kind": "quest", "name": prefix + name}
 			queue.append(to)
+	return {}
+
+## 主线目标不在本图时，沿世界出口图（广度优先）找出下一步该走的出口，给 HUD 与罗盘一个可走的方向。
+func _story_route_info() -> Dictionary:
+	if _mode != "main_world": return {}
+	var goal_map := String(G.story_current().get("map", ""))
+	return _route_to_map_info(goal_map, "前往")
+
+## 主线目标在本图时，直接定位对应的城内 NPC、任务实体、前置机关或讨伐敌怪。
+func _story_same_map_info() -> Dictionary:
+	if _mode != "main_world": return {}
+	var row := G.story_current()
+	if row.is_empty() or String(row.get("map", "")) != _main_map_id:
+		return {}
+	var entities_cfg: Dictionary = _main_cfg.get("entities", {})
+	for req_flag in row.get("requires_flags", []):
+		var flag_id := String(req_flag)
+		if bool(G.prog.get("flags", {}).get(flag_id, false)):
+			continue
+		for entity in _quest_entities:
+			if not is_instance_valid(entity) or entity.used: continue
+			var erow: Dictionary = entities_cfg.get(entity.eid, {})
+			if String(erow.get("flag", "")) == flag_id:
+				return {"name": entity.caption if not entity.caption.is_empty() else String(row.get("goal", "主线目标")),
+					"pos": entity.position, "kind": "puzzle"}
+	var kind := String(row.get("kind", row.get("event", "")))
+	var target_id := String(row.get("target", ""))
+	var goal_text := String(row.get("goal", "主线目标"))
+	if kind in ["talk", "craft"] and is_instance_valid(_city_content):
+		var want_npc := "npc_blacksmith" if kind == "craft" else target_id
+		for npc in _city_content._npcs:
+			if is_instance_valid(npc) and String(npc.data.get("id", "")) == want_npc:
+				return {"name": goal_text, "pos": npc.position, "kind": "quest"}
+	for entity in _quest_entities:
+		if not is_instance_valid(entity) or entity.used: continue
+		if entity.eid == target_id:
+			return {"name": entity.caption if not entity.caption.is_empty() else goal_text,
+				"pos": entity.position, "kind": "quest"}
+		var erow: Dictionary = entities_cfg.get(entity.eid, {})
+		if entity.kind == "story" and String(erow.get("story_step", "")) == String(row.get("id", "")):
+			return {"name": entity.caption if not entity.caption.is_empty() else goal_text,
+				"pos": entity.position, "kind": "quest"}
+	if kind == "defeat":
+		for m in _monsters:
+			if is_instance_valid(m) and m.mon_id == target_id:
+				return {"name": goal_text, "pos": m.position, "kind": "boss" if m.tier == "boss" else "monster"}
+		for m in _monsters:
+			if is_instance_valid(m):
+				return {"name": goal_text, "pos": m.position, "kind": "boss" if m.tier == "boss" else "monster"}
+	return {}
+
+## 追踪中的支线目标：同图定位实体/NPC/敌怪，跨图沿世界出口引路。
+func _tracked_side_nav_info() -> Dictionary:
+	if _mode != "main_world": return {}
+	var qid := G.side_tracked()
+	if qid.is_empty(): return {}
+	var rows := G._side_live_rows()
+	var row := QuestService.side_row(rows, qid)
+	var info := QuestService.side_progress_info(G.act1_state(), rows, qid)
+	if row.is_empty() or info.is_empty(): return {}
+	var st_side := String(info.get("status", ""))
+	if st_side == QuestService.SIDE_READY:
+		var turn_in := String(info.get("turn_in", ""))
+		var turn_map := String(info.get("turn_in_map", row.get("map", "lorin_wilds")))
+		if turn_map == _main_map_id:
+			if is_instance_valid(_city_content):
+				for npc in _city_content._npcs:
+					if is_instance_valid(npc) and String(npc.data.get("id", "")) == turn_in:
+						return {"name": "支线 · " + G.side_target_name(turn_in), "pos": npc.position, "kind": "quest"}
+			for entity in _quest_entities:
+				if is_instance_valid(entity) and not entity.used and entity.eid == turn_in:
+					return {"name": "支线 · " + entity.caption, "pos": entity.position, "kind": "quest"}
+		elif not turn_map.is_empty():
+			return _route_to_map_info(turn_map, "前往")
+	elif st_side == QuestService.SIDE_ACTIVE:
+		var current := QuestService.side_objective(row, QuestService.side_get(G.act1_state(), qid))
+		var obj_map := String(current.get("map", row.get("map", "")))
+		var obj_target := String(current.get("target", ""))
+		var obj_kind := String(current.get("kind", ""))
+		if obj_map == _main_map_id:
+			for entity in _quest_entities:
+				if is_instance_valid(entity) and not entity.used and (entity.eid == obj_target or entity.quest == qid):
+					return {"name": "支线 · " + (entity.caption if not entity.caption.is_empty() else String(row.get("title", "支线"))),
+						"pos": entity.position, "kind": "quest"}
+			if is_instance_valid(_city_content):
+				for npc in _city_content._npcs:
+					if is_instance_valid(npc) and String(npc.data.get("id", "")) == obj_target:
+						return {"name": "支线 · " + String(npc.data.get("name", obj_target)), "pos": npc.position, "kind": "quest"}
+			if obj_kind == "defeat":
+				for m in _monsters:
+					if is_instance_valid(m) and (m.mon_id == obj_target or obj_target.is_empty()):
+						return {"name": "支线 · " + String(row.get("title", "讨伐")), "pos": m.position, "kind": "monster"}
+		elif not obj_map.is_empty():
+			return _route_to_map_info(obj_map, "前往")
 	return {}
 
 func _nav_info() -> Dictionary:
 	var special_id := SpecialEvents.tracked(G) if _mode=="main_world" else ""
 	if not special_id.is_empty():
 		var target := SpecialEvents.objective(G,special_id)
-		if String(target.get("map",""))==_main_map_id:
+		var spec_map := String(target.get("map",""))
+		if spec_map==_main_map_id:
 			return {"name":"奇遇 · "+String(target.get("name",SpecialEvents.row(special_id).giver)),
 				"pos":_cfg_point(target.at,Vector2.ZERO),"kind":"quest"}
+		elif not spec_map.is_empty():
+			var spec_route := _route_to_map_info(spec_map, "前往")
+			if not spec_route.is_empty(): return spec_route
 	for entity in _quest_entities:
 		if is_instance_valid(entity) and not entity.used and entity.kind=="trade_contract":return {"name":entity.caption,"pos":entity.position,"kind":"quest"}
 		if is_instance_valid(entity) and not entity.used and entity.kind=="trial":return {"name":entity.caption,"pos":entity.position,"kind":"quest"}
@@ -3328,6 +3451,10 @@ func _nav_info() -> Dictionary:
 			for entity in _quest_entities:
 				if is_instance_valid(entity) and not entity.used and entity.eid == objective:
 					return {"name": entity.caption, "pos": entity.position, "kind": "puzzle"}
+	var story_same := _story_same_map_info()
+	if not story_same.is_empty(): return story_same
+	var tracked_side := _tracked_side_nav_info()
+	if not tracked_side.is_empty(): return tracked_side
 	var story_route := _story_route_info()
 	if not story_route.is_empty(): return story_route
 	if _interactable != null and not _interactable.used:
@@ -3335,12 +3462,17 @@ func _nav_info() -> Dictionary:
 		var n: String = {"chest": "宝箱", "event": "奇遇", "shop": "商队",
 			"bonfire": "篝火"}.get(kind, "目标")
 		return {"name": n, "pos": _interactable.position, "kind": kind}
-	if _portal != null and _portal.locked:
+	if _mode != "main_world":
+		if _portal != null and _portal.locked:
+			for m in _monsters:
+				if m.tier == "boss":
+					return {"name": "首领", "pos": m.position, "kind": "boss"}
+		if _portal != null:
+			return {"name": "传送阵", "pos": _portal.position, "kind": "portal"}
+	else:
 		for m in _monsters:
-			if m.tier == "boss":
+			if is_instance_valid(m) and m.tier == "boss" and not _main_boss_cleared():
 				return {"name": "首领", "pos": m.position, "kind": "boss"}
-	if _portal != null:
-		return {"name": "传送阵", "pos": _portal.position, "kind": "portal"}
 	return {"name": "", "pos": Vector2.ZERO, "kind": ""}
 
 
@@ -3411,9 +3543,18 @@ func _stop_auto_walk(msg: String) -> void:
 ## 自动前往的转向：直线朝目标；被散件挡住时先沿切线绕一段再回来
 func _auto_dir(delta: float) -> Vector2:
 	var info := _nav_info()
+	if String(info.get("kind", "")).is_empty():
+		_stop_auto_walk("")
+		return Vector2.ZERO
 	var target := info.get("pos", Vector2.ZERO) as Vector2
+	if _mode == "main_world" and String(info.get("name", "")).begins_with("前往"):
+		target += Vector2(0, -16.0)
 	var to := target - _player.position
-	if to.length() < 24.0:
+	var stop_dist := 24.0
+	if is_instance_valid(_round_target) and _round_target.position.distance_to(target) < 28.0:
+		var interact_r := 52.0 if (not _round_target is _QuestEntity and not _round_target is _Interactable) else INTERACT_R
+		stop_dist = maxf(24.0, interact_r - 10.0)
+	if to.length() < stop_dist:
 		_stop_auto_walk("")
 		return Vector2.ZERO
 	_auto_time += delta
@@ -3422,8 +3563,11 @@ func _auto_dir(delta: float) -> Vector2:
 	if _auto_time > allowed:
 		_stop_auto_walk("走得太久——请你亲自来")
 		return Vector2.ZERO
-	var waypoint: Vector2 = _illustrated_navigation.next_point(self,_player.position,target) if _illustrated_ground() else _river_detour(_player.position,target)
+	var detoured := _river_detour(_player.position, target)
+	var waypoint: Vector2 = _illustrated_navigation.next_point(self, _player.position, detoured) if _mode == "main_world" else detoured
 	var steer := waypoint - _player.position
+	if steer.length_squared() < 1.0:
+		steer = to
 	if _auto_dodge > 0.0:
 		_auto_dodge -= delta
 		var side := steer.normalized().rotated(PI * 0.5 * _auto_dodge_side)
@@ -5629,7 +5773,7 @@ class _Minimap extends Control:
 		title.size = Vector2(size.x - 45, 28 if big else 20)
 		add_child(title)
 		var north := MapScene.HudStyle.label("北", 12, Color("c3c9b4"))
-		north.position = Vector2(size.x - 22, 2)
+		north.position = Vector2(size.x - 22, 2) if big else Vector2(size.x - 36, 12)
 		north.size = Vector2(16, 20)
 		add_child(north)
 		var footer := MapScene.HudStyle.label("金箭 · 当前位置" if big else "展开地图", 12, Color("d3c9aa"))
@@ -5839,7 +5983,7 @@ class _Minimap extends Control:
 				_: face = Vector2(0, 1)
 		MapScene.Cartography.marker(self,at.call(pp),"player",face)
 		# 北向固定的双色罗针；下缘给出明确的展开入口。
-		var needle := Vector2(sz.x - 30, 12)
+		var needle := Vector2(sz.x - 30, 12) if big else Vector2(sz.x - 42, 22)
 		draw_colored_polygon(PackedVector2Array([needle + Vector2(0, -5), needle + Vector2(-3, 3), needle]), Color("efd5a0"))
 		draw_colored_polygon(PackedVector2Array([needle + Vector2(0, -5), needle + Vector2(3, 3), needle]), Color("a47a49"))
 		if big: draw_line(Vector2(9, sz.y - 23), Vector2(sz.x - 9, sz.y - 23), Color("bca16c", 0.32), 1)
@@ -5920,11 +6064,13 @@ class _Joystick extends Control:
 		mouse_filter = Control.MOUSE_FILTER_STOP
 
 	func _gui_input(e: InputEvent) -> void:
+		var center := (size if size.x > 1.0 else custom_minimum_size) * 0.5
 		if e is InputEventScreenTouch:
 			if e.pressed and _touch_index == -1:
 				_touch_index = e.index
 				_active = true
-				_base = e.position
+				_base = center
+				vector = (e.position - _base).limit_length(44.0) / 44.0
 			elif not e.pressed and e.index == _touch_index:
 				_touch_index = -1
 				_active = false
@@ -5941,7 +6087,9 @@ class _Joystick extends Control:
 		if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT:
 			if e.pressed:
 				_active = true
-				_base = (e as InputEventMouseButton).position
+				_base = center
+				vector = ((e as InputEventMouseButton).position - _base).limit_length(44.0) / 44.0
+				queue_redraw()
 			else:
 				_active = false
 				vector = Vector2.ZERO
@@ -5957,14 +6105,18 @@ class _Joystick extends Control:
 
 
 ## 驿路浮层冻结世界接触；首领结算完后同一入口提供返程。
-func _open_journey(recommended := "") -> void:
+func _open_journey(recommended := "", initial_tab := "") -> void:
 	if _mode != "main_world" or _battle != null or _map_done or _journey_panel != null: return
 	_stop_auto_walk("")
 	_persist_main_world_progress()
 	var page := preload("res://src/ui/JourneyPanel.gd").new()
 	page.recommended = recommended
+	if not initial_tab.is_empty():
+		page.set("_tab", initial_tab)
 	_journey_panel = page
 	_hud.add_child(page)
+	if not initial_tab.is_empty() and page.has_method("_refresh"):
+		page.call("_refresh")
 	page.closed.connect(func():
 		_journey_panel = null
 		if _main_boss_cleared():
@@ -5975,6 +6127,26 @@ func _open_journey(recommended := "") -> void:
 		var result := preload("res://src/world/JourneyService.gd").travel(G,map_id)
 		if bool(result.ok): G.enter_main_world(map_id)
 		else: page.show_message(String(result.line)))
+
+
+func open_gm_feature(feature_id: String) -> void:
+	if _mode == "main_world" and _battle == null and not _map_done:
+		if _big_map != null:
+			_close_big_map()
+		if _journey_panel != null and is_instance_valid(_journey_panel):
+			_journey_panel.queue_free()
+			_journey_panel = null
+		if feature_id == "journey":
+			_open_journey("", "travel")
+			return
+		if feature_id == "relic_hunt":
+			_open_journey("", "hunt")
+			return
+		if feature_id == "worlds":
+			_open_region_map_overlay()
+			return
+	G.set_meta("gm_pending_feature", feature_id)
+	G.go("res://src/ui/GameHome.tscn")
 
 
 func _round_action(words: String, glyph: String, at: Vector2, diameter: float, cb: Callable, round_shape: bool = true) -> Button:
@@ -6013,9 +6185,16 @@ func _build_round1_hud() -> void:
 	_side_chip.pressed.connect(func():
 		if not G.ui_blocked:
 			var special_goal := SpecialEvents.goal(G)
-			if not special_goal.is_empty():
-				G.show_info_popup(_side_chip,"追踪奇遇",[special_goal,"到标记的地点继续，谢礼在复命时领取。"],self)
-			else: G.show_info_popup(_side_chip,"追踪目标",G.side_info_lines(),self))
+			var pop_title := "追踪奇遇" if not special_goal.is_empty() else "追踪目标"
+			var pop_lines: Array = [special_goal, "到标记的地点继续，谢礼在复命时领取。"] if not special_goal.is_empty() else G.side_info_lines()
+			if not String(_nav_info().get("kind", "")).is_empty():
+				var action_text := "停止寻路" if _auto_walk else "自动前往"
+				G.show_choice_popup(_side_chip, pop_title, pop_lines, [
+					{"text": action_text, "cb": Callable(self, "_on_compass_tapped")},
+					{"text": "知道了", "cb": Callable()},
+				], self)
+			else:
+				G.show_info_popup(_side_chip, pop_title, pop_lines, self))
 	_side_chip.visible = false
 	_round_fold = _round_action("", "≡", Vector2(228,76),44,func():
 		if _round_collapsed:
@@ -6090,14 +6269,15 @@ func _layout_round1_hud(safe_override: Rect2 = Rect2()) -> void:
 	_round_safe = safe
 	_main_gold_chip.size.x = 92 if safe.size.x < 480 else 104
 	_main_gold_l.size.x = _main_gold_chip.size.x - 32
+	var bottom_lift := 16.0 if view.size.y > 820.0 else 0.0
 	for child in _hud.get_children():
 		if not child is Control or child.name in ["TopScrim", "AmbientVignette", "WeatherVFX", "DirectionalSunbeams", "ForegroundCanopy"]: continue
 		if child.has_meta("safe_hud_position"): child.remove_meta("safe_hud_position")
 		if not child.has_meta("round_base"): child.set_meta("round_base",child.position)
 		var base: Vector2 = child.get_meta("round_base")
 		child.position = base + Vector2(safe.position.x if base.x < 240 else safe.end.x - 480,
-			safe.position.y if base.y < 400 else safe.end.y - 800)
-		child.set_meta("safe_hud_position",base + Vector2(view.size.x - 480 if base.x >= 240 else 0,view.size.y - 800 if base.y >= 400 else 0))
+			safe.position.y if base.y < 400 else safe.end.y - 800 - bottom_lift)
+		child.set_meta("safe_hud_position",base + Vector2(view.size.x - 480 if base.x >= 240 else 0,view.size.y - 800 - bottom_lift if base.y >= 400 else 0))
 	_layout_round_tasks()
 
 func _layout_round_tasks() -> void:
@@ -6131,7 +6311,7 @@ func _layout_round_tasks() -> void:
 		else: hidden+=1
 	if not available.is_empty():
 		if _round_fold.get_parent()!=available[0]: _round_fold.reparent(available[0])
-		_round_fold.position=Vector2(216,0)
+		_round_fold.position=Vector2(216, roundf((available[0].size.y - 44.0) * 0.5))
 		_round_fold.size=Vector2(44,44)
 		_round_fold.quiet=true
 	_round_fold.call("set_count",hidden if hidden > 0 else -1,Vector2(27,-4))
