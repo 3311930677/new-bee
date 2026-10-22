@@ -47,8 +47,15 @@ func _build() -> void:
 	header.add_theme_stylebox_override("panel", Art.box("header", 8))
 	_content.add_child(header)
 	var head_row := HBoxContainer.new()
-	head_row.add_theme_constant_override("separation", 12)
+	head_row.add_theme_constant_override("separation", 10)
 	header.add_child(head_row)
+	var top_back := Art.action("‹", "back")
+	top_back.name = "HeaderBackButton"
+	top_back.custom_minimum_size = Vector2(44, 44)
+	top_back.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	top_back.tooltip_text = "返回"
+	top_back.pressed.connect(_close_self)
+	head_row.add_child(top_back)
 	var mark := G.ui_icon("quest", Vector2(28,28), Art.GOLD)
 	mark.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	head_row.add_child(mark)
@@ -87,7 +94,7 @@ func _build() -> void:
 func _resize_frame(safe_override := Rect2()) -> void:
 	if _panel == null: return
 	var safe: Rect2 = safe_override if safe_override.has_area() else G.ui_safe_rect(self)
-	var height := minf(800,safe.size.y-32)
+	var height := safe.size.y - 24.0
 	_panel.position = safe.position + Vector2(16,roundf((safe.size.y-height)*.5))
 	_panel.size = Vector2(safe.size.x-32,height)
 
@@ -135,8 +142,12 @@ func _story_card(story: Dictionary) -> void:
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	top.add_child(title)
 	var badge := PanelContainer.new()
+	badge.custom_minimum_size = Vector2(68, 26)
 	badge.add_theme_stylebox_override("panel",_badge_box())
-	badge.add_child(Art.label("进行中","tag",Art.JADE))
+	var badge_l := Art.label("进行中","tag",Art.JADE)
+	badge_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	badge_l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	badge.add_child(badge_l)
 	badge.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	top.add_child(badge)
 	info.add_child(_line("目标：" + String(story.get("goal","")),"body"))
@@ -305,19 +316,21 @@ func _row(qid: String) -> void:
 	info.add_child(_line(String(d.get("goal","")),"caption"))
 	var state := G.quest_state(qid)
 	info.add_child(_line(state,"tag",Art.JADE if state == "可交付" else Art.GOLD if state.begins_with("进行中") else Art.MUTED))
-	info.add_child(_line(" · ".join(G.reward_lines(d.get("reward",{}))),"tag",Art.GOLD))
+	var reward_line := _line(" · ".join(G.reward_lines(d.get("reward",{}))),"tag",Art.GOLD)
+	reward_line.add_theme_font_size_override("font_size", 13)
+	info.add_child(reward_line)
 	var side := VBoxContainer.new()
-	side.custom_minimum_size.x = 108
+	side.custom_minimum_size.x = 114
 	side.alignment = BoxContainer.ALIGNMENT_CENTER
 	side.add_theme_constant_override("separation",8)
 	row.add_child(side)
 	var npc := G.city_npc(String(d.get("npc","")))
 	var who := String(npc.get("name",""))
 	if not String(npc.get("title","")).is_empty(): who += " · " + String(npc.title)
-	var who_label := _line(who,"tag",Art.MUTED)
+	var who_label := Art.label(who,"tag",Art.MUTED)
 	who_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	who_label.custom_minimum_size.x = 108
-	who_label.add_theme_font_size_override("font_size",G.FS_XS)
+	who_label.custom_minimum_size.x = 114
+	who_label.add_theme_font_size_override("font_size", 13)
 	side.add_child(who_label)
 	var enabled := not G.quest_claimed(qid) and (not G.quest_active(qid) or G.quest_completed(qid))
 	var words := "已交付" if G.quest_claimed(qid) else "接取" if not G.quest_active(qid) else "交付" if G.quest_completed(qid) else "进行中"

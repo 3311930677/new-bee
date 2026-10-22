@@ -126,9 +126,9 @@ func _build() -> void:
 	_art.stretch_mode = TextureRect.STRETCH_SCALE
 	_art.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	# 高屏时原图上沿渐隐进天空铺底，不留硬边。
+	# 高屏时原图上下沿渐隐进铺底，不留硬边。
 	var edge := Shader.new()
-	edge.code = "shader_type canvas_item; uniform float fade_px = 0.0; uniform float art_h = 853.0; void fragment(){ vec4 c = texture(TEXTURE, UV); if (fade_px > 0.0) { c.a *= smoothstep(0.0, fade_px / art_h, UV.y); } COLOR = c; }"
+	edge.code = "shader_type canvas_item; uniform float fade_px = 0.0; uniform float fade_bottom = 0.0; uniform float art_h = 853.0; void fragment(){ vec4 c = texture(TEXTURE, UV); float y = UV.y * art_h; if (fade_px > 0.0) { c.a *= smoothstep(0.0, fade_px, y); } if (fade_bottom > 0.0) { c.a *= smoothstep(0.0, fade_bottom, art_h - y); } COLOR = c; }"
 	var edge_mat := ShaderMaterial.new()
 	edge_mat.shader = edge
 	_art.material = edge_mat
@@ -215,20 +215,24 @@ func _layout(safe_override:=Rect2()) -> void:
 	if _brand==null or _gauge==null:return
 	var safe:=safe_override if safe_override.has_area() else G.ui_safe_rect(self)
 	var view := get_viewport_rect().size
-	_hint_l.position = Vector2(safe.position.x+24, safe.end.y-TIP_H-6)
-	_hint_l.size = Vector2(safe.size.x-48, TIP_H)
-	_gauge.position = Vector2(roundf(safe.get_center().x-_gauge.size.x*.5),
-		_hint_l.position.y-STATUS_GAP-22-_gauge.size.y)
 	_art.size = _art.texture.get_size()
-	_art.position = _gauge.position - _gauge.origin
+	var bottom_art_y := safe.end.y - TIP_H - 6.0 - STATUS_GAP - 22.0 - _gauge.size.y - _gauge.origin.y
+	var centered_art_y := roundf(safe.position.y + (safe.size.y - _art.size.y) * 0.45)
+	var art_y := minf(bottom_art_y, centered_art_y)
+	_art.position = Vector2(roundf(safe.get_center().x - _art.size.x * 0.5), art_y)
+	_gauge.position = Vector2(roundf(safe.get_center().x-_gauge.size.x*.5), _art.position.y + _gauge.origin.y)
+	_hint_l.position = Vector2(safe.position.x+24, minf(safe.end.y-TIP_H-12.0, _gauge.position.y+_gauge.size.y+STATUS_GAP+26.0))
+	_hint_l.size = Vector2(safe.size.x-48, TIP_H)
 	var mat := _art.material as ShaderMaterial
 	mat.set_shader_parameter("art_h", _art.size.y)
-	mat.set_shader_parameter("fade_px", 64.0 if _art.position.y > 0.5 else 0.0)
+	mat.set_shader_parameter("fade_px", 96.0 if _art.position.y > 0.5 else 0.0)
+	mat.set_shader_parameter("fade_bottom", 64.0 if _art.position.y + _art.size.y < view.y - 0.5 else 0.0)
 	_backdrop.position = Vector2.ZERO
 	_backdrop.size = view
-	_floor.position = Vector2(0, _art.position.y+_art.size.y)
+	var floor_y := maxf(0.0, _art.position.y + _art.size.y - (64.0 if _art.position.y + _art.size.y < view.y - 0.5 else 0.0))
+	_floor.position = Vector2(0, floor_y)
 	_floor.size = Vector2(view.x, maxf(0.0, view.y-_floor.position.y))
-	_brand.position = Vector2(roundf(safe.get_center().x-BRAND_SIZE.x*.5), safe.position.y+36)
+	_brand.position = Vector2(roundf(safe.get_center().x-BRAND_SIZE.x*.5), safe.position.y+36.0+maxf(0.0, art_y*0.55))
 
 func _set_bar_ratio(ratio: float) -> void:
 	var r := clampf(ratio,0.0,1.0)

@@ -180,11 +180,27 @@ func refresh(sync_panel: bool = false) -> void:
 	_relayout.call_deferred()
 
 
-func _relayout() -> void:
-	if not is_inside_tree() or _card == null:
-		return
-	var vp := get_viewport_rect().size
-	var step := Tut.current_step(G)
+func _resolve_target_rect(step: Dictionary, vp: Vector2) -> Rect2:
+	var sid := String(step.get("id", ""))
+	var root: Node = get_parent() if get_parent() != null else self
+	var node_map := {
+		"step_01_role": "HeroPreviewButton",
+		"step_02_move": "ReturnToWorld",
+		"step_03_npc": "MainStoryCard",
+		"step_04_quest": "CommissionScroll",
+		"step_11_goals": "QuestSummary",
+	}
+	if node_map.has(sid):
+		var target_node := root.find_child(String(node_map[sid]), true, false) as Control
+		if target_node != null and target_node.is_visible_in_tree() and target_node.size.x > 1.0 and target_node.size.y > 1.0:
+			var r := target_node.get_global_rect()
+			if sid == "step_01_role":
+				r = r.grow_individual(24.0, 8.0, 24.0, 28.0)
+			elif sid == "step_02_move":
+				r = r.grow_individual(16.0, 8.0, 16.0, 42.0)
+			elif sid == "step_04_quest":
+				r.size.y = minf(r.size.y, 280.0)
+			return r
 	var hl: Array = step.get("highlight", [160, 440, 160, 120])
 	var extra_y := maxf(vp.y - 800.0, 0.0)
 	var hx := float(hl[0]) + (vp.x - 480.0) * 0.5
@@ -194,12 +210,18 @@ func _relayout() -> void:
 		if hy >= 580.0:
 			hy += extra_y
 		elif hy >= 240.0:
-			hy += extra_y * 0.75
+			hy += extra_y * 0.45
 	else:
-		hy += extra_y * 0.5
-	var hw := float(hl[2])
-	var hh := float(hl[3])
-	var target := Rect2(hx, hy, hw, hh)
+		hy += extra_y * 0.35
+	return Rect2(hx, hy, float(hl[2]), float(hl[3]))
+
+
+func _relayout() -> void:
+	if not is_inside_tree() or _card == null:
+		return
+	var vp := get_viewport_rect().size
+	var step := Tut.current_step(G)
+	var target := _resolve_target_rect(step, vp)
 
 	var card_w := minf(448.0, vp.x - 24.0)
 	var card_x := roundf((vp.x - card_w) * 0.5)
@@ -207,17 +229,21 @@ func _relayout() -> void:
 	if _vbox != null:
 		_vbox.custom_minimum_size = Vector2(inner_w, 0)
 		_vbox.size = Vector2(inner_w, 0)
+		for lbl in [_badge_l, _title_l, _body_l, _hint_l]:
+			if lbl != null:
+				lbl.custom_minimum_size.x = inner_w
+				lbl.size.x = inner_w
 	var vbox_h := _vbox.get_combined_minimum_size().y if _vbox != null else 260.0
-	var card_h := maxf(264.0, vbox_h + 20.0)
+	var card_h := maxf(268.0, vbox_h + 28.0)
 	var target_cy := target.get_center().y
-	var card_at_top := target_cy >= vp.y * 0.52
-	var card_y := 32.0 if card_at_top else (vp.y - card_h - 12.0)
+	var card_at_top := target_cy >= vp.y * 0.56
+	var card_y := 32.0 if card_at_top else (vp.y - card_h - 14.0)
 	_card.position = Vector2(card_x, card_y)
 	_card.size = Vector2(card_w, card_h)
 	_card.custom_minimum_size = Vector2(card_w, card_h)
 	if _vbox != null:
-		_vbox.position = Vector2(14, 10)
-		_vbox.size = Vector2(inner_w, card_h - 20.0)
+		_vbox.position = Vector2(14, 12)
+		_vbox.size = Vector2(inner_w, card_h - 24.0)
 
 	_highlight.target_rect = target
 	_highlight.card_at_top = card_at_top

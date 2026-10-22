@@ -125,10 +125,10 @@ func _ready() -> void:
 func layout(safe_override: Rect2 = Rect2()) -> void:
 	var vh := get_viewport_rect().size.y
 	var safe := safe_override if safe_override.has_area() else _safe_rect()
-	# 高屏多出的高度约 3/4 给上方夜空、1/4 给下方广场，城门不至于离任务条太远
+	# 高屏多出的高度按均衡比例分配给上方夜空与下方石阶广场，保持月下山城整体居中舒展
 	# （取偶数，保持 2 倍像素对齐；超出 home_bg_tall 顶部的部分由 SKY 色块补齐）
 	var extra: float = max(vh - 800.0, 0.0)
-	var core_y: float = CORE_Y_800 + floor(extra * 0.75 / 2.0) * 2.0
+	var core_y: float = CORE_Y_800 + floor(extra * 0.45 / 2.0) * 2.0
 	_scene.position = Vector2(0, core_y)
 	for id in _plaques:
 		var b: Button = _plaques[id]
@@ -170,7 +170,7 @@ func refresh() -> void:
 		_quest_dot.visible = host._quest_claimable()
 		_plaque_dots["gacha"].visible = host._entry_has_badge("召唤")
 		_plaque_dots["exchange"].visible = host._entry_has_badge("兑换")
-		_gathering_unlocked = G.side_status_of("a4_rel_nighttable") == QuestService.SIDE_DONE
+		_gathering_unlocked = G.side_status_of("a4_rel_nighttable") == QuestService.SIDE_DONE or G.gm_unlocked
 	var gather: TextureButton = _rail["gathering"]
 	gather.modulate = Color.WHITE if _gathering_unlocked or host == null else LOCKED_TINT
 	gather.tooltip_text = "归路小聚" if _gathering_unlocked else "完成归路小聚支线后开放"

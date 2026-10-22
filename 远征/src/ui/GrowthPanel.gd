@@ -115,23 +115,28 @@ func _layout(safe_override: Rect2 = Rect2()) -> void:
 	var safe := safe_override if safe_override.has_area() else G.ui_safe_rect(self)
 	var x := safe.position.x
 	var y := safe.position.y
-	var top := safe.end.y-472
+	var extra := maxf(0.0, safe.size.y - 800.0)
+	var tray_h := roundf(clampf(472.0 + extra * 0.62, 472.0, 640.0))
+	var top := safe.end.y - tray_h
 	Page.place(_stage,Vector2.ZERO,get_viewport_rect().size)
-	Page.place(_back,Vector2(x+8,y+6),Vector2(44,44))
-	Page.place(_heading,Vector2(x+64,y+8),Vector2(300,40))
-	Page.place(_pool,Vector2(x+196,top-58),Vector2(256,60))
-	var stage_start:=maxf(y+60,top-232)
-	var hero_extent:=minf(200,top-stage_start-28)
-	Page.place(_hero,Vector2(x+216,top-28-hero_extent),Vector2(hero_extent,hero_extent))
-	Page.place(_hero_name,Vector2(x+192,top-42),Vector2(256,30))
+	Page.place(_back,Vector2(x+12,y+8),Vector2(44,44))
+	Page.place(_heading,Vector2(x+68,y+10),Vector2(300,40))
+	var stage_h := maxf(220.0, top - (y + 56.0))
+	var hero_extent := clampf(stage_h - 68.0, 160.0, 212.0)
+	var block_h := hero_extent + 36.0
+	var stage_start := roundf(y + 56.0 + maxf(4.0, (stage_h - block_h) * 0.5))
+	Page.place(_pool,Vector2(x+196,stage_start+hero_extent-34.0),Vector2(256,60))
+	Page.place(_hero,Vector2(x+224+(200.0-hero_extent)*0.5,stage_start),Vector2(hero_extent,hero_extent))
+	Page.place(_hero_name,Vector2(x+196,stage_start+hero_extent+2.0),Vector2(256,28))
 	var sc: Control = _page.get_node_or_null("StatsCard")
+	var sc_y := roundf(stage_start + (block_h - 176.0) * 0.5)
 	if sc != null:
-		Page.place(sc, Vector2(x+16, stage_start), Vector2(172, 172))
+		Page.place(sc, Vector2(x+16, sc_y), Vector2(172, 176))
 	else:
-		Page.place(_stats,Vector2(x+16,stage_start),Vector2(172,172))
-	Page.place(_tray,Vector2(x,top),Vector2(safe.size.x,safe.end.y-top))
-	Page.place(_recommend,Vector2(x+16,top+8),Vector2(safe.size.x-32,44))
-	Page.place(_row_scroll,Vector2(x+16,top+60),Vector2(safe.size.x-32,safe.end.y-top-72))
+		Page.place(_stats,Vector2(x+16,sc_y),Vector2(172,176))
+	Page.place(_tray,Vector2(x,top),Vector2(safe.size.x,tray_h))
+	Page.place(_recommend,Vector2(x+16,top+10),Vector2(safe.size.x-32,44))
+	Page.place(_row_scroll,Vector2(x+16,top+62),Vector2(safe.size.x-32,tray_h-74))
 
 func _entry_row(words: String, icon: String, id: String) -> Control:
 	var row := Page.GrowthRow.new(words,icon)

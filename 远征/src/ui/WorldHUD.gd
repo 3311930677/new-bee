@@ -1,12 +1,12 @@
 class_name WorldHUD
 extends RefCounted
 const UI := preload("res://src/ui/LacquerUI.gd")
-const STATUS_SIZE := Vector2(176, 64)
+const STATUS_SIZE := Vector2(176, 68)
 const GOLD_POS := Vector2(196, 8)
 const GOLD_SIZE := Vector2(104, 44)
-const CITY_TASK_Y := 86.0
-const FIELD_TASK_Y := 86.0
-const TASK_GAP := 50.0
+const CITY_TASK_Y := 88.0
+const FIELD_TASK_Y := 88.0
+const TASK_GAP := 54.0
 const WOOD := Color("17151a", 0.78)
 const EDGE := Color("6e5434")
 const BRASS := Color("c29a5b")
@@ -39,33 +39,33 @@ static func status(hp_fill: ColorRect, exp_fill: ColorRect) -> Dictionary:
 	root.size = STATUS_SIZE
 	var lv_caption := label("Lv", 12, UI.AGED)
 	lv_caption.position = Vector2(8, 5)
-	lv_caption.size = Vector2(36, 16)
+	lv_caption.size = Vector2(36, 18)
 	lv_caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	root.add_child(lv_caption)
 	var level := label("", 18, UI.GOLD, true)
-	level.position = Vector2(8, 24)
+	level.position = Vector2(8, 25)
 	level.size = Vector2(36, 28)
 	level.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	root.add_child(level)
 	var hp := label("", 13, UI.PAPER, true)
-	hp.position = Vector2(72, 5)
-	hp.size = Vector2(96, 18)
+	hp.position = Vector2(72, 2)
+	hp.size = Vector2(96, 20)
 	hp.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	root.add_child(hp)
 	var heart := label("♥", 12, UI.JADE)
-	heart.position = Vector2(56, 5)
-	heart.size = Vector2(14, 18)
+	heart.position = Vector2(56, 2)
+	heart.size = Vector2(14, 20)
 	root.add_child(heart)
 	var caption := label("历练", 11, UI.AGED)
-	caption.position = Vector2(56, 36)
-	caption.size = Vector2(40, 16)
+	caption.position = Vector2(56, 33)
+	caption.size = Vector2(44, 20)
 	root.add_child(caption)
 	var exp := label("", 11, UI.AGED)
-	exp.position = Vector2(96, 36)
-	exp.size = Vector2(72, 16)
+	exp.position = Vector2(96, 33)
+	exp.size = Vector2(72, 20)
 	exp.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	root.add_child(exp)
-	for item in [[hp_fill, 10, 24, UI.JADE], [exp_fill, 6, 52, UI.FROST]]:
+	for item in [[hp_fill, 10, 23, UI.JADE], [exp_fill, 6, 55, UI.FROST]]:
 		var fill := item[0] as ColorRect
 		var bg := BarTrack.new()
 		bg.position = Vector2(56, item[2])
@@ -127,23 +127,23 @@ static func region_title(text: String) -> Control:
 static func task_chip(width: float, kind: String) -> Dictionary:
 	var root := ActionChip.new()
 	root.name = "WorldTask_" + kind
-	root.size = Vector2(width, 44)
+	root.size = Vector2(width, 50)
 	root.task_kind = kind
 	root.accent = {"story":UI.GOLD, "daily":UI.AGED, "side":UI.FROST}.get(kind, UI.AGED)
 	var badge := label({"story":"主", "daily":"委", "side":"支"}.get(kind, "事"), 11, root.accent, true)
 	badge.name = "TaskBadge"
-	badge.position = Vector2(8, 10)
+	badge.position = Vector2(8, 12)
 	badge.size = Vector2(22, 24)
 	badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	root.add_child(badge)
 	var heading := label({"story":"当前主线", "daily":"行旅委托", "side":"追踪目标"}.get(kind,"行旅记事"), 10, root.accent)
 	heading.name = "TaskHeading"
-	heading.position = Vector2(38, 4)
-	heading.size = Vector2(width - 46, 14)
+	heading.position = Vector2(38, 3)
+	heading.size = Vector2(width - 46, 18)
 	root.add_child(heading)
 	var l := label("", 13, UI.PAPER)
-	l.position = Vector2(38, 19)
-	l.size = Vector2(width - 46, 20)
+	l.position = Vector2(38, 21)
+	l.size = Vector2(width - 46, 25)
 	l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	l.max_lines_visible = 2
 	l.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
@@ -159,9 +159,9 @@ static func update_task(l: Label, words: String) -> void:
 	if pieces.size() == 2:
 		var first := pieces[0].strip_edges()
 		(chip.get_node("TaskBadge") as Label).text = first.left(1)
-	var width := G.font_reg.get_string_size(l.text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x
-	chip.size.y = 68 if width > l.size.x else 44
-	l.size.y = chip.size.y - 23
+	var width := G.font_reg.get_string_size(l.text, HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS).x
+	chip.size.y = 72 if width > l.size.x else 50
+	l.size.y = chip.size.y - 24
 	chip.queue_redraw()
 
 static func format_currency(amount: int) -> String:
@@ -186,7 +186,7 @@ class MaterialPanel extends Control:
 	func _draw() -> void:
 		S.plate(self, Rect2(Vector2.ZERO, size))
 		if kind == "status":
-			S.medallion(self,Rect2(6,6,40,51))
+			S.medallion(self,Rect2(6,6,40,size.y-13))
 			draw_line(Vector2(50,6),Vector2(50,size.y-6),Color(S.BRONZE,0.65),1)
 		elif kind == "region":
 			for x in [5.0,size.x-6]: S.diamond(self,Vector2(x,size.y*0.5),2,S.GOLD)
@@ -219,6 +219,6 @@ class ActionChip extends Button:
 		S.plate(self, r, bg, S.GOLD if is_hovered() or has_focus() else edge, true, is_pressed())
 		if not task_kind.is_empty():
 			draw_rect(Rect2(4, inset_y + 8, 1, r.size.y - 16), accent)
-			S.plate(self,Rect2(8,inset_y+9,22,26),Color("463824"),accent,false)
+			S.plate(self,Rect2(8,inset_y+11,22,26),Color("463824"),accent,false)
 		if has_focus(): L.plate(self, Rect2(Vector2.ONE * -2, size + Vector2.ONE * 4), Color.TRANSPARENT, L.PAPER)
 	func pulse() -> void: queue_redraw()

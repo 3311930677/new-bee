@@ -5,7 +5,7 @@ extends Control
 const UI:=preload("res://src/ui/TravelChestUI.gd")
 const Flow:=preload("res://src/ui/FlowChestUI.gd")
 const KIT:="res://assets/ui/login_20261014/"
-const FADE:=24.0
+const FADE:=64.0
 var host:Control
 var _kit:Dictionary
 var _backdrop:TextureRect
@@ -186,7 +186,7 @@ func layout(safe_override:Rect2=Rect2(),keyboard_override:float=-1) -> void:
 	var mat:=_art.material as ShaderMaterial
 	mat.set_shader_parameter("fade_top",FADE if _art_top>0 else 0.0)
 	mat.set_shader_parameter("fade_bottom",FADE if _art_top+art_h<view_h else 0.0)
-	_back.position=safe.position+Vector2(8,6);_back.size=Vector2(44,44)
+	_back.position=Vector2(safe.position.x+12,safe.position.y+8 if typing else maxf(safe.position.y+12,_art_top+12));_back.size=Vector2(44,44)
 	_put(host._wordmark,"title")
 	_put(host._subtitle,"subtitle")
 	_put(host._paper,"paper")

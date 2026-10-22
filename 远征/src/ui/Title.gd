@@ -65,11 +65,24 @@ func _ready() -> void:
 	_subtitle_group.size = Vector2(260,28)
 	_subtitle_group.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_subtitle_group)
-	_subtitle = Lacquer.label("点击开始旅程",16,Color("e6cf9c"),true)
+	var sub_pill := StyleBoxFlat.new()
+	sub_pill.bg_color = Color("120e14", 0.64)
+	sub_pill.border_color = Color(Lacquer.LIT, 0.38)
+	sub_pill.set_border_width_all(1)
+	sub_pill.set_corner_radius_all(13)
+	var sub_bg := Panel.new()
+	sub_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	sub_bg.position = Vector2(46, 1)
+	sub_bg.size = Vector2(168, 26)
+	sub_bg.add_theme_stylebox_override("panel", sub_pill)
+	_subtitle_group.add_child(sub_bg)
+	_subtitle = Lacquer.label("点击开始旅程",16,Color("f2deaf"),true)
 	var subtitle_font := FontVariation.new()
 	subtitle_font.base_font = G.font_serif
 	subtitle_font.spacing_glyph = 4
 	_subtitle.add_theme_font_override("font",subtitle_font)
+	_subtitle.add_theme_color_override("font_outline_color", Color("120d0a", 0.94))
+	_subtitle.add_theme_constant_override("outline_size", 3)
 	_subtitle.position = Vector2(56,0)
 	_subtitle.size = Vector2(148,28)
 	_subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -140,7 +153,7 @@ func _layout_page(safe_override: Rect2 = Rect2()) -> void:
 	# 菜单落在底部石阶暗区：主角和路牌在按钮上方完整露出（参考稿三键约在 73% / 79% / 86% 高度）。
 	var cx := safe.get_center().x
 	var sizes := [Vector2(280, 60), Vector2(256, 52), Vector2(256, 52)]
-	var tops := [safe.end.y - 272, safe.end.y - 204, safe.end.y - 144]
+	var tops := [safe.end.y - 284, safe.end.y - 214, safe.end.y - 152]
 	for i in _btns.size():
 		_btns[i].size = sizes[i]
 		_btns[i].position = Vector2(cx - sizes[i].x * .5, tops[i])
@@ -148,12 +161,12 @@ func _layout_page(safe_override: Rect2 = Rect2()) -> void:
 		icon.size = Vector2(36, 36)
 		icon.position = Vector2(sizes[i].x * .5 - 86, (sizes[i].y - 36) * .5)
 	# 底部：左侧公告 / 退出游戏，右侧制作组 / 版本信息，最底一条罗盘细线。
-	var link_y := safe.end.y - 90
+	var link_y := safe.end.y - 98
 	_links[0].position = Vector2(safe.position.x + 14, link_y)
 	_links[1].position = Vector2(safe.position.x + 14 + _FooterLink.W + 6, link_y)
 	_links[2].position = Vector2(safe.end.x - 14 - 2 * _FooterLink.W - 6, link_y)
 	_links[3].position = Vector2(safe.end.x - 14 - _FooterLink.W, link_y)
-	_footer.position = Vector2(safe.position.x, safe.end.y - 14)
+	_footer.position = Vector2(safe.position.x, safe.end.y - 18)
 	_footer.size = Vector2(safe.size.x, 12)
 	# 焦点：主按钮上下循环，最后一个向下进入底部入口。
 	var live: Array[Control] = []

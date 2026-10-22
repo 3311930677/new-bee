@@ -56,6 +56,7 @@ var _home_content_hidden := false
 var _gathering:Control=null
 var _activities: Control = null
 var _tutorial: Control = null
+var _gm_extra: Control = null
 var _wallet_row: HBoxContainer = null
 var _wallet_labels: Array = []
 var _chest_view: Control
@@ -76,7 +77,7 @@ func _set_home_content_visible(visible: bool) -> void:
 			continue
 		if child != _deploy and child != _worlds and child != _codex and child != _gacha \
 			and child != _exchange and child != _settings and child != _arena and child != _growth \
-			and child != _bag and child != _avatar_panel and child != _quests and child != _gathering and child != _activities and child != _tutorial:
+			and child != _bag and child != _avatar_panel and child != _quests and child != _gathering and child != _activities and child != _tutorial and child != _gm_extra:
 			child.visible = visible
 	if _tutorial != null:
 		_tutorial.visible = TutorialServiceScript.should_show(G)
@@ -95,6 +96,11 @@ func _ready() -> void:
 	add_child(_chest_view)
 	_ensure_tutorial_overlay()
 	_prompt_save_locked()
+	if G.has_meta("gm_pending_feature"):
+		var feat := String(G.get_meta("gm_pending_feature", ""))
+		G.remove_meta("gm_pending_feature")
+		if not feat.is_empty():
+			open_gm_feature.call_deferred(feat)
 
 func _prompt_save_locked() -> void:
 	if not G.save_locked:
@@ -502,6 +508,12 @@ func _close_subpanels_except(keep: String) -> void:
 	if keep != "gathering" and _gathering != null:
 		_gathering.queue_free()
 		_gathering = null
+	if keep != "avatar" and _avatar_panel != null:
+		_avatar_panel.queue_free()
+		_avatar_panel = null
+	if keep != "gm_extra" and _gm_extra != null:
+		_gm_extra.queue_free()
+		_gm_extra = null
 
 
 func _sync_tutorial_panel(panel_id: String, _step_id: String = "") -> void:
@@ -678,12 +690,164 @@ func _close_overlay_with_escape() -> bool:
 		_exchange.closed.emit()
 		return true
 	if _arena != null:
+		if _arena.get("_archery_overlay") != null and is_instance_valid(_arena.get("_archery_overlay")):
+			var ao := _arena.get("_archery_overlay") as Node
+			if ao.has_signal("closed"):
+				ao.emit_signal("closed")
+			else:
+				ao.queue_free()
+				_arena.set("_archery_overlay", null)
+			return true
+		if _arena.get("_curio_overlay") != null and is_instance_valid(_arena.get("_curio_overlay")):
+			(_arena.get("_curio_overlay") as Node).queue_free()
+			_arena.set("_curio_overlay", null)
+			return true
 		_arena.closed.emit()
 		return true
 	if _growth != null:
+		if _growth.get("_sub") != null and is_instance_valid(_growth.get("_sub")):
+			var gs := _growth.get("_sub") as Node
+			if gs.has_signal("closed"):
+				gs.emit_signal("closed")
+				return true
 		_growth.closed.emit()
 		return true
+	if _gm_extra != null:
+		if _gm_extra.has_method("close"):
+			_gm_extra.call("close")
+		elif _gm_extra.has_signal("closed"):
+			_gm_extra.emit_signal("closed")
+		else:
+			_gm_extra.queue_free()
+			_gm_extra = null
+			_set_home_content_visible(true)
+		return true
 	return false
+
+
+func _open_gm_extra(panel: Control) -> void:
+	_close_subpanels_except("gm_extra")
+	if _gm_extra != null:
+		_gm_extra.queue_free()
+		_gm_extra = null
+	_gm_extra = panel
+	if panel.has_signal("closed"):
+		panel.connect("closed", func():
+			Audio.sfx("ui_close")
+			if is_instance_valid(_gm_extra):
+				_gm_extra.queue_free()
+			_gm_extra = null
+			_set_home_content_visible(true))
+	_set_home_content_visible(false)
+	add_child(panel)
+
+
+## 开发者控制台一键直达任意功能界面
+func open_gm_feature(feature_id: String) -> void:
+	_close_subpanels_except("")
+	_set_home_content_visible(true)
+	match feature_id:
+		"home":
+			_set_home_content_visible(true)
+		"main_world":
+			G.enter_main_world()
+		"deploy":
+			_on_expedition(_click_ev())
+		"worlds":
+			_open_worlds(_click_ev())
+		"journey", "relic_hunt":
+			var jp: Control = (load("res://src/ui/JourneyPanel.gd") as GDScript).new()
+			if feature_id == "relic_hunt":
+				jp.set("_tab", "hunt")
+			_open_gm_extra(jp)
+			if feature_id == "relic_hunt" and jp.has_method("_refresh"):
+				jp.call("_refresh")
+			if jp.has_signal("travel_requested"):
+				jp.connect("travel_requested", func(map_id: String):
+					if not G.can_go("res://src/explore/MapScene.tscn"):
+						return
+					var res: Dictionary = preload("res://src/world/JourneyService.gd").travel(G, map_id)
+					if bool(res.get("ok", false)):
+						G.enter_main_world(map_id)
+					elif jp.has_method("show_message"):
+						jp.call("show_message", String(res.get("line", "暂不可前往"))))
+		"codex":
+			_open_codex(_click_ev())
+		"gacha":
+			_open_gacha()
+		"exchange":
+			_open_exchange()
+		"arena":
+			_open_arena()
+		"archery":
+			_open_arena()
+			if _arena != null and _arena.has_method("_open_archery"):
+				_arena.call("_open_archery")
+		"curio":
+			_open_arena()
+			if _arena != null and _arena.has_method("_open_curio_modal"):
+				_arena.call("_open_curio_modal")
+		"quests":
+			_open_quests()
+		"gathering":
+			_open_gathering()
+		"activities":
+			_open_activities()
+		"bag":
+			_open_bag()
+		"growth":
+			_open_growth()
+		"growth:talent", "growth:equip", "growth:pet", "growth:skill", "growth:mount", "growth:title":
+			_open_growth()
+			var sub_id := feature_id.get_slice(":", 1)
+			if _growth != null and _growth.has_method("_open"):
+				_growth.call("_open", sub_id)
+		"companion":
+			_open_gm_extra((load("res://src/ui/CompanionPanel.gd") as GDScript).new())
+		"shop":
+			_open_gm_extra((load("res://src/ui/ShopPanel.gd") as GDScript).new())
+		"journal":
+			_open_gm_extra((load("res://src/ui/FieldJournalPanel.gd") as GDScript).new())
+		"oath":
+			_open_gm_extra((load("res://src/ui/OathPanel.gd") as GDScript).new())
+		"trade:city", "trade:port", "trade:frost":
+			var site_map := {
+				"city": "city_market",
+				"port": "shenyuan_market",
+				"frost": "frost_market",
+			}
+			var tp: Control = (load("res://src/ui/TradePanel.gd") as GDScript).new()
+			_open_gm_extra(tp)
+			tp.call("open_site", String(site_map.get(feature_id.get_slice(":", 1), "city_market")))
+		"contract":
+			var cp: Control = (load("res://src/ui/FrostContractPanel.gd") as GDScript).new()
+			_open_gm_extra(cp)
+			cp.call("open_contract", "shenyuan_market")
+		"fishing:salt", "fishing:port", "fishing:tide", "fishing:frost":
+			var spot_map := {
+				"salt": "fish_salt_spring",
+				"port": "fish_port_pier",
+				"tide": "fish_tide_pool",
+				"frost": "fish_frost_pool",
+			}
+			var fp: Control = (load("res://src/ui/FishingPanel.gd") as GDScript).new()
+			_open_gm_extra(fp)
+			fp.call("open_spot", String(spot_map.get(feature_id.get_slice(":", 1), "fish_salt_spring")))
+		"mail":
+			var mp: Control = (load("res://src/ui/RoadMailPanel.gd") as GDScript).new()
+			_open_gm_extra(mp)
+			mp.call("open_board")
+		"avatar":
+			_open_avatar_panel()
+		"settings":
+			_open_settings(_click_ev())
+		"tutorial":
+			open_tutorial(true)
+		"reselect":
+			G.set_meta("reselect_from_home", true)
+			G.go("res://src/ui/CreateRole.tscn")
+		"prologue":
+			G.go("res://src/ui/Prologue.tscn")
 
 
 

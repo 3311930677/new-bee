@@ -31,8 +31,8 @@ static func status(host: Object, map_id: String) -> Dictionary:
 	var row := point(map_id)
 	if row.is_empty(): return {"ok":false, "line":"这里没有驿路落点"}
 	if host.has_method("world_gate_open") and host.world_gate_open():
-		var dev_reason := blocked(host)
-		return {"ok":dev_reason.is_empty(), "line":"开发者放行" if dev_reason.is_empty() else dev_reason}
+		if host.save_locked: return {"ok":false, "line":"存档暂不可写"}
+		return {"ok":true, "line":"开发者放行"}
 	var world: Dictionary = host.prog.get("main_world", {})
 	var visited: Array = world.get("visited_maps", [])
 	if not visited.has(map_id) and String(world.get("map_id", "")) != map_id:

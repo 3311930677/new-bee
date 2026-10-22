@@ -32,12 +32,17 @@ static func safe_position(cfg: Dictionary, at: Vector2) -> Vector2:
 	return best
 
 func next_point(map: CanvasItem, from: Vector2, target: Vector2) -> Vector2:
-	var cfg: Dictionary = map.get("_main_cfg")
-	var current := JSON.stringify(G.prog.get("flags",{})) + str(G.mount_riding())
+	var cfg: Dictionary = map.get("_main_cfg") if map.get("_main_cfg") is Dictionary else {}
+	if cfg.is_empty() and map.get("_map_cfg") is Dictionary:
+		cfg = map.get("_map_cfg")
+	var cols := maxi(2, int(cfg.get("map_cols", 20)) * 2)
+	var rows := maxi(2, int(cfg.get("map_rows", 26)) * 2)
+	var map_id := String(map.get("_main_map_id") if map.get("_main_map_id") != null else "")
+	var current := "%s|%dx%d|%s|%s" % [map_id, cols, rows, JSON.stringify(G.prog.get("flags", {})), str(G.mount_riding())]
 	if grid == null or signature != current:
 		signature = current
 		grid = AStarGrid2D.new()
-		grid.region = Rect2i(0,0,40,52)
+		grid.region = Rect2i(0,0,cols,rows)
 		grid.cell_size = Vector2.ONE*STEP
 		grid.offset = Vector2.ONE*(STEP*0.5)
 		grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
@@ -47,8 +52,11 @@ func next_point(map: CanvasItem, from: Vector2, target: Vector2) -> Vector2:
 		shape.radius = 22.0 if G.mount_riding() else 16.0
 		query.shape = shape
 		query.collision_mask = 2
-		for y in 52:
-			for x in 40:
+		var player := map.get("_player") as CollisionObject2D
+		if player != null:
+			query.exclude = [player.get_rid()]
+		for y in rows:
+			for x in cols:
 				var at := Vector2(x,y)*STEP+Vector2.ONE*(STEP*0.5)
 				query.transform = Transform2D(0.0,at+Vector2(0,8))
 				var solid := blocked(cfg,at) or not map.get_world_2d().direct_space_state.intersect_shape(query,1).is_empty()
@@ -58,15 +66,17 @@ func next_point(map: CanvasItem, from: Vector2, target: Vector2) -> Vector2:
 	var path := grid.get_point_path(start,goal,true)
 	for point in path:
 		if from.distance_to(point)>18.0: return point
-	return from
+	if not path.is_empty() and from.distance_to(path[path.size() - 1]) > 8.0:
+		return path[path.size() - 1]
+	return target
 
 func _nearest(at: Vector2) -> Vector2i:
 	var direct := Vector2i(floori(at.x/STEP),floori(at.y/STEP))
 	if grid.is_in_boundsv(direct) and not grid.is_point_solid(direct): return direct
 	var best := Vector2i.ZERO
 	var distance := INF
-	for y in 52:
-		for x in 40:
+	for y in grid.region.size.y:
+		for x in grid.region.size.x:
 			var cell := Vector2i(x,y)
 			if grid.is_point_solid(cell): continue
 			var d := grid.get_point_position(cell).distance_squared_to(at)

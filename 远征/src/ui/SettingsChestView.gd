@@ -268,6 +268,15 @@ func _common(parent:Control) -> void:
 	tut_quick.name="QuickTutorialReplayButton"
 	tut_quick.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	quick_row.add_child(tut_quick)
+	var gm_quick:=_btn("开发者控制台 · 全功能界面解锁",func():
+		if GmConsole.has_method("open_unlocked"):
+			GmConsole.call("open_unlocked")
+		else:
+			G.gm_unlocked = true
+			GmConsole.open(),"primary","btn_copy")
+	gm_quick.name="QuickGmConsoleButton"
+	Kit.ornaments(gm_quick)
+	parent.add_child(gm_quick)
 	_section(parent,"声音")
 	var sound:=_rows_card(parent)
 	_volume(sound,"音乐",Audio.bgm_vol(),Audio.set_bgm_vol)

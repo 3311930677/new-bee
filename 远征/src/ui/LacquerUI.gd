@@ -17,8 +17,9 @@ static func theme() -> Theme:
 	t.default_font_size = G.FS_XS
 	t.set_color("font_color", "Label", PAPER)
 	t.set_color("font_shadow_color", "Label", Color("0a090b", 0.8))
+	t.set_color("font_outline_color", "Label", Color("0a090b", 0.88))
 	t.set_constant("shadow_offset_y", "Label", 1)
-	t.set_constant("outline_size", "Label", 0)
+	t.set_constant("outline_size", "Label", 2)
 	return t
 
 static func label(words: String, px: int = G.FS_XS, color: Color = PAPER, serif: bool = false) -> Label:
@@ -196,7 +197,7 @@ class Action extends Button:
 		if disabled: edge = Color(edge, 0.5)
 		if is_pressed(): bg = bg.darkened(0.12)
 		if primary: caption.position.y = 1 if is_pressed() else 0
-		caption.modulate = Color(Lacquer.ASH) if disabled else Color.WHITE
+		caption.modulate = Color("cfc2ab") if disabled else Color.WHITE
 		if not quiet:
 			if world_skin:
 				var trim := WorldSkin.JADE if active else (Lacquer.RED if warning else WorldSkin.BRONZE)

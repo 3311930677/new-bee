@@ -61,15 +61,15 @@ func _ready() -> void:
 	_add("skill","技能",host._show_command_skills)
 	_add("item","道具",host._command_item)
 	_add("partner","伙伴",host._command_swap_pet)
-	_add("target","换目标",host._command_attack)
+	_add("target","换目标",host._command_switch_target)
 	_target_subtitle=_buttons.target.subtitle
 	_add("flee","撤退",retreat)
 	_add("speed","×1",func():host.speed=BattleScene.next_speed(host.cur_speed());refresh())
 	_add("auto","自动",func():host.sim.auto_mode=not host.sim.auto_mode;refresh())
 	host._auto_btn=_buttons.auto
 	host._speed_btn=_buttons.speed
-	_buttons.attack.tooltip_text="普通攻击持续进行；点击切换集火目标"
-	_buttons.target.tooltip_text="循环选择可攻击的敌方目标"
+	_buttons.attack.tooltip_text="手动攻击当前选定目标；开启「自动」可持续自动攻击"
+	_buttons.target.tooltip_text="循环选择可攻击的敌方目标，或直接点击敌方单位/目标卡"
 	var title_text: String = {"normal":"遭遇战","elite":"精英战","boss":"首领战"}.get(String(host._cfg.get("enemy",{}).get("node_type","normal")),"遭遇战")
 	var title := BattleTitleBanner.new(title_text)
 	_title=title
@@ -303,6 +303,7 @@ func _enemy_cards(sim:BattleSim) -> void:
 		_enemy_key=key;Page.clear(_enemy_strip)
 		for i in mini(4,units.size()):
 			var chip:=Fix.EnemyChip.new(_portrait(units[i].uid));_enemy_strip.add_child(chip)
+			chip.selected.connect(func(uid:int):host._select_enemy_target(uid,false))
 			if i==3 and units.size()>4:chip.extra=units.size()-3
 	for i in _enemy_strip.get_child_count():
 		var chip=_enemy_strip.get_child(i);chip.unit=units[i];chip.number=i+1;chip.display_name=_enemy_name(units[i])

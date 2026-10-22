@@ -306,6 +306,8 @@ func _ensure_input_map() -> void:
 
 func _ready() -> void:
 	_ensure_input_map()
+	if get_tree() != null:
+		get_tree().quit_on_go_back = false
 	font_reg = load(FONT_REG) as FontFile
 	font_bold = load(FONT_BOLD) as FontFile
 	font_serif = load(FONT_SERIF) as FontFile
@@ -337,6 +339,34 @@ func _ready() -> void:
 	# 直接踩预算。在这里跑一次以后所有面板首开都拿缓存，零开销。
 	_build_vignette_tex()
 	_build_hatch_tex()
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		trigger_cancel()
+
+
+## 移动端 / 触控触发 ESC（ui_cancel）：发送标准 ESC 按键事件，走完整 _input -> _gui_input -> _unhandled_input 传播链
+func trigger_cancel() -> void:
+	if GmConsole != null and GmConsole.visible:
+		GmConsole.close()
+		return
+	var ev_down := InputEventKey.new()
+	ev_down.keycode = KEY_ESCAPE
+	ev_down.physical_keycode = KEY_ESCAPE
+	ev_down.pressed = true
+	var ev_up := InputEventKey.new()
+	ev_up.keycode = KEY_ESCAPE
+	ev_up.physical_keycode = KEY_ESCAPE
+	ev_up.pressed = false
+	var vp := get_viewport()
+	if vp != null:
+		vp.push_input(ev_down)
+		vp.push_input(ev_up)
+	else:
+		Input.parse_input_event(ev_down)
+		Input.parse_input_event(ev_up)
+		Input.flush_buffered_events()
 
 
 ## Smooth sampling is applied separately to text nodes; art textures remain pixel sharp.
@@ -645,6 +675,8 @@ func _load_save() -> void:
 func _init_state_defaults() -> void:
 	_pending_campaign_note = ""
 	_campaign_exp_batch = false
+	if has_meta("map_sprint_active"):
+		remove_meta("map_sprint_active")
 	wallet = {"gold": 0, "expedition": 0, "soul": 0, "honor": 0}
 	items = {"ticket_ten": 0, "ticket_sweep": 1}
 	prog = {"level": 1, "exp": 0, "worlds_unlocked": 1, "world_cleared": {}, "pets": [],
@@ -5607,6 +5639,185 @@ func gm_reset_save() -> void:
 	_init_state_defaults()
 	ensure_starter_pets()
 	ensure_starter_buildings()
+	save_game()
+
+
+## 一键全功能大满贯解锁：解锁全部等级、货币、道具、装备、灵宠进化/羁绊/协战、坐骑、称号、建筑、主世界全图、主线与支线门槛
+func gm_unlock_all_features() -> void:
+	save_locked = false
+	save_lock_reason = ""
+	gm_unlocked = true
+	gm_world_open = true
+	if account.strip_edges().is_empty():
+		account = "开发者"
+	if player_name.strip_edges().is_empty():
+		player_name = "昭元行者"
+	if selected_role.strip_edges().is_empty() or get_role(selected_role).is_empty():
+		selected_role = "zs"
+	_save_batch_depth += 1
+	gm_grant_all()
+	gm_clear_all_worlds()
+	# 1. 全道具拉满（排除跑商货物，避免触发「携带商货时请沿道路运输」拦截驿车）
+	var trade_cargo_ids := ["trade_grain", "trade_salt", "trade_herb", "trade_iron", "salt_pack"]
+	for iid in ITEM_NAMES.keys():
+		var k := String(iid)
+		if k in trade_cargo_ids:
+			items.erase(k)
+		else:
+			items[k] = maxi(int(items.get(k, 0)), 99)
+	for cargo_id in trade_cargo_ids:
+		items.erase(cargo_id)
+	if prog.get("economy") is Dictionary and (prog["economy"] as Dictionary).get("orders") is Dictionary:
+		(prog["economy"] as Dictionary)["orders"] = {}
+	if prog.get("trade_contracts") is Dictionary:
+		prog["trade_contracts"] = {}
+	if prog.get("road_mail") is Dictionary and String((prog["road_mail"] as Dictionary).get("status", "")) == "active":
+		(prog["road_mail"] as Dictionary)["status"] = "idle"
+	if prog.get("oaths") is Dictionary and (prog["oaths"] as Dictionary).get("trips") is Dictionary:
+		(prog["oaths"] as Dictionary)["trips"] = {}
+	# 2. 全建筑落成
+	var built: Array = city.get("built", []) if city.get("built") is Array else ["hall", "gate"]
+	for b in city_buildings():
+		var bid := String((b as Dictionary).get("id", ""))
+		if not bid.is_empty() and not built.has(bid):
+			built.append(bid)
+	for extra_b in ["archive", "kennel", "barracks", "storehouse", "shrine", "forge", "frost_lodge", "stable"]:
+		if not built.has(extra_b):
+			built.append(extra_b)
+	city["built"] = built
+	# 3. 全主世界地图与驿路落点解锁并标记已到访
+	var mw: Dictionary = prog.get("main_world", {}) if prog.get("main_world") is Dictionary else {"map_id": "lorin_wilds"}
+	if String(mw.get("map_id", "")).is_empty():
+		mw["map_id"] = "lorin_wilds"
+	var visited: Array = mw.get("visited_maps", []) if mw.get("visited_maps") is Array else []
+	for mid in (TableCache.main_world_config().get("maps", {}) as Dictionary).keys():
+		var m_str := String(mid)
+		if not m_str.is_empty() and not visited.has(m_str):
+			visited.append(m_str)
+	for j_pt in TableCache._load("res://data/journey.json").get("points", []):
+		var j_map := String((j_pt as Dictionary).get("map", ""))
+		if not j_map.is_empty() and not visited.has(j_map):
+			visited.append(j_map)
+	mw["visited_maps"] = visited
+	prog["main_world"] = mw
+	# 4. 全主线章节与关键世界旗标解锁（开放巡猎、邮路、跨城药单、船单、小聚、授业、同行伙伴等全部功能）
+	var all_done: Array = []
+	for s_row in TableCache.story_quests_config().get("steps", []):
+		var sid := String((s_row as Dictionary).get("id", ""))
+		if not sid.is_empty() and not all_done.has(sid):
+			all_done.append(sid)
+	prog["story"] = {"step": "", "done": all_done, "goals": {}}
+	var flags: Dictionary = prog.get("flags", {}) if prog.get("flags") is Dictionary else {}
+	var unlock_flags := {
+		"act1_stele_repaired": true,
+		"act1_route_open": true,
+		"act1_repair_method": "forge",
+		"act1_lost_beast_down": true,
+		"act1_stele_rooms_v1": true,
+		"act1_first_mount_claimed": true,
+		"act2_tidal_rooms_v1": true,
+		"act2_tide_gate_open": true,
+		"act2_port_choice": "bridge",
+		"act2_tide_route_bridge": true,
+		"act2_tide_bridge_open": true,
+		"act3_mine_rooms_v1": true,
+		"act3_supply_choice": "merchant",
+		"act3_pass_open": true,
+		"act4_resonance_found": true,
+		"act4_preparation": "steady",
+		"act4_depth_ready": true,
+		"act4_depth_entered": true,
+		"act4_voices_aligned": true,
+		"act4_avatar_down": true,
+		"act4_ending": "keep",
+		"campaign_complete": true,
+		"act4_reply_route_open": true,
+	}
+	for fk in unlock_flags:
+		flags[fk] = unlock_flags[fk]
+	prog["flags"] = flags
+	# 5. 支线与授业解锁（含小聚 a4_rel_nighttable、商路 a1_trade_cart 等）
+	var a1 := act1_state()
+	a1["repair_method"] = "forge"
+	var sq: Dictionary = a1.get("side_quests", {}) if a1.get("side_quests") is Dictionary else {}
+	for q_row in side_quest_rows():
+		var qid := String((q_row as Dictionary).get("id", ""))
+		if not qid.is_empty():
+			sq[qid] = {"status": "done"}
+	sq["a4_rel_nighttable"] = {"status": "done"}
+	sq["a1_trade_cart"] = {"status": "done"}
+	a1["side_quests"] = sq
+	var m_state := mentor_state()
+	var m_unlocked: Array = m_state.get("unlocked", [])
+	var m_mastery: Dictionary = m_state.get("mastery", {})
+	for rid in ["zs", "ck", "fs", "fz"]:
+		var sec_sk := mentor_second_skill(rid)
+		if not sec_sk.is_empty():
+			if not m_unlocked.has(sec_sk):
+				m_unlocked.append(sec_sk)
+			m_mastery[sec_sk] = 3
+	m_state["unlocked"] = m_unlocked
+	m_state["mastery"] = m_mastery
+	# 6. 全灵宠满级、满星、满突破、已进化、满羁绊、协战特性解锁
+	var p_stats: Dictionary = prog.get("pet_stat", {}) if prog.get("pet_stat") is Dictionary else {}
+	var comp_pets := {}
+	for p in TableCache.pets():
+		var pid := String((p as Dictionary).get("id", ""))
+		if pid.is_empty():
+			continue
+		p_stats[pid] = {"lv": level_cap(), "exp": 0, "star": 5, "brk": 5, "evolved": true}
+		flags["pet_bond_" + pid] = 5
+		comp_pets[pid] = {"wins": 10, "traits": ["comp_guard", "comp_pursuit"]}
+	prog["pet_stat"] = p_stats
+	prog["companions"] = {"active": "pet_rockturtle", "pets": comp_pets}
+	# 7. 全坐骑满阶 & 全称号解锁 & 全技能满级
+	var mt_owned := {}
+	for m in mounts_cfg():
+		var mid := String((m as Dictionary).get("id", ""))
+		if not mid.is_empty():
+			mt_owned[mid] = maxi(1, ((m as Dictionary).get("tiers", []) as Array).size())
+	prog["mounts"] = {"owned": mt_owned, "active": "horse", "riding": false}
+	var ti_owned: Array = []
+	for t in titles_cfg():
+		var tid := String((t as Dictionary).get("id", ""))
+		if not tid.is_empty() and not ti_owned.has(tid):
+			ti_owned.append(tid)
+	prog["titles"] = {"owned": ti_owned, "active": "t_rookie" if ti_owned.has("t_rookie") else (String(ti_owned[0]) if not ti_owned.is_empty() else "")}
+	var sk_map: Dictionary = prog.get("skills", {}) if prog.get("skills") is Dictionary else {}
+	for r in roles:
+		for sk_id in (r as Dictionary).get("skills", []):
+			sk_map[String(sk_id)] = skill_max_level()
+	prog["skills"] = sk_map
+	# 8. 传世挑战胜场与全职业传世神装补齐
+	var rh: Dictionary = prog.get("relic_hunts", {}) if prog.get("relic_hunts") is Dictionary else {}
+	rh["seq"] = maxi(int(rh.get("seq", 0)), 1)
+	rh["wins"] = maxi(int(rh.get("wins", 0)), 120)
+	rh["purchases"] = maxi(int(rh.get("purchases", 0)), 0)
+	if not (rh.get("misses") is Dictionary):
+		rh["misses"] = {"zs": 0, "ck": 0, "fs": 0, "fz": 0}
+	rh["pending"] = {}
+	prog["relic_hunts"] = rh
+	ensure_starter_equip(false)
+	var existing_tpls := {}
+	for inst in inv_instances():
+		existing_tpls[String((inst as Dictionary).get("tpl", ""))] = true
+	for gear_spec in [
+		{"tpl": "tpl_sword_starfall", "rarity": 4},
+		{"tpl": "tpl_sword_relic", "rarity": 5},
+		{"tpl": "tpl_spear_relic", "rarity": 5},
+		{"tpl": "tpl_staff_relic", "rarity": 5},
+		{"tpl": "tpl_hammer_relic", "rarity": 5},
+		{"tpl": "tpl_spear_iron", "rarity": 4},
+		{"tpl": "tpl_staff_frost", "rarity": 4},
+		{"tpl": "tpl_hammer_dawn", "rarity": 4},
+		{"tpl": "tpl_armor_expedition", "rarity": 4},
+		{"tpl": "tpl_accessory_moon", "rarity": 4},
+		{"tpl": "tpl_acc_archery_ring", "rarity": 4},
+	]:
+		var gtpl := String(gear_spec["tpl"])
+		if not equip_tpl(gtpl).is_empty() and not existing_tpls.has(gtpl):
+			inv_grant_equip({"tpl": gtpl, "rarity": int(gear_spec["rarity"]), "n": 1}, false)
+	_save_batch_depth -= 1
 	save_game()
 
 
