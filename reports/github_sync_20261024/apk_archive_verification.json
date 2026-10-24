@@ -1,0 +1,18 @@
+{
+  "archive": "Yuanzheng-apk-archive-20261024.tar.zst",
+  "bytes": 890685112,
+  "sha256": "2a42140105a4c4f1698b2bb715af4b3dd0f79d77d217818deee4c101031ec8b8",
+  "format": "standard tar with Zstandard compression, 1 GiB window",
+  "verified_apk_payloads": [
+    "reports/mobile_fixes_20261024/Yuanzheng-mobile-fixed-final.apk",
+    "reports/mobile_rework_20261024/Yuanzheng-0.2.1-mobile2.apk",
+    "远征/exports/android/Yuanzheng-0.2.1-mobile2.apk",
+    "reports/android_emulator_20261024/Yuanzheng-android-audit.apk",
+    "reports/android_emulator_20261024/Yuanzheng-emulator.apk",
+    "reports/android_full_audit_20261024/Yuanzheng-deep-audit-extended.apk",
+    "reports/android_full_audit_20261024/Yuanzheng-deep-audit-final.apk",
+    "reports/android_full_audit_20261024/Yuanzheng-deep-audit.apk",
+    "reports/android_full_audit_20261024/Yuanzheng-full-flow.apk"
+  ],
+  "all_nine_payload_sha256_match": true
+}

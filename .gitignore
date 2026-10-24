@@ -61,3 +61,4 @@ _backups/
 # APK builds are published as GitHub Release assets with SHA-256 manifests.
 /reports/**/*.apk
 /reports/github_sync_20261024/upload_staging/
+/tools/github-upload-deps/
