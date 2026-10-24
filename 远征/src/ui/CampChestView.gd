@@ -155,7 +155,7 @@ func _build_wallet() -> void:
 		var chip := UI.CurrencyChip.new()
 		chip.name = "Currency_"+data[1]
 		chip.currency_image.texture = G.res_tex(data[2])
-		chip.pressed.connect(func(): host._show_chest_dialog("行囊与货币",G.wallet_info_lines()))
+		chip.pressed.connect(func(): G.show_currency_popup(host,String(data[1])))
 		row.add_child(chip)
 		host._wallet_labels.append({"label":chip.amount,"key":data[1],"name":data[0],"button":chip})
 

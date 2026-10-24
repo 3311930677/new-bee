@@ -1,0 +1,2233 @@
+{
+	"checks": [],
+	"device": {
+		"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+		"mix_rate": 44100.0,
+		"model": "Android SDK built for x86_64",
+		"os": "Android",
+		"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+		"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+		"version": "37.16571990",
+		"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+		"window": "(1080, 2400)"
+	},
+	"final": {
+		"audio": {
+			"bgm": "bgm_home",
+			"events": [
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 343536
+				},
+				{
+					"category": "UI",
+					"name": "ui_page",
+					"time_ms": 345386
+				},
+				{
+					"category": "UI",
+					"name": "ui_page",
+					"time_ms": 347220
+				}
+			],
+			"mute": false,
+			"paused": false,
+			"playing": true,
+			"position": 22.6479682922363,
+			"suspended": false,
+			"voices": 0
+		},
+		"controls": [
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/ReturnButton",
+				"rect": [
+					18.0,
+					75.9624938964844,
+					56.0,
+					56.0
+				],
+				"safe": true,
+				"text": "‹",
+				"tooltip": "返回",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_equip",
+				"rect": [
+					20.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"safe": true,
+				"text": "装备",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_mat",
+				"rect": [
+					131.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"safe": true,
+				"text": "材料",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_gem",
+				"rect": [
+					242.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"safe": true,
+				"text": "宝石",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_pending",
+				"rect": [
+					353.0,
+					185.962493896484,
+					106.0,
+					60.0
+				],
+				"safe": true,
+				"text": "待领取",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2325",
+				"rect": [
+					24.0,
+					267.962493896484,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "攻击宝石 · 1 级 ×9",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2330",
+				"rect": [
+					134.0,
+					267.962493896484,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "攻击宝石 · 2 级 ×9",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2335",
+				"rect": [
+					244.0,
+					267.962493896484,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "攻击宝石 · 3 级 ×9",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2340",
+				"rect": [
+					354.0,
+					267.962493896484,
+					101.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "攻击宝石 · 4 级 ×9",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2345",
+				"rect": [
+					24.0,
+					376.962493896484,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "攻击宝石 · 5 级 ×9",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2350",
+				"rect": [
+					134.0,
+					376.962493896484,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "防御宝石 · 1 级 ×9",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2355",
+				"rect": [
+					244.0,
+					376.962493896484,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "防御宝石 · 2 级 ×9",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2360",
+				"rect": [
+					354.0,
+					376.962493896484,
+					101.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "防御宝石 · 3 级 ×9",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2365",
+				"rect": [
+					24.0,
+					485.962493896484,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "防御宝石 · 4 级 ×9",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2370",
+				"rect": [
+					134.0,
+					485.962493896484,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "防御宝石 · 5 级 ×9",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2375",
+				"rect": [
+					244.0,
+					485.962493896484,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "生命宝石 · 1 级 ×9",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2380",
+				"rect": [
+					354.0,
+					485.962493896484,
+					101.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "生命宝石 · 2 级 ×9",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2385",
+				"rect": [
+					24.0,
+					594.962524414062,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "生命宝石 · 3 级 ×9",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2390",
+				"rect": [
+					134.0,
+					594.962524414062,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "生命宝石 · 4 级 ×9",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2395",
+				"rect": [
+					244.0,
+					594.962524414062,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "生命宝石 · 5 级 ×9",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2400",
+				"rect": [
+					354.0,
+					594.962524414062,
+					101.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2405",
+				"rect": [
+					24.0,
+					703.962524414062,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2410",
+				"rect": [
+					134.0,
+					703.962524414062,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2415",
+				"rect": [
+					244.0,
+					703.962524414062,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2420",
+				"rect": [
+					354.0,
+					703.962524414062,
+					101.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2425",
+				"rect": [
+					24.0,
+					812.962524414062,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2430",
+				"rect": [
+					134.0,
+					812.962524414062,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2435",
+				"rect": [
+					244.0,
+					812.962524414062,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2440",
+				"rect": [
+					354.0,
+					812.962524414062,
+					101.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "",
+				"touch_under44": false
+			}
+		],
+		"device": {
+			"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+			"mix_rate": 44100.0,
+			"model": "Android SDK built for x86_64",
+			"os": "Android",
+			"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+			"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+			"version": "37.16571990",
+			"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+			"window": "(1080, 2400)"
+		},
+		"focus": "Tab_gem:<Button#907177625781>",
+		"keyboard_height": 0,
+		"labels": [
+			{
+				"font": 15,
+				"minimum": "(73.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Control@1861/HeroRolePlate/@Label@1870",
+				"rect": [
+					182.0,
+					701.0,
+					116.0,
+					23.0
+				],
+				"text": "破军 · 战士"
+			},
+			{
+				"font": 16,
+				"minimum": "(1.0, 24.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Label@1928",
+				"rect": [
+					0.0,
+					447.720001220703,
+					480.0,
+					28.0
+				],
+				"text": ""
+			},
+			{
+				"font": 20,
+				"minimum": "(7.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/ReturnButton/@Label@2031",
+				"rect": [
+					18.0,
+					75.9624938964844,
+					56.0,
+					56.0
+				],
+				"text": "‹"
+			},
+			{
+				"font": 28,
+				"minimum": "(112.0, 42.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/@Label@2032",
+				"rect": [
+					128.0,
+					77.9624938964844,
+					327.999969482422,
+					52.0
+				],
+				"text": "行旅背包"
+			},
+			{
+				"font": 18,
+				"minimum": "(96.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Capacity",
+				"rect": [
+					24.0,
+					143.962493896484,
+					163.199996948242,
+					36.0
+				],
+				"text": "装备 28 / 60"
+			},
+			{
+				"font": 18,
+				"minimum": "(69.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/@Label@2033",
+				"rect": [
+					182.399993896484,
+					143.962493896484,
+					110.399993896484,
+					36.0
+				],
+				"text": "待领取 0"
+			},
+			{
+				"font": 18,
+				"minimum": "(107.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/GoldBalance",
+				"rect": [
+					307.199981689453,
+					143.962493896484,
+					148.799987792969,
+					36.0
+				],
+				"text": "金币 123.4万"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_equip/@Label@2034",
+				"rect": [
+					20.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"text": "装备"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_mat/@Label@2035",
+				"rect": [
+					131.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"text": "材料"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_gem/@Label@2036",
+				"rect": [
+					242.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"text": "宝石"
+			},
+			{
+				"font": 20,
+				"minimum": "(60.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_pending/@Label@2037",
+				"rect": [
+					353.0,
+					185.962493896484,
+					106.0,
+					60.0
+				],
+				"text": "待领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(24.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2325/@Label@2323",
+				"rect": [
+					28.0,
+					271.962493896484,
+					90.0,
+					23.0
+				],
+				"text": "×9"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2325/@Label@2324",
+				"rect": [
+					30.0,
+					346.962493896484,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(24.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2330/@Label@2328",
+				"rect": [
+					138.0,
+					271.962493896484,
+					90.0,
+					23.0
+				],
+				"text": "×9"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2330/@Label@2329",
+				"rect": [
+					140.0,
+					346.962493896484,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(24.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2335/@Label@2333",
+				"rect": [
+					248.0,
+					271.962493896484,
+					90.0,
+					23.0
+				],
+				"text": "×9"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2335/@Label@2334",
+				"rect": [
+					250.0,
+					346.962493896484,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(24.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2340/@Label@2338",
+				"rect": [
+					358.0,
+					271.962493896484,
+					89.0,
+					23.0
+				],
+				"text": "×9"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2340/@Label@2339",
+				"rect": [
+					360.0,
+					346.962493896484,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(24.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2345/@Label@2343",
+				"rect": [
+					28.0,
+					380.962493896484,
+					90.0,
+					23.0
+				],
+				"text": "×9"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2345/@Label@2344",
+				"rect": [
+					30.0,
+					455.962493896484,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(24.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2350/@Label@2348",
+				"rect": [
+					138.0,
+					380.962493896484,
+					90.0,
+					23.0
+				],
+				"text": "×9"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2350/@Label@2349",
+				"rect": [
+					140.0,
+					455.962493896484,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(24.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2355/@Label@2353",
+				"rect": [
+					248.0,
+					380.962493896484,
+					90.0,
+					23.0
+				],
+				"text": "×9"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2355/@Label@2354",
+				"rect": [
+					250.0,
+					455.962493896484,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(24.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2360/@Label@2358",
+				"rect": [
+					358.0,
+					380.962493896484,
+					89.0,
+					23.0
+				],
+				"text": "×9"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2360/@Label@2359",
+				"rect": [
+					360.0,
+					455.962493896484,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(24.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2365/@Label@2363",
+				"rect": [
+					28.0,
+					489.962493896484,
+					90.0,
+					23.0
+				],
+				"text": "×9"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2365/@Label@2364",
+				"rect": [
+					30.0,
+					564.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(24.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2370/@Label@2368",
+				"rect": [
+					138.0,
+					489.962493896484,
+					90.0,
+					23.0
+				],
+				"text": "×9"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2370/@Label@2369",
+				"rect": [
+					140.0,
+					564.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(24.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2375/@Label@2373",
+				"rect": [
+					248.0,
+					489.962493896484,
+					90.0,
+					23.0
+				],
+				"text": "×9"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2375/@Label@2374",
+				"rect": [
+					250.0,
+					564.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(24.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2380/@Label@2378",
+				"rect": [
+					358.0,
+					489.962493896484,
+					89.0,
+					23.0
+				],
+				"text": "×9"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2380/@Label@2379",
+				"rect": [
+					360.0,
+					564.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(24.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2385/@Label@2383",
+				"rect": [
+					28.0,
+					598.962524414062,
+					90.0,
+					23.0
+				],
+				"text": "×9"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2385/@Label@2384",
+				"rect": [
+					30.0,
+					673.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(24.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2390/@Label@2388",
+				"rect": [
+					138.0,
+					598.962524414062,
+					90.0,
+					23.0
+				],
+				"text": "×9"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2390/@Label@2389",
+				"rect": [
+					140.0,
+					673.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(24.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2395/@Label@2393",
+				"rect": [
+					248.0,
+					598.962524414062,
+					90.0,
+					23.0
+				],
+				"text": "×9"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2395/@Label@2394",
+				"rect": [
+					250.0,
+					673.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2400/@Label@2399",
+				"rect": [
+					354.0,
+					594.962524414062,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2405/@Label@2404",
+				"rect": [
+					24.0,
+					703.962524414062,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2410/@Label@2409",
+				"rect": [
+					134.0,
+					703.962524414062,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2415/@Label@2414",
+				"rect": [
+					244.0,
+					703.962524414062,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2420/@Label@2419",
+				"rect": [
+					354.0,
+					703.962524414062,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2425/@Label@2424",
+				"rect": [
+					24.0,
+					812.962524414062,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2430/@Label@2429",
+				"rect": [
+					134.0,
+					812.962524414062,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2435/@Label@2434",
+				"rect": [
+					244.0,
+					812.962524414062,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2440/@Label@2439",
+				"rect": [
+					354.0,
+					812.962524414062,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 24,
+				"minimum": "(1.0, 35.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/SelectedItemDetail/DetailScroll/@VBoxContainer@2044/@Label@2441",
+				"rect": [
+					38.0,
+					885.999877929688,
+					403.0,
+					35.0
+				],
+				"text": "宝石镶嵌与合成"
+			},
+			{
+				"font": 18,
+				"minimum": "(1.0, 57.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/SelectedItemDetail/DetailScroll/@VBoxContainer@2044/@Label@2442",
+				"rect": [
+					38.0,
+					924.999877929688,
+					403.0,
+					57.0
+				],
+				"text": "3 颗同级同色宝石可合成更高级宝石；前往养成 → 装备 → 宝石。"
+			}
+		],
+		"modals": [],
+		"page": "GameHome",
+		"tick_ms": 347875
+	},
+	"id": "native_bag_gem",
+	"photos": [],
+	"records": [
+		{
+			"audio": {
+				"bgm": "bgm_home",
+				"events": [
+					{
+						"category": "UI",
+						"name": "ui_open",
+						"time_ms": 343536
+					},
+					{
+						"category": "UI",
+						"name": "ui_page",
+						"time_ms": 345386
+					},
+					{
+						"category": "UI",
+						"name": "ui_page",
+						"time_ms": 347220
+					}
+				],
+				"mute": false,
+				"paused": false,
+				"playing": true,
+				"position": 22.6479682922363,
+				"suspended": false,
+				"voices": 0
+			},
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/ReturnButton",
+					"rect": [
+						18.0,
+						75.9624938964844,
+						56.0,
+						56.0
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_equip",
+					"rect": [
+						20.0,
+						185.962493896484,
+						105.0,
+						60.0
+					],
+					"safe": true,
+					"text": "装备",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_mat",
+					"rect": [
+						131.0,
+						185.962493896484,
+						105.0,
+						60.0
+					],
+					"safe": true,
+					"text": "材料",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_gem",
+					"rect": [
+						242.0,
+						185.962493896484,
+						105.0,
+						60.0
+					],
+					"safe": true,
+					"text": "宝石",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_pending",
+					"rect": [
+						353.0,
+						185.962493896484,
+						106.0,
+						60.0
+					],
+					"safe": true,
+					"text": "待领取",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2325",
+					"rect": [
+						24.0,
+						267.962493896484,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "攻击宝石 · 1 级 ×9",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2330",
+					"rect": [
+						134.0,
+						267.962493896484,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "攻击宝石 · 2 级 ×9",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2335",
+					"rect": [
+						244.0,
+						267.962493896484,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "攻击宝石 · 3 级 ×9",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2340",
+					"rect": [
+						354.0,
+						267.962493896484,
+						101.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "攻击宝石 · 4 级 ×9",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2345",
+					"rect": [
+						24.0,
+						376.962493896484,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "攻击宝石 · 5 级 ×9",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2350",
+					"rect": [
+						134.0,
+						376.962493896484,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "防御宝石 · 1 级 ×9",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2355",
+					"rect": [
+						244.0,
+						376.962493896484,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "防御宝石 · 2 级 ×9",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2360",
+					"rect": [
+						354.0,
+						376.962493896484,
+						101.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "防御宝石 · 3 级 ×9",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2365",
+					"rect": [
+						24.0,
+						485.962493896484,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "防御宝石 · 4 级 ×9",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2370",
+					"rect": [
+						134.0,
+						485.962493896484,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "防御宝石 · 5 级 ×9",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2375",
+					"rect": [
+						244.0,
+						485.962493896484,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "生命宝石 · 1 级 ×9",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2380",
+					"rect": [
+						354.0,
+						485.962493896484,
+						101.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "生命宝石 · 2 级 ×9",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2385",
+					"rect": [
+						24.0,
+						594.962524414062,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "生命宝石 · 3 级 ×9",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2390",
+					"rect": [
+						134.0,
+						594.962524414062,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "生命宝石 · 4 级 ×9",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2395",
+					"rect": [
+						244.0,
+						594.962524414062,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "生命宝石 · 5 级 ×9",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2400",
+					"rect": [
+						354.0,
+						594.962524414062,
+						101.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2405",
+					"rect": [
+						24.0,
+						703.962524414062,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2410",
+					"rect": [
+						134.0,
+						703.962524414062,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2415",
+					"rect": [
+						244.0,
+						703.962524414062,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2420",
+					"rect": [
+						354.0,
+						703.962524414062,
+						101.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2425",
+					"rect": [
+						24.0,
+						812.962524414062,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2430",
+					"rect": [
+						134.0,
+						812.962524414062,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2435",
+					"rect": [
+						244.0,
+						812.962524414062,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2440",
+					"rect": [
+						354.0,
+						812.962524414062,
+						101.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"device": {
+				"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+				"mix_rate": 44100.0,
+				"model": "Android SDK built for x86_64",
+				"os": "Android",
+				"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+				"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+				"version": "37.16571990",
+				"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+				"window": "(1080, 2400)"
+			},
+			"focus": "Tab_gem:<Button#907177625781>",
+			"keyboard_height": 0,
+			"labels": [
+				{
+					"font": 15,
+					"minimum": "(73.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Control@1861/HeroRolePlate/@Label@1870",
+					"rect": [
+						182.0,
+						701.0,
+						116.0,
+						23.0
+					],
+					"text": "破军 · 战士"
+				},
+				{
+					"font": 16,
+					"minimum": "(1.0, 24.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Label@1928",
+					"rect": [
+						0.0,
+						447.720001220703,
+						480.0,
+						28.0
+					],
+					"text": ""
+				},
+				{
+					"font": 20,
+					"minimum": "(7.0, 30.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/ReturnButton/@Label@2031",
+					"rect": [
+						18.0,
+						75.9624938964844,
+						56.0,
+						56.0
+					],
+					"text": "‹"
+				},
+				{
+					"font": 28,
+					"minimum": "(112.0, 42.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/@Label@2032",
+					"rect": [
+						128.0,
+						77.9624938964844,
+						327.999969482422,
+						52.0
+					],
+					"text": "行旅背包"
+				},
+				{
+					"font": 18,
+					"minimum": "(96.0, 27.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Capacity",
+					"rect": [
+						24.0,
+						143.962493896484,
+						163.199996948242,
+						36.0
+					],
+					"text": "装备 28 / 60"
+				},
+				{
+					"font": 18,
+					"minimum": "(69.0, 27.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/@Label@2033",
+					"rect": [
+						182.399993896484,
+						143.962493896484,
+						110.399993896484,
+						36.0
+					],
+					"text": "待领取 0"
+				},
+				{
+					"font": 18,
+					"minimum": "(107.0, 27.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/GoldBalance",
+					"rect": [
+						307.199981689453,
+						143.962493896484,
+						148.799987792969,
+						36.0
+					],
+					"text": "金币 123.4万"
+				},
+				{
+					"font": 20,
+					"minimum": "(40.0, 30.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_equip/@Label@2034",
+					"rect": [
+						20.0,
+						185.962493896484,
+						105.0,
+						60.0
+					],
+					"text": "装备"
+				},
+				{
+					"font": 20,
+					"minimum": "(40.0, 30.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_mat/@Label@2035",
+					"rect": [
+						131.0,
+						185.962493896484,
+						105.0,
+						60.0
+					],
+					"text": "材料"
+				},
+				{
+					"font": 20,
+					"minimum": "(40.0, 30.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_gem/@Label@2036",
+					"rect": [
+						242.0,
+						185.962493896484,
+						105.0,
+						60.0
+					],
+					"text": "宝石"
+				},
+				{
+					"font": 20,
+					"minimum": "(60.0, 30.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_pending/@Label@2037",
+					"rect": [
+						353.0,
+						185.962493896484,
+						106.0,
+						60.0
+					],
+					"text": "待领取"
+				},
+				{
+					"font": 15,
+					"minimum": "(24.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2325/@Label@2323",
+					"rect": [
+						28.0,
+						271.962493896484,
+						90.0,
+						23.0
+					],
+					"text": "×9"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2325/@Label@2324",
+					"rect": [
+						30.0,
+						346.962493896484,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(24.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2330/@Label@2328",
+					"rect": [
+						138.0,
+						271.962493896484,
+						90.0,
+						23.0
+					],
+					"text": "×9"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2330/@Label@2329",
+					"rect": [
+						140.0,
+						346.962493896484,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(24.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2335/@Label@2333",
+					"rect": [
+						248.0,
+						271.962493896484,
+						90.0,
+						23.0
+					],
+					"text": "×9"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2335/@Label@2334",
+					"rect": [
+						250.0,
+						346.962493896484,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(24.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2340/@Label@2338",
+					"rect": [
+						358.0,
+						271.962493896484,
+						89.0,
+						23.0
+					],
+					"text": "×9"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2340/@Label@2339",
+					"rect": [
+						360.0,
+						346.962493896484,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(24.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2345/@Label@2343",
+					"rect": [
+						28.0,
+						380.962493896484,
+						90.0,
+						23.0
+					],
+					"text": "×9"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2345/@Label@2344",
+					"rect": [
+						30.0,
+						455.962493896484,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(24.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2350/@Label@2348",
+					"rect": [
+						138.0,
+						380.962493896484,
+						90.0,
+						23.0
+					],
+					"text": "×9"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2350/@Label@2349",
+					"rect": [
+						140.0,
+						455.962493896484,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(24.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2355/@Label@2353",
+					"rect": [
+						248.0,
+						380.962493896484,
+						90.0,
+						23.0
+					],
+					"text": "×9"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2355/@Label@2354",
+					"rect": [
+						250.0,
+						455.962493896484,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(24.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2360/@Label@2358",
+					"rect": [
+						358.0,
+						380.962493896484,
+						89.0,
+						23.0
+					],
+					"text": "×9"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2360/@Label@2359",
+					"rect": [
+						360.0,
+						455.962493896484,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(24.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2365/@Label@2363",
+					"rect": [
+						28.0,
+						489.962493896484,
+						90.0,
+						23.0
+					],
+					"text": "×9"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2365/@Label@2364",
+					"rect": [
+						30.0,
+						564.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(24.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2370/@Label@2368",
+					"rect": [
+						138.0,
+						489.962493896484,
+						90.0,
+						23.0
+					],
+					"text": "×9"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2370/@Label@2369",
+					"rect": [
+						140.0,
+						564.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(24.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2375/@Label@2373",
+					"rect": [
+						248.0,
+						489.962493896484,
+						90.0,
+						23.0
+					],
+					"text": "×9"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2375/@Label@2374",
+					"rect": [
+						250.0,
+						564.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(24.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2380/@Label@2378",
+					"rect": [
+						358.0,
+						489.962493896484,
+						89.0,
+						23.0
+					],
+					"text": "×9"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2380/@Label@2379",
+					"rect": [
+						360.0,
+						564.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(24.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2385/@Label@2383",
+					"rect": [
+						28.0,
+						598.962524414062,
+						90.0,
+						23.0
+					],
+					"text": "×9"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2385/@Label@2384",
+					"rect": [
+						30.0,
+						673.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(24.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2390/@Label@2388",
+					"rect": [
+						138.0,
+						598.962524414062,
+						90.0,
+						23.0
+					],
+					"text": "×9"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2390/@Label@2389",
+					"rect": [
+						140.0,
+						673.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(24.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2395/@Label@2393",
+					"rect": [
+						248.0,
+						598.962524414062,
+						90.0,
+						23.0
+					],
+					"text": "×9"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2395/@Label@2394",
+					"rect": [
+						250.0,
+						673.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2400/@Label@2399",
+					"rect": [
+						354.0,
+						594.962524414062,
+						1.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2405/@Label@2404",
+					"rect": [
+						24.0,
+						703.962524414062,
+						1.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2410/@Label@2409",
+					"rect": [
+						134.0,
+						703.962524414062,
+						1.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2415/@Label@2414",
+					"rect": [
+						244.0,
+						703.962524414062,
+						1.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2420/@Label@2419",
+					"rect": [
+						354.0,
+						703.962524414062,
+						1.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2425/@Label@2424",
+					"rect": [
+						24.0,
+						812.962524414062,
+						1.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2430/@Label@2429",
+					"rect": [
+						134.0,
+						812.962524414062,
+						1.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2435/@Label@2434",
+					"rect": [
+						244.0,
+						812.962524414062,
+						1.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/SupplyGrid/@Button@2440/@Label@2439",
+					"rect": [
+						354.0,
+						812.962524414062,
+						1.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 24,
+					"minimum": "(1.0, 35.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/SelectedItemDetail/DetailScroll/@VBoxContainer@2044/@Label@2441",
+					"rect": [
+						38.0,
+						885.999877929688,
+						403.0,
+						35.0
+					],
+					"text": "宝石镶嵌与合成"
+				},
+				{
+					"font": 18,
+					"minimum": "(1.0, 57.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/SelectedItemDetail/DetailScroll/@VBoxContainer@2044/@Label@2442",
+					"rect": [
+						38.0,
+						924.999877929688,
+						403.0,
+						57.0
+					],
+					"text": "3 颗同级同色宝石可合成更高级宝石；前往养成 → 装备 → 宝石。"
+				}
+			],
+			"modals": [],
+			"page": "GameHome",
+			"tick_ms": 347874
+		}
+	],
+	"suite": "probe"
+}

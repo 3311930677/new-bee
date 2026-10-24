@@ -346,6 +346,12 @@ func _notification(what: int) -> void:
 		trigger_cancel()
 
 
+func _exit_tree() -> void:
+	# The platform cursor otherwise retains its texture beyond RenderingServer.
+	if DisplayServer.get_name() != "headless":
+		Input.set_custom_mouse_cursor(null)
+
+
 ## 移动端 / 触控触发 ESC（ui_cancel）：发送标准 ESC 按键事件，走完整 _input -> _gui_input -> _unhandled_input 传播链
 func trigger_cancel() -> void:
 	if GmConsole != null and GmConsole.visible:
@@ -2245,9 +2251,16 @@ func side_entity_visible(eid: String, qid: String) -> bool:
 		return true   # 无任务归属的实体（P05-D 旧路石箱）由 WorldSession 实体态自己管
 	var act1 := act1_state()
 	var st := QuestService.side_status(act1, qid)
-	if st.is_empty() or st == QuestService.SIDE_READY or st == QuestService.SIDE_DONE:
+	if st == QuestService.SIDE_READY or st == QuestService.SIDE_DONE:
 		return false
 	var row := QuestService.side_row(_side_live_rows(), qid)
+	if row.is_empty():
+		return false
+	if st.is_empty():
+		# 未接任务时仍可发现首个线索；后续步骤保持隐藏，避免提前泄露剧情。
+		var first := QuestService.side_objective(row, {})
+		return String(first.get("kind", "")) in ["collect", "observe", "deliver"] \
+			and QuestService._side_entity_match(first, {"source_id": eid})
 	if not (row.get("steps", []) as Array).is_empty():
 		var objective := QuestService.side_objective(row, QuestService.side_get(act1, qid))
 		return QuestService._side_entity_match(objective, {"source_id": eid})
@@ -2267,16 +2280,30 @@ func side_entity_interact(kind: String, eid: String, map_id: String, qid := "", 
 	var rows := _side_live_rows()
 	var event := QuestService.world_event(kind, eid, map_id,
 		selected_role if not selected_role.is_empty() else "player", {"choice": choice})
-	var step := QuestService.side_objective(QuestService.side_row(rows, qid), QuestService.side_get(act1, qid))
+	var quest_row := QuestService.side_row(rows, qid)
+	var step := QuestService.side_objective(quest_row, QuestService.side_get(act1, qid))
 	if not (step.get("choices", {}) as Dictionary).is_empty():
 		if not (step.get("choices", {}) as Dictionary).has(choice):
 			return {"ok": false, "reason": "invalid_choice", "hide": false}
 		if not String(step.get("correct", "")).is_empty() and choice != String(step["correct"]):
 			return {"ok": false, "reason": "wrong_choice", "line": String(step.get("wrong", "再核对线索，仍可重试。")), "hide": false}
+	var discovered := not qid.is_empty() and QuestService.side_status(act1, qid).is_empty()
+	if discovered:
+		var accepted := QuestService.side_accept(act1, rows, qid)
+		if not bool(accepted.get("ok", false)):
+			return {"ok": false, "reason": "no_progress", "hide": false}
+		var accepted_item := String(quest_row.get("accept_item", ""))
+		if not accepted_item.is_empty():
+			items[accepted_item] = item_count(accepted_item) + 1
 	var touched := QuestService.side_report(act1, rows, event, items)
 	if touched.is_empty():
+		if discovered:
+			prog = before_prog
+			items = before_items
 		return {"ok": false, "reason": "no_progress", "toasts": [], "hide": false}
 	var toasts: Array = []
+	if discovered:
+		toasts.append("发现委托 · " + String(quest_row.get("title", "")))
 	if not String(step.get("completion", "")).is_empty(): toasts.append(String(step["completion"]))
 	if kind == "collect":
 		for qid_v in touched:
@@ -3182,6 +3209,28 @@ func wallet_info_lines() -> Array:
 	return lines
 
 
+func show_currency_popup(anchor: Control, currency_id := "gold") -> Control:
+	if ui_blocked: return null
+	var layer := CanvasLayer.new()
+	layer.layer = 90
+	anchor.get_viewport().add_child(layer)
+	_modal_seq += 1
+	var mid := _modal_seq
+	_modals.append({"id":mid,"layer":layer,"owner":anchor})
+	anchor.tree_exiting.connect(func(): close_info_popup_by_id(mid),CONNECT_ONE_SHOT)
+	var script := load("res://src/ui/CurrencyPanel.gd") as GDScript
+	var panel := script.new() as Control
+	panel.set("currency_id",currency_id)
+	var focus := anchor.get_viewport().gui_get_focus_owner()
+	var focus_ref: WeakRef = weakref(focus) if focus != null else null
+	panel.connect("closed",func(): close_info_popup_by_id(mid))
+	layer.tree_exiting.connect(func():
+		var target: Control = focus_ref.get_ref() if focus_ref != null else null
+		if is_instance_valid(target) and target.is_visible_in_tree(): target.grab_focus.call_deferred())
+	layer.add_child(panel)
+	return panel
+
+
 func city_config() -> Dictionary:
 	return TableCache.city_config()
 
@@ -3222,7 +3271,7 @@ func gacha_free_available() -> bool:
 	return String(gacha_state().get("free_day", "")) != today_key()
 
 
-## 记一次免费召唤：连续天数 +1（昨天抽过才算连），满 7 天送灵魂石 ×50 并重新计数。
+## 记一次免费召唤：连续天数 +1（昨天抽过才算连），满 7 天送魂晶 ×50 并重新计数。
 ## 返回本次连抽奖励（0 或 50），UI 据此飘字。
 func gacha_mark_free() -> int:
 	var gs := gacha_state()
@@ -3260,7 +3309,7 @@ func report_run_result(win: bool) -> String:
 		prog["lose_streak"] = 0
 		wallet["soul"] = int(wallet.get("soul", 0)) + 30
 		grant_item("pet_food", 5)   # 内部落盘
-		gift = "连败慰礼 · 灵魂石 +30 · 宠物粮 ×5"
+		gift = "连败慰礼 · 魂晶 +30 · 宠物粮 ×5"
 	save_game()
 	return gift
 
@@ -4638,7 +4687,7 @@ func pet_break(pid: String) -> Dictionary:
 	if item_count("break_crystal") < int(cost["crystal"]):
 		return {"ok": false, "err": "突破晶不足"}
 	if int(wallet.get("soul", 0)) < int(cost["soul"]):
-		return {"ok": false, "err": "灵魂石不足"}
+		return {"ok": false, "err": "魂晶不足"}
 	consume_item("break_crystal", int(cost["crystal"]))
 	wallet["soul"] = int(wallet.get("soul", 0)) - int(cost["soul"])
 	var all: Dictionary = prog.get("pet_stat", {})
@@ -5009,7 +5058,8 @@ func companion_train(pid: String, slot: int, tid: String) -> Dictionary:
 func growth_bonuses(role_id := "") -> Dictionary:
 	var out := {"atk_pct": 0.0, "def_pct": 0.0, "maxhp_pct": 0.0, "spd_pct": 0.0,
 		"crit_add": 0.0, "atk_add": 0.0, "def_add": 0.0, "hp_add": 0, "energy_pct": 0.0,
-		"relic_shield_pct":0.0, "relic_break_damage_pct":0.0}
+		"relic_shield_pct":0.0, "relic_break_damage_pct":0.0,
+		"perk_crit_bleed":0.0, "perk_last_stand":0.0, "perk_quick_cast":0.0}
 	# 天赋
 	var tl: Dictionary = prog.get("talents", {})
 	for nid in tl.keys():
@@ -5983,6 +6033,9 @@ func _build_res_index() -> void:
 	if _res_indexed:
 		return
 	_res_indexed = true
+	var manifest: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/resource_manifest.json"))
+	if manifest is Dictionary:
+		_res_index.merge(manifest, false)
 	# 小型任务图标采用代码原生矢量；保留 res_tex 的名称契约与纹理缓存。
 	_res_index["itm_frost_letter.png"] = "res://image/third_act/itm_frost_letter.svg"
 	_res_index["itm_mine_record.png"] = "res://image/third_act/itm_mine_record.svg"
@@ -6039,6 +6092,8 @@ func res_path(res_name: String) -> String:
 		return MonsterArt.path(res_name)
 	if not _res_indexed:
 		_build_res_index()
+	if res_name.begins_with("world_") and res_name.ends_with("_art") and not _res_index.has(res_name+".png"):
+		return res_path(res_name.trim_suffix("_art"))
 	return String(_res_index.get("%s.png" % res_name, ""))
 
 
@@ -6064,7 +6119,11 @@ func res_tex(res_name: String) -> Texture2D:
 	var t: Texture2D = null
 	if not p.is_empty():
 		t = visual_texture(p)
-	_tex_cache[res_name] = t
+	if t != null:
+		_tex_cache[res_name] = t
+	elif not res_name.is_empty() and not has_meta("missing_texture_" + res_name):
+		set_meta("missing_texture_" + res_name, true)
+		push_warning("Missing visual resource: id=%s resolved=%s" % [res_name, p])
 	return t
 
 
@@ -6226,19 +6285,27 @@ func paper_ink(color: Color) -> Color:
 func center_fixed_page(parent: Variant) -> void:
 	# 页面可在本帧关掉；延后布局不能解引用已释放的控件。
 	if not is_instance_valid(parent) or not (parent is Control): return
-	if parent.get_meta("visual_centered", false): return
 	parent.set_meta("visual_centered", true)
 	preload("res://src/ui/UiSafeArea.gd").fit_page(parent,ui_safe_rect(parent))
+	preload("res://src/ui/UiSafeArea.gd").watch(parent,center_fixed_page.bind(parent))
 
 func fit_mobile_page(parent:Variant)->void:
 	if not is_instance_valid(parent) or not parent is Control:return
 	if OS.get_name() not in ["Android","iOS"]:return
+	if parent.get_meta("visual_centered",false):return
 	preload("res://src/ui/UiSafeArea.gd").fit_page(parent,ui_safe_rect(parent),_veil_viewport_size(parent))
+	preload("res://src/ui/UiSafeArea.gd").watch(parent,fit_mobile_page.bind(parent))
 
 func ui_safe_rect(parent:Node)->Rect2:
 	var view:=Rect2(Vector2.ZERO,_veil_viewport_size(parent))
+	# A device sample contains raw pixel measurements, not a pre-approved logical
+	# rectangle. Reproduction tools exercise the same conversion as the native path.
+	if has_meta("device_layout_sample"):
+		var sample:Dictionary=get_meta("device_layout_sample")
+		return preload("res://src/ui/UiSafeArea.gd").from_screen(view,sample.screen_safe,sample.transform,sample.get("cutouts",[]))
+	if has_meta("test_safe_rect"): return (get_meta("test_safe_rect") as Rect2).intersection(view)
 	if OS.get_name() not in ["Android","iOS"] or DisplayServer.get_name()=="headless":return view
-	return preload("res://src/ui/UiSafeArea.gd").from_screen(view,Rect2(DisplayServer.get_display_safe_area()),parent.get_viewport().get_screen_transform())
+	return preload("res://src/ui/UiSafeArea.gd").from_screen(view,Rect2(DisplayServer.get_display_safe_area()),parent.get_viewport().get_screen_transform(),DisplayServer.get_display_cutouts())
 
 
 func _build_vignette_tex() -> GradientTexture2D:
@@ -7002,7 +7069,6 @@ func _bind_press_feedback(root: Control) -> void:
 			var tw := root.create_tween()
 			root.set_meta("press_motion",tw)
 			if e.pressed:
-				_sfx("ui_click")
 				preload("res://src/ui/HapticFeedback.gd").light()
 				tw.tween_property(root, "modulate", Color(0.9, 0.9, 0.9), 0.05)
 				tw.parallel().tween_property(root, "scale", Vector2.ONE * 0.96, 0.05)
@@ -7011,6 +7077,7 @@ func _bind_press_feedback(root: Control) -> void:
 				tw.parallel().tween_property(root, "scale", Vector2.ONE * 1.03, 0.08).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 				tw.tween_property(root, "scale", Vector2.ONE, 0.08).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 			else:
+				if root.get_global_rect().has_point(e.global_position): _sfx("ui_click")
 				tw.tween_property(root, "modulate", Color.WHITE, 0.10)
 				tw.parallel().tween_property(root, "scale", Vector2.ONE, 0.10))
 

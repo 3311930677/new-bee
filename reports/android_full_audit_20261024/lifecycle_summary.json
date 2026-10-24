@@ -1,0 +1,143 @@
+{
+  "before": {
+    "bgm": "bgm_home",
+    "events": [
+      {
+        "category": "UI",
+        "name": "ui_open",
+        "time_ms": 343536
+      },
+      {
+        "category": "UI",
+        "name": "ui_page",
+        "time_ms": 345386
+      },
+      {
+        "category": "UI",
+        "name": "ui_page",
+        "time_ms": 347220
+      },
+      {
+        "category": "UI",
+        "name": "ui_page",
+        "time_ms": 349056
+      },
+      {
+        "category": "UI",
+        "name": "ui_page",
+        "time_ms": 350202
+      },
+      {
+        "category": "UI",
+        "name": "ui_close",
+        "time_ms": 352155
+      },
+      {
+        "category": "UI",
+        "name": "ui_open",
+        "time_ms": 354636
+      }
+    ],
+    "mute": false,
+    "paused": false,
+    "playing": true,
+    "position": 12.9932813644409,
+    "suspended": false,
+    "voices": 0
+  },
+  "after": {
+    "bgm": "bgm_home",
+    "events": [
+      {
+        "category": "UI",
+        "name": "ui_open",
+        "time_ms": 343536
+      },
+      {
+        "category": "UI",
+        "name": "ui_page",
+        "time_ms": 345386
+      },
+      {
+        "category": "UI",
+        "name": "ui_page",
+        "time_ms": 347220
+      },
+      {
+        "category": "UI",
+        "name": "ui_page",
+        "time_ms": 349056
+      },
+      {
+        "category": "UI",
+        "name": "ui_page",
+        "time_ms": 350202
+      },
+      {
+        "category": "UI",
+        "name": "ui_close",
+        "time_ms": 352155
+      },
+      {
+        "category": "UI",
+        "name": "ui_open",
+        "time_ms": 354636
+      }
+    ],
+    "mute": false,
+    "paused": false,
+    "playing": true,
+    "position": 15.153281211853,
+    "suspended": false,
+    "voices": 0
+  },
+  "restored": {
+    "bgm": "bgm_home",
+    "events": [
+      {
+        "category": "UI",
+        "name": "ui_open",
+        "time_ms": 343536
+      },
+      {
+        "category": "UI",
+        "name": "ui_page",
+        "time_ms": 345386
+      },
+      {
+        "category": "UI",
+        "name": "ui_page",
+        "time_ms": 347220
+      },
+      {
+        "category": "UI",
+        "name": "ui_page",
+        "time_ms": 349056
+      },
+      {
+        "category": "UI",
+        "name": "ui_page",
+        "time_ms": 350202
+      },
+      {
+        "category": "UI",
+        "name": "ui_close",
+        "time_ms": 352155
+      },
+      {
+        "category": "UI",
+        "name": "ui_open",
+        "time_ms": 354636
+      }
+    ],
+    "mute": false,
+    "paused": false,
+    "playing": true,
+    "position": 17.2892818450928,
+    "suspended": false,
+    "voices": 0
+  },
+  "same_bgm": true,
+  "resumed_unpaused": true,
+  "pid_after": "6037"
+}

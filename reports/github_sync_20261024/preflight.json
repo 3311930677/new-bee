@@ -1,0 +1,98 @@
+{
+  "repository": "3311930677/new-bee",
+  "branch": "main",
+  "base": "0566a80813448ad8ee8b2dbd5b5593b5305fa467",
+  "pending_files": 1341,
+  "pending_bytes": 7150928408,
+  "large_files": [
+    {
+      "path": "reports/android_emulator_20261024/Yuanzheng-android-audit.apk",
+      "bytes": 730421584
+    },
+    {
+      "path": "reports/android_emulator_20261024/Yuanzheng-emulator.apk",
+      "bytes": 730413010
+    },
+    {
+      "path": "reports/android_full_audit_20261024/Yuanzheng-deep-audit-extended.apk",
+      "bytes": 730446550
+    },
+    {
+      "path": "reports/android_full_audit_20261024/Yuanzheng-deep-audit-final.apk",
+      "bytes": 730450646
+    },
+    {
+      "path": "reports/android_full_audit_20261024/Yuanzheng-deep-audit.apk",
+      "bytes": 730446550
+    },
+    {
+      "path": "reports/android_full_audit_20261024/Yuanzheng-full-flow.apk",
+      "bytes": 730417180
+    },
+    {
+      "path": "reports/mobile_fixes_20261024/Yuanzheng-mobile-fixed-final.apk",
+      "bytes": 727635656
+    },
+    {
+      "path": "reports/mobile_rework_20261024/Yuanzheng-0.2.1-mobile2.apk",
+      "bytes": 727635928
+    }
+  ],
+  "secret_signals": [],
+  "release_assets": [
+    {
+      "path": "reports/android_emulator_20261024/Yuanzheng-android-audit.apk",
+      "bytes": 730421584,
+      "sha256": "55c209ffbd0c3774cfdc1967babfc869ba30362cb5e0c93731cd1d011f1dd56d",
+      "asset": "Yuanzheng-android-audit.apk"
+    },
+    {
+      "path": "reports/android_emulator_20261024/Yuanzheng-emulator.apk",
+      "bytes": 730413010,
+      "sha256": "ba04a487ed30c02906a7574b9ac3e0c4c7c825115f7e5c450343ff9793b9327f",
+      "asset": "Yuanzheng-emulator.apk"
+    },
+    {
+      "path": "reports/android_full_audit_20261024/Yuanzheng-deep-audit-extended.apk",
+      "bytes": 730446550,
+      "sha256": "c02c86d544334b9abbad51cca8558f6c258d30e8b6807d189f960eea0029c7fd",
+      "asset": "Yuanzheng-deep-audit-extended.apk"
+    },
+    {
+      "path": "reports/android_full_audit_20261024/Yuanzheng-deep-audit-final.apk",
+      "bytes": 730450646,
+      "sha256": "094cbb19f08505ed3cb75ea87f0163cd4a5ec4ddf515a45e9da1e3bc33b16669",
+      "asset": "Yuanzheng-deep-audit-final.apk"
+    },
+    {
+      "path": "reports/android_full_audit_20261024/Yuanzheng-deep-audit.apk",
+      "bytes": 730446550,
+      "sha256": "bce9da02c06e21465fc424709bd76d7ef4d5157a4a9fdad303ac43879bc9a3ee",
+      "asset": "Yuanzheng-deep-audit.apk"
+    },
+    {
+      "path": "reports/android_full_audit_20261024/Yuanzheng-full-flow.apk",
+      "bytes": 730417180,
+      "sha256": "dfeb4f163d3ee1b9808b2359da605a276a7854fb53e13ddadf9b3cca00aa9662",
+      "asset": "Yuanzheng-full-flow.apk"
+    },
+    {
+      "path": "reports/mobile_fixes_20261024/Yuanzheng-mobile-fixed-final.apk",
+      "bytes": 727635656,
+      "sha256": "1eb24fc889af6dd9f862cf48b7000f1b7490963c906105e92911c009bb31c0ac",
+      "asset": "Yuanzheng-mobile-fixed-final.apk"
+    },
+    {
+      "path": "reports/mobile_rework_20261024/Yuanzheng-0.2.1-mobile2.apk",
+      "bytes": 727635928,
+      "sha256": "adba676c7d5abdfb613754a4029383783efafcdf46e63dd6c90ea0de23272ece",
+      "asset": "Yuanzheng-0.2.1-mobile2.apk"
+    },
+    {
+      "path": "远征/exports/android/Yuanzheng-0.2.1-mobile2.apk",
+      "bytes": 727636002,
+      "sha256": "a4a4f426ef96792bf503bbcfc1dd6d5cc21f0b97f845a1aafccc8432fa12b373",
+      "asset": "Yuanzheng-0.2.1-mobile2-arm64.apk"
+    }
+  ]
+}

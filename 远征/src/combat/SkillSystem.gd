@@ -60,7 +60,7 @@ static func can_cast(sim: BattleSim, caster: Combatant, skill: Dictionary) -> bo
 
 
 ## 入队（校验通过后调用）
-static func enqueue_cast(sim: BattleSim, caster: Combatant, skill: Dictionary) -> void:
+static func enqueue_cast(sim: BattleSim, caster: Combatant, skill: Dictionary, target_uid := -1) -> void:
 	var windup := WINDUP_TICKS_ULT if int(skill.get("cost", 0)) >= 60 else WINDUP_TICKS
 	# 表驱动的 per-skill 前摇（秒）：慢招要让玩家**看得见**预兆（例：失路兽「嗅踪」2 秒，
 	# 表现层按 cast_queue 剩余前摇画收缩环并逐帧倒数）。不给 windup 的照旧走 0.4/0.5 秒口径。
@@ -69,7 +69,10 @@ static func enqueue_cast(sim: BattleSim, caster: Combatant, skill: Dictionary) -
 		windup = maxi(1, int(windup_sec * float(BattleSim.TICK_RATE)))
 	if caster.traits != null:
 		windup = maxi(6, int(float(windup) * (1.0 + caster.traits.passive_cd_pct() * 0.5)))
-	sim.cast_queue.append({"uid": caster.uid, "skill": skill, "windup": windup})
+	if caster.kind == "role" and bool(sim.growth_perks.get("quick_cast", false)) \
+			and int(skill.get("cost", 0)) <= 40:
+		windup = maxi(6, int(float(windup) * 0.75))
+	sim.cast_queue.append({"uid": caster.uid, "skill": skill, "windup": windup, "target_uid": target_uid})
 	sim.emit({"t": "cast_start", "uid": caster.uid, "skill": String(skill.get("id", "")),
 		"name": String(skill.get("name", ""))})
 
@@ -90,6 +93,14 @@ static func resolve_cast(sim: BattleSim, entry: Dictionary) -> void:
 	if etype_pre != "heal" and etype_pre != "summon" and etype_pre != "cleanse":
 		if sim.alive_units("enemy" if caster.side == "ally" else "ally").is_empty():
 			return
+	var chosen_ally := sim.unit_by_uid(int(entry.get("target_uid", -1)))
+	if chosen_ally == null or not chosen_ally.alive or chosen_ally.side != caster.side:
+		chosen_ally = null
+	if etype_pre == "cleanse":
+		if chosen_ally != null and _debuff_count(chosen_ally) == 0:
+			return
+		if chosen_ally == null and _cleanse_target(sim.alive_units(caster.side)) == null:
+			return
 	# 「满能量」快照必须在**扣能量之前**取（A4）：扣完再判恒为 false，
 	# 上限 100、技能至少 20 费 → 超载（tr_energy_2）从未生效过
 	var is_full_energy := caster.kind == "role" \
@@ -109,7 +120,7 @@ static func resolve_cast(sim: BattleSim, entry: Dictionary) -> void:
 	var combo := _check_combo(sim, caster, skill)
 	sim.emit({"t": "cast", "uid": caster.uid, "skill": String(skill.get("id", "")),
 		"name": String(skill.get("name", "")), "combo": combo.get("name", "")})
-	_apply_skill(sim, caster, skill, combo, is_full_energy)
+	_apply_skill(sim, caster, skill, combo, is_full_energy, chosen_ally)
 	# 仅在实际结算后记一次性技能；前摇被控制打断仍可重新尝试。
 	if bool(skill.get("once", false)):
 		caster.once_flags["skill_" + String(skill.get("id", ""))] = true
@@ -132,7 +143,7 @@ static func _check_combo(sim: BattleSim, caster: Combatant, skill: Dictionary) -
 
 
 static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, combo: Dictionary,
-		is_full_energy := false) -> void:
+		is_full_energy := false, chosen_ally: Combatant = null) -> void:
 	# 记录连携窗口起点
 	sim.last_cast[caster.uid] = {"skill_id": String(skill.get("id", "")), "tick": sim.tick_count}
 	var target_type := String(skill.get("target", "enemy_single"))
@@ -166,6 +177,14 @@ static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, c
 	# 目标集合
 	var etype := String(effect.get("type", ""))
 	var targets := _pick_targets(sim, caster, target_type)
+	if target_type == "ally_single" and chosen_ally != null:
+		targets.clear()
+		targets.append(chosen_ally)
+	if etype == "cleanse":
+		var cleanse_target := chosen_ally if chosen_ally != null else _cleanse_target(sim.alive_units(caster.side))
+		targets.clear()
+		if cleanse_target != null:
+			targets.append(cleanse_target)
 	var effective := 0
 	var companion_effective := 0
 	if targets.is_empty() and target_type != "ally_role" and etype != "heal" and etype != "summon" and etype != "cleanse":
@@ -400,6 +419,25 @@ static func _heal_target(caster: Combatant, allies: Array[Combatant]) -> Combata
 		if float(a.hp) / float(maxi(a.get_max_hp(), 1)) < float(best.hp) / float(maxi(best.get_max_hp(), 1)):
 			best = a
 	return best
+
+
+static func _cleanse_target(allies: Array[Combatant]) -> Combatant:
+	var best: Combatant = null
+	var best_count := 0
+	for ally in allies:
+		var count := _debuff_count(ally)
+		if count > best_count:
+			best = ally
+			best_count = count
+	return best
+
+
+static func _debuff_count(ally: Combatant) -> int:
+	var count := 0
+	for debuff in ["bleed", "poison", "slow", "def_break", "fear", "stun", "confusion", "atk_down"]:
+		if ally.has_buff(debuff):
+			count += 1
+	return count
 
 
 static func _primary_target(sim: BattleSim, caster: Combatant, target_type: String) -> Combatant:

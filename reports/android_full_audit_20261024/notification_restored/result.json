@@ -1,0 +1,1487 @@
+{
+	"checks": [],
+	"device": {
+		"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+		"mix_rate": 44100.0,
+		"model": "Android SDK built for x86_64",
+		"os": "Android",
+		"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+		"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+		"version": "37.16571990",
+		"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+		"window": "(1080, 2400)"
+	},
+	"final": {
+		"audio": {
+			"bgm": "bgm_home",
+			"events": [
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 343536
+				},
+				{
+					"category": "UI",
+					"name": "ui_page",
+					"time_ms": 345386
+				},
+				{
+					"category": "UI",
+					"name": "ui_page",
+					"time_ms": 347220
+				},
+				{
+					"category": "UI",
+					"name": "ui_page",
+					"time_ms": 349056
+				},
+				{
+					"category": "UI",
+					"name": "ui_page",
+					"time_ms": 350202
+				},
+				{
+					"category": "UI",
+					"name": "ui_close",
+					"time_ms": 352155
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 354636
+				}
+			],
+			"mute": false,
+			"paused": false,
+			"playing": true,
+			"position": 17.2892818450928,
+			"suspended": false,
+			"voices": 0
+		},
+		"controls": [
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@HBoxContainer@2573/@Button@2580",
+				"rect": [
+					18.0,
+					175.962493896484,
+					146.0,
+					50.0
+				],
+				"safe": true,
+				"text": "常规",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@HBoxContainer@2573/@Button@2582",
+				"rect": [
+					168.0,
+					178.962493896484,
+					146.0,
+					47.0
+				],
+				"safe": true,
+				"text": "旅人",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@HBoxContainer@2573/@Button@2584",
+				"rect": [
+					318.0,
+					178.962493896484,
+					146.0,
+					47.0
+				],
+				"safe": true,
+				"text": "存档",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@HBoxContainer@2590/QuickReselectRoleButton",
+				"rect": [
+					20.0,
+					297.962493896484,
+					215.0,
+					48.0
+				],
+				"safe": true,
+				"text": "重选角色 · 易职",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@HBoxContainer@2590/QuickTutorialReplayButton",
+				"rect": [
+					245.0,
+					297.962493896484,
+					215.0,
+					48.0
+				],
+				"safe": true,
+				"text": "新手指引 · 教学",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/QuickGmConsoleButton",
+				"rect": [
+					20.0,
+					353.962493896484,
+					440.0,
+					48.0
+				],
+				"safe": true,
+				"text": "开发者控制台 · 全功能界面解锁",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2597/@VBoxContainer@2598/@MarginContainer@2616/@Button@2613",
+				"rect": [
+					20.0,
+					574.962524414062,
+					440.0,
+					54.0
+				],
+				"safe": true,
+				"text": "静音",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2630/@Button@2629",
+				"rect": [
+					20.0,
+					727.962524414062,
+					440.0,
+					54.0
+				],
+				"safe": true,
+				"text": "震屏",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2636/@Button@2633",
+				"rect": [
+					20.0,
+					782.962524414062,
+					440.0,
+					54.0
+				],
+				"safe": true,
+				"text": "剧情演出",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2640/@HBoxContainer@2637/@Button@2643",
+				"rect": [
+					288.0,
+					847.962524414062,
+					42.0,
+					34.0
+				],
+				"safe": true,
+				"text": "‹",
+				"tooltip": "",
+				"touch_under44": true
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2640/@HBoxContainer@2637/@Button@2646",
+				"rect": [
+					406.0,
+					847.962524414062,
+					42.0,
+					34.0
+				],
+				"safe": true,
+				"text": "›",
+				"tooltip": "",
+				"touch_under44": true
+			},
+			{
+				"clipped": true,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/CopyDisplayInfo",
+				"rect": [
+					20.0,
+					964.962524414062,
+					440.0,
+					48.0
+				],
+				"safe": true,
+				"text": "复制设备与显示信息",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/SettingsBack",
+				"rect": [
+					12.0,
+					71.9624938964844,
+					52.0,
+					54.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "返回",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Button@2706",
+				"rect": [
+					399.0,
+					78.9624938964844,
+					68.0,
+					36.0
+				],
+				"safe": true,
+				"text": "说明",
+				"tooltip": "",
+				"touch_under44": true
+			}
+		],
+		"device": {
+			"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+			"mix_rate": 44100.0,
+			"model": "Android SDK built for x86_64",
+			"os": "Android",
+			"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+			"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+			"version": "37.16571990",
+			"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+			"window": "(1080, 2400)"
+		},
+		"focus": "@Button@2613:<Button#977675488707>",
+		"keyboard_height": 0,
+		"labels": [
+			{
+				"font": 15,
+				"minimum": "(73.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Control@1861/HeroRolePlate/@Label@1870",
+				"rect": [
+					182.0,
+					701.0,
+					116.0,
+					23.0
+				],
+				"text": "破军 · 战士"
+			},
+			{
+				"font": 16,
+				"minimum": "(1.0, 24.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Label@1928",
+				"rect": [
+					0.0,
+					447.720001220703,
+					480.0,
+					28.0
+				],
+				"text": ""
+			},
+			{
+				"font": 17,
+				"minimum": "(34.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@HBoxContainer@2573/@Button@2580/Caption",
+				"rect": [
+					56.0,
+					175.962493896484,
+					108.0,
+					50.0
+				],
+				"text": "常规"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@HBoxContainer@2573/@Button@2580/Subtitle",
+				"rect": [
+					18.0,
+					175.962493896484,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 17,
+				"minimum": "(34.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@HBoxContainer@2573/@Button@2582/Caption",
+				"rect": [
+					204.0,
+					178.962493896484,
+					110.0,
+					47.0
+				],
+				"text": "旅人"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@HBoxContainer@2573/@Button@2582/Subtitle",
+				"rect": [
+					168.0,
+					178.962493896484,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 17,
+				"minimum": "(34.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@HBoxContainer@2573/@Button@2584/Caption",
+				"rect": [
+					354.0,
+					178.962493896484,
+					110.0,
+					47.0
+				],
+				"text": "存档"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@HBoxContainer@2573/@Button@2584/Subtitle",
+				"rect": [
+					318.0,
+					178.962493896484,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 18,
+				"minimum": "(90.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@PanelContainer@2589/@HBoxContainer@2586/@Label@2588",
+				"rect": [
+					92.0,
+					252.962493896484,
+					90.0,
+					27.0
+				],
+				"text": "角色与旅程"
+			},
+			{
+				"font": 17,
+				"minimum": "(117.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@HBoxContainer@2590/QuickReselectRoleButton/Caption",
+				"rect": [
+					59.0,
+					297.962493896484,
+					176.0,
+					48.0
+				],
+				"text": "重选角色 · 易职"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@HBoxContainer@2590/QuickReselectRoleButton/Subtitle",
+				"rect": [
+					20.0,
+					297.962493896484,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 17,
+				"minimum": "(117.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@HBoxContainer@2590/QuickTutorialReplayButton/Caption",
+				"rect": [
+					333.0,
+					297.962493896484,
+					127.0,
+					48.0
+				],
+				"text": "新手指引 · 教学"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@HBoxContainer@2590/QuickTutorialReplayButton/Subtitle",
+				"rect": [
+					245.0,
+					297.962493896484,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 17,
+				"minimum": "(236.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/QuickGmConsoleButton/Caption",
+				"rect": [
+					54.0,
+					353.962493896484,
+					406.0,
+					48.0
+				],
+				"text": "开发者控制台 · 全功能界面解锁"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/QuickGmConsoleButton/Subtitle",
+				"rect": [
+					20.0,
+					353.962493896484,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 18,
+				"minimum": "(36.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@PanelContainer@2596/@HBoxContainer@2593/@Label@2595",
+				"rect": [
+					92.0,
+					417.962493896484,
+					36.0,
+					27.0
+				],
+				"text": "声音"
+			},
+			{
+				"font": 17,
+				"minimum": "(34.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2597/@VBoxContainer@2598/@MarginContainer@2600/@HBoxContainer@2599/@Label@2601",
+				"rect": [
+					79.0,
+					478.962493896484,
+					52.0,
+					25.0
+				],
+				"text": "音乐"
+			},
+			{
+				"font": 15,
+				"minimum": "(33.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2597/@VBoxContainer@2598/@MarginContainer@2600/@HBoxContainer@2599/@Label@2603",
+				"rect": [
+					400.0,
+					479.962493896484,
+					48.0,
+					23.0
+				],
+				"text": "70%"
+			},
+			{
+				"font": 17,
+				"minimum": "(34.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2597/@VBoxContainer@2598/@MarginContainer@2607/@HBoxContainer@2604/@Label@2608",
+				"rect": [
+					79.0,
+					533.962524414062,
+					52.0,
+					25.0
+				],
+				"text": "音效"
+			},
+			{
+				"font": 15,
+				"minimum": "(33.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2597/@VBoxContainer@2598/@MarginContainer@2607/@HBoxContainer@2604/@Label@2610",
+				"rect": [
+					400.0,
+					534.962524414062,
+					48.0,
+					23.0
+				],
+				"text": "80%"
+			},
+			{
+				"font": 17,
+				"minimum": "(34.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2597/@VBoxContainer@2598/@MarginContainer@2616/@Button@2613/@Label@2611",
+				"rect": [
+					80.0,
+					574.962524414062,
+					236.0,
+					54.0
+				],
+				"text": "静音"
+			},
+			{
+				"font": 15,
+				"minimum": "(15.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2597/@VBoxContainer@2598/@MarginContainer@2616/@Button@2613/@Label@2612",
+				"rect": [
+					320.0,
+					574.962524414062,
+					68.0,
+					54.0
+				],
+				"text": "关"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2620/@HBoxContainer@2619/@Label@2618",
+				"rect": [
+					48.0,
+					639.962524414062,
+					412.0,
+					23.0
+				],
+				"text": "音乐与音效已开启"
+			},
+			{
+				"font": 18,
+				"minimum": "(90.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@PanelContainer@2624/@HBoxContainer@2621/@Label@2623",
+				"rect": [
+					92.0,
+					679.962524414062,
+					90.0,
+					27.0
+				],
+				"text": "战斗与演出"
+			},
+			{
+				"font": 17,
+				"minimum": "(34.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2630/@Button@2629/@Label@2627",
+				"rect": [
+					80.0,
+					727.962524414062,
+					236.0,
+					54.0
+				],
+				"text": "震屏"
+			},
+			{
+				"font": 15,
+				"minimum": "(15.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2630/@Button@2629/@Label@2628",
+				"rect": [
+					320.0,
+					727.962524414062,
+					68.0,
+					54.0
+				],
+				"text": "开"
+			},
+			{
+				"font": 17,
+				"minimum": "(68.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2636/@Button@2633/@Label@2631",
+				"rect": [
+					80.0,
+					782.962524414062,
+					236.0,
+					54.0
+				],
+				"text": "剧情演出"
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2636/@Button@2633/@Label@2632",
+				"rect": [
+					320.0,
+					782.962524414062,
+					68.0,
+					54.0
+				],
+				"text": "播放"
+			},
+			{
+				"font": 17,
+				"minimum": "(68.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2640/@HBoxContainer@2637/@Label@2641",
+				"rect": [
+					80.0,
+					851.962524414062,
+					196.0,
+					25.0
+				],
+				"text": "战斗倍速"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2640/@HBoxContainer@2637/@Button@2643/Subtitle",
+				"rect": [
+					288.0,
+					847.962524414062,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(24.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2640/@HBoxContainer@2637/@Label@2644",
+				"rect": [
+					342.0,
+					852.962524414062,
+					52.0,
+					23.0
+				],
+				"text": "×1"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2640/@HBoxContainer@2637/@Button@2646/Subtitle",
+				"rect": [
+					406.0,
+					847.962524414062,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2650/@HBoxContainer@2649/@Label@2648",
+				"rect": [
+					48.0,
+					902.962524414062,
+					412.0,
+					23.0
+				],
+				"text": "支持 ×1 / ×2 / ×4 / ×8 四档，战斗中也可随时切换倍速"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/BuildVersion",
+				"rect": [
+					20.0,
+					933.962524414062,
+					440.0,
+					23.0
+				],
+				"text": "版本 0.2.1-mobile2"
+			},
+			{
+				"font": 17,
+				"minimum": "(153.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/CopyDisplayInfo/Caption",
+				"rect": [
+					108.0,
+					964.962524414062,
+					352.0,
+					48.0
+				],
+				"text": "复制设备与显示信息"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/CopyDisplayInfo/Subtitle",
+				"rect": [
+					20.0,
+					964.962524414062,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 17,
+				"minimum": "(34.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Button@2706/Caption",
+				"rect": [
+					399.0,
+					78.9624938964844,
+					68.0,
+					36.0
+				],
+				"text": "说明"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Button@2706/Subtitle",
+				"rect": [
+					399.0,
+					78.9624938964844,
+					1.0,
+					23.0
+				],
+				"text": ""
+			}
+		],
+		"modals": [],
+		"page": "GameHome",
+		"tick_ms": 451858
+	},
+	"id": "notification_restored",
+	"photos": [],
+	"records": [
+		{
+			"audio": {
+				"bgm": "bgm_home",
+				"events": [
+					{
+						"category": "UI",
+						"name": "ui_open",
+						"time_ms": 343536
+					},
+					{
+						"category": "UI",
+						"name": "ui_page",
+						"time_ms": 345386
+					},
+					{
+						"category": "UI",
+						"name": "ui_page",
+						"time_ms": 347220
+					},
+					{
+						"category": "UI",
+						"name": "ui_page",
+						"time_ms": 349056
+					},
+					{
+						"category": "UI",
+						"name": "ui_page",
+						"time_ms": 350202
+					},
+					{
+						"category": "UI",
+						"name": "ui_close",
+						"time_ms": 352155
+					},
+					{
+						"category": "UI",
+						"name": "ui_open",
+						"time_ms": 354636
+					}
+				],
+				"mute": false,
+				"paused": false,
+				"playing": true,
+				"position": 17.2892818450928,
+				"suspended": false,
+				"voices": 0
+			},
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@HBoxContainer@2573/@Button@2580",
+					"rect": [
+						18.0,
+						175.962493896484,
+						146.0,
+						50.0
+					],
+					"safe": true,
+					"text": "常规",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@HBoxContainer@2573/@Button@2582",
+					"rect": [
+						168.0,
+						178.962493896484,
+						146.0,
+						47.0
+					],
+					"safe": true,
+					"text": "旅人",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@HBoxContainer@2573/@Button@2584",
+					"rect": [
+						318.0,
+						178.962493896484,
+						146.0,
+						47.0
+					],
+					"safe": true,
+					"text": "存档",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@HBoxContainer@2590/QuickReselectRoleButton",
+					"rect": [
+						20.0,
+						297.962493896484,
+						215.0,
+						48.0
+					],
+					"safe": true,
+					"text": "重选角色 · 易职",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@HBoxContainer@2590/QuickTutorialReplayButton",
+					"rect": [
+						245.0,
+						297.962493896484,
+						215.0,
+						48.0
+					],
+					"safe": true,
+					"text": "新手指引 · 教学",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/QuickGmConsoleButton",
+					"rect": [
+						20.0,
+						353.962493896484,
+						440.0,
+						48.0
+					],
+					"safe": true,
+					"text": "开发者控制台 · 全功能界面解锁",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2597/@VBoxContainer@2598/@MarginContainer@2616/@Button@2613",
+					"rect": [
+						20.0,
+						574.962524414062,
+						440.0,
+						54.0
+					],
+					"safe": true,
+					"text": "静音",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2630/@Button@2629",
+					"rect": [
+						20.0,
+						727.962524414062,
+						440.0,
+						54.0
+					],
+					"safe": true,
+					"text": "震屏",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2636/@Button@2633",
+					"rect": [
+						20.0,
+						782.962524414062,
+						440.0,
+						54.0
+					],
+					"safe": true,
+					"text": "剧情演出",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2640/@HBoxContainer@2637/@Button@2643",
+					"rect": [
+						288.0,
+						847.962524414062,
+						42.0,
+						34.0
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "",
+					"touch_under44": true
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2640/@HBoxContainer@2637/@Button@2646",
+					"rect": [
+						406.0,
+						847.962524414062,
+						42.0,
+						34.0
+					],
+					"safe": true,
+					"text": "›",
+					"tooltip": "",
+					"touch_under44": true
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/CopyDisplayInfo",
+					"rect": [
+						20.0,
+						964.962524414062,
+						440.0,
+						48.0
+					],
+					"safe": true,
+					"text": "复制设备与显示信息",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/SettingsBack",
+					"rect": [
+						12.0,
+						71.9624938964844,
+						52.0,
+						54.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Button@2706",
+					"rect": [
+						399.0,
+						78.9624938964844,
+						68.0,
+						36.0
+					],
+					"safe": true,
+					"text": "说明",
+					"tooltip": "",
+					"touch_under44": true
+				}
+			],
+			"device": {
+				"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+				"mix_rate": 44100.0,
+				"model": "Android SDK built for x86_64",
+				"os": "Android",
+				"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+				"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+				"version": "37.16571990",
+				"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+				"window": "(1080, 2400)"
+			},
+			"focus": "@Button@2613:<Button#977675488707>",
+			"keyboard_height": 0,
+			"labels": [
+				{
+					"font": 15,
+					"minimum": "(73.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Control@1861/HeroRolePlate/@Label@1870",
+					"rect": [
+						182.0,
+						701.0,
+						116.0,
+						23.0
+					],
+					"text": "破军 · 战士"
+				},
+				{
+					"font": 16,
+					"minimum": "(1.0, 24.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Label@1928",
+					"rect": [
+						0.0,
+						447.720001220703,
+						480.0,
+						28.0
+					],
+					"text": ""
+				},
+				{
+					"font": 17,
+					"minimum": "(34.0, 25.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@HBoxContainer@2573/@Button@2580/Caption",
+					"rect": [
+						56.0,
+						175.962493896484,
+						108.0,
+						50.0
+					],
+					"text": "常规"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@HBoxContainer@2573/@Button@2580/Subtitle",
+					"rect": [
+						18.0,
+						175.962493896484,
+						1.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 17,
+					"minimum": "(34.0, 25.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@HBoxContainer@2573/@Button@2582/Caption",
+					"rect": [
+						204.0,
+						178.962493896484,
+						110.0,
+						47.0
+					],
+					"text": "旅人"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@HBoxContainer@2573/@Button@2582/Subtitle",
+					"rect": [
+						168.0,
+						178.962493896484,
+						1.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 17,
+					"minimum": "(34.0, 25.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@HBoxContainer@2573/@Button@2584/Caption",
+					"rect": [
+						354.0,
+						178.962493896484,
+						110.0,
+						47.0
+					],
+					"text": "存档"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@HBoxContainer@2573/@Button@2584/Subtitle",
+					"rect": [
+						318.0,
+						178.962493896484,
+						1.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 18,
+					"minimum": "(90.0, 27.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@PanelContainer@2589/@HBoxContainer@2586/@Label@2588",
+					"rect": [
+						92.0,
+						252.962493896484,
+						90.0,
+						27.0
+					],
+					"text": "角色与旅程"
+				},
+				{
+					"font": 17,
+					"minimum": "(117.0, 25.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@HBoxContainer@2590/QuickReselectRoleButton/Caption",
+					"rect": [
+						59.0,
+						297.962493896484,
+						176.0,
+						48.0
+					],
+					"text": "重选角色 · 易职"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@HBoxContainer@2590/QuickReselectRoleButton/Subtitle",
+					"rect": [
+						20.0,
+						297.962493896484,
+						1.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 17,
+					"minimum": "(117.0, 25.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@HBoxContainer@2590/QuickTutorialReplayButton/Caption",
+					"rect": [
+						333.0,
+						297.962493896484,
+						127.0,
+						48.0
+					],
+					"text": "新手指引 · 教学"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@HBoxContainer@2590/QuickTutorialReplayButton/Subtitle",
+					"rect": [
+						245.0,
+						297.962493896484,
+						1.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 17,
+					"minimum": "(236.0, 25.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/QuickGmConsoleButton/Caption",
+					"rect": [
+						54.0,
+						353.962493896484,
+						406.0,
+						48.0
+					],
+					"text": "开发者控制台 · 全功能界面解锁"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/QuickGmConsoleButton/Subtitle",
+					"rect": [
+						20.0,
+						353.962493896484,
+						1.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 18,
+					"minimum": "(36.0, 27.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@PanelContainer@2596/@HBoxContainer@2593/@Label@2595",
+					"rect": [
+						92.0,
+						417.962493896484,
+						36.0,
+						27.0
+					],
+					"text": "声音"
+				},
+				{
+					"font": 17,
+					"minimum": "(34.0, 25.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2597/@VBoxContainer@2598/@MarginContainer@2600/@HBoxContainer@2599/@Label@2601",
+					"rect": [
+						79.0,
+						478.962493896484,
+						52.0,
+						25.0
+					],
+					"text": "音乐"
+				},
+				{
+					"font": 15,
+					"minimum": "(33.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2597/@VBoxContainer@2598/@MarginContainer@2600/@HBoxContainer@2599/@Label@2603",
+					"rect": [
+						400.0,
+						479.962493896484,
+						48.0,
+						23.0
+					],
+					"text": "70%"
+				},
+				{
+					"font": 17,
+					"minimum": "(34.0, 25.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2597/@VBoxContainer@2598/@MarginContainer@2607/@HBoxContainer@2604/@Label@2608",
+					"rect": [
+						79.0,
+						533.962524414062,
+						52.0,
+						25.0
+					],
+					"text": "音效"
+				},
+				{
+					"font": 15,
+					"minimum": "(33.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2597/@VBoxContainer@2598/@MarginContainer@2607/@HBoxContainer@2604/@Label@2610",
+					"rect": [
+						400.0,
+						534.962524414062,
+						48.0,
+						23.0
+					],
+					"text": "80%"
+				},
+				{
+					"font": 17,
+					"minimum": "(34.0, 25.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2597/@VBoxContainer@2598/@MarginContainer@2616/@Button@2613/@Label@2611",
+					"rect": [
+						80.0,
+						574.962524414062,
+						236.0,
+						54.0
+					],
+					"text": "静音"
+				},
+				{
+					"font": 15,
+					"minimum": "(15.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2597/@VBoxContainer@2598/@MarginContainer@2616/@Button@2613/@Label@2612",
+					"rect": [
+						320.0,
+						574.962524414062,
+						68.0,
+						54.0
+					],
+					"text": "关"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2620/@HBoxContainer@2619/@Label@2618",
+					"rect": [
+						48.0,
+						639.962524414062,
+						412.0,
+						23.0
+					],
+					"text": "音乐与音效已开启"
+				},
+				{
+					"font": 18,
+					"minimum": "(90.0, 27.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@PanelContainer@2624/@HBoxContainer@2621/@Label@2623",
+					"rect": [
+						92.0,
+						679.962524414062,
+						90.0,
+						27.0
+					],
+					"text": "战斗与演出"
+				},
+				{
+					"font": 17,
+					"minimum": "(34.0, 25.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2630/@Button@2629/@Label@2627",
+					"rect": [
+						80.0,
+						727.962524414062,
+						236.0,
+						54.0
+					],
+					"text": "震屏"
+				},
+				{
+					"font": 15,
+					"minimum": "(15.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2630/@Button@2629/@Label@2628",
+					"rect": [
+						320.0,
+						727.962524414062,
+						68.0,
+						54.0
+					],
+					"text": "开"
+				},
+				{
+					"font": 17,
+					"minimum": "(68.0, 25.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2636/@Button@2633/@Label@2631",
+					"rect": [
+						80.0,
+						782.962524414062,
+						236.0,
+						54.0
+					],
+					"text": "剧情演出"
+				},
+				{
+					"font": 15,
+					"minimum": "(30.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2636/@Button@2633/@Label@2632",
+					"rect": [
+						320.0,
+						782.962524414062,
+						68.0,
+						54.0
+					],
+					"text": "播放"
+				},
+				{
+					"font": 17,
+					"minimum": "(68.0, 25.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2640/@HBoxContainer@2637/@Label@2641",
+					"rect": [
+						80.0,
+						851.962524414062,
+						196.0,
+						25.0
+					],
+					"text": "战斗倍速"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2640/@HBoxContainer@2637/@Button@2643/Subtitle",
+					"rect": [
+						288.0,
+						847.962524414062,
+						1.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(24.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2640/@HBoxContainer@2637/@Label@2644",
+					"rect": [
+						342.0,
+						852.962524414062,
+						52.0,
+						23.0
+					],
+					"text": "×1"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2625/@VBoxContainer@2626/@MarginContainer@2640/@HBoxContainer@2637/@Button@2646/Subtitle",
+					"rect": [
+						406.0,
+						847.962524414062,
+						1.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/@MarginContainer@2650/@HBoxContainer@2649/@Label@2648",
+					"rect": [
+						48.0,
+						902.962524414062,
+						412.0,
+						23.0
+					],
+					"text": "支持 ×1 / ×2 / ×4 / ×8 四档，战斗中也可随时切换倍速"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/BuildVersion",
+					"rect": [
+						20.0,
+						933.962524414062,
+						440.0,
+						23.0
+					],
+					"text": "版本 0.2.1-mobile2"
+				},
+				{
+					"font": 17,
+					"minimum": "(153.0, 25.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/CopyDisplayInfo/Caption",
+					"rect": [
+						108.0,
+						964.962524414062,
+						352.0,
+						48.0
+					],
+					"text": "复制设备与显示信息"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Control@2564/@ScrollContainer@2576/@VBoxContainer@2577/@VBoxContainer@2581/CopyDisplayInfo/Subtitle",
+					"rect": [
+						20.0,
+						964.962524414062,
+						1.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 17,
+					"minimum": "(34.0, 25.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Button@2706/Caption",
+					"rect": [
+						399.0,
+						78.9624938964844,
+						68.0,
+						36.0
+					],
+					"text": "说明"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2562/@Control@2563/@Button@2706/Subtitle",
+					"rect": [
+						399.0,
+						78.9624938964844,
+						1.0,
+						23.0
+					],
+					"text": ""
+				}
+			],
+			"modals": [],
+			"page": "GameHome",
+			"tick_ms": 451857
+		}
+	],
+	"suite": "probe"
+}

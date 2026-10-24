@@ -42,6 +42,7 @@ var _next_uid := 1
 var _by_uid: Dictionary = {}
 
 var campaign_profile: Dictionary = {}
+var growth_perks: Dictionary = {}
 const CampaignPressure := preload("res://src/world/CampaignPressure.gd")
 
 var role_uid: int = 0
@@ -127,6 +128,11 @@ func _build_role(cfg: Dictionary) -> void:
 	stats.crit += ts.passive_crit_add()
 	# 局外养成加成（天赋/装备/坐骑/称号聚合，由 G.gd 计算后传入；缺省不影响）
 	var gb: Dictionary = gb0
+	growth_perks = {
+		"crit_bleed": bool(gb.get("perk_crit_bleed", 0.0)),
+		"last_stand": bool(gb.get("perk_last_stand", 0.0)),
+		"quick_cast": bool(gb.get("perk_quick_cast", 0.0)),
+	}
 	if not gb.is_empty():
 		stats.atk = int(float(stats.atk) * (1.0 + float(gb.get("atk_pct", 0.0))) + float(gb.get("atk_add", 0.0)))
 		stats.def = int(float(stats.def) * (1.0 + float(gb.get("def_pct", 0.0))) + float(gb.get("def_add", 0.0)))
@@ -446,7 +452,7 @@ func emit(e: Dictionary) -> void:
 
 
 # ---------- 指令（玩家输入，经校验后入队） ----------
-func cast_skill(uid: int, skill_id: String) -> bool:
+func cast_skill(uid: int, skill_id: String, target_uid := -1) -> bool:
 	var u := unit_by_uid(uid)
 	if u == null:
 		return false
@@ -462,7 +468,7 @@ func cast_skill(uid: int, skill_id: String) -> bool:
 		return false
 	if not SkillSystem.can_cast(self, u, sd):
 		return false
-	SkillSystem.enqueue_cast(self, u, sd)
+	SkillSystem.enqueue_cast(self, u, sd, target_uid)
 	return true
 
 
@@ -523,6 +529,12 @@ func step() -> void:
 	for u in units:
 		if not u.alive:
 			continue
+		if u.kind == "role" and bool(growth_perks.get("last_stand", false)) \
+				and not u.once_flags.has("growth_last_stand") \
+				and float(u.hp) / float(maxi(u.get_max_hp(), 1)) <= 0.35:
+			u.once_flags["growth_last_stand"] = true
+			u.add_buff("shield", 5 * TICK_RATE, {"pool": maxi(1, int(u.get_max_hp() * 0.20))})
+			emit({"t": "buff", "uid": u.uid, "buff": "shield"})
 		for s in u.skills:
 			if int(s.cd_left) > 0:
 				s.cd_left = int(s.cd_left) - 1

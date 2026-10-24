@@ -118,6 +118,7 @@ func _ready() -> void:
 	_toast.modulate.a = 0.0
 	add_child(_toast)
 	get_viewport().size_changed.connect(layout)
+	preload("res://src/ui/UiSafeArea.gd").watch(self,layout)
 	layout()
 
 
@@ -568,7 +569,8 @@ func _build_top_bar() -> void:
 		cap.custom_minimum_size = Vector2(CAP_W, 44)
 		for state in ["normal", "hover", "pressed", "focus", "disabled"]:
 			cap.add_theme_stylebox_override(state, StyleBoxEmpty.new())
-		cap.pressed.connect(_on_entry.bind("wallet", "行囊与货币"))
+		cap.pressed.connect(func():
+			if host != null: G.show_currency_popup(host,String(c[0])))
 		row.add_child(cap)
 		var skin := NinePatchRect.new()
 		skin.texture = load(KIT + "currency_capsule.png")
@@ -604,9 +606,6 @@ func _build_top_bar() -> void:
 		btn.focus_mode = Control.FOCUS_NONE
 		btn.position = Vector2(rx, 52)
 		btn.pressed.connect(_on_entry.bind(rid, rtitle))
-		btn.gui_input.connect(func(e: InputEvent):
-			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-				_on_entry(rid, rtitle))
 		_top.add_child(btn)
 		btn.add_child(_disc(Vector2(10, 10), 36, HOLE_DARK))
 		btn.add_child(_tex(PIX + "%s.png" % r[2], Vector2(12, 12)))
@@ -826,7 +825,7 @@ func _on_entry(id: String, title: String) -> void:
 		"exchange": host._open_exchange()
 		"world": host._open_worlds(host._click_ev())
 		"avatar": host._open_avatar_panel()
-		"wallet": host._show_chest_dialog("行囊与货币", G.wallet_info_lines())
+		"wallet": G.show_currency_popup(host,"gold")
 		"bag": host._open_bag()
 		"gathering":
 			if _gathering_unlocked:

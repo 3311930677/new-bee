@@ -305,6 +305,14 @@ func _common(parent:Control) -> void:
 	host._speed_btn=_step("›",func():G.setting_set("battle_speed",BattleScene.step_speed(float(G.setting_get("battle_speed",1.0)),1));sync(),1.0)
 	row.add_child(host._speed_btn)
 	_caption(parent,Flow.text("支持 ×1 / ×2 / ×4 / ×8 四档，战斗中也可随时切换倍速","caption",UI.AGED))
+	var version:=Flow.text("版本 "+String(ProjectSettings.get_setting("application/config/version","")),"caption",UI.AGED)
+	version.name="BuildVersion"
+	parent.add_child(version)
+	var diagnostic:=_btn("复制设备与显示信息",func():
+		DisplayServer.clipboard_set(preload("res://src/ui/DeviceLayoutInfo.gd").text(self))
+		Flow.info(self,"已复制",["设备型号、系统版本和屏幕尺寸已复制，可粘贴到问题反馈中。不包含存档、账号或密码。"]),"row","btn_copy")
+	diagnostic.name="CopyDisplayInfo"
+	parent.add_child(diagnostic)
 	sync()
 func sync() -> void:
 	host._mute_btn.on=Audio.muted()
@@ -316,7 +324,7 @@ func sync() -> void:
 	_speed_value.text="×%d"%cur_sp
 	_speed_prev.disabled=cur_sp<=1
 	host._speed_btn.disabled=cur_sp>=8
-	host._mute_hint.text="已静音，音量设置已保留" if Audio.muted() else "音乐与音效正常播放"
+	host._mute_hint.text="已静音，音量设置已保留" if Audio.muted() else "音乐与音效已开启"
 ## 旅人卡：参考稿月夜底板，头像裁成圆放进金环，右侧昵称与职业等级
 func _traveller_card() -> Control:
 	var info:Dictionary=Kit.scene("profile_card")

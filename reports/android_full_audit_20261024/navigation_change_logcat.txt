@@ -1,0 +1,685 @@
+--------- beginning of main
+10-23 20:37:34.160  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb,raw:cmd overlay enable-exclusive --category --user 0 com.android.internal.systemui.navbar.threebutton'
+--------- beginning of kernel
+10-23 20:37:34.230     0     0 I init    : starting service 'idmap2d'...
+10-23 20:37:34.232     0     0 I libprocessgroup: Created cgroup /sys/fs/cgroup/system/uid_1000/pid_8006
+10-23 20:37:34.244     0     0 I init    : ... started service 'idmap2d' has pid 8006
+10-23 20:37:34.244     0     0 I init    : Control message: Processed ctl.start for 'idmap2d' from pid: 666 (system_server)
+10-23 20:37:34.200  8006  8006 I idmap2d : Starting
+10-23 20:37:34.202  8006  8006 W libbinder.BackendUnifiedServiceManager: Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: idmap
+--------- beginning of system
+10-23 20:37:34.225  6037  6037 I ActivityThread: ApplicationInfo updating for org.yuanzheng.singleplayer, new timestamp: 1629018
+10-23 20:37:34.225  6037  6037 I ActivityThread: assets removed: [/product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk]
+10-23 20:37:34.225  6037  6037 I ActivityThread: assets added: [/product/overlay/NavigationBarMode3Button/NavigationBarMode3ButtonOverlay.apk]
+10-23 20:37:34.225   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.225  1385  1385 I ActivityThread: ApplicationInfo updating for android.ext.services, new timestamp: 1629019
+10-23 20:37:34.225  1385  1385 I ActivityThread: assets removed: [/product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk]
+10-23 20:37:34.225  1385  1385 I ActivityThread: assets added: [/product/overlay/NavigationBarMode3Button/NavigationBarMode3ButtonOverlay.apk]
+10-23 20:37:34.226   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.226   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.226   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.226   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.226   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.226   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.226   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.226   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.226  1448  1448 I ActivityThread: ApplicationInfo updating for com.android.providers.media.module, new timestamp: 1629019
+10-23 20:37:34.226  1448  1448 I ActivityThread: assets removed: [/product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk]
+10-23 20:37:34.226  1448  1448 I ActivityThread: assets added: [/product/overlay/NavigationBarMode3Button/NavigationBarMode3ButtonOverlay.apk]
+10-23 20:37:34.227  1361  1361 I ActivityThread: ApplicationInfo updating for com.android.inputmethod.latin, new timestamp: 1629019
+10-23 20:37:34.227  1361  1361 I ActivityThread: assets removed: [/product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk]
+10-23 20:37:34.227  1361  1361 I ActivityThread: assets added: [/product/overlay/NavigationBarMode3Button/NavigationBarMode3ButtonOverlay.apk]
+10-23 20:37:34.227  1188  1188 I ActivityThread: ApplicationInfo updating for com.android.launcher3, new timestamp: 1629019
+10-23 20:37:34.227  1188  1188 I ActivityThread: assets removed: [/product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk]
+10-23 20:37:34.227  1188  1188 I ActivityThread: assets added: [/product/overlay/NavigationBarMode3Button/NavigationBarMode3ButtonOverlay.apk]
+10-23 20:37:34.229   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.229   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.229   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.229   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.229   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.229   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.229   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.229   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.229   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.229   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.229   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.229   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.229   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.229   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.229   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.229   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.230   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.230   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.230   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.230   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.230   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.230   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.230   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.230   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.230   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.230   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.230   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.230   666   690 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.231  1480  1480 I ActivityThread: ApplicationInfo updating for com.android.emulator.multidisplay, new timestamp: 1629019
+10-23 20:37:34.231  1480  1480 I ActivityThread: assets removed: [/product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk]
+10-23 20:37:34.231  1480  1480 I ActivityThread: assets added: [/product/overlay/NavigationBarMode3Button/NavigationBarMode3ButtonOverlay.apk]
+10-23 20:37:34.231  1037  1037 I ActivityThread: ApplicationInfo updating for com.android.bluetooth, new timestamp: 1629017
+10-23 20:37:34.231  1037  1037 I ActivityThread: assets removed: [/product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk]
+10-23 20:37:34.231  1037  1037 I ActivityThread: assets added: [/product/overlay/NavigationBarMode3Button/NavigationBarMode3ButtonOverlay.apk]
+10-23 20:37:34.233  1051  1051 I ActivityThread: ApplicationInfo updating for com.android.se, new timestamp: 1629017
+10-23 20:37:34.233  1051  1051 I ActivityThread: assets removed: [/product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk]
+10-23 20:37:34.233  1051  1051 I ActivityThread: assets added: [/product/overlay/NavigationBarMode3Button/NavigationBarMode3ButtonOverlay.apk]
+10-23 20:37:34.237   666   690 I ActivityTaskManager: Config changes=80000000 {1.0 310mcc260mnc [en_US] ldltr sw411dp w411dp h914dp 420dpi nrml long compactNeeded port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 0 - 1080, 2400) mMaxBounds=Rect(0, 0 - 1080, 2400) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.11 s.759 fontWeightAdjustment=0}
+10-23 20:37:34.237   935  1007 V WindowManagerShell: Transition requested (#42): android.os.BinderProxy@fc3a192 TransitionRequestInfo { type = CHANGE, triggerTask = null, pipChange = null, remoteTransitionInfo = null, displayChanges = null, requestedLocation = null, userChange = null, windowingLayerChange = null, fullscreenRequestChange = null, flags = 0, debugId = 42 }
+10-23 20:37:34.237   935  1007 W DisconnectHandler: No disconnect change found in the transition, not handling request.
+10-23 20:37:34.237   935  1007 V ShellDesktopMode: DesktopTasksController: skipping handleRequest reason=triggerTask is null
+10-23 20:37:34.238   935   935 I ActivityThread: ApplicationInfo updating for com.android.systemui, new timestamp: 1629018
+10-23 20:37:34.238   935   935 I ActivityThread: assets removed: [/product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk]
+10-23 20:37:34.238   935   935 I ActivityThread: assets added: [/product/overlay/NavigationBarMode3Button/NavigationBarMode3ButtonOverlay.apk]
+10-23 20:37:34.239   666   690 V ActivityTaskManager: Sending to IME proc com.android.inputmethod.latin new config {1.0 310mcc260mnc [en_US] ldltr sw411dp w411dp h839dp 420dpi nrml long compactNeeded port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 135 - 1080, 2337) mMaxBounds=Rect(0, 0 - 1080, 2400) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.11 s.794 fontWeightAdjustment=0}
+10-23 20:37:34.239  1020  1020 I ActivityThread: ApplicationInfo updating for com.android.networkstack, new timestamp: 1629017
+10-23 20:37:34.239  1020  1020 I ActivityThread: assets removed: [/product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk]
+10-23 20:37:34.239  1020  1020 I ActivityThread: assets added: [/product/overlay/NavigationBarMode3Button/NavigationBarMode3ButtonOverlay.apk]
+10-23 20:37:34.240   666   690 I WindowManager: Override config changes=80000000 {1.0 310mcc260mnc [en_US] ldltr sw411dp w411dp h914dp 420dpi nrml long compactNeeded port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 0 - 1080, 2400) mMaxBounds=Rect(0, 0 - 1080, 2400) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.11 s.759 fontWeightAdjustment=0} for displayId=0
+10-23 20:37:34.240   666   690 W TransitionChain: Combining dispOverCfg into #42(CHANGE|R|0x0) from updateGlobalConfig
+10-23 20:37:34.257   521   584 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+10-23 20:37:34.264   666   690 V AppCompatResourceOverlayPolicy: doResourceOverlayChangesAffectActivity: result: true componentName: ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} overlayPathsAdded: {/product/overlay/NavigationBarMode3Button/NavigationBarMode3ButtonOverlay.apk} overlayPathsRemoved: {/product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk} displayId: 0 deviceId: 0
+10-23 20:37:34.267   935   935 I NoBackGesture: Config changed: newConfig={1.0 310mcc260mnc [en_US] ldltr sw411dp w411dp h914dp 420dpi nrml long compactNeeded port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 0 - 1080, 2400) mMaxBounds=Rect(0, 0 - 1080, 2400) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.11 s.803 fontWeightAdjustment=0} lastReportedConfig={1.0 310mcc260mnc [en_US] ldltr sw411dp w411dp h914dp 420dpi nrml long compactNeeded port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 0 - 1080, 2400) mMaxBounds=Rect(0, 0 - 1080, 2400) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.10 s.755 fontWeightAdjustment=0}
+10-23 20:37:34.267   935   935 I NoBackGesture: NavbarController: newConfig={1.0 310mcc260mnc [en_US] ldltr sw411dp w411dp h914dp 420dpi nrml long compactNeeded port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 0 - 1080, 2400) mMaxBounds=Rect(0, 0 - 1080, 2400) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.11 s.803 fontWeightAdjustment=0} mTaskbarDelegate initialized=true willApplyConfigToNavbars=false navBarCount=0
+10-23 20:37:34.267  6037  6037 V Godot   : OnPause: GodotFragment{eea7236} (96e81e89-869d-4b7a-a8a8-1e3e02202138 id=0x7f07002c)
+10-23 20:37:34.268  1188  1188 D PerDisplayTaskbarResource: onConfigurationChanged: {1.0 310mcc260mnc [en_US] ldltr sw411dp w411dp h914dp 420dpi nrml long compactNeeded port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 0 - 1080, 2400) mMaxBounds=Rect(0, 0 - 1080, 2400) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.11 s.759 fontWeightAdjustment=0} displayId=0
+10-23 20:37:34.268  1188  1188 D PerDisplayTaskbarResource: onConfigurationChanged: | configDiff={CONFIG_ASSETS_PATHS} displayId=0
+10-23 20:37:34.268  1188  1188 D PerDisplayTaskbarResource: onConfigurationChanged: call recreateTaskbars displayId=0
+10-23 20:37:34.269  1188  1188 D PerDisplayTaskbarResource: recreateTaskbarForDisplay displayId=0
+10-23 20:37:34.269  1188  1188 D PerDisplayTaskbarResource: recreateTaskbarForDisplay: getting device profile displayId=0
+10-23 20:37:34.269  1188  1188 D PerDisplayTaskbarResource: recreateTaskbarForDisplay: destroying taskbar displayId=0
+10-23 20:37:34.269  1188  1188 D PerDisplayTaskbarResource: destroyTaskbarForDisplay displayId=0
+10-23 20:37:34.269   935   935 D NavigationModeController: onOverlayChanged
+10-23 20:37:34.269   935   935 D NavigationModeController: getCurrentUserContext: contextUser=0 currentUser=0
+10-23 20:37:34.269   935   935 D NavigationModeController: getCurrentInteractionMode: mode=0 contextUser=0
+10-23 20:37:34.269   935   935 D NavigationModeController: updateCurrentInteractionMode: mode=0
+10-23 20:37:34.269   935   935 D NavigationModeController:   contextUser=0
+10-23 20:37:34.269   935   935 D NavigationModeController:   assetPaths=
+10-23 20:37:34.269   935   935 D NavigationModeController:     /system/framework/framework-res.apk
+10-23 20:37:34.269   935   935 D NavigationModeController:     /vendor/overlay/framework-res__sdk_phone64_x86_64__auto_generated_rro_vendor.apk
+10-23 20:37:34.269   935   935 D NavigationModeController:     /product/overlay/RanchuCommonOverlay.apk
+10-23 20:37:34.269   935   935 D NavigationModeController:     /system_ext/priv-app/SystemUI/SystemUI.apk
+10-23 20:37:34.269   935   935 D NavigationModeController:     /product/overlay/NavigationBarMode3Button/NavigationBarMode3ButtonOverlay.apk
+10-23 20:37:34.269   935   935 D NavigationModeController:     /data/resource-cache/com.android.systemui-neutral-zXI9.frro
+10-23 20:37:34.269   935   935 D NavigationModeController:     /data/resource-cache/com.android.systemui-accent-lF7U.frro
+10-23 20:37:34.269   935   935 D NavigationModeController:     /data/resource-cache/com.android.systemui-dynamic-CoE4.frro
+10-23 20:37:34.269   935   935 D NavigationModeController:     /product/overlay/DisplayCutoutEmulationHole/DisplayCutoutEmulationHoleOverlay.apk
+10-23 20:37:34.269   935   935 D NavigationModeController:     /vendor/overlay/SystemUI__sdk_phone64_x86_64__auto_generated_rro_vendor.apk
+10-23 20:37:34.269   666   690 W ActivityTaskManager: Current config: {1.0 310mcc260mnc [en_US] ldltr sw411dp w411dp h839dp 420dpi nrml long compactNeeded port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2400) mAppBounds=Rect(0, 135 - 1080, 2337) mMaxBounds=Rect(0, 0 - 1080, 2400) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.11 s.759 fontWeightAdjustment=0} unchanged for IME proc com.android.inputmethod.latin
+10-23 20:37:34.269   666   783 W InputDispatcher: channel '[Gesture Monitor] edge-swipe' ~ Consumer closed input channel or an error occurred.  events=0x9
+10-23 20:37:34.269   666   783 E InputDispatcher: channel '[Gesture Monitor] edge-swipe' ~ Channel is unrecoverably broken and will be disposed!
+10-23 20:37:34.270   935   935 D InputMonitorCompat: Input event receiver for monitor (edge-swipe-disp0) disposed
+10-23 20:37:34.270   935   935 W InputChannel-JNI: Channel already disposed.
+10-23 20:37:34.271   935   935 D InputMonitorCompat: Input monitor (edge-swipe-disp0) disposed
+10-23 20:37:34.271  1188  1188 D CueBarController: CuebarController destroy
+10-23 20:37:34.272  1188  1188 D TaskbarOverlayController: onDestroy: 	at com.android.launcher3.taskbar.PerDisplayTaskbarResource.removeExistingTaskbar(PerDisplayTaskbarResource.kt:193)
+10-23 20:37:34.272  1188  1188 D TaskbarOverlayController: 	at com.android.launcher3.taskbar.PerDisplayTaskbarResource.access$removeExistingTaskbar(PerDisplayTaskbarResource.kt:53)
+10-23 20:37:34.272  1188  1188 D TaskbarOverlayController: 	at com.android.launcher3.taskbar.PerDisplayTaskbarResource.destroyTaskbarForDisplay(PerDisplayTaskbarResource.kt:213)
+10-23 20:37:34.272  1188  1188 D TaskbarOverlayController: onDestroy: Was window already present? false
+10-23 20:37:34.272  1188  1188 D PerDisplayTaskbarResource: recreateTaskbarForDisplay: isTaskbarEnabled=true [dp != null]=true mUserUnlocked=true dp.isTaskbarPresent=false isTaskbarEnabled=true displayExists=true displayId=0
+10-23 20:37:34.273  6037  6062 I godot   : ANDROID_DEEP_LIFECYCLE { "what": 2017, "tick_ms": 770087, "suspended": true, "bgm_paused": true, "bgm": "bgm_map", "voices": 0 }
+10-23 20:37:34.273  6037  6062 D ng.singleplayer: PlayerBase::pause() from IPlayer
+10-23 20:37:34.273  6037  6037 E Surface : [79e4871 SurfaceView[org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher]#3(BLAST Consumer)3](id:179500000003) clearBuffersForDisconnectLocked: 1 buffers were freed while being dequeued!
+10-23 20:37:34.274   935  1007 W Looper  : Slow dispatch took 37ms wmshell.main app=com.android.systemui main=false group=FOREGROUND h=android.os.Handler c=com.android.wm.shell.transition.Transitions$ShellTransitionImpl$$ExternalSyntheticLambda1@b469c19 m=0
+10-23 20:37:34.274   935  1007 V ShellDesktopMode: DesktopDisplayEventHandler: displayAreaChanged in displayId=0
+10-23 20:37:34.274  1188  1188 D PerDisplayTaskbarResource: recreateTaskbarForDisplay: creating taskbar displayId=0
+10-23 20:37:34.274  6037  6037 V Godot   : OnStop: GodotFragment{eea7236} (96e81e89-869d-4b7a-a8a8-1e3e02202138 id=0x7f07002c)
+10-23 20:37:34.275   666   666 V AccessibilityUserState: updateShortcutTargets: type:accessibility_button_targets, current:{}, new:{}
+10-23 20:37:34.275   935  1007 V ShellDesktopMode: DesktopDisplayEventHandler: reconnectOrCreateDefaultDesk displayId=0, keyguardLocked=false
+10-23 20:37:34.275  6037  6037 V GodotActivity: Destroying GodotActivity com.godot.game.GodotApp@e84b9cf...
+10-23 20:37:34.275   666   666 V AccessibilityUserState: updateShortcutTargets: type:accessibility_gesture_targets, current:{}, new:{}
+10-23 20:37:34.275   935  1007 V ShellDesktopMode: DesktopDisplayEventHandler: handlePotentialReconnect: default display; aborting.
+10-23 20:37:34.276   935  1007 V ShellDesktopMode: DesktopDisplayEventHandler: createDefaultDesksIfNeeded displays=[0] userId=0
+10-23 20:37:34.278   666   693 I DisplayDeviceRepository: Display device same: DisplayDeviceInfo{"Built-in Screen": uniqueId="local:4619827259835644672", 1080 x 2424, modeId 1, renderFrameRate 60.000004, hasArrSupport false, frameRateCategoryRate FrameRateCategoryRate {normal=60.0, high=90.0}, supportedRefreshRates [60.000004, 30.000002, 20.0], defaultModeId 1, userPreferredModeId -1, supportedModes [{id=1, parentModeId=-1, sfModeId=0, flags=, width=1080, height=2424, fps=60.000004, vsync=60.000004, alternativeRefreshRates=[], supportedHdrTypes=[]}], colorMode 0, supportedColorModes [0], hdrCapabilities HdrCapabilities{mSupportedHdrTypes=[], mMaxLuminance=500.0, mMaxAverageLuminance=500.0, mMinLuminance=0.0}, isForceSdr false, allmSupported false, gameContentTypeSupported false, density 420, 420.0 x 420.0 dpi, appVsyncOff 1000000, presDeadline 16666666, cutout DisplayCutout{insets=Rect(0, 136 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(0, 0 - 136, 136), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=1080 displayHeight=2424 physicalDisplayWidth=1080 physicalDisplayHeight=2424 density={2.625} cutoutSpec={M 128,83 A 44,44 0 0 1 84,127 44,44 0 0 1 40,83 44,44 0 0 1 84,39 44,44 0 0 1 128,83 Z @left} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={1.0}}} sideOverrides={}}, touch INTERNAL, rotation 0, type INTERNAL, address StablePhysical{id=4619827259835644672, port=0}, deviceProductInfo DeviceProductInfo{name=EMU_display_0, manufacturerPnpId=GGL, productId=1, modelYear=null, manufactureDate=ManufactureDate{week=27, year=2006}, connectionToSinkType=1, edidStructureMetadata=EdidStructureMetadata{version=0, revision=0}, videoInputType=0}, state ON, committedState ON, frameRateOverride {uid=10156 frameRateHz=60.000004} , brightnessMinimum 0.035433073, brightnessMaximum 1.0, brightnessDefault 0.39763778, brightnessDim 0.05, hdrSdrRatio NaN, FLAG_ALLOWED_TO_BE_DEFAULT_DISPLAY, FLAG_ROTATES_WITH_CONTENT, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS, FLAG_TRUSTED, installOrientation 0, displayShape DisplayShape{type=2, displayWidth=1080, displayHeight=2424, physicalPixelDisplaySizeRatio=1.0, rotation=0, offsetX=0, offsetY=0, scale=1.0}}
+10-23 20:37:34.278   666   754 E AppOps  : attributionTag  not declared in manifest of org.yuanzheng.singleplayer
+10-23 20:37:34.278   666   754 E AppOps  : attributionTag  not declared in manifest of org.yuanzheng.singleplayer
+10-23 20:37:34.279   666   907 V AppCompatResourceOverlayPolicy: doResourceOverlayChangesAffectActivity: result: true componentName: ComponentInfo{com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher} overlayPathsAdded: {/product/overlay/NavigationBarMode3Button/NavigationBarMode3ButtonOverlay.apk} overlayPathsRemoved: {/product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk} displayId: 0 deviceId: 0
+10-23 20:37:34.280  6037  6062 I godot   : ANDROID_DEEP_LIFECYCLE { "what": 2015, "tick_ms": 770094, "suspended": true, "bgm_paused": true, "bgm": "bgm_map", "voices": 0 }
+10-23 20:37:34.281  6037  6062 D GLThread: Exiting render thread
+10-23 20:37:34.281  6037  6062 D GodotRenderer: Destroying Godot Engine
+10-23 20:37:34.283  1037  1037 I bluetooth: system/btif/avrcp/avrcp_service.cc:533 SendMediaUpdate: track_changed=false :  play_state=true :  queue=false
+10-23 20:37:34.283  1037  1037 E MediaControlProfile: onCurrentPlayerStateUpdated: base actions not supported, player actions= 0, expected at least= 7f
+10-23 20:37:34.283  1037  1037 W MediaControlGattService: Feature PLAYBACK_SPEED support: true
+10-23 20:37:34.283  1037  1037 W MediaControlGattService: Feature PLAYBACK_SPEED support: true
+10-23 20:37:34.283  1037  1037 W MediaControlGattService: Feature PLAYBACK_SPEED support: true
+10-23 20:37:34.283  1037  1037 W MediaControlGattService: Feature PLAYBACK_SPEED_NOTIFY support: true
+10-23 20:37:34.285   666   868 I AppWidgetServiceImpl: Received broadcast: android.intent.action.PACKAGE_CHANGED on user 0
+10-23 20:37:34.286   935  1007 V ShellDragAndDrop: Display changed: 0
+10-23 20:37:34.289   935  1007 D Bubbles : BubblePositioner.update() insets=Insets{left=0, top=135, right=0, bottom=63} largeScreen=false smallTablet=false isBubbleBar=false bounds=Rect(0, 0 - 1080, 2400)
+10-23 20:37:34.290  1037  1037 W MediaControlGattService: Feature TRACK_POSITION support: true
+10-23 20:37:34.291   666   829 W BestClock: java.time.DateTimeException: No network time available
+10-23 20:37:34.291   666   829 W BestClock: java.time.DateTimeException: No network time available
+10-23 20:37:34.292   666   693 I DisplayDeviceRepository: Display device changed render timings: "Built-in Screen", renderFrameRate=60.000004, presentationDeadlineNanos=16666666, appVsyncOffsetNanos=1000000, frameRateOverrides=[]
+10-23 20:37:34.293  1037  1037 W MediaControlGattService: Feature TRACK_POSITION_NOTIFY support: true
+10-23 20:37:34.293  1037  1037 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-23 20:37:34.293  1037  1037 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-23 20:37:34.296   666   690 I ServiceWatcher: [TrustManagerService] chose new implementation null
+10-23 20:37:34.297   935  1007 D ShellSplitScreen: onTaskInfoChanged: taskId=6 taskAct=null stageId=SIDE displayId=0
+10-23 20:37:34.297   935  1007 D ShellSplitScreen: onTaskInfoChanged: taskId=5 taskAct=null stageId=MAIN displayId=0
+10-23 20:37:34.297   935  1007 V ShellDesktopMode: DesktopDisplayEventHandler: shouldCreateOrWarmUpDesk skipping displayId=0 reason: desktop ineligible
+10-23 20:37:34.297   935   935 D NavigationModeController: getCurrentUserContext: contextUser=0 currentUser=0
+10-23 20:37:34.303  1055  1206 I SatelliteAppTracker: onPackageModified : android
+10-23 20:37:34.305   935   935 D ShadeStateTraceLogger: New configuration change from Shade window. smallestScreenWidthDp: 411, densityDpi: 420
+10-23 20:37:34.307  1055  1055 I ActivityThread: ApplicationInfo updating for com.android.providers.telephony, new timestamp: 1629019
+10-23 20:37:34.307  1055  1055 I ActivityThread: assets removed: [/product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk]
+10-23 20:37:34.307  1055  1055 I ActivityThread: assets added: [/product/overlay/NavigationBarMode3Button/NavigationBarMode3ButtonOverlay.apk]
+10-23 20:37:34.308  1055  1206 D SatelliteAppTracker: packageName: android, value: null
+10-23 20:37:34.311  1055  1181 V MessagingReadRestrictionAllowlistMonitor: onBroadcastReceived: No AppOp changes for package: android
+10-23 20:37:34.311   666   913 D ActivityManager: sync unfroze 1154 com.android.permissioncontroller for 6
+10-23 20:37:34.315   666   698 W VoiceInteractionManager: no available voice recognition services found for user 0
+10-23 20:37:34.316   666   698 I AppBindingService: [Supervision app] feature disabled
+10-23 20:37:34.320   666  1456 I PackageManager: getInstalledPackages: callingUid=1000 flags=134217856 updatedFlags=135004288 userId=0
+10-23 20:37:34.329  1037  1037 W MediaControlGattService: Feature MEDIA_CONTROL_POINT_OPCODES_SUPPORTED support: true
+10-23 20:37:34.329  1037  1037 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-23 20:37:34.329  1037  1037 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-23 20:37:34.332  1188  1188 W SystemServiceRegistry: No service published for: personal_context
+10-23 20:37:34.332  1188  1188 W AmbientCueRepository: spoonBarOptedIn not found, default to enabled
+10-23 20:37:34.332  1188  1188 D LauncherAmbientCueVM: onUnfilteredActionsChange: []
+10-23 20:37:34.334   460   501 I netd    : tetherGetStats() -> {[]} <0.47ms>
+10-23 20:37:34.334  1055  1055 W LoadedApk: New application info for package com.android.phone is out of date with TS 1629017 < the current TS 1629079
+10-23 20:37:34.335  1055  1055 D CarrierSvcBindHelper: onPackageModified: android
+10-23 20:37:34.337  1055  1055 D CarrierSvcBindHelper: No carrier app for: 0
+10-23 20:37:34.339  1037  1037 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-23 20:37:34.339  1037  1037 W MediaControlGattService: Feature SEEKING_SPEED support: true
+10-23 20:37:34.339  1037  1037 W MediaControlGattService: Feature SEEKING_SPEED support: true
+10-23 20:37:34.339  1037  1037 W MediaControlGattService: Feature SEEKING_SPEED support: true
+10-23 20:37:34.339  1037  1037 W MediaControlProfile: MCS service state fields left unhandled: 
+10-23 20:37:34.339  1037  1037 W MediaControlProfile:    > PLAYER_NAME
+10-23 20:37:34.339  1037  1037 W MediaControlProfile:    > PLAYING_ORDER_SUPPORTED
+10-23 20:37:34.339   666   797 V AccessibilityUserState: updateShortcutTargets: type:accessibility_shortcut_target_service, current:{}, new:{}
+10-23 20:37:34.339   666   797 V AccessibilityUserState: updateShortcutTargets: type:accessibility_qs_targets, current:{}, new:{}
+10-23 20:37:34.339   666   797 V AccessibilityUserState: updateShortcutTargets: type:accessibility_button_targets, current:{}, new:{}
+10-23 20:37:34.339   666   797 V AccessibilityUserState: updateShortcutTargets: type:accessibility_gesture_targets, current:{}, new:{}
+10-23 20:37:34.339   666   797 V AccessibilityUserState: updateShortcutTargets: type:accessibility_key_gesture_targets, current:{}, new:{}
+10-23 20:37:34.339   666   797 V AccessibilityUserState: updateShortcutTargets: type:accessibility_top_row_key_targets, current:{}, new:{}
+10-23 20:37:34.339   666   797 V AccessibilityUserState: updateShortcutTargets: type:accessibility_quick_access_targets, current:{}, new:{}
+10-23 20:37:34.339   666   797 V AccessibilityManagerService: onUserStateChangedLocked for userId: 0, forceUpdate: false
+10-23 20:37:34.341  1188  1188 D AmbientCueRepository: connectToAce: connecting TO ACE and registering
+10-23 20:37:34.341   666   797 V AccessibilityUserState: updateShortcutTargets: type:accessibility_shortcut_target_service, current:{}, new:{}
+10-23 20:37:34.341   666   797 V AccessibilityUserState: updateShortcutTargets: type:accessibility_button_targets, current:{}, new:{}
+10-23 20:37:34.341   666   797 V AccessibilityUserState: updateShortcutTargets: type:accessibility_gesture_targets, current:{}, new:{}
+10-23 20:37:34.341   666   797 V AccessibilityUserState: updateShortcutTargets: type:accessibility_qs_targets, current:{}, new:{}
+10-23 20:37:34.341   666   797 V AccessibilityUserState: updateShortcutTargets: type:accessibility_key_gesture_targets, current:{}, new:{}
+10-23 20:37:34.341   666   797 V AccessibilityUserState: updateShortcutTargets: type:accessibility_top_row_key_targets, current:{}, new:{}
+10-23 20:37:34.341   666   797 V AccessibilityUserState: updateShortcutTargets: type:accessibility_quick_access_targets, current:{}, new:{}
+10-23 20:37:34.341   666   797 W MagnificationConnectionManager: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+10-23 20:37:34.342   666   666 V AccessibilityManagerService: onUserStateChangedLocked for userId: 0, forceUpdate: false
+10-23 20:37:34.343  1188  1188 D AllAppsStore: setApps: apps.length=13
+10-23 20:37:34.343  1188  1188 D AllAppsStore: notifyUpdate: notifying listeners
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: No service published for: ethernet
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: android.os.ServiceManager$ServiceNotFoundException: No service published for: ethernet
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: 	at android.os.ServiceManager.getServiceOrThrow(ServiceManager.java:176)
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: 	at android.app.SystemServiceRegistry$169.createService(SystemServiceRegistry.java:2654)
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: 	at android.app.SystemServiceRegistry$CachedServiceFetcher.getService(SystemServiceRegistry.java:2784)
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: 	at android.app.SystemServiceRegistry.getSystemService(SystemServiceRegistry.java:2297)
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: 	at android.app.ContextImpl.getSystemService(ContextImpl.java:2450)
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: 	at android.content.ContextWrapper.getSystemService(ContextWrapper.java:991)
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: 	at com.android.networkstack.tethering.Tethering.isEthernetSupported(Tethering.java:1849)
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: 	at com.android.networkstack.tethering.Tethering.makeSupportedDownstreams(Tethering.java:2830)
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: 	at com.android.networkstack.tethering.Tethering.updateSupportedDownstreams(Tethering.java:2804)
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: 	at com.android.networkstack.tethering.Tethering.updateConfiguration(Tethering.java:558)
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: 	at com.android.networkstack.tethering.Tethering.-$$Nest$mupdateConfiguration(Tethering.java:0)
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: 	at com.android.networkstack.tethering.Tethering$StateReceiver.onReceive(Tethering.java:1372)
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: 	at android.app.LoadedApk$ReceiverDispatcher$Args.lambda$getRunnable$0(LoadedApk.java:2050)
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: 	at android.app.LoadedApk$ReceiverDispatcher$Args.$r8$lambda$mcNAAl1SQ4MyJPyDg8TJ2x2h0Rk(LoadedApk.java:0)
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: 	at android.app.LoadedApk$ReceiverDispatcher$Args$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: 	at android.os.Handler.handleCallback(Handler.java:1095)
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: 	at android.os.Handler.dispatchMessage(Handler.java:125)
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: 	at android.os.Looper.loopOnce(Looper.java:296)
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: 	at android.os.Looper.loop(Looper.java:397)
+10-23 20:37:34.343  1020  1098 E SystemServiceRegistry: 	at android.os.HandlerThread.run(HandlerThread.java:139)
+10-23 20:37:34.344  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Settings sectionName: S
+10-23 20:37:34.344  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Contacts sectionName: C
+10-23 20:37:34.344  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Gallery sectionName: G
+10-23 20:37:34.345  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Search sectionName: S
+10-23 20:37:34.345  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Clock sectionName: C
+10-23 20:37:34.346  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Messaging sectionName: M
+10-23 20:37:34.346  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Calendar sectionName: C
+10-23 20:37:34.346  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Conversations sectionName: C
+10-23 20:37:34.347   666   886 D ShortcutService: received package broadcast intent: Intent { act=android.intent.action.PACKAGE_CHANGED dat=package: flg=0x5000010 (has extras) }
+10-23 20:37:34.347   666   666 V AccessibilityUserState: updateShortcutTargets: type:accessibility_shortcut_target_service, current:{}, new:{}
+10-23 20:37:34.347   666   666 V AccessibilityUserState: updateShortcutTargets: type:accessibility_button_targets, current:{}, new:{}
+10-23 20:37:34.347   666   886 D ShortcutService: changing package: android userId=0
+10-23 20:37:34.347   666   666 V AccessibilityUserState: updateShortcutTargets: type:accessibility_gesture_targets, current:{}, new:{}
+10-23 20:37:34.347   666   666 V AccessibilityUserState: updateShortcutTargets: type:accessibility_qs_targets, current:{}, new:{}
+10-23 20:37:34.347   666   666 V AccessibilityUserState: updateShortcutTargets: type:accessibility_key_gesture_targets, current:{}, new:{}
+10-23 20:37:34.347   666   666 V AccessibilityUserState: updateShortcutTargets: type:accessibility_top_row_key_targets, current:{}, new:{}
+10-23 20:37:34.347   666   666 V AccessibilityUserState: updateShortcutTargets: type:accessibility_quick_access_targets, current:{}, new:{}
+10-23 20:37:34.347   666   666 W MagnificationConnectionManager: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+10-23 20:37:34.347  1188  1188 D TaskbarManager: createTaskbarUIControllerForRecentsViewContainer displayId=0 mPrimaryDisplayId=0
+10-23 20:37:34.347   666   666 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.347  1188  1188 D PerDisplayTaskbarResource: recreateTaskbarForDisplay: adding rootView displayId=0
+10-23 20:37:34.347  1188  1188 D PerDisplayTaskbarResource: recreateTaskbarForDisplay: adding root layout displayId=0
+10-23 20:37:34.347   666   666 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-23 20:37:34.359  1154  1154 I ActivityThread: ApplicationInfo updating for com.android.permissioncontroller, new timestamp: 1629019
+10-23 20:37:34.359  1154  1154 I ActivityThread: assets removed: [/product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk]
+10-23 20:37:34.359  1154  1154 I ActivityThread: assets added: [/product/overlay/NavigationBarMode3Button/NavigationBarMode3ButtonOverlay.apk]
+10-23 20:37:34.362  1188  1188 D BubbleBarView: BubbleBar RTL properties changed, new layoutDirection=0 previous layoutDirection=-1
+10-23 20:37:34.366  1055  1055 E SmsApplication: com.android.messaging lost android:receive_wap_push:  (fixing)
+10-23 20:37:34.367  1055  1055 E SmsApplication: com.android.messaging lost android:read_cell_broadcasts:  (fixing)
+10-23 20:37:34.380  1188  1188 D Current state display 0: newValue: DESTROYED
+10-23 20:37:34.382  1188  1188 D RecentsView: destroy
+10-23 20:37:34.382  1188  1188 D TaskbarManager: onActivityDestroyed: displayId=0 mPrimaryDisplayId=0
+10-23 20:37:34.383  1188  1188 D TaskbarManager: onActivityDestroyed: unregistering callbacks displayId=0 mPrimaryDisplayId=0
+10-23 20:37:34.383  1188  1188 D TaskbarManager: onActivityDestroyed: setting taskbarUIController displayId=0 mPrimaryDisplayId=0
+10-23 20:37:34.384   666   754 W ProcessStats: Tracking association SourceState{4f86c0d system/1000 ImpFg #655} whose proc state 5 is better than process ProcessState{f108ce com.android.permissioncontroller/10149 pkg=com.android.permissioncontroller} proc state 14 (5 skipped)
+10-23 20:37:34.387  1188  1188 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): null
+10-23 20:37:34.387  1188  1188 D RecentsView: reset - mEnableDrawingLiveTile: false, mRecentsAnimationController: null
+10-23 20:37:34.388   666  1649 D CoreBackPreview: Window{ef1f4b4 u0 com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher}: Setting back callback null
+10-23 20:37:34.391  1188  1188 D ViewRootImpl: Skipping stats log for color mode
+10-23 20:37:34.395  1154  6008 I PermissionControllerServiceImpl: Updating user sensitive for uid 1000
+10-23 20:37:34.396  1055  1291 D ImsResolver: maybeAddedImsService, packageName: android
+10-23 20:37:34.396  1055  1291 V ImsResolver: searchForImsServices: package=android, users=[UserHandle{0}]
+10-23 20:37:34.397  1055  1291 V ImsResolver: searchForImsServices: package=android, users=[UserHandle{0}]
+10-23 20:37:34.398  1055  1055 D SatelliteController: packageStateChanged: package:android defaultSmsPackageName: com.android.messaging satelliteGatewayServicePackageName: 
+10-23 20:37:34.403  6037  6062 D ng.singleplayer: PlayerBase::stop() from IPlayer
+10-23 20:37:34.403  6037  6062 D AudioTrack: stop(21): called with 33806485 frames delivered
+10-23 20:37:34.405  1055  1299 E SmsApplication: com.android.messaging lost android:receive_wap_push:  (fixing)
+10-23 20:37:34.405   666  2114 I AppWidgetServiceImpl: getInstalledProvidersForProfiles() 0
+10-23 20:37:34.407  6037  6062 E GFXSTREAM: [GLClientState.cpp(284)] 7 not found in VAO state!
+10-23 20:37:34.407  1055  1299 E SmsApplication: com.android.messaging lost android:read_cell_broadcasts:  (fixing)
+10-23 20:37:34.413   666  3743 I AppWidgetServiceImpl: notifyProviderInheritance() 0
+10-23 20:37:34.413   666  1554 W PackageInfo: Large parcel: size=180808 pkg=android uid=1000 perm=176752(1104) reqPerm=1920(38) attr=484(9) prevAllowSquashing=false
+10-23 20:37:34.417   935   935 D NavigationModeController: ACTION_OVERLAY_CHANGED
+10-23 20:37:34.417   935   935 D NavigationModeController: getCurrentUserContext: contextUser=0 currentUser=0
+10-23 20:37:34.417   935   935 D NavigationModeController: getCurrentInteractionMode: mode=0 contextUser=0
+10-23 20:37:34.417   935   935 D NavigationModeController: updateCurrentInteractionMode: mode=0
+10-23 20:37:34.417   935   935 D NavigationModeController:   contextUser=0
+10-23 20:37:34.417   935   935 D NavigationModeController:   assetPaths=
+10-23 20:37:34.417   935   935 D NavigationModeController:     /system/framework/framework-res.apk
+10-23 20:37:34.417   935   935 D NavigationModeController:     /vendor/overlay/framework-res__sdk_phone64_x86_64__auto_generated_rro_vendor.apk
+10-23 20:37:34.417   935   935 D NavigationModeController:     /product/overlay/RanchuCommonOverlay.apk
+10-23 20:37:34.417   935   935 D NavigationModeController:     /system_ext/priv-app/SystemUI/SystemUI.apk
+10-23 20:37:34.417   935   935 D NavigationModeController:     /product/overlay/NavigationBarMode3Button/NavigationBarMode3ButtonOverlay.apk
+10-23 20:37:34.417   935   935 D NavigationModeController:     /data/resource-cache/com.android.systemui-neutral-zXI9.frro
+10-23 20:37:34.417   935   935 D NavigationModeController:     /data/resource-cache/com.android.systemui-accent-lF7U.frro
+10-23 20:37:34.417   935   935 D NavigationModeController:     /data/resource-cache/com.android.systemui-dynamic-CoE4.frro
+10-23 20:37:34.417   935   935 D NavigationModeController:     /product/overlay/DisplayCutoutEmulationHole/DisplayCutoutEmulationHoleOverlay.apk
+10-23 20:37:34.417   935   935 D NavigationModeController:     /vendor/overlay/SystemUI__sdk_phone64_x86_64__auto_generated_rro_vendor.apk
+10-23 20:37:34.418   935   935 D NavigationModeController: getCurrentUserContext: contextUser=0 currentUser=0
+10-23 20:37:34.421  1055  1299 D SatelliteAccessController: Current default SMS app:ComponentInfo{com.android.messaging/com.android.messaging.receiver.SmsDeliverReceiver}
+10-23 20:37:34.421  1055  1299 D SatelliteController: getSelectedSatelliteSubId: subId=-1
+10-23 20:37:34.422  1055  1299 D SatelliteAccessController: supportedMsgApps:com.google.android.apps.messaging
+10-23 20:37:34.451   935   935 D ControlsListingControllerImpl: ServiceConfig reloaded, count: 0
+10-23 20:37:34.452  6037  6062 V Godot   : OnGodotTerminating
+10-23 20:37:34.456  6037  6062 E Surface : [79e4871 SurfaceView[org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher]#3(BLAST Consumer)3-DISCONNECTED](id:0) Surface::cancelBuffer given a leaked buffer! Deleting extra held reference.
+10-23 20:37:34.456  6037  6062 E Surface : [79e4871 SurfaceView[org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher]#3(BLAST Consumer)3-DISCONNECTED](id:0) clearBuffersForDisconnectLocked: 1 buffers were freed while being dequeued!
+10-23 20:37:34.459  1188  1188 D AutofillManager: Fill dialog is enabled:false, hints=[]
+10-23 20:37:34.459  1188  1188 E RecyclerView: Cannot scroll to position a LayoutManager set. Call setLayoutManager with a non-null argument.
+10-23 20:37:34.459   935  1233 V ActivityThread: getPackageInfo() caused update to cached ApplicationInfo for package android
+10-23 20:37:34.460  1188  1188 D ActivityAllAppsContainerView: rebindAdapters: force: true
+10-23 20:37:34.460  1188  1188 D ActivityAllAppsContainerView: replaceAppsRVContainer: showTabs: false
+10-23 20:37:34.460  1188  1188 D AlphabeticalAppsList: Clearing FastScrollerSections.
+10-23 20:37:34.460  1188  1188 D AlphabeticalAppsList: Adding apps with sections. HasPrivateApps: true
+10-23 20:37:34.460  1188  1188 E RecyclerView: Cannot scroll to position a LayoutManager set. Call setLayoutManager with a non-null argument.
+10-23 20:37:34.462  6037  6037 V Godot   : OnDestroy: GodotFragment{eea7236} (96e81e89-869d-4b7a-a8a8-1e3e02202138 id=0x7f07002c)
+10-23 20:37:34.462  6037  6037 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): null
+10-23 20:37:34.463   666  3769 D CoreBackPreview: Window{a37623d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}: Setting back callback null
+10-23 20:37:34.468  6037  6037 D ViewRootImpl: Skipping stats log for color mode
+10-23 20:37:34.469  1188  1188 D OverviewActionsView: updateActionButtonsVisibility() called: showSingleTaskActions = [true], showGroupActions = [false]
+10-23 20:37:34.473   666   693 V WindowManager: Unknown focus tokens, dropping reportFocusChanged
+10-23 20:37:34.475  1188  1188 D PerDisplayTaskbarResource: setActivityInteractor: mActivityInteractor=null displayId=0
+10-23 20:37:34.475  1188  1188 D PerDisplayTaskbarResource: updateTaskbarsVisibility displayId=0
+10-23 20:37:34.476  1188  1188 D PerDisplayTaskbarResource: setActivityInteractor: registering activity lifecycle callbacks. displayId=0
+10-23 20:37:34.476  1188  1188 D PerDisplayTaskbarResource: setRecentsViewContainer displayId=0
+10-23 20:37:34.476  1188  1188 D TaskbarManager: createTaskbarUIControllerForRecentsViewContainer displayId=0 mPrimaryDisplayId=0
+10-23 20:37:34.480  1188  1188 D AllAppsTransitionController: shouldProtectHeader: false skipScrim: false state: Normal stateManager.getState(): Normal
+10-23 20:37:34.480  6037  6037 D GodotActivity: Project command line parameters: [--xr_mode_regular, --xr-mode, off, --fullscreen, --edge_to_edge, --background_color, #000000]
+10-23 20:37:34.481  6037  6037 D GodotActivity: Launch intent Intent { flg=0x10400000 xflg=0x4 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } with parameters []
+10-23 20:37:34.482  6037  6037 D Godot   : Engine already initialized
+10-23 20:37:34.482  6037  6037 V Godot   : OnInitRenderView: GodotFragment{935d996} (96e81e89-869d-4b7a-a8a8-1e3e02202138 id=0x7f07002c)
+10-23 20:37:34.484  6037  6037 V GodotActivity: Reusing existing Godot fragment instance.
+10-23 20:37:34.487  6037  6037 V Godot   : OnStart: GodotFragment{935d996} (96e81e89-869d-4b7a-a8a8-1e3e02202138 id=0x7f07002c)
+10-23 20:37:34.487  6037  6037 D AutofillManager: Fill dialog is enabled:false, hints=[]
+10-23 20:37:34.489  1188  1188 D ModelCallbacks: startBinding: hotseat layout was vertical: false and is setting to false
+10-23 20:37:34.489  6037  6037 V Godot   : OnResume: GodotFragment{935d996} (96e81e89-869d-4b7a-a8a8-1e3e02202138 id=0x7f07002c)
+10-23 20:37:34.492   517   569 I APM_AudioPolicyManager: getNewOutputDevices io 13 recent device override {AUDIO_DEVICE_OUT_SPEAKER, @:}
+10-23 20:37:34.493  1188  1188 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 0 and y = 0
+10-23 20:37:34.493  1188  1188 D CellLayout: Adding view to ShortcutsAndWidgetsContainer: com.android.launcher3.views.DoubleShadowBubbleTextView{b6ec5af VFED..C.. ......ID 0,0-0,0 #1}
+10-23 20:37:34.493  1188  1188 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 1 and y = 0
+10-23 20:37:34.493  1188  1188 D CellLayout: Adding view to ShortcutsAndWidgetsContainer: com.android.launcher3.views.DoubleShadowBubbleTextView{2bfadbc VFED..C.. ......ID 0,0-0,0 #2}
+10-23 20:37:34.493  1188  1188 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 3 and y = 0
+10-23 20:37:34.493  1188  1188 D CellLayout: Adding view to ShortcutsAndWidgetsContainer: com.android.launcher3.views.DoubleShadowBubbleTextView{df47145 VFED..C.. ......ID 0,0-0,0 #3}
+10-23 20:37:34.493  1188  1188 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 4 and y = 0
+10-23 20:37:34.493  1188  1188 D CellLayout: Adding view to ShortcutsAndWidgetsContainer: com.android.launcher3.views.DoubleShadowBubbleTextView{bf5709a VFED..C.. ......ID 0,0-0,0 #4}
+10-23 20:37:34.493  1188  1188 D CellLayout: Adding view to ShortcutsAndWidgetsContainer: com.android.launcher3.views.DoubleShadowBubbleTextView{ec0dcb VFED..C.. ......ID 0,0-0,0 #5}
+10-23 20:37:34.494  6037  6037 D InsetsController: Setting requestedVisibleTypes to 496 (was 503)
+10-23 20:37:34.497   666   739 W InputChannel-JNI: Channel already disposed.
+10-23 20:37:34.504  1188  1188 D AllAppsStore: setApps: apps.length=13
+10-23 20:37:34.504  1188  1188 D AllAppsStore: notifyUpdate: notifying listeners
+10-23 20:37:34.505  1188  1188 D ActivityAllAppsContainerView: onAppsUpdated; number of apps: 13
+10-23 20:37:34.505  1188  1188 D ActivityAllAppsContainerView: rebindAdapters: force: false
+10-23 20:37:34.505  1188  1188 D ActivityAllAppsContainerView: rebindAdapters: Not needed.
+10-23 20:37:34.505  1188  1188 D StatsLog: LAUNCHER_ALLAPPS_COUNT
+10-23 20:37:34.505  1188  1188 D AlphabeticalAppsList: Clearing FastScrollerSections.
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: Adding apps with sections. HasPrivateApps: false
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: C with appInfoTitle: Calendar
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: F with appInfoTitle: Files
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: G with appInfoTitle: Gallery
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: M with appInfoTitle: Messaging
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: P with appInfoTitle: Phone
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: S with appInfoTitle: Search
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: T with appInfoTitle: TMoble
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: W with appInfoTitle: WebView Browser Tester
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: … with appInfoTitle: 远征
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: Adding FastScrollSection duplicate to scroll to the bottom.
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: Clearing FastScrollerSections.
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: Adding apps with sections. HasPrivateApps: false
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: C with appInfoTitle: Calendar
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: F with appInfoTitle: Files
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: G with appInfoTitle: Gallery
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: M with appInfoTitle: Messaging
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: P with appInfoTitle: Phone
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: S with appInfoTitle: Search
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: T with appInfoTitle: TMoble
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: W with appInfoTitle: WebView Browser Tester
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: … with appInfoTitle: 远征
+10-23 20:37:34.506  1188  1188 D AlphabeticalAppsList: Adding FastScrollSection duplicate to scroll to the bottom.
+10-23 20:37:34.506  6037  6037 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@60b3a59
+10-23 20:37:34.506  6037  6037 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): androidx.activity.OnBackPressedDispatcher$Api34Impl$createOnBackAnimationCallback$1@de28eff
+10-23 20:37:34.506   666  3743 D CoreBackPreview: Window{9ad4b32 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@92d0a39, mPriority=-1, mIsAnimationCallback=false, mOverrideBehavior=0}
+10-23 20:37:34.506   666  3743 D CoreBackPreview: Window{9ad4b32 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@260e87e, mPriority=0, mIsAnimationCallback=true, mOverrideBehavior=0}
+10-23 20:37:34.508  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Settings sectionName: S
+10-23 20:37:34.508  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Contacts sectionName: C
+10-23 20:37:34.508  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Gallery sectionName: G
+10-23 20:37:34.508  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Search sectionName: S
+10-23 20:37:34.508  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Clock sectionName: C
+10-23 20:37:34.509  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Messaging sectionName: M
+10-23 20:37:34.511  6037  6037 D VRI[GodotAppLauncher]: WindowInsets changed: 1080x2400 mandatorySystemGestures:[0,167,0,126] 
+10-23 20:37:34.512  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Calendar sectionName: C
+10-23 20:37:34.512  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Conversations sectionName: C
+10-23 20:37:34.513  1188  1188 D OverviewActionsView: updateActionButtonsVisibility() called: showSingleTaskActions = [true], showGroupActions = [false]
+10-23 20:37:34.514  1188  1188 D b/475447538: Rotation Helper = [mStateHandlerRequest=0, mCurrentStateRequest=0, mLastActivityFlags=5, mIgnoreAutoRotateSettings=false, mForceAllowRotationForTesting=false, mDestroyed=false, mIsFixedLandscape=false]
+10-23 20:37:34.514   666  3769 D WindowManager: setClientSurface Surface(name=VRI-org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher#385)/@0x98d91df for 9ad4b32 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher
+10-23 20:37:34.515  1188  1188 D BaseActivity: Launcher flags updated: [state_started] +[state_started]
+10-23 20:37:34.518  6037  6037 I Surface : Creating surface for consumer unnamed-6037-4 with slotExpansion=1 for 64 slots
+10-23 20:37:34.519  6037  6037 I Surface : Creating surface for consumer VRI[GodotAppLauncher]#4(BLAST Consumer)4 with slotExpansion=1 for 64 slots
+10-23 20:37:34.522  6037  6037 I Surface : Creating surface for consumer unnamed-6037-5 with slotExpansion=1 for 64 slots
+10-23 20:37:34.523  6037  6037 I Surface : Creating surface for consumer 79e4871 SurfaceView[org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher]#5(BLAST Consumer)5 with slotExpansion=1 for 64 slots
+10-23 20:37:34.528  6037  8011 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-23 20:37:34.528  1188  1188 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_user_active] +[state_resumed|state_user_active]
+10-23 20:37:34.532   935  1007 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=true, height=406
+10-23 20:37:34.541   666   739 W InputChannel-JNI: Channel already disposed.
+10-23 20:37:34.542  1188  1188 D BaseActivity: Launcher flags updated: [state_started|state_user_active] -[state_resumed]
+10-23 20:37:34.542  1188  1188 W SplitSelectStateCtor: Missing session instanceIds
+10-23 20:37:34.542  1188  1188 D StatsLog: LAUNCHER_SPLIT_SELECTION_EXIT_INTERRUPTED
+10-23 20:37:34.544  1188  1188 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@569f9ff
+10-23 20:37:34.544   666  1554 D CoreBackPreview: Window{5cb10f5 u0 com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@1636cfb, mPriority=-1, mIsAnimationCallback=false, mOverrideBehavior=0}
+10-23 20:37:34.544  1188  1188 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): com.android.launcher3.uioverrides.QuickstepLauncher$2@36e371b
+10-23 20:37:34.545   666  1554 D CoreBackPreview: Window{5cb10f5 u0 com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@7ac1118, mPriority=0, mIsAnimationCallback=true, mOverrideBehavior=0}
+10-23 20:37:34.546  6037  8011 W RegularContextFactory: creating OpenGL ES 3.0 context :
+10-23 20:37:34.547  1188  1188 I OseWidgetView: setAppWidget providerInfo=AppWidgetProviderInfo(UserHandle{0}/ComponentInfo{com.android.quicksearchbox/com.android.quicksearchbox.SearchWidgetProvider})
+10-23 20:37:34.548  1188  1188 I OseWidgetView: updateAppWidget view=android.widget.RemoteViews@c2d316e
+10-23 20:37:34.549  1188  1696 V ActivityThread: getPackageInfo() caused update to cached ApplicationInfo for package com.android.quicksearchbox
+10-23 20:37:34.551  1188  1188 D VRI[QuickstepLauncher]: WindowInsets changed: 1080x2400 mandatorySystemGestures:[0,167,0,126] 
+10-23 20:37:34.552  1188  1188 D OverviewActionsView: updateActionButtonsVisibility() called: showSingleTaskActions = [true], showGroupActions = [false]
+10-23 20:37:34.552  1188  1188 D LauncherStateManager: StateManager.cancelAnimation: animation ongoing: false, partial trace:
+10-23 20:37:34.552  1188  1188 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.reapplyState(StateManager.java:224)
+10-23 20:37:34.552  1188  1188 D LauncherStateManager: 	at com.android.launcher3.LauncherRootView.handleSystemWindowInsets(LauncherRootView.java:51)
+10-23 20:37:34.552  1188  1188 D LauncherStateManager: 	at com.android.launcher3.LauncherRootView.updateInsets(LauncherRootView.java:65)
+10-23 20:37:34.552  1188  1188 D AllAppsTransitionController: shouldProtectHeader: false skipScrim: false state: Normal stateManager.getState(): Normal
+10-23 20:37:34.569  1188  1188 D ActivityAllAppsContainerView: rebindAdapters: force: false
+10-23 20:37:34.570  1188  1188 D ActivityAllAppsContainerView: rebindAdapters: Not needed.
+10-23 20:37:34.573  1188  1188 D KeyboardStateManager: hideKeyboard
+10-23 20:37:34.574  1188  1188 D KeyboardStateManager: isImeShown: false
+10-23 20:37:34.580  6037  6037 V GodotActivity: Force quitting Godot instance
+10-23 20:37:34.580  6037  6037 I Process : Sending signal. PID: 6037 SIG: 9
+10-23 20:37:34.595   666   691 V GameManagerService: Game power mode OFF (first non-game in foreground)
+10-23 20:37:34.600  1188  1188 D OverlayChangeHandler: Overlay changed, destroyed=false
+10-23 20:37:34.601   935  1108 W ImageLoader: Failed to load source Resource{name=com.android.systemui:drawable/ic_brightness_full}
+10-23 20:37:34.601   935  1108 W ImageLoader: android.graphics.ImageDecoder$DecodeException: Failed to create image decoder with message 'unimplemented'Input contained an error.
+10-23 20:37:34.601   935  1108 W ImageLoader: 	at android.graphics.ImageDecoder.nCreate(Native Method)
+10-23 20:37:34.601   935  1108 W ImageLoader: 	at android.graphics.ImageDecoder.createFromAsset(ImageDecoder.java:551)
+10-23 20:37:34.601   935  1108 W ImageLoader: 	at android.graphics.ImageDecoder.-$$Nest$smcreateFromAsset(ImageDecoder.java:0)
+10-23 20:37:34.601   935  1108 W ImageLoader: 	at android.graphics.ImageDecoder$ResourceSource.createImageDecoder(ImageDecoder.java:528)
+10-23 20:37:34.601   935  1108 W ImageLoader: 	at android.graphics.ImageDecoder.decodeDrawableImpl(ImageDecoder.java:1879)
+10-23 20:37:34.601   935  1108 W ImageLoader: 	at android.graphics.ImageDecoder.decodeDrawable(ImageDecoder.java:1871)
+10-23 20:37:34.601   935  1108 W ImageLoader: 	at com.android.systemui.graphics.ImageLoaderImpl.loadDrawableSync(go/retraceme 226321beaa6507663f5ced47f2535a4ec682f1eb01f534461d4442276b66a2ee:218)
+10-23 20:37:34.601   935  1108 W ImageLoader: 	at com.android.systemui.graphics.ImageLoaderImpl.loadDrawableSync(go/retraceme 226321beaa6507663f5ced47f2535a4ec682f1eb01f534461d4442276b66a2ee:134)
+10-23 20:37:34.601   935  1108 W ImageLoader: 	at com.android.systemui.graphics.ImageLoaderImpl$loadDrawable$4.invokeSuspend(go/retraceme 226321beaa6507663f5ced47f2535a4ec682f1eb01f534461d4442276b66a2ee:17)
+10-23 20:37:34.601   935  1108 W ImageLoader: 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(go/retraceme 226321beaa6507663f5ced47f2535a4ec682f1eb01f534461d4442276b66a2ee:7)
+10-23 20:37:34.601   935  1108 W ImageLoader: 	at kotlinx.coroutines.DispatchedTask.run(go/retraceme 226321beaa6507663f5ced47f2535a4ec682f1eb01f534461d4442276b66a2ee:111)
+10-23 20:37:34.601   935  1108 W ImageLoader: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+10-23 20:37:34.601   935  1108 W ImageLoader: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+10-23 20:37:34.601   935  1108 W ImageLoader: 	at java.lang.Thread.run(Thread.java:1572)
+10-23 20:37:34.603  1188  1188 E LauncherDisplayInfo: Unexpected normalizedDisplayInfo found, invalidating cache: CachedDisplayInfo{size=Point(1080, 2400), cutout=DisplayCutout{insets=Rect(0, 135 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(0, 0 - 135, 135), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=1080 displayHeight=2400 physicalDisplayWidth=1080 physicalDisplayHeight=2424 density={2.625} cutoutSpec={M 128,83 A 44,44 0 0 1 84,127 44,44 0 0 1 40,83 44,44 0 0 1 84,39 44,44 0 0 1 128,83 Z @left} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={0.990099}}} sideOverrides={}}, rotation=0}
+10-23 20:37:34.604  1188  1188 E LauncherDisplayInfo: (Invalid Cache) perDisplayBounds : {CachedDisplayInfo{size=Point(1080, 2400), cutout=DisplayCutout{insets=Rect(0, 0 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=0 displayHeight=0 physicalDisplayWidth=0 physicalDisplayHeight=0 density={0.0} cutoutSpec={} rotation={0} scale={0.0} physicalPixelDisplaySizeRatio={0.0}}} sideOverrides=null}, rotation=0}=[WindowBounds{bounds=Rect(0, 0 - 1080, 2400), insets=Rect(0, 135 - 0, 126), availableSize=Point(1080, 2274), rotationHint=0}, WindowBounds{bounds=Rect(0, 0 - 2400, 1080), insets=Rect(0, 74 - 0, 63), availableSize=Point(2400, 943), rotationHint=1}, WindowBounds{bounds=Rect(0, 0 - 1080, 2400), insets=Rect(0, 136 - 0, 63), availableSize=Point(1080, 2201), rotationHint=2}, WindowBounds{bounds=Rect(0, 0 - 2400, 1080), insets=Rect(0, 74 - 0, 63), availableSize=Point(2400, 943), rotationHint=3}]}
+10-23 20:37:34.604   666  1554 D DisplayManagerService: supportedStates=[0]
+10-23 20:37:34.604   666  1554 D DisplayManagerService: possibleInfos={DisplayInfo{"Built-in Screen", displayId 0, displayGroupId 0, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS, FLAG_TRUSTED, FLAG_ALLOWS_CONTENT_MODE_SWITCH, real 1080 x 2400, largest app 2400 x 2400, smallest app 1080 x 1080, appVsyncOff 1000000, presDeadline 16666666, mode 1, renderFrameRate 60.000004, hasArrSupport false, frameRateCategoryRate FrameRateCategoryRate {normal=60.0, high=90.0}, supportedRefreshRates [60.000004, 30.000002, 20.0], frameRateVelocityMapping [], defaultMode 1, userPreferredModeId -1, supportedModes [{id=1, parentModeId=-1, sfModeId=0, flags=, width=1080, height=2424, fps=60.000004, vsync=60.000004, alternativeRefreshRates=[], supportedHdrTypes=[]}], hdrCapabilities HdrCapabilities{mSupportedHdrTypes=[], mMaxLuminance=500.0, mMaxAverageLuminance=500.0, mMinLuminance=0.0}, isForceSdr false, userDisabledHdrTypes [], minimalPostProcessingSupported false, rotation 0, state ON, committedState ON, type INTERNAL, uniqueId "local:4619827259835644672", app 1080 x 2400, density 420 (420.0 x 420.0) dpi, layerStack 0, colorMode 0, supportedColorModes [0], address StablePhysical{id=4619827259835644672, port=0}, deviceProductInfo DeviceProductInfo{name=EMU_display_0, manufacturerPnpId=GGL, productId=1, modelYear=null, manufactureDate=ManufactureDate{week=27, year=2006}, connectionToSinkType=1, edidStructureMetadata=EdidStructureMetadata{version=0, revision=0}, videoInputType=0}, removeMode 0, refreshRateOverride 0.0, brightnessMinimum 0.035433073, brightnessMaximum 1.0, brightnessDefault 0.39763778, brightnessDim 0.05, installOrientation ROTATION_0, layoutLimitedRefreshRate null, hdrSdrRatio not_available, thermalRefreshRateThrottling {}, thermalBrightnessThrottlingDataId default, canHostTasks true}}
+10-23 20:37:34.605   935   935 I SceneTransitionLayoutState: snapTo(scene=SceneKey(debugName=QuickQuickSettingsScene), overlays=[])
+10-23 20:37:34.608   935   935 D LocalImageResolver: Couldn't use ImageDecoder for drawable, falling back to non-resized load.
+10-23 20:37:34.611   666  1554 D DisplayManagerService: supportedStates=[0]
+10-23 20:37:34.611   666  1554 D DisplayManagerService: possibleInfos={DisplayInfo{"Built-in Screen", displayId 0, displayGroupId 0, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS, FLAG_TRUSTED, FLAG_ALLOWS_CONTENT_MODE_SWITCH, real 1080 x 2400, largest app 2400 x 2400, smallest app 1080 x 1080, appVsyncOff 1000000, presDeadline 16666666, mode 1, renderFrameRate 60.000004, hasArrSupport false, frameRateCategoryRate FrameRateCategoryRate {normal=60.0, high=90.0}, supportedRefreshRates [60.000004, 30.000002, 20.0], frameRateVelocityMapping [], defaultMode 1, userPreferredModeId -1, supportedModes [{id=1, parentModeId=-1, sfModeId=0, flags=, width=1080, height=2424, fps=60.000004, vsync=60.000004, alternativeRefreshRates=[], supportedHdrTypes=[]}], hdrCapabilities HdrCapabilities{mSupportedHdrTypes=[], mMaxLuminance=500.0, mMaxAverageLuminance=500.0, mMinLuminance=0.0}, isForceSdr false, userDisabledHdrTypes [], minimalPostProcessingSupported false, rotation 0, state ON, committedState ON, type INTERNAL, uniqueId "local:4619827259835644672", app 1080 x 2400, density 420 (420.0 x 420.0) dpi, layerStack 0, colorMode 0, supportedColorModes [0], address StablePhysical{id=4619827259835644672, port=0}, deviceProductInfo DeviceProductInfo{name=EMU_display_0, manufacturerPnpId=GGL, productId=1, modelYear=null, manufactureDate=ManufactureDate{week=27, year=2006}, connectionToSinkType=1, edidStructureMetadata=EdidStructureMetadata{version=0, revision=0}, videoInputType=0}, removeMode 0, refreshRateOverride 0.0, brightnessMinimum 0.035433073, brightnessMaximum 1.0, brightnessDefault 0.39763778, brightnessDim 0.05, installOrientation ROTATION_0, layoutLimitedRefreshRate null, hdrSdrRatio not_available, thermalRefreshRateThrottling {}, thermalBrightnessThrottlingDataId default, canHostTasks true}}
+10-23 20:37:34.618   935   935 D LocalImageResolver: Couldn't use ImageDecoder for drawable, falling back to non-resized load.
+10-23 20:37:34.618  1188  1188 D TouchInteractionService: disposeEventHandlers: Reason: Initializing input monitor due to: onNavigationModeChanged() instance=199380933
+10-23 20:37:34.618  1188  1188 D InputMonitorCompat: Input event receiver for monitor (swipe-up-disp0) disposed
+10-23 20:37:34.618  1188  1188 W InputChannel-JNI: Channel already disposed.
+10-23 20:37:34.618   666   783 W InputDispatcher: channel '[Gesture Monitor] swipe-up' ~ Consumer closed input channel or an error occurred.  events=0x9
+10-23 20:37:34.618   666   783 E InputDispatcher: channel '[Gesture Monitor] swipe-up' ~ Channel is unrecoverably broken and will be disposed!
+10-23 20:37:34.618  1188  1188 D InputMonitorCompat: Input monitor (swipe-up-disp0) disposed
+10-23 20:37:34.623  1188  1188 D b/475447538: Fixed Landscape pref = false all grids = [GridConfig{name='5_by_5', gridTitle='null', gridIconId=-1, numRows=5, numColumns=5, gridType=13, mIsFixedLandscape=false}, GridConfig{name='5_by_5', gridTitle='null', gridIconId=-1, numRows=5, numColumns=5, gridType=13, mIsFixedLandscape=false}, GridConfig{name='5_by_5', gridTitle='null', gridIconId=-1, numRows=5, numColumns=5, gridType=13, mIsFixedLandscape=false}]
+10-23 20:37:34.625   666   783 W InputDispatcher: channel '9ad4b32 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher' ~ Consumer closed input channel or an error occurred.  events=0x9
+10-23 20:37:34.625   666   783 E InputDispatcher: channel '9ad4b32 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher' ~ Channel is unrecoverably broken and will be disposed!
+10-23 20:37:34.625   666   783 I WindowManager: WINDOW DIED Window{9ad4b32 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+10-23 20:37:34.625   666   754 I ActivityManager: Process org.yuanzheng.singleplayer (pid 6037) has died: fg  TOP 
+10-23 20:37:34.626   666  2365 I ImeTracker: org.yuanzheng.singleplayer:92d55a3c: onRequestHide at ORIGIN_SERVER reason HIDE_REMOVE_CLIENT fromUser false userId 0 displayId 0
+10-23 20:37:34.626   666  2365 I ImeTracker: org.yuanzheng.singleplayer:92d55a3c: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-23 20:37:34.627   666  3743 D SensorService: Unregistering client listener for PID 6037
+10-23 20:37:34.627  2119  2119 I adbd    : Remote process closed the socket (on MSG_PEEK)
+10-23 20:37:34.678     0     0 I binder  : undelivered transaction 709432, process died.
+10-23 20:37:34.628   666   754 W ActivityTaskManager: Force removing ActivityRecord{134239522 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher t28}: app died, no saved state
+10-23 20:37:34.628   666   754 W TransitionChain: Combining appDied into #42(CHANGE|R|0x0) from updateGlobalConfig
+10-23 20:37:34.629  1361  1361 W InputChannel-JNI: Channel already disposed.
+10-23 20:37:34.631  1188  1188 D IDP     : After initGrid:gridName:5_by_5, dbFile:launcher.db, LauncherPrefs GRID_NAME:5_by_5, LauncherPrefs DB_FILE:launcher.db
+10-23 20:37:34.631   462   462 I Zygote  : Process 6037 exited due to signal 9 (Killed)
+10-23 20:37:34.631   666   701 I libprocessgroup: Removed cgroup /sys/fs/cgroup/apps/uid_10156/pid_6037
+10-23 20:37:34.633  1188  1188 D PerDisplayTaskbarResource: recreateTaskbars displayId=0
+10-23 20:37:34.634  1188  1188 D PerDisplayTaskbarResource: recreateTaskbarForDisplay displayId=0
+10-23 20:37:34.634   935  1007 V ShellTaskOrganizer: Task vanished taskId=28
+10-23 20:37:34.634   935  1007 V ShellTaskOrganizer: Fullscreen Task Vanished: #28
+10-23 20:37:34.634   935  1007 V ShellDesktopMode: Task Vanished: #28 closed=true
+10-23 20:37:34.634   935  1007 D ShellPackageUpdate: PackageUpdateController: Removing handlePackageUpdate for task: 28
+10-23 20:37:34.634  1188  1188 D PerDisplayTaskbarResource: recreateTaskbarForDisplay: getting device profile displayId=0
+10-23 20:37:34.634  1188  1188 D PerDisplayTaskbarResource: recreateTaskbarForDisplay: destroying taskbar displayId=0
+10-23 20:37:34.634  1188  1188 D PerDisplayTaskbarResource: destroyTaskbarForDisplay displayId=0
+10-23 20:37:34.635   666  1379 I AppWidgetServiceImpl: getAppWidgetOptions() 0
+10-23 20:37:34.639  1188  1188 D CueBarController: CuebarController destroy
+10-23 20:37:34.639   666   690 V WindowManager: Sent Transition (#42) createdAt=10-23 20:37:34.232 via request=TransitionRequestInfo { type = CHANGE, triggerTask = null, pipChange = null, remoteTransitionInfo = null, displayChanges = null, requestedLocation = null, userChange = null, windowingLayerChange = null, fullscreenRequestChange = null, flags = 0, debugId = 42 }
+10-23 20:37:34.639   666   690 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] flags= 0 errorCallbackToken=null taskFragmentOrganizer=null }
+10-23 20:37:34.639   666   690 V WindowManager:     info={id=42 t=CHANGE f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-23 20:37:34.639   666   690 V WindowManager:         {WCT{RemoteToken{4db2d23 Task{4dee1b4 #1 type=home}}} m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE p=WCT{RemoteToken{ae71b88 Display{#0 state=ON size=1080x2400 ROTATION_0}}} leash=Surface(name=Task=1#33)/@0x6a203c6 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},
+10-23 20:37:34.639   666   690 V WindowManager:         {WCT{RemoteToken{ae71b88 Display{#0 state=ON size=1080x2400 ROTATION_0}}} m=CHANGE f=SHOW_WALLPAPER|IS_DISPLAY leash=Surface(name=WindowedMagnification:0:31#1)/@0x27c7577 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}
+10-23 20:37:34.639   666   690 V WindowManager:     ]}
+10-23 20:37:34.640   935  1166 V WindowManagerShell: onTransitionReady(transaction=2860448223083)
+10-23 20:37:34.640   666   693 W ActivityManager: setHasOverlayUi called on unknown pid: 6037
+10-23 20:37:34.642   666  2791 E WindowOrganizerController: Attempting to externally change a non-organized container: Task{c60cbb3 #28 type=standard A=10156:org.yuanzheng.singleplayer}={handlePackageUpdate:false,} playercount=2 taskorg=android.window.ITaskOrganizer$Stub$Proxy@f14643d
+10-23 20:37:34.643   935  1007 V RecentTasksController: Notify recent tasks changed
+10-23 20:37:34.643   935  1007 D ShellDesktopMode: AppToWebRepository: Task 28 is vanishing. Removing task data from repository
+10-23 20:37:34.644   935  1007 V AppCompat: SingleSurfaceLetterboxController: []
+10-23 20:37:34.644   935  1007 V AppCompat: MultiSurfaceLetterboxController: []
+10-23 20:37:34.644   935  1007 V AppCompat: LetterboxInputController: []
+10-23 20:37:34.644   935  1007 V AppCompat: RoundedCornersLetterboxController: {}
+10-23 20:37:34.645   935  1007 V WindowManagerShell: onTransitionReady (#42) android.os.BinderProxy@fc3a192: {id=42 t=CHANGE f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-23 20:37:34.645   935  1007 V WindowManagerShell:         {m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE p=WCT{android.os.BinderProxy@ea94902} leash=Surface(name=Task=1#33)/@0x79e462d sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},
+10-23 20:37:34.645   935  1007 V WindowManagerShell:         {m=CHANGE f=SHOW_WALLPAPER|IS_DISPLAY leash=Surface(name=WindowedMagnification:0:31#1)/@0xb93c762 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 snapshot=Surface(name=transition snapshot: Display{#0 state=ON size=1080x2400 ROTATION_0}#383)/@0xc77f0f3}
+10-23 20:37:34.645   935  1007 V WindowManagerShell:     ]}
+10-23 20:37:34.645   935  1007 V WindowManagerShell: Playing animation for (#42) android.os.BinderProxy@fc3a192@0
+10-23 20:37:34.645   935  1007 D ShellSplitScreen: startAnimation: transition=42 isSplitActive=false
+10-23 20:37:34.645  1188  1188 D TaskbarOverlayController: onDestroy: 	at com.android.launcher3.taskbar.PerDisplayTaskbarResource.removeExistingTaskbar(PerDisplayTaskbarResource.kt:193)
+10-23 20:37:34.645  1188  1188 D TaskbarOverlayController: 	at com.android.launcher3.taskbar.PerDisplayTaskbarResource.access$removeExistingTaskbar(PerDisplayTaskbarResource.kt:53)
+10-23 20:37:34.645  1188  1188 D TaskbarOverlayController: 	at com.android.launcher3.taskbar.PerDisplayTaskbarResource.destroyTaskbarForDisplay(PerDisplayTaskbarResource.kt:213)
+10-23 20:37:34.645   935  1007 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+10-23 20:37:34.645   935  1007 V ShellDesktopMode: DesktopMixedTransitionHandler: No pending desktop transition
+10-23 20:37:34.645   935  1007 V WindowManagerShell: start default transition animation, info = {id=42 t=CHANGE f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE p=WCT{android.os.BinderProxy@ea94902} leash=Surface(name=Task=1#33)/@0x79e462d sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},{m=CHANGE f=SHOW_WALLPAPER|IS_DISPLAY leash=Surface(name=WindowedMagnification:0:31#1)/@0xb93c762 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 snapshot=Surface(name=transition snapshot: Display{#0 state=ON size=1080x2400 ROTATION_0}#383)/@0xc77f0f3}]}
+10-23 20:37:34.645   935  1007 V WindowManagerShell: Display is changing, resolve the animation hint.
+10-23 20:37:34.646  1188  1188 D TaskbarOverlayController: onDestroy: Was window already present? false
+10-23 20:37:34.646  1188  1188 D PerDisplayTaskbarResource: recreateTaskbarForDisplay: isTaskbarEnabled=true [dp != null]=true mUserUnlocked=true dp.isTaskbarPresent=false isTaskbarEnabled=true displayExists=true displayId=0
+10-23 20:37:34.647  1188  1188 D PerDisplayTaskbarResource: recreateTaskbarForDisplay: creating taskbar displayId=0
+10-23 20:37:34.651   935  1007 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@4e9eaab
+10-23 20:37:34.651   935  1007 V RecentTasksController: Notify recent tasks changed
+10-23 20:37:34.657  1188  1188 W SystemServiceRegistry: No service published for: personal_context
+10-23 20:37:34.657  1188  1188 W AmbientCueRepository: spoonBarOptedIn not found, default to enabled
+10-23 20:37:34.658   666   699 D ActivityManager: sync unfroze 1627 com.android.quicksearchbox for 3
+10-23 20:37:34.659  1188  1188 D LauncherAmbientCueVM: onUnfilteredActionsChange: []
+10-23 20:37:34.659  1627  1627 I ActivityThread: ApplicationInfo updating for com.android.quicksearchbox, new timestamp: 1629018
+10-23 20:37:34.659  1627  1627 I ActivityThread: assets removed: [/product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk]
+10-23 20:37:34.659  1627  1627 I ActivityThread: assets added: [/product/overlay/NavigationBarMode3Button/NavigationBarMode3ButtonOverlay.apk]
+10-23 20:37:34.664  1188  1188 D AmbientCueRepository: connectToAce: connecting TO ACE and registering
+10-23 20:37:34.666  1188  1188 D AllAppsStore: setApps: apps.length=13
+10-23 20:37:34.666  1188  1188 D AllAppsStore: notifyUpdate: notifying listeners
+10-23 20:37:34.667  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Settings sectionName: S
+10-23 20:37:34.667  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Contacts sectionName: C
+10-23 20:37:34.667  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Gallery sectionName: G
+10-23 20:37:34.667  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Search sectionName: S
+10-23 20:37:34.668  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Clock sectionName: C
+10-23 20:37:34.668  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Messaging sectionName: M
+10-23 20:37:34.668  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Calendar sectionName: C
+10-23 20:37:34.668  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Conversations sectionName: C
+10-23 20:37:34.671  1188  1188 D TaskbarManager: createTaskbarUIControllerForRecentsViewContainer displayId=0 mPrimaryDisplayId=0
+10-23 20:37:34.672  1188  1188 D PerDisplayTaskbarResource: recreateTaskbarForDisplay: adding rootView displayId=0
+10-23 20:37:34.672  1188  1188 D PerDisplayTaskbarResource: recreateTaskbarForDisplay: adding root layout displayId=0
+10-23 20:37:34.673  1188  1188 D b/475447538: Rotation Helper = [mStateHandlerRequest=0, mCurrentStateRequest=0, mLastActivityFlags=5, mIgnoreAutoRotateSettings=false, mForceAllowRotationForTesting=false, mDestroyed=false, mIsFixedLandscape=false]
+10-23 20:37:34.676  1188  1188 D OverviewActionsView: updateActionButtonsVisibility() called: showSingleTaskActions = [true], showGroupActions = [false]
+10-23 20:37:34.677  1188  1188 D LauncherStateManager: StateManager.cancelAnimation: animation ongoing: false, partial trace:
+10-23 20:37:34.677  1188  1188 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.reapplyState(StateManager.java:224)
+10-23 20:37:34.677  1188  1188 D LauncherStateManager: 	at com.android.launcher3.statemanager.StatefulActivity.reapplyUi(StatefulActivity.java:108)
+10-23 20:37:34.677  1188  1188 D LauncherStateManager: 	at com.android.launcher3.Launcher.onHandleConfigurationChanged(Launcher.java:634)
+10-23 20:37:34.677  1188  1188 D AllAppsTransitionController: shouldProtectHeader: false skipScrim: false state: Normal stateManager.getState(): Normal
+10-23 20:37:34.678  1188  1188 D ModelCallbacks: startBinding: hotseat layout was vertical: false and is setting to false
+10-23 20:37:34.680  1188  1188 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 0 and y = 0
+10-23 20:37:34.680  1188  1188 D CellLayout: Adding view to ShortcutsAndWidgetsContainer: com.android.launcher3.views.DoubleShadowBubbleTextView{28e379 VFED..C.. ......ID 0,0-0,0 #1}
+10-23 20:37:34.680  1188  1188 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 1 and y = 0
+10-23 20:37:34.680  1188  1188 D CellLayout: Adding view to ShortcutsAndWidgetsContainer: com.android.launcher3.views.DoubleShadowBubbleTextView{c470f58 VFED..C.. ......ID 0,0-0,0 #2}
+10-23 20:37:34.680  1188  1188 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 3 and y = 0
+10-23 20:37:34.680  1188  1188 D CellLayout: Adding view to ShortcutsAndWidgetsContainer: com.android.launcher3.views.DoubleShadowBubbleTextView{6fe88b1 VFED..C.. ......ID 0,0-0,0 #3}
+10-23 20:37:34.680  1188  1188 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 4 and y = 0
+10-23 20:37:34.680  1188  1188 D CellLayout: Adding view to ShortcutsAndWidgetsContainer: com.android.launcher3.views.DoubleShadowBubbleTextView{1ec5196 VFED..C.. ......ID 0,0-0,0 #4}
+10-23 20:37:34.680  1188  1188 D CellLayout: Adding view to ShortcutsAndWidgetsContainer: com.android.launcher3.views.DoubleShadowBubbleTextView{27ea117 VFED..C.. ......ID 0,0-0,0 #5}
+10-23 20:37:34.681  1188  1188 D AllAppsStore: setApps: apps.length=13
+10-23 20:37:34.681  1188  1188 D AllAppsStore: notifyUpdate: notifying listeners
+10-23 20:37:34.681  1188  1188 D ActivityAllAppsContainerView: onAppsUpdated; number of apps: 13
+10-23 20:37:34.681  1188  1188 D ActivityAllAppsContainerView: rebindAdapters: force: false
+10-23 20:37:34.681  1188  1188 D ActivityAllAppsContainerView: rebindAdapters: Not needed.
+10-23 20:37:34.681  1188  1188 D StatsLog: LAUNCHER_ALLAPPS_COUNT
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: Clearing FastScrollerSections.
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: Adding apps with sections. HasPrivateApps: false
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: C with appInfoTitle: Calendar
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: F with appInfoTitle: Files
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: G with appInfoTitle: Gallery
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: M with appInfoTitle: Messaging
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: P with appInfoTitle: Phone
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: S with appInfoTitle: Search
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: T with appInfoTitle: TMoble
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: W with appInfoTitle: WebView Browser Tester
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: … with appInfoTitle: 远征
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: Adding FastScrollSection duplicate to scroll to the bottom.
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: Clearing FastScrollerSections.
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: Adding apps with sections. HasPrivateApps: false
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: C with appInfoTitle: Calendar
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: F with appInfoTitle: Files
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: G with appInfoTitle: Gallery
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: M with appInfoTitle: Messaging
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: P with appInfoTitle: Phone
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: S with appInfoTitle: Search
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: T with appInfoTitle: TMoble
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: W with appInfoTitle: WebView Browser Tester
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: … with appInfoTitle: 远征
+10-23 20:37:34.681  1188  1188 D AlphabeticalAppsList: Adding FastScrollSection duplicate to scroll to the bottom.
+10-23 20:37:34.682  1188  1188 D AllAppsStore: setApps: apps.length=13
+10-23 20:37:34.682  1188  1188 D AllAppsStore: notifyUpdate: notifying listeners
+10-23 20:37:34.682  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Settings sectionName: S
+10-23 20:37:34.683  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Contacts sectionName: C
+10-23 20:37:34.683  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Gallery sectionName: G
+10-23 20:37:34.683  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Search sectionName: S
+10-23 20:37:34.683  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Clock sectionName: C
+10-23 20:37:34.683  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Messaging sectionName: M
+10-23 20:37:34.683  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Calendar sectionName: C
+10-23 20:37:34.684  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Conversations sectionName: C
+10-23 20:37:34.685  1188  1188 D PerDisplayTaskbarResource: onDisplayInfoChanged: Navigation mode changed displayId=0
+10-23 20:37:34.685  1188  1188 D PerDisplayTaskbarResource: recreateTaskbarForDisplay displayId=0
+10-23 20:37:34.685  1188  1188 D PerDisplayTaskbarResource: recreateTaskbarForDisplay: getting device profile displayId=0
+10-23 20:37:34.685  1188  1188 D PerDisplayTaskbarResource: recreateTaskbarForDisplay: destroying taskbar displayId=0
+10-23 20:37:34.685  1188  1188 D PerDisplayTaskbarResource: destroyTaskbarForDisplay displayId=0
+10-23 20:37:34.688  1188  1188 D CueBarController: CuebarController destroy
+10-23 20:37:34.689  1188  1188 D TaskbarOverlayController: onDestroy: 	at com.android.launcher3.taskbar.PerDisplayTaskbarResource.removeExistingTaskbar(PerDisplayTaskbarResource.kt:193)
+10-23 20:37:34.689  1188  1188 D TaskbarOverlayController: 	at com.android.launcher3.taskbar.PerDisplayTaskbarResource.access$removeExistingTaskbar(PerDisplayTaskbarResource.kt:53)
+10-23 20:37:34.689  1188  1188 D TaskbarOverlayController: 	at com.android.launcher3.taskbar.PerDisplayTaskbarResource.destroyTaskbarForDisplay(PerDisplayTaskbarResource.kt:213)
+10-23 20:37:34.690  1188  1188 D TaskbarOverlayController: onDestroy: Was window already present? false
+10-23 20:37:34.690  1188  1188 D PerDisplayTaskbarResource: recreateTaskbarForDisplay: isTaskbarEnabled=true [dp != null]=true mUserUnlocked=true dp.isTaskbarPresent=false isTaskbarEnabled=true displayExists=true displayId=0
+10-23 20:37:34.690  1188  1188 D PerDisplayTaskbarResource: recreateTaskbarForDisplay: creating taskbar displayId=0
+10-23 20:37:34.697  1188  1188 W SystemServiceRegistry: No service published for: personal_context
+10-23 20:37:34.697  1188  1188 W AmbientCueRepository: spoonBarOptedIn not found, default to enabled
+10-23 20:37:34.697  1188  1188 D LauncherAmbientCueVM: onUnfilteredActionsChange: []
+10-23 20:37:34.700  1188  1188 D AmbientCueRepository: connectToAce: connecting TO ACE and registering
+10-23 20:37:34.704  1188  1188 D AllAppsStore: setApps: apps.length=13
+10-23 20:37:34.704  1188  1188 D AllAppsStore: notifyUpdate: notifying listeners
+10-23 20:37:34.705  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Settings sectionName: S
+10-23 20:37:34.705  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Contacts sectionName: C
+10-23 20:37:34.705  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Gallery sectionName: G
+10-23 20:37:34.706  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Search sectionName: S
+10-23 20:37:34.706  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Clock sectionName: C
+10-23 20:37:34.706  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Messaging sectionName: M
+10-23 20:37:34.706  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Calendar sectionName: C
+10-23 20:37:34.706  1188  1188 D AlphabeticIndexCompat: computeSectionName: cs: Conversations sectionName: C
+10-23 20:37:34.707  1188  1188 D TaskbarManager: createTaskbarUIControllerForRecentsViewContainer displayId=0 mPrimaryDisplayId=0
+10-23 20:37:34.708  1188  1188 D PerDisplayTaskbarResource: recreateTaskbarForDisplay: adding rootView displayId=0
+10-23 20:37:34.708  1188  1188 D PerDisplayTaskbarResource: recreateTaskbarForDisplay: adding root layout displayId=0
+10-23 20:37:34.709  1188  1188 D LauncherStateManager: StateManager.goToState: fromState: Normal, toState: Normal, partial trace:
+10-23 20:37:34.709  1188  1188 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:469)
+10-23 20:37:34.709  1188  1188 D LauncherStateManager: 	at com.android.launcher3.uioverrides.QuickstepLauncher.onDisplayInfoChanged(QuickstepLauncher.java:1396)
+10-23 20:37:34.709  1188  1188 D LauncherStateManager: 	at com.android.launcher3.BaseActivity$$ExternalSyntheticLambda0.accept(R8$$SyntheticClass:0)
+10-23 20:37:34.709  1188  1188 D LauncherStateManager: StateManager.onRepeatStateSetAborted: state: Normal
+10-23 20:37:34.711  1188  1188 D BubbleBarView: BubbleBar RTL properties changed, new layoutDirection=0 previous layoutDirection=-1
+10-23 20:37:34.731  1188  1188 D VRI[QuickstepLauncher]: visibilityChanged oldVisibility=false newVisibility=true
+10-23 20:37:34.732  1188  1188 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_user_active] +[state_resumed]
+10-23 20:37:34.732  1188  1188 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_user_active] +[]
+10-23 20:37:34.732  1188  1188 D RecentsView: onTaskRemoved: 28, not handling task stack changes
+10-23 20:37:34.732  1188  1188 D RecentsView: onTaskRemoved: 28, not handling task stack changes
+10-23 20:37:34.734   935  1007 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=true, height=427
+10-23 20:37:34.734  1188  1188 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+10-23 20:37:34.734  1188  1188 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+10-23 20:37:34.742  1188  1188 D VRI[QuickstepLauncher]: WindowInsets changed: statusBars:[0,135,0,0] navigationBars:[0,0,0,63] 
+10-23 20:37:34.744   666  3260 D WindowManager: setClientSurface Surface(name=VRI-com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher#398)/@0x86066bc for 5cb10f5 com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher
+10-23 20:37:34.748  1188  1188 I Surface : Creating surface for consumer unnamed-1188-43 with slotExpansion=1 for 64 slots
+10-23 20:37:34.749  1188  1188 I Surface : Creating surface for consumer VRI[QuickstepLauncher]#17(BLAST Consumer)17 with slotExpansion=1 for 64 slots
+10-23 20:37:34.750  1188  1188 D BaseDepthController: setSurface:
+10-23 20:37:34.750  1188  1188 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+10-23 20:37:34.750  1188  1188 D BaseDepthController: 	mBaseSurface: Surface(name=VRI-com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher#398)/@0xbdfbebe
+10-23 20:37:34.750  1188  1188 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher#398)/@0xbdfbebe applyImmediately: false
+10-23 20:37:34.750  1188  1188 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{f564b1f V.ED..... ......ID 0,0-1080,2400 #7f0903f2 app:id/workspace}, com.android.launcher3.Hotseat{b9b9e6c V.ED..... ......ID 0,1973-1080,2400 #7f0901bf app:id/hotseat}]
+10-23 20:37:34.759   935  1177 D WallpaperService: onVisibilityChanged(true): com.android.systemui.wallpapers.ImageWallpaper$CanvasEngine@2aff6f5
+10-23 20:37:34.762   935  1177 D WallpaperService: onSurfaceChanged(android.service.wallpaper.WallpaperService$Engine$1@a3fc2c, 2, 922, 1024): com.android.systemui.wallpapers.ImageWallpaper$CanvasEngine@2aff6f5
+10-23 20:37:34.762   935  1177 D WallpaperService: onSurfaceRedrawNeeded(android.service.wallpaper.WallpaperService$Engine$1@a3fc2c): com.android.systemui.wallpapers.ImageWallpaper$CanvasEngine@2aff6f5
+10-23 20:37:34.781  1188  1188 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_user_active] +[state_deferred_resumed]
+10-23 20:37:34.781  1188  1188 D StatsLog: LAUNCHER_ONRESUME
+10-23 20:37:34.784  1188  1225 D QuickstepModelDelegate: notifyAppTargetEvent action=1 launchLocation=workspace/0/[-1,-1]/[1,1]
+10-23 20:37:34.787   935  1007 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#42) android.os.BinderProxy@fc3a192@0
+10-23 20:37:34.789   666   690 V WindowManager: Finish Transition (#42): created at 10-23 20:37:34.232 collect-started=3.541ms request-sent=3.58ms started=40.148ms ready=41.148ms sent=404.737ms commit=22.314ms finished=556.913ms
+10-23 20:37:34.790   935  1007 V WindowManagerShell: Track 0 became idle
+10-23 20:37:34.790   935  1007 V WindowManagerShell: All active transition animations finished
+10-23 20:37:34.807  1188  1188 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_window_focused|state_user_active] +[state_window_focused]
+10-23 20:37:34.808   666   792 I ImeTracker: com.android.launcher3:a9641886: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false userId 0 displayId 0
+10-23 20:37:34.809  1188  1188 D InsetsController: hide(ime())
+10-23 20:37:34.809  1188  1188 I ImeTracker: com.android.launcher3:a9641886: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:37:34.810   666   792 D InputMethodManagerService: Attach new input but force hide
+10-23 20:37:34.810   666   792 I ImeTracker: com.android.launcher3:bd5a1e3a: onRequestHide at ORIGIN_SERVER reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:37:34.810   666   792 I ImeTracker: com.android.launcher3:bd5a1e3a: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-23 20:37:34.810   666   792 W InputChannel-JNI: Channel already disposed.
+10-23 20:37:34.863     0     0 I binder  : 1361:1361 cannot find target node
+10-23 20:37:34.864     0     0 I binder  : 1361:1361 transaction async to 0:0 failed 710094/29189/-22, code 9 size 136-0 line 3436
+10-23 20:37:34.812  1361  1361 E libbinder.IPCThreadState: Binder transaction failure. id: 710094, cmd: BR_DEAD_REPLY (29189), error: -22 (Invalid argument)
+10-23 20:37:34.812   666   684 W ActivityManager: pid 1361 com.android.inputmethod.latin sent binder code 9 with flags 1 and got error -32
+10-23 20:37:34.813   666  1379 I ImeTracker: system_server:c11516f1: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false displayId 0
+10-23 20:37:34.813   666   693 I ImeTracker: system_server:c11516f1: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-23 20:37:34.998  1188  1188 D LauncherAmbientCueVM: Debounced empty action: updating state
+10-23 20:37:35.256   666   684 I ImeTracker: system_server:e4d9ae38: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false displayId 0
+10-23 20:37:35.256   666   693 I ImeTracker: system_server:e4d9ae38: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-23 20:37:35.269  1188  1188 D VRI[QuickstepLauncher]: WindowInsets changed: navigationBars:[0,0,0,126] 
+10-23 20:37:36.247  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d''
+10-23 20:37:36.310     0     0 I logd    : logdr: UID=0 GID=0 PID=8017 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns

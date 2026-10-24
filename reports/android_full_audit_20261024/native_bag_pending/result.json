@@ -1,0 +1,645 @@
+{
+	"checks": [],
+	"device": {
+		"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+		"mix_rate": 44100.0,
+		"model": "Android SDK built for x86_64",
+		"os": "Android",
+		"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+		"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+		"version": "37.16571990",
+		"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+		"window": "(1080, 2400)"
+	},
+	"final": {
+		"audio": {
+			"bgm": "bgm_home",
+			"events": [
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 343536
+				},
+				{
+					"category": "UI",
+					"name": "ui_page",
+					"time_ms": 345386
+				},
+				{
+					"category": "UI",
+					"name": "ui_page",
+					"time_ms": 347220
+				},
+				{
+					"category": "UI",
+					"name": "ui_page",
+					"time_ms": 349056
+				},
+				{
+					"category": "UI",
+					"name": "ui_page",
+					"time_ms": 350202
+				}
+			],
+			"mute": false,
+			"paused": false,
+			"playing": true,
+			"position": 25.6919689178467,
+			"suspended": false,
+			"voices": 0
+		},
+		"controls": [
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/ReturnButton",
+				"rect": [
+					18.0,
+					75.9624938964844,
+					56.0,
+					56.0
+				],
+				"safe": true,
+				"text": "‹",
+				"tooltip": "返回",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_equip",
+				"rect": [
+					20.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"safe": true,
+				"text": "装备",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_mat",
+				"rect": [
+					131.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"safe": true,
+				"text": "材料",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_gem",
+				"rect": [
+					242.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"safe": true,
+				"text": "宝石",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_pending",
+				"rect": [
+					353.0,
+					185.962493896484,
+					106.0,
+					60.0
+				],
+				"safe": true,
+				"text": "待领取",
+				"tooltip": "",
+				"touch_under44": false
+			}
+		],
+		"device": {
+			"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+			"mix_rate": 44100.0,
+			"model": "Android SDK built for x86_64",
+			"os": "Android",
+			"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+			"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+			"version": "37.16571990",
+			"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+			"window": "(1080, 2400)"
+		},
+		"focus": "Tab_pending:<Button#907378952939>",
+		"keyboard_height": 0,
+		"labels": [
+			{
+				"font": 15,
+				"minimum": "(73.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Control@1861/HeroRolePlate/@Label@1870",
+				"rect": [
+					182.0,
+					701.0,
+					116.0,
+					23.0
+				],
+				"text": "破军 · 战士"
+			},
+			{
+				"font": 16,
+				"minimum": "(1.0, 24.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Label@1928",
+				"rect": [
+					0.0,
+					447.720001220703,
+					480.0,
+					28.0
+				],
+				"text": ""
+			},
+			{
+				"font": 20,
+				"minimum": "(7.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/ReturnButton/@Label@2031",
+				"rect": [
+					18.0,
+					75.9624938964844,
+					56.0,
+					56.0
+				],
+				"text": "‹"
+			},
+			{
+				"font": 28,
+				"minimum": "(112.0, 42.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/@Label@2032",
+				"rect": [
+					128.0,
+					77.9624938964844,
+					327.999969482422,
+					52.0
+				],
+				"text": "行旅背包"
+			},
+			{
+				"font": 18,
+				"minimum": "(96.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Capacity",
+				"rect": [
+					24.0,
+					143.962493896484,
+					163.199996948242,
+					36.0
+				],
+				"text": "装备 28 / 60"
+			},
+			{
+				"font": 18,
+				"minimum": "(69.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/@Label@2033",
+				"rect": [
+					182.399993896484,
+					143.962493896484,
+					110.399993896484,
+					36.0
+				],
+				"text": "待领取 0"
+			},
+			{
+				"font": 18,
+				"minimum": "(107.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/GoldBalance",
+				"rect": [
+					307.199981689453,
+					143.962493896484,
+					148.799987792969,
+					36.0
+				],
+				"text": "金币 123.4万"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_equip/@Label@2034",
+				"rect": [
+					20.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"text": "装备"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_mat/@Label@2035",
+				"rect": [
+					131.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"text": "材料"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_gem/@Label@2036",
+				"rect": [
+					242.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"text": "宝石"
+			},
+			{
+				"font": 20,
+				"minimum": "(60.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_pending/@Label@2037",
+				"rect": [
+					353.0,
+					185.962493896484,
+					106.0,
+					60.0
+				],
+				"text": "待领取"
+			},
+			{
+				"font": 24,
+				"minimum": "(168.0, 35.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/PendingEmptyState/@Label@2558",
+				"rect": [
+					24.0,
+					635.962524414062,
+					431.0,
+					35.0
+				],
+				"text": "暂无待领取物品"
+			},
+			{
+				"font": 18,
+				"minimum": "(1.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/PendingEmptyState/@Label@2559",
+				"rect": [
+					24.0,
+					682.962524414062,
+					431.0,
+					27.0
+				],
+				"text": "背包满时，掉落将暂存于此"
+			},
+			{
+				"font": 22,
+				"minimum": "(1.0, 33.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/SelectedItemDetail/DetailScroll/@VBoxContainer@2044/@Label@2560",
+				"rect": [
+					38.0,
+					885.999877929688,
+					403.0,
+					33.0
+				],
+				"text": "待领取物品会保留在这里"
+			},
+			{
+				"font": 18,
+				"minimum": "(1.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/SelectedItemDetail/DetailScroll/@VBoxContainer@2044/@Label@2561",
+				"rect": [
+					38.0,
+					922.999877929688,
+					403.0,
+					27.0
+				],
+				"text": "腾出装备格后即可领取；领取不会额外消耗资源。"
+			}
+		],
+		"modals": [],
+		"page": "GameHome",
+		"tick_ms": 350906
+	},
+	"id": "native_bag_pending",
+	"photos": [],
+	"records": [
+		{
+			"audio": {
+				"bgm": "bgm_home",
+				"events": [
+					{
+						"category": "UI",
+						"name": "ui_open",
+						"time_ms": 343536
+					},
+					{
+						"category": "UI",
+						"name": "ui_page",
+						"time_ms": 345386
+					},
+					{
+						"category": "UI",
+						"name": "ui_page",
+						"time_ms": 347220
+					},
+					{
+						"category": "UI",
+						"name": "ui_page",
+						"time_ms": 349056
+					},
+					{
+						"category": "UI",
+						"name": "ui_page",
+						"time_ms": 350202
+					}
+				],
+				"mute": false,
+				"paused": false,
+				"playing": true,
+				"position": 25.6919689178467,
+				"suspended": false,
+				"voices": 0
+			},
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/ReturnButton",
+					"rect": [
+						18.0,
+						75.9624938964844,
+						56.0,
+						56.0
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_equip",
+					"rect": [
+						20.0,
+						185.962493896484,
+						105.0,
+						60.0
+					],
+					"safe": true,
+					"text": "装备",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_mat",
+					"rect": [
+						131.0,
+						185.962493896484,
+						105.0,
+						60.0
+					],
+					"safe": true,
+					"text": "材料",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_gem",
+					"rect": [
+						242.0,
+						185.962493896484,
+						105.0,
+						60.0
+					],
+					"safe": true,
+					"text": "宝石",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_pending",
+					"rect": [
+						353.0,
+						185.962493896484,
+						106.0,
+						60.0
+					],
+					"safe": true,
+					"text": "待领取",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"device": {
+				"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+				"mix_rate": 44100.0,
+				"model": "Android SDK built for x86_64",
+				"os": "Android",
+				"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+				"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+				"version": "37.16571990",
+				"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+				"window": "(1080, 2400)"
+			},
+			"focus": "Tab_pending:<Button#907378952939>",
+			"keyboard_height": 0,
+			"labels": [
+				{
+					"font": 15,
+					"minimum": "(73.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Control@1861/HeroRolePlate/@Label@1870",
+					"rect": [
+						182.0,
+						701.0,
+						116.0,
+						23.0
+					],
+					"text": "破军 · 战士"
+				},
+				{
+					"font": 16,
+					"minimum": "(1.0, 24.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Label@1928",
+					"rect": [
+						0.0,
+						447.720001220703,
+						480.0,
+						28.0
+					],
+					"text": ""
+				},
+				{
+					"font": 20,
+					"minimum": "(7.0, 30.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/ReturnButton/@Label@2031",
+					"rect": [
+						18.0,
+						75.9624938964844,
+						56.0,
+						56.0
+					],
+					"text": "‹"
+				},
+				{
+					"font": 28,
+					"minimum": "(112.0, 42.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/@Label@2032",
+					"rect": [
+						128.0,
+						77.9624938964844,
+						327.999969482422,
+						52.0
+					],
+					"text": "行旅背包"
+				},
+				{
+					"font": 18,
+					"minimum": "(96.0, 27.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Capacity",
+					"rect": [
+						24.0,
+						143.962493896484,
+						163.199996948242,
+						36.0
+					],
+					"text": "装备 28 / 60"
+				},
+				{
+					"font": 18,
+					"minimum": "(69.0, 27.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/@Label@2033",
+					"rect": [
+						182.399993896484,
+						143.962493896484,
+						110.399993896484,
+						36.0
+					],
+					"text": "待领取 0"
+				},
+				{
+					"font": 18,
+					"minimum": "(107.0, 27.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/GoldBalance",
+					"rect": [
+						307.199981689453,
+						143.962493896484,
+						148.799987792969,
+						36.0
+					],
+					"text": "金币 123.4万"
+				},
+				{
+					"font": 20,
+					"minimum": "(40.0, 30.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_equip/@Label@2034",
+					"rect": [
+						20.0,
+						185.962493896484,
+						105.0,
+						60.0
+					],
+					"text": "装备"
+				},
+				{
+					"font": 20,
+					"minimum": "(40.0, 30.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_mat/@Label@2035",
+					"rect": [
+						131.0,
+						185.962493896484,
+						105.0,
+						60.0
+					],
+					"text": "材料"
+				},
+				{
+					"font": 20,
+					"minimum": "(40.0, 30.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_gem/@Label@2036",
+					"rect": [
+						242.0,
+						185.962493896484,
+						105.0,
+						60.0
+					],
+					"text": "宝石"
+				},
+				{
+					"font": 20,
+					"minimum": "(60.0, 30.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_pending/@Label@2037",
+					"rect": [
+						353.0,
+						185.962493896484,
+						106.0,
+						60.0
+					],
+					"text": "待领取"
+				},
+				{
+					"font": 24,
+					"minimum": "(168.0, 35.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/PendingEmptyState/@Label@2558",
+					"rect": [
+						24.0,
+						635.962524414062,
+						431.0,
+						35.0
+					],
+					"text": "暂无待领取物品"
+				},
+				{
+					"font": 18,
+					"minimum": "(1.0, 27.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/PendingEmptyState/@Label@2559",
+					"rect": [
+						24.0,
+						682.962524414062,
+						431.0,
+						27.0
+					],
+					"text": "背包满时，掉落将暂存于此"
+				},
+				{
+					"font": 22,
+					"minimum": "(1.0, 33.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/SelectedItemDetail/DetailScroll/@VBoxContainer@2044/@Label@2560",
+					"rect": [
+						38.0,
+						885.999877929688,
+						403.0,
+						33.0
+					],
+					"text": "待领取物品会保留在这里"
+				},
+				{
+					"font": 18,
+					"minimum": "(1.0, 27.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/SelectedItemDetail/DetailScroll/@VBoxContainer@2044/@Label@2561",
+					"rect": [
+						38.0,
+						922.999877929688,
+						403.0,
+						27.0
+					],
+					"text": "腾出装备格后即可领取；领取不会额外消耗资源。"
+				}
+			],
+			"modals": [],
+			"page": "GameHome",
+			"tick_ms": 350905
+		}
+	],
+	"suite": "probe"
+}

@@ -104,8 +104,11 @@ func _ready() -> void:
 		# 货币说明弹窗
 		await click(page._wallet_labels[0].button)
 		await frames(2)
-		check(page._chest_dialog != null, "点货币打开行囊与货币")
-		page._close_chest_dialog()
+		check(not G._modals.is_empty(), "点货币打开对应币种详情")
+		if not G._modals.is_empty():
+			var currency: Control = G._modals.back().layer.get_child(0)
+			check(currency.get("currency_id")=="gold", "金币入口默认显示金币")
+			G.close_info_popup_by_id(int(G._modals.back().id))
 		await frames(2)
 		# 小聚未解锁时不绕过剧情
 		await click(view.find_child("Rail_gathering", true, false))

@@ -1,0 +1,133 @@
+{
+	"display": "远征 0.2.1-mobile2\nAndroid 37.16571990\n机型：Android SDK built for x86_64\n窗口像素：(1080, 2424)\n逻辑视口：[P: (0.0, 0.0), S: (480.0, 1077.0)]\n系统安全区：[P: (0, 136), S: (1080, 2288)]\n交互安全区：[P: (0.0, 60.42574), S: (480.0, 1016.574)]\n屏幕变换：[X: (2.25, 0.0), Y: (0.0, 2.250696), O: (0.0, 0.0)]\n缺口：[[P: (0.0, 0.0), S: (136.0, 136.0)]]",
+	"os": "Android",
+	"screens": [
+		{
+			"id": "loading",
+			"outliers": [],
+			"safe": "[P: (0.0, 60.42574), S: (480.0, 1016.574)]"
+		},
+		{
+			"id": "login",
+			"outliers": [],
+			"safe": "[P: (0.0, 60.42574), S: (480.0, 1016.574)]"
+		},
+		{
+			"id": "login_keyboard",
+			"outliers": [],
+			"safe": "[P: (0.0, 60.42574), S: (480.0, 1016.574)]"
+		},
+		{
+			"id": "town",
+			"outliers": [],
+			"safe": "[P: (0.0, 60.42574), S: (480.0, 1016.574)]"
+		},
+		{
+			"id": "activity",
+			"outliers": [],
+			"safe": "[P: (0.0, 60.42574), S: (480.0, 1016.574)]"
+		},
+		{
+			"id": "bag",
+			"outliers": [],
+			"safe": "[P: (0.0, 60.42574), S: (480.0, 1016.574)]"
+		},
+		{
+			"id": "gathering",
+			"outliers": [],
+			"safe": "[P: (0.0, 60.42574), S: (480.0, 1016.574)]"
+		},
+		{
+			"id": "settings",
+			"outliers": [],
+			"safe": "[P: (0.0, 60.42574), S: (480.0, 1016.574)]"
+		},
+		{
+			"id": "growth",
+			"outliers": [],
+			"safe": "[P: (0.0, 60.42574), S: (480.0, 1016.574)]"
+		},
+		{
+			"id": "codex",
+			"outliers": [],
+			"safe": "[P: (0.0, 60.42574), S: (480.0, 1016.574)]"
+		},
+		{
+			"id": "gacha",
+			"outliers": [],
+			"safe": "[P: (0.0, 60.42574), S: (480.0, 1016.574)]"
+		},
+		{
+			"id": "exchange",
+			"outliers": [],
+			"safe": "[P: (0.0, 60.42574), S: (480.0, 1016.574)]"
+		},
+		{
+			"id": "quests",
+			"outliers": [],
+			"safe": "[P: (0.0, 60.42574), S: (480.0, 1016.574)]"
+		},
+		{
+			"id": "world",
+			"outliers": [
+				{
+					"path": "/root/AndroidUiAudit/GameHome/@Control@911/@Control@912/@Control@917/@Control@927/@Control@928/Map_shenyuan_port",
+					"rect": "[P: (476.0, 179.4257), S: (96.0, 80.0)]",
+					"text": ""
+				},
+				{
+					"path": "/root/AndroidUiAudit/GameHome/@Control@911/@Control@912/@Control@917/@Control@927/@Control@928/Map_tideflat",
+					"rect": "[P: (560.5, 279.4257), S: (96.0, 80.0)]",
+					"text": ""
+				},
+				{
+					"path": "/root/AndroidUiAudit/GameHome/@Control@911/@Control@912/@Control@917/@Control@927/@Control@928/Map_tidal_gate",
+					"rect": "[P: (472.0, 395.9257), S: (96.0, 80.0)]",
+					"text": ""
+				},
+				{
+					"path": "/root/AndroidUiAudit/GameHome/@Control@911/@Control@912/@Control@917/@Control@927/@Control@928/Map_rift_mine_road",
+					"rect": "[P: (469.5, 533.4257), S: (96.0, 80.0)]",
+					"text": ""
+				},
+				{
+					"path": "/root/AndroidUiAudit/GameHome/@Control@911/@Control@912/@Control@917/@Control@927/@Control@928/Map_rift_mine_vault",
+					"rect": "[P: (631.0, 534.9257), S: (96.0, 80.0)]",
+					"text": ""
+				},
+				{
+					"path": "/root/AndroidUiAudit/GameHome/@Control@911/@Control@912/@Control@917/@Control@927/@Control@928/Map_frost_pass",
+					"rect": "[P: (437.0, 719.9257), S: (96.0, 80.0)]",
+					"text": ""
+				},
+				{
+					"path": "/root/AndroidUiAudit/GameHome/@Control@911/@Control@912/@Control@917/@Control@927/@Control@928/Map_abyss_ring",
+					"rect": "[P: (557.5, 700.4257), S: (96.0, 80.0)]",
+					"text": ""
+				},
+				{
+					"path": "/root/AndroidUiAudit/GameHome/@Control@911/@Control@912/@Control@917/@Control@927/@Control@928/Map_stele_entry",
+					"rect": "[P: (544.0, 411.9257), S: (96.0, 80.0)]",
+					"text": ""
+				},
+				{
+					"path": "/root/AndroidUiAudit/GameHome/@Control@911/@Control@912/@Control@917/@Control@927/@Control@928/Map_stele_resonance",
+					"rect": "[P: (562.5, 591.4257), S: (96.0, 80.0)]",
+					"text": ""
+				},
+				{
+					"path": "/root/AndroidUiAudit/GameHome/@Control@911/@Control@912/@Control@917/@Control@927/@Control@928/Map_stele_core",
+					"rect": "[P: (583.5, 799.9257), S: (96.0, 80.0)]",
+					"text": ""
+				}
+			],
+			"safe": "[P: (0.0, 60.42574), S: (480.0, 1016.574)]"
+		},
+		{
+			"id": "arena",
+			"outliers": [],
+			"safe": "[P: (0.0, 60.42574), S: (480.0, 1016.574)]"
+		}
+	],
+	"version": "37.16571990"
+}

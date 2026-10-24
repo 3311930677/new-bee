@@ -1,0 +1,344 @@
+--------- beginning of main
+10-24 00:30:28.119  1052  1290 D ImsResolver: maybeAddedImsService, packageName: org.yuanzheng.singleplayer
+10-24 00:30:28.119  1052  1290 V ImsResolver: searchForImsServices: package=org.yuanzheng.singleplayer, users=[UserHandle{0}]
+10-24 00:30:28.120  1052  1290 V ImsResolver: searchForImsServices: package=org.yuanzheng.singleplayer, users=[UserHandle{0}]
+10-24 00:30:28.122  1052  1052 W VvmPkgInstalledRcvr: carrierVvmPkgAdded: carrier vvm packages doesn't contain org.yuanzheng.singleplayer
+10-24 00:30:28.123  1133  1133 I SafetyLabelChangedBroadcastReceiver: received broadcast packageName: org.yuanzheng.singleplayer, current user: UserHandle{0}, packageChangeEvent: UPDATE, intent user: UserHandle{0}
+10-24 00:30:28.130  1052  1052 D SatelliteController: packageStateChanged: package:org.yuanzheng.singleplayer defaultSmsPackageName: com.android.messaging satelliteGatewayServicePackageName: 
+10-24 00:30:28.135  1187  1251 D AlphabeticIndexCompat: computeSectionName: cs: 远征 sectionName: …
+10-24 00:30:28.136  1187  1187 D AllAppsStore: setApps: apps.length=13
+10-24 00:30:28.136  1187  1187 D AllAppsStore: notifyUpdate: notifying listeners
+10-24 00:30:28.136  1187  1187 D ActivityAllAppsContainerView: onAppsUpdated; number of apps: 13
+10-24 00:30:28.136  1187  1187 D ActivityAllAppsContainerView: rebindAdapters: force: false
+10-24 00:30:28.136  1187  1187 D ActivityAllAppsContainerView: rebindAdapters: Not needed.
+10-24 00:30:28.136  1187  1187 D StatsLog: LAUNCHER_ALLAPPS_COUNT
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: Clearing FastScrollerSections.
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: Adding apps with sections. HasPrivateApps: false
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: C with appInfoTitle: Calendar
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: F with appInfoTitle: Files
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: G with appInfoTitle: Gallery
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: M with appInfoTitle: Messaging
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: P with appInfoTitle: Phone
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: S with appInfoTitle: Search
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: T with appInfoTitle: TMoble
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: W with appInfoTitle: WebView Browser Tester
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: … with appInfoTitle: 远征
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: Adding FastScrollSection duplicate to scroll to the bottom.
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: Clearing FastScrollerSections.
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: Adding apps with sections. HasPrivateApps: false
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: C with appInfoTitle: Calendar
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: F with appInfoTitle: Files
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: G with appInfoTitle: Gallery
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: M with appInfoTitle: Messaging
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: P with appInfoTitle: Phone
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: S with appInfoTitle: Search
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: T with appInfoTitle: TMoble
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: W with appInfoTitle: WebView Browser Tester
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: addAppsWithSections: adding sectionName: … with appInfoTitle: 远征
+10-24 00:30:28.136  1187  1187 D AlphabeticalAppsList: Adding FastScrollSection duplicate to scroll to the bottom.
+10-24 00:30:28.137  1187  1187 D AllAppsStore: setApps: apps.length=13
+10-24 00:30:28.137  1187  1187 D AllAppsStore: notifyUpdate: notifying listeners
+10-24 00:30:28.140  1133  2079 I PermissionControllerServiceImpl: Updating user sensitive for uid 10156
+--------- beginning of system
+10-24 00:30:28.183   666  1420 I PackageManager: getInstalledPackages: callingUid=1000 flags=134217856 updatedFlags=135004288 userId=0
+10-24 00:30:28.245  2149  2149 I adbd    : adbd service requested 'shell,v2,TERM=dumb,raw:am start -n org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher'
+10-24 00:30:28.267   666  1039 W ActivityTaskManager: callingPackage for (uid=0, pid=2216) has no WPC
+10-24 00:30:28.269   666  1039 V GrammaticalInflectionUtils: AttributionSource: AttributionSource { uid = 10156, packageName = null, attributionTag = null, token = android.os.Binder@ca09710, deviceId = 0, next = null } does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+10-24 00:30:28.272  1187  1187 D RecentsView: onTaskDisplayChanged: 31, new displayId = 0
+10-24 00:30:28.276   666  1039 D CorePackageUpdate: onRecentTaskRemoved Removing task: 29
+10-24 00:30:28.276   666  1039 D CorePackageUpdate: Couldn't find a persistent state for task= 29
+10-24 00:30:28.277   666  1039 V ActivityTaskManager: TaskLaunchParamsModifier: phase=3 task=Task{c3c6a10 #31 type=standard A=10156:org.yuanzheng.singleplayer} activity=ActivityRecord{188362451 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher t-1} display-from-task=0 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@167431122 inherit-from-task=fullscreen non-freeform-task-display-area display-area=DefaultTaskDisplayArea@167431122 skip-bounds-fullscreen
+10-24 00:30:28.277   666  1039 I ActivityTaskManager: START u0 {flg=0x10000000 xflg=0x4 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} with LAUNCH_SINGLE_INSTANCE_PER_TASK from uid 0 (com.android.shell) (BAL_ALLOW_ALLOWLISTED_UID) result code=0
+10-24 00:30:28.277  1187  1187 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_window_focused|state_user_active] -[]
+10-24 00:30:28.277   666   693 V GrammaticalInflectionUtils: AttributionSource: AttributionSource { uid = 10156, packageName = null, attributionTag = null, token = android.os.Binder@ca09710, deviceId = 0, next = null } does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+10-24 00:30:28.277   926   992 V WindowManagerShell: Transition requested (#9): android.os.BinderProxy@3d521d0 TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=31 effectiveUid=10156 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } baseActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} topActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} origActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} realActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} realActivityIsAppLockEnabled=false numActivities=1 lastActiveTime=69059 supportsMultiWindow=true supportsMultiWindowWithoutConstraints=false resizeMode=0 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.os.BinderProxy@8ecf5c9} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 135 - 0, 0) topActivityInfo=ActivityInfo{23e14ce com.godot.game.GodotAppLauncher} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isInteractive=false isVisible=false isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=null leafTaskBoundsFromOptions= false capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=503 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false isLeafTask= true eligibleForLetterboxEducation= false isLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2400) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransitionInfo = null, displayChanges = null, requestedLocation = null, userChange = null, windowingLayerChange = null, fullscreenRequestChange = null, flags = 0, debugId = 9 }
+10-24 00:30:28.277   926   992 W DisconnectHandler: No disconnect change found in the transition, not handling request.
+10-24 00:30:28.277   926   992 V ShellDesktopMode: DesktopTasksController: skipping handleRequest reason=triggerTask's display doesn't support desktop mode
+10-24 00:30:28.278   926   992 D ShellSplitScreen: logExit: no-op, mLoggerSessionId is null
+10-24 00:30:28.278  1187  1187 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_window_focused] -[state_user_active]
+10-24 00:30:28.278  1187  1187 D BaseActivity: Launcher flags updated: [state_started|state_window_focused] -[state_resumed|state_deferred_resumed]
+10-24 00:30:28.278  1187  1187 W SplitSelectStateCtor: Missing session instanceIds
+10-24 00:30:28.278  1187  1187 D StatsLog: LAUNCHER_SPLIT_SELECTION_EXIT_INTERRUPTED
+10-24 00:30:28.279   666  1039 D CompatChangeReporter: Compat change id reported: 377864165; UID 10156; state: ENABLED
+10-24 00:30:28.279   926   992 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=false, height=427
+10-24 00:30:28.280   926  1046 W ShellStartingWindow: Get attribute fail, return default: File res/mipmap-xxhdpi-v4/icon_background.webp from drawable resource ID #0x7f0a0001: .xml extension required
+10-24 00:30:28.281   666   859 I AppWidgetServiceImpl: Received broadcast: android.intent.action.PACKAGE_UNSTOPPED on user 0
+10-24 00:30:28.282   666   859 I AppWidgetServiceImpl: Updating package stopped masked state for uid 10156 package org.yuanzheng.singleplayer isStopped false
+10-24 00:30:28.283   926   992 V RecentTasksController: Notify recent tasks changed
+10-24 00:30:28.284  1187  1187 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+10-24 00:30:28.285   926   992 D ShellDesktopMode: DesktopRepository(0): Removes freeform task: taskId=29
+10-24 00:30:28.285   926   992 W ShellDesktopMode: DesktopRepository(0): No display id found for task: taskId=29
+10-24 00:30:28.285   926   992 V RecentTasksController: Notify recent tasks changed
+10-24 00:30:28.285  1187  1187 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+10-24 00:30:28.289   666  1039 D CompatChangeReporter: Compat change id reported: 463899193; UID 10156; state: ENABLED
+10-24 00:30:28.291   666  1039 W InputChannel-JNI: Channel already disposed.
+10-24 00:30:28.292   926  1046 W System  : ClassLoader referenced unknown path: 
+10-24 00:30:28.292   926  1046 D nativeloader: Configuring clns-10 for other apk . target_sdk_version=36, uses_libraries=, library_path=/data/app/~~9hfBQ0qVtg2i4PngdrEmVQ==/org.yuanzheng.singleplayer-gMIL6unUAc9efOMhq-xARg==/lib/x86_64:/data/app/~~9hfBQ0qVtg2i4PngdrEmVQ==/org.yuanzheng.singleplayer-gMIL6unUAc9efOMhq-xARg==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand
+10-24 00:30:28.291   464   464 D Zygote  : Forked child process 2221
+10-24 00:30:28.292   926  1046 D SplashScreenView: Build android.window.SplashScreenView{b9c9f00 V.E...... ......ID 0,0-0,0}
+10-24 00:30:28.292   926  1046 D SplashScreenView: Icon: view: android.widget.ImageView{421e339 V.ED..... ......I. 0,0-0,0 #1020575 android:id/splashscreen_icon_view} drawable: com.android.wm.shell.startingsurface.SplashscreenIconDrawableFactory$ImmobileIconDrawable@cbf4d7e size: 504
+10-24 00:30:28.292   926  1046 D SplashScreenView: Branding: view: android.view.View{48492df V.ED..... ......I. 0,0-0,0 #1020574 android:id/splashscreen_branding_view} drawable: android.graphics.drawable.BitmapDrawable@8acab2c size w: 525 h: 210
+10-24 00:30:28.293   666   700 I ActivityManager: Start proc 2221:org.yuanzheng.singleplayer/u0a156 for next-top-activity {org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+10-24 00:30:28.299  2221  2221 I libprocessgroup: Created cgroup /sys/fs/cgroup/apps/uid_10156
+10-24 00:30:28.301  2221  2221 I libprocessgroup: Created cgroup /sys/fs/cgroup/apps/uid_10156/pid_2221
+10-24 00:30:28.302  1187  1187 D BaseActivity: Launcher flags updated: [state_started] -[state_window_focused]
+10-24 00:30:28.303   666  1171 D WindowManager: setClientSurface Surface(name=VRI-Splash Screen org.yuanzheng.singleplayer#95)/@0xd867740 for 37e5f7d Splash Screen org.yuanzheng.singleplayer
+10-24 00:30:28.304   926  1045 I Surface : Creating surface for consumer unnamed-926-5 with slotExpansion=1 for 64 slots
+10-24 00:30:28.304  2221  2221 I Zygote  : Process 2221 created for org.yuanzheng.singleplayer
+10-24 00:30:28.305  2221  2221 I ng.singleplayer: Late-enabling -Xcheck:jni
+10-24 00:30:28.305   926  1045 I Surface : Creating surface for consumer VRI[singleplayer]#5(BLAST Consumer)5 with slotExpansion=1 for 64 slots
+10-24 00:30:28.317  2221  2221 I ng.singleplayer: Using generational CollectorTypeCMC GC.
+10-24 00:30:28.317  2221  2221 W ng.singleplayer: Unexpected CPU variant for x86: x86_64.
+10-24 00:30:28.317  2221  2221 W ng.singleplayer: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, alderlake, pantherlake, default
+10-24 00:30:28.320  2149  2154 I adbd    : jdwp connection from 2221
+10-24 00:30:28.326  2221  2221 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+10-24 00:30:28.387   926   992 V RecentTasksController: Notify recent tasks changed
+10-24 00:30:28.387  1187  1187 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+10-24 00:30:28.388   926   940 V WindowManagerShell: onTransitionReady(transaction=2860448219924)
+10-24 00:30:28.391   926   992 V WindowManagerShell: onTransitionReady (#9) android.os.BinderProxy@3d521d0: {id=9 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-24 00:30:28.391   926   992 V WindowManagerShell:         {m=OPEN f=MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=31#92)/@0xd03b173 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},
+10-24 00:30:28.391   926   992 V WindowManagerShell:         {m=TO_BACK f=SHOW_WALLPAPER|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#33)/@0xc95c830 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},
+10-24 00:30:28.391   926   992 V WindowManagerShell:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{2040de1}#42)/@0x3e50ca9 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}
+10-24 00:30:28.391   926   992 V WindowManagerShell:     ]}
+10-24 00:30:28.393   926   992 V WindowManagerShell: Playing animation for (#9) android.os.BinderProxy@3d521d0@0
+10-24 00:30:28.393   926   992 D ShellSplitScreen: startAnimation: transition=9 isSplitActive=false
+10-24 00:30:28.393   926   992 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+10-24 00:30:28.393   926   992 V ShellDesktopMode: DesktopMixedTransitionHandler: No pending desktop transition
+10-24 00:30:28.393   926   992 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=9 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=OPEN f=MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=31#92)/@0xd03b173 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=SHOW_WALLPAPER|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#33)/@0xc95c830 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{2040de1}#42)/@0x3e50ca9 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}]}
+10-24 00:30:28.394   926   992 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=false modes=[CHANGE] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=true}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@b5df1cf, appThread = android.app.IApplicationThread$Stub$Proxy@bc7375c, debugName = QuickstepDisplayMove, filter = {types=[] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=false modes=[CHANGE] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=true}]} }}
+10-24 00:30:28.394   926   992 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@3d8ca65, appThread = android.app.IApplicationThread$Stub$Proxy@17233a, debugName = QuickstepLaunchHome, filter = {types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} }}
+10-24 00:30:28.394   926   992 V WindowManagerShell:  Checking filter Pair{{types=[OPEN,TO_FRONT] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=freeform isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@f71dbeb, appThread = null, debugName = DesktopWindowLimitUnminimize, filter = {types=[OPEN,TO_FRONT] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=freeform isCrossDisplayMove=false}]} }}
+10-24 00:30:28.394   926   992 V WindowManagerShell:  Delegate animation for (#9) to null
+10-24 00:30:28.394   926   992 V WindowManagerShell: start default transition animation, info = {id=9 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=OPEN f=MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=31#92)/@0xd03b173 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=SHOW_WALLPAPER|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#33)/@0xc95c830 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{2040de1}#42)/@0x3e50ca9 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}]}
+10-24 00:30:28.413   926   992 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@1c43906 animAttr=0x13 type=OPEN isEntrance=false
+10-24 00:30:28.413   926   992 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@6dadf92 animAttr=0x12 type=OPEN isEntrance=true
+10-24 00:30:28.417   926   992 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@29d2f99
+10-24 00:30:28.418   926   992 V RecentTasksController: generateList(getRecentTasks)
+10-24 00:30:28.419   926   992 V RecentTasksController: initializeDesksMap - allDeskIds: []
+10-24 00:30:28.419   926   992 V RecentTasksController: Task 31 is not an active desktop task
+10-24 00:30:28.419   926   992 V RecentTasksController: Added fullscreen task: 31
+10-24 00:30:28.419   666   690 V WindowManager: Sent Transition (#9) createdAt=10-24 00:30:28.270 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=31 effectiveUid=10156 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } baseActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} topActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} origActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} realActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} realActivityIsAppLockEnabled=false numActivities=1 lastActiveTime=69059 supportsMultiWindow=true supportsMultiWindowWithoutConstraints=false resizeMode=0 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{30f92b3 Task{c3c6a10 #31 type=standard A=10156:org.yuanzheng.singleplayer}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 135 - 0, 0) topActivityInfo=ActivityInfo{5c63070 com.godot.game.GodotAppLauncher} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isInteractive=false isVisible=false isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=null leafTaskBoundsFromOptions= false capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=503 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false isLeafTask= true eligibleForLetterboxEducation= false isLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2400) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransitionInfo = null, displayChanges = null, requestedLocation = null, userChange = null, windowingLayerChange = null, fullscreenRequestChange = null, flags = 0, debugId = 9 }
+10-24 00:30:28.419   666   690 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] flags= 0 errorCallbackToken=null taskFragmentOrganizer=null }
+10-24 00:30:28.419   666   690 V WindowManager:     info={id=9 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-24 00:30:28.419   666   690 V WindowManager:         {WCT{RemoteToken{30f92b3 Task{c3c6a10 #31 type=standard A=10156:org.yuanzheng.singleplayer}}} m=OPEN f=MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=31#92)/@0x4ab7bb1 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},
+10-24 00:30:28.419   666   690 V WindowManager:         {WCT{RemoteToken{ec4efe9 Task{437bdb7 #1 type=home}}} m=TO_BACK f=SHOW_WALLPAPER|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#33)/@0xf93ee58 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},
+10-24 00:30:28.419   666   690 V WindowManager:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{2040de1}#42)/@0xb37773b sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}
+10-24 00:30:28.419   666   690 V WindowManager:     ]}
+10-24 00:30:28.424   926   992 V RecentTasksController: Task 17 is not an active desktop task
+10-24 00:30:28.424   926   992 V RecentTasksController: Added fullscreen task: 17
+10-24 00:30:28.424   926   992 V RecentTasksController: generateList - complete
+10-24 00:30:28.424   926   992 V ShellTaskOrganizer: Task appeared taskId=31 listener=FullscreenTaskListener
+10-24 00:30:28.425   926   992 V ShellTaskOrganizer: Fullscreen Task Appeared: #31
+10-24 00:30:28.425  1187  1249 D PreloadThumbnailUseCase: Preloading thumbnails for task ids: [[id=17 windowingMode=0 user=0 lastActiveTime=18063] null, [id=31 windowingMode=1 user=0 lastActiveTime=69059] null]
+10-24 00:30:28.426   926   992 D ShellPackageUpdate: PackageUpdateController: Setting handlePackageUpdate for task: 31
+10-24 00:30:28.427   666  1171 E TransitionChain: Can't collect into a chain with no transition
+10-24 00:30:28.427   666   691 V GameManagerService: setDefaultFrameRateOverride : 10156 , 60.0
+10-24 00:30:28.427   926   992 V RecentTasksController: Notify recent tasks changed
+10-24 00:30:28.428  1187  1187 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+10-24 00:30:28.445  2221  2221 D nativeloader: Configuring clns-9 for other apk /data/app/~~9hfBQ0qVtg2i4PngdrEmVQ==/org.yuanzheng.singleplayer-gMIL6unUAc9efOMhq-xARg==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~9hfBQ0qVtg2i4PngdrEmVQ==/org.yuanzheng.singleplayer-gMIL6unUAc9efOMhq-xARg==/lib/x86_64:/data/app/~~9hfBQ0qVtg2i4PngdrEmVQ==/org.yuanzheng.singleplayer-gMIL6unUAc9efOMhq-xARg==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/org.yuanzheng.singleplayer
+10-24 00:30:28.456  2221  2221 V GraphicsEnvironment: Currently set values for:
+10-24 00:30:28.456  2221  2221 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+10-24 00:30:28.456  2221  2221 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+10-24 00:30:28.456  2221  2221 V GraphicsEnvironment: org.yuanzheng.singleplayer is not listed in per-application setting
+10-24 00:30:28.456  2221  2221 V GraphicsEnvironment: No special selections for ANGLE, returning default driver choice
+10-24 00:30:28.458  2221  2221 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+10-24 00:30:28.466  2221  2221 D DesktopExperienceFlags: Toggle override initialized to: false
+10-24 00:30:28.476   666  1171 D CorePackageUpdate: Couldn't find a persistent state for task= 31
+10-24 00:30:28.482  2221  2236 I DisplayManager: Choreographer implicitly registered for the refresh rate.
+10-24 00:30:28.520  1425  1425 W MediaProvider: WorkProfileOwnerApps cache is empty
+10-24 00:30:28.520  1425  1425 D PickerSyncLockManager: Trying to acquire lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@74335ad[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+10-24 00:30:28.520  1425  1425 D CloseableReentrantLock: Successfully acquired lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@74335ad[Locked by thread main]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+10-24 00:30:28.520  1425  1425 D CloseableReentrantLock: Successfully released lock com.android.providers.media.photopicker.sync.CloseableReentrantLock@74335ad[Unlocked]. Lock Name = CLOUD_PROVIDER_LOCK. Threads that may be waiting to acquire this lock = []
+10-24 00:30:28.523  2221  2236 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv1_CM_emulation.so
+10-24 00:30:28.524  2221  2236 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv2_emulation.so
+10-24 00:30:28.527  2221  2236 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-24 00:30:28.537  2221  2236 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+10-24 00:30:28.537  2221  2236 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+10-24 00:30:28.564  2221  2221 D CompatChangeReporter: Compat change id reported: 377864165; UID 10156; state: ENABLED
+10-24 00:30:28.574  2221  2221 D GodotActivity: Project command line parameters: [--xr_mode_regular, --xr-mode, off, --fullscreen, --edge_to_edge, --background_color, #000000]
+10-24 00:30:28.574  2221  2221 D GodotActivity: Launch intent Intent { flg=0x10000000 xflg=0x4 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } with parameters []
+10-24 00:30:28.614  2221  2221 V GodotActivity: Creating new Godot fragment instance.
+10-24 00:30:28.659  2221  2221 V Godot   : Initializing Godot plugin registry
+10-24 00:30:28.704  2221  2221 I GodotPluginRegistry: Registering runtime plugin AndroidRuntime
+10-24 00:30:28.705  2221  2221 V Godot   : InitEngine with params: [--xr_mode_regular, --xr-mode, off, --fullscreen, --edge_to_edge, --background_color, #000000]
+10-24 00:30:28.734   926   992 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#9) android.os.BinderProxy@3d521d0@0
+10-24 00:30:28.737   666   690 V WindowManager: Finish Transition (#9): created at 10-24 00:30:28.270 collect-started=0.109ms request-sent=6.446ms started=7.544ms ready=108.146ms sent=112.315ms commit=37.839ms finished=465.972ms
+10-24 00:30:28.737  1187  1187 D VRI[QuickstepLauncher]: visibilityChanged oldVisibility=true newVisibility=false
+10-24 00:30:28.738   926   992 V WindowManagerShell: Track 0 became idle
+10-24 00:30:28.738   926   992 V WindowManagerShell: All active transition animations finished
+10-24 00:30:28.738   926  1169 D WallpaperService: onVisibilityChanged(false): com.android.systemui.wallpapers.ImageWallpaper$CanvasEngine@ada0ce4
+10-24 00:30:28.749  2221  2221 D nativeloader: Load /data/app/~~9hfBQ0qVtg2i4PngdrEmVQ==/org.yuanzheng.singleplayer-gMIL6unUAc9efOMhq-xARg==/lib/x86_64/libgodot_android.so using class loader ns clns-9 (caller=/data/app/~~9hfBQ0qVtg2i4PngdrEmVQ==/org.yuanzheng.singleplayer-gMIL6unUAc9efOMhq-xARg==/base.apk!classes7.dex): ok
+10-24 00:30:28.755  2221  2221 V Godot   : Godot native layer initialization completed: true
+10-24 00:30:28.756  2221  2221 V Godot   : Setting up native layer with params: [--xr-mode, off, --fullscreen]
+10-24 00:30:28.823  2221  2221 V Godot   : Godot native layer setup completed
+10-24 00:30:28.824  2221  2221 V Godot   : OnInitRenderView: GodotFragment{f2b62bc} (cc4fdadc-4a87-4d74-94dd-8dfe1c2d2b56 id=0x7f07002c)
+10-24 00:30:28.842  2221  2221 D Godot   : Render view should be transparent: false
+10-24 00:30:28.842  2221  2221 D Godot   : renderingDevice: opengl3 (ProjectSettings)
+10-24 00:30:28.842  2221  2221 D Godot   : 			renderer: gl_compatibility (ProjectSettings)
+10-24 00:30:28.885  2221  2221 V Godot   : OnStart: GodotFragment{f2b62bc} (cc4fdadc-4a87-4d74-94dd-8dfe1c2d2b56 id=0x7f07002c)
+10-24 00:30:28.886  2221  2221 D AutofillManager: Fill dialog is enabled:false, hints=[]
+10-24 00:30:28.891  2221  2221 V Godot   : OnResume: GodotFragment{f2b62bc} (cc4fdadc-4a87-4d74-94dd-8dfe1c2d2b56 id=0x7f07002c)
+10-24 00:30:28.897  2221  2221 W HWUI    : Unknown dataspace 0
+--------- beginning of kernel
+10-24 00:30:28.952     0     0 I servicemanager: Caller(pid=2221,uid=10156,sid=u:r:untrusted_app_34:s0:c156,c256,c512,c768) Found android.hardware.graphics.allocator.IAllocator/default in device VINTF manifest.
+10-24 00:30:28.954     0     0 I servicemanager: Caller(pid=2221,uid=10156,sid=u:r:untrusted_app_34:s0:c156,c256,c512,c768) Found android.hardware.graphics.allocator.IAllocator/default in device VINTF manifest.
+10-24 00:30:28.956     0     0 I servicemanager: Caller(pid=2221,uid=10156,sid=u:r:untrusted_app_34:s0:c156,c256,c512,c768) Found mapper/ranchu in device VINTF manifest.
+10-24 00:30:28.902  2221  2221 D InsetsController: Setting requestedVisibleTypes to 496 (was 503)
+10-24 00:30:28.905   666  1172 W InputChannel-JNI: Channel already disposed.
+10-24 00:30:28.909  2221  2247 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-24 00:30:28.920  2221  2221 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@483e62
+10-24 00:30:28.920  2221  2221 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): androidx.activity.OnBackPressedDispatcher$Api34Impl$createOnBackAnimationCallback$1@508a0b0
+10-24 00:30:28.920   666  1172 D CoreBackPreview: Window{82578b8 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@1a1f7, mPriority=-1, mIsAnimationCallback=false, mOverrideBehavior=0}
+10-24 00:30:28.921   666  1172 D CoreBackPreview: Window{82578b8 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@c156864, mPriority=0, mIsAnimationCallback=true, mOverrideBehavior=0}
+10-24 00:30:28.923  2221  2221 D VRI[GodotAppLauncher]: WindowInsets changed: 1080x2400 statusBars:[0,135,0,0] navigationBars:[0,0,0,126] mandatorySystemGestures:[0,167,0,126] 
+10-24 00:30:28.924  2221  2221 I HWUI    : Using FreeType backend (prop=Auto)
+10-24 00:30:28.927   523  1151 W libbinder.ServiceManagerCppClient: Permission failure: android.permission.ACCESS_SURFACE_FLINGER from uid=10156 pid=2221
+10-24 00:30:28.928   523  1151 D libbinder.PermissionCache: checking android.permission.ACCESS_SURFACE_FLINGER for uid=10156 => denied (500 us)
+10-24 00:30:28.928   523  1151 W libbinder.ServiceManagerCppClient: Permission failure: android.permission.ROTATE_SURFACE_FLINGER from uid=10156 pid=2221
+10-24 00:30:28.928   523  1151 D libbinder.PermissionCache: checking android.permission.ROTATE_SURFACE_FLINGER for uid=10156 => denied (573 us)
+10-24 00:30:28.928   523  1151 W libbinder.ServiceManagerCppClient: Permission failure: android.permission.INTERNAL_SYSTEM_WINDOW from uid=10156 pid=2221
+10-24 00:30:28.928   523  1151 D libbinder.PermissionCache: checking android.permission.INTERNAL_SYSTEM_WINDOW for uid=10156 => denied (232 us)
+10-24 00:30:28.929   523  1151 W libbinder.ServiceManagerCppClient: Permission failure: android.permission.READ_FRAME_BUFFER from uid=10156 pid=2221
+10-24 00:30:28.929   523  1151 D libbinder.PermissionCache: checking android.permission.READ_FRAME_BUFFER for uid=10156 => denied (169 us)
+10-24 00:30:28.930   666  1039 D WindowManager: setClientSurface Surface(name=VRI-org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher#101)/@0xc441acd for 82578b8 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher
+10-24 00:30:28.937  2221  2221 I Surface : Creating surface for consumer unnamed-2221-0 with slotExpansion=1 for 64 slots
+10-24 00:30:28.937  2221  2221 I Surface : Creating surface for consumer VRI[GodotAppLauncher]#0(BLAST Consumer)0 with slotExpansion=1 for 64 slots
+10-24 00:30:28.939  2221  2221 D VRI[GodotAppLauncher]: WindowInsets changed: statusBars:null navigationBars:null 
+10-24 00:30:28.943  2221  2221 I Surface : Creating surface for consumer unnamed-2221-1 with slotExpansion=1 for 64 slots
+10-24 00:30:28.943  2221  2221 I Surface : Creating surface for consumer 20f044f SurfaceView[org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher]#1(BLAST Consumer)1 with slotExpansion=1 for 64 slots
+10-24 00:30:28.970  2221  2244 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-24 00:30:28.978  2221  2244 W RegularContextFactory: creating OpenGL ES 3.0 context :
+10-24 00:30:29.028   666  1172 E AppOps  : attributionTag VCN not declared in manifest of android
+10-24 00:30:29.031  2221  2244 I godot   : Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+10-24 00:30:29.055   666  1172 W libbinder.ServiceManagerCppClient: Permission failure: android.permission.ACCESS_SURFACE_FLINGER from uid=10156 pid=0
+10-24 00:30:29.055   666  1172 D libbinder.PermissionCache: checking android.permission.ACCESS_SURFACE_FLINGER for uid=10156 => denied (185 us)
+10-24 00:30:29.055   666  1172 W libbinder.ServiceManagerCppClient: Permission failure: android.permission.ROTATE_SURFACE_FLINGER from uid=10156 pid=0
+10-24 00:30:29.055   666  1172 D libbinder.PermissionCache: checking android.permission.ROTATE_SURFACE_FLINGER for uid=10156 => denied (76 us)
+10-24 00:30:29.055   666  1172 W libbinder.ServiceManagerCppClient: Permission failure: android.permission.INTERNAL_SYSTEM_WINDOW from uid=10156 pid=0
+10-24 00:30:29.055   666  1172 D libbinder.PermissionCache: checking android.permission.INTERNAL_SYSTEM_WINDOW for uid=10156 => denied (47 us)
+10-24 00:30:29.056   666  1172 W libbinder.ServiceManagerCppClient: Permission failure: android.permission.READ_FRAME_BUFFER from uid=10156 pid=0
+10-24 00:30:29.056   666  1172 D libbinder.PermissionCache: checking android.permission.READ_FRAME_BUFFER for uid=10156 => denied (50 us)
+10-24 00:30:29.059   666   690 I ActivityTaskManager: Displayed org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher for user 0: +794ms
+10-24 00:30:29.063  1187  1187 D BaseActivity: Launcher flags updated: [] -[state_started]
+10-24 00:30:29.063  1187  1187 D BaseDepthController: setSurface:
+10-24 00:30:29.063  1187  1187 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+10-24 00:30:29.063  1187  1187 D BaseDepthController: 	mBaseSurface: null
+10-24 00:30:29.064  1187  1187 D BaseDepthController: mSurface is null and mCurrentBlur is: 0
+10-24 00:30:29.064  1187  1187 D LauncherStateManager: StateManager.goToState: fromState: Normal, toState: Normal, partial trace:
+10-24 00:30:29.064  1187  1187 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:469)
+10-24 00:30:29.064  1187  1187 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:460)
+10-24 00:30:29.064  1187  1187 D LauncherStateManager: 	at com.android.launcher3.statemanager.StatefulActivity.onStop(StatefulActivity.java:120)
+10-24 00:30:29.064  1187  1187 D LauncherStateManager: StateManager.onRepeatStateSetAborted: state: Normal
+10-24 00:30:29.065  1187  1187 D KeyboardStateManager: hideKeyboard
+10-24 00:30:29.065  1187  1187 D KeyboardStateManager: isImeShown: false
+10-24 00:30:29.065  1187  1187 D StatsLog: LAUNCHER_ONSTOP
+10-24 00:30:29.075   666   691 V GameManagerService: Game power mode ON (only games in foreground)
+10-24 00:30:29.088   666   693 I DisplayDeviceRepository: Display device changed render timings: "Built-in Screen", renderFrameRate=60.000004, presentationDeadlineNanos=16666666, appVsyncOffsetNanos=1000000, frameRateOverrides=[{uid=10156 frameRateHz=60.000004}]
+10-24 00:30:29.091   666   786 I ImeTracker: org.yuanzheng.singleplayer:1a7036ff: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false userId 0 displayId 0
+10-24 00:30:29.093  2221  2221 D InsetsController: hide(ime())
+10-24 00:30:29.094  2221  2221 I ImeTracker: org.yuanzheng.singleplayer:1a7036ff: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-24 00:30:29.094   666  1172 W InputChannel-JNI: Channel already disposed.
+10-24 00:30:29.095   666  1039 I ImeTracker: system_server:b957f200: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false displayId 0
+10-24 00:30:29.096   666   693 I ImeTracker: system_server:b957f200: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-24 00:30:29.147  2221  2244 E godot   : WARNING: Failed to load cached shader, recompiling.
+10-24 00:30:29.148  2221  2244 E godot   :    at: _load_from_cache (drivers/gles3/shader_gles3.cpp:615)
+10-24 00:30:29.315  2149  2149 I adbd    : adbd service requested 'exec:screencap '-p''
+10-24 00:30:29.402  2221  2221 W InteractionJankMonitor: Initializing without READ_DEVICE_CONFIG permission. enabled=true, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=org.yuanzheng.singleplayer
+10-24 00:30:29.404   666  1172 I ImeTracker: system_server:1e8227a7: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false displayId 0
+10-24 00:30:29.405   666   693 I ImeTracker: system_server:1e8227a7: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-24 00:30:29.414  2255  2255 W libbinder.BackendUnifiedServiceManager: Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: SurfaceFlingerAIDL
+10-24 00:30:29.414  2255  2255 W libbinder.BpBinder: Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+10-24 00:30:29.415  2255  2255 W libbinder.ProcessState: Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+10-24 00:30:29.450   523   585 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+10-24 00:30:29.450   523   585 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+10-24 00:30:29.509     0     0 I servicemanager: Caller(pid=2255,uid=0,sid=u:r:su:s0) Found android.hardware.graphics.allocator.IAllocator/default in device VINTF manifest.
+10-24 00:30:29.511     0     0 I servicemanager: Caller(pid=2255,uid=0,sid=u:r:su:s0) Found android.hardware.graphics.allocator.IAllocator/default in device VINTF manifest.
+10-24 00:30:29.512     0     0 I servicemanager: Caller(pid=2255,uid=0,sid=u:r:su:s0) Found mapper/ranchu in device VINTF manifest.
+10-24 00:30:29.515   926  1045 W FrameTracker: Missed App frame:jankTypeLegacy: UNKNOWN: 3, jankTypeExperimental: JANK_NONE, vsyncId: 4375, totalDuration: 21329694, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-24 00:30:29.515   926  1045 W FrameTracker: Missed SF frame:jankTypeLegacy: UNKNOWN: 3, jankTypeExperimental: JANK_NONE, vsyncId: 4375, totalDuration: 21329694, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-24 00:30:29.515   926  1045 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_NONE, vsyncId: 4405, totalDuration: 22266930, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-24 00:30:29.515   926  1045 W FrameTracker: Missed App frame:jankTypeLegacy: UNKNOWN: 3, jankTypeExperimental: JANK_NONE, vsyncId: 4434, totalDuration: 35954217, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-24 00:30:29.515   926  1045 W FrameTracker: Missed SF frame:jankTypeLegacy: UNKNOWN: 3, jankTypeExperimental: JANK_NONE, vsyncId: 4434, totalDuration: 35954217, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-24 00:30:29.515   926  1045 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_NONE, vsyncId: 4594, totalDuration: 4383799, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-24 00:30:29.515   926  1045 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_NONE, vsyncId: 4638, totalDuration: 5125170, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-24 00:30:29.515   926  1045 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_NONE, vsyncId: 4660, totalDuration: 5127804, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-24 00:30:29.515   926  1045 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_NONE, vsyncId: 4757, totalDuration: 5978708, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-24 00:30:29.515   926  1045 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_NONE, vsyncId: 4772, totalDuration: 5948542, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-24 00:30:29.515   926  1045 W FrameTracker: Missed App frame:jankTypeLegacy: UNKNOWN: 3, jankTypeExperimental: UNKNOWN: 3, vsyncId: 4787, totalDuration: 17255276, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-24 00:30:29.515   926  1045 W FrameTracker: Missed SF frame:jankTypeLegacy: UNKNOWN: 3, jankTypeExperimental: UNKNOWN: 3, vsyncId: 4787, totalDuration: 17255276, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-24 00:30:29.515   926  1045 W FrameTracker: Missed App frame:jankTypeLegacy: JANK_APPLICATION, jankTypeExperimental: JANK_COMPOSER, vsyncId: 4809, totalDuration: 36150610, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-24 00:30:29.515   926  1045 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_NONE, vsyncId: 4831, totalDuration: 31198144, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-24 00:30:29.515   926  1012 V PerfettoTrigger: Not triggering com.android.telemetry.interaction-jank-monitor-39 - not enough time since last trigger
+10-24 00:30:29.590  2221  2225 I ng.singleplayer: Compiler allocated 5239KB to compile void android.view.ViewRootImpl.performTraversals(long)
+10-24 00:30:29.753  2221  2244 I godot   : OpenGL API OpenGL ES 3.1 (4.5.0 Core Profile Context 23.20.60.03.240314) - Compatibility - Using Device: Google (ATI Technologies Inc.) - Android Emulator OpenGL ES Translator (AMD Radeon 780M Graphics)
+10-24 00:30:29.755  2221  2244 D AudioSystem: onNewServiceWithAdapter: media.audio_flinger service obtained 0x7787b5e9ce40
+10-24 00:30:29.756   516   540 D AudioFlinger: onStateChanged: pid:2221  uid:10156  state:unfrozen - no freeze activity
+10-24 00:30:29.756  2221  2244 D AudioSystem: getService: IAudioFlingerService retrieved: 0x7788a5f87a50  IAudioFlinger cached: 0x7787b5e9ce40
+10-24 00:30:29.757  2221  2244 D ng.singleplayer: PlayerBase::PlayerBase()
+10-24 00:30:29.757  2221  2244 D ng.singleplayer: TrackPlayerBase::TrackPlayerBase()
+10-24 00:30:29.757  2221  2244 I libOpenSLES: Emulating old channel mask behavior (ignoring positional mask 0x3, using default mask 0x3 based on channel count of 2)
+10-24 00:30:29.760   666   666 I PowerManagerService.WLLog: Changing the tag database size from 32 to  64
+10-24 00:30:29.762   516   516 W AudioFlinger: createTrack_l(): mismatch between requested flags (00000104) and output flags (00000002)
+10-24 00:30:29.762   516   516 D AudioFlinger: Client defaulted notificationFrames to 882 for frameCount 4012
+10-24 00:30:29.764   516   516 I AF::AfPlaybackCommon: AfPlaybackCommon: creating track with enforcement level 1 reason TARGET_SDK shouldHarden 1
+10-24 00:30:29.779   666  1172 E AppOps  : attributionTag  not declared in manifest of org.yuanzheng.singleplayer
+10-24 00:30:29.780   666  1038 E AppOps  : attributionTag  not declared in manifest of org.yuanzheng.singleplayer
+10-24 00:30:29.781  2221  2244 I godot   : 
+10-24 00:30:29.783   475  2260 W libprocessgroup: A JoinCgroup action in the SystemMemoryProcess profile is used for controller memory in the cgroup v2 hierarchy and will be ignored
+10-24 00:30:29.784  1023  1023 I bluetooth: system/btif/avrcp/avrcp_service.cc:533 SendMediaUpdate: track_changed=true :  play_state=true :  queue=true
+10-24 00:30:29.785  1023  1023 E MediaControlProfile: onCurrentPlayerStateUpdated: base actions not supported, player actions= 0, expected at least= 7f
+10-24 00:30:29.785  1023  1023 W MediaControlGattService: Feature PLAYBACK_SPEED support: true
+10-24 00:30:29.785  1023  1023 W MediaControlGattService: Feature PLAYBACK_SPEED support: true
+10-24 00:30:29.786  1023  1023 W MediaControlGattService: Feature PLAYBACK_SPEED support: true
+10-24 00:30:29.786  1023  1023 W MediaControlGattService: Feature TRACK_POSITION support: true
+10-24 00:30:29.786  1023  1023 W MediaControlGattService: Feature TRACK_POSITION_NOTIFY support: true
+10-24 00:30:29.786  1023  1023 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-24 00:30:29.786  1023  1023 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-24 00:30:29.787  1023  1023 W MediaControlGattService: Feature MEDIA_CONTROL_POINT_OPCODES_SUPPORTED support: true
+10-24 00:30:29.787  1023  1023 W MediaControlGattService: Feature TRACK_TITLE support: true
+10-24 00:30:29.787  1023  1023 W MediaControlGattService: Feature TRACK_TITLE support: true
+10-24 00:30:29.787  1023  1023 W MediaControlGattService: Feature TRACK_TITLE_NOTIFY support: true
+10-24 00:30:29.788  1023  1023 W MediaControlGattService: Feature TRACK_DURATION support: true
+10-24 00:30:29.788  1023  1023 W MediaControlGattService: Feature TRACK_DURATION support: true
+10-24 00:30:29.788  1023  1023 W MediaControlGattService: Feature TRACK_DURATION_NOTIFY support: true
+10-24 00:30:29.789  1023  1023 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-24 00:30:29.789  1023  1023 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-24 00:30:29.790  1023  1023 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-24 00:30:29.790  1023  1023 W MediaControlGattService: Feature SEEKING_SPEED support: true
+10-24 00:30:29.790  1023  1023 W MediaControlGattService: Feature SEEKING_SPEED support: true
+10-24 00:30:29.790  1023  1023 W MediaControlGattService: Feature SEEKING_SPEED support: true
+10-24 00:30:29.790  1023  1023 W MediaControlGattService: Feature TRACK_CHANGED support: true
+10-24 00:30:29.791  1023  1023 W MediaControlProfile: MCS service state fields left unhandled: 
+10-24 00:30:29.791  1023  1023 W MediaControlProfile:    > PLAYER_NAME
+10-24 00:30:29.791  1023  1023 W MediaControlProfile:    > PLAYING_ORDER_SUPPORTED
+10-24 00:30:29.861   516   570 D AudioFlinger: mixer(0x772c68e00790) throttle end: throttle time(33)
+10-24 00:30:29.945  2221  2250 E SurfaceSyncGroup: Failed to receive transaction ready in 1000ms. Marking SurfaceSyncGroup(wmsSync-VRI[GodotAppLauncher]#1) as ready
+10-24 00:30:29.946  2221  2250 E SurfaceSyncGroup: Failed to receive transaction ready in 1000ms. Marking SurfaceSyncGroup(VRI[GodotAppLauncher]#2) as ready
+10-24 00:30:29.947  2221  2250 E SurfaceSyncGroup: Failed to receive transaction ready in 1000ms. Marking SurfaceSyncGroup(SurfaceView[org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher]#0) as ready
+10-24 00:30:31.302  2221  2244 V Godot   : OnGodotSetupCompleted
+10-24 00:30:31.434  2221  2244 V Godot   : OnGodotMainLoopStarted
+10-24 00:30:31.782   666  1440 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-24 00:30:32.153   666   760 W CpuMonitorService: Current CPU frequency (4887198) is greater than maximum CPU frequency (2) for policy ID (1). Skipping CPU frequency policy
+10-24 00:30:32.153   666   760 W CpuMonitorService: Current CPU frequency (3249794) is greater than maximum CPU frequency (2) for policy ID (2). Skipping CPU frequency policy
+10-24 00:30:32.153   666   760 W CpuMonitorService: Current CPU frequency (4900798) is greater than maximum CPU frequency (2) for policy ID (3). Skipping CPU frequency policy
+10-24 00:30:32.778   666   764 D ActivityManager: freezing 1600 android.process.media
+10-24 00:30:32.783   666   832 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-24 00:30:32.783   666   832 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-24 00:30:32.784   666   832 D InetDiagMessage: Destroyed live tcp sockets for uids={10075} in 2ms
+10-24 00:30:33.438  1133  1147 I PermissionControllerServiceImpl: Updating user sensitive for user 0
+10-24 00:30:33.442   666  1171 I PackageManager: getInstalledPackages: callingUid=10149 flags=2147618816 updatedFlags=2148405248 userId=0
+10-24 00:30:33.448   666  1171 W PackageInfo: Large parcel: size=50460 pkg=com.android.healthconnect.controller uid=10140 perm=48464(344) reqPerm=372(16) prevAllowSquashing=false
+10-24 00:30:33.453   666  1171 W PackageInfo: Large parcel: size=166872 pkg=android uid=1000 perm=165304(1104) reqPerm=156(38) attr=520(9) prevAllowSquashing=false
+10-24 00:30:33.453   666  1171 W ParceledListSlice: Element #52 is 166872 bytes.
+10-24 00:30:33.453   666  1171 W ParceledListSlice: Overly large reply size: 219028
+10-24 00:30:34.016   666   709 I WifiService: isFeatureSupported uid=1000 returns [WIFI_FEATURE_INFRA, WIFI_FEATURE_P2P, WIFI_FEATURE_MOBILE_HOTSPOT, WIFI_FEATURE_WPA3_SAE, WIFI_FEATURE_WPA3_SUITE_B, WIFI_FEATURE_OWE, WIFI_FEATURE_DPP, WIFI_FEATURE_AP_RAND_MAC, WIFI_FEATURE_MBO, WIFI_FEATURE_FILS_SHA256, WIFI_FEATURE_FILS_SHA384, WIFI_FEATURE_SAE_PK, WIFI_FEATURE_DPP_ENROLLEE_RESPONDER, WIFI_FEATURE_PASSPOINT_TERMS_AND_CONDITIONS, WIFI_FEATURE_WFD_R2, WIFI_FEATURE_DECORATED_IDENTITY, WIFI_FEATURE_TRUST_ON_FIRST_USE, WIFI_FEATURE_SET_TLS_MINIMUM_VERSION, WIFI_FEATURE_TLS_V1_3, WIFI_FEATURE_WEP, WIFI_FEATURE_WPA_PERSONAL]
+10-24 00:30:34.613  2149  2149 I adbd    : adbd service requested 'exec:screencap '-p''
+10-24 00:30:34.678  2265  2265 W libbinder.BackendUnifiedServiceManager: Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: SurfaceFlingerAIDL
+10-24 00:30:34.678  2265  2265 W libbinder.BpBinder: Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+10-24 00:30:34.678  2265  2265 W libbinder.ProcessState: Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+10-24 00:30:34.720   523   585 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+10-24 00:30:34.776     0     0 I servicemanager: Caller(pid=2265,uid=0,sid=u:r:su:s0) Found android.hardware.graphics.allocator.IAllocator/default in device VINTF manifest.
+10-24 00:30:34.779     0     0 I servicemanager: Caller(pid=2265,uid=0,sid=u:r:su:s0) Found android.hardware.graphics.allocator.IAllocator/default in device VINTF manifest.
+10-24 00:30:34.781     0     0 I servicemanager: Caller(pid=2265,uid=0,sid=u:r:su:s0) Found mapper/ranchu in device VINTF manifest.
+10-24 00:30:34.975  2149  2149 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d''
+10-24 00:30:35.039     0     0 I logd    : logdr: UID=0 GID=0 PID=2268 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns

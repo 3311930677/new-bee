@@ -21,7 +21,7 @@ static func theme() -> Theme:
 	for role in Base.FONT_SIZES:
 		var variant := "Chest_" + String(role)
 		_theme.set_font("font", variant, G.font_serif if role in ["title", "section", "object"] else G.font_bold if role in ["number", "tag"] else G.font_reg)
-		_theme.set_font_size("font_size", variant, 24 if role == "title" else 19 if role == "object" else 16 if role == "section" else 16 if role in ["secondary", "primary"] else Base.FONT_SIZES[role])
+		_theme.set_font_size("font_size", variant, 28 if role == "title" else 24 if role == "object" else 22 if role in ["section","body"] else 20 if role in ["secondary", "primary"] else 18)
 	_theme.default_font = G.font_reg
 	return _theme
 
@@ -147,6 +147,13 @@ class ItemCell extends Page.ItemCell:
 		image_px = 64
 	func _draw() -> void:
 		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		# Empty capacity slots must not look like occupied items with missing art.
+		if disabled and item_image.texture == null:
+			draw_rect(Rect2(Vector2(3,3),size-Vector2(6,6)),Color("15191e"))
+			draw_rect(Rect2(Vector2(3,3),size-Vector2(6,6)),Color("484237"),false,1)
+			heading.hide()
+			amount.hide()
+			return
 		draw_style_box(Art.box("secondary",0),Rect2(Vector2.ZERO,size))
 		if item_image.texture == null:
 			var c := (size *.5).floor()
@@ -161,7 +168,7 @@ class ItemCell extends Page.ItemCell:
 		item_image.custom_minimum_size = Vector2(px,px)
 		item_image.position = ((size-Vector2(px,px))*.5).floor()
 		item_image.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		heading.visible = show_name
+		heading.visible = show_name or (item_image.texture == null and not disabled)
 		heading.position = Vector2(4,size.y-24)
 		heading.size = Vector2(size.x-8,20)
 		amount.position = Vector2(4,4)

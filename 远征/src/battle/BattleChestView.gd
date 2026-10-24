@@ -109,6 +109,7 @@ func _ready() -> void:
 	if host._flee_blocked:host._set_radial_disabled("flee",true)
 	host._build_boss_bar()
 	get_viewport().size_changed.connect(layout)
+	preload("res://src/ui/UiSafeArea.gd").watch(self,layout)
 	layout()
 	refresh()
 func _add(id:String,words:String,callback:Callable,main:bool=false) -> void:

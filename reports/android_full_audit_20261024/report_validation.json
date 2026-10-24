@@ -1,0 +1,24 @@
+{
+  "original_issues": 17,
+  "suite_count": 48,
+  "media_files": 679,
+  "broken_readme_links": [],
+  "html_links_checked": 2068,
+  "html_missing_links": [],
+  "mute_restart_settings": {
+    "saved_mute_on": {
+      "bgm": 0.7,
+      "mute": true,
+      "sfx": 0.8
+    },
+    "saved_after_restart": {
+      "bgm": 0.7,
+      "mute": true,
+      "sfx": 0.8
+    }
+  },
+  "normal_flow_fatal_errors": [],
+  "installed_hash_matches": true,
+  "audio_expected_failures": 1,
+  "gallery_visual_browser_review": "not completed; in-app browser local connection refused/time out"
+}

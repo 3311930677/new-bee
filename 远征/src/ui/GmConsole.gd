@@ -42,18 +42,22 @@ func _ready() -> void:
 	visible = false
 	# 常驻最上层：任何界面（含手机正式导出包）都能唤起
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	_build_float_bar.call_deferred()
+	if OS.is_debug_build() and "--gm-touch-bar" in OS.get_cmdline_user_args():
+		_build_float_bar.call_deferred()
 
 
 func _process(_delta: float) -> void:
 	if _bar_layer != null:
 		var review_hide := bool(G.get_meta("ui_review_mode", false))
-		_bar_layer.visible = not review_hide
+		_bar_layer.visible = not review_hide and OS.is_debug_build()
+		if _float_bar != null:
+			var safe := G.ui_safe_rect(_float_bar)
+			_float_bar.position = _float_bar.position.clamp(safe.position+Vector2(4,4), (safe.end-_float_bar.size-Vector2(4,4)).max(safe.position+Vector2(4,4)))
 
 
 ## 用 _input 抢在各界面之前：否则底层场景的 ESC 处理会先把按键吃掉
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("gm_console"):
+	if OS.is_debug_build() and event.is_action_pressed("gm_console"):
 		toggle()
 		var vp := get_viewport()
 		if vp != null:

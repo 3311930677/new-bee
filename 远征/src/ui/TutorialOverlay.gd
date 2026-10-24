@@ -174,7 +174,12 @@ func refresh(sync_panel: bool = false) -> void:
 	_hint_l.text = "▶ " + String(step.get("action_hint", ""))
 	_prev_btn.disabled = idx <= 0
 	var is_last := idx >= total - 1
-	_next_btn.caption.text = "完成引导 · 领礼" if is_last else "下一步"
+	var battle_done := bool(tut.get("field_battle_won", false))
+	var moved := bool(tut.get("field_moved", false))
+	_next_btn.caption.text = "先去主世界移动" if idx == 1 and not moved else ("完成引导 · 领礼" if is_last and battle_done else ("先赢一场野外战斗" if is_last else "下一步"))
+	_next_btn.disabled = (idx == 1 and not moved) or (is_last and not battle_done)
+	if is_last and not battle_done:
+		_hint_l.text = "▶ 去野外完成一场战斗，回城后领取启程贺礼"
 	_try_btn.visible = action_router.is_valid() and not is_last
 	_relayout()
 	_relayout.call_deferred()

@@ -1,0 +1,895 @@
+--------- beginning of main
+10-23 20:13:47.556  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb,raw:am start -n org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher'
+--------- beginning of system
+10-23 20:13:47.575   666  1379 W ActivityTaskManager: callingPackage for (uid=0, pid=3782) has no WPC
+10-23 20:13:47.577   666  1379 V GrammaticalInflectionUtils: AttributionSource: AttributionSource { uid = 10156, packageName = null, attributionTag = null, token = android.os.Binder@21eda21, deviceId = 0, next = null } does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+10-23 20:13:47.579  1188  1188 D RecentsView: onTaskDisplayChanged: 26, new displayId = 0
+10-23 20:13:47.584   666  1379 D CorePackageUpdate: onRecentTaskRemoved Removing task: 25
+10-23 20:13:47.584   666  1379 D CorePackageUpdate: Couldn't find a persistent state for task= 25
+10-23 20:13:47.585   666  1379 V ActivityTaskManager: TaskLaunchParamsModifier: phase=3 task=Task{11dbb8c #26 type=standard A=10156:org.yuanzheng.singleplayer} activity=ActivityRecord{143141055 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher t-1} display-from-task=0 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@44935168 inherit-from-task=fullscreen non-freeform-task-display-area display-area=DefaultTaskDisplayArea@44935168 skip-bounds-fullscreen
+10-23 20:13:47.585   666  1379 I ActivityTaskManager: START u0 {flg=0x10000000 xflg=0x4 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} with LAUNCH_SINGLE_INSTANCE_PER_TASK from uid 0 (com.android.shell) (BAL_ALLOW_ALLOWLISTED_UID) result code=0
+10-23 20:13:47.585   935  1007 V WindowManagerShell: Transition requested (#31): android.os.BinderProxy@79fbf44 TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=26 effectiveUid=10156 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } baseActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} topActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} origActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} realActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} realActivityIsAppLockEnabled=false numActivities=1 lastActiveTime=202380 supportsMultiWindow=true supportsMultiWindowWithoutConstraints=true resizeMode=0 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.os.BinderProxy@de3582d} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=ActivityInfo{e787162 com.godot.game.GodotAppLauncher} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isInteractive=false isVisible=false isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=null leafTaskBoundsFromOptions= false capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=503 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false isLeafTask= true eligibleForLetterboxEducation= false isLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1600, 2560) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransitionInfo = null, displayChanges = null, requestedLocation = null, userChange = null, windowingLayerChange = null, fullscreenRequestChange = null, flags = 0, debugId = 31 }
+10-23 20:13:47.586  1188  1188 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_window_focused|state_user_active] -[]
+10-23 20:13:47.586   935  1007 W DisconnectHandler: No disconnect change found in the transition, not handling request.
+10-23 20:13:47.586   935  1007 V ShellDesktopMode: DesktopTasksController: skipping handleRequest reason=triggerTask's display doesn't support desktop mode
+10-23 20:13:47.587   935  1007 D ShellSplitScreen: logExit: no-op, mLoggerSessionId is null
+10-23 20:13:47.588   666   693 V GrammaticalInflectionUtils: AttributionSource: AttributionSource { uid = 10156, packageName = null, attributionTag = null, token = android.os.Binder@21eda21, deviceId = 0, next = null } does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+10-23 20:13:47.588   666  3743 D CompatChangeReporter: Compat change id reported: 377864165; UID 10156; state: ENABLED
+10-23 20:13:47.589  1188  1188 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_window_focused] -[state_user_active]
+10-23 20:13:47.589  1188  1188 D BaseActivity: Launcher flags updated: [state_started|state_window_focused] -[state_resumed|state_deferred_resumed]
+10-23 20:13:47.590  1188  1188 W SplitSelectStateCtor: Missing session instanceIds
+10-23 20:13:47.590  1188  1188 D StatsLog: LAUNCHER_SPLIT_SELECTION_EXIT_INTERRUPTED
+10-23 20:13:47.591   935  1065 W ShellStartingWindow: Get attribute fail, return default: File res/mipmap-xxhdpi-v4/icon_background.webp from drawable resource ID #0x7f0a0001: .xml extension required
+10-23 20:13:47.593   935  1007 V RecentTasksController: Notify recent tasks changed
+10-23 20:13:47.593   935  1007 D ShellDesktopMode: DesktopRepository(0): Removes freeform task: taskId=25
+10-23 20:13:47.593   935  1007 W ShellDesktopMode: DesktopRepository(0): No display id found for task: taskId=25
+10-23 20:13:47.593   935  1007 V RecentTasksController: Notify recent tasks changed
+10-23 20:13:47.596   935  1007 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=false, height=491
+10-23 20:13:47.597   935  1065 D SplashScreenView: Build android.window.SplashScreenView{bb01561 V.E...... ......ID 0,0-0,0}
+10-23 20:13:47.597   935  1065 D SplashScreenView: Icon: view: android.widget.ImageView{a82d886 V.ED..... ......I. 0,0-0,0 #1020575 android:id/splashscreen_icon_view} drawable: com.android.wm.shell.startingsurface.SplashscreenIconDrawableFactory$ImmobileIconDrawable@5533547 size: 504
+10-23 20:13:47.597   935  1065 D SplashScreenView: Branding: view: android.view.View{a938174 V.ED..... ......I. 0,0-0,0 #1020574 android:id/splashscreen_branding_view} drawable: android.graphics.drawable.BitmapDrawable@5f7a69d size w: 525 h: 210
+10-23 20:13:47.598   666  1379 D CompatChangeReporter: Compat change id reported: 463899193; UID 10156; state: ENABLED
+10-23 20:13:47.599   666  1379 W InputChannel-JNI: Channel already disposed.
+10-23 20:13:47.601  1188  1188 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: 25
+10-23 20:13:47.601  1188  1188 V TaskbarRecentAppsController: reloadRecentTasksIfNeeded: load recents tasks
+10-23 20:13:47.601   462   462 D Zygote  : Forked child process 3785
+10-23 20:13:47.601  1188  1188 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+10-23 20:13:47.601  1188  1188 V TaskbarRecentAppsController: reloadRecentTasksIfNeeded: tried to reload while loading recents tasks
+10-23 20:13:47.603   666   868 I AppWidgetServiceImpl: Received broadcast: android.intent.action.PACKAGE_UNSTOPPED on user 0
+10-23 20:13:47.603   666   868 I AppWidgetServiceImpl: Updating package stopped masked state for uid 10156 package org.yuanzheng.singleplayer isStopped false
+10-23 20:13:47.604  3785  3785 I libprocessgroup: Created cgroup /sys/fs/cgroup/apps/uid_10156/pid_3785
+10-23 20:13:47.606   935  1007 V RecentTasksController: generateList(getRecentTasks)
+10-23 20:13:47.606   935  1007 V RecentTasksController: initializeDesksMap - allDeskIds: []
+10-23 20:13:47.606   935  1007 V RecentTasksController: Task 26 is not an active desktop task
+10-23 20:13:47.606   935  1007 V RecentTasksController: Added fullscreen task: 26
+10-23 20:13:47.606   935  1007 V RecentTasksController: Task 17 is not an active desktop task
+10-23 20:13:47.606   935  1007 V RecentTasksController: Added fullscreen task: 17
+10-23 20:13:47.606   935  1007 V RecentTasksController: generateList - complete
+10-23 20:13:47.606   666  3743 D WindowManager: setClientSurface Surface(name=VRI-Splash Screen org.yuanzheng.singleplayer#257)/@0x217d0a for 58ba751 Splash Screen org.yuanzheng.singleplayer
+10-23 20:13:47.607  1188  1223 D RecentTasksList: loadTasksInBackground - isDeviceLocked(0): false
+10-23 20:13:47.607  1188  1223 D RecentTasksList: getTasks - loadTasksInBackground: 26
+10-23 20:13:47.607  1188  1188 D RecentTasksList: getTasks - updating mResultsUi: 26
+10-23 20:13:47.608  3785  3785 I Zygote  : Process 3785 created for org.yuanzheng.singleplayer
+10-23 20:13:47.608  3785  3785 I ng.singleplayer: Late-enabling -Xcheck:jni
+10-23 20:13:47.609  1188  1188 V TaskbarRecentAppsController: reloadRecentTasksIfNeeded: reload recents tasks
+10-23 20:13:47.609  1188  1188 V TaskbarRecentAppsController: reloadRecentTasksIfNeeded: load recents tasks
+10-23 20:13:47.610   666   700 I ActivityManager: Start proc 3785:org.yuanzheng.singleplayer/u0a156 for next-top-activity {org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+10-23 20:13:47.610   935  1062 I Surface : Creating surface for consumer unnamed-935-11 with slotExpansion=1 for 64 slots
+10-23 20:13:47.610   935  1062 I Surface : Creating surface for consumer VRI[singleplayer]#11(BLAST Consumer)11 with slotExpansion=1 for 64 slots
+10-23 20:13:47.611   935  1007 V RecentTasksController: generateList(getRecentTasks)
+10-23 20:13:47.611   935  1007 V RecentTasksController: initializeDesksMap - allDeskIds: []
+10-23 20:13:47.611   935  1007 V RecentTasksController: Task 26 is not an active desktop task
+10-23 20:13:47.611   935  1007 V RecentTasksController: Added fullscreen task: 26
+10-23 20:13:47.611   935  1007 V RecentTasksController: Task 17 is not an active desktop task
+10-23 20:13:47.611   935  1007 V RecentTasksController: Added fullscreen task: 17
+10-23 20:13:47.611   935  1007 V RecentTasksController: generateList - complete
+10-23 20:13:47.613  1188  1223 D RecentTasksList: loadTasksInBackground - isDeviceLocked(0): false
+10-23 20:13:47.616  1188  1223 D RecentTasksList: getTasks - loadTasksInBackground: 27
+10-23 20:13:47.616  1188  1188 D RecentTasksList: getTasks - updating mResultsUi: 27
+10-23 20:13:47.620  3785  3785 I ng.singleplayer: Using generational CollectorTypeCMC GC.
+10-23 20:13:47.620  3785  3785 W ng.singleplayer: Unexpected CPU variant for x86: x86_64.
+10-23 20:13:47.620  3785  3785 W ng.singleplayer: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, alderlake, pantherlake, default
+10-23 20:13:47.628  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/ready.json''
+10-23 20:13:47.640  2119  2124 I adbd    : jdwp connection from 3785
+10-23 20:13:47.641  1188  1188 D BaseActivity: Launcher flags updated: [state_started] -[state_window_focused]
+10-23 20:13:47.646  3785  3785 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+10-23 20:13:47.662   666   691 V GameManagerService: setDefaultFrameRateOverride : 10156 , 60.0
+10-23 20:13:47.696   935  1007 V RecentTasksController: Notify recent tasks changed
+10-23 20:13:47.701   935  1007 V RecentTasksController: generateList(getRecentTasks)
+10-23 20:13:47.701   935  1007 V RecentTasksController: initializeDesksMap - allDeskIds: []
+10-23 20:13:47.702   935  1007 V RecentTasksController: Task 26 is not an active desktop task
+10-23 20:13:47.703   935  1007 V RecentTasksController: Added fullscreen task: 26
+10-23 20:13:47.703   935  1007 V RecentTasksController: Task 17 is not an active desktop task
+10-23 20:13:47.703   935  1007 V RecentTasksController: Added fullscreen task: 17
+10-23 20:13:47.703   935  1007 V RecentTasksController: generateList - complete
+10-23 20:13:47.703  1188  1223 D PreloadThumbnailUseCase: Preloading thumbnails for task ids: [[id=17 windowingMode=0 user=0 lastActiveTime=17022] null, [id=26 windowingMode=1 user=0 lastActiveTime=202380] null]
+10-23 20:13:47.709   666   690 V WindowManager: Sent Transition (#31) createdAt=10-23 20:13:47.578 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=26 effectiveUid=10156 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } baseActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} topActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} origActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} realActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} realActivityIsAppLockEnabled=false numActivities=1 lastActiveTime=202380 supportsMultiWindow=true supportsMultiWindowWithoutConstraints=true resizeMode=0 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{bf1122d Task{11dbb8c #26 type=standard A=10156:org.yuanzheng.singleplayer}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=ActivityInfo{4fca362 com.godot.game.GodotAppLauncher} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isInteractive=false isVisible=false isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=null leafTaskBoundsFromOptions= false capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=503 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false isLeafTask= true eligibleForLetterboxEducation= false isLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1600, 2560) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransitionInfo = null, displayChanges = null, requestedLocation = null, userChange = null, windowingLayerChange = null, fullscreenRequestChange = null, flags = 0, debugId = 31 }
+10-23 20:13:47.709   666   690 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] flags= 0 errorCallbackToken=null taskFragmentOrganizer=null }
+10-23 20:13:47.709   666   690 V WindowManager:     info={id=31 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-23 20:13:47.709   666   690 V WindowManager:         {WCT{RemoteToken{bf1122d Task{11dbb8c #26 type=standard A=10156:org.yuanzheng.singleplayer}}} m=OPEN f=MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=26#254)/@0x21a3257 sb=Rect(0, 0 - 1600, 2560) eb=Rect(0, 0 - 1600, 2560) epz=Point(1600, 2560) d=0 taskParent=-1 winMode=1 userId=0},
+10-23 20:13:47.709   666   690 V WindowManager:         {WCT{RemoteToken{4db2d23 Task{4dee1b4 #1 type=home}}} m=TO_BACK f=SHOW_WALLPAPER|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#33)/@0x6a203c6 sb=Rect(0, 0 - 1600, 2560) eb=Rect(0, 0 - 1600, 2560) epz=Point(1600, 2560) d=0 taskParent=-1 winMode=1 userId=0},
+10-23 20:13:47.709   666   690 V WindowManager:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{d7e6825}#45)/@0x1efe5a1 sb=Rect(0, 0 - 1600, 2560) eb=Rect(0, 0 - 1600, 2560) epz=Point(1600, 2560) d=0}
+10-23 20:13:47.709   666   690 V WindowManager:     ]}
+10-23 20:13:47.714   935  1166 V WindowManagerShell: onTransitionReady(transaction=2860448221825)
+10-23 20:13:47.720   935  1007 V WindowManagerShell: onTransitionReady (#31) android.os.BinderProxy@79fbf44: {id=31 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-23 20:13:47.720   935  1007 V WindowManagerShell:         {m=OPEN f=MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=26#254)/@0xd6dfe37 sb=Rect(0, 0 - 1600, 2560) eb=Rect(0, 0 - 1600, 2560) epz=Point(1600, 2560) d=0 taskParent=-1 winMode=1 userId=0},
+10-23 20:13:47.720   935  1007 V WindowManagerShell:         {m=TO_BACK f=SHOW_WALLPAPER|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#33)/@0xd42fa4 sb=Rect(0, 0 - 1600, 2560) eb=Rect(0, 0 - 1600, 2560) epz=Point(1600, 2560) d=0 taskParent=-1 winMode=1 userId=0},
+10-23 20:13:47.720   935  1007 V WindowManagerShell:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{d7e6825}#45)/@0xdb4710d sb=Rect(0, 0 - 1600, 2560) eb=Rect(0, 0 - 1600, 2560) epz=Point(1600, 2560) d=0}
+10-23 20:13:47.720   935  1007 V WindowManagerShell:     ]}
+10-23 20:13:47.726   935  1007 V WindowManagerShell: Playing animation for (#31) android.os.BinderProxy@79fbf44@0
+10-23 20:13:47.726   935  1007 D ShellSplitScreen: startAnimation: transition=31 isSplitActive=false
+10-23 20:13:47.726   935  1007 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+10-23 20:13:47.726   935  1007 V ShellDesktopMode: DesktopMixedTransitionHandler: No pending desktop transition
+10-23 20:13:47.726   935  1007 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=31 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=OPEN f=MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=26#254)/@0xd6dfe37 sb=Rect(0, 0 - 1600, 2560) eb=Rect(0, 0 - 1600, 2560) epz=Point(1600, 2560) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=SHOW_WALLPAPER|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#33)/@0xd42fa4 sb=Rect(0, 0 - 1600, 2560) eb=Rect(0, 0 - 1600, 2560) epz=Point(1600, 2560) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{d7e6825}#45)/@0xdb4710d sb=Rect(0, 0 - 1600, 2560) eb=Rect(0, 0 - 1600, 2560) epz=Point(1600, 2560) d=0}]}
+10-23 20:13:47.726   935  1007 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=false modes=[CHANGE] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=true}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@31a46d3, appThread = android.app.IApplicationThread$Stub$Proxy@df6a210, debugName = QuickstepDisplayMove, filter = {types=[] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=false modes=[CHANGE] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=true}]} }}
+10-23 20:13:47.726   935  1007 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@fc41109, appThread = android.app.IApplicationThread$Stub$Proxy@9a22f0e, debugName = QuickstepLaunchHome, filter = {types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} }}
+10-23 20:13:47.726   935  1007 V WindowManagerShell:  Checking filter Pair{{types=[OPEN,TO_FRONT] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=freeform isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@2a7dba5, appThread = null, debugName = DesktopWindowLimitUnminimize, filter = {types=[OPEN,TO_FRONT] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=freeform isCrossDisplayMove=false}]} }}
+10-23 20:13:47.726   935  1007 V WindowManagerShell:  Delegate animation for (#31) to null
+10-23 20:13:47.726   935  1007 V WindowManagerShell: start default transition animation, info = {id=31 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=OPEN f=MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=26#254)/@0xd6dfe37 sb=Rect(0, 0 - 1600, 2560) eb=Rect(0, 0 - 1600, 2560) epz=Point(1600, 2560) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=SHOW_WALLPAPER|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#33)/@0xd42fa4 sb=Rect(0, 0 - 1600, 2560) eb=Rect(0, 0 - 1600, 2560) epz=Point(1600, 2560) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{d7e6825}#45)/@0xdb4710d sb=Rect(0, 0 - 1600, 2560) eb=Rect(0, 0 - 1600, 2560) epz=Point(1600, 2560) d=0}]}
+10-23 20:13:47.726   935  1007 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@a8bcf3c animAttr=0x13 type=OPEN isEntrance=false
+10-23 20:13:47.727   935  1007 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@8e4a328 animAttr=0x12 type=OPEN isEntrance=true
+10-23 20:13:47.736  1188  1188 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: 27
+10-23 20:13:47.737  1188  1188 V TaskbarRecentAppsController: reloadRecentTasksIfNeeded: load recents tasks
+10-23 20:13:47.740   935  1007 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@4e9eaab
+10-23 20:13:47.741   935  1007 V ShellTaskOrganizer: Task appeared taskId=26 listener=FullscreenTaskListener
+10-23 20:13:47.741   935  1007 V ShellTaskOrganizer: Fullscreen Task Appeared: #26
+10-23 20:13:47.741   935  1007 D ShellPackageUpdate: PackageUpdateController: Setting handlePackageUpdate for task: 26
+10-23 20:13:47.742   666  1379 E TransitionChain: Can't collect into a chain with no transition
+10-23 20:13:47.742   935  1007 V RecentTasksController: Notify recent tasks changed
+10-23 20:13:47.743   935  1007 V RecentTasksController: generateList(getRecentTasks)
+10-23 20:13:47.743   935  1007 V RecentTasksController: initializeDesksMap - allDeskIds: []
+10-23 20:13:47.743   935  1007 V RecentTasksController: Task 26 is not an active desktop task
+10-23 20:13:47.743   935  1007 V RecentTasksController: Added fullscreen task: 26
+10-23 20:13:47.744   935  1007 V RecentTasksController: Task 17 is not an active desktop task
+10-23 20:13:47.744   935  1007 V RecentTasksController: Added fullscreen task: 17
+10-23 20:13:47.744   935  1007 V RecentTasksController: generateList - complete
+10-23 20:13:47.745  1188  1223 D RecentTasksList: loadTasksInBackground - isDeviceLocked(0): false
+10-23 20:13:47.745  1188  1223 D RecentTasksList: getTasks - loadTasksInBackground: 28
+10-23 20:13:47.749  3785  3785 D nativeloader: Configuring clns-9 for other apk /data/app/~~0Z1gJgxo_Z2jFsg7xqYknA==/org.yuanzheng.singleplayer-A47sA1kMIU3-THvTCj-qzg==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~0Z1gJgxo_Z2jFsg7xqYknA==/org.yuanzheng.singleplayer-A47sA1kMIU3-THvTCj-qzg==/lib/x86_64:/data/app/~~0Z1gJgxo_Z2jFsg7xqYknA==/org.yuanzheng.singleplayer-A47sA1kMIU3-THvTCj-qzg==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/org.yuanzheng.singleplayer
+10-23 20:13:47.765  3785  3785 V GraphicsEnvironment: Currently set values for:
+10-23 20:13:47.765  3785  3785 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+10-23 20:13:47.765  3785  3785 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+10-23 20:13:47.765  3785  3785 V GraphicsEnvironment: org.yuanzheng.singleplayer is not listed in per-application setting
+10-23 20:13:47.765  3785  3785 V GraphicsEnvironment: No special selections for ANGLE, returning default driver choice
+10-23 20:13:47.766  1188  1188 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: 28
+10-23 20:13:47.766  1188  1188 V TaskbarRecentAppsController: reloadRecentTasksIfNeeded: tried to reload while loading recents tasks
+10-23 20:13:47.766  1188  1188 D RecentTasksList: getTasks - updating mResultsUi: 28
+10-23 20:13:47.766  1188  1188 V TaskbarRecentAppsController: reloadRecentTasksIfNeeded: reload recents tasks
+10-23 20:13:47.767  1188  1188 V TaskbarRecentAppsController: reloadRecentTasksIfNeeded: load recents tasks
+10-23 20:13:47.768  3785  3785 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+10-23 20:13:47.770   935  1007 V RecentTasksController: generateList(getRecentTasks)
+10-23 20:13:47.770   935  1007 V RecentTasksController: initializeDesksMap - allDeskIds: []
+10-23 20:13:47.770   935  1007 V RecentTasksController: Task 26 is not an active desktop task
+10-23 20:13:47.770   935  1007 V RecentTasksController: Added fullscreen task: 26
+10-23 20:13:47.770   935  1007 V RecentTasksController: Task 17 is not an active desktop task
+10-23 20:13:47.770   935  1007 V RecentTasksController: Added fullscreen task: 17
+10-23 20:13:47.770   935  1007 V RecentTasksController: generateList - complete
+10-23 20:13:47.776  1188  1223 D RecentTasksList: loadTasksInBackground - isDeviceLocked(0): false
+10-23 20:13:47.776  1188  1223 D RecentTasksList: getTasks - loadTasksInBackground: 29
+10-23 20:13:47.778  3785  3785 D DesktopExperienceFlags: Toggle override initialized to: false
+10-23 20:13:47.785   666  1379 D CorePackageUpdate: Couldn't find a persistent state for task= 26
+10-23 20:13:47.790  1188  1188 D RecentTasksList: getTasks - updating mResultsUi: 29
+10-23 20:13:47.791  3785  3802 I DisplayManager: Choreographer implicitly registered for the refresh rate.
+10-23 20:13:47.832  3785  3802 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv1_CM_emulation.so
+10-23 20:13:47.833  3785  3802 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv2_emulation.so
+10-23 20:13:47.840  3785  3802 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-23 20:13:47.847  3785  3802 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+10-23 20:13:47.848  3785  3802 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+10-23 20:13:47.891  3785  3785 D CompatChangeReporter: Compat change id reported: 377864165; UID 10156; state: ENABLED
+10-23 20:13:47.898  3785  3785 D GodotActivity: Project command line parameters: [--xr_mode_regular, --xr-mode, off, --fullscreen, --edge_to_edge, --background_color, #000000]
+10-23 20:13:47.899  3785  3785 D GodotActivity: Launch intent Intent { flg=0x10000000 xflg=0x4 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } with parameters []
+10-23 20:13:47.944  3785  3785 V GodotActivity: Creating new Godot fragment instance.
+10-23 20:13:47.986  3785  3785 V Godot   : Initializing Godot plugin registry
+10-23 20:13:48.034  3785  3785 I GodotPluginRegistry: Registering runtime plugin AndroidRuntime
+10-23 20:13:48.034  3785  3785 V Godot   : InitEngine with params: [--xr_mode_regular, --xr-mode, off, --fullscreen, --edge_to_edge, --background_color, #000000]
+10-23 20:13:48.056   935  1007 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#31) android.os.BinderProxy@79fbf44@0
+10-23 20:13:48.057   666   690 V WindowManager: Finish Transition (#31): created at 10-23 20:13:47.578 collect-started=0.046ms request-sent=6.813ms started=9.758ms ready=128.506ms sent=130.407ms commit=29.88ms finished=479.352ms
+10-23 20:13:48.058  1188  1188 D VRI[QuickstepLauncher]: visibilityChanged oldVisibility=true newVisibility=false
+10-23 20:13:48.059   935  1007 V WindowManagerShell: Track 0 became idle
+10-23 20:13:48.059   935  1007 V WindowManagerShell: All active transition animations finished
+10-23 20:13:48.059   935  1177 D WallpaperService: onVisibilityChanged(false): com.android.systemui.wallpapers.ImageWallpaper$CanvasEngine@2aff6f5
+10-23 20:13:48.060  3785  3785 D nativeloader: Load /data/app/~~0Z1gJgxo_Z2jFsg7xqYknA==/org.yuanzheng.singleplayer-A47sA1kMIU3-THvTCj-qzg==/lib/x86_64/libgodot_android.so using class loader ns clns-9 (caller=/data/app/~~0Z1gJgxo_Z2jFsg7xqYknA==/org.yuanzheng.singleplayer-A47sA1kMIU3-THvTCj-qzg==/base.apk!classes7.dex): ok
+10-23 20:13:48.065  3785  3785 V Godot   : Godot native layer initialization completed: true
+10-23 20:13:48.065  3785  3785 V Godot   : Setting up native layer with params: [--xr-mode, off, --fullscreen]
+10-23 20:13:48.123  3785  3785 V Godot   : Godot native layer setup completed
+10-23 20:13:48.123  3785  3785 V Godot   : OnInitRenderView: GodotFragment{eea7236} (1d22fecd-8cc6-4442-9a1e-f1786dba2bd9 id=0x7f07002c)
+10-23 20:13:48.140  3785  3785 D Godot   : Render view should be transparent: false
+10-23 20:13:48.140  3785  3785 D Godot   : renderingDevice: opengl3 (ProjectSettings)
+10-23 20:13:48.140  3785  3785 D Godot   : 			renderer: gl_compatibility (ProjectSettings)
+10-23 20:13:48.193  3785  3785 V Godot   : OnStart: GodotFragment{eea7236} (1d22fecd-8cc6-4442-9a1e-f1786dba2bd9 id=0x7f07002c)
+10-23 20:13:48.195  3785  3785 D AutofillManager: Fill dialog is enabled:false, hints=[]
+10-23 20:13:48.199  3785  3785 V Godot   : OnResume: GodotFragment{eea7236} (1d22fecd-8cc6-4442-9a1e-f1786dba2bd9 id=0x7f07002c)
+10-23 20:13:48.207  3785  3785 W HWUI    : Unknown dataspace 0
+--------- beginning of kernel
+10-23 20:13:48.260     0     0 I servicemanager: Caller(pid=3785,uid=10156,sid=u:r:untrusted_app_34:s0:c156,c256,c512,c768) Found android.hardware.graphics.allocator.IAllocator/default in device VINTF manifest.
+10-23 20:13:48.265     0     0 I servicemanager: Caller(pid=3785,uid=10156,sid=u:r:untrusted_app_34:s0:c156,c256,c512,c768) Found android.hardware.graphics.allocator.IAllocator/default in device VINTF manifest.
+10-23 20:13:48.214  3785  3785 D InsetsController: Setting requestedVisibleTypes to 496 (was 503)
+10-23 20:13:48.266     0     0 I servicemanager: Caller(pid=3785,uid=10156,sid=u:r:untrusted_app_34:s0:c156,c256,c512,c768) Found mapper/ranchu in device VINTF manifest.
+10-23 20:13:48.216   666  1379 W InputChannel-JNI: Channel already disposed.
+10-23 20:13:48.221  3785  3813 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-23 20:13:48.223  3785  3785 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@485d32c
+10-23 20:13:48.223  3785  3785 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): androidx.activity.OnBackPressedDispatcher$Api34Impl$createOnBackAnimationCallback$1@9a02b8a
+10-23 20:13:48.223   666   684 D CoreBackPreview: Window{388ad0c u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@497515b, mPriority=-1, mIsAnimationCallback=false, mOverrideBehavior=0}
+10-23 20:13:48.224   666   684 D CoreBackPreview: Window{388ad0c u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@6998df8, mPriority=0, mIsAnimationCallback=true, mOverrideBehavior=0}
+10-23 20:13:48.226  3785  3785 D VRI[GodotAppLauncher]: WindowInsets changed: 1600x2560 statusBars:[0,144,0,0] navigationBars:[0,0,0,147] mandatorySystemGestures:[0,144,0,147] 
+10-23 20:13:48.226  3785  3785 I HWUI    : Using FreeType backend (prop=Auto)
+10-23 20:13:48.229   666   684 D WindowManager: setClientSurface Surface(name=VRI-org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher#263)/@0xe7332d1 for 388ad0c org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher
+10-23 20:13:48.233  3785  3785 I Surface : Creating surface for consumer unnamed-3785-0 with slotExpansion=1 for 64 slots
+10-23 20:13:48.233  3785  3785 I Surface : Creating surface for consumer VRI[GodotAppLauncher]#0(BLAST Consumer)0 with slotExpansion=1 for 64 slots
+10-23 20:13:48.235  3785  3785 D VRI[GodotAppLauncher]: WindowInsets changed: statusBars:null navigationBars:null 
+10-23 20:13:48.239  3785  3785 I Surface : Creating surface for consumer unnamed-3785-1 with slotExpansion=1 for 64 slots
+10-23 20:13:48.239  3785  3785 I Surface : Creating surface for consumer 79e4871 SurfaceView[org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher]#1(BLAST Consumer)1 with slotExpansion=1 for 64 slots
+10-23 20:13:48.240  3785  3810 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-23 20:13:48.243  3785  3810 W RegularContextFactory: creating OpenGL ES 3.0 context :
+10-23 20:13:48.279  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/ready.json''
+10-23 20:13:48.327  3785  3810 I godot   : Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+10-23 20:13:48.402   935  1007 V WindowManagerShell: Transition requested (#32): android.os.BinderProxy@e3eaf40 TransitionRequestInfo { type = CHANGE, triggerTask = null, pipChange = null, remoteTransitionInfo = null, displayChanges = null, requestedLocation = null, userChange = null, windowingLayerChange = null, fullscreenRequestChange = null, flags = 0, debugId = 32 }
+10-23 20:13:48.403   935  1007 W DisconnectHandler: No disconnect change found in the transition, not handling request.
+10-23 20:13:48.403   935  1007 V ShellDesktopMode: DesktopTasksController: skipping handleRequest reason=triggerTask is null
+10-23 20:13:48.424  3785  3810 E godot   : WARNING: Failed to load cached shader, recompiling.
+10-23 20:13:48.424  3785  3810 E godot   :    at: _load_from_cache (drivers/gles3/shader_gles3.cpp:615)
+10-23 20:13:48.431   666   690 I ActivityTaskManager: Displayed org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher for user 0: +853ms
+10-23 20:13:48.433  1188  1188 D BaseActivity: Launcher flags updated: [] -[state_started]
+10-23 20:13:48.433  1188  1188 D BaseDepthController: setSurface:
+10-23 20:13:48.433  1188  1188 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+10-23 20:13:48.433  1188  1188 D BaseDepthController: 	mBaseSurface: null
+10-23 20:13:48.433  1188  1188 D BaseDepthController: mSurface is null and mCurrentBlur is: 0
+10-23 20:13:48.434  1188  1188 D LauncherStateManager: StateManager.goToState: fromState: Normal, toState: Normal, partial trace:
+10-23 20:13:48.434  1188  1188 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:469)
+10-23 20:13:48.434  1188  1188 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:460)
+10-23 20:13:48.434  1188  1188 D LauncherStateManager: 	at com.android.launcher3.statemanager.StatefulActivity.onStop(StatefulActivity.java:120)
+10-23 20:13:48.434  1188  1188 D LauncherStateManager: StateManager.onRepeatStateSetAborted: state: Normal
+10-23 20:13:48.434  1188  1188 D KeyboardStateManager: hideKeyboard
+10-23 20:13:48.434  1188  1188 D KeyboardStateManager: isImeShown: false
+10-23 20:13:48.434  1188  1188 D StatsLog: LAUNCHER_ONSTOP
+10-23 20:13:48.437   666   690 V WindowManager: Sent Transition (#32) createdAt=10-23 20:13:48.400 via request=TransitionRequestInfo { type = CHANGE, triggerTask = null, pipChange = null, remoteTransitionInfo = null, displayChanges = null, requestedLocation = null, userChange = null, windowingLayerChange = null, fullscreenRequestChange = null, flags = 0, debugId = 32 }
+10-23 20:13:48.437   666   690 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] flags= 0 errorCallbackToken=null taskFragmentOrganizer=null }
+10-23 20:13:48.437   666   690 V WindowManager:     info={id=32 t=CHANGE f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-23 20:13:48.437   666   690 V WindowManager:         {WCT{RemoteToken{bf1122d Task{11dbb8c #26 type=standard A=10156:org.yuanzheng.singleplayer}}} m=CHANGE f=NONE leash=Surface(name=Task=26#254)/@0x21a3257 sb=Rect(0, 0 - 1600, 2560) eb=Rect(0, 0 - 1600, 2560) epz=Point(1600, 2560) d=0 taskParent=-1 winMode=1 userId=0}
+10-23 20:13:48.437   666   690 V WindowManager:     ]}
+10-23 20:13:48.439   935  1166 V WindowManagerShell: onTransitionReady(transaction=2860448221929)
+10-23 20:13:48.440   935  1007 V WindowManagerShell: onTransitionReady (#32) android.os.BinderProxy@e3eaf40: {id=32 t=CHANGE f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-23 20:13:48.440   935  1007 V WindowManagerShell:         {m=CHANGE f=NONE leash=Surface(name=Task=26#254)/@0x5964e79 sb=Rect(0, 0 - 1600, 2560) eb=Rect(0, 0 - 1600, 2560) epz=Point(1600, 2560) d=0 taskParent=-1 winMode=1 userId=0}
+10-23 20:13:48.440   935  1007 V WindowManagerShell:     ]}
+10-23 20:13:48.441   935  1007 V WindowManagerShell: Playing animation for (#32) android.os.BinderProxy@e3eaf40@0
+10-23 20:13:48.441   935  1007 D ShellSplitScreen: startAnimation: transition=32 isSplitActive=false
+10-23 20:13:48.441   935  1007 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+10-23 20:13:48.441   935  1007 V ShellDesktopMode: DesktopMixedTransitionHandler: No pending desktop transition
+10-23 20:13:48.441   935  1007 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=32 t=CHANGE f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=CHANGE f=NONE leash=Surface(name=Task=26#254)/@0x5964e79 sb=Rect(0, 0 - 1600, 2560) eb=Rect(0, 0 - 1600, 2560) epz=Point(1600, 2560) d=0 taskParent=-1 winMode=1 userId=0}]}
+10-23 20:13:48.441   935  1007 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=false modes=[CHANGE] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=true}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@31a46d3, appThread = android.app.IApplicationThread$Stub$Proxy@df6a210, debugName = QuickstepDisplayMove, filter = {types=[] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=false modes=[CHANGE] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=true}]} }}
+10-23 20:13:48.443   666   691 V GameManagerService: Game power mode ON (only games in foreground)
+10-23 20:13:48.444   935  1007 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@fc41109, appThread = android.app.IApplicationThread$Stub$Proxy@9a22f0e, debugName = QuickstepLaunchHome, filter = {types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} }}
+10-23 20:13:48.444   935  1007 V WindowManagerShell:  Checking filter Pair{{types=[OPEN,TO_FRONT] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=freeform isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@2a7dba5, appThread = null, debugName = DesktopWindowLimitUnminimize, filter = {types=[OPEN,TO_FRONT] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=freeform isCrossDisplayMove=false}]} }}
+10-23 20:13:48.444   935  1007 V WindowManagerShell:  Delegate animation for (#32) to null
+10-23 20:13:48.444   935  1007 V WindowManagerShell: start default transition animation, info = {id=32 t=CHANGE f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=CHANGE f=NONE leash=Surface(name=Task=26#254)/@0x5964e79 sb=Rect(0, 0 - 1600, 2560) eb=Rect(0, 0 - 1600, 2560) epz=Point(1600, 2560) d=0 taskParent=-1 winMode=1 userId=0}]}
+10-23 20:13:48.450   935  1007 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#32) android.os.BinderProxy@e3eaf40@0
+10-23 20:13:48.453   666   690 V WindowManager: Finish Transition (#32): created at 10-23 20:13:48.400 collect-started=0.122ms request-sent=0.995ms started=30.166ms ready=30.142ms sent=34.686ms commit=18.3ms finished=51.632ms
+10-23 20:13:48.456   666   693 I DisplayDeviceRepository: Display device changed render timings: "Built-in Screen", renderFrameRate=60.000004, presentationDeadlineNanos=16666666, appVsyncOffsetNanos=1000000, frameRateOverrides=[{uid=10156 frameRateHz=60.000004}]
+10-23 20:13:48.457   935  1007 V WindowManagerShell: Track 0 became idle
+10-23 20:13:48.457   935  1007 V WindowManagerShell: All active transition animations finished
+10-23 20:13:48.457   935  1007 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@4e9eaab
+10-23 20:13:48.457   935  1007 V WindowManagerShell: Track 0 became idle
+10-23 20:13:48.457   935  1007 V WindowManagerShell: All active transition animations finished
+10-23 20:13:48.459   460   501 I netd    : tetherGetStats() -> {[]} <0.55ms>
+10-23 20:13:48.462   666   792 I ImeTracker: org.yuanzheng.singleplayer:24b9d9b7: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false userId 0 displayId 0
+10-23 20:13:48.463  3785  3785 D InsetsController: hide(ime())
+10-23 20:13:48.463  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:24b9d9b7: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:13:48.466   666   754 W InputChannel-JNI: Channel already disposed.
+10-23 20:13:48.467   666  3743 I ImeTracker: system_server:5d3e1e39: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false displayId 0
+10-23 20:13:48.468   666   693 I ImeTracker: system_server:5d3e1e39: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-23 20:13:48.530   666   692 I DropBoxManagerService: add tag=system_app_strictmode isTagEnabled=true flags=0x2
+10-23 20:13:48.775  3785  3785 W InteractionJankMonitor: Initializing without READ_DEVICE_CONFIG permission. enabled=true, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=org.yuanzheng.singleplayer
+10-23 20:13:48.776   666  3261 I ImeTracker: system_server:154fc157: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false displayId 0
+10-23 20:13:48.777   666   693 I ImeTracker: system_server:154fc157: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-23 20:13:48.841  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/ready.json''
+10-23 20:13:48.938   473  2221 D android.hardware.audio@7.1-impl.ranchu: threadLoop: entering standby, frames: 8123008
+10-23 20:13:48.938   473  2221 D android.hardware.audio@7.1-impl.ranchu: ~TinyalsaSink: joining consumeThread
+10-23 20:13:48.938   473  3341 D android.hardware.audio@7.1-impl.ranchu: consumeThread: exiting
+10-23 20:13:49.034  3785  3810 I godot   : OpenGL API OpenGL ES 3.1 (4.5.0 Core Profile Context 23.20.60.03.240314) - Compatibility - Using Device: Google (ATI Technologies Inc.) - Android Emulator OpenGL ES Translator (AMD Radeon 780M Graphics)
+10-23 20:13:49.037  3785  3810 D AudioSystem: onNewServiceWithAdapter: media.audio_flinger service obtained 0x7a27ec49a0e0
+10-23 20:13:49.038   517   748 D AudioFlinger: onStateChanged: pid:3785  uid:10156  state:unfrozen - no freeze activity
+10-23 20:13:49.038  3785  3810 D AudioSystem: getService: IAudioFlingerService retrieved: 0x7a27dc581220  IAudioFlinger cached: 0x7a27ec49a0e0
+10-23 20:13:49.038  3785  3810 D ng.singleplayer: PlayerBase::PlayerBase()
+10-23 20:13:49.038  3785  3810 D ng.singleplayer: TrackPlayerBase::TrackPlayerBase()
+10-23 20:13:49.038  3785  3810 I libOpenSLES: Emulating old channel mask behavior (ignoring positional mask 0x3, using default mask 0x3 based on channel count of 2)
+10-23 20:13:49.040   517  1153 W AudioFlinger: createTrack_l(): mismatch between requested flags (00000104) and output flags (00000002)
+10-23 20:13:49.041   517  1153 D AudioFlinger: Client defaulted notificationFrames to 882 for frameCount 4012
+10-23 20:13:49.041   517  1153 I AF::AfPlaybackCommon: AfPlaybackCommon: creating track with enforcement level 1 reason TARGET_SDK shouldHarden 1
+10-23 20:13:49.049   666  3743 E AppOps  : attributionTag  not declared in manifest of org.yuanzheng.singleplayer
+10-23 20:13:49.049  1037  1037 I bluetooth: system/btif/avrcp/avrcp_service.cc:533 SendMediaUpdate: track_changed=false :  play_state=true :  queue=false
+10-23 20:13:49.049   666  3743 E AppOps  : attributionTag  not declared in manifest of org.yuanzheng.singleplayer
+10-23 20:13:49.049  1037  1037 E MediaControlProfile: onCurrentPlayerStateUpdated: base actions not supported, player actions= 0, expected at least= 7f
+10-23 20:13:49.049  1037  1037 W MediaControlGattService: Feature PLAYBACK_SPEED support: true
+10-23 20:13:49.049  1037  1037 W MediaControlGattService: Feature PLAYBACK_SPEED support: true
+10-23 20:13:49.050  1037  1037 W MediaControlGattService: Feature PLAYBACK_SPEED support: true
+10-23 20:13:49.050  1037  1037 W MediaControlGattService: Feature PLAYBACK_SPEED_NOTIFY support: true
+10-23 20:13:49.050  3785  3810 I godot   : 
+10-23 20:13:49.051  1037  1037 W MediaControlGattService: Feature TRACK_POSITION support: true
+10-23 20:13:49.051  1037  1037 W MediaControlGattService: Feature TRACK_POSITION_NOTIFY support: true
+10-23 20:13:49.051  1037  1037 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-23 20:13:49.052  1037  1037 W MediaControlGattService: Feature MEDIA_CONTROL_POINT_OPCODES_SUPPORTED support: true
+10-23 20:13:49.052  1037  1037 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-23 20:13:49.052  1037  1037 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-23 20:13:49.053  1037  1037 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-23 20:13:49.053  1037  1037 W MediaControlGattService: Feature SEEKING_SPEED support: true
+10-23 20:13:49.053  1037  1037 W MediaControlGattService: Feature SEEKING_SPEED support: true
+10-23 20:13:49.053  1037  1037 W MediaControlGattService: Feature SEEKING_SPEED support: true
+10-23 20:13:49.053  1037  1037 W MediaControlProfile: MCS service state fields left unhandled: 
+10-23 20:13:49.053  1037  1037 W MediaControlProfile:    > PLAYER_NAME
+10-23 20:13:49.053  1037  1037 W MediaControlProfile:    > PLAYING_ORDER_SUPPORTED
+10-23 20:13:49.143   517   600 D AudioFlinger: mixer(0x73225c3c6790) throttle end: throttle time(36)
+10-23 20:13:49.199  3785  3793 I ng.singleplayer: Compiler allocated 5239KB to compile void android.view.ViewRootImpl.performTraversals(long)
+10-23 20:13:49.296  3785  3819 E SurfaceSyncGroup: Failed to receive transaction ready in 1000ms. Marking SurfaceSyncGroup(wmsSync-VRI[GodotAppLauncher]#1) as ready
+10-23 20:13:49.296  3785  3819 E SurfaceSyncGroup: Failed to receive transaction ready in 1000ms. Marking SurfaceSyncGroup(VRI[GodotAppLauncher]#2) as ready
+10-23 20:13:49.297  3785  3819 E SurfaceSyncGroup: Failed to receive transaction ready in 1000ms. Marking SurfaceSyncGroup(SurfaceView[org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher]#0) as ready
+10-23 20:13:49.402  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/ready.json''
+10-23 20:13:49.951  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/ready.json''
+10-23 20:13:50.496  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/ready.json''
+10-23 20:13:50.818   666   870 D SntpClient: request time failed: java.net.SocketTimeoutException: Poll timed out
+10-23 20:13:51.039  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/ready.json''
+10-23 20:13:51.254   666   693 I DisplayDeviceRepository: Display device changed render timings: "Built-in Screen", renderFrameRate=60.000004, presentationDeadlineNanos=16666666, appVsyncOffsetNanos=1000000, frameRateOverrides=[]
+10-23 20:13:51.261   666  1474 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-23 20:13:51.369  3785  3810 V Godot   : OnGodotSetupCompleted
+10-23 20:13:51.431  3785  3810 I godot   : ANDROID_DEEP_READY { "os": "Android", "version": "37.16571990", "model": "Android SDK built for x86_64", "window": "(1600, 2560)", "viewport": "[P: (0.0, 0.0), S: (480.0, 800.0)]", "safe": "[P: (0.0, 0.0), S: (480.0, 799.9999)]", "system_safe": "[P: (0, 0), S: (1600, 2560)]", "cutouts": "[]", "mix_rate": 44100.0 }
+10-23 20:13:51.431  3785  3810 V Godot   : OnGodotMainLoopStarted
+10-23 20:13:51.454   666   693 I DisplayDeviceRepository: Display device changed render timings: "Built-in Screen", renderFrameRate=60.000004, presentationDeadlineNanos=16666666, appVsyncOffsetNanos=1000000, frameRateOverrides=[{uid=10156 frameRateHz=60.000004}]
+10-23 20:13:51.584  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/ready.json''
+10-23 20:13:51.629  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb,raw:run-as org.yuanzheng.singleplayer rm -f files/android_full_audit/tablet_10_16/result.json'
+10-23 20:13:51.675  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'tee' 'files/android_full_audit/request.json''
+10-23 20:13:51.702  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:13:51.745  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:13:51.812     0     0 I logd    : logdr: UID=0 GID=0 PID=3852 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:13:51.838  3785  3810 I godot   : ANDROID_DEEP_BEGIN tablet_10_16 { "id": "tablet_10_16", "suite": "pages" }
+10-23 20:13:51.845  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:ce0e0d23: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:13:51.847  3785  3785 D InsetsController: hide(ime())
+10-23 20:13:51.847  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:ce0e0d23: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:13:51.847  3785  3785 D CompatChangeReporter: Compat change id reported: 395521150; UID 10156; state: ENABLED
+10-23 20:13:51.862   666   837 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-23 20:13:51.862   666   837 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-23 20:13:51.862   666   837 D InetDiagMessage: Destroyed live tcp sockets for uids={10114} in 1ms
+10-23 20:13:51.862   666   837 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-23 20:13:51.863   666   837 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-23 20:13:51.863   666   837 D InetDiagMessage: Destroyed live tcp sockets for uids={20114} in 1ms
+10-23 20:13:52.390  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:13:52.439  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:13:52.501     0     0 I logd    : logdr: UID=0 GID=0 PID=3859 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:13:52.694  2119  2119 W adbd    : timeout expired while flushing socket, closing
+10-23 20:13:52.821  1055  1206 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 20:13:52.821  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:13:52.821  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:13:52.821  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:13:52.821  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:13:52.824  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:13:52.824  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:13:52.824  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:13:52.824  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:13:52.824  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:13:52.824  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:13:52.824  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:13:52.824  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:13:52.824  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:13:52.825  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:13:52.825  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:13:52.825  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:13:52.825  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:13:52.825  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:13:52.825  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:13:52.825  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:13:52.825  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:13:52.825  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:13:52.825  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:13:52.825  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:13:52.825  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:13:52.825  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:13:53.081  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:13:53.128  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:13:53.192     0     0 I logd    : logdr: UID=0 GID=0 PID=3865 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:13:53.748     0     0 I init    : Untracked process (pid: 3848 name: (tee) ppid: 1 pgrp: 3846 state: Z) exited with status 1
+10-23 20:13:53.749     0     0 I init    : Untracked process (pid: 3848 name: (tee) ppid: 1 pgrp: 3846 state: Z) did not have an associated service entry and will not be reaped
+10-23 20:13:53.769  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:13:53.814  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:13:53.877     0     0 I logd    : logdr: UID=0 GID=0 PID=3871 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:13:53.858  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/loading
+10-23 20:13:53.858  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:2eb54049: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:13:53.858  3785  3785 D InsetsController: hide(ime())
+10-23 20:13:53.858  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:2eb54049: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:13:54.455  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:13:54.501  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:13:54.568     0     0 I logd    : logdr: UID=0 GID=0 PID=3877 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:13:55.083   666   727 I SharedLibrariesImpl: Start pruneUnusedStaticSharedLibraries for neededSpace: 9223372036854775807 maxCachePeriod: 604800000
+10-23 20:13:55.147  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:13:55.190  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:13:55.253     0     0 I logd    : logdr: UID=0 GID=0 PID=3883 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:13:55.826   666   870 D SntpClient: request time failed: java.net.SocketTimeoutException: Poll timed out
+10-23 20:13:55.829  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:13:55.875  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:13:55.939     0     0 I logd    : logdr: UID=0 GID=0 PID=3889 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:13:56.133   666   709 I WifiService: isFeatureSupported uid=1000 returns [WIFI_FEATURE_INFRA, WIFI_FEATURE_P2P, WIFI_FEATURE_MOBILE_HOTSPOT, WIFI_FEATURE_WPA3_SAE, WIFI_FEATURE_WPA3_SUITE_B, WIFI_FEATURE_OWE, WIFI_FEATURE_DPP, WIFI_FEATURE_AP_RAND_MAC, WIFI_FEATURE_MBO, WIFI_FEATURE_FILS_SHA256, WIFI_FEATURE_FILS_SHA384, WIFI_FEATURE_SAE_PK, WIFI_FEATURE_DPP_ENROLLEE_RESPONDER, WIFI_FEATURE_PASSPOINT_TERMS_AND_CONDITIONS, WIFI_FEATURE_WFD_R2, WIFI_FEATURE_DECORATED_IDENTITY, WIFI_FEATURE_TRUST_ON_FIRST_USE, WIFI_FEATURE_SET_TLS_MINIMUM_VERSION, WIFI_FEATURE_TLS_V1_3, WIFI_FEATURE_WEP, WIFI_FEATURE_WPA_PERSONAL]
+10-23 20:13:56.185  1707  1990 I Dialer  : OmtpVvmCarrierCfgHlpr - OmtpEvent:CONFIG_STATUS_SMS_TIME_OUT
+10-23 20:13:56.185  1707  1707 I Dialer  : RetryPolicy - discarding deferred status: configuration_state=4
+10-23 20:13:56.187  1707  1707 I Dialer  : VvmTaskExecutor - no more tasks, stopping service if no task are added in 5000 millis
+10-23 20:13:56.188  1707  1707 I Dialer  : VvmTaskReceiver - task received
+10-23 20:13:56.188  1707  1707 I Dialer  : VvmTaskReceiver - TaskExecutor already running
+10-23 20:13:56.188  1707  1707 I Dialer  : Task.createTask - create task:com.android.voicemail.impl.ActivationTask
+10-23 20:13:56.188  1707  1707 I Dialer  : RetryPolicy - retry #3 for com.android.voicemail.impl.ActivationTask@efc80f7 queued, executing in 5000
+10-23 20:13:56.188  1707  1707 I Dialer  : VvmTaskExecutor - com.android.voicemail.impl.ActivationTask@efc80f7 added
+10-23 20:13:56.188  1707  1707 I Dialer  : VvmTaskExecutor - minimal wait time:4999
+10-23 20:13:56.188  1707  1707 I Dialer  : VvmTaskExecutor - sleep for 4999 millis
+10-23 20:13:56.189   666   699 D OomAdjuster: Not killing cached processes
+10-23 20:13:56.353   666  3261 W OverlayManager: service 'idmap' died
+10-23 20:13:56.404     0     0 I init    : Sending SIGKILL to service 'idmap2d' (pid 3760) process group...
+10-23 20:13:56.406     0     0 I libprocessgroup: Removed cgroup /sys/fs/cgroup/system/uid_1000/pid_3760
+10-23 20:13:56.407     0     0 I init    : Control message: Processed ctl.stop for 'idmap2d' from pid: 666 (system_server)
+10-23 20:13:56.407     0     0 I init    : Service 'idmap2d' (pid 3760) received SIGKILL
+10-23 20:13:56.408     0     0 I init    : Sending SIGKILL to service 'idmap2d' (pid 3760) process group...
+10-23 20:13:56.408     0     0 E libprocessgroup: Failed to write 1 to /sys/fs/cgroup/system/uid_1000/pid_3760/cgroup.kill: No such file or directory
+10-23 20:13:56.516  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:13:56.561  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/title
+10-23 20:13:56.561  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:f0c5d463: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:13:56.562  3785  3785 D InsetsController: hide(ime())
+10-23 20:13:56.563  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:f0c5d463: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:13:56.564  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:13:56.628     0     0 I logd    : logdr: UID=0 GID=0 PID=3895 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:13:56.610   460   501 I netd    : tetherGetStats() -> {[]} <0.81ms>
+10-23 20:13:56.860   666   771 D ActivityManager: freezing 1627 com.android.quicksearchbox
+10-23 20:13:56.862   666   837 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-23 20:13:56.862   666   837 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-23 20:13:56.862   666   837 D InetDiagMessage: Destroyed live tcp sockets for uids={10114} in 1ms
+10-23 20:13:57.109  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/login
+10-23 20:13:57.110  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:9359a6f9: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:13:57.113  3785  3785 D InsetsController: hide(ime())
+10-23 20:13:57.114  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:9359a6f9: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:13:57.203  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:13:57.250  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:13:57.314     0     0 I logd    : logdr: UID=0 GID=0 PID=3901 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:13:57.893  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:13:57.936  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:13:57.999     0     0 I logd    : logdr: UID=0 GID=0 PID=3907 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:13:58.575  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:13:58.623  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:13:58.686     0     0 I logd    : logdr: UID=0 GID=0 PID=3913 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:13:58.824  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/home
+10-23 20:13:58.825  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:979c91e: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:13:58.825  3785  3785 D InsetsController: hide(ime())
+10-23 20:13:58.825  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:979c91e: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:13:59.265  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:13:59.316  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:13:59.379     0     0 I logd    : logdr: UID=0 GID=0 PID=3919 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:13:59.771  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/bag
+10-23 20:13:59.957  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:00.004  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:00.068     0     0 I logd    : logdr: UID=0 GID=0 PID=3925 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:00.153  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/bag_equip
+10-23 20:14:00.519  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/bag_equip_bottom
+10-23 20:14:00.646  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:00.696  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:00.763     0     0 I logd    : logdr: UID=0 GID=0 PID=3931 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:00.833   666   870 D SntpClient: request time failed: java.net.SocketTimeoutException: Poll timed out
+10-23 20:14:01.052  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/bag_mat
+10-23 20:14:01.193  1707  1990 I Dialer  : VvmTaskExecutor - executing task com.android.voicemail.impl.ActivationTask@efc80f7
+10-23 20:14:01.193  1707  1990 I Dialer  : PreOMigrationHandler - ComponentInfo{com.android.phone/com.android.services.telephony.TelephonyConnectionService}, 1, UserHandle{0} already migrated
+10-23 20:14:01.200   666   754 D OomAdjuster: Not killing cached processes
+10-23 20:14:01.200   666   754 D ActivityManager: sync unfroze 1508 android.process.acore for 7
+10-23 20:14:01.210   460   501 I netd    : tetherGetStats() -> {[]} <0.54ms>
+10-23 20:14:01.211  1508  1508 I ActivityThread: ApplicationInfo updating for com.android.providers.contactkeys, new timestamp: 201065
+10-23 20:14:01.211  1508  1508 I ActivityThread: assets removed: [/product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk, /product/overlay/DisplayCutoutEmulationHole/DisplayCutoutEmulationHoleOverlay.apk]
+10-23 20:14:01.211  1508  1508 I ActivityThread: assets added: [/product/overlay/NavigationBarMode3Button/NavigationBarMode3ButtonOverlay.apk]
+10-23 20:14:01.218  1508  1682 I VoicemailNotifier: receivers for android.intent.action.PROVIDER_CHANGED :[]
+10-23 20:14:01.221  1707  1990 I Dialer  : VvmActivationTask - VVM content provider configured - vvm_type_cvvm
+10-23 20:14:01.221  1707  1990 I Dialer  : OmtpVvmCarrierCfgHlpr - OmtpEvent:CONFIG_ACTIVATING
+10-23 20:14:01.225  1508  1682 I VoicemailNotifier: receivers for android.intent.action.PROVIDER_CHANGED :[]
+10-23 20:14:01.231  1055  1345 I RemoteVvmTaskManager: getRemotePackage: found package null
+10-23 20:14:01.234  1055  1345 I RemoteVvmTaskManager: getRemotePackage: found package null
+10-23 20:14:01.235  1055  1345 D SmsNumberUtils: enter filterDestAddr. destAddr="[BajqU4K5_YhSYbs-7QUn0dOwcmI]"
+10-23 20:14:01.235  1055  1345 D SmsNumberUtils: destAddr is not formatted.
+10-23 20:14:01.235  1055  1345 D SmsNumberUtils: leave filterDestAddr, new destAddr="[BajqU4K5_YhSYbs-7QUn0dOwcmI]"
+10-23 20:14:01.246  1055  1055 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 20:14:01.249  1055  1055 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:14:01.249  1055  1055 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:01.249  1055  1055 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:01.249  1055  1055 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:14:01.249  1055  1055 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:14:01.249  1055  1055 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:14:01.249  1055  1055 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:01.249  1055  1055 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:01.249  1055  1055 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:14:01.249  1055  1055 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:14:01.249  1055  1055 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:01.249  1055  1055 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:01.249  1055  1055 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:14:01.250  1055  1055 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 20:14:01.250  1055  1055 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:14:01.250  1055  1055 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:01.250  1055  1055 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:01.250  1055  1055 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:14:01.250  1055  1055 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:14:01.250  1055  1055 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:14:01.250  1055  1055 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:01.250  1055  1055 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:01.250  1055  1055 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:14:01.250  1055  1055 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:14:01.250  1055  1055 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:01.250  1055  1055 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:01.250  1055  1055 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:14:01.340  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:01.384  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:01.449     0     0 I logd    : logdr: UID=0 GID=0 PID=3939 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:01.428  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/bag_mat_bottom
+10-23 20:14:01.823  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/bag_gem
+10-23 20:14:02.026  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:02.075  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:02.139     0     0 I logd    : logdr: UID=0 GID=0 PID=3945 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:02.186  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/bag_gem_bottom
+10-23 20:14:02.610  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/bag_pending
+10-23 20:14:02.716  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:02.766  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:02.828     0     0 I logd    : logdr: UID=0 GID=0 PID=3951 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:02.821  1055  1206 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 20:14:02.821  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:14:02.821  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:02.821  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:02.821  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:14:02.822  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:14:02.822  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:14:02.822  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:02.822  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:02.822  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:14:02.822  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:14:02.822  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:02.822  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:02.822  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:14:02.822  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:14:02.822  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:02.822  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:02.822  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:14:02.823  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:14:02.823  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:14:02.823  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:02.823  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:02.823  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:14:02.823  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:14:02.823  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:02.823  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:02.823  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:14:02.982  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/bag_pending_bottom
+10-23 20:14:02.983  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:1ad0f7c6: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:02.983  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:02.983  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:1ad0f7c6: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:03.404  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:03.452  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:03.518     0     0 I logd    : logdr: UID=0 GID=0 PID=3957 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:03.579  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/currency
+10-23 20:14:03.838  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/currency_gold
+10-23 20:14:04.096  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:04.138  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:04.200     0     0 I logd    : logdr: UID=0 GID=0 PID=3963 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:04.204  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/currency_gold_bottom
+10-23 20:14:04.207  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:331ee16: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:04.209  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:04.209  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:331ee16: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:04.769  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/currency
+10-23 20:14:04.778  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:04.818  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:04.880     0     0 I logd    : logdr: UID=0 GID=0 PID=3969 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:05.014  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/currency_expedition
+10-23 20:14:05.368  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/currency_expedition_bottom
+10-23 20:14:05.368  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:43cf7fc1: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:05.369  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:05.369  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:43cf7fc1: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:05.458  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:05.504  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:05.568     0     0 I logd    : logdr: UID=0 GID=0 PID=3975 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:05.841   666   870 D SntpClient: request time failed: java.net.SocketTimeoutException: Poll timed out
+10-23 20:14:05.945  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/currency
+10-23 20:14:06.143  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:06.190  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:06.205  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/currency_soul
+10-23 20:14:06.256     0     0 I logd    : logdr: UID=0 GID=0 PID=3981 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:06.598  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/currency_soul_bottom
+10-23 20:14:06.600  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:e73663bf: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:06.600  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:06.600  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:e73663bf: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:06.618   666   771 D ActivityManager: freezing 1154 com.android.permissioncontroller
+10-23 20:14:06.621   666   837 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-23 20:14:06.621   666   837 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-23 20:14:06.621   666   837 D InetDiagMessage: Destroyed live tcp sockets for uids={10149} in 2ms
+10-23 20:14:06.840  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:06.885  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:06.951     0     0 I logd    : logdr: UID=0 GID=0 PID=3987 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:07.156  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/currency
+10-23 20:14:07.252   666   698 D OomAdjuster: Not killing cached processes
+10-23 20:14:07.266   460   501 I netd    : tetherGetStats() -> {[]} <0.40ms>
+10-23 20:14:07.420  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/currency_honor
+10-23 20:14:07.529  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:07.574  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:07.641     0     0 I logd    : logdr: UID=0 GID=0 PID=3993 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:07.795  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/currency_honor_bottom
+10-23 20:14:07.800  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:de066286: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:07.800  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:07.800  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:de066286: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:08.217  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:08.264  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:08.327     0     0 I logd    : logdr: UID=0 GID=0 PID=3999 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:08.599  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/gathering
+10-23 20:14:08.905  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:08.952  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:09.015     0     0 I logd    : logdr: UID=0 GID=0 PID=4005 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:09.154  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/gathering_story_0
+10-23 20:14:09.587  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:09.629  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:09.691     0     0 I logd    : logdr: UID=0 GID=0 PID=4011 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:09.692  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/gathering_story_1
+10-23 20:14:10.222  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/gathering_story_2
+10-23 20:14:10.225  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:dc5f29ed: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:10.225  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:10.226  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:dc5f29ed: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:10.270  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:10.318  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:10.381     0     0 I logd    : logdr: UID=0 GID=0 PID=4017 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:10.776  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/modal
+10-23 20:14:10.848   666   870 D SntpClient: request time failed: java.net.SocketTimeoutException: Poll timed out
+10-23 20:14:10.849   666   870 D SntpClient: request time failed
+10-23 20:14:10.959  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:11.002  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:11.066     0     0 I logd    : logdr: UID=0 GID=0 PID=4023 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:11.023  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/long_modal
+10-23 20:14:11.026  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:5dd492fc: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:11.026  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:11.026  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:5dd492fc: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:11.608  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/settings
+10-23 20:14:11.643  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:11.691  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:11.753     0     0 I logd    : logdr: UID=0 GID=0 PID=4029 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:11.890  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/settings_bottom
+10-23 20:14:11.891  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:c93ed620: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:11.891  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:11.891  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:c93ed620: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:12.331  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:12.376  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:12.441     0     0 I logd    : logdr: UID=0 GID=0 PID=4035 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:12.822  1055  1206 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 20:14:12.822  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:14:12.822  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:12.822  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:12.822  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:14:12.824  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:14:12.824  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:14:12.824  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:12.825  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:12.825  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:14:12.825  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:14:12.825  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:12.825  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:12.825  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:14:12.825  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:14:12.825  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:12.825  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:12.825  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:14:12.825  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:14:12.825  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:14:12.825  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:12.825  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:12.825  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:14:12.825  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:14:12.825  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:12.825  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:12.825  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:14:13.018  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:13.059  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:13.123     0     0 I logd    : logdr: UID=0 GID=0 PID=4041 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:13.160  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/growth
+10-23 20:14:13.637  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/growth_bottom
+10-23 20:14:13.638  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:490abf77: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:13.638  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:13.638  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:490abf77: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:13.699  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:13.745  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:13.808     0     0 I logd    : logdr: UID=0 GID=0 PID=4047 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:14.385  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:14.434  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:14.498     0     0 I logd    : logdr: UID=0 GID=0 PID=4053 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:15.037  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/codex
+10-23 20:14:15.075  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:15.121  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:15.185     0     0 I logd    : logdr: UID=0 GID=0 PID=4059 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:15.582  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/codex_bottom
+10-23 20:14:15.583  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:5ac09ad5: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:15.583  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:15.583  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:5ac09ad5: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:15.763  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:15.808  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:15.873     0     0 I logd    : logdr: UID=0 GID=0 PID=4065 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:16.455  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:16.505  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:16.569     0     0 I logd    : logdr: UID=0 GID=0 PID=4071 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:16.721  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/gacha
+10-23 20:14:17.072  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/gacha_bottom
+10-23 20:14:17.073  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:acb8c62c: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:17.074  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:17.074  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:acb8c62c: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:17.145  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:17.191  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:17.254     0     0 I logd    : logdr: UID=0 GID=0 PID=4077 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:17.832  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:17.882  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:17.946     0     0 I logd    : logdr: UID=0 GID=0 PID=4083 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:18.079  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/exchange
+10-23 20:14:18.401  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/exchange_bottom
+10-23 20:14:18.401  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:8d461b98: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:18.402  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:18.402  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:8d461b98: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:18.523  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:18.569  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:18.631     0     0 I logd    : logdr: UID=0 GID=0 PID=4089 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:19.209  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:19.255  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:19.322     0     0 I logd    : logdr: UID=0 GID=0 PID=4095 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:19.504  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/quests
+10-23 20:14:19.868  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/quests_bottom
+10-23 20:14:19.869  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:3076783a: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:19.869  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:19.869  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:3076783a: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:19.902  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:19.952  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:20.017     0     0 I logd    : logdr: UID=0 GID=0 PID=4101 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:20.595  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:20.642  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:20.706     0     0 I logd    : logdr: UID=0 GID=0 PID=4107 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:21.272  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/worlds
+10-23 20:14:21.285  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:21.329  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:21.396     0     0 I logd    : logdr: UID=0 GID=0 PID=4113 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:21.843  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/worlds_bottom
+10-23 20:14:21.844  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:9ff3788: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:21.844  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:21.844  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:9ff3788: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:21.974  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:22.017  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:22.080     0     0 I logd    : logdr: UID=0 GID=0 PID=4119 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:22.655  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:22.700  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:22.767     0     0 I logd    : logdr: UID=0 GID=0 PID=4125 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:22.822  1055  1206 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 20:14:22.822  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:14:22.822  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:22.822  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:22.822  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:14:22.823  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:14:22.824  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:14:22.824  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:22.824  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:22.824  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:14:22.824  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:14:22.824  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:22.824  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:22.824  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:14:22.824  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:14:22.824  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:22.824  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:22.824  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:14:22.824  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:14:22.824  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:14:22.824  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:22.824  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:22.824  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:14:22.824  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:14:22.824  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:22.824  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:22.824  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:14:22.932  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/arena
+10-23 20:14:23.291  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/arena_bottom
+10-23 20:14:23.293  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:cfc77e08: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:23.293  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:23.293  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:cfc77e08: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:23.349  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:23.402  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:23.466     0     0 I logd    : logdr: UID=0 GID=0 PID=4131 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:24.048  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:24.118  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:24.193     0     0 I logd    : logdr: UID=0 GID=0 PID=4137 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:24.586  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/archery
+10-23 20:14:24.773  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:24.820  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:24.887     0     0 I logd    : logdr: UID=0 GID=0 PID=4143 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:25.020  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/archery_bottom
+10-23 20:14:25.021  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:b2ecc078: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:25.021  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:25.022  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:b2ecc078: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:25.467  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:25.522  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:25.587     0     0 I logd    : logdr: UID=0 GID=0 PID=4149 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:26.085  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/companion
+10-23 20:14:26.166  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:26.213  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:26.279     0     0 I logd    : logdr: UID=0 GID=0 PID=4155 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:26.409  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/companion_bottom
+10-23 20:14:26.409  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:8fd27f24: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:26.410  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:26.410  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:8fd27f24: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:26.858  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:26.911  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:26.977     0     0 I logd    : logdr: UID=0 GID=0 PID=4161 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:27.274   666   706 D OomAdjuster: Not killing cached processes
+10-23 20:14:27.282   460   501 I netd    : tetherGetStats() -> {[]} <0.65ms>
+10-23 20:14:27.414  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/shop
+10-23 20:14:27.559  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:27.604  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:27.670     0     0 I logd    : logdr: UID=0 GID=0 PID=4167 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:27.742  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/shop_bottom
+10-23 20:14:27.743  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:6f3b07f: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:27.743  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:27.744  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:6f3b07f: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:28.251  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:28.302  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:28.366     0     0 I logd    : logdr: UID=0 GID=0 PID=4173 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:28.738  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/journal
+10-23 20:14:28.941  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:28.989  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:29.057     0     0 I logd    : logdr: UID=0 GID=0 PID=4179 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:29.028  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/journal_bottom
+10-23 20:14:29.029  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:e551dfa7: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:29.030  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:29.030  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:e551dfa7: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:29.636  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:29.685  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:29.753     0     0 I logd    : logdr: UID=0 GID=0 PID=4185 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:30.007  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/oath
+10-23 20:14:30.303  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/oath_bottom
+10-23 20:14:30.305  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:7deb1365: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:30.305  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:30.305  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:7deb1365: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:30.332  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:30.380  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:30.443     0     0 I logd    : logdr: UID=0 GID=0 PID=4191 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:31.018  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:31.064  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:31.127     0     0 I logd    : logdr: UID=0 GID=0 PID=4197 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:31.384  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/avatar
+10-23 20:14:31.703  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:31.750  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:31.814     0     0 I logd    : logdr: UID=0 GID=0 PID=4203 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:31.820  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/avatar_bottom
+10-23 20:14:31.821  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:210f814e: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:31.821  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:31.821  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:210f814e: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:32.390  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:32.437  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:32.501     0     0 I logd    : logdr: UID=0 GID=0 PID=4209 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:32.822  1055  1206 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 20:14:32.822  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:14:32.822  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:32.822  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:32.822  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:14:32.822  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:14:32.822  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:14:32.822  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:32.823  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:32.823  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:14:32.823  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:14:32.823  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:32.823  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:32.823  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:14:32.823  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:14:32.823  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:32.823  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:32.823  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:14:32.823  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:14:32.823  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:14:32.823  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:32.823  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:32.823  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:14:32.823  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:14:32.823  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:14:32.823  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:14:32.823  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:14:32.851  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/journey
+10-23 20:14:33.077  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:33.122  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:33.186     0     0 I logd    : logdr: UID=0 GID=0 PID=4215 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:33.162  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/journey_bottom
+10-23 20:14:33.163  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:ca02870a: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:33.164  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:33.164  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:ca02870a: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:33.504     0     0 W healthd : battery l=100 v=5000 t=25.0 h=2 st=2 c=900000 fc=3000000 cc=10 chg=a
+10-23 20:14:33.688  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/settlement_true
+10-23 20:14:33.763  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:33.810  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:33.874     0     0 I logd    : logdr: UID=0 GID=0 PID=4221 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:34.044  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/settlement_true_bottom
+10-23 20:14:34.045  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:4265735e: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:34.048  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:34.048  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:4265735e: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:34.450  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:34.496  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:14:34.562     0     0 I logd    : logdr: UID=0 GID=0 PID=4227 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:14:34.568  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/settlement_false
+10-23 20:14:34.910  3785  3810 I godot   : ANDROID_DEEP_PHOTO tablet_10_16/settlement_false_bottom
+10-23 20:14:34.911  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:de8be83a: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:14:34.911  3785  3785 D InsetsController: hide(ime())
+10-23 20:14:34.911  3785  3785 I ImeTracker: org.yuanzheng.singleplayer:de8be83a: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:14:34.962  3785  3810 I godot   : ANDROID_DEEP_COMPLETE tablet_10_16 checks=84 failed=0 photos=65
+10-23 20:14:35.143  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/tablet_10_16/result.json''
+10-23 20:14:35.197  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'tar' '-C' 'files/android_full_audit' '-cf' '-' 'tablet_10_16''
+10-23 20:14:37.041   517   600 D AF::Track: interceptBuffer: took 638us to intercept 0 tracks
+10-23 20:14:37.305   666   771 D ActivityManager: freezing 1508 android.process.acore
+10-23 20:14:37.781  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d''

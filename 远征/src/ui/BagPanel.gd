@@ -44,6 +44,7 @@ func _ready() -> void:
 	theme=Art.theme()
 	_build()
 	get_viewport().size_changed.connect(_resize_frame)
+	preload("res://src/ui/UiSafeArea.gd").watch(self,_resize_frame)
 	_refresh()
 	_tab_buttons[_tab].grab_focus.call_deferred()
 
@@ -86,7 +87,7 @@ func _build() -> void:
 	for entry in TABS:
 		var key: String=entry[0]
 		var b=Art.action(entry[1],"tab")
-		b.custom_minimum_size.y=44
+		b.custom_minimum_size.y=60
 		b.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 		b.name="Tab_"+key
 		b.pressed.connect(_select_tab.bind(key))
@@ -121,37 +122,44 @@ func _build() -> void:
 func _resize_frame(safe_override: Rect2=Rect2()) -> void:
 	if _panel_root==null:return
 	var safe:=safe_override if safe_override.has_area() else G.ui_safe_rect(self)
+	# Keep the reading column usable on tablets without shrinking phone controls.
+	if safe.size.x>640:
+		safe=Rect2(Vector2(safe.get_center().x-320,safe.position.y),Vector2(640,safe.size.y))
 	Page.place(_stage,Vector2.ZERO,get_viewport_rect().size)
 	Page.place(_panel_root,safe.position,safe.size)
 	var w:=safe.size.x
-	Page.place(_header,Vector2(16,10),Vector2(w-32,60))
-	Page.place(_close_btn,Vector2(22,18),Vector2(44,44))
-	Page.place(_bag_mark,Vector2(80,26),Vector2(28,28))
-	Page.place(_banner,Vector2(120,20),Vector2(w-148,40))
-	Page.place(_count_l,Vector2(24,78),Vector2(136,34))
-	Page.place(_pending_l,Vector2(164,78),Vector2(110,34))
-	if _gold_bg!=null:Page.place(_gold_bg,Vector2(w-182,78),Vector2(158,34))
-	Page.place(_gold,Vector2(w-182,78),Vector2(158,34))
-	Page.place(_tabs,Vector2(24,120),Vector2(w-48,44))
+	Page.place(_header,Vector2(12,8),Vector2(w-24,72))
+	Page.place(_close_btn,Vector2(18,16),Vector2(56,56))
+	Page.place(_bag_mark,Vector2(86,28),Vector2(32,32))
+	Page.place(_banner,Vector2(128,18),Vector2(w-152,52))
+	Page.place(_count_l,Vector2(24,84),Vector2(w*.34,36))
+	Page.place(_pending_l,Vector2(w*.38,84),Vector2(w*.23,36))
+	if _gold_bg!=null:Page.place(_gold_bg,Vector2(w*.64,84),Vector2(w*.36-24,36))
+	Page.place(_gold,Vector2(w*.64,84),Vector2(w*.36-24,36))
+	Page.place(_tabs,Vector2(20,126),Vector2(w-40,60))
 	var compact:=_tab=="pending" or _tab in ["mat","gem"] or G.inv_find(_sel_uid).is_empty()
-	var tray_h:=168.0 if compact else 324.0
+	var tray_h:=184.0 if compact else minf(340,safe.size.y*.42)
+	tray_h=minf(tray_h,maxf(156,safe.size.y-376))
 	var tray_top:=safe.size.y-tray_h-16
-	Page.place(_list_plate,Vector2(16,174),Vector2(w-32,maxf(148,tray_top-182)))
-	Page.place(_list,Vector2(24,182),Vector2(w-48,maxf(132,tray_top-198)))
+	Page.place(_list_plate,Vector2(12,196),Vector2(w-24,maxf(96,tray_top-204)))
+	Page.place(_list,Vector2(24,208),Vector2(w-48,maxf(72,tray_top-228)))
 	if _scroll.get_child_count()>0 and _scroll.get_child(0) is GridContainer:
-		for cell in _scroll.get_child(0).get_children():
-			var cell_w:=floorf((_list.size.x-32)/5)
+		var grid:=_scroll.get_child(0) as GridContainer
+		grid.columns=clampi(floori((_list.size.x+8)/104),2,6)
+		for cell in grid.get_children():
+			var cell_w:=floorf((_list.size.x-8*(grid.columns-1))/grid.columns)
 			cell.custom_minimum_size = Vector2(cell_w,cell_w)
 			cell.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	Page.place(_tray,Vector2(16,tray_top),Vector2(w-32,tray_h))
 	Page.place(_detail,Vector2(38,tray_top+20),Vector2(w-76,tray_h-40))
-	Page.place(_detail_scroll,Vector2(0,0),Vector2(_detail.size.x,128 if compact else 224))
-	Page.place(_actions,Vector2(0,232),Vector2(_detail.size.x,48))
+	Page.place(_detail_scroll,Vector2(0,0),Vector2(_detail.size.x,maxf(48,_detail.size.y-(72 if not _action_buttons.is_empty() else 0))))
+	Page.place(_actions,Vector2(0,maxf(0,_detail.size.y-64)),Vector2(_detail.size.x,64))
+	var unit:=(_actions.size.x-16)/3.0
 	for b in _action_buttons:
 		match b.get_meta("action",""):
-			"sell":Page.place(b,Vector2.ZERO,Vector2(128,48))
-			"lock":Page.place(b,Vector2(136,0),Vector2(72,48))
-			_:Page.place(b,Vector2(216,0),Vector2(_actions.size.x-216,48))
+			"sell":Page.place(b,Vector2.ZERO,Vector2(unit,64))
+			"lock":Page.place(b,Vector2(unit+8,0),Vector2(unit,64))
+			_:Page.place(b,Vector2((unit+8)*2,0),Vector2(unit,64))
 
 func _select_tab(key: String) -> void:
 	_tab=key
@@ -188,7 +196,7 @@ func _refresh() -> void:
 
 func _grid() -> GridContainer:
 	var grid:=GridContainer.new()
-	grid.columns=5
+	grid.columns=clampi(floori((_list.size.x+8)/104),2,6)
 	grid.name="EquipmentGrid" if _tab=="equip" else "SupplyGrid"
 	grid.add_theme_constant_override("h_separation",8)
 	grid.add_theme_constant_override("v_separation",8)
@@ -197,12 +205,10 @@ func _grid() -> GridContainer:
 	return grid
 
 func _min_grid_slots(count: int) -> int:
-	var safe := G.ui_safe_rect(self)
-	var compact := _tab == "pending" or _tab in ["mat", "gem"] or G.inv_find(_sel_uid).is_empty()
-	var tray_h := 168.0 if compact else 324.0
-	var avail_h := maxf(320.0, safe.size.y - tray_h - 16.0 - 198.0)
-	var rows := maxi(4, int(floor((avail_h + 8.0) / 88.0)))
-	return maxi(rows * 5, int(ceil(float(count) / 5.0)) * 5)
+	var columns:=clampi(floori((_list.size.x+8)/104),2,6)
+	var cell_width:=(_list.size.x-8*(columns-1))/columns
+	var rows:=maxi(1,ceili((_list.size.y+8)/(cell_width+8)))
+	return maxi(rows*columns,ceili(float(count)/columns)*columns)
 
 func _build_equip_tab() -> void:
 	var items:=_bag_items()
@@ -372,6 +378,8 @@ func _build_supplies(gems: bool) -> void:
 		var b:=Art.ItemCell.new()
 		b.item_image.texture=G.res_tex(G.item_icon(id))
 		b.heading.text=G.gem_label(id) if gems else G.item_name(id)
+		b.tooltip_text=b.heading.text+" ×%d" % G.item_count(id)
+		b.show_name=b.item_image.texture==null
 		b.amount.text="×%d" % G.item_count(id)
 		b.selected=id==_sel_supply
 		b.set_meta("supply_id",id)

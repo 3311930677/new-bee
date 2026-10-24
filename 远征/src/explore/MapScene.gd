@@ -193,6 +193,8 @@ var _journey_panel: Control = null
 var _big_map: Control = null         # 大地图浮层（含图例与返回按钮）
 var _sprint := false
 var _mount_hoof_timer := 0.0
+var _mount_contact_frame := -1
+var _mount_foreground: Sprite2D
 var _last_battle_pets: Array = []
 var _auto_walk := false
 var _auto_time := 0.0                # 自动前往累计时长（超时自停，防止绕过点卡死）
@@ -1188,6 +1190,13 @@ func _sync_mount_visual() -> void:
 	_mount_anim.sprite_frames=MountVisual.frames_for(st.role_id,"bear" if bear else "horse")
 	_mount_anim.scale=Vector2.ONE*(.34 if bear else .36)
 	_mount_anim.visible = riding
+	if _mount_foreground == null:
+		_mount_foreground = Sprite2D.new()
+		_mount_foreground.name = "MountForehead"
+		_mount_foreground.z_index = 2
+		_mount_foreground.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		_player.add_child(_mount_foreground)
+	_mount_foreground.visible = false
 	var cur_dir := String(_mount_anim.animation) if riding else String(_player_anim.animation).replace("idle_", "walk_")
 	if not cur_dir.begins_with("walk_"):
 		cur_dir = "walk_down"
@@ -1198,7 +1207,7 @@ func _sync_mount_visual() -> void:
 	_player_anim.visible = true
 	_player_anim.z_index=1 if riding else 0
 	var player_scale:=float(_main_cfg.get("player_scale",.96))
-	_player_anim.scale=Vector2.ONE*(.60 if riding else player_scale)
+	_player_anim.scale=Vector2.ONE*(MountVisual.rider_scale() if riding else player_scale)
 	_player_anim.position=MountVisual.rider_pos(G.mount_active(),String(_mount_anim.animation)) if riding else Vector2(0, 21.0-56.0*player_scale)
 	_mount_anim.position=MountVisual.mount_offset(G.mount_active(),String(_mount_anim.animation))
 	if _player_shadow != null:
@@ -1677,7 +1686,7 @@ func _build_main_world_status() -> void:
 	_main_gold_chip = gold_chip
 	gold_chip.pressed.connect(func():
 		if not G.ui_blocked:
-			G.show_info_popup(gold_chip, "行囊与货币", G.wallet_info_lines()))
+			G.show_currency_popup(gold_chip,"gold"))
 	_hud.add_child(gold_chip)
 	_main_gold_l = currency.value
 	_hud.add_child(HudStyle.region_title(String(_main_cfg.get("name", "昭元边城"))))
@@ -2776,8 +2785,14 @@ func _physics_process(delta: float) -> void:
 	_tick_main_respawns(delta)
 	_world_exit_cd = maxf(0.0, _world_exit_cd - delta)
 	if _modal_open():
+		if _mode == "main_world" and G.mount_riding():
+			_mount_anim.stop()
+			_mount_contact_frame = -1
 		return
 	if G.ui_blocked:  # GM 控制台等全屏浮层打开时冻结移动
+		if _mode == "main_world" and G.mount_riding():
+			_mount_anim.stop()
+			_mount_contact_frame = -1
 		return
 	if _player == null:
 		return
@@ -2806,6 +2821,9 @@ func _physics_process(delta: float) -> void:
 	var rows := int(_map_cfg.get("map_rows", 42))
 	_player.position = _player.position.clamp(Vector2(24, 60), Vector2(cols * 48 - 24, rows * 48 - 24))
 	var actual_dir := (_player.position - _prev_pos) / maxf(delta, 0.0001)
+	if _mode == "main_world" and actual_dir.length_squared() > 1.0 \
+			and not bool((G.prog.get("tutorial", {}) as Dictionary).get("field_moved", false)):
+		preload("res://src/world/TutorialService.gd").notify_event(G, "player_moved")
 	_update_player_anim(actual_dir)
 	_tick_mount_hoof(delta, actual_dir)
 	_update_world_companion(delta, actual_dir)
@@ -2816,12 +2834,20 @@ func _physics_process(delta: float) -> void:
 
 func _tick_mount_hoof(delta: float, actual_dir: Vector2) -> void:
 	if _mode != "main_world" or not G.mount_riding() or actual_dir.length_squared() < 0.25:
-		_mount_hoof_timer = 0.0
+		_mount_contact_frame = -1
 		return
-	_mount_hoof_timer -= delta
-	if _mount_hoof_timer <= 0.0:
-		Audio.sfx("mount_hoof", 0.02)
-		_mount_hoof_timer = 0.43
+	_mount_hoof_timer = maxf(0.0,_mount_hoof_timer-delta)
+	var frame := _mount_anim.frame
+	if frame != _mount_contact_frame and frame in [0,2] and _mount_hoof_timer <= 0:
+		Audio.hoof(_hoof_surface())
+		_mount_hoof_timer = .10
+	_mount_contact_frame = frame
+
+func _hoof_surface() -> String:
+	if _main_map_id.contains("boardwalk") or _main_map_id.contains("port"): return "wood"
+	if _main_map_id.contains("frost") or _main_map_id.contains("snow") or _main_map_id.contains("glacier"): return "snow"
+	if _main_map_id.contains("sand") or _main_map_id.contains("desert"): return "sand"
+	return "stone"
 
 
 func _update_player_anim(dir: Vector2) -> void:
@@ -2833,12 +2859,12 @@ func _update_player_anim(dir: Vector2) -> void:
 			else:
 				mount_dir = &"walk_down" if dir.y > 0 else &"walk_up"
 			_mount_anim.animation = mount_dir
-			_mount_anim.speed_scale = clampf(dir.length() / maxf(1.0, TableCache.map_player_speed()), 0.85, 1.75)
+			_mount_anim.speed_scale = clampf(dir.length() / maxf(1.0, TableCache.map_player_speed()*1.5), 0.15, 2.4)
 			if not _mount_anim.is_playing():
 				_mount_anim.play(mount_dir)
 			_player_anim.animation=mount_dir
 			DirectionalIdle.stop(_player_anim)
-			var bob := -1.5 if _mount_anim.frame != 1 else 0.0
+			var bob := -1.0 if _mount_anim.frame in [0,2] else 0.0
 			_player_anim.position=MountVisual.rider_pos(G.mount_active(),String(mount_dir),bob)
 			_mount_anim.position=MountVisual.mount_offset(G.mount_active(),String(mount_dir))
 		else:
@@ -2846,6 +2872,7 @@ func _update_player_anim(dir: Vector2) -> void:
 			_mount_anim.frame=1
 			_player_anim.position=MountVisual.rider_pos(G.mount_active(),String(_mount_anim.animation),0.0)
 			_mount_anim.position=MountVisual.mount_offset(G.mount_active(),String(_mount_anim.animation))
+		_sync_mount_foreground()
 		return
 	var base_scale := float(_main_cfg.get("player_scale", 0.96)) if _mode == "main_world" else 0.72
 	var base_y := 21.0 - 56.0 * base_scale
@@ -2871,6 +2898,16 @@ func _update_player_anim(dir: Vector2) -> void:
 	_player_anim.position.y = base_y
 	if _player_shadow != null:
 		_player_shadow.set_walking(true, _player_anim.frame)
+
+
+func _sync_mount_foreground() -> void:
+	if _mount_foreground == null: return
+	_mount_foreground.visible = G.mount_riding() and G.mount_active()=="horse" and _mount_anim.animation==&"walk_down"
+	if not _mount_foreground.visible: return
+	var part := _mount_anim.sprite_frames.get_frame_texture(_mount_anim.animation,_mount_anim.frame)
+	_mount_foreground.texture = MountVisual.foreground_for(part)
+	_mount_foreground.position = _mount_anim.position
+	_mount_foreground.scale = _mount_anim.scale
 
 
 # ================= 探索动机（轮次 16） =================
@@ -3477,7 +3514,7 @@ func _nav_info() -> Dictionary:
 
 
 func _update_nav(delta: float = 0.0) -> void:
-	var info := _nav_info()
+	var info := _hud_target_info()
 	if _mode=="main_world" and _player!=null and st!=null:
 		var hint_key:=st.active_pet+"|"+_main_map_id
 		if not _exploration_seen.has(hint_key) and _player.position.distance_to(info.get("pos",Vector2.ZERO))<300:
@@ -3512,7 +3549,7 @@ func _on_compass_tapped() -> void:
 		return
 	if _map_done or _battle != null or _picker != null or _remover != null:
 		return
-	var info := _nav_info()
+	var info := _hud_target_info()
 	if String(info.get("kind", "")).is_empty():
 		return
 	Audio.sfx("ui_confirm")
@@ -3542,7 +3579,7 @@ func _stop_auto_walk(msg: String) -> void:
 
 ## 自动前往的转向：直线朝目标；被散件挡住时先沿切线绕一段再回来
 func _auto_dir(delta: float) -> Vector2:
-	var info := _nav_info()
+	var info := _hud_target_info()
 	if String(info.get("kind", "")).is_empty():
 		_stop_auto_walk("")
 		return Vector2.ZERO
@@ -6256,6 +6293,7 @@ func _build_round1_hud() -> void:
 	_refresh_hud()
 	_layout_round1_hud()
 	get_viewport().size_changed.connect(_layout_round1_hud)
+	preload("res://src/ui/UiSafeArea.gd").watch(self,_layout_round1_hud)
 
 func register_city_task(chip: Button) -> void:
 	# City services keep their existing callbacks and are parented in the shared HUD.

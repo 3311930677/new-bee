@@ -1,0 +1,15 @@
+{
+  "output": "D:\\new-bee\\远征\\exports\\android\\Yuanzheng-0.2.1-mobile2.apk",
+  "sha256": "a4a4f426ef96792bf503bbcfc1dd6d5cc21f0b97f845a1aafccc8432fa12b373",
+  "bytes": 727636002,
+  "signature_verifies": true,
+  "architectures": [
+    "lib/arm64-v8a/libc++_shared.so",
+    "lib/arm64-v8a/libgodot_android.so"
+  ],
+  "diagnostic_files": [],
+  "production_script_json_count": 283,
+  "mismatches_from_audited_source": [],
+  "signing": "debug signature; not release-store signing",
+  "scope": "export lock workaround only; no gameplay fixes"
+}

@@ -1,0 +1,19 @@
+{
+  "captured_utc": "2026-10-23T19:46:08.878642+00:00",
+  "apk": "Yuanzheng-android-audit.apk",
+  "apk_sha256": "55c209ffbd0c3774cfdc1967babfc869ba30362cb5e0c93731cd1d011f1dd56d",
+  "installed_apk_sha256": "55c209ffbd0c3774cfdc1967babfc869ba30362cb5e0c93731cd1d011f1dd56d",
+  "installed_matches": true,
+  "native_libraries": [
+    "lib/x86_64/libc++_shared.so",
+    "lib/x86_64/libgodot_android.so"
+  ],
+  "source_sha256": {
+    "远征/src/ui/ExchangePanel.gd": "7bb2f60d22fb744f70f8525355e0ddca159d3bf9bffed09fb19d3d2d99c9cace",
+    "远征/src/qa/AndroidUiAudit.gd": "95cda8f35b197f5cc7079b29d0b5be5974478cbe28e07b206c8b8510fb0cb4f0",
+    "远征/project.godot": "96a9decc450e33de6126883693cba077991a5ba50b9e6dbf63584a5f21737da8",
+    "远征/export_presets.cfg": "251f11b5c78e91d516edca9123bf5f3ceb3483494b81eec07f35b81ffc5f5144"
+  },
+  "phone_preset_qa_feature_enabled": false,
+  "phone_preset_excludes_qa": true
+}

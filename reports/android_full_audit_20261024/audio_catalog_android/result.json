@@ -1,0 +1,624 @@
+{
+	"checks": [
+		{
+			"detail": null,
+			"label": "A07 all 34 effects exercised on Android",
+			"ok": true
+		}
+	],
+	"device": {
+		"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+		"mix_rate": 44100.0,
+		"model": "Android SDK built for x86_64",
+		"os": "Android",
+		"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+		"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+		"version": "37.16571990",
+		"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+		"window": "(1080, 2400)"
+	},
+	"final": {
+		"audio": {
+			"bgm": "bgm_home",
+			"events": [
+				{
+					"category": "UI",
+					"name": "ui_click",
+					"time_ms": 131356
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 131556
+				},
+				{
+					"category": "UI",
+					"name": "ui_close",
+					"time_ms": 131838
+				},
+				{
+					"category": "UI",
+					"name": "ui_page",
+					"time_ms": 132088
+				},
+				{
+					"category": "UI",
+					"name": "ui_confirm",
+					"time_ms": 132404
+				},
+				{
+					"category": "UI",
+					"name": "ui_cancel",
+					"time_ms": 132838
+				},
+				{
+					"category": "UI",
+					"name": "ui_locked",
+					"time_ms": 133222
+				},
+				{
+					"category": "Rewards",
+					"name": "coin",
+					"time_ms": 133555
+				},
+				{
+					"category": "Rewards",
+					"name": "reward",
+					"time_ms": 133905
+				},
+				{
+					"category": "Rewards",
+					"name": "level_up",
+					"time_ms": 134654
+				},
+				{
+					"category": "Combat",
+					"name": "hit_light",
+					"time_ms": 135604
+				},
+				{
+					"category": "Combat",
+					"name": "hit_heavy",
+					"time_ms": 135836
+				},
+				{
+					"category": "Combat",
+					"name": "hit_crit",
+					"time_ms": 136171
+				},
+				{
+					"category": "Combat",
+					"name": "skill_cast",
+					"time_ms": 136604
+				},
+				{
+					"category": "Alerts",
+					"name": "boss_warn",
+					"time_ms": 137071
+				},
+				{
+					"category": "Alerts",
+					"name": "low_hp",
+					"time_ms": 137754
+				},
+				{
+					"category": "Alerts",
+					"name": "victory",
+					"time_ms": 138387
+				},
+				{
+					"category": "Alerts",
+					"name": "defeat",
+					"time_ms": 139538
+				},
+				{
+					"category": "Rewards",
+					"name": "pickup",
+					"time_ms": 140588
+				},
+				{
+					"category": "Rewards",
+					"name": "altar",
+					"time_ms": 141020
+				},
+				{
+					"category": "Movement",
+					"name": "mount_toggle",
+					"time_ms": 142353
+				},
+				{
+					"category": "Movement",
+					"name": "mount_hoof",
+					"time_ms": 142921
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 143172
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_snow",
+					"time_ms": 143420
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_sand",
+					"time_ms": 143671
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_wood",
+					"time_ms": 143920
+				},
+				{
+					"category": "Combat",
+					"name": "cast_blade",
+					"time_ms": 144170
+				},
+				{
+					"category": "Combat",
+					"name": "cast_bow",
+					"time_ms": 144520
+				},
+				{
+					"category": "Combat",
+					"name": "cast_frost",
+					"time_ms": 144871
+				},
+				{
+					"category": "Combat",
+					"name": "cast_radiant",
+					"time_ms": 145355
+				},
+				{
+					"category": "Combat",
+					"name": "hit_blade",
+					"time_ms": 145837
+				},
+				{
+					"category": "Combat",
+					"name": "hit_arrow",
+					"time_ms": 146188
+				},
+				{
+					"category": "Combat",
+					"name": "hit_frost",
+					"time_ms": 146537
+				},
+				{
+					"category": "Combat",
+					"name": "hit_radiant",
+					"time_ms": 147020
+				}
+			],
+			"mute": false,
+			"paused": false,
+			"playing": true,
+			"position": 0.00400000018998981,
+			"suspended": false,
+			"voices": 0
+		},
+		"controls": [],
+		"device": {
+			"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+			"mix_rate": 44100.0,
+			"model": "Android SDK built for x86_64",
+			"os": "Android",
+			"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+			"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+			"version": "37.16571990",
+			"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+			"window": "(1080, 2400)"
+		},
+		"focus": "<Object#null>",
+		"keyboard_height": 0,
+		"labels": [],
+		"modals": [],
+		"page": "",
+		"tick_ms": 147765
+	},
+	"id": "audio_catalog_android",
+	"photos": [],
+	"records": [
+		{
+			"discarded": 0,
+			"frames": 711680,
+			"label": "sfx_catalog",
+			"peak": 0.178853362798691,
+			"rms": 0.0283268094464379,
+			"seconds": 16.1378684807256,
+			"zero_frames": 209167
+		},
+		{
+			"events": [
+				{
+					"category": "UI",
+					"name": "ui_click",
+					"time_ms": 131356
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 131556
+				},
+				{
+					"category": "UI",
+					"name": "ui_close",
+					"time_ms": 131838
+				},
+				{
+					"category": "UI",
+					"name": "ui_page",
+					"time_ms": 132088
+				},
+				{
+					"category": "UI",
+					"name": "ui_confirm",
+					"time_ms": 132404
+				},
+				{
+					"category": "UI",
+					"name": "ui_cancel",
+					"time_ms": 132838
+				},
+				{
+					"category": "UI",
+					"name": "ui_locked",
+					"time_ms": 133222
+				},
+				{
+					"category": "Rewards",
+					"name": "coin",
+					"time_ms": 133555
+				},
+				{
+					"category": "Rewards",
+					"name": "reward",
+					"time_ms": 133905
+				},
+				{
+					"category": "Rewards",
+					"name": "level_up",
+					"time_ms": 134654
+				},
+				{
+					"category": "Combat",
+					"name": "hit_light",
+					"time_ms": 135604
+				},
+				{
+					"category": "Combat",
+					"name": "hit_heavy",
+					"time_ms": 135836
+				},
+				{
+					"category": "Combat",
+					"name": "hit_crit",
+					"time_ms": 136171
+				},
+				{
+					"category": "Combat",
+					"name": "skill_cast",
+					"time_ms": 136604
+				},
+				{
+					"category": "Alerts",
+					"name": "boss_warn",
+					"time_ms": 137071
+				},
+				{
+					"category": "Alerts",
+					"name": "low_hp",
+					"time_ms": 137754
+				},
+				{
+					"category": "Alerts",
+					"name": "victory",
+					"time_ms": 138387
+				},
+				{
+					"category": "Alerts",
+					"name": "defeat",
+					"time_ms": 139538
+				},
+				{
+					"category": "Rewards",
+					"name": "pickup",
+					"time_ms": 140588
+				},
+				{
+					"category": "Rewards",
+					"name": "altar",
+					"time_ms": 141020
+				},
+				{
+					"category": "Movement",
+					"name": "mount_toggle",
+					"time_ms": 142353
+				},
+				{
+					"category": "Movement",
+					"name": "mount_hoof",
+					"time_ms": 142921
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 143172
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_snow",
+					"time_ms": 143420
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_sand",
+					"time_ms": 143671
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_wood",
+					"time_ms": 143920
+				},
+				{
+					"category": "Combat",
+					"name": "cast_blade",
+					"time_ms": 144170
+				},
+				{
+					"category": "Combat",
+					"name": "cast_bow",
+					"time_ms": 144520
+				},
+				{
+					"category": "Combat",
+					"name": "cast_frost",
+					"time_ms": 144871
+				},
+				{
+					"category": "Combat",
+					"name": "cast_radiant",
+					"time_ms": 145355
+				},
+				{
+					"category": "Combat",
+					"name": "hit_blade",
+					"time_ms": 145837
+				},
+				{
+					"category": "Combat",
+					"name": "hit_arrow",
+					"time_ms": 146188
+				},
+				{
+					"category": "Combat",
+					"name": "hit_frost",
+					"time_ms": 146537
+				},
+				{
+					"category": "Combat",
+					"name": "hit_radiant",
+					"time_ms": 147020
+				}
+			],
+			"mix": {
+				"discarded": 0,
+				"frames": 711680,
+				"label": "sfx_catalog",
+				"peak": 0.178853362798691,
+				"rms": 0.0283268094464379,
+				"seconds": 16.1378684807256,
+				"zero_frames": 209167
+			},
+			"timeline": [
+				{
+					"name": "ui_click",
+					"sample_start": 0,
+					"source_seconds": 0.0649886621315193,
+					"tick_ms": 131355
+				},
+				{
+					"name": "ui_open",
+					"sample_start": 9216,
+					"source_seconds": 0.15,
+					"tick_ms": 131556
+				},
+				{
+					"name": "ui_close",
+					"sample_start": 21504,
+					"source_seconds": 0.12,
+					"tick_ms": 131838
+				},
+				{
+					"name": "ui_page",
+					"sample_start": 31744,
+					"source_seconds": 0.19,
+					"tick_ms": 132088
+				},
+				{
+					"name": "ui_confirm",
+					"sample_start": 46080,
+					"source_seconds": 0.3,
+					"tick_ms": 132404
+				},
+				{
+					"name": "ui_cancel",
+					"sample_start": 65536,
+					"source_seconds": 0.26,
+					"tick_ms": 132838
+				},
+				{
+					"name": "ui_locked",
+					"sample_start": 81920,
+					"source_seconds": 0.2,
+					"tick_ms": 133222
+				},
+				{
+					"name": "coin",
+					"sample_start": 97280,
+					"source_seconds": 0.22,
+					"tick_ms": 133555
+				},
+				{
+					"name": "reward",
+					"sample_start": 112640,
+					"source_seconds": 0.62,
+					"tick_ms": 133905
+				},
+				{
+					"name": "level_up",
+					"sample_start": 145408,
+					"source_seconds": 0.82,
+					"tick_ms": 134654
+				},
+				{
+					"name": "hit_light",
+					"sample_start": 187392,
+					"source_seconds": 0.1,
+					"tick_ms": 135604
+				},
+				{
+					"name": "hit_heavy",
+					"sample_start": 197632,
+					"source_seconds": 0.2,
+					"tick_ms": 135836
+				},
+				{
+					"name": "hit_crit",
+					"sample_start": 211968,
+					"source_seconds": 0.3,
+					"tick_ms": 136171
+				},
+				{
+					"name": "skill_cast",
+					"sample_start": 231424,
+					"source_seconds": 0.34,
+					"tick_ms": 136604
+				},
+				{
+					"name": "boss_warn",
+					"sample_start": 251904,
+					"source_seconds": 0.55,
+					"tick_ms": 137071
+				},
+				{
+					"name": "low_hp",
+					"sample_start": 281600,
+					"source_seconds": 0.5,
+					"tick_ms": 137754
+				},
+				{
+					"name": "victory",
+					"sample_start": 310272,
+					"source_seconds": 1.02,
+					"tick_ms": 138387
+				},
+				{
+					"name": "defeat",
+					"sample_start": 360448,
+					"source_seconds": 0.92,
+					"tick_ms": 139538
+				},
+				{
+					"name": "pickup",
+					"sample_start": 407552,
+					"source_seconds": 0.3,
+					"tick_ms": 140588
+				},
+				{
+					"name": "altar",
+					"sample_start": 425984,
+					"source_seconds": 1.2,
+					"tick_ms": 141020
+				},
+				{
+					"name": "mount_toggle",
+					"sample_start": 485376,
+					"source_seconds": 0.43,
+					"tick_ms": 142353
+				},
+				{
+					"name": "mount_hoof",
+					"sample_start": 509952,
+					"source_seconds": 0.115,
+					"tick_ms": 142921
+				},
+				{
+					"name": "hoof_stone",
+					"sample_start": 521216,
+					"source_seconds": 0.115,
+					"tick_ms": 143172
+				},
+				{
+					"name": "hoof_snow",
+					"sample_start": 531456,
+					"source_seconds": 0.115,
+					"tick_ms": 143420
+				},
+				{
+					"name": "hoof_sand",
+					"sample_start": 542720,
+					"source_seconds": 0.115,
+					"tick_ms": 143671
+				},
+				{
+					"name": "hoof_wood",
+					"sample_start": 553984,
+					"source_seconds": 0.115,
+					"tick_ms": 143920
+				},
+				{
+					"name": "cast_blade",
+					"sample_start": 565248,
+					"source_seconds": 0.22,
+					"tick_ms": 144170
+				},
+				{
+					"name": "cast_bow",
+					"sample_start": 579584,
+					"source_seconds": 0.22,
+					"tick_ms": 144520
+				},
+				{
+					"name": "cast_frost",
+					"sample_start": 595968,
+					"source_seconds": 0.36,
+					"tick_ms": 144871
+				},
+				{
+					"name": "cast_radiant",
+					"sample_start": 617472,
+					"source_seconds": 0.36,
+					"tick_ms": 145355
+				},
+				{
+					"name": "hit_blade",
+					"sample_start": 638976,
+					"source_seconds": 0.22,
+					"tick_ms": 145837
+				},
+				{
+					"name": "hit_arrow",
+					"sample_start": 654336,
+					"source_seconds": 0.22,
+					"tick_ms": 146188
+				},
+				{
+					"name": "hit_frost",
+					"sample_start": 668672,
+					"source_seconds": 0.36,
+					"tick_ms": 146537
+				},
+				{
+					"name": "hit_radiant",
+					"sample_start": 690176,
+					"source_seconds": 0.36,
+					"tick_ms": 147020
+				}
+			]
+		}
+	],
+	"suite": "audio_catalog"
+}

@@ -209,8 +209,8 @@ func _run() -> void:
 			var ents1: Dictionary = (maps[qmap] as Dictionary).get("entities", {})
 			_check(ents1.has(one), "支线单体目标必须在该图声明：%s" % one)
 	_check(live_count == 9, "第一幕九条配置均有运行时入口，章节前置另行控制")
-	_check(not bool(G.side_entity_interact("collect", "a1_chime", "maple_road", "a1_rel_child").get("ok", false)),
-		"接取前的目标事件不得计数")
+	_check(G.side_entity_visible("a1_chime", "a1_rel_child"),
+		"未接取的首个线索应可被发现")
 	_check(G.side_status_of("a1_elite_beast") == "", "未接取的首领支线不应有状态")
 	var acc_child := G.side_accept("a1_rel_child")
 	_check(bool(acc_child.get("ok", false)) and G.side_tracked() == "a1_rel_child",
@@ -306,15 +306,12 @@ func _run() -> void:
 		and int(G.wallet.get("gold", 0)) == gold_before_guard + 100
 		and G.item_count("enhance_stone") == stone_before_guard + 1,
 		"讨伐交付应发金币与强化石（口径调整：原药剂为局内资源）")
-	_check(not G.side_entity_visible("a1_tracks_a", "a1_eco_tracks"), "未接取时足迹实体不应生成")
-	var acc_tracks := G.side_accept("a1_eco_tracks")
-	_check(bool(acc_tracks.get("ok", false)) and G.side_tracked() == "a1_eco_tracks",
-		"接取足迹支线应自动追踪")
 	_check(G.side_entity_visible("a1_tracks_a", "a1_eco_tracks")
-		and G.side_entity_visible("a1_tracks_b", "a1_eco_tracks"), "接取后两处足迹都应生成")
+		and G.side_entity_visible("a1_tracks_b", "a1_eco_tracks"), "未接取时两处首步足迹可发现")
 	var obs := G.side_entity_interact("observe", "a1_tracks_a", "broken_slope", "a1_eco_tracks")
-	_check(bool(obs.get("ok", false)) and not G.side_entity_visible("a1_tracks_a", "a1_eco_tracks"),
-		"观察过的足迹不应再生成（跨读档一致）")
+	_check(bool(obs.get("ok", false)) and G.side_tracked() == "a1_eco_tracks"
+		and not G.side_entity_visible("a1_tracks_a", "a1_eco_tracks"),
+		"观察首个线索应自动接取并追踪，已看足迹不再生成")
 	_check(G.save_game() and G.reload_save(), "支线状态应可落盘重读")
 	_check(G.side_tracked() == "a1_eco_tracks"
 		and G.side_status_of("a1_eco_tracks") == QuestService.SIDE_ACTIVE

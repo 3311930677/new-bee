@@ -1,0 +1,50 @@
+{
+  "motion_normal_15s": {
+    "max_speed": 175.0,
+    "hoof_events": 50,
+    "boundary_stops": [
+      {
+        "from": 495794,
+        "to": 496415,
+        "position": [
+          600.0,
+          2088.0
+        ],
+        "hoof_events_inside": 0
+      },
+      {
+        "from": 499697,
+        "to": 500160,
+        "position": [
+          1176.0,
+          2088.0
+        ],
+        "hoof_events_inside": 0
+      }
+    ]
+  },
+  "motion_sprint_15s": {
+    "max_speed": 218.75,
+    "hoof_events": 55,
+    "boundary_stops": [
+      {
+        "from": 518470,
+        "to": 519739,
+        "position": [
+          600.0,
+          2088.0
+        ],
+        "hoof_events_inside": 0
+      },
+      {
+        "from": 522348,
+        "to": 523477,
+        "position": [
+          1176.0,
+          2088.0
+        ],
+        "hoof_events_inside": 0
+      }
+    ]
+  }
+}

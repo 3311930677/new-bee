@@ -1,0 +1,1545 @@
+{
+	"checks": [],
+	"device": {
+		"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+		"mix_rate": 44100.0,
+		"model": "Android SDK built for x86_64",
+		"os": "Android",
+		"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+		"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+		"version": "37.16571990",
+		"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+		"window": "(1080, 2400)"
+	},
+	"final": {
+		"audio": {
+			"bgm": "bgm_map",
+			"events": [
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516013
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516240
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516460
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516691
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516905
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 517141
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 517389
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 517608
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 517837
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 518056
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 518284
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 519740
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 519980
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 520190
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 520438
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 520652
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 520874
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 521121
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 521340
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 521577
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 521805
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 522034
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 522255
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 523727
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 523968
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 524179
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 524418
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 524648
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 524868
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525106
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525319
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525567
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525778
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525998
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 526267
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 526464
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 526716
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 526938
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 527155
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 527472
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 527702
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 527929
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 528149
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 528381
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 528603
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 528842
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529081
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529313
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529534
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529768
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529994
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 530208
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 530441
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 530666
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 530891
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 572886
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 575286
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 575377
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 578220
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 578309
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 581371
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 583687
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 586553
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 588921
+				},
+				{
+					"category": "UI",
+					"name": "ui_page",
+					"time_ms": 591621
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_snow",
+					"time_ms": 676281
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_snow",
+					"time_ms": 676612
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_snow",
+					"time_ms": 676942
+				}
+			],
+			"mute": false,
+			"paused": false,
+			"playing": true,
+			"position": 17.2320003509521,
+			"suspended": false,
+			"voices": 0
+		},
+		"controls": [
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldGold",
+				"rect": [
+					196.0,
+					67.9624938964844,
+					92.0,
+					44.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "金币 1234567 · 点击查看全部货币",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldTask_story",
+				"rect": [
+					12.0,
+					147.962493896484,
+					264.0,
+					50.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "归路仍在 · 三城可回访 · 查看目标与奖励",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldTask_story/Action_",
+				"rect": [
+					228.0,
+					150.962493896484,
+					44.0,
+					44.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "还有 0 项任务；点击展开 / 收起",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/Action_药剂",
+				"rect": [
+					403.999969482422,
+					965.999877929688,
+					64.0,
+					64.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/Action_疾行",
+				"rect": [
+					327.999969482422,
+					973.999877929688,
+					56.0,
+					56.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "疾行：关闭",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/Action_营帐",
+				"rect": [
+					311.999969482422,
+					71.9624938964844,
+					44.0,
+					44.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/Action_骑乘",
+				"rect": [
+					251.999969482422,
+					973.999877929688,
+					56.0,
+					56.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "下马",
+				"touch_under44": false
+			}
+		],
+		"device": {
+			"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+			"mix_rate": 44100.0,
+			"model": "Android SDK built for x86_64",
+			"os": "Android",
+			"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+			"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+			"version": "37.16571990",
+			"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+			"window": "(1080, 2400)"
+		},
+		"focus": "<Object#null>",
+		"keyboard_height": 0,
+		"labels": [
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@Node2D@5197/@Node2D@5230/@Label@5231",
+				"rect": [
+					512.0,
+					1936.0,
+					70.0,
+					24.0
+				],
+				"text": "昭元边城"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@Node2D@5197/@Node2D@5232/@Label@5233",
+				"rect": [
+					512.0,
+					186.0,
+					60.0,
+					24.0
+				],
+				"text": "断碑坡"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@Node2D@5197/@CharacterBody2D@5236/@Panel@5239/@Label@5242",
+				"rect": [
+					407.5,
+					1753.0,
+					145.0,
+					23.0
+				],
+				"text": "安卓全量巡检  Lv60"
+			},
+			{
+				"font": 15,
+				"minimum": "(60.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@Node2D@5197/@Node2D@5280/@Label@5281",
+				"rect": [
+					146.0,
+					1010.0,
+					168.0,
+					24.0
+				],
+				"text": "旧路石匣"
+			},
+			{
+				"font": 15,
+				"minimum": "(60.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@Node2D@5197/@Node2D@5282/@Label@5283",
+				"rect": [
+					541.0,
+					980.0,
+					168.0,
+					24.0
+				],
+				"text": "驿亭交易"
+			},
+			{
+				"font": 15,
+				"minimum": "(16.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldStatus/@Label@5287",
+				"rect": [
+					20.0,
+					76.9624938964844,
+					36.0,
+					23.0
+				],
+				"text": "Lv"
+			},
+			{
+				"font": 18,
+				"minimum": "(22.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldStatus/@Label@5288",
+				"rect": [
+					20.0,
+					96.9624938964844,
+					36.0,
+					28.0
+				],
+				"text": "60"
+			},
+			{
+				"font": 15,
+				"minimum": "(77.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldStatus/@Label@5289",
+				"rect": [
+					84.0,
+					73.9624938964844,
+					96.0,
+					23.0
+				],
+				"text": "3410/3410"
+			},
+			{
+				"font": 15,
+				"minimum": "(15.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldStatus/@Label@5290",
+				"rect": [
+					68.0,
+					73.9624938964844,
+					20.0,
+					23.0
+				],
+				"text": "♥"
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldStatus/@Label@5291",
+				"rect": [
+					68.0,
+					104.962493896484,
+					44.0,
+					24.0
+				],
+				"text": "历练"
+			},
+			{
+				"font": 15,
+				"minimum": "(39.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldStatus/@Label@5292",
+				"rect": [
+					108.0,
+					104.962493896484,
+					72.0,
+					23.0
+				],
+				"text": "100%"
+			},
+			{
+				"font": 15,
+				"minimum": "(56.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldGold/@Label@5299",
+				"rect": [
+					224.0,
+					75.9624938964844,
+					60.0,
+					28.0
+				],
+				"text": "123.4万"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/RegionTitle/@Label@5300",
+				"rect": [
+					349.999969482422,
+					184.962493896484,
+					108.0,
+					24.0
+				],
+				"text": "枫林古道"
+			},
+			{
+				"font": 15,
+				"minimum": "(15.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldTask_story/TaskBadge",
+				"rect": [
+					20.0,
+					159.962493896484,
+					22.0,
+					24.0
+				],
+				"text": "归"
+			},
+			{
+				"font": 15,
+				"minimum": "(60.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldTask_story/TaskHeading",
+				"rect": [
+					50.0,
+					150.962493896484,
+					170.0,
+					24.0
+				],
+				"text": "当前主线"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 1.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldTask_story/@Label@5301",
+				"rect": [
+					50.0,
+					168.962493896484,
+					170.0,
+					26.0
+				],
+				"text": "三城可回访"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldTask_story/Action_/Caption",
+				"rect": [
+					228.0,
+					176.962493896484,
+					44.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/Action_药剂/Caption",
+				"rect": [
+					403.999969482422,
+					1011.99987792969,
+					64.0,
+					23.0
+				],
+				"text": "药剂"
+			},
+			{
+				"font": 15,
+				"minimum": "(9.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/Action_药剂/CountBadge/Count",
+				"rect": [
+					447.999969482422,
+					961.999877929688,
+					24.0,
+					23.0
+				],
+				"text": "0"
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/Action_疾行/Caption",
+				"rect": [
+					327.999969482422,
+					1011.99987792969,
+					56.0,
+					23.0
+				],
+				"text": "疾行"
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/Action_营帐/Caption",
+				"rect": [
+					311.999969482422,
+					97.9624938964844,
+					44.0,
+					23.0
+				],
+				"text": "营帐"
+			},
+			{
+				"font": 15,
+				"minimum": "(15.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/Minimap/@Label@5304",
+				"rect": [
+					431.999969482422,
+					83.9624938964844,
+					16.0,
+					24.0
+				],
+				"text": "北"
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/Action_骑乘/Caption",
+				"rect": [
+					251.999969482422,
+					1011.99987792969,
+					56.0,
+					23.0
+				],
+				"text": "下马"
+			}
+		],
+		"map": {
+			"id": "maple_road",
+			"joy": "(0.0, 0.0)",
+			"joy_rect": "[P: (12.0, 877.9999), S: (144.0, 144.0)]",
+			"mount_frame": 1,
+			"position": "(480.0, 1860.0)",
+			"riding": true,
+			"velocity": "(0.0, 0.0)"
+		},
+		"modals": [],
+		"page": "MapScene",
+		"tick_ms": 751892
+	},
+	"id": "nav_map_probe",
+	"photos": [],
+	"records": [
+		{
+			"audio": {
+				"bgm": "bgm_map",
+				"events": [
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 516013
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 516240
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 516460
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 516691
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 516905
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 517141
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 517389
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 517608
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 517837
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 518056
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 518284
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 519740
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 519980
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 520190
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 520438
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 520652
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 520874
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 521121
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 521340
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 521577
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 521805
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 522034
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 522255
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 523727
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 523968
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 524179
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 524418
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 524648
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 524868
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 525106
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 525319
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 525567
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 525778
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 525998
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 526267
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 526464
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 526716
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 526938
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 527155
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 527472
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 527702
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 527929
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 528149
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 528381
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 528603
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 528842
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 529081
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 529313
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 529534
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 529768
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 529994
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 530208
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 530441
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 530666
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_stone",
+						"time_ms": 530891
+					},
+					{
+						"category": "UI",
+						"name": "ui_open",
+						"time_ms": 572886
+					},
+					{
+						"category": "UI",
+						"name": "ui_open",
+						"time_ms": 575286
+					},
+					{
+						"category": "UI",
+						"name": "ui_open",
+						"time_ms": 575377
+					},
+					{
+						"category": "UI",
+						"name": "ui_open",
+						"time_ms": 578220
+					},
+					{
+						"category": "UI",
+						"name": "ui_open",
+						"time_ms": 578309
+					},
+					{
+						"category": "UI",
+						"name": "ui_open",
+						"time_ms": 581371
+					},
+					{
+						"category": "UI",
+						"name": "ui_open",
+						"time_ms": 583687
+					},
+					{
+						"category": "UI",
+						"name": "ui_open",
+						"time_ms": 586553
+					},
+					{
+						"category": "UI",
+						"name": "ui_open",
+						"time_ms": 588921
+					},
+					{
+						"category": "UI",
+						"name": "ui_page",
+						"time_ms": 591621
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_snow",
+						"time_ms": 676281
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_snow",
+						"time_ms": 676612
+					},
+					{
+						"category": "Movement",
+						"name": "hoof_snow",
+						"time_ms": 676942
+					}
+				],
+				"mute": false,
+				"paused": false,
+				"playing": true,
+				"position": 17.2320003509521,
+				"suspended": false,
+				"voices": 0
+			},
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldGold",
+					"rect": [
+						196.0,
+						67.9624938964844,
+						92.0,
+						44.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "金币 1234567 · 点击查看全部货币",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldTask_story",
+					"rect": [
+						12.0,
+						147.962493896484,
+						264.0,
+						50.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "归路仍在 · 三城可回访 · 查看目标与奖励",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldTask_story/Action_",
+					"rect": [
+						228.0,
+						150.962493896484,
+						44.0,
+						44.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "还有 0 项任务；点击展开 / 收起",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/Action_药剂",
+					"rect": [
+						403.999969482422,
+						965.999877929688,
+						64.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/Action_疾行",
+					"rect": [
+						327.999969482422,
+						973.999877929688,
+						56.0,
+						56.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "疾行：关闭",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/Action_营帐",
+					"rect": [
+						311.999969482422,
+						71.9624938964844,
+						44.0,
+						44.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/Action_骑乘",
+					"rect": [
+						251.999969482422,
+						973.999877929688,
+						56.0,
+						56.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "下马",
+					"touch_under44": false
+				}
+			],
+			"device": {
+				"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+				"mix_rate": 44100.0,
+				"model": "Android SDK built for x86_64",
+				"os": "Android",
+				"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+				"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+				"version": "37.16571990",
+				"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+				"window": "(1080, 2400)"
+			},
+			"focus": "<Object#null>",
+			"keyboard_height": 0,
+			"labels": [
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@Node2D@5197/@Node2D@5230/@Label@5231",
+					"rect": [
+						512.0,
+						1936.0,
+						70.0,
+						24.0
+					],
+					"text": "昭元边城"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@Node2D@5197/@Node2D@5232/@Label@5233",
+					"rect": [
+						512.0,
+						186.0,
+						60.0,
+						24.0
+					],
+					"text": "断碑坡"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@Node2D@5197/@CharacterBody2D@5236/@Panel@5239/@Label@5242",
+					"rect": [
+						407.5,
+						1753.0,
+						145.0,
+						23.0
+					],
+					"text": "安卓全量巡检  Lv60"
+				},
+				{
+					"font": 15,
+					"minimum": "(60.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@Node2D@5197/@Node2D@5280/@Label@5281",
+					"rect": [
+						146.0,
+						1010.0,
+						168.0,
+						24.0
+					],
+					"text": "旧路石匣"
+				},
+				{
+					"font": 15,
+					"minimum": "(60.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@Node2D@5197/@Node2D@5282/@Label@5283",
+					"rect": [
+						541.0,
+						980.0,
+						168.0,
+						24.0
+					],
+					"text": "驿亭交易"
+				},
+				{
+					"font": 15,
+					"minimum": "(16.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldStatus/@Label@5287",
+					"rect": [
+						20.0,
+						76.9624938964844,
+						36.0,
+						23.0
+					],
+					"text": "Lv"
+				},
+				{
+					"font": 18,
+					"minimum": "(22.0, 27.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldStatus/@Label@5288",
+					"rect": [
+						20.0,
+						96.9624938964844,
+						36.0,
+						28.0
+					],
+					"text": "60"
+				},
+				{
+					"font": 15,
+					"minimum": "(77.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldStatus/@Label@5289",
+					"rect": [
+						84.0,
+						73.9624938964844,
+						96.0,
+						23.0
+					],
+					"text": "3410/3410"
+				},
+				{
+					"font": 15,
+					"minimum": "(15.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldStatus/@Label@5290",
+					"rect": [
+						68.0,
+						73.9624938964844,
+						20.0,
+						23.0
+					],
+					"text": "♥"
+				},
+				{
+					"font": 15,
+					"minimum": "(30.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldStatus/@Label@5291",
+					"rect": [
+						68.0,
+						104.962493896484,
+						44.0,
+						24.0
+					],
+					"text": "历练"
+				},
+				{
+					"font": 15,
+					"minimum": "(39.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldStatus/@Label@5292",
+					"rect": [
+						108.0,
+						104.962493896484,
+						72.0,
+						23.0
+					],
+					"text": "100%"
+				},
+				{
+					"font": 15,
+					"minimum": "(56.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldGold/@Label@5299",
+					"rect": [
+						224.0,
+						75.9624938964844,
+						60.0,
+						28.0
+					],
+					"text": "123.4万"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/RegionTitle/@Label@5300",
+					"rect": [
+						349.999969482422,
+						184.962493896484,
+						108.0,
+						24.0
+					],
+					"text": "枫林古道"
+				},
+				{
+					"font": 15,
+					"minimum": "(15.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldTask_story/TaskBadge",
+					"rect": [
+						20.0,
+						159.962493896484,
+						22.0,
+						24.0
+					],
+					"text": "归"
+				},
+				{
+					"font": 15,
+					"minimum": "(60.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldTask_story/TaskHeading",
+					"rect": [
+						50.0,
+						150.962493896484,
+						170.0,
+						24.0
+					],
+					"text": "当前主线"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 1.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldTask_story/@Label@5301",
+					"rect": [
+						50.0,
+						168.962493896484,
+						170.0,
+						26.0
+					],
+					"text": "三城可回访"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/WorldTask_story/Action_/Caption",
+					"rect": [
+						228.0,
+						176.962493896484,
+						44.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(30.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/Action_药剂/Caption",
+					"rect": [
+						403.999969482422,
+						1011.99987792969,
+						64.0,
+						23.0
+					],
+					"text": "药剂"
+				},
+				{
+					"font": 15,
+					"minimum": "(9.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/Action_药剂/CountBadge/Count",
+					"rect": [
+						447.999969482422,
+						961.999877929688,
+						24.0,
+						23.0
+					],
+					"text": "0"
+				},
+				{
+					"font": 15,
+					"minimum": "(30.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/Action_疾行/Caption",
+					"rect": [
+						327.999969482422,
+						1011.99987792969,
+						56.0,
+						23.0
+					],
+					"text": "疾行"
+				},
+				{
+					"font": 15,
+					"minimum": "(30.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/Action_营帐/Caption",
+					"rect": [
+						311.999969482422,
+						97.9624938964844,
+						44.0,
+						23.0
+					],
+					"text": "营帐"
+				},
+				{
+					"font": 15,
+					"minimum": "(15.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/Minimap/@Label@5304",
+					"rect": [
+						431.999969482422,
+						83.9624938964844,
+						16.0,
+						24.0
+					],
+					"text": "北"
+				},
+				{
+					"font": 15,
+					"minimum": "(30.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@5286/Action_骑乘/Caption",
+					"rect": [
+						251.999969482422,
+						1011.99987792969,
+						56.0,
+						23.0
+					],
+					"text": "下马"
+				}
+			],
+			"map": {
+				"id": "maple_road",
+				"joy": "(0.0, 0.0)",
+				"joy_rect": "[P: (12.0, 877.9999), S: (144.0, 144.0)]",
+				"mount_frame": 1,
+				"position": "(480.0, 1860.0)",
+				"riding": true,
+				"velocity": "(0.0, 0.0)"
+			},
+			"modals": [],
+			"page": "MapScene",
+			"tick_ms": 751891
+		}
+	],
+	"suite": "probe"
+}

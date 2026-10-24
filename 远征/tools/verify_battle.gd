@@ -42,11 +42,41 @@ func _run() -> void:
 	_test_boss_phases()
 	_test_break_window()
 	_test_no_phases_unchanged()
+	_test_cleanse_target()
 	if _fails == 0:
 		print("BATTLE_OK all tests passed")
 	else:
 		print("BATTLE_FAIL fails=%d" % _fails)
 	quit(0 if _fails == 0 else 1)
+
+
+func _test_cleanse_target() -> void:
+	var sim := BattleSim.new()
+	sim.record_events = false
+	sim.setup(82, {"role_id": "fz", "level": 5, "traits": [], "active_pet": "pet_rockturtle"},
+		{"theme": "forest", "node_type": "normal", "layer": 1})
+	var role := sim.role_unit()
+	var pet: Combatant = null
+	for ally in sim.alive_units("ally"):
+		if ally.kind == "pet":
+			pet = ally
+	_check(role != null and pet != null, "净化测试需要人物和随行宠物")
+	if role == null or pet == null:
+		return
+	pet.hp = maxi(1, int(pet.get_max_hp() * 0.3))
+	role.add_buff("poison", 90, {"pct": 0.02, "atk": 10})
+	_check(SkillSystem._cleanse_target(sim.alive_units("ally")) == role,
+		"净化应优先中毒主角，即使宠物血量更低")
+	role.dispel_debuffs()
+	_check(SkillSystem._cleanse_target(sim.alive_units("ally")) == null,
+		"没有负面状态时不应选出净化目标")
+	role.add_buff("poison", 90, {"pct": 0.02, "atk": 10})
+	pet.add_buff("poison", 90, {"pct": 0.02, "atk": 10})
+	SkillSystem._apply_skill(sim, role,
+		{"id": "fz_jinghua", "target": "ally_single", "effect": {"type": "cleanse"}},
+		{}, false, pet)
+	_check(not pet.has_buff("poison") and role.has_buff("poison"),
+		"玩家指定宠物时净化应准确落到该宠物")
 
 
 # ---------- 1. DamageCalc 手算（3 组） ----------

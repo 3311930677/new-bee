@@ -53,7 +53,8 @@ static func _auto_condition(sim: BattleSim, unit: Combatant, sid: String,
 		"fz_jinghua":
 			for a in allies:
 				if a.has_buff("bleed") or a.has_buff("poison") or a.has_buff("slow") \
-						or a.has_buff("def_break") or a.has_buff("fear") or a.has_buff("stun"):
+						or a.has_buff("def_break") or a.has_buff("fear") or a.has_buff("stun") \
+						or a.has_buff("confusion") or a.has_buff("atk_down"):
 					return true
 			return false
 		"fz_zhudao":

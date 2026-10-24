@@ -47,7 +47,7 @@ var finished := false
 var result := ""           # "defeat" / "clear"
 var gold := 0              # 局内累计金币（#10b 结算入账钱包）
 var expedition := 0        # 局内累计远征币（抽奖祭坛货币）
-var soul := 0              # 局内累计灵魂石（宠物池货币）
+var soul := 0              # 局内累计魂晶（宠物池货币）
 var exp := 0               # 局内累计经验（结算时回写养成等级）
 var honor := 0             # 局内累计荣誉（战功，用于高难世界门禁）
 ## 本局各节点探索进度（会话态，不入存档；键 "layer_index"）：重进同一节点恢复

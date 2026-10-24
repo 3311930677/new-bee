@@ -1,0 +1,673 @@
+--------- beginning of main
+10-23 20:17:42.257  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb,raw:am start -n org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher'
+--------- beginning of system
+10-23 20:17:42.280   666  2365 W ActivityTaskManager: callingPackage for (uid=0, pid=4850) has no WPC
+10-23 20:17:42.283   666  2365 V GrammaticalInflectionUtils: AttributionSource: AttributionSource { uid = 10156, packageName = null, attributionTag = null, token = android.os.Binder@21eda21, deviceId = 0, next = null } does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+10-23 20:17:42.285  1188  1188 D RecentsView: onTaskDisplayChanged: 27, new displayId = 0
+10-23 20:17:42.287   521  1136 I libbinder.BpBinder: onLastStrongRef automatically unlinking death recipients for binder (0x7f86792bdc90) with descriptor: '(not cached)'
+10-23 20:17:42.290   666  2365 D CorePackageUpdate: onRecentTaskRemoved Removing task: 26
+10-23 20:17:42.290   666  2365 D CorePackageUpdate: Couldn't find a persistent state for task= 26
+10-23 20:17:42.291   666  2365 V ActivityTaskManager: TaskLaunchParamsModifier: phase=3 task=Task{6ffef4f #27 type=standard A=10156:org.yuanzheng.singleplayer} activity=ActivityRecord{37066158 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher t-1} display-from-task=0 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@44935168 inherit-from-task=fullscreen non-freeform-task-display-area display-area=DefaultTaskDisplayArea@44935168 skip-bounds-fullscreen
+10-23 20:17:42.291   666  2365 I ActivityTaskManager: START u0 {flg=0x10000000 xflg=0x4 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} with LAUNCH_SINGLE_INSTANCE_PER_TASK from uid 0 (com.android.shell) (BAL_ALLOW_ALLOWLISTED_UID) result code=0
+10-23 20:17:42.291  1188  1188 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_window_focused|state_user_active] -[]
+10-23 20:17:42.291   935  1007 V WindowManagerShell: Transition requested (#37): android.os.BinderProxy@1d7e250 TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=27 effectiveUid=10156 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } baseActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} topActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} origActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} realActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} realActivityIsAppLockEnabled=false numActivities=1 lastActiveTime=437086 supportsMultiWindow=true supportsMultiWindowWithoutConstraints=false resizeMode=0 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.os.BinderProxy@9bfec49} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 135 - 0, 0) topActivityInfo=ActivityInfo{a2c094e com.godot.game.GodotAppLauncher} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isInteractive=false isVisible=false isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=null leafTaskBoundsFromOptions= false capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=503 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false isLeafTask= true eligibleForLetterboxEducation= false isLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2400) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransitionInfo = null, displayChanges = null, requestedLocation = null, userChange = null, windowingLayerChange = null, fullscreenRequestChange = null, flags = 0, debugId = 37 }
+10-23 20:17:42.291   935  1007 W DisconnectHandler: No disconnect change found in the transition, not handling request.
+10-23 20:17:42.292   935  1007 V ShellDesktopMode: DesktopTasksController: skipping handleRequest reason=triggerTask's display doesn't support desktop mode
+10-23 20:17:42.292   935  1007 D ShellSplitScreen: logExit: no-op, mLoggerSessionId is null
+10-23 20:17:42.292  1188  1188 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_window_focused] -[state_user_active]
+10-23 20:17:42.293  1188  1188 D BaseActivity: Launcher flags updated: [state_started|state_window_focused] -[state_resumed|state_deferred_resumed]
+10-23 20:17:42.293   666   693 V GrammaticalInflectionUtils: AttributionSource: AttributionSource { uid = 10156, packageName = null, attributionTag = null, token = android.os.Binder@21eda21, deviceId = 0, next = null } does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+10-23 20:17:42.293  1188  1188 W SplitSelectStateCtor: Missing session instanceIds
+10-23 20:17:42.293  1188  1188 D StatsLog: LAUNCHER_SPLIT_SELECTION_EXIT_INTERRUPTED
+10-23 20:17:42.293   666  3260 D CompatChangeReporter: Compat change id reported: 377864165; UID 10156; state: ENABLED
+10-23 20:17:42.294   935  1065 W ShellStartingWindow: Get attribute fail, return default: File res/mipmap-xxhdpi-v4/icon_background.webp from drawable resource ID #0x7f0a0001: .xml extension required
+10-23 20:17:42.295   935  1007 V RecentTasksController: Notify recent tasks changed
+10-23 20:17:42.295   935  1007 D ShellDesktopMode: DesktopRepository(0): Removes freeform task: taskId=26
+10-23 20:17:42.295   935  1007 W ShellDesktopMode: DesktopRepository(0): No display id found for task: taskId=26
+10-23 20:17:42.295   935  1007 V RecentTasksController: Notify recent tasks changed
+10-23 20:17:42.296   935  1007 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=false, height=406
+10-23 20:17:42.301   666   868 I AppWidgetServiceImpl: Received broadcast: android.intent.action.PACKAGE_UNSTOPPED on user 0
+10-23 20:17:42.301   666   868 I AppWidgetServiceImpl: Updating package stopped masked state for uid 10156 package org.yuanzheng.singleplayer isStopped false
+10-23 20:17:42.301   666  2789 D CompatChangeReporter: Compat change id reported: 463899193; UID 10156; state: ENABLED
+10-23 20:17:42.301  1188  1188 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: 31
+10-23 20:17:42.301  1188  1188 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: 31
+10-23 20:17:42.302   935  1065 D SplashScreenView: Build android.window.SplashScreenView{45e1614 V.E...... ......ID 0,0-0,0}
+10-23 20:17:42.302   935  1065 D SplashScreenView: Icon: view: android.widget.ImageView{e41aebd V.ED..... ......I. 0,0-0,0 #1020575 android:id/splashscreen_icon_view} drawable: com.android.wm.shell.startingsurface.SplashscreenIconDrawableFactory$ImmobileIconDrawable@8632cb2 size: 504
+10-23 20:17:42.302   935  1065 D SplashScreenView: Branding: view: android.view.View{d847403 V.ED..... ......I. 0,0-0,0 #1020574 android:id/splashscreen_branding_view} drawable: android.graphics.drawable.BitmapDrawable@a107f80 size w: 525 h: 210
+10-23 20:17:42.303   666  2789 W InputChannel-JNI: Channel already disposed.
+10-23 20:17:42.309   462   462 D Zygote  : Forked child process 4853
+10-23 20:17:42.309   666   700 I ActivityManager: Start proc 4853:org.yuanzheng.singleplayer/u0a156 for next-top-activity {org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+10-23 20:17:42.310   666  3260 D WindowManager: setClientSurface Surface(name=VRI-Splash Screen org.yuanzheng.singleplayer#301)/@0x9743399 for c9eac86 Splash Screen org.yuanzheng.singleplayer
+10-23 20:17:42.312   935  1062 I Surface : Creating surface for consumer unnamed-935-14 with slotExpansion=1 for 64 slots
+10-23 20:17:42.312   935  1062 I Surface : Creating surface for consumer VRI[singleplayer]#14(BLAST Consumer)14 with slotExpansion=1 for 64 slots
+10-23 20:17:42.314  4853  4853 I libprocessgroup: Created cgroup /sys/fs/cgroup/apps/uid_10156/pid_4853
+10-23 20:17:42.317  4853  4853 I Zygote  : Process 4853 created for org.yuanzheng.singleplayer
+10-23 20:17:42.317  4853  4853 I ng.singleplayer: Late-enabling -Xcheck:jni
+10-23 20:17:42.325  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/ready.json''
+10-23 20:17:42.329  1188  1188 D BaseActivity: Launcher flags updated: [state_started] -[state_window_focused]
+10-23 20:17:42.334  4853  4853 I ng.singleplayer: Using generational CollectorTypeCMC GC.
+10-23 20:17:42.335  4853  4853 W ng.singleplayer: Unexpected CPU variant for x86: x86_64.
+10-23 20:17:42.335  4853  4853 W ng.singleplayer: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, alderlake, pantherlake, default
+10-23 20:17:42.342  2119  2124 I adbd    : jdwp connection from 4853
+10-23 20:17:42.344  4853  4853 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+10-23 20:17:42.346   666   690 V WindowManager: Sent Transition (#37) createdAt=10-23 20:17:42.283 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=27 effectiveUid=10156 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } baseActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} topActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} origActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} realActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} realActivityIsAppLockEnabled=false numActivities=1 lastActiveTime=437086 supportsMultiWindow=true supportsMultiWindowWithoutConstraints=false resizeMode=0 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{dc5ff0c Task{6ffef4f #27 type=standard A=10156:org.yuanzheng.singleplayer}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 135 - 0, 0) topActivityInfo=ActivityInfo{4b7055 com.godot.game.GodotAppLauncher} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isInteractive=false isVisible=false isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=null leafTaskBoundsFromOptions= false capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=503 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false isLeafTask= true eligibleForLetterboxEducation= false isLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2400) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransitionInfo = null, displayChanges = null, requestedLocation = null, userChange = null, windowingLayerChange = null, fullscreenRequestChange = null, flags = 0, debugId = 37 }
+10-23 20:17:42.346   666   690 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] flags= 0 errorCallbackToken=null taskFragmentOrganizer=null }
+10-23 20:17:42.346   666   690 V WindowManager:     info={id=37 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-23 20:17:42.346   666   690 V WindowManager:         {WCT{RemoteToken{dc5ff0c Task{6ffef4f #27 type=standard A=10156:org.yuanzheng.singleplayer}}} m=OPEN f=MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=27#298)/@0xf88c65e sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},
+10-23 20:17:42.346   666   690 V WindowManager:         {WCT{RemoteToken{4db2d23 Task{4dee1b4 #1 type=home}}} m=TO_BACK f=SHOW_WALLPAPER|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#33)/@0x6a203c6 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},
+10-23 20:17:42.346   666   690 V WindowManager:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{d7e6825}#45)/@0x1efe5a1 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}
+10-23 20:17:42.346   666   690 V WindowManager:     ]}
+10-23 20:17:42.347   935  1316 V WindowManagerShell: onTransitionReady(transaction=2860448222454)
+10-23 20:17:42.348   935  1007 V WindowManagerShell: onTransitionReady (#37) android.os.BinderProxy@1d7e250: {id=37 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-23 20:17:42.348   935  1007 V WindowManagerShell:         {m=OPEN f=MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=27#298)/@0x19c2662 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},
+10-23 20:17:42.348   935  1007 V WindowManagerShell:         {m=TO_BACK f=SHOW_WALLPAPER|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#33)/@0x4fa63f3 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},
+10-23 20:17:42.348   935  1007 V WindowManagerShell:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{d7e6825}#45)/@0xa02c8b0 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}
+10-23 20:17:42.348   935  1007 V WindowManagerShell:     ]}
+10-23 20:17:42.349   935  1007 V WindowManagerShell: Playing animation for (#37) android.os.BinderProxy@1d7e250@0
+10-23 20:17:42.349   935  1007 D ShellSplitScreen: startAnimation: transition=37 isSplitActive=false
+10-23 20:17:42.349   935  1007 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+10-23 20:17:42.349   935  1007 V ShellDesktopMode: DesktopMixedTransitionHandler: No pending desktop transition
+10-23 20:17:42.349   935  1007 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=37 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=OPEN f=MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=27#298)/@0x19c2662 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=SHOW_WALLPAPER|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#33)/@0x4fa63f3 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{d7e6825}#45)/@0xa02c8b0 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}]}
+10-23 20:17:42.349   935  1007 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=false modes=[CHANGE] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=true}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@b1a46ae, appThread = android.app.IApplicationThread$Stub$Proxy@44d4c4f, debugName = QuickstepDisplayMove, filter = {types=[] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=false modes=[CHANGE] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=true}]} }}
+10-23 20:17:42.349   935  1007 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@643bfdc, appThread = android.app.IApplicationThread$Stub$Proxy@f75e8e5, debugName = QuickstepLaunchHome, filter = {types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} }}
+10-23 20:17:42.349   935  1007 V WindowManagerShell:  Checking filter Pair{{types=[OPEN,TO_FRONT] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=freeform isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@2a7dba5, appThread = null, debugName = DesktopWindowLimitUnminimize, filter = {types=[OPEN,TO_FRONT] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=freeform isCrossDisplayMove=false}]} }}
+10-23 20:17:42.349   935  1007 V WindowManagerShell:  Delegate animation for (#37) to null
+10-23 20:17:42.349   935  1007 V WindowManagerShell: start default transition animation, info = {id=37 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=OPEN f=MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=27#298)/@0x19c2662 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=SHOW_WALLPAPER|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#33)/@0x4fa63f3 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{d7e6825}#45)/@0xa02c8b0 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}]}
+10-23 20:17:42.350   935  1007 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@43c5e6b animAttr=0x13 type=OPEN isEntrance=false
+10-23 20:17:42.350   935  1007 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@1c07647 animAttr=0x12 type=OPEN isEntrance=true
+10-23 20:17:42.353   935  1007 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@4e9eaab
+10-23 20:17:42.353   935  1007 V ShellTaskOrganizer: Task appeared taskId=27 listener=FullscreenTaskListener
+10-23 20:17:42.353   935  1007 V ShellTaskOrganizer: Fullscreen Task Appeared: #27
+10-23 20:17:42.353   935  1007 D ShellPackageUpdate: PackageUpdateController: Setting handlePackageUpdate for task: 27
+10-23 20:17:42.353   666  2365 E TransitionChain: Can't collect into a chain with no transition
+10-23 20:17:42.355   935  1007 V RecentTasksController: Notify recent tasks changed
+10-23 20:17:42.356  1188  1188 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+10-23 20:17:42.363   666   691 V GameManagerService: setDefaultFrameRateOverride : 10156 , 60.0
+10-23 20:17:42.401   935  1007 V RecentTasksController: Notify recent tasks changed
+10-23 20:17:42.405   935  1007 V RecentTasksController: generateList(getRecentTasks)
+10-23 20:17:42.405  1188  1188 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+10-23 20:17:42.405   935  1007 V RecentTasksController: initializeDesksMap - allDeskIds: []
+10-23 20:17:42.405   935  1007 V RecentTasksController: Task 27 is not an active desktop task
+10-23 20:17:42.405   935  1007 V RecentTasksController: Added fullscreen task: 27
+10-23 20:17:42.405   935  1007 V RecentTasksController: Task 17 is not an active desktop task
+10-23 20:17:42.405   935  1007 V RecentTasksController: Added fullscreen task: 17
+10-23 20:17:42.405   935  1007 V RecentTasksController: generateList - complete
+10-23 20:17:42.406   521   584 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+10-23 20:17:42.406   521   584 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+10-23 20:17:42.408  1188  1223 D PreloadThumbnailUseCase: Preloading thumbnails for task ids: [[id=17 windowingMode=0 user=0 lastActiveTime=17022] null, [id=27 windowingMode=1 user=0 lastActiveTime=437086] null]
+10-23 20:17:42.445  4853  4853 D nativeloader: Configuring clns-9 for other apk /data/app/~~2eAGTv2GPPcqEW3tm3QDEQ==/org.yuanzheng.singleplayer-MPlKNgF1DjbtuBjREiJKSA==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~2eAGTv2GPPcqEW3tm3QDEQ==/org.yuanzheng.singleplayer-MPlKNgF1DjbtuBjREiJKSA==/lib/x86_64:/data/app/~~2eAGTv2GPPcqEW3tm3QDEQ==/org.yuanzheng.singleplayer-MPlKNgF1DjbtuBjREiJKSA==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/org.yuanzheng.singleplayer
+10-23 20:17:42.462  4853  4853 V GraphicsEnvironment: Currently set values for:
+10-23 20:17:42.462  4853  4853 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+10-23 20:17:42.462  4853  4853 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+10-23 20:17:42.462  4853  4853 V GraphicsEnvironment: org.yuanzheng.singleplayer is not listed in per-application setting
+10-23 20:17:42.462  4853  4853 V GraphicsEnvironment: No special selections for ANGLE, returning default driver choice
+10-23 20:17:42.463  4853  4853 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+10-23 20:17:42.472  4853  4853 D DesktopExperienceFlags: Toggle override initialized to: false
+10-23 20:17:42.481   666  3260 D CorePackageUpdate: Couldn't find a persistent state for task= 27
+10-23 20:17:42.490  4853  4870 I DisplayManager: Choreographer implicitly registered for the refresh rate.
+10-23 20:17:42.508   521   584 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+10-23 20:17:42.508   521   584 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+10-23 20:17:42.543  4853  4870 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv1_CM_emulation.so
+10-23 20:17:42.545  4853  4870 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv2_emulation.so
+10-23 20:17:42.546  4853  4870 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-23 20:17:42.560  4853  4870 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+10-23 20:17:42.560  4853  4870 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+10-23 20:17:42.572  4853  4853 D CompatChangeReporter: Compat change id reported: 377864165; UID 10156; state: ENABLED
+10-23 20:17:42.580  4853  4853 D GodotActivity: Project command line parameters: [--xr_mode_regular, --xr-mode, off, --fullscreen, --edge_to_edge, --background_color, #000000]
+10-23 20:17:42.581  4853  4853 D GodotActivity: Launch intent Intent { flg=0x10000000 xflg=0x4 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } with parameters []
+10-23 20:17:42.608   521   584 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+10-23 20:17:42.608   521   584 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+10-23 20:17:42.608   521   584 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+10-23 20:17:42.626  4853  4853 V GodotActivity: Creating new Godot fragment instance.
+10-23 20:17:42.670   935  1007 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#37) android.os.BinderProxy@1d7e250@0
+10-23 20:17:42.672   666   690 V WindowManager: Finish Transition (#37): created at 10-23 20:17:42.283 collect-started=0.066ms request-sent=7.197ms started=9.581ms ready=59.153ms sent=62.128ms commit=7.389ms finished=388.922ms
+10-23 20:17:42.673   935  1177 D WallpaperService: onVisibilityChanged(false): com.android.systemui.wallpapers.ImageWallpaper$CanvasEngine@2aff6f5
+10-23 20:17:42.673  1188  1188 D VRI[QuickstepLauncher]: visibilityChanged oldVisibility=true newVisibility=false
+10-23 20:17:42.674   935  1007 V WindowManagerShell: Track 0 became idle
+10-23 20:17:42.674   935  1007 V WindowManagerShell: All active transition animations finished
+10-23 20:17:42.676  4853  4853 V Godot   : Initializing Godot plugin registry
+10-23 20:17:42.709   521   584 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+10-23 20:17:42.725  4853  4853 I GodotPluginRegistry: Registering runtime plugin AndroidRuntime
+10-23 20:17:42.726  4853  4853 V Godot   : InitEngine with params: [--xr_mode_regular, --xr-mode, off, --fullscreen, --edge_to_edge, --background_color, #000000]
+10-23 20:17:42.771  4853  4853 D nativeloader: Load /data/app/~~2eAGTv2GPPcqEW3tm3QDEQ==/org.yuanzheng.singleplayer-MPlKNgF1DjbtuBjREiJKSA==/lib/x86_64/libgodot_android.so using class loader ns clns-9 (caller=/data/app/~~2eAGTv2GPPcqEW3tm3QDEQ==/org.yuanzheng.singleplayer-MPlKNgF1DjbtuBjREiJKSA==/base.apk!classes7.dex): ok
+10-23 20:17:42.777  4853  4853 V Godot   : Godot native layer initialization completed: true
+10-23 20:17:42.777  4853  4853 V Godot   : Setting up native layer with params: [--xr-mode, off, --fullscreen]
+10-23 20:17:42.809   521   584 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+10-23 20:17:42.832  1055  1206 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 20:17:42.832  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:17:42.832  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:17:42.832  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:17:42.832  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:17:42.836  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:17:42.837  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:17:42.837  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:17:42.837  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:17:42.837  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:17:42.837  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:17:42.837  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:17:42.837  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:17:42.837  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:17:42.837  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:17:42.837  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:17:42.837  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:17:42.837  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:17:42.837  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:17:42.837  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:17:42.837  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:17:42.837  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:17:42.837  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:17:42.837  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:17:42.837  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:17:42.837  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:17:42.837  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:17:42.852  4853  4853 V Godot   : Godot native layer setup completed
+10-23 20:17:42.852  4853  4853 V Godot   : OnInitRenderView: GodotFragment{eea7236} (284db07b-9e0c-4adf-b486-913fac8d212a id=0x7f07002c)
+10-23 20:17:42.873  4853  4853 D Godot   : Render view should be transparent: false
+10-23 20:17:42.873  4853  4853 D Godot   : renderingDevice: opengl3 (ProjectSettings)
+10-23 20:17:42.873  4853  4853 D Godot   : 			renderer: gl_compatibility (ProjectSettings)
+10-23 20:17:42.885  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/ready.json''
+10-23 20:17:42.912   521   584 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+10-23 20:17:42.920  4853  4853 V Godot   : OnStart: GodotFragment{eea7236} (284db07b-9e0c-4adf-b486-913fac8d212a id=0x7f07002c)
+10-23 20:17:42.922  4853  4853 D AutofillManager: Fill dialog is enabled:false, hints=[]
+10-23 20:17:42.927  4853  4853 V Godot   : OnResume: GodotFragment{eea7236} (284db07b-9e0c-4adf-b486-913fac8d212a id=0x7f07002c)
+10-23 20:17:42.932  4853  4853 W HWUI    : Unknown dataspace 0
+--------- beginning of kernel
+10-23 20:17:42.985     0     0 I servicemanager: Caller(pid=4853,uid=10156,sid=u:r:untrusted_app_34:s0:c156,c256,c512,c768) Found android.hardware.graphics.allocator.IAllocator/default in device VINTF manifest.
+10-23 20:17:42.988     0     0 I servicemanager: Caller(pid=4853,uid=10156,sid=u:r:untrusted_app_34:s0:c156,c256,c512,c768) Found android.hardware.graphics.allocator.IAllocator/default in device VINTF manifest.
+10-23 20:17:42.936  4853  4853 D InsetsController: Setting requestedVisibleTypes to 496 (was 503)
+10-23 20:17:42.938   666  2789 W InputChannel-JNI: Channel already disposed.
+10-23 20:17:42.990     0     0 I servicemanager: Caller(pid=4853,uid=10156,sid=u:r:untrusted_app_34:s0:c156,c256,c512,c768) Found mapper/ranchu in device VINTF manifest.
+10-23 20:17:42.944  4853  4884 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-23 20:17:42.956  4853  4853 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@485d32c
+10-23 20:17:42.957  4853  4853 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): androidx.activity.OnBackPressedDispatcher$Api34Impl$createOnBackAnimationCallback$1@9a02b8a
+10-23 20:17:42.957   666  2789 D CoreBackPreview: Window{4737a72 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@43f7279, mPriority=-1, mIsAnimationCallback=false, mOverrideBehavior=0}
+10-23 20:17:42.957   666  2789 D CoreBackPreview: Window{4737a72 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@67acbbe, mPriority=0, mIsAnimationCallback=true, mOverrideBehavior=0}
+10-23 20:17:42.959  4853  4853 D VRI[GodotAppLauncher]: WindowInsets changed: 1080x2400 statusBars:[0,63,0,0] navigationBars:[0,0,0,63] mandatorySystemGestures:[0,167,0,84] 
+10-23 20:17:42.960  4853  4853 I HWUI    : Using FreeType backend (prop=Auto)
+10-23 20:17:42.964   666  2789 D WindowManager: setClientSurface Surface(name=VRI-org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher#307)/@0xf50d41f for 4737a72 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher
+10-23 20:17:42.971   521  1136 I libbinder.BpBinder: onLastStrongRef automatically unlinking death recipients for binder (0x7f86792c0680) with descriptor: '(not cached)'
+10-23 20:17:42.972  4853  4853 I Surface : Creating surface for consumer unnamed-4853-0 with slotExpansion=1 for 64 slots
+10-23 20:17:42.973  4853  4853 I Surface : Creating surface for consumer VRI[GodotAppLauncher]#0(BLAST Consumer)0 with slotExpansion=1 for 64 slots
+10-23 20:17:42.975  4853  4853 D VRI[GodotAppLauncher]: WindowInsets changed: statusBars:null navigationBars:null 
+10-23 20:17:42.979  4853  4853 I Surface : Creating surface for consumer unnamed-4853-1 with slotExpansion=1 for 64 slots
+10-23 20:17:42.979  4853  4853 I Surface : Creating surface for consumer 79e4871 SurfaceView[org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher]#1(BLAST Consumer)1 with slotExpansion=1 for 64 slots
+10-23 20:17:42.980  4853  4878 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-23 20:17:42.986  4853  4878 W RegularContextFactory: creating OpenGL ES 3.0 context :
+10-23 20:17:43.013  4853  4878 I godot   : Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+10-23 20:17:43.075   666   690 I ActivityTaskManager: Displayed org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher for user 0: +795ms
+10-23 20:17:43.078  1188  1188 D BaseActivity: Launcher flags updated: [] -[state_started]
+10-23 20:17:43.079  1188  1188 D BaseDepthController: setSurface:
+10-23 20:17:43.079  1188  1188 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+10-23 20:17:43.079  1188  1188 D BaseDepthController: 	mBaseSurface: null
+10-23 20:17:43.079  1188  1188 D BaseDepthController: mSurface is null and mCurrentBlur is: 0
+10-23 20:17:43.079  1188  1188 D LauncherStateManager: StateManager.goToState: fromState: Normal, toState: Normal, partial trace:
+10-23 20:17:43.079  1188  1188 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:469)
+10-23 20:17:43.079  1188  1188 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:460)
+10-23 20:17:43.079  1188  1188 D LauncherStateManager: 	at com.android.launcher3.statemanager.StatefulActivity.onStop(StatefulActivity.java:120)
+10-23 20:17:43.079  1188  1188 D LauncherStateManager: StateManager.onRepeatStateSetAborted: state: Normal
+10-23 20:17:43.079  1188  1188 D KeyboardStateManager: hideKeyboard
+10-23 20:17:43.079  1188  1188 D KeyboardStateManager: isImeShown: false
+10-23 20:17:43.079  1188  1188 D StatsLog: LAUNCHER_ONSTOP
+10-23 20:17:43.080   666   691 V GameManagerService: Game power mode ON (only games in foreground)
+10-23 20:17:43.094   460   501 I netd    : tetherGetStats() -> {[]} <0.65ms>
+10-23 20:17:43.106   666   693 I DisplayDeviceRepository: Display device changed render timings: "Built-in Screen", renderFrameRate=60.000004, presentationDeadlineNanos=16666666, appVsyncOffsetNanos=1000000, frameRateOverrides=[{uid=10156 frameRateHz=60.000004}]
+10-23 20:17:43.110   666   792 I ImeTracker: org.yuanzheng.singleplayer:407889a6: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false userId 0 displayId 0
+10-23 20:17:43.113   666  2365 W InputChannel-JNI: Channel already disposed.
+10-23 20:17:43.113  4853  4853 D InsetsController: hide(ime())
+10-23 20:17:43.113  4853  4853 I ImeTracker: org.yuanzheng.singleplayer:407889a6: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:17:43.114   666  2789 I ImeTracker: system_server:fb6346c2: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false displayId 0
+10-23 20:17:43.115   666   693 I ImeTracker: system_server:fb6346c2: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-23 20:17:43.126  4853  4878 E godot   : WARNING: Failed to load cached shader, recompiling.
+10-23 20:17:43.126  4853  4878 E godot   :    at: _load_from_cache (drivers/gles3/shader_gles3.cpp:615)
+10-23 20:17:43.218   666   680 I libbinder.BpBinder: onLastStrongRef automatically unlinking death recipients for binder (0x7a289c4c7720) with descriptor: '(not cached)'
+10-23 20:17:43.425  4853  4853 W InteractionJankMonitor: Initializing without READ_DEVICE_CONFIG permission. enabled=true, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=org.yuanzheng.singleplayer
+10-23 20:17:43.426   666  2789 I ImeTracker: system_server:101d2b56: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false displayId 0
+10-23 20:17:43.427   666   693 I ImeTracker: system_server:101d2b56: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-23 20:17:43.439  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/ready.json''
+10-23 20:17:43.644  4853  4861 I ng.singleplayer: Compiler allocated 5239KB to compile void android.view.ViewRootImpl.performTraversals(long)
+10-23 20:17:43.676  4853  4878 I godot   : OpenGL API OpenGL ES 3.1 (4.5.0 Core Profile Context 23.20.60.03.240314) - Compatibility - Using Device: Google (ATI Technologies Inc.) - Android Emulator OpenGL ES Translator (AMD Radeon 780M Graphics)
+10-23 20:17:43.677  4853  4878 D AudioSystem: onNewServiceWithAdapter: media.audio_flinger service obtained 0x7a27ec499ae0
+10-23 20:17:43.677   517  1153 D AudioFlinger: onStateChanged: pid:4853  uid:10156  state:unfrozen - no freeze activity
+10-23 20:17:43.678  4853  4878 D AudioSystem: getService: IAudioFlingerService retrieved: 0x7a27dc581540  IAudioFlinger cached: 0x7a27ec499ae0
+10-23 20:17:43.679  4853  4878 D ng.singleplayer: PlayerBase::PlayerBase()
+10-23 20:17:43.679  4853  4878 D ng.singleplayer: TrackPlayerBase::TrackPlayerBase()
+10-23 20:17:43.679  4853  4878 I libOpenSLES: Emulating old channel mask behavior (ignoring positional mask 0x3, using default mask 0x3 based on channel count of 2)
+10-23 20:17:43.682   517   517 W AudioFlinger: createTrack_l(): mismatch between requested flags (00000104) and output flags (00000002)
+10-23 20:17:43.682   517   517 D AudioFlinger: Client defaulted notificationFrames to 882 for frameCount 4012
+10-23 20:17:43.682   517   517 I AF::AfPlaybackCommon: AfPlaybackCommon: creating track with enforcement level 1 reason TARGET_SDK shouldHarden 1
+10-23 20:17:43.690  1037  1037 I bluetooth: system/btif/avrcp/avrcp_service.cc:533 SendMediaUpdate: track_changed=false :  play_state=true :  queue=false
+10-23 20:17:43.690  1037  1037 E MediaControlProfile: onCurrentPlayerStateUpdated: base actions not supported, player actions= 0, expected at least= 7f
+10-23 20:17:43.691   666  1151 E AppOps  : attributionTag  not declared in manifest of org.yuanzheng.singleplayer
+10-23 20:17:43.691   666  1151 E AppOps  : attributionTag  not declared in manifest of org.yuanzheng.singleplayer
+10-23 20:17:43.691  1037  1037 W MediaControlGattService: Feature PLAYBACK_SPEED support: true
+10-23 20:17:43.692  4853  4878 I godot   : 
+10-23 20:17:43.692  1037  1037 W MediaControlGattService: Feature PLAYBACK_SPEED support: true
+10-23 20:17:43.693  1037  1037 W MediaControlGattService: Feature PLAYBACK_SPEED support: true
+10-23 20:17:43.693  1037  1037 W MediaControlGattService: Feature PLAYBACK_SPEED_NOTIFY support: true
+10-23 20:17:43.694  1037  1037 W MediaControlGattService: Feature TRACK_POSITION support: true
+10-23 20:17:43.694  1037  1037 W MediaControlGattService: Feature TRACK_POSITION_NOTIFY support: true
+10-23 20:17:43.694  1037  1037 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-23 20:17:43.695  1037  1037 W MediaControlGattService: Feature MEDIA_CONTROL_POINT_OPCODES_SUPPORTED support: true
+10-23 20:17:43.695  1037  1037 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-23 20:17:43.695  1037  1037 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-23 20:17:43.696  1037  1037 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-23 20:17:43.696  1037  1037 W MediaControlGattService: Feature SEEKING_SPEED support: true
+10-23 20:17:43.696  1037  1037 W MediaControlGattService: Feature SEEKING_SPEED support: true
+10-23 20:17:43.696  1037  1037 W MediaControlGattService: Feature SEEKING_SPEED support: true
+10-23 20:17:43.697  1037  1037 W MediaControlProfile: MCS service state fields left unhandled: 
+10-23 20:17:43.697  1037  1037 W MediaControlProfile:    > PLAYER_NAME
+10-23 20:17:43.697  1037  1037 W MediaControlProfile:    > PLAYING_ORDER_SUPPORTED
+10-23 20:17:43.784   517   600 D AudioFlinger: mixer(0x73225c3c6790) throttle end: throttle time(38)
+10-23 20:17:44.007  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/ready.json''
+10-23 20:17:44.554  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/ready.json''
+10-23 20:17:45.100  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/ready.json''
+10-23 20:17:45.645  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/ready.json''
+10-23 20:17:45.796   666  1474 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-23 20:17:45.987   666   693 I DisplayDeviceRepository: Display device changed render timings: "Built-in Screen", renderFrameRate=60.000004, presentationDeadlineNanos=16666666, appVsyncOffsetNanos=1000000, frameRateOverrides=[]
+10-23 20:17:46.191  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/ready.json''
+10-23 20:17:46.197  4853  4878 V Godot   : OnGodotSetupCompleted
+10-23 20:17:46.255  4853  4878 I godot   : ANDROID_DEEP_READY { "os": "Android", "version": "37.16571990", "model": "Android SDK built for x86_64", "window": "(1080, 2400)", "viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]", "safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]", "system_safe": "[P: (0, 135), S: (1080, 2265)]", "cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]", "mix_rate": 44100.0 }
+10-23 20:17:46.256  4853  4878 V Godot   : OnGodotMainLoopStarted
+10-23 20:17:46.270   666   693 I DisplayDeviceRepository: Display device changed render timings: "Built-in Screen", renderFrameRate=60.000004, presentationDeadlineNanos=16666666, appVsyncOffsetNanos=1000000, frameRateOverrides=[{uid=10156 frameRateHz=60.000004}]
+10-23 20:17:46.734  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/ready.json''
+10-23 20:17:51.054   666  2114 W OverlayManager: service 'idmap' died
+10-23 20:17:51.104     0     0 I init    : Sending SIGKILL to service 'idmap2d' (pid 4831) process group...
+10-23 20:17:51.106     0     0 I libprocessgroup: Removed cgroup /sys/fs/cgroup/system/uid_1000/pid_4831
+10-23 20:17:51.107     0     0 I init    : Control message: Processed ctl.stop for 'idmap2d' from pid: 666 (system_server)
+10-23 20:17:51.108     0     0 I init    : Service 'idmap2d' (pid 4831) received SIGKILL
+10-23 20:17:51.108     0     0 I init    : Sending SIGKILL to service 'idmap2d' (pid 4831) process group...
+10-23 20:17:51.109     0     0 E libprocessgroup: Failed to write 1 to /sys/fs/cgroup/system/uid_1000/pid_4831/cgroup.kill: No such file or directory
+10-23 20:17:51.236   666   771 D ActivityManager: freezing 1627 com.android.quicksearchbox
+10-23 20:17:51.295   666   913 D OomAdjuster: Not killing cached processes
+10-23 20:17:51.313   460   501 I netd    : tetherGetStats() -> {[]} <0.41ms>
+10-23 20:17:52.830  1055  1206 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 20:17:52.830  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:17:52.830  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:17:52.830  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:17:52.830  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:17:52.834  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:17:52.834  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:17:52.834  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:17:52.834  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:17:52.834  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:17:52.834  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:17:52.834  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:17:52.834  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:17:52.834  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:17:52.834  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:17:52.834  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:17:52.834  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:17:52.834  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:17:52.834  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:17:52.834  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:17:52.834  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:17:52.834  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:17:52.834  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:17:52.834  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:17:52.834  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:17:52.834  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:17:52.834  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:01.341   666   771 D ActivityManager: freezing 1154 com.android.permissioncontroller
+10-23 20:18:02.830  1055  1206 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 20:18:02.830  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:18:02.830  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:02.830  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:02.830  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:02.831  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:18:02.831  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:18:02.831  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:02.831  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:02.831  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:18:02.831  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:18:02.831  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:02.831  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:02.831  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:02.831  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:18:02.831  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:02.831  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:02.833  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:02.833  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:18:02.833  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:18:02.833  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:02.833  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:02.833  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:18:02.833  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:18:02.833  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:02.833  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:02.833  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:08.292   666  2365 D OomAdjuster: Not killing cached processes
+10-23 20:18:12.831  1055  1206 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 20:18:12.831  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:18:12.831  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:12.831  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:12.831  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:12.831  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:18:12.831  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:18:12.831  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:12.831  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:12.831  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:18:12.832  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:18:12.832  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:12.832  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:12.832  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:12.832  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:18:12.832  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:12.832  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:12.832  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:12.832  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:18:12.832  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:18:12.832  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:12.832  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:12.832  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:18:12.832  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:18:12.832  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:12.832  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:12.832  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:20.685   666   771 D ActivityManager: freezing 1600 com.android.keychain
+10-23 20:18:20.687   666   771 D ActivityManager: freezing 1066 com.android.settings
+10-23 20:18:20.687   666   771 D ActivityManager: freezing 1907 com.android.localtransport
+10-23 20:18:20.688   666   771 D ActivityManager: freezing 1826 com.android.dynsystem:dynsystem
+10-23 20:18:20.688   666   771 D ActivityManager: freezing 1813 com.android.dynsystem
+10-23 20:18:21.848   666   835 I WifiScanningService: Registering listener= com.android.server.wifi.scanner.WifiScannerInternal$ScanListener@bf934ef uid=1000 packageName=null workSource=WorkSource{1000}
+10-23 20:18:21.848   666   835 I WifiScanningService: start scan: ClientInfo[uid=1000, package=null, attributionTag=null, com.android.server.wifi.scanner.WifiScannerInternal$ScanListener@bf934ef] package null AttributionTag null
+10-23 20:18:21.849   666   835 I WifiScanningService: addSingleScanRequest: ClientInfo[uid=1000, package=null, attributionTag=null, com.android.server.wifi.scanner.WifiScannerInternal$ScanListener@bf934ef],WorkSource{1010}, ScanSettings {  type:HIGH ACCURACY band:24Ghz & 5Ghz (DFS incl) & 6Ghz ignoreLocationSettings:false period:0 reportEvents:3 numBssidsPerScan:0 maxScansToCache:0 rnrSetting:1 6GhzPscOnlyEnabled:true channels:[  ]  } 
+10-23 20:18:21.849   666   835 D WifiScanningService: replySucceeded onSuccess
+10-23 20:18:21.849   666   831 V WifiConnectivityManager: schedulePeriodicScanTimer intervalMs 160000
+10-23 20:18:21.849   666   835 E Nl80211Native: getChannelsMhzForBand: Wiphy index not recorded for band 8
+10-23 20:18:21.849   666   835 E Nl80211Native: getChannelsMhzForBand: Wiphy index not recorded for band 16
+10-23 20:18:21.849   666   835 D Nl80211Native: Ignoring unsupported scan type 2
+10-23 20:18:21.849   666   835 I Nl80211Proxy: Sending Nl80211 message: GenericNetlinkMsg{ nlHeader{StructNlMsgHdr{ nlmsg_len{352}, nlmsg_type{30()}, nlmsg_flags{5(NLM_F_REQUEST|NLM_F_ACK)}, nlmsg_seq{22}, nlmsg_pid{0} }}, genNlHeader{StructGenNlMsgHdr{ command{33}, version{1}, reserved{0} }}, attributes{[StructNlAttr{ nla_len{8}, nla_type{-32723}, nla_value{04000000}, }, StructNlAttr{ nla_len{8}, nla_type{3}, nla_value{10000000}, }, StructNlAttr{ nla_len{308}, nla_type{-32724}, nla_value{080000006C09000008000100710900000800020076090000080003007B09000008000400800900000800050085090000080006008A090000080007008F0900000800080094090000080009009909000008000A009E09000008000B00A309000008000C00A809000008000D00B409000008000E003C14000008000F005014000008001000641400000800110078140000080012008C14000008001300A014000008001400B414000008001500C8140000080016007C150000080017009015000008001800A415000008001900B815000008001A00CC15000008001B00E015000008001C00F415000008001D000816000008001E001C16000008001F0030160000080020004416000008002100711600000800220085160000080023009916000008002400AD16000008002500C1160000}, }, StructNlAttr{ nla_len{8}, nla_type{158}, nla_value{08000000}, }]} }
+10-23 20:18:21.850   666   835 I Nl80211Proxy: Received NLMSG_ERROR with error 0 for message GenericNetlinkMsg{ nlHeader{StructNlMsgHdr{ nlmsg_len{352}, nlmsg_type{30()}, nlmsg_flags{5(NLM_F_REQUEST|NLM_F_ACK)}, nlmsg_seq{22}, nlmsg_pid{0} }}, genNlHeader{StructGenNlMsgHdr{ command{33}, version{1}, reserved{0} }}, attributes{[StructNlAttr{ nla_len{8}, nla_type{-32723}, nla_value{04000000}, }, StructNlAttr{ nla_len{8}, nla_type{3}, nla_value{10000000}, }, StructNlAttr{ nla_len{308}, nla_type{-32724}, nla_value{080000006C09000008000100710900000800020076090000080003007B09000008000400800900000800050085090000080006008A090000080007008F0900000800080094090000080009009909000008000A009E09000008000B00A309000008000C00A809000008000D00B409000008000E003C14000008000F005014000008001000641400000800110078140000080012008C14000008001300A014000008001400B414000008001500C8140000080016007C150000080017009015000008001800A415000008001900B815000008001A00CC15000008001B00E015000008001C00F415000008001D000816000008001E001C16000008001F0030160000080020004416000008002100711600000800220085160000080023009916000008002400AD16000008002500C1160000}, }, StructNlAttr{ nla_len{8}, nla_type{158}, nla_value{08000000}, }]} }
+10-23 20:18:21.850   924   924 D wpa_supplicant: nl80211: Drv Event 33 (NL80211_CMD_TRIGGER_SCAN) received for wlan0
+10-23 20:18:21.850   924   924 D wpa_supplicant: wlan0: nl80211: Scan trigger
+10-23 20:18:21.850   924   924 D wpa_supplicant: wlan0: Event SCAN_STARTED (47) received
+10-23 20:18:21.850   924   924 D wpa_supplicant: wlan0: External program started a scan
+10-23 20:18:22.831  1055  1206 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 20:18:22.831  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:18:22.831  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:22.831  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:22.831  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:22.832  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:18:22.832  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:18:22.832  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:22.832  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:22.832  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:18:22.833  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:18:22.833  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:22.833  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:22.833  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:22.833  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:18:22.833  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:22.833  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:22.833  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:22.833  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:18:22.833  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:18:22.833  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:22.834  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:22.834  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:18:22.834  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:18:22.834  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:22.834  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:22.834  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:25.609   924   924 D wpa_supplicant: nl80211: Drv Event 34 (NL80211_CMD_NEW_SCAN_RESULTS) received for wlan0
+10-23 20:18:25.609   924   924 D wpa_supplicant: wlan0: nl80211: New scan results available
+10-23 20:18:25.609   924   924 D wpa_supplicant: nl80211: Scan probed for SSID ''
+10-23 20:18:25.609   924   924 D wpa_supplicant: nl80211: Scan included frequencies: 2412 2417 2422 2427 2432 2437 2442 2447 2452 2457 2462 2467 2472 2484 5180 5200 5220 5240 5260 5280 5300 5320 5500 5520 5540 5560 5580 5600 5620 5640 5660 5680 5700 5745 5765 5785 5805 5825
+10-23 20:18:25.609   924   924 D wpa_supplicant: wlan0: Event SCAN_RESULTS (3) received
+10-23 20:18:25.609   924   924 D wpa_supplicant: nl80211: Received scan results (1 BSSes)
+10-23 20:18:25.609   924   924 D wpa_supplicant: wlan0: BSS: Start scan result update 6
+10-23 20:18:25.609   666   831 D Nl80211Native: Received NL80211 broadcast: GenericNetlinkMsg{ nlHeader{StructNlMsgHdr{ nlmsg_len{372}, nlmsg_type{30()}, nlmsg_flags{0()}, nlmsg_seq{0}, nlmsg_pid{0} }}, genNlHeader{StructGenNlMsgHdr{ command{34}, version{1}, reserved{0} }}, attributes{[StructNlAttr{ nla_len{8}, nla_type{1}, nla_value{01000000}, }, StructNlAttr{ nla_len{8}, nla_type{3}, nla_value{10000000}, }, StructNlAttr{ nla_len{12}, nla_type{153}, nla_value{0100000001000000}, }, StructNlAttr{ nla_len{308}, nla_type{44}, nla_value{080000006C09000008000100710900000800020076090000080003007B09000008000400800900000800050085090000080006008A090000080007008F0900000800080094090000080009009909000008000A009E09000008000B00A309000008000C00A809000008000D00B409000008000E003C14000008000F005014000008001000641400000800110078140000080012008C14000008001300A014000008001400B414000008001500C8140000080016007C150000080017009015000008001800A415000008001900B815000008001A00CC15000008001B00E015000008001C00F415000008001D000816000008001E001C16000008001F0030160000080020004416000008002100711600000800220085160000080023009916000008002400AD16000008002500C1160000}, }, StructNlAttr{ nla_len{8}, nla_type{45}, nla_value{04000000}, }, StructNlAttr{ nla_len{8}, nla_type{158}, nla_value{08000000}, }]} }
+10-23 20:18:25.609   924   924 D wpa_supplicant: BSS: last_scan_res_used=1/32
+10-23 20:18:25.609   924   924 D wpa_supplicant: wlan0: New scan results available (own=0 ext=1)
+10-23 20:18:25.609   666   831 D WifiNative: Scan result ready event
+10-23 20:18:25.609   924   924 D wpa_supplicant: wlan0: Do not use results from externally requested scan operation for network selection
+10-23 20:18:25.610   666   835 I Nl80211Proxy: Sending Nl80211 message: GenericNetlinkMsg{ nlHeader{StructNlMsgHdr{ nlmsg_len{20}, nlmsg_type{30()}, nlmsg_flags{769(NLM_F_REQUEST|NLM_F_DUMP)}, nlmsg_seq{23}, nlmsg_pid{0} }}, genNlHeader{StructGenNlMsgHdr{ command{5}, version{1}, reserved{0} }}, attributes{[]} }
+10-23 20:18:25.610   666   835 I Nl80211Proxy: Received NLMSG_DONE for message GenericNetlinkMsg{ nlHeader{StructNlMsgHdr{ nlmsg_len{20}, nlmsg_type{30()}, nlmsg_flags{769(NLM_F_REQUEST|NLM_F_DUMP)}, nlmsg_seq{23}, nlmsg_pid{0} }}, genNlHeader{StructGenNlMsgHdr{ command{5}, version{1}, reserved{0} }}, attributes{[]} }
+10-23 20:18:25.610   666   835 W Nl80211Utils: Malformed NEW_INTERFACE response: missing attributes
+10-23 20:18:25.610   666   835 I Nl80211Proxy: Sending Nl80211 message: GenericNetlinkMsg{ nlHeader{StructNlMsgHdr{ nlmsg_len{28}, nlmsg_type{30()}, nlmsg_flags{769(NLM_F_REQUEST|NLM_F_DUMP)}, nlmsg_seq{24}, nlmsg_pid{0} }}, genNlHeader{StructGenNlMsgHdr{ command{32}, version{1}, reserved{0} }}, attributes{[StructNlAttr{ nla_len{8}, nla_type{3}, nla_value{10000000}, }]} }
+10-23 20:18:25.610   666   835 I Nl80211Proxy: Received NLMSG_DONE for message GenericNetlinkMsg{ nlHeader{StructNlMsgHdr{ nlmsg_len{28}, nlmsg_type{30()}, nlmsg_flags{769(NLM_F_REQUEST|NLM_F_DUMP)}, nlmsg_seq{24}, nlmsg_pid{0} }}, genNlHeader{StructGenNlMsgHdr{ command{32}, version{1}, reserved{0} }}, attributes{[StructNlAttr{ nla_len{8}, nla_type{3}, nla_value{10000000}, }]} }
+10-23 20:18:25.611   666   835 D WifiNative: get 1 scan results from nl80211
+10-23 20:18:25.611   666   835 I WifiScanningService: singleScanResults: ClientInfo[uid=1000, package=null, attributionTag=null, com.android.server.wifi.scanner.WifiScannerInternal$ScanListener@bf934ef],results=1
+10-23 20:18:25.611   666   835 I WifiScanningService: singleScanResults listener: ClientInfo[uid=1000, package=android, attributionTag=null, com.android.server.wifi.scanner.WifiScannerInternal$ScanListener@a15676d],results=1
+10-23 20:18:25.611   666   835 I WifiScanningService: singleScanResults listener: ClientInfo[uid=1000, package=android, attributionTag=null, com.android.server.wifi.scanner.WifiScannerInternal$ScanListener@fcd3e14],results=1
+10-23 20:18:25.612   666   831 D WifiScanRequestProxy: Scan results received
+10-23 20:18:25.612   666   835 I WifiScanningService: singleScanResults listener: ClientInfo[uid=1000, package=android, attributionTag=null, com.android.server.wifi.scanner.WifiScannerInternal$ScanListener@b4d5396],results=1
+10-23 20:18:25.612   666   831 D WifiScanRequestProxy: Received 1 scan results
+10-23 20:18:25.612   666   835 I WifiScanningService: Unregistering listener= com.android.server.wifi.scanner.WifiScannerInternal$ScanListener@bf934ef uid=1000 packageName=null workSource=WorkSource{1000}
+10-23 20:18:25.612   666   831 D WifiHealthMonitor:  2G scanResult count: 1, Above2g scanResult count: 0
+10-23 20:18:25.613   666  2114 I WifiService: getScanResults uid=10124
+10-23 20:18:25.613   666   831 V WifiConfigManager: getSavedNetworkFromScanResult Found "AndroidWifi"NONE for AndroidWifi[[ESS]]
+10-23 20:18:25.613   666  2365 I WifiService: getScanResults uid=10124
+10-23 20:18:25.616   666   831 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+10-23 20:18:25.616   666   831 V WifiConnectivityManager: Clearing blocklist for REASON_FRAMEWORK_DISCONNECT_FAST_RECONNECT
+10-23 20:18:25.616   666   831 V WifiConnectivityManager: AllSingleScanListener onResults: start network selection
+10-23 20:18:25.616   666   831 V WifiConfigManager: getSavedNetworkFromScanResult Found "AndroidWifi"NONE for AndroidWifi[[ESS]]
+10-23 20:18:25.617   666   831 V WifiConfigManager: Clear network candidate scan result for 0
+10-23 20:18:25.617   666   831 D WifiNetworkSelector: Disabled configured networks:
+10-23 20:18:25.617   666   831 D WifiNetworkSelector:   "AndroidWifi":0 reason=NETWORK_SELECTION_DISABLED_NO_INTERNET_PERMANENT, count=1; 
+10-23 20:18:25.617   666   831 D WifiNetworkSelector: 
+10-23 20:18:25.617   666   831 D WifiNetworkSelector: About to run SavedNetworkNominator :
+10-23 20:18:25.617   666   831 D WifiNetworkSelector: About to run NetworkSuggestionNominator :
+10-23 20:18:25.618   666   831 V WifiLastResortWatchdog: updateAvailableNetworks: size = 0
+10-23 20:18:25.618   666   831 V WifiLastResortWatchdog: mWatchdogFeatureEnabled: true
+10-23 20:18:25.618   666   831 V WifiLastResortWatchdog: mWatchdogAllowedToTrigger: true
+10-23 20:18:25.618   666   831 V WifiLastResortWatchdog: mRecentAvailableNetworks: 0
+10-23 20:18:25.618   666   831 V WifiLastResortWatchdog: mSsidFailureCount:
+10-23 20:18:25.618   666   831 V WifiConnectivityManager: AllSingleScanListener:  No candidates
+10-23 20:18:25.618   666   831 V WifiConfigManager: getSavedNetworkFromScanResult Found "AndroidWifi"NONE for AndroidWifi[[ESS]]
+10-23 20:18:32.831  1055  1206 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 20:18:32.831  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:18:32.831  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:32.832  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:32.832  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:32.833  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:18:32.834  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:18:32.834  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:32.834  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:32.834  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:18:32.835  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:18:32.835  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:32.835  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:32.835  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:32.835  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:18:32.835  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:32.835  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:32.835  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:32.835  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:18:32.835  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:18:32.835  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:32.835  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:32.835  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:18:32.835  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:18:32.835  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:32.835  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:32.835  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:33.503     0     0 W healthd : battery l=100 v=5000 t=25.0 h=2 st=2 c=900000 fc=3000000 cc=10 chg=a
+10-23 20:18:35.761   666   709 I WifiService: isFeatureSupported uid=1000 returns [WIFI_FEATURE_INFRA, WIFI_FEATURE_P2P, WIFI_FEATURE_MOBILE_HOTSPOT, WIFI_FEATURE_WPA3_SAE, WIFI_FEATURE_WPA3_SUITE_B, WIFI_FEATURE_OWE, WIFI_FEATURE_DPP, WIFI_FEATURE_AP_RAND_MAC, WIFI_FEATURE_MBO, WIFI_FEATURE_FILS_SHA256, WIFI_FEATURE_FILS_SHA384, WIFI_FEATURE_SAE_PK, WIFI_FEATURE_DPP_ENROLLEE_RESPONDER, WIFI_FEATURE_PASSPOINT_TERMS_AND_CONDITIONS, WIFI_FEATURE_WFD_R2, WIFI_FEATURE_DECORATED_IDENTITY, WIFI_FEATURE_TRUST_ON_FIRST_USE, WIFI_FEATURE_SET_TLS_MINIMUM_VERSION, WIFI_FEATURE_TLS_V1_3, WIFI_FEATURE_WEP, WIFI_FEATURE_WPA_PERSONAL]
+10-23 20:18:38.372   666   767 W CpuMonitorService: Current CPU frequency (4590063) is greater than maximum CPU frequency (2) for policy ID (0). Skipping CPU frequency policy
+10-23 20:18:38.372   666   767 W CpuMonitorService: Current CPU frequency (3932902) is greater than maximum CPU frequency (2) for policy ID (1). Skipping CPU frequency policy
+10-23 20:18:38.372   666   767 W CpuMonitorService: Current CPU frequency (5000676) is greater than maximum CPU frequency (2) for policy ID (2). Skipping CPU frequency policy
+10-23 20:18:38.373   666   767 W CpuMonitorService: Current CPU frequency (4775323) is greater than maximum CPU frequency (2) for policy ID (3). Skipping CPU frequency policy
+10-23 20:18:40.792   666  1637 I AppSearchIcing: icing-search-engine.cc:2487: Persisting data to disk with mode 3
+10-23 20:18:40.793   666  1637 I AppSearchIcing: icing-search-engine.cc:2502: PersistToDisk completed.
+10-23 20:18:42.831  1055  1206 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 20:18:42.831  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:18:42.831  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:42.831  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:42.831  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:42.832  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:18:42.832  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:18:42.832  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:42.832  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:42.832  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:18:42.832  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:18:42.832  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:42.832  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:42.832  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:42.832  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:18:42.832  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:42.832  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:42.832  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:42.833  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:18:42.833  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:18:42.833  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:42.833  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:42.833  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:18:42.833  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:18:42.833  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:42.833  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:42.833  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:43.693   666   699 D OomAdjuster: Not killing cached processes
+10-23 20:18:43.694   666   699 D ActivityManager: sync unfroze 1600 com.android.keychain for 10
+10-23 20:18:43.694   666   699 D ActivityManager: sync unfroze 1066 com.android.settings for 10
+10-23 20:18:43.695   666   699 D ActivityManager: sync unfroze 1907 com.android.localtransport for 10
+10-23 20:18:43.695   666   699 D ActivityManager: sync unfroze 1826 com.android.dynsystem:dynsystem for 10
+10-23 20:18:43.695   666   699 D ActivityManager: sync unfroze 1813 com.android.dynsystem for 10
+10-23 20:18:52.831  1055  1206 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 20:18:52.831  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:18:52.831  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:52.831  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:52.831  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:52.832  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:18:52.832  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:18:52.832  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:52.832  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:52.832  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:18:52.833  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:18:52.833  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:52.833  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:52.833  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:52.833  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:18:52.833  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:52.833  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:52.833  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:52.834  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:18:52.834  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:18:52.834  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:52.834  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:52.834  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:18:52.834  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:18:52.834  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:18:52.834  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:18:52.834  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:18:53.697   666   761 D OomAdjuster: Not killing cached processes
+10-23 20:19:02.832  1055  1206 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 20:19:02.832  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:19:02.832  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:19:02.832  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:19:02.832  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:19:02.832  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:19:02.832  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:19:02.832  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:19:02.832  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:19:02.832  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:19:02.832  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:19:02.832  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:19:02.832  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:19:02.832  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:19:02.833  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:19:02.833  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:19:02.833  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:19:02.833  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:19:02.833  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:19:02.833  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:19:02.833  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:19:02.833  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:19:02.833  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:19:02.833  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:19:02.833  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:19:02.833  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:19:02.833  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:19:03.706   666   771 D ActivityManager: freezing 1600 com.android.keychain
+10-23 20:19:03.707   666   771 D ActivityManager: freezing 1066 com.android.settings
+10-23 20:19:03.709   666   771 D ActivityManager: freezing 1907 com.android.localtransport
+10-23 20:19:03.709   666   771 D ActivityManager: freezing 1826 com.android.dynsystem:dynsystem
+10-23 20:19:03.710   666   771 D ActivityManager: freezing 1813 com.android.dynsystem
+10-23 20:19:04.935  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb,raw:run-as org.yuanzheng.singleplayer rm -f files/android_full_audit/audio_android/result.json'
+10-23 20:19:04.985  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'tee' 'files/android_full_audit/request.json''
+10-23 20:19:05.014  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/audio_android/result.json''
+10-23 20:19:05.064  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:19:05.128     0     0 I logd    : logdr: UID=0 GID=0 PID=4924 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:19:05.105  4853  4878 I godot   : ANDROID_DEEP_BEGIN audio_android { "id": "audio_android", "suite": "audio" }
+10-23 20:19:05.106  4853  4853 I ImeTracker: org.yuanzheng.singleplayer:86652c43: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-23 20:19:05.107  4853  4853 D InsetsController: hide(ime())
+10-23 20:19:05.108  4853  4853 I ImeTracker: org.yuanzheng.singleplayer:86652c43: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 20:19:05.108  4853  4853 D CompatChangeReporter: Compat change id reported: 395521150; UID 10156; state: ENABLED
+10-23 20:19:05.705  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/audio_android/result.json''
+10-23 20:19:05.752  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:19:05.816     0     0 I logd    : logdr: UID=0 GID=0 PID=4931 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:19:06.008  2119  2119 W adbd    : timeout expired while flushing socket, closing
+10-23 20:19:06.395  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/audio_android/result.json''
+10-23 20:19:06.444  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:19:06.510     0     0 I logd    : logdr: UID=0 GID=0 PID=4937 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:19:07.064     0     0 I init    : Untracked process (pid: 4920 name: (tee) ppid: 1 pgrp: 4918 state: Z) exited with status 1
+10-23 20:19:07.064     0     0 I init    : Untracked process (pid: 4920 name: (tee) ppid: 1 pgrp: 4918 state: Z) did not have an associated service entry and will not be reaped
+10-23 20:19:07.089  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/audio_android/result.json''
+10-23 20:19:07.136  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:19:07.200     0     0 I logd    : logdr: UID=0 GID=0 PID=4943 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:19:07.778  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/audio_android/result.json''
+10-23 20:19:07.827  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:19:07.894     0     0 I logd    : logdr: UID=0 GID=0 PID=4949 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:19:08.471  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/audio_android/result.json''
+10-23 20:19:08.517  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:19:08.581     0     0 I logd    : logdr: UID=0 GID=0 PID=4955 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:19:09.159  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/audio_android/result.json''
+10-23 20:19:09.204  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:19:09.268     0     0 I logd    : logdr: UID=0 GID=0 PID=4961 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:19:09.845  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/audio_android/result.json''
+10-23 20:19:09.894  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:19:09.960     0     0 I logd    : logdr: UID=0 GID=0 PID=4967 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:19:10.537  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/audio_android/result.json''
+10-23 20:19:10.582  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:19:10.646     0     0 I logd    : logdr: UID=0 GID=0 PID=4973 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:19:11.226  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/audio_android/result.json''
+10-23 20:19:11.271  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:19:11.336     0     0 I logd    : logdr: UID=0 GID=0 PID=4979 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:19:11.917  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/audio_android/result.json''
+10-23 20:19:11.966  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:19:12.031     0     0 I logd    : logdr: UID=0 GID=0 PID=4985 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:19:12.554  4853  4878 I godot   : ANDROID_DEEP_CHECK_FAIL A03 victory can start when two lower-priority alerts occupy category [{ "name": "boss_warn", "category": "Alerts", "time_ms": 89756 }, { "name": "low_hp", "category": "Alerts", "time_ms": 89757 }]
+10-23 20:19:12.610  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/audio_android/result.json''
+10-23 20:19:12.659  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:19:12.724     0     0 I logd    : logdr: UID=0 GID=0 PID=4991 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:19:12.832  1055  1206 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 20:19:12.832  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:19:12.832  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:19:12.832  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:19:12.832  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:19:12.833  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:19:12.833  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:19:12.833  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:19:12.833  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:19:12.833  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:19:12.833  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:19:12.833  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:19:12.833  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:19:12.833  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:19:12.833  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 20:19:12.834  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:19:12.834  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:19:12.834  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:19:12.834  1055  1206 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 20:19:12.834  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 20:19:12.834  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:19:12.834  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:19:12.834  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 20:19:12.835  1055  1206 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 20:19:12.835  1055  1206 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 20:19:12.835  1055  1206 V SatelliteController: satelliteConfigParser is not ready
+10-23 20:19:12.835  1055  1206 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 20:19:13.302  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/audio_android/result.json''
+10-23 20:19:13.350  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:19:13.417     0     0 I logd    : logdr: UID=0 GID=0 PID=4997 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:19:13.997  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/audio_android/result.json''
+10-23 20:19:14.043  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:19:14.108     0     0 I logd    : logdr: UID=0 GID=0 PID=5003 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:19:14.685  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/audio_android/result.json''
+10-23 20:19:14.732  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot:I' 'AndroidRuntime:E' 'libc:F''
+10-23 20:19:14.796     0     0 I logd    : logdr: UID=0 GID=0 PID=5009 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 20:19:15.356  4853  4878 I godot   : ANDROID_DEEP_COMPLETE audio_android checks=13 failed=1 photos=0
+10-23 20:19:15.374  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'cat' 'files/android_full_audit/audio_android/result.json''
+10-23 20:19:15.421  2119  2119 I adbd    : adbd service requested 'exec:run-as 'org.yuanzheng.singleplayer' 'tar' '-C' 'files/android_full_audit' '-cf' '-' 'audio_android''
+10-23 20:19:15.514  2119  2119 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d''
+10-23 20:19:15.579     0     0 I logd    : logdr: UID=0 GID=0 PID=5018 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns

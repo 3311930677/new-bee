@@ -1,0 +1,144 @@
+[
+  {
+    "label": "M07 native currency entrance gold",
+    "ok": true,
+    "detail": [
+      {
+        "currency": "gold",
+        "name": "@Control@1939",
+        "script": "res://src/ui/CurrencyPanel.gd"
+      }
+    ]
+  },
+  {
+    "label": "M07 native currency entrance expedition",
+    "ok": true,
+    "detail": [
+      {
+        "currency": "expedition",
+        "name": "@Control@1964",
+        "script": "res://src/ui/CurrencyPanel.gd"
+      }
+    ]
+  },
+  {
+    "label": "M07 native currency entrance soul",
+    "ok": true,
+    "detail": [
+      {
+        "currency": "soul",
+        "name": "@Control@1984",
+        "script": "res://src/ui/CurrencyPanel.gd"
+      }
+    ]
+  },
+  {
+    "label": "M07 native currency entrance honor",
+    "ok": true,
+    "detail": [
+      {
+        "currency": "honor",
+        "name": "@Control@2006",
+        "script": "res://src/ui/CurrencyPanel.gd"
+      }
+    ]
+  },
+  {
+    "label": "A04 native bag hold/open feedback",
+    "ok": true,
+    "detail": [
+      {
+        "category": "UI",
+        "name": "ui_open",
+        "time_ms": 343536
+      }
+    ]
+  },
+  {
+    "label": "native bag closes and returns home",
+    "ok": true,
+    "detail": [
+      {
+        "category": "UI",
+        "name": "ui_open",
+        "time_ms": 343536
+      },
+      {
+        "category": "UI",
+        "name": "ui_page",
+        "time_ms": 345386
+      },
+      {
+        "category": "UI",
+        "name": "ui_page",
+        "time_ms": 347220
+      },
+      {
+        "category": "UI",
+        "name": "ui_page",
+        "time_ms": 349056
+      },
+      {
+        "category": "UI",
+        "name": "ui_page",
+        "time_ms": 350202
+      },
+      {
+        "category": "UI",
+        "name": "ui_close",
+        "time_ms": 352155
+      }
+    ]
+  },
+  {
+    "label": "A02 native mute switch on",
+    "ok": true,
+    "detail": null
+  },
+  {
+    "label": "A02 native mute switch off",
+    "ok": true,
+    "detail": null
+  },
+  {
+    "label": "A04 native total UI events",
+    "ok": true,
+    "detail": [
+      {
+        "category": "UI",
+        "name": "ui_open",
+        "time_ms": 343536
+      },
+      {
+        "category": "UI",
+        "name": "ui_page",
+        "time_ms": 345386
+      },
+      {
+        "category": "UI",
+        "name": "ui_page",
+        "time_ms": 347220
+      },
+      {
+        "category": "UI",
+        "name": "ui_page",
+        "time_ms": 349056
+      },
+      {
+        "category": "UI",
+        "name": "ui_page",
+        "time_ms": 350202
+      },
+      {
+        "category": "UI",
+        "name": "ui_close",
+        "time_ms": 352155
+      },
+      {
+        "category": "UI",
+        "name": "ui_open",
+        "time_ms": 354636
+      }
+    ]
+  }
+]

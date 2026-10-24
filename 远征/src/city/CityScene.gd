@@ -2635,7 +2635,6 @@ class _Building extends StaticBody2D:
 		_w = float(s[0]) * 48.0
 		_h = float(s[1]) * 48.0
 		# 贴图只在落成后才画（_draw_built 才走 _draw_art），工地仍走 _draw_plot 的翻土画法。
-		art = G.res_tex("city_%s" % String(d.get("id", "")))
 		var art_id := String(d.get("id", ""))
 		if art_id == "stable": art_id = "kennel"
 		if art_id in REFERENCE_ART_IDS:
@@ -2646,6 +2645,7 @@ class _Building extends StaticBody2D:
 		if art_id.begins_with("frost_") and _reference_art:
 			art = FrostCityArt.prop("city_" + art_id)
 			material = FrostCityArt.cutout_material()
+		if art == null: art = G.res_tex("city_%s" % String(d.get("id", "")))
 		if bool(get_meta("sunny_sample",false)) and art_id=="hall":
 			art=SunnyTravelArt.texture("hall")
 			_reference_art=true

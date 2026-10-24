@@ -135,6 +135,7 @@ class Shell extends Control:
 		footer.add_theme_constant_override("separation",12)
 		add_child(footer)
 		get_viewport().size_changed.connect(layout)
+		preload("res://src/ui/UiSafeArea.gd").watch(self,layout)
 		layout()
 	func layout(safe_override: Rect2=Rect2()) -> void:
 		safe=safe_override if safe_override.has_area() else G.ui_safe_rect(self)

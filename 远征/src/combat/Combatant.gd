@@ -448,6 +448,10 @@ func do_basic_attack(sim: BattleSim) -> void:
 	# 用 take_damage 的**返回值**（已减伤/已被盾吸收后的实数）喂命中钩子：
 	# 以前喂的是未减伤的 dmg，打盾时饮血吸回来的血比实际造成的伤害还多
 	var dealt := target.take_damage(dmg, self, sim, is_crit)
+	if kind == "role" and is_crit and target.alive and bool(sim.growth_perks.get("crit_bleed", false)):
+		target.add_buff("bleed", 3 * BattleSim.TICK_RATE,
+			{"pct": 0.02, "atk": get_atk(), "stacks": 1, "stack_cap": 3, "src_uid": uid})
+		sim.emit({"t": "proc", "src": uid, "uid": target.uid, "buff": "bleed"})
 	# 怪物附带效果（毒/流血/减速按概率）
 	if kind == "monster" and data.has("on_hit") and target.alive:
 		var proc: Dictionary = data.on_hit

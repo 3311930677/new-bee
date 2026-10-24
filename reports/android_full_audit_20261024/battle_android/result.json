@@ -1,0 +1,1254 @@
+{
+	"checks": [],
+	"device": {
+		"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+		"mix_rate": 44100.0,
+		"model": "Android SDK built for x86_64",
+		"os": "Android",
+		"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+		"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+		"version": "37.16571990",
+		"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+		"window": "(1080, 2400)"
+	},
+	"final": {
+		"audio": {
+			"bgm": "bgm_battle",
+			"events": [
+				{
+					"category": "UI",
+					"name": "ui_click",
+					"time_ms": 131356
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 131556
+				},
+				{
+					"category": "UI",
+					"name": "ui_close",
+					"time_ms": 131838
+				},
+				{
+					"category": "UI",
+					"name": "ui_page",
+					"time_ms": 132088
+				},
+				{
+					"category": "UI",
+					"name": "ui_confirm",
+					"time_ms": 132404
+				},
+				{
+					"category": "UI",
+					"name": "ui_cancel",
+					"time_ms": 132838
+				},
+				{
+					"category": "UI",
+					"name": "ui_locked",
+					"time_ms": 133222
+				},
+				{
+					"category": "Rewards",
+					"name": "coin",
+					"time_ms": 133555
+				},
+				{
+					"category": "Rewards",
+					"name": "reward",
+					"time_ms": 133905
+				},
+				{
+					"category": "Rewards",
+					"name": "level_up",
+					"time_ms": 134654
+				},
+				{
+					"category": "Combat",
+					"name": "hit_light",
+					"time_ms": 135604
+				},
+				{
+					"category": "Combat",
+					"name": "hit_heavy",
+					"time_ms": 135836
+				},
+				{
+					"category": "Combat",
+					"name": "hit_crit",
+					"time_ms": 136171
+				},
+				{
+					"category": "Combat",
+					"name": "skill_cast",
+					"time_ms": 136604
+				},
+				{
+					"category": "Alerts",
+					"name": "boss_warn",
+					"time_ms": 137071
+				},
+				{
+					"category": "Alerts",
+					"name": "low_hp",
+					"time_ms": 137754
+				},
+				{
+					"category": "Alerts",
+					"name": "victory",
+					"time_ms": 138387
+				},
+				{
+					"category": "Alerts",
+					"name": "defeat",
+					"time_ms": 139538
+				},
+				{
+					"category": "Rewards",
+					"name": "pickup",
+					"time_ms": 140588
+				},
+				{
+					"category": "Rewards",
+					"name": "altar",
+					"time_ms": 141020
+				},
+				{
+					"category": "Movement",
+					"name": "mount_toggle",
+					"time_ms": 142353
+				},
+				{
+					"category": "Movement",
+					"name": "mount_hoof",
+					"time_ms": 142921
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 143172
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_snow",
+					"time_ms": 143420
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_sand",
+					"time_ms": 143671
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_wood",
+					"time_ms": 143920
+				},
+				{
+					"category": "Combat",
+					"name": "cast_blade",
+					"time_ms": 144170
+				},
+				{
+					"category": "Combat",
+					"name": "cast_bow",
+					"time_ms": 144520
+				},
+				{
+					"category": "Combat",
+					"name": "cast_frost",
+					"time_ms": 144871
+				},
+				{
+					"category": "Combat",
+					"name": "cast_radiant",
+					"time_ms": 145355
+				},
+				{
+					"category": "Combat",
+					"name": "hit_blade",
+					"time_ms": 145837
+				},
+				{
+					"category": "Combat",
+					"name": "hit_arrow",
+					"time_ms": 146188
+				},
+				{
+					"category": "Combat",
+					"name": "hit_frost",
+					"time_ms": 146537
+				},
+				{
+					"category": "Combat",
+					"name": "hit_radiant",
+					"time_ms": 147020
+				},
+				{
+					"category": "Combat",
+					"name": "hit_heavy",
+					"time_ms": 304018
+				},
+				{
+					"category": "Combat",
+					"name": "hit_light",
+					"time_ms": 306733
+				},
+				{
+					"category": "Combat",
+					"name": "hit_heavy",
+					"time_ms": 306761
+				},
+				{
+					"category": "Combat",
+					"name": "hit_light",
+					"time_ms": 307252
+				},
+				{
+					"category": "Combat",
+					"name": "hit_light",
+					"time_ms": 308770
+				},
+				{
+					"category": "Combat",
+					"name": "hit_heavy",
+					"time_ms": 308798
+				},
+				{
+					"category": "Combat",
+					"name": "hit_light",
+					"time_ms": 310782
+				},
+				{
+					"category": "Combat",
+					"name": "hit_heavy",
+					"time_ms": 310847
+				},
+				{
+					"category": "Alerts",
+					"name": "victory",
+					"time_ms": 312695
+				},
+				{
+					"category": "Combat",
+					"name": "hit_light",
+					"time_ms": 312804
+				},
+				{
+					"category": "Combat",
+					"name": "hit_heavy",
+					"time_ms": 312873
+				}
+			],
+			"mute": false,
+			"paused": false,
+			"playing": true,
+			"position": 9.12800025939941,
+			"suspended": false,
+			"voices": 1
+		},
+		"controls": [
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Button@109",
+				"rect": [
+					12.0,
+					67.9624938964844,
+					76.0,
+					44.0
+				],
+				"safe": true,
+				"text": "撤退",
+				"tooltip": "退出本节点，保留战损与进度",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Button@110",
+				"rect": [
+					323.999969482422,
+					67.9624938964844,
+					68.0,
+					44.0
+				],
+				"safe": true,
+				"text": "×1",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Button@111",
+				"rect": [
+					399.999969482422,
+					67.9624938964844,
+					68.0,
+					44.0
+				],
+				"safe": true,
+				"text": "自动",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ConfirmSettlement",
+				"rect": [
+					32.0,
+					969.0,
+					415.0,
+					65.0
+				],
+				"safe": true,
+				"text": "继续征途",
+				"tooltip": "",
+				"touch_under44": false
+			}
+		],
+		"device": {
+			"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+			"mix_rate": 44100.0,
+			"model": "Android SDK built for x86_64",
+			"os": "Android",
+			"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+			"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+			"version": "37.16571990",
+			"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+			"window": "(1080, 2400)"
+		},
+		"focus": "ConfirmSettlement:<Button#721722280369>",
+		"keyboard_height": 0,
+		"labels": [
+			{
+				"font": 17,
+				"minimum": "(1.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@80/@Node2D@84/@Node2D@159/@Node2D@147/@Label@150",
+				"rect": [
+					304.466857910156,
+					443.298950195312,
+					66.0,
+					25.0
+				],
+				"text": "旅人 20"
+			},
+			{
+				"font": 15,
+				"minimum": "(59.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@80/@Node2D@84/@Node2D@159/@Node2D@147/@Label@155",
+				"rect": [
+					295.466857910156,
+					563.298950195312,
+					84.0,
+					23.0
+				],
+				"text": "877/890"
+			},
+			{
+				"font": 15,
+				"minimum": "(15.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@80/@Node2D@84/@Node2D@159/@Node2D@147/@Label@158",
+				"rect": [
+					295.466857910156,
+					583.298950195312,
+					72.0,
+					23.0
+				],
+				"text": "毒"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@80/@Node2D@84/@Node2D@170/@Node2D@160/@Label@169",
+				"rect": [
+					300.671051025391,
+					635.4765625,
+					61.2000007629395,
+					16.1000003814697
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@80/@Node2D@84/@Node2D@181/@Node2D@171/@Label@180",
+				"rect": [
+					360.671051025391,
+					635.4765625,
+					61.2000007629395,
+					16.1000003814697
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@80/@Node2D@84/@Node2D@192/@Node2D@182/@Label@191",
+				"rect": [
+					300.671051025391,
+					555.4765625,
+					61.2000007629395,
+					16.1000003814697
+				],
+				"text": ""
+			},
+			{
+				"font": 17,
+				"minimum": "(1.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@80/@Node2D@84/@Node2D@203/@Node2D@193/@Label@195",
+				"rect": [
+					375.371063232422,
+					410.316528320312,
+					42.0,
+					25.0
+				],
+				"text": "毒蛛"
+			},
+			{
+				"font": 15,
+				"minimum": "(42.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@80/@Node2D@84/@Node2D@203/@Node2D@193/@Label@201",
+				"rect": [
+					354.371063232422,
+					548.316528320312,
+					84.0,
+					23.0
+				],
+				"text": "56/56"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@80/@Node2D@84/@Node2D@203/@Node2D@193/@Label@202",
+				"rect": [
+					354.371063232422,
+					568.316528320312,
+					72.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(15.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@85/@Label@261",
+				"rect": [
+					135.559265136719,
+					548.7177734375,
+					10.5,
+					16.1000003814697
+				],
+				"text": "毒"
+			},
+			{
+				"font": 18,
+				"minimum": "(18.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@85/@Label@311",
+				"rect": [
+					312.834106445312,
+					494.523895263672,
+					19.4400005340576,
+					29.1600017547607
+				],
+				"text": "-1"
+			},
+			{
+				"font": 24,
+				"minimum": "(48.0, 73.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@85/@Label@314",
+				"rect": [
+					383.060516357422,
+					473.830261230469,
+					57.6217460632324,
+					87.6330718994141
+				],
+				"text": "-56\n重击"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@HBoxContainer@93/@Control@131/@Label@128",
+				"rect": [
+					53.0,
+					857.999877929688,
+					65.0,
+					23.0
+				],
+				"text": "哥布林掠盗"
+			},
+			{
+				"font": 15,
+				"minimum": "(33.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@HBoxContainer@93/@Control@131/@Label@129",
+				"rect": [
+					53.0,
+					878.999877929688,
+					65.0,
+					23.0
+				],
+				"text": "0/51"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@HBoxContainer@93/@Control@131/@Label@130",
+				"rect": [
+					15.0,
+					882.999877929688,
+					34.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@HBoxContainer@93/@Control@136/@Label@133",
+				"rect": [
+					167.0,
+					857.999877929688,
+					66.0,
+					23.0
+				],
+				"text": "毒蛛·2"
+			},
+			{
+				"font": 15,
+				"minimum": "(33.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@HBoxContainer@93/@Control@136/@Label@134",
+				"rect": [
+					167.0,
+					878.999877929688,
+					66.0,
+					23.0
+				],
+				"text": "0/56"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@HBoxContainer@93/@Control@136/@Label@135",
+				"rect": [
+					129.0,
+					882.999877929688,
+					34.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@HBoxContainer@93/@Control@141/@Label@138",
+				"rect": [
+					282.0,
+					857.999877929688,
+					66.0,
+					23.0
+				],
+				"text": "树妖"
+			},
+			{
+				"font": 15,
+				"minimum": "(33.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@HBoxContainer@93/@Control@141/@Label@139",
+				"rect": [
+					282.0,
+					878.999877929688,
+					66.0,
+					23.0
+				],
+				"text": "0/91"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@HBoxContainer@93/@Control@141/@Label@140",
+				"rect": [
+					244.0,
+					882.999877929688,
+					34.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@HBoxContainer@93/@Control@146/@Label@143",
+				"rect": [
+					397.0,
+					857.999877929688,
+					66.0,
+					23.0
+				],
+				"text": "毒蛛·4"
+			},
+			{
+				"font": 15,
+				"minimum": "(33.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@HBoxContainer@93/@Control@146/@Label@144",
+				"rect": [
+					397.0,
+					878.999877929688,
+					66.0,
+					23.0
+				],
+				"text": "0/56"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@HBoxContainer@93/@Control@146/@Label@145",
+				"rect": [
+					359.0,
+					882.999877929688,
+					34.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Control@96/@Label@94",
+				"rect": [
+					12.0,
+					909.999877929688,
+					75.1500015258789,
+					23.0
+				],
+				"text": "旅人"
+			},
+			{
+				"font": 15,
+				"minimum": "(59.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Control@96/@Label@95",
+				"rect": [
+					70.4499969482422,
+					909.999877929688,
+					108.550003051758,
+					23.0
+				],
+				"text": "877/890"
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Control@99/@Label@97",
+				"rect": [
+					187.0,
+					909.999877929688,
+					57.1500015258789,
+					23.0
+				],
+				"text": "伙伴"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Control@99/@Label@98",
+				"rect": [
+					231.449996948242,
+					909.999877929688,
+					82.5500030517578,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Control@102/@Label@100",
+				"rect": [
+					322.0,
+					909.999877929688,
+					65.6999893188477,
+					23.0
+				],
+				"text": "能量"
+			},
+			{
+				"font": 15,
+				"minimum": "(59.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Control@102/@Label@101",
+				"rect": [
+					373.099975585938,
+					909.999877929688,
+					94.8999786376953,
+					23.0
+				],
+				"text": "100/100"
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Button@109/Caption",
+				"rect": [
+					12.0,
+					87.9624938964844,
+					76.0,
+					23.0
+				],
+				"text": "撤退"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Button@109/Subtitle",
+				"rect": [
+					12.0,
+					67.9624938964844,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(24.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Button@110/Caption",
+				"rect": [
+					323.999969482422,
+					87.9624938964844,
+					68.0,
+					23.0
+				],
+				"text": "×1"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Button@110/Subtitle",
+				"rect": [
+					323.999969482422,
+					67.9624938964844,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Button@111/Caption",
+				"rect": [
+					399.999969482422,
+					87.9624938964844,
+					68.0,
+					23.0
+				],
+				"text": "自动"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Button@111/Subtitle",
+				"rect": [
+					399.999969482422,
+					67.9624938964844,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 17,
+				"minimum": "(94.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Control@113/@Label@112",
+				"rect": [
+					160.0,
+					71.9624938964844,
+					150.0,
+					36.0
+				],
+				"text": "【 遭遇战 】"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Label@125",
+				"rect": [
+					16.0,
+					809.999877929688,
+					447.999969482422,
+					40.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Label@126",
+				"rect": [
+					16.0,
+					785.999877929688,
+					447.999969482422,
+					24.0
+				],
+				"text": ""
+			},
+			{
+				"font": 30,
+				"minimum": "(1.0, 44.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/@Label@268",
+				"rect": [
+					32.0,
+					92.0,
+					415.0,
+					44.0
+				],
+				"text": "凯旋战报"
+			},
+			{
+				"font": 26,
+				"minimum": "(1.0, 39.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ReportScroll/@VBoxContainer@271/@Label@273",
+				"rect": [
+					32.0,
+					274.0,
+					407.0,
+					39.0
+				],
+				"text": "破军  ·  Lv.20"
+			},
+			{
+				"font": 22,
+				"minimum": "(1.0, 69.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ReportScroll/@VBoxContainer@271/@Label@274",
+				"rect": [
+					32.0,
+					331.0,
+					407.0,
+					69.0
+				],
+				"text": "剩余生命 877 / 890\n协战伙伴：岩龟"
+			},
+			{
+				"font": 24,
+				"minimum": "(1.0, 35.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ReportScroll/@VBoxContainer@271/@Label@275",
+				"rect": [
+					32.0,
+					418.0,
+					407.0,
+					35.0
+				],
+				"text": "四维战功录"
+			},
+			{
+				"font": 20,
+				"minimum": "(1.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ReportScroll/@VBoxContainer@271/@GridContainer@276/@PanelContainer@277/@VBoxContainer@278/@Label@279",
+				"rect": [
+					54.0,
+					493.0,
+					154.0,
+					30.0
+				],
+				"text": "战斗用时"
+			},
+			{
+				"font": 26,
+				"minimum": "(1.0, 39.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ReportScroll/@VBoxContainer@271/@GridContainer@276/@PanelContainer@277/@VBoxContainer@278/@Label@280",
+				"rect": [
+					54.0,
+					527.0,
+					154.0,
+					39.0
+				],
+				"text": "8.0 秒"
+			},
+			{
+				"font": 20,
+				"minimum": "(1.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ReportScroll/@VBoxContainer@271/@GridContainer@276/@PanelContainer@281/@VBoxContainer@282/@Label@283",
+				"rect": [
+					264.0,
+					493.0,
+					153.0,
+					30.0
+				],
+				"text": "最高单击"
+			},
+			{
+				"font": 26,
+				"minimum": "(1.0, 39.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ReportScroll/@VBoxContainer@271/@GridContainer@276/@PanelContainer@281/@VBoxContainer@282/@Label@284",
+				"rect": [
+					264.0,
+					527.0,
+					153.0,
+					39.0
+				],
+				"text": "59"
+			},
+			{
+				"font": 20,
+				"minimum": "(1.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ReportScroll/@VBoxContainer@271/@GridContainer@276/@PanelContainer@285/@VBoxContainer@286/@Label@287",
+				"rect": [
+					54.0,
+					622.0,
+					154.0,
+					30.0
+				],
+				"text": "我方输出"
+			},
+			{
+				"font": 26,
+				"minimum": "(1.0, 39.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ReportScroll/@VBoxContainer@271/@GridContainer@276/@PanelContainer@285/@VBoxContainer@286/@Label@288",
+				"rect": [
+					54.0,
+					656.0,
+					154.0,
+					39.0
+				],
+				"text": "254"
+			},
+			{
+				"font": 20,
+				"minimum": "(1.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ReportScroll/@VBoxContainer@271/@GridContainer@276/@PanelContainer@289/@VBoxContainer@290/@Label@291",
+				"rect": [
+					264.0,
+					622.0,
+					153.0,
+					30.0
+				],
+				"text": "承受伤害"
+			},
+			{
+				"font": 26,
+				"minimum": "(1.0, 39.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ReportScroll/@VBoxContainer@271/@GridContainer@276/@PanelContainer@289/@VBoxContainer@290/@Label@292",
+				"rect": [
+					264.0,
+					656.0,
+					153.0,
+					39.0
+				],
+				"text": "13"
+			},
+			{
+				"font": 24,
+				"minimum": "(1.0, 35.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ReportScroll/@VBoxContainer@271/@Label@293",
+				"rect": [
+					32.0,
+					735.0,
+					407.0,
+					35.0
+				],
+				"text": "凯旋战利品"
+			},
+			{
+				"font": 22,
+				"minimum": "(1.0, 33.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ReportScroll/@VBoxContainer@271/@GridContainer@294/@PanelContainer@295/@VBoxContainer@296/@Label@297",
+				"rect": [
+					54.0,
+					810.0,
+					154.0,
+					33.0
+				],
+				"text": "金币"
+			},
+			{
+				"font": 28,
+				"minimum": "(1.0, 42.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ReportScroll/@VBoxContainer@271/@GridContainer@294/@PanelContainer@295/@VBoxContainer@296/@Label@298",
+				"rect": [
+					54.0,
+					851.0,
+					154.0,
+					42.0
+				],
+				"text": "+60"
+			},
+			{
+				"font": 22,
+				"minimum": "(1.0, 33.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ReportScroll/@VBoxContainer@271/@GridContainer@294/@PanelContainer@299/@VBoxContainer@300/@Label@301",
+				"rect": [
+					264.0,
+					810.0,
+					153.0,
+					33.0
+				],
+				"text": "远征币"
+			},
+			{
+				"font": 28,
+				"minimum": "(1.0, 42.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ReportScroll/@VBoxContainer@271/@GridContainer@294/@PanelContainer@299/@VBoxContainer@300/@Label@302",
+				"rect": [
+					264.0,
+					851.0,
+					153.0,
+					42.0
+				],
+				"text": "+20"
+			},
+			{
+				"font": 22,
+				"minimum": "(1.0, 33.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ReportScroll/@VBoxContainer@271/@GridContainer@294/@PanelContainer@303/@VBoxContainer@304/@Label@305",
+				"rect": [
+					54.0,
+					949.0,
+					154.0,
+					33.0
+				],
+				"text": "魂晶"
+			},
+			{
+				"font": 28,
+				"minimum": "(1.0, 42.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ReportScroll/@VBoxContainer@271/@GridContainer@294/@PanelContainer@303/@VBoxContainer@304/@Label@306",
+				"rect": [
+					54.0,
+					990.0,
+					154.0,
+					42.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 22,
+				"minimum": "(1.0, 33.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ReportScroll/@VBoxContainer@271/@GridContainer@294/@PanelContainer@307/@VBoxContainer@308/@Label@309",
+				"rect": [
+					264.0,
+					949.0,
+					153.0,
+					33.0
+				],
+				"text": "历练经验"
+			},
+			{
+				"font": 28,
+				"minimum": "(1.0, 42.0)",
+				"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ReportScroll/@VBoxContainer@271/@GridContainer@294/@PanelContainer@307/@VBoxContainer@308/@Label@310",
+				"rect": [
+					264.0,
+					990.0,
+					153.0,
+					42.0
+				],
+				"text": "+60"
+			}
+		],
+		"modals": [],
+		"page": "BattleScene",
+		"tick_ms": 313196
+	},
+	"id": "battle_android",
+	"photos": [
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Control@103/@Button@104",
+					"rect": [
+						314.0,
+						945.999877929688,
+						153.999969482422,
+						104.0
+					],
+					"safe": true,
+					"text": "攻击",
+					"tooltip": "手动攻击当前选定目标；开启「自动」可持续自动攻击",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Control@103/@Button@105",
+					"rect": [
+						163.0,
+						945.999877929688,
+						145.0,
+						50.0
+					],
+					"safe": true,
+					"text": "技能",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Control@103/@Button@106",
+					"rect": [
+						163.0,
+						999.999877929688,
+						145.0,
+						50.0
+					],
+					"safe": true,
+					"text": "道具",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Control@103/@Button@107",
+					"rect": [
+						12.0,
+						945.999877929688,
+						145.0,
+						50.0
+					],
+					"safe": true,
+					"text": "伙伴",
+					"tooltip": "没有替补伙伴",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Control@103/@Button@108",
+					"rect": [
+						12.0,
+						999.999877929688,
+						145.0,
+						50.0
+					],
+					"safe": true,
+					"text": "换目标",
+					"tooltip": "循环选择可攻击的敌方目标，或直接点击敌方单位/目标卡",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Button@109",
+					"rect": [
+						12.0,
+						67.9624938964844,
+						76.0,
+						44.0
+					],
+					"safe": true,
+					"text": "撤退",
+					"tooltip": "退出本节点，保留战损与进度",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Button@110",
+					"rect": [
+						323.999969482422,
+						67.9624938964844,
+						68.0,
+						44.0
+					],
+					"safe": true,
+					"text": "×1",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Button@111",
+					"rect": [
+						399.999969482422,
+						67.9624938964844,
+						68.0,
+						44.0
+					],
+					"safe": true,
+					"text": "自动",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "battle_initial",
+			"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]"
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Button@109",
+					"rect": [
+						12.0,
+						67.9624938964844,
+						76.0,
+						44.0
+					],
+					"safe": true,
+					"text": "撤退",
+					"tooltip": "退出本节点，保留战损与进度",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Button@110",
+					"rect": [
+						323.999969482422,
+						67.9624938964844,
+						68.0,
+						44.0
+					],
+					"safe": true,
+					"text": "×1",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/BattleScene/@Control@87/@Button@111",
+					"rect": [
+						399.999969482422,
+						67.9624938964844,
+						68.0,
+						44.0
+					],
+					"safe": true,
+					"text": "自动",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/BattleScene/SettlementModal/@VBoxContainer@267/ConfirmSettlement",
+					"rect": [
+						32.0,
+						969.0,
+						415.0,
+						65.0
+					],
+					"safe": true,
+					"text": "继续征途",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "battle_after8s",
+			"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]"
+		}
+	],
+	"records": [
+		{
+			"battle_result": "victory",
+			"running_seconds": 8.03333333333333
+		}
+	],
+	"suite": "battle"
+}

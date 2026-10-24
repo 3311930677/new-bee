@@ -1,0 +1,13 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+WARNING: Missing visual resource: id=npc_frost_guard_idle resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6116)
+       [1] _ready (res://src/ui/CampGatheringPanel.gd:33)
+       [2] _open_gathering (res://src/ui/GameHome.gd:252)
+       [3] _on_entry (res://src/ui/home/TownHome.gd:834)
+       [4] <anonymous lambda> (res://src/ui/home/TownHome.gd:610)
+       [5] click (res://tools/VerifyCampGathering.gd:21)
+       [6] _ready (res://tools/VerifyCampGathering.gd:39)
+CAMP_GATHERING_OK

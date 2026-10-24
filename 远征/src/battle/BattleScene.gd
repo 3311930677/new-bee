@@ -252,12 +252,13 @@ var _dmg_out := 0                    # 我方造成的总伤害（战报用）
 var _dmg_in := 0                     # 我方承受的总伤害
 var _best_hit := 0                   # 我方最高单击
 var _skill_btns: Array[Dictionary] = []  # {btn, name_l, cd_l, skill}
+var _ally_focus_uid := -1
 var effective_skills: Array = []         # P05-D：本场真正生效过的玩家技能（每个 id 只记一次）
 var _energy_fill: ColorRect = null       # 底部能量横条（经典模式不建：能量只走角色脚下蓝条）
 var _energy_bar_w := VIEW_W - BAR_X * 2.0
 var _energy_l: Label = null              # 底部能量文字（同上）
 var _page_energy_l: Label = null         # 「技」页展开时的能量读数（底部撤条后的数值入口）
-var _potion_l := Label.new()
+var _potion_l: Label
 var _pet_btn: Control = null
 var _auto_btn: Control = null
 var _speed_btn: Control = null
@@ -270,9 +271,9 @@ var _page_panel: Control = null          # 技能页 / 道具页弹出条（PAGE
 var _command_page := "root"            # root / skills / items
 var _ranged_waiting: Dictionary = {}  # "src:dst" -> 命中前正在飞行的弹道状态
 var _skill_motion_sources: Dictionary = {} # Casts resolved in the current event batch.
-var _cast_tip := Label.new()
+var _cast_tip: Label
 var _tip_tween: Tween = null
-var _combo_tip := Label.new()      # 连携窗口提示（能量条上方）
+var _combo_tip: Label      # 连携窗口提示（能量条上方）
 var _finished_ui := false
 var _cfg: Dictionary = {}
 # ---------- P03 表现层：预兆 / 阶段横幅 ----------
@@ -309,7 +310,8 @@ func _ready() -> void:
 	if seed_v == 0:
 		seed_v = randi()
 	sim.setup(seed_v, _cfg.get("ally", {}), _cfg.get("enemy", {}))
-	sim.manual_basic_attack = true
+	# 普攻持续进行；玩家手动保留技能、集火、药剂和换宠的时机选择。
+	sim.manual_basic_attack = false
 	var init_role := sim.role_unit()
 	if init_role != null:
 		init_role.attack_timer = init_role.basic_threshold()
@@ -1122,7 +1124,7 @@ func _command_attack() -> void:
 	if target == null:
 		target = enemies[0]
 	sim.set_role_focus_target(target.uid)
-	if is_processing() and speed > 0.0:
+	if sim.manual_basic_attack and is_processing() and speed > 0.0:
 		sim.trigger_manual_attack()
 		_consume_events()
 	_sync_views()
@@ -1168,6 +1170,14 @@ func _gui_input(event: InputEvent) -> void:
 		Audio.sfx("ui_click")
 		_select_enemy_target(best_uid, true)
 		accept_event()
+		return
+	for ally in sim.alive_units("ally"):
+		var ally_view: UnitView = _views.get(ally.uid)
+		if ally_view != null and ally_view._actor_rect().grow(14.0).has_point(pos):
+			_ally_focus_uid = ally.uid
+			_show_tip("辅助目标：%s" % ally.name)
+			accept_event()
+			return
 
 
 func _cast_command_skill(sid: String) -> void:
@@ -1182,7 +1192,7 @@ func _cast_command_skill(sid: String) -> void:
 	if role.energy<cost:
 		_show_tip("能量不足 · 需要 %d，当前 %d" % [cost,role.energy])
 		return
-	if sim.cast_skill(role.uid,sid):
+	if sim.cast_skill(role.uid,sid,_ally_focus_uid):
 		_consume_events()
 		_close_page()
 	else: _show_tip("当前无法施放这个技能")
@@ -1386,7 +1396,7 @@ func _on_event(e: Dictionary) -> void:
 			var role := sim.role_unit()
 			if role != null and int(e.uid) == role.uid:
 				# 我方施法不再走顶部通报：技能名跟着施法者头顶的图标牌走（_skill_splash）
-				Audio.sfx("skill_cast")
+				Audio.cast(String((_cfg.get("ally",{}) as Dictionary).get("role_id","zs")))
 			else:
 				# 敌方施法必须看得见：被打了却不知道对方放了什么，战斗就成了看血条
 				var tier := "normal"
@@ -1830,7 +1840,7 @@ func _try_cast(sid: String) -> void:
 	var role := sim.role_unit()
 	if role == null or not role.alive:
 		return
-	if sim.cast_skill(role.uid, sid):
+	if sim.cast_skill(role.uid, sid, _ally_focus_uid):
 		_consume_events()  # 立即消费 cast_start 提示
 
 
@@ -2160,7 +2170,8 @@ func _present_damage_feedback(dst: UnitView, e: Dictionary, heavy: bool, to_role
 	else:
 		dst.hit_flash()
 		_float_dmg(fx_pos, amount, "hit")
-		Audio.sfx("hit_light")
+		if to_role: Audio.sfx("hit_light")
+		else: Audio.hit(String((_cfg.get("ally",{}) as Dictionary).get("role_id","zs")))
 		if to_role:
 			_shake(SHAKE_HIT)
 	if not dot:
@@ -2315,295 +2326,40 @@ static func _settle_label(txt: String, fnt: Font, sz: int, col: Color,
 
 func _show_result() -> void:
 	_close_page()
-	if _cmd_root != null:
-		_cmd_root.hide()
-	if _danger != null:
-		_danger.modulate.a = 0.0
+	if _cmd_root != null: _cmd_root.hide()
+	if _danger != null: _danger.modulate.a = 0.0
+	if has_node("SettlementModal"): return
 	var win := sim.result == "victory"
 	var flee := sim.result == "flee"
 	var draw := sim.result == "draw"
 	var arena_mode := String(_cfg.get("mode", "pve")) == "arena"
 	var role := sim.role_unit()
-	var hp_left := maxi(0, role.hp) if role != null else 0
-	var hp_max := maxi(1, role.get_max_hp()) if role != null else maxi(1, hp_left)
-	var hp_pct := clampi(roundi(float(hp_left) * 100.0 / float(hp_max)), 0, 100)
-	Audio.sfx("victory" if win else ("defeat" if not flee and not draw else "ui_close"), 0.0)
-
-	G.veil(self, G.VEIL_TAKEOVER_A)
-
-	# 外框：kit_20261013/panel_iron.png 九宫格乌木鎏金铁框
-	var panel := Panel.new()
-	panel.name = "SettlementModal"
-	panel.position = Vector2(20, 68)
-	panel.size = Vector2(440, 664)
-	panel.custom_minimum_size = Vector2(440, 664)
-	panel.add_theme_stylebox_override("panel",
-		_settle_sb_tex("res://assets/ui/kit_20261013/panel_iron.png", 36, 36, 36, 36))
+	var hp_left := maxi(0,role.hp) if role != null else 0
+	var hp_max := maxi(1,role.get_max_hp()) if role != null else maxi(1,hp_left)
+	var active_pid := String(_cfg.get("ally",{}).get("active_pet",G.companion_active()))
+	var pet := TableCache.get_pet(active_pid) if not active_pid.is_empty() else {}
+	var nt := String(_cfg.get("enemy",{}).get("node_type","normal"))
+	var heading := "凯旋战利品" if win else "破敌整备策"
+	if win and not String(_cfg.get("special_event_id", "")).is_empty(): heading = "奇遇办妥 · 回城复命选谢礼"
+	elif win and arena_mode: heading = "演武战报 · 返回演武场结算段位"
+	var title := "凯旋战报" if win else "暂避锋芒" if flee else "未分胜负" if draw and arena_mode else "远征失利" if draw else "折戟整备"
+	var panel := preload("res://src/battle/BattleSettlementView.gd").new()
+	panel.report = {
+		"title":title,"win":win,"role_name":String(role.name) if role != null else G.display_name(),
+		"level":int(_cfg.get("ally",{}).get("level",G.prog.get("level",1))),
+		"hp_left":hp_left,"hp_max":hp_max,"pet_name":String(pet.get("name","无")),
+		"seconds":float(sim.tick_count)/30.0,"best_hit":_best_hit,"damage_out":_dmg_out,"damage_in":_dmg_in,
+		"loot_heading":heading,"rewards":_cfg.get("reward_preview",TableCache.nodes_config().get("rewards",{}).get(nt,{})),
+		"action":"返回" if flee else "继续征途" if win else "整备再战"
+	}
+	panel.confirmed.connect(confirm_result)
+	Audio.sfx("victory" if win else "defeat" if not flee and not draw else "ui_close",0.0)
+	G.veil(self,G.VEIL_TAKEOVER_A)
 	add_child(panel)
 
-	# 1. 顶部乌木鎏金木匾 (plaque_title.png) + 毛笔行书大题名 (G.font_art)
-	var plaque := TextureRect.new()
-	plaque.texture = G.visual_texture("res://assets/ui/kit_20261013/plaque_title.png")
-	plaque.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	plaque.stretch_mode = TextureRect.STRETCH_SCALE
-	plaque.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	plaque.position = Vector2(75, 12)
-	plaque.size = Vector2(290, 52)
-	panel.add_child(plaque)
 
-	var title_text := "折戟整备"
-	var title_col := Color("f2c0a8")
-	if win:
-		title_text = "凯旋战报"
-		title_col = Color("ffe8a8")
-	elif flee:
-		title_text = "暂避锋芒"
-		title_col = Color("f0d494")
-	elif draw:
-		title_text = "未分胜负" if arena_mode else "远征失利"
-		title_col = Color("f0d494") if arena_mode else Color("f2c0a8")
-
-	var title_l := _settle_label(title_text, _settle_font_spaced(G.font_art, 4), 26,
-		title_col, HORIZONTAL_ALIGNMENT_CENTER, 4)
-	title_l.position = Vector2(0, 2)
-	title_l.size = Vector2(290, 46)
-	plaque.add_child(title_l)
-
-	# 2. 像素实景横幅 (x:18, y:72, 404x108)
-	var banner_path := "res://assets/ui/battle_settle/victory_header_banner.png" if win else "res://assets/ui/battle_settle/defeat_header_banner.png"
-	var banner_rect := TextureRect.new()
-	banner_rect.position = Vector2(18, 72)
-	banner_rect.size = Vector2(404, 108)
-	banner_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	banner_rect.stretch_mode = TextureRect.STRETCH_SCALE
-	banner_rect.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	banner_rect.texture = G.visual_texture(banner_path)
-	panel.add_child(banner_rect)
-
-	var role_name := String(role.name) if role != null else G.display_name()
-	var role_lv := int(_cfg.get("ally", {}).get("level", G.prog.get("level", 1)))
-	var active_pid := String(_cfg.get("ally", {}).get("active_pet", G.companion_active()))
-	var pet_name := "无"
-	if not active_pid.is_empty():
-		var pd := TableCache.get_pet(active_pid)
-		pet_name = String(pd.get("name", active_pid))
-
-	var hero_name_l := _settle_label(role_name, _settle_font_spaced(G.font_serif, 1), 17,
-		Color("fff2d4"), HORIZONTAL_ALIGNMENT_LEFT, 3)
-	hero_name_l.position = Vector2(106, 12)
-	hero_name_l.size = Vector2(118, 24)
-	banner_rect.add_child(hero_name_l)
-
-	var name_w := clampf(G.font_serif.get_string_size(role_name, HORIZONTAL_ALIGNMENT_LEFT, -1, 17).x + 12.0, 48.0, 118.0)
-	var hero_lv_l := _settle_label("Lv.%d" % role_lv, G.font_display, 18,
-		Color("ffd470"), HORIZONTAL_ALIGNMENT_LEFT, 3)
-	hero_lv_l.position = Vector2(106.0 + name_w, 11)
-	hero_lv_l.size = Vector2(72, 24)
-	banner_rect.add_child(hero_lv_l)
-
-	var hp_line := _settle_label("残存生命 %d/%d (%d%%) · 协战：%s" % [hp_left, hp_max, hp_pct, pet_name],
-		G.font_reg, 12, Color("98f0b4") if win else Color("f4b0a0"), HORIZONTAL_ALIGNMENT_LEFT, 3)
-	hp_line.position = Vector2(106, 38)
-	hp_line.size = Vector2(246, 20)
-	banner_rect.add_child(hp_line)
-
-	var hp_track := Panel.new()
-	hp_track.position = Vector2(106, 62)
-	hp_track.size = Vector2(184, 13)
-	hp_track.add_theme_stylebox_override("panel",
-		_settle_sb_tex("res://assets/ui/kit_20261013/bar_frame.png", 8, 4, 8, 4))
-	banner_rect.add_child(hp_track)
-
-	var fill_w := roundf(178.0 * clampf(float(hp_left) / float(hp_max), 0.0, 1.0))
-	if fill_w > 0.0:
-		var hp_fill := ColorRect.new()
-		hp_fill.position = Vector2(109, 65)
-		hp_fill.size = Vector2(fill_w, 7)
-		hp_fill.color = Color("3eb86e") if hp_pct >= 30 else Color("cf4a33")
-		banner_rect.add_child(hp_fill)
-		var hp_hi := ColorRect.new()
-		hp_hi.position = Vector2(109, 65)
-		hp_hi.size = Vector2(fill_w, 2)
-		hp_hi.color = Color("96f4b8", 0.75) if hp_pct >= 30 else Color("ff9882", 0.75)
-		banner_rect.add_child(hp_hi)
-
-	var banner_sub_text := "破阵斩将 · 战利已清点入册" if win else "胜败乃兵家常事 · 整备再战"
-	if flee:
-		banner_sub_text = "节点进度已保留 · 可再次进入"
-	elif draw:
-		banner_sub_text = "时间耗尽 · 未分胜负" if arena_mode else "时间耗尽 · 远征失利"
-	var banner_sub := _settle_label(banner_sub_text, G.font_reg, 12,
-		Color("ffe6a4") if win else Color("f0bcb0"), HORIZONTAL_ALIGNMENT_LEFT, 3)
-	banner_sub.position = Vector2(106, 80)
-	banner_sub.size = Vector2(246, 20)
-	banner_rect.add_child(banner_sub)
-
-	# 3. 四维战功录分栏条 (section.png + ic_orn.png) + 2x2 云锦数据牌 (btn_row.png)
-	var sec1 := Panel.new()
-	sec1.position = Vector2(18, 188)
-	sec1.size = Vector2(404, 34)
-	sec1.add_theme_stylebox_override("panel",
-		_settle_sb_tex("res://assets/ui/settings_20261014/section.png", 16, 8, 48, 8))
-	panel.add_child(sec1)
-	var orn1 := TextureRect.new()
-	orn1.texture = G.visual_texture("res://assets/ui/settings_20261014/ic_orn.png")
-	orn1.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	orn1.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	orn1.position = Vector2(14, 9)
-	orn1.size = Vector2(16, 16)
-	sec1.add_child(orn1)
-	var s1_lbl := _settle_label("四维战功录", _settle_font_spaced(G.font_serif, 1), 15, Color("f6e6c4"))
-	s1_lbl.position = Vector2(36, 0)
-	s1_lbl.size = Vector2(320, 34)
-	sec1.add_child(s1_lbl)
-
-	var secs := float(sim.tick_count) / 30.0
-	var stat_specs := [
-		["战斗用时", "%.1f" % secs, "秒", Color("ffe298")],
-		["最高单击", "%d" % _best_hit, "伤害", Color("ffca68")],
-		["我方输出", "%d" % _dmg_out, "总伤", Color("8ce8ac")],
-		["承受伤害", "%d" % _dmg_in, "战损", Color("f2a08c")],
-	]
-	for idx in stat_specs.size():
-		var spec: Array = stat_specs[idx]
-		var cell := Panel.new()
-		cell.position = Vector2(18 + (idx % 2) * 206, 228 + int(idx / 2) * 54)
-		cell.size = Vector2(198, 48)
-		cell.add_theme_stylebox_override("panel",
-			_settle_sb_tex("res://assets/ui/settings_20261014/btn_row.png", 14, 8, 14, 8))
-		panel.add_child(cell)
-
-		var k_lbl := _settle_label(String(spec[0]), G.font_serif, 13, Color("d4c4a8"), HORIZONTAL_ALIGNMENT_LEFT, 2)
-		k_lbl.position = Vector2(12, 10)
-		k_lbl.size = Vector2(72, 28)
-		cell.add_child(k_lbl)
-
-		var v_lbl := _settle_label(String(spec[1]), G.font_display, 21, spec[3], HORIZONTAL_ALIGNMENT_RIGHT, 3)
-		v_lbl.position = Vector2(76, 8)
-		v_lbl.size = Vector2(76, 30)
-		cell.add_child(v_lbl)
-
-		var u_lbl := _settle_label(String(spec[2]), G.font_reg, 12, Color("b8a890"), HORIZONTAL_ALIGNMENT_LEFT, 2)
-		u_lbl.position = Vector2(156, 11)
-		u_lbl.size = Vector2(36, 26)
-		cell.add_child(u_lbl)
-
-	# 4. 战利品结算 / 破敌整备策 分栏条 + 内容区
-	var sec2 := Panel.new()
-	sec2.position = Vector2(18, 342)
-	sec2.size = Vector2(404, 34)
-	sec2.add_theme_stylebox_override("panel",
-		_settle_sb_tex("res://assets/ui/settings_20261014/section.png", 16, 8, 48, 8))
-	panel.add_child(sec2)
-	var orn2 := TextureRect.new()
-	orn2.texture = G.visual_texture("res://assets/ui/settings_20261014/ic_orn.png")
-	orn2.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	orn2.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	orn2.position = Vector2(14, 9)
-	orn2.size = Vector2(16, 16)
-	sec2.add_child(orn2)
-
-	var sec2_title := "凯旋战利品" if win else "破敌整备策"
-	if win and not String(_cfg.get("special_event_id", "")).is_empty():
-		sec2_title = "奇遇办妥 · 回城复命选谢礼"
-	elif win and arena_mode:
-		sec2_title = "演武战报 · 返回演武场结算段位"
-	var s2_lbl := _settle_label(sec2_title, _settle_font_spaced(G.font_serif, 1), 15, Color("f6e6c4"))
-	s2_lbl.position = Vector2(36, 0)
-	s2_lbl.size = Vector2(340, 34)
-	sec2.add_child(s2_lbl)
-
-	if win:
-		var nt: String = String(_cfg.get("enemy", {}).get("node_type", "normal"))
-		var rw: Dictionary = _cfg.get("reward_preview", TableCache.nodes_config().get("rewards", {}).get(nt, {}))
-		var badge_sheet := G.visual_texture("res://assets/ui/battle_settle/reward_badge_icons.png")
-		var loot_specs := [
-			[0, "金币", "+%d" % int(rw.get("gold", 0)), Color("ffd86b")],
-			[1, "远征币", "+%d" % int(rw.get("expedition", 0)), Color("f2bc78")],
-			[2, "灵魂石", "+%d" % int(rw.get("soul", 0)), Color("98daf8")],
-			[3, "历练经验", "+%d" % int(rw.get("exp", 0)), Color("92e6aa")],
-		]
-		for i in loot_specs.size():
-			var ls: Array = loot_specs[i]
-			var slot := Panel.new()
-			slot.position = Vector2(18 + i * 103, 384)
-			slot.size = Vector2(95, 122)
-			slot.add_theme_stylebox_override("panel",
-				_settle_sb_tex("res://assets/ui/settings_20261014/btn_row.png", 12, 8, 12, 8))
-			panel.add_child(slot)
-
-			if badge_sheet != null:
-				var at := AtlasTexture.new()
-				at.atlas = badge_sheet
-				at.region = Rect2(int(ls[0]) * 48, 0, 48, 48)
-				var ic := TextureRect.new()
-				ic.texture = at
-				ic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-				ic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-				ic.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-				ic.position = Vector2(23, 10)
-				ic.size = Vector2(48, 48)
-				slot.add_child(ic)
-
-			var n_lbl := _settle_label(String(ls[1]), G.font_serif, 13, Color("e4d6bc"), HORIZONTAL_ALIGNMENT_CENTER, 2)
-			n_lbl.position = Vector2(4, 62)
-			n_lbl.size = Vector2(87, 22)
-			slot.add_child(n_lbl)
-
-			var val_lbl := _settle_label(String(ls[2]), G.font_display, 20, ls[3], HORIZONTAL_ALIGNMENT_CENTER, 3)
-			val_lbl.position = Vector2(4, 86)
-			val_lbl.size = Vector2(87, 28)
-			slot.add_child(val_lbl)
-	else:
-		var tips := [
-			["铁匠锻造", "前往铁匠铺强化武器防具、精炼高阶词条"],
-			["灵兽协战", "喂养与升星出战灵兽，分担承伤补充护盾"],
-			["招式药剂", "调整破绽爆发技能衔接，备齐药剂再战"],
-		]
-		for tidx in tips.size():
-			var row_tip: Array = tips[tidx]
-			var slip := Panel.new()
-			slip.position = Vector2(18, 384 + tidx * 42)
-			slip.size = Vector2(404, 38)
-			slip.add_theme_stylebox_override("panel",
-				_settle_sb_tex("res://assets/ui/kit_20261013/quest_slip.png", 26, 8, 14, 8))
-			panel.add_child(slip)
-
-			var tk_lbl := _settle_label(String(row_tip[0]), G.font_serif, 14, Color("5a2614"), HORIZONTAL_ALIGNMENT_LEFT, 0)
-			tk_lbl.position = Vector2(28, 4)
-			tk_lbl.size = Vector2(72, 30)
-			slip.add_child(tk_lbl)
-
-			var tv_lbl := _settle_label(String(row_tip[1]), G.font_reg, 13, Color("382618"), HORIZONTAL_ALIGNMENT_LEFT, 0)
-			tv_lbl.position = Vector2(102, 4)
-			tv_lbl.size = Vector2(290, 30)
-			slip.add_child(tv_lbl)
-
-	# 5. 底部战报摘要与鎏金雕花主按钮 (button_red.png / button_dark.png)
-	var summary_l := _settle_label("战报纪要 · 用时 %.1fs · 最高单击 %d · 输出 %d · 承伤 %d"
-		% [secs, _best_hit, _dmg_out, _dmg_in], G.font_reg, 12, Color("b6a68c"), HORIZONTAL_ALIGNMENT_CENTER, 2)
-	summary_l.position = Vector2(18, 520)
-	summary_l.size = Vector2(404, 24)
-	panel.add_child(summary_l)
-
-	var btn_caption := "返 回" if flee else ("继 续 征 途" if win else "整 备 再 战")
-	var btn := Panel.new()
-	btn.position = Vector2(86, 556)
-	btn.size = Vector2(268, 56)
-	btn.custom_minimum_size = Vector2(268, 56)
-	btn.mouse_filter = Control.MOUSE_FILTER_STOP
-	btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	var btn_tex := "res://assets/ui/introduction_20261015/button_red.png" if win else "res://assets/ui/introduction_20261015/button_dark.png"
-	btn.add_theme_stylebox_override("panel", _settle_sb_tex(btn_tex, 24, 14, 24, 14))
-	var btn_lbl := _settle_label(btn_caption, _settle_font_spaced(G.font_serif, 3), 20,
-		Color("fff2d4"), HORIZONTAL_ALIGNMENT_CENTER, 3)
-	btn_lbl.position = Vector2(8, 0)
-	btn_lbl.size = Vector2(252, 54)
-	btn.add_child(btn_lbl)
-	btn.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			confirm_result())
-	panel.add_child(btn)
+func _layout_settlement(panel: Control) -> void:
+	if is_instance_valid(panel) and panel.has_method("layout"): panel.call("layout")
 
 
 ## 结算确认（远征循环 #7 接管信号；无监听时回主界面——冒烟入口）
@@ -2719,11 +2475,11 @@ class UnitView extends Node2D:
 	var hp_bg := ColorRect.new()
 	var hp_ghost := ColorRect.new()    # B2 白残影条：停在旧血量，缓动追上真实值
 	var hp_fg := ColorRect.new()
-	var energy_bg := ColorRect.new()
-	var energy_fg := ColorRect.new()
-	var name_l := Label.new()
+	var energy_bg: ColorRect
+	var energy_fg: ColorRect
+	var name_l: Label
 	var name_bg: Panel = null
-	var buff_l := Label.new()
+	var buff_l: Label
 	var shield_ring: Line2D = null
 	var _target_mark: Polygon2D = null
 	var _base_pos := Vector2.ZERO
@@ -2902,6 +2658,8 @@ class UnitView extends Node2D:
 		hp_value.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 		body.add_child(hp_value)
 		if _classic and is_role:
+			energy_bg = ColorRect.new()
+			energy_fg = ColorRect.new()
 			energy_bg.color = Color(0, 0, 0, 0.65)
 			energy_bg.position = hp_bg.position + Vector2(0, 6)
 			energy_bg.size = Vector2(84,4)

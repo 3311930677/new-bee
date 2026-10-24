@@ -1,0 +1,2350 @@
+{
+	"checks": [
+		{
+			"detail": null,
+			"label": "M01 pending inventory fixture exists",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "full bag disables pending claim",
+			"ok": true
+		}
+	],
+	"device": {
+		"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+		"mix_rate": 44100.0,
+		"model": "Android SDK built for x86_64",
+		"os": "Android",
+		"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+		"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+		"version": "37.16571990",
+		"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+		"window": "(1080, 2400)"
+	},
+	"final": {
+		"audio": {
+			"bgm": "bgm_home",
+			"events": [
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516013
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516240
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516460
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516691
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516905
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 517141
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 517389
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 517608
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 517837
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 518056
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 518284
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 519740
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 519980
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 520190
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 520438
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 520652
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 520874
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 521121
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 521340
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 521577
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 521805
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 522034
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 522255
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 523727
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 523968
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 524179
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 524418
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 524648
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 524868
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525106
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525319
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525567
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525778
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525998
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 526267
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 526464
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 526716
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 526938
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 527155
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 527472
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 527702
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 527929
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 528149
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 528381
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 528603
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 528842
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529081
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529313
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529534
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529768
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529994
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 530208
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 530441
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 530666
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 530891
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 572886
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 575286
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 575377
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 578220
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 578309
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 581371
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 583687
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 586553
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 588921
+				},
+				{
+					"category": "UI",
+					"name": "ui_page",
+					"time_ms": 591621
+				}
+			],
+			"mute": false,
+			"paused": false,
+			"playing": true,
+			"position": 19.3199996948242,
+			"suspended": false,
+			"voices": 0
+		},
+		"controls": [
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/ReturnButton",
+				"rect": [
+					18.0,
+					75.9624938964844,
+					56.0,
+					56.0
+				],
+				"safe": true,
+				"text": "‹",
+				"tooltip": "返回",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Categories/Tab_equip",
+				"rect": [
+					20.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"safe": true,
+				"text": "装备",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Categories/Tab_mat",
+				"rect": [
+					131.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"safe": true,
+				"text": "材料",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Categories/Tab_gem",
+				"rect": [
+					242.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"safe": true,
+				"text": "宝石",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Categories/Tab_pending",
+				"rect": [
+					353.0,
+					185.962493896484,
+					106.0,
+					60.0
+				],
+				"safe": true,
+				"text": "待领取",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4817/@Button@4821",
+				"rect": [
+					375.0,
+					267.962493896484,
+					80.0,
+					64.0
+				],
+				"safe": true,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4822/@Button@4826",
+				"rect": [
+					375.0,
+					339.962493896484,
+					80.0,
+					64.0
+				],
+				"safe": true,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4827/@Button@4831",
+				"rect": [
+					375.0,
+					411.962493896484,
+					80.0,
+					64.0
+				],
+				"safe": true,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4832/@Button@4836",
+				"rect": [
+					375.0,
+					483.962493896484,
+					80.0,
+					64.0
+				],
+				"safe": true,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4837/@Button@4841",
+				"rect": [
+					375.0,
+					555.962524414062,
+					80.0,
+					64.0
+				],
+				"safe": true,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4842/@Button@4846",
+				"rect": [
+					375.0,
+					627.962524414062,
+					80.0,
+					64.0
+				],
+				"safe": true,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4847/@Button@4851",
+				"rect": [
+					375.0,
+					699.962524414062,
+					80.0,
+					64.0
+				],
+				"safe": true,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4852/@Button@4856",
+				"rect": [
+					375.0,
+					771.962524414062,
+					80.0,
+					64.0
+				],
+				"safe": true,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4857/@Button@4861",
+				"rect": [
+					375.0,
+					843.962524414062,
+					80.0,
+					64.0
+				],
+				"safe": true,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4862/@Button@4866",
+				"rect": [
+					375.0,
+					915.962524414062,
+					80.0,
+					64.0
+				],
+				"safe": true,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4867/@Button@4871",
+				"rect": [
+					375.0,
+					987.962524414062,
+					80.0,
+					64.0
+				],
+				"safe": true,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4872/@Button@4876",
+				"rect": [
+					375.0,
+					1059.96252441406,
+					80.0,
+					64.0
+				],
+				"safe": false,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4877/@Button@4881",
+				"rect": [
+					375.0,
+					1131.96252441406,
+					80.0,
+					64.0
+				],
+				"safe": false,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4882/@Button@4886",
+				"rect": [
+					375.0,
+					1203.96252441406,
+					80.0,
+					64.0
+				],
+				"safe": false,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4887/@Button@4891",
+				"rect": [
+					375.0,
+					1275.96252441406,
+					80.0,
+					64.0
+				],
+				"safe": false,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4892/@Button@4896",
+				"rect": [
+					375.0,
+					1347.96252441406,
+					80.0,
+					64.0
+				],
+				"safe": false,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4897/@Button@4901",
+				"rect": [
+					375.0,
+					1419.96252441406,
+					80.0,
+					64.0
+				],
+				"safe": false,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4902/@Button@4906",
+				"rect": [
+					375.0,
+					1491.96252441406,
+					80.0,
+					64.0
+				],
+				"safe": false,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4907/@Button@4911",
+				"rect": [
+					375.0,
+					1563.96252441406,
+					80.0,
+					64.0
+				],
+				"safe": false,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4912/@Button@4916",
+				"rect": [
+					375.0,
+					1635.96252441406,
+					80.0,
+					64.0
+				],
+				"safe": false,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4917/@Button@4921",
+				"rect": [
+					375.0,
+					1707.96252441406,
+					80.0,
+					64.0
+				],
+				"safe": false,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4922/@Button@4926",
+				"rect": [
+					375.0,
+					1779.96252441406,
+					80.0,
+					64.0
+				],
+				"safe": false,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4927/@Button@4931",
+				"rect": [
+					375.0,
+					1851.96252441406,
+					80.0,
+					64.0
+				],
+				"safe": false,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4932/@Button@4936",
+				"rect": [
+					375.0,
+					1923.96252441406,
+					80.0,
+					64.0
+				],
+				"safe": false,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4937/@Button@4941",
+				"rect": [
+					375.0,
+					1995.96252441406,
+					80.0,
+					64.0
+				],
+				"safe": false,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4942/@Button@4946",
+				"rect": [
+					375.0,
+					2067.96240234375,
+					80.0,
+					64.0
+				],
+				"safe": false,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4947/@Button@4951",
+				"rect": [
+					375.0,
+					2139.96240234375,
+					80.0,
+					64.0
+				],
+				"safe": false,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4952/@Button@4956",
+				"rect": [
+					375.0,
+					2211.96240234375,
+					80.0,
+					64.0
+				],
+				"safe": false,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4957/@Button@4961",
+				"rect": [
+					375.0,
+					2283.96240234375,
+					80.0,
+					64.0
+				],
+				"safe": false,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4962/@Button@4966",
+				"rect": [
+					375.0,
+					2355.96240234375,
+					80.0,
+					64.0
+				],
+				"safe": false,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4967/@Button@4971",
+				"rect": [
+					375.0,
+					2427.96240234375,
+					80.0,
+					64.0
+				],
+				"safe": false,
+				"text": "领取",
+				"tooltip": "背包已满，先腾出装备格",
+				"touch_under44": false
+			}
+		],
+		"device": {
+			"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+			"mix_rate": 44100.0,
+			"model": "Android SDK built for x86_64",
+			"os": "Android",
+			"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+			"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+			"version": "37.16571990",
+			"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+			"window": "(1080, 2400)"
+		},
+		"focus": "Tab_pending:<Button#1558536260180>",
+		"keyboard_height": 0,
+		"labels": [
+			{
+				"font": 20,
+				"minimum": "(7.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/ReturnButton/@Label@4560",
+				"rect": [
+					18.0,
+					75.9624938964844,
+					56.0,
+					56.0
+				],
+				"text": "‹"
+			},
+			{
+				"font": 28,
+				"minimum": "(112.0, 42.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/@Label@4561",
+				"rect": [
+					128.0,
+					77.9624938964844,
+					327.999969482422,
+					52.0
+				],
+				"text": "行旅背包"
+			},
+			{
+				"font": 18,
+				"minimum": "(96.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Capacity",
+				"rect": [
+					24.0,
+					143.962493896484,
+					163.199996948242,
+					36.0
+				],
+				"text": "装备 60 / 60"
+			},
+			{
+				"font": 18,
+				"minimum": "(78.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/@Label@4562",
+				"rect": [
+					182.399993896484,
+					143.962493896484,
+					110.399993896484,
+					36.0
+				],
+				"text": "待领取 31"
+			},
+			{
+				"font": 18,
+				"minimum": "(107.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/GoldBalance",
+				"rect": [
+					307.199981689453,
+					143.962493896484,
+					148.799987792969,
+					36.0
+				],
+				"text": "金币 123.4万"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Categories/Tab_equip/@Label@4563",
+				"rect": [
+					20.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"text": "装备"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Categories/Tab_mat/@Label@4564",
+				"rect": [
+					131.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"text": "材料"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Categories/Tab_gem/@Label@4565",
+				"rect": [
+					242.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"text": "宝石"
+			},
+			{
+				"font": 20,
+				"minimum": "(60.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Categories/Tab_pending/@Label@4566",
+				"rect": [
+					353.0,
+					185.962493896484,
+					106.0,
+					60.0
+				],
+				"text": "待领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4817/@Label@4819",
+				"rect": [
+					76.0,
+					274.962493896484,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4817/@Button@4821/@Label@4820",
+				"rect": [
+					375.0,
+					267.962493896484,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4822/@Label@4824",
+				"rect": [
+					76.0,
+					346.962493896484,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4822/@Button@4826/@Label@4825",
+				"rect": [
+					375.0,
+					339.962493896484,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4827/@Label@4829",
+				"rect": [
+					76.0,
+					418.962493896484,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4827/@Button@4831/@Label@4830",
+				"rect": [
+					375.0,
+					411.962493896484,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4832/@Label@4834",
+				"rect": [
+					76.0,
+					490.962493896484,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4832/@Button@4836/@Label@4835",
+				"rect": [
+					375.0,
+					483.962493896484,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4837/@Label@4839",
+				"rect": [
+					76.0,
+					562.962524414062,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4837/@Button@4841/@Label@4840",
+				"rect": [
+					375.0,
+					555.962524414062,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4842/@Label@4844",
+				"rect": [
+					76.0,
+					634.962524414062,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4842/@Button@4846/@Label@4845",
+				"rect": [
+					375.0,
+					627.962524414062,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4847/@Label@4849",
+				"rect": [
+					76.0,
+					706.962524414062,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4847/@Button@4851/@Label@4850",
+				"rect": [
+					375.0,
+					699.962524414062,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4852/@Label@4854",
+				"rect": [
+					76.0,
+					778.962524414062,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4852/@Button@4856/@Label@4855",
+				"rect": [
+					375.0,
+					771.962524414062,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4857/@Label@4859",
+				"rect": [
+					76.0,
+					850.962524414062,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4857/@Button@4861/@Label@4860",
+				"rect": [
+					375.0,
+					843.962524414062,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4862/@Label@4864",
+				"rect": [
+					76.0,
+					922.962524414062,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4862/@Button@4866/@Label@4865",
+				"rect": [
+					375.0,
+					915.962524414062,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4867/@Label@4869",
+				"rect": [
+					76.0,
+					994.962524414062,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4867/@Button@4871/@Label@4870",
+				"rect": [
+					375.0,
+					987.962524414062,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4872/@Label@4874",
+				"rect": [
+					76.0,
+					1066.96252441406,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4872/@Button@4876/@Label@4875",
+				"rect": [
+					375.0,
+					1059.96252441406,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4877/@Label@4879",
+				"rect": [
+					76.0,
+					1138.96252441406,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4877/@Button@4881/@Label@4880",
+				"rect": [
+					375.0,
+					1131.96252441406,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4882/@Label@4884",
+				"rect": [
+					76.0,
+					1210.96252441406,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4882/@Button@4886/@Label@4885",
+				"rect": [
+					375.0,
+					1203.96252441406,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4887/@Label@4889",
+				"rect": [
+					76.0,
+					1282.96252441406,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4887/@Button@4891/@Label@4890",
+				"rect": [
+					375.0,
+					1275.96252441406,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4892/@Label@4894",
+				"rect": [
+					76.0,
+					1354.96252441406,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4892/@Button@4896/@Label@4895",
+				"rect": [
+					375.0,
+					1347.96252441406,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4897/@Label@4899",
+				"rect": [
+					76.0,
+					1426.96252441406,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4897/@Button@4901/@Label@4900",
+				"rect": [
+					375.0,
+					1419.96252441406,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4902/@Label@4904",
+				"rect": [
+					76.0,
+					1498.96252441406,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4902/@Button@4906/@Label@4905",
+				"rect": [
+					375.0,
+					1491.96252441406,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4907/@Label@4909",
+				"rect": [
+					76.0,
+					1570.96252441406,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4907/@Button@4911/@Label@4910",
+				"rect": [
+					375.0,
+					1563.96252441406,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4912/@Label@4914",
+				"rect": [
+					76.0,
+					1642.96252441406,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4912/@Button@4916/@Label@4915",
+				"rect": [
+					375.0,
+					1635.96252441406,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4917/@Label@4919",
+				"rect": [
+					76.0,
+					1714.96252441406,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4917/@Button@4921/@Label@4920",
+				"rect": [
+					375.0,
+					1707.96252441406,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4922/@Label@4924",
+				"rect": [
+					76.0,
+					1786.96252441406,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4922/@Button@4926/@Label@4925",
+				"rect": [
+					375.0,
+					1779.96252441406,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4927/@Label@4929",
+				"rect": [
+					76.0,
+					1858.96252441406,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4927/@Button@4931/@Label@4930",
+				"rect": [
+					375.0,
+					1851.96252441406,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4932/@Label@4934",
+				"rect": [
+					76.0,
+					1930.96252441406,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4932/@Button@4936/@Label@4935",
+				"rect": [
+					375.0,
+					1923.96252441406,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4937/@Label@4939",
+				"rect": [
+					76.0,
+					2002.96252441406,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4937/@Button@4941/@Label@4940",
+				"rect": [
+					375.0,
+					1995.96252441406,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4942/@Label@4944",
+				"rect": [
+					76.0,
+					2074.96240234375,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4942/@Button@4946/@Label@4945",
+				"rect": [
+					375.0,
+					2067.96240234375,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4947/@Label@4949",
+				"rect": [
+					76.0,
+					2146.96240234375,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4947/@Button@4951/@Label@4950",
+				"rect": [
+					375.0,
+					2139.96240234375,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4952/@Label@4954",
+				"rect": [
+					76.0,
+					2218.96240234375,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4952/@Button@4956/@Label@4955",
+				"rect": [
+					375.0,
+					2211.96240234375,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4957/@Label@4959",
+				"rect": [
+					76.0,
+					2290.96240234375,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4957/@Button@4961/@Label@4960",
+				"rect": [
+					375.0,
+					2283.96240234375,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4962/@Label@4964",
+				"rect": [
+					76.0,
+					2362.96240234375,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4962/@Button@4966/@Label@4965",
+				"rect": [
+					375.0,
+					2355.96240234375,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 49.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4967/@Label@4969",
+				"rect": [
+					76.0,
+					2434.96240234375,
+					295.0,
+					49.0
+				],
+				"text": "狼牙大剑\n普通 · 强化 +0"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4967/@Button@4971/@Label@4970",
+				"rect": [
+					375.0,
+					2427.96240234375,
+					80.0,
+					64.0
+				],
+				"text": "领取"
+			},
+			{
+				"font": 22,
+				"minimum": "(1.0, 33.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/SelectedItemDetail/DetailScroll/@VBoxContainer@4573/@Label@4972",
+				"rect": [
+					38.0,
+					885.999877929688,
+					403.0,
+					33.0
+				],
+				"text": "待领取物品会保留在这里"
+			},
+			{
+				"font": 18,
+				"minimum": "(1.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/SelectedItemDetail/DetailScroll/@VBoxContainer@4573/@Label@4973",
+				"rect": [
+					38.0,
+					922.999877929688,
+					403.0,
+					27.0
+				],
+				"text": "腾出装备格后即可领取；领取不会额外消耗资源。"
+			}
+		],
+		"modals": [],
+		"page": "@Control@4555",
+		"tick_ms": 592064
+	},
+	"id": "pending_full_android",
+	"photos": [
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/ReturnButton",
+					"rect": [
+						18.0,
+						75.9624938964844,
+						56.0,
+						56.0
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Categories/Tab_equip",
+					"rect": [
+						20.0,
+						185.962493896484,
+						105.0,
+						60.0
+					],
+					"safe": true,
+					"text": "装备",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Categories/Tab_mat",
+					"rect": [
+						131.0,
+						185.962493896484,
+						105.0,
+						60.0
+					],
+					"safe": true,
+					"text": "材料",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Categories/Tab_gem",
+					"rect": [
+						242.0,
+						185.962493896484,
+						105.0,
+						60.0
+					],
+					"safe": true,
+					"text": "宝石",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Categories/Tab_pending",
+					"rect": [
+						353.0,
+						185.962493896484,
+						106.0,
+						60.0
+					],
+					"safe": true,
+					"text": "待领取",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4817/@Button@4821",
+					"rect": [
+						375.0,
+						267.962493896484,
+						80.0,
+						64.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4822/@Button@4826",
+					"rect": [
+						375.0,
+						339.962493896484,
+						80.0,
+						64.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4827/@Button@4831",
+					"rect": [
+						375.0,
+						411.962493896484,
+						80.0,
+						64.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4832/@Button@4836",
+					"rect": [
+						375.0,
+						483.962493896484,
+						80.0,
+						64.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4837/@Button@4841",
+					"rect": [
+						375.0,
+						555.962524414062,
+						80.0,
+						64.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4842/@Button@4846",
+					"rect": [
+						375.0,
+						627.962524414062,
+						80.0,
+						64.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4847/@Button@4851",
+					"rect": [
+						375.0,
+						699.962524414062,
+						80.0,
+						64.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4852/@Button@4856",
+					"rect": [
+						375.0,
+						771.962524414062,
+						80.0,
+						64.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4857/@Button@4861",
+					"rect": [
+						375.0,
+						843.962524414062,
+						80.0,
+						64.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4862/@Button@4866",
+					"rect": [
+						375.0,
+						915.962524414062,
+						80.0,
+						64.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4867/@Button@4871",
+					"rect": [
+						375.0,
+						987.962524414062,
+						80.0,
+						64.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4872/@Button@4876",
+					"rect": [
+						375.0,
+						1059.96252441406,
+						80.0,
+						64.0
+					],
+					"safe": false,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4877/@Button@4881",
+					"rect": [
+						375.0,
+						1131.96252441406,
+						80.0,
+						64.0
+					],
+					"safe": false,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4882/@Button@4886",
+					"rect": [
+						375.0,
+						1203.96252441406,
+						80.0,
+						64.0
+					],
+					"safe": false,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4887/@Button@4891",
+					"rect": [
+						375.0,
+						1275.96252441406,
+						80.0,
+						64.0
+					],
+					"safe": false,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4892/@Button@4896",
+					"rect": [
+						375.0,
+						1347.96252441406,
+						80.0,
+						64.0
+					],
+					"safe": false,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4897/@Button@4901",
+					"rect": [
+						375.0,
+						1419.96252441406,
+						80.0,
+						64.0
+					],
+					"safe": false,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4902/@Button@4906",
+					"rect": [
+						375.0,
+						1491.96252441406,
+						80.0,
+						64.0
+					],
+					"safe": false,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4907/@Button@4911",
+					"rect": [
+						375.0,
+						1563.96252441406,
+						80.0,
+						64.0
+					],
+					"safe": false,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4912/@Button@4916",
+					"rect": [
+						375.0,
+						1635.96252441406,
+						80.0,
+						64.0
+					],
+					"safe": false,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4917/@Button@4921",
+					"rect": [
+						375.0,
+						1707.96252441406,
+						80.0,
+						64.0
+					],
+					"safe": false,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4922/@Button@4926",
+					"rect": [
+						375.0,
+						1779.96252441406,
+						80.0,
+						64.0
+					],
+					"safe": false,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4927/@Button@4931",
+					"rect": [
+						375.0,
+						1851.96252441406,
+						80.0,
+						64.0
+					],
+					"safe": false,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4932/@Button@4936",
+					"rect": [
+						375.0,
+						1923.96252441406,
+						80.0,
+						64.0
+					],
+					"safe": false,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4937/@Button@4941",
+					"rect": [
+						375.0,
+						1995.96252441406,
+						80.0,
+						64.0
+					],
+					"safe": false,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4942/@Button@4946",
+					"rect": [
+						375.0,
+						2067.96240234375,
+						80.0,
+						64.0
+					],
+					"safe": false,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4947/@Button@4951",
+					"rect": [
+						375.0,
+						2139.96240234375,
+						80.0,
+						64.0
+					],
+					"safe": false,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4952/@Button@4956",
+					"rect": [
+						375.0,
+						2211.96240234375,
+						80.0,
+						64.0
+					],
+					"safe": false,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4957/@Button@4961",
+					"rect": [
+						375.0,
+						2283.96240234375,
+						80.0,
+						64.0
+					],
+					"safe": false,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4962/@Button@4966",
+					"rect": [
+						375.0,
+						2355.96240234375,
+						80.0,
+						64.0
+					],
+					"safe": false,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@4555/@Control@4557/Items/ItemScroll/@VBoxContainer@4816/@HBoxContainer@4967/@Button@4971",
+					"rect": [
+						375.0,
+						2427.96240234375,
+						80.0,
+						64.0
+					],
+					"safe": false,
+					"text": "领取",
+					"tooltip": "背包已满，先腾出装备格",
+					"touch_under44": false
+				}
+			],
+			"name": "pending_full",
+			"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]"
+		}
+	],
+	"records": [],
+	"suite": "inventory_full"
+}

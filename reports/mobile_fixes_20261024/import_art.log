@@ -1,0 +1,170 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+[   0% ] first_scan_filesystem | Started 项目初始化 (5 steps)
+[   0% ] first_scan_filesystem | 正在扫描文件结构……
+[  16% ] first_scan_filesystem | 正在加载全局类名……
+[  33% ] first_scan_filesystem | 正在校验 GDExtension……
+[  50% ] first_scan_filesystem | 正在创建自动加载脚本……
+[  66% ] first_scan_filesystem | 正在初始化插件……
+MCP_BRIDGE_LISTENING: 38900
+[  83% ] first_scan_filesystem | 正在启动文件扫描……
+[ DONE ] first_scan_filesystem
+
+[   0% ] update_scripts_classes | Started 正在注册全局类…… (23 steps)
+[   0% ] update_scripts_classes | 
+[   4% ] update_scripts_classes | 
+[   8% ] update_scripts_classes | BattleScene
+[  12% ] update_scripts_classes | MapScene
+[  16% ] update_scripts_classes | 
+[  20% ] update_scripts_classes | RouteScene
+[  25% ] update_scripts_classes | RunState
+[  29% ] update_scripts_classes | 
+[  33% ] update_scripts_classes | 
+[  37% ] update_scripts_classes | BagPanel
+[  41% ] update_scripts_classes | 
+[  45% ] update_scripts_classes | 
+[  50% ] update_scripts_classes | 
+[  54% ] update_scripts_classes | 
+[  58% ] update_scripts_classes | GachaPanel
+[  62% ] update_scripts_classes | 
+[  66% ] update_scripts_classes | 
+[  70% ] update_scripts_classes | 
+[  75% ] update_scripts_classes | 
+[  79% ] update_scripts_classes | 
+[  83% ] update_scripts_classes | 
+[  87% ] update_scripts_classes | 
+[  91% ] update_scripts_classes | 
+[ DONE ] update_scripts_classes
+
+[   0% ] _update_scan_actions | Started 正在扫描动作…… (37 steps)
+[   0% ] _update_scan_actions | altar.wav
+[   2% ] _update_scan_actions | bgm_battle.wav
+[   5% ] _update_scan_actions | bgm_city.wav
+[   7% ] _update_scan_actions | bgm_home.wav
+[  10% ] _update_scan_actions | bgm_map.wav
+[  13% ] _update_scan_actions | bgm_route.wav
+[  15% ] _update_scan_actions | bgm_title.wav
+[  18% ] _update_scan_actions | boss_warn.wav
+[  21% ] _update_scan_actions | coin.wav
+[  23% ] _update_scan_actions | defeat.wav
+[  26% ] _update_scan_actions | hit_crit.wav
+[  28% ] _update_scan_actions | hit_heavy.wav
+[  31% ] _update_scan_actions | hit_light.wav
+[  34% ] _update_scan_actions | hoof_sand.wav
+[  36% ] _update_scan_actions | hoof_snow.wav
+[  39% ] _update_scan_actions | hoof_stone.wav
+[  42% ] _update_scan_actions | hoof_wood.wav
+[  44% ] _update_scan_actions | level_up.wav
+[  47% ] _update_scan_actions | low_hp.wav
+[  50% ] _update_scan_actions | mount_hoof.wav
+[  52% ] _update_scan_actions | mount_toggle.wav
+[  55% ] _update_scan_actions | pickup.wav
+[  57% ] _update_scan_actions | reward.wav
+[  60% ] _update_scan_actions | skill_cast.wav
+[  63% ] _update_scan_actions | ui_cancel.wav
+[  65% ] _update_scan_actions | ui_click.wav
+[  68% ] _update_scan_actions | ui_close.wav
+[  71% ] _update_scan_actions | ui_confirm.wav
+[  73% ] _update_scan_actions | ui_locked.wav
+[  76% ] _update_scan_actions | ui_open.wav
+[  78% ] _update_scan_actions | ui_page.wav
+[  81% ] _update_scan_actions | victory.wav
+[  84% ] _update_scan_actions | background_432.png
+[  86% ] _update_scan_actions | foreground_432.png
+[  89% ] _update_scan_actions | main_192.png
+[  92% ] _update_scan_actions | monochrome.svg
+[  94% ] _update_scan_actions | riders_seated_v3.png
+[ DONE ] _update_scan_actions
+
+[   0% ] reimport | Started 正在导入或重新导入资产 (37 steps)
+[   0% ] reimport | 正在准备重新导入文件……
+[   2% ] reimport | 正在准备重新导入文件……
+[   5% ] reimport | 正在准备重新导入文件……
+[   7% ] reimport | 正在准备重新导入文件……
+[  10% ] reimport | 正在准备重新导入文件……
+[  13% ] reimport | 正在准备重新导入文件……
+[  15% ] reimport | 正在准备重新导入文件……
+[  18% ] reimport | 正在准备重新导入文件……
+[  21% ] reimport | 正在准备重新导入文件……
+[  23% ] reimport | 正在准备重新导入文件……
+[  26% ] reimport | 正在准备重新导入文件……
+[  28% ] reimport | 正在准备重新导入文件……
+[  31% ] reimport | 正在准备重新导入文件……
+[  34% ] reimport | 正在准备重新导入文件……
+[  36% ] reimport | 正在准备重新导入文件……
+[  39% ] reimport | 正在准备重新导入文件……
+[  42% ] reimport | 正在准备重新导入文件……
+[  44% ] reimport | 正在准备重新导入文件……
+[  47% ] reimport | 正在准备重新导入文件……
+[  50% ] reimport | 正在准备重新导入文件……
+[  52% ] reimport | 正在准备重新导入文件……
+[  55% ] reimport | 正在准备重新导入文件……
+[  57% ] reimport | 正在准备重新导入文件……
+[  60% ] reimport | 正在准备重新导入文件……
+[  63% ] reimport | 正在准备重新导入文件……
+[  65% ] reimport | 正在准备重新导入文件……
+[  68% ] reimport | 正在准备重新导入文件……
+[  71% ] reimport | 正在准备重新导入文件……
+[  73% ] reimport | 正在准备重新导入文件……
+[  76% ] reimport | 正在准备重新导入文件……
+[  78% ] reimport | 正在准备重新导入文件……
+[  81% ] reimport | 正在准备重新导入文件……
+[  84% ] reimport | 正在准备重新导入文件……
+[  86% ] reimport | 正在准备重新导入文件……
+[  89% ] reimport | 正在准备重新导入文件……
+[  92% ] reimport | 正在准备重新导入文件……
+[  94% ] reimport | 正在准备重新导入文件……
+[   0% ] reimport | 正在执行重新导入的前置操作……
+[   0% ] reimport | riders_seated_v3.png
+[   2% ] reimport | monochrome.svg
+[   5% ] reimport | main_192.png
+[   7% ] reimport | foreground_432.png
+[  10% ] reimport | background_432.png
+[  13% ] reimport | riders_seated_v3.png
+[  15% ] reimport | monochrome.svg
+[  18% ] reimport | main_192.png
+[  21% ] reimport | foreground_432.png
+[  23% ] reimport | background_432.png
+[  26% ] reimport | mount_hoof.wav
+[  28% ] reimport | mount_toggle.wav
+[  31% ] reimport | pickup.wav
+[  34% ] reimport | reward.wav
+[  36% ] reimport | skill_cast.wav
+[  39% ] reimport | ui_cancel.wav
+[  42% ] reimport | ui_click.wav
+[  44% ] reimport | ui_close.wav
+[  47% ] reimport | ui_confirm.wav
+[  50% ] reimport | ui_locked.wav
+[  52% ] reimport | ui_open.wav
+[  55% ] reimport | ui_page.wav
+[  57% ] reimport | victory.wav
+[  60% ] reimport | altar.wav
+[  63% ] reimport | bgm_battle.wav
+[  65% ] reimport | bgm_city.wav
+[  68% ] reimport | bgm_home.wav
+[  71% ] reimport | bgm_map.wav
+[  73% ] reimport | bgm_route.wav
+[  76% ] reimport | bgm_title.wav
+[  78% ] reimport | boss_warn.wav
+[  81% ] reimport | coin.wav
+[  84% ] reimport | defeat.wav
+[  86% ] reimport | hit_crit.wav
+[  89% ] reimport | hit_heavy.wav
+[  92% ] reimport | hit_light.wav
+[  94% ] reimport | hoof_sand.wav
+[  97% ] reimport | 正在结束资产导入……
+[ DONE ] reimport
+
+[   0% ] reimport | Started 正在导入或重新导入资产 (37 steps)
+[   0% ] reimport | 正在执行重新导入的后置操作……
+[ DONE ] reimport
+
+[   0% ] loading_editor_layout | Started 正在加载编辑器 (5 steps)
+[   0% ] loading_editor_layout | 正在加载编辑器布局……
+[  16% ] loading_editor_layout | 正在加载停靠面板……
+[  33% ] loading_editor_layout | 正在重新打开场景……
+[  50% ] loading_editor_layout | 正在加载中央编辑器布局……
+[  66% ] loading_editor_layout | 正在加载插件窗口布局……
+[  83% ] loading_editor_layout | 编辑器布局就绪。
+[ DONE ] loading_editor_layout
+

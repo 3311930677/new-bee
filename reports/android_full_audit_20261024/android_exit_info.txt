@@ -1,0 +1,82 @@
+ACTIVITY MANAGER PROCESS EXIT INFO (dumpsys activity exit-info)
+Last Timestamp of Persistence Into Persistent Storage: 2026-10-23 19:38:59.090
+  package: org.yuanzheng.singleplayer
+    Historical Process Exit for uid=10156
+        ApplicationExitInfo #0:
+          timestamp=2026-10-23 20:37:34.628 pid=6037 realUid=10156 packageUid=10156 definingUid=10156 user=0
+          process=org.yuanzheng.singleplayer reason=2 (SIGNALED) subreason=0 (UNKNOWN) status=9
+          importance=100 pss=0.00 rss=500MB state=empty trace=null
+          description=null
+          anrInfo=null
+        ApplicationExitInfo #1:
+          timestamp=2026-10-23 20:24:36.698 pid=4853 realUid=10156 packageUid=10156 definingUid=10156 user=0
+          process=org.yuanzheng.singleplayer reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=0.00 state=empty trace=null
+          description=stop org.yuanzheng.singleplayer due to from pid 5989
+          anrInfo=null
+        ApplicationExitInfo #2:
+          timestamp=2026-10-23 20:17:35.759 pid=3785 realUid=10156 packageUid=10156 definingUid=10156 user=0
+          process=org.yuanzheng.singleplayer reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=0.00 state=empty trace=null
+          description=stop org.yuanzheng.singleplayer due to from pid 4785
+          anrInfo=null
+        ApplicationExitInfo #3:
+          timestamp=2026-10-23 20:13:45.859 pid=3300 realUid=10156 packageUid=10156 definingUid=10156 user=0
+          process=org.yuanzheng.singleplayer reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=0.00 state=empty trace=null
+          description=stop org.yuanzheng.singleplayer due to from pid 3739
+          anrInfo=null
+        ApplicationExitInfo #4:
+          timestamp=2026-10-23 20:12:58.917 pid=2827 realUid=10156 packageUid=10156 definingUid=10156 user=0
+          process=org.yuanzheng.singleplayer reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=0.00 state=empty trace=null
+          description=stop org.yuanzheng.singleplayer due to from pid 3254
+          anrInfo=null
+        ApplicationExitInfo #5:
+          timestamp=2026-10-23 20:12:13.726 pid=2400 realUid=10156 packageUid=10156 definingUid=10156 user=0
+          process=org.yuanzheng.singleplayer reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=0.00 state=empty trace=null
+          description=stop org.yuanzheng.singleplayer due to from pid 2783
+          anrInfo=null
+        ApplicationExitInfo #6:
+          timestamp=2026-10-23 20:11:33.592 pid=2177 realUid=10156 packageUid=10156 definingUid=10156 user=0
+          process=org.yuanzheng.singleplayer reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=0.00 state=empty trace=null
+          description=stop org.yuanzheng.singleplayer due to from pid 2358
+          anrInfo=null
+        ApplicationExitInfo #7:
+          timestamp=2026-10-23 19:36:06.692 pid=2968 realUid=10156 packageUid=10156 definingUid=10156 user=0
+          process=org.yuanzheng.singleplayer reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=0.00 state=empty trace=null
+          description=stop org.yuanzheng.singleplayer due to from pid 3136
+          anrInfo=null
+        ApplicationExitInfo #8:
+          timestamp=2026-10-23 19:34:31.441 pid=2783 realUid=10156 packageUid=10156 definingUid=10156 user=0
+          process=org.yuanzheng.singleplayer reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=519MB state=empty trace=null
+          description=stop org.yuanzheng.singleplayer due to from pid 2915
+          anrInfo=null
+        ApplicationExitInfo #9:
+          timestamp=2026-10-23 19:26:00.933 pid=2729 realUid=10156 packageUid=10156 definingUid=10156 user=0
+          process=org.yuanzheng.singleplayer reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=0.00 state=empty trace=null
+          description=stop org.yuanzheng.singleplayer due to from pid 2771
+          anrInfo=null
+        ApplicationExitInfo #10:
+          timestamp=2026-10-23 19:25:33.270 pid=2587 realUid=10156 packageUid=10156 definingUid=10156 user=0
+          process=org.yuanzheng.singleplayer reason=16 (PACKAGE UPDATED) subreason=0 (UNKNOWN) status=0
+          importance=100 pss=0.00 rss=0.00 state=empty trace=null
+          description=stop org.yuanzheng.singleplayer due to killDueToPackageUpdate
+          anrInfo=null
+        ApplicationExitInfo #11:
+          timestamp=2026-10-23 19:15:15.246 pid=2333 realUid=10156 packageUid=10156 definingUid=10156 user=0
+          process=org.yuanzheng.singleplayer reason=5 (APP CRASH(NATIVE)) subreason=0 (UNKNOWN) status=6
+          importance=100 pss=0.00 rss=0.00 state=empty trace=null
+          description=crash
+          anrInfo=null
+        ApplicationExitInfo #12:
+          timestamp=2026-10-23 19:11:07.060 pid=2130 realUid=10156 packageUid=10156 definingUid=10156 user=0
+          process=org.yuanzheng.singleplayer reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=0.00 state=empty trace=null
+          description=stop org.yuanzheng.singleplayer due to from pid 2320
+          anrInfo=null

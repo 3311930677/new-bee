@@ -367,88 +367,76 @@ class Toast extends Control:
 class Modal extends Control:
 	signal closed
 	signal selected(index: int)
-	const UI = preload("res://src/ui/TravelChestUI.gd")
+	const Reading = preload("res://src/ui/ReadingSkin.gd")
 	var heading := ""
 	var lines: Array = []
 	var choices: Array = []
 	var _buttons: Array[Button] = []
+	var _frame: PanelContainer
+	var _column: VBoxContainer
+	var _scroll: ScrollContainer
+	var _reading: VBoxContainer
 	func _ready() -> void:
 		set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		set_meta("safe_layout_exempt",true)
 		mouse_filter = Control.MOUSE_FILTER_STOP
-		z_index = UI.Z_MODAL
+		z_index = 60
 		var veil := ColorRect.new()
-		veil.color = Color("0e0d10",0.55)
+		veil.color = Color("0e0d10",.72)
 		veil.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		veil.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		veil.mouse_filter = Control.MOUSE_FILTER_STOP
 		add_child(veil)
-		var safe := G.ui_safe_rect(self)
-		var width := minf(432,safe.size.x-32)
-		var inner := width-40
-		var body_height := 0.0
-		for words in lines:
-			var pixels := G.font_reg.get_string_size(String(words),HORIZONTAL_ALIGNMENT_LEFT,-1,14).x
-			body_height += maxf(26,ceili(pixels/inner)*22)+6
-		var height := minf(560,112+body_height+choices.size()*52)
-		var tray := UI.Tray.new()
-		tray.position = Vector2(safe.get_center().x-width*0.5,safe.get_center().y-height*0.5)
-		tray.size = Vector2(width,height)
-		add_child(tray)
-		if not G.get_meta("ui_review_mode", false) and DisplayServer.get_name() != "headless":
-			tray.modulate.a = 0.0
-			tray.pivot_offset = tray.size * 0.5
-			tray.scale = Vector2(0.96, 0.96)
-			var tw := create_tween()
-			tw.set_parallel(true)
-			tw.tween_property(tray, "modulate:a", 1.0, 0.16).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-			tw.tween_property(tray, "scale", Vector2.ONE, 0.16).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-		var title := UI.label(heading,"section")
-		title.position = Vector2(20,16)
-		title.size = Vector2(inner,28)
-		title.clip_text = true
-		title.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-		tray.add_child(title)
-		var scroll := ScrollContainer.new()
-		scroll.name = "BodyScroll"
-		scroll.position = Vector2(20,52)
-		var available := height-112-choices.size()*52
-		scroll.size = Vector2(inner,available)
-		scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-		scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
-		tray.add_child(scroll)
-		var column := VBoxContainer.new()
-		column.custom_minimum_size.x = inner
-		column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		column.add_theme_constant_override("separation",6)
-		scroll.add_child(column)
-		for words in lines:
-			var l := UI.label(String(words),"body")
-			l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-			l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			column.add_child(l)
-		var y := 60+available
+		_frame = Reading.frame(false,G.Visuals.title_family(heading))
+		_frame.name = "ReadingDialog"
+		add_child(_frame)
+		_column = VBoxContainer.new()
+		_column.add_theme_constant_override("separation",14)
+		_frame.add_child(_column)
+		var title := Reading.label(heading,24,Reading.TEXT)
+		_column.add_child(title)
+		_scroll = ScrollContainer.new()
+		_scroll.name = "BodyScroll"
+		_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+		_scroll.follow_focus = true
+		_column.add_child(_scroll)
+		_reading = VBoxContainer.new()
+		_reading.add_theme_constant_override("separation",14)
+		_reading.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		_scroll.add_child(_reading)
+		for words in lines: _reading.add_child(Reading.label(String(words),22,Reading.TEXT))
 		for i in choices.size():
-			var b := UI.action(String(choices[i]),"secondary")
-			b.position = Vector2(20,y)
-			b.size = Vector2(inner,44)
-			b.pressed.connect(func(): selected.emit(i))
-			tray.add_child(b)
-			_buttons.append(b)
-			y += 52
-		var close := UI.action("关闭","quiet")
-		close.position = Vector2(20,height-48)
-		close.size = Vector2(inner,44)
-		close.pressed.connect(func(): closed.emit())
-		tray.add_child(close)
+			var button := Reading.button(String(choices[i]))
+			button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			button.pressed.connect(func(): Audio.sfx("ui_confirm"); selected.emit(i))
+			_reading.add_child(button)
+			_buttons.append(button)
+		var close := Reading.button("关闭",true)
+		close.pressed.connect(func(): Audio.sfx("ui_close"); closed.emit())
+		_column.add_child(close)
 		_buttons.append(close)
 		for i in _buttons.size():
 			_buttons[i].focus_next = _buttons[(i+1)%_buttons.size()].get_path()
 			_buttons[i].focus_previous = _buttons[posmod(i-1,_buttons.size())].get_path()
-			_buttons[i].focus_neighbor_bottom = _buttons[(i+1)%_buttons.size()].get_path()
-			_buttons[i].focus_neighbor_top = _buttons[posmod(i-1,_buttons.size())].get_path()
-			_buttons[i].focus_neighbor_left = _buttons[i].get_path()
-			_buttons[i].focus_neighbor_right = _buttons[i].get_path()
-		close.grab_focus()
-	func _unhandled_input(e: InputEvent) -> void:
-		if not G.ui_blocked and e.is_action_pressed("ui_cancel"):
+			_buttons[i].focus_neighbor_bottom = _buttons[i].focus_next
+			_buttons[i].focus_neighbor_top = _buttons[i].focus_previous
+		get_viewport().size_changed.connect(layout)
+		preload("res://src/ui/UiSafeArea.gd").watch(self,layout)
+		layout()
+		close.grab_focus.call_deferred()
+	func layout() -> void:
+		if _frame == null: return
+		var safe := G.ui_safe_rect(self)
+		var width := minf(440,safe.size.x-24)
+		var body_height := 0.0
+		for words in lines:
+			var pixels := G.font_reg.get_string_size(String(words),HORIZONTAL_ALIGNMENT_LEFT,-1,22).x
+			body_height += maxf(34,ceili(pixels/maxf(120,width-60))*34)+14
+		var height := minf(safe.size.y-24,maxf(260,180+body_height+choices.size()*74))
+		_frame.size = Vector2(width,height)
+		_frame.position = (safe.get_center()-_frame.size*.5).round()
+		_reading.custom_minimum_size.x = width-58
+	func _unhandled_input(event: InputEvent) -> void:
+		if not G.ui_blocked and event.is_action_pressed("ui_cancel"):
 			closed.emit()
 			get_viewport().set_input_as_handled()
