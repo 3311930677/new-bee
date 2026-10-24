@@ -1,0 +1,1570 @@
+{
+	"checks": [],
+	"device": {
+		"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+		"mix_rate": 44100.0,
+		"model": "Android SDK built for x86_64",
+		"os": "Android",
+		"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+		"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+		"version": "37.16571990",
+		"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+		"window": "(1080, 2400)"
+	},
+	"final": {
+		"audio": {
+			"bgm": "bgm_home",
+			"events": [
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516013
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516240
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516460
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516691
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516905
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 517141
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 517389
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 517608
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 517837
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 518056
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 518284
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 519740
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 519980
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 520190
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 520438
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 520652
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 520874
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 521121
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 521340
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 521577
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 521805
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 522034
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 522255
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 523727
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 523968
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 524179
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 524418
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 524648
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 524868
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525106
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525319
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525567
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525778
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525998
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 526267
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 526464
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 526716
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 526938
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 527155
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 527472
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 527702
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 527929
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 528149
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 528381
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 528603
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 528842
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529081
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529313
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529534
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529768
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529994
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 530208
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 530441
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 530666
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 530891
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 572886
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 575286
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 575377
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 578220
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 578309
+				}
+			],
+			"mute": false,
+			"paused": false,
+			"playing": true,
+			"position": 6.45599985122681,
+			"suspended": false,
+			"voices": 0
+		},
+		"controls": [
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Button@3503",
+				"rect": [
+					8.0,
+					65.9624938964844,
+					44.0,
+					44.0
+				],
+				"safe": true,
+				"text": "‹",
+				"tooltip": "返回",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Button@3505",
+				"rect": [
+					415.999969482422,
+					65.9624938964844,
+					56.0,
+					44.0
+				],
+				"safe": true,
+				"text": "背包",
+				"tooltip": "打开背包",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3520",
+				"rect": [
+					12.0,
+					123.962493896484,
+					70.0,
+					70.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "大剑 · 本职业武器",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3526",
+				"rect": [
+					86.0,
+					123.962493896484,
+					70.0,
+					70.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "长枪",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3532",
+				"rect": [
+					160.0,
+					123.962493896484,
+					70.0,
+					70.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "法杖",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3538",
+				"rect": [
+					234.0,
+					123.962493896484,
+					70.0,
+					70.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "圣锤",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3544",
+				"rect": [
+					320.0,
+					123.962493896484,
+					70.0,
+					70.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "护甲",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3550",
+				"rect": [
+					394.0,
+					123.962493896484,
+					70.0,
+					70.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "饰品",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3507/@Button@3556",
+				"rect": [
+					26.0,
+					328.981201171875,
+					96.0,
+					96.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@HBoxContainer@3509/@Button@3560",
+				"rect": [
+					12.0,
+					573.999877929688,
+					149.0,
+					44.0
+				],
+				"safe": true,
+				"text": "强化",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@HBoxContainer@3509/@Button@3561",
+				"rect": [
+					165.0,
+					573.999877929688,
+					149.0,
+					44.0
+				],
+				"safe": true,
+				"text": "宝石",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@HBoxContainer@3509/@Button@3562",
+				"rect": [
+					318.0,
+					573.999877929688,
+					149.0,
+					44.0
+				],
+				"safe": true,
+				"text": "精炼",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@VBoxContainer@3573/@HBoxContainer@3569/@Button@3571",
+				"rect": [
+					403.0,
+					723.999877929688,
+					56.0,
+					44.0
+				],
+				"safe": true,
+				"text": "说明",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@HBoxContainer@3588/@Button@3591",
+				"rect": [
+					54.0,
+					874.999877929688,
+					44.0,
+					44.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "空宝石孔",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@HBoxContainer@3588/@Button@3593",
+				"rect": [
+					102.0,
+					874.999877929688,
+					44.0,
+					44.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "空宝石孔",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": true,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@HBoxContainer@3588/@Button@3595",
+				"rect": [
+					150.0,
+					874.999877929688,
+					44.0,
+					44.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "空宝石孔",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3514/@Button@3563",
+				"rect": [
+					12.0,
+					997.999877929688,
+					132.0,
+					56.0
+				],
+				"safe": true,
+				"text": "卸下",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3514/@Button@3586",
+				"rect": [
+					156.0,
+					997.999877929688,
+					311.999969482422,
+					56.0
+				],
+				"safe": true,
+				"text": "确认强化",
+				"tooltip": "",
+				"touch_under44": false
+			}
+		],
+		"device": {
+			"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+			"mix_rate": 44100.0,
+			"model": "Android SDK built for x86_64",
+			"os": "Android",
+			"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+			"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+			"version": "37.16571990",
+			"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+			"window": "(1080, 2400)"
+		},
+		"focus": "<Object#null>",
+		"keyboard_height": 0,
+		"labels": [
+			{
+				"font": 15,
+				"minimum": "(73.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Control@3357/HeroRolePlate/@Label@3366",
+				"rect": [
+					182.0,
+					701.0,
+					116.0,
+					23.0
+				],
+				"text": "破军 · 战士"
+			},
+			{
+				"font": 16,
+				"minimum": "(1.0, 24.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Label@3424",
+				"rect": [
+					0.0,
+					447.720001220703,
+					480.0,
+					28.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Button@3503/Subtitle",
+				"rect": [
+					8.0,
+					65.9624938964844,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 22,
+				"minimum": "(100.0, 33.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Label@3504",
+				"rect": [
+					64.0,
+					67.9624938964844,
+					300.0,
+					40.0
+				],
+				"text": "装备整备"
+			},
+			{
+				"font": 17,
+				"minimum": "(34.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Button@3505/Caption",
+				"rect": [
+					415.999969482422,
+					65.9624938964844,
+					56.0,
+					44.0
+				],
+				"text": "背包"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Button@3505/Subtitle",
+				"rect": [
+					415.999969482422,
+					65.9624938964844,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3520/@Label@3518",
+				"rect": [
+					16.0,
+					127.962493896484,
+					58.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3520/@Label@3519",
+				"rect": [
+					17.0,
+					169.962493896484,
+					30.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Label@3521",
+				"rect": [
+					12.0,
+					195.962493896484,
+					70.0,
+					23.0
+				],
+				"text": "大剑"
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3526/@Label@3524",
+				"rect": [
+					90.0,
+					127.962493896484,
+					58.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3526/@Label@3525",
+				"rect": [
+					91.0,
+					169.962493896484,
+					30.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Label@3527",
+				"rect": [
+					86.0,
+					195.962493896484,
+					70.0,
+					23.0
+				],
+				"text": "长枪"
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3532/@Label@3530",
+				"rect": [
+					164.0,
+					127.962493896484,
+					58.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3532/@Label@3531",
+				"rect": [
+					165.0,
+					169.962493896484,
+					30.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Label@3533",
+				"rect": [
+					160.0,
+					195.962493896484,
+					70.0,
+					23.0
+				],
+				"text": "法杖"
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3538/@Label@3536",
+				"rect": [
+					238.0,
+					127.962493896484,
+					58.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3538/@Label@3537",
+				"rect": [
+					239.0,
+					169.962493896484,
+					30.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Label@3539",
+				"rect": [
+					234.0,
+					195.962493896484,
+					70.0,
+					23.0
+				],
+				"text": "圣锤"
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3544/@Label@3542",
+				"rect": [
+					324.0,
+					127.962493896484,
+					58.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3544/@Label@3543",
+				"rect": [
+					325.0,
+					169.962493896484,
+					30.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Label@3545",
+				"rect": [
+					320.0,
+					195.962493896484,
+					70.0,
+					23.0
+				],
+				"text": "护甲"
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3550/@Label@3548",
+				"rect": [
+					398.0,
+					127.962493896484,
+					58.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3550/@Label@3549",
+				"rect": [
+					399.0,
+					169.962493896484,
+					30.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Label@3551",
+				"rect": [
+					394.0,
+					195.962493896484,
+					70.0,
+					23.0
+				],
+				"text": "饰品"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3507/@Button@3556/@Label@3554",
+				"rect": [
+					30.0,
+					332.981201171875,
+					84.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3507/@Button@3556/@Label@3555",
+				"rect": [
+					31.0,
+					400.981201171875,
+					30.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 20,
+				"minimum": "(80.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3507/@Label@3557",
+				"rect": [
+					134.0,
+					330.981201171875,
+					300.0,
+					30.0
+				],
+				"text": "生铁大剑"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3507/@Label@3558",
+				"rect": [
+					134.0,
+					360.981201171875,
+					300.0,
+					24.0
+				],
+				"text": "普通 · 强化 +0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3507/@Label@3559",
+				"rect": [
+					134.0,
+					386.981201171875,
+					300.0,
+					40.0
+				],
+				"text": "攻击 +10"
+			},
+			{
+				"font": 17,
+				"minimum": "(34.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@HBoxContainer@3509/@Button@3560/Caption",
+				"rect": [
+					12.0,
+					573.999877929688,
+					149.0,
+					44.0
+				],
+				"text": "强化"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@HBoxContainer@3509/@Button@3560/Subtitle",
+				"rect": [
+					12.0,
+					573.999877929688,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 17,
+				"minimum": "(34.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@HBoxContainer@3509/@Button@3561/Caption",
+				"rect": [
+					165.0,
+					573.999877929688,
+					149.0,
+					44.0
+				],
+				"text": "宝石"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@HBoxContainer@3509/@Button@3561/Subtitle",
+				"rect": [
+					165.0,
+					573.999877929688,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 17,
+				"minimum": "(34.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@HBoxContainer@3509/@Button@3562/Caption",
+				"rect": [
+					318.0,
+					573.999877929688,
+					149.0,
+					44.0
+				],
+				"text": "精炼"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@HBoxContainer@3509/@Button@3562/Subtitle",
+				"rect": [
+					318.0,
+					573.999877929688,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 24,
+				"minimum": "(1.0, 35.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@VBoxContainer@3573/@HBoxContainer@3564/@Label@3565",
+				"rect": [
+					20.0,
+					629.999877929688,
+					439.0,
+					35.0
+				],
+				"text": "+0 → +1"
+			},
+			{
+				"font": 15,
+				"minimum": "(51.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@VBoxContainer@3573/@HFlowContainer@3566/@PanelContainer@3567/@Label@3568",
+				"rect": [
+					26.0,
+					682.999877929688,
+					51.0,
+					23.0
+				],
+				"text": "攻击 +1"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@VBoxContainer@3573/@HBoxContainer@3569/@Label@3570",
+				"rect": [
+					20.0,
+					733.999877929688,
+					379.0,
+					23.0
+				],
+				"text": "成功率 100.0% · 失败不掉级"
+			},
+			{
+				"font": 17,
+				"minimum": "(34.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@VBoxContainer@3573/@HBoxContainer@3569/@Button@3571/Caption",
+				"rect": [
+					403.0,
+					723.999877929688,
+					56.0,
+					44.0
+				],
+				"text": "说明"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@VBoxContainer@3573/@HBoxContainer@3569/@Button@3571/Subtitle",
+				"rect": [
+					403.0,
+					723.999877929688,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@VBoxContainer@3573/@HBoxContainer@3572/@Control@3579/@Label@3575",
+				"rect": [
+					72.0,
+					781.999877929688,
+					135.0,
+					23.0
+				],
+				"text": "金币"
+			},
+			{
+				"font": 24,
+				"minimum": "(42.0, 35.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@VBoxContainer@3573/@HBoxContainer@3572/@Control@3579/@Label@3576",
+				"rect": [
+					72.0,
+					799.999877929688,
+					64.0,
+					35.0
+				],
+				"text": "150"
+			},
+			{
+				"font": 15,
+				"minimum": "(89.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@VBoxContainer@3573/@HBoxContainer@3572/@Control@3579/@Label@3577",
+				"rect": [
+					136.0,
+					804.999877929688,
+					93.0,
+					23.0
+				],
+				"text": "持有 123.4万"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@VBoxContainer@3573/@HBoxContainer@3572/@Control@3579/@Label@3578",
+				"rect": [
+					201.0,
+					781.999877929688,
+					30.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(45.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@VBoxContainer@3573/@HBoxContainer@3572/@Control@3585/@Label@3581",
+				"rect": [
+					295.0,
+					781.999877929688,
+					136.0,
+					23.0
+				],
+				"text": "强化石"
+			},
+			{
+				"font": 24,
+				"minimum": "(14.0, 35.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@VBoxContainer@3573/@HBoxContainer@3572/@Control@3585/@Label@3582",
+				"rect": [
+					295.0,
+					799.999877929688,
+					64.0,
+					35.0
+				],
+				"text": "1"
+			},
+			{
+				"font": 15,
+				"minimum": "(52.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@VBoxContainer@3573/@HBoxContainer@3572/@Control@3585/@Label@3583",
+				"rect": [
+					359.0,
+					804.999877929688,
+					94.0,
+					23.0
+				],
+				"text": "持有 99"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@VBoxContainer@3573/@HBoxContainer@3572/@Control@3585/@Label@3584",
+				"rect": [
+					425.0,
+					781.999877929688,
+					30.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@Label@3587",
+				"rect": [
+					20.0,
+					843.999877929688,
+					439.0,
+					23.0
+				],
+				"text": "强化积累 0/0"
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@HBoxContainer@3588/@Label@3589",
+				"rect": [
+					20.0,
+					884.999877929688,
+					30.0,
+					23.0
+				],
+				"text": "宝石"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@Label@3596",
+				"rect": [
+					20.0,
+					926.999877929688,
+					439.0,
+					23.0
+				],
+				"text": "词条尚未精炼 · 切换精炼页签整备"
+			},
+			{
+				"font": 17,
+				"minimum": "(34.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3514/@Button@3563/Caption",
+				"rect": [
+					12.0,
+					997.999877929688,
+					132.0,
+					56.0
+				],
+				"text": "卸下"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3514/@Button@3563/Subtitle",
+				"rect": [
+					12.0,
+					997.999877929688,
+					1.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 22,
+				"minimum": "(100.0, 33.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3514/@Button@3586/Caption",
+				"rect": [
+					156.0,
+					997.999877929688,
+					311.999969482422,
+					33.0
+				],
+				"text": "确认强化"
+			},
+			{
+				"font": 15,
+				"minimum": "(137.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3514/@Button@3586/Subtitle",
+				"rect": [
+					164.0,
+					1029.99987792969,
+					295.999969482422,
+					23.0
+				],
+				"text": "金币 150 · 强化石 1"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Label@3515",
+				"rect": [
+					20.0,
+					961.999877929688,
+					439.999969482422,
+					32.0
+				],
+				"text": ""
+			}
+		],
+		"modals": [],
+		"page": "GameHome",
+		"tick_ms": 579217
+	},
+	"id": "extra_growth_equip",
+	"photos": [
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Button@3503",
+					"rect": [
+						8.0,
+						65.9624938964844,
+						44.0,
+						44.0
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Button@3505",
+					"rect": [
+						415.999969482422,
+						65.9624938964844,
+						56.0,
+						44.0
+					],
+					"safe": true,
+					"text": "背包",
+					"tooltip": "打开背包",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3520",
+					"rect": [
+						12.0,
+						123.962493896484,
+						70.0,
+						70.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "大剑 · 本职业武器",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3526",
+					"rect": [
+						86.0,
+						123.962493896484,
+						70.0,
+						70.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "长枪",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3532",
+					"rect": [
+						160.0,
+						123.962493896484,
+						70.0,
+						70.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "法杖",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3538",
+					"rect": [
+						234.0,
+						123.962493896484,
+						70.0,
+						70.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "圣锤",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3544",
+					"rect": [
+						320.0,
+						123.962493896484,
+						70.0,
+						70.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "护甲",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3506/@Button@3550",
+					"rect": [
+						394.0,
+						123.962493896484,
+						70.0,
+						70.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "饰品",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3507/@Button@3556",
+					"rect": [
+						26.0,
+						328.981201171875,
+						96.0,
+						96.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@HBoxContainer@3509/@Button@3560",
+					"rect": [
+						12.0,
+						573.999877929688,
+						149.0,
+						44.0
+					],
+					"safe": true,
+					"text": "强化",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@HBoxContainer@3509/@Button@3561",
+					"rect": [
+						165.0,
+						573.999877929688,
+						149.0,
+						44.0
+					],
+					"safe": true,
+					"text": "宝石",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@HBoxContainer@3509/@Button@3562",
+					"rect": [
+						318.0,
+						573.999877929688,
+						149.0,
+						44.0
+					],
+					"safe": true,
+					"text": "精炼",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@VBoxContainer@3573/@HBoxContainer@3569/@Button@3571",
+					"rect": [
+						403.0,
+						723.999877929688,
+						56.0,
+						44.0
+					],
+					"safe": true,
+					"text": "说明",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@HBoxContainer@3588/@Button@3591",
+					"rect": [
+						54.0,
+						874.999877929688,
+						44.0,
+						44.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "空宝石孔",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@HBoxContainer@3588/@Button@3593",
+					"rect": [
+						102.0,
+						874.999877929688,
+						44.0,
+						44.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "空宝石孔",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@ScrollContainer@3512/@VBoxContainer@3513/@HBoxContainer@3588/@Button@3595",
+					"rect": [
+						150.0,
+						874.999877929688,
+						44.0,
+						44.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "空宝石孔",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3514/@Button@3563",
+					"rect": [
+						12.0,
+						997.999877929688,
+						132.0,
+						56.0
+					],
+					"safe": true,
+					"text": "卸下",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@3434/@Control@3499/@Control@3500/@Control@3514/@Button@3586",
+					"rect": [
+						156.0,
+						997.999877929688,
+						311.999969482422,
+						56.0
+					],
+					"safe": true,
+					"text": "确认强化",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "growth:equip",
+			"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]"
+		}
+	],
+	"records": [],
+	"suite": "page"
+}

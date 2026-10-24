@@ -1,0 +1,1559 @@
+Input Method Manager Service state:
+  mSystemReady=true
+  mInteractive=true
+  mConcurrentMultiUserModeEnabled=false
+  mPreventImeStartupUnlessTextEditor=false
+  mCurrentImeUserId=0
+  mStylusIds=[4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+  mMenuController:
+  mClientController:
+    ClientState{d2b4cdb mUid=1000 mPid=1084 mSelfReportedDisplayId=0}:
+      client=com.android.server.inputmethod.IInputMethodClientInvoker@5189c86
+      fallbackInputConnection=com.android.internal.inputmethod.IRemoteInputConnection$Stub$Proxy@cfa947
+      sessionRequested=false
+      sessionRequestedForAccessibility=false
+      curSession=SessionState{uid=1000 pid=1084 ime=e4316d6 session=30a1d57 channel=ClientState{d2b4cdb mUid=1000 mPid=1084 mSelfReportedDisplayId=0} userId=0}
+      selfReportedDisplayId=0
+      uid=1000
+      pid=1084
+    ClientState{2140ff3 mUid=10156 mPid=3942 mSelfReportedDisplayId=0}:
+      client=com.android.server.inputmethod.IInputMethodClientInvoker@94dd117
+      fallbackInputConnection=com.android.internal.inputmethod.IRemoteInputConnection$Stub$Proxy@aa13904
+      sessionRequested=false
+      sessionRequestedForAccessibility=true
+      curSession=SessionState{uid=10156 pid=3942 ime=e4316d6 session=490e2ae channel=ClientState{2140ff3 mUid=10156 mPid=3942 mSelfReportedDisplayId=0} userId=0}
+      selfReportedDisplayId=0
+      uid=10156
+      pid=3942
+    ClientState{1d1fb12 mUid=10064 mPid=1556 mSelfReportedDisplayId=0}:
+      client=com.android.server.inputmethod.IInputMethodClientInvoker@2d392e3
+      fallbackInputConnection=com.android.internal.inputmethod.IRemoteInputConnection$Stub$Proxy@968e4e0
+      sessionRequested=false
+      sessionRequestedForAccessibility=false
+      curSession=null
+      selfReportedDisplayId=0
+      uid=10064
+      pid=1556
+    ClientState{5e44745 mUid=10124 mPid=939 mSelfReportedDisplayId=0}:
+      client=com.android.server.inputmethod.IInputMethodClientInvoker@ca5e399
+      fallbackInputConnection=com.android.internal.inputmethod.IRemoteInputConnection$Stub$Proxy@f50b65e
+      sessionRequested=false
+      sessionRequestedForAccessibility=false
+      curSession=SessionState{uid=10124 pid=939 ime=e4316d6 session=506d3cb channel=ClientState{5e44745 mUid=10124 mPid=939 mSelfReportedDisplayId=0} userId=0}
+      selfReportedDisplayId=0
+      uid=10124
+      pid=939
+    ClientState{b0ba870 mUid=10122 mPid=1206 mSelfReportedDisplayId=0}:
+      client=com.android.server.inputmethod.IInputMethodClientInvoker@7a27a3f
+      fallbackInputConnection=com.android.internal.inputmethod.IRemoteInputConnection$Stub$Proxy@d276f0c
+      sessionRequested=false
+      sessionRequestedForAccessibility=false
+      curSession=SessionState{uid=10122 pid=1206 ime=e4316d6 session=d5adb9c channel=ClientState{b0ba870 mUid=10122 mPid=1206 mSelfReportedDisplayId=0} userId=0}
+      selfReportedDisplayId=0
+      uid=10122
+      pid=1206
+    ClientState{e0180b1 mUid=10106 mPid=3372 mSelfReportedDisplayId=0}:
+      client=com.android.server.inputmethod.IInputMethodClientInvoker@33d7598
+      fallbackInputConnection=com.android.internal.inputmethod.IRemoteInputConnection$Stub$Proxy@68f91f1
+      sessionRequested=false
+      sessionRequestedForAccessibility=false
+      curSession=SessionState{uid=10106 pid=3372 ime=e4316d6 session=be65917 channel=ClientState{e0180b1 mUid=10106 mPid=3372 mSelfReportedDisplayId=0} userId=0}
+      selfReportedDisplayId=0
+      uid=10106
+      pid=3372
+    ClientState{ce82055 mUid=10112 mPid=1355 mSelfReportedDisplayId=0}:
+      client=com.android.server.inputmethod.IInputMethodClientInvoker@f6dda6a
+      fallbackInputConnection=com.android.internal.inputmethod.IRemoteInputConnection$Stub$Proxy@24e7b5b
+      sessionRequested=false
+      sessionRequestedForAccessibility=false
+      curSession=null
+      selfReportedDisplayId=0
+      uid=10112
+      pid=1355
+  mUserDataRepository:
+    userId=0
+      unlocked=true
+      hasMainConnection=true
+      hasVisibleConnection=true
+      boundToMethod=true
+      curClient=ClientState{2140ff3 mUid=10156 mPid=3942 mSelfReportedDisplayId=0}
+      curEditorInfo:
+        inputType=0x200001 imeOptions=0x10000006 privateImeOptions=null
+        actionLabel=null actionId=0
+        initialSelStart=2 initialSelEnd=2 initialToolType=0 initialCapsMode=0x0
+        hintText=null label=null
+        packageName=org.yuanzheng.singleplayer autofillId=0 fieldId=-1 fieldName=null
+        hintLocales=null
+        supportedHandwritingGestureTypes=SELECT|SELECT_RANGE|INSERT|DELETE|DELETE_RANGE|REMOVE_SPACE|JOIN_OR_SPLIT
+        supportedHandwritingGesturePreviewTypes=SELECT|SELECT_RANGE|DELETE|DELETE_RANGE
+        isStylusHandwritingEnabled=true
+        writingToolsEnabled=true
+        contentMimeTypes=null
+      imeBindingState:
+        mFocusedWindow=android.os.BinderProxy@81fbb80
+        mFocusedWindowSoftInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+        mFocusedWindowClient=ClientState{2140ff3 mUid=10156 mPid=3942 mSelfReportedDisplayId=0}
+      enabledSession=SessionState{uid=10156 pid=3942 ime=e4316d6 session=490e2ae channel=ClientState{2140ff3 mUid=10156 mPid=3942 mSelfReportedDisplayId=0} userId=0}
+      inFullscreenMode=false
+      imeDrawsNavBar=false
+      imeSwitcherMenuVisible=false
+      switchingController:
+        mRotationList:
+          Static order:
+            i=0 item=ImeSubtypeListItem{mImeName=Android Keyboard (AOSP) mSubtypeName=English (US) mSubtypeShortLabel= mSubtypeIconResId=2131230877 mLayoutName= mSubtypeIndex=0 mShowInImeSwitcherMenu=true mIsAuxiliary=false mSuitableForHardware=true}
+          Recency order:
+            i=0 item=ImeSubtypeListItem{mImeName=Android Keyboard (AOSP) mSubtypeName=English (US) mSubtypeShortLabel= mSubtypeIconResId=2131230877 mLayoutName= mSubtypeIndex=0 mShowInImeSwitcherMenu=true mIsAuxiliary=false mSuitableForHardware=true}
+        mEnabledItems:
+          i=0 item=ImeSubtypeListItem{mImeName=Android Keyboard (AOSP) mSubtypeName=English (US) mSubtypeShortLabel= mSubtypeIconResId=2131230877 mLayoutName= mSubtypeIndex=0 mShowInImeSwitcherMenu=true mIsAuxiliary=false mSuitableForHardware=true}
+        User action since last switch: false
+      mLastEnabledInputMethodsStr=
+      active computer control input connections on display ids:[]
+  mStartInputHistory:
+    StartInput #7:
+      time=2026-10-23 19:11:07.195 (timestamp=145076) reason=WINDOW_FOCUS_GAIN restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@b837d8a [com.android.launcher3] targetUserId=0 targetDisplayId=0 clientBindSeq=8
+      softInputMode=STATE_UNSPECIFIED|ADJUST_NOTHING
+      inputType=0x0 imeOptions=0x0 fieldId=0x0 fieldName=null actionId=0 actionLabel=null
+    StartInput #8:
+      time=2026-10-23 19:11:08.312 (timestamp=146193) reason=SESSION_CREATED_BY_IME restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@4459e32 [org.yuanzheng.singleplayer] targetUserId=0 targetDisplayId=0 clientBindSeq=9
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+      inputType=0x0 imeOptions=0x0 fieldId=0x0 fieldName=null actionId=0 actionLabel=null
+    StartInput #9:
+      time=2026-10-23 19:15:15.459 (timestamp=393340) reason=WINDOW_FOCUS_GAIN restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@c6267af [com.android.launcher3] targetUserId=0 targetDisplayId=0 clientBindSeq=10
+      softInputMode=STATE_UNSPECIFIED|ADJUST_NOTHING
+      inputType=0x0 imeOptions=0x0 fieldId=0x0 fieldName=null actionId=0 actionLabel=null
+    StartInput #10:
+      time=2026-10-23 19:18:04.422 (timestamp=562304) reason=SESSION_CREATED_BY_IME restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@8824ae0 [org.yuanzheng.singleplayer] targetUserId=0 targetDisplayId=0 clientBindSeq=11
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+      inputType=0x0 imeOptions=0x0 fieldId=0x0 fieldName=null actionId=0 actionLabel=null
+    StartInput #11:
+      time=2026-10-23 19:25:33.593 (timestamp=1011475) reason=WINDOW_FOCUS_GAIN restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@4a6aaff [com.android.systemui] targetUserId=0 targetDisplayId=0 clientBindSeq=12
+      softInputMode=STATE_UNSPECIFIED|ADJUST_PAN|IS_FORWARD_NAVIGATION
+      inputType=0x0 imeOptions=0x0 fieldId=0x0 fieldName=null actionId=0 actionLabel=null
+    StartInput #12:
+      time=2026-10-23 19:25:34.818 (timestamp=1012700) reason=SESSION_CREATED_BY_IME restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@2c1b002 [org.yuanzheng.singleplayer] targetUserId=0 targetDisplayId=0 clientBindSeq=13
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE
+      inputType=0x0 imeOptions=0x0 fieldId=0x0 fieldName=null actionId=0 actionLabel=null
+    StartInput #13:
+      time=2026-10-23 19:26:01.059 (timestamp=1038940) reason=WINDOW_FOCUS_GAIN restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@c6267af [com.android.launcher3] targetUserId=0 targetDisplayId=0 clientBindSeq=14
+      softInputMode=STATE_UNSPECIFIED|ADJUST_NOTHING
+      inputType=0x0 imeOptions=0x0 fieldId=0x0 fieldName=null actionId=0 actionLabel=null
+    StartInput #14:
+      time=2026-10-23 19:26:02.211 (timestamp=1040092) reason=SESSION_CREATED_BY_IME restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@e3034d0 [org.yuanzheng.singleplayer] targetUserId=0 targetDisplayId=0 clientBindSeq=15
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+      inputType=0x0 imeOptions=0x0 fieldId=0x0 fieldName=null actionId=0 actionLabel=null
+    StartInput #15:
+      time=2026-10-23 19:34:31.592 (timestamp=1549473) reason=WINDOW_FOCUS_GAIN restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@c6267af [com.android.launcher3] targetUserId=0 targetDisplayId=0 clientBindSeq=16
+      softInputMode=STATE_UNSPECIFIED|ADJUST_NOTHING
+      inputType=0x0 imeOptions=0x0 fieldId=0x0 fieldName=null actionId=0 actionLabel=null
+    StartInput #16:
+      time=2026-10-23 19:34:40.339 (timestamp=1558220) reason=SESSION_CREATED_BY_IME restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@b3653ed [org.yuanzheng.singleplayer] targetUserId=0 targetDisplayId=0 clientBindSeq=17
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+      inputType=0x0 imeOptions=0x0 fieldId=0x0 fieldName=null actionId=0 actionLabel=null
+    StartInput #17:
+      time=2026-10-23 19:36:07.838 (timestamp=1645719) reason=WINDOW_FOCUS_GAIN restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@c63a08a [com.android.launcher3] targetUserId=0 targetDisplayId=0 clientBindSeq=18
+      softInputMode=STATE_UNSPECIFIED|ADJUST_NOTHING
+      inputType=0x0 imeOptions=0x0 fieldId=0x0 fieldName=null actionId=0 actionLabel=null
+    StartInput #18:
+      time=2026-10-23 19:36:10.121 (timestamp=1648002) reason=SESSION_CREATED_BY_IME restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@4130cce [org.yuanzheng.singleplayer] targetUserId=0 targetDisplayId=0 clientBindSeq=19
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+      inputType=0x0 imeOptions=0x0 fieldId=0x0 fieldName=null actionId=0 actionLabel=null
+    StartInput #19:
+      time=2026-10-23 19:37:19.339 (timestamp=1717220) reason=WINDOW_FOCUS_GAIN restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@1c011fa [com.android.settings] targetUserId=0 targetDisplayId=0 clientBindSeq=20
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+      inputType=0x0 imeOptions=0x0 fieldId=0x0 fieldName=null actionId=0 actionLabel=null
+    StartInput #20:
+      time=2026-10-23 19:37:32.357 (timestamp=1730238) reason=SESSION_CREATED_BY_IME restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@cc5f80e [com.android.settings.intelligence] targetUserId=0 targetDisplayId=0 clientBindSeq=22
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+      inputType=0x290001 imeOptions=0x10000003 fieldId=0x102052b fieldName=null actionId=0 actionLabel=null
+    StartInput #21:
+      time=2026-10-23 19:40:07.374 (timestamp=1885255) reason=WINDOW_FOCUS_GAIN restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@4130cce [org.yuanzheng.singleplayer] targetUserId=0 targetDisplayId=0 clientBindSeq=23
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE
+      inputType=0x0 imeOptions=0x0 fieldId=0x0 fieldName=null actionId=0 actionLabel=null
+    StartInput #22:
+      time=2026-10-23 19:40:23.080 (timestamp=1900961) reason=CHECK_FOCUS restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@4130cce [org.yuanzheng.singleplayer] targetUserId=0 targetDisplayId=0 clientBindSeq=24
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE
+      inputType=0x200001 imeOptions=0x10000006 fieldId=0xffffffff fieldName=null actionId=0 actionLabel=null
+    StartInput #23:
+      time=2026-10-23 19:40:23.083 (timestamp=1900965) reason=APP_CALLED_RESTART_INPUT_API restarting=true
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@4130cce [org.yuanzheng.singleplayer] targetUserId=0 targetDisplayId=0 clientBindSeq=25
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE
+      inputType=0x200001 imeOptions=0x10000006 fieldId=0xffffffff fieldName=null actionId=0 actionLabel=null
+    StartInput #24:
+      time=2026-10-23 19:40:23.104 (timestamp=1900985) reason=APP_CALLED_RESTART_INPUT_API restarting=true
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@4130cce [org.yuanzheng.singleplayer] targetUserId=0 targetDisplayId=0 clientBindSeq=26
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE
+      inputType=0x200001 imeOptions=0x10000006 fieldId=0xffffffff fieldName=null actionId=0 actionLabel=null
+    StartInput #25:
+      time=2026-10-23 19:41:03.059 (timestamp=1940941) reason=WINDOW_FOCUS_GAIN restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@cc5f80e [com.android.settings.intelligence] targetUserId=0 targetDisplayId=0 clientBindSeq=27
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE
+      inputType=0x290001 imeOptions=0x10000003 fieldId=0x102052b fieldName=null actionId=0 actionLabel=null
+    StartInput #26:
+      time=2026-10-23 19:41:03.451 (timestamp=1941332) reason=WINDOW_FOCUS_GAIN restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@e70ea5b [com.android.settings.intelligence] targetUserId=0 targetDisplayId=0 clientBindSeq=28
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE
+      inputType=0x290001 imeOptions=0x10000003 fieldId=0x102052b fieldName=null actionId=0 actionLabel=null
+    StartInput #27:
+      time=2026-10-23 19:41:03.793 (timestamp=1941674) reason=WINDOW_FOCUS_GAIN restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@98d8314 [com.android.settings.intelligence] targetUserId=0 targetDisplayId=0 clientBindSeq=29
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE
+      inputType=0x290001 imeOptions=0x10000003 fieldId=0x102052b fieldName=null actionId=0 actionLabel=null
+    StartInput #28:
+      time=2026-10-23 19:41:06.735 (timestamp=1944616) reason=SESSION_CREATED_BY_IME restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@c7edff4 [org.yuanzheng.singleplayer] targetUserId=0 targetDisplayId=0 clientBindSeq=30
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+      inputType=0x0 imeOptions=0x0 fieldId=0x0 fieldName=null actionId=0 actionLabel=null
+    StartInput #29:
+      time=2026-10-23 19:41:13.119 (timestamp=1951000) reason=CHECK_FOCUS restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@c7edff4 [org.yuanzheng.singleplayer] targetUserId=0 targetDisplayId=0 clientBindSeq=31
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+      inputType=0x200001 imeOptions=0x10000006 fieldId=0xffffffff fieldName=null actionId=0 actionLabel=null
+    StartInput #30:
+      time=2026-10-23 19:41:13.122 (timestamp=1951003) reason=APP_CALLED_RESTART_INPUT_API restarting=true
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@c7edff4 [org.yuanzheng.singleplayer] targetUserId=0 targetDisplayId=0 clientBindSeq=32
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+      inputType=0x200001 imeOptions=0x10000006 fieldId=0xffffffff fieldName=null actionId=0 actionLabel=null
+    StartInput #31:
+      time=2026-10-23 19:41:13.145 (timestamp=1951026) reason=APP_CALLED_RESTART_INPUT_API restarting=true
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@c7edff4 [org.yuanzheng.singleplayer] targetUserId=0 targetDisplayId=0 clientBindSeq=33
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+      inputType=0x200001 imeOptions=0x10000006 fieldId=0xffffffff fieldName=null actionId=0 actionLabel=null
+    StartInput #32:
+      time=2026-10-23 19:41:14.762 (timestamp=1952643) reason=CHECK_FOCUS restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@c7edff4 [org.yuanzheng.singleplayer] targetUserId=0 targetDisplayId=0 clientBindSeq=34
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE
+      inputType=0x0 imeOptions=0x0 fieldId=0x0 fieldName=null actionId=0 actionLabel=null
+    StartInput #33:
+      time=2026-10-23 19:44:25.421 (timestamp=2143302) reason=WINDOW_FOCUS_GAIN restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@98d8314 [com.android.settings.intelligence] targetUserId=0 targetDisplayId=0 clientBindSeq=35
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE
+      inputType=0x290001 imeOptions=0x10000003 fieldId=0x102052b fieldName=null actionId=0 actionLabel=null
+    StartInput #34:
+      time=2026-10-23 19:44:25.434 (timestamp=2143315) reason=CHECK_FOCUS restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@98d8314 [com.android.settings.intelligence] targetUserId=0 targetDisplayId=0 clientBindSeq=36
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE
+      inputType=0x290001 imeOptions=0x10000003 fieldId=0x102052b fieldName=null actionId=0 actionLabel=null
+    StartInput #35:
+      time=2026-10-23 19:44:33.359 (timestamp=2151240) reason=SESSION_CREATED_BY_IME restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@81fbb80 [org.yuanzheng.singleplayer] targetUserId=0 targetDisplayId=0 clientBindSeq=37
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+      inputType=0x0 imeOptions=0x0 fieldId=0x0 fieldName=null actionId=0 actionLabel=null
+    StartInput #36:
+      time=2026-10-23 19:44:39.990 (timestamp=2157871) reason=CHECK_FOCUS restarting=false
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@81fbb80 [org.yuanzheng.singleplayer] targetUserId=0 targetDisplayId=0 clientBindSeq=38
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+      inputType=0x200001 imeOptions=0x10000006 fieldId=0xffffffff fieldName=null actionId=0 actionLabel=null
+    StartInput #37:
+      time=2026-10-23 19:44:39.993 (timestamp=2157874) reason=APP_CALLED_RESTART_INPUT_API restarting=true
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@81fbb80 [org.yuanzheng.singleplayer] targetUserId=0 targetDisplayId=0 clientBindSeq=39
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+      inputType=0x200001 imeOptions=0x10000006 fieldId=0xffffffff fieldName=null actionId=0 actionLabel=null
+    StartInput #38:
+      time=2026-10-23 19:44:40.019 (timestamp=2157900) reason=APP_CALLED_RESTART_INPUT_API restarting=true
+      imeToken=android.os.Binder@e1e874a [com.android.inputmethod.latin/.LatinIME] imeUserId=0 imeDisplayId=0
+      targetWin=android.os.BinderProxy@81fbb80 [org.yuanzheng.singleplayer] targetUserId=0 targetDisplayId=0 clientBindSeq=40
+      softInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+      inputType=0x200001 imeOptions=0x10000006 fieldId=0xffffffff fieldName=null actionId=0 actionLabel=null
+  mSoftInputShowHideHistory:
+    SoftInputShowHide[0] #2:
+      time=2026-10-23 19:40:07.404 (timestamp=1885285)
+      reason=HIDE_SOFT_INPUT inFullscreenMode=false
+      requestClient=ClientState{d78d700 mUid=10156 mPid=3177 mSelfReportedDisplayId=0}
+      focusedWindowName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      requestWindowName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeLayeringTargetName=Window{27604b8 u0 SnapshotStartingWindow for taskId=16}
+      imeInputTargetName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeControlTargetName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeParentName=ActivityRecord{119697788 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher t16}
+      editorInfo: inputType=0 privateImeOptions=null fieldId (viewId)=0
+      focusedWindowSoftInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE
+    SoftInputShowHide[0] #3:
+      time=2026-10-23 19:40:07.423 (timestamp=1885304)
+      reason=HIDE_SOFT_INPUT inFullscreenMode=false
+      requestClient=ClientState{d78d700 mUid=10156 mPid=3177 mSelfReportedDisplayId=0}
+      focusedWindowName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      requestWindowName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeLayeringTargetName=Window{27604b8 u0 SnapshotStartingWindow for taskId=16}
+      imeInputTargetName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeControlTargetName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeParentName=ActivityRecord{119697788 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher t16}
+      editorInfo: inputType=0 privateImeOptions=null fieldId (viewId)=0
+      focusedWindowSoftInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE
+    SoftInputShowHide[0] #4:
+      time=2026-10-23 19:40:23.094 (timestamp=1900975)
+      reason=SHOW_SOFT_INPUT inFullscreenMode=false
+      requestClient=ClientState{d78d700 mUid=10156 mPid=3177 mSelfReportedDisplayId=0}
+      focusedWindowName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      requestWindowName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeLayeringTargetName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeInputTargetName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeControlTargetName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeParentName=ActivityRecord{119697788 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher t16}
+      editorInfo: inputType=0 privateImeOptions=null fieldId (viewId)=0
+      focusedWindowSoftInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE
+    SoftInputShowHide[0] #5:
+      time=2026-10-23 19:40:23.106 (timestamp=1900987)
+      reason=SHOW_SOFT_INPUT inFullscreenMode=false
+      requestClient=ClientState{d78d700 mUid=10156 mPid=3177 mSelfReportedDisplayId=0}
+      focusedWindowName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      requestWindowName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeLayeringTargetName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeInputTargetName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeControlTargetName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeParentName=ActivityRecord{119697788 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher t16}
+      editorInfo: inputType=0 privateImeOptions=null fieldId (viewId)=0
+      focusedWindowSoftInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE
+    SoftInputShowHide[0] #6:
+      time=2026-10-23 19:41:03.062 (timestamp=1940943)
+      reason=SHOW_SOFT_INPUT inFullscreenMode=false
+      requestClient=ClientState{e0180b1 mUid=10106 mPid=3372 mSelfReportedDisplayId=0}
+      focusedWindowName=Window{ab3122f u0 com.android.settings.intelligence/com.android.settings.intelligence.search.SearchActivity}
+      requestWindowName=Window{ab3122f u0 com.android.settings.intelligence/com.android.settings.intelligence.search.SearchActivity}
+      imeLayeringTargetName=Window{ab3122f u0 com.android.settings.intelligence/com.android.settings.intelligence.search.SearchActivity}
+      imeInputTargetName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeControlTargetName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeParentName=ActivityRecord{119697788 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher t16 f} isExiting}
+      editorInfo: inputType=2686977 privateImeOptions=null fieldId (viewId)=16909611
+      focusedWindowSoftInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE
+    SoftInputShowHide[0] #7:
+      time=2026-10-23 19:41:03.800 (timestamp=1941681)
+      reason=SHOW_SOFT_INPUT inFullscreenMode=false
+      requestClient=ClientState{e0180b1 mUid=10106 mPid=3372 mSelfReportedDisplayId=0}
+      focusedWindowName=Window{4a917bd u0 com.android.settings.intelligence/com.android.settings.intelligence.search.SearchActivity}
+      requestWindowName=Window{4a917bd u0 com.android.settings.intelligence/com.android.settings.intelligence.search.SearchActivity}
+      imeLayeringTargetName=Window{4a917bd u0 com.android.settings.intelligence/com.android.settings.intelligence.search.SearchActivity}
+      imeInputTargetName=Window{ab3122f u0 com.android.settings.intelligence/com.android.settings.intelligence.search.SearchActivity}
+      imeControlTargetName=Window{ab3122f u0 com.android.settings.intelligence/com.android.settings.intelligence.search.SearchActivity}
+      imeParentName=ActivityRecord{235070284 u0 com.android.settings.intelligence/.search.SearchActivity t17}
+      editorInfo: inputType=2686977 privateImeOptions=null fieldId (viewId)=16909611
+      focusedWindowSoftInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE
+    SoftInputShowHide[0] #8:
+      time=2026-10-23 19:41:06.750 (timestamp=1944631)
+      reason=HIDE_SOFT_INPUT inFullscreenMode=false
+      requestClient=ClientState{dde398e mUid=10156 mPid=3585 mSelfReportedDisplayId=0}
+      focusedWindowName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      requestWindowName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeLayeringTargetName=Window{7a2cbe u0 Splash Screen org.yuanzheng.singleplayer}
+      imeInputTargetName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeControlTargetName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeParentName=ActivityRecord{247293652 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher t18}
+      editorInfo: inputType=0 privateImeOptions=null fieldId (viewId)=0
+      focusedWindowSoftInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+    SoftInputShowHide[0] #9:
+      time=2026-10-23 19:41:06.775 (timestamp=1944656)
+      reason=HIDE_SOFT_INPUT inFullscreenMode=false
+      requestClient=ClientState{dde398e mUid=10156 mPid=3585 mSelfReportedDisplayId=0}
+      focusedWindowName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      requestWindowName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeLayeringTargetName=Window{7a2cbe u0 Splash Screen org.yuanzheng.singleplayer}
+      imeInputTargetName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeControlTargetName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeParentName=ActivityRecord{247293652 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher t18}
+      editorInfo: inputType=0 privateImeOptions=null fieldId (viewId)=0
+      focusedWindowSoftInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+    SoftInputShowHide[0] #10:
+      time=2026-10-23 19:41:13.142 (timestamp=1951024)
+      reason=SHOW_SOFT_INPUT inFullscreenMode=false
+      requestClient=ClientState{dde398e mUid=10156 mPid=3585 mSelfReportedDisplayId=0}
+      focusedWindowName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      requestWindowName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeLayeringTargetName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeInputTargetName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeControlTargetName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeParentName=ActivityRecord{247293652 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher t18}
+      editorInfo: inputType=0 privateImeOptions=null fieldId (viewId)=0
+      focusedWindowSoftInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+    SoftInputShowHide[0] #11:
+      time=2026-10-23 19:41:13.149 (timestamp=1951031)
+      reason=SHOW_SOFT_INPUT inFullscreenMode=false
+      requestClient=ClientState{dde398e mUid=10156 mPid=3585 mSelfReportedDisplayId=0}
+      focusedWindowName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      requestWindowName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeLayeringTargetName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeInputTargetName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeControlTargetName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeParentName=ActivityRecord{247293652 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher t18}
+      editorInfo: inputType=0 privateImeOptions=null fieldId (viewId)=0
+      focusedWindowSoftInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+    SoftInputShowHide[0] #12:
+      time=2026-10-23 19:41:15.082 (timestamp=1952964)
+      reason=HIDE_SOFT_INPUT inFullscreenMode=false
+      requestClient=ClientState{dde398e mUid=10156 mPid=3585 mSelfReportedDisplayId=0}
+      focusedWindowName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      requestWindowName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeLayeringTargetName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeInputTargetName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeControlTargetName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeParentName=ActivityRecord{247293652 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher t18}
+      editorInfo: inputType=0 privateImeOptions=null fieldId (viewId)=0
+      focusedWindowSoftInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE
+    SoftInputShowHide[0] #13:
+      time=2026-10-23 19:44:25.423 (timestamp=2143305)
+      reason=SHOW_SOFT_INPUT inFullscreenMode=false
+      requestClient=ClientState{e0180b1 mUid=10106 mPid=3372 mSelfReportedDisplayId=0}
+      focusedWindowName=Window{4a917bd u0 com.android.settings.intelligence/com.android.settings.intelligence.search.SearchActivity}
+      requestWindowName=Window{4a917bd u0 com.android.settings.intelligence/com.android.settings.intelligence.search.SearchActivity}
+      imeLayeringTargetName=Window{4a917bd u0 com.android.settings.intelligence/com.android.settings.intelligence.search.SearchActivity}
+      imeInputTargetName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher EXITING}
+      imeControlTargetName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher EXITING}
+      imeParentName=ActivityRecord{247293652 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher t18 f} isExiting}
+      editorInfo: inputType=2686977 privateImeOptions=null fieldId (viewId)=16909611
+      focusedWindowSoftInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE
+    SoftInputShowHide[0] #14:
+      time=2026-10-23 19:44:25.436 (timestamp=2143318)
+      reason=SHOW_SOFT_INPUT inFullscreenMode=false
+      requestClient=ClientState{e0180b1 mUid=10106 mPid=3372 mSelfReportedDisplayId=0}
+      focusedWindowName=Window{4a917bd u0 com.android.settings.intelligence/com.android.settings.intelligence.search.SearchActivity}
+      requestWindowName=Window{4a917bd u0 com.android.settings.intelligence/com.android.settings.intelligence.search.SearchActivity}
+      imeLayeringTargetName=Window{4a917bd u0 com.android.settings.intelligence/com.android.settings.intelligence.search.SearchActivity}
+      imeInputTargetName=Window{4a917bd u0 com.android.settings.intelligence/com.android.settings.intelligence.search.SearchActivity}
+      imeControlTargetName=Window{4a917bd u0 com.android.settings.intelligence/com.android.settings.intelligence.search.SearchActivity}
+      imeParentName=ActivityRecord{235070284 u0 com.android.settings.intelligence/.search.SearchActivity t17}
+      editorInfo: inputType=2686977 privateImeOptions=null fieldId (viewId)=16909611
+      focusedWindowSoftInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE
+    SoftInputShowHide[0] #15:
+      time=2026-10-23 19:44:33.374 (timestamp=2151256)
+      reason=HIDE_SOFT_INPUT inFullscreenMode=false
+      requestClient=ClientState{2140ff3 mUid=10156 mPid=3942 mSelfReportedDisplayId=0}
+      focusedWindowName=Window{5a405b9 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      requestWindowName=Window{5a405b9 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeLayeringTargetName=Window{4a5b25 u0 Splash Screen org.yuanzheng.singleplayer}
+      imeInputTargetName=Window{5a405b9 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeControlTargetName=Window{5a405b9 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeParentName=ActivityRecord{210860083 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher t19}
+      editorInfo: inputType=0 privateImeOptions=null fieldId (viewId)=0
+      focusedWindowSoftInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+    SoftInputShowHide[0] #16:
+      time=2026-10-23 19:44:40.017 (timestamp=2157898)
+      reason=SHOW_SOFT_INPUT inFullscreenMode=false
+      requestClient=ClientState{2140ff3 mUid=10156 mPid=3942 mSelfReportedDisplayId=0}
+      focusedWindowName=Window{5a405b9 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      requestWindowName=Window{5a405b9 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeLayeringTargetName=Window{5a405b9 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeInputTargetName=Window{5a405b9 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeControlTargetName=Window{5a405b9 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeParentName=ActivityRecord{210860083 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher t19}
+      editorInfo: inputType=0 privateImeOptions=null fieldId (viewId)=0
+      focusedWindowSoftInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+    SoftInputShowHide[0] #17:
+      time=2026-10-23 19:44:40.021 (timestamp=2157902)
+      reason=SHOW_SOFT_INPUT inFullscreenMode=false
+      requestClient=ClientState{2140ff3 mUid=10156 mPid=3942 mSelfReportedDisplayId=0}
+      focusedWindowName=Window{5a405b9 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      requestWindowName=Window{5a405b9 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeLayeringTargetName=Window{5a405b9 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeInputTargetName=Window{5a405b9 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeControlTargetName=Window{5a405b9 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      imeParentName=ActivityRecord{210860083 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher t19}
+      editorInfo: inputType=0 privateImeOptions=null fieldId (viewId)=0
+      focusedWindowSoftInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+  mImeTrackerService#History:
+    mActiveEntries: 0 elements
+    mCompletedEntries: 140 elements
+      #0 TYPE_HIDE - STATUS_CANCEL - com.android.settings:b55ffb71 (7ms):
+        startTime=2026-10-23 19:09:01.493 (timestamp=19375) ORIGIN_SERVER
+        reason=HIDE_UNSPECIFIED_WINDOW PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #1 TYPE_HIDE - STATUS_CANCEL - system_server:65632c27 (126ms):
+        startTime=2026-10-23 19:09:01.989 (timestamp=19870) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #2 TYPE_HIDE - STATUS_CANCEL - system_server:13127a34 (17ms):
+        startTime=2026-10-23 19:09:02.099 (timestamp=19980) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #3 TYPE_HIDE - STATUS_FAIL - com.android.launcher3:16808e41 (10ms):
+        startTime=2026-10-23 19:09:03.640 (timestamp=21521) ORIGIN_SERVER
+        reason=HIDE_UNSPECIFIED_WINDOW PHASE_CLIENT_HANDLE_SET_IME_VISIBILITY
+        userId=0 displayId=0
+        requestWindowName=not set
+      #4 TYPE_HIDE - STATUS_CANCEL - com.android.launcher3:ecfe33bd (5ms):
+        startTime=2026-10-23 19:09:03.666 (timestamp=21547) ORIGIN_SERVER
+        reason=HIDE_SAME_WINDOW_FOCUSED_WITHOUT_EDITOR PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #5 TYPE_HIDE - STATUS_CANCEL - system_server:22ea3ea7 (11ms):
+        startTime=2026-10-23 19:09:03.674 (timestamp=21555) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #6 TYPE_HIDE - STATUS_CANCEL - org.yuanzheng.singleplayer:13f559f (3ms):
+        startTime=2026-10-23 19:09:22.823 (timestamp=40704) ORIGIN_SERVER
+        reason=HIDE_UNSPECIFIED_WINDOW PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #7 TYPE_HIDE - STATUS_CANCEL - system_server:fd25f7e0 (0ms):
+        startTime=2026-10-23 19:09:22.840 (timestamp=40722) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #8 TYPE_HIDE - STATUS_CANCEL - system_server:68d21020 (0ms):
+        startTime=2026-10-23 19:09:23.159 (timestamp=41041) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #9 TYPE_HIDE - STATUS_CANCEL - com.android.systemui:33d7e0f8 (2ms):
+        startTime=2026-10-23 19:09:23.805 (timestamp=41686) ORIGIN_SERVER
+        reason=HIDE_UNSPECIFIED_WINDOW PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #10 TYPE_HIDE - STATUS_CANCEL - system_server:5b578c97 (2ms):
+        startTime=2026-10-23 19:09:23.824 (timestamp=41705) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #12 TYPE_HIDE - STATUS_FAIL - com.android.systemui:bf3d0222 (0ms):
+        startTime=2026-10-23 19:10:16.473 (timestamp=94355) ORIGIN_CLIENT
+        reason=HIDE_CLOSE_CURRENT_SESSION PHASE_CLIENT_VIEW_HANDLER_AVAILABLE
+        userId=0 displayId=0
+        requestWindowName=not set
+      #11 TYPE_HIDE - STATUS_FAIL - com.android.systemui:5152d5a5 (59ms):
+        startTime=2026-10-23 19:10:16.415 (timestamp=94296) ORIGIN_SERVER
+        reason=HIDE_SAME_WINDOW_FOCUSED_WITHOUT_EDITOR PHASE_CLIENT_VIEW_HANDLER_AVAILABLE
+        userId=0 displayId=0
+        requestWindowName=not set
+      #13 TYPE_HIDE - STATUS_CANCEL - org.yuanzheng.singleplayer:1ff7e01 (2ms):
+        startTime=2026-10-23 19:10:16.501 (timestamp=94382) ORIGIN_SERVER
+        reason=HIDE_UNSPECIFIED_WINDOW PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #14 TYPE_HIDE - STATUS_CANCEL - system_server:d230e944 (2ms):
+        startTime=2026-10-23 19:10:16.505 (timestamp=94386) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #16 TYPE_HIDE - STATUS_CANCEL - system_server:52cd9e18 (0ms):
+        startTime=2026-10-23 19:11:07.214 (timestamp=145096) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #15 TYPE_HIDE - STATUS_CANCEL - com.android.launcher3:f259477b (50ms):
+        startTime=2026-10-23 19:11:07.190 (timestamp=145071) ORIGIN_SERVER
+        reason=HIDE_UNSPECIFIED_WINDOW PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #17 TYPE_HIDE - STATUS_CANCEL - system_server:5234cf3 (2ms):
+        startTime=2026-10-23 19:11:07.351 (timestamp=145232) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #18 TYPE_HIDE - STATUS_CANCEL - org.yuanzheng.singleplayer:a0c3d34 (6ms):
+        startTime=2026-10-23 19:11:08.307 (timestamp=146188) ORIGIN_SERVER
+        reason=HIDE_UNSPECIFIED_WINDOW PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #19 TYPE_HIDE - STATUS_CANCEL - system_server:4677b462 (1ms):
+        startTime=2026-10-23 19:11:08.320 (timestamp=146201) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #20 TYPE_HIDE - STATUS_CANCEL - system_server:fd73657f (2ms):
+        startTime=2026-10-23 19:11:08.623 (timestamp=146504) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #21 TYPE_HIDE - STATUS_CANCEL - org.yuanzheng.singleplayer:b3d0b591 (1ms):
+        startTime=2026-10-23 19:15:15.271 (timestamp=393152) ORIGIN_SERVER
+        reason=HIDE_REMOVE_CLIENT PHASE_SERVER_SHOULD_HIDE
+        userId=0 displayId=0
+        requestWindowName=not set
+      #23 TYPE_HIDE - STATUS_CANCEL - com.android.launcher3:c999ccb9 (0ms):
+        startTime=2026-10-23 19:15:15.460 (timestamp=393341) ORIGIN_SERVER
+        reason=HIDE_SOFT_INPUT PHASE_SERVER_SHOULD_HIDE
+        userId=0 displayId=0
+        requestWindowName=not set
+      #22 TYPE_HIDE - STATUS_CANCEL - com.android.launcher3:8c21e2d6 (2ms):
+        startTime=2026-10-23 19:15:15.458 (timestamp=393340) ORIGIN_SERVER
+        reason=HIDE_UNSPECIFIED_WINDOW PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #24 TYPE_HIDE - STATUS_CANCEL - system_server:c6ad10ff (2ms):
+        startTime=2026-10-23 19:15:15.465 (timestamp=393346) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #25 TYPE_HIDE - STATUS_CANCEL - system_server:55f98742 (1ms):
+        startTime=2026-10-23 19:15:15.965 (timestamp=393846) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #26 TYPE_HIDE - STATUS_CANCEL - org.yuanzheng.singleplayer:86baac47 (2ms):
+        startTime=2026-10-23 19:18:04.419 (timestamp=562301) ORIGIN_SERVER
+        reason=HIDE_UNSPECIFIED_WINDOW PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #27 TYPE_HIDE - STATUS_CANCEL - system_server:cdcada24 (1ms):
+        startTime=2026-10-23 19:18:04.426 (timestamp=562307) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #28 TYPE_HIDE - STATUS_CANCEL - system_server:2d936dea (0ms):
+        startTime=2026-10-23 19:18:04.753 (timestamp=562635) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #29 TYPE_HIDE - STATUS_CANCEL - org.yuanzheng.singleplayer:7c532862 (2ms):
+        startTime=2026-10-23 19:25:33.310 (timestamp=1011192) ORIGIN_SERVER
+        reason=HIDE_REMOVE_CLIENT PHASE_SERVER_SHOULD_HIDE
+        userId=0 displayId=0
+        requestWindowName=not set
+      #30 TYPE_HIDE - STATUS_CANCEL - com.android.systemui:49df24a2 (38ms):
+        startTime=2026-10-23 19:25:33.592 (timestamp=1011474) ORIGIN_SERVER
+        reason=HIDE_UNSPECIFIED_WINDOW PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #31 TYPE_HIDE - STATUS_CANCEL - system_server:eacede0c (45ms):
+        startTime=2026-10-23 19:25:33.610 (timestamp=1011492) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #32 TYPE_HIDE - STATUS_CANCEL - system_server:32e6e369 (1ms):
+        startTime=2026-10-23 19:25:34.006 (timestamp=1011887) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #33 TYPE_HIDE - STATUS_CANCEL - system_server:a6397263 (11ms):
+        startTime=2026-10-23 19:25:34.806 (timestamp=1012687) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #34 TYPE_HIDE - STATUS_CANCEL - org.yuanzheng.singleplayer:54872981 (7ms):
+        startTime=2026-10-23 19:25:34.811 (timestamp=1012692) ORIGIN_SERVER
+        reason=HIDE_UNSPECIFIED_WINDOW PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #35 TYPE_HIDE - STATUS_CANCEL - system_server:178d1145 (2ms):
+        startTime=2026-10-23 19:25:34.825 (timestamp=1012707) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #36 TYPE_HIDE - STATUS_CANCEL - system_server:982a064f (1ms):
+        startTime=2026-10-23 19:25:35.119 (timestamp=1013000) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #37 TYPE_HIDE - STATUS_CANCEL - org.yuanzheng.singleplayer:9dd2db3a (0ms):
+        startTime=2026-10-23 19:26:01.048 (timestamp=1038929) ORIGIN_SERVER
+        reason=HIDE_REMOVE_CLIENT PHASE_SERVER_SHOULD_HIDE
+        userId=0 displayId=0
+        requestWindowName=not set
+      #38 TYPE_HIDE - STATUS_CANCEL - com.android.launcher3:edb39adc (2ms):
+        startTime=2026-10-23 19:26:01.058 (timestamp=1038939) ORIGIN_SERVER
+        reason=HIDE_UNSPECIFIED_WINDOW PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #39 TYPE_HIDE - STATUS_CANCEL - system_server:d6223d67 (1ms):
+        startTime=2026-10-23 19:26:01.061 (timestamp=1038942) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #40 TYPE_HIDE - STATUS_CANCEL - system_server:a19d701b (2ms):
+        startTime=2026-10-23 19:26:01.307 (timestamp=1039188) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #41 TYPE_HIDE - STATUS_CANCEL - org.yuanzheng.singleplayer:dbc830ff (7ms):
+        startTime=2026-10-23 19:26:02.209 (timestamp=1040090) ORIGIN_SERVER
+        reason=HIDE_UNSPECIFIED_WINDOW PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #42 TYPE_HIDE - STATUS_CANCEL - system_server:f15e692d (0ms):
+        startTime=2026-10-23 19:26:02.221 (timestamp=1040103) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #43 TYPE_HIDE - STATUS_CANCEL - system_server:70bc5c9a (1ms):
+        startTime=2026-10-23 19:26:02.539 (timestamp=1040420) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #44 TYPE_HIDE - STATUS_CANCEL - org.yuanzheng.singleplayer:e5f06cda (0ms):
+        startTime=2026-10-23 19:34:31.513 (timestamp=1549394) ORIGIN_SERVER
+        reason=HIDE_REMOVE_CLIENT PHASE_SERVER_SHOULD_HIDE
+        userId=0 displayId=0
+        requestWindowName=not set
+      #45 TYPE_HIDE - STATUS_CANCEL - com.android.launcher3:799e2440 (3ms):
+        startTime=2026-10-23 19:34:31.591 (timestamp=1549472) ORIGIN_SERVER
+        reason=HIDE_UNSPECIFIED_WINDOW PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #46 TYPE_HIDE - STATUS_CANCEL - system_server:f06f4aec (6ms):
+        startTime=2026-10-23 19:34:31.596 (timestamp=1549477) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #47 TYPE_HIDE - STATUS_CANCEL - system_server:fcd3f23 (1ms):
+        startTime=2026-10-23 19:34:32.066 (timestamp=1549948) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #48 TYPE_HIDE - STATUS_CANCEL - org.yuanzheng.singleplayer:7d1c5d42 (3ms):
+        startTime=2026-10-23 19:34:40.335 (timestamp=1558216) ORIGIN_SERVER
+        reason=HIDE_UNSPECIFIED_WINDOW PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #49 TYPE_HIDE - STATUS_CANCEL - system_server:6d717e29 (0ms):
+        startTime=2026-10-23 19:34:40.341 (timestamp=1558222) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #50 TYPE_HIDE - STATUS_CANCEL - system_server:b9f13dbd (2ms):
+        startTime=2026-10-23 19:34:40.654 (timestamp=1558535) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #51 TYPE_HIDE - STATUS_CANCEL - org.yuanzheng.singleplayer:c4598ed7 (0ms):
+        startTime=2026-10-23 19:36:06.752 (timestamp=1644634) ORIGIN_SERVER
+        reason=HIDE_REMOVE_CLIENT PHASE_SERVER_SHOULD_HIDE
+        userId=0 displayId=0
+        requestWindowName=not set
+      #52 TYPE_HIDE - STATUS_CANCEL - com.android.launcher3:93ef9670 (11ms):
+        startTime=2026-10-23 19:36:07.837 (timestamp=1645718) ORIGIN_SERVER
+        reason=HIDE_UNSPECIFIED_WINDOW PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #53 TYPE_HIDE - STATUS_CANCEL - system_server:a3a807db (2ms):
+        startTime=2026-10-23 19:36:07.858 (timestamp=1645739) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #54 TYPE_HIDE - STATUS_CANCEL - system_server:b41508e8 (2ms):
+        startTime=2026-10-23 19:36:08.282 (timestamp=1646163) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #55 TYPE_HIDE - STATUS_CANCEL - org.yuanzheng.singleplayer:79e86e23 (4ms):
+        startTime=2026-10-23 19:36:10.119 (timestamp=1648000) ORIGIN_SERVER
+        reason=HIDE_UNSPECIFIED_WINDOW PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #56 TYPE_HIDE - STATUS_CANCEL - system_server:8ff15711 (1ms):
+        startTime=2026-10-23 19:36:10.124 (timestamp=1648005) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #57 TYPE_HIDE - STATUS_CANCEL - system_server:7849e027 (0ms):
+        startTime=2026-10-23 19:36:10.452 (timestamp=1648333) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #59 TYPE_HIDE - STATUS_CANCEL - com.android.settings:4bf6e020 (0ms):
+        startTime=2026-10-23 19:37:19.340 (timestamp=1717221) ORIGIN_SERVER
+        reason=HIDE_SOFT_INPUT PHASE_SERVER_SHOULD_HIDE
+        userId=0 displayId=0
+        requestWindowName=not set
+      #58 TYPE_HIDE - STATUS_CANCEL - com.android.settings:8002191f (6ms):
+        startTime=2026-10-23 19:37:19.335 (timestamp=1717217) ORIGIN_SERVER
+        reason=HIDE_UNSPECIFIED_WINDOW PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #60 TYPE_HIDE - STATUS_CANCEL - system_server:c457e340 (0ms):
+        startTime=2026-10-23 19:37:19.344 (timestamp=1717226) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #61 TYPE_HIDE - STATUS_CANCEL - system_server:95782307 (0ms):
+        startTime=2026-10-23 19:37:19.772 (timestamp=1717654) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #62 TYPE_HIDE - STATUS_FAIL - com.android.settings.intelligence:c5e986c4 (2ms):
+        startTime=2026-10-23 19:37:32.154 (timestamp=1730035) ORIGIN_CLIENT
+        reason=HIDE_SOFT_INPUT PHASE_CLIENT_VIEW_SERVED
+        userId=0 displayId=0
+        requestWindowName=not set
+      #63 TYPE_SHOW - STATUS_FAIL - com.android.settings.intelligence:33a901e1 (12ms):
+        startTime=2026-10-23 19:37:32.344 (timestamp=1730226) ORIGIN_SERVER
+        reason=SHOW_AUTO_EDITOR_FORWARD_NAV PHASE_SERVER_UPDATE_CLIENT_VISIBILITY
+        userId=0 displayId=0
+        requestWindowName=not set
+      #64 TYPE_SHOW - STATUS_CANCEL - com.android.settings.intelligence:383afba0 (6ms):
+        startTime=2026-10-23 19:37:32.352 (timestamp=1730233) ORIGIN_CLIENT
+        reason=SHOW_SOFT_INPUT PHASE_CLIENT_REPORT_REQUESTED_VISIBLE_TYPES
+        userId=0 displayId=0
+        requestWindowName=not set
+      #65 TYPE_SHOW - STATUS_CANCEL - system_server:19feb383 (529ms):
+        startTime=2026-10-23 19:37:32.361 (timestamp=1730242) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_POST_LAYOUT_NOTIFY_CONTROLS_CHANGED
+        userId=-10000 displayId=0
+        requestWindowName=Window{ab3122f u0 com.android.settings.intelligence/com.android.settings.intelligence.search.SearchActivity}
+      #66 TYPE_SHOW - STATUS_SUCCESS - system_server:72e10079 (219ms):
+        startTime=2026-10-23 19:37:32.915 (timestamp=1730796) ORIGIN_SERVER
+        reason=CONTROLS_CHANGED PHASE_CLIENT_ANIMATION_FINISHED_SHOW
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #68 TYPE_SHOW - STATUS_CANCEL - system_server:44e05a68 (15ms):
+        startTime=2026-10-23 19:40:07.010 (timestamp=1884891) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_ALREADY_VISIBLE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #69 TYPE_SHOW - STATUS_CANCEL - system_server:c8f7b5fc (4ms):
+        startTime=2026-10-23 19:40:07.319 (timestamp=1885200) ORIGIN_SERVER
+        reason=CONTROLS_CHANGED PHASE_CLIENT_ON_CONTROLS_CHANGED
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #70 TYPE_HIDE - STATUS_CANCEL - org.yuanzheng.singleplayer:e10e543a (2ms):
+        startTime=2026-10-23 19:40:07.372 (timestamp=1885254) ORIGIN_SERVER
+        reason=HIDE_UNSPECIFIED_WINDOW PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #67 TYPE_SHOW - STATUS_CANCEL - com.android.inputmethod.latin:10da18d7 (407ms):
+        startTime=2026-10-23 19:40:07.009 (timestamp=1884890) ORIGIN_IME
+        reason=RESET_NEW_CONFIGURATION PHASE_CLIENT_ANIMATION_CANCEL
+        userId=0 displayId=0
+        requestWindowName=not set
+      #73 TYPE_SHOW - STATUS_CANCEL - system_server:66de4b8e (4ms):
+        startTime=2026-10-23 19:40:07.415 (timestamp=1885296) ORIGIN_SERVER
+        reason=CONTROLS_CHANGED PHASE_CLIENT_ON_CONTROLS_CHANGED
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #71 TYPE_HIDE - STATUS_SUCCESS - org.yuanzheng.singleplayer:6cc7767b (52ms):
+        startTime=2026-10-23 19:40:07.376 (timestamp=1885257) ORIGIN_SERVER
+        reason=HIDE_SOFT_INPUT PHASE_IME_NOTIFY_IME_VISIBILITY_CHANGED
+        userId=0 displayId=0
+        requestWindowName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      #72 TYPE_HIDE - STATUS_SUCCESS - system_server:ee353d52 (45ms):
+        startTime=2026-10-23 19:40:07.387 (timestamp=1885270) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_IME_NOTIFY_IME_VISIBILITY_CHANGED
+        userId=-10000 displayId=0
+        requestWindowName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      #74 TYPE_HIDE - STATUS_SUCCESS - system_server:f284dff3 (15ms):
+        startTime=2026-10-23 19:40:07.420 (timestamp=1885301) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_IME_NOTIFY_IME_VISIBILITY_CHANGED
+        userId=-10000 displayId=0
+        requestWindowName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      #75 TYPE_HIDE - STATUS_CANCEL - system_server:82dd5b8d (2ms):
+        startTime=2026-10-23 19:40:07.636 (timestamp=1885517) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #76 TYPE_HIDE - STATUS_CANCEL - system_server:6057c3d4 (0ms):
+        startTime=2026-10-23 19:40:07.799 (timestamp=1885680) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #77 TYPE_HIDE - STATUS_CANCEL - system_server:9b1a9afd (1ms):
+        startTime=2026-10-23 19:40:07.953 (timestamp=1885834) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #79 TYPE_SHOW - STATUS_CANCEL - org.yuanzheng.singleplayer:a07d34bf (1ms):
+        startTime=2026-10-23 19:40:23.100 (timestamp=1900981) ORIGIN_CLIENT
+        reason=SHOW_SOFT_INPUT PHASE_CLIENT_REPORT_REQUESTED_VISIBLE_TYPES
+        userId=0 displayId=0
+        requestWindowName=not set
+      #78 TYPE_SHOW - STATUS_SUCCESS - org.yuanzheng.singleplayer:f98f39e3 (433ms):
+        startTime=2026-10-23 19:40:23.082 (timestamp=1900964) ORIGIN_CLIENT
+        reason=SHOW_SOFT_INPUT PHASE_CLIENT_ANIMATION_FINISHED_SHOW
+        userId=0 displayId=0
+        requestWindowName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      #80 TYPE_SHOW - STATUS_TIMEOUT - org.yuanzheng.singleplayer:5c943d5d (10002ms):
+        startTime=2026-10-23 19:40:23.105 (timestamp=1900986) ORIGIN_SERVER
+        reason=ATTACH_NEW_INPUT PHASE_SERVER_NOTIFY_IME_VISIBILITY_CHANGED_FROM_CLIENT lastProgressTime=2026-10-23 19:40:23.226
+        userId=0 displayId=0
+        requestWindowName=Window{f5767ef u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      #83 TYPE_SHOW - STATUS_CANCEL - com.android.settings.intelligence:be4cf8c (3ms):
+        startTime=2026-10-23 19:41:03.069 (timestamp=1940950) ORIGIN_CLIENT
+        reason=SHOW_SOFT_INPUT PHASE_CLIENT_APPLY_ANIMATION
+        userId=0 displayId=0
+        requestWindowName=not set
+      #82 TYPE_SHOW - STATUS_CANCEL - com.android.settings.intelligence:be8f6f01 (9ms):
+        startTime=2026-10-23 19:41:03.064 (timestamp=1940945) ORIGIN_SERVER
+        reason=SHOW_RESTORE_IME_VISIBILITY PHASE_CLIENT_APPLY_ANIMATION
+        userId=0 displayId=0
+        requestWindowName=not set
+      #84 TYPE_SHOW - STATUS_CANCEL - system_server:531958fe (1ms):
+        startTime=2026-10-23 19:41:03.072 (timestamp=1940953) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_ALREADY_VISIBLE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #85 TYPE_SHOW - STATUS_CANCEL - system_server:38801391 (151ms):
+        startTime=2026-10-23 19:41:03.084 (timestamp=1940965) ORIGIN_SERVER
+        reason=CONTROLS_CHANGED PHASE_CLIENT_ANIMATION_CANCEL
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #88 TYPE_HIDE - STATUS_CANCEL - com.android.settings.intelligence:2c353b01 (3ms):
+        startTime=2026-10-23 19:41:03.233 (timestamp=1941114) ORIGIN_CLIENT
+        reason=HIDE_SOFT_INPUT PHASE_CLIENT_ANIMATION_CANCEL
+        userId=0 displayId=0
+        requestWindowName=not set
+      #81 TYPE_SHOW - STATUS_CANCEL - com.android.settings.intelligence:476c196f (182ms):
+        startTime=2026-10-23 19:41:03.060 (timestamp=1940941) ORIGIN_SERVER
+        reason=ATTACH_NEW_INPUT PHASE_SERVER_ABORT_SHOW_IME_POST_LAYOUT
+        userId=0 displayId=0
+        requestWindowName=Window{ab3122f u0 com.android.settings.intelligence/com.android.settings.intelligence.search.SearchActivity}
+      #89 TYPE_HIDE - STATUS_FAIL - com.android.settings.intelligence:d099462e (0ms):
+        startTime=2026-10-23 19:41:03.267 (timestamp=1941149) ORIGIN_CLIENT
+        reason=HIDE_SOFT_INPUT PHASE_CLIENT_VIEW_SERVED
+        userId=0 displayId=0
+        requestWindowName=not set
+      #86 TYPE_SHOW - STATUS_CANCEL - system_server:cc109486 (44ms):
+        startTime=2026-10-23 19:41:03.228 (timestamp=1941109) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_ALREADY_VISIBLE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #90 TYPE_SHOW - STATUS_FAIL - com.android.settings.intelligence:56ea94c4 (52ms):
+        startTime=2026-10-23 19:41:03.401 (timestamp=1941282) ORIGIN_CLIENT
+        reason=SHOW_SOFT_INPUT PHASE_SERVER_UPDATE_CLIENT_VISIBILITY
+        userId=0 displayId=0
+        requestWindowName=not set
+      #92 TYPE_HIDE - STATUS_FAIL - com.android.settings.intelligence:e3b8cdc3 (0ms):
+        startTime=2026-10-23 19:41:03.490 (timestamp=1941372) ORIGIN_CLIENT
+        reason=HIDE_SOFT_INPUT PHASE_CLIENT_VIEW_SERVED
+        userId=0 displayId=0
+        requestWindowName=not set
+      #87 TYPE_SHOW - STATUS_CANCEL - com.android.inputmethod.latin:9979a8d7 (340ms):
+        startTime=2026-10-23 19:41:03.233 (timestamp=1941114) ORIGIN_IME
+        reason=RESET_NEW_CONFIGURATION PHASE_SERVER_ABORT_SHOW_IME_POST_LAYOUT
+        userId=0 displayId=0
+        requestWindowName=not set
+      #94 TYPE_HIDE - STATUS_FAIL - com.android.settings.intelligence:f3ae5e81 (0ms):
+        startTime=2026-10-23 19:41:03.587 (timestamp=1941469) ORIGIN_CLIENT
+        reason=HIDE_SOFT_INPUT PHASE_CLIENT_VIEW_SERVED
+        userId=0 displayId=0
+        requestWindowName=not set
+      #95 TYPE_HIDE - STATUS_FAIL - com.android.settings.intelligence:89b32102 (2ms):
+        startTime=2026-10-23 19:41:03.644 (timestamp=1941525) ORIGIN_CLIENT
+        reason=HIDE_SOFT_INPUT PHASE_CLIENT_VIEW_SERVED
+        userId=0 displayId=0
+        requestWindowName=not set
+      #96 TYPE_SHOW - STATUS_FAIL - com.android.settings.intelligence:77d00c07 (4ms):
+        startTime=2026-10-23 19:41:03.785 (timestamp=1941666) ORIGIN_CLIENT
+        reason=SHOW_SOFT_INPUT PHASE_SERVER_UPDATE_CLIENT_VISIBILITY
+        userId=0 displayId=0
+        requestWindowName=not set
+      #93 TYPE_SHOW - STATUS_CANCEL - com.android.inputmethod.latin:e255ec0d (310ms):
+        startTime=2026-10-23 19:41:03.518 (timestamp=1941399) ORIGIN_IME
+        reason=RESET_NEW_CONFIGURATION PHASE_SERVER_ABORT_SHOW_IME_POST_LAYOUT
+        userId=0 displayId=0
+        requestWindowName=not set
+      #98 TYPE_SHOW - STATUS_CANCEL - com.android.settings.intelligence:5622f154 (53ms):
+        startTime=2026-10-23 19:41:03.800 (timestamp=1941681) ORIGIN_SERVER
+        reason=SHOW_RESTORE_IME_VISIBILITY PHASE_CLIENT_REPORT_REQUESTED_VISIBLE_TYPES
+        userId=0 displayId=0
+        requestWindowName=not set
+      #99 TYPE_SHOW - STATUS_CANCEL - com.android.inputmethod.latin:3f7cb874 (125ms):
+        startTime=2026-10-23 19:41:03.817 (timestamp=1941698) ORIGIN_IME
+        reason=RESET_NEW_CONFIGURATION PHASE_SERVER_ABORT_SHOW_IME_POST_LAYOUT
+        userId=0 displayId=0
+        requestWindowName=not set
+      #100 TYPE_SHOW - STATUS_CANCEL - com.android.inputmethod.latin:53201937 (110ms):
+        startTime=2026-10-23 19:41:03.940 (timestamp=1941821) ORIGIN_IME
+        reason=RESET_NEW_CONFIGURATION PHASE_SERVER_ABORT_SHOW_IME_POST_LAYOUT
+        userId=0 displayId=0
+        requestWindowName=not set
+      #102 TYPE_SHOW - STATUS_CANCEL - system_server:b431c931 (1ms):
+        startTime=2026-10-23 19:41:04.127 (timestamp=1942008) ORIGIN_SERVER
+        reason=SHOW_INPUT_TARGET_CHANGED PHASE_SERVER_ALREADY_VISIBLE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #101 TYPE_SHOW - STATUS_CANCEL - com.android.inputmethod.latin:de7f9461 (115ms):
+        startTime=2026-10-23 19:41:04.049 (timestamp=1941931) ORIGIN_IME
+        reason=RESET_NEW_CONFIGURATION PHASE_SERVER_ABORT_SHOW_IME_POST_LAYOUT
+        userId=0 displayId=0
+        requestWindowName=not set
+      #103 TYPE_SHOW - STATUS_CANCEL - system_server:ef06a747 (5ms):
+        startTime=2026-10-23 19:41:04.196 (timestamp=1942077) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_ALREADY_VISIBLE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #97 TYPE_SHOW - STATUS_SUCCESS - com.android.settings.intelligence:aad2ac7c (652ms):
+        startTime=2026-10-23 19:41:03.797 (timestamp=1941678) ORIGIN_SERVER
+        reason=ATTACH_NEW_INPUT PHASE_CLIENT_ANIMATION_FINISHED_SHOW
+        userId=0 displayId=0
+        requestWindowName=Window{4a917bd u0 com.android.settings.intelligence/com.android.settings.intelligence.search.SearchActivity}
+      #104 TYPE_SHOW - STATUS_CANCEL - system_server:950a7656 (2ms):
+        startTime=2026-10-23 19:41:04.584 (timestamp=1942465) ORIGIN_SERVER
+        reason=CONTROLS_CHANGED PHASE_CLIENT_ON_CONTROLS_CHANGED
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #105 TYPE_HIDE - STATUS_CANCEL - com.android.launcher3:94fa65e6 (0ms):
+        startTime=2026-10-23 19:41:04.697 (timestamp=1942578) ORIGIN_CLIENT
+        reason=HIDE_SOFT_INPUT_BY_INSETS_API PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #106 TYPE_HIDE - STATUS_CANCEL - com.android.launcher3:93fa8b56 (1ms):
+        startTime=2026-10-23 19:41:04.899 (timestamp=1942780) ORIGIN_CLIENT
+        reason=HIDE_SOFT_INPUT_BY_INSETS_API PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #107 TYPE_SHOW - STATUS_CANCEL - system_server:92fb4b6 (2ms):
+        startTime=2026-10-23 19:41:05.863 (timestamp=1943744) ORIGIN_SERVER
+        reason=CONTROLS_CHANGED PHASE_CLIENT_ON_CONTROLS_CHANGED
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #108 TYPE_HIDE - STATUS_CANCEL - org.yuanzheng.singleplayer:dd9d6646 (14ms):
+        startTime=2026-10-23 19:41:06.728 (timestamp=1944609) ORIGIN_SERVER
+        reason=HIDE_UNSPECIFIED_WINDOW PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #110 TYPE_SHOW - STATUS_CANCEL - system_server:197174a7 (8ms):
+        startTime=2026-10-23 19:41:06.766 (timestamp=1944648) ORIGIN_SERVER
+        reason=CONTROLS_CHANGED PHASE_CLIENT_ON_CONTROLS_CHANGED
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #109 TYPE_HIDE - STATUS_SUCCESS - system_server:d0cadc52 (66ms):
+        startTime=2026-10-23 19:41:06.738 (timestamp=1944619) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_IME_NOTIFY_IME_VISIBILITY_CHANGED
+        userId=-10000 displayId=0
+        requestWindowName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      #111 TYPE_HIDE - STATUS_SUCCESS - system_server:b21d5abe (30ms):
+        startTime=2026-10-23 19:41:06.775 (timestamp=1944656) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_IME_NOTIFY_IME_VISIBILITY_CHANGED
+        userId=-10000 displayId=0
+        requestWindowName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      #112 TYPE_HIDE - STATUS_CANCEL - system_server:53436a4f (0ms):
+        startTime=2026-10-23 19:41:07.037 (timestamp=1944918) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #113 TYPE_HIDE - STATUS_CANCEL - system_server:b4bcffc5 (1ms):
+        startTime=2026-10-23 19:41:07.152 (timestamp=1945033) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #114 TYPE_HIDE - STATUS_CANCEL - system_server:6776e327 (1ms):
+        startTime=2026-10-23 19:41:07.317 (timestamp=1945198) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #116 TYPE_SHOW - STATUS_CANCEL - org.yuanzheng.singleplayer:11d1eea5 (1ms):
+        startTime=2026-10-23 19:41:13.135 (timestamp=1951017) ORIGIN_CLIENT
+        reason=SHOW_SOFT_INPUT PHASE_CLIENT_REPORT_REQUESTED_VISIBLE_TYPES
+        userId=0 displayId=0
+        requestWindowName=not set
+      #115 TYPE_SHOW - STATUS_CANCEL - org.yuanzheng.singleplayer:28cd7641 (183ms):
+        startTime=2026-10-23 19:41:13.123 (timestamp=1951004) ORIGIN_CLIENT
+        reason=SHOW_SOFT_INPUT PHASE_SERVER_ABORT_SHOW_IME_POST_LAYOUT
+        userId=0 displayId=0
+        requestWindowName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      #91 TYPE_HIDE - STATUS_TIMEOUT - com.android.settings.intelligence:ef476332 (10002ms):
+        startTime=2026-10-23 19:41:03.437 (timestamp=1941319) ORIGIN_CLIENT
+        reason=HIDE_SOFT_INPUT PHASE_CLIENT_REPORT_REQUESTED_VISIBLE_TYPES lastProgressTime=2026-10-23 19:41:03.439
+        userId=0 displayId=0
+        requestWindowName=not set
+      #117 TYPE_SHOW - STATUS_SUCCESS - org.yuanzheng.singleplayer:3d094d1b (534ms):
+        startTime=2026-10-23 19:41:13.148 (timestamp=1951030) ORIGIN_SERVER
+        reason=ATTACH_NEW_INPUT PHASE_CLIENT_ANIMATION_FINISHED_SHOW
+        userId=0 displayId=0
+        requestWindowName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      #120 TYPE_HIDE - STATUS_CANCEL - org.yuanzheng.singleplayer:b0435639 (4ms):
+        startTime=2026-10-23 19:41:14.756 (timestamp=1952638) ORIGIN_CLIENT
+        reason=HIDE_SOFT_INPUT PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #119 TYPE_SHOW - STATUS_CANCEL - system_server:dd73a522 (13ms):
+        startTime=2026-10-23 19:41:14.756 (timestamp=1952637) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_ALREADY_VISIBLE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #121 TYPE_SHOW - STATUS_CANCEL - system_server:62a57175 (9ms):
+        startTime=2026-10-23 19:41:14.780 (timestamp=1952661) ORIGIN_SERVER
+        reason=CONTROLS_CHANGED PHASE_CLIENT_ON_CONTROLS_CHANGED
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #118 TYPE_HIDE - STATUS_SUCCESS - org.yuanzheng.singleplayer:b840279 (335ms):
+        startTime=2026-10-23 19:41:14.750 (timestamp=1952632) ORIGIN_CLIENT
+        reason=HIDE_SOFT_INPUT PHASE_IME_NOTIFY_IME_VISIBILITY_CHANGED
+        userId=0 displayId=0
+        requestWindowName=Window{4f9e31d u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      #122 TYPE_HIDE - STATUS_CANCEL - system_server:a4732939 (1ms):
+        startTime=2026-10-23 19:41:15.182 (timestamp=1953063) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #123 TYPE_HIDE - STATUS_CANCEL - system_server:1cec62c5 (1ms):
+        startTime=2026-10-23 19:41:15.603 (timestamp=1953484) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #124 TYPE_HIDE - STATUS_CANCEL - org.yuanzheng.singleplayer:941b4eb (1ms):
+        startTime=2026-10-23 19:44:25.294 (timestamp=2143175) ORIGIN_SERVER
+        reason=HIDE_REMOVE_CLIENT PHASE_SERVER_SHOULD_HIDE
+        userId=0 displayId=0
+        requestWindowName=not set
+      #127 TYPE_SHOW - STATUS_CANCEL - system_server:8e9fed0 (3ms):
+        startTime=2026-10-23 19:44:25.425 (timestamp=2143306) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_ALREADY_VISIBLE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #126 TYPE_SHOW - STATUS_CANCEL - com.android.settings.intelligence:8b27bc92 (8ms):
+        startTime=2026-10-23 19:44:25.423 (timestamp=2143305) ORIGIN_SERVER
+        reason=SHOW_RESTORE_IME_VISIBILITY PHASE_CLIENT_REPORT_REQUESTED_VISIBLE_TYPES
+        userId=0 displayId=0
+        requestWindowName=not set
+      #128 TYPE_SHOW - STATUS_CANCEL - com.android.settings.intelligence:bfdb8a08 (2ms):
+        startTime=2026-10-23 19:44:25.432 (timestamp=2143313) ORIGIN_CLIENT
+        reason=SHOW_SOFT_INPUT PHASE_CLIENT_REPORT_REQUESTED_VISIBLE_TYPES
+        userId=0 displayId=0
+        requestWindowName=not set
+      #125 TYPE_SHOW - STATUS_SUCCESS - com.android.settings.intelligence:757efc6d (370ms):
+        startTime=2026-10-23 19:44:25.421 (timestamp=2143303) ORIGIN_SERVER
+        reason=ATTACH_NEW_INPUT PHASE_CLIENT_ANIMATION_FINISHED_SHOW
+        userId=0 displayId=0
+        requestWindowName=Window{4a917bd u0 com.android.settings.intelligence/com.android.settings.intelligence.search.SearchActivity}
+      #129 TYPE_SHOW - STATUS_CANCEL - com.android.settings.intelligence:7b478801 (7168ms):
+        startTime=2026-10-23 19:44:25.436 (timestamp=2143317) ORIGIN_SERVER
+        reason=ATTACH_NEW_INPUT PHASE_CLIENT_ON_CONTROLS_CHANGED
+        userId=0 displayId=0
+        requestWindowName=Window{4a917bd u0 com.android.settings.intelligence/com.android.settings.intelligence.search.SearchActivity}
+      #130 TYPE_HIDE - STATUS_CANCEL - org.yuanzheng.singleplayer:8be32c31 (3ms):
+        startTime=2026-10-23 19:44:33.357 (timestamp=2151238) ORIGIN_SERVER
+        reason=HIDE_UNSPECIFIED_WINDOW PHASE_CLIENT_ALREADY_HIDDEN
+        userId=0 displayId=0
+        requestWindowName=not set
+      #131 TYPE_HIDE - STATUS_SUCCESS - system_server:97d499eb (35ms):
+        startTime=2026-10-23 19:44:33.365 (timestamp=2151247) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_IME_NOTIFY_IME_VISIBILITY_CHANGED
+        userId=-10000 displayId=0
+        requestWindowName=Window{5a405b9 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      #132 TYPE_SHOW - STATUS_CANCEL - system_server:8a07d144 (4ms):
+        startTime=2026-10-23 19:44:33.407 (timestamp=2151289) ORIGIN_SERVER
+        reason=CONTROLS_CHANGED PHASE_CLIENT_ON_CONTROLS_CHANGED
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #133 TYPE_HIDE - STATUS_CANCEL - system_server:812ba651 (1ms):
+        startTime=2026-10-23 19:44:33.413 (timestamp=2151295) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #134 TYPE_HIDE - STATUS_CANCEL - system_server:b2af7197 (2ms):
+        startTime=2026-10-23 19:44:33.683 (timestamp=2151564) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #135 TYPE_HIDE - STATUS_CANCEL - system_server:3e70b5f8 (1ms):
+        startTime=2026-10-23 19:44:33.782 (timestamp=2151663) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #136 TYPE_HIDE - STATUS_CANCEL - system_server:43f019f9 (0ms):
+        startTime=2026-10-23 19:44:33.920 (timestamp=2151802) ORIGIN_SERVER
+        reason=IME_REQUESTED_CHANGED_LISTENER PHASE_SERVER_SHOULD_HIDE
+        userId=-10000 displayId=0
+        requestWindowName=not set
+      #138 TYPE_SHOW - STATUS_CANCEL - org.yuanzheng.singleplayer:8d33e64c (2ms):
+        startTime=2026-10-23 19:44:40.007 (timestamp=2157888) ORIGIN_CLIENT
+        reason=SHOW_SOFT_INPUT PHASE_CLIENT_REPORT_REQUESTED_VISIBLE_TYPES
+        userId=0 displayId=0
+        requestWindowName=not set
+      #137 TYPE_SHOW - STATUS_CANCEL - org.yuanzheng.singleplayer:f40babe8 (74ms):
+        startTime=2026-10-23 19:44:39.993 (timestamp=2157874) ORIGIN_CLIENT
+        reason=SHOW_SOFT_INPUT PHASE_SERVER_ABORT_SHOW_IME_POST_LAYOUT
+        userId=0 displayId=0
+        requestWindowName=Window{5a405b9 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+      #139 TYPE_SHOW - STATUS_SUCCESS - org.yuanzheng.singleplayer:76f16ffb (461ms):
+        startTime=2026-10-23 19:44:40.021 (timestamp=2157902) ORIGIN_SERVER
+        reason=ATTACH_NEW_INPUT PHASE_CLIENT_ANIMATION_FINISHED_SHOW
+        userId=0 displayId=0
+        requestWindowName=Window{5a405b9 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+  UserId=0
+    mBindingController:
+      mSelectedImeId=com.android.inputmethod.latin/.LatinIME
+      mCurrentSubtype=android.view.inputmethod.InputMethodSubtype@c9194f98
+      mCurSeq=40
+      mCurImeId=com.android.inputmethod.latin/.LatinIME
+      mBackgroundConnection=null
+      mMainConnection=com.android.server.inputmethod.InputMethodBindingController$MainConnection@f80dacf
+      mVisibleConnection=com.android.server.inputmethod.InputMethodBindingController$VisibleConnection@e22ac7d
+      mCurToken=android.os.Binder@e1e874a
+      mCurDisplayId=0
+      mActive=true
+      mCurHostInputToken=null
+      mCurImeIntent=Intent { act=android.view.InputMethod xflg=0x4 cmp=com.android.inputmethod.latin/.LatinIME (has extras) }
+      mCurIme=com.android.server.inputmethod.IInputMethodInvoker@8626ff8
+      mImeWindowVis=3
+      mBackDisposition=0
+      mSelectedDisplayId=0
+      mDeviceId=0
+      mSupportsStylusHw=false
+      mSupportsConnectionlessStylusHw=false
+    mCurClient=ClientState{2140ff3 mUid=10156 mPid=3942 mSelfReportedDisplayId=0}
+    mFocusedWindowPerceptible={android.os.BinderProxy@6ad5676=true, android.os.BinderProxy@98d8314=true, android.os.BinderProxy@e70ea5b=true, android.os.BinderProxy@2c1b002=true, android.os.BinderProxy@dd2d656=true, null=true, android.os.BinderProxy@c7edff4=false, android.os.BinderProxy@1c011fa=true, android.os.BinderProxy@81fbb80=true}
+    mImeBindingState:
+      mFocusedWindow=android.os.BinderProxy@81fbb80
+      mFocusedWindowSoftInputMode=STATE_UNSPECIFIED|ADJUST_RESIZE|IS_FORWARD_NAVIGATION
+      mFocusedWindowClient=ClientState{2140ff3 mUid=10156 mPid=3942 mSelfReportedDisplayId=0}
+    mBoundToMethod=true
+    mEnabledSession=SessionState{uid=10156 pid=3942 ime=e4316d6 session=490e2ae channel=ClientState{2140ff3 mUid=10156 mPid=3942 mSelfReportedDisplayId=0} userId=0}
+    mVisibilityStateComputer:
+      mImeHiddenByDisplayPolicy=false
+      mInputShown=true
+      mLastImeTargetWindow=android.os.BinderProxy@81fbb80
+    mInFullscreenMode=false
+    mEnabledA11ySessions={}
+    Input Methods:
+      InputMethod #0:
+        mId=com.android.inputmethod.latin/.LatinIME mSettingsActivityName=com.android.inputmethod.latin.settings.SettingsActivity mLanguageSettingsActivityName=null mIsVrOnly=false mIsVirtualDeviceOnly=false mSupportsSwitchingToNextInputMethod=true mInlineSuggestionsEnabled=false mSupportsInlineSuggestionsWithTouchExploration=false mSuppressesSpellChecker=false mShowInInputMethodPicker=true mSupportsStylusHandwriting=false mSupportsConnectionlessStylusHandwriting=false mStylusHandwritingSettingsActivityAttr=null
+        mIsDefaultResId=0x7f050012
+        Service:
+          priority=0 preferredOrder=0 match=0x108000 specificIndex=-1 isDefault=false
+          ServiceInfo:
+            name=com.android.inputmethod.latin.LatinIME
+            packageName=com.android.inputmethod.latin
+            labelRes=0x7f0f0053 nonLocalizedLabel=null icon=0x0 banner=0x0
+            enabled=true exported=true directBootAware=true
+            permission=android.permission.BIND_INPUT_METHOD
+            flags=0x100000
+            ApplicationInfo:
+              packageName=com.android.inputmethod.latin
+              labelRes=0x7f0f0053 nonLocalizedLabel=null icon=0x7f08009e banner=0x0
+              processName=com.android.inputmethod.latin
+              taskAffinity=com.android.inputmethod.latin
+              uid=10112 flags=0x30c9be45 privateFlags=0x8c081060 theme=0x0
+              requiresSmallestWidthDp=0 compatibleWidthLimitDp=0 largestWidthLimitDp=0
+              sourceDir=/product/app/LatinIME/LatinIME.apk
+              resourceDirs=[/product/overlay/NavigationBarMode3Button/NavigationBarMode3ButtonOverlay.apk, /product/overlay/DisplayCutoutEmulationHole/DisplayCutoutEmulationHoleOverlay.apk]
+              overlayPaths=[/product/overlay/NavigationBarMode3Button/NavigationBarMode3ButtonOverlay.apk, /data/resource-cache/com.android.systemui-neutral-zXI9.frro, /data/resource-cache/com.android.systemui-accent-lF7U.frro, /data/resource-cache/com.android.systemui-dynamic-CoE4.frro, /product/overlay/DisplayCutoutEmulationHole/DisplayCutoutEmulationHoleOverlay.apk]
+              seinfo=default:targetSdkVersion=30:partition=product
+              seinfoUser=:complete
+              dataDir=/data/user_de/0/com.android.inputmethod.latin
+              deviceProtectedDataDir=/data/user_de/0/com.android.inputmethod.latin
+              credentialProtectedDataDir=/data/user/0/com.android.inputmethod.latin
+              enabled=true minSdkVersion=24 targetSdkVersion=30 versionCode=30 targetSandboxVersion=1
+              supportsRtl=true
+              fullBackupContent=true
+              crossProfile=false
+              HiddenApiEnforcementPolicy=2
+              usesNonSdkApi=false
+              allowsPlaybackCapture=true
+              nativeHeapZeroInitialized=0
+              enableOnBackInvokedCallback=false
+              allowCrossUidActivitySwitchFromBelow=true
+              mPageSizeAppCompatFlags=0
+              isAppLockSupported=false
+              isAppLockEnabled=false
+              createTimestamp=2150339
+        InputMethodSubtype array: count=82
+          InputMethodSubtype #0:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-921088104 mSubtypeLocale=en_US mSubtypeLanguageTag=en-US mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-921088104
+          InputMethodSubtype #1:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-1337596075 mSubtypeLocale=en_GB mSubtypeLanguageTag=en-GB mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-1337596075
+          InputMethodSubtype #2:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=1872175968 mSubtypeLocale=af mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=1872175968
+          InputMethodSubtype #3:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=1494081088 mSubtypeLocale=ar mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=1494081088
+          InputMethodSubtype #4:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=1890646388 mSubtypeLocale=az_AZ mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=1890646388
+          InputMethodSubtype #5:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=499361881 mSubtypeLocale=be_BY mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=499361881
+          InputMethodSubtype #6:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=195674344 mSubtypeLocale=bg mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=195674344
+          InputMethodSubtype #7:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=1599191706 mSubtypeLocale=bg mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=1599191706
+          InputMethodSubtype #8:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-1575728372 mSubtypeLocale=bn_BD mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=-1575728372
+          InputMethodSubtype #9:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-1074423700 mSubtypeLocale=bn_IN mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=-1074423700
+          InputMethodSubtype #10:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-756735787 mSubtypeLocale=ca mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-756735787
+          InputMethodSubtype #11:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=758984400 mSubtypeLocale=cs mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=758984400
+          InputMethodSubtype #12:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=770990173 mSubtypeLocale=da mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=770990173
+          InputMethodSubtype #13:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=774684257 mSubtypeLocale=de mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=774684257
+          InputMethodSubtype #14:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=2060439722 mSubtypeLocale=de_CH mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=2060439722
+          InputMethodSubtype #15:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=242746067 mSubtypeLocale=el mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=242746067
+          InputMethodSubtype #16:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-1923548115 mSubtypeLocale=en_IN mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-1923548115
+          InputMethodSubtype #17:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=1083200842 mSubtypeLocale=eo mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=1083200842
+          InputMethodSubtype #18:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=816242702 mSubtypeLocale=es mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=816242702
+          InputMethodSubtype #19:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-2066550842 mSubtypeLocale=es_US mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-2066550842
+          InputMethodSubtype #20:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-1572971239 mSubtypeLocale=es_419 mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-1572971239
+          InputMethodSubtype #21:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-332580523 mSubtypeLocale=et_EE mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-332580523
+          InputMethodSubtype #22:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=118381575 mSubtypeLocale=eu_ES mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=118381575
+          InputMethodSubtype #23:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-1100561836 mSubtypeLocale=fa mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=-1100561836
+          InputMethodSubtype #24:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=835636643 mSubtypeLocale=fi mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=835636643
+          InputMethodSubtype #25:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=843948332 mSubtypeLocale=fr mSubtypeLanguageTag=fr mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=843948332
+          InputMethodSubtype #26:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-354699631 mSubtypeLocale=fr_CA mSubtypeLanguageTag=fr-CA mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-354699631
+          InputMethodSubtype #27:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-354658827 mSubtypeLocale=fr_CH mSubtypeLanguageTag=fr-CH mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-354658827
+          InputMethodSubtype #28:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-1187424452 mSubtypeLocale=gl_ES mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-1187424452
+          InputMethodSubtype #29:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=963984255 mSubtypeLocale=hi mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=963984255
+          InputMethodSubtype #30:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-459503199 mSubtypeLocale=hi mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=-459503199
+          InputMethodSubtype #31:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=901206634 mSubtypeLocale=hr mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=901206634
+          InputMethodSubtype #32:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=903977197 mSubtypeLocale=hu mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=903977197
+          InputMethodSubtype #33:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-476396598 mSubtypeLocale=hy_AM mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=-476396598
+          InputMethodSubtype #34:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=2108597344 mSubtypeLocale=in mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=2108597344
+          InputMethodSubtype #35:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=2113214949 mSubtypeLocale=is mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=2113214949
+          InputMethodSubtype #36:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=931682827 mSubtypeLocale=it mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=931682827
+          InputMethodSubtype #37:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-652935654 mSubtypeLocale=it_CH mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-652935654
+          InputMethodSubtype #38:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=1727731901 mSubtypeLocale=iw mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=1727731901
+          InputMethodSubtype #39:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=1846648426 mSubtypeLocale=ka_GE mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=1846648426
+          InputMethodSubtype #40:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=762565366 mSubtypeLocale=kk mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=762565366
+          InputMethodSubtype #41:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=325412922 mSubtypeLocale=km_KH mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=325412922
+          InputMethodSubtype #42:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-1938291121 mSubtypeLocale=kn_IN mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=-1938291121
+          InputMethodSubtype #43:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=775494660 mSubtypeLocale=ky mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=775494660
+          InputMethodSubtype #44:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-2095745236 mSubtypeLocale=lo_LA mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=-2095745236
+          InputMethodSubtype #45:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-2094941373 mSubtypeLocale=lt mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-2094941373
+          InputMethodSubtype #46:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-2093094331 mSubtypeLocale=lv mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-2093094331
+          InputMethodSubtype #47:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-1353667716 mSubtypeLocale=mk mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=-1353667716
+          InputMethodSubtype #48:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-1048384556 mSubtypeLocale=ml_IN mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=-1048384556
+          InputMethodSubtype #49:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-842021973 mSubtypeLocale=mn_MN mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=-842021973
+          InputMethodSubtype #50:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=1954258691 mSubtypeLocale=mr_IN mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=1954258691
+          InputMethodSubtype #51:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-2067235743 mSubtypeLocale=ms_MY mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-2067235743
+          InputMethodSubtype #52:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=1058205204 mSubtypeLocale=nb mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=1058205204
+          InputMethodSubtype #53:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-670413586 mSubtypeLocale=ne_NP mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=-670413586
+          InputMethodSubtype #54:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=1605364360 mSubtypeLocale=ne_NP mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=1605364360
+          InputMethodSubtype #55:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=1067440414 mSubtypeLocale=nl mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=1067440414
+          InputMethodSubtype #56:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=1343007020 mSubtypeLocale=nl_BE mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=1343007020
+          InputMethodSubtype #57:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=1124698716 mSubtypeLocale=pl mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=1124698716
+          InputMethodSubtype #58:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-889195354 mSubtypeLocale=pt_BR mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-889195354
+          InputMethodSubtype #59:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-486540198 mSubtypeLocale=pt_PT mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-486540198
+          InputMethodSubtype #60:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-1927784072 mSubtypeLocale=ro mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-1927784072
+          InputMethodSubtype #61:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=1983547218 mSubtypeLocale=ru mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=1983547218
+          InputMethodSubtype #62:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-1902849005 mSubtypeLocale=sk mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-1902849005
+          InputMethodSubtype #63:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-1901925484 mSubtypeLocale=sl mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-1901925484
+          InputMethodSubtype #64:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=2009405806 mSubtypeLocale=sr mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=2009405806
+          InputMethodSubtype #65:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-190490980 mSubtypeLocale=sr_ZZ mSubtypeLanguageTag=sr-Latn mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-190490980
+          InputMethodSubtype #66:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=1219821379 mSubtypeLocale=sv mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=1219821379
+          InputMethodSubtype #67:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-1891766753 mSubtypeLocale=sw mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-1891766753
+          InputMethodSubtype #68:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=1739385386 mSubtypeLocale=ta_IN mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=1739385386
+          InputMethodSubtype #69:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=2019212249 mSubtypeLocale=ta_SG mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=2019212249
+          InputMethodSubtype #70:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=504853385 mSubtypeLocale=te_IN mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=504853385
+          InputMethodSubtype #71:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=529847764 mSubtypeLocale=th mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=529847764
+          InputMethodSubtype #72:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-259881489 mSubtypeLocale=tl mSubtypeLanguageTag=fil mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-259881489
+          InputMethodSubtype #73:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=1244756446 mSubtypeLocale=tr mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=1244756446
+          InputMethodSubtype #74:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=415200485 mSubtypeLocale=tyv_RU mSubtypeLanguageTag=tyv-RU mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=415200485
+          InputMethodSubtype #75:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=1048856876 mSubtypeLocale=uk mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=1048856876
+          InputMethodSubtype #76:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-1386416138 mSubtypeLocale=uz_UZ mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-1386416138
+          InputMethodSubtype #77:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-1818808594 mSubtypeLocale=vi mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-1818808594
+          InputMethodSubtype #78:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-1693209738 mSubtypeLocale=zu mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-1693209738
+          InputMethodSubtype #79:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=-1573262419 mSubtypeLocale=zz mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=true mSubtypeHashCode=-1573262419
+          InputMethodSubtype #80:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=784412869 mSubtypeLocale=de mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=784412869
+          InputMethodSubtype #81:
+            mSubtypeNameOverride= mSubtypeShortLabel= mLayoutLabelNonLocalized= mPkLanguageTag= mPkLayoutType= mSubtypeId=845917585 mSubtypeLocale=fr mSubtypeLanguageTag= mSubtypeMode=keyboard mIsAuxiliary=false mOverridesImplicitlyEnabledSubtype=false mIsAsciiCapable=false mSubtypeHashCode=845917585
+
+Input method client state for android.view.inputmethod.InputMethodManager@a899901:
+  mFallbackInputConnection=RemoteInputConnectionImpl{connection=android.view.inputmethod.BaseInputConnection@faa3a6 mDeactivateRequested=false mServedView=null}
+  mActive=true mRestartOnNextWindowFocus=false mBindSequence=40 mCurImeId=com.android.inputmethod.latin/.LatinIME
+  mFullscreenMode=false
+  mCurMethod=com.android.internal.inputmethod.IInputMethodSession$Stub$Proxy@f871e7
+  mCurRootView=android.view.ViewRootImpl@afea16b
+  mServedView=org.godotengine.godot.input.GodotEditText{a4e10f6 VFED..CL. .F...... 0,0-1080,126 aid=0}
+  mNextServedView=org.godotengine.godot.input.GodotEditText{a4e10f6 VFED..CL. .F...... 0,0-1080,126 aid=0}
+  mServedConnecting=false
+  mCurrentEditorInfo:
+    inputType=0x200001 imeOptions=0x10000006 privateImeOptions=null
+    actionLabel=null actionId=0
+    initialSelStart=2 initialSelEnd=2 initialToolType=0 initialCapsMode=0x0
+    hintText=null label=null
+    packageName=org.yuanzheng.singleplayer autofillId=0 fieldId=-1 fieldName=null
+    hintLocales=null
+    supportedHandwritingGestureTypes=SELECT|SELECT_RANGE|INSERT|DELETE|DELETE_RANGE|REMOVE_SPACE|JOIN_OR_SPLIT
+    supportedHandwritingGesturePreviewTypes=SELECT|SELECT_RANGE|DELETE|DELETE_RANGE
+    isStylusHandwritingEnabled=false
+    writingToolsEnabled=true
+    contentMimeTypes=null
+  mServedInputConnection=RemoteInputConnectionImpl{connection=com.android.internal.inputmethod.EditableInputConnection@c271194 mDeactivateRequested=false mServedView=org.godotengine.godot.input.GodotEditText{a4e10f6 VFED..CL. .F...... 0,0-1080,126 aid=0}}
+  mServedInputConnectionHandler=null
+  mLastPendingStartSeqId=-1
+  mCompletions=null
+  mCursorRect=Rect(0, 0 - 0, 0)
+  mCursorSelStart=2 mCursorSelEnd=2 mCursorCandStart=0 mCursorCandEnd=2
+  ImeBackCallbackProxy:
+    mImeCallbacks:
+      ImeOnBackInvokedCallback@149607037 Callback=android.window.IOnBackInvokedCallback$Stub$Proxy@6a179c9
+
+Input method service state for com.android.inputmethod.latin.LatinIME@b63eff5:
+  mViewsCreated=true
+  mDecorViewVisible=true mDecorViewWasVisible=true mWindowVisible=true mInShowWindow=false
+  Configuration={1.0 310mcc260mnc [en_US] ldltr sw411dp w411dp h875dp 420dpi nrml long compactNeeded port finger -keyb/v/h -nav/h winConfig={ mBounds=Rect(0, 0 - 1080, 2424) mAppBounds=Rect(0, 0 - 1080, 2361) mMaxBounds=Rect(0, 0 - 1080, 2424) mDisplayRotation=ROTATION_0 mWindowingMode=fullscreen mActivityType=undefined mAlwaysOnTop=undefined mRotation=ROTATION_0} as.7 s.408 fontWeightAdjustment=0}
+  mToken=android.os.BinderProxy@de8f2bf
+  mInputBinding=InputBinding{android.os.BinderProxy@8c9b51b / uid 10156 / pid 3942}
+  mInputConnection=RemoteInputConnection{idHash=#f286b8}
+  mStartedInputConnection=RemoteInputConnection{idHash=#69f9c91}
+  mInputStarted=true mInputViewStarted=true mCandidatesViewStarted=false
+  mInputEditorInfo:
+    inputType=0x200001 imeOptions=0x10000006 privateImeOptions=null
+    actionLabel=null actionId=0
+    initialSelStart=2 initialSelEnd=2 initialToolType=0 initialCapsMode=0x0
+    hintText=null label=null
+    packageName=org.yuanzheng.singleplayer autofillId=0 fieldId=-1 fieldName=null
+    hintLocales=null
+    supportedHandwritingGestureTypes=SELECT|SELECT_RANGE|INSERT|DELETE|DELETE_RANGE|REMOVE_SPACE|JOIN_OR_SPLIT
+    supportedHandwritingGesturePreviewTypes=SELECT|SELECT_RANGE|DELETE|DELETE_RANGE
+    isStylusHandwritingEnabled=true
+    writingToolsEnabled=true
+    contentMimeTypes=null
+  mShowInputRequested=true mLastShowInputRequested=true mShowInputFlags=0x1
+  mCandidatesVisibility=4 mFullscreenApplied=true mIsFullscreen=false mExtractViewHidden=false
+  mExtractedText: null
+  mExtractedToken=0
+  mIsInputViewShown=true mStatusIcon=0
+  Last computed insets:
+    contentTopInsets=1387 visibleTopInsets=1387 touchableInsets=3 touchableRegion=SkRegion((0,1387,1080,2162))
+  mSettingsObserver=SettingsObserver{mShowImeWithHardKeyboard=2}
+  mNavigationBarController={mImeDrawsImeNavBar=false mNavigationBarFrame=null mShowImeSwitcherButton=false mImeSwitcherButtonEnabled=true mCustomImeSwitcherButtonRequestedVisible=false mAppearance=0x0 mDarkIntensity=0.0 mDrawLegacyNavigationBarBackground=false}
+  mBackCallbackRegistered=true
+LatinIME state :
+  VersionCode = 30
+  VersionName = 17
+  Keyboard mode = 0
+Current settings :
+   mSpacingAndPunctuations = mSortedSymbolsPrecededBySpace = [38, 40, 91, 123]
+   mSortedSymbolsFollowedBySpace = [33, 38, 41, 44, 46, 58, 59, 63, 93, 125]
+   mSortedWordConnectors = [39, 45]
+   mSortedWordSeparators = [9, 10, 32, 33, 34, 38, 40, 41, 42, 43, 44, 46, 47, 58, 59, 60, 61, 62, 63, 91, 93, 95, 123, 124, 125, 160]
+   mSuggestPuncList = PunctuationSuggestions:  words=[!, ?, \,, :, ;, ", (, ), ', -, /, @, _]
+   mSentenceSeparator = 46
+   mSentenceSeparatorAndSpace = . 
+   mCurrentLanguageHasSpaces = true
+   mUsesAmericanTypography = true
+   mUsesGermanRules = false
+   mDelayInMillisecondsToUpdateOldSuggestions = 300
+   mAutoCap = true
+   mVibrateOn = true
+   mSoundOn = false
+   mKeyPreviewPopupOn = true
+   mShowsVoiceInputKey = true
+   mIncludesOtherImesInLanguageSwitchList = true
+   mShowsLanguageSwitchKey = true
+   mUseContactsDict = true
+   mUsePersonalizedDicts = true
+   mUseDoubleSpacePeriod = true
+   mBlockPotentiallyOffensive = true
+   mBigramPredictionEnabled = true
+   mGestureInputEnabled = false
+   mGestureTrailEnabled = true
+   mGestureFloatingPreviewTextEnabled = true
+   mSlidingKeyInputPreviewEnabled = true
+   mKeyLongpressTimeout = 300
+   mLocale = en_US
+   mInputAttributes = InputAttributes: inputType=0x00200001 noAutoCorrect shouldShowSuggestions insertSpaces targetApp=org.yuanzheng.singleplayer
+
+   mKeypressVibrationDuration = -1
+   mKeypressSoundVolume = -1.0
+   mKeyPreviewPopupDismissDelay = 70
+   mAutoCorrectEnabled = true
+   mAutoCorrectionThreshold = 0.185
+   mAutoCorrectionEnabledPerUserSettings = false
+   mSuggestionsEnabledPerUserSettings = true
+   mDisplayOrientation = 1
+   mAppWorkarounds = Target application : null
+Package : org.yuanzheng.singleplayer
+Target app sdk version : 36
+   mIsInternal = false
+   mKeyPreviewShowUpDuration = 17
+   mKeyPreviewDismissDuration = 53
+   mKeyPreviewShowUpStartScaleX = 0.98
+   mKeyPreviewShowUpStartScaleY = 0.98
+   mKeyPreviewDismissEndScaleX = 0.94000006
+   mKeyPreviewDismissEndScaleY = 0.94000006
+

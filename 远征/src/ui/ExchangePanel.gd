@@ -26,13 +26,33 @@ var _honor_l: Label = null   # 顶部荣誉余额
 var _hint: Label = null      # 底部提示（默认引导 / 荣誉不足红字）
 var _toast_l: Label = null   # 淡出提示（成功兑换）
 var _toast_tw: Tween = null
+var _panel: PanelContainer
+var _scroll: ScrollContainer
+var _back: Button
+var _banner: Control
 
 
 func _ready() -> void:
-	G.center_fixed_page.call_deferred(self)
-	set_anchors_preset(Control.PRESET_FULL_RECT)
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_entries = _load_entries()
 	_build()
+	preload("res://src/ui/UiSafeArea.gd").watch(self,_layout_page)
+	get_viewport().size_changed.connect(_layout_page)
+	_layout_page.call_deferred()
+
+func _layout_page() -> void:
+	if _panel == null: return
+	var safe := G.ui_safe_rect(self)
+	_banner.position=Vector2(safe.get_center().x-150,safe.position.y+12)
+	_panel.position=Vector2(safe.get_center().x-220,safe.position.y+80)
+	_panel.custom_minimum_size=Vector2(440,0)
+	_panel.size=Vector2(440,maxf(400,safe.size.y-92))
+	var inner_h := _panel.size.y-32
+	_scroll.size=Vector2(CONTENT_W,maxf(120,inner_h-162))
+	_hint.position.y=inner_h-94
+	_back.position=Vector2((CONTENT_W-220)*.5,inner_h-64)
+	_back.size=Vector2(220,60)
+	if is_instance_valid(_toast_l): _toast_l.position.y=inner_h-124
 
 
 func _load_entries() -> Array:
@@ -56,11 +76,13 @@ func _build() -> void:
 	G.veil(self, 0.72)
 
 	var banner := G.banner_box("演 武 补 给", 300, 50)
+	_banner=banner
 	banner.position = Vector2(90, 36)
 	add_child(banner)
 
 	# 统一黑漆墨玉金边主面板 + 九宫格玄铁外框
 	var panel := PanelContainer.new()
+	_panel=panel
 	var box := StyleBoxFlat.new()
 	box.bg_color = Color("141118", 0.96)
 	box.border_color = Color("b89658")
@@ -130,6 +152,7 @@ func _build() -> void:
 
 	# 14 条兑换项放不进一屏：装进滚动容器，返回/提示行固定在底部不再被行压住
 	var scroll := ScrollContainer.new()
+	_scroll=scroll
 	scroll.position = Vector2(0, 58)
 	scroll.size = Vector2(CONTENT_W, 458)
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -150,25 +173,9 @@ func _build() -> void:
 	_hint.custom_minimum_size = Vector2(CONTENT_W, 0)
 	_content.add_child(_hint)
 
-	var back := G.gold_button("返 回", 130, 40)
-	back.position = Vector2((CONTENT_W - 130.0) * 0.5, 598)
-	var back_box := StyleBoxFlat.new()
-	back_box.bg_color = Color("231c26")
-	back_box.border_color = Color("8c6f42")
-	back_box.set_border_width_all(1)
-	back_box.corner_radius_top_left = 6
-	back_box.corner_radius_top_right = 6
-	back_box.corner_radius_bottom_left = 6
-	back_box.corner_radius_bottom_right = 6
-	for st in ["normal", "hover", "pressed", "focus"]:
-		back.add_theme_stylebox_override(st, back_box)
-	back.add_theme_color_override("font_color", Color("e8d2a0"))
-	var bl := back.get_child(0) as Label
-	if bl != null:
-		bl.add_theme_color_override("font_color", Color("e8d2a0"))
-	back.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			_on_back())
+	var back := preload("res://src/ui/ReadingSkin.gd").button("返回")
+	_back=back
+	back.pressed.connect(_on_back)
 	_content.add_child(back)
 
 	_refresh()
@@ -345,7 +352,7 @@ func _toast(msg: String) -> void:
 		_toast_tw.kill()
 		_toast_tw = null
 	_toast_l = G.gold_label(msg, G.FS_SM, false, Color("4a7a44"), false)
-	_toast_l.position = Vector2(0, 556)
+	_toast_l.position = Vector2(0, _panel.size.y-156)
 	_toast_l.custom_minimum_size = Vector2(CONTENT_W, 0)
 	if _content != null:
 		_content.add_child(_toast_l)

@@ -1,125 +1,94 @@
-# VerifyAudio.gd —— 音频层回归（场景模式：godot --headless --path . res://tools/VerifyAudio.tscn）
-# 守：22 个音效素材全部可解析（缺一个就红）、音效池逐次轮转 + 随机音高（防机械复读）、
-#     静音早退、BGM 同名不重播 / 换曲 / 缺曲静默降级、音量设置 API，
-#     以及"防循环依赖"：G 与 Audio 之间不许有编译期互相引用（只准运行时取节点）。
-# 音效由 tools/make_sfx.py 程序合成；新增/重生成后要跑 godot --headless --path . --import。
 extends Node
-
 var _fails := 0
-
-
-func _ready() -> void:
-	G.SAVE_PATH = "user://save_verify_audio.json"
-	await _run()
-	get_tree().quit(0 if _fails == 0 else 1)
-
-
-func _check(cond: bool, msg: String) -> void:
-	if not cond:
+var _checks := 0
+func _check(ok: bool, words: String) -> void:
+	_checks += 1
+	if not ok:
 		_fails += 1
-		push_error("FAIL: " + msg)
-
-
-func _run() -> void:
-	# ---- A. 音效素材完整性（程序合成，不允许缺；缺了先跑 tools/make_sfx.py） ----
-	var missing: Array = []
-	for n in Audio.SFX_NAMES:
-		if Audio.sfx_path(String(n)) == "":
-			missing.append(String(n))
-	_check(missing.is_empty(), "音效素材缺失：%s" % str(missing))
-	_check(Audio.SFX_NAMES.size() >= 22, "音效清单不应少于 22 个，实为 %d" % Audio.SFX_NAMES.size())
-	_check(Audio.sfx_path("ui_click").begins_with("res://assets/audio/ui_click"),
-		"sfx_path 应指向 assets/audio，实为 %s" % Audio.sfx_path("ui_click"))
-
-	# ---- B. BGM（占位也要在；缺了会整段静默） ----
-	var bgm_missing: Array = []
-	for b in ["bgm_home", "bgm_city", "bgm_title", "bgm_route", "bgm_map", "bgm_battle"]:
-		if not ResourceLoader.exists("res://assets/audio/%s.ogg" % b):
-			bgm_missing.append(b)
-	_check(bgm_missing.is_empty(), "BGM 缺失：%s" % str(bgm_missing))
-
-	# ---- C. 音效池：连点不掐断（逐次轮转 + 至少能播） ----
-	_check(Audio.sfx_player_count() >= 4, "音效池至少 4 个播放器，实为 %d" % Audio.sfx_player_count())
-	for i in 12:
-		Audio.sfx("ui_click")
-	_check(Audio.sfx_playing_count() >= 1, "连发 12 次后应有播放器在播，实为 %d" % Audio.sfx_playing_count())
-	var s0 := Audio.sfx_slot()
-	Audio.sfx("ui_click")
-	var s1 := Audio.sfx_slot()
-	Audio.sfx("ui_click")
-	var s2 := Audio.sfx_slot()
-	var n_pool := Audio.sfx_player_count()
-	_check((s0 + 1) % n_pool == s1 and (s1 + 1) % n_pool == s2,
-		"音效池应按次轮转（%d → %d → %d）" % [s0, s1, s2])
-
-	# ---- D. 随机音高（同一音反复响也不机械复读） ----
-	var pitches := {}
-	for i in 20:
-		Audio.sfx("ui_click")
-		pitches[snappedf(Audio.last_pitch(), 0.0001)] = true
-	_check(pitches.size() >= 5, "20 次播放的音高应有多样性，实为 %d 种" % pitches.size())
-	var last := Audio.last_pitch()
-	_check(last > 0.9 and last < 1.1, "音高扰动应在 ±10％ 内，实为 %.4f" % last)
-
-	# ---- E. 静音早退（静音时 sfx 直接返回，不动播放状态） ----
-	Audio.set_mute(true)
-	var pitch_before := Audio.last_pitch()
-	Audio.sfx("ui_click")
-	_check(is_equal_approx(Audio.last_pitch(), pitch_before), "静音时 sfx 应直接返回")
+		push_error("AUDIO_FAIL: "+words)
+func _ready() -> void:
+	G.SAVE_PATH = "res://tools/_logs/save_verify_audio.json"
+	G._init_state_defaults()
+	Audio.set_suspended(false)
 	Audio.set_mute(false)
-
-	# ---- F. BGM 状态机（同名不重播 / 换曲 / 缺曲静默降级 / 停止） ----
-	Audio.play_bgm("bgm_home")
-	_check(Audio.current_bgm() == "bgm_home", "play_bgm 后状态应为 bgm_home")
-	Audio.play_bgm("bgm_home")
-	_check(Audio.current_bgm() == "bgm_home", "同名重播不应清状态")
-	Audio.play_bgm("bgm_city")
-	_check(Audio.current_bgm() == "bgm_city", "换曲后状态应更新")
-	Audio.play_bgm("bgm_not_exist")
-	_check(Audio.current_bgm() == "bgm_not_exist", "缺曲应静默降级但记录状态")
+	Audio.set_sfx_vol(.8)
+	Audio.set_bgm_vol(.7)
+	for name in Audio.SFX_NAMES:
+		_check(not Audio.sfx_path(name).is_empty(),"effect exists "+name)
+	for name in ["bgm_title","bgm_home","bgm_city","bgm_route","bgm_map","bgm_battle"]:
+		var stream := Audio._stream(name) as AudioStreamWAV
+		_check(stream != null and stream.loop_mode == AudioStreamWAV.LOOP_FORWARD,"original loop "+name)
+		if stream != null: _check(stream.get_length()>30,"music phrase duration "+name)
 	Audio.stop_bgm()
-	_check(Audio.current_bgm() == "", "stop_bgm 后状态应为空")
-
-	# ---- G. 音量设置（内存态；落盘由 Audio 的防抖计时器负责） ----
-	Audio.set_bgm_vol(0.42)
-	Audio.set_sfx_vol(0.31)
-	_check(is_equal_approx(Audio.bgm_vol(), 0.42), "音乐音量设置未生效")
-	_check(is_equal_approx(Audio.sfx_vol(), 0.31), "音效音量设置未生效")
-	Audio.set_bgm_vol(0.7)
-	Audio.set_sfx_vol(0.8)
-
-	# ---- H. 预载与整体状态 ----
-	Audio.preload_all()   # 不崩即过
-	_check(not Audio.has_no_stream(), "素材齐全时 has_no_stream 应为 false")
-
+	Audio.play_bgm("bgm_home")
+	var home := Audio._bgm.stream
+	var at := Audio._bgm.get_playback_position()
+	Audio.play_bgm("bgm_home")
+	_check(Audio._bgm.stream == home and Audio._bgm.get_playback_position()>=at,"same track does not restart")
+	Audio.play_bgm("bgm_city")
+	_check(Audio._bgm.stream == home,"old stream survives until fade-out completes")
+	Audio.play_bgm("bgm_map")
+	await get_tree().create_timer(.65).timeout
+	_check(Audio._bgm.stream == Audio._stream("bgm_map") and Audio.current_bgm()=="bgm_map","rapid replacement selects only latest track")
+	Audio.play_bgm("bgm_battle")
+	Audio.stop_bgm()
+	await get_tree().create_timer(.65).timeout
+	_check(not Audio._bgm.playing and Audio.current_bgm().is_empty(),"stop cancels all delayed callbacks")
+	Audio.play_bgm("bgm_home")
+	Audio.play_bgm("bgm_city")
+	Audio.set_bgm_vol(.23)
+	await get_tree().create_timer(.65).timeout
+	_check(is_equal_approx(Audio._bgm.volume_db,linear_to_db(.23)-9),"slider not overwritten by stale fade")
+	_check(Audio._bgm.stream == Audio._stream("bgm_city"),"slider preserves requested track")
+	Audio.set_bgm_vol(0)
+	_check(AudioServer.is_bus_mute(AudioServer.get_bus_index("Music")),"music zero is actual bus mute")
+	Audio.set_bgm_vol(.7)
+	Audio._last_events.clear()
+	Audio.sfx("reward")
+	_check(Audio.sfx_playing_count()>0,"reward plays before mute")
+	Audio.set_mute(true)
+	_check(Audio.sfx_playing_count()==0,"already playing effects stop on mute")
+	for bus in ["Music","UI","Combat","Rewards","Alerts","Movement","Ambience"]:
+		_check(AudioServer.is_bus_mute(AudioServer.get_bus_index(bus)),"all categories mute "+bus)
+	Audio.set_mute(false)
+	Audio.set_sfx_vol(0)
+	Audio.sfx("hit_heavy")
+	_check(Audio.sfx_playing_count()==0,"sfx zero suppresses new voices")
+	Audio.set_sfx_vol(.8)
+	Audio._last_events.clear()
+	Audio.event_log.clear()
+	for i in 30: Audio.sfx("hit_light")
+	_check(Audio.event_log.size()==1,"same-event burst coalesces")
+	Audio.sfx("victory",0)
+	var result_voice: AudioStreamPlayer
+	for voice in Audio._sfx_pool:
+		if voice.get_meta("sound","")=="victory": result_voice=voice
+	for i in 30:
+		for sound in ["hit_light","hit_heavy","hit_crit","skill_cast","coin"]: Audio.sfx(sound)
+	_check(result_voice != null and result_voice.playing and result_voice.get_meta("sound","")=="victory","combat burst cannot steal result")
+	Audio._last_events.clear()
+	Audio.event_log.clear()
+	Audio.sfx("ui_click")
+	Audio.sfx("ui_open")
+	await get_tree().process_frame
+	_check(Audio.event_log.filter(func(row):return row.name=="ui_click").is_empty(),"semantic UI sound replaces generic click")
+	Audio.set_suspended(true)
+	_check(Audio._bgm.stream_paused and Audio.sfx_playing_count()==0,"focus loss pauses music and clears transients")
+	Audio.set_suspended(false)
+	_check(not Audio._bgm.stream_paused,"resume unpauses existing stream")
 	for region in ["forest","snow","volcano","tomb","desert","glacier","abyss","castle","port","mine"]:
 		Audio.play_ambience(region)
-		_check(Audio.current_ambience()=="ambient_"+region, "地区音景可解析："+region)
-		_check(Audio._ambient.stream is AudioStreamWAV and Audio._ambient.stream.loop_mode==AudioStreamWAV.LOOP_FORWARD,"音景明确循环")
-	Audio.set_mute(true)
-	_check(Audio._ambient.volume_db <= -79, "静音同步覆盖地区音景")
-	Audio.set_mute(false)
+		_check(Audio.current_ambience()=="ambient_"+region,"region ambience "+region)
 	Audio.play_bgm("bgm_battle")
-	_check(Audio.current_ambience().is_empty(), "战斗提示不与地区音景叠加")
+	_check(Audio.current_ambience().is_empty(),"battle stops ambience")
 	Audio.play_ambience("missing_region")
-	_check(Audio.current_ambience().is_empty(), "缺音景静默降级")
+	_check(Audio.current_ambience().is_empty(),"missing region clears ambience")
+	_check(_scan_autoload_cycle().is_empty(),"no compile-time autoload cycle")
+	Audio.stop_bgm()
+	print("AUDIO_OK checks=%d fails=%d" % [_checks,_fails])
+	await get_tree().process_frame
+	get_tree().quit(0 if _fails==0 else 1)
 
-	# ---- I. 防回退：G 与 Audio 两个 autoload 之间零编译期引用 ----
-	# 曾踩：Audio 里写 G.audio / G.save_game()，同时 G 里写 Audio.sfx()，双向依赖让编译器
-	# 互等对方先编译 → 全项目级联 `Identifier not found: Audio`（编辑期表现为满屏红字）。
-	# 规则：两边都只准运行时取节点（G._sfx → /root/Audio；Audio._game_state → /root/G）。
-	var cycle_sites := _scan_autoload_cycle()
-	_check(cycle_sites.is_empty(),
-		"G/Audio 之间又出现编译期引用（应改走 G._sfx / Audio._game_state 运行时取节点）：%s" % str(cycle_sites))
-
-	if _fails == 0:
-		print("AUDIO_OK all tests passed")
-	else:
-		print("AUDIO_FAIL fails=%d" % _fails)
-
-
-# ---------- 源码扫描（防循环依赖守则） ----------
-## 扫描两个自动加载器之间的编译期互相引用；命中返回 ["文件:行号", …]
 func _scan_autoload_cycle() -> Array:
 	var out: Array = []
 	_scan_compile_refs("res://src/autoload/Audio.gd", "G", out)

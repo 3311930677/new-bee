@@ -1,0 +1,2771 @@
+{
+	"checks": [],
+	"device": {
+		"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+		"mix_rate": 44100.0,
+		"model": "Android SDK built for x86_64",
+		"os": "Android",
+		"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+		"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+		"version": "37.16571990",
+		"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+		"window": "(1080, 2400)"
+	},
+	"final": {
+		"audio": {
+			"bgm": "bgm_home",
+			"events": [
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 343536
+				},
+				{
+					"category": "UI",
+					"name": "ui_page",
+					"time_ms": 345386
+				},
+				{
+					"category": "UI",
+					"name": "ui_page",
+					"time_ms": 347220
+				},
+				{
+					"category": "UI",
+					"name": "ui_page",
+					"time_ms": 349056
+				}
+			],
+			"mute": false,
+			"paused": false,
+			"playing": true,
+			"position": 24.3879680633545,
+			"suspended": false,
+			"voices": 0
+		},
+		"controls": [
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/ReturnButton",
+				"rect": [
+					18.0,
+					75.9624938964844,
+					56.0,
+					56.0
+				],
+				"safe": true,
+				"text": "‹",
+				"tooltip": "返回",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_equip",
+				"rect": [
+					20.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"safe": true,
+				"text": "装备",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_mat",
+				"rect": [
+					131.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"safe": true,
+				"text": "材料",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_gem",
+				"rect": [
+					242.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"safe": true,
+				"text": "宝石",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_pending",
+				"rect": [
+					353.0,
+					185.962493896484,
+					106.0,
+					60.0
+				],
+				"safe": true,
+				"text": "待领取",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_24",
+				"rect": [
+					24.0,
+					267.962493896484,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_25",
+				"rect": [
+					134.0,
+					267.962493896484,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_26",
+				"rect": [
+					244.0,
+					267.962493896484,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_27",
+				"rect": [
+					354.0,
+					267.962493896484,
+					101.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_28",
+				"rect": [
+					24.0,
+					376.962493896484,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_29",
+				"rect": [
+					134.0,
+					376.962493896484,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_30",
+				"rect": [
+					244.0,
+					376.962493896484,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_31",
+				"rect": [
+					354.0,
+					376.962493896484,
+					101.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_32",
+				"rect": [
+					24.0,
+					485.962493896484,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_33",
+				"rect": [
+					134.0,
+					485.962493896484,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_34",
+				"rect": [
+					244.0,
+					485.962493896484,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_35",
+				"rect": [
+					354.0,
+					485.962493896484,
+					101.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_36",
+				"rect": [
+					24.0,
+					594.962524414062,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_37",
+				"rect": [
+					134.0,
+					594.962524414062,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_38",
+				"rect": [
+					244.0,
+					594.962524414062,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_39",
+				"rect": [
+					354.0,
+					594.962524414062,
+					101.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_40",
+				"rect": [
+					24.0,
+					703.962524414062,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_41",
+				"rect": [
+					134.0,
+					703.962524414062,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_42",
+				"rect": [
+					244.0,
+					703.962524414062,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_43",
+				"rect": [
+					354.0,
+					703.962524414062,
+					101.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_44",
+				"rect": [
+					24.0,
+					812.962524414062,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_45",
+				"rect": [
+					134.0,
+					812.962524414062,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_46",
+				"rect": [
+					244.0,
+					812.962524414062,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_47",
+				"rect": [
+					354.0,
+					812.962524414062,
+					101.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_48",
+				"rect": [
+					24.0,
+					921.962524414062,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_49",
+				"rect": [
+					134.0,
+					921.962524414062,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_50",
+				"rect": [
+					244.0,
+					921.962524414062,
+					102.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_51",
+				"rect": [
+					354.0,
+					921.962524414062,
+					101.0,
+					101.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "狼牙大剑 · 精良",
+				"touch_under44": false
+			}
+		],
+		"device": {
+			"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+			"mix_rate": 44100.0,
+			"model": "Android SDK built for x86_64",
+			"os": "Android",
+			"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+			"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+			"version": "37.16571990",
+			"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+			"window": "(1080, 2400)"
+		},
+		"focus": "Tab_equip:<Button#906774972486>",
+		"keyboard_height": 0,
+		"labels": [
+			{
+				"font": 15,
+				"minimum": "(73.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Control@1861/HeroRolePlate/@Label@1870",
+				"rect": [
+					182.0,
+					701.0,
+					116.0,
+					23.0
+				],
+				"text": "破军 · 战士"
+			},
+			{
+				"font": 16,
+				"minimum": "(1.0, 24.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Label@1928",
+				"rect": [
+					0.0,
+					447.720001220703,
+					480.0,
+					28.0
+				],
+				"text": ""
+			},
+			{
+				"font": 20,
+				"minimum": "(7.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/ReturnButton/@Label@2031",
+				"rect": [
+					18.0,
+					75.9624938964844,
+					56.0,
+					56.0
+				],
+				"text": "‹"
+			},
+			{
+				"font": 28,
+				"minimum": "(112.0, 42.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/@Label@2032",
+				"rect": [
+					128.0,
+					77.9624938964844,
+					327.999969482422,
+					52.0
+				],
+				"text": "行旅背包"
+			},
+			{
+				"font": 18,
+				"minimum": "(96.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Capacity",
+				"rect": [
+					24.0,
+					143.962493896484,
+					163.199996948242,
+					36.0
+				],
+				"text": "装备 28 / 60"
+			},
+			{
+				"font": 18,
+				"minimum": "(69.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/@Label@2033",
+				"rect": [
+					182.399993896484,
+					143.962493896484,
+					110.399993896484,
+					36.0
+				],
+				"text": "待领取 0"
+			},
+			{
+				"font": 18,
+				"minimum": "(107.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/GoldBalance",
+				"rect": [
+					307.199981689453,
+					143.962493896484,
+					148.799987792969,
+					36.0
+				],
+				"text": "金币 123.4万"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_equip/@Label@2034",
+				"rect": [
+					20.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"text": "装备"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_mat/@Label@2035",
+				"rect": [
+					131.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"text": "材料"
+			},
+			{
+				"font": 20,
+				"minimum": "(40.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_gem/@Label@2036",
+				"rect": [
+					242.0,
+					185.962493896484,
+					105.0,
+					60.0
+				],
+				"text": "宝石"
+			},
+			{
+				"font": 20,
+				"minimum": "(60.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_pending/@Label@2037",
+				"rect": [
+					353.0,
+					185.962493896484,
+					106.0,
+					60.0
+				],
+				"text": "待领取"
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_24/@Label@2445",
+				"rect": [
+					28.0,
+					271.962493896484,
+					90.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_24/@Label@2446",
+				"rect": [
+					30.0,
+					346.962493896484,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_25/@Label@2449",
+				"rect": [
+					138.0,
+					271.962493896484,
+					90.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_25/@Label@2450",
+				"rect": [
+					140.0,
+					346.962493896484,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_26/@Label@2453",
+				"rect": [
+					248.0,
+					271.962493896484,
+					90.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_26/@Label@2454",
+				"rect": [
+					250.0,
+					346.962493896484,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_27/@Label@2457",
+				"rect": [
+					358.0,
+					271.962493896484,
+					89.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_27/@Label@2458",
+				"rect": [
+					360.0,
+					346.962493896484,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_28/@Label@2461",
+				"rect": [
+					28.0,
+					380.962493896484,
+					90.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_28/@Label@2462",
+				"rect": [
+					30.0,
+					455.962493896484,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_29/@Label@2465",
+				"rect": [
+					138.0,
+					380.962493896484,
+					90.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_29/@Label@2466",
+				"rect": [
+					140.0,
+					455.962493896484,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_30/@Label@2469",
+				"rect": [
+					248.0,
+					380.962493896484,
+					90.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_30/@Label@2470",
+				"rect": [
+					250.0,
+					455.962493896484,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_31/@Label@2473",
+				"rect": [
+					358.0,
+					380.962493896484,
+					89.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_31/@Label@2474",
+				"rect": [
+					360.0,
+					455.962493896484,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_32/@Label@2477",
+				"rect": [
+					28.0,
+					489.962493896484,
+					90.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_32/@Label@2478",
+				"rect": [
+					30.0,
+					564.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_33/@Label@2481",
+				"rect": [
+					138.0,
+					489.962493896484,
+					90.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_33/@Label@2482",
+				"rect": [
+					140.0,
+					564.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_34/@Label@2485",
+				"rect": [
+					248.0,
+					489.962493896484,
+					90.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_34/@Label@2486",
+				"rect": [
+					250.0,
+					564.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_35/@Label@2489",
+				"rect": [
+					358.0,
+					489.962493896484,
+					89.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_35/@Label@2490",
+				"rect": [
+					360.0,
+					564.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_36/@Label@2493",
+				"rect": [
+					28.0,
+					598.962524414062,
+					90.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_36/@Label@2494",
+				"rect": [
+					30.0,
+					673.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_37/@Label@2497",
+				"rect": [
+					138.0,
+					598.962524414062,
+					90.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_37/@Label@2498",
+				"rect": [
+					140.0,
+					673.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_38/@Label@2501",
+				"rect": [
+					248.0,
+					598.962524414062,
+					90.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_38/@Label@2502",
+				"rect": [
+					250.0,
+					673.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_39/@Label@2505",
+				"rect": [
+					358.0,
+					598.962524414062,
+					89.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_39/@Label@2506",
+				"rect": [
+					360.0,
+					673.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_40/@Label@2509",
+				"rect": [
+					28.0,
+					707.962524414062,
+					90.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_40/@Label@2510",
+				"rect": [
+					30.0,
+					782.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_41/@Label@2513",
+				"rect": [
+					138.0,
+					707.962524414062,
+					90.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_41/@Label@2514",
+				"rect": [
+					140.0,
+					782.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_42/@Label@2517",
+				"rect": [
+					248.0,
+					707.962524414062,
+					90.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_42/@Label@2518",
+				"rect": [
+					250.0,
+					782.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_43/@Label@2521",
+				"rect": [
+					358.0,
+					707.962524414062,
+					89.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_43/@Label@2522",
+				"rect": [
+					360.0,
+					782.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_44/@Label@2525",
+				"rect": [
+					28.0,
+					816.962524414062,
+					90.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_44/@Label@2526",
+				"rect": [
+					30.0,
+					891.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_45/@Label@2529",
+				"rect": [
+					138.0,
+					816.962524414062,
+					90.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_45/@Label@2530",
+				"rect": [
+					140.0,
+					891.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_46/@Label@2533",
+				"rect": [
+					248.0,
+					816.962524414062,
+					90.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_46/@Label@2534",
+				"rect": [
+					250.0,
+					891.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_47/@Label@2537",
+				"rect": [
+					358.0,
+					816.962524414062,
+					89.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_47/@Label@2538",
+				"rect": [
+					360.0,
+					891.962524414062,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_48/@Label@2541",
+				"rect": [
+					28.0,
+					925.962524414062,
+					90.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_48/@Label@2542",
+				"rect": [
+					30.0,
+					1000.96252441406,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_49/@Label@2545",
+				"rect": [
+					138.0,
+					925.962524414062,
+					90.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_49/@Label@2546",
+				"rect": [
+					140.0,
+					1000.96252441406,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_50/@Label@2549",
+				"rect": [
+					248.0,
+					925.962524414062,
+					90.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_50/@Label@2550",
+				"rect": [
+					250.0,
+					1000.96252441406,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_51/@Label@2553",
+				"rect": [
+					358.0,
+					925.962524414062,
+					89.0,
+					23.0
+				],
+				"text": "+0"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_51/@Label@2554",
+				"rect": [
+					360.0,
+					1000.96252441406,
+					24.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 22,
+				"minimum": "(1.0, 33.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/SelectedItemDetail/DetailScroll/@VBoxContainer@2044/@Label@2555",
+				"rect": [
+					38.0,
+					885.999877929688,
+					403.0,
+					33.0
+				],
+				"text": "选中器物，查看详情与比较"
+			},
+			{
+				"font": 18,
+				"minimum": "(1.0, 57.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/SelectedItemDetail/DetailScroll/@VBoxContainer@2044/@Label@2556",
+				"rect": [
+					38.0,
+					922.999877929688,
+					403.0,
+					57.0
+				],
+				"text": "品质从高到低排列；装备后可在养成中强化与镶嵌。"
+			}
+		],
+		"modals": [],
+		"page": "GameHome",
+		"tick_ms": 349609
+	},
+	"id": "native_bag_equip",
+	"photos": [],
+	"records": [
+		{
+			"audio": {
+				"bgm": "bgm_home",
+				"events": [
+					{
+						"category": "UI",
+						"name": "ui_open",
+						"time_ms": 343536
+					},
+					{
+						"category": "UI",
+						"name": "ui_page",
+						"time_ms": 345386
+					},
+					{
+						"category": "UI",
+						"name": "ui_page",
+						"time_ms": 347220
+					},
+					{
+						"category": "UI",
+						"name": "ui_page",
+						"time_ms": 349056
+					}
+				],
+				"mute": false,
+				"paused": false,
+				"playing": true,
+				"position": 24.3879680633545,
+				"suspended": false,
+				"voices": 0
+			},
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/ReturnButton",
+					"rect": [
+						18.0,
+						75.9624938964844,
+						56.0,
+						56.0
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_equip",
+					"rect": [
+						20.0,
+						185.962493896484,
+						105.0,
+						60.0
+					],
+					"safe": true,
+					"text": "装备",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_mat",
+					"rect": [
+						131.0,
+						185.962493896484,
+						105.0,
+						60.0
+					],
+					"safe": true,
+					"text": "材料",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_gem",
+					"rect": [
+						242.0,
+						185.962493896484,
+						105.0,
+						60.0
+					],
+					"safe": true,
+					"text": "宝石",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_pending",
+					"rect": [
+						353.0,
+						185.962493896484,
+						106.0,
+						60.0
+					],
+					"safe": true,
+					"text": "待领取",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_24",
+					"rect": [
+						24.0,
+						267.962493896484,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_25",
+					"rect": [
+						134.0,
+						267.962493896484,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_26",
+					"rect": [
+						244.0,
+						267.962493896484,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_27",
+					"rect": [
+						354.0,
+						267.962493896484,
+						101.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_28",
+					"rect": [
+						24.0,
+						376.962493896484,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_29",
+					"rect": [
+						134.0,
+						376.962493896484,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_30",
+					"rect": [
+						244.0,
+						376.962493896484,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_31",
+					"rect": [
+						354.0,
+						376.962493896484,
+						101.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_32",
+					"rect": [
+						24.0,
+						485.962493896484,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_33",
+					"rect": [
+						134.0,
+						485.962493896484,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_34",
+					"rect": [
+						244.0,
+						485.962493896484,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_35",
+					"rect": [
+						354.0,
+						485.962493896484,
+						101.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_36",
+					"rect": [
+						24.0,
+						594.962524414062,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_37",
+					"rect": [
+						134.0,
+						594.962524414062,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_38",
+					"rect": [
+						244.0,
+						594.962524414062,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_39",
+					"rect": [
+						354.0,
+						594.962524414062,
+						101.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_40",
+					"rect": [
+						24.0,
+						703.962524414062,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_41",
+					"rect": [
+						134.0,
+						703.962524414062,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_42",
+					"rect": [
+						244.0,
+						703.962524414062,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_43",
+					"rect": [
+						354.0,
+						703.962524414062,
+						101.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_44",
+					"rect": [
+						24.0,
+						812.962524414062,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_45",
+					"rect": [
+						134.0,
+						812.962524414062,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_46",
+					"rect": [
+						244.0,
+						812.962524414062,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_47",
+					"rect": [
+						354.0,
+						812.962524414062,
+						101.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_48",
+					"rect": [
+						24.0,
+						921.962524414062,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_49",
+					"rect": [
+						134.0,
+						921.962524414062,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_50",
+					"rect": [
+						244.0,
+						921.962524414062,
+						102.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_51",
+					"rect": [
+						354.0,
+						921.962524414062,
+						101.0,
+						101.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "狼牙大剑 · 精良",
+					"touch_under44": false
+				}
+			],
+			"device": {
+				"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+				"mix_rate": 44100.0,
+				"model": "Android SDK built for x86_64",
+				"os": "Android",
+				"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+				"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+				"version": "37.16571990",
+				"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+				"window": "(1080, 2400)"
+			},
+			"focus": "Tab_equip:<Button#906774972486>",
+			"keyboard_height": 0,
+			"labels": [
+				{
+					"font": 15,
+					"minimum": "(73.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Control@1861/HeroRolePlate/@Label@1870",
+					"rect": [
+						182.0,
+						701.0,
+						116.0,
+						23.0
+					],
+					"text": "破军 · 战士"
+				},
+				{
+					"font": 16,
+					"minimum": "(1.0, 24.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Label@1928",
+					"rect": [
+						0.0,
+						447.720001220703,
+						480.0,
+						28.0
+					],
+					"text": ""
+				},
+				{
+					"font": 20,
+					"minimum": "(7.0, 30.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/ReturnButton/@Label@2031",
+					"rect": [
+						18.0,
+						75.9624938964844,
+						56.0,
+						56.0
+					],
+					"text": "‹"
+				},
+				{
+					"font": 28,
+					"minimum": "(112.0, 42.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/@Label@2032",
+					"rect": [
+						128.0,
+						77.9624938964844,
+						327.999969482422,
+						52.0
+					],
+					"text": "行旅背包"
+				},
+				{
+					"font": 18,
+					"minimum": "(96.0, 27.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Capacity",
+					"rect": [
+						24.0,
+						143.962493896484,
+						163.199996948242,
+						36.0
+					],
+					"text": "装备 28 / 60"
+				},
+				{
+					"font": 18,
+					"minimum": "(69.0, 27.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/@Label@2033",
+					"rect": [
+						182.399993896484,
+						143.962493896484,
+						110.399993896484,
+						36.0
+					],
+					"text": "待领取 0"
+				},
+				{
+					"font": 18,
+					"minimum": "(107.0, 27.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/GoldBalance",
+					"rect": [
+						307.199981689453,
+						143.962493896484,
+						148.799987792969,
+						36.0
+					],
+					"text": "金币 123.4万"
+				},
+				{
+					"font": 20,
+					"minimum": "(40.0, 30.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_equip/@Label@2034",
+					"rect": [
+						20.0,
+						185.962493896484,
+						105.0,
+						60.0
+					],
+					"text": "装备"
+				},
+				{
+					"font": 20,
+					"minimum": "(40.0, 30.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_mat/@Label@2035",
+					"rect": [
+						131.0,
+						185.962493896484,
+						105.0,
+						60.0
+					],
+					"text": "材料"
+				},
+				{
+					"font": 20,
+					"minimum": "(40.0, 30.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_gem/@Label@2036",
+					"rect": [
+						242.0,
+						185.962493896484,
+						105.0,
+						60.0
+					],
+					"text": "宝石"
+				},
+				{
+					"font": 20,
+					"minimum": "(60.0, 30.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Categories/Tab_pending/@Label@2037",
+					"rect": [
+						353.0,
+						185.962493896484,
+						106.0,
+						60.0
+					],
+					"text": "待领取"
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_24/@Label@2445",
+					"rect": [
+						28.0,
+						271.962493896484,
+						90.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_24/@Label@2446",
+					"rect": [
+						30.0,
+						346.962493896484,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_25/@Label@2449",
+					"rect": [
+						138.0,
+						271.962493896484,
+						90.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_25/@Label@2450",
+					"rect": [
+						140.0,
+						346.962493896484,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_26/@Label@2453",
+					"rect": [
+						248.0,
+						271.962493896484,
+						90.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_26/@Label@2454",
+					"rect": [
+						250.0,
+						346.962493896484,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_27/@Label@2457",
+					"rect": [
+						358.0,
+						271.962493896484,
+						89.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_27/@Label@2458",
+					"rect": [
+						360.0,
+						346.962493896484,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_28/@Label@2461",
+					"rect": [
+						28.0,
+						380.962493896484,
+						90.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_28/@Label@2462",
+					"rect": [
+						30.0,
+						455.962493896484,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_29/@Label@2465",
+					"rect": [
+						138.0,
+						380.962493896484,
+						90.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_29/@Label@2466",
+					"rect": [
+						140.0,
+						455.962493896484,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_30/@Label@2469",
+					"rect": [
+						248.0,
+						380.962493896484,
+						90.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_30/@Label@2470",
+					"rect": [
+						250.0,
+						455.962493896484,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_31/@Label@2473",
+					"rect": [
+						358.0,
+						380.962493896484,
+						89.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_31/@Label@2474",
+					"rect": [
+						360.0,
+						455.962493896484,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_32/@Label@2477",
+					"rect": [
+						28.0,
+						489.962493896484,
+						90.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_32/@Label@2478",
+					"rect": [
+						30.0,
+						564.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_33/@Label@2481",
+					"rect": [
+						138.0,
+						489.962493896484,
+						90.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_33/@Label@2482",
+					"rect": [
+						140.0,
+						564.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_34/@Label@2485",
+					"rect": [
+						248.0,
+						489.962493896484,
+						90.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_34/@Label@2486",
+					"rect": [
+						250.0,
+						564.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_35/@Label@2489",
+					"rect": [
+						358.0,
+						489.962493896484,
+						89.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_35/@Label@2490",
+					"rect": [
+						360.0,
+						564.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_36/@Label@2493",
+					"rect": [
+						28.0,
+						598.962524414062,
+						90.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_36/@Label@2494",
+					"rect": [
+						30.0,
+						673.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_37/@Label@2497",
+					"rect": [
+						138.0,
+						598.962524414062,
+						90.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_37/@Label@2498",
+					"rect": [
+						140.0,
+						673.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_38/@Label@2501",
+					"rect": [
+						248.0,
+						598.962524414062,
+						90.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_38/@Label@2502",
+					"rect": [
+						250.0,
+						673.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_39/@Label@2505",
+					"rect": [
+						358.0,
+						598.962524414062,
+						89.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_39/@Label@2506",
+					"rect": [
+						360.0,
+						673.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_40/@Label@2509",
+					"rect": [
+						28.0,
+						707.962524414062,
+						90.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_40/@Label@2510",
+					"rect": [
+						30.0,
+						782.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_41/@Label@2513",
+					"rect": [
+						138.0,
+						707.962524414062,
+						90.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_41/@Label@2514",
+					"rect": [
+						140.0,
+						782.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_42/@Label@2517",
+					"rect": [
+						248.0,
+						707.962524414062,
+						90.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_42/@Label@2518",
+					"rect": [
+						250.0,
+						782.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_43/@Label@2521",
+					"rect": [
+						358.0,
+						707.962524414062,
+						89.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_43/@Label@2522",
+					"rect": [
+						360.0,
+						782.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_44/@Label@2525",
+					"rect": [
+						28.0,
+						816.962524414062,
+						90.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_44/@Label@2526",
+					"rect": [
+						30.0,
+						891.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_45/@Label@2529",
+					"rect": [
+						138.0,
+						816.962524414062,
+						90.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_45/@Label@2530",
+					"rect": [
+						140.0,
+						891.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_46/@Label@2533",
+					"rect": [
+						248.0,
+						816.962524414062,
+						90.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_46/@Label@2534",
+					"rect": [
+						250.0,
+						891.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_47/@Label@2537",
+					"rect": [
+						358.0,
+						816.962524414062,
+						89.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_47/@Label@2538",
+					"rect": [
+						360.0,
+						891.962524414062,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_48/@Label@2541",
+					"rect": [
+						28.0,
+						925.962524414062,
+						90.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_48/@Label@2542",
+					"rect": [
+						30.0,
+						1000.96252441406,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_49/@Label@2545",
+					"rect": [
+						138.0,
+						925.962524414062,
+						90.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_49/@Label@2546",
+					"rect": [
+						140.0,
+						1000.96252441406,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_50/@Label@2549",
+					"rect": [
+						248.0,
+						925.962524414062,
+						90.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_50/@Label@2550",
+					"rect": [
+						250.0,
+						1000.96252441406,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_51/@Label@2553",
+					"rect": [
+						358.0,
+						925.962524414062,
+						89.0,
+						23.0
+					],
+					"text": "+0"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/Items/ItemScroll/EquipmentGrid/Equipment_51/@Label@2554",
+					"rect": [
+						360.0,
+						1000.96252441406,
+						24.0,
+						23.0
+					],
+					"text": ""
+				},
+				{
+					"font": 22,
+					"minimum": "(1.0, 33.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/SelectedItemDetail/DetailScroll/@VBoxContainer@2044/@Label@2555",
+					"rect": [
+						38.0,
+						885.999877929688,
+						403.0,
+						33.0
+					],
+					"text": "选中器物，查看详情与比较"
+				},
+				{
+					"font": 18,
+					"minimum": "(1.0, 57.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/@Control@2026/@Control@2028/SelectedItemDetail/DetailScroll/@VBoxContainer@2044/@Label@2556",
+					"rect": [
+						38.0,
+						922.999877929688,
+						403.0,
+						57.0
+					],
+					"text": "品质从高到低排列；装备后可在养成中强化与镶嵌。"
+				}
+			],
+			"modals": [],
+			"page": "GameHome",
+			"tick_ms": 349607
+		}
+	],
+	"suite": "probe"
+}

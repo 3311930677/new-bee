@@ -127,6 +127,7 @@ func _ready() -> void:
 		add_child(link)
 		_links.append(link)
 	get_viewport().size_changed.connect(_layout_page)
+	preload("res://src/ui/UiSafeArea.gd").watch(self,_layout_page)
 	_layout_page()
 	_update_focus(0, false)
 	# 入场：标识自上落下、副标题随后、按钮自下逐个推入。

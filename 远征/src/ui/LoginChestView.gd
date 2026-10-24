@@ -22,6 +22,7 @@ var _art_top:=0.0
 var _last_keyboard:=-1
 
 func _ready() -> void:
+	preload("res://src/ui/UiSafeArea.gd").watch(self,layout)
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter=Control.MOUSE_FILTER_IGNORE
 	theme=UI.theme()

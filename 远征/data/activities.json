@@ -1,4 +1,25 @@
 {
   "version": 1,
-  "events": []
+  "events": [
+    {
+      "id": "arena_practice",
+      "title": "演武场 · 连招试炼",
+      "summary": "与机关傀儡切磋，练习留招、集火与伙伴配合。",
+      "body": "从演武场进入挑战。战斗会结算已有的荣誉与段位进度；可以在这里试验不同职业、技能时机和伙伴编成。",
+      "action": "arena",
+      "action_text": "前往演武场",
+      "starts_at": 0,
+      "ends_at": 0
+    },
+    {
+      "id": "world_trial",
+      "title": "行路试炼 · 重访旧地",
+      "summary": "返回主世界，挑战已解锁的碑窟、水闸与矿脉附加试炼。",
+      "body": "从主世界前往已经首通的副本，完成观察、抉择与首领练习。首次附加挑战可领取强化石；再次挑战用于检验新构筑。",
+      "action": "world",
+      "action_text": "前往主世界",
+      "starts_at": 0,
+      "ends_at": 0
+    }
+  ]
 }

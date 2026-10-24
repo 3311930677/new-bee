@@ -49,9 +49,9 @@ func _draw() -> void:
 			if not _choice.is_empty():
 				var color := Color("c9b477") if _choice == "merchant" else Color("83bfc6")
 				for x in [415.0, 545.0]:
-					draw_rect(Rect2(x - 3, 235, 6, 95), Color("635543"))
-					draw_rect(Rect2(x, 235, 34, 48), color)
-					draw_rect(Rect2(x + 8, 245, 18, 5), Color("eee7d4"))
+					draw_set_transform(Vector2(x,330))
+					preload("res://src/world/WorldPropArt.gd").supply_banner(self,color)
+				draw_set_transform(Vector2.ZERO)
 			if not use_reference_ground and not flat_floor:
 				# 雪地木栈道：宽主街与东向矿道支路，两侧房屋独立留出 NPC 空间。
 				_boardwalk(Rect2(426, 80, 108, 1100))

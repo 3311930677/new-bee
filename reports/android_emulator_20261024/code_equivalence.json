@@ -1,0 +1,12 @@
+{
+  "compared_scripts_and_json": 283,
+  "mismatches": [],
+  "phone_native_libraries": [
+    "lib/arm64-v8a/libc++_shared.so",
+    "lib/arm64-v8a/libgodot_android.so"
+  ],
+  "emulator_native_libraries": [
+    "lib/x86_64/libc++_shared.so",
+    "lib/x86_64/libgodot_android.so"
+  ]
+}

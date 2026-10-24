@@ -238,3 +238,18 @@ static func signal_flags(c: CanvasItem) -> void:
 	if _bitmap(c,"flags",84): return
 	flag(c,Vector2(-26,0),Color("c9b477"))
 	flag(c,Vector2(26,0),Color("83bfc6"))
+
+static func supply_banner(c: CanvasItem,tint: Color) -> void:
+	# Pick one authored banner, rather than drawing the two-banner atlas twice.
+	if _atlas == null: _atlas = load(ATLAS_PATH)
+	if _atlas == null:
+		push_warning("Supply banner atlas missing: "+ATLAS_PATH)
+		flag(c,Vector2.ZERO,tint)
+		return
+	var region: Rect2 = REGIONS.flags
+	region.size.x *= .5
+	if tint.b > tint.r: region.position.x += region.size.x
+	var width := 95.0*region.size.x/region.size.y
+	var rect := Rect2(-width*.5,-95,width,95)
+	_ground_bitmap(c,_atlas,rect,region)
+	c.draw_texture_rect_region(_atlas,rect,region)

@@ -22,7 +22,7 @@ const STEPS := [
 		"speaker": "边城执事·闻叔",
 		"title": "第2步 · 踏足街巷（出征探索大世界）",
 		"body": "底部中央的「出征」大印是步入昭元边城与外野的唯一总入口。进入地图后可用摇杆或 WASD 自由行走，靠近发光器物与路牌即可交互。",
-		"action_hint": "实操任务：认准底部「出征」大印，点「下一步」继续",
+		"action_hint": "实操任务：点「实操演示」进入主世界，推动摇杆或按方向键移动",
 		"scene": "home",
 		"panel": "home",
 		"page_badge": "当前页面：主城总览 · 底部【出征】大印",
@@ -61,7 +61,7 @@ const STEPS := [
 		"speaker": "边城教头·雷烈",
 		"title": "第5步 · 演武切磋（战斗机制与段位试炼）",
 		"body": "已自动切换至【演武场】！战斗中角色自动普攻攒能，点选招式可施放职业绝技并支持 ×1/×2/×4/×8 倍速。在此与机关傀儡切磋可演练连招、赢取演武荣誉！",
-		"action_hint": "实操任务：了解演武切磋与段位，点「下一步」试射艺",
+		"action_hint": "实操任务：点「实操演示」进入野外，打一场真实战斗",
 		"scene": "battle",
 		"panel": "arena",
 		"page_badge": "已自动切页 ▶ 演武场 · 傀儡切磋与武艺试炼",
@@ -138,8 +138,8 @@ const STEPS := [
 		"index": 11,
 		"speaker": "边城执事·闻叔",
 		"title": "第11步 · 远征启程（领取完训启程贺礼）",
-		"body": "已返回【主城总览】！你已完整掌握角色易职、任务追踪、演武射艺、装备养成与行路图驿车。点击「完成引导 · 领礼」立得金币×300、远征币×30、强化石×3、口粮×2！",
-		"action_hint": "实操任务：点击「完成引导 · 领礼」领取启程贺礼！",
+		"body": "已返回【主城总览】！请先在野外赢得一场战斗，亲手走通探索与整备。回城后点击「完成引导 · 领礼」，领取金币×300、远征币×30、强化石×3、口粮×2。",
+		"action_hint": "实操任务：赢得一场野外战斗，再领取启程贺礼",
 		"scene": "home",
 		"panel": "home",
 		"page_badge": "已返回 ▶ 主城总览 · 领取启程贺礼",
@@ -185,6 +185,10 @@ static func ensure_state(host: Object) -> Dictionary:
 		tut["skipped"] = false
 	if not tut.has("reward_claimed"):
 		tut["reward_claimed"] = false
+	if not tut.has("field_battle_won"):
+		tut["field_battle_won"] = false
+	if not tut.has("field_moved"):
+		tut["field_moved"] = false
 	if not (tut.get("seen_steps") is Array):
 		tut["seen_steps"] = []
 	tut["step_idx"] = clampi(int(tut.get("step_idx", 0)), 0, STEPS.size() - 1)
@@ -197,6 +201,8 @@ static func _default_state() -> Dictionary:
 		"completed": false,
 		"skipped": false,
 		"reward_claimed": false,
+		"field_battle_won": false,
+		"field_moved": false,
 		"seen_steps": [],
 	}
 
@@ -225,6 +231,8 @@ static func step_at(idx: int) -> Dictionary:
 static func advance(host: Object, save: bool = true) -> Dictionary:
 	var tut := ensure_state(host)
 	var idx := clampi(int(tut.get("step_idx", 0)), 0, STEPS.size() - 1)
+	if idx == 1 and not bool(tut.get("field_moved", false)):
+		return {"ok": false, "finished": false, "reason": "先在主世界移动一次"}
 	var cur_id := String(STEPS[idx].get("id", ""))
 	var seen: Array = tut.get("seen_steps", [])
 	if not seen.has(cur_id):
@@ -267,6 +275,8 @@ static func restart(host: Object, save: bool = true) -> Dictionary:
 
 static func complete(host: Object, save: bool = true) -> Dictionary:
 	var tut := ensure_state(host)
+	if not bool(tut.get("field_battle_won", false)):
+		return {"ok": false, "finished": false, "reason": "先在野外赢得一场战斗"}
 	var seen: Array = tut.get("seen_steps", [])
 	for s in STEPS:
 		var sid := String(s.get("id", ""))
@@ -303,6 +313,13 @@ static func complete(host: Object, save: bool = true) -> Dictionary:
 static func notify_event(host: Object, event_name: String) -> bool:
 	if not should_show(host):
 		return false
+	if event_name == "battle_won":
+		var progress := ensure_state(host)
+		progress["field_battle_won"] = true
+		if host.has_method("save_game"):
+			host.save_game()
+	if event_name == "player_moved":
+		ensure_state(host)["field_moved"] = true
 	var step := current_step(host)
 	if String(step.get("event", "")) == event_name:
 		advance(host, true)

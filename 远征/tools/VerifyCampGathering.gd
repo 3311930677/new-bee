@@ -5,12 +5,16 @@ func check(ok:bool,line:String)->void:
 		fails+=1
 		push_error("FAIL: "+line)
 func find_button(root:Node,label:String)->Control:
+	if root is Button and root.text.replace(" ","")==label.replace(" ",""):return root
 	if root is Label and root.text.replace(" ","")==label.replace(" ",""):return root.get_parent() as Control
 	for child in root.get_children():
 		var found:=find_button(child,label)
 		if found!=null:return found
 	return null
 func click(control:Control)->void:
+	if control is Button:
+		control.pressed.emit()
+		return
 	var e:=InputEventMouseButton.new()
 	e.button_index=MOUSE_BUTTON_LEFT
 	e.pressed=true
@@ -38,7 +42,7 @@ func _ready()->void:
 	if home._gathering!=null:
 		var panel:Control=home._gathering
 		var actors:=0
-		for child in panel.get_children():
+		for child in panel.find_children("*","Sprite2D",true,false):
 			if child.get_meta("gathering_actor",false):actors+=1
 		check(actors==3,"场景中有三位旧识")
 		for story in panel.stories:

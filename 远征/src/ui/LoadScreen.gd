@@ -43,12 +43,12 @@ const PRELOAD_CODE := [
 
 # 音频预热：首播时解析 ogg 有几毫秒抖动，顺手一起热掉（音量大头是流式解码，不进这里）
 const PRELOAD_AUDIO := [
-	"res://assets/audio/bgm_home.ogg",
-	"res://assets/audio/bgm_city.ogg",
-	"res://assets/audio/bgm_title.ogg",
-	"res://assets/audio/bgm_route.ogg",
-	"res://assets/audio/bgm_map.ogg",
-	"res://assets/audio/bgm_battle.ogg",
+	"res://assets/audio/bgm_home.wav",
+	"res://assets/audio/bgm_city.wav",
+	"res://assets/audio/bgm_title.wav",
+	"res://assets/audio/bgm_route.wav",
+	"res://assets/audio/bgm_map.wav",
+	"res://assets/audio/bgm_battle.wav",
 ]
 
 var _queue: Array[String] = []      # 待加载的贴图/音频
@@ -191,6 +191,7 @@ func _build() -> void:
 	_hint_l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(_hint_l)
 	resized.connect(_layout)
+	preload("res://src/ui/UiSafeArea.gd").watch(self,_layout)
 	_layout()
 	_layout.call_deferred()
 	_set_bar_ratio(0.0)
@@ -215,24 +216,22 @@ func _layout(safe_override:=Rect2()) -> void:
 	if _brand==null or _gauge==null:return
 	var safe:=safe_override if safe_override.has_area() else G.ui_safe_rect(self)
 	var view := get_viewport_rect().size
-	_art.size = _art.texture.get_size()
-	var bottom_art_y := safe.end.y - TIP_H - 6.0 - STATUS_GAP - 22.0 - _gauge.size.y - _gauge.origin.y
-	var centered_art_y := roundf(safe.position.y + (safe.size.y - _art.size.y) * 0.45)
-	var art_y := minf(bottom_art_y, centered_art_y)
-	_art.position = Vector2(roundf(safe.get_center().x - _art.size.x * 0.5), art_y)
-	_gauge.position = Vector2(roundf(safe.get_center().x-_gauge.size.x*.5), _art.position.y + _gauge.origin.y)
-	_hint_l.position = Vector2(safe.position.x+24, minf(safe.end.y-TIP_H-12.0, _gauge.position.y+_gauge.size.y+STATUS_GAP+26.0))
+	# Illustration covers the window independently of the safe interactive layer.
+	# Increasing phone height must not add a flat dark strip below a fixed poster.
+	_art.position = Vector2.ZERO
+	_art.size = view
+	_art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	_gauge.position = Vector2(roundf(safe.get_center().x-_gauge.size.x*.5),safe.end.y-TIP_H-64.0-_gauge.size.y)
+	_hint_l.position = Vector2(safe.position.x+24,safe.end.y-TIP_H-12.0)
 	_hint_l.size = Vector2(safe.size.x-48, TIP_H)
 	var mat := _art.material as ShaderMaterial
 	mat.set_shader_parameter("art_h", _art.size.y)
-	mat.set_shader_parameter("fade_px", 96.0 if _art.position.y > 0.5 else 0.0)
-	mat.set_shader_parameter("fade_bottom", 64.0 if _art.position.y + _art.size.y < view.y - 0.5 else 0.0)
+	mat.set_shader_parameter("fade_px",0.0)
+	mat.set_shader_parameter("fade_bottom",0.0)
 	_backdrop.position = Vector2.ZERO
 	_backdrop.size = view
-	var floor_y := maxf(0.0, _art.position.y + _art.size.y - (64.0 if _art.position.y + _art.size.y < view.y - 0.5 else 0.0))
-	_floor.position = Vector2(0, floor_y)
-	_floor.size = Vector2(view.x, maxf(0.0, view.y-_floor.position.y))
-	_brand.position = Vector2(roundf(safe.get_center().x-BRAND_SIZE.x*.5), safe.position.y+36.0+maxf(0.0, art_y*0.55))
+	_floor.hide()
+	_brand.position = Vector2(roundf(safe.get_center().x-BRAND_SIZE.x*.5),safe.position.y+36.0)
 
 func _set_bar_ratio(ratio: float) -> void:
 	var r := clampf(ratio,0.0,1.0)

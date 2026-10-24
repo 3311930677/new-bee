@@ -1,0 +1,513 @@
+{
+	"checks": [],
+	"device": {
+		"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+		"mix_rate": 44100.0,
+		"model": "Android SDK built for x86_64",
+		"os": "Android",
+		"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+		"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+		"version": "37.16571990",
+		"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+		"window": "(1080, 2400)"
+	},
+	"final": {
+		"audio": {
+			"bgm": "bgm_home",
+			"events": [
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516013
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516240
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516460
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516691
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516905
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 517141
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 517389
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 517608
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 517837
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 518056
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 518284
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 519740
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 519980
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 520190
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 520438
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 520652
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 520874
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 521121
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 521340
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 521577
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 521805
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 522034
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 522255
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 523727
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 523968
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 524179
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 524418
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 524648
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 524868
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525106
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525319
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525567
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525778
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525998
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 526267
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 526464
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 526716
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 526938
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 527155
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 527472
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 527702
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 527929
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 528149
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 528381
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 528603
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 528842
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529081
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529313
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529534
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529768
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529994
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 530208
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 530441
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 530666
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 530891
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 572886
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 575286
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 575377
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 578220
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 578309
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 581371
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 583687
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 586553
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 588921
+				},
+				{
+					"category": "UI",
+					"name": "ui_page",
+					"time_ms": 591621
+				}
+			],
+			"mute": false,
+			"paused": false,
+			"playing": true,
+			"position": 21.7360000610352,
+			"suspended": false,
+			"voices": 0
+		},
+		"controls": [],
+		"device": {
+			"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+			"mix_rate": 44100.0,
+			"model": "Android SDK built for x86_64",
+			"os": "Android",
+			"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+			"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+			"version": "37.16571990",
+			"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+			"window": "(1080, 2400)"
+		},
+		"focus": "<Object#null>",
+		"keyboard_height": 0,
+		"labels": [
+			{
+				"font": 15,
+				"minimum": "(73.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Control@4974/HeroRolePlate/@Label@4983",
+				"rect": [
+					182.0,
+					701.0,
+					116.0,
+					23.0
+				],
+				"text": "破军 · 战士"
+			},
+			{
+				"font": 16,
+				"minimum": "(1.0, 24.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Label@5041",
+				"rect": [
+					0.0,
+					447.720001220703,
+					480.0,
+					28.0
+				],
+				"text": ""
+			},
+			{
+				"font": 24,
+				"minimum": "(144.0, 35.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@5051/@PanelContainer@5055/@Control@5056/@Control@5057/PlaqueLabel",
+				"rect": [
+					45.9999961853027,
+					225.181198120117,
+					387.999969482422,
+					37.9999961853027
+				],
+				"text": "守碑出行誓约"
+			},
+			{
+				"font": 17,
+				"minimum": "(1.0, 54.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@5051/@PanelContainer@5055/@Control@5056/@Label@5058",
+				"rect": [
+					39.9999961853027,
+					281.181182861328,
+					399.999969482422,
+					87.9999923706055
+				],
+				"text": "三誓约可换；本图当日已锁定的誓约不会随切换重置。每张野外图每日一个目标，报酬不含剧情首通物。"
+			},
+			{
+				"font": 17,
+				"minimum": "(74.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@5051/@PanelContainer@5055/@Control@5056/@PanelContainer@5061/@Label@5060",
+				"rect": [
+					61.9999961853027,
+					391.181182861328,
+					187.999984741211,
+					24.9999980926514
+				],
+				"text": "庇护·立约"
+			},
+			{
+				"font": 17,
+				"minimum": "(1.0, 83.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@5051/@PanelContainer@5055/@Control@5056/@Label@5063",
+				"rect": [
+					45.9999961853027,
+					433.181182861328,
+					387.999969482422,
+					82.9999923706055
+				],
+				"text": "护送路边旅人到安全点；防御 +5%，攻击 -5%，药剂回复 +5%。\n可得守护纹样 · 宠物粮 × 2"
+			},
+			{
+				"font": 17,
+				"minimum": "(74.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@5051/@PanelContainer@5055/@Control@5056/@PanelContainer@5066/@Label@5065",
+				"rect": [
+					61.9999961853027,
+					531.18115234375,
+					187.999984741211,
+					24.9999980926514
+				],
+				"text": "征伐·立约"
+			},
+			{
+				"font": 17,
+				"minimum": "(1.0, 83.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@5051/@PanelContainer@5055/@Control@5056/@Label@5068",
+				"rect": [
+					45.9999961853027,
+					573.18115234375,
+					387.999969482422,
+					82.9999923706055
+				],
+				"text": "击退地图上的誓约前哨；攻击 +5%，药剂回复 -5%。\n可得前哨纹样 · 强化石 × 2"
+			},
+			{
+				"font": 17,
+				"minimum": "(74.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@5051/@PanelContainer@5055/@Control@5056/@PanelContainer@5071/@Label@5070",
+				"rect": [
+					61.9999961853027,
+					671.18115234375,
+					187.999984741211,
+					24.9999980926514
+				],
+				"text": "丰收·立约"
+			},
+			{
+				"font": 17,
+				"minimum": "(1.0, 83.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@5051/@PanelContainer@5055/@Control@5056/@Label@5073",
+				"rect": [
+					45.9999961853027,
+					713.18115234375,
+					387.999969482422,
+					82.9999923706055
+				],
+				"text": "清理路边障碍、留根采样；攻击 -5%，完成目标多获一份普通培养材料。\n可得行旅营帐纹样 · 强化石 × 2 / 宠物粮 × 1"
+			},
+			{
+				"font": 17,
+				"minimum": "(34.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@5051/@PanelContainer@5055/@Control@5056/@PanelContainer@5075/@Label@5074",
+				"rect": [
+					173.999984741211,
+					843.18115234375,
+					131.999984741211,
+					24.9999980926514
+				],
+				"text": "返回"
+			}
+		],
+		"modals": [],
+		"page": "GameHome",
+		"tick_ms": 594487
+	},
+	"id": "oath_geometry",
+	"photos": [
+		{
+			"controls": [],
+			"name": "oath",
+			"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]"
+		}
+	],
+	"records": [],
+	"suite": "page"
+}

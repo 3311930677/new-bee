@@ -30,7 +30,7 @@ func _ready() -> void:
 	_check(get_viewport().gui_get_focus_owner()==bag._tab_buttons.equip,"opening selects keyboard focus")
 	_layout_check()
 	_check(bag._item_buttons.size()==bag._bag_items().size(),"every equipment item is in the scrolling grid")
-	_check(bag._scroll.get_child(0).columns==5,"equipment grid has five columns")
+	_check(bag._scroll.get_child(0).columns==4,"phone inventory has four readable columns")
 	bag._scroll.scroll_vertical=10000
 	await _frames()
 	_check(bag._scroll.scroll_vertical>0,"equipment scroll reaches later rows")

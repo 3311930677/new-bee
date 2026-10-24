@@ -1,6 +1,7 @@
 extends Control
 ## Configured announcements only. Opening this page never changes player progress.
 signal closed
+signal action_requested(action_id: String)
 const Craft := preload("res://src/ui/CraftUI.gd")
 const CONFIG := "res://data/activities.json"
 var events_override: Variant = null
@@ -49,8 +50,29 @@ func _ready() -> void:
 	_back.activated.connect(go_back)
 	add_child(_back)
 	_show_list()
-	G.center_fixed_page.call_deferred(self)
-	G.fit_mobile_page.call_deferred(self)
+	get_viewport().size_changed.connect(_layout_page)
+	preload("res://src/ui/UiSafeArea.gd").watch(self,_layout_page)
+	_layout_page.call_deferred()
+
+func _layout_page() -> void:
+	if _content == null: return
+	var safe := G.ui_safe_rect(self)
+	var base := Vector2(480,800)
+	var factor := minf(1.0,safe.size.x/base.x)
+	# Header is at the top and the reading area expands; the return action stays
+	# at the bottom. The background is a separate full-viewport layer.
+	for child in get_children():
+		if not child is Control or child == _content or child == _back or child.name in ["PageBackground","BackgroundShade","SceneryMotion","DisplayAtmosphere"]: continue
+		if not child.has_meta("activity_base"): child.set_meta("activity_base",child.position)
+		child.position = safe.position+Vector2(child.get_meta("activity_base"))*factor
+		child.scale = Vector2.ONE*factor
+	_content.position = safe.position+Vector2(24,132)*factor
+	_content.size = Vector2(432,maxf(340,(safe.size.y-220*factor)/factor))
+	_content.scale = Vector2.ONE*factor
+	_back.position = Vector2(safe.get_center().x-110*factor,safe.end.y-64*factor)
+	_back.scale = Vector2.ONE*factor
+	for child in _content.get_children():
+		if child is ScrollContainer: child.size = _content.size
 
 func _clear_content() -> void:
 	for child in _content.get_children():
@@ -178,6 +200,11 @@ func show_event(id: String) -> void:
 	if body is Array:
 		for paragraph in body: _add_paragraph(inner,String(paragraph),G.FS_MD,Craft.WHITE)
 	else: _add_paragraph(inner,String(body),G.FS_MD,Craft.WHITE)
+	var action_id := String(event.get("action", ""))
+	if not action_id.is_empty() and event_status(event, int(Time.get_unix_time_from_system())) == "进行中":
+		var action := Craft.action(String(event.get("action_text", "前往挑战")), Vector2.ZERO, Vector2(350, 54))
+		action.activated.connect(func(): action_requested.emit(action_id))
+		inner.add_child(action)
 
 func _add_paragraph(parent: Control,words: String,px: int,ink: Color,bold := false) -> void:
 	var l := Craft.label(words,Vector2.ZERO,Vector2(360,32),px,ink,bold)

@@ -1,0 +1,1259 @@
+{
+	"checks": [],
+	"device": {
+		"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+		"mix_rate": 44100.0,
+		"model": "Android SDK built for x86_64",
+		"os": "Android",
+		"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+		"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+		"version": "37.16571990",
+		"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+		"window": "(1080, 2400)"
+	},
+	"final": {
+		"audio": {
+			"bgm": "bgm_home",
+			"events": [
+				{
+					"category": "UI",
+					"name": "ui_close",
+					"time_ms": 334503
+				}
+			],
+			"mute": false,
+			"paused": false,
+			"playing": true,
+			"position": 10.4599685668945,
+			"suspended": false,
+			"voices": 0
+		},
+		"controls": [
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/Plaque_gacha",
+				"rect": [
+					77.0,
+					286.0,
+					107.0,
+					44.0
+				],
+				"safe": true,
+				"text": "唤灵阁",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/Plaque_arena",
+				"rect": [
+					299.0,
+					286.0,
+					107.0,
+					44.0
+				],
+				"safe": true,
+				"text": "竞技场",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/Plaque_craft",
+				"rect": [
+					55.0,
+					404.0,
+					107.0,
+					44.0
+				],
+				"safe": true,
+				"text": "铁匠铺",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/Plaque_exchange",
+				"rect": [
+					326.0,
+					420.0,
+					92.0,
+					44.0
+				],
+				"safe": true,
+				"text": "集市",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/Plaque_world",
+				"rect": [
+					194.0,
+					486.0,
+					92.0,
+					44.0
+				],
+				"safe": true,
+				"text": "世界",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/HeroPreviewButton",
+				"rect": [
+					196.0,
+					602.0,
+					88.0,
+					96.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "点按切换角色朝向预览",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/AvatarEntry",
+				"rect": [
+					8.0,
+					67.9624938964844,
+					80.0,
+					80.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "更换头像",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_gold",
+				"rect": [
+					112.0,
+					65.9624938964844,
+					86.0,
+					44.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "金币：1234567",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_expedition",
+				"rect": [
+					202.0,
+					65.9624938964844,
+					86.0,
+					44.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "远征币：234567",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_soul",
+				"rect": [
+					292.0,
+					65.9624938964844,
+					86.0,
+					44.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "魂晶：34567",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_honor",
+				"rect": [
+					382.0,
+					65.9624938964844,
+					86.0,
+					44.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "荣誉：4567",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/Rail_bag",
+				"rect": [
+					356.0,
+					111.962493896484,
+					56.0,
+					60.0
+				],
+				"safe": true,
+				"text": "Rail_bag",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/Rail_gathering",
+				"rect": [
+					416.0,
+					111.962493896484,
+					56.0,
+					60.0
+				],
+				"safe": true,
+				"text": "Rail_gathering",
+				"tooltip": "归路小聚",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/QuestSummary",
+				"rect": [
+					84.0,
+					881.999877929688,
+					312.0,
+					56.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/Navigation_养成",
+				"rect": [
+					12.0,
+					981.999877929688,
+					80.0,
+					80.0
+				],
+				"safe": true,
+				"text": "Navigation_养成",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/Navigation_活动",
+				"rect": [
+					308.0,
+					981.999877929688,
+					80.0,
+					80.0
+				],
+				"safe": true,
+				"text": "Navigation_活动",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/Navigation_伙伴",
+				"rect": [
+					92.0,
+					981.999877929688,
+					80.0,
+					80.0
+				],
+				"safe": true,
+				"text": "Navigation_伙伴",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/Navigation_设置",
+				"rect": [
+					388.0,
+					981.999877929688,
+					80.0,
+					80.0
+				],
+				"safe": true,
+				"text": "Navigation_设置",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/ReturnToWorld",
+				"rect": [
+					184.0,
+					946.999877929688,
+					112.0,
+					112.0
+				],
+				"safe": true,
+				"text": "ReturnToWorld",
+				"tooltip": "出征 · 返回主世界",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/@CanvasLayer@1963/@Control@1964/CurrencyDetails/@VBoxContainer@1966/@HBoxContainer@1967/Currency_gold",
+				"rect": [
+					34.0,
+					94.0,
+					98.0,
+					65.0
+				],
+				"safe": true,
+				"text": "金币",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/@CanvasLayer@1963/@Control@1964/CurrencyDetails/@VBoxContainer@1966/@HBoxContainer@1967/Currency_expedition",
+				"rect": [
+					138.0,
+					94.0,
+					98.0,
+					65.0
+				],
+				"safe": true,
+				"text": "远征币",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/@CanvasLayer@1963/@Control@1964/CurrencyDetails/@VBoxContainer@1966/@HBoxContainer@1967/Currency_soul",
+				"rect": [
+					242.0,
+					94.0,
+					98.0,
+					65.0
+				],
+				"safe": true,
+				"text": "魂晶",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/@CanvasLayer@1963/@Control@1964/CurrencyDetails/@VBoxContainer@1966/@HBoxContainer@1967/Currency_honor",
+				"rect": [
+					346.0,
+					94.0,
+					99.0,
+					65.0
+				],
+				"safe": true,
+				"text": "荣誉",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/@CanvasLayer@1963/@Control@1964/CurrencyDetails/@VBoxContainer@1966/CloseCurrency",
+				"rect": [
+					34.0,
+					967.0,
+					411.0,
+					65.0
+				],
+				"safe": true,
+				"text": "返回",
+				"tooltip": "",
+				"touch_under44": false
+			}
+		],
+		"device": {
+			"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+			"mix_rate": 44100.0,
+			"model": "Android SDK built for x86_64",
+			"os": "Android",
+			"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+			"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+			"version": "37.16571990",
+			"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+			"window": "(1080, 2400)"
+		},
+		"focus": "CloseCurrency:<Button#892665334498>",
+		"keyboard_height": 0,
+		"labels": [
+			{
+				"font": 15,
+				"minimum": "(73.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Control@1861/HeroRolePlate/@Label@1870",
+				"rect": [
+					182.0,
+					701.0,
+					116.0,
+					23.0
+				],
+				"text": "破军 · 战士"
+			},
+			{
+				"font": 15,
+				"minimum": "(18.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/AvatarEntry/@TextureRect@1880/@Label@1881",
+				"rect": [
+					32.0,
+					129.962493896484,
+					32.0,
+					23.0
+				],
+				"text": "60"
+			},
+			{
+				"font": 17,
+				"minimum": "(1.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/@Label@1882",
+				"rect": [
+					96.0,
+					109.962493896484,
+					142.0,
+					25.0
+				],
+				"text": "安卓全量巡检"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_gold/@NinePatchRect@1885/@Label@1887",
+				"rect": [
+					142.0,
+					75.9624938964844,
+					58.0,
+					24.0
+				],
+				"text": "123.4万"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_expedition/@NinePatchRect@1888/@Label@1890",
+				"rect": [
+					232.0,
+					75.9624938964844,
+					55.0,
+					23.0
+				],
+				"text": "234567"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_soul/@NinePatchRect@1891/@Label@1893",
+				"rect": [
+					322.0,
+					75.9624938964844,
+					48.0,
+					23.0
+				],
+				"text": "34567"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_honor/@NinePatchRect@1894/@Label@1896",
+				"rect": [
+					412.0,
+					75.9624938964844,
+					48.0,
+					23.0
+				],
+				"text": "4567"
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/Rail_bag/@Panel@1899/@Label@1900",
+				"rect": [
+					364.0,
+					152.962493896484,
+					40.0,
+					24.0
+				],
+				"text": "背包"
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/Rail_gathering/@Panel@1903/@Label@1904",
+				"rect": [
+					424.0,
+					152.962493896484,
+					40.0,
+					24.0
+				],
+				"text": "小聚"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/QuestSummary/@Label@1906",
+				"rect": [
+					136.0,
+					887.999877929688,
+					226.0,
+					24.0
+				],
+				"text": "主线"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/QuestSummary/@Label@1907",
+				"rect": [
+					136.0,
+					908.999877929688,
+					226.0,
+					24.0
+				],
+				"text": "归路仍在 · 三城可回访"
+			},
+			{
+				"font": 26,
+				"minimum": "(8.0, 39.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/QuestSummary/@Label@1908",
+				"rect": [
+					366.0,
+					887.999877929688,
+					8.0,
+					39.0
+				],
+				"text": "›"
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/Navigation_养成/@Panel@1913/@Label@1914",
+				"rect": [
+					30.0,
+					1034.99987792969,
+					44.0,
+					24.0
+				],
+				"text": "养成"
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/Navigation_活动/@Panel@1917/@Label@1918",
+				"rect": [
+					326.0,
+					1034.99987792969,
+					44.0,
+					24.0
+				],
+				"text": "活动"
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/Navigation_伙伴/@Panel@1921/@Label@1922",
+				"rect": [
+					110.0,
+					1034.99987792969,
+					44.0,
+					24.0
+				],
+				"text": "伙伴"
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/Navigation_设置/@Panel@1925/@Label@1926",
+				"rect": [
+					406.0,
+					1034.99987792969,
+					44.0,
+					24.0
+				],
+				"text": "设置"
+			},
+			{
+				"font": 24,
+				"minimum": "(48.0, 35.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/ReturnToWorld/SortiePlate/@Label@1927",
+				"rect": [
+					184.0,
+					1022.99987792969,
+					112.0,
+					40.0
+				],
+				"text": "出征"
+			},
+			{
+				"font": 16,
+				"minimum": "(1.0, 24.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Label@1928",
+				"rect": [
+					0.0,
+					447.720001220703,
+					480.0,
+					28.0
+				],
+				"text": ""
+			}
+		],
+		"modals": [
+			{
+				"currency": "expedition",
+				"name": "@Control@1964",
+				"script": "res://src/ui/CurrencyPanel.gd"
+			}
+		],
+		"page": "GameHome",
+		"tick_ms": 335689
+	},
+	"id": "native_currency_expedition",
+	"photos": [],
+	"records": [
+		{
+			"audio": {
+				"bgm": "bgm_home",
+				"events": [
+					{
+						"category": "UI",
+						"name": "ui_close",
+						"time_ms": 334503
+					}
+				],
+				"mute": false,
+				"paused": false,
+				"playing": true,
+				"position": 10.4599685668945,
+				"suspended": false,
+				"voices": 0
+			},
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/Plaque_gacha",
+					"rect": [
+						77.0,
+						286.0,
+						107.0,
+						44.0
+					],
+					"safe": true,
+					"text": "唤灵阁",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/Plaque_arena",
+					"rect": [
+						299.0,
+						286.0,
+						107.0,
+						44.0
+					],
+					"safe": true,
+					"text": "竞技场",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/Plaque_craft",
+					"rect": [
+						55.0,
+						404.0,
+						107.0,
+						44.0
+					],
+					"safe": true,
+					"text": "铁匠铺",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/Plaque_exchange",
+					"rect": [
+						326.0,
+						420.0,
+						92.0,
+						44.0
+					],
+					"safe": true,
+					"text": "集市",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/Plaque_world",
+					"rect": [
+						194.0,
+						486.0,
+						92.0,
+						44.0
+					],
+					"safe": true,
+					"text": "世界",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/HeroPreviewButton",
+					"rect": [
+						196.0,
+						602.0,
+						88.0,
+						96.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "点按切换角色朝向预览",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/AvatarEntry",
+					"rect": [
+						8.0,
+						67.9624938964844,
+						80.0,
+						80.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "更换头像",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_gold",
+					"rect": [
+						112.0,
+						65.9624938964844,
+						86.0,
+						44.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "金币：1234567",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_expedition",
+					"rect": [
+						202.0,
+						65.9624938964844,
+						86.0,
+						44.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "远征币：234567",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_soul",
+					"rect": [
+						292.0,
+						65.9624938964844,
+						86.0,
+						44.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "魂晶：34567",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_honor",
+					"rect": [
+						382.0,
+						65.9624938964844,
+						86.0,
+						44.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "荣誉：4567",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/Rail_bag",
+					"rect": [
+						356.0,
+						111.962493896484,
+						56.0,
+						60.0
+					],
+					"safe": true,
+					"text": "Rail_bag",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/Rail_gathering",
+					"rect": [
+						416.0,
+						111.962493896484,
+						56.0,
+						60.0
+					],
+					"safe": true,
+					"text": "Rail_gathering",
+					"tooltip": "归路小聚",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/QuestSummary",
+					"rect": [
+						84.0,
+						881.999877929688,
+						312.0,
+						56.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/Navigation_养成",
+					"rect": [
+						12.0,
+						981.999877929688,
+						80.0,
+						80.0
+					],
+					"safe": true,
+					"text": "Navigation_养成",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/Navigation_活动",
+					"rect": [
+						308.0,
+						981.999877929688,
+						80.0,
+						80.0
+					],
+					"safe": true,
+					"text": "Navigation_活动",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/Navigation_伙伴",
+					"rect": [
+						92.0,
+						981.999877929688,
+						80.0,
+						80.0
+					],
+					"safe": true,
+					"text": "Navigation_伙伴",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/Navigation_设置",
+					"rect": [
+						388.0,
+						981.999877929688,
+						80.0,
+						80.0
+					],
+					"safe": true,
+					"text": "Navigation_设置",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/ReturnToWorld",
+					"rect": [
+						184.0,
+						946.999877929688,
+						112.0,
+						112.0
+					],
+					"safe": true,
+					"text": "ReturnToWorld",
+					"tooltip": "出征 · 返回主世界",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/@CanvasLayer@1963/@Control@1964/CurrencyDetails/@VBoxContainer@1966/@HBoxContainer@1967/Currency_gold",
+					"rect": [
+						34.0,
+						94.0,
+						98.0,
+						65.0
+					],
+					"safe": true,
+					"text": "金币",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/@CanvasLayer@1963/@Control@1964/CurrencyDetails/@VBoxContainer@1966/@HBoxContainer@1967/Currency_expedition",
+					"rect": [
+						138.0,
+						94.0,
+						98.0,
+						65.0
+					],
+					"safe": true,
+					"text": "远征币",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/@CanvasLayer@1963/@Control@1964/CurrencyDetails/@VBoxContainer@1966/@HBoxContainer@1967/Currency_soul",
+					"rect": [
+						242.0,
+						94.0,
+						98.0,
+						65.0
+					],
+					"safe": true,
+					"text": "魂晶",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/@CanvasLayer@1963/@Control@1964/CurrencyDetails/@VBoxContainer@1966/@HBoxContainer@1967/Currency_honor",
+					"rect": [
+						346.0,
+						94.0,
+						99.0,
+						65.0
+					],
+					"safe": true,
+					"text": "荣誉",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/@CanvasLayer@1963/@Control@1964/CurrencyDetails/@VBoxContainer@1966/CloseCurrency",
+					"rect": [
+						34.0,
+						967.0,
+						411.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"device": {
+				"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+				"mix_rate": 44100.0,
+				"model": "Android SDK built for x86_64",
+				"os": "Android",
+				"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+				"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+				"version": "37.16571990",
+				"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+				"window": "(1080, 2400)"
+			},
+			"focus": "CloseCurrency:<Button#892665334498>",
+			"keyboard_height": 0,
+			"labels": [
+				{
+					"font": 15,
+					"minimum": "(73.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Control@1861/HeroRolePlate/@Label@1870",
+					"rect": [
+						182.0,
+						701.0,
+						116.0,
+						23.0
+					],
+					"text": "破军 · 战士"
+				},
+				{
+					"font": 15,
+					"minimum": "(18.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/AvatarEntry/@TextureRect@1880/@Label@1881",
+					"rect": [
+						32.0,
+						129.962493896484,
+						32.0,
+						23.0
+					],
+					"text": "60"
+				},
+				{
+					"font": 17,
+					"minimum": "(1.0, 25.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/@Label@1882",
+					"rect": [
+						96.0,
+						109.962493896484,
+						142.0,
+						25.0
+					],
+					"text": "安卓全量巡检"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_gold/@NinePatchRect@1885/@Label@1887",
+					"rect": [
+						142.0,
+						75.9624938964844,
+						58.0,
+						24.0
+					],
+					"text": "123.4万"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_expedition/@NinePatchRect@1888/@Label@1890",
+					"rect": [
+						232.0,
+						75.9624938964844,
+						55.0,
+						23.0
+					],
+					"text": "234567"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_soul/@NinePatchRect@1891/@Label@1893",
+					"rect": [
+						322.0,
+						75.9624938964844,
+						48.0,
+						23.0
+					],
+					"text": "34567"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/CurrencyRow/Currency_honor/@NinePatchRect@1894/@Label@1896",
+					"rect": [
+						412.0,
+						75.9624938964844,
+						48.0,
+						23.0
+					],
+					"text": "4567"
+				},
+				{
+					"font": 15,
+					"minimum": "(30.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/Rail_bag/@Panel@1899/@Label@1900",
+					"rect": [
+						364.0,
+						152.962493896484,
+						40.0,
+						24.0
+					],
+					"text": "背包"
+				},
+				{
+					"font": 15,
+					"minimum": "(30.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/TopBar/Rail_gathering/@Panel@1903/@Label@1904",
+					"rect": [
+						424.0,
+						152.962493896484,
+						40.0,
+						24.0
+					],
+					"text": "小聚"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/QuestSummary/@Label@1906",
+					"rect": [
+						136.0,
+						887.999877929688,
+						226.0,
+						24.0
+					],
+					"text": "主线"
+				},
+				{
+					"font": 15,
+					"minimum": "(1.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/QuestSummary/@Label@1907",
+					"rect": [
+						136.0,
+						908.999877929688,
+						226.0,
+						24.0
+					],
+					"text": "归路仍在 · 三城可回访"
+				},
+				{
+					"font": 26,
+					"minimum": "(8.0, 39.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/QuestSummary/@Label@1908",
+					"rect": [
+						366.0,
+						887.999877929688,
+						8.0,
+						39.0
+					],
+					"text": "›"
+				},
+				{
+					"font": 15,
+					"minimum": "(30.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/Navigation_养成/@Panel@1913/@Label@1914",
+					"rect": [
+						30.0,
+						1034.99987792969,
+						44.0,
+						24.0
+					],
+					"text": "养成"
+				},
+				{
+					"font": 15,
+					"minimum": "(30.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/Navigation_活动/@Panel@1917/@Label@1918",
+					"rect": [
+						326.0,
+						1034.99987792969,
+						44.0,
+						24.0
+					],
+					"text": "活动"
+				},
+				{
+					"font": 15,
+					"minimum": "(30.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/Navigation_伙伴/@Panel@1921/@Label@1922",
+					"rect": [
+						110.0,
+						1034.99987792969,
+						44.0,
+						24.0
+					],
+					"text": "伙伴"
+				},
+				{
+					"font": 15,
+					"minimum": "(30.0, 23.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/Navigation_设置/@Panel@1925/@Label@1926",
+					"rect": [
+						406.0,
+						1034.99987792969,
+						44.0,
+						24.0
+					],
+					"text": "设置"
+				},
+				{
+					"font": 24,
+					"minimum": "(48.0, 35.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/TownContent/BottomHud/ReturnToWorld/SortiePlate/@Label@1927",
+					"rect": [
+						184.0,
+						1022.99987792969,
+						112.0,
+						40.0
+					],
+					"text": "出征"
+				},
+				{
+					"font": 16,
+					"minimum": "(1.0, 24.0)",
+					"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Label@1928",
+					"rect": [
+						0.0,
+						447.720001220703,
+						480.0,
+						28.0
+					],
+					"text": ""
+				}
+			],
+			"modals": [
+				{
+					"currency": "expedition",
+					"name": "@Control@1964",
+					"script": "res://src/ui/CurrencyPanel.gd"
+				}
+			],
+			"page": "GameHome",
+			"tick_ms": 335688
+		}
+	],
+	"suite": "probe"
+}

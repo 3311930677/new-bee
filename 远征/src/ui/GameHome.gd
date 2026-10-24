@@ -255,6 +255,13 @@ func _open_activities() -> void:
 	if _activities!=null: return
 	Audio.sfx("ui_open")
 	_activities = ActivityPanelScript.new()
+	_activities.action_requested.connect(func(action_id: String):
+		_activities.queue_free()
+		_activities = null
+		match action_id:
+			"arena": _open_arena()
+			"world": G.enter_main_world()
+	)
 	_activities.closed.connect(func():
 		_activities.queue_free()
 		_activities = null
@@ -588,8 +595,7 @@ func _on_tutorial_try_step(step_id: String) -> void:
 			if _tutorial != null:
 				_tutorial.move_to_front()
 		"step_02_move":
-			if _tutorial != null and _tutorial.has_method("_on_next"):
-				_tutorial.call("_on_next")
+			G.enter_main_world()
 		"step_03_npc":
 			if _quests != null and _quests.has_method("_show_toast"):
 				_quests.call("_show_toast", "主线指引：步入昭元边城与闻叔交谈即可推进章节")
@@ -603,8 +609,7 @@ func _on_tutorial_try_step(step_id: String) -> void:
 				if _quests.has_method("_show_toast"):
 					_quests.call("_show_toast", "已为你接取并追踪边城委托，路牌方向信标已激活！")
 		"step_05_battle":
-			if _tutorial != null and _tutorial.has_method("_on_next"):
-				_tutorial.call("_on_next")
+			G.enter_main_world()
 		"step_06_reward":
 			if _arena != null and _arena.get("_archery_overlay") != null and is_instance_valid(_arena.get("_archery_overlay")):
 				var arch: Node = _arena.get("_archery_overlay")

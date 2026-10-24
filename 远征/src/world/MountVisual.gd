@@ -9,7 +9,25 @@ const ROLE_SHEETS := {
 	"fz": "res://image/mounts/first_horse_fz.png",
 }
 const DIRECTIONS := ["walk_down", "walk_left", "walk_right", "walk_up"]
+const RIDER_ATLAS := "res://image/mounts/riders_seated_v3.png"
 static var _cache: Dictionary = {}
+static var _head_cache: Dictionary = {}
+
+static func foreground_for(texture: Texture2D) -> Texture2D:
+	var source := texture as AtlasTexture
+	if source == null: return null
+	var key := str(source.region)
+	if _head_cache.has(key): return _head_cache[key]
+	# The horse's muzzle is in front of the rider's knees when facing south.
+	# Keep the original full-cell canvas so it registers exactly with the gait.
+	var crop := Rect2(130,128,110,112)
+	var part := AtlasTexture.new()
+	part.atlas = source.atlas
+	part.region = Rect2(source.region.position+crop.position,crop.size)
+	part.margin = Rect2(crop.position,source.region.size-crop.size)
+	part.filter_clip = true
+	_head_cache[key] = part
+	return part
 
 
 static func frames_for(role_id: String, mount_id := "horse") -> SpriteFrames:
@@ -42,9 +60,9 @@ static func _bear_frames() -> SpriteFrames:
 	var frames := SpriteFrames.new()
 	for i in 4:
 		frames.add_animation(DIRECTIONS[i])
-		frames.set_animation_speed(DIRECTIONS[i], 8.0)
+		frames.set_animation_speed(DIRECTIONS[i], 6.0)
 		frames.set_animation_loop(DIRECTIONS[i], true)
-		for col in 3:
+		for col in [0,1,2,1]:
 			var atlas := AtlasTexture.new()
 			atlas.atlas = sheet
 			atlas.region = Rect2(col * 362, i * 362, 362, 362)
@@ -61,9 +79,9 @@ static func _horse_frames() -> SpriteFrames:
 	var frames := SpriteFrames.new()
 	for direction in 4:
 		frames.add_animation(DIRECTIONS[direction])
-		frames.set_animation_speed(DIRECTIONS[direction], 8.0)
+		frames.set_animation_speed(DIRECTIONS[direction], 6.0)
 		frames.set_animation_loop(DIRECTIONS[direction], true)
-		for phase in 3:
+		for phase in [0,1,2,1]:
 			var atlas := AtlasTexture.new()
 			atlas.atlas = sheet
 			atlas.region = Rect2(phase * 362, direction * 362, 362, 362)
@@ -71,39 +89,30 @@ static func _horse_frames() -> SpriteFrames:
 	_cache.horse_walk = frames
 	return frames
 
-static func rider_frames_for(role_id: String, base_frames: SpriteFrames) -> SpriteFrames:
-	var key := "rider_" + role_id
-	if _cache.has(key):
-		return _cache[key] as SpriteFrames
-	if base_frames == null:
-		return null
+static func rider_frames_for(role_id: String, _base_frames: SpriteFrames) -> SpriteFrames:
+	var key := "rider_seated_" + role_id
+	if _cache.has(key): return _cache[key]
+	var sheet := load(RIDER_ATLAS) as Texture2D
+	var cell := sheet.get_size()/4.0
+	var column: int = {"zs":0,"ck":1,"fs":2,"fz":3}.get(role_id,0)
 	var frames := SpriteFrames.new()
-	var crop_heights := {"down": 68.0, "left": 86.0, "right": 86.0, "up": 82.0}
-	for dir_suffix in ["down", "left", "right", "up"]:
-		var walk_anim := StringName("walk_" + dir_suffix)
-		var idle_anim := StringName("idle_" + dir_suffix)
-		var src_anim := idle_anim if base_frames.has_animation(idle_anim) else walk_anim
-		var src_tex: Texture2D = base_frames.get_frame_texture(src_anim, 0) if base_frames.has_animation(src_anim) and base_frames.get_frame_count(src_anim) > 0 else null
-		var seated_tex: Texture2D = src_tex
-		if src_tex is AtlasTexture:
-			var orig := src_tex as AtlasTexture
-			var at := AtlasTexture.new()
-			at.atlas = orig.atlas
-			var ch := float(crop_heights.get(dir_suffix, 84.0))
-			var orig_h := orig.region.size.y if orig.region.size.y > 0.0 else 128.0
-			at.region = Rect2(orig.region.position.x, orig.region.position.y, orig.region.size.x, minf(ch, orig_h))
-			at.margin = Rect2(0.0, 0.0, 0.0, maxf(0.0, orig_h - ch))
-			at.filter_clip = true
-			seated_tex = at
-		for anim_name in [walk_anim, idle_anim]:
-			if not frames.has_animation(anim_name):
-				frames.add_animation(anim_name)
-			frames.set_animation_loop(anim_name, false)
-			frames.set_animation_speed(anim_name, 1.0)
-			if seated_tex != null:
-				frames.add_frame(anim_name, seated_tex)
+	frames.remove_animation(&"default")
+	for row in 4:
+		var part := AtlasTexture.new()
+		part.atlas = sheet
+		part.region = Rect2(Vector2(column,row)*cell,cell)
+		part.filter_clip = true
+		for name in [DIRECTIONS[row], DIRECTIONS[row].replace("walk_","idle_")]:
+			frames.add_animation(name)
+			frames.set_animation_loop(name,false)
+			frames.add_frame(name,part)
 	_cache[key] = frames
 	return frames
+
+static func rider_scale() -> float:
+	# The atlas has an explicit saddle anchor at (0.5, 0.60) in every cell.
+	var sheet := load(RIDER_ATLAS) as Texture2D
+	return 74.0/(sheet.get_height()/4.0)
 
 static func mount_offset(mount_id: String, direction: String) -> Vector2:
 	if mount_id == "bear": return bear_offset(direction)
@@ -111,10 +120,10 @@ static func mount_offset(mount_id: String, direction: String) -> Vector2:
 
 static func rider_offset(mount_id: String, direction: String) -> float:
 	var dir_key := direction.replace("idle_", "walk_")
-	if mount_id == "bear": return -45.0 if dir_key in ["walk_down", "walk_up"] else -39.0
-	return float({"walk_down": -55.0, "walk_left": -43.0, "walk_right": -43.0, "walk_up": -48.0}.get(dir_key, -46.0))
+	if mount_id == "bear": return -49.0 if dir_key == "walk_up" else -46.0
+	return float({"walk_down": -51.0, "walk_left": -48.0, "walk_right": -48.0, "walk_up": -58.0}.get(dir_key, -46.0))
 
 static func rider_pos(mount_id: String, direction: String, stride_bob := 0.0) -> Vector2:
 	var dir_key := direction.replace("idle_", "walk_")
-	var rx := 3.0 if dir_key == "walk_left" else (-3.0 if dir_key == "walk_right" else 0.0)
+	var rx := 0.0
 	return Vector2(rx, rider_offset(mount_id, dir_key) + stride_bob)

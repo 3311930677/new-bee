@@ -11,10 +11,12 @@ config_version=5
 [application]
 
 config/name="远征"
-config/version="0.2.0"
+config/version="0.2.1-mobile2"
 run/main_scene="res://src/main/Main.tscn"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.png"
+run/main_scene.android_ui_audit="res://src/qa/AndroidUiAudit.tscn"
+run/main_scene.android_deep_audit="res://src/qa/AndroidDeepAudit.tscn"
 
 [autoload]
 

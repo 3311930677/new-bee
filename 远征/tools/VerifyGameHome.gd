@@ -517,8 +517,17 @@ func _run() -> void:
 	var tut_gold_before := int(G.wallet.get("gold", 0))
 	var tut_exp_before := int(G.wallet.get("expedition", 0))
 	var tut_stone_before := G.item_count("enhance_stone")
-	for step_i in 11:
+	Tut.advance(G, false)
+	_check(not bool(Tut.advance(G, false).get("ok", true)),
+		"没有在主世界移动时不能跳过移动教学")
+	Tut.notify_event(G, "player_moved")
+	for step_i in 8:
 		Tut.advance(G, false)
+	_check(not bool(Tut.complete(G, false).get("ok", true))
+		and not bool(Tut.ensure_state(G).get("completed", false)),
+		"只看完教程而未赢得野外战斗时不得领贺礼")
+	Tut.notify_event(G, "battle_won")
+	Tut.advance(G, false)
 	_check(bool(Tut.ensure_state(G).get("completed", false)), "走完 11 步后应标记 completed=true")
 	_check(int(G.wallet.get("gold", 0)) == tut_gold_before + 300
 		and int(G.wallet.get("expedition", 0)) == tut_exp_before + 30
@@ -530,6 +539,16 @@ func _run() -> void:
 	_check(not bool(done_again.get("reward_granted", true))
 		and int(G.wallet.get("gold", 0)) == tut_gold_before + 300,
 		"重温教程再次完成不应重复发放启程奖励")
+	home_tut._open_activities()
+	await get_tree().process_frame
+	_check(home_tut._activities != null and home_tut._activities._events.size() >= 2,
+		"活动页应提供可进入的演武与行路挑战")
+	if home_tut._activities != null:
+		home_tut._activities.show_event("arena_practice")
+		home_tut._activities.action_requested.emit("arena")
+		await get_tree().process_frame
+		_check(home_tut._activities == null and home_tut._arena != null,
+			"活动挑战按钮应实际进入演武场")
 	home_tut.queue_free()
 	await get_tree().process_frame
 
@@ -643,7 +662,7 @@ func _run() -> void:
 	_check(G.is_built("forge") and G.is_built("frost_lodge"), "gm_unlock_all_features 应落成全部边城与霜关建筑")
 	GmConsole.open_unlocked()
 	_check(GmConsole.visible and G.ui_blocked, "GmConsole.open_unlocked 应免密打开开发者控制台")
-	_check(GmConsole.get("_float_bar") != null, "GmConsole 应创建手机端常驻触控胶囊 _float_bar")
+	_check(GmConsole.get("_float_bar") == null, "默认不创建遮挡手机内容的常驻开发者浮条")
 	G.trigger_cancel()
 	_check(not GmConsole.visible and not G.ui_blocked, "G.trigger_cancel() 应触发 ESC 关闭当前顶层窗口")
 

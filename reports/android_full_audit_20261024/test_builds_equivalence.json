@@ -1,0 +1,45 @@
+{
+  "scope": "Exported production scripts and JSON, excludes diagnostic src/qa",
+  "builds": {
+    "Yuanzheng-deep-audit.apk": {
+      "sha256": "bce9da02c06e21465fc424709bd76d7ef4d5157a4a9fdad303ac43879bc9a3ee",
+      "production_script_json_count": 283,
+      "mismatches": [],
+      "diagnostic_file_count": 6,
+      "native_libs": [
+        "lib/x86_64/libc++_shared.so",
+        "lib/x86_64/libgodot_android.so"
+      ]
+    },
+    "Yuanzheng-deep-audit-extended.apk": {
+      "sha256": "c02c86d544334b9abbad51cca8558f6c258d30e8b6807d189f960eea0029c7fd",
+      "production_script_json_count": 283,
+      "mismatches": [],
+      "diagnostic_file_count": 6,
+      "native_libs": [
+        "lib/x86_64/libc++_shared.so",
+        "lib/x86_64/libgodot_android.so"
+      ]
+    },
+    "Yuanzheng-deep-audit-final.apk": {
+      "sha256": "094cbb19f08505ed3cb75ea87f0163cd4a5ec4ddf515a45e9da1e3bc33b16669",
+      "production_script_json_count": 283,
+      "mismatches": [],
+      "diagnostic_file_count": 6,
+      "native_libs": [
+        "lib/x86_64/libc++_shared.so",
+        "lib/x86_64/libgodot_android.so"
+      ]
+    },
+    "Yuanzheng-full-flow.apk": {
+      "sha256": "dfeb4f163d3ee1b9808b2359da605a276a7854fb53e13ddadf9b3cca00aa9662",
+      "production_script_json_count": 283,
+      "mismatches": [],
+      "diagnostic_file_count": 0,
+      "native_libs": [
+        "lib/x86_64/libc++_shared.so",
+        "lib/x86_64/libgodot_android.so"
+      ]
+    }
+  }
+}

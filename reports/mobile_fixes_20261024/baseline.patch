@@ -1,0 +1,702 @@
+diff --git "a/\350\277\234\345\276\201/data/activities.json" "b/\350\277\234\345\276\201/data/activities.json"
+index 2d349d61..2aef1fa6 100644
+--- "a/\350\277\234\345\276\201/data/activities.json"
++++ "b/\350\277\234\345\276\201/data/activities.json"
+@@ -1,4 +1,25 @@
+ {
+   "version": 1,
+-  "events": []
++  "events": [
++    {
++      "id": "arena_practice",
++      "title": "演武场 · 连招试炼",
++      "summary": "与机关傀儡切磋，练习留招、集火与伙伴配合。",
++      "body": "从演武场进入挑战。战斗会结算已有的荣誉与段位进度；可以在这里试验不同职业、技能时机和伙伴编成。",
++      "action": "arena",
++      "action_text": "前往演武场",
++      "starts_at": 0,
++      "ends_at": 0
++    },
++    {
++      "id": "world_trial",
++      "title": "行路试炼 · 重访旧地",
++      "summary": "返回主世界，挑战已解锁的碑窟、水闸与矿脉附加试炼。",
++      "body": "从主世界前往已经首通的副本，完成观察、抉择与首领练习。首次附加挑战可领取强化石；再次挑战用于检验新构筑。",
++      "action": "world",
++      "action_text": "前往主世界",
++      "starts_at": 0,
++      "ends_at": 0
++    }
++  ]
+ }
+diff --git "a/\350\277\234\345\276\201/data/talents.json" "b/\350\277\234\345\276\201/data/talents.json"
+index 887dd90e..d0df9e5e 100644
+--- "a/\350\277\234\345\276\201/data/talents.json"
++++ "b/\350\277\234\345\276\201/data/talents.json"
+@@ -14,7 +14,7 @@
+         { "id": "fury_7", "tier": 7, "max": 2, "name": "绝杀", "effect": {"crit_add": 0.02}, "desc": "每点 暴击+2%" },
+         { "id": "fury_8", "tier": 8, "max": 3, "name": "狂澜", "effect": {"atk_pct": 0.04}, "desc": "每点 攻击+4%" },
+         { "id": "fury_9", "tier": 9, "max": 2, "name": "战意", "effect": {"energy_pct": 0.15}, "desc": "每点 能量获取+15%" },
+-        { "id": "fury_10", "tier": 10, "max": 1, "name": "破军之势", "effect": {"atk_pct": 0.08, "crit_add": 0.03}, "desc": "攻击+8% 暴击+3%" }
++        { "id": "fury_10", "tier": 10, "max": 1, "name": "破军之势", "effect": {"atk_pct": 0.08, "crit_add": 0.03, "perk_crit_bleed": 1}, "desc": "攻击+8% 暴击+3%；普攻暴击施加流血" }
+       ] },
+     { "id": "guard", "name": "坚壁", "color": "5a8a5a", "desc": "防御系：生命与减伤",
+       "nodes": [
+@@ -27,7 +27,7 @@
+         { "id": "guard_7", "tier": 7, "max": 2, "name": "御劲", "effect": {"def_pct": 0.06}, "desc": "每点 防御+6%" },
+         { "id": "guard_8", "tier": 8, "max": 3, "name": "磐石", "effect": {"hp_add": 70}, "desc": "每点 生命+70" },
+         { "id": "guard_9", "tier": 9, "max": 2, "name": "不屈", "effect": {"maxhp_pct": 0.04}, "desc": "每点 生命+4%" },
+-        { "id": "guard_10", "tier": 10, "max": 1, "name": "不动如山", "effect": {"maxhp_pct": 0.08, "def_pct": 0.10}, "desc": "生命+8% 防御+10%" }
++        { "id": "guard_10", "tier": 10, "max": 1, "name": "不动如山", "effect": {"maxhp_pct": 0.08, "def_pct": 0.10, "perk_last_stand": 1}, "desc": "生命+8% 防御+10%；每战低血时获得一次护盾" }
+       ] },
+     { "id": "spirit", "name": "迅捷", "color": "4a7a9a", "desc": "辅助系：速度与回复",
+       "nodes": [
+@@ -40,7 +40,7 @@
+         { "id": "spirit_7", "tier": 7, "max": 2, "name": "流影", "effect": {"spd_pct": 0.04}, "desc": "每点 速度+4%" },
+         { "id": "spirit_8", "tier": 8, "max": 3, "name": "通明", "effect": {"crit_add": 0.015}, "desc": "每点 暴击+1.5%" },
+         { "id": "spirit_9", "tier": 9, "max": 2, "name": "乘风", "effect": {"spd_pct": 0.05}, "desc": "每点 速度+5%" },
+-        { "id": "spirit_10", "tier": 10, "max": 1, "name": "天人合一", "effect": {"spd_pct": 0.08, "energy_pct": 0.20}, "desc": "速度+8% 能量+20%" }
++        { "id": "spirit_10", "tier": 10, "max": 1, "name": "天人合一", "effect": {"spd_pct": 0.08, "energy_pct": 0.20, "perk_quick_cast": 1}, "desc": "速度+8% 能量+20%；低耗招式前摇缩短" }
+       ] }
+   ]
+ }
+diff --git "a/\350\277\234\345\276\201/src/autoload/G.gd" "b/\350\277\234\345\276\201/src/autoload/G.gd"
+index e269b2e6..51d2cfa6 100644
+--- "a/\350\277\234\345\276\201/src/autoload/G.gd"
++++ "b/\350\277\234\345\276\201/src/autoload/G.gd"
+@@ -2245,9 +2245,16 @@ func side_entity_visible(eid: String, qid: String) -> bool:
+ 		return true   # 无任务归属的实体（P05-D 旧路石箱）由 WorldSession 实体态自己管
+ 	var act1 := act1_state()
+ 	var st := QuestService.side_status(act1, qid)
+-	if st.is_empty() or st == QuestService.SIDE_READY or st == QuestService.SIDE_DONE:
++	if st == QuestService.SIDE_READY or st == QuestService.SIDE_DONE:
+ 		return false
+ 	var row := QuestService.side_row(_side_live_rows(), qid)
++	if row.is_empty():
++		return false
++	if st.is_empty():
++		# 未接任务时仍可发现首个线索；后续步骤保持隐藏，避免提前泄露剧情。
++		var first := QuestService.side_objective(row, {})
++		return String(first.get("kind", "")) in ["collect", "observe", "deliver"] \
++			and QuestService._side_entity_match(first, {"source_id": eid})
+ 	if not (row.get("steps", []) as Array).is_empty():
+ 		var objective := QuestService.side_objective(row, QuestService.side_get(act1, qid))
+ 		return QuestService._side_entity_match(objective, {"source_id": eid})
+@@ -2267,16 +2274,30 @@ func side_entity_interact(kind: String, eid: String, map_id: String, qid := "",
+ 	var rows := _side_live_rows()
+ 	var event := QuestService.world_event(kind, eid, map_id,
+ 		selected_role if not selected_role.is_empty() else "player", {"choice": choice})
+-	var step := QuestService.side_objective(QuestService.side_row(rows, qid), QuestService.side_get(act1, qid))
++	var quest_row := QuestService.side_row(rows, qid)
++	var step := QuestService.side_objective(quest_row, QuestService.side_get(act1, qid))
+ 	if not (step.get("choices", {}) as Dictionary).is_empty():
+ 		if not (step.get("choices", {}) as Dictionary).has(choice):
+ 			return {"ok": false, "reason": "invalid_choice", "hide": false}
+ 		if not String(step.get("correct", "")).is_empty() and choice != String(step["correct"]):
+ 			return {"ok": false, "reason": "wrong_choice", "line": String(step.get("wrong", "再核对线索，仍可重试。")), "hide": false}
++	var discovered := not qid.is_empty() and QuestService.side_status(act1, qid).is_empty()
++	if discovered:
++		var accepted := QuestService.side_accept(act1, rows, qid)
++		if not bool(accepted.get("ok", false)):
++			return {"ok": false, "reason": "no_progress", "hide": false}
++		var accepted_item := String(quest_row.get("accept_item", ""))
++		if not accepted_item.is_empty():
++			items[accepted_item] = item_count(accepted_item) + 1
+ 	var touched := QuestService.side_report(act1, rows, event, items)
+ 	if touched.is_empty():
++		if discovered:
++			prog = before_prog
++			items = before_items
+ 		return {"ok": false, "reason": "no_progress", "toasts": [], "hide": false}
+ 	var toasts: Array = []
++	if discovered:
++		toasts.append("发现委托 · " + String(quest_row.get("title", "")))
+ 	if not String(step.get("completion", "")).is_empty(): toasts.append(String(step["completion"]))
+ 	if kind == "collect":
+ 		for qid_v in touched:
+@@ -5009,7 +5030,8 @@ func companion_train(pid: String, slot: int, tid: String) -> Dictionary:
+ func growth_bonuses(role_id := "") -> Dictionary:
+ 	var out := {"atk_pct": 0.0, "def_pct": 0.0, "maxhp_pct": 0.0, "spd_pct": 0.0,
+ 		"crit_add": 0.0, "atk_add": 0.0, "def_add": 0.0, "hp_add": 0, "energy_pct": 0.0,
+-		"relic_shield_pct":0.0, "relic_break_damage_pct":0.0}
++		"relic_shield_pct":0.0, "relic_break_damage_pct":0.0,
++		"perk_crit_bleed":0.0, "perk_last_stand":0.0, "perk_quick_cast":0.0}
+ 	# 天赋
+ 	var tl: Dictionary = prog.get("talents", {})
+ 	for nid in tl.keys():
+diff --git "a/\350\277\234\345\276\201/src/battle/BattleScene.gd" "b/\350\277\234\345\276\201/src/battle/BattleScene.gd"
+index c404d2ba..bfe1b49c 100644
+--- "a/\350\277\234\345\276\201/src/battle/BattleScene.gd"
++++ "b/\350\277\234\345\276\201/src/battle/BattleScene.gd"
+@@ -252,6 +252,7 @@ var _dmg_out := 0                    # 我方造成的总伤害（战报用）
+ var _dmg_in := 0                     # 我方承受的总伤害
+ var _best_hit := 0                   # 我方最高单击
+ var _skill_btns: Array[Dictionary] = []  # {btn, name_l, cd_l, skill}
++var _ally_focus_uid := -1
+ var effective_skills: Array = []         # P05-D：本场真正生效过的玩家技能（每个 id 只记一次）
+ var _energy_fill: ColorRect = null       # 底部能量横条（经典模式不建：能量只走角色脚下蓝条）
+ var _energy_bar_w := VIEW_W - BAR_X * 2.0
+@@ -309,7 +310,8 @@ func _ready() -> void:
+ 	if seed_v == 0:
+ 		seed_v = randi()
+ 	sim.setup(seed_v, _cfg.get("ally", {}), _cfg.get("enemy", {}))
+-	sim.manual_basic_attack = true
++	# 普攻持续进行；玩家手动保留技能、集火、药剂和换宠的时机选择。
++	sim.manual_basic_attack = false
+ 	var init_role := sim.role_unit()
+ 	if init_role != null:
+ 		init_role.attack_timer = init_role.basic_threshold()
+@@ -1122,7 +1124,7 @@ func _command_attack() -> void:
+ 	if target == null:
+ 		target = enemies[0]
+ 	sim.set_role_focus_target(target.uid)
+-	if is_processing() and speed > 0.0:
++	if sim.manual_basic_attack and is_processing() and speed > 0.0:
+ 		sim.trigger_manual_attack()
+ 		_consume_events()
+ 	_sync_views()
+@@ -1168,6 +1170,14 @@ func _gui_input(event: InputEvent) -> void:
+ 		Audio.sfx("ui_click")
+ 		_select_enemy_target(best_uid, true)
+ 		accept_event()
++		return
++	for ally in sim.alive_units("ally"):
++		var ally_view: UnitView = _views.get(ally.uid)
++		if ally_view != null and ally_view._actor_rect().grow(14.0).has_point(pos):
++			_ally_focus_uid = ally.uid
++			_show_tip("辅助目标：%s" % ally.name)
++			accept_event()
++			return
+ 
+ 
+ func _cast_command_skill(sid: String) -> void:
+@@ -1182,7 +1192,7 @@ func _cast_command_skill(sid: String) -> void:
+ 	if role.energy<cost:
+ 		_show_tip("能量不足 · 需要 %d，当前 %d" % [cost,role.energy])
+ 		return
+-	if sim.cast_skill(role.uid,sid):
++	if sim.cast_skill(role.uid,sid,_ally_focus_uid):
+ 		_consume_events()
+ 		_close_page()
+ 	else: _show_tip("当前无法施放这个技能")
+@@ -1830,7 +1840,7 @@ func _try_cast(sid: String) -> void:
+ 	var role := sim.role_unit()
+ 	if role == null or not role.alive:
+ 		return
+-	if sim.cast_skill(role.uid, sid):
++	if sim.cast_skill(role.uid, sid, _ally_focus_uid):
+ 		_consume_events()  # 立即消费 cast_start 提示
+ 
+ 
+diff --git "a/\350\277\234\345\276\201/src/combat/BattleSim.gd" "b/\350\277\234\345\276\201/src/combat/BattleSim.gd"
+index 8e6e9c83..b3262b1c 100644
+--- "a/\350\277\234\345\276\201/src/combat/BattleSim.gd"
++++ "b/\350\277\234\345\276\201/src/combat/BattleSim.gd"
+@@ -42,6 +42,7 @@ var _next_uid := 1
+ var _by_uid: Dictionary = {}
+ 
+ var campaign_profile: Dictionary = {}
++var growth_perks: Dictionary = {}
+ const CampaignPressure := preload("res://src/world/CampaignPressure.gd")
+ 
+ var role_uid: int = 0
+@@ -127,6 +128,11 @@ func _build_role(cfg: Dictionary) -> void:
+ 	stats.crit += ts.passive_crit_add()
+ 	# 局外养成加成（天赋/装备/坐骑/称号聚合，由 G.gd 计算后传入；缺省不影响）
+ 	var gb: Dictionary = gb0
++	growth_perks = {
++		"crit_bleed": bool(gb.get("perk_crit_bleed", 0.0)),
++		"last_stand": bool(gb.get("perk_last_stand", 0.0)),
++		"quick_cast": bool(gb.get("perk_quick_cast", 0.0)),
++	}
+ 	if not gb.is_empty():
+ 		stats.atk = int(float(stats.atk) * (1.0 + float(gb.get("atk_pct", 0.0))) + float(gb.get("atk_add", 0.0)))
+ 		stats.def = int(float(stats.def) * (1.0 + float(gb.get("def_pct", 0.0))) + float(gb.get("def_add", 0.0)))
+@@ -446,7 +452,7 @@ func emit(e: Dictionary) -> void:
+ 
+ 
+ # ---------- 指令（玩家输入，经校验后入队） ----------
+-func cast_skill(uid: int, skill_id: String) -> bool:
++func cast_skill(uid: int, skill_id: String, target_uid := -1) -> bool:
+ 	var u := unit_by_uid(uid)
+ 	if u == null:
+ 		return false
+@@ -462,7 +468,7 @@ func cast_skill(uid: int, skill_id: String) -> bool:
+ 		return false
+ 	if not SkillSystem.can_cast(self, u, sd):
+ 		return false
+-	SkillSystem.enqueue_cast(self, u, sd)
++	SkillSystem.enqueue_cast(self, u, sd, target_uid)
+ 	return true
+ 
+ 
+@@ -523,6 +529,12 @@ func step() -> void:
+ 	for u in units:
+ 		if not u.alive:
+ 			continue
++		if u.kind == "role" and bool(growth_perks.get("last_stand", false)) \
++				and not u.once_flags.has("growth_last_stand") \
++				and float(u.hp) / float(maxi(u.get_max_hp(), 1)) <= 0.35:
++			u.once_flags["growth_last_stand"] = true
++			u.add_buff("shield", 5 * TICK_RATE, {"pool": maxi(1, int(u.get_max_hp() * 0.20))})
++			emit({"t": "buff", "uid": u.uid, "buff": "shield"})
+ 		for s in u.skills:
+ 			if int(s.cd_left) > 0:
+ 				s.cd_left = int(s.cd_left) - 1
+diff --git "a/\350\277\234\345\276\201/src/combat/Combatant.gd" "b/\350\277\234\345\276\201/src/combat/Combatant.gd"
+index 54170111..f57e72c6 100644
+--- "a/\350\277\234\345\276\201/src/combat/Combatant.gd"
++++ "b/\350\277\234\345\276\201/src/combat/Combatant.gd"
+@@ -448,6 +448,10 @@ func do_basic_attack(sim: BattleSim) -> void:
+ 	# 用 take_damage 的**返回值**（已减伤/已被盾吸收后的实数）喂命中钩子：
+ 	# 以前喂的是未减伤的 dmg，打盾时饮血吸回来的血比实际造成的伤害还多
+ 	var dealt := target.take_damage(dmg, self, sim, is_crit)
++	if kind == "role" and is_crit and target.alive and bool(sim.growth_perks.get("crit_bleed", false)):
++		target.add_buff("bleed", 3 * BattleSim.TICK_RATE,
++			{"pct": 0.02, "atk": get_atk(), "stacks": 1, "stack_cap": 3, "src_uid": uid})
++		sim.emit({"t": "proc", "src": uid, "uid": target.uid, "buff": "bleed"})
+ 	# 怪物附带效果（毒/流血/减速按概率）
+ 	if kind == "monster" and data.has("on_hit") and target.alive:
+ 		var proc: Dictionary = data.on_hit
+diff --git "a/\350\277\234\345\276\201/src/combat/MonsterAI.gd" "b/\350\277\234\345\276\201/src/combat/MonsterAI.gd"
+index 27dcb3f0..c3b142d2 100644
+--- "a/\350\277\234\345\276\201/src/combat/MonsterAI.gd"
++++ "b/\350\277\234\345\276\201/src/combat/MonsterAI.gd"
+@@ -53,7 +53,8 @@ static func _auto_condition(sim: BattleSim, unit: Combatant, sid: String,
+ 		"fz_jinghua":
+ 			for a in allies:
+ 				if a.has_buff("bleed") or a.has_buff("poison") or a.has_buff("slow") \
+-						or a.has_buff("def_break") or a.has_buff("fear") or a.has_buff("stun"):
++						or a.has_buff("def_break") or a.has_buff("fear") or a.has_buff("stun") \
++						or a.has_buff("confusion") or a.has_buff("atk_down"):
+ 					return true
+ 			return false
+ 		"fz_zhudao":
+diff --git "a/\350\277\234\345\276\201/src/combat/SkillSystem.gd" "b/\350\277\234\345\276\201/src/combat/SkillSystem.gd"
+index 948616dc..33e8c0fb 100644
+--- "a/\350\277\234\345\276\201/src/combat/SkillSystem.gd"
++++ "b/\350\277\234\345\276\201/src/combat/SkillSystem.gd"
+@@ -60,7 +60,7 @@ static func can_cast(sim: BattleSim, caster: Combatant, skill: Dictionary) -> bo
+ 
+ 
+ ## 入队（校验通过后调用）
+-static func enqueue_cast(sim: BattleSim, caster: Combatant, skill: Dictionary) -> void:
++static func enqueue_cast(sim: BattleSim, caster: Combatant, skill: Dictionary, target_uid := -1) -> void:
+ 	var windup := WINDUP_TICKS_ULT if int(skill.get("cost", 0)) >= 60 else WINDUP_TICKS
+ 	# 表驱动的 per-skill 前摇（秒）：慢招要让玩家**看得见**预兆（例：失路兽「嗅踪」2 秒，
+ 	# 表现层按 cast_queue 剩余前摇画收缩环并逐帧倒数）。不给 windup 的照旧走 0.4/0.5 秒口径。
+@@ -69,7 +69,10 @@ static func enqueue_cast(sim: BattleSim, caster: Combatant, skill: Dictionary) -
+ 		windup = maxi(1, int(windup_sec * float(BattleSim.TICK_RATE)))
+ 	if caster.traits != null:
+ 		windup = maxi(6, int(float(windup) * (1.0 + caster.traits.passive_cd_pct() * 0.5)))
+-	sim.cast_queue.append({"uid": caster.uid, "skill": skill, "windup": windup})
++	if caster.kind == "role" and bool(sim.growth_perks.get("quick_cast", false)) \
++			and int(skill.get("cost", 0)) <= 40:
++		windup = maxi(6, int(float(windup) * 0.75))
++	sim.cast_queue.append({"uid": caster.uid, "skill": skill, "windup": windup, "target_uid": target_uid})
+ 	sim.emit({"t": "cast_start", "uid": caster.uid, "skill": String(skill.get("id", "")),
+ 		"name": String(skill.get("name", ""))})
+ 
+@@ -90,6 +93,14 @@ static func resolve_cast(sim: BattleSim, entry: Dictionary) -> void:
+ 	if etype_pre != "heal" and etype_pre != "summon" and etype_pre != "cleanse":
+ 		if sim.alive_units("enemy" if caster.side == "ally" else "ally").is_empty():
+ 			return
++	var chosen_ally := sim.unit_by_uid(int(entry.get("target_uid", -1)))
++	if chosen_ally == null or not chosen_ally.alive or chosen_ally.side != caster.side:
++		chosen_ally = null
++	if etype_pre == "cleanse":
++		if chosen_ally != null and _debuff_count(chosen_ally) == 0:
++			return
++		if chosen_ally == null and _cleanse_target(sim.alive_units(caster.side)) == null:
++			return
+ 	# 「满能量」快照必须在**扣能量之前**取（A4）：扣完再判恒为 false，
+ 	# 上限 100、技能至少 20 费 → 超载（tr_energy_2）从未生效过
+ 	var is_full_energy := caster.kind == "role" \
+@@ -109,7 +120,7 @@ static func resolve_cast(sim: BattleSim, entry: Dictionary) -> void:
+ 	var combo := _check_combo(sim, caster, skill)
+ 	sim.emit({"t": "cast", "uid": caster.uid, "skill": String(skill.get("id", "")),
+ 		"name": String(skill.get("name", "")), "combo": combo.get("name", "")})
+-	_apply_skill(sim, caster, skill, combo, is_full_energy)
++	_apply_skill(sim, caster, skill, combo, is_full_energy, chosen_ally)
+ 	# 仅在实际结算后记一次性技能；前摇被控制打断仍可重新尝试。
+ 	if bool(skill.get("once", false)):
+ 		caster.once_flags["skill_" + String(skill.get("id", ""))] = true
+@@ -132,7 +143,7 @@ static func _check_combo(sim: BattleSim, caster: Combatant, skill: Dictionary) -
+ 
+ 
+ static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, combo: Dictionary,
+-		is_full_energy := false) -> void:
++		is_full_energy := false, chosen_ally: Combatant = null) -> void:
+ 	# 记录连携窗口起点
+ 	sim.last_cast[caster.uid] = {"skill_id": String(skill.get("id", "")), "tick": sim.tick_count}
+ 	var target_type := String(skill.get("target", "enemy_single"))
+@@ -166,6 +177,14 @@ static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, c
+ 	# 目标集合
+ 	var etype := String(effect.get("type", ""))
+ 	var targets := _pick_targets(sim, caster, target_type)
++	if target_type == "ally_single" and chosen_ally != null:
++		targets.clear()
++		targets.append(chosen_ally)
++	if etype == "cleanse":
++		var cleanse_target := chosen_ally if chosen_ally != null else _cleanse_target(sim.alive_units(caster.side))
++		targets.clear()
++		if cleanse_target != null:
++			targets.append(cleanse_target)
+ 	var effective := 0
+ 	var companion_effective := 0
+ 	if targets.is_empty() and target_type != "ally_role" and etype != "heal" and etype != "summon" and etype != "cleanse":
+@@ -402,6 +421,25 @@ static func _heal_target(caster: Combatant, allies: Array[Combatant]) -> Combata
+ 	return best
+ 
+ 
++static func _cleanse_target(allies: Array[Combatant]) -> Combatant:
++	var best: Combatant = null
++	var best_count := 0
++	for ally in allies:
++		var count := _debuff_count(ally)
++		if count > best_count:
++			best = ally
++			best_count = count
++	return best
++
++
++static func _debuff_count(ally: Combatant) -> int:
++	var count := 0
++	for debuff in ["bleed", "poison", "slow", "def_break", "fear", "stun", "confusion", "atk_down"]:
++		if ally.has_buff(debuff):
++			count += 1
++	return count
++
++
+ static func _primary_target(sim: BattleSim, caster: Combatant, target_type: String) -> Combatant:
+ 	var targets := _pick_targets(sim, caster, target_type)
+ 	if targets.is_empty():
+diff --git "a/\350\277\234\345\276\201/src/explore/MapScene.gd" "b/\350\277\234\345\276\201/src/explore/MapScene.gd"
+index e8d53bb1..bdd511a0 100644
+--- "a/\350\277\234\345\276\201/src/explore/MapScene.gd"
++++ "b/\350\277\234\345\276\201/src/explore/MapScene.gd"
+@@ -2806,6 +2806,9 @@ func _physics_process(delta: float) -> void:
+ 	var rows := int(_map_cfg.get("map_rows", 42))
+ 	_player.position = _player.position.clamp(Vector2(24, 60), Vector2(cols * 48 - 24, rows * 48 - 24))
+ 	var actual_dir := (_player.position - _prev_pos) / maxf(delta, 0.0001)
++	if _mode == "main_world" and actual_dir.length_squared() > 1.0 \
++			and not bool((G.prog.get("tutorial", {}) as Dictionary).get("field_moved", false)):
++		preload("res://src/world/TutorialService.gd").notify_event(G, "player_moved")
+ 	_update_player_anim(actual_dir)
+ 	_tick_mount_hoof(delta, actual_dir)
+ 	_update_world_companion(delta, actual_dir)
+@@ -3477,7 +3480,7 @@ func _nav_info() -> Dictionary:
+ 
+ 
+ func _update_nav(delta: float = 0.0) -> void:
+-	var info := _nav_info()
++	var info := _hud_target_info()
+ 	if _mode=="main_world" and _player!=null and st!=null:
+ 		var hint_key:=st.active_pet+"|"+_main_map_id
+ 		if not _exploration_seen.has(hint_key) and _player.position.distance_to(info.get("pos",Vector2.ZERO))<300:
+@@ -3512,7 +3515,7 @@ func _on_compass_tapped() -> void:
+ 		return
+ 	if _map_done or _battle != null or _picker != null or _remover != null:
+ 		return
+-	var info := _nav_info()
++	var info := _hud_target_info()
+ 	if String(info.get("kind", "")).is_empty():
+ 		return
+ 	Audio.sfx("ui_confirm")
+@@ -3542,7 +3545,7 @@ func _stop_auto_walk(msg: String) -> void:
+ 
+ ## 自动前往的转向：直线朝目标；被散件挡住时先沿切线绕一段再回来
+ func _auto_dir(delta: float) -> Vector2:
+-	var info := _nav_info()
++	var info := _hud_target_info()
+ 	if String(info.get("kind", "")).is_empty():
+ 		_stop_auto_walk("")
+ 		return Vector2.ZERO
+diff --git "a/\350\277\234\345\276\201/src/ui/ActivityPanel.gd" "b/\350\277\234\345\276\201/src/ui/ActivityPanel.gd"
+index 440dc804..fd22d89a 100644
+--- "a/\350\277\234\345\276\201/src/ui/ActivityPanel.gd"
++++ "b/\350\277\234\345\276\201/src/ui/ActivityPanel.gd"
+@@ -1,6 +1,7 @@
+ extends Control
+ ## Configured announcements only. Opening this page never changes player progress.
+ signal closed
++signal action_requested(action_id: String)
+ const Craft := preload("res://src/ui/CraftUI.gd")
+ const CONFIG := "res://data/activities.json"
+ var events_override: Variant = null
+@@ -178,6 +179,11 @@ func show_event(id: String) -> void:
+ 	if body is Array:
+ 		for paragraph in body: _add_paragraph(inner,String(paragraph),G.FS_MD,Craft.WHITE)
+ 	else: _add_paragraph(inner,String(body),G.FS_MD,Craft.WHITE)
++	var action_id := String(event.get("action", ""))
++	if not action_id.is_empty() and event_status(event, int(Time.get_unix_time_from_system())) == "进行中":
++		var action := Craft.action(String(event.get("action_text", "前往挑战")), Vector2.ZERO, Vector2(350, 54))
++		action.activated.connect(func(): action_requested.emit(action_id))
++		inner.add_child(action)
+ 
+ func _add_paragraph(parent: Control,words: String,px: int,ink: Color,bold := false) -> void:
+ 	var l := Craft.label(words,Vector2.ZERO,Vector2(360,32),px,ink,bold)
+diff --git "a/\350\277\234\345\276\201/src/ui/GameHome.gd" "b/\350\277\234\345\276\201/src/ui/GameHome.gd"
+index 151c9280..3fe09683 100644
+--- "a/\350\277\234\345\276\201/src/ui/GameHome.gd"
++++ "b/\350\277\234\345\276\201/src/ui/GameHome.gd"
+@@ -255,6 +255,13 @@ func _open_activities() -> void:
+ 	if _activities!=null: return
+ 	Audio.sfx("ui_open")
+ 	_activities = ActivityPanelScript.new()
++	_activities.action_requested.connect(func(action_id: String):
++		_activities.queue_free()
++		_activities = null
++		match action_id:
++			"arena": _open_arena()
++			"world": G.enter_main_world()
++	)
+ 	_activities.closed.connect(func():
+ 		_activities.queue_free()
+ 		_activities = null
+@@ -588,8 +595,7 @@ func _on_tutorial_try_step(step_id: String) -> void:
+ 			if _tutorial != null:
+ 				_tutorial.move_to_front()
+ 		"step_02_move":
+-			if _tutorial != null and _tutorial.has_method("_on_next"):
+-				_tutorial.call("_on_next")
++			G.enter_main_world()
+ 		"step_03_npc":
+ 			if _quests != null and _quests.has_method("_show_toast"):
+ 				_quests.call("_show_toast", "主线指引：步入昭元边城与闻叔交谈即可推进章节")
+@@ -603,8 +609,7 @@ func _on_tutorial_try_step(step_id: String) -> void:
+ 				if _quests.has_method("_show_toast"):
+ 					_quests.call("_show_toast", "已为你接取并追踪边城委托，路牌方向信标已激活！")
+ 		"step_05_battle":
+-			if _tutorial != null and _tutorial.has_method("_on_next"):
+-				_tutorial.call("_on_next")
++			G.enter_main_world()
+ 		"step_06_reward":
+ 			if _arena != null and _arena.get("_archery_overlay") != null and is_instance_valid(_arena.get("_archery_overlay")):
+ 				var arch: Node = _arena.get("_archery_overlay")
+diff --git "a/\350\277\234\345\276\201/src/ui/TutorialOverlay.gd" "b/\350\277\234\345\276\201/src/ui/TutorialOverlay.gd"
+index 1ea9ff9d..538f3760 100644
+--- "a/\350\277\234\345\276\201/src/ui/TutorialOverlay.gd"
++++ "b/\350\277\234\345\276\201/src/ui/TutorialOverlay.gd"
+@@ -174,7 +174,12 @@ func refresh(sync_panel: bool = false) -> void:
+ 	_hint_l.text = "▶ " + String(step.get("action_hint", ""))
+ 	_prev_btn.disabled = idx <= 0
+ 	var is_last := idx >= total - 1
+-	_next_btn.caption.text = "完成引导 · 领礼" if is_last else "下一步"
++	var battle_done := bool(tut.get("field_battle_won", false))
++	var moved := bool(tut.get("field_moved", false))
++	_next_btn.caption.text = "先去主世界移动" if idx == 1 and not moved else ("完成引导 · 领礼" if is_last and battle_done else ("先赢一场野外战斗" if is_last else "下一步"))
++	_next_btn.disabled = (idx == 1 and not moved) or (is_last and not battle_done)
++	if is_last and not battle_done:
++		_hint_l.text = "▶ 去野外完成一场战斗，回城后领取启程贺礼"
+ 	_try_btn.visible = action_router.is_valid() and not is_last
+ 	_relayout()
+ 	_relayout.call_deferred()
+diff --git "a/\350\277\234\345\276\201/src/world/TutorialService.gd" "b/\350\277\234\345\276\201/src/world/TutorialService.gd"
+index b0703d78..fbb7c13b 100644
+--- "a/\350\277\234\345\276\201/src/world/TutorialService.gd"
++++ "b/\350\277\234\345\276\201/src/world/TutorialService.gd"
+@@ -22,7 +22,7 @@ const STEPS := [
+ 		"speaker": "边城执事·闻叔",
+ 		"title": "第2步 · 踏足街巷（出征探索大世界）",
+ 		"body": "底部中央的「出征」大印是步入昭元边城与外野的唯一总入口。进入地图后可用摇杆或 WASD 自由行走，靠近发光器物与路牌即可交互。",
+-		"action_hint": "实操任务：认准底部「出征」大印，点「下一步」继续",
++		"action_hint": "实操任务：点「实操演示」进入主世界，推动摇杆或按方向键移动",
+ 		"scene": "home",
+ 		"panel": "home",
+ 		"page_badge": "当前页面：主城总览 · 底部【出征】大印",
+@@ -61,7 +61,7 @@ const STEPS := [
+ 		"speaker": "边城教头·雷烈",
+ 		"title": "第5步 · 演武切磋（战斗机制与段位试炼）",
+ 		"body": "已自动切换至【演武场】！战斗中角色自动普攻攒能，点选招式可施放职业绝技并支持 ×1/×2/×4/×8 倍速。在此与机关傀儡切磋可演练连招、赢取演武荣誉！",
+-		"action_hint": "实操任务：了解演武切磋与段位，点「下一步」试射艺",
++		"action_hint": "实操任务：点「实操演示」进入野外，打一场真实战斗",
+ 		"scene": "battle",
+ 		"panel": "arena",
+ 		"page_badge": "已自动切页 ▶ 演武场 · 傀儡切磋与武艺试炼",
+@@ -138,8 +138,8 @@ const STEPS := [
+ 		"index": 11,
+ 		"speaker": "边城执事·闻叔",
+ 		"title": "第11步 · 远征启程（领取完训启程贺礼）",
+-		"body": "已返回【主城总览】！你已完整掌握角色易职、任务追踪、演武射艺、装备养成与行路图驿车。点击「完成引导 · 领礼」立得金币×300、远征币×30、强化石×3、口粮×2！",
+-		"action_hint": "实操任务：点击「完成引导 · 领礼」领取启程贺礼！",
++		"body": "已返回【主城总览】！请先在野外赢得一场战斗，亲手走通探索与整备。回城后点击「完成引导 · 领礼」，领取金币×300、远征币×30、强化石×3、口粮×2。",
++		"action_hint": "实操任务：赢得一场野外战斗，再领取启程贺礼",
+ 		"scene": "home",
+ 		"panel": "home",
+ 		"page_badge": "已返回 ▶ 主城总览 · 领取启程贺礼",
+@@ -185,6 +185,10 @@ static func ensure_state(host: Object) -> Dictionary:
+ 		tut["skipped"] = false
+ 	if not tut.has("reward_claimed"):
+ 		tut["reward_claimed"] = false
++	if not tut.has("field_battle_won"):
++		tut["field_battle_won"] = false
++	if not tut.has("field_moved"):
++		tut["field_moved"] = false
+ 	if not (tut.get("seen_steps") is Array):
+ 		tut["seen_steps"] = []
+ 	tut["step_idx"] = clampi(int(tut.get("step_idx", 0)), 0, STEPS.size() - 1)
+@@ -197,6 +201,8 @@ static func _default_state() -> Dictionary:
+ 		"completed": false,
+ 		"skipped": false,
+ 		"reward_claimed": false,
++		"field_battle_won": false,
++		"field_moved": false,
+ 		"seen_steps": [],
+ 	}
+ 
+@@ -225,6 +231,8 @@ static func step_at(idx: int) -> Dictionary:
+ static func advance(host: Object, save: bool = true) -> Dictionary:
+ 	var tut := ensure_state(host)
+ 	var idx := clampi(int(tut.get("step_idx", 0)), 0, STEPS.size() - 1)
++	if idx == 1 and not bool(tut.get("field_moved", false)):
++		return {"ok": false, "finished": false, "reason": "先在主世界移动一次"}
+ 	var cur_id := String(STEPS[idx].get("id", ""))
+ 	var seen: Array = tut.get("seen_steps", [])
+ 	if not seen.has(cur_id):
+@@ -267,6 +275,8 @@ static func restart(host: Object, save: bool = true) -> Dictionary:
+ 
+ static func complete(host: Object, save: bool = true) -> Dictionary:
+ 	var tut := ensure_state(host)
++	if not bool(tut.get("field_battle_won", false)):
++		return {"ok": false, "finished": false, "reason": "先在野外赢得一场战斗"}
+ 	var seen: Array = tut.get("seen_steps", [])
+ 	for s in STEPS:
+ 		var sid := String(s.get("id", ""))
+@@ -303,6 +313,13 @@ static func complete(host: Object, save: bool = true) -> Dictionary:
+ static func notify_event(host: Object, event_name: String) -> bool:
+ 	if not should_show(host):
+ 		return false
++	if event_name == "battle_won":
++		var progress := ensure_state(host)
++		progress["field_battle_won"] = true
++		if host.has_method("save_game"):
++			host.save_game()
++	if event_name == "player_moved":
++		ensure_state(host)["field_moved"] = true
+ 	var step := current_step(host)
+ 	if String(step.get("event", "")) == event_name:
+ 		advance(host, true)
+diff --git "a/\350\277\234\345\276\201/tools/VerifyGameHome.gd" "b/\350\277\234\345\276\201/tools/VerifyGameHome.gd"
+index 8e398ab5..c4b1dcc0 100644
+--- "a/\350\277\234\345\276\201/tools/VerifyGameHome.gd"
++++ "b/\350\277\234\345\276\201/tools/VerifyGameHome.gd"
+@@ -517,8 +517,17 @@ func _run() -> void:
+ 	var tut_gold_before := int(G.wallet.get("gold", 0))
+ 	var tut_exp_before := int(G.wallet.get("expedition", 0))
+ 	var tut_stone_before := G.item_count("enhance_stone")
+-	for step_i in 11:
++	Tut.advance(G, false)
++	_check(not bool(Tut.advance(G, false).get("ok", true)),
++		"没有在主世界移动时不能跳过移动教学")
++	Tut.notify_event(G, "player_moved")
++	for step_i in 8:
+ 		Tut.advance(G, false)
++	_check(not bool(Tut.complete(G, false).get("ok", true))
++		and not bool(Tut.ensure_state(G).get("completed", false)),
++		"只看完教程而未赢得野外战斗时不得领贺礼")
++	Tut.notify_event(G, "battle_won")
++	Tut.advance(G, false)
+ 	_check(bool(Tut.ensure_state(G).get("completed", false)), "走完 11 步后应标记 completed=true")
+ 	_check(int(G.wallet.get("gold", 0)) == tut_gold_before + 300
+ 		and int(G.wallet.get("expedition", 0)) == tut_exp_before + 30
+@@ -530,6 +539,16 @@ func _run() -> void:
+ 	_check(not bool(done_again.get("reward_granted", true))
+ 		and int(G.wallet.get("gold", 0)) == tut_gold_before + 300,
+ 		"重温教程再次完成不应重复发放启程奖励")
++	home_tut._open_activities()
++	await get_tree().process_frame
++	_check(home_tut._activities != null and home_tut._activities._events.size() >= 2,
++		"活动页应提供可进入的演武与行路挑战")
++	if home_tut._activities != null:
++		home_tut._activities.show_event("arena_practice")
++		home_tut._activities.action_requested.emit("arena")
++		await get_tree().process_frame
++		_check(home_tut._activities == null and home_tut._arena != null,
++			"活动挑战按钮应实际进入演武场")
+ 	home_tut.queue_free()
+ 	await get_tree().process_frame
+ 
+diff --git "a/\350\277\234\345\276\201/tools/VerifyStory.gd" "b/\350\277\234\345\276\201/tools/VerifyStory.gd"
+index 1daf922a..b39995f3 100644
+--- "a/\350\277\234\345\276\201/tools/VerifyStory.gd"
++++ "b/\350\277\234\345\276\201/tools/VerifyStory.gd"
+@@ -209,8 +209,8 @@ func _run() -> void:
+ 			var ents1: Dictionary = (maps[qmap] as Dictionary).get("entities", {})
+ 			_check(ents1.has(one), "支线单体目标必须在该图声明：%s" % one)
+ 	_check(live_count == 9, "第一幕九条配置均有运行时入口，章节前置另行控制")
+-	_check(not bool(G.side_entity_interact("collect", "a1_chime", "maple_road", "a1_rel_child").get("ok", false)),
+-		"接取前的目标事件不得计数")
++	_check(G.side_entity_visible("a1_chime", "a1_rel_child"),
++		"未接取的首个线索应可被发现")
+ 	_check(G.side_status_of("a1_elite_beast") == "", "未接取的首领支线不应有状态")
+ 	var acc_child := G.side_accept("a1_rel_child")
+ 	_check(bool(acc_child.get("ok", false)) and G.side_tracked() == "a1_rel_child",
+@@ -306,15 +306,12 @@ func _run() -> void:
+ 		and int(G.wallet.get("gold", 0)) == gold_before_guard + 100
+ 		and G.item_count("enhance_stone") == stone_before_guard + 1,
+ 		"讨伐交付应发金币与强化石（口径调整：原药剂为局内资源）")
+-	_check(not G.side_entity_visible("a1_tracks_a", "a1_eco_tracks"), "未接取时足迹实体不应生成")
+-	var acc_tracks := G.side_accept("a1_eco_tracks")
+-	_check(bool(acc_tracks.get("ok", false)) and G.side_tracked() == "a1_eco_tracks",
+-		"接取足迹支线应自动追踪")
+ 	_check(G.side_entity_visible("a1_tracks_a", "a1_eco_tracks")
+-		and G.side_entity_visible("a1_tracks_b", "a1_eco_tracks"), "接取后两处足迹都应生成")
++		and G.side_entity_visible("a1_tracks_b", "a1_eco_tracks"), "未接取时两处首步足迹可发现")
+ 	var obs := G.side_entity_interact("observe", "a1_tracks_a", "broken_slope", "a1_eco_tracks")
+-	_check(bool(obs.get("ok", false)) and not G.side_entity_visible("a1_tracks_a", "a1_eco_tracks"),
+-		"观察过的足迹不应再生成（跨读档一致）")
++	_check(bool(obs.get("ok", false)) and G.side_tracked() == "a1_eco_tracks"
++		and not G.side_entity_visible("a1_tracks_a", "a1_eco_tracks"),
++		"观察首个线索应自动接取并追踪，已看足迹不再生成")
+ 	_check(G.save_game() and G.reload_save(), "支线状态应可落盘重读")
+ 	_check(G.side_tracked() == "a1_eco_tracks"
+ 		and G.side_status_of("a1_eco_tracks") == QuestService.SIDE_ACTIVE
+diff --git "a/\350\277\234\345\276\201/tools/verify_battle.gd" "b/\350\277\234\345\276\201/tools/verify_battle.gd"
+index c8e0964f..672a9c72 100644
+--- "a/\350\277\234\345\276\201/tools/verify_battle.gd"
++++ "b/\350\277\234\345\276\201/tools/verify_battle.gd"
+@@ -42,6 +42,7 @@ func _run() -> void:
+ 	_test_boss_phases()
+ 	_test_break_window()
+ 	_test_no_phases_unchanged()
++	_test_cleanse_target()
+ 	if _fails == 0:
+ 		print("BATTLE_OK all tests passed")
+ 	else:
+@@ -49,6 +50,35 @@ func _run() -> void:
+ 	quit(0 if _fails == 0 else 1)
+ 
+ 
++func _test_cleanse_target() -> void:
++	var sim := BattleSim.new()
++	sim.record_events = false
++	sim.setup(82, {"role_id": "fz", "level": 5, "traits": [], "active_pet": "pet_rockturtle"},
++		{"theme": "forest", "node_type": "normal", "layer": 1})
++	var role := sim.role_unit()
++	var pet: Combatant = null
++	for ally in sim.alive_units("ally"):
++		if ally.kind == "pet":
++			pet = ally
++	_check(role != null and pet != null, "净化测试需要人物和随行宠物")
++	if role == null or pet == null:
++		return
++	pet.hp = maxi(1, int(pet.get_max_hp() * 0.3))
++	role.add_buff("poison", 90, {"pct": 0.02, "atk": 10})
++	_check(SkillSystem._cleanse_target(sim.alive_units("ally")) == role,
++		"净化应优先中毒主角，即使宠物血量更低")
++	role.dispel_debuffs()
++	_check(SkillSystem._cleanse_target(sim.alive_units("ally")) == null,
++		"没有负面状态时不应选出净化目标")
++	role.add_buff("poison", 90, {"pct": 0.02, "atk": 10})
++	pet.add_buff("poison", 90, {"pct": 0.02, "atk": 10})
++	SkillSystem._apply_skill(sim, role,
++		{"id": "fz_jinghua", "target": "ally_single", "effect": {"type": "cleanse"}},
++		{}, false, pet)
++	_check(not pet.has_buff("poison") and role.has_buff("poison"),
++		"玩家指定宠物时净化应准确落到该宠物")
++
++
+ # ---------- 1. DamageCalc 手算（3 组） ----------
+ func _test_damage_calc() -> void:
+ 	_check(DamageCalc.basic_damage(20, 10) == 4, "手算1: 20²/(8×10+20)=400/100=4")

@@ -1,0 +1,956 @@
+--------- beginning of main
+10-23 19:26:01.039   523   562 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+10-23 19:26:01.045  1206  1206 D LauncherStateManager: StateManager.cancelAnimation: animation ongoing: false, partial trace:
+10-23 19:26:01.045  1206  1206 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.setCurrentAnimation(StateManager.java:547)
+10-23 19:26:01.045  1206  1206 D LauncherStateManager: 	at com.android.launcher3.QuickstepTransitionManager.createWallpaperOpenAnimations(QuickstepTransitionManager.java:2108)
+10-23 19:26:01.045  1206  1206 D LauncherStateManager: 	at com.android.launcher3.QuickstepTransitionManager$WallpaperOpenLauncherAnimationRunner.onAnimationStart(QuickstepTransitionManager.java:2190)
+10-23 19:26:01.045  1206  1206 D LauncherStateManager: StateManager.createAtomicAnimation: fromState: Normal, toState: Normal, partial trace:
+10-23 19:26:01.045  1206  1206 D LauncherStateManager: 	at com.android.quickstep.util.WorkspaceRevealAnim.prepareToAnimate(WorkspaceRevealAnim.java:146)
+10-23 19:26:01.045  1206  1206 D LauncherStateManager: 	at com.android.quickstep.util.WorkspaceRevealAnim.<init>(WorkspaceRevealAnim.java:69)
+10-23 19:26:01.045  1206  1206 D LauncherStateManager: 	at com.android.launcher3.QuickstepTransitionManager.createWallpaperOpenAnimations(QuickstepTransitionManager.java:2122)
+10-23 19:26:01.045  1206  1206 D AllAppsTransitionController: shouldProtectHeader: false skipScrim: true state: Normal stateManager.getState(): Normal
+10-23 19:26:01.046  1206  1206 D b/311077782: LauncherAnimationRunner.setAnimation
+--------- beginning of system
+10-23 19:26:01.053   939   983 V WindowManagerShell:  animated by com.android.wm.shell.transition.RemoteTransitionHandler@9dcd6c1
+10-23 19:26:01.054  1206  1206 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_window_focused|state_user_active] +[state_window_focused]
+10-23 19:26:01.054   666   705 W ActivityManager: setHasOverlayUi called on unknown pid: 2729
+10-23 19:26:01.055   527   527 I adbd    : Remote process closed the socket (on MSG_PEEK)
+10-23 19:26:01.056  1355  1355 W InputChannel-JNI: Channel already disposed.
+10-23 19:26:01.057   666   713 I libprocessgroup: Removed cgroup /sys/fs/cgroup/apps/uid_10156/pid_2729
+10-23 19:26:01.058   666   798 I ImeTracker: com.android.launcher3:edb39adc: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false userId 0 displayId 0
+10-23 19:26:01.058   462   462 I Zygote  : Process 2729 exited due to signal 9 (Killed)
+10-23 19:26:01.059  1206  1206 D InsetsController: hide(ime())
+10-23 19:26:01.059  1206  1206 I ImeTracker: com.android.launcher3:edb39adc: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 19:26:01.060   666   798 W InputChannel-JNI: Channel already disposed.
+10-23 19:26:01.061   666  1130 I ImeTracker: system_server:d6223d67: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false displayId 0
+10-23 19:26:01.062   666   705 I ImeTracker: system_server:d6223d67: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-23 19:26:01.079   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:01.081   666   706 W ActivityTaskManager: Unable to send transaction to client proc org.yuanzheng.singleplayer: no app thread
+10-23 19:26:01.151   527   527 I adbd    : adbd service requested 'shell,v2,TERM=dumb,raw:am start -W -n org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher'
+10-23 19:26:01.153   517   566 I APM_AudioPolicyManager: getNewOutputDevices io 13 recent device override {AUDIO_DEVICE_OUT_SPEAKER, @:}
+10-23 19:26:01.178   666  1435 W ActivityTaskManager: callingPackage for (uid=2000, pid=2780) has no WPC
+10-23 19:26:01.181   666  1435 V GrammaticalInflectionUtils: AttributionSource: AttributionSource { uid = 10156, packageName = null, attributionTag = null, token = android.os.Binder@9f4537, deviceId = 0, next = null } does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+10-23 19:26:01.186  1206  1206 D RecentsView: onTaskDisplayChanged: 14, new displayId = 0
+10-23 19:26:01.191   666  1435 I ActivityTaskManager: Add Task{72d5314 #13 type=standard A=10156:org.yuanzheng.singleplayer} to hidden list because adding Task{a865e1f #14 type=standard A=10156:org.yuanzheng.singleplayer}
+10-23 19:26:01.192   666  1435 D CorePackageUpdate: onRecentTaskRemoved Removing task: 13
+10-23 19:26:01.192   666  1435 D CorePackageUpdate: Couldn't find a persistent state for task= 13
+10-23 19:26:01.193   939  1057 W ShellStartingWindow: Get attribute fail, return default: File res/mipmap-xxhdpi-v4/icon_background.webp from drawable resource ID #0x7f0a0001: .xml extension required
+10-23 19:26:01.193   939  1057 D SplashScreenView: Build android.window.SplashScreenView{5d222b4 V.E...... ......ID 0,0-0,0}
+10-23 19:26:01.193   939  1057 D SplashScreenView: Icon: view: android.widget.ImageView{c43cedd V.ED..... ......I. 0,0-0,0 #1020575 android:id/splashscreen_icon_view} drawable: com.android.wm.shell.startingsurface.SplashscreenIconDrawableFactory$ImmobileIconDrawable@dd49a52 size: 504
+10-23 19:26:01.193   939  1057 D SplashScreenView: Branding: view: android.view.View{7f6e123 V.ED..... ......I. 0,0-0,0 #1020574 android:id/splashscreen_branding_view} drawable: android.graphics.drawable.BitmapDrawable@c8b620 size w: 525 h: 210
+10-23 19:26:01.193   666  1435 V ActivityTaskManager: TaskLaunchParamsModifier: phase=3 task=Task{a865e1f #14 type=standard A=10156:org.yuanzheng.singleplayer} activity=ActivityRecord{38288830 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher t-1} display-from-task=0 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@22806358 inherit-from-task=fullscreen non-freeform-task-display-area display-area=DefaultTaskDisplayArea@22806358 skip-bounds-fullscreen
+10-23 19:26:01.193   666  1435 I ActivityTaskManager: START u0 {flg=0x10000000 xflg=0x5 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} with LAUNCH_SINGLE_INSTANCE_PER_TASK from uid 2000 (com.android.shell) (BAL_ALLOW_PERMISSION) result code=0
+10-23 19:26:01.193   939   983 V WindowManagerShell: Transition requested (#16): android.os.BinderProxy@9b37bd9 TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=14 effectiveUid=10156 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } baseActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} topActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} origActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} realActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} realActivityIsAppLockEnabled=false numActivities=1 lastActiveTime=1039073 supportsMultiWindow=true supportsMultiWindowWithoutConstraints=false resizeMode=0 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.os.BinderProxy@3fe099e} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 136 - 0, 0) topActivityInfo=ActivityInfo{84c6c7f com.godot.game.GodotAppLauncher} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isInteractive=false isVisible=false isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=null leafTaskBoundsFromOptions= false capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=503 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false isLeafTask= true eligibleForLetterboxEducation= false isLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2424) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransitionInfo = null, displayChanges = null, requestedLocation = null, userChange = null, windowingLayerChange = null, fullscreenRequestChange = null, flags = 0, debugId = 16 }
+10-23 19:26:01.193   939   983 W DisconnectHandler: No disconnect change found in the transition, not handling request.
+10-23 19:26:01.194  1206  1206 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_window_focused|state_user_active] -[]
+10-23 19:26:01.194   939   983 V ShellDesktopMode: DesktopTasksController: skipping handleRequest reason=triggerTask's display doesn't support desktop mode
+10-23 19:26:01.194   939   983 D ShellSplitScreen: logExit: no-op, mLoggerSessionId is null
+10-23 19:26:01.195   666   705 V GrammaticalInflectionUtils: AttributionSource: AttributionSource { uid = 10156, packageName = null, attributionTag = null, token = android.os.Binder@9f4537, deviceId = 0, next = null } does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+10-23 19:26:01.195  1206  1206 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_window_focused] -[state_user_active]
+10-23 19:26:01.197  1206  1206 D BaseActivity: Launcher flags updated: [state_started|state_window_focused] -[state_resumed|state_deferred_resumed]
+10-23 19:26:01.198   939   983 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=false, height=427
+10-23 19:26:01.199   666   989 W InputChannel-JNI: Channel already disposed.
+10-23 19:26:01.202  1206  1206 W SplitSelectStateCtor: Missing session instanceIds
+10-23 19:26:01.202  1206  1206 D StatsLog: LAUNCHER_SPLIT_SELECTION_EXIT_INTERRUPTED
+10-23 19:26:01.205   939   983 V RecentTasksController: Notify recent tasks changed
+10-23 19:26:01.205   939   983 D ShellDesktopMode: DesktopRepository(0): Removes freeform task: taskId=13
+10-23 19:26:01.205   939   983 W ShellDesktopMode: DesktopRepository(0): No display id found for task: taskId=13
+10-23 19:26:01.205   939   983 V RecentTasksController: Notify recent tasks changed
+10-23 19:26:01.207   666   705 I DisplayDeviceRepository: Display device changed render timings: "Built-in Screen", renderFrameRate=60.000004, presentationDeadlineNanos=16666666, appVsyncOffsetNanos=1000000, frameRateOverrides=[]
+10-23 19:26:01.212   666   872 I AppWidgetServiceImpl: Received broadcast: android.intent.action.PACKAGE_UNSTOPPED on user 0
+10-23 19:26:01.213   666   872 I AppWidgetServiceImpl: Updating package stopped masked state for uid 10156 package org.yuanzheng.singleplayer isStopped false
+10-23 19:26:01.216   666   989 D WindowManager: setClientSurface Surface(name=VRI-Splash Screen org.yuanzheng.singleplayer#217)/@0xa4be70 for a6bc58 Splash Screen org.yuanzheng.singleplayer
+10-23 19:26:01.218   462   462 D Zygote  : Forked child process 2783
+10-23 19:26:01.219   939  1056 I Surface : Creating surface for consumer unnamed-939-11 with slotExpansion=1 for 64 slots
+10-23 19:26:01.220  1206  1206 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+10-23 19:26:01.220  1206  1206 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+10-23 19:26:01.221   939  1056 I Surface : Creating surface for consumer VRI[singleplayer]#11(BLAST Consumer)11 with slotExpansion=1 for 64 slots
+10-23 19:26:01.221   666   712 I ActivityManager: Start proc 2783:org.yuanzheng.singleplayer/u0a156 for next-top-activity {org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+10-23 19:26:01.222  2783  2783 I libprocessgroup: Created cgroup /sys/fs/cgroup/apps/uid_10156/pid_2783
+10-23 19:26:01.233  2783  2783 I Zygote  : Process 2783 created for org.yuanzheng.singleplayer
+10-23 19:26:01.235  2783  2783 I ng.singleplayer: Late-enabling -Xcheck:jni
+10-23 19:26:01.244  1206  1206 D BaseActivity: Launcher flags updated: [state_started] -[state_window_focused]
+10-23 19:26:01.250  2783  2783 I ng.singleplayer: Using generational CollectorTypeCMC GC.
+10-23 19:26:01.251  2783  2783 W ng.singleplayer: Unexpected CPU variant for x86: x86_64.
+10-23 19:26:01.251  2783  2783 W ng.singleplayer: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, alderlake, pantherlake, default
+10-23 19:26:01.260   527   554 I adbd    : jdwp connection from 2783
+10-23 19:26:01.271  2783  2783 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+10-23 19:26:01.273   666   702 V WindowManager: Sent Transition (#16) createdAt=10-23 19:26:01.181 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=14 effectiveUid=10156 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } baseActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} topActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} origActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} realActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} realActivityIsAppLockEnabled=false numActivities=1 lastActiveTime=1039073 supportsMultiWindow=true supportsMultiWindowWithoutConstraints=false resizeMode=0 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{26f519c Task{a865e1f #14 type=standard A=10156:org.yuanzheng.singleplayer}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 136 - 0, 0) topActivityInfo=ActivityInfo{754677a com.godot.game.GodotAppLauncher} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isInteractive=false isVisible=false isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=null leafTaskBoundsFromOptions= false capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=503 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false isLeafTask= true eligibleForLetterboxEducation= false isLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2424) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransitionInfo = null, displayChanges = null, requestedLocation = null, userChange = null, windowingLayerChange = null, fullscreenRequestChange = null, flags = 0, debugId = 16 }
+10-23 19:26:01.273   666   702 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] flags= 0 errorCallbackToken=null taskFragmentOrganizer=null }
+10-23 19:26:01.273   666   702 V WindowManager:     info={id=16 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-23 19:26:01.273   666   702 V WindowManager:         {WCT{RemoteToken{26f519c Task{a865e1f #14 type=standard A=10156:org.yuanzheng.singleplayer}}} m=OPEN f=MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=14#214)/@0x4dd926e sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0 taskParent=-1 winMode=1 userId=0},
+10-23 19:26:01.273   666   702 V WindowManager:         {WCT{RemoteToken{e0c29d0 Task{792eae6 #1 type=home}}} m=TO_BACK f=SHOW_WALLPAPER|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#33)/@0x67d8d91 sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0 taskParent=-1 winMode=1 userId=0},
+10-23 19:26:01.273   666   702 V WindowManager:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{b3d4944}#41)/@0x8bd9bb8 sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0}
+10-23 19:26:01.273   666   702 V WindowManager:     ]}
+10-23 19:26:01.274   939  1292 V WindowManagerShell: onTransitionReady(transaction=2860448220679)
+10-23 19:26:01.275   939   983 V WindowManagerShell: onTransitionReady (#16) android.os.BinderProxy@9b37bd9: {id=16 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-23 19:26:01.275   939   983 V WindowManagerShell:         {m=OPEN f=MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=14#214)/@0xa1f736f sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0 taskParent=-1 winMode=1 userId=0},
+10-23 19:26:01.275   939   983 V WindowManagerShell:         {m=TO_BACK f=SHOW_WALLPAPER|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#33)/@0xb6a287c sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0 taskParent=-1 winMode=1 userId=0},
+10-23 19:26:01.275   939   983 V WindowManagerShell:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{b3d4944}#41)/@0x713505 sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0}
+10-23 19:26:01.275   939   983 V WindowManagerShell:     ]}
+10-23 19:26:01.276   939   983 V WindowManagerShell: Transition (#16) android.os.BinderProxy@9b37bd9@0 ready while (#15) android.os.BinderProxy@52f5ed8@0 is still animating. Notify the animating transition in case they can be merged
+10-23 19:26:01.276   939   983 V WindowManagerShell:    Requesting merge (#16) into remote: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@b557ed, appThread = android.app.IApplicationThread$Stub$Proxy@c4ed622, debugName = QuickstepLaunchHome, filter = {types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} }
+10-23 19:26:01.277   939   983 V ShellTaskOrganizer: Task appeared taskId=14 listener=FullscreenTaskListener
+10-23 19:26:01.277   939   983 V ShellTaskOrganizer: Fullscreen Task Appeared: #14
+10-23 19:26:01.277   939   983 D ShellPackageUpdate: PackageUpdateController: Setting handlePackageUpdate for task: 14
+10-23 19:26:01.277   666   989 E TransitionChain: Can't collect into a chain with no transition
+10-23 19:26:01.278   939   983 V RecentTasksController: Notify recent tasks changed
+10-23 19:26:01.279   939  1292 V WindowManagerShell: Received remote transition finished callback for (#15)
+10-23 19:26:01.282   939   983 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#15) android.os.BinderProxy@52f5ed8@0
+10-23 19:26:01.286  1206  1206 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+10-23 19:26:01.288   666   702 V WindowManager: Finish Transition (#15): created at 10-23 19:26:00.938 collect-started=0.062ms request-sent=0.155ms started=16.783ms ready=16.749ms sent=84.703ms commit=23.82ms finished=348.206ms
+10-23 19:26:01.289   666  1535 E libbinder.IPCThreadState: Binder transaction failure. id: 461170, cmd: BR_DEAD_REPLY (29189), error: -22 (Invalid argument)
+10-23 19:26:01.289   666  1535 W ActivityManager: pid 666 system sent binder code 7 with flags 1 and got error -32
+10-23 19:26:01.289   666  1535 W WindowManager: Exception thrown during dispatchAppVisibility Window{3a4bd13 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher EXITING}
+10-23 19:26:01.289   666  1535 W WindowManager: android.os.DeadObjectException
+10-23 19:26:01.289   666  1535 W WindowManager: 	at android.os.BinderProxy.transactNative(Native Method)
+10-23 19:26:01.289   666  1535 W WindowManager: 	at android.os.BinderProxy.transact(BinderProxy.java:626)
+10-23 19:26:01.289   666  1535 W WindowManager: 	at android.view.IWindow$Stub$Proxy.dispatchAppVisibility(IWindow.java:602)
+10-23 19:26:01.289   666  1535 W WindowManager: 	at com.android.server.wm.WindowState.sendAppVisibilityToClients(WindowState.java:3388)
+10-23 19:26:01.289   666  1535 W WindowManager: 	at com.android.server.wm.WindowContainer.sendAppVisibilityToClients(WindowContainer.java:1245)
+10-23 19:26:01.289   666  1535 W WindowManager: 	at com.android.server.wm.WindowToken.setClientVisible(WindowToken.java:392)
+10-23 19:26:01.289   666  1535 W WindowManager: 	at com.android.server.wm.ActivityRecord.commitVisibility(ActivityRecord.java:5654)
+10-23 19:26:01.289   666  1535 W WindowManager: 	at com.android.server.wm.Transition.finishTransition(Transition.java:1629)
+10-23 19:26:01.289   666  1535 W WindowManager: 	at com.android.server.wm.TransitionController.finishTransition(TransitionController.java:1220)
+10-23 19:26:01.289   666  1535 W WindowManager: 	at com.android.server.wm.WindowOrganizerController.finishTransition(WindowOrganizerController.java:533)
+10-23 19:26:01.289   666  1535 W WindowManager: 	at android.window.IWindowOrganizerController$Stub.onTransact(IWindowOrganizerController.java:265)
+10-23 19:26:01.289   666  1535 W WindowManager: 	at com.android.server.wm.WindowOrganizerController.onTransact(WindowOrganizerController.java:239)
+10-23 19:26:01.289   666  1535 W WindowManager: 	at android.os.Binder.execTransactInternal(Binder.java:1364)
+10-23 19:26:01.289   666  1535 W WindowManager: 	at android.os.Binder.execTransact(Binder.java:1323)
+10-23 19:26:01.289   666  1535 W Process : Unable to open /proc/2729/status
+--------- beginning of kernel
+10-23 19:26:01.347     0     0 I binder  : 1535:666 cannot find target node
+10-23 19:26:01.348     0     0 I binder  : 666:1535 transaction async to 0:0 failed 461170/29189/-22, code 7 size 68-0 line 3436
+10-23 19:26:01.300   939   983 V WindowManagerShell: Playing animation for (#16) android.os.BinderProxy@9b37bd9@0
+10-23 19:26:01.300   666   703 V GameManagerService: setDefaultFrameRateOverride : 10156 , 60.0
+10-23 19:26:01.303   939   983 D ShellSplitScreen: startAnimation: transition=16 isSplitActive=false
+10-23 19:26:01.303   939   983 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+10-23 19:26:01.303   939   983 V ShellDesktopMode: DesktopMixedTransitionHandler: No pending desktop transition
+10-23 19:26:01.306   939   983 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=16 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=OPEN f=MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=14#214)/@0xa1f736f sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=SHOW_WALLPAPER|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#33)/@0xb6a287c sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{b3d4944}#41)/@0x713505 sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0}]}
+10-23 19:26:01.307   666   989 I ImeTracker: system_server:a19d701b: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false displayId 0
+10-23 19:26:01.309   666   705 I ImeTracker: system_server:a19d701b: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-23 19:26:01.309   939   983 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=false modes=[CHANGE] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=true}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@6121217, appThread = android.app.IApplicationThread$Stub$Proxy@bfee604, debugName = QuickstepDisplayMove, filter = {types=[] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=false modes=[CHANGE] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=true}]} }}
+10-23 19:26:01.309   939   983 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@b557ed, appThread = android.app.IApplicationThread$Stub$Proxy@c4ed622, debugName = QuickstepLaunchHome, filter = {types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} }}
+10-23 19:26:01.309   939   983 V WindowManagerShell:  Checking filter Pair{{types=[OPEN,TO_FRONT] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=freeform isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@d1abd6a, appThread = null, debugName = DesktopWindowLimitUnminimize, filter = {types=[OPEN,TO_FRONT] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=freeform isCrossDisplayMove=false}]} }}
+10-23 19:26:01.309   939   983 V WindowManagerShell:  Delegate animation for (#16) to null
+10-23 19:26:01.309   939   983 V WindowManagerShell: start default transition animation, info = {id=16 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=OPEN f=MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=14#214)/@0xa1f736f sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=SHOW_WALLPAPER|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#33)/@0xb6a287c sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{b3d4944}#41)/@0x713505 sb=Rect(0, 0 - 1080, 2424) eb=Rect(0, 0 - 1080, 2424) epz=Point(1080, 2424) d=0}]}
+10-23 19:26:01.309   939   983 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@61d0b14 animAttr=0x13 type=OPEN isEntrance=false
+10-23 19:26:01.315   939   983 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@935ffbd animAttr=0x12 type=OPEN isEntrance=true
+10-23 19:26:01.317  1206  1206 D RecentsView: onTaskRemoved: 13, not handling task stack changes
+10-23 19:26:01.317  1206  1206 D RecentsView: onTaskRemoved: 13, not handling task stack changes
+10-23 19:26:01.317   939   983 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@9ef3b4d
+10-23 19:26:01.320   939   983 W Looper  : Slow dispatch took 37ms wmshell.main app=com.android.systemui main=false group=TOP_APP h=android.os.Handler c=com.android.wm.shell.transition.RemoteTransitionHandler$1$$ExternalSyntheticLambda0@917a9b2 m=0
+10-23 19:26:01.320   939   983 V ShellTaskOrganizer: Task vanished taskId=13
+10-23 19:26:01.320   939   983 V ShellTaskOrganizer: Fullscreen Task Vanished: #13
+10-23 19:26:01.320   939   983 V ShellDesktopMode: Task Vanished: #13 closed=true
+10-23 19:26:01.320   939   983 D ShellPackageUpdate: PackageUpdateController: Removing handlePackageUpdate for task: 13
+10-23 19:26:01.321   666  1535 E WindowOrganizerController: Attempting to externally change a non-organized container: Task{72d5314 #13 type=standard A=10156:org.yuanzheng.singleplayer}={handlePackageUpdate:false,} playercount=2 taskorg=android.window.ITaskOrganizer$Stub$Proxy@a073af6
+10-23 19:26:01.322   939   983 V RecentTasksController: Notify recent tasks changed
+10-23 19:26:01.322   939   983 D ShellDesktopMode: AppToWebRepository: Task 13 is vanishing. Removing task data from repository
+10-23 19:26:01.323  1206  1206 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+10-23 19:26:01.323   939   983 V AppCompat: SingleSurfaceLetterboxController: []
+10-23 19:26:01.323   939   983 V AppCompat: MultiSurfaceLetterboxController: []
+10-23 19:26:01.323   939   983 V AppCompat: LetterboxInputController: []
+10-23 19:26:01.323   939   983 V AppCompat: RoundedCornersLetterboxController: {}
+10-23 19:26:01.324   939   983 V RecentTasksController: Notify recent tasks changed
+10-23 19:26:01.327   939   983 V RecentTasksController: generateList(getRecentTasks)
+10-23 19:26:01.327   939   983 V RecentTasksController: initializeDesksMap - allDeskIds: []
+10-23 19:26:01.328   939   983 V RecentTasksController: Task 14 is not an active desktop task
+10-23 19:26:01.328   939   983 V RecentTasksController: Added fullscreen task: 14
+10-23 19:26:01.328   939   983 V RecentTasksController: generateList - complete
+10-23 19:26:01.329   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:01.332  1206  1264 D PreloadThumbnailUseCase: Preloading thumbnails for task ids: [[id=14 windowingMode=1 user=0 lastActiveTime=1039073] null]
+10-23 19:26:01.332   523   523 E BpTransactionCompletedListener: Failed to transact (-32)
+10-23 19:26:01.332   523   523 E BpTransactionCompletedListener: Failed to transact (-32)
+10-23 19:26:01.339  1206  1206 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+10-23 19:26:01.406  2783  2783 D nativeloader: Configuring clns-9 for other apk /data/app/~~5Lzs0r14ioNW1eejjbVUlg==/org.yuanzheng.singleplayer-4mQfyRo8C34VBoozD_BfWA==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~5Lzs0r14ioNW1eejjbVUlg==/org.yuanzheng.singleplayer-4mQfyRo8C34VBoozD_BfWA==/lib/x86_64:/data/app/~~5Lzs0r14ioNW1eejjbVUlg==/org.yuanzheng.singleplayer-4mQfyRo8C34VBoozD_BfWA==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/org.yuanzheng.singleplayer
+10-23 19:26:01.413  1206  1206 D WorkspaceRevealAnim: onAnimationEnd: workspace alpha = 1.0
+10-23 19:26:01.423  2783  2783 V GraphicsEnvironment: Currently set values for:
+10-23 19:26:01.423  2783  2783 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+10-23 19:26:01.423  2783  2783 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+10-23 19:26:01.423  2783  2783 V GraphicsEnvironment: org.yuanzheng.singleplayer is not listed in per-application setting
+10-23 19:26:01.423  2783  2783 V GraphicsEnvironment: No special selections for ANGLE, returning default driver choice
+10-23 19:26:01.424  2783  2783 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+10-23 19:26:01.444  2783  2783 D DesktopExperienceFlags: Toggle override initialized to: false
+10-23 19:26:01.457   666  1434 D CorePackageUpdate: Couldn't find a persistent state for task= 14
+10-23 19:26:01.468  2783  2797 I DisplayManager: Choreographer implicitly registered for the refresh rate.
+10-23 19:26:01.477  1206  1206 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_NONE, vsyncId: 76129, totalDuration: 5318174, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME_FALLBACK>
+10-23 19:26:01.477  1206  1206 W FrameTracker: Missed App frame:jankTypeLegacy: JANK_APPLICATION, jankTypeExperimental: JANK_APPLICATION, vsyncId: 76191, totalDuration: 34546778, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME_FALLBACK>
+10-23 19:26:01.477  1206  1206 W FrameTracker: Missed App frame:jankTypeLegacy: UNKNOWN: 3, jankTypeExperimental: JANK_APPLICATION, vsyncId: 76236, totalDuration: 25094080, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME_FALLBACK>
+10-23 19:26:01.477  1206  1206 W FrameTracker: Missed SF frame:jankTypeLegacy: UNKNOWN: 3, jankTypeExperimental: JANK_APPLICATION, vsyncId: 76236, totalDuration: 25094080, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME_FALLBACK>
+10-23 19:26:01.477  1206  1206 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_NONE, vsyncId: 76243, totalDuration: 8479714, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME_FALLBACK>
+10-23 19:26:01.477  1206  1206 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_NONE, vsyncId: 76265, totalDuration: 34098048, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME_FALLBACK>
+10-23 19:26:01.477  1206  1206 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_NONE, vsyncId: 76419, totalDuration: 8962986, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME_FALLBACK>
+10-23 19:26:01.477  1206  1246 V PerfettoTrigger: Triggering /system/bin/trigger_perfetto com.android.telemetry.interaction-jank-monitor-78
+10-23 19:26:01.531  2783  2797 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv1_CM_emulation.so
+10-23 19:26:01.532  2783  2797 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv2_emulation.so
+10-23 19:26:01.539  2783  2797 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-23 19:26:01.545  2783  2797 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+10-23 19:26:01.545  2783  2797 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+10-23 19:26:01.584   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:01.587  2783  2783 D CompatChangeReporter: Compat change id reported: 377864165; UID 10156; state: ENABLED
+10-23 19:26:01.596  2783  2783 D GodotActivity: Project command line parameters: [--xr_mode_regular, --xr-mode, off, --fullscreen, --edge_to_edge, --background_color, #000000]
+10-23 19:26:01.598  2783  2783 D GodotActivity: Launch intent Intent { flg=0x10000000 xflg=0x5 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } with parameters []
+10-23 19:26:01.630   939   983 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#16) android.os.BinderProxy@9b37bd9@0
+10-23 19:26:01.633   666   702 V WindowManager: Finish Transition (#16): created at 10-23 19:26:01.181 collect-started=0.064ms request-sent=11.114ms started=12.605ms ready=88.96ms sent=90.47ms commit=60.889ms finished=451.485ms
+10-23 19:26:01.634  1206  1206 D VRI[QuickstepLauncher]: visibilityChanged oldVisibility=true newVisibility=false
+10-23 19:26:01.637   939  1191 D WallpaperService: onVisibilityChanged(false): com.android.systemui.wallpapers.ImageWallpaper$CanvasEngine@c1f0eab
+10-23 19:26:01.638   939   983 V WindowManagerShell: Track 0 became idle
+10-23 19:26:01.638   939   983 V WindowManagerShell: All active transition animations finished
+10-23 19:26:01.656  2783  2783 V GodotActivity: Creating new Godot fragment instance.
+10-23 19:26:01.711  2783  2783 V Godot   : Initializing Godot plugin registry
+10-23 19:26:01.772  2783  2783 I GodotPluginRegistry: Registering runtime plugin AndroidRuntime
+10-23 19:26:01.772  2783  2783 V Godot   : InitEngine with params: [--xr_mode_regular, --xr-mode, off, --fullscreen, --edge_to_edge, --background_color, #000000]
+10-23 19:26:01.834   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:01.836  2783  2783 D nativeloader: Load /data/app/~~5Lzs0r14ioNW1eejjbVUlg==/org.yuanzheng.singleplayer-4mQfyRo8C34VBoozD_BfWA==/lib/x86_64/libgodot_android.so using class loader ns clns-9 (caller=/data/app/~~5Lzs0r14ioNW1eejjbVUlg==/org.yuanzheng.singleplayer-4mQfyRo8C34VBoozD_BfWA==/base.apk!classes7.dex): ok
+10-23 19:26:01.840  2783  2783 V Godot   : Godot native layer initialization completed: true
+10-23 19:26:01.840  2783  2783 V Godot   : Setting up native layer with params: [--xr-mode, off, --fullscreen]
+10-23 19:26:01.911  2783  2783 V Godot   : Godot native layer setup completed
+10-23 19:26:01.912  2783  2783 V Godot   : OnInitRenderView: GodotFragment{4d40b53} (f255c10b-3c88-4f25-80ee-8740f54050ff id=0x7f07002c)
+10-23 19:26:01.928  2783  2783 D Godot   : Render view should be transparent: false
+10-23 19:26:01.928  2783  2783 D Godot   : renderingDevice: opengl3 (ProjectSettings)
+10-23 19:26:01.928  2783  2783 D Godot   : 			renderer: gl_compatibility (ProjectSettings)
+10-23 19:26:01.979  2783  2783 V Godot   : OnStart: GodotFragment{4d40b53} (f255c10b-3c88-4f25-80ee-8740f54050ff id=0x7f07002c)
+10-23 19:26:01.981  2783  2783 D AutofillManager: Fill dialog is enabled:false, hints=[]
+10-23 19:26:01.988  2783  2783 V Godot   : OnResume: GodotFragment{4d40b53} (f255c10b-3c88-4f25-80ee-8740f54050ff id=0x7f07002c)
+10-23 19:26:01.992  2783  2783 W HWUI    : Unknown dataspace 0
+10-23 19:26:02.053     0     0 I servicemanager: Caller(pid=2783,uid=10156,sid=u:r:untrusted_app_34:s0:c156,c256,c512,c768) Found android.hardware.graphics.allocator.IAllocator/default in device VINTF manifest.
+10-23 19:26:02.057     0     0 I servicemanager: Caller(pid=2783,uid=10156,sid=u:r:untrusted_app_34:s0:c156,c256,c512,c768) Found android.hardware.graphics.allocator.IAllocator/default in device VINTF manifest.
+10-23 19:26:02.059     0     0 I servicemanager: Caller(pid=2783,uid=10156,sid=u:r:untrusted_app_34:s0:c156,c256,c512,c768) Found mapper/ranchu in device VINTF manifest.
+10-23 19:26:02.001  2783  2783 D InsetsController: Setting requestedVisibleTypes to 496 (was 503)
+10-23 19:26:02.004   666  1535 W InputChannel-JNI: Channel already disposed.
+10-23 19:26:02.005  2783  2809 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-23 19:26:02.015  2783  2783 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda0@80061f1
+10-23 19:26:02.016  2783  2783 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): androidx.activity.OnBackPressedDispatcher$Api34Impl$createOnBackAnimationCallback$1@3713c57
+10-23 19:26:02.016   666  1535 D CoreBackPreview: Window{37e0cc9 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@eabcdfc, mPriority=-1, mIsAnimationCallback=false, mOverrideBehavior=0}
+10-23 19:26:02.016   666  1535 D CoreBackPreview: Window{37e0cc9 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@4d1ac85, mPriority=0, mIsAnimationCallback=true, mOverrideBehavior=0}
+10-23 19:26:02.019  2783  2783 D VRI[GodotAppLauncher]: WindowInsets changed: 1080x2424 statusBars:[0,63,0,0] navigationBars:[0,0,0,126] mandatorySystemGestures:[0,168,0,126] 
+10-23 19:26:02.022  2783  2783 I HWUI    : Using FreeType backend (prop=Auto)
+10-23 19:26:02.025   666  1535 D WindowManager: setClientSurface Surface(name=VRI-org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher#224)/@0x3b52ada for 37e0cc9 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher
+10-23 19:26:02.029  2783  2783 I Surface : Creating surface for consumer unnamed-2783-0 with slotExpansion=1 for 64 slots
+10-23 19:26:02.034  2783  2783 I Surface : Creating surface for consumer VRI[GodotAppLauncher]#0(BLAST Consumer)0 with slotExpansion=1 for 64 slots
+10-23 19:26:02.036  2783  2783 D VRI[GodotAppLauncher]: WindowInsets changed: statusBars:null navigationBars:null 
+10-23 19:26:02.039  2783  2783 I Surface : Creating surface for consumer unnamed-2783-1 with slotExpansion=1 for 64 slots
+10-23 19:26:02.040  2783  2783 I Surface : Creating surface for consumer 4deb562 SurfaceView[org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher]#1(BLAST Consumer)1 with slotExpansion=1 for 64 slots
+10-23 19:26:02.041  2783  2807 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-23 19:26:02.059  2783  2807 W RegularContextFactory: creating OpenGL ES 3.0 context :
+10-23 19:26:02.086   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:02.089  2783  2807 I godot   : Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+10-23 19:26:02.172   666   702 I ActivityTaskManager: Displayed org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher for user 0: +993ms
+10-23 19:26:02.183  1206  1206 D BaseActivity: Launcher flags updated: [] -[state_started]
+10-23 19:26:02.183  1206  1206 D BaseDepthController: setSurface:
+10-23 19:26:02.183  1206  1206 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+10-23 19:26:02.183  1206  1206 D BaseDepthController: 	mBaseSurface: null
+10-23 19:26:02.184  1206  1206 D BaseDepthController: mSurface is null and mCurrentBlur is: 0
+10-23 19:26:02.185  1206  1206 D LauncherStateManager: StateManager.goToState: fromState: Normal, toState: Normal, partial trace:
+10-23 19:26:02.185  1206  1206 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:469)
+10-23 19:26:02.185  1206  1206 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:460)
+10-23 19:26:02.185  1206  1206 D LauncherStateManager: 	at com.android.launcher3.statemanager.StatefulActivity.onStop(StatefulActivity.java:120)
+10-23 19:26:02.185  1206  1206 D LauncherStateManager: StateManager.onRepeatStateSetAborted: state: Normal
+10-23 19:26:02.185  1206  1206 D KeyboardStateManager: hideKeyboard
+10-23 19:26:02.185  1206  1206 D KeyboardStateManager: isImeShown: false
+10-23 19:26:02.185  1206  1206 D StatsLog: LAUNCHER_ONSTOP
+10-23 19:26:02.199   666   705 I DisplayDeviceRepository: Display device changed render timings: "Built-in Screen", renderFrameRate=60.000004, presentationDeadlineNanos=16666666, appVsyncOffsetNanos=1000000, frameRateOverrides=[{uid=10156 frameRateHz=60.000004}]
+10-23 19:26:02.200   666   703 V GameManagerService: Game power mode ON (only games in foreground)
+10-23 19:26:02.209   666   798 I ImeTracker: org.yuanzheng.singleplayer:dbc830ff: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false userId 0 displayId 0
+10-23 19:26:02.214  2783  2783 D InsetsController: hide(ime())
+10-23 19:26:02.214   666  1535 W InputChannel-JNI: Channel already disposed.
+10-23 19:26:02.216  2783  2783 I ImeTracker: org.yuanzheng.singleplayer:dbc830ff: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-23 19:26:02.220  2783  2807 E godot   : WARNING: Failed to load cached shader, recompiling.
+10-23 19:26:02.220  2783  2807 E godot   :    at: _load_from_cache (drivers/gles3/shader_gles3.cpp:615)
+10-23 19:26:02.221   666  1535 I ImeTracker: system_server:f15e692d: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false displayId 0
+10-23 19:26:02.222   666   705 I ImeTracker: system_server:f15e692d: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-23 19:26:02.336   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:02.534  2783  2783 W InteractionJankMonitor: Initializing without READ_DEVICE_CONFIG permission. enabled=true, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=org.yuanzheng.singleplayer
+10-23 19:26:02.539   666  1535 I ImeTracker: system_server:70bc5c9a: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false displayId 0
+10-23 19:26:02.540   666   705 I ImeTracker: system_server:70bc5c9a: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-23 19:26:02.587   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:02.617   939  1056 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_COMPOSER, vsyncId: 77027, totalDuration: 11591718, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-23 19:26:02.618   939  1056 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_NONE, vsyncId: 77158, totalDuration: 6791388, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-23 19:26:02.618   939  1056 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_NONE, vsyncId: 77180, totalDuration: 9115022, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-23 19:26:02.618   939  1056 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_NONE, vsyncId: 77268, totalDuration: 8444458, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-23 19:26:02.839   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:02.998  2783  2807 I godot   : OpenGL API OpenGL ES 3.1 (4.5.0 Core Profile Context 23.20.60.03.240314) - Compatibility - Using Device: Google (ATI Technologies Inc.) - Android Emulator OpenGL ES Translator (AMD Radeon 780M Graphics)
+10-23 19:26:03.000  2783  2807 D AudioSystem: onNewServiceWithAdapter: media.audio_flinger service obtained 0x78c2d00953f0
+10-23 19:26:03.000   517  2413 D AudioFlinger: onStateChanged: pid:2783  uid:10156  state:unfrozen - no freeze activity
+10-23 19:26:03.001  2783  2807 D AudioSystem: getService: IAudioFlingerService retrieved: 0x78c470186d80  IAudioFlinger cached: 0x78c2d00953f0
+10-23 19:26:03.001  2783  2807 D ng.singleplayer: PlayerBase::PlayerBase()
+10-23 19:26:03.001  2783  2807 D ng.singleplayer: TrackPlayerBase::TrackPlayerBase()
+10-23 19:26:03.001  2783  2807 I libOpenSLES: Emulating old channel mask behavior (ignoring positional mask 0x3, using default mask 0x3 based on channel count of 2)
+10-23 19:26:03.003   517  1490 W AudioFlinger: createTrack_l(): mismatch between requested flags (00000104) and output flags (00000002)
+10-23 19:26:03.004   517  1490 D AudioFlinger: Client defaulted notificationFrames to 882 for frameCount 4012
+10-23 19:26:03.004   517  1490 I AF::AfPlaybackCommon: AfPlaybackCommon: creating track with enforcement level 1 reason TARGET_SDK shouldHarden 1
+10-23 19:26:03.013   666  1434 E AppOps  : attributionTag  not declared in manifest of org.yuanzheng.singleplayer
+10-23 19:26:03.013   666  1435 E AppOps  : attributionTag  not declared in manifest of org.yuanzheng.singleplayer
+10-23 19:26:03.014  2783  2807 I godot   : 
+10-23 19:26:03.014  1039  1039 I bluetooth: system/btif/avrcp/avrcp_service.cc:533 SendMediaUpdate: track_changed=false :  play_state=true :  queue=false
+10-23 19:26:03.015  1039  1039 E MediaControlProfile: onCurrentPlayerStateUpdated: base actions not supported, player actions= 0, expected at least= 7f
+10-23 19:26:03.015  1039  1039 W MediaControlGattService: Feature PLAYBACK_SPEED support: true
+10-23 19:26:03.015  1039  1039 W MediaControlGattService: Feature PLAYBACK_SPEED support: true
+10-23 19:26:03.015  1039  1039 W MediaControlGattService: Feature PLAYBACK_SPEED support: true
+10-23 19:26:03.015  1039  1039 W MediaControlGattService: Feature PLAYBACK_SPEED_NOTIFY support: true
+10-23 19:26:03.016  1039  1039 W MediaControlGattService: Feature TRACK_POSITION support: true
+10-23 19:26:03.016  1039  1039 W MediaControlGattService: Feature TRACK_POSITION_NOTIFY support: true
+10-23 19:26:03.016  1039  1039 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-23 19:26:03.017  1039  1039 W MediaControlGattService: Feature MEDIA_CONTROL_POINT_OPCODES_SUPPORTED support: true
+10-23 19:26:03.017  1039  1039 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-23 19:26:03.017  1039  1039 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-23 19:26:03.020  1039  1039 W MediaControlGattService: Feature MEDIA_STATE support: true
+10-23 19:26:03.020  1039  1039 W MediaControlGattService: Feature SEEKING_SPEED support: true
+10-23 19:26:03.020  1039  1039 W MediaControlGattService: Feature SEEKING_SPEED support: true
+10-23 19:26:03.020  1039  1039 W MediaControlGattService: Feature SEEKING_SPEED support: true
+10-23 19:26:03.020  1039  1039 W MediaControlProfile: MCS service state fields left unhandled: 
+10-23 19:26:03.020  1039  1039 W MediaControlProfile:    > PLAYER_NAME
+10-23 19:26:03.020  1039  1039 W MediaControlProfile:    > PLAYING_ORDER_SUPPORTED
+10-23 19:26:03.076  2783  2814 E SurfaceSyncGroup: Failed to receive transaction ready in 1000ms. Marking SurfaceSyncGroup(wmsSync-VRI[GodotAppLauncher]#1) as ready
+10-23 19:26:03.077  2783  2814 E SurfaceSyncGroup: Failed to receive transaction ready in 1000ms. Marking SurfaceSyncGroup(VRI[GodotAppLauncher]#2) as ready
+10-23 19:26:03.078  2783  2814 E SurfaceSyncGroup: Failed to receive transaction ready in 1000ms. Marking SurfaceSyncGroup(SurfaceView[org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher]#0) as ready
+10-23 19:26:03.088   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:03.198  2783  2788 I ng.singleplayer: Compiler allocated 5239KB to compile void android.view.ViewRootImpl.performTraversals(long)
+10-23 19:26:03.339   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:03.589   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:03.841   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:04.092   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:04.344   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:04.593   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:04.844   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:05.049   666   705 I DisplayDeviceRepository: Display device changed render timings: "Built-in Screen", renderFrameRate=60.000004, presentationDeadlineNanos=16666666, appVsyncOffsetNanos=1000000, frameRateOverrides=[]
+10-23 19:26:05.094   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:05.199   666  1475 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-23 19:26:05.346   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:05.406  2783  2807 V Godot   : OnGodotSetupCompleted
+10-23 19:26:05.457  2783  2807 I godot   : ANDROID_UI_AUDIT_START 远征 0.2.1-mobile2
+10-23 19:26:05.457  2783  2807 I godot   : Android 37.16571990
+10-23 19:26:05.457  2783  2807 I godot   : 机型：Android SDK built for x86_64
+10-23 19:26:05.457  2783  2807 I godot   : 窗口像素：(1080, 2424)
+10-23 19:26:05.457  2783  2807 I godot   : 逻辑视口：[P: (0.0, 0.0), S: (480.0, 1077.0)]
+10-23 19:26:05.457  2783  2807 I godot   : 系统安全区：[P: (0, 136), S: (1080, 2288)]
+10-23 19:26:05.457  2783  2807 I godot   : 交互安全区：[P: (0.0, 60.42574), S: (480.0, 1016.574)]
+10-23 19:26:05.457  2783  2807 I godot   : 屏幕变换：[X: (2.25, 0.0), Y: (0.0, 2.250696), O: (0.0, 0.0)]
+10-23 19:26:05.457  2783  2807 I godot   : 缺口：[[P: (0.0, 0.0), S: (136.0, 136.0)]]
+10-23 19:26:05.595   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:05.623  2783  2807 V Godot   : OnGodotMainLoopStarted
+10-23 19:26:05.847   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:05.864   666   705 I DisplayDeviceRepository: Display device changed render timings: "Built-in Screen", renderFrameRate=60.000004, presentationDeadlineNanos=16666666, appVsyncOffsetNanos=1000000, frameRateOverrides=[{uid=10156 frameRateHz=60.000004}]
+10-23 19:26:06.097   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:06.347   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:06.598   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:06.851   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:07.104   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:07.355   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:07.605   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:07.724  2783  2807 I godot   : ANDROID_UI_PAGE loading safe=[P: (0.0, 60.42574), S: (480.0, 1016.574)] outliers=0
+10-23 19:26:07.856   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:08.108   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:08.361   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:08.369  2783  2807 I godot   : ANDROID_UI_PAGE login safe=[P: (0.0, 60.42574), S: (480.0, 1016.574)] outliers=0
+10-23 19:26:08.369  2783  2807 I godot   : ANDROID_IME feature=true enabled=true
+10-23 19:26:08.612   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:08.862   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:09.113   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:09.364   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:09.598  1063  1197 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 19:26:09.598  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 19:26:09.598  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:09.598  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:09.598  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:09.603  1063  1197 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 19:26:09.604  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 19:26:09.604  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:09.605  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:09.605  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 19:26:09.606  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 19:26:09.606  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:09.606  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:09.606  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:09.606  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 19:26:09.606  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:09.606  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:09.606  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:09.606  1063  1197 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 19:26:09.606  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 19:26:09.606  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:09.606  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:09.606  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 19:26:09.606  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 19:26:09.606  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:09.606  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:09.606  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:09.614   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:09.866   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:10.007  2783  2807 I godot   : ANDROID_UI_PAGE login_keyboard safe=[P: (0.0, 60.42574), S: (480.0, 1016.574)] outliers=0
+10-23 19:26:10.007  2783  2807 I godot   : ANDROID_IME_HEIGHT 0
+10-23 19:26:10.119   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:10.358   527   527 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-s' 'godot''
+10-23 19:26:10.371   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:10.434     0     0 I logd    : logdr: UID=2000 GID=2000 PID=2819 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-23 19:26:10.623   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:10.882   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:11.119  2783  2807 I godot   : ANDROID_UI_PAGE town safe=[P: (0.0, 60.42574), S: (480.0, 1016.574)] outliers=0
+10-23 19:26:11.134   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:11.384   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:11.639   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:11.760  2783  2807 I godot   : ANDROID_UI_PAGE activity safe=[P: (0.0, 60.42574), S: (480.0, 1016.574)] outliers=0
+10-23 19:26:11.888   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:12.140   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:12.392   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:12.643   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:12.894   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:12.961  2783  2807 I godot   : ANDROID_UI_PAGE bag safe=[P: (0.0, 60.42574), S: (480.0, 1016.574)] outliers=0
+10-23 19:26:13.145   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:13.384   666   778 D ActivityManager: freezing 1616 com.android.keychain
+10-23 19:26:13.385   666   778 D ActivityManager: freezing 1084 com.android.settings
+10-23 19:26:13.386   666   778 D ActivityManager: freezing 1891 com.android.localtransport
+10-23 19:26:13.387   666   778 D ActivityManager: freezing 1842 com.android.dynsystem:dynsystem
+10-23 19:26:13.388   666   778 D ActivityManager: freezing 1827 com.android.dynsystem
+10-23 19:26:13.398   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:13.648   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:13.803  2783  2807 I godot   : ANDROID_UI_PAGE gathering safe=[P: (0.0, 60.42574), S: (480.0, 1016.574)] outliers=0
+10-23 19:26:13.901   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:14.154   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:14.405   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:14.516  2783  2807 I godot   : ANDROID_UI_PAGE settings safe=[P: (0.0, 60.42574), S: (480.0, 1016.574)] outliers=0
+10-23 19:26:14.656   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:14.905   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:15.156   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:15.408   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:15.445  2783  2807 I godot   : ANDROID_UI_PAGE growth safe=[P: (0.0, 60.42574), S: (480.0, 1016.574)] outliers=0
+10-23 19:26:15.661   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:15.913   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:16.163   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:16.412   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:16.551  2783  2807 I godot   : ANDROID_UI_PAGE codex safe=[P: (0.0, 60.42574), S: (480.0, 1016.574)] outliers=0
+10-23 19:26:16.664   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:16.916   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:17.176   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:17.427   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:17.452  2783  2807 I godot   : ANDROID_UI_PAGE gacha safe=[P: (0.0, 60.42574), S: (480.0, 1016.574)] outliers=0
+10-23 19:26:17.678   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:17.938   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:18.082  2783  2807 I godot   : ANDROID_UI_PAGE exchange safe=[P: (0.0, 60.42574), S: (480.0, 1016.574)] outliers=0
+10-23 19:26:18.191   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:18.441   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:18.692   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:18.707  2783  2807 I godot   : ANDROID_UI_PAGE quests safe=[P: (0.0, 60.42574), S: (480.0, 1016.574)] outliers=0
+10-23 19:26:18.943   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:19.194   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:19.452   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:19.598  1063  1197 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 19:26:19.598  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 19:26:19.598  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:19.598  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:19.598  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:19.600  1063  1197 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 19:26:19.600  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 19:26:19.601  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:19.601  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:19.601  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 19:26:19.601  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 19:26:19.601  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:19.601  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:19.601  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:19.601  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 19:26:19.601  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:19.601  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:19.601  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:19.601  1063  1197 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 19:26:19.601  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 19:26:19.601  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:19.601  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:19.601  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 19:26:19.602  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 19:26:19.602  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:19.602  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:19.602  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:19.702   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:19.943  2783  2807 I godot   : ANDROID_UI_PAGE world safe=[P: (0.0, 60.42574), S: (480.0, 1016.574)] outliers=10
+10-23 19:26:19.952   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:20.205   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:20.456   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:20.700  2783  2807 I godot   : ANDROID_UI_PAGE arena safe=[P: (0.0, 60.42574), S: (480.0, 1016.574)] outliers=0
+10-23 19:26:20.706   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:20.737  2783  2807 I godot   : ANDROID_UI_AUDIT_COMPLETE screens=15
+10-23 19:26:20.964   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:21.224   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:21.477   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:21.729   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:21.979   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:22.229   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:22.482   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:22.734   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:22.984   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:23.236   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:23.487   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:23.737   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:23.988   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:24.238   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:24.489   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:24.740   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:24.991   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:25.242   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:25.493   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:25.744   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:25.995   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:26.246   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:26.497   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:26.749   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:26.999   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:27.249   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:27.503   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:27.757   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:28.009   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:28.258   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:28.510   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:28.761   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:29.011   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:29.261   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:29.513   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:29.598  1063  1197 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 19:26:29.598  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 19:26:29.598  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:29.598  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:29.598  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:29.599  1063  1197 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 19:26:29.599  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 19:26:29.599  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:29.599  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:29.599  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 19:26:29.601  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 19:26:29.601  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:29.601  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:29.601  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:29.601  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 19:26:29.602  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:29.602  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:29.602  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:29.602  1063  1197 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 19:26:29.602  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 19:26:29.602  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:29.602  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:29.602  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 19:26:29.603  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 19:26:29.603  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:29.603  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:29.603  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:29.764   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:30.014   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:30.274   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:30.524   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:30.776   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:31.034   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:31.287   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:31.538   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:31.790   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:32.041   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:32.293   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:32.542   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:32.793   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:33.043   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:33.272   666   721 I WifiService: isFeatureSupported uid=1000 returns [WIFI_FEATURE_INFRA, WIFI_FEATURE_P2P, WIFI_FEATURE_MOBILE_HOTSPOT, WIFI_FEATURE_WPA3_SAE, WIFI_FEATURE_WPA3_SUITE_B, WIFI_FEATURE_OWE, WIFI_FEATURE_DPP, WIFI_FEATURE_AP_RAND_MAC, WIFI_FEATURE_MBO, WIFI_FEATURE_FILS_SHA256, WIFI_FEATURE_FILS_SHA384, WIFI_FEATURE_SAE_PK, WIFI_FEATURE_DPP_ENROLLEE_RESPONDER, WIFI_FEATURE_PASSPOINT_TERMS_AND_CONDITIONS, WIFI_FEATURE_WFD_R2, WIFI_FEATURE_DECORATED_IDENTITY, WIFI_FEATURE_TRUST_ON_FIRST_USE, WIFI_FEATURE_SET_TLS_MINIMUM_VERSION, WIFI_FEATURE_TLS_V1_3, WIFI_FEATURE_WEP, WIFI_FEATURE_WPA_PERSONAL]
+10-23 19:26:33.275   666  1130 I BluetoothPowerStatsCollector: BluetoothActivityEnergyInfo not supported.
+10-23 19:26:33.294   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:33.544   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:33.794   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:33.935   666  1675 I AppSearchIcing: icing-search-engine.cc:2487: Persisting data to disk with mode 3
+10-23 19:26:33.940   666  1675 I AppSearchIcing: icing-search-engine.cc:2502: PersistToDisk completed.
+10-23 19:26:34.044   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:34.295   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:34.544   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:34.794   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:35.044   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:35.294   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:35.545   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:35.798   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:36.050   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:36.302   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:36.553   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:36.804   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:37.056   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:37.305   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:37.556   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:37.806   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:38.058   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:38.309   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:38.558   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:38.802   517   604 D AF::Track: interceptBuffer: took 1374us to intercept 0 tracks
+10-23 19:26:38.810   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:39.061   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:39.311   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:39.561   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:39.599  1063  1197 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 19:26:39.599  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 19:26:39.599  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:39.599  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:39.599  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:39.600  1063  1197 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 19:26:39.600  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 19:26:39.600  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:39.600  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:39.600  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 19:26:39.600  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 19:26:39.600  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:39.600  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:39.600  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:39.600  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 19:26:39.600  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:39.601  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:39.601  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:39.601  1063  1197 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 19:26:39.601  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 19:26:39.601  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:39.601  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:39.601  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 19:26:39.601  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 19:26:39.601  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:39.601  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:39.601  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:39.811   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:40.061   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:40.313   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:40.564   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:40.815   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:41.066   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:41.317   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:41.566   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:41.821   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:42.075   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:42.326   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:42.577   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:42.830   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:43.082   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:43.333   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:43.588   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:43.841   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:44.094   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:44.344   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:44.595   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:44.846   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:45.095   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:45.345   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:45.597   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:45.849   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:46.100   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:46.355   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:46.605   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:46.856   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:47.108   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:47.361   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:47.613   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:47.865   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:48.117   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:48.370   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:48.623   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:48.875   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:49.126   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:49.376   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:49.600  1063  1197 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 19:26:49.600  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 19:26:49.601  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:49.601  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:49.601  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:49.602  1063  1197 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 19:26:49.602  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 19:26:49.602  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:49.602  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:49.602  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 19:26:49.603  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 19:26:49.603  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:49.603  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:49.603  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:49.604  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 19:26:49.604  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:49.605  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:49.605  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:49.605  1063  1197 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 19:26:49.605  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 19:26:49.605  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:49.605  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:49.605  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 19:26:49.605  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 19:26:49.606  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:49.606  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:49.606  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:49.627   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:49.878   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:50.129   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:50.379   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:50.641   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:50.927     0     0 W healthd : battery l=100 v=5000 t=25.0 h=2 st=2 c=900000 fc=3000000 cc=10 chg=a
+10-23 19:26:50.890   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:51.140   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:51.389   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:51.639   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:51.891   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:52.141   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:52.393   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:52.645   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:52.896   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:53.147   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:53.399   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:53.649   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:53.899   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:54.148   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:54.399   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:54.651   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:54.902   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:55.155   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:55.409   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:55.660   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:55.910   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:56.161   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:56.410   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:56.662   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:56.913   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:57.163   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:57.413   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:57.579   666   774 W CpuMonitorService: Current CPU frequency (4684781) is greater than maximum CPU frequency (2) for policy ID (0). Skipping CPU frequency policy
+10-23 19:26:57.580   666   774 W CpuMonitorService: Current CPU frequency (4571416) is greater than maximum CPU frequency (2) for policy ID (1). Skipping CPU frequency policy
+10-23 19:26:57.580   666   774 W CpuMonitorService: Current CPU frequency (3687812) is greater than maximum CPU frequency (2) for policy ID (2). Skipping CPU frequency policy
+10-23 19:26:57.580   666   774 W CpuMonitorService: Current CPU frequency (4408598) is greater than maximum CPU frequency (2) for policy ID (3). Skipping CPU frequency policy
+10-23 19:26:57.663   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:57.913   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:58.164   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:58.416   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:58.590   517   604 D AudioFlinger: mixer(0x730e03ee8790) throttle end: throttle time(40)
+10-23 19:26:58.613   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:58.839   517   604 D AF::Track: interceptBuffer: took 570us to intercept 0 tracks
+10-23 19:26:58.863   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:59.112   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:59.362   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:59.600  1063  1197 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 19:26:59.600  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 19:26:59.600  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:59.600  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:59.600  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:59.602  1063  1197 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 19:26:59.602  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 19:26:59.602  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:59.602  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:59.602  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 19:26:59.602  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 19:26:59.602  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:59.602  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:59.602  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:59.602  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 19:26:59.602  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:59.602  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:59.602  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:59.602  1063  1197 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 19:26:59.602  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 19:26:59.602  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:59.602  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:59.602  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 19:26:59.606  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 19:26:59.606  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:26:59.606  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:26:59.606  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:26:59.611   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:26:59.863   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:00.114   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:00.372   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:00.622   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:00.872   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:01.123   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:01.374   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:01.625   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:01.874   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:02.125   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:02.375   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:02.626   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:02.876   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:03.023   666   711 D ActivityManager: sync unfroze 1616 com.android.keychain for 10
+10-23 19:27:03.023   666   711 D ActivityManager: sync unfroze 1084 com.android.settings for 10
+10-23 19:27:03.024   666   711 D ActivityManager: sync unfroze 1891 com.android.localtransport for 10
+10-23 19:27:03.024   666   711 D ActivityManager: sync unfroze 1842 com.android.dynsystem:dynsystem for 10
+10-23 19:27:03.025   666   711 D ActivityManager: sync unfroze 1827 com.android.dynsystem for 10
+10-23 19:27:03.127   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:03.380   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:03.634   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:03.885   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:04.140   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:04.391   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:04.641   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:04.890   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:05.142   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:05.393   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:05.643   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:05.894   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:06.144   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:06.396   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:06.647   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:06.898   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:07.151   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:07.403   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:07.564   517   604 D AF::Track: interceptBuffer: took 1715us to intercept 0 tracks
+10-23 19:27:07.654   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:07.908   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:08.158   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:08.408   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:08.660   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:08.910   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:09.014   517   604 D AF::Track: interceptBuffer: took 1258us to intercept 0 tracks
+10-23 19:27:09.162   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:09.413   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:09.601  1063  1197 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 19:27:09.602  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 19:27:09.602  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:27:09.602  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:27:09.602  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:27:09.603  1063  1197 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 19:27:09.603  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 19:27:09.603  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:27:09.603  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:27:09.604  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 19:27:09.604  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 19:27:09.604  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:27:09.604  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:27:09.604  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:27:09.604  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 19:27:09.604  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:27:09.604  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:27:09.604  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:27:09.604  1063  1197 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 19:27:09.604  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 19:27:09.604  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:27:09.604  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:27:09.605  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 19:27:09.605  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 19:27:09.605  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:27:09.605  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:27:09.605  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:27:09.665   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:09.917   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:10.167   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:10.417   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:10.670   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:10.922   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:11.085   460  2826 I resolv  : ResNSendHandler::run: 0 / {100 983140 100 983140 1073 1}
+10-23 19:27:11.088   460  2827 I resolv  : ResNSendHandler::run: 0 / {100 983140 100 983140 1073 1}
+10-23 19:27:11.091   460  2828 I resolv  : ResNSendHandler::run: 0 / {100 983140 100 983140 1073 1}
+10-23 19:27:11.091   666   845 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-23 19:27:11.091   666   845 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-23 19:27:11.092   666   845 D InetDiagMessage: Destroyed live tcp sockets for uids={10149} in 1ms
+10-23 19:27:11.094   460  2829 I resolv  : ResNSendHandler::run: 0 / {100 983140 100 983140 1073 1}
+10-23 19:27:11.103   460  2826 I resolv  : res_nsend: used send_dg 48 terrno: 0
+10-23 19:27:11.123   460  2827 I resolv  : res_nsend: used send_dg 107 terrno: 0
+10-23 19:27:11.123   460  2828 I resolv  : res_nsend: used send_dg 48 terrno: 0
+10-23 19:27:11.125  1027  2824 D NetworkMonitor/100: PROBE_DNS www.google.com 45ms OK 69.171.235.22
+10-23 19:27:11.127   460  2829 I resolv  : res_nsend: used send_dg 63 terrno: 0
+10-23 19:27:11.127   460  2830 I resolv  : GetAddrInfoHandler::run: {100 983140 100 983140 1073 1}
+10-23 19:27:11.128   460  2832 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-23 19:27:11.128   460  2831 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-23 19:27:11.128   460  2832 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x76f822c0b140
+10-23 19:27:11.128   460  2832 I resolv  : doQuery: rcode=0, ancount=1, return value=48
+10-23 19:27:11.129   460  2831 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x76f822c0b980
+10-23 19:27:11.129   460  2831 I resolv  : doQuery: rcode=0, ancount=1, return value=48
+10-23 19:27:11.132  1027  2825 D NetworkMonitor/100: PROBE_DNS connectivitycheck.gstatic.com 51ms OK 58.63.233.98
+10-23 19:27:11.138   460  2834 I resolv  : GetAddrInfoHandler::run: {100 983140 100 983140 1073 1}
+10-23 19:27:11.138   460  2835 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-23 19:27:11.138   460  2835 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x76f8d2c08d10
+10-23 19:27:11.138   460  2835 I resolv  : doQuery: rcode=0, ancount=0, return value=107
+10-23 19:27:11.139   460  2836 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-23 19:27:11.139   460  2836 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x76f722c01ef0
+10-23 19:27:11.139   460  2836 I resolv  : doQuery: rcode=0, ancount=1, return value=63
+10-23 19:27:11.173   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:11.422   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:11.675   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:11.740  1027  2825 D NetworkMonitor/100: PROBE_HTTP http://connectivitycheck.gstatic.com/generate_204 time=604ms ret=204 request={Connection=[close], User-Agent=[Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.32 Safari/537.36]} headers={null=[HTTP/1.1 204 No Content], Connection=[close], Cross-Origin-Resource-Policy=[cross-origin], Date=[Fri, 23 Oct 2026 19:27:12 GMT], X-Android-Received-Millis=[1792783631740], X-Android-Response-Source=[NETWORK 204], X-Android-Selected-Protocol=[http/1.1], X-Android-Sent-Millis=[1792783631150]}
+10-23 19:27:11.926   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:12.177   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:12.429   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:12.678   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:12.929   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:13.178   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:13.430   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:13.682   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:13.935   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:14.087   460  2837 I resolv  : GetAddrInfoHandler::run: {100 983140 100 983140 1073 1}
+10-23 19:27:14.087   460  2838 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-23 19:27:14.089   460  2839 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-23 19:27:14.133   460  2838 I resolv  : res_nsend: used send_dg 261 terrno: 0
+10-23 19:27:14.133   460  2838 I resolv  : doQuery: rcode=0, ancount=8, return value=261
+10-23 19:27:14.133   460  2839 I resolv  : res_nsend: used send_dg 165 terrno: 0
+10-23 19:27:14.134   460  2839 I resolv  : doQuery: rcode=0, ancount=8, return value=165
+10-23 19:27:14.188   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:14.440   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:14.691   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:14.770  1027  2823 D NetworkMonitor/100: PROBE_FALLBACK http://play.googleapis.com/generate_204 time=686ms ret=204 request={Connection=[close], User-Agent=[Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.32 Safari/537.36]} headers={null=[HTTP/1.1 204 No Content], Connection=[close], Cross-Origin-Resource-Policy=[cross-origin], Date=[Fri, 23 Oct 2026 19:27:15 GMT], X-Android-Received-Millis=[1792783634768], X-Android-Response-Source=[NETWORK 204], X-Android-Selected-Protocol=[http/1.1], X-Android-Sent-Millis=[1792783634145]}
+10-23 19:27:14.941   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:15.191   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:15.443   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:15.692   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:15.942   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:16.194   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:16.443   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:16.693   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:16.695  1027  2824 D NetworkMonitor/100: PROBE_HTTPS https://www.google.com/generate_204 Probe failed with exception javax.net.ssl.SSLHandshakeException: connection closed
+10-23 19:27:16.697  1027  2823 D NetworkMonitor/100: isCaptivePortal: isSuccessful()=false isPortal()=false RedirectUrl=null isPartialConnectivity()=true Time=5618ms
+10-23 19:27:16.699   666   845 D ConnectivityService: [100 CELLULAR] validation failed
+10-23 19:27:16.943   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:17.192   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:17.442   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:17.693   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:17.943   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:18.192   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:18.443   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:18.694   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:18.945   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:19.197   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:19.446   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:19.602  1063  1197 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-23 19:27:19.602  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 19:27:19.602  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:27:19.602  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:27:19.602  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:27:19.603  1063  1197 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 19:27:19.603  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 19:27:19.603  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:27:19.603  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:27:19.603  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 19:27:19.603  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 19:27:19.603  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:27:19.603  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:27:19.603  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:27:19.603  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-23 19:27:19.603  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:27:19.603  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:27:19.603  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:27:19.603  1063  1197 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-23 19:27:19.603  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-23 19:27:19.603  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:27:19.603  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:27:19.604  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-23 19:27:19.604  1063  1197 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-23 19:27:19.604  1063  1197 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-23 19:27:19.604  1063  1197 V SatelliteController: satelliteConfigParser is not ready
+10-23 19:27:19.604  1063  1197 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-23 19:27:19.699   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:19.952   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:20.203   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:20.454   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:20.707   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:20.958   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:21.210   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:21.460   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:21.711   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:21.960   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:21.997   666   839 V WifiConnectivityManager: schedulePeriodicScanTimer intervalMs 160000
+10-23 19:27:21.997   666   843 I WifiScanningService: Registering listener= com.android.server.wifi.scanner.WifiScannerInternal$ScanListener@fe734db uid=1000 packageName=null workSource=WorkSource{1000}
+10-23 19:27:21.998   666   843 I WifiScanningService: start scan: ClientInfo[uid=1000, package=null, attributionTag=null, com.android.server.wifi.scanner.WifiScannerInternal$ScanListener@fe734db] package null AttributionTag null
+10-23 19:27:21.998   666   843 I WifiScanningService: addSingleScanRequest: ClientInfo[uid=1000, package=null, attributionTag=null, com.android.server.wifi.scanner.WifiScannerInternal$ScanListener@fe734db],WorkSource{1010}, ScanSettings {  type:HIGH ACCURACY band:24Ghz & 5Ghz (DFS incl) & 6Ghz ignoreLocationSettings:false period:0 reportEvents:3 numBssidsPerScan:0 maxScansToCache:0 rnrSetting:1 6GhzPscOnlyEnabled:true channels:[  ]  } 
+10-23 19:27:21.998   666   843 D WifiScanningService: replySucceeded onSuccess
+10-23 19:27:21.998   666   843 E Nl80211Native: getChannelsMhzForBand: Wiphy index not recorded for band 8
+10-23 19:27:21.998   666   843 E Nl80211Native: getChannelsMhzForBand: Wiphy index not recorded for band 16
+10-23 19:27:21.998   666   843 D Nl80211Native: Ignoring unsupported scan type 2
+10-23 19:27:21.998   666   843 I Nl80211Proxy: Sending Nl80211 message: GenericNetlinkMsg{ nlHeader{StructNlMsgHdr{ nlmsg_len{352}, nlmsg_type{30()}, nlmsg_flags{5(NLM_F_REQUEST|NLM_F_ACK)}, nlmsg_seq{37}, nlmsg_pid{0} }}, genNlHeader{StructGenNlMsgHdr{ command{33}, version{1}, reserved{0} }}, attributes{[StructNlAttr{ nla_len{8}, nla_type{-32723}, nla_value{04000000}, }, StructNlAttr{ nla_len{8}, nla_type{3}, nla_value{10000000}, }, StructNlAttr{ nla_len{308}, nla_type{-32724}, nla_value{080000006C09000008000100710900000800020076090000080003007B09000008000400800900000800050085090000080006008A090000080007008F0900000800080094090000080009009909000008000A009E09000008000B00A309000008000C00A809000008000D00B409000008000E003C14000008000F005014000008001000641400000800110078140000080012008C14000008001300A014000008001400B414000008001500C8140000080016007C150000080017009015000008001800A415000008001900B815000008001A00CC15000008001B00E015000008001C00F415000008001D000816000008001E001C16000008001F0030160000080020004416000008002100711600000800220085160000080023009916000008002400AD16000008002500C1160000}, }, StructNlAttr{ nla_len{8}, nla_type{158}, nla_value{08000000}, }]} }
+10-23 19:27:21.999   666   843 I Nl80211Proxy: Received NLMSG_ERROR with error 0 for message GenericNetlinkMsg{ nlHeader{StructNlMsgHdr{ nlmsg_len{352}, nlmsg_type{30()}, nlmsg_flags{5(NLM_F_REQUEST|NLM_F_ACK)}, nlmsg_seq{37}, nlmsg_pid{0} }}, genNlHeader{StructGenNlMsgHdr{ command{33}, version{1}, reserved{0} }}, attributes{[StructNlAttr{ nla_len{8}, nla_type{-32723}, nla_value{04000000}, }, StructNlAttr{ nla_len{8}, nla_type{3}, nla_value{10000000}, }, StructNlAttr{ nla_len{308}, nla_type{-32724}, nla_value{080000006C09000008000100710900000800020076090000080003007B09000008000400800900000800050085090000080006008A090000080007008F0900000800080094090000080009009909000008000A009E09000008000B00A309000008000C00A809000008000D00B409000008000E003C14000008000F005014000008001000641400000800110078140000080012008C14000008001300A014000008001400B414000008001500C8140000080016007C150000080017009015000008001800A415000008001900B815000008001A00CC15000008001B00E015000008001C00F415000008001D000816000008001E001C16000008001F0030160000080020004416000008002100711600000800220085160000080023009916000008002400AD16000008002500C1160000}, }, StructNlAttr{ nla_len{8}, nla_type{158}, nla_value{08000000}, }]} }
+10-23 19:27:21.999   926   926 D wpa_supplicant: nl80211: Drv Event 33 (NL80211_CMD_TRIGGER_SCAN) received for wlan0
+10-23 19:27:22.000   926   926 D wpa_supplicant: wlan0: nl80211: Scan trigger
+10-23 19:27:22.000   926   926 D wpa_supplicant: wlan0: Event SCAN_STARTED (47) received
+10-23 19:27:22.000   926   926 D wpa_supplicant: wlan0: External program started a scan
+10-23 19:27:22.211   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:22.463   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:22.714   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:22.952   527   527 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-v' 'threadtime''
+10-23 19:27:22.964   473  2622 W android.hardware.audio@7.1-impl.ranchu: consumeThread: timeout waiting for tinyalsa, error: ''
+10-23 19:27:23.029     0     0 I logd    : logdr: UID=2000 GID=2000 PID=2841 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns

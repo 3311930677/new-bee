@@ -388,7 +388,7 @@ func _show_end(win: bool) -> void:
 	if _bonus_gold > 0:
 		box.add_child(G.gold_label("毫发无损 · 加成 +%d" % _bonus_gold, G.FS_SM, true, Color("a06020")))
 	box.add_child(G.gold_label("远征币 +%d" % st.expedition, G.FS_MD, false, Color("8a6a34"), false))
-	box.add_child(G.gold_label("灵魂石 +%d" % st.soul, G.FS_MD, false, Color("8a6a34"), false))
+	box.add_child(G.gold_label("魂晶 +%d" % st.soul, G.FS_MD, false, Color("8a6a34"), false))
 	box.add_child(G.gold_label("荣　誉 +%d" % st.honor, G.FS_MD, false, Color("8a6a34"), false))
 	box.add_child(G.gold_label("经验 +%d" % st.exp, G.FS_MD, false, Color("8a6a34"), false))
 	if _level_ups > 0:

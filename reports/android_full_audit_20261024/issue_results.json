@@ -1,0 +1,348 @@
+{
+  "date": "2026-10-24",
+  "conclusion": "未全部解决",
+  "scope": "Android 17 API37 AOSP x86_64 emulator; current workspace export; not original ARM64 final APK",
+  "original_issues": [
+    {
+      "id": "M01",
+      "title": "材料和宝石空图",
+      "status": "本轮范围通过",
+      "detail": "Android实际加载清单486/486纹理；测试存档47种材料宝石全部取得纹理。四页签、上下滚动、60/60装备与31条待领取已检查。不是所有任意物品ID和所有旧存档都覆盖。资源 材料 宝石 满背包",
+      "evidence": [
+        {
+          "label": "资源",
+          "path": "resources/result.json"
+        },
+        {
+          "label": "材料",
+          "path": "portrait_20_9/bag_mat.png"
+        },
+        {
+          "label": "宝石",
+          "path": "portrait_20_9/bag_gem.png"
+        },
+        {
+          "label": "满背包",
+          "path": "pending_full_android/result.json"
+        }
+      ]
+    },
+    {
+      "id": "M02",
+      "title": "应用图标不符合选择",
+      "status": "部分通过 待确认图样",
+      "detail": "Android桌面已显示新的远征城景图标，导出配置使用统一launcher资源。原反馈没有确认目标母版，不能认定已符合用户所选图样；主题图标与不同桌面遮罩仍需补验。实际桌面",
+      "evidence": [
+        {
+          "label": "实际桌面",
+          "path": "normal_flow/launcher_apps.png"
+        }
+      ]
+    },
+    {
+      "id": "M03",
+      "title": "页面位置和背景适配不统一",
+      "status": "未通过",
+      "detail": "加载、标题、登录、货币与战报已在Android检查；商店、召唤、演武等仍有固定画布居中和较大留白，整页与弹窗布局规则仍未统一。誓约页还有实质文字越界，见N01。居中弹窗的合理留白不应一概删除。长屏召唤 商店 演武",
+      "evidence": [
+        {
+          "label": "长屏召唤",
+          "path": "portrait_20_9/gacha.png"
+        },
+        {
+          "label": "商店",
+          "path": "portrait_20_9/shop.png"
+        },
+        {
+          "label": "演武",
+          "path": "portrait_20_9/arena.png"
+        }
+      ]
+    },
+    {
+      "id": "M04",
+      "title": "系统栏和安全区不一致",
+      "status": "未通过",
+      "detail": "普通入口中从底部唤出三键导航，系统返回、主页、最近任务键覆盖主城底部标签。另在运行中切换导航模式后进程退出，本次系统记录SIGKILL，具体原因待定位。普通包遮挡 窗口数据 退出记录",
+      "evidence": [
+        {
+          "label": "普通包遮挡",
+          "path": "normal_flow/home_threebutton_native.png"
+        },
+        {
+          "label": "窗口数据",
+          "path": "normal_flow/home_threebutton_window.txt"
+        },
+        {
+          "label": "退出记录",
+          "path": "android_exit_info.txt"
+        }
+      ]
+    },
+    {
+      "id": "M05",
+      "title": "GM常驻悬浮条遮挡",
+      "status": "本轮范围通过",
+      "detail": "页面巡检与普通入口未出现原反馈中的ESC和GM常驻条；资源套件同时检查默认状态无悬浮条。设置内开发者功能入口仍存在，不属于本项所说的常驻悬浮条。普通主城 资源检查",
+      "evidence": [
+        {
+          "label": "普通主城",
+          "path": "normal_flow/home_ready.png"
+        },
+        {
+          "label": "资源检查",
+          "path": "resources/result.json"
+        }
+      ]
+    },
+    {
+      "id": "M06",
+      "title": "桌子旗帜等素材完成度",
+      "status": "部分通过",
+      "detail": "18张地图91处静态区域样本未见明显资源空白，小聚桌面和霜关商队旗帜已有细节。地图静态取样冻结了过程，不能验证所有任务切换；旗帜另一分支和全部道具状态没有完成验收。小聚 已出现的旗帜 地图记录",
+      "evidence": [
+        {
+          "label": "小聚",
+          "path": "portrait_20_9/gathering.png"
+        },
+        {
+          "label": "已出现的旗帜",
+          "path": "frost_flags.png"
+        },
+        {
+          "label": "地图记录",
+          "path": "maps_android/result.json"
+        }
+      ]
+    },
+    {
+      "id": "M07",
+      "title": "四种货币说明混在一起",
+      "status": "本轮范围通过",
+      "detail": "Android原生触摸四个入口分别打开对应币种；详情展示完整大额余额，可滚动且关闭返回主城。金币1234567、远征币234567、魂晶34567、荣誉4567分别检查。操作记录 金币详情",
+      "evidence": [
+        {
+          "label": "操作记录",
+          "path": "native_interactions.json"
+        },
+        {
+          "label": "金币详情",
+          "path": "native_currency_gold/adb_screen.png"
+        }
+      ]
+    },
+    {
+      "id": "M08",
+      "title": "骑手与坐骑比例姿态",
+      "status": "部分通过",
+      "detail": "四职业、马与熊、四方向、四步态帧共128张实际Android画面，基本坐姿和组合未见原反馈中的明显脱离。长时间动态美术观感及其他坐骑不能据此一并验收。马组合 熊组合 检查",
+      "evidence": [
+        {
+          "label": "马组合",
+          "path": "mounts_android/horse_poses.jpg"
+        },
+        {
+          "label": "熊组合",
+          "path": "mounts_android/bear_poses.jpg"
+        },
+        {
+          "label": "检查",
+          "path": "mounts_android/result.json"
+        }
+      ]
+    },
+    {
+      "id": "M09",
+      "title": "马匹步态与蹄声",
+      "status": "部分通过",
+      "detail": "普通移动、疾行各15秒实际Android录屏；移动、转向、松手及顶边界已检查。脚本接地相位和事件误差最高约18ms，但没有物理声路声画延迟证据。移动记录 普通录屏 疾行录屏",
+      "evidence": [
+        {
+          "label": "移动记录",
+          "path": "motion_analysis.json"
+        },
+        {
+          "label": "普通录屏",
+          "path": "motion_normal_15s/android_screenrecord.mp4"
+        },
+        {
+          "label": "疾行录屏",
+          "path": "motion_sprint_15s/android_screenrecord.mp4"
+        }
+      ]
+    },
+    {
+      "id": "M10",
+      "title": "文字框按钮风格与可读性",
+      "status": "未通过",
+      "detail": "货币、阅读、战报已有可用样本；誓约卡片奖励行越界，多个操作按钮有效尺寸低于本轮44逻辑像素检查线。全组件推广和视觉确认尚未完成。誓约 四比例结果",
+      "evidence": [
+        {
+          "label": "誓约",
+          "path": "oath_overlap.png"
+        },
+        {
+          "label": "四比例结果",
+          "path": "portrait_20_9/result.json"
+        }
+      ]
+    },
+    {
+      "id": "A01",
+      "title": "BGM切换和停止",
+      "status": "本轮机制通过",
+      "detail": "同曲不重启、快速换曲最终曲目正确、停止取消旧淡化回调均在Android执行。未把极短片段等同整曲听感合格。音频检查",
+      "evidence": [
+        {
+          "label": "音频检查",
+          "path": "audio_android/result.json"
+        }
+      ]
+    },
+    {
+      "id": "A02",
+      "title": "静音与零音量",
+      "status": "本轮范围通过",
+      "detail": "全局静音与音乐音效同时归零，捕获样本均全部为0；原生开关可恢复。普通入口静音开启后保存、强制结束、重启，界面与存档仍为开启，之后已恢复关闭。零样本 重启后设置 重启存档",
+      "evidence": [
+        {
+          "label": "零样本",
+          "path": "audio_android/result.json"
+        },
+        {
+          "label": "重启后设置",
+          "path": "normal_flow/mute_after_restart.png"
+        },
+        {
+          "label": "重启存档",
+          "path": "normal_flow/saved_after_restart.json"
+        }
+      ]
+    },
+    {
+      "id": "A03",
+      "title": "并发叠加截断与优先级",
+      "status": "未通过",
+      "detail": "总并发受限、已有胜利音受到保护，但boss_warn与low_hp占满两个Alerts名额后，新victory被直接丢弃。音频套件13项有1项失败，不能称全部通过。失败记录",
+      "evidence": [
+        {
+          "label": "失败记录",
+          "path": "audio_android/result.json"
+        }
+      ]
+    },
+    {
+      "id": "A04",
+      "title": "重复声与触发时机",
+      "status": "代表场景通过",
+      "detail": "原生长按背包打开只记录一次ui_open，四页签各一次ui_page，关闭一次ui_close；语义反馈合并通过。未覆盖每个奖励、失败与取消操作链。原生操作",
+      "evidence": [
+        {
+          "label": "原生操作",
+          "path": "native_interactions.json"
+        }
+      ]
+    },
+    {
+      "id": "A05",
+      "title": "落蹄触发",
+      "status": "部分通过",
+      "detail": "正常最高速度175，疾行218.75；分别50与55个蹄声事件。四段顶边界静止期间0蹄声，松手后无残留；物理声画时差仍待设备录音。分析 内部混音",
+      "evidence": [
+        {
+          "label": "分析",
+          "path": "motion_analysis.json"
+        },
+        {
+          "label": "内部混音",
+          "path": "motion_normal_15s/motion_mix.wav"
+        }
+      ]
+    },
+    {
+      "id": "A06",
+      "title": "后台与音频设备变化",
+      "status": "部分通过",
+      "detail": "Home退后台、回应用、展开收起通知栏已实测，暂停恢复和清理短音正常，同一进程未重启BGM。来电、耳机拔插及蓝牙切换没有实体设备证据。生命周期 系统通知记录",
+      "evidence": [
+        {
+          "label": "生命周期",
+          "path": "lifecycle_summary.json"
+        },
+        {
+          "label": "系统通知记录",
+          "path": "lifecycle.json"
+        }
+      ]
+    },
+    {
+      "id": "A07",
+      "title": "音色响度与循环",
+      "status": "待主观验收",
+      "detail": "34种短音已在Android依次触发并捕获约16.14秒内部混音，六首BGM有源文件接缝数据和一次Android跨循环检查。没有完成手机外放主观试听，仍须逐条记录奇怪音色与替换意见。试听文件 触发时间表 BGM数据",
+      "evidence": [
+        {
+          "label": "试听文件",
+          "path": "audio_catalog_android/sfx_catalog.wav"
+        },
+        {
+          "label": "触发时间表",
+          "path": "audio_catalog_android/result.json"
+        },
+        {
+          "label": "BGM数据",
+          "path": "source_music_loop_stats.json"
+        }
+      ]
+    }
+  ],
+  "new_or_refined_issues": [
+    {
+      "id": "N01",
+      "priority": "P2",
+      "related": [
+        "M03",
+        "M10"
+      ],
+      "title": "誓约说明越过卡片边界"
+    },
+    {
+      "id": "N02",
+      "priority": "P1",
+      "related": [
+        "A03"
+      ],
+      "title": "胜利音在警报并发时丢失"
+    },
+    {
+      "id": "N03",
+      "priority": "P2",
+      "related": [],
+      "title": "背包四列布局仍按五列移动焦点"
+    },
+    {
+      "id": "N04",
+      "priority": "P2",
+      "related": [
+        "M10"
+      ],
+      "title": "多处小按钮触控范围偏小"
+    },
+    {
+      "id": "N05",
+      "priority": "P1",
+      "related": [
+        "M04"
+      ],
+      "title": "主城底部被系统三键导航覆盖"
+    },
+    {
+      "id": "N06",
+      "priority": "P1",
+      "related": [
+        "M04"
+      ],
+      "title": "运行中切换导航模式后退出 原因待定位"
+    }
+  ]
+}

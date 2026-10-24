@@ -1,0 +1,46 @@
+extends SceneTree
+var failures: Array[String]=[]
+func _initialize() -> void: _run.call_deferred()
+func check(ok: bool, words: String) -> void:
+	if not ok: failures.append(words)
+func frames() -> void:
+	for i in 8: await process_frame
+func _run() -> void:
+	var game:Node=root.get_node("G")
+	game.set("SAVE_PATH","user://candidate_package_probe.json")
+	game.set("save_locked",true)
+	game.call("_init_state_defaults")
+	game.set("save_locked",true)
+	game.set("selected_role","zs")
+	game.set_meta("device_layout_sample",{"screen_safe":Rect2(0,72,1080,2256),"transform":Transform2D(Vector2(2.25,0),Vector2(0,2.25),Vector2.ZERO),"cutouts":[Rect2i(450,0,180,96)]})
+	check(ProjectSettings.get_setting("application/config/version")=="0.2.1-mobile2","version")
+	check(root.get_node("GmConsole").get("_bar_layer")==null,"default GM overlay")
+	var items:Dictionary=game.get("items")
+	for stat in ["atk","def","hp"]:
+		for tier in range(1,6): items["gem_%s_%d" % [stat,tier]]=9
+	var bag:Control=load("res://src/ui/BagPanel.gd").new()
+	root.add_child(bag)
+	bag.call("_select_tab","gem")
+	await frames()
+	check(bag.get("_scroll").get_child(0).columns==4,"compiled inventory layout")
+	for cell in bag.get("_item_buttons"): check(cell.get("item_image").texture!=null,"occupied gem")
+	var safe:Rect2=game.call("ui_safe_rect",bag)
+	check(absf(safe.position.y-96.0/2.25)<.1,"compiled native coordinate conversion")
+	bag.queue_free()
+	await frames()
+	var currency:Control=load("res://src/ui/CurrencyPanel.gd").new()
+	root.add_child(currency)
+	await frames()
+	check(absf(currency.get("_frame").size.y-(safe.size.y-24))<1,"compiled full-height currency")
+	currency.queue_free()
+	await frames()
+	var settlement:Control=load("res://src/battle/BattleSettlementView.gd").new()
+	settlement.set("report",{"title":"打包核验","win":true})
+	root.add_child(settlement)
+	await frames()
+	check(settlement.get("_confirm").size.y>=64,"compiled settlement action")
+	check(settlement.get("_scroll")!=null and settlement.scale==Vector2.ONE,"compiled scrollable settlement")
+	settlement.queue_free()
+	await frames()
+	print("CANDIDATE_PACKAGE_RUNTIME failures=",failures)
+	quit(0 if failures.is_empty() else 1)

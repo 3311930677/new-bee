@@ -1,0 +1,541 @@
+{
+	"checks": [
+		{
+			"detail": [],
+			"label": "M01 resource manifest loads on Android",
+			"ok": true
+		},
+		{
+			"detail": [
+				{
+					"icon": "itm_ticket_ten",
+					"id": "ticket_ten",
+					"loaded": true
+				},
+				{
+					"icon": "itm_ticket_sweep",
+					"id": "ticket_sweep",
+					"loaded": true
+				},
+				{
+					"icon": "itm_enhance_stone",
+					"id": "enhance_stone",
+					"loaded": true
+				},
+				{
+					"icon": "itm_refine_stone",
+					"id": "refine_stone",
+					"loaded": true
+				},
+				{
+					"icon": "itm_lock_rune",
+					"id": "lock_rune",
+					"loaded": true
+				},
+				{
+					"icon": "itm_pet_food",
+					"id": "pet_food",
+					"loaded": true
+				},
+				{
+					"icon": "itm_break_crystal",
+					"id": "break_crystal",
+					"loaded": true
+				},
+				{
+					"icon": "itm_aptitude_fruit",
+					"id": "aptitude_fruit",
+					"loaded": true
+				},
+				{
+					"icon": "gem_atk_1",
+					"id": "gem_atk_1",
+					"loaded": true
+				},
+				{
+					"icon": "gem_atk_2",
+					"id": "gem_atk_2",
+					"loaded": true
+				},
+				{
+					"icon": "gem_atk_3",
+					"id": "gem_atk_3",
+					"loaded": true
+				},
+				{
+					"icon": "gem_atk_4",
+					"id": "gem_atk_4",
+					"loaded": true
+				},
+				{
+					"icon": "gem_atk_5",
+					"id": "gem_atk_5",
+					"loaded": true
+				},
+				{
+					"icon": "gem_def_1",
+					"id": "gem_def_1",
+					"loaded": true
+				},
+				{
+					"icon": "gem_def_2",
+					"id": "gem_def_2",
+					"loaded": true
+				},
+				{
+					"icon": "gem_def_3",
+					"id": "gem_def_3",
+					"loaded": true
+				},
+				{
+					"icon": "gem_def_4",
+					"id": "gem_def_4",
+					"loaded": true
+				},
+				{
+					"icon": "gem_def_5",
+					"id": "gem_def_5",
+					"loaded": true
+				},
+				{
+					"icon": "gem_hp_1",
+					"id": "gem_hp_1",
+					"loaded": true
+				},
+				{
+					"icon": "gem_hp_2",
+					"id": "gem_hp_2",
+					"loaded": true
+				},
+				{
+					"icon": "gem_hp_3",
+					"id": "gem_hp_3",
+					"loaded": true
+				},
+				{
+					"icon": "gem_hp_4",
+					"id": "gem_hp_4",
+					"loaded": true
+				},
+				{
+					"icon": "gem_hp_5",
+					"id": "gem_hp_5",
+					"loaded": true
+				},
+				{
+					"icon": "itm_evolve_crystal",
+					"id": "evolve_crystal",
+					"loaded": true
+				},
+				{
+					"icon": "itm_stele_fragment",
+					"id": "stele_fragment",
+					"loaded": true
+				},
+				{
+					"icon": "itm_salt_ledger",
+					"id": "salt_ledger",
+					"loaded": true
+				},
+				{
+					"icon": "itm_gate_clue",
+					"id": "gate_clue",
+					"loaded": true
+				},
+				{
+					"icon": "itm_tide_core",
+					"id": "tide_core",
+					"loaded": true
+				},
+				{
+					"icon": "itm_frost_letter",
+					"id": "frost_letter",
+					"loaded": true
+				},
+				{
+					"icon": "itm_mine_record",
+					"id": "mine_record",
+					"loaded": true
+				},
+				{
+					"icon": "itm_gate_stamp",
+					"id": "gate_stamp",
+					"loaded": true
+				},
+				{
+					"icon": "itm_frost_reply",
+					"id": "frost_reply",
+					"loaded": true
+				},
+				{
+					"icon": "itm_veil_seal",
+					"id": "veil_seal",
+					"loaded": true
+				},
+				{
+					"icon": "itm_stele_fragment",
+					"id": "rift_echo",
+					"loaded": true
+				},
+				{
+					"icon": "itm_gate_stamp",
+					"id": "stele_key",
+					"loaded": true
+				},
+				{
+					"icon": "itm_gate_stamp",
+					"id": "stable_seal",
+					"loaded": true
+				},
+				{
+					"icon": "itm_mine_record",
+					"id": "stele_record",
+					"loaded": true
+				},
+				{
+					"icon": "itm_frost_nameplate",
+					"id": "frost_nameplate",
+					"loaded": true
+				},
+				{
+					"icon": "itm_frost_parcel",
+					"id": "frost_parcel",
+					"loaded": true
+				},
+				{
+					"icon": "itm_tide_egg",
+					"id": "tide_egg",
+					"loaded": true
+				},
+				{
+					"icon": "itm_fish_common",
+					"id": "fish_salt",
+					"loaded": true
+				},
+				{
+					"icon": "itm_fish_common",
+					"id": "fish_port",
+					"loaded": true
+				},
+				{
+					"icon": "itm_fish_common",
+					"id": "fish_tide",
+					"loaded": true
+				},
+				{
+					"icon": "itm_fish_common",
+					"id": "fish_frost",
+					"loaded": true
+				},
+				{
+					"icon": "itm_wind_chime",
+					"id": "wind_chime",
+					"loaded": true
+				},
+				{
+					"icon": "itm_return_old_letter",
+					"id": "return_old_letter",
+					"loaded": true
+				},
+				{
+					"icon": "itm_return_mailbag",
+					"id": "return_mailbag",
+					"loaded": true
+				}
+			],
+			"label": "M01 all fixture materials and gems have textures",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "M05 default GM overlay absent",
+			"ok": true
+		}
+	],
+	"device": {
+		"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+		"mix_rate": 44100.0,
+		"model": "Android SDK built for x86_64",
+		"os": "Android",
+		"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+		"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+		"version": "37.16571990",
+		"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+		"window": "(1080, 2400)"
+	},
+	"final": {
+		"audio": {
+			"bgm": "",
+			"events": [],
+			"mute": false,
+			"paused": false,
+			"playing": false,
+			"position": 0.0,
+			"suspended": false,
+			"voices": 0
+		},
+		"controls": [],
+		"device": {
+			"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+			"mix_rate": 44100.0,
+			"model": "Android SDK built for x86_64",
+			"os": "Android",
+			"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+			"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+			"version": "37.16571990",
+			"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+			"window": "(1080, 2400)"
+		},
+		"focus": "<Object#null>",
+		"keyboard_height": 0,
+		"page": "",
+		"tick_ms": 24261
+	},
+	"id": "resources",
+	"photos": [],
+	"records": [
+		{
+			"loaded": 486,
+			"manifest_entries": 486,
+			"missing": [],
+			"supplies": [
+				{
+					"icon": "itm_ticket_ten",
+					"id": "ticket_ten",
+					"loaded": true
+				},
+				{
+					"icon": "itm_ticket_sweep",
+					"id": "ticket_sweep",
+					"loaded": true
+				},
+				{
+					"icon": "itm_enhance_stone",
+					"id": "enhance_stone",
+					"loaded": true
+				},
+				{
+					"icon": "itm_refine_stone",
+					"id": "refine_stone",
+					"loaded": true
+				},
+				{
+					"icon": "itm_lock_rune",
+					"id": "lock_rune",
+					"loaded": true
+				},
+				{
+					"icon": "itm_pet_food",
+					"id": "pet_food",
+					"loaded": true
+				},
+				{
+					"icon": "itm_break_crystal",
+					"id": "break_crystal",
+					"loaded": true
+				},
+				{
+					"icon": "itm_aptitude_fruit",
+					"id": "aptitude_fruit",
+					"loaded": true
+				},
+				{
+					"icon": "gem_atk_1",
+					"id": "gem_atk_1",
+					"loaded": true
+				},
+				{
+					"icon": "gem_atk_2",
+					"id": "gem_atk_2",
+					"loaded": true
+				},
+				{
+					"icon": "gem_atk_3",
+					"id": "gem_atk_3",
+					"loaded": true
+				},
+				{
+					"icon": "gem_atk_4",
+					"id": "gem_atk_4",
+					"loaded": true
+				},
+				{
+					"icon": "gem_atk_5",
+					"id": "gem_atk_5",
+					"loaded": true
+				},
+				{
+					"icon": "gem_def_1",
+					"id": "gem_def_1",
+					"loaded": true
+				},
+				{
+					"icon": "gem_def_2",
+					"id": "gem_def_2",
+					"loaded": true
+				},
+				{
+					"icon": "gem_def_3",
+					"id": "gem_def_3",
+					"loaded": true
+				},
+				{
+					"icon": "gem_def_4",
+					"id": "gem_def_4",
+					"loaded": true
+				},
+				{
+					"icon": "gem_def_5",
+					"id": "gem_def_5",
+					"loaded": true
+				},
+				{
+					"icon": "gem_hp_1",
+					"id": "gem_hp_1",
+					"loaded": true
+				},
+				{
+					"icon": "gem_hp_2",
+					"id": "gem_hp_2",
+					"loaded": true
+				},
+				{
+					"icon": "gem_hp_3",
+					"id": "gem_hp_3",
+					"loaded": true
+				},
+				{
+					"icon": "gem_hp_4",
+					"id": "gem_hp_4",
+					"loaded": true
+				},
+				{
+					"icon": "gem_hp_5",
+					"id": "gem_hp_5",
+					"loaded": true
+				},
+				{
+					"icon": "itm_evolve_crystal",
+					"id": "evolve_crystal",
+					"loaded": true
+				},
+				{
+					"icon": "itm_stele_fragment",
+					"id": "stele_fragment",
+					"loaded": true
+				},
+				{
+					"icon": "itm_salt_ledger",
+					"id": "salt_ledger",
+					"loaded": true
+				},
+				{
+					"icon": "itm_gate_clue",
+					"id": "gate_clue",
+					"loaded": true
+				},
+				{
+					"icon": "itm_tide_core",
+					"id": "tide_core",
+					"loaded": true
+				},
+				{
+					"icon": "itm_frost_letter",
+					"id": "frost_letter",
+					"loaded": true
+				},
+				{
+					"icon": "itm_mine_record",
+					"id": "mine_record",
+					"loaded": true
+				},
+				{
+					"icon": "itm_gate_stamp",
+					"id": "gate_stamp",
+					"loaded": true
+				},
+				{
+					"icon": "itm_frost_reply",
+					"id": "frost_reply",
+					"loaded": true
+				},
+				{
+					"icon": "itm_veil_seal",
+					"id": "veil_seal",
+					"loaded": true
+				},
+				{
+					"icon": "itm_stele_fragment",
+					"id": "rift_echo",
+					"loaded": true
+				},
+				{
+					"icon": "itm_gate_stamp",
+					"id": "stele_key",
+					"loaded": true
+				},
+				{
+					"icon": "itm_gate_stamp",
+					"id": "stable_seal",
+					"loaded": true
+				},
+				{
+					"icon": "itm_mine_record",
+					"id": "stele_record",
+					"loaded": true
+				},
+				{
+					"icon": "itm_frost_nameplate",
+					"id": "frost_nameplate",
+					"loaded": true
+				},
+				{
+					"icon": "itm_frost_parcel",
+					"id": "frost_parcel",
+					"loaded": true
+				},
+				{
+					"icon": "itm_tide_egg",
+					"id": "tide_egg",
+					"loaded": true
+				},
+				{
+					"icon": "itm_fish_common",
+					"id": "fish_salt",
+					"loaded": true
+				},
+				{
+					"icon": "itm_fish_common",
+					"id": "fish_port",
+					"loaded": true
+				},
+				{
+					"icon": "itm_fish_common",
+					"id": "fish_tide",
+					"loaded": true
+				},
+				{
+					"icon": "itm_fish_common",
+					"id": "fish_frost",
+					"loaded": true
+				},
+				{
+					"icon": "itm_wind_chime",
+					"id": "wind_chime",
+					"loaded": true
+				},
+				{
+					"icon": "itm_return_old_letter",
+					"id": "return_old_letter",
+					"loaded": true
+				},
+				{
+					"icon": "itm_return_mailbag",
+					"id": "return_mailbag",
+					"loaded": true
+				}
+			]
+		}
+	],
+	"suite": "resources"
+}

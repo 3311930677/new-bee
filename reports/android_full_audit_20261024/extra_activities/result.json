@@ -1,0 +1,492 @@
+{
+	"checks": [],
+	"device": {
+		"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+		"mix_rate": 44100.0,
+		"model": "Android SDK built for x86_64",
+		"os": "Android",
+		"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+		"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+		"version": "37.16571990",
+		"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+		"window": "(1080, 2400)"
+	},
+	"final": {
+		"audio": {
+			"bgm": "bgm_home",
+			"events": [
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516013
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516240
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516460
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516691
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 516905
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 517141
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 517389
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 517608
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 517837
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 518056
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 518284
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 519740
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 519980
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 520190
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 520438
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 520652
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 520874
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 521121
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 521340
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 521577
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 521805
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 522034
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 522255
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 523727
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 523968
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 524179
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 524418
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 524648
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 524868
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525106
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525319
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525567
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525778
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 525998
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 526267
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 526464
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 526716
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 526938
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 527155
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 527472
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 527702
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 527929
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 528149
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 528381
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 528603
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 528842
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529081
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529313
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529534
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529768
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 529994
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 530208
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 530441
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 530666
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 530891
+				},
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 572886
+				}
+			],
+			"mute": false,
+			"paused": false,
+			"playing": true,
+			"position": 0.836000025272369,
+			"suspended": false,
+			"voices": 0
+		},
+		"controls": [],
+		"device": {
+			"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+			"mix_rate": 44100.0,
+			"model": "Android SDK built for x86_64",
+			"os": "Android",
+			"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+			"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+			"version": "37.16571990",
+			"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+			"window": "(1080, 2400)"
+		},
+		"focus": "<Object#null>",
+		"keyboard_height": 0,
+		"labels": [
+			{
+				"font": 15,
+				"minimum": "(73.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Control@3033/HeroRolePlate/@Label@3042",
+				"rect": [
+					182.0,
+					701.0,
+					116.0,
+					23.0
+				],
+				"text": "破军 · 战士"
+			},
+			{
+				"font": 16,
+				"minimum": "(1.0, 24.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/TownHome/@Label@3100",
+				"rect": [
+					0.0,
+					447.720001220703,
+					480.0,
+					28.0
+				],
+				"text": ""
+			},
+			{
+				"font": 28,
+				"minimum": "(56.0, 42.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3110/@Label@3112",
+				"rect": [
+					27.9999980926514,
+					81.9624938964844,
+					319.999969482422,
+					45.9999961853027
+				],
+				"text": "活动"
+			},
+			{
+				"font": 15,
+				"minimum": "(172.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3110/@Label@3113",
+				"rect": [
+					27.9999980926514,
+					129.962493896484,
+					349.999969482422,
+					23.9999980926514
+				],
+				"text": "行旅告示 · 活动与新消息"
+			},
+			{
+				"font": 18,
+				"minimum": "(1.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3110/@Control@3115/@ScrollContainer@3120/@VBoxContainer@3121/Event_arena_practice/@Label@3123",
+				"rect": [
+					39.9999961853027,
+					275.962463378906,
+					379.999969482422,
+					121.999992370605
+				],
+				"text": ""
+			},
+			{
+				"font": 18,
+				"minimum": "(1.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3110/@Control@3115/@ScrollContainer@3120/@VBoxContainer@3121/Event_arena_practice/@Label@3124",
+				"rect": [
+					39.9999961853027,
+					283.962463378906,
+					293.999969482422,
+					31.9999980926514
+				],
+				"text": "◆ 演武场 · 连招试炼"
+			},
+			{
+				"font": 15,
+				"minimum": "(75.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3110/@Control@3115/@ScrollContainer@3120/@VBoxContainer@3121/Event_arena_practice/@Label@3125",
+				"rect": [
+					327.999969482422,
+					285.962463378906,
+					99.9999923706055,
+					27.9999980926514
+				],
+				"text": "【进行中】"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 1.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3110/@Control@3115/@ScrollContainer@3120/@VBoxContainer@3121/Event_arena_practice/@Label@3127",
+				"rect": [
+					39.9999961853027,
+					323.962463378906,
+					369.999969482422,
+					51.9999961853027
+				],
+				"text": "与机关傀儡切磋，练习留招、集火与伙伴配合。"
+			},
+			{
+				"font": 18,
+				"minimum": "(1.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3110/@Control@3115/@ScrollContainer@3120/@VBoxContainer@3121/Event_world_trial/@Label@3128",
+				"rect": [
+					39.9999961853027,
+					413.962463378906,
+					379.999969482422,
+					121.999992370605
+				],
+				"text": ""
+			},
+			{
+				"font": 18,
+				"minimum": "(1.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3110/@Control@3115/@ScrollContainer@3120/@VBoxContainer@3121/Event_world_trial/@Label@3129",
+				"rect": [
+					39.9999961853027,
+					421.962463378906,
+					293.999969482422,
+					31.9999980926514
+				],
+				"text": "◆ 行路试炼 · 重访旧地"
+			},
+			{
+				"font": 15,
+				"minimum": "(75.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3110/@Control@3115/@ScrollContainer@3120/@VBoxContainer@3121/Event_world_trial/@Label@3130",
+				"rect": [
+					327.999969482422,
+					423.962463378906,
+					99.9999923706055,
+					27.9999980926514
+				],
+				"text": "【进行中】"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 1.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3110/@Control@3115/@ScrollContainer@3120/@VBoxContainer@3121/Event_world_trial/@Label@3132",
+				"rect": [
+					39.9999961853027,
+					461.962463378906,
+					399.999969482422,
+					51.9999961853027
+				],
+				"text": "返回主世界，挑战已解锁的碑窟、水闸与矿脉附加试炼。"
+			},
+			{
+				"font": 18,
+				"minimum": "(72.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/GameHome/@Control@3110/@Control@3117/@Label@3116",
+				"rect": [
+					145.999984741211,
+					1001.99987792969,
+					187.999984741211,
+					47.9999961853027
+				],
+				"text": "返回营帐"
+			}
+		],
+		"modals": [],
+		"page": "GameHome",
+		"tick_ms": 573591
+	},
+	"id": "extra_activities",
+	"photos": [
+		{
+			"controls": [],
+			"name": "activities",
+			"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]"
+		}
+	],
+	"records": [],
+	"suite": "page"
+}

@@ -1,0 +1,289 @@
+{
+	"checks": [
+		{
+			"detail": {
+				"discarded": 0,
+				"frames": 45056,
+				"label": "normal_bgm",
+				"peak": 0.0798213705420494,
+				"rms": 0.0218787632600311,
+				"seconds": 1.02167800453515,
+				"zero_frames": 0
+			},
+			"label": "A07 native Android mix contains signal",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "A01 repeat BGM does not restart",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "A01 rapid switch ends on requested track",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "A01 stop cancels pending fade callback",
+			"ok": true
+		},
+		{
+			"detail": {
+				"discarded": 0,
+				"frames": 35840,
+				"label": "global_mute",
+				"peak": 0.0,
+				"rms": 0.0,
+				"seconds": 0.812698412698413,
+				"zero_frames": 35840
+			},
+			"label": "A02 global mute actual captured samples zero",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "A02 active effects cleared by mute",
+			"ok": true
+		},
+		{
+			"detail": {
+				"discarded": 0,
+				"frames": 35840,
+				"label": "zero_sliders",
+				"peak": 0.0,
+				"rms": 0.0,
+				"seconds": 0.812698412698413,
+				"zero_frames": 35840
+			},
+			"label": "A02 both sliders zero actual captured samples zero",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "A03 pressure does not steal victory voice",
+			"ok": true
+		},
+		{
+			"detail": 8,
+			"label": "A03 bounded voice count",
+			"ok": true
+		},
+		{
+			"detail": {
+				"discarded": 0,
+				"frames": 28672,
+				"label": "combat_pressure",
+				"peak": 0.502119421958923,
+				"rms": 0.103328282022698,
+				"seconds": 0.65015873015873,
+				"zero_frames": 0
+			},
+			"label": "A03 captured master has headroom",
+			"ok": true
+		},
+		{
+			"detail": [
+				{
+					"category": "Alerts",
+					"name": "boss_warn",
+					"time_ms": 89756
+				},
+				{
+					"category": "Alerts",
+					"name": "low_hp",
+					"time_ms": 89757
+				}
+			],
+			"label": "A03 victory can start when two lower-priority alerts occupy category",
+			"ok": false
+		},
+		{
+			"detail": [
+				{
+					"category": "UI",
+					"name": "ui_open",
+					"time_ms": 90377
+				}
+			],
+			"label": "A04 semantic feedback coalesces generic click",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "A07 Android BGM crosses loop boundary",
+			"ok": true
+		}
+	],
+	"device": {
+		"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+		"mix_rate": 44100.0,
+		"model": "Android SDK built for x86_64",
+		"os": "Android",
+		"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+		"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+		"version": "37.16571990",
+		"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+		"window": "(1080, 2400)"
+	},
+	"final": {
+		"audio": {
+			"bgm": "bgm_home",
+			"events": [
+				{
+					"category": "Combat",
+					"name": "cast_radiant",
+					"time_ms": 92445
+				},
+				{
+					"category": "Combat",
+					"name": "hit_radiant",
+					"time_ms": 92446
+				}
+			],
+			"mute": false,
+			"paused": false,
+			"playing": true,
+			"position": 1.23599994182587,
+			"suspended": false,
+			"voices": 4
+		},
+		"controls": [],
+		"device": {
+			"cutouts": "[[P: (0.0, 0.0), S: (135.0, 135.0)]]",
+			"mix_rate": 44100.0,
+			"model": "Android SDK built for x86_64",
+			"os": "Android",
+			"safe": "[P: (0.0, 59.96249), S: (480.0, 1006.037)]",
+			"system_safe": "[P: (0, 135), S: (1080, 2265)]",
+			"version": "37.16571990",
+			"viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+			"window": "(1080, 2400)"
+		},
+		"focus": "<Object#null>",
+		"keyboard_height": 0,
+		"labels": [],
+		"modals": [],
+		"page": "",
+		"tick_ms": 92578
+	},
+	"id": "audio_android",
+	"photos": [],
+	"records": [
+		{
+			"discarded": 0,
+			"frames": 45056,
+			"label": "normal_bgm",
+			"peak": 0.0798213705420494,
+			"rms": 0.0218787632600311,
+			"seconds": 1.02167800453515,
+			"zero_frames": 0
+		},
+		{
+			"discarded": 0,
+			"frames": 48128,
+			"label": "rapid_bgm",
+			"peak": 0.0750208869576454,
+			"rms": 0.0170959228109816,
+			"seconds": 1.09133786848073,
+			"zero_frames": 0
+		},
+		{
+			"discarded": 0,
+			"frames": 35840,
+			"label": "global_mute",
+			"peak": 0.0,
+			"rms": 0.0,
+			"seconds": 0.812698412698413,
+			"zero_frames": 35840
+		},
+		{
+			"discarded": 0,
+			"frames": 35840,
+			"label": "zero_sliders",
+			"peak": 0.0,
+			"rms": 0.0,
+			"seconds": 0.812698412698413,
+			"zero_frames": 35840
+		},
+		{
+			"discarded": 0,
+			"frames": 28672,
+			"label": "combat_pressure",
+			"peak": 0.502119421958923,
+			"rms": 0.103328282022698,
+			"seconds": 0.65015873015873,
+			"zero_frames": 0
+		},
+		{
+			"discarded": 0,
+			"frames": 45056,
+			"label": "bgm_loop_join",
+			"peak": 0.0951781645417213,
+			"rms": 0.0275789255733217,
+			"seconds": 1.02167800453515,
+			"zero_frames": 0
+		},
+		{
+			"events": [
+				{
+					"category": "Combat",
+					"name": "cast_blade",
+					"time_ms": 92062
+				},
+				{
+					"category": "Combat",
+					"name": "hit_blade",
+					"time_ms": 92063
+				}
+			],
+			"role": "zs"
+		},
+		{
+			"events": [
+				{
+					"category": "Combat",
+					"name": "cast_bow",
+					"time_ms": 92177
+				},
+				{
+					"category": "Combat",
+					"name": "hit_arrow",
+					"time_ms": 92178
+				}
+			],
+			"role": "ck"
+		},
+		{
+			"events": [
+				{
+					"category": "Combat",
+					"name": "cast_frost",
+					"time_ms": 92312
+				},
+				{
+					"category": "Combat",
+					"name": "hit_frost",
+					"time_ms": 92313
+				}
+			],
+			"role": "fs"
+		},
+		{
+			"events": [
+				{
+					"category": "Combat",
+					"name": "cast_radiant",
+					"time_ms": 92445
+				},
+				{
+					"category": "Combat",
+					"name": "hit_radiant",
+					"time_ms": 92446
+				}
+			],
+			"role": "fz"
+		}
+	],
+	"suite": "audio"
+}
