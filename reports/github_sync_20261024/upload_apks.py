@@ -3,13 +3,13 @@ from pathlib import Path
 import concurrent.futures as cf
 import subprocess,json,time,threading
 R=Path(r"D:\new-bee");O=R/"reports/github_sync_20261024"
-manifest=json.loads((O/"release_assets.json").read_text(encoding="utf-8"))
+manifest=json.loads((O/"delivery_assets.json").read_text(encoding="utf-8"))
 REPO=manifest["repository"];TAG=manifest["tag"];GH=r"C:\Program Files\GitHub CLI\gh.exe"
 state_path=O/"upload_staging/upload_state.json";lock=threading.Lock();states={}
 def gh(*args,timeout=3600):
     return subprocess.run([GH,*args],stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=timeout)
 def release():
-    p=gh("api","repos/"+REPO+"/releases/tags/"+TAG,timeout=90)
+    p=gh("api","repos/"+REPO+"/releases/"+str(manifest["release_id"]),timeout=90)
     if p.returncode:raise RuntimeError(p.stderr.decode(errors="replace")[-1000:])
     return json.loads(p.stdout)
 def record(name,**values):
@@ -17,7 +17,7 @@ def record(name,**values):
         states.setdefault(name,{}).update(values)
         state_path.write_text(json.dumps(states,ensure_ascii=False,indent=2),encoding="utf-8")
 def upload(row):
-    name=row["asset"];src=O/"upload_staging"/name if name=="Yuanzheng-0.2.1-mobile2-arm64.apk" else R/row["path"]
+    name=row["asset"];src=R/row["path"]
     started=time.time();record(name,state="uploading",bytes=row["bytes"],started=started)
     print("START",name,row["bytes"],flush=True)
     for attempt in range(1,4):
@@ -47,7 +47,8 @@ def upload(row):
     raise RuntimeError("Upload failed: "+name)
 def main():
     with cf.ThreadPoolExecutor(max_workers=3) as pool:
-        futures={pool.submit(upload,row):row["asset"] for row in manifest["assets"]}
+        rows=sorted(manifest["assets"],key=lambda row:row["asset"]!="Yuanzheng-0.2.1-mobile2-arm64.apk")
+        futures={pool.submit(upload,row):row["asset"] for row in rows}
         errors=[]
         for f in cf.as_completed(futures):
             try:f.result()
@@ -57,6 +58,6 @@ def main():
     if errors:
         (O/"upload_staging/upload_errors.json").write_text(json.dumps(errors,ensure_ascii=False,indent=2),encoding="utf-8")
         raise RuntimeError(str(errors))
-    print("ALL_APK_UPLOADS_VERIFIED",len(states),flush=True)
+    print("ALL_DELIVERY_UPLOADS_VERIFIED",len(states),flush=True)
 if __name__=="__main__":main()
 

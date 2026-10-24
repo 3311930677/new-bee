@@ -9,63 +9,89 @@
       "bytes": 730421584,
       "sha256": "55c209ffbd0c3774cfdc1967babfc869ba30362cb5e0c93731cd1d011f1dd56d",
       "asset": "Yuanzheng-android-audit.apk",
-      "download_url": "https://github.com/3311930677/new-bee/releases/download/workspace-sync-20261024/Yuanzheng-android-audit.apk"
+      "download_url": "https://github.com/3311930677/new-bee/releases/download/workspace-sync-20261024/Yuanzheng-apk-archive-20261024.tar.zst",
+      "archive_member": "reports/android_emulator_20261024/Yuanzheng-android-audit.apk",
+      "delivery": "full archive member"
     },
     {
       "path": "reports/android_emulator_20261024/Yuanzheng-emulator.apk",
       "bytes": 730413010,
       "sha256": "ba04a487ed30c02906a7574b9ac3e0c4c7c825115f7e5c450343ff9793b9327f",
       "asset": "Yuanzheng-emulator.apk",
-      "download_url": "https://github.com/3311930677/new-bee/releases/download/workspace-sync-20261024/Yuanzheng-emulator.apk"
+      "download_url": "https://github.com/3311930677/new-bee/releases/download/workspace-sync-20261024/Yuanzheng-apk-archive-20261024.tar.zst",
+      "archive_member": "reports/android_emulator_20261024/Yuanzheng-emulator.apk",
+      "delivery": "full archive member"
     },
     {
       "path": "reports/android_full_audit_20261024/Yuanzheng-deep-audit-extended.apk",
       "bytes": 730446550,
       "sha256": "c02c86d544334b9abbad51cca8558f6c258d30e8b6807d189f960eea0029c7fd",
       "asset": "Yuanzheng-deep-audit-extended.apk",
-      "download_url": "https://github.com/3311930677/new-bee/releases/download/workspace-sync-20261024/Yuanzheng-deep-audit-extended.apk"
+      "download_url": "https://github.com/3311930677/new-bee/releases/download/workspace-sync-20261024/Yuanzheng-apk-archive-20261024.tar.zst",
+      "archive_member": "reports/android_full_audit_20261024/Yuanzheng-deep-audit-extended.apk",
+      "delivery": "full archive member"
     },
     {
       "path": "reports/android_full_audit_20261024/Yuanzheng-deep-audit-final.apk",
       "bytes": 730450646,
       "sha256": "094cbb19f08505ed3cb75ea87f0163cd4a5ec4ddf515a45e9da1e3bc33b16669",
       "asset": "Yuanzheng-deep-audit-final.apk",
-      "download_url": "https://github.com/3311930677/new-bee/releases/download/workspace-sync-20261024/Yuanzheng-deep-audit-final.apk"
+      "download_url": "https://github.com/3311930677/new-bee/releases/download/workspace-sync-20261024/Yuanzheng-apk-archive-20261024.tar.zst",
+      "archive_member": "reports/android_full_audit_20261024/Yuanzheng-deep-audit-final.apk",
+      "delivery": "full archive member"
     },
     {
       "path": "reports/android_full_audit_20261024/Yuanzheng-deep-audit.apk",
       "bytes": 730446550,
       "sha256": "bce9da02c06e21465fc424709bd76d7ef4d5157a4a9fdad303ac43879bc9a3ee",
       "asset": "Yuanzheng-deep-audit.apk",
-      "download_url": "https://github.com/3311930677/new-bee/releases/download/workspace-sync-20261024/Yuanzheng-deep-audit.apk"
+      "download_url": "https://github.com/3311930677/new-bee/releases/download/workspace-sync-20261024/Yuanzheng-apk-archive-20261024.tar.zst",
+      "archive_member": "reports/android_full_audit_20261024/Yuanzheng-deep-audit.apk",
+      "delivery": "full archive member"
     },
     {
       "path": "reports/android_full_audit_20261024/Yuanzheng-full-flow.apk",
       "bytes": 730417180,
       "sha256": "dfeb4f163d3ee1b9808b2359da605a276a7854fb53e13ddadf9b3cca00aa9662",
       "asset": "Yuanzheng-full-flow.apk",
-      "download_url": "https://github.com/3311930677/new-bee/releases/download/workspace-sync-20261024/Yuanzheng-full-flow.apk"
+      "download_url": "https://github.com/3311930677/new-bee/releases/download/workspace-sync-20261024/Yuanzheng-apk-archive-20261024.tar.zst",
+      "archive_member": "reports/android_full_audit_20261024/Yuanzheng-full-flow.apk",
+      "delivery": "full archive member"
     },
     {
       "path": "reports/mobile_fixes_20261024/Yuanzheng-mobile-fixed-final.apk",
       "bytes": 727635656,
       "sha256": "1eb24fc889af6dd9f862cf48b7000f1b7490963c906105e92911c009bb31c0ac",
       "asset": "Yuanzheng-mobile-fixed-final.apk",
-      "download_url": "https://github.com/3311930677/new-bee/releases/download/workspace-sync-20261024/Yuanzheng-mobile-fixed-final.apk"
+      "download_url": "https://github.com/3311930677/new-bee/releases/download/workspace-sync-20261024/Yuanzheng-apk-archive-20261024.tar.zst",
+      "archive_member": "reports/mobile_fixes_20261024/Yuanzheng-mobile-fixed-final.apk",
+      "delivery": "full archive member"
     },
     {
       "path": "reports/mobile_rework_20261024/Yuanzheng-0.2.1-mobile2.apk",
       "bytes": 727635928,
       "sha256": "adba676c7d5abdfb613754a4029383783efafcdf46e63dd6c90ea0de23272ece",
       "asset": "Yuanzheng-0.2.1-mobile2.apk",
-      "download_url": "https://github.com/3311930677/new-bee/releases/download/workspace-sync-20261024/Yuanzheng-0.2.1-mobile2.apk"
+      "download_url": "https://github.com/3311930677/new-bee/releases/download/workspace-sync-20261024/Yuanzheng-apk-archive-20261024.tar.zst",
+      "archive_member": "reports/mobile_rework_20261024/Yuanzheng-0.2.1-mobile2.apk",
+      "delivery": "full archive member"
     },
     {
       "path": "远征/exports/android/Yuanzheng-0.2.1-mobile2.apk",
       "bytes": 727636002,
       "sha256": "a4a4f426ef96792bf503bbcfc1dd6d5cc21f0b97f845a1aafccc8432fa12b373",
       "asset": "Yuanzheng-0.2.1-mobile2-arm64.apk",
-      "download_url": "https://github.com/3311930677/new-bee/releases/download/workspace-sync-20261024/Yuanzheng-0.2.1-mobile2-arm64.apk"
+      "download_url": "https://github.com/3311930677/new-bee/releases/download/workspace-sync-20261024/Yuanzheng-0.2.1-mobile2-arm64.apk",
+      "archive_member": "远征/exports/android/Yuanzheng-0.2.1-mobile2.apk",
+      "delivery": "standalone APK and full archive"
     }
-  ]
+  ],
+  "archive": {
+    "archive": "Yuanzheng-apk-archive-20261024.tar.zst",
+    "bytes": 890685112,
+    "sha256": "2a42140105a4c4f1698b2bb715af4b3dd0f79d77d217818deee4c101031ec8b8",
+    "format": "standard tar with Zstandard compression, 1 GiB window",
+    "download_url": "https://github.com/3311930677/new-bee/releases/download/workspace-sync-20261024/Yuanzheng-apk-archive-20261024.tar.zst",
+    "contains": "all 9 APKs at original relative paths plus available idsig sidecars"
+  }
 }

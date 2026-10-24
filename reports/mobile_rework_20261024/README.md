@@ -4,7 +4,7 @@
 
 后续已配置 Android 17 模拟器并实际运行，记录见[Android模拟器复验](../android_emulator_20261024/README.md)。下文“未连接Android”的限制描述对应此候选包交付当时，后续结果以复验记录为准；不能将后续模拟器测试扩大为用户手机通过。
 
-安装包：[Yuanzheng-0.2.1-mobile2.apk](https://github.com/3311930677/new-bee/releases/download/workspace-sync-20261024/Yuanzheng-0.2.1-mobile2.apk)。包名 `org.yuanzheng.singleplayer`，versionCode 3，versionName `0.2.1-mobile2`，调试签名、ARM64，最低SDK 24、目标SDK 36。未执行卸载、清档或修改存档规则。
+安装包：[Yuanzheng-0.2.1-mobile2.apk](https://github.com/3311930677/new-bee/releases/download/workspace-sync-20261024/Yuanzheng-apk-archive-20261024.tar.zst)。包名 `org.yuanzheng.singleplayer`，versionCode 3，versionName `0.2.1-mobile2`，调试签名、ARM64，最低SDK 24、目标SDK 36。未执行卸载、清档或修改存档规则。
 
 ## 本轮实际返工
 
@@ -43,3 +43,6 @@
 仍未关闭：用户手机上的实际缺图原因、系统栏/圆角/切后台行为、图标实际桌面效果、骑乘真实动态观感，以及音频的外放、耳机和蓝牙主观听感。当前没有连接Android设备；“安卓手机最新版本”不足以判定具体系统版本、分辨率或厂商行为，因此保留这些未知项。下一次实际反馈可直接粘贴设置中的设备与显示信息，并对照新版版本号及页面截图定位差异。
 
 完整清单M01至M10、A01至A07维持“重新验收中”；不能因为本轮页面和机制检查通过，再次写成“全部修复”。
+
+
+历史构建下载说明：上述安装包包含于完整APK归档，解压后按本目录相对路径取得原文件；当前手机包请见全量同步清单。归档内全部9份APK已逐一验证SHA-256。

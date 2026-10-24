@@ -1,0 +1,52 @@
+{
+  "repository": "3311930677/new-bee",
+  "release_tag": "workspace-sync-20261024",
+  "release_id": 422468629,
+  "all_six_assets_size_and_sha256_match": true,
+  "archive_apk_payloads": 9,
+  "assets": [
+    {
+      "name": "Yuanzheng-0.2.1-mobile2-arm64.apk",
+      "bytes": 727636002,
+      "sha256": "a4a4f426ef96792bf503bbcfc1dd6d5cc21f0b97f845a1aafccc8432fa12b373",
+      "remote_sha256_matches": true,
+      "asset_id": 671060065
+    },
+    {
+      "name": "Yuanzheng-apk-archive-20261024.tar.zst",
+      "bytes": 890685112,
+      "sha256": "2a42140105a4c4f1698b2bb715af4b3dd0f79d77d217818deee4c101031ec8b8",
+      "remote_sha256_matches": true,
+      "asset_id": 671070696
+    },
+    {
+      "name": "release_assets.json",
+      "bytes": 5540,
+      "sha256": "6ac2f7622c96fdee23adc3f4eeb129a6f73c84f0e9dbc2cbf1355a0e94ee39a1",
+      "remote_sha256_matches": true,
+      "asset_id": 671075296
+    },
+    {
+      "name": "SHA256SUMS.txt",
+      "bytes": 863,
+      "sha256": "11f93b6d9aae998f89dbe3386730f383ca92dc765c5f3a09affbbd19568fa2ea",
+      "remote_sha256_matches": true,
+      "asset_id": 671054724
+    },
+    {
+      "name": "ARCHIVE_SHA256SUMS.txt",
+      "bytes": 106,
+      "sha256": "8c8cecaf2623426005b1c4d1fbde267925e4216e9e97ced794dcddb29a029837",
+      "remote_sha256_matches": true,
+      "asset_id": 671075295
+    },
+    {
+      "name": "apk_archive_verification.json",
+      "bytes": 932,
+      "sha256": "de5ab1698fc50bdacb90199b0592f70bf8c24486fb11de32f2fac1cb72366fb5",
+      "remote_sha256_matches": true,
+      "asset_id": 671075297
+    }
+  ],
+  "verified_at_utc": "2026-10-24T02:48:17.884505+00:00"
+}
