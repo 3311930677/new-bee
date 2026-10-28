@@ -1,0 +1,132 @@
+{
+  "checks": 364,
+  "failures": 0,
+  "maps": [
+    {
+      "flags": "initial",
+      "id": "lorin_wilds_initial",
+      "rendered": true
+    },
+    {
+      "flags": "initial",
+      "id": "maple_road_initial",
+      "rendered": true
+    },
+    {
+      "flags": "initial",
+      "id": "broken_slope_initial",
+      "rendered": true
+    },
+    {
+      "flags": "initial",
+      "id": "old_salt_road_initial",
+      "rendered": true
+    },
+    {
+      "flags": "initial",
+      "id": "shenyuan_port_initial",
+      "rendered": true
+    },
+    {
+      "flags": "initial",
+      "id": "tideflat_initial",
+      "rendered": true
+    },
+    {
+      "flags": "initial",
+      "id": "tidal_gate_initial",
+      "rendered": true
+    },
+    {
+      "flags": "initial",
+      "id": "stele_cavern_initial",
+      "rendered": true
+    },
+    {
+      "flags": "initial",
+      "id": "red_sand_route_initial",
+      "rendered": true
+    },
+    {
+      "flags": "initial",
+      "id": "frost_post_initial",
+      "rendered": true
+    },
+    {
+      "flags": "initial",
+      "id": "rift_mine_road_initial",
+      "rendered": true
+    },
+    {
+      "flags": "initial",
+      "id": "rift_mine_vault_initial",
+      "rendered": true
+    },
+    {
+      "flags": "initial",
+      "id": "frost_pass_initial",
+      "rendered": true
+    },
+    {
+      "flags": "initial",
+      "id": "frost_boardwalk_initial",
+      "rendered": true
+    },
+    {
+      "flags": "initial",
+      "id": "abyss_ring_initial",
+      "rendered": true
+    },
+    {
+      "flags": "initial",
+      "id": "stele_entry_initial",
+      "rendered": true
+    },
+    {
+      "flags": "initial",
+      "id": "stele_resonance_initial",
+      "rendered": true
+    },
+    {
+      "flags": "initial",
+      "id": "stele_core_initial",
+      "rendered": true
+    },
+    {
+      "flags": "completed",
+      "id": "stele_cavern_completed",
+      "rendered": true
+    },
+    {
+      "flags": "completed",
+      "id": "tidal_gate_completed",
+      "rendered": true
+    },
+    {
+      "flags": "completed",
+      "id": "rift_mine_vault_completed",
+      "rendered": true
+    },
+    {
+      "flags": "completed",
+      "id": "stele_entry_completed",
+      "rendered": true
+    },
+    {
+      "flags": "completed",
+      "id": "stele_resonance_completed",
+      "rendered": true
+    },
+    {
+      "flags": "completed",
+      "id": "stele_core_completed",
+      "rendered": true
+    },
+    {
+      "flags": "completed",
+      "id": "shenyuan_port_completed",
+      "rendered": true
+    }
+  ],
+  "textures": 49
+}

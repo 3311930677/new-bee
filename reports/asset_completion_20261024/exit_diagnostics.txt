@@ -1,0 +1,19 @@
+Observed in process stdout/stderr during earlier verification runs.
+The Godot log-file output does not include these late shutdown diagnostics.
+
+Asset verification console (earlier run):
+ASSET_COMPLETION_OK checks=359 failures=0 textures=49 map_cases=25
+WARNING: 4 ObjectDB instances were leaked at exit (run with --verbose for details).
+  at: cleanup (core/object/object.cpp:2536)
+
+Inventory verification console:
+INVENTORY_UI_OK checks=450 failures=0
+WARNING: 4 ObjectDB instances were leaked at exit (run with --verbose for details).
+  at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+  at: clear (core/io/resource.cpp:822)
+
+The final completed render run reported:
+ASSET_COMPLETION_OK checks=364 failures=0 textures=49 map_cases=25
+
+The source of the shutdown lifetime diagnostics was not investigated in this asset completion task.

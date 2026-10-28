@@ -1,0 +1,348 @@
+{
+  "generated_static_assets": 33,
+  "equipment": 6,
+  "quest_item_bitmaps": 7,
+  "quest_item_ids": 9,
+  "home_icons": 6,
+  "world_assets": 14,
+  "loaded_texture_keys": 49,
+  "render_checks": 364,
+  "render_failures": 0,
+  "map_builds": 18,
+  "map_state_cases": 25,
+  "inventory_checks": 450,
+  "inventory_failures": 0,
+  "platform": "Windows Godot 4.7.2 OpenGL Compatibility",
+  "files": [
+    {
+      "id": "tpl_sword_starfall",
+      "path": "assets/completion_20261024/ready/equipment/tpl_sword_starfall.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 3758,
+      "sha256": "fbb5a74c6f6787bd2da3e235eead600500ae0547847f0fc5d94ab9b603f01d1f"
+    },
+    {
+      "id": "tpl_spear_windpiercer",
+      "path": "assets/completion_20261024/ready/equipment/tpl_spear_windpiercer.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 2013,
+      "sha256": "52a28b0b9be2ef11e4bd3625dcc4a1eeed1e7c469dd8a5a7a332b5ee82ed8032"
+    },
+    {
+      "id": "tpl_staff_glacierheart",
+      "path": "assets/completion_20261024/ready/equipment/tpl_staff_glacierheart.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 3048,
+      "sha256": "a4213d8bfaf585e5e589f2293129774083764d50984df79c5e43b09b1786b996"
+    },
+    {
+      "id": "tpl_hammer_dawnlight",
+      "path": "assets/completion_20261024/ready/equipment/tpl_hammer_dawnlight.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 4073,
+      "sha256": "df880d3c5ac6b7b05bca0f569dde71607fc07dc4851733fc38a75019a2e04caf"
+    },
+    {
+      "id": "tpl_armor_expedition",
+      "path": "assets/completion_20261024/ready/equipment/tpl_armor_expedition.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 9367,
+      "sha256": "d02975a3641eea3af0c33c60da5dd2f4dd79fad699ed0a46fdf41a6a7baaacaa"
+    },
+    {
+      "id": "tpl_acc_archery_ring",
+      "path": "assets/completion_20261024/ready/equipment/tpl_acc_archery_ring.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 8527,
+      "sha256": "d6644deee3f2d36b5a9906d711707da32b36a14e3f86a441d3b734f5a22cce78"
+    },
+    {
+      "id": "rune_dais",
+      "path": "assets/completion_20261024/ready/world/rune_dais.png",
+      "size": [
+        252,
+        185
+      ],
+      "bytes": 110378,
+      "sha256": "f760e65f2d898fd19bf0e6101763f0582d26f6cc067021860386a3a9dbf5af47"
+    },
+    {
+      "id": "rune_channel",
+      "path": "assets/completion_20261024/ready/world/rune_channel.png",
+      "size": [
+        124,
+        19
+      ],
+      "bytes": 7026,
+      "sha256": "af583ef32a8a1717bd40222e868b9eb7235c92f4d0b80205f67aec3e68677a88"
+    },
+    {
+      "id": "salt_trace",
+      "path": "assets/completion_20261024/ready/world/salt_trace.png",
+      "size": [
+        124,
+        64
+      ],
+      "bytes": 21723,
+      "sha256": "5aacfc1d79da1f2b18fc083ad877e53d5df3d1e1bfbc7f813be1f295969d72de"
+    },
+    {
+      "id": "itm_frost_letter",
+      "path": "assets/completion_20261024/ready/items/itm_frost_letter.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 6349,
+      "sha256": "a20ed66f9037ebc9e20d277471b65925725f6c8ee1a367ebed5b9060c767a528"
+    },
+    {
+      "id": "itm_mine_record",
+      "path": "assets/completion_20261024/ready/items/itm_mine_record.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 6868,
+      "sha256": "6333d1997a3fa3e15ea458f16190f0fc7df38e1808b7080ed24e218252b4204e"
+    },
+    {
+      "id": "itm_gate_stamp",
+      "path": "assets/completion_20261024/ready/items/itm_gate_stamp.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 7958,
+      "sha256": "1743f75a97fd940a7a919a363a869526753aa7b60dca47880fc0cc287fe9a811"
+    },
+    {
+      "id": "itm_frost_reply",
+      "path": "assets/completion_20261024/ready/items/itm_frost_reply.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 5821,
+      "sha256": "74227e9c1182185eb09181c9f0817424d2937a2915269af6678b9f31a1b6bd51"
+    },
+    {
+      "id": "itm_veil_seal",
+      "path": "assets/completion_20261024/ready/items/itm_veil_seal.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 7483,
+      "sha256": "a6b189a069537fe4e8efbc7111ab5332b5d201fcf4fa749a1b91de361088191e"
+    },
+    {
+      "id": "itm_frost_nameplate",
+      "path": "assets/completion_20261024/ready/items/itm_frost_nameplate.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 6224,
+      "sha256": "5d06c96800bb4072ffa0f9863595790ba7d100f465e7cc17481d46740a253109"
+    },
+    {
+      "id": "itm_frost_parcel",
+      "path": "assets/completion_20261024/ready/items/itm_frost_parcel.png",
+      "size": [
+        64,
+        64
+      ],
+      "bytes": 7524,
+      "sha256": "37e5140e565aabcce2d276312fefebce263abd5a37d39fe50af430e9e706aba8"
+    },
+    {
+      "id": "home_coin",
+      "path": "assets/completion_20261024/ready/home/home_coin.png",
+      "size": [
+        32,
+        32
+      ],
+      "bytes": 1923,
+      "sha256": "f3e996abd22c605b98ecbdb2617fd7c4af1d1eaede3769eb630a02a7025c723d"
+    },
+    {
+      "id": "home_expedition",
+      "path": "assets/completion_20261024/ready/home/home_expedition.png",
+      "size": [
+        32,
+        32
+      ],
+      "bytes": 1913,
+      "sha256": "db66df4e81da49877e4356f58e93ca4051b6df64163c07d7bf5e8136bf0951b1"
+    },
+    {
+      "id": "home_soul",
+      "path": "assets/completion_20261024/ready/home/home_soul.png",
+      "size": [
+        32,
+        32
+      ],
+      "bytes": 1290,
+      "sha256": "5917dba9f17c879bddd236656b57c62532341055a88d4f4c2e4b3ca7f768a27f"
+    },
+    {
+      "id": "home_honor",
+      "path": "assets/completion_20261024/ready/home/home_honor.png",
+      "size": [
+        32,
+        32
+      ],
+      "bytes": 1802,
+      "sha256": "c74f63fe8bedb54b41be835224ee64a40c6dbde42ef24f54a0a8aba2e6d2614a"
+    },
+    {
+      "id": "home_bag",
+      "path": "assets/completion_20261024/ready/home/home_bag.png",
+      "size": [
+        32,
+        32
+      ],
+      "bytes": 2097,
+      "sha256": "61a670df7f6cc409897cef9eacfb870f5dd71b672992ee7ec39dee7b2c5fa67c"
+    },
+    {
+      "id": "home_food",
+      "path": "assets/completion_20261024/ready/home/home_food.png",
+      "size": [
+        32,
+        32
+      ],
+      "bytes": 1884,
+      "sha256": "70c7bef40c93e3e8ba1b83534f9aaa7c5b0cbee00b9d7ddae144560871dde6f5"
+    },
+    {
+      "id": "beast_tracks",
+      "path": "assets/completion_20261024/ready/world/beast_tracks.png",
+      "size": [
+        124,
+        117
+      ],
+      "bytes": 33268,
+      "sha256": "8d031d6087c9b156a73bd8fca122459c58912444dcea30ec4a10bfcc915ed00f"
+    },
+    {
+      "id": "boot_tracks",
+      "path": "assets/completion_20261024/ready/world/boot_tracks.png",
+      "size": [
+        98,
+        124
+      ],
+      "bytes": 25291,
+      "sha256": "86fb68900334196371bd9f9b8a063a6c1c992cb6b0e0fb9882f2b7b8cdb6b464"
+    },
+    {
+      "id": "ground_fissure",
+      "path": "assets/completion_20261024/ready/world/ground_fissure.png",
+      "size": [
+        124,
+        103
+      ],
+      "bytes": 25562,
+      "sha256": "07a22e4fc8beb4e4540e4dbe72b07f78c3d9cc1a8b9d7565ef5f46104a28997a"
+    },
+    {
+      "id": "ground_scuff",
+      "path": "assets/completion_20261024/ready/world/ground_scuff.png",
+      "size": [
+        124,
+        80
+      ],
+      "bytes": 23374,
+      "sha256": "f788138c8ad7b2ceddd5b7274a69930ef7f5ad7bdc90c249d672a16af6da6ec7"
+    },
+    {
+      "id": "work_helmet",
+      "path": "assets/completion_20261024/ready/world/work_helmet.png",
+      "size": [
+        124,
+        83
+      ],
+      "bytes": 22571,
+      "sha256": "87bb89414d320aed3349293be053dde1b47c4c7bfc6fe466bc0e90f66a0afd94"
+    },
+    {
+      "id": "mine_wheel",
+      "path": "assets/completion_20261024/ready/world/mine_wheel.png",
+      "size": [
+        124,
+        122
+      ],
+      "bytes": 36634,
+      "sha256": "1632582a1130631d1ca696bcc933349c8f895994c801578686548072fdfa76e2"
+    },
+    {
+      "id": "turtle_tracks",
+      "path": "assets/completion_20261024/ready/world/turtle_tracks.png",
+      "size": [
+        100,
+        124
+      ],
+      "bytes": 26093,
+      "sha256": "9cc404d80705c562a53e74b29328cc31a2c8516d755f71fde4cc78e8cc58eeb5"
+    },
+    {
+      "id": "rubbing_page",
+      "path": "assets/completion_20261024/ready/world/rubbing_page.png",
+      "size": [
+        124,
+        113
+      ],
+      "bytes": 35690,
+      "sha256": "26b61fed8dbe46dee2c2168e90ae13cd6b2cad103c7d5d900da121f93901095a"
+    },
+    {
+      "id": "shallow_flood",
+      "path": "assets/completion_20261024/ready/world/shallow_flood.png",
+      "size": [
+        124,
+        32
+      ],
+      "bytes": 9862,
+      "sha256": "cfd416d978abdd17667ab592724aa0b34197baf0474f1304064be0706be009e5"
+    },
+    {
+      "id": "supply_sack",
+      "path": "assets/completion_20261024/ready/world/supply_sack.png",
+      "size": [
+        111,
+        124
+      ],
+      "bytes": 31638,
+      "sha256": "b3e901a249f6863e3f877eed108ff3463a658b244a95be1abb90f7f7ca7afccd"
+    },
+    {
+      "id": "cargo_tag",
+      "path": "assets/completion_20261024/ready/world/cargo_tag.png",
+      "size": [
+        124,
+        75
+      ],
+      "bytes": 15110,
+      "sha256": "94af7591c94c2b556917ef0ca45712fbedd00b35019a689227dc4bcad1f50dea"
+    }
+  ]
+}
