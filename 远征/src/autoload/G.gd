@@ -85,10 +85,15 @@ var font_serif: FontFile
 var font_art: FontFile
 var font_display: FontFile
 
-# 字号阶梯（统一收敛，禁止随手调参；层间比例 15/17/18/24/28/56）
+# Shared type sizes for dense phone cards, reading forms and page headings.
+const FS_DENSE := 13
+const FS_TINY := 14
 const FS_XS := 15    # 角标 / 最小辅助
+const FS_CAPTION := 16
 const FS_SM := 17    # 提示 / 描述文字
 const FS_MD := 18    # 按钮 / 输入框 / 正文
+const FS_READING := 20
+const FS_SECTION := 22
 const FS_LG := 24    # 面板标题 / 特写字段（角色名）
 const FS_BIG := 28   # 木匾 / 区块标题
 const FS_HERO := 56  # 主界面大标题
@@ -179,14 +184,15 @@ func grant_item(id: String, n: int, persist := true) -> void:
 
 ## 消耗道具：不足则不动并返回 false
 func consume_item(id: String, n: int) -> bool:
-	if item_count(id) < n:
-		return false
+	if save_locked or n < 0 or item_count(id) < n: return false
+	if n == 0: return true
+	var before := items.duplicate(true)
 	items[id] = item_count(id) - n
-	save_game()
-	return true
+	if save_game(): return true
+	items = before
+	return false
 
 
-## 战斗掉落掷表（data/drops.json，按档位）；返回 [{item, n}]
 func roll_drops(tier: String) -> Array:
 	var rows: Variant = TableCache.drops_config().get("drops", {})
 	if not (rows is Dictionary):
@@ -224,6 +230,7 @@ var prog := {
 	"world_cleared": {},        # theme_id -> true（已通关该世界）
 	"pets": [],                 # 已收集宠物 id；岩龟在第一幕 s04 后于兽栏领取
 	"main_world": {"map_id": "lorin_wilds"},
+	"map_destination": "",
 	"story": {"step": "s01", "done": [], "goals": {}},
 	"ledger": {"applied": []},  # P02：已结算事务 ID（同一事务只落地一次）
 	"flags": {},                # P02：世界旗标（事务副作用）
@@ -254,7 +261,7 @@ var quest := {
 
 # ---------- GM 开发者控制台 ----------
 # F10 / ` 唤起；输入口令后解锁全部内容与满级，仅供调试。解锁态只存本次运行，不落盘。
-const GM_PASSWORD := "@tsz20060706"
+## 调试口令仅从进程环境读取，正式导出不启用 GM。
 # ---------- 音频设置（音量 0~1，存进存档；Audio 自动加载器读它）----------
 var audio := {"bgm": 0.7, "sfx": 0.8, "mute": false}
 
@@ -471,7 +478,7 @@ func json_parse_silent(text: String) -> Variant:
 	return j.data
 
 
-## 读档：恢复钱包与角色档案（无存档/坏档保持默认，不报错弹窗——挫败感克制）
+## 读档：无存档使用默认值；坏档先恢复备份，无可用备份则锁写并提示恢复。
 ##
 ## 版本闸门 / 逐版迁移 / 语义校验都收在 SaveData（问题 #39）；未来时间水位也在那里判（#24）。
 ## 未来版本的档不能"只用默认值顶着"——那等于静默覆盖玩家进度，所以先备份原档再按兼容方式读。
@@ -485,9 +492,12 @@ func _load_save() -> void:
 	if source == "none":
 		return
 	if source == "unreadable":
-		# 主档在，但连 JSON 都解析不了：不改写内存、不锁写（保持"坏档不静默覆盖玩家真档"的既有语义），
-		# 把判断权交回玩家 / 工具。
-		push_warning("存档解析失败，沿用默认状态（原档保持不动）")
+		# 无可用恢复源时锁定写盘，防止默认状态覆盖损坏的唯一主档。
+		save_backup_path = SaveData.backup_file(SAVE_PATH, now)
+		save_locked = true
+		save_lock_reason = "存档 JSON 无法解析，已保留原档，请从备份恢复或显式重置"
+		last_load_report = {"ok": false, "mode": "invalid", "err": save_lock_reason}
+		push_warning(save_lock_reason)
 		return
 	if source != "main":
 		# 从残档 / 备份恢复：把内容写回主档，让"主档缺失"被真正修好，而不是每次启动都从备份捞。
@@ -574,6 +584,8 @@ func _load_save() -> void:
 		prog["ledger"] = RewardLedger.ensure(lg if lg is Dictionary else {"applied": []})
 		var flg: Variant = pd.get("flags", {})
 		prog["flags"] = flg if flg is Dictionary else {}
+		var map_destination: Variant = pd.get("map_destination", "")
+		prog["map_destination"] = map_destination if map_destination is String else ""
 		# P05：第一幕状态（repair_method / side_quests / tracked / discoveries / first_kills）。
 		# 读档白名单此前漏了 act1，会让修碑选择与支线进度在读档后静默丢失——这里补上，
 		# 缺键由 act1_state() 懒归一兜底（不预写默认，避免把"没做过"写成"做过了"）。
@@ -687,6 +699,7 @@ func _init_state_defaults() -> void:
 	items = {"ticket_ten": 0, "ticket_sweep": 1}
 	prog = {"level": 1, "exp": 0, "worlds_unlocked": 1, "world_cleared": {}, "pets": [],
 		"main_world": {"map_id": "lorin_wilds"},
+	"map_destination": "",
 		"story": {"step": "s01", "done": [], "goals": {}},
 		"ledger": {"applied": []}, "flags": {},
 		"inventory": {"instances": [], "pending": [], "next_uid": 1},
@@ -771,6 +784,26 @@ func save_game() -> bool:
 # 药剂本来是固定 2 瓶（开局给），玩家没有任何"为这趟远征投资"的决策；
 # 加带补给把金币变成一次可选的战前取舍：多带一瓶 = 多一次容错，但要花钱。
 
+## 将扣费、奖励与进度合为一次写盘；任何失败恢复整笔操作前的内存。
+func saved_mutation(action: Callable) -> Dictionary:
+	if save_locked: return {"ok": false, "err": "存档暂不可写"}
+	var before := {"wallet": wallet.duplicate(true), "items": items.duplicate(true),
+		"prog": prog.duplicate(true), "city": city.duplicate(true),
+		"quest": quest.duplicate(true), "arena": arena.duplicate(true)}
+	_save_batch_depth += 1
+	var outcome: Dictionary = action.call()
+	_save_batch_depth -= 1
+	if not bool(outcome.get("ok", false)) or not save_game():
+		wallet = before.wallet
+		items = before.items
+		prog = before.prog
+		city = before.city
+		quest = before.quest
+		arena = before.arena
+		return outcome if not bool(outcome.get("ok", false)) else {"ok": false, "err": "保存失败，本次操作已回滚"}
+	return outcome
+
+
 func run_cfg() -> Dictionary:
 	var c: Variant = TableCache.nodes_config().get("run", {})
 	return c if c is Dictionary else {}
@@ -803,6 +836,10 @@ func run_supply_price(bought: int) -> int:
 ## 超上限 / 单价未配置 / 余额不足 → 整单拒绝（不做部分发放），成功才扣款落盘。
 ## 返回 { ok, err, total }
 func buy_run_supply_pack(extra: int) -> Dictionary:
+	return saved_mutation(func(): return _uncommitted_buy_run_supply_pack(extra))
+
+
+func _uncommitted_buy_run_supply_pack(extra: int) -> Dictionary:
 	if extra <= 0:
 		return {"ok": true, "err": "", "total": 0}
 	var room := run_potions_max() - run_potions_base()
@@ -824,14 +861,11 @@ func buy_run_supply_pack(extra: int) -> Dictionary:
 
 ## 局结算入账（战败亦保留——失败无惩罚）并落盘
 func deposit(gold: int, expedition: int, soul: int, honor := 0) -> void:
-	wallet["gold"] = int(wallet.get("gold", 0)) + gold
-	wallet["expedition"] = int(wallet.get("expedition", 0)) + expedition
-	wallet["soul"] = int(wallet.get("soul", 0)) + soul
-	wallet["honor"] = int(wallet.get("honor", 0)) + honor
-	save_game()
+	saved_mutation(func():
+		for pair in [["gold", gold], ["expedition", expedition], ["soul", soul], ["honor", honor]]:
+			wallet[pair[0]] = maxi(0, int(wallet.get(pair[0], 0))) + maxi(0, int(pair[1]))
+		return {"ok": true})
 
-
-# ================= 养成进度 =================
 
 func level_cap() -> int:
 	return int(TableCache.growth().get("level_cap", 60))
@@ -2564,6 +2598,13 @@ func cleared_world_count() -> int:
 ## 扫荡已通关世界：消耗 1 张扫荡券，按 nodes.json 标准路线（3 遭遇 + 首领）的
 ## rewards × sweep_yield 折算一键入账；未通关 / 券不足返回空字典（不动存档）
 func sweep_world(theme_id: String) -> Dictionary:
+	var outcome := saved_mutation(func():
+		var gains := _uncommitted_sweep_world(theme_id)
+		return {"ok": not gains.is_empty(), "gains": gains})
+	return outcome.get("gains", {}) if outcome.ok else {}
+
+
+func _uncommitted_sweep_world(theme_id: String) -> Dictionary:
 	if not is_world_cleared(theme_id):
 		return {}
 	var nodes_cfg: Dictionary = TableCache.nodes_config()
@@ -3033,7 +3074,7 @@ func claim_waystone_cache(persist := true) -> Dictionary:
 		wallet = before_wallet
 		items = before_items
 		return {"ok": false, "reason": "save_failed", "toasts": []}
-	if persist: present_reward("石匣启封","强化石 ×1 · 金币 +30")
+	if persist: present_reward("石匣启封","精炼石 ×1 · 金币 +30")
 	return {"ok": true, "reason": "", "toasts": [
 		"旧路石匣：箱盖内刻着断碑坡方位",
 		"获得 精炼石 ×1 · 金币 +30",
@@ -3239,15 +3280,13 @@ func city_name() -> String:
 	return String(city_config().get("name", "远征主城"))
 
 
-## 当前时间（unix 秒；**单调**：系统时钟被回拨时取存档水位，日常进度不重放，P1-13）。
-## 前跳不设防（离线单机可接受）；水位随存档落盘。
+## 会话开始时对齐系统时间与存档水位，此后仅按单调计时推进。
+## 运行中拨快/回拨系统时间不会跳过冷却；重启异常水位仍由 SaveData 保留原档并保护。
+var _session_clock := preload("res://src/world/SessionClock.gd").new()
+
 func now_ts() -> int:
-	var t := int(Time.get_unix_time_from_system())
-	var last := int(prog.get("last_ts", 0))
-	if t < last:
-		return last
-	if t != last:
-		prog["last_ts"] = t
+	var t := _session_clock.now(int(Time.get_unix_time_from_system()), Time.get_ticks_msec(), int(prog.get("last_ts", 0)))
+	prog["last_ts"] = t
 	return t
 
 
@@ -3380,17 +3419,18 @@ func can_build(id: String) -> bool:
 
 ## 建造：扣资源 → 落成 → 落盘；返回是否成功
 func build(id: String) -> bool:
-	if not can_build(id):
-		return false
-	pay_cost(city_building(id).get("cost", {}))
-	var arr: Array = city.get("built", [])
-	arr.append(id)
-	city["built"] = arr
-	if save_game(): present_reward("新建筑落成",String(city_building(id).get("name",id)),"unlock")
+	var outcome := saved_mutation(func():
+		if not can_build(id): return {"ok": false}
+		pay_cost(city_building(id).get("cost", {}))
+		var arr: Array = city.get("built", [])
+		arr.append(id)
+		city["built"] = arr
+		return {"ok": true})
+	if not outcome.ok: return false
+	present_reward("新建筑落成", String(city_building(id).get("name", id)), "unlock")
 	return true
 
 
-## 建筑状态文案（布告板按钮用）：已落成 / 可建造 / 等级不足 / 资源不足 / 尚未开放
 func build_state(id: String) -> String:
 	var b := city_building(id)
 	if b.is_empty():
@@ -3542,6 +3582,12 @@ func reward_lines(reward: Dictionary) -> Array:
 ## 领取活动：校验 → 扣消耗 → 结算签到连击 → 发奖 → 落盘。
 ## 返回 { ok, name, lines, err }；调用方直接把 lines 丢给 toast。
 func do_activity(id: String) -> Dictionary:
+	var outcome := saved_mutation(func(): return _uncommitted_do_activity(id))
+	if outcome.ok: present_reward("收获入囊", String(outcome.get("name", "")))
+	return outcome
+
+
+func _uncommitted_do_activity(id: String) -> Dictionary:
 	var a := city_activity(id)
 	if a.is_empty():
 		return {"ok": false, "err": "没有这项活动"}
@@ -3574,7 +3620,6 @@ func do_activity(id: String) -> Dictionary:
 	city["acts"] = acts
 	var committed := save_game()
 	lines.append_array(reward_lines(reward))
-	if committed: present_reward("收获入囊",String(a.get("name","")))
 	return {"ok": true, "name": String(a.get("name", "")), "lines": lines}
 
 
@@ -3656,7 +3701,7 @@ func item_icon(item_id: String) -> String:
 	if item_id in ["stele_key", "stable_seal"]: return "itm_gate_stamp"
 	if item_id == "stele_record": return "itm_mine_record"
 	if item_id in ["fish_salt", "fish_port", "fish_tide", "fish_frost"]:
-		return "itm_fish_common"
+		return "itm_"+item_id
 	if item_id.begins_with("gem_"):
 		return item_id
 	if item_id.begins_with("trade_"):
@@ -3675,6 +3720,14 @@ func talents_cfg() -> Dictionary:
 func talent_points_total() -> int:
 	var per := int(talents_cfg().get("points_per_levels", 5))
 	return int(prog.get("level", 1)) / maxi(1, per)
+
+
+## 重新分配只清除已投点，不改变可用点总量；失败时保留原配置。
+func talent_reset() -> Dictionary:
+	return saved_mutation(func():
+		if talent_points_spent() <= 0: return {"ok": false, "err": "尚未分配天赋点"}
+		prog["talents"] = {}
+		return {"ok": true})
 
 
 func talent_points_spent() -> int:
@@ -3725,12 +3778,16 @@ func talent_can_add(node_id: String) -> bool:
 
 
 func talent_add(node_id: String) -> bool:
-	if not talent_can_add(node_id):
+	if save_locked or not talent_can_add(node_id):
 		return false
+	var before := prog.duplicate(true)
 	var tl: Dictionary = prog.get("talents", {})
 	tl[node_id] = int(tl.get(node_id, 0)) + 1
 	prog["talents"] = tl
-	if save_game(): present_reward("天赋点亮",String(talent_node(node_id).get("name",node_id)),"unlock")
+	if not save_game():
+		prog = before
+		return false
+	present_reward("天赋点亮",String(talent_node(node_id).get("name",node_id)),"unlock")
 	return true
 
 
@@ -4205,6 +4262,10 @@ func equip_socket_gem(slot_id: String, gem_id: String) -> Dictionary:
 
 ## 精炼：重洗未锁定词条（满 4 条）；每条锁定额外耗 1 锁符
 func equip_refine(slot_id: String, rng: RandomNumberGenerator = null) -> Dictionary:
+	return saved_mutation(func(): return _uncommitted_equip_refine(slot_id, rng))
+
+
+func _uncommitted_equip_refine(slot_id: String, rng: RandomNumberGenerator = null) -> Dictionary:
 	var rc: Dictionary = equip_cfg().get("refine", {})
 	var st := _equip_worn(slot_id, true)
 	if st.is_empty():
@@ -4228,6 +4289,7 @@ func equip_refine(slot_id: String, rng: RandomNumberGenerator = null) -> Diction
 	if rng == null:
 		r.randomize()
 	var pool: Array = rc.get("pool", [])
+	if pool.is_empty(): return {"ok": false, "err": "精炼词条配置为空"}
 	var count := int(rc.get("affix_count", 4))
 	while affixes.size() < count:
 		affixes.append({"stat": "", "v": 0.0, "locked": false})
@@ -4246,6 +4308,8 @@ func equip_refine(slot_id: String, rng: RandomNumberGenerator = null) -> Diction
 
 ## 切换词条锁定状态（免费，只是标记）
 func equip_toggle_lock(slot_id: String, idx: int) -> void:
+	if save_locked: return
+	var before := prog.duplicate(true)
 	var st := _equip_worn(slot_id, true)
 	if st.is_empty():
 		return
@@ -4253,7 +4317,7 @@ func equip_toggle_lock(slot_id: String, idx: int) -> void:
 	if idx >= 0 and idx < affixes.size():
 		var a := affixes[idx] as Dictionary
 		a["locked"] = not bool(a.get("locked", false))
-		save_game()
+		if not save_game(): prog = before
 
 
 ## 任意实例的加成（强化基础 + 宝石 + 精炼词条）。
@@ -4571,6 +4635,12 @@ func title_cond_met(t: Dictionary) -> bool:
 
 ## 领取称号：条件达成免费；否则按 cost 付荣誉
 func title_claim(tid: String) -> Dictionary:
+	var outcome := saved_mutation(func(): return _uncommitted_title_claim(tid))
+	if outcome.ok: present_reward("名号解锁", String(title_cfg(tid).get("name", tid)), "unlock")
+	return outcome
+
+
+func _uncommitted_title_claim(tid: String) -> Dictionary:
 	var t := title_cfg(tid)
 	if t.is_empty():
 		return {"ok": false, "err": "没有这个称号"}
@@ -4590,7 +4660,7 @@ func title_claim(tid: String) -> Dictionary:
 	if String(ts.get("active", "")).is_empty():
 		ts["active"] = tid
 	prog["titles"] = ts
-	if save_game(): present_reward("名号解锁",String(t.get("name",tid)),"unlock")
+	save_game()
 	return {"ok": true}
 
 
@@ -4599,13 +4669,15 @@ func title_active() -> String:
 
 
 func title_set_active(tid: String) -> bool:
-	if not tid.is_empty() and not title_owned(tid):
+	if save_locked or (not tid.is_empty() and not title_owned(tid)):
 		return false
+	var before := prog.duplicate(true)
 	var ts: Dictionary = prog.get("titles", {})
 	ts["active"] = tid
 	prog["titles"] = ts
-	save_game()
-	return true
+	if save_game(): return true
+	prog = before
+	return false
 
 
 # ---------- 宠物养成（升级宠物粮 / 突破晶 / 资质果） ----------
@@ -4641,6 +4713,10 @@ func pet_level(pid: String) -> int:
 
 ## 喂宠物粮：每份 +100 经验，逐级结算（不超过人物等级）
 func pet_feed(pid: String) -> Dictionary:
+	return saved_mutation(func(): return _uncommitted_pet_feed(pid))
+
+
+func _uncommitted_pet_feed(pid: String) -> Dictionary:
 	if not owns_pet(pid):
 		return {"ok": false, "err": "尚未收集"}
 	var st := pet_stat(pid)
@@ -4679,6 +4755,10 @@ func pet_break_cost(pid: String) -> Dictionary:
 
 
 func pet_break(pid: String) -> Dictionary:
+	return saved_mutation(func(): return _uncommitted_pet_break(pid))
+
+
+func _uncommitted_pet_break(pid: String) -> Dictionary:
 	if not owns_pet(pid):
 		return {"ok": false, "err": "尚未收集"}
 	var cost := pet_break_cost(pid)
@@ -4701,6 +4781,10 @@ func pet_break(pid: String) -> Dictionary:
 
 ## 资质重随：耗资质果 ×1，随机 1~5 星
 func pet_reroll_star(pid: String) -> Dictionary:
+	return saved_mutation(func(): return _uncommitted_pet_reroll_star(pid))
+
+
+func _uncommitted_pet_reroll_star(pid: String) -> Dictionary:
 	if not owns_pet(pid):
 		return {"ok": false, "err": "尚未收集"}
 	if not consume_item("aptitude_fruit", 1):
@@ -4719,6 +4803,10 @@ func pet_reroll_star(pid: String) -> Dictionary:
 ## 宠物进化（P1-3）：每只一次，全属性 +25％（由 pet_stat_mult 承接）；耗进化晶石。
 ## 数值从 pets.json 的 evolve 段读；素材换用 <pid>_evo（图鉴卡自动切换）。
 func pet_evolve(pid: String) -> Dictionary:
+	return saved_mutation(func(): return _uncommitted_pet_evolve(pid))
+
+
+func _uncommitted_pet_evolve(pid: String) -> Dictionary:
 	if not owns_pet(pid):
 		return {"ok": false, "err": "尚未结缘"}
 	var st := pet_stat(pid)
@@ -4759,6 +4847,10 @@ func pet_bond_cost(pid: String) -> Dictionary:
 
 ## 灵宠羁绊互动：消耗宠粮×1 + 金币，提升羁绊阶数（上限5阶），同时提供 +60 灵宠经验与寻宝馈赠
 func pet_bond_interact(pid: String) -> Dictionary:
+	return saved_mutation(func(): return _uncommitted_pet_bond_interact(pid))
+
+
+func _uncommitted_pet_bond_interact(pid: String) -> Dictionary:
 	if not owns_pet(pid):
 		return {"ok": false, "err": "尚未收集该灵宠"}
 	var cur := pet_bond_level(pid)
@@ -4809,7 +4901,7 @@ func pet_bond_interact(pid: String) -> Dictionary:
 
 
 ## 第三轮扩充：边城古碑四职业专属铭文共鸣（每名角色首次共鸣获赏并解锁专属称号）
-func lore_resonate(role_id := "") -> Dictionary:
+func lore_entry(role_id := "") -> Dictionary:
 	var rid := selected_role if role_id.is_empty() else role_id
 	if rid not in ["zs", "ck", "fs", "fz"]:
 		rid = "zs"
@@ -4851,7 +4943,14 @@ func lore_resonate(role_id := "") -> Dictionary:
 			],
 		},
 	}
-	var entry: Dictionary = LORE_MAP.get(rid, LORE_MAP["zs"])
+	var entry: Dictionary = LORE_MAP.get(rid, LORE_MAP["zs"]).duplicate(true)
+	entry["role_id"] = rid
+	return entry
+
+
+func lore_resonate(role_id := "") -> Dictionary:
+	var entry := lore_entry(role_id)
+	var rid := String(entry.role_id)
 	if not (prog.get("flags") is Dictionary):
 		prog["flags"] = {}
 	var flags: Dictionary = prog["flags"]
@@ -4881,6 +4980,17 @@ func lore_resonate(role_id := "") -> Dictionary:
 
 ## 第五轮扩充：边城行商古玩鉴宝（消耗金币鉴定蒙尘古物，产出高阶宝石/精炼锁符/稀有与史诗装备）
 func curio_appraise(tier_id := "common") -> Dictionary:
+	return saved_mutation(func(): return _uncommitted_curio_appraise(tier_id))
+
+
+func _uncommitted_curio_appraise(tier_id := "common") -> Dictionary:
+	if tier_id not in ["common", "rare"]: return {"ok": false, "err": "未知匣型"}
+	var day := today_key()
+	var current_flags: Dictionary = prog.get("flags", {})
+	var daily := int(current_flags.get("curio_daily_count", 0)) if String(current_flags.get("curio_day", "")) == day else 0
+	if daily >= 5: return {"ok": false, "err": "今日已鉴定 5 次，明日再来"}
+	var wait := 60 - (now_ts() - int(current_flags.get("curio_last_ts", 0)))
+	if wait > 0: return {"ok": false, "err": "请等待 %d 秒后再鉴定" % wait}
 	var is_rare := (tier_id == "rare")
 	var cost := 680 if is_rare else 260
 	if int(wallet.get("gold", 0)) < cost:
@@ -4893,7 +5003,12 @@ func curio_appraise(tier_id := "common") -> Dictionary:
 	flags["curio_appraised_count"] = cnt
 	var reward_desc := ""
 	var curio_name := ""
-	var slot := cnt % 4
+	flags["curio_day"] = day
+	flags["curio_daily_count"] = daily + 1
+	flags["curio_last_ts"] = now_ts()
+	var roll := randi_range(0, 999)
+	# 装备命中率：宝匣 1%，古匣 0.2%；其余均分材料，计数只用于称号与记录。
+	var slot: int = 2 if roll < (10 if is_rare else 2) else int([0, 1, 3][randi_range(0, 2)])
 	if is_rare:
 		match slot:
 			1:
@@ -5600,7 +5715,8 @@ func trial_goal_short() -> String:
 # ================= GM 开发者控制台 =================
 
 func gm_check_password(text: String) -> bool:
-	if text == GM_PASSWORD:
+	var password := OS.get_environment("YUANZHENG_GM_PASSWORD")
+	if OS.is_debug_build() and not save_locked and not password.is_empty() and text == password:
 		gm_unlocked = true
 		return true
 	return false
@@ -5609,6 +5725,7 @@ func gm_check_password(text: String) -> bool:
 ## 一键满配：满级 + 全解锁 + 全宠物 + 资源管够（调试用）
 ## 注意：只做「解锁」，不伪造「已通关」——两者是不同状态（通关要靠真的打掉首领）
 func gm_grant_all() -> void:
+	if not OS.is_debug_build() or save_locked: return
 	prog["level"] = level_cap()
 	prog["exp"] = 0
 	prog["worlds_unlocked"] = maxi(1, world_count())
@@ -5638,6 +5755,7 @@ func gm_grant_all() -> void:
 
 
 func gm_max_level() -> void:
+	if not OS.is_debug_build() or save_locked: return
 	prog["level"] = level_cap()
 	prog["exp"] = 0
 	save_game()
@@ -5645,6 +5763,7 @@ func gm_max_level() -> void:
 
 ## 「解锁全部世界」= 全部可出征，但不等于「已通关」：world_cleared 保持原样，等玩家自己打掉首领
 func gm_unlock_all_worlds() -> void:
+	if not OS.is_debug_build() or save_locked: return
 	prog["worlds_unlocked"] = maxi(1, world_count())
 	gm_world_open = true
 	save_game()
@@ -5659,6 +5778,7 @@ func world_gate_open() -> bool:
 
 ## 调试用：把所有世界直接标记为已通关（与「解锁」分开，便于单独验证通关态 UI）
 func gm_clear_all_worlds() -> void:
+	if not OS.is_debug_build() or save_locked: return
 	var cleared: Dictionary = prog.get("world_cleared", {})
 	for t in theme_order():
 		cleared[String(t)] = true
@@ -5668,6 +5788,7 @@ func gm_clear_all_worlds() -> void:
 
 
 func gm_unlock_all_pets() -> void:
+	if not OS.is_debug_build() or save_locked: return
 	var pets: Array = []
 	for p in TableCache.pets():
 		var pid := String((p as Dictionary).get("id", ""))
@@ -5678,12 +5799,14 @@ func gm_unlock_all_pets() -> void:
 
 
 func gm_add_currency(amount: int) -> void:
+	if not OS.is_debug_build() or save_locked: return
 	for k in wallet:
 		wallet[k] = int(wallet.get(k, 0)) + amount
 	save_game()
 
 
 func gm_reset_save() -> void:
+	if not OS.is_debug_build() or save_locked: return
 	# 完整口径（P0-4）：钱包/道具/养成/主城/委托/段位/账号资料全清；头像文件保留但不启用；
 	# 补发初始伙伴与初始建筑后落盘
 	_init_state_defaults()
@@ -5694,8 +5817,7 @@ func gm_reset_save() -> void:
 
 ## 一键全功能大满贯解锁：解锁全部等级、货币、道具、装备、灵宠进化/羁绊/协战、坐骑、称号、建筑、主世界全图、主线与支线门槛
 func gm_unlock_all_features() -> void:
-	save_locked = false
-	save_lock_reason = ""
+	if not OS.is_debug_build() or save_locked: return
 	gm_unlocked = true
 	gm_world_open = true
 	if account.strip_edges().is_empty():
@@ -6036,13 +6158,7 @@ func _build_res_index() -> void:
 	var manifest: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/resource_manifest.json"))
 	if manifest is Dictionary:
 		_res_index.merge(manifest, false)
-	# 小型任务图标采用代码原生矢量；保留 res_tex 的名称契约与纹理缓存。
-	_res_index["itm_frost_letter.png"] = "res://image/third_act/itm_frost_letter.svg"
-	_res_index["itm_mine_record.png"] = "res://image/third_act/itm_mine_record.svg"
-	_res_index["itm_return_old_letter.png"] = "res://image/third_act/itm_frost_letter.svg"
-	_res_index["itm_return_mailbag.png"] = "res://image/third_act/itm_frost_parcel.svg"
-	for id in ["gate_stamp", "frost_reply", "veil_seal", "frost_nameplate", "frost_parcel"]:
-		_res_index["itm_%s.png" % id] = "res://image/third_act/itm_%s.svg" % id
+	# Quest bitmaps are explicitly indexed in resource_manifest.json for desktop and exports.
 	for id in ["mon_redsand_guard", "mon_snowveil_lord"]:
 		_res_index[id + ".png"] = "res://image/third_act/%s.png" % id
 	_res_index["mon_frost_eye.png"] = "res://image/third_act/mon_frost_eye.svg"
@@ -6086,6 +6202,8 @@ func _scan_png_dir(dir_path: String, strip_prefix: bool) -> void:
 
 ## 按名称取完整路径（无此素材返回空串）
 func res_path(res_name: String) -> String:
+	if res_name == "sk_boss_slam": return res_path("sk_zs_lieshan")
+	if res_name == "sk_boss_summon": return res_path("fx_mount_summon")
 	var ui_path := NavigationIcons.resource_path(res_name)
 	if not ui_path.is_empty(): return ui_path
 	if res_name.begins_with("mon_") and MonsterArt.has(res_name):
@@ -6120,6 +6238,7 @@ func res_tex(res_name: String) -> Texture2D:
 	if not p.is_empty():
 		t = visual_texture(p)
 	if t != null:
+		if p.begins_with("res://assets/full_issue_fix_20261024/ready/"):t.set_meta("pixel_art",true)
 		_tex_cache[res_name] = t
 	elif not res_name.is_empty() and not has_meta("missing_texture_" + res_name):
 		set_meta("missing_texture_" + res_name, true)
@@ -6130,6 +6249,7 @@ func res_tex(res_name: String) -> Texture2D:
 func visual_texture(path: String) -> Texture2D:
 	var clean_path := path.get_base_dir()+"/refined/"+path.get_file()
 	var target := clean_path if ResourceLoader.exists(clean_path) else path
+	if (path.begins_with("res://assets/world/") or path.begins_with("res://image/main_world/")) and preload("res://src/world/WorldPresentation.gd").original_art():target=preload("res://src/world/WorldPresentation.gd").background_path(path)
 	if ResourceLoader.exists(target):
 		var res = load(target)
 		if res is Texture2D:
@@ -7577,7 +7697,8 @@ func _reading_groups(lines: Array) -> Array:
 
 
 func _reading_page(lines: Array, width: float, height: float) -> ScrollContainer:
-	var scroll := ScrollContainer.new()
+	var scroll := preload("res://src/ui/TouchScroll.gd").new()
+	scroll.follow_keyboard_focus = true
 	scroll.size = Vector2(width, height)
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	var box := VBoxContainer.new()
@@ -7628,9 +7749,10 @@ func _build_popup(anchor: Control, title: String, lines: Array, owner: Node,
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
 			close_info_popup(layer))
 
-	# 宽度 400：与所有面板同一排版基准；每行约 22 个中文（FS_SM/16px ÷ 368px 行宽）
-	const PW := 400.0
-	const LINE_W := 360.0
+	# Reflow the reading width before laying out text, rather than cropping a
+	# fixed 400px paper on narrow phones. Later inset changes fit the same card.
+	var popup_safe:=ui_safe_rect(anchor)
+	var PW:=minf(400,popup_safe.size.x-24)
 	var est := 0.0
 	for ln in lines:
 		var rows := maxi(1, int(ceil(String(ln).length() / 19.0)))
@@ -7638,12 +7760,16 @@ func _build_popup(anchor: Control, title: String, lines: Array, owner: Node,
 	var reading_groups := _reading_groups(lines)
 	var paged := choices.is_empty() and reading_groups.size() > 1
 	var content_h := 300.0 if paged else clampf(est + 12.0, 40.0, 360.0)
+	content_h=minf(content_h,maxf(80,popup_safe.size.y-146))
 	var ph := 14.0 + 34.0 + 8.0 + content_h + 12.0 + 40.0 + 14.0
 
 	var panel := parchment_box(PW, ph, 16.0)
-	var popup_view := _veil_viewport_size(anchor)
-	panel.position = Vector2((popup_view.x - PW) * 0.5, (popup_view.y - ph) * 0.5)
+	panel.name="InfoPopupPaper"
 	layer.add_child(panel)
+	var fit_popup:=func():
+		preload("res://src/ui/UiSafeArea.gd").fit_card(panel,ui_safe_rect(dim),Vector2(PW,ph))
+	fit_popup.call()
+	preload("res://src/ui/UiSafeArea.gd").watch(dim,fit_popup)
 
 	var content := Control.new()
 	content.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -7655,27 +7781,30 @@ func _build_popup(anchor: Control, title: String, lines: Array, owner: Node,
 	content.add_child(plaque)
 
 	if paged:
-		var deck := (load("res://src/ui/PageDeck.gd") as GDScript).new(PW - 32.0, 234.0) as Control
+		var page_h:=maxf(40,content_h-66)
+		var deck := (load("res://src/ui/PageDeck.gd") as GDScript).new(PW - 32.0, page_h) as Control
 		deck.name = "ReadingPages"
 		deck.position = Vector2(0, 44)
 		deck.set("key_mode", "none")
 		deck.set("navigation_visible", false)
 		deck.set("page_gap", 14.0)
 		for group in reading_groups:
-			deck.call("add_page", _reading_page(group, PW - 32.0, 234.0), Vector2(PW - 32.0, 234.0))
+			deck.call("add_page", _reading_page(group, PW - 32.0, page_h), Vector2(PW - 32.0, page_h))
 		content.add_child(deck)
 		_modals.back()["reader"] = deck
-		var previous := ghost_button("上一页", 110, 42, FS_XS)
-		previous.position = Vector2(0, 294)
+		var nav_w:=minf(110,(PW-112)*.5)
+		var previous := ghost_button("上一页", nav_w, 42, FS_XS)
+		previous.position = Vector2(0, content_h-6)
 		button_icon(previous, "back")
 		content.add_child(previous)
-		var next := ghost_button("下一页", 110, 42, FS_XS)
-		next.position = Vector2(258, 294)
+		var next := ghost_button("下一页", nav_w, 42, FS_XS)
+		next.position = Vector2(PW-32-nav_w, content_h-6)
 		button_icon(next, "forward")
 		content.add_child(next)
 		var counter := gold_label("", FS_XS, false, TEXT_MUTED, false)
-		counter.position = Vector2(116, 305)
-		counter.size = Vector2(136, 26)
+		counter.position = Vector2(nav_w+4, content_h+5)
+		counter.size = Vector2(PW-40-nav_w*2, 26)
+		counter.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 		content.add_child(counter)
 		var sync := func(index: int):
 			counter.text = "%d / %d" % [index + 1, reading_groups.size()]
@@ -7703,8 +7832,8 @@ func _build_popup(anchor: Control, title: String, lines: Array, owner: Node,
 			picks.append(c)
 	if picks.is_empty():
 		picks = [{"text": "知道了", "cb": Callable()}]
-	var bw := 120.0 if picks.size() == 1 else 150.0
 	var gap := 12.0
+	var bw := minf(120.0 if picks.size()==1 else 150.0,(PW-32-gap*(picks.size()-1))/picks.size())
 	var total_w := float(picks.size()) * bw + float(picks.size() - 1) * gap
 	var x0 := (PW - 32.0 - total_w) * 0.5
 	for i in picks.size():
