@@ -1,0 +1,37 @@
+{
+  "specialist_acceptance": {
+    "checks": 56,
+    "display": "Windows",
+    "fails": 0
+  },
+  "runner_selftest": {
+    "checks": 11,
+    "fails": 0
+  },
+  "full_regression_initial": {
+    "cases": 78,
+    "passed": 62,
+    "failed": 16
+  },
+  "subsequently_passed": [
+    "VerifyFourthBack",
+    "VerifyNav"
+  ],
+  "remaining_failed_cases": 14,
+  "key_rechecks_passed": [
+    "VerifyPlayJourney",
+    "VerifyBattleScene",
+    "VerifySave",
+    "VerifyGameHome",
+    "VerifyWorldSession",
+    "VerifyStory",
+    "VerifyFourthBack",
+    "VerifyNav"
+  ],
+  "main_scene_restored": true,
+  "player_data": {
+    "checked_files": 39,
+    "changed_files": 0,
+    "main_save_unchanged": true
+  }
+}

@@ -1,0 +1,163 @@
+{
+	"account": "",
+	"arena": {
+		"best_streak": 0,
+		"losses": 0,
+		"score": 1000,
+		"streak": 0,
+		"wins": 0
+	},
+	"audio": {
+		"bgm": 0.7,
+		"mute": false,
+		"sfx": 0.8
+	},
+	"avatar_custom": "",
+	"avatar_id": "fox",
+	"avatar_use_custom": false,
+	"city": {
+		"acts": {},
+		"built": [
+			"hall",
+			"gate",
+			"archive",
+			"kennel",
+			"barracks",
+			"storehouse",
+			"stable",
+			"forge"
+		],
+		"code": "",
+		"day": "",
+		"streak": 0,
+		"visits": []
+	},
+	"gender": "男",
+	"items": {
+		"enhance_stone": 3,
+		"refine_stone": 0,
+		"stele_fragment": 0
+	},
+	"player_name": "",
+	"prog": {
+		"act1": {
+			"repair_method": "forge"
+		},
+		"campaign_growth": {
+			"story_revision": {
+				"s01": 2,
+				"s02": 2,
+				"s03": 2,
+				"s04": 2,
+				"s05": 2,
+				"s06": 2,
+				"s07": 2,
+				"s08": 2,
+				"s09": 2,
+				"s10": 2,
+				"s11": 2
+			}
+		},
+		"economy": {
+			"bought": {},
+			"day": 1,
+			"history": {},
+			"next_tx": 1,
+			"orders": {},
+			"seed": 7919,
+			"sold": {},
+			"work": {}
+		},
+		"equip": {},
+		"exp": 1010,
+		"flags": {
+			"act1_repair_method": "forge",
+			"act1_route_open": true,
+			"act1_stele_repaired": true,
+			"act1_stele_rooms_v1": true
+		},
+		"inventory": {
+			"instances": [
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 3,
+					"slot": "sword",
+					"sockets": 3,
+					"source_id": "campaign_gear|s10|first|",
+					"tpl": "tpl_sword_stele",
+					"uid": 1
+				}
+			],
+			"next_uid": 2,
+			"pending": []
+		},
+		"ledger": {
+			"applied": [
+				"story|s01|talk|lorin_wilds|npc_steward|",
+				"story|s02|visit|maple_road|maple_road|",
+				"story|s03|defeat|maple_road|mon_wolf|",
+				"story|s04|talk|lorin_wilds|npc_smith|",
+				"story|s05|visit|broken_slope|broken_slope|",
+				"story|s06|defeat|broken_slope|mon_skeleton|",
+				"story|s07|talk|lorin_wilds|npc_steward|",
+				"story|s08|talk|lorin_wilds|npc_scribe|",
+				"story|s09|visit|stele_cavern|stele_cavern|",
+				"story|s10|defeat|stele_cavern|mon_stele_warden|",
+				"campaign_gear|s10|first|",
+				"story|s11|craft|lorin_wilds|npc_smith|"
+			]
+		},
+		"level": 12,
+		"main_world": {
+			"map_id": "lorin_wilds"
+		},
+		"map_destination": "",
+		"pets": [],
+		"story": {
+			"done": [
+				"s01",
+				"s02",
+				"s03",
+				"s04",
+				"s05",
+				"s06",
+				"s07",
+				"s08",
+				"s09",
+				"s10"
+			],
+			"goals": {
+				"s01": "done",
+				"s02": "done",
+				"s03": "done",
+				"s04": "done",
+				"s05": "done",
+				"s06": "done",
+				"s07": "done",
+				"s08": "done",
+				"s09": "done",
+				"s10": "done"
+			},
+			"step": "s11"
+		},
+		"world_cleared": {},
+		"worlds_unlocked": 1
+	},
+	"quest": {
+		"active": {},
+		"claimed": [],
+		"day": "",
+		"offer": []
+	},
+	"selected_role": "",
+	"version": 7,
+	"wallet": {
+		"expedition": 0,
+		"gold": 950,
+		"honor": 0,
+		"soul": 0
+	}
+}

@@ -1,0 +1,97 @@
+[
+  {
+    "path": "远征/src/explore/MapScene.gd",
+    "before_sha256": "b6ababcafeb9a8d47b6b95c993158925fb30286c0b7d26bb9d599111ff358cdb",
+    "after_sha256": "dc870bc80c38e9a9c385b062d253bd853130871faefd4b109a881d05fc12ce27"
+  },
+  {
+    "path": "远征/src/ui/ArcheryPanel.gd",
+    "before_sha256": "028e602bef4394415051b3dae83c2044d3bd4e5165c1d867207d431a8178a208",
+    "after_sha256": "100fd3fa260c5442511f594b17ca517e892778d345d1476e8252a7be547b1f3d"
+  },
+  {
+    "path": "远征/data/archery.json",
+    "before_sha256": "70aef857e4d4edaa1d47443c467d1be9c8f2b9bfee5aedbf29dc50d3ef49b388",
+    "after_sha256": "ff80432351f172e8448e8159cd392315059b12e16755aff59c650ba739f21f83"
+  },
+  {
+    "path": "远征/src/ui/CurioLorePanel.gd",
+    "before_sha256": "601e41a203fd3d0b961d0e0472fbf5be9051a905f9077bfb379f4e1af14206a7",
+    "after_sha256": "db3a9da188d6aa828ac1986c8e2569c10dc186fa58960c07cedd4a56058b2422"
+  },
+  {
+    "path": "远征/src/ui/HonorMarketPanel.gd",
+    "before_sha256": "c159e24400629a4e000ae10233b29236523f20d15ea4d3a8452ab206320af28e",
+    "after_sha256": "7cd5f9308aa850755fb29db4226f1b3d01fa42b50ac850537f330bf323234838"
+  },
+  {
+    "path": "远征/src/ui/WorldPointMap.gd",
+    "before_sha256": "7f88122bccb4f521798e29838f3fadac256b43a7da0c75acafecd146a524923d",
+    "after_sha256": "3879d021169cb0de249d4cadf38109a3d18d03ecd73e79b0eaee3793ae77204a"
+  },
+  {
+    "path": "远征/src/ui/CurrencyPanel.gd",
+    "before_sha256": "bed745098978249f6aee6d5d63e40a8da4e91ffd07286d614340a6ae9e825f23",
+    "after_sha256": "2a69110250b2e4cc1d0b46de537e2e1fbfe515d0dcf76c351ba43db3cf5d9dba"
+  },
+  {
+    "path": "远征/tools/VerifyFourthBack.gd",
+    "before_sha256": "6cb2a20dcedbf600af204c1c531d916ac98441e6d516229535a9048be73cd4ff",
+    "after_sha256": "55b9381eb4d1c71f471c23b87a969aa6cfadeafe14541833010b7f178ef7889c"
+  },
+  {
+    "path": "远征/tools/VerifyNav.gd",
+    "before_sha256": "d44e5891efdceb44d5e5b77b53e103934c2633bde14009e70892525349601455",
+    "after_sha256": "4cb9318d5d688ffe7ca47175f72c9de86322a2f8f6c4a6e849ea74fce6d2f1ec"
+  },
+  {
+    "path": "远征/tools/run_regression.ps1",
+    "before_sha256": "1f4720664f4860919a9d97c24ddc4b1b91ef8d62abb20a6830e547e1bcc0201a",
+    "after_sha256": "ced24be1bc1d8cb4e6853c27903cf2713e3b4676f84848783c8d5b7e3dcf60be"
+  },
+  {
+    "path": "远征/src/world/ArcheryRewards.gd",
+    "new": true,
+    "sha256": "fb9fb0451801aea74b4342ecc2bb6e7687bee5fa3db12fa0636660e372349b43"
+  },
+  {
+    "path": "远征/src/world/ArcheryRewards.gd.uid",
+    "new": true,
+    "sha256": "af397e42902e25352a6b6accd4c120c6371dc69ec5308f91c57b6e00b0efa834"
+  },
+  {
+    "path": "远征/tools/PlayReviewBootstrap.gd",
+    "new": true,
+    "sha256": "71d252ff3a9d0b83a40cbc9ca70b9fbee96bf94834f50538e554c66273e2539c"
+  },
+  {
+    "path": "远征/tools/PlayReviewBootstrap.gd.uid",
+    "new": true,
+    "sha256": "40fd2e5f45ec07c2e14b731a4b42a4ba44fc83b4513631446f463799b112159d"
+  },
+  {
+    "path": "远征/tools/PlayReviewBootstrap.tscn",
+    "new": true,
+    "sha256": "9eafbd1fa297dbd784a634bc5d72ac66555afbe0d73c308ea1ec92a24c70eaca"
+  },
+  {
+    "path": "远征/tools/VerifyPlayJourney.gd",
+    "new": true,
+    "sha256": "c239206e5ce5eec2c0ba58e6c871b0550cbc8a6cc3b257433ebc3bdf02531de3"
+  },
+  {
+    "path": "远征/tools/VerifyPlayJourney.gd.uid",
+    "new": true,
+    "sha256": "92f043524dc21ed637a57bcdb52e64b5ae07217023ee0da9fa3ba668cdc87cc5"
+  },
+  {
+    "path": "远征/tools/VerifyPlayJourney.tscn",
+    "new": true,
+    "sha256": "5ef16276de43b90b7f26b3ca06b98c4925e080f3297747405c30ffd765fd3b7e"
+  },
+  {
+    "path": "远征/docs/plans/2026-10-26-play-journey-and-lantern.md",
+    "new": true,
+    "sha256": "0c8b66d19110e736f21db04952d0ddeef55d17324ac98540ee62ab36ced6b172"
+  }
+]

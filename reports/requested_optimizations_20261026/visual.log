@@ -1,0 +1,25 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 Core Profile Context 23.20.60.03.240314 - Compatibility - Using Device: ATI Technologies Inc. - AMD Radeon 780M Graphics
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+ERROR: REQUESTED_FAIL location list fits screen (320, 640) rect=[P: (14.0, -21.0), S: (292.0, 682.0)] safe=[P: (0.0, 0.0), S: (320.0, 640.0)]
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyRequestedOptimizations.gd:15)
+       [1] map_controls (res://tools/VerifyRequestedOptimizations.gd:151)
+       [2] click (res://tools/VerifyRequestedOptimizations.gd:49)
+       [3] frames (res://tools/VerifyRequestedOptimizations.gd:18)
+ERROR: REQUESTED_FAIL map gains scenery stele_cavern
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyRequestedOptimizations.gd:15)
+       [1] worlds (res://tools/VerifyRequestedOptimizations.gd:188)
+       [2] frames (res://tools/VerifyRequestedOptimizations.gd:18)
+ERROR: REQUESTED_FAIL map gains scenery rift_mine_vault
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyRequestedOptimizations.gd:15)
+       [1] worlds (res://tools/VerifyRequestedOptimizations.gd:188)
+       [2] frames (res://tools/VerifyRequestedOptimizations.gd:18)
+REQUESTED_OPTIMIZATIONS checks=439 failures=3 maps=18

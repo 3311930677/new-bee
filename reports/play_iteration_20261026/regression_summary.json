@@ -1,0 +1,218 @@
+{
+  "total": 78,
+  "passed": [
+    "VerifyAftermath",
+    "VerifyAftermathPaths",
+    "VerifyAftermathResume",
+    "VerifyArena",
+    "VerifyAssets",
+    "VerifyAudio",
+    "VerifyBattleScene",
+    "VerifyBossPuzzles",
+    "VerifyCampaignGear",
+    "VerifyCurrencyBalance",
+    "VerifyCurriculum",
+    "VerifyDrops",
+    "VerifyDungeonTrials",
+    "VerifyDungeonTrialsRead",
+    "VerifyEconomy",
+    "VerifyFourthFront",
+    "VerifyFrostHerbOrder",
+    "VerifyGacha",
+    "VerifyGameHome",
+    "VerifyGameplayBalance",
+    "VerifyGrowth",
+    "VerifyJourneyRelics",
+    "VerifyLore",
+    "VerifyMapScene",
+    "VerifyOathWalk",
+    "VerifyPanels",
+    "VerifyPlayJourney",
+    "VerifyPortGrowth",
+    "VerifyQuests",
+    "VerifyReturnJobs",
+    "VerifyRoadMail",
+    "VerifyRunEvents",
+    "VerifyRunEventsRead",
+    "VerifyRunImmediate",
+    "VerifyRunResume",
+    "VerifyRunResumeRead",
+    "VerifySave",
+    "VerifySecondAct",
+    "VerifyShipping",
+    "VerifySignpostEntry",
+    "VerifySpecialEvents",
+    "VerifySpecialEventsRead",
+    "VerifyStelePuzzle",
+    "VerifyStory",
+    "VerifySweep",
+    "VerifyThirdAct",
+    "VerifyThirdBack",
+    "VerifyThirdSide",
+    "VerifyTradeContracts",
+    "VerifyTradeContractsRead",
+    "VerifyTradeWorld",
+    "VerifyTransit",
+    "VerifyUiLayout",
+    "VerifyWorkshop",
+    "VerifyWorldCommissions",
+    "VerifyWorldCommissionsRead",
+    "VerifyWorldSession",
+    "verify_battle",
+    "verify_data",
+    "verify_route",
+    "verify_trait",
+    "verify_walk_assets"
+  ],
+  "failed": [
+    {
+      "test": "VerifyAvatar",
+      "issues": [
+        "ERROR: FAIL: 上传大图不会撑大头像区域"
+      ]
+    },
+    {
+      "test": "VerifyCampaignGrowth",
+      "issues": [
+        "ERROR: FAIL: 战利升级写盘失败连同生命和等级整体回滚",
+        "ERROR: FAIL: 战利升级成功立即同步生命上限",
+        "ERROR: FAIL: 熊的四向各有三个实际步态帧",
+        "ERROR: FAIL: 熊的四向各有三个实际步态帧",
+        "ERROR: FAIL: 熊的四向各有三个实际步态帧",
+        "ERROR: FAIL: 熊的四向各有三个实际步态帧",
+        "ERROR: FAIL: 四职业骑熊时保留角色并压在鞍上",
+        "ERROR: FAIL: 四职业骑熊时保留角色并压在鞍上",
+        "ERROR: FAIL: 四职业骑熊时保留角色并压在鞍上",
+        "ERROR: FAIL: 四职业骑熊时保留角色并压在鞍上",
+        "ERROR: FAIL: 首骑使用独立马步态与当前职业骑手",
+        "ERROR: FAIL: 首骑四向完整步态驱动",
+        "ERROR: FAIL: 首骑四向完整步态驱动",
+        "ERROR: FAIL: 首骑四向完整步态驱动",
+        "ERROR: FAIL: 首骑四向完整步态驱动"
+      ]
+    },
+    {
+      "test": "VerifyCampGathering",
+      "issues": [
+        "ERROR: FAIL: 实际按钮打开三城小聚"
+      ]
+    },
+    {
+      "test": "VerifyCity",
+      "issues": [
+        "ERROR: FAIL: NPC 帧动画缩放应为 0.72，实为 0.850",
+        "ERROR: FAIL: NPC 脚底标定应为 -42.5，实为 -50.15"
+      ]
+    },
+    {
+      "test": "VerifyCompanions",
+      "issues": [
+        "ERROR: FAIL: 锁盘胜利不计协战",
+        "ERROR: FAIL: 正常胜利必须保存",
+        "ERROR: FAIL: 实际参战同物种只加一次",
+        "ERROR: FAIL: 重复战果不重复加熟练",
+        "ERROR: FAIL: 三胜后可训练第二项"
+      ]
+    },
+    {
+      "test": "VerifyFieldUI",
+      "issues": [
+        "ERROR: FAIL: Default activity page must not invent active events",
+        "ERROR: FAIL: Activity card must open its own detail",
+        "ERROR: FAIL: Default activity page must not invent active events",
+        "ERROR: FAIL: Activity card must open its own detail"
+      ]
+    },
+    {
+      "test": "VerifyFishing",
+      "issues": [
+        "ERROR: FAIL: 霜关钓点可从公共街道用实际移动触发"
+      ]
+    },
+    {
+      "test": "VerifyFourthBack",
+      "issues": [
+        "ERROR: FAIL: 被锁结算退回首领/战利/封记/账本",
+        "ERROR: FAIL: 真实写盘失败退回首领/战利/封记/账本",
+        "ERROR: FAIL: 首通一步事务消费封记并发记录和职业武器",
+        "ERROR: FAIL: 首通和记录真实存取",
+        "ERROR: FAIL: 首通后重进不复活剧情首领",
+        "ERROR: FAIL: 两选项均完成36步60级 seal",
+        "ERROR: FAIL: 结局世界旗 seal",
+        "SCRIPT ERROR: Invalid access to property or key 'act4_ending' on a base object of type 'Dictionary'."
+      ]
+    },
+    {
+      "test": "VerifyFrostArt",
+      "issues": [
+        "ERROR: FAIL: 建筑基座固定",
+        "ERROR: FAIL: 建筑基座固定",
+        "ERROR: FAIL: 建筑基座固定"
+      ]
+    },
+    {
+      "test": "VerifyMainWorld",
+      "issues": [
+        "ERROR: FAIL: 主地图旅人应采用当前同屏样板比例"
+      ]
+    },
+    {
+      "test": "VerifyNav",
+      "issues": [
+        "ERROR: FAIL: CurioLorePanel.gd 的 ESC 没有 G.ui_blocked 守卫——开着 GM 控制台按 ESC 会关掉背后的浮层",
+        "ERROR: FAIL: CurrencyPanel.gd 缺少 ESC（ui_cancel）处理——浮层的返回不能只靠父层",
+        "ERROR: FAIL: DeviceLayoutInfo.gd 缺少 ESC（ui_cancel）处理——浮层的返回不能只靠父层",
+        "ERROR: FAIL: ExchangePanel.gd 缺少 ESC（ui_cancel）处理——浮层的返回不能只靠父层",
+        "ERROR: FAIL: HonorMarketPanel.gd 的 ESC 没有 G.ui_blocked 守卫——开着 GM 控制台按 ESC 会关掉背后的浮层",
+        "ERROR: FAIL: ItemDescriptions.gd 缺少 ESC（ui_cancel）处理——浮层的返回不能只靠父层",
+        "ERROR: FAIL: ReadingSkin.gd 缺少 ESC（ui_cancel）处理——浮层的返回不能只靠父层",
+        "ERROR: FAIL: ShowcaseUI.gd 缺少 ESC（ui_cancel）处理——浮层的返回不能只靠父层",
+        "ERROR: FAIL: TouchScroll.gd 缺少 ESC（ui_cancel）处理——浮层的返回不能只靠父层",
+        "ERROR: FAIL: WorldPointMap.gd 的 ESC 没有 G.ui_blocked 守卫——开着 GM 控制台按 ESC 会关掉背后的浮层"
+      ]
+    },
+    {
+      "test": "VerifyPerf",
+      "issues": [
+        "ERROR: FAIL: 浮层「世界」第 1 次打开 122 ms 超预算 100 ms",
+        "ERROR: FAIL: 浮层「世界」第 2 次打开 80 ms 超预算 70 ms",
+        "ERROR: FAIL: 浮层「图鉴」第 1 次打开 111 ms 超预算 100 ms",
+        "ERROR: FAIL: 浮层「设置」第 2 次打开 74 ms 超预算 70 ms",
+        "ERROR: FAIL: CityScene 进场景 耗时 530 ms 超出预算 320 ms（一次性开销应已在加载页付掉）"
+      ]
+    },
+    {
+      "test": "VerifyReferenceComplete",
+      "issues": [
+        "ERROR: REFERENCE_COMPLETE_FAIL lorin_wilds original hero scale .65",
+        "ERROR: REFERENCE_COMPLETE_FAIL maple_road original hero scale .65",
+        "ERROR: REFERENCE_COMPLETE_FAIL keyboard prioritises form",
+        "ERROR: REFERENCE_COMPLETE_FAIL keyboard prioritises form"
+      ]
+    },
+    {
+      "test": "VerifyRouteScene",
+      "issues": [
+        "ERROR: FAIL: 三连败应发礼包（实为「连败慰礼 · 魂晶 +30 · 宠物粮 ×5」）"
+      ]
+    },
+    {
+      "test": "VerifySafeArea",
+      "issues": [
+        "ERROR: FAIL: 登录纸页在模拟手机安全区内",
+        "ERROR: FAIL: 登录重排后不累计缩放"
+      ]
+    },
+    {
+      "test": "VerifyVisualRefresh",
+      "issues": [
+        "ERROR: FAIL: No literal font_size override outside src/preview: res://src/ui/LoginChestView.gd, res://src/ui/QuestPanel.gd, res://src/ui/ReadingSkin.gd, res://src/ui/ShowcaseUI.gd, res://src/ui/WorldPointMap.gd"
+      ]
+    }
+  ],
+  "rechecked_pass": [
+    "VerifyFourthBack",
+    "VerifyNav"
+  ],
+  "note": "Initial full run. Rechecks have separate logs. Other failures are retained, not waived."
+}

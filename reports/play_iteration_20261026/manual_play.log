@@ -1,0 +1,8 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 Core Profile Context 23.20.60.03.240314 - Compatibility - Using Device: ATI Technologies Inc. - AMD Radeon 780M Graphics
+
+PLAY_REVIEW {"navigation":{"auto":false,"map":"maple_road","nav":"{ \"name\": \"在枫林古道击败一只游荡怪物\", \"pos\": (216.7086, 1477.07), \"kind\": \"monster\" }","player":"(480.0, 1860.0)"},"scene":"res://src/explore/MapScene.tscn","shot":"res://shots/play_iteration_20261026/manual_03.png","story":{"done":["s01","s02"],"goals":{"s01":"done","s02":"done"},"step":"s03"},"wallet":{"expedition":0,"gold":70,"honor":0,"soul":0}}
+PLAY_REVIEW {"navigation":{"auto":false,"map":"maple_road","nav":"{ \"name\": \"在枫林古道击败一只游荡怪物\", \"pos\": (197.5148, 1496.14), \"kind\": \"monster\" }","player":"(231.9606, 1513.626)"},"scene":"res://src/explore/MapScene.tscn","shot":"res://shots/play_iteration_20261026/manual_04.png","story":{"done":["s01","s02"],"goals":{"s01":"done","s02":"done"},"step":"s03"},"wallet":{"expedition":0,"gold":70,"honor":0,"soul":0}}
+PLAY_REVIEW {"navigation":{"auto":false,"map":"lorin_wilds","nav":"{ \"pos\": (640.0, 160.0), \"kind\": \"quest\", \"name\": \"前往断碑坡\" }","player":"(600.0, 300.0)"},"scene":"res://src/explore/MapScene.tscn","shot":"res://shots/play_iteration_20261026/manual_05.png","story":{"done":["s01","s02","s03"],"goals":{"s01":"done","s02":"done","s03":"done"},"step":"s04"},"wallet":{"expedition":0,"gold":173,"honor":0,"soul":0}}
+
+

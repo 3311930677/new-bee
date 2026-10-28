@@ -1,0 +1,96 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+CAMPAIGN_GROWTH_FAIL fails=15
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+ERROR: FAIL: 战利升级写盘失败连同生命和等级整体回滚
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _run (res://tools/VerifyCampaignGrowth.gd:150)
+       [2] _simple_map (res://tools/VerifyCampaignGrowth.gd:49)
+ERROR: FAIL: 战利升级成功立即同步生命上限
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _run (res://tools/VerifyCampaignGrowth.gd:152)
+       [2] _simple_map (res://tools/VerifyCampaignGrowth.gd:49)
+ERROR: FAIL: 熊的四向各有三个实际步态帧
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _test_bear (res://tools/VerifyCampaignGrowth.gd:191)
+       [2] _ready (res://tools/VerifyCampaignGrowth.gd:10)
+       [3] _run (res://tools/VerifyCampaignGrowth.gd:168)
+ERROR: FAIL: 熊的四向各有三个实际步态帧
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _test_bear (res://tools/VerifyCampaignGrowth.gd:191)
+       [2] _ready (res://tools/VerifyCampaignGrowth.gd:10)
+       [3] _run (res://tools/VerifyCampaignGrowth.gd:168)
+ERROR: FAIL: 熊的四向各有三个实际步态帧
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _test_bear (res://tools/VerifyCampaignGrowth.gd:191)
+       [2] _ready (res://tools/VerifyCampaignGrowth.gd:10)
+       [3] _run (res://tools/VerifyCampaignGrowth.gd:168)
+ERROR: FAIL: 熊的四向各有三个实际步态帧
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _test_bear (res://tools/VerifyCampaignGrowth.gd:191)
+       [2] _ready (res://tools/VerifyCampaignGrowth.gd:10)
+       [3] _run (res://tools/VerifyCampaignGrowth.gd:168)
+ERROR: FAIL: 四职业骑熊时保留角色并压在鞍上
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _test_bear (res://tools/VerifyCampaignGrowth.gd:213)
+ERROR: FAIL: 四职业骑熊时保留角色并压在鞍上
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _test_bear (res://tools/VerifyCampaignGrowth.gd:213)
+ERROR: FAIL: 四职业骑熊时保留角色并压在鞍上
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _test_bear (res://tools/VerifyCampaignGrowth.gd:213)
+ERROR: FAIL: 四职业骑熊时保留角色并压在鞍上
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _test_bear (res://tools/VerifyCampaignGrowth.gd:213)
+ERROR: FAIL: 首骑使用独立马步态与当前职业骑手
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _test_bear (res://tools/VerifyCampaignGrowth.gd:226)
+       [2] _simple_map (res://tools/VerifyCampaignGrowth.gd:49)
+ERROR: FAIL: 首骑四向完整步态驱动
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _test_bear (res://tools/VerifyCampaignGrowth.gd:229)
+       [2] _simple_map (res://tools/VerifyCampaignGrowth.gd:49)
+ERROR: FAIL: 首骑四向完整步态驱动
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _test_bear (res://tools/VerifyCampaignGrowth.gd:229)
+       [2] _simple_map (res://tools/VerifyCampaignGrowth.gd:49)
+ERROR: FAIL: 首骑四向完整步态驱动
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _test_bear (res://tools/VerifyCampaignGrowth.gd:229)
+       [2] _simple_map (res://tools/VerifyCampaignGrowth.gd:49)
+ERROR: FAIL: 首骑四向完整步态驱动
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _test_bear (res://tools/VerifyCampaignGrowth.gd:229)
+       [2] _simple_map (res://tools/VerifyCampaignGrowth.gd:49)
+
