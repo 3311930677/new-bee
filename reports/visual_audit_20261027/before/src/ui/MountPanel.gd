@@ -1,0 +1,154 @@
+# MountPanel.gd —— 坐骑（6 类×2 阶：购入 1 阶 → 升 2 阶；骑乘加成全局生效）
+class_name MountPanel
+extends Control
+
+signal closed
+const Chest := preload("res://src/ui/TravelChestUI.gd")
+var _chest: Control
+
+const CONTENT_W := 408.0
+const CARD_W := 198.0
+const CARD_H := 148.0
+
+var _grid: Control = null
+var _active_l: Label = null
+var _toast: Control = null
+
+
+func _ready() -> void:
+	set_anchors_preset(Control.PRESET_FULL_RECT)
+	_build()
+
+
+func _build() -> void:
+	_chest=preload("res://src/ui/GrowthChestView.gd").new()
+	_chest.host=self
+	_chest.system="mount"
+	add_child(_chest)
+
+func _refresh() -> void:
+	if _chest!=null:_chest.refresh()
+
+func _mount_card(m: Dictionary) -> Control:
+	var mid := String(m.get("id", ""))
+	var tier := G.mount_tier(mid)
+	var tiers: Array = m.get("tiers", [])
+	var is_active := G.mount_active() == mid and tier > 0
+
+	var root := G.InsetPanel.new()
+	root.custom_minimum_size = Vector2(CARD_W, CARD_H)
+	# 坐骑卡：切角 + 内凹光（内层是手摆的 Control，留白给 0 不影响版式）
+	root.setup(Color("f0e2bc") if tier > 0 else Color("d0c09a"),
+		G.GOLD_BRIGHT if is_active else Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.5),
+		0.0, 0.0, 0.0, 0.0)
+	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	var inner := Control.new()
+	inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(inner)
+
+	# 坐骑图（按阶级切换素材）
+	var icon := String(m.get("icon2" if tier >= 2 else "icon", ""))
+	var tex: Texture2D = G.res_tex(icon)
+	if tex != null:
+		var tr := TextureRect.new()
+		tr.texture = tex
+		tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		tr.custom_minimum_size = Vector2(56, 56)
+		tr.size = Vector2(56, 56)
+		tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		tr.position = Vector2(6, 6)
+		tr.modulate = Color.WHITE if tier > 0 else Color(0.55, 0.55, 0.55)
+		inner.add_child(tr)
+
+	var name_l := G.serif_label(String(m.get("name", "")), G.FS_MD,
+		G.TEXT_DARK if tier > 0 else Color("8a7a58"))
+	name_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	name_l.position = Vector2(68, 8)
+	inner.add_child(name_l)
+
+	# 当前/下一阶加成说明
+	var show_tier := mini(tier, tiers.size() - 1)
+	var tinfo := tiers[show_tier] as Dictionary
+	var bonus: Dictionary = tinfo.get("bonus", {})
+	var bl := G.text_label("%s：%s" % [String(tinfo.get("name", "")), _bonus_text(bonus)],
+		G.FS_XS, G.TEXT_MUTED)
+	bl.position = Vector2(68, 34)
+	bl.custom_minimum_size = Vector2(122, 40)
+	bl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	inner.add_child(bl)
+
+	var tier_l := G.gold_label("未拥有" if tier == 0 else ("二阶" if tier >= 2 else "一阶"),
+		G.FS_XS, true, Color("a06020") if tier > 0 else Color("8a7a58"), false)
+	tier_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	tier_l.position = Vector2(6, 66)
+	inner.add_child(tier_l)
+
+	# 按钮：购买 / 升阶 / 骑乘 / 骑乘中
+	var btn: Control
+	if tier <= 0 or tier < tiers.size():
+		var cost: Dictionary = tinfo.get("cost", {})
+		btn = G.gold_button("购 买" if tier <= 0 else "升 阶", 84, 30, G.FS_SM)
+		# 价格独立行：FS_XS + 限宽换行裁切。原来 12px 一行横排、资源间空格相连，
+		# 五位数金币带第二项资源时直接顶出卡右缘
+		var cost_l := G.text_label(_cost_text(cost), G.FS_XS, G.TEXT_MUTED)
+		cost_l.position = Vector2(96, 100)
+		cost_l.size = Vector2(CARD_W - 102.0, 44)
+		cost_l.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
+		cost_l.clip_text = true
+		inner.add_child(cost_l)
+		btn.gui_input.connect(func(ev: InputEvent):
+			if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
+				_on_buy(mid))
+	elif is_active:
+		btn = G.ghost_button("骑乘中", 84, 30, G.FS_SM)
+	else:
+		btn = G.gold_button("骑 乘", 84, 30, G.FS_SM)
+		btn.gui_input.connect(func(ev: InputEvent):
+			if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
+				if G.mount_set_active(mid):
+					_toast_msg("已骑乘「%s」" % String(m.get("name", "")))
+					_refresh())
+	btn.position = Vector2(6, 100)
+	btn.mouse_filter = Control.MOUSE_FILTER_STOP
+	inner.add_child(btn)
+	return root
+
+
+func _bonus_text(bonus: Dictionary) -> String:
+	var names := {"atk_pct": "攻击", "def_pct": "防御", "maxhp_pct": "生命", "spd_pct": "速度", "crit_add": "暴击"}
+	var parts := PackedStringArray()
+	for k in bonus.keys():
+		parts.append("%s+%d%%" % [String(names.get(String(k), String(k))), roundi(float(bonus[k]) * 100.0)])
+	return " ".join(parts)
+
+
+func _cost_text(cost: Dictionary) -> String:
+	var names := {"gold": "金币", "soul": "魂石", "honor": "荣誉", "expedition": "远征币"}
+	var parts := PackedStringArray()
+	for k in cost.keys():
+		parts.append("%s·%d" % [String(names.get(String(k), String(k))), int(cost[k])])
+	return "\n".join(parts)   # 一项资源一行：卡内只有 96px 宽，横排必溢出
+
+
+func _on_buy(mid: String) -> void:
+	var r := G.mount_buy(mid)
+	if bool(r.get("ok", false)):
+		_toast_msg("「%s」%s" % [String(G.mount_cfg(mid).get("name", "")),
+			"已入手！" if int(r.get("tier", 0)) == 1 else "升至二阶！"])
+	else:
+		_toast_msg(String(r.get("err", "")))
+	_refresh()
+
+
+func _toast_msg(msg: String) -> void:
+	if is_instance_valid(_toast):_toast.queue_free()
+	_toast=Chest.toast(self,msg)
+	_toast.position.y=G.ui_safe_rect(self).end.y-116
+
+func _unhandled_input(event: InputEvent) -> void:
+	if G.ui_blocked:   # GM 控制台等全屏层优先（轮次 14）
+		return
+	if event.is_action_pressed("ui_cancel"):
+		closed.emit()
+		get_viewport().set_input_as_handled()
