@@ -1,0 +1,96 @@
+{
+  "engine": "Godot 4.7.2.stable.official.ed1daf0bf",
+  "renderer": "OpenGL Compatibility / AMD Radeon 780M",
+  "source_files_changed": 32,
+  "source_sha256": {
+    "autoload/G.gd": "1818a815b5f39525bd3a4b97a7a30d51fe17279567bc8eee546988eaebd9ad16",
+    "battle/BattleChestView.gd": "11b698139c9cd77410ef6ecb1b719fc3f05c112dbb7e925702b73fb466c8cb83",
+    "ui/ArcheryPanel.gd": "fdf96f29a69202d06e824e345003af4eddf67fc9ebe4a13f58878eb8925fbc82",
+    "ui/AvatarPanel.gd": "aaf3094dd5428ebba466efca42d694c79439f36778874b71484faf12777f2790",
+    "ui/BagPanel.gd": "cc5a6f68150e161aad692976890c0a1b8de6d4b70275e63e7e9959517dd0fe41",
+    "ui/ChestPageUI.gd": "cf4c43e2cde372347aa8002ab6232205da794cdfa6f628accca49259f36ed4dc",
+    "ui/CompanionPanel.gd": "79a41724dd003ea6effa2cfdb97650ac07ca6ca5a7780cf7ef3ef227b8b09ac6",
+    "ui/CreateRole.gd": "52555a6c985ab39ff3fb6dbcef2cfa107cbab89034e830f47d4f91b3084a1782",
+    "ui/CreateRoleChestView.gd": "8eee9a0a89e8e665544d89ef6d5aa7525ce35112cc0ab610ce99d4bc1241a2f0",
+    "ui/EquipChestView.gd": "fdac71b82388a7731b75d808e67526304319e54cbe66a008a783d0a060215ee0",
+    "ui/FieldJournalPanel.gd": "4a91e3c8b34af28985d8946af11143533a87a9f60a3949af3cbf10ea96a07941",
+    "ui/FlowChestUI.gd": "23d919067e3615062d018988b82eb4bd3c53f93984ebdfe88d8c697b2b0a7feb",
+    "ui/FrostContractPanel.gd": "2892c3519598b66f79ce066499e6b3c9ae25a0a522686c74ca2e6d37ddff0e23",
+    "ui/GrowthChestView.gd": "8001ddc47b525ec9675000e67995a2cc335a59e16d73ae1a674fcbebd5afaa6d",
+    "ui/GrowthPanel.gd": "d6e42af2b0244ae5eafaef2d3b911e91bedeffb35217b4b4a7dd68b194dedc4b",
+    "ui/home/TownHome.gd": "cd0cd64dea575cdc3000ec4be1e1db10f25c4df18b58f0b9679e32048ea9cfb5",
+    "ui/HonorMarketPanel.gd": "017d09db9b43551039fcaaf1b216d7a91d20aed0478f4dae425810871fe32073",
+    "ui/InventoryQuestSkin.gd": "f5955bfc793c10a429c1acde17d7a5c522bc1ad89f78735316f3e4ccf02fb8cf",
+    "ui/JourneyPanel.gd": "6e6688717aef2fd9cc14033e499358db76facd5994ef294d75f4805af5bab1e1",
+    "ui/LoadScreen.gd": "b54ec9909dbe4b21a3df5c8d4c4949369a1513c3d8916a2fd0c086cf8bdda97b",
+    "ui/LoginChestView.gd": "48fc8cca45482730d6217dea07893b33417d548528373be55fab15b6dc1119fd",
+    "ui/QuestPanel.gd": "acb84230dee738b40ab0c4e0904822d5c326265354054d10f2e22a1bc485ce88",
+    "ui/ReadingSkin.gd": "e09d8562097a0f0774cf88090de019724b5332bd4cd6ccb9bc65381bab2c6229",
+    "ui/RegionChestMap.gd": "3d6a2cfc1ac61594896a143e4daa655920e2593d86ed130a946bf54f87018a08",
+    "ui/ReviewFixUI.gd": "4cbaa8e300b98ba8c1ae2f4711ca8827e4d6f71781f3774e0481f72ba40a577f",
+    "ui/RoadMailPanel.gd": "493fb19d2dcc8e618d698f978c8e60eac7e9befb52f1877c3dc1a03953b44210",
+    "ui/SettingsChestView.gd": "d6766e8d75266e5d8821d9b90ac60a34eafb0b3e05779c0383f4617b7fa2010e",
+    "ui/ShowcaseUI.gd": "dd973c07a2a8344af97c5f3160df6207bcf743935d1da3a26b5e7254288db30b",
+    "ui/TouchScroll.gd": "32986f6405c9d22e7aca12d114f7cded5d80ff8d39877ccd3c4556defea79066",
+    "ui/TravelChestUI.gd": "482020cfc98078e5d9ce784efb2632fdfdad7e5a9715fb15fe11a61101da45c5",
+    "ui/UiSafeArea.gd": "a4fe4254629ce795e42c356a5562ce98e8f32233d64020c34eca8046ab6e75e5",
+    "ui/WorldPointMap.gd": "9e696f96e95167d46e393703778c74900bad1025cac00252a73861ed5b68be55"
+  },
+  "regression": {
+    "cases": 78,
+    "passed": 78,
+    "log": "regression_final_complete_summary.log",
+    "note": "Complete suite run after all product changes."
+  },
+  "performance_lines": [
+    "PERF 加载页预热完（含编译）     4720 ms",
+    "PERF GameHome 进场景             115 ms（预算 200）",
+    "PERF 开浮层 世界     第1次       58 ms（预算 100）",
+    "PERF 开浮层 世界     第2次       35 ms（预算 70）",
+    "PERF 开浮层 图鉴     第1次       55 ms（预算 100）",
+    "PERF 开浮层 图鉴     第2次       31 ms（预算 70）",
+    "PERF 开浮层 召唤     第1次       46 ms（预算 100）",
+    "PERF 开浮层 召唤     第2次       15 ms（预算 70）",
+    "PERF 开浮层 兑换     第1次       44 ms（预算 100）",
+    "PERF 开浮层 兑换     第2次       35 ms（预算 70）",
+    "PERF 开浮层 设置     第1次       59 ms（预算 100）",
+    "PERF 开浮层 设置     第2次       41 ms（预算 70）",
+    "PERF 开浮层 养成     第1次       50 ms（预算 100）",
+    "PERF 开浮层 养成     第2次       23 ms（预算 70）",
+    "PERF CityScene 进场景            184 ms（预算 320）"
+  ],
+  "visual_checks": 503,
+  "visual_failures": 0,
+  "responsive": {
+    "screenshots": 132,
+    "visible_rectangles": 4182,
+    "overruns": 0,
+    "sizes": [
+      [
+        320,
+        640
+      ],
+      [
+        480,
+        640
+      ],
+      [
+        480,
+        800
+      ],
+      [
+        480,
+        1067
+      ]
+    ]
+  },
+  "full_capture": {
+    "screenshots": 105,
+    "steps": 141,
+    "errors": [],
+    "battle_result": "",
+    "battle_result_late": ""
+  },
+  "scope": "Actual Windows GPU rendering at phone viewport sizes; no physical Android device validation.",
+  "known_engine_exit_diagnostics": "Original runner issue #43: shutdown resource diagnostics. See final runner summary for exact count. Graphical fixtures also emit exit-time resource warnings; not visual assertion failures."
+}

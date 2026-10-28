@@ -1,0 +1,533 @@
+{
+  "mode": "built-in imagegen",
+  "jobs": [
+    {
+      "id": "tpl_sword_starfall",
+      "prompt": "Use case: stylized-concept. Asset type: inventory icon for Chinese fantasy pixel RPG 远征. Reference image is style only: match its crisp chunky pixel-art, dark brown outlines, restrained 12-16 color palette per object and upper-left lighting. Generate exactly ONE isolated object centered on genuinely transparent background, filling 85% of square. Render on an approximately 64x64 logical pixel grid enlarged with nearest neighbor, readable at 40 pixels. No letters, numbers, labels, frame, badge, background circle, gradient, blur or glow. A massive two-handed meteor-iron greatsword 陨星破阵重剑, diagonal from bottom left hilt to upper right blade tip. Broad dark steel blade with a jagged meteor fracture, a narrow warm amber seam and heavy bronze crossguard. Clearly an actual complete sword, not an emblem.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-d2203f09-6ed2-4d7d-8f1b-700ae53f4e6f.png",
+      "ready": "assets/completion_20261024/ready/equipment/tpl_sword_starfall.png",
+      "alpha_bounds": [
+        43,
+        15,
+        1237,
+        1239
+      ],
+      "size": [
+        64,
+        64
+      ]
+    },
+    {
+      "id": "tpl_spear_windpiercer",
+      "prompt": "Use case: stylized-concept. Asset type: inventory icon for Chinese fantasy pixel RPG 远征. Reference image is style only: match its crisp chunky pixel-art, dark brown outlines, restrained 12-16 color palette per object and upper-left lighting. Generate exactly ONE isolated object centered on genuinely transparent background, filling 85% of square. Render on an approximately 64x64 logical pixel grid enlarged with nearest neighbor, readable at 40 pixels. No letters, numbers, labels, frame, badge, background circle, gradient, blur or glow. A long Chinese wind-piercing spear 朔风贯影长枪, diagonal bottom left butt to upper right spearhead. Slim dark wood pole, long silver leaf-shaped blade, bronze collar and two small muted teal streamers. Clearly a complete spear.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-1d186ede-f2f0-4d2c-beb1-db5efbd84c02.png",
+      "ready": "assets/completion_20261024/ready/equipment/tpl_spear_windpiercer.png",
+      "alpha_bounds": [
+        126,
+        40,
+        1216,
+        1197
+      ],
+      "size": [
+        64,
+        64
+      ]
+    },
+    {
+      "id": "tpl_staff_glacierheart",
+      "prompt": "Use case: stylized-concept. Asset type: inventory icon for Chinese fantasy pixel RPG 远征. Reference image is style only: match its crisp chunky pixel-art, dark brown outlines, restrained 12-16 color palette per object and upper-left lighting. Generate exactly ONE isolated object centered on genuinely transparent background, filling 85% of square. Render on an approximately 64x64 logical pixel grid enlarged with nearest neighbor, readable at 40 pixels. No letters, numbers, labels, frame, badge, background circle, gradient, blur or glow. A glacier-heart stargazer wizard staff 凝霜观星法杖, diagonal bottom left grip to upper right crown. Dark wood shaft, silver prongs holding a faceted icy pale-blue crystal, a small bronze star-shaped fitting. Clearly a complete staff. No luminous halo.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-07ac9990-8c2c-456f-bece-db6cef5e8f22.png",
+      "ready": "assets/completion_20261024/ready/equipment/tpl_staff_glacierheart.png",
+      "alpha_bounds": [
+        137,
+        59,
+        1216,
+        1196
+      ],
+      "size": [
+        64,
+        64
+      ]
+    },
+    {
+      "id": "tpl_hammer_dawnlight",
+      "prompt": "Use case: stylized-concept. Asset type: inventory icon for Chinese fantasy pixel RPG 远征. Reference image is style only: match crisp chunky pixel art, dark brown outlines, 12-16 colors per object, upper-left lighting. Exactly ONE complete isolated object, centered filling 85% of square, transparent background. Approximately 64x64 logical pixel grid enlarged with nearest neighbor, readable at 40px. No letters, numbers, labels, frame, badge, background disc, gradient, blur, glow. A holy dawnlight warhammer 破晓圣辉战锤, diagonal bottom-left leather-wrapped handle to top-right broad square hammer head. Ivory steel head, restrained gold sunburst engraved on face, sturdy bronze fittings, short muted red tassel. Actual complete hammer.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-6b5496a6-811c-4928-a597-79f5d5839bfc.png",
+      "ready": "assets/completion_20261024/ready/equipment/tpl_hammer_dawnlight.png",
+      "alpha_bounds": [
+        113,
+        42,
+        1221,
+        1192
+      ],
+      "size": [
+        64,
+        64
+      ]
+    },
+    {
+      "id": "tpl_armor_expedition",
+      "prompt": "Use case: stylized-concept. Asset type: inventory icon for Chinese fantasy pixel RPG 远征. Reference image is style only: match crisp chunky pixel art, dark brown outlines, 12-16 colors per object, upper-left lighting. Exactly ONE complete isolated object, centered filling 85% of square, transparent background. Approximately 64x64 logical pixel grid enlarged with nearest neighbor, readable at 40px. No letters, numbers, labels, frame, badge, background disc, gradient, blur, glow. A heavy expedition guard cuirass 远征戍卫重铠, frontal three-quarter view, complete torso armor with large layered steel shoulder plates, weathered bronze edges, dark teal undercloth and brown leather straps. Empty armor, no wearer, no helmet, no head, no stand.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-3f67d825-65de-480b-aacf-7966c951677d.png",
+      "ready": "assets/completion_20261024/ready/equipment/tpl_armor_expedition.png",
+      "alpha_bounds": [
+        60,
+        64,
+        1197,
+        1215
+      ],
+      "size": [
+        64,
+        64
+      ]
+    },
+    {
+      "id": "tpl_acc_archery_ring",
+      "prompt": "Use case: stylized-concept. Asset type: inventory icon for Chinese fantasy pixel RPG 远征. Reference image is style only: match crisp chunky pixel art, dark brown outlines, 12-16 colors per object, upper-left lighting. Exactly ONE complete isolated object, centered filling 85% of square, transparent background. Approximately 64x64 logical pixel grid enlarged with nearest neighbor, readable at 40px. No letters, numbers, labels, frame, badge, background disc, gradient, blur, glow. A traditional Chinese archer thumb ring 穿杨听风扳指, one thick green jade cylindrical thumb guard with clearly visible open hollow center, slightly tilted three-quarter view, weathered bronze rim with a tiny engraved arrow motif. Actual wearable thumb ring, not a medal, no hand.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-a4342a81-1ab6-4771-aaba-c9f3b05dbffd.png",
+      "ready": "assets/completion_20261024/ready/equipment/tpl_acc_archery_ring.png",
+      "alpha_bounds": [
+        84,
+        102,
+        1183,
+        1184
+      ],
+      "size": [
+        64,
+        64
+      ]
+    },
+    {
+      "id": "rune_dais",
+      "prompt": "Use case: stylized-concept. Game asset for 远征 Chinese fantasy RPG. Reference image is STYLE ONLY. Match crisp detailed pixel art, weathered blue gray stone and old bronze, upper-left light, rich material detail with discrete pixel clusters. Exactly ONE isolated world object on transparent background. No text, no frame, no UI symbols, no painted scenery, no blur or bloom. Elevated top-down 2D RPG perspective looking down at floor about 60 degrees. A LOW circular ancient basalt rune dais inlaid in the floor, not a vertical standing monument. Octagonal broken stone border, thick chipped rim, nested carved bronze channels, subtle turquoise mineral inlays, small worn stone runes spaced around inner circle. Flat circular top in perspective, a very shallow front edge, shadow only under the object. Standalone practical ground prop, neutral unlit state. Clear textured stone, not just rings and spokes.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-eb17c18f-b2a8-47ed-b29c-b1edf22ef5da.png",
+      "ready": "assets/completion_20261024/ready/world/rune_dais.png",
+      "alpha_bounds": [
+        63,
+        98,
+        1338,
+        1033
+      ],
+      "size": [
+        252,
+        185
+      ]
+    },
+    {
+      "id": "rune_channel",
+      "prompt": "Use case: stylized-concept. Game asset for 远征 Chinese fantasy RPG. Reference image is STYLE ONLY. Match crisp detailed pixel art, weathered blue gray stone and old bronze, upper-left light, rich material detail with discrete pixel clusters. Exactly ONE isolated world object on transparent background. No text, no frame, no UI symbols, no painted scenery, no blur or bloom. Elevated top-down 2D RPG perspective looking down at floor about 60 degrees. One straight horizontal modular section of inset carved stone conduit, long and narrow 5:1 shape. Worn dark basalt edge strips with chipped surfaces, an inset narrow oxidized bronze rune channel down its center with a dull turquoise inlay. Open ends so identical modules can join. Completely flat TOP-DOWN floor view for rotating and tiling. No terminal caps, no discs, no background.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-58727106-02be-4a84-905c-2c03c82d3cac.png",
+      "ready": "assets/completion_20261024/ready/world/rune_channel.png",
+      "alpha_bounds": [
+        23,
+        204,
+        2148,
+        531
+      ],
+      "size": [
+        124,
+        19
+      ]
+    },
+    {
+      "id": "salt_trace",
+      "prompt": "Use case: stylized-concept. Game asset for 远征 Chinese fantasy RPG. Reference image is STYLE ONLY. Match crisp detailed pixel art, weathered blue gray stone and old bronze, upper-left light, rich material detail with discrete pixel clusters. Exactly ONE isolated world object on transparent background. No text, no frame, no UI symbols, no painted scenery, no blur or bloom. Elevated top-down 2D RPG perspective looking down at floor about 60 degrees. A natural irregular patch of white salt crystals and dried pale sediment streaks on a few small flat gray-brown shore stones. Very low ground decal, open sparse asymmetrical silhouette, rough granular residue, no parallel zigzags or drawn symbols. Full top-down view, real transparent gaps between the loose crystals.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-78b750b1-0966-4962-8271-4825c793fd44.png",
+      "ready": "assets/completion_20261024/ready/world/salt_trace.png",
+      "alpha_bounds": [
+        126,
+        178,
+        1425,
+        852
+      ],
+      "size": [
+        124,
+        64
+      ]
+    },
+    {
+      "id": "itm_frost_letter",
+      "prompt": "Use case: stylized-concept. One production inventory icon for Chinese fantasy pixel RPG 远征. Use reference only for STYLE: chunky crisp pixel art at 64x64 logical resolution, dark brown outlines, limited 16-color palette, upper-left light. One object centered filling 85% square, genuinely transparent background. No text/letters/numbers, no background disk, no frame/badge, no blurry gradients or glow. A worn folded cream-paper courier letter with frayed edges, a thin blue cloth binding and small dark red wax seal, faint frost on upper corners. Whole letter at three-quarter view.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-ca65521d-cbc4-45aa-8ccb-39f93a7587a5.png",
+      "ready": "assets/completion_20261024/ready/items/itm_frost_letter.png",
+      "alpha_bounds": [
+        79,
+        172,
+        1201,
+        1158
+      ],
+      "size": [
+        64,
+        64
+      ]
+    },
+    {
+      "id": "itm_mine_record",
+      "prompt": "Use case: stylized-concept. One production inventory icon for Chinese fantasy pixel RPG 远征. Use reference only for STYLE: chunky crisp pixel art at 64x64 logical resolution, dark brown outlines, limited 16-color palette, upper-left light. One object centered filling 85% square, genuinely transparent background. No text/letters/numbers, no background disk, no frame/badge, no blurry gradients or glow. A small battered miner's field record book, dark leather binding, a few cream pages open, a short charcoal pencil tucked across the pages, gray dust and a brass corner protector. No legible writing.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-56f936b7-962e-4a73-9253-7ece47c84a0c.png",
+      "ready": "assets/completion_20261024/ready/items/itm_mine_record.png",
+      "alpha_bounds": [
+        59,
+        168,
+        1227,
+        1146
+      ],
+      "size": [
+        64,
+        64
+      ]
+    },
+    {
+      "id": "itm_gate_stamp",
+      "prompt": "Use case: stylized-concept. One production inventory icon for Chinese fantasy pixel RPG 远征. Use reference only for STYLE: chunky crisp pixel art at 64x64 logical resolution, dark brown outlines, limited 16-color palette, upper-left light. One object centered filling 85% square, genuinely transparent background. No text/letters/numbers, no background disk, no frame/badge, no blurry gradients or glow. A square bronze frontier pass seal stamp with thick carved base, a small loop handle on top, worn ochre bronze patina and dark incised seal-face pattern. Actual physical stamp not a UI seal badge.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-de667b5f-c8f3-4a51-978b-876792548f3b.png",
+      "ready": "assets/completion_20261024/ready/items/itm_gate_stamp.png",
+      "alpha_bounds": [
+        110,
+        70,
+        1176,
+        1238
+      ],
+      "size": [
+        64,
+        64
+      ]
+    },
+    {
+      "id": "itm_frost_reply",
+      "prompt": "Use case: stylized-concept. One production inventory icon for Chinese fantasy pixel RPG 远征. Use reference only for STYLE: chunky crisp pixel art at 64x64 logical resolution, dark brown outlines, limited 16-color palette, upper-left light. One object centered filling 85% square, genuinely transparent background. No text/letters/numbers, no background disk, no frame/badge, no blurry gradients or glow. A compact rolled cream parchment reply letter, tied by a muted red cord around its center, small bronze courier token on cord, slightly icy paper edge. No legible writing.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-c491b1ce-92c5-4843-a6cc-cd255fff3385.png",
+      "ready": "assets/completion_20261024/ready/items/itm_frost_reply.png",
+      "alpha_bounds": [
+        46,
+        88,
+        1232,
+        1195
+      ],
+      "size": [
+        64,
+        64
+      ]
+    },
+    {
+      "id": "itm_veil_seal",
+      "prompt": "Use case: stylized-concept. One production inventory icon for Chinese fantasy pixel RPG 远征. Use reference only for STYLE: chunky crisp pixel art at 64x64 logical resolution, dark brown outlines, limited 16-color palette, upper-left light. One object centered filling 85% square, genuinely transparent background. No text/letters/numbers, no background disk, no frame/badge, no blurry gradients or glow. A thick hexagonal ancient ice ward seal carved from pale blue stone, beveled weathered edges, engraved symmetrical snowflake inset with dark blue cracks, small bronze clasp at top. A physical talisman.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-7bf71cba-e5f7-4e95-8224-2c0d1bde855b.png",
+      "ready": "assets/completion_20261024/ready/items/itm_veil_seal.png",
+      "alpha_bounds": [
+        127,
+        29,
+        1131,
+        1244
+      ],
+      "size": [
+        64,
+        64
+      ]
+    },
+    {
+      "id": "itm_frost_nameplate",
+      "prompt": "Use case: stylized-concept. One production inventory icon for Chinese fantasy pixel RPG 远征. Use reference only for STYLE: chunky crisp pixel art at 64x64 logical resolution, dark brown outlines, limited 16-color palette, upper-left light. One object centered filling 85% square, genuinely transparent background. No text/letters/numbers, no background disk, no frame/badge, no blurry gradients or glow. A cracked rectangular bronze worker name tag, small bent hanging loop at top, shallow incised unreadable marks, leather string and worn metal edges. Three-quarter view. No actual text.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-56cf6182-6aaa-4136-8690-028777696a4c.png",
+      "ready": "assets/completion_20261024/ready/items/itm_frost_nameplate.png",
+      "alpha_bounds": [
+        191,
+        87,
+        1237,
+        1204
+      ],
+      "size": [
+        64,
+        64
+      ]
+    },
+    {
+      "id": "itm_frost_parcel",
+      "prompt": "Use case: stylized-concept. One production inventory icon for Chinese fantasy pixel RPG 远征. Use reference only for STYLE: chunky crisp pixel art at 64x64 logical resolution, dark brown outlines, limited 16-color palette, upper-left light. One object centered filling 85% square, genuinely transparent background. No text/letters/numbers, no background disk, no frame/badge, no blurry gradients or glow. A compact cream cloth courier parcel tied in a cross with faded teal fabric straps and a visible knot, two green herb leaves protruding from folded top. Three-quarter view. No labels.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-10b0a14c-f370-4e83-a14e-934cb8cc6dc9.png",
+      "ready": "assets/completion_20261024/ready/items/itm_frost_parcel.png",
+      "alpha_bounds": [
+        135,
+        78,
+        1174,
+        1188
+      ],
+      "size": [
+        64,
+        64
+      ]
+    },
+    {
+      "id": "home_coin",
+      "prompt": "Use case: stylized-concept. One small home UI icon for Chinese fantasy pixel RPG 远征. Reference coin pouch is STYLE ONLY: chunky true pixel art at 32x32 logical resolution enlarged nearest neighbor, dark brown outline, 10-14 warm restrained flat colors, cream highlights, upper-left light. Exactly ONE object centered filling 85% square. Transparent background. Readable at 24-32 pixels. No words/letters/numbers, no frames, no background circle/badge, no gradient/glow, no smooth vector surfaces. A small stack of three old ochre gold Chinese cash coins with square center holes, thick metal edges.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-0ef57d6d-e2f2-4019-8bee-9b3158e32b2a.png",
+      "ready": "assets/completion_20261024/ready/home/home_coin.png",
+      "alpha_bounds": [
+        79,
+        148,
+        1202,
+        1150
+      ],
+      "size": [
+        32,
+        32
+      ]
+    },
+    {
+      "id": "home_expedition",
+      "prompt": "Use case: stylized-concept. One small home UI icon for Chinese fantasy pixel RPG 远征. Reference coin pouch is STYLE ONLY: chunky true pixel art at 32x32 logical resolution enlarged nearest neighbor, dark brown outline, 10-14 warm restrained flat colors, cream highlights, upper-left light. Exactly ONE object centered filling 85% square. Transparent background. Readable at 24-32 pixels. No words/letters/numbers, no frames, no background circle/badge, no gradient/glow, no smooth vector surfaces. A weathered bronze expedition token shaped like a small rectangular military tally with one red tassel and an incised mountain mark.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-a75d4994-44aa-43f4-8db5-bb7408dd030a.png",
+      "ready": "assets/completion_20261024/ready/home/home_expedition.png",
+      "alpha_bounds": [
+        114,
+        77,
+        1222,
+        1218
+      ],
+      "size": [
+        32,
+        32
+      ]
+    },
+    {
+      "id": "home_soul",
+      "prompt": "Use case: stylized-concept. One small home UI icon for Chinese fantasy pixel RPG 远征. Reference coin pouch is STYLE ONLY: chunky true pixel art at 32x32 logical resolution enlarged nearest neighbor, dark brown outline, 10-14 warm restrained flat colors, cream highlights, upper-left light. Exactly ONE object centered filling 85% square. Transparent background. Readable at 24-32 pixels. No words/letters/numbers, no frames, no background circle/badge, no gradient/glow, no smooth vector surfaces. A single faceted smoky violet soul crystal, small bronze setting at its base. Physical gemstone, no halo.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-79cd7508-965b-4bc5-9dc3-3e4ebc850bad.png",
+      "ready": "assets/completion_20261024/ready/home/home_soul.png",
+      "alpha_bounds": [
+        286,
+        101,
+        968,
+        1156
+      ],
+      "size": [
+        32,
+        32
+      ]
+    },
+    {
+      "id": "home_honor",
+      "prompt": "Use case: stylized-concept. One small home UI icon for Chinese fantasy pixel RPG 远征. Reference coin pouch is STYLE ONLY: chunky true pixel art at 32x32 logical resolution enlarged nearest neighbor, dark brown outline, 10-14 warm restrained flat colors, cream highlights, upper-left light. Exactly ONE object centered filling 85% square. Transparent background. Readable at 24-32 pixels. No words/letters/numbers, no frames, no background circle/badge, no gradient/glow, no smooth vector surfaces. A bronze honor medal with a sturdy shield-shaped face, small ivory star inset and two short muted red ribbon tails.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-5961ba56-c2b1-4395-b1fa-b961cc4f515d.png",
+      "ready": "assets/completion_20261024/ready/home/home_honor.png",
+      "alpha_bounds": [
+        125,
+        74,
+        1130,
+        1199
+      ],
+      "size": [
+        32,
+        32
+      ]
+    },
+    {
+      "id": "home_bag",
+      "prompt": "Use case: stylized-concept. One small home UI icon for Chinese fantasy pixel RPG 远征. Reference coin pouch is STYLE ONLY: chunky true pixel art at 32x32 logical resolution enlarged nearest neighbor, dark brown outline, 10-14 warm restrained flat colors, cream highlights, upper-left light. Exactly ONE object centered filling 85% square. Transparent background. Readable at 24-32 pixels. No words/letters/numbers, no frames, no background circle/badge, no gradient/glow, no smooth vector surfaces. A compact worn brown leather travel backpack with broad shoulder straps, cream bedroll strapped atop, small bronze buckle.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-7d67c999-27ca-491b-ad78-e710244623f0.png",
+      "ready": "assets/completion_20261024/ready/home/home_bag.png",
+      "alpha_bounds": [
+        95,
+        95,
+        1247,
+        1184
+      ],
+      "size": [
+        32,
+        32
+      ]
+    },
+    {
+      "id": "home_food",
+      "prompt": "Use case: stylized-concept. One small home UI icon for Chinese fantasy pixel RPG 远征. Reference coin pouch is STYLE ONLY: chunky true pixel art at 32x32 logical resolution enlarged nearest neighbor, dark brown outline, 10-14 warm restrained flat colors, cream highlights, upper-left light. Exactly ONE object centered filling 85% square. Transparent background. Readable at 24-32 pixels. No words/letters/numbers, no frames, no background circle/badge, no gradient/glow, no smooth vector surfaces. A rustic warm clay bowl of stew with three cream dumplings and green herb garnish, a pair of short wooden chopsticks resting across rim.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-8d94e8f5-d1c4-4bc1-b7c4-48a64c257404.png",
+      "ready": "assets/completion_20261024/ready/home/home_food.png",
+      "alpha_bounds": [
+        39,
+        118,
+        1230,
+        1183
+      ],
+      "size": [
+        32,
+        32
+      ]
+    },
+    {
+      "id": "beast_tracks",
+      "prompt": "Use case: stylized-concept. Asset type: isolated ground decal for 远征 Chinese fantasy pixel RPG. Crisp pixel art, earthy muted dark brown / slate gray, upper-left light, transparent background. ONE small irregular cluster, full top-down view. No surrounding landscape, no icon frame, no UI symbols, no text, no smooth vector strokes or blur. Two staggered deep wolf paw impressions in loose soil, organic toe pads and claw gouges, small crumbs and tiny pebbles at uneven edges. Low shallow ground trace, not a raised animal foot or heraldic paw emblem.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-ff9dee37-c265-4ea4-8ccb-ec4b5f127951.png",
+      "ready": "assets/completion_20261024/ready/world/beast_tracks.png",
+      "alpha_bounds": [
+        320,
+        93,
+        1225,
+        945
+      ],
+      "size": [
+        124,
+        117
+      ]
+    },
+    {
+      "id": "boot_tracks",
+      "prompt": "Use case: stylized-concept. Asset type: isolated ground decal for 远征 Chinese fantasy pixel RPG. Crisp pixel art, earthy muted dark brown / slate gray, upper-left light, transparent background. ONE small irregular cluster, full top-down view. No surrounding landscape, no icon frame, no UI symbols, no text, no smooth vector strokes or blur. Two staggered human boot sole impressions, elongated heels and segmented tread pressed into soil with rough irregular edges and a few displaced grains. Low shallow ground trace, not actual boots.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-b71ee2c8-d7c0-400f-b32b-78f1c2e37045.png",
+      "ready": "assets/completion_20261024/ready/world/boot_tracks.png",
+      "alpha_bounds": [
+        208,
+        131,
+        1046,
+        1191
+      ],
+      "size": [
+        98,
+        124
+      ]
+    },
+    {
+      "id": "ground_fissure",
+      "prompt": "Use case: stylized-concept. Asset type: isolated ground decal for 远征 Chinese fantasy pixel RPG. Crisp pixel art, earthy muted dark brown / slate gray, upper-left light, transparent background. ONE small irregular cluster, full top-down view. No surrounding landscape, no icon frame, no UI symbols, no text, no smooth vector strokes or blur. An irregular branching crack cut into a small patch of weathered gray stone floor, chipped stone lips, deep dark center, a few loose fragments along crack. Long narrow branching crevice visible from above, no bright glow.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-4b142a7b-0440-4213-8250-891e8a1fa4e3.png",
+      "ready": "assets/completion_20261024/ready/world/ground_fissure.png",
+      "alpha_bounds": [
+        261,
+        73,
+        1347,
+        971
+      ],
+      "size": [
+        124,
+        103
+      ]
+    },
+    {
+      "id": "ground_scuff",
+      "prompt": "Use case: stylized-concept. Asset type: isolated ground decal for 远征 Chinese fantasy pixel RPG. Crisp pixel art, earthy muted dark brown / slate gray, upper-left light, transparent background. ONE small irregular cluster, full top-down view. No surrounding landscape, no icon frame, no UI symbols, no text, no smooth vector strokes or blur. A rough set of short scrape gouges and scuffed soil beside a small exposed old tree root and one gray stone chip. Low ground trace with organic uneven edges, no repeated symbols.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-2a49054f-d0b6-44a3-8016-e771ddbf91d5.png",
+      "ready": "assets/completion_20261024/ready/world/ground_scuff.png",
+      "alpha_bounds": [
+        197,
+        162,
+        1340,
+        897
+      ],
+      "size": [
+        124,
+        80
+      ]
+    },
+    {
+      "id": "work_helmet",
+      "prompt": "Use case: stylized-concept. Asset type: isolated ground decal for 远征 Chinese fantasy pixel RPG. Crisp pixel art, earthy muted dark brown / slate gray, upper-left light, transparent background. ONE small irregular cluster, full top-down view. No surrounding landscape, no icon frame, no UI symbols, no text, no smooth vector strokes or blur. ONE old miner's bronze-yellow hard leather work helmet with brass rim and a small unlit oil-lamp bracket on front, seen from elevated three-quarter view, resting on ground. No wearer, no human, no badge.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-43c7673c-8898-4e9e-bb73-081c4065be1a.png",
+      "ready": "assets/completion_20261024/ready/world/work_helmet.png",
+      "alpha_bounds": [
+        142,
+        226,
+        1216,
+        947
+      ],
+      "size": [
+        124,
+        83
+      ]
+    },
+    {
+      "id": "mine_wheel",
+      "prompt": "Use case: stylized-concept. One isolated world sprite for 远征 Chinese fantasy pixel RPG. Reference is STYLE ONLY, crisp detailed pixel art, weathered slate blue-gray and bronze, discrete pixel clusters, top-left light. Transparent background, no backdrop, no frame, no UI symbols, no readable text, no blur/glow. A single circular horizontal bronze mine ventilation control handwheel set into a low iron floor mounting rim. FULL TOP-DOWN view, ring fully visible, four heavy slightly curved spokes and a square central axle, scratches and bolts. Symmetric round outer rim fits rotation at 45 degrees; do not attach a vertical pedestal or side housing. 96x96 logical pixels.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-6081b6b8-8d3d-4f2b-90f4-fdce7c3adc7b.png",
+      "ready": "assets/completion_20261024/ready/world/mine_wheel.png",
+      "alpha_bounds": [
+        108,
+        105,
+        1146,
+        1128
+      ],
+      "size": [
+        124,
+        122
+      ]
+    },
+    {
+      "id": "turtle_tracks",
+      "prompt": "Use case: stylized-concept. One isolated world sprite for 远征 Chinese fantasy pixel RPG. Reference is STYLE ONLY, crisp detailed pixel art, weathered slate blue-gray and bronze, discrete pixel clusters, top-left light. Transparent background, no backdrop, no frame, no UI symbols, no readable text, no blur/glow. One short natural trail of a heavy turtle: four broad shallow three-claw impressions, two on each side of a faint central belly drag groove, rough dark soil edges and tiny displaced grains. FULL TOP-DOWN ground decal, low footprint impression, not an actual animal. Muted earth brown, 96x96 logical pixels.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-abccf742-187e-4f28-849a-9c3dd6a0961a.png",
+      "ready": "assets/completion_20261024/ready/world/turtle_tracks.png",
+      "alpha_bounds": [
+        241,
+        179,
+        1033,
+        1162
+      ],
+      "size": [
+        100,
+        124
+      ]
+    },
+    {
+      "id": "rubbing_page",
+      "prompt": "Use case: stylized-concept. One isolated world sprite for 远征 Chinese fantasy pixel RPG. Reference is STYLE ONLY, crisp detailed pixel art, weathered slate blue-gray and bronze, discrete pixel clusters, top-left light. Transparent background, no backdrop, no frame, no UI symbols, no readable text, no blur/glow. One fragile cream paper rubbing sheet lying on stone floor in elevated top-down view, torn edges, dark charcoal impressions of ancient angular stone runes in the center, slightly curled upper corner, small flat pebble holding a corner. No readable letters or modern writing. 96x96 logical pixels.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-0d9cf095-ac03-418c-93cf-5e12a8874c05.png",
+      "ready": "assets/completion_20261024/ready/world/rubbing_page.png",
+      "alpha_bounds": [
+        62,
+        109,
+        1215,
+        1162
+      ],
+      "size": [
+        124,
+        113
+      ]
+    },
+    {
+      "id": "shallow_flood",
+      "prompt": "Use case: stylized-concept. One modular shallow flood water decal for 远征 top-down 2D pixel RPG. Reference water image is texture and palette reference only. A wide horizontal low puddle of muted blue-green tidal water with small subtle broken pale ripple highlights, visible small stones under the surface and a naturally jagged wet stone shoreline along top and bottom edges. Approximately 4:1 wide shape, center continuous water. Genuinely transparent background outside the irregular water silhouette, no hard straight rectangular edges, no solid blue disc, no big breaking waves, no painted landscape, no text. Crisp small discrete pixel clusters, no blur, no gradient, understated texture intended to display at 260x63 game pixels.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-537dc7fd-1d39-48a7-978b-24db140b1f92.png",
+      "ready": "assets/completion_20261024/ready/world/shallow_flood.png",
+      "alpha_bounds": [
+        16,
+        153,
+        1966,
+        662
+      ],
+      "size": [
+        124,
+        32
+      ]
+    },
+    {
+      "id": "supply_sack",
+      "prompt": "Use case: stylized-concept. One isolated world prop for 远征 Chinese fantasy pixel RPG. Reference image is style only. Match its rich weathered material detail and crisp pixel art with upper-left lighting, elevated top-down game perspective. Render one complete object centered on transparent background, 96x96 logical pixels enlarged with nearest neighbor. No backdrop, no frame, no UI badge, no text, no blur or glow. One sturdy closed beige burlap sack of grain standing on its slightly flattened base. Tied neck with rough twisted rope, wrinkles and stitching, small dark teal cloth tie. Complete cloth sack silhouette with transparent space around it. No crate, cart, planks or surrounding stones.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-bdc8eaee-d5a3-4aa6-b9f5-c71d37a28bc5.png",
+      "ready": "assets/completion_20261024/ready/world/supply_sack.png",
+      "alpha_bounds": [
+        160,
+        117,
+        1094,
+        1164
+      ],
+      "size": [
+        111,
+        124
+      ]
+    },
+    {
+      "id": "cargo_tag",
+      "prompt": "Use case: stylized-concept. One isolated world prop for 远征 Chinese fantasy pixel RPG. Reference image is style only. Match its rich weathered material detail and crisp pixel art with upper-left lighting, elevated top-down game perspective. Render one complete object centered on transparent background, 96x96 logical pixels enlarged with nearest neighbor. No backdrop, no frame, no UI badge, no text, no blur or glow. One old parchment cargo tag, a broad small cream rectangular label with clipped corners, tiny punched hole and a loop of brown twine, faint illegible tally marks and small dark red seal. Tag lying on the ground at a shallow diagonal. Complete isolated paper label, no box, cart or wooden background.",
+      "source": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-5a373c63-ef79-4ec0-9dc0-c1debfd19dc6.png",
+      "ready": "assets/completion_20261024/ready/world/cargo_tag.png",
+      "alpha_bounds": [
+        33,
+        330,
+        1204,
+        1039
+      ],
+      "size": [
+        124,
+        75
+      ]
+    }
+  ]
+}

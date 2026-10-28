@@ -1,0 +1,848 @@
+--- before/src/battle/BattleChestView.gd
++++ after/src/battle/BattleChestView.gd
+@@ -29,6 +29,7 @@
+ var _energy_graph:Control
+ var _page_energy_graph:Control
+ var _enemy_key:=""
++var _target_hint:Label
+ var _auto_focus_uid:=-1
+ var _portraits:Dictionary={}
+ var _badges:Dictionary={}
+@@ -50,11 +51,15 @@
+ 	_energy=UI.label("","tag",UI.BLUE)
+ 	add_child(_energy)
+ 	for label in [_now,_hp,_pet,_energy]:label.visible=false
+-	_enemy_scroll=ScrollContainer.new()
++	_enemy_scroll=preload("res://src/ui/TouchScroll.gd").new()
++	_enemy_scroll.horizontal_gesture=true
+ 	_enemy_scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_SHOW_NEVER
+ 	_enemy_scroll.vertical_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
+ 	add_child(_enemy_scroll)
+ 	_enemy_strip=HBoxContainer.new();_enemy_strip.add_theme_constant_override("separation",4);_enemy_scroll.add_child(_enemy_strip)
++	_target_hint=UI.label("敌方目标 · 横向滑动选择","tag",UI.AGED)
++	_target_hint.add_theme_font_size_override("font_size",13)
++	add_child(_target_hint)
+ 	_hp_graph=Fix.Gauge.new("旅人");add_child(_hp_graph)
+ 	_pet_graph=Fix.Gauge.new("伙伴");add_child(_pet_graph)
+ 	_energy_graph=Fix.Gauge.new("能量",UI.BLUE);add_child(_energy_graph)
+@@ -137,9 +142,15 @@
+ 	_safe=safe_override if safe_override.has_area() else G.ui_safe_rect(self)
+ 	var x:=_safe.position.x
+ 	var bottom:=_safe.end.y
+-	Page.place(_title,Vector2(x+160,_safe.position.y+12),Vector2(150,36))
+-	Page.place(tray,Vector2(x,bottom-216),Vector2(_safe.size.x,216))
+-	Page.place(_enemy_scroll,Vector2(x+12,bottom-208),Vector2(_safe.size.x-24,44))
++	var narrow:=_safe.size.x<400
++	Page.place(_title,Vector2(x+(_safe.size.x-150)*.5,_safe.position.y+(60 if narrow else 12)),Vector2(150,36))
++	if host._field!=null:
++		var field_scale:=minf(1.0,_safe.size.x/480.0)
++		host._field.scale=Vector2.ONE*field_scale
++		host._field.position.x=x+(_safe.size.x-480*field_scale)*.5
++	Page.place(tray,Vector2(x,bottom-264),Vector2(_safe.size.x,264))
++	Page.place(_target_hint,Vector2(x+16,bottom-260),Vector2(_safe.size.x-32,22))
++	Page.place(_enemy_scroll,Vector2(x+12,bottom-234),Vector2(_safe.size.x-24,60))
+ 	var gauge_width:=(_safe.size.x-40)
+ 	var hp_width:=floorf(gauge_width*.38)
+ 	var pet_width:=floorf(gauge_width*.29)
+@@ -151,7 +162,7 @@
+ 	Page.place(_pet,Vector2(x+220,bottom-172),Vector2(120,32))
+ 	Page.place(_energy,Vector2(x+348,bottom-172),Vector2(112,32))
+ 	Page.place(commands,Vector2(x+12,bottom-120),Vector2(_safe.size.x-24,104))
+-	var column:=floorf((commands.size.x-12-152)/2)
++	var column:=floorf((commands.size.x-12-(100 if narrow else 152))/2)
+ 	for id in ["partner","target","skill","item","attack"]:
+ 		var p:=Vector2(0,0) if id=="partner" else Vector2(0,54) if id=="target" else Vector2(column+6,0) if id=="skill" else Vector2(column+6,54) if id=="item" else Vector2((column+6)*2,0)
+ 		Page.place(_buttons[id],p,Vector2(commands.size.x-2*column-12 if id=="attack" else column,104 if id=="attack" else 50))
+@@ -166,12 +177,12 @@
+ 		if b.has_node("CommandGlyph"):b.get_node("CommandGlyph").position=Vector2(4,2) if id=="target" else Vector2((b.size.x-40)*.5,16)
+ 	Page.place(_page,Vector2(x,bottom-416),Vector2(_safe.size.x,416))
+ 	Page.place(_page_back,Vector2(8,12),Vector2(44,44))
+-	Page.place(_page_title,Vector2(64,12),Vector2(200,32))
++	Page.place(_page_title,Vector2(64,12),Vector2(minf(200,_safe.size.x-220),32))
+ 	Page.place(host._page_energy_l,Vector2(_safe.size.x-144,14),Vector2(128,28))
+ 	Page.place(_page_energy_graph,Vector2(_safe.size.x-156,10),Vector2(144,34))
+ 	Page.place(_page_scroll,Vector2(12,64),Vector2(_safe.size.x-24,336))
+-	Page.place(host._cast_tip,Vector2(x+16,bottom-256),Vector2(_safe.size.x-32,40))
+-	Page.place(host._combo_tip,Vector2(x+16,bottom-280),Vector2(_safe.size.x-32,24))
++	Page.place(host._cast_tip,Vector2(x+16,bottom-300),Vector2(_safe.size.x-32,32))
++	Page.place(host._combo_tip,Vector2(x+16,bottom-326),Vector2(_safe.size.x-32,24))
+ func refresh() -> void:
+ 	var role:Combatant=host.sim.role_unit()
+ 	var sim:BattleSim=host.sim
+@@ -207,6 +218,8 @@
+ 	_buttons.target.caption.text="换目标"
+ 	_target_subtitle.text="下个 · "+_enemy_name(next) if next!=null else "没有目标"
+ 	_target_subtitle.position=Vector2(2,28);_target_subtitle.size=Vector2(_buttons.target.size.x-4,22)
++	_target_subtitle.clip_text=true
++	_target_subtitle.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
+ 	_buttons.target.caption.position=Vector2(30,1);_buttons.target.caption.size=Vector2(_buttons.target.size.x-34,28)
+ 	_buttons.target.get_node("CommandIcon").position=Vector2(4,2)
+ 	_sync_badges(sim)
+@@ -226,7 +239,7 @@
+ 				if other!=null and other.side=="enemy" and other.alive and area.intersects(host._views[other_uid]._actor_rect()):crowded=true;break
+ 			view.name_l.visible=not crowded;view.hp_value.visible=not crowded
+ 			view.compact_health(crowded)
+-			var health_rect := Rect2(Vector2(area.get_center().x-view.hp_bg.size.x*.5,area.end.y+24),view.hp_bg.size)
++			var health_rect := Rect2(Vector2(area.get_center().x-view.hp_bg.size.x*.5,area.end.y+7),view.hp_bg.size)
+ 			for attempt in 12:
+ 				if not health_rects.any(func(r):return r.grow(1).intersects(health_rect)):break
+ 				health_rect.position.y+=7
+@@ -320,13 +333,15 @@
+ 	var key:=str(units.map(func(u):return u.uid))
+ 	if key!=_enemy_key:
+ 		_enemy_key=key;Page.clear(_enemy_strip)
+-		_enemy_strip.custom_minimum_size=Vector2(maxf(0,units.size()*110+(units.size()-1)*4),44)
++		_enemy_strip.custom_minimum_size=Vector2(maxf(0,units.size()*148+(units.size()-1)*4),60)
+ 		for i in units.size():
+ 			var chip:=Fix.EnemyChip.new(_portrait(units[i].uid));_enemy_strip.add_child(chip)
+ 			chip.mouse_filter=Control.MOUSE_FILTER_PASS
+ 			chip.selected.connect(func(uid:int):host._select_enemy_target(uid,false))
++	_target_hint.text="敌方目标 %d · 横向滑动选择"%units.size()
+ 	for i in _enemy_strip.get_child_count():
+ 		var chip=_enemy_strip.get_child(i);chip.unit=units[i];chip.number=i+1;chip.display_name=_enemy_name(units[i])
++		chip.custom_minimum_size=Vector2(148,60)
+ 		# The deck is built before UnitViews finish spawning; retry missing portraits.
+ 		if chip.portrait.texture==null:chip.portrait.texture=_portrait(units[i].uid)
+ 		chip.focused=units[i].uid==sim.role_focus_target_uid or (sim.role_focus_target_uid<0 and units[i].uid==_auto_focus_uid)
+@@ -354,7 +369,7 @@
+ 		badge.focused=unit.uid==sim.role_focus_target_uid
+ 		var rect:Rect2=view._actor_rect()
+ 		var foot:=Vector2(rect.get_center().x,rect.end.y)
+-		var at:=foot+Vector2(0,12)
++		var at:=Vector2(rect.position.x+3,rect.position.y+8)
+ 		for attempt in 2:
+ 			var conflict:=false
+ 			for point in occupied:if point.distance_to(at)<18:conflict=true;break
+--- before/src/battle/BattleScene.gd
++++ after/src/battle/BattleScene.gd
+@@ -1309,6 +1309,11 @@
+ 			if unit.kind == "monster" and String(unit.data.get("tier", "")) == "boss":
+ 				spread_boss = true
+ 	spread_boss = spread_boss and enemy_count > 1
++	var enemy_rows: Dictionary={}
++	for unit in sim.units:
++		if unit.side!="enemy":continue
++		if not enemy_rows.has(unit.row):enemy_rows[unit.row]=[]
++		enemy_rows[unit.row].append(unit)
+ 	for u in sim.units:
+ 		if not _views.has(u.uid):
+ 			_views[u.uid] = _spawn_view(u)
+@@ -1317,9 +1322,17 @@
+ 		var view: UnitView = _views[u.uid]
+ 		# Large boss art and summoned front units need separate horizontal lanes.
+ 		view._formation_offset = Vector2.ZERO
+-		if spread_boss and u.side == "enemy":
+-			view._formation_offset.x = -50.0 if String(u.data.get("tier", "")) == "boss" \
+-				else (65.0 if u.row == Combatant.ROW_FRONT else 0.0)
++		if u.side == "enemy":
++			var row_units: Array=enemy_rows[u.row]
++			var index:=row_units.find(u)
++			var back:=u.row==Combatant.ROW_BACK
++			var top:=176.0+(0 if back else 36)
++			var bottom:=clampf((get_viewport_rect().size.y-350.0-_field.position.y)/maxf(.5,_field.scale.y),250,470)-(36 if back else 0)
++			var span:=minf(maxf(0,bottom-top),112.0*maxi(0,row_units.size()-1))
++			var y: float=(top+bottom)*.5+(-span*.5+span*index/(row_units.size()-1) if row_units.size()>1 else 0.0)
++			var x:=410.0 if back else 300.0
++			if spread_boss and String(u.data.get("tier",""))=="boss":x-=20
++			view._formation_offset=Vector2(x,y)-classic_grid_pos(u.side,u.row,u.col)
+ 		view.sync(u)
+ 		(_views[u.uid] as UnitView).set_focused(
+ 			u.alive and u.uid == sim.role_focus_target_uid)
+--- before/src/explore/MapScene.gd
++++ after/src/explore/MapScene.gd
+@@ -319,6 +319,7 @@
+ 			_refresh_hud()
+ 			_refresh_quest_entities.call_deferred()
+ 	_refresh_explore_hud()   # 恢复的探索分/击杀数要在 HUD 上显出来
++	if _mode=="main_world":_refresh_hud.call_deferred()
+ 	if _mode == "main_world":
+ 		var campaign_note := G.take_campaign_note()
+ 		if not campaign_note.is_empty(): _toast(campaign_note)
+@@ -2147,7 +2148,7 @@
+ 		prop.art = "trust_"+region
+ 		prop.feedback_tier=int(trust_script.info(G,region).tier)
+ 		prop.caption = {"zhaoyuan":"路簿灯架 · 留有你的名字", "shenyuan":"港务旧潮线纸", "frost":"轮岗簿的新一页"}[region]
+-		prop.position = {"zhaoyuan":Vector2(580,730),"shenyuan":Vector2(610,720),"frost":Vector2(580,1010)}[region]
++		prop.position = {"zhaoyuan":Vector2(580,730),"shenyuan":Vector2(610,720),"frost":Vector2(700,1090)}[region]
+ 		prop.map_ref=self
+ 		_world.add_child(prop)
+ 		_quest_entities.append(prop)
+--- before/src/ui/BagPanel.gd
++++ after/src/ui/BagPanel.gd
+@@ -22,6 +22,7 @@
+ var _pending_l: Label
+ var _gold: Label
+ var _gold_bg: Panel = null
++var _gold_hit: Button
+ var _tabs: HBoxContainer
+ var _list: Control
+ var _scroll: TouchScroll
+@@ -82,6 +83,18 @@
+ 	_gold.name="GoldBalance"
+ 	_gold.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+ 	_panel_root.add_child(_gold)
++	_gold_hit=Button.new()
++	_gold_hit.name="ViewGoldBalance"
++	_gold_hit.custom_minimum_size=Vector2(44,44)
++	for state in ["normal","hover","pressed","disabled"]:_gold_hit.add_theme_stylebox_override(state,StyleBoxEmpty.new())
++	var gold_focus:=StyleBoxFlat.new()
++	gold_focus.bg_color=Color.TRANSPARENT
++	gold_focus.border_color=Art.GOLD
++	gold_focus.set_border_width_all(1)
++	_gold_hit.add_theme_stylebox_override("focus",gold_focus)
++	_gold_hit.mouse_default_cursor_shape=Control.CURSOR_POINTING_HAND
++	_gold_hit.pressed.connect(func():_toast_msg("金币 %d"%int(G.wallet.get("gold",0))))
++	_panel_root.add_child(_gold_hit)
+ 	_tabs=HBoxContainer.new()
+ 	_tabs.name="Categories"
+ 	_tabs.add_theme_constant_override("separation",6)
+@@ -130,14 +143,31 @@
+ 	Page.place(_stage,Vector2.ZERO,get_viewport_rect().size)
+ 	Page.place(_panel_root,safe.position,safe.size)
+ 	var w:=safe.size.x
++	var narrow:=w<400
+ 	Page.place(_header,Vector2(12,8),Vector2(w-24,72))
+ 	Page.place(_close_btn,Vector2(18,16),Vector2(56,56))
+ 	Page.place(_bag_mark,Vector2(86,28),Vector2(32,32))
+ 	Page.place(_banner,Vector2(128,18),Vector2(w-152,52))
+-	Page.place(_count_l,Vector2(24,84),Vector2(w*.34,36))
+-	Page.place(_pending_l,Vector2(w*.38,84),Vector2(w*.23,36))
+-	if _gold_bg!=null:Page.place(_gold_bg,Vector2(w*.64,84),Vector2(w*.36-24,36))
+-	Page.place(_gold,Vector2(w*.64,84),Vector2(w*.36-24,36))
++	var gold_w:=96.0 if narrow else maxf(148,w*.34)
++	var gold_x:=w-24-gold_w
++	Page.place(_count_l,Vector2(24,84),Vector2(104 if narrow else w*.32,36))
++	Page.place(_pending_l,Vector2(126 if narrow else w*.38,84),Vector2(gold_x-(126 if narrow else w*.38)-6,36))
++	_pending_l.text=("待领 %d" if narrow else "待领取 %d")%G.inv_pending().size()
++	for caption in [_count_l,_pending_l]:
++		caption.clip_text=true
++		caption.add_theme_font_size_override("font_size",14 if narrow else 16)
++	if _gold_bg!=null:Page.place(_gold_bg,Vector2(gold_x,84),Vector2(gold_w,36))
++	_gold.clip_text=true
++	_gold.add_theme_font_size_override("font_size",16 if narrow else 20)
++	var amount:=int(G.wallet.get("gold",0))
++	var value:=UI.format_number(amount)
++	if narrow and amount>=10000:
++		value=("%.2f"%(float(amount)/(100000000 if amount>=100000000 else 10000))).trim_suffix("0").trim_suffix("0").trim_suffix(".")+("亿" if amount>=100000000 else "万")
++	_gold.text=("金 " if narrow else "金币 ")+value
++	_gold.tooltip_text="金币 %d"%amount
++	_gold_hit.tooltip_text="金币 %d · 点按查看完整数值"%amount
++	Page.place(_gold_hit,Vector2(gold_x,80),Vector2(gold_w,44))
++	Page.place(_gold,Vector2(gold_x+6,84),Vector2(gold_w-12,36))
+ 	Page.place(_tabs,Vector2(20,126),Vector2(w-40,60))
+ 	var compact:=(_tab=="equip" and G.inv_find(_sel_uid).is_empty()) or (_tab=="pending" and _sel_uid==0) or (_tab in ["mat","gem"] and _sel_supply.is_empty())
+ 	var tray_h:=184.0 if compact else minf(340,safe.size.y*.42)
+@@ -158,6 +188,12 @@
+ 	Page.place(_actions,Vector2(0,maxf(0,_detail.size.y-64)),Vector2(_detail.size.x,64))
+ 	var unit:=(_actions.size.x-16)/3.0
+ 	for b in _action_buttons:
++		b.caption.add_theme_font_size_override("font_size",16 if narrow else 18)
++		b.caption.clip_text=true
++		if b.get_meta("action","")=="sell":
++			var price:=G.inv_sell_price(_sel_uid)
++			b.caption.text="卖出" if narrow else "卖出 %d 金"%price
++			b.tooltip_text="卖出可得 %d 金币"%price if not b.disabled else b.tooltip_text
+ 		match b.get_meta("action",""):
+ 			"sell":Page.place(b,Vector2.ZERO,Vector2(unit,64))
+ 			"lock":Page.place(b,Vector2(unit+8,0),Vector2(unit,64))
+@@ -494,6 +530,11 @@
+ func _toast_msg(msg: String) -> void:
+ 	if is_instance_valid(_toast):_toast.queue_free()
+ 	_toast=UI.toast(self,msg)
++	var safe:=G.ui_safe_rect(self)
++	_toast.size.x=minf(360,safe.size.x-24)
++	_toast.position.x=safe.get_center().x-_toast.size.x*.5
++	for child in _toast.get_children():
++		if child is Label:child.size.x=_toast.size.x-24
+ 	_toast.z_index=UI.Z_FEEDBACK
+ 
+ func _close() -> void:
+--- before/src/ui/FishingPanel.gd
++++ after/src/ui/FishingPanel.gd
+@@ -77,7 +77,7 @@
+ 	_gauge.custom_minimum_size.y = 32
+ 	body.add_child(_gauge)
+ 	var track := ColorRect.new()
+-	track.color = Color("203e44")
++	track.color = Color("332d25")
+ 	track.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+ 	track.mouse_filter = Control.MOUSE_FILTER_IGNORE
+ 	_gauge.add_child(track)
+--- before/src/ui/home/TownHome.gd
++++ after/src/ui/home/TownHome.gd
+@@ -129,15 +129,19 @@
+ 	# 高屏多出的高度按均衡比例分配给上方夜空与下方石阶广场，保持月下山城整体居中舒展
+ 	# （取偶数，保持 2 倍像素对齐；超出 home_bg_tall 顶部的部分由 SKY 色块补齐）
+ 	var extra: float = max(vh - 800.0, 0.0)
+-	var core_y: float = CORE_Y_800 + floor(extra * 0.45 / 2.0) * 2.0
+-	_scene.position = Vector2(0, core_y)
++	var scene_scale:=1.0+minf(extra/1100.0,.24)
++	var core_y: float = CORE_Y_800 + floor(extra * 0.16 / 2.0) * 2.0
++	var scene_x: float = VIEW_W*(1.0-scene_scale)*.5
++	_scene.scale=Vector2.ONE*scene_scale
++	_scene.position = Vector2(scene_x, core_y)
+ 	for id in _plaques:
+ 		var b: Button = _plaques[id]
+-		b.position = (Vector2(b.get_meta("center")) + Vector2(0, core_y) - b.size * 0.5).round()
++		b.position = (Vector2(b.get_meta("center"))*scene_scale + Vector2(scene_x, core_y) - b.size * 0.5).round()
+ 	if _hero_hit != null:
+-		_hero_hit.position = Vector2(HERO_FEET.x - 44.0, HERO_FEET.y + core_y - 96.0)
++		_hero_hit.position = Vector2(HERO_FEET.x*scene_scale+scene_x-44.0, HERO_FEET.y*scene_scale + core_y - 96.0)
+ 	_top.position = Vector2(0, safe.position.y)
+ 	_hud_bottom.position = Vector2(0, safe.end.y - 200.0)
++	_quest.position.y=16.0-minf(extra*.26,78)
+ 	_toast.position = Vector2(0, vh * 0.42)
+ 	refresh()
+ 
+--- before/src/ui/RegionChestMap.gd
++++ after/src/ui/RegionChestMap.gd
+@@ -37,15 +37,21 @@
+ var _zoom_button:Button
+ var _quest_button:Button
+ var _travel_button:Button
++var _details_button:Button
+ var _bounds:=Rect2()
+ var _press:=Vector2.ZERO
+ var _moved:=false
+ var _hint:Label
+ func _ready() -> void:
+ 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+-	_shell=Flow.Shell.new("地区行路图",196)
++	_shell=Flow.Shell.new("地区行路图",260)
+ 	_shell.closed=func():closed.emit()
+ 	add_child(_shell)
++	_details_button=preload("res://src/ui/ShowcaseUI.gd").button("地理详图与玩法地点",true)
++	_details_button.name="OpenWorldPoints"
++	_details_button.size_flags_horizontal=Control.SIZE_EXPAND_FILL
++	_details_button.pressed.connect(func():open_points(_selected))
++	_shell.footer.add_child(_details_button)
+ 	_map=Control.new()
+ 	_map.mouse_filter=Control.MOUSE_FILTER_STOP
+ 	_map.clip_contents=true
+@@ -218,10 +224,6 @@
+ 	if id=="lorin_wilds":note+="\n界碑历练从巡界厅进入。"
+ 	if id in ["broken_slope","stele_cavern"] and G.prog.get("flags",{}).get("act1_stele_repaired",false):note+="\n图志新录 · "+G.restored_stele_name()
+ 	_shell.body.add_child(Flow.text(note,"caption",UI.AGED))
+-	var detail := preload("res://src/ui/ShowcaseUI.gd").button("地理详图与玩法地点",true)
+-	detail.name="OpenWorldPoints"
+-	detail.pressed.connect(open_points.bind(id))
+-	_shell.body.add_child(detail)
+ 	for key in _nodes:_nodes[key].selected=key==id;_nodes[key].queue_redraw()
+ 	_graph.queue_redraw()
+ 	_velocity=Vector2.ZERO
+--- before/src/ui/ReviewFixUI.gd
++++ after/src/ui/ReviewFixUI.gd
+@@ -242,24 +242,43 @@
+ 	var extra:=0
+ 	var number:=1
+ 	var display_name:=""
++	var _tap_pointer:=-2
++	var _tap_at:=Vector2.ZERO
+ 	func _init(tex:Texture2D=null) -> void:
+-		custom_minimum_size=Vector2(0,44);size_flags_horizontal=Control.SIZE_EXPAND_FILL
++		custom_minimum_size=Vector2(148,60);size_flags_horizontal=Control.SIZE_EXPAND_FILL
+ 		mouse_filter=Control.MOUSE_FILTER_STOP
+ 		mouse_default_cursor_shape=Control.CURSOR_POINTING_HAND
+-		gui_input.connect(func(e:InputEvent):
+-			if e is InputEventMouseButton and e.pressed and e.button_index==MOUSE_BUTTON_LEFT:
+-				if unit!=null and unit.alive and extra==0:selected.emit(unit.uid))
++		gui_input.connect(_pointer_input)
+ 		portrait=Page.picture(tex,Vector2(32,32));portrait.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;add_child(portrait)
+ 		heading=UI.label("","tag");heading.clip_text=true;heading.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS;add_child(heading)
+ 		value=UI.label("","tag",UI.AGED);add_child(value)
+ 		marker=UI.label("","tag",UI.GOLD);marker.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT;add_child(marker)
+ 	func _ready() -> void:resized.connect(queue_redraw)
++	func _notification(what: int) -> void:
++		if what==Control.NOTIFICATION_SCROLL_BEGIN:_tap_pointer=-2
++	func _pointer_input(e: InputEvent) -> void:
++		if e is InputEventScreenTouch:
++			if e.pressed:_tap_pointer=e.index;_tap_at=e.position
++			elif _tap_pointer==e.index:
++				_tap_pointer=-2
++				if e.position.distance_to(_tap_at)<10:_choose()
++		elif e is InputEventMouseButton and e.button_index==MOUSE_BUTTON_LEFT:
++			if e.pressed:_tap_pointer=-1;_tap_at=e.position
++			elif _tap_pointer==-1:
++				_tap_pointer=-2
++				if e.position.distance_to(_tap_at)<10:_choose()
++	func _choose() -> void:
++		var scroll:=get_parent().get_parent()
++		if scroll.has_method("gesture_active") and scroll.gesture_active():return
++		if unit!=null and unit.alive and extra==0:selected.emit(unit.uid)
+ 	func _draw() -> void:
+ 		UI.surface(self,Rect2(Vector2.ZERO,size),UI.SELECTED if focused else UI.FACE,UI.GOLD if focused else UI.BRONZE)
+ 		if focused:draw_rect(Rect2(1,1,size.x-2,size.y-2),UI.GOLD,false,2)
+-		portrait.position=Vector2(5,6)
+-		heading.position=Vector2(41,0);heading.size=Vector2(size.x-45,20)
+-		value.position=Vector2(41,21);value.size=Vector2(size.x-45,19)
++		portrait.position=Vector2(6,14)
++		heading.add_theme_font_size_override("font_size",14)
++		heading.position=Vector2(44,4);heading.size=Vector2(size.x-50,22)
++		value.add_theme_font_size_override("font_size",14)
++		value.position=Vector2(44,32);value.size=Vector2(size.x-50,22)
+ 		# The narrow chip reserves its text area for the name and HP.
+ 		# A focus badge sits over the portrait, never over the name.
+ 		marker.position=Vector2(3,25);marker.size=Vector2(34,18)
+@@ -274,6 +293,6 @@
+ 		heading.text=display_name if not display_name.is_empty() else unit.name
+ 		value.text="%d/%d"%[unit.hp,unit.get_max_hp()]
+ 		portrait.modulate=Color.WHITE if unit.alive else Color(.35,.35,.35)
+-		draw_rect(Rect2(41,20,maxf(4,size.x-46),3),UI.NIGHT)
+-		draw_rect(Rect2(41,20,maxf(4,size.x-46)*clampf(float(unit.hp)/maxi(1,unit.get_max_hp()),0,1),3),Color("e58a72"))
++		draw_rect(Rect2(44,28,maxf(4,size.x-50),3),UI.NIGHT)
++		draw_rect(Rect2(44,28,maxf(4,size.x-50)*clampf(float(unit.hp)/maxi(1,unit.get_max_hp()),0,1),3),Color("e58a72"))
+ 		if not unit.alive:draw_line(Vector2(42,10),Vector2(size.x-5,10),UI.ASH,1)
+--- before/src/ui/ShowcaseUI.gd
++++ after/src/ui/ShowcaseUI.gd
+@@ -1,10 +1,11 @@
+ extends RefCounted
+ ## Shared semantic type and controls for showcase, activity and life-skill pages.
+ const TouchScroll := preload("res://src/ui/TouchScroll.gd")
+-const INK := Color("101c22")
+-const CARD := Color("192b31")
++const Art := preload("res://src/ui/InventoryQuestSkin.gd")
++const INK := Color("12151c")
++const CARD := Color("1b2028")
+ const TEXT := Color("f3e9d2")
+-const MUTED := Color("a8b6b1")
++const MUTED := Color("bdb29b")
+ const GOLD := Color("e6bd77")
+ const JADE := Color("83c9ac")
+ const RED := Color("f29c87")
+@@ -21,17 +22,13 @@
+ 	l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+ 	return l
+ 
+-static func surface(fill := CARD, border := Color("5c6558"), padding := 14.0) -> StyleBoxFlat:
+-	var box := StyleBoxFlat.new()
+-	box.bg_color = fill
+-	box.border_color = border
+-	box.set_border_width_all(1)
+-	box.set_corner_radius_all(6)
+-	box.set_content_margin_all(padding)
++static func surface(_fill := CARD, _border := Color("796344"), padding := 14.0) -> StyleBox:
++	var box := Art.box("card",padding)
+ 	return box
+ 
+ static func frame(padding := 14.0) -> PanelContainer:
+ 	var p := PanelContainer.new()
++	p.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+ 	p.add_theme_stylebox_override("panel",surface(CARD,Color("667360"),padding))
+ 	p.mouse_filter = Control.MOUSE_FILTER_PASS
+ 	return p
+@@ -46,14 +43,22 @@
+ 	var b := Button.new()
+ 	b.text = words
+ 	b.custom_minimum_size = Vector2(56,52)
++	b.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
++	b.clip_text=true
++	b.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
+ 	b.add_theme_font_override("font",G.font_bold if primary else G.font_reg)
+ 	b.add_theme_font_size_override("font_size",18)
+ 	for state in ["normal","hover","pressed","focus","disabled"]:
+-		var fill := Color("315f54") if primary else Color("26373b")
+-		if state=="hover":fill=fill.lightened(.12)
+-		if state=="pressed":fill=fill.darkened(.2)
+-		if state=="disabled":fill=Color("252c2e")
+-		b.add_theme_stylebox_override(state,surface(Color.TRANSPARENT if state=="focus" else fill,GOLD if state=="focus" or primary else Color("788071"),10))
++		var box:=Art.box("primary" if primary or state=="pressed" else "secondary",10)
++		if box is StyleBoxTexture:
++			box.modulate_color=Color(1.12,1.1,1.04) if state=="hover" else Color(.72,.72,.72) if state=="pressed" else Color(.45,.45,.45) if state=="disabled" else Color.WHITE
++		if state=="focus":
++			var focus:=StyleBoxFlat.new()
++			focus.bg_color=Color.TRANSPARENT
++			focus.border_color=GOLD
++			focus.set_border_width_all(2)
++			b.add_theme_stylebox_override(state,focus)
++		else:b.add_theme_stylebox_override(state,box)
+ 	for state in ["font_color","font_hover_color","font_pressed_color","font_focus_color"]:b.add_theme_color_override(state,TEXT)
+ 	b.add_theme_color_override("font_disabled_color",MUTED.darkened(.2))
+ 	b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+@@ -101,7 +106,7 @@
+ 	canvas.add_child(image)
+ 	var shade := TextureRect.new()
+ 	var gradient := Gradient.new()
+-	gradient.colors=PackedColorArray([Color("0a2023",.92),Color("0a2023",.25)])
++	gradient.colors=PackedColorArray([Color("17151a",.96),Color("17151a",.20)])
+ 	var tex := GradientTexture2D.new()
+ 	tex.gradient=gradient
+ 	tex.fill_from=Vector2.ZERO
+--- before/src/ui/TouchScroll.gd
++++ after/src/ui/TouchScroll.gd
+@@ -6,10 +6,11 @@
+ var _dragging := false
+ var _recent_until := 0
+ var _velocity := 0.0
++var horizontal_gesture := false
+ 
+ func _ready() -> void:
+-	horizontal_scroll_mode = SCROLL_MODE_DISABLED
+-	vertical_scroll_mode = SCROLL_MODE_AUTO
++	horizontal_scroll_mode = SCROLL_MODE_SHOW_NEVER if horizontal_gesture else SCROLL_MODE_DISABLED
++	vertical_scroll_mode = SCROLL_MODE_DISABLED if horizontal_gesture else SCROLL_MODE_AUTO
+ 	scroll_deadzone = 10
+ 	follow_focus = false
+ 	mouse_filter = Control.MOUSE_FILTER_STOP
+@@ -40,19 +41,21 @@
+ 	if top != null and top.get_global_rect().has_point(at) and top != self and not is_ancestor_of(top):return
+ 	_pointer = pointer
+ 	_origin = at
+-	_offset = scroll_vertical
++	_offset = scroll_horizontal if horizontal_gesture else scroll_vertical
+ 	_velocity = 0.0
+ 	_dragging = false
+ 
+ func _drag(at: Vector2) -> void:
+-	var delta := (at.y-_origin.y)/maxf(.01,get_global_transform().get_scale().y)
++	var delta := (at.x-_origin.x)/maxf(.01,get_global_transform().get_scale().x) if horizontal_gesture else (at.y-_origin.y)/maxf(.01,get_global_transform().get_scale().y)
+ 	if not _dragging and absf(delta)<10:return
+ 	if not _dragging:
+ 		_dragging = true
+ 		propagate_notification(Control.NOTIFICATION_SCROLL_BEGIN)
+-	var before := scroll_vertical
+-	scroll_vertical = roundi(_offset-delta)
+-	_velocity = lerpf(_velocity,float(scroll_vertical-before)*60.0,.45)
++	var before := scroll_horizontal if horizontal_gesture else scroll_vertical
++	if horizontal_gesture:scroll_horizontal=roundi(_offset-delta)
++	else:scroll_vertical=roundi(_offset-delta)
++	var after := scroll_horizontal if horizontal_gesture else scroll_vertical
++	_velocity = lerpf(_velocity,float(after-before)*60.0,.45)
+ 	_recent_until = Time.get_ticks_msec()+180
+ 	get_viewport().set_input_as_handled()
+ 
+@@ -66,7 +69,8 @@
+ 
+ func _process(delta: float) -> void:
+ 	if _pointer != -2 or absf(_velocity)<3:return
+-	var before := scroll_vertical
+-	scroll_vertical += roundi(_velocity*delta)
++	var before := scroll_horizontal if horizontal_gesture else scroll_vertical
++	if horizontal_gesture:scroll_horizontal+=roundi(_velocity*delta)
++	else:scroll_vertical+=roundi(_velocity*delta)
+ 	_velocity = move_toward(_velocity,0,1800*delta)
+-	if before == scroll_vertical:_velocity = 0
++	if before == (scroll_horizontal if horizontal_gesture else scroll_vertical):_velocity = 0
+--- before/src/ui/WorldPointMap.gd
++++ after/src/ui/WorldPointMap.gd
+@@ -79,8 +79,6 @@
+ 		b.disabled=count==0
+ 		b.tooltip_text="本区域没有此类地点" if count==0 else "显示"+String(pair[1])+"地点"
+ 		b.pressed.connect(_set_filter.bind(key))
+-		b.add_theme_stylebox_override("normal",View.surface(View.CARD,View.MUTED,4))
+-		b.add_theme_stylebox_override("pressed",View.surface(Color("315f54"),View.GOLD,4))
+ 		filters.add_child(b)
+ 		_filter_buttons[key]=b
+ 	_canvas = MapCanvas.new()
+@@ -92,7 +90,7 @@
+ 	_canvas.cluster_selected.connect(_choose_cluster)
+ 	_canvas.zoom_changed.connect(_sync_zoom)
+ 	body.add_child(_canvas)
+-	if G.ui_safe_rect(self).size.y>=720:body.add_child(View.text("拖动浏览 · 图标选点 · 北向朝上","tag",View.MUTED))
++	if G.ui_safe_rect(self).size.y>=720:body.add_child(View.text("拖动浏览 · 缩小看全图 · 北向朝上","tag",View.MUTED))
+ 	_title = View.text("选择地点","section",View.GOLD)
+ 	_title.max_lines_visible=1
+ 	_title.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
+@@ -173,7 +171,7 @@
+ 	_cancel.disabled=Points.target().is_empty()
+ 
+ func _sync_zoom() -> void:
+-	_zoom_out.disabled=_canvas.zoom<=1.001
++	_zoom_out.disabled=_canvas.zoom<=_canvas.overview_zoom()+.001
+ 	_zoom_in.disabled=_canvas.zoom>=2.999
+ 
+ func _set_filter(key: String) -> void:
+@@ -302,6 +300,9 @@
+ 	var pointer := -2
+ 	var texture: Texture2D
+ 	var points: Array[Dictionary] = []
++	var scenery: Array[Dictionary] = []
++	var _camera_ready := false
++	const KIND_COLORS := {"shop":Color("edbf69"),"station":Color("9fb9e5"),"fishing":Color("8cd9e5"),"npc":Color("93ccac"),"landmark":Color("eadbc0")}
+ 	func _ready() -> void:
+ 		clip_contents=true
+ 		mouse_filter=Control.MOUSE_FILTER_STOP
+@@ -311,9 +312,38 @@
+ 		extent=Vector2(float(_main_cfg.get("map_cols",20))*48,float(_main_cfg.get("map_rows",26))*48)
+ 		points=Points.rows(map_id)
+ 		if ReferenceWorldArt.active(map_id):texture=ReferenceWorldArt.texture(map_id+"_floor")
+-		elif not String(_main_cfg.get("background","")).is_empty():texture=G.visual_texture(String(_main_cfg.background))
++		elif not String(_main_cfg.get("background","")).is_empty():texture=G.visual_texture(preload("res://src/world/WorldPresentation.gd").background_path(String(_main_cfg.background)))
+ 		if texture==null:texture=preload("res://src/explore/MinimapCartography.gd").new().terrain_thumbnail(self)
+-		resized.connect(queue_redraw)
++		_load_scenery()
++		resized.connect(_resize_camera)
++		_resize_camera.call_deferred()
++	func overview_zoom() -> float:
++		return clampf((size.y/extent.y)/maxf(.001,size.x/extent.x),.05,1.0)
++	func _resize_camera() -> void:
++		if size.x<1 or size.y<1:return
++		zoom=maxf(overview_zoom(),zoom)
++		if not _camera_ready:
++			_camera_ready=true
++			var at:=player_at()
++			if at==Vector2.INF:at=extent*.5
++			pan=(extent*.5-at)*_scale()
++		_clamp_pan()
++		zoom_changed.emit()
++		queue_redraw()
++	func _load_scenery() -> void:
++		for id in _main_cfg.get("city_building_positions",{}):
++			var at: Array=_main_cfg.city_building_positions[id]
++			var dimensions: Array=_main_cfg.get("city_building_sizes",{}).get(id,[240,180])
++			var path:=ReferenceWorldArt.ROOT+("ledger" if id=="gate" else String(id))+".png" if ReferenceWorldArt.active(map_id) else "res://image/main_world/city_%s_reference_v2.png"%String(id)
++			var art: Texture2D=G.visual_texture(path) if ResourceLoader.exists(path) else null
++			scenery.append({"at":Vector2(at[0],at[1]),"size":Vector2(dimensions[0],dimensions[1])*preload("res://src/world/WorldPresentation.gd").BUILDING_ENLARGEMENT,"art":art})
++		for row in _main_cfg.get("illustrated_scenery",[]):
++			var art: Texture2D=G.visual_texture(String(row.texture))
++			scenery.append({"at":Vector2(row.at[0],row.at[1]),"size":Vector2(row.size[0],row.size[1]),"art":art})
++		for row in _main_cfg.get("reference_scenery",[]):
++			var group:=String(row.get("group","foliage"))
++			scenery.append({"at":Vector2(row.at[0],row.at[1]),"size":ReferenceWorldArt.dimensions(group,String(row.id)),"art":ReferenceWorldArt.texture(String(row.id))})
++		scenery.sort_custom(func(a,b):return a.at.y<b.at.y)
+ 	func update_route(point: Dictionary) -> void:
+ 		route_points.clear()
+ 		# The exploration navigator still finds a path; the map shows markers only.
+@@ -323,7 +353,7 @@
+ 	func set_zoom(value: float,anchor := Vector2(-1,-1)) -> void:
+ 		if anchor.x<0:anchor=size*.5
+ 		var world_at: Vector2=(anchor-_rect().position)/_scale()
+-		zoom=clampf(value,1,3)
++		zoom=clampf(value,overview_zoom(),3)
+ 		pan=anchor-(size-extent*_scale())*.5-world_at*_scale()
+ 		_clamp_pan()
+ 		zoom_changed.emit()
+@@ -342,7 +372,7 @@
+ 		_clamp_pan()
+ 		zoom_changed.emit()
+ 		queue_redraw()
+-	func _scale() -> float:return minf(size.x/extent.x,size.y/extent.y)*zoom
++	func _scale() -> float:return maxf(.001,size.x/extent.x)*zoom
+ 	func _rect() -> Rect2:
+ 		var dimensions := extent*_scale()
+ 		return Rect2((size-dimensions)*.5+pan,dimensions)
+@@ -379,14 +409,27 @@
+ 			var at := screen_at(Points.position(point))
+ 			var merged := false
+ 			for group in groups:
+-				if at.distance_to(group.at)<46:
++				if String(group.kind)==String(point.kind) and at.distance_to(group.at)<(54 if point.kind=="npc" else 34):
+ 					var count: int=group.ids.size()
+ 					group.at=(group.at*count+at)/(count+1)
+ 					group.ids.append(String(point.id))
+ 					merged=true
+ 					break
+-			if not merged:groups.append({"at":at,"ids":[String(point.id)]})
+-		return groups
++			if not merged:groups.append({"at":at,"ids":[String(point.id)],"kind":String(point.kind)})
++		var occupied: Array[Vector2]=[]
++		var player:=player_at()
++		if player!=Vector2.INF:occupied.append(screen_at(player))
++		var visible: Array[Dictionary]=[]
++		for group in groups:
++			var original: Vector2=group.at
++			if not Rect2(Vector2(16,28),size-Vector2(32,44)).has_point(original):continue
++			for offset in [Vector2.ZERO,Vector2(28,0),Vector2(-28,0),Vector2(0,32),Vector2(0,-32),Vector2(28,32),Vector2(-28,-32)]:
++				var proposed: Vector2=original+offset
++				if not occupied.any(func(p):return p.distance_to(proposed)<32):group.at=proposed;break
++			occupied.append(group.at)
++			visible.append(group)
++		visible.sort_custom(func(a,b):return ["shop","station","fishing","landmark","npc"].find(a.kind)<["shop","station","fishing","landmark","npc"].find(b.kind))
++		return visible
+ 	func _end(at: Vector2) -> void:
+ 		pointer=-2
+ 		if moved:return
+@@ -401,31 +444,57 @@
+ 		if picked.ids.size()>1:cluster_selected.emit(picked.ids)
+ 		else:point_selected.emit(String(picked.ids[0]))
+ 	func _clamp_pan() -> void:
+-		var overflow := (extent*_scale()-size).max(Vector2.ZERO)*.5+Vector2(24,24)
++		var overflow := (extent*_scale()-size).max(Vector2.ZERO)*.5
+ 		pan=pan.clamp(-overflow,overflow)
+ 	func _draw() -> void:
+-		draw_rect(Rect2(Vector2.ZERO,size),Color("0c191f"))
+-		if texture!=null:draw_texture_rect(texture,_rect(),false,Color(.8,.85,.82))
++		draw_rect(Rect2(Vector2.ZERO,size),Color("14171c"))
++		if texture!=null:draw_texture_rect(texture,_rect(),false,Color(.70,.72,.68))
++		for prop in scenery:
++			var dimensions: Vector2=prop.size*_scale()
++			var rect:=Rect2(screen_at(prop.at)-Vector2(dimensions.x*.5,dimensions.y),dimensions)
++			if prop.art!=null:draw_texture_rect(prop.art,rect,false,Color(.85,.86,.81))
++			else:
++				draw_rect(rect,Color("382f29"))
++				draw_rect(rect,Color("bda073"),false,1)
+ 		for exit in _main_cfg.get("exits",[]):
+ 			var at: Array=exit.get("sign_at",exit.get("at",[]))
+ 			if at.size()<2:continue
+ 			var p := screen_at(Vector2(at[0],at[1]))
+ 			draw_circle(p,5,View.JADE if Points.gate_reason(exit).is_empty() else View.MUTED)
+ 		var target := Points.target()
+-		for marker in _markers():
++		var label_rects: Array[Rect2]=[]
++		var markers:=_markers()
++		var icon_rects: Array[Rect2]=[]
++		for marker in markers:icon_rects.append(Rect2(marker.at-Vector2(18,18),Vector2(36,36)))
++		var player_point:=player_at()
++		if player_point!=Vector2.INF:icon_rects.append(Rect2(screen_at(player_point)-Vector2(15,15),Vector2(30,30)))
++		for marker in markers:
+ 			var p: Vector2=marker.at
+ 			var active: bool=marker.ids.has(selected) or (not target.is_empty() and marker.ids.has(String(target.id)))
+-			draw_circle(p,21,Color("10272c",.97))
+-			draw_arc(p,21,0,TAU,32,View.GOLD if active else View.MUTED,2 if active else 1,true)
++			if not Rect2(Vector2(-24,-24),size+Vector2(48,48)).has_point(p):continue
++			var tint: Color=KIND_COLORS.get(String(marker.kind),View.GOLD)
++			draw_circle(p,16,Color("15171d",.97))
++			draw_arc(p,16,0,TAU,32,View.GOLD if active else tint,2,true)
++			var point := Points.find(String(marker.ids[0]))
++			var icon := Points.icon(String(marker.kind))
++			if icon!=null:draw_texture_rect(icon,Rect2(p-Vector2(10,10),Vector2(20,20)),false)
+ 			if marker.ids.size()>1:
+-				var count := str(marker.ids.size())
+-				var width := G.font_bold.get_string_size(count,HORIZONTAL_ALIGNMENT_LEFT,-1,16).x
+-				draw_string(G.font_bold,p+Vector2(-width*.5,6),count,HORIZONTAL_ALIGNMENT_LEFT,-1,16,View.GOLD)
+-			else:
+-				var point := Points.find(String(marker.ids[0]))
+-				var icon := Points.icon(String(point.kind))
+-				if icon!=null:draw_texture_rect(icon,Rect2(p-Vector2(12,12),Vector2(24,24)),false)
+-			if active:draw_arc(p,24,0,TAU,32,View.GOLD,1,true)
++				draw_circle(p+Vector2(13,-12),8,tint)
++				draw_string(G.font_bold,p+Vector2(9,-8),str(marker.ids.size()),HORIZONTAL_ALIGNMENT_LEFT,-1,11,View.INK)
++			var words:=String(point.name).split("·")[0].strip_edges().left(6) if marker.ids.size()==1 else String(Points.LABELS.get(marker.kind,"地点"))+"·%d"%marker.ids.size()
++			if active:draw_arc(p,20,0,TAU,32,View.GOLD,1,true)
++			if marker.kind=="npc" and filter=="all" and zoom<1.5 and not active:continue
++			var width:=G.font_bold.get_string_size(words,HORIZONTAL_ALIGNMENT_LEFT,-1,12).x+12
++			var label_rect:=Rect2(Vector2(clampf(p.x-width*.5,3,maxf(3,size.x-width-3)),p.y+19),Vector2(width,21))
++			for offset in [Vector2.ZERO,Vector2(0,-58),Vector2(width*.5+22,-29),Vector2(-width*.5-22,-29),Vector2(0,24),Vector2(0,-82)]:
++				var candidate:=Rect2(label_rect.position+offset,label_rect.size)
++				if Rect2(Vector2(2,26),size-Vector2(4,30)).encloses(candidate) and not label_rects.any(func(r):return r.grow(2).intersects(candidate)) and not icon_rects.any(func(r):return r.intersects(candidate)):
++					label_rect=candidate
++					label_rects.append(label_rect)
++					draw_rect(label_rect,Color("14141a",.94))
++					draw_rect(label_rect,Color(tint,.65),false,1)
++					draw_string(G.font_bold,label_rect.position+Vector2(6,15),words,HORIZONTAL_ALIGNMENT_LEFT,-1,12,tint)
++					break
+ 		var player:=player_at()
+ 		if player!=Vector2.INF:
+ 			var p:=screen_at(player)
+--- before/src/world/WorldDressing.gd
++++ after/src/world/WorldDressing.gd
+@@ -12,9 +12,10 @@
+ 		return [[REF+"stonebox.png",Vector2(54,40)],[REF+"lantern.png",Vector2(40,74)],[REF+"nighttable.png",Vector2(96,46)]]
+ 	match String(cfg.get("theme","forest")):
+ 		"desert":
+-			return [[PROC+"045_deco_desert_sandstone.png",Vector2(110,100)],
+-				[PROC+"044_deco_desert_cactus.png",Vector2(90,112)],
+-				[PROC+"045_deco_desert_sandstone.png",Vector2(76,64)]]
++			return [[PROC+"045_deco_desert_sandstone.png",Vector2(148,118)],
++				[PROC+"044_deco_desert_cactus.png",Vector2(82,148)],
++				[PROC+"045_deco_desert_sandstone.png",Vector2(88,64)],
++				[PROC+"046_deco_desert_drywell.png",Vector2(104,104)]]
+ 		"snow","glacier":
+ 			return [[PROC+"035_deco_snow_pine.png",Vector2(146,172)],
+ 				[PROC+"037_deco_snow_snowdrift.png",Vector2(110,68)],
+@@ -41,23 +42,43 @@
+ 	var routes:=Layout.sample_routes(cfg.get("flat_routes",[]))
+ 	var count:=0
+ 	var compact:=String(map._main_map_id) in ["shenyuan_port","tidal_gate","stele_cavern","rift_mine_vault"]
+-	var spacing:=56 if compact else 112
+-	var limit:=28 if String(cfg.get("theme",""))=="desert" else 16
+-	if bool(cfg.get("city",false)):limit=10
++	var spacing:=88 if compact else 108
++	var limit:=clampi(ceili(extent.x*extent.y/26000.0),24,100)
++	var city:=bool(cfg.get("city",false))
++	if city:limit=maxi(16,ceili(extent.y/220)*2)
+ 	var occupied: Array[Rect2]=[]
+ 	for row in cfg.get("illustrated_scenery",[]):
+-		occupied.append(Rect2(Vector2(row.at[0]-row.size[0]*.5,row.at[1]-row.size[1]),Vector2(row.size[0],row.size[1])))
++		var dimensions:=Vector2(row.size[0],row.size[1])*Presentation.SCENERY_ENLARGEMENT
++		occupied.append(Rect2(Vector2(row.at[0]-dimensions.x*.5,row.at[1]-dimensions.y),dimensions))
+ 	var candidates: Array[Dictionary]=[]
++	# Anchor a small landmark near each stretch of the road before filling distant margins.
++	if not city and not compact:
++		for y in range(300,int(extent.y)-100,200):
++			for fraction in [.35,.68]:
++				candidates.append({"at":Vector2(extent.x*fraction,y),"rank":-1.0,"band":int(y/220),"anchor":true})
+ 	for y in range(160,int(extent.y)-48,spacing):
+ 		for x in range(64,int(extent.x)-48,spacing):
+-			candidates.append({"at":Vector2(x,y),"rank":rng.randf()})
+-	candidates.sort_custom(func(a,b):return a.rank<b.rank)
++			candidates.append({"at":Vector2(x,y),"rank":rng.randf(),"band":int(y/220)})
++	candidates.sort_custom(func(a,b):return a.band<b.band if a.band!=b.band else a.rank<b.rank)
++	var bands: Dictionary={}
++	var wells:=0
+ 	for candidate in candidates:
+ 		if count>=limit:break
++		if int(bands.get(candidate.band,0))>=(2 if city else 7):continue
+ 		var source: Array=sources[rng.randi_range(0,sources.size()-1)]
++		if String(source[0]).contains("drywell") and wells>0:source=sources[0]
+ 		var size: Vector2=source[1]*rng.randf_range(.9,1.15)
++		var anchor:=bool(candidate.get("anchor",false))
++		if anchor:
++			var theme:=String(cfg.get("theme","forest"))
++			var left:=float(candidate.at.x)<extent.x*.5
++			source=sources[2] if theme=="desert" else sources[0 if left else 2] if theme in ["snow","glacier"] else sources[0]
++			size=Vector2(92,70) if theme=="desert" else (Vector2(148,174) if left else Vector2(70,90)) if theme in ["snow","glacier"] else source[1]*.9
+ 		if compact:size*=.55
+ 		var at: Vector2=candidate.at+Vector2(rng.randf_range(-20,20),rng.randf_range(-22,22))
++		if anchor:
++			for offset in [Vector2.ZERO,Vector2(0,48),Vector2(0,-48),Vector2(-48,0),Vector2(48,0)]:
++				if clear(map,candidate.at+offset,size,routes,occupied):at=candidate.at+offset;break
+ 		if not clear(map,at,size,routes,occupied):continue
+ 		var texture:=G.visual_texture(String(source[0]))
+ 		if texture==null:continue
+@@ -71,6 +92,8 @@
+ 		layer.add_child(prop)
+ 		occupied.append(Rect2(at-Vector2(size.x*.5,size.y),size).grow(16))
+ 		count+=1
++		if String(source[0]).contains("drywell"):wells+=1
++		bands[candidate.band]=int(bands.get(candidate.band,0))+1
+ 	layer.set_meta("prop_count",count)
+ 	layer.set_meta("map_id",String(map._main_map_id))
+ 
+@@ -82,7 +105,7 @@
+ 		if rect.intersects(other):return false
+ 	for route in routes:
+ 		for p: Vector2 in route.points:
+-			if at.distance_to(p)<minf(float(route.width)*.5,52)+size.x*.4+26:return false
++			if at.distance_to(p)<minf(float(route.width)*.5,52)+size.x*.28+18:return false
+ 	var spawn: Array=cfg.get("spawn",[480,1050])
+ 	if at.distance_to(Vector2(spawn[0],spawn[1]))<130:return false
+ 	for exit in cfg.get("exits",[]):
+@@ -90,15 +113,20 @@
+ 		if pos.size()>=2 and at.distance_to(Vector2(pos[0],pos[1]))<120:return false
+ 	for row in cfg.get("entities",{}).values():
+ 		var pos: Array=row.get("at",[])
+-		if pos.size()>=2 and rect.grow(72).has_point(Vector2(pos[0],pos[1])):return false
++		if pos.size()>=2 and rect.grow(24).has_point(Vector2(pos[0],pos[1])):return false
++	for entity in map._quest_entities:
++		if is_instance_valid(entity) and rect.grow(24).has_point(entity.position):return false
+ 	for pos in cfg.get("city_npc_positions",{}).values():
+ 		if rect.grow(96).has_point(Vector2(pos[0],pos[1])):return false
+ 	for id in cfg.get("city_building_positions",{}):
+ 		var pos: Array=cfg.city_building_positions[id]
+-		var dimensions: Array=cfg.get("city_building_sizes",{}).get(id,[240,200])
+-		if rect.intersects(Rect2(Vector2(pos[0]-dimensions[0]*.5-24,pos[1]-dimensions[1]),Vector2(dimensions[0]+48,dimensions[1]+100))):return false
++		var source: Array=cfg.get("city_building_sizes",{}).get(id,[240,200])
++		var dimensions:=Vector2(source[0],source[1])*Presentation.BUILDING_ENLARGEMENT
++		if rect.intersects(Rect2(Vector2(pos[0]-dimensions.x*.5-24,pos[1]-dimensions.y),dimensions+Vector2(48,72))):return false
+ 	for blocker in cfg.get("block_rects",[]):
+ 		if Rect2(blocker[0],blocker[1],blocker[2],blocker[3]).has_point(at):return false
+ 	if map._in_river_zone(at,size.x*.5):return false
+-	if map._foot_hits_patrol(at,1.3):return false
++	# These props have no colliders; leave each enemy visible without reserving its entire patrol disk.
++	for monster in map._monsters:
++		if is_instance_valid(monster) and rect.grow(16).has_point(monster.position):return false
+ 	return true
+--- before/src/world/WorldPresentation.gd
++++ after/src/world/WorldPresentation.gd
+@@ -9,9 +9,9 @@
+ static func original_art() -> bool:
+ 	return OS.get_environment("YUANZHENG_LEGACY_BACKGROUND")=="" or OS.get_environment("YUANZHENG_LEGACY_BACKGROUND")=="0"
+ 
+-const NPC_ENLARGEMENT := 1.18
++const NPC_ENLARGEMENT := 0.96
+ const SCENERY_ENLARGEMENT := 1.12
+-const BUILDING_ENLARGEMENT := 1.10
++const BUILDING_ENLARGEMENT := 1.24
+ 
+ static func background_path(path: String) -> String:
+ 	if original_art() and path.begins_with("res://assets/world/maps_rebuild_20261015/"):
