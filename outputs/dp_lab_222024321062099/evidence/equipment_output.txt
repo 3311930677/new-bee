@@ -1,0 +1,7 @@
+Cycle costs (index 0 unused): 0 50 85 140 220 340
+Minimum total cost: 255
+Optimal service lives: 2 2 2
+DP[0..N]: 0 50 85 135 170 220 255
+Buy at start of year 1, sell at end of year 2
+Buy at start of year 3, sell at end of year 4
+Buy at start of year 5, sell at end of year 6

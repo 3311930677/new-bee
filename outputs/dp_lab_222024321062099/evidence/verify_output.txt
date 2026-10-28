@@ -1,0 +1,6 @@
+Matrix chain: 200/200 PASS (all parenthesizations)
+LCS: 200/200 PASS (enumerate subsequences + reconstruction)
+0-1 knapsack: 200/200 PASS (enumerate subsets + reconstruction)
+Equipment renewal: 200/200 PASS (enumerate all life partitions)
+Explicit boundary/error checks: 8/8 PASS
+TOTAL: 808/808 PASS
