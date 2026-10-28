@@ -1,0 +1,7 @@
+{
+  "mount": "horse",
+  "role": "fs",
+  "direction": "right",
+  "prompt": "Use case: precise-object-edit. Correct this production animation atlas for game 远征. Preserve the exact fs rider identity, brown horse and golden tack, perspective, colors and all intended motion poses. The input has missing/clipped/overlapping cels. Deliver a TALL PORTRAIT 1024x1536 transparent image with EXACTLY FOUR COLUMNS and SIX ROWS,24 FULL SEPARATE sprites. Each square cell256x256 with minimum16px transparent margin around the entire full-body integrated mounted rider. Keep every hoof/paw, tail and staff tip inside its own cell. ALL face RIGHT. Row1=4 unique subtle idle poses; rows2-3=8 sequential alternating walk poses; rows4-6=12 sequential gallop/bound poses with contact/loading, lift, suspension and recovery. Add the missing final four running poses where the source has only five rows. Where source is cropped, redraw complete limbs. Maintain genuine anatomical animation and synchronized seated rider, cloak/hair/reins, seamless forward loops; no duplicated or merely shifted poses. Consistent scale and ground90% anchor; rider pelvis on saddle, hands on reins, boots in stirrups/straps. Important: count SIX rows, each containing FOUR complete bodies, leave generous gutters and outside border, no overlap between rows. Genuine transparent RGBA, no shadow/floor, writing, grid or blur.",
+  "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-d5232c3e-6610-4318-b041-6cb42934a20b.png"
+}

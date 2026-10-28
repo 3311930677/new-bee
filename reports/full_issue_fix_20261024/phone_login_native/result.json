@@ -1,0 +1,278 @@
+{
+	"checks": [],
+	"device": {
+		"cutouts": "[]",
+		"mix_rate": 44100.0,
+		"model": "Android SDK built for x86_64",
+		"os": "Android",
+		"safe": "[P: (0.0, 0.0), S: (480.0, 852.9999)]",
+		"system_safe": "[P: (0, 0), S: (720, 1280)]",
+		"version": "37.16571990",
+		"viewport": "[P: (0.0, 0.0), S: (480.0, 853.0)]",
+		"window": "(720, 1280)"
+	},
+	"final": {
+		"audio": {
+			"bgm": "",
+			"events": [
+				{
+					"category": "Rewards",
+					"name": "coin",
+					"time_ms": 156510
+				},
+				{
+					"category": "Rewards",
+					"name": "reward",
+					"time_ms": 157612
+				}
+			],
+			"mute": false,
+			"paused": false,
+			"playing": false,
+			"position": 0.0,
+			"suspended": false,
+			"voices": 0
+		},
+		"controls": [
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/@HBoxContainer@1910/@Button@1911",
+				"rect": [
+					46.0,
+					77.0,
+					44.0,
+					65.0
+				],
+				"safe": true,
+				"text": "‹",
+				"tooltip": "返回标题",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/RegistrationFields/@VBoxContainer@1919/@HBoxContainer@1922/@Button@1923",
+				"rect": [
+					378.0,
+					434.0,
+					56.0,
+					65.0
+				],
+				"safe": true,
+				"text": "显",
+				"tooltip": "显示或隐藏密码",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/RegistrationFields/@VBoxContainer@1919/@HBoxContainer@1924/AvatarCard",
+				"rect": [
+					104.0,
+					509.0,
+					330.0,
+					62.0
+				],
+				"safe": true,
+				"text": "自选画像 · 导入图片",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/LoginButton",
+				"rect": [
+					46.0,
+					597.0,
+					388.0,
+					65.0
+				],
+				"safe": true,
+				"text": "登录入城",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/GuestButton",
+				"rect": [
+					46.0,
+					674.0,
+					388.0,
+					65.0
+				],
+				"safe": true,
+				"text": "游客入城",
+				"tooltip": "",
+				"touch_under44": false
+			}
+		],
+		"device": {
+			"cutouts": "[]",
+			"mix_rate": 44100.0,
+			"model": "Android SDK built for x86_64",
+			"os": "Android",
+			"safe": "[P: (0.0, 0.0), S: (480.0, 852.9999)]",
+			"system_safe": "[P: (0, 0), S: (720, 1280)]",
+			"version": "37.16571990",
+			"viewport": "[P: (0.0, 0.0), S: (480.0, 853.0)]",
+			"window": "(720, 1280)"
+		},
+		"focus": "<Object#null>",
+		"keyboard_height": 0,
+		"labels": [
+			{
+				"font": 24,
+				"minimum": "(1.0, 35.0)",
+				"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/@HBoxContainer@1910/@Label@1912",
+				"rect": [
+					94.0,
+					92.0,
+					340.0,
+					35.0
+				],
+				"text": "旅人登记"
+			},
+			{
+				"font": 20,
+				"minimum": "(1.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/@VBoxContainer@1913/@Label@1916",
+				"rect": [
+					46.0,
+					246.0,
+					388.0,
+					30.0
+				],
+				"text": "昭元行旅录"
+			},
+			{
+				"font": 20,
+				"minimum": "(1.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/RegistrationFields/@VBoxContainer@1919/@Label@1920",
+				"rect": [
+					46.0,
+					288.0,
+					388.0,
+					30.0
+				],
+				"text": "通关文牒 · 账号"
+			},
+			{
+				"font": 20,
+				"minimum": "(1.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/RegistrationFields/@VBoxContainer@1919/@Label@1921",
+				"rect": [
+					46.0,
+					394.0,
+					388.0,
+					30.0
+				],
+				"text": "通关秘钥 · 密码"
+			},
+			{
+				"font": 16,
+				"minimum": "(1.0, 24.0)",
+				"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/@Label@1927",
+				"rect": [
+					46.0,
+					751.0,
+					388.0,
+					24.0
+				],
+				"text": "旅途进度自动保存在本机 · 离线可读"
+			}
+		],
+		"modals": [],
+		"page": "Login",
+		"tick_ms": 393886
+	},
+	"id": "phone_login_native",
+	"photos": [
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/@HBoxContainer@1910/@Button@1911",
+					"rect": [
+						46.0,
+						77.0,
+						44.0,
+						65.0
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回标题",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/RegistrationFields/@VBoxContainer@1919/@HBoxContainer@1922/@Button@1923",
+					"rect": [
+						378.0,
+						434.0,
+						56.0,
+						65.0
+					],
+					"safe": true,
+					"text": "显",
+					"tooltip": "显示或隐藏密码",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/RegistrationFields/@VBoxContainer@1919/@HBoxContainer@1924/AvatarCard",
+					"rect": [
+						104.0,
+						509.0,
+						330.0,
+						62.0
+					],
+					"safe": true,
+					"text": "自选画像 · 导入图片",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/LoginButton",
+					"rect": [
+						46.0,
+						597.0,
+						388.0,
+						65.0
+					],
+					"safe": true,
+					"text": "登录入城",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/GuestButton",
+					"rect": [
+						46.0,
+						674.0,
+						388.0,
+						65.0
+					],
+					"safe": true,
+					"text": "游客入城",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "login",
+			"safe": "[P: (0.0, 0.0), S: (480.0, 852.9999)]"
+		}
+	],
+	"records": [],
+	"suite": "page"
+}

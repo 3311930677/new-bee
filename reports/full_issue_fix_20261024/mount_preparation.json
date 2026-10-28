@@ -1,0 +1,5540 @@
+[
+  {
+    "mount": "horse",
+    "role": "zs",
+    "direction": "down",
+    "prompt": "Use case: stylized-concept. Production animation sprite sheet for Chinese fantasy pixel RPG 远征. Reference image supplies the exact warrior, horse, armor, red cape and tack identity. Generate ONE coherent animation asset: the red-haired male warrior in black bronze-trim armor SEATED CORRECTLY ON HIS BROWN HORSE, facing straight DOWN toward the camera in elevated top-down RPG perspective. Rider and horse are a single integrated silhouette in every cel, pelvis on saddle, hands on reins, legs occluded correctly, no separate standing rider. Exactly FOUR columns and SIX rows of equally sized SQUARE cells, 24 cels total, aligned regular grid. Every cel contains one COMPLETE rider+horse, consistent scale and camera and centered ground anchor at 50% x,90% y, ample transparent gutters. Entire sheet genuinely transparent. Row 1: 4 unique subtle idle breathing poses. Rows 2-3: chronological 8 distinct walking poses, alternating fore/hind hoof support with body and rider following the gait, natural loop. Rows 4-6: chronological 12 distinct canter/gallop poses including contact, loading, lift, suspension, recovery and opposite support; reins, cape and seated rider follow each phase, seamless loop from cel 12 to cel 1. Full actual anatomy changes; never use a repeated ping-pong loop or mere translation of the same cel. Crisp pixel art designed at 128 logical pixels per cel and enlarged nearest neighbor. Brown horse, dark brown outline, golden harness, black armor, red cape, chestnut hair; upper-left light. NO written labels, numbers, grid lines, frames, scenery, floor, ground shadows, extra limbs, detached body parts, blur or glow. Keep all 24 silhouettes separate and uncropped.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-70b5add0-afe5-41c4-a938-bf7b8fbb498c.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\horse_zs_down.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/horse_zs_down.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        54,
+        20,
+        223,
+        263
+      ],
+      [
+        303,
+        19,
+        466,
+        262
+      ],
+      [
+        550,
+        20,
+        714,
+        262
+      ],
+      [
+        794,
+        20,
+        968,
+        263
+      ],
+      [
+        55,
+        269,
+        223,
+        518
+      ],
+      [
+        296,
+        270,
+        458,
+        516
+      ],
+      [
+        550,
+        269,
+        719,
+        518
+      ],
+      [
+        794,
+        269,
+        965,
+        518
+      ],
+      [
+        48,
+        523,
+        224,
+        769
+      ],
+      [
+        300,
+        524,
+        472,
+        769
+      ],
+      [
+        549,
+        524,
+        719,
+        768
+      ],
+      [
+        794,
+        524,
+        974,
+        769
+      ],
+      [
+        37,
+        776,
+        231,
+        1021
+      ],
+      [
+        284,
+        776,
+        484,
+        1022
+      ],
+      [
+        530,
+        776,
+        726,
+        1017
+      ],
+      [
+        786,
+        776,
+        993,
+        1021
+      ],
+      [
+        29,
+        1026,
+        246,
+        1269
+      ],
+      [
+        284,
+        1026,
+        494,
+        1264
+      ],
+      [
+        529,
+        1027,
+        737,
+        1265
+      ],
+      [
+        779,
+        1027,
+        996,
+        1269
+      ],
+      [
+        30,
+        1274,
+        236,
+        1512
+      ],
+      [
+        289,
+        1275,
+        494,
+        1517
+      ],
+      [
+        533,
+        1275,
+        745,
+        1517
+      ],
+      [
+        784,
+        1275,
+        984,
+        1518
+      ]
+    ],
+    "scale": 0.48559670781893005,
+    "sha256": "acc2b29cfe16ea8e3d50d86c18e9902bfd7c0db9f83d32720f378a60af83920b"
+  },
+  {
+    "mount": "horse",
+    "role": "zs",
+    "direction": "left",
+    "prompt": "Use case: stylized-concept. Production animation sheet for pixel RPG 远征, same red-haired male warrior, black bronze-trim armor, RED cape, brown horse and golden tack as reference. Rider and horse are ONE integrated full-body sprite in each cel: pelvis on saddle, both feet in stirrups, hands on reins, proper occlusion. Exactly 4 columns by 6 rows of square cells, 24 cels. Every full sprite has identical scale and camera, centered ground anchor 50% x / 90% y, ample transparent gutters. Row 1 has 4 unique idle/breathing poses. Rows 2-3 have 8 chronological WALK poses with correct alternating hoof support. Rows 4-6 have 12 chronological gallop poses including contact/loading, lift, suspension and recovery; torso, seat, reins and cape follow motion. Seamless sequential loops, never ping-pong, no duplicate cels, no static pose merely translated. Genuinely transparent RGBA background. Crisp 128-pixel logical pixel art enlarged nearest neighbor, top-left light, no labels/numbers/frames/grid/floor/shadows/extra limbs/blur. Facing exactly LEFT, side profile of the complete horse and seated rider, moving to the left.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-3b47d2fb-226b-43a1-9d85-608cddd2ca46.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\horse_zs_left.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/horse_zs_left.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        36,
+        45,
+        258,
+        264
+      ],
+      [
+        285,
+        45,
+        509,
+        264
+      ],
+      [
+        531,
+        45,
+        754,
+        264
+      ],
+      [
+        780,
+        45,
+        1005,
+        264
+      ],
+      [
+        18,
+        294,
+        269,
+        512
+      ],
+      [
+        272,
+        294,
+        517,
+        512
+      ],
+      [
+        524,
+        294,
+        766,
+        512
+      ],
+      [
+        771,
+        295,
+        1011,
+        512
+      ],
+      [
+        20,
+        545,
+        269,
+        764
+      ],
+      [
+        270,
+        545,
+        514,
+        765
+      ],
+      [
+        523,
+        545,
+        771,
+        762
+      ],
+      [
+        770,
+        545,
+        1012,
+        765
+      ],
+      [
+        17,
+        798,
+        268,
+        1015
+      ],
+      [
+        270,
+        800,
+        516,
+        1007
+      ],
+      [
+        515,
+        800,
+        772,
+        1012
+      ],
+      [
+        768,
+        801,
+        1015,
+        1013
+      ],
+      [
+        17,
+        1051,
+        270,
+        1261
+      ],
+      [
+        269,
+        1051,
+        521,
+        1261
+      ],
+      [
+        525,
+        1051,
+        778,
+        1259
+      ],
+      [
+        774,
+        1050,
+        1015,
+        1258
+      ],
+      [
+        15,
+        1292,
+        268,
+        1505
+      ],
+      [
+        276,
+        1294,
+        525,
+        1497
+      ],
+      [
+        527,
+        1292,
+        773,
+        1504
+      ],
+      [
+        776,
+        1293,
+        1012,
+        1504
+      ]
+    ],
+    "scale": 0.5388127853881278,
+    "sha256": "dcdbf1f09f42bc9e065a717cefc4075321d331237f3bb95d94ec554247fe8ac7"
+  },
+  {
+    "mount": "horse",
+    "role": "zs",
+    "direction": "right",
+    "prompt": "Use case: stylized-concept. Production animation sheet for pixel RPG 远征, same red-haired male warrior, black bronze-trim armor, RED cape, brown horse and golden tack as reference. Rider and horse are ONE integrated full-body sprite in each cel: pelvis on saddle, both feet in stirrups, hands on reins, proper occlusion. Exactly 4 columns by 6 rows of square cells, 24 cels. Every full sprite has identical scale and camera, centered ground anchor 50% x / 90% y, ample transparent gutters. Row 1 has 4 unique idle/breathing poses. Rows 2-3 have 8 chronological WALK poses with correct alternating hoof support. Rows 4-6 have 12 chronological gallop poses including contact/loading, lift, suspension and recovery; torso, seat, reins and cape follow motion. Seamless sequential loops, never ping-pong, no duplicate cels, no static pose merely translated. Genuinely transparent RGBA background. Crisp 128-pixel logical pixel art enlarged nearest neighbor, top-left light, no labels/numbers/frames/grid/floor/shadows/extra limbs/blur. Facing exactly RIGHT, side profile of the complete horse and seated rider, moving to the right. Preserve correct armor and weapon side.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-3e7aa575-2c32-435a-877f-0a86924e840d.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\horse_zs_right.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/horse_zs_right.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        55,
+        6,
+        255,
+        203
+      ],
+      [
+        373,
+        6,
+        576,
+        203
+      ],
+      [
+        691,
+        6,
+        894,
+        203
+      ],
+      [
+        1013,
+        6,
+        1217,
+        203
+      ],
+      [
+        34,
+        214,
+        272,
+        412
+      ],
+      [
+        343,
+        215,
+        592,
+        413
+      ],
+      [
+        666,
+        215,
+        910,
+        413
+      ],
+      [
+        985,
+        214,
+        1235,
+        413
+      ],
+      [
+        21,
+        423,
+        278,
+        626
+      ],
+      [
+        341,
+        424,
+        596,
+        626
+      ],
+      [
+        660,
+        423,
+        916,
+        626
+      ],
+      [
+        982,
+        424,
+        1244,
+        626
+      ],
+      [
+        13,
+        637,
+        299,
+        837
+      ],
+      [
+        330,
+        636,
+        612,
+        837
+      ],
+      [
+        648,
+        636,
+        941,
+        838
+      ],
+      [
+        969,
+        634,
+        1260,
+        836
+      ],
+      [
+        16,
+        844,
+        306,
+        1039
+      ],
+      [
+        329,
+        848,
+        625,
+        1032
+      ],
+      [
+        648,
+        845,
+        944,
+        1041
+      ],
+      [
+        968,
+        846,
+        1262,
+        1041
+      ],
+      [
+        14,
+        1047,
+        309,
+        1228
+      ],
+      [
+        330,
+        1047,
+        628,
+        1228
+      ],
+      [
+        647,
+        1046,
+        945,
+        1229
+      ],
+      [
+        970,
+        1044,
+        1265,
+        1228
+      ]
+    ],
+    "scale": 0.5989847715736041,
+    "sha256": "085a03f9f9b4042bddd8da5480364690b021c54463c6f63704b8f894a49963ba"
+  },
+  {
+    "mount": "horse",
+    "role": "zs",
+    "direction": "up",
+    "prompt": "Use case: stylized-concept. Production animation sheet for pixel RPG 远征, same red-haired male warrior, black bronze-trim armor, RED cape, brown horse and golden tack as reference. Rider and horse are ONE integrated full-body sprite in each cel: pelvis on saddle, both feet in stirrups, hands on reins, proper occlusion. Exactly 4 columns by 6 rows of square cells, 24 cels. Every full sprite has identical scale and camera, centered ground anchor 50% x / 90% y, ample transparent gutters. Row 1 has 4 unique idle/breathing poses. Rows 2-3 have 8 chronological WALK poses with correct alternating hoof support. Rows 4-6 have 12 chronological gallop poses including contact/loading, lift, suspension and recovery; torso, seat, reins and cape follow motion. Seamless sequential loops, never ping-pong, no duplicate cels, no static pose merely translated. Genuinely transparent RGBA background. Crisp 128-pixel logical pixel art enlarged nearest neighbor, top-left light, no labels/numbers/frames/grid/floor/shadows/extra limbs/blur. Facing exactly UP, rear view of complete horse and seated rider moving away from camera. Back of red cape and horse rump visible; no front-facing face.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-c039e77b-ecd1-437d-9edd-805204ca79ef.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\horse_zs_up.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/horse_zs_up.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        70,
+        9,
+        227,
+        246
+      ],
+      [
+        324,
+        9,
+        499,
+        246
+      ],
+      [
+        551,
+        9,
+        712,
+        246
+      ],
+      [
+        803,
+        9,
+        954,
+        246
+      ],
+      [
+        66,
+        256,
+        225,
+        501
+      ],
+      [
+        323,
+        256,
+        491,
+        501
+      ],
+      [
+        553,
+        256,
+        712,
+        501
+      ],
+      [
+        803,
+        255,
+        960,
+        501
+      ],
+      [
+        70,
+        507,
+        224,
+        754
+      ],
+      [
+        317,
+        507,
+        474,
+        754
+      ],
+      [
+        560,
+        507,
+        734,
+        754
+      ],
+      [
+        798,
+        507,
+        960,
+        754
+      ],
+      [
+        65,
+        767,
+        230,
+        1011
+      ],
+      [
+        300,
+        767,
+        479,
+        1011
+      ],
+      [
+        552,
+        766,
+        743,
+        1005
+      ],
+      [
+        791,
+        767,
+        960,
+        1011
+      ],
+      [
+        53,
+        1024,
+        254,
+        1265
+      ],
+      [
+        298,
+        1023,
+        498,
+        1250
+      ],
+      [
+        550,
+        1023,
+        725,
+        1255
+      ],
+      [
+        786,
+        1023,
+        973,
+        1265
+      ],
+      [
+        53,
+        1273,
+        241,
+        1512
+      ],
+      [
+        319,
+        1273,
+        475,
+        1518
+      ],
+      [
+        552,
+        1273,
+        735,
+        1518
+      ],
+      [
+        799,
+        1273,
+        960,
+        1518
+      ]
+    ],
+    "scale": 0.4978902953586498,
+    "sha256": "f12c99e26b6c25e1f55bf385fc53b919b8296e84e5b2b4299c50553aa1d91300"
+  },
+  {
+    "mount": "horse",
+    "role": "ck",
+    "direction": "down",
+    "prompt": "Use case: precise-object-edit. Correct this production animation atlas for game 远征. Preserve the exact ck rider identity, brown horse and golden tack, perspective, colors and all intended motion poses. The input has missing/clipped/overlapping cels. Deliver a TALL PORTRAIT 1024x1536 transparent image with EXACTLY FOUR COLUMNS and SIX ROWS,24 FULL SEPARATE sprites. Each square cell256x256 with minimum16px transparent margin around the entire full-body integrated mounted rider. Keep every hoof/paw, tail and staff tip inside its own cell. ALL face DOWN. Row1=4 unique subtle idle poses; rows2-3=8 sequential alternating walk poses; rows4-6=12 sequential gallop/bound poses with contact/loading, lift, suspension and recovery. Add the missing final four running poses where the source has only five rows. Where source is cropped, redraw complete limbs. Maintain genuine anatomical animation and synchronized seated rider, cloak/hair/reins, seamless forward loops; no duplicated or merely shifted poses. Consistent scale and ground90% anchor; rider pelvis on saddle, hands on reins, boots in stirrups/straps. Important: count SIX rows, each containing FOUR complete bodies, leave generous gutters and outside border, no overlap between rows. Genuine transparent RGBA, no shadow/floor, writing, grid or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-663ccd30-4e09-4fb0-a0cd-70fee8668da7.png",
+    "supplements": [
+      {
+        "mount": "horse",
+        "role": "ck",
+        "direction": "down",
+        "count": 4,
+        "base_count": 20,
+        "source": "exec-663ccd30-4e09-4fb0-a0cd-70fee8668da7.png",
+        "indices": [
+          20,
+          21,
+          22,
+          23
+        ],
+        "prompt": "Use case: stylized-concept. Additional production animation cels matching this exact mounted RPG character reference, preserving rider identity, outfit, brown horse, tack, camera and pixel art style. Output EXACTLY FOUR separate full-body sprites in a spacious TWO by TWO grid. These are four chronological NEW final recovery phases that continue the last two rows of the reference's running loop and return smoothly to its first running contact: opposite support/loading, foreleg recovery, next lift, return contact. Actual distinct leg anatomy, weight transfer and synchronized seated rider/cape/hair/reins. All face DOWN toward viewer. All limbs, tail and staff tips complete with at least15% empty transparent outer margin; no sheet-edge clipping. Rider pelvis seated on saddle, hands on reins, boots in stirrups/straps; rider and mount one coherent sprite. Keep proportions identical to reference, crisp pixel art, no ground/shadows, text, grid, blur or extra limbs. Transparent RGBA background. Do not reproduce the reference's full sheet.",
+        "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-4c0609b8-aebd-4919-9b11-b8d22f11239f.png"
+      }
+    ],
+    "source": "assets\\full_issue_fix_20261024\\source\\horse_ck_down.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/horse_ck_down.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        77,
+        7,
+        253,
+        269
+      ],
+      [
+        322,
+        9,
+        489,
+        269
+      ],
+      [
+        550,
+        6,
+        719,
+        270
+      ],
+      [
+        787,
+        10,
+        960,
+        269
+      ],
+      [
+        57,
+        274,
+        240,
+        545
+      ],
+      [
+        309,
+        274,
+        489,
+        545
+      ],
+      [
+        545,
+        274,
+        724,
+        546
+      ],
+      [
+        792,
+        276,
+        974,
+        547
+      ],
+      [
+        46,
+        551,
+        247,
+        823
+      ],
+      [
+        299,
+        551,
+        501,
+        823
+      ],
+      [
+        545,
+        550,
+        738,
+        825
+      ],
+      [
+        783,
+        551,
+        978,
+        823
+      ],
+      [
+        30,
+        823,
+        245,
+        1104
+      ],
+      [
+        273,
+        824,
+        504,
+        1105
+      ],
+      [
+        530,
+        826,
+        753,
+        1097
+      ],
+      [
+        786,
+        830,
+        1000,
+        1099
+      ],
+      [
+        17,
+        1106,
+        251,
+        1411
+      ],
+      [
+        283,
+        1112,
+        511,
+        1411
+      ],
+      [
+        532,
+        1109,
+        763,
+        1384
+      ],
+      [
+        782,
+        1107,
+        1003,
+        1411
+      ],
+      [
+        44,
+        44,
+        485,
+        694
+      ],
+      [
+        538,
+        28,
+        981,
+        682
+      ],
+      [
+        60,
+        767,
+        511,
+        1396
+      ],
+      [
+        544,
+        777,
+        966,
+        1429
+      ]
+    ],
+    "scale": 0.43934426229508194,
+    "sha256": "6e8de48848135db2a0b9d23d97d43d751e8f682ba99e498102eebbefea8d34e8"
+  },
+  {
+    "mount": "horse",
+    "role": "ck",
+    "direction": "left",
+    "prompt": "Use case: precise-object-edit. Correct this production animation atlas for game 远征. Preserve the exact ck rider identity, brown horse and golden tack, perspective, colors and all intended motion poses. The input has missing/clipped/overlapping cels. Deliver a TALL PORTRAIT 1024x1536 transparent image with EXACTLY FOUR COLUMNS and SIX ROWS,24 FULL SEPARATE sprites. Each square cell256x256 with minimum16px transparent margin around the entire full-body integrated mounted rider. Keep every hoof/paw, tail and staff tip inside its own cell. ALL face LEFT. Row1=4 unique subtle idle poses; rows2-3=8 sequential alternating walk poses; rows4-6=12 sequential gallop/bound poses with contact/loading, lift, suspension and recovery. Add the missing final four running poses where the source has only five rows. Where source is cropped, redraw complete limbs. Maintain genuine anatomical animation and synchronized seated rider, cloak/hair/reins, seamless forward loops; no duplicated or merely shifted poses. Consistent scale and ground90% anchor; rider pelvis on saddle, hands on reins, boots in stirrups/straps. Important: count SIX rows, each containing FOUR complete bodies, leave generous gutters and outside border, no overlap between rows. Genuine transparent RGBA, no shadow/floor, writing, grid or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-ca1dbf92-900b-4291-a597-da135e0ebbd7.png",
+    "supplements": [
+      {
+        "mount": "horse",
+        "role": "ck",
+        "direction": "left",
+        "count": 1,
+        "base_count": 24,
+        "indices": [
+          19
+        ],
+        "prompt": "Use case: precise-object-edit. This is ONE exact animation cel from a pixel RPG sheet, padded with transparency. Restore ONLY the missing cropped silhouette at the RIGHT edge of the mounted character. Extend the truncated tail/horse head/foreleg naturally into the empty transparent margin as appropriate. Preserve the complete original character, horse, colors, dark brown coat, pose, proportions, pixel cluster shapes, staff, cloak, saddle and lighting as closely as possible; do not redesign, repaint or change the gait pose. The restoration must match the original chunky small pixel art, not a smooth illustration. Keep ONE integrated rider and horse, facing LEFT. Preserve the reference camera and current action exactly. Full body including tail, head and every hoof must now be complete and surrounded by transparent margin. Genuine transparent RGBA, no shadow/background, extra objects, text, grid or glow.",
+        "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-d99b3f43-e2cc-48e1-98bf-caef0ae14fab.png"
+      }
+    ],
+    "source": "assets\\full_issue_fix_20261024\\source\\horse_ck_left.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/horse_ck_left.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [
+      19
+    ],
+    "extraction_bounds": [
+      [
+        43,
+        55,
+        260,
+        275
+      ],
+      [
+        285,
+        55,
+        508,
+        275
+      ],
+      [
+        531,
+        53,
+        755,
+        275
+      ],
+      [
+        776,
+        54,
+        1000,
+        275
+      ],
+      [
+        31,
+        298,
+        269,
+        528
+      ],
+      [
+        278,
+        298,
+        520,
+        527
+      ],
+      [
+        531,
+        298,
+        768,
+        526
+      ],
+      [
+        775,
+        298,
+        1013,
+        525
+      ],
+      [
+        26,
+        549,
+        269,
+        776
+      ],
+      [
+        282,
+        549,
+        526,
+        776
+      ],
+      [
+        531,
+        550,
+        774,
+        776
+      ],
+      [
+        775,
+        549,
+        1015,
+        776
+      ],
+      [
+        15,
+        795,
+        272,
+        1018
+      ],
+      [
+        274,
+        795,
+        536,
+        1014
+      ],
+      [
+        527,
+        797,
+        786,
+        1019
+      ],
+      [
+        775,
+        795,
+        1022,
+        1019
+      ],
+      [
+        10,
+        1033,
+        285,
+        1259
+      ],
+      [
+        278,
+        1030,
+        541,
+        1237
+      ],
+      [
+        530,
+        1031,
+        792,
+        1250
+      ],
+      [
+        148,
+        183,
+        1172,
+        1007
+      ],
+      [
+        21,
+        1265,
+        274,
+        1488
+      ],
+      [
+        272,
+        1265,
+        518,
+        1483
+      ],
+      [
+        517,
+        1264,
+        778,
+        1487
+      ],
+      [
+        769,
+        1264,
+        1012,
+        1485
+      ]
+    ],
+    "scale": 0.5339366515837104,
+    "sha256": "9949d84cd8cb051c09ca216b0d5ba38af927c79688c8df8137239a7881c6f149"
+  },
+  {
+    "mount": "horse",
+    "role": "ck",
+    "direction": "right",
+    "prompt": "Use case: stylized-concept. Production sprite animation sheet for pixel RPG 远征. Input image is identity and art-style reference: female dark navy high ponytail ranger, dark armor with gold trim, BLUE cloak, bow and quiver on back, on the same brown horse with gold tack. ONE integrated full-body rider and horse per cel, correct saddle seated pelvis, feet in stirrups, hands hold reins (and class item if applicable), proper near/far occlusion. Exactly 4 columns by 6 rows of square cells =24 chronological frames. Row1 =4 distinct subtle idle breathing poses. Rows2-3 =8 distinct walk gait poses. Rows4-6 =12 distinct gallop phases including contact/loading, lift, suspension and recovery, matching rider seat, hair, cloak and reins. Smooth sequential loops, no ping-pong, do not merely translate a static sprite. All frames same scale/camera/proportions and common ground anchor at50%x90%y with transparent gutters. Facing exactly RIGHT, side profile moving right. Crisp pixel art, 128px logical sprites enlarged nearest neighbor; preserve exact character identity/colors from reference. Transparent RGBA background, no shadows, floor, labels, numbers, grid, extra limbs, blur.",
+    "path": "C:/Users/tsz/.codex/generated_images/01a16bba-0ea5-7d70-88d4-db883f6c0fdc/exec-d798db72-f381-4000-b113-fd2f575c0dfe.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\horse_ck_right.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/horse_ck_right.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        70,
+        6,
+        290,
+        219
+      ],
+      [
+        384,
+        6,
+        602,
+        217
+      ],
+      [
+        693,
+        8,
+        914,
+        217
+      ],
+      [
+        1004,
+        5,
+        1224,
+        217
+      ],
+      [
+        42,
+        224,
+        286,
+        426
+      ],
+      [
+        350,
+        218,
+        602,
+        425
+      ],
+      [
+        666,
+        221,
+        920,
+        428
+      ],
+      [
+        978,
+        221,
+        1234,
+        428
+      ],
+      [
+        38,
+        435,
+        289,
+        639
+      ],
+      [
+        355,
+        434,
+        605,
+        641
+      ],
+      [
+        666,
+        435,
+        922,
+        641
+      ],
+      [
+        988,
+        438,
+        1236,
+        641
+      ],
+      [
+        16,
+        646,
+        316,
+        836
+      ],
+      [
+        342,
+        646,
+        639,
+        836
+      ],
+      [
+        660,
+        652,
+        949,
+        840
+      ],
+      [
+        975,
+        648,
+        1267,
+        840
+      ],
+      [
+        22,
+        836,
+        319,
+        1011
+      ],
+      [
+        341,
+        835,
+        643,
+        1006
+      ],
+      [
+        668,
+        839,
+        959,
+        1024
+      ],
+      [
+        980,
+        840,
+        1264,
+        1025
+      ],
+      [
+        24,
+        1019,
+        299,
+        1217
+      ],
+      [
+        346,
+        1018,
+        615,
+        1218
+      ],
+      [
+        649,
+        1020,
+        923,
+        1219
+      ],
+      [
+        973,
+        1021,
+        1251,
+        1219
+      ]
+    ],
+    "scale": 0.5566037735849056,
+    "sha256": "13848e654af7fcdb2d300fc702439492a07800aa246734f0309110f162cc863d"
+  },
+  {
+    "mount": "horse",
+    "role": "ck",
+    "direction": "up",
+    "prompt": "Use case: stylized-concept. Production sprite animation sheet for pixel RPG 远征. Input image is identity and art-style reference: female dark navy high ponytail ranger, dark armor with gold trim, BLUE cloak, bow and quiver on back, on the same brown horse with gold tack. ONE integrated full-body rider and horse per cel, correct saddle seated pelvis, feet in stirrups, hands hold reins (and class item if applicable), proper near/far occlusion. Exactly 4 columns by 6 rows of square cells =24 chronological frames. Row1 =4 distinct subtle idle breathing poses. Rows2-3 =8 distinct walk gait poses. Rows4-6 =12 distinct gallop phases including contact/loading, lift, suspension and recovery, matching rider seat, hair, cloak and reins. Smooth sequential loops, no ping-pong, do not merely translate a static sprite. All frames same scale/camera/proportions and common ground anchor at50%x90%y with transparent gutters. Facing exactly UP, rear view away from viewer. Crisp pixel art, 128px logical sprites enlarged nearest neighbor; preserve exact character identity/colors from reference. Transparent RGBA background, no shadows, floor, labels, numbers, grid, extra limbs, blur.",
+    "path": "C:/Users/tsz/.codex/generated_images/01a16bba-0ea5-7d70-88d4-db883f6c0fdc/exec-f028f15f-4b5d-4e4b-a56c-9b2d653f0638.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\horse_ck_up.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/horse_ck_up.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        104,
+        12,
+        238,
+        246
+      ],
+      [
+        334,
+        13,
+        469,
+        244
+      ],
+      [
+        566,
+        12,
+        697,
+        243
+      ],
+      [
+        795,
+        12,
+        929,
+        246
+      ],
+      [
+        89,
+        257,
+        241,
+        507
+      ],
+      [
+        329,
+        257,
+        470,
+        507
+      ],
+      [
+        557,
+        257,
+        703,
+        507
+      ],
+      [
+        796,
+        258,
+        943,
+        502
+      ],
+      [
+        88,
+        515,
+        238,
+        768
+      ],
+      [
+        329,
+        516,
+        472,
+        770
+      ],
+      [
+        561,
+        515,
+        704,
+        769
+      ],
+      [
+        795,
+        515,
+        941,
+        770
+      ],
+      [
+        79,
+        779,
+        239,
+        1023
+      ],
+      [
+        314,
+        780,
+        491,
+        1016
+      ],
+      [
+        536,
+        780,
+        721,
+        1009
+      ],
+      [
+        781,
+        780,
+        965,
+        1022
+      ],
+      [
+        63,
+        1030,
+        260,
+        1256
+      ],
+      [
+        298,
+        1031,
+        505,
+        1256
+      ],
+      [
+        545,
+        1026,
+        731,
+        1256
+      ],
+      [
+        781,
+        1031,
+        968,
+        1269
+      ],
+      [
+        83,
+        1270,
+        248,
+        1516
+      ],
+      [
+        324,
+        1271,
+        482,
+        1521
+      ],
+      [
+        551,
+        1274,
+        711,
+        1523
+      ],
+      [
+        788,
+        1270,
+        953,
+        1523
+      ]
+    ],
+    "scale": 0.5042735042735043,
+    "sha256": "10d9c960ec75b0359b606c1da47f4055836ba90b61fc6060884fce3c2d6029af"
+  },
+  {
+    "mount": "horse",
+    "role": "fs",
+    "direction": "down",
+    "prompt": "Use case: precise-object-edit. Correct this production animation atlas for game 远征. Preserve the exact fs rider identity, brown horse and golden tack, perspective, colors and all intended motion poses. The input has missing/clipped/overlapping cels. Deliver a TALL PORTRAIT 1024x1536 transparent image with EXACTLY FOUR COLUMNS and SIX ROWS,24 FULL SEPARATE sprites. Each square cell256x256 with minimum16px transparent margin around the entire full-body integrated mounted rider. Keep every hoof/paw, tail and staff tip inside its own cell. ALL face DOWN. Row1=4 unique subtle idle poses; rows2-3=8 sequential alternating walk poses; rows4-6=12 sequential gallop/bound poses with contact/loading, lift, suspension and recovery. Add the missing final four running poses where the source has only five rows. Where source is cropped, redraw complete limbs. Maintain genuine anatomical animation and synchronized seated rider, cloak/hair/reins, seamless forward loops; no duplicated or merely shifted poses. Consistent scale and ground90% anchor; rider pelvis on saddle, hands on reins, boots in stirrups/straps. Important: count SIX rows, each containing FOUR complete bodies, leave generous gutters and outside border, no overlap between rows. Genuine transparent RGBA, no shadow/floor, writing, grid or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-e6c6d1b2-fdaf-4f62-b56f-51f66bf4fea8.png",
+    "supplements": [
+      {
+        "mount": "horse",
+        "role": "fs",
+        "direction": "down",
+        "count": 4,
+        "base_count": 20,
+        "source": "exec-e6c6d1b2-fdaf-4f62-b56f-51f66bf4fea8.png",
+        "indices": [
+          20,
+          21,
+          22,
+          23
+        ],
+        "prompt": "Use case: stylized-concept. Additional production animation cels matching this exact mounted RPG character reference, preserving rider identity, outfit, brown horse, tack, camera and pixel art style. Output EXACTLY FOUR separate full-body sprites in a spacious TWO by TWO grid. These are four chronological NEW final recovery phases that continue the last two rows of the reference's running loop and return smoothly to its first running contact: opposite support/loading, foreleg recovery, next lift, return contact. Actual distinct leg anatomy, weight transfer and synchronized seated rider/cape/hair/reins. All face DOWN toward viewer. All limbs, tail and staff tips complete with at least15% empty transparent outer margin; no sheet-edge clipping. Rider pelvis seated on saddle, hands on reins, boots in stirrups/straps; rider and mount one coherent sprite. Keep proportions identical to reference, crisp pixel art, no ground/shadows, text, grid, blur or extra limbs. Transparent RGBA background. Do not reproduce the reference's full sheet.",
+        "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-5089ad78-29e5-499a-8f63-733d407c7fee.png"
+      }
+    ],
+    "source": "assets\\full_issue_fix_20261024\\source\\horse_fs_down.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/horse_fs_down.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        34,
+        18,
+        247,
+        301
+      ],
+      [
+        284,
+        18,
+        493,
+        299
+      ],
+      [
+        531,
+        18,
+        744,
+        299
+      ],
+      [
+        790,
+        18,
+        992,
+        301
+      ],
+      [
+        37,
+        304,
+        248,
+        594
+      ],
+      [
+        283,
+        303,
+        493,
+        600
+      ],
+      [
+        531,
+        304,
+        743,
+        598
+      ],
+      [
+        782,
+        303,
+        993,
+        598
+      ],
+      [
+        30,
+        594,
+        251,
+        894
+      ],
+      [
+        278,
+        593,
+        495,
+        894
+      ],
+      [
+        520,
+        594,
+        744,
+        892
+      ],
+      [
+        778,
+        594,
+        997,
+        895
+      ],
+      [
+        27,
+        886,
+        252,
+        1176
+      ],
+      [
+        273,
+        888,
+        499,
+        1179
+      ],
+      [
+        518,
+        883,
+        734,
+        1172
+      ],
+      [
+        770,
+        887,
+        1000,
+        1179
+      ],
+      [
+        29,
+        1172,
+        251,
+        1483
+      ],
+      [
+        278,
+        1170,
+        498,
+        1447
+      ],
+      [
+        516,
+        1167,
+        746,
+        1480
+      ],
+      [
+        774,
+        1171,
+        1002,
+        1478
+      ],
+      [
+        47,
+        55,
+        500,
+        690
+      ],
+      [
+        541,
+        63,
+        987,
+        695
+      ],
+      [
+        32,
+        790,
+        513,
+        1400
+      ],
+      [
+        541,
+        792,
+        993,
+        1417
+      ]
+    ],
+    "scale": 0.4169611307420495,
+    "sha256": "fb956b1a634b0082e983fa2393f324e60e73d1895fbc9684a64faa8232ec3aef"
+  },
+  {
+    "mount": "horse",
+    "role": "fs",
+    "direction": "left",
+    "prompt": "Use case: stylized-concept. Production sprite animation sheet for pixel RPG 远征. Input image is identity and art-style reference: female white-haired mage, blue cloak and blue gold outfit, crystal-tipped staff in hand, on the same brown horse with gold tack. ONE integrated full-body rider and horse per cel, correct saddle seated pelvis, feet in stirrups, hands hold reins (and class item if applicable), proper near/far occlusion. Exactly 4 columns by 6 rows of square cells =24 chronological frames. Row1 =4 distinct subtle idle breathing poses. Rows2-3 =8 distinct walk gait poses. Rows4-6 =12 distinct gallop phases including contact/loading, lift, suspension and recovery, matching rider seat, hair, cloak and reins. Smooth sequential loops, no ping-pong, do not merely translate a static sprite. All frames same scale/camera/proportions and common ground anchor at50%x90%y with transparent gutters. Facing exactly LEFT, side profile moving left. Crisp pixel art, 128px logical sprites enlarged nearest neighbor; preserve exact character identity/colors from reference. Transparent RGBA background, no shadows, floor, labels, numbers, grid, extra limbs, blur.",
+    "path": "C:/Users/tsz/.codex/generated_images/01a16bba-0ea5-7d70-88d4-db883f6c0fdc/exec-d23434b5-d99b-40fe-ab4b-4d13640f9ea1.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\horse_fs_left.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/horse_fs_left.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        66,
+        4,
+        286,
+        219
+      ],
+      [
+        372,
+        5,
+        595,
+        219
+      ],
+      [
+        683,
+        5,
+        906,
+        219
+      ],
+      [
+        1000,
+        5,
+        1224,
+        220
+      ],
+      [
+        55,
+        223,
+        294,
+        428
+      ],
+      [
+        366,
+        222,
+        610,
+        429
+      ],
+      [
+        671,
+        223,
+        920,
+        428
+      ],
+      [
+        1001,
+        222,
+        1244,
+        428
+      ],
+      [
+        53,
+        437,
+        295,
+        645
+      ],
+      [
+        365,
+        437,
+        616,
+        644
+      ],
+      [
+        682,
+        437,
+        931,
+        643
+      ],
+      [
+        994,
+        436,
+        1250,
+        644
+      ],
+      [
+        33,
+        654,
+        317,
+        851
+      ],
+      [
+        353,
+        649,
+        637,
+        851
+      ],
+      [
+        670,
+        651,
+        957,
+        851
+      ],
+      [
+        996,
+        651,
+        1268,
+        851
+      ],
+      [
+        35,
+        857,
+        324,
+        1042
+      ],
+      [
+        357,
+        857,
+        651,
+        1037
+      ],
+      [
+        678,
+        861,
+        971,
+        1042
+      ],
+      [
+        1000,
+        860,
+        1261,
+        1042
+      ],
+      [
+        44,
+        1045,
+        307,
+        1223
+      ],
+      [
+        365,
+        1045,
+        634,
+        1224
+      ],
+      [
+        686,
+        1046,
+        946,
+        1223
+      ],
+      [
+        1003,
+        1045,
+        1254,
+        1224
+      ]
+    ],
+    "scale": 0.5488372093023256,
+    "sha256": "3297549fb9934745721aacc8642d111f92e5eec94ee0319b703e0c60bdf0dadd"
+  },
+  {
+    "mount": "horse",
+    "role": "fs",
+    "direction": "right",
+    "prompt": "Use case: precise-object-edit. Correct this production animation atlas for game 远征. Preserve the exact fs rider identity, brown horse and golden tack, perspective, colors and all intended motion poses. The input has missing/clipped/overlapping cels. Deliver a TALL PORTRAIT 1024x1536 transparent image with EXACTLY FOUR COLUMNS and SIX ROWS,24 FULL SEPARATE sprites. Each square cell256x256 with minimum16px transparent margin around the entire full-body integrated mounted rider. Keep every hoof/paw, tail and staff tip inside its own cell. ALL face RIGHT. Row1=4 unique subtle idle poses; rows2-3=8 sequential alternating walk poses; rows4-6=12 sequential gallop/bound poses with contact/loading, lift, suspension and recovery. Add the missing final four running poses where the source has only five rows. Where source is cropped, redraw complete limbs. Maintain genuine anatomical animation and synchronized seated rider, cloak/hair/reins, seamless forward loops; no duplicated or merely shifted poses. Consistent scale and ground90% anchor; rider pelvis on saddle, hands on reins, boots in stirrups/straps. Important: count SIX rows, each containing FOUR complete bodies, leave generous gutters and outside border, no overlap between rows. Genuine transparent RGBA, no shadow/floor, writing, grid or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-d5232c3e-6610-4318-b041-6cb42934a20b.png",
+    "supplements": [
+      {
+        "mount": "horse",
+        "role": "fs",
+        "direction": "right",
+        "count": 1,
+        "base_count": 24,
+        "indices": [
+          11
+        ],
+        "prompt": "Use case: precise-object-edit. This is ONE exact animation cel from a pixel RPG sheet, padded with transparency. Restore ONLY the missing cropped silhouette at the RIGHT edge of the mounted character. Extend the truncated tail/horse head/foreleg naturally into the empty transparent margin as appropriate. Preserve the complete original character, horse, colors, dark brown coat, pose, proportions, pixel cluster shapes, staff, cloak, saddle and lighting as closely as possible; do not redesign, repaint or change the gait pose. The restoration must match the original chunky small pixel art, not a smooth illustration. Keep ONE integrated rider and horse, facing RIGHT. Preserve the reference camera and current action exactly. Full body including tail, head and every hoof must now be complete and surrounded by transparent margin. Genuine transparent RGBA, no shadow/background, extra objects, text, grid or glow.",
+        "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-3bc610cf-0198-45b7-91ef-7c9f03ac760c.png"
+      },
+      {
+        "mount": "horse",
+        "role": "fs",
+        "direction": "right",
+        "count": 1,
+        "base_count": 24,
+        "indices": [
+          15
+        ],
+        "prompt": "Use case: precise-object-edit. This is ONE exact animation cel from a pixel RPG sheet, padded with transparency. Restore ONLY the missing cropped silhouette at the RIGHT edge of the mounted character. Extend the truncated tail/horse head/foreleg naturally into the empty transparent margin as appropriate. Preserve the complete original character, horse, colors, dark brown coat, pose, proportions, pixel cluster shapes, staff, cloak, saddle and lighting as closely as possible; do not redesign, repaint or change the gait pose. The restoration must match the original chunky small pixel art, not a smooth illustration. Keep ONE integrated rider and horse, facing RIGHT. Preserve the reference camera and current action exactly. Full body including tail, head and every hoof must now be complete and surrounded by transparent margin. Genuine transparent RGBA, no shadow/background, extra objects, text, grid or glow.",
+        "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-03feea07-75a7-4249-aae6-06ea5864b206.png"
+      },
+      {
+        "mount": "horse",
+        "role": "fs",
+        "direction": "right",
+        "count": 1,
+        "base_count": 24,
+        "indices": [
+          19
+        ],
+        "prompt": "Use case: precise-object-edit. This is ONE exact animation cel from a pixel RPG sheet, padded with transparency. Restore ONLY the missing cropped silhouette at the RIGHT edge of the mounted character. Extend the truncated tail/horse head/foreleg naturally into the empty transparent margin as appropriate. Preserve the complete original character, horse, colors, dark brown coat, pose, proportions, pixel cluster shapes, staff, cloak, saddle and lighting as closely as possible; do not redesign, repaint or change the gait pose. The restoration must match the original chunky small pixel art, not a smooth illustration. Keep ONE integrated rider and horse, facing RIGHT. Preserve the reference camera and current action exactly. Full body including tail, head and every hoof must now be complete and surrounded by transparent margin. Genuine transparent RGBA, no shadow/background, extra objects, text, grid or glow.",
+        "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-becfeb5c-fccc-491e-b8c3-a2c248489c4a.png"
+      }
+    ],
+    "source": "assets\\full_issue_fix_20261024\\source\\horse_fs_right.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/horse_fs_right.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [
+      11,
+      15,
+      19
+    ],
+    "extraction_bounds": [
+      [
+        12,
+        29,
+        247,
+        251
+      ],
+      [
+        269,
+        29,
+        502,
+        250
+      ],
+      [
+        533,
+        30,
+        765,
+        250
+      ],
+      [
+        787,
+        28,
+        1016,
+        250
+      ],
+      [
+        5,
+        269,
+        253,
+        494
+      ],
+      [
+        264,
+        267,
+        510,
+        496
+      ],
+      [
+        517,
+        267,
+        766,
+        496
+      ],
+      [
+        778,
+        269,
+        1023,
+        496
+      ],
+      [
+        6,
+        522,
+        259,
+        749
+      ],
+      [
+        261,
+        520,
+        517,
+        748
+      ],
+      [
+        515,
+        523,
+        770,
+        749
+      ],
+      [
+        138,
+        178,
+        1176,
+        1064
+      ],
+      [
+        9,
+        774,
+        289,
+        1010
+      ],
+      [
+        275,
+        772,
+        543,
+        1014
+      ],
+      [
+        526,
+        773,
+        800,
+        1009
+      ],
+      [
+        122,
+        171,
+        1150,
+        1098
+      ],
+      [
+        7,
+        1035,
+        282,
+        1269
+      ],
+      [
+        268,
+        1038,
+        541,
+        1253
+      ],
+      [
+        526,
+        1040,
+        798,
+        1267
+      ],
+      [
+        143,
+        188,
+        1093,
+        1037
+      ],
+      [
+        13,
+        1287,
+        292,
+        1512
+      ],
+      [
+        273,
+        1291,
+        531,
+        1511
+      ],
+      [
+        521,
+        1288,
+        782,
+        1512
+      ],
+      [
+        773,
+        1291,
+        1022,
+        1513
+      ]
+    ],
+    "scale": 0.5315315315315315,
+    "sha256": "05afe4208c935c1e864984cc9c017899a694c607f448a4777a37612beb5c6a12"
+  },
+  {
+    "mount": "horse",
+    "role": "fs",
+    "direction": "up",
+    "prompt": "Use case: stylized-concept. Production sprite animation sheet for pixel RPG 远征. Input image is identity and art-style reference: female white-haired mage, blue cloak and blue gold outfit, crystal-tipped staff in hand, on the same brown horse with gold tack. ONE integrated full-body rider and horse per cel, correct saddle seated pelvis, feet in stirrups, hands hold reins (and class item if applicable), proper near/far occlusion. Exactly 4 columns by 6 rows of square cells =24 chronological frames. Row1 =4 distinct subtle idle breathing poses. Rows2-3 =8 distinct walk gait poses. Rows4-6 =12 distinct gallop phases including contact/loading, lift, suspension and recovery, matching rider seat, hair, cloak and reins. Smooth sequential loops, no ping-pong, do not merely translate a static sprite. All frames same scale/camera/proportions and common ground anchor at50%x90%y with transparent gutters. Facing exactly UP, rear view away from viewer. Crisp pixel art, 128px logical sprites enlarged nearest neighbor; preserve exact character identity/colors from reference. Transparent RGBA background, no shadows, floor, labels, numbers, grid, extra limbs, blur.",
+    "path": "C:/Users/tsz/.codex/generated_images/01a16bba-0ea5-7d70-88d4-db883f6c0fdc/exec-5fe01d45-1307-4fa8-ad59-a92cbc9265f5.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\horse_fs_up.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/horse_fs_up.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        105,
+        11,
+        247,
+        259
+      ],
+      [
+        329,
+        10,
+        479,
+        259
+      ],
+      [
+        551,
+        11,
+        714,
+        259
+      ],
+      [
+        793,
+        10,
+        945,
+        259
+      ],
+      [
+        64,
+        275,
+        220,
+        518
+      ],
+      [
+        319,
+        271,
+        475,
+        517
+      ],
+      [
+        564,
+        272,
+        707,
+        518
+      ],
+      [
+        796,
+        271,
+        961,
+        519
+      ],
+      [
+        57,
+        525,
+        229,
+        774
+      ],
+      [
+        310,
+        523,
+        476,
+        774
+      ],
+      [
+        560,
+        524,
+        724,
+        771
+      ],
+      [
+        794,
+        522,
+        967,
+        774
+      ],
+      [
+        50,
+        775,
+        239,
+        1033
+      ],
+      [
+        301,
+        776,
+        486,
+        1022
+      ],
+      [
+        551,
+        776,
+        723,
+        1022
+      ],
+      [
+        799,
+        782,
+        980,
+        1028
+      ],
+      [
+        40,
+        1033,
+        232,
+        1284
+      ],
+      [
+        299,
+        1026,
+        493,
+        1265
+      ],
+      [
+        545,
+        1026,
+        730,
+        1281
+      ],
+      [
+        787,
+        1035,
+        986,
+        1280
+      ],
+      [
+        41,
+        1278,
+        239,
+        1535
+      ],
+      [
+        299,
+        1271,
+        488,
+        1526
+      ],
+      [
+        546,
+        1275,
+        727,
+        1525
+      ],
+      [
+        805,
+        1277,
+        987,
+        1535
+      ]
+    ],
+    "scale": 0.4738955823293173,
+    "sha256": "6b98da5ca9428090449b9db88759b79cc7f3034f71280701e948455ed9896a90"
+  },
+  {
+    "mount": "horse",
+    "role": "fz",
+    "direction": "down",
+    "prompt": "Use case: precise-object-edit. Correct this production animation atlas for game 远征. Preserve the exact fz rider identity, brown horse and golden tack, perspective, colors and all intended motion poses. The input has missing/clipped/overlapping cels. Deliver a TALL PORTRAIT 1024x1536 transparent image with EXACTLY FOUR COLUMNS and SIX ROWS,24 FULL SEPARATE sprites. Each square cell256x256 with minimum16px transparent margin around the entire full-body integrated mounted rider. Keep every hoof/paw, tail and staff tip inside its own cell. ALL face DOWN. Row1=4 unique subtle idle poses; rows2-3=8 sequential alternating walk poses; rows4-6=12 sequential gallop/bound poses with contact/loading, lift, suspension and recovery. Add the missing final four running poses where the source has only five rows. Where source is cropped, redraw complete limbs. Maintain genuine anatomical animation and synchronized seated rider, cloak/hair/reins, seamless forward loops; no duplicated or merely shifted poses. Consistent scale and ground90% anchor; rider pelvis on saddle, hands on reins, boots in stirrups/straps. Important: count SIX rows, each containing FOUR complete bodies, leave generous gutters and outside border, no overlap between rows. Genuine transparent RGBA, no shadow/floor, writing, grid or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-67c7f91d-ec1b-4f96-a3da-b2e4334b7ba8.png",
+    "supplements": [
+      {
+        "mount": "horse",
+        "role": "fz",
+        "direction": "down",
+        "count": 4,
+        "base_count": 20,
+        "source": "exec-67c7f91d-ec1b-4f96-a3da-b2e4334b7ba8.png",
+        "indices": [
+          20,
+          21,
+          22,
+          23
+        ],
+        "prompt": "Use case: stylized-concept. Additional production animation cels matching this exact mounted RPG character reference, preserving rider identity, outfit, brown horse, tack, camera and pixel art style. Output EXACTLY FOUR separate full-body sprites in a spacious TWO by TWO grid. These are four chronological NEW final recovery phases that continue the last two rows of the reference's running loop and return smoothly to its first running contact: opposite support/loading, foreleg recovery, next lift, return contact. Actual distinct leg anatomy, weight transfer and synchronized seated rider/cape/hair/reins. All face DOWN toward viewer. All limbs, tail and staff tips complete with at least15% empty transparent outer margin; no sheet-edge clipping. Rider pelvis seated on saddle, hands on reins, boots in stirrups/straps; rider and mount one coherent sprite. Keep proportions identical to reference, crisp pixel art, no ground/shadows, text, grid, blur or extra limbs. Transparent RGBA background. Do not reproduce the reference's full sheet.",
+        "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-3477c9dc-8ced-4878-9f68-c39d6c60ebba.png"
+      }
+    ],
+    "source": "assets\\full_issue_fix_20261024\\source\\horse_fz_down.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/horse_fz_down.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        61,
+        8,
+        226,
+        289
+      ],
+      [
+        305,
+        8,
+        475,
+        289
+      ],
+      [
+        551,
+        8,
+        718,
+        289
+      ],
+      [
+        797,
+        8,
+        964,
+        289
+      ],
+      [
+        47,
+        298,
+        231,
+        580
+      ],
+      [
+        302,
+        297,
+        471,
+        581
+      ],
+      [
+        534,
+        298,
+        721,
+        581
+      ],
+      [
+        795,
+        298,
+        973,
+        581
+      ],
+      [
+        45,
+        583,
+        231,
+        869
+      ],
+      [
+        294,
+        588,
+        483,
+        869
+      ],
+      [
+        538,
+        587,
+        733,
+        866
+      ],
+      [
+        793,
+        587,
+        984,
+        869
+      ],
+      [
+        31,
+        872,
+        239,
+        1158
+      ],
+      [
+        283,
+        872,
+        494,
+        1163
+      ],
+      [
+        535,
+        872,
+        737,
+        1150
+      ],
+      [
+        782,
+        872,
+        994,
+        1158
+      ],
+      [
+        31,
+        1161,
+        232,
+        1463
+      ],
+      [
+        284,
+        1164,
+        491,
+        1468
+      ],
+      [
+        529,
+        1161,
+        735,
+        1468
+      ],
+      [
+        778,
+        1161,
+        992,
+        1468
+      ],
+      [
+        161,
+        35,
+        533,
+        581
+      ],
+      [
+        734,
+        31,
+        1125,
+        581
+      ],
+      [
+        159,
+        641,
+        541,
+        1190
+      ],
+      [
+        733,
+        643,
+        1115,
+        1190
+      ]
+    ],
+    "scale": 0.4199288256227758,
+    "sha256": "e344f423b25924e4b0cc3e0c04184fd80944dd5c7286698efdba3c0fa32205f7"
+  },
+  {
+    "mount": "horse",
+    "role": "fz",
+    "direction": "left",
+    "prompt": "Use case: stylized-concept. Production sprite animation sheet for pixel RPG 远征. Input image is identity and art-style reference: female golden-haired cleric, white and gold hood and robe, small gold blue prayer book, on the same brown horse with gold tack. ONE integrated full-body rider and horse per cel, correct saddle seated pelvis, feet in stirrups, hands hold reins (and class item if applicable), proper near/far occlusion. Exactly 4 columns by 6 rows of square cells =24 chronological frames. Row1 =4 distinct subtle idle breathing poses. Rows2-3 =8 distinct walk gait poses. Rows4-6 =12 distinct gallop phases including contact/loading, lift, suspension and recovery, matching rider seat, hair, cloak and reins. Smooth sequential loops, no ping-pong, do not merely translate a static sprite. All frames same scale/camera/proportions and common ground anchor at50%x90%y with transparent gutters. Facing exactly LEFT, side profile moving left. Crisp pixel art, 128px logical sprites enlarged nearest neighbor; preserve exact character identity/colors from reference. Transparent RGBA background, no shadows, floor, labels, numbers, grid, extra limbs, blur.",
+    "path": "C:/Users/tsz/.codex/generated_images/01a16bba-0ea5-7d70-88d4-db883f6c0fdc/exec-2896bfa5-31d5-47a9-8db4-0f94ca6b8523.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\horse_fz_left.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/horse_fz_left.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        26,
+        36,
+        246,
+        260
+      ],
+      [
+        274,
+        35,
+        494,
+        260
+      ],
+      [
+        525,
+        36,
+        749,
+        260
+      ],
+      [
+        779,
+        37,
+        998,
+        260
+      ],
+      [
+        19,
+        289,
+        258,
+        515
+      ],
+      [
+        269,
+        288,
+        507,
+        515
+      ],
+      [
+        521,
+        288,
+        759,
+        516
+      ],
+      [
+        768,
+        290,
+        1006,
+        516
+      ],
+      [
+        16,
+        542,
+        255,
+        776
+      ],
+      [
+        270,
+        543,
+        505,
+        774
+      ],
+      [
+        518,
+        544,
+        760,
+        774
+      ],
+      [
+        770,
+        545,
+        1011,
+        773
+      ],
+      [
+        10,
+        798,
+        262,
+        1016
+      ],
+      [
+        271,
+        801,
+        521,
+        1012
+      ],
+      [
+        514,
+        799,
+        770,
+        1017
+      ],
+      [
+        770,
+        806,
+        1015,
+        1017
+      ],
+      [
+        12,
+        1044,
+        264,
+        1266
+      ],
+      [
+        268,
+        1047,
+        516,
+        1258
+      ],
+      [
+        520,
+        1048,
+        773,
+        1266
+      ],
+      [
+        771,
+        1047,
+        1012,
+        1266
+      ],
+      [
+        16,
+        1286,
+        265,
+        1510
+      ],
+      [
+        269,
+        1287,
+        518,
+        1509
+      ],
+      [
+        523,
+        1296,
+        775,
+        1510
+      ],
+      [
+        780,
+        1286,
+        1013,
+        1510
+      ]
+    ],
+    "scale": 0.5267857142857143,
+    "sha256": "c5788927f359245afe030c59367f8fa0e84ee849b179e08079de73623d6e8140"
+  },
+  {
+    "mount": "bear",
+    "role": "zs",
+    "direction": "down",
+    "prompt": "Use case: stylized-concept. Production pixel RPG animation sheet. EXACTLY FOUR COLUMNS and SIX ROWS of square cells,24 separate full-body integrated rider+mount sprites. All24 face DOWN, front towards viewer. Rider identity from reference1: red-haired male warrior, black bronze-trim armor, RED cape. Mount is the WHITE POLAR BEAR with brown leather saddle from reference2, bear paws and round ears, NO HORSE. Rider pelvis seated firmly on saddle, boots on stirrup/strap, hands on reins, correct near/far occlusion, mount and rider ONE coherent silhouette per frame. Row1 exactly4 distinct subtle idle breathing poses. Rows2-3 exactly8 sequential walking poses. Rows4-6 exactly12 sequential running bounding poses showing paw/hoof contact, loading, suspension and recovery; rider seat, hair and cape follow each phase. Seamless forward loops, no ping-pong or duplicated/static translated poses. Identical scale/camera/proportions, square cell grid, common ground anchor50%x90%y, ample transparent gutters, no clipping. Crisp logical120px pixel art enlarged nearest neighbor. Transparent RGBA, no ground, shadows, labels, grid, extra limbs or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-4c49c8d9-6526-435e-9bf2-9073a8b344a2.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\bear_zs_down.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/bear_zs_down.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        57,
+        17,
+        249,
+        256
+      ],
+      [
+        291,
+        16,
+        478,
+        255
+      ],
+      [
+        540,
+        16,
+        731,
+        256
+      ],
+      [
+        773,
+        16,
+        962,
+        253
+      ],
+      [
+        48,
+        269,
+        236,
+        514
+      ],
+      [
+        289,
+        269,
+        493,
+        514
+      ],
+      [
+        538,
+        269,
+        732,
+        510
+      ],
+      [
+        781,
+        269,
+        978,
+        512
+      ],
+      [
+        45,
+        524,
+        245,
+        770
+      ],
+      [
+        286,
+        524,
+        488,
+        762
+      ],
+      [
+        531,
+        525,
+        731,
+        770
+      ],
+      [
+        776,
+        524,
+        976,
+        770
+      ],
+      [
+        37,
+        782,
+        248,
+        1022
+      ],
+      [
+        281,
+        772,
+        494,
+        1011
+      ],
+      [
+        531,
+        777,
+        750,
+        1015
+      ],
+      [
+        781,
+        774,
+        986,
+        1015
+      ],
+      [
+        44,
+        1028,
+        252,
+        1251
+      ],
+      [
+        282,
+        1024,
+        498,
+        1267
+      ],
+      [
+        534,
+        1024,
+        748,
+        1258
+      ],
+      [
+        780,
+        1025,
+        998,
+        1265
+      ],
+      [
+        41,
+        1272,
+        255,
+        1510
+      ],
+      [
+        285,
+        1275,
+        497,
+        1507
+      ],
+      [
+        526,
+        1279,
+        736,
+        1516
+      ],
+      [
+        772,
+        1273,
+        987,
+        1506
+      ]
+    ],
+    "scale": 0.49372384937238495,
+    "sha256": "efca2d19f3b7b5843bcf06ff783b0e7f1d6d8a816480eea826d3159fa63e14e8"
+  },
+  {
+    "mount": "horse",
+    "role": "fz",
+    "direction": "right",
+    "prompt": "Use case: stylized-concept. Production pixel RPG animation sheet. EXACTLY FOUR COLUMNS and SIX ROWS of square cells,24 separate full-body integrated rider+mount sprites. All24 face RIGHT, side profile to right. Rider identity from reference1: golden-haired female cleric, white gold hood and robe, gold blue prayer book. Mount is same BROWN HORSE and golden tack from reference1. Rider pelvis seated firmly on saddle, boots on stirrup/strap, hands on reins, correct near/far occlusion, mount and rider ONE coherent silhouette per frame. Row1 exactly4 distinct subtle idle breathing poses. Rows2-3 exactly8 sequential walking poses. Rows4-6 exactly12 sequential running galloping poses showing paw/hoof contact, loading, suspension and recovery; rider seat, hair and cape follow each phase. Seamless forward loops, no ping-pong or duplicated/static translated poses. Identical scale/camera/proportions, square cell grid, common ground anchor50%x90%y, ample transparent gutters, no clipping. Crisp logical120px pixel art enlarged nearest neighbor. Transparent RGBA, no ground, shadows, labels, grid, extra limbs or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-e6371731-9041-4f21-8e31-bc7dd98cb4f7.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\horse_fz_right.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/horse_fz_right.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        25,
+        47,
+        257,
+        271
+      ],
+      [
+        268,
+        47,
+        496,
+        271
+      ],
+      [
+        514,
+        46,
+        743,
+        271
+      ],
+      [
+        765,
+        46,
+        1000,
+        271
+      ],
+      [
+        20,
+        303,
+        259,
+        527
+      ],
+      [
+        265,
+        303,
+        504,
+        527
+      ],
+      [
+        514,
+        302,
+        752,
+        527
+      ],
+      [
+        764,
+        303,
+        1002,
+        527
+      ],
+      [
+        20,
+        554,
+        257,
+        781
+      ],
+      [
+        263,
+        558,
+        508,
+        781
+      ],
+      [
+        515,
+        556,
+        770,
+        781
+      ],
+      [
+        771,
+        557,
+        1007,
+        781
+      ],
+      [
+        12,
+        813,
+        264,
+        1028
+      ],
+      [
+        261,
+        813,
+        511,
+        1028
+      ],
+      [
+        513,
+        813,
+        765,
+        1028
+      ],
+      [
+        765,
+        812,
+        1013,
+        1024
+      ],
+      [
+        13,
+        1051,
+        269,
+        1268
+      ],
+      [
+        268,
+        1051,
+        518,
+        1263
+      ],
+      [
+        515,
+        1051,
+        768,
+        1266
+      ],
+      [
+        768,
+        1048,
+        1007,
+        1266
+      ],
+      [
+        13,
+        1294,
+        273,
+        1504
+      ],
+      [
+        267,
+        1291,
+        516,
+        1504
+      ],
+      [
+        518,
+        1291,
+        765,
+        1496
+      ],
+      [
+        768,
+        1292,
+        1002,
+        1503
+      ]
+    ],
+    "scale": 0.5244444444444445,
+    "sha256": "34f77f1ff8ee8f143932dc9053a52ba4aaa4a56f405f05f21556de733844d051"
+  },
+  {
+    "mount": "horse",
+    "role": "fz",
+    "direction": "up",
+    "prompt": "Use case: stylized-concept. Production pixel RPG animation sheet. EXACTLY FOUR COLUMNS and SIX ROWS of square cells,24 separate full-body integrated rider+mount sprites. All24 face UP, rear away from viewer. Rider identity from reference1: golden-haired female cleric, white gold hood and robe, gold blue prayer book. Mount is same BROWN HORSE and golden tack from reference1. Rider pelvis seated firmly on saddle, boots on stirrup/strap, hands on reins, correct near/far occlusion, mount and rider ONE coherent silhouette per frame. Row1 exactly4 distinct subtle idle breathing poses. Rows2-3 exactly8 sequential walking poses. Rows4-6 exactly12 sequential running galloping poses showing paw/hoof contact, loading, suspension and recovery; rider seat, hair and cape follow each phase. Seamless forward loops, no ping-pong or duplicated/static translated poses. Identical scale/camera/proportions, square cell grid, common ground anchor50%x90%y, ample transparent gutters, no clipping. Crisp logical120px pixel art enlarged nearest neighbor. Transparent RGBA, no ground, shadows, labels, grid, extra limbs or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-c2c4597b-79c2-4f57-abfa-509c5de51ccf.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\horse_fz_up.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/horse_fz_up.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        128,
+        12,
+        237,
+        241
+      ],
+      [
+        348,
+        12,
+        459,
+        245
+      ],
+      [
+        566,
+        12,
+        677,
+        245
+      ],
+      [
+        785,
+        12,
+        895,
+        245
+      ],
+      [
+        124,
+        258,
+        243,
+        497
+      ],
+      [
+        345,
+        260,
+        465,
+        498
+      ],
+      [
+        561,
+        259,
+        687,
+        499
+      ],
+      [
+        781,
+        260,
+        905,
+        499
+      ],
+      [
+        114,
+        513,
+        246,
+        759
+      ],
+      [
+        340,
+        512,
+        468,
+        754
+      ],
+      [
+        555,
+        513,
+        688,
+        758
+      ],
+      [
+        781,
+        514,
+        909,
+        759
+      ],
+      [
+        112,
+        773,
+        243,
+        1020
+      ],
+      [
+        332,
+        772,
+        478,
+        1014
+      ],
+      [
+        552,
+        771,
+        687,
+        1017
+      ],
+      [
+        758,
+        772,
+        915,
+        1017
+      ],
+      [
+        103,
+        1031,
+        243,
+        1272
+      ],
+      [
+        331,
+        1031,
+        465,
+        1265
+      ],
+      [
+        549,
+        1031,
+        687,
+        1257
+      ],
+      [
+        779,
+        1031,
+        910,
+        1273
+      ],
+      [
+        108,
+        1288,
+        242,
+        1525
+      ],
+      [
+        331,
+        1288,
+        469,
+        1525
+      ],
+      [
+        547,
+        1287,
+        698,
+        1525
+      ],
+      [
+        774,
+        1290,
+        912,
+        1525
+      ]
+    ],
+    "scale": 0.5064377682403434,
+    "sha256": "4d212a11460cd1f716fa27d989fcb4c960c20b3f52e588ce16ecd206a03214e7"
+  },
+  {
+    "mount": "bear",
+    "role": "ck",
+    "direction": "down",
+    "prompt": "Use case: precise-object-edit. Correct this production animation atlas for game 远征. Preserve the exact ck rider identity, white polar bear and brown leather saddle, perspective, colors and all intended motion poses. The input has missing/clipped/overlapping cels. Deliver a TALL PORTRAIT 1024x1536 transparent image with EXACTLY FOUR COLUMNS and SIX ROWS,24 FULL SEPARATE sprites. Each square cell256x256 with minimum16px transparent margin around the entire full-body integrated mounted rider. Keep every hoof/paw, tail and staff tip inside its own cell. ALL face DOWN. Row1=4 unique subtle idle poses; rows2-3=8 sequential alternating walk poses; rows4-6=12 sequential gallop/bound poses with contact/loading, lift, suspension and recovery. Add the missing final four running poses where the source has only five rows. Where source is cropped, redraw complete limbs. Maintain genuine anatomical animation and synchronized seated rider, cloak/hair/reins, seamless forward loops; no duplicated or merely shifted poses. Consistent scale and ground90% anchor; rider pelvis on saddle, hands on reins, boots in stirrups/straps. Important: count SIX rows, each containing FOUR complete bodies, leave generous gutters and outside border, no overlap between rows. Genuine transparent RGBA, no shadow/floor, writing, grid or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-10857802-b4b9-4a38-9236-e42e3bfb2fd2.png",
+    "supplements": [
+      {
+        "mount": "bear",
+        "role": "ck",
+        "direction": "down",
+        "count": 4,
+        "base_count": 20,
+        "source": "exec-10857802-b4b9-4a38-9236-e42e3bfb2fd2.png",
+        "indices": [
+          20,
+          21,
+          22,
+          23
+        ],
+        "prompt": "Use case: stylized-concept. Additional production animation cels matching this exact mounted RPG character reference, preserving rider identity, outfit, white bear, tack, camera and pixel art style. Output EXACTLY FOUR separate full-body sprites in a spacious TWO by TWO grid. These are four chronological NEW final recovery phases that continue the last two rows of the reference's running loop and return smoothly to its first running contact: opposite support/loading, foreleg recovery, next lift, return contact. Actual distinct leg anatomy, weight transfer and synchronized seated rider/cape/hair/reins. All face DOWN toward viewer. All limbs, tail and staff tips complete with at least15% empty transparent outer margin; no sheet-edge clipping. Rider pelvis seated on saddle, hands on reins, boots in stirrups/straps; rider and mount one coherent sprite. Keep proportions identical to reference, crisp pixel art, no ground/shadows, text, grid, blur or extra limbs. Transparent RGBA background. Do not reproduce the reference's full sheet.",
+        "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-faee9e4e-4d17-4a72-9e69-d68f3eee8833.png"
+      }
+    ],
+    "source": "assets\\full_issue_fix_20261024\\source\\bear_ck_down.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/bear_ck_down.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        47,
+        20,
+        242,
+        284
+      ],
+      [
+        291,
+        20,
+        484,
+        281
+      ],
+      [
+        543,
+        20,
+        737,
+        284
+      ],
+      [
+        786,
+        19,
+        978,
+        284
+      ],
+      [
+        45,
+        290,
+        244,
+        569
+      ],
+      [
+        287,
+        291,
+        491,
+        573
+      ],
+      [
+        543,
+        292,
+        743,
+        569
+      ],
+      [
+        787,
+        293,
+        991,
+        569
+      ],
+      [
+        37,
+        576,
+        258,
+        851
+      ],
+      [
+        284,
+        580,
+        508,
+        863
+      ],
+      [
+        531,
+        577,
+        753,
+        848
+      ],
+      [
+        777,
+        576,
+        998,
+        863
+      ],
+      [
+        34,
+        866,
+        264,
+        1141
+      ],
+      [
+        286,
+        868,
+        508,
+        1137
+      ],
+      [
+        527,
+        869,
+        757,
+        1139
+      ],
+      [
+        776,
+        869,
+        1000,
+        1158
+      ],
+      [
+        36,
+        1165,
+        269,
+        1459
+      ],
+      [
+        282,
+        1162,
+        510,
+        1462
+      ],
+      [
+        528,
+        1162,
+        761,
+        1451
+      ],
+      [
+        779,
+        1166,
+        1006,
+        1464
+      ],
+      [
+        77,
+        41,
+        567,
+        647
+      ],
+      [
+        649,
+        41,
+        1131,
+        651
+      ],
+      [
+        77,
+        672,
+        561,
+        1269
+      ],
+      [
+        647,
+        674,
+        1131,
+        1271
+      ]
+    ],
+    "scale": 0.44666666666666666,
+    "sha256": "6f341d6be6db7f6f21e75e54369d0f3c99b59a7eaf61b282809e026fc2be0788"
+  },
+  {
+    "mount": "bear",
+    "role": "ck",
+    "direction": "left",
+    "prompt": "Use case: stylized-concept. Production pixel RPG animation sheet. EXACTLY FOUR COLUMNS and SIX ROWS of square cells,24 separate full-body integrated rider+mount sprites. All24 face LEFT, side profile to left. Rider identity from reference1: female ranger, dark navy ponytail, blue cloak, dark gold armor, bow and quiver. Mount is the WHITE POLAR BEAR with brown leather saddle from reference2, bear paws and round ears, NO HORSE. Rider pelvis seated firmly on saddle, boots on stirrup/strap, hands on reins, correct near/far occlusion, mount and rider ONE coherent silhouette per frame. Row1 exactly4 distinct subtle idle breathing poses. Rows2-3 exactly8 sequential walking poses. Rows4-6 exactly12 sequential running bounding poses showing paw/hoof contact, loading, suspension and recovery; rider seat, hair and cape follow each phase. Seamless forward loops, no ping-pong or duplicated/static translated poses. Identical scale/camera/proportions, square cell grid, common ground anchor50%x90%y, ample transparent gutters, no clipping. Crisp logical120px pixel art enlarged nearest neighbor. Transparent RGBA, no ground, shadows, labels, grid, extra limbs or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-3be9836c-b63a-4c3d-9df4-82e0906485a6.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\bear_ck_left.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/bear_ck_left.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        26,
+        19,
+        247,
+        256
+      ],
+      [
+        275,
+        19,
+        497,
+        255
+      ],
+      [
+        527,
+        19,
+        748,
+        256
+      ],
+      [
+        776,
+        21,
+        997,
+        256
+      ],
+      [
+        22,
+        285,
+        263,
+        506
+      ],
+      [
+        278,
+        283,
+        511,
+        504
+      ],
+      [
+        524,
+        283,
+        759,
+        507
+      ],
+      [
+        771,
+        284,
+        1008,
+        504
+      ],
+      [
+        23,
+        528,
+        266,
+        752
+      ],
+      [
+        277,
+        528,
+        505,
+        752
+      ],
+      [
+        524,
+        529,
+        765,
+        752
+      ],
+      [
+        773,
+        529,
+        999,
+        752
+      ],
+      [
+        19,
+        781,
+        254,
+        1001
+      ],
+      [
+        267,
+        781,
+        507,
+        1001
+      ],
+      [
+        520,
+        782,
+        765,
+        997
+      ],
+      [
+        778,
+        781,
+        1003,
+        1006
+      ],
+      [
+        18,
+        1038,
+        256,
+        1249
+      ],
+      [
+        270,
+        1032,
+        508,
+        1250
+      ],
+      [
+        519,
+        1033,
+        772,
+        1248
+      ],
+      [
+        773,
+        1034,
+        1003,
+        1251
+      ],
+      [
+        18,
+        1288,
+        255,
+        1505
+      ],
+      [
+        268,
+        1282,
+        512,
+        1505
+      ],
+      [
+        522,
+        1281,
+        775,
+        1503
+      ],
+      [
+        779,
+        1288,
+        1000,
+        1506
+      ]
+    ],
+    "scale": 0.4978902953586498,
+    "sha256": "8c84becda1557f591bc333a85ec2291bd4713181c4f0c9d5ebcdfe6660334cee"
+  },
+  {
+    "mount": "bear",
+    "role": "ck",
+    "direction": "right",
+    "prompt": "Use case: stylized-concept. Production pixel RPG animation sheet. EXACTLY FOUR COLUMNS and SIX ROWS of square cells,24 separate full-body integrated rider+mount sprites. All24 face RIGHT, side profile to right. Rider identity from reference1: female ranger, dark navy ponytail, blue cloak, dark gold armor, bow and quiver. Mount is the WHITE POLAR BEAR with brown leather saddle from reference2, bear paws and round ears, NO HORSE. Rider pelvis seated firmly on saddle, boots on stirrup/strap, hands on reins, correct near/far occlusion, mount and rider ONE coherent silhouette per frame. Row1 exactly4 distinct subtle idle breathing poses. Rows2-3 exactly8 sequential walking poses. Rows4-6 exactly12 sequential running bounding poses showing paw/hoof contact, loading, suspension and recovery; rider seat, hair and cape follow each phase. Seamless forward loops, no ping-pong or duplicated/static translated poses. Identical scale/camera/proportions, square cell grid, common ground anchor50%x90%y, ample transparent gutters, no clipping. Crisp logical120px pixel art enlarged nearest neighbor. Transparent RGBA, no ground, shadows, labels, grid, extra limbs or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-797326e3-77be-4abe-aed1-2345d923da4c.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\bear_ck_right.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/bear_ck_right.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        34,
+        30,
+        251,
+        255
+      ],
+      [
+        289,
+        26,
+        507,
+        255
+      ],
+      [
+        544,
+        29,
+        759,
+        255
+      ],
+      [
+        802,
+        27,
+        1017,
+        255
+      ],
+      [
+        17,
+        274,
+        258,
+        500
+      ],
+      [
+        269,
+        275,
+        512,
+        499
+      ],
+      [
+        529,
+        274,
+        767,
+        501
+      ],
+      [
+        777,
+        276,
+        1016,
+        499
+      ],
+      [
+        18,
+        527,
+        256,
+        751
+      ],
+      [
+        264,
+        526,
+        511,
+        753
+      ],
+      [
+        522,
+        524,
+        768,
+        751
+      ],
+      [
+        773,
+        527,
+        1019,
+        751
+      ],
+      [
+        8,
+        772,
+        263,
+        994
+      ],
+      [
+        266,
+        778,
+        528,
+        989
+      ],
+      [
+        543,
+        780,
+        771,
+        997
+      ],
+      [
+        779,
+        781,
+        1019,
+        994
+      ],
+      [
+        8,
+        1015,
+        259,
+        1239
+      ],
+      [
+        265,
+        1018,
+        532,
+        1231
+      ],
+      [
+        536,
+        1020,
+        776,
+        1237
+      ],
+      [
+        799,
+        1024,
+        1020,
+        1244
+      ],
+      [
+        17,
+        1262,
+        259,
+        1493
+      ],
+      [
+        258,
+        1268,
+        526,
+        1490
+      ],
+      [
+        528,
+        1275,
+        774,
+        1493
+      ],
+      [
+        795,
+        1274,
+        1019,
+        1496
+      ]
+    ],
+    "scale": 0.5175438596491229,
+    "sha256": "a52a5bd13d779cb9111de91aea1bc10e14ce063142066ea1c2e3d1c21e86e92a"
+  },
+  {
+    "mount": "bear",
+    "role": "ck",
+    "direction": "up",
+    "prompt": "Use case: stylized-concept. Production pixel RPG animation sheet. EXACTLY FOUR COLUMNS and SIX ROWS of square cells,24 separate full-body integrated rider+mount sprites. All24 face UP, rear away from viewer. Rider identity from reference1: female ranger, dark navy ponytail, blue cloak, dark gold armor, bow and quiver. Mount is the WHITE POLAR BEAR with brown leather saddle from reference2, bear paws and round ears, NO HORSE. Rider pelvis seated firmly on saddle, boots on stirrup/strap, hands on reins, correct near/far occlusion, mount and rider ONE coherent silhouette per frame. Row1 exactly4 distinct subtle idle breathing poses. Rows2-3 exactly8 sequential walking poses. Rows4-6 exactly12 sequential running bounding poses showing paw/hoof contact, loading, suspension and recovery; rider seat, hair and cape follow each phase. Seamless forward loops, no ping-pong or duplicated/static translated poses. Identical scale/camera/proportions, square cell grid, common ground anchor50%x90%y, ample transparent gutters, no clipping. Crisp logical120px pixel art enlarged nearest neighbor. Transparent RGBA, no ground, shadows, labels, grid, extra limbs or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-0159801e-472d-4056-bd31-856cd935a725.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\bear_ck_up.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/bear_ck_up.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        73,
+        13,
+        220,
+        259
+      ],
+      [
+        313,
+        14,
+        461,
+        256
+      ],
+      [
+        560,
+        13,
+        707,
+        257
+      ],
+      [
+        806,
+        13,
+        955,
+        254
+      ],
+      [
+        62,
+        267,
+        222,
+        510
+      ],
+      [
+        313,
+        267,
+        471,
+        510
+      ],
+      [
+        559,
+        268,
+        714,
+        512
+      ],
+      [
+        803,
+        267,
+        961,
+        510
+      ],
+      [
+        62,
+        522,
+        229,
+        767
+      ],
+      [
+        313,
+        521,
+        476,
+        767
+      ],
+      [
+        559,
+        520,
+        725,
+        767
+      ],
+      [
+        803,
+        520,
+        969,
+        768
+      ],
+      [
+        63,
+        777,
+        229,
+        1018
+      ],
+      [
+        311,
+        778,
+        482,
+        1010
+      ],
+      [
+        560,
+        778,
+        734,
+        1018
+      ],
+      [
+        809,
+        777,
+        979,
+        1016
+      ],
+      [
+        64,
+        1031,
+        239,
+        1268
+      ],
+      [
+        312,
+        1031,
+        490,
+        1261
+      ],
+      [
+        558,
+        1030,
+        746,
+        1272
+      ],
+      [
+        810,
+        1030,
+        985,
+        1272
+      ],
+      [
+        63,
+        1283,
+        248,
+        1522
+      ],
+      [
+        305,
+        1283,
+        495,
+        1522
+      ],
+      [
+        552,
+        1283,
+        743,
+        1514
+      ],
+      [
+        806,
+        1286,
+        989,
+        1522
+      ]
+    ],
+    "scale": 0.48360655737704916,
+    "sha256": "0b1ac2eb835d0c84f634f2bd3ee09366da7a0690bf7bc4634432b6931249be39"
+  },
+  {
+    "mount": "bear",
+    "role": "fs",
+    "direction": "down",
+    "prompt": "Use case: stylized-concept. Production pixel RPG animation sheet. EXACTLY FOUR COLUMNS and SIX ROWS of square cells,24 separate full-body integrated rider+mount sprites. All24 face DOWN, front towards viewer. Rider identity from reference1: white-haired female mage, blue outfit and cloak, crystal-tipped staff. Mount is the WHITE POLAR BEAR with brown leather saddle from reference2, bear paws and round ears, NO HORSE. Rider pelvis seated firmly on saddle, boots on stirrup/strap, hands on reins, correct near/far occlusion, mount and rider ONE coherent silhouette per frame. Row1 exactly4 distinct subtle idle breathing poses. Rows2-3 exactly8 sequential walking poses. Rows4-6 exactly12 sequential running bounding poses showing paw/hoof contact, loading, suspension and recovery; rider seat, hair and cape follow each phase. Seamless forward loops, no ping-pong or duplicated/static translated poses. Identical scale/camera/proportions, square cell grid, common ground anchor50%x90%y, ample transparent gutters, no clipping. Crisp logical120px pixel art enlarged nearest neighbor. Transparent RGBA, no ground, shadows, labels, grid, extra limbs or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-29e05bb7-2aea-40c3-8fd3-56aca84dc9e0.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\bear_fs_down.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/bear_fs_down.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        63,
+        14,
+        232,
+        266
+      ],
+      [
+        308,
+        14,
+        477,
+        266
+      ],
+      [
+        551,
+        16,
+        713,
+        266
+      ],
+      [
+        790,
+        14,
+        960,
+        266
+      ],
+      [
+        62,
+        276,
+        236,
+        520
+      ],
+      [
+        303,
+        278,
+        483,
+        526
+      ],
+      [
+        551,
+        276,
+        720,
+        524
+      ],
+      [
+        795,
+        276,
+        962,
+        523
+      ],
+      [
+        49,
+        534,
+        235,
+        787
+      ],
+      [
+        301,
+        535,
+        485,
+        785
+      ],
+      [
+        559,
+        535,
+        729,
+        787
+      ],
+      [
+        794,
+        535,
+        972,
+        787
+      ],
+      [
+        47,
+        796,
+        232,
+        1037
+      ],
+      [
+        298,
+        795,
+        502,
+        1037
+      ],
+      [
+        540,
+        800,
+        729,
+        1040
+      ],
+      [
+        783,
+        800,
+        975,
+        1036
+      ],
+      [
+        46,
+        1046,
+        245,
+        1283
+      ],
+      [
+        300,
+        1050,
+        500,
+        1279
+      ],
+      [
+        542,
+        1052,
+        746,
+        1277
+      ],
+      [
+        784,
+        1046,
+        990,
+        1283
+      ],
+      [
+        46,
+        1289,
+        239,
+        1526
+      ],
+      [
+        299,
+        1289,
+        498,
+        1517
+      ],
+      [
+        540,
+        1290,
+        735,
+        1526
+      ],
+      [
+        801,
+        1291,
+        986,
+        1526
+      ]
+    ],
+    "scale": 0.46825396825396826,
+    "sha256": "3c4bc4cfdce28636818907cf24aca0768571e0aa14de8f435f58a38ec514760f"
+  },
+  {
+    "mount": "bear",
+    "role": "zs",
+    "direction": "left",
+    "prompt": "Use case: stylized-concept. Production pixel RPG animation sheet. EXACTLY FOUR COLUMNS and SIX ROWS of square cells,24 separate full-body integrated rider+mount sprites. All24 face LEFT, side profile to left. Rider identity from reference1: red-haired male warrior, black bronze-trim armor, RED cape. Mount is the WHITE POLAR BEAR with brown leather saddle from reference2, bear paws and round ears, NO HORSE. Rider pelvis seated firmly on saddle, boots on stirrup/strap, hands on reins, correct near/far occlusion, mount and rider ONE coherent silhouette per frame. Row1 exactly4 distinct subtle idle breathing poses. Rows2-3 exactly8 sequential walking poses. Rows4-6 exactly12 sequential running bounding poses showing paw/hoof contact, loading, suspension and recovery; rider seat, hair and cape follow each phase. Seamless forward loops, no ping-pong or duplicated/static translated poses. Identical scale/camera/proportions, square cell grid, common ground anchor50%x90%y, ample transparent gutters, no clipping. Crisp logical120px pixel art enlarged nearest neighbor. Transparent RGBA, no ground, shadows, labels, grid, extra limbs or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-a42c86ef-08af-415a-905a-5c2c54753f5a.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\bear_zs_left.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/bear_zs_left.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        30,
+        35,
+        256,
+        272
+      ],
+      [
+        275,
+        38,
+        497,
+        272
+      ],
+      [
+        521,
+        38,
+        745,
+        272
+      ],
+      [
+        771,
+        37,
+        1000,
+        272
+      ],
+      [
+        23,
+        307,
+        256,
+        531
+      ],
+      [
+        273,
+        305,
+        506,
+        531
+      ],
+      [
+        525,
+        305,
+        757,
+        531
+      ],
+      [
+        776,
+        308,
+        1002,
+        531
+      ],
+      [
+        24,
+        565,
+        268,
+        792
+      ],
+      [
+        274,
+        565,
+        507,
+        792
+      ],
+      [
+        525,
+        566,
+        763,
+        792
+      ],
+      [
+        778,
+        569,
+        1008,
+        792
+      ],
+      [
+        26,
+        825,
+        278,
+        1033
+      ],
+      [
+        277,
+        831,
+        533,
+        1033
+      ],
+      [
+        531,
+        819,
+        794,
+        1029
+      ],
+      [
+        792,
+        833,
+        1006,
+        1037
+      ],
+      [
+        20,
+        1060,
+        278,
+        1264
+      ],
+      [
+        266,
+        1060,
+        538,
+        1265
+      ],
+      [
+        531,
+        1060,
+        786,
+        1264
+      ],
+      [
+        786,
+        1065,
+        999,
+        1266
+      ],
+      [
+        21,
+        1289,
+        251,
+        1496
+      ],
+      [
+        280,
+        1290,
+        523,
+        1495
+      ],
+      [
+        537,
+        1289,
+        787,
+        1498
+      ],
+      [
+        784,
+        1290,
+        1009,
+        1499
+      ]
+    ],
+    "scale": 0.502127659574468,
+    "sha256": "f91c6819438cfa3200a8c07eb77da82a3b04396a54e5a360406240eca6c8d4e4"
+  },
+  {
+    "mount": "bear",
+    "role": "zs",
+    "direction": "right",
+    "prompt": "Use case: stylized-concept. Production pixel RPG animation sheet. EXACTLY FOUR COLUMNS and SIX ROWS of square cells,24 separate full-body integrated rider+mount sprites. All24 face RIGHT, side profile to right. Rider identity from reference1: red-haired male warrior, black bronze-trim armor, RED cape. Mount is the WHITE POLAR BEAR with brown leather saddle from reference2, bear paws and round ears, NO HORSE. Rider pelvis seated firmly on saddle, boots on stirrup/strap, hands on reins, correct near/far occlusion, mount and rider ONE coherent silhouette per frame. Row1 exactly4 distinct subtle idle breathing poses. Rows2-3 exactly8 sequential walking poses. Rows4-6 exactly12 sequential running bounding poses showing paw/hoof contact, loading, suspension and recovery; rider seat, hair and cape follow each phase. Seamless forward loops, no ping-pong or duplicated/static translated poses. Identical scale/camera/proportions, square cell grid, common ground anchor50%x90%y, ample transparent gutters, no clipping. Crisp logical120px pixel art enlarged nearest neighbor. Transparent RGBA, no ground, shadows, labels, grid, extra limbs or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-0af33035-6876-4d8c-8073-f874dccdbece.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\bear_zs_right.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/bear_zs_right.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        30,
+        47,
+        248,
+        262
+      ],
+      [
+        287,
+        47,
+        503,
+        263
+      ],
+      [
+        539,
+        47,
+        755,
+        263
+      ],
+      [
+        801,
+        47,
+        1011,
+        263
+      ],
+      [
+        19,
+        318,
+        249,
+        535
+      ],
+      [
+        270,
+        319,
+        502,
+        535
+      ],
+      [
+        526,
+        319,
+        756,
+        536
+      ],
+      [
+        782,
+        319,
+        1011,
+        537
+      ],
+      [
+        19,
+        587,
+        254,
+        799
+      ],
+      [
+        276,
+        585,
+        509,
+        800
+      ],
+      [
+        515,
+        586,
+        760,
+        799
+      ],
+      [
+        773,
+        586,
+        1012,
+        801
+      ],
+      [
+        9,
+        843,
+        257,
+        1046
+      ],
+      [
+        269,
+        841,
+        527,
+        1046
+      ],
+      [
+        532,
+        845,
+        773,
+        1047
+      ],
+      [
+        780,
+        844,
+        1022,
+        1042
+      ],
+      [
+        12,
+        1074,
+        251,
+        1275
+      ],
+      [
+        260,
+        1074,
+        517,
+        1257
+      ],
+      [
+        529,
+        1070,
+        779,
+        1267
+      ],
+      [
+        798,
+        1077,
+        1016,
+        1277
+      ],
+      [
+        18,
+        1305,
+        252,
+        1506
+      ],
+      [
+        274,
+        1306,
+        518,
+        1509
+      ],
+      [
+        522,
+        1307,
+        780,
+        1507
+      ],
+      [
+        792,
+        1308,
+        1016,
+        1509
+      ]
+    ],
+    "scale": 0.5462962962962963,
+    "sha256": "87f2506288aa0b027617bdd2f33a921c332ec6db315c178b116399a377a318f1"
+  },
+  {
+    "mount": "bear",
+    "role": "zs",
+    "direction": "up",
+    "prompt": "Use case: stylized-concept. Production pixel RPG animation sheet. EXACTLY FOUR COLUMNS and SIX ROWS of square cells,24 separate full-body integrated rider+mount sprites. All24 face UP, rear away from viewer. Rider identity from reference1: red-haired male warrior, black bronze-trim armor, RED cape. Mount is the WHITE POLAR BEAR with brown leather saddle from reference2, bear paws and round ears, NO HORSE. Rider pelvis seated firmly on saddle, boots on stirrup/strap, hands on reins, correct near/far occlusion, mount and rider ONE coherent silhouette per frame. Row1 exactly4 distinct subtle idle breathing poses. Rows2-3 exactly8 sequential walking poses. Rows4-6 exactly12 sequential running bounding poses showing paw/hoof contact, loading, suspension and recovery; rider seat, hair and cape follow each phase. Seamless forward loops, no ping-pong or duplicated/static translated poses. Identical scale/camera/proportions, square cell grid, common ground anchor50%x90%y, ample transparent gutters, no clipping. Crisp logical120px pixel art enlarged nearest neighbor. Transparent RGBA, no ground, shadows, labels, grid, extra limbs or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-7599d3cc-9596-4cb1-bd75-c7bcf051b375.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\bear_zs_up.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/bear_zs_up.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        78,
+        11,
+        239,
+        247
+      ],
+      [
+        324,
+        10,
+        489,
+        247
+      ],
+      [
+        570,
+        11,
+        735,
+        246
+      ],
+      [
+        811,
+        11,
+        971,
+        247
+      ],
+      [
+        76,
+        259,
+        236,
+        496
+      ],
+      [
+        321,
+        259,
+        484,
+        497
+      ],
+      [
+        561,
+        259,
+        722,
+        496
+      ],
+      [
+        806,
+        259,
+        968,
+        497
+      ],
+      [
+        75,
+        508,
+        250,
+        743
+      ],
+      [
+        318,
+        509,
+        486,
+        737
+      ],
+      [
+        556,
+        507,
+        726,
+        750
+      ],
+      [
+        806,
+        508,
+        977,
+        749
+      ],
+      [
+        45,
+        757,
+        230,
+        999
+      ],
+      [
+        290,
+        757,
+        479,
+        989
+      ],
+      [
+        534,
+        757,
+        720,
+        1001
+      ],
+      [
+        776,
+        758,
+        968,
+        1000
+      ],
+      [
+        45,
+        1010,
+        231,
+        1246
+      ],
+      [
+        292,
+        1010,
+        485,
+        1245
+      ],
+      [
+        542,
+        1011,
+        723,
+        1244
+      ],
+      [
+        784,
+        1010,
+        969,
+        1246
+      ],
+      [
+        45,
+        1257,
+        240,
+        1503
+      ],
+      [
+        295,
+        1256,
+        477,
+        1494
+      ],
+      [
+        543,
+        1256,
+        726,
+        1502
+      ],
+      [
+        784,
+        1256,
+        978,
+        1503
+      ]
+    ],
+    "scale": 0.5,
+    "sha256": "160c3b582c4318d4ab10e05be99fd5fc57a4f1ab8786b7582ef74ceccf8690c4"
+  },
+  {
+    "mount": "bear",
+    "role": "fs",
+    "direction": "left",
+    "prompt": "Use case: stylized-concept. Production pixel RPG animation sheet. EXACTLY FOUR COLUMNS and SIX ROWS of square cells,24 separate full-body integrated rider+mount sprites. All24 face LEFT, side profile to left. Rider identity from reference1: white-haired female mage, blue outfit and cloak, crystal-tipped staff. Mount is the WHITE POLAR BEAR with brown leather saddle from reference2, bear paws and round ears, NO HORSE. Rider pelvis seated firmly on saddle, boots on stirrup/strap, hands on reins, correct near/far occlusion, mount and rider ONE coherent silhouette per frame. Row1 exactly4 distinct subtle idle breathing poses. Rows2-3 exactly8 sequential walking poses. Rows4-6 exactly12 sequential running bounding poses showing paw/hoof contact, loading, suspension and recovery; rider seat, hair and cape follow each phase. Seamless forward loops, no ping-pong or duplicated/static translated poses. Identical scale/camera/proportions, square cell grid, common ground anchor50%x90%y, ample transparent gutters, no clipping. Crisp logical120px pixel art enlarged nearest neighbor. Transparent RGBA, no ground, shadows, labels, grid, extra limbs or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-ddde26d0-3165-4179-8583-f1880bf41118.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\bear_fs_left.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/bear_fs_left.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        32,
+        36,
+        246,
+        255
+      ],
+      [
+        280,
+        36,
+        493,
+        255
+      ],
+      [
+        528,
+        44,
+        742,
+        255
+      ],
+      [
+        781,
+        42,
+        990,
+        254
+      ],
+      [
+        27,
+        287,
+        259,
+        505
+      ],
+      [
+        276,
+        289,
+        491,
+        505
+      ],
+      [
+        526,
+        288,
+        752,
+        504
+      ],
+      [
+        776,
+        290,
+        997,
+        505
+      ],
+      [
+        29,
+        527,
+        262,
+        742
+      ],
+      [
+        277,
+        527,
+        512,
+        740
+      ],
+      [
+        527,
+        529,
+        748,
+        742
+      ],
+      [
+        776,
+        529,
+        1001,
+        741
+      ],
+      [
+        23,
+        787,
+        273,
+        1002
+      ],
+      [
+        282,
+        790,
+        543,
+        990
+      ],
+      [
+        540,
+        791,
+        754,
+        1001
+      ],
+      [
+        775,
+        794,
+        1004,
+        1005
+      ],
+      [
+        23,
+        1039,
+        278,
+        1253
+      ],
+      [
+        285,
+        1038,
+        509,
+        1247
+      ],
+      [
+        536,
+        1038,
+        775,
+        1236
+      ],
+      [
+        781,
+        1039,
+        993,
+        1255
+      ],
+      [
+        27,
+        1286,
+        273,
+        1495
+      ],
+      [
+        288,
+        1292,
+        526,
+        1498
+      ],
+      [
+        536,
+        1282,
+        755,
+        1492
+      ],
+      [
+        780,
+        1285,
+        999,
+        1501
+      ]
+    ],
+    "scale": 0.5388127853881278,
+    "sha256": "d7a65259e57f9f21f570c2b72648a35648426a1097c311aad00821eba0136e60"
+  },
+  {
+    "mount": "bear",
+    "role": "fs",
+    "direction": "right",
+    "prompt": "Use case: stylized-concept. Production pixel RPG animation sheet. EXACTLY FOUR COLUMNS and SIX ROWS of square cells,24 separate full-body integrated rider+mount sprites. All24 face RIGHT, side profile to right. Rider identity from reference1: white-haired female mage, blue outfit and cloak, crystal-tipped staff. Mount is the WHITE POLAR BEAR with brown leather saddle from reference2, bear paws and round ears, NO HORSE. Rider pelvis seated firmly on saddle, boots on stirrup/strap, hands on reins, correct near/far occlusion, mount and rider ONE coherent silhouette per frame. Row1 exactly4 distinct subtle idle breathing poses. Rows2-3 exactly8 sequential walking poses. Rows4-6 exactly12 sequential running bounding poses showing paw/hoof contact, loading, suspension and recovery; rider seat, hair and cape follow each phase. Seamless forward loops, no ping-pong or duplicated/static translated poses. Identical scale/camera/proportions, square cell grid, common ground anchor50%x90%y, ample transparent gutters, no clipping. Crisp logical120px pixel art enlarged nearest neighbor. Transparent RGBA, no ground, shadows, labels, grid, extra limbs or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-d2be9ce0-02ee-47e1-9f33-a3efa8887aa5.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\bear_fs_right.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/bear_fs_right.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        26,
+        28,
+        255,
+        258
+      ],
+      [
+        283,
+        28,
+        507,
+        258
+      ],
+      [
+        536,
+        33,
+        766,
+        258
+      ],
+      [
+        796,
+        29,
+        1021,
+        258
+      ],
+      [
+        17,
+        294,
+        258,
+        514
+      ],
+      [
+        270,
+        291,
+        512,
+        513
+      ],
+      [
+        521,
+        302,
+        766,
+        516
+      ],
+      [
+        775,
+        294,
+        1019,
+        516
+      ],
+      [
+        17,
+        541,
+        256,
+        768
+      ],
+      [
+        272,
+        538,
+        513,
+        767
+      ],
+      [
+        533,
+        537,
+        769,
+        768
+      ],
+      [
+        776,
+        547,
+        1019,
+        768
+      ],
+      [
+        7,
+        806,
+        263,
+        1021
+      ],
+      [
+        263,
+        816,
+        514,
+        1019
+      ],
+      [
+        521,
+        809,
+        767,
+        1012
+      ],
+      [
+        778,
+        806,
+        1019,
+        1023
+      ],
+      [
+        7,
+        1047,
+        271,
+        1249
+      ],
+      [
+        263,
+        1056,
+        523,
+        1244
+      ],
+      [
+        524,
+        1059,
+        776,
+        1251
+      ],
+      [
+        780,
+        1059,
+        1018,
+        1251
+      ],
+      [
+        18,
+        1279,
+        259,
+        1501
+      ],
+      [
+        277,
+        1286,
+        517,
+        1497
+      ],
+      [
+        532,
+        1283,
+        766,
+        1496
+      ],
+      [
+        775,
+        1282,
+        1019,
+        1493
+      ]
+    ],
+    "scale": 0.5130434782608696,
+    "sha256": "ad59f27578181f7223f512a7cd460358ce10bb456a2285654dbe345e8a505417"
+  },
+  {
+    "mount": "bear",
+    "role": "fs",
+    "direction": "up",
+    "prompt": "Use case: stylized-concept. Production pixel RPG animation sheet. EXACTLY FOUR COLUMNS and SIX ROWS of square cells,24 separate full-body integrated rider+mount sprites. All24 face UP, rear away from viewer. Rider identity from reference1: white-haired female mage, blue outfit and cloak, crystal-tipped staff. Mount is the WHITE POLAR BEAR with brown leather saddle from reference2, bear paws and round ears, NO HORSE. Rider pelvis seated firmly on saddle, boots on stirrup/strap, hands on reins, correct near/far occlusion, mount and rider ONE coherent silhouette per frame. Row1 exactly4 distinct subtle idle breathing poses. Rows2-3 exactly8 sequential walking poses. Rows4-6 exactly12 sequential running bounding poses showing paw/hoof contact, loading, suspension and recovery; rider seat, hair and cape follow each phase. Seamless forward loops, no ping-pong or duplicated/static translated poses. Identical scale/camera/proportions, square cell grid, common ground anchor50%x90%y, ample transparent gutters, no clipping. Crisp logical120px pixel art enlarged nearest neighbor. Transparent RGBA, no ground, shadows, labels, grid, extra limbs or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-aab1665b-da56-4a5f-a0db-e21739d01c2b.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\bear_fs_up.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/bear_fs_up.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        65,
+        14,
+        204,
+        258
+      ],
+      [
+        314,
+        14,
+        463,
+        257
+      ],
+      [
+        565,
+        15,
+        712,
+        258
+      ],
+      [
+        810,
+        16,
+        963,
+        258
+      ],
+      [
+        56,
+        275,
+        202,
+        513
+      ],
+      [
+        305,
+        276,
+        456,
+        514
+      ],
+      [
+        559,
+        272,
+        705,
+        515
+      ],
+      [
+        815,
+        276,
+        961,
+        515
+      ],
+      [
+        55,
+        530,
+        208,
+        768
+      ],
+      [
+        306,
+        532,
+        456,
+        768
+      ],
+      [
+        556,
+        533,
+        708,
+        768
+      ],
+      [
+        813,
+        533,
+        961,
+        768
+      ],
+      [
+        55,
+        789,
+        204,
+        1023
+      ],
+      [
+        299,
+        783,
+        463,
+        1021
+      ],
+      [
+        551,
+        782,
+        726,
+        1015
+      ],
+      [
+        802,
+        778,
+        977,
+        1023
+      ],
+      [
+        48,
+        1037,
+        221,
+        1275
+      ],
+      [
+        298,
+        1039,
+        476,
+        1268
+      ],
+      [
+        545,
+        1038,
+        727,
+        1264
+      ],
+      [
+        801,
+        1039,
+        969,
+        1275
+      ],
+      [
+        56,
+        1293,
+        214,
+        1524
+      ],
+      [
+        299,
+        1288,
+        471,
+        1524
+      ],
+      [
+        555,
+        1283,
+        724,
+        1524
+      ],
+      [
+        806,
+        1285,
+        970,
+        1524
+      ]
+    ],
+    "scale": 0.48559670781893005,
+    "sha256": "bd5dc3b8f02fa3921183009169769961b232eadb51ffd2c67c3993ce13ac442d"
+  },
+  {
+    "mount": "bear",
+    "role": "fz",
+    "direction": "down",
+    "prompt": "Use case: stylized-concept. Production pixel RPG animation sheet. EXACTLY FOUR COLUMNS and SIX ROWS of square cells,24 separate full-body integrated rider+mount sprites. All24 face DOWN, front towards viewer. Rider identity from reference1: golden-haired female cleric, white gold hood and robe, gold blue prayer book. Mount is the WHITE POLAR BEAR with brown leather saddle from reference2, bear paws and round ears, NO HORSE. Rider pelvis seated firmly on saddle, boots on stirrup/strap, hands on reins, correct near/far occlusion, mount and rider ONE coherent silhouette per frame. Row1 exactly4 distinct subtle idle breathing poses. Rows2-3 exactly8 sequential walking poses. Rows4-6 exactly12 sequential running bounding poses showing paw/hoof contact, loading, suspension and recovery; rider seat, hair and cape follow each phase. Seamless forward loops, no ping-pong or duplicated/static translated poses. Identical scale/camera/proportions, square cell grid, common ground anchor50%x90%y, ample transparent gutters, no clipping. Crisp logical120px pixel art enlarged nearest neighbor. Transparent RGBA, no ground, shadows, labels, grid, extra limbs or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-68ccbed8-5373-4a05-95d6-7b84a4b9293c.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\bear_fz_down.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/bear_fz_down.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        82,
+        16,
+        219,
+        250
+      ],
+      [
+        319,
+        16,
+        463,
+        255
+      ],
+      [
+        562,
+        16,
+        701,
+        251
+      ],
+      [
+        802,
+        16,
+        945,
+        250
+      ],
+      [
+        79,
+        267,
+        219,
+        505
+      ],
+      [
+        319,
+        267,
+        461,
+        511
+      ],
+      [
+        561,
+        267,
+        703,
+        510
+      ],
+      [
+        806,
+        267,
+        945,
+        511
+      ],
+      [
+        81,
+        523,
+        226,
+        768
+      ],
+      [
+        322,
+        526,
+        464,
+        766
+      ],
+      [
+        562,
+        523,
+        708,
+        765
+      ],
+      [
+        806,
+        523,
+        952,
+        767
+      ],
+      [
+        81,
+        784,
+        222,
+        1014
+      ],
+      [
+        314,
+        783,
+        470,
+        1013
+      ],
+      [
+        560,
+        783,
+        715,
+        1016
+      ],
+      [
+        802,
+        782,
+        952,
+        1017
+      ],
+      [
+        81,
+        1033,
+        241,
+        1267
+      ],
+      [
+        314,
+        1036,
+        472,
+        1252
+      ],
+      [
+        562,
+        1033,
+        717,
+        1271
+      ],
+      [
+        806,
+        1036,
+        957,
+        1268
+      ],
+      [
+        77,
+        1276,
+        229,
+        1519
+      ],
+      [
+        313,
+        1280,
+        466,
+        1511
+      ],
+      [
+        560,
+        1284,
+        716,
+        1520
+      ],
+      [
+        804,
+        1283,
+        956,
+        1518
+      ]
+    ],
+    "scale": 0.502127659574468,
+    "sha256": "8bc5e69dbb47effd7fe943bcdd8a731b0494a9a683c2ca65d4949be8bc72ce97"
+  },
+  {
+    "mount": "bear",
+    "role": "fz",
+    "direction": "left",
+    "prompt": "Use case: stylized-concept. Production pixel RPG animation sheet. EXACTLY FOUR COLUMNS and SIX ROWS of square cells,24 separate full-body integrated rider+mount sprites. All24 face LEFT, side profile to left. Rider identity from reference1: golden-haired female cleric, white gold hood and robe, gold blue prayer book. Mount is the WHITE POLAR BEAR with brown leather saddle from reference2, bear paws and round ears, NO HORSE. Rider pelvis seated firmly on saddle, boots on stirrup/strap, hands on reins, correct near/far occlusion, mount and rider ONE coherent silhouette per frame. Row1 exactly4 distinct subtle idle breathing poses. Rows2-3 exactly8 sequential walking poses. Rows4-6 exactly12 sequential running bounding poses showing paw/hoof contact, loading, suspension and recovery; rider seat, hair and cape follow each phase. Seamless forward loops, no ping-pong or duplicated/static translated poses. Identical scale/camera/proportions, square cell grid, common ground anchor50%x90%y, ample transparent gutters, no clipping. Crisp logical120px pixel art enlarged nearest neighbor. Transparent RGBA, no ground, shadows, labels, grid, extra limbs or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-acf0cfd5-431f-4c17-b6a3-97d47f56c197.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\bear_fz_left.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/bear_fz_left.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        17,
+        16,
+        249,
+        261
+      ],
+      [
+        272,
+        16,
+        509,
+        261
+      ],
+      [
+        528,
+        15,
+        764,
+        261
+      ],
+      [
+        784,
+        16,
+        1014,
+        261
+      ],
+      [
+        15,
+        276,
+        257,
+        512
+      ],
+      [
+        265,
+        277,
+        507,
+        511
+      ],
+      [
+        521,
+        277,
+        761,
+        512
+      ],
+      [
+        776,
+        276,
+        1015,
+        512
+      ],
+      [
+        10,
+        525,
+        259,
+        764
+      ],
+      [
+        267,
+        525,
+        511,
+        765
+      ],
+      [
+        521,
+        525,
+        767,
+        765
+      ],
+      [
+        780,
+        526,
+        1015,
+        765
+      ],
+      [
+        15,
+        775,
+        264,
+        1014
+      ],
+      [
+        271,
+        776,
+        529,
+        1012
+      ],
+      [
+        519,
+        779,
+        794,
+        1002
+      ],
+      [
+        779,
+        779,
+        1014,
+        1013
+      ],
+      [
+        12,
+        1030,
+        270,
+        1262
+      ],
+      [
+        266,
+        1030,
+        529,
+        1240
+      ],
+      [
+        524,
+        1031,
+        784,
+        1241
+      ],
+      [
+        781,
+        1030,
+        1013,
+        1261
+      ],
+      [
+        13,
+        1275,
+        269,
+        1513
+      ],
+      [
+        264,
+        1275,
+        525,
+        1489
+      ],
+      [
+        519,
+        1277,
+        776,
+        1506
+      ],
+      [
+        780,
+        1277,
+        1011,
+        1515
+      ]
+    ],
+    "scale": 0.4816326530612245,
+    "sha256": "f718d23878a89cd93073d9949fab2299329f9e807be7eca847466da4f1eb8583"
+  },
+  {
+    "mount": "bear",
+    "role": "fz",
+    "direction": "right",
+    "prompt": "Use case: stylized-concept. Production pixel RPG animation sheet. EXACTLY FOUR COLUMNS and SIX ROWS of square cells,24 separate full-body integrated rider+mount sprites. All24 face RIGHT, side profile to right. Rider identity from reference1: golden-haired female cleric, white gold hood and robe, gold blue prayer book. Mount is the WHITE POLAR BEAR with brown leather saddle from reference2, bear paws and round ears, NO HORSE. Rider pelvis seated firmly on saddle, boots on stirrup/strap, hands on reins, correct near/far occlusion, mount and rider ONE coherent silhouette per frame. Row1 exactly4 distinct subtle idle breathing poses. Rows2-3 exactly8 sequential walking poses. Rows4-6 exactly12 sequential running bounding poses showing paw/hoof contact, loading, suspension and recovery; rider seat, hair and cape follow each phase. Seamless forward loops, no ping-pong or duplicated/static translated poses. Identical scale/camera/proportions, square cell grid, common ground anchor50%x90%y, ample transparent gutters, no clipping. Crisp logical120px pixel art enlarged nearest neighbor. Transparent RGBA, no ground, shadows, labels, grid, extra limbs or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-2c34f5c6-68de-4047-b4f9-e243ac5a835b.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\bear_fz_right.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/bear_fz_right.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        36,
+        36,
+        258,
+        257
+      ],
+      [
+        294,
+        36,
+        509,
+        257
+      ],
+      [
+        540,
+        39,
+        754,
+        258
+      ],
+      [
+        798,
+        37,
+        1007,
+        259
+      ],
+      [
+        22,
+        298,
+        258,
+        520
+      ],
+      [
+        291,
+        295,
+        515,
+        520
+      ],
+      [
+        529,
+        296,
+        762,
+        522
+      ],
+      [
+        785,
+        300,
+        1015,
+        522
+      ],
+      [
+        26,
+        555,
+        260,
+        782
+      ],
+      [
+        290,
+        555,
+        513,
+        782
+      ],
+      [
+        539,
+        558,
+        761,
+        783
+      ],
+      [
+        785,
+        558,
+        1014,
+        784
+      ],
+      [
+        36,
+        821,
+        250,
+        1030
+      ],
+      [
+        255,
+        818,
+        519,
+        1024
+      ],
+      [
+        522,
+        818,
+        767,
+        1032
+      ],
+      [
+        772,
+        819,
+        1013,
+        1032
+      ],
+      [
+        17,
+        1057,
+        259,
+        1264
+      ],
+      [
+        265,
+        1054,
+        513,
+        1258
+      ],
+      [
+        521,
+        1060,
+        769,
+        1270
+      ],
+      [
+        770,
+        1061,
+        1009,
+        1274
+      ],
+      [
+        10,
+        1290,
+        254,
+        1508
+      ],
+      [
+        263,
+        1298,
+        517,
+        1509
+      ],
+      [
+        537,
+        1293,
+        764,
+        1509
+      ],
+      [
+        771,
+        1293,
+        1014,
+        1511
+      ]
+    ],
+    "scale": 0.5339366515837104,
+    "sha256": "4d8755394cf3644f5f1ae4113f7b2f4acda4c77327ef56e8af432bae76038ccb"
+  },
+  {
+    "mount": "bear",
+    "role": "fz",
+    "direction": "up",
+    "prompt": "Use case: stylized-concept. Production pixel RPG animation sheet. EXACTLY FOUR COLUMNS and SIX ROWS of square cells,24 separate full-body integrated rider+mount sprites. All24 face UP, rear away from viewer. Rider identity from reference1: golden-haired female cleric, white gold hood and robe, gold blue prayer book. Mount is the WHITE POLAR BEAR with brown leather saddle from reference2, bear paws and round ears, NO HORSE. Rider pelvis seated firmly on saddle, boots on stirrup/strap, hands on reins, correct near/far occlusion, mount and rider ONE coherent silhouette per frame. Row1 exactly4 distinct subtle idle breathing poses. Rows2-3 exactly8 sequential walking poses. Rows4-6 exactly12 sequential running bounding poses showing paw/hoof contact, loading, suspension and recovery; rider seat, hair and cape follow each phase. Seamless forward loops, no ping-pong or duplicated/static translated poses. Identical scale/camera/proportions, square cell grid, common ground anchor50%x90%y, ample transparent gutters, no clipping. Crisp logical120px pixel art enlarged nearest neighbor. Transparent RGBA, no ground, shadows, labels, grid, extra limbs or blur.",
+    "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-4d5bbe7d-ec50-430a-a63c-8abf2b4ba6ad.png",
+    "source": "assets\\full_issue_fix_20261024\\source\\bear_fz_up.png",
+    "texture": "res://assets/full_issue_fix_20261024/ready/bear_fz_up.png",
+    "cell": 192,
+    "foot": [
+      96,
+      176
+    ],
+    "frames": {
+      "idle": 4,
+      "walk": 8,
+      "run": 12
+    },
+    "unique_frames": 24,
+    "source_edge_clipping": [],
+    "extraction_bounds": [
+      [
+        97,
+        38,
+        232,
+        275
+      ],
+      [
+        341,
+        38,
+        477,
+        275
+      ],
+      [
+        570,
+        39,
+        705,
+        278
+      ],
+      [
+        807,
+        38,
+        943,
+        274
+      ],
+      [
+        83,
+        292,
+        224,
+        528
+      ],
+      [
+        329,
+        294,
+        467,
+        522
+      ],
+      [
+        559,
+        294,
+        702,
+        527
+      ],
+      [
+        802,
+        294,
+        941,
+        529
+      ],
+      [
+        79,
+        536,
+        221,
+        771
+      ],
+      [
+        323,
+        534,
+        465,
+        770
+      ],
+      [
+        559,
+        536,
+        703,
+        774
+      ],
+      [
+        807,
+        536,
+        946,
+        769
+      ],
+      [
+        74,
+        784,
+        218,
+        1019
+      ],
+      [
+        323,
+        784,
+        465,
+        1014
+      ],
+      [
+        563,
+        784,
+        707,
+        1021
+      ],
+      [
+        816,
+        784,
+        957,
+        1019
+      ],
+      [
+        62,
+        1024,
+        213,
+        1260
+      ],
+      [
+        324,
+        1026,
+        469,
+        1256
+      ],
+      [
+        567,
+        1024,
+        714,
+        1251
+      ],
+      [
+        811,
+        1024,
+        958,
+        1259
+      ],
+      [
+        64,
+        1265,
+        209,
+        1504
+      ],
+      [
+        321,
+        1264,
+        469,
+        1499
+      ],
+      [
+        564,
+        1264,
+        706,
+        1500
+      ],
+      [
+        809,
+        1264,
+        957,
+        1508
+      ]
+    ],
+    "scale": 0.4978902953586498,
+    "sha256": "c53b4cc0b55eba2982f64d6db88dfabe27c749d89663287eeebaee31ac10041b"
+  }
+]

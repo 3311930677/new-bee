@@ -1,0 +1,101 @@
+{
+	"account": "",
+	"arena": {
+		"best_streak": 0,
+		"losses": 0,
+		"score": 1000,
+		"streak": 0,
+		"wins": 0
+	},
+	"audio": {
+		"bgm": 0.7,
+		"mute": false,
+		"sfx": 0.8
+	},
+	"avatar_custom": "",
+	"avatar_id": "fox",
+	"avatar_use_custom": false,
+	"city": {
+		"acts": {},
+		"built": [
+			"hall",
+			"gate",
+			"archive",
+			"kennel",
+			"barracks",
+			"storehouse",
+			"stable",
+			"forge"
+		],
+		"code": "",
+		"day": "",
+		"streak": 0,
+		"visits": []
+	},
+	"gender": "男",
+	"items": {
+		"ticket_sweep": 1,
+		"ticket_ten": 0
+	},
+	"player_name": "",
+	"prog": {
+		"economy": {
+			"bought": {},
+			"day": 1,
+			"history": {},
+			"next_tx": 1,
+			"orders": {},
+			"seed": 7919,
+			"sold": {},
+			"work": {}
+		},
+		"exp": 0,
+		"flags": {},
+		"gacha": {
+			"free_day": "2026-10-25",
+			"free_last": "",
+			"free_streak": 0,
+			"pity": 8
+		},
+		"inventory": {
+			"instances": [],
+			"next_uid": 1,
+			"pending": []
+		},
+		"last_ts": 1792967025,
+		"ledger": {
+			"applied": []
+		},
+		"level": 1,
+		"main_world": {
+			"map_id": "lorin_wilds"
+		},
+		"pets": [
+			"pet_thunderhawk",
+			"pet_eyescat",
+			"pet_rockturtle",
+			"pet_frostwolf"
+		],
+		"story": {
+			"done": [],
+			"goals": {},
+			"step": "s01"
+		},
+		"world_cleared": {},
+		"worlds_unlocked": 1
+	},
+	"quest": {
+		"active": {},
+		"claimed": [],
+		"day": "",
+		"offer": []
+	},
+	"selected_role": "",
+	"version": 7,
+	"wallet": {
+		"expedition": 0,
+		"gold": 1600,
+		"honor": 0,
+		"soul": 0
+	}
+}

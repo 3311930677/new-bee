@@ -1,0 +1,14 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SCRIPT ERROR: Parse Error: Cannot infer the type of "slot" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://src/autoload/G.gd:4976)
+ERROR: Failed to load script "res://src/autoload/G.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript_resource_format.cpp:46)
+ERROR: Failed to instantiate an autoload, script 'res://src/autoload/G.gd' does not inherit from 'Node'.
+   at: start (main/main.cpp:4539)
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+SCRIPT ERROR: Invalid assignment of property or key 'SAVE_PATH' with value of type 'String' on a base object of type 'Nil'.
+   at: _ready (res://tools/VerifyGacha.gd:12)
+   GDScript backtrace (most recent call first):
+       [0] _ready (res://tools/VerifyGacha.gd:12)

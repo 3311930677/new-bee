@@ -1,0 +1,1015 @@
+--------- beginning of system
+10-25 06:50:49.505   579  5617 W ActivityTaskManager: callingPackage for (uid=0, pid=6415) has no WPC
+10-25 06:50:49.506   579  5617 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_ORIENTATION_OVERRIDE
+--------- beginning of main
+10-25 06:50:49.506   579  5617 V GrammaticalInflectionUtils: AttributionSource: AttributionSource { uid = 10148, packageName = null, attributionTag = null, token = android.os.Binder@82325c2, deviceId = 0, next = null } does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+10-25 06:50:49.507   579  5617 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_RESIZEABLE_ACTIVITY_OVERRIDES
+10-25 06:50:49.507   579  5617 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_MIN_ASPECT_RATIO_OVERRIDE
+10-25 06:50:49.512   579  5617 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} with LAUNCH_SINGLE_INSTANCE_PER_TASK from uid 0 (BAL_ALLOW_ALLOWLISTED_UID) result code=0
+10-25 06:50:49.512   959  1008 V WindowManagerShell: Transition requested (#22): android.os.BinderProxy@2d2ca4 TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=13 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } baseActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} topActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} origActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} realActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} numActivities=1 lastActiveTime=1036879 supportsMultiWindow=true resizeMode=0 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@1ae2a0d} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 204 - 0, 0) topActivityInfo=ActivityInfo{b060dc2 com.godot.game.GodotAppLauncher} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=1080 topActivityLetterboxHeight=2400 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 22 }
+10-25 06:50:49.513   959  1058 W ShellStartingWindow: Get attribute fail, return default: File res/mipmap-hdpi-v4/icon_background.webp from drawable resource ID #0x7f0a0001: .xml extension required
+10-25 06:50:49.513  1207  1207 W SplitSelectStateCtor: Missing session instanceIds
+10-25 06:50:49.513   959  1058 D SplashScreenView: Build android.window.SplashScreenView{fd127d3 V.E...... ......ID 0,0-0,0}
+10-25 06:50:49.513   959  1058 D SplashScreenView: Icon: view: android.widget.ImageView{6626f10 V.ED..... ......I. 0,0-0,0 #1020504 android:id/splashscreen_icon_view} drawable: com.android.wm.shell.startingsurface.SplashscreenIconDrawableFactory$ImmobileIconDrawable@c205a09 size: 288
+10-25 06:50:49.513   959  1058 D SplashScreenView: Branding: view: android.view.View{12b440e V.ED..... ......I. 0,0-0,0 #1020503 android:id/splashscreen_branding_view} drawable: android.graphics.drawable.BitmapDrawable@efc6e2f size w: 300 h: 120
+10-25 06:50:49.513  1207  1207 D StatsLog: LAUNCHER_SPLIT_SELECTION_EXIT_INTERRUPTED
+10-25 06:50:49.518   959  1008 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=false, height=204
+10-25 06:50:49.518   579   608 V GrammaticalInflectionUtils: AttributionSource: AttributionSource { uid = 10148, packageName = null, attributionTag = null, token = android.os.Binder@82325c2, deviceId = 0, next = null } does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+10-25 06:50:49.519  1207  1207 I TopTaskTracker: onTaskMovedToFront: (moved taskInfo to front) taskId=13, baseIntent=Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher }
+10-25 06:50:49.524   579   903 I AppWidgetServiceImpl: Received broadcast: android.intent.action.PACKAGE_UNSTOPPED on user 0
+10-25 06:50:49.524   579   903 I AppWidgetServiceImpl: Updating package stopped masked state for uid 10148 package org.yuanzheng.singleplayer isStopped false
+10-25 06:50:49.525   452   452 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-25 06:50:49.528   579  5617 D CoreBackPreview: Window{f076e8f u0 Splash Screen org.yuanzheng.singleplayer}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@6d03ea1, mPriority=0, mIsAnimationCallback=false}
+10-25 06:50:49.528   382   382 D Zygote  : Forked child process 6418
+10-25 06:50:49.529   579   616 I ActivityManager: Start proc 6418:org.yuanzheng.singleplayer/u0a148 for next-top-activity {org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+10-25 06:50:49.534   381   381 I netd    : tetherGetStats() -> {[]} <0.39ms>
+10-25 06:50:49.536  6418  6418 I ng.singleplayer: Late-enabling -Xcheck:jni
+10-25 06:50:49.550  6418  6418 I ng.singleplayer: Using CollectorTypeCMC GC.
+10-25 06:50:49.551  6418  6418 W ng.singleplayer: Unexpected CPU variant for x86: x86_64.
+10-25 06:50:49.551  6418  6418 W ng.singleplayer: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, default
+10-25 06:50:49.563   959  1082 V WindowManagerShell: onTransitionReady(transaction=2486786065706)
+10-25 06:50:49.563   579   605 V WindowManager: Sent Transition (#22) createdAt=10-25 06:50:49.507 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=13 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } baseActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} topActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} origActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} realActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} numActivities=1 lastActiveTime=1036879 supportsMultiWindow=true resizeMode=0 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{d50be23 Task{28ae233 #13 type=standard A=10148:org.yuanzheng.singleplayer}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 204 - 0, 0) topActivityInfo=ActivityInfo{761cf20 com.godot.game.GodotAppLauncher} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=1080 topActivityLetterboxHeight=2400 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 22 }
+10-25 06:50:49.563   579   605 V WindowManager:     startWCT=WindowContainerTransaction { changes = {} hops = [] errorCallbackToken=null taskFragmentOrganizer=null }
+10-25 06:50:49.563   959  1008 V WindowManagerShell: onTransitionReady (#22) android.os.BinderProxy@2d2ca4: {id=22 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@803abc3} m=OPEN f=NONE leash=Surface(name=Task=13)/@0x78706d4 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@3b7bc40} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x48ab07d sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1}]}
+10-25 06:50:49.563   579   605 V WindowManager:     info={id=22 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-25 06:50:49.563   579   605 V WindowManager:         {WCT{RemoteToken{d50be23 Task{28ae233 #13 type=standard A=10148:org.yuanzheng.singleplayer}}} m=OPEN f=NONE leash=Surface(name=Task=13)/@0x8d4a087 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1},
+10-25 06:50:49.563   579   605 V WindowManager:         {WCT{RemoteToken{c57625f Task{abb7a23 #1 type=home}}} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x84a5e29 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1}
+10-25 06:50:49.563   579   605 V WindowManager:     ]}
+10-25 06:50:49.564   959  1008 V WindowManagerShell: Playing animation for (#22) android.os.BinderProxy@2d2ca4@0
+10-25 06:50:49.564   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.transition.DefaultMixedHandler@498eec9
+10-25 06:50:49.564   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.keyguard.KeyguardTransitionHandler@65519ce
+10-25 06:50:49.565   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.pip.PipTransition@36cf0ef
+10-25 06:50:49.565   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.activityembedding.ActivityEmbeddingController@ea597fc
+10-25 06:50:49.565   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.recents.RecentsTransitionHandler@9b8ae85
+10-25 06:50:49.565   959  1008 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+10-25 06:50:49.565   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.splitscreen.StageCoordinator@8ad04da
+10-25 06:50:49.565   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.transition.RemoteTransitionHandler@3c1ad0b
+10-25 06:50:49.566   959  1008 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=22 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@803abc3} m=OPEN f=NONE leash=Surface(name=Task=13)/@0x78706d4 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@3b7bc40} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x48ab07d sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1}]}
+10-25 06:50:49.566   959  1008 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher} launchCookie=null},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@5c085b, appThread = android.app.IApplicationThread$Stub$Proxy@31d78f8, debugName = QuickstepLaunchHome }}
+10-25 06:50:49.566   959  1008 V WindowManagerShell:  Delegate animation for (#22) to null
+10-25 06:50:49.566   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.transition.DefaultTransitionHandler@86694a6
+10-25 06:50:49.566   959  1008 V WindowManagerShell: start default transition animation, info = {id=22 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@803abc3} m=OPEN f=NONE leash=Surface(name=Task=13)/@0x78706d4 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@3b7bc40} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x48ab07d sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1}]}
+10-25 06:50:49.567   959  1008 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@16b411f animAttr=0x13 type=OPEN isEntrance=false
+10-25 06:50:49.567   959  1008 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@57c5c6c animAttr=0x12 type=OPEN isEntrance=true
+10-25 06:50:49.567   959  1008 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@86694a6
+10-25 06:50:49.570   579  3095 W UserManagerService: Requested status bar icon for non-badged user 0
+10-25 06:50:49.577  2320  2327 I adbd    : jdwp connection from 6418
+10-25 06:50:49.578  1207  1459 D EGL_emulation: app_time_stats: avg=48.39ms min=1.05ms max=1083.69ms count=27
+10-25 06:50:49.580   959  1097 D EGL_emulation: app_time_stats: avg=9418.05ms min=9418.05ms max=9418.05ms count=1
+10-25 06:50:49.586  6418  6418 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+10-25 06:50:49.597  1207  1459 D EGL_emulation: app_time_stats: avg=46.25ms min=0.88ms max=1036.98ms count=33
+10-25 06:50:49.601   579   606 V GameManagerService: setDefaultFrameRateOverride : 10148 , 60.0
+10-25 06:50:49.614  6418  6418 W ziparchive: Unable to open '/data/app/~~Uu5HkdPW2p3GuGJT1ftMkQ==/org.yuanzheng.singleplayer-ctG-36Uc4LFUJokoUIlT6Q==/base.dm': No such file or directory
+10-25 06:50:49.614  6418  6418 W ziparchive: Unable to open '/data/app/~~Uu5HkdPW2p3GuGJT1ftMkQ==/org.yuanzheng.singleplayer-ctG-36Uc4LFUJokoUIlT6Q==/base.dm': No such file or directory
+10-25 06:50:49.673  6418  6418 D nativeloader: Configuring clns-7 for other apk /data/app/~~Uu5HkdPW2p3GuGJT1ftMkQ==/org.yuanzheng.singleplayer-ctG-36Uc4LFUJokoUIlT6Q==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~Uu5HkdPW2p3GuGJT1ftMkQ==/org.yuanzheng.singleplayer-ctG-36Uc4LFUJokoUIlT6Q==/lib/x86_64:/data/app/~~Uu5HkdPW2p3GuGJT1ftMkQ==/org.yuanzheng.singleplayer-ctG-36Uc4LFUJokoUIlT6Q==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/org.yuanzheng.singleplayer
+10-25 06:50:49.686  6418  6418 V GraphicsEnvironment: Currently set values for:
+10-25 06:50:49.686  6418  6418 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+10-25 06:50:49.686  6418  6418 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+10-25 06:50:49.686  6418  6418 V GraphicsEnvironment: Global.Settings values are invalid: number of packages: 0, number of values: 0
+10-25 06:50:49.686  6418  6418 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+10-25 06:50:49.805  6418  6418 D GodotActivity: Project command line parameters: [--xr_mode_regular, --xr-mode, off, --fullscreen, --edge_to_edge, --background_color, #000000]
+10-25 06:50:49.809  6418  6418 D GodotActivity: Launch intent Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } with parameters []
+10-25 06:50:49.854  6418  6418 V GodotActivity: Creating new Godot fragment instance.
+10-25 06:50:49.859   959  1008 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#22) android.os.BinderProxy@2d2ca4@0
+10-25 06:50:49.861   579   605 V WindowManager: Finish Transition (#22): created at 10-25 06:50:49.507 collect-started=0.024ms request-sent=4.194ms started=5.886ms ready=53.348ms sent=54.882ms finished=353.811ms
+10-25 06:50:49.862  1207  1207 D VRI[QuickstepLauncher]: visibilityChanged oldVisibility=true newVisibility=false
+10-25 06:50:49.863   959  1008 V WindowManagerShell: Track 0 became idle
+10-25 06:50:49.863   959  1008 V WindowManagerShell: All active transition animations finished
+10-25 06:50:49.863   579   655 W UserManagerService: Requested status bar icon for non-badged user 0
+10-25 06:50:49.864   579   655 W UserManagerService: Requested status bar icon for non-badged user 0
+10-25 06:50:49.913  6418  6418 V Godot   : Initializing Godot plugin registry
+10-25 06:50:49.963  6418  6418 I GodotPluginRegistry: Registering runtime plugin AndroidRuntime
+10-25 06:50:49.963  6418  6418 V Godot   : InitEngine with params: [--xr_mode_regular, --xr-mode, off, --fullscreen, --edge_to_edge, --background_color, #000000]
+10-25 06:50:50.015  6418  6418 D nativeloader: Load /data/app/~~Uu5HkdPW2p3GuGJT1ftMkQ==/org.yuanzheng.singleplayer-ctG-36Uc4LFUJokoUIlT6Q==/lib/x86_64/libgodot_android.so using ns clns-7 from class loader (caller=/data/app/~~Uu5HkdPW2p3GuGJT1ftMkQ==/org.yuanzheng.singleplayer-ctG-36Uc4LFUJokoUIlT6Q==/base.apk!classes7.dex): ok
+10-25 06:50:50.019  6418  6418 V Godot   : Godot native layer initialization completed: true
+10-25 06:50:50.020  6418  6418 V Godot   : Setting up native layer with params: [--xr-mode, off, --fullscreen]
+10-25 06:50:50.088  6418  6418 V Godot   : Godot native layer setup completed
+10-25 06:50:50.089  6418  6418 V Godot   : OnInitRenderView: GodotFragment{beebc26} (ac5f8a0d-abf6-49c4-8b6c-c4bc60d2858f id=0x7f07002c)
+10-25 06:50:50.103  6418  6418 D Godot   : Render view should be transparent: false
+10-25 06:50:50.104  6418  6418 D Godot   : renderingDevice: opengl3 (ProjectSettings)
+10-25 06:50:50.104  6418  6418 D Godot   : 			renderer: gl_compatibility (ProjectSettings)
+10-25 06:50:50.132  6418  6418 W WindowOnBackDispatcher: OnBackInvokedCallback is not enabled for the application.
+10-25 06:50:50.132  6418  6418 W WindowOnBackDispatcher: Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+10-25 06:50:50.150  6418  6418 V Godot   : OnStart: GodotFragment{beebc26} (ac5f8a0d-abf6-49c4-8b6c-c4bc60d2858f id=0x7f07002c)
+10-25 06:50:50.155  6418  6418 V Godot   : OnResume: GodotFragment{beebc26} (ac5f8a0d-abf6-49c4-8b6c-c4bc60d2858f id=0x7f07002c)
+10-25 06:50:50.160  6418  6418 W HWUI    : Unknown dataspace 0
+10-25 06:50:50.163   579  3095 W WindowManager: Failed looking up window session=Session{b35974e 6418:u0a10148} callers=com.android.server.wm.WindowManagerService.windowForClientLocked:6311 com.android.server.wm.Session.updateRequestedVisibleTypes:755 android.view.IWindowSession$Stub.onTransact:1078 
+10-25 06:50:50.180   579  3095 D CoreBackPreview: Window{1b6a05 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@e0b948b, mPriority=0, mIsAnimationCallback=false}
+10-25 06:50:50.187   452   473 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-25 06:50:50.190  6418  6436 I EGL_emulation: Opening libGLESv1_CM_emulation.so
+10-25 06:50:50.193  6418  6436 I EGL_emulation: Opening libGLESv2_emulation.so
+10-25 06:50:50.210  1207  1207 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 74502, 5878796, CUJ=J<TASKBAR_COLLAPSE::Home to App>
+10-25 06:50:50.210  1207  1207 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 74531, 4991930, CUJ=J<TASKBAR_COLLAPSE::Home to App>
+10-25 06:50:50.210  1207  1207 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 74684, 5861434, CUJ=J<TASKBAR_COLLAPSE::Home to App>
+10-25 06:50:50.210  1207  1207 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 74713, 5368468, CUJ=J<TASKBAR_COLLAPSE::Home to App>
+10-25 06:50:50.210  1207  1207 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 74735, 6109902, CUJ=J<TASKBAR_COLLAPSE::Home to App>
+10-25 06:50:50.210  1207  1207 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 74750, 4902336, CUJ=J<TASKBAR_COLLAPSE::Home to App>
+10-25 06:50:50.210  1207  1207 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 74765, 4466870, CUJ=J<TASKBAR_COLLAPSE::Home to App>
+10-25 06:50:50.210  1207  1207 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 74780, 4286804, CUJ=J<TASKBAR_COLLAPSE::Home to App>
+10-25 06:50:50.211  1207  1207 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 74825, 5067006, CUJ=J<TASKBAR_COLLAPSE::Home to App>
+10-25 06:50:50.211  1207  1207 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 74840, 5666440, CUJ=J<TASKBAR_COLLAPSE::Home to App>
+10-25 06:50:50.211  1207  1207 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 74915, 4114710, CUJ=J<TASKBAR_COLLAPSE::Home to App>
+10-25 06:50:50.211  1207  1207 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 74923, 4179144, CUJ=J<TASKBAR_COLLAPSE::Home to App>
+10-25 06:50:50.211  1207  1207 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 74939, 4009812, CUJ=J<TASKBAR_COLLAPSE::Home to App>
+10-25 06:50:50.212  1207  1225 V PerfettoTrigger: Not triggering com.android.telemetry.interaction-jank-monitor-61 - not enough time since last trigger
+10-25 06:50:50.213  6418  6436 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+10-25 06:50:50.213  6418  6436 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+10-25 06:50:50.225  6418  6447 W RegularContextFactory: creating OpenGL ES 3.0 context :
+10-25 06:50:50.242   174   174 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device VINTF manifest.
+10-25 06:50:50.243  6418  6447 I Gralloc4: mapper 4.x is not supported
+--------- beginning of kernel
+10-25 06:50:50.287     0     0 I servicemanager: Caller(pid=6418,uid=10148,sid=u:r:untrusted_app:s0:c148,c256,c512,c768) Could not find android.hardware.graphics.allocator.IAllocator/default in the VINTF manifest. No alternative instances declared in VINTF.
+10-25 06:50:50.264  6418  6447 I godot   : Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+10-25 06:50:50.328   579   605 W ziparchive: Unable to open '/data/app/~~Uu5HkdPW2p3GuGJT1ftMkQ==/org.yuanzheng.singleplayer-ctG-36Uc4LFUJokoUIlT6Q==/base.dm': No such file or directory
+10-25 06:50:50.329   579   605 I ActivityTaskManager: Displayed org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher for user 0: +821ms
+10-25 06:50:50.332  1207  1207 D BaseDepthController: setSurface:
+10-25 06:50:50.332  1207  1207 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+10-25 06:50:50.332  1207  1207 D BaseDepthController: 	mSurface: null
+10-25 06:50:50.332  1207  1207 D BaseDepthController: mSurface is null and mCurrentBlur is: 0
+10-25 06:50:50.333  1207  1207 D StateManager: goToState - fromState: Normal, toState: Normal, partial trace:
+10-25 06:50:50.333  1207  1207 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:453)
+10-25 06:50:50.333  1207  1207 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:444)
+10-25 06:50:50.333  1207  1207 D StateManager: 	at com.android.launcher3.statemanager.StatefulActivity.onStop(StatefulActivity.java:119)
+10-25 06:50:50.333  1207  1207 D StatsLog: LAUNCHER_ONSTOP
+10-25 06:50:50.333   579  5617 I AppWidgetServiceImpl: setAppWidgetHidden() 0
+10-25 06:50:50.335   579   606 V GameManagerService: Game power mode ON (only games in foreground)
+10-25 06:50:50.343  6418  6447 E godot   : WARNING: Failed to load cached shader, recompiling.
+10-25 06:50:50.343  6418  6447 E godot   :    at: _load_from_cache (drivers/gles3/shader_gles3.cpp:615)
+10-25 06:50:50.345  6418  6426 I ng.singleplayer: Compiler allocated 4219KB to compile void android.widget.TextView.<init>(android.content.Context, android.util.AttributeSet, int, int)
+10-25 06:50:50.360   579   608 I DisplayDeviceRepository: Display device changed: DisplayDeviceInfo{"Built-in Screen": uniqueId="local:4619827259835644672", 720 x 1280, modeId 1, renderFrameRate 60.000004, defaultModeId 1, userPreferredModeId -1, supportedModes [{id=1, width=720, height=1280, fps=60.000004, vsync=60.000004, synthetic=false, alternativeRefreshRates=[], supportedHdrTypes=[]}], colorMode 0, supportedColorModes [0], hdrCapabilities HdrCapabilities{mSupportedHdrTypes=[], mMaxLuminance=500.0, mMaxAverageLuminance=500.0, mMinLuminance=0.0}, allmSupported false, gameContentTypeSupported false, density 240, 240.0 x 240.0 dpi, appVsyncOff 1000000, presDeadline 16666666, cutout DisplayCutout{insets=Rect(0, 136 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(0, 0 - 136, 136), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=720 displayHeight=1280 physicalDisplayWidth=720 physicalDisplayHeight=1280 density={1.5} cutoutSpec={M 128,83 A 44,44 0 0 1 84,127 44,44 0 0 1 40,83 44,44 0 0 1 84,39 44,44 0 0 1 128,83 Z @left} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={1.0}}} sideOverrides={}}, touch INTERNAL, rotation 0, type INTERNAL, address {port=0, model=0x401cec6a7a2b7b}, deviceProductInfo DeviceProductInfo{name=EMU_display_0, manufacturerPnpId=GGL, productId=1, modelYear=null, manufactureDate=ManufactureDate{week=27, year=2006}, connectionToSinkType=0}, state ON, committedState ON, frameRateOverride {uid=10148 frameRateHz=60.000004} , brightnessMinimum 0.0, brightnessMaximum 1.0, brightnessDefault 0.39763778, hdrSdrRatio NaN, roundedCorners RoundedCorners{[RoundedCorner{position=TopLeft, radius=28, center=Point(28, 28)}, RoundedCorner{position=TopRight, radius=28, center=Point(692, 28)}, RoundedCorner{position=BottomRight, radius=28, center=Point(692, 1252)}, RoundedCorner{position=BottomLeft, radius=28, center=Point(28, 1252)}]}, FLAG_ALLOWED_TO_BE_DEFAULT_DISPLAY, FLAG_ROTATES_WITH_CONTENT, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS, FLAG_TRUSTED, installOrientation 0, displayShape DisplayShape{ spec=42744253 displayWidth=720 displayHeight=1280 physicalPixelDisplaySizeRatio=1.0 rotation=0 offsetX=0 offsetY=0 scale=1.0}}
+10-25 06:50:50.366   579   703 I ImeTracker: org.yuanzheng.singleplayer:4c667cda: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false
+10-25 06:50:50.367   579   703 I ImeTracker: org.yuanzheng.singleplayer:4c667cda: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-25 06:50:50.681  6418  6418 W InteractionJankMonitor: Initializing without READ_DEVICE_CONFIG permission. enabled=true, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=org.yuanzheng.singleplayer
+10-25 06:50:50.700   959  1057 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda11@6ebbe4b
+10-25 06:50:50.700   579   655 D CoreBackPreview: Window{f076e8f u0 Splash Screen org.yuanzheng.singleplayer EXITING}: Setting back callback null
+10-25 06:50:50.701   579  5617 W InputManager-JNI: Input channel object 'f076e8f Splash Screen org.yuanzheng.singleplayer (client)' was disposed without first being removed with the input manager!
+10-25 06:50:50.714   381   381 I netd    : tetherGetStats() -> {[]} <0.54ms>
+10-25 06:50:50.716  6418  6426 I ng.singleplayer: Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+10-25 06:50:50.750   959  1057 W FrameTracker: Missing HWUI jank callback for vsyncId: 75097, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:50:50.750   959  1057 W FrameTracker: Missed App frame:UNKNOWN: 24, 75213, 19024962, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:50:50.750   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 24, 75213, 19024962, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:50:50.750   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 75234, 28761296, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:50:50.750   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 75256, 22631230, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:50:50.751   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 75278, 21532064, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:50:50.751   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 75300, 24573798, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:50:50.751   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 75322, 0, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:50:50.751   959  1057 W FrameTracker: Missing HWUI jank callback for vsyncId: 75322, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:50:50.751   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 75344, 21728266, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:50:50.751   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 75366, 25322500, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:50:50.751   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 75388, 23807134, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:50:50.751   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 75403, 24972968, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:50:50.751   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 75418, 24744102, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:50:50.751   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 75433, 24842836, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:50:50.751   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 75448, 23718070, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:50:50.751   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 75463, 27325204, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:50:50.751   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 75478, 0, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:50:50.751   959  1057 W FrameTracker: Missing HWUI jank callback for vsyncId: 75478, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:50:50.751   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 75493, 22442072, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:50:50.753   959  1021 V PerfettoTrigger: Triggering /system/bin/trigger_perfetto com.android.telemetry.interaction-jank-monitor-39
+10-25 06:50:50.879   959  1097 D EGL_emulation: app_time_stats: avg=129.83ms min=14.33ms max=1151.80ms count=10
+10-25 06:50:50.886  6418  6447 I godot   : OpenGL API OpenGL ES 3.1 (4.5.0 Core Profile Context 23.20.60.03.240314) - Compatibility - Using Device: Google (ATI Technologies Inc.) - Android Emulator OpenGL ES Translator (AMD Radeon 780M Graphics)
+10-25 06:50:50.888  6418  6447 D ng.singleplayer: PlayerBase::PlayerBase()
+10-25 06:50:50.888  6418  6447 D ng.singleplayer: TrackPlayerBase::TrackPlayerBase()
+10-25 06:50:50.888  6418  6447 I libOpenSLES: Emulating old channel mask behavior (ignoring positional mask 0x3, using default mask 0x3 based on channel count of 2)
+10-25 06:50:50.893   446   446 W AudioFlinger: createTrack_l(): mismatch between requested flags (00000104) and output flags (00000002)
+10-25 06:50:50.895   446   446 D AudioFlinger: Client defaulted notificationFrames to 882 for frameCount 4012
+10-25 06:50:50.896   579   608 I DisplayDeviceRepository: Display device changed: DisplayDeviceInfo{"Built-in Screen": uniqueId="local:4619827259835644672", 720 x 1280, modeId 1, renderFrameRate 60.000004, defaultModeId 1, userPreferredModeId -1, supportedModes [{id=1, width=720, height=1280, fps=60.000004, vsync=60.000004, synthetic=false, alternativeRefreshRates=[], supportedHdrTypes=[]}], colorMode 0, supportedColorModes [0], hdrCapabilities HdrCapabilities{mSupportedHdrTypes=[], mMaxLuminance=500.0, mMaxAverageLuminance=500.0, mMinLuminance=0.0}, allmSupported false, gameContentTypeSupported false, density 240, 240.0 x 240.0 dpi, appVsyncOff 1000000, presDeadline 16666666, cutout DisplayCutout{insets=Rect(0, 136 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(0, 0 - 136, 136), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=720 displayHeight=1280 physicalDisplayWidth=720 physicalDisplayHeight=1280 density={1.5} cutoutSpec={M 128,83 A 44,44 0 0 1 84,127 44,44 0 0 1 40,83 44,44 0 0 1 84,39 44,44 0 0 1 128,83 Z @left} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={1.0}}} sideOverrides={}}, touch INTERNAL, rotation 0, type INTERNAL, address {port=0, model=0x401cec6a7a2b7b}, deviceProductInfo DeviceProductInfo{name=EMU_display_0, manufacturerPnpId=GGL, productId=1, modelYear=null, manufactureDate=ManufactureDate{week=27, year=2006}, connectionToSinkType=0}, state ON, committedState ON, frameRateOverride , brightnessMinimum 0.0, brightnessMaximum 1.0, brightnessDefault 0.39763778, hdrSdrRatio NaN, roundedCorners RoundedCorners{[RoundedCorner{position=TopLeft, radius=28, center=Point(28, 28)}, RoundedCorner{position=TopRight, radius=28, center=Point(692, 28)}, RoundedCorner{position=BottomRight, radius=28, center=Point(692, 1252)}, RoundedCorner{position=BottomLeft, radius=28, center=Point(28, 1252)}]}, FLAG_ALLOWED_TO_BE_DEFAULT_DISPLAY, FLAG_ROTATES_WITH_CONTENT, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS, FLAG_TRUSTED, installOrientation 0, displayShape DisplayShape{ spec=42744253 displayWidth=720 displayHeight=1280 physicalPixelDisplaySizeRatio=1.0 rotation=0 offsetX=0 offsetY=0 scale=1.0}}
+10-25 06:50:50.901   446   446 D audioserver: logFgsApiBegin: FGS Logger Transaction failed, -129
+10-25 06:50:50.902  6418  6447 I godot   : 
+10-25 06:50:50.912   579   608 I DisplayDeviceRepository: Display device changed: DisplayDeviceInfo{"Built-in Screen": uniqueId="local:4619827259835644672", 720 x 1280, modeId 1, renderFrameRate 60.000004, defaultModeId 1, userPreferredModeId -1, supportedModes [{id=1, width=720, height=1280, fps=60.000004, vsync=60.000004, synthetic=false, alternativeRefreshRates=[], supportedHdrTypes=[]}], colorMode 0, supportedColorModes [0], hdrCapabilities HdrCapabilities{mSupportedHdrTypes=[], mMaxLuminance=500.0, mMaxAverageLuminance=500.0, mMinLuminance=0.0}, allmSupported false, gameContentTypeSupported false, density 240, 240.0 x 240.0 dpi, appVsyncOff 1000000, presDeadline 16666666, cutout DisplayCutout{insets=Rect(0, 136 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(0, 0 - 136, 136), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=720 displayHeight=1280 physicalDisplayWidth=720 physicalDisplayHeight=1280 density={1.5} cutoutSpec={M 128,83 A 44,44 0 0 1 84,127 44,44 0 0 1 40,83 44,44 0 0 1 84,39 44,44 0 0 1 128,83 Z @left} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={1.0}}} sideOverrides={}}, touch INTERNAL, rotation 0, type INTERNAL, address {port=0, model=0x401cec6a7a2b7b}, deviceProductInfo DeviceProductInfo{name=EMU_display_0, manufacturerPnpId=GGL, productId=1, modelYear=null, manufactureDate=ManufactureDate{week=27, year=2006}, connectionToSinkType=0}, state ON, committedState ON, frameRateOverride {uid=10148 frameRateHz=60.000004} , brightnessMinimum 0.0, brightnessMaximum 1.0, brightnessDefault 0.39763778, hdrSdrRatio NaN, roundedCorners RoundedCorners{[RoundedCorner{position=TopLeft, radius=28, center=Point(28, 28)}, RoundedCorner{position=TopRight, radius=28, center=Point(692, 28)}, RoundedCorner{position=BottomRight, radius=28, center=Point(692, 1252)}, RoundedCorner{position=BottomLeft, radius=28, center=Point(28, 1252)}]}, FLAG_ALLOWED_TO_BE_DEFAULT_DISPLAY, FLAG_ROTATES_WITH_CONTENT, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS, FLAG_TRUSTED, installOrientation 0, displayShape DisplayShape{ spec=42744253 displayWidth=720 displayHeight=1280 physicalPixelDisplaySizeRatio=1.0 rotation=0 offsetX=0 offsetY=0 scale=1.0}}
+10-25 06:50:52.082   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:50:52.083   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:50:52.083   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:50:52.083   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:50:52.084   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:50:52.392   579  1803 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-25 06:50:52.635   579   677 W CpuMonitorService: Current CPU frequency (4927433) is greater than maximum CPU frequency (2) for policy ID (1). Skipping CPU frequency policy
+10-25 06:50:52.635   579   677 W CpuMonitorService: Current CPU frequency (4463304) is greater than maximum CPU frequency (2) for policy ID (2). Skipping CPU frequency policy
+10-25 06:50:53.114  6418  6447 V Godot   : OnGodotSetupCompleted
+10-25 06:50:53.182  6418  6447 I godot   : ANDROID_DEEP_READY { "os": "Android", "version": "35.12368160", "model": "Android SDK built for x86_64", "window": "(1080, 2400)", "viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]", "safe": "[P: (0.0, 90.60999), S: (480.0, 975.3899)]", "system_safe": "[P: (0, 204), S: (1080, 2196)]", "cutouts": "[[P: (0.0, 0.0), S: (204.0, 204.0)]]", "mix_rate": 44100.0 }
+10-25 06:50:53.182  6418  6447 V Godot   : OnGodotMainLoopStarted
+10-25 06:50:53.188  6418  6447 D EGL_emulation: app_time_stats: avg=1010.28ms min=7.28ms max=2013.27ms count=2
+10-25 06:50:53.477  6478  6478 D MediaCodecList: codecHandlesFormat: no format, so no extra checks
+10-25 06:50:53.479  6478  6483 D CCodec  : allocate(c2.android.avc.encoder)
+10-25 06:50:53.480  6478  6483 I Codec2Client: Available Codec2 services: "default" "software"
+10-25 06:50:53.482  6478  6483 I CCodec  : setting up 'default' as default (vendor) store
+10-25 06:50:53.487   498  1053 I mediaswcodec: missing struct descriptor #Param::CoreIndex(--004) for field values of struct #Param::CoreIndex(F-12004)
+10-25 06:50:53.487   498  1053 I mediaswcodec: missing struct descriptor #Param::CoreIndex(--1812) for field values of struct #Param::CoreIndex(F-11812)
+10-25 06:50:53.487   498  1053 I mediaswcodec: missing struct descriptor #Param::CoreIndex(--004) for field values of struct #Param::CoreIndex(F-12004)
+10-25 06:50:53.487   498  1053 I mediaswcodec: missing struct descriptor #Param::CoreIndex(--1812) for field values of struct #Param::CoreIndex(F-11812)
+10-25 06:50:53.488  6478  6483 I CCodec  : Created component [c2.android.avc.encoder]
+10-25 06:50:53.490  6478  6483 D CCodecConfig: read media type: video/avc
+10-25 06:50:53.493  6478  6483 D ReflectedParamUpdater: extent() != 1 for single value type: algo.buffers.max-count.values
+10-25 06:50:53.494  6478  6483 D ReflectedParamUpdater: extent() != 1 for single value type: output.subscribed-indices.values
+10-25 06:50:53.494  6478  6483 D ReflectedParamUpdater: extent() != 1 for single value type: input.buffers.allocator-ids.values
+10-25 06:50:53.495  6478  6483 D ReflectedParamUpdater: extent() != 1 for single value type: output.buffers.allocator-ids.values
+10-25 06:50:53.495  6478  6483 D ReflectedParamUpdater: extent() != 1 for single value type: algo.buffers.allocator-ids.values
+10-25 06:50:53.495  6478  6483 D ReflectedParamUpdater: extent() != 1 for single value type: output.buffers.pool-ids.values
+10-25 06:50:53.496  6478  6483 D ReflectedParamUpdater: extent() != 1 for single value type: algo.buffers.pool-ids.values
+10-25 06:50:53.498  6478  6483 D ReflectedParamUpdater: ignored struct field coding.gop.values
+10-25 06:50:53.498  6478  6483 D ReflectedParamUpdater: ignored struct field coding.qp.values
+10-25 06:50:53.499  6478  6483 D CCodecConfig: ignoring local param raw.color (0xc2001809) as it is already supported
+10-25 06:50:53.500  6478  6483 I CCodecConfig: query failed after returning 13 values (BAD_INDEX)
+10-25 06:50:53.500  6478  6483 D CCodecConfig: c2 config diff is Dict {
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::u32 algo.bitrate-mode.value = 3
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::i32 coded.average-qp.value = 0
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::u32 coded.bitrate.value = 64000
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::float coded.frame-rate.value = 1
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::u32 coded.picture-type.value = 0
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::u32 coded.pl.level = 20492
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::u32 coded.pl.profile = 20481
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::u32 coded.vui.color.matrix = 0
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::u32 coded.vui.color.primaries = 0
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::u32 coded.vui.color.range = 0
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::u32 coded.vui.color.transfer = 0
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::u32 coding.intra-refresh.mode = 0
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::float coding.intra-refresh.period = 0
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::u32 coding.request-sync-frame.value = 0
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::i64 coding.sync-frame-interval.value = 1000000
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::u32 input.delay.value = 0
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   string input.media-type.value = "video/raw"
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   string output.media-type.value = "video/avc"
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::u32 raw.color.matrix = 0
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::u32 raw.color.primaries = 0
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::u32 raw.color.range = 0
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::u32 raw.color.transfer = 0
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::u32 raw.size.height = 16
+10-25 06:50:53.500  6478  6483 D CCodecConfig:   c2::u32 raw.size.width = 16
+10-25 06:50:53.500  6478  6483 D CCodecConfig: }
+10-25 06:50:53.500  6478  6483 W ColorUtils: expected specified color aspects (0:0:0:0)
+10-25 06:50:53.513  6478  6478 D CodecSeeding: Seed: codec c2.android.avc.encoder, mediatype video/avc, overrideable 1
+10-25 06:50:53.513  6478  6478 D CodecProperties: setTuningValue(vq-target-bpp,0)
+10-25 06:50:53.513  6478  6478 D CodecProperties: setTuningValue(vq-target-bpp-1080p,1.90)
+10-25 06:50:53.513  6478  6478 D CodecProperties: setTuningValue(vq-target-bpp-720p,2.25)
+10-25 06:50:53.513  6478  6478 D CodecProperties: setTuningValue(vq-target-bpp-540p,2.65)
+10-25 06:50:53.513  6478  6478 D CodecProperties: setTuningValue(vq-target-bpp-480p,3.00)
+10-25 06:50:53.513  6478  6478 D CodecProperties: setTuningValue(vq-target-bpp-320x240,0)
+10-25 06:50:53.513  6478  6478 D CodecProperties: setTuningValue(vq-target-qpmax,-1)
+10-25 06:50:53.514  6478  6478 D CodecProperties: setTuningValue(vq-target-qpmax-1080p,45)
+10-25 06:50:53.514  6478  6478 D CodecProperties: setTuningValue(vq-target-qpmax-720p,43)
+10-25 06:50:53.514  6478  6478 D CodecProperties: setTuningValue(vq-target-qpmax-540p,42)
+10-25 06:50:53.514  6478  6478 D CodecProperties: setTuningValue(vq-target-qpmax-480p,38)
+10-25 06:50:53.514  6478  6478 D CodecProperties: setTuningValue(vq-bitrate-phaseout,1.75)
+10-25 06:50:53.514  6478  6478 D CodecProperties: setTuningValue(vq-boost-missing-qp,0.20)
+10-25 06:50:53.514  6478  6478 D CodecProperties: setFeatureValue(intra-refresh,0)
+10-25 06:50:53.514  6478  6478 D CodecProperties: setFeatureValue(qp-bounds,0)
+10-25 06:50:53.514  6478  6478 D CodecProperties: setFeatureValue(_vq_eligible.device,1)
+10-25 06:50:53.514  6478  6478 D CodecProperties: setFeatureValue(_quality.target,1)
+10-25 06:50:53.515  6478  6478 D CodecSeeding: Seed: codec c2.android.avc.encoder, mediatype video/avc, overrideable 0
+10-25 06:50:53.515  6478  6478 D VQApply : minquality: 1080x2400 outside of shaping range
+10-25 06:50:53.515  6478  6478 D MediaCodec: shapeMediaFormat: deltas(1): AMessage(what = 0x00000000) = {
+10-25 06:50:53.515  6478  6478 D MediaCodec:     int32_t android._encoding-quality-level = 0
+10-25 06:50:53.515  6478  6478 D MediaCodec:   }
+10-25 06:50:53.515  6478  6483 D CCodec  : [c2.android.avc.encoder] buffers are bound to CCodec for this session
+10-25 06:50:53.516  6478  6483 D CCodecConfig: no c2 equivalents for color-format
+10-25 06:50:53.516  6478  6483 D CCodecConfig: no c2 equivalents for max-bframes
+10-25 06:50:53.516  6478  6483 D CCodecConfig: no c2 equivalents for flags
+10-25 06:50:53.516  6478  6483 D CCodecConfig: no c2 equivalents for encoder
+10-25 06:50:53.517  6478  6483 D CCodecConfig: c2 config diff is   c2::u32 coded.bitrate.value = 6000000
+10-25 06:50:53.517  6478  6483 D CCodecConfig:   c2::float coded.frame-rate.value = 60
+10-25 06:50:53.517  6478  6483 D CCodecConfig:   c2::i64 coding.sync-frame-interval.value = 10000000
+10-25 06:50:53.517  6478  6483 D CCodecConfig:   c2::u32 raw.size.height = 2400
+10-25 06:50:53.517  6478  6483 D CCodecConfig:   c2::u32 raw.size.width = 1080
+10-25 06:50:53.517  6478  6483 W ColorUtils: expected specified color aspects (0:0:0:0)
+10-25 06:50:53.517  6478  6483 D CCodec  : encoding statistics level = 0
+10-25 06:50:53.517  6478  6483 D CCodec  : setup formats input: AMessage(what = 0x00000000) = {
+10-25 06:50:53.517  6478  6483 D CCodec  :   Rect crop(0, 0, 1079, 2399)
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t color-standard = 0
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t color-range = 0
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t color-transfer = 0
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t frame-rate = 60
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t height = 2400
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t intra-refresh-period = 0
+10-25 06:50:53.517  6478  6483 D CCodec  :   string mime = "video/raw"
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t video-qp-average = 0
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t width = 1080
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t android._dataspace = 0
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t using-sw-read-often = 1
+10-25 06:50:53.517  6478  6483 D CCodec  :   int64_t android._C2MemoryUsage = 1
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t color-format = 2130708361
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t android._color-format = 2130708361
+10-25 06:50:53.517  6478  6483 D CCodec  : }
+10-25 06:50:53.517  6478  6483 D CCodec  : setup formats output: AMessage(what = 0x00000000) = {
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t bitrate = 6000000
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t bitrate-mode = 1
+10-25 06:50:53.517  6478  6483 D CCodec  :   Rect crop(0, 0, 1079, 2399)
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t color-standard = 0
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t color-range = 0
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t color-transfer = 0
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t frame-rate = 60
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t height = 2400
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t intra-refresh-period = 0
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t level = 4096
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t max-bitrate = 6000000
+10-25 06:50:53.517  6478  6483 D CCodec  :   string mime = "video/avc"
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t profile = 65536
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t video-qp-average = 0
+10-25 06:50:53.517  6478  6483 D CCodec  :   int32_t width = 1080
+10-25 06:50:53.517  6478  6483 D CCodec  : }
+10-25 06:50:53.518  6478  6483 I CCodecConfig: query failed after returning 14 values (BAD_INDEX)
+10-25 06:50:53.518  6478  6483 D CCodecConfig: c2 config diff is   c2::u32 coded.pl.level = 20494
+10-25 06:50:53.518  6478  6483 W ColorUtils: expected specified color aspects (0:0:0:0)
+10-25 06:50:53.519  6478  6483 D CCodec  : hidl based PersistentSurface created
+10-25 06:50:53.519  6478  6483 D CCodec  : input format changed to AMessage(what = 0x00000000) = {
+10-25 06:50:53.519  6478  6483 D CCodec  :   Rect crop(0, 0, 1079, 2399)
+10-25 06:50:53.519  6478  6483 D CCodec  :   int32_t color-standard = 1
+10-25 06:50:53.519  6478  6483 D CCodec  :   int32_t color-range = 2
+10-25 06:50:53.519  6478  6483 D CCodec  :   int32_t color-transfer = 3
+10-25 06:50:53.519  6478  6483 D CCodec  :   int32_t frame-rate = 60
+10-25 06:50:53.519  6478  6483 D CCodec  :   int32_t height = 2400
+10-25 06:50:53.519  6478  6483 D CCodec  :   int32_t intra-refresh-period = 0
+10-25 06:50:53.519  6478  6483 D CCodec  :   string mime = "video/raw"
+10-25 06:50:53.519  6478  6483 D CCodec  :   int32_t video-qp-average = 0
+10-25 06:50:53.519  6478  6483 D CCodec  :   int32_t width = 1080
+10-25 06:50:53.519  6478  6483 D CCodec  :   int32_t android._dataspace = 260
+10-25 06:50:53.519  6478  6483 D CCodec  :   int32_t using-sw-read-often = 1
+10-25 06:50:53.519  6478  6483 D CCodec  :   int64_t android._C2MemoryUsage = 1
+10-25 06:50:53.519  6478  6483 D CCodec  :   int32_t color-format = 2130708361
+10-25 06:50:53.519  6478  6483 D CCodec  :   int32_t android._color-format = 2130708361
+10-25 06:50:53.519  6478  6483 D CCodec  : }
+10-25 06:50:53.520  6478  6483 D GraphicBufferSource: setting dataspace: 0x104, acquired=0
+10-25 06:50:53.520  6478  6483 D CCodec  : ISConfig not changed
+10-25 06:50:53.521  6478  6483 W Codec2Client: query -- param skipped: index = 1342179345.
+10-25 06:50:53.521  6478  6483 W Codec2Client: query -- param skipped: index = 2415921170.
+10-25 06:50:53.521  6478  6483 D CCodecBufferChannel: [c2.android.avc.encoder#28] Using basic input block pool with poolID 1 => got 1 - OK (0)
+10-25 06:50:53.521  6478  6483 D C2Store : Using DMABUF Heaps
+10-25 06:50:53.523   959  1291 D BufferPoolAccessor2.0: bufferpool2 0x78f9e8e6d978 : 0(0 size) total buffers - 0(0 size) used buffers - 1/7 (recycle/alloc) - 10/36 (fetch/transfer)
+10-25 06:50:53.523   579   698 D BufferPoolAccessor2.0: bufferpool2 0x78f9e8ea9b78 : 0(0 size) total buffers - 0(0 size) used buffers - 1/7 (recycle/alloc) - 7/26 (fetch/transfer)
+10-25 06:50:53.523   579   698 D BufferPoolAccessor2.0: Destruction - bufferpool2 0x78f9e8ea9b78 cached: 0/0M, 0/0% in use; allocs: 7, 14% recycled; transfers: 26, 73% unfetched
+10-25 06:50:53.523   959  1291 D BufferPoolAccessor2.0: Destruction - bufferpool2 0x78f9e8e6d978 cached: 0/0M, 0/0% in use; allocs: 7, 14% recycled; transfers: 36, 72% unfetched
+10-25 06:50:53.523   579  1079 D BufferPoolAccessor2.0: bufferpool2 0x78f9e8eb2198 : 0(0 size) total buffers - 0(0 size) used buffers - 2/7 (recycle/alloc) - 4/24 (fetch/transfer)
+10-25 06:50:53.523   579  1079 D BufferPoolAccessor2.0: Destruction - bufferpool2 0x78f9e8eb2198 cached: 0/0M, 0/0% in use; allocs: 7, 29% recycled; transfers: 24, 83% unfetched
+10-25 06:50:53.523   959  1291 D BufferPoolAccessor2.0: bufferpool2 0x78f9e8e6e758 : 0(0 size) total buffers - 0(0 size) used buffers - 2/7 (recycle/alloc) - 5/38 (fetch/transfer)
+10-25 06:50:53.523   959  1291 D BufferPoolAccessor2.0: Destruction - bufferpool2 0x78f9e8e6e758 cached: 0/0M, 0/0% in use; allocs: 7, 29% recycled; transfers: 38, 87% unfetched
+10-25 06:50:53.523  6478  6483 I CCodecBufferChannel: [c2.android.avc.encoder#28] Created output block pool with allocatorID 16 => poolID 35 - OK
+10-25 06:50:53.524   959  1291 D BufferPoolAccessor2.0: bufferpool2 0x78f9e8e70568 : 0(0 size) total buffers - 0(0 size) used buffers - 2/7 (recycle/alloc) - 5/18 (fetch/transfer)
+10-25 06:50:53.524   959  1291 D BufferPoolAccessor2.0: Destruction - bufferpool2 0x78f9e8e70568 cached: 0/0M, 0/0% in use; allocs: 7, 29% recycled; transfers: 18, 72% unfetched
+10-25 06:50:53.524  6478  6483 D CCodecBufferChannel: [c2.android.avc.encoder#28] Configured output block pool ids 35 => OK
+10-25 06:50:53.524   579  1023 D BufferPoolAccessor2.0: bufferpool2 0x78f9e8ea0c18 : 0(0 size) total buffers - 0(0 size) used buffers - 2/7 (recycle/alloc) - 5/24 (fetch/transfer)
+10-25 06:50:53.524   579  1023 D BufferPoolAccessor2.0: Destruction - bufferpool2 0x78f9e8ea0c18 cached: 0/0M, 0/0% in use; allocs: 7, 29% recycled; transfers: 24, 79% unfetched
+10-25 06:50:53.525   579  1079 D BufferPoolAccessor2.0: bufferpool2 0x78f9e8eaadf8 : 0(0 size) total buffers - 0(0 size) used buffers - 2/7 (recycle/alloc) - 5/18 (fetch/transfer)
+10-25 06:50:53.525   579  1079 D BufferPoolAccessor2.0: Destruction - bufferpool2 0x78f9e8eaadf8 cached: 0/0M, 0/0% in use; allocs: 7, 29% recycled; transfers: 18, 72% unfetched
+10-25 06:50:53.525   492  1751 W ResourceManagerServiceUtils: Ignoring request to add new resource entry with value <= 0
+10-25 06:50:53.525   579  1023 D BufferPoolAccessor2.0: bufferpool2 0x78f9e8eae7c8 : 0(0 size) total buffers - 0(0 size) used buffers - 2/7 (recycle/alloc) - 5/34 (fetch/transfer)
+10-25 06:50:53.525   579  1023 D BufferPoolAccessor2.0: Destruction - bufferpool2 0x78f9e8eae7c8 cached: 0/0M, 0/0% in use; allocs: 7, 29% recycled; transfers: 34, 85% unfetched
+10-25 06:50:53.525   579   696 D BufferPoolAccessor2.0: bufferpool2 0x78f9e8ea27d8 : 0(0 size) total buffers - 0(0 size) used buffers - 2/7 (recycle/alloc) - 5/34 (fetch/transfer)
+10-25 06:50:53.526   579   696 D BufferPoolAccessor2.0: Destruction - bufferpool2 0x78f9e8ea27d8 cached: 0/0M, 0/0% in use; allocs: 7, 29% recycled; transfers: 34, 85% unfetched
+10-25 06:50:53.528  6478  6478 D MPEG4Writer: PreAllocation enabled
+10-25 06:50:53.548   174   174 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device VINTF manifest.
+10-25 06:50:53.549  6478  6481 I Gralloc4: mapper 4.x is not supported
+10-25 06:50:53.594     0     0 I servicemanager: Caller(pid=6478,uid=0,sid=u:r:su:s0) Could not find android.hardware.graphics.allocator.IAllocator/default in the VINTF manifest. No alternative instances declared in VINTF.
+10-25 06:50:53.572  6478  6481 D GraphicBufferSource: got buffer with new dataSpace 0x104
+10-25 06:50:53.572  6478  6481 D C2NodeImpl: dataspace changed to 0x104 pixel format: 0x1
+10-25 06:50:53.578   498  6488 D SimpleC2Component: Using output block pool with poolID 35 => got 35 - 0
+10-25 06:50:53.578   498  6488 D SimpleC2Component: applied 2 configUpdates => BAD_INDEX (6)
+10-25 06:50:53.578   498  6488 D C2SoftAvcEnc: Params width 1080 height 2400 level 50 colorFormat 0 bframes 0
+10-25 06:50:53.610   174   174 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device VINTF manifest.
+10-25 06:50:53.610   498  6488 I Gralloc4: mapper 4.x is not supported
+10-25 06:50:53.656     0     0 I servicemanager: Caller(pid=498,uid=1046,sid=u:r:mediaswcodec:s0) Could not find android.hardware.graphics.allocator.IAllocator/default in the VINTF manifest. No alternative instances declared in VINTF.
+10-25 06:50:53.669  6478  6483 D CCodecConfig: c2 config diff is   Buffer coded.init-data.value = {
+10-25 06:50:53.669  6478  6483 D CCodecConfig:     00000000:  00 00 00 01 67 42 c0 32  8d 68 04 40 12 de 5e 42  ....gB.2.h.@..^B
+10-25 06:50:53.669  6478  6483 D CCodecConfig:     00000010:  02 02 02 0f 08 84 6a 00  00 00 01 68 ce 01 a8 35  ......j....h...5
+10-25 06:50:53.669  6478  6483 D CCodecConfig:     00000020:  c8                                                .
+10-25 06:50:53.669  6478  6483 D CCodecConfig:   }
+10-25 06:50:53.672  6478  6478 D MPEG4Writer: fpathconf _PC_FILESIZEBITS:64
+10-25 06:50:53.672  6478  6478 D MPEG4Writer: File size limit set to 4503599627370495 bytes implicitly
+10-25 06:50:53.673  6478  6478 D MPEG4Writer: MP4WtrCtrlHlpLooper Started
+10-25 06:50:53.673  6478  6478 I MPEG4Writer: limits: 4503599627370495/0 bytes/us, bit rate: -1 bps and the estimated moov size 3192 bytes
+10-25 06:50:53.678  6478  6498 I MPEG4Writer: setStartTimestampUs: 1040939969
+10-25 06:50:53.679  6478  6498 I MPEG4Writer: Earliest track starting time: 1040939969
+10-25 06:50:54.014  6418  6447 I godot   : ANDROID_DEEP_BEGIN final_motion_horse_zs_walk { "id": "final_motion_horse_zs_walk", "suite": "motion", "role": "zs", "mount": "horse", "sprint": false, "seconds": 12.0, "start": [400.0, 1100.0] }
+10-25 06:50:54.039  6418  6418 I ImeTracker: org.yuanzheng.singleplayer:f4e48c3c: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+10-25 06:50:54.041   579   703 I ImeTracker: org.yuanzheng.singleplayer:f4e48c3c: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-25 06:50:54.125     0     0 I logd    : logdr: UID=0 GID=0 PID=6539 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:50:54.810     0     0 I logd    : logdr: UID=0 GID=0 PID=6599 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:50:55.001  2320  2320 W adbd    : timeout expired while flushing socket, closing
+10-25 06:50:55.089   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:50:55.089   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:50:55.089   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:50:55.090   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:50:55.090   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:50:55.491     0     0 I logd    : logdr: UID=0 GID=0 PID=6605 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:50:55.976  6418  6447 D EGL_emulation: app_time_stats: avg=40.44ms min=0.81ms max=1884.37ms count=51
+10-25 06:50:56.051     0     0 I init    : Untracked pid 6532 received signal 1
+10-25 06:50:56.051     0     0 I init    : Untracked pid 6532 did not have an associated service entry and will not be reaped
+10-25 06:50:56.191     0     0 I logd    : logdr: UID=0 GID=0 PID=6626 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:50:56.874     0     0 I logd    : logdr: UID=0 GID=0 PID=6665 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:50:56.905  6418  6447 I godot   : ANDROID_DEEP_PHOTO final_motion_horse_zs_walk/map
+10-25 06:50:57.007  6418  6447 D EGL_emulation: app_time_stats: avg=50.63ms min=14.28ms max=606.90ms count=20
+10-25 06:50:57.574     0     0 I logd    : logdr: UID=0 GID=0 PID=6740 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:50:58.024  6418  6447 D EGL_emulation: app_time_stats: avg=17.85ms min=12.74ms max=28.71ms count=55
+10-25 06:50:58.101   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:50:58.104   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:50:58.104   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:50:58.104   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:50:58.106   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:50:58.287     0     0 I logd    : logdr: UID=0 GID=0 PID=6821 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:50:58.300   579  5617 W OverlayManager: service 'idmap' died
+10-25 06:50:58.343     0     0 I init    : Sending signal 9 to service 'idmap2d' (pid 6403) process group...
+10-25 06:50:58.348     0     0 I libprocessgroup: Removed cgroup /sys/fs/cgroup/uid_1000/pid_6403
+10-25 06:50:58.350     0     0 I init    : Control message: Processed ctl.stop for 'idmap2d' from pid: 579 (system_server)
+10-25 06:50:58.351     0     0 I init    : Service 'idmap2d' (pid 6403) received signal 9
+10-25 06:50:58.351     0     0 I init    : Sending signal 9 to service 'idmap2d' (pid 6403) process group...
+10-25 06:50:58.351     0     0 E libprocessgroup: Failed to write 1 to /sys/fs/cgroup/uid_1000/pid_6403/cgroup.kill: No such file or directory
+10-25 06:50:58.353     0     0 E libprocessgroup: Failed to open /sys/fs/cgroup/uid_1000/pid_6403/cgroup.procs: No such file or directory
+10-25 06:50:58.527   579  1014 D BufferPoolAccessor2.0: evictor expired: 6, evicted: 0
+10-25 06:50:58.528   959  1290 D BufferPoolAccessor2.0: evictor expired: 3, evicted: 0
+10-25 06:50:58.987     0     0 I logd    : logdr: UID=0 GID=0 PID=6899 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:50:58.961   498  6488 D BufferPoolAccessor2.0: bufferpool2 0x7fd10b38f348 : 2(7776000 size) total buffers - 1(3888000 size) used buffers - 116/118 (recycle/alloc) - 3/118 (fetch/transfer)
+10-25 06:50:59.071  6418  6447 D EGL_emulation: app_time_stats: avg=21.80ms min=14.99ms max=52.43ms count=47
+10-25 06:50:59.699     0     0 I logd    : logdr: UID=0 GID=0 PID=6974 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:51:00.047   959  1097 D EGL_emulation: app_time_stats: avg=916.66ms min=14.85ms max=9020.61ms count=10
+10-25 06:51:00.079  6418  6447 D EGL_emulation: app_time_stats: avg=20.03ms min=15.19ms max=33.68ms count=49
+10-25 06:51:00.408     0     0 I logd    : logdr: UID=0 GID=0 PID=7058 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:51:01.105     0     0 I logd    : logdr: UID=0 GID=0 PID=7157 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:51:01.082  6418  6447 D EGL_emulation: app_time_stats: avg=18.46ms min=13.09ms max=29.96ms count=53
+10-25 06:51:01.113   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:01.116   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:01.117   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:01.118   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:01.118   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:01.805     0     0 I logd    : logdr: UID=0 GID=0 PID=7250 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:51:02.096  6418  6447 D EGL_emulation: app_time_stats: avg=19.27ms min=13.68ms max=27.01ms count=51
+10-25 06:51:02.512     0     0 I logd    : logdr: UID=0 GID=0 PID=7358 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:51:03.119  6418  6447 D EGL_emulation: app_time_stats: avg=20.05ms min=15.74ms max=32.54ms count=50
+10-25 06:51:03.207     0     0 I logd    : logdr: UID=0 GID=0 PID=7451 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:51:03.909     0     0 I logd    : logdr: UID=0 GID=0 PID=7544 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:51:04.096   498  6488 D BufferPoolAccessor2.0: bufferpool2 0x7fd10b38f348 : 2(7776000 size) total buffers - 1(3888000 size) used buffers - 326/328 (recycle/alloc) - 3/328 (fetch/transfer)
+10-25 06:51:04.124   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:04.125   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:04.126   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:04.127   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:04.128  6418  6447 D EGL_emulation: app_time_stats: avg=19.79ms min=14.53ms max=30.01ms count=50
+10-25 06:51:04.128   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:04.610     0     0 I logd    : logdr: UID=0 GID=0 PID=7637 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:51:05.144  6418  6447 D EGL_emulation: app_time_stats: avg=19.16ms min=13.29ms max=28.76ms count=52
+10-25 06:51:05.318     0     0 I logd    : logdr: UID=0 GID=0 PID=7733 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:51:06.015     0     0 I logd    : logdr: UID=0 GID=0 PID=7817 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:51:06.157  6418  6447 D EGL_emulation: app_time_stats: avg=19.36ms min=14.37ms max=34.17ms count=51
+10-25 06:51:06.719     0     0 I logd    : logdr: UID=0 GID=0 PID=7902 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:51:07.138   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:07.139   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:07.140   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:07.140   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:07.141   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:07.168  6418  6447 D EGL_emulation: app_time_stats: avg=19.74ms min=14.71ms max=29.53ms count=50
+10-25 06:51:07.421     0     0 I logd    : logdr: UID=0 GID=0 PID=8010 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:51:08.123     0     0 I logd    : logdr: UID=0 GID=0 PID=8106 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:51:08.182  6418  6447 D EGL_emulation: app_time_stats: avg=20.24ms min=15.13ms max=33.69ms count=49
+10-25 06:51:08.827     0     0 I logd    : logdr: UID=0 GID=0 PID=8208 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:51:09.184  6418  6447 D EGL_emulation: app_time_stats: avg=19.23ms min=15.06ms max=30.28ms count=51
+10-25 06:51:09.188   498  6488 D BufferPoolAccessor2.0: bufferpool2 0x7fd10b38f348 : 2(7776000 size) total buffers - 1(3888000 size) used buffers - 540/542 (recycle/alloc) - 5/542 (fetch/transfer)
+10-25 06:51:09.542     0     0 I logd    : logdr: UID=0 GID=0 PID=8298 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:51:09.537  6478  6499 I MPEG4Writer: setStartTimestampUs: 1040939969
+10-25 06:51:09.537  6478  6500 I MPEG4Writer: setStartTimestampUs: 1040939969
+10-25 06:51:09.537  6478  6500 V MediaWriter: Track event err/info msg:101, trackId:3, type:1000,val:-1011
+10-25 06:51:09.537  6478  6478 D MPEG4Writer: reset()
+10-25 06:51:09.537  6478  6478 D MPEG4Writer: Video track stopping. Stop source
+10-25 06:51:09.537  6478  6500 W MPEG4Writer: 0-duration samples found: 1
+10-25 06:51:09.537  6478  6478 D MPEG4Writer: Video track source stopping
+10-25 06:51:09.537  6478  6499 V MediaWriter: Track event err/info msg:101, trackId:2, type:1000,val:-1011
+10-25 06:51:09.537  6478  6478 D MPEG4Writer: Video track source stopped
+10-25 06:51:09.537  6478  6500 I MPEG4Writer: Received total/0-length (1/0) buffers and encoded 1 frames. - Metadata
+10-25 06:51:09.537  6478  6499 W MPEG4Writer: 0-duration samples found: 1
+10-25 06:51:09.537  6478  6498 V MediaWriter: Track event err/info msg:101, trackId:1, type:1000,val:-1011
+10-25 06:51:09.537  6478  6499 I MPEG4Writer: Received total/0-length (1/0) buffers and encoded 1 frames. - Metadata
+10-25 06:51:09.537  6478  6498 I MPEG4Writer: Received total/0-length (554/0) buffers and encoded 554 frames. - Video
+10-25 06:51:09.538  6478  6478 D MPEG4Writer: Video track stopped. Status:0. Stop source
+10-25 06:51:09.538  6478  6478 D MPEG4Writer: Metadata track stopping. Stop source
+10-25 06:51:09.538  6478  6478 D MPEG4Writer: Metadata track source stopping
+10-25 06:51:09.538  6478  6478 D MPEG4Writer: Metadata track source stopped
+10-25 06:51:09.538  6478  6478 D MPEG4Writer: Metadata track stopped. Status:0. Stop source
+10-25 06:51:09.538  6478  6478 D MPEG4Writer: Metadata track stopping. Stop source
+10-25 06:51:09.538  6478  6478 D MPEG4Writer: Metadata track source stopping
+10-25 06:51:09.539  6478  6478 D MPEG4Writer: Metadata track source stopped
+10-25 06:51:09.539  6478  6478 D MPEG4Writer: Metadata track stopped. Status:0. Stop source
+10-25 06:51:09.548  6478  6478 D MPEG4Writer: Duration from tracks range is [0, 15572672] us
+10-25 06:51:09.548  6478  6496 D MPEG4Writer: 0 chunks are written in the last batch
+10-25 06:51:09.548  6478  6478 D MPEG4Writer: WriterThread stopped. Status:0
+10-25 06:51:09.548  6478  6478 I MPEG4Writer: Adjust the moov start time from 1040939969 us -> 1040939969 us
+10-25 06:51:09.557  6478  6478 I MPEG4Writer: The mp4 file will not be streamable.
+10-25 06:51:09.557  6478  6478 I MPEG4Writer: MOOV atom was written to the file
+10-25 06:51:09.557  6478  6478 D MPEG4Writer: release()
+10-25 06:51:09.557  6478  6478 D MPEG4Writer: ftruncate mPreAllocateFileEndOffset:13593684 mOffset:13592263 mMdatEndOffset:13583832 diff:1421
+10-25 06:51:09.577  6478  6478 D MPEG4Writer: final fsync() takes 19 ms, file size 13592263
+10-25 06:51:09.578  6478  6478 D MPEG4Writer: MP4WtrCtrlHlpLooper stopped
+10-25 06:51:09.578  6478  6478 D MPEG4Writer: Top 5 write durations(microseconds): #1:340 #2:378 #3:451 #4:1017 #5:2326
+10-25 06:51:09.589  6478  8307 I hw-BpHwBinder: onLastStrongRef automatically unlinking death recipients
+10-25 06:51:09.590   498   955 I hw-BpHwBinder: onLastStrongRef automatically unlinking death recipients
+10-25 06:51:09.591   498   955 I hw-BpHwBinder: onLastStrongRef automatically unlinking death recipients
+10-25 06:51:09.595  6478  6480 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-25 06:51:09.614   579  5617 I ActivityManager: Broadcasting: Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///... flg=0x400000 }
+10-25 06:51:09.615   579  5617 I ActivityManager: Enqueued broadcast Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///... flg=0x400000 }: 0
+10-25 06:51:09.618   579   655 W JobInfo : Job 'com.android.providers.media.module/com.android.providers.media.MediaService#-300' has a deadline with no functional constraints. The deadline won't improve job execution latency. Consider removing the deadline.
+10-25 06:51:09.624   579   605 I ActivityManager: Broadcast completed: result=0
+10-25 06:51:09.626  6478  6478 D ScreenRecord: success
+10-25 06:51:09.627  1388  1700 I MediaProvider: Begin Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///... flg=0x1400010 cmp=com.android.providers.media.module/com.android.providers.media.MediaService }
+10-25 06:51:09.628  6478  6478 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-25 06:51:09.629  6478  6478 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-25 06:51:09.624  1388  1388 W com.android.providers.media.module: type=1400 audit(0.0:29): avc:  denied  { search } for  comm=4173796E635461736B202331 name="tmp" dev="dm-43" ino=196610 scontext=u:r:mediaprovider_app:s0:c127,c256,c512,c768 tcontext=u:object_r:shell_data_file:s0 tclass=dir permissive=0 app=com.android.providers.media.module
+10-25 06:51:09.675     0     0 I logd    : start watching /data/system/packages.list ...
+10-25 06:51:09.631   498   955 D BufferPoolAccessor2.0: Destruction - bufferpool2 0x7fd10b38f348 cached: 0/0M, 0/0% in use; allocs: 555, 100% recycled; transfers: 555, 99% unfetched
+10-25 06:51:09.624  1388  1388 W com.android.providers.media.module: type=1400 audit(0.0:30): avc:  denied  { getattr } for  comm=4173796E635461736B202331 path="/data/local/tmp" dev="dm-43" ino=196610 scontext=u:r:mediaprovider_app:s0:c127,c256,c512,c768 tcontext=u:object_r:shell_data_file:s0 tclass=dir permissive=0 app=com.android.providers.media.module
+10-25 06:51:09.632  1388  1388 W com.android.providers.media.module: type=1400 audit(0.0:31): avc:  denied  { search } for  comm=4173796E635461736B202331 name="tmp" dev="dm-43" ino=196610 scontext=u:r:mediaprovider_app:s0:c127,c256,c512,c768 tcontext=u:object_r:shell_data_file:s0 tclass=dir permissive=0 app=com.android.providers.media.module
+10-25 06:51:09.632  1388  1388 W com.android.providers.media.module: type=1400 audit(0.0:32): avc:  denied  { getattr } for  comm=4173796E635461736B202331 path="/data/local/tmp" dev="dm-43" ino=196610 scontext=u:r:mediaprovider_app:s0:c127,c256,c512,c768 tcontext=u:object_r:shell_data_file:s0 tclass=dir permissive=0 app=com.android.providers.media.module
+10-25 06:51:09.680     0     0 I logd    : ReadPackageList, total packages: 156
+10-25 06:51:09.684     0     0 W audit   : audit_lost=8 audit_rate_limit=5 audit_backlog_limit=64
+10-25 06:51:09.686     0     0 E audit   : rate limit exceeded
+10-25 06:51:09.632  1388  1388 W com.android.providers.media.module: type=1400 audit(0.0:33): avc:  denied  { search } for  comm=4173796E635461736B202331 name="tmp" dev="dm-43" ino=196610 scontext=u:r:mediaprovider_app:s0:c127,c256,c512,c768 tcontext=u:object_r:shell_data_file:s0 tclass=dir permissive=0 app=com.android.providers.media.module
+10-25 06:51:09.642  1388  1700 W ModernMediaScanner: Failed to visit /data/local/tmp/final_motion_horse_zs_walk.mp4: java.nio.file.AccessDeniedException: /data/local/tmp/final_motion_horse_zs_walk.mp4
+10-25 06:51:09.632  1388  1388 W com.android.providers.media.module: type=1400 audit(0.0:34): avc:  denied  { search } for  comm=4173796E635461736B202331 name="tmp" dev="dm-43" ino=196610 scontext=u:r:mediaprovider_app:s0:c127,c256,c512,c768 tcontext=u:object_r:shell_data_file:s0 tclass=dir permissive=0 app=com.android.providers.media.module
+10-25 06:51:09.646  1388  1700 I MediaProvider: Scanned internal due to REASON_DEMAND, found 0 items in 9ms, 0 inserts 0 updates 0 deletes
+10-25 06:51:09.647  1388  1700 I MediaProvider: End Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///... flg=0x1400010 cmp=com.android.providers.media.module/com.android.providers.media.MediaService }
+10-25 06:51:10.146   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:10.147   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:10.148   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:10.148   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:10.148   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:10.227     0     0 I logd    : logdr: UID=0 GID=0 PID=8316 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:51:10.633  6418  6447 I godot   : ANDROID_DEEP_PHOTO final_motion_horse_zs_walk/motion_end
+10-25 06:51:10.642  6418  6447 I godot   : ANDROID_DEEP_COMPLETE final_motion_horse_zs_walk checks=3 failed=0 photos=2
+10-25 06:51:10.645  6418  6447 D EGL_emulation: app_time_stats: avg=41.24ms min=12.69ms max=825.78ms count=35
+10-25 06:51:11.485     0     0 I logd    : logdr: UID=0 GID=0 PID=8325 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:51:11.556  8330  8330 W BpBinder: Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+10-25 06:51:11.559  8330  8330 W ProcessState: Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+10-25 06:51:11.602   174   174 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device VINTF manifest.
+10-25 06:51:11.602  8330  8331 I Gralloc4: mapper 4.x is not supported
+10-25 06:51:11.648     0     0 I servicemanager: Caller(pid=8330,uid=0,sid=u:r:su:s0) Could not find android.hardware.graphics.allocator.IAllocator/default in the VINTF manifest. No alternative instances declared in VINTF.
+10-25 06:51:11.643   446   548 D AudioFlinger: mixer(0x7c7a4d6468e0) throttle end: throttle time(13)
+10-25 06:51:11.650  6418  6447 D EGL_emulation: app_time_stats: avg=21.95ms min=13.84ms max=43.25ms count=45
+10-25 06:51:11.803   446   548 D AF::Track: interceptBuffer: took 510us to intercept 0 tracks
+10-25 06:51:12.664  6418  6447 D EGL_emulation: app_time_stats: avg=23.41ms min=14.78ms max=93.64ms count=43
+10-25 06:51:13.153   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:13.153   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:13.154   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:13.154   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:13.155   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:13.672  6418  6447 D EGL_emulation: app_time_stats: avg=15.83ms min=12.42ms max=27.51ms count=60
+10-25 06:51:14.556   498   957 D BufferPoolAccessor2.0: evictor expired: 1, evicted: 0
+10-25 06:51:14.677  6418  6447 D EGL_emulation: app_time_stats: avg=15.42ms min=13.03ms max=19.71ms count=60
+10-25 06:51:14.842   446   548 D AF::Track: interceptBuffer: took 1719us to intercept 0 tracks
+10-25 06:51:15.687  6418  6447 D EGL_emulation: app_time_stats: avg=15.44ms min=12.61ms max=23.41ms count=60
+10-25 06:51:16.161   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:16.162   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:16.162   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:16.162   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:16.163   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:16.694  6418  6447 D EGL_emulation: app_time_stats: avg=17.32ms min=13.44ms max=23.17ms count=57
+10-25 06:51:17.702  6418  6447 D EGL_emulation: app_time_stats: avg=16.91ms min=13.98ms max=23.34ms count=59
+10-25 06:51:18.715  6418  6447 D EGL_emulation: app_time_stats: avg=17.28ms min=15.06ms max=22.27ms count=58
+10-25 06:51:19.166   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:19.166   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:19.166   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:19.166   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:19.167   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:19.729  6418  6447 D EGL_emulation: app_time_stats: avg=17.20ms min=13.93ms max=23.86ms count=58
+10-25 06:51:20.745  6418  6447 D EGL_emulation: app_time_stats: avg=17.16ms min=13.80ms max=30.67ms count=58
+10-25 06:51:21.755  6418  6447 D EGL_emulation: app_time_stats: avg=16.99ms min=13.54ms max=22.51ms count=59
+10-25 06:51:22.169   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:22.170   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:22.170   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:22.171   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:22.171   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:22.766  6418  6447 D EGL_emulation: app_time_stats: avg=17.41ms min=14.12ms max=22.97ms count=57
+10-25 06:51:23.767  6418  6447 D EGL_emulation: app_time_stats: avg=17.40ms min=14.06ms max=23.36ms count=56
+10-25 06:51:24.782  6418  6447 D EGL_emulation: app_time_stats: avg=17.47ms min=14.49ms max=22.62ms count=57
+10-25 06:51:25.177   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:25.178   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:25.178   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:25.179   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:25.179   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:25.788  6418  6447 D EGL_emulation: app_time_stats: avg=17.06ms min=12.74ms max=23.17ms count=58
+10-25 06:51:26.795  6418  6447 D EGL_emulation: app_time_stats: avg=17.65ms min=13.83ms max=24.23ms count=56
+10-25 06:51:27.798  6418  6447 D EGL_emulation: app_time_stats: avg=17.01ms min=13.98ms max=24.33ms count=58
+10-25 06:51:28.181   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:28.182   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:28.182   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:28.183   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:28.183   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:28.808  6418  6447 D EGL_emulation: app_time_stats: avg=16.94ms min=13.71ms max=22.61ms count=58
+10-25 06:51:29.814  6418  6447 D EGL_emulation: app_time_stats: avg=16.91ms min=13.01ms max=21.34ms count=58
+10-25 06:51:30.832  6418  6447 D EGL_emulation: app_time_stats: avg=17.17ms min=14.14ms max=24.26ms count=59
+10-25 06:51:31.189   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:31.189   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:31.190   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:31.190   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:31.190   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:31.842  6418  6447 D EGL_emulation: app_time_stats: avg=16.96ms min=14.38ms max=23.19ms count=58
+10-25 06:51:32.854  6418  6447 D EGL_emulation: app_time_stats: avg=16.98ms min=14.32ms max=22.30ms count=59
+10-25 06:51:33.867  6418  6447 D EGL_emulation: app_time_stats: avg=17.37ms min=14.55ms max=21.67ms count=57
+10-25 06:51:34.197   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:34.198   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:34.198   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:34.199   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:34.199   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:34.869  6418  6447 D EGL_emulation: app_time_stats: avg=17.58ms min=13.52ms max=23.87ms count=56
+10-25 06:51:35.880  6418  6447 D EGL_emulation: app_time_stats: avg=18.21ms min=14.67ms max=23.21ms count=55
+10-25 06:51:36.885  6418  6447 D EGL_emulation: app_time_stats: avg=17.01ms min=13.93ms max=22.02ms count=58
+10-25 06:51:37.202   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:37.202   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:37.203   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:37.203   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:37.204   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:37.896  6418  6447 D EGL_emulation: app_time_stats: avg=17.15ms min=14.37ms max=22.97ms count=58
+10-25 06:51:38.903  6418  6447 D EGL_emulation: app_time_stats: avg=17.42ms min=14.42ms max=23.37ms count=57
+10-25 06:51:39.921  6418  6447 D EGL_emulation: app_time_stats: avg=17.40ms min=14.33ms max=23.31ms count=58
+10-25 06:51:40.210   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:40.211   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:40.211   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:40.212   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:40.212   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:40.934  6418  6447 D EGL_emulation: app_time_stats: avg=17.74ms min=14.54ms max=25.48ms count=56
+10-25 06:51:41.948  6418  6447 D EGL_emulation: app_time_stats: avg=17.75ms min=14.36ms max=23.20ms count=56
+10-25 06:51:42.956  6418  6447 D EGL_emulation: app_time_stats: avg=17.43ms min=14.59ms max=22.19ms count=57
+10-25 06:51:43.218   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:43.218   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:43.219   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:43.219   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:43.220   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:43.960  6418  6447 D EGL_emulation: app_time_stats: avg=17.18ms min=13.89ms max=21.99ms count=57
+10-25 06:51:44.962  6418  6447 D EGL_emulation: app_time_stats: avg=17.43ms min=13.38ms max=23.68ms count=56
+10-25 06:51:45.831     0     0 W healthd : battery l=100 v=5000 t=25.0 h=2 st=2 c=900000 fc=3000000 cc=10 chg=a
+10-25 06:51:45.967  6418  6447 D EGL_emulation: app_time_stats: avg=17.32ms min=13.69ms max=22.65ms count=57
+10-25 06:51:46.227   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:46.227   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:46.227   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:46.228   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:46.229   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:46.967  6418  6447 D EGL_emulation: app_time_stats: avg=16.84ms min=14.14ms max=22.97ms count=59
+10-25 06:51:47.983  6418  6447 D EGL_emulation: app_time_stats: avg=17.64ms min=14.19ms max=23.71ms count=57
+10-25 06:51:48.990  6418  6447 D EGL_emulation: app_time_stats: avg=17.41ms min=14.02ms max=23.88ms count=57
+10-25 06:51:49.234   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:49.234   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:49.235   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:49.235   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:49.235   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:49.996  6418  6447 D EGL_emulation: app_time_stats: avg=17.14ms min=13.89ms max=22.81ms count=58
+10-25 06:51:50.903   579   615 D ActivityManager: sync unfroze 5632 com.android.keychain for 10
+10-25 06:51:50.906   579   615 D ActivityManager: sync unfroze 1135 com.android.settings for 10
+10-25 06:51:50.906   579   615 D ActivityManager: sync unfroze 1869 com.android.localtransport for 10
+10-25 06:51:51.011  6418  6447 D EGL_emulation: app_time_stats: avg=18.22ms min=14.64ms max=26.53ms count=55
+10-25 06:51:52.018  6418  6447 D EGL_emulation: app_time_stats: avg=16.95ms min=13.25ms max=23.91ms count=59
+10-25 06:51:52.237   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:52.237   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:52.238   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:52.238   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:52.239   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:52.724   579   677 W CpuMonitorService: Current CPU frequency (4843384) is greater than maximum CPU frequency (2) for policy ID (0). Skipping CPU frequency policy
+10-25 06:51:52.725   579   677 W CpuMonitorService: Current CPU frequency (4364960) is greater than maximum CPU frequency (2) for policy ID (1). Skipping CPU frequency policy
+10-25 06:51:52.725   579   677 W CpuMonitorService: Current CPU frequency (4608667) is greater than maximum CPU frequency (2) for policy ID (2). Skipping CPU frequency policy
+10-25 06:51:52.725   579   677 W CpuMonitorService: Current CPU frequency (4849535) is greater than maximum CPU frequency (2) for policy ID (3). Skipping CPU frequency policy
+10-25 06:51:53.031  6418  6447 D EGL_emulation: app_time_stats: avg=17.22ms min=13.44ms max=22.35ms count=58
+10-25 06:51:54.050  6418  6447 D EGL_emulation: app_time_stats: avg=17.07ms min=14.32ms max=22.85ms count=59
+10-25 06:51:55.052  6418  6447 D EGL_emulation: app_time_stats: avg=17.32ms min=14.22ms max=23.54ms count=57
+10-25 06:51:55.245   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:55.246   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:55.246   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:55.247   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:55.247   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:56.069  6418  6447 D EGL_emulation: app_time_stats: avg=17.32ms min=14.51ms max=23.08ms count=58
+10-25 06:51:57.085  6418  6447 D EGL_emulation: app_time_stats: avg=16.92ms min=13.80ms max=23.91ms count=59
+10-25 06:51:58.098  6418  6447 D EGL_emulation: app_time_stats: avg=16.71ms min=13.45ms max=23.54ms count=60
+10-25 06:51:58.158   446   548 D AF::Track: interceptBuffer: took 594us to intercept 0 tracks
+10-25 06:51:58.252   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:58.252   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:58.252   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:58.253   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:58.253   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:51:59.112  6418  6447 D EGL_emulation: app_time_stats: avg=16.88ms min=13.61ms max=21.93ms count=59
+10-25 06:52:00.031   959  1097 D EGL_emulation: app_time_stats: avg=59984.02ms min=59984.02ms max=59984.02ms count=1
+10-25 06:52:00.118  6418  6447 D EGL_emulation: app_time_stats: avg=17.06ms min=13.87ms max=22.81ms count=58
+10-25 06:52:01.128  6418  6447 D EGL_emulation: app_time_stats: avg=17.10ms min=12.90ms max=21.70ms count=58
+10-25 06:52:01.260   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:01.261   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:01.261   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:01.261   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:01.262   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:02.134  6418  6447 D EGL_emulation: app_time_stats: avg=16.51ms min=14.05ms max=21.75ms count=60
+10-25 06:52:03.154  6418  6447 D EGL_emulation: app_time_stats: avg=17.11ms min=14.39ms max=22.45ms count=59
+10-25 06:52:04.167  6418  6447 D EGL_emulation: app_time_stats: avg=17.20ms min=13.52ms max=22.88ms count=58
+10-25 06:52:04.266   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:04.266   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:04.267   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:04.267   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:04.267   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:05.180  6418  6447 D EGL_emulation: app_time_stats: avg=18.33ms min=14.14ms max=24.04ms count=54
+10-25 06:52:06.184  6418  6447 D EGL_emulation: app_time_stats: avg=17.81ms min=13.33ms max=31.68ms count=55
+10-25 06:52:07.201  6418  6447 D EGL_emulation: app_time_stats: avg=17.61ms min=15.62ms max=23.08ms count=57
+10-25 06:52:07.273   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:07.274   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:07.274   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:07.275   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:07.275   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:08.214  6418  6447 D EGL_emulation: app_time_stats: avg=16.81ms min=12.91ms max=22.17ms count=58
+10-25 06:52:09.219  6418  6447 D EGL_emulation: app_time_stats: avg=16.82ms min=13.82ms max=21.83ms count=59
+10-25 06:52:10.232  6418  6447 D EGL_emulation: app_time_stats: avg=17.50ms min=14.31ms max=24.18ms count=57
+10-25 06:52:10.282   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:10.283   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:10.283   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:10.284   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:10.284   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:10.966   579   681 D ActivityManager: freezing 5632 com.android.keychain
+10-25 06:52:10.967   579   681 D ActivityManager: freezing 1135 com.android.settings
+10-25 06:52:10.968   579   681 D ActivityManager: freezing 1869 com.android.localtransport
+10-25 06:52:11.244  6418  6447 D EGL_emulation: app_time_stats: avg=17.34ms min=14.14ms max=24.08ms count=57
+10-25 06:52:12.255  6418  6447 D EGL_emulation: app_time_stats: avg=15.81ms min=12.34ms max=22.04ms count=61
+10-25 06:52:13.261  6418  6447 D EGL_emulation: app_time_stats: avg=15.71ms min=12.34ms max=23.18ms count=59
+10-25 06:52:13.293   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:13.293   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:13.294   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:13.294   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:13.294   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:14.267  6418  6447 D EGL_emulation: app_time_stats: avg=16.64ms min=13.46ms max=23.38ms count=59
+10-25 06:52:15.282  6418  6447 D EGL_emulation: app_time_stats: avg=17.33ms min=14.70ms max=23.25ms count=58
+10-25 06:52:16.299  6418  6447 D EGL_emulation: app_time_stats: avg=18.88ms min=13.52ms max=26.91ms count=53
+10-25 06:52:16.300   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:16.300   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:16.301   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:16.301   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:16.302   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:16.388   579   597 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-25 06:52:16.391   579   598 W system_server: ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/LatinIME/LatinIME.apk' with 1 weak references
+10-25 06:52:16.391   579   598 W system_server: ApkAssets: Deleting an ApkAssets object '<empty> and /system/priv-app/InputDevices/InputDevices.apk' with 1 weak references
+10-25 06:52:16.392   579   598 W system_server: ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/app/AccessibilityMenu/AccessibilityMenu.apk' with 1 weak references
+10-25 06:52:17.313  6418  6447 D EGL_emulation: app_time_stats: avg=18.27ms min=14.63ms max=24.76ms count=55
+10-25 06:52:18.319  6418  6447 D EGL_emulation: app_time_stats: avg=17.97ms min=14.73ms max=24.34ms count=55
+10-25 06:52:19.308   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:19.309   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:19.309   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:19.309   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:19.310   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:19.322  6418  6447 D EGL_emulation: app_time_stats: avg=18.61ms min=13.17ms max=24.26ms count=53
+10-25 06:52:20.178   959  1097 D EGL_emulation: app_time_stats: avg=20147.13ms min=20147.13ms max=20147.13ms count=1
+10-25 06:52:20.333  6418  6447 D EGL_emulation: app_time_stats: avg=18.41ms min=14.07ms max=23.20ms count=54
+10-25 06:52:21.348  6418  6447 D EGL_emulation: app_time_stats: avg=18.25ms min=13.69ms max=24.15ms count=55
+10-25 06:52:22.313   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:22.313   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:22.314   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:22.314   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:22.315   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:22.359  6418  6447 D EGL_emulation: app_time_stats: avg=17.41ms min=13.66ms max=22.52ms count=57
+10-25 06:52:23.367  6418  6447 D EGL_emulation: app_time_stats: avg=17.03ms min=13.98ms max=22.56ms count=58
+10-25 06:52:24.378  6418  6447 D EGL_emulation: app_time_stats: avg=17.16ms min=13.88ms max=24.00ms count=58
+10-25 06:52:25.318   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:25.319   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:25.319   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:25.319   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:25.320   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:25.382  6418  6447 D EGL_emulation: app_time_stats: avg=16.87ms min=13.85ms max=23.54ms count=59
+10-25 06:52:26.394  6418  6447 D EGL_emulation: app_time_stats: avg=16.84ms min=13.10ms max=23.05ms count=58
+10-25 06:52:27.399  6418  6447 D EGL_emulation: app_time_stats: avg=17.32ms min=14.33ms max=22.26ms count=57
+10-25 06:52:28.321   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:28.322   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:28.322   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:28.323   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:28.323   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:28.403  6418  6447 D EGL_emulation: app_time_stats: avg=16.89ms min=13.24ms max=21.71ms count=59
+10-25 06:52:29.413  6418  6447 D EGL_emulation: app_time_stats: avg=17.33ms min=13.25ms max=23.29ms count=57
+10-25 06:52:30.428  6418  6447 D EGL_emulation: app_time_stats: avg=16.93ms min=13.64ms max=24.22ms count=58
+10-25 06:52:31.329   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:31.329   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:31.330   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:31.331   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:31.331   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:31.433  6418  6447 D EGL_emulation: app_time_stats: avg=17.21ms min=14.02ms max=23.08ms count=57
+10-25 06:52:32.443  6418  6447 D EGL_emulation: app_time_stats: avg=17.36ms min=14.18ms max=22.80ms count=57
+10-25 06:52:33.447  6418  6447 D EGL_emulation: app_time_stats: avg=17.22ms min=13.25ms max=22.78ms count=57
+10-25 06:52:34.174   446   548 D AF::Track: interceptBuffer: took 741us to intercept 0 tracks
+10-25 06:52:34.335   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:34.335   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:34.335   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:34.336   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:34.337   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:34.464  6418  6447 D EGL_emulation: app_time_stats: avg=16.74ms min=13.70ms max=21.64ms count=60
+10-25 06:52:35.470  6418  6447 D EGL_emulation: app_time_stats: avg=17.35ms min=13.83ms max=23.36ms count=57
+10-25 06:52:36.477  6418  6447 D EGL_emulation: app_time_stats: avg=17.64ms min=14.09ms max=23.57ms count=56
+10-25 06:52:37.342   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:37.343   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:37.343   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:37.344   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:37.344   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:37.494  6418  6447 D EGL_emulation: app_time_stats: avg=17.28ms min=14.54ms max=23.56ms count=58
+10-25 06:52:38.510  6418  6447 D EGL_emulation: app_time_stats: avg=18.24ms min=14.93ms max=24.39ms count=55
+10-25 06:52:39.516  6418  6447 D EGL_emulation: app_time_stats: avg=17.80ms min=14.01ms max=23.98ms count=56
+10-25 06:52:40.351   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:40.351   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:40.352   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:40.352   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:40.353   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:40.536  6418  6447 D EGL_emulation: app_time_stats: avg=17.33ms min=13.87ms max=21.66ms count=58
+10-25 06:52:40.682  1062  8337 D TrafficStats: tagSocket(122) with statsTag=0xffffff81, statsUid=-1
+10-25 06:52:40.682  1062  8336 D TrafficStats: tagSocket(121) with statsTag=0xffffff81, statsUid=-1
+10-25 06:52:40.683  1062  8336 D TrafficStats: tagSocket(121) with statsTag=0xffffff81, statsUid=-1
+10-25 06:52:40.684  1062  8337 D TrafficStats: tagSocket(123) with statsTag=0xffffff81, statsUid=-1
+10-25 06:52:40.686   381  8338 I resolv  : ResNSendHandler::run: 0 / {100 983140 100 983140 1073 1}
+10-25 06:52:40.686   381  8339 I resolv  : ResNSendHandler::run: 0 / {100 983140 100 983140 1073 1}
+10-25 06:52:40.689   381  8340 I resolv  : ResNSendHandler::run: 0 / {100 983140 100 983140 1073 1}
+10-25 06:52:40.689   381  8341 I resolv  : ResNSendHandler::run: 0 / {100 983140 100 983140 1073 1}
+10-25 06:52:40.718   381  8338 I resolv  : res_nsend: used send_dg 60 terrno: 0
+10-25 06:52:40.719   381  8339 I resolv  : res_nsend: used send_dg 107 terrno: 0
+10-25 06:52:40.721   381  8340 I resolv  : res_nsend: used send_dg 63 terrno: 0
+10-25 06:52:40.722  1062  1062 D TrafficStats: tagSocket(121) with statsTag=0xffffffff, statsUid=-1
+10-25 06:52:40.726   381  8341 I resolv  : res_nsend: used send_dg 48 terrno: 0
+10-25 06:52:40.728  1062  1062 D TrafficStats: tagSocket(121) with statsTag=0xffffffff, statsUid=-1
+10-25 06:52:40.728  1062  8337 D NetworkMonitor/100: PROBE_DNS connectivitycheck.gstatic.com 46ms OK 113.108.239.226
+10-25 06:52:40.729  1062  1062 D TrafficStats: tagSocket(121) with statsTag=0xffffffff, statsUid=-1
+10-25 06:52:40.730  1062  8336 D NetworkMonitor/100: PROBE_DNS www.google.com 47ms OK 185.45.5.35,2001::1
+10-25 06:52:40.731   381  8342 I resolv  : GetAddrInfoHandler::run: {100 983140 100 983140 1073 1}
+10-25 06:52:40.731   381  8344 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-25 06:52:40.731   381  8343 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-25 06:52:40.731   381  8343 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x761bee862d50
+10-25 06:52:40.732   381  8343 I resolv  : doQuery: rcode=0, ancount=0, return value=107
+10-25 06:52:40.732   381  8344 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x761c8e8657b0
+10-25 06:52:40.732   381  8344 I resolv  : doQuery: rcode=0, ancount=1, return value=63
+10-25 06:52:40.732   381  8345 I resolv  : GetAddrInfoHandler::run: {100 983140 100 983140 1073 1}
+10-25 06:52:40.733  1062  8337 D TrafficStats: tagSocket(121) with statsTag=0xffffff81, statsUid=-1
+10-25 06:52:40.733   381  8348 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-25 06:52:40.734   381  8347 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-25 06:52:40.734   381  8348 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x761cde869320
+10-25 06:52:40.734   381  8348 I resolv  : doQuery: rcode=0, ancount=1, return value=48
+10-25 06:52:40.734   381  8347 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x761c3e85b310
+10-25 06:52:40.734   381  8347 I resolv  : doQuery: rcode=0, ancount=1, return value=60
+10-25 06:52:40.735  1062  8336 D TrafficStats: tagSocket(124) with statsTag=0xffffff81, statsUid=-1
+10-25 06:52:41.543  6418  6447 D EGL_emulation: app_time_stats: avg=17.08ms min=14.12ms max=22.35ms count=58
+10-25 06:52:42.556  6418  6447 D EGL_emulation: app_time_stats: avg=17.88ms min=14.29ms max=25.10ms count=56
+10-25 06:52:43.358   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:43.359   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:43.360   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:43.360   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:43.360   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:43.575  6418  6447 D EGL_emulation: app_time_stats: avg=18.98ms min=13.68ms max=24.78ms count=53
+10-25 06:52:43.685   381  8349 I resolv  : GetAddrInfoHandler::run: {100 983140 100 983140 1073 1}
+10-25 06:52:43.686   381  8350 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-25 06:52:43.686   381  8351 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-25 06:52:43.729   381  8350 I resolv  : res_nsend: used send_dg 261 terrno: 0
+10-25 06:52:43.729   381  8350 I resolv  : doQuery: rcode=0, ancount=8, return value=261
+10-25 06:52:43.730   381  8351 I resolv  : res_nsend: used send_dg 165 terrno: 0
+10-25 06:52:43.731   381  8351 I resolv  : doQuery: rcode=0, ancount=8, return value=165
+10-25 06:52:43.732  1062  8335 D TrafficStats: tagSocket(125) with statsTag=0xffffff81, statsUid=-1
+10-25 06:52:44.591  6418  6447 D EGL_emulation: app_time_stats: avg=18.98ms min=15.53ms max=24.72ms count=53
+10-25 06:52:44.698   579  5617 D WifiNl80211Manager: Scan result ready event
+10-25 06:52:44.698   579  5617 D WifiNative: Scan result ready event
+10-25 06:52:44.703   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:44.704   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:44.704   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:44.707   579   867 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+10-25 06:52:44.789  1062  8335 D NetworkMonitor/100: PROBE_FALLBACK http://play.googleapis.com/generate_204 time=1106ms ret=204 request={Connection=[close], User-Agent=[Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.32 Safari/537.36]} headers={null=[HTTP/1.1 204 No Content], Connection=[close], Cross-Origin-Resource-Policy=[cross-origin], Date=[Sun, 25 Oct 2026 06:52:47 GMT], X-Android-Received-Millis=[1792911164789], X-Android-Response-Source=[NETWORK 204], X-Android-Selected-Protocol=[http/1.1], X-Android-Sent-Millis=[1792911163736]}
+10-25 06:52:45.596  6418  6447 D EGL_emulation: app_time_stats: avg=17.71ms min=14.18ms max=23.41ms count=56
+10-25 06:52:45.832     0     0 W healthd : battery l=100 v=5000 t=25.0 h=2 st=2 c=900000 fc=3000000 cc=10 chg=a
+10-25 06:52:46.367   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:46.368   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:46.368   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:46.369   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:46.369   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:46.608  6418  6447 D EGL_emulation: app_time_stats: avg=17.92ms min=14.26ms max=22.78ms count=56
+10-25 06:52:46.811  1062  8337 D NetworkMonitor/100: PROBE_HTTP http://connectivitycheck.gstatic.com/generate_204 time=6080ms ret=204 request={Connection=[close], User-Agent=[Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.32 Safari/537.36]} headers={null=[HTTP/1.1 204 No Content], Connection=[close], Cross-Origin-Resource-Policy=[cross-origin], Date=[Sun, 25 Oct 2026 06:52:44 GMT], X-Android-Received-Millis=[1792911166810], X-Android-Response-Source=[NETWORK 204], X-Android-Selected-Protocol=[http/1.1], X-Android-Sent-Millis=[1792911160739]}
+10-25 06:52:46.811  1062  8336 D TrafficStats: tagSocket(121) with statsTag=0xffffff81, statsUid=-1
+10-25 06:52:47.614  6418  6447 D EGL_emulation: app_time_stats: avg=18.06ms min=14.88ms max=24.67ms count=55
+10-25 06:52:47.829  1062  8336 D NetworkMonitor/100: PROBE_HTTPS https://www.google.com/generate_204 Probe failed with exception javax.net.ssl.SSLHandshakeException: connection closed
+10-25 06:52:47.830  1062  8335 D NetworkMonitor/100: isCaptivePortal: isSuccessful()=false isPortal()=false RedirectUrl=null isPartialConnectivity()=true Time=7148ms
+10-25 06:52:47.831   579   876 D ConnectivityService: [100 WIFI] validation failed
+10-25 06:52:48.629  6418  6447 D EGL_emulation: app_time_stats: avg=17.25ms min=14.27ms max=23.16ms count=58
+10-25 06:52:49.375   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:49.376   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:49.378   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:49.378   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:49.379   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:49.633  6418  6447 D EGL_emulation: app_time_stats: avg=17.05ms min=14.31ms max=22.99ms count=58
+10-25 06:52:50.179   959  1097 D EGL_emulation: app_time_stats: avg=30000.46ms min=30000.46ms max=30000.46ms count=1
+10-25 06:52:50.646  6418  6447 D EGL_emulation: app_time_stats: avg=17.25ms min=13.97ms max=22.96ms count=58
+10-25 06:52:51.648  6418  6447 D EGL_emulation: app_time_stats: avg=16.89ms min=13.43ms max=22.35ms count=58
+10-25 06:52:51.881   381   381 I netd    : setProcSysNet(4, 2, wlan0, retrans_time_ms, 750) <0.17ms>
+10-25 06:52:51.881   381   381 I netd    : setProcSysNet(4, 2, wlan0, ucast_solicit, 10) <0.03ms>
+10-25 06:52:51.882   381   381 I netd    : setProcSysNet(6, 2, wlan0, retrans_time_ms, 750) <0.07ms>
+10-25 06:52:51.882   381   437 I netd    : setProcSysNet(6, 2, wlan0, ucast_solicit, 10) <0.06ms>
+10-25 06:52:52.385   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:52.386   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:52.387   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:52.387   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:52.388   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:52.661  6418  6447 D EGL_emulation: app_time_stats: avg=17.48ms min=14.43ms max=23.09ms count=57
+10-25 06:52:52.823   579   677 W CpuMonitorService: Current CPU frequency (3862578) is greater than maximum CPU frequency (2) for policy ID (0). Skipping CPU frequency policy
+10-25 06:52:52.825   579   677 W CpuMonitorService: Current CPU frequency (4675468) is greater than maximum CPU frequency (2) for policy ID (1). Skipping CPU frequency policy
+10-25 06:52:52.825   579   677 W CpuMonitorService: Current CPU frequency (4818711) is greater than maximum CPU frequency (2) for policy ID (2). Skipping CPU frequency policy
+10-25 06:52:52.825   579   677 W CpuMonitorService: Current CPU frequency (4412335) is greater than maximum CPU frequency (2) for policy ID (3). Skipping CPU frequency policy
+10-25 06:52:53.668  6418  6447 D EGL_emulation: app_time_stats: avg=17.00ms min=13.48ms max=24.77ms count=58
+10-25 06:52:54.685  6418  6447 D EGL_emulation: app_time_stats: avg=17.47ms min=13.24ms max=22.63ms count=57
+10-25 06:52:55.394   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:55.395   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:55.395   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:55.396   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:55.396   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:55.688  6418  6447 D EGL_emulation: app_time_stats: avg=17.66ms min=14.54ms max=23.45ms count=56
+10-25 06:52:56.691  6418  6447 D EGL_emulation: app_time_stats: avg=17.62ms min=14.75ms max=23.03ms count=56
+10-25 06:52:57.715  6418  6447 D EGL_emulation: app_time_stats: avg=17.70ms min=14.32ms max=24.19ms count=57
+10-25 06:52:58.401   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:58.402   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:58.402   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:58.402   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:58.403   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:52:58.723  6418  6447 D EGL_emulation: app_time_stats: avg=18.73ms min=13.54ms max=25.55ms count=53
+10-25 06:52:59.726  6418  6447 D EGL_emulation: app_time_stats: avg=19.12ms min=15.18ms max=26.08ms count=52
+10-25 06:53:00.011   959  1097 D EGL_emulation: app_time_stats: avg=9831.69ms min=9831.69ms max=9831.69ms count=1
+10-25 06:53:00.736  6418  6447 D EGL_emulation: app_time_stats: avg=19.17ms min=14.33ms max=23.87ms count=52
+10-25 06:53:01.406   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:01.407   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:01.407   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:01.407   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:01.407   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:01.750  6418  6447 D EGL_emulation: app_time_stats: avg=18.92ms min=14.34ms max=25.68ms count=53
+10-25 06:53:02.752  6418  6447 D EGL_emulation: app_time_stats: avg=17.25ms min=14.08ms max=23.58ms count=57
+10-25 06:53:03.757  6418  6447 D EGL_emulation: app_time_stats: avg=17.15ms min=13.95ms max=21.75ms count=58
+10-25 06:53:04.413   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:04.414   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:04.414   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:04.414   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:04.415   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:04.768  6418  6447 D EGL_emulation: app_time_stats: avg=17.80ms min=14.91ms max=25.10ms count=56
+10-25 06:53:05.776  6418  6447 D EGL_emulation: app_time_stats: avg=17.57ms min=14.12ms max=23.29ms count=56
+10-25 06:53:06.789  6418  6447 D EGL_emulation: app_time_stats: avg=16.88ms min=13.51ms max=22.68ms count=59
+10-25 06:53:07.417   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:07.419   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:07.419   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:07.419   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:07.420   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:07.804  6418  6447 D EGL_emulation: app_time_stats: avg=17.44ms min=14.06ms max=23.30ms count=57
+10-25 06:53:08.806  6418  6447 D EGL_emulation: app_time_stats: avg=17.55ms min=13.86ms max=23.82ms count=56
+10-25 06:53:09.819  6418  6447 D EGL_emulation: app_time_stats: avg=17.48ms min=14.16ms max=21.79ms count=57
+10-25 06:53:10.424   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:10.425   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:10.426   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:10.426   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:10.426   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:10.832  6418  6447 D EGL_emulation: app_time_stats: avg=17.19ms min=14.25ms max=22.37ms count=57
+10-25 06:53:11.835  6418  6447 D EGL_emulation: app_time_stats: avg=17.59ms min=14.48ms max=22.40ms count=56
+10-25 06:53:12.836  6418  6447 D EGL_emulation: app_time_stats: avg=17.50ms min=14.06ms max=23.93ms count=56
+10-25 06:53:13.034     0     0 I logd    : logdr: UID=0 GID=0 PID=8360 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:13.025  6418  6447 I godot   : ANDROID_DEEP_BEGIN route_centre { "id": "route_centre", "suite": "motion", "role": "zs", "mount": "horse", "seconds": 12.0, "start": [600.0, 1100.0] }
+10-25 06:53:13.035  6418  6418 I ImeTracker: org.yuanzheng.singleplayer:58fdd8c2: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+10-25 06:53:13.035   579   703 I ImeTracker: org.yuanzheng.singleplayer:58fdd8c2: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-25 06:53:13.429   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:13.430   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:13.430   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:13.430   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:13.431   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:13.727     0     0 I logd    : logdr: UID=0 GID=0 PID=8366 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:13.916  2320  2320 W adbd    : timeout expired while flushing socket, closing
+10-25 06:53:14.267  6418  6447 I godot   : ANDROID_DEEP_PHOTO route_centre/map
+10-25 06:53:14.273  6418  6447 D EGL_emulation: app_time_stats: avg=44.81ms min=1.74ms max=604.93ms count=31
+10-25 06:53:14.417     0     0 I logd    : logdr: UID=0 GID=0 PID=8372 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:14.968     0     0 I init    : Untracked pid 8356 exited with status 1
+10-25 06:53:14.968     0     0 I init    : Untracked pid 8356 did not have an associated service entry and will not be reaped
+10-25 06:53:15.113     0     0 I logd    : logdr: UID=0 GID=0 PID=8378 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:15.287  6418  6447 D EGL_emulation: app_time_stats: avg=17.86ms min=13.77ms max=34.59ms count=56
+10-25 06:53:15.800     0     0 I logd    : logdr: UID=0 GID=0 PID=8384 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:16.295  6418  6447 D EGL_emulation: app_time_stats: avg=17.13ms min=12.62ms max=25.08ms count=57
+10-25 06:53:16.437   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:16.437   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:16.438   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:16.439   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:16.439   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:16.490     0     0 I logd    : logdr: UID=0 GID=0 PID=8390 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:17.180     0     0 I logd    : logdr: UID=0 GID=0 PID=8396 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:17.305  6418  6447 D EGL_emulation: app_time_stats: avg=17.25ms min=14.30ms max=24.16ms count=57
+10-25 06:53:17.866     0     0 I logd    : logdr: UID=0 GID=0 PID=8402 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:18.320  6418  6447 D EGL_emulation: app_time_stats: avg=17.71ms min=13.32ms max=25.85ms count=56
+10-25 06:53:18.552     0     0 I logd    : logdr: UID=0 GID=0 PID=8408 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:19.248     0     0 I logd    : logdr: UID=0 GID=0 PID=8414 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:19.326  6418  6447 D EGL_emulation: app_time_stats: avg=17.26ms min=14.20ms max=23.79ms count=57
+10-25 06:53:19.446   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:19.446   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:19.447   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:19.447   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:19.447   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:19.933     0     0 I logd    : logdr: UID=0 GID=0 PID=8420 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:20.337  6418  6447 D EGL_emulation: app_time_stats: avg=17.17ms min=13.87ms max=22.72ms count=58
+10-25 06:53:20.621     0     0 I logd    : logdr: UID=0 GID=0 PID=8426 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:21.311     0     0 I logd    : logdr: UID=0 GID=0 PID=8432 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:21.347  6418  6447 D EGL_emulation: app_time_stats: avg=17.32ms min=13.82ms max=25.79ms count=56
+10-25 06:53:21.998     0     0 I logd    : logdr: UID=0 GID=0 PID=8438 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:22.360  6418  6447 D EGL_emulation: app_time_stats: avg=16.73ms min=13.74ms max=22.56ms count=59
+10-25 06:53:22.455   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:22.455   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:22.456   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:22.456   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:22.456   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:22.695     0     0 I logd    : logdr: UID=0 GID=0 PID=8444 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:23.383     0     0 I logd    : logdr: UID=0 GID=0 PID=8450 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:23.365  6418  6447 D EGL_emulation: app_time_stats: avg=17.95ms min=14.81ms max=24.67ms count=55
+10-25 06:53:24.078     0     0 I logd    : logdr: UID=0 GID=0 PID=8456 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:24.366  6418  6447 D EGL_emulation: app_time_stats: avg=17.72ms min=13.45ms max=26.22ms count=56
+10-25 06:53:24.765     0     0 I logd    : logdr: UID=0 GID=0 PID=8462 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:25.371  6418  6447 D EGL_emulation: app_time_stats: avg=18.76ms min=14.76ms max=25.72ms count=53
+10-25 06:53:25.451     0     0 I logd    : logdr: UID=0 GID=0 PID=8468 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:25.463   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:25.464   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:25.464   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:25.465   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:25.465   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:53:26.136     0     0 I logd    : logdr: UID=0 GID=0 PID=8474 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:26.377  6418  6447 D EGL_emulation: app_time_stats: avg=18.76ms min=14.50ms max=26.24ms count=53
+10-25 06:53:26.823     0     0 I logd    : logdr: UID=0 GID=0 PID=8480 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:27.503     0     0 I logd    : logdr: UID=0 GID=0 PID=8486 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:53:28.018  6418  6447 I godot   : ANDROID_DEEP_PHOTO route_centre/motion_end
+10-25 06:53:28.025  6418  6447 I godot   : ANDROID_DEEP_COMPLETE route_centre checks=3 failed=0 photos=2
+10-25 06:53:28.028  6418  6447 D EGL_emulation: app_time_stats: avg=36.51ms min=14.75ms max=864.96ms count=45
