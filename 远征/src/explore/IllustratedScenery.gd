@@ -11,9 +11,9 @@ static func setup(map: Node) -> void:
 			continue
 		var prop := Prop.new()
 		prop.name = "Illustrated_" + String(row.get("id", "prop"))
-		prop.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		prop.texture_filter = preload("res://src/world/WorldPresentation.gd").sampling()
 		prop.position = Vector2(float(row.at[0]), float(row.at[1]))
-		prop.display_size = Vector2(float(row.size[0]),float(row.size[1]))
+		prop.display_size = Vector2(float(row.size[0]),float(row.size[1]))*preload("res://src/world/WorldPresentation.gd").SCENERY_ENLARGEMENT
 		prop.art = art
 		prop.canopy = bool(row.get("canopy",false))
 		world.add_child(prop)

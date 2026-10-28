@@ -47,7 +47,7 @@ func _ready()->void:
 			for x in thumbnail.get_width():
 				if thumbnail.get_pixel(x,y).is_equal_approx(Color("c9b88a")):road_pixels+=1
 		check(road_pixels==0,id+" minimap contains no road-colored pixels")
-		check(is_equal_approx(map._player_anim.scale.x,.65),id+" original hero scale .65")
+		check(is_equal_approx(map._player_anim.scale.x,float(cfg.player_scale)),id+" hero uses the configured world scale")
 		check(map._player_anim.sprite_frames.resource_path=="res://image/role/zs/pojun_walk_frames.tres",id+" existing hero retained")
 		for suffix in ["top","bottom"]:
 			var image:=ReferenceWorldArt.texture(id+"_floor_"+suffix).get_image()
@@ -112,7 +112,7 @@ func _ready()->void:
 		for control:Control in [login._account,login._password,login._chest._go,login._chest._guest]:check(Rect2(0,0,480,height).encloses(control.get_global_rect()),"login control within "+str(height))
 		login._chest.layout(Rect2(0,0,480,height),320);await frames()
 		check(login._chest._go.get_global_rect().end.y<=height-320,"keyboard keeps submit visible")
-		check(not login._wordmark.visible and not login._chest._guest.visible,"keyboard prioritises form")
+		check(not login._wordmark.is_visible_in_tree() and not login._chest._guest.is_visible_in_tree(),"keyboard prioritises form")
 		login.queue_free();await frames()
 		var loading:=preload("res://src/ui/LoadScreen.tscn").instantiate();loading.auto_advance=false;vp.add_child(loading);loading.set_process(false);await frames()
 		for ratio in [0.0,.45,1.0]:

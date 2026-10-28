@@ -2,6 +2,7 @@ extends Node2D
 
 # The three rooms share a carved basalt floor; symbols show the saved mechanism state.
 const Surface := preload("res://src/explore/TerrainSurface.gd")
+const Art := preload("res://src/world/AssetCompletion.gd")
 var map_id := ""
 var _flags := ""
 var flat_floor := false
@@ -22,21 +23,21 @@ func _draw() -> void:
 		"stele_entry":
 			_seal(Vector2(480, 625), 80, "act4_return_anchor", Color("9adad0"))
 			for y in [360.0, 895.0]:
-				draw_arc(Vector2(480,y), 44, 0, TAU, 24, Color("ad9272"), 4)
+				Art.centered(self, "rune_dais", Vector2(480,y), 88, Color("777b82"))
 		"stele_resonance":
 			for row in [[Vector2(335,880),"act4_forest_voice",Color("93bf95")],
 				[Vector2(625,625),"act4_tide_voice",Color("82bacb")],
 				[Vector2(335,375),"act4_snow_voice",Color("d1dceb")]]:
 				_seal(row[0], 40, row[1], row[2])
 				var lit := bool(G.prog.get("flags",{}).get(row[1],false))
-				draw_line(row[0], Vector2(480,row[0].y), row[2] if lit else Color("5d6170"), 4)
+				Art.channel(self, [row[0], Vector2(480,row[0].y)], lit)
 			_seal(Vector2(480,230), 72, "act4_voices_aligned", Color("bca6da"))
 		"stele_core":
 			_seal(Vector2(480,570), 160, "act4_avatar_down", Color("a4d9d1"))
 			for i in 3:
 				var angle := TAU * i / 3.0 - PI / 2
 				var p := Vector2(480,570) + Vector2(cos(angle),sin(angle)) * 133
-				draw_circle(p, 14, [Color("93bf95"),Color("82bacb"),Color("d1dceb")][i])
+				Art.prop(self, "rune_stone", p + Vector2(0,8), 32, [Color("93bf95"),Color("82bacb"),Color("d1dceb")][i])
 
 func _draw_legacy_trim() -> void:
 	for x in [196.0, 762.0]:
@@ -62,10 +63,4 @@ func _pillar(p: Vector2) -> void:
 
 func _seal(p: Vector2, radius: float, flag: String, color: Color) -> void:
 	var lit := bool(G.prog.get("flags",{}).get(flag,false))
-	draw_circle(p,radius,Color("303a49",.45))
-	draw_arc(p,radius,0,TAU,48,Color("9d8c6c"),5)
-	draw_arc(p,radius-9,0,TAU,48,color if lit else Color("586879"),2)
-	for i in 8:
-		var a := TAU*i/8
-		var v := Vector2(cos(a),sin(a))
-		draw_line(p+v*(radius-18),p+v*(radius-27),color if lit else Color("777568"),3)
+	Art.centered(self, "rune_dais", p, radius*2.0, color.lightened(.22) if lit else Color("727b87"))

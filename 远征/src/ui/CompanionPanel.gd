@@ -15,6 +15,11 @@ func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	_sel = G.companion_active()
 	_build()
+	get_viewport().size_changed.connect(_build)
+	preload("res://src/ui/UiSafeArea.gd").watch(self,_fit)
+
+func _fit() -> void:
+	G.center_fixed_page(self)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if G.ui_blocked: return
@@ -44,7 +49,7 @@ func _build() -> void:
 		remove_child(child)
 		child.queue_free()
 	G.veil(self, 0.78)
-	var top := (maxf(800, get_viewport_rect().size.y) - 618) * 0.5
+	var top := 91.0
 	var banner := G.banner_box("伙伴", 240, 48)
 	banner.position = Vector2(120, top - 55)
 	add_child(banner)
@@ -93,6 +98,7 @@ func _build() -> void:
 		var note := _text(content, _message, Vector2(0, 512), 400, 34, true)
 		note.add_theme_color_override("font_color", G.C_GAIN_INK)
 	_button(content, "返回", Vector2(130, 552), 140, func(): closed.emit())
+	_fit.call_deferred()
 
 func _page_root() -> Control:
 	var page := Control.new()

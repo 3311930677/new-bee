@@ -22,8 +22,6 @@ static func pet_hint(host:Object,pet:String,map_id:String,kind:String)->String:
 class Trail extends Node2D:
 	var area:=Rect2()
 	func _draw()->void:
-		draw_rect(area,Color(.57,.84,.88,.07))
 		for i in 6:
 			var p:=Vector2(area.get_center().x,area.position.y+30+i*(area.size.y-60)/5)
-			draw_circle(p+Vector2(-8,-5),4,Color(.67,.95,.95,.6))
-			draw_circle(p+Vector2(8,5),4,Color(.67,.95,.95,.6))
+			preload("res://src/world/AssetCompletion.gd").centered(self,"ground_scuff",p,38,Color(.81,.91,.85,.55))

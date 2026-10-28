@@ -28,7 +28,7 @@ static var _story_atlas: Texture2D
 static var _return_atlas: Texture2D
 
 static func supplementary(c: CanvasItem,key: String,height: float,tint := Color.WHITE) -> void:
-	c.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	c.texture_filter = preload("res://src/world/WorldPresentation.gd").sampling()
 	if _return_atlas==null: _return_atlas = load(RETURN_ATLAS_PATH)
 	if _return_atlas==null: return
 	var region: Rect2 = RETURN_REGIONS[key]
@@ -37,7 +37,7 @@ static func supplementary(c: CanvasItem,key: String,height: float,tint := Color.
 	c.draw_texture_rect_region(_return_atlas,Rect2(-width*.5,-height,width,height),region,tint)
 
 static func barrier(c: CanvasItem,start: float,width: float,height := 48.0,tint := Color.WHITE) -> void:
-	c.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	c.texture_filter = preload("res://src/world/WorldPresentation.gd").sampling()
 	if _return_atlas==null: _return_atlas = load(RETURN_ATLAS_PATH)
 	if _return_atlas==null: return
 	var region: Rect2 = RETURN_REGIONS.barrier
@@ -49,7 +49,7 @@ static func barrier(c: CanvasItem,start: float,width: float,height := 48.0,tint 
 		x+=module_width
 
 static func story(c: CanvasItem,key: String,height: float) -> void:
-	c.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	c.texture_filter = preload("res://src/world/WorldPresentation.gd").sampling()
 	if _story_atlas==null: _story_atlas = load(STORY_ATLAS_PATH)
 	if _story_atlas==null: return
 	var region: Rect2 = STORY_REGIONS[key]
@@ -63,7 +63,7 @@ static func muted_material() -> ShaderMaterial:
 	return material
 
 static func _bitmap(c: CanvasItem,key: String,height: float,tint := Color.WHITE) -> bool:
-	c.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	c.texture_filter = preload("res://src/world/WorldPresentation.gd").sampling()
 	if _atlas==null: _atlas = load(ATLAS_PATH)
 	if _atlas==null: return false
 	var region: Rect2 = REGIONS[key]

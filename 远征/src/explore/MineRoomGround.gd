@@ -1,4 +1,6 @@
 extends Node2D
+const Art := preload("res://src/world/AssetCompletion.gd")
+const Surface := preload("res://src/explore/TerrainSurface.gd")
 
 var ventilated := false
 var rescued := false
@@ -20,27 +22,20 @@ func _draw_floor() -> void:
 	draw_rect(Rect2(385, 130, 190, 1015), Color("51443c"))
 
 func _draw_state() -> void:
-	for x in [444, 516]:
-		draw_line(Vector2(x, 200), Vector2(x, 1080), Color("a19681"), 5)
-	for y in range(220, 1080, 30):
-		draw_line(Vector2(427, y), Vector2(533, y), Color("746352"), 7)
+	texture_filter = preload("res://src/world/WorldPresentation.gd").sampling()
+	Surface.tiled(self, "res://image/main_world/rail_texture_visual_v2.png", Rect2(402,200,156,880), Vector2(156,234))
 	for pos in [Vector2(340, 680), Vector2(620, 590)]:
-		draw_circle(pos, 32, Color("776254"))
-		draw_circle(pos, 24, Color("292c31"))
-		for i in 4:
-			var axis := Vector2.RIGHT.rotated(float(i) * PI / 2.0 + (PI / 4.0 if ventilated else 0.0))
-			draw_line(pos - axis * 23, pos + axis * 23, Color("aa9476"), 6)
+		draw_set_transform(pos, PI/4.0 if ventilated else 0.0)
+		Art.centered(self, "mine_wheel", Vector2.ZERO, 64, Color.WHITE if ventilated else Color("aaa49a"))
+		draw_set_transform(Vector2.ZERO)
 	if not ventilated:
-		for i in 7:
-			draw_rect(Rect2(290 + i * 35, 570 + (i % 3) * 18, 130, 56), Color("92928a", 0.24))
+		for i in 3:
+			Art.centered(self, "smoke", Vector2(385+i*90,610+(i%2)*24), 220, Color(.65,.62,.59,.24))
 	var cart := Vector2(480, 880) if not rescued else Vector2(585, 410)
-	draw_rect(Rect2(cart - Vector2(23, 29), Vector2(46, 26)), Color("a27c50"))
-	draw_line(cart - Vector2(28, 30), cart + Vector2(28, -30), Color("d0a473"), 4)
-	for x in [-17, 17]: draw_circle(cart + Vector2(x, 0), 7, Color("1e2025"))
+	Art.prop(self, "mine_cart", cart + Vector2(0,8), 64)
 	# 获救后入口出现三顶工帽，撤离事实可见且由存档重建。
 	if rescued:
 		for x in [375, 415, 455]:
-			draw_circle(Vector2(x, 1020), 10, Color("d0a35a"))
+			Art.prop(self, "work_helmet", Vector2(x,1028), 24)
 	for x in [315, 645]:
-		draw_rect(Rect2(x - 9, 215, 18, 65), Color("655057"))
-		draw_circle(Vector2(x, 215), 12, Color("e5a166"))
+		Art.prop(self, "lantern", Vector2(x,280), 66)

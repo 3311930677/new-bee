@@ -47,7 +47,10 @@ func _encounter(map: MapScene, mon: Node2D) -> void:
 	map._last_battle_optional = mon.optional
 	map._encounter = WorldSession.new_encounter(map._main_map_id,mon.idx,mon.position,mon.mon_id,
 		mon.display_level,map._player.position,"",0,Time.get_ticks_usec())
-	WorldSession.advance(map._main_world_state(),map._encounter,WorldSession.ST_BATTLE)
+	# Follow the same encounter lifecycle as on_monster_contact; an unregistered
+	# result is deliberately rejected by WorldSession and cannot test payout rollback.
+	for phase in [WorldSession.ST_APPROACH, WorldSession.ST_LOCKED, WorldSession.ST_BATTLE]:
+		_check(bool(WorldSession.advance(map._main_world_state(),map._encounter,phase).ok), "测试遭遇合法进入 " + phase)
 
 func _run() -> void:
 	_reset()

@@ -12,7 +12,7 @@ static func apply(st: RunState, progress: Dictionary, choice: String) -> Diction
 		st.heal(maxi(1, roundi(cap * float(entry.heal_pct))))
 	else:
 		var potion_count := int(entry.get("potions",0))
-		if potion_count>0 and st.potions>=3: return {"ok":false,"reason":"potions","message":"药剂已满，先选择休整；补给袋不会被白白消耗。"}
+		if potion_count>0 and st.potions>=RunState.potion_cap(): return {"ok":false,"reason":"potions","message":"药剂已满，先选择休整；补给袋不会被白白消耗。"}
 		var hp := cap if st.hp < 0 else st.hp
 		var cost := maxi(1, roundi(cap * float(entry.cost_hp_pct)))
 		if hp <= cost: return {"ok": false, "reason": "hp", "message": "体力不足，先选择休整；这项行动不能让角色倒下。"}
@@ -20,7 +20,7 @@ static func apply(st: RunState, progress: Dictionary, choice: String) -> Diction
 		st.gold += int(entry.gold)
 		st.expedition += int(entry.get("expedition",0))
 		st.soul += int(entry.get("soul",0))
-		st.potions = mini(3,st.potions+potion_count)
+		st.potions = mini(RunState.potion_cap(),st.potions+potion_count)
 	progress["event_choice"] = choice
 	progress["interact_done"] = true
 	return {"ok": true}

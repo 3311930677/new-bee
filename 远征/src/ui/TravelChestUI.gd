@@ -153,16 +153,25 @@ class ChestButton extends Button:
 	## 换皮用：文字区左缩进（左侧放图标时用），默认 0 时文字铺满按钮居中
 	var caption_inset := 0.0
 	var _state_material: ShaderMaterial
+	var _fit_text := ""
+	var _fit_font: Font
+	var _fit_base_size := 0
+	var _fit_measured := 0.0
 	func _init(words: String = "", family: String = "secondary", icon: String = "") -> void:
 		text = words
+		clip_text = true
 		skin = family
 		icon_id = icon
 		caption = UI.label(words,"hero" if family=="hero" else ("primary" if family=="primary" else ("caption" if family=="nav" else ("tag" if family=="rail" else "secondary"))))
 		caption.name = "Caption"
+		caption.clip_text = true
+		caption.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		add_child(caption)
 		subtitle = UI.label("","body" if family=="hero" else "caption",UI.AGED)
 		subtitle.name = "Subtitle"
+		subtitle.clip_text = true
+		subtitle.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		add_child(subtitle)
 		texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
@@ -193,6 +202,20 @@ class ChestButton extends Button:
 		_layout()
 	func _layout() -> void:
 		var offset := 1.0 if is_pressed() else 0.0
+		# Labels paint the button; the hidden native caption must not impose a width.
+		if not caption.has_meta("fit_font_size"):
+			caption.set_meta("fit_font_size",caption.get_theme_font_size("font_size"))
+		var base_size := int(caption.get_meta("fit_font_size"))
+		var available := maxf(16,size.x-caption_inset-(88 if skin=="hero" else 12))
+		var font := caption.get_theme_font("font")
+		if _fit_font!=font or _fit_text!=caption.text or _fit_base_size!=base_size:
+			_fit_font=font
+			_fit_text=caption.text
+			_fit_base_size=base_size
+			_fit_measured=font.get_string_size(caption.text,HORIZONTAL_ALIGNMENT_LEFT,-1,base_size).x
+		var fitted_size:=maxi(12,mini(base_size,floori(base_size*available/maxf(1,_fit_measured))))
+		if caption.get_theme_font_size("font_size")!=fitted_size:
+			caption.add_theme_font_size_override("font_size",fitted_size)
 		if skin == "hero":
 			caption.position = Vector2(64,4+offset)
 			caption.size = Vector2(size.x-88,40)
@@ -346,12 +369,13 @@ class Toast extends Control:
 	var kind := "info"
 	func _ready() -> void:
 		z_index = UI.Z_FEEDBACK
-		size = Vector2(360,44)
-		position = Vector2((get_viewport_rect().size.x-360)*0.5,get_viewport_rect().size.y/3)
+		var safe:=G.ui_safe_rect(self)
+		size = Vector2(minf(360,safe.size.x-24),44)
+		position = Vector2(safe.get_center().x-size.x*.5,safe.position.y+safe.size.y/3)
 		mouse_filter = Control.MOUSE_FILTER_STOP
 		var l := UI.label(words,"body")
 		l.position = Vector2(12,4)
-		l.size = Vector2(336,36)
+		l.size = Vector2(size.x-24,36)
 		l.clip_text = true
 		add_child(l)
 		gui_input.connect(func(e:InputEvent):

@@ -34,6 +34,7 @@ func setup(dimensions: Vector2, centerlines: Array, palette: Array, seed_value: 
 	if has_atlas:
 		var finish := ShaderMaterial.new()
 		finish.shader = MATERIAL_SHADER
+		finish.set_shader_parameter("original_art",preload("res://src/world/WorldPresentation.gd").original_art())
 		finish.set_shader_parameter("surface_atlas", load(atlas_path))
 		finish.set_shader_parameter("surface_tint", tint)
 		finish.set_shader_parameter("surface_scale", dimensions / Vector2(768, 998.4))
@@ -46,7 +47,7 @@ func setup(dimensions: Vector2, centerlines: Array, palette: Array, seed_value: 
 		elif material_id in ["wet", "volcano"]: b_type = 5
 		finish.set_shader_parameter("biome_type", b_type)
 		material = finish
-	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	texture_filter = preload("res://src/world/WorldPresentation.gd").sampling()
 	z_index = -20
 	queue_redraw()
 

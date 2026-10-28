@@ -19,6 +19,11 @@ func snapshot() -> Dictionary:
 	return out
 
 func restore(data: Dictionary) -> bool:
+	# v1 扩展字段缺失时使用新实例默认值，核心续局字段仍严格校验。
+	data = data.duplicate(true)
+	var defaults := RunState.new()
+	for field in ["growth_bonus", "ascetic", "map_state", "honor"]:
+		if not data.has(field): data[field] = defaults.get(field)
 	if int(data.get("version", 0)) != 1 or String(data.get("run_id", "")).is_empty(): return false
 	if not (data.get("route") is Dictionary) or not (data.route.get("layers") is Array): return false
 	if (data.route.layers as Array).size() != 3: return false
@@ -58,6 +63,10 @@ var ascetic := false       # 苦行（轮次 22）：本局敌人更强、收益
 
 
 ## 苦行参数（data/nodes.json 的 ascetic 段）
+static func potion_cap() -> int:
+	return maxi(0, int(TableCache.nodes_config().get("run", {}).get("potions_max", 4)))
+
+
 func ascetic_cfg() -> Dictionary:
 	var c: Variant = TableCache.nodes_config().get("ascetic", {})
 	return c if c is Dictionary else {}

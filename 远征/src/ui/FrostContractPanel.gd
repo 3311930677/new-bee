@@ -16,13 +16,13 @@ func open_contract(id: String) -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	_build()
+	get_viewport().size_changed.connect(_build)
 
 func _build() -> void:
 	for child in get_children():
 		remove_child(child)
 		child.queue_free()
-	var viewport_size := get_viewport_rect().size
-	_offset = Vector2((viewport_size.x - 480.0) * 0.5, (viewport_size.y - 800.0) * 0.5)
+	_offset = Vector2.ZERO
 	G.veil(self, 0.84, true)
 	var paper := Style.panel(Vector2(20,86) + _offset,Vector2(440,618),true,18)
 	add_child(paper)
@@ -102,6 +102,7 @@ func _build() -> void:
 			_button("确认退单" if _confirm_abandon else "退单 · 退 %d 金" % refund,
 				Vector2(250, 585), 184, "abandon")
 	_button("返回市集", Vector2(146, 646), 188, "close")
+	G.center_fixed_page.call_deferred(self)
 
 func _button(label: String, pos: Vector2, width: int, action: String) -> void:
 	var button := G.gold_button(label, width, 42, G.FS_SM)

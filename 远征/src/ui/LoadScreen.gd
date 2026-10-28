@@ -332,6 +332,8 @@ func _collect_queue() -> void:
 		if ResourceLoader.exists("res://image/background/%s.png" % bg):
 			_queue.append("res://image/background/%s.png" % bg)
 	_queue.append("res://image/ui/frontend_polish_20261007/journey_world.png")
+	_queue.append("res://image/background/art_v2/camp_bluehour.png")
+	for id in ["primary","secondary","card"]:_queue.append("inventory_skin:"+id)
 	for key in ["charter_menu","silk_action","folio_window","journey_atlas"]:
 		_queue.append("res://image/ui/designer_20261007/%s.png" % key)
 	for a in PRELOAD_AUDIO:
@@ -349,6 +351,8 @@ func _collect_queue() -> void:
 	if FileAccess.file_exists("res://assets/ui/next_review_20261009/regions.json"):
 		var next_regions:Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://assets/ui/next_review_20261009/regions.json"))
 		for id in next_regions:_queue.append("reviewfix:"+String(id))
+	_queue.append("showcase:pedestal")
+	for pet in TableCache.pets():_queue.append("showcase_pet:"+String(pet.id))
 	_queue.append("res://assets/ui/next_review_20261009/map.png")
 	if ReferenceWorldArt.active("lorin_wilds"):
 		for group in ["buildings","npcs","foliage","props"]:
@@ -369,7 +373,16 @@ func _process(_d: float) -> void:
 			break
 		var path := _queue.pop_front() as String
 		if path.begins_with("chest:"): Chest.texture(path.trim_prefix("chest:"))
+		elif path.begins_with("inventory_skin:"):
+			preload("res://src/ui/InventoryQuestSkin.gd").texture(path.trim_prefix("inventory_skin:"))
+			break
 		elif path.begins_with("reviewfix:"):ReviewFix.texture(path.trim_prefix("reviewfix:"))
+		elif path=="showcase:pedestal":
+			preload("res://src/ui/NameTagLayout.gd").opaque_bounds(ReviewFix.texture("pedestal"))
+			break
+		elif path.begins_with("showcase_pet:"):
+			preload("res://src/ui/NameTagLayout.gd").opaque_bounds(ReviewFix.pet(path.trim_prefix("showcase_pet:")+"_hd"))
+			break
 		elif path=="sunny:prepare":preload("res://src/world/SunnyTravelArt.gd").prepare()
 		else:
 			var res := load(path)
@@ -385,7 +398,9 @@ func _process(_d: float) -> void:
 		var art := load("res://image/main_world/city_%s_reference_v2.png" % id) as Texture2D
 		if art != null:
 			_warm_art.append(art)
-			Grounding.prepare(art, 192, roundi(192.0 * art.get_height() / art.get_width()))
+			# Match CityScene's displayed width so entry reuses this mask cache.
+			var display_width:=192.0*preload("res://src/world/WorldPresentation.gd").BUILDING_ENLARGEMENT
+			Grounding.prepare(art, roundi(display_width), roundi(display_width * art.get_height() / art.get_width()))
 	var left := _queue.size() + _code.size() + _ground.size()
 	var ratio := 0.0 if _total == 0 else clampf(float(_total - left) / float(_total), 0.0, 1.0)
 	var elapsed := float(Time.get_ticks_msec() - _t0) / 1000.0

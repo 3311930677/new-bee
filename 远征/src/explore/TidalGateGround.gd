@@ -1,5 +1,7 @@
 class_name TidalGateGround
 extends Node2D
+const Art := preload("res://src/world/AssetCompletion.gd")
+const Surface := preload("res://src/explore/TerrainSurface.gd")
 
 # 水闸战场的双侧水道、闸墙和退潮石道；中央保持首领战可走空间。
 var dynamic_water := false
@@ -61,49 +63,22 @@ func _draw() -> void:
 func _draw_illustrated_state() -> void:
 	if not dynamic_water: return
 	if not bridge_drained:
-		draw_rect(Rect2(350, 485, 260, 63), Color("438d9a", 0.5))
-		for y in [504.0, 530.0]:
-			draw_line(Vector2(355,y),Vector2(605,y),Color("c5e7de",0.75),2)
+		draw_texture_rect(Art.texture("shallow_flood"),Rect2(350,485,260,63),false,Color(1,1,1,.8))
 	else:
 		if passages in ["bridge","both"]:
-			_draw_dry_passage(Rect2(365,485,100,63),Color("838f8c",0.7))
+			_draw_dry_passage(Rect2(365,485,100,63),Color("bdc5c0"))
 		if passages in ["cargo","both"]:
-			_draw_dry_passage(Rect2(495,485,100,63),Color("9a927e",0.7))
+			_draw_dry_passage(Rect2(495,485,100,63),Color("c7b995"))
 	var level := 900.0 if upper_released else 750.0
 	for x in [25.0,670.0]:
-		draw_line(Vector2(x,level),Vector2(x+265,level),Color("bbebe0",0.65),2)
+		draw_texture_rect(Art.texture("shallow_flood"),Rect2(x,level-8,265,28),false,Color(.9,1,1,.5))
 	_draw_supply_cache(Vector2(408,625),false,passages in ["bridge","both"])
 	_draw_supply_cache(Vector2(555,625),true,passages in ["cargo","both"])
 
 func _draw_dry_passage(rect: Rect2, tone: Color) -> void:
-	draw_rect(rect,tone)
-	for offset in [17.0,49.0,81.0]:
-		draw_line(rect.position+Vector2(offset,3),rect.position+Vector2(offset,rect.size.y-3),Color("596b67"),2)
+	# A worn deck section makes the open lane visible without a flat painted block.
+	draw_texture_rect(Art.texture("bridge_planks"),rect.grow(-3),false,tone)
 
 func _draw_supply_cache(at: Vector2, cargo: bool, dry: bool) -> void:
-	var wood := Color("76583c") if dry else Color("585951")
-	var rim := Color("b99c6c") if dry else Color("768b83")
-	draw_rect(Rect2(at.x - 30, at.y + 19, 60, 10), Color(0.08, 0.15, 0.16, 0.32))
-	if cargo:
-		draw_colored_polygon(PackedVector2Array([
-			at + Vector2(-29, -12), at + Vector2(-15, -25),
-			at + Vector2(28, -25), at + Vector2(29, -12)]), rim)
-		draw_rect(Rect2(at.x - 29, at.y - 12, 58, 32), wood)
-		draw_rect(Rect2(at.x - 29, at.y - 12, 58, 32), Color("393b35"), false, 3)
-		for y in [-2.0, 9.0]:
-			draw_line(at + Vector2(-27, y), at + Vector2(27, y), Color("403c31"), 2)
-		for x in [-16.0, 16.0]:
-			draw_line(at + Vector2(x, -10), at + Vector2(x, 18), rim, 4)
-			for y in [-6.0, 14.0]:
-				draw_circle(at + Vector2(x, y), 1.8, Color("d2c19a"))
-	else:
-		draw_colored_polygon(PackedVector2Array([
-			at + Vector2(-23, 18), at + Vector2(-26, -1),
-			at + Vector2(-13, -20), at + Vector2(15, -20),
-			at + Vector2(27, -1), at + Vector2(22, 18)]),
-			Color("a38d69") if dry else Color("6e766f"))
-		draw_line(at + Vector2(-14, -16), at + Vector2(15, -16), rim, 3)
-		draw_line(at + Vector2(-19, -7), at + Vector2(17, 11), Color("70634e"), 2)
-		draw_line(at + Vector2(17, -7), at + Vector2(-14, 12), Color("c2ae83"), 2)
-		draw_circle(at + Vector2(0, 0), 3, Color("5a5544"))
-		draw_line(at + Vector2(-20, 17), at + Vector2(20, 17), Color("3c4945"), 3)
+	Art.prop(self,"tide_cargo" if cargo else "supply_sack",at+Vector2(0,22),
+		52 if cargo else 48,Color.WHITE if dry else Color("7b9695"))

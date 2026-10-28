@@ -1,11 +1,12 @@
 shader_type canvas_item;
 render_mode unshaded;
 
-uniform sampler2D surface_atlas : source_color, filter_nearest;
+uniform sampler2D surface_atlas : source_color, filter_linear;
 uniform vec4 surface_tint : source_color = vec4(1.0);
 uniform vec2 surface_scale = vec2(1.0);
 uniform vec2 map_dimensions = vec2(960.0, 1248.0);
 uniform int biome_type = 0; // 0:forest, 1:snow, 2:desert, 3:cavern, 4:abyss, 5:tide
+uniform bool original_art = true;
 
 float hash21(vec2 p) {
 	p = fract(p * vec2(123.34, 456.21));
@@ -15,7 +16,7 @@ float hash21(vec2 p) {
 
 void fragment() {
 	float road = texture(TEXTURE, UV).r;
-	vec2 px = floor(UV * map_dimensions);
+	vec2 px = original_art ? UV * map_dimensions : floor(UV * map_dimensions);
 
 	// 1. High-Density 16-Bit Tile Frequency (96px tile domain instead of 1000px stretch)
 	// This eliminates the crude "一深一浅" oversized blurry patch problem!
@@ -35,6 +36,9 @@ void fragment() {
 
 	vec3 terrain = mix(atlas_terrain, macro_terrain, 0.35);
 	vec3 track = mix(atlas_track, macro_track, 0.30);
+	if (original_art) {
+		COLOR = vec4(mix(atlas_terrain, atlas_track, smoothstep(0.38, 0.62, road)) * surface_tint.rgb, 1.0);
+	} else {
 
 	// 2. Multi-tier Handcrafted Pixel Details by Biome
 	vec2 cell_16 = floor(px / 16.0);
@@ -145,4 +149,5 @@ void fragment() {
 	final_rgb *= vig;
 
 	COLOR = vec4(final_rgb * surface_tint.rgb, 1.0);
+	}
 }

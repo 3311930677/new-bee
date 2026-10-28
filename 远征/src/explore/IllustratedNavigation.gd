@@ -70,6 +70,11 @@ func next_point(map: CanvasItem, from: Vector2, target: Vector2) -> Vector2:
 		return path[path.size() - 1]
 	return target
 
+func route_points(map: CanvasItem,from: Vector2,target: Vector2) -> PackedVector2Array:
+	next_point(map,from,target)
+	if grid==null:return PackedVector2Array()
+	return grid.get_point_path(_nearest(from),_nearest(target),false)
+
 func _nearest(at: Vector2) -> Vector2i:
 	var direct := Vector2i(floori(at.x/STEP),floori(at.y/STEP))
 	if grid.is_in_boundsv(direct) and not grid.is_point_solid(direct): return direct

@@ -219,7 +219,7 @@ func _run() -> void:
 	_check(G.report_run_result(false) == "", "首败不送礼包")
 	_check(G.report_run_result(false) == "", "二连败不送礼包")
 	var g3 := G.report_run_result(false)
-	_check(g3.contains("灵魂石 +30"), "三连败应发礼包（实为「%s」）" % g3)
+	_check(g3.contains("魂晶 +30"), "三连败应提示当前魂晶名称与数量（实为「%s」）" % g3)
 	_check(int(G.wallet.get("soul", 0)) == 30 and G.item_count("pet_food") == 5,
 		"礼包应入账 30 魂石 + 5 宠物粮")
 	_check(int(G.prog.get("lose_streak", -1)) == 0, "发礼包后连败应清零")

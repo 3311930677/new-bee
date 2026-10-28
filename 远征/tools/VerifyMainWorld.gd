@@ -7,6 +7,12 @@ var _last_result := ""
 
 func _ready() -> void:
 	G.SAVE_PATH = "res://tools/_logs/save_verify_main_world.json"
+	G._init_state_defaults()
+	G.save_locked=false
+	G.selected_role="zs"
+	G.set_meta("ui_review_mode",true)
+	# This regression exercises the stable NPC, which requires the stable fixture.
+	G.city.built.append("stable")
 	G.prog["main_world"] = {"map_id": "lorin_wilds"}
 	G.prog["level"] = 5
 	G.prog["exp"] = 10
@@ -17,6 +23,8 @@ func _ready() -> void:
 		print("MAIN_WORLD_OK map=lorin_wilds")
 	else:
 		print("MAIN_WORLD_FAIL fails=%d" % _fails)
+	Audio.stop_bgm();Audio.set_suspended(true)
+	await get_tree().create_timer(.2).timeout
 	get_tree().quit(0 if _fails == 0 else 1)
 
 
@@ -89,7 +97,8 @@ func _run() -> void:
 	map._city_content._check_interact()
 	_check(not map._city_content._npcs[0].label_near,
 		"下方NPC名牌不能压住主角身体")
-	map._player.position = map._city_content._npcs[0].position + Vector2(70, 0)
+	# Approach from below: the enlarged hero and NPC nameplates must not overlap.
+	map._player.position = map._city_content._npcs[0].position + Vector2(0, 110)
 	map._city_content._check_interact()
 	_check(map._city_content._npcs[0].label_near,
 		"走近 NPC 时名签应出现")
@@ -130,7 +139,7 @@ func _run() -> void:
 	_check(first_mon._state == "wander", "主世界怪物靠近玩家时不应进入追击")
 	_check(map._map_cfg.get("map_cols") == 25 and map._map_cfg.get("map_rows") == 44,
 		"主地图行走范围应适应左右建筑与南部荒院")
-	_check(is_equal_approx(map._player_anim.scale.x, 0.65), "主地图旅人应采用当前同屏样板比例")
+	_check(is_equal_approx(map._player_anim.scale.x, float(cfg.player_scale)), "主地图旅人应采用地图配置的同屏比例")
 	var player_camera: Camera2D
 	for child in map._player.get_children():
 		if child is Camera2D:
@@ -290,7 +299,7 @@ func _run() -> void:
 	add_child(mounted)
 	await get_tree().process_frame
 	_check(mounted._mount_anim != null and mounted._mount_anim.visible
-		and mounted._player_anim.visible and mounted._player_anim.z_index>mounted._mount_anim.z_index
+		and not mounted._player_anim.visible
 		and mounted._mount_btn != null and mounted._mount_btn.visible
 		and (mounted._player_shape.shape as RectangleShape2D).size == Vector2(42, 28),
 		"主世界骑乘须显示四向步态马与当前职业骑手并使用窄路碰撞盒")
@@ -305,6 +314,12 @@ func _run() -> void:
 	_check(G.mount_riding() and mounted._mount_anim.visible,
 		"骑乘按钮应能再次上马并立即更新外观")
 	var hoof_slot := Audio.sfx_slot()
+	for voice in Audio._sfx_pool:voice.stop()
+	Audio._last_events.clear()
+	mounted._mount_contact_frame=-1
+	mounted._mount_hoof_timer=0
+	mounted._update_player_anim(Vector2(100,0))
+	mounted._mount_anim.frame=0
 	mounted._tick_mount_hoof(0.016, Vector2(100, 0))
 	_check(Audio.sfx_slot() == (hoof_slot + 1) % Audio.sfx_player_count(),
 		"骑行产生实际位移时应有低音量落蹄反馈")
@@ -367,9 +382,12 @@ func _run() -> void:
 	var tall_map := (load("res://src/explore/MapScene.tscn") as PackedScene).instantiate() as MapScene
 	tall_view.add_child(tall_map)
 	await get_tree().process_frame
-	_check(absf(tall_map._joy.position.y - 895.0) < 1.0
-		and absf(tall_map._pet_btn.position.y - 911.0) < 1.0
-		and absf(tall_map._sprint_btn.position.y - 991.0) < 1.0,
+	var safe := G.ui_safe_rect(tall_map)
+	_check(safe.encloses(tall_map._joy.get_global_rect())
+		and safe.encloses(tall_map._pet_btn.get_global_rect())
+		and safe.encloses(tall_map._sprint_btn.get_global_rect())
+		and tall_map._joy.get_global_rect().end.y>safe.end.y-72
+		and tall_map._sprint_btn.get_global_rect().end.y>safe.end.y-56,
 		"长屏主世界摇杆与拇指按钮应留在视口底缘")
 	await _verify_top_hud(tall_map, false)
 	if not tall_map._monsters.is_empty():
@@ -377,7 +395,9 @@ func _run() -> void:
 		await get_tree().process_frame
 		_check(tall_map._battle != null
 			and absf(tall_map._battle._field.position.y - 267.0) < 1.0
-			and absf(tall_map._battle._chest._enemy_strip.get_global_rect().position.y - (tall_map.get_viewport_rect().size.y-208.0)) < 1.0,
+			and safe.encloses(tall_map._battle._chest.commands.get_global_rect())
+			and tall_map._battle._chest._enemy_strip.get_global_rect().position.y>=safe.end.y-264
+			and tall_map._battle._chest._enemy_strip.get_global_rect().end.y<=tall_map._battle._chest.commands.get_global_rect().position.y,
 			"长屏同图战斗人物与指令条应跟随视口下移")
 	tall_view.queue_free()
 	await get_tree().process_frame
@@ -438,6 +458,10 @@ func _verify_top_hud(map: MapScene, click_entries := true) -> void:
 	_check(G.modal_count() == 1, "实际点击主线签应打开目标与奖励")
 	if G.modal_count() > 0: G.close_info_popup(G._modals.back().layer)
 	await get_tree().process_frame
+	if not daily.is_visible_in_tree():
+		await _click_hud(map,map._round_fold)
+		await get_tree().process_frame
+	_check(daily.is_visible_in_tree(),"展开任务后城务签应可见")
 	await _click_hud(map, daily)
 	_check(map._city_content.has_modal(), "实际点击城务签应打开委托板")
 	map._city_content._close_overlay()

@@ -1309,6 +1309,11 @@ func _sync_views() -> void:
 			if unit.kind == "monster" and String(unit.data.get("tier", "")) == "boss":
 				spread_boss = true
 	spread_boss = spread_boss and enemy_count > 1
+	var enemy_rows: Dictionary={}
+	for unit in sim.units:
+		if unit.side!="enemy":continue
+		if not enemy_rows.has(unit.row):enemy_rows[unit.row]=[]
+		enemy_rows[unit.row].append(unit)
 	for u in sim.units:
 		if not _views.has(u.uid):
 			_views[u.uid] = _spawn_view(u)
@@ -1317,9 +1322,17 @@ func _sync_views() -> void:
 		var view: UnitView = _views[u.uid]
 		# Large boss art and summoned front units need separate horizontal lanes.
 		view._formation_offset = Vector2.ZERO
-		if spread_boss and u.side == "enemy":
-			view._formation_offset.x = -50.0 if String(u.data.get("tier", "")) == "boss" \
-				else (65.0 if u.row == Combatant.ROW_FRONT else 0.0)
+		if u.side == "enemy":
+			var row_units: Array=enemy_rows[u.row]
+			var index:=row_units.find(u)
+			var back:=u.row==Combatant.ROW_BACK
+			var top:=176.0+(0 if back else 36)
+			var bottom:=clampf((get_viewport_rect().size.y-350.0-_field.position.y)/maxf(.5,_field.scale.y),250,470)-(36 if back else 0)
+			var span:=minf(maxf(0,bottom-top),112.0*maxi(0,row_units.size()-1))
+			var y: float=(top+bottom)*.5+(-span*.5+span*index/(row_units.size()-1) if row_units.size()>1 else 0.0)
+			var x:=410.0 if back else 300.0
+			if spread_boss and String(u.data.get("tier",""))=="boss":x-=20
+			view._formation_offset=Vector2(x,y)-classic_grid_pos(u.side,u.row,u.col)
 		view.sync(u)
 		(_views[u.uid] as UnitView).set_focused(
 			u.alive and u.uid == sim.role_focus_target_uid)
@@ -2233,10 +2246,14 @@ func _skill_splash(caster: UnitView, skill_id: String) -> void:
 		if previous.get_meta("skill_caster", -1) == caster.uid:
 			_fx_layer.remove_child(previous)
 			previous.queue_free()
-	var tex: Texture2D = G.res_tex("sk_%s" % skill_id)
+	var icon_key := "sk_%s" % skill_id
+	var caster_unit := sim.unit_by_uid(caster.uid) if sim!=null else null
+	var pet_skill := caster_unit!=null and caster_unit.kind=="pet"
+	# Pet actions intentionally share their pet portrait when no dedicated skill art exists.
+	var tex: Texture2D = null
+	if not pet_skill or not G.res_path(icon_key).is_empty():tex=G.res_tex(icon_key)
 	var sname := String(TableCache.get_skill(skill_id).get("name", skill_id))
 	if tex == null and sim != null:
-		var caster_unit := sim.unit_by_uid(caster.uid)
 		if caster_unit != null and caster_unit.kind == "pet":
 			tex = G.res_tex(String(caster_unit.data.get("id", "")))
 			for slot_v in caster_unit.skills:
@@ -2343,6 +2360,10 @@ func _show_result() -> void:
 	if win and not String(_cfg.get("special_event_id", "")).is_empty(): heading = "奇遇办妥 · 回城复命选谢礼"
 	elif win and arena_mode: heading = "演武战报 · 返回演武场结算段位"
 	var title := "凯旋战报" if win else "暂避锋芒" if flee else "未分胜负" if draw and arena_mode else "远征失利" if draw else "折戟整备"
+	if not sim.setup_error.is_empty():
+		title = "战斗未能开始"
+		heading = sim.setup_error
+		_cfg["reward_preview"] = {}
 	var panel := preload("res://src/battle/BattleSettlementView.gd").new()
 	panel.report = {
 		"title":title,"win":win,"role_name":String(role.name) if role != null else G.display_name(),

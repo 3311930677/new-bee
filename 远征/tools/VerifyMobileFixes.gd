@@ -122,14 +122,14 @@ func _ready() -> void:
 			await frames(6)
 			map.set_physics_process(false)
 			map._player.position = Vector2(480,700)
-			var pose := Mount.rider_frames_for(role,null)
+			var pose := Mount.frames_for(role,mount)
 			for direction in Mount.DIRECTIONS:
 				check(pose.get_frame_texture(direction,0).get_size().x>1,"dedicated seated pose "+role+direction)
 				var vector: Vector2 = {"walk_down":Vector2.DOWN,"walk_left":Vector2.LEFT,"walk_right":Vector2.RIGHT,"walk_up":Vector2.UP}[direction]
 				map._update_player_anim(vector*180)
 				map._mount_anim.pause()
-				check(map._mount_foreground.visible == (mount=="horse" and direction=="walk_down"),"correct front muzzle occlusion")
-				check(map._mount_anim.sprite_frames.get_frame_count(direction)==4,"reciprocal gait "+mount+direction)
+				check(not map._player_anim.visible and (map._mount_foreground==null or not map._mount_foreground.visible),"one integrated rider and mount")
+				check(map._mount_anim.sprite_frames.get_frame_count(direction)==8,"sequential walk gait "+mount+direction)
 				await frames()
 				await photo("rider_%s_%s_%s" % [role,mount,direction])
 				# Sound follows contact phase, never a timer independent of animation.

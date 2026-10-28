@@ -8,7 +8,7 @@ var _volume := 0
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	G.veil(self, 0.8)
-	var top := maxf(24, (get_viewport_rect().size.y - 680) * 0.5)
+	var top := 60.0
 	var panel := G.parchment_box(440, 680, 16)
 	panel.position = Vector2(20, top)
 	add_child(panel)
@@ -42,7 +42,7 @@ func _ready() -> void:
 		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT: closed.emit())
 	content.add_child(back)
 	_refresh()
-	G.fit_mobile_page.call_deferred(self)
+	G.center_fixed_page.call_deferred(self)
 
 func _paragraph(text: String, heading := false) -> void:
 	var label := G.text_label(text, G.FS_MD if heading else G.FS_SM, G.TEXT_DARK)

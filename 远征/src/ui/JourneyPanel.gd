@@ -81,7 +81,8 @@ static func _styled_label(txt: String, fnt: Font, sz: int, col: Color,
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	G.veil(self, .90)
-	var center := CenterContainer.new()
+	var center := Control.new()
+	center.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(center)
 
@@ -177,14 +178,16 @@ func _ready() -> void:
 	close_btn.custom_minimum_size.y = 46
 
 	resized.connect(_resize)
+	preload("res://src/ui/UiSafeArea.gd").watch(self,_resize)
 	_resize()
 	_refresh()
 
 func _resize() -> void:
-	var target_w := minf(436.0, maxf(360.0, size.x - 32.0))
-	var target_h := minf(724.0, maxf(520.0, size.y - 44.0))
-	_paper.custom_minimum_size = Vector2(target_w, target_h)
-	_paper.size = Vector2(target_w, target_h)
+	var safe:=G.ui_safe_rect(self)
+	var factor:=minf(1.0,(safe.size.x-24)/436.0)
+	var target_h:=minf(724,maxf(520,(safe.size.y-24)/factor))
+	_paper.custom_minimum_size=Vector2(436,target_h)
+	preload("res://src/ui/UiSafeArea.gd").fit_card(_paper,safe,Vector2(436,target_h))
 
 func _text(parent: Node, words: String, big := false) -> Label:
 	var label := _styled_label(words, G.font_serif if big else G.font_reg,

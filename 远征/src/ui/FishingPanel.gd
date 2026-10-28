@@ -1,8 +1,7 @@
 class_name FishingPanel
 extends Control
-
 signal closed
-
+const View := preload("res://src/ui/ShowcaseUI.gd")
 var spot_id := ""
 var _cast: Dictionary = {}
 var _casting := false
@@ -13,91 +12,126 @@ var _band: ColorRect
 var _needle: ColorRect
 var _info: Label
 var _message: Label
-var _action_label: Label
-
+var _stage_label: Label
+var _action_button: Button
+var _gauge: Control
+var _action_grid: GridContainer
+var _page: VBoxContainer
+var _water: FishingWater
+var _result_icon: TextureRect
 
 func open_spot(id: String) -> void:
 	spot_id = id
-	set_anchors_preset(Control.PRESET_FULL_RECT)
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	set_meta("safe_layout_exempt",true)
 	mouse_filter = Control.MOUSE_FILTER_STOP
-	G.veil(self, 0.72, true)
-	var top := (maxf(800.0, get_viewport_rect().size.y) - 470.0) * 0.5
-	var banner := G.banner_box("水边垂钓", 260, 48)
-	banner.position = Vector2(110, top - 58)
-	add_child(banner)
-	var paper := G.parchment_box(432, 470, 16.0)
-	paper.position = Vector2(24, top)
-	add_child(paper)
-	var body := Control.new()
-	body.set_anchors_preset(Control.PRESET_FULL_RECT)
-	body.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	paper.add_child(body)
-	var pic := TextureRect.new()
-	pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	pic.texture = G.res_tex("itm_fish_common")
-	pic.stretch_mode = TextureRect.STRETCH_SCALE
-	pic.position = Vector2(158, 10)
-	pic.size = Vector2(84, 84)
-	pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	body.add_child(pic)
-	pic.size = Vector2(84, 84)
-	var spot := G.fishing_spot(spot_id)
-	body.add_child(G.Visuals.parchment_subcard(Vector2(4, 96), Vector2(392, 134)))
-	_label(body, String(spot.get("name", "钓点")), Vector2(16, 104), 368, G.FS_MD)
-	_info = _label(body, "", Vector2(16, 140), 368, G.FS_SM)
-	_label(body, String(spot.get("king_hint","") if G.fishing_king_available(spot_id) else spot.get("environment_hint","抛竿后，等浮标进入绿色区域再收竿。")), Vector2(16, 174), 368, G.FS_SM)
-	var gauge_frame := G.InsetBand.new()
-	gauge_frame.set_surface(Color("1e3536"), Color("b89456"))
-	gauge_frame.position = Vector2(16, 238)
-	gauge_frame.size = Vector2(368, 38)
-	gauge_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	body.add_child(gauge_frame)
-	var gauge := ColorRect.new()
-	gauge.color = Color("2b4849")
-	gauge.position = Vector2(20, 242)
-	gauge.size = Vector2(360, 30)
-	gauge.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	body.add_child(gauge)
+	var background := TextureRect.new()
+	background.texture = load("res://assets/ui/experience_20261026/fishing_scene.png")
+	background.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	background.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	background.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	background.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(background)
+	var shade := ColorRect.new()
+	shade.color = Color(0,.04,.08,.20)
+	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(shade)
+	_page = View.column(12)
+	add_child(_page)
+	var top := HBoxContainer.new()
+	_page.add_child(top)
+	var title := View.column(4)
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	top.add_child(title)
+	title.add_child(View.text("水边垂钓","title",View.GOLD))
+	title.add_child(View.text(String(G.fishing_spot(id).get("name","钓点")),"object"))
+	var back := View.button("返回")
+	back.custom_minimum_size.x = 80
+	back.pressed.connect(close)
+	top.add_child(back)
+	_water = FishingWater.new()
+	_water.snow=String(G.fishing_spot(id).get("map",""))=="frost_post"
+	if _water.snow:background.modulate=Color(.80,.91,1.0)
+	_water.custom_minimum_size.y = 70
+	_water.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_water.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_page.add_child(_water)
+	var frame := View.frame(14)
+	frame.add_theme_stylebox_override("panel",View.surface(Color("102b32",.94),View.GOLD,14))
+	_page.add_child(frame)
+	var body := View.column(10)
+	frame.add_child(body)
+	var row := HBoxContainer.new()
+	body.add_child(row)
+	_result_icon = View.picture(null,56)
+	_result_icon.hide()
+	row.add_child(_result_icon)
+	_info = View.text("","caption",View.JADE)
+	row.add_child(_info)
+	var spot := G.fishing_spot(id)
+	_stage_label=View.text("准备抛竿 · "+String(spot.get("fish_name","水中游鱼")),"object",View.GOLD)
+	body.add_child(_stage_label)
+	_gauge = Control.new()
+	_gauge.custom_minimum_size.y = 32
+	body.add_child(_gauge)
+	var track := ColorRect.new()
+	track.color = Color("332d25")
+	track.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	track.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_gauge.add_child(track)
 	_band = ColorRect.new()
-	_band.color = Color("74a85c")
-	_band.size = Vector2(86.4, 30)
-	_band.position = Vector2(136.8, 0)
+	_band.color = Color("70ad7d")
 	_band.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	gauge.add_child(_band)
+	_gauge.add_child(_band)
 	_needle = ColorRect.new()
-	_needle.color = Color("fff0ba")
-	_needle.size = Vector2(6, 38)
-	_needle.position = Vector2(0, -4)
+	_needle.color = View.GOLD
 	_needle.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	gauge.add_child(_needle)
-	_message = _label(body, "每处每游戏日三竿。市集歇脚可推进一日，离开会放弃当前一竿。", Vector2(12, 282), 376, G.FS_SM)
-	var action := _button(body, "抛 竿", Vector2(12, 340), 184, _act)
-	_action_label = action.get_child(0) as Label
-	_button(body, "鲜鱼制粮 · 1 换 1", Vector2(206, 340), 184, _cook)
-	_button(body, "返 回", Vector2(140, 402), 120, close)
+	_gauge.add_child(_needle)
+	_gauge.resized.connect(_update_gauge)
+	_message = View.text(String(spot.get("king_hint","") if G.fishing_king_available(id) else spot.get("environment_hint","抛竿后，在绿色区间收竿。")),"body")
+	_message.custom_minimum_size.y = 54
+	body.add_child(_message)
+	var actions := GridContainer.new()
+	_action_grid=actions
+	actions.columns=2
+	actions.add_theme_constant_override("h_separation",10)
+	actions.add_theme_constant_override("v_separation",8)
+	body.add_child(actions)
+	_action_button = View.button("抛竿",true)
+	_action_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_action_button.pressed.connect(_act)
+	actions.add_child(_action_button)
+	var cook := View.button("鲜鱼制粮 1换1")
+	cook.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	cook.pressed.connect(_cook)
+	actions.add_child(cook)
+	var rules := View.text("每日三竿 · 返回放弃本竿","tag",View.MUTED)
+	rules.tooltip_text="每处每游戏日三竿，市集歇脚可推进一日；离开会放弃当前一竿。"
+	body.add_child(rules)
 	_refresh_info()
-	G.fit_mobile_page.call_deferred(self)
+	get_viewport().size_changed.connect(layout)
+	preload("res://src/ui/UiSafeArea.gd").watch(self,layout)
+	layout()
 
+func layout() -> void:
+	var safe := G.ui_safe_rect(self)
+	var width := minf(620,safe.size.x-28)
+	_page.position = Vector2(safe.get_center().x-width*.5,safe.position.y+14)
+	_page.size = Vector2(width,safe.size.y-28)
+	_action_grid.columns=1 if width<350 else 2
+	_page.add_theme_constant_override("separation",8 if width<350 else 12)
+	_water.custom_minimum_size.y=56 if width<350 else 70
 
-func _label(parent: Control, value: String, at: Vector2, width: float, fs: int) -> Label:
-	var lab := G.text_label(value, fs, Color("493724"))
-	lab.position = at
-	lab.custom_minimum_size = Vector2(width, 0)
-	lab.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	parent.add_child(lab)
-	return lab
-
-
-func _button(parent: Control, value: String, at: Vector2, width: int, action: Callable) -> Control:
-	var btn := G.gold_button(value, width, 44, G.FS_SM)
-	btn.position = at
-	btn.gui_input.connect(func(e: InputEvent):
-		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
-			HapticFeedback.light()
-			action.call())
-	parent.add_child(btn)
-	return btn
-
+func _update_gauge() -> void:
+	if _gauge==null or _band==null:return
+	var w := _gauge.size.x if _gauge.size.x>1 else 360.0
+	var radius := .08 if bool(_cast.get("king",false)) else .12
+	_band.position = Vector2((float(_cast.get("center",.5))-radius)*w,0)
+	_band.size = Vector2(radius*2*w,32)
+	_needle.size = Vector2(4,32)
+	_needle.position = Vector2(_phase*maxf(0,w-4),0)
 
 func _refresh_info() -> void:
 	var iid := String(G.fishing_spot(spot_id).get("item", ""))
@@ -108,8 +142,12 @@ func _refresh_info() -> void:
 func _process(_delta: float) -> void:
 	if not _casting:
 		return
-	_phase = 1.0 - absf(fmod(float(Time.get_ticks_msec() - _started) / 1000.0, 2.0) - 1.0)
-	_needle.position.x = _phase * 355.0
+	var elapsed := float(Time.get_ticks_msec()-_started)/1000.0
+	_stage_label.text="抛竿入水" if elapsed<.45 else "静候咬钩" if elapsed<1.1 else "看准时机 · 收竿"
+	_phase = 1.0 - absf(fmod(elapsed, 2.0) - 1.0)
+	_update_gauge()
+	_water.casting = _casting
+	_water.queue_redraw()
 
 
 func _act() -> void:
@@ -124,11 +162,13 @@ func _act() -> void:
 		_started = Time.get_ticks_msec()
 		_phase = 0.0
 		_casting = true
+		Audio.sfx("ui_confirm")
 		var radius:=.08 if bool(_cast.get("king",false)) else .12
-		_band.size.x=radius*720.0
-		_band.position.x = (float(_cast.get("center", 0.5)) - radius) * 360.0
-		_action_label.text = "收 竿"
-		_message.text = "看准绿色区域。重启后在同一钓点可接回未完成的一竿。"
+		_update_gauge()
+		_water.casting = true
+		_result_icon.hide()
+		_action_button.text = "收 竿"
+		_message.text = "浮标进入绿色区间时收竿。" if not bool(res.get("resumed",false)) else "接回未完成的一竿，不再消耗次数。看准绿色区间收竿。"
 		_refresh_info()
 		return
 	var radius:=.08 if bool(_cast.get("king",false)) else .12
@@ -138,8 +178,14 @@ func _act() -> void:
 		_message.text = "结算未保存，请再收竿一次。"
 		return
 	_casting = false
+	_water.casting = false
+	_water.queue_redraw()
+	_result_icon.texture = G.res_tex(G.item_icon(String(result.get("item","")))) if hit else null
+	_result_icon.visible = hit
+	if hit:Audio.sfx("reward")
 	_cast = {}
-	_action_label.text = "再抛一竿"
+	_action_button.text = "再抛一竿"
+	_stage_label.text="本竿收获" if hit else "鱼儿脱钩"
 	_message.text = "钓得 %s ×1，已入背包。" % G.item_name(String(result.get("item", ""))) if hit else "鱼挣脱了。下一竿再留意浮标位置。"
 	if bool(result.get("king",false)):_message.text="认出鱼王 · %s ×1，图志留下水情记录。"%G.item_name(String(result.item))
 	_refresh_info()
@@ -160,7 +206,12 @@ func close() -> void:
 		return
 	_closing = true
 	if _casting:
-		G.fishing_finish(String(_cast.get("token", "")), false)
+		var result := G.fishing_finish(String(_cast.get("token", "")), false)
+		if not bool(result.get("ok",false)):
+			_closing = false
+			_message.text = "放弃本竿未能保存，请稍后重试。"
+			return
+		_casting = false
 	closed.emit()
 	queue_free()
 
@@ -171,3 +222,28 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
 		close()
+
+class FishingWater extends Control:
+	var casting := false
+	var snow := false
+	var clock := 0.0
+	func _process(delta: float) -> void:
+		clock+=delta
+		queue_redraw()
+	func _draw() -> void:
+		if snow:
+			for i in 16:
+				var x := fmod(i*67.0+sin(clock+i)*10,maxf(1,size.x))
+				var y := fmod(i*31.0+clock*12,maxf(1,size.y))
+				draw_circle(Vector2(x,y),1.2,Color(1,1,1,.45))
+		var center := size*Vector2(.57,.58)+Vector2(0,sin(clock*2)*2)
+		for i in 3:
+			var radius := 12+fmod(clock*8+i*14,42)
+			draw_set_transform(center,0,Vector2(1,.35))
+			draw_arc(Vector2.ZERO,radius,0,TAU,40,Color(.68,.86,.82,.32*(1-radius/60)),1,true)
+		draw_set_transform(Vector2.ZERO)
+		if casting:
+			draw_line(Vector2(size.x*.12,size.y*.95),center,Color("c2c4a1",.65),1,true)
+			draw_circle(center,4,Color("d7a64e"))
+			draw_line(center-Vector2(0,13),center+Vector2(0,4),Color("fff0c4"),2,true)
+			draw_line(center-Vector2(0,11),center-Vector2(0,4),Color("ba4d3f"),3,true)

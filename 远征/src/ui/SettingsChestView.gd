@@ -77,7 +77,9 @@ func _ready() -> void:
 	shell.layout()
 ## 标题栏、页签、滚动区对齐参考稿底图（480 宽美术居中；上段贴安全区顶）
 func _skin_layout(safe:Rect2) -> void:
-	var view:=get_viewport_rect().size
+	var factor:=minf(1.0,safe.size.x/480.0)
+	var view:=get_viewport_rect().size/factor
+	safe=Rect2(safe.position/factor,safe.size/factor)
 	var ax:=roundf((view.x-480.0)*.5)
 	backdrop.safe=safe
 	Page.place(backdrop,Vector2.ZERO,view)
@@ -91,6 +93,9 @@ func _skin_layout(safe:Rect2) -> void:
 	# 滚动区：面板上沿以下到栏杆柱头以上（柱头在底图下段第 27 行）
 	var top:=safe.position.y+184
 	Page.place(shell.scroll,Vector2(ax+20,top),Vector2(440,maxf(40,backdrop.bottom_y(view.y)+22-top)))
+	for control in [backdrop,back,help,shell.tabs,shell.scroll]:
+		control.scale=Vector2.ONE*factor
+		control.position*=factor
 func _select(index:int) -> void:
 	for i in _pages.size():
 		_pages[i].visible=i==index

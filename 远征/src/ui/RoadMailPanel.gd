@@ -15,13 +15,13 @@ func open_board() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	_archive_index = -1
 	_build()
+	get_viewport().size_changed.connect(_build)
 
 func _build() -> void:
 	for child in get_children():
 		remove_child(child)
 		child.queue_free()
-	var viewport_size := get_viewport_rect().size
-	_offset = Vector2((viewport_size.x - 480.0) * 0.5, (viewport_size.y - 800.0) * 0.5)
+	_offset = Vector2.ZERO
 	G.veil(self, 0.76, true)
 	var paper := G.parchment_box(432, 620, 18.0)
 	paper.position = Vector2(24, 90) + _offset
@@ -36,6 +36,7 @@ func _build() -> void:
 	else:
 		_archive_index = -1
 		_build_board(state, archive.size())
+	G.center_fixed_page.call_deferred(self)
 
 func _build_board(state: Dictionary, archive_count: int) -> void:
 	var day := int(G.economy_state().get("day", 1))

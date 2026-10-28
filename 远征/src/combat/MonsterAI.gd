@@ -73,10 +73,5 @@ static func _auto_condition(sim: BattleSim, unit: Combatant, sid: String,
 			return sim.has_boss() or enemies.size() >= 3
 		"ck_dunying":
 			return float(unit.hp) / float(maxi(unit.get_max_hp(), 1)) < 0.40
-	# 通用：大招满能量即放；中费技能留 20 缓冲；小技能能量够就放
-	var cost := int(skill.get("cost", 0))
-	if cost >= 55:
-		return unit.energy >= cost
-	if cost >= 30:
-		return unit.energy >= cost + 20
-	return true
+	# can_cast 已校验真实能耗；额外预留能量会让中费技能被低费技能永久抢占。
+	return unit.energy >= int(skill.get("cost", 0))

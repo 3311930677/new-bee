@@ -32,6 +32,8 @@ const SKIP_FILES := [
 	"CampChestView.gd", # Camp visual subtree; GameHome owns ESC and overlays.
 	"LoadingRelic.gd", # mouse_filter=IGNORE 的加载进度绘图组件，无可关闭浮层
 	"UIReadability.gd", "UIFeedback.gd", # Text policy and non-interactive effect components.
+	"DeviceLayoutInfo.gd", "ItemDescriptions.gd", "ReadingSkin.gd", "ShowcaseUI.gd", "TouchScroll.gd", # Embedded helpers, not standalone pages.
+	"ExchangePanel.gd", # Inherits HonorMarketPanel input handling; dynamic affordance coverage remains below.
 	"HapticFeedback.gd", "RareGearCeremony.gd", # Haptic helper and ceremony popup
 	"Main.gd",        # 无 UI
 	"LoadScreen.gd",  # 过渡页：加载中途不该能返回（返回了等于卡在半路）

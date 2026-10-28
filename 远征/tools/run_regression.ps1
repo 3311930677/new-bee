@@ -34,7 +34,7 @@ param(
   [string]$List = "",
   [int]$QuitAfter = 6000,
   [int]$TimeoutSec = 240,
-    [int]$Expected = 77,
+    [int]$Expected = 78,
   [string]$LogDir = "",
   [switch]$AllowAnyVersion
 )
@@ -106,6 +106,7 @@ if ($verOut -notmatch "4\.7\.") {
 $cases = @(
 	@{ N = "VerifyAssets";      K = "scene";  T = "ASSETS_OK" },
 	@{ N = "VerifyBattleScene"; K = "scene";  T = "BATTLE_SCENE_OK" },
+	@{ N = "VerifyPlayJourney"; K = "scene"; T = "PLAY_JOURNEY_OK" },
 	@{ N = "VerifySave";        K = "scene";  T = "SAVE_OK" },
 	@{ N = "VerifyUiLayout";    K = "scene";  T = "UI_LAYOUT_OK" },
 	@{ N = "VerifyVisualRefresh";K = "scene";  T = "VISUAL_REFRESH_OK" },

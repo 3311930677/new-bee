@@ -1,5 +1,7 @@
 extends Control
 signal closed
+signal destination_selected(id: String)
+var _point_map: Control = null
 const UI:=preload("res://src/ui/TravelChestUI.gd")
 const Page:=preload("res://src/ui/ChestPageUI.gd")
 const Fix:=preload("res://src/ui/ReviewFixUI.gd")
@@ -11,8 +13,7 @@ static var _visual_cache:Dictionary={}
 static func warm() -> void:
 	if _visual_cache.is_empty():
 		_visual_cache=JSON.parse_string(FileAccess.get_file_as_string("res://assets/ui/next_review_20261009/map_layout.json"))
-	for row in TableCache.main_world_config().get("regions",[]):
-		TableCache.main_world_map(String(row.id))
+	TableCache.main_world_config()
 	for m in ["town","maple","stele","cavern","salt","port","marsh","sluice","sand","frost","mine","pass"]:
 		Flow.texture(m)
 const Journey:=preload("res://src/world/JourneyService.gd")
@@ -22,6 +23,7 @@ var _graph:Control
 var _positions:Dictionary={}
 var _nodes:Dictionary={}
 var _rows:Array=[]
+var _map_definitions:Dictionary={}
 var _routes:Array=[]
 var _reachable:Dictionary={}
 var _reasons:Dictionary={}
@@ -35,22 +37,32 @@ var _zoom:=.5
 var _zoom_button:Button
 var _quest_button:Button
 var _travel_button:Button
+var _details_button:Button
 var _bounds:=Rect2()
+var _quest_badges:Dictionary={}
 var _press:=Vector2.ZERO
 var _moved:=false
 var _hint:Label
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	_shell=Flow.Shell.new("地区行路图",196)
+	_shell=Flow.Shell.new("地区行路图",260)
 	_shell.closed=func():closed.emit()
 	add_child(_shell)
+	_details_button=preload("res://src/ui/ShowcaseUI.gd").button("地理详图与玩法地点",true)
+	_details_button.name="OpenWorldPoints"
+	_details_button.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	_details_button.pressed.connect(func():open_points(_selected))
+	_shell.footer.add_child(_details_button)
 	_map=Control.new()
 	_map.mouse_filter=Control.MOUSE_FILTER_STOP
 	_map.clip_contents=true
 	_shell.stage.add_child(_map)
 	_graph=_MapGraph.new()
 	_map.add_child(_graph)
-	_rows=TableCache.main_world_config().get("regions",[])
+	var config:=TableCache.main_world_config()
+	_rows=config.get("regions",[])
+	# This view only reads map metadata; avoid copying every map's entity tree.
+	_map_definitions=config.get("maps",{})
 	if _visual_cache.is_empty():
 		_visual_cache=JSON.parse_string(FileAccess.get_file_as_string("res://assets/ui/next_review_20261009/map_layout.json"))
 	_visual=_visual_cache
@@ -66,17 +78,22 @@ func _ready() -> void:
 	_graph.map_ref=self
 	for row in _rows:
 		var id:=String(row.id)
-		for exit in TableCache.main_world_map(id).get("exits",[]):
+		for exit in _map_definitions.get(id,{}).get("exits",[]):
 			var to:=String(exit.get("to",""))
 			if not _positions.has(to):continue
-			_routes.append({"from":id,"to":to,"gate":exit})
 			var reason:=_gate(exit)
+			_routes.append({"from":id,"to":to,"gate":exit,"blocked":not reason.is_empty()})
 			if not reason.is_empty():_reasons[to]=reason
 	_reachable[_current]=true
 	for iteration in _rows.size():
+		var changed:=false
 		for route in _routes:
-			if _reachable.has(route.from) and _gate(route.gate).is_empty():_reachable[route.to]=true
+			if _reachable.has(route.from) and not _reachable.has(route.to) and not route.blocked:
+				_reachable[route.to]=true
+				changed=true
+		if not changed:break
 	var visited:Array=G.prog.get("main_world",{}).get("visited_maps",[])
+	_refresh_quest_badges()
 	for row in _rows:
 		var id:=String(row.id)
 		var node:=_MapNode.new()
@@ -92,7 +109,7 @@ func _ready() -> void:
 		node.quest_badges=_quest_badges_for(id)
 		node.condition=false
 		for route in _routes:
-			if route.to==id and _reachable.has(route.from) and not _gate(route.gate).is_empty():node.condition=true;break
+			if route.to==id and _reachable.has(route.from) and route.blocked:node.condition=true;break
 		node.mouse_filter=Control.MOUSE_FILTER_PASS
 		node.pressed.connect(func():if not _moved:select(id))
 		_graph.add_child(node)
@@ -118,24 +135,29 @@ func _ready() -> void:
 	select(_current,false)
 func _quest_badges_for(id:String) -> Array[String]:
 	var badges:Array[String]=[]
+	badges.assign(_quest_badges.get(id,[]))
+	return badges
+func _add_quest_badge(id:String,words:String) -> void:
+	if id.is_empty():return
+	if not _quest_badges.has(id):_quest_badges[id]=[]
+	if not _quest_badges[id].has(words):_quest_badges[id].append(words)
+func _refresh_quest_badges() -> void:
+	# Read each quest once, then distribute its marker to the region nodes.
+	_quest_badges.clear()
 	var story:Dictionary=G.story_current()
-	if not story.is_empty() and String(story.get("map",""))==id:
-		badges.append("主线")
+	if not story.is_empty():_add_quest_badge(String(story.get("map","")),"主线")
 	var tracked_side:String=String(G.side_tracked_id()) if G.has_method("side_tracked_id") else ""
 	if not tracked_side.is_empty():
 		var srow:Dictionary=G.side_quest_def(tracked_side) if G.has_method("side_quest_def") else {}
 		var smap:=String(srow.get("map",""))
-		if smap==id and not badges.has("支线"):
-			badges.append("支线")
+		_add_quest_badge(smap,"支线")
 	for row_v in TableCache.side_quests_config().get("quests",[]):
 		var row:Dictionary=row_v
 		var qid:=String(row.get("id",""))
 		var st:String=String(G.side_status_of(qid)) if G.has_method("side_status_of") else ""
 		if st in ["active","ready"]:
 			var target_map:=String(row.get("map","")) if st=="active" else String(row.get("turn_in_map",row.get("map","lorin_wilds")))
-			if target_map==id and not badges.has("支线"):
-				badges.append("支线")
-	return badges
+			_add_quest_badge(target_map,"支线")
 func _focus_quest_target() -> void:
 	var story:Dictionary=G.story_current()
 	var target_map:=String(story.get("map",""))
@@ -149,12 +171,7 @@ func _focus_quest_target() -> void:
 	else:
 		select(_current,true)
 func _gate(row:Dictionary) -> String:
-	if G.has_method("world_gate_open") and G.world_gate_open():return ""
-	var story:=String(row.get("requires_story",""))
-	if not story.is_empty() and not G.story_step_done(story):return String(row.get("locked_hint","先完成当前道路的主线"))
-	for flag in row.get("requires_flags",[]):
-		if not G.prog.get("flags",{}).get(String(flag),false):return String(row.get("locked_hint","先完成入口机关"))
-	return ""
+	return preload("res://src/world/WorldPoints.gd").gate_reason(row)
 func _show_legend() -> void:
 	var modal:=UI.Modal.new();modal.heading="行路图图例";modal.lines=["当前位置 · 可达 · 锁定 · 条件受限","旅人旗标记当前位置，金标「主」/蓝标「支」指引任务所在地。","已探索且无货运限制的地区，可直接点击「乘驿车前往」免费直达。","首次探索未知地区请沿相邻路牌步行前往。"]
 	modal.closed.connect(modal.queue_free);add_child(modal)
@@ -184,7 +201,7 @@ func select(id:String,animate:bool=true) -> void:
 	if not _positions.has(id):return
 	_selected=id
 	Page.clear(_shell.body)
-	var cfg:=TableCache.main_world_map(id)
+	var cfg:Dictionary=_map_definitions.get(id,{})
 	var row:Dictionary={}
 	for entry in _rows:
 		if String(entry.id)==id:row=entry;break
@@ -313,7 +330,7 @@ func _update_edges() -> void:
 			button=Flow.button("",func():select(target));button.set_meta("map_id",id);button.caption.add_theme_font_size_override("font_size",G.FS_XS);_edge_tags.add_child(button)
 		var point:Vector2=desired[id]
 		var arrow:="←" if point.x<24 else "→" if point.x>_map.size.x-24 else "↑" if point.y<24 else "↓"
-		button.caption.text=arrow+" "+String(TableCache.main_world_map(id).get("name",id))
+		button.caption.text=arrow+" "+String(_map_definitions.get(id,{}).get("name",id))
 		Page.place(button,(point-Vector2(48,16)).clamp(Vector2(8,48),_map.size-Vector2(104,48)),Vector2(96,44))
 
 class _MapNode extends Button:
@@ -407,3 +424,16 @@ class _MapGraph extends Control:
 			draw_line(p1,p2,Color("17141a",.65),6.0)
 			draw_line(p1,p2,UI.GOLD if active_edge else (Color("e3c588",.78) if open else Color("8a7060",.45)),3.0 if active_edge else 2.0)
 
+
+func open_points(id: String) -> void:
+	if is_instance_valid(_point_map):return
+	var panel := preload("res://src/ui/WorldPointMap.gd").new()
+	panel.map_id=id
+	_point_map=panel
+	add_child(panel)
+	panel.closed.connect(func():
+		panel.queue_free()
+		_point_map=null)
+	panel.destination_selected.connect(func(point_id: String):
+		destination_selected.emit(point_id)
+		closed.emit())

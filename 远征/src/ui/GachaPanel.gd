@@ -44,6 +44,8 @@ var _free_l: Label = null
 var _free_available := false
 # ---- 结果层 ----
 var _result: Control = null
+var _result_scroll: ScrollContainer
+var _result_content: Control
 var _cards_box: Control = null
 var _fx_layer: Control = null
 var _r_soul_l: Label = null
@@ -250,7 +252,7 @@ func _build() -> void:
 		if _is_activate(e): _do_free())
 	content.add_child(_free_btn)
 	content.add_child(Craft.label("◆ 本期奖池",Vector2(0,443),Vector2(200,28),G.FS_MD,Craft.GOLD))
-	var pets: Array = TableCache.pets()
+	var pets: Array = TableCache.pets().filter(func(p): return RARITY_ORDER.has(String(p.get("rarity", ""))))
 	for i in mini(pets.size(),8):
 		var card := _pool_card(pets[i] as Dictionary)
 		card.position = Vector2((i%4)*110,478+floori(float(i)/4)*76)
@@ -438,19 +440,32 @@ func _build_result() -> void:
 	_result.mouse_filter = Control.MOUSE_FILTER_STOP   # 盖住主面板的按钮
 	_result.visible = false
 	add_child(_result)
+	_result_scroll = preload("res://src/ui/TouchScroll.gd").new()
+	_result_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_result_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	_result.add_child(_result_scroll)
+	_result_content = Control.new()
+	_result_content.mouse_filter = Control.MOUSE_FILTER_PASS
+	_result_content.custom_minimum_size = Vector2(VIEW_W, 680)
+	_result_scroll.add_child(_result_content)
+	get_viewport().size_changed.connect(_layout_result)
+	preload("res://src/ui/UiSafeArea.gd").watch(self, _layout_result)
+	_layout_result()
 	var solid := ColorRect.new()
 	solid.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	solid.color = Color("211d2a")
 	solid.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_result.add_child(solid)
+	_result.move_child(solid, 0)
 
 	# 结果层底衬：整屏接管，底下不该透出任何东西。走统一浮层工厂（深棕+暗角+斜纹），
 	# 比原来单色 0.985 的大平底有纵深——顶部木匾、底部按钮各有一块暗角收边。
 	var rdim := G.veil(_result, G.VEIL_TAKEOVER_A)
+	_result.move_child(rdim, 1)
 
 	var title := G.banner_box("召唤结果", 260, 46)
 	title.position = Vector2(110, 30)
-	_result.add_child(title)
+	_result_content.add_child(title)
 
 	# 余额条：结果层在深底上，控件的浅色字需要一块暗底衬着才不发飘（§8 光效预算——
 	# 只有一块内嵌底，不做发光）。用非交互 Panel 承载，避免和遮罩抢点击。
@@ -463,7 +478,7 @@ func _build_result() -> void:
 	rsb.set_border_width_all(0)
 	rbal.add_theme_stylebox_override("panel", rsb)
 	rbal.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_result.add_child(rbal)
+	_result_content.add_child(rbal)
 	# 两个资源对称排布：中心线左右各占一半，图标+数字成组居中。
 	# 坐标一律相对 rbal（高 34），垂直居中 → (34-20)/2 = 7。
 	# 原来写 y=93/94（那是屏幕绝对坐标），被 rbal 的 34 高裁掉，余额条看着是空的。
@@ -489,12 +504,12 @@ func _build_result() -> void:
 	_sum_l.add_theme_font_override("font",G.font_reg)
 	_sum_l.position = Vector2(0, 400)
 	_sum_l.custom_minimum_size = Vector2(VIEW_W, 0)
-	_result.add_child(_sum_l)
+	_result_content.add_child(_sum_l)
 	_r_hint = G.gold_label("", G.FS_SM, false, Color("ff9a8a"), true)
 	_r_hint.position = Vector2(0, 426)
 	_r_hint.custom_minimum_size = Vector2(VIEW_W, 0)
 	_r_hint.modulate.a = 0.0
-	_result.add_child(_r_hint)
+	_result_content.add_child(_r_hint)
 
 	# 卡片区与特效层同坐标系：特效压在卡上方但不挡点击。
 	# 这两层是卡片定位的坐标基准，必须立即铺满（否则卡会按 (0,0) 尺寸的父级算位置）
@@ -506,18 +521,18 @@ func _build_result() -> void:
 	_ceremony.position = Vector2(100,120)
 	_ceremony.size = Vector2(280,280)
 	_ceremony.visible = false
-	_result.add_child(_ceremony)
+	_result_content.add_child(_ceremony)
 	_ceremony_label = G.serif_label("星阵唤灵",30,Color("efdab5"))
 	_ceremony_label.position = Vector2(0,405)
 	_ceremony_label.size = Vector2(VIEW_W,44)
 	_ceremony_label.visible = false
-	_result.add_child(_ceremony_label)
-	_result.add_child(_cards_box)
+	_result_content.add_child(_ceremony_label)
+	_result_content.add_child(_cards_box)
 	var _fx := Control.new()
 	_fx.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_fx.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_fx_layer = _fx
-	_result.add_child(_fx_layer)
+	_result_content.add_child(_fx_layer)
 
 	# 「全部翻开」：悬浮在摘要行上方居中，只在还有未翻卡时出现
 	_flip_all_btn = G.gold_button("全部翻开", 150, 44)
@@ -527,7 +542,7 @@ func _build_result() -> void:
 	_flip_all_btn.gui_input.connect(func(e: InputEvent):
 		if _is_activate(e):
 			_flip_all(_arriving))
-	_result.add_child(_flip_all_btn)
+	_result_content.add_child(_flip_all_btn)
 
 	# 底部操作行：主操作（再抽一次）+ 次操作（返回），同高同基线、左右对称留边 28。
 	# y=612 而非 540：卡片/摘要/翻牌按钮占满 400..500，按钮贴太近会挤成一坨，
@@ -542,7 +557,7 @@ func _build_result() -> void:
 	_again_btn.gui_input.connect(func(e: InputEvent):
 		if _is_activate(e):
 			if _can_repeat(): _again())
-	_result.add_child(_again_btn)
+	_result_content.add_child(_again_btn)
 
 	# 返回是次操作：走描边款，避免和主操作抢视觉（§7 一层只有一个核心操作）
 	# 结果层是整屏暗底（VEIL_TAKEOVER_A）：这里必须传浅色字，否则返回键的字会被暗底吃掉
@@ -552,11 +567,21 @@ func _build_result() -> void:
 	back_btn.gui_input.connect(func(e: InputEvent):
 		if _is_activate(e):
 			_close())
-	_result.add_child(back_btn)
+	_result_content.add_child(back_btn)
 
 
 ## 展示一批结果：单抽一张大卡居中，十连 5×2 网格；全部背面朝上、back 缓动入场
+func _layout_result() -> void:
+	if _result_scroll == null: return
+	var safe := G.ui_safe_rect(self)
+	_result_scroll.position = safe.position
+	_result_scroll.size = safe.size
+	# 短屏滚动展示完整结果，底部操作仍保留 48px 触控高度。
+	_result_content.custom_minimum_size.y = maxf(680, safe.size.y)
+
+
 func _show_results(mode: String, results: Array) -> void:
+	_layout_result()
 	_reveal_epoch += 1
 	_revealing = false
 	if _presentation != null and _presentation.is_valid(): _presentation.kill()
@@ -880,47 +905,49 @@ func _update_result_ui() -> void:
 
 # ================= 行为逻辑 =================
 
-func _do_single() -> void:
-	var cost := int(_pool().get("cost_soul_single", 80))
-	if int(G.wallet.get("soul", 0)) < cost:
-		_warn("魂石不足：单抽需 %d，现有 %d" % [cost, int(G.wallet.get("soul", 0))])
+func _draw_saved(mode: String) -> void:
+	var outcome := G.saved_mutation(func():
+		# 缺失奖池直接拒绝整单，保底不能拿低品质宠物冒充。
+		for rarity in RARITY_ORDER:
+			if float(_rates().get(rarity, 0.0)) > 0.0 and _pool_of(rarity).is_empty():
+				return {"ok": false, "err": "奖池配置不完整，暂不能召唤"}
+		if _pool_of("purple").is_empty() or _pool_of("gold").is_empty():
+			return {"ok": false, "err": "保底奖池配置不完整，暂不能召唤"}
+		var bonus := 0
+		if mode == "free":
+			if not G.gacha_free_available(): return {"ok": false, "err": "今日免费已领取 · 明日再来"}
+			bonus = G.gacha_mark_free()
+		elif mode == "ten" and G.item_count("ticket_ten") > 0:
+			if not G.consume_item("ticket_ten", 1): return {"ok": false, "err": "十连券不可用"}
+		else:
+			var cost := int(_pool().get("cost_soul_ten" if mode == "ten" else "cost_soul_single", 720 if mode == "ten" else 80))
+			if cost < 0 or int(G.wallet.get("soul", 0)) < cost:
+				return {"ok": false, "err": "魂石不足：本次需 %d 魂石" % cost}
+			G.wallet["soul"] = int(G.wallet.get("soul", 0)) - cost
+		var results := _roll_batch(10 if mode == "ten" else 1)
+		if results.any(func(r): return String(r.get("id", "")).is_empty()):
+			return {"ok": false, "err": "奖池配置不完整，召唤已取消"}
+		_settle(results)
+		return {"ok": true, "results": results, "bonus": bonus})
+	if not bool(outcome.get("ok", false)):
+		_warn(String(outcome.get("err", "召唤未保存")))
 		return
-	G.wallet["soul"] = int(G.wallet.get("soul", 0)) - cost
-	var results := _roll_batch(1)
-	_settle(results)
-	G.save_game()
-	_show_results("single", results)
+	_show_results("ten" if mode == "ten" else "single", outcome.results)
+	if int(outcome.get("bonus", 0)) > 0:
+		_warn("连续七日 · 魂晶 +%d" % int(outcome.bonus), Color("ffe9b8"))
+	_refresh_top()
+
+
+func _do_single() -> void:
+	_draw_saved("single")
 
 
 func _do_ten() -> void:
-	var cost := int(_pool().get("cost_soul_ten", 720))
-	# 有券优先用券（consume_item 内部会落盘）
-	if G.item_count("ticket_ten") >= 1 and G.consume_item("ticket_ten", 1):
-		pass
-	elif int(G.wallet.get("soul", 0)) >= cost:
-		G.wallet["soul"] = int(G.wallet.get("soul", 0)) - cost
-	else:
-		_warn("魂石不足且无十连券：十连需 %d 魂石或 1 张券" % cost)
-		return
-	var results := _roll_batch(10)
-	_settle(results)
-	G.save_game()
-	_show_results("ten", results)
+	_draw_saved("ten")
 
 
-## 每日免费一召：不扣魂石、正常累积保底；连抽满 7 天由 G.gacha_mark_free 发奖
 func _do_free() -> void:
-	if not G.gacha_free_available():
-		_warn("今日免费已领取 · 明日再来")
-		return
-	var bonus := G.gacha_mark_free()
-	var results := _roll_batch(1)
-	_settle(results)
-	G.save_game()
-	_show_results("single", results)
-	if bonus > 0:
-		_warn("连续七日 · 魂晶 +%d" % bonus, Color("ffe9b8"))
-	_refresh_top()
+	_draw_saved("free")
 
 
 ## 再抽一次：按上次模式重放
@@ -991,8 +1018,6 @@ func _rand_id(rng: RandomNumberGenerator, pool: Array) -> String:
 ## randf 按权重选稀有度 → 再在该稀有度宠物里随机
 func _pick_pet(rng: RandomNumberGenerator, rarity: String) -> String:
 	var pool := _pool_of(rarity)
-	if pool.is_empty():
-		pool = TableCache.pets()   # 该档位没宠物时兜底全池，别让抽卡空转
 	return _rand_id(rng, pool)
 
 

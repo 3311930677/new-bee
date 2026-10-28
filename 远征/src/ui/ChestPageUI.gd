@@ -38,10 +38,21 @@ static func clear(node: Node) -> void:
 		child.queue_free()
 
 static func scroll() -> ScrollContainer:
-	var s := ScrollContainer.new()
+	var s := preload("res://src/ui/TouchScroll.gd").new()
+	s.follow_keyboard_focus = true
 	s.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	s.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
+	s.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
 	s.follow_focus = true
+	var rail:=StyleBoxFlat.new()
+	rail.bg_color=Color(UI.NIGHT,.65)
+	rail.content_margin_left=3; rail.content_margin_right=3
+	var grip:=StyleBoxFlat.new()
+	grip.bg_color=UI.BRONZE
+	grip.content_margin_left=3; grip.content_margin_right=3
+	grip.set_corner_radius_all(2)
+	var bar:=s.get_v_scroll_bar()
+	bar.add_theme_stylebox_override("scroll",rail)
+	for state in ["grabber","grabber_highlight","grabber_pressed"]:bar.add_theme_stylebox_override(state,grip)
 	return s
 
 static func line(words: String, role: String = "body", color: Color = UI.PAPER) -> Label:
@@ -271,7 +282,12 @@ class GrowthRow extends Button:
 		image.position = Vector2(12, 6)
 
 		# 标题与副标题位置：保证宽度充分，杜绝折行或文字遮挡
-		var text_w := maxf(120.0, size.x - 180.0)
+		var badge_w := minf(96.0,maxf(66,size.x*.22))
+		var text_w := maxf(40.0, size.x-64.0-(badge_w+36.0 if not next_action.text.is_empty() else 24.0))
+		heading.clip_text=true
+		heading.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
+		status.clip_text=true
+		status.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
 		heading.position = Vector2(64, 2)
 		heading.size = Vector2(text_w, 26)
 		if get_meta("recommendation", false):
@@ -280,7 +296,6 @@ class GrowthRow extends Button:
 		status.size = Vector2(text_w, 22)
 
 		# 右侧徽章按钮
-		var badge_w := 96.0
 		var badge_h := 26.0
 		var badge_x := size.x - badge_w - 28.0
 		var badge_y := (size.y - badge_h) * 0.5

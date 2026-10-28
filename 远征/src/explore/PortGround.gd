@@ -1,5 +1,6 @@
 class_name PortGround
 extends Node2D
+const Art := preload("res://src/world/AssetCompletion.gd")
 
 var _event := ""
 var _rope := ""
@@ -70,28 +71,15 @@ func _draw_base() -> void:
 
 
 func _draw_state() -> void:
-	# 潮位牌和船缆，不占交互层。
+	# These are feedback props only; the port economy continues to own the choice.
 	if not _rope.is_empty():
-		var rope_color := Color("e0c395") if _rope == "replace" else Color("a08662")
-		draw_line(Vector2(570, 701), Vector2(624, 730), rope_color, 4)
-		draw_circle(Vector2(624, 730), 7, Color("70503a"))
-		draw_arc(Vector2(624, 730), 9, 0, TAU, 20, rope_color, 3)
-
-	# 回港供货选择有地图回应：盐渠来船 / 堤道粮袋，不压中轴通行带。
+		Art.prop(self,"rope_post",Vector2(624,738),48,
+			Color.WHITE if _rope=="replace" else Color("b2a58f"))
 	if _event == "dredge":
-		var hull := PackedVector2Array([Vector2(158, 438), Vector2(274, 438), Vector2(259, 504), Vector2(174, 504)])
-		draw_colored_polygon(hull, Color("684833"))
-		draw_polyline(PackedVector2Array([Vector2(158, 438), Vector2(274, 438), Vector2(259, 504), Vector2(174, 504), Vector2(158, 438)]), Color("342b27"), 3)
-		for x in [182, 217, 247]:
-			draw_rect(Rect2(x, 451, 25, 29), Color("d7cdb1"))
-			draw_line(Vector2(x + 3, 465), Vector2(x + 22, 465), Color("9a8b70"), 2)
-		draw_line(Vector2(268, 450), Vector2(329, 479), Color("b59c70"), 2)
+		Art.centered(self,"boat",Vector2(216,472),124)
+		Art.prop(self,"supply_sack",Vector2(205,474),22)
+		Art.prop(self,"supply_sack",Vector2(233,474),22)
 	elif _event == "embank":
-		draw_rect(Rect2(704, 460, 134, 57), Color("7b634c"))
-		for x in range(725, 835, 23):
-			draw_line(Vector2(x, 464), Vector2(x, 513), Color("b1936d"), 2)
-		for x in [735, 775, 807]:
-			draw_rect(Rect2(x, 469, 24, 30), Color("c4a46a"))
-			draw_line(Vector2(x + 3, 480), Vector2(x + 21, 480), Color("745638"), 3)
-		draw_line(Vector2(704, 458), Vector2(704, 526), Color("463526"), 6)
-		draw_line(Vector2(841, 458), Vector2(841, 526), Color("463526"), 6)
+		Art.centered(self,"bridge_planks",Vector2(772,494),134)
+		for x in [735,775,807]:
+			Art.prop(self,"supply_sack",Vector2(x,505),34)

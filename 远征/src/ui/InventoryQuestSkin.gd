@@ -21,7 +21,7 @@ static func theme() -> Theme:
 	for role in Base.FONT_SIZES:
 		var variant := "Chest_" + String(role)
 		_theme.set_font("font", variant, G.font_serif if role in ["title", "section", "object"] else G.font_bold if role in ["number", "tag"] else G.font_reg)
-		_theme.set_font_size("font_size", variant, 28 if role == "title" else 24 if role == "object" else 22 if role in ["section","body"] else 20 if role in ["secondary", "primary"] else 18)
+		_theme.set_font_size("font_size", variant, 28 if role == "title" else 24 if role == "object" else 22 if role == "section" else 18 if role == "body" else 20 if role in ["secondary", "primary","number"] else 16)
 	_theme.default_font = G.font_reg
 	return _theme
 
@@ -117,12 +117,15 @@ class PixelButton extends Button:
 	var skin := "secondary"
 	func _init(words := "", family := "secondary") -> void:
 		text = words
+		clip_text = true
 		skin = family
 		theme = Art.theme()
 		custom_minimum_size = Vector2(44,44)
 		focus_mode = Control.FOCUS_ALL
 		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		caption = Art.label(words, "secondary")
+		caption.clip_text = true
+		caption.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 		caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		caption.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		add_child(caption)

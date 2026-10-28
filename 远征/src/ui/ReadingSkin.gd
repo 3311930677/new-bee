@@ -33,7 +33,7 @@ static func button(words: String, primary := false) -> Button:
 	button.text = words
 	button.custom_minimum_size = Vector2(56,60)
 	button.add_theme_font_override("font",G.font_serif)
-	button.add_theme_font_size_override("font_size",22)
+	button.add_theme_font_size_override("font_size",G.FS_SECTION)
 	for pair in [["normal",Color.WHITE],["hover",Color(1.12,1.1,1.04)],["pressed",Color(.8,.84,.8)],["disabled",Color(.5,.5,.5)],["focus",Color("f8d58b")]]:
 		var box := StyleBoxTexture.new()
 		box.texture = load("res://assets/ui/introduction_20261015/button_red.png" if primary else "res://assets/ui/introduction_20261015/button_dark.png")

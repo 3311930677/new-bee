@@ -86,6 +86,8 @@ func _ready() -> void:
 	_check(_scan_autoload_cycle().is_empty(),"no compile-time autoload cycle")
 	Audio.stop_bgm()
 	print("AUDIO_OK checks=%d fails=%d" % [_checks,_fails])
+	Audio.set_suspended(true)
+	await get_tree().create_timer(.2).timeout
 	await get_tree().process_frame
 	get_tree().quit(0 if _fails==0 else 1)
 

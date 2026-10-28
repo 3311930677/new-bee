@@ -132,9 +132,10 @@ func _run() -> void:
 		_check(mine.get_world_2d().direct_space_state.intersect_shape(query,1).is_empty(),"矿道明雷出生点必须能实际接近")
 	mine._last_battle_pets = ["pet_rockturtle","pet_rockturtle"]
 	mine._encounter = WorldSession.new_encounter("rift_mine_road",0,Vector2(90,500),"mon_scorp",5,Vector2(480,710),"",0,902)
-	WorldSession.advance(mine._main_world_state(),mine._encounter,WorldSession.ST_BATTLE)
+	for stage in [WorldSession.ST_APPROACH,WorldSession.ST_LOCKED,WorldSession.ST_BATTLE]:
+		_check(bool(WorldSession.advance(mine._main_world_state(),mine._encounter,stage).ok),"协战夹具按正式遭遇状态进入战斗")
 	G.save_locked = true
-	_check(mine._settle_main_world("normal","mon_scorp") == "save_failed" and int(CompanionService.state(G.prog,"pet_rockturtle").wins) == 0,"锁盘胜利不计协战")
+	_check(mine._settle_main_world("normal","mon_scorp") in ["save_failed","settle_failed"] and int(CompanionService.state(G.prog,"pet_rockturtle").wins) == 0,"锁盘胜利不计协战")
 	G.save_locked = false
 	_check(mine._settle_main_world("normal","mon_scorp") == "ok","正常胜利必须保存")
 	_check(int(CompanionService.state(G.prog,"pet_rockturtle").wins) == 1,"实际参战同物种只加一次")

@@ -17,6 +17,9 @@ var _strip:ScrollContainer
 var _pedestal:TextureRect
 var _frame:Control
 var _shadow:Control
+var _pet_anchor := Vector2(96,185)
+var _anchor_canvas := Vector2(192,192)
+var _preferred_tray_height := 368.0
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	shell=Flow.Shell.new("灵宠图鉴" if system=="codex" else "技能研习",448 if system=="codex" else 376)
@@ -35,7 +38,12 @@ func _ready() -> void:
 	shell.stage.add_child(_pool)
 	_frame=Showcase.new();shell.stage.add_child(_frame)
 	_shadow=ContactShadow.new();shell.stage.add_child(_shadow)
-	_pedestal=Page.picture(Fix.texture("pedestal"),Vector2(200,48));shell.stage.add_child(_pedestal)
+	var pedestal_source := Fix.texture("pedestal")
+	var pedestal_crop := AtlasTexture.new()
+	pedestal_crop.atlas = pedestal_source
+	pedestal_crop.region = Rect2(preload("res://src/ui/NameTagLayout.gd").opaque_bounds(pedestal_source))
+	pedestal_crop.filter_clip = true
+	_pedestal=Page.picture(pedestal_crop,Vector2(200,48));shell.stage.add_child(_pedestal)
 	shell.stage.move_child(_shadow,shell.stage.get_child_count()-1)
 	_prev=Flow.button("◀",func():HapticFeedback.light();host._deck.go(host._deck.current-1))
 	_next=Flow.button("▶",func():HapticFeedback.light();host._deck.go(host._deck.current+1))
@@ -74,9 +82,12 @@ func _codex() -> void:
 	if host._pets.is_empty():return
 	var p:Dictionary=host._pets[host._deck.current]
 	var pid:=String(p.id)
+	var anchor_data: Dictionary = TableCache._load("res://data/pet_showcase_anchors.json")
+	var anchor: Array = anchor_data.get("anchors",{}).get(pid,[96,185])
+	_pet_anchor = Vector2(anchor[0],anchor[1])
 	var owned:=G.owns_pet(pid)
 	var extra_h := maxf(0.0, get_viewport_rect().size.y - 800.0)
-	shell.tray_height = (456.0 + minf(24.0, roundf(extra_h * 0.1))) if owned else 368.0
+	_preferred_tray_height = (456.0 + minf(24.0, roundf(extra_h * 0.1))) if owned else 368.0
 	var state:=G.pet_stat(pid) if owned else {}
 	var tex:Texture2D=Fix.pet(pid+"_hd")
 	_art=Page.picture(tex,Vector2(184,184))
@@ -203,6 +214,9 @@ func _skill() -> void:
 	_go.subtitle.text="远征币不足 · 差%d"%(cost-int(G.wallet.get("expedition",0))) if int(G.wallet.get("expedition",0))<cost else "远征币 %d"%cost
 	for i in shell.tabs.get_child_count():shell.tabs.get_child(i).selected=i==host._deck.current;shell.tabs.get_child(i).queue_redraw()
 func layout(safe_override:Rect2=Rect2()) -> void:
+	if system=="codex":
+		var safe := safe_override if safe_override.has_area() else G.ui_safe_rect(self)
+		shell.tray_height = minf(_preferred_tray_height,maxf(180,safe.size.y-280))
 	shell.layout(safe_override)
 	if system=="codex" and not _go.visible:
 		shell.footer.visible=false;shell.scroll.size.y=shell.safe.end.y-shell.scroll.position.y-16
@@ -220,20 +234,17 @@ func layout(safe_override:Rect2=Rect2()) -> void:
 		var dimensions:=Vector2(shell.stage.size.x-144,maxf(1,shell.stage.size.y-64))
 		if system=="codex" and (_art as TextureRect).texture!=null:
 			var source:=(_art as TextureRect).texture.get_size()
-			var max_h:=minf(184.0,maxf(96.0,ped_base_y-86.0))
+			var max_h:=minf(184.0,maxf(24.0,ped_base_y-80.0))
 			var factor:=minf(3.0,minf(dimensions.x/source.x,max_h/source.y))
 			if factor>=1.0:factor=maxf(1.0,floorf(factor))
 			dimensions=source*factor
-		var feet:=1.0
-		if system=="codex":
-			var texture:Texture2D=(_art as TextureRect).texture
-			var used:=preload("res://src/ui/NameTagLayout.gd").opaque_bounds(texture)
-			feet=float(used.end.y)/texture.get_height()
-		var art_y:=maxf(48.0,ped_base_y-24.0-dimensions.y*feet)
-		Page.place(_art,Vector2((shell.stage.size.x-dimensions.x)*.5,art_y) if system=="codex" else Vector2(72,44),dimensions)
+		var foot := Vector2(shell.stage.size.x*.5,ped_base_y-30)
+		var art_at := foot-_pet_anchor/_anchor_canvas*dimensions
+		_art.custom_minimum_size = Vector2.ZERO
+		Page.place(_art,art_at.round() if system=="codex" else Vector2(72,44),dimensions)
 		var shadow_width:=64.0
 		if system=="codex":shadow_width=preload("res://src/ui/NameTagLayout.gd").opaque_bounds((_art as TextureRect).texture).size.x*dimensions.x/(_art as TextureRect).texture.get_width()*.8
-		Page.place(_shadow,Vector2((shell.stage.size.x-shadow_width)*.5,ped_base_y-29),Vector2(shadow_width,10));_shadow.visible=system=="codex";_shadow.queue_redraw()
+		Page.place(_shadow,Vector2(foot.x-shadow_width*.5,foot.y-5),Vector2(shadow_width,10));_shadow.visible=system=="codex";_shadow.queue_redraw()
 		shell.stage.move_child(_index,shell.stage.get_child_count()-1)
 		shell.stage.move_child(_prev,shell.stage.get_child_count()-1)
 		shell.stage.move_child(_next,shell.stage.get_child_count()-1)

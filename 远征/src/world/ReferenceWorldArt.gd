@@ -45,8 +45,8 @@ static func prepare()->void:
 		for suffix in ["_floor","_floor_top","_floor_bottom"]:texture(id+suffix)
 static func add_prop(world:Node2D,id:String,at:Vector2,group:="props",solid:=false)->Node2D:
 	var prop:=Scenery.new()
-	prop.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
-	prop.position=at;prop.art=texture(id);prop.display_size=dimensions(group,id)
+	prop.texture_filter=preload("res://src/world/WorldPresentation.gd").sampling()
+	prop.position=at;prop.art=texture(id);prop.display_size=dimensions(group,id)*preload("res://src/world/WorldPresentation.gd").SCENERY_ENLARGEMENT
 	prop.solid=solid;prop.canopy=group=="foliage" and id not in ["bush","fern"]
 	prop.name="Reference_"+id
 	world.add_child(prop)

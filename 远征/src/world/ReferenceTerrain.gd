@@ -7,7 +7,7 @@ var _white:Texture2D
 func setup(id:String,size:Vector2)->void:
 	map_id=id
 	extent=size
-	texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+	texture_filter=preload("res://src/world/WorldPresentation.gd").sampling()
 	var shader:=Shader.new()
 	shader.code="""shader_type canvas_item;
 uniform sampler2D grass_tex : source_color, filter_nearest, repeat_enable;
@@ -29,6 +29,7 @@ void fragment() {
 	base = mix(base, water, m.g);
 	COLOR = vec4(base.rgb,1.0);
 }"""
+	if not preload("res://src/world/WorldPresentation.gd").nearest():shader.code=shader.code.replace("source_color, filter_nearest","source_color, filter_linear")
 	var mat:=ShaderMaterial.new()
 	mat.shader=shader
 	mat.set_shader_parameter("grass_tex",load(ROOT+"material_grass.png"))

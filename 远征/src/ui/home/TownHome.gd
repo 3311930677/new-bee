@@ -12,7 +12,7 @@ const UI := preload("res://src/ui/TravelChestUI.gd")
 const DIR := "res://assets/ui/home/"
 const KIT := "res://assets/ui/kit_20261013/"
 const UiKitLib := preload("res://src/ui/UiKit.gd")
-const PIX := "res://assets/ui/pixel_icons/"
+const PIX := "res://assets/completion_20261024/ready/home/home_"
 const FONT_SERIF := preload("res://assets/fonts/NotoSerifCJKsc-SemiBold.otf")
 const FONT_BOLD := preload("res://assets/fonts/NotoSansSC-Bold.otf")
 const FONT_ART := preload("res://assets/fonts/MaShanZheng-Regular.ttf")
@@ -124,20 +124,35 @@ func _ready() -> void:
 
 # ---------- 布局 ----------
 func layout(safe_override: Rect2 = Rect2()) -> void:
-	var vh := get_viewport_rect().size.y
 	var safe := safe_override if safe_override.has_area() else _safe_rect()
+	var width_factor:=minf(1.0,safe.size.x/VIEW_W)
+	var origin_x:=safe.position.x+(safe.size.x-VIEW_W*width_factor)*.5
+	var vh := get_viewport_rect().size.y/width_factor
+	safe=Rect2(safe.position/width_factor,safe.size/width_factor)
+	content.scale=Vector2.ONE*width_factor
+	content.position=Vector2(origin_x,0)
 	# 高屏多出的高度按均衡比例分配给上方夜空与下方石阶广场，保持月下山城整体居中舒展
 	# （取偶数，保持 2 倍像素对齐；超出 home_bg_tall 顶部的部分由 SKY 色块补齐）
 	var extra: float = max(vh - 800.0, 0.0)
-	var core_y: float = CORE_Y_800 + floor(extra * 0.45 / 2.0) * 2.0
-	_scene.position = Vector2(0, core_y)
+	var scene_scale:=1.0+minf(extra/1100.0,.24)
+	var core_y: float = CORE_Y_800 + floor(extra * 0.16 / 2.0) * 2.0
+	var scene_x: float = VIEW_W*(1.0-scene_scale)*.5
+	_scene.scale=Vector2.ONE*scene_scale*width_factor
+	_scene.position = Vector2(origin_x,0)+Vector2(scene_x, core_y)*width_factor
 	for id in _plaques:
 		var b: Button = _plaques[id]
-		b.position = (Vector2(b.get_meta("center")) + Vector2(0, core_y) - b.size * 0.5).round()
+		b.position = (Vector2(b.get_meta("center"))*scene_scale + Vector2(scene_x, core_y) - b.size * 0.5).round()
 	if _hero_hit != null:
-		_hero_hit.position = Vector2(HERO_FEET.x - 44.0, HERO_FEET.y + core_y - 96.0)
+		_hero_hit.position = Vector2(HERO_FEET.x*scene_scale+scene_x-44.0, HERO_FEET.y*scene_scale + core_y - 96.0)
 	_top.position = Vector2(0, safe.position.y)
 	_hud_bottom.position = Vector2(0, safe.end.y - 200.0)
+	_quest.position.y=16.0-minf(extra*.26,78)
+	var short_lift:=maxf(0,800.0-vh)
+	_hero_sprite.position=Vector2(HERO_FEET.x,HERO_FEET.y-61.0*HERO_SCALE-short_lift)
+	_hero_shadow.position=HERO_FEET-Vector2(0,short_lift)
+	_hero_plate.position=Vector2(HERO_FEET.x-58,HERO_FEET.y+4-short_lift)
+	_hero_hit.position.y-=short_lift*scene_scale
+	_toast.scale=Vector2.ONE*width_factor
 	_toast.position = Vector2(0, vh * 0.42)
 	refresh()
 

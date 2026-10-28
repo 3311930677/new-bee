@@ -12,7 +12,7 @@ func find_button(root:Node,label:String)->Control:
 		if found!=null:return found
 	return null
 func click(control:Control)->void:
-	if control is Button:
+	if control is BaseButton:
 		control.pressed.emit()
 		return
 	var e:=InputEventMouseButton.new()

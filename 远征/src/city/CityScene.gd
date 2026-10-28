@@ -1378,10 +1378,19 @@ func _open_return_job(nd: Dictionary, reply := "", selected_qid := "") -> void:
 	if row.is_empty(): return
 	var qid := String(row.id)
 	var status := G.side_status_of(qid)
-	var content := _panel_base("归路托付",432,496)
-	var task_title := G.text_label(String(row.title),G.FS_MD,Color("815326"))
-	task_title.position=Vector2(8,10)
-	content.add_child(task_title)
+	var root := _panel_base("归路托付",432,440 if status==QuestService.SIDE_DONE else 520)
+	var View := preload("res://src/ui/ShowcaseUI.gd")
+	var content := View.column(12)
+	content.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	root.add_child(content)
+	content.add_child(View.text(String(row.title),"title",Color("815326")))
+	var progress := QuestService.side_get(G.act1_state(),qid)
+	var caption := "未接取" if status.is_empty() else ("已完成 · 变化已留在归路上" if status == QuestService.SIDE_DONE else "进度 %d/%d%s" % [int(progress.get("progress",0)),QuestService.side_need(row)," · 可交付" if status==QuestService.SIDE_READY else ""])
+	content.add_child(View.text(caption,"caption",Color("386c61")))
+	var scroll := View.scroll()
+	content.add_child(scroll)
+	var reading := View.column(14)
+	scroll.add_child(reading)
 	var words := reply
 	if words.is_empty():
 		words = String(row.get("accept_dialogue", "")) if status.is_empty() else G.side_npc_line(String(nd.id))
@@ -1390,29 +1399,16 @@ func _open_return_job(nd: Dictionary, reply := "", selected_qid := "") -> void:
 		elif status == QuestService.SIDE_DONE:
 			var choice := String(QuestService.side_get(G.act1_state(),qid).get("choice", ""))
 			words = String((row.get("choices", {}) as Dictionary).get(choice, {}).get("dialogue",row.completion_dialogue))
-	var intro := G.text_label(words,G.FS_SM,Color("493724"))
-	intro.position=Vector2(8,52)
-	intro.custom_minimum_size=Vector2(384,116)
-	intro.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
-	content.add_child(intro)
-	var progress := QuestService.side_get(G.act1_state(),qid)
-	var caption := "未接取" if status.is_empty() else ("已完成 · 变化已留在归路上" if status == QuestService.SIDE_DONE \
-		else "进度 %d/%d%s" % [int(progress.get("progress",0)),QuestService.side_need(row)," · 可交付" if status==QuestService.SIDE_READY else ""])
-	var state_label := G.text_label(caption,G.FS_SM,Color("3c6070"))
-	state_label.position=Vector2(8,178)
-	content.add_child(state_label)
-	var goal := G.text_label(String(row.objective_text),G.FS_SM,Color("493724"))
-	goal.position=Vector2(8,210)
-	goal.custom_minimum_size=Vector2(384,64)
-	goal.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
-	content.add_child(goal)
-	var rewards := G.text_label("报酬："+" · ".join(G._side_reward_toasts(row.reward)),G.FS_SM,Color("815326"))
-	rewards.position=Vector2(8,282)
-	rewards.custom_minimum_size=Vector2(384,62)
-	rewards.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
-	content.add_child(rewards)
+	reading.add_child(View.text(words,"body",Color("493724")))
+	reading.add_child(View.text("托付目标","section",Color("815326")))
+	reading.add_child(View.text(String(row.objective_text),"object",Color("493724")))
+	content.add_child(View.text("已获报酬" if status==QuestService.SIDE_DONE else "完成报酬","section",Color("815326")))
+	content.add_child(View.text(" · ".join(G._side_reward_toasts(row.reward)),"object",Color("386c61")))
+	var actions := HBoxContainer.new()
+	actions.add_theme_constant_override("separation",8)
+	content.add_child(actions)
 	if status.is_empty():
-		_return_job_button(content,"接下这份托付",Vector2(108,350),184,func():
+		_return_job_button(actions,"接下这份托付",Vector2(108,350),184,func():
 			var result:=G.side_accept(qid)
 			if not bool(result.get("ok",false)):
 				_toast("托付未能保存，请稍后再试")
@@ -1422,30 +1418,31 @@ func _open_return_job(nd: Dictionary, reply := "", selected_qid := "") -> void:
 	elif status == QuestService.SIDE_READY:
 		var choices: Dictionary=row.get("choices",{})
 		if choices.is_empty():
-			_return_job_button(content,"交付 · 领取报酬",Vector2(108,350),184,func(): _finish_return_job(nd,qid,""))
+			_return_job_button(actions,"交付 · 领取报酬",Vector2(108,350),184,func(): _finish_return_job(nd,qid,""))
 		else:
 			var index:=0
 			for key in choices:
 				var choice:=String(key)
-				_return_job_button(content,String(choices[key].title),Vector2(8+index*196,350),188,
+				_return_job_button(actions,String(choices[key].title),Vector2(8+index*196,350),188,
 					func(): _finish_return_job(nd,qid,choice))
 				index+=1
 	elif status == QuestService.SIDE_ACTIVE:
-		_return_job_button(content,"追踪这份托付",Vector2(108,350),184,func():
+		_return_job_button(actions,"追踪这份托付",Vector2(108,350),184,func():
 			if not G.side_track(qid):
 				_toast("追踪未能保存，请稍后再试")
 				return
 			_close_panel()
 			_open_return_job(nd,"已追踪这份托付；地图任务栏和罗盘会指向下一处目标。",qid))
-	_return_job_button(content,"原有事务",Vector2(8,414),120,func():
+	var nav := HBoxContainer.new()
+	nav.add_theme_constant_override("separation",8)
+	content.add_child(nav)
+	_return_job_button(nav,"原有事务",Vector2.ZERO,120,func():
 		_close_panel()
 		_open_dialog(nd,false,false))
-	_return_job_button(content,"其他托付",Vector2(140,414),120,func():
+	_return_job_button(nav,"其他托付",Vector2.ZERO,120,func():
 		_close_panel()
 		_open_npc_jobs(nd))
-	_panel_back(content,414,120)
-	# Keep the back button beside the original-service entry.
-	(content.get_child(content.get_child_count()-1) as Control).position.x=260
+	_return_job_button(nav,"返回",Vector2.ZERO,120,_close_panel)
 	if _embedded_map!=null:
 		_embedded_map.call("_refresh_quest_entities")
 		_embedded_map.call("_refresh_hud")
@@ -1486,8 +1483,11 @@ func _open_npc_jobs(nd:Dictionary)->void:
 
 
 func _return_job_button(content: Control, title: String, at: Vector2, width: float, action: Callable) -> void:
-	var button:=G.gold_button(title,width,44,G.FS_SM)
+	var button:=G.gold_button(title,width,48,G.FS_SM)
 	button.position=at
+	if content is Container:
+		button.custom_minimum_size=Vector2(0,48)
+		button.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	button.gui_input.connect(func(event: InputEvent):
 		if event is InputEventMouseButton and event.pressed and event.button_index==MOUSE_BUTTON_LEFT:
 			action.call())
@@ -2615,7 +2615,7 @@ class _Building extends StaticBody2D:
 	# 这批楼是同一台等距相机、同一比例出的：内容高都落在 161~181px，宽随楼本身宽窄变化
 	# （城门宽、祭坛窄）。所以绝不能"按各楼占地宽度缩放"——那会让窄楼被拉扁、宽楼被撑肿，
 	# 一排楼大小失控。统一倍数才能让它们看起来在同一片城里。
-	const ART_SCALE := 0.75
+	const ART_SCALE := 0.75 * preload("res://src/world/WorldPresentation.gd").BUILDING_ENLARGEMENT
 	const ART_W := 256.0 * ART_SCALE    # 192
 	const ART_H := 192.0 * ART_SCALE    # 144
 	const ART_BOTTOM := 4.0             # 楼脚相对节点原点的下探量（压住落地影）
@@ -2625,7 +2625,7 @@ class _Building extends StaticBody2D:
 		if bool(get_meta("reference_complete",false)):
 			var id:=String(d.get("id",""));var dimensions:=ReferenceWorldArt.building_size(id)
 			_w=dimensions.x;_h=dimensions.y;art=ReferenceWorldArt.building_texture(id)
-			texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+			texture_filter=preload("res://src/world/WorldPresentation.gd").sampling()
 			collision_layer=2;collision_mask=0
 			if id!="gate":
 				var shape:=CollisionShape2D.new();var rect:=RectangleShape2D.new()
@@ -2689,7 +2689,7 @@ class _Building extends StaticBody2D:
 	## 楼体可见轮廓的最高点（负值，越小越高）。木牌、功能图标、悬停指示都挂在这条线之上，
 	## 免得贴图比程序绘制高时，装饰还按老高度摆就被楼顶顶穿。
 	func _art_top() -> float:
-		if bool(get_meta("reference_complete",false)):return -_h
+		if bool(get_meta("reference_complete",false)):return -_h*preload("res://src/world/WorldPresentation.gd").BUILDING_ENLARGEMENT
 		if art != null:
 			if _reference_art:
 				return ART_BOTTOM - ART_W * float(art.get_height()) / float(art.get_width())
@@ -2701,6 +2701,7 @@ class _Building extends StaticBody2D:
 			draw_set_transform(Vector2(0,-4),0,Vector2(1,.17));draw_circle(Vector2.ZERO,_w*.43,Color("35402a",.13));draw_set_transform(Vector2.ZERO)
 			var tex:=art if built() else ReferenceWorldArt.texture("construction")
 			var size:=Vector2(_w,_h) if built() else Vector2(_w,minf(145,_h))
+			size*=preload("res://src/world/WorldPresentation.gd").BUILDING_ENLARGEMENT
 			draw_texture_rect(tex,Rect2(Vector2(-size.x*.5,-size.y),size),false)
 			if hover:
 				var text:=String(data.get("name",""))+(" · 待建" if not built() else "")
@@ -3152,6 +3153,9 @@ class _CityNPC extends Node2D:
 				sp.position = Vector2(0, -canvas_height * display_scale * 0.5)
 				if not bool(frames.get_meta("fine_art",false)):sp.material = FrostCityArt.cutout_material()
 				sp.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+			sp.scale*=preload("res://src/world/WorldPresentation.gd").NPC_ENLARGEMENT
+			sp.position*=preload("res://src/world/WorldPresentation.gd").NPC_ENLARGEMENT
+			set_meta("display_height",float(frames.get_meta("visible_world_height",76.0))*preload("res://src/world/WorldPresentation.gd").NPC_ENLARGEMENT)
 			# 错开起始帧：一排 NPC 齐步呼吸，会像同一张贴图复制了八份
 			sp.frame = int(absf(position.x + position.y)) % maxi(1,frames.get_frame_count(&"idle"))
 			sp.play()
@@ -3171,6 +3175,7 @@ class _CityNPC extends Node2D:
 		if embedded and frames != null:
 			# 成人名牌保留原安全高度，避免与0.66倍主角名牌相交后被隐藏。
 			_plate_top = -78.0 if String(data.get("id", "")) == "npc_child" else -108.0
+		_plate_top*=preload("res://src/world/WorldPresentation.gd").NPC_ENLARGEMENT
 		_plate_w = clampf(G.font_bold.get_string_size(txt,
 			HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS).x + 16.0, 56.0, 112.0) \
 			if embedded else maxf(64.0, G.font_bold.get_string_size(txt, HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS).x + 20)
@@ -3252,8 +3257,8 @@ class _CityNPC extends Node2D:
 			return
 		if art != null:
 			# 半身立绘立在地上：底缘压深渐隐，裁切不生硬（比色块小人像样得多）
-			var h := 104.0
-			var w := 104.0
+			var h := 104.0*preload("res://src/world/WorldPresentation.gd").NPC_ENLARGEMENT
+			var w := h
 			var top := -h + bob * 0.5
 			draw_texture_rect(art, Rect2(-w * 0.5, top, w, h), false)
 			for i in 8:

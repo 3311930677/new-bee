@@ -63,7 +63,7 @@ func _run() -> void:
 		_check(building._reference_art and building.art != null and building.built(), "建筑素材实际接入 " + String(building.data.id))
 		var shape := building.get_child(0) as CollisionShape2D
 		_check((shape.shape as RectangleShape2D).size.is_equal_approx(Vector2(3.3 * 48 * 0.8, 2.7 * 48 * 0.3)), "原基座碰撞保持")
-		_check(is_equal_approx(building._art_top() + 192.0 * building.art.get_height() / building.art.get_width(), 4.0), "建筑基座固定")
+		_check(is_equal_approx(building._art_top() + building.ART_W * building.art.get_height() / building.art.get_width(), building.ART_BOTTOM), "建筑缩放后基座固定")
 	var ground: Node = null
 	for child in map.get_children():
 		if child.get_script() == load("res://src/explore/ThirdActGround.gd"): ground = child

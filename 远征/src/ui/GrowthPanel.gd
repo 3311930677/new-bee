@@ -109,6 +109,7 @@ func _build() -> void:
 			box.add_child(_entry_row({"equip":"装备","talent":"天赋","skill":"技能书","pet":"宠物","mount":"坐骑","title":"称号"}[id], "fury" if id == "talent" else id, id))
 	_refresh()
 	get_viewport().size_changed.connect(_layout)
+	preload("res://src/ui/UiSafeArea.gd").watch(self,_layout)
 	_layout()
 
 func _layout(safe_override: Rect2 = Rect2()) -> void:
@@ -116,22 +117,27 @@ func _layout(safe_override: Rect2 = Rect2()) -> void:
 	var x := safe.position.x
 	var y := safe.position.y
 	var extra := maxf(0.0, safe.size.y - 800.0)
-	var tray_h := roundf(clampf(472.0 + extra * 0.62, 472.0, 640.0))
+	var tray_h := minf(roundf(clampf(472.0 + extra * 0.62, 472.0, 640.0)),safe.size.y-272.0)
 	var top := safe.end.y - tray_h
 	Page.place(_stage,Vector2.ZERO,get_viewport_rect().size)
 	Page.place(_back,Vector2(x+12,y+8),Vector2(44,44))
-	Page.place(_heading,Vector2(x+68,y+10),Vector2(300,40))
+	_heading.clip_text=true
+	Page.place(_heading,Vector2(x+68,y+10),Vector2(safe.size.x-80,40))
 	var stage_h := maxf(220.0, top - (y + 56.0))
-	var hero_extent := clampf(stage_h - 68.0, 160.0, 212.0)
+	var stats_w := minf(172,safe.size.x*.36)
+	var hero_extent := minf(clampf(stage_h-68.0,140.0,212.0),safe.size.x-stats_w-40.0)
 	var block_h := hero_extent + 36.0
 	var stage_start := roundf(y + 56.0 + maxf(4.0, (stage_h - block_h) * 0.5))
-	Page.place(_pool,Vector2(x+196,stage_start+hero_extent-34.0),Vector2(256,60))
-	Page.place(_hero,Vector2(x+224+(200.0-hero_extent)*0.5,stage_start),Vector2(hero_extent,hero_extent))
-	Page.place(_hero_name,Vector2(x+196,stage_start+hero_extent+2.0),Vector2(256,28))
+	var hero_center := x+stats_w+24+(safe.size.x-stats_w-40)*.5
+	_pool.custom_minimum_size=Vector2.ZERO
+	Page.place(_pool,Vector2(hero_center-hero_extent*.6,stage_start+hero_extent-30),Vector2(hero_extent*1.2,48))
+	Page.place(_hero,Vector2(hero_center-hero_extent*.5,stage_start),Vector2(hero_extent,hero_extent))
+	_hero_name.clip_text=true
+	Page.place(_hero_name,Vector2(x+stats_w+24,stage_start+hero_extent+2),Vector2(safe.size.x-stats_w-40,28))
 	var sc: Control = _page.get_node_or_null("StatsCard")
 	var sc_y := roundf(stage_start + (block_h - 176.0) * 0.5)
 	if sc != null:
-		Page.place(sc, Vector2(x+16, sc_y), Vector2(172, 176))
+		Page.place(sc, Vector2(x+16, sc_y), Vector2(stats_w,176))
 	else:
 		Page.place(_stats,Vector2(x+16,sc_y),Vector2(172,176))
 	Page.place(_tray,Vector2(x,top),Vector2(safe.size.x,tray_h))

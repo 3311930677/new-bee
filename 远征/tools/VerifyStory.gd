@@ -713,7 +713,7 @@ func _run() -> void:
 		if mount_frames != null:
 			for direction in MountVisual.DIRECTIONS:
 				_check(mount_frames.has_animation(StringName(direction))
-					and mount_frames.get_frame_count(StringName(direction)) == 3,
+					and mount_frames.get_frame_count(StringName(direction)) == int(MountVisual.ACTIONS.walk[1]),
 					"%s 缺 %s 骑姿" % [role_id, direction])
 	G.prog["mounts"] = {"owned": {}, "active": ""}
 	G.prog["story"] = {"step": "s06", "done": ["s01", "s02", "s03", "s04", "s05"], "goals": {}}

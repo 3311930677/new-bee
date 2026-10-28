@@ -24,6 +24,7 @@ func _ready() -> void:
 	_build()
 	_refresh()
 	get_viewport().size_changed.connect(_resize_frame)
+	preload("res://src/ui/UiSafeArea.gd").watch(self,_resize_frame)
 	_content.minimum_size_changed.connect(_resize_frame.call_deferred)
 	_resize_frame()
 	_world_button.grab_focus.call_deferred()
@@ -57,9 +58,12 @@ func _build() -> void:
 	top_back.pressed.connect(_close_self)
 	head_row.add_child(top_back)
 	var mark := G.ui_icon("quest", Vector2(28,28), Art.GOLD)
+	mark.name="HeaderIcon"
 	mark.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	head_row.add_child(mark)
 	var title := Art.label("任务卷宗", "title", Art.GOLD)
+	title.name="JournalTitle"
+	title.clip_text=true
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	head_row.add_child(title)
 	_world_button = Art.action("世界事务")
@@ -94,9 +98,26 @@ func _build() -> void:
 func _resize_frame(safe_override := Rect2()) -> void:
 	if _panel == null: return
 	var safe: Rect2 = safe_override if safe_override.has_area() else G.ui_safe_rect(self)
+	var compact:=safe.size.x<400
+	_panel.find_child("HeaderIcon",true,false).visible=not compact
+	var title:=_panel.find_child("JournalTitle",true,false) as Label
+	title.add_theme_font_size_override("font_size",G.FS_SECTION if compact else G.FS_BIG)
+	_world_button.custom_minimum_size.x=68 if compact else 104
+	_world_button.caption.text="事务" if compact else "世界事务"
 	var height := safe.size.y - 24.0
 	_panel.position = safe.position + Vector2(16,roundf((safe.size.y-height)*.5))
 	_panel.size = Vector2(safe.size.x-32,height)
+	# Labels in side columns wrap, so long NPC titles cannot widen the journal.
+	for label in _panel.find_children("*","Label",true,false):
+		if label.text.begins_with("已接委托"):label.clip_text=true
+	var story_icon:=_panel.find_child("StoryIcon",true,false) as Control
+	if story_icon!=null:story_icon.visible=not compact
+	for card in _list.get_children():
+		if not card.has_meta("side_column"):continue
+		var side:Control=card.get_meta("side_column")
+		var target:Node=card.get_meta("card_body") if compact else card.get_meta("info_row")
+		if side.get_parent()!=target:side.reparent(target,false)
+		side.custom_minimum_size.x=0 if compact else float(card.get_meta("side_width"))
 
 func _section(words: String, icon: String) -> Control:
 	var panel := PanelContainer.new()
@@ -126,6 +147,7 @@ func _story_card(story: Dictionary) -> void:
 	row.add_theme_constant_override("separation", 12)
 	card.add_child(row)
 	var mark := G.ui_icon("quest", Vector2(44,44), Art.GOLD)
+	mark.name="StoryIcon"
 	mark.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	row.add_child(mark)
 	var info := VBoxContainer.new()
@@ -230,9 +252,12 @@ func _append_side_quests() -> void:
 		card.custom_minimum_size.y = 124
 		card.add_theme_stylebox_override("panel", Art.box("card", 12))
 		_list.add_child(card)
+		var body:=VBoxContainer.new()
+		body.add_theme_constant_override("separation",8)
+		card.add_child(body)
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override("separation", 10)
-		card.add_child(row)
+		body.add_child(row)
 		var mark := G.ui_icon("quest", Vector2(30, 30), Art.JADE if st == "ready" else Art.GOLD)
 		mark.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 		row.add_child(mark)
@@ -250,6 +275,10 @@ func _append_side_quests() -> void:
 		side.alignment = BoxContainer.ALIGNMENT_CENTER
 		side.add_theme_constant_override("separation", 6)
 		row.add_child(side)
+		card.set_meta("side_column",side)
+		card.set_meta("card_body",body)
+		card.set_meta("info_row",row)
+		card.set_meta("side_width",108)
 		var choices: Array = srow.get("choices", [])
 		var can_courier := st == "ready" and choices.is_empty()
 		var act_label := "信使交付" if can_courier else ("前往抉择" if st == "ready" else ("看地图" if sid == tracked_id else "追踪"))
@@ -302,9 +331,12 @@ func _row(qid: String) -> void:
 	card.custom_minimum_size.y = 132
 	card.add_theme_stylebox_override("panel",Art.box("card",12))
 	_list.add_child(card)
+	var body:=VBoxContainer.new()
+	body.add_theme_constant_override("separation",8)
+	card.add_child(body)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation",10)
-	card.add_child(row)
+	body.add_child(row)
 	var mark := G.ui_icon("swords" if String(d.get("kind","")) == "slay" else "quest",Vector2(32,32),Art.GOLD)
 	mark.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	row.add_child(mark)
@@ -317,20 +349,26 @@ func _row(qid: String) -> void:
 	var state := G.quest_state(qid)
 	info.add_child(_line(state,"tag",Art.JADE if state == "可交付" else Art.GOLD if state.begins_with("进行中") else Art.MUTED))
 	var reward_line := _line(" · ".join(G.reward_lines(d.get("reward",{}))),"tag",Art.GOLD)
-	reward_line.add_theme_font_size_override("font_size", 13)
+	reward_line.add_theme_font_size_override("font_size", G.FS_DENSE)
 	info.add_child(reward_line)
 	var side := VBoxContainer.new()
 	side.custom_minimum_size.x = 114
 	side.alignment = BoxContainer.ALIGNMENT_CENTER
 	side.add_theme_constant_override("separation",8)
 	row.add_child(side)
+	card.set_meta("side_column",side)
+	card.set_meta("card_body",body)
+	card.set_meta("info_row",row)
+	card.set_meta("side_width",114)
 	var npc := G.city_npc(String(d.get("npc","")))
 	var who := String(npc.get("name",""))
 	if not String(npc.get("title","")).is_empty(): who += " · " + String(npc.title)
 	var who_label := Art.label(who,"tag",Art.MUTED)
+	who_label.clip_text=true
+	who_label.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
 	who_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	who_label.custom_minimum_size.x = 114
-	who_label.add_theme_font_size_override("font_size", 13)
+	who_label.add_theme_font_size_override("font_size", G.FS_DENSE)
 	side.add_child(who_label)
 	var enabled := not G.quest_claimed(qid) and (not G.quest_active(qid) or G.quest_completed(qid))
 	var words := "已交付" if G.quest_claimed(qid) else "接取" if not G.quest_active(qid) else "交付" if G.quest_completed(qid) else "进行中"

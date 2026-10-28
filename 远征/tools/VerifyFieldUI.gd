@@ -63,7 +63,8 @@ func _ready() -> void:
 		G.wallet.expedition=999999999
 		home._open_activities()
 		var activities: Control = home._activities
-		_check(activities._events.is_empty(),"Default activity page must not invent active events")
+		var configured:Variant=JSON.parse_string(FileAccess.get_file_as_string(Activities.CONFIG))
+		_check(activities._events==Activities.valid_events(configured.get("events",[])),"Activity page must show exactly the configured activities")
 		home._close_overlay_with_escape()
 		await get_tree().process_frame
 		_check(home._activities==null and home._anim.visible,"Activity back must restore home")
@@ -75,7 +76,10 @@ func _ready() -> void:
 		var before_wallet := JSON.stringify(G.wallet)
 		var entry: Control = event_page._content.find_child("Event_test",true,false)
 		_check(entry!=null,"Configured event must appear in activity list")
-		if entry!=null: entry.gui_input.emit(_click())
+		if entry!=null:
+			entry.gui_input.emit(_click())
+			var release:=_click();release.pressed=false
+			entry.gui_input.emit(release)
 		_check(event_page._detail_id=="test","Activity card must open its own detail")
 		_check(event_page._back.get_global_rect().end.y<=height,"Activity return action must fit on phone")
 		event_page.go_back()
