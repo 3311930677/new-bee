@@ -1,0 +1,419 @@
+--------- beginning of main
+10-25 07:07:21.584  1207  1600 E SurfaceSyncGroup: Failed to receive transaction ready in 1000ms. Marking SurfaceSyncGroup(wmsSync-VRI[Taskbar]#27) as ready
+--------- beginning of system
+10-25 07:07:21.630   579  5617 W ActivityTaskManager: callingPackage for (uid=0, pid=16982) has no WPC
+10-25 07:07:21.631   579  5617 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_ORIENTATION_OVERRIDE
+10-25 07:07:21.631   579  5617 V GrammaticalInflectionUtils: AttributionSource: AttributionSource { uid = 10148, packageName = null, attributionTag = null, token = android.os.Binder@82325c2, deviceId = 0, next = null } does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+10-25 07:07:21.632   579  5617 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_RESIZEABLE_ACTIVITY_OVERRIDES
+10-25 07:07:21.632   579  5617 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_MIN_ASPECT_RATIO_OVERRIDE
+10-25 07:07:21.636   579  5617 I ActivityTaskManager: Add Task{72b136d #15 type=standard A=10148:org.yuanzheng.singleplayer} to hidden list because adding Task{2cfa73a #16 type=standard A=10148:org.yuanzheng.singleplayer}
+10-25 07:07:21.636   579  5617 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} with LAUNCH_SINGLE_INSTANCE_PER_TASK from uid 0 (BAL_ALLOW_ALLOWLISTED_UID) result code=0
+10-25 07:07:21.637   959  1058 W ShellStartingWindow: Get attribute fail, return default: File res/mipmap-hdpi-v4/icon_background.webp from drawable resource ID #0x7f0a0001: .xml extension required
+10-25 07:07:21.638   579   608 V GrammaticalInflectionUtils: AttributionSource: AttributionSource { uid = 10148, packageName = null, attributionTag = null, token = android.os.Binder@82325c2, deviceId = 0, next = null } does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+10-25 07:07:21.644   959  1058 D SplashScreenView: Build android.window.SplashScreenView{e6d6836 V.E...... ......ID 0,0-0,0}
+10-25 07:07:21.644   959  1058 D SplashScreenView: Icon: view: android.widget.ImageView{a1a0337 V.ED..... ......I. 0,0-0,0 #1020504 android:id/splashscreen_icon_view} drawable: com.android.wm.shell.startingsurface.SplashscreenIconDrawableFactory$ImmobileIconDrawable@d9850a4 size: 288
+10-25 07:07:21.644   959  1058 D SplashScreenView: Branding: view: android.view.View{5447e0d V.ED..... ......I. 0,0-0,0 #1020503 android:id/splashscreen_branding_view} drawable: android.graphics.drawable.BitmapDrawable@79fd1c2 size w: 300 h: 120
+10-25 07:07:21.648   382   382 D Zygote  : Forked child process 16985
+10-25 07:07:21.650   579   616 I ActivityManager: Start proc 16985:org.yuanzheng.singleplayer/u0a148 for next-top-activity {org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+10-25 07:07:21.659   381   437 I netd    : tetherGetStats() -> {[]} <0.42ms>
+10-25 07:07:21.661   579  1958 D CoreBackPreview: Window{9a7bfc7 u0 Splash Screen org.yuanzheng.singleplayer}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@f9fe392, mPriority=0, mIsAnimationCallback=false}
+10-25 07:07:21.663 16985 16985 I ng.singleplayer: Late-enabling -Xcheck:jni
+10-25 07:07:21.676 16985 16985 I ng.singleplayer: Using CollectorTypeCMC GC.
+10-25 07:07:21.677 16985 16985 W ng.singleplayer: Unexpected CPU variant for x86: x86_64.
+10-25 07:07:21.677 16985 16985 W ng.singleplayer: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, default
+10-25 07:07:21.698  2320  2327 I adbd    : jdwp connection from 16985
+10-25 07:07:21.705 16985 16985 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+10-25 07:07:21.718   579   606 V GameManagerService: setDefaultFrameRateOverride : 10148 , 60.0
+10-25 07:07:21.728 16985 16985 W ziparchive: Unable to open '/data/app/~~D1xBM7eF1nHasPg9cKS9IQ==/org.yuanzheng.singleplayer-jmd-HOHB44lV1Tm4UfuY0A==/base.dm': No such file or directory
+10-25 07:07:21.728 16985 16985 W ziparchive: Unable to open '/data/app/~~D1xBM7eF1nHasPg9cKS9IQ==/org.yuanzheng.singleplayer-jmd-HOHB44lV1Tm4UfuY0A==/base.dm': No such file or directory
+10-25 07:07:21.773 16985 16985 D nativeloader: Configuring clns-7 for other apk /data/app/~~D1xBM7eF1nHasPg9cKS9IQ==/org.yuanzheng.singleplayer-jmd-HOHB44lV1Tm4UfuY0A==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~D1xBM7eF1nHasPg9cKS9IQ==/org.yuanzheng.singleplayer-jmd-HOHB44lV1Tm4UfuY0A==/lib/x86_64:/data/app/~~D1xBM7eF1nHasPg9cKS9IQ==/org.yuanzheng.singleplayer-jmd-HOHB44lV1Tm4UfuY0A==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/org.yuanzheng.singleplayer
+10-25 07:07:21.785 16985 16985 V GraphicsEnvironment: Currently set values for:
+10-25 07:07:21.785 16985 16985 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+10-25 07:07:21.785 16985 16985 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+10-25 07:07:21.785 16985 16985 V GraphicsEnvironment: Global.Settings values are invalid: number of packages: 0, number of values: 0
+10-25 07:07:21.786 16985 16985 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+10-25 07:07:22.136   579   608 W ActivityTaskManager: Activity top resumed state loss timeout for ActivityRecord{ecc722d u0 com.android.launcher3/.uioverrides.QuickstepLauncher t7}
+10-25 07:07:22.136   579   608 W ActivityTaskManager: Activity pause timeout for ActivityRecord{ecc722d u0 com.android.launcher3/.uioverrides.QuickstepLauncher t7}
+10-25 07:07:22.139   579   903 I AppWidgetServiceImpl: Received broadcast: android.intent.action.PACKAGE_UNSTOPPED on user 0
+10-25 07:07:22.139   579   903 I AppWidgetServiceImpl: Updating package stopped masked state for uid 10148 package org.yuanzheng.singleplayer isStopped false
+10-25 07:07:22.148   959   989 V WindowManagerShell: onTransitionReady(transaction=2486786065991)
+10-25 07:07:22.149   959  1008 V WindowManagerShell: onTransitionReady (#28) android.os.BinderProxy@7b09cc9: {id=28 t=CHANGE f=0x0 trk=1 r=[0@Point(0, 0)] c=[{null m=CHANGE f=TRANSLUCENT|FLAG_IS_SYSTEM_WINDOW p=WCT{android.window.IWindowContainerToken$Stub$Proxy@5cb6b79} leash=Surface(name=WindowToken{2593084 type=2019 android.os.BinderProxy@eaf7293})/@0x39ef428 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 720, 1280) d=0},{null m=CHANGE f=TRANSLUCENT|FLAG_IS_SYSTEM_WINDOW p=WCT{android.window.IWindowContainerToken$Stub$Proxy@af1d0be} leash=Surface(name=WindowToken{9c13a1c type=2000 android.os.BinderProxy@b9e26ee})/@0x8025541 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 720, 1280) d=0},{WCT{android.window.IWindowContainerToken$Stub$Proxy@783f51f} m=OPEN f=MOVE_TO_TOP p=WCT{android.window.IWindowContainerToken$Stub$Proxy@cd9006c} leash=Surface(name=Task=16)/@0x3e4ae6 sb=Rect(0, 0 - 720, 1280) eb=Rect(0, 0 - 720, 1280) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@60e4635} m=TO_BACK f=SHOW_WALLPAPER p=WCT{android.window.IWindowContainerToken$Stub$Proxy@f763aca} leash=Surface(name=Task=1)/@0x93c2827 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 720, 1280) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@d7cc43b} m=CHANGE f=SHOW_WALLPAPER p=WCT{android.window.IWindowContainerToken$Stub$Proxy@28bb758} leash=Surface(name=DefaultTaskDisplayArea)/@0x8032ad4 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 720, 1280) d=0},{null m=TO_BACK f=IS_WALLPAPER p=WCT{android.window.IWindowContainerToken$Stub$Proxy@d6a10b1} leash=Surface(name=WallpaperWindowToken{a15a577 token=android.os.Binder@ae52b76})/@0x45e047d sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 720, 1280) d=0},{WCT{android.window.IWindowContainerToken$Stub$Proxy@1253996} m=CHANGE f=SHOW_WALLPAPER|IS_DISPLAY leash=Surface(name=WindowedMagnification:0:31)/@0x7142f72 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 720, 1280) d=0 snapshot=Surface(name=transition snapshot: Display{#0 state=ON size=720x1280 ROTATION_0})/@0xe391fc3}]}
+10-25 07:07:22.149   959  1008 V WindowManagerShell: Playing animation for (#28) android.os.BinderProxy@7b09cc9@1
+10-25 07:07:22.149   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.transition.DefaultMixedHandler@498eec9
+10-25 07:07:22.150   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.keyguard.KeyguardTransitionHandler@65519ce
+10-25 07:07:22.150   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.pip.PipTransition@36cf0ef
+10-25 07:07:22.150   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.activityembedding.ActivityEmbeddingController@ea597fc
+10-25 07:07:22.150   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.recents.RecentsTransitionHandler@9b8ae85
+10-25 07:07:22.150   959  1008 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+10-25 07:07:22.151   579   605 V WindowManager: Sent Transition (#28) createdAt=10-25 07:07:20.197 via request=TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = null, displayChange = DisplayChange { displayId = 0, startAbsBounds = Rect(0, 0 - 720, 1280), endAbsBounds = Rect(0, 0 - 720, 1280), startRotation = -1, endRotation = -1, physicalDisplayChanged = false }, flags = 0, debugId = 28 }
+10-25 07:07:22.151   579   605 V WindowManager:     startWCT=WindowContainerTransaction { changes = {} hops = [] errorCallbackToken=null taskFragmentOrganizer=null }
+10-25 07:07:22.151   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.splitscreen.StageCoordinator@8ad04da
+10-25 07:07:22.151   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.transition.RemoteTransitionHandler@3c1ad0b
+10-25 07:07:22.151   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.transition.DefaultTransitionHandler@86694a6
+10-25 07:07:22.151   959  1008 V WindowManagerShell: start default transition animation, info = {id=28 t=CHANGE f=0x0 trk=1 r=[0@Point(0, 0)] c=[{null m=CHANGE f=TRANSLUCENT|FLAG_IS_SYSTEM_WINDOW p=WCT{android.window.IWindowContainerToken$Stub$Proxy@5cb6b79} leash=Surface(name=WindowToken{2593084 type=2019 android.os.BinderProxy@eaf7293})/@0x39ef428 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 720, 1280) d=0},{null m=CHANGE f=TRANSLUCENT|FLAG_IS_SYSTEM_WINDOW p=WCT{android.window.IWindowContainerToken$Stub$Proxy@af1d0be} leash=Surface(name=WindowToken{9c13a1c type=2000 android.os.BinderProxy@b9e26ee})/@0x8025541 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 720, 1280) d=0},{WCT{android.window.IWindowContainerToken$Stub$Proxy@783f51f} m=OPEN f=MOVE_TO_TOP p=WCT{android.window.IWindowContainerToken$Stub$Proxy@cd9006c} leash=Surface(name=Task=16)/@0x3e4ae6 sb=Rect(0, 0 - 720, 1280) eb=Rect(0, 0 - 720, 1280) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@60e4635} m=TO_BACK f=SHOW_WALLPAPER p=WCT{android.window.IWindowContainerToken$Stub$Proxy@f763aca} leash=Surface(name=Task=1)/@0x93c2827 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 720, 1280) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@d7cc43b} m=CHANGE f=SHOW_WALLPAPER p=WCT{android.window.IWindowContainerToken$Stub$Proxy@28bb758} leash=Surface(name=DefaultTaskDisplayArea)/@0x8032ad4 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 720, 1280) d=0},{null m=TO_BACK f=IS_WALLPAPER p=WCT{android.window.IWindowContainerToken$Stub$Proxy@d6a10b1} leash=Surface(name=WallpaperWindowToken{a15a577 token=android.os.Binder@ae52b76})/@0x45e047d sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 720, 1280) d=0},{WCT{android.window.IWindowContainerToken$Stub$Proxy@1253996} m=CHANGE f=SHOW_WALLPAPER|IS_DISPLAY leash=Surface(name=WindowedMagnification:0:31)/@0x7142f72 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 720, 1280) d=0 snapshot=Surface(name=transition snapshot: Display{#0 state=ON size=720x1280 ROTATION_0})/@0xe391fc3}]}
+10-25 07:07:22.151   579   606 V GameManagerService: setDefaultFrameRateOverride : 10148 , 60.0
+10-25 07:07:22.151   959  1008 V WindowManagerShell: Display is changing, resolve the animation hint.
+10-25 07:07:22.153   579   605 V WindowManager:     info={id=28 t=CHANGE f=0x0 trk=1 r=[0@Point(0, 0)] c=[
+10-25 07:07:22.153   579   605 V WindowManager:         {null m=CHANGE f=TRANSLUCENT|FLAG_IS_SYSTEM_WINDOW p=WCT{RemoteToken{588cdfb Display{#0 state=ON size=720x1280 ROTATION_0}}} leash=Surface(name=WindowToken{2593084 type=2019 android.os.BinderProxy@eaf7293})/@0xd75d619 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 720, 1280) d=0},
+10-25 07:07:22.153   579   605 V WindowManager:         {null m=CHANGE f=TRANSLUCENT|FLAG_IS_SYSTEM_WINDOW p=WCT{RemoteToken{588cdfb Display{#0 state=ON size=720x1280 ROTATION_0}}} leash=Surface(name=WindowToken{9c13a1c type=2000 android.os.BinderProxy@b9e26ee})/@0xd8f1160 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 720, 1280) d=0},
+10-25 07:07:22.153   579   605 V WindowManager:         {WCT{RemoteToken{73a28b7 Task{2cfa73a #16 type=standard A=10148:org.yuanzheng.singleplayer}}} m=OPEN f=MOVE_TO_TOP p=WCT{RemoteToken{ec3e38c DefaultTaskDisplayArea@28029704}} leash=Surface(name=Task=16)/@0x4f2dc78 sb=Rect(0, 0 - 720, 1280) eb=Rect(0, 0 - 720, 1280) d=0 taskParent=-1},
+10-25 07:07:22.153   579   605 V WindowManager:         {WCT{RemoteToken{c57625f Task{abb7a23 #1 type=home}}} m=TO_BACK f=SHOW_WALLPAPER p=WCT{RemoteToken{ec3e38c DefaultTaskDisplayArea@28029704}} leash=Surface(name=Task=1)/@0x84a5e29 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 720, 1280) d=0 taskParent=-1},
+10-25 07:07:22.153   579   605 V WindowManager:         {WCT{RemoteToken{ec3e38c DefaultTaskDisplayArea@28029704}} m=CHANGE f=SHOW_WALLPAPER p=WCT{RemoteToken{588cdfb Display{#0 state=ON size=720x1280 ROTATION_0}}} leash=Surface(name=DefaultTaskDisplayArea)/@0xfdf6fb0 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 720, 1280) d=0},
+10-25 07:07:22.153   579   605 V WindowManager:         {null m=TO_BACK f=IS_WALLPAPER p=WCT{RemoteToken{588cdfb Display{#0 state=ON size=720x1280 ROTATION_0}}} leash=Surface(name=WallpaperWindowToken{a15a577 token=android.os.Binder@ae52b76})/@0x63317bc sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 720, 1280) d=0},
+10-25 07:07:22.153   579   605 V WindowManager:         {WCT{RemoteToken{588cdfb Display{#0 state=ON size=720x1280 ROTATION_0}}} m=CHANGE f=SHOW_WALLPAPER|IS_DISPLAY leash=Surface(name=WindowedMagnification:0:31)/@0x8414c45 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 720, 1280) d=0}
+10-25 07:07:22.153   579   605 V WindowManager:     ]}
+10-25 07:07:22.155   959  1008 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@57aea7a animAttr=0x12 type=CHANGE isEntrance=true
+10-25 07:07:22.156   959  1008 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@86694a6
+10-25 07:07:22.160   959  1008 V WindowManagerShell: Transition requested (#29): android.os.BinderProxy@b34a334 TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = null, displayChange = DisplayChange { displayId = 0, startAbsBounds = Rect(0, 0 - 720, 1280), endAbsBounds = Rect(0, 0 - 720, 1280), startRotation = 0, endRotation = 0, physicalDisplayChanged = false }, flags = 0, debugId = 29 }
+10-25 07:07:22.166   579   608 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 07:07:22.171   579   655 W UserManagerService: Requested status bar icon for non-badged user 0
+10-25 07:07:22.180   959  1097 D EGL_emulation: app_time_stats: avg=83.89ms min=13.37ms max=1220.25ms count=22
+10-25 07:07:22.181  1207  1207 D OverviewActionsView: updateActionButtonsVisibility() called: showSingleTaskActions = [true], showGroupActions = [false]
+10-25 07:07:22.182   959   959 D DisplayRepository: combining enabled=[0], connectedExternalDisplayIds=[], ignored=[]
+10-25 07:07:22.184   579  1952 D CoreBackPreview: Window{473e901 u0 com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@40f77af, mPriority=-1, mIsAnimationCallback=false}
+10-25 07:07:22.189   579  5617 D CoreBackPreview: Window{473e901 u0 com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@16777bc, mPriority=0, mIsAnimationCallback=true}
+10-25 07:07:22.195  1207  1207 D TISBindHelper: TIS service connected
+10-25 07:07:22.196  1207  1207 D b/254119092: Set mActivity=com.android.launcher3.uioverrides.QuickstepLauncher@92a321
+10-25 07:07:22.196  1207  1207 D b/254119092: mActivity and mContext agree taskbarIsPresent=false
+10-25 07:07:22.196  1207  1207 D b/254119092: registering activity lifecycle callbacks from setActivity().
+10-25 07:07:22.199  1207  1207 D StatsLog: LAUNCHER_ONRESUME
+10-25 07:07:22.201  1207  1207 I Choreographer: Skipped 96 frames!  The application may be doing too much work on its main thread.
+10-25 07:07:22.202   579  1946 D ShortcutService: Getting shortcuts for launcher= com.android.launcher3user=0 pkg=null
+10-25 07:07:22.207  1207  1231 D LoaderTask: sanitizeData
+10-25 07:07:22.208  1207  1231 D LoaderTask: Cancelled
+10-25 07:07:22.215  1207  1231 D LauncherProvider: migrateGridIfNeeded: no grid migration needed
+10-25 07:07:22.215  1207  1231 D LoaderTask: loadWorkspace: loading default favorites
+10-25 07:07:22.215  1207  1219 I HWUI    : Davey! duration=1779ms; Flags=0, FrameTimelineVsyncId=130219, IntendedVsync=2027757050782, Vsync=2027940384108, InputEventId=0, HandleInputStart=2027946077810, AnimationStart=2027946092210, PerformTraversalsStart=2027946477610, DrawStart=2027958056610, FrameDeadline=2027773717448, FrameInterval=2027945964110, FrameStartTime=16666666, SyncQueued=2027958170410, SyncStart=2027958416010, IssueDrawCommandsStart=2027958475110, SwapBuffers=2027958707410, FrameCompleted=2029536492610, DequeueBufferDuration=7693900, QueueBufferDuration=1569759700, GpuCompleted=2029528699210, SwapBuffersCompleted=2029536492610, DisplayPresentTime=0, CommandSubmissionCompleted=2027958707410, 
+10-25 07:07:22.215  1207  1231 D LoaderTask: loadWorkspace: Packages with active install sessions: []
+10-25 07:07:22.221   579  1952 D ShortcutService: Getting shortcuts for launcher= com.android.launcher3user=0 pkg=null
+10-25 07:07:22.221  1207  1231 D LoaderTask: No pinned shortcuts found for user UserHandle{0}
+10-25 07:07:22.228  1207  1207 W SplitSelectStateCtor: Missing session instanceIds
+10-25 07:07:22.228  1207  1207 D StatsLog: LAUNCHER_SPLIT_SELECTION_EXIT_INTERRUPTED
+10-25 07:07:22.229   959  1008 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=false, height=156
+10-25 07:07:22.229  1207  1207 I TopTaskTracker: onTaskMovedToFront: (moved taskInfo to front) taskId=16, baseIntent=Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher }
+10-25 07:07:22.244  1207  1231 I Launcher.IconCache: Database bulk icon loading failed, using fallback bulk icon loading for: ComponentInfo{com.android.messaging/com.android.messaging.ui.conversationlist.ConversationListActivity}
+10-25 07:07:22.245  1207  1231 I Launcher.IconCache: Database bulk icon loading failed, using fallback bulk icon loading for: ComponentInfo{org.chromium.webview_shell/org.chromium.webview_shell.WebViewBrowserActivity}
+10-25 07:07:22.246  1207  1231 I Launcher.IconCache: Database bulk icon loading failed, using fallback bulk icon loading for: ComponentInfo{com.android.dialer/com.android.dialer.main.impl.MainActivity}
+10-25 07:07:22.247  1207  1231 I Launcher.IconCache: Database bulk icon loading failed, using fallback bulk icon loading for: ComponentInfo{com.android.camera2/com.android.camera.CameraLauncher}
+10-25 07:07:22.249  1207  1231 I Launcher.IconCache: Database bulk icon loading failed, using fallback bulk icon loading for: ComponentInfo{com.android.gallery3d/com.android.gallery3d.app.GalleryActivity}
+10-25 07:07:22.255  1207  1231 D LoaderTask: loadWorkspace
+10-25 07:07:22.255   579  1952 I AppWidgetServiceImpl: getAppWidgetIdsForHost() 0
+10-25 07:07:22.277 16985 16985 D GodotActivity: Project command line parameters: [--xr_mode_regular, --xr-mode, off, --fullscreen, --edge_to_edge, --background_color, #000000]
+10-25 07:07:22.277 16985 16985 D GodotActivity: Launch intent Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } with parameters []
+10-25 07:07:22.317 16985 16985 V GodotActivity: Creating new Godot fragment instance.
+10-25 07:07:22.368 16985 16985 V Godot   : Initializing Godot plugin registry
+10-25 07:07:22.416 16985 16985 I GodotPluginRegistry: Registering runtime plugin AndroidRuntime
+10-25 07:07:22.417 16985 16985 V Godot   : InitEngine with params: [--xr_mode_regular, --xr-mode, off, --fullscreen, --edge_to_edge, --background_color, #000000]
+10-25 07:07:22.443   959  1008 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#28) android.os.BinderProxy@7b09cc9@1
+10-25 07:07:22.445   579   605 V WindowManager: Finish Transition (#28): created at 10-25 07:07:20.197 collect-started=0.062ms request-sent=0.109ms started=35.749ms ready=1945.026ms sent=1947.924ms finished=2247.833ms
+10-25 07:07:22.449   959  1008 V WindowManagerShell: Track 1 became idle
+10-25 07:07:22.449   579   655 W UserManagerService: Requested status bar icon for non-badged user 0
+10-25 07:07:22.449   579   655 W UserManagerService: Requested status bar icon for non-badged user 0
+10-25 07:07:22.458 16985 16985 D nativeloader: Load /data/app/~~D1xBM7eF1nHasPg9cKS9IQ==/org.yuanzheng.singleplayer-jmd-HOHB44lV1Tm4UfuY0A==/lib/x86_64/libgodot_android.so using ns clns-7 from class loader (caller=/data/app/~~D1xBM7eF1nHasPg9cKS9IQ==/org.yuanzheng.singleplayer-jmd-HOHB44lV1Tm4UfuY0A==/base.apk!classes7.dex): ok
+10-25 07:07:22.463 16985 16985 V Godot   : Godot native layer initialization completed: true
+10-25 07:07:22.463 16985 16985 V Godot   : Setting up native layer with params: [--xr-mode, off, --fullscreen]
+10-25 07:07:22.496   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:07:22.496   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:07:22.497   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:07:22.497   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:07:22.497   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:07:22.507 16985 16985 V Godot   : Godot native layer setup completed
+10-25 07:07:22.508 16985 16985 V Godot   : OnInitRenderView: GodotFragment{beebc26} (cc55c39f-c602-41fa-8430-b5caffe73060 id=0x7f07002c)
+10-25 07:07:22.519 16985 16985 D Godot   : Render view should be transparent: false
+10-25 07:07:22.519 16985 16985 D Godot   : renderingDevice: opengl3 (ProjectSettings)
+10-25 07:07:22.519 16985 16985 D Godot   : 			renderer: gl_compatibility (ProjectSettings)
+10-25 07:07:22.521 16985 16993 I ng.singleplayer: Compiler allocated 4219KB to compile void android.widget.TextView.<init>(android.content.Context, android.util.AttributeSet, int, int)
+10-25 07:07:22.546 16985 16985 W WindowOnBackDispatcher: OnBackInvokedCallback is not enabled for the application.
+10-25 07:07:22.546 16985 16985 W WindowOnBackDispatcher: Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+10-25 07:07:22.566 16985 16985 V Godot   : OnStart: GodotFragment{beebc26} (cc55c39f-c602-41fa-8430-b5caffe73060 id=0x7f07002c)
+10-25 07:07:22.572 16985 16985 V Godot   : OnResume: GodotFragment{beebc26} (cc55c39f-c602-41fa-8430-b5caffe73060 id=0x7f07002c)
+10-25 07:07:22.579 16985 16985 W HWUI    : Unknown dataspace 0
+10-25 07:07:22.582   579   655 W WindowManager: Failed looking up window session=Session{4c0ec3e 16985:u0a10148} callers=com.android.server.wm.WindowManagerService.windowForClientLocked:6311 com.android.server.wm.Session.updateRequestedVisibleTypes:755 android.view.IWindowSession$Stub.onTransact:1078 
+10-25 07:07:22.595   579   655 D CoreBackPreview: Window{b2eb7b5 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@f1251bb, mPriority=0, mIsAnimationCallback=false}
+10-25 07:07:22.603 16985 17003 I EGL_emulation: Opening libGLESv1_CM_emulation.so
+10-25 07:07:22.604 16985 17003 I EGL_emulation: Opening libGLESv2_emulation.so
+10-25 07:07:22.617 16985 17003 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+10-25 07:07:22.617 16985 17003 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+10-25 07:07:22.634 16985 17015 W RegularContextFactory: creating OpenGL ES 3.0 context :
+10-25 07:07:22.648   174   174 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device VINTF manifest.
+10-25 07:07:22.648 16985 17015 I Gralloc4: mapper 4.x is not supported
+--------- beginning of kernel
+10-25 07:07:22.693     0     0 I servicemanager: Caller(pid=16985,uid=10148,sid=u:r:untrusted_app:s0:c148,c256,c512,c768) Could not find android.hardware.graphics.allocator.IAllocator/default in the VINTF manifest. No alternative instances declared in VINTF.
+10-25 07:07:22.664 16985 17015 I godot   : Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+10-25 07:07:22.719   579   605 W ziparchive: Unable to open '/data/app/~~D1xBM7eF1nHasPg9cKS9IQ==/org.yuanzheng.singleplayer-jmd-HOHB44lV1Tm4UfuY0A==/base.dm': No such file or directory
+10-25 07:07:22.722   579   605 I ActivityTaskManager: Displayed org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher for user 0: +1s89ms
+10-25 07:07:22.725   579   606 V GameManagerService: Game power mode ON (only games in foreground)
+10-25 07:07:22.729 16985 17015 E godot   : WARNING: Failed to load cached shader, recompiling.
+10-25 07:07:22.729 16985 17015 E godot   :    at: _load_from_cache (drivers/gles3/shader_gles3.cpp:615)
+10-25 07:07:22.742   579   608 I DisplayDeviceRepository: Display device changed: DisplayDeviceInfo{"Built-in Screen": uniqueId="local:4619827259835644672", 720 x 1280, modeId 1, renderFrameRate 60.000004, defaultModeId 1, userPreferredModeId -1, supportedModes [{id=1, width=720, height=1280, fps=60.000004, vsync=60.000004, synthetic=false, alternativeRefreshRates=[], supportedHdrTypes=[]}], colorMode 0, supportedColorModes [0], hdrCapabilities HdrCapabilities{mSupportedHdrTypes=[], mMaxLuminance=500.0, mMaxAverageLuminance=500.0, mMinLuminance=0.0}, allmSupported false, gameContentTypeSupported false, density 240, 240.0 x 240.0 dpi, appVsyncOff 1000000, presDeadline 16666666, cutout DisplayCutout{insets=Rect(0, 128 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(492, 0 - 610, 128), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=720 displayHeight=1280 physicalDisplayWidth=720 physicalDisplayHeight=1280 density={1.5} cutoutSpec={M 507,64 a 33,33 0 1 0 66,0 33,33 0 1 0 -66,0 Z @left} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={1.0}}} sideOverrides={}}, touch INTERNAL, rotation 0, type INTERNAL, address {port=0, model=0x401cec6a7a2b7b}, deviceProductInfo DeviceProductInfo{name=EMU_display_0, manufacturerPnpId=GGL, productId=1, modelYear=null, manufactureDate=ManufactureDate{week=27, year=2006}, connectionToSinkType=0}, state ON, committedState ON, frameRateOverride {uid=10148 frameRateHz=60.000004} , brightnessMinimum 0.0, brightnessMaximum 1.0, brightnessDefault 0.39763778, hdrSdrRatio NaN, roundedCorners RoundedCorners{[RoundedCorner{position=TopLeft, radius=28, center=Point(28, 28)}, RoundedCorner{position=TopRight, radius=28, center=Point(692, 28)}, RoundedCorner{position=BottomRight, radius=28, center=Point(692, 1252)}, RoundedCorner{position=BottomLeft, radius=28, center=Point(28, 1252)}]}, FLAG_ALLOWED_TO_BE_DEFAULT_DISPLAY, FLAG_ROTATES_WITH_CONTENT, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS, FLAG_TRUSTED, installOrientation 0, displayShape DisplayShape{ spec=42744253 displayWidth=720 displayHeight=1280 physicalPixelDisplaySizeRatio=1.0 rotation=0 offsetX=0 offsetY=0 scale=1.0}}
+10-25 07:07:22.744   381   437 I netd    : tetherGetStats() -> {[]} <1.55ms>
+10-25 07:07:22.747   579   703 I ImeTracker: org.yuanzheng.singleplayer:58904643: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false
+10-25 07:07:22.748   579   703 I ImeTracker: org.yuanzheng.singleplayer:58904643: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-25 07:07:22.891 16985 16993 I ng.singleplayer: Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+10-25 07:07:23.011   390  2465 D android.hardware.audio@7.1-impl.ranchu: threadLoop: entering standby, frames: 94911680
+10-25 07:07:23.077 16985 16985 W InteractionJankMonitor: Initializing without READ_DEVICE_CONFIG permission. enabled=true, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=org.yuanzheng.singleplayer
+10-25 07:07:23.081   959  1057 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda11@79d480e
+10-25 07:07:23.081   579  1952 D CoreBackPreview: Window{9a7bfc7 u0 Splash Screen org.yuanzheng.singleplayer EXITING}: Setting back callback null
+10-25 07:07:23.082   579   655 W InputManager-JNI: Input channel object '9a7bfc7 Splash Screen org.yuanzheng.singleplayer (client)' was disposed without first being removed with the input manager!
+10-25 07:07:23.132   959  1057 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 131748, 3606488, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:07:23.132   959  1057 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 131770, 6289122, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:07:23.132   959  1057 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 131799, 0, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:07:23.132   959  1057 W FrameTracker: Missing HWUI jank callback for vsyncId: 131799, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:07:23.132   959  1057 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 131851, 8273758, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:07:23.132   959  1057 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 131866, 4647292, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:07:23.133   959  1057 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 131926, 4414628, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:07:23.133   959  1057 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 131986, 5921464, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:07:23.133   959  1057 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 132001, 4486998, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:07:23.133   959  1057 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 132031, 4510566, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:07:23.133   959  1057 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 132046, 4578700, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:07:23.134   959  1021 V PerfettoTrigger: Triggering /system/bin/trigger_perfetto com.android.telemetry.interaction-jank-monitor-39
+10-25 07:07:23.197  1207  1600 E SurfaceSyncGroup: Failed to receive transaction ready in 1000ms. Marking SurfaceSyncGroup(SysUIAnimation#30) as ready
+10-25 07:07:23.198  1207  1600 E SurfaceSyncGroup: Failed to receive transaction ready in 1000ms. Marking SurfaceSyncGroup(VRI[QuickstepLauncher]#31) as ready
+10-25 07:07:23.241  1207  1600 E SurfaceSyncGroup: Failed to receive transaction ready in 1000ms. Marking SurfaceSyncGroup(SysUIAnimation#35) as ready
+10-25 07:07:23.261  1207  1219 I HWUI    : Davey! duration=1654ms; Flags=0, FrameTimelineVsyncId=130411, IntendedVsync=2027957050774, Vsync=2029557050710, InputEventId=0, HandleInputStart=2029569651710, AnimationStart=2029569691010, PerformTraversalsStart=2029570618510, DrawStart=2029576669110, FrameDeadline=2029557050710, FrameInterval=2029569348410, FrameStartTime=16666666, SyncQueued=2029577033010, SyncStart=2029577110510, IssueDrawCommandsStart=2029577241010, SwapBuffers=2029581371310, FrameCompleted=2029611151010, DequeueBufferDuration=4264700, QueueBufferDuration=254000, GpuCompleted=2029611151010, SwapBuffersCompleted=2029590801210, DisplayPresentTime=0, CommandSubmissionCompleted=2029581371310, 
+10-25 07:07:23.261  1207  1207 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 130018, 7676320, CUJ=J<TASKBAR_EXPAND::App to Home>
+10-25 07:07:23.262  1207  1207 W FrameTracker: Missed App frame:JANK_APP_DEADLINE_MISSED, 130115, 0, CUJ=J<TASKBAR_EXPAND::App to Home>
+10-25 07:07:23.262  1207  1207 W FrameTracker: Missing HWUI jank callback for vsyncId: 130115, CUJ=J<TASKBAR_EXPAND::App to Home>
+10-25 07:07:23.262  1207  1207 W FrameTracker: Missed App frame:JANK_APP_DEADLINE_MISSED, 130130, 0, CUJ=J<TASKBAR_EXPAND::App to Home>
+10-25 07:07:23.262  1207  1207 W FrameTracker: Missing HWUI jank callback for vsyncId: 130130, CUJ=J<TASKBAR_EXPAND::App to Home>
+10-25 07:07:23.262  1207  1207 W FrameTracker: Missed App frame:JANK_APP_DEADLINE_MISSED, 130219, 1779441828, CUJ=J<TASKBAR_EXPAND::App to Home>
+10-25 07:07:23.262  1207  1459 D EGL_emulation: app_time_stats: avg=23.89ms min=1.26ms max=49.99ms count=3
+10-25 07:07:23.263  1207  1225 V PerfettoTrigger: Triggering /system/bin/trigger_perfetto com.android.telemetry.interaction-jank-monitor-60
+10-25 07:07:23.263  1207  1207 I Choreographer: Skipped 59 frames!  The application may be doing too much work on its main thread.
+10-25 07:07:23.269   579   655 D ShortcutService: Getting shortcuts for launcher= com.android.launcher3user=0 pkg=null
+10-25 07:07:23.269  1207  1231 D LoaderTask: sanitizeData
+10-25 07:07:23.269  1207  1231 D LoaderTask: bindWorkspace
+10-25 07:07:23.270  1207  1231 D LoaderTask: sendFirstScreenBroadcast
+10-25 07:07:23.274  1207  1226 I HWUI    : Davey! duration=1022ms; Flags=0, FrameTimelineVsyncId=131524, IntendedVsync=2029607050708, Vsync=2029607050708, InputEventId=0, HandleInputStart=2029608371610, AnimationStart=2029608390910, PerformTraversalsStart=2029609602710, DrawStart=2029610120510, FrameDeadline=2029640384040, FrameInterval=2029608359410, FrameStartTime=16666666, SyncQueued=2029610158510, SyncStart=2029610195510, IssueDrawCommandsStart=2029610472310, SwapBuffers=2029610856610, FrameCompleted=2030629935710, DequeueBufferDuration=1017507900, QueueBufferDuration=147400, GpuCompleted=2030629935710, SwapBuffersCompleted=2030628766710, DisplayPresentTime=0, CommandSubmissionCompleted=2029610856610, 
+10-25 07:07:23.276  1207  1207 D VRI[QuickstepLauncher]: visibilityChanged oldVisibility=true newVisibility=false
+10-25 07:07:23.277  1207  1207 I TopTaskTracker: onTaskRemoved: taskId=15
+10-25 07:07:23.277  1207  1207 I TopTaskTracker: onTaskRemoved: taskId=15
+10-25 07:07:23.279   452  1318 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-25 07:07:23.293  1207  1207 D StateManager: goToState - fromState: Normal, toState: Normal, partial trace:
+10-25 07:07:23.293  1207  1207 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:453)
+10-25 07:07:23.293  1207  1207 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:444)
+10-25 07:07:23.293  1207  1207 D StateManager: 	at com.android.launcher3.statemanager.StatefulActivity.onStop(StatefulActivity.java:119)
+10-25 07:07:23.293  1207  1207 D StatsLog: LAUNCHER_ONSTOP
+10-25 07:07:23.293   579   655 I AppWidgetServiceImpl: setAppWidgetHidden() 0
+10-25 07:07:23.302  1207  1207 W SurfaceSyncGroup: Adding transaction to a completed SurfaceSyncGroup(VRI[QuickstepLauncher]#31).  Applying immediately
+10-25 07:07:23.311  1207  1207 D ModelCallbacks: startBinding: hotseat layout was vertical: false and is setting to false
+10-25 07:07:23.311 16985 17015 I godot   : OpenGL API OpenGL ES 3.1 (4.5.0 Core Profile Context 23.20.60.03.240314) - Compatibility - Using Device: Google (ATI Technologies Inc.) - Android Emulator OpenGL ES Translator (AMD Radeon 780M Graphics)
+10-25 07:07:23.312  1207  1207 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 0 and y = 0
+10-25 07:07:23.312  1207  1207 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 1 and y = 0
+10-25 07:07:23.312  1207  1207 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 3 and y = 0
+10-25 07:07:23.312  1207  1207 D Launcher.Workspace: addInScreenFromBind: hotseat inflation with x = 4 and y = 0
+10-25 07:07:23.313 16985 17015 D ng.singleplayer: PlayerBase::PlayerBase()
+10-25 07:07:23.313 16985 17015 D ng.singleplayer: TrackPlayerBase::TrackPlayerBase()
+10-25 07:07:23.313 16985 17015 I libOpenSLES: Emulating old channel mask behavior (ignoring positional mask 0x3, using default mask 0x3 based on channel count of 2)
+10-25 07:07:23.315   446   497 W AudioFlinger: createTrack_l(): mismatch between requested flags (00000104) and output flags (00000002)
+10-25 07:07:23.315   446   497 D AudioFlinger: Client defaulted notificationFrames to 882 for frameCount 4012
+10-25 07:07:23.322   446   497 D audioserver: logFgsApiBegin: FGS Logger Transaction failed, -129
+10-25 07:07:23.322  1207  1207 W SurfaceSyncGroup: Adding transaction to a completed SurfaceSyncGroup(VRI[QuickstepLauncher]#31).  Applying immediately
+10-25 07:07:23.322  1207  1207 W SurfaceSyncGroup: Adding transaction to a completed SurfaceSyncGroup(VRI[QuickstepLauncher]#31).  Applying immediately
+10-25 07:07:23.325  1207  1231 D LoaderTask: step 1 complete
+10-25 07:07:23.325 16985 17015 I godot   : 
+10-25 07:07:23.338  1207  1231 I Launcher.IconCache: Database bulk icon loading failed, using fallback bulk icon loading for: ComponentInfo{com.android.messaging/com.android.messaging.ui.conversationlist.ConversationListActivity}
+10-25 07:07:23.339  1207  1231 I Launcher.IconCache: Database bulk icon loading failed, using fallback bulk icon loading for: ComponentInfo{org.chromium.webview_shell/org.chromium.webview_shell.WebViewBrowserActivity}
+10-25 07:07:23.340  1207  1231 I Launcher.IconCache: Database bulk icon loading failed, using fallback bulk icon loading for: ComponentInfo{com.android.documentsui/com.android.documentsui.LauncherActivity}
+10-25 07:07:23.345  1207  1231 I Launcher.IconCache: Database bulk icon loading failed, using fallback bulk icon loading for: ComponentInfo{com.android.deskclock/com.android.deskclock.DeskClock}
+10-25 07:07:23.347  1207  1231 I Launcher.IconCache: Database bulk icon loading failed, using fallback bulk icon loading for: ComponentInfo{com.android.calendar/com.android.calendar.AllInOneActivity}
+10-25 07:07:23.349  1207  1231 I Launcher.IconCache: Database bulk icon loading failed, using fallback bulk icon loading for: ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+10-25 07:07:23.351  1207  1231 I Launcher.IconCache: Database bulk icon loading failed, using fallback bulk icon loading for: ComponentInfo{com.android.dialer/com.android.dialer.main.impl.MainActivity}
+10-25 07:07:23.352  1207  1231 I Launcher.IconCache: Database bulk icon loading failed, using fallback bulk icon loading for: ComponentInfo{com.android.camera2/com.android.camera.CameraLauncher}
+10-25 07:07:23.353  1207  1231 I Launcher.IconCache: Database bulk icon loading failed, using fallback bulk icon loading for: ComponentInfo{com.android.contacts/com.android.contacts.activities.PeopleActivity}
+10-25 07:07:23.355  1207  1231 I Launcher.IconCache: Database bulk icon loading failed, using fallback bulk icon loading for: ComponentInfo{com.android.stk/com.android.stk.StkMain}
+10-25 07:07:23.357  1207  1231 I Launcher.IconCache: Database bulk icon loading failed, using fallback bulk icon loading for: ComponentInfo{com.android.settings/com.android.settings.Settings}
+10-25 07:07:23.361  1207  1231 I Launcher.IconCache: Database bulk icon loading failed, using fallback bulk icon loading for: ComponentInfo{com.android.gallery3d/com.android.gallery3d.app.GalleryActivity}
+10-25 07:07:23.362  1207  1231 I Launcher.IconCache: Database bulk icon loading failed, using fallback bulk icon loading for: ComponentInfo{com.android.quicksearchbox/com.android.quicksearchbox.SearchActivity}
+10-25 07:07:23.363  1207  1231 D LoaderTask: loadAllApps
+10-25 07:07:23.364  1207  1231 D LoaderTask: bindAllApps
+10-25 07:07:23.369  1207  1231 D LoaderTask: update icon cache
+10-25 07:07:23.369  1207  1231 D LoaderTask: save shortcuts in icon cache
+10-25 07:07:23.370  1207  1231 D LoaderTask: step 2 complete
+10-25 07:07:23.370   579  1946 D ShortcutService: Getting shortcuts for launcher= com.android.launcher3user=0 pkg=null
+10-25 07:07:23.370  1207  1231 D LoaderTask: loadDeepShortcuts
+10-25 07:07:23.370  1207  1231 D LoaderTask: bindDeepShortcuts
+10-25 07:07:23.370  1207  1231 D LoaderTask: save deep shortcuts in icon cache
+10-25 07:07:23.371  1207  1231 D LoaderTask: step 3 complete
+10-25 07:07:23.371   579  1946 I AppWidgetServiceImpl: getInstalledProvidersForProfiles() 0
+10-25 07:07:23.375  1207  1231 W PackageManager: Failure retrieving text 0x7f130725 in package com.android.systemui
+10-25 07:07:23.375  1207  1231 W PackageManager: android.content.res.Resources$NotFoundException: String resource ID #0x7f130725
+10-25 07:07:23.375  1207  1231 W PackageManager: 	at android.content.res.Resources.getText(Resources.java:466)
+10-25 07:07:23.375  1207  1231 W PackageManager: 	at android.app.ApplicationPackageManager.getText(ApplicationPackageManager.java:2405)
+10-25 07:07:23.375  1207  1231 W PackageManager: 	at android.appwidget.AppWidgetProviderInfo.loadDescription(AppWidgetProviderInfo.java:484)
+10-25 07:07:23.375  1207  1231 W PackageManager: 	at com.android.launcher3.model.WidgetItem.<init>(WidgetItem.java:51)
+10-25 07:07:23.375  1207  1231 W PackageManager: 	at com.android.launcher3.model.WidgetsModel.update(WidgetsModel.java:175)
+10-25 07:07:23.375  1207  1231 W PackageManager: 	at com.android.launcher3.model.LoaderTask.run(LoaderTask.java:332)
+10-25 07:07:23.375  1207  1231 W PackageManager: 	at android.os.Handler.handleCallback(Handler.java:959)
+10-25 07:07:23.375  1207  1231 W PackageManager: 	at android.os.Handler.dispatchMessage(Handler.java:100)
+10-25 07:07:23.375  1207  1231 W PackageManager: 	at android.os.Looper.loopOnce(Looper.java:232)
+10-25 07:07:23.375  1207  1231 W PackageManager: 	at android.os.Looper.loop(Looper.java:317)
+10-25 07:07:23.375  1207  1231 W PackageManager: 	at android.os.HandlerThread.run(HandlerThread.java:85)
+10-25 07:07:23.375   579  1946 I AppWidgetServiceImpl: getWidgetPreview() 0
+10-25 07:07:23.376   579  1946 I AppWidgetServiceImpl: getWidgetPreview() 0
+10-25 07:07:23.417   446   548 D AudioFlinger: mixer(0x7c7a4d6468e0) throttle end: throttle time(36)
+10-25 07:07:23.453  1207  1231 D LoaderTask: load widgets
+10-25 07:07:23.454  1207  1231 D LoaderTask: bindWidgets
+10-25 07:07:23.454  1207  1231 D LoaderTask: save widgets in icon cache
+10-25 07:07:23.455  1207  1231 D LoaderTask: finish icon update
+10-25 07:07:23.455  1207  1231 D QuickstepModelDelegate: Successfully registered for launcher snapshot logging!
+10-25 07:07:23.455   579  1946 W Binder  : Caught a RuntimeException from the binder stub implementation.
+10-25 07:07:23.455   579  1946 W Binder  : java.lang.SecurityException: Need REGISTER_STATS_PULL_ATOM permission.: Neither user 10120 nor current process has android.permission.REGISTER_STATS_PULL_ATOM.
+10-25 07:07:23.455   579  1946 W Binder  : 	at android.app.ContextImpl.enforce(ContextImpl.java:2389)
+10-25 07:07:23.455   579  1946 W Binder  : 	at android.app.ContextImpl.enforceCallingOrSelfPermission(ContextImpl.java:2417)
+10-25 07:07:23.455   579  1946 W Binder  : 	at com.android.server.stats.StatsManagerService.enforceRegisterStatsPullAtomPermission(StatsManagerService.java:678)
+10-25 07:07:23.455   579  1946 W Binder  : 	at com.android.server.stats.StatsManagerService.registerPullAtomCallback(StatsManagerService.java:219)
+10-25 07:07:23.455   579  1946 W Binder  : 	at android.os.IStatsManagerService$Stub.onTransact(IStatsManagerService.java:430)
+10-25 07:07:23.455   579  1946 W Binder  : 	at android.os.Binder.execTransactInternal(Binder.java:1505)
+10-25 07:07:23.455   579  1946 W Binder  : 	at android.os.Binder.execTransact(Binder.java:1444)
+10-25 07:07:23.457  1207  1231 D PackageUpdatedTask: Package updated: mOp=UPDATE packages=[android]
+10-25 07:07:23.458  1207  1231 W AllAppsList: updatePromiseInstallInfo: no Activities matched updated package, removing all apps from package=android
+10-25 07:07:23.624  1207  1231 W PackageManager: Failure retrieving resources for com.android.systemui: Drawable com.android.systemui:drawable/ic_bubbles_shortcut_widget with resource ID #0x7f0806c9
+10-25 07:07:23.625  1207  1231 W PackageManager: Failure retrieving resources for com.android.systemui: Drawable com.android.systemui:drawable/android15_patch_adaptive with resource ID #0x7f0805e2
+10-25 07:07:24.147   579   608 W BLASTSyncEngine: Sync group 29 timeout
+10-25 07:07:24.147   579   608 W BLASTSyncEngine: Sync group 29 timed-out because not ready. If you see this, please file a bug.
+10-25 07:07:24.147   579   608 E Transition: #29 readiness timeout, used=false deferReadyDepth=0 group={Display{#0 state=ON size=720x1280 ROTATION_0}=false}
+10-25 07:07:24.149   579   605 V WindowManager: Sent Transition (#29) createdAt=10-25 07:07:20.389 via request=TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = null, displayChange = DisplayChange { displayId = 0, startAbsBounds = Rect(0, 0 - 720, 1280), endAbsBounds = Rect(0, 0 - 720, 1280), startRotation = 0, endRotation = 0, physicalDisplayChanged = false }, flags = 0, debugId = 29 }
+10-25 07:07:24.149   579   605 V WindowManager:     startWCT=WindowContainerTransaction { changes = {} hops = [] errorCallbackToken=null taskFragmentOrganizer=null }
+10-25 07:07:24.149   579   605 V WindowManager:     info={id=29 t=CHANGE f=0x0 trk=2 r=[] c=[]}
+10-25 07:07:24.149   959  1826 V WindowManagerShell: onTransitionReady(transaction=2486786066041)
+10-25 07:07:24.150   959  1008 V WindowManagerShell: onTransitionReady (#29) android.os.BinderProxy@b34a334: {id=29 t=CHANGE f=0x0 trk=2 r=[] c=[]}
+10-25 07:07:24.150   959  1008 V WindowManagerShell: No transition roots in (#29) android.os.BinderProxy@b34a334@2 so abort
+10-25 07:07:24.151   959  1008 V WindowManagerShell: Transition animation finished (aborted=true), notifying core (#29) android.os.BinderProxy@b34a334@2
+10-25 07:07:24.151   579  1946 W UserManagerService: Requested status bar icon for non-badged user 0
+10-25 07:07:24.152   579   605 V WindowManager: Finish Transition (#29): created at 10-25 07:07:20.389 collect-started=1755.83ms request-sent=1768.152ms started=1780.031ms ready=-2027757.395ms sent=3758.553ms finished=3762.245ms
+10-25 07:07:24.153   959  1008 V WindowManagerShell: Track 2 became idle
+10-25 07:07:24.153   959  1008 V WindowManagerShell: All active transition animations finished
+10-25 07:07:24.154   579  1946 W UserManagerService: Requested status bar icon for non-badged user 0
+10-25 07:07:24.173   452   452 E BpTransactionCompletedListener: Failed to transact (-32)
+10-25 07:07:24.174   452   452 E BpTransactionCompletedListener: Failed to transact (-32)
+10-25 07:07:24.324  1207  1207 E VRI[QuickstepLauncher]: Timedout waiting to unpause for sync
+10-25 07:07:25.343 16985 17015 V Godot   : OnGodotSetupCompleted
+10-25 07:07:25.408 16985 17015 I godot   : ANDROID_DEEP_READY { "os": "Android", "version": "35.12368160", "model": "Android SDK built for x86_64", "window": "(720, 1280)", "viewport": "[P: (0.0, 0.0), S: (480.0, 853.0)]", "safe": "[P: (0.0, 85.3), S: (480.0, 767.7)]", "system_safe": "[P: (0, 128), S: (720, 1152)]", "cutouts": "[[P: (492.0, 0.0), S: (118.0, 128.0)]]", "mix_rate": 44100.0 }
+10-25 07:07:25.409 16985 17015 V Godot   : OnGodotMainLoopStarted
+10-25 07:07:25.414 16985 17015 D EGL_emulation: app_time_stats: avg=998.54ms min=6.82ms max=1990.26ms count=2
+10-25 07:07:25.501   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:07:25.501   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:07:25.501   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:07:25.502   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:07:25.502   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:07:25.559   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 07:07:25.560   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 07:07:25.560   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10105} in 2ms
+10-25 07:07:25.561   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 07:07:25.562   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 07:07:25.563   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={20105} in 2ms
+10-25 07:07:25.610 16985 17015 I godot   : ANDROID_DEEP_BEGIN final_keyboard_login { "id": "final_keyboard_login", "suite": "page", "page": "login" }
+10-25 07:07:25.613 16985 16985 I ImeTracker: org.yuanzheng.singleplayer:c078d0c0: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+10-25 07:07:25.614   579   703 I ImeTracker: org.yuanzheng.singleplayer:c078d0c0: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-25 07:07:25.645   579  1803 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-25 07:07:25.718     0     0 I logd    : logdr: UID=0 GID=0 PID=17057 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:07:26.397     0     0 I logd    : logdr: UID=0 GID=0 PID=17063 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:07:26.430 16985 17015 D EGL_emulation: app_time_stats: avg=29.58ms min=0.90ms max=650.84ms count=24
+10-25 07:07:26.610  2320  2320 W adbd    : timeout expired while flushing socket, closing
+10-25 07:07:26.798 16985 17015 I godot   : ANDROID_DEEP_PHOTO final_keyboard_login/login
+10-25 07:07:26.798 16985 17015 I godot   : ANDROID_DEEP_COMPLETE final_keyboard_login checks=1 failed=0 photos=1
+10-25 07:07:27.044 16985 16985 D AutofillManager: Fill dialog is enabled:false, hints=[]
+10-25 07:07:27.072 16985 16985 I ImeTracker: org.yuanzheng.singleplayer:a5f6c378: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+10-25 07:07:27.073 16985 16985 D InputMethodManager: showSoftInput() view=org.godotengine.godot.input.GodotEditText{10a4eb VFED..CL. .F....ID 0,0-720,72 aid=0} flags=0 reason=SHOW_SOFT_INPUT
+10-25 07:07:27.089 16985 17003 D EGL_emulation: app_time_stats: avg=165.85ms min=0.79ms max=3671.13ms count=25
+10-25 07:07:27.090   381   437 I netd    : tetherGetStats() -> {[]} <0.69ms>
+10-25 07:07:27.090   579   703 I ImeTracker: org.yuanzheng.singleplayer:887e059f: onRequestShow at ORIGIN_SERVER reason ATTACH_NEW_INPUT fromUser false
+10-25 07:07:27.092 16985 16985 I ImeTracker: org.yuanzheng.singleplayer:f01b420b: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+10-25 07:07:27.092 16985 16985 D InputMethodManager: showSoftInput() view=org.godotengine.godot.input.GodotEditText{10a4eb VFED..CL. .F....ID 0,0-720,72 aid=0} flags=0 reason=SHOW_SOFT_INPUT
+10-25 07:07:27.111  1762  1762 W RichInputMethodSubtype: Can't find emoji subtype
+10-25 07:07:27.111  1762  1762 W RichInputMethodSubtype: No input method subtype found; returning placeholder subtype: Multi-lingual subtype: android.view.inputmethod.InputMethodSubtype@d78b2ed0, zz
+10-25 07:07:27.131  1762  1790 I putmethod.latin: Waiting for a blocking GC ProfileSaver
+10-25 07:07:27.144  1762  1762 I EmojiCategory: Last Emoji category id is 8
+10-25 07:07:27.147  1762  1776 W putmethod.latin: Reducing the number of considered missed Gc histogram windows from 197 to 100
+10-25 07:07:27.147  1762  1790 I putmethod.latin: WaitForGcToComplete blocked ProfileSaver on Background for 16.478ms
+10-25 07:07:27.149  1762  1778 W putmethod.latin: ApkAssets: Deleting an ApkAssets object '/product/overlay/DisplayCutoutEmulationHole/DisplayCutoutEmulationHoleOverlay.apk' with 8 weak references
+10-25 07:07:27.151  1762  1778 W putmethod.latin: ApkAssets: Deleting an ApkAssets object '/product/overlay/NavigationBarMode3Button/NavigationBarMode3ButtonOverlay.apk' with 5 weak references
+10-25 07:07:27.165  1762  1762 W ViewPager: Requested offscreen page limit 0 too small; defaulting to 1
+10-25 07:07:27.171  1762  1762 I LatinIME: Starting input. Cursor position = 0,0
+10-25 07:07:27.174  1762  1762 E RichInputConnection: Unable to connect to the editor to retrieve text.
+10-25 07:07:27.174  1762  1762 D RichInputConnection: Will try to retrieve text later.
+10-25 07:07:27.177  1762  1762 E RichInputConnection: Unable to connect to the editor to retrieve text.
+10-25 07:07:27.177  1762  1762 W RichInputConnection: Unable to connect to the editor. Setting caps mode without knowing text.
+10-25 07:07:27.199   452  1059 W ServiceManagerCppClient: Permission failure: android.permission.ACCESS_SURFACE_FLINGER from uid=10113 pid=0
+10-25 07:07:27.199   452  1059 D PermissionCache: checking android.permission.ACCESS_SURFACE_FLINGER for uid=10113 => denied (546 us)
+10-25 07:07:27.199   452  1059 W ServiceManagerCppClient: Permission failure: android.permission.ROTATE_SURFACE_FLINGER from uid=10113 pid=0
+10-25 07:07:27.199   452  1059 D PermissionCache: checking android.permission.ROTATE_SURFACE_FLINGER for uid=10113 => denied (223 us)
+10-25 07:07:27.199   452  1059 W ServiceManagerCppClient: Permission failure: android.permission.INTERNAL_SYSTEM_WINDOW from uid=10113 pid=0
+10-25 07:07:27.199   452  1059 D PermissionCache: checking android.permission.INTERNAL_SYSTEM_WINDOW for uid=10113 => denied (207 us)
+10-25 07:07:27.216  1762  1800 I EGL_emulation: Opening libGLESv1_CM_emulation.so
+10-25 07:07:27.217  1762  1800 I EGL_emulation: Opening libGLESv2_emulation.so
+10-25 07:07:27.222  1762  1800 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+10-25 07:07:27.222  1762  1800 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+10-25 07:07:27.248   174   174 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device VINTF manifest.
+10-25 07:07:27.248  1762  1800 I Gralloc4: mapper 4.x is not supported
+10-25 07:07:27.294     0     0 I servicemanager: Caller(pid=1762,uid=10113,sid=u:r:untrusted_app_30:s0:c113,c256,c512,c768) Could not find android.hardware.graphics.allocator.IAllocator/default in the VINTF manifest. No alternative instances declared in VINTF.
+10-25 07:07:27.267  1762 17079 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+10-25 07:07:27.268  1762 17079 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+10-25 07:07:27.334   579  6387 W ServiceManagerCppClient: Permission failure: android.permission.ACCESS_SURFACE_FLINGER from uid=10113 pid=0
+10-25 07:07:27.335   579  6387 D PermissionCache: checking android.permission.ACCESS_SURFACE_FLINGER for uid=10113 => denied (1043 us)
+10-25 07:07:27.335   579  6387 W ServiceManagerCppClient: Permission failure: android.permission.ROTATE_SURFACE_FLINGER from uid=10113 pid=0
+10-25 07:07:27.335   579  6387 D PermissionCache: checking android.permission.ROTATE_SURFACE_FLINGER for uid=10113 => denied (111 us)
+10-25 07:07:27.335   579  6387 W ServiceManagerCppClient: Permission failure: android.permission.INTERNAL_SYSTEM_WINDOW from uid=10113 pid=0
+10-25 07:07:27.336   579  6387 D PermissionCache: checking android.permission.INTERNAL_SYSTEM_WINDOW for uid=10113 => denied (96 us)
+10-25 07:07:27.339 16985 16985 D InsetsController: show(ime(), fromIme=true)
+10-25 07:07:27.340  1762  1762 I LatinIME: Starting input. Cursor position = 0,0
+10-25 07:07:27.346   959  1008 D WindowManagerShell: onKeepClearAreasChanged: restricted={}, unrestricted={Rect(0, 763 - 720, 1280)}
+10-25 07:07:27.398 16985 16985 D InsetsController: show(ime(), fromIme=true)
+10-25 07:07:27.399 16985 16985 I ImeTracker: org.yuanzheng.singleplayer:887e059f: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+10-25 07:07:27.400 16985 16985 D InsetsController: show(ime(), fromIme=true)
+10-25 07:07:27.401 16985 16985 I ImeTracker: org.yuanzheng.singleplayer:f01b420b: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+10-25 07:07:27.430 16985 17015 D EGL_emulation: app_time_stats: avg=8.04ms min=1.46ms max=223.62ms count=48
+10-25 07:07:27.444  1207  1459 D EGL_emulation: app_time_stats: avg=1384.56ms min=1.98ms max=4123.07ms count=3
+10-25 07:07:27.660     0     0 I init    : Untracked pid 17053 exited with status 1
+10-25 07:07:27.661     0     0 I init    : Untracked pid 17053 did not have an associated service entry and will not be reaped
+10-25 07:07:27.678 16985 16985 I ImeTracker: org.yuanzheng.singleplayer:a5f6c378: onShown
+10-25 07:07:28.093 16985 17003 D EGL_emulation: app_time_stats: avg=45.53ms min=12.76ms max=411.48ms count=22
+10-25 07:07:28.431 16985 17015 D EGL_emulation: app_time_stats: avg=2.83ms min=1.64ms max=6.28ms count=60
+10-25 07:07:28.506   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:07:28.506   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:07:28.506   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:07:28.507   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:07:28.507   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:07:28.647     0     0 I logd    : logdr: UID=0 GID=0 PID=17098 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:07:28.709 16985 17015 I godot   : ANDROID_DEEP_BEGIN final_keyboard_open { "id": "final_keyboard_open", "suite": "probe" }
+10-25 07:07:28.710 16985 17015 I godot   : ANDROID_DEEP_COMPLETE final_keyboard_open checks=0 failed=0 photos=0
+10-25 07:07:29.386     0     0 I logd    : logdr: UID=0 GID=0 PID=17107 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:07:29.444 16985 17015 D EGL_emulation: app_time_stats: avg=2.76ms min=1.49ms max=12.17ms count=61
+10-25 07:07:29.446 16985 17003 D EGL_emulation: app_time_stats: avg=135.18ms min=5.34ms max=502.80ms count=10
+10-25 07:07:29.445 17112 17112 W BpBinder: Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+10-25 07:07:29.446 17112 17112 W ProcessState: Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+10-25 07:07:29.456   174   174 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device VINTF manifest.
+10-25 07:07:29.456 17112 17113 I Gralloc4: mapper 4.x is not supported
+10-25 07:07:29.502     0     0 I servicemanager: Caller(pid=17112,uid=0,sid=u:r:su:s0) Could not find android.hardware.graphics.allocator.IAllocator/default in the VINTF manifest. No alternative instances declared in VINTF.
+10-25 07:07:29.537  2320  2320 W adbd    : timeout expired while flushing socket, closing
+10-25 07:07:29.702   579   606 D AutofillManagerService: onBackKeyPressed()
+10-25 07:07:29.703  1762  1762 I ImeTracker: com.android.inputmethod.latin:7026b171: onRequestHide at ORIGIN_IME reason HIDE_SOFT_INPUT_BY_BACK_KEY fromUser true
+10-25 07:07:29.705 16985 16985 D InsetsController: hide(ime(), fromIme=true)
+10-25 07:07:29.711   452   473 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-25 07:07:29.713   959  1008 D WindowManagerShell: onKeepClearAreasChanged: restricted={}, unrestricted={}
+10-25 07:07:29.717  1762  1800 D EGL_emulation: app_time_stats: avg=794.86ms min=81.92ms max=1390.35ms count=3
+10-25 07:07:29.722   381   437 I netd    : tetherGetStats() -> {[]} <0.65ms>
+10-25 07:07:30.027 16985 16985 I ImeTracker: org.yuanzheng.singleplayer:810fb468: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT_ON_ANIMATION_STATE_CHANGED fromUser false
+10-25 07:07:30.028 16985 16985 I ImeTracker: com.android.inputmethod.latin:7026b171: onHidden
+10-25 07:07:30.028   579   703 I ImeTracker: org.yuanzheng.singleplayer:810fb468: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-25 07:07:30.198   959  1097 D EGL_emulation: app_time_stats: avg=4008.74ms min=26.34ms max=7991.14ms count=2
+10-25 07:07:30.479     0     0 I init    : Sending signal 9 to service 'idmap2d' (pid 16959) process group...
+10-25 07:07:30.435   579  1946 W OverlayManager: service 'idmap' died
+10-25 07:07:30.482     0     0 I libprocessgroup: Removed cgroup /sys/fs/cgroup/uid_1000/pid_16959
+10-25 07:07:30.484     0     0 I init    : Control message: Processed ctl.stop for 'idmap2d' from pid: 579 (system_server)
+10-25 07:07:30.485     0     0 I init    : Service 'idmap2d' (pid 16959) received signal 9
+10-25 07:07:30.486     0     0 I init    : Sending signal 9 to service 'idmap2d' (pid 16959) process group...
+10-25 07:07:30.487     0     0 E libprocessgroup: Failed to write 1 to /sys/fs/cgroup/uid_1000/pid_16959/cgroup.kill: No such file or directory
+10-25 07:07:30.488     0     0 E libprocessgroup: Failed to open /sys/fs/cgroup/uid_1000/pid_16959/cgroup.procs: No such file or directory
+10-25 07:07:30.449 16985 17015 D EGL_emulation: app_time_stats: avg=2.64ms min=1.38ms max=7.42ms count=60
+10-25 07:07:30.476 16985 17003 D EGL_emulation: app_time_stats: avg=39.53ms min=12.24ms max=367.09ms count=26
+10-25 07:07:30.586     0     0 I init    : Untracked pid 17094 exited with status 1
+10-25 07:07:30.586     0     0 I init    : Untracked pid 17094 did not have an associated service entry and will not be reaped
+10-25 07:07:30.606   579   681 D ActivityManager: freezing 1683 com.android.quicksearchbox
+10-25 07:07:30.609   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 07:07:30.610   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 07:07:30.610   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10105} in 3ms
+10-25 07:07:30.643 16985 17015 I godot   : ANDROID_DEEP_BEGIN final_keyboard_closed { "id": "final_keyboard_closed", "suite": "probe" }
+10-25 07:07:30.645 16985 17015 I godot   : ANDROID_DEEP_COMPLETE final_keyboard_closed checks=0 failed=0 photos=0
+10-25 07:07:30.718     0     0 I logd    : logdr: UID=0 GID=0 PID=17127 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
