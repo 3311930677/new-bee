@@ -247,7 +247,7 @@
       "map_cols": 25,
       "map_rows": 44,
       "layout_version": 6,
-      "player_scale": 0.65,
+      "player_scale": 0.7,
       "camera_zoom": 1.15,
       "spawn": [
         600,
@@ -868,40 +868,40 @@
       "art_profile": "reference_complete",
       "city_building_sizes": {
         "stable": [
-          360.0,
-          191.0
+          360,
+          191
         ],
         "barracks": [
-          376.0,
-          239.0
+          376,
+          239
         ],
         "storehouse": [
-          395.0,
-          249.0
+          395,
+          249
         ],
         "forge": [
-          392.0,
-          253.0
+          392,
+          253
         ],
         "hall": [
-          420.0,
-          259.0
+          420,
+          259
         ],
         "archive": [
-          332.0,
-          329.0
+          332,
+          329
         ],
         "kennel": [
-          400.0,
-          230.0
+          400,
+          230
         ],
         "shrine": [
-          240.0,
-          164.0
+          240,
+          164
         ],
         "gate": [
           60.2490844726563,
-          64.0
+          64
         ]
       },
       "city_building_approaches": {
@@ -1294,7 +1294,8 @@
         ]
       },
       "minimap_show_roads": false,
-      "reference_floor_root": "res://assets/world/natural_ground_20261011/ready/"
+      "reference_floor_root": "res://assets/world/natural_ground_20261011/ready/",
+      "mount_display_scale": 0.86
     },
     "maple_road": {
       "name": "枫林古道",
@@ -1311,7 +1312,7 @@
       "map_cols": 20,
       "map_rows": 44,
       "layout_version": 5,
-      "player_scale": 0.65,
+      "player_scale": 0.7,
       "camera_zoom": 1.15,
       "spawn": [
         480,
@@ -2165,7 +2166,8 @@
         ]
       },
       "minimap_show_roads": false,
-      "reference_floor_root": "res://assets/world/natural_ground_20261011/ready/"
+      "reference_floor_root": "res://assets/world/natural_ground_20261011/ready/",
+      "mount_display_scale": 0.86
     },
     "broken_slope": {
       "name": "断碑坡",
@@ -2496,7 +2498,7 @@
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 2,
-      "player_scale": 0.54,
+      "player_scale": 0.7,
       "camera_zoom": 1.15,
       "spawn": [
         480,
@@ -2896,7 +2898,8 @@
       "deco_density": 0.095,
       "deco_tint": "ffffff",
       "flat_material": "stone",
-      "surface_tint": "ffffff"
+      "surface_tint": "ffffff",
+      "mount_display_scale": 0.86
     },
     "old_salt_road": {
       "name": "旧盐道",
@@ -2908,7 +2911,7 @@
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
-      "player_scale": 0.54,
+      "player_scale": 0.7,
       "camera_zoom": 1.15,
       "spawn": [
         160,
@@ -3362,7 +3365,8 @@
             22
           ]
         }
-      ]
+      ],
+      "mount_display_scale": 0.86
     },
     "shenyuan_port": {
       "name": "沉渊港",
@@ -3374,7 +3378,7 @@
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
-      "player_scale": 0.54,
+      "player_scale": 0.7,
       "camera_zoom": 1.15,
       "spawn": [
         210,
@@ -3956,7 +3960,8 @@
           330,
           170
         ]
-      ]
+      ],
+      "mount_display_scale": 0.86
     },
     "tideflat": {
       "name": "潮痕滩",
@@ -4242,7 +4247,7 @@
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
-      "player_scale": 0.54,
+      "player_scale": 0.7,
       "camera_zoom": 1.15,
       "spawn": [
         165,
@@ -4783,7 +4788,8 @@
       "surface_tint": "ffffff",
       "ground_art_version": 20261015,
       "minimap_show_roads": false,
-      "illustrated_scenery": []
+      "illustrated_scenery": [],
+      "mount_display_scale": 0.86
     },
     "tidal_gate": {
       "name": "退潮水闸",
@@ -4794,7 +4800,7 @@
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
-      "player_scale": 0.54,
+      "player_scale": 0.7,
       "camera_zoom": 1.15,
       "spawn": [
         480,
@@ -5123,7 +5129,8 @@
           330,
           1248
         ]
-      ]
+      ],
+      "mount_display_scale": 0.86
     },
     "stele_cavern": {
       "name": "失声碑窟",
@@ -5134,7 +5141,7 @@
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
-      "player_scale": 0.54,
+      "player_scale": 0.7,
       "camera_zoom": 1.15,
       "spawn": [
         480,
@@ -5817,7 +5824,8 @@
       "illustrated_heart_gate": [
         480,
         540
-      ]
+      ],
+      "mount_display_scale": 0.86
     },
     "red_sand_route": {
       "name": "赤砂商路",
@@ -5828,7 +5836,7 @@
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
-      "player_scale": 0.54,
+      "player_scale": 0.7,
       "camera_zoom": 1.15,
       "spawn": [
         480,
@@ -6203,7 +6211,8 @@
             22
           ]
         }
-      ]
+      ],
+      "mount_display_scale": 0.86
     },
     "frost_post": {
       "name": "霜关驿",
@@ -6215,7 +6224,7 @@
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
-      "player_scale": 0.54,
+      "player_scale": 0.7,
       "camera_zoom": 1.15,
       "spawn": [
         480,
@@ -6553,8 +6562,8 @@
             360
           ],
           "size": [
-            128,
-            144
+            141,
+            158
           ],
           "footprint": [
             30,
@@ -6570,8 +6579,8 @@
             400
           ],
           "size": [
-            128,
-            144
+            141,
+            158
           ],
           "footprint": [
             30,
@@ -6603,8 +6612,8 @@
             900
           ],
           "size": [
-            128,
-            144
+            141,
+            158
           ],
           "footprint": [
             30,
@@ -6636,8 +6645,8 @@
             790
           ],
           "size": [
-            128,
-            144
+            141,
+            158
           ],
           "footprint": [
             30,
@@ -6653,8 +6662,8 @@
             270
           ],
           "size": [
-            128,
-            144
+            141,
+            158
           ],
           "footprint": [
             30,
@@ -6662,7 +6671,8 @@
           ],
           "canopy": true
         }
-      ]
+      ],
+      "mount_display_scale": 0.86
     },
     "rift_mine_road": {
       "clear_rects": [
@@ -6759,7 +6769,7 @@
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
-      "player_scale": 0.54,
+      "player_scale": 0.7,
       "camera_zoom": 1.15,
       "spawn": [
         160,
@@ -7170,7 +7180,8 @@
             26
           ]
         }
-      ]
+      ],
+      "mount_display_scale": 0.86
     },
     "rift_mine_vault": {
       "name": "裂谷矿脉",
@@ -7181,7 +7192,7 @@
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
-      "player_scale": 0.54,
+      "player_scale": 0.7,
       "camera_zoom": 1.15,
       "spawn": [
         480,
@@ -7675,7 +7686,8 @@
           385,
           83
         ]
-      ]
+      ],
+      "mount_display_scale": 0.86
     },
     "frost_pass": {
       "name": "冰隘",
@@ -7686,7 +7698,7 @@
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
-      "player_scale": 0.54,
+      "player_scale": 0.7,
       "camera_zoom": 1.15,
       "spawn": [
         480,
@@ -7893,8 +7905,8 @@
             360
           ],
           "size": [
-            128,
-            144
+            141,
+            158
           ],
           "footprint": [
             30,
@@ -7910,8 +7922,8 @@
             400
           ],
           "size": [
-            128,
-            144
+            141,
+            158
           ],
           "footprint": [
             30,
@@ -7943,8 +7955,8 @@
             900
           ],
           "size": [
-            128,
-            144
+            141,
+            158
           ],
           "footprint": [
             30,
@@ -7960,8 +7972,8 @@
             1130
           ],
           "size": [
-            128,
-            144
+            141,
+            158
           ],
           "footprint": [
             30,
@@ -7993,8 +8005,8 @@
             790
           ],
           "size": [
-            128,
-            144
+            141,
+            158
           ],
           "footprint": [
             30,
@@ -8010,8 +8022,8 @@
             270
           ],
           "size": [
-            128,
-            144
+            141,
+            158
           ],
           "footprint": [
             30,
@@ -8019,7 +8031,8 @@
           ],
           "canopy": true
         }
-      ]
+      ],
+      "mount_display_scale": 0.86
     },
     "frost_boardwalk": {
       "name": "霜林栈道",
@@ -8030,7 +8043,7 @@
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
-      "player_scale": 0.54,
+      "player_scale": 0.7,
       "camera_zoom": 1.15,
       "spawn": [
         480,
@@ -8418,8 +8431,8 @@
             360
           ],
           "size": [
-            128,
-            144
+            141,
+            158
           ],
           "footprint": [
             30,
@@ -8435,8 +8448,8 @@
             400
           ],
           "size": [
-            128,
-            144
+            141,
+            158
           ],
           "footprint": [
             30,
@@ -8468,8 +8481,8 @@
             900
           ],
           "size": [
-            128,
-            144
+            141,
+            158
           ],
           "footprint": [
             30,
@@ -8485,8 +8498,8 @@
             1130
           ],
           "size": [
-            128,
-            144
+            141,
+            158
           ],
           "footprint": [
             30,
@@ -8518,8 +8531,8 @@
             790
           ],
           "size": [
-            128,
-            144
+            141,
+            158
           ],
           "footprint": [
             30,
@@ -8535,8 +8548,8 @@
             270
           ],
           "size": [
-            128,
-            144
+            141,
+            158
           ],
           "footprint": [
             30,
@@ -8544,7 +8557,8 @@
           ],
           "canopy": true
         }
-      ]
+      ],
+      "mount_display_scale": 0.86
     },
     "abyss_ring": {
       "name": "渊口外环",
@@ -8556,7 +8570,7 @@
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
-      "player_scale": 0.54,
+      "player_scale": 0.7,
       "camera_zoom": 1.15,
       "spawn": [
         480,
@@ -8923,7 +8937,8 @@
           510,
           1248
         ]
-      ]
+      ],
+      "mount_display_scale": 0.86
     },
     "stele_entry": {
       "name": "归路门厅",
@@ -8932,7 +8947,7 @@
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
-      "player_scale": 0.66,
+      "player_scale": 0.7,
       "camera_zoom": 1.15,
       "spawn": [
         480,
@@ -9226,7 +9241,8 @@
           580,
           1248
         ]
-      ]
+      ],
+      "mount_display_scale": 0.86
     },
     "stele_resonance": {
       "name": "三声共鸣廊",
@@ -9235,7 +9251,7 @@
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
-      "player_scale": 0.66,
+      "player_scale": 0.7,
       "camera_zoom": 1.15,
       "spawn": [
         480,
@@ -9620,7 +9636,8 @@
           580,
           1248
         ]
-      ]
+      ],
+      "mount_display_scale": 0.86
     },
     "stele_core": {
       "name": "碑心",
@@ -9629,7 +9646,7 @@
       "map_cols": 20,
       "map_rows": 26,
       "layout_version": 1,
-      "player_scale": 0.66,
+      "player_scale": 0.7,
       "camera_zoom": 1.15,
       "spawn": [
         480,
@@ -9919,7 +9936,8 @@
           580,
           1248
         ]
-      ]
+      ],
+      "mount_display_scale": 0.86
     }
   }
 }

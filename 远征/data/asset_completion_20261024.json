@@ -1,0 +1,215 @@
+{
+  "tpl_sword_starfall": {
+    "file": "res://assets/completion_20261024/ready/equipment/tpl_sword_starfall.png"
+  },
+  "tpl_spear_windpiercer": {
+    "file": "res://assets/completion_20261024/ready/equipment/tpl_spear_windpiercer.png"
+  },
+  "tpl_staff_glacierheart": {
+    "file": "res://assets/completion_20261024/ready/equipment/tpl_staff_glacierheart.png"
+  },
+  "tpl_hammer_dawnlight": {
+    "file": "res://assets/completion_20261024/ready/equipment/tpl_hammer_dawnlight.png"
+  },
+  "tpl_armor_expedition": {
+    "file": "res://assets/completion_20261024/ready/equipment/tpl_armor_expedition.png"
+  },
+  "tpl_acc_archery_ring": {
+    "file": "res://assets/completion_20261024/ready/equipment/tpl_acc_archery_ring.png"
+  },
+  "rune_dais": {
+    "file": "res://assets/completion_20261024/ready/world/rune_dais.png"
+  },
+  "rune_channel": {
+    "file": "res://assets/completion_20261024/ready/world/rune_channel.png"
+  },
+  "salt_trace": {
+    "file": "res://assets/completion_20261024/ready/world/salt_trace.png"
+  },
+  "itm_frost_letter": {
+    "file": "res://assets/completion_20261024/ready/items/itm_frost_letter.png"
+  },
+  "itm_mine_record": {
+    "file": "res://assets/completion_20261024/ready/items/itm_mine_record.png"
+  },
+  "itm_gate_stamp": {
+    "file": "res://assets/completion_20261024/ready/items/itm_gate_stamp.png"
+  },
+  "itm_frost_reply": {
+    "file": "res://assets/completion_20261024/ready/items/itm_frost_reply.png"
+  },
+  "itm_veil_seal": {
+    "file": "res://assets/completion_20261024/ready/items/itm_veil_seal.png"
+  },
+  "itm_frost_nameplate": {
+    "file": "res://assets/completion_20261024/ready/items/itm_frost_nameplate.png"
+  },
+  "itm_frost_parcel": {
+    "file": "res://assets/completion_20261024/ready/items/itm_frost_parcel.png"
+  },
+  "home_coin": {
+    "file": "res://assets/completion_20261024/ready/home/home_coin.png"
+  },
+  "home_expedition": {
+    "file": "res://assets/completion_20261024/ready/home/home_expedition.png"
+  },
+  "home_soul": {
+    "file": "res://assets/completion_20261024/ready/home/home_soul.png"
+  },
+  "home_honor": {
+    "file": "res://assets/completion_20261024/ready/home/home_honor.png"
+  },
+  "home_bag": {
+    "file": "res://assets/completion_20261024/ready/home/home_bag.png"
+  },
+  "home_food": {
+    "file": "res://assets/completion_20261024/ready/home/home_food.png"
+  },
+  "beast_tracks": {
+    "file": "res://assets/completion_20261024/ready/world/beast_tracks.png"
+  },
+  "boot_tracks": {
+    "file": "res://assets/completion_20261024/ready/world/boot_tracks.png"
+  },
+  "ground_fissure": {
+    "file": "res://assets/completion_20261024/ready/world/ground_fissure.png"
+  },
+  "ground_scuff": {
+    "file": "res://assets/completion_20261024/ready/world/ground_scuff.png"
+  },
+  "work_helmet": {
+    "file": "res://assets/completion_20261024/ready/world/work_helmet.png"
+  },
+  "mine_wheel": {
+    "file": "res://assets/completion_20261024/ready/world/mine_wheel.png"
+  },
+  "turtle_tracks": {
+    "file": "res://assets/completion_20261024/ready/world/turtle_tracks.png"
+  },
+  "rubbing_page": {
+    "file": "res://assets/completion_20261024/ready/world/rubbing_page.png"
+  },
+  "shallow_flood": {
+    "file": "res://assets/completion_20261024/ready/world/shallow_flood.png"
+  },
+  "supply_sack": {
+    "file": "res://assets/completion_20261024/ready/world/supply_sack.png"
+  },
+  "cargo_tag": {
+    "file": "res://assets/completion_20261024/ready/world/cargo_tag.png"
+  },
+  "mine_cart": {
+    "file": "res://image/main_world/art_v2/story_props_atlas.png",
+    "rect": [
+      81,
+      178,
+      334,
+      258
+    ]
+  },
+  "brazier": {
+    "file": "res://image/main_world/art_v2/story_props_atlas.png",
+    "rect": [
+      546,
+      82,
+      239,
+      355
+    ]
+  },
+  "rope_post": {
+    "file": "res://image/main_world/art_v2/story_props_atlas.png",
+    "rect": [
+      84,
+      946,
+      287,
+      294
+    ]
+  },
+  "tide_cargo": {
+    "file": "res://image/main_world/art_v2/story_props_atlas.png",
+    "rect": [
+      517,
+      1383,
+      302,
+      263
+    ]
+  },
+  "vent": {
+    "file": "res://image/main_world/art_v2/props_atlas.png",
+    "rect": [
+      456,
+      933,
+      399,
+      350
+    ]
+  },
+  "lantern": {
+    "file": "res://image/main_world/art_v2/return_props_atlas.png",
+    "rect": [
+      66,
+      22,
+      193,
+      349
+    ]
+  },
+  "letter_prop": {
+    "file": "res://image/main_world/art_v2/return_props_atlas.png",
+    "rect": [
+      406,
+      160,
+      273,
+      197
+    ]
+  },
+  "rune_stone": {
+    "file": "res://image/main_world/art_v2/return_props_atlas.png",
+    "rect": [
+      424,
+      408,
+      243,
+      314
+    ]
+  },
+  "road_ledger": {
+    "file": "res://image/main_world/art_v2/return_props_atlas.png",
+    "rect": [
+      27,
+      736,
+      324,
+      310
+    ]
+  },
+  "tide_board": {
+    "file": "res://image/main_world/art_v2/return_props_atlas.png",
+    "rect": [
+      404,
+      745,
+      278,
+      314
+    ]
+  },
+  "notice": {
+    "file": "res://assets/world/reference_complete_20261011/ready/signpost.png"
+  },
+  "bridge": {
+    "file": "res://assets/world/reference_complete_20261011/ready/bridge.png"
+  },
+  "ledger": {
+    "file": "res://assets/world/reference_complete_20261011/ready/ledger.png"
+  },
+  "boat": {
+    "file": "res://image/main_world/tideflat_props/tf_rowboat.png"
+  },
+  "smoke": {
+    "file": "res://image/generated_001_100/source/064_deco_bg_mist.png"
+  },
+  "bridge_planks": {
+    "file": "res://assets/world/reference_complete_20261011/ready/bridge.png",
+    "rect": [
+      34,
+      72,
+      78,
+      35
+    ]
+  }
+}

@@ -2,10 +2,75 @@
   "version": 2,
   "comment": "荣誉仅用于演武辅助材料。金币、远征币、魂晶不能在此互换。",
   "entries": [
-    {"id": "enhance_stone", "name": "强化石 ×3", "cost": 80, "give": {"item_enhance_stone": 3}, "icon": "itm_enhance_stone"},
-    {"id": "refine_stone", "name": "精炼石 ×2", "cost": 120, "give": {"item_refine_stone": 2}, "icon": "itm_refine_stone"},
-    {"id": "lock_rune", "name": "锁定符 ×1", "cost": 160, "give": {"item_lock_rune": 1}, "icon": "itm_lock_rune"},
-    {"id": "gem_atk", "name": "攻击宝石·叁", "cost": 240, "give": {"item_gem_atk_3": 1}, "icon": "gem_atk_3"},
-    {"id": "gem_hp", "name": "生命宝石·叁", "cost": 240, "give": {"item_gem_hp_3": 1}, "icon": "gem_hp_3"}
+    {
+      "id": "enhance_stone",
+      "name": "强化石 ×3",
+      "cost": 80,
+      "give": {
+        "item_enhance_stone": 3
+      },
+      "icon": "itm_enhance_stone",
+      "category": "material",
+      "display_template": "compact",
+      "description": "用于强化装备，提升装备的基础属性。"
+    },
+    {
+      "id": "refine_stone",
+      "name": "精炼石 ×2",
+      "cost": 120,
+      "give": {
+        "item_refine_stone": 2
+      },
+      "icon": "itm_refine_stone",
+      "category": "material",
+      "display_template": "compact",
+      "description": "用于精炼装备，打磨装备属性。"
+    },
+    {
+      "id": "lock_rune",
+      "name": "锁定符 ×1",
+      "cost": 160,
+      "give": {
+        "item_lock_rune": 1
+      },
+      "icon": "itm_lock_rune",
+      "category": "material",
+      "display_template": "compact",
+      "description": "用于锁定装备属性，保留需要的词条。"
+    },
+    {
+      "id": "gem_atk",
+      "name": "攻击宝石·叁",
+      "cost": 240,
+      "give": {
+        "item_gem_atk_3": 1
+      },
+      "icon": "gem_atk_3",
+      "category": "gem",
+      "display_template": "compact",
+      "description": "可镶嵌于装备宝石孔，提升攻击属性。"
+    },
+    {
+      "id": "gem_hp",
+      "name": "生命宝石·叁",
+      "cost": 240,
+      "give": {
+        "item_gem_hp_3": 1
+      },
+      "icon": "gem_hp_3",
+      "category": "gem",
+      "display_template": "compact",
+      "description": "可镶嵌于装备宝石孔，提升生命属性。"
+    }
+  ],
+  "categories": [
+    {
+      "id": "material",
+      "name": "锻造材料"
+    },
+    {
+      "id": "gem",
+      "name": "宝石"
+    }
   ]
 }

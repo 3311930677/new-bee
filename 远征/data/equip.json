@@ -846,7 +846,7 @@
       "name": "陨星破阵重剑",
       "slot": "sword",
       "rarity": 4,
-      "icon": "slot_sword",
+      "icon": "tpl_sword_starfall",
       "base": {
         "atk": 68,
         "def": 12
@@ -866,7 +866,7 @@
       "name": "朔风贯影长枪",
       "slot": "spear",
       "rarity": 4,
-      "icon": "slot_spear",
+      "icon": "tpl_spear_windpiercer",
       "base": {
         "atk": 72,
         "crit": 0.03
@@ -886,7 +886,7 @@
       "name": "凝霜观星法杖",
       "slot": "staff",
       "rarity": 4,
-      "icon": "slot_staff",
+      "icon": "tpl_staff_glacierheart",
       "base": {
         "atk": 74,
         "hp": 90
@@ -906,7 +906,7 @@
       "name": "破晓圣辉战锤",
       "slot": "hammer",
       "rarity": 4,
-      "icon": "slot_hammer",
+      "icon": "tpl_hammer_dawnlight",
       "base": {
         "atk": 64,
         "hp": 180
@@ -926,7 +926,7 @@
       "name": "远征戍卫重铠",
       "slot": "armor",
       "rarity": 4,
-      "icon": "slot_armor",
+      "icon": "tpl_armor_expedition",
       "base": {
         "def": 38,
         "hp": 320
@@ -946,7 +946,7 @@
       "name": "穿杨听风扳指",
       "slot": "accessory",
       "rarity": 4,
-      "icon": "slot_accessory",
+      "icon": "tpl_acc_archery_ring",
       "base": {
         "atk": 26,
         "crit": 0.04
