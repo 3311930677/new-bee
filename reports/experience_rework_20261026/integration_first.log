@@ -1,0 +1,458 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+WARNING: 存档处于锁定状态，本次写盘已跳过（原因：；备份：）
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:738)
+       [1] track (res://src/world/WorldPoints.gd:90)
+       [2] poi_layout (res://tools/VerifyExperienceRework.gd:169)
+       [3] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: 存档处于锁定状态，本次写盘已跳过（原因：；备份：）
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:738)
+       [1] do_exchange (res://src/ui/HonorMarketPanel.gd:245)
+       [2] market (res://tools/VerifyExperienceRework.gd:107)
+       [3] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: 存档处于锁定状态，本次写盘已跳过（原因：；备份：）
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:738)
+       [1] track (res://src/world/WorldPoints.gd:90)
+       [2] poi_layout (res://tools/VerifyExperienceRework.gd:169)
+       [3] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: EXPERIENCE_FAIL all configured products
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyExperienceRework.gd:15)
+       [1] market (res://tools/VerifyExperienceRework.gd:82)
+       [2] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: EXPERIENCE_FAIL material category
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyExperienceRework.gd:15)
+       [1] market (res://tools/VerifyExperienceRework.gd:85)
+       [2] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: 存档处于锁定状态，本次写盘已跳过（原因：；备份：）
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:738)
+       [1] track (res://src/world/WorldPoints.gd:90)
+       [2] poi_layout (res://tools/VerifyExperienceRework.gd:169)
+       [3] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_0 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_1 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_10 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_11 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_12 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_13 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_14 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_15 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_16 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_17 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_18 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_19 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_2 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_20 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_21 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_22 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_23 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_24 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_25 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_26 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_27 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_28 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_29 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_3 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_30 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_31 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_32 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_33 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_34 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_35 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_36 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_37 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_38 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_39 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_4 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_40 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_41 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_42 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_43 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_44 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_5 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_6 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_7 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_8 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_review_material_9 resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6218)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:181)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+SCRIPT ERROR: Invalid access to property or key 'id' on a base object of type 'Dictionary'.
+   at: world_flow (res://tools/VerifyExperienceRework.gd:214)
+   GDScript backtrace (most recent call first):
+       [0] world_flow (res://tools/VerifyExperienceRework.gd:214)
+       [1] _ready (res://tools/VerifyExperienceRework.gd:66)
+       [2] bag_drag (res://tools/VerifyExperienceRework.gd:209)
+       [3] drop (res://tools/VerifyExperienceRework.gd:22)
+       [4] frames (res://tools/VerifyExperienceRework.gd:18)
+EXPERIENCE_REWORK checks=63 failures=2

@@ -1,0 +1,18 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 Core Profile Context 23.20.60.03.240314 - Compatibility - Using Device: ATI Technologies Inc. - AMD Radeon 780M Graphics
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+ERROR: EXPERIENCE_WORLD_FAIL narrow frame 2 rect=[P: (4.0, 32.0), S: (312.0, 576.0)] safe=[P: (8.0, 24.0), S: (304.0, 592.0)]
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyExperienceWorld.gd:11)
+       [1] narrow_layouts (res://tools/VerifyExperienceWorld.gd:141)
+       [2] frames (res://tools/VerifyExperienceWorld.gd:14)
+ERROR: EXPERIENCE_WORLD_FAIL narrow frame 3 rect=[P: (22.0, 38.0), S: (276.0, 608.0)] safe=[P: (8.0, 24.0), S: (304.0, 592.0)]
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyExperienceWorld.gd:11)
+       [1] narrow_layouts (res://tools/VerifyExperienceWorld.gd:141)
+       [2] frames (res://tools/VerifyExperienceWorld.gd:14)
+EXPERIENCE_WORLD maps=18 checks=137 failures=2

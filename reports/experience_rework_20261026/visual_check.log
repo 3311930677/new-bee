@@ -1,0 +1,34 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 Core Profile Context 23.20.60.03.240314 - Compatibility - Using Device: ATI Technologies Inc. - AMD Radeon 780M Graphics
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+WARNING: 存档处于锁定状态，本次写盘已跳过（原因：；备份：）
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:742)
+       [1] track (res://src/world/WorldPoints.gd:90)
+       [2] poi_layout (res://tools/VerifyExperienceRework.gd:169)
+       [3] shot (res://tools/VerifyExperienceRework.gd:29)
+WARNING: 存档处于锁定状态，本次写盘已跳过（原因：；备份：）
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:742)
+       [1] do_exchange (res://src/ui/HonorMarketPanel.gd:245)
+       [2] market (res://tools/VerifyExperienceRework.gd:107)
+       [3] shot (res://tools/VerifyExperienceRework.gd:29)
+WARNING: 存档处于锁定状态，本次写盘已跳过（原因：；备份：）
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:742)
+       [1] track (res://src/world/WorldPoints.gd:90)
+       [2] poi_layout (res://tools/VerifyExperienceRework.gd:169)
+       [3] shot (res://tools/VerifyExperienceRework.gd:29)
+WARNING: 存档处于锁定状态，本次写盘已跳过（原因：；备份：）
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:742)
+       [1] track (res://src/world/WorldPoints.gd:90)
+       [2] poi_layout (res://tools/VerifyExperienceRework.gd:169)
+       [3] shot (res://tools/VerifyExperienceRework.gd:29)
+EXPERIENCE_REWORK checks=91 failures=0

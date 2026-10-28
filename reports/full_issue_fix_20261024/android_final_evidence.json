@@ -1,0 +1,247 @@
+{
+  "original_phone_verified": false,
+  "screen_profiles": [
+    {
+      "id": "final_phone16",
+      "checks": 123,
+      "photos": 41,
+      "device": {
+        "cutouts": "[[P: (492.0, 0.0), S: (118.0, 128.0)]]",
+        "mix_rate": 44100.0,
+        "model": "Android SDK built for x86_64",
+        "os": "Android",
+        "safe": "[P: (0.0, 85.3), S: (480.0, 767.7)]",
+        "system_safe": "[P: (0, 128), S: (720, 1152)]",
+        "version": "35.12368160",
+        "viewport": "[P: (0.0, 0.0), S: (480.0, 853.0)]",
+        "window": "(720, 1280)"
+      }
+    },
+    {
+      "id": "final_phone20",
+      "checks": 123,
+      "photos": 41,
+      "device": {
+        "cutouts": "[[P: (0.0, 0.0), S: (204.0, 204.0)]]",
+        "mix_rate": 44100.0,
+        "model": "Android SDK built for x86_64",
+        "os": "Android",
+        "safe": "[P: (0.0, 90.60999), S: (480.0, 975.3899)]",
+        "system_safe": "[P: (0, 204), S: (1080, 2196)]",
+        "version": "35.12368160",
+        "viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]",
+        "window": "(1080, 2400)"
+      }
+    },
+    {
+      "id": "final_tablet",
+      "checks": 123,
+      "photos": 41,
+      "device": {
+        "cutouts": "[[P: (984.0, 0.0), S: (236.0, 256.0)]]",
+        "mix_rate": 44100.0,
+        "model": "Android SDK built for x86_64",
+        "os": "Android",
+        "safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+        "system_safe": "[P: (0, 256), S: (1600, 2304)]",
+        "version": "35.12368160",
+        "viewport": "[P: (0.0, 0.0), S: (480.0, 800.0)]",
+        "window": "(1600, 2560)"
+      }
+    }
+  ],
+  "maps": {
+    "maps": 18,
+    "checks": 109,
+    "photos": 91
+  },
+  "mounts": {
+    "static_checks": 384,
+    "static_photos": 256,
+    "actual_moving_checks": 96,
+    "actual_moving_cases": 16
+  },
+  "native_recordings": [
+    {
+      "id": "final_motion_horse_zs_walk",
+      "checks": 7,
+      "complete_loops_per_direction": {
+        "walk_down": 4,
+        "walk_right": 4,
+        "walk_up": 4,
+        "walk_left": 4
+      },
+      "video_sha256": "3d0cd19f53440fef521783b5f807b21a1d184dcdc915400165ba6fbd85ef34f4"
+    },
+    {
+      "id": "final_motion_horse_zs_run",
+      "checks": 7,
+      "complete_loops_per_direction": {
+        "run_down": 5,
+        "run_right": 5,
+        "run_up": 5,
+        "run_left": 4
+      },
+      "video_sha256": "b7622e182d8fc6927b39295f9c90149e3c4d4eac8766d1dae5c8ac85ba5c9355"
+    },
+    {
+      "id": "final_motion_horse_ck_walk",
+      "checks": 7,
+      "complete_loops_per_direction": {
+        "walk_down": 4,
+        "walk_right": 4,
+        "walk_up": 4,
+        "walk_left": 4
+      },
+      "video_sha256": "2abe6e3bf63f7dd5af530b65197849d21b81b2ec9b5150a668d4fd2e9ad1d2c8"
+    },
+    {
+      "id": "final_motion_horse_ck_run",
+      "checks": 7,
+      "complete_loops_per_direction": {
+        "run_down": 5,
+        "run_right": 4,
+        "run_up": 4,
+        "run_left": 5
+      },
+      "video_sha256": "a2d1e7e0072d8a23ec799ba7d4bc113e8df45e4053418b23bfa114615c1f644f"
+    },
+    {
+      "id": "final_motion_horse_fs_walk",
+      "checks": 7,
+      "complete_loops_per_direction": {
+        "walk_down": 4,
+        "walk_right": 4,
+        "walk_up": 4,
+        "walk_left": 4
+      },
+      "video_sha256": "ef51a96e86d44252d7b9cefc9c6e3f1ed8f1bbba701bc3b00dcb3cb76c35e8c6"
+    },
+    {
+      "id": "final_motion_horse_fs_run",
+      "checks": 7,
+      "complete_loops_per_direction": {
+        "run_down": 5,
+        "run_right": 5,
+        "run_up": 4,
+        "run_left": 4
+      },
+      "video_sha256": "2976181dfee50b7c1c0d2f112cd923a58fecc8231beb3722acb52c58c26845c3"
+    },
+    {
+      "id": "final_motion_horse_fz_walk",
+      "checks": 7,
+      "complete_loops_per_direction": {
+        "walk_down": 4,
+        "walk_right": 4,
+        "walk_up": 4,
+        "walk_left": 4
+      },
+      "video_sha256": "4efec51ca4f66ea52e82e6d48ed5f165a88c2cf6322924fbe70590975ee12bc1"
+    },
+    {
+      "id": "final_motion_horse_fz_run",
+      "checks": 7,
+      "complete_loops_per_direction": {
+        "run_down": 5,
+        "run_right": 4,
+        "run_up": 5,
+        "run_left": 5
+      },
+      "video_sha256": "9728d00eee9d3f0609bc95090f1e64a31085ce9bf6080a7f7aa6a76f31f1134f"
+    },
+    {
+      "id": "final_motion_bear_zs_walk",
+      "checks": 7,
+      "complete_loops_per_direction": {
+        "walk_down": 4,
+        "walk_right": 4,
+        "walk_up": 4,
+        "walk_left": 4
+      },
+      "video_sha256": "6b456d173b24c8a30eec80c0cda4bfc371bf63e8066edaffb0e7d6a61e70e5a1"
+    },
+    {
+      "id": "final_motion_bear_zs_run",
+      "checks": 7,
+      "complete_loops_per_direction": {
+        "run_down": 5,
+        "run_right": 4,
+        "run_up": 4,
+        "run_left": 5
+      },
+      "video_sha256": "54e7be86d09d821d230e1c78f40d3f9a8ab6173f693921a38a091fd9aa67df91"
+    },
+    {
+      "id": "final_motion_bear_ck_walk",
+      "checks": 7,
+      "complete_loops_per_direction": {
+        "walk_down": 4,
+        "walk_right": 4,
+        "walk_up": 4,
+        "walk_left": 4
+      },
+      "video_sha256": "9b00775f2a1207f7934e46cd8d335a991cd49b1decd1edfe2bc23020e791a819"
+    },
+    {
+      "id": "final_motion_bear_ck_run",
+      "checks": 7,
+      "complete_loops_per_direction": {
+        "run_down": 5,
+        "run_right": 5,
+        "run_up": 4,
+        "run_left": 5
+      },
+      "video_sha256": "0b0e00c159518a417ac328f4db94695bd7778e9db70faaf0bfcdb955e8fe7b12"
+    },
+    {
+      "id": "final_motion_bear_fs_walk",
+      "checks": 7,
+      "complete_loops_per_direction": {
+        "walk_down": 4,
+        "walk_right": 4,
+        "walk_up": 4,
+        "walk_left": 4
+      },
+      "video_sha256": "6eebef47a02535aa85df0b474ac848b03a392f3b10f7bc8b34deb9d4fbbfd80c"
+    },
+    {
+      "id": "final_motion_bear_fs_run",
+      "checks": 7,
+      "complete_loops_per_direction": {
+        "run_down": 5,
+        "run_right": 5,
+        "run_up": 4,
+        "run_left": 5
+      },
+      "video_sha256": "4a876853adea06e0c2f3f2d226f08fb57d6a7d27a227bb86d8541a74b3255a91"
+    },
+    {
+      "id": "final_motion_bear_fz_walk",
+      "checks": 7,
+      "complete_loops_per_direction": {
+        "walk_down": 4,
+        "walk_right": 4,
+        "walk_up": 4,
+        "walk_left": 4
+      },
+      "video_sha256": "8b79dd408eceebe0a8e748deaac55fef714213bface4a01c094e3a84ee6b0a32"
+    },
+    {
+      "id": "final_motion_bear_fz_run",
+      "checks": 7,
+      "complete_loops_per_direction": {
+        "run_down": 5,
+        "run_right": 4,
+        "run_up": 5,
+        "run_left": 5
+      },
+      "video_sha256": "c3e4af1a6682762e4122dcf61bbe2fe0b9a48c8b0a3f8c6ff1aab0df6544e830"
+    }
+  ],
+  "native_keyboard": {
+    "height": 517,
+    "focus": "Password:<LineEdit#226693744452>",
+    "restores": true
+  }
+}

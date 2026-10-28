@@ -1,0 +1,28 @@
+﻿Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+REFERENCE_COMPLETE_FAIL checks=179 failures=4
+ERROR: REFERENCE_COMPLETE_FAIL lorin_wilds original hero scale .65
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyReferenceComplete.gd:6)
+       [1] _ready (res://tools/VerifyReferenceComplete.gd:50)
+       [2] spawn_map (res://tools/VerifyReferenceComplete.gd:21)
+ERROR: REFERENCE_COMPLETE_FAIL maple_road original hero scale .65
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyReferenceComplete.gd:6)
+       [1] _ready (res://tools/VerifyReferenceComplete.gd:50)
+       [2] spawn_map (res://tools/VerifyReferenceComplete.gd:21)
+ERROR: REFERENCE_COMPLETE_FAIL keyboard prioritises form
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyReferenceComplete.gd:6)
+       [1] _ready (res://tools/VerifyReferenceComplete.gd:115)
+       [2] frames (res://tools/VerifyReferenceComplete.gd:8)
+ERROR: REFERENCE_COMPLETE_FAIL keyboard prioritises form
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyReferenceComplete.gd:6)
+       [1] _ready (res://tools/VerifyReferenceComplete.gd:115)
+       [2] frames (res://tools/VerifyReferenceComplete.gd:8)
+
