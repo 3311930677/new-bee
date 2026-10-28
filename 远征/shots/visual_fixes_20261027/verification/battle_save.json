@@ -1,0 +1,299 @@
+{
+	"account": "",
+	"arena": {
+		"best_streak": 0,
+		"losses": 0,
+		"score": 1000,
+		"streak": 0,
+		"wins": 0
+	},
+	"audio": {
+		"bgm": 0.7,
+		"mute": false,
+		"sfx": 0.68
+	},
+	"avatar_custom": "custom_1789738666_22025941.png",
+	"avatar_id": "fox",
+	"avatar_use_custom": false,
+	"city": {
+		"acts": {},
+		"built": [
+			"hall",
+			"gate",
+			"archive",
+			"kennel",
+			"barracks",
+			"storehouse",
+			"stable",
+			"forge"
+		],
+		"code": "",
+		"day": "",
+		"streak": 0,
+		"visits": []
+	},
+	"gender": "男",
+	"items": {
+		"aptitude_fruit": 2,
+		"enhance_stone": 2,
+		"evolve_crystal": 1,
+		"refine_stone": 6,
+		"ticket_sweep": 1,
+		"ticket_ten": 0
+	},
+	"player_name": "",
+	"prog": {
+		"act1": {
+			"discoveries": [],
+			"first_kills": [],
+			"mentor": {
+				"mastery": {},
+				"unlocked": [],
+				"variants": {}
+			},
+			"side_quests": {},
+			"tracked": ""
+		},
+		"active_run": {},
+		"codex_claimed": [],
+		"dungeon_trials": {},
+		"economy": {
+			"bought": {},
+			"day": 1.0,
+			"history": {},
+			"next_tx": 1.0,
+			"orders": {},
+			"seed": 7919.0,
+			"sold": {},
+			"work": {}
+		},
+		"equip": {},
+		"exp": 0,
+		"fishing": {},
+		"flags": {},
+		"gacha": {
+			"free_day": "",
+			"free_last": "",
+			"free_streak": 0,
+			"pity": 0
+		},
+		"inventory": {
+			"instances": [
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0.0,
+					"rarity": 2.0,
+					"slot": "accessory",
+					"sockets": 3.0,
+					"source_id": "res|stele_cavern#stele_cavern:0#52306205|victory",
+					"tpl": "tpl_accessory_moon",
+					"uid": 1.0
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0.0,
+					"rarity": 2.0,
+					"slot": "armor",
+					"sockets": 3.0,
+					"source_id": "res|rift_mine_road#rift_mine_road:3#123437844|victory",
+					"tpl": "tpl_armor_scale",
+					"uid": 2.0
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0.0,
+					"rarity": 2.0,
+					"slot": "armor",
+					"sockets": 3.0,
+					"source_id": "res|rift_mine_vault#rift_mine_vault:0#248520041|victory",
+					"tpl": "tpl_armor_scale",
+					"uid": 3.0
+				}
+			],
+			"next_uid": 4,
+			"pending": []
+		},
+		"last_ts": 1793036922,
+		"ledger": {
+			"applied": [
+				"res|stele_cavern#stele_cavern:0#52306205|victory",
+				"res|rift_mine_road#rift_mine_road:3#123437844|victory",
+				"res|rift_mine_vault#rift_mine_vault:0#248520041|victory"
+			]
+		},
+		"level": 60,
+		"lore_beats": {},
+		"lore_seen": false,
+		"main_world": {
+			"bosses_cleared": [
+				"stele_cavern",
+				"rift_mine_vault"
+			],
+			"encounters": {
+				"rift_mine_road#rift_mine_road:3#123437844": {
+					"enemy_id": "mon_cryptspider",
+					"result": "victory",
+					"result_id": "res|rift_mine_road#rift_mine_road:3#123437844|victory",
+					"spawn_id": "rift_mine_road:3",
+					"status": "return",
+					"tick": 123437844.0
+				},
+				"rift_mine_vault#rift_mine_vault:0#171930126": {
+					"enemy_id": "mon_redsand_guard",
+					"spawn_id": "rift_mine_vault:0",
+					"status": "failed",
+					"tick": 171930126.0
+				},
+				"rift_mine_vault#rift_mine_vault:0#248520041": {
+					"enemy_id": "mon_redsand_guard",
+					"result": "victory",
+					"result_id": "res|rift_mine_vault#rift_mine_vault:0#248520041|victory",
+					"spawn_id": "rift_mine_vault:0",
+					"status": "return",
+					"tick": 248520041.0
+				},
+				"stele_cavern#stele_cavern:0#52306205": {
+					"enemy_id": "mon_stele_warden",
+					"result": "victory",
+					"result_id": "res|stele_cavern#stele_cavern:0#52306205|victory",
+					"spawn_id": "stele_cavern:0",
+					"status": "return",
+					"tick": 52306205.0
+				},
+				"stele_core#stele_core:0#340095697": {
+					"enemy_id": "mon_abyss_avatar",
+					"spawn_id": "stele_core:0",
+					"status": "failed",
+					"tick": 340095697.0
+				}
+			},
+			"entities": {},
+			"layout_version": 1.0,
+			"map_id": "stele_core",
+			"position": [
+				502.0,
+				607.0
+			],
+			"respawn_at": {},
+			"respawn_by_map": {
+				"broken_slope": {},
+				"frost_post": {},
+				"red_sand_route": {},
+				"rift_mine_road": {
+					"3": 1792083385.035
+				},
+				"rift_mine_vault": {},
+				"shenyuan_port": {},
+				"stele_cavern": {},
+				"stele_core": {}
+			},
+			"visited_maps": [
+				"broken_slope",
+				"stele_cavern",
+				"shenyuan_port",
+				"red_sand_route",
+				"frost_post",
+				"rift_mine_road",
+				"rift_mine_vault",
+				"stele_core"
+			]
+		},
+		"map_destination": "",
+		"mounts": {
+			"active": "",
+			"owned": {},
+			"riding": false
+		},
+		"oaths": {},
+		"pet_stat": {
+			"pet_foxfire": {
+				"brk": 0.0,
+				"exp": 0.0,
+				"lv": 1.0,
+				"star": 1.0
+			},
+			"pet_frostwolf": {
+				"brk": 0.0,
+				"exp": 0.0,
+				"lv": 1.0,
+				"star": 1.0
+			}
+		},
+		"pets": [
+			"pet_frostwolf",
+			"pet_foxfire",
+			"pet_rockturtle",
+			"pet_thunderhawk",
+			"pet_tide_gull",
+			"pet_eyescat",
+			"pet_holydeer",
+			"pet_emberling",
+			"pet_shadowviper",
+			"pet_return_deer"
+		],
+		"quest_postings": {},
+		"relic_hunts": {},
+		"road_mail": {
+			"archive": [],
+			"deliveries": 0,
+			"encounter": "",
+			"last_claim_day": 0,
+			"observed_clues": [],
+			"penalty_gold": 0,
+			"phase": "",
+			"route": "",
+			"run_id": "",
+			"run_seq": 0,
+			"solution": "",
+			"status": "idle"
+		},
+		"settings": {},
+		"skills": {},
+		"special_events": {
+			"records": {},
+			"tracked": ""
+		},
+		"story": {
+			"done": [],
+			"goals": {},
+			"step": "s01"
+		},
+		"talents": {
+			"fury_1": 2.0,
+			"guard_1": 3.0,
+			"spirit_1": 3.0
+		},
+		"tips_seen": {},
+		"titles": {
+			"active": "",
+			"owned": []
+		},
+		"trade_contracts": {},
+		"world_cleared": {},
+		"world_commissions": {},
+		"worlds_unlocked": 1
+	},
+	"quest": {
+		"active": {},
+		"claimed": [],
+		"day": "2026-10-15",
+		"offer": [
+			"q_slay_forest",
+			"q_deliver_sweep"
+		]
+	},
+	"selected_role": "",
+	"version": 7,
+	"wallet": {
+		"expedition": 0,
+		"gold": 5765,
+		"honor": 0,
+		"soul": 0
+	}
+}

@@ -117,7 +117,7 @@ func _play_sfx(name: String,jitter: float) -> void:
 	if muted() or sfx_vol() <= 0 or _suspended: return
 	var now := Time.get_ticks_msec()
 	var kind := category(name)
-	var cooldown := 65 if kind == "Combat" else 80 if kind == "UI" else 140 if kind == "Rewards" else 90
+	var cooldown := 35 if name.begins_with("hoof_") else 65 if kind == "Combat" else 80 if kind == "UI" else 140 if kind == "Rewards" else 90
 	if now-int(_last_events.get(name,-10000)) < cooldown: return
 	var stream := _stream(name)
 	if stream == null: return
@@ -127,7 +127,16 @@ func _play_sfx(name: String,jitter: float) -> void:
 		var candidate := _sfx_pool[(_sfx_i+offset)%_sfx_pool.size()]
 		if candidate.playing and candidate.get_meta("category","") == kind: active += 1
 		if not candidate.playing and voice == null: voice = candidate
-	if active >= int(LIMITS[kind]): return
+	if active >= int(LIMITS[kind]):
+		# Consecutive hoof contacts replace the previous tail in the same one voice.
+		# A four-beat gait must not lose the next footfall to a still-playing sample.
+		voice=null
+		if name.begins_with("hoof_"):
+			for candidate in _sfx_pool:
+				if candidate.playing and String(candidate.get_meta("sound","")).begins_with("hoof_"):
+					voice=candidate
+					break
+		if voice==null:return
 	if voice == null:
 		var weakest := priority(name)
 		for candidate in _sfx_pool:

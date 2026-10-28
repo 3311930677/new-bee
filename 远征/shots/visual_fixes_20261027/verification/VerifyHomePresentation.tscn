@@ -1,0 +1,4 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://shots/visual_fixes_20261027/verification/VerifyHomePresentation.gd" id="1"]
+[node name="HomeRegression" type="Node"]
+script = ExtResource("1")

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://shots/visual_fixes_20261026/round1/CaptureReview.gd" id="1"]
+
+[node name="CaptureReview" type="Node"]
+script = ExtResource("1")

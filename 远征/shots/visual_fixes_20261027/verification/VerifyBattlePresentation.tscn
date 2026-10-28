@@ -1,0 +1,4 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://shots/visual_fixes_20261027/verification/VerifyBattlePresentation.gd" id="1"]
+[node name="VisualRegression" type="Node"]
+script = ExtResource("1")

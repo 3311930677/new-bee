@@ -22,12 +22,14 @@ var _safe:=Rect2()
 var _acting_uid:=-1
 var _acting_until:=0
 var _title:Control
+var _enemy_scroll:ScrollContainer
 var _enemy_strip:HBoxContainer
 var _hp_graph:Control
 var _pet_graph:Control
 var _energy_graph:Control
 var _page_energy_graph:Control
 var _enemy_key:=""
+var _target_hint:Label
 var _auto_focus_uid:=-1
 var _portraits:Dictionary={}
 var _badges:Dictionary={}
@@ -49,7 +51,15 @@ func _ready() -> void:
 	_energy=UI.label("","tag",UI.BLUE)
 	add_child(_energy)
 	for label in [_now,_hp,_pet,_energy]:label.visible=false
-	_enemy_strip=HBoxContainer.new();_enemy_strip.add_theme_constant_override("separation",4);add_child(_enemy_strip)
+	_enemy_scroll=preload("res://src/ui/TouchScroll.gd").new()
+	_enemy_scroll.horizontal_gesture=true
+	_enemy_scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_SHOW_NEVER
+	_enemy_scroll.vertical_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
+	add_child(_enemy_scroll)
+	_enemy_strip=HBoxContainer.new();_enemy_strip.add_theme_constant_override("separation",4);_enemy_scroll.add_child(_enemy_strip)
+	_target_hint=UI.label("敌方目标 · 横向滑动选择","tag",UI.AGED)
+	_target_hint.add_theme_font_size_override("font_size",G.FS_DENSE)
+	add_child(_target_hint)
 	_hp_graph=Fix.Gauge.new("旅人");add_child(_hp_graph)
 	_pet_graph=Fix.Gauge.new("伙伴");add_child(_pet_graph)
 	_energy_graph=Fix.Gauge.new("能量",UI.BLUE);add_child(_energy_graph)
@@ -68,7 +78,7 @@ func _ready() -> void:
 	_add("auto","自动",func():host.sim.auto_mode=not host.sim.auto_mode;refresh())
 	host._auto_btn=_buttons.auto
 	host._speed_btn=_buttons.speed
-	_buttons.attack.tooltip_text="手动攻击当前选定目标；开启「自动」可持续自动攻击"
+	_buttons.attack.tooltip_text="指定普攻集火目标；普攻持续进行，自动模式同时托管技能"
 	_buttons.target.tooltip_text="循环选择可攻击的敌方目标，或直接点击敌方单位/目标卡"
 	var title_text: String = {"normal":"遭遇战","elite":"精英战","boss":"首领战"}.get(String(host._cfg.get("enemy",{}).get("node_type","normal")),"遭遇战")
 	var title := BattleTitleBanner.new(title_text)
@@ -132,9 +142,15 @@ func layout(safe_override:Rect2=Rect2()) -> void:
 	_safe=safe_override if safe_override.has_area() else G.ui_safe_rect(self)
 	var x:=_safe.position.x
 	var bottom:=_safe.end.y
-	Page.place(_title,Vector2(x+160,_safe.position.y+12),Vector2(150,36))
-	Page.place(tray,Vector2(x,bottom-216),Vector2(_safe.size.x,216))
-	Page.place(_enemy_strip,Vector2(x+12,bottom-208),Vector2(_safe.size.x-24,44))
+	var narrow:=_safe.size.x<400
+	Page.place(_title,Vector2(x+(_safe.size.x-150)*.5,_safe.position.y+(60 if narrow else 12)),Vector2(150,36))
+	if host._field!=null:
+		var field_scale:=minf(1.0,_safe.size.x/480.0)
+		host._field.scale=Vector2.ONE*field_scale
+		host._field.position.x=x+(_safe.size.x-480*field_scale)*.5
+	Page.place(tray,Vector2(x,bottom-264),Vector2(_safe.size.x,264))
+	Page.place(_target_hint,Vector2(x+16,bottom-260),Vector2(_safe.size.x-32,22))
+	Page.place(_enemy_scroll,Vector2(x+12,bottom-234),Vector2(_safe.size.x-24,60))
 	var gauge_width:=(_safe.size.x-40)
 	var hp_width:=floorf(gauge_width*.38)
 	var pet_width:=floorf(gauge_width*.29)
@@ -146,7 +162,7 @@ func layout(safe_override:Rect2=Rect2()) -> void:
 	Page.place(_pet,Vector2(x+220,bottom-172),Vector2(120,32))
 	Page.place(_energy,Vector2(x+348,bottom-172),Vector2(112,32))
 	Page.place(commands,Vector2(x+12,bottom-120),Vector2(_safe.size.x-24,104))
-	var column:=floorf((commands.size.x-12-152)/2)
+	var column:=floorf((commands.size.x-12-(100 if narrow else 152))/2)
 	for id in ["partner","target","skill","item","attack"]:
 		var p:=Vector2(0,0) if id=="partner" else Vector2(0,54) if id=="target" else Vector2(column+6,0) if id=="skill" else Vector2(column+6,54) if id=="item" else Vector2((column+6)*2,0)
 		Page.place(_buttons[id],p,Vector2(commands.size.x-2*column-12 if id=="attack" else column,104 if id=="attack" else 50))
@@ -161,12 +177,12 @@ func layout(safe_override:Rect2=Rect2()) -> void:
 		if b.has_node("CommandGlyph"):b.get_node("CommandGlyph").position=Vector2(4,2) if id=="target" else Vector2((b.size.x-40)*.5,16)
 	Page.place(_page,Vector2(x,bottom-416),Vector2(_safe.size.x,416))
 	Page.place(_page_back,Vector2(8,12),Vector2(44,44))
-	Page.place(_page_title,Vector2(64,12),Vector2(200,32))
+	Page.place(_page_title,Vector2(64,12),Vector2(minf(200,_safe.size.x-220),32))
 	Page.place(host._page_energy_l,Vector2(_safe.size.x-144,14),Vector2(128,28))
 	Page.place(_page_energy_graph,Vector2(_safe.size.x-156,10),Vector2(144,34))
 	Page.place(_page_scroll,Vector2(12,64),Vector2(_safe.size.x-24,336))
-	Page.place(host._cast_tip,Vector2(x+16,bottom-256),Vector2(_safe.size.x-32,40))
-	Page.place(host._combo_tip,Vector2(x+16,bottom-280),Vector2(_safe.size.x-32,24))
+	Page.place(host._cast_tip,Vector2(x+16,bottom-300),Vector2(_safe.size.x-32,32))
+	Page.place(host._combo_tip,Vector2(x+16,bottom-326),Vector2(_safe.size.x-32,24))
 func refresh() -> void:
 	var role:Combatant=host.sim.role_unit()
 	var sim:BattleSim=host.sim
@@ -202,10 +218,13 @@ func refresh() -> void:
 	_buttons.target.caption.text="换目标"
 	_target_subtitle.text="下个 · "+_enemy_name(next) if next!=null else "没有目标"
 	_target_subtitle.position=Vector2(2,28);_target_subtitle.size=Vector2(_buttons.target.size.x-4,22)
+	_target_subtitle.clip_text=true
+	_target_subtitle.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
 	_buttons.target.caption.position=Vector2(30,1);_buttons.target.caption.size=Vector2(_buttons.target.size.x-34,28)
 	_buttons.target.get_node("CommandIcon").position=Vector2(4,2)
 	_sync_badges(sim)
 	if _page.visible:update_page()
+	var health_rects:Array[Rect2]=[]
 	var candidates:Array=[]
 	for uid in host._views:
 		var view=host._views[uid]
@@ -220,7 +239,19 @@ func refresh() -> void:
 				if other!=null and other.side=="enemy" and other.alive and area.intersects(host._views[other_uid]._actor_rect()):crowded=true;break
 			view.name_l.visible=not crowded;view.hp_value.visible=not crowded
 			view.compact_health(crowded)
-			for bar in [view.hp_bg,view.hp_fg,view.hp_ghost]:bar.visible=not crowded or unit.uid==sim.role_focus_target_uid
+			var health_rect := Rect2(Vector2(area.get_center().x-view.hp_bg.size.x*.5,area.end.y+7),view.hp_bg.size)
+			for attempt in 12:
+				if not health_rects.any(func(r):return r.grow(1).intersects(health_rect)):break
+				health_rect.position.y+=7
+			health_rects.append(health_rect)
+			view.hp_bg.global_position=health_rect.position
+			view.hp_ghost.global_position=health_rect.position+Vector2.ONE
+			view.hp_fg.global_position=health_rect.position+Vector2.ONE
+			for index in 3:
+				var bar=[view.hp_bg,view.hp_ghost,view.hp_fg][index]
+				bar.visible=true
+				bar.z_as_relative=false
+				bar.z_index=22+index
 		if view.hp_value!=null:candidates.append({"label":view.hp_value,"priority":0})
 		if view.name_l!=null:candidates.append({"label":view.name_l,"priority":1 if unit.kind=="role" else 2 if int(uid)==sim.role_focus_target_uid else 3})
 	var exclusions:Array[Rect2]=[tray.get_global_rect()]
@@ -302,12 +333,15 @@ func _enemy_cards(sim:BattleSim) -> void:
 	var key:=str(units.map(func(u):return u.uid))
 	if key!=_enemy_key:
 		_enemy_key=key;Page.clear(_enemy_strip)
-		for i in mini(4,units.size()):
+		_enemy_strip.custom_minimum_size=Vector2(maxf(0,units.size()*148+(units.size()-1)*4),60)
+		for i in units.size():
 			var chip:=Fix.EnemyChip.new(_portrait(units[i].uid));_enemy_strip.add_child(chip)
+			chip.mouse_filter=Control.MOUSE_FILTER_PASS
 			chip.selected.connect(func(uid:int):host._select_enemy_target(uid,false))
-			if i==3 and units.size()>4:chip.extra=units.size()-3
+	_target_hint.text="敌方目标 %d · 横向滑动选择"%units.size()
 	for i in _enemy_strip.get_child_count():
 		var chip=_enemy_strip.get_child(i);chip.unit=units[i];chip.number=i+1;chip.display_name=_enemy_name(units[i])
+		chip.custom_minimum_size=Vector2(148,60)
 		# The deck is built before UnitViews finish spawning; retry missing portraits.
 		if chip.portrait.texture==null:chip.portrait.texture=_portrait(units[i].uid)
 		chip.focused=units[i].uid==sim.role_focus_target_uid or (sim.role_focus_target_uid<0 and units[i].uid==_auto_focus_uid)
@@ -335,7 +369,7 @@ func _sync_badges(sim:BattleSim) -> void:
 		badge.focused=unit.uid==sim.role_focus_target_uid
 		var rect:Rect2=view._actor_rect()
 		var foot:=Vector2(rect.get_center().x,rect.end.y)
-		var at:=foot+Vector2(0,12)
+		var at:=Vector2(rect.position.x+3,rect.position.y+8)
 		for attempt in 2:
 			var conflict:=false
 			for point in occupied:if point.distance_to(at)<18:conflict=true;break
