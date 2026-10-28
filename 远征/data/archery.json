@@ -69,6 +69,27 @@
         "gold": 180,
         "honor": 40
       }
+    },
+    {
+      "id": "lantern",
+      "name": "巡灯守夜",
+      "subtitle": "听风候灯 · 亮灯命中才计环",
+      "requires_clear": "novice",
+      "arrows": 6,
+      "target_speed": 62.0,
+      "target_bob": 10.0,
+      "wind_max": 24.0,
+      "timing_period": 2.8,
+      "timing_window": 1.5,
+      "required_lit_hits": 4,
+      "pass_score": 32,
+      "master_score": 48,
+      "first_reward": {
+        "gold": 360,
+        "honor": 90,
+        "items": { "refine_stone": 3, "pet_food": 2 }
+      },
+      "repeat_reward": { "gold": 90, "honor": 18 }
     }
   ]
 }
