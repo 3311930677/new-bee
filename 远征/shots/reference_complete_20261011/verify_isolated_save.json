@@ -64,7 +64,7 @@
 			"next_uid": 1,
 			"pending": []
 		},
-		"last_ts": 1792361166,
+		"last_ts": 1793078223,
 		"ledger": {
 			"applied": []
 		},
@@ -89,6 +89,7 @@
 				}
 			}
 		},
+		"map_destination": "",
 		"mounts": {
 			"active": "",
 			"owned": {}
@@ -123,10 +124,10 @@
 	"quest": {
 		"active": {},
 		"claimed": [],
-		"day": "2026-10-18",
+		"day": "2026-10-27",
 		"offer": [
-			"q_deliver_sweep",
-			"q_deliver_stone"
+			"q_deliver_food",
+			"q_deliver_crystal"
 		]
 	},
 	"selected_role": "zs",

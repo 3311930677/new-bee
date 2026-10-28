@@ -1,0 +1,137 @@
+{
+	"account": "",
+	"arena": {
+		"best_streak": 0,
+		"losses": 0,
+		"score": 1000,
+		"streak": 0,
+		"wins": 0
+	},
+	"audio": {
+		"bgm": 0.7,
+		"mute": false,
+		"sfx": 0.8
+	},
+	"avatar_custom": "",
+	"avatar_id": "fox",
+	"avatar_use_custom": false,
+	"city": {
+		"acts": {},
+		"built": [
+			"hall",
+			"gate"
+		],
+		"code": "ERN66V",
+		"day": "",
+		"streak": 0,
+		"visits": []
+	},
+	"gender": "男",
+	"items": {
+		"ticket_sweep": 1,
+		"ticket_ten": 0
+	},
+	"player_name": "行旅人",
+	"prog": {
+		"act1": {
+			"discoveries": [],
+			"first_kills": [],
+			"side_quests": {},
+			"tracked": ""
+		},
+		"codex_claimed": [],
+		"economy": {
+			"bought": {},
+			"day": 1,
+			"history": {},
+			"next_tx": 1,
+			"orders": {},
+			"seed": 7919,
+			"sold": {},
+			"work": {}
+		},
+		"equip": {},
+		"exp": 0,
+		"flags": {},
+		"gacha": {
+			"free_day": "",
+			"free_last": "",
+			"free_streak": 0,
+			"pity": 0
+		},
+		"inventory": {
+			"instances": [],
+			"next_uid": 1,
+			"pending": []
+		},
+		"last_ts": 1793045805,
+		"ledger": {
+			"applied": []
+		},
+		"level": 12,
+		"lore_beats": {},
+		"lore_seen": false,
+		"main_world": {
+			"bosses_cleared": [],
+			"custom_progress": 42,
+			"encounters": {},
+			"entities": {},
+			"layout_version": 5,
+			"map_id": "lorin_wilds",
+			"position": [
+				500,
+				1050
+			],
+			"respawn_at": {},
+			"respawn_by_map": {
+				"lorin_wilds": {
+					"0": 9999999999
+				}
+			}
+		},
+		"map_destination": "",
+		"mounts": {
+			"active": "",
+			"owned": {}
+		},
+		"pet_stat": {},
+		"pets": [
+			"pet_rockturtle"
+		],
+		"settings": {},
+		"skills": {},
+		"special_events": {
+			"records": {},
+			"tracked": ""
+		},
+		"story": {
+			"done": [],
+			"goals": {},
+			"step": "s01"
+		},
+		"talents": {},
+		"tips_seen": {
+			"deploy": true
+		},
+		"titles": {
+			"active": "",
+			"owned": []
+		},
+		"world_cleared": {},
+		"worlds_unlocked": 1
+	},
+	"quest": {
+		"active": {},
+		"claimed": [],
+		"day": "",
+		"offer": []
+	},
+	"selected_role": "zs",
+	"version": 7,
+	"wallet": {
+		"expedition": 0,
+		"gold": 0,
+		"honor": 0,
+		"soul": 0
+	}
+}

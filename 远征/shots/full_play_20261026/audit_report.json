@@ -1,0 +1,571 @@
+{
+	"battle_sim_result": "victory",
+	"battle_sim_result_late": "victory",
+	"errors": [],
+	"steps": [
+		{
+			"name": "s01_loading",
+			"t": 7.016
+		},
+		{
+			"name": "s02_title",
+			"t": 8.339
+		},
+		{
+			"name": "s03_login",
+			"t": 8.682
+		},
+		{
+			"name": "s04_createrole",
+			"t": 9.129
+		},
+		{
+			"name": "s05_home",
+			"t": 9.89
+		},
+		{
+			"name": "s06_tutorial",
+			"t": 10.287
+		},
+		{
+			"name": "s07_growth",
+			"t": 10.747
+		},
+		{
+			"name": "s07_growth_bottom",
+			"t": 10.839
+		},
+		{
+			"name": "s07_growth",
+			"page": "growth"
+		},
+		{
+			"name": "s07_growth_talent",
+			"t": 11.253
+		},
+		{
+			"name": "s07_growth_talent_bottom",
+			"t": 11.363
+		},
+		{
+			"name": "s07_growth_talent",
+			"page": "growth:talent"
+		},
+		{
+			"name": "s07_growth_equip",
+			"t": 11.84
+		},
+		{
+			"name": "s07_growth_equip_bottom",
+			"t": 11.938
+		},
+		{
+			"name": "s07_growth_equip",
+			"page": "growth:equip"
+		},
+		{
+			"name": "s07_growth_pet",
+			"t": 12.562
+		},
+		{
+			"name": "s07_growth_pet_bottom",
+			"t": 12.629
+		},
+		{
+			"name": "s07_growth_pet",
+			"page": "growth:pet"
+		},
+		{
+			"name": "s07_growth_skill",
+			"t": 13.206
+		},
+		{
+			"name": "s07_growth_skill_bottom",
+			"t": 13.33
+		},
+		{
+			"name": "s07_growth_skill",
+			"page": "growth:skill"
+		},
+		{
+			"name": "s07_growth_mount",
+			"t": 13.821
+		},
+		{
+			"name": "s07_growth_mount_bottom",
+			"t": 13.921
+		},
+		{
+			"name": "s07_growth_mount",
+			"page": "growth:mount"
+		},
+		{
+			"name": "s07_growth_title",
+			"t": 14.387
+		},
+		{
+			"name": "s07_growth_title_bottom",
+			"t": 14.51
+		},
+		{
+			"name": "s07_growth_title",
+			"page": "growth:title"
+		},
+		{
+			"name": "s07_bag",
+			"t": 14.955
+		},
+		{
+			"name": "s07_bag_bottom",
+			"t": 15.013
+		},
+		{
+			"name": "s07_bag",
+			"page": "bag"
+		},
+		{
+			"name": "s07_quests",
+			"t": 15.415
+		},
+		{
+			"name": "s07_quests_bottom",
+			"t": 15.492
+		},
+		{
+			"name": "s07_quests",
+			"page": "quests"
+		},
+		{
+			"name": "s07_gathering",
+			"t": 15.913
+		},
+		{
+			"name": "s07_gathering_bottom",
+			"t": 16.009
+		},
+		{
+			"name": "s07_gathering",
+			"page": "gathering"
+		},
+		{
+			"name": "s07_activities",
+			"t": 16.38
+		},
+		{
+			"name": "s07_activities_bottom",
+			"t": 16.487
+		},
+		{
+			"name": "s07_activities",
+			"page": "activities"
+		},
+		{
+			"name": "s07_worlds",
+			"t": 16.913
+		},
+		{
+			"name": "s07_worlds_bottom",
+			"t": 17.054
+		},
+		{
+			"name": "s07_worlds",
+			"page": "worlds"
+		},
+		{
+			"name": "s07_arena",
+			"t": 17.489
+		},
+		{
+			"name": "s07_arena_bottom",
+			"t": 17.565
+		},
+		{
+			"name": "s07_arena",
+			"page": "arena"
+		},
+		{
+			"name": "s07_archery",
+			"t": 18.047
+		},
+		{
+			"name": "s07_archery_bottom",
+			"t": 18.155
+		},
+		{
+			"name": "s07_archery",
+			"page": "archery"
+		},
+		{
+			"name": "s07_companion",
+			"t": 18.522
+		},
+		{
+			"name": "s07_companion_bottom",
+			"t": 18.574
+		},
+		{
+			"name": "s07_companion",
+			"page": "companion"
+		},
+		{
+			"name": "s07_shop",
+			"t": 18.95
+		},
+		{
+			"name": "s07_shop_bottom",
+			"t": 19.01
+		},
+		{
+			"name": "s07_shop",
+			"page": "shop"
+		},
+		{
+			"name": "s07_journal",
+			"t": 19.299
+		},
+		{
+			"name": "s07_journal_bottom",
+			"t": 19.35
+		},
+		{
+			"name": "s07_journal",
+			"page": "journal"
+		},
+		{
+			"name": "s07_oath",
+			"t": 19.642
+		},
+		{
+			"name": "s07_oath_bottom",
+			"t": 19.701
+		},
+		{
+			"name": "s07_oath",
+			"page": "oath"
+		},
+		{
+			"name": "s07_avatar",
+			"t": 20.003
+		},
+		{
+			"name": "s07_avatar_bottom",
+			"t": 20.069
+		},
+		{
+			"name": "s07_avatar",
+			"page": "avatar"
+		},
+		{
+			"name": "s07_gacha",
+			"t": 20.506
+		},
+		{
+			"name": "s07_gacha_bottom",
+			"t": 20.575
+		},
+		{
+			"name": "s07_gacha",
+			"page": "gacha"
+		},
+		{
+			"name": "s07_exchange",
+			"t": 20.91
+		},
+		{
+			"name": "s07_exchange_bottom",
+			"t": 20.977
+		},
+		{
+			"name": "s07_exchange",
+			"page": "exchange"
+		},
+		{
+			"name": "s07_curio",
+			"t": 21.288
+		},
+		{
+			"name": "s07_curio_bottom",
+			"t": 21.363
+		},
+		{
+			"name": "s07_curio",
+			"page": "curio"
+		},
+		{
+			"name": "s07_mail",
+			"t": 21.634
+		},
+		{
+			"name": "s07_mail_bottom",
+			"t": 21.694
+		},
+		{
+			"name": "s07_mail",
+			"page": "mail"
+		},
+		{
+			"name": "s07_trade_city",
+			"t": 22.032
+		},
+		{
+			"name": "s07_trade_city_bottom",
+			"t": 22.089
+		},
+		{
+			"name": "s07_trade_city",
+			"page": "trade:city"
+		},
+		{
+			"name": "s07_trade_port",
+			"t": 22.365
+		},
+		{
+			"name": "s07_trade_port_bottom",
+			"t": 22.427
+		},
+		{
+			"name": "s07_trade_port",
+			"page": "trade:port"
+		},
+		{
+			"name": "s07_trade_frost",
+			"t": 22.706
+		},
+		{
+			"name": "s07_trade_frost_bottom",
+			"t": 22.764
+		},
+		{
+			"name": "s07_trade_frost",
+			"page": "trade:frost"
+		},
+		{
+			"name": "s07_contract",
+			"t": 23.033
+		},
+		{
+			"name": "s07_contract_bottom",
+			"t": 23.082
+		},
+		{
+			"name": "s07_contract",
+			"page": "contract"
+		},
+		{
+			"name": "s07_fishing_salt",
+			"t": 23.42
+		},
+		{
+			"name": "s07_fishing_salt_bottom",
+			"t": 23.487
+		},
+		{
+			"name": "s07_fishing_salt",
+			"page": "fishing:salt"
+		},
+		{
+			"name": "s07_fishing_port",
+			"t": 23.78
+		},
+		{
+			"name": "s07_fishing_port_bottom",
+			"t": 23.845
+		},
+		{
+			"name": "s07_fishing_port",
+			"page": "fishing:port"
+		},
+		{
+			"name": "s07_fishing_tide",
+			"t": 24.146
+		},
+		{
+			"name": "s07_fishing_tide_bottom",
+			"t": 24.214
+		},
+		{
+			"name": "s07_fishing_tide",
+			"page": "fishing:tide"
+		},
+		{
+			"name": "s07_fishing_frost",
+			"t": 24.511
+		},
+		{
+			"name": "s07_fishing_frost_bottom",
+			"t": 24.578
+		},
+		{
+			"name": "s07_fishing_frost",
+			"page": "fishing:frost"
+		},
+		{
+			"name": "s07_journey",
+			"t": 24.936
+		},
+		{
+			"name": "s07_journey_bottom",
+			"t": 24.995
+		},
+		{
+			"name": "s07_journey",
+			"page": "journey"
+		},
+		{
+			"name": "s07_relic_hunt",
+			"t": 25.406
+		},
+		{
+			"name": "s07_relic_hunt_bottom",
+			"t": 25.464
+		},
+		{
+			"name": "s07_relic_hunt",
+			"page": "relic_hunt"
+		},
+		{
+			"name": "s07_settings",
+			"t": 25.827
+		},
+		{
+			"name": "s07_settings_bottom",
+			"t": 25.876
+		},
+		{
+			"name": "s07_settings",
+			"page": "settings"
+		},
+		{
+			"name": "s07_tutorial",
+			"t": 26.221
+		},
+		{
+			"name": "s07_tutorial_bottom",
+			"t": 26.357
+		},
+		{
+			"name": "s07_tutorial",
+			"page": "tutorial"
+		},
+		{
+			"name": "s07_deploy",
+			"t": 26.774
+		},
+		{
+			"name": "s07_deploy_bottom",
+			"t": 26.841
+		},
+		{
+			"name": "s07_deploy",
+			"page": "deploy"
+		},
+		{
+			"name": "s08_currency_gold",
+			"t": 26.956
+		},
+		{
+			"name": "s08_currency_expedition",
+			"t": 27.057
+		},
+		{
+			"name": "s08_currency_soul",
+			"t": 27.164
+		},
+		{
+			"name": "s08_currency_honor",
+			"t": 27.265
+		},
+		{
+			"name": "s09_map_lorin_wilds",
+			"t": 28.962
+		},
+		{
+			"name": "s09_map_maple_road",
+			"t": 30.18
+		},
+		{
+			"name": "s09_map_broken_slope",
+			"t": 31.56
+		},
+		{
+			"name": "s09_map_old_salt_road",
+			"t": 32.244
+		},
+		{
+			"name": "s09_map_shenyuan_port",
+			"t": 33.124
+		},
+		{
+			"name": "s09_map_tideflat",
+			"t": 34.306
+		},
+		{
+			"name": "s09_map_tidal_gate",
+			"t": 35.036
+		},
+		{
+			"name": "s09_map_stele_cavern",
+			"t": 35.736
+		},
+		{
+			"name": "s09_map_red_sand_route",
+			"t": 36.369
+		},
+		{
+			"name": "s09_map_frost_post",
+			"t": 37.364
+		},
+		{
+			"name": "s09_map_rift_mine_road",
+			"t": 38.03
+		},
+		{
+			"name": "s09_map_rift_mine_vault",
+			"t": 38.743
+		},
+		{
+			"name": "s09_map_frost_pass",
+			"t": 39.385
+		},
+		{
+			"name": "s09_map_frost_boardwalk",
+			"t": 40.061
+		},
+		{
+			"name": "s09_map_abyss_ring",
+			"t": 40.778
+		},
+		{
+			"name": "s09_map_stele_entry",
+			"t": 41.388
+		},
+		{
+			"name": "s09_map_stele_resonance",
+			"t": 42.006
+		},
+		{
+			"name": "s09_map_stele_core",
+			"t": 42.655
+		},
+		{
+			"name": "s10_battle_start",
+			"t": 43.961
+		},
+		{
+			"name": "s11_battle_mid",
+			"t": 49.921
+		},
+		{
+			"name": "s12_battle_late",
+			"t": 55.91
+		},
+		{
+			"name": "s13_settlement_win",
+			"t": 56.034
+		},
+		{
+			"name": "s13_settlement_lose",
+			"t": 56.164
+		}
+	]
+}
