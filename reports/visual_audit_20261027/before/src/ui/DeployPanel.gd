@@ -1,0 +1,408 @@
+# DeployPanel.gd —— 出征筹备浮层（秘境 / 人物 / 宠物 三页签，每页一屏一项的大卡轮播）
+# 交互：← → （或 A/D、拖拽）翻当前页的选项；↑ ↓（或 W/S）切页签；点卡片选定。
+# 插画命名：秘境 world_<theme>.png、人物 role_<role>.png、宠物 <宠物id>.png；
+#          缺图时卡上留白占位并写出素材名，生成后丢进 image/generated_*/ready/ 即生效。
+# 从 GameHome 的内部类抽出，营帐与主城两处入口共用同一份筹备面板
+class_name DeployPanel
+extends Control
+
+signal confirmed(cfg: Dictionary)
+signal canceled
+var _chest:Control
+
+# 新 class_name 尚未进编辑器全局类缓存，按项目惯例 preload 路径取脚本
+const PageDeckScript := preload("res://src/ui/PageDeck.gd")
+const SlideCardScript := preload("res://src/ui/SlideCard.gd")
+
+const STEPS := ["秘境", "人物", "宠物"]
+# 羊皮纸 440 宽 - 左右各 16 内边距 = 内容可用宽。子控件坐标一律以这个宽度为基准，
+# 因为子控件挂的是 content（已被 PanelContainer 内缩过），再按 440 算就会整体右偏 16px
+const CONTENT_W := 408.0
+const TAB_W := 96.0
+const TAB_H := 30.0
+const GUTTER := 40.0     # 与卡片左右边距对齐（卡 = 408 - 2*40）
+const DECK_Y := 36.0
+const DECK_H := 346.0
+
+# 秘境色标：maps.json 的 tint 是给地图叠色用的（8 个都接近白），当色卡完全分不出来，
+# 所以另起一套辨识色 —— 林绿 / 雪蓝 / 火岩红 / 墓紫 / 沙黄 / 冰川青 / 深渊靛 / 城石灰
+const THEME_HUE := {
+	"forest": Color("5f8a46"), "snow": Color("7fa8cf"), "volcano": Color("b0523a"),
+	"tomb": Color("6b5f88"), "desert": Color("c09a55"), "glacier": Color("6fb3ba"),
+	"abyss": Color("6d5a9e"), "castle": Color("8d8474"),
+}
+# 稀有度色/名全项目唯一定义在 G.gd（C6），这里只引用，不再各自复制一份
+const GScript := preload("res://src/autoload/G.gd")
+const RARITY_HUE := GScript.RARITY_HUE
+const RARITY_NAME := GScript.RARITY_NAME
+const RARITY_FRAME := {"white": "frame_white", "blue": "frame_blue",
+	"purple": "frame_purple", "gold": "frame_gold", "relic": "frame_gold"}
+const ROLE_NAME := {
+	"tank": "护卫", "ranged_dps": "远程", "fast_dps": "速攻", "control": "控制",
+	"healer": "治疗", "aoe_dps": "群攻", "poison_control": "毒控",
+}
+# 立绘文件名映射（内部类拿不到外层类的 _role_name()，这里自持一份）
+const ROLE_ART := {"zs": "pojun", "ck": "chuanyang", "fs": "shuangyu", "fz": "chenxing"}
+
+var _theme := "forest"
+var _role := "zs"
+var _active_pet := "pet_rockturtle"
+var _bench_pet := ""
+
+var _content: Control = null
+var _deck = null          # PageDeck（类型不写死，避免全局类缓存未刷新时报错）
+var _hint: Label = null
+var _step := 0
+var _tab_btns: Array = []
+var _cards := {}          # "步骤:选项id" -> SlideCard（选中态只改样式，不重建卡）
+var _sweep_btn: Control = null   # 扫荡按钮（持有引用用于刷新券余量）
+var _help_btn: Control = null    # 右上角「?」操作说明
+var _extra_potions := 0          # 出征前加带的药剂（轮次 21）；金币在「出征」确认时结算
+var _supply_btn: Control = null
+var _ascetic := false            # 苦行（轮次 22）：敌人更强 / 收益更高，本局一次性选择
+var _ascetic_btn: Control = null
+
+# 操作说明：? 弹层与首次进入的引导共用同一份文案
+const TIPS := [
+	"← → 或 A/D：切当前页的选项，也可直接左右拖动卡片",
+	"↑ ↓ 或 W/S：切换「秘境 / 人物 / 宠物」三个页签",
+	"点卡片选定；宠物再点一次可换替补或取消出战",
+	"秘境未解锁时，需先通关前一片大陆的首领",
+	"左下「补给」可加带药剂：金币在点「出征」时一次性结算，返回不扣钱",
+	"右下「苦行」是难度开关：敌人更强，但本局金币/远征币/经验等收益同样放大",
+]
+
+func _ready() -> void:
+	set_anchors_preset(Control.PRESET_FULL_RECT)
+	if G.selected_role != "":
+		_role = G.selected_role
+	_build()
+
+func _build() -> void:
+	_chest=preload("res://src/ui/DeployChestView.gd").new()
+	_chest.host=self
+	add_child(_chest)
+
+func _on_tab_click(e: InputEvent, i: int) -> void:
+	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+		_goto_step(i)
+
+func _goto_step(i: int) -> void:
+	i = wrapi(i, 0, STEPS.size())
+	if i == _step:
+		return
+	_step = i
+	_rebuild_step()
+
+func _refresh_tabs() -> void:
+	for i in _tab_btns.size():
+		var tab := _tab_btns[i] as G.PixelButton
+		var on := i == _step
+		tab.set_surface(G.GOLD_BTN if on else Color("ddd0ae"),
+			G.GOLD_BTN_EDGE if on else Color("c0a068"))
+		tab.set_meta("tab_selected", on)
+		(tab.get_child(0) as Label).add_theme_color_override("font_color", G.GOLD_BRIGHT if on else G.TEXT_DARK)
+		tab.modulate = Color.WHITE if on else Color(0.86, 0.84, 0.80)
+
+# ---------- 选项页（一屏一项） ----------
+func _rebuild_step() -> void:
+	_chest.step()
+
+func _fill_themes() -> void:
+	var order: Array = G.theme_order()
+	var start := maxi(0, order.find(_theme))
+	# 卡「用到才建」：首开只建首屏与相邻页（20 张卡全建会砸出一次顿卡）
+	_deck.set_factory(order.size(), func(i: int) -> Control:
+		return SlideCardScript.page(_theme_card(String(order[i]), i, order), CONTENT_W, DECK_H),
+		Vector2(CONTENT_W, DECK_H))
+	_deck.go(start, true)
+
+func _theme_card(tid: String, i: int, order: Array) -> Control:
+	var open: bool = G.is_world_unlocked(tid)
+	# 志异题记 + 状态：出征前先让玩家读出这片地方的味道（文案在 data/lore.json）
+	var rows: Array = []
+	var epi := String(G.theme_lore(tid).get("epigraph", ""))
+	if not epi.is_empty():
+		rows.append("「%s」" % epi)
+	rows.append("首领未讨伐 · 通关开启下一片" if open else "尚未解锁 · 先通关前一片")
+	var card := SlideCardScript.new({
+		"kicker": "秘 境 %02d / %02d" % [i + 1, order.size()],
+		"title": G.world_name(tid),
+		"art_names": ["world_%s_art" % tid, "world_%s" % tid],
+		"art_hint": "world_%s.png" % tid,
+		"art_tint": THEME_HUE.get(tid, Color("8d8474")),
+		"art_fit": "cover",
+		"art_dim": not open,
+		"art_ratio": 0.44,
+		"lines": rows,
+		"footer": "点击选定出征目标",
+		"on_click": func(): _select_theme(tid),
+	})
+	card.set_meta("locked", not open)   # 未解锁标记：校验脚本与后续扩展按它取态
+	_cards["0:%s" % tid] = card
+	return card
+
+func _fill_roles() -> void:
+	var start := 0
+	for i in G.roles.size():
+		var r: Dictionary = G.roles[i]
+		if String(r.get("id", "")) == _role:
+			start = i
+	_deck.set_factory(G.roles.size(), func(i: int) -> Control:
+		return SlideCardScript.page(_role_card(G.roles[i] as Dictionary, i), CONTENT_W, DECK_H),
+		Vector2(CONTENT_W, DECK_H))
+	_deck.go(start, true)
+
+func _role_card(r: Dictionary, i: int) -> Control:
+	var rid := String(r.get("id", ""))
+	var card := SlideCardScript.new({
+		"kicker": "人 物 %02d / %02d" % [i + 1, G.roles.size()],
+		"title": String(r.get("name", rid)),
+		"subtitle": "%s · %s" % [String(r.get("job", "")), String(r.get("weapon", ""))],
+		"art_names": ["role_%s_art" % rid, "role_%s" % rid],
+		"art_hint": "role_%s.png" % rid,
+		"art_fallback": G.role_dir(rid) + String(ROLE_ART.get(rid, rid)) + "_icon.png",
+		"art_tint": Color("b8923c"),
+		"art_fit": "contain",
+		"art_ratio": 0.44,
+		# 只放一行 tag：desc 是两三行散文，塞进选择卡会把卡片顶破（长文案在创角页看）
+		"lines": [String(r.get("tags", ""))],
+		"footer": "点击选定出战人物",
+		"on_click": func(): _select_role(rid),
+	})
+	_cards["1:%s" % rid] = card
+	return card
+
+func _fill_pets() -> void:
+	var pets: Array = TableCache.pets()
+	var start := 0
+	for i in pets.size():
+		var p: Dictionary = pets[i]
+		var pid := String(p.get("id", ""))
+		if pid == _active_pet or pid == _bench_pet:
+			start = i
+	_deck.set_factory(pets.size(), func(i: int) -> Control:
+		return SlideCardScript.page(_pet_card(pets[i] as Dictionary, i, pets.size()), CONTENT_W, DECK_H),
+		Vector2(CONTENT_W, DECK_H))
+	_deck.go(start, true)
+
+func _pet_card(p: Dictionary, i: int, total: int) -> Control:
+	var pid := String(p.get("id", ""))
+	var owned: bool = G.owns_pet(pid)
+	var rarity := String(p.get("rarity", "white"))
+	var card := SlideCardScript.new({
+		"kicker": "灵 宠 %02d / %02d" % [i + 1, total],
+		"title": String(p.get("name", pid)),
+		"subtitle": "%s · %s" % [RARITY_NAME.get(rarity, "普通"),
+			ROLE_NAME.get(String(p.get("role", "")), "未知")],
+		"art_names": ["%s_art" % pid, pid],
+		"art_hint": "%s.png" % pid,
+		"art_tint": RARITY_HUE.get(rarity, G.C_HINT),
+		"art_fit": "contain",
+		"art_dim": not owned,
+		"art_frame": RARITY_FRAME.get(rarity, "frame_white"),
+		"art_ratio": 0.44,
+		# 文案只留一行：两行会把卡撑高、被页脚裁掉（操作说明在右上角 ? 里）
+		"lines": [G.pet_unlock_text(pid)] if not owned else [],
+		"footer": "",
+		"on_click": func(): _select_pet(pid),
+	})
+	card.set_meta("locked", not owned)
+	_cards["2:%s" % pid] = card
+	return card
+
+# ---------- 选择 ----------
+func _select_theme(id: String) -> void:
+	if not G.is_world_unlocked(id):
+		_warn("「%s」尚未解锁：先通关前一世界的首领" % G.world_name(id))
+		return
+	_theme = id
+	_set_hint_default()
+	_refresh_sel()
+
+func _select_role(id: String) -> void:
+	_role = id
+	_set_hint_default()
+	_refresh_sel()
+
+func _select_pet(id: String) -> void:
+	if not G.owns_pet(id):
+		_warn("「%s」未收集：%s" % [
+			String(TableCache.get_pet(id).get("name", id)), G.pet_unlock_text(id)])
+		return
+	if id == _active_pet:
+		if _bench_pet != "":
+			_active_pet = _bench_pet
+			_bench_pet = ""
+		else:
+			_active_pet = ""
+	elif id == _bench_pet:
+		_bench_pet = ""
+	else:
+		if _active_pet == "":
+			_active_pet = id
+		else:
+			_bench_pet = id
+	_set_hint_default()
+	_refresh_sel()
+
+## 加带一瓶药剂（不立即扣钱，只累计）。已满或价格未配置就提示。
+func _add_supply() -> void:
+	var room := G.run_potions_max() - G.run_potions_base()
+	if _extra_potions >= room:
+		_warn("补给已满：本趟最多带 %d 瓶药剂" % G.run_potions_max())
+		return
+	if G.run_supply_price(_extra_potions) <= 0:
+		_warn("补给价格未配置")
+		return
+	_extra_potions += 1
+	Audio.sfx("ui_confirm")
+	_refresh_supply()
+	_hint.text = "已加带 %d 瓶（出征时合计结算 %d 金）" % [_extra_potions, _supply_total()]
+	_hint.add_theme_color_override("font_color", Color("4a7a44"))
+
+
+## 苦行开关：只改本局参数，不动任何局外状态
+func _toggle_ascetic() -> void:
+	_ascetic = not _ascetic
+	Audio.sfx("ui_confirm" if _ascetic else "ui_close")
+	_refresh_ascetic()
+	var c := G.ascetic_cfg()
+	_hint.text = ("已开启「%s」：敌人全属性 ×%.2f，本局收益 ×%.2f"
+		% [String(c.get("name", "苦行")), float(c.get("enemy_mult", 1.0)),
+			float(c.get("reward_mult", 1.0))]) if _ascetic else "已关闭「%s」" % String(c.get("name", "苦行"))
+	_hint.add_theme_color_override("font_color", Color("a04a3a") if _ascetic else Color("4a7a44"))
+
+
+func _refresh_ascetic() -> void:
+	if _chest!=null:_chest.refresh()
+
+func _supply_total() -> int:
+	var sum := 0
+	for i in _extra_potions:
+		sum += G.run_supply_price(i)
+	return sum
+
+
+func _refresh_supply() -> void:
+	if _chest!=null:_chest.refresh()
+
+func _set_hint_default() -> void:
+	# 平常留空：操作说明交给右上角「?」，这行只用来报错与提示结果
+	var c := G.ascetic_cfg()
+	_hint.text = "苦行已开启：敌人 ×%.2f · 收益 ×%.2f" % [float(c.get("enemy_mult",1)),float(c.get("reward_mult",1))] if _ascetic else ""
+	_hint.add_theme_color_override("font_color", G.TEXT_MUTED)
+
+func _warn(msg: String) -> void:
+	if _hint == null:
+		return
+	Audio.sfx("ui_locked")   # 所有"这里走不通"的统一有声
+	_hint.text = msg
+	_hint.add_theme_color_override("font_color", Color("a04a3a"))
+
+## 选中态刷新：只改卡片的描边、徽标与提示行，不重建（点一下不闪屏）
+func _refresh_sel() -> void:
+	_chest.refresh()
+
+func _paint_theme(card, tid: String) -> void:
+	var on := tid == _theme
+	card.set_selected(on)
+	if on:
+		card.set_badge("出征目标", Color("8a4a2a"))
+		card.set_footer("已选定 · 出征即前往此秘境")
+	elif G.is_world_cleared(tid):
+		card.set_badge("已通关", Color("4a7a44"))
+		card.set_footer("点击选定出征目标 · 已通关可扫荡")
+	elif G.is_world_unlocked(tid):
+		card.set_badge("可挑战", Color("a06020"))
+		card.set_footer("点击选定出征目标")
+	else:
+		card.set_badge("未解锁", Color("7a7263"))
+
+func _paint_role(card, rid: String) -> void:
+	var on := rid == _role
+	card.set_selected(on)
+	card.set_badge("出战人物" if on else "", Color("8a4a2a"))
+	card.set_footer("已选定 · 出征带队人物" if on else "点击选定出战人物")
+
+func _paint_pet(card, pid: String) -> void:
+	if not G.owns_pet(pid):
+		card.set_selected(false)
+		card.set_badge("未收集", Color("7a7263"))
+		card.set_footer("未收集 · 不可出战")
+		return
+	card.set_footer("点卡片派出 · 再点换位或取消")
+	card.set_selected(pid == _active_pet or pid == _bench_pet)
+	if pid == _active_pet:
+		card.set_badge("▶ 出战", Color("8a4a2a"))
+	elif pid == _bench_pet:
+		card.set_badge("◇ 替补", Color("3a5a6a"))
+	else:
+		card.set_badge("可出战", Color("4a7a44"))
+
+# ---------- 键盘：ESC 取消筹备 / ↑↓·WS 切页签（←→ 交给卡片轮播） ----------
+func _unhandled_input(e: InputEvent) -> void:
+	if G.ui_blocked:
+		return
+	if e.is_action_pressed("ui_cancel"):   # 轮次 14 统一口径：浮层自己吃 ESC
+		canceled.emit()
+		get_viewport().set_input_as_handled()
+	elif e.is_action_pressed("move_up") or e.is_action_pressed("ui_up"):
+		_goto_step(_step - 1)
+		get_viewport().set_input_as_handled()
+	elif e.is_action_pressed("move_down") or e.is_action_pressed("ui_down"):
+		_goto_step(_step + 1)
+		get_viewport().set_input_as_handled()
+
+# ---------- 扫荡 / 出征 ----------
+## 扫荡：已通关秘境 + 1 张扫荡券 → 标准路线收益（×0.7）直接入账
+func _on_sweep() -> void:
+	if not G.is_world_cleared(_theme):
+		_warn("「%s」尚未通关首领，不能扫荡" % G.world_name(_theme))
+		return
+	if G.item_count("ticket_sweep") < 1:
+		_warn("扫荡券不足（可在荣誉兑换补给）")
+		return
+	var gains := G.sweep_world(_theme)
+	if gains.is_empty():
+		_warn("扫荡失败：条件不满足")
+		return
+	Audio.sfx("coin")
+	var ups := int(gains.get("level_ups", 0))
+	var msg := "扫荡入账：金+%d 币+%d 魂+%d 荣誉+%d" % [
+		int(gains["gold"]), int(gains["expedition"]), int(gains["soul"]), int(gains["honor"])]
+	if ups > 0:
+		msg += " · 升 %d 级" % ups
+	_hint.text = msg
+	_hint.add_theme_color_override("font_color", Color("4a7a44"))
+	# 刷新按钮上的券余量
+	if _sweep_btn != null and _sweep_btn.get_child_count() > 0:
+		(_sweep_btn.get_child(0) as Label).text = "扫荡×%d" % G.item_count("ticket_sweep")
+
+func _on_confirm() -> void:
+	if _active_pet == "":
+		_warn("请先点选一只出战宠物")
+		return
+	if not G.owns_pet(_active_pet):
+		_warn("出战宠物尚未收集：%s" % G.pet_unlock_text(_active_pet))
+		return
+	if not G.is_world_unlocked(_theme):
+		_warn("「%s」尚未解锁" % G.world_name(_theme))
+		return
+	# 补给在这里一次性结算：买不成就不放行，避免"进了远征却少带药剂"
+	if _extra_potions > 0:
+		var pay := G.buy_run_supply_pack(_extra_potions)
+		if not bool(pay.get("ok", false)):
+			_warn(String(pay.get("err", "补给结算失败")))
+			return
+	Audio.sfx("ui_confirm")
+	confirmed.emit({
+		"theme": _theme,
+		"role_id": _role,
+		"level": int(G.prog.get("level", 1)),
+		"active_pet": _active_pet,
+		"bench_pet": _bench_pet,
+		"potions": G.run_potions_base() + _extra_potions,
+		"ascetic": _ascetic,
+		"seed": 0,
+	})

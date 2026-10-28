@@ -1,0 +1,275 @@
+# PetRaisePanel.gd —— 宠物养成（升级·宠物粮 / 突破·突破晶+魂石 / 资质·资质果）
+# 版式：顶部是「一屏一只」的灵宠轮播（大图居中 + 名字/等级/星级），
+#      下方只留养成操作 —— 旧版一排 52×64 小头像既挤又看不清，换成大卡后一眼认得出是谁。
+# 培养链路见玩法文档 §3.2；战斗属性快照由 G.battle_pet_stats 传给 BattleSim。
+class_name PetRaisePanel
+extends Control
+
+signal closed
+const Chest := preload("res://src/ui/TravelChestUI.gd")
+var _chest: Control
+
+# 新 class_name 尚未进编辑器全局类缓存，按项目惯例 preload 路径取脚本
+const PageDeckScript := preload("res://src/ui/PageDeck.gd")
+const SlideCardScript := preload("res://src/ui/SlideCard.gd")
+const Finesse := preload("res://src/ui/UIFinesse.gd")
+
+const CONTENT_W := 408.0
+const DECK_H := 196.0        # 卡高要装得下：页眉 18 + 插画 + 名字 30 + 星级 18 + 间距
+const DETAIL_Y := 226.0
+
+var _sel := ""
+var _owned: Array = []
+var _content: Control = null
+var _deck_holder: Control = null
+var _deck = null            # PageDeck（类型不写死，避免全局类缓存未刷新时报错）
+var _detail: Control = null
+var _toast: Control = null
+var _help_btn: Control = null    # 右上角「?」养成说明
+
+# 养成说明：? 弹层与首次进入的引导共用同一份文案
+const PET_TIPS := [
+	"品阶分普通、稀有、史诗、传说、传世；与资质星级是两回事。",
+	"传世归路圣鹿在通关后的传世挑战累计120胜结缘，可群体治疗与护盾。",
+	"喂养消耗宠物粮：每份 100 经验，宠物等级上限跟随人物等级。",
+	"突破每层全属性 +8%，共 5 层，需突破晶与魂石。",
+	"洗资质消耗资质果，资质决定每级成长（1星×0.8 ~ 5星×1.6）。",
+	"材料产出自「兑换」商店与远征掉落。",
+]
+
+
+func _ready() -> void:
+	set_anchors_preset(Control.PRESET_FULL_RECT)
+	_owned = G.owned_pets()
+	if not _owned.is_empty():
+		_sel = String(_owned[0])
+	_build()
+
+
+func _build() -> void:
+	_chest=preload("res://src/ui/GrowthChestView.gd").new()
+	_chest.host=self
+	_chest.system="pet"
+	add_child(_chest)
+
+func _refresh() -> void:
+	if _chest!=null:_chest.refresh()
+
+func _rebuild_deck() -> void:
+	if _deck != null:
+		_deck_holder.remove_child(_deck)
+		_deck.queue_free()
+		_deck = null
+	var start := maxi(0, _owned.find(_sel))
+	_deck = PageDeckScript.new(CONTENT_W, DECK_H, 22.0)
+	_deck.key_mode = "both"   # 方向键 / WASD 都能换灵宠
+	_deck.page_changed.connect(_on_pet_page)
+	if _owned.is_empty():
+		_deck_holder.add_child(_deck)
+		return
+	for i in _owned.size():
+		var pid := String(_owned[i])
+		_deck.add_page(SlideCardScript.page(_pet_card(pid, i), CONTENT_W, DECK_H),
+			Vector2(CONTENT_W, DECK_H))
+	_deck_holder.add_child(_deck)
+	_deck.go(start, true)
+
+
+func _on_pet_page(i: int) -> void:
+	if i < 0 or i >= _owned.size():
+		return
+	var pid := String(_owned[i])
+	if pid == _sel:
+		return
+	_sel = pid
+	_build_detail()
+
+
+## 轮播卡：大图 + 名字（含等级）+ 星级；突破层数放副标题，一眼看出养成度
+func _pet_card(pid: String, idx: int) -> Control:
+	var pd := TableCache.get_pet(pid)
+	var st := G.pet_stat(pid)
+	var lv := int(st.get("lv", 1))
+	var star := int(st.get("star", 3))
+	var brk := int(st.get("brk", 0))
+	var stars := ""
+	for i in 5:
+		stars += "★" if i < star else "☆"
+	return SlideCardScript.new({
+		"kicker": "灵 宠 %02d / %02d" % [idx + 1, _owned.size()],
+		"title": "%s  Lv%d" % [String(pd.get("name", pid)), lv],
+		"subtitle": "%s · %s · 突破%d/5" % [String(G.RARITY_NAME.get(String(pd.get("rarity","white")),"普通")), stars, brk],
+		"art_names": ["%s_art" % pid, pid],
+		"art_hint": "%s.png" % pid,
+		"art_tint": G.RARITY_HUE.get(String(pd.get("rarity","white")),G.C_HINT),
+		"art_fit": "contain",
+		"art_ratio": 0.34,
+		"badge": "出战主力" if idx == 0 else "",
+		"badge_color": Color("8a4a2a"),
+	})
+
+
+func _build_detail() -> void:
+	for c in _detail.get_children():
+		_detail.remove_child(c)
+		c.queue_free()
+	if _owned.is_empty():
+		var none := G.text_label("尚未收集任何灵宠", G.FS_SM, G.TEXT_MUTED)
+		none.position = Vector2(0, 40)
+		_detail.add_child(none)
+		return
+
+	var pd := TableCache.get_pet(_sel)
+	var st := G.pet_stat(_sel)
+	var lv := int(st.get("lv", 1))
+	var brk := int(st.get("brk", 0))
+
+	# 突破进度（名字/星级已在上方轮播卡里，这里不重复画一遍）
+	var brk_l := G.gold_label("突破 %d / 5 层（每层全属性 +8%%）" % brk, G.FS_XS, false,
+		G.TEXT_MUTED, false)
+	brk_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	brk_l.position = Vector2(40, 0)
+	_detail.add_child(brk_l)
+
+	# 经验条
+	var cap := int(G.prog.get("level", 1))
+	var need := G.pet_exp_to_next(lv)
+	var cur := int(st.get("exp", 0))
+	var bar_bg := ColorRect.new()
+	bar_bg.color = Color("b8a884")
+	bar_bg.position = Vector2(40, 24)
+	bar_bg.size = Vector2(240, 12)
+	bar_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_detail.add_child(bar_bg)
+	var bar := ColorRect.new()
+	bar.color = Color("d8a838")
+	bar.position = Vector2(41, 25)
+	bar.size = Vector2(238.0 * clampf(float(cur) / maxf(1.0, float(need)), 0.0, 1.0), 10)
+	bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_detail.add_child(bar)
+	var exp_l := G.text_label("本级满（达人物等级上限）" if lv >= cap else "经验 %d / %d" % [cur, need],
+		G.FS_XS, G.TEXT_MUTED)
+	exp_l.position = Vector2(286, 22)
+	_detail.add_child(exp_l)
+
+	# 当前属性预览（按养成状态）
+	var base: Dictionary = pd.get("base", {})
+	var growth: Dictionary = pd.get("growth", {})
+	var gmult := G.pet_growth_mult(_sel)
+	var smult := G.pet_stat_mult(_sel)
+	var hp := int((float(int(base.get("hp", 50))) + float(growth.get("hp", 0)) * float(lv - 1) * gmult) * smult)
+	var atk := int((float(int(base.get("atk", 10))) + float(growth.get("atk", 0)) * float(lv - 1) * gmult) * smult)
+	var def := int((float(int(base.get("def", 5))) + float(growth.get("def", 0)) * float(lv - 1) * gmult) * smult)
+	var stat_l := G.gold_label("血 %d · 攻 %d · 防 %d" % [hp, atk, def], G.FS_SM, true,
+		Color("a06020"), false)
+	stat_l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	stat_l.position = Vector2(40, 48)
+	_detail.add_child(stat_l)
+
+	# 三操作：喂养 / 突破 / 重随资质
+	var feed_btn := _op_btn("喂 养", "宠物粮 ×%d（%d 经验/份）" % [G.item_count("pet_food"), 100])
+	feed_btn.position = Vector2(40, 76)
+	feed_btn.gui_input.connect(func(ev: InputEvent):
+		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
+			_on_feed())
+	_detail.add_child(feed_btn)
+
+	var cost := G.pet_break_cost(_sel)
+	var brk_text := "已至五层" if cost.is_empty() else "突破晶×%d + 魂石 %d" % [int(cost["crystal"]), int(cost["soul"])]
+	var brk_btn := _op_btn("突 破", "%s（持有 ×%d）" % [brk_text, G.item_count("break_crystal")])
+	brk_btn.position = Vector2(40, 138)
+	brk_btn.gui_input.connect(func(ev: InputEvent):
+		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
+			_on_break())
+	_detail.add_child(brk_btn)
+
+	var star_btn := _op_btn("洗资质", "资质果 ×%d（随机 1~5 星）" % G.item_count("aptitude_fruit"))
+	star_btn.position = Vector2(40, 200)
+	star_btn.gui_input.connect(func(ev: InputEvent):
+		if ev is InputEventMouseButton and ev.pressed and ev.button_index == MOUSE_BUTTON_LEFT:
+			_on_reroll())
+	_detail.add_child(star_btn)
+
+
+
+
+func _op_btn(label: String, sub: String) -> Control:
+	# PixelButton 皮（切角 + 厚度 + 硬影）：与 gold_button 同一套按钮语言，
+	# 弃用圆角12+软影的旧皮；内层 Control 承载手摆的两行字
+	var root := G.PixelButton.new()
+	root.custom_minimum_size = Vector2(CONTENT_W - 80.0, 56)
+	root.set_content_margin(0.0)
+	root.set_surface(G.GOLD_BTN, G.GOLD_BTN_EDGE)
+	root.mouse_filter = Control.MOUSE_FILTER_STOP
+	var inner := Control.new()
+	inner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(inner)
+	var l := G.serif_label(label, 20, G.GOLD_BRIGHT)
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	l.position = Vector2(18, 6)
+	inner.add_child(l)
+	var s := G.gold_label(sub, G.FS_XS, false, Color("d0c6a8"), false)
+	s.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	s.position = Vector2(14, 32)
+	inner.add_child(s)
+	return root
+
+
+func _on_feed() -> void:
+	var r := G.pet_feed(_sel)
+	if not bool(r.get("ok", false)):
+		_toast_msg(String(r.get("err", "")))
+	elif int(r.get("ups", 0)) > 0:
+		_toast_msg("升到 Lv%d！" % int(r.get("lv", 1)))
+	else:
+		_toast_msg("经验 +100")
+	_refresh()
+	if bool(r.get("ok",false)):
+		Finesse.celebrate(self,Vector2(240,230),Color("aac794"),120 if int(r.get("ups",0))==0 else 190)
+		Audio.sfx("level_up" if int(r.get("ups",0))>0 else "reward",0.0)
+
+
+func _on_break() -> void:
+	var r := G.pet_break(_sel)
+	_toast_msg("突破成功！当前 %d 层" % int(r.get("brk", 0)) if bool(r.get("ok", false))
+		else String(r.get("err", "")))
+	_refresh()
+	if bool(r.get("ok",false)):
+		Finesse.celebrate(self,Vector2(240,230),Color("f3cf89"),200)
+		Audio.sfx("level_up",0.0)
+
+
+func _on_reroll() -> void:
+	var r := G.pet_reroll_star(_sel)
+	_toast_msg("新资质 %d 星！" % int(r.get("star", 0)) if bool(r.get("ok", false))
+		else String(r.get("err", "")))
+	_refresh()
+	if bool(r.get("ok",false)):
+		Finesse.celebrate(self,Vector2(240,230),Color("bdb1dd"),150)
+
+
+func _on_bond() -> void:
+	var r := G.pet_bond_interact(_sel)
+	if not bool(r.get("ok", false)):
+		_toast_msg(String(r.get("err", "")))
+	else:
+		var treasure := String(r.get("treasure", ""))
+		var tail := (" · 寻宝获赠 " + treasure) if not treasure.is_empty() else ""
+		_toast_msg("羁绊升至 %d 阶！经验+60%s" % [int(r.get("bond", 1)), tail])
+	_refresh()
+	if bool(r.get("ok", false)):
+		Finesse.celebrate(self, Vector2(240, 230), Color("f2c66d"), 180)
+		Audio.sfx("level_up", 0.0)
+
+
+func _toast_msg(msg: String) -> void:
+	if is_instance_valid(_toast):_toast.queue_free()
+	_toast=Chest.toast(self,msg)
+	_toast.position.y=G.ui_safe_rect(self).end.y-116
+
+func _unhandled_input(event: InputEvent) -> void:
+	if G.ui_blocked:   # GM 控制台等全屏层优先（轮次 14）
+		return
+	if event.is_action_pressed("ui_cancel"):
+		closed.emit()
+		get_viewport().set_input_as_handled()

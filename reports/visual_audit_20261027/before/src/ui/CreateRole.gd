@@ -1,0 +1,447 @@
+# CreateRole.gd —— 创建角色（参考"创建角色"风：昵称输入 + 随机取名 + 性别/职业切换 + 单角色展示 + 羊皮纸说明）
+extends Control
+
+const BG_W := 971.0
+const BG_H := 1619.0
+const VIEW_W := 480.0
+const VIEW_H := 800.0
+
+const SPRITE_SCALE := 2.0      # 单角色放大展示
+const PED_Y := 530.0           # 金色圆台中心 y
+const BASE_OFFSET := 59.0      # 清理后素材脚底相对帧中心的偏移（基线 y=123）
+const ANIM_Y := PED_Y - BASE_OFFSET * SPRITE_SCALE
+
+const GENDERS := ["男", "女"]
+
+var _name_edit: LineEdit
+var _sel_gender: _Selector
+var _sel_class: _Selector
+var _anim: AnimatedSprite2D
+var _info: Dictionary = {}
+var _role_idx := 0
+var _gender_idx := 0
+var _preview_pose: StringName = &"walk_down"
+var _reselect_mode := false
+var _toast: Label = null
+var _chest:Control
+var _role_art_frame: PanelContainer = null   # 职业插画位（有图才显形）
+var _role_art: TextureRect = null
+
+
+func _ready() -> void:
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_reselect_mode = bool(G.get_meta("reselect_from_home", false))
+	_chest=preload("res://src/ui/CreateRoleChestView.gd").new()
+	_chest.host=self
+	add_child(_chest)
+	var existing_name := G.player_name.strip_edges()
+	_name_edit.text = existing_name if not existing_name.is_empty() else G.random_name()
+	var g_idx := GENDERS.find(G.gender)
+	if g_idx >= 0:
+		_gender_idx = g_idx
+	var start:=0
+	var target_role := G.selected_role if G.selected_role in ["zs", "ck", "fs", "fz"] else "zs"
+	for i in G.roles.size():
+		if G.roles[i].id==target_role:start=i
+	_switch_role(start,false)
+
+func _build_background() -> void:
+	G.page_background(self, 0.25)
+
+
+func _build_header() -> void:
+	var b := G.banner_box("创建角色", 240, 54)
+	b.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	b.position = Vector2(-120, 22)
+	add_child(b)
+
+
+# ---------- 昵称 ----------
+func _build_name_row() -> void:
+	var lbl := G.serif_label("角色昵称", G.FS_MD, Color("ecdcb2"))
+	lbl.position = Vector2(0, 88)
+	lbl.size = Vector2(VIEW_W, 26)
+	add_child(lbl)
+
+	_name_edit = LineEdit.new()
+	_name_edit.placeholder_text = "请输入昵称"
+	_name_edit.max_length = 12
+	_name_edit.alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_name_edit.position = Vector2(62, 118)
+	_name_edit.custom_minimum_size = Vector2(232, 42)
+	G.style_line_edit(_name_edit, G.FS_MD)
+	_name_edit.text_submitted.connect(func(_t: String): _confirm())
+	add_child(_name_edit)
+
+	var rnd := G.gold_button("随机取名", 112, 42)
+	rnd.position = Vector2(306, 118)
+	rnd.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed:
+			_name_edit.text = G.random_name()
+			_name_edit.grab_focus()
+	)
+	add_child(rnd)
+
+	var hint := G.gold_label("2~12 个字符，汉字 2~6 个", G.FS_XS, false, Color("cdb088", 0.85), false)
+	hint.position = Vector2(0, 168)
+	hint.size = Vector2(VIEW_W, 22)
+	add_child(hint)
+
+
+# ---------- 性别 / 职业 选择框 ----------
+func _build_selectors() -> void:
+	_sel_gender = _Selector.new(132, 42, G.FS_MD)
+	_sel_gender.position = Vector2(92, 200)
+	_sel_gender.prev_pressed.connect(func(): _cycle_gender(-1))
+	_sel_gender.next_pressed.connect(func(): _cycle_gender(1))
+	add_child(_sel_gender)
+
+	_sel_class = _Selector.new(132, 42, G.FS_MD)
+	_sel_class.position = Vector2(256, 200)
+	_sel_class.prev_pressed.connect(func(): _switch_role(_role_idx - 1, true))
+	_sel_class.next_pressed.connect(func(): _switch_role(_role_idx + 1, true))
+	add_child(_sel_class)
+
+
+func _cycle_gender(delta: int) -> void:
+	_gender_idx = wrapi(_gender_idx + delta, 0, GENDERS.size())
+	_sel_gender.set_text(GENDERS[_gender_idx])
+	_sel_gender.set_active(true)
+	_sel_class.set_active(false)
+
+
+# ---------- 角色展示台 ----------
+## 职业插画位：role_<id>_art.png（或 role_<id>.png）存在时才显形，缺图整块不占地方
+## —— 生成好立绘丢进 image/generated_*/ready/ 即可自动铺在角色身后
+func _build_stage_art() -> void:
+	_role_art_frame = PanelContainer.new()
+	_role_art_frame.position = Vector2(72, 298)
+	_role_art_frame.custom_minimum_size = Vector2(336, 246)
+	_role_art_frame.clip_contents = true
+	_role_art_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(0.06, 0.04, 0.03, 0.35)
+	# 3px 圆角 ≈ 八边形切角语言，弃用大圆角
+	sb.set_corner_radius_all(3)
+	sb.set_border_width_all(2)
+	sb.border_color = Color(G.GOLD.r, G.GOLD.g, G.GOLD.b, 0.16)
+	_role_art_frame.add_theme_stylebox_override("panel", sb)
+	add_child(_role_art_frame)
+
+	_role_art = TextureRect.new()
+	_role_art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_role_art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	# 压成氛围层：这张立绘和台上的像素小人画的是同一个角色，太实会"两个破军"打架
+	_role_art.modulate = Color.WHITE
+	_role_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_role_art_frame.add_child(_role_art)
+	_refresh_role_art()
+
+
+func _refresh_role_art() -> void:
+	if _role_art_frame != null:
+		_role_art_frame.visible = false
+	if _anim != null:
+		_anim.visible = true
+
+
+func _build_stage() -> void:
+	var ped := _Pedestal.new()
+	ped.position = Vector2(VIEW_W / 2.0, PED_Y)
+	add_child(ped)
+	var ring := _RingDrawer.new()
+	ring.position = Vector2(VIEW_W / 2.0, PED_Y)
+	add_child(ring)
+	_anim = AnimatedSprite2D.new()
+	_anim.scale = Vector2.ONE * SPRITE_SCALE
+	_anim.position = Vector2(VIEW_W / 2.0, ANIM_Y)
+	_anim.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	add_child(_anim)
+
+
+func _build_swipe() -> void:
+	var hint := G.gold_label("← → 或左右拖动切换职业", G.FS_XS, false, Color("cdb088", 0.8), false)
+	hint.position = Vector2(0, 272)
+	hint.custom_minimum_size = Vector2(VIEW_W, 0)
+	add_child(hint)
+
+	var zone := Control.new()
+	zone.position = Vector2(20, 296)
+	zone.custom_minimum_size = Vector2(440, 268)
+	zone.mouse_filter = Control.MOUSE_FILTER_STOP
+	zone.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	var drag := {"on": false, "x": 0.0}
+	zone.gui_input.connect(func(e: InputEvent):
+		if not (e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT):
+			return
+		if e.pressed:
+			drag["on"] = true
+			drag["x"] = (e as InputEventMouseButton).global_position.x
+		elif drag["on"]:
+			drag["on"] = false
+			var dx: float = (e as InputEventMouseButton).global_position.x - float(drag["x"])
+			if dx < -40.0:
+				_switch_role(_role_idx + 1, true)
+			elif dx > 40.0:
+				_switch_role(_role_idx - 1, true))
+	add_child(zone)
+
+
+func _switch_role(idx: int, animate: bool) -> void:
+	_role_idx = wrapi(idx, 0, G.roles.size())
+	var role: Dictionary = G.roles[_role_idx]
+	_anim.sprite_frames = _build_frames(role["id"])
+	var pose: StringName = _preview_pose if _anim.sprite_frames.has_animation(_preview_pose) else &"walk_down"
+	_anim.animation = pose
+	_anim.play(pose)
+	_chest.refresh()
+	if animate:
+		_anim.modulate.a = 0.0
+		_anim.scale = Vector2.ONE * (SPRITE_SCALE * 0.78)
+		var tw := create_tween()
+		tw.set_parallel(true)
+		tw.tween_property(_anim, "modulate:a", 1.0, 0.16)
+		tw.tween_property(_anim, "scale", Vector2.ONE * SPRITE_SCALE, 0.22) \
+			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+
+func set_preview_pose(pose: StringName) -> void:
+	_preview_pose = pose
+	if _anim != null and _anim.sprite_frames != null and _anim.sprite_frames.has_animation(pose):
+		_anim.animation = pose
+		_anim.play(pose)
+	if _chest != null:
+		_chest.refresh()
+
+
+func _build_frames(role_id: String) -> SpriteFrames:
+	var slug := _role_name(role_id)
+	var frames := SpriteFrames.new()
+	frames.remove_animation(&"default")
+	var walk_path := G.role_dir(role_id) + slug + "_walk_frames.tres"
+	var walk_frames := load(walk_path) as SpriteFrames
+	if walk_frames != null:
+		for dir_anim in [&"walk_down", &"walk_left", &"walk_right", &"walk_up"]:
+			if walk_frames.has_animation(dir_anim):
+				frames.add_animation(dir_anim)
+				frames.set_animation_speed(dir_anim, walk_frames.get_animation_speed(dir_anim))
+				frames.set_animation_loop(dir_anim, true)
+				for idx in walk_frames.get_frame_count(dir_anim):
+					frames.add_frame(dir_anim, walk_frames.get_frame_texture(dir_anim, idx))
+		if walk_frames.has_animation(&"walk_down"):
+			frames.add_animation(&"idle")
+			frames.set_animation_speed(&"idle", walk_frames.get_animation_speed(&"walk_down"))
+			frames.set_animation_loop(&"idle", true)
+			for idx in walk_frames.get_frame_count(&"walk_down"):
+				frames.add_frame(&"idle", walk_frames.get_frame_texture(&"walk_down", idx))
+	return frames
+
+
+func _role_name(id: String) -> String:
+	match id:
+		"zs": return "pojun"
+		"ck": return "chuanyang"
+		"fs": return "shuangyu"
+		"fz": return "chenxing"
+	return id
+
+
+# ---------- 羊皮纸说明面板 ----------
+func _build_info_panel() -> void:
+	var panel := G.parchment_box(432, 156, 20.0)
+	panel.position = Vector2(24, 580)
+	add_child(panel)
+
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 5)
+	panel.add_child(box)
+
+	var title_row := HBoxContainer.new()
+	title_row.add_theme_constant_override("separation", 10)
+	box.add_child(title_row)
+
+	var rname := G.serif_label("破军", G.FS_LG, G.BANNER)
+	title_row.add_child(rname)
+	var job := G.gold_label("战士 · 大剑", G.FS_SM, false, G.TEXT_MUTED, false)
+	job.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+	title_row.add_child(job)
+
+	var tags := G.gold_label("近战物理 · 能抗能打", G.FS_SM, false, G.TEXT_MUTED, false)
+	tags.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	box.add_child(tags)
+
+	var desc := Label.new()
+	desc.add_theme_font_override("font", G.font_reg)
+	desc.add_theme_font_size_override("font_size", G.FS_SM)
+	desc.add_theme_color_override("font_color", G.TEXT_DARK)
+	desc.add_theme_constant_override("line_spacing", 5)
+	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	desc.custom_minimum_size = Vector2(392, 0)
+	desc.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	box.add_child(desc)
+
+	_info = {"title": rname, "job": job, "tags": tags, "desc": desc}
+
+
+func _refresh_info() -> void:
+	var role: Dictionary = G.roles[_role_idx]
+	_info["title"].text = role["name"]
+	_info["job"].text = "%s · %s" % [role["job"], role["weapon"]]
+	_info["tags"].text = role.get("tags", "")
+	_info["desc"].text = role.get("desc", "")
+
+
+# ---------- 底部按钮 ----------
+func _build_buttons() -> void:
+	var ok := G.gold_button("确定", 150, 46)
+	ok.position = Vector2(78, 744)
+	ok.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed:
+			_confirm()
+	)
+	add_child(ok)
+
+	var cancel := G.gold_button("取消", 150, 46)
+	cancel.position = Vector2(252, 744)
+	cancel.gui_input.connect(func(e: InputEvent):
+		if e is InputEventMouseButton and e.pressed:
+			_close_or_cancel()
+	)
+	add_child(cancel)
+
+
+func _close_or_cancel() -> void:
+	if _reselect_mode:
+		G.set_meta("reselect_from_home", false)
+		G.go("res://src/ui/GameHome.tscn")
+	else:
+		G.go("res://src/ui/Login.tscn")
+
+
+# ---------- 确认 ----------
+func _confirm() -> void:
+	var nm := _name_edit.text.strip_edges()
+	if nm.is_empty():
+		Audio.sfx("ui_locked")
+		_toast_msg("请输入角色昵称")
+		return
+	if nm.length() > 12:
+		Audio.sfx("ui_locked")
+		_toast_msg("昵称最长 12 个字符")
+		return
+	Audio.sfx("ui_confirm")
+	G.gender = GENDERS[_gender_idx]
+	G.selected_role = G.roles[_role_idx]["id"]
+	G.player_name = nm
+	if G.avatar_id.is_empty():
+		G.avatar_id = "fox"
+	G.save_game()
+	if _reselect_mode:
+		G.set_meta("reselect_from_home", false)
+		G.go("res://src/ui/GameHome.tscn")
+		return
+	# 捏完人先看序章：交代"你在哪、为什么出征、第一站去哪"，再进主城
+	if G.lore_seen():
+		G.enter_main_world()
+	else:
+		G.go("res://src/ui/Prologue.tscn")
+
+
+func _toast_msg(msg:String) -> void:
+	_chest.error(msg)
+
+func _unhandled_input(event: InputEvent) -> void:
+	if G.ui_blocked:   # GM 控制台等全屏层优先（轮次 14）
+		return
+	if event.is_action_pressed("ui_cancel"):
+		_close_or_cancel()
+	elif event.is_action_pressed("ui_left"):
+		_switch_role(_role_idx - 1, true)
+	elif event.is_action_pressed("ui_right"):
+		_switch_role(_role_idx + 1, true)
+
+
+# ---------- 参考风选择框：◀ 值 ▶ ----------
+class _Selector extends PanelContainer:
+	signal prev_pressed
+	signal next_pressed
+
+	var value: Label
+	var _sb: StyleBoxFlat
+
+	func _init(w: float, h: float, fs: int) -> void:
+		custom_minimum_size = Vector2(w, h)
+		_sb = StyleBoxFlat.new()
+		_sb.bg_color = G.BOX_BG
+		_sb.set_corner_radius_all(3)
+		_sb.set_border_width_all(2)
+		_sb.border_color = G.BOX_EDGE
+		add_theme_stylebox_override("panel", _sb)
+
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override("separation", 0)
+		add_child(row)
+		row.add_child(_arrow("◀", fs, true))
+		value = G.gold_label("-", fs, true, G.TEXT_DARK, false)
+		value.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		value.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		row.add_child(value)
+		row.add_child(_arrow("▶", fs, false))
+
+	func _arrow(glyph: String, fs: int, is_prev: bool) -> Control:
+		var b := Control.new()
+		b.custom_minimum_size = Vector2(32, 0)
+		b.mouse_filter = Control.MOUSE_FILTER_STOP
+		b.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		var l := G.gold_label(glyph, fs, true, G.TEXT_DARK, false)
+		l.set_anchors_preset(Control.PRESET_FULL_RECT)
+		l.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		b.add_child(l)
+		b.gui_input.connect(func(e: InputEvent):
+			if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+				if is_prev:
+					prev_pressed.emit()
+				else:
+					next_pressed.emit()
+		)
+		return b
+
+	func set_text(t: String) -> void:
+		value.text = t
+
+	func set_active(a: bool) -> void:
+		_sb.bg_color = G.GOLD_BTN if a else Color("b5aa90")
+		_sb.border_color = G.GOLD_BTN_EDGE if a else G.BOX_EDGE
+		value.add_theme_color_override("font_color", G.GOLD_BRIGHT if a else G.TEXT_DARK)
+		var row := get_child(0) as HBoxContainer
+		for i in [0,2]:
+			(row.get_child(i).get_child(0) as Label).add_theme_color_override("font_color", G.GOLD_BRIGHT if a else G.TEXT_DARK)
+
+
+# ---------- 自绘：金色圆台 / 脚下光圈 ----------
+class _Pedestal extends Node2D:
+	var rx := 64.0
+	var ry := 40.0
+	func _draw() -> void:
+		var s := ry / rx
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, s))
+		draw_circle(Vector2(0, 6.0 / s), rx * 1.05, Color(0, 0, 0, 0.35))
+		draw_circle(Vector2.ZERO, rx, Color("8a6a28"))
+		draw_circle(Vector2(0, -3.0 / s), rx * 0.8, Color("c9a44a"))
+		draw_circle(Vector2(0, -5.0 / s), rx * 0.5, Color("e8c668"))
+
+
+class _RingDrawer extends Node2D:
+	var rx := 80.0
+	var ry := 48.0
+	func _draw() -> void:
+		var outer := PackedVector2Array()
+		var inner := PackedVector2Array()
+		var n := 64
+		for i in n + 1:
+			var a := TAU * float(i) / float(n)
+			outer.append(Vector2(cos(a) * rx, sin(a) * ry))
+			inner.append(Vector2(cos(a) * rx * 0.9, sin(a) * ry * 0.9))
+		draw_polyline(outer, G.GOLD_BRIGHT, 3.0)
+		draw_polyline(inner, Color(G.GOLD_BRIGHT.r, G.GOLD_BRIGHT.g, G.GOLD_BRIGHT.b, 0.5), 2.0)
