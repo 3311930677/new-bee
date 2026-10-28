@@ -1,0 +1,6917 @@
+{
+	"checks": [
+		{
+			"detail": 246,
+			"label": "rendered frame has visible detail login",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P01 crisp full-height login background",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P01 login form safe on Android",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P01 fields retain touch size",
+			"ok": true
+		},
+		{
+			"detail": 88,
+			"label": "rendered frame has visible detail currency",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P03 independent currency card gold",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P03 exact balance gold",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P03 compact card height gold",
+			"ok": true
+		},
+		{
+			"detail": 88,
+			"label": "rendered frame has visible detail currency_gold",
+			"ok": true
+		},
+		{
+			"detail": 73,
+			"label": "rendered frame has visible detail currency",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P03 independent currency card expedition",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P03 exact balance expedition",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P03 compact card height expedition",
+			"ok": true
+		},
+		{
+			"detail": 73,
+			"label": "rendered frame has visible detail currency_expedition",
+			"ok": true
+		},
+		{
+			"detail": 79,
+			"label": "rendered frame has visible detail currency",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P03 independent currency card soul",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P03 exact balance soul",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P03 compact card height soul",
+			"ok": true
+		},
+		{
+			"detail": 79,
+			"label": "rendered frame has visible detail currency_soul",
+			"ok": true
+		},
+		{
+			"detail": 82,
+			"label": "rendered frame has visible detail currency",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P03 independent currency card honor",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P03 exact balance honor",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P03 compact card height honor",
+			"ok": true
+		},
+		{
+			"detail": 82,
+			"label": "rendered frame has visible detail currency_honor",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P03 reading four cards never mutates state",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 body pedestal support 0",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 shared shadow support 0",
+			"ok": true
+		},
+		{
+			"detail": 277,
+			"label": "rendered frame has visible detail pet_0_silhouette",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 body pedestal support 1",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 shared shadow support 1",
+			"ok": true
+		},
+		{
+			"detail": 275,
+			"label": "rendered frame has visible detail pet_1_silhouette",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 body pedestal support 2",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 shared shadow support 2",
+			"ok": true
+		},
+		{
+			"detail": 276,
+			"label": "rendered frame has visible detail pet_2_silhouette",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 body pedestal support 3",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 shared shadow support 3",
+			"ok": true
+		},
+		{
+			"detail": 278,
+			"label": "rendered frame has visible detail pet_3_silhouette",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 body pedestal support 4",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 shared shadow support 4",
+			"ok": true
+		},
+		{
+			"detail": 277,
+			"label": "rendered frame has visible detail pet_4_silhouette",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 body pedestal support 5",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 shared shadow support 5",
+			"ok": true
+		},
+		{
+			"detail": 277,
+			"label": "rendered frame has visible detail pet_5_silhouette",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 body pedestal support 6",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 shared shadow support 6",
+			"ok": true
+		},
+		{
+			"detail": 278,
+			"label": "rendered frame has visible detail pet_6_silhouette",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 body pedestal support 7",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 shared shadow support 7",
+			"ok": true
+		},
+		{
+			"detail": 284,
+			"label": "rendered frame has visible detail pet_7_silhouette",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 body pedestal support 8",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 shared shadow support 8",
+			"ok": true
+		},
+		{
+			"detail": 279,
+			"label": "rendered frame has visible detail pet_8_silhouette",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 body pedestal support 9",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 shared shadow support 9",
+			"ok": true
+		},
+		{
+			"detail": 285,
+			"label": "rendered frame has visible detail pet_9_silhouette",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 body pedestal support 0",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 shared shadow support 0",
+			"ok": true
+		},
+		{
+			"detail": 261,
+			"label": "rendered frame has visible detail pet_0_owned",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 body pedestal support 1",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 shared shadow support 1",
+			"ok": true
+		},
+		{
+			"detail": 260,
+			"label": "rendered frame has visible detail pet_1_owned",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 body pedestal support 2",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 shared shadow support 2",
+			"ok": true
+		},
+		{
+			"detail": 261,
+			"label": "rendered frame has visible detail pet_2_owned",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 body pedestal support 3",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 shared shadow support 3",
+			"ok": true
+		},
+		{
+			"detail": 262,
+			"label": "rendered frame has visible detail pet_3_owned",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 body pedestal support 4",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 shared shadow support 4",
+			"ok": true
+		},
+		{
+			"detail": 263,
+			"label": "rendered frame has visible detail pet_4_owned",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 body pedestal support 5",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 shared shadow support 5",
+			"ok": true
+		},
+		{
+			"detail": 261,
+			"label": "rendered frame has visible detail pet_5_owned",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 body pedestal support 6",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 shared shadow support 6",
+			"ok": true
+		},
+		{
+			"detail": 261,
+			"label": "rendered frame has visible detail pet_6_owned",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 body pedestal support 7",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 shared shadow support 7",
+			"ok": true
+		},
+		{
+			"detail": 261,
+			"label": "rendered frame has visible detail pet_7_owned",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 body pedestal support 8",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 shared shadow support 8",
+			"ok": true
+		},
+		{
+			"detail": 263,
+			"label": "rendered frame has visible detail pet_8_owned",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 body pedestal support 9",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P02 shared shadow support 9",
+			"ok": true
+		},
+		{
+			"detail": 265,
+			"label": "rendered frame has visible detail pet_9_owned",
+			"ok": true
+		},
+		{
+			"detail": 130,
+			"label": "rendered frame has visible detail exchange",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P06 five original products",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P06 viewing product does not purchase enhance_stone",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P06 product detail safe",
+			"ok": true
+		},
+		{
+			"detail": 108,
+			"label": "rendered frame has visible detail market_detail_enhance_stone",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P06 viewing product does not purchase refine_stone",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P06 product detail safe",
+			"ok": true
+		},
+		{
+			"detail": 109,
+			"label": "rendered frame has visible detail market_detail_refine_stone",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P06 viewing product does not purchase lock_rune",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P06 product detail safe",
+			"ok": true
+		},
+		{
+			"detail": 112,
+			"label": "rendered frame has visible detail market_detail_lock_rune",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P06 viewing product does not purchase gem_atk",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P06 product detail safe",
+			"ok": true
+		},
+		{
+			"detail": 116,
+			"label": "rendered frame has visible detail market_detail_gem_atk",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P06 viewing product does not purchase gem_hp",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P06 product detail safe",
+			"ok": true
+		},
+		{
+			"detail": 118,
+			"label": "rendered frame has visible detail market_detail_gem_hp",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P06 one confirmation one transaction",
+			"ok": true
+		},
+		{
+			"detail": 145,
+			"label": "rendered frame has visible detail curio",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P09 safe overview",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P09 accessible return overview",
+			"ok": true
+		},
+		{
+			"detail": 145,
+			"label": "rendered frame has visible detail curio_overview",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P09 safe lore",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P09 accessible return lore",
+			"ok": true
+		},
+		{
+			"detail": 93,
+			"label": "rendered frame has visible detail curio_lore",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P09 safe appraise",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P09 accessible return appraise",
+			"ok": true
+		},
+		{
+			"detail": 105,
+			"label": "rendered frame has visible detail curio_appraise",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P09 safe history",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P09 accessible return history",
+			"ok": true
+		},
+		{
+			"detail": 66,
+			"label": "rendered frame has visible detail curio_history",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P09 navigation has no rewards or charges",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P09 appraise charges exactly once",
+			"ok": true
+		},
+		{
+			"detail": 70,
+			"label": "rendered frame has visible detail curio_result",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "P09 result confirmation never repeats reward",
+			"ok": true
+		},
+		{
+			"detail": [],
+			"label": "M01 resource manifest loads on Android",
+			"ok": true
+		},
+		{
+			"detail": [
+				{
+					"icon": "itm_ticket_ten",
+					"id": "ticket_ten",
+					"loaded": true
+				},
+				{
+					"icon": "itm_ticket_sweep",
+					"id": "ticket_sweep",
+					"loaded": true
+				},
+				{
+					"icon": "itm_enhance_stone",
+					"id": "enhance_stone",
+					"loaded": true
+				},
+				{
+					"icon": "itm_refine_stone",
+					"id": "refine_stone",
+					"loaded": true
+				},
+				{
+					"icon": "itm_lock_rune",
+					"id": "lock_rune",
+					"loaded": true
+				},
+				{
+					"icon": "itm_pet_food",
+					"id": "pet_food",
+					"loaded": true
+				},
+				{
+					"icon": "itm_break_crystal",
+					"id": "break_crystal",
+					"loaded": true
+				},
+				{
+					"icon": "itm_aptitude_fruit",
+					"id": "aptitude_fruit",
+					"loaded": true
+				},
+				{
+					"icon": "gem_atk_1",
+					"id": "gem_atk_1",
+					"loaded": true
+				},
+				{
+					"icon": "gem_atk_2",
+					"id": "gem_atk_2",
+					"loaded": true
+				},
+				{
+					"icon": "gem_atk_3",
+					"id": "gem_atk_3",
+					"loaded": true
+				},
+				{
+					"icon": "gem_atk_4",
+					"id": "gem_atk_4",
+					"loaded": true
+				},
+				{
+					"icon": "gem_atk_5",
+					"id": "gem_atk_5",
+					"loaded": true
+				},
+				{
+					"icon": "gem_def_1",
+					"id": "gem_def_1",
+					"loaded": true
+				},
+				{
+					"icon": "gem_def_2",
+					"id": "gem_def_2",
+					"loaded": true
+				},
+				{
+					"icon": "gem_def_3",
+					"id": "gem_def_3",
+					"loaded": true
+				},
+				{
+					"icon": "gem_def_4",
+					"id": "gem_def_4",
+					"loaded": true
+				},
+				{
+					"icon": "gem_def_5",
+					"id": "gem_def_5",
+					"loaded": true
+				},
+				{
+					"icon": "gem_hp_1",
+					"id": "gem_hp_1",
+					"loaded": true
+				},
+				{
+					"icon": "gem_hp_2",
+					"id": "gem_hp_2",
+					"loaded": true
+				},
+				{
+					"icon": "gem_hp_3",
+					"id": "gem_hp_3",
+					"loaded": true
+				},
+				{
+					"icon": "gem_hp_4",
+					"id": "gem_hp_4",
+					"loaded": true
+				},
+				{
+					"icon": "gem_hp_5",
+					"id": "gem_hp_5",
+					"loaded": true
+				},
+				{
+					"icon": "itm_evolve_crystal",
+					"id": "evolve_crystal",
+					"loaded": true
+				},
+				{
+					"icon": "itm_stele_fragment",
+					"id": "stele_fragment",
+					"loaded": true
+				},
+				{
+					"icon": "itm_salt_ledger",
+					"id": "salt_ledger",
+					"loaded": true
+				},
+				{
+					"icon": "itm_gate_clue",
+					"id": "gate_clue",
+					"loaded": true
+				},
+				{
+					"icon": "itm_tide_core",
+					"id": "tide_core",
+					"loaded": true
+				},
+				{
+					"icon": "itm_frost_letter",
+					"id": "frost_letter",
+					"loaded": true
+				},
+				{
+					"icon": "itm_mine_record",
+					"id": "mine_record",
+					"loaded": true
+				},
+				{
+					"icon": "itm_gate_stamp",
+					"id": "gate_stamp",
+					"loaded": true
+				},
+				{
+					"icon": "itm_frost_reply",
+					"id": "frost_reply",
+					"loaded": true
+				},
+				{
+					"icon": "itm_veil_seal",
+					"id": "veil_seal",
+					"loaded": true
+				},
+				{
+					"icon": "itm_stele_fragment",
+					"id": "rift_echo",
+					"loaded": true
+				},
+				{
+					"icon": "itm_gate_stamp",
+					"id": "stele_key",
+					"loaded": true
+				},
+				{
+					"icon": "itm_gate_stamp",
+					"id": "stable_seal",
+					"loaded": true
+				},
+				{
+					"icon": "itm_mine_record",
+					"id": "stele_record",
+					"loaded": true
+				},
+				{
+					"icon": "itm_frost_nameplate",
+					"id": "frost_nameplate",
+					"loaded": true
+				},
+				{
+					"icon": "itm_frost_parcel",
+					"id": "frost_parcel",
+					"loaded": true
+				},
+				{
+					"icon": "itm_tide_egg",
+					"id": "tide_egg",
+					"loaded": true
+				},
+				{
+					"icon": "itm_fish_salt",
+					"id": "fish_salt",
+					"loaded": true
+				},
+				{
+					"icon": "itm_fish_port",
+					"id": "fish_port",
+					"loaded": true
+				},
+				{
+					"icon": "itm_fish_tide",
+					"id": "fish_tide",
+					"loaded": true
+				},
+				{
+					"icon": "itm_fish_frost",
+					"id": "fish_frost",
+					"loaded": true
+				},
+				{
+					"icon": "itm_wind_chime",
+					"id": "wind_chime",
+					"loaded": true
+				},
+				{
+					"icon": "itm_return_old_letter",
+					"id": "return_old_letter",
+					"loaded": true
+				},
+				{
+					"icon": "itm_return_mailbag",
+					"id": "return_mailbag",
+					"loaded": true
+				}
+			],
+			"label": "M01 all fixture materials and gems have textures",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "M05 default GM overlay absent",
+			"ok": true
+		}
+	],
+	"device": {
+		"cutouts": "[[P: (984.0, 0.0), S: (236.0, 256.0)]]",
+		"mix_rate": 44100.0,
+		"model": "Android SDK built for x86_64",
+		"os": "Android",
+		"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+		"system_safe": "[P: (0, 256), S: (1600, 2304)]",
+		"version": "35.12368160",
+		"viewport": "[P: (0.0, 0.0), S: (480.0, 800.0)]",
+		"window": "(1600, 2560)"
+	},
+	"final": {
+		"audio": {
+			"bgm": "",
+			"events": [
+				{
+					"category": "Rewards",
+					"name": "coin",
+					"time_ms": 21525
+				},
+				{
+					"category": "Rewards",
+					"name": "reward",
+					"time_ms": 23800
+				}
+			],
+			"mute": false,
+			"paused": false,
+			"playing": false,
+			"position": 0.0,
+			"suspended": false,
+			"voices": 0
+		},
+		"controls": [],
+		"device": {
+			"cutouts": "[[P: (984.0, 0.0), S: (236.0, 256.0)]]",
+			"mix_rate": 44100.0,
+			"model": "Android SDK built for x86_64",
+			"os": "Android",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"system_safe": "[P: (0, 256), S: (1600, 2304)]",
+			"version": "35.12368160",
+			"viewport": "[P: (0.0, 0.0), S: (480.0, 800.0)]",
+			"window": "(1600, 2560)"
+		},
+		"focus": "<Object#null>",
+		"keyboard_height": 0,
+		"labels": [],
+		"modals": [],
+		"page": "",
+		"tick_ms": 26337
+	},
+	"id": "final_tablet",
+	"photos": [
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/Login/@Control@3/RegistrationPaper/@VBoxContainer@4/@HBoxContainer@5/@Button@6",
+					"rect": [
+						46.0,
+						114.0,
+						44.0,
+						65.0
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回标题",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/Login/@Control@3/RegistrationPaper/@VBoxContainer@4/RegistrationFields/@VBoxContainer@14/@HBoxContainer@17/@Button@18",
+					"rect": [
+						378.0,
+						471.0,
+						56.0,
+						65.0
+					],
+					"safe": true,
+					"text": "显",
+					"tooltip": "显示或隐藏密码",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/Login/@Control@3/RegistrationPaper/@VBoxContainer@4/RegistrationFields/@VBoxContainer@14/@HBoxContainer@19/AvatarCard",
+					"rect": [
+						104.0,
+						546.0,
+						330.0,
+						62.0
+					],
+					"safe": true,
+					"text": "自选画像 · 导入图片",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/Login/@Control@3/RegistrationPaper/@VBoxContainer@4/LoginButton",
+					"rect": [
+						46.0,
+						587.0,
+						396.0,
+						65.0
+					],
+					"safe": true,
+					"text": "登录入城",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/Login/@Control@3/RegistrationPaper/@VBoxContainer@4/GuestButton",
+					"rect": [
+						46.0,
+						664.0,
+						396.0,
+						65.0
+					],
+					"safe": true,
+					"text": "游客入城",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "login",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 246
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@23/CurrencyDetails/@VBoxContainer@25/CloseCurrency",
+					"rect": [
+						52.0,
+						678.0,
+						384.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "currency",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 88
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@23/CurrencyDetails/@VBoxContainer@25/CloseCurrency",
+					"rect": [
+						52.0,
+						678.0,
+						384.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "currency_gold",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 88
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@46/CurrencyDetails/@VBoxContainer@48/CloseCurrency",
+					"rect": [
+						52.0,
+						623.0,
+						384.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "currency",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 73
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@46/CurrencyDetails/@VBoxContainer@48/CloseCurrency",
+					"rect": [
+						52.0,
+						623.0,
+						384.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "currency_expedition",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 73
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@64/CurrencyDetails/@VBoxContainer@66/CloseCurrency",
+					"rect": [
+						52.0,
+						668.0,
+						384.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "currency",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 79
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@64/CurrencyDetails/@VBoxContainer@66/CloseCurrency",
+					"rect": [
+						52.0,
+						668.0,
+						384.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "currency_soul",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 79
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@84/CurrencyDetails/@VBoxContainer@86/CloseCurrency",
+					"rect": [
+						52.0,
+						645.0,
+						384.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "currency",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 82
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@84/CurrencyDetails/@VBoxContainer@86/CloseCurrency",
+					"rect": [
+						52.0,
+						645.0,
+						384.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "currency_honor",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 82
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Control@110/@Button@127",
+					"rect": [
+						16.0,
+						255.999969482422,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "◀",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Control@110/@Button@128",
+					"rect": [
+						420.0,
+						255.999969482422,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "▶",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Button@112",
+					"rect": [
+						8.0,
+						85.9999923706055,
+						44.0,
+						44.0000076293945
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@202/@HBoxContainer@203/@Button@208",
+					"rect": [
+						16.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@202/@HBoxContainer@203/@Button@213",
+					"rect": [
+						80.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@202/@HBoxContainer@203/@Button@218",
+					"rect": [
+						144.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@202/@HBoxContainer@203/@Button@223",
+					"rect": [
+						208.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@202/@HBoxContainer@203/@Button@228",
+					"rect": [
+						272.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@202/@HBoxContainer@203/@Button@233",
+					"rect": [
+						336.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@202/@HBoxContainer@203/@Button@238",
+					"rect": [
+						400.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@202/@HBoxContainer@203/@Button@243",
+					"rect": [
+						464.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@202/@HBoxContainer@203/@Button@248",
+					"rect": [
+						528.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@202/@HBoxContainer@203/@Button@253",
+					"rect": [
+						592.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@HBoxContainer@254/@Button@256",
+					"rect": [
+						372.0,
+						715.999938964844,
+						92.0,
+						38.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "",
+					"touch_under44": true
+				}
+			],
+			"name": "pet_0_silhouette",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 277
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Control@110/@Button@127",
+					"rect": [
+						16.0,
+						255.999969482422,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "◀",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Control@110/@Button@128",
+					"rect": [
+						420.0,
+						255.999969482422,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "▶",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Button@112",
+					"rect": [
+						8.0,
+						85.9999923706055,
+						44.0,
+						44.0000076293945
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@267/@HBoxContainer@268/@Button@273",
+					"rect": [
+						16.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@267/@HBoxContainer@268/@Button@278",
+					"rect": [
+						80.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@267/@HBoxContainer@268/@Button@283",
+					"rect": [
+						144.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@267/@HBoxContainer@268/@Button@288",
+					"rect": [
+						208.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@267/@HBoxContainer@268/@Button@293",
+					"rect": [
+						272.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@267/@HBoxContainer@268/@Button@298",
+					"rect": [
+						336.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@267/@HBoxContainer@268/@Button@303",
+					"rect": [
+						400.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@267/@HBoxContainer@268/@Button@308",
+					"rect": [
+						464.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@267/@HBoxContainer@268/@Button@313",
+					"rect": [
+						528.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@267/@HBoxContainer@268/@Button@318",
+					"rect": [
+						592.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@HBoxContainer@319/@Button@321",
+					"rect": [
+						372.0,
+						715.999938964844,
+						92.0,
+						38.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "",
+					"touch_under44": true
+				}
+			],
+			"name": "pet_1_silhouette",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 275
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Control@110/@Button@127",
+					"rect": [
+						16.0,
+						255.999969482422,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "◀",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Control@110/@Button@128",
+					"rect": [
+						420.0,
+						255.999969482422,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "▶",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Button@112",
+					"rect": [
+						8.0,
+						85.9999923706055,
+						44.0,
+						44.0000076293945
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@332/@HBoxContainer@333/@Button@338",
+					"rect": [
+						16.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@332/@HBoxContainer@333/@Button@343",
+					"rect": [
+						80.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@332/@HBoxContainer@333/@Button@348",
+					"rect": [
+						144.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@332/@HBoxContainer@333/@Button@353",
+					"rect": [
+						208.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@332/@HBoxContainer@333/@Button@358",
+					"rect": [
+						272.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@332/@HBoxContainer@333/@Button@363",
+					"rect": [
+						336.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@332/@HBoxContainer@333/@Button@368",
+					"rect": [
+						400.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@332/@HBoxContainer@333/@Button@373",
+					"rect": [
+						464.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@332/@HBoxContainer@333/@Button@378",
+					"rect": [
+						528.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@332/@HBoxContainer@333/@Button@383",
+					"rect": [
+						592.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@HBoxContainer@384/@Button@386",
+					"rect": [
+						372.0,
+						715.999938964844,
+						92.0,
+						38.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "",
+					"touch_under44": true
+				}
+			],
+			"name": "pet_2_silhouette",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 276
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Control@110/@Button@127",
+					"rect": [
+						16.0,
+						255.999969482422,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "◀",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Control@110/@Button@128",
+					"rect": [
+						420.0,
+						255.999969482422,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "▶",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Button@112",
+					"rect": [
+						8.0,
+						85.9999923706055,
+						44.0,
+						44.0000076293945
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@397/@HBoxContainer@398/@Button@403",
+					"rect": [
+						16.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@397/@HBoxContainer@398/@Button@408",
+					"rect": [
+						80.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@397/@HBoxContainer@398/@Button@413",
+					"rect": [
+						144.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@397/@HBoxContainer@398/@Button@418",
+					"rect": [
+						208.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@397/@HBoxContainer@398/@Button@423",
+					"rect": [
+						272.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@397/@HBoxContainer@398/@Button@428",
+					"rect": [
+						336.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@397/@HBoxContainer@398/@Button@433",
+					"rect": [
+						400.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@397/@HBoxContainer@398/@Button@438",
+					"rect": [
+						464.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@397/@HBoxContainer@398/@Button@443",
+					"rect": [
+						528.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@397/@HBoxContainer@398/@Button@448",
+					"rect": [
+						592.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@HBoxContainer@449/@Button@451",
+					"rect": [
+						372.0,
+						715.999938964844,
+						92.0,
+						38.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "",
+					"touch_under44": true
+				}
+			],
+			"name": "pet_3_silhouette",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 278
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Control@110/@Button@127",
+					"rect": [
+						16.0,
+						255.999969482422,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "◀",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Control@110/@Button@128",
+					"rect": [
+						420.0,
+						255.999969482422,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "▶",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Button@112",
+					"rect": [
+						8.0,
+						85.9999923706055,
+						44.0,
+						44.0000076293945
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@462/@HBoxContainer@463/@Button@468",
+					"rect": [
+						16.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@462/@HBoxContainer@463/@Button@473",
+					"rect": [
+						80.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@462/@HBoxContainer@463/@Button@478",
+					"rect": [
+						144.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@462/@HBoxContainer@463/@Button@483",
+					"rect": [
+						208.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@462/@HBoxContainer@463/@Button@488",
+					"rect": [
+						272.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@462/@HBoxContainer@463/@Button@493",
+					"rect": [
+						336.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@462/@HBoxContainer@463/@Button@498",
+					"rect": [
+						400.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@462/@HBoxContainer@463/@Button@503",
+					"rect": [
+						464.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@462/@HBoxContainer@463/@Button@508",
+					"rect": [
+						528.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@462/@HBoxContainer@463/@Button@513",
+					"rect": [
+						592.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@HBoxContainer@514/@Button@516",
+					"rect": [
+						372.0,
+						715.999938964844,
+						92.0,
+						38.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "",
+					"touch_under44": true
+				}
+			],
+			"name": "pet_4_silhouette",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 277
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Control@110/@Button@127",
+					"rect": [
+						16.0,
+						255.999969482422,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "◀",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Control@110/@Button@128",
+					"rect": [
+						420.0,
+						255.999969482422,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "▶",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Button@112",
+					"rect": [
+						8.0,
+						85.9999923706055,
+						44.0,
+						44.0000076293945
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@527/@HBoxContainer@528/@Button@533",
+					"rect": [
+						16.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@527/@HBoxContainer@528/@Button@538",
+					"rect": [
+						80.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@527/@HBoxContainer@528/@Button@543",
+					"rect": [
+						144.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@527/@HBoxContainer@528/@Button@548",
+					"rect": [
+						208.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@527/@HBoxContainer@528/@Button@553",
+					"rect": [
+						272.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@527/@HBoxContainer@528/@Button@558",
+					"rect": [
+						336.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@527/@HBoxContainer@528/@Button@563",
+					"rect": [
+						400.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@527/@HBoxContainer@528/@Button@568",
+					"rect": [
+						464.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@527/@HBoxContainer@528/@Button@573",
+					"rect": [
+						528.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@527/@HBoxContainer@528/@Button@578",
+					"rect": [
+						592.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@HBoxContainer@579/@Button@581",
+					"rect": [
+						372.0,
+						715.999938964844,
+						92.0,
+						38.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "",
+					"touch_under44": true
+				}
+			],
+			"name": "pet_5_silhouette",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 277
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Control@110/@Button@127",
+					"rect": [
+						16.0,
+						255.999969482422,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "◀",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Control@110/@Button@128",
+					"rect": [
+						420.0,
+						255.999969482422,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "▶",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Button@112",
+					"rect": [
+						8.0,
+						85.9999923706055,
+						44.0,
+						44.0000076293945
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@592/@HBoxContainer@593/@Button@598",
+					"rect": [
+						16.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@592/@HBoxContainer@593/@Button@603",
+					"rect": [
+						80.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@592/@HBoxContainer@593/@Button@608",
+					"rect": [
+						144.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@592/@HBoxContainer@593/@Button@613",
+					"rect": [
+						208.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@592/@HBoxContainer@593/@Button@618",
+					"rect": [
+						272.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@592/@HBoxContainer@593/@Button@623",
+					"rect": [
+						336.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@592/@HBoxContainer@593/@Button@628",
+					"rect": [
+						400.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@592/@HBoxContainer@593/@Button@633",
+					"rect": [
+						464.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@592/@HBoxContainer@593/@Button@638",
+					"rect": [
+						528.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@592/@HBoxContainer@593/@Button@643",
+					"rect": [
+						592.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@HBoxContainer@644/@Button@646",
+					"rect": [
+						372.0,
+						715.999938964844,
+						92.0,
+						38.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "",
+					"touch_under44": true
+				}
+			],
+			"name": "pet_6_silhouette",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 278
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Control@110/@Button@127",
+					"rect": [
+						16.0,
+						255.999969482422,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "◀",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Control@110/@Button@128",
+					"rect": [
+						420.0,
+						255.999969482422,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "▶",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Button@112",
+					"rect": [
+						8.0,
+						85.9999923706055,
+						44.0,
+						44.0000076293945
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@657/@HBoxContainer@658/@Button@663",
+					"rect": [
+						-40.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@657/@HBoxContainer@658/@Button@668",
+					"rect": [
+						24.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@657/@HBoxContainer@658/@Button@673",
+					"rect": [
+						88.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@657/@HBoxContainer@658/@Button@678",
+					"rect": [
+						152.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@657/@HBoxContainer@658/@Button@683",
+					"rect": [
+						216.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@657/@HBoxContainer@658/@Button@688",
+					"rect": [
+						280.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@657/@HBoxContainer@658/@Button@693",
+					"rect": [
+						344.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@657/@HBoxContainer@658/@Button@698",
+					"rect": [
+						408.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@657/@HBoxContainer@658/@Button@703",
+					"rect": [
+						472.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@657/@HBoxContainer@658/@Button@708",
+					"rect": [
+						536.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@HBoxContainer@709/@Button@711",
+					"rect": [
+						372.0,
+						715.999938964844,
+						92.0,
+						38.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "",
+					"touch_under44": true
+				}
+			],
+			"name": "pet_7_silhouette",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 284
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Control@110/@Button@127",
+					"rect": [
+						16.0,
+						255.999969482422,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "◀",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Control@110/@Button@128",
+					"rect": [
+						420.0,
+						255.999969482422,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "▶",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Button@112",
+					"rect": [
+						8.0,
+						85.9999923706055,
+						44.0,
+						44.0000076293945
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@722/@HBoxContainer@723/@Button@728",
+					"rect": [
+						-104.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@722/@HBoxContainer@723/@Button@733",
+					"rect": [
+						-40.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@722/@HBoxContainer@723/@Button@738",
+					"rect": [
+						24.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@722/@HBoxContainer@723/@Button@743",
+					"rect": [
+						88.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@722/@HBoxContainer@723/@Button@748",
+					"rect": [
+						152.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@722/@HBoxContainer@723/@Button@753",
+					"rect": [
+						216.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@722/@HBoxContainer@723/@Button@758",
+					"rect": [
+						280.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@722/@HBoxContainer@723/@Button@763",
+					"rect": [
+						344.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@722/@HBoxContainer@723/@Button@768",
+					"rect": [
+						408.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@722/@HBoxContainer@723/@Button@773",
+					"rect": [
+						472.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@HBoxContainer@774/@Button@776",
+					"rect": [
+						372.0,
+						715.999938964844,
+						92.0,
+						38.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "",
+					"touch_under44": true
+				}
+			],
+			"name": "pet_8_silhouette",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 279
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Control@110/@Button@127",
+					"rect": [
+						16.0,
+						255.999969482422,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "◀",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Control@110/@Button@128",
+					"rect": [
+						420.0,
+						255.999969482422,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "▶",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@Button@112",
+					"rect": [
+						8.0,
+						85.9999923706055,
+						44.0,
+						44.0000076293945
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@787/@HBoxContainer@788/@Button@793",
+					"rect": [
+						-168.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@787/@HBoxContainer@788/@Button@798",
+					"rect": [
+						-104.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@787/@HBoxContainer@788/@Button@803",
+					"rect": [
+						-40.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@787/@HBoxContainer@788/@Button@808",
+					"rect": [
+						24.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@787/@HBoxContainer@788/@Button@813",
+					"rect": [
+						88.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@787/@HBoxContainer@788/@Button@818",
+					"rect": [
+						152.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@787/@HBoxContainer@788/@Button@823",
+					"rect": [
+						216.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@787/@HBoxContainer@788/@Button@828",
+					"rect": [
+						280.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@787/@HBoxContainer@788/@Button@833",
+					"rect": [
+						344.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@ScrollContainer@787/@HBoxContainer@788/@Button@838",
+					"rect": [
+						408.0,
+						516.999938964844,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@103/@Control@104/@Control@105/@ScrollContainer@117/@VBoxContainer@118/@HBoxContainer@839/@Button@841",
+					"rect": [
+						372.0,
+						715.999938964844,
+						92.0,
+						38.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "",
+					"touch_under44": true
+				}
+			],
+			"name": "pet_9_silhouette",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 285
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Control@854/@Button@871",
+					"rect": [
+						16.0,
+						220.0,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "◀",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Control@854/@Button@872",
+					"rect": [
+						420.0,
+						220.0,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "▶",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Button@856",
+					"rect": [
+						8.0,
+						85.9999923706055,
+						44.0,
+						44.0000076293945
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@958/@HBoxContainer@959/@Button@964",
+					"rect": [
+						16.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@958/@HBoxContainer@959/@Button@969",
+					"rect": [
+						80.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@958/@HBoxContainer@959/@Button@974",
+					"rect": [
+						144.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@958/@HBoxContainer@959/@Button@979",
+					"rect": [
+						208.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@958/@HBoxContainer@959/@Button@984",
+					"rect": [
+						272.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@958/@HBoxContainer@959/@Button@989",
+					"rect": [
+						336.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@958/@HBoxContainer@959/@Button@994",
+					"rect": [
+						400.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@958/@HBoxContainer@959/@Button@999",
+					"rect": [
+						464.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@958/@HBoxContainer@959/@Button@1004",
+					"rect": [
+						528.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@958/@HBoxContainer@959/@Button@1009",
+					"rect": [
+						592.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@HBoxContainer@1010/@Button@1012",
+					"rect": [
+						372.0,
+						579.0,
+						92.0,
+						38.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "",
+					"touch_under44": true
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@HBoxContainer@863/@Button@875",
+					"rect": [
+						12.0,
+						731.999938964844,
+						456.0,
+						56.0
+					],
+					"safe": true,
+					"text": "进化",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "pet_0_owned",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 261
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Control@854/@Button@871",
+					"rect": [
+						16.0,
+						220.0,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "◀",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Control@854/@Button@872",
+					"rect": [
+						420.0,
+						220.0,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "▶",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Button@856",
+					"rect": [
+						8.0,
+						85.9999923706055,
+						44.0,
+						44.0000076293945
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1033/@HBoxContainer@1034/@Button@1039",
+					"rect": [
+						16.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1033/@HBoxContainer@1034/@Button@1044",
+					"rect": [
+						80.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1033/@HBoxContainer@1034/@Button@1049",
+					"rect": [
+						144.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1033/@HBoxContainer@1034/@Button@1054",
+					"rect": [
+						208.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1033/@HBoxContainer@1034/@Button@1059",
+					"rect": [
+						272.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1033/@HBoxContainer@1034/@Button@1064",
+					"rect": [
+						336.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1033/@HBoxContainer@1034/@Button@1069",
+					"rect": [
+						400.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1033/@HBoxContainer@1034/@Button@1074",
+					"rect": [
+						464.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1033/@HBoxContainer@1034/@Button@1079",
+					"rect": [
+						528.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1033/@HBoxContainer@1034/@Button@1084",
+					"rect": [
+						592.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@HBoxContainer@1085/@Button@1087",
+					"rect": [
+						372.0,
+						579.0,
+						92.0,
+						38.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "",
+					"touch_under44": true
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@HBoxContainer@863/@Button@875",
+					"rect": [
+						12.0,
+						731.999938964844,
+						456.0,
+						56.0
+					],
+					"safe": true,
+					"text": "进化",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "pet_1_owned",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 260
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Control@854/@Button@871",
+					"rect": [
+						16.0,
+						220.0,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "◀",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Control@854/@Button@872",
+					"rect": [
+						420.0,
+						220.0,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "▶",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Button@856",
+					"rect": [
+						8.0,
+						85.9999923706055,
+						44.0,
+						44.0000076293945
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1108/@HBoxContainer@1109/@Button@1114",
+					"rect": [
+						16.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1108/@HBoxContainer@1109/@Button@1119",
+					"rect": [
+						80.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1108/@HBoxContainer@1109/@Button@1124",
+					"rect": [
+						144.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1108/@HBoxContainer@1109/@Button@1129",
+					"rect": [
+						208.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1108/@HBoxContainer@1109/@Button@1134",
+					"rect": [
+						272.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1108/@HBoxContainer@1109/@Button@1139",
+					"rect": [
+						336.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1108/@HBoxContainer@1109/@Button@1144",
+					"rect": [
+						400.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1108/@HBoxContainer@1109/@Button@1149",
+					"rect": [
+						464.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1108/@HBoxContainer@1109/@Button@1154",
+					"rect": [
+						528.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1108/@HBoxContainer@1109/@Button@1159",
+					"rect": [
+						592.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@HBoxContainer@1160/@Button@1162",
+					"rect": [
+						372.0,
+						579.0,
+						92.0,
+						38.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "",
+					"touch_under44": true
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@HBoxContainer@863/@Button@875",
+					"rect": [
+						12.0,
+						731.999938964844,
+						456.0,
+						56.0
+					],
+					"safe": true,
+					"text": "进化",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "pet_2_owned",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 261
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Control@854/@Button@871",
+					"rect": [
+						16.0,
+						220.0,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "◀",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Control@854/@Button@872",
+					"rect": [
+						420.0,
+						220.0,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "▶",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Button@856",
+					"rect": [
+						8.0,
+						85.9999923706055,
+						44.0,
+						44.0000076293945
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1183/@HBoxContainer@1184/@Button@1189",
+					"rect": [
+						16.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1183/@HBoxContainer@1184/@Button@1194",
+					"rect": [
+						80.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1183/@HBoxContainer@1184/@Button@1199",
+					"rect": [
+						144.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1183/@HBoxContainer@1184/@Button@1204",
+					"rect": [
+						208.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1183/@HBoxContainer@1184/@Button@1209",
+					"rect": [
+						272.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1183/@HBoxContainer@1184/@Button@1214",
+					"rect": [
+						336.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1183/@HBoxContainer@1184/@Button@1219",
+					"rect": [
+						400.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1183/@HBoxContainer@1184/@Button@1224",
+					"rect": [
+						464.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1183/@HBoxContainer@1184/@Button@1229",
+					"rect": [
+						528.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1183/@HBoxContainer@1184/@Button@1234",
+					"rect": [
+						592.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@HBoxContainer@1235/@Button@1237",
+					"rect": [
+						372.0,
+						579.0,
+						92.0,
+						38.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "",
+					"touch_under44": true
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@HBoxContainer@863/@Button@875",
+					"rect": [
+						12.0,
+						731.999938964844,
+						456.0,
+						56.0
+					],
+					"safe": true,
+					"text": "进化",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "pet_3_owned",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 262
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Control@854/@Button@871",
+					"rect": [
+						16.0,
+						220.0,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "◀",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Control@854/@Button@872",
+					"rect": [
+						420.0,
+						220.0,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "▶",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Button@856",
+					"rect": [
+						8.0,
+						85.9999923706055,
+						44.0,
+						44.0000076293945
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1258/@HBoxContainer@1259/@Button@1264",
+					"rect": [
+						16.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1258/@HBoxContainer@1259/@Button@1269",
+					"rect": [
+						80.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1258/@HBoxContainer@1259/@Button@1274",
+					"rect": [
+						144.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1258/@HBoxContainer@1259/@Button@1279",
+					"rect": [
+						208.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1258/@HBoxContainer@1259/@Button@1284",
+					"rect": [
+						272.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1258/@HBoxContainer@1259/@Button@1289",
+					"rect": [
+						336.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1258/@HBoxContainer@1259/@Button@1294",
+					"rect": [
+						400.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1258/@HBoxContainer@1259/@Button@1299",
+					"rect": [
+						464.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1258/@HBoxContainer@1259/@Button@1304",
+					"rect": [
+						528.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1258/@HBoxContainer@1259/@Button@1309",
+					"rect": [
+						592.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@HBoxContainer@1310/@Button@1312",
+					"rect": [
+						372.0,
+						579.0,
+						92.0,
+						38.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "",
+					"touch_under44": true
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@HBoxContainer@863/@Button@875",
+					"rect": [
+						12.0,
+						731.999938964844,
+						456.0,
+						56.0
+					],
+					"safe": true,
+					"text": "进化",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "pet_4_owned",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 263
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Control@854/@Button@871",
+					"rect": [
+						16.0,
+						220.0,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "◀",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Control@854/@Button@872",
+					"rect": [
+						420.0,
+						220.0,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "▶",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Button@856",
+					"rect": [
+						8.0,
+						85.9999923706055,
+						44.0,
+						44.0000076293945
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1333/@HBoxContainer@1334/@Button@1339",
+					"rect": [
+						16.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1333/@HBoxContainer@1334/@Button@1344",
+					"rect": [
+						80.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1333/@HBoxContainer@1334/@Button@1349",
+					"rect": [
+						144.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1333/@HBoxContainer@1334/@Button@1354",
+					"rect": [
+						208.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1333/@HBoxContainer@1334/@Button@1359",
+					"rect": [
+						272.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1333/@HBoxContainer@1334/@Button@1364",
+					"rect": [
+						336.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1333/@HBoxContainer@1334/@Button@1369",
+					"rect": [
+						400.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1333/@HBoxContainer@1334/@Button@1374",
+					"rect": [
+						464.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1333/@HBoxContainer@1334/@Button@1379",
+					"rect": [
+						528.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1333/@HBoxContainer@1334/@Button@1384",
+					"rect": [
+						592.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@HBoxContainer@1385/@Button@1387",
+					"rect": [
+						372.0,
+						579.0,
+						92.0,
+						38.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "",
+					"touch_under44": true
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@HBoxContainer@863/@Button@875",
+					"rect": [
+						12.0,
+						731.999938964844,
+						456.0,
+						56.0
+					],
+					"safe": true,
+					"text": "进化",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "pet_5_owned",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 261
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Control@854/@Button@871",
+					"rect": [
+						16.0,
+						220.0,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "◀",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Control@854/@Button@872",
+					"rect": [
+						420.0,
+						220.0,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "▶",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Button@856",
+					"rect": [
+						8.0,
+						85.9999923706055,
+						44.0,
+						44.0000076293945
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1408/@HBoxContainer@1409/@Button@1414",
+					"rect": [
+						16.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1408/@HBoxContainer@1409/@Button@1419",
+					"rect": [
+						80.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1408/@HBoxContainer@1409/@Button@1424",
+					"rect": [
+						144.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1408/@HBoxContainer@1409/@Button@1429",
+					"rect": [
+						208.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1408/@HBoxContainer@1409/@Button@1434",
+					"rect": [
+						272.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1408/@HBoxContainer@1409/@Button@1439",
+					"rect": [
+						336.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1408/@HBoxContainer@1409/@Button@1444",
+					"rect": [
+						400.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1408/@HBoxContainer@1409/@Button@1449",
+					"rect": [
+						464.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1408/@HBoxContainer@1409/@Button@1454",
+					"rect": [
+						528.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1408/@HBoxContainer@1409/@Button@1459",
+					"rect": [
+						592.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@HBoxContainer@1460/@Button@1462",
+					"rect": [
+						372.0,
+						579.0,
+						92.0,
+						38.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "",
+					"touch_under44": true
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@HBoxContainer@863/@Button@875",
+					"rect": [
+						12.0,
+						731.999938964844,
+						456.0,
+						56.0
+					],
+					"safe": true,
+					"text": "进化",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "pet_6_owned",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 261
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Control@854/@Button@871",
+					"rect": [
+						16.0,
+						220.0,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "◀",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Control@854/@Button@872",
+					"rect": [
+						420.0,
+						220.0,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "▶",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Button@856",
+					"rect": [
+						8.0,
+						85.9999923706055,
+						44.0,
+						44.0000076293945
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1483/@HBoxContainer@1484/@Button@1489",
+					"rect": [
+						-40.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1483/@HBoxContainer@1484/@Button@1494",
+					"rect": [
+						24.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1483/@HBoxContainer@1484/@Button@1499",
+					"rect": [
+						88.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1483/@HBoxContainer@1484/@Button@1504",
+					"rect": [
+						152.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1483/@HBoxContainer@1484/@Button@1509",
+					"rect": [
+						216.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1483/@HBoxContainer@1484/@Button@1514",
+					"rect": [
+						280.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1483/@HBoxContainer@1484/@Button@1519",
+					"rect": [
+						344.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1483/@HBoxContainer@1484/@Button@1524",
+					"rect": [
+						408.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1483/@HBoxContainer@1484/@Button@1529",
+					"rect": [
+						472.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1483/@HBoxContainer@1484/@Button@1534",
+					"rect": [
+						536.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@HBoxContainer@1535/@Button@1537",
+					"rect": [
+						372.0,
+						579.0,
+						92.0,
+						38.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "",
+					"touch_under44": true
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@HBoxContainer@863/@Button@875",
+					"rect": [
+						12.0,
+						731.999938964844,
+						456.0,
+						56.0
+					],
+					"safe": true,
+					"text": "进化",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "pet_7_owned",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 261
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Control@854/@Button@871",
+					"rect": [
+						16.0,
+						220.0,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "◀",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Control@854/@Button@872",
+					"rect": [
+						420.0,
+						220.0,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "▶",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Button@856",
+					"rect": [
+						8.0,
+						85.9999923706055,
+						44.0,
+						44.0000076293945
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1558/@HBoxContainer@1559/@Button@1564",
+					"rect": [
+						-104.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1558/@HBoxContainer@1559/@Button@1569",
+					"rect": [
+						-40.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1558/@HBoxContainer@1559/@Button@1574",
+					"rect": [
+						24.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1558/@HBoxContainer@1559/@Button@1579",
+					"rect": [
+						88.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1558/@HBoxContainer@1559/@Button@1584",
+					"rect": [
+						152.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1558/@HBoxContainer@1559/@Button@1589",
+					"rect": [
+						216.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1558/@HBoxContainer@1559/@Button@1594",
+					"rect": [
+						280.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1558/@HBoxContainer@1559/@Button@1599",
+					"rect": [
+						344.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1558/@HBoxContainer@1559/@Button@1604",
+					"rect": [
+						408.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1558/@HBoxContainer@1559/@Button@1609",
+					"rect": [
+						472.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@HBoxContainer@1610/@Button@1612",
+					"rect": [
+						372.0,
+						579.0,
+						92.0,
+						38.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "",
+					"touch_under44": true
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@HBoxContainer@863/@Button@875",
+					"rect": [
+						12.0,
+						731.999938964844,
+						456.0,
+						56.0
+					],
+					"safe": true,
+					"text": "进化",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "pet_8_owned",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 263
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Control@854/@Button@871",
+					"rect": [
+						16.0,
+						220.0,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "◀",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Control@854/@Button@872",
+					"rect": [
+						420.0,
+						220.0,
+						44.0,
+						56.0
+					],
+					"safe": true,
+					"text": "▶",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@Button@856",
+					"rect": [
+						8.0,
+						85.9999923706055,
+						44.0,
+						44.0000076293945
+					],
+					"safe": true,
+					"text": "‹",
+					"tooltip": "返回",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1633/@HBoxContainer@1634/@Button@1639",
+					"rect": [
+						-168.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1633/@HBoxContainer@1634/@Button@1644",
+					"rect": [
+						-104.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1633/@HBoxContainer@1634/@Button@1649",
+					"rect": [
+						-40.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": false,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1633/@HBoxContainer@1634/@Button@1654",
+					"rect": [
+						24.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1633/@HBoxContainer@1634/@Button@1659",
+					"rect": [
+						88.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1633/@HBoxContainer@1634/@Button@1664",
+					"rect": [
+						152.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1633/@HBoxContainer@1634/@Button@1669",
+					"rect": [
+						216.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1633/@HBoxContainer@1634/@Button@1674",
+					"rect": [
+						280.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1633/@HBoxContainer@1634/@Button@1679",
+					"rect": [
+						344.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@ScrollContainer@1633/@HBoxContainer@1634/@Button@1684",
+					"rect": [
+						408.0,
+						507.0,
+						56.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@ScrollContainer@861/@VBoxContainer@862/@HBoxContainer@1685/@Button@1687",
+					"rect": [
+						372.0,
+						579.0,
+						92.0,
+						38.0
+					],
+					"safe": true,
+					"text": "领取",
+					"tooltip": "",
+					"touch_under44": true
+				},
+				{
+					"clipped": false,
+					"disabled": true,
+					"path": "/root/AndroidDeepAudit/@Control@847/@Control@848/@Control@849/@HBoxContainer@863/@Button@875",
+					"rect": [
+						12.0,
+						731.999938964844,
+						456.0,
+						56.0
+					],
+					"safe": true,
+					"text": "进化",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "pet_9_owned",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 265
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1719/@VBoxContainer@1714/@Button@1718",
+					"rect": [
+						56.0,
+						452.0,
+						156.0,
+						62.0
+					],
+					"safe": true,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1725/@VBoxContainer@1720/@Button@1724",
+					"rect": [
+						268.0,
+						452.0,
+						156.0,
+						62.0
+					],
+					"safe": true,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1731/@VBoxContainer@1726/@Button@1730",
+					"rect": [
+						56.0,
+						748.0,
+						156.0,
+						62.0
+					],
+					"safe": false,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1737/@VBoxContainer@1732/@Button@1736",
+					"rect": [
+						268.0,
+						748.0,
+						156.0,
+						62.0
+					],
+					"safe": false,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1743/@VBoxContainer@1738/@Button@1742",
+					"rect": [
+						56.0,
+						1044.0,
+						156.0,
+						62.0
+					],
+					"safe": false,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@Button@1745",
+					"rect": [
+						34.0,
+						700.0,
+						420.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "exchange",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 130
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1719/@VBoxContainer@1714/@Button@1718",
+					"rect": [
+						56.0,
+						452.0,
+						156.0,
+						62.0
+					],
+					"safe": true,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1725/@VBoxContainer@1720/@Button@1724",
+					"rect": [
+						268.0,
+						452.0,
+						156.0,
+						62.0
+					],
+					"safe": true,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1731/@VBoxContainer@1726/@Button@1730",
+					"rect": [
+						56.0,
+						748.0,
+						156.0,
+						62.0
+					],
+					"safe": false,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1737/@VBoxContainer@1732/@Button@1736",
+					"rect": [
+						268.0,
+						748.0,
+						156.0,
+						62.0
+					],
+					"safe": false,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1743/@VBoxContainer@1738/@Button@1742",
+					"rect": [
+						56.0,
+						1044.0,
+						156.0,
+						62.0
+					],
+					"safe": false,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@Button@1745",
+					"rect": [
+						34.0,
+						700.0,
+						420.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1746/@VBoxContainer@1747/@Button@1759",
+					"rect": [
+						34.0,
+						623.0,
+						420.0,
+						65.0
+					],
+					"safe": true,
+					"text": "确认兑换 · 80 荣誉",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1746/@VBoxContainer@1747/@Button@1760",
+					"rect": [
+						34.0,
+						700.0,
+						420.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回商品区",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "market_detail_enhance_stone",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 108
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1719/@VBoxContainer@1714/@Button@1718",
+					"rect": [
+						56.0,
+						452.0,
+						156.0,
+						62.0
+					],
+					"safe": true,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1725/@VBoxContainer@1720/@Button@1724",
+					"rect": [
+						268.0,
+						452.0,
+						156.0,
+						62.0
+					],
+					"safe": true,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1731/@VBoxContainer@1726/@Button@1730",
+					"rect": [
+						56.0,
+						748.0,
+						156.0,
+						62.0
+					],
+					"safe": false,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1737/@VBoxContainer@1732/@Button@1736",
+					"rect": [
+						268.0,
+						748.0,
+						156.0,
+						62.0
+					],
+					"safe": false,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1743/@VBoxContainer@1738/@Button@1742",
+					"rect": [
+						56.0,
+						1044.0,
+						156.0,
+						62.0
+					],
+					"safe": false,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@Button@1745",
+					"rect": [
+						34.0,
+						700.0,
+						420.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1761/@VBoxContainer@1762/@Button@1774",
+					"rect": [
+						34.0,
+						623.0,
+						420.0,
+						65.0
+					],
+					"safe": true,
+					"text": "确认兑换 · 120 荣誉",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1761/@VBoxContainer@1762/@Button@1775",
+					"rect": [
+						34.0,
+						700.0,
+						420.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回商品区",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "market_detail_refine_stone",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 109
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1719/@VBoxContainer@1714/@Button@1718",
+					"rect": [
+						56.0,
+						452.0,
+						156.0,
+						62.0
+					],
+					"safe": true,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1725/@VBoxContainer@1720/@Button@1724",
+					"rect": [
+						268.0,
+						452.0,
+						156.0,
+						62.0
+					],
+					"safe": true,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1731/@VBoxContainer@1726/@Button@1730",
+					"rect": [
+						56.0,
+						748.0,
+						156.0,
+						62.0
+					],
+					"safe": false,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1737/@VBoxContainer@1732/@Button@1736",
+					"rect": [
+						268.0,
+						748.0,
+						156.0,
+						62.0
+					],
+					"safe": false,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1743/@VBoxContainer@1738/@Button@1742",
+					"rect": [
+						56.0,
+						1044.0,
+						156.0,
+						62.0
+					],
+					"safe": false,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@Button@1745",
+					"rect": [
+						34.0,
+						700.0,
+						420.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1776/@VBoxContainer@1777/@Button@1789",
+					"rect": [
+						34.0,
+						623.0,
+						420.0,
+						65.0
+					],
+					"safe": true,
+					"text": "确认兑换 · 160 荣誉",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1776/@VBoxContainer@1777/@Button@1790",
+					"rect": [
+						34.0,
+						700.0,
+						420.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回商品区",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "market_detail_lock_rune",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 112
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1719/@VBoxContainer@1714/@Button@1718",
+					"rect": [
+						56.0,
+						452.0,
+						156.0,
+						62.0
+					],
+					"safe": true,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1725/@VBoxContainer@1720/@Button@1724",
+					"rect": [
+						268.0,
+						452.0,
+						156.0,
+						62.0
+					],
+					"safe": true,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1731/@VBoxContainer@1726/@Button@1730",
+					"rect": [
+						56.0,
+						748.0,
+						156.0,
+						62.0
+					],
+					"safe": false,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1737/@VBoxContainer@1732/@Button@1736",
+					"rect": [
+						268.0,
+						748.0,
+						156.0,
+						62.0
+					],
+					"safe": false,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1743/@VBoxContainer@1738/@Button@1742",
+					"rect": [
+						56.0,
+						1044.0,
+						156.0,
+						62.0
+					],
+					"safe": false,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@Button@1745",
+					"rect": [
+						34.0,
+						700.0,
+						420.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1791/@VBoxContainer@1792/@Button@1804",
+					"rect": [
+						34.0,
+						623.0,
+						420.0,
+						65.0
+					],
+					"safe": true,
+					"text": "确认兑换 · 240 荣誉",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1791/@VBoxContainer@1792/@Button@1805",
+					"rect": [
+						34.0,
+						700.0,
+						420.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回商品区",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "market_detail_gem_atk",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 116
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1719/@VBoxContainer@1714/@Button@1718",
+					"rect": [
+						56.0,
+						452.0,
+						156.0,
+						62.0
+					],
+					"safe": true,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1725/@VBoxContainer@1720/@Button@1724",
+					"rect": [
+						268.0,
+						452.0,
+						156.0,
+						62.0
+					],
+					"safe": true,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1731/@VBoxContainer@1726/@Button@1730",
+					"rect": [
+						56.0,
+						748.0,
+						156.0,
+						62.0
+					],
+					"safe": false,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1737/@VBoxContainer@1732/@Button@1736",
+					"rect": [
+						268.0,
+						748.0,
+						156.0,
+						62.0
+					],
+					"safe": false,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@ScrollContainer@1712/@GridContainer@1713/@PanelContainer@1743/@VBoxContainer@1738/@Button@1742",
+					"rect": [
+						56.0,
+						1044.0,
+						156.0,
+						62.0
+					],
+					"safe": false,
+					"text": "查看商品",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1703/@VBoxContainer@1704/@Button@1745",
+					"rect": [
+						34.0,
+						700.0,
+						420.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1806/@VBoxContainer@1807/@Button@1819",
+					"rect": [
+						34.0,
+						623.0,
+						420.0,
+						65.0
+					],
+					"safe": true,
+					"text": "确认兑换 · 240 荣誉",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1701/@PanelContainer@1806/@VBoxContainer@1807/@Button@1820",
+					"rect": [
+						34.0,
+						700.0,
+						420.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回商品区",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "market_detail_gem_hp",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 118
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1837/@PanelContainer@1839/@VBoxContainer@1840/@PanelContainer@1843/@ScrollContainer@1846/@VBoxContainer@1847/@Button@1857",
+					"rect": [
+						56.0,
+						279.0,
+						368.0,
+						65.0
+					],
+					"safe": true,
+					"text": "先祖古碑  ›",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1837/@PanelContainer@1839/@VBoxContainer@1840/@PanelContainer@1843/@ScrollContainer@1846/@VBoxContainer@1847/@Button@1859",
+					"rect": [
+						56.0,
+						439.0,
+						368.0,
+						65.0
+					],
+					"safe": true,
+					"text": "行商鉴宝  ›",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1837/@PanelContainer@1839/@VBoxContainer@1840/@PanelContainer@1843/@ScrollContainer@1846/@VBoxContainer@1847/@Button@1861",
+					"rect": [
+						56.0,
+						599.0,
+						368.0,
+						65.0
+					],
+					"safe": true,
+					"text": "鉴宝记录  ›",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1837/@PanelContainer@1839/@VBoxContainer@1840/@HBoxContainer@1848/@Button@1862",
+					"rect": [
+						34.0,
+						700.0,
+						412.0,
+						65.0
+					],
+					"safe": true,
+					"text": "关闭",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "curio",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 145
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1837/@PanelContainer@1839/@VBoxContainer@1840/@PanelContainer@1843/@ScrollContainer@1846/@VBoxContainer@1847/@Button@1864",
+					"rect": [
+						56.0,
+						279.0,
+						368.0,
+						65.0
+					],
+					"safe": true,
+					"text": "先祖古碑  ›",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1837/@PanelContainer@1839/@VBoxContainer@1840/@PanelContainer@1843/@ScrollContainer@1846/@VBoxContainer@1847/@Button@1866",
+					"rect": [
+						56.0,
+						439.0,
+						368.0,
+						65.0
+					],
+					"safe": true,
+					"text": "行商鉴宝  ›",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1837/@PanelContainer@1839/@VBoxContainer@1840/@PanelContainer@1843/@ScrollContainer@1846/@VBoxContainer@1847/@Button@1868",
+					"rect": [
+						56.0,
+						599.0,
+						368.0,
+						65.0
+					],
+					"safe": true,
+					"text": "鉴宝记录  ›",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1837/@PanelContainer@1839/@VBoxContainer@1840/@HBoxContainer@1848/@Button@1869",
+					"rect": [
+						34.0,
+						700.0,
+						412.0,
+						65.0
+					],
+					"safe": true,
+					"text": "关闭",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "curio_overview",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 145
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1837/@PanelContainer@1839/@VBoxContainer@1840/@HBoxContainer@1848/@Button@1874",
+					"rect": [
+						34.0,
+						700.0,
+						201.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1837/@PanelContainer@1839/@VBoxContainer@1840/@HBoxContainer@1848/@Button@1875",
+					"rect": [
+						245.0,
+						700.0,
+						201.0,
+						65.0
+					],
+					"safe": true,
+					"text": "参悟古碑",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "curio_lore",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 93
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1837/@PanelContainer@1839/@VBoxContainer@1840/@PanelContainer@1843/@ScrollContainer@1846/@VBoxContainer@1847/@HBoxContainer@1877/@Button@1878",
+					"rect": [
+						56.0,
+						284.0,
+						180.0,
+						65.0
+					],
+					"safe": true,
+					"text": "✓ 古匣",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1837/@PanelContainer@1839/@VBoxContainer@1840/@PanelContainer@1843/@ScrollContainer@1846/@VBoxContainer@1847/@HBoxContainer@1877/@Button@1879",
+					"rect": [
+						244.0,
+						284.0,
+						180.0,
+						65.0
+					],
+					"safe": true,
+					"text": "宝匣",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1837/@PanelContainer@1839/@VBoxContainer@1840/@HBoxContainer@1848/@Button@1883",
+					"rect": [
+						34.0,
+						700.0,
+						183.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1837/@PanelContainer@1839/@VBoxContainer@1840/@HBoxContainer@1848/@Button@1884",
+					"rect": [
+						227.0,
+						700.0,
+						219.0,
+						65.0
+					],
+					"safe": true,
+					"text": "确认鉴定 · 260 金币",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "curio_appraise",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 105
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1837/@PanelContainer@1839/@VBoxContainer@1840/@HBoxContainer@1848/@Button@1886",
+					"rect": [
+						34.0,
+						700.0,
+						412.0,
+						65.0
+					],
+					"safe": true,
+					"text": "返回",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "curio_history",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 66
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/@Control@1837/@PanelContainer@1839/@VBoxContainer@1840/@HBoxContainer@1848/@Button@1898",
+					"rect": [
+						34.0,
+						700.0,
+						412.0,
+						65.0
+					],
+					"safe": true,
+					"text": "确认",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"name": "curio_result",
+			"safe": "[P: (0.0, 79.99999), S: (480.0, 719.9999)]",
+			"sample_colors": 70
+		}
+	],
+	"records": [
+		{
+			"loaded": 509,
+			"manifest_entries": 509,
+			"missing": [],
+			"supplies": [
+				{
+					"icon": "itm_ticket_ten",
+					"id": "ticket_ten",
+					"loaded": true
+				},
+				{
+					"icon": "itm_ticket_sweep",
+					"id": "ticket_sweep",
+					"loaded": true
+				},
+				{
+					"icon": "itm_enhance_stone",
+					"id": "enhance_stone",
+					"loaded": true
+				},
+				{
+					"icon": "itm_refine_stone",
+					"id": "refine_stone",
+					"loaded": true
+				},
+				{
+					"icon": "itm_lock_rune",
+					"id": "lock_rune",
+					"loaded": true
+				},
+				{
+					"icon": "itm_pet_food",
+					"id": "pet_food",
+					"loaded": true
+				},
+				{
+					"icon": "itm_break_crystal",
+					"id": "break_crystal",
+					"loaded": true
+				},
+				{
+					"icon": "itm_aptitude_fruit",
+					"id": "aptitude_fruit",
+					"loaded": true
+				},
+				{
+					"icon": "gem_atk_1",
+					"id": "gem_atk_1",
+					"loaded": true
+				},
+				{
+					"icon": "gem_atk_2",
+					"id": "gem_atk_2",
+					"loaded": true
+				},
+				{
+					"icon": "gem_atk_3",
+					"id": "gem_atk_3",
+					"loaded": true
+				},
+				{
+					"icon": "gem_atk_4",
+					"id": "gem_atk_4",
+					"loaded": true
+				},
+				{
+					"icon": "gem_atk_5",
+					"id": "gem_atk_5",
+					"loaded": true
+				},
+				{
+					"icon": "gem_def_1",
+					"id": "gem_def_1",
+					"loaded": true
+				},
+				{
+					"icon": "gem_def_2",
+					"id": "gem_def_2",
+					"loaded": true
+				},
+				{
+					"icon": "gem_def_3",
+					"id": "gem_def_3",
+					"loaded": true
+				},
+				{
+					"icon": "gem_def_4",
+					"id": "gem_def_4",
+					"loaded": true
+				},
+				{
+					"icon": "gem_def_5",
+					"id": "gem_def_5",
+					"loaded": true
+				},
+				{
+					"icon": "gem_hp_1",
+					"id": "gem_hp_1",
+					"loaded": true
+				},
+				{
+					"icon": "gem_hp_2",
+					"id": "gem_hp_2",
+					"loaded": true
+				},
+				{
+					"icon": "gem_hp_3",
+					"id": "gem_hp_3",
+					"loaded": true
+				},
+				{
+					"icon": "gem_hp_4",
+					"id": "gem_hp_4",
+					"loaded": true
+				},
+				{
+					"icon": "gem_hp_5",
+					"id": "gem_hp_5",
+					"loaded": true
+				},
+				{
+					"icon": "itm_evolve_crystal",
+					"id": "evolve_crystal",
+					"loaded": true
+				},
+				{
+					"icon": "itm_stele_fragment",
+					"id": "stele_fragment",
+					"loaded": true
+				},
+				{
+					"icon": "itm_salt_ledger",
+					"id": "salt_ledger",
+					"loaded": true
+				},
+				{
+					"icon": "itm_gate_clue",
+					"id": "gate_clue",
+					"loaded": true
+				},
+				{
+					"icon": "itm_tide_core",
+					"id": "tide_core",
+					"loaded": true
+				},
+				{
+					"icon": "itm_frost_letter",
+					"id": "frost_letter",
+					"loaded": true
+				},
+				{
+					"icon": "itm_mine_record",
+					"id": "mine_record",
+					"loaded": true
+				},
+				{
+					"icon": "itm_gate_stamp",
+					"id": "gate_stamp",
+					"loaded": true
+				},
+				{
+					"icon": "itm_frost_reply",
+					"id": "frost_reply",
+					"loaded": true
+				},
+				{
+					"icon": "itm_veil_seal",
+					"id": "veil_seal",
+					"loaded": true
+				},
+				{
+					"icon": "itm_stele_fragment",
+					"id": "rift_echo",
+					"loaded": true
+				},
+				{
+					"icon": "itm_gate_stamp",
+					"id": "stele_key",
+					"loaded": true
+				},
+				{
+					"icon": "itm_gate_stamp",
+					"id": "stable_seal",
+					"loaded": true
+				},
+				{
+					"icon": "itm_mine_record",
+					"id": "stele_record",
+					"loaded": true
+				},
+				{
+					"icon": "itm_frost_nameplate",
+					"id": "frost_nameplate",
+					"loaded": true
+				},
+				{
+					"icon": "itm_frost_parcel",
+					"id": "frost_parcel",
+					"loaded": true
+				},
+				{
+					"icon": "itm_tide_egg",
+					"id": "tide_egg",
+					"loaded": true
+				},
+				{
+					"icon": "itm_fish_salt",
+					"id": "fish_salt",
+					"loaded": true
+				},
+				{
+					"icon": "itm_fish_port",
+					"id": "fish_port",
+					"loaded": true
+				},
+				{
+					"icon": "itm_fish_tide",
+					"id": "fish_tide",
+					"loaded": true
+				},
+				{
+					"icon": "itm_fish_frost",
+					"id": "fish_frost",
+					"loaded": true
+				},
+				{
+					"icon": "itm_wind_chime",
+					"id": "wind_chime",
+					"loaded": true
+				},
+				{
+					"icon": "itm_return_old_letter",
+					"id": "return_old_letter",
+					"loaded": true
+				},
+				{
+					"icon": "itm_return_mailbag",
+					"id": "return_mailbag",
+					"loaded": true
+				}
+			]
+		}
+	],
+	"suite": "issue_fix"
+}

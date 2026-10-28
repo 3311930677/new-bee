@@ -1,0 +1,524 @@
+--------- beginning of system
+10-25 06:59:59.325   579  1076 W ActivityTaskManager: callingPackage for (uid=0, pid=8678) has no WPC
+10-25 06:59:59.326   579  1076 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_ORIENTATION_OVERRIDE
+--------- beginning of main
+10-25 06:59:59.327   579  1076 V GrammaticalInflectionUtils: AttributionSource: AttributionSource { uid = 10148, packageName = null, attributionTag = null, token = android.os.Binder@82325c2, deviceId = 0, next = null } does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+10-25 06:59:59.327   579  1076 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_RESIZEABLE_ACTIVITY_OVERRIDES
+10-25 06:59:59.327   579  1076 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_MIN_ASPECT_RATIO_OVERRIDE
+10-25 06:59:59.334   579  1076 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} with LAUNCH_SINGLE_INSTANCE_PER_TASK from uid 0 (BAL_ALLOW_ALLOWLISTED_UID) result code=0
+10-25 06:59:59.334   959  1008 V WindowManagerShell: Transition requested (#26): android.os.BinderProxy@cb6b23c TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=15 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } baseActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} topActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} origActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} realActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} numActivities=1 lastActiveTime=1586701 supportsMultiWindow=true resizeMode=0 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@a805bc5} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 204 - 0, 0) topActivityInfo=ActivityInfo{3fb491a com.godot.game.GodotAppLauncher} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=1080 topActivityLetterboxHeight=2400 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 26 }
+10-25 06:59:59.335  1207  1207 W SplitSelectStateCtor: Missing session instanceIds
+10-25 06:59:59.335  1207  1207 D StatsLog: LAUNCHER_SPLIT_SELECTION_EXIT_INTERRUPTED
+10-25 06:59:59.335   959  1058 W ShellStartingWindow: Get attribute fail, return default: File res/mipmap-hdpi-v4/icon_background.webp from drawable resource ID #0x7f0a0001: .xml extension required
+10-25 06:59:59.335   959  1058 D SplashScreenView: Build android.window.SplashScreenView{6603c4b V.E...... ......ID 0,0-0,0}
+10-25 06:59:59.335   959  1058 D SplashScreenView: Icon: view: android.widget.ImageView{65ab628 V.ED..... ......I. 0,0-0,0 #1020504 android:id/splashscreen_icon_view} drawable: com.android.wm.shell.startingsurface.SplashscreenIconDrawableFactory$ImmobileIconDrawable@30fef41 size: 288
+10-25 06:59:59.335   959  1058 D SplashScreenView: Branding: view: android.view.View{5f4dce6 V.ED..... ......I. 0,0-0,0 #1020503 android:id/splashscreen_branding_view} drawable: android.graphics.drawable.BitmapDrawable@4745227 size w: 300 h: 120
+10-25 06:59:59.337   959  1008 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=false, height=204
+10-25 06:59:59.340   579   608 V GrammaticalInflectionUtils: AttributionSource: AttributionSource { uid = 10148, packageName = null, attributionTag = null, token = android.os.Binder@82325c2, deviceId = 0, next = null } does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+10-25 06:59:59.341   452   452 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-25 06:59:59.342  1207  1207 I TopTaskTracker: onTaskMovedToFront: (moved taskInfo to front) taskId=15, baseIntent=Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher }
+10-25 06:59:59.347   579  1952 D CoreBackPreview: Window{9727969 u0 Splash Screen org.yuanzheng.singleplayer}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@af5e2ab, mPriority=0, mIsAnimationCallback=false}
+10-25 06:59:59.348   579   903 I AppWidgetServiceImpl: Received broadcast: android.intent.action.PACKAGE_UNSTOPPED on user 0
+10-25 06:59:59.348   579   903 I AppWidgetServiceImpl: Updating package stopped masked state for uid 10148 package org.yuanzheng.singleplayer isStopped false
+10-25 06:59:59.354   382   382 D Zygote  : Forked child process 8681
+10-25 06:59:59.355   579   616 I ActivityManager: Start proc 8681:org.yuanzheng.singleplayer/u0a148 for next-top-activity {org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+10-25 06:59:59.359  8681  8681 I ng.singleplayer: Late-enabling -Xcheck:jni
+10-25 06:59:59.365   381   437 I netd    : tetherGetStats() -> {[]} <1.17ms>
+10-25 06:59:59.381  8681  8681 I ng.singleplayer: Using CollectorTypeCMC GC.
+10-25 06:59:59.387  8681  8681 W ng.singleplayer: Unexpected CPU variant for x86: x86_64.
+10-25 06:59:59.387  8681  8681 W ng.singleplayer: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, default
+10-25 06:59:59.392   579   605 V WindowManager: Sent Transition (#26) createdAt=10-25 06:59:59.328 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=15 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } baseActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} topActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} origActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} realActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} numActivities=1 lastActiveTime=1586701 supportsMultiWindow=true resizeMode=0 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{62dfe87 Task{72b136d #15 type=standard A=10148:org.yuanzheng.singleplayer}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 204 - 0, 0) topActivityInfo=ActivityInfo{88cb1b4 com.godot.game.GodotAppLauncher} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=1080 topActivityLetterboxHeight=2400 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 26 }
+10-25 06:59:59.392   959   976 V WindowManagerShell: onTransitionReady(transaction=2486786065870)
+10-25 06:59:59.393   579   605 V WindowManager:     startWCT=WindowContainerTransaction { changes = {} hops = [] errorCallbackToken=null taskFragmentOrganizer=null }
+10-25 06:59:59.393   579   605 V WindowManager:     info={id=26 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-25 06:59:59.393   579   605 V WindowManager:         {WCT{RemoteToken{62dfe87 Task{72b136d #15 type=standard A=10148:org.yuanzheng.singleplayer}}} m=OPEN f=NONE leash=Surface(name=Task=15)/@0x346eca1 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1},
+10-25 06:59:59.393   579   605 V WindowManager:         {WCT{RemoteToken{c57625f Task{abb7a23 #1 type=home}}} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x84a5e29 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1}
+10-25 06:59:59.393   579   605 V WindowManager:     ]}
+10-25 06:59:59.394   959  1008 V WindowManagerShell: onTransitionReady (#26) android.os.BinderProxy@cb6b23c: {id=26 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@4bbf958} m=OPEN f=NONE leash=Surface(name=Task=15)/@0xd29226c sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@c122ab1} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0xe88c035 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1}]}
+10-25 06:59:59.395   959  1008 V WindowManagerShell: Playing animation for (#26) android.os.BinderProxy@cb6b23c@0
+10-25 06:59:59.395   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.transition.DefaultMixedHandler@498eec9
+10-25 06:59:59.395   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.keyguard.KeyguardTransitionHandler@65519ce
+10-25 06:59:59.395   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.pip.PipTransition@36cf0ef
+10-25 06:59:59.396   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.activityembedding.ActivityEmbeddingController@ea597fc
+10-25 06:59:59.396   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.recents.RecentsTransitionHandler@9b8ae85
+10-25 06:59:59.397   959  1008 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+10-25 06:59:59.397   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.splitscreen.StageCoordinator@8ad04da
+10-25 06:59:59.397   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.transition.RemoteTransitionHandler@3c1ad0b
+10-25 06:59:59.397   959  1008 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=26 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@4bbf958} m=OPEN f=NONE leash=Surface(name=Task=15)/@0xd29226c sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@c122ab1} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0xe88c035 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1}]}
+10-25 06:59:59.397   959  1008 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher} launchCookie=null},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@5c085b, appThread = android.app.IApplicationThread$Stub$Proxy@31d78f8, debugName = QuickstepLaunchHome }}
+10-25 06:59:59.398   959  1008 V WindowManagerShell:  Delegate animation for (#26) to null
+10-25 06:59:59.398   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.transition.DefaultTransitionHandler@86694a6
+10-25 06:59:59.398   959  1008 V WindowManagerShell: start default transition animation, info = {id=26 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@4bbf958} m=OPEN f=NONE leash=Surface(name=Task=15)/@0xd29226c sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@c122ab1} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0xe88c035 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1}]}
+10-25 06:59:59.398   579  1076 W UserManagerService: Requested status bar icon for non-badged user 0
+10-25 06:59:59.398   959  1008 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@fa35304 animAttr=0x13 type=OPEN isEntrance=false
+10-25 06:59:59.398   959  1008 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@4edc0ed animAttr=0x12 type=OPEN isEntrance=true
+10-25 06:59:59.399   959  1008 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@86694a6
+10-25 06:59:59.411  2320  2327 I adbd    : jdwp connection from 8681
+10-25 06:59:59.411  1207  1459 D EGL_emulation: app_time_stats: avg=59.25ms min=13.18ms max=1133.87ms count=26
+10-25 06:59:59.414   959  1097 D EGL_emulation: app_time_stats: avg=39217.70ms min=39217.70ms max=39217.70ms count=1
+10-25 06:59:59.421  8681  8681 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+10-25 06:59:59.430  1207  1459 D EGL_emulation: app_time_stats: avg=48.27ms min=9.68ms max=1071.08ms count=33
+10-25 06:59:59.446   579   606 V GameManagerService: setDefaultFrameRateOverride : 10148 , 60.0
+10-25 06:59:59.447   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:59:59.447   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:59:59.447   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:59:59.447   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:59:59.448   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:59:59.460  8681  8681 W ziparchive: Unable to open '/data/app/~~D1xBM7eF1nHasPg9cKS9IQ==/org.yuanzheng.singleplayer-jmd-HOHB44lV1Tm4UfuY0A==/base.dm': No such file or directory
+10-25 06:59:59.460  8681  8681 W ziparchive: Unable to open '/data/app/~~D1xBM7eF1nHasPg9cKS9IQ==/org.yuanzheng.singleplayer-jmd-HOHB44lV1Tm4UfuY0A==/base.dm': No such file or directory
+10-25 06:59:59.512  8681  8681 D nativeloader: Configuring clns-7 for other apk /data/app/~~D1xBM7eF1nHasPg9cKS9IQ==/org.yuanzheng.singleplayer-jmd-HOHB44lV1Tm4UfuY0A==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~D1xBM7eF1nHasPg9cKS9IQ==/org.yuanzheng.singleplayer-jmd-HOHB44lV1Tm4UfuY0A==/lib/x86_64:/data/app/~~D1xBM7eF1nHasPg9cKS9IQ==/org.yuanzheng.singleplayer-jmd-HOHB44lV1Tm4UfuY0A==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/org.yuanzheng.singleplayer
+10-25 06:59:59.523  8681  8681 V GraphicsEnvironment: Currently set values for:
+10-25 06:59:59.524  8681  8681 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+10-25 06:59:59.524  8681  8681 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+10-25 06:59:59.524  8681  8681 V GraphicsEnvironment: Global.Settings values are invalid: number of packages: 0, number of values: 0
+10-25 06:59:59.527  8681  8681 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+10-25 06:59:59.652  8681  8681 D GodotActivity: Project command line parameters: [--xr_mode_regular, --xr-mode, off, --fullscreen, --edge_to_edge, --background_color, #000000]
+10-25 06:59:59.653  8681  8681 D GodotActivity: Launch intent Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } with parameters []
+10-25 06:59:59.691   959  1008 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#26) android.os.BinderProxy@cb6b23c@0
+10-25 06:59:59.693   579   605 V WindowManager: Finish Transition (#26): created at 10-25 06:59:59.328 collect-started=0.046ms request-sent=5.521ms started=7.067ms ready=61.502ms sent=63.532ms finished=364.243ms
+10-25 06:59:59.693  1207  1207 D VRI[QuickstepLauncher]: visibilityChanged oldVisibility=true newVisibility=false
+10-25 06:59:59.695   959  1008 V WindowManagerShell: Track 0 became idle
+10-25 06:59:59.695   959  1008 V WindowManagerShell: All active transition animations finished
+10-25 06:59:59.697   579  1952 W UserManagerService: Requested status bar icon for non-badged user 0
+10-25 06:59:59.698   579  1952 W UserManagerService: Requested status bar icon for non-badged user 0
+10-25 06:59:59.698  8681  8681 V GodotActivity: Creating new Godot fragment instance.
+10-25 06:59:59.745  8681  8681 V Godot   : Initializing Godot plugin registry
+10-25 06:59:59.796  8681  8681 I GodotPluginRegistry: Registering runtime plugin AndroidRuntime
+10-25 06:59:59.796  8681  8681 V Godot   : InitEngine with params: [--xr_mode_regular, --xr-mode, off, --fullscreen, --edge_to_edge, --background_color, #000000]
+10-25 06:59:59.845  8681  8681 D nativeloader: Load /data/app/~~D1xBM7eF1nHasPg9cKS9IQ==/org.yuanzheng.singleplayer-jmd-HOHB44lV1Tm4UfuY0A==/lib/x86_64/libgodot_android.so using ns clns-7 from class loader (caller=/data/app/~~D1xBM7eF1nHasPg9cKS9IQ==/org.yuanzheng.singleplayer-jmd-HOHB44lV1Tm4UfuY0A==/base.apk!classes7.dex): ok
+10-25 06:59:59.851  8681  8681 V Godot   : Godot native layer initialization completed: true
+10-25 06:59:59.851  8681  8681 V Godot   : Setting up native layer with params: [--xr-mode, off, --fullscreen]
+10-25 06:59:59.915  8681  8681 V Godot   : Godot native layer setup completed
+10-25 06:59:59.915  8681  8681 V Godot   : OnInitRenderView: GodotFragment{beebc26} (f440db33-4dee-425e-8f4a-c73e4089c52a id=0x7f07002c)
+10-25 06:59:59.930  8681  8681 D Godot   : Render view should be transparent: false
+10-25 06:59:59.930  8681  8681 D Godot   : renderingDevice: opengl3 (ProjectSettings)
+10-25 06:59:59.930  8681  8681 D Godot   : 			renderer: gl_compatibility (ProjectSettings)
+10-25 06:59:59.960  8681  8681 W WindowOnBackDispatcher: OnBackInvokedCallback is not enabled for the application.
+10-25 06:59:59.960  8681  8681 W WindowOnBackDispatcher: Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+10-25 06:59:59.980  8681  8681 V Godot   : OnStart: GodotFragment{beebc26} (f440db33-4dee-425e-8f4a-c73e4089c52a id=0x7f07002c)
+10-25 06:59:59.985  8681  8681 V Godot   : OnResume: GodotFragment{beebc26} (f440db33-4dee-425e-8f4a-c73e4089c52a id=0x7f07002c)
+10-25 06:59:59.990  8681  8681 W HWUI    : Unknown dataspace 0
+10-25 06:59:59.993   579  1952 W WindowManager: Failed looking up window session=Session{c1577c 8681:u0a10148} callers=com.android.server.wm.WindowManagerService.windowForClientLocked:6311 com.android.server.wm.Session.updateRequestedVisibleTypes:755 android.view.IWindowSession$Stub.onTransact:1078 
+10-25 07:00:00.014   579  1952 D CoreBackPreview: Window{382128b u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@5785826, mPriority=0, mIsAnimationCallback=false}
+10-25 07:00:00.023  8681  8699 I EGL_emulation: Opening libGLESv1_CM_emulation.so
+10-25 07:00:00.025  8681  8699 I EGL_emulation: Opening libGLESv2_emulation.so
+10-25 07:00:00.025  1207  1207 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 108841, 0, CUJ=J<TASKBAR_COLLAPSE::Home to App>
+10-25 07:00:00.025  1207  1207 W FrameTracker: Missing HWUI jank callback for vsyncId: 108841, CUJ=J<TASKBAR_COLLAPSE::Home to App>
+10-25 07:00:00.026  1207  1207 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 108928, 4010624, CUJ=J<TASKBAR_COLLAPSE::Home to App>
+10-25 07:00:00.026  1207  1207 W FrameTracker: Missing HWUI jank callback for vsyncId: 109008, CUJ=J<TASKBAR_COLLAPSE::Home to App>
+10-25 07:00:00.026  1207  1207 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 109030, 6400060, CUJ=J<TASKBAR_COLLAPSE::Home to App>
+10-25 07:00:00.026  1207  1207 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 109081, 9400928, CUJ=J<TASKBAR_COLLAPSE::Home to App>
+10-25 07:00:00.026  1207  1207 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 109185, 6665232, CUJ=J<TASKBAR_COLLAPSE::Home to App>
+10-25 07:00:00.026  1207  1207 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 109245, 6445668, CUJ=J<TASKBAR_COLLAPSE::Home to App>
+10-25 07:00:00.026  1207  1225 V PerfettoTrigger: Not triggering com.android.telemetry.interaction-jank-monitor-61 - not enough time since last trigger
+10-25 07:00:00.035   452   473 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-25 07:00:00.039  8681  8699 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+10-25 07:00:00.040  8681  8699 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+10-25 07:00:00.049  8681  8710 W RegularContextFactory: creating OpenGL ES 3.0 context :
+10-25 07:00:00.075   174   174 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device VINTF manifest.
+10-25 07:00:00.076  8681  8710 I Gralloc4: mapper 4.x is not supported
+--------- beginning of kernel
+10-25 07:00:00.118     0     0 I servicemanager: Caller(pid=8681,uid=10148,sid=u:r:untrusted_app:s0:c148,c256,c512,c768) Could not find android.hardware.graphics.allocator.IAllocator/default in the VINTF manifest. No alternative instances declared in VINTF.
+10-25 07:00:00.106  8681  8710 I godot   : Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+10-25 07:00:00.162   579   605 W ziparchive: Unable to open '/data/app/~~D1xBM7eF1nHasPg9cKS9IQ==/org.yuanzheng.singleplayer-jmd-HOHB44lV1Tm4UfuY0A==/base.dm': No such file or directory
+10-25 07:00:00.162   579   606 V GameManagerService: Game power mode ON (only games in foreground)
+10-25 07:00:00.164   579   605 I ActivityTaskManager: Displayed org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher for user 0: +836ms
+10-25 07:00:00.165  1207  1207 D BaseDepthController: setSurface:
+10-25 07:00:00.165  1207  1207 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+10-25 07:00:00.165  1207  1207 D BaseDepthController: 	mSurface: null
+10-25 07:00:00.165  1207  1207 D BaseDepthController: mSurface is null and mCurrentBlur is: 0
+10-25 07:00:00.165  1207  1207 D StateManager: goToState - fromState: Normal, toState: Normal, partial trace:
+10-25 07:00:00.165  1207  1207 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:453)
+10-25 07:00:00.165  1207  1207 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:444)
+10-25 07:00:00.165  1207  1207 D StateManager: 	at com.android.launcher3.statemanager.StatefulActivity.onStop(StatefulActivity.java:119)
+10-25 07:00:00.165  1207  1207 D StatsLog: LAUNCHER_ONSTOP
+10-25 07:00:00.166   579  1952 I AppWidgetServiceImpl: setAppWidgetHidden() 0
+10-25 07:00:00.192  8681  8689 I ng.singleplayer: Compiler allocated 4219KB to compile void android.widget.TextView.<init>(android.content.Context, android.util.AttributeSet, int, int)
+10-25 07:00:00.194   579   608 I DisplayDeviceRepository: Display device changed: DisplayDeviceInfo{"Built-in Screen": uniqueId="local:4619827259835644672", 720 x 1280, modeId 1, renderFrameRate 60.000004, defaultModeId 1, userPreferredModeId -1, supportedModes [{id=1, width=720, height=1280, fps=60.000004, vsync=60.000004, synthetic=false, alternativeRefreshRates=[], supportedHdrTypes=[]}], colorMode 0, supportedColorModes [0], hdrCapabilities HdrCapabilities{mSupportedHdrTypes=[], mMaxLuminance=500.0, mMaxAverageLuminance=500.0, mMinLuminance=0.0}, allmSupported false, gameContentTypeSupported false, density 240, 240.0 x 240.0 dpi, appVsyncOff 1000000, presDeadline 16666666, cutout DisplayCutout{insets=Rect(0, 136 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(0, 0 - 136, 136), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=720 displayHeight=1280 physicalDisplayWidth=720 physicalDisplayHeight=1280 density={1.5} cutoutSpec={M 128,83 A 44,44 0 0 1 84,127 44,44 0 0 1 40,83 44,44 0 0 1 84,39 44,44 0 0 1 128,83 Z @left} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={1.0}}} sideOverrides={}}, touch INTERNAL, rotation 0, type INTERNAL, address {port=0, model=0x401cec6a7a2b7b}, deviceProductInfo DeviceProductInfo{name=EMU_display_0, manufacturerPnpId=GGL, productId=1, modelYear=null, manufactureDate=ManufactureDate{week=27, year=2006}, connectionToSinkType=0}, state ON, committedState ON, frameRateOverride {uid=10148 frameRateHz=60.000004} , brightnessMinimum 0.0, brightnessMaximum 1.0, brightnessDefault 0.39763778, hdrSdrRatio NaN, roundedCorners RoundedCorners{[RoundedCorner{position=TopLeft, radius=28, center=Point(28, 28)}, RoundedCorner{position=TopRight, radius=28, center=Point(692, 28)}, RoundedCorner{position=BottomRight, radius=28, center=Point(692, 1252)}, RoundedCorner{position=BottomLeft, radius=28, center=Point(28, 1252)}]}, FLAG_ALLOWED_TO_BE_DEFAULT_DISPLAY, FLAG_ROTATES_WITH_CONTENT, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS, FLAG_TRUSTED, installOrientation 0, displayShape DisplayShape{ spec=42744253 displayWidth=720 displayHeight=1280 physicalPixelDisplaySizeRatio=1.0 rotation=0 offsetX=0 offsetY=0 scale=1.0}}
+10-25 07:00:00.198  8681  8710 E godot   : WARNING: Failed to load cached shader, recompiling.
+10-25 07:00:00.198  8681  8710 E godot   :    at: _load_from_cache (drivers/gles3/shader_gles3.cpp:615)
+10-25 07:00:00.199   579   703 I ImeTracker: org.yuanzheng.singleplayer:93d24019: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false
+10-25 07:00:00.199   579   703 I ImeTracker: org.yuanzheng.singleplayer:93d24019: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-25 07:00:00.515  8681  8681 W InteractionJankMonitor: Initializing without READ_DEVICE_CONFIG permission. enabled=true, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=org.yuanzheng.singleplayer
+10-25 07:00:00.532  8681  8689 I ng.singleplayer: Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+10-25 07:00:00.533   959  1057 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda11@5c9e9c3
+10-25 07:00:00.533   579  5617 D CoreBackPreview: Window{9727969 u0 Splash Screen org.yuanzheng.singleplayer EXITING}: Setting back callback null
+10-25 07:00:00.534   579  1959 W InputManager-JNI: Input channel object '9727969 Splash Screen org.yuanzheng.singleplayer (client)' was disposed without first being removed with the input manager!
+10-25 07:00:00.547   381   437 I netd    : tetherGetStats() -> {[]} <0.82ms>
+10-25 07:00:00.584   959  1057 W FrameTracker: Missed App frame:UNKNOWN: 10, 109565, 18105288, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:00:00.584   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 10, 109565, 18105288, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:00:00.584   959  1057 W FrameTracker: Missed App frame:UNKNOWN: 24, 109594, 20667922, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:00:00.585   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 24, 109594, 20667922, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:00:00.585   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 109615, 21294156, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:00:00.585   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 109637, 26141690, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:00:00.585   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 109659, 29117824, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:00:00.585   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 109681, 24687058, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:00:00.585   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 109703, 21550592, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:00:00.585   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 109725, 23752326, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:00:00.585   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 109747, 24809060, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:00:00.585   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 109762, 22551194, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:00:00.585   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 109777, 23935028, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:00:00.585   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 109792, 0, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:00:00.585   959  1057 W FrameTracker: Missing HWUI jank callback for vsyncId: 109792, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:00:00.585   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 109807, 23410596, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:00:00.585   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 109822, 22248630, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:00:00.585   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 109837, 23819764, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:00:00.585   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 109852, 22064198, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:00:00.585   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 109867, 22845032, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 07:00:00.586   959  1021 V PerfettoTrigger: Not triggering com.android.telemetry.interaction-jank-monitor-39 - not enough time since last trigger
+10-25 07:00:00.711  8681  8710 I godot   : OpenGL API OpenGL ES 3.1 (4.5.0 Core Profile Context 23.20.60.03.240314) - Compatibility - Using Device: Google (ATI Technologies Inc.) - Android Emulator OpenGL ES Translator (AMD Radeon 780M Graphics)
+10-25 07:00:00.714  8681  8710 D ng.singleplayer: PlayerBase::PlayerBase()
+10-25 07:00:00.715  8681  8710 D ng.singleplayer: TrackPlayerBase::TrackPlayerBase()
+10-25 07:00:00.715  8681  8710 I libOpenSLES: Emulating old channel mask behavior (ignoring positional mask 0x3, using default mask 0x3 based on channel count of 2)
+10-25 07:00:00.717   446   497 W AudioFlinger: createTrack_l(): mismatch between requested flags (00000104) and output flags (00000002)
+10-25 07:00:00.717   446   497 D AudioFlinger: Client defaulted notificationFrames to 882 for frameCount 4012
+10-25 07:00:00.717   959  1097 D EGL_emulation: app_time_stats: avg=118.35ms min=8.07ms max=682.00ms count=11
+10-25 07:00:00.723   446   497 D audioserver: logFgsApiBegin: FGS Logger Transaction failed, -129
+10-25 07:00:00.725  8681  8710 I godot   : 
+10-25 07:00:00.726   579   608 I DisplayDeviceRepository: Display device changed: DisplayDeviceInfo{"Built-in Screen": uniqueId="local:4619827259835644672", 720 x 1280, modeId 1, renderFrameRate 60.000004, defaultModeId 1, userPreferredModeId -1, supportedModes [{id=1, width=720, height=1280, fps=60.000004, vsync=60.000004, synthetic=false, alternativeRefreshRates=[], supportedHdrTypes=[]}], colorMode 0, supportedColorModes [0], hdrCapabilities HdrCapabilities{mSupportedHdrTypes=[], mMaxLuminance=500.0, mMaxAverageLuminance=500.0, mMinLuminance=0.0}, allmSupported false, gameContentTypeSupported false, density 240, 240.0 x 240.0 dpi, appVsyncOff 1000000, presDeadline 16666666, cutout DisplayCutout{insets=Rect(0, 136 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(0, 0 - 136, 136), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=720 displayHeight=1280 physicalDisplayWidth=720 physicalDisplayHeight=1280 density={1.5} cutoutSpec={M 128,83 A 44,44 0 0 1 84,127 44,44 0 0 1 40,83 44,44 0 0 1 84,39 44,44 0 0 1 128,83 Z @left} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={1.0}}} sideOverrides={}}, touch INTERNAL, rotation 0, type INTERNAL, address {port=0, model=0x401cec6a7a2b7b}, deviceProductInfo DeviceProductInfo{name=EMU_display_0, manufacturerPnpId=GGL, productId=1, modelYear=null, manufactureDate=ManufactureDate{week=27, year=2006}, connectionToSinkType=0}, state ON, committedState ON, frameRateOverride , brightnessMinimum 0.0, brightnessMaximum 1.0, brightnessDefault 0.39763778, hdrSdrRatio NaN, roundedCorners RoundedCorners{[RoundedCorner{position=TopLeft, radius=28, center=Point(28, 28)}, RoundedCorner{position=TopRight, radius=28, center=Point(692, 28)}, RoundedCorner{position=BottomRight, radius=28, center=Point(692, 1252)}, RoundedCorner{position=BottomLeft, radius=28, center=Point(28, 1252)}]}, FLAG_ALLOWED_TO_BE_DEFAULT_DISPLAY, FLAG_ROTATES_WITH_CONTENT, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS, FLAG_TRUSTED, installOrientation 0, displayShape DisplayShape{ spec=42744253 displayWidth=720 displayHeight=1280 physicalPixelDisplaySizeRatio=1.0 rotation=0 offsetX=0 offsetY=0 scale=1.0}}
+10-25 07:00:00.743   579   608 I DisplayDeviceRepository: Display device changed: DisplayDeviceInfo{"Built-in Screen": uniqueId="local:4619827259835644672", 720 x 1280, modeId 1, renderFrameRate 60.000004, defaultModeId 1, userPreferredModeId -1, supportedModes [{id=1, width=720, height=1280, fps=60.000004, vsync=60.000004, synthetic=false, alternativeRefreshRates=[], supportedHdrTypes=[]}], colorMode 0, supportedColorModes [0], hdrCapabilities HdrCapabilities{mSupportedHdrTypes=[], mMaxLuminance=500.0, mMaxAverageLuminance=500.0, mMinLuminance=0.0}, allmSupported false, gameContentTypeSupported false, density 240, 240.0 x 240.0 dpi, appVsyncOff 1000000, presDeadline 16666666, cutout DisplayCutout{insets=Rect(0, 136 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(0, 0 - 136, 136), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=720 displayHeight=1280 physicalDisplayWidth=720 physicalDisplayHeight=1280 density={1.5} cutoutSpec={M 128,83 A 44,44 0 0 1 84,127 44,44 0 0 1 40,83 44,44 0 0 1 84,39 44,44 0 0 1 128,83 Z @left} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={1.0}}} sideOverrides={}}, touch INTERNAL, rotation 0, type INTERNAL, address {port=0, model=0x401cec6a7a2b7b}, deviceProductInfo DeviceProductInfo{name=EMU_display_0, manufacturerPnpId=GGL, productId=1, modelYear=null, manufactureDate=ManufactureDate{week=27, year=2006}, connectionToSinkType=0}, state ON, committedState ON, frameRateOverride {uid=10148 frameRateHz=60.000004} , brightnessMinimum 0.0, brightnessMaximum 1.0, brightnessDefault 0.39763778, hdrSdrRatio NaN, roundedCorners RoundedCorners{[RoundedCorner{position=TopLeft, radius=28, center=Point(28, 28)}, RoundedCorner{position=TopRight, radius=28, center=Point(692, 28)}, RoundedCorner{position=BottomRight, radius=28, center=Point(692, 1252)}, RoundedCorner{position=BottomLeft, radius=28, center=Point(28, 1252)}]}, FLAG_ALLOWED_TO_BE_DEFAULT_DISPLAY, FLAG_ROTATES_WITH_CONTENT, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS, FLAG_TRUSTED, installOrientation 0, displayShape DisplayShape{ spec=42744253 displayWidth=720 displayHeight=1280 physicalPixelDisplaySizeRatio=1.0 rotation=0 offsetX=0 offsetY=0 scale=1.0}}
+10-25 07:00:02.210   579  1803 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-25 07:00:02.453   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:02.454   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:02.454   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:02.454   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:02.454   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:02.831  8681  8710 V Godot   : OnGodotSetupCompleted
+10-25 07:00:02.897  8681  8710 I godot   : ANDROID_DEEP_READY { "os": "Android", "version": "35.12368160", "model": "Android SDK built for x86_64", "window": "(1080, 2400)", "viewport": "[P: (0.0, 0.0), S: (480.0, 1066.0)]", "safe": "[P: (0.0, 90.60999), S: (480.0, 975.3899)]", "system_safe": "[P: (0, 204), S: (1080, 2196)]", "cutouts": "[[P: (0.0, 0.0), S: (204.0, 204.0)]]", "mix_rate": 44100.0 }
+10-25 07:00:02.897  8681  8710 V Godot   : OnGodotMainLoopStarted
+10-25 07:00:02.900  8681  8710 D EGL_emulation: app_time_stats: avg=967.10ms min=9.97ms max=1924.23ms count=2
+10-25 07:00:03.298  8738  8738 D MediaCodecList: codecHandlesFormat: no format, so no extra checks
+10-25 07:00:03.300  8738  8743 D CCodec  : allocate(c2.android.avc.encoder)
+10-25 07:00:03.301  8738  8743 I Codec2Client: Available Codec2 services: "default" "software"
+10-25 07:00:03.303  8738  8743 I CCodec  : setting up 'default' as default (vendor) store
+10-25 07:00:03.311   498  1053 I mediaswcodec: missing struct descriptor #Param::CoreIndex(--004) for field values of struct #Param::CoreIndex(F-12004)
+10-25 07:00:03.311   498  1053 I mediaswcodec: missing struct descriptor #Param::CoreIndex(--1812) for field values of struct #Param::CoreIndex(F-11812)
+10-25 07:00:03.311   498  1053 I mediaswcodec: missing struct descriptor #Param::CoreIndex(--004) for field values of struct #Param::CoreIndex(F-12004)
+10-25 07:00:03.311   498  1053 I mediaswcodec: missing struct descriptor #Param::CoreIndex(--1812) for field values of struct #Param::CoreIndex(F-11812)
+10-25 07:00:03.314  8738  8743 I CCodec  : Created component [c2.android.avc.encoder]
+10-25 07:00:03.314  8738  8743 D CCodecConfig: read media type: video/avc
+10-25 07:00:03.316  8738  8743 D ReflectedParamUpdater: extent() != 1 for single value type: algo.buffers.max-count.values
+10-25 07:00:03.317  8738  8743 D ReflectedParamUpdater: extent() != 1 for single value type: output.subscribed-indices.values
+10-25 07:00:03.317  8738  8743 D ReflectedParamUpdater: extent() != 1 for single value type: input.buffers.allocator-ids.values
+10-25 07:00:03.317  8738  8743 D ReflectedParamUpdater: extent() != 1 for single value type: output.buffers.allocator-ids.values
+10-25 07:00:03.318  8738  8743 D ReflectedParamUpdater: extent() != 1 for single value type: algo.buffers.allocator-ids.values
+10-25 07:00:03.318  8738  8743 D ReflectedParamUpdater: extent() != 1 for single value type: output.buffers.pool-ids.values
+10-25 07:00:03.318  8738  8743 D ReflectedParamUpdater: extent() != 1 for single value type: algo.buffers.pool-ids.values
+10-25 07:00:03.320  8738  8743 D ReflectedParamUpdater: ignored struct field coding.gop.values
+10-25 07:00:03.320  8738  8743 D ReflectedParamUpdater: ignored struct field coding.qp.values
+10-25 07:00:03.320  8738  8743 D CCodecConfig: ignoring local param raw.color (0xc2001809) as it is already supported
+10-25 07:00:03.321  8738  8743 I CCodecConfig: query failed after returning 13 values (BAD_INDEX)
+10-25 07:00:03.321  8738  8743 D CCodecConfig: c2 config diff is Dict {
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::u32 algo.bitrate-mode.value = 3
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::i32 coded.average-qp.value = 0
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::u32 coded.bitrate.value = 64000
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::float coded.frame-rate.value = 1
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::u32 coded.picture-type.value = 0
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::u32 coded.pl.level = 20492
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::u32 coded.pl.profile = 20481
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::u32 coded.vui.color.matrix = 0
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::u32 coded.vui.color.primaries = 0
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::u32 coded.vui.color.range = 0
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::u32 coded.vui.color.transfer = 0
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::u32 coding.intra-refresh.mode = 0
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::float coding.intra-refresh.period = 0
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::u32 coding.request-sync-frame.value = 0
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::i64 coding.sync-frame-interval.value = 1000000
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::u32 input.delay.value = 0
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   string input.media-type.value = "video/raw"
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   string output.media-type.value = "video/avc"
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::u32 raw.color.matrix = 0
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::u32 raw.color.primaries = 0
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::u32 raw.color.range = 0
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::u32 raw.color.transfer = 0
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::u32 raw.size.height = 16
+10-25 07:00:03.321  8738  8743 D CCodecConfig:   c2::u32 raw.size.width = 16
+10-25 07:00:03.321  8738  8743 D CCodecConfig: }
+10-25 07:00:03.321  8738  8743 W ColorUtils: expected specified color aspects (0:0:0:0)
+10-25 07:00:03.326  8738  8738 D CodecSeeding: Seed: codec c2.android.avc.encoder, mediatype video/avc, overrideable 1
+10-25 07:00:03.326  8738  8738 D CodecProperties: setTuningValue(vq-target-bpp,0)
+10-25 07:00:03.326  8738  8738 D CodecProperties: setTuningValue(vq-target-bpp-1080p,1.90)
+10-25 07:00:03.326  8738  8738 D CodecProperties: setTuningValue(vq-target-bpp-720p,2.25)
+10-25 07:00:03.326  8738  8738 D CodecProperties: setTuningValue(vq-target-bpp-540p,2.65)
+10-25 07:00:03.326  8738  8738 D CodecProperties: setTuningValue(vq-target-bpp-480p,3.00)
+10-25 07:00:03.326  8738  8738 D CodecProperties: setTuningValue(vq-target-bpp-320x240,0)
+10-25 07:00:03.326  8738  8738 D CodecProperties: setTuningValue(vq-target-qpmax,-1)
+10-25 07:00:03.326  8738  8738 D CodecProperties: setTuningValue(vq-target-qpmax-1080p,45)
+10-25 07:00:03.326  8738  8738 D CodecProperties: setTuningValue(vq-target-qpmax-720p,43)
+10-25 07:00:03.326  8738  8738 D CodecProperties: setTuningValue(vq-target-qpmax-540p,42)
+10-25 07:00:03.326  8738  8738 D CodecProperties: setTuningValue(vq-target-qpmax-480p,38)
+10-25 07:00:03.326  8738  8738 D CodecProperties: setTuningValue(vq-bitrate-phaseout,1.75)
+10-25 07:00:03.326  8738  8738 D CodecProperties: setTuningValue(vq-boost-missing-qp,0.20)
+10-25 07:00:03.326  8738  8738 D CodecProperties: setFeatureValue(intra-refresh,0)
+10-25 07:00:03.326  8738  8738 D CodecProperties: setFeatureValue(qp-bounds,0)
+10-25 07:00:03.326  8738  8738 D CodecProperties: setFeatureValue(_vq_eligible.device,1)
+10-25 07:00:03.326  8738  8738 D CodecProperties: setFeatureValue(_quality.target,1)
+10-25 07:00:03.326  8738  8738 D CodecSeeding: Seed: codec c2.android.avc.encoder, mediatype video/avc, overrideable 0
+10-25 07:00:03.327  8738  8738 D VQApply : minquality: 1080x2400 outside of shaping range
+10-25 07:00:03.327  8738  8738 D MediaCodec: shapeMediaFormat: deltas(1): AMessage(what = 0x00000000) = {
+10-25 07:00:03.327  8738  8738 D MediaCodec:     int32_t android._encoding-quality-level = 0
+10-25 07:00:03.327  8738  8738 D MediaCodec:   }
+10-25 07:00:03.327  8738  8743 D CCodec  : [c2.android.avc.encoder] buffers are bound to CCodec for this session
+10-25 07:00:03.327  8738  8743 D CCodecConfig: no c2 equivalents for color-format
+10-25 07:00:03.327  8738  8743 D CCodecConfig: no c2 equivalents for max-bframes
+10-25 07:00:03.328  8738  8743 D CCodecConfig: no c2 equivalents for flags
+10-25 07:00:03.328  8738  8743 D CCodecConfig: no c2 equivalents for encoder
+10-25 07:00:03.329  8738  8743 D CCodecConfig: c2 config diff is   c2::u32 coded.bitrate.value = 6000000
+10-25 07:00:03.329  8738  8743 D CCodecConfig:   c2::float coded.frame-rate.value = 60
+10-25 07:00:03.329  8738  8743 D CCodecConfig:   c2::i64 coding.sync-frame-interval.value = 10000000
+10-25 07:00:03.329  8738  8743 D CCodecConfig:   c2::u32 raw.size.height = 2400
+10-25 07:00:03.329  8738  8743 D CCodecConfig:   c2::u32 raw.size.width = 1080
+10-25 07:00:03.329  8738  8743 W ColorUtils: expected specified color aspects (0:0:0:0)
+10-25 07:00:03.329  8738  8743 D CCodec  : encoding statistics level = 0
+10-25 07:00:03.329  8738  8743 D CCodec  : setup formats input: AMessage(what = 0x00000000) = {
+10-25 07:00:03.329  8738  8743 D CCodec  :   Rect crop(0, 0, 1079, 2399)
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t color-standard = 0
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t color-range = 0
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t color-transfer = 0
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t frame-rate = 60
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t height = 2400
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t intra-refresh-period = 0
+10-25 07:00:03.329  8738  8743 D CCodec  :   string mime = "video/raw"
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t video-qp-average = 0
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t width = 1080
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t android._dataspace = 0
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t using-sw-read-often = 1
+10-25 07:00:03.329  8738  8743 D CCodec  :   int64_t android._C2MemoryUsage = 1
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t color-format = 2130708361
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t android._color-format = 2130708361
+10-25 07:00:03.329  8738  8743 D CCodec  : }
+10-25 07:00:03.329  8738  8743 D CCodec  : setup formats output: AMessage(what = 0x00000000) = {
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t bitrate = 6000000
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t bitrate-mode = 1
+10-25 07:00:03.329  8738  8743 D CCodec  :   Rect crop(0, 0, 1079, 2399)
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t color-standard = 0
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t color-range = 0
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t color-transfer = 0
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t frame-rate = 60
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t height = 2400
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t intra-refresh-period = 0
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t level = 4096
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t max-bitrate = 6000000
+10-25 07:00:03.329  8738  8743 D CCodec  :   string mime = "video/avc"
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t profile = 65536
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t video-qp-average = 0
+10-25 07:00:03.329  8738  8743 D CCodec  :   int32_t width = 1080
+10-25 07:00:03.329  8738  8743 D CCodec  : }
+10-25 07:00:03.330  8738  8743 I CCodecConfig: query failed after returning 14 values (BAD_INDEX)
+10-25 07:00:03.330  8738  8743 D CCodecConfig: c2 config diff is   c2::u32 coded.pl.level = 20494
+10-25 07:00:03.330  8738  8743 W ColorUtils: expected specified color aspects (0:0:0:0)
+10-25 07:00:03.330  8738  8743 D CCodec  : hidl based PersistentSurface created
+10-25 07:00:03.331  8738  8743 D CCodec  : input format changed to AMessage(what = 0x00000000) = {
+10-25 07:00:03.331  8738  8743 D CCodec  :   Rect crop(0, 0, 1079, 2399)
+10-25 07:00:03.331  8738  8743 D CCodec  :   int32_t color-standard = 1
+10-25 07:00:03.331  8738  8743 D CCodec  :   int32_t color-range = 2
+10-25 07:00:03.331  8738  8743 D CCodec  :   int32_t color-transfer = 3
+10-25 07:00:03.331  8738  8743 D CCodec  :   int32_t frame-rate = 60
+10-25 07:00:03.331  8738  8743 D CCodec  :   int32_t height = 2400
+10-25 07:00:03.331  8738  8743 D CCodec  :   int32_t intra-refresh-period = 0
+10-25 07:00:03.331  8738  8743 D CCodec  :   string mime = "video/raw"
+10-25 07:00:03.331  8738  8743 D CCodec  :   int32_t video-qp-average = 0
+10-25 07:00:03.331  8738  8743 D CCodec  :   int32_t width = 1080
+10-25 07:00:03.331  8738  8743 D CCodec  :   int32_t android._dataspace = 260
+10-25 07:00:03.331  8738  8743 D CCodec  :   int32_t using-sw-read-often = 1
+10-25 07:00:03.331  8738  8743 D CCodec  :   int64_t android._C2MemoryUsage = 1
+10-25 07:00:03.331  8738  8743 D CCodec  :   int32_t color-format = 2130708361
+10-25 07:00:03.331  8738  8743 D CCodec  :   int32_t android._color-format = 2130708361
+10-25 07:00:03.331  8738  8743 D CCodec  : }
+10-25 07:00:03.331  8738  8743 D GraphicBufferSource: setting dataspace: 0x104, acquired=0
+10-25 07:00:03.331  8738  8743 D CCodec  : ISConfig not changed
+10-25 07:00:03.333  8738  8743 W Codec2Client: query -- param skipped: index = 1342179345.
+10-25 07:00:03.333  8738  8743 W Codec2Client: query -- param skipped: index = 2415921170.
+10-25 07:00:03.333  8738  8743 D CCodecBufferChannel: [c2.android.avc.encoder#737] Using basic input block pool with poolID 1 => got 1 - OK (0)
+10-25 07:00:03.333  8738  8743 D C2Store : Using DMABUF Heaps
+10-25 07:00:03.334  8738  8743 I CCodecBufferChannel: [c2.android.avc.encoder#737] Created output block pool with allocatorID 16 => poolID 36 - OK
+10-25 07:00:03.335  8738  8743 D CCodecBufferChannel: [c2.android.avc.encoder#737] Configured output block pool ids 36 => OK
+10-25 07:00:03.335   492  1751 W ResourceManagerServiceUtils: Ignoring request to add new resource entry with value <= 0
+10-25 07:00:03.338  8738  8738 D MPEG4Writer: PreAllocation enabled
+10-25 07:00:03.347   174   174 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device VINTF manifest.
+10-25 07:00:03.347  8738  8741 I Gralloc4: mapper 4.x is not supported
+10-25 07:00:03.393     0     0 I servicemanager: Caller(pid=8738,uid=0,sid=u:r:su:s0) Could not find android.hardware.graphics.allocator.IAllocator/default in the VINTF manifest. No alternative instances declared in VINTF.
+10-25 07:00:03.370  8738  8741 D GraphicBufferSource: got buffer with new dataSpace 0x104
+10-25 07:00:03.370  8738  8741 D C2NodeImpl: dataspace changed to 0x104 pixel format: 0x1
+10-25 07:00:03.373   498  8748 D SimpleC2Component: Using output block pool with poolID 36 => got 36 - 0
+10-25 07:00:03.373   498  8748 D SimpleC2Component: applied 2 configUpdates => BAD_INDEX (6)
+10-25 07:00:03.373   498  8748 D C2SoftAvcEnc: Params width 1080 height 2400 level 50 colorFormat 0 bframes 0
+10-25 07:00:03.438  8738  8743 D CCodecConfig: c2 config diff is   Buffer coded.init-data.value = {
+10-25 07:00:03.438  8738  8743 D CCodecConfig:     00000000:  00 00 00 01 67 42 c0 32  8d 68 04 40 12 de 5e 42  ....gB.2.h.@..^B
+10-25 07:00:03.438  8738  8743 D CCodecConfig:     00000010:  02 02 02 0f 08 84 6a 00  00 00 01 68 ce 01 a8 35  ......j....h...5
+10-25 07:00:03.438  8738  8743 D CCodecConfig:     00000020:  c8                                                .
+10-25 07:00:03.438  8738  8743 D CCodecConfig:   }
+10-25 07:00:03.440  8738  8738 D MPEG4Writer: fpathconf _PC_FILESIZEBITS:64
+10-25 07:00:03.440  8738  8738 D MPEG4Writer: File size limit set to 4503599627370495 bytes implicitly
+10-25 07:00:03.440  8738  8738 D MPEG4Writer: MP4WtrCtrlHlpLooper Started
+10-25 07:00:03.440  8738  8738 I MPEG4Writer: limits: 4503599627370495/0 bytes/us, bit rate: -1 bps and the estimated moov size 3192 bytes
+10-25 07:00:03.443  8738  8757 I MPEG4Writer: setStartTimestampUs: 1590737621
+10-25 07:00:03.444  8738  8757 I MPEG4Writer: Earliest track starting time: 1590737621
+10-25 07:00:03.949     0     0 I logd    : logdr: UID=0 GID=0 PID=8819 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:03.911  8681  8710 D EGL_emulation: app_time_stats: avg=1.63ms min=0.80ms max=9.42ms count=61
+10-25 07:00:03.930  8681  8710 I godot   : ANDROID_DEEP_BEGIN final_motion_horse_zs_walk { "id": "final_motion_horse_zs_walk", "suite": "motion", "role": "zs", "mount": "horse", "sprint": false, "seconds": 16.0, "isolated_directions": true }
+10-25 07:00:03.952  8681  8681 I ImeTracker: org.yuanzheng.singleplayer:170e9dff: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+10-25 07:00:03.956   579   703 I ImeTracker: org.yuanzheng.singleplayer:170e9dff: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-25 07:00:04.636     0     0 I logd    : logdr: UID=0 GID=0 PID=8891 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:04.822  2320  2320 W adbd    : timeout expired while flushing socket, closing
+10-25 07:00:05.316     0     0 I logd    : logdr: UID=0 GID=0 PID=8897 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:05.461   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:05.461   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:05.461   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:05.462   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:05.462   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:05.871     0     0 I init    : Untracked pid 8805 exited with status 1
+10-25 07:00:05.872     0     0 I init    : Untracked pid 8805 did not have an associated service entry and will not be reaped
+10-25 07:00:05.827  8681  8710 D EGL_emulation: app_time_stats: avg=371.77ms min=1.02ms max=1832.54ms count=5
+10-25 07:00:06.013     0     0 I logd    : logdr: UID=0 GID=0 PID=8915 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:06.696     0     0 I logd    : logdr: UID=0 GID=0 PID=8957 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:06.732  8681  8710 I godot   : ANDROID_DEEP_PHOTO final_motion_horse_zs_walk/map
+10-25 07:00:06.829  8681  8710 D EGL_emulation: app_time_stats: avg=49.12ms min=13.67ms max=619.66ms count=20
+10-25 07:00:07.391     0     0 I logd    : logdr: UID=0 GID=0 PID=9029 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:07.837  8681  8710 D EGL_emulation: app_time_stats: avg=18.20ms min=12.33ms max=28.05ms count=53
+10-25 07:00:08.105     0     0 I logd    : logdr: UID=0 GID=0 PID=9123 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:08.127   579  1959 W OverlayManager: service 'idmap' died
+10-25 07:00:08.171     0     0 I init    : Sending signal 9 to service 'idmap2d' (pid 8666) process group...
+10-25 07:00:08.174     0     0 I libprocessgroup: Removed cgroup /sys/fs/cgroup/uid_1000/pid_8666
+10-25 07:00:08.175     0     0 I init    : Control message: Processed ctl.stop for 'idmap2d' from pid: 579 (system_server)
+10-25 07:00:08.176     0     0 I init    : Service 'idmap2d' (pid 8666) received signal 9
+10-25 07:00:08.177     0     0 I init    : Sending signal 9 to service 'idmap2d' (pid 8666) process group...
+10-25 07:00:08.177     0     0 E libprocessgroup: Failed to write 1 to /sys/fs/cgroup/uid_1000/pid_8666/cgroup.kill: No such file or directory
+10-25 07:00:08.177     0     0 E libprocessgroup: Failed to open /sys/fs/cgroup/uid_1000/pid_8666/cgroup.procs: No such file or directory
+10-25 07:00:08.465   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:08.466   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:08.467   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:08.467   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:08.468   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:08.818     0     0 I logd    : logdr: UID=0 GID=0 PID=9210 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:08.784   498  8748 D BufferPoolAccessor2.0: bufferpool2 0x7fd10b3915f8 : 2(7776000 size) total buffers - 1(3888000 size) used buffers - 133/135 (recycle/alloc) - 3/135 (fetch/transfer)
+10-25 07:00:08.845  8681  8710 D EGL_emulation: app_time_stats: avg=20.67ms min=15.13ms max=39.94ms count=48
+10-25 07:00:09.526     0     0 I logd    : logdr: UID=0 GID=0 PID=9303 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:09.860  8681  8710 D EGL_emulation: app_time_stats: avg=20.29ms min=14.85ms max=29.81ms count=49
+10-25 07:00:10.228     0     0 I logd    : logdr: UID=0 GID=0 PID=9396 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:10.876  8681  8710 D EGL_emulation: app_time_stats: avg=18.07ms min=13.56ms max=27.61ms count=54
+10-25 07:00:10.930     0     0 I logd    : logdr: UID=0 GID=0 PID=9492 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:11.053   579   681 D ActivityManager: freezing 5632 com.android.keychain
+10-25 07:00:11.056   579   681 D ActivityManager: freezing 1135 com.android.settings
+10-25 07:00:11.060   579   681 D ActivityManager: freezing 1869 com.android.localtransport
+10-25 07:00:11.475   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:11.482   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:11.485   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:11.497   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:11.498   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:11.632     0     0 I logd    : logdr: UID=0 GID=0 PID=9579 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:11.894  8681  8710 D EGL_emulation: app_time_stats: avg=18.16ms min=13.20ms max=27.45ms count=55
+10-25 07:00:12.338     0     0 I logd    : logdr: UID=0 GID=0 PID=9666 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:12.934  8681  8710 D EGL_emulation: app_time_stats: avg=20.63ms min=14.32ms max=52.09ms count=49
+10-25 07:00:13.035     0     0 I logd    : logdr: UID=0 GID=0 PID=9759 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:13.734     0     0 I logd    : logdr: UID=0 GID=0 PID=9858 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:13.897   498  8748 D BufferPoolAccessor2.0: bufferpool2 0x7fd10b3915f8 : 2(7776000 size) total buffers - 1(3888000 size) used buffers - 344/346 (recycle/alloc) - 4/346 (fetch/transfer)
+10-25 07:00:13.946  8681  8710 D EGL_emulation: app_time_stats: avg=20.06ms min=14.76ms max=36.74ms count=49
+10-25 07:00:14.374   446   548 D AF::Track: interceptBuffer: took 1483us to intercept 0 tracks
+10-25 07:00:14.434     0     0 I logd    : logdr: UID=0 GID=0 PID=9957 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:14.505   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:14.506   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:14.506   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:14.506   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:14.506   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:14.961  8681  8710 D EGL_emulation: app_time_stats: avg=19.40ms min=14.33ms max=26.90ms count=51
+10-25 07:00:15.141     0     0 I logd    : logdr: UID=0 GID=0 PID=10059 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:15.849     0     0 I logd    : logdr: UID=0 GID=0 PID=10158 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:15.968  8681  8710 D EGL_emulation: app_time_stats: avg=18.96ms min=14.67ms max=27.98ms count=52
+10-25 07:00:16.549     0     0 I logd    : logdr: UID=0 GID=0 PID=10257 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:16.985  8681  8710 D EGL_emulation: app_time_stats: avg=18.86ms min=14.50ms max=26.30ms count=52
+10-25 07:00:17.252     0     0 I logd    : logdr: UID=0 GID=0 PID=10353 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:17.514   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:17.515   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:17.515   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:17.515   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:17.515   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:17.953     0     0 I logd    : logdr: UID=0 GID=0 PID=10452 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:17.988  8681  8710 D EGL_emulation: app_time_stats: avg=19.32ms min=14.61ms max=26.82ms count=50
+10-25 07:00:18.665     0     0 I logd    : logdr: UID=0 GID=0 PID=10551 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:19.000  8681  8710 D EGL_emulation: app_time_stats: avg=18.19ms min=14.12ms max=24.99ms count=54
+10-25 07:00:19.006   498  8748 D BufferPoolAccessor2.0: bufferpool2 0x7fd10b3915f8 : 2(7776000 size) total buffers - 1(3888000 size) used buffers - 570/572 (recycle/alloc) - 4/572 (fetch/transfer)
+10-25 07:00:19.363     0     0 I logd    : logdr: UID=0 GID=0 PID=10650 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:20.009  8681  8710 D EGL_emulation: app_time_stats: avg=19.24ms min=14.73ms max=33.42ms count=51
+10-25 07:00:20.067     0     0 I logd    : logdr: UID=0 GID=0 PID=10749 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:20.533   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:20.538   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:20.539   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:20.542   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:20.543   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:20.770     0     0 I logd    : logdr: UID=0 GID=0 PID=10848 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:21.022  8681  8710 D EGL_emulation: app_time_stats: avg=18.89ms min=14.37ms max=33.36ms count=52
+10-25 07:00:21.486     0     0 I logd    : logdr: UID=0 GID=0 PID=10938 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:22.030  8681  8710 D EGL_emulation: app_time_stats: avg=21.31ms min=12.89ms max=39.86ms count=46
+10-25 07:00:22.195     0     0 I logd    : logdr: UID=0 GID=0 PID=11039 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:22.897     0     0 I logd    : logdr: UID=0 GID=0 PID=11118 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:23.032  8681  8710 D EGL_emulation: app_time_stats: avg=26.76ms min=14.39ms max=47.19ms count=37
+10-25 07:00:23.549   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:23.559   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:23.611     0     0 I logd    : logdr: UID=0 GID=0 PID=11187 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:23.566   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:23.569   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:23.571   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 07:00:24.300     0     0 I logd    : logdr: UID=0 GID=0 PID=11247 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 07:00:24.567  8738  8758 I MPEG4Writer: setStartTimestampUs: 1590737621
+10-25 07:00:24.567  8738  8738 D MPEG4Writer: reset()
+10-25 07:00:24.567  8738  8738 D MPEG4Writer: Video track stopping. Stop source
+10-25 07:00:24.568  8738  8738 D MPEG4Writer: Video track source stopping
+10-25 07:00:24.568  8738  8738 D MPEG4Writer: Video track source stopped
+10-25 07:00:24.568  8738  8757 V MediaWriter: Track event err/info msg:101, trackId:1, type:1000,val:-1011
+10-25 07:00:24.568  8738  8757 I MPEG4Writer: Received total/0-length (769/0) buffers and encoded 769 frames. - Video
+10-25 07:00:24.568  8738  8759 I MPEG4Writer: setStartTimestampUs: 1590737621
+10-25 07:00:24.568  8738  8759 V MediaWriter: Track event err/info msg:101, trackId:3, type:1000,val:-1011
+10-25 07:00:24.568  8738  8759 W MPEG4Writer: 0-duration samples found: 1
+10-25 07:00:24.568  8738  8759 I MPEG4Writer: Received total/0-length (1/0) buffers and encoded 1 frames. - Metadata
+10-25 07:00:24.571  8738  8758 V MediaWriter: Track event err/info msg:101, trackId:2, type:1000,val:-1011
+10-25 07:00:24.571  8738  8758 W MPEG4Writer: 0-duration samples found: 1
+10-25 07:00:24.571  8738  8758 I MPEG4Writer: Received total/0-length (1/0) buffers and encoded 1 frames. - Metadata
+10-25 07:00:24.571  8738  8738 D MPEG4Writer: Video track stopped. Status:0. Stop source
+10-25 07:00:24.571  8738  8738 D MPEG4Writer: Metadata track stopping. Stop source
+10-25 07:00:24.571  8738  8738 D MPEG4Writer: Metadata track source stopping
+10-25 07:00:24.571  8738  8738 D MPEG4Writer: Metadata track source stopped
+10-25 07:00:24.572  8738  8738 D MPEG4Writer: Metadata track stopped. Status:0. Stop source
+10-25 07:00:24.572  8738  8738 D MPEG4Writer: Metadata track stopping. Stop source
+10-25 07:00:24.572  8738  8738 D MPEG4Writer: Metadata track source stopping
+10-25 07:00:24.572  8738  8738 D MPEG4Writer: Metadata track source stopped
+10-25 07:00:24.572  8738  8738 D MPEG4Writer: Metadata track stopped. Status:0. Stop source
+10-25 07:00:24.572  8738  8738 D MPEG4Writer: Duration from tracks range is [0, 20391753] us
+10-25 07:00:24.573  8738  8755 D MPEG4Writer: 1 chunks are written in the last batch
+10-25 07:00:24.573  8738  8738 D MPEG4Writer: WriterThread stopped. Status:0
+10-25 07:00:24.573  8738  8738 I MPEG4Writer: Adjust the moov start time from 1590737621 us -> 1590737621 us
+10-25 07:00:24.577  8738  8738 I MPEG4Writer: The mp4 file will not be streamable.
+10-25 07:00:24.578  8738  8738 I MPEG4Writer: MOOV atom was written to the file
+10-25 07:00:24.578  8738  8738 D MPEG4Writer: release()
+10-25 07:00:24.578  8738  8738 D MPEG4Writer: ftruncate mPreAllocateFileEndOffset:13762772 mOffset:13761351 mMdatEndOffset:13750304 diff:1421
+10-25 07:00:24.607  8738  8738 D MPEG4Writer: final fsync() takes 29 ms, file size 13761351
+10-25 07:00:24.607  8738  8738 D MPEG4Writer: MP4WtrCtrlHlpLooper stopped
+10-25 07:00:24.607  8738  8738 D MPEG4Writer: Top 5 write durations(microseconds): #1:442 #2:517 #3:617 #4:1060 #5:1123
+10-25 07:00:24.615  8738  8743 I hw-BpHwBinder: onLastStrongRef automatically unlinking death recipients
+10-25 07:00:24.616   498   955 I hw-BpHwBinder: onLastStrongRef automatically unlinking death recipients
+10-25 07:00:24.616   498   955 I hw-BpHwBinder: onLastStrongRef automatically unlinking death recipients
+10-25 07:00:24.621   498   955 D BufferPoolAccessor2.0: bufferpool2 0x7fd10b3915f8 : 0(0 size) total buffers - 0(0 size) used buffers - 767/769 (recycle/alloc) - 5/769 (fetch/transfer)
+10-25 07:00:24.629  8738  9038 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-25 07:00:24.637   579  5617 I ActivityManager: Broadcasting: Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///... flg=0x400000 }
+10-25 07:00:24.638   579  5617 I ActivityManager: Enqueued broadcast Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///... flg=0x400000 }: 0
+10-25 07:00:24.640   579  1959 W JobInfo : Job 'com.android.providers.media.module/com.android.providers.media.MediaService#-300' has a deadline with no functional constraints. The deadline won't improve job execution latency. Consider removing the deadline.
+10-25 07:00:24.643   579   605 I ActivityManager: Broadcast completed: result=0
+10-25 07:00:24.644  1388  1388 W com.android.providers.media.module: type=1400 audit(0.0:37): avc:  denied  { search } for  comm=4173796E635461736B202331 name="tmp" dev="dm-43" ino=196610 scontext=u:r:mediaprovider_app:s0:c127,c256,c512,c768 tcontext=u:object_r:shell_data_file:s0 tclass=dir permissive=0 app=com.android.providers.media.module
+10-25 07:00:24.644  1388  1388 W com.android.providers.media.module: type=1400 audit(0.0:38): avc:  denied  { getattr } for  comm=4173796E635461736B202331 path="/data/local/tmp" dev="dm-43" ino=196610 scontext=u:r:mediaprovider_app:s0:c127,c256,c512,c768 tcontext=u:object_r:shell_data_file:s0 tclass=dir permissive=0 app=com.android.providers.media.module
+10-25 07:00:24.695     0     0 W audit   : audit_lost=10 audit_rate_limit=5 audit_backlog_limit=64
+10-25 07:00:24.695     0     0 E audit   : rate limit exceeded
+10-25 07:00:24.646  1388  1700 I MediaProvider: Begin Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///... flg=0x1400010 cmp=com.android.providers.media.module/com.android.providers.media.MediaService }
+10-25 07:00:24.649  8738  8738 D ScreenRecord: success
+10-25 07:00:24.650  1388  1700 W ModernMediaScanner: Failed to visit /data/local/tmp/final_motion_horse_zs_walk.mp4: java.nio.file.AccessDeniedException: /data/local/tmp/final_motion_horse_zs_walk.mp4
+10-25 07:00:24.644  1388  1388 W com.android.providers.media.module: type=1400 audit(0.0:39): avc:  denied  { search } for  comm=4173796E635461736B202331 name="tmp" dev="dm-43" ino=196610 scontext=u:r:mediaprovider_app:s0:c127,c256,c512,c768 tcontext=u:object_r:shell_data_file:s0 tclass=dir permissive=0 app=com.android.providers.media.module
+10-25 07:00:24.644  1388  1388 W com.android.providers.media.module: type=1400 audit(0.0:40): avc:  denied  { getattr } for  comm=4173796E635461736B202331 path="/data/local/tmp" dev="dm-43" ino=196610 scontext=u:r:mediaprovider_app:s0:c127,c256,c512,c768 tcontext=u:object_r:shell_data_file:s0 tclass=dir permissive=0 app=com.android.providers.media.module
+10-25 07:00:24.652  1388  1700 I MediaProvider: Scanned internal due to REASON_DEMAND, found 0 items in 5ms, 0 inserts 0 updates 0 deletes
+10-25 07:00:24.653  1388  1700 I MediaProvider: End Intent { act=android.intent.action.MEDIA_SCANNER_SCAN_FILE dat=file:///... flg=0x1400010 cmp=com.android.providers.media.module/com.android.providers.media.MediaService }
+10-25 07:00:24.654  8738  8738 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-25 07:00:24.644  1388  1388 W com.android.providers.media.module: type=1400 audit(0.0:41): avc:  denied  { search } for  comm=4173796E635461736B202331 name="tmp" dev="dm-43" ino=196610 scontext=u:r:mediaprovider_app:s0:c127,c256,c512,c768 tcontext=u:object_r:shell_data_file:s0 tclass=dir permissive=0 app=com.android.providers.media.module
+10-25 07:00:24.655  8738  8738 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-25 07:00:24.657   498  1053 D BufferPoolAccessor2.0: Destruction - bufferpool2 0x7fd10b3915f8 cached: 0/0M, 0/0% in use; allocs: 769, 100% recycled; transfers: 769, 99% unfetched
+10-25 07:00:24.728  8681  8710 I godot   : ANDROID_DEEP_PHOTO final_motion_horse_zs_walk/motion_end
+10-25 07:00:24.740  8681  8710 I godot   : ANDROID_DEEP_COMPLETE final_motion_horse_zs_walk checks=7 failed=0 photos=2
+10-25 07:00:24.744  8681  8710 D EGL_emulation: app_time_stats: avg=89.90ms min=21.56ms max=1055.76ms count=19
+10-25 07:00:25.359     0     0 I logd    : logdr: UID=0 GID=0 PID=11263 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
