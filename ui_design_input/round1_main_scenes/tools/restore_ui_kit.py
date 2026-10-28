@@ -29,6 +29,9 @@ GROUPS = {
     "nav_socket": ["nav_socket", "nav_socket_selected"],
     "rail_socket": ["rail_socket", "rail_socket_selected"],
     "toggle": ["toggle_off", "toggle_on"],
+    "back_diamond": ["back_diamond", "back_diamond_pressed"],
+    "node": ["node_lit", "node_open", "node_locked"],
+    "star": ["star_on", "star_off"],
 }
 COLORS = 32
 # 品红溢色：边缘像素 R、B 都明显高于 G。把 B 压到不超过 G，粉紫边就回到暖棕/金色。

@@ -1,0 +1,77 @@
+[
+  {
+    "path": "src/battle/BattleChestView.gd",
+    "before_sha256": "98094c35686088c070dae88c0d5ea3e804babba67fdf77429882627be29d7252",
+    "after_sha256": "775d65fc48d252954b6094ac89022f33d7ece7ccbcefeb4b568fc25c419cbc3a"
+  },
+  {
+    "path": "src/battle/BattleScene.gd",
+    "before_sha256": "f0dcf2f86fabd1a7271c0a64abb28bfe2345ba8b00d591fa6ef8163f9f6b44f7",
+    "after_sha256": "18f5f0c1a5785b3530c2888ffda9c3dfa8e44c3cf34d41d61b7698cf114f4f4e"
+  },
+  {
+    "path": "src/explore/MapScene.gd",
+    "before_sha256": "dc870bc80c38e9a9c385b062d253bd853130871faefd4b109a881d05fc12ce27",
+    "after_sha256": "3d3da0d6da82d68447d56f26cf05f4305c1247963046a2e7b870bc3315d077ce"
+  },
+  {
+    "path": "src/ui/BagPanel.gd",
+    "before_sha256": "54a8d92c30b8bc91cde0a3481f4eedf53f08fd4cf278fc1a6f49847de5302116",
+    "after_sha256": "de59247ac8301ac076b24b8adf22b67f4ffb5efc42af68ff1d96f0754475ea2c"
+  },
+  {
+    "path": "src/ui/FishingPanel.gd",
+    "before_sha256": "fef773e886738c03fe84ef05f1a436f5f2e494e5bcfa3bd13850160efba5b01a",
+    "after_sha256": "812b1822d58c19482b2524a8a6aab77b8fe95b622d6c1aee0c276b062ec0b5c3"
+  },
+  {
+    "path": "src/ui/home/TownHome.gd",
+    "before_sha256": "cc06c3d817ba9d36a861147a475baa908341fc254d01bc305a6913b93031fc81",
+    "after_sha256": "9d192997ce2b910dea48959779af321f022f6e19cbcab90afc77887fe899e493"
+  },
+  {
+    "path": "src/ui/RegionChestMap.gd",
+    "before_sha256": "9c844ffa4de57388373c4cb5a618f78da1eeb415406f3408e1340e8f301d3c40",
+    "after_sha256": "5776add7dceecc38c82a126bc1bcc81285784c3242e7ee839c2d1868ef04e80d"
+  },
+  {
+    "path": "src/ui/ReviewFixUI.gd",
+    "before_sha256": "df616c88f5495095c4de070ee2c5e335eb7abfe613776b3557266ad38d333de3",
+    "after_sha256": "73942d3100d5c04eb630223e4997fd24e6afc6a77fe01ceca45409146762c50d"
+  },
+  {
+    "path": "src/ui/ShowcaseUI.gd",
+    "before_sha256": "f492082532f7794dffe2f58de069c513596b01d3acb3b1d9fc450ce1efcfbf07",
+    "after_sha256": "2daca8a3e14c7baad07aeb9785b3217f75f332186fae914c638c4075b69cddb6"
+  },
+  {
+    "path": "src/ui/TouchScroll.gd",
+    "before_sha256": "17409b2dc7ecf951487d7a7e364bc0d7a7895cb2677f7ebe9753fd4562137b97",
+    "after_sha256": "895897be3047fe6366b4eefa553fc2d60458f9aa89396f2445c1a9c10584615c"
+  },
+  {
+    "path": "src/ui/WorldPointMap.gd",
+    "before_sha256": "3879d021169cb0de249d4cadf38109a3d18d03ecd73e79b0eaee3793ae77204a",
+    "after_sha256": "9f552364818f8e9996a2e9cf7a34af43a4112d7172111691dbbf0bb4868c333a"
+  },
+  {
+    "path": "src/world/WorldDressing.gd",
+    "before_sha256": "e158387dc4ce80b67c1073f00bb4c9e5d0d81b9f28cd03ca3a0ad3428c2f6eea",
+    "after_sha256": "44cdbb4637b55dc0317cb2fc2c6f34b38a3ddca300d2c145ee83914b24482204"
+  },
+  {
+    "path": "src/world/WorldPresentation.gd",
+    "before_sha256": "421dc6822825c68fb71555f012e9232f20059568df8bf8ce834d6268b9b9314b",
+    "after_sha256": "05ba19ea9b9230fa31fffc360f67d61a3d931dd968c11678863b5ae3bdbf7f08"
+  },
+  {
+    "path": "tools/VerifyVisualPolish.gd",
+    "new_file": true,
+    "after_sha256": "2b59fcdb623a43c2475c6b1dee4dcbba8ac249a79a3c6559c4b7f82cbcd7bfa5"
+  },
+  {
+    "path": "tools/VerifyVisualPolish.tscn",
+    "new_file": true,
+    "after_sha256": "4953c60212a449db837f4aae05d8a302b2b59ca405cb5c7f25b36faf566c914f"
+  }
+]

@@ -1,0 +1,518 @@
+{
+ "art_to_screen": 1,
+ "canvas": [
+  1536,
+  1024
+ ],
+ "background": "#FF00FF",
+ "items": {
+  "top_bar": {
+   "sheet": "UI4-01_topbar",
+   "art": [
+    480,
+    56
+   ],
+   "game": [
+    480,
+    56
+   ],
+   "slice": [
+    72,
+    0,
+    72,
+    0
+   ],
+   "guide_box": [
+    288,
+    264,
+    960,
+    112
+   ]
+  },
+  "action_bar": {
+   "sheet": "UI4-01_topbar",
+   "art": [
+    480,
+    80
+   ],
+   "game": [
+    480,
+    80
+   ],
+   "slice": [
+    72,
+    0,
+    72,
+    0
+   ],
+   "guide_box": [
+    288,
+    440,
+    960,
+    160
+   ]
+  },
+  "back_diamond": {
+   "sheet": "UI4-01_topbar",
+   "art": [
+    48,
+    48
+   ],
+   "game": [
+    48,
+    48
+   ],
+   "slice": null,
+   "guide_box": [
+    568,
+    664,
+    96,
+    96
+   ]
+  },
+  "back_diamond_pressed": {
+   "sheet": "UI4-01_topbar",
+   "art": [
+    48,
+    48
+   ],
+   "game": [
+    48,
+    48
+   ],
+   "slice": null,
+   "guide_box": [
+    728,
+    664,
+    96,
+    96
+   ]
+  },
+  "help_round": {
+   "sheet": "UI4-01_topbar",
+   "art": [
+    40,
+    40
+   ],
+   "game": [
+    40,
+    40
+   ],
+   "slice": null,
+   "guide_box": [
+    888,
+    672,
+    80,
+    80
+   ]
+  },
+  "sheet_panel": {
+   "sheet": "UI4-02_sheets",
+   "art": [
+    480,
+    240
+   ],
+   "game": [
+    480,
+    240
+   ],
+   "slice": [
+    64,
+    48,
+    64,
+    24
+   ],
+   "guide_box": [
+    408,
+    115,
+    720,
+    360
+   ]
+  },
+  "dialog_box": {
+   "sheet": "UI4-02_sheets",
+   "art": [
+    456,
+    168
+   ],
+   "game": [
+    456,
+    168
+   ],
+   "slice": [
+    56,
+    40,
+    56,
+    40
+   ],
+   "guide_box": [
+    426,
+    539,
+    684,
+    252
+   ]
+  },
+  "nameplate": {
+   "sheet": "UI4-02_sheets",
+   "art": [
+    176,
+    36
+   ],
+   "game": [
+    176,
+    36
+   ],
+   "slice": [
+    40,
+    0,
+    40,
+    0
+   ],
+   "guide_box": [
+    636,
+    855,
+    264,
+    54
+   ]
+  },
+  "red_dot": {
+   "sheet": "UI4-03_badges",
+   "art": [
+    14,
+    14
+   ],
+   "game": [
+    14,
+    14
+   ],
+   "slice": null,
+   "guide_box": [
+    448,
+    387,
+    42,
+    42
+   ]
+  },
+  "badge_pill": {
+   "sheet": "UI4-03_badges",
+   "art": [
+    40,
+    20
+   ],
+   "game": [
+    40,
+    20
+   ],
+   "slice": [
+    12,
+    0,
+    12,
+    0
+   ],
+   "guide_box": [
+    554,
+    378,
+    120,
+    60
+   ]
+  },
+  "plus_socket": {
+   "sheet": "UI4-03_badges",
+   "art": [
+    22,
+    22
+   ],
+   "game": [
+    22,
+    22
+   ],
+   "slice": null,
+   "guide_box": [
+    738,
+    375,
+    66,
+    66
+   ]
+  },
+  "lock_mark": {
+   "sheet": "UI4-03_badges",
+   "art": [
+    20,
+    24
+   ],
+   "game": [
+    20,
+    24
+   ],
+   "slice": null,
+   "guide_box": [
+    868,
+    372,
+    60,
+    72
+   ]
+  },
+  "check_seal": {
+   "sheet": "UI4-03_badges",
+   "art": [
+    32,
+    32
+   ],
+   "game": [
+    32,
+    32
+   ],
+   "slice": null,
+   "guide_box": [
+    992,
+    360,
+    96,
+    96
+   ]
+  },
+  "ribbon_corner": {
+   "sheet": "UI4-03_badges",
+   "art": [
+    48,
+    48
+   ],
+   "game": [
+    48,
+    48
+   ],
+   "slice": null,
+   "guide_box": [
+    512,
+    520,
+    144,
+    144
+   ]
+  },
+  "star_on": {
+   "sheet": "UI4-03_badges",
+   "art": [
+    40,
+    40
+   ],
+   "game": [
+    40,
+    40
+   ],
+   "slice": null,
+   "guide_box": [
+    720,
+    532,
+    120,
+    120
+   ]
+  },
+  "star_off": {
+   "sheet": "UI4-03_badges",
+   "art": [
+    40,
+    40
+   ],
+   "game": [
+    40,
+    40
+   ],
+   "slice": null,
+   "guide_box": [
+    904,
+    532,
+    120,
+    120
+   ]
+  },
+  "player_card": {
+   "sheet": "UI4-04_player",
+   "art": [
+    240,
+    80
+   ],
+   "game": [
+    240,
+    80
+   ],
+   "slice": [
+    88,
+    20,
+    24,
+    20
+   ],
+   "guide_box": [
+    468,
+    285,
+    600,
+    200
+   ]
+  },
+  "avatar_ring": {
+   "sheet": "UI4-04_player",
+   "art": [
+    76,
+    76
+   ],
+   "game": [
+    76,
+    76
+   ],
+   "slice": null,
+   "guide_box": [
+    596,
+    549,
+    190,
+    190
+   ]
+  },
+  "level_badge_v4": {
+   "sheet": "UI4-04_player",
+   "art": [
+    36,
+    22
+   ],
+   "game": [
+    36,
+    22
+   ],
+   "slice": null,
+   "guide_box": [
+    850,
+    616,
+    90,
+    55
+   ]
+  },
+  "node_lit": {
+   "sheet": "UI4-05_nodes",
+   "art": [
+    52,
+    52
+   ],
+   "game": [
+    52,
+    52
+   ],
+   "slice": null,
+   "guide_box": [
+    470,
+    300,
+    156,
+    156
+   ]
+  },
+  "node_open": {
+   "sheet": "UI4-05_nodes",
+   "art": [
+    52,
+    52
+   ],
+   "game": [
+    52,
+    52
+   ],
+   "slice": null,
+   "guide_box": [
+    690,
+    300,
+    156,
+    156
+   ]
+  },
+  "node_locked": {
+   "sheet": "UI4-05_nodes",
+   "art": [
+    52,
+    52
+   ],
+   "game": [
+    52,
+    52
+   ],
+   "slice": null,
+   "guide_box": [
+    910,
+    300,
+    156,
+    156
+   ]
+  },
+  "node_ultimate": {
+   "sheet": "UI4-05_nodes",
+   "art": [
+    68,
+    68
+   ],
+   "game": [
+    68,
+    68
+   ],
+   "slice": null,
+   "guide_box": [
+    666,
+    520,
+    204,
+    204
+   ]
+  },
+  "vbar_frame": {
+   "sheet": "UI4-06_meters",
+   "art": [
+    28,
+    240
+   ],
+   "game": [
+    28,
+    240
+   ],
+   "slice": [
+    0,
+    24,
+    0,
+    24
+   ],
+   "guide_box": [
+    529,
+    212,
+    70,
+    600
+   ]
+  },
+  "vbar_fill": {
+   "sheet": "UI4-06_meters",
+   "art": [
+    16,
+    224
+   ],
+   "game": [
+    16,
+    224
+   ],
+   "slice": null,
+   "guide_box": [
+    663,
+    232,
+    40,
+    560
+   ]
+  },
+  "pity_ring": {
+   "sheet": "UI4-06_meters",
+   "art": [
+    96,
+    96
+   ],
+   "game": [
+    96,
+    96
+   ],
+   "slice": null,
+   "guide_box": [
+    767,
+    392,
+    240,
+    240
+   ]
+  }
+ }
+}

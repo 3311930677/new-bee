@@ -1,7 +1,7 @@
 """UI kit asset spec + layout guides for image generation (single source of truth).
 
 Usage:
-    python -I make_ui_guides.py <out_dir> [v1|v3]   (default v1)
+    python -I make_ui_guides.py <out_dir> [v1|v3|v4]   (default v1)
 
 Writes:
     ui_kit_spec.json          every asset: sheet, art size, nine-slice margins, game size, guide box
@@ -89,7 +89,32 @@ SHEETS_V3 = {
         [("bar_fill_exp", 184, 8, None), ("bar_fill_hp", 184, 8, None)],
         [("currency_capsule", 144, 36, (40, 0, 20, 0)), ("quest_slip", 256, 72, (40, 20, 24, 20))]]},
 }
-VERSIONS = {"v1": SHEETS, "v3": SHEETS_V3}
+# v4（2026-10-28）：v3 乌漆细金推广到全游戏时缺的件（顶栏、操作条、抽屉、对话框、角标、玩家卡、
+# 天赋节点、竖条、保底环）。面板、按钮、页签、格子、条、货币、导航沿用 v3，不重画。
+# 需求：远征/docs/2026-10-28-素材生成提示词清单.md 的 A 组。
+SHEETS_V4 = {
+    "UI4-01_topbar": {"scale": 2, "rows": [
+        [("top_bar", 480, 56, (72, 0, 72, 0))],
+        [("action_bar", 480, 80, (72, 0, 72, 0))],
+        [("back_diamond", 48, 48, None), ("back_diamond_pressed", 48, 48, None), ("help_round", 40, 40, None)]]},
+    "UI4-02_sheets": {"scale": 1.5, "rows": [
+        [("sheet_panel", 480, 240, (64, 48, 64, 24))],
+        [("dialog_box", 456, 168, (56, 40, 56, 40))],
+        [("nameplate", 176, 36, (40, 0, 40, 0))]]},  # 小确认框沿用 v3 panel_iron
+    "UI4-03_badges": {"scale": 3, "rows": [
+        [("red_dot", 14, 14, None), ("badge_pill", 40, 20, (12, 0, 12, 0)), ("plus_socket", 22, 22, None),
+         ("lock_mark", 20, 24, None), ("check_seal", 32, 32, None)],
+        [("ribbon_corner", 48, 48, None), ("star_on", 40, 40, None), ("star_off", 40, 40, None)]]},
+    "UI4-04_player": {"scale": 2.5, "rows": [
+        [("player_card", 240, 80, (88, 20, 24, 20))],
+        [("avatar_ring", 76, 76, None), ("level_badge_v4", 36, 22, None)]]},
+    "UI4-05_nodes": {"scale": 3, "rows": [
+        [("node_lit", 52, 52, None), ("node_open", 52, 52, None), ("node_locked", 52, 52, None)],
+        [("node_ultimate", 68, 68, None)]]},
+    "UI4-06_meters": {"scale": 2.5, "rows": [
+        [("vbar_frame", 28, 240, (0, 24, 0, 24)), ("vbar_fill", 16, 224, None), ("pity_ring", 96, 96, None)]]},
+}
+VERSIONS = {"v1": SHEETS, "v3": SHEETS_V3, "v4": SHEETS_V4}
 
 
 def layout(sheet):
@@ -131,6 +156,9 @@ def draw(boxes, scale, check):
             if l and r and not t:  # horizontal three-slice: mark both caps
                 d.rectangle((x, y, x + l - 1, y + h - 1), fill=CORNER)
                 d.rectangle((x + w - r, y, x + w - 1, y + h - 1), fill=CORNER)
+            if t and btm and not l:  # vertical three-slice: mark both caps
+                d.rectangle((x, y, x + w - 1, y + t - 1), fill=CORNER)
+                d.rectangle((x, y + h - btm, x + w - 1, y + h - 1), fill=CORNER)
         if check:
             if sl:
                 l, t, r, btm = (round(v * scale) for v in sl)
