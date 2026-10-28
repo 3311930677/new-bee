@@ -1,0 +1,861 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+WARNING: 存档处于锁定状态，本次写盘已跳过（原因：；备份：）
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:742)
+       [1] track (res://src/world/WorldPoints.gd:90)
+       [2] poi_layout (res://tools/VerifyExperienceRework.gd:169)
+       [3] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: 存档处于锁定状态，本次写盘已跳过（原因：；备份：）
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:742)
+       [1] do_exchange (res://src/ui/HonorMarketPanel.gd:245)
+       [2] market (res://tools/VerifyExperienceRework.gd:107)
+       [3] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: 存档处于锁定状态，本次写盘已跳过（原因：；备份：）
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:742)
+       [1] track (res://src/world/WorldPoints.gd:90)
+       [2] poi_layout (res://tools/VerifyExperienceRework.gd:169)
+       [3] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: 存档处于锁定状态，本次写盘已跳过（原因：；备份：）
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:742)
+       [1] track (res://src/world/WorldPoints.gd:90)
+       [2] poi_layout (res://tools/VerifyExperienceRework.gd:169)
+       [3] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_antidote.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_antidote.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_aptitude_fruit.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_aptitude_fruit.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_break_crystal.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_break_crystal.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_dragon_scale.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_dragon_scale.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_energy_dew.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_energy_dew.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_enhance_stone.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_enhance_stone.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_evolve_crystal.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_evolve_crystal.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_fish_common.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_fish_common.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_fish_frost.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_fish_frost.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_fish_port.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_fish_port.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_fish_salt.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_fish_salt.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_fish_tide.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_fish_tide.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_frost_letter.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_frost_letter.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_frost_nameplate.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_frost_nameplate.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_frost_parcel.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_frost_parcel.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_frost_reply.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_frost_reply.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_gate_clue.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_gate_clue.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_gate_stamp.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_gate_stamp.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_gold_shard.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_gold_shard.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_herb.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_herb.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_iron_ore.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_iron_ore.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_lock_rune.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_lock_rune.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_magic_crystal.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_magic_crystal.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_map_scrap.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_map_scrap.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_mine_record.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_mine_record.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_mithril.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_mithril.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_pet_book.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_pet_book.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_pet_food.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_pet_food.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_potion_hp_l.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_potion_hp_l.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_potion_hp_m.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_potion_hp_m.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_potion_hp_s.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_potion_hp_s.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_refine_stone.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_refine_stone.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_return_mailbag.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_return_mailbag.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_return_old_letter.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_return_old_letter.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_revive_feather.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_revive_feather.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_salt_ledger.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_salt_ledger.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_salt_pack.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_salt_pack.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_stele_fragment.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_stele_fragment.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_ticket_sweep.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_ticket_sweep.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_ticket_ten.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_ticket_ten.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_tide_core.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_tide_core.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_tide_egg.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_tide_egg.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_torch.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_torch.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_trade_grain.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_trade_grain.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_veil_seal.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_veil_seal.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+ERROR: Invalid metadata identifier: 'missing_texture_itm_wind_chime.png'.
+   at: set_meta (core/object/object.cpp:1037)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6239)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+WARNING: Missing visual resource: id=itm_wind_chime.png resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _build_supplies (res://src/ui/BagPanel.gd:381)
+       [2] _refresh (res://src/ui/BagPanel.gd:190)
+       [3] _select_tab (res://src/ui/BagPanel.gd:171)
+       [4] bag_drag (res://tools/VerifyExperienceRework.gd:182)
+       [5] frames (res://tools/VerifyExperienceRework.gd:18)
+EXPERIENCE_REWORK checks=73 failures=0

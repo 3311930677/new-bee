@@ -1,0 +1,15 @@
+﻿Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+VISUAL_REFRESH_FAIL 1
+ERROR: FAIL: No literal font_size override outside src/preview: res://src/battle/BattleChestView.gd, res://src/ui/BagPanel.gd, res://src/ui/GrowthChestView.gd, res://src/ui/LoginChestView.gd, res://src/ui/QuestPanel.gd, res://src/ui/ReadingSkin.gd, res://src/ui/ReviewFixUI.gd, res://src/ui/ShowcaseUI.gd, res://src/ui/WorldPointMap.gd
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyVisualRefresh.gd:8)
+       [1] _ready (res://tools/VerifyVisualRefresh.gd:146)
+WARNING: 4 RIDs of type "CanvasItem" were leaked.
+   at: _free_rids (servers/rendering/renderer_canvas_cull.cpp:2735)
+WARNING: 10 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+

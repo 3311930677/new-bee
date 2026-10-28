@@ -1,0 +1,175 @@
+{
+  "note": "本轮涉及文件；共享文件也保留工作区其他已存在或并行完成的改动，不能将整文件差异都归于本轮。",
+  "files": [
+    {
+      "path": "project.godot",
+      "baseline_sha256": "b142719217fc6c8b5755a70f837be314fb35b9935bbaa1ba94446bdf11a86c02",
+      "current_sha256": "8e615706517f07e1691f6b9c60bfc442579617928164cb7ce6d1abfa1e635d08"
+    },
+    {
+      "path": "export_presets.cfg",
+      "baseline_sha256": "d43dca1084bb8350465203ab39438f0eb81093f89fcd9336b73ff9c6217ab0dc",
+      "current_sha256": "e0d44b0f0187d7c7e014f43a11b532981414182b6b950b7ca6ccea86e45a54b9"
+    },
+    {
+      "path": "src/autoload/G.gd",
+      "baseline_sha256": "17dddba13d0ca40486fb46c156fabda42994309d6a8974d41f19d23852c96e9a",
+      "current_sha256": "8b3f6c090114503bf986699678994908aedcedc2448a92cc02b0d17763582c05"
+    },
+    {
+      "path": "src/city/CityScene.gd",
+      "baseline_sha256": "e81a584b783a66093e442bb451db596f4c94a841086a9b379a64d2af319e3ef5",
+      "current_sha256": "c1f6da908071808142ebd3133d2914c6bf52bf510b960b33345dd5523ec485de"
+    },
+    {
+      "path": "src/ui/TouchScroll.gd",
+      "baseline_sha256": null,
+      "current_sha256": "17409b2dc7ecf951487d7a7e364bc0d7a7895cb2677f7ebe9753fd4562137b97"
+    },
+    {
+      "path": "src/ui/ShowcaseUI.gd",
+      "baseline_sha256": null,
+      "current_sha256": "f492082532f7794dffe2f58de069c513596b01d3acb3b1d9fc450ce1efcfbf07"
+    },
+    {
+      "path": "src/ui/BagPanel.gd",
+      "baseline_sha256": "fc1397025a533e32cbac5a68e5f57862516178521a1ca62f317668a2db791481",
+      "current_sha256": "770d7b680d8e7984d8aac62063c7eaa26945c326f1f4b237bcb7d5149167d57d"
+    },
+    {
+      "path": "src/ui/HonorMarketPanel.gd",
+      "baseline_sha256": "85d714c6a2738c6d14a159e544fc476034b46de6b5e8a208184e8905159ef198",
+      "current_sha256": "c159e24400629a4e000ae10233b29236523f20d15ea4d3a8452ab206320af28e"
+    },
+    {
+      "path": "src/ui/ActivityPanel.gd",
+      "baseline_sha256": "b3d2c599d6a4c74bb73e1f04f0541fbdea570e38928e8d291300cadbd6b07a3e",
+      "current_sha256": "32ccc848ede111d72e7e4c0569865a4e907bc1c38973913fd83b6f6b8697913b"
+    },
+    {
+      "path": "src/ui/FishingPanel.gd",
+      "baseline_sha256": "16e91340dcd41e080ba0ee54a080c7dd43a4c577ccdd66179ea81e21c930766d",
+      "current_sha256": "fef773e886738c03fe84ef05f1a436f5f2e494e5bcfa3bd13850160efba5b01a"
+    },
+    {
+      "path": "src/ui/InventoryQuestSkin.gd",
+      "baseline_sha256": "59d1bc446e5e8d7f6ed79db744f17ccbc3dc84939caee8c115859ccf094fdf3d",
+      "current_sha256": "6a4137a7c53e6f9723689bc171d5580b106b38e87940fba6e002352c9cb034d3"
+    },
+    {
+      "path": "src/ui/RegionChestMap.gd",
+      "baseline_sha256": "d340b4286f1bc25f0a9b5ea48248376f905e0112351d72cf61fca70639219ac2",
+      "current_sha256": "9c844ffa4de57388373c4cb5a618f78da1eeb415406f3408e1340e8f301d3c40"
+    },
+    {
+      "path": "src/ui/WorldPointMap.gd",
+      "baseline_sha256": null,
+      "current_sha256": "837b97ce231385875afaf0b9cd8bcf3357168c5d5937ac6436e70048ec49ba9e"
+    },
+    {
+      "path": "src/world/WorldPoints.gd",
+      "baseline_sha256": null,
+      "current_sha256": "97dc3242daaf90fc852f459bb859255e82779e98e63c7cbb3036e1ee41e99a86"
+    },
+    {
+      "path": "src/world/WorldPresentation.gd",
+      "baseline_sha256": null,
+      "current_sha256": "a56b2e8fc3e05ed671cde97ad0f7be46989fe773aec733101420980ceb843f6f"
+    },
+    {
+      "path": "src/world/MountVisual.gd",
+      "baseline_sha256": "2693ccbb28c04159ef5f7da7a2693c14776cde7d83072de29b02e3bbc0a30f19",
+      "current_sha256": "c08f3083a3a5b2e55164ef89d499b9638b47cd71dd4f01d864d55fdd4c905216"
+    },
+    {
+      "path": "src/world/ReferenceFloor.gd",
+      "baseline_sha256": "37cfe5f47da2e4102af49d2c266723aad1641741403c8417cc6307baa9e00ea5",
+      "current_sha256": "06cb54862eaa9d0abf1420e4579e341441c9ab55115112411fef2f1a80d92d96"
+    },
+    {
+      "path": "src/world/ReferenceWorldArt.gd",
+      "baseline_sha256": "3b801c9a9873eb694e3c576554b4d001b26566876019ac5bdfe1e1e9cebb81ba",
+      "current_sha256": "070bd442e2cdbff0070bd54d316e2fb5d1b1dd04be76137aac67c461fcb52527"
+    },
+    {
+      "path": "src/world/ReferenceTerrain.gd",
+      "baseline_sha256": "cf815c18d94426769180b33970c9608bcc8edc623cf1ec2b0f98ee19ffc71b06",
+      "current_sha256": "67f14a3fa4d2f663be31c886bc4b39eddb4cd51d58383291b4de242e08c4e018"
+    },
+    {
+      "path": "src/world/SunnyTravelArt.gd",
+      "baseline_sha256": "935b285bebca8cea4f94f592d8cafcc3e4a6ff9323b43d2ba7a1bcceaa78c2c7",
+      "current_sha256": "152cffe0644822de1a98598160a60794cc4913b5a77f6aae369996beaefd2c06"
+    },
+    {
+      "path": "src/world/WorldPropArt.gd",
+      "baseline_sha256": "90efb3b469c57c4c99b85ce39b35f068073398e9be1781220b0d18f72e17a586",
+      "current_sha256": "f3dd7edf9b313cc800db710e58542352c222aa38c20371444570c58d55416905"
+    },
+    {
+      "path": "src/explore/MapScene.gd",
+      "baseline_sha256": "6013ca505d6c31a5b12f6615782007a7d4bba1b45b5cc3f9e2b738e974431501",
+      "current_sha256": "1f0f476ccb5d122fcda0543dc07bb91cfb5f86f8488fdbe6919909a3f364bdf6"
+    },
+    {
+      "path": "src/explore/IllustratedNavigation.gd",
+      "baseline_sha256": "c72b76c5f460e754c979cae40e879c1bbb9a5da281704d5e4f50dbd0f8309f8d",
+      "current_sha256": "86961991f9e23b9c1a6ec37c5a7a9e60fe817da138d02b1f82be41bcf7dd3fe9"
+    },
+    {
+      "path": "src/explore/IllustratedScenery.gd",
+      "baseline_sha256": "5a77fe61780e727e6271ecc9d6ae905974f67d9fde21fe2c569ce74e14d1ce77",
+      "current_sha256": "176332f34d48bd5d606e3bdeae883f91ad30ccfc569c981f729cc56e80b4dbdd"
+    },
+    {
+      "path": "src/explore/FlatMapGround.gd",
+      "baseline_sha256": "4954740c8e7983e2f64b369948fd48c42efda47c2b1f2f70bb86cae7c21a3e5f",
+      "current_sha256": "105f3b0812a137d729abfd5a07f5d20b5fcc88c66093329e93b4cad51dfd495e"
+    },
+    {
+      "path": "src/explore/FlatGroundMaterial.gdshader",
+      "baseline_sha256": "07791dcbdc2b55ba799e8fc173101c8a90e9a2d5ec4499b844d42f3bc1fe1bc8",
+      "current_sha256": "c637a449537d66da7c45e458b7ff0465f59a271e4b6dc67006ac514b458c8319"
+    },
+    {
+      "path": "src/explore/MineRoomGround.gd",
+      "baseline_sha256": "d4d2b2f77152d0a34e4cd802e2ad0fc124d265c0a71bfe92960febaf2b66b7b0",
+      "current_sha256": "61f592925bc651f6ad748268a3f6540af92d3d1091f91b5f7ba62b4d0bf3fda5"
+    },
+    {
+      "path": "src/explore/SteleRoomGround.gd",
+      "baseline_sha256": "1246ae8101252d922ec5ac9c8577ccd000b6b680d547e78dbe5aab93b0f423cb",
+      "current_sha256": "14fc4830334e81a4d28be62734fcbcdcdbc15fa24a1ac6e0db2bf369ad2849a2"
+    },
+    {
+      "path": "data/exchange.json",
+      "baseline_sha256": "67aa6f4f0a2d885782457a5fea488954deeb00d9057036d02ce7877edc8c83c4",
+      "current_sha256": "ed99803e95f61e54f4f4f04a19732e141bbf3f7c48c56b3b3fa2f2835bac64c3"
+    },
+    {
+      "path": "data/activities.json",
+      "baseline_sha256": "bc0faedd529cde1d3670dc8b1a1362ac03975eacf7f33acde8e5bf4932ad7e92",
+      "current_sha256": "cd4fb108882ab8f30d1b23716bcfed2476c8e54f16bb801aedbb67587ff29fc4"
+    },
+    {
+      "path": "data/main_world_maps.json",
+      "baseline_sha256": "e3f70b9c5f0acc2b520638fd2ea74ce1abe95246ef986e83952fa7775df891e0",
+      "current_sha256": "1563a4aef9a09131e47523833920ec2361f2ab18609cd79fc0285b48724cd1e3"
+    },
+    {
+      "path": "data/monster_art.json",
+      "baseline_sha256": "f57462990eaec300c6a40c56fdddbe57d0c68e5b07171fa9e7dc7b3b35dd1237",
+      "current_sha256": "e981d2f52bb4f5ce011e403f3e00cf554bc908e5890ad4d1a1c80081e84db15b"
+    },
+    {
+      "path": "assets/ui/experience_20261026/fishing_scene.png",
+      "baseline_sha256": null,
+      "current_sha256": "f279d8ad6045db22a742fd5aaa80e06b6c19753be1a52f9a747274ba1f3ac393"
+    },
+    {
+      "path": "assets/ui/experience_20261026/market_banner.png",
+      "baseline_sha256": null,
+      "current_sha256": "aca1f09b8f11f10bc2fe4875d09ba66839bb29d6988c3673786ec48a2e83cef9"
+    }
+  ]
+}

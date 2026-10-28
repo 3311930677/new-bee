@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+ERROR: EXPERIENCE_WORLD_FAIL narrow frame 2
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyExperienceWorld.gd:11)
+       [1] narrow_layouts (res://tools/VerifyExperienceWorld.gd:141)
+       [2] frames (res://tools/VerifyExperienceWorld.gd:14)
+ERROR: EXPERIENCE_WORLD_FAIL narrow frame 3
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tools/VerifyExperienceWorld.gd:11)
+       [1] narrow_layouts (res://tools/VerifyExperienceWorld.gd:141)
+       [2] frames (res://tools/VerifyExperienceWorld.gd:14)
+EXPERIENCE_WORLD maps=18 checks=121 failures=2

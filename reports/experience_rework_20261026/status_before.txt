@@ -1,0 +1,67 @@
+﻿ M reports/mobile_issue_plan_20261024/远征移动端问题梳理与修改方案_20261024.docx
+ M reports/mobile_issue_plan_20261024/远征移动端问题梳理与修改方案_20261024.md
+ M 远征/data/equip.json
+ M 远征/data/resource_manifest.json
+ M 远征/src/autoload/Audio.gd
+ M 远征/src/autoload/G.gd
+ M 远征/src/battle/BattleScene.gd
+ M 远征/src/explore/FourthActGround.gd
+ M 远征/src/explore/MapScene.gd
+ M 远征/src/explore/MineRoomGround.gd
+ M 远征/src/explore/PortGround.gd
+ M 远征/src/explore/SteleRoomGround.gd
+ M 远征/src/explore/TidalGateGround.gd
+ M 远征/src/qa/AndroidDeepAudit.gd
+ M 远征/src/ui/ArenaPanel.gd
+ M 远征/src/ui/CollectionChestView.gd
+ M 远征/src/ui/CurrencyPanel.gd
+ M 远征/src/ui/ExchangePanel.gd
+ M 远征/src/ui/LoginChestView.gd
+ M 远征/src/ui/ReviewFixUI.gd
+ M 远征/src/ui/UIIcons.gd
+ M 远征/src/ui/home/TownHome.gd
+ M 远征/src/world/ExplorationLinks.gd
+ M 远征/src/world/MountVisual.gd
+ M 远征/tools/CaptureMountSequences.gd
+ M 远征/tools/VerifyAudio.gd
+ M 远征/tools/VerifyMainWorld.gd
+ M 远征/tools/VerifyMobileFixes.gd
+ M 远征/tools/VerifyMobileRework.gd
+ M 远征/tools/verify_mount_motion.py
+?? reports/asset_completion_20261024/
+?? reports/experience_issue_plan_20261026/
+?? reports/experience_rework_20261026/
+?? reports/full_issue_fix_20261024/
+?? reports/full_play_review_20261026/
+?? 远征/assets/completion_20261024/
+?? 远征/assets/full_issue_fix_20261024/
+?? 远征/data/asset_completion_20261024.json
+?? 远征/data/mount_animation_20261024.json
+?? 远征/data/pet_showcase_anchors.json
+?? 远征/shots/asset_completion_20261024/
+?? 远征/shots/full_issue_fix_20261024/
+?? 远征/shots/full_play_20261026/
+?? 远征/shots/full_play_audit_run.log
+?? 远征/src/ui/CurioLorePanel.gd
+?? 远征/src/ui/CurioLorePanel.gd.uid
+?? 远征/src/ui/HonorMarketPanel.gd
+?? 远征/src/ui/HonorMarketPanel.gd.uid
+?? 远征/src/world/AssetCompletion.gd
+?? 远征/src/world/AssetCompletion.gd.uid
+?? 远征/tools/FullPlayAudit.gd
+?? 远征/tools/FullPlayAudit.tscn
+?? 远征/tools/VerifyAssetCompletion.gd
+?? 远征/tools/VerifyAssetCompletion.gd.uid
+?? 远征/tools/VerifyAssetCompletion.tscn
+?? 远征/tools/VerifyFullIssueFix.gd
+?? 远征/tools/VerifyFullIssueFix.gd.uid
+?? 远征/tools/VerifyFullIssueFix.tscn
+?? 远征/tools/VerifyIntegratedMount.gd
+?? 远征/tools/VerifyIntegratedMount.gd.uid
+?? 远征/tools/VerifyIntegratedMount.tscn
+?? 远征/tools/VerifyMapPropStates.gd
+?? 远征/tools/VerifyMapPropStates.tscn
+?? 远征/tools/VerifyMountTerrain.gd
+?? 远征/tools/VerifyMountTerrain.tscn
+?? 远征/tools/prepare_completion_assets.py
+?? 远征/tools/prepare_mount_animation.py
