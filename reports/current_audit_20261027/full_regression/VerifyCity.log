@@ -1,0 +1,11 @@
+﻿Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+CITY_OK all tests passed
+WARNING: Missing visual resource: id=npc_warden_portrait resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6245)
+       [1] _npc_portrait_tex (res://src/city/CityScene.gd:1163)
+       [2] _open_dialog (res://src/city/CityScene.gd:1266)
+       [3] _run (res://tools/VerifyCity.gd:52)
+
