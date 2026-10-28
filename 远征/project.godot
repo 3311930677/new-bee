@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="远征"
-config/version="0.2.1-mobile2"
+config/version="0.2.3-optimization"
 run/main_scene="res://src/main/Main.tscn"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.png"
