@@ -1,0 +1,106 @@
+[
+  {
+    "mount": "horse",
+    "role": "ck",
+    "direction": "down",
+    "count": 4,
+    "base_count": 20,
+    "source": "exec-663ccd30-4e09-4fb0-a0cd-70fee8668da7.png",
+    "indices": [
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "mount": "horse",
+    "role": "fs",
+    "direction": "down",
+    "count": 4,
+    "base_count": 20,
+    "source": "exec-e6c6d1b2-fdaf-4f62-b56f-51f66bf4fea8.png",
+    "indices": [
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "mount": "horse",
+    "role": "fz",
+    "direction": "down",
+    "count": 4,
+    "base_count": 20,
+    "source": "exec-67c7f91d-ec1b-4f96-a3da-b2e4334b7ba8.png",
+    "indices": [
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "mount": "bear",
+    "role": "ck",
+    "direction": "down",
+    "count": 4,
+    "base_count": 20,
+    "source": "exec-10857802-b4b9-4a38-9236-e42e3bfb2fd2.png",
+    "indices": [
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  {
+    "mount": "horse",
+    "role": "ck",
+    "direction": "left",
+    "count": 1,
+    "base_count": 24,
+    "source": "exec-ca1dbf92-900b-4291-a597-da135e0ebbd7.png",
+    "indices": [
+      19
+    ],
+    "pose": "gallop recovery with legs folded underneath, rider leaning forward and cape trailing right, full tail"
+  },
+  {
+    "mount": "horse",
+    "role": "fs",
+    "direction": "right",
+    "count": 1,
+    "base_count": 24,
+    "source": "exec-d5232c3e-6610-4318-b041-6cb42934a20b.png",
+    "indices": [
+      11
+    ],
+    "pose": "walking terminal phase with one front hoof lifted and opposite fore hoof supporting"
+  },
+  {
+    "mount": "horse",
+    "role": "fs",
+    "direction": "right",
+    "count": 1,
+    "base_count": 24,
+    "source": "exec-d5232c3e-6610-4318-b041-6cb42934a20b.png",
+    "indices": [
+      15
+    ],
+    "pose": "gallop compression with forelegs folded and hindlegs pushing off"
+  },
+  {
+    "mount": "horse",
+    "role": "fs",
+    "direction": "right",
+    "count": 1,
+    "base_count": 24,
+    "source": "exec-d5232c3e-6610-4318-b041-6cb42934a20b.png",
+    "indices": [
+      19
+    ],
+    "pose": "gallop full suspension stretched forelegs forward hindlegs back"
+  }
+]

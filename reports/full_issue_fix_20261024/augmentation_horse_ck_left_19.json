@@ -1,0 +1,14 @@
+{
+  "mount": "horse",
+  "role": "ck",
+  "direction": "left",
+  "count": 1,
+  "base_count": 24,
+  "source": "exec-ca1dbf92-900b-4291-a597-da135e0ebbd7.png",
+  "indices": [
+    19
+  ],
+  "pose": "gallop recovery with legs folded underneath, rider leaning forward and cape trailing right, full tail",
+  "prompt": "Use case: stylized-concept. Additional production animation cel matching this exact mounted RPG character reference, preserving rider identity, outfit, brown horse, tack, camera and pixel art style. Output ONE SINGLE complete full-body sprite, facing LEFT. Pose: gallop recovery with legs folded underneath, rider leaning forward and cape trailing right, full tail. All limbs, tail and staff tips complete with at least15% empty transparent outer margin; no sheet-edge clipping. Rider pelvis seated on saddle, hands on reins, boots in stirrups/straps; rider and mount one coherent sprite. Keep proportions identical to reference, crisp pixel art, no ground/shadows, text, grid, blur or extra limbs. Transparent RGBA background. Do not reproduce the reference's full sheet.",
+  "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-9a223f7b-5b75-44f5-84c3-f81b50c5202a.png"
+}
