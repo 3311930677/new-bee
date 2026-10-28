@@ -1,0 +1,27 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+ERROR: 主题怪物池为空：__empty_pool__
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _build_enemies (res://src/combat/BattleSim.gd:295)
+       [1] setup (res://src/combat/BattleSim.gd:108)
+       [2] run_checks (res://tools/VerifyFullPlayFixes20261026.gd:137)
+       [3] _ready (res://tools/VerifyFullPlayFixes20261026.gd:30)
+WARNING: 存档 JSON 无法解析，已保留原档，请从备份恢复或显式重置
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] _load_save (res://src/autoload/G.gd:495)
+       [1] run_checks (res://tools/VerifyFullPlayFixes20261026.gd:187)
+       [2] _ready (res://tools/VerifyFullPlayFixes20261026.gd:30)
+ERROR: 存档写入失败：user://directory_that_does_not_exist/save.json（临时文件写入失败：user://directory_that_does_not_exist/save.json.tmp）
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:773)
+       [1] saved_mutation (res://src/autoload/G.gd:791)
+       [2] _draw_saved (res://src/ui/GachaPanel.gd:909)
+       [3] _do_ten (res://src/ui/GachaPanel.gd:946)
+       [4] run_checks (res://tools/VerifyFullPlayFixes20261026.gd:201)
+       [5] _ready (res://tools/VerifyFullPlayFixes20261026.gd:30)
+FULL_PLAY_FIXES_OK checks=63 failures=0

@@ -1,0 +1,691 @@
+# VerifyGameHome.gd —— 主城冒烟（场景模式：godot --headless --path . res://tools/VerifyGameHome.tscn）
+# 覆盖：G 存档读写往返（四币）/ 主城顶栏钱包 / 世界图志 + 宠物图鉴浮层 /
+#       出征筹备 DEPLOY（默认预填、未解锁世界与未收集宠物的门禁、解锁后交互、出征配置）
+extends Node
+
+var _fails := 0
+var _got_cfg := {}   # confirmed 信号回填（lambda 不能写回局部变量，用成员）
+
+
+func _ready() -> void:
+	G.SAVE_PATH = "res://tools/_logs/save_verify_home.json"  # 别污染真实存档
+	await _run()
+	get_tree().quit(0 if _fails == 0 else 1)
+
+
+func _check(cond: bool, msg: String) -> void:
+	if not cond:
+		_fails += 1
+		push_error("FAIL: " + msg)
+
+
+func _click() -> InputEventMouseButton:
+	var ev := InputEventMouseButton.new()
+	ev.button_index = MOUSE_BUTTON_LEFT
+	ev.pressed = true
+	return ev
+
+
+func _drop_confirm(dp) -> void:
+	for c in dp.confirmed.get_connections():
+		dp.confirmed.disconnect(c["callable"])
+
+
+func _run() -> void:
+	# 基线：只解锁主世界（forest）、显式放入一只测试伙伴。门禁断言必须建立在确定状态上，
+	# 不能依赖环境里那份存档（跑过出征/路线图用例后它已经推进过了）。
+	G.prog = {"level": 1, "exp": 0, "worlds_unlocked": 1, "world_cleared": {},
+		"pets": ["pet_rockturtle"]}
+	G.wallet = {"gold": 0, "expedition": 0, "soul": 0, "honor": 0}
+	G.save_game()
+
+	# ---- A. G 存档读写往返（四币） ----
+	G.wallet = {"gold": 111, "expedition": 22, "soul": 3, "honor": 7}
+	G.save_game()
+	G.wallet = {"gold": 0, "expedition": 0, "soul": 0, "honor": 0}
+	G._load_save()
+	_check(int(G.wallet.get("gold", 0)) == 111 and int(G.wallet.get("expedition", 0)) == 22
+		and int(G.wallet.get("soul", 0)) == 3 and int(G.wallet.get("honor", 0)) == 7,
+		"读档应恢复钱包四币，实为 %s" % str(G.wallet))
+	G.wallet = {"gold": 0, "expedition": 0, "soul": 0, "honor": 0}
+	G.save_game()
+
+	# ---- B. 主城构建 + 四角色动态展示 + 顶栏钱包 ----
+	G.selected_role = "zs"
+	var packed: PackedScene = load("res://src/ui/GameHome.tscn")
+	var home: Control = packed.instantiate()
+	add_child(home)
+	await get_tree().process_frame
+	_check(home._anim != null and home._anim.is_playing(), "角色待机动画应播放")
+	var seen_textures := {}
+	for rid in ["zs", "ck", "fs", "fz"]:
+		G.selected_role = rid
+		home._refresh_wallet()
+		_check(String(home._anim.get_meta("role_id", "")) == rid, "主页小人应随 G.selected_role 立即切换为 %s" % rid)
+		_check(home._anim.is_playing(), "切换为 %s 后待机动画应继续播放" % rid)
+		var ftex: Texture2D = home._anim.sprite_frames.get_frame_texture(&"idle", 0)
+		var apath := (ftex as AtlasTexture).atlas.resource_path if ftex is AtlasTexture else ""
+		seen_textures[rid] = apath
+	_check(seen_textures.size() == 4 and seen_textures["zs"] != seen_textures["ck"]
+		and seen_textures["ck"] != seen_textures["fs"] and seen_textures["fs"] != seen_textures["fz"],
+		"四名角色主页待机贴图应互不相同：%s" % str(seen_textures))
+	G.selected_role = "invalid_role_id"
+	home._refresh_wallet()
+	_check(String(home._anim.get_meta("role_id", "")) == "zs", "异常角色 ID 应安全回退至 zs")
+	G.selected_role = "zs"
+	home._refresh_wallet()
+	_check(home._deploy == null, "开局不应有 DEPLOY 浮层")
+	var world_entry := home.find_child("ReturnToWorld",true,false) as Control
+	# 主城首页的“出征”徽章即返回主世界入口（118×114），旧营帐为 400×72 横条
+	_check(world_entry != null and world_entry.size.x >= 96.0
+		and world_entry.size.y >= 44.0,
+		"营帐应有明确且可触控的返回主世界入口")
+	var wallet_txt := ""
+	for entry in home._wallet_labels:
+		wallet_txt += String(entry.button.tooltip_text)
+		_check(entry.label.text == str(int(G.wallet.get(entry.key,0))),"每格钱包数字来自对应货币")
+	_check(wallet_txt.contains("金币") and wallet_txt.contains("远征币")
+		and wallet_txt.contains("魂晶") and wallet_txt.contains("荣誉"),
+		"顶栏应显示钱包四币（金币/远征币/魂晶/荣誉），实为「%s」" % wallet_txt)
+
+	# ESC：主界面打开设置，不应直接跳到创角页；设置内再次 ESC 才关闭浮层
+	var esc := InputEventKey.new()
+	esc.keycode = KEY_ESCAPE
+	esc.pressed = true
+	home._unhandled_input(esc)
+	_check(home._settings != null, "主界面 ESC 应打开设置浮层，而不是直接进创角页")
+	if home._settings != null:
+		home._unhandled_input(esc)
+		await get_tree().process_frame
+	_check(home._settings == null, "设置浮层内 ESC 应关闭设置")
+
+	# ---- C. DEPLOY 浮层构建、默认预填与门禁 ----
+	home._on_expedition(_click())
+	_check(home._deploy != null, "点出征入口应打开 DEPLOY 浮层")
+	if home._deploy != null:
+		var dp = home._deploy
+		# 断开 GameHome 的真实出征连接（后面会 emit confirmed，避免真的切场景）
+		_drop_confirm(dp)
+		# 三页签各自一屏一项的轮播：卡片按「步骤:选项id」登记；虚拟化后**卡用到才建**
+		_check(dp._chest._art.texture!=null and dp._deck.page_count==G.world_count(),
+			"秘境轮播只渲染当前插画，全部选项可达")
+		_check(dp._theme == "forest" and dp._role == "zs" and dp._active_pet == "pet_rockturtle",
+			"应预填 forest/zs/岩龟出战，实为 %s/%s/%s" % [dp._theme, dp._role, dp._active_pet])
+
+		# 门禁 A：未解锁世界 / 未收集宠物应压灰（locked 元标记）；翻页把卡建出来再查
+		dp._deck.go(1, true)   # 翻到 snow
+		_check(dp._chest._go.disabled, "未解锁世界卡（snow）应标记 locked")
+		dp._deck.go(0, true)
+		_check(not dp._chest._go.disabled, "主世界卡（forest）不应 locked")
+		dp._goto_step(1)
+		for i in 4:
+			dp._deck.go(i, true)
+		_check(dp._deck.page_count == 4, "人物页保留四个职业，逐个可选")
+		dp._goto_step(2)
+		for i in 8:
+			dp._deck.go(i, true)
+		_check(dp._deck.page_count == TableCache.pets().size(), "宠物轮播保留表内全部伙伴")
+		dp._deck.go(6,true)
+		_check(dp._chest._name.text=="？？？", "未收集伙伴显示剪影与条件")
+		dp._deck.go(2,true)
+		_check(dp._chest._name.text=="岩龟", "已收集伙伴显示真实名字")
+
+		# 门禁 B：点它们应被拒绝并给出解锁提示
+		dp._select_theme("snow")
+		_check(dp._theme == "forest", "点未解锁世界应被拒绝，实为 %s" % dp._theme)
+		_check(dp._hint.text.contains("未解锁"), "拒绝选世界应提示解锁条件，实为「%s」" % dp._hint.text)
+		dp._select_pet("pet_holydeer")
+		_check(dp._active_pet == "pet_rockturtle", "点未收集宠物应被拒绝，实为 %s" % dp._active_pet)
+		_check(dp._hint.text.contains("未收集"), "拒绝选宠物应提示收集途径，实为「%s」" % dp._hint.text)
+
+		# 关掉，用 GM 全解锁后重开——卡片锁态是构建期写死的，必须重建才会刷新
+		home._deploy.canceled.emit()
+		_check(home._deploy == null, "取消后浮层应关闭（GameHome 释放引用）")
+		G.gm_unlock_all_worlds()
+		G.gm_unlock_all_pets()
+		home._on_expedition(_click())
+		dp = home._deploy
+		_check(dp != null, "解锁后应能重开 DEPLOY 浮层")
+		if dp != null:
+			_drop_confirm(dp)
+			dp._deck.go(1, true)   # 翻到 snow（虚拟化：卡用到才建）
+			_check(not dp._chest._go.disabled, "解锁后 snow 卡应解除 locked")
+			dp._goto_step(2)
+			for i in 8:
+				dp._deck.go(i, true)
+			dp._deck.go(0,true)
+			_check(dp._chest._name.text==String(TableCache.get_pet("pet_frostwolf").name), "收集后霜狼显示真实名字")
+
+			# ---- D. 选择交互（解锁后全部可选） ----
+			dp._select_theme("snow")
+			_check(dp._theme == "snow", "解锁后应能选 snow，实为 %s" % dp._theme)
+			dp._select_role("ck")
+			dp._select_pet("pet_frostwolf")  # 有出战 → 进替补
+			_check(dp._bench_pet == "pet_frostwolf", "第二只宠物应进替补位")
+			dp._select_pet("pet_foxfire")    # 已有替补 → 替换替补
+			_check(dp._bench_pet == "pet_foxfire", "第三只应替换替补位")
+			dp._select_pet("pet_rockturtle")  # 点出战 → 替补转正
+			_check(dp._active_pet == "pet_foxfire" and dp._bench_pet == "",
+				"取消出战应由替补转正，实为 %s/%s" % [dp._active_pet, dp._bench_pet])
+			dp._select_pet("pet_foxfire")     # 唯一出战再点 → 清空
+			_check(dp._active_pet == "", "再点唯一出战应清空出战位")
+			_check(not dp._hint.text.contains("未解锁") and not dp._hint.text.contains("未收集"), "正常选择后解除错误提示，保留补给结算说明")
+
+			# ---- E. 出征校验与配置 ----
+			_got_cfg = {}
+			dp.confirmed.connect(func(cfg: Dictionary): _got_cfg = cfg)
+			dp._on_confirm()
+			_check(_got_cfg.is_empty(), "无出战宠物时出征应被拦截")
+			dp._select_pet("pet_holydeer")
+			dp._on_confirm()
+			_check(not _got_cfg.is_empty(), "补齐出战后出征应通过")
+			if not _got_cfg.is_empty():
+				_check(String(_got_cfg.get("theme", "")) == "snow" and String(_got_cfg.get("role_id", "")) == "ck"
+					and String(_got_cfg.get("active_pet", "")) == "pet_holydeer",
+					"出征配置应带所选秘境/人物/宠物，实为 %s" % str(_got_cfg))
+				_check(int(_got_cfg.get("level", 0)) == int(G.prog.get("level", 1)),
+					"出征配置的等级应取存档等级，实为 %s" % str(_got_cfg.get("level")))
+
+	# ---- F. 取消关闭 ----
+	if home._deploy != null:
+		home._deploy.canceled.emit()
+		_check(home._deploy == null, "取消后浮层应关闭（GameHome 释放引用）")
+
+	# ---- G. 世界图志 / 宠物图鉴浮层 ----
+	home._open_worlds(_click())
+	_check(home._worlds != null, "点「世界」入口应打开世界图志浮层")
+	if home._worlds != null:
+		_check(home._worlds._shell.back.size.y>=44, "地区图有可触控的返回入口")
+		home._worlds.closed.emit()
+		_check(home._worlds == null, "关闭后应释放世界图志引用")
+		await get_tree().process_frame
+	home._open_codex(_click())
+	_check(home._codex != null, "点「图鉴」入口应打开宠物图鉴浮层")
+	if home._codex != null:
+		_check(home._codex._chest.shell.back.size.y>=44, "宠物图鉴应有横幅/面板/返回等内容")
+		home._codex.closed.emit()
+		_check(home._codex == null, "关闭后应释放宠物图鉴引用")
+		await get_tree().process_frame
+
+	home.queue_free()
+	await get_tree().process_frame
+
+	# ---- H. 养成主线：通关世界 → 解锁下一世界 + 解封对应宠物 ----
+	G.prog = {"level": 1, "exp": 0, "worlds_unlocked": 1, "world_cleared": {}, "pets": [],
+		"story": {"step": "s01", "done": [], "goals": {}}, "flags": {}}
+	G.ensure_starter_pets()
+	_check(not G.owns_pet("pet_rockturtle"), "新档不得跳过第一幕自动赠送岩龟")
+	_check(not bool(G.claim_rockturtle(false).get("ok", false)), "s04 前不得提前领取岩龟")
+	G.prog["story"] = {"step": "s05", "done": ["s01", "s02", "s03", "s04"],
+		"goals": {"s01": "done", "s02": "done", "s03": "done", "s04": "done"}}
+	_check(bool(G.claim_rockturtle(false).get("ok", false)) and G.owns_pet("pet_rockturtle"),
+		"s04 后应在兽栏领取岩龟")
+	_check(G.is_world_unlocked("forest") and not G.is_world_unlocked("snow"), "初始只应解锁主世界 forest")
+	_check(not G.owns_pet("pet_thunderhawk") and not G.owns_pet("pet_frostwolf"),
+		"初始不应拥有通关奖励宠物")
+	var opened := G.on_world_cleared("forest")
+	_check(opened != "", "通关 forest 应解锁下一世界并返回新世界名，实为「%s」" % opened)
+	_check(G.is_world_cleared("forest"), "通关后应标记 world_cleared")
+	_check(G.is_world_unlocked("snow"), "通关 forest 后 snow 应解锁")
+	_check(G.owns_pet("pet_thunderhawk"), "通关 forest 应解封该世界的对应宠物 thunderhawk")
+	_check(not G.owns_pet("pet_frostwolf"), "未通关 snow 不应提前解封 frostwolf")
+	_check(not G.is_world_unlocked("volcano"), "一次只应推进一界，volcano 仍应锁定")
+
+	# 经验与升级（逐级结算）
+	G.prog["level"] = 1
+	G.prog["exp"] = 0
+	var need := G.exp_to_next(1)
+	_check(need > 0, "1 级应有升级所需经验")
+	_check(G.gain_exp(need) == 1 and int(G.prog["level"]) == 2, "加满需求经验应升 1 级，实为 %s" % str(G.prog["level"]))
+	_check(G.gain_exp(need * 3) >= 1, "溢出经验应继续升级")
+	_check(G.exp_to_next(G.level_cap()) == 0, "满级不应再有升级需求")
+
+	# ---- I. GM 口令与一键满配 ----
+	G.gm_unlocked = false
+	_check(not G.gm_check_password("@tsz20060707"), "错口令不应解锁")
+	_check(not G.gm_unlocked, "错口令不应置位 gm_unlocked")
+	_check(G.gm_check_password("@tsz20060706"), "对口令 @tsz20060706 应解锁")
+	_check(G.gm_unlocked, "对口令应置位 gm_unlocked")
+
+	G.gm_grant_all()
+	_check(int(G.prog.get("level", 0)) == G.level_cap(),
+		"一键满配应满级 %d，实为 %s" % [G.level_cap(), str(G.prog.get("level"))])
+	_check(int(G.prog.get("worlds_unlocked", 0)) == G.world_count(),
+		"一键满配应解锁全部 %d 个世界" % G.world_count())
+	# 「解锁」和「已通关」是两种状态：一键满配只管解锁，不伪造通关记录
+	_check(G.is_world_unlocked("castle"), "一键满配后最后一界 castle 应可出征")
+	_check(not G.is_world_cleared("castle"), "一键满配不该把没打过的 castle 记成已通关（解锁≠通关）")
+	_check(G.cleared_world_count() == 1,
+		"此时通关数应仍是 1（前面只打掉 forest），实为 %d" % G.cleared_world_count())
+	G.gm_clear_all_worlds()
+	_check(G.cleared_world_count() == G.world_count(),
+		"「全部标记已通关」应把 %d 个世界都记上，实为 %d" % [G.world_count(), G.cleared_world_count()])
+	_check(G.is_world_cleared("castle") and G.is_world_cleared("forest"),
+		"标记通关后 castle 与 forest 都应算已通关")
+	_check(G.is_world_unlocked("forest"), "标记通关不该把世界反过来锁掉")
+	var all_owned := true
+	for p in TableCache.pets():
+		if not G.owns_pet(String((p as Dictionary).get("id", ""))):
+			all_owned = false
+	_check(all_owned, "一键满配应收集全部宠物")
+	_check(int(G.wallet.get("gold", 0)) >= 99999 and int(G.wallet.get("honor", 0)) >= 99999,
+		"一键满配应把四币管够，实为 %s" % str(G.wallet))
+
+	# 单步工具 + 复位
+	G.gm_reset_save()
+	_check(int(G.prog.get("level", 0)) == 1 and int(G.prog.get("worlds_unlocked", 0)) == 1, "复位应回到 1 级、仅解锁主世界")
+	_check(not G.owns_pet("pet_rockturtle") and not G.owns_pet("pet_frostwolf"), "复位后应回到尚未结缘的全新档")
+	_check(int(G.wallet.get("gold", 0)) == 0, "复位应清空钱包")
+	G.gm_add_currency(50)
+	_check(int(G.wallet.get("gold", 0)) == 50 and int(G.wallet.get("honor", 0)) == 50, "加币应对四币同时生效")
+	G.gm_max_level()
+	_check(int(G.prog.get("level", 0)) == G.level_cap(), "单独满级指令应生效")
+
+	# 解锁文案
+	_check(G.pet_unlock_text("pet_rockturtle") == "第一幕兽栏结缘", "岩龟解锁文案应指向第一幕兽栏")
+	_check(G.pet_unlock_text("pet_frostwolf").begins_with("通关"),
+		"世界解锁宠物的文案应说明通关条件，实为「%s」" % G.pet_unlock_text("pet_frostwolf"))
+
+	# ---- J. 图鉴收集里程（轮次 20） ----
+	# 收集本身此前没有任何回报；里程把"收了几只"换成可领取奖励。
+	# 这里守三件事：未达标不给领、达标只能领一次、领完要落盘。
+	G.prog["pets"] = ["pet_rockturtle"]
+	G.prog["codex_claimed"] = []
+	G.wallet = {"gold": 0, "expedition": 0, "soul": 0, "honor": 0}
+	G.items = {}
+	G.save_game()
+	var ms := G.codex_milestones()
+	_check(ms.size() >= 3, "codex.json 应有至少 3 档收集里程，实为 %d" % ms.size())
+	var max_need := 0
+	var monotonic := true
+	var prev_need := 0
+	for m in ms:
+		var need_m := int((m as Dictionary).get("need", 0))
+		if need_m <= prev_need:
+			monotonic = false
+		prev_need = need_m
+		max_need = maxi(max_need, need_m)
+	_check(monotonic, "里程档位应严格递增（按 need 升序）")
+	_check(max_need <= TableCache.pets().size(),
+		"最高里程 need=%d 不应超过宠物总数 %d（否则永远领不到）" % [max_need, TableCache.pets().size()])
+	_check(G.codex_next_ready().is_empty(), "只集 1 只时不应有可领取里程")
+	var first_need := int((ms[0] as Dictionary).get("need", 0))
+	var deny := G.codex_claim(String((ms[0] as Dictionary).get("id", "")))
+	_check(not bool(deny["ok"]), "数量不足时不应允许领取")
+	_check(int(G.wallet.get("soul", 0)) == 0 and int(G.wallet.get("honor", 0)) == 0,
+		"被拒的领取不能有任何部分发放")
+
+	# 凑到达标数量 → 可领取
+	var all_ids: Array = []
+	for p in TableCache.pets():
+		all_ids.append(String((p as Dictionary).get("id", "")))
+	G.prog["pets"] = all_ids.slice(0, first_need)
+	var ready := G.codex_next_ready()
+	_check(not ready.is_empty(), "达标后应出现可领取里程")
+	var soul_before := int(G.wallet.get("soul", 0))
+	var claim := G.codex_claim(String(ready.get("id", "")))
+	_check(bool(claim["ok"]), "达标后应能领取（err=%s）" % String(claim.get("err", "")))
+	_check(int(G.wallet.get("soul", 0)) > soul_before, "领取后魂晶应入账")
+	_check((claim.get("lines", []) as Array).size() > 0, "领取应返回奖励明细文案")
+	var again := G.codex_claim(String(ready.get("id", "")))
+	_check(not bool(again["ok"]), "同一档里程不应能重复领取")
+	_check(G.codex_claimed().has(String(ready.get("id", ""))), "已领记录应写进 prog.codex_claimed")
+
+	# 领完所有档：逐档领取，且最后一档的奖励真的到账
+	G.prog["pets"] = all_ids
+	var guard := 0
+	while not G.codex_next_ready().is_empty() and guard < 20:
+		var r2 := G.codex_next_ready()
+		var c2 := G.codex_claim(String(r2.get("id", "")))
+		_check(bool(c2["ok"]), "逐档领取应成功（%s）" % String(r2.get("id", "")))
+		guard += 1
+	_check(G.codex_next_ready().is_empty(), "全部领取后不应再有可领里程")
+	_check(G.codex_claimed().size() == ms.size(),
+		"已领记录应覆盖全部 %d 档，实为 %d" % [ms.size(), G.codex_claimed().size()])
+	_check(int(G.wallet.get("honor", 0)) > 0, "里程奖励里的荣誉应入账")
+
+	# 落盘往返：已领记录必须跟着存档走，否则重进游戏能再领一次
+	G.save_game()
+	G.prog["codex_claimed"] = []
+	G._load_save()
+	_check(G.codex_claimed().size() == ms.size(), "读档后已领记录应保留，实为 %d" % G.codex_claimed().size())
+	_check(G.codex_next_ready().is_empty(), "读档后不应又冒出可领取里程（防重复领奖）")
+
+	# 面板层：进度行文案与领取按钮可用态
+	G.prog["pets"] = ["pet_rockturtle"]
+	G.prog["codex_claimed"] = []
+	var codex: Control = (load("res://src/ui/CodexPanel.gd") as GDScript).new()
+	add_child(codex)
+	await get_tree().process_frame
+	var ms_label := codex.get("_ms_l") as Label
+	var ms_text := ms_label.text if ms_label != null else ""
+	_check(ms_label != null and ms_text.begins_with("收集里程"),
+		"图鉴应显示收集里程行，实为「%s」" % ms_text)
+	_check((codex.get("_claim_btn") as Control).mouse_filter == Control.MOUSE_FILTER_IGNORE,
+		"没有可领奖励时领取按钮不应可点")
+	G.prog["pets"] = all_ids.slice(0, first_need)
+	codex._refresh_milestone()
+	_check((codex.get("_claim_btn") as Control).mouse_filter == Control.MOUSE_FILTER_STOP,
+		"有可领奖励时领取按钮应可点")
+	codex._on_claim()
+	_check(G.codex_claimed().size() == 1, "从面板点领取应真的领到一档")
+	codex.queue_free()
+	await get_tree().process_frame
+
+	# ---- K. 出征补给（轮次 21） ----
+	# 药剂本来固定 2 瓶，玩家没有"为这趟远征投资"的取舍；加带补给把金币变成战前选择。
+	# 守两条：金币在出征时才结算（加带/返回不扣钱），超上限与余额不足整单拒绝。
+	G.prog["pets"] = ["pet_rockturtle"]
+	G.prog["worlds_unlocked"] = 1
+	G.selected_role = "zs"
+	var base_p := G.run_potions_base()
+	var max_p := G.run_potions_max()
+	_check(base_p >= 1 and max_p > base_p, "补给口径应 base≥1 且 max>base（base=%d max=%d）" % [base_p, max_p])
+	var p0 := G.run_supply_price(0)
+	var p1 := G.run_supply_price(1)
+	_check(p0 > 0 and p1 > p0, "加带单价应随数量递增（%d → %d）" % [p0, p1])
+	G.wallet["gold"] = 0
+	var deny_pay := G.buy_run_supply_pack(1)
+	_check(not bool(deny_pay["ok"]), "金币不足时不应结算成功")
+	_check(int(G.wallet["gold"]) == 0, "被拒的补给不能扣钱")
+	var over := G.buy_run_supply_pack(max_p - base_p + 1)
+	_check(not bool(over["ok"]), "超过上限的加带应被拒绝")
+	G.wallet["gold"] = 99999
+	var total_want := 0
+	for i in (max_p - base_p):
+		total_want += G.run_supply_price(i)
+	var okk := G.buy_run_supply_pack(max_p - base_p)
+	_check(bool(okk["ok"]) and int(okk["total"]) == total_want,
+		"加带到上限应按递增单价求和（实为 %d，应为 %d）" % [int(okk["total"]), total_want])
+	_check(int(G.wallet["gold"]) == 99999 - total_want, "应恰好扣一次总价")
+
+	# 面板：加带只计数不扣钱；点「出征」才一次结算；取消返回更不该扣
+	G.wallet["gold"] = 99999
+	var dp: Control = (load("res://src/ui/DeployPanel.gd") as GDScript).new()
+	add_child(dp)
+	await get_tree().process_frame
+	_drop_confirm(dp)
+	var gold_before := int(G.wallet["gold"])
+	dp._add_supply()
+	dp._add_supply()
+	_check(int(dp.get("_extra_potions")) == 2, "点两次补给应记 2 瓶，实为 %d" % int(dp.get("_extra_potions")))
+	_check(int(G.wallet["gold"]) == gold_before, "加带阶段不应扣钱（金币在出征时才结算）")
+	_got_cfg = {}
+	dp.confirmed.connect(func(cfg): _got_cfg = cfg)
+	dp._on_confirm()
+	_check(not _got_cfg.is_empty(), "确认后应发出出征配置")
+	_check(int(_got_cfg.get("potions", -1)) == base_p + 2,
+		"出征配置里的药剂应为 base+2=%d，实为 %d" % [base_p + 2, int(_got_cfg.get("potions", -1))])
+	_check(int(G.wallet["gold"]) == gold_before - (p0 + p1),
+		"出征时应一次结算两瓶的递增总价（%d）" % (p0 + p1))
+	dp.queue_free()
+	await get_tree().process_frame
+	var dp2: Control = (load("res://src/ui/DeployPanel.gd") as GDScript).new()
+	add_child(dp2)
+	await get_tree().process_frame
+	var gold2 := int(G.wallet["gold"])
+	dp2._add_supply()
+	dp2.canceled.emit()
+	_check(int(G.wallet["gold"]) == gold2, "取消返回不应扣补给钱")
+	dp2.queue_free()
+	await get_tree().process_frame
+
+	# ---- L. 苦行（轮次 22） ----
+	# 出征前可选的难度/收益开关：敌人更强、本局收益同倍放大。守三件事：
+	# 面板能把开关带进出口配置、RunState 的收益倍率作用在唯一入口 add_reward 上、
+	# 战斗内核只吃"倍率数字"而不会自己去读表。
+	var ac := G.ascetic_cfg()
+	_check(not ac.is_empty(), "nodes.json 应声明 ascetic 段")
+	var em := float(ac.get("enemy_mult", 0.0))
+	var rm := float(ac.get("reward_mult", 0.0))
+	_check(em > 1.0, "苦行的敌人倍率应 >1（实为 %.2f）" % em)
+	_check(rm > 1.0, "苦行的收益倍率应 >1（实为 %.2f）" % rm)
+	# RunState：默认局收益 = 表值；苦行局按倍率放大，且五币同时生效
+	var st_n := RunState.new()
+	st_n.setup({"theme": "forest", "role_id": "zs", "level": 1, "seed": 20260920})
+	var row: Dictionary = TableCache.nodes_config().get("rewards", {}).get("normal", {})
+	st_n.add_reward("normal")
+	_check(st_n.gold == int(row.get("gold", 0)),
+		"普通局收益应等于表值（实为 %d）" % st_n.gold)
+	var st_a := RunState.new()
+	st_a.setup({"theme": "forest", "role_id": "zs", "level": 1, "seed": 20260920, "ascetic": true})
+	_check(st_a.ascetic, "配置里 ascetic=true 应被 RunState 接住")
+	st_a.add_reward("normal")
+	_check(st_a.gold == roundi(float(row.get("gold", 0)) * rm),
+		"苦行局金币应 ×%.2f（期望 %d，实为 %d）"
+		% [rm, roundi(float(row.get("gold", 0)) * rm), st_a.gold])
+	_check(st_a.expedition == roundi(float(row.get("expedition", 0)) * rm)
+		and st_a.honor == roundi(float(row.get("honor", 0)) * rm),
+		"远征币与荣誉也应同倍放大")
+	_check(is_equal_approx(st_n.enemy_mult(), 1.0), "普通局敌人倍率应为 1.0")
+	_check(absf(st_a.enemy_mult() - em) < 0.0001, "苦行局敌人倍率应等于表值 %.2f" % em)
+	# BattleSim：只有传进来的 enemy_mult 起作用（内核不读表）
+	var base_sim := BattleSim.new()
+	base_sim.setup(1, {"role_id": "zs", "level": 3, "traits": [], "active_pet": ""},
+		{"theme": "forest", "node_type": "normal", "layer": 1})
+	var asc_sim := BattleSim.new()
+	asc_sim.setup(1, {"role_id": "zs", "level": 3, "traits": [], "active_pet": ""},
+		{"theme": "forest", "node_type": "normal", "layer": 1, "enemy_mult": em})
+	_check(absf(asc_sim.enemy_scale - base_sim.enemy_scale * em) < 0.0001,
+		"战斗内核应按传入倍率缩放敌人（%.3f vs %.3f）" % [asc_sim.enemy_scale, base_sim.enemy_scale * em])
+	# 面板：开关能把 ascetic 带进出口配置
+	G.wallet["gold"] = 5000
+	var dp3: Control = (load("res://src/ui/DeployPanel.gd") as GDScript).new()
+	add_child(dp3)
+	await get_tree().process_frame
+	_drop_confirm(dp3)
+	_check(not bool(dp3.get("_ascetic")), "苦行默认应为关")
+	dp3._toggle_ascetic()
+	_check(bool(dp3.get("_ascetic")), "点一下应开启苦行")
+	_got_cfg = {}
+	dp3.confirmed.connect(func(cfg): _got_cfg = cfg)
+	dp3._on_confirm()
+	_check(bool(_got_cfg.get("ascetic", false)), "出征配置应带上 ascetic=true")
+	var st_cfg := RunState.new()
+	st_cfg.setup(_got_cfg)
+	_check(st_cfg.ascetic and absf(st_cfg.enemy_mult() - em) < 0.0001,
+		"面板配置直接喂给 RunState 也应生效")
+	dp3._toggle_ascetic()
+	_check(not bool(dp3.get("_ascetic")), "再点一下应关闭苦行")
+	dp3.queue_free()
+	await get_tree().process_frame
+
+	# ---- M. 11步新手指引（Task E） ----
+	var Tut := preload("res://src/world/TutorialService.gd")
+	_check(Tut.total_steps() == 11, "新手教程应包含 11 个完整步骤，实为 %d" % Tut.total_steps())
+	G.prog.erase("tutorial")
+	G.prog["level"] = 1
+	G.prog["story"] = {"step": "s01", "done": [], "goals": {}}
+	var tut_st := Tut.ensure_state(G)
+	_check(not bool(tut_st.get("completed", true)) and int(tut_st.get("step_idx", -1)) == 0,
+		"新玩家首次进入应自动初始化为第 1 步且未完成")
+	_check(Tut.should_show(G), "新玩家首次进入应触发新手引导")
+	var home_tut: Control = load("res://src/ui/GameHome.tscn").instantiate()
+	add_child(home_tut)
+	await get_tree().process_frame
+	_check(home_tut.get("_tutorial") != null and (home_tut.get("_tutorial") as Control).visible,
+		"GameHome 首次进入应自动展示 TutorialOverlay")
+	# 验证事件推进与手动步进
+	var moved_ok := Tut.notify_event(G, "role_inspected")
+	_check(moved_ok and int(Tut.ensure_state(G).get("step_idx", 0)) == 1,
+		"触发 role_inspected 事件应推进到第 2 步")
+	Tut.skip(G, false)
+	_check(not Tut.should_show(G), "跳过后不应再自动弹出教程")
+	Tut.restart(G, false)
+	_check(Tut.should_show(G) and int(Tut.ensure_state(G).get("step_idx", -1)) == 0,
+		"在设置中重温新手指引应恢复到第 1 步")
+	var tut_gold_before := int(G.wallet.get("gold", 0))
+	var tut_exp_before := int(G.wallet.get("expedition", 0))
+	var tut_stone_before := G.item_count("enhance_stone")
+	Tut.advance(G, false)
+	_check(not bool(Tut.advance(G, false).get("ok", true)),
+		"没有在主世界移动时不能跳过移动教学")
+	Tut.notify_event(G, "player_moved")
+	for step_i in 8:
+		Tut.advance(G, false)
+	_check(not bool(Tut.complete(G, false).get("ok", true))
+		and not bool(Tut.ensure_state(G).get("completed", false)),
+		"只看完教程而未赢得野外战斗时不得领贺礼")
+	Tut.notify_event(G, "battle_won")
+	Tut.advance(G, false)
+	_check(bool(Tut.ensure_state(G).get("completed", false)), "走完 11 步后应标记 completed=true")
+	_check(int(G.wallet.get("gold", 0)) == tut_gold_before + 300
+		and int(G.wallet.get("expedition", 0)) == tut_exp_before + 30
+		and G.item_count("enhance_stone") == tut_stone_before + 3,
+		"首次完成新手引导应发放启程贺礼（金币+300、远征币+30、强化石+3）")
+	# 再次重温并完成不重复发奖（防刷奖）
+	Tut.restart(G, false)
+	var done_again := Tut.complete(G, false)
+	_check(not bool(done_again.get("reward_granted", true))
+		and int(G.wallet.get("gold", 0)) == tut_gold_before + 300,
+		"重温教程再次完成不应重复发放启程奖励")
+	home_tut._open_activities()
+	await get_tree().process_frame
+	_check(home_tut._activities != null and home_tut._activities._events.size() >= 2,
+		"活动页应提供可进入的演武与行路挑战")
+	if home_tut._activities != null:
+		home_tut._activities.show_event("arena_practice")
+		home_tut._activities.action_requested.emit("arena")
+		await get_tree().process_frame
+		_check(home_tut._activities == null and home_tut._arena != null,
+			"活动挑战按钮应实际进入演武场")
+	home_tut.queue_free()
+	await get_tree().process_frame
+
+	# ---- N. 五轮内容扩充综合回归（Rounds 1–5） ----
+	# Round 1: 校场射艺小游戏（ArcheryPanel）
+	var arch: Control = (load("res://src/ui/ArcheryPanel.gd") as GDScript).new()
+	add_child(arch)
+	await get_tree().process_frame
+	_check(arch._modes.size() >= 3, "校场射艺应配置至少 3 档难度")
+	arch._select_mode(0)
+	var gold_a0 := int(G.wallet.get("gold", 0))
+	for shot_i in 5:
+		arch._wind = 0.0
+		var sres: Dictionary = arch.shoot_with_params(arch._target_pos, 0.80)
+		_check(int(sres.get("rings", 0)) == 10, "无风且正中靶心+0.80甜区蓄力应得 10 环")
+	_check(arch._round_finished and arch._score == 50, "5 箭 10 环应得满分 50 环并结算")
+	_check(int(G.wallet.get("gold", 0)) > gold_a0, "射艺达标结算应发放金币与荣誉奖励")
+	_check(G.title_owned("t_archery_master") or G.title_cond_met(G.title_cfg("t_archery_master")),
+		"射艺满分魁首应解锁或满足【百步穿杨】称号条件")
+	arch.queue_free()
+	await get_tree().process_frame
+
+	# Round 2: 6 件新中期/后期特技装备模板
+	for tpl_id in ["tpl_sword_starfall", "tpl_spear_windpiercer", "tpl_staff_glacierheart",
+			"tpl_hammer_dawnlight", "tpl_armor_expedition", "tpl_acc_archery_ring"]:
+		var tpl_d: Dictionary = G.equip_tpl(tpl_id)
+		_check(not tpl_d.is_empty() and not (tpl_d.get("special", {}) as Dictionary).is_empty(),
+			"新装备模板 %s 应存在且带专属被动词条" % tpl_id)
+
+	# Round 3: 四职业边城古碑共鸣（lore_resonate）
+	for rid2 in ["zs", "ck", "fs", "fz"]:
+		var lres := G.lore_resonate(rid2)
+		_check(bool(lres.get("ok", false)) and bool(lres.get("first", false)),
+			"%s 首次古碑共鸣应成功并标记 first=true" % rid2)
+		_check(G.title_owned("t_lore_" + rid2), "%s 古碑共鸣后应自动解锁专属称号 t_lore_%s" % [rid2, rid2])
+		var lres_again := G.lore_resonate(rid2)
+		_check(not bool(lres_again.get("first", true)), "%s 重复共鸣不应重复发放首通奖励" % rid2)
+
+	# Round 4: 灵宠羁绊互动与寻宝馈赠（pet_bond_interact）
+	G.prog["pets"] = ["pet_rockturtle"]
+	G.prog["level"] = 20
+	G.items["pet_food"] = 10
+	G.wallet["gold"] = 5000
+	var hp_bonus_before := int(G.growth_bonuses("zs").get("hp_add", 0))
+	var mult_before := G.pet_stat_mult("pet_rockturtle")
+	for b_step in 3:
+		var b_res := G.pet_bond_interact("pet_rockturtle")
+		_check(bool(b_res.get("ok", false)), "灵宠羁绊第 %d 阶互动应成功" % (b_step + 1))
+	_check(G.pet_bond_level("pet_rockturtle") == 3, "互动 3 次后羁绊应为 3 阶")
+	_check(G.pet_stat_mult("pet_rockturtle") > mult_before, "羁绊提升应增加灵宠属性倍率")
+	_check(int(G.growth_bonuses("zs").get("hp_add", 0)) == hp_bonus_before + 45,
+		"3 阶羁绊应为主角提供 +45 生命共鸣加成")
+	_check(G.title_cond_met(G.title_cfg("t_pet_bond")), "3 阶羁绊应满足【灵犀契主】称号条件")
+
+	# Round 5: 边城古玩鉴宝（curio_appraise）
+	G.wallet["gold"] = 5000
+	for c_i in 3:
+		var cres := G.curio_appraise("common" if c_i < 2 else "rare")
+		_check(bool(cres.get("ok", false)), "第 %d 次古玩鉴宝应成功" % (c_i + 1))
+	_check(G.title_owned("t_curio_seer") or G.title_cond_met(G.title_cfg("t_curio_seer")),
+		"累计鉴宝 3 次应解锁或达成【慧眼识珍】称号")
+
+	# ---- O. 体验精修回归（教学实操Toast / 唤灵阁更名 / 大厅隐藏易职 / 创角去待机图 / 灵宠高清完整展示） ----
+	var home_v3: Control = load("res://src/ui/GameHome.tscn").instantiate()
+	add_child(home_v3)
+	await get_tree().process_frame
+	home_v3._on_tutorial_try_step("step_03_npc")
+	home_v3._on_tutorial_try_step("step_04_quest")
+	_check(home_v3._quests != null, "新手教学 step_03/step_04 实操演示应打开任务面板且不触发 _show_toast 参数报错")
+	if home_v3._quests != null:
+		home_v3._quests.closed.emit()
+		await get_tree().process_frame
+	var gacha_plaque := home_v3.find_child("Plaque_gacha", true, false)
+	var gacha_txt := (gacha_plaque as Button).text if gacha_plaque is Button else ""
+	if gacha_plaque != null:
+		for ch in gacha_plaque.get_children():
+			if ch is Label:
+				gacha_txt += (ch as Label).text
+	_check(gacha_txt.contains("唤灵阁") and not gacha_txt.contains("酒馆"),
+		"主城召唤建筑名牌应更名为「唤灵阁」，实为「%s」" % gacha_txt)
+	var switch_btn := home_v3.find_child("RoleSwitchEntry", true, false) as Control
+	_check(switch_btn != null and not switch_btn.visible, "大厅顶栏不应展示「易职」按钮（仅在设置内提供）")
+	home_v3.queue_free()
+	await get_tree().process_frame
+
+	var cr: Control = load("res://src/ui/CreateRole.tscn").instantiate()
+	add_child(cr)
+	await get_tree().process_frame
+	_check(String(cr.get("_preview_pose")) == "walk_down", "选择角色页面默认应展示朝南姿态而非旧待机图")
+	var pose_labels: Array[String] = []
+	for p_entry in cr._chest.POSES:
+		pose_labels.append(String(p_entry[0]))
+	_check(not pose_labels.has("待机") and pose_labels.size() == 4,
+		"选择角色页面不应包含「待机」展示图页签，实为 %s" % str(pose_labels))
+	cr.queue_free()
+	await get_tree().process_frame
+
+	var FixUI := preload("res://src/ui/ReviewFixUI.gd")
+	for p_row in TableCache.pets():
+		var pid_chk := String((p_row as Dictionary).get("id", ""))
+		var hd_tex: Texture2D = FixUI.pet(pid_chk + "_hd")
+		_check(hd_tex != null and hd_tex.get_size() == Vector2(192, 192),
+			"灵宠图鉴展示贴图 %s 应为 192×192 高清完整立绘" % pid_chk)
+
+	# ---- P. 手机端 ESC / GM 开发者浮标与一键全功能界面解锁回归 ----
+	G.gm_unlock_all_features()
+	_check(G.gm_unlocked and G.gm_world_open, "gm_unlock_all_features 应开启 gm_unlocked 与 gm_world_open")
+	_check(int(G.prog.get("level", 0)) == G.level_cap(), "gm_unlock_all_features 应将主角升至满级")
+	_check(G.story_step_done("s36"), "gm_unlock_all_features 应解锁全部主线至 s36")
+	_check(G.side_status_of("a4_rel_nighttable") == QuestService.SIDE_DONE, "gm_unlock_all_features 应解锁营火小聚前置支线")
+	_check(G.is_built("forge") and G.is_built("frost_lodge"), "gm_unlock_all_features 应落成全部边城与霜关建筑")
+	GmConsole.open_unlocked()
+	_check(GmConsole.visible and G.ui_blocked, "GmConsole.open_unlocked 应免密打开开发者控制台")
+	_check(GmConsole.get("_float_bar") == null, "默认不创建遮挡手机内容的常驻开发者浮条")
+	G.trigger_cancel()
+	_check(not GmConsole.visible and not G.ui_blocked, "G.trigger_cancel() 应触发 ESC 关闭当前顶层窗口")
+
+	var home_gm: Control = load("res://src/ui/GameHome.tscn").instantiate()
+	add_child(home_gm)
+	await get_tree().process_frame
+	for feat in ["gathering", "archery", "curio", "shop", "companion", "journal", "oath", "trade:city", "contract", "fishing:salt", "mail", "growth:talent", "home"]:
+		home_gm.call("open_gm_feature", feat)
+		await get_tree().process_frame
+	_check(home_gm.get("_gm_extra") == null and not home_gm._home_content_hidden,
+		"GameHome.open_gm_feature 应能遍历打开各功能界面并切回主城总览")
+	# 验证 G.trigger_cancel() 在子面板打开时也能按 ESC 关闭子面板回到主城
+	home_gm.call("open_gm_feature", "shop")
+	await get_tree().process_frame
+	_check(home_gm.get("_gm_extra") != null, "open_gm_feature('shop') 应打开物资铺")
+	G.trigger_cancel()
+	await get_tree().process_frame
+	_check(home_gm.get("_gm_extra") == null, "G.trigger_cancel() 应能关闭物资铺回到主城")
+	home_gm.queue_free()
+	await get_tree().process_frame
+	await get_tree().process_frame
+
+	if _fails == 0:
+		print("GAME_HOME_OK all tests passed")
+	else:
+		print("GAME_HOME_FAIL fails=%d" % _fails)

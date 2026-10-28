@@ -1,0 +1,215 @@
+{
+	"account": "",
+	"arena": {
+		"best_streak": 0,
+		"losses": 0,
+		"score": 1000,
+		"streak": 0,
+		"wins": 0
+	},
+	"audio": {
+		"bgm": 0.7,
+		"mute": false,
+		"sfx": 0.8
+	},
+	"avatar_custom": "",
+	"avatar_id": "fox",
+	"avatar_use_custom": false,
+	"city": {
+		"acts": {},
+		"built": [
+			"hall",
+			"gate",
+			"archive",
+			"kennel",
+			"barracks",
+			"storehouse",
+			"stable",
+			"forge"
+		],
+		"code": "",
+		"day": "",
+		"streak": 0,
+		"visits": []
+	},
+	"gender": "男",
+	"items": {
+		"ticket_sweep": 0,
+		"ticket_ten": 0
+	},
+	"player_name": "",
+	"prog": {
+		"act1": {},
+		"active_run": {},
+		"codex_claimed": [],
+		"dungeon_trials": {},
+		"economy": {
+			"bought": {},
+			"day": 1.0,
+			"history": {},
+			"next_tx": 1.0,
+			"orders": {},
+			"seed": 7919.0,
+			"sold": {},
+			"work": {}
+		},
+		"equip": {
+			"accessory": 6,
+			"armor": 5,
+			"hammer": 4,
+			"spear": 2,
+			"staff": 3,
+			"sword": 1
+		},
+		"exp": 0,
+		"fishing": {},
+		"flags": {},
+		"gacha": {
+			"free_day": "2026-10-25",
+			"free_last": "",
+			"free_streak": 0,
+			"pity": 0
+		},
+		"inventory": {
+			"instances": [
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 1,
+					"slot": "sword",
+					"sockets": 3,
+					"tpl": "tpl_sword_basic",
+					"uid": 1
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 1,
+					"slot": "spear",
+					"sockets": 3,
+					"tpl": "tpl_spear_basic",
+					"uid": 2
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 1,
+					"slot": "staff",
+					"sockets": 3,
+					"tpl": "tpl_staff_basic",
+					"uid": 3
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 1,
+					"slot": "hammer",
+					"sockets": 3,
+					"tpl": "tpl_hammer_basic",
+					"uid": 4
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 1,
+					"slot": "armor",
+					"sockets": 3,
+					"tpl": "tpl_armor_basic",
+					"uid": 5
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 1,
+					"slot": "accessory",
+					"sockets": 3,
+					"tpl": "tpl_accessory_basic",
+					"uid": 6
+				}
+			],
+			"next_uid": 7,
+			"pending": []
+		},
+		"last_ts": 1792967648,
+		"ledger": {
+			"applied": []
+		},
+		"level": 1,
+		"lore_beats": {},
+		"lore_seen": false,
+		"main_world": {
+			"bosses_cleared": [],
+			"encounters": {},
+			"entities": {},
+			"map_id": "lorin_wilds",
+			"respawn_at": {},
+			"respawn_by_map": {}
+		},
+		"mounts": {},
+		"oaths": {},
+		"pet_stat": {},
+		"pets": [
+			"pet_rockturtle"
+		],
+		"quest_postings": {},
+		"relic_hunts": {},
+		"road_mail": {
+			"archive": [],
+			"deliveries": 0,
+			"encounter": "",
+			"last_claim_day": 0,
+			"observed_clues": [],
+			"penalty_gold": 0,
+			"phase": "",
+			"route": "",
+			"run_id": "",
+			"run_seq": 0,
+			"solution": "",
+			"status": "idle"
+		},
+		"settings": {},
+		"skills": {},
+		"special_events": {
+			"records": {},
+			"tracked": ""
+		},
+		"story": {
+			"done": [],
+			"goals": {},
+			"step": "s01"
+		},
+		"talents": {},
+		"tips_seen": {},
+		"titles": {},
+		"trade_contracts": {},
+		"world_cleared": {},
+		"world_commissions": {},
+		"worlds_unlocked": 1
+	},
+	"quest": {
+		"active": {},
+		"claimed": [],
+		"day": "",
+		"offer": []
+	},
+	"selected_role": "",
+	"version": 7,
+	"wallet": {
+		"expedition": 0,
+		"gold": 0,
+		"honor": 0,
+		"soul": 80
+	}
+}

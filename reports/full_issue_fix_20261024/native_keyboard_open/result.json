@@ -1,0 +1,243 @@
+{
+	"checks": [],
+	"device": {
+		"cutouts": "[]",
+		"mix_rate": 44100.0,
+		"model": "Android SDK built for x86_64",
+		"os": "Android",
+		"safe": "[P: (0.0, 0.0), S: (480.0, 852.9999)]",
+		"system_safe": "[P: (0, 0), S: (720, 1280)]",
+		"version": "37.16571990",
+		"viewport": "[P: (0.0, 0.0), S: (480.0, 853.0)]",
+		"window": "(720, 1280)"
+	},
+	"final": {
+		"audio": {
+			"bgm": "",
+			"events": [
+				{
+					"category": "Rewards",
+					"name": "coin",
+					"time_ms": 128986
+				},
+				{
+					"category": "Rewards",
+					"name": "reward",
+					"time_ms": 130423
+				}
+			],
+			"mute": false,
+			"paused": false,
+			"playing": false,
+			"position": 0.0,
+			"suspended": false,
+			"voices": 0
+		},
+		"controls": [
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/RegistrationFields/@VBoxContainer@1919/@HBoxContainer@1922/@Button@1923",
+				"rect": [
+					378.0,
+					161.0,
+					56.0,
+					65.0
+				],
+				"safe": true,
+				"text": "显",
+				"tooltip": "显示或隐藏密码",
+				"touch_under44": false
+			},
+			{
+				"clipped": true,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/RegistrationFields/@VBoxContainer@1919/@HBoxContainer@1924/AvatarCard",
+				"rect": [
+					104.0,
+					236.0,
+					330.0,
+					62.0
+				],
+				"safe": true,
+				"text": "自选画像 · 导入图片",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/LoginButton",
+				"rect": [
+					46.0,
+					238.0,
+					396.0,
+					65.0
+				],
+				"safe": true,
+				"text": "登录入城",
+				"tooltip": "",
+				"touch_under44": false
+			}
+		],
+		"device": {
+			"cutouts": "[]",
+			"mix_rate": 44100.0,
+			"model": "Android SDK built for x86_64",
+			"os": "Android",
+			"safe": "[P: (0.0, 0.0), S: (480.0, 852.9999)]",
+			"system_safe": "[P: (0, 0), S: (720, 1280)]",
+			"version": "37.16571990",
+			"viewport": "[P: (0.0, 0.0), S: (480.0, 853.0)]",
+			"window": "(720, 1280)"
+		},
+		"focus": "Password:<LineEdit#574770645194>",
+		"keyboard_height": 773,
+		"labels": [
+			{
+				"font": 20,
+				"minimum": "(1.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/RegistrationFields/@VBoxContainer@1919/@Label@1920",
+				"rect": [
+					46.0,
+					15.0,
+					388.0,
+					30.0
+				],
+				"text": "通关文牒 · 账号"
+			},
+			{
+				"font": 20,
+				"minimum": "(1.0, 30.0)",
+				"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/RegistrationFields/@VBoxContainer@1919/@Label@1921",
+				"rect": [
+					46.0,
+					121.0,
+					388.0,
+					30.0
+				],
+				"text": "通关秘钥 · 密码"
+			}
+		],
+		"modals": [],
+		"page": "Login",
+		"tick_ms": 431131
+	},
+	"id": "native_keyboard_open",
+	"photos": [],
+	"records": [
+		{
+			"audio": {
+				"bgm": "",
+				"events": [
+					{
+						"category": "Rewards",
+						"name": "coin",
+						"time_ms": 128986
+					},
+					{
+						"category": "Rewards",
+						"name": "reward",
+						"time_ms": 130423
+					}
+				],
+				"mute": false,
+				"paused": false,
+				"playing": false,
+				"position": 0.0,
+				"suspended": false,
+				"voices": 0
+			},
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/RegistrationFields/@VBoxContainer@1919/@HBoxContainer@1922/@Button@1923",
+					"rect": [
+						378.0,
+						161.0,
+						56.0,
+						65.0
+					],
+					"safe": true,
+					"text": "显",
+					"tooltip": "显示或隐藏密码",
+					"touch_under44": false
+				},
+				{
+					"clipped": true,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/RegistrationFields/@VBoxContainer@1919/@HBoxContainer@1924/AvatarCard",
+					"rect": [
+						104.0,
+						236.0,
+						330.0,
+						62.0
+					],
+					"safe": true,
+					"text": "自选画像 · 导入图片",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/LoginButton",
+					"rect": [
+						46.0,
+						238.0,
+						396.0,
+						65.0
+					],
+					"safe": true,
+					"text": "登录入城",
+					"tooltip": "",
+					"touch_under44": false
+				}
+			],
+			"device": {
+				"cutouts": "[]",
+				"mix_rate": 44100.0,
+				"model": "Android SDK built for x86_64",
+				"os": "Android",
+				"safe": "[P: (0.0, 0.0), S: (480.0, 852.9999)]",
+				"system_safe": "[P: (0, 0), S: (720, 1280)]",
+				"version": "37.16571990",
+				"viewport": "[P: (0.0, 0.0), S: (480.0, 853.0)]",
+				"window": "(720, 1280)"
+			},
+			"focus": "Password:<LineEdit#574770645194>",
+			"keyboard_height": 773,
+			"labels": [
+				{
+					"font": 20,
+					"minimum": "(1.0, 30.0)",
+					"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/RegistrationFields/@VBoxContainer@1919/@Label@1920",
+					"rect": [
+						46.0,
+						15.0,
+						388.0,
+						30.0
+					],
+					"text": "通关文牒 · 账号"
+				},
+				{
+					"font": 20,
+					"minimum": "(1.0, 30.0)",
+					"path": "/root/AndroidDeepAudit/Login/@Control@1908/RegistrationPaper/@VBoxContainer@1909/RegistrationFields/@VBoxContainer@1919/@Label@1921",
+					"rect": [
+						46.0,
+						121.0,
+						388.0,
+						30.0
+					],
+					"text": "通关秘钥 · 密码"
+				}
+			],
+			"modals": [],
+			"page": "Login",
+			"tick_ms": 431131
+		}
+	],
+	"suite": "probe"
+}

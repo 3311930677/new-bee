@@ -1,0 +1,12 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+ERROR: FAIL: lv15+词条应胜 BOSS，实为 defeat
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyBattleScene.gd:19)
+       [1] _run (res://tools/VerifyBattleScene.gd:33)
+       [2] _run_one (res://tools/VerifyBattleScene.gd:405)
+       [3] _drive (res://tools/VerifyBattleScene.gd:509)
+BATTLE_SCENE_FAIL fails=1

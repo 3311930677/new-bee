@@ -1,0 +1,187 @@
+{
+	"account": "",
+	"arena": {
+		"best_streak": 0,
+		"losses": 0,
+		"score": 1000,
+		"streak": 0,
+		"wins": 0
+	},
+	"audio": {
+		"bgm": 0.7,
+		"mute": false,
+		"sfx": 0.8
+	},
+	"avatar_custom": "",
+	"avatar_id": "fox",
+	"avatar_use_custom": false,
+	"city": {
+		"acts": {},
+		"built": [
+			"hall",
+			"gate",
+			"archive",
+			"kennel",
+			"barracks",
+			"storehouse",
+			"stable",
+			"forge"
+		],
+		"code": "",
+		"day": "",
+		"streak": 0,
+		"visits": []
+	},
+	"gender": "男",
+	"items": {
+		"pet_food": 2
+	},
+	"player_name": "",
+	"prog": {
+		"economy": {
+			"bought": {},
+			"day": 1,
+			"history": {},
+			"next_tx": 1,
+			"orders": {},
+			"seed": 7919,
+			"sold": {},
+			"work": {}
+		},
+		"equip": {
+			"accessory": 6,
+			"armor": 5,
+			"hammer": 4,
+			"spear": 2,
+			"staff": 3,
+			"sword": 1
+		},
+		"exp": 0,
+		"flags": {},
+		"inventory": {
+			"instances": [
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 1,
+					"slot": "sword",
+					"sockets": 3,
+					"tpl": "tpl_sword_basic",
+					"uid": 1
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 1,
+					"slot": "spear",
+					"sockets": 3,
+					"tpl": "tpl_spear_basic",
+					"uid": 2
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 1,
+					"slot": "staff",
+					"sockets": 3,
+					"tpl": "tpl_staff_basic",
+					"uid": 3
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 1,
+					"slot": "hammer",
+					"sockets": 3,
+					"tpl": "tpl_hammer_basic",
+					"uid": 4
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 1,
+					"slot": "armor",
+					"sockets": 3,
+					"tpl": "tpl_armor_basic",
+					"uid": 5
+				},
+				{
+					"affixes": [],
+					"gems": [],
+					"locked": false,
+					"lv": 0,
+					"rarity": 1,
+					"slot": "accessory",
+					"sockets": 3,
+					"tpl": "tpl_accessory_basic",
+					"uid": 6
+				}
+			],
+			"next_uid": 7,
+			"pending": []
+		},
+		"ledger": {
+			"applied": [
+				"mount|horse|tier_1|",
+				"mount|horse|tier_2|",
+				"mount|bear|tier_1|"
+			]
+		},
+		"level": 5,
+		"main_world": {
+			"map_id": "lorin_wilds"
+		},
+		"mounts": {
+			"active": "",
+			"owned": {}
+		},
+		"pet_stat": {
+			"pet_rockturtle": {
+				"brk": 0,
+				"exp": 20,
+				"lv": 2,
+				"star": 3
+			}
+		},
+		"pets": [
+			"pet_rockturtle"
+		],
+		"skills": {},
+		"story": {
+			"done": [],
+			"goals": {},
+			"step": "s01"
+		},
+		"talents": {},
+		"titles": {
+			"active": "",
+			"owned": []
+		},
+		"world_cleared": {},
+		"worlds_unlocked": 1
+	},
+	"quest": {
+		"active": {},
+		"claimed": [],
+		"day": "",
+		"offer": []
+	},
+	"selected_role": "zs",
+	"version": 7,
+	"wallet": {
+		"expedition": 0,
+		"gold": 0,
+		"honor": 0,
+		"soul": 0
+	}
+}

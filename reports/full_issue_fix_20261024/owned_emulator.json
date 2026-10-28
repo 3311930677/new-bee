@@ -1,0 +1,19 @@
+{
+  "pid": 28500,
+  "args": [
+    "D:\\new-bee\\tools\\android-sdk-mobile\\emulator\\emulator.exe",
+    "-avd",
+    "Yuanzheng_FullFix_Android15",
+    "-gpu",
+    "host",
+    "-no-snapshot",
+    "-no-boot-anim",
+    "-no-window",
+    "-no-audio",
+    "-memory",
+    "4096",
+    "-cores",
+    "4"
+  ],
+  "mode": "host"
+}
