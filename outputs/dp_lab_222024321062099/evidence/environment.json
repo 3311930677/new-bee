@@ -1,0 +1,10 @@
+{
+  "os": "Windows-11-10.0.26200-SP0",
+  "compiler": "g++ (GCC) 13.2.0",
+  "standard": "C++17",
+  "compile_flags": "-std=c++17 -O2 -Wall -Wextra -pedantic",
+  "source_sha256": "f08fcb2cfe7b95be1771defb542c2cfa9aa758eeeaa60620fb96587945edd62c",
+  "random_seed": 20261027,
+  "automated_checks": 808,
+  "additional_cli_checks": 11
+}

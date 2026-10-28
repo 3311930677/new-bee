@@ -1,0 +1,44 @@
+[
+  {
+    "mode": "matrix",
+    "title": "矩阵连乘",
+    "input": "6\n30 35 15 5 10 20 25\n",
+    "output": "Minimum scalar multiplications: 15125\nOptimal order: ((A1 x (A2 x A3)) x ((A4 x A5) x A6))\nCost table (lower triangle unused):\n0 15750 7875 9375 11875 15125\n0 0 2625 4375 7125 10500\n0 0 0 750 2500 5375\n0 0 0 0 1000 3500\n0 0 0 0 0 5000\n0 0 0 0 0 0\n",
+    "returncode": 0
+  },
+  {
+    "mode": "lcs",
+    "title": "最长公共子序列",
+    "input": "ABCBDAB\nBDCABA\n",
+    "output": "LCS length: 4\nLCS: BCBA\nDP table:\n0 0 0 0 0 0 0\n0 0 0 0 1 1 1\n0 1 1 1 1 2 2\n0 1 1 2 2 2 2\n0 1 1 2 2 3 3\n0 1 2 2 2 3 3\n0 1 2 2 3 3 4\n0 1 2 2 3 4 4\n",
+    "returncode": 0
+  },
+  {
+    "mode": "knapsack",
+    "title": "0-1 背包",
+    "input": "5 10\n2 6\n2 3\n6 5\n5 4\n4 6\n",
+    "output": "Maximum value: 15\nSelected item IDs: 1 2 5\nTotal weight: 8 / 10\nDP table:\n0 0 0 0 0 0 0 0 0 0 0\n0 0 6 6 6 6 6 6 6 6 6\n0 0 6 6 9 9 9 9 9 9 9\n0 0 6 6 9 9 9 9 11 11 14\n0 0 6 6 9 9 9 10 11 13 14\n0 0 6 6 9 9 12 12 15 15 15\n",
+    "returncode": 0
+  },
+  {
+    "mode": "equipment",
+    "title": "设备更新",
+    "input": "6 5 100\n10 20 40 70 110\n60 45 30 20 10\n",
+    "output": "Cycle costs (index 0 unused): 0 50 85 140 220 340\nMinimum total cost: 255\nOptimal service lives: 2 2 2\nDP[0..N]: 0 50 85 135 170 220 255\nBuy at start of year 1, sell at end of year 2\nBuy at start of year 3, sell at end of year 4\nBuy at start of year 5, sell at end of year 6\n",
+    "returncode": 0
+  },
+  {
+    "mode": "verify",
+    "title": "随机对照与边界验证",
+    "input": "",
+    "output": "Matrix chain: 200/200 PASS (all parenthesizations)\nLCS: 200/200 PASS (enumerate subsequences + reconstruction)\n0-1 knapsack: 200/200 PASS (enumerate subsets + reconstruction)\nEquipment renewal: 200/200 PASS (enumerate all life partitions)\nExplicit boundary/error checks: 8/8 PASS\nTOTAL: 808/808 PASS\n",
+    "returncode": 0
+  },
+  {
+    "mode": "boundary",
+    "title": "独立边界与非法输入测试",
+    "input": "8 valid boundary cases + 3 invalid-input cases",
+    "output": "PASS | matrix     | Minimum scalar multiplications: 0\nPASS | matrix     | Minimum scalar multiplications: 125000000000000\nPASS | lcs        | LCS length: 0\nPASS | lcs        | LCS length: 2\nPASS | knapsack   | Maximum value: 3\nPASS | knapsack   | Maximum value: 0\nPASS | equipment  | Minimum total cost: 0\nPASS | equipment  | Minimum total cost: 150\nPASS | matrix     | rejected: ERROR: dimensions must be in 1..100000\nPASS | knapsack   | rejected: ERROR: weights must be positive\nPASS | equipment  | rejected: ERROR: invalid maintenance or salvage\nTOTAL: 11/11 PASS\n",
+    "returncode": 0
+  }
+]

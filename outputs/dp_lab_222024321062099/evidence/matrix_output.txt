@@ -1,0 +1,9 @@
+Minimum scalar multiplications: 15125
+Optimal order: ((A1 x (A2 x A3)) x ((A4 x A5) x A6))
+Cost table (lower triangle unused):
+0 15750 7875 9375 11875 15125
+0 0 2625 4375 7125 10500
+0 0 0 750 2500 5375
+0 0 0 0 1000 3500
+0 0 0 0 0 5000
+0 0 0 0 0 0
