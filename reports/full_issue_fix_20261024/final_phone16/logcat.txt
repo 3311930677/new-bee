@@ -1,0 +1,772 @@
+--------- beginning of system
+10-25 06:34:13.392   579   656 W ActivityTaskManager: callingPackage for (uid=0, pid=2420) has no WPC
+10-25 06:34:13.393   579   656 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_ORIENTATION_OVERRIDE
+--------- beginning of main
+10-25 06:34:13.394   579   656 V GrammaticalInflectionUtils: AttributionSource: AttributionSource { uid = 10148, packageName = null, attributionTag = null, token = android.os.Binder@82325c2, deviceId = 0, next = null } does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+10-25 06:34:13.395   579   656 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_RESIZEABLE_ACTIVITY_OVERRIDES
+10-25 06:34:13.395   579   656 W OptProp : Cannot read opt property android.window.PROPERTY_COMPAT_ALLOW_MIN_ASPECT_RATIO_OVERRIDE
+10-25 06:34:13.400   579   656 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} with LAUNCH_SINGLE_INSTANCE_PER_TASK from uid 0 (BAL_ALLOW_ALLOWLISTED_UID) result code=0
+10-25 06:34:13.400   959  1008 V WindowManagerShell: Transition requested (#9): android.os.BinderProxy@3572694 TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=8 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } baseActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} topActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} origActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} realActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} numActivities=1 lastActiveTime=40767 supportsMultiWindow=true resizeMode=0 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@454b53d} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 128 - 0, 0) topActivityInfo=ActivityInfo{177f132 com.godot.game.GodotAppLauncher} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=720 topActivityLetterboxHeight=1280 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 9 }
+10-25 06:34:13.401  1207  1207 W SplitSelectStateCtor: Missing session instanceIds
+10-25 06:34:13.401  1207  1207 D StatsLog: LAUNCHER_SPLIT_SELECTION_EXIT_INTERRUPTED
+10-25 06:34:13.401   579   608 V GrammaticalInflectionUtils: AttributionSource: AttributionSource { uid = 10148, packageName = null, attributionTag = null, token = android.os.Binder@82325c2, deviceId = 0, next = null } does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+10-25 06:34:13.403   959  1058 W ShellStartingWindow: Get attribute fail, return default: File res/mipmap-hdpi-v4/icon_background.webp from drawable resource ID #0x7f0a0001: .xml extension required
+10-25 06:34:13.404  1207  1207 I TopTaskTracker: onTaskMovedToFront: (moved taskInfo to front) taskId=8, baseIntent=Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher }
+10-25 06:34:13.406   959  1008 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=false, height=156
+10-25 06:34:13.406   452   452 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-25 06:34:13.410   959  1058 D SplashScreenView: Build android.window.SplashScreenView{e924ef5 V.E...... ......ID 0,0-0,0}
+10-25 06:34:13.410   959  1058 D SplashScreenView: Icon: view: android.widget.ImageView{ed8748a V.ED..... ......I. 0,0-0,0 #1020504 android:id/splashscreen_icon_view} drawable: com.android.wm.shell.startingsurface.SplashscreenIconDrawableFactory$ImmobileIconDrawable@267dafb size: 288
+10-25 06:34:13.410   959  1058 D SplashScreenView: Branding: view: android.view.View{412e718 V.ED..... ......I. 0,0-0,0 #1020503 android:id/splashscreen_branding_view} drawable: android.graphics.drawable.BitmapDrawable@305e571 size w: 300 h: 120
+10-25 06:34:13.412   579   903 I AppWidgetServiceImpl: Received broadcast: android.intent.action.PACKAGE_UNSTOPPED on user 0
+10-25 06:34:13.413   579   903 I AppWidgetServiceImpl: Updating package stopped masked state for uid 10148 package org.yuanzheng.singleplayer isStopped false
+10-25 06:34:13.416   382   382 D Zygote  : Forked child process 2423
+10-25 06:34:13.417   579   616 I ActivityManager: Start proc 2423:org.yuanzheng.singleplayer/u0a148 for next-top-activity {org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}
+10-25 06:34:13.428   579   656 D CoreBackPreview: Window{8cb6c68 u0 Splash Screen org.yuanzheng.singleplayer}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@11ee714, mPriority=0, mIsAnimationCallback=false}
+10-25 06:34:13.437  2423  2423 I ng.singleplayer: Late-enabling -Xcheck:jni
+10-25 06:34:13.450  2423  2423 I ng.singleplayer: Using CollectorTypeCMC GC.
+10-25 06:34:13.450  2423  2423 W ng.singleplayer: Unexpected CPU variant for x86: x86_64.
+10-25 06:34:13.450  2423  2423 W ng.singleplayer: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, default
+10-25 06:34:13.452   959  2220 V WindowManagerShell: onTransitionReady(transaction=2486786064801)
+10-25 06:34:13.453   579   605 V WindowManager: Sent Transition (#9) createdAt=10-25 06:34:13.396 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=8 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } baseActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} topActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} origActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher} realActivity=ComponentInfo{org.yuanzheng.singleplayer/com.godot.game.GodotApp} numActivities=1 lastActiveTime=40767 supportsMultiWindow=true resizeMode=0 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{8543903 Task{8dee7d9 #8 type=standard A=10148:org.yuanzheng.singleplayer}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 128 - 0, 0) topActivityInfo=ActivityInfo{8d6080 com.godot.game.GodotAppLauncher} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=720 topActivityLetterboxHeight=1280 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 9 }
+10-25 06:34:13.453   959  1008 V WindowManagerShell: onTransitionReady (#9) android.os.BinderProxy@3572694: {id=9 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@655df65} m=OPEN f=NONE leash=Surface(name=Task=8)/@0xe72f32e sb=Rect(0, 0 - 720, 1280) eb=Rect(0, 0 - 720, 1280) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@9bf143a} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x9dbecf sb=Rect(0, 0 - 720, 1280) eb=Rect(0, 0 - 720, 1280) d=0 taskParent=-1}]}
+10-25 06:34:13.453   579   605 V WindowManager:     startWCT=WindowContainerTransaction { changes = {} hops = [] errorCallbackToken=null taskFragmentOrganizer=null }
+10-25 06:34:13.453   579   605 V WindowManager:     info={id=9 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-25 06:34:13.453   579   605 V WindowManager:         {WCT{RemoteToken{8543903 Task{8dee7d9 #8 type=standard A=10148:org.yuanzheng.singleplayer}}} m=OPEN f=NONE leash=Surface(name=Task=8)/@0x208abbd sb=Rect(0, 0 - 720, 1280) eb=Rect(0, 0 - 720, 1280) d=0 taskParent=-1},
+10-25 06:34:13.453   579   605 V WindowManager:         {WCT{RemoteToken{c57625f Task{abb7a23 #1 type=home}}} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x84a5e29 sb=Rect(0, 0 - 720, 1280) eb=Rect(0, 0 - 720, 1280) d=0 taskParent=-1}
+10-25 06:34:13.453   579   605 V WindowManager:     ]}
+10-25 06:34:13.454   959  1008 V WindowManagerShell: Playing animation for (#9) android.os.BinderProxy@3572694@0
+10-25 06:34:13.454   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.transition.DefaultMixedHandler@498eec9
+10-25 06:34:13.454   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.keyguard.KeyguardTransitionHandler@65519ce
+10-25 06:34:13.454   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.pip.PipTransition@36cf0ef
+10-25 06:34:13.455   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.activityembedding.ActivityEmbeddingController@ea597fc
+10-25 06:34:13.455   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.recents.RecentsTransitionHandler@9b8ae85
+10-25 06:34:13.455   959  1008 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+10-25 06:34:13.455   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.splitscreen.StageCoordinator@8ad04da
+10-25 06:34:13.455   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.transition.RemoteTransitionHandler@3c1ad0b
+10-25 06:34:13.455   959  1008 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=9 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@655df65} m=OPEN f=NONE leash=Surface(name=Task=8)/@0xe72f32e sb=Rect(0, 0 - 720, 1280) eb=Rect(0, 0 - 720, 1280) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@9bf143a} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x9dbecf sb=Rect(0, 0 - 720, 1280) eb=Rect(0, 0 - 720, 1280) d=0 taskParent=-1}]}
+10-25 06:34:13.455   959  1008 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher} launchCookie=null},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@61a4648, appThread = android.app.IApplicationThread$Stub$Proxy@e4a0ce1, debugName = QuickstepLaunchHome }}
+10-25 06:34:13.455   959  1008 V WindowManagerShell:  Delegate animation for (#9) to null
+10-25 06:34:13.455   959  1008 V WindowManagerShell:  try handler com.android.wm.shell.transition.DefaultTransitionHandler@86694a6
+10-25 06:34:13.455   579   656 W UserManagerService: Requested status bar icon for non-badged user 0
+10-25 06:34:13.455   959  1008 V WindowManagerShell: start default transition animation, info = {id=9 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@655df65} m=OPEN f=NONE leash=Surface(name=Task=8)/@0xe72f32e sb=Rect(0, 0 - 720, 1280) eb=Rect(0, 0 - 720, 1280) d=0 taskParent=-1},{WCT{android.window.IWindowContainerToken$Stub$Proxy@9bf143a} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x9dbecf sb=Rect(0, 0 - 720, 1280) eb=Rect(0, 0 - 720, 1280) d=0 taskParent=-1}]}
+10-25 06:34:13.456   959  1008 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@45cb8c7 animAttr=0x13 type=OPEN isEntrance=false
+10-25 06:34:13.457   959  1008 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@6e21a63 animAttr=0x12 type=OPEN isEntrance=true
+10-25 06:34:13.457   959  1008 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@86694a6
+10-25 06:34:13.460   959  1097 D EGL_emulation: app_time_stats: avg=61.08ms min=4.14ms max=617.43ms count=22
+10-25 06:34:13.478  1207  1459 D EGL_emulation: app_time_stats: avg=175.94ms min=11.57ms max=526.20ms count=6
+10-25 06:34:13.482  2320  2327 I adbd    : jdwp connection from 2423
+10-25 06:34:13.490  2423  2423 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+10-25 06:34:13.511   579   606 V GameManagerService: setDefaultFrameRateOverride : 10148 , 60.0
+10-25 06:34:13.524  2423  2423 W ziparchive: Unable to open '/data/app/~~0w3aSwmxbNpfRHmqdS71dg==/org.yuanzheng.singleplayer-Oc0z7gRmoHkMWXF3z9N5vQ==/base.dm': No such file or directory
+10-25 06:34:13.525  2423  2423 W ziparchive: Unable to open '/data/app/~~0w3aSwmxbNpfRHmqdS71dg==/org.yuanzheng.singleplayer-Oc0z7gRmoHkMWXF3z9N5vQ==/base.dm': No such file or directory
+10-25 06:34:13.534   381   437 I netd    : tetherGetStats() -> {[]} <0.62ms>
+10-25 06:34:13.543  1207  1459 D EGL_emulation: app_time_stats: avg=39.56ms min=0.66ms max=701.18ms count=21
+10-25 06:34:13.576  2423  2423 D nativeloader: Configuring clns-7 for other apk /data/app/~~0w3aSwmxbNpfRHmqdS71dg==/org.yuanzheng.singleplayer-Oc0z7gRmoHkMWXF3z9N5vQ==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~0w3aSwmxbNpfRHmqdS71dg==/org.yuanzheng.singleplayer-Oc0z7gRmoHkMWXF3z9N5vQ==/lib/x86_64:/data/app/~~0w3aSwmxbNpfRHmqdS71dg==/org.yuanzheng.singleplayer-Oc0z7gRmoHkMWXF3z9N5vQ==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/org.yuanzheng.singleplayer
+10-25 06:34:13.589  2423  2423 V GraphicsEnvironment: Currently set values for:
+10-25 06:34:13.589  2423  2423 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+10-25 06:34:13.589  2423  2423 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+10-25 06:34:13.590   579   681 D ActivityManager: freezing 1409 com.android.printspooler
+10-25 06:34:13.590  2423  2423 V GraphicsEnvironment: Global.Settings values are invalid: number of packages: 0, number of values: 0
+10-25 06:34:13.590  2423  2423 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+10-25 06:34:13.594   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:13.594   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:13.594   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10082} in 2ms
+10-25 06:34:13.707  2423  2423 D GodotActivity: Project command line parameters: [--xr_mode_regular, --xr-mode, off, --fullscreen, --edge_to_edge, --background_color, #000000]
+10-25 06:34:13.711  2423  2423 D GodotActivity: Launch intent Intent { flg=0x10000000 cmp=org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher } with parameters []
+10-25 06:34:13.754  2423  2423 V GodotActivity: Creating new Godot fragment instance.
+10-25 06:34:13.759   959  1008 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#9) android.os.BinderProxy@3572694@0
+10-25 06:34:13.760   579   605 V WindowManager: Finish Transition (#9): created at 10-25 06:34:13.396 collect-started=0.056ms request-sent=4.165ms started=9.365ms ready=54.357ms sent=55.676ms finished=364.371ms
+10-25 06:34:13.765  1207  1207 D VRI[QuickstepLauncher]: visibilityChanged oldVisibility=true newVisibility=false
+10-25 06:34:13.766   959  1008 V WindowManagerShell: Track 0 became idle
+10-25 06:34:13.766   959  1008 V WindowManagerShell: All active transition animations finished
+10-25 06:34:13.767   579   656 W UserManagerService: Requested status bar icon for non-badged user 0
+10-25 06:34:13.768   579   656 W UserManagerService: Requested status bar icon for non-badged user 0
+10-25 06:34:13.810  2423  2423 V Godot   : Initializing Godot plugin registry
+10-25 06:34:13.859  2423  2423 I GodotPluginRegistry: Registering runtime plugin AndroidRuntime
+10-25 06:34:13.860  2423  2423 V Godot   : InitEngine with params: [--xr_mode_regular, --xr-mode, off, --fullscreen, --edge_to_edge, --background_color, #000000]
+10-25 06:34:13.906  2423  2423 D nativeloader: Load /data/app/~~0w3aSwmxbNpfRHmqdS71dg==/org.yuanzheng.singleplayer-Oc0z7gRmoHkMWXF3z9N5vQ==/lib/x86_64/libgodot_android.so using ns clns-7 from class loader (caller=/data/app/~~0w3aSwmxbNpfRHmqdS71dg==/org.yuanzheng.singleplayer-Oc0z7gRmoHkMWXF3z9N5vQ==/base.apk!classes7.dex): ok
+10-25 06:34:13.910  2423  2423 V Godot   : Godot native layer initialization completed: true
+10-25 06:34:13.910  2423  2423 V Godot   : Setting up native layer with params: [--xr-mode, off, --fullscreen]
+10-25 06:34:13.911   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:13.913   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:13.914   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:13.917   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:13.918   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:13.923  1810  1865 D WM-NetworkStateTracker: Network capabilities changed: [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&PARTIAL_CONNECTIVITY&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=12000Kbps LinkDnBandwidth>=30000Kbps TransportInfo: <SSID: <unknown ssid>, BSSID: 02:00:00:00:00:00, MAC: 02:00:00:00:00:00, IP: /10.0.2.16, Security type: 0, Supplicant state: COMPLETED, Wi-Fi standard: legacy, RSSI: -50, Link speed: 2Mbps, Tx Link speed: 2Mbps, Max Supported Tx Link speed: 54Mbps, Rx Link speed: 2Mbps, Max Supported Rx Link speed: 54Mbps, Frequency: 2437MHz, Net ID: -1, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: -1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none><none>MLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -50 UnderlyingNetworks: Null]
+10-25 06:34:13.923  2207  2244 D WM-NetworkStateTracker: Network capabilities changed: [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&PARTIAL_CONNECTIVITY&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=12000Kbps LinkDnBandwidth>=30000Kbps TransportInfo: <SSID: <unknown ssid>, BSSID: 02:00:00:00:00:00, MAC: 02:00:00:00:00:00, IP: /10.0.2.16, Security type: 0, Supplicant state: COMPLETED, Wi-Fi standard: legacy, RSSI: -50, Link speed: 2Mbps, Tx Link speed: 2Mbps, Max Supported Tx Link speed: 54Mbps, Rx Link speed: 2Mbps, Max Supported Rx Link speed: 54Mbps, Frequency: 2437MHz, Net ID: -1, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: -1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none><none>MLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -50 UnderlyingNetworks: Null]
+10-25 06:34:13.977  2423  2423 V Godot   : Godot native layer setup completed
+10-25 06:34:13.978  2423  2423 V Godot   : OnInitRenderView: GodotFragment{beebc26} (260b44f6-ae70-4a89-adce-c482b3a204f2 id=0x7f07002c)
+10-25 06:34:13.995  2423  2423 D Godot   : Render view should be transparent: false
+10-25 06:34:13.999  2423  2423 D Godot   : renderingDevice: opengl3 (ProjectSettings)
+10-25 06:34:13.999  2423  2423 D Godot   : 			renderer: gl_compatibility (ProjectSettings)
+10-25 06:34:14.027  2423  2423 W WindowOnBackDispatcher: OnBackInvokedCallback is not enabled for the application.
+10-25 06:34:14.027  2423  2423 W WindowOnBackDispatcher: Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+10-25 06:34:14.044  2423  2423 V Godot   : OnStart: GodotFragment{beebc26} (260b44f6-ae70-4a89-adce-c482b3a204f2 id=0x7f07002c)
+10-25 06:34:14.049  2423  2423 V Godot   : OnResume: GodotFragment{beebc26} (260b44f6-ae70-4a89-adce-c482b3a204f2 id=0x7f07002c)
+10-25 06:34:14.053  2423  2423 W HWUI    : Unknown dataspace 0
+10-25 06:34:14.057   579   656 W WindowManager: Failed looking up window session=Session{f9cdb61 2423:u0a10148} callers=com.android.server.wm.WindowManagerService.windowForClientLocked:6311 com.android.server.wm.Session.updateRequestedVisibleTypes:755 android.view.IWindowSession$Stub.onTransact:1078 
+10-25 06:34:14.067   579   656 D CoreBackPreview: Window{637f74 u0 org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@6bf2512, mPriority=0, mIsAnimationCallback=false}
+10-25 06:34:14.076   452   473 W ServiceManagerCppClient: Permission failure: android.permission.ACCESS_SURFACE_FLINGER from uid=10148 pid=0
+10-25 06:34:14.077   452   473 D PermissionCache: checking android.permission.ACCESS_SURFACE_FLINGER for uid=10148 => denied (497 us)
+10-25 06:34:14.077   452   474 W ServiceManagerCppClient: Permission failure: android.permission.ACCESS_SURFACE_FLINGER from uid=10148 pid=2423
+10-25 06:34:14.077   452   474 D PermissionCache: checking android.permission.ACCESS_SURFACE_FLINGER for uid=10148 => denied (340 us)
+10-25 06:34:14.077   452   636 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-25 06:34:14.077   452   474 W ServiceManagerCppClient: Permission failure: android.permission.ROTATE_SURFACE_FLINGER from uid=10148 pid=2423
+10-25 06:34:14.077   452   474 D PermissionCache: checking android.permission.ROTATE_SURFACE_FLINGER for uid=10148 => denied (383 us)
+10-25 06:34:14.077   452   474 W ServiceManagerCppClient: Permission failure: android.permission.INTERNAL_SYSTEM_WINDOW from uid=10148 pid=2423
+10-25 06:34:14.077   452   474 D PermissionCache: checking android.permission.INTERNAL_SYSTEM_WINDOW for uid=10148 => denied (217 us)
+10-25 06:34:14.078   452   473 W ServiceManagerCppClient: Permission failure: android.permission.ROTATE_SURFACE_FLINGER from uid=10148 pid=0
+10-25 06:34:14.078   452   473 D PermissionCache: checking android.permission.ROTATE_SURFACE_FLINGER for uid=10148 => denied (1563 us)
+10-25 06:34:14.079  2423  2440 I EGL_emulation: Opening libGLESv1_CM_emulation.so
+10-25 06:34:14.080  2423  2440 I EGL_emulation: Opening libGLESv2_emulation.so
+10-25 06:34:14.089  2423  2440 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+10-25 06:34:14.090  2423  2440 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+10-25 06:34:14.104  2423  2451 W RegularContextFactory: creating OpenGL ES 3.0 context :
+10-25 06:34:14.127   174   174 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device VINTF manifest.
+10-25 06:34:14.127  2423  2451 I Gralloc4: mapper 4.x is not supported
+--------- beginning of kernel
+10-25 06:34:14.173     0     0 I servicemanager: Caller(pid=2423,uid=10148,sid=u:r:untrusted_app:s0:c148,c256,c512,c768) Could not find android.hardware.graphics.allocator.IAllocator/default in the VINTF manifest. No alternative instances declared in VINTF.
+10-25 06:34:14.145  2423  2451 I godot   : Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+10-25 06:34:14.206   579  1950 W ServiceManagerCppClient: Permission failure: android.permission.ACCESS_SURFACE_FLINGER from uid=10148 pid=0
+10-25 06:34:14.206   579  1950 D PermissionCache: checking android.permission.ACCESS_SURFACE_FLINGER for uid=10148 => denied (140 us)
+10-25 06:34:14.206   579  1950 W ServiceManagerCppClient: Permission failure: android.permission.ROTATE_SURFACE_FLINGER from uid=10148 pid=0
+10-25 06:34:14.206   579  1950 D PermissionCache: checking android.permission.ROTATE_SURFACE_FLINGER for uid=10148 => denied (64 us)
+10-25 06:34:14.206   579  1950 W ServiceManagerCppClient: Permission failure: android.permission.INTERNAL_SYSTEM_WINDOW from uid=10148 pid=0
+10-25 06:34:14.206   579  1950 D PermissionCache: checking android.permission.INTERNAL_SYSTEM_WINDOW for uid=10148 => denied (62 us)
+10-25 06:34:14.209   579   605 W ziparchive: Unable to open '/data/app/~~0w3aSwmxbNpfRHmqdS71dg==/org.yuanzheng.singleplayer-Oc0z7gRmoHkMWXF3z9N5vQ==/base.dm': No such file or directory
+10-25 06:34:14.211   579   605 I ActivityTaskManager: Displayed org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher for user 0: +817ms
+10-25 06:34:14.215   579   606 V GameManagerService: Game power mode ON (only games in foreground)
+10-25 06:34:14.216  1207  1207 D BaseDepthController: setSurface:
+10-25 06:34:14.216  1207  1207 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+10-25 06:34:14.216  1207  1207 D BaseDepthController: 	mSurface: null
+10-25 06:34:14.216  1207  1207 D BaseDepthController: mSurface is null and mCurrentBlur is: 0
+10-25 06:34:14.217  1207  1207 D StateManager: goToState - fromState: Normal, toState: Normal, partial trace:
+10-25 06:34:14.217  1207  1207 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:453)
+10-25 06:34:14.217  1207  1207 D StateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(StateManager.java:444)
+10-25 06:34:14.217  1207  1207 D StateManager: 	at com.android.launcher3.statemanager.StatefulActivity.onStop(StatefulActivity.java:119)
+10-25 06:34:14.218  1207  1207 D StatsLog: LAUNCHER_ONSTOP
+10-25 06:34:14.218   579   656 I AppWidgetServiceImpl: setAppWidgetHidden() 0
+10-25 06:34:14.221  1062  2385 D TrafficStats: tagSocket(95) with statsTag=0xffffff81, statsUid=-1
+10-25 06:34:14.237  2423  2431 I ng.singleplayer: Compiler allocated 4219KB to compile void android.widget.TextView.<init>(android.content.Context, android.util.AttributeSet, int, int)
+10-25 06:34:14.244   579   608 I DisplayDeviceRepository: Display device changed: DisplayDeviceInfo{"Built-in Screen": uniqueId="local:4619827259835644672", 720 x 1280, modeId 1, renderFrameRate 60.000004, defaultModeId 1, userPreferredModeId -1, supportedModes [{id=1, width=720, height=1280, fps=60.000004, vsync=60.000004, synthetic=false, alternativeRefreshRates=[], supportedHdrTypes=[]}], colorMode 0, supportedColorModes [0], hdrCapabilities HdrCapabilities{mSupportedHdrTypes=[], mMaxLuminance=500.0, mMaxAverageLuminance=500.0, mMinLuminance=0.0}, allmSupported false, gameContentTypeSupported false, density 240, 240.0 x 240.0 dpi, appVsyncOff 1000000, presDeadline 16666666, cutout DisplayCutout{insets=Rect(0, 128 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(492, 0 - 610, 128), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=720 displayHeight=1280 physicalDisplayWidth=720 physicalDisplayHeight=1280 density={1.5} cutoutSpec={M 507,64 a 33,33 0 1 0 66,0 33,33 0 1 0 -66,0 Z @left} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={1.0}}} sideOverrides={}}, touch INTERNAL, rotation 0, type INTERNAL, address {port=0, model=0x401cec6a7a2b7b}, deviceProductInfo DeviceProductInfo{name=EMU_display_0, manufacturerPnpId=GGL, productId=1, modelYear=null, manufactureDate=ManufactureDate{week=27, year=2006}, connectionToSinkType=0}, state ON, committedState ON, frameRateOverride {uid=10148 frameRateHz=60.000004} , brightnessMinimum 0.0, brightnessMaximum 1.0, brightnessDefault 0.39763778, hdrSdrRatio NaN, roundedCorners RoundedCorners{[RoundedCorner{position=TopLeft, radius=28, center=Point(28, 28)}, RoundedCorner{position=TopRight, radius=28, center=Point(692, 28)}, RoundedCorner{position=BottomRight, radius=28, center=Point(692, 1252)}, RoundedCorner{position=BottomLeft, radius=28, center=Point(28, 1252)}]}, FLAG_ALLOWED_TO_BE_DEFAULT_DISPLAY, FLAG_ROTATES_WITH_CONTENT, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS, FLAG_TRUSTED, installOrientation 0, displayShape DisplayShape{ spec=42744253 displayWidth=720 displayHeight=1280 physicalPixelDisplaySizeRatio=1.0 rotation=0 offsetX=0 offsetY=0 scale=1.0}}
+10-25 06:34:14.254   579   703 I ImeTracker: org.yuanzheng.singleplayer:62aad892: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false
+10-25 06:34:14.255   579   703 I ImeTracker: org.yuanzheng.singleplayer:62aad892: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-25 06:34:14.560  2423  2423 W InteractionJankMonitor: Initializing without READ_DEVICE_CONFIG permission. enabled=true, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=org.yuanzheng.singleplayer
+10-25 06:34:14.600   959  1057 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda11@54267ad
+10-25 06:34:14.600   579  1950 D CoreBackPreview: Window{8cb6c68 u0 Splash Screen org.yuanzheng.singleplayer EXITING}: Setting back callback null
+10-25 06:34:14.601   579   656 W InputManager-JNI: Input channel object '8cb6c68 Splash Screen org.yuanzheng.singleplayer (client)' was disposed without first being removed with the input manager!
+10-25 06:34:14.603   381   437 I netd    : tetherGetStats() -> {[]} <0.47ms>
+10-25 06:34:14.611  2423  2431 I ng.singleplayer: Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+10-25 06:34:14.651   959  1057 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 8932, 0, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:34:14.652   959  1057 W FrameTracker: Missing HWUI jank callback for vsyncId: 8932, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:34:14.652   959  1057 W FrameTracker: Missed SF frame:PREDICTION_ERROR, 9077, 4351018, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:34:14.652   959  1057 W FrameTracker: Missed App frame:UNKNOWN: 24, 9099, 0, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:34:14.652   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 24, 9099, 0, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:34:14.652   959  1057 W FrameTracker: Missing HWUI jank callback for vsyncId: 9099, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:34:14.652   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 9121, 0, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:34:14.652   959  1057 W FrameTracker: Missing HWUI jank callback for vsyncId: 9121, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:34:14.652   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 9143, 38623020, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:34:14.652   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 9165, 38133154, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:34:14.652   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 9187, 40330488, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:34:14.652   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 9209, 40999122, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:34:14.653   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 9231, 39576056, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:34:14.653   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 9253, 38444290, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:34:14.653   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 9275, 39201624, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:34:14.653   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 9297, 38378958, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:34:14.653   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 9319, 38373692, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:34:14.653   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 9341, 40689726, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:34:14.653   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 9363, 38927660, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:34:14.653   959  1057 W FrameTracker: Missed SF frame:UNKNOWN: 80, 9385, 36879394, CUJ=J<SPLASHSCREEN_EXIT_ANIM>
+10-25 06:34:14.653   959  1021 V PerfettoTrigger: Not triggering com.android.telemetry.interaction-jank-monitor-39 - not enough time since last trigger
+10-25 06:34:14.780   959  1097 D EGL_emulation: app_time_stats: avg=121.30ms min=1.39ms max=1151.44ms count=10
+10-25 06:34:14.791   579   608 I DisplayDeviceRepository: Display device changed: DisplayDeviceInfo{"Built-in Screen": uniqueId="local:4619827259835644672", 720 x 1280, modeId 1, renderFrameRate 60.000004, defaultModeId 1, userPreferredModeId -1, supportedModes [{id=1, width=720, height=1280, fps=60.000004, vsync=60.000004, synthetic=false, alternativeRefreshRates=[], supportedHdrTypes=[]}], colorMode 0, supportedColorModes [0], hdrCapabilities HdrCapabilities{mSupportedHdrTypes=[], mMaxLuminance=500.0, mMaxAverageLuminance=500.0, mMinLuminance=0.0}, allmSupported false, gameContentTypeSupported false, density 240, 240.0 x 240.0 dpi, appVsyncOff 1000000, presDeadline 16666666, cutout DisplayCutout{insets=Rect(0, 128 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(492, 0 - 610, 128), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=720 displayHeight=1280 physicalDisplayWidth=720 physicalDisplayHeight=1280 density={1.5} cutoutSpec={M 507,64 a 33,33 0 1 0 66,0 33,33 0 1 0 -66,0 Z @left} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={1.0}}} sideOverrides={}}, touch INTERNAL, rotation 0, type INTERNAL, address {port=0, model=0x401cec6a7a2b7b}, deviceProductInfo DeviceProductInfo{name=EMU_display_0, manufacturerPnpId=GGL, productId=1, modelYear=null, manufactureDate=ManufactureDate{week=27, year=2006}, connectionToSinkType=0}, state ON, committedState ON, frameRateOverride , brightnessMinimum 0.0, brightnessMaximum 1.0, brightnessDefault 0.39763778, hdrSdrRatio NaN, roundedCorners RoundedCorners{[RoundedCorner{position=TopLeft, radius=28, center=Point(28, 28)}, RoundedCorner{position=TopRight, radius=28, center=Point(692, 28)}, RoundedCorner{position=BottomRight, radius=28, center=Point(692, 1252)}, RoundedCorner{position=BottomLeft, radius=28, center=Point(28, 1252)}]}, FLAG_ALLOWED_TO_BE_DEFAULT_DISPLAY, FLAG_ROTATES_WITH_CONTENT, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS, FLAG_TRUSTED, installOrientation 0, displayShape DisplayShape{ spec=42744253 displayWidth=720 displayHeight=1280 physicalPixelDisplaySizeRatio=1.0 rotation=0 offsetX=0 offsetY=0 scale=1.0}}
+10-25 06:34:14.809   579   608 I DisplayDeviceRepository: Display device changed: DisplayDeviceInfo{"Built-in Screen": uniqueId="local:4619827259835644672", 720 x 1280, modeId 1, renderFrameRate 60.000004, defaultModeId 1, userPreferredModeId -1, supportedModes [{id=1, width=720, height=1280, fps=60.000004, vsync=60.000004, synthetic=false, alternativeRefreshRates=[], supportedHdrTypes=[]}], colorMode 0, supportedColorModes [0], hdrCapabilities HdrCapabilities{mSupportedHdrTypes=[], mMaxLuminance=500.0, mMaxAverageLuminance=500.0, mMinLuminance=0.0}, allmSupported false, gameContentTypeSupported false, density 240, 240.0 x 240.0 dpi, appVsyncOff 1000000, presDeadline 16666666, cutout DisplayCutout{insets=Rect(0, 128 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(492, 0 - 610, 128), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=720 displayHeight=1280 physicalDisplayWidth=720 physicalDisplayHeight=1280 density={1.5} cutoutSpec={M 507,64 a 33,33 0 1 0 66,0 33,33 0 1 0 -66,0 Z @left} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={1.0}}} sideOverrides={}}, touch INTERNAL, rotation 0, type INTERNAL, address {port=0, model=0x401cec6a7a2b7b}, deviceProductInfo DeviceProductInfo{name=EMU_display_0, manufacturerPnpId=GGL, productId=1, modelYear=null, manufactureDate=ManufactureDate{week=27, year=2006}, connectionToSinkType=0}, state ON, committedState ON, frameRateOverride {uid=10148 frameRateHz=60.000004} , brightnessMinimum 0.0, brightnessMaximum 1.0, brightnessDefault 0.39763778, hdrSdrRatio NaN, roundedCorners RoundedCorners{[RoundedCorner{position=TopLeft, radius=28, center=Point(28, 28)}, RoundedCorner{position=TopRight, radius=28, center=Point(692, 28)}, RoundedCorner{position=BottomRight, radius=28, center=Point(692, 1252)}, RoundedCorner{position=BottomLeft, radius=28, center=Point(28, 1252)}]}, FLAG_ALLOWED_TO_BE_DEFAULT_DISPLAY, FLAG_ROTATES_WITH_CONTENT, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS, FLAG_TRUSTED, installOrientation 0, displayShape DisplayShape{ spec=42744253 displayWidth=720 displayHeight=1280 physicalPixelDisplaySizeRatio=1.0 rotation=0 offsetX=0 offsetY=0 scale=1.0}}
+10-25 06:34:14.822  2423  2451 I godot   : OpenGL API OpenGL ES 3.1 (4.5.0 Core Profile Context 23.20.60.03.240314) - Compatibility - Using Device: Google (ATI Technologies Inc.) - Android Emulator OpenGL ES Translator (AMD Radeon 780M Graphics)
+10-25 06:34:14.824  2423  2451 D ng.singleplayer: PlayerBase::PlayerBase()
+10-25 06:34:14.825  2423  2451 D ng.singleplayer: TrackPlayerBase::TrackPlayerBase()
+10-25 06:34:14.825  2423  2451 I libOpenSLES: Emulating old channel mask behavior (ignoring positional mask 0x3, using default mask 0x3 based on channel count of 2)
+10-25 06:34:14.830   446   497 W AudioFlinger: createTrack_l(): mismatch between requested flags (00000104) and output flags (00000002)
+10-25 06:34:14.830   446   497 D AudioFlinger: Client defaulted notificationFrames to 882 for frameCount 4012
+10-25 06:34:14.840   446   497 D audioserver: logFgsApiBegin: FGS Logger Transaction failed, -129
+10-25 06:34:14.841  2423  2451 I godot   : 
+10-25 06:34:14.846   579   606 D CoreBackPreview: Window{9dc9a17 u0 ImmersiveModeConfirmation}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.WindowOnBackInvokedDispatcher$OnBackInvokedCallbackWrapper@ed2aba0, mPriority=0, mIsAnimationCallback=false}
+10-25 06:34:14.850   579  2464 I EGL_emulation: Opening libGLESv1_CM_emulation.so
+10-25 06:34:14.851   579  2464 I EGL_emulation: Opening libGLESv2_emulation.so
+10-25 06:34:14.874   579  2464 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+10-25 06:34:14.874   579  2464 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+10-25 06:34:14.892   446   548 D AudioFlinger: mixer(0x7c7a4d6468e0) throttle end: throttle time(9)
+10-25 06:34:14.937   446   548 D AudioFlinger: mixer(0x7c7a4d6468e0) throttle end: throttle time(14)
+10-25 06:34:14.965   579   703 I ImeTracker: android:6a2e0455: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false
+10-25 06:34:14.965   579   703 I ImeTracker: android:6a2e0455: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-25 06:34:15.085  2423  2454 E SurfaceSyncGroup: Failed to receive transaction ready in 1000ms. Marking SurfaceSyncGroup(wmsSync-VRI[GodotAppLauncher]#1) as ready
+10-25 06:34:15.085  2423  2454 E SurfaceSyncGroup: Failed to receive transaction ready in 1000ms. Marking SurfaceSyncGroup(VRI[GodotAppLauncher]#2) as ready
+10-25 06:34:15.087  2423  2454 E SurfaceSyncGroup: Failed to receive transaction ready in 1000ms. Marking SurfaceSyncGroup(SurfaceView[org.yuanzheng.singleplayer/com.godot.game.GodotAppLauncher]#0) as ready
+10-25 06:34:15.233   381  2476 I resolv  : GetAddrInfoHandler::run: {100 983140 100 983140 1073 1}
+10-25 06:34:15.233   381  2477 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-25 06:34:15.234   381  2477 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x761c3e85b310
+10-25 06:34:15.234   381  2477 I resolv  : doQuery: rcode=0, ancount=1, return value=60
+10-25 06:34:15.234   381  2478 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-25 06:34:15.234   381  2478 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x761cde869320
+10-25 06:34:15.234   381  2478 I resolv  : doQuery: rcode=0, ancount=1, return value=48
+10-25 06:34:15.235  1062  2384 D TrafficStats: tagSocket(122) with statsTag=0xffffff81, statsUid=-1
+10-25 06:34:15.346   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:15.347   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:15.347   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10088} in 1ms
+10-25 06:34:15.347   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:15.347   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:15.347   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={20088} in 1ms
+10-25 06:34:15.381   579   905 D SntpClient: request time failed: java.net.SocketTimeoutException: Poll timed out
+10-25 06:34:15.381   579   905 D TrafficStats: tagSocket(557) with statsTag=0xffffff41, statsUid=-1
+10-25 06:34:16.056   449   457 W GpuWork : Failed to attach bpf program to power/gpu_work_period tracepoint [2(No such file or directory)]
+10-25 06:34:16.407   579  1803 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-25 06:34:16.922   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:16.923   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:16.925   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:16.926   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:16.926   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:16.931  1810  1865 D WM-NetworkStateTracker: Network capabilities changed: [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&PARTIAL_CONNECTIVITY&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=12000Kbps LinkDnBandwidth>=30000Kbps TransportInfo: <SSID: <unknown ssid>, BSSID: 02:00:00:00:00:00, MAC: 02:00:00:00:00:00, IP: /10.0.2.16, Security type: 0, Supplicant state: COMPLETED, Wi-Fi standard: legacy, RSSI: -50, Link speed: 6Mbps, Tx Link speed: 6Mbps, Max Supported Tx Link speed: 54Mbps, Rx Link speed: 2Mbps, Max Supported Rx Link speed: 54Mbps, Frequency: 2437MHz, Net ID: -1, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: -1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none><none>MLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -50 UnderlyingNetworks: Null]
+10-25 06:34:16.931  2207  2244 D WM-NetworkStateTracker: Network capabilities changed: [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&PARTIAL_CONNECTIVITY&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=12000Kbps LinkDnBandwidth>=30000Kbps TransportInfo: <SSID: <unknown ssid>, BSSID: 02:00:00:00:00:00, MAC: 02:00:00:00:00:00, IP: /10.0.2.16, Security type: 0, Supplicant state: COMPLETED, Wi-Fi standard: legacy, RSSI: -50, Link speed: 6Mbps, Tx Link speed: 6Mbps, Max Supported Tx Link speed: 54Mbps, Rx Link speed: 2Mbps, Max Supported Rx Link speed: 54Mbps, Frequency: 2437MHz, Net ID: -1, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: -1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none><none>MLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -50 UnderlyingNetworks: Null]
+10-25 06:34:17.158  1062  2384 D NetworkMonitor/100: PROBE_FALLBACK http://www.google.com/gen_204 time=1926ms ret=204 request={Connection=[close], User-Agent=[Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.32 Safari/537.36]} headers={null=[HTTP/1.1 204 No Content], Connection=[close], Content-Security-Policy=[object-src 'none';base-uri 'self';script-src 'nonce-yhVJBqKcRWZuP2NZdTn9xA' 'strict-dynamic' 'report-sample' 'unsafe-eval' 'unsafe-inline' https: http:;report-uri https://csp.withgoogle.com/csp/gws/other], Content-Type=[text/html; charset=UTF-8], Date=[Sun, 25 Oct 2026 06:34:19 GMT], Permissions-Policy=[unload=()], Server=[gws], Set-Cookie=[__Secure-STRP=ABNhA6gd7MAHhqUwG3yRW1f2H7site_CZWymQAGyJKHf_noZ3ihANbn1mNkNd0yMzgLFkf6iSKTPv8QqvwZAJUiWXeZAb9r-l3T3; expires=Sun, 25-Oct-2026 06:39:19 GMT; path=/; domain=.google.com; Secure; SameSite=strict, SEARCH_SAMESITE=CgQIj6IB; expires=Fri, 23-Apr-2027 06:34:19 GMT; path=/; domain=.google.com; SameSite=strict], X-Android-Received-Millis=[1792910057157], X-Android-Response-Source=[NETWORK 204], X-Android-Selected-Protocol=[http/1.1], X-Android-Sent-Millis=[1792910055239], X-Frame-Options=[SAMEORIGIN], X-Xss-Protection=[0]}
+10-25 06:34:17.340   579   681 D ActivityManager: freezing 1683 com.android.quicksearchbox
+10-25 06:34:17.342   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:17.342   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:17.342   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10105} in 1ms
+10-25 06:34:17.344  2423  2451 V Godot   : OnGodotSetupCompleted
+10-25 06:34:17.405  2423  2451 I godot   : ANDROID_DEEP_READY { "os": "Android", "version": "35.12368160", "model": "Android SDK built for x86_64", "window": "(720, 1280)", "viewport": "[P: (0.0, 0.0), S: (480.0, 853.0)]", "safe": "[P: (0.0, 85.3), S: (480.0, 767.7)]", "system_safe": "[P: (0, 128), S: (720, 1152)]", "cutouts": "[[P: (492.0, 0.0), S: (118.0, 128.0)]]", "mix_rate": 44100.0 }
+10-25 06:34:17.406  2423  2451 V Godot   : OnGodotMainLoopStarted
+10-25 06:34:17.411  2423  2451 D EGL_emulation: app_time_stats: avg=1136.53ms min=7.30ms max=2265.77ms count=2
+10-25 06:34:17.514   381   437 I netd    : setProcSysNet(4, 2, wlan0, retrans_time_ms, 750) <0.10ms>
+10-25 06:34:17.515   381   437 I netd    : setProcSysNet(4, 2, wlan0, ucast_solicit, 10) <0.03ms>
+10-25 06:34:17.515   381   437 I netd    : setProcSysNet(6, 2, wlan0, retrans_time_ms, 750) <0.03ms>
+10-25 06:34:17.516   381   437 I netd    : setProcSysNet(6, 2, wlan0, ucast_solicit, 10) <0.02ms>
+10-25 06:34:17.611   579   614 D OomAdjuster: Not killing cached processes
+10-25 06:34:17.656  1106  1114 W droid.bluetooth: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NYS0.frro' with 1 weak references
+10-25 06:34:17.657  1106  1114 W droid.bluetooth: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-MWAs.frro' with 1 weak references
+10-25 06:34:17.657  1106  1114 W droid.bluetooth: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-AB1M.frro' with 1 weak references
+10-25 06:34:17.658   579   607 I DropBoxManagerService: add tag=system_app_strictmode isTagEnabled=true flags=0x2
+10-25 06:34:18.032     0     0 I logd    : logdr: UID=0 GID=0 PID=2502 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:18.043  2423  2451 I godot   : ANDROID_DEEP_BEGIN final_phone16 { "id": "final_phone16", "suite": "issue_fix" }
+10-25 06:34:18.047  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:b4fcfa3a: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+10-25 06:34:18.047  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:b4fcfa3a: onFailed at PHASE_CLIENT_VIEW_SERVED
+10-25 06:34:18.092   579   614 W VoiceInteractionManager: no available voice recognition services found for user 0
+10-25 06:34:18.092   579   920 D ShortcutService: received package broadcast intent: Intent { act=android.intent.action.PACKAGE_CHANGED dat=package: flg=0x45000010 (has extras) }
+10-25 06:34:18.092   579   920 D ShortcutService: changing package: com.android.carrierdefaultapp userId0
+10-25 06:34:18.092   579   920 D ShortcutService: handlePackageChanged: com.android.carrierdefaultapp user=0
+10-25 06:34:18.093   579   920 D ShortcutService: rescanPackageIfNeeded 0@com.android.carrierdefaultapp, forceRescan=true , isNewApp=true
+10-25 06:34:18.094   579   920 D ShortcutService: Package com.android.carrierdefaultapp has 0 manifest shortcut(s), and 0 share target(s)
+10-25 06:34:18.094   579   614 W MagnificationConnectionManager: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+10-25 06:34:18.094  1207  1231 D PackageUpdatedTask: Package updated: mOp=UPDATE packages=[com.android.carrierdefaultapp]
+10-25 06:34:18.097  1132  1132 D CarrierSvcBindHelper: onPackageModified: com.android.carrierdefaultapp
+10-25 06:34:18.095   579   903 I AppWidgetServiceImpl: Received broadcast: android.intent.action.PACKAGE_CHANGED on user 0
+10-25 06:34:18.098   978  2284 I PermissionControllerServiceImpl: Updating user sensitive for uid 10088
+10-25 06:34:18.099   579   579 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 06:34:18.100  1132  1132 D CarrierSvcBindHelper: No carrier app for: 0
+10-25 06:34:18.102   959   959 D ControlsListingControllerImpl: ServiceConfig reloaded, count: 0
+10-25 06:34:18.102  1207  1231 W AllAppsList: updatePromiseInstallInfo: no Activities matched updated package, removing all apps from package=com.android.carrierdefaultapp
+10-25 06:34:18.104  1132  1132 E SmsApplication: com.android.messaging lost android:receive_wap_push:  (fixing)
+10-25 06:34:18.104   579   601 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 10114, code = RECEIVE_WAP_PUSH, mode = allow, callingUid = 1001, oldMode = allow
+10-25 06:34:18.105  1132  1132 E SmsApplication: com.android.messaging lost android:read_cell_broadcasts:  (fixing)
+10-25 06:34:18.105   579   601 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 10114, code = READ_CELL_BROADCASTS, mode = allow, callingUid = 1001, oldMode = allow
+10-25 06:34:18.110  1132  1132 E CellBroadcastUtils: getDefaultCellBroadcastReceiverPackageName: no package found
+10-25 06:34:18.110   579   601 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = READ_SMS, mode = allow, callingUid = 1001, oldMode = allow
+10-25 06:34:18.112   579   601 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = RECEIVE_SMS, mode = allow, callingUid = 1001, oldMode = allow
+10-25 06:34:18.112   579  1950 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = RECEIVE_WAP_PUSH, mode = allow, callingUid = 1001, oldMode = allow
+10-25 06:34:18.113   579  1950 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = SEND_SMS, mode = allow, callingUid = 1001, oldMode = allow
+10-25 06:34:18.114   579   601 W AppOpService: Ignored setUidMode call for runtime permission app op: uid = 1001, code = READ_CELL_BROADCASTS, mode = allow, callingUid = 1001, oldMode = allow
+10-25 06:34:18.116  1132  1699 D ImsResolver: maybeAddedImsService, packageName: com.android.carrierdefaultapp
+10-25 06:34:18.119   579   867 W FileUtils: Failed to chmod(/data/misc_ce/0/apexdata/com.android.wifi/WifiConfigStoreNetworkSuggestions.xml, 384): 
+10-25 06:34:18.119   579   867 W FileUtils: android.system.ErrnoException: chmod failed: ENOENT (No such file or directory)
+10-25 06:34:18.119   579   867 W FileUtils: 	at libcore.io.Linux.chmod(Native Method)
+10-25 06:34:18.119   579   867 W FileUtils: 	at libcore.io.ForwardingOs.chmod(ForwardingOs.java:165)
+10-25 06:34:18.119   579   867 W FileUtils: 	at libcore.io.BlockGuardOs.chmod(BlockGuardOs.java:83)
+10-25 06:34:18.119   579   867 W FileUtils: 	at android.system.Os.chmod(Os.java:119)
+10-25 06:34:18.119   579   867 W FileUtils: 	at com.android.server.wifi.util.FileUtils.chmod(FileUtils.java:44)
+10-25 06:34:18.119   579   867 W FileUtils: 	at com.android.server.wifi.WifiConfigStore$StoreFile.writeBufferedRawData(WifiConfigStore.java:864)
+10-25 06:34:18.119   579   867 W FileUtils: 	at com.android.server.wifi.WifiConfigStore.writeBufferedData(WifiConfigStore.java:435)
+10-25 06:34:18.119   579   867 W FileUtils: 	at com.android.server.wifi.WifiConfigStore.write(WifiConfigStore.java:386)
+10-25 06:34:18.119   579   867 W FileUtils: 	at com.android.server.wifi.WifiConfigManager.writeBufferedData(WifiConfigManager.java:3866)
+10-25 06:34:18.119   579   867 W FileUtils: 	at com.android.server.wifi.WifiConfigManager.-$$Nest$mwriteBufferedData(WifiConfigManager.java:0)
+10-25 06:34:18.119   579   867 W FileUtils: 	at com.android.server.wifi.WifiConfigManager$1.onAlarm(WifiConfigManager.java:136)
+10-25 06:34:18.119   579   867 W FileUtils: 	at android.app.AlarmManager$ListenerWrapper.run(AlarmManager.java:375)
+10-25 06:34:18.119   579   867 W FileUtils: 	at android.os.Handler.handleCallback(Handler.java:959)
+10-25 06:34:18.119   579   867 W FileUtils: 	at android.os.Handler.dispatchMessage(Handler.java:100)
+10-25 06:34:18.119   579   867 W FileUtils: 	at com.android.server.wifi.RunnerHandler.dispatchMessage(RunnerHandler.java:124)
+10-25 06:34:18.119   579   867 W FileUtils: 	at android.os.Looper.loopOnce(Looper.java:232)
+10-25 06:34:18.119   579   867 W FileUtils: 	at android.os.Looper.loop(Looper.java:317)
+10-25 06:34:18.119   579   867 W FileUtils: 	at android.os.HandlerThread.run(HandlerThread.java:85)
+10-25 06:34:18.123   579   867 D WifiConfigStore: Writing to stores completed in 13 ms.
+10-25 06:34:18.124  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:4834bc34: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+10-25 06:34:18.124  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:4834bc34: onFailed at PHASE_CLIENT_VIEW_SERVED
+10-25 06:34:18.135   579   876 I ConnectivityService: Update score for net 101 : +EVER_EVALUATED
+10-25 06:34:18.135   579   876 D ConnectivityService: NetReassign [no changes] [c 0] [a 0] [i 0]
+10-25 06:34:18.709     0     0 I logd    : logdr: UID=0 GID=0 PID=2513 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:18.736   579   681 D ActivityManager: freezing 2138 com.android.carrierconfig
+10-25 06:34:18.738   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:18.738   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:18.738   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10118} in 1ms
+10-25 06:34:18.897  2423  2451 D EGL_emulation: app_time_stats: avg=17.67ms min=0.77ms max=720.56ms count=47
+10-25 06:34:18.916  2320  2320 W adbd    : timeout expired while flushing socket, closing
+10-25 06:34:19.387     0     0 I logd    : logdr: UID=0 GID=0 PID=2520 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:19.372  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/login
+10-25 06:34:19.374  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:dd7f0205: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+10-25 06:34:19.374  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:dd7f0205: onFailed at PHASE_CLIENT_VIEW_SERVED
+10-25 06:34:19.752  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/currency
+10-25 06:34:19.816  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/currency_gold
+10-25 06:34:19.818  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:cc36f2aa: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+10-25 06:34:19.818  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:cc36f2aa: onFailed at PHASE_CLIENT_VIEW_SERVED
+10-25 06:34:19.911  2423  2451 D EGL_emulation: app_time_stats: avg=11.35ms min=1.25ms max=232.29ms count=44
+10-25 06:34:19.966     0     0 I init    : Untracked pid 2498 received signal 1
+10-25 06:34:19.966     0     0 I init    : Untracked pid 2498 did not have an associated service entry and will not be reaped
+10-25 06:34:19.930   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:19.930   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:19.931   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:19.931   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:19.931   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:19.935  1810  1865 D WM-NetworkStateTracker: Network capabilities changed: [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&PARTIAL_CONNECTIVITY&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=12000Kbps LinkDnBandwidth>=30000Kbps TransportInfo: <SSID: <unknown ssid>, BSSID: 02:00:00:00:00:00, MAC: 02:00:00:00:00:00, IP: /10.0.2.16, Security type: 0, Supplicant state: COMPLETED, Wi-Fi standard: legacy, RSSI: -50, Link speed: 1Mbps, Tx Link speed: 1Mbps, Max Supported Tx Link speed: 54Mbps, Rx Link speed: 2Mbps, Max Supported Rx Link speed: 54Mbps, Frequency: 2437MHz, Net ID: -1, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: -1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none><none>MLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -50 UnderlyingNetworks: Null]
+10-25 06:34:19.935  2207  2244 D WM-NetworkStateTracker: Network capabilities changed: [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&PARTIAL_CONNECTIVITY&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=12000Kbps LinkDnBandwidth>=30000Kbps TransportInfo: <SSID: <unknown ssid>, BSSID: 02:00:00:00:00:00, MAC: 02:00:00:00:00:00, IP: /10.0.2.16, Security type: 0, Supplicant state: COMPLETED, Wi-Fi standard: legacy, RSSI: -50, Link speed: 1Mbps, Tx Link speed: 1Mbps, Max Supported Tx Link speed: 54Mbps, Rx Link speed: 2Mbps, Max Supported Rx Link speed: 54Mbps, Frequency: 2437MHz, Net ID: -1, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: -1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none><none>MLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -50 UnderlyingNetworks: Null]
+10-25 06:34:20.066     0     0 I logd    : logdr: UID=0 GID=0 PID=2526 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:20.037   579   932 I SdkSandboxManager: Reconciling sdk data package directories for 0
+10-25 06:34:20.065  1062  2385 D NetworkMonitor/100: PROBE_HTTPS https://www.google.com/generate_204 Probe failed with exception javax.net.ssl.SSLHandshakeException: connection closed
+10-25 06:34:20.066  1062  2384 D NetworkMonitor/100: isCaptivePortal: isSuccessful()=false isPortal()=false RedirectUrl=null isPartialConnectivity()=true Time=7837ms
+10-25 06:34:20.066   579   876 D ConnectivityService: [100 WIFI] validation failed
+10-25 06:34:20.186  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/currency
+10-25 06:34:20.198  1062  2305 D NetworkMonitor/101: PROBE_HTTPS https://www.google.com/generate_204 Probe failed with exception java.net.SocketTimeoutException: failed to connect to www.google.com/157.240.7.20 (port 443) from /10.0.2.15 (port 51866) after 10000ms
+10-25 06:34:20.247  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/currency_expedition
+10-25 06:34:20.249  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:79baf83b: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+10-25 06:34:20.249  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:79baf83b: onFailed at PHASE_CLIENT_VIEW_SERVED
+10-25 06:34:20.343   579   681 D ActivityManager: freezing 2270 com.android.carrierdefaultapp
+10-25 06:34:20.345   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:20.345   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:20.345   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10088} in 1ms
+10-25 06:34:20.388   579   905 D SntpClient: request time failed: java.net.SocketTimeoutException: Poll timed out
+10-25 06:34:20.389   579   905 D TrafficStats: tagSocket(557) with statsTag=0xffffff41, statsUid=-1
+10-25 06:34:20.618  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/currency
+10-25 06:34:20.679  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/currency_soul
+10-25 06:34:20.680  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:22b9a2ff: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+10-25 06:34:20.680  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:22b9a2ff: onFailed at PHASE_CLIENT_VIEW_SERVED
+10-25 06:34:20.744     0     0 I logd    : logdr: UID=0 GID=0 PID=2532 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:20.926  2423  2451 D EGL_emulation: app_time_stats: avg=6.94ms min=1.09ms max=62.34ms count=51
+10-25 06:34:20.938   579  1950 D WifiNl80211Manager: Scan result ready event
+10-25 06:34:20.938   579  1950 D WifiNative: Scan result ready event
+10-25 06:34:20.940   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:20.941   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:20.941   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:20.946   579   867 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+10-25 06:34:20.991   198   999 I keystore2: system/security/keystore2/watchdog/src/lib.rs:319 - Watchdog thread idle -> terminating. Have a great day.
+10-25 06:34:21.054  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/currency
+10-25 06:34:21.118  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/currency_honor
+10-25 06:34:21.121  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:320832c5: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+10-25 06:34:21.121  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:320832c5: onFailed at PHASE_CLIENT_VIEW_SERVED
+10-25 06:34:21.429     0     0 I logd    : logdr: UID=0 GID=0 PID=2539 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:21.771   579  1950 D CompatChangeReporter: Compat change id reported: 311208629; UID 10125; state: ENABLED
+10-25 06:34:21.846  2423  2451 E godot   : WARNING: Failed to load cached shader, recompiling.
+10-25 06:34:21.846  2423  2451 E godot   :    at: _load_from_cache (drivers/gles3/shader_gles3.cpp:615)
+10-25 06:34:21.879  1425  1437 W or.multidisplay: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NYS0.frro' with 1 weak references
+10-25 06:34:21.879  1425  1437 W or.multidisplay: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-MWAs.frro' with 1 weak references
+10-25 06:34:21.879  1425  1437 W or.multidisplay: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-AB1M.frro' with 1 weak references
+10-25 06:34:22.076  1062  2547 D TrafficStats: tagSocket(95) with statsTag=0xffffff81, statsUid=-1
+10-25 06:34:22.077  1062  2548 D TrafficStats: tagSocket(116) with statsTag=0xffffff81, statsUid=-1
+10-25 06:34:22.108  1062  2547 D TrafficStats: tagSocket(95) with statsTag=0xffffff81, statsUid=-1
+10-25 06:34:22.110  1062  2548 D TrafficStats: tagSocket(116) with statsTag=0xffffff81, statsUid=-1
+10-25 06:34:22.113   381  2549 I resolv  : ResNSendHandler::run: 0 / {100 983140 100 983140 1073 1}
+10-25 06:34:22.113   381  2549 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x761bee861010
+10-25 06:34:22.114   381  2550 I resolv  : ResNSendHandler::run: 0 / {100 983140 100 983140 1073 1}
+10-25 06:34:22.114   381  2550 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x761c3e85b310
+10-25 06:34:22.117   381  2551 I resolv  : ResNSendHandler::run: 0 / {100 983140 100 983140 1073 1}
+10-25 06:34:22.117   381  2551 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x761c8e8657b0
+10-25 06:34:22.118  1062  1062 D TrafficStats: tagSocket(116) with statsTag=0xffffffff, statsUid=-1
+10-25 06:34:22.118   381  2552 I resolv  : ResNSendHandler::run: 0 / {100 983140 100 983140 1073 1}
+10-25 06:34:22.118   381  2552 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x761cde869320
+10-25 06:34:22.124  1062  1062 D TrafficStats: tagSocket(95) with statsTag=0xffffffff, statsUid=-1
+10-25 06:34:22.124  1062  2548 D NetworkMonitor/100: PROBE_DNS connectivitycheck.gstatic.com 49ms OK 58.63.233.98
+10-25 06:34:22.126  1062  1062 D TrafficStats: tagSocket(116) with statsTag=0xffffffff, statsUid=-1
+10-25 06:34:22.126   381  2553 I resolv  : GetAddrInfoHandler::run: {100 983140 100 983140 1073 1}
+10-25 06:34:22.127   381  2555 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-25 06:34:22.127   381  2554 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-25 06:34:22.127   381  2554 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x761bee861010
+10-25 06:34:22.127   381  2554 I resolv  : doQuery: rcode=0, ancount=0, return value=107
+10-25 06:34:22.127   381  2555 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x761c8e8657b0
+10-25 06:34:22.127   381  2555 I resolv  : doQuery: rcode=0, ancount=1, return value=63
+10-25 06:34:22.129  1062  2548 D TrafficStats: tagSocket(95) with statsTag=0xffffff81, statsUid=-1
+10-25 06:34:22.131  1062  2547 D NetworkMonitor/100: PROBE_DNS www.google.com 56ms OK 157.240.7.20,2001::1
+10-25 06:34:22.134   381  2556 I resolv  : GetAddrInfoHandler::run: {100 983140 100 983140 1073 1}
+10-25 06:34:22.136   381  2557 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-25 06:34:22.137   381  2557 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x761c3e85b310
+10-25 06:34:22.137   381  2558 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-25 06:34:22.137   381  2557 I resolv  : doQuery: rcode=0, ancount=1, return value=60
+10-25 06:34:22.137   381  2558 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x761cde869320
+10-25 06:34:22.137   381  2558 I resolv  : doQuery: rcode=0, ancount=1, return value=48
+10-25 06:34:22.138  1062  2547 D TrafficStats: tagSocket(116) with statsTag=0xffffff81, statsUid=-1
+10-25 06:34:22.159  1845  1852 W android.traceur: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NYS0.frro' with 1 weak references
+10-25 06:34:22.160  1845  1852 W android.traceur: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-MWAs.frro' with 1 weak references
+10-25 06:34:22.160  1845  1852 W android.traceur: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-AB1M.frro' with 1 weak references
+10-25 06:34:22.213     0     0 I logd    : logdr: UID=0 GID=0 PID=2559 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:22.177   579  1034 W OverlayManager: service 'idmap' died
+10-25 06:34:22.222     0     0 I init    : Sending signal 9 to service 'idmap2d' (pid 485) process group...
+10-25 06:34:22.224     0     0 I libprocessgroup: Removed cgroup /sys/fs/cgroup/uid_1000/pid_485
+10-25 06:34:22.225     0     0 I init    : Control message: Processed ctl.stop for 'idmap2d' from pid: 579 (system_server)
+10-25 06:34:22.226     0     0 I init    : Service 'idmap2d' (pid 485) received signal 9
+10-25 06:34:22.226     0     0 I init    : Sending signal 9 to service 'idmap2d' (pid 485) process group...
+10-25 06:34:22.227     0     0 E libprocessgroup: Failed to write 1 to /sys/fs/cgroup/uid_1000/pid_485/cgroup.kill: No such file or directory
+10-25 06:34:22.227     0     0 E libprocessgroup: Failed to open /sys/fs/cgroup/uid_1000/pid_485/cgroup.procs: No such file or directory
+10-25 06:34:22.248  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/pet_0_silhouette
+10-25 06:34:22.261  1515  1525 W ndroid.keychain: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NYS0.frro' with 1 weak references
+10-25 06:34:22.261  1515  1525 W ndroid.keychain: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-MWAs.frro' with 1 weak references
+10-25 06:34:22.261  1515  1525 W ndroid.keychain: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-AB1M.frro' with 1 weak references
+10-25 06:34:22.264  2423  2451 D EGL_emulation: app_time_stats: avg=35.60ms min=0.99ms max=395.19ms count=29
+10-25 06:34:22.285  1429  1446 W oid.documentsui: ApkAssets: Deleting an ApkAssets object '<empty> and /system/priv-app/MtpService/MtpService.apk' with 1 weak references
+10-25 06:34:22.285  1429  1446 W oid.documentsui: ApkAssets: Deleting an ApkAssets object '<empty> and /system/priv-app/DownloadProvider/DownloadProvider.apk' with 1 weak references
+10-25 06:34:22.285  1429  1446 W oid.documentsui: ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.mediaprovider/priv-app/MediaProvider@AE3A.240806.019/MediaProvider.apk' with 1 weak references
+10-25 06:34:22.286  1429  1446 W oid.documentsui: ApkAssets: Deleting an ApkAssets object '<empty> and /system/priv-app/ExternalStorageProvider/ExternalStorageProvider.apk' with 1 weak references
+10-25 06:34:22.472   579   681 D ActivityManager: freezing 1641 com.android.cellbroadcastreceiver
+10-25 06:34:22.474   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:22.475   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:22.475   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10068} in 1ms
+10-25 06:34:22.600  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/pet_1_silhouette
+10-25 06:34:22.895     0     0 I logd    : logdr: UID=0 GID=0 PID=2566 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:22.938   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:22.939   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:22.939   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:22.940   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:22.941   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:22.944  2207  2244 D WM-NetworkStateTracker: Network capabilities changed: [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&PARTIAL_CONNECTIVITY&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=12000Kbps LinkDnBandwidth>=30000Kbps TransportInfo: <SSID: <unknown ssid>, BSSID: 02:00:00:00:00:00, MAC: 02:00:00:00:00:00, IP: /10.0.2.16, Security type: 0, Supplicant state: COMPLETED, Wi-Fi standard: legacy, RSSI: -50, Link speed: 2Mbps, Tx Link speed: 2Mbps, Max Supported Tx Link speed: 54Mbps, Rx Link speed: 2Mbps, Max Supported Rx Link speed: 54Mbps, Frequency: 2437MHz, Net ID: -1, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: -1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none><none>MLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -50 UnderlyingNetworks: Null]
+10-25 06:34:22.945  1810  1865 D WM-NetworkStateTracker: Network capabilities changed: [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&PARTIAL_CONNECTIVITY&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=12000Kbps LinkDnBandwidth>=30000Kbps TransportInfo: <SSID: <unknown ssid>, BSSID: 02:00:00:00:00:00, MAC: 02:00:00:00:00:00, IP: /10.0.2.16, Security type: 0, Supplicant state: COMPLETED, Wi-Fi standard: legacy, RSSI: -50, Link speed: 2Mbps, Tx Link speed: 2Mbps, Max Supported Tx Link speed: 54Mbps, Rx Link speed: 2Mbps, Max Supported Rx Link speed: 54Mbps, Frequency: 2437MHz, Net ID: -1, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: -1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none><none>MLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -50 UnderlyingNetworks: Null]
+10-25 06:34:22.958  1567  1575 W receiver.module: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NYS0.frro' with 1 weak references
+10-25 06:34:22.958  1567  1575 W receiver.module: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-MWAs.frro' with 1 weak references
+10-25 06:34:22.958  1567  1575 W receiver.module: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-AB1M.frro' with 1 weak references
+10-25 06:34:22.973  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/pet_2_silhouette
+10-25 06:34:22.977  1062  2548 D NetworkMonitor/100: PROBE_HTTP http://connectivitycheck.gstatic.com/generate_204 time=852ms ret=204 request={Connection=[close], User-Agent=[Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.32 Safari/537.36]} headers={null=[HTTP/1.1 204 No Content], Connection=[close], Cross-Origin-Resource-Policy=[cross-origin], Date=[Sun, 25 Oct 2026 06:34:25 GMT], X-Android-Received-Millis=[1792910062977], X-Android-Response-Source=[NETWORK 204], X-Android-Selected-Protocol=[http/1.1], X-Android-Sent-Millis=[1792910062135]}
+10-25 06:34:23.180  1062  2304 D TrafficStats: tagSocket(95) with statsTag=0xffffff81, statsUid=-1
+10-25 06:34:23.192   579   673 D OomAdjuster: Not killing cached processes
+10-25 06:34:23.322  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/pet_3_silhouette
+10-25 06:34:23.337  2423  2451 D EGL_emulation: app_time_stats: avg=83.97ms min=2.81ms max=281.93ms count=12
+10-25 06:34:23.366   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:23.367   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:23.367   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10101} in 1ms
+10-25 06:34:23.367   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:23.368   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:23.368   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={20101} in 1ms
+10-25 06:34:23.581     0     0 I logd    : logdr: UID=0 GID=0 PID=2572 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:23.613   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:23.613   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:23.613   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10069} in 1ms
+10-25 06:34:23.613   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:23.613   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:23.613   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={20069} in 0ms
+10-25 06:34:23.624   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:23.624   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:23.624   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10114} in 1ms
+10-25 06:34:23.625   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:23.625   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:23.625   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={20114} in 1ms
+10-25 06:34:23.666  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/pet_4_silhouette
+10-25 06:34:23.770   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:23.771   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:23.771   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10109} in 1ms
+10-25 06:34:23.771   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:23.771   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:23.771   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={20109} in 1ms
+10-25 06:34:23.904  1810  1817 W tatementservice: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NYS0.frro' with 1 weak references
+10-25 06:34:23.905  1810  1817 W tatementservice: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-MWAs.frro' with 1 weak references
+10-25 06:34:23.905  1810  1817 W tatementservice: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-AB1M.frro' with 1 weak references
+10-25 06:34:23.983   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:23.984   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:23.984   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10076} in 1ms
+10-25 06:34:23.984   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:23.984   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:23.984   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={20076} in 1ms
+10-25 06:34:24.010  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/pet_5_silhouette
+10-25 06:34:24.154   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:24.155   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:24.155   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10107} in 0ms
+10-25 06:34:24.155   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:24.155   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:24.156   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={20107} in 1ms
+10-25 06:34:24.258     0     0 I logd    : logdr: UID=0 GID=0 PID=2578 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:24.365  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/pet_6_silhouette
+10-25 06:34:24.371  2152  2165 W zation.services: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NYS0.frro' with 1 weak references
+10-25 06:34:24.371  2152  2165 W zation.services: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-MWAs.frro' with 1 weak references
+10-25 06:34:24.371  2152  2165 W zation.services: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-AB1M.frro' with 1 weak references
+10-25 06:34:24.380  2423  2451 D EGL_emulation: app_time_stats: avg=81.71ms min=2.26ms max=272.71ms count=12
+10-25 06:34:24.475   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:24.476   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:24.476   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10129} in 2ms
+10-25 06:34:24.476   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:24.477   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:24.477   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={20129} in 1ms
+10-25 06:34:24.699  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/pet_7_silhouette
+10-25 06:34:24.941     0     0 I logd    : logdr: UID=0 GID=0 PID=2584 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:25.006  1869  1878 W .localtransport: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NYS0.frro' with 1 weak references
+10-25 06:34:25.006  1869  1878 W .localtransport: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-MWAs.frro' with 1 weak references
+10-25 06:34:25.006  1869  1878 W .localtransport: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-AB1M.frro' with 1 weak references
+10-25 06:34:25.044  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/pet_8_silhouette
+10-25 06:34:25.077  1120  1126 W com.android.se: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NYS0.frro' with 1 weak references
+10-25 06:34:25.077  1120  1126 W com.android.se: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-MWAs.frro' with 1 weak references
+10-25 06:34:25.077  1120  1126 W com.android.se: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-AB1M.frro' with 1 weak references
+10-25 06:34:25.078   381  2587 I resolv  : GetAddrInfoHandler::run: {100 983140 100 983140 1073 1}
+10-25 06:34:25.079   381  2588 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-25 06:34:25.079   381  2589 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-25 06:34:25.166   381  2589 I resolv  : res_nsend: used send_dg 165 terrno: 0
+10-25 06:34:25.166   381  2589 I resolv  : doQuery: rcode=0, ancount=8, return value=165
+10-25 06:34:25.178   381  2588 I resolv  : res_nsend: used send_dg 261 terrno: 0
+10-25 06:34:25.178   381  2588 I resolv  : doQuery: rcode=0, ancount=8, return value=261
+10-25 06:34:25.179  1062  2546 D TrafficStats: tagSocket(96) with statsTag=0xffffff81, statsUid=-1
+10-25 06:34:25.295   446   548 D AudioFlinger: mixer(0x7c7a4d6468e0) throttle end: throttle time(9)
+10-25 06:34:25.378   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:25.379   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:25.379   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10128} in 4ms
+10-25 06:34:25.380   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:25.380   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:25.380   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={20128} in 1ms
+10-25 06:34:25.393   579   905 D SntpClient: request time failed: java.net.SocketTimeoutException: Poll timed out
+10-25 06:34:25.393   579   905 D SntpClient: request time failed
+10-25 06:34:25.393   579   905 W AlarmManager: Unrecognized alarm listener com.android.server.timedetector.NetworkTimeUpdateService$ScheduledRefreshAlarmListener@62feb1c
+10-25 06:34:25.624     0     0 I logd    : logdr: UID=0 GID=0 PID=2593 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:25.606  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/pet_9_silhouette
+10-25 06:34:25.607  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:79a8db94: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+10-25 06:34:25.608  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:79a8db94: onFailed at PHASE_CLIENT_VIEW_SERVED
+10-25 06:34:25.609  2423  2451 D EGL_emulation: app_time_stats: avg=97.89ms min=2.20ms max=291.26ms count=12
+10-25 06:34:25.774   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:25.774   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:25.774   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10146} in 1ms
+10-25 06:34:25.774   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:25.775   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:25.775   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={20146} in 0ms
+10-25 06:34:25.916  2027  2034 W droid.dynsystem: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NYS0.frro' with 1 weak references
+10-25 06:34:25.916  2027  2034 W droid.dynsystem: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-MWAs.frro' with 1 weak references
+10-25 06:34:25.916  2027  2034 W droid.dynsystem: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-AB1M.frro' with 1 weak references
+10-25 06:34:25.947   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:25.947   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:25.947   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:25.948   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:25.948   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:25.953  1810  1865 D WM-NetworkStateTracker: Network capabilities changed: [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&PARTIAL_CONNECTIVITY&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=12000Kbps LinkDnBandwidth>=30000Kbps TransportInfo: <SSID: <unknown ssid>, BSSID: 02:00:00:00:00:00, MAC: 02:00:00:00:00:00, IP: /10.0.2.16, Security type: 0, Supplicant state: COMPLETED, Wi-Fi standard: legacy, RSSI: -50, Link speed: 6Mbps, Tx Link speed: 6Mbps, Max Supported Tx Link speed: 54Mbps, Rx Link speed: 2Mbps, Max Supported Rx Link speed: 54Mbps, Frequency: 2437MHz, Net ID: -1, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: -1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none><none>MLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -50 UnderlyingNetworks: Null]
+10-25 06:34:25.953  2207  2244 D WM-NetworkStateTracker: Network capabilities changed: [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&PARTIAL_CONNECTIVITY&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=12000Kbps LinkDnBandwidth>=30000Kbps TransportInfo: <SSID: <unknown ssid>, BSSID: 02:00:00:00:00:00, MAC: 02:00:00:00:00:00, IP: /10.0.2.16, Security type: 0, Supplicant state: COMPLETED, Wi-Fi standard: legacy, RSSI: -50, Link speed: 6Mbps, Tx Link speed: 6Mbps, Max Supported Tx Link speed: 54Mbps, Rx Link speed: 2Mbps, Max Supported Rx Link speed: 54Mbps, Frequency: 2437MHz, Net ID: -1, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: -1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none><none>MLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -50 UnderlyingNetworks: Null]
+10-25 06:34:25.953   579  1384 D ConnectivityService: Returning BLOCKED NetworkInfo to uid=10076
+10-25 06:34:25.954   579   654 D ConnectivityService: Returning BLOCKED NetworkInfo to uid=10146
+10-25 06:34:26.303     0     0 I logd    : logdr: UID=0 GID=0 PID=2599 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:26.408  1062  2546 D NetworkMonitor/100: PROBE_FALLBACK http://play.googleapis.com/generate_204 time=1331ms ret=204 request={Connection=[close], User-Agent=[Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.32 Safari/537.36]} headers={null=[HTTP/1.1 204 No Content], Connection=[close], Cross-Origin-Resource-Policy=[cross-origin], Date=[Sun, 25 Oct 2026 06:34:28 GMT], X-Android-Received-Millis=[1792910066407], X-Android-Response-Source=[NETWORK 204], X-Android-Selected-Protocol=[http/1.1], X-Android-Sent-Millis=[1792910065189]}
+10-25 06:34:26.415  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/pet_0_owned
+10-25 06:34:26.713  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/pet_1_owned
+10-25 06:34:26.726  2423  2451 D EGL_emulation: app_time_stats: avg=29.60ms min=1.89ms max=233.82ms count=28
+10-25 06:34:26.988     0     0 I logd    : logdr: UID=0 GID=0 PID=2605 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:27.019  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/pet_2_owned
+10-25 06:34:27.052  1539  1545 W d.process.media: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NYS0.frro' with 3 weak references
+10-25 06:34:27.052  1539  1545 W d.process.media: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-MWAs.frro' with 3 weak references
+10-25 06:34:27.052  1539  1545 W d.process.media: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-AB1M.frro' with 3 weak references
+10-25 06:34:27.203  1752  1758 W ndroid.contacts: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NYS0.frro' with 1 weak references
+10-25 06:34:27.203  1752  1758 W ndroid.contacts: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-MWAs.frro' with 1 weak references
+10-25 06:34:27.203  1752  1758 W ndroid.contacts: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-AB1M.frro' with 1 weak references
+10-25 06:34:27.334  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/pet_3_owned
+10-25 06:34:27.672     0     0 I logd    : logdr: UID=0 GID=0 PID=2611 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:27.634   579   681 D ActivityManager: freezing 1623 com.android.externalstorage
+10-25 06:34:27.635   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:27.636   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:27.636   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10064} in 0ms
+10-25 06:34:27.650  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/pet_4_owned
+10-25 06:34:27.880  1729  1739 W gedprovisioning: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NYS0.frro' with 1 weak references
+10-25 06:34:27.880  1729  1739 W gedprovisioning: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-MWAs.frro' with 1 weak references
+10-25 06:34:27.880  1729  1739 W gedprovisioning: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-AB1M.frro' with 1 weak references
+10-25 06:34:27.950  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/pet_5_owned
+10-25 06:34:27.963  2423  2451 D EGL_emulation: app_time_stats: avg=71.12ms min=2.30ms max=237.86ms count=16
+10-25 06:34:27.983  2050  2056 W ompute.services: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NYS0.frro' with 1 weak references
+10-25 06:34:27.983  2050  2056 W ompute.services: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-MWAs.frro' with 1 weak references
+10-25 06:34:27.984  2050  2056 W ompute.services: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-AB1M.frro' with 1 weak references
+10-25 06:34:28.132   381   437 I netd    : tetherGetStats() -> {[]} <1.42ms>
+10-25 06:34:28.248  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/pet_6_owned
+10-25 06:34:28.357     0     0 I logd    : logdr: UID=0 GID=0 PID=2617 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:28.542  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/pet_7_owned
+10-25 06:34:28.848  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/pet_8_owned
+10-25 06:34:28.954   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:28.954   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:28.954   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:28.956   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:28.956   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:28.960  1810  1865 D WM-NetworkStateTracker: Network capabilities changed: [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&PARTIAL_CONNECTIVITY&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=12000Kbps LinkDnBandwidth>=30000Kbps TransportInfo: <SSID: <unknown ssid>, BSSID: 02:00:00:00:00:00, MAC: 02:00:00:00:00:00, IP: /10.0.2.16, Security type: 0, Supplicant state: COMPLETED, Wi-Fi standard: legacy, RSSI: -50, Link speed: 1Mbps, Tx Link speed: 1Mbps, Max Supported Tx Link speed: 54Mbps, Rx Link speed: 2Mbps, Max Supported Rx Link speed: 54Mbps, Frequency: 2437MHz, Net ID: -1, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: -1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none><none>MLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -50 UnderlyingNetworks: Null]
+10-25 06:34:28.962  2207  2244 D WM-NetworkStateTracker: Network capabilities changed: [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&PARTIAL_CONNECTIVITY&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=12000Kbps LinkDnBandwidth>=30000Kbps TransportInfo: <SSID: <unknown ssid>, BSSID: 02:00:00:00:00:00, MAC: 02:00:00:00:00:00, IP: /10.0.2.16, Security type: 0, Supplicant state: COMPLETED, Wi-Fi standard: legacy, RSSI: -50, Link speed: 1Mbps, Tx Link speed: 1Mbps, Max Supported Tx Link speed: 54Mbps, Rx Link speed: 2Mbps, Max Supported Rx Link speed: 54Mbps, Frequency: 2437MHz, Net ID: -1, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: -1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none><none>MLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -50 UnderlyingNetworks: Null]
+10-25 06:34:29.037     0     0 I logd    : logdr: UID=0 GID=0 PID=2623 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:29.153  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/pet_9_owned
+10-25 06:34:29.154  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:1cc70329: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+10-25 06:34:29.154  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:1cc70329: onFailed at PHASE_CLIENT_VIEW_SERVED
+10-25 06:34:29.155  2423  2451 D EGL_emulation: app_time_stats: avg=70.24ms min=2.20ms max=235.58ms count=16
+10-25 06:34:29.540  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/exchange
+10-25 06:34:29.717     0     0 I logd    : logdr: UID=0 GID=0 PID=2629 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:29.739  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/market_detail_enhance_stone
+10-25 06:34:29.937  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/market_detail_refine_stone
+10-25 06:34:30.140  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/market_detail_lock_rune
+10-25 06:34:30.160  2423  2451 D EGL_emulation: app_time_stats: avg=10.69ms min=1.20ms max=89.58ms count=46
+10-25 06:34:30.315   381   437 I netd    : setProcSysNet(4, 2, wlan0, retrans_time_ms, 750) <0.09ms>
+10-25 06:34:30.315   381   437 I netd    : setProcSysNet(4, 2, wlan0, ucast_solicit, 10) <0.11ms>
+10-25 06:34:30.316   381   437 I netd    : setProcSysNet(6, 2, wlan0, retrans_time_ms, 750) <0.04ms>
+10-25 06:34:30.316   381   437 I netd    : setProcSysNet(6, 2, wlan0, ucast_solicit, 10) <0.02ms>
+10-25 06:34:30.345  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/market_detail_gem_atk
+10-25 06:34:30.395     0     0 I logd    : logdr: UID=0 GID=0 PID=2635 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:30.539  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/market_detail_gem_hp
+10-25 06:34:30.589  2207  2213 W android.rkpdapp: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NYS0.frro' with 1 weak references
+10-25 06:34:30.589  2207  2213 W android.rkpdapp: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-MWAs.frro' with 1 weak references
+10-25 06:34:30.589  2207  2213 W android.rkpdapp: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-AB1M.frro' with 1 weak references
+10-25 06:34:30.669  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:5e85e7fe: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+10-25 06:34:30.669  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:5e85e7fe: onFailed at PHASE_CLIENT_VIEW_SERVED
+10-25 06:34:30.772   579   681 D ActivityManager: freezing 1429 com.android.documentsui
+10-25 06:34:30.775   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:30.776   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:30.776   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10063} in 2ms
+10-25 06:34:30.916  1985  1991 W .adservices: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NYS0.frro' with 1 weak references
+10-25 06:34:30.916  1985  1991 W .adservices: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-MWAs.frro' with 1 weak references
+10-25 06:34:30.916  1985  1991 W .adservices: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-AB1M.frro' with 1 weak references
+10-25 06:34:31.074     0     0 I logd    : logdr: UID=0 GID=0 PID=2641 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:31.236  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/curio
+10-25 06:34:31.242  2423  2451 D EGL_emulation: app_time_stats: avg=8.75ms min=1.02ms max=117.12ms count=50
+10-25 06:34:31.270  2226  2232 W m.android.shell: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NYS0.frro' with 1 weak references
+10-25 06:34:31.270  2226  2232 W m.android.shell: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-MWAs.frro' with 1 weak references
+10-25 06:34:31.270  2226  2232 W m.android.shell: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-AB1M.frro' with 1 weak references
+10-25 06:34:31.465  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/curio_overview
+10-25 06:34:31.665  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/curio_lore
+10-25 06:34:31.759     0     0 I logd    : logdr: UID=0 GID=0 PID=2647 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:31.781   579   614 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 06:34:31.852  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/curio_appraise
+10-25 06:34:31.880   579   601 D OomAdjuster: Not killing cached processes
+10-25 06:34:31.898   381   437 I netd    : tetherGetStats() -> {[]} <0.54ms>
+10-25 06:34:31.963   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:31.964   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:31.964   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:31.964   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:31.965   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:31.968  1810  1865 D WM-NetworkStateTracker: Network capabilities changed: [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&PARTIAL_CONNECTIVITY&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=12000Kbps LinkDnBandwidth>=30000Kbps TransportInfo: <SSID: <unknown ssid>, BSSID: 02:00:00:00:00:00, MAC: 02:00:00:00:00:00, IP: /10.0.2.16, Security type: 0, Supplicant state: COMPLETED, Wi-Fi standard: legacy, RSSI: -50, Link speed: 36Mbps, Tx Link speed: 36Mbps, Max Supported Tx Link speed: 54Mbps, Rx Link speed: 2Mbps, Max Supported Rx Link speed: 54Mbps, Frequency: 2437MHz, Net ID: -1, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: -1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none><none>MLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -50 UnderlyingNetworks: Null]
+10-25 06:34:31.968  2207  2244 D WM-NetworkStateTracker: Network capabilities changed: [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&PARTIAL_CONNECTIVITY&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=12000Kbps LinkDnBandwidth>=30000Kbps TransportInfo: <SSID: <unknown ssid>, BSSID: 02:00:00:00:00:00, MAC: 02:00:00:00:00:00, IP: /10.0.2.16, Security type: 0, Supplicant state: COMPLETED, Wi-Fi standard: legacy, RSSI: -50, Link speed: 36Mbps, Tx Link speed: 36Mbps, Max Supported Tx Link speed: 54Mbps, Rx Link speed: 2Mbps, Max Supported Rx Link speed: 54Mbps, Frequency: 2437MHz, Net ID: -1, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: -1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none><none>MLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -50 UnderlyingNetworks: Null]
+10-25 06:34:32.019  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/curio_history
+10-25 06:34:32.154  1062  2547 D TrafficStats: tagSocket(96) with statsTag=0xffffff81, statsUid=-1
+10-25 06:34:32.214  2423  2451 I godot   : ANDROID_DEEP_PHOTO final_phone16/curio_result
+10-25 06:34:32.245  2423  2451 D EGL_emulation: app_time_stats: avg=12.45ms min=1.39ms max=115.08ms count=43
+10-25 06:34:32.329  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:2e596936: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+10-25 06:34:32.330  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:2e596936: onFailed at PHASE_CLIENT_VIEW_SERVED
+10-25 06:34:32.442     0     0 I logd    : logdr: UID=0 GID=0 PID=2653 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:32.638  1135  1135 D BatteryUsageBroadcastReceiver: onReceive:android.intent.action.BATTERY_LEVEL_CHANGED
+10-25 06:34:32.638  1135  1135 D BatteryUsageBroadcastReceiver: fetch data because of event: ACTION_BATTERY_LEVEL_CHANGED
+10-25 06:34:32.639  1135  1135 D BatteryUsageBroadcastReceiver: cancel sendBroadcastToFetchUsageData when broadcastDelay is 2339993ms.
+10-25 06:34:32.988  2001  2007 W android.camera2: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-NYS0.frro' with 1 weak references
+10-25 06:34:32.989  2001  2007 W android.camera2: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-MWAs.frro' with 1 weak references
+10-25 06:34:32.989  2001  2007 W android.camera2: ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-AB1M.frro' with 1 weak references
+10-25 06:34:33.120     0     0 I logd    : logdr: UID=0 GID=0 PID=2659 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:33.192  1062  2304 D NetworkMonitor/101: PROBE_FALLBACK http://www.google.com/gen_204 Probe failed with exception java.net.SocketTimeoutException: failed to connect to www.google.com/2001::1 (port 80) from /fec0::5054:ff:fe12:3456 (port 54458) after 10000ms
+10-25 06:34:33.193  1062  2304 D NetworkMonitor/101: isCaptivePortal: isSuccessful()=false isPortal()=false RedirectUrl=null isPartialConnectivity()=true Time=23058ms
+10-25 06:34:33.193   579   876 D ConnectivityService: [101 CELLULAR] validation failed
+10-25 06:34:33.194   579   876 I ConnectivityService: Update capabilities for net 101 : +PARTIAL_CONNECTIVITY
+10-25 06:34:33.195   579   876 D NetworkNotificationManager: showNotification tag=ConnectivityNotification:101 event=PARTIAL_CONNECTIVITY transport=mobile data name=fast.t-mobile.com highPriority=false
+10-25 06:34:33.198   579   681 D ActivityManager: freezing 1845 com.android.traceur
+10-25 06:34:33.199   579   865 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:33.199   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:33.200   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:33.200   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10097} in 2ms
+10-25 06:34:33.201   579   865 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:33.283  2423  2451 D EGL_emulation: app_time_stats: avg=50.27ms min=1.14ms max=342.94ms count=18
+10-25 06:34:33.284   579   681 D ActivityManager: freezing 1567 com.android.cellbroadcastreceiver.module
+10-25 06:34:33.285   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:33.286   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:33.286   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10130} in 2ms
+10-25 06:34:33.334  1062  2547 D NetworkMonitor/100: PROBE_HTTPS https://www.google.com/generate_204 Probe failed with exception javax.net.ssl.SSLHandshakeException: connection closed
+10-25 06:34:33.335  1062  2546 D NetworkMonitor/100: isCaptivePortal: isSuccessful()=false isPortal()=false RedirectUrl=null isPartialConnectivity()=true Time=11262ms
+10-25 06:34:33.335   579   876 D ConnectivityService: [100 WIFI] validation failed
+10-25 06:34:33.613   579   681 D ActivityManager: freezing 1729 com.android.managedprovisioning
+10-25 06:34:33.615   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:33.615   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:33.616   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10069} in 1ms
+10-25 06:34:33.647   579   681 D ActivityManager: freezing 1705 com.android.messaging
+10-25 06:34:33.649   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:33.649   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:33.649   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10114} in 1ms
+10-25 06:34:33.811     0     0 I logd    : logdr: UID=0 GID=0 PID=2665 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:33.771   579   681 D ActivityManager: freezing 1873 com.android.calendar
+10-25 06:34:33.772   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:33.774   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:33.774   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10109} in 3ms
+10-25 06:34:33.798   579   681 D ActivityManager: freezing 1760 com.android.providers.calendar
+10-25 06:34:33.799   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:33.799   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:33.799   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10079} in 1ms
+10-25 06:34:33.896   579   681 D ActivityManager: freezing 1985 .adservices
+10-25 06:34:33.984   579   681 D ActivityManager: freezing 1810 com.android.statementservice
+10-25 06:34:33.987   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:33.988   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:33.988   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10076} in 3ms
+10-25 06:34:34.156   579   681 D ActivityManager: freezing 2001 com.android.camera2
+10-25 06:34:34.159   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:34.160   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:34.160   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10107} in 3ms
+10-25 06:34:34.198  1062  2669 D TrafficStats: tagSocket(96) with statsTag=0xffffff81, statsUid=-1
+10-25 06:34:34.198  1062  2670 D TrafficStats: tagSocket(95) with statsTag=0xffffff81, statsUid=-1
+10-25 06:34:34.199  1062  2670 D TrafficStats: tagSocket(95) with statsTag=0xffffff81, statsUid=-1
+10-25 06:34:34.199  1062  2669 D TrafficStats: tagSocket(96) with statsTag=0xffffff81, statsUid=-1
+10-25 06:34:34.201   381  2671 I resolv  : ResNSendHandler::run: 0 / {101 983141 101 983141 1073 1}
+10-25 06:34:34.201   381  2672 I resolv  : ResNSendHandler::run: 0 / {101 983141 101 983141 1073 1}
+10-25 06:34:34.201   381  2671 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x761c3e85ba90
+10-25 06:34:34.204   381  2673 I resolv  : ResNSendHandler::run: 0 / {101 983141 101 983141 1073 1}
+10-25 06:34:34.204   381  2674 I resolv  : ResNSendHandler::run: 0 / {101 983141 101 983141 1073 1}
+10-25 06:34:34.204   381  2673 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x761cde869e20
+10-25 06:34:34.204  1062  1062 D TrafficStats: tagSocket(96) with statsTag=0xffffffff, statsUid=-1
+10-25 06:34:34.204   381  2674 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x761c8e865f90
+10-25 06:34:34.205  1062  1062 D TrafficStats: tagSocket(96) with statsTag=0xffffffff, statsUid=-1
+10-25 06:34:34.206  1062  2669 D NetworkMonitor/101: PROBE_DNS www.google.com 8ms OK 157.240.7.20,2001::1
+10-25 06:34:34.207   381  2675 I resolv  : GetAddrInfoHandler::run: {101 983141 101 983141 1073 1}
+10-25 06:34:34.207   381  2676 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-25 06:34:34.207   381  2677 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-25 06:34:34.208   381  2676 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x761c3e85ba90
+10-25 06:34:34.208   381  2676 I resolv  : doQuery: rcode=0, ancount=1, return value=60
+10-25 06:34:34.208   381  2677 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x761cde869e20
+10-25 06:34:34.208   381  2677 I resolv  : doQuery: rcode=0, ancount=1, return value=48
+10-25 06:34:34.208  1062  2669 D TrafficStats: tagSocket(96) with statsTag=0xffffff81, statsUid=-1
+10-25 06:34:34.231   381  2672 I resolv  : res_nsend: used send_dg 107 terrno: 0
+10-25 06:34:34.232  1062  1062 D TrafficStats: tagSocket(95) with statsTag=0xffffffff, statsUid=-1
+10-25 06:34:34.234  1062  2670 D NetworkMonitor/101: PROBE_DNS connectivitycheck.gstatic.com 35ms OK 58.63.233.98
+10-25 06:34:34.235   381  2678 I resolv  : GetAddrInfoHandler::run: {101 983141 101 983141 1073 1}
+10-25 06:34:34.235   381  2679 I resolv  : res_nmkquery: (QUERY, IN, AAAA)
+10-25 06:34:34.235   381  2679 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x761bee861490
+10-25 06:34:34.236   381  2680 I resolv  : res_nmkquery: (QUERY, IN, A)
+10-25 06:34:34.236   381  2679 I resolv  : doQuery: rcode=0, ancount=0, return value=107
+10-25 06:34:34.236   381  2680 I resolv  : resolv_cache_lookup: FOUND IN CACHE entry=0x761c8e865f90
+10-25 06:34:34.236   381  2680 I resolv  : doQuery: rcode=0, ancount=1, return value=63
+10-25 06:34:34.237  1062  2670 D TrafficStats: tagSocket(95) with statsTag=0xffffff81, statsUid=-1
+10-25 06:34:34.320   579   681 D ActivityManager: freezing 1869 com.android.localtransport
+10-25 06:34:34.321   579   681 D ActivityManager: freezing 2058 com.android.dynsystem:dynsystem
+10-25 06:34:34.321   579   681 D ActivityManager: freezing 2027 com.android.dynsystem
+10-25 06:34:34.322   579   681 D ActivityManager: freezing 1515 com.android.keychain
+10-25 06:34:34.323  2423  2451 D EGL_emulation: app_time_stats: avg=68.85ms min=11.02ms max=152.19ms count=15
+10-25 06:34:34.343  1062  2670 D NetworkMonitor/101: PROBE_HTTP http://connectivitycheck.gstatic.com/generate_204 time=109ms ret=204 request={Connection=[close], User-Agent=[Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.32 Safari/537.36]} headers={null=[HTTP/1.1 204 No Content], Connection=[close], Content-Length=[0], Cross-Origin-Resource-Policy=[cross-origin], Date=[Sun, 25 Oct 2026 06:34:37 GMT], X-Android-Received-Millis=[1792910074343], X-Android-Response-Source=[NETWORK 204], X-Android-Selected-Protocol=[http/1.1], X-Android-Sent-Millis=[1792910074268]}
+10-25 06:34:34.431  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:6546afd4: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+10-25 06:34:34.432  2423  2423 I ImeTracker: org.yuanzheng.singleplayer:6546afd4: onFailed at PHASE_CLIENT_VIEW_SERVED
+10-25 06:34:34.502     0     0 I logd    : logdr: UID=0 GID=0 PID=2684 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+10-25 06:34:34.476   579   681 D ActivityManager: freezing 2050 com.android.federatedcompute.services
+10-25 06:34:34.478   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:34.478   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:34.478   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10129} in 2ms
+10-25 06:34:34.482  2423  2451 I godot   : ANDROID_DEEP_COMPLETE final_phone16 checks=123 failed=0 photos=41
+10-25 06:34:34.789   579   681 D ActivityManager: freezing 2090 com.android.imsserviceentitlement
+10-25 06:34:34.793   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:34.794   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:34.794   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10100} in 2ms
+10-25 06:34:34.969   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:34.969   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:34.969   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:34.970   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:34.970   579   867 W BestClock: java.time.DateTimeException: Missing network time fix
+10-25 06:34:34.973   579   876 W IPCThreadState: Sending oneway calls to frozen process.
+10-25 06:34:34.974  2207  2244 D WM-NetworkStateTracker: Network capabilities changed: [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&PARTIAL_CONNECTIVITY&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=12000Kbps LinkDnBandwidth>=30000Kbps TransportInfo: <SSID: <unknown ssid>, BSSID: 02:00:00:00:00:00, MAC: 02:00:00:00:00:00, IP: /10.0.2.16, Security type: 0, Supplicant state: COMPLETED, Wi-Fi standard: legacy, RSSI: -50, Link speed: 6Mbps, Tx Link speed: 6Mbps, Max Supported Tx Link speed: 54Mbps, Rx Link speed: 2Mbps, Max Supported Rx Link speed: 54Mbps, Frequency: 2437MHz, Net ID: -1, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: -1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none><none>MLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -50 UnderlyingNetworks: Null]
+10-25 06:34:35.328  2423  2451 D EGL_emulation: app_time_stats: avg=3.68ms min=1.05ms max=108.44ms count=56
+10-25 06:34:35.377   579   681 D ActivityManager: freezing 2152 com.android.ondevicepersonalization.services
+10-25 06:34:35.381   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:35.385   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:35.385   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10128} in 5ms
+10-25 06:34:35.407   446   548 D AF::Track: interceptBuffer: took 2679us to intercept 0 tracks
+10-25 06:34:35.517   579   681 D ActivityManager: freezing 2183 com.android.packageinstaller
+10-25 06:34:35.520   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:35.521   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:35.521   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10062} in 3ms
+10-25 06:34:35.773   579   681 D ActivityManager: freezing 2207 com.android.rkpdapp
+10-25 06:34:35.776   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:35.776   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:35.776   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={10146} in 3ms
+10-25 06:34:35.923   579   681 D ActivityManager: freezing 2226 com.android.shell
+10-25 06:34:35.925   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-25 06:34:35.926   579   876 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-25 06:34:35.926   579   876 D InetDiagMessage: Destroyed live tcp sockets for uids={2000} in 2ms
+10-25 06:34:36.039     0     0 I logd    : logdr: UID=0 GID=0 PID=2693 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
