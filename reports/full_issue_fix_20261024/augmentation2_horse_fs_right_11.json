@@ -1,0 +1,12 @@
+{
+  "mount": "horse",
+  "role": "fs",
+  "direction": "right",
+  "count": 1,
+  "base_count": 24,
+  "indices": [
+    11
+  ],
+  "prompt": "Use case: precise-object-edit. This is ONE exact animation cel from a pixel RPG sheet, padded with transparency. Restore ONLY the missing cropped silhouette at the RIGHT edge of the mounted character. Extend the truncated tail/horse head/foreleg naturally into the empty transparent margin as appropriate. Preserve the complete original character, horse, colors, dark brown coat, pose, proportions, pixel cluster shapes, staff, cloak, saddle and lighting as closely as possible; do not redesign, repaint or change the gait pose. The restoration must match the original chunky small pixel art, not a smooth illustration. Keep ONE integrated rider and horse, facing RIGHT. Preserve the reference camera and current action exactly. Full body including tail, head and every hoof must now be complete and surrounded by transparent margin. Genuine transparent RGBA, no shadow/background, extra objects, text, grid or glow.",
+  "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-3bc610cf-0198-45b7-91ef-7c9f03ac760c.png"
+}

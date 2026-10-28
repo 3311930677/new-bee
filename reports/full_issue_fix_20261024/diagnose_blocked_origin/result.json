@@ -1,0 +1,3658 @@
+{
+	"checks": [
+		{
+			"detail": 352,
+			"label": "rendered frame has visible detail map",
+			"ok": true
+		},
+		{
+			"detail": null,
+			"label": "M09 A05 no hoof events after stop in long motion",
+			"ok": true
+		},
+		{
+			"detail": 137,
+			"label": "rendered frame has visible detail motion_end",
+			"ok": true
+		}
+	],
+	"device": {
+		"cutouts": "[[P: (492.0, 0.0), S: (118.0, 128.0)]]",
+		"mix_rate": 44100.0,
+		"model": "Android SDK built for x86_64",
+		"os": "Android",
+		"safe": "[P: (0.0, 85.3), S: (480.0, 767.7)]",
+		"system_safe": "[P: (0, 128), S: (720, 1152)]",
+		"version": "35.12368160",
+		"viewport": "[P: (0.0, 0.0), S: (480.0, 853.0)]",
+		"window": "(720, 1280)"
+	},
+	"final": {
+		"audio": {
+			"bgm": "bgm_map",
+			"events": [
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 6615
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 6709
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 6929
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 7176
+				}
+			],
+			"mute": false,
+			"paused": false,
+			"playing": true,
+			"position": 6.80399990081787,
+			"suspended": false,
+			"voices": 0
+		},
+		"controls": [
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/WorldGold",
+				"rect": [
+					196.0,
+					93.2999954223633,
+					92.0,
+					43.9999923706055
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "金币 1234567 · 点击查看全部货币",
+				"touch_under44": true
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/WorldTask_story",
+				"rect": [
+					12.0,
+					173.299987792969,
+					264.0,
+					50.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "归路仍在 · 三城可回访 · 查看目标与奖励",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/WorldTask_story/Action_",
+				"rect": [
+					228.0,
+					176.299987792969,
+					44.0,
+					44.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "还有 1 项任务；点击展开 / 收起",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/Action_药剂",
+				"rect": [
+					403.999969482422,
+					752.999938964844,
+					64.0,
+					64.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/Action_疾行",
+				"rect": [
+					327.999969482422,
+					760.999938964844,
+					56.0,
+					56.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "疾行：关闭",
+				"touch_under44": false
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/Action_营帐",
+				"rect": [
+					311.999969482422,
+					97.2999954223633,
+					44.0,
+					43.9999923706055
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "",
+				"touch_under44": true
+			},
+			{
+				"clipped": false,
+				"disabled": false,
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/Action_骑乘",
+				"rect": [
+					251.999969482422,
+					760.999938964844,
+					56.0,
+					56.0
+				],
+				"safe": true,
+				"text": "",
+				"tooltip": "下马",
+				"touch_under44": false
+			}
+		],
+		"device": {
+			"cutouts": "[[P: (492.0, 0.0), S: (118.0, 128.0)]]",
+			"mix_rate": 44100.0,
+			"model": "Android SDK built for x86_64",
+			"os": "Android",
+			"safe": "[P: (0.0, 85.3), S: (480.0, 767.7)]",
+			"system_safe": "[P: (0, 128), S: (720, 1152)]",
+			"version": "35.12368160",
+			"viewport": "[P: (0.0, 0.0), S: (480.0, 853.0)]",
+			"window": "(720, 1280)"
+		},
+		"focus": "@PanelContainer@183:<PanelContainer#281991449247>",
+		"keyboard_height": 0,
+		"labels": [
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@Node2D@9/@Node2D@23/@Label@24",
+				"rect": [
+					605.0,
+					176.0,
+					70.0,
+					24.0
+				],
+				"text": "枫林古道"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@Node2D@9/@CharacterBody2D@25/@Panel@28/@Label@31",
+				"rect": [
+					407.5,
+					688.084289550781,
+					145.0,
+					23.0
+				],
+				"text": "安卓全量巡检  Lv60"
+			},
+			{
+				"font": 15,
+				"minimum": "(157.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@Node2D@9/@Node2D@66/@Label@67",
+				"rect": [
+					396.0,
+					810.0,
+					168.0,
+					24.0
+				],
+				"text": "奇遇 · 一封错送的喜帖"
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@Node2D@9/@Node2D@139/@Label@143",
+				"rect": [
+					390.0,
+					628.0,
+					56.0,
+					23.0
+				],
+				"text": "马伯"
+			},
+			{
+				"font": 15,
+				"minimum": "(45.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@Node2D@9/@Node2D@154/@Label@158",
+				"rect": [
+					452.5,
+					853.0,
+					61.0,
+					23.0
+				],
+				"text": "长风关"
+			},
+			{
+				"font": 15,
+				"minimum": "(16.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/WorldStatus/@Label@69",
+				"rect": [
+					20.0,
+					102.299995422363,
+					36.0,
+					23.0
+				],
+				"text": "Lv"
+			},
+			{
+				"font": 18,
+				"minimum": "(22.0, 27.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/WorldStatus/@Label@70",
+				"rect": [
+					20.0,
+					122.299995422363,
+					36.0,
+					28.0
+				],
+				"text": "60"
+			},
+			{
+				"font": 15,
+				"minimum": "(77.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/WorldStatus/@Label@71",
+				"rect": [
+					84.0,
+					99.2999954223633,
+					96.0,
+					23.0
+				],
+				"text": "3410/3410"
+			},
+			{
+				"font": 15,
+				"minimum": "(15.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/WorldStatus/@Label@72",
+				"rect": [
+					68.0,
+					99.2999954223633,
+					20.0,
+					23.0
+				],
+				"text": "♥"
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/WorldStatus/@Label@73",
+				"rect": [
+					68.0,
+					130.299987792969,
+					44.0,
+					24.0
+				],
+				"text": "历练"
+			},
+			{
+				"font": 15,
+				"minimum": "(39.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/WorldStatus/@Label@74",
+				"rect": [
+					108.0,
+					130.299987792969,
+					72.0,
+					23.0
+				],
+				"text": "100%"
+			},
+			{
+				"font": 15,
+				"minimum": "(56.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/WorldGold/@Label@81",
+				"rect": [
+					224.0,
+					101.299995422363,
+					60.0,
+					28.0
+				],
+				"text": "123.4万"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/RegionTitle/@Label@82",
+				"rect": [
+					349.999969482422,
+					210.299987792969,
+					108.0,
+					24.0
+				],
+				"text": "昭元边城"
+			},
+			{
+				"font": 15,
+				"minimum": "(15.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/WorldTask_story/TaskBadge",
+				"rect": [
+					20.0,
+					185.299987792969,
+					22.0,
+					24.0
+				],
+				"text": "归"
+			},
+			{
+				"font": 15,
+				"minimum": "(60.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/WorldTask_story/TaskHeading",
+				"rect": [
+					50.0,
+					176.299987792969,
+					170.0,
+					24.0
+				],
+				"text": "当前主线"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 1.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/WorldTask_story/@Label@83",
+				"rect": [
+					50.0,
+					194.299987792969,
+					170.0,
+					26.0
+				],
+				"text": "三城可回访"
+			},
+			{
+				"font": 15,
+				"minimum": "(1.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/WorldTask_story/Action_/Caption",
+				"rect": [
+					228.0,
+					202.299987792969,
+					44.0,
+					23.0
+				],
+				"text": ""
+			},
+			{
+				"font": 15,
+				"minimum": "(9.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/WorldTask_story/Action_/CountBadge/Count",
+				"rect": [
+					255.0,
+					172.299987792969,
+					24.0,
+					23.0
+				],
+				"text": "1"
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/Action_药剂/Caption",
+				"rect": [
+					403.999969482422,
+					798.999938964844,
+					64.0,
+					23.0
+				],
+				"text": "药剂"
+			},
+			{
+				"font": 15,
+				"minimum": "(9.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/Action_药剂/CountBadge/Count",
+				"rect": [
+					447.999969482422,
+					748.999938964844,
+					24.0,
+					23.0
+				],
+				"text": "0"
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/Action_疾行/Caption",
+				"rect": [
+					327.999969482422,
+					798.999938964844,
+					56.0,
+					23.0
+				],
+				"text": "疾行"
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/Action_营帐/Caption",
+				"rect": [
+					311.999969482422,
+					123.299995422363,
+					44.0,
+					23.0
+				],
+				"text": "营帐"
+			},
+			{
+				"font": 15,
+				"minimum": "(15.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/Minimap/@Label@86",
+				"rect": [
+					431.999969482422,
+					109.299995422363,
+					16.0,
+					24.0
+				],
+				"text": "北"
+			},
+			{
+				"font": 15,
+				"minimum": "(30.0, 23.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/Action_骑乘/Caption",
+				"rect": [
+					251.999969482422,
+					798.999938964844,
+					56.0,
+					23.0
+				],
+				"text": "下马"
+			},
+			{
+				"font": 24,
+				"minimum": "(168.0, 35.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/@Control@166/@PanelContainer@170/@MarginContainer@171/@VBoxContainer@172/@Control@173/PlaqueLabel",
+				"rect": [
+					67.2674942016602,
+					176.080520629883,
+					345.464965820312,
+					36.465747833252
+				],
+				"text": "一封错送的喜帖"
+			},
+			{
+				"font": 17,
+				"minimum": "(1.0, 228.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/@Control@166/@PanelContainer@170/@MarginContainer@171/@VBoxContainer@172/@ScrollContainer@176/@VBoxContainer@177/@Label@179",
+				"rect": [
+					67.2674942016602,
+					402.552001953125,
+					358.899719238281,
+					218.794494628906
+				],
+				"text": "老赵把一张红帖塞进你手里：‘上面写着请赵老爷来提亲。我连姑娘姓什么都不知道！你替我去古道问清楚，先别让石头瞧见。’\n红帖背面粘着半截戏票，落款被红绳遮住了。\n\n复命谢礼：金币 480，以下二选一。\n伙伴粮 ×3 · 在伙伴养成中喂养常用伙伴。\n攻击宝石Ⅰ ×1 · 在工坊镶嵌到装备空孔中。"
+			},
+			{
+				"font": 17,
+				"minimum": "(102.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/@Control@166/@PanelContainer@170/@MarginContainer@171/@VBoxContainer@172/@PanelContainer@181/@Label@180",
+				"rect": [
+					82.6214904785156,
+					659.731506347656,
+					328.191741943359,
+					23.9906234741211
+				],
+				"text": "接下这件趣事"
+			},
+			{
+				"font": 17,
+				"minimum": "(68.0, 25.0)",
+				"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/@Control@166/@PanelContainer@170/@MarginContainer@171/@VBoxContainer@172/@PanelContainer@183/@Label@182",
+				"rect": [
+					82.6214904785156,
+					713.470458984375,
+					328.191741943359,
+					23.9906234741211
+				],
+				"text": "回到路上"
+			}
+		],
+		"map": {
+			"id": "lorin_wilds",
+			"joy": "(0.0, 0.0)",
+			"joy_rect": "[P: (12.0, 664.9999), S: (144.0, 144.0)]",
+			"mount_frame": 0,
+			"position": "(480.0, 837.0843)",
+			"riding": true,
+			"velocity": "(0.0, 175.0)"
+		},
+		"modals": [],
+		"page": "MapScene",
+		"tick_ms": 10682
+	},
+	"id": "diagnose_blocked_origin",
+	"photos": [
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/WorldGold",
+					"rect": [
+						196.0,
+						93.2999954223633,
+						92.0,
+						43.9999923706055
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "金币 1234567 · 点击查看全部货币",
+					"touch_under44": true
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/WorldTask_story",
+					"rect": [
+						12.0,
+						173.299987792969,
+						264.0,
+						50.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "归路仍在 · 三城可回访 · 查看目标与奖励",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/WorldTask_story/Action_",
+					"rect": [
+						228.0,
+						176.299987792969,
+						44.0,
+						44.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "还有 1 项任务；点击展开 / 收起",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/Action_药剂",
+					"rect": [
+						403.999969482422,
+						752.999938964844,
+						64.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/Action_疾行",
+					"rect": [
+						327.999969482422,
+						760.999938964844,
+						56.0,
+						56.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "疾行：关闭",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/Action_营帐",
+					"rect": [
+						311.999969482422,
+						97.2999954223633,
+						44.0,
+						43.9999923706055
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": true
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/Action_骑乘",
+					"rect": [
+						251.999969482422,
+						760.999938964844,
+						56.0,
+						56.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "下马",
+					"touch_under44": false
+				}
+			],
+			"name": "map",
+			"safe": "[P: (0.0, 85.3), S: (480.0, 767.7)]",
+			"sample_colors": 352
+		},
+		{
+			"controls": [
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/WorldGold",
+					"rect": [
+						196.0,
+						93.2999954223633,
+						92.0,
+						43.9999923706055
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "金币 1234567 · 点击查看全部货币",
+					"touch_under44": true
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/WorldTask_story",
+					"rect": [
+						12.0,
+						173.299987792969,
+						264.0,
+						50.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "归路仍在 · 三城可回访 · 查看目标与奖励",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/WorldTask_story/Action_",
+					"rect": [
+						228.0,
+						176.299987792969,
+						44.0,
+						44.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "还有 1 项任务；点击展开 / 收起",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/Action_药剂",
+					"rect": [
+						403.999969482422,
+						752.999938964844,
+						64.0,
+						64.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/Action_疾行",
+					"rect": [
+						327.999969482422,
+						760.999938964844,
+						56.0,
+						56.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "疾行：关闭",
+					"touch_under44": false
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/Action_营帐",
+					"rect": [
+						311.999969482422,
+						97.2999954223633,
+						44.0,
+						43.9999923706055
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "",
+					"touch_under44": true
+				},
+				{
+					"clipped": false,
+					"disabled": false,
+					"path": "/root/AndroidDeepAudit/MapScene/@CanvasLayer@68/Action_骑乘",
+					"rect": [
+						251.999969482422,
+						760.999938964844,
+						56.0,
+						56.0
+					],
+					"safe": true,
+					"text": "",
+					"tooltip": "下马",
+					"touch_under44": false
+				}
+			],
+			"name": "motion_end",
+			"safe": "[P: (0.0, 85.3), S: (480.0, 767.7)]",
+			"sample_colors": 137
+		}
+	],
+	"records": [
+		{
+			"discarded": 0,
+			"frames": 172032,
+			"label": "motion_mix",
+			"peak": 0.083378940820694,
+			"rms": 0.0210843440118313,
+			"seconds": 3.90095238095238,
+			"zero_frames": 0
+		},
+		{
+			"audio_events": [
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 6615
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 6709
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 6929
+				},
+				{
+					"category": "Movement",
+					"name": "hoof_stone",
+					"time_ms": 7176
+				}
+			],
+			"mix": {
+				"discarded": 0,
+				"frames": 172032,
+				"label": "motion_mix",
+				"peak": 0.083378940820694,
+				"rms": 0.0210843440118313,
+				"seconds": 3.90095238095238,
+				"zero_frames": 0
+			},
+			"note": "Real Android map physics; monsters frozen to isolate motion; native joystick tested separately.",
+			"samples": [
+				{
+					"animation": "idle_down",
+					"city_modal": false,
+					"frame": 2,
+					"hoof_events": 0,
+					"modal": false,
+					"position": [
+						480.0,
+						700.0
+					],
+					"riding": true,
+					"tick": 6614,
+					"ui_blocked": false,
+					"velocity": 0.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 1,
+					"modal": false,
+					"position": [
+						480.0,
+						702.916687011719
+					],
+					"riding": true,
+					"tick": 6620,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 1,
+					"modal": false,
+					"position": [
+						480.0,
+						705.833374023438
+					],
+					"riding": true,
+					"tick": 6624,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 1,
+					"modal": false,
+					"position": [
+						480.0,
+						708.750061035156
+					],
+					"riding": true,
+					"tick": 6625,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 1,
+					"modal": false,
+					"position": [
+						480.0,
+						711.666748046875
+					],
+					"riding": true,
+					"tick": 6633,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 1,
+					"modal": false,
+					"position": [
+						480.0,
+						714.583435058594
+					],
+					"riding": true,
+					"tick": 6634,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 1,
+					"modal": false,
+					"position": [
+						480.0,
+						717.500122070312
+					],
+					"riding": true,
+					"tick": 6634,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 1,
+					"modal": false,
+					"position": [
+						480.0,
+						720.416809082031
+					],
+					"riding": true,
+					"tick": 6635,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 1,
+					"hoof_events": 1,
+					"modal": false,
+					"position": [
+						480.0,
+						723.33349609375
+					],
+					"riding": true,
+					"tick": 6665,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 1,
+					"hoof_events": 1,
+					"modal": false,
+					"position": [
+						480.0,
+						726.250183105469
+					],
+					"riding": true,
+					"tick": 6667,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 1,
+					"hoof_events": 1,
+					"modal": false,
+					"position": [
+						480.0,
+						729.166870117188
+					],
+					"riding": true,
+					"tick": 6667,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 1,
+					"hoof_events": 1,
+					"modal": false,
+					"position": [
+						480.0,
+						732.083557128906
+					],
+					"riding": true,
+					"tick": 6674,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 1,
+					"hoof_events": 1,
+					"modal": false,
+					"position": [
+						480.0,
+						735.000244140625
+					],
+					"riding": true,
+					"tick": 6689,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 1,
+					"hoof_events": 1,
+					"modal": false,
+					"position": [
+						480.0,
+						737.916931152344
+					],
+					"riding": true,
+					"tick": 6690,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 2,
+					"hoof_events": 1,
+					"modal": false,
+					"position": [
+						480.0,
+						740.833618164062
+					],
+					"riding": true,
+					"tick": 6708,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 2,
+					"hoof_events": 2,
+					"modal": false,
+					"position": [
+						480.0,
+						743.750305175781
+					],
+					"riding": true,
+					"tick": 6726,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 2,
+					"hoof_events": 2,
+					"modal": false,
+					"position": [
+						480.0,
+						746.6669921875
+					],
+					"riding": true,
+					"tick": 6743,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 2,
+					"hoof_events": 2,
+					"modal": false,
+					"position": [
+						480.0,
+						749.583679199219
+					],
+					"riding": true,
+					"tick": 6759,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 2,
+					"hoof_events": 2,
+					"modal": false,
+					"position": [
+						480.0,
+						752.500366210938
+					],
+					"riding": true,
+					"tick": 6780,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 2,
+					"hoof_events": 2,
+					"modal": false,
+					"position": [
+						480.0,
+						755.417053222656
+					],
+					"riding": true,
+					"tick": 6795,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 2,
+					"hoof_events": 2,
+					"modal": false,
+					"position": [
+						480.0,
+						758.333740234375
+					],
+					"riding": true,
+					"tick": 6810,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 3,
+					"hoof_events": 2,
+					"modal": false,
+					"position": [
+						480.0,
+						761.250427246094
+					],
+					"riding": true,
+					"tick": 6827,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 3,
+					"hoof_events": 2,
+					"modal": false,
+					"position": [
+						480.0,
+						764.167114257812
+					],
+					"riding": true,
+					"tick": 6844,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 3,
+					"hoof_events": 2,
+					"modal": false,
+					"position": [
+						480.0,
+						767.083801269531
+					],
+					"riding": true,
+					"tick": 6859,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 3,
+					"hoof_events": 2,
+					"modal": false,
+					"position": [
+						480.0,
+						770.00048828125
+					],
+					"riding": true,
+					"tick": 6876,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 3,
+					"hoof_events": 2,
+					"modal": false,
+					"position": [
+						480.0,
+						772.917175292969
+					],
+					"riding": true,
+					"tick": 6898,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 3,
+					"hoof_events": 2,
+					"modal": false,
+					"position": [
+						480.0,
+						775.833862304688
+					],
+					"riding": true,
+					"tick": 6914,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 4,
+					"hoof_events": 2,
+					"modal": false,
+					"position": [
+						480.0,
+						778.750549316406
+					],
+					"riding": true,
+					"tick": 6928,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 4,
+					"hoof_events": 3,
+					"modal": false,
+					"position": [
+						480.0,
+						781.667236328125
+					],
+					"riding": true,
+					"tick": 6949,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 4,
+					"hoof_events": 3,
+					"modal": false,
+					"position": [
+						480.0,
+						784.583923339844
+					],
+					"riding": true,
+					"tick": 6966,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 4,
+					"hoof_events": 3,
+					"modal": false,
+					"position": [
+						480.0,
+						787.500610351562
+					],
+					"riding": true,
+					"tick": 6985,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 4,
+					"hoof_events": 3,
+					"modal": false,
+					"position": [
+						480.0,
+						790.417297363281
+					],
+					"riding": true,
+					"tick": 7000,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 4,
+					"hoof_events": 3,
+					"modal": false,
+					"position": [
+						480.0,
+						793.333984375
+					],
+					"riding": true,
+					"tick": 7024,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 4,
+					"hoof_events": 3,
+					"modal": false,
+					"position": [
+						480.0,
+						796.250671386719
+					],
+					"riding": true,
+					"tick": 7044,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 5,
+					"hoof_events": 3,
+					"modal": false,
+					"position": [
+						480.0,
+						799.167358398438
+					],
+					"riding": true,
+					"tick": 7062,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 5,
+					"hoof_events": 3,
+					"modal": false,
+					"position": [
+						480.0,
+						802.084045410156
+					],
+					"riding": true,
+					"tick": 7082,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 5,
+					"hoof_events": 3,
+					"modal": false,
+					"position": [
+						480.0,
+						805.000732421875
+					],
+					"riding": true,
+					"tick": 7083,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 5,
+					"hoof_events": 3,
+					"modal": false,
+					"position": [
+						480.0,
+						807.917419433594
+					],
+					"riding": true,
+					"tick": 7100,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 5,
+					"hoof_events": 3,
+					"modal": false,
+					"position": [
+						480.0,
+						810.834106445312
+					],
+					"riding": true,
+					"tick": 7117,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 5,
+					"hoof_events": 3,
+					"modal": false,
+					"position": [
+						480.0,
+						813.750793457031
+					],
+					"riding": true,
+					"tick": 7140,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 5,
+					"hoof_events": 3,
+					"modal": false,
+					"position": [
+						480.0,
+						816.66748046875
+					],
+					"riding": true,
+					"tick": 7159,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 6,
+					"hoof_events": 3,
+					"modal": false,
+					"position": [
+						480.0,
+						819.584167480469
+					],
+					"riding": true,
+					"tick": 7176,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 6,
+					"hoof_events": 4,
+					"modal": false,
+					"position": [
+						480.0,
+						822.500854492188
+					],
+					"riding": true,
+					"tick": 7194,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 6,
+					"hoof_events": 4,
+					"modal": false,
+					"position": [
+						480.0,
+						825.417541503906
+					],
+					"riding": true,
+					"tick": 7210,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 6,
+					"hoof_events": 4,
+					"modal": false,
+					"position": [
+						480.0,
+						828.334228515625
+					],
+					"riding": true,
+					"tick": 7226,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 6,
+					"hoof_events": 4,
+					"modal": false,
+					"position": [
+						480.0,
+						831.250915527344
+					],
+					"riding": true,
+					"tick": 7241,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 6,
+					"hoof_events": 4,
+					"modal": false,
+					"position": [
+						480.0,
+						834.167602539062
+					],
+					"riding": true,
+					"tick": 7260,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 7,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7365,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7366,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7366,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7367,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7367,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7367,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7381,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7382,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7394,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7408,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7425,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7442,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7458,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7476,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7493,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7508,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7527,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7542,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7559,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7575,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7592,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7608,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7625,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7643,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7660,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7675,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7693,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7708,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7725,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7742,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7759,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7775,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7793,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7808,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7826,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7842,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7859,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7876,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7894,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7910,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7925,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7942,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7959,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7975,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 7991,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8009,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8025,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8042,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8059,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8074,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8093,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8108,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8125,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8142,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8160,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8175,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8192,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8209,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8225,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8242,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8259,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8275,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8292,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8308,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8324,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8343,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8358,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8375,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8393,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8409,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8424,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8444,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8459,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8475,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8491,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8509,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8525,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8543,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8558,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8576,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8592,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8610,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8625,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8643,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8659,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8676,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8692,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8710,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8726,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8741,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8759,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8776,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8792,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8808,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8825,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8842,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8860,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8876,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8892,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8910,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8925,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8943,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8963,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8977,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 8992,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9008,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9026,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9042,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9058,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9077,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9092,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9108,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9125,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9142,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9159,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9176,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9191,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9208,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9225,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9243,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9259,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9275,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9293,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9309,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9326,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9342,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9359,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9375,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9392,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9409,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9426,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9442,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9459,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9476,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9492,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9509,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9525,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9541,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9558,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9575,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9593,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9608,
+					"ui_blocked": false,
+					"velocity": 175.0
+				},
+				{
+					"animation": "walk_down",
+					"city_modal": false,
+					"frame": 0,
+					"hoof_events": 4,
+					"modal": true,
+					"position": [
+						480.0,
+						837.084289550781
+					],
+					"riding": true,
+					"tick": 9625,
+					"ui_blocked": false,
+					"velocity": 175.0
+				}
+			]
+		}
+	],
+	"suite": "motion"
+}

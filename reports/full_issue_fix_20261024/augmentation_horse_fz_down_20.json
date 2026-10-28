@@ -1,0 +1,16 @@
+{
+  "mount": "horse",
+  "role": "fz",
+  "direction": "down",
+  "count": 4,
+  "base_count": 20,
+  "source": "exec-67c7f91d-ec1b-4f96-a3da-b2e4334b7ba8.png",
+  "indices": [
+    20,
+    21,
+    22,
+    23
+  ],
+  "prompt": "Use case: stylized-concept. Additional production animation cels matching this exact mounted RPG character reference, preserving rider identity, outfit, brown horse, tack, camera and pixel art style. Output EXACTLY FOUR separate full-body sprites in a spacious TWO by TWO grid. These are four chronological NEW final recovery phases that continue the last two rows of the reference's running loop and return smoothly to its first running contact: opposite support/loading, foreleg recovery, next lift, return contact. Actual distinct leg anatomy, weight transfer and synchronized seated rider/cape/hair/reins. All face DOWN toward viewer. All limbs, tail and staff tips complete with at least15% empty transparent outer margin; no sheet-edge clipping. Rider pelvis seated on saddle, hands on reins, boots in stirrups/straps; rider and mount one coherent sprite. Keep proportions identical to reference, crisp pixel art, no ground/shadows, text, grid, blur or extra limbs. Transparent RGBA background. Do not reproduce the reference's full sheet.",
+  "path": "C:\\Users\\tsz\\.codex\\generated_images\\01a16bba-0ea5-7d70-88d4-db883f6c0fdc\\exec-3477c9dc-8ced-4878-9f68-c39d6c60ebba.png"
+}

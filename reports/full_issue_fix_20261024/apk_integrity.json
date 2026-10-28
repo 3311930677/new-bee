@@ -1,0 +1,32 @@
+{
+  "packages": [
+    {
+      "apk": "Yuanzheng-fullfix.apk",
+      "architecture": "arm64-v8a",
+      "size": 745905485,
+      "sha256": "4c628e7bcf1ed896a1b7a3c95f4658c8913e5c1dfbdcce18d48ffc7119ca8fb3",
+      "ready_textures": 70,
+      "data_identical": true,
+      "qa_included": false,
+      "new_source_masters_excluded": true
+    },
+    {
+      "apk": "Yuanzheng-fullfix-audit.apk",
+      "architecture": "x86_64",
+      "size": 748736513,
+      "sha256": "46db9834f9d354982d2972d500564a91c69a35de10b86f154593b65fad893289",
+      "ready_textures": 70,
+      "data_identical": true,
+      "qa_included": true,
+      "new_source_masters_excluded": true
+    }
+  ],
+  "equipment_changed_icons_only": [
+    "tpl_sword_starfall",
+    "tpl_spear_windpiercer",
+    "tpl_staff_glacierheart",
+    "tpl_hammer_dawnlight",
+    "tpl_armor_expedition",
+    "tpl_acc_archery_ring"
+  ]
+}
