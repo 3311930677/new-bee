@@ -1,0 +1,23 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+CITY_FAIL 2 test(s) failed
+WARNING: Missing visual resource: id=npc_warden_portrait resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _npc_portrait_tex (res://src/city/CityScene.gd:1163)
+       [2] _open_dialog (res://src/city/CityScene.gd:1266)
+       [3] _run (res://tools/VerifyCity.gd:52)
+ERROR: FAIL: NPC 帧动画缩放应为 0.72，实为 0.691
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyCity.gd:16)
+       [1] _run (res://tools/VerifyCity.gd:99)
+ERROR: FAIL: NPC 脚底标定应为 -42.5，实为 -40.80
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyCity.gd:16)
+       [1] _run (res://tools/VerifyCity.gd:100)
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+

@@ -1,0 +1,38 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PERF 加载页预热完（含编译）     6082 ms
+PERF GameHome 进场景             140 ms（预算 200）
+PERF 开浮层 世界     第1次      128 ms（预算 100）
+PERF 开浮层 世界     第2次       74 ms（预算 70）
+PERF 开浮层 图鉴     第1次      111 ms（预算 100）
+PERF 开浮层 图鉴     第2次       70 ms（预算 70）
+PERF 开浮层 召唤     第1次       64 ms（预算 100）
+PERF 开浮层 召唤     第2次       19 ms（预算 70）
+PERF 开浮层 兑换     第1次       97 ms（预算 100）
+PERF 开浮层 兑换     第2次       44 ms（预算 70）
+PERF 开浮层 设置     第1次       95 ms（预算 100）
+PERF 开浮层 设置     第2次       69 ms（预算 70）
+PERF 开浮层 养成     第1次       84 ms（预算 100）
+PERF 开浮层 养成     第2次       56 ms（预算 70）
+PERF CityScene 进场景            205 ms（预算 320）
+PERF_FAIL fails=3
+ERROR: FAIL: 浮层「世界」第 1 次打开 128 ms 超预算 100 ms
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyPerf.gd:27)
+       [1] _run (res://tools/VerifyPerf.gd:157)
+ERROR: FAIL: 浮层「世界」第 2 次打开 74 ms 超预算 70 ms
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyPerf.gd:27)
+       [1] _run (res://tools/VerifyPerf.gd:157)
+ERROR: FAIL: 浮层「图鉴」第 1 次打开 111 ms 超预算 100 ms
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyPerf.gd:27)
+       [1] _run (res://tools/VerifyPerf.gd:157)
+WARNING: 4 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 1 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)
+

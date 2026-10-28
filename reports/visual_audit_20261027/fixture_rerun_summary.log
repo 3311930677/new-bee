@@ -1,0 +1,17 @@
+Godot  : D:\new-bee\tools\godot-4.7.2\Godot_v4.7.2-stable_win64_console.exe
+Version: 4.7.2.stable.official.ed1daf0bf
+Project: D:\new-bee\远征
+UserDir: D:/new-bee/远征/tools/_logs/user_sandbox_5b8fa3da4eaf48bb8a56e3559a01c671/Godot/app_userdata/远征/
+Cases  : 3  (timeout 240s, quit-after 6000 frames)
+Logs   : D:\new-bee\reports\visual_audit_20261027\fixture_rerun
+Commit : 0c2a77c2
+
+PASS  VerifyCompanions
+FAIL  VerifyCampaignGrowth  <- exit code 1; missing completion line 'CAMPAIGN_GROWTH_OK'; output contains [ERROR:]; output contains [FAIL:]; output contains [_FAIL]
+      CAMPAIGN_GROWTH_FAIL fails=1
+      ERROR: FAIL: 首骑使用当前职业骑手与马的合成帧
+      log: D:\new-bee\reports\visual_audit_20261027\fixture_rerun\VerifyCampaignGrowth.log
+PASS  VerifyFrostArt
+
+NOTE: 2 case(s) emitted 3 engine exit-time resource diagnostic(s) (leaked RIDs / resources still in use). Not counted as failures - tracked as issue #43.
+FAILED: 1 / 3

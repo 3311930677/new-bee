@@ -1,0 +1,142 @@
+Godot  : D:\new-bee\tools\godot-4.7.2\Godot_v4.7.2-stable_win64_console.exe
+Version: 4.7.2.stable.official.ed1daf0bf
+Project: D:\new-bee\远征
+UserDir: D:/new-bee/远征/tools/_logs/user_sandbox_f2d62e963a834337bba1bcb05febae32/Godot/app_userdata/远征/
+Cases  : 78  (timeout 240s, quit-after 6000 frames)
+Logs   : D:\new-bee\reports\visual_audit_20261027\full_regression
+Commit : 0c2a77c2
+
+PASS  VerifyAssets
+PASS  VerifyBattleScene
+PASS  VerifyPlayJourney
+PASS  VerifySave
+PASS  VerifyUiLayout
+FAIL  VerifyVisualRefresh  <- exit code 1; missing completion line 'VISUAL_REFRESH_OK'; output contains [ERROR:]; output contains [FAIL:]; output contains [_FAIL]
+      VISUAL_REFRESH_FAIL 1
+      ERROR: FAIL: No literal font_size override outside src/preview: res://src/battle/BattleChestView.gd, res://src/ui/BagPanel.gd, res://src/ui/GrowthChestView.gd, res://src/ui/LoginChestView.gd, res://src/ui/QuestPanel.gd, res://src/ui/ReadingSkin.gd, res://src/ui/ReviewFixUI.gd, res://src/ui/ShowcaseUI.gd, res://src/ui/WorldPointMap.gd
+      log: D:\new-bee\reports\visual_audit_20261027\full_regression\VerifyVisualRefresh.log
+FAIL  VerifyFieldUI  <- exit code 1; missing completion line 'FIELD_UI_OK'; output contains [ERROR:]; output contains [FAIL:]; output contains [_FAIL]
+      FIELD_UI_FAIL 4
+      ERROR: FAIL: Default activity page must not invent active events
+      ERROR: FAIL: Activity card must open its own detail
+      log: D:\new-bee\reports\visual_audit_20261027\full_regression\VerifyFieldUI.log
+PASS  VerifySweep
+FAIL  VerifyCity  <- exit code 1; missing completion line 'CITY_OK'; output contains [ERROR:]; output contains [FAIL:]; output contains [_FAIL]
+      CITY_FAIL 2 test(s) failed
+      ERROR: FAIL: NPC 帧动画缩放应为 0.72，实为 0.691
+      ERROR: FAIL: NPC 脚底标定应为 -42.5，实为 -40.80
+      log: D:\new-bee\reports\visual_audit_20261027\full_regression\VerifyCity.log
+PASS  VerifyGameHome
+PASS  VerifyMapScene
+FAIL  VerifyMainWorld  <- exit code 1; missing completion line 'MAIN_WORLD_OK'; output contains [ERROR:]; output contains [FAIL:]; output contains [_FAIL]
+      MAIN_WORLD_FAIL fails=3
+      ERROR: FAIL: 走近 NPC 时名签应出现
+      ERROR: FAIL: 主地图旅人应采用当前同屏样板比例
+      ERROR: FAIL: 长屏同图战斗人物与指令条应跟随视口下移
+      log: D:\new-bee\reports\visual_audit_20261027\full_regression\VerifyMainWorld.log
+FAIL  VerifyReferenceComplete  <- exit code 1; missing completion line 'REFERENCE_COMPLETE_OK'; output contains [ERROR:]; output contains [_FAIL]
+      REFERENCE_COMPLETE_FAIL checks=179 failures=4
+      ERROR: REFERENCE_COMPLETE_FAIL lorin_wilds original hero scale .65
+      ERROR: REFERENCE_COMPLETE_FAIL maple_road original hero scale .65
+      ERROR: REFERENCE_COMPLETE_FAIL keyboard prioritises form
+      log: D:\new-bee\reports\visual_audit_20261027\full_regression\VerifyReferenceComplete.log
+PASS  VerifyWorldSession
+PASS  VerifyStory
+PASS  VerifyEconomy
+PASS  VerifyTradeWorld
+PASS  VerifySecondAct
+PASS  VerifyThirdAct
+PASS  VerifyThirdBack
+PASS  VerifyFourthFront
+PASS  VerifyFourthBack
+PASS  VerifyReturnJobs
+PASS  VerifyThirdSide
+FAIL  VerifyCompanions  <- exit code 1; missing completion line 'COMPANIONS_OK'; output contains [ERROR:]; output contains [FAIL:]; output contains [_FAIL]
+      COMPANIONS_FAIL fails=5
+      ERROR: FAIL: 锁盘胜利不计协战
+      ERROR: FAIL: 正常胜利必须保存
+      ERROR: FAIL: 实际参战同物种只加一次
+      ERROR: FAIL: 重复战果不重复加熟练
+      ERROR: FAIL: 三胜后可训练第二项
+      log: D:\new-bee\reports\visual_audit_20261027\full_regression\VerifyCompanions.log
+FAIL  VerifyCampaignGrowth  <- exit code 1; missing completion line 'CAMPAIGN_GROWTH_OK'; output contains [ERROR:]; output contains [FAIL:]; output contains [_FAIL]
+      CAMPAIGN_GROWTH_FAIL fails=15
+      ERROR: FAIL: 战利升级写盘失败连同生命和等级整体回滚
+      ERROR: FAIL: 战利升级成功立即同步生命上限
+      ERROR: FAIL: 熊的四向各有三个实际步态帧
+      ERROR: FAIL: 四职业骑熊时保留角色并压在鞍上
+      ERROR: FAIL: 首骑使用独立马步态与当前职业骑手
+      ERROR: FAIL: 首骑四向完整步态驱动
+      log: D:\new-bee\reports\visual_audit_20261027\full_regression\VerifyCampaignGrowth.log
+PASS  VerifyCampaignGear
+PASS  VerifyWorkshop
+PASS  VerifyCurriculum
+FAIL  VerifyFrostArt  <- exit code 1; missing completion line 'FROST_ART_OK'; output contains [ERROR:]; output contains [FAIL:]; output contains [_FAIL]
+      FROST_ART_FAIL fails=3
+      ERROR: FAIL: 建筑基座固定
+      log: D:\new-bee\reports\visual_audit_20261027\full_regression\VerifyFrostArt.log
+PASS  VerifyPortGrowth
+PASS  VerifyShipping
+PASS  VerifyFrostHerbOrder
+PASS  VerifyRoadMail
+PASS  VerifyStelePuzzle
+PASS  VerifyBossPuzzles
+PASS  VerifyAftermath
+PASS  VerifyAftermathResume
+PASS  VerifyFishing
+FAIL  VerifyRouteScene  <- exit code 1; missing completion line 'ROUTE_SCENE_OK'; output contains [ERROR:]; output contains [FAIL:]; output contains [_FAIL]
+      ROUTE_SCENE_FAIL fails=1
+      ERROR: FAIL: 三连败应发礼包（实为「连败慰礼 · 魂晶 +30 · 宠物粮 ×5」）
+      log: D:\new-bee\reports\visual_audit_20261027\full_regression\VerifyRouteScene.log
+PASS  VerifyRunResume
+PASS  VerifyRunResumeRead
+PASS  VerifyRunImmediate
+PASS  VerifyRunEvents
+PASS  VerifyRunEventsRead
+PASS  VerifyTradeContracts
+PASS  VerifyTradeContractsRead
+PASS  VerifyOathWalk
+FAIL  VerifyCampGathering  <- exit code 1; missing completion line 'CAMP_GATHERING_OK'; output contains [ERROR:]; output contains [FAIL:]; output contains [_FAIL]
+      CAMP_GATHERING_FAIL fails=1
+      ERROR: FAIL: 实际按钮打开三城小聚
+      log: D:\new-bee\reports\visual_audit_20261027\full_regression\VerifyCampGathering.log
+PASS  VerifySafeArea
+PASS  VerifyAftermathPaths
+PASS  VerifyWorldCommissions
+PASS  VerifyWorldCommissionsRead
+PASS  VerifyDungeonTrials
+PASS  VerifyDungeonTrialsRead
+PASS  VerifyGacha
+PASS  VerifyPanels
+PASS  VerifyGrowth
+FAIL  VerifyPerf  <- exit code 1; missing completion line 'PERF_OK'; output contains [ERROR:]; output contains [FAIL:]; output contains [_FAIL]
+      PERF_FAIL fails=6
+      ERROR: FAIL: 浮层「世界」第 1 次打开 130 ms 超预算 100 ms
+      ERROR: FAIL: 浮层「世界」第 2 次打开 78 ms 超预算 70 ms
+      ERROR: FAIL: 浮层「图鉴」第 1 次打开 118 ms 超预算 100 ms
+      ERROR: FAIL: 浮层「兑换」第 1 次打开 107 ms 超预算 100 ms
+      ERROR: FAIL: 浮层「设置」第 2 次打开 73 ms 超预算 70 ms
+      ERROR: FAIL: CityScene 进场景 耗时 597 ms 超出预算 320 ms（一次性开销应已在加载页付掉）
+      log: D:\new-bee\reports\visual_audit_20261027\full_regression\VerifyPerf.log
+PASS  VerifyLore
+PASS  VerifyQuests
+PASS  VerifyAudio
+PASS  VerifyTransit
+PASS  VerifyDrops
+PASS  VerifyArena
+PASS  VerifyAvatar
+PASS  VerifySignpostEntry
+PASS  VerifyNav
+PASS  verify_data
+PASS  verify_battle
+PASS  VerifyGameplayBalance
+PASS  VerifyJourneyRelics
+PASS  VerifySpecialEvents
+PASS  VerifySpecialEventsRead
+PASS  VerifyCurrencyBalance
+PASS  verify_route
+PASS  verify_trait
+PASS  verify_walk_assets
+
+NOTE: 23 case(s) emitted 54 engine exit-time resource diagnostic(s) (leaked RIDs / resources still in use). Not counted as failures - tracked as issue #43.
+FAILED: 11 / 78

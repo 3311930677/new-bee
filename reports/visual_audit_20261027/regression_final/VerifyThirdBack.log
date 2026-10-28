@@ -1,0 +1,13 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+THIRD_BACK_OK
+WARNING: 存档处于锁定状态，本次写盘已跳过（原因：；备份：）
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:747)
+       [1] gain_exp (res://src/autoload/G.gd:907)
+       [2] _bank_main_world_rewards (res://src/explore/MapScene.gd:4729)
+       [3] _settle_main_world (res://src/explore/MapScene.gd:4484)
+       [4] _run (res://tools/VerifyThirdBack.gd:71)
+       [5] _enter (res://tools/VerifyThirdBack.gd:32)
+
