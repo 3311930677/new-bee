@@ -1,0 +1,53 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+FOURTH_DISK_ROLLBACK rejected=false prog=true wallet=true items=true
+FOURTH_DISK_ROLLBACK_CHECKED expected_io_rejection=true
+FOURTH_BACK_FAIL fails=7
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+ERROR: FAIL: 被锁结算退回首领/战利/封记/账本
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _run (res://tools/VerifyFourthBack.gd:102)
+       [2] _enter (res://tools/VerifyThirdBack.gd:32)
+ERROR: FAIL: 真实写盘失败退回首领/战利/封记/账本
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _run (res://tools/VerifyFourthBack.gd:113)
+       [2] _enter (res://tools/VerifyThirdBack.gd:32)
+ERROR: FAIL: 首通一步事务消费封记并发记录和职业武器
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _run (res://tools/VerifyFourthBack.gd:115)
+       [2] _enter (res://tools/VerifyThirdBack.gd:32)
+ERROR: FAIL: 首通和记录真实存取
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _run (res://tools/VerifyFourthBack.gd:120)
+ERROR: FAIL: 首通后重进不复活剧情首领
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _run (res://tools/VerifyFourthBack.gd:122)
+       [2] _enter (res://tools/VerifyThirdBack.gd:32)
+ERROR: FAIL: 两选项均完成36步60级 seal
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _run (res://tools/VerifyFourthBack.gd:139)
+       [2] _enter (res://tools/VerifyThirdBack.gd:32)
+ERROR: FAIL: 结局世界旗 seal
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _run (res://tools/VerifyFourthBack.gd:140)
+       [2] _enter (res://tools/VerifyThirdBack.gd:32)
+SCRIPT ERROR: Invalid access to property or key 'act4_ending' on a base object of type 'Dictionary'.
+   at: _run (res://tools/VerifyFourthBack.gd:148)
+   GDScript backtrace (most recent call first):
+       [0] _run (res://tools/VerifyFourthBack.gd:148)
+

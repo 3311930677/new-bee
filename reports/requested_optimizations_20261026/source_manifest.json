@@ -1,0 +1,78 @@
+[
+  {
+    "path": "export_presets.cfg",
+    "sha256": "c2b0528cb2dc35da66536ac74437414a7ea69d6d452b68e9e05574c667a72040"
+  },
+  {
+    "path": "project.godot",
+    "sha256": "5adb38931f3c1f12df5e02c3bca654a19955a2fc33416ef2846dbcc43a530ae9"
+  },
+  {
+    "path": "src/autoload/G.gd",
+    "sha256": "1915d29a0431435d0188c0a47d437d264825a0971a5ac0f04d055b230958d2b7"
+  },
+  {
+    "path": "src/city/CityScene.gd",
+    "sha256": "a6e4821c3192e7ca6ac12f32d7ad56213e7e2cd56c670d6912217fe0cdec8012"
+  },
+  {
+    "path": "src/explore/FlatGroundMaterial.gdshader",
+    "sha256": "dc25085c3a40b61c6775468d06b44367ff0d5b86a33cc0943d396360f349fecf"
+  },
+  {
+    "path": "src/explore/FlatMapGround.gd",
+    "sha256": "73a4e4da1b3b82cced561c84516e10c6781fd0d7a2df9eb1d2bcd084831acd4c"
+  },
+  {
+    "path": "src/explore/IllustratedScenery.gd",
+    "sha256": "be1d9b3fe93539dcd77b0fda3df6eddbec9b2f81a7fd1c72f3608ccfaf45433c"
+  },
+  {
+    "path": "src/explore/MapScene.gd",
+    "sha256": "b6ababcafeb9a8d47b6b95c993158925fb30286c0b7d26bb9d599111ff358cdb"
+  },
+  {
+    "path": "src/explore/SecondaryMapEnhancer.gd",
+    "sha256": "6e07e4b011e6ecb891aa223200c1b3c21292676fa7868a816e4e343c9c635d67"
+  },
+  {
+    "path": "src/ui/BagPanel.gd",
+    "sha256": "54a8d92c30b8bc91cde0a3481f4eedf53f08fd4cf278fc1a6f49847de5302116"
+  },
+  {
+    "path": "src/ui/WorldPointMap.gd",
+    "sha256": "7f88122bccb4f521798e29838f3fadac256b43a7da0c75acafecd146a524923d"
+  },
+  {
+    "path": "src/world/ReferenceWorldArt.gd",
+    "sha256": "4a7d1667bd835e04cfa615a00d56041e7a91c777f2c9be6b3373dab70859757f"
+  },
+  {
+    "path": "src/world/SunnyTravelArt.gd",
+    "sha256": "58858178b3f70b692aff794be1ffaf6b991daf0c5cf01ae33d6a13d1890b4d19"
+  },
+  {
+    "path": "src/world/WorldPresentation.gd",
+    "sha256": "421dc6822825c68fb71555f012e9232f20059568df8bf8ce834d6268b9b9314b"
+  },
+  {
+    "path": "src/ui/ItemDescriptions.gd",
+    "new": true,
+    "sha256": "49abc2450e0672863e39dbdcac61faabca6ffc2d7260819710989eccaa5b32a0"
+  },
+  {
+    "path": "src/world/WorldDressing.gd",
+    "new": true,
+    "sha256": "e158387dc4ce80b67c1073f00bb4c9e5d0d81b9f28cd03ca3a0ad3428c2f6eea"
+  },
+  {
+    "path": "tools/VerifyRequestedOptimizations.gd",
+    "new": true,
+    "sha256": "124d19e96b5e42250d41ce154a8c8e2ab57ba1e91ade7ef2c1658042fd28063b"
+  },
+  {
+    "path": "tools/VerifyRequestedOptimizations.tscn",
+    "new": true,
+    "sha256": "49ed57ebcf5b8f05ed34defbb611790c0ba51e66acbdd5bc2d642700b7f41bb4"
+  }
+]

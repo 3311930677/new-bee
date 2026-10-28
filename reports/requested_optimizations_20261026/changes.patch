@@ -1,0 +1,789 @@
+--- before/export_presets.cfg
++++ after/export_presets.cfg
+@@ -147,8 +147,8 @@
+ architectures/arm64-v8a=true
+ architectures/x86=false
+ architectures/x86_64=false
+-version/code=4
+-version/name="0.2.2-experience"
++version/code=5
++version/name="0.2.3-optimization"
+ package/unique_name="org.yuanzheng.singleplayer"
+ package/name="远征"
+ package/signed=true
+--- before/project.godot
++++ after/project.godot
+@@ -11,7 +11,7 @@
+ [application]
+ 
+ config/name="远征"
+-config/version="0.2.2-experience"
++config/version="0.2.3-optimization"
+ run/main_scene="res://src/main/Main.tscn"
+ config/features=PackedStringArray("4.7", "Mobile")
+ config/icon="res://icon.png"
+--- before/src/autoload/G.gd
++++ after/src/autoload/G.gd
+@@ -6244,6 +6244,7 @@
+ func visual_texture(path: String) -> Texture2D:
+ 	var clean_path := path.get_base_dir()+"/refined/"+path.get_file()
+ 	var target := clean_path if ResourceLoader.exists(clean_path) else path
++	if (path.begins_with("res://assets/world/") or path.begins_with("res://image/main_world/")) and preload("res://src/world/WorldPresentation.gd").original_art():target=preload("res://src/world/WorldPresentation.gd").background_path(path)
+ 	if ResourceLoader.exists(target):
+ 		var res = load(target)
+ 		if res is Texture2D:
+--- before/src/city/CityScene.gd
++++ after/src/city/CityScene.gd
+@@ -2615,7 +2615,7 @@
+ 	# 这批楼是同一台等距相机、同一比例出的：内容高都落在 161~181px，宽随楼本身宽窄变化
+ 	# （城门宽、祭坛窄）。所以绝不能"按各楼占地宽度缩放"——那会让窄楼被拉扁、宽楼被撑肿，
+ 	# 一排楼大小失控。统一倍数才能让它们看起来在同一片城里。
+-	const ART_SCALE := 0.75
++	const ART_SCALE := 0.75 * preload("res://src/world/WorldPresentation.gd").BUILDING_ENLARGEMENT
+ 	const ART_W := 256.0 * ART_SCALE    # 192
+ 	const ART_H := 192.0 * ART_SCALE    # 144
+ 	const ART_BOTTOM := 4.0             # 楼脚相对节点原点的下探量（压住落地影）
+@@ -2689,7 +2689,7 @@
+ 	## 楼体可见轮廓的最高点（负值，越小越高）。木牌、功能图标、悬停指示都挂在这条线之上，
+ 	## 免得贴图比程序绘制高时，装饰还按老高度摆就被楼顶顶穿。
+ 	func _art_top() -> float:
+-		if bool(get_meta("reference_complete",false)):return -_h
++		if bool(get_meta("reference_complete",false)):return -_h*preload("res://src/world/WorldPresentation.gd").BUILDING_ENLARGEMENT
+ 		if art != null:
+ 			if _reference_art:
+ 				return ART_BOTTOM - ART_W * float(art.get_height()) / float(art.get_width())
+@@ -2701,6 +2701,7 @@
+ 			draw_set_transform(Vector2(0,-4),0,Vector2(1,.17));draw_circle(Vector2.ZERO,_w*.43,Color("35402a",.13));draw_set_transform(Vector2.ZERO)
+ 			var tex:=art if built() else ReferenceWorldArt.texture("construction")
+ 			var size:=Vector2(_w,_h) if built() else Vector2(_w,minf(145,_h))
++			size*=preload("res://src/world/WorldPresentation.gd").BUILDING_ENLARGEMENT
+ 			draw_texture_rect(tex,Rect2(Vector2(-size.x*.5,-size.y),size),false)
+ 			if hover:
+ 				var text:=String(data.get("name",""))+(" · 待建" if not built() else "")
+@@ -3152,6 +3153,9 @@
+ 				sp.position = Vector2(0, -canvas_height * display_scale * 0.5)
+ 				if not bool(frames.get_meta("fine_art",false)):sp.material = FrostCityArt.cutout_material()
+ 				sp.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
++			sp.scale*=preload("res://src/world/WorldPresentation.gd").NPC_ENLARGEMENT
++			sp.position*=preload("res://src/world/WorldPresentation.gd").NPC_ENLARGEMENT
++			set_meta("display_height",float(frames.get_meta("visible_world_height",76.0))*preload("res://src/world/WorldPresentation.gd").NPC_ENLARGEMENT)
+ 			# 错开起始帧：一排 NPC 齐步呼吸，会像同一张贴图复制了八份
+ 			sp.frame = int(absf(position.x + position.y)) % maxi(1,frames.get_frame_count(&"idle"))
+ 			sp.play()
+@@ -3171,6 +3175,7 @@
+ 		if embedded and frames != null:
+ 			# 成人名牌保留原安全高度，避免与0.66倍主角名牌相交后被隐藏。
+ 			_plate_top = -78.0 if String(data.get("id", "")) == "npc_child" else -108.0
++		_plate_top*=preload("res://src/world/WorldPresentation.gd").NPC_ENLARGEMENT
+ 		_plate_w = clampf(G.font_bold.get_string_size(txt,
+ 			HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS).x + 16.0, 56.0, 112.0) \
+ 			if embedded else maxf(64.0, G.font_bold.get_string_size(txt, HORIZONTAL_ALIGNMENT_LEFT, -1, G.FS_XS).x + 20)
+@@ -3252,8 +3257,8 @@
+ 			return
+ 		if art != null:
+ 			# 半身立绘立在地上：底缘压深渐隐，裁切不生硬（比色块小人像样得多）
+-			var h := 104.0
+-			var w := 104.0
++			var h := 104.0*preload("res://src/world/WorldPresentation.gd").NPC_ENLARGEMENT
++			var w := h
+ 			var top := -h + bob * 0.5
+ 			draw_texture_rect(art, Rect2(-w * 0.5, top, w, h), false)
+ 			for i in 8:
+--- before/src/explore/FlatGroundMaterial.gdshader
++++ after/src/explore/FlatGroundMaterial.gdshader
+@@ -6,6 +6,7 @@
+ uniform vec2 surface_scale = vec2(1.0);
+ uniform vec2 map_dimensions = vec2(960.0, 1248.0);
+ uniform int biome_type = 0; // 0:forest, 1:snow, 2:desert, 3:cavern, 4:abyss, 5:tide
++uniform bool original_art = true;
+ 
+ float hash21(vec2 p) {
+ 	p = fract(p * vec2(123.34, 456.21));
+@@ -15,7 +16,7 @@
+ 
+ void fragment() {
+ 	float road = texture(TEXTURE, UV).r;
+-	vec2 px = floor(UV * map_dimensions);
++	vec2 px = original_art ? UV * map_dimensions : floor(UV * map_dimensions);
+ 
+ 	// 1. High-Density 16-Bit Tile Frequency (96px tile domain instead of 1000px stretch)
+ 	// This eliminates the crude "一深一浅" oversized blurry patch problem!
+@@ -35,6 +36,9 @@
+ 
+ 	vec3 terrain = mix(atlas_terrain, macro_terrain, 0.35);
+ 	vec3 track = mix(atlas_track, macro_track, 0.30);
++	if (original_art) {
++		COLOR = vec4(mix(atlas_terrain, atlas_track, smoothstep(0.38, 0.62, road)) * surface_tint.rgb, 1.0);
++	} else {
+ 
+ 	// 2. Multi-tier Handcrafted Pixel Details by Biome
+ 	vec2 cell_16 = floor(px / 16.0);
+@@ -145,4 +149,5 @@
+ 	final_rgb *= vig;
+ 
+ 	COLOR = vec4(final_rgb * surface_tint.rgb, 1.0);
++	}
+ }
+--- before/src/explore/FlatMapGround.gd
++++ after/src/explore/FlatMapGround.gd
+@@ -34,6 +34,7 @@
+ 	if has_atlas:
+ 		var finish := ShaderMaterial.new()
+ 		finish.shader = MATERIAL_SHADER
++		finish.set_shader_parameter("original_art",preload("res://src/world/WorldPresentation.gd").original_art())
+ 		finish.set_shader_parameter("surface_atlas", load(atlas_path))
+ 		finish.set_shader_parameter("surface_tint", tint)
+ 		finish.set_shader_parameter("surface_scale", dimensions / Vector2(768, 998.4))
+--- before/src/explore/IllustratedScenery.gd
++++ after/src/explore/IllustratedScenery.gd
+@@ -13,7 +13,7 @@
+ 		prop.name = "Illustrated_" + String(row.get("id", "prop"))
+ 		prop.texture_filter = preload("res://src/world/WorldPresentation.gd").sampling()
+ 		prop.position = Vector2(float(row.at[0]), float(row.at[1]))
+-		prop.display_size = Vector2(float(row.size[0]),float(row.size[1]))
++		prop.display_size = Vector2(float(row.size[0]),float(row.size[1]))*preload("res://src/world/WorldPresentation.gd").SCENERY_ENLARGEMENT
+ 		prop.art = art
+ 		prop.canopy = bool(row.get("canopy",false))
+ 		world.add_child(prop)
+--- before/src/explore/MapScene.gd
++++ after/src/explore/MapScene.gd
+@@ -310,6 +310,7 @@
+ 	_build_hud()
+ 	if _mode == "main_world" and bool(_main_cfg.get("city", false)):
+ 		_attach_city_content()
++	if _mode == "main_world":preload("res://src/world/WorldDressing.gd").setup(self)
+ 	if _mode == "main_world":
+ 		var story_result := G.story_event("visit", _main_map_id, _main_map_id)
+ 		if not story_result.is_empty():
+@@ -833,7 +834,8 @@
+ 		holder.position = Vector2(float(row[1]), float(row[2]))
+ 		var sprite := Sprite2D.new()
+ 		sprite.texture = tex
+-		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
++		sprite.texture_filter = preload("res://src/world/WorldPresentation.gd").sampling()
++		sprite.scale=Vector2.ONE*preload("res://src/world/WorldPresentation.gd").SCENERY_ENLARGEMENT
+ 		sprite.offset = Vector2(0, -tex.get_height() * 0.5)
+ 		holder.add_child(sprite)
+ 		if row.size() > 3 and row[3] is Array and (row[3] as Array).size() == 2:
+@@ -5038,7 +5040,7 @@
+ 			return
+ 		var spr := Sprite2D.new()
+ 		spr.texture = tex
+-		spr.scale = Vector2.ONE * s
++		spr.scale = Vector2.ONE * s * preload("res://src/world/WorldPresentation.gd").SCENERY_ENLARGEMENT
+ 		spr.offset = Vector2(0, -tex.get_height() / 2.0)
+ 		add_child(spr)
+ 		var shape := CollisionShape2D.new()
+@@ -5605,8 +5607,8 @@
+ 				frames.add_frame(&"idle",atlas)
+ 			sprite=AnimatedSprite2D.new()
+ 			sprite.sprite_frames=frames
+-			sprite.scale=Vector2.ONE*.55
+-			sprite.position.y=-32
++			sprite.scale=Vector2.ONE*.55*preload("res://src/world/WorldPresentation.gd").NPC_ENLARGEMENT
++			sprite.position.y=-59.0*sprite.scale.y
+ 			sprite.play(&"idle")
+ 			add_child(sprite)
+ 	func _physics_process(_delta:float)->void:
+--- before/src/explore/SecondaryMapEnhancer.gd
++++ after/src/explore/SecondaryMapEnhancer.gd
+@@ -38,7 +38,8 @@
+ 	var floor_depth := FloorDepthLayer.new(map, map_id, map_size)
+ 	floor_depth.name = "SecondaryFloorDepth"
+ 	floor_depth.z_index = -11
+-	world.add_child(floor_depth)
++	if not preload("res://src/world/WorldPresentation.gd").original_art():world.add_child(floor_depth)
++	else:floor_depth.free()
+ 
+ 	# 2. 中景环境道具层 (y_sort_enabled = true)
+ 	var scenery_layer := SceneryLayer.new(map, map_id, map_size)
+@@ -496,7 +497,7 @@
+ 		node.position = pos
+ 
+ 		# 像素缩放比为 0.5 (source_to_world)
+-		var base_scale := 0.5 * sc
++		var base_scale := 0.5 * sc * preload("res://src/world/WorldPresentation.gd").SCENERY_ENLARGEMENT
+ 		var shadow_size := tex.get_size() * base_scale * 0.5
+ 		var shadow := PropShadow.new(shadow_size)
+ 		node.add_child(shadow)
+@@ -509,7 +510,7 @@
+ 		# 精灵本体（Origin 在脚底中央，符合 Y-Sort 真实地表遮挡）
+ 		var spr := Sprite2D.new()
+ 		spr.texture = tex
+-		spr.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
++		spr.texture_filter = preload("res://src/world/WorldPresentation.gd").sampling()
+ 		spr.scale = Vector2(base_scale, base_scale)
+ 		spr.offset = Vector2(0, -tex.get_height() * 0.5)
+ 		node.add_child(spr)
+--- before/src/ui/BagPanel.gd
++++ after/src/ui/BagPanel.gd
+@@ -7,6 +7,7 @@
+ const TouchScroll := preload("res://src/ui/TouchScroll.gd")
+ const Fix:=preload("res://src/ui/ReviewFixUI.gd")
+ const Art := preload("res://src/ui/InventoryQuestSkin.gd")
++const Descriptions := preload("res://src/ui/ItemDescriptions.gd")
+ const TABS := [["equip","装备"],["mat","材料"],["gem","宝石"],["pending","待领取"]]
+ var _tab := "equip"
+ var _page := 0
+@@ -138,7 +139,7 @@
+ 	if _gold_bg!=null:Page.place(_gold_bg,Vector2(w*.64,84),Vector2(w*.36-24,36))
+ 	Page.place(_gold,Vector2(w*.64,84),Vector2(w*.36-24,36))
+ 	Page.place(_tabs,Vector2(20,126),Vector2(w-40,60))
+-	var compact:=_tab=="pending" or _tab in ["mat","gem"] or G.inv_find(_sel_uid).is_empty()
++	var compact:=(_tab=="equip" and G.inv_find(_sel_uid).is_empty()) or (_tab=="pending" and _sel_uid==0) or (_tab in ["mat","gem"] and _sel_supply.is_empty())
+ 	var tray_h:=184.0 if compact else minf(340,safe.size.y*.42)
+ 	tray_h=minf(tray_h,maxf(156,safe.size.y-376))
+ 	var tray_top:=safe.size.y-tray_h-16
+@@ -163,6 +164,7 @@
+ 			_:Page.place(b,Vector2((unit+8)*2,0),Vector2(unit,64))
+ 
+ func _select_tab(key: String) -> void:
++	if key=="pending" or _tab=="pending":_sel_uid=0
+ 	_tab=key
+ 	_confirm_uid=0
+ 	_sel_supply=""
+@@ -225,6 +227,8 @@
+ 		cell.rarity_rank=int(inst.get("rarity",1))
+ 		cell.locked=bool(inst.get("locked",false))
+ 		cell.heading.text=String(tpl.get("name","装备"))
++		cell.show_name=true
++		cell.image_px=54
+ 		cell.flag.text="锁" if inst.get("locked",false) else ""
+ 		cell.amount.text="+%d" % int(inst.get("lv",0))
+ 		cell.selected=uid==_sel_uid
+@@ -248,6 +252,9 @@
+ 	_refresh()
+ 	for b in _item_buttons:
+ 		if int(b.get_meta("gear_uid",0))==uid:b.grab_focus.call_deferred()
++	if _tab=="pending":
++		var preview:=find_child("PendingPreview_"+str(uid),true,false)
++		if preview!=null:preview.grab_focus.call_deferred()
+ 
+ func _empty(words: String, hint: String) -> void:
+ 	var box:=VBoxContainer.new()
+@@ -271,6 +278,10 @@
+ 
+ func _build_detail() -> void:
+ 	var inst:=G.inv_find(_sel_uid)
++	if _tab=="pending":
++		inst={}
++		for pending in G.inv_pending():
++			if int(pending.uid)==_sel_uid:inst=pending;break
+ 	if inst.is_empty():
+ 		_detail_body.add_child(Page.line("选中器物，查看详情与比较","section"))
+ 		_detail_body.add_child(Page.line("品质从高到低排列；装备后可在养成中强化与镶嵌。","caption",UI.AGED))
+@@ -339,6 +350,11 @@
+ 	var affixes:PackedStringArray=[]
+ 	for a in inst.get("affixes",[]):affixes.append(Page.affix_label(a)+("［锁］" if a.get("locked",false) else ""))
+ 	if not affixes.is_empty():_detail_body.add_child(Page.line("词条："+" · ".join(affixes),"caption",UI.AGED))
++	if _tab=="pending":
++		_detail_body.add_child(Page.line("背包满时暂存于此。腾出装备格后可领取，查看详情不会领取或消耗资源。","caption",UI.AGED))
++		var claim:=_action("领取","primary","wear",func():_toast_msg(_ok_msg(G.inv_claim(uid),"已领取"));_sel_uid=0;_refresh())
++		claim.disabled=G.inv_count()>=G.inv_capacity()
++		return
+ 	var locked:=bool(inst.get("locked",false))
+ 	var sell:=_action("卖出 %d 金" % G.inv_sell_price(uid),"secondary","sell",_do_sell.bind(uid))
+ 	sell.caption.add_theme_font_size_override("font_size",G.FS_XS)
+@@ -366,8 +382,8 @@
+ 	var b:=Page.GemSocket.new(G.res_tex(id) if not id.is_empty() else null)
+ 	b.theme_type_variation="BagSocket"
+ 	b.tooltip_text=G.gem_label(id)+" · 点击拆除" if not id.is_empty() else "空宝石孔 · 在装备中镶嵌"
+-	b.disabled=id.is_empty()
+-	if not id.is_empty():b.pressed.connect(func():_toast_msg(_ok_msg(G.inv_gem_pop(uid,index),"已拆除 "+G.gem_label(id)));_refresh())
++	b.disabled=id.is_empty() or _tab=="pending"
++	if not b.disabled:b.pressed.connect(func():_toast_msg(_ok_msg(G.inv_gem_pop(uid,index),"已拆除 "+G.gem_label(id)));_refresh())
+ 	return b
+ 
+ func _build_supplies(gems: bool) -> void:
+@@ -375,20 +391,26 @@
+ 	for key in G.items:
+ 		if String(key).begins_with("gem_")==gems and G.item_count(key)>0:ids.append(String(key))
+ 	ids.sort()
++	if not ids.has(_sel_supply):_sel_supply=""
+ 	var grid:=_grid()
+ 	for id in ids:
+ 		var b:=Art.ItemCell.new()
+ 		b.item_image.texture=G.res_tex(G.item_icon(id))
+-		b.heading.text=G.gem_label(id) if gems else G.item_name(id)
+-		b.tooltip_text=b.heading.text+" ×%d" % G.item_count(id)
+-		b.show_name=b.item_image.texture==null
++		b.heading.text=G.gem_label(id).replace("宝石","").replace(" ","") if gems else G.item_name(id)
++		b.name="Supply_"+id
++		b.tooltip_text=G.item_name(id)+" ×%d" % G.item_count(id)
++		b.show_name=true
++		b.image_px=54
+ 		b.amount.text="×%d" % G.item_count(id)
+ 		b.selected=id==_sel_supply
+ 		b.set_meta("supply_id",id)
+ 		b.pressed.connect(func():
+ 			if _scroll.gesture_active():return
+ 			_sel_supply=id
+-			_refresh())
++			_detail_scroll.scroll_vertical=0
++			_refresh()
++			for item in _item_buttons:
++				if item.get_meta("supply_id","")==id:item.grab_focus.call_deferred())
+ 		grid.add_child(b)
+ 		_item_buttons.append(b)
+ 	var min_slots: int = _min_grid_slots(ids.size())
+@@ -401,8 +423,12 @@
+ 		_detail_body.add_child(Page.line("暂无宝石" if gems else "暂无材料", "section"))
+ 		_detail_body.add_child(Page.line("沿途掉落和兑换所得会收纳在这里。", "caption", UI.AGED))
+ 	_detail_body.add_child(Page.line(G.gem_label(_sel_supply) if gems and not _sel_supply.is_empty() else G.item_name(_sel_supply) if not _sel_supply.is_empty() else "宝石镶嵌与合成" if gems else "行旅材料","object"))
+-	if not _sel_supply.is_empty():_detail_body.add_child(Page.line("持有 ×%d%s" % [G.item_count(_sel_supply)," · 属性加成 +%d" % G.equip_gem_value(_sel_supply) if gems else ""],"body"))
+-	_detail_body.add_child(Page.line("3 颗同级同色宝石可合成更高级宝石；前往养成 → 装备 → 宝石。" if gems else "材料可堆叠，不占装备格。强化、精炼等加工操作位于养成 → 装备。","caption",UI.AGED))
++	if not _sel_supply.is_empty():
++		_detail_body.add_child(Page.line("持有 ×%d · %s" % [G.item_count(_sel_supply),"宝石" if gems else "随行物品"],"body"))
++		var description:=Page.line(Descriptions.describe(_sel_supply),"caption",UI.AGED)
++		description.name="ItemUsage"
++		_detail_body.add_child(description)
++	_detail_body.add_child(Page.line("可堆叠，不占装备格。点击上方物品可切换说明。","caption",UI.AGED))
+ 
+ func _build_pending_tab() -> void:
+ 	var box:=VBoxContainer.new()
+@@ -414,7 +440,14 @@
+ 		row.custom_minimum_size.y=64
+ 		box.add_child(row)
+ 		var tpl:=G.equip_tpl(String(inst.tpl))
+-		row.add_child(Page.picture(Fix.item(String(inst.tpl)),Vector2(48,48)))
++		var preview:=Art.ItemCell.new()
++		preview.name="PendingPreview_"+str(inst.uid)
++		preview.item_image.texture=Fix.item(String(inst.tpl))
++		preview.custom_minimum_size=Vector2(56,56)
++		preview.image_px=42
++		preview.selected=int(inst.uid)==_sel_uid
++		preview.pressed.connect(_select_item.bind(int(inst.uid)))
++		row.add_child(preview)
+ 		var title:=Page.line("%s
+ %s · 强化 +%d" % [tpl.get("name","装备"),G.equip_rarity_name(int(inst.get("rarity",1))),int(inst.get("lv",0))],"body")
+ 		row.add_child(title)
+@@ -428,8 +461,10 @@
+ 		row.add_child(b)
+ 		_item_buttons.append(b)
+ 	if G.inv_pending().is_empty():_empty("暂无待领取物品","背包满时，掉落将暂存于此")
+-	_detail_body.add_child(Page.line("待领取物品会保留在这里","section"))
+-	_detail_body.add_child(Page.line("腾出装备格后即可领取；领取不会额外消耗资源。","caption",UI.AGED))
++	if _sel_uid!=0:_build_detail()
++	else:
++		_detail_body.add_child(Page.line("点击物品图标，预览装备详情","section"))
++		_detail_body.add_child(Page.line("待领取物品会保留在这里。腾出装备格后可领取。","caption",UI.AGED))
+ 
+ func _wire_focus() -> void:
+ 	var available:Array[Button]=[]
+--- before/src/ui/WorldPointMap.gd
++++ after/src/ui/WorldPointMap.gd
+@@ -13,6 +13,9 @@
+ var _title: Label
+ var _note: Label
+ var _go: Button
++var _cancel: Button
++var _zoom_in: Button
++var _zoom_out: Button
+ var _selected := ""
+ var _filter := "all"
+ var _picker: Control
+@@ -34,33 +37,50 @@
+ 	var body := View.column(8)
+ 	_frame.add_child(body)
+ 	var top := HBoxContainer.new()
++	top.add_theme_constant_override("separation",4)
+ 	body.add_child(top)
+-	top.add_child(View.text(String(TableCache.main_world_map(map_id).get("name",map_id)),"section",View.GOLD))
+-	var zoom := View.button("缩放")
+-	zoom.custom_minimum_size.x = 72
+-	zoom.pressed.connect(func():_canvas.toggle_zoom())
+-	top.add_child(zoom)
+-	var filters := HBoxContainer.new()
+-	filters.add_theme_constant_override("separation",6)
+-	var filter_strip := ScrollContainer.new()
+-	filter_strip.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_AUTO
+-	filter_strip.vertical_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
+-	filter_strip.custom_minimum_size.y=56
+-	filter_strip.add_child(filters)
+-	body.add_child(filter_strip)
+-	for pair in [["all","全部"],["fishing","垂钓"],["shop","商店"],["station","驿站"],["npc","人物"]]:
++	var heading:=View.text(String(TableCache.main_world_map(map_id).get("name",map_id)),"body",View.GOLD)
++	heading.max_lines_visible=1
++	heading.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
++	top.add_child(heading)
++	_zoom_out=View.button("−")
++	_zoom_out.name="ZoomOut"
++	_zoom_in=View.button("＋")
++	_zoom_in.name="ZoomIn"
++	var locate:=View.button("定位")
++	locate.name="LocatePlayer"
++	for control in [_zoom_out,_zoom_in,locate]:
++		control.custom_minimum_size=Vector2(44,44)
++		control.add_theme_font_size_override("font_size",16)
++		top.add_child(control)
++	_zoom_out.tooltip_text="缩小地图"
++	_zoom_in.tooltip_text="放大地图"
++	locate.tooltip_text="回到我的位置"
++	_zoom_out.pressed.connect(func():_canvas.set_zoom(_canvas.zoom/1.35);_sync_zoom())
++	_zoom_in.pressed.connect(func():_canvas.set_zoom(_canvas.zoom*1.35);_sync_zoom())
++	locate.pressed.connect(func():_canvas.locate_player();_sync_zoom())
++	var filters:=GridContainer.new()
++	filters.columns=3
++	filters.add_theme_constant_override("h_separation",6)
++	filters.add_theme_constant_override("v_separation",4)
++	body.add_child(filters)
++	for pair in [["all","全部"],["fishing","垂钓"],["shop","商店"],["station","驿站"],["npc","人物"],["landmark","设施"]]:
+ 		var key: String = pair[0]
+-		var b := View.button(pair[1])
++		var count:=0
++		for point in Points.rows(map_id):
++			if key=="all" or point.kind==key:count+=1
++		var b := View.button("%s %d"%[pair[1],count])
++		b.name="Filter_"+key
+ 		b.toggle_mode = true
+-		b.add_theme_font_size_override("font_size",16)
+-		b.custom_minimum_size.x = 44
++		b.add_theme_font_size_override("font_size",15)
++		b.custom_minimum_size=Vector2(44,44)
+ 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+ 		b.set_pressed_no_signal(key==_filter)
+-		b.pressed.connect(func():
+-			_filter=key
+-			_canvas.filter=key
+-			for item in _filter_buttons:_filter_buttons[item].set_pressed_no_signal(item==key)
+-			_canvas.queue_redraw())
++		b.disabled=count==0
++		b.tooltip_text="本区域没有此类地点" if count==0 else "显示"+String(pair[1])+"地点"
++		b.pressed.connect(_set_filter.bind(key))
++		b.add_theme_stylebox_override("normal",View.surface(View.CARD,View.MUTED,4))
++		b.add_theme_stylebox_override("pressed",View.surface(Color("315f54"),View.GOLD,4))
+ 		filters.add_child(b)
+ 		_filter_buttons[key]=b
+ 	_canvas = MapCanvas.new()
+@@ -70,46 +90,59 @@
+ 	_canvas.custom_minimum_size.y = 96
+ 	_canvas.point_selected.connect(select_point)
+ 	_canvas.cluster_selected.connect(_choose_cluster)
++	_canvas.zoom_changed.connect(_sync_zoom)
+ 	body.add_child(_canvas)
+-	if G.ui_safe_rect(self).size.y>=720:body.add_child(View.text("拖动地图 · 点击功能图标 · 北向朝上","tag",View.MUTED))
++	if G.ui_safe_rect(self).size.y>=720:body.add_child(View.text("拖动浏览 · 图标选点 · 北向朝上","tag",View.MUTED))
+ 	_title = View.text("选择地点","section",View.GOLD)
+ 	_title.max_lines_visible=1
+ 	_title.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
+ 	body.add_child(_title)
+-	_note = View.text("功能图标对应实景位置，设为目的地后骑行前往。","caption",View.MUTED)
++	_note = View.text("点击图标或地点列表选点，再设为目的地。","caption",View.MUTED)
++	_note.max_lines_visible=2
++	_note.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
+ 	_note.custom_minimum_size.y = 44
+ 	body.add_child(_note)
+ 	var actions := HBoxContainer.new()
+ 	actions.add_theme_constant_override("separation",8)
+ 	body.add_child(actions)
+ 	_go = View.button("设为目的地",true)
++	_go.name="TrackDestination"
+ 	_go.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+ 	_go.disabled=true
+ 	_go.pressed.connect(_track)
+ 	actions.add_child(_go)
+-	var cancel := View.button("取消追踪")
+-	cancel.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+-	cancel.pressed.connect(func():
+-		if Points.cancel():
+-			_note.text="追踪已取消"
+-			_canvas.queue_redraw()
+-		else:_note.text="取消未能保存，请重试")
+-	actions.add_child(cancel)
++	_cancel=View.button("取消追踪")
++	_cancel.name="CancelTracking"
++	_cancel.size_flags_horizontal=Control.SIZE_EXPAND_FILL
++	_cancel.pressed.connect(_cancel_tracking)
++	actions.add_child(_cancel)
+ 	var navigation := HBoxContainer.new()
+ 	navigation.add_theme_constant_override("separation",8)
+ 	body.add_child(navigation)
++	var locations:=View.button("地点列表")
++	locations.name="LocationList"
++	locations.size_flags_horizontal=Control.SIZE_EXPAND_FILL
++	locations.pressed.connect(_show_locations)
++	navigation.add_child(locations)
+ 	if standalone:
+-		var overview := View.button("世界总览与地区连接")
++		var overview := View.button("世界总览")
++		overview.name="WorldOverview"
+ 		overview.pressed.connect(func():region_requested.emit())
+ 		overview.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+ 		navigation.add_child(overview)
+-	var back := View.button("返回探索" if standalone else "返回地区行路图")
++	var back := View.button("返回探索" if standalone else "返回地区")
++	back.name="ReturnFromMap"
+ 	back.pressed.connect(func():closed.emit())
+ 	back.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+ 	navigation.add_child(back)
++	for button in navigation.get_children():
++		button.add_theme_font_size_override("font_size",15)
++		button.custom_minimum_size=Vector2(44,48)
+ 	get_viewport().size_changed.connect(layout)
+ 	preload("res://src/ui/UiSafeArea.gd").watch(self,layout)
+ 	layout()
++	_sync_zoom()
++	_cancel.disabled=Points.target().is_empty()
+ 	var target := Points.target()
+ 	if not target.is_empty() and target.map==map_id:select_point(String(target.id))
+ 
+@@ -121,7 +154,7 @@
+ 
+ func select_point(id: String) -> void:
+ 	var point := Points.find(id)
+-	if point.is_empty():return
++	if point.is_empty() or point.map!=map_id:return
+ 	_selected=id
+ 	_canvas.selected=id
+ 	_canvas.update_route(point)
+@@ -134,6 +167,42 @@
+ 		_note.text+="\n"+String(fishing.get("fish_name",""))+" · 今日余 %d 竿"%G.fishing_remaining(String(point.entity))
+ 	_go.disabled=state!="可前往"
+ 	_go.text="设为目的地" if _go.disabled==false else "当前不可前往"
++	if String(Points.target().get("id",""))==id:
++		_go.text="正在追踪"
++		_go.disabled=true
++	_cancel.disabled=Points.target().is_empty()
++
++func _sync_zoom() -> void:
++	_zoom_out.disabled=_canvas.zoom<=1.001
++	_zoom_in.disabled=_canvas.zoom>=2.999
++
++func _set_filter(key: String) -> void:
++	_filter=key
++	_canvas.filter=key
++	for item in _filter_buttons:_filter_buttons[item].set_pressed_no_signal(item==key)
++	_canvas.queue_redraw()
++	var selected:=Points.find(_selected)
++	if not selected.is_empty() and key!="all" and selected.kind!=key:
++		_selected=""
++		_canvas.selected=""
++		_go.disabled=true
++		_go.text="设为目的地"
++		_title.text="选择地点"
++		_note.text="点击图标或地点列表，选择本分类的地点。"
++
++func _show_locations() -> void:
++	var ids: Array=[]
++	for point in Points.rows(map_id):
++		if _filter=="all" or point.kind==_filter:ids.append(String(point.id))
++	_choose_cluster(ids)
++
++func _cancel_tracking() -> void:
++	if Points.cancel():
++		_cancel.disabled=true
++		if not _selected.is_empty():select_point(_selected)
++		_note.text="追踪已取消，可重新选择目的地。"
++		_canvas.queue_redraw()
++	else:_note.text="取消未能保存，请重试"
+ 
+ func _choose_cluster(ids: Array) -> void:
+ 	_close_picker()
+@@ -151,8 +220,13 @@
+ 	_picker.add_child(_picker_frame)
+ 	var body := View.column(10)
+ 	_picker_frame.add_child(body)
+-	body.add_child(View.text("附近地点","section",View.GOLD))
+-	body.add_child(View.text("请选择具体地点查看。","caption",View.MUTED))
++	var heading:=View.text("地点列表 · %d"%ids.size(),"section",View.GOLD)
++	heading.autowrap_mode=TextServer.AUTOWRAP_OFF
++	heading.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
++	body.add_child(heading)
++	var hint:=View.text("请选择具体地点查看。","caption",View.MUTED)
++	hint.max_lines_visible=2
++	body.add_child(hint)
+ 	var scroll := View.scroll()
+ 	body.add_child(scroll)
+ 	var list := View.column(8)
+@@ -162,7 +236,9 @@
+ 		var point := Points.find(id)
+ 		var choice := View.button(String(point.name))
+ 		choice.tooltip_text=String(point.name)
++		choice.set_meta("point_id",id)
+ 		choice.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS
++		choice.clip_text=true
+ 		choice.pressed.connect(func():_close_picker();select_point(id))
+ 		list.add_child(choice)
+ 	var back := View.button("返回地图")
+@@ -188,6 +264,10 @@
+ 	var result := Points.track(_selected)
+ 	_note.text=String(result.get("line",""))
+ 	if bool(result.get("ok",false)):
++		_go.text="正在追踪"
++		_go.disabled=true
++		_cancel.disabled=false
++		_canvas.queue_redraw()
+ 		Audio.sfx("ui_confirm")
+ 		destination_selected.emit(_selected)
+ 
+@@ -200,6 +280,7 @@
+ class MapCanvas extends Control:
+ 	signal point_selected(id: String)
+ 	signal cluster_selected(ids: Array)
++	signal zoom_changed
+ 	const Points = preload("res://src/world/WorldPoints.gd")
+ 	const View = preload("res://src/ui/ShowcaseUI.gd")
+ 	var map_id := ""
+@@ -228,17 +309,37 @@
+ 		_main_map_id=map_id
+ 		extent=Vector2(float(_main_cfg.get("map_cols",20))*48,float(_main_cfg.get("map_rows",26))*48)
+ 		points=Points.rows(map_id)
+-		if not String(_main_cfg.get("background","")).is_empty() and not ReferenceWorldArt.active(map_id):texture=G.visual_texture(String(_main_cfg.background))
++		if ReferenceWorldArt.active(map_id):texture=ReferenceWorldArt.texture(map_id+"_floor")
++		elif not String(_main_cfg.get("background","")).is_empty():texture=G.visual_texture(String(_main_cfg.background))
+ 		if texture==null:texture=preload("res://src/explore/MinimapCartography.gd").new().terrain_thumbnail(self)
+ 		resized.connect(queue_redraw)
+ 	func update_route(point: Dictionary) -> void:
+ 		route_points.clear()
+-		if not is_instance_valid(live_map) or live_map._main_map_id!=map_id:return
+-		route_points=live_map._illustrated_navigation.route_points(live_map,live_map._player.position,Points.position(point,true))
++		# The exploration navigator still finds a path; the map shows markers only.
+ 	func _map_extent() -> Vector2:return extent
+ 	func toggle_zoom() -> void:
+-		zoom=1.0 if zoom>1.1 else 1.8
+-		pan=Vector2.ZERO
++		set_zoom(1.0 if zoom>1.1 else 1.8)
++	func set_zoom(value: float,anchor := Vector2(-1,-1)) -> void:
++		if anchor.x<0:anchor=size*.5
++		var world_at: Vector2=(anchor-_rect().position)/_scale()
++		zoom=clampf(value,1,3)
++		pan=anchor-(size-extent*_scale())*.5-world_at*_scale()
++		_clamp_pan()
++		zoom_changed.emit()
++		queue_redraw()
++	func player_at() -> Vector2:
++		if is_instance_valid(live_map) and String(live_map._main_map_id)==map_id:return live_map._player.position
++		var state: Dictionary=G.prog.get("main_world",{})
++		if String(state.get("map_id","lorin_wilds"))!=map_id:return Vector2.INF
++		var saved: Array=state.get("position",_main_cfg.get("spawn",[480,900]))
++		return Vector2(saved[0],saved[1]) if saved.size()>=2 else Vector2.INF
++	func locate_player() -> void:
++		var at:=player_at()
++		if at==Vector2.INF:at=extent*.5
++		zoom=maxf(1.8,zoom)
++		pan=(extent*.5-at)*_scale()
++		_clamp_pan()
++		zoom_changed.emit()
+ 		queue_redraw()
+ 	func _scale() -> float:return minf(size.x/extent.x,size.y/extent.y)*zoom
+ 	func _rect() -> Rect2:
+@@ -248,9 +349,7 @@
+ 	func _gui_input(event: InputEvent) -> void:
+ 		if event is InputEventMouseButton:
+ 			if event.button_index in [MOUSE_BUTTON_WHEEL_UP,MOUSE_BUTTON_WHEEL_DOWN] and event.pressed:
+-				zoom=clampf(zoom*(1.15 if event.button_index==MOUSE_BUTTON_WHEEL_UP else .87),1,3)
+-				_clamp_pan()
+-				queue_redraw()
++				set_zoom(zoom*(1.15 if event.button_index==MOUSE_BUTTON_WHEEL_UP else .87),event.position)
+ 			elif event.button_index==MOUSE_BUTTON_LEFT:
+ 				if event.pressed:_begin(event.position,-1)
+ 				elif pointer==-1:_end(event.position)
+@@ -279,7 +378,7 @@
+ 			var at := screen_at(Points.position(point))
+ 			var merged := false
+ 			for group in groups:
+-				if at.distance_to(group.at)<38:
++				if at.distance_to(group.at)<46:
+ 					var count: int=group.ids.size()
+ 					group.at=(group.at*count+at)/(count+1)
+ 					group.ids.append(String(point.id))
+@@ -290,7 +389,7 @@
+ 	func _end(at: Vector2) -> void:
+ 		pointer=-2
+ 		if moved:return
+-		var closest := 24.0
++		var closest := 25.0
+ 		var picked: Dictionary={}
+ 		for marker in _markers():
+ 			var distance := at.distance_to(marker.at)
+@@ -306,28 +405,17 @@
+ 	func _draw() -> void:
+ 		draw_rect(Rect2(Vector2.ZERO,size),Color("0c191f"))
+ 		if texture!=null:draw_texture_rect(texture,_rect(),false,Color(.8,.85,.82))
+-		for route in _main_cfg.get("flat_routes",[]):
+-			var path := PackedVector2Array()
+-			for at in route.get("points",[]):path.append(screen_at(Vector2(at[0],at[1])))
+-			if path.size()>1:
+-				draw_polyline(path,Color("0b2528",.8),5,true)
+-				draw_polyline(path,Color("e1d3a5",.65),2,true)
+ 		for exit in _main_cfg.get("exits",[]):
+ 			var at: Array=exit.get("sign_at",exit.get("at",[]))
+ 			if at.size()<2:continue
+ 			var p := screen_at(Vector2(at[0],at[1]))
+ 			draw_circle(p,5,View.JADE if Points.gate_reason(exit).is_empty() else View.MUTED)
+-		if route_points.size()>1:
+-			var line := PackedVector2Array()
+-			for at in route_points:line.append(screen_at(at))
+-			draw_polyline(line,Color("173c43"),6,true)
+-			draw_polyline(line,View.GOLD,3,true)
+ 		var target := Points.target()
+ 		for marker in _markers():
+ 			var p: Vector2=marker.at
+ 			var active: bool=marker.ids.has(selected) or (not target.is_empty() and marker.ids.has(String(target.id)))
+-			draw_circle(p,17,Color("10272c",.97))
+-			draw_arc(p,17,0,TAU,32,View.GOLD if active else View.MUTED,2 if active else 1,true)
++			draw_circle(p,21,Color("10272c",.97))
++			draw_arc(p,21,0,TAU,32,View.GOLD if active else View.MUTED,2 if active else 1,true)
+ 			if marker.ids.size()>1:
+ 				var count := str(marker.ids.size())
+ 				var width := G.font_bold.get_string_size(count,HORIZONTAL_ALIGNMENT_LEFT,-1,16).x
+@@ -336,10 +424,11 @@
+ 				var point := Points.find(String(marker.ids[0]))
+ 				var icon := Points.icon(String(point.kind))
+ 				if icon!=null:draw_texture_rect(icon,Rect2(p-Vector2(12,12),Vector2(24,24)),false)
+-			if active:draw_arc(p,21,0,TAU,32,View.GOLD,1,true)
+-		if String(G.prog.get("main_world",{}).get("map_id","lorin_wilds"))==map_id:
+-			var saved: Array=G.prog.get("main_world",{}).get("position",_main_cfg.get("spawn",[480,900]))
+-			if saved.size()>=2:
+-				var p := screen_at(Vector2(saved[0],saved[1]))
+-				draw_colored_polygon(PackedVector2Array([p+Vector2(0,-9),p+Vector2(6,7),p,p+Vector2(-6,7)]),View.GOLD)
++			if active:draw_arc(p,24,0,TAU,32,View.GOLD,1,true)
++		var player:=player_at()
++		if player!=Vector2.INF:
++			var p:=screen_at(player)
++			draw_circle(p,12,Color("0c191f"))
++			draw_colored_polygon(PackedVector2Array([p+Vector2(0,-9),p+Vector2(6,7),p,p+Vector2(-6,7)]),View.GOLD)
+ 		draw_string(G.font_bold,Vector2(size.x-26,22),"北",HORIZONTAL_ALIGNMENT_LEFT,-1,16,View.GOLD)
++		draw_string(G.font_bold,Vector2(10,22),"%.1f×"%zoom,HORIZONTAL_ALIGNMENT_LEFT,-1,14,View.GOLD)
+--- before/src/world/ReferenceWorldArt.gd
++++ after/src/world/ReferenceWorldArt.gd
+@@ -46,7 +46,7 @@
+ static func add_prop(world:Node2D,id:String,at:Vector2,group:="props",solid:=false)->Node2D:
+ 	var prop:=Scenery.new()
+ 	prop.texture_filter=preload("res://src/world/WorldPresentation.gd").sampling()
+-	prop.position=at;prop.art=texture(id);prop.display_size=dimensions(group,id)
++	prop.position=at;prop.art=texture(id);prop.display_size=dimensions(group,id)*preload("res://src/world/WorldPresentation.gd").SCENERY_ENLARGEMENT
+ 	prop.solid=solid;prop.canopy=group=="foliage" and id not in ["bush","fern"]
+ 	prop.name="Reference_"+id
+ 	world.add_child(prop)
+--- before/src/world/SunnyTravelArt.gd
++++ after/src/world/SunnyTravelArt.gd
+@@ -207,6 +207,7 @@
+ 	var tint:=Color.WHITE
+ 	func _ready() -> void:texture_filter=preload("res://src/world/WorldPresentation.gd").sampling()
+ 	func _draw() -> void:
++		draw_set_transform(Vector2.ZERO,0,Vector2.ONE*preload("res://src/world/WorldPresentation.gd").SCENERY_ENLARGEMENT)
+ 		if kind=="tree":
+ 			draw_texture_rect(SunnyTravelArt.texture("leaves%d"%variant),Rect2(-20,-4,40,24),false)
+ 			draw_set_transform(Vector2(4,2),0,Vector2(1,.28));draw_circle(Vector2.ZERO,27,Color("483b2e",.35));draw_set_transform(Vector2.ZERO)
+--- before/src/world/WorldPresentation.gd
++++ after/src/world/WorldPresentation.gd
+@@ -6,5 +6,18 @@
+ static func sampling() -> int:
+ 	return CanvasItem.TEXTURE_FILTER_NEAREST if nearest() else CanvasItem.TEXTURE_FILTER_LINEAR
+ 
++static func original_art() -> bool:
++	return OS.get_environment("YUANZHENG_LEGACY_BACKGROUND")=="" or OS.get_environment("YUANZHENG_LEGACY_BACKGROUND")=="0"
++
++const NPC_ENLARGEMENT := 1.18
++const SCENERY_ENLARGEMENT := 1.12
++const BUILDING_ENLARGEMENT := 1.10
++
++static func background_path(path: String) -> String:
++	if original_art() and path.begins_with("res://assets/world/maps_rebuild_20261015/"):
++		var raw:="res://assets/world/original_backgrounds_20261026/"+path.get_file().trim_suffix("_floor.png")+".png"
++		if ResourceLoader.exists(raw):return raw
++	return path
++
+ static func mount_scale(player_scale: float) -> float:
+ 	return player_scale/.70*.86

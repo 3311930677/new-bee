@@ -1,0 +1,541 @@
+--- before/src/explore/MapScene.gd
++++ 远征/src/explore/MapScene.gd
+@@ -200,6 +200,7 @@
+ var _mount_foreground: Sprite2D
+ var _last_battle_pets: Array = []
+ var _auto_walk := false
++var _walk_focus := ""                 # Explicitly selected HUD task; incidental quests cannot redirect it.
+ var _auto_time := 0.0                # 自动前往累计时长（超时自停，防止绕过点卡死）
+ var _auto_stuck := 0.0
+ var _auto_dodge := 0.0
+@@ -1708,10 +1709,13 @@
+ 	var lines: Array = ["目标：%s" % String(row.get("goal", "")), "地点：%s" % map_name]
+ 	for reward_line in G.reward_lines(reward):
+ 		lines.append(String(reward_line))
+-	if not String(_nav_info().get("kind", "")).is_empty():
+-		var action_text := "停止寻路" if _auto_walk else "自动前往"
++	var target := _story_navigation_info()
++	if bool(target.get("waiting", false)):
++		lines.append("目标暂未出现，稍后刷新后可继续；无需攻击其他敌人。")
++	if not String(target.get("kind", "")).is_empty():
++		var action_text := "停止寻路" if _auto_walk and _walk_focus == "story" else "自动前往"
+ 		G.show_choice_popup(anchor, title, lines, [
+-			{"text": action_text, "cb": Callable(self, "_on_compass_tapped")},
++			{"text": action_text, "cb": Callable(self, "_select_walk_focus").bind("story")},
+ 			{"text": "知道了", "cb": Callable()},
+ 		], self)
+ 	else:
+@@ -3276,6 +3280,10 @@
+ 	return _feedback_focus
+ 
+ func _hud_target_info() -> Dictionary:
++	if _walk_focus == "story":
++		return _story_navigation_info()
++	if _walk_focus == "side":
++		return _nav_info()
+ 	var destination := _destination_info()
+ 	if not destination.is_empty():return destination
+ 	# Resolve the displayed quest marker and keep HUD/minimap aligned with auto-navigation.
+@@ -3284,6 +3292,21 @@
+ 		if not story_same.is_empty():
+ 			return story_same
+ 	return _nav_info()
++
++
++func _story_navigation_info() -> Dictionary:
++	var same := _story_same_map_info()
++	return same if not same.is_empty() else _story_route_info()
++
++
++func _select_walk_focus(focus: String) -> void:
++	if _auto_walk and _walk_focus == focus:
++		_stop_auto_walk("")
++		return
++	_stop_auto_walk("")
++	_walk_focus = focus
++	_on_compass_tapped()
++	_mark_nav_dirty()
+ 
+ 
+ func _destination_info() -> Dictionary:
+@@ -3309,7 +3332,7 @@
+ 	var point := WorldPoints.target()
+ 	if point.is_empty():return
+ 	G.show_choice_popup(_side_chip,"地图目的地",[String(point.name),WorldPoints.status(point,_main_map_id),"抵达后点击现场交互进入玩法。"],[
+-		{"text":"停止寻路" if _auto_walk else "自动前往","cb":Callable(self,"_on_compass_tapped")},
++		{"text":"停止寻路" if _auto_walk and _walk_focus == "destination" else "自动前往","cb":Callable(self,"_select_walk_focus").bind("destination")},
+ 		{"text":"取消追踪","cb":Callable(self,"_cancel_destination")},
+ 		{"text":"继续骑行","cb":Callable()},
+ 	],self)
+@@ -3401,7 +3424,7 @@
+ 	var target_id := String(row.get("target", ""))
+ 	var goal_text := String(row.get("goal", "主线目标"))
+ 	if kind in ["talk", "craft"] and is_instance_valid(_city_content):
+-		var want_npc := "npc_blacksmith" if kind == "craft" else target_id
++		var want_npc := target_id
+ 		for npc in _city_content._npcs:
+ 			if is_instance_valid(npc) and String(npc.data.get("id", "")) == want_npc:
+ 				return {"name": goal_text, "pos": npc.position, "kind": "quest"}
+@@ -3416,11 +3439,10 @@
+ 				"pos": entity.position, "kind": "quest"}
+ 	if kind == "defeat":
+ 		for m in _monsters:
+-			if is_instance_valid(m) and m.mon_id == target_id:
++			if is_instance_valid(m) and (target_id == "*" or m.mon_id == target_id):
+ 				return {"name": goal_text, "pos": m.position, "kind": "boss" if m.tier == "boss" else "monster"}
+-		for m in _monsters:
+-			if is_instance_valid(m):
+-				return {"name": goal_text, "pos": m.position, "kind": "boss" if m.tier == "boss" else "monster"}
++		return {"name": goal_text + " · 等待目标重现", "pos": _player.position if _player != null else Vector2.ZERO,
++			"kind": "", "waiting": true}
+ 	return {}
+ 
+ ## 追踪中的支线目标：同图定位实体/NPC/敌怪，跨图沿世界出口引路。
+@@ -3545,7 +3567,7 @@
+ 	var point := WorldPoints.target() if _mode=="main_world" else {}
+ 	if not point.is_empty() and is_instance_valid(_side_chip):
+ 		var same := String(point.map)==_main_map_id
+-		var distance := _player.position.distance_to(info.get("pos",Vector2.ZERO)) if _player!=null else 0.0
++		var distance := _player.position.distance_to(WorldPoints.position(point,true)) if _player!=null and same else 0.0
+ 		var tail := " · 已抵达，点击交互" if same and distance<INTERACT_R else " · %d 步"%ceili(distance/48.0) if same else " · 沿出口跨图"
+ 		_side_chip.visible=true
+ 		HudStyle.update_task(_main_side_l,"目的地 · "+String(point.name)+tail)
+@@ -3723,6 +3745,8 @@
+ 		points.closed.connect(_close_big_map)
+ 		points.region_requested.connect(func():_close_big_map();_open_region_map_overlay())
+ 		points.destination_selected.connect(func(_id: String):
++			_stop_auto_walk("")
++			_walk_focus = "destination"
+ 			_close_big_map()
+ 			_mark_nav_dirty()
+ 			_refresh_hud())
+@@ -6288,9 +6312,9 @@
+ 			var pop_title := "追踪奇遇" if not special_goal.is_empty() else "追踪目标"
+ 			var pop_lines: Array = [special_goal, "到标记的地点继续，谢礼在复命时领取。"] if not special_goal.is_empty() else G.side_info_lines()
+ 			if not String(_nav_info().get("kind", "")).is_empty():
+-				var action_text := "停止寻路" if _auto_walk else "自动前往"
++				var action_text := "停止寻路" if _auto_walk and _walk_focus == "side" else "自动前往"
+ 				G.show_choice_popup(_side_chip, pop_title, pop_lines, [
+-					{"text": action_text, "cb": Callable(self, "_on_compass_tapped")},
++					{"text": action_text, "cb": Callable(self, "_select_walk_focus").bind("side")},
+ 					{"text": "知道了", "cb": Callable()},
+ 				], self)
+ 			else:
+--- before/src/ui/ArcheryPanel.gd
++++ 远征/src/ui/ArcheryPanel.gd
+@@ -7,10 +7,14 @@
+ const UI := preload("res://src/ui/TravelChestUI.gd")
+ const Page := preload("res://src/ui/ChestPageUI.gd")
+ const Flow := preload("res://src/ui/FlowChestUI.gd")
++const Rewards := preload("res://src/world/ArcheryRewards.gd")
++const BASE_TRAY_HEIGHT := 338.0
++const MAX_STAGE_HEIGHT := 400.0
++const SHELL_HEADER_HEIGHT := 56.0
+ 
+ var shell: Control
+ var _range: _RangeCanvas
+-var _mode_tabs: HBoxContainer
++var _mode_tabs: GridContainer
+ var _status_label: Label
+ var _wind_label: Label
+ var _log_label: Label
+@@ -42,6 +46,10 @@
+ var _last_banner := ""
+ var _last_banner_t := 0.0
+ var _round_finished := false
++var _round_token := ""
++var _save_pending := false
++var _lit_hits := 0
++var _last_lit := false
+ var _rng := RandomNumberGenerator.new()
+ 
+ 
+@@ -70,7 +78,7 @@
+ 
+ 
+ func _build() -> void:
+-	shell = Flow.Shell.new("校场射艺 · 演武靶场", 338)
++	shell = Flow.Shell.new("校场射艺 · 演武靶场", BASE_TRAY_HEIGHT)
+ 	shell.closed = _close
+ 	add_child(shell)
+ 	if shell.body is VBoxContainer:
+@@ -83,8 +91,10 @@
+ 	_range.gui_input.connect(_on_range_input)
+ 	shell.stage.add_child(_range)
+ 
+-	_mode_tabs = HBoxContainer.new()
+-	_mode_tabs.add_theme_constant_override("separation", 6)
++	_mode_tabs = GridContainer.new()
++	_mode_tabs.columns = 2
++	_mode_tabs.add_theme_constant_override("h_separation", 6)
++	_mode_tabs.add_theme_constant_override("v_separation", 6)
+ 	shell.body.add_child(_mode_tabs)
+ 	for i in _modes.size():
+ 		var idx: int = i
+@@ -125,7 +135,9 @@
+ 	_reward_label = Flow.text("", "caption", UI.AGED)
+ 	shell.body.add_child(_reward_label)
+ 
+-	_reset_btn = Flow.button("重开一局", func(): _select_mode(_mode_idx))
++	_reset_btn = Flow.button("重开一局", func():
++		if _save_pending: _finish_round()
++		else: _select_mode(_mode_idx))
+ 	_reset_btn.name = "ResetArcheryButton"
+ 	shell.footer.add_child(_reset_btn)
+ 
+@@ -139,28 +151,15 @@
+ func _relayout() -> void:
+ 	if shell == null:
+ 		return
++	# Long screens give the rules and result more room instead of stretching the range.
++	shell.tray_height = maxf(BASE_TRAY_HEIGHT, G.ui_safe_rect(self).size.y - SHELL_HEADER_HEIGHT - MAX_STAGE_HEIGHT)
+ 	shell.layout()
+ 	if _range != null:
+ 		Page.place(_range, Vector2.ZERO, shell.stage.size)
+ 
+ 
+ static func ensure_archery_state(host: Object) -> Dictionary:
+-	if not (host.prog.get("flags") is Dictionary):
+-		host.prog["flags"] = {}
+-	var flags: Dictionary = host.prog["flags"]
+-	if not (flags.get("archery_state") is Dictionary):
+-		flags["archery_state"] = {
+-			"best_scores": {},
+-			"cleared": {},
+-			"first_claimed": {},
+-			"total_plays": 0,
+-			"total_bullseyes": 0,
+-		}
+-	var st: Dictionary = flags["archery_state"]
+-	for k in ["best_scores", "cleared", "first_claimed"]:
+-		if not (st.get(k) is Dictionary):
+-			st[k] = {}
+-	return st
++	return Rewards.state(host)
+ 
+ 
+ func _current_mode() -> Dictionary:
+@@ -170,8 +169,16 @@
+ 
+ 
+ func _select_mode(idx: int) -> void:
++	if _save_pending:
++		return
++	var candidate: Dictionary = _modes[clampi(idx, 0, maxi(0, _modes.size() - 1))] if not _modes.is_empty() else {}
++	if not Rewards.unlocked(G, candidate):
++		return
+ 	_mode_idx = clampi(idx, 0, maxi(0, _modes.size() - 1))
+ 	var m := _current_mode()
++	_round_token = "archery|%s|%d|%d" % [String(m.id), Time.get_ticks_usec(), _rng.randi()]
++	_lit_hits = 0
++	_time = 0.0
+ 	_arrows_max = int(m.get("arrows", 5))
+ 	_arrows_left = _arrows_max
+ 	_score = 0
+@@ -189,8 +196,10 @@
+ 	_target_pos = Vector2(w * 0.5, 134.0)
+ 	_aim_pos = _target_pos
+ 	_roll_wind()
+-	_log_label.text = "点「听风校准」逆风预瞄，按住「蓄力射箭」在右侧翠金甜区松手！"
++	_log_label.text = "点靶场移动准星；听风校准抵消风偏，按住射箭并在绿区松手。" if not m.has("timing_period") else \
++		"柳教头：等灯亮再放箭！箭到靶时亮灯才计环，6箭中至少4箭点亮岗灯；首通得精炼石与伙伴口粮。"
+ 	_sync_ui()
++	if is_instance_valid(_fire_btn): _fire_btn.grab_focus()
+ 
+ 
+ func _roll_wind() -> void:
+@@ -257,6 +266,8 @@
+ 
+ func shoot_with_params(aim: Vector2, charge_power: float) -> Dictionary:
+ 	## 供自动化测试或新手指引一键演练确定性调用
++	if _round_finished or _flying or _arrows_left <= 0:
++		return {"ok": false}
+ 	_aim_pos = aim
+ 	_charge = clampf(charge_power, 0.0, 1.0)
+ 	_charging = false
+@@ -283,6 +294,10 @@
+ 	var bob := float(m.get("target_bob", 8.0))
+ 	var w := maxf(360.0, _range.size.x if _range.size.x > 0 else 480.0)
+ 	_time += delta
++	var lit := _lamp_lit()
++	if lit != _last_lit:
++		_last_lit = lit
++		if m.has("timing_period"): _sync_ui()
+ 	if not _round_finished:
+ 		var amp_x := minf(118.0, (w - 190.0) * 0.5)
+ 		_target_pos.x = w * 0.5 + sin(_time * (spd / 52.0)) * amp_x
+@@ -309,6 +324,12 @@
+ 		_range.queue_redraw()
+ 
+ 
++func _lamp_lit() -> bool:
++	var m := _current_mode()
++	if not m.has("timing_period"): return true
++	return fposmod(_time, float(m.timing_period)) < float(m.timing_window)
++
++
+ func _resolve_shot(aim: Vector2, power: float, instant: bool) -> Dictionary:
+ 	var drift_x := _wind * 0.65
+ 	var drop_y := (0.80 - power) * 95.0
+@@ -322,7 +343,6 @@
+ 		rings = 10
+ 		comment = "正中红心 · 百步穿杨！"
+ 		pop_col = Color("ffe478")
+-		_bullseyes_this_round += 1
+ 		_streak += 1
+ 	elif dist <= 25.0:
+ 		rings = 8
+@@ -346,6 +366,14 @@
+ 		_streak = 0
+ 	else:
+ 		_streak = 0
++	if not _lamp_lit():
++		rings = 0
++		_streak = 0
++		comment = "灯未亮 · 本箭不计环"
++		pop_col = G.FIELD_MUTED
++	elif rings > 0:
++		_lit_hits += 1
++	if rings == 10: _bullseyes_this_round += 1
+ 	_arrows_left = maxi(0, _arrows_left - 1)
+ 	_score += rings
+ 	_hit_shake_t = 0.28 if rings >= 6 else 0.12
+@@ -366,59 +394,11 @@
+ 
+ func _finish_round() -> void:
+ 	_round_finished = true
+-	var m := _current_mode()
+-	var mid := String(m.get("id", "novice"))
+-	var pass_sc := int(m.get("pass_score", 28))
+-	var master_sc := int(m.get("master_score", 42))
+-	var st := ensure_archery_state(G)
+-	st["total_plays"] = int(st.get("total_plays", 0)) + 1
+-	st["total_bullseyes"] = int(st.get("total_bullseyes", 0)) + _bullseyes_this_round
+-	var best_map: Dictionary = st["best_scores"]
+-	var old_best := int(best_map.get(mid, 0))
+-	if _score > old_best:
+-		best_map[mid] = _score
+-	var passed := _score >= pass_sc
+-	var mastered := _score >= master_sc
+-	var reward_parts: Array[String] = []
+-	if passed:
+-		st["cleared"][mid] = true
+-		var first_map: Dictionary = st["first_claimed"]
+-		var is_first := not bool(first_map.get(mid, false))
+-		var rcfg: Dictionary = m.get("first_reward" if is_first else "repeat_reward", {})
+-		if is_first:
+-			first_map[mid] = true
+-		var gold := int(rcfg.get("gold", 0))
+-		var exp_coin := int(rcfg.get("expedition", 0))
+-		var soul := int(rcfg.get("soul", 0))
+-		var honor := int(rcfg.get("honor", 0))
+-		if gold > 0 or exp_coin > 0 or soul > 0 or honor > 0:
+-			G.deposit(gold, exp_coin, soul, honor)
+-			if gold > 0: reward_parts.append("金币+%d" % gold)
+-			if exp_coin > 0: reward_parts.append("远征币+%d" % exp_coin)
+-			if soul > 0: reward_parts.append("魂晶+%d" % soul)
+-			if honor > 0: reward_parts.append("荣誉+%d" % honor)
+-		var items_dict: Dictionary = rcfg.get("items", {})
+-		for iid in items_dict:
+-			var cnt := int(items_dict[iid])
+-			if cnt > 0:
+-				G.grant_item(String(iid), cnt)
+-				reward_parts.append("%s×%d" % [G.item_name(String(iid)), cnt])
+-		var title_id := String(rcfg.get("title", ""))
+-		if not title_id.is_empty() and mastered:
+-			var titles_st: Dictionary = G.prog.get("titles", {"owned": [], "active": ""})
+-			var owned: Array = titles_st.get("owned", [])
+-			if not owned.has(title_id):
+-				owned.append(title_id)
+-				titles_st["owned"] = owned
+-				G.prog["titles"] = titles_st
+-				reward_parts.append("解锁称号【百步穿杨】")
+-		G.side_report("archery", mid, "lorin_wilds", false)
+-		G.save_game()
+-		var rank_tag := "【神射魁首】" if mastered else "【演武达标】"
+-		_log_label.text = "%s 总分 %d 环！获赏：%s" % [rank_tag, _score, " · ".join(reward_parts)]
+-	else:
+-		G.save_game()
+-		_log_label.text = "本局总分 %d 环（达标需 %d 环），调整风偏与绿区蓄力再试一次！" % [_score, pass_sc]
++	var result := Rewards.settle(G, _current_mode(), _round_token, _score, _bullseyes_this_round, _lit_hits)
++	_save_pending = not bool(result.get("ok", false))
++	_log_label.text = String(result.get("line", ""))
++	if not _save_pending:
++		Audio.sfx("reward" if bool(result.get("passed", false)) else "ui_close")
+ 	_sync_ui()
+ 
+ 
+@@ -432,6 +412,10 @@
+ 	for i in _mode_tabs.get_child_count():
+ 		var b: Button = _mode_tabs.get_child(i)
+ 		b.selected = i == _mode_idx
++		var available := Rewards.unlocked(G, _modes[i])
++		b.disabled = _save_pending or not available
++		b.tooltip_text = "先在初试百步取得28环，柳教头便会开放守夜试炼。" if not available else String(_modes[i].get("subtitle", ""))
++		b.caption.text = String(_modes[i].name) + (" · 未解锁" if not available else "")
+ 		b.queue_redraw()
+ 	_status_label.text = "%s ｜ 箭囊：%d/%d ｜ 当前得分：%d环（最高 %d环）" % [
+ 		String(m.get("name", "初试百步")), _arrows_left, _arrows_max, _score, best
+@@ -439,7 +423,11 @@
+ 	var wind_dir := "东风(左偏)" if _wind < -0.5 else ("西风(右偏)" if _wind > 0.5 else "微风无偏")
+ 	_wind_label.text = "当前风势：%s %.1f ｜ 达标：%d环 · 魁首：%d环" % [wind_dir, absf(_wind), pass_sc, master_sc]
+ 	var first_done := bool(st["first_claimed"].get(mid, false))
+-	_reward_label.text = "本档状态：%s" % ("首通重赏已领（重开可刷荣誉与铜钱）" if first_done else "首通可获强化石/精炼石与丰厚荣誉")
++	var reward: Dictionary = m.get("repeat_reward" if first_done else "first_reward", {})
++	_reward_label.text = ("再战奖励：" if first_done else "首通奖励：") + " · ".join(G.reward_lines(reward))
++	if m.has("timing_period"):
++		_wind_label.text += "\n%s · 亮灯命中 %d/%d 箭" % ["灯亮 · 可以射击" if _lamp_lit() else "蓄灯 · 等待时机", _lit_hits, int(m.required_lit_hits)]
++	_reset_btn.caption.text = "重试保存" if _save_pending else "重开一局"
+ 	_fire_btn.disabled = _round_finished or _arrows_left <= 0
+ 
+ 
+@@ -553,6 +541,17 @@
+ 		if _tex_target != null:
+ 			# 靶盘中心在贴图 (72, 70) 处（贴图尺寸 144x168）
+ 			draw_texture_rect(_tex_target, Rect2(tp.x - 72.0, tp.y - 70.0, 144.0, 168.0), false)
++		if panel_ref._current_mode().has("timing_period"):
++			var lit := panel_ref._lamp_lit()
++			var lamp_color := G.GOLD_BRIGHT if lit else G.FIELD_MUTED
++			var lamp_at := tp + Vector2(0, -88)
++			draw_rect(Rect2(lamp_at - Vector2(40, 12), Vector2(80, 24)), G.FIELD_DEEP)
++			draw_rect(Rect2(lamp_at - Vector2(40, 12), Vector2(80, 24)), lamp_color, false, 1)
++			draw_string(G.font_bold, lamp_at + Vector2(-30, 5), "灯亮·射" if lit else "蓄灯中", HORIZONTAL_ALIGNMENT_LEFT, 64, G.FS_XS, lamp_color)
++			var period := float(panel_ref._current_mode().timing_period)
++			var phase := fposmod(panel_ref._time, period) / period
++			draw_line(lamp_at + Vector2(-38, 15), lamp_at + Vector2(38, 15), G.FIELD_DEEP, 4)
++			draw_line(lamp_at + Vector2(-38, 15), lamp_at + Vector2(-38 + 76 * phase, 15), lamp_color, 4)
+ 
+ 		# 绘制靶上已命中的雕翎箭矢
+ 		for pin_v in pins:
+@@ -683,9 +682,12 @@
+ 			draw_string(rfnt, Vector2(fx_x, fpos.y), String(fl["text"]), HORIZONTAL_ALIGNMENT_CENTER, box_w, G.FS_SM, fcol)
+ 
+ 		# 10. 底部锦缎战报横幅
+-		if panel_ref._last_banner_t > 0.0 and not panel_ref._last_banner.is_empty():
++		var banner: String = panel_ref._last_banner if panel_ref._last_banner_t > 0.0 else \
++			"亮灯命中才计环 · 6箭中至少4箭命中" if panel_ref._current_mode().has("timing_period") else \
++			"点靶场瞄准 · 听风校准 · 蓄力到绿区松手"
++		if not banner.is_empty():
+ 			var b_rect := Rect2(14, h - 24, w - 28, 22)
+ 			draw_rect(b_rect, Color(0.10, 0.06, 0.04, 0.86))
+ 			draw_rect(b_rect, Color("b88c46"), false, 1.0)
+-			draw_string_outline(rfnt, Vector2(22, h - 8), panel_ref._last_banner, HORIZONTAL_ALIGNMENT_LEFT, w - 44, G.FS_XS, 3, Color(0.05, 0.03, 0.02, 0.95))
+-			draw_string(rfnt, Vector2(22, h - 8), panel_ref._last_banner, HORIZONTAL_ALIGNMENT_LEFT, w - 44, G.FS_XS, Color("ffe58f"))
++			draw_string_outline(rfnt, Vector2(22, h - 8), banner, HORIZONTAL_ALIGNMENT_LEFT, w - 44, G.FS_XS, 3, Color(0.05, 0.03, 0.02, 0.95))
++			draw_string(rfnt, Vector2(22, h - 8), banner, HORIZONTAL_ALIGNMENT_LEFT, w - 44, G.FS_XS, Color("ffe58f"))
+--- before/data/archery.json
++++ 远征/data/archery.json
+@@ -69,6 +69,27 @@
+         "gold": 180,
+         "honor": 40
+       }
++    },
++    {
++      "id": "lantern",
++      "name": "巡灯守夜",
++      "subtitle": "听风候灯 · 亮灯命中才计环",
++      "requires_clear": "novice",
++      "arrows": 6,
++      "target_speed": 62.0,
++      "target_bob": 10.0,
++      "wind_max": 24.0,
++      "timing_period": 2.8,
++      "timing_window": 1.5,
++      "required_lit_hits": 4,
++      "pass_score": 32,
++      "master_score": 48,
++      "first_reward": {
++        "gold": 360,
++        "honor": 90,
++        "items": { "refine_stone": 3, "pet_food": 2 }
++      },
++      "repeat_reward": { "gold": 90, "honor": 18 }
+     }
+   ]
+ }
+--- before/src/ui/CurioLorePanel.gd
++++ 远征/src/ui/CurioLorePanel.gd
+@@ -182,6 +182,7 @@
+ 	_body.custom_minimum_size.x = maxf(100,extent.x-88)
+ 
+ func _input(event: InputEvent) -> void:
++	if G.ui_blocked: return
+ 	if is_visible_in_tree() and event.is_action_pressed("ui_cancel"):
+ 		back()
+ 		get_viewport().set_input_as_handled()
+--- before/src/ui/HonorMarketPanel.gd
++++ 远征/src/ui/HonorMarketPanel.gd
+@@ -295,6 +295,7 @@
+ 		_detail_body.custom_minimum_size.x = maxf(80,extent.x-88)
+ 
+ func _input(event: InputEvent) -> void:
++	if G.ui_blocked: return
+ 	if not is_visible_in_tree() or not event.is_action_pressed("ui_cancel"):return
+ 	if is_instance_valid(_detail):close_product()
+ 	else:closed.emit()
+--- before/src/ui/WorldPointMap.gd
++++ 远征/src/ui/WorldPointMap.gd
+@@ -272,6 +272,7 @@
+ 		destination_selected.emit(_selected)
+ 
+ func _unhandled_input(event: InputEvent) -> void:
++	if G.ui_blocked: return
+ 	if event.is_action_pressed("ui_cancel"):
+ 		if is_instance_valid(_picker):_close_picker()
+ 		else:closed.emit()
+--- before/src/ui/CurrencyPanel.gd
++++ 远征/src/ui/CurrencyPanel.gd
+@@ -100,3 +100,9 @@
+ 	var extent := Vector2(width,clampf(wanted,320.0,minf(650.0,safe.size.y-32)))
+ 	_frame.position = (safe.get_center()-extent*.5).round()
+ 	_frame.size = extent
++
++func _unhandled_input(event: InputEvent) -> void:
++	if G.ui_blocked: return
++	if is_visible_in_tree() and event.is_action_pressed("ui_cancel"):
++		closed.emit()
++		get_viewport().set_input_as_handled()
+--- before/tools/VerifyFourthBack.gd
++++ 远征/tools/VerifyFourthBack.gd
+@@ -47,7 +47,10 @@
+ 	map._last_battle_optional = mon.optional
+ 	map._encounter = WorldSession.new_encounter(map._main_map_id,mon.idx,mon.position,mon.mon_id,
+ 		mon.display_level,map._player.position,"",0,Time.get_ticks_usec())
+-	WorldSession.advance(map._main_world_state(),map._encounter,WorldSession.ST_BATTLE)
++	# Follow the same encounter lifecycle as on_monster_contact; an unregistered
++	# result is deliberately rejected by WorldSession and cannot test payout rollback.
++	for phase in [WorldSession.ST_APPROACH, WorldSession.ST_LOCKED, WorldSession.ST_BATTLE]:
++		_check(bool(WorldSession.advance(map._main_world_state(),map._encounter,phase).ok), "测试遭遇合法进入 " + phase)
+ 
+ func _run() -> void:
+ 	_reset()
+--- before/tools/VerifyNav.gd
++++ 远征/tools/VerifyNav.gd
+@@ -32,6 +32,8 @@
+ 	"CampChestView.gd", # Camp visual subtree; GameHome owns ESC and overlays.
+ 	"LoadingRelic.gd", # mouse_filter=IGNORE 的加载进度绘图组件，无可关闭浮层
+ 	"UIReadability.gd", "UIFeedback.gd", # Text policy and non-interactive effect components.
++	"DeviceLayoutInfo.gd", "ItemDescriptions.gd", "ReadingSkin.gd", "ShowcaseUI.gd", "TouchScroll.gd", # Embedded helpers, not standalone pages.
++	"ExchangePanel.gd", # Inherits HonorMarketPanel input handling; dynamic affordance coverage remains below.
+ 	"HapticFeedback.gd", "RareGearCeremony.gd", # Haptic helper and ceremony popup
+ 	"Main.gd",        # 无 UI
+ 	"LoadScreen.gd",  # 过渡页：加载中途不该能返回（返回了等于卡在半路）
+--- before/tools/run_regression.ps1
++++ 远征/tools/run_regression.ps1
+@@ -34,7 +34,7 @@
+   [string]$List = "",
+   [int]$QuitAfter = 6000,
+   [int]$TimeoutSec = 240,
+-    [int]$Expected = 77,
++    [int]$Expected = 78,
+   [string]$LogDir = "",
+   [switch]$AllowAnyVersion
+ )
+@@ -106,6 +106,7 @@
+ $cases = @(
+ 	@{ N = "VerifyAssets";      K = "scene";  T = "ASSETS_OK" },
+ 	@{ N = "VerifyBattleScene"; K = "scene";  T = "BATTLE_SCENE_OK" },
++	@{ N = "VerifyPlayJourney"; K = "scene"; T = "PLAY_JOURNEY_OK" },
+ 	@{ N = "VerifySave";        K = "scene";  T = "SAVE_OK" },
+ 	@{ N = "VerifyUiLayout";    K = "scene";  T = "UI_LAYOUT_OK" },
+ 	@{ N = "VerifyVisualRefresh";K = "scene";  T = "VISUAL_REFRESH_OK" },

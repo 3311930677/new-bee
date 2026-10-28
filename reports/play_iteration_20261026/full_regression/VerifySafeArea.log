@@ -1,0 +1,16 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SAFE_AREA_FAIL count=2
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+ERROR: FAIL: 登录纸页在模拟手机安全区内
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifySafeArea.gd:7)
+       [1] _ready (res://tools/VerifySafeArea.gd:36)
+ERROR: FAIL: 登录重排后不累计缩放
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifySafeArea.gd:7)
+       [1] _ready (res://tools/VerifySafeArea.gd:39)
+

@@ -1,0 +1,100 @@
+{
+  "checks": [
+    {
+      "file": "battle_final2.log",
+      "marker": "BATTLE_SCENE_OK",
+      "passed": true,
+      "expected_fault_injection": false,
+      "certificate_diagnostic": true,
+      "exit_cleanup_diagnostic": false
+    },
+    {
+      "file": "gacha_latest.log",
+      "marker": "GACHA_OK",
+      "passed": true,
+      "expected_fault_injection": false,
+      "certificate_diagnostic": true,
+      "exit_cleanup_diagnostic": false
+    },
+    {
+      "file": "growth_final.log",
+      "marker": "GROWTH_OK",
+      "passed": true,
+      "expected_fault_injection": false,
+      "certificate_diagnostic": true,
+      "exit_cleanup_diagnostic": false
+    },
+    {
+      "file": "economy.log",
+      "marker": "ECONOMY_OK",
+      "passed": true,
+      "expected_fault_injection": false,
+      "certificate_diagnostic": true,
+      "exit_cleanup_diagnostic": false
+    },
+    {
+      "file": "save_latest.log",
+      "marker": "SAVE_OK",
+      "passed": true,
+      "expected_fault_injection": false,
+      "certificate_diagnostic": true,
+      "exit_cleanup_diagnostic": false
+    },
+    {
+      "file": "home_latest.log",
+      "marker": "GAME_HOME_OK",
+      "passed": true,
+      "expected_fault_injection": false,
+      "certificate_diagnostic": true,
+      "exit_cleanup_diagnostic": false
+    },
+    {
+      "file": "gameplay_final.log",
+      "marker": "GAMEPLAY_BALANCE_OK",
+      "passed": true,
+      "expected_fault_injection": false,
+      "certificate_diagnostic": true,
+      "exit_cleanup_diagnostic": false
+    },
+    {
+      "file": "story_latest.log",
+      "marker": "STORY_OK",
+      "passed": true,
+      "expected_fault_injection": false,
+      "certificate_diagnostic": true,
+      "exit_cleanup_diagnostic": false
+    },
+    {
+      "file": "worldsession_final.log",
+      "marker": "WORLD_SESSION_OK",
+      "passed": true,
+      "expected_fault_injection": false,
+      "certificate_diagnostic": true,
+      "exit_cleanup_diagnostic": false
+    },
+    {
+      "file": "regression_final.log",
+      "marker": "FULL_PLAY_FIXES_OK checks=63 failures=0",
+      "passed": true,
+      "expected_fault_injection": true,
+      "certificate_diagnostic": true,
+      "exit_cleanup_diagnostic": false
+    },
+    {
+      "file": "visual_final.log",
+      "marker": "FULL_PLAY_VISUAL_OK failures=0",
+      "passed": true,
+      "expected_fault_injection": false,
+      "certificate_diagnostic": true,
+      "exit_cleanup_diagnostic": false
+    }
+  ],
+  "not_passing": {
+    "file": "mainworld_final.log",
+    "issues": [
+      "NPC name tag proximity",
+      "Player scale"
+    ],
+    "ownership": "Other active chat world presentation changes; retained untouched"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-26",
+  "modified": [],
+  "added": [
+    "src/world/SessionClock.gd",
+    "tools/VerifyFullPlayFixes20261026.gd",
+    "tools/VerifyFullPlayFixes20261026.tscn",
+    "tools/VerifyFullPlayVisual20261026.gd",
+    "tools/VerifyFullPlayVisual20261026.tscn",
+    "tools/VerifyFullPlayBalance20261026.gd",
+    "tools/VerifyFullPlayBalance20261026.tscn"
+  ],
+  "sha256": {
+    "src/world/SessionClock.gd": "346e4c42fca85e8b4cd57c363b645389504a5fc7081490370d4afb4f0fcca1f5",
+    "tools/VerifyFullPlayFixes20261026.gd": "d5776ebc8e68b7d05ab3403c4c2561082670db7aaab054856dd0ccc6f64bf622",
+    "tools/VerifyFullPlayFixes20261026.tscn": "6b0bb8c031426bfda91fbf30ca920faa1ca5da2945002534faf4001eee8cb86e",
+    "tools/VerifyFullPlayVisual20261026.gd": "390e1cba7fad325b6ab1f4cb2c739c1c479bb230bdd1ecd633a39e3540b8e743",
+    "tools/VerifyFullPlayVisual20261026.tscn": "839141bd2a567953ad9b1b8b850408caad900c8cd0a8765309d4734825d3506b",
+    "tools/VerifyFullPlayBalance20261026.gd": "463d451bccabc5a0a7efbb983ea8d0bad22d65777d88bfebd8d5c56b01d2272e",
+    "tools/VerifyFullPlayBalance20261026.tscn": "d10c21561c35187b0875bf06b0419536c198e437f08a45d42a03ce2a28131e0b"
+  },
+  "shared_files": {
+    "src/autoload/G.gd": "Only save/transaction/appraisal/growth/GM/time/resource functions; UI factory changes preserved.",
+    "src/explore/MapScene.gd": "Only _QuestEntity contact latch; map presentation/navigation changes preserved.",
+    "src/battle/BattleScene.gd": "Only failed-setup settlement text."
+  }
+}

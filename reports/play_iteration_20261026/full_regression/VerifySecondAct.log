@@ -1,0 +1,46 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SECOND_ACT_OK
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+WARNING: Missing visual resource: id=npc_harbormaster_portrait resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _npc_portrait_tex (res://src/city/CityScene.gd:1163)
+       [2] _run (res://tools/VerifySecondAct.gd:97)
+WARNING: Missing visual resource: id=npc_port_trader_portrait resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _npc_portrait_tex (res://src/city/CityScene.gd:1163)
+       [2] _run (res://tools/VerifySecondAct.gd:97)
+WARNING: Missing visual resource: id=npc_port_keeper_portrait resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _npc_portrait_tex (res://src/city/CityScene.gd:1163)
+       [2] _run (res://tools/VerifySecondAct.gd:97)
+WARNING: Missing visual resource: id=npc_port_worker_portrait resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6240)
+       [1] _npc_portrait_tex (res://src/city/CityScene.gd:1163)
+       [2] _run (res://tools/VerifySecondAct.gd:97)
+WARNING: 存档处于锁定状态，本次写盘已跳过（原因：；备份：）
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:742)
+       [1] gain_exp (res://src/autoload/G.gd:902)
+       [2] _bank_main_world_rewards (res://src/explore/MapScene.gd:4726)
+       [3] _settle_main_world (res://src/explore/MapScene.gd:4481)
+       [4] _run (res://tools/VerifySecondAct.gd:257)
+       [5] _enter (res://tools/VerifySecondAct.gd:41)
+WARNING: 存档处于锁定状态，本次写盘已跳过（原因：；备份：）
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:742)
+       [1] _settle_main_world (res://src/explore/MapScene.gd:4556)
+       [2] _run (res://tools/VerifySecondAct.gd:257)
+       [3] _enter (res://tools/VerifySecondAct.gd:41)
+
