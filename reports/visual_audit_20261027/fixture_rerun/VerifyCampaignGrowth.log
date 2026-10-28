@@ -1,0 +1,17 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+CAMPAIGN_GROWTH_FAIL fails=1
+WARNING: 存档处于锁定状态，本次写盘已跳过（原因：；备份：）
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] save_game (res://src/autoload/G.gd:747)
+       [1] _settle_main_world (res://src/explore/MapScene.gd:4559)
+       [2] _run (res://tools/VerifyCampaignGrowth.gd:151)
+       [3] _simple_map (res://tools/VerifyCampaignGrowth.gd:49)
+ERROR: FAIL: 首骑使用当前职业骑手与马的合成帧
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyThirdBack.gd:20)
+       [1] _test_bear (res://tools/VerifyCampaignGrowth.gd:227)
+       [2] _simple_map (res://tools/VerifyCampaignGrowth.gd:49)
+

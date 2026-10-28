@@ -1,0 +1,20 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+JOURNEY_RELICS_OK
+WARNING: Missing visual resource: id=sk_boss_rail_slam resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6245)
+       [1] _skill_splash (res://src/battle/BattleScene.gd:2254)
+       [2] _on_event (res://src/battle/BattleScene.gd:1435)
+       [3] _consume_events (res://src/battle/BattleScene.gd:1380)
+       [4] _process (res://src/battle/BattleScene.gd:1369)
+WARNING: Missing visual resource: id=sk_boss_snow_blast resolved=
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] res_tex (res://src/autoload/G.gd:6245)
+       [1] _skill_splash (res://src/battle/BattleScene.gd:2254)
+       [2] _on_event (res://src/battle/BattleScene.gd:1435)
+       [3] _consume_events (res://src/battle/BattleScene.gd:1380)
+       [4] _process (res://src/battle/BattleScene.gd:1369)
+

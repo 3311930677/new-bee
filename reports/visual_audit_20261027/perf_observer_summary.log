@@ -1,0 +1,17 @@
+Godot  : D:\new-bee\tools\godot-4.7.2\Godot_v4.7.2-stable_win64_console.exe
+Version: 4.7.2.stable.official.ed1daf0bf
+Project: D:\new-bee\远征
+UserDir: D:/new-bee/远征/tools/_logs/user_sandbox_fd04d25a3eff47488378e6c9bd0ea1e8/Godot/app_userdata/远征/
+Cases  : 1  (timeout 240s, quit-after 6000 frames)
+Logs   : D:\new-bee\reports\visual_audit_20261027\perf_observer
+Commit : 0c2a77c2
+
+FAIL  VerifyPerf  <- exit code 1; missing completion line 'PERF_OK'; output contains [ERROR:]; output contains [FAIL:]; output contains [_FAIL]
+      PERF_FAIL fails=3
+      ERROR: FAIL: 浮层「世界」第 1 次打开 128 ms 超预算 100 ms
+      ERROR: FAIL: 浮层「世界」第 2 次打开 74 ms 超预算 70 ms
+      ERROR: FAIL: 浮层「图鉴」第 1 次打开 111 ms 超预算 100 ms
+      log: D:\new-bee\reports\visual_audit_20261027\perf_observer\VerifyPerf.log
+
+NOTE: 1 case(s) emitted 2 engine exit-time resource diagnostic(s) (leaked RIDs / resources still in use). Not counted as failures - tracked as issue #43.
+FAILED: 1 / 1

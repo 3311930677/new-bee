@@ -1,0 +1,44 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PANELS_OK all tests passed
+WARNING: shop.json 商品 id 重复：ticket_ten，只保留第一条
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] shop_items (res://src/autoload/G.gd:3126)
+       [1] _verify_settings (res://tools/VerifyPanels.gd:284)
+WARNING: shop.json 商品价格非法（须正整数）：enhance_stone，已下架
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] shop_items (res://src/autoload/G.gd:3133)
+       [1] _verify_settings (res://tools/VerifyPanels.gd:284)
+WARNING: shop.json 商品价格非法（须正整数）：refine_stone，已下架
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] shop_items (res://src/autoload/G.gd:3133)
+       [1] _verify_settings (res://tools/VerifyPanels.gd:284)
+WARNING: shop.json 商品价格非法（须正整数）：lock_rune，已下架
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] shop_items (res://src/autoload/G.gd:3133)
+       [1] _verify_settings (res://tools/VerifyPanels.gd:284)
+WARNING: shop.json 商品价格非法（须正整数）：pet_food，已下架
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] shop_items (res://src/autoload/G.gd:3133)
+       [1] _verify_settings (res://tools/VerifyPanels.gd:284)
+WARNING: shop.json 商品价格非法（须正整数）：break_crystal，已下架
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] shop_items (res://src/autoload/G.gd:3133)
+       [1] _verify_settings (res://tools/VerifyPanels.gd:284)
+WARNING: shop.json 商品未登记：no_such_item_xyz，已下架
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] shop_items (res://src/autoload/G.gd:3129)
+       [1] _verify_settings (res://tools/VerifyPanels.gd:284)
+WARNING: shop.json 条目缺 item 字段，已下架
+   at: push_warning (core/variant/variant_utility.cpp:1033)
+   GDScript backtrace (most recent call first):
+       [0] shop_items (res://src/autoload/G.gd:3123)
+       [1] _verify_settings (res://tools/VerifyPanels.gd:284)
+

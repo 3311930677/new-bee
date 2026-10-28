@@ -1,0 +1,24 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+FIELD_UI_FAIL 4
+ERROR: FAIL: Default activity page must not invent active events
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyFieldUI.gd:188)
+       [1] _ready (res://tools/VerifyFieldUI.gd:66)
+ERROR: FAIL: Activity card must open its own detail
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyFieldUI.gd:188)
+       [1] _ready (res://tools/VerifyFieldUI.gd:79)
+ERROR: FAIL: Default activity page must not invent active events
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyFieldUI.gd:188)
+       [1] _ready (res://tools/VerifyFieldUI.gd:66)
+ERROR: FAIL: Activity card must open its own detail
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] _check (res://tools/VerifyFieldUI.gd:188)
+       [1] _ready (res://tools/VerifyFieldUI.gd:79)
+
