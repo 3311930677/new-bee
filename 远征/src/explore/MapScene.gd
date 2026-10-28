@@ -14,7 +14,10 @@ static var pending_cfg: Dictionary = {}
 const VIEW_W := 480.0
 const VIEW_H := 800.0
 const DirectionalIdle := preload("res://src/world/DirectionalIdle.gd")
+const WorldPoints := preload("res://src/world/WorldPoints.gd")
+var _region_map: Control = null
 const WorldPropArt := preload("res://src/world/WorldPropArt.gd")
+const CompletionArt := preload("res://src/world/AssetCompletion.gd")
 const WorldArtFinish := preload("res://src/world/WorldArtFinish.gd")
 const SunnyArt:=preload("res://src/world/SunnyTravelArt.gd")
 const Lacquer := preload("res://src/ui/LacquerUI.gd")
@@ -197,6 +200,7 @@ var _mount_contact_frame := -1
 var _mount_foreground: Sprite2D
 var _last_battle_pets: Array = []
 var _auto_walk := false
+var _walk_focus := ""                 # Explicitly selected HUD task; incidental quests cannot redirect it.
 var _auto_time := 0.0                # 自动前往累计时长（超时自停，防止绕过点卡死）
 var _auto_stuck := 0.0
 var _auto_dodge := 0.0
@@ -307,6 +311,7 @@ func _ready() -> void:
 	_build_hud()
 	if _mode == "main_world" and bool(_main_cfg.get("city", false)):
 		_attach_city_content()
+	if _mode == "main_world":preload("res://src/world/WorldDressing.gd").setup(self)
 	if _mode == "main_world":
 		var story_result := G.story_event("visit", _main_map_id, _main_map_id)
 		if not story_result.is_empty():
@@ -314,6 +319,7 @@ func _ready() -> void:
 			_refresh_hud()
 			_refresh_quest_entities.call_deferred()
 	_refresh_explore_hud()   # 恢复的探索分/击杀数要在 HUD 上显出来
+	if _mode=="main_world":_refresh_hud.call_deferred()
 	if _mode == "main_world":
 		var campaign_note := G.take_campaign_note()
 		if not campaign_note.is_empty(): _toast(campaign_note)
@@ -378,7 +384,7 @@ func _build_ground() -> void:
 			bg.name = "IllustratedMapGround" if _illustrated_ground() else "MapBackground"
 			# A crop would move authored shorelines and doorways away from their collisions.
 			bg.stretch_mode = TextureRect.STRETCH_SCALE if _illustrated_ground() else TextureRect.STRETCH_KEEP_ASPECT_COVERED
-			bg.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+			bg.texture_filter = preload("res://src/world/WorldPresentation.gd").sampling()
 			bg.modulate = _ground_tint()
 			bg.size = Vector2(int(_map_cfg.get("map_cols", 32)) * 48,
 				int(_map_cfg.get("map_rows", 42)) * 48)
@@ -621,6 +627,7 @@ func _town_blocked(pos: Vector2) -> bool:
 
 
 func _build_world() -> void:
+	_world.texture_filter=preload("res://src/world/WorldPresentation.gd").sampling()
 	var cols := int(_map_cfg.get("map_cols", 32))
 	var rows := int(_map_cfg.get("map_rows", 42))
 	var map_w := float(cols * 48)
@@ -829,7 +836,8 @@ func _build_painted_props() -> void:
 		holder.position = Vector2(float(row[1]), float(row[2]))
 		var sprite := Sprite2D.new()
 		sprite.texture = tex
-		sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		sprite.texture_filter = preload("res://src/world/WorldPresentation.gd").sampling()
+		sprite.scale=Vector2.ONE*preload("res://src/world/WorldPresentation.gd").SCENERY_ENLARGEMENT
 		sprite.offset = Vector2(0, -tex.get_height() * 0.5)
 		holder.add_child(sprite)
 		if row.size() > 3 and row[3] is Array and (row[3] as Array).size() == 2:
@@ -1068,6 +1076,7 @@ func _build_player(map_w: float, map_h: float) -> void:
 	_world.add_child(_player)
 
 	_player_anim = AnimatedSprite2D.new()
+	_player_anim.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
 	var frames_path := String(ROLE_FRAMES.get(st.role_id, ROLE_FRAMES["zs"])[0])
 	_player_anim.sprite_frames = load(frames_path)
 	_player_anim.material = WorldArtFinish.character_material(st.role_id)
@@ -1086,11 +1095,10 @@ func _build_player(map_w: float, map_h: float) -> void:
 	_player.add_child(_player_anim)
 	if _mode == "main_world":
 		_mount_anim = AnimatedSprite2D.new()
-		_mount_anim.sprite_frames = MountVisual.frames_for(st.role_id)
+		_mount_anim.sprite_frames = SpriteFrames.new()
 		_mount_anim.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		_mount_anim.scale = Vector2.ONE * 0.18
-		_mount_anim.position = Vector2(0, -50)
-		_mount_anim.animation = &"walk_down"
+		_mount_anim.scale = Vector2.ONE
+		_mount_anim.position = MountVisual.mount_offset("horse","idle_down")
 		_mount_anim.visible = false
 		_player.add_child(_mount_anim)
 	if _mode == "main_world":
@@ -1187,29 +1195,24 @@ func _sync_mount_visual() -> void:
 			_toast(String(terrain.line))
 	var bear := riding and G.mount_active()=="bear"
 	var walk_frames: SpriteFrames = load(String(ROLE_FRAMES.get(st.role_id, ROLE_FRAMES["zs"])[0]))
-	_mount_anim.sprite_frames=MountVisual.frames_for(st.role_id,"bear" if bear else "horse")
-	_mount_anim.scale=Vector2.ONE*(.34 if bear else .36)
+	if riding:_mount_anim.sprite_frames=MountVisual.frames_for(st.role_id,"bear" if bear else "horse")
+	else:_mount_anim.stop()
+	_mount_anim.scale=Vector2.ONE*float(_main_cfg.get("mount_display_scale",.86))
 	_mount_anim.visible = riding
-	if _mount_foreground == null:
-		_mount_foreground = Sprite2D.new()
-		_mount_foreground.name = "MountForehead"
-		_mount_foreground.z_index = 2
-		_mount_foreground.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		_player.add_child(_mount_foreground)
-	_mount_foreground.visible = false
-	var cur_dir := String(_mount_anim.animation) if riding else String(_player_anim.animation).replace("idle_", "walk_")
-	if not cur_dir.begins_with("walk_"):
-		cur_dir = "walk_down"
-	_player_anim.sprite_frames = MountVisual.rider_frames_for(st.role_id, walk_frames) if riding else walk_frames
-	_player_anim.animation = StringName(cur_dir)
+	if _mount_foreground != null:_mount_foreground.visible = false
+	var facing := String(_player_anim.animation).get_slice("_",1)
+	if facing not in ["down","left","right","up"]:facing = "down"
+	_player_anim.sprite_frames = walk_frames
+	_player_anim.animation = StringName("walk_"+facing)
+	if riding:_mount_anim.play(StringName("idle_"+facing))
 	if not riding:
 		DirectionalIdle.stop(_player_anim)
-	_player_anim.visible = true
+	_player_anim.visible = not riding
 	_player_anim.z_index=1 if riding else 0
 	var player_scale:=float(_main_cfg.get("player_scale",.96))
-	_player_anim.scale=Vector2.ONE*(MountVisual.rider_scale() if riding else player_scale)
-	_player_anim.position=MountVisual.rider_pos(G.mount_active(),String(_mount_anim.animation)) if riding else Vector2(0, 21.0-56.0*player_scale)
-	_mount_anim.position=MountVisual.mount_offset(G.mount_active(),String(_mount_anim.animation))
+	_player_anim.scale=Vector2.ONE*player_scale
+	_player_anim.position=Vector2(0, 21.0-56.0*player_scale)
+	_mount_anim.position=MountVisual.mount_offset(G.mount_active(),String(_mount_anim.animation),_mount_anim.scale.x)
 	if _player_shadow != null:
 		_player_shadow.riding = riding
 		_player_shadow.shadow_scale = player_scale
@@ -1217,7 +1220,7 @@ func _sync_mount_visual() -> void:
 	if _player_shape != null:
 		(_player_shape.shape as RectangleShape2D).size = Vector2(42, 28) if riding else Vector2(30, 26)
 	if _player_tag != null:
-		var tag_y := -108.0 if riding else -38.0 - 60.0 * float(_main_cfg.get("player_scale", 0.96))
+		var tag_y := 0.0-132.0*_mount_anim.scale.y if riding else -38.0 - 60.0 * float(_main_cfg.get("player_scale", 0.96))
 		_player_tag.position.y = tag_y
 		if _player_marker != null:
 			_player_marker.position.y = tag_y - 19.0
@@ -1707,10 +1710,13 @@ func _open_story_info(anchor: Control) -> void:
 	var lines: Array = ["目标：%s" % String(row.get("goal", "")), "地点：%s" % map_name]
 	for reward_line in G.reward_lines(reward):
 		lines.append(String(reward_line))
-	if not String(_nav_info().get("kind", "")).is_empty():
-		var action_text := "停止寻路" if _auto_walk else "自动前往"
+	var target := _story_navigation_info()
+	if bool(target.get("waiting", false)):
+		lines.append("目标暂未出现，稍后刷新后可继续；无需攻击其他敌人。")
+	if not String(target.get("kind", "")).is_empty():
+		var action_text := "停止寻路" if _auto_walk and _walk_focus == "story" else "自动前往"
 		G.show_choice_popup(anchor, title, lines, [
-			{"text": action_text, "cb": Callable(self, "_on_compass_tapped")},
+			{"text": action_text, "cb": Callable(self, "_select_walk_focus").bind("story")},
 			{"text": "知道了", "cb": Callable()},
 		], self)
 	else:
@@ -1761,6 +1767,8 @@ func _refresh_hud() -> void:
 			if not commissions.is_empty(): side_text = "委托 · " + String(commissions[0].name)
 			var special_goal := SpecialEvents.goal(G)
 			if not special_goal.is_empty(): side_text = "奇遇 · " + special_goal
+			var destination := WorldPoints.target()
+			if not destination.is_empty():side_text="目的地 · "+String(destination.name)
 			_side_chip.visible = not side_text.is_empty()
 			HudStyle.update_task(_main_side_l, side_text)
 			_side_chip.tooltip_text = side_text + " · 查看追踪支线"
@@ -2140,7 +2148,7 @@ func _build_commission_entities() -> void:
 		prop.art = "trust_"+region
 		prop.feedback_tier=int(trust_script.info(G,region).tier)
 		prop.caption = {"zhaoyuan":"路簿灯架 · 留有你的名字", "shenyuan":"港务旧潮线纸", "frost":"轮岗簿的新一页"}[region]
-		prop.position = {"zhaoyuan":Vector2(580,730),"shenyuan":Vector2(610,720),"frost":Vector2(580,1010)}[region]
+		prop.position = {"zhaoyuan":Vector2(580,730),"shenyuan":Vector2(610,720),"frost":Vector2(700,1090)}[region]
 		prop.map_ref=self
 		_world.add_child(prop)
 		_quest_entities.append(prop)
@@ -2703,6 +2711,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif _journey_panel != null:
 		_journey_panel.close()
 		if vp != null: vp.set_input_as_handled()
+	elif is_instance_valid(_region_map):
+		_region_map.closed.emit()
+		if vp!=null:vp.set_input_as_handled()
 	elif _big_map != null:   # 大地图：ESC 先收浮层，再谈撤离
 		_close_big_map()
 		if vp != null:
@@ -2838,9 +2849,9 @@ func _tick_mount_hoof(delta: float, actual_dir: Vector2) -> void:
 		return
 	_mount_hoof_timer = maxf(0.0,_mount_hoof_timer-delta)
 	var frame := _mount_anim.frame
-	if frame != _mount_contact_frame and frame in [0,2] and _mount_hoof_timer <= 0:
+	if frame != _mount_contact_frame and frame in MountVisual.contact_frames(String(_mount_anim.animation)) and _mount_hoof_timer <= 0:
 		Audio.hoof(_hoof_surface())
-		_mount_hoof_timer = .10
+		_mount_hoof_timer = .045
 	_mount_contact_frame = frame
 
 func _hoof_surface() -> String:
@@ -2852,26 +2863,21 @@ func _hoof_surface() -> String:
 
 func _update_player_anim(dir: Vector2) -> void:
 	if _mode == "main_world" and G.mount_riding() and _mount_anim != null:
-		if dir.length_squared() >= 0.25:
-			var mount_dir := &"walk_down"
-			if absf(dir.x) > absf(dir.y):
-				mount_dir = &"walk_right" if dir.x > 0 else &"walk_left"
-			else:
-				mount_dir = &"walk_down" if dir.y > 0 else &"walk_up"
-			_mount_anim.animation = mount_dir
-			_mount_anim.speed_scale = clampf(dir.length() / maxf(1.0, TableCache.map_player_speed()*1.5), 0.15, 2.4)
-			if not _mount_anim.is_playing():
-				_mount_anim.play(mount_dir)
-			_player_anim.animation=mount_dir
-			DirectionalIdle.stop(_player_anim)
-			var bob := -1.0 if _mount_anim.frame in [0,2] else 0.0
-			_player_anim.position=MountVisual.rider_pos(G.mount_active(),String(mount_dir),bob)
-			_mount_anim.position=MountVisual.mount_offset(G.mount_active(),String(mount_dir))
-		else:
-			_mount_anim.stop()
-			_mount_anim.frame=1
-			_player_anim.position=MountVisual.rider_pos(G.mount_active(),String(_mount_anim.animation),0.0)
-			_mount_anim.position=MountVisual.mount_offset(G.mount_active(),String(_mount_anim.animation))
+		var facing := String(_mount_anim.animation).get_slice("_",1)
+		if facing not in ["down","left","right","up"]:facing = "down"
+		var moving := dir.length_squared() >= 0.25
+		if moving:
+			if absf(dir.x)>absf(dir.y):facing="right" if dir.x>0 else "left"
+			else:facing="down" if dir.y>0 else "up"
+		var action := ("run" if _sprint else "walk") if moving else "idle"
+		var animation := StringName(action+"_"+facing)
+		if _mount_anim.animation!=animation or not _mount_anim.is_playing():
+			_mount_anim.play(animation)
+		var reference := TableCache.map_player_speed()*float(G.first_mount_cfg().get("world_speed_mult",1.75))*(1.25 if _sprint else 1.0)
+		_mount_anim.speed_scale = clampf(dir.length()/maxf(1,reference),.40,1.35) if moving else 1.0
+		_mount_anim.position=MountVisual.mount_offset(G.mount_active(),String(animation),_mount_anim.scale.x)
+		_player_anim.visible=false
+		if _player_shadow!=null:_player_shadow.set_walking(moving,_mount_anim.frame)
 		_sync_mount_foreground()
 		return
 	var base_scale := float(_main_cfg.get("player_scale", 0.96)) if _mode == "main_world" else 0.72
@@ -2901,13 +2907,7 @@ func _update_player_anim(dir: Vector2) -> void:
 
 
 func _sync_mount_foreground() -> void:
-	if _mount_foreground == null: return
-	_mount_foreground.visible = G.mount_riding() and G.mount_active()=="horse" and _mount_anim.animation==&"walk_down"
-	if not _mount_foreground.visible: return
-	var part := _mount_anim.sprite_frames.get_frame_texture(_mount_anim.animation,_mount_anim.frame)
-	_mount_foreground.texture = MountVisual.foreground_for(part)
-	_mount_foreground.position = _mount_anim.position
-	_mount_foreground.scale = _mount_anim.scale
+	if _mount_foreground!=null:_mount_foreground.visible=false
 
 
 # ================= 探索动机（轮次 16） =================
@@ -3281,6 +3281,12 @@ func _closest_feedback()->Node2D:
 	return _feedback_focus
 
 func _hud_target_info() -> Dictionary:
+	if _walk_focus == "story":
+		return _story_navigation_info()
+	if _walk_focus == "side":
+		return _nav_info()
+	var destination := _destination_info()
+	if not destination.is_empty():return destination
 	# Resolve the displayed quest marker and keep HUD/minimap aligned with auto-navigation.
 	if _mode == "main_world" and SpecialEvents.tracked(G).is_empty():
 		var story_same := _story_same_map_info()
@@ -3288,6 +3294,49 @@ func _hud_target_info() -> Dictionary:
 			return story_same
 	return _nav_info()
 
+
+func _story_navigation_info() -> Dictionary:
+	var same := _story_same_map_info()
+	return same if not same.is_empty() else _story_route_info()
+
+
+func _select_walk_focus(focus: String) -> void:
+	if _auto_walk and _walk_focus == focus:
+		_stop_auto_walk("")
+		return
+	_stop_auto_walk("")
+	_walk_focus = focus
+	_on_compass_tapped()
+	_mark_nav_dirty()
+
+
+func _destination_info() -> Dictionary:
+	if _mode!="main_world":return {}
+	var point := WorldPoints.target()
+	if point.is_empty():return {}
+	if String(point.map)!=_main_map_id:
+		var route := _route_to_map_info(String(point.map),"前往")
+		if route.is_empty():return {"name":"路线受限 · "+String(point.name),"kind":"","pos":Vector2.ZERO}
+		route["poi_id"]=point.id
+		return route
+	return {"name":String(point.name),"kind":String(point.kind),"pos":WorldPoints.position(point,true),"poi_id":point.id}
+
+func _cancel_destination() -> void:
+	if not WorldPoints.cancel():
+		_toast("取消目的地未能保存，请重试")
+		return
+	_stop_auto_walk("")
+	_mark_nav_dirty()
+	_refresh_hud()
+
+func _show_destination_actions() -> void:
+	var point := WorldPoints.target()
+	if point.is_empty():return
+	G.show_choice_popup(_side_chip,"地图目的地",[String(point.name),WorldPoints.status(point,_main_map_id),"抵达后点击现场交互进入玩法。"],[
+		{"text":"停止寻路" if _auto_walk and _walk_focus == "destination" else "自动前往","cb":Callable(self,"_select_walk_focus").bind("destination")},
+		{"text":"取消追踪","cb":Callable(self,"_cancel_destination")},
+		{"text":"继续骑行","cb":Callable()},
+	],self)
 
 func _tracked_side_map() -> String:
 	if _mode != "main_world": return ""
@@ -3318,7 +3367,7 @@ func _first_hop_map_toward(goal_map: String) -> String:
 			var to := String((row_v as Dictionary).get("to", ""))
 			if to.is_empty() or seen.has(to): continue
 			var required := String((row_v as Dictionary).get("requires_story", ""))
-			if not required.is_empty() and not G.story_step_done(required) and not G.world_gate_open(): continue
+			if not WorldPoints.gate_reason(row_v).is_empty():continue
 			seen[to] = true
 			first_hop[to] = to if at == _main_map_id else String(first_hop[at])
 			if to == goal_map:
@@ -3340,7 +3389,7 @@ func _route_to_map_info(goal_map: String, prefix := "前往") -> Dictionary:
 			var to := String((row_v as Dictionary).get("to", ""))
 			if to.is_empty() or seen.has(to): continue
 			var required := String((row_v as Dictionary).get("requires_story", ""))
-			if not required.is_empty() and not G.story_step_done(required) and not G.world_gate_open(): continue
+			if not WorldPoints.gate_reason(row_v).is_empty():continue
 			seen[to] = true
 			first_hop[to] = row_v if at == _main_map_id else first_hop[at]
 			if to == goal_map:
@@ -3376,7 +3425,7 @@ func _story_same_map_info() -> Dictionary:
 	var target_id := String(row.get("target", ""))
 	var goal_text := String(row.get("goal", "主线目标"))
 	if kind in ["talk", "craft"] and is_instance_valid(_city_content):
-		var want_npc := "npc_blacksmith" if kind == "craft" else target_id
+		var want_npc := target_id
 		for npc in _city_content._npcs:
 			if is_instance_valid(npc) and String(npc.data.get("id", "")) == want_npc:
 				return {"name": goal_text, "pos": npc.position, "kind": "quest"}
@@ -3391,11 +3440,10 @@ func _story_same_map_info() -> Dictionary:
 				"pos": entity.position, "kind": "quest"}
 	if kind == "defeat":
 		for m in _monsters:
-			if is_instance_valid(m) and m.mon_id == target_id:
+			if is_instance_valid(m) and (target_id == "*" or m.mon_id == target_id):
 				return {"name": goal_text, "pos": m.position, "kind": "boss" if m.tier == "boss" else "monster"}
-		for m in _monsters:
-			if is_instance_valid(m):
-				return {"name": goal_text, "pos": m.position, "kind": "boss" if m.tier == "boss" else "monster"}
+		return {"name": goal_text + " · 等待目标重现", "pos": _player.position if _player != null else Vector2.ZERO,
+			"kind": "", "waiting": true}
 	return {}
 
 ## 追踪中的支线目标：同图定位实体/NPC/敌怪，跨图沿世界出口引路。
@@ -3444,6 +3492,8 @@ func _tracked_side_nav_info() -> Dictionary:
 	return {}
 
 func _nav_info() -> Dictionary:
+	var destination := _destination_info()
+	if not destination.is_empty():return destination
 	var special_id := SpecialEvents.tracked(G) if _mode=="main_world" else ""
 	if not special_id.is_empty():
 		var target := SpecialEvents.objective(G,special_id)
@@ -3515,6 +3565,13 @@ func _nav_info() -> Dictionary:
 
 func _update_nav(delta: float = 0.0) -> void:
 	var info := _hud_target_info()
+	var point := WorldPoints.target() if _mode=="main_world" else {}
+	if not point.is_empty() and is_instance_valid(_side_chip):
+		var same := String(point.map)==_main_map_id
+		var distance := _player.position.distance_to(WorldPoints.position(point,true)) if _player!=null and same else 0.0
+		var tail := " · 已抵达，点击交互" if same and distance<INTERACT_R else " · %d 步"%ceili(distance/48.0) if same else " · 沿出口跨图"
+		_side_chip.visible=true
+		HudStyle.update_task(_main_side_l,"目的地 · "+String(point.name)+tail)
 	if _mode=="main_world" and _player!=null and st!=null:
 		var hint_key:=st.active_pet+"|"+_main_map_id
 		if not _exploration_seen.has(hint_key) and _player.position.distance_to(info.get("pos",Vector2.ZERO))<300:
@@ -3677,6 +3734,24 @@ func _toggle_big_map() -> void:
 	if _map_done or _battle != null or G.ui_blocked: return
 	Audio.sfx("ui_open")
 	_mark_nav_dirty()
+	if _mode=="main_world":
+		_persist_main_world_progress()
+		var points := preload("res://src/ui/WorldPointMap.gd").new()
+		points.map_id=_main_map_id
+		points.standalone=true
+		points.z_index=100
+		points.live_map=self
+		_big_map=points
+		_hud.add_child(points)
+		points.closed.connect(_close_big_map)
+		points.region_requested.connect(func():_close_big_map();_open_region_map_overlay())
+		points.destination_selected.connect(func(_id: String):
+			_stop_auto_walk("")
+			_walk_focus = "destination"
+			_close_big_map()
+			_mark_nav_dirty()
+			_refresh_hud())
+		return
 	var safe := G.ui_safe_rect(self)
 	_big_map = Control.new()
 	_big_map.name = "ExpandedMap"
@@ -3748,10 +3823,15 @@ func _open_region_map_overlay() -> void:
 	if _mode != "main_world" or _battle != null or _map_done: return
 	_stop_auto_walk("")
 	_persist_main_world_progress()
+	if is_instance_valid(_region_map):return
 	var rmap := RegionMapPanel.new()
+	_region_map=rmap
+	rmap.z_index=100
 	_hud.add_child(rmap)
+	rmap.destination_selected.connect(func(_id: String):_mark_nav_dirty();_refresh_hud())
 	rmap.closed.connect(func():
-		if is_instance_valid(rmap): rmap.queue_free())
+		_region_map=null
+		if is_instance_valid(rmap):rmap.queue_free())
 
 
 func _close_big_map() -> void:
@@ -3891,7 +3971,7 @@ func _finish_map(result: String) -> void:
 ## 任一浮层/演出/看地图打开时冻结怪物与接触判定（防"看地图被偷袭"，P1-10）
 func _modal_open() -> bool:
 	return _special_panel != null or _journey_panel != null or _battle != null or _map_done or _picker != null or _remover != null \
-		or _big_map != null or _altar_ui != null or _exit_ui != null or _beat != null \
+		or _big_map != null or is_instance_valid(_region_map) or _altar_ui != null or _exit_ui != null or _beat != null \
 		or _trade_panel != null or _road_mail_panel != null or _puzzle_panel != null \
 		or _fishing_panel != null \
 		or (_city_content != null and bool(_city_content.call("has_modal"))) \
@@ -4985,7 +5065,7 @@ class _Deco extends StaticBody2D:
 			return
 		var spr := Sprite2D.new()
 		spr.texture = tex
-		spr.scale = Vector2.ONE * s
+		spr.scale = Vector2.ONE * s * preload("res://src/world/WorldPresentation.gd").SCENERY_ENLARGEMENT
 		spr.offset = Vector2(0, -tex.get_height() / 2.0)
 		add_child(spr)
 		var shape := CollisionShape2D.new()
@@ -5157,7 +5237,7 @@ class _MapMonster extends CharacterBody2D:
 			var registered := MonsterArt.has(mon_id)
 			if registered: tex = MonsterArt.texture(mon_id)
 			if tex != null:
-				var h: float = sprite_height if not sprite_path.is_empty() else {"normal": 48.0, "elite": 60.0, "boss": 84.0}.get(tier, 48.0)
+				var h: float = sprite_height if not sprite_path.is_empty() else {"normal": 64.0, "elite": 80.0, "boss": 108.0}.get(tier, 64.0)
 				var s := h / float(tex.get_height())
 				if registered: s = MonsterArt.display_scale(mon_id, h)
 				_sprite = Sprite2D.new()
@@ -5552,8 +5632,8 @@ class _OathTraveler extends CharacterBody2D:
 				frames.add_frame(&"idle",atlas)
 			sprite=AnimatedSprite2D.new()
 			sprite.sprite_frames=frames
-			sprite.scale=Vector2.ONE*.55
-			sprite.position.y=-32
+			sprite.scale=Vector2.ONE*.55*preload("res://src/world/WorldPresentation.gd").NPC_ENLARGEMENT
+			sprite.position.y=-59.0*sprite.scale.y
 			sprite.play(&"idle")
 			add_child(sprite)
 	func _physics_process(_delta:float)->void:
@@ -5601,6 +5681,7 @@ class _QuestEntity extends Node2D:
 	var _trade_tex: Texture2D = null
 	var _trade_ground: Dictionary = {}
 	var _uses_ground_art := false
+	var _contact_latched := false
 	var _caption_label:Label
 
 	func _ready() -> void:
@@ -5636,7 +5717,15 @@ class _QuestEntity extends Node2D:
 				return
 		if map_ref._modal_open():
 			return  # 覆盖层期间不触发（与 _Interactable 同口径）
-		if position.distance_to(map_ref._player.position) < MapScene.INTERACT_R:
+		if kind=="fishing":
+			queue_redraw()
+			return  # A fishing destination requires the nearby interaction button.
+		# 所有机关/剧情/采集点每次接近只触发一次；离开范围后才重新武装。
+		# 使用独立接触锁，保留各类交互已有的 trade_cooled 校验。
+		if position.distance_to(map_ref._player.position) > MapScene.INTERACT_R + 32:
+			_contact_latched = false
+		if position.distance_to(map_ref._player.position) < MapScene.INTERACT_R and not _contact_latched:
+			_contact_latched = true
 			map_ref.on_quest_entity(self)
 		queue_redraw()
 
@@ -5656,7 +5745,7 @@ class _QuestEntity extends Node2D:
 				return
 		if art == "trade_stall" and _trade_tex != null:
 			preload("res://src/world/BuildingGrounding.gd").draw_prop(self,_trade_ground,Vector2(-56,-96),_trade_tex.get_width())
-		elif art not in ["trust_zhaoyuan","trust_shenyuan","trust_frost","return_lamp","return_letter","return_tidebud","return_snowflower","return_rune","stele_anchor","frost_brazier","frost_lichen","mine_vent","frost_echo","signal_ribbons","mine_cart","rope","feather","tide_cargo","salt_cart","chime","cache","post"]:
+		elif art not in ["salt_marks","tracks","trust_zhaoyuan","trust_shenyuan","trust_frost","return_lamp","return_letter","return_tidebud","return_snowflower","return_rune","stele_anchor","frost_brazier","frost_lichen","mine_vent","frost_echo","signal_ribbons","mine_cart","rope","feather","tide_cargo","salt_cart","chime","cache","post"]:
 			draw_set_transform(Vector2(0, 8), 0.0, Vector2(1.0, 0.36))
 			draw_circle(Vector2.ZERO, 22.0, Color(0, 0, 0, 0.24))
 			draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
@@ -5668,13 +5757,11 @@ class _QuestEntity extends Node2D:
 			"stele_anchor":
 				MapScene.WorldPropArt.altar(self,false)
 			"resonance":
-				# 地表原图承接碑座本体；程序层只叠加可交互的三地共鸣光纹。
+				# Three physical rune stones retain the interaction owned by this entity.
 				for i in 3:
 					var p := Vector2(-24 + i * 24, -18)
 					var color: Color = [Color("93bf95"), Color("82bacb"), Color("d1dceb")][i]
-					draw_arc(p, 9, 0, TAU, 12, color, 2)
-					draw_line(p + Vector2(-3, 0), p + Vector2(3, 0), color, 2)
-				draw_arc(Vector2(0, -18), 44, .2, PI - .2, 20, Color(.74, .58, .87, .45), 2)
+					MapScene.CompletionArt.prop(self, "rune_stone", p+Vector2(0,8), 28, color)
 			"frost_brazier":
 				# Permanent scene art owns the body at frost_post.
 				if not _uses_ground_art: MapScene.WorldPropArt.story(self,"frost_brazier",76)
@@ -5701,8 +5788,7 @@ class _QuestEntity extends Node2D:
 			"feather":
 				MapScene.WorldPropArt.story(self,"feather",44)
 			"salt_marks":
-				for offset in [0.0, 8.0, 16.0]:
-					draw_polyline(PackedVector2Array([Vector2(-23, -8 + offset), Vector2(-7, -16 + offset), Vector2(14, -11 + offset), Vector2(25, -17 + offset)]), Color("d9dbc9"), 3)
+				MapScene.CompletionArt.quest_prop(self, eid, art)
 			"courier":
 				var strip := G.res_tex("npc_port_worker_idle")
 				if strip != null:
@@ -5741,10 +5827,7 @@ class _QuestEntity extends Node2D:
 		MapScene.WorldPropArt.story(self,"salt_cart",94)
 
 	func _draw_fishing() -> void:
-		draw_set_transform(Vector2(0,8),0.0,Vector2(1.4,.48))
-		draw_circle(Vector2.ZERO,34,Color("4d8a94"))
-		draw_arc(Vector2.ZERO,23+sin(_t*2)*3,0,TAU,24,Color("b3d5d0"),2)
-		draw_set_transform(Vector2.ZERO)
+		# The authored fishing prop already includes a water bucket and float.
 		MapScene.WorldPropArt.supplementary(self,"fishing",68)
 
 	func _draw_tide_cargo() -> void:
@@ -5763,14 +5846,7 @@ class _QuestEntity extends Node2D:
 
 
 	func _draw_tracks() -> void:
-		for i in 2:
-			_paw(Vector2(-13.0 + float(i) * 26.0, -6.0 + float(i) * 13.0))
-
-	func _paw(c: Vector2) -> void:
-		draw_circle(c, 5.0, Color("6f6858"))                                   # 掌垫
-		for j in 3:
-			var a := -PI * 0.5 + (float(j) - 1.0) * 0.5
-			draw_circle(c + Vector2(cos(a), sin(a)) * 8.5, 2.2, Color("6f6858"))  # 趾
+		MapScene.CompletionArt.quest_prop(self, eid, "tracks")
 
 	## 驿亭：柱、顶与招幡（送达点）
 	func _draw_post() -> void:
@@ -5920,6 +5996,15 @@ class _Minimap extends Control:
 		if map_ref._city_content != null:
 			for npc in map_ref._city_content._npcs:
 				if big or bounds.has_point(npc.position): MapScene.Cartography.marker(self,(at.call(npc.position) as Vector2).clamp(map_rect.position+Vector2(4,4),map_rect.end-Vector2(4,4)),"npc")
+		if map_ref._mode=="main_world":
+			for point in MapScene.WorldPoints.rows(map_ref._main_map_id):
+				var world_point := MapScene.WorldPoints.position(point)
+				if not bounds.has_point(world_point):continue
+				if not big and point.kind!="fishing":continue
+				var marker: Vector2=at.call(world_point)
+				draw_circle(marker,5,Color("14333b"))
+				var icon := MapScene.WorldPoints.icon(String(point.kind))
+				if icon!=null:draw_texture_rect(icon,Rect2(marker-Vector2(5,5),Vector2(10,10)),false)
 		var objective: Dictionary = map_ref._hud_target_info()
 		if not String(objective.get("kind","")).is_empty():
 			var objective_pos: Vector2 = objective.get("pos",Vector2.ZERO)
@@ -6220,14 +6305,17 @@ func _build_round1_hud() -> void:
 	_round_tasks.append(_side_chip)
 	_hud.add_child(_side_chip)
 	_side_chip.pressed.connect(func():
+		if not WorldPoints.target().is_empty():
+			_show_destination_actions()
+			return
 		if not G.ui_blocked:
 			var special_goal := SpecialEvents.goal(G)
 			var pop_title := "追踪奇遇" if not special_goal.is_empty() else "追踪目标"
 			var pop_lines: Array = [special_goal, "到标记的地点继续，谢礼在复命时领取。"] if not special_goal.is_empty() else G.side_info_lines()
 			if not String(_nav_info().get("kind", "")).is_empty():
-				var action_text := "停止寻路" if _auto_walk else "自动前往"
+				var action_text := "停止寻路" if _auto_walk and _walk_focus == "side" else "自动前往"
 				G.show_choice_popup(_side_chip, pop_title, pop_lines, [
-					{"text": action_text, "cb": Callable(self, "_on_compass_tapped")},
+					{"text": action_text, "cb": Callable(self, "_select_walk_focus").bind("side")},
 					{"text": "知道了", "cb": Callable()},
 				], self)
 			else:
@@ -6383,7 +6471,7 @@ func _tick_round_interaction() -> void:
 	_round_interact.visible = true
 	var radius := 52.0 if (not _round_target is _QuestEntity and not _round_target is _Interactable) else INTERACT_R
 	_round_interact.disabled = best >= radius
-	_round_interact.get_node("Caption").text = "靠近" if best >= radius else ("交谈" if (not _round_target is _QuestEntity and not _round_target is _Interactable) else "交互")
+	_round_interact.get_node("Caption").text = "靠近" if best >= radius else ("交谈" if (not _round_target is _QuestEntity and not _round_target is _Interactable) else "垂钓" if _round_target is _QuestEntity and _round_target.kind=="fishing" else "交互")
 
 func _round_interact_pressed() -> void:
 	if not is_instance_valid(_round_target) or _modal_open(): return
@@ -6444,4 +6532,3 @@ class _PlayerShadow extends Node2D:
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2(1.0, ry / maxf(1.0, rx)))
 		draw_circle(Vector2(0, 1.5), rx, Color(0.05, 0.04, 0.03, 0.32))
 		draw_circle(Vector2.ZERO, rx * 0.66, Color(0.02, 0.02, 0.01, 0.48))
-

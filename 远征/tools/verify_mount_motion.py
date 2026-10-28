@@ -1,25 +1,17 @@
-"""Read-only QA of actual moving renders, with cropped review contact sheets."""
+"""Validate current integrated actor evidence, not the retired split-rider fixture."""
 import json
 from pathlib import Path
-from PIL import Image, ImageDraw
 
 root = Path(__file__).resolve().parents[1]
-folder = root / 'shots/body_mount_motion_20261004'
-rows = json.loads((root / 'tools/_logs/mount_motion_qa.json').read_text(encoding='utf-8'))
-assert len(rows) == 64 and len({r['image'] for r in rows}) == 64
-for row in rows:
-    assert set(row['frames']) == {0, 1, 2} and all(row[k] for k in ['moving', 'rider_visible', 'mount_visible'])
-for mount in ['horse', 'bear']:
-    for height in [800, 1067]:
-        sheet = Image.new('RGB', (800, 800), '#192426')
-        for role_index, role in enumerate(['zs', 'ck', 'fs', 'fz']):
-            for direction_index, direction in enumerate(['down', 'left', 'right', 'up']):
-                row = next(r for r in rows if r['image'] == f'{mount}_{role}_{direction}_{height}.png')
-                x, y = row['foot']
-                with Image.open(folder / row['image']) as source:
-                    assert source.size == (480, height)
-                    crop = source.crop((int(x)-100, int(y)-160, int(x)+100, int(y)+20)).convert('RGB')
-                sheet.paste(crop, (direction_index*200, role_index*200+20))
-                ImageDraw.Draw(sheet).text((direction_index*200+8, role_index*200+3), f'{role} {direction}', fill='white')
-        sheet.save(folder / f'matrix_{mount}_{height}.jpg', quality=95)
-print('MOUNT_MOTION_QA_OK 64 moving renders, three frames each')
+result = json.loads((root / 'tools/_logs/integrated_mount_results.json').read_text(encoding='utf-8'))
+assert result['failures'] == 0
+assert {(r['mount'], r['role']) for r in result['records']} == {(m, r) for m in ['horse','bear'] for r in ['zs','ck','fs','fz']}
+for row in result['records']:
+    assert len(row['animations']) == 12
+    for animation in row['animations']:
+        action, direction = animation['animation'].split('_')
+        assert direction in ['down','left','right','up']
+        assert set(animation['seen']) == set(range({'idle':4,'walk':8,'run':12}[action]))
+        screenshot = root / 'shots/full_issue_fix_20261024/mount' / (row['mount'] + '_' + row['role'] + '_' + animation['animation'] + '.png')
+        assert screenshot.is_file(), screenshot
+print('MOUNT_MOTION_QA_OK 8 integrated actors, 96 sequential idle/walk/run states')

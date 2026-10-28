@@ -3,12 +3,17 @@ extends RefCounted
 const UI:=preload("res://src/ui/TravelChestUI.gd")
 const Page:=preload("res://src/ui/ChestPageUI.gd")
 const ROOT:="res://assets/ui/full_review_fixes_20261009/"
+const Completion := preload("res://src/world/AssetCompletion.gd")
 static var _regions:Dictionary={}
 static var _textures:Dictionary={}
 static var _pixel_regions:Dictionary={}
 static var _showcase_pets:Dictionary={}
 static func texture(id:String) -> Texture2D:
 	if _textures.has(id):return _textures[id]
+	var completed := Completion.texture(id)
+	if completed != null:
+		_textures[id] = completed
+		return completed
 	if _pixel_regions.is_empty() and FileAccess.file_exists("res://assets/ui/next_review_20261009/regions.json"):_pixel_regions=JSON.parse_string(FileAccess.get_file_as_string("res://assets/ui/next_review_20261009/regions.json"))
 	if _pixel_regions.has(id):
 		var entry:Dictionary=_pixel_regions[id]
@@ -120,7 +125,17 @@ class CostChip extends Control:
 		amount=UI.label(str(need),"number",UI.RED if owned<need else UI.PAPER);amount.add_theme_font_size_override("font_size",G.FS_LG);add_child(amount)
 		holding=UI.label("持有 "+UI.format_number(owned),"tag",UI.AGED);add_child(holding)
 		lacking=UI.label("不足" if owned<need else "","tag",UI.RED);add_child(lacking)
-	func _ready() -> void:resized.connect(queue_redraw)
+		tooltip_text="%s：需要 %d，持有 %d"%[words,need,owned]
+		mouse_filter=Control.MOUSE_FILTER_PASS
+		for label in [heading,amount,holding,lacking]:label.clip_text=true
+		amount.text=UI.format_number(need)
+		holding.text="持有 "+UI.format_number(owned)
+	func _ready() -> void:
+		resized.connect(_layout)
+		_layout()
+	func _layout() -> void:
+		custom_minimum_size.y=78 if size.x<196 else 56
+		queue_redraw()
 	func _draw() -> void:
 		texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		UI.surface(self,Rect2(Vector2.ZERO,size),UI.FACE,UI.RED if owned<need else Color("5e4a38"))
@@ -128,10 +143,13 @@ class CostChip extends Control:
 		draw_rect(slot_box, Color("110e15"))
 		G.Visuals.nine_slice(self, G.Visuals._kit_tex("slot_rare.png"), slot_box, 6.0, 6.0, Color(1, 1, 1, 0.52))
 		picture.position=Vector2(12,14)
-		heading.position=Vector2(52,2);heading.size=Vector2(size.x-80,22)
-		amount.position=Vector2(52,20);amount.size=Vector2(64,32)
-		holding.position=Vector2(116,25);holding.size=Vector2(maxf(80,size.x-122),22)
-		lacking.position=Vector2(size.x-34,2);lacking.size=Vector2(30,22)
+		var compact:=size.x<196
+		heading.position=Vector2(52,2);heading.size=Vector2(maxf(1,size.x-60),22)
+		amount.position=Vector2(52,20);amount.size=Vector2(maxf(1,size.x-60) if compact else 64,32)
+		holding.position=Vector2(8,52) if compact else Vector2(116,25)
+		holding.size=Vector2(maxf(1,size.x-16) if compact else maxf(1,size.x-122),22)
+		lacking.position=Vector2(size.x-38,52 if compact else 2);lacking.size=Vector2(30,22)
+		if not lacking.text.is_empty():holding.size.x=maxf(1,holding.size.x-36)
 
 class Investment extends VBoxContainer:
 	const UI=preload("res://src/ui/TravelChestUI.gd")
@@ -237,24 +255,43 @@ class EnemyChip extends Control:
 	var extra:=0
 	var number:=1
 	var display_name:=""
+	var _tap_pointer:=-2
+	var _tap_at:=Vector2.ZERO
 	func _init(tex:Texture2D=null) -> void:
-		custom_minimum_size=Vector2(0,44);size_flags_horizontal=Control.SIZE_EXPAND_FILL
+		custom_minimum_size=Vector2(148,60);size_flags_horizontal=Control.SIZE_EXPAND_FILL
 		mouse_filter=Control.MOUSE_FILTER_STOP
 		mouse_default_cursor_shape=Control.CURSOR_POINTING_HAND
-		gui_input.connect(func(e:InputEvent):
-			if e is InputEventMouseButton and e.pressed and e.button_index==MOUSE_BUTTON_LEFT:
-				if unit!=null and unit.alive and extra==0:selected.emit(unit.uid))
+		gui_input.connect(_pointer_input)
 		portrait=Page.picture(tex,Vector2(32,32));portrait.texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;add_child(portrait)
 		heading=UI.label("","tag");heading.clip_text=true;heading.text_overrun_behavior=TextServer.OVERRUN_TRIM_ELLIPSIS;add_child(heading)
 		value=UI.label("","tag",UI.AGED);add_child(value)
 		marker=UI.label("","tag",UI.GOLD);marker.horizontal_alignment=HORIZONTAL_ALIGNMENT_RIGHT;add_child(marker)
 	func _ready() -> void:resized.connect(queue_redraw)
+	func _notification(what: int) -> void:
+		if what==Control.NOTIFICATION_SCROLL_BEGIN:_tap_pointer=-2
+	func _pointer_input(e: InputEvent) -> void:
+		if e is InputEventScreenTouch:
+			if e.pressed:_tap_pointer=e.index;_tap_at=e.position
+			elif _tap_pointer==e.index:
+				_tap_pointer=-2
+				if e.position.distance_to(_tap_at)<10:_choose()
+		elif e is InputEventMouseButton and e.button_index==MOUSE_BUTTON_LEFT:
+			if e.pressed:_tap_pointer=-1;_tap_at=e.position
+			elif _tap_pointer==-1:
+				_tap_pointer=-2
+				if e.position.distance_to(_tap_at)<10:_choose()
+	func _choose() -> void:
+		var scroll:=get_parent().get_parent()
+		if scroll.has_method("gesture_active") and scroll.gesture_active():return
+		if unit!=null and unit.alive and extra==0:selected.emit(unit.uid)
 	func _draw() -> void:
 		UI.surface(self,Rect2(Vector2.ZERO,size),UI.SELECTED if focused else UI.FACE,UI.GOLD if focused else UI.BRONZE)
 		if focused:draw_rect(Rect2(1,1,size.x-2,size.y-2),UI.GOLD,false,2)
-		portrait.position=Vector2(5,6)
-		heading.position=Vector2(41,0);heading.size=Vector2(size.x-45,20)
-		value.position=Vector2(41,21);value.size=Vector2(size.x-45,19)
+		portrait.position=Vector2(6,14)
+		heading.add_theme_font_size_override("font_size",G.FS_TINY)
+		heading.position=Vector2(44,4);heading.size=Vector2(size.x-50,22)
+		value.add_theme_font_size_override("font_size",G.FS_TINY)
+		value.position=Vector2(44,32);value.size=Vector2(size.x-50,22)
 		# The narrow chip reserves its text area for the name and HP.
 		# A focus badge sits over the portrait, never over the name.
 		marker.position=Vector2(3,25);marker.size=Vector2(34,18)
@@ -269,6 +306,6 @@ class EnemyChip extends Control:
 		heading.text=display_name if not display_name.is_empty() else unit.name
 		value.text="%d/%d"%[unit.hp,unit.get_max_hp()]
 		portrait.modulate=Color.WHITE if unit.alive else Color(.35,.35,.35)
-		draw_rect(Rect2(41,20,maxf(4,size.x-46),3),UI.NIGHT)
-		draw_rect(Rect2(41,20,maxf(4,size.x-46)*clampf(float(unit.hp)/maxi(1,unit.get_max_hp()),0,1),3),Color("e58a72"))
+		draw_rect(Rect2(44,28,maxf(4,size.x-50),3),UI.NIGHT)
+		draw_rect(Rect2(44,28,maxf(4,size.x-50)*clampf(float(unit.hp)/maxi(1,unit.get_max_hp()),0,1),3),Color("e58a72"))
 		if not unit.alive:draw_line(Vector2(42,10),Vector2(size.x-5,10),UI.ASH,1)

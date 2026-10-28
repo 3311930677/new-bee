@@ -9,7 +9,7 @@ func setup(id:String,cfg:Dictionary)->void:
 	extent=Vector2(float(cfg.map_cols)*48,float(cfg.map_rows)*48)
 	top=ReferenceWorldArt.texture(id+"_floor_top")
 	bottom=ReferenceWorldArt.texture(id+"_floor_bottom")
-	texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST;z_index=-20
+	texture_filter=preload("res://src/world/WorldPresentation.gd").sampling();z_index=-20
 func _draw()->void:
 	var half:=Vector2(extent.x,extent.y*.5)
 	draw_texture_rect(top,Rect2(Vector2.ZERO,half),false)

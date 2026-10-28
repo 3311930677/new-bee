@@ -402,7 +402,10 @@ func _run_one(theme: String, node_type: String, layer: int, strong: bool) -> Dic
 		"enemy": {"theme": theme, "node_type": node_type, "layer": layer},
 		"seed": 7,
 	}
-	return await _drive(2400)
+	# 本用例验证首领演出与胜利结算；按实际玩法使用技能与药剂。
+	var scene := _spawn()
+	scene.sim.auto_mode = strong
+	return await _drive(2400, scene, strong)
 
 
 func _run_flee() -> Dictionary:
@@ -484,7 +487,7 @@ func _spawn() -> BattleScene:
 	return scene
 
 
-func _drive(max_frames: int, scene: BattleScene = null) -> Dictionary:
+func _drive(max_frames: int, scene: BattleScene = null, use_potions := false) -> Dictionary:
 	if scene == null:
 		scene = _spawn()
 	var out := {"finished": false, "result": "", "fx_left": -1, "views": 0}
@@ -493,6 +496,9 @@ func _drive(max_frames: int, scene: BattleScene = null) -> Dictionary:
 		out["result"] = result)
 	var frames := 0
 	while not out["finished"] and frames < max_frames:
+		var role := scene.sim.role_unit()
+		if use_potions and role != null and role.hp < role.get_max_hp() * 0.45:
+			scene.sim.use_potion()
 		await get_tree().process_frame
 		frames += 1
 	# 结算浮层出现的下一帧

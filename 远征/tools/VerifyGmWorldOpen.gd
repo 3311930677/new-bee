@@ -8,7 +8,7 @@ func _ready() -> void:
 	var fails := 0
 	var locked: Dictionary = Journey.status(G, "stele_core")
 	if bool(locked.get("ok", false)): fails += 1; print("FAIL: 未放行时碑心不应可达")
-	G.gm_check_password(G.GM_PASSWORD)
+	G.gm_unlocked = OS.is_debug_build()
 	G.gm_unlock_all_worlds()
 	var maps: Dictionary = TableCache.main_world_config().get("maps", {})
 	for id in maps:

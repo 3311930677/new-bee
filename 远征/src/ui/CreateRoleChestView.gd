@@ -88,7 +88,8 @@ func _ready() -> void:
 	shell.body.add_child(_desc)
 	_combat_line=Flow.text("","caption",UI.GOLD)
 	shell.body.add_child(_combat_line)
-	shell.body.add_child(Flow.text("角色昵称","caption",UI.AGED))
+	var name_label:=Flow.text("角色昵称","caption",UI.AGED)
+	shell.body.add_child(name_label)
 	var row:=HBoxContainer.new()
 	shell.body.add_child(row)
 	host._name_edit=Flow.field("输入角色昵称")
@@ -100,6 +101,11 @@ func _ready() -> void:
 	row.add_child(random)
 	_rule=Flow.text("昵称最长 12 个字符","caption",UI.AGED)
 	shell.body.add_child(_rule)
+	# Put required input before the longer lore, so the first short-screen view
+	# exposes the name field and its validation beside the fixed confirm button.
+	shell.body.move_child(name_label,2)
+	shell.body.move_child(row,3)
+	shell.body.move_child(_rule,4)
 	_confirm=Flow.button("确认易职 · 返回主城" if reselect else "踏入昭元 · 开启征途",host._confirm,true)
 	shell.footer.add_child(_confirm)
 	host._name_edit.text_changed.connect(func(_words:String):_sync_name())
@@ -111,6 +117,7 @@ func _ready() -> void:
 			if e.pressed:_swipe_at=e.position
 			elif absf(e.position.x-_swipe_at.x)>48:host._switch_role(host._role_idx+(-1 if e.position.x>_swipe_at.x else 1),true))
 	get_viewport().size_changed.connect(layout)
+	preload("res://src/ui/UiSafeArea.gd").watch(self,layout)
 	layout()
 func _role_skill_summary(role_id:String) -> String:
 	var names:Array[String]=[]
@@ -149,6 +156,8 @@ func _sync_name() -> void:
 	_rule.text="请输入角色昵称" if _confirm.disabled else "昵称最长 12 个字符"
 	_rule.add_theme_color_override("font_color",UI.RED if _confirm.disabled else UI.AGED)
 func layout(safe_override:Rect2=Rect2()) -> void:
+	var safe:=safe_override if safe_override.has_area() else G.ui_safe_rect(self)
+	shell.tray_height=minf(396,safe.size.y-304)
 	shell.layout(safe_override)
 	var width:float=shell.stage.size.x
 	var height:float=shell.stage.size.y
@@ -156,7 +165,11 @@ func layout(safe_override:Rect2=Rect2()) -> void:
 	Page.place(_job,Vector2(72,44),Vector2(width-144,22))
 	Page.place(_tags,Vector2(48,68),Vector2(width-96,22))
 	var feet_y:float=height-48.0
-	host._anim.position=Vector2(width*.5,feet_y-112.0)
+	# Animated frames have a 112px foot anchor at scale 2. Fit their full body
+	# between the identity text and direction controls on short screens.
+	var factor:=minf(1.0,maxf(.35,(height-144.0)/224.0))
+	host._anim.scale=Vector2.ONE*2.0*factor
+	host._anim.position=Vector2(width*.5,feet_y-112.0*factor)
 	if _shadow!=null:_shadow.position=Vector2(width*.5,feet_y)
 	Page.place(_pool,Vector2(width*.5-128,feet_y-30.0),Vector2(256,60))
 	if _pose_tabs!=null:

@@ -9,6 +9,8 @@ static func watch(parent: Control, callback: Callable) -> void:
 	observer.name = key
 	observer.target = parent
 	observer.callback = callback
+	# The first sample also fits controls after their initial container pass.
+	# Wrapped text can change a panel's minimum size after its owner's _ready.
 	parent.add_child(observer)
 
 class SafeObserver extends Node:
@@ -68,6 +70,15 @@ static func restore_page(parent:Control)->void:
 			child.scale=child.get_meta("safe_base_scale")
 			child.remove_meta("safe_base_position")
 			child.remove_meta("safe_base_scale")
+
+## A fixed illustration/card keeps its own design coordinates; only its outer
+## frame is fitted. Recompute from design dimensions to avoid cumulative shrink.
+static func fit_card(card:Control,safe:Rect2,design:Vector2,margin:=12.0)->void:
+	var available:=(safe.size-Vector2.ONE*margin*2).max(Vector2.ONE)
+	var factor:=minf(1.0,minf(available.x/design.x,available.y/design.y))
+	card.size=design
+	card.scale=Vector2.ONE*factor
+	card.position=(safe.get_center()-design*factor*.5).round()
 
 static func fit_hud(layer:CanvasLayer,safe:Rect2,view:Rect2)->void:
 	var insets:=Vector4(safe.position.x-view.position.x,safe.position.y-view.position.y,view.end.x-safe.end.x,view.end.y-safe.end.y)

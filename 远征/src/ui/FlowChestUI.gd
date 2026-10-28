@@ -144,7 +144,8 @@ class Shell extends Control:
 		var top:=safe.position.y+116 if tray_height<=0 else safe.end.y-tray_height
 		Page.place(background,Vector2.ZERO,get_viewport_rect().size)
 		Page.place(back,safe.position+Vector2(8,6),Vector2(44,44))
-		Page.place(title,safe.position+Vector2(64,8),Vector2(safe.size.x-80,40))
+		title.clip_text=true
+		Page.place(title,safe.position+Vector2(64,8),Vector2(safe.size.x-(148 if not header_actions.is_empty() else 80),40))
 		tabs.visible=has_tabs
 		Page.place(tabs,safe.position+Vector2(12,60),Vector2(safe.size.x-24,44))
 		Page.place(stage,Vector2(safe.position.x,start),Vector2(safe.size.x,maxf(0,top-start)))

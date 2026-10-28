@@ -32,10 +32,11 @@ func _ready()->void:
 	var login:=preload("res://src/ui/Login.tscn").instantiate() as Control
 	add_child(login)
 	await get_tree().process_frame
-	Safe.fit_page(login,safe_mixed)
+	# Login now owns a responsive form rather than fixed direct-child artwork.
+	login._chest.layout(safe_mixed)
 	_check(safe_mixed.encloses(login._paper.get_global_rect()),"登录纸页在模拟手机安全区内")
 	login._layout_page()
-	Safe.fit_page(login,safe_mixed)
+	login._chest.layout(safe_mixed)
 	_check(safe_mixed.encloses(login._paper.get_global_rect()),"登录重排后不累计缩放")
 	login.queue_free()
 	await get_tree().process_frame

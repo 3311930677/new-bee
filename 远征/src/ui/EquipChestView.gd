@@ -56,16 +56,18 @@ func _ready() -> void:
 	host._slots_row = _slots
 	host._detail = self
 	get_viewport().size_changed.connect(layout)
+	preload("res://src/ui/UiSafeArea.gd").watch(self,layout)
 	refresh()
 
 func layout(safe_override: Rect2 = Rect2()) -> void:
 	var safe := safe_override if safe_override.has_area() else G.ui_safe_rect(self)
 	var x := safe.position.x
 	var y := safe.position.y
-	var tray_top := maxf(y+300,safe.end.y-500)
+	var tray_top := clampf(safe.end.y-500,y+300,y+380)
 	Page.place(_stage,Vector2.ZERO,get_viewport_rect().size)
 	Page.place(_back,Vector2(x+8,y+6),Vector2(44,44))
-	Page.place(_heading,Vector2(x+64,y+8),Vector2(300,40))
+	_heading.clip_text=true
+	Page.place(_heading,Vector2(x+64,y+8),Vector2(safe.size.x-136,40))
 	Page.place(_bag,Vector2(safe.end.x-64,y+6),Vector2(56,44))
 	Page.place(_slots,Vector2(x+12,y+64),Vector2(safe.size.x-24,80))
 	var cell_width := floorf((_slots.size.x-32)/6)
@@ -79,14 +81,19 @@ func layout(safe_override: Rect2 = Rect2()) -> void:
 		else:
 			Page.place(child,Vector2((slot_i-1)*(cell_width+4)+(12 if slot_i>4 else 0),72),Vector2(cell_width,22))
 	Page.place(_focus,Vector2(x+20,y+160+(tray_top-y-300)*.5),Vector2(safe.size.x-40,108))
+	for child in _focus.get_children():
+		if child is Label:
+			child.clip_text=true
+			child.size.x=maxf(40,_focus.size.x-child.position.x-8)
 	Page.place(_tray,Vector2(x,tray_top),Vector2(safe.size.x,safe.end.y-tray_top))
 	Page.place(_tabs,Vector2(x+12,tray_top+8),Vector2(safe.size.x-24,44))
 	Page.place(_scroll,Vector2(x+20,tray_top+64),Vector2(safe.size.x-40,maxf(100,safe.end.y-tray_top-176)))
 	Page.place(_result,Vector2(x+20,safe.end.y-104),Vector2(safe.size.x-40,32))
 	Page.place(_actions,Vector2(x+12,safe.end.y-68),Vector2(safe.size.x-24,56))
 	for child in _actions.get_children():
-		if child.get_meta("main",false): Page.place(child,Vector2(144,0),Vector2(_actions.size.x-144,56))
-		else: Page.place(child,Vector2.ZERO,Vector2(132,56))
+		var side_w:=minf(132,_actions.size.x*.28)
+		if child.get_meta("main",false): Page.place(child,Vector2(side_w+12,0),Vector2(_actions.size.x-side_w-12,56))
+		else: Page.place(child,Vector2.ZERO,Vector2(side_w,56))
 	if is_instance_valid(host._toast):host._toast.position=Vector2(safe.get_center().x-180,safe.end.y-116)
 
 func refresh() -> void:

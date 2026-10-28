@@ -244,7 +244,10 @@ func _run() -> void:
 	G.gm_unlocked = false
 	_check(not G.gm_check_password("@tsz20060707"), "错口令不应解锁")
 	_check(not G.gm_unlocked, "错口令不应置位 gm_unlocked")
-	_check(G.gm_check_password("@tsz20060706"), "对口令 @tsz20060706 应解锁")
+	var old_password := OS.get_environment("YUANZHENG_GM_PASSWORD")
+	OS.set_environment("YUANZHENG_GM_PASSWORD", "verify-only-gm-password")
+	_check(G.gm_check_password("verify-only-gm-password"), "显式配置的调试口令应解锁")
+	OS.set_environment("YUANZHENG_GM_PASSWORD", old_password)
 	_check(G.gm_unlocked, "对口令应置位 gm_unlocked")
 
 	G.gm_grant_all()
@@ -606,6 +609,8 @@ func _run() -> void:
 	# Round 5: 边城古玩鉴宝（curio_appraise）
 	G.wallet["gold"] = 5000
 	for c_i in 3:
+		# 推进鉴定冷却的测试水位；连续点击拒绝由专项回归覆盖。
+		G.prog.flags["curio_last_ts"] = G.now_ts() - 61
 		var cres := G.curio_appraise("common" if c_i < 2 else "rare")
 		_check(bool(cres.get("ok", false)), "第 %d 次古玩鉴宝应成功" % (c_i + 1))
 	_check(G.title_owned("t_curio_seer") or G.title_cond_met(G.title_cfg("t_curio_seer")),

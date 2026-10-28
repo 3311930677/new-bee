@@ -198,15 +198,16 @@ class Ground extends Node2D:
 	var extent:Vector2
 	var routes:Array
 	func setup(id:String,dimensions:Vector2,centerlines:Array,extras:Dictionary={}) -> void:
-		extent=dimensions;routes=centerlines.duplicate(true);texture=SunnyTravelArt.ground(id,dimensions,centerlines,extras);z_index=-20;texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+		extent=dimensions;routes=centerlines.duplicate(true);texture=SunnyTravelArt.ground(id,dimensions,centerlines,extras);z_index=-20;texture_filter=preload("res://src/world/WorldPresentation.gd").sampling()
 	func _draw() -> void:draw_texture_rect(texture,Rect2(Vector2.ZERO,extent),false)
 
 class Scenery extends Node2D:
 	var kind:="tree"
 	var variant:=1
 	var tint:=Color.WHITE
-	func _ready() -> void:texture_filter=CanvasItem.TEXTURE_FILTER_NEAREST
+	func _ready() -> void:texture_filter=preload("res://src/world/WorldPresentation.gd").sampling()
 	func _draw() -> void:
+		draw_set_transform(Vector2.ZERO,0,Vector2.ONE*preload("res://src/world/WorldPresentation.gd").SCENERY_ENLARGEMENT)
 		if kind=="tree":
 			draw_texture_rect(SunnyTravelArt.texture("leaves%d"%variant),Rect2(-20,-4,40,24),false)
 			draw_set_transform(Vector2(4,2),0,Vector2(1,.28));draw_circle(Vector2.ZERO,27,Color("483b2e",.35));draw_set_transform(Vector2.ZERO)

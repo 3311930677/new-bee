@@ -65,7 +65,8 @@ func get_atk() -> int:
 			"atk_down": pct -= float(b.val.get("pct", 0.0))
 	if traits != null:
 		pct += traits.dynamic_atk_pct(self)
-	if kind == "monster" and ai_type == "boss" and float(hp) / float(get_max_hp()) < 0.3:
+	if kind == "monster" and ai_type == "boss" and (data.get("phases", []) as Array).is_empty() \
+			and float(hp) / float(maxi(1, get_max_hp())) < 0.3:
 		pct += 0.3  # BOSS 阶段狂暴
 	return maxi(1, int(float(base_atk) * (1.0 + pct)))
 
@@ -429,7 +430,7 @@ func do_basic_attack(sim: BattleSim) -> void:
 	var crit_chance := get_crit()
 	if traits != null:
 		crit_chance += traits.crit_vs_full_hp_bonus(target)   # 弱点洞悉（P1-12）
-	var is_crit := sim.rng.randf() < crit_chance
+	var is_crit := sim.rng.randf() < clampf(crit_chance, 0.0, 0.95)
 	if is_crit:
 		dmg = DamageCalc.crit_damage(dmg, crit_dmg)
 	var halved := false

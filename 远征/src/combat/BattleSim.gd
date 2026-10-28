@@ -53,9 +53,26 @@ var companion_participants: Array = []
 # ---------- 组建 ----------
 ## ally_cfg: {role_id, level, traits[], active_pet, bench_pet, hp_override, potions}
 ## enemy_cfg: {theme, node_type("normal"/"elite"/"boss"), layer(1..3), enemy_mult,
-##             solo, display_level}; solo 明雷按显示等级成长，历练仍按层数成长。
+##             solo, display_level}; 明雷按显示等级成长，历练按人物等级与层数成长。
 ##   enemy_mult 由调用方（苦行局）给，默认 1.0；模拟器不自己读表，保持内核无配置依赖。
 func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
+	# 同一模拟器可重用；上一场的单位、结果与错误不能泄漏到下一场。
+	units.clear()
+	_by_uid.clear()
+	cast_queue.clear()
+	last_cast.clear()
+	events.clear()
+	companion_used.clear()
+	companion_participants.clear()
+	_next_uid = 1
+	role_uid = 0
+	tick_count = 0
+	finished = false
+	result = ""
+	setup_error = ""
+	pet_bench_id = ""
+	pet_swap_used = false
+	potion_cd_ticks = 0
 	rng.seed = seed
 	campaign_profile = CampaignPressure.profile(String(enemy_cfg.get("world_map_id", "")))
 	if enemy_cfg.get("difficulty_override") is Dictionary:
@@ -70,6 +87,10 @@ func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 	enemy_scale = 1.0 + per_layer * float(int(enemy_cfg.get("layer", 1)))
 	if bool(enemy_cfg.get("solo", false)) and int(enemy_cfg.get("display_level", 0)) > 0:
 		enemy_scale = 1.0 + 0.16 * float(int(enemy_cfg.get("display_level", 1)) - 1)
+	elif not (enemy_cfg.get("custom_mon") is Dictionary):
+		# 历练保留层数差异，同时随角色等级成长，避免高等级反复秒杀初始怪。
+		var per_level := maxf(0.0, float(TableCache.nodes_config().get("difficulty_scale_per_level", 0.08)))
+		enemy_scale *= 1.0 + per_level * float(maxi(1, int(ally_cfg.get("level", 1))) - 1)
 	enemy_scale *= maxf(0.1, float(enemy_cfg.get("enemy_mult", 1.0)))
 	pet_level = maxi(1, int(ally_cfg.get("level", 1)))
 	pet_stats = (ally_cfg.get("pet_stats", {}) as Dictionary).duplicate(true)
@@ -87,6 +108,13 @@ func setup(seed: int, ally_cfg: Dictionary, enemy_cfg: Dictionary) -> void:
 		_build_enemies(String(enemy_cfg.get("theme", "forest")),
 			String(enemy_cfg.get("node_type", "normal")),
 			String(enemy_cfg.get("lead_mon", "")), bool(enemy_cfg.get("solo", false)))
+	if role_unit() == null or alive_units("enemy").is_empty():
+		if setup_error.is_empty(): setup_error = "战斗配置无有效角色或敌人"
+	if not setup_error.is_empty():
+		finished = true
+		result = "flee"
+		emit({"t": "setup_error", "reason": setup_error})
+		return
 	# 地图机关造成的短暂护甲破绽在战斗创建时生效，计时走同一 tick 时钟。
 	var opening_break: Dictionary = enemy_cfg.get("opening_def_break", {})
 	var break_target := String(opening_break.get("monster_id", ""))

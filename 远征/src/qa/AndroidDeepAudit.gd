@@ -73,7 +73,8 @@ func execute(request:Dictionary):
 		"pages":await pages_suite()
 		"resources":await resources_suite()
 		"maps":await maps_suite()
-		"mounts":await mounts_suite()
+		"mounts":await mounts_suite(request)
+		"issue_fix":await issue_fix_suite()
 		"audio":await audio_suite()
 		"audio_catalog":await audio_catalog()
 		"page":await open_page(String(request.get("page","home")),request)
@@ -128,10 +129,16 @@ func attach(node:Node):
 func photo(label:String):
 	await RenderingServer.frame_post_draw
 	var path=OUT+active_id+"/"+label+".png"
-	get_viewport().get_texture().get_image().save_png(path)
+	var rendered=get_viewport().get_texture().get_image()
+	rendered.save_png(path)
+	var colors={}
+	for sy in range(0,rendered.get_height(),maxi(1,rendered.get_height()/24)):
+		for sx in range(0,rendered.get_width(),maxi(1,rendered.get_width()/16)):
+			colors[rendered.get_pixel(sx,sy).to_rgba32()]=true
+	if is_instance_valid(current):check(colors.size()>16,"rendered frame has visible detail "+label,colors.size())
 	var geometry:Array=[]
 	if is_instance_valid(current):collect_controls(current,geometry)
-	photos.append({"name":label,"safe":str(G.ui_safe_rect(self)),"controls":geometry})
+	photos.append({"name":label,"safe":str(G.ui_safe_rect(self)),"controls":geometry,"sample_colors":colors.size()})
 	print("ANDROID_DEEP_PHOTO ",active_id,"/",label)
 
 func collect_controls(node:Node,output:Array):
@@ -186,6 +193,10 @@ func open_page(page:String,request:Dictionary={}):
 			await attach(Bag.new());current._select_tab(String(request.get("tab","equip")));await frames()
 		"currency":
 			var node=Currency.new();node.currency_id=String(request.get("currency","gold"));await attach(node)
+		"curio":
+			await attach(preload("res://src/ui/CurioLorePanel.gd").new())
+			current.navigate(String(request.get("section","overview")));await frames()
+		"exchange":await attach(preload("res://src/ui/ExchangePanel.gd").new())
 		"gathering":await attach(preload("res://src/ui/CampGatheringPanel.gd").new())
 		"settings":await attach(preload("res://src/ui/SettingsPanel.gd").new())
 		"map":await attach(make_map(String(request.get("map","lorin_wilds")),String(request.get("role","zs")),String(request.get("mount",""))))
@@ -194,6 +205,61 @@ func open_page(page:String,request:Dictionary={}):
 		_:
 			await attach(preload("res://src/ui/GameHome.tscn").instantiate());current.open_gm_feature(page);await frames(20)
 	await photo(page)
+
+func issue_fix_suite():
+	await clean();fixture()
+	await open_page("login")
+	check(current._chest._backdrop.material==null,"P01 crisp full-height login background")
+	check(G.ui_safe_rect(self).encloses(current._paper.get_global_rect()),"P01 login form safe on Android")
+	check(current._account.size.y>=56 and current._password.size.y>=56,"P01 fields retain touch size")
+	var before=JSON.stringify([G.wallet,G.items,G.prog])
+	for id in ["gold","expedition","soul","honor"]:
+		await open_page("currency",{"currency":id})
+		check(current._tabs.is_empty(),"P03 independent currency card "+id)
+		check(str(G.wallet[id]) in current._balance.text,"P03 exact balance "+id)
+		check(current._frame.size.y<=650.5,"P03 compact card height "+id)
+		await photo("currency_"+id)
+	check(before==JSON.stringify([G.wallet,G.items,G.prog]),"P03 reading four cards never mutates state")
+	for owned in [false,true]:
+		G.prog.pets=[]
+		if owned:
+			for row in TableCache.pets():G.prog.pets.append(String(row.id))
+		await clean();await attach(preload("res://src/ui/CodexPanel.gd").new())
+		for index in current._pets.size():
+			current._deck.go(index,true);await frames(4)
+			var view=current._chest
+			var anchor=view._art.position+view._pet_anchor/view._anchor_canvas*view._art.size
+			check(absf(anchor.x-(view._pedestal.position.x+view._pedestal.size.x*.5))<=1.1,"P02 body pedestal support "+str(index))
+			check(absf(anchor.x-(view._shadow.position.x+view._shadow.size.x*.5))<=1.1,"P02 shared shadow support "+str(index))
+			await photo("pet_"+str(index)+("_owned" if owned else "_silhouette"))
+	await open_page("exchange")
+	check(current.entries().size()==5,"P06 five original products")
+	for row in current.entries():
+		before=JSON.stringify([G.wallet,G.items,G.prog])
+		current.open_product(String(row.id));await frames()
+		check(before==JSON.stringify([G.wallet,G.items,G.prog]),"P06 viewing product does not purchase "+String(row.id))
+		check(G.ui_safe_rect(self).encloses(current._detail.get_global_rect()),"P06 product detail safe")
+		await photo("market_detail_"+String(row.id));current.close_product()
+	current.open_product("enhance_stone");await frames()
+	var honor=int(G.wallet.honor);var amount=G.item_count("enhance_stone")
+	current.confirm_purchase();current.confirm_purchase()
+	check(int(G.wallet.honor)==honor-80 and G.item_count("enhance_stone")==amount+3,"P06 one confirmation one transaction")
+	await open_page("curio")
+	before=JSON.stringify([G.wallet,G.items,G.prog])
+	for section in ["overview","lore","appraise","history"]:
+		current.navigate(section);await frames()
+		check(G.ui_safe_rect(self).encloses(current._frame.get_global_rect()),"P09 safe "+section)
+		check(G.ui_safe_rect(self).encloses(current._back.get_global_rect()),"P09 accessible return "+section)
+		await photo("curio_"+section)
+	check(before==JSON.stringify([G.wallet,G.items,G.prog]),"P09 navigation has no rewards or charges")
+	current.navigate("appraise");var gold=int(G.wallet.gold)
+	current.appraise();current.appraise();await frames()
+	check(int(G.wallet.gold)==gold-260,"P09 appraise charges exactly once")
+	await photo("curio_result")
+	before=JSON.stringify([G.wallet,G.items,G.prog]);current.back();await frames()
+	check(before==JSON.stringify([G.wallet,G.items,G.prog]),"P09 result confirmation never repeats reward")
+	await resources_suite()
+	await clean()
 
 func resources_suite():
 	await clean();fixture()
@@ -285,20 +351,23 @@ func maps_suite():
 		records.append({"map":id,"extent":str(extent),"spawn":str(start),"sample_positions":str(points),"blank_visible_sprites":blanks})
 	await clean()
 
-func mounts_suite():
+func mounts_suite(request:Dictionary={}):
 	fixture()
 	for mount in ["horse","bear"]:
 		for role in ["zs","ck","fs","fz"]:
 			await clean();await attach(make_map("lorin_wilds",role,mount))
 			var map=current as MapScene
+			var motion_origin=map._player.position
 			map.set_physics_process(false)
 			if map._city_content!=null:map._city_content.set_physics_process(false)
+			for monster in map._monsters:
+				if is_instance_valid(monster):monster.set_physics_process(false);monster.set_process(false)
 			map._player.position=Vector2(480,700)
-			for direction in [Vector2.DOWN,Vector2.LEFT,Vector2.RIGHT,Vector2.UP]:
+			for direction in ([] if bool(request.get("motion_only",false)) else [Vector2.DOWN,Vector2.LEFT,Vector2.RIGHT,Vector2.UP]):
 				var name="mount_%s_%s_%s"%[mount,role,str(direction).replace(" ","").replace(",","_").replace("(","").replace(")","")]
 				map._update_player_anim(direction*180)
 				map._mount_anim.pause();map._mount_hoof_timer=0;map._mount_contact_frame=-1
-				for frame in 4:
+				for frame in 8:
 					map._mount_anim.frame=frame;map._update_player_anim(direction*180);map._mount_anim.pause()
 					await frames(1);await photo(name+"_"+str(frame))
 				Audio._last_events.clear();Audio.event_log.clear()
@@ -308,18 +377,27 @@ func mounts_suite():
 				check(Audio.event_log.size()==1,"M09 A05 one hoof event on held contact "+name)
 				map._tick_mount_hoof(.1,Vector2.ZERO)
 				check(map._mount_contact_frame==-1,"M09 stop clears contact "+name)
-				check(map._mount_anim.sprite_frames.get_frame_count(map._mount_anim.animation)==4,"M08 four gait frames "+name)
-				check(map._player_anim.visible and map._mount_anim.visible,"M08 rider and mount visible "+name)
+				check(map._mount_anim.sprite_frames.get_frame_count(map._mount_anim.animation)==8,"M08 eight sequential walking poses "+name)
+				check(not map._player_anim.visible and map._mount_anim.visible,"M08 integrated rider and mount visible "+name)
 			# Actual physics-driven normal/sprint/stop sequence; no forced anim frames.
 			map.set_physics_process(true)
 			for sprint in [false,true]:
-				map._sprint=sprint;map._player.position=Vector2(480,700)
+				map._sprint=sprint;map._player.position=motion_origin
 				var samples:Array=[]
 				Audio.event_log.clear();Audio._last_events.clear()
 				Input.action_press("move_down")
-				for i in 60:
+				var motion_started=Time.get_ticks_msec()
+				while Time.get_ticks_msec()-motion_started<1800:
 					await get_tree().physics_frame
-					samples.append({"tick":Time.get_ticks_msec(),"frame":map._mount_anim.frame,"y":map._player.position.y,"velocity":map._player.velocity.length(),"hoof_count":Audio.event_log.filter(func(row):return row.category=="Movement").size()})
+					samples.append({"tick":Time.get_ticks_msec(),"frame":map._mount_anim.frame,"animation":str(map._mount_anim.animation),"playing":map._mount_anim.is_playing(),"riding":G.mount_riding(),"y":map._player.position.y,"velocity":map._player.velocity.length(),"modal":map._modal_open(),"city_modal":map._city_content!=null and bool(map._city_content.call("has_modal")),"ui_blocked":G.ui_blocked,"hoof_count":Audio.event_log.filter(func(row):return row.category=="Movement").size()})
+				var seen={}
+				for sample in samples:
+					if sample.velocity>1:seen[sample.frame]=true
+				check(seen.size()>=(10 if sprint else 6),"P10 actual moving gait advances "+mount+role+str(sprint),seen.keys())
+				check(samples.all(func(sample):return sample.riding),"P10 remains mounted throughout isolated motion")
+				check(samples.size()>1 and float(samples.back().y)-float(samples.front().y)>180.0,"P10 real world position advances during gait")
+				check(samples.any(func(sample):return str(sample.animation).begins_with("run_" if sprint else "walk_") and sample.playing),"P10 requested gait is playing")
+				check(Audio.event_log.any(func(row):return row.category=="Movement"),"P10 real hoof contacts audible")
 				Input.action_release("move_down");await frames(6)
 				var count=Audio.event_log.size();await pause(.4)
 				check(Audio.event_log.size()==count,"M09 no hoof after stopping "+mount+role+str(sprint))
@@ -424,6 +502,7 @@ func audio_catalog():
 func motion_suite(request:Dictionary):
 	fixture();await open_page("map",request)
 	var map=current as MapScene
+	if request.has("start"):map._player.position=Vector2(request.start[0],request.start[1])
 	if map._city_content!=null:map._city_content.set_physics_process(false)
 	for monster in map._monsters:
 		if is_instance_valid(monster):monster.set_physics_process(false);monster.set_process(false)
@@ -432,23 +511,46 @@ func motion_suite(request:Dictionary):
 	var samples:Array=[]
 	capture_start()
 	var started=Time.get_ticks_msec()
-	var directions=["move_down","move_right","move_up","move_left"]
+	var directions=request.get("directions",["move_down","move_right","move_up","move_left"])
 	var active=""
 	var duration=float(request.get("seconds",15))
 	while (Time.get_ticks_msec()-started)/1000.0<duration:
 		var elapsed=(Time.get_ticks_msec()-started)/1000.0
-		var direction=directions[mini(3,int(elapsed/(duration/4.0)))]
+		var direction=directions[mini(directions.size()-1,int(elapsed/(duration/directions.size())))]
 		if active!=direction:
 			if not active.is_empty():Input.action_release(active)
+			if bool(request.get("isolated_directions",false)):
+				map._player.position=clear_motion_origin(map,String(direction),duration/float(directions.size()))
+				for camera in map._player.get_children():
+					if camera is Camera2D:camera.reset_smoothing();camera.force_update_scroll()
 			active=direction;Input.action_press(active)
 		await get_tree().physics_frame
-		samples.append({"tick":Time.get_ticks_msec(),"position":[map._player.position.x,map._player.position.y],"velocity":map._player.velocity.length(),"frame":map._mount_anim.frame,"animation":str(map._mount_anim.animation),"hoof_events":Audio.event_log.filter(func(row):return row.category=="Movement").size()})
+		samples.append({"tick":Time.get_ticks_msec(),"position":[map._player.position.x,map._player.position.y],"velocity":map._player.velocity.length(),"frame":map._mount_anim.frame,"animation":str(map._mount_anim.animation),"riding":G.mount_riding(),"modal":map._modal_open(),"city_modal":map._city_content!=null and bool(map._city_content.call("has_modal")),"ui_blocked":G.ui_blocked,"hoof_events":Audio.event_log.filter(func(row):return row.category=="Movement").size()})
 	Input.action_release(active)
 	await frames(6);var stop_events=Audio.event_log.size();await pause(.8)
 	check(stop_events==Audio.event_log.size(),"M09 A05 no hoof events after stop in long motion")
 	var mixed=capture_finish("motion_mix")
 	records.append({"samples":samples,"audio_events":Audio.event_log.duplicate(true),"mix":mixed,"note":"Real Android map physics; monsters frozen to isolate motion; native joystick tested separately."})
 	await photo("motion_end")
+
+func clear_motion_origin(map:MapScene,direction:String,seconds:float)->Vector2:
+	var vector:Vector2={"move_down":Vector2.DOWN,"move_right":Vector2.RIGHT,"move_up":Vector2.UP,"move_left":Vector2.LEFT}[direction]
+	var speed=TableCache.map_player_speed()*float(G.first_mount_cfg().get("world_speed_mult",1.75))*(1.25 if map._sprint else 1.0)
+	var motion=vector*speed*(seconds+.05)
+	var extent=map._map_extent()
+	var allowed=Rect2(70,1000,extent.x-140,950)
+	var candidates:Array[Vector2]=[]
+	for y in range(1050,1950,50):
+		for x in range(100,int(extent.x)-100,50):candidates.append(Vector2(x,y))
+	for origin in candidates:
+		if not allowed.has_point(origin+motion):continue
+		var transform=map._player.global_transform
+		transform.origin=origin
+		if not map._player.test_move(transform,motion,null,.08,true):
+			check(true,"P10 native directional segment has clear original collisions "+direction,{"start":str(origin),"end":str(origin+motion)})
+			return origin
+	check(false,"P10 no sufficiently long clear native segment "+direction)
+	return map._player.position
 
 func battle_suite():
 	fixture();await clean()

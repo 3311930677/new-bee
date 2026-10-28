@@ -27,6 +27,7 @@ func _ready() -> void:
 	_build()
 	_refresh()
 	resized.connect(_layout_panel)
+	preload("res://src/ui/UiSafeArea.gd").watch(self,_layout_panel)
 	_layout_panel.call_deferred()
 
 
@@ -104,7 +105,7 @@ func _build() -> void:
 
 
 func _layout_panel() -> void:
-	_paper.position = Vector2(46, (maxf(800, get_viewport_rect().size.y) - _paper.custom_minimum_size.y) * 0.5)
+	preload("res://src/ui/UiSafeArea.gd").fit_card(_paper,G.ui_safe_rect(self),_paper.custom_minimum_size)
 
 
 func _close() -> void:

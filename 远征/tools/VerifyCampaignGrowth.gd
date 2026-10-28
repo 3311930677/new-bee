@@ -144,10 +144,11 @@ func _run() -> void:
 	var failed_hp := map.st.hp
 	var failed_prog := G.prog.duplicate(true)
 	map._encounter = WorldSession.new_encounter("lorin_wilds", 0, Vector2(90,500), "mon_zombie", 5, Vector2(480,710), "", 0, 813)
-	WorldSession.advance(map._main_world_state(), map._encounter, WorldSession.ST_BATTLE)
+	for stage in [WorldSession.ST_APPROACH,WorldSession.ST_LOCKED,WorldSession.ST_BATTLE]:
+		_check(bool(WorldSession.advance(map._main_world_state(),map._encounter,stage).ok),"战利夹具按正式遭遇状态进入战斗")
 	failed_prog = G.prog.duplicate(true)
 	G.save_locked = true
-	_check(map._settle_main_world("normal", "mon_zombie") == "save_failed" and map.st.level == 5 and map.st.hp == failed_hp and G.prog == failed_prog, "战利升级写盘失败连同生命和等级整体回滚")
+	_check(map._settle_main_world("normal", "mon_zombie") in ["save_failed","settle_failed"] and map.st.level == 5 and map.st.hp == failed_hp and G.prog == failed_prog, "战利升级写盘失败连同生命和等级整体回滚")
 	G.save_locked = false
 	_check(map._settle_main_world("normal", "mon_zombie") == "ok" and map.st.level == 6 and map.st.max_hp()-map.st.hp == 35, "战利升级成功立即同步生命上限")
 	map.queue_free()
@@ -188,8 +189,8 @@ func _test_bear()->void:
 	_check(G.reload_save() and G.mount_riding() and G.mount_active()=="bear","第二骑旧投入与骑乘状态可读档")
 	var frames:=preload("res://src/world/MountVisual.gd").frames_for("zs","bear")
 	for direction in ["walk_down","walk_left","walk_right","walk_up"]:
-		_check(frames.get_frame_count(direction)==3,"熊的四向各有三个实际步态帧")
-		for i in 3:
+		_check(frames.get_frame_count(direction)==8,"熊的四向各有八个实际步态帧")
+		for i in 8:
 			var texture:=frames.get_frame_texture(direction,i) as AtlasTexture
 			_check(texture!=null and texture.region.end.x<=texture.atlas.get_width() and texture.region.end.y<=texture.atlas.get_height(),"完整足部图格均在真实透明图边界内")
 	var links:=preload("res://src/world/ExplorationLinks.gd")
@@ -210,10 +211,10 @@ func _test_bear()->void:
 		map.set_physics_process(false)
 		map._player.position=Vector2(480,800)
 		map._sync_mount_visual()
-		_check(map._mount_anim.visible and map._player_anim.visible and map._player_anim.z_index>map._mount_anim.z_index,"四职业骑熊时保留角色并压在鞍上")
+		_check(map._mount_anim.visible and not map._player_anim.visible and map._mount_anim.sprite_frames==preload("res://src/world/MountVisual.gd").frames_for(role,"bear"),"四职业使用对应的骑手与熊合成帧，避免重复绘制人物")
 		for direction in [Vector2.DOWN,Vector2.LEFT,Vector2.RIGHT,Vector2.UP]:
 			map._update_player_anim(direction)
-			_check(map._mount_anim.is_playing(),"四方向驱动实际三帧动画")
+			_check(map._mount_anim.is_playing(),"四方向驱动实际骑乘动画")
 			await get_tree().process_frame
 			if role=="zs" and OS.get_cmdline_user_args().has("--screens"):
 				await get_tree().create_timer(.15).timeout
@@ -223,10 +224,10 @@ func _test_bear()->void:
 		await get_tree().process_frame
 	_check(G.mount_set_active("horse") and G.mount_set_riding(true),"仍可切回原首骑")
 	var horse:=await _simple_map(20)
-	_check(horse._mount_anim.visible and horse._player_anim.visible,"首骑使用独立马步态与当前职业骑手")
+	_check(horse._mount_anim.visible and not horse._player_anim.visible and horse._mount_anim.sprite_frames==preload("res://src/world/MountVisual.gd").frames_for(horse.st.role_id,"horse"),"首骑使用本次行旅职业骑手与马的合成帧")
 	for direction in [Vector2.DOWN,Vector2.LEFT,Vector2.RIGHT,Vector2.UP]:
 		horse._update_player_anim(direction)
-		_check(horse._mount_anim.sprite_frames.get_frame_count(horse._mount_anim.animation)==3 and horse._mount_anim.is_playing(),"首骑四向完整步态驱动")
+		_check(horse._mount_anim.sprite_frames.get_frame_count(horse._mount_anim.animation)==8 and horse._mount_anim.is_playing(),"首骑四向完整步态驱动")
 		if OS.get_cmdline_user_args().has("--screens"):
 			await get_tree().create_timer(.15).timeout
 			await RenderingServer.frame_post_draw

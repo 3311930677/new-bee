@@ -91,13 +91,14 @@ func _run() -> void:
 		if fr == null or fr.get_frame_count(&"idle") != 4:
 			npc_bad.append(String(((n as Object).get("data") as Dictionary).get("id", "")))
 	_check(npc_bad.is_empty(), "NPC 缺 idle 四帧条：%s" % ", ".join(npc_bad))
-	# 标定：帧动画子节点在位、0.72 倍、抬 42.5px（脚底踩在节点原点）
+	# Preserve foot registration under the shared world presentation scale.
 	var npc0: Node2D = city._npcs[0]
 	var sp := npc0.get_node_or_null("Idle") as AnimatedSprite2D
 	_check(sp != null, "NPC 未挂 Idle 帧节点")
 	if sp != null:
-		_check(is_equal_approx(sp.scale.x, 0.72), "NPC 帧动画缩放应为 0.72，实为 %.3f" % sp.scale.x)
-		_check(is_equal_approx(sp.position.y, -42.5), "NPC 脚底标定应为 -42.5，实为 %.2f" % sp.position.y)
+		var world_scale:=preload("res://src/world/WorldPresentation.gd").NPC_ENLARGEMENT
+		_check(is_equal_approx(sp.scale.x, 0.72*world_scale), "NPC 帧动画遵守世界显示比例，实为 %.3f" % sp.scale.x)
+		_check(is_equal_approx(sp.position.y, -42.5*world_scale), "NPC 脚底在缩放后仍对齐地面，实为 %.2f" % sp.position.y)
 		_check(sp.is_playing(), "NPC 呼吸动画应在播放")
 
 	# 基础服务开局可用；工坊与图志不能把主线挡在建造门槛外。

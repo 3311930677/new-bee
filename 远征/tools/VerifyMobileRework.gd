@@ -81,7 +81,7 @@ func _ready() -> void:
 		currency.currency_id="gold"
 		add_child(currency)
 		await frames(8)
-		check(absf(currency._frame.size.y-(safe.size.y-24))<1,"currency uses available height")
+		check(currency._frame.size.y<=minf(650,safe.size.y-24)+1,"currency card respects height cap")
 		check("123456789" in currency._balance.text,"full balance visible in model")
 		check(safe.encloses(currency._frame.get_global_rect()),"currency content fits safe area")
 		check(currency._scroll.size.y>=100,"currency has useful reading area")

@@ -1,5 +1,6 @@
 extends Node2D
 
+const Art := preload("res://src/world/AssetCompletion.gd")
 const WorldPropArt := preload("res://src/world/WorldPropArt.gd")
 
 var _signature := ""
@@ -26,7 +27,7 @@ func _process(delta: float) -> void:
 		queue_redraw()
 
 func _draw() -> void:
-	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	texture_filter = preload("res://src/world/WorldPresentation.gd").sampling()
 	if not flat_floor:
 		_draw_floor()
 	_draw_state()
@@ -103,91 +104,30 @@ func _draw_state() -> void:
 		_draw_wall_brazier(at, heard or seat1)
 
 func _draw_stone_fissure(at: Vector2, active: bool) -> void:
-	draw_colored_polygon(PackedVector2Array([
-		at + Vector2(-26, 6), at + Vector2(-18, -8), at + Vector2(16, -10),
-		at + Vector2(26, 4), at + Vector2(14, 14), at + Vector2(-16, 13)
-	]), Color("2a3336", 0.72))
-	draw_polyline(PackedVector2Array([
-		at + Vector2(-12, -12), at + Vector2(-2, -2), at + Vector2(6, 3), at + Vector2(-4, 13)
-	]), Color("182226", 0.92), 3.0)
-	var glow := Color("8cd8d4", 0.68) if active else Color("7c8882", 0.32)
-	draw_polyline(PackedVector2Array([
-		at + Vector2(-11, -11), at + Vector2(-2, -2), at + Vector2(5, 3), at + Vector2(-3, 12)
-	]), glow, 1.5)
-	if active:
-		for r in [20.0, 30.0]:
-			draw_arc(at + Vector2(0, 2), r, PI * 0.18, PI * 0.82, 12, Color("8cd8d4", 0.38), 1.5)
+	Art.centered(self, "ground_fissure", at, 56, Color("b7d7d1") if active else Color.WHITE)
 
 func _draw_rune_channel(pts: Array, lit: bool) -> void:
-	if pts.size() < 2:
-		return
-	var poly := PackedVector2Array()
-	for p in pts:
-		poly.append(p)
-	draw_polyline(poly, Color("242e31", 0.75), 6.0)
-	draw_polyline(poly, Color("7fd8d4", 0.68) if lit else Color("586463", 0.42), 2.0)
+	Art.channel(self, pts, lit)
 
 func _draw_stele_seat(at: Vector2, calibrated: bool, entity_active: bool, status_text: String) -> void:
-	# 阴影与八角阶梯石座（像素石雕质感，贴合石窟地砖）
-	draw_set_transform(at + Vector2(0, 6), 0.0, Vector2(1.0, 0.52))
-	draw_circle(Vector2.ZERO, 38.0, Color("101619", 0.45))
-	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
-
-	var outer := PackedVector2Array([
-		at + Vector2(-34, -6), at + Vector2(-22, -16), at + Vector2(22, -16), at + Vector2(34, -6),
-		at + Vector2(34, 10), at + Vector2(22, 20), at + Vector2(-22, 20), at + Vector2(-34, 10)
-	])
-	var mid := PackedVector2Array([
-		at + Vector2(-28, -5), at + Vector2(-18, -13), at + Vector2(18, -13), at + Vector2(28, -5),
-		at + Vector2(28, 7), at + Vector2(18, 15), at + Vector2(-18, 15), at + Vector2(-28, 7)
-	])
-	draw_colored_polygon(outer, Color("2e383b"))
-	draw_polyline(outer + PackedVector2Array([outer[0]]), Color("1b2326", 0.9), 2.0)
-	draw_colored_polygon(mid, Color("495556"))
-	draw_line(at + Vector2(-20, -13), at + Vector2(20, -13), Color("8b948b", 0.65), 2.0)
-	draw_line(at + Vector2(-22, 15), at + Vector2(22, 15), Color("222b2e", 0.85), 2.0)
-
-	# 碑座凹槽导音符文
-	var rune_col := Color("86e3de", 0.88) if calibrated else (Color("d9c58a", 0.65) if entity_active else Color("6d7876", 0.55))
-	draw_rect(Rect2(at + Vector2(-22, -2), Vector2(44, 4)), Color("232c2f"))
-	draw_line(at + Vector2(-18, 0), at + Vector2(18, 0), rune_col, 2.0)
-	for dx in [-20.0, 20.0]:
-		draw_rect(Rect2(at + Vector2(dx - 2, -9), Vector2(4, 4)), rune_col)
-		draw_rect(Rect2(at + Vector2(dx - 2, 7), Vector2(4, 4)), rune_col)
-
-	# 当交互实体尚未刷出或已归位消失时，在底座上常驻绘制石碑本体与说明文字，不再留空圆圈
+	Art.centered(self, "rune_dais", at + Vector2(0,5), 76,
+		Color("c9e8de") if calibrated else Color("898e91"))
+	# Interactive entities still own their body and trigger while they are present.
 	if not entity_active:
-		draw_set_transform(at, 0.0, Vector2(0.92, 0.92))
+		draw_set_transform(at, 0.0, Vector2(.92,.92))
 		WorldPropArt.altar(self, not calibrated)
-		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
-		if calibrated:
-			draw_arc(at + Vector2(0, -18), 26.0, 0.0, TAU, 24, Color("86e3de", 0.35), 2.0)
+		draw_set_transform(Vector2.ZERO)
 		if G.font_bold != null and not status_text.is_empty():
 			var fs := 12
 			var tw := G.font_bold.get_string_size(status_text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
-			var tag_rect := Rect2(at.x - tw * 0.5 - 6.0, at.y + 22.0, tw + 12.0, 18.0)
-			draw_rect(tag_rect, Color("141b1d", 0.82))
-			draw_rect(tag_rect, Color("86e3de", 0.55) if calibrated else Color("8b8570", 0.45), false, 1.0)
-			var text_col := Color("b8f2ee") if calibrated else Color("cbbd9d")
-			draw_string(G.font_bold, Vector2(at.x - tw * 0.5, at.y + 35.0), status_text, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, text_col)
+			var tag_rect := Rect2(at.x-tw*.5-6, at.y+22, tw+12, 18)
+			draw_rect(tag_rect, Color("141b1d",.82))
+			draw_rect(tag_rect, Color("86e3de",.55) if calibrated else Color("8b8570",.45), false, 1)
+			draw_string(G.font_bold, Vector2(at.x-tw*.5,at.y+35),status_text,
+				HORIZONTAL_ALIGNMENT_LEFT,-1,fs,Color("b8f2ee") if calibrated else Color("cbbd9d"))
 
 func _draw_heart_dais(heart: Vector2, aligned: bool) -> void:
-	var ring_col := Color("84d8d5", 0.42 if aligned else 0.16)
-	var stone_col := Color("6e7874", 0.45)
-	for radius in [44.0, 68.0]:
-		draw_arc(heart, radius, 0.0, TAU, 32, stone_col, 2.0)
-		draw_arc(heart, radius - 2.0, 0.0, TAU, 32, ring_col, 1.5)
-	for i in 8:
-		var axis := Vector2.UP.rotated(float(i) * TAU / 8.0)
-		draw_line(heart + axis * 46.0, heart + axis * 66.0, Color("b8a87e", 0.55 if aligned else 0.28), 2.0)
+	Art.centered(self, "rune_dais", heart, 136, Color("c9e8de") if aligned else Color("788386"))
 
 func _draw_wall_brazier(at: Vector2, lit: bool) -> void:
-	draw_rect(Rect2(at - Vector2(10, 22), Vector2(20, 30)), Color("2c3538", 0.85))
-	draw_rect(Rect2(at - Vector2(8, 20), Vector2(16, 26)), Color("4d5758", 0.85))
-	draw_rect(Rect2(at - Vector2(12, 23), Vector2(24, 5)), Color("7d8278", 0.85))
-	draw_rect(Rect2(at - Vector2(11, 6), Vector2(22, 4)), Color("394245", 0.9))
-	var flame := Color("8be3df", 0.85) if lit else Color("667370", 0.55)
-	draw_rect(Rect2(at - Vector2(3, 14), Vector2(6, 6)), flame)
-	if lit:
-		draw_rect(Rect2(at - Vector2(1, 12), Vector2(2, 2)), Color("e3fbfa", 0.9))
-
+	Art.prop(self, "lantern", at+Vector2(0,10), 40, Color.WHITE if lit else Color("626b6b"))

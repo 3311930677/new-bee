@@ -248,6 +248,7 @@ func _build() -> void:
 	_quick_unlock_btn.position = Vector2(0, 78)
 	_quick_unlock_btn.gui_input.connect(func(e: InputEvent):
 		if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT:
+			if not OS.is_debug_build() or G.save_locked: return
 			G.gm_unlocked = true
 			_sync_state()
 			_flash("开发者权限已开启 · 可直接解锁全部功能与界面"))

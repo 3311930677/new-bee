@@ -7,10 +7,14 @@ signal closed
 const UI := preload("res://src/ui/TravelChestUI.gd")
 const Page := preload("res://src/ui/ChestPageUI.gd")
 const Flow := preload("res://src/ui/FlowChestUI.gd")
+const Rewards := preload("res://src/world/ArcheryRewards.gd")
+const BASE_TRAY_HEIGHT := 338.0
+const MAX_STAGE_HEIGHT := 400.0
+const SHELL_HEADER_HEIGHT := 56.0
 
 var shell: Control
 var _range: _RangeCanvas
-var _mode_tabs: HBoxContainer
+var _mode_tabs: GridContainer
 var _status_label: Label
 var _wind_label: Label
 var _log_label: Label
@@ -42,6 +46,10 @@ var _hit_shake_t := 0.0
 var _last_banner := ""
 var _last_banner_t := 0.0
 var _round_finished := false
+var _round_token := ""
+var _save_pending := false
+var _lit_hits := 0
+var _last_lit := false
 var _rng := RandomNumberGenerator.new()
 
 
@@ -70,7 +78,7 @@ func _close() -> void:
 
 
 func _build() -> void:
-	shell = Flow.Shell.new("校场射艺 · 演武靶场", 338)
+	shell = Flow.Shell.new("校场射艺 · 演武靶场", BASE_TRAY_HEIGHT)
 	shell.closed = _close
 	add_child(shell)
 	if shell.body is VBoxContainer:
@@ -83,8 +91,10 @@ func _build() -> void:
 	_range.gui_input.connect(_on_range_input)
 	shell.stage.add_child(_range)
 
-	_mode_tabs = HBoxContainer.new()
-	_mode_tabs.add_theme_constant_override("separation", 6)
+	_mode_tabs = GridContainer.new()
+	_mode_tabs.columns = 2
+	_mode_tabs.add_theme_constant_override("h_separation", 6)
+	_mode_tabs.add_theme_constant_override("v_separation", 6)
 	shell.body.add_child(_mode_tabs)
 	for i in _modes.size():
 		var idx: int = i
@@ -125,7 +135,9 @@ func _build() -> void:
 	_reward_label = Flow.text("", "caption", UI.AGED)
 	shell.body.add_child(_reward_label)
 
-	_reset_btn = Flow.button("重开一局", func(): _select_mode(_mode_idx))
+	_reset_btn = Flow.button("重开一局", func():
+		if _save_pending: _finish_round()
+		else: _select_mode(_mode_idx))
 	_reset_btn.name = "ResetArcheryButton"
 	shell.footer.add_child(_reset_btn)
 
@@ -139,28 +151,15 @@ func _build() -> void:
 func _relayout() -> void:
 	if shell == null:
 		return
+	# Long screens give the rules and result more room instead of stretching the range.
+	shell.tray_height = maxf(BASE_TRAY_HEIGHT, G.ui_safe_rect(self).size.y - SHELL_HEADER_HEIGHT - MAX_STAGE_HEIGHT)
 	shell.layout()
 	if _range != null:
 		Page.place(_range, Vector2.ZERO, shell.stage.size)
 
 
 static func ensure_archery_state(host: Object) -> Dictionary:
-	if not (host.prog.get("flags") is Dictionary):
-		host.prog["flags"] = {}
-	var flags: Dictionary = host.prog["flags"]
-	if not (flags.get("archery_state") is Dictionary):
-		flags["archery_state"] = {
-			"best_scores": {},
-			"cleared": {},
-			"first_claimed": {},
-			"total_plays": 0,
-			"total_bullseyes": 0,
-		}
-	var st: Dictionary = flags["archery_state"]
-	for k in ["best_scores", "cleared", "first_claimed"]:
-		if not (st.get(k) is Dictionary):
-			st[k] = {}
-	return st
+	return Rewards.state(host)
 
 
 func _current_mode() -> Dictionary:
@@ -170,8 +169,16 @@ func _current_mode() -> Dictionary:
 
 
 func _select_mode(idx: int) -> void:
+	if _save_pending:
+		return
+	var candidate: Dictionary = _modes[clampi(idx, 0, maxi(0, _modes.size() - 1))] if not _modes.is_empty() else {}
+	if not Rewards.unlocked(G, candidate):
+		return
 	_mode_idx = clampi(idx, 0, maxi(0, _modes.size() - 1))
 	var m := _current_mode()
+	_round_token = "archery|%s|%d|%d" % [String(m.id), Time.get_ticks_usec(), _rng.randi()]
+	_lit_hits = 0
+	_time = 0.0
 	_arrows_max = int(m.get("arrows", 5))
 	_arrows_left = _arrows_max
 	_score = 0
@@ -185,12 +192,14 @@ func _select_mode(idx: int) -> void:
 	_range.pins.clear()
 	_range.floaters.clear()
 	_range.sparks.clear()
-	var w := maxf(360.0, shell.stage.size.x if shell.stage.size.x > 0 else 480.0)
+	var w := maxf(160.0, shell.stage.size.x if shell.stage.size.x > 0 else 480.0)
 	_target_pos = Vector2(w * 0.5, 134.0)
 	_aim_pos = _target_pos
 	_roll_wind()
-	_log_label.text = "点「听风校准」逆风预瞄，按住「蓄力射箭」在右侧翠金甜区松手！"
+	_log_label.text = "点靶场移动准星；听风校准抵消风偏，按住射箭并在绿区松手。" if not m.has("timing_period") else \
+		"柳教头：等灯亮再放箭！箭到靶时亮灯才计环，6箭中至少4箭点亮岗灯；首通得精炼石与伙伴口粮。"
 	_sync_ui()
+	if is_instance_valid(_fire_btn): _fire_btn.grab_focus()
 
 
 func _roll_wind() -> void:
@@ -202,7 +211,7 @@ func _roll_wind() -> void:
 func _nudge_aim(delta_v: Vector2) -> void:
 	if _round_finished or _flying:
 		return
-	var w := maxf(360.0, _range.size.x if _range.size.x > 0 else 480.0)
+	var w := maxf(160.0, _range.size.x if _range.size.x > 0 else 480.0)
 	_aim_pos.x = clampf(_aim_pos.x + delta_v.x, 64.0, w - 64.0)
 	_aim_pos.y = clampf(_aim_pos.y + delta_v.y, 64.0, 214.0)
 	_range.queue_redraw()
@@ -213,7 +222,7 @@ func _auto_compensate_wind() -> void:
 		return
 	Audio.sfx("ui_click")
 	_aim_pos = Vector2(
-		clampf(_target_pos.x - _wind * 0.65, 64.0, maxf(360.0, _range.size.x) - 64.0),
+		clampf(_target_pos.x - _wind * 0.65, 64.0, maxf(160.0, _range.size.x) - 64.0),
 		_target_pos.y
 	)
 	_last_banner = "✦ 已听风校准：准星预偏逆风位"
@@ -225,11 +234,11 @@ func _on_range_input(event: InputEvent) -> void:
 	if _round_finished or _flying:
 		return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		_aim_pos.x = clampf(event.position.x, 64.0, maxf(360.0, _range.size.x) - 64.0)
+		_aim_pos.x = clampf(event.position.x, 64.0, maxf(160.0, _range.size.x) - 64.0)
 		_aim_pos.y = clampf(event.position.y, 64.0, 214.0)
 		_range.queue_redraw()
 	elif event is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		_aim_pos.x = clampf(event.position.x, 64.0, maxf(360.0, _range.size.x) - 64.0)
+		_aim_pos.x = clampf(event.position.x, 64.0, maxf(160.0, _range.size.x) - 64.0)
 		_aim_pos.y = clampf(event.position.y, 64.0, 214.0)
 		_range.queue_redraw()
 
@@ -257,6 +266,8 @@ func _on_fire_quick_press() -> void:
 
 func shoot_with_params(aim: Vector2, charge_power: float) -> Dictionary:
 	## 供自动化测试或新手指引一键演练确定性调用
+	if _round_finished or _flying or _arrows_left <= 0:
+		return {"ok": false}
 	_aim_pos = aim
 	_charge = clampf(charge_power, 0.0, 1.0)
 	_charging = false
@@ -269,8 +280,8 @@ func _release_arrow(power: float) -> void:
 	Audio.sfx("ui_confirm")
 	_flying = true
 	_fly_t = 0.0
-	var w := maxf(360.0, _range.size.x if _range.size.x > 0 else 480.0)
-	_fly_from = Vector2(w * 0.5, 276.0)
+	var w := maxf(160.0, _range.size.x if _range.size.x > 0 else 480.0)
+	_fly_from = Vector2(w * 0.5, minf(276.0,_range.size.y-30.0))
 	var drift_x := _wind * 0.65
 	var drop_y := (0.80 - power) * 95.0
 	_fly_to = Vector2(_aim_pos.x + drift_x, _aim_pos.y + drop_y)
@@ -281,8 +292,12 @@ func _process(delta: float) -> void:
 	var m := _current_mode()
 	var spd := float(m.get("target_speed", 48.0))
 	var bob := float(m.get("target_bob", 8.0))
-	var w := maxf(360.0, _range.size.x if _range.size.x > 0 else 480.0)
+	var w := maxf(160.0, _range.size.x if _range.size.x > 0 else 480.0)
 	_time += delta
+	var lit := _lamp_lit()
+	if lit != _last_lit:
+		_last_lit = lit
+		if m.has("timing_period"): _sync_ui()
 	if not _round_finished:
 		var amp_x := minf(118.0, (w - 190.0) * 0.5)
 		_target_pos.x = w * 0.5 + sin(_time * (spd / 52.0)) * amp_x
@@ -309,6 +324,12 @@ func _process(delta: float) -> void:
 		_range.queue_redraw()
 
 
+func _lamp_lit() -> bool:
+	var m := _current_mode()
+	if not m.has("timing_period"): return true
+	return fposmod(_time, float(m.timing_period)) < float(m.timing_window)
+
+
 func _resolve_shot(aim: Vector2, power: float, instant: bool) -> Dictionary:
 	var drift_x := _wind * 0.65
 	var drop_y := (0.80 - power) * 95.0
@@ -322,7 +343,6 @@ func _resolve_shot(aim: Vector2, power: float, instant: bool) -> Dictionary:
 		rings = 10
 		comment = "正中红心 · 百步穿杨！"
 		pop_col = Color("ffe478")
-		_bullseyes_this_round += 1
 		_streak += 1
 	elif dist <= 25.0:
 		rings = 8
@@ -346,6 +366,14 @@ func _resolve_shot(aim: Vector2, power: float, instant: bool) -> Dictionary:
 		_streak = 0
 	else:
 		_streak = 0
+	if not _lamp_lit():
+		rings = 0
+		_streak = 0
+		comment = "灯未亮 · 本箭不计环"
+		pop_col = G.FIELD_MUTED
+	elif rings > 0:
+		_lit_hits += 1
+	if rings == 10: _bullseyes_this_round += 1
 	_arrows_left = maxi(0, _arrows_left - 1)
 	_score += rings
 	_hit_shake_t = 0.28 if rings >= 6 else 0.12
@@ -366,59 +394,11 @@ func _resolve_shot(aim: Vector2, power: float, instant: bool) -> Dictionary:
 
 func _finish_round() -> void:
 	_round_finished = true
-	var m := _current_mode()
-	var mid := String(m.get("id", "novice"))
-	var pass_sc := int(m.get("pass_score", 28))
-	var master_sc := int(m.get("master_score", 42))
-	var st := ensure_archery_state(G)
-	st["total_plays"] = int(st.get("total_plays", 0)) + 1
-	st["total_bullseyes"] = int(st.get("total_bullseyes", 0)) + _bullseyes_this_round
-	var best_map: Dictionary = st["best_scores"]
-	var old_best := int(best_map.get(mid, 0))
-	if _score > old_best:
-		best_map[mid] = _score
-	var passed := _score >= pass_sc
-	var mastered := _score >= master_sc
-	var reward_parts: Array[String] = []
-	if passed:
-		st["cleared"][mid] = true
-		var first_map: Dictionary = st["first_claimed"]
-		var is_first := not bool(first_map.get(mid, false))
-		var rcfg: Dictionary = m.get("first_reward" if is_first else "repeat_reward", {})
-		if is_first:
-			first_map[mid] = true
-		var gold := int(rcfg.get("gold", 0))
-		var exp_coin := int(rcfg.get("expedition", 0))
-		var soul := int(rcfg.get("soul", 0))
-		var honor := int(rcfg.get("honor", 0))
-		if gold > 0 or exp_coin > 0 or soul > 0 or honor > 0:
-			G.deposit(gold, exp_coin, soul, honor)
-			if gold > 0: reward_parts.append("金币+%d" % gold)
-			if exp_coin > 0: reward_parts.append("远征币+%d" % exp_coin)
-			if soul > 0: reward_parts.append("魂晶+%d" % soul)
-			if honor > 0: reward_parts.append("荣誉+%d" % honor)
-		var items_dict: Dictionary = rcfg.get("items", {})
-		for iid in items_dict:
-			var cnt := int(items_dict[iid])
-			if cnt > 0:
-				G.grant_item(String(iid), cnt)
-				reward_parts.append("%s×%d" % [G.item_name(String(iid)), cnt])
-		var title_id := String(rcfg.get("title", ""))
-		if not title_id.is_empty() and mastered:
-			var titles_st: Dictionary = G.prog.get("titles", {"owned": [], "active": ""})
-			var owned: Array = titles_st.get("owned", [])
-			if not owned.has(title_id):
-				owned.append(title_id)
-				titles_st["owned"] = owned
-				G.prog["titles"] = titles_st
-				reward_parts.append("解锁称号【百步穿杨】")
-		G.side_report("archery", mid, "lorin_wilds", false)
-		G.save_game()
-		var rank_tag := "【神射魁首】" if mastered else "【演武达标】"
-		_log_label.text = "%s 总分 %d 环！获赏：%s" % [rank_tag, _score, " · ".join(reward_parts)]
-	else:
-		G.save_game()
-		_log_label.text = "本局总分 %d 环（达标需 %d 环），调整风偏与绿区蓄力再试一次！" % [_score, pass_sc]
+	var result := Rewards.settle(G, _current_mode(), _round_token, _score, _bullseyes_this_round, _lit_hits)
+	_save_pending = not bool(result.get("ok", false))
+	_log_label.text = String(result.get("line", ""))
+	if not _save_pending:
+		Audio.sfx("reward" if bool(result.get("passed", false)) else "ui_close")
 	_sync_ui()
 
 
@@ -432,6 +412,10 @@ func _sync_ui() -> void:
 	for i in _mode_tabs.get_child_count():
 		var b: Button = _mode_tabs.get_child(i)
 		b.selected = i == _mode_idx
+		var available := Rewards.unlocked(G, _modes[i])
+		b.disabled = _save_pending or not available
+		b.tooltip_text = "先在初试百步取得28环，柳教头便会开放守夜试炼。" if not available else String(_modes[i].get("subtitle", ""))
+		b.caption.text = String(_modes[i].name) + (" · 未解锁" if not available else "")
 		b.queue_redraw()
 	_status_label.text = "%s ｜ 箭囊：%d/%d ｜ 当前得分：%d环（最高 %d环）" % [
 		String(m.get("name", "初试百步")), _arrows_left, _arrows_max, _score, best
@@ -439,7 +423,11 @@ func _sync_ui() -> void:
 	var wind_dir := "东风(左偏)" if _wind < -0.5 else ("西风(右偏)" if _wind > 0.5 else "微风无偏")
 	_wind_label.text = "当前风势：%s %.1f ｜ 达标：%d环 · 魁首：%d环" % [wind_dir, absf(_wind), pass_sc, master_sc]
 	var first_done := bool(st["first_claimed"].get(mid, false))
-	_reward_label.text = "本档状态：%s" % ("首通重赏已领（重开可刷荣誉与铜钱）" if first_done else "首通可获强化石/精炼石与丰厚荣誉")
+	var reward: Dictionary = m.get("repeat_reward" if first_done else "first_reward", {})
+	_reward_label.text = ("再战奖励：" if first_done else "首通奖励：") + " · ".join(G.reward_lines(reward))
+	if m.has("timing_period"):
+		_wind_label.text += "\n%s · 亮灯命中 %d/%d 箭" % ["灯亮 · 可以射击" if _lamp_lit() else "蓄灯 · 等待时机", _lit_hits, int(m.required_lit_hits)]
+	_reset_btn.caption.text = "重试保存" if _save_pending else "重开一局"
 	_fire_btn.disabled = _round_finished or _arrows_left <= 0
 
 
@@ -553,6 +541,17 @@ class _RangeCanvas extends Control:
 		if _tex_target != null:
 			# 靶盘中心在贴图 (72, 70) 处（贴图尺寸 144x168）
 			draw_texture_rect(_tex_target, Rect2(tp.x - 72.0, tp.y - 70.0, 144.0, 168.0), false)
+		if panel_ref._current_mode().has("timing_period"):
+			var lit := panel_ref._lamp_lit()
+			var lamp_color := G.GOLD_BRIGHT if lit else G.FIELD_MUTED
+			var lamp_at := tp + Vector2(0, -88)
+			draw_rect(Rect2(lamp_at - Vector2(40, 12), Vector2(80, 24)), G.FIELD_DEEP)
+			draw_rect(Rect2(lamp_at - Vector2(40, 12), Vector2(80, 24)), lamp_color, false, 1)
+			draw_string(G.font_bold, lamp_at + Vector2(-30, 5), "灯亮·射" if lit else "蓄灯中", HORIZONTAL_ALIGNMENT_LEFT, 64, G.FS_XS, lamp_color)
+			var period := float(panel_ref._current_mode().timing_period)
+			var phase := fposmod(panel_ref._time, period) / period
+			draw_line(lamp_at + Vector2(-38, 15), lamp_at + Vector2(38, 15), G.FIELD_DEEP, 4)
+			draw_line(lamp_at + Vector2(-38, 15), lamp_at + Vector2(-38 + 76 * phase, 15), lamp_color, 4)
 
 		# 绘制靶上已命中的雕翎箭矢
 		for pin_v in pins:
@@ -683,9 +682,12 @@ class _RangeCanvas extends Control:
 			draw_string(rfnt, Vector2(fx_x, fpos.y), String(fl["text"]), HORIZONTAL_ALIGNMENT_CENTER, box_w, G.FS_SM, fcol)
 
 		# 10. 底部锦缎战报横幅
-		if panel_ref._last_banner_t > 0.0 and not panel_ref._last_banner.is_empty():
+		var banner: String = panel_ref._last_banner if panel_ref._last_banner_t > 0.0 else \
+			"亮灯命中才计环 · 6箭中至少4箭命中" if panel_ref._current_mode().has("timing_period") else \
+			"点靶场瞄准 · 听风校准 · 蓄力到绿区松手"
+		if not banner.is_empty():
 			var b_rect := Rect2(14, h - 24, w - 28, 22)
 			draw_rect(b_rect, Color(0.10, 0.06, 0.04, 0.86))
 			draw_rect(b_rect, Color("b88c46"), false, 1.0)
-			draw_string_outline(rfnt, Vector2(22, h - 8), panel_ref._last_banner, HORIZONTAL_ALIGNMENT_LEFT, w - 44, G.FS_XS, 3, Color(0.05, 0.03, 0.02, 0.95))
-			draw_string(rfnt, Vector2(22, h - 8), panel_ref._last_banner, HORIZONTAL_ALIGNMENT_LEFT, w - 44, G.FS_XS, Color("ffe58f"))
+			draw_string_outline(rfnt, Vector2(22, h - 8), banner, HORIZONTAL_ALIGNMENT_LEFT, w - 44, G.FS_XS, 3, Color(0.05, 0.03, 0.02, 0.95))
+			draw_string(rfnt, Vector2(22, h - 8), banner, HORIZONTAL_ALIGNMENT_LEFT, w - 44, G.FS_XS, Color("ffe58f"))

@@ -37,6 +37,8 @@ const ALLOWED := {
 
 ## 安全位判定半径（px）：读档落在怪物这个范围内就认为会被立刻拖进战斗
 const DANGER_RADIUS := 96.0
+## 只保留最近完成的遭遇；在途记录始终保留。
+const COMPLETED_HISTORY_LIMIT := 128
 ## 实体永久取走标记（P05-B）：值为 "once" 表示不再恢复；值为日期键表示当天已取、次日恢复。
 const ENTITY_ONCE := "once"
 ## 传送阵避让半径（px）与避让后的朝向偏移
@@ -114,19 +116,37 @@ static func record(state: Dictionary, ctx: Dictionary, status: String) -> bool:
 	row["enemy_id"] = String(ctx.get("enemy_id", ""))
 	row["tick"] = int(str(eid).get_slice("#", 2)) if str(eid).contains("#") else 0
 	enc[eid] = row
+	if status in [ST_RETURN, ST_FAILED]: prune_history(state, eid)
 	return true
 
 
-## 结算一次遭遇。只有从非终态进入 committed 才算「新结算」；重复上报返回 false。
+## 结算一次已登记的战斗；未知/已裁剪的旧回调拒绝结算，避免历史裁剪后重发奖励。
 static func commit(state: Dictionary, ctx: Dictionary) -> bool:
 	var eid := String(ctx.get("encounter_id", ""))
 	if eid.is_empty():
 		return false
 	var st := status_of(state, eid)
-	if is_terminal(st):
+	if st not in [ST_BATTLE, ST_RESULT_PENDING]:
 		return false
 	record(state, ctx, ST_COMMITTED)
 	return true
+
+
+## Dictionary 保持写入顺序；只裁剪完整返回/战败的旧记录。
+## committed/result_pending 等尚未回到地图的事务不参与裁剪。
+static func prune_history(state: Dictionary, protect := "") -> void:
+	var enc := encounters(state)
+	var completed: Array = []
+	for eid in enc:
+		var row: Variant = enc[eid]
+		if row is Dictionary and String(row.get("status", "")) in [ST_RETURN, ST_FAILED]:
+			completed.append(eid)
+	var excess := completed.size() - COMPLETED_HISTORY_LIMIT
+	for eid in completed:
+		if excess <= 0: break
+		if String(eid) == protect: continue
+		enc.erase(eid)
+		excess -= 1
 
 
 ## 终态：到达后这场遭遇不能再被结算（重复上报走这里挡掉）。

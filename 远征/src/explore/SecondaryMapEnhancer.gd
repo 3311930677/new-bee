@@ -38,7 +38,8 @@ static func setup(map: Node) -> void:
 	var floor_depth := FloorDepthLayer.new(map, map_id, map_size)
 	floor_depth.name = "SecondaryFloorDepth"
 	floor_depth.z_index = -11
-	world.add_child(floor_depth)
+	if not preload("res://src/world/WorldPresentation.gd").original_art():world.add_child(floor_depth)
+	else:floor_depth.free()
 
 	# 2. 中景环境道具层 (y_sort_enabled = true)
 	var scenery_layer := SceneryLayer.new(map, map_id, map_size)
@@ -496,7 +497,7 @@ class SceneryLayer extends Node2D:
 		node.position = pos
 
 		# 像素缩放比为 0.5 (source_to_world)
-		var base_scale := 0.5 * sc
+		var base_scale := 0.5 * sc * preload("res://src/world/WorldPresentation.gd").SCENERY_ENLARGEMENT
 		var shadow_size := tex.get_size() * base_scale * 0.5
 		var shadow := PropShadow.new(shadow_size)
 		node.add_child(shadow)
@@ -509,7 +510,7 @@ class SceneryLayer extends Node2D:
 		# 精灵本体（Origin 在脚底中央，符合 Y-Sort 真实地表遮挡）
 		var spr := Sprite2D.new()
 		spr.texture = tex
-		spr.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		spr.texture_filter = preload("res://src/world/WorldPresentation.gd").sampling()
 		spr.scale = Vector2(base_scale, base_scale)
 		spr.offset = Vector2(0, -tex.get_height() * 0.5)
 		node.add_child(spr)

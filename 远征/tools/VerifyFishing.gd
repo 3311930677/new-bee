@@ -79,15 +79,20 @@ func _run() -> void:
 			and not bool(G.fishing_begin(id).get("ok", false)) and G.item_count(iid) == 0,
 			"三竿上限、失败无鱼、重开不可绕过次数")
 		if id=="fish_frost_pool":
-			# Fixture start on the public street; actual movement must open the new spot.
+			# Walk from the public street, then use the production nearby action.
+			# Fishing deliberately requires a tap so walking past cannot open a modal.
 			map._player.position=Vector2(480,1080)
 			for frame in 4:await get_tree().physics_frame
 			Input.action_press("move_left")
 			for frame in 240:
-				if map._fishing_panel!=null:break
+				if map._player.position.distance_to(ent.position)<MapScene.INTERACT_R-8:break
 				await get_tree().physics_frame
 			Input.action_release("move_left")
-			_check(map._fishing_panel!=null,"霜关钓点可从公共街道用实际移动触发")
+			await get_tree().process_frame
+			map._tick_round_interaction()
+			_check(map._round_target==ent and not map._round_interact.disabled,"霜关钓点可从公共街道步行到达并出现垂钓按钮")
+			if map._round_target==ent:map._round_interact.pressed.emit()
+			_check(map._fishing_panel!=null,"实际垂钓按钮可打开霜关钓点")
 			if map._fishing_panel!=null:map._fishing_panel.close()
 		map.queue_free()
 		await get_tree().process_frame

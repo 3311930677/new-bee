@@ -23,6 +23,8 @@ static func resource_path(res_name: String) -> String:
 	return refined_path(String(RESOURCE_KEYS[res_name])) if RESOURCE_KEYS.has(res_name) else ""
 
 static func refined_path(key: String) -> String:
+	var completed := preload("res://src/world/AssetCompletion.gd").home_path(key)
+	if not completed.is_empty(): return completed
 	var pixel_path := "res://assets/ui/pixel_icons/%s.png" % key
 	if ResourceLoader.exists(pixel_path): return pixel_path
 	return "res://assets/ui/refined_icons/%s.svg" % key if key in REFINED_KEYS else ""

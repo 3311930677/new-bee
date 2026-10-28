@@ -195,13 +195,15 @@ func _switch_role(idx: int, animate: bool) -> void:
 	_anim.animation = pose
 	_anim.play(pose)
 	_chest.refresh()
+	_chest.layout()
 	if animate:
+		var final_scale:=_anim.scale
 		_anim.modulate.a = 0.0
-		_anim.scale = Vector2.ONE * (SPRITE_SCALE * 0.78)
+		_anim.scale = final_scale * 0.78
 		var tw := create_tween()
 		tw.set_parallel(true)
 		tw.tween_property(_anim, "modulate:a", 1.0, 0.16)
-		tw.tween_property(_anim, "scale", Vector2.ONE * SPRITE_SCALE, 0.22) \
+		tw.tween_property(_anim, "scale", final_scale, 0.22) \
 			.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 

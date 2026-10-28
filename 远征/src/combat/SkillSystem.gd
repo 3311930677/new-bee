@@ -230,14 +230,14 @@ static func _apply_skill(sim: BattleSim, caster: Combatant, skill: Dictionary, c
 				t.add_buff("atk_up", dur_t,
 					{"pct": effect.get("pct", 0.2)})
 				if String(skill.get("id", "")) == "fz_zhudao":
-					t.add_buff("spd_up", dur_t, {"pct": 0.18})
+					t.add_buff("spd_up", dur_t, {"pct": float(effect.get("spd_pct", 0.18))})
 				companion_effective += 1
 				sim.emit({"t": "buff", "uid": t.uid, "buff": "atk_up"})
 			if String(skill.get("id", "")) == "fz_zhudao":
 				var foes := sim.alive_units("enemy" if caster.side == "ally" else "ally")
 				if not foes.is_empty():
 					var smite_target := caster.lowest_hp(foes)
-					var smite_raw := DamageCalc.basic_damage(int(float(caster.get_atk()) * 1.45), smite_target.get_def())
+					var smite_raw := DamageCalc.basic_damage(int(float(caster.get_atk()) * float(effect.get("smite_k", 1.45))), smite_target.get_def())
 					effective += smite_target.take_damage(maxi(1, smite_raw), caster, sim, false)
 		"invincible_heal":
 			for t in targets:
@@ -312,7 +312,7 @@ static func _apply_damage(sim: BattleSim, caster: Combatant, skill: Dictionary, 
 			var crit_chance := caster.get_crit()
 			if caster.traits != null:
 				crit_chance += caster.traits.crit_vs_full_hp_bonus(t)   # 弱点洞悉（P1-12）
-			var is_crit := sim.rng.randf() < crit_chance
+			var is_crit := sim.rng.randf() < clampf(crit_chance, 0.0, 0.95)
 			if is_crit:
 				dmg = DamageCalc.crit_damage(dmg, caster.crit_dmg)
 			# 词条修正（凝神/处决/碎冰/超载）

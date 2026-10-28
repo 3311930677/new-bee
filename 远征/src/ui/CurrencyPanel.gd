@@ -26,18 +26,6 @@ func _ready() -> void:
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override("separation",14)
 	_frame.add_child(column)
-	var tabs := HBoxContainer.new()
-	tabs.add_theme_constant_override("separation",6)
-	column.add_child(tabs)
-	for row in TableCache.currencies_config().get("currencies",[]):
-		var id := String(row.id)
-		var tab := Reading.button(String(row.name))
-		tab.custom_minimum_size.y = 60
-		tab.name = "Currency_"+id
-		tab.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		tab.pressed.connect(select_currency.bind(id))
-		tabs.add_child(tab)
-		_tabs[id] = tab
 	var header := HBoxContainer.new()
 	header.add_theme_constant_override("separation",16)
 	column.add_child(header)
@@ -45,6 +33,7 @@ func _ready() -> void:
 	_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	_icon.custom_minimum_size = Vector2(62,62)
+	_icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	header.add_child(_icon)
 	var captions := VBoxContainer.new()
 	captions.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -66,6 +55,7 @@ func _ready() -> void:
 	_body.add_theme_constant_override("separation",12)
 	_body.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_scroll.add_child(_body)
+	_body.minimum_size_changed.connect(func(): layout.call_deferred())
 	var close := Reading.button("返回",true)
 	close.custom_minimum_size.y = 64
 	close.name = "CloseCurrency"
@@ -103,9 +93,16 @@ func select_currency(id: String, sound := true) -> void:
 func layout() -> void:
 	if _frame == null: return
 	var safe := G.ui_safe_rect(self)
-	# A currency is a reading page, so use the available height. Only its body
-	# scrolls; tabs, identity, balance and return action retain their touch size.
-	var extent := Vector2(minf(600,safe.size.x-24),safe.size.y-24)
+	# A single-currency card grows with its text and caps at the safe reading area.
+	var width := minf(420,safe.size.x-32)
+	_body.custom_minimum_size.x = maxf(120,width-88)
+	var wanted := _body.get_combined_minimum_size().y + 238.0
+	var extent := Vector2(width,clampf(wanted,320.0,minf(650.0,safe.size.y-32)))
 	_frame.position = (safe.get_center()-extent*.5).round()
 	_frame.size = extent
-	_body.custom_minimum_size.x = maxf(120,extent.x-96)
+
+func _unhandled_input(event: InputEvent) -> void:
+	if G.ui_blocked: return
+	if is_visible_in_tree() and event.is_action_pressed("ui_cancel"):
+		closed.emit()
+		get_viewport().set_input_as_handled()

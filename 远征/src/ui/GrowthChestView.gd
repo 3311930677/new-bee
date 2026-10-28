@@ -69,7 +69,15 @@ func _ready() -> void:
 	_secondary=UI.action("切换骑乘","secondary")
 	_secondary.pressed.connect(func():
 		HapticFeedback.light()
-		if system=="mount" and G.mount_set_active(selection):host._toast_msg("已选择坐骑");refresh())
+		if system=="mount" and G.mount_set_active(selection):host._toast_msg("已选择坐骑");refresh()
+		elif system=="talent":
+			G.show_choice_popup(self, "重置天赋", ["免费退回全部已分配点数，之后可以重新选择流派。"], [
+				{"text": "取消", "cb": func(): pass},
+				{"text": "确认重置", "cb": func():
+					var result := G.talent_reset()
+					_info.text = "天赋点已全部退回" if result.ok else String(result.get("err", "未能保存"))
+					refresh()},
+			]))
 	add_child(_secondary)
 	_help=UI.action("说明","quiet")
 	_help.pressed.connect(func():
@@ -83,32 +91,39 @@ func _ready() -> void:
 	if system=="title":host._scroll=_scroll
 	if system=="pet":G.tip_once.call_deferred("pet_raise","灵宠养成 · 怎么玩",host.PET_TIPS,host)
 	get_viewport().size_changed.connect(layout)
+	preload("res://src/ui/UiSafeArea.gd").watch(self,layout)
 	refresh()
 
 func layout(safe_override: Rect2=Rect2()) -> void:
 	var safe:=safe_override if safe_override.has_area() else G.ui_safe_rect(self)
 	var x:=safe.position.x
 	var extra:=maxf(0.0,safe.size.y-800.0)
-	var tray_h:=roundf(clampf(472.0+extra*0.58,472.0,636.0))
+	var tray_h:=minf(roundf(clampf(472.0+extra*0.58,472.0,636.0)),safe.size.y-260.0)
 	var top:=safe.end.y-tray_h
-	var extra_tray:=tray_h-472.0
-	var stage_h:=maxf(212.0,top-(safe.position.y+56.0))
-	var art_top:=roundf(safe.position.y+56.0+maxf(4.0,(stage_h-210.0)*0.5))
+	var list_h:=maxf(60,tray_h-244.0)
+	var stage_h:=top-(safe.position.y+56.0)
+	var art_extent:=minf(144,maxf(72,stage_h-66.0))
+	var art_top:=roundf(safe.position.y+56.0+maxf(0.0,(stage_h-art_extent-62.0)*0.5))
 	Page.place(_stage,Vector2.ZERO,get_viewport_rect().size)
 	Page.place(_back,Vector2(x+12,safe.position.y+8),Vector2(44,44))
-	Page.place(_title,Vector2(x+68,safe.position.y+10),Vector2(300,40))
+	_title.clip_text=true
+	Page.place(_title,Vector2(x+68,safe.position.y+10),Vector2(safe.size.x-(148 if system=="pet" else 80),40))
 	Page.place(_help,Vector2(safe.end.x-72,safe.position.y+8),Vector2(64,44))
-	Page.place(_art,Vector2(safe.get_center().x-72,art_top),Vector2(144,144))
-	Page.place(_name,Vector2(x+16,art_top+148),Vector2(safe.size.x-32,32))
-	Page.place(_status,Vector2(x+16,art_top+180),Vector2(safe.size.x-32,26))
+	_art.custom_minimum_size=Vector2.ZERO
+	Page.place(_art,Vector2(safe.get_center().x-art_extent*.5,art_top),Vector2.ONE*art_extent)
+	Page.place(_name,Vector2(x+16,art_top+art_extent+2),Vector2(safe.size.x-32,30))
+	_status.clip_text=true
+	_status.add_theme_font_size_override("font_size",G.FS_DENSE if safe.size.x<380 else G.FS_XS)
+	Page.place(_status,Vector2(x+12,art_top+art_extent+32),Vector2(safe.size.x-24,26))
 	Page.place(_tray,Vector2(x,top),Vector2(safe.size.x,tray_h))
 	Page.place(_tabs,Vector2(x+16,top+12),Vector2(safe.size.x-32,44))
-	Page.place(_scroll,Vector2(x+16,top+64),Vector2(safe.size.x-32,228+extra_tray))
-	Page.place(_reading,Vector2(x+20,top+304+extra_tray),Vector2(safe.size.x-40,68))
-	Page.place(_info,Vector2(x+20,top+376+extra_tray),Vector2(safe.size.x-40,24))
-	Page.place(_secondary,Vector2(x+12,safe.end.y-68),Vector2(132,56))
-	Page.place(_main,Vector2(x+156,safe.end.y-68),Vector2(safe.size.x-168,56))
-	if not _secondary.visible:Page.place(_main,Vector2(x+156,safe.end.y-68),Vector2(safe.size.x-168,56))
+	Page.place(_scroll,Vector2(x+16,top+64),Vector2(safe.size.x-32,list_h))
+	Page.place(_reading,Vector2(x+20,top+76+list_h),Vector2(safe.size.x-40,68))
+	Page.place(_info,Vector2(x+20,safe.end.y-104),Vector2(safe.size.x-40,24))
+	var secondary_w:=minf(132,safe.size.x*.34)
+	Page.place(_secondary,Vector2(x+12,safe.end.y-68),Vector2(secondary_w,56))
+	var main_x:=x+24+secondary_w if _secondary.visible else x+12
+	Page.place(_main,Vector2(main_x,safe.end.y-68),Vector2(safe.end.x-main_x-12,56))
 	if system!="talent" and is_instance_valid(host._toast):host._toast.position=Vector2(safe.get_center().x-180,safe.end.y-116)
 
 func _tab(words: String,id: String,current: String,callback: Callable) -> void:
@@ -155,6 +170,10 @@ func _set_main(words: String,enabled: bool) -> void:
 	_main.queue_redraw()
 
 func _talent() -> void:
+	_secondary.visible=true
+	_secondary.text="重置天赋"
+	_secondary.caption.text="重置天赋"
+	_secondary.disabled=G.save_locked or G.talent_points_spent()<=0
 	var branches:Array=G.talents_cfg().get("branches",[])
 	if selection.is_empty() and not branches.is_empty():selection=String(branches[0].nodes[0].id)
 	var selected:=G.talent_node(selection)
@@ -175,7 +194,7 @@ func _talent() -> void:
 	_art.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	_name.text=String(selected.get("name","天赋修习"))
 	_status.text="剩余天赋点 %d / %d" % [G.talent_points_left(),G.talent_points_total()]
-	_details.text=String(selected.get("desc",""))+"\n每 5 级获得 1 点；需本系投入 %d 点" % maxi(0,int(selected.get("tier",1))-1)
+	_details.text=String(selected.get("desc",""))+"\n每 5 级获得 1 点，可免费重置；需本系投入 %d 点" % maxi(0,int(selected.get("tier",1))-1)
 	_set_main("分配天赋",G.talent_can_add(selection))
 
 func _pet() -> void:
@@ -220,6 +239,9 @@ func _pet() -> void:
 	_set_main({"feed":"确认喂养","break":"确认突破","star":"重洗资质","bond":"羁绊互动"}[operation],enabled)
 
 func _mount() -> void:
+	_secondary.text="切换骑乘"
+	_secondary.caption.text="切换骑乘"
+	_secondary.disabled=false
 	var mounts:=G.mounts_cfg()
 	if selection.is_empty():selection=G.mount_active() if not G.mount_active().is_empty() else String(mounts[0].id)
 	for m in mounts:

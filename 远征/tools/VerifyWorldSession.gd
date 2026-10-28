@@ -69,7 +69,7 @@ class FakeHost:
 
 
 func _ready() -> void:
-	G.SAVE_PATH = "res://tools/_logs/save_verify_world_session.json"
+	G.SAVE_PATH = "user://save_verify_world_session.json"
 	G.save_locked = false
 	_run()
 	if _fails == 0:
@@ -151,7 +151,9 @@ func _test_lifecycle() -> void:
 		Vector2(480, 930), "", 0, 1)
 	var eid := String(ctx["encounter_id"])
 	_check(not WorldSession.is_settled(state, eid), "未结算不应算 settled")
-	_check(WorldSession.commit(state, ctx), "首次 commit 应结算")
+	_check(not WorldSession.commit(state, ctx), "未登记的遭遇不得直接发奖")
+	WorldSession.record(state, ctx, WorldSession.ST_BATTLE)
+	_check(WorldSession.commit(state, ctx), "首次已登记战斗 commit 应结算")
 	_check(WorldSession.is_settled(state, eid), "commit 后应标记 committed")
 	_check(not WorldSession.commit(state, ctx), "重复 commit 必须返回 false（不得重复发奖）")
 	var fled := WorldSession.new_encounter("maple_road", 1, Vector2(750, 470), "mon_wolf", 6,
@@ -208,6 +210,7 @@ func _test_crash_matrix() -> void:
 		Vector2(480, 930), "", 0, 21)
 	var eid4 := String(ctx4["encounter_id"])
 	var txid4 := "enc|" + eid4
+	WorldSession.record(s4, ctx4, WorldSession.ST_BATTLE)
 	WorldSession.commit(s4, ctx4)
 	WorldSession.mark_spawn_defeated(s4, "lorin_wilds", 1, 1789900000.0)
 	var h4 := _host(0)
@@ -302,6 +305,7 @@ func _test_result_idempotent() -> void:
 
 	var st := {}
 	var host := _host(0)
+	WorldSession.record(st, ctx, WorldSession.ST_BATTLE)
 	var first := _settle_result_once(st, ctx, host, "victory", 33)
 	var second := _settle_result_once(st, ctx, host, "victory", 33)
 	_check(bool(first["settled"]) and bool(first["applied"]), "首次 settle_result 应结算并发奖一次")
