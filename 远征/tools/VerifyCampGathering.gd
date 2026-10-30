@@ -5,7 +5,11 @@ func check(ok:bool,line:String)->void:
 		fails+=1
 		push_error("FAIL: "+line)
 func find_button(root:Node,label:String)->Control:
-	if root is Button and root.text.replace(" ","")==label.replace(" ",""):return root
+	if root is Button:
+		var caption: String = root.text
+		var tooltip: String = root.tooltip_text
+		var needle := label.replace(" ","")
+		if caption.replace(" ","")==needle or tooltip.replace(" ","")==needle:return root
 	if root is Label and root.text.replace(" ","")==label.replace(" ",""):return root.get_parent() as Control
 	for child in root.get_children():
 		var found:=find_button(child,label)
@@ -51,7 +55,7 @@ func _ready()->void:
 			if button!=null:click(button)
 			check(String(story.text) in panel.page.text,"点选后显示对应完整故事")
 		check(panel.seen.size()==3,"故事顺序不漏掉任何一位")
-		click(find_button(panel,"回到营帐"))
+		click(find_button(panel,"返回营帐"))
 	check(home._gathering==null and not home._home_content_hidden,"返回后恢复营帐操作")
 	home._open_gathering()
 	await get_tree().process_frame

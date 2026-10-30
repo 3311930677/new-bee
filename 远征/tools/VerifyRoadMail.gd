@@ -44,6 +44,11 @@ func _entity(map: MapScene, eid: String) -> Node2D:
 func _find_button(node: Node, label: String) -> Control:
 	var needle := label.replace(" ", "")
 	for child in node.get_children():
+		if child is BaseButton:
+			var caption := String(child.text).replace(" ", "")
+			var tooltip := String(child.tooltip_text).replace(" ", "")
+			if needle in caption or needle in tooltip:
+				return child
 		if child is Label and needle in String(child.text).replace(" ", "") and node is Control:
 			return node
 		var hit := _find_button(child, label)

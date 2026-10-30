@@ -438,7 +438,7 @@ func _verify_top_hud(map: MapScene, click_entries := true) -> void:
 	var number_width := map._main_gold_l.get_theme_font("font").get_string_size(
 		map._main_gold_l.text, HORIZONTAL_ALIGNMENT_LEFT, -1, 13).x
 	_check(map._main_gold_l.text == "9.99亿" and int(map._main_gold_l.get_meta("hud_amount")) == 999999999 and number_width <= map._main_gold_l.size.x,
-		"九位金币按规范缩写且保留完整数值，不依赖裁剪")
+		"九位金币按规范缩写且保留完整数值，不依赖裁剪（%s / %.1f <= %.1f / %s）" % [map._main_gold_l.text, number_width, map._main_gold_l.size.x, str(map._main_gold_l.get_meta("hud_amount"))])
 	G.wallet.gold = wallet_before
 	var hp_before := map.st.hp
 	map.st.hp = roundi(map.st.max_hp() * 0.22)
